@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-03-21
+ChangeLog - 2005-03-24
 
 
 Version 0.1.2 (under dev!):
+   * fixed crash with 64-bits arch (like AMD64) when converting UTF-8
    * added missing IRC commands (307)
 
 Version 0.1.1 (2005-03-20):

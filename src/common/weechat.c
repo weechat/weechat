@@ -116,7 +116,7 @@ weechat_convert_encoding (char *from_code, char *to_code, char *string)
     #ifdef HAVE_ICONV
     iconv_t cd;
     char *inbuf, *ptr_inbuf, *ptr_outbuf;
-    int inbytesleft, outbytesleft;
+    size_t inbytesleft, outbytesleft;
     
     if (from_code && from_code[0] && to_code && to_code[0]
         && (strcasecmp(from_code, to_code) != 0))
@@ -573,6 +573,9 @@ weechat_welcome_message ()
         cfg_look_startup_version)
         gui_printf_color (NULL, COLOR_WIN_CHAT_PREFIX1,
             "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
+    
+    wee_log_printf ("%s (%s %s %s)\n",
+                    PACKAGE_STRING, _("compiled on"), __DATE__, __TIME__);
 }
 
 /*
@@ -761,8 +764,8 @@ main (int argc, char *argv[])
     }
     
     gui_init ();                    /* init WeeChat interface               */
-    plugin_init ();                 /* init plugin interface(s)             */    
     weechat_welcome_message ();     /* display WeeChat welcome message      */
+    plugin_init ();                 /* init plugin interface(s)             */    
                                     /* auto-connect to servers              */
     server_auto_connect (server_cmd_line);
     fifo_create ();                 /* create FIFO pipe for remote control  */
