@@ -349,6 +349,7 @@ void
 gui_buffer_free (t_gui_buffer *buffer)
 {
     t_gui_window *ptr_win;
+    t_gui_buffer *ptr_buffer;
     t_gui_line *ptr_line;
     int create_new;
     
@@ -359,6 +360,12 @@ gui_buffer_free (t_gui_buffer *buffer)
         if ((buffer == ptr_win->buffer) &&
             ((buffer->next_buffer) || (buffer->prev_buffer)))
             gui_switch_to_previous_buffer (ptr_win);
+    }
+    
+    /* decrease buffer number for all next buffers */
+    for (ptr_buffer = buffer->next_buffer; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    {
+        ptr_buffer->number--;
     }
     
     /* free lines and messages */
