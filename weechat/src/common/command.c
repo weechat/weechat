@@ -886,7 +886,12 @@ weechat_cmd_buffer (int argc, char **argv)
                 ptr_server->buffer = NULL;
             }
             else
-                irc_cmd_send_part (SERVER(gui_current_window->buffer), NULL);
+            {
+                if (SERVER(gui_current_window->buffer))
+                    irc_cmd_send_part (SERVER(gui_current_window->buffer), NULL);
+                else
+                    gui_buffer_free (gui_current_window->buffer, 1);
+            }
         }
         else if (strcasecmp (argv[0], "notify") == 0)
         {
@@ -1337,6 +1342,7 @@ weechat_cmd_server (int argc, char **argv)
 {
     int i;
     t_irc_server server, *ptr_server, *server_found, *new_server;
+    t_gui_buffer *ptr_buffer;
     
     if ((argc == 0) || (argc == 1))
     {
@@ -1407,6 +1413,24 @@ weechat_cmd_server (int argc, char **argv)
                             _("%s server \"%s\" not found for \"%s\" command\n"),
                             WEECHAT_ERROR, argv[1], "server del");
                 return -1;
+            }
+            if (server_found->is_connected)
+            {
+                irc_display_prefix (NULL, PREFIX_ERROR);
+                gui_printf (NULL,
+                            _("%s you can not delete server \"%s\" because you are connected to. "
+                            "Try /disconnect %s before.\n"),
+                            WEECHAT_ERROR, argv[1], argv[1]);
+                return -1;
+            }
+            
+            for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+            {
+                if (SERVER(ptr_buffer) == server_found)
+                {
+                    ptr_buffer->server = NULL;
+                    ptr_buffer->channel = NULL;
+                }
             }
             
             irc_display_prefix (NULL, PREFIX_INFO);

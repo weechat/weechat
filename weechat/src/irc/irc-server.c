@@ -60,7 +60,7 @@ void
 server_init (t_irc_server *server)
 {
     server->name = NULL;
-    server->autoconnect = 1;
+    server->autoconnect = 0;
     server->autoreconnect = 1;
     server->autoreconnect_delay = 30;
     server->command_line = 0;
