@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2003-11-16
+TODO - 2003-11-23
 
 Legend:
   #  done
@@ -31,6 +31,7 @@ v0.0.4:
  * Plugins:
     + Perl plugin
     # "/perl load" and "/perl unload" commands to (un)load Perl scripts
+    - auto-load Perl scripts at startup
 
 
 Future versions:
