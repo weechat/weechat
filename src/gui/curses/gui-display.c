@@ -611,7 +611,8 @@ gui_draw_window_nick (t_gui_window *window)
     if (CHANNEL(window) && CHANNEL(window)->nicks)
     {
         max_length = nick_get_max_length (CHANNEL(window));
-        if ((max_length + 2) != window->win_nick_width)
+        if ((window == gui_current_window) &&
+            ((max_length + 2) != window->win_nick_width))
         {
             gui_calculate_pos_size (window);
             delwin (window->win_chat);
@@ -624,7 +625,6 @@ gui_draw_window_nick (t_gui_window *window)
                                        window->win_nick_width,
                                        window->win_nick_y,
                                        window->win_nick_x);
-            //scrollok (window->win_chat, TRUE);
             gui_redraw_window_chat (window);
         }
         sprintf (format, "%%-%ds", max_length);
@@ -1089,6 +1089,8 @@ gui_switch_to_window (t_gui_window *window)
         }
     }
     
+    gui_calculate_pos_size (window);
+    
     /* first time creation for windows */
     if (!another_window)
     {
@@ -1099,7 +1101,6 @@ gui_switch_to_window (t_gui_window *window)
                                    window->win_chat_width,
                                    window->win_chat_y,
                                    window->win_chat_x);
-        //scrollok (window->win_chat, TRUE);
         if (CHANNEL(window))
             window->win_nick = newwin (window->win_nick_height,
                                        window->win_nick_width,
@@ -1123,7 +1124,6 @@ gui_switch_to_window (t_gui_window *window)
                                        window->win_chat_width,
                                        window->win_chat_y,
                                        window->win_chat_x);
-            //scrollok (window->win_chat, TRUE);
             window->win_nick = newwin (window->win_nick_height,
                                        window->win_nick_width,
                                        window->win_nick_y,
@@ -1139,7 +1139,6 @@ gui_switch_to_window (t_gui_window *window)
                                        window->win_chat_width,
                                        window->win_chat_y,
                                        window->win_chat_x);
-            //scrollok (window->win_chat, TRUE);
         }
     }
     
