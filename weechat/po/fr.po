@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.1-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-02-27 14:13+0100\n"
+"POT-Creation-Date: 2005-02-28 11:36+0100\n"
 "PO-Revision-Date: 2005-02-27 23:48+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -305,7 +305,8 @@ msgstr ""
 
 #: src/irc/irc-commands.c:87
 msgid "list all servernames which are known by the server answering the query"
-msgstr "lister tous les noms de serveurs connus du serveur qui répondent à la requête"
+msgstr ""
+"lister tous les noms de serveurs connus du serveur qui répondent à la requête"
 
 #: src/irc/irc-commands.c:88
 msgid "[[server] server_mask]"
@@ -336,7 +337,7 @@ msgstr ""
 "serveur: nom du serveur"
 
 #: src/irc/irc-commands.c:96
-msgid "get statistics about ths size of the IRC network"
+msgid "get statistics about the size of the IRC network"
 msgstr "obtenir des statistiques sur la taille du réseau IRC"
 
 #: src/irc/irc-commands.c:97
@@ -407,7 +408,8 @@ msgstr ""
 "  n: aucun message au canal depuis l'extérieur\n"
 "  m: canal modéré\n"
 "  l: fixer la limite d'utilisateurs pour le canal\n"
-"  b: paramétrer un masque de banissement pour garder des utilisateurs dehors\n"
+"  b: paramétrer un masque de banissement pour garder des utilisateurs "
+"dehors\n"
 "  v: donner/reprendre la possibilité de parler sur un canal modéré\n"
 "  k: définir une clé (mot de passe) pour accéder au canal\n"
 "modes utilisateur :\n"
@@ -648,7 +650,7 @@ msgid "disconnect server links"
 msgstr "déconnecter les liens vers un serveur"
 
 #: src/irc/irc-commands.c:200
-msgid "server commnent"
+msgid "server comment"
 msgstr "serveur commentaire"
 
 #: src/irc/irc-commands.c:200
@@ -679,7 +681,9 @@ msgstr ""
 msgid ""
 "give users who are on a host running an IRC server a message asking them to "
 "please join IRC"
-msgstr "envoyer aux utilisateurs d'un serveur IRC un message leur demandant de rejoindre IRC"
+msgstr ""
+"envoyer aux utilisateurs d'un serveur IRC un message leur demandant de "
+"rejoindre IRC"
 
 #: src/irc/irc-commands.c:208
 msgid "user [target [channel]]"
@@ -816,7 +820,8 @@ msgid ""
 "target: reply should match this mask"
 msgstr ""
 "pseudo: pseudo à chercher\n"
-"nombre: nombre de réponses à retourner (recherche complète si nombre négatif)\n"
+"nombre: nombre de réponses à retourner (recherche complète si nombre "
+"négatif)\n"
 "cible: la réponse doit correspondre à ce masque"
 
 #: src/irc/irc-commands.c:251 src/irc/irc-commands.c:252
@@ -1049,7 +1054,7 @@ msgid "no nickname given"
 msgstr "pas d'utilisateur donné"
 
 #: src/irc/irc-commands.c:360
-msgid "erroneus nickname"
+msgid "erroneous nickname"
 msgstr "nom d'utilisateur erroné"
 
 #: src/irc/irc-commands.c:362
@@ -1615,7 +1620,9 @@ msgstr ""
 #: src/irc/irc-recv.c:3152
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\"\n"
-msgstr "%s: l'utilisateur \"%s\" est déjà en cours d'utilisation, essai avec le 3ème nom d'utilisateur \"%s\"\n"
+msgstr ""
+"%s: l'utilisateur \"%s\" est déjà en cours d'utilisation, essai avec le 3ème "
+"nom d'utilisateur \"%s\"\n"
 
 #: src/irc/irc-recv.c:3164
 #, c-format
@@ -1963,10 +1970,13 @@ msgid ""
 "number: jump to buffer by number"
 msgstr ""
 "action: action à effectuer:\n"
-"  move    déplacer le tampon dans la liste (peut être relatif, par exemple -1)\n"
-"  close   fermer le tampon (pour un canal: équivalent à /part sans message de fin)\n"
+"  move    déplacer le tampon dans la liste (peut être relatif, par exemple -"
+"1)\n"
+"  close   fermer le tampon (pour un canal: équivalent à /part sans message "
+"de fin)\n"
 "  list    liste les tampons ouverts (pas de paramètre affiche cette liste)\n"
-"  notify  fixer le niveau de notification (0=jamais, 1=highlight, 2=1+msg, 3=2+join/part)\n"
+"  notify  fixer le niveau de notification (0=jamais, 1=highlight, 2=1+msg, "
+"3=2+join/part)\n"
 "nombre: sauter au tampon qui a ce numéro"
 
 #: src/common/command.c:56
@@ -3309,7 +3319,7 @@ msgid "delay before trying again to reconnect"
 msgstr "délai avant de tenter une reconnexion"
 
 #: src/common/weeconfig.c:626
-msgid "delay (in deconds) before trying again to reconnect to server"
+msgid "delay (in seconds) before trying again to reconnect to server"
 msgstr "délai (en secondes) avant de tenter une reconnexion au serveur"
 
 #: src/common/weeconfig.c:629
@@ -3428,7 +3438,9 @@ msgstr "%s %s, ligne %d: impossible de créer le serveur\n"
 #: src/common/weeconfig.c:1084
 #, c-format
 msgid "%s unable to assign default int with string (\"%s\")\n"
-msgstr "%s impossible d'assigner la valeur entière par défaut avec la chaîne (\"%s\")\n"
+msgstr ""
+"%s impossible d'assigner la valeur entière par défaut avec la chaîne (\"%s"
+"\")\n"
 
 #: src/common/weeconfig.c:1095
 #, c-format

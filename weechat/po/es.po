@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.1-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-02-27 14:13+0100\n"
-"PO-Revision-Date: 2005-02-25 21:12+0100\n"
+"POT-Creation-Date: 2005-02-28 11:36+0100\n"
+"PO-Revision-Date: 2005-02-28 11:25+0100\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -267,7 +267,7 @@ msgid ""
 "key: key to join the channel"
 msgstr ""
 "canal: nombre del canal al que unirse\n"
-"clé: clave para unirse al canal"
+"clave: clave para unirse al canal"
 
 #: src/irc/irc-commands.c:79
 msgid "forcibly remove a user from a channel"
@@ -285,7 +285,7 @@ msgid ""
 msgstr ""
 "canal: canal en el que está el usuario\n"
 "usuario: usuario a expulsar\n"
-"comentario: comentario para la expulsi"
+"comentario: comentario para la expulsión"
 
 #: src/irc/irc-commands.c:83
 msgid "close client-server connection"
@@ -327,7 +327,7 @@ msgstr "listar canales y sus temas"
 
 #: src/irc/irc-commands.c:93
 msgid "[channel[,channel] [server]]"
-msgstr "[canal[,canall] [servidor]]"
+msgstr "[canal[,canal] [servidor]]"
 
 #: src/irc/irc-commands.c:94
 msgid ""
@@ -338,7 +338,7 @@ msgstr ""
 "servidor: nombre del servidor"
 
 #: src/irc/irc-commands.c:96
-msgid "get statistics about ths size of the IRC network"
+msgid "get statistics about the size of the IRC network"
 msgstr "obtener estadísticas sobre el tamaño de la red IRC"
 
 #: src/irc/irc-commands.c:97
@@ -651,7 +651,7 @@ msgid "disconnect server links"
 msgstr "desconectar los enlaces de servidor"
 
 #: src/irc/irc-commands.c:200
-msgid "server commnent"
+msgid "server comment"
 msgstr "comentario de servidor"
 
 #: src/irc/irc-commands.c:200
@@ -676,7 +676,7 @@ msgid ""
 "server: server name"
 msgstr ""
 "consulta: c/h/i/k/l/m/o/y/u (ver la RFC1459)\n"
-"sevidor: nombre del servidor"
+"servidor: nombre del servidor"
 
 #: src/irc/irc-commands.c:206
 msgid ""
@@ -1055,7 +1055,7 @@ msgid "no nickname given"
 msgstr "no se ha dado un nombre de usuario"
 
 #: src/irc/irc-commands.c:360
-msgid "erroneus nickname"
+msgid "erroneous nickname"
 msgstr "nombre de usuario erróneo"
 
 #: src/irc/irc-commands.c:362
@@ -1442,7 +1442,7 @@ msgstr "%s no es posible analizar el comando \"%s\"\n"
 #: src/irc/irc-recv.c:1304
 #, c-format
 msgid "%s unknown DCC CHAT type received from "
-msgstr "%s unknown DCC CHAT type received from "
+msgstr "%s tipo DCC CHAT desconocido recibido de "
 
 #: src/irc/irc-recv.c:1379 src/irc/irc-dcc.c:753
 #, c-format
@@ -1694,8 +1694,8 @@ msgid ""
 "%s can't associate DCC chat with private buffer (maybe private buffer has "
 "already DCC CHAT?)\n"
 msgstr ""
-"%s can't associate DCC chat with private buffer (maybe private buffer has "
-"already DCC CHAT?)\n"
+"%s no se puede asociar la conversación DCC con el búfer privado (quizá el "
+"búfer privado ya tiene DCC CHAT)\n"
 
 #: src/irc/irc-dcc.c:230
 msgid "Connected to "
@@ -2145,7 +2145,7 @@ msgstr ""
 #: src/common/command.c:250
 #, c-format
 msgid "%s alias or command \"%s\" already exists!\n"
-msgstr "%s ¡zl alias o el comando \"%s\" ya existe!\n"
+msgstr "%s ¡el alias o el comando \"%s\" ya existe!\n"
 
 #: src/common/command.c:260
 #, c-format
@@ -2515,7 +2515,7 @@ msgstr "Ventanas abiertas:\n"
 #: src/common/hotlist.c:102
 #, c-format
 msgid "%s cannot add a buffer to hotlist\n"
-msgstr "%s cannot add a buffer to hotlist\n"
+msgstr "%s no es posible añadir un búfer a la lista caliente (hotlist)\n"
 
 #: src/common/log.c:118
 msgid "Not enough memory to write log file for a buffer\n"
@@ -3329,7 +3329,7 @@ msgid "delay before trying again to reconnect"
 msgstr "esperar antes de intentar de nuevo una reconexión"
 
 #: src/common/weeconfig.c:626
-msgid "delay (in deconds) before trying again to reconnect to server"
+msgid "delay (in seconds) before trying again to reconnect to server"
 msgstr ""
 "espera (en segundos) antes de intentar de nuevo una reconexión al servidor"
 

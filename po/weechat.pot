@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-02-27 14:13+0100\n"
+"POT-Creation-Date: 2005-02-28 11:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -313,7 +313,7 @@ msgid ""
 msgstr ""
 
 #: src/irc/irc-commands.c:96
-msgid "get statistics about ths size of the IRC network"
+msgid "get statistics about the size of the IRC network"
 msgstr ""
 
 #: src/irc/irc-commands.c:97
@@ -504,7 +504,7 @@ msgid ""
 msgstr ""
 
 #: src/irc/irc-commands.c:173
-msgid "close all connections & quit "
+msgid "close all connections & quit"
 msgstr ""
 
 #: src/irc/irc-commands.c:174
@@ -582,7 +582,7 @@ msgid "disconnect server links"
 msgstr ""
 
 #: src/irc/irc-commands.c:200
-msgid "server commnent"
+msgid "server comment"
 msgstr ""
 
 #: src/irc/irc-commands.c:200
@@ -957,7 +957,7 @@ msgid "no nickname given"
 msgstr ""
 
 #: src/irc/irc-commands.c:360
-msgid "erroneus nickname"
+msgid "erroneous nickname"
 msgstr ""
 
 #: src/irc/irc-commands.c:362
@@ -3099,7 +3099,7 @@ msgid "delay before trying again to reconnect"
 msgstr ""
 
 #: src/common/weeconfig.c:626
-msgid "delay (in deconds) before trying again to reconnect to server"
+msgid "delay (in seconds) before trying again to reconnect to server"
 msgstr ""
 
 #: src/common/weeconfig.c:629

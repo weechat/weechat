@@ -623,7 +623,7 @@ t_config_option weechat_options_server[] =
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
     NULL, NULL, &(cfg_server.autoreconnect), NULL, NULL },
   { "server_autoreconnect_delay", N_("delay before trying again to reconnect"),
-    N_("delay (in deconds) before trying again to reconnect to server"),
+    N_("delay (in seconds) before trying again to reconnect to server"),
     OPTION_TYPE_INT, 0, 65535, 30,
     NULL, NULL, &(cfg_server.autoreconnect_delay), NULL, NULL },
   { "server_address", N_("server address or hostname"),
