@@ -56,4 +56,5 @@ void
 gui_main_loop ()
 {
     /* TODO: main loop function for Gtk GUI */
+    gtk_main ();
 }

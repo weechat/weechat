@@ -30,7 +30,6 @@
 #include <signal.h>
 #include <time.h>
 #include <sys/socket.h>
-#include <curses.h>
 
 #include "../../weechat.h"
 #include "../gui.h"

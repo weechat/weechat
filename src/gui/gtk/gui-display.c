@@ -62,6 +62,9 @@ char *nicks_colors[COLOR_WIN_NICK_NUMBER] =
 
 int color_attr[NUM_COLORS];
 
+GtkWidget *gtk_main_window;
+
+
 /*
  * gui_assign_color: assign a color (read from config)
  */
@@ -565,9 +568,78 @@ gui_init_colors ()
 void
 gui_init ()
 {
-    /* TODO: initialize Gtk GUI */
+    GtkWidget *vbox1;
+    GtkWidget *entry_topic;
+    GtkWidget *notebook1;
+    GtkWidget *vbox2;
+    GtkWidget *hbox1;
+    GtkWidget *scrolledwindow_chat;
+    GtkWidget *textview_chat;
+    GtkWidget *scrolledwindow_nick;
+    GtkWidget *textview_nick;
+    GtkWidget *entry_input;
+    GtkWidget *label1;
     
-    gui_ready = 1;
+    gtk_main_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title (GTK_WINDOW (gtk_main_window), WEECHAT_NAME_AND_VERSION);
+    
+    vbox1 = gtk_vbox_new (FALSE, 0);
+    gtk_widget_show (vbox1);
+    gtk_container_add (GTK_CONTAINER (gtk_main_window), vbox1);
+    
+    entry_topic = gtk_entry_new ();
+    gtk_widget_show (entry_topic);
+    gtk_box_pack_start (GTK_BOX (vbox1), entry_topic, FALSE, FALSE, 0);
+    
+    notebook1 = gtk_notebook_new ();
+    gtk_widget_show (notebook1);
+    gtk_box_pack_start (GTK_BOX (vbox1), notebook1, TRUE, TRUE, 0);
+    gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook1), GTK_POS_BOTTOM);
+    
+    vbox2 = gtk_vbox_new (FALSE, 0);
+    gtk_widget_show (vbox2);
+    gtk_container_add (GTK_CONTAINER (notebook1), vbox2);
+    
+    hbox1 = gtk_hbox_new (FALSE, 0);
+    gtk_widget_show (hbox1);
+    gtk_box_pack_start (GTK_BOX (vbox2), hbox1, TRUE, TRUE, 0);
+    
+    scrolledwindow_chat = gtk_scrolled_window_new (NULL, NULL);
+    gtk_widget_show (scrolledwindow_chat);
+    gtk_box_pack_start (GTK_BOX (hbox1), scrolledwindow_chat, TRUE, TRUE, 0);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow_chat), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
+    
+    textview_chat = gtk_text_view_new ();
+    gtk_widget_show (textview_chat);
+    gtk_container_add (GTK_CONTAINER (scrolledwindow_chat), textview_chat);
+    gtk_widget_set_size_request (textview_chat, 300, -1);
+    gtk_text_view_set_editable (GTK_TEXT_VIEW (textview_chat), FALSE);
+    gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (textview_chat), FALSE);
+    
+    scrolledwindow_nick = gtk_scrolled_window_new (NULL, NULL);
+    gtk_widget_show (scrolledwindow_nick);
+    gtk_box_pack_start (GTK_BOX (hbox1), scrolledwindow_nick, TRUE, TRUE, 0);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow_nick), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
+    
+    textview_nick = gtk_text_view_new ();
+    gtk_widget_show (textview_nick);
+    gtk_container_add (GTK_CONTAINER (scrolledwindow_nick), textview_nick);
+    gtk_text_view_set_editable (GTK_TEXT_VIEW (textview_nick), FALSE);
+    gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (textview_nick), FALSE);
+    
+    entry_input = gtk_entry_new ();
+    gtk_widget_show (entry_input);
+    gtk_box_pack_start (GTK_BOX (vbox2), entry_input, FALSE, FALSE, 0);
+    
+    label1 = gtk_label_new (_("server"));
+    gtk_widget_show (label1);
+    gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook1), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook1), 0), label1);
+    gtk_label_set_justify (GTK_LABEL (label1), GTK_JUSTIFY_LEFT);
+    
+    gtk_widget_show_all (gtk_main_window);
+    
+    /* TODO: set gui_ready to 1 when Gtk display functions will be ok */
+    gui_ready = 0;
 }
 
 /*
@@ -649,9 +721,52 @@ gui_add_message (t_gui_window *window, int type, int color, char *message)
 void
 gui_printf_color_type (t_gui_window *window, int type, int color, char *message, ...)
 {
-    /* TODO: write gui_printf_colot_type function for Gtk! */
+    static char buffer[8192];
+    char timestamp[16];
+    char *pos;
+    va_list argptr;
+    static time_t seconds;
+    struct tm *date_tmp;
+
+    /* make gcc hapy */
     (void) window;
     (void) type;
     (void) color;
     (void) message;
+    
+    va_start (argptr, message);
+    vsnprintf (buffer, sizeof (buffer) - 1, message, argptr);
+    va_end (argptr);
+    
+    if (gui_ready)
+    {
+        seconds = time (NULL);
+        date_tmp = localtime (&seconds);
+        
+        pos = buffer - 1;
+        while (pos)
+        {
+            /* TODO: read timestamp format from config! */
+            if ((!window->last_line) || (window->line_complete))
+            {
+                gui_add_message (window, MSG_TYPE_TIME, COLOR_WIN_CHAT_DARK, "[");
+                sprintf (timestamp, "%02d", date_tmp->tm_hour);
+                gui_add_message (window, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME, timestamp);
+                gui_add_message (window, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME_SEP, ":");
+                sprintf (timestamp, "%02d", date_tmp->tm_min);
+                gui_add_message (window, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME, timestamp);
+                gui_add_message (window, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME_SEP, ":");
+                sprintf (timestamp, "%02d", date_tmp->tm_sec);
+                gui_add_message (window, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME, timestamp);
+                gui_add_message (window, MSG_TYPE_TIME, COLOR_WIN_CHAT_DARK, "] ");
+            }
+            gui_add_message (window, type, color, pos+1);
+            pos = strchr (pos+1, '\n');
+            if (pos)
+                if (pos[1] == '\0')
+                    pos = NULL;
+        }
+    }
+    else
+        g_print ("%s", buffer);
 }

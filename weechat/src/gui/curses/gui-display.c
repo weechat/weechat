@@ -29,7 +29,6 @@
 #include <string.h>
 #include <signal.h>
 #include <time.h>
-#include <curses.h>
 
 #include "../../weechat.h"
 #include "../gui.h"
