@@ -184,6 +184,7 @@ struct t_dcc
     unsigned long addr;             /* IP address                           */
     int port;                       /* port                                 */
     char *nick;                     /* remote nick                          */
+    int sock;                       /* socket for connection                */
     int file;                       /* local file (for reading or writing)  */
     char *filename;                 /* local filename                       */
     unsigned long size;             /* file size                            */

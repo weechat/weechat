@@ -25,7 +25,12 @@
 #endif
 
 #include <stdlib.h>
+#include <unistd.h>
 #include <string.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
 
 #include "../common/weechat.h"
 #include "irc.h"
@@ -44,8 +49,21 @@ char *dcc_status_string[] =     /* strings for DCC status                   */
  */
 
 void
-dcc_connect ()
+dcc_connect (t_dcc *dcc)
 {
+    struct sockaddr_in addr;
+    
+    dcc->status = DCC_CONNECTING;
+    
+    dcc->sock = socket (AF_INET, SOCK_STREAM, 0);
+    if (dcc->sock == -1)
+        return;
+    memset (&addr, 0, sizeof (addr));
+    addr.sin_port = htons (dcc->port);
+    addr.sin_family = AF_INET;
+    addr.sin_addr.s_addr = htonl (dcc->addr);
+    fcntl (dcc->sock, F_SETFL, O_NONBLOCK);
+    connect (dcc->sock, (struct sockaddr *) &addr, sizeof (addr));
 }
 
 /*
@@ -87,10 +105,11 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
     }
     new_dcc->server = server;
     new_dcc->type = type;
-    new_dcc->status = DCC_ACTIVE;
+    new_dcc->status = DCC_WAITING;
     new_dcc->addr = addr;
     new_dcc->port = port;
     new_dcc->nick = strdup (nick);
+    new_dcc->sock = -1;
     new_dcc->file = -1;
     new_dcc->filename = strdup (filename);
     new_dcc->size = size;
@@ -103,5 +122,86 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
                 type, nick,
                 addr >> 24, (addr >> 16) & 0xff, (addr >> 8) & 0xff, addr & 0xff,
                 port, filename, size);
+    
+    if (type == DCC_FILE_RECV)
+    {
+        dcc_connect (new_dcc);
+        if (new_dcc->sock == -1)
+            new_dcc->status = DCC_FAILED;
+        else
+            new_dcc->status = DCC_ACTIVE;
+    }
+        
+    
     return new_dcc;
+}
+
+/*
+ * dcc_handle: receive/send data for each active DCC
+ */
+
+void
+dcc_handle ()
+{
+    t_dcc *ptr_dcc;
+    int num;
+    char buffer[8192];
+    uint32_t pos;
+    
+    for (ptr_dcc = dcc_list; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
+    {
+        if (ptr_dcc->status == DCC_ACTIVE)
+        {
+            if (ptr_dcc->type == DCC_FILE_RECV)
+            {
+                num = recv (ptr_dcc->sock, buffer, sizeof (buffer), 0);
+                if (num != -1)
+                {
+                    if (num == 0)
+                    {
+                        ptr_dcc->status = DCC_FAILED;
+                        close (ptr_dcc->sock);
+                        ptr_dcc->sock = -1;
+                    }
+                    else
+                    {
+                        gui_printf (NULL, "DCC: file \"%s\": %d bytes received\n",
+                                    ptr_dcc->filename, num);
+                        ptr_dcc->pos += (unsigned long) num;
+                        pos = htonl (ptr_dcc->pos);
+                        send (ptr_dcc->sock, (char *) &pos, 4, 0);
+                        if (ptr_dcc->pos >= ptr_dcc->size)
+                        {
+                            ptr_dcc->status = DCC_DONE;
+                            gui_printf (NULL, "DCC: file \"%s\": done!\n",
+                                        ptr_dcc->filename);
+                            close (ptr_dcc->sock);
+                            ptr_dcc->sock = -1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*
+ * dcc_end: close all opened sockets (called when WeeChat is exiting)
+ */
+
+void
+dcc_end ()
+{
+    t_dcc *ptr_dcc;
+    
+    for (ptr_dcc = dcc_list; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
+    {
+        if (ptr_dcc->sock != -1)
+        {
+            if (ptr_dcc->status == DCC_ACTIVE)
+                wee_log_printf (_("aborting active DCC: \"%s\" from %s\n"),
+                                ptr_dcc->filename, ptr_dcc->nick);
+            close (ptr_dcc->sock);
+        }
+    }
 }
