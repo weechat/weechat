@@ -29,6 +29,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <sys/utsname.h>
 
 #include "../weechat.h"
 #include "irc.h"
@@ -1665,6 +1666,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
     char *pos, *pos2, *host2;
     t_irc_channel *ptr_channel;
     t_irc_nick *ptr_nick;
+    struct utsname *buf;
     
     /* no host => we can't identify sender of message! */
     if (host == NULL)
@@ -1759,11 +1761,27 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                 pos++;
             
             if (strcmp (pos, "\01VERSION\01") == 0)
+            {
+                buf = (struct utsname *) malloc (sizeof (struct utsname));
+                uname (buf);
                 server_sendf (server,
                               "NOTICE %s :\01VERSION "
                               WEECHAT_NAME " v"
-                              WEECHAT_VERSION ", compiled on " __DATE__ "\01\r\n",
-                              host);
+                              WEECHAT_VERSION " compiled on " __DATE__
+                              ", \"%s\" running %s %s on a %s\01\r\n",
+                              host, &buf->nodename, &buf->sysname,
+                              &buf->release, &buf->machine);
+                free (buf);
+                irc_display_prefix (server->window, PREFIX_INFO);
+                gui_printf_color (server->window,
+                                  COLOR_WIN_CHAT, _("Received a "));
+                gui_printf_color (server->window,
+                                  COLOR_WIN_CHAT_CHANNEL, _("CTCP VERSION "));
+                gui_printf_color (server->window,
+                                  COLOR_WIN_CHAT, _("from"));
+                gui_printf_color (server->window,
+                                  COLOR_WIN_CHAT_NICK, " %s\n", host);
+            }
             else
             {
                 /* private message received */
