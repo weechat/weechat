@@ -227,10 +227,10 @@ gui_calculate_pos_size (t_gui_window *window)
             case CFG_LOOK_NICKLIST_TOP:
                 nick_count (CHANNEL(window), &num_nicks, &num_op, &num_halfop,
                             &num_voice, &num_normal);
-                if (((max_length + 1) * num_nicks) % COLS == 0)
-                    lines = ((max_length + 1) * num_nicks) / COLS;
+                if (((max_length + 2) * num_nicks) % COLS == 0)
+                    lines = ((max_length + 2) * num_nicks) / COLS;
                 else
-                    lines = (((max_length + 1) * num_nicks) / COLS) + 1;
+                    lines = (((max_length + 2) * num_nicks) / COLS) + 1;
                 window->win_chat_x = 0;
                 window->win_chat_y = 1 + (lines + 1);
                 window->win_chat_width = COLS;
@@ -246,10 +246,10 @@ gui_calculate_pos_size (t_gui_window *window)
             case CFG_LOOK_NICKLIST_BOTTOM:
                 nick_count (CHANNEL(window), &num_nicks, &num_op, &num_halfop,
                             &num_voice, &num_normal);
-                if (((max_length + 1) * num_nicks) % COLS == 0)
-                    lines = ((max_length + 1) * num_nicks) / COLS;
+                if (((max_length + 2) * num_nicks) % COLS == 0)
+                    lines = ((max_length + 2) * num_nicks) / COLS;
                 else
-                    lines = (((max_length + 1) * num_nicks) / COLS) + 1;
+                    lines = (((max_length + 2) * num_nicks) / COLS) + 1;
                 window->win_chat_x = 0;
                 window->win_chat_y = 1;
                 window->win_chat_width = COLS;
@@ -778,9 +778,9 @@ gui_draw_window_nick (t_gui_window *window)
             if ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_TOP) ||
                 (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM))
             {
-                if (y >= window->win_nick_height - 1)
+                if (y - ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM) ? 1 : 0) >= window->win_nick_height - 1)
                 {
-                    column += max_length + 1;
+                    column += max_length + 2;
                     y = (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_TOP) ?
                         0 : 1;
                 }

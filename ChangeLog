@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2004-06-13
+ChangeLog - 2004-06-17
 
 
 Version 0.0.7 (under dev!):
+   * fixed display bug when nicklist is displayed at bottom of screen
    * added history limit (text buffer & commands)
 
 Version 0.0.6 (2004-06-05):

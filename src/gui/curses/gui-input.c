@@ -59,6 +59,7 @@ gui_read_keyb ()
         {
             /* resize event */
             case KEY_RESIZE:
+                gui_calculate_pos_size (gui_current_window);
                 gui_redraw_window (gui_current_window);
                 break;
             /* previous window */
