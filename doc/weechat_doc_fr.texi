@@ -35,7 +35,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.0.9 - 1er Janvier 2005
+@subtitle Documentation pour WeeChat v0.1.0-cvs - 23 Janvier 2005
 
 @image{weechat_image}
 
@@ -259,6 +259,12 @@ Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
 @item look_weechat_slogan
 Slogan WeeChat (si vide, le slogan ne sera pas utilis@'e)@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: 'the geekest IRC client!'@*
+@item look_charset_decode
+Jeu de caract@`eres pour d@'ecoder les messages du serveur, exemples: UTF-8, ISO-8859-1 (si non renseign@'e, les messages ne sont pas convertis)@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
+@item look_charset_encode
+Jeu de caract@`eres pour encoder les messages envoy@'es au serveur, exemples: UFT-8, ISO-8859-1 (si non renseign@'e, le jeu de caract@`eres local est utilis@'e)@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
 @item look_color_nicks
 Afficher les utilisateurs avec diff@'erentes couleurs@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
@@ -292,30 +298,27 @@ Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
 @item look_nick_completor
 La cha@^ine affich@'ee apr@`es la compl@'etion des utilisateurs@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ':'@*
-@item look_display_away
-Affiche un message sur tous les canaux pour l'absence/le retour@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
 @item look_infobar
 Active la barre d'infos@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
 @item look_infobar_timestamp
 Horodatage pour les conversations sauvegard@'ees@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '%B, %A %d %G - %H:%M'@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '%B, %A %d %Y - %H:%M'@*
 @item look_infobar_delay_highlight
 D@'elai (en secondes) pour la notification des messages dans la barre d'infos (0 = d@'esactiver les notifications dans la barre d'infos)@*
 Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 7@*
 @item col_title
 Couleur pour la barre de titre@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'gray'@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
 @item col_title_bg
 Couleur de fond pour la barre de titre@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'blue'@*
 @item col_chat
 Couleur pour le texte de discussion@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'gray'@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
 @item col_chat_time
 Couleur pour l'heure dans la fen@^etre de discussion@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'gray'@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
 @item col_chat_time_sep
 Couleur pour la s@'eparation de l'heure (fen@^etre de discussion)@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'brown'@*
@@ -345,7 +348,7 @@ Couleur de fond pour la fen@^etre de discussion@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
 @item col_status
 Couleur pour la barre de statut@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'gray'@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
 @item col_status_delimiters
 Couleur pour les d@'elimiteurs de la barre de statut@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'cyan'@*
@@ -357,7 +360,7 @@ Couleur pour une fen@^etre avec un highlight (barre de statut)@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightmagenta'@*
 @item col_status_data_other
 Couleur pour une fen@^etre avec des nouvelles donn@'ees (pas des infos) (barre de statut)@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'gray'@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
 @item col_status_more
 Couleur pour une fen@^etre avec des nouvelles donn@'ees (barre de statut)@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'white'@*
@@ -375,7 +378,7 @@ Couleur de fond pour la fen@^etre de barre d'infos@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'cyan'@*
 @item col_input
 Couleur pour le texte saisi@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'gray'@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
 @item col_input_channel
 Couleur pour le texte saisi (nom du canal)@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'white'@*
@@ -387,7 +390,7 @@ Couleur de fond pour la fen@^etre de saisie@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
 @item col_nick
 Couleur pour les pseudos@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'gray'@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
 @item col_nick_op
 Couleur pour le symbole op@'erateur@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightgreen'@*
@@ -405,7 +408,7 @@ Couleur pour le pseudo local@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'white'@*
 @item col_nick_private
 Couleur pour l'autre pseudo dans la fen@^etre priv@'ee@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'gray'@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
 @item col_nick_bg
 Couleur de fond pour les pseudos@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
@@ -438,13 +441,13 @@ Nombre maximum de commandes utilisateur dans l'historique (0 = sans limite)@*
 Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 100@*
 @item log_auto_server
 Enregistrer automatiquement les messages du serveur@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
+Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
 @item log_auto_channel
 Enregistrer automatiquement les conversations des canaux@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
+Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
 @item log_auto_private
 Enregistrer automatiquement les conversations priv@'ees@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
+Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
 @item log_path
 Chemin pour les conversations sauvegard@'ees par WeeChat@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '~/.weechat/logs/'@*
@@ -454,6 +457,27 @@ Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '%Y %b %d %H:%M:%S'@*
 @item log_hide_nickserv_pwd
 Masquer le mot de passe affich@'e par nickserv@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
+@item irc_display_away
+Affiche un message sur tous les canaux pour l'absence/le retour@*
+Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
+@item irc_default_msg_away
+Message par d@'efaut pour l'absence@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: 'away'@*
+@item irc_default_msg_part
+Message par d@'efaut pour le part (quitte un canal)@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
+@item irc_default_msg_quit
+Message de fin par d@'efaut ('%v' sera remplac@'e par la version de WeeChat dans la cha@^ine)@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: 'WeeChat %v'@*
+@item irc_lag_check
+Intervalle entre deux mesures de lag (en secondes)@*
+Type: entier (valeurs: entre 30 et 2147483647), valeur par d@'efaut: 60@*
+@item irc_lag_min_show
+Lag minimum @`a afficher (en secondes)@*
+Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 1@*
+@item irc_lag_disconnect
+D@'econnexion apr@`es un lag important (en minutes, 0 = ne jamais se d@'econnecter)@*
+Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 5@*
 @item dcc_auto_accept_files
 Accepte automatiquement les fichiers dcc entrants@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
@@ -531,7 +555,7 @@ Commande @`a ex@'ecuter en premier lorsque connect@'e au serveur@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
 @item server_command_delay
 D@'elai (en secondes) apr@`es ex@'ecution de la commande (exemple: donner du temps pour l'authentification)@*
-Type: entier (valeurs: entre 0 et 3600), valeur par d@'efaut: 1@*
+Type: entier (valeurs: entre 0 et 5), valeur par d@'efaut: 0@*
 @item server_autojoin
 Liste des canaux (s@'epar@'es par des virgules) @`a rejoindre lorsque connect@'e au serveur@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
@@ -570,8 +594,6 @@ Les couleurs pour l'interface Curses sont :@*
 @kbd{cyan}: cyan fonc@'e
 @item
 @kbd{lightcyan}: cyan clair
-@item
-@kbd{gray}: gris
 @item
 @kbd{white}: blanc
 @end itemize
