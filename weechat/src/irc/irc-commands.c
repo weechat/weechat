@@ -135,7 +135,7 @@ t_irc_command irc_commands[] =
     1, 2, 1, irc_cmd_send_pong, NULL, NULL },
   { "privmsg", N_("message received"),
     "", "",
-    0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_privmsg },
+    0, 0, 1, NULL, NULL, irc_cmd_recv_privmsg },
   { "quit", N_("close all connections & quit " WEECHAT_NAME),
     N_("[quit_message]"),
     N_("quit_message: quit message (displayed to other users)"),
