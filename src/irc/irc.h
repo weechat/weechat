@@ -34,6 +34,8 @@
 
 #define CHANNEL_PREFIX "#&+!"
 
+#define DEFAULT_IRC_PORT 6667
+
 /* nick types */
 
 typedef struct t_irc_nick t_irc_nick;
@@ -78,6 +80,7 @@ struct t_irc_server
     /* user choices */
     char *name;                     /* name of server (only for display)    */
     int autoconnect;                /* = 1 if auto connect at startup       */
+    int command_line;               /* server was given on command line     */
     char *address;                  /* address of server (IP or name)       */
     int port;                       /* port for server (6667 by default)    */
     char *password;                 /* password for server                  */
@@ -140,17 +143,18 @@ extern t_irc_channel *current_channel;
 /* server functions (irc-server.c) */
 
 extern void server_init (t_irc_server *);
+extern int server_init_with_url (char *, t_irc_server *);
 extern t_irc_server *server_alloc ();
 extern void server_destroy (t_irc_server *);
 extern void server_free (t_irc_server *);
 extern void server_free_all ();
-extern t_irc_server *server_new (char *, int, char *, int, char *, char *,
+extern t_irc_server *server_new (char *, int, int, char *, int, char *, char *,
                                  char *, char *, char *, char *, char *, char *);
 extern int server_send (t_irc_server *, char *, int);
 extern int server_sendf (t_irc_server *, char *, ...);
 extern void server_recv (t_irc_server *);
 extern int server_connect ();
-extern void server_auto_connect ();
+extern void server_auto_connect (int);
 extern void server_disconnect (t_irc_server *);
 extern void server_disconnect_all ();
 extern t_irc_server *server_search (char *);

@@ -59,6 +59,7 @@ server_init (t_irc_server *server)
 {
     server->name = NULL;
     server->autoconnect = 0;
+    server->command_line = 0;
     server->address = NULL;
     server->port = -1;
     server->password = NULL;
@@ -78,6 +79,68 @@ server_init (t_irc_server *server)
     server->window = NULL;
     server->channels = NULL;
     server->last_channel = NULL;
+}
+
+/*
+ * server_init_with_url: init a server with url of this form:
+ *                       irc://nick:pass@irc.toto.org:6667
+ *                       returns:  0 = ok
+ *                                -1 = invalid syntax
+ */
+
+int
+server_init_with_url (char *irc_url, t_irc_server *server)
+{
+    char *url, *pos_address, *pos, *pos2;
+    
+    server_init (server);
+    if (strncasecmp (irc_url, "irc://", 6) != 0)
+        return -1;
+    url = strdup (irc_url);
+    pos_address = strchr (url, '@');
+    if (!pos_address || !pos_address[1])
+    {
+        free (url);
+        return -1;
+    }
+    pos_address[0] = '\0';
+    pos_address++;
+    pos = url + 6;
+    if (!pos[0])
+    {
+        free (url);
+        return -1;
+    }
+    pos2 = strchr (pos, ':');
+    if (pos2)
+    {
+        pos2[0] = '\0';
+        server->password = strdup (pos2 + 1);
+    }
+    server->nick1 = strdup (pos);
+    
+    pos2 = strchr (pos_address, ':');
+    if (pos2)
+    {
+        pos2[0] = '\0';
+        server->port = atoi (pos2 + 1);
+    }
+    server->name = strdup (pos_address);
+    server->address = strdup (pos_address);
+    
+    free (url);
+    
+    /* some default values */
+    if (server->port < 0)
+        server->port = DEFAULT_IRC_PORT;
+    server->nick2 = (char *) malloc (strlen (server->nick1) + 2);
+    strcpy (server->nick2, server->nick1);
+    server->nick2 = strcat (server->nick2, "1");
+    server->nick3 = (char *) malloc (strlen (server->nick1) + 2);
+    strcpy (server->nick3, server->nick1);
+    server->nick3 = strcat (server->nick3, "2");
+    
+    return 0;
 }
 
 /*
@@ -193,8 +256,8 @@ server_free_all ()
  */
 
 t_irc_server *
-server_new (char *name, int autoconnect, char *address, int port,
-            char *password, char *nick1, char *nick2, char *nick3,
+server_new (char *name, int autoconnect, int command_line, char *address,
+            int port, char *password, char *nick1, char *nick2, char *nick3,
             char *username, char *realname, char *command, char *autojoin)
 {
     t_irc_server *new_server;
@@ -216,6 +279,7 @@ server_new (char *name, int autoconnect, char *address, int port,
     {
         new_server->name = strdup (name);
         new_server->autoconnect = autoconnect;
+        new_server->command_line = command_line;
         new_server->address = strdup (address);
         new_server->port = port;
         new_server->password = (password) ? strdup (password) : strdup ("");
@@ -574,14 +638,15 @@ server_connect (t_irc_server *server)
  */
 
 void
-server_auto_connect ()
+server_auto_connect (int command_line)
 {
     t_irc_server *ptr_server;
     
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        if (ptr_server->autoconnect)
+        if ( ((command_line) && (ptr_server->command_line))
+            || ((!command_line) && (ptr_server->autoconnect)) )
         {
             gui_window_new (ptr_server, NULL, 1);
             if (server_connect (ptr_server))

@@ -1167,8 +1167,11 @@ weechat_cmd_server (int argc, char **argv)
                 irc_display_prefix (NULL, PREFIX_INFO);
                 gui_printf_color (NULL,
                                   COLOR_WIN_CHAT,
-                                  _("  Autoconnect: %s\n"),
-                                  (ptr_server->autoconnect) ? _("yes") : _("no"));
+                                  _("  Autoconnect: %s%s\n"),
+                                  (ptr_server->autoconnect) ? _("yes") : _("no"),
+                                  (ptr_server->command_line) ?
+                                      _(" (temporary server, will not be saved)") :
+                                      "");
                 irc_display_prefix (NULL, PREFIX_INFO);
                 gui_printf_color (NULL,
                                   COLOR_WIN_CHAT,
@@ -1399,11 +1402,11 @@ weechat_cmd_server (int argc, char **argv)
         }
         
         /* create new server */
-        new_server = server_new (server.name, server.autoconnect, server.address,
-                                 server.port, server.password, server.nick1,
-                                 server.nick2, server.nick3, server.username,
-                                 server.realname, server.command,
-                                 server.autojoin);
+        new_server = server_new (server.name, server.autoconnect, 0,
+                                 server.address, server.port, server.password,
+                                 server.nick1, server.nick2, server.nick3,
+                                 server.username, server.realname,
+                                 server.command, server.autojoin);
         if (new_server)
         {
             irc_display_prefix (NULL, PREFIX_INFO);

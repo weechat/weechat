@@ -76,11 +76,14 @@
     "along with this program; if not, write to the Free Software\n" \
     "Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n\n"
     
-#define WEE_USAGE \
+#define WEE_USAGE1 \
     PACKAGE_STRING " (c) Copyright 2004, compiled on " __DATE__ " " __TIME__ \
     "\nDeveloped by FlashCode, Bounga and Xahlexx - " WEECHAT_WEBSITE "\n\n" \
+    "Usage: %s [options ...] [irc://nick[:passwd]@irc.example.org[:port] ...]\n\n"
+
+#define WEE_USAGE2 \
     "  -c, --config        config file help (list of options)\n" \
-    "  -h, --help          this help screen\n", \
+    "  -h, --help          this help screen\n" \
     "  -l, --license       display WeeChat license\n" \
     "  -v, --version       display WeeChat version\n\n"
 

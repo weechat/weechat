@@ -658,7 +658,7 @@ config_allocate_server (char *filename, int line_number)
         return 0;
     }
     if (!server_new (cfg_server.name,
-        cfg_server.autoconnect, cfg_server.address, cfg_server.port,
+        cfg_server.autoconnect, 0, cfg_server.address, cfg_server.port,
         cfg_server.password, cfg_server.nick1, cfg_server.nick2,
         cfg_server.nick3, cfg_server.username, cfg_server.realname,
         cfg_server.command, cfg_server.autojoin))
@@ -1194,23 +1194,26 @@ config_write (char *config_name)
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        fprintf (file, "\n[server]\n");
-        fprintf (file, "server_name=%s\n", ptr_server->name);
-        fprintf (file, "server_autoconnect=%s\n",
-                 (ptr_server->autoconnect) ? "on" : "off");
-        fprintf (file, "server_address=%s\n", ptr_server->address);
-        fprintf (file, "server_port=%d\n", ptr_server->port);
-        fprintf (file, "server_password=%s\n",
-                 (ptr_server->password) ? ptr_server->password : "");
-        fprintf (file, "server_nick1=%s\n", ptr_server->nick1);
-        fprintf (file, "server_nick2=%s\n", ptr_server->nick2);
-        fprintf (file, "server_nick3=%s\n", ptr_server->nick3);
-        fprintf (file, "server_username=%s\n", ptr_server->username);
-        fprintf (file, "server_realname=%s\n", ptr_server->realname);
-        fprintf (file, "server_command=%s\n",
-                 (ptr_server->command) ? ptr_server->command : "");
-        fprintf (file, "server_autojoin=%s\n",
-                 (ptr_server->autojoin) ? ptr_server->autojoin : "");
+        if (!ptr_server->command_line)
+        {
+            fprintf (file, "\n[server]\n");
+            fprintf (file, "server_name=%s\n", ptr_server->name);
+            fprintf (file, "server_autoconnect=%s\n",
+                     (ptr_server->autoconnect) ? "on" : "off");
+            fprintf (file, "server_address=%s\n", ptr_server->address);
+            fprintf (file, "server_port=%d\n", ptr_server->port);
+            fprintf (file, "server_password=%s\n",
+                     (ptr_server->password) ? ptr_server->password : "");
+            fprintf (file, "server_nick1=%s\n", ptr_server->nick1);
+            fprintf (file, "server_nick2=%s\n", ptr_server->nick2);
+            fprintf (file, "server_nick3=%s\n", ptr_server->nick3);
+            fprintf (file, "server_username=%s\n", ptr_server->username);
+            fprintf (file, "server_realname=%s\n", ptr_server->realname);
+            fprintf (file, "server_command=%s\n",
+                     (ptr_server->command) ? ptr_server->command : "");
+            fprintf (file, "server_autojoin=%s\n",
+                     (ptr_server->autojoin) ? ptr_server->autojoin : "");
+        }
     }
     
     fclose (file);
