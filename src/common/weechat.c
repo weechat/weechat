@@ -130,11 +130,16 @@ wee_parse_args (int argc, char *argv[])
                         {
                             case OPTION_TYPE_BOOLEAN:
                                 printf (_("  . type boolean (values: 'on' or 'off')\n"));
+                                printf (_("  . default value: '%s'\n"),
+                                    (weechat_options[j][k].default_int == BOOL_TRUE) ?
+                                    "on" : "off");
                                 break;
                             case OPTION_TYPE_INT:
                                 printf (_("  . type integer (values: between %d and %d)\n"),
                                     weechat_options[j][k].min,
                                     weechat_options[j][k].max);
+                                printf (_("  . default value: %d\n"),
+                                    weechat_options[j][k].default_int);
                                 break;
                             case OPTION_TYPE_INT_WITH_STRING:
                                 printf (_("  . type string (values: "));
@@ -148,12 +153,21 @@ wee_parse_args (int argc, char *argv[])
                                     m++;
                                 }
                                 printf (")\n");
+                                printf (_("  . default value: '%s'\n"),
+                                    (weechat_options[j][k].default_string) ?
+                                    weechat_options[j][k].default_string : _("empty"));
                                 break;
                             case OPTION_TYPE_COLOR:
                                 printf (_("  . type color (Curses or Gtk color, look at WeeChat doc)\n"));
+                                printf (_("  . default value: '%s'\n"),
+                                    (weechat_options[j][k].default_string) ?
+                                    weechat_options[j][k].default_string : _("empty"));
                                 break;
                             case OPTION_TYPE_STRING:
                                 printf (_("  . type string (any string)\n"));
+                                printf (_("  . default value: '%s'\n"),
+                                    (weechat_options[j][k].default_string) ?
+                                    weechat_options[j][k].default_string : _("empty"));
                                 break;
                         }
                         printf (_("  . description: %s\n\n"),
