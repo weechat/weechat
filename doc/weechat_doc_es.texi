@@ -1,0 +1,1077 @@
+\input texinfo  @c -*-texinfo-*-
+@c %**start of header
+@setfilename weechat_doc_es.info
+@settitle WeeChat - Cliente IRC r@'apido, ligero y extensible
+@c %**end of header
+
+@c WeeChat documentation (spanish version)
+@c
+@c Copyright (c) 2005 by FlashCode <flashcode@flashtux.org>
+@c
+@c This manual is free software; you can redistribute it and/or modify
+@c it under the terms of the GNU General Public License as published by
+@c the Free Software Foundation; either version 2 of the License, or
+@c (at your option) any later version.
+@c
+@c This manual is distributed in the hope that it will be useful,
+@c but WITHOUT ANY WARRANTY; without even the implied warranty of
+@c MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+@c GNU General Public License for more details.
+@c
+@c You should have received a copy of the GNU General Public License
+@c along with this program; if not, write to the Free Software
+@c Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+@c pdf : texi2pdf weechat_doc_es.texi
+@c html: makeinfo --html --no-split --number-sections weechat_doc_es.texi
+
+@c tex
+@c \overfullrule=0pt
+@c end tex
+
+@documentlanguage es
+
+@titlepage
+
+@title WeeChat - Gui@'on de usuario.
+@subtitle Cliente IRC r@'apido, peque@~no y extensible
+@subtitle Documentaci@'on para WeeChat v0.1.1-cvs - 10 de marzo de 2005
+
+@image{weechat_image}
+
+@author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
+
+@page
+
+Este manual documenta el cliente de IRC WeeChat, y hace parte del proyecto.@*
+@*
+Puede obtener la @`ultima versi@'on de este documento en la p@'agina:@*
+@uref{http://weechat.flashtux.org/doc.php}@*
+@*
+Copyright @copyright{} 2005 FlashCode
+<@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>@*
+Traducido en espa@~nol por Iznogoud <@email{iznogoud@@dlfp.org, iznogoud AT dlfp.org}>@*
+@*
+Puede utilizar este documento seg@'un los t@'erminos de la licencia GNU General Public
+License versi@'on 2 o posterior.
+
+@end titlepage
+
+@everyheading @thischapter @| @|
+@everyfooting @thistitle @| @| Page @thispage
+
+@contents
+
+@node Top, Introduccion, (dir), (dir)
+@menu
+* Introduccion:: Presentaci@'on de WeeChat
+* Instalacion:: Instalaci@'on de WeeChat
+* Uso:: Utilizaci@'on de WeeChat
+* Extensiones:: Extensiones de WeeChat
+* Autores / Soporte:: Contactar los autores y obtener soporte
+@end menu
+
+
+@c ******************************* Introducci'on *******************************
+
+@node Introduccion, Instalacion, Top, Top
+@chapter Introducci@'on
+@menu
+* Descripcion::
+* Requisitos::
+@end menu
+
+@node Descripcion, Requisitos, Introduccion, Introduccion
+@section Descripci@'on
+
+WeeChat (Wee Enhanced Environment for Chat) es un cliente de IRC libre, r@'apido y de peque@~no tama@~no,
+dise@~nado para diferentes sistemas operativos.@*
+@*
+Las caracter@'isticas principales son las siguientes:
+@itemize @minus
+@item
+conexi@'on multi-servidores
+@item
+m@'ultiples interfaces: Curses, Gtk y Qt
+@item
+peque@~no, r@'apido y ligero.
+@item
+parametrizable y extensible mediante guiones (scripts)
+@item
+conforme a las RFCs 1459, 2810, 2811, 2812, y 2813
+@item
+multi-plataforma (Gnu/Linux, *BSD, Windows y otros sistemas operativos)
+@item
+100% GPL, con Licencia Libre
+@end itemize
+
+@*
+La p@'agina Web de WeeChat est@'a aqu@'i (en franc@'es):@*
+@uref{http://weechat.flashtux.org}@*
+
+@node Requisitos, , Descripcion, Introduccion
+@section Requisitos
+
+Los requisitos para instalar WeeChat son:@*
+
+@itemize @bullet
+@item
+Un sistema operativo GNU/Linux (con compilador y herramientas asociadas para paquetes de c@'odigo fuente)
+@item
+Acceso a la cuenta "root" (para instalar WeeChat)
+@item
+Seg@'un el interfaz, una de las bibliotecas siguientes:
+@itemize @minus
+@item
+Curses: la librer@'ia ncurses,
+@item
+Gtk: *** interfaz no desarrollada por el momento ***,
+@item
+Qt: *** interfaz no desarrollada por el momento ***,
+@end itemize
+@end itemize
+
+
+@c ******************************* Instalaci@'on *******************************
+
+@node Instalacion, Uso, Introduccion, Top
+@chapter Instalaci@'on
+
+@menu
+* Paquetes binarios::
+* Paquetes de fuentes::
+* CVS::
+@end menu
+
+@node Paquetes binarios, Paquetes de fuentes, Instalacion, Instalacion
+@section Paquetes binarios
+
+Los paquetes binarios est@'an disponibles para las siguientes distribuciones:
+@itemize @bullet
+@item
+Debian (o compatible con Debian)@*
+Para instalar WeeChat: @kbd{dpkg -i /direccion/weechat_x.y.z-1_i386.deb}
+@item
+Mandrake/Redhat (o cualquier distribuci@'on compatible con los paquetes RPM)@*
+Para instalar WeeChat: @kbd{rpm -i /direccion/weechat-x.y.z-1.i386.rpm}
+@item
+Gentoo@*
+Para instalar WeeChat: @kbd{emerge -pf weechat && emerge weechat}
+@item
+BSD (no disponible !)
+@item
+Slackware (no disponible!)
+@item
+Windows (no disponible!)
+@end itemize
+
+donde x.y.z es la versi@'on de WeeChat (por ejemplo 0.0.1)
+@*
+
+@node Paquetes de fuentes, CVS, Paquetes binarios, Instalacion
+@section Paquetes de fuentes
+
+Escribe en un terminal o una consola:@*
+@kbd{./configure}@*
+@kbd{make}@*
+Nota: si quieres construir WeeChat @'unicamente para ciertas interfaces, puedes a@~nadir Par@'ametros a 
+./configure, escribe @kbd{./configure --help} para obtener ayuda sobre estas opciones.@*
+
+Adquiere los derechos de root e instala WeeChat:@*
+@kbd{su}@*
+(introduce la contrase@~na de root)@*
+@kbd{make install}@*
+
+@node CVS, , Paquetes de fuentes, Instalacion
+@section CVS
+
+Atenci@'on: Las fuentes CVS est@'an reservadas para usuarios con experiencia: Es posible que WeeChat no
+se instale o que se sea bastante inestable.
+¡Ya te he avisado!@*
+
+Para recuperar las fuentes CVS, escribe las l@'ineas siguientes:@*
+@kbd{cvs -d:pserver:anoncvs@@subversions.gnu.org:/cvsroot/weechat login}@*
+@kbd{cvs -z3 -d:pserver:anoncvs@@subversions.gnu.org:/cvsroot/weechat co weechat}@*
+(Si te pregunta una contrase@~na, simplemente pulsa la tecla Entrar)@*
+
+Ejecuta el script:@*
+@kbd{./autogen.sh}@*
+
+Luego, lee las instructiones para Paquetes de fuentes - @xref{Paquetes de fuentes}.
+
+
+@c ******************************* Utilisaci@'on ********************************
+
+@node Uso, Extensiones, Instalacion, Top
+@chapter Uso
+
+@menu
+* Iniciar WeeChat::
+* Ficheros de configuracion::
+* Atajos de teclado::
+* Comandos WeeChat::
+@end menu
+
+@node Iniciar WeeChat, Ficheros de configuracion, Uso, Uso
+@section Iniciar WeeChat
+
+@subsection Par@'ametros de l@'inea de comandos
+
+@table @code
+@item -c, --config
+Obtener la ayuda del fichero de configuraci@'on (lista de opciones)@*
+@item -h, --help
+Obtener la ayuda@*
+@item -l, --license
+Obtener la licencia de WeeChat@*
+@item -v, --version
+Obtener la versi@'on de WeeChat@*
+@end table
+
+@subsection Lanzar WeeChat
+
+Para ejecutar WeeChat, basta escribir la l@'inea siguiente:@*
+@kbd{weechat-curses} (para el interfaz con Curses)@*
+o @kbd{weechat-gtk} (para el interfaz con Gtk)@*
+o @kbd{weechat-qt} (para el interfaz con Qt)@*
+
+Cuando se ejecuta WeeChat por primera vez, un fichero de configuraci@'on se crea con las opciones por defecto;@*
+El fichero de configuraci@'on por defecto est@'a en: ~/.weechat/weechat.rc@*
+
+Puedes editarlo para configurar WeeChat con las opciones deseadas, o tambi@'en puedes modificar los par@'ametros directamente en WeeChat, con la l@'inea @kbd{/set} - @xref{Comandos WeeChat}.
+
+@node Ficheros de configuracion, Atajos de teclado, Iniciar WeeChat, Uso
+@section Ficheros de configuraci@'on
+
+Enumeraci@'on de las opciones del fichero de configuraci@'on:@*
+
+@table @kbd
+
+@end table
+
+Los colores para el interfaz Curses son:@*
+@itemize @minus
+@item
+@kbd{default}: color por defecto (con transparencia para el fondo)
+@item
+@kbd{black}: negro
+@item
+@kbd{red}: rojo oscuro
+@item
+@kbd{lightred}: rojo claro
+@item
+@kbd{green}: verde oscuro
+@item
+@kbd{lightgreen}: verde claro
+@item
+@kbd{brown}: marr@'on
+@item
+@kbd{yellow}: amarillo
+@item
+@kbd{blue}: azul oscuro
+@item
+@kbd{lightblue}: azul claro
+@item
+@kbd{magenta}: violeta oscuro
+@item
+@kbd{lightmagenta}: violeta claro
+@item
+@kbd{cyan}: cyan oscuro
+@item
+@kbd{lightcyan}: cyan claro
+@item
+@kbd{white}: blanco
+@end itemize
+
+
+@node Atajos de teclado, Comandos WeeChat, Ficheros de configuracion, Uso
+@section Atajos de teclado
+
+@table @kbd
+@item Flecha izquierda / Flecha derecha
+Ir a la letra anterior / siguiente en la l@'inea de comandos@*
+@*
+@item Ctrl + flecha izquierda / Ctrl + flecha derecha
+Ir a la palabra anterior / siguiente en la l@'inea de comandos@*
+@*
+@item Inicio / Ctrl + A
+Ir al inicio de la l@'inea de comandos@*
+@*
+@item Fin / Ctrl + E
+Ir al final de la l@'inea de comandos@*
+@*
+@item Backspace / Supr
+Borrar el caracter anterior / siguiente en la l@'inea de comandos@*
+@*
+@item Ctrl + Backspace / Ctrl + W
+Borrar la palabra anterior en la l@'inea de comandos@*
+@*
+@item Tab
+Completar el comando o el seud@'onimo (@kbd{Tab} de nuevo: encontrar la pr@'oxima autocompletaci@'on)@*
+@*
+@item Cualquier caracter
+A@~nadir la letra en la posici@'on del cursor en la l@'inea de comandos@*
+@*
+@item Entrar
+Ejecutar la l@'inea de comandos o enviar el mensaje@*
+@*
+@item Flecha de arriba / Flecha de abajo
+Mostrar los @'ultimos comandos/mensajes@*
+@*
+@item PageUp / PageDown
+Obtener el hist@'orico de la memoria temporal (buffer)@*
+@*
+@item F5 / F6
+Ir a la memoria temporal anterior / siguiente@*
+@*
+@item F7 / F8
+Ir a la ventana anterior / siguiente@*
+@*
+@item F10
+Borrar el @'ultimo mensaje en la barra de informaciones@*
+@*
+@item Ctrl + L
+Refrescar toda la ventana@*
+@*
+@item Alt + flecha izquierda / Alt + flecha derecha
+Como F5 / F6@*
+@*
+@item Alt + A
+Ir a la memoria temporal donde hay actividad (con el orden de prioridad siguiente: resaltado, mensaje, otros)@*
+@*
+@item Alt + D
+Obtener la lista de DCC actual@*
+@*
+@item Alt + R
+Borrar la 'hotlist' (notificaci@'on de actividad en otras memorias temporales)@*
+@*
+@item Alt + S
+Ir a la memoria temporal del servidor@*
+@*
+@item Alt + X
+Ir al primer canal del servidor siguiente (o a la memoria temporal del servidor si ning@'un canal est@'a abierto)@*
+@*
+@item Alt + (1-9)
+Saltar a la memoria temporal con ese n@'umero@*
+@*
+@end table
+
+@node Comandos WeeChat, , Atajos de teclado, Uso
+@section Comandos WeeChat
+
+Comandos internos WeeChat:@*
+
+@table @kbd
+
+@item alias  [nombre_alias [comando [argumentos]]
+@*
+crear un alias para un comando@*
+@*
+nombre_alias: nombre del seud@'onimo@*
+comando: nombre del comando (comando WeeChat @'o IRC, sin el primer '/')@*
+argumentos: par@'ametros para el comando@*
+@*
+@item buffer  [acci@'on | número]
+@*
+gestionar los búfers@*
+@*
+acci@'on: acci@'on a efectuar:@*
+  move: desplaza el búfer en la lista (puede ser relativo, por ejemplo, -1)@*
+  close: cierra el búfer (para un canal equivale a /part sin el mensaje de fin)@*
+  list: lista los búfers abiertos (si no hay par@'ametros se supone esta lista)@*
+  notify: fija el nivel de notificaci@'on (0=nunca, 1=highlight, 2=1+msg, 3=2+join/part)@*
+número: saltar al búfer por número@*
+@*
+@item clear  [-all]
+@*
+limpiar la(s) ventana(s)@*
+@*
+-all: limpiar todas las ventanas@*
+@*
+@item connect  [nombre_del_servidor]
+@*
+conectarse a un servidor@*
+@*
+nombre_del_servidor: nombre del servidor al que conectarse@*
+@*
+@item disconnect  [nombre_del_servidor]
+@*
+desconectarse de un servidor@*
+@*
+nombre_del_servidor: nombre del servidor del que desconectarse@*
+@*
+@item debug  dump
+@*
+print debug messages@*
+@*
+dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)@*
+@*
+@item help  [comando]
+@*
+mostrar ayuda sobre los comandos@*
+@*
+comando: nombre de un comando de Weechat @'o de IRC@*
+@*
+@item perl  [load fichero] | [autoload] | [unload]
+@*
+lista/carga/descarga de los Perl scripts@*
+@*
+fichero: Perl script (archivo) a cargar@*
+Sin argumentos, el comando /perl lista todos los Perl scripts cargados.@*
+@*
+@item server  [nombre_de_servidor] | [nombre_de_servidor nombre/IP puerto [-auto | -noauto] [-pwd contrase@~na] [-nicks alias1 [alias2 [alias3]]] [-username nombre de usuario] [-realname nombre_real] [-command comando] [-autojoin canal[,canal]] ] | [del nombre_de_servidor]
+@*
+lista, a@~nade o elimina servidores@*
+@*
+nombre_de_servidor: nombre del servidor, para uso interno y para mostrar@*
+nombre/IP: nombre o direcci@'on IP del servidor@*
+puerto: puerto para el servidor (número entero)@*
+contrase@~na: contrase@~na para el servidor@*
+alias1: primer alias para el servidor@*
+alias2: alias alternativo para el servidor@*
+alias3: segundo alias alternativo para el servidor@*
+nombre_de_usuario: nombre de usuario@*
+nombre_real: nombre real del usuario@*
+@*
+@item save  [archivo]
+@*
+guardar configuraci@'on a disco@*
+@*
+archivo: fichero en el que guardar la configuraci@'on@*
+@*
+@item set  [opci@'on[=valor]]
+@*
+modificar par@'ametros de configuraci@'on@*
+@*
+opci@'on: nombre de una opci@'on@*
+valor: valor para la opci@'on@*
+@*
+@item unalias  alias
+@*
+eliminar un alias@*
+@*
+alias: nombre del alias a suprimir@*
+@*
+@item window  [list | splith | splitv | [merge [down | up | left | right | all]]]
+@*
+gesti@'on de ventanas@*
+@*
+list: lista las ventanas abiertas (si no hay par@'ametros, significa esta lista)@*
+splith: dividir la ventana actual horizontalmente@*
+splitv: dividir la ventana actual verticalmente@*
+merge: fusionar una ventana con otra@*
+@*
+
+@end table
+
+Comandos IRC:@*
+
+@table @kbd
+
+@item admin  [target]
+@*
+encontrar informaci@'on sobre el administrador del servidor@*
+@*
+target: servidor objetivo@*
+@*
+@item away  [-all] [mensaje]
+@*
+revertir el estado ausente@*
+@*
+-all: revertir el estado ausente en todos los servidores conectados@*
+mensaje: mensaje para el estado ausente (si no se da ningún mensaje, se elimina el estado ausente)@*
+@*
+@item ctcp  usuario tipo
+@*
+enviar un mensaje ctcp@*
+@*
+usuario: usuario a quien enviar el ctcp@*
+tipo: "action" @'o "version"@*
+@*
+@item dcc  acci@'on [usuario [fichero]]
+@*
+empieza DCC (archivo @'o charla) @'o cerrar charla@*
+@*
+acci@'on: 'send' (env@'io de archivo) @'o 'chat' (charla) @'o 'close' (cerrar charla)@*
+usuario: nombre de usuario a quien enviar el archivo o la charla@*
+fichero: nombre del fichero (en la m@'aquina local)@*
+@*
+@item deop  pseudo [pseudo]
+@*
+elimina el estado de operador de canal a/a los usuario(s)@*
+@*
+@item devoice  pseudo [pseudo]
+@*
+elimina la voz a/a los usuario(s)@*
+@*
+@item die
+@*
+cerrar el servidor@*
+@*
+@item info  [target]
+@*
+obtener informaci@'on describiendo al servidor@*
+@*
+objetivo: nombre del servidor@*
+@*
+@item invite  usuario canal
+@*
+invitar a un usuario a un canal@*
+@*
+nickname: usuario a invitar@*
+channel: canal para la invitaci@'on@*
+@*
+@item ison  usuario [usuario ...]
+@*
+comprobar si un usuario est@'a actualmente en el IRC@*
+@*
+usuario: usuario@*
+@*
+@item join  canal[,canal] [clave[,clave]]
+@*
+unirse a un canal@*
+@*
+canal: nombre del canal al que unirse@*
+clave: clave para unirse al canal@*
+@*
+@item kick  [canal] usuario [comentario]
+@*
+expulsar forzosamente a un usuario de un canal@*
+@*
+canal: canal en el que est@'a el usuario@*
+usuario: usuario a expulsar@*
+comentario: comentario para la expulsi@'on@*
+@*
+@item kill  usuario comentario
+@*
+cerrar la conexi@'on cliente-servidor@*
+@*
+usuario: usuario@*
+comentario: comentario para la muerte@*
+@*
+@item links  [[servidor] m@'ascara_servidor]
+@*
+listar todos los nombres de servidor conocidos por el servidor que responde a la consulta@*
+@*
+servidor: este servidor deber@'ia responder a la consulta@*
+m@'ascara_servidor: listado de servidores que deben coincidir con esta m@'ascara@*
+@*
+@item list  [canal[,canal] [servidor]]
+@*
+listar canales y sus temas@*
+@*
+canal: canal a listar@*
+servidor: nombre del servidor@*
+@*
+@item lusers  [m@'ascara [objetivo]]
+@*
+obtener estad@'isticas sobre el tama@~no de la red IRC@*
+@*
+m@'ascara: servidores que coinciden s@'olo con la m@'ascara@*
+objetivo: servidor al que remitir la consulta@*
+@*
+@item me  mensaje
+@*
+enviar una acci@'on ctcp al canal actual@*
+@*
+mensaje: mensaje a enviar@*
+@*
+@item mode  @{ canal @{[+|-]|o|p|s|i|t|n|b|v@} [limitar] [usuario] [m@'ascara de baneo] @} | @{ usuario @{[+|-]|i|w|s|o@} @}
+@*
+cambiar modo del canal o del usuario@*
+@*
+modos del canal:@*
+  canal: nombre del canal a modificar@*
+  o: dar/coger privilegios de operador de canal@*
+  p: indicador de canal privado@*
+  s: indicador de canal secreto@*
+  i: indicador de canal s@'olo con invitaci@'on@*
+  t: indicador de tema s@'olo modificable por operador de canal@*
+  n: ningún mensaje al canal desde el exterior@*
+  m: canal moderado@*
+  l: fijar el l@'imite de usuarios para el canal@*
+  b: establecer una m@'ascara de baneo para mantener fuera a usuarios@*
+  v: dar/quitar la capacidad de hablar en un canal moderado@*
+  k: definir una clave (contrase@~na) de canal@*
+modos de usuario:@*
+  usuario: usuario a modificar@*
+  i: marcar a un usuario como invisible@*
+  s: marcar a un usuario para recibir noticias del servidor@*
+  w: el usuario recibe golpes@*
+  o: indicador de operador@*
+@*
+@item motd  [target]
+@*
+obtener el mensaje del d@'ia@*
+@*
+objetivo: nombre del servidor@*
+@*
+@item msg  destinatario[,destinatario] texto
+@*
+enviar un mensaje a un usuario o canal@*
+@*
+destinatario: usuario o canal (puede que sea una m@'ascara, '*' = canal actual)@*
+texto: texto a enviar@*
+@*
+@item names  [canal[,canal]]
+@*
+listar usuarios en canales@*
+@*
+canal: nombre del canal@*
+@*
+@item nick  usuario
+@*
+cambiar el nombre de usuario actual@*
+@*
+usuario: nuevo nombre de usuario para el servidor IRC actual@*
+@*
+@item notice  usuario texto
+@*
+enviar mensaje de aviso a usuario@*
+@*
+usuario: usuario destinatario del aviso@*
+texto: texto a enviar@*
+@*
+@item op  pseudo [pseudo]
+@*
+dar el estado de operador de canal a/a los usuario(s)@*
+@*
+@item oper  contrase@~na de usuario
+@*
+obtener el estado de operador@*
+@*
+usuario/contrase@~na: usado para obtener los privilegios en el servidor IRC actual@*
+@*
+@item part  [canal[,canal]] [mensaje_de_salida]
+@*
+abandonar un canal@*
+@*
+canal: canal a abandonar@*
+mensaje de salida: mensaje de partida (mostrado al resto de usuarios)@*
+@*
+@item ping  servidor1 [servidor2]
+@*
+hacer ping a un servidor@*
+@*
+servidor1: servidor al que hacer ping@*
+servidor2: remitir el ping a este servidor@*
+@*
+@item pong  demonio [demonio2]
+@*
+contestar a un mensaje de ping@*
+@*
+demonio: demonio que ha contestado al mensaje Ping@*
+d@'emon2: remitir el mensaje a este demonio@*
+@*
+@item query  usuario [texto]
+@*
+enviar un mensaje privado a un usuario@*
+@*
+usuario: usuario para conversaci@'on privada@*
+texto: texto a enviar@*
+@*
+@item quit  [mensaje_de_salida]
+@*
+cerrar todas las conexiones y salir@*
+@*
+mensaje_de_salida: mensaje de partida (mostrado al resto de usuarios)@*
+@*
+@item quote  datos
+@*
+enviar datos en sucio al servidor sin analizar@*
+@*
+datos: datos en sucio a enviar@*
+@*
+@item rehash
+@*
+pedir al servidor que recarque su archivo de configuraci@'on@*
+@*
+@item restart
+@*
+pedir al servidor que se reinicie@*
+@*
+@item service  usuario reservado distribuci@'on tipo reservado info
+@*
+registrar un nuevo servicio@*
+@*
+distribuci@'on: visibilidad del servicio@*
+tipo: reservado para una futura utilizaci@'on@*
+@*
+@item servlist  [m@'ascara [tipo]]
+@*
+listar servicios conectados actualmente a la red@*
+@*
+m@'ascara: listar s@'olo aquellos servicios que concuerdan con esta m@'ascara@*
+tipo: listar s@'olo servicios de este tipo@*
+@*
+@item squery  servicio texto
+@*
+enviar un mensaje a un servicio@*
+@*
+servicio: nombre del servicio@*
+texto: texto a enviar@*
+@*
+@item squit  comentario de servidor
+@*
+desconectar los enlaces de servidor@*
+@*
+servidor: nombre del servidor@*
+comentario: comentario para salir@*
+@*
+@item stats  [consulta [servidor]]
+@*
+pedir estad@'isticas sobre el servidor@*
+@*
+consulta: c/h/i/k/l/m/o/y/u (ver la RFC1459)@*
+servidor: nombre del servidor@*
+@*
+@item summon  usuario [destinatario [canal]]
+@*
+enviar a los usuarios que est@'an en una m@'aquina local ejecutando un servidor IRC un mensaje pidi@'endoles que se unan al IRC@*
+@*
+usuario: nombre de usuario@*
+destinatario: nombre del servidor@*
+canal: nombre del canal@*
+@*
+@item time  [target]
+@*
+pedir la hora local del servidor@*
+@*
+destinatario: pedir la hora de ese servidor@*
+@*
+@item topic  [canal] [tema]
+@*
+obtener/establecer el tema de un canal@*
+@*
+canal: nombre del canal@*
+tema: nuevo tema para el canal (si el tema es "-delete" entonces se elimina el tema actual)@*
+@*
+@item trace  [target]
+@*
+encontrar la ruta hacia el servidor especificado@*
+@*
+target: servidor objetivo@*
+@*
+@item userhost  usuario [usuario ...]
+@*
+devuelve una lista de informaci@'on sobre usuarios@*
+@*
+usuario: usuario@*
+@*
+@item users  [target]
+@*
+lista de usuarios conectados al servidor@*
+@*
+target: servidor objetivo@*
+@*
+@item version  [servidor | usuario]
+@*
+da la informaci@'on de versi@'on del usuario o servidor (actual o especificado)@*
+@*
+servidor: nombre de servidor@*
+usuario: usuario@*
+@*
+@item voice  pseudo [pseudo]
+@*
+da voz a/a los usuario(s)@*
+@*
+@item wallops  texto
+@*
+enviar un mensaje a todos los usuarios conectados que tengan activo el modo de usuario w para ellos mismos@*
+@*
+texto a enviar@*
+@*
+@item who  [m@'ascara ["o"]]
+@*
+genera una consulta que devuelve una lista de informaci@'on@*
+@*
+m@'ascara: s@'olo informaci@'on que concuerde con esta m@'ascara@*
+o: s@'olo son devueltos operadores de acuerdo con la m@'ascara proporcionada@*
+@*
+@item whois  [servidor] usuario[,usuario]
+@*
+pedir informaci@'on sobre el/los usuario(s)@*
+@*
+servidor: nombre del servidor@*
+usuario: nombre de usuario (puede que sea una m@'ascara)@*
+@*
+@item whowas  usuario [,usuario [,usuario ...]] [número [destinatario]]
+@*
+pedir informaci@'on sobre un usuario que ya no existe@*
+@*
+usuario: nombre de usuario a buscar@*
+número: número de respuestas a devolver (búsqueda completa si el número es negativo)@*
+destinatario: la respuesta deber@'ia concordar con esta m@'ascara@*
+@*
+
+@end table
+
+
+@c ******************************* Extensions *********************************
+
+@node Extensiones, Autores / Soporte, Uso, Top
+@chapter Extensiones
+
+@menu
+* Programas Perl::
+* Programas Python::
+* Programas Ruby::
+@end menu
+
+@node Programas Perl, Programas Python, Extensiones, Extensiones
+@section Programas Perl
+
+@subsection Cargar/descargar programas Perl
+
+Los programas Perl se cargan y descargan con el comando @command{/perl}
+(escribiendo @kbd{/help perl} en WeeChat para obtener la ayuda acerca del comando).@*
+
+@emph{Ejemplos:}@*
+@itemize @bullet
+@item
+Cargar un programa Perl: @kbd{/perl load /tmp/ejemplo.pl}@*
+@item Descargar todos los programas Perl: @kbd{/perl unload}@*
+@item
+Listar los programas Perl cargados: @kbd{/perl}@*
+@end itemize
+
+@subsection Interfaz WeeChat / Perl
+
+@itemize @bullet
+@item
+@command{IRC::register ( nombre, versi@'on, funci@'on_final, descripci@'on );}@*
+@*
+Es la primera funci@'on a la que llamar en el programa Perl.@*
+Todos los programas en Perl para WeeChat deben llamar esta funci@'on.@*
+
+@emph{Par@'ametros:}
+@itemize @minus
+@item @option{nombre}: nombre @'unico para identificar el programa (cada programa debe
+tener un nombre distinto)
+@item @option{versi@'on}: versi@'on del programa
+@item @option{funci@'on_final}: funci@'on Perl llamada cuando el programa finaliza
+(par@'ametro facultativo, una cadena llena significa que no hay ninguna funci@'on que llamar)
+@item @option{descripci@'on}: descripci@'on breve del programa
+@end itemize
+@*
+@emph{Ejemplo:}@*
+@code{IRC::register ("ejemplo", "1.0", "fin_ejemplo", "programa de ejemplo...");}@*
+@*
+
+@item
+@command{IRC::print ( mensaje );}@*
+@*
+Escribe un mensaje en la ventana actual (canal o servidor).@*
+
+@emph{Par@'ametros:}
+@itemize @minus
+@item @option{mensaje}: mensaje a escribir
+@end itemize
+@*
+@emph{Ejemplo:}@*
+@code{IRC::print ("mensaje");}@*
+@*
+
+@item
+@command{IRC::print_with_channel ( canal, [servidor,] mensaje );}@*
+@*
+Escribe un mensaje en un canal.@*
+
+@emph{Par@'ametros:}
+@itemize @minus
+@item @option{canal}: nombre del canal
+@item @option{servidor}: (opcional) nombre interno del servidor
+@item @option{mensaje}: mensaje que debe escribir en el canal
+@end itemize
+@*
+@emph{Ejemplos:}@*
+@code{IRC::print_with_channel ("#weechat", "freenode", "mensaje");}@*
+@code{IRC::print_with_channel ("#weechat", "mensaje");}@*
+@*
+
+@item
+@command{IRC::print_infobar ( retraso, mensaje );}@*
+@*
+Escribir un mensaje en la barra de informaciones.@*
+
+@emph{Par@'ametros:}
+@itemize @minus
+@item @option{plazo}: periodo en segundo durante el cual se mostrar@'a el mensaje
+(si es 0, el mensaje no se borrar@'a).
+@item @option{message}: mensaje que se escribir@'a en la barra de informaciones.
+@end itemize
+@*
+@emph{Ejemplo:}@*
+@code{IRC::print_infobar (5, "mensaje");}@*
+@*
+
+@item
+@command{IRC::add_message_handler ( nombre, funci@'on );}@*
+@*
+Adjunta una funci@'on Perl a un mensaje IRC.@*
+Se llamar@'a a la funci@'on cada vez que el mensaje IRC se reciba.@*
+
+@emph{Par@'ametros:}
+@itemize @minus
+@item @option{nombre}: nombre del mensaje IRC que producir@'a la llamada a la funci@'on.@*
+Para saber qu@'e tipo de mensajes IRC existen puede leer las 
+RFC 1459 y/o 2812:@*
+RFC 1459: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc1459.txt}@*
+RFC 2812: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
+@item @option{funci@'on}: funci@'on en Perl llamada cuando se reciba el mensaje.
+@end itemize
+@*
+@emph{Ejemplo:}@*
+@code{IRC::add_message_handler ("privmsg", mi_funcion);}@*
+@code{sub mi_funcion}@*
+@code{@{ }@*
+@code{@ @ @ @ IRC::print ("serveur=$_[0]\n");}@*
+@code{@ @ @ @ ($null, $canal, $mensaje) = split ":",$_[1],3;}@*
+@code{@ @ @ @ ($mascara, $null, $canal) = split " ", $canal;}@*
+@code{@ @ @ @ IRC::print ("mascara=$mascara, canal=$canal, mensaje=$mensaje\n");}@*
+@code{@} }@*
+@*
+
+@item
+@command{IRC::add_command_handler ( nombre, funci@'on );}@*
+@*
+A@~nadir un nuevo comando WeeChat, con un enlace a una funci@'on en Perl.@*
+Se llamar@'a a la funci@'on cuando el usuario lance el comando con @kbd{/nombre}.@*
+
+@emph{Par@'ametros:}
+@itemize @minus
+@item @option{nombre}: nombre del nuevo comando@*
+Puede ser un comando que ya existe, y en este caso el nuevo comando sustituir@'a
+el antiguo. Ten cuidado cuando sustituyas a un comando de WeeChat, no podr@'a acceder 
+al antiguo comando si el script Perl est@'a cargado.
+@item @option{funcion}: funci@'on Perl assiciada al comando.
+@end itemize
+@*
+@emph{Ejemplo:}@*
+@code{IRC::add_command_handler ("comando", mi_comando);}@*
+@code{sub mi_comando}@*
+@code{@{ }@*
+@code{@ @ @ @ IRC::print("Servidor: $_[0], Par@'ametros: $_[1]\n");}@*
+@code{@ @ @ @ return 0;}@*
+@code{@} }@*
+@*
+
+@item
+@command{IRC::get_info ( [servidor,] nombre );}@*
+@*
+Obtener informaciones distintas sobre WeeChat, el servidor o el usuario.@*
+
+@emph{Par@'ametros:}
+@itemize @minus
+@item @option{servidor}: nombre interno del servidor
+@item @option{nombre}: nombre de la informaci@'on que se quiere obtener:
+@itemize @minus
+@item @option{0 o version}: obtener la versi@'on de WeeChat
+@item @option{1 o nick}: obtener el seud@'onimo
+@item @option{2 o channel}: obtener el nombre del canal
+@item @option{3 o server}: obtener el nombre del servidor
+@item @option{4 o weechatdir}: obtener el directorio home de WeeChat
+@item @option{5 o away}: obtener la informaci@'on "away" del servidor
+@end itemize
+@end itemize
+@*
+@emph{Ejemplos:}@*
+@code{$version = get_info("version");}@*
+@code{$nick = get_info("freenode", "nick");}@*
+@*
+
+@end itemize
+
+@node Programas Python, Programas Ruby, Programas Perl, Extensiones
+@section Programas Python
+
+¡No desarrollado!
+
+@node Programas Ruby, , Programas Python, Extensiones
+@section Programas Ruby
+
+¡No desarrollado!
+
+@c **************************** Autores / Soporte *****************************
+
+@node Autores / Soporte, , Extensiones, Top
+@chapter Autores / Soporte
+
+@ifhtml
+@menu
+* Autores::
+* Obtener soporte/ayuda::
+* Copyright::
+@end menu
+@end ifhtml
+@ifnothtml
+@menu
+* Autores::
+* Obtener soporte/ayuda::
+@end menu
+@end ifnothtml
+
+@node Autores, Obtener soporte/ayuda, Autores / Soporte, Autores / Soporte
+@section Autores
+
+WeeChat est@'a desarollado por:@*
+
+@itemize @bullet
+@item 
+FlashCode
+<@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
+@item
+Bounga
+<@email{bounga@@altern.org, bounga AT altern.org}>
+@item
+Xahlexx
+<@email{xahlexx@@tuxfamily.org, xahlexx AT tuxfamily.org}>
+
+@end itemize
+
+@ifhtml
+@node Obtener soporte/ayuda, Copyright, Autores, Autores / Soporte
+@end ifhtml
+@ifnothtml
+@node Obtener soporte/ayuda, , Autores, Autores / Soporte
+@end ifnothtml
+@section Obtener soporte/ayuda
+
+Antes de pedir ayuda al soporte, por favor lee la documentaci@'on y las FAQ de WeeChat.@*
+(La documentaci@'on es el documento que est@'as leyendo, si no has leido todo hasta aqu@'i,
+puedes hacerlo ahora ...)@*
+
+@itemize @bullet
+@item
+Soporte por IRC:@*
+- servidor: @b{irc.freenode.net}@*
+- canal: @b{#weechat}@*@*
+@item
+Foro WeeChat: @uref{http://forums.flashtux.org}@*@*
+@item
+Soporte mediante listas de difusi@'on:@*
+- para apuntarse: @*@uref{http://mail.nongnu.org/mailman/listinfo/weechat-support}.@*
+- para enviar un correo a la lista:@*@email{weechat-support@@nongnu.org}.@*
+
+Los archivos de la lista est@'an aqu@'i:@*
+@uref{http://mail.nongnu.org/archive/html/weechat-support}@*@*
+@item
+Ver la p@'agina de soporte para WeeChat para m@'as detalles:@*
+@uref{http://weechat.flashtux.org/support.php}
+
+@end itemize
+
+@ifhtml
+@node Copyright, , Obtener soporte/ayuda, Autores / Soporte
+@section Copyright
+
+Este manual documenta el cliente IRC WeeChat y hace parte del mismo proyecto WeeChat.@*
+
+Copyright @copyright{} 2005 FlashCode
+<@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>@*
+@*
+Este documento puede ser utilizado seg@'un los t@'erminos de la licencia GNU General Public License
+versi@'on 2 o posterior.
+@end ifhtml
+
+@bye
