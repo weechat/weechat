@@ -229,8 +229,10 @@ server_new (char *name, int autoconnect, char *address, int port,
             (username) ? strdup (username) : strdup ("weechat");
         new_server->realname =
             (realname) ? strdup (realname) : strdup ("realname");
-        new_server->command = command;
-        new_server->autojoin = autojoin;
+        new_server->command =
+            (command) ? strdup (command) : NULL;
+        new_server->autojoin =
+            (autojoin) ? strdup (autojoin) : NULL;
         new_server->nick = strdup (new_server->nick1);
     }
     else
