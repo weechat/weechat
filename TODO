@@ -10,33 +10,42 @@ Legend:
   ?  is this really necessary?
 
 
-v0.0.2:
+v0.0.3:
 ------
 
  * IRC protocol:
-    # "/rehash" command: tell the server to reload its config file
-    # "/restart" command: tell the server to restart itself
+    - implement RFC 2812
+    + "/mode" command: change the user/channels modes
 
  * WeeChat commands:
-    # "/connect" and "/disconnect" commands (for multiservers use)
-    # "/server" command to add, remove or list servers
-    # "/save" command: save configuration to disk
-    # "/alias" and "/unalias" commands
+    - "/reload" command: reload the WeeChat's config file
+    - "/highlight" command: highlight a given word when it appears on
+      channels/privates
+    + "/set" command: allow the user to set the WeeChat variables
+      under WeeChat without editing the config file (colours, time
+      format, etc)
+
+ * Interface:
+    - display current channel modes (example : #weechat(+nt))
+    - interpret special chars in messages (color & bold for example)
+    - internationalization (traduce WeeChat in many languages)
+    - log chats to file
+
+ * TCP/IP communication:
+    - proxy support
 
  * Configuration:
-    # write config file
-    # add alias definition
-    # add an option for each server in order to run commands on join
-      (example: /msg nickserv identify password)
-    # channel list for auto-join (for each server)
+    - add missing options for config file
+    - wrong alias is not created and not saved when quitting WeeChat
+    - do not stop program if problem with options in config file
+    - load config file after GUI (so init values by default (colors, ...) before
+      loading config)
 
 
 Future versions:
 ---------------
 
  * IRC protocol:
-    - implement RFC 2812
-    + "/mode" command: change the user/channels modes
     - "/dcc" command (for chat and sending/receiving files)
     - complete "/list" command: add regexp search, display only channels that
       match regexp
@@ -56,20 +65,10 @@ Future versions:
       and show us the output on the current window. An option to exec
       like -o could send the output to the server, on the current
       channel/private
-    - "/reload" command: reload the WeeChat's config file
-    - "/highlight" command: highlight a given word when it appears on
-      channels/privates
-    + "/set" command: allow the user to set the WeeChat variables
-      under WeeChat without editing the config file (colours, time
-      format, etc)
 
  * Interface:
-    - display current channel modes (example : #weechat(+nt))
-    - interpret special chars in messages (color & bold for example)
-    - internationalization (traduce WeeChat in many languages)
     - many channel windows in one window/term (window split)
     - add lag indicator
-    - log chats to file
     - forget some old lines that were displayed long time ago (now all is saved,
       if WeeChat is running for long time, a lot of memory is used!)
     - improve completion (for example complete command parameters when possible)
@@ -85,11 +84,6 @@ Future versions:
 
  * Configuration:
     - add key bindings to config file
-    - add missing options for config file
-    - wrong alias is not created and not saved when quitting WeeChat
-    - do not stop program if problem with options in config file
-    - load config file after GUI (so init values by default (colors, ...) before
-      loading config)
 
  * Plugins:
     - add Perl plugin
