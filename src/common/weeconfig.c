@@ -569,6 +569,10 @@ t_config_option weechat_options_server[] =
     N_("comma separated list of channels to join when connected to server"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "", NULL, NULL, &(cfg_server.autojoin), NULL },
+  { "server_autorejoin", N_("automatically rejoin channels when kicked"),
+    N_("automatically rejoin channels when kicked"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
+    NULL, NULL, &(cfg_server.autorejoin), NULL, NULL },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
@@ -805,7 +809,7 @@ config_allocate_server (char *filename, int line_number)
         cfg_server.autoconnect, 0, cfg_server.address, cfg_server.port,
         cfg_server.password, cfg_server.nick1, cfg_server.nick2,
         cfg_server.nick3, cfg_server.username, cfg_server.realname,
-        cfg_server.command, cfg_server.autojoin))
+        cfg_server.command, cfg_server.autojoin, cfg_server.autorejoin))
     {
         server_free_all ();
         gui_printf (NULL,
@@ -1235,6 +1239,7 @@ config_create_default ()
     
     fprintf (file, "server_command=\n");
     fprintf (file, "server_autojoin=\n");
+    fprintf (file, "server_autorejoin=on\n");
     
     fclose (file);
     free (filename);
@@ -1372,6 +1377,8 @@ config_write (char *config_name)
                      (ptr_server->command) ? ptr_server->command : "");
             fprintf (file, "server_autojoin=%s\n",
                      (ptr_server->autojoin) ? ptr_server->autojoin : "");
+            fprintf (file, "server_autorejoin=%s\n",
+                     (ptr_server->autorejoin) ? "on" : "off");
         }
     }
     

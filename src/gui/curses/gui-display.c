@@ -745,7 +745,7 @@ gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
                 }
             }
             
-            if (CHANNEL(buffer) && CHANNEL(buffer)->nicks)
+            if (gui_buffer_has_nicklist (buffer))
             {
                 max_length = nick_get_max_length (CHANNEL(buffer));
                 if ((buffer == gui_current_window->buffer) &&
@@ -956,8 +956,12 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
             wprintw (ptr_win->win_status, ":");
             gui_window_set_color (ptr_win->win_status,
                                   COLOR_WIN_STATUS);
-            wprintw (ptr_win->win_status, "%s",
-                     CHANNEL(ptr_win->buffer)->name);
+            if (CHANNEL(ptr_win->buffer)->nicks)
+                wprintw (ptr_win->win_status, "%s",
+                         CHANNEL(ptr_win->buffer)->name);
+            else
+                wprintw (ptr_win->win_status, "(%s)",
+                         CHANNEL(ptr_win->buffer)->name);
             if (ptr_win->buffer == CHANNEL(ptr_win->buffer)->buffer)
             {
                 /* display channel modes */

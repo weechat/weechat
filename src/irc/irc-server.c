@@ -292,7 +292,8 @@ server_free_all ()
 t_irc_server *
 server_new (char *name, int autoconnect, int command_line, char *address,
             int port, char *password, char *nick1, char *nick2, char *nick3,
-            char *username, char *realname, char *command, char *autojoin)
+            char *username, char *realname, char *command, char *autojoin,
+            int autorejoin)
 {
     t_irc_server *new_server;
     
@@ -302,11 +303,12 @@ server_new (char *name, int autoconnect, int command_line, char *address,
     #ifdef DEBUG
     wee_log_printf ("creating new server (name:%s, address:%s, port:%d, pwd:%s, "
                     "nick1:%s, nick2:%s, nick3:%s, username:%s, realname:%s, "
-                    "command:%s, autojoin:%s)\n",
+                    "command:%s, autojoin:%s, autorejoin:%s)\n",
                     name, address, port, (password) ? password : "",
                     (nick1) ? nick1 : "", (nick2) ? nick2 : "", (nick3) ? nick3 : "",
                     (username) ? username : "", (realname) ? realname : "",
-                    (command) ? command : "", (autojoin) ? autojoin : "");
+                    (command) ? command : "", (autojoin) ? autojoin : "",
+                    (autorejoin) ? "on" : "off");
     #endif
     
     if ((new_server = server_alloc ()))
@@ -328,6 +330,7 @@ server_new (char *name, int autoconnect, int command_line, char *address,
             (command) ? strdup (command) : NULL;
         new_server->autojoin =
             (autojoin) ? strdup (autojoin) : NULL;
+        new_server->autorejoin = autorejoin;
         new_server->nick = strdup (new_server->nick1);
     }
     else

@@ -262,11 +262,23 @@ irc_cmd_recv_kick (t_irc_server *server, char *host, char *arguments)
                     WEECHAT_ERROR, "kick");
         return -1;
     }
-    ptr_nick = nick_search (ptr_channel, pos_nick);
-    if (ptr_nick)
+    if (strcmp (pos_nick, server->nick) == 0)
     {
-        nick_free (ptr_channel, ptr_nick);
+        /* my nick was kicked => free all nicks, channel is not active any more */
+        nick_free_all (ptr_channel);
         gui_draw_buffer_nick (gui_current_window->buffer, 1);
+        gui_draw_buffer_status (gui_current_window->buffer, 1);
+        if (server->autorejoin)
+            irc_cmd_send_join (server, ptr_channel->name);
+    }
+    {
+        /* someone was kicked from channel (but not me) => remove only this nick */
+        ptr_nick = nick_search (ptr_channel, pos_nick);
+        if (ptr_nick)
+        {
+            nick_free (ptr_channel, ptr_nick);
+            gui_draw_buffer_nick (gui_current_window->buffer, 1);
+        }
     }
     return 0;
 }

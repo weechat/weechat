@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2004-10-03
+ChangeLog - 2004-10-17
 
 
 Version 0.0.8 (under dev!):
+   * auto-rejoin channels when kicked (new config option: server_autorejoin on/off)
    * added IRC::command function for Perl scripts
    * fixed bug when adding alias with same name as other
    * /buffer command developed (buffers list, move and notify)

@@ -127,6 +127,7 @@ struct t_irc_server
     char *realname;                 /* real name                            */
     char *command;					/* command to run once connected        */
     char *autojoin;					/* channels to automatically join       */
+    int autorejoin;                 /* auto rejoin channels when kicked     */
     
     /* internal vars */
     char *nick;                     /* current nickname                     */
@@ -213,7 +214,8 @@ extern void server_destroy (t_irc_server *);
 extern void server_free (t_irc_server *);
 extern void server_free_all ();
 extern t_irc_server *server_new (char *, int, int, char *, int, char *, char *,
-                                 char *, char *, char *, char *, char *, char *);
+                                 char *, char *, char *, char *, char *, char *,
+                                 int);
 extern int server_send (t_irc_server *, char *, int);
 extern void server_sendf (t_irc_server *, char *, ...);
 extern void server_recv (t_irc_server *);

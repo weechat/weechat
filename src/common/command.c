@@ -1607,7 +1607,7 @@ weechat_cmd_server (int argc, char **argv)
                                  server.address, server.port, server.password,
                                  server.nick1, server.nick2, server.nick3,
                                  server.username, server.realname,
-                                 server.command, server.autojoin);
+                                 server.command, server.autojoin, 1);
         if (new_server)
         {
             irc_display_prefix (NULL, PREFIX_INFO);
