@@ -146,7 +146,6 @@ extern char *cfg_log_start_string;
 extern char *cfg_log_end_string;
 
 extern int cfg_dcc_auto_accept_files;
-extern int cfg_dcc_auto_accept_max_size;
 extern int cfg_dcc_auto_accept_chats;
 extern int cfg_dcc_timeout;
 extern int cfg_dcc_blocksize;

@@ -188,6 +188,7 @@ struct t_dcc
     int file;                       /* local file (for reading or writing)  */
     char *filename;                 /* filename                             */
     char *local_filename;           /* local filename                       */
+    int filename_suffix;            /* suffix (.1 for ex) if renaming file  */
     unsigned long size;             /* file size                            */
     unsigned long pos;              /* number of bytes received/sent        */
     t_dcc *next_dcc;                /* link to next dcc file/chat           */

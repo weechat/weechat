@@ -604,6 +604,9 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                         gui_window_set_color (ptr_win->win_chat, COLOR_WIN_CHAT);
                         mvwprintw (ptr_win->win_chat, i, 0, " %-16s %s",
                                    ptr_dcc->nick, ptr_dcc->filename);
+                        if (ptr_dcc->filename_suffix > 0)
+                            wprintw (ptr_win->win_chat, " (.%d)",
+                                     ptr_dcc->filename_suffix);
                         gui_window_set_color (ptr_win->win_chat, COLOR_WIN_CHAT);
                         mvwprintw (ptr_win->win_chat, i + 1, 0, " %s ",
                                    (ptr_dcc->type == DCC_FILE_RECV) ?
@@ -1008,8 +1011,12 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                                               COLOR_WIN_STATUS_DATA_HIGHLIGHT);
                         break;
                 }
-                wprintw (ptr_win->win_status, "%d",
-                         ptr_hotlist->buffer->number);
+                if (ptr_hotlist->buffer->dcc)
+                    wprintw (ptr_win->win_status, "%d/DCC",
+                             ptr_hotlist->buffer->number);
+                else
+                    wprintw (ptr_win->win_status, "%d",
+                             ptr_hotlist->buffer->number);
                 gui_window_set_color (ptr_win->win_status,
                                       COLOR_WIN_STATUS);
                 if (ptr_hotlist->next_hotlist)
@@ -1338,6 +1345,27 @@ gui_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
     buffer->num_displayed++;
     
     hotlist_remove_buffer (buffer);
+}
+
+/*
+ * gui_get_dcc_buffer: get pointer to DCC buffer (DCC buffer created if not existing)
+ */
+
+t_gui_buffer *
+gui_get_dcc_buffer ()
+{
+    t_gui_buffer *ptr_buffer;
+    
+    /* check if dcc buffer exists */
+    for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (BUFFER_IS_DCC (ptr_buffer))
+            break;
+    }
+    if (ptr_buffer)
+        return ptr_buffer;
+    else
+        return gui_buffer_new (gui_current_window, NULL, NULL, 1, 0);
 }
 
 /*

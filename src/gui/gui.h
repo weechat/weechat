@@ -263,6 +263,7 @@ extern void gui_draw_buffer_infobar (t_gui_buffer *, int);
 extern void gui_draw_buffer_input (t_gui_buffer *, int);
 extern void gui_redraw_buffer (t_gui_buffer *);
 extern void gui_switch_to_buffer (t_gui_window *, t_gui_buffer *);
+extern t_gui_buffer *gui_get_dcc_buffer ();
 extern void gui_switch_to_dcc_buffer ();
 extern void gui_switch_to_previous_buffer (t_gui_window *);
 extern void gui_switch_to_next_buffer (t_gui_window *);

@@ -80,6 +80,9 @@ hotlist_add (int priority, t_gui_buffer *buffer)
 {
     t_weechat_hotlist *new_hotlist, *pos_hotlist;
     
+    if (!buffer)
+        return;
+    
     if ((pos_hotlist = hotlist_search (buffer)))
     {
         /* return if priority is greater or equal than the one to add */

@@ -109,6 +109,83 @@ dcc_close (t_dcc *ptr_dcc, int status)
 }
 
 /*
+ * dcc_accept: accepts a DCC file or chat request
+ */
+
+void
+dcc_accept (t_dcc *ptr_dcc)
+{
+    char *ptr_home, *filename2;
+    
+    dcc_connect (ptr_dcc);
+    if (ptr_dcc->sock == -1)
+        ptr_dcc->status = DCC_FAILED;
+    else
+    {
+        ptr_dcc->status = DCC_ACTIVE;
+        ptr_home = getenv ("HOME");
+        gui_printf (NULL, "home = %s\n", ptr_home);
+        ptr_dcc->local_filename = (char *) malloc (strlen (cfg_dcc_download_path) +
+                                                   strlen (ptr_dcc->nick) +
+                                                   strlen (ptr_dcc->filename) +
+                                                   ((cfg_dcc_download_path[0] == '~') ?
+                                                       strlen (ptr_home) : 0) +
+                                                   4);
+        if (!ptr_dcc->local_filename)
+        {
+            ptr_dcc->status = DCC_FAILED;
+            return;
+        }
+        if (cfg_dcc_download_path[0] == '~')
+        {
+            strcpy (ptr_dcc->local_filename, ptr_home);
+            strcat (ptr_dcc->local_filename, cfg_dcc_download_path + 1);
+        }
+        else
+            strcpy (ptr_dcc->local_filename, cfg_dcc_download_path);
+        if (ptr_dcc->local_filename[strlen (ptr_dcc->local_filename) - 1] != DIR_SEPARATOR)
+            strcat (ptr_dcc->local_filename, DIR_SEPARATOR);
+        strcat (ptr_dcc->local_filename, ptr_dcc->nick);
+        strcat (ptr_dcc->local_filename, ".");
+        strcat (ptr_dcc->local_filename, ptr_dcc->filename);
+        
+        /* file already exists? */
+        if (access (ptr_dcc->local_filename, F_OK) == 0)
+        {
+            /* if auto rename is not set, then abort DCC */
+            if (!cfg_dcc_auto_rename)
+            {
+                ptr_dcc->status = DCC_FAILED;
+                return;
+            }
+            
+            filename2 = (char *) malloc (strlen (ptr_dcc->local_filename) + 16);
+            if (!filename2)
+            {
+                ptr_dcc->status = DCC_FAILED;
+                return;
+            }
+            ptr_dcc->filename_suffix = 0;
+            do
+            {
+                ptr_dcc->filename_suffix++;
+                sprintf (filename2, "%s.%d",
+                         ptr_dcc->local_filename,
+                         ptr_dcc->filename_suffix);
+            }
+            while (access (filename2, F_OK) == 0);
+            
+            free (ptr_dcc->local_filename);
+            ptr_dcc->local_filename = strdup (filename2);
+            free (filename2);
+        }
+        ptr_dcc->file = open (ptr_dcc->local_filename,
+                              O_CREAT | O_TRUNC | O_WRONLY,
+                              0644);
+    }
+}
+
+/*
  * dcc_add: add a DCC file to queue
  */
 
@@ -117,8 +194,7 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
          unsigned int size)
 {
     t_dcc *new_dcc;
-    int num;
-    char *filename2;
+    t_gui_buffer *dcc_buffer;
     
     if ((new_dcc = (t_dcc *) malloc (sizeof (t_dcc))) == NULL)
     {
@@ -135,6 +211,7 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
     new_dcc->file = -1;
     new_dcc->filename = strdup (filename);
     new_dcc->local_filename = NULL;
+    new_dcc->filename_suffix = -1;
     new_dcc->size = size;
     new_dcc->pos = 0;
     new_dcc->next_dcc = dcc_list;
@@ -146,53 +223,17 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
                 addr >> 24, (addr >> 16) & 0xff, (addr >> 8) & 0xff, addr & 0xff,
                 port, filename, size);
     
-    if (type == DCC_FILE_RECV)
+    dcc_buffer = gui_get_dcc_buffer ();
+    
+    if ( ( (type == DCC_CHAT_RECV) && (cfg_dcc_auto_accept_chats) )
+        || ( (type == DCC_FILE_RECV) && (cfg_dcc_auto_accept_files) ) )
     {
-        dcc_connect (new_dcc);
-        if (new_dcc->sock == -1)
-            new_dcc->status = DCC_FAILED;
-        else
-        {
-            new_dcc->status = DCC_ACTIVE;
-            new_dcc->local_filename = (char *) malloc (strlen (cfg_dcc_download_path) +
-                                                       strlen (nick) +
-                                                       strlen (filename) + 4);
-            if (!new_dcc->local_filename)
-            {
-                new_dcc->status = DCC_FAILED;
-                return NULL;
-            }
-            strcpy (new_dcc->local_filename, cfg_dcc_download_path);
-            if (new_dcc->local_filename[strlen (new_dcc->local_filename) - 1] != '/')
-                strcat (new_dcc->local_filename, "/");
-            strcat (new_dcc->local_filename, nick);
-            strcat (new_dcc->local_filename, ".");
-            strcat (new_dcc->local_filename, filename);
-            if (access (new_dcc->local_filename, F_OK) == 0)
-            {
-                filename2 = (char *) malloc (strlen (new_dcc->local_filename) + 16);
-                if (!filename2)
-                {
-                    new_dcc->status = DCC_FAILED;
-                    return NULL;
-                }
-                num = 0;
-                do
-                {
-                    num++;
-                    sprintf (filename2, "%s.%d", new_dcc->local_filename, num);
-                }
-                while (access (filename2, F_OK) == 0);
-                
-                free (new_dcc->local_filename);
-                new_dcc->local_filename = strdup (filename2);
-                free (filename2);
-            }
-            new_dcc->file = open (new_dcc->local_filename,
-                                  O_CREAT | O_TRUNC | O_WRONLY,
-                                  0644);
-        }
+        dcc_accept (new_dcc);
+        hotlist_add (1, dcc_buffer);
     }
+    else
+        hotlist_add (2, dcc_buffer);
+    gui_draw_buffer_status (dcc_buffer, 0);
     
     return new_dcc;
 }
@@ -233,7 +274,7 @@ dcc_handle ()
                         if (ptr_dcc->pos >= ptr_dcc->size)
                         {
                             gui_printf (NULL,
-                                        _("DCC: file \"%s\" received from \"%s\": done!\n"),
+                                        _("DCC: file \"%s\" received from \"%s\": ok!\n"),
                                         ptr_dcc->filename, ptr_dcc->nick);
                             dcc_close (ptr_dcc, DCC_DONE);
                         }
@@ -260,7 +301,7 @@ dcc_end ()
             if (ptr_dcc->status == DCC_ACTIVE)
                 wee_log_printf (_("aborting active DCC: \"%s\" from %s\n"),
                                 ptr_dcc->filename, ptr_dcc->nick);
-            close (ptr_dcc->sock);
+            dcc_close (ptr_dcc, DCC_FAILED);
         }
     }
 }

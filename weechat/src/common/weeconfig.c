@@ -448,7 +448,6 @@ t_config_option weechat_options_log[] =
 /* config, dcc section */
 
 int cfg_dcc_auto_accept_files;
-int cfg_dcc_auto_accept_max_size;
 int cfg_dcc_auto_accept_chats;
 int cfg_dcc_timeout;
 int cfg_dcc_blocksize;
@@ -460,40 +459,36 @@ int cfg_dcc_auto_resume;
 t_config_option weechat_options_dcc[] =
 { { "dcc_auto_accept_files", N_("automatically accept dcc files"),
     N_("automatically accept incoming dcc files"),
-    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_dcc_auto_accept_files, NULL, NULL },
-  { "dcc_auto_accept_max_size", N_("max size when auto accepting file"),
-    N_("maximum size for incoming file when automatically accepted"),
-    OPTION_TYPE_INT, 0, INT_MAX, 0,
-    NULL, NULL, &cfg_dcc_auto_accept_max_size, NULL, NULL },
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
+    NULL, NULL, &cfg_dcc_auto_accept_files, NULL, config_change_noop },
   { "dcc_auto_accept_chats", N_("automatically accept dcc chats"),
     N_("automatically accept dcc chats (use carefully!)"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_dcc_auto_accept_chats, NULL, NULL },
+    NULL, NULL, &cfg_dcc_auto_accept_chats, NULL, config_change_noop },
   { "dcc_timeout", N_("timeout for dcc request"),
     N_("timeout for dcc request (in seconds)"),
     OPTION_TYPE_INT, 1, INT_MAX, 300,
-    NULL, NULL, &cfg_dcc_timeout, NULL, NULL },
+    NULL, NULL, &cfg_dcc_timeout, NULL, config_change_noop },
   { "dcc_blocksize", N_("block size for dcc packets"),
     N_("block size for dcc packets in bytes (default: 1024)"),
     OPTION_TYPE_INT, 1024, 102400, 1024,
-    NULL, NULL, &cfg_dcc_blocksize, NULL, NULL },
+    NULL, NULL, &cfg_dcc_blocksize, NULL, config_change_noop },
   { "dcc_download_path", N_("path for incoming files with dcc"),
     N_("path for writing incoming files with dcc (default: user home)"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "~", NULL, NULL, &cfg_dcc_download_path, NULL },
+    "~", NULL, NULL, &cfg_dcc_download_path, config_change_noop },
   { "dcc_upload_path", N_("default path for sending files with dcc"),
     N_("path for reading files when sending thru dcc (when no path is specified)"),
     OPTION_TYPE_STRING, 0, 0, 0, "~",
-    NULL, NULL, &cfg_dcc_upload_path, NULL },
+    NULL, NULL, &cfg_dcc_upload_path, config_change_noop },
   { "dcc_auto_rename", N_("automatically rename dcc files if already exists"),
     N_("rename incoming files if already exists (add '.1', '.2', ...)"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_dcc_auto_rename, NULL, NULL },
+    NULL, NULL, &cfg_dcc_auto_rename, NULL, config_change_noop },
   { "dcc_auto_resume", N_("automatically resume aborted transfers"),
     N_("automatically resume dcc transfer if connection with remote host is loosed"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_dcc_auto_resume, NULL, NULL },
+    NULL, NULL, &cfg_dcc_auto_resume, NULL, config_change_noop },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
