@@ -210,8 +210,9 @@ gui_read_keyb ()
                     }
                 }
                 break;
-            /* home key */
+            /* home key or Control + A */
             case KEY_HOME:
+            case 0x01:
                 if (!gui_current_window->buffer->dcc)
                 {
                     if (gui_current_window->buffer->input_buffer_pos > 0)
@@ -221,8 +222,9 @@ gui_read_keyb ()
                     }
                 }
                 break;
-            /* end key */
+            /* end key or Control + E */
             case KEY_END:
+            case 0x05:
                 if (!gui_current_window->buffer->dcc)
                 {
                     if (gui_current_window->buffer->input_buffer_pos <
@@ -267,8 +269,9 @@ gui_read_keyb ()
                     }
                 }
                 break;
-            /* Control + Backspace */
+            /* Control + Backspace or Control + W */
             case 0x08:
+            case 0x17:
                 if (!gui_current_window->buffer->dcc)    
                     gui_delete_previous_word (gui_current_window->buffer);
                 break;
