@@ -24,22 +24,17 @@
                    RFC 1459,2810,2811,2812 */
 
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <string.h>
-#include <time.h>
-#include <sys/utsname.h>
-
 #include "../weechat.h"
 #include "irc.h"
 #include "../command.h"
-#include "../config.h"
-#include "../gui/gui.h"
 
 
 t_irc_command irc_commands[] =
-{ { "away", N_("toggle away status"),
+{ { "admin", N_("find information about the administrator of the server"),
+    N_("[target]"),
+    N_("target: server"),
+    0, 1, 1, NULL, irc_cmd_send_admin, NULL },
+  { "away", N_("toggle away status"),
     N_("[-all] [message]"),
     N_("-all: toggle away status on all connected servers\n"
     "message: message for away (if no message is given, away status is removed)"),
@@ -71,10 +66,20 @@ t_irc_command irc_commands[] =
     N_("nickname comment"),
     N_("nickname: nickname\ncomment: comment for kill"),
     2, MAX_ARGS, 1, NULL, irc_cmd_send_kill, NULL },
+  { "links", N_("list all servernames which are known by the server answering the query"),
+    N_("[[remove_server] server_mask]"),
+    N_("remote_server: this server should answer the query\n"
+    "server_mask: list of servers must match this mask"),
+    0, 2, 1, NULL, irc_cmd_send_links, NULL },
   { "list", N_("list channels and their topic"),
     N_("[channel[,channel] [server]]"),
     N_("channel: channel to list\nserver: server name"),
     0, MAX_ARGS, 1, NULL, irc_cmd_send_list, NULL },
+  { "lusers", N_("get statistics about ths size of the IRC network"),
+    N_("[mask [target]]"),
+    N_("mask: servers matching the mask only\n"
+    "target: server for forwarding request"),
+    0, 2, 1, NULL, irc_cmd_send_lusers, NULL },
   { "me", N_("send a ctcp action to the current channel"),
     N_("message"),
     N_("message: message to send"),
@@ -107,6 +112,10 @@ t_irc_command irc_commands[] =
     N_("receiver: nick or channel (may be mask, '*' = current channel)"
     "\ntext: text to send"),
     1, MAX_ARGS, 1, NULL, irc_cmd_send_msg, NULL },
+  { "motd", N_("get the \"Message Of The Day\""),
+    N_("[target]"),
+    N_("target: server name"),
+    0, 1, 1, NULL, irc_cmd_send_motd, NULL },
   { "names", N_("list nicknames on channels"),
     N_("[channel[,channel]]"), N_("channel: channel name"),
     0, MAX_ARGS, 1, NULL, irc_cmd_send_names, NULL },
@@ -122,18 +131,18 @@ t_irc_command irc_commands[] =
   { "oper", N_("get operator privileges"),
     N_("user password"),
     N_("user/password: used to get privileges on current IRC server"),
-    2, 2, 1, irc_cmd_send_oper, NULL, NULL },
+    2, 2, 1, NULL, irc_cmd_send_oper, NULL },
   { "part", N_("leave a channel"),
     N_("[channel[,channel]]"), N_("channel: channel name to leave"),
     0, MAX_ARGS, 1, NULL, irc_cmd_send_part, irc_cmd_recv_part },
   { "ping", N_("ping server"),
     N_("server1 [server2]"),
     N_("server1: server to ping\nserver2: forward ping to this server"),
-    1, 2, 1, irc_cmd_send_ping, NULL, irc_cmd_recv_ping },
+    1, 2, 1, NULL, irc_cmd_send_ping, irc_cmd_recv_ping },
   { "pong", N_("answer to a ping message"),
     N_("daemon [daemon2]"), N_("daemon: daemon who has responded to Ping message\n"
     "daemon2: forward message to this daemon"),
-    1, 2, 1, irc_cmd_send_pong, NULL, NULL },
+    1, 2, 1, NULL, irc_cmd_send_pong, NULL },
   { "privmsg", N_("message received"),
     "", "",
     0, 0, 1, NULL, NULL, irc_cmd_recv_privmsg },
@@ -151,14 +160,28 @@ t_irc_command irc_commands[] =
   { "restart", N_("tell the server to restart itself"),
     "", "",
     0, 0, 1, NULL, irc_cmd_send_restart, NULL },
+  { "service", N_("register a new service"),
+    N_("nickname reserved distribution type reserved info"),
+    N_("distribution: visibility of service\n"
+    "type: reserved for future usage"),
+    6, 6, 1, NULL, irc_cmd_send_service, NULL },
+  { "squit", N_("disconnect server links"),
+    N_("server commnent"), N_("server: server name\ncomment: comment for quit"),
+    2, 2, 1, NULL, irc_cmd_send_squit, NULL },
   { "stats", N_("query statistics about server"),
     "[query [server]]",
     "query: c/h/i/k/l/m/o/y/u (see RFC1459)\nserver: server name",
     0, 2, 1, NULL, irc_cmd_send_stats, NULL },
+  { "time", N_("query local time from server"),
+    N_("[target]"), N_("target: query time from specified server"),
+    0, 1, 1, NULL, irc_cmd_send_time, NULL },
   { "topic", N_("get/set channel topic"),
     N_("[channel] [topic]"), N_("channel: channel name\ntopic: new topic for channel "
     "(if topic is \"-delete\" then topic is deleted)"),
     0, MAX_ARGS, 1, NULL, irc_cmd_send_topic, irc_cmd_recv_topic },
+  { "trace", N_("find the route to specific server"),
+    N_("[target]"), N_("target: server"),
+    0, 1, 1, NULL, irc_cmd_send_trace, NULL },
   { "version", N_("gives the version info of nick or server (current or specified)"),
     N_("[server | nickname]"), N_("server: server name\nnickname: nickname"),
     0, 1, 1, NULL, irc_cmd_send_version, NULL },
@@ -222,6 +245,8 @@ t_irc_command irc_commands[] =
     N_("channel :[[@|+]nick ...]"),
     N_("channel: name of channel\nnick: nick on the channel"),
     2, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_353 },
+  { "364", N_("links"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
+  { "365", N_("end of /links list"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
   { "366", N_("end of /names list"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_366 },
   { "371", N_("a server message"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
   { "372", N_("a server message"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
@@ -229,6 +254,7 @@ t_irc_command irc_commands[] =
   { "374", N_("a server message"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
   { "375", N_("a server message"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
   { "376", N_("a server message"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
+  { "391", N_("server local time"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
   { "401", N_("no such nick/channel"),
     "", "", 0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_error },
   { "402", N_("no such server"),

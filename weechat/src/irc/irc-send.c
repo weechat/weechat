@@ -65,6 +65,20 @@ irc_login (t_irc_server *server)
 }
 
 /*
+ * irc_cmd_send_admin: find information about the administrator of the server
+ */
+
+int
+irc_cmd_send_admin (t_irc_server *server, char *arguments)
+{
+    if (arguments)
+        server_sendf (server, "ADMIN %s\r\n", arguments);
+    else
+        server_sendf (server, "ADMIN\r\n");
+    return 0;
+}
+
+/*
  * irc_cmd_send_away: toggle away status
  */
 
@@ -265,6 +279,21 @@ irc_cmd_send_kill (t_irc_server *server, char *arguments)
 }
 
 /*
+ * irc_cmd_send_links: list all servernames which are known by the server
+ *                     answering the query
+ */
+
+int
+irc_cmd_send_links (t_irc_server *server, char *arguments)
+{
+    if (arguments)
+        server_sendf (server, "LINKS %s\r\n", arguments);
+    else
+        server_sendf (server, "LINKS\r\n");
+    return 0;
+}
+
+/*
  * irc_cmd_send_list: close client-server connection
  */
 
@@ -275,6 +304,20 @@ irc_cmd_send_list (t_irc_server *server, char *arguments)
         server_sendf (server, "LIST %s\r\n", arguments);
     else
         server_sendf (server, "LIST\r\n");
+    return 0;
+}
+
+/*
+ * irc_cmd_send_lusers: get statistics about ths size of the IRC network
+ */
+
+int
+irc_cmd_send_lusers (t_irc_server *server, char *arguments)
+{
+    if (arguments)
+        server_sendf (server, "LUSERS %s\r\n", arguments);
+    else
+        server_sendf (server, "LUSERS\r\n");
     return 0;
 }
 
@@ -435,6 +478,20 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
 }
 
 /*
+ * irc_cmd_send_motd: get the "Message Of The Day"
+ */
+
+int
+irc_cmd_send_motd (t_irc_server *server, char *arguments)
+{
+    if (arguments)
+        server_sendf (server, "MOTD %s\r\n", arguments);
+    else
+        server_sendf (server, "MOTD\r\n");
+    return 0;
+}
+
+/*
  * irc_cmd_send_names: list nicknames on channels
  */
 
@@ -514,11 +571,9 @@ irc_cmd_send_op (t_irc_server *server, int argc, char **argv)
  */
 
 int
-irc_cmd_send_oper (t_irc_server *server, int argc, char **argv)
+irc_cmd_send_oper (t_irc_server *server, char *arguments)
 {
-    if (argc != 2)
-        return -1;
-    server_sendf (server, "OPER %s %s\r\n", argv[0], argv[1]);
+    server_sendf (server, "OPER %s %s\r\n", arguments);
     return 0;
 }
 
@@ -593,13 +648,9 @@ irc_cmd_send_part (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_ping (t_irc_server *server, int argc, char **argv)
+irc_cmd_send_ping (t_irc_server *server, char *arguments)
 {
-    if (argc == 1)
-        server_sendf (server, "PING %s\r\n", argv[0]);
-    if (argc == 2)
-        server_sendf (server, "PING %s %s\r\n", argv[0],
-                      argv[1]);
+    server_sendf (server, "PING %s\r\n", arguments);
     return 0;
 }
 
@@ -608,13 +659,9 @@ irc_cmd_send_ping (t_irc_server *server, int argc, char **argv)
  */
 
 int
-irc_cmd_send_pong (t_irc_server *server, int argc, char **argv)
+irc_cmd_send_pong (t_irc_server *server, char *arguments)
 {
-    if (argc == 1)
-        server_sendf (server, "PONG %s\r\n", argv[0]);
-    if (argc == 2)
-        server_sendf (server, "PONG %s %s\r\n", argv[0],
-                      argv[1]);
+    server_sendf (server, "PONG %s\r\n", arguments);
     return 0;
 }
 
@@ -676,6 +723,28 @@ irc_cmd_send_restart (t_irc_server *server, char *arguments)
 }
 
 /*
+ * irc_cmd_send_service: register a new service
+ */
+
+int
+irc_cmd_send_service (t_irc_server *server, char *arguments)
+{
+    server_sendf (server, "SERVICE %s\r\n", arguments);
+    return 0;
+}
+
+/*
+ * irc_cmd_send_squit: disconnect server links
+ */
+
+int
+irc_cmd_send_squit (t_irc_server *server, char *arguments)
+{
+    server_sendf (server, "SQUIT %s\r\n", arguments);
+    return 0;
+}
+
+/*
  * irc_cmd_send_stats: query statistics about server
  */
 
@@ -686,6 +755,20 @@ irc_cmd_send_stats (t_irc_server *server, char *arguments)
         server_sendf (server, "STATS %s\r\n", arguments);
     else
         server_sendf (server, "STATS\r\n");
+    return 0;
+}
+
+/*
+ * irc_cmd_send_time: query local time from server
+ */
+
+int
+irc_cmd_send_time (t_irc_server *server, char *arguments)
+{
+    if (arguments)
+        server_sendf (server, "TIME %s\r\n", arguments);
+    else
+        server_sendf (server, "TIME\r\n");
     return 0;
 }
 
@@ -742,6 +825,20 @@ irc_cmd_send_topic (t_irc_server *server, char *arguments)
     }
     else
         server_sendf (server, "TOPIC %s\r\n", channel_name);
+    return 0;
+}
+
+/*
+ * irc_cmd_send_trace: find the route to specific server
+ */
+
+int
+irc_cmd_send_trace (t_irc_server *server, char *arguments)
+{
+    if (arguments)
+        server_sendf (server, "TRACE %s\r\n", arguments);
+    else
+        server_sendf (server, "TRACE\r\n");
     return 0;
 }
 
