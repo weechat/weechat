@@ -138,6 +138,63 @@ static XS (XS_IRC_print)
 }
 
 /*
+ * IRC::print_with_channel: print message to a specific channel/server
+ *                          (server is optional)
+ */
+
+static XS (XS_IRC_print_with_channel)
+{
+    int i, integer;
+    char *message, *channel, *server = NULL;
+    t_gui_window *ptr_window;
+    t_irc_server *ptr_server;
+    t_irc_channel *ptr_channel;
+    dXSARGS;
+    
+    /* server specified */
+    if (items > 2)
+    {
+        server = SvPV (ST (2), integer);
+        if (!server[0])
+            server = NULL;
+    }
+    
+    /* look for window for printing message */
+    channel = SvPV (ST (1), integer);
+    ptr_window = NULL;
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        if (!server || (strcasecmp (ptr_server->name, server)) == 0)
+        {
+            for (ptr_channel = ptr_server->channels; ptr_channel;
+                 ptr_channel = ptr_channel->next_channel)
+            {
+                if (strcasecmp (ptr_channel->name, channel) == 0)
+                {
+                    ptr_window = ptr_channel->window;
+                    break;
+                }
+            }
+        }
+        if (ptr_window)
+            break;
+    }
+    
+    /* window found => display message & return 1 */
+    if (ptr_window)
+    {
+        message = SvPV (ST (0), integer);
+        irc_display_prefix (ptr_window, PREFIX_PLUGIN);
+        gui_printf (ptr_window, "%s", message);
+        XSRETURN_YES;
+    }
+        
+    /* no window found => return 0 */
+    XSRETURN_NO;
+}
+
+/*
  * IRC::add_message_handler: add handler for messages (privmsg, ...)
  */
 
@@ -191,6 +248,7 @@ xs_init (pTHX)
     newXS ("DynaLoader::boot_DynaLoader", boot_DynaLoader, __FILE__);
     newXS ("IRC::register", XS_IRC_register, "IRC");
     newXS ("IRC::print", XS_IRC_print, "IRC");
+    newXS ("IRC::print_with_channel", XS_IRC_print_with_channel, "IRC");
     newXS ("IRC::add_message_handler", XS_IRC_add_message_handler, "IRC");
     newXS ("IRC::add_command_handler", XS_IRC_add_command_handler, "IRC");
 }
