@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-WeeChat known bugs, 2003-12-24
+WeeChat known bugs, 2003-12-26
 
 - ./configure does not check that Curses headers are installed
 - ./configure does not check that Gtk 2.0 libraries are installed
@@ -18,3 +18,4 @@ WeeChat known bugs, 2003-12-24
 - when many WeeChat are launched, log file is not properly written (cleared by
   each WeeChat at startup)
 - display problems with Konsole (Kde terminal)
+- do not switch automatically to private windows when they're created

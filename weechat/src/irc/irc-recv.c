@@ -799,8 +799,12 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                     ptr_nick = nick_search (ptr_channel, host);
                     if (ptr_nick)
                     {
-                        irc_display_nick (ptr_channel->window, ptr_nick,
-                                          MSG_TYPE_NICK, 1, 1, 0);
+                        if (strstr (pos, server->nick))
+                            irc_display_nick (ptr_channel->window, ptr_nick,
+                                              MSG_TYPE_NICK, 1, -1, 0);
+                        else
+                            irc_display_nick (ptr_channel->window, ptr_nick,
+                                              MSG_TYPE_NICK, 1, 1, 0);
                         gui_printf_color_type (ptr_channel->window,
                                                MSG_TYPE_MSG,
                                                COLOR_WIN_CHAT, "%s\n", pos);
@@ -908,10 +912,16 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                     gui_printf_color_type (ptr_channel->window,
                                            MSG_TYPE_NICK,
                                            COLOR_WIN_CHAT_DARK, "<");
-                    gui_printf_color_type (ptr_channel->window,
-                                           MSG_TYPE_NICK,
-                                           COLOR_WIN_NICK_PRIVATE,
-                                           "%s", host);
+                    if (strstr (pos, server->nick))
+                        gui_printf_color_type (ptr_channel->window,
+                                               MSG_TYPE_NICK,
+                                               COLOR_WIN_CHAT_HIGHLIGHT,
+                                               "%s", host);
+                    else
+                        gui_printf_color_type (ptr_channel->window,
+                                               MSG_TYPE_NICK,
+                                               COLOR_WIN_NICK_PRIVATE,
+                                               "%s", host);
                     gui_printf_color_type (ptr_channel->window,
                                            MSG_TYPE_NICK,
                                            COLOR_WIN_CHAT_DARK, "> ");

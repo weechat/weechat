@@ -6,6 +6,7 @@ ChangeLog - 2003-12-26
 
 Version 0.0.4 (under dev!):
    * Perl plugin, with auto-load
+   * Highlight when our nick is written in a channel/private window
    * Ctrl-C now intercepted (ignored)
    * debug messages can be enabled via ./configure --enbale-debug option
 

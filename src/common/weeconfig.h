@@ -102,6 +102,7 @@ extern int cfg_col_chat_nick;
 extern int cfg_col_chat_host;
 extern int cfg_col_chat_channel;
 extern int cfg_col_chat_dark;
+extern int cfg_col_chat_highlight;
 extern int cfg_col_chat_bg;
 extern int cfg_col_status;
 extern int cfg_col_status_active;

@@ -57,6 +57,7 @@ irc_display_prefix (t_gui_window *window, char *prefix)
 
 /*
  * irc_display_nick: display nick in chat window
+ *                   if color_nick < 0 then nick is highlighted
  */
 
 void
@@ -92,13 +93,19 @@ irc_display_nick (t_gui_window *window, t_irc_nick *nick, int message_type,
             }
         }
     }
-    gui_printf_color_type (window,
-                           message_type,
-                           (color_nick) ?
-                               ((cfg_look_color_nicks) ?
-                               nick->color : COLOR_WIN_CHAT) :
-                               COLOR_WIN_CHAT,
-                           "%s", nick->nick);
+    if (color_nick < 0)
+        gui_printf_color_type (window,
+                               message_type,
+                               COLOR_WIN_CHAT_HIGHLIGHT,
+                               "%s", nick->nick);
+    else
+        gui_printf_color_type (window,
+                               message_type,
+                               (color_nick) ?
+                                   ((cfg_look_color_nicks) ?
+                                   nick->color : COLOR_WIN_CHAT) :
+                                   COLOR_WIN_CHAT,
+                               "%s", nick->nick);
     
     if (display_around)
         gui_printf_color_type (window,

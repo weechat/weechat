@@ -1306,6 +1306,8 @@ gui_init_colors ()
             cfg_col_chat_channel & A_CHARTEXT, cfg_col_chat_bg);
         init_pair (COLOR_WIN_CHAT_DARK,
             cfg_col_chat_dark & A_CHARTEXT, cfg_col_chat_bg);
+        init_pair (COLOR_WIN_CHAT_HIGHLIGHT,
+            cfg_col_chat_highlight & A_CHARTEXT, cfg_col_chat_bg);
         init_pair (COLOR_WIN_STATUS,
             cfg_col_status & A_CHARTEXT, cfg_col_status_bg);
         init_pair (COLOR_WIN_STATUS_ACTIVE,
@@ -1356,6 +1358,7 @@ gui_init_colors ()
         color_attr[COLOR_WIN_CHAT_HOST - 1] = cfg_col_chat_host & A_BOLD;
         color_attr[COLOR_WIN_CHAT_CHANNEL - 1] = cfg_col_chat_channel & A_BOLD;
         color_attr[COLOR_WIN_CHAT_DARK - 1] = cfg_col_chat_dark & A_BOLD;
+        color_attr[COLOR_WIN_CHAT_HIGHLIGHT - 1] = cfg_col_chat_highlight & A_BOLD;
         color_attr[COLOR_WIN_STATUS - 1] = cfg_col_status & A_BOLD;
         color_attr[COLOR_WIN_STATUS_ACTIVE - 1] = cfg_col_status_active & A_BOLD;
         color_attr[COLOR_WIN_STATUS_DATA_MSG - 1] = cfg_col_status_data_msg & A_BOLD;

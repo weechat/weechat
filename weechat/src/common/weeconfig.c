@@ -151,6 +151,7 @@ int cfg_col_chat_nick;
 int cfg_col_chat_host;
 int cfg_col_chat_channel;
 int cfg_col_chat_dark;
+int cfg_col_chat_highlight;
 int cfg_col_chat_bg;
 int cfg_col_status;
 int cfg_col_status_active;
@@ -219,6 +220,10 @@ t_config_option weechat_options_colors[] =
     N_("color for dark separators (chat window)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
     "green", NULL, &cfg_col_chat_dark, NULL, NULL },
+  { "col_chat_highlight", N_("color for highlighted nick"),
+    N_("color for highlighted nick (chat window)"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "yellow", NULL, &cfg_col_chat_highlight, NULL, NULL },
   { "col_chat_bg", N_("background for chat"),
     N_("background for chat window"),
     OPTION_TYPE_COLOR, 0, 0, 0,
@@ -296,7 +301,7 @@ t_config_option weechat_options_colors[] =
   { "col_nick_private", N_("color for other nick in private window"),
     N_("color for other nick in private window"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "brown", NULL, &cfg_col_nick_private, NULL, NULL },
+    "gray", NULL, &cfg_col_nick_private, NULL, NULL },
   { "col_nick_bg", N_("background for nicknames"),
     N_("background for nicknames"),
     OPTION_TYPE_COLOR, 0, 0, 0,

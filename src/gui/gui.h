@@ -28,7 +28,7 @@
 
 #define INPUT_BUFFER_BLOCK_SIZE 256
 
-#define NUM_COLORS                  35
+#define NUM_COLORS                  36
 #define COLOR_WIN_TITLE             1
 #define COLOR_WIN_CHAT              2
 #define COLOR_WIN_CHAT_TIME         3
@@ -39,23 +39,24 @@
 #define COLOR_WIN_CHAT_HOST         8
 #define COLOR_WIN_CHAT_CHANNEL      9
 #define COLOR_WIN_CHAT_DARK         10
-#define COLOR_WIN_STATUS            11
-#define COLOR_WIN_STATUS_ACTIVE     12
-#define COLOR_WIN_STATUS_DATA_MSG   13
-#define COLOR_WIN_STATUS_DATA_OTHER 14
-#define COLOR_WIN_STATUS_MORE       15
-#define COLOR_WIN_INPUT             16
-#define COLOR_WIN_INPUT_CHANNEL     17
-#define COLOR_WIN_INPUT_NICK        18
-#define COLOR_WIN_NICK              19
-#define COLOR_WIN_NICK_OP           20
-#define COLOR_WIN_NICK_HALFOP       21
-#define COLOR_WIN_NICK_VOICE        22
-#define COLOR_WIN_NICK_SEP          23
-#define COLOR_WIN_NICK_SELF         24
-#define COLOR_WIN_NICK_PRIVATE      25
-#define COLOR_WIN_NICK_FIRST        26
-#define COLOR_WIN_NICK_LAST         35
+#define COLOR_WIN_CHAT_HIGHLIGHT    11
+#define COLOR_WIN_STATUS            12
+#define COLOR_WIN_STATUS_ACTIVE     13
+#define COLOR_WIN_STATUS_DATA_MSG   14
+#define COLOR_WIN_STATUS_DATA_OTHER 15
+#define COLOR_WIN_STATUS_MORE       16
+#define COLOR_WIN_INPUT             17
+#define COLOR_WIN_INPUT_CHANNEL     18
+#define COLOR_WIN_INPUT_NICK        19
+#define COLOR_WIN_NICK              20
+#define COLOR_WIN_NICK_OP           21
+#define COLOR_WIN_NICK_HALFOP       22
+#define COLOR_WIN_NICK_VOICE        23
+#define COLOR_WIN_NICK_SEP          24
+#define COLOR_WIN_NICK_SELF         25
+#define COLOR_WIN_NICK_PRIVATE      26
+#define COLOR_WIN_NICK_FIRST        27
+#define COLOR_WIN_NICK_LAST         36
 #define COLOR_WIN_NICK_NUMBER       (COLOR_WIN_NICK_LAST - COLOR_WIN_NICK_FIRST + 1)
 
 #define SERVER(window)  ((t_irc_server *)(window->server))
