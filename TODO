@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2003-11-23
+TODO - 2003-12-26
 
 Legend:
   #  done
@@ -12,17 +12,8 @@ Legend:
 
 v0.0.4:
 ------
- 
- * IRC protocol:
-    + "/mode" command: change the user/channels modes
-
- * WeeChat commands:
-    + "/set" command: allow the user to set the WeeChat variables
-      under WeeChat without editing the config file (colours, time
-      format, etc)
 
  * Interface:
-    + Gtk GUI
     + internationalization (traduce WeeChat in many languages)
 
  * Configuration:
@@ -31,16 +22,17 @@ v0.0.4:
  * Plugins:
     + Perl plugin
     # "/perl load" and "/perl unload" commands to (un)load Perl scripts
-    - auto-load Perl scripts at startup
+    # auto-load Perl scripts at startup
 
 
 Future versions:
 ---------------
 
- * General
+ * General:
     - Windows version
 
  * IRC protocol:
+    + "/mode" command: change the user/channels modes
     - "/dcc" command (for chat and sending/receiving files)
     - complete "/list" command: add regexp search, display only channels that
       match regexp
@@ -52,6 +44,9 @@ Future versions:
       nick/host connect to the given irc network
 
  * WeeChat commands:
+    + "/set" command: allow the user to set the WeeChat variables
+      under WeeChat without editing the config file (colours, time
+      format, etc)
     - "/reload" command: reload the WeeChat's config file
     - "/highlight" command: highlight a given word when it appears on
       channels/privates
@@ -63,6 +58,7 @@ Future versions:
       channel/private
 
  * Interface:
+    + Gtk GUI
     - display current channel modes (example : #weechat(+nt))
     - interpret special chars in messages (color & bold for example)
     - many channel windows in one window/term (window split)

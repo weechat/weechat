@@ -27,7 +27,11 @@
 #endif
 
 #include <stdlib.h>
+#include <unistd.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <dirent.h>
 #include "../common/weechat.h"
 #include "plugins.h"
 #include "../irc/irc.h"
@@ -38,12 +42,66 @@
 #endif
 
 
+char *plugin_name[3] = { "Perl", "Python", "Ruby" };
+
 t_plugin_handler *plugin_msg_handlers = NULL;
 t_plugin_handler *last_plugin_msg_handler = NULL;
 
 t_plugin_handler *plugin_cmd_handlers = NULL;
 t_plugin_handler *last_plugin_cmd_handler = NULL;
 
+
+/*
+ * plugin_auto_load: auto-load all scripts in a directory
+ */
+
+void
+plugin_auto_load (int plugin_type, char *directory)
+{
+    char *dir_name, *current_dir;
+    DIR *dir;
+    struct dirent *entry;
+    struct stat statbuf;
+    
+    /* build directory, adding WeeChat home */
+    dir_name =
+        (char *) malloc ((strlen (weechat_home) + strlen (directory) + 2) * sizeof (char));
+    sprintf (dir_name, "%s%s%s", weechat_home, DIR_SEPARATOR, directory);
+    
+    /* save working directory */
+    current_dir = (char *) malloc (1024 * sizeof (char));
+    if (!getcwd (current_dir, 1024 - 1))
+    {
+        free (current_dir);
+        current_dir = NULL;
+    }
+    
+    /* browse autoload directory */
+    dir = opendir (dir_name);
+    chdir (dir_name);
+    if (dir)
+    {
+        while ((entry = readdir (dir)))
+        {
+            lstat (entry->d_name, &statbuf);
+            if (! S_ISDIR(statbuf.st_mode))
+            {
+                wee_log_printf (_("auto-loading %s script: %s%s%s\n"),
+                                plugin_name[plugin_type],
+                                dir_name, DIR_SEPARATOR, entry->d_name);
+                plugin_load (plugin_type, entry->d_name);
+            }
+        }
+    }
+    
+    /* restore working directory */
+    if (current_dir)
+    {
+        chdir (current_dir);
+        free (current_dir);
+    }
+    free (dir_name);
+}
 
 /*
  * plugin_init: initialize all plugins
@@ -54,6 +112,7 @@ plugin_init ()
 {
     #ifdef PLUGIN_PERL
     wee_perl_init();
+    plugin_auto_load (PLUGIN_TYPE_PERL, "perl/autoload");
     #endif
 }
 

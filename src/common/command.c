@@ -993,6 +993,7 @@ weechat_cmd_perl (int argc, char **argv)
     t_plugin_script *ptr_plugin_script;
     t_plugin_handler *ptr_plugin_handler;
     int handler_found;
+    char *path_script;
     
     #ifdef PLUGIN_PERL
     switch (argc)
@@ -1078,7 +1079,19 @@ weechat_cmd_perl (int argc, char **argv)
             if (strcmp (argv[0], "load") == 0)
             {
                 /* load Perl script */
-                plugin_load (PLUGIN_TYPE_PERL, argv[1]);
+                if (strstr(argv[1], DIR_SEPARATOR))
+                    path_script = NULL;
+                else
+                {
+                    path_script = (char *) malloc ((strlen (weechat_home) +
+                        strlen (argv[1]) + 7) * sizeof (char));
+                    sprintf (path_script, "%s%s%s%s%s", weechat_home,
+                             DIR_SEPARATOR, "perl", DIR_SEPARATOR, argv[1]);
+                }
+                plugin_load (PLUGIN_TYPE_PERL,
+                             (path_script) ? path_script : argv[1]);
+                if (path_script)
+                    free (path_script);
             }
             else
             {

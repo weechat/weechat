@@ -86,6 +86,15 @@
     "  -l, --license       display WeeChat license\n" \
     "  -v, --version       display WeeChat version\n\n"
 
+/* directory separator, depending on OS */
+
+#ifdef _WIN32
+    #define DIR_SEPARATOR "\\"
+#else
+    #define DIR_SEPARATOR "/"
+#endif
+
+/* global variables and functions */
 
 extern int quit_weechat;
 extern char *weechat_home;

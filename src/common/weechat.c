@@ -62,7 +62,7 @@
 
 int quit_weechat;       /* = 1 if quit request from user... why ? :'(        */
 char *weechat_home;     /* WeeChat home dir. (example: /home/toto/.weechat)  */
-FILE *log_file;         /* WeeChat log file (~/.weechat/weechat.log          */
+FILE *log_file;         /* WeeChat log file (~/.weechat/weechat.log)         */
 
 
 /*
@@ -73,6 +73,7 @@ FILE *log_file;         /* WeeChat log file (~/.weechat/weechat.log          */
 void
 my_sigint ()
 {
+    /* do nothing */
 }
 
 /*
@@ -142,31 +143,82 @@ wee_parse_args (int argc, char *argv[])
 }
 
 /*
- * wee_create_home_dir: create weechat home directory (if not found)
+ * wee_create_dir: create a directory
+ *                 return: 1 if ok (or directory already exists)
+ *                         0 if error
  */
 
-void
-wee_create_home_dir ()
+int
+wee_create_dir (char *directory)
 {
-    int return_code;
-
-    /* TODO: rewrite this code for Windows version */
-    weechat_home =
-        (char *) malloc ((strlen (getenv ("HOME")) + 10) * sizeof (char));
-    sprintf (weechat_home, "%s/.weechat", getenv ("HOME"));
-    
-    /* try to create home directory */
-    return_code = mkdir (weechat_home, 0755);
-    if (return_code < 0)
+    if (mkdir (directory, 0755) < 0)
     {
         /* exit if error (except if directory already exists) */
         if (errno != EEXIST)
         {
             fprintf (stderr, _("%s cannot create directory \"%s\"\n"),
-                     WEECHAT_ERROR, weechat_home);
-            exit (1);
+                     WEECHAT_ERROR, directory);
+            return 0;
         }
     }
+    return 1;
+}
+
+/*
+ * wee_create_home_dirs: create (if not found):
+ *                       - WeeChat home directory ("~/.weechat")
+ *                       - "perl" directory (and "autoload")
+ *                       - "ruby" directory (and "autoload")
+ *                       - "python" directory (and "autoload")
+ */
+
+void
+wee_create_home_dirs ()
+{
+    char *dir_name;
+
+    /* TODO: rewrite this code for Windows version */
+    weechat_home =
+        (char *) malloc ((strlen (getenv ("HOME")) + 10) * sizeof (char));
+    sprintf (weechat_home, "%s%s.weechat", getenv ("HOME"), DIR_SEPARATOR);
+    
+    /* create home directory "~/.weechat" ; error is fatal */
+    if (!wee_create_dir (weechat_home))
+        exit (1);
+    
+    dir_name = (char *) malloc ((strlen (weechat_home) + 64) * sizeof (char));
+    
+    /* create "~/.weechat/perl" */
+    sprintf (dir_name, "%s%s%s", weechat_home, DIR_SEPARATOR, "perl");
+    if (wee_create_dir (dir_name))
+    {
+        /* create "~/.weechat/perl/autoload" */
+        sprintf (dir_name, "%s%s%s%s%s", weechat_home, DIR_SEPARATOR, "perl",
+                 DIR_SEPARATOR, "autoload");
+        wee_create_dir (dir_name);
+    }
+    
+    /* create "~/.weechat/python" */
+    sprintf (dir_name, "%s%s%s", weechat_home, DIR_SEPARATOR, "python");
+    if (wee_create_dir (dir_name))
+    {
+        /* create "~/.weechat/python/autoload" */
+        sprintf (dir_name, "%s%s%s%s%s", weechat_home, DIR_SEPARATOR, "python",
+                 DIR_SEPARATOR, "autoload");
+        wee_create_dir (dir_name);
+    }
+    
+    /* create "~/.weechat/ruby" */
+    sprintf (dir_name, "%s%s%s", weechat_home, DIR_SEPARATOR, "ruby");
+    if (wee_create_dir (dir_name))
+    {
+        /* create "~/.weechat/ruby/autoload" */
+        sprintf (dir_name, "%s%s%s%s%s", weechat_home, DIR_SEPARATOR, "ruby",
+                 DIR_SEPARATOR, "autoload");
+        wee_create_dir (dir_name);
+    }
+    
+    free (dir_name);
 }
 
 /*
@@ -200,8 +252,8 @@ wee_init_log ()
     {
         free (filename);
         fprintf (stderr,
-                 _("%s unable to create/append to log file (~/.weechat/"
-                 WEECHAT_LOG_NAME), WEECHAT_ERROR);
+                 _("%s unable to create/append to log file (~/.weechat/%s)"),
+                 WEECHAT_ERROR, WEECHAT_LOG_NAME);
     }
     free (filename);
 }
@@ -277,7 +329,7 @@ main (int argc, char *argv[])
     gui_pre_init (&argc, &argv);    /* pre-initiliaze interface             */
     wee_init_vars ();               /* initialize some variables            */
     wee_parse_args (argc, argv);    /* parse command line args              */
-    wee_create_home_dir ();         /* create weechat home directory        */
+    wee_create_home_dirs ();        /* create WeeChat directories           */
     wee_init_log ();                /* init log file                        */
     index_command_build ();         /* build commands index  for completion */
     
