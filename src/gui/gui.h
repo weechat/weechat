@@ -247,9 +247,8 @@ extern t_gui_buffer *last_gui_buffer;
 extern t_gui_buffer *buffer_before_dcc;
 extern t_gui_infobar *gui_infobar;
 
-/* prototypes */
-
 /* GUI independent functions */
+
 extern t_gui_window *gui_window_new (int, int, int, int);
 extern t_gui_buffer *gui_buffer_new (t_gui_window *, void *, void *, int, int);
 extern void gui_buffer_clear (t_gui_buffer *);
@@ -267,7 +266,9 @@ extern void gui_move_next_word (t_gui_buffer *);
 extern void gui_buffer_insert_string (t_gui_buffer *, char *, int);
 extern t_gui_buffer *gui_switch_to_buffer_by_number (t_gui_window *, int);
 extern void gui_move_buffer_to_number (t_gui_window *, int);
+
 /* GUI dependant functions */
+
 extern int gui_assign_color (int *, char *);
 extern int gui_get_color_by_name (char *);
 extern char *gui_get_color_by_value (int);
@@ -292,6 +293,12 @@ extern void gui_curses_resize_handler ();
 extern void gui_window_init_subwindows (t_gui_window *);
 extern void gui_window_split_horiz (t_gui_window *);
 extern void gui_window_split_vertic (t_gui_window *);
+extern int gui_window_merge_up (t_gui_window *);
+extern int gui_window_merge_down (t_gui_window *);
+extern int gui_window_merge_left (t_gui_window *);
+extern int gui_window_merge_right (t_gui_window *);
+extern void gui_window_merge_auto (t_gui_window *);
+extern void gui_window_merge_all (t_gui_window *);
 extern void gui_pre_init (int *, char **[]);
 extern void gui_init_colors ();
 extern void gui_set_window_title ();

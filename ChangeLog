@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-02-05
+ChangeLog - 2005-02-06
 
 
 Version 0.1.0 (under dev!):
+   * improved /window command: now split and merge are ok
    * away nicks are now displayed with another color (new option: "irc_away_check")
    * added away indicator in status bar
    * added lag indicator (and auto-disconnect after a delay if important lag)
@@ -21,6 +22,7 @@ Version 0.1.0 (under dev!):
    * fixed many memory leaks
    * fixed colors bug: removed "gray" color (replaced by "default"), colors are
      ok when terminal has white (or light) background
+   * fixed crash when resizing terminal to small size
    * fixed crash when multiple servers and big messages received from server
    * fixed crash when closing some private buffers
    * fixed crash when unknown section with option(s) in config file

@@ -233,21 +233,46 @@ completion_build_list (t_completion *completion, void *channel)
         }
         return;
     }
-    if ((strcasecmp (completion->base_command, "window") == 0)
-        && (completion->base_command_arg == 2))
+    if (strcasecmp (completion->base_command, "window") == 0)
     {
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     "close");
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     "list");
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     "splith");
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     "splitv");
+        if (completion->base_command_arg == 1)
+        {
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         "list");
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         "splith");
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         "splitv");
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         "merge");
+            return;
+        }
+        
+        if (completion->base_command_arg == 2)
+        {
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         "down");
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         "up");
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         "left");
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         "right");
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         "all");
+            return;
+        }
+        
+        completion_stop (completion);
         return;
     }
     

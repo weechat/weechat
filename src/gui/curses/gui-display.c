@@ -299,6 +299,29 @@ gui_curses_window_clear (WINDOW *window)
 }
 
 /*
+ * gui_draw_window_separator: draw window separation
+ */
+
+void
+gui_draw_window_separator (t_gui_window *window)
+{
+    if (window->win_separator)
+        delwin (window->win_separator);
+    
+    if (window->win_x > 0)
+    {
+        window->win_separator = newwin (window->win_height,
+                                        1,
+                                        window->win_y,
+                                        window->win_x - 1);
+        gui_window_set_color (window->win_separator, COLOR_WIN_TITLE);
+        wborder (window->win_separator, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
+        wrefresh (window->win_separator);
+        refresh ();
+    }
+}
+
+/*
  * gui_draw_buffer_title: draw title window for a buffer
  */
 
@@ -419,6 +442,8 @@ gui_display_end_of_line (t_gui_window *window, t_gui_line *line, int count)
         {
             num_displayed = window->win_chat_width -
                 window->win_chat_cursor_x;
+            if (num_displayed < 0)
+                return;
             saved_char = ptr_message->message[offset + num_displayed];
             ptr_message->message[offset + num_displayed] = '\0';
             if (lines_displayed >= num_lines - count)
@@ -1583,49 +1608,6 @@ gui_move_page_down (t_gui_window *window)
 }
 
 /*
- * gui_curses_resize_handler: called when term size is modified
- */
-
-void
-gui_curses_resize_handler ()
-{
-    t_gui_window *ptr_win, *old_current_window;
-    int old_width, old_height;
-    int new_width, new_height;
-    
-    getmaxyx (stdscr, old_height, old_width);
-    
-    endwin ();
-    refresh ();
-    
-    getmaxyx (stdscr, new_height, new_width);
-    
-    old_current_window = gui_current_window;
-    
-    /* TODO: manage when some windows are outside new term size */
-    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-    {
-        ptr_win->dcc_first = NULL;
-        ptr_win->dcc_selected = NULL;
-        if (ptr_win->win_x + ptr_win->win_width == old_width)
-            ptr_win->win_width = new_width - ptr_win->win_x;
-        if (ptr_win->win_y + ptr_win->win_height == old_height)
-            ptr_win->win_height = new_height - ptr_win->win_y;
-        gui_switch_to_buffer (ptr_win, ptr_win->buffer);
-    }
-    
-    gui_current_window = old_current_window;
-    if ((new_width > 5) && (new_height > 5))
-    {
-        gui_ok = 1;
-        gui_calculate_pos_size (gui_current_window);
-        gui_redraw_buffer (gui_current_window->buffer);
-    }
-    else
-        gui_ok = 0;
-}
-
-/*
  * gui_window_init_subviews: init subviews for a WeeChat window
  */
 
@@ -1703,16 +1685,227 @@ gui_window_split_vertic (t_gui_window *window)
         gui_switch_to_buffer (gui_current_window, gui_current_window->buffer);
         gui_redraw_buffer (gui_current_window->buffer);
         
-        /* create & draw separator if window is not on the left */
-        gui_current_window->win_separator = newwin (gui_current_window->win_height,
-                                                    1,
-                                                    gui_current_window->win_y,
-                                                    gui_current_window->win_x - 1);
-        gui_window_set_color (gui_current_window->win_separator, COLOR_WIN_TITLE);
-        wborder (gui_current_window->win_separator, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
-        wrefresh (gui_current_window->win_separator);
-        refresh ();
+        /* create & draw separator */
+        gui_draw_window_separator (gui_current_window);
     }
+}
+
+/*
+ * gui_window_merge_down: merge window, direction down
+ */
+
+int
+gui_window_merge_down (t_gui_window *window)
+{
+    t_gui_window *ptr_win;
+    
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        if (ptr_win != window)
+        {
+            if ((ptr_win->win_y == window->win_y + window->win_height)
+                && (ptr_win->win_x == window->win_x)
+                && (ptr_win->win_width == window->win_width))
+            {
+                window->win_height += ptr_win->win_height;
+                gui_window_free (ptr_win);
+                gui_switch_to_buffer (window, window->buffer);
+                gui_redraw_buffer (window->buffer);
+                return 0;
+            }
+        }
+    }
+    
+    /* no window found below current window */
+    return -1;
+}
+
+/*
+ * gui_window_merge_up: merge window, direction up
+ */
+
+int
+gui_window_merge_up (t_gui_window *window)
+{
+    t_gui_window *ptr_win;
+    
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        if (ptr_win != window)
+        {
+            if ((ptr_win->win_y + ptr_win->win_height == window->win_y)
+                && (ptr_win->win_x == window->win_x)
+                && (ptr_win->win_width == window->win_width))
+            {
+                window->win_height += ptr_win->win_height;
+                window->win_y -= ptr_win->win_height;
+                gui_window_free (ptr_win);
+                gui_switch_to_buffer (window, window->buffer);
+                gui_redraw_buffer (window->buffer);
+                return 0;
+            }
+        }
+    }
+    
+    /* no window found above current window */
+    return -1;
+}
+
+/*
+ * gui_window_merge_left: merge window, direction left
+ */
+
+int
+gui_window_merge_left (t_gui_window *window)
+{
+    t_gui_window *ptr_win;
+    
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        if (ptr_win != window)
+        {
+            if ((ptr_win->win_x + ptr_win->win_width + 1 == window->win_x)
+                && (ptr_win->win_y == window->win_y)
+                && (ptr_win->win_height == window->win_height))
+            {
+                window->win_width += ptr_win->win_width + 1;
+                window->win_x -= ptr_win->win_width + 1;
+                gui_window_free (ptr_win);
+                gui_switch_to_buffer (window, window->buffer);
+                gui_redraw_buffer (window->buffer);
+                return 0;
+            }
+        }
+    }
+    
+    /* no window found on the left of current window */
+    return -1;
+}
+
+/*
+ * gui_window_merge_right: merge window, direction right
+ */
+
+int
+gui_window_merge_right (t_gui_window *window)
+{
+    t_gui_window *ptr_win;
+    
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        if (ptr_win != window)
+        {
+            if ((ptr_win->win_x == window->win_x + window->win_width + 1)
+                && (ptr_win->win_y == window->win_y)
+                && (ptr_win->win_height == window->win_height))
+            {
+                window->win_width += ptr_win->win_width + 1;
+                gui_window_free (ptr_win);
+                gui_switch_to_buffer (window, window->buffer);
+                gui_redraw_buffer (window->buffer);
+                return 0;
+            }
+        }
+    }
+    
+    /* no window found on the right of current window */
+    return -1;
+}
+
+/*
+ * gui_window_merge: merge a window, direction auto
+ */
+
+void
+gui_window_merge_auto (t_gui_window *window)
+{
+    if (gui_window_merge_down (window) == 0)
+        return;
+    if (gui_window_merge_up (window) == 0)
+        return;
+    if (gui_window_merge_left (window) == 0)
+        return;
+    if (gui_window_merge_right (window) == 0)
+        return;
+}
+
+/*
+ * gui_window_merge_all: merge all windows
+ */
+
+void
+gui_window_merge_all (t_gui_window *window)
+{
+    while (gui_windows->next_window)
+    {
+        gui_window_free ((gui_windows == window) ? gui_windows->next_window : gui_windows);
+    }
+    window->win_x = 0;
+    window->win_y = 0;
+    window->win_width = COLS;
+    window->win_height = LINES;
+    gui_switch_to_buffer (window, window->buffer);
+    gui_redraw_buffer (window->buffer);
+}
+
+/*
+ * gui_curses_resize_handler: called when term size is modified
+ */
+
+void
+gui_curses_resize_handler ()
+{
+    t_gui_window *ptr_win, *old_current_window;
+    int old_width, old_height;
+    int new_width, new_height;
+    int merge_all_windows;
+    
+    getmaxyx (stdscr, old_height, old_width);
+    
+    endwin ();
+    refresh ();
+    
+    getmaxyx (stdscr, new_height, new_width);
+    
+    old_current_window = gui_current_window;
+    
+    gui_ok = ((new_width > 5) && (new_height > 5));
+    
+    merge_all_windows = 0;
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        ptr_win->dcc_first = NULL;
+        ptr_win->dcc_selected = NULL;
+        
+        if (!merge_all_windows)
+        {
+            if ((ptr_win->win_x > new_width - 5)
+                || (ptr_win->win_y > new_height - 5))
+                merge_all_windows = 1;
+            else
+            {
+                if (ptr_win->win_x + ptr_win->win_width == old_width)
+                    ptr_win->win_width = new_width - ptr_win->win_x;
+                if (ptr_win->win_y + ptr_win->win_height == old_height)
+                    ptr_win->win_height = new_height - ptr_win->win_y;
+                if ((ptr_win->win_width < 5) || (ptr_win->win_height < 5))
+                    merge_all_windows = 1;
+            }
+        }
+    }
+    
+    if (merge_all_windows)
+        gui_window_merge_all (gui_current_window);
+    
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        gui_calculate_pos_size (ptr_win);
+        gui_switch_to_buffer (ptr_win, ptr_win->buffer);
+        gui_draw_window_separator (ptr_win);
+    }
+    
+    gui_current_window = old_current_window;
+    gui_redraw_buffer (gui_current_window->buffer);
 }
 
 /*

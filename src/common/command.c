@@ -99,13 +99,13 @@ t_weechat_command weechat_commands[] =
     N_("alias_name"), N_("alias_name: name of alias to remove"),
     1, 1, NULL, weechat_cmd_unalias },
   { "window", N_("manage windows"),
-    N_("[action]"),
-    N_("action: action to do:\n"
-    "   close  close current window (under development!)\n"
-    "    list  list opened windows (no parameter implies this list)\n"
-    "  splith  split current window horizontally\n"
-    "  splitv  split current window vertically"),
-    0, MAX_ARGS, weechat_cmd_window, NULL },
+    N_("[list | splith | splitv | [merge [down | up | left | right | all]]]"),
+    N_(
+    "  list  list opened windows (no parameter implies this list)\n"
+    "splith  split current window horizontally\n"
+    "splitv  split current window vertically\n"
+    " merge  merge window with another"),
+    0, 2, weechat_cmd_window, NULL },
   { NULL, NULL, NULL, NULL, 0, 0, NULL, NULL }
 };
 
@@ -788,6 +788,43 @@ weechat_cmd_alias (char *arguments)
 }
 
 /*
+ * weechat_cmd_buffer_display_info: display info about a buffer
+ */
+
+void
+weechat_cmd_buffer_display_info (t_gui_buffer *buffer)
+{
+    if (buffer->dcc)
+        gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "DCC\n");
+    else if (BUFFER_IS_SERVER (buffer))
+    {
+        gui_printf (NULL, _("Server: "));
+        gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
+                          "%s\n", SERVER(buffer)->name);
+    }
+    else if (BUFFER_IS_CHANNEL (buffer))
+    {
+        gui_printf (NULL, _("Channel: "));
+        gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
+                          "%s", CHANNEL(buffer)->name);
+        gui_printf (NULL, _(" (server: "));
+        gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
+                          "%s", SERVER(buffer)->name);
+        gui_printf (NULL, ")\n");
+    }
+    else if (BUFFER_IS_PRIVATE (buffer))
+    {
+        gui_printf (NULL, _("Private with: "));
+        gui_printf_color (NULL, COLOR_WIN_CHAT_NICK,
+                          "%s", CHANNEL(buffer)->name);
+        gui_printf (NULL, _(" (server: "));
+        gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
+                          "%s", SERVER(buffer)->name);
+        gui_printf (NULL, ")\n");
+    }
+}
+
+/*
  * weechat_cmd_buffer: manage buffers
  */
 
@@ -813,34 +850,7 @@ weechat_cmd_buffer (int argc, char **argv)
             gui_printf (NULL, "%d", ptr_buffer->number);
             gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "] ");
             
-            if (ptr_buffer->dcc)
-                gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "DCC\n");
-            else if (BUFFER_IS_SERVER (ptr_buffer))
-            {
-                gui_printf (NULL, _("Server: "));
-                gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
-                                  "%s\n", SERVER(ptr_buffer)->name);
-            }
-            else if (BUFFER_IS_CHANNEL (ptr_buffer))
-            {
-                gui_printf (NULL, _("Channel: "));
-                gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
-                                  "%s", CHANNEL(ptr_buffer)->name);
-                gui_printf (NULL, _(" (server: "));
-                gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
-                                  "%s", SERVER(ptr_buffer)->name);
-                gui_printf (NULL, ")\n");
-            }
-            else if (BUFFER_IS_PRIVATE (ptr_buffer))
-            {
-                gui_printf (NULL, _("Private with: "));
-                gui_printf_color (NULL, COLOR_WIN_CHAT_NICK,
-                                  "%s", CHANNEL(ptr_buffer)->name);
-                gui_printf (NULL, _(" (server: "));
-                gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
-                                  "%s", SERVER(ptr_buffer)->name);
-                gui_printf (NULL, ")\n");
-            }
+            weechat_cmd_buffer_display_info (ptr_buffer);
         }
     }
     else
@@ -1966,11 +1976,36 @@ weechat_cmd_unalias (char *arguments)
 int
 weechat_cmd_window (int argc, char **argv)
 {
+    t_gui_window *ptr_win;
+    int i;
+    
     if ((argc == 0) || ((argc == 1) && (strcasecmp (argv[0], "list") == 0)))
     {
         /* list opened windows */
-        irc_display_prefix (NULL, PREFIX_ERROR);
-        gui_printf (NULL, "window list -- NOT DEVELOPED!\n");
+        
+        irc_display_prefix (NULL, PREFIX_INFO);
+        gui_printf (NULL, _("Opened windows:\n"));
+        
+        i = 1;
+        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        {
+            irc_display_prefix (NULL, PREFIX_INFO);
+            gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "[");
+            gui_printf (NULL, "%d", i);
+            gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "] (");
+            gui_printf (NULL, "%d", ptr_win->win_x);
+            gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, ":");
+            gui_printf (NULL, "%d", ptr_win->win_y);
+            gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, ";");
+            gui_printf (NULL, "%d", ptr_win->win_width);
+            gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "x");
+            gui_printf (NULL, "%d", ptr_win->win_height);
+            gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, ") ");
+            
+            weechat_cmd_buffer_display_info (ptr_win->buffer);
+            
+            i++;
+        }
     }
     else
     {
@@ -1984,12 +2019,39 @@ weechat_cmd_window (int argc, char **argv)
             /* split window vertically */
             gui_window_split_vertic (gui_current_window);
         }
+        else if (strcasecmp (argv[0], "merge") == 0)
+        {
+            if (argc >= 2)
+            {
+                if (strcasecmp (argv[1], "down") == 0)
+                    gui_window_merge_down (gui_current_window);
+                else if (strcasecmp (argv[1], "up") == 0)
+                    gui_window_merge_up (gui_current_window);
+                else if (strcasecmp (argv[1], "left") == 0)
+                    gui_window_merge_left (gui_current_window);
+                else if (strcasecmp (argv[1], "right") == 0)
+                    gui_window_merge_right (gui_current_window);
+                else if (strcasecmp (argv[1], "all") == 0)
+                    gui_window_merge_all (gui_current_window);
+                else
+                {
+                    irc_display_prefix (NULL, PREFIX_ERROR);
+                    gui_printf (NULL,
+                                _("%s unknown option for \"%s\" command\n"),
+                                WEECHAT_ERROR, "window merge");
+                    return -1;
+                }
+            }
+            else
+                gui_window_merge_auto (gui_current_window);
+        }
         else
         {
             irc_display_prefix (NULL, PREFIX_ERROR);
             gui_printf (NULL,
                         _("%s unknown option for \"%s\" command\n"),
                         WEECHAT_ERROR, "window");
+            return -1;
         }
     }
     return 0;
