@@ -28,7 +28,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.0.5-pre2 - 21 janvier 2004
+@subtitle Documentation pour WeeChat v0.0.5-pre3 - 24 janvier 2004
 
 @image{weechat_image}
 
@@ -241,7 +241,7 @@ Liste des options du fichier de configuration :@*
 
 @table @kbd
 @item look_set_title
-D@'efinit le titre de la fen@^etre de terminal (GUI curses) avec le nom et la version@*
+D@'efinit le titre de la fen@^etre (terminal pour l'interface Curses) avec le nom et la version@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
 @item look_startup_logo
 Afficher le logo WeeChat au d@'emarrage@*
@@ -291,6 +291,9 @@ Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
 @item look_infobar_timestamp
 Horodatage pour les conversations sauvegard@'ees@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '%B, %A %d %G - %H:%M'@*
+@item look_infobar_delay_highlight
+D@'elai (en secondes) pour la notification des messages dans la barre d'infos (0 = d@'esactiver les notifications dans la barre d'infos)@*
+Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 7@*
 @item col_title
 Couleur pour la barre de titre@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'gray'@*
@@ -351,6 +354,9 @@ Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'blue'@*
 @item col_infobar
 Couleur pour la barre d'infos@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'black'@*
+@item col_infobar_highlight
+Couleur pour la notification dans la barre d'infos@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'white'@*
 @item col_infobar_bg
 Couleur de fond pour la fen@^etre de barre d'infos@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'cyan'@*

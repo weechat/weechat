@@ -28,7 +28,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.0.5-pre2 - January, 21 2004
+@subtitle Documentation for WeeChat v0.0.5-pre3 - January, 24 2004
 
 @image{weechat_image}
 
@@ -241,7 +241,7 @@ Here is a list of all options for config file:@*
 
 @table @kbd
 @item look_set_title
-Set title for terminal window (curses GUI) with name & version@*
+Set title for window (terminal for Curses GUI) with name & version@*
 Type: boolean (values: 'on' or 'off'), default value: 'on'@*
 @item look_startup_logo
 Display WeeChat logo at startup@*
@@ -291,6 +291,9 @@ Type: boolean (values: 'on' or 'off'), default value: 'on'@*
 @item look_infobar_timestamp
 Timestamp for time in infobar@*
 Type: string (any string), default value: '%B, %A %d %G - %H:%M'@*
+@item look_infobar_delay_highlight
+Delay (in seconds) for highlight messages in infobar (0 = disable highlight notifications in infobar)@*
+Type: integer (values: between 0 and 2147483647), default value: 7@*
 @item col_title
 Color for title bar@*
 Type: color (Curses or Gtk color), default value: 'gray'@*
@@ -351,6 +354,9 @@ Type: color (Curses or Gtk color), default value: 'blue'@*
 @item col_infobar
 Color for info bar text@*
 Type: color (Curses or Gtk color), default value: 'black'@*
+@item col_infobar_highlight
+Color for info bar highlight notification@*
+Type: color (Curses or Gtk color), default value: 'white'@*
 @item col_infobar_bg
 Background for info bar window@*
 Type: color (Curses or Gtk color), default value: 'cyan'@*
