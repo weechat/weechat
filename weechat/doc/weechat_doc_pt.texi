@@ -35,7 +35,7 @@
 
 @title WeeChat - Guia do Utilizador
 @subtitle Cliente de IRC rapido, leve e extencivel
-@subtitle Documenta@,{c}@~ao do WeeChat v0.1.1-cvs - 11 de Mar@,{c}o de 2005
+@subtitle Documenta@,{c}@~ao do WeeChat v0.1.1 - 20 de Mar@,{c}o de 2005
 
 @image{weechat_image}
 
@@ -206,6 +206,7 @@ Segue agora as instru@,{c}@~oes para compilar o c@'odigo fonte - @xref{Codigo Fo
 * Invocar o WeeChat::
 * Recursos de teclado::
 * Comandos do WeeChat::
+* FIFO pipe::
 @end menu
 
 @node Invocar o WeeChat, Recursos de teclado, Utilizacao, Utilizacao
@@ -309,10 +310,53 @@ Comute ao amortecedor pelo n@'umero@*
 @*
 @end table
 
-@node Comandos do WeeChat, , Recursos de teclado, Utilizacao
+@node Comandos do WeeChat, FIFO pipe, Recursos de teclado, Utilizacao
 @section Comandos do WeeChat
 
 N@~AO ESCRITO !
+
+@node FIFO pipe, , Comandos do WeeChat, Utilizacao
+@section FIFO pipe
+
+You can remote control WeeChat, by sending commands or text to a FIFO pipe
+(you have to enable option "irc_fifo_pipe", it is disabled by default).@*
+The FIFO pipe is located in ~/.weechat/ and is called "weechat_fifo_xxxxx"
+(where xxxxx is the process ID (PID) of running WeeChat).@*
+So if many WeeChat are running, you have many FIFO pipe, one for each session.@*
+@*
+The syntax for the FIFO pipe commands/text is:@*
+@command{server,channel *text or command here}@*
+where server and channel are optional, but if channel is here, server should be too.@*
+@*
+Some examples:
+@table @asis
+@item @bullet{} change your nick on freenode to "mynick|out":
+@*
+@command{echo "freenode */nick mynick|out" >~/.weechat/weechat_fifo_12345}
+@item @bullet{} display text on #weechat channel:
+@*
+@command{echo "freenode,#weechat *hello everybody!" >~/.weechat/weechat_fifo_12345}
+@item @bullet{} display text on current channel (buffer displayed by WeeChat):
+@*
+@command{echo "*hello!" >~/.weechat/weechat_fifo_12345}@*
+@*
+@b{Warning:} this is dangerous and you should not do that except if you know what you do!
+@item @bullet{} send 2 commands to unload/reload Perl scripts (you have to separate them with \n):
+@command{echo -e "freenode */perl unload\nfreenode */perl autoload" >~/.weechat/weechat_fifo_12345}
+@end table
+@*
+You can write a script to send command to all running WeeChat at same time, for example:@*
+@verbatim
+ #!/bin/sh
+ if [ $# -eq 1 ]; then
+     for fifo in $(/bin/ls ~/.weechat/weechat_fifo_* 2>/dev/null); do
+         echo -e "$1" >$fifo
+     done
+ fi
+@end verbatim
+@*
+If the script is called "auto_weechat_command", you can run it with:@*
+@command{./auto_weechat_command "freenode,#weechat *hello"}
 
 
 @c ******************************* Extencoes *********************************

@@ -1,10 +1,10 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-03-16
+ChangeLog - 2005-03-20
 
 
-Version 0.1.1 (under dev!):
+Version 0.1.1 (2005-03-20):
    * added nicks count for channel buffers
    * added FIFO pipe for remote control
    * added crash dump when WeeChat receives SIGSEGV (Segmentation fault)

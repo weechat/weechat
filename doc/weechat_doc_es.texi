@@ -35,7 +35,7 @@
 
 @title WeeChat - Gui@'on de usuario.
 @subtitle Cliente IRC r@'apido, peque@~no y extensible
-@subtitle Documentaci@'on para WeeChat v0.1.1-cvs - 11 de marzo de 2005
+@subtitle Documentaci@'on para WeeChat v0.1.1 - 20 de marzo de 2005
 
 @image{weechat_image}
 
@@ -210,6 +210,7 @@ Luego, lee las instructiones para Paquetes de fuentes - @xref{Paquetes de fuente
 * Ficheros de configuracion::
 * Atajos de teclado::
 * Comandos WeeChat::
+* FIFO pipe::
 @end menu
 
 @node Iniciar WeeChat, Ficheros de configuracion, Uso, Uso
@@ -486,7 +487,7 @@ Mensaje de fin por defecto ('%v' ser@'a reemplazado por la versi@'on de WeeChat 
 Typo: cadena (cualquier cadena), valor por defecto: 'WeeChat %v'@*
 @item irc_away_check
 Intervalo entre dos comprobaciones de ausencia (en minutos, 0 = no comprobar)@*
-Typo: entero (valores: entre 0 y 2147483647), valor por defecto: 1@*
+Typo: entero (valores: entre 0 y 2147483647), valor por defecto: 0@*
 @item irc_lag_check
 Intervalo entre dos medidas de lag (en segundos)@*
 Typo: entero (valores: entre 30 y 2147483647), valor por defecto: 60@*
@@ -496,6 +497,9 @@ Typo: entero (valores: entre 0 y 2147483647), valor por defecto: 1@*
 @item irc_lag_disconnect
 Desconexi@'on tras un lag importante (en minutos, 0 = no desconectar nunca)@*
 Typo: entero (valores: entre 0 y 2147483647), valor por defecto: 5@*
+@item irc_fifo_pipe
+Create a FIFO pipe for remote control@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
 @item dcc_auto_accept_files
 Aceptar autom@'aticamente los ficheros dcc entrantes@*
 Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
@@ -693,7 +697,7 @@ Saltar a la memoria temporal con ese n@'umero@*
 @*
 @end table
 
-@node Comandos WeeChat, , Atajos de teclado, Uso
+@node Comandos WeeChat, FIFO pipe, Atajos de teclado, Uso
 @section Comandos WeeChat
 
 Comandos internos WeeChat:@*
@@ -818,6 +822,13 @@ revertir el estado ausente@*
 -all: revertir el estado ausente en todos los servidores conectados@*
 mensaje: mensaje para el estado ausente (si no se da ningún mensaje, se elimina el estado ausente)@*
 @*
+@item ban  [canal] [usariio [usuario ...]]
+@*
+bans nicks or hosts@*
+@*
+channel: channel for ban@*
+nickname: user or host to ban@*
+@*
 @item ctcp  usuario tipo
 @*
 enviar un mensaje ctcp@*
@@ -833,6 +844,10 @@ acci@'on: 'send' (env@'io de archivo) @'o 'chat' (charla) @'o 'close' (cerrar ch
 usuario: nombre de usuario a quien enviar el archivo o la charla@*
 fichero: nombre del fichero (en la m@'aquina local)@*
 @*
+@item dehalfop  pseudo [pseudo]
+@*
+elimina el estado de media operador de canal a/a los usuario(s)@*
+@*
 @item deop  pseudo [pseudo]
 @*
 elimina el estado de operador de canal a/a los usuario(s)@*
@@ -844,6 +859,10 @@ elimina la voz a/a los usuario(s)@*
 @item die
 @*
 cerrar el servidor@*
+@*
+@item halfop  pseudo [pseudo]
+@*
+dar el estado de media operador de canal a/a los usuario(s)@*
 @*
 @item info  [target]
 @*
@@ -878,6 +897,14 @@ expulsar forzosamente a un usuario de un canal@*
 canal: canal en el que est@'a el usuario@*
 usuario: usuario a expulsar@*
 comentario: comentario para la expulsi@'on@*
+@*
+@item kickban  [canal] usuario [comentario]
+@*
+kicks and bans a nick from a channel@*
+@*
+channel: channel where user is@*
+nickname: nickname to kick and ban@*
+comment: comment for kick@*
 @*
 @item kill  usuario comentario
 @*
@@ -1089,6 +1116,13 @@ encontrar la ruta hacia el servidor especificado@*
 @*
 target: servidor objetivo@*
 @*
+@item unban  [canal] usuario [usuario ...]
+@*
+unbans nicks or hosts@*
+@*
+channel: channel for unban@*
+nickname: user or host to unban@*
+@*
 @item userhost  usuario [usuario ...]
 @*
 devuelve una lista de informaci@'on sobre usuarios@*
@@ -1142,6 +1176,49 @@ destinatario: la respuesta deber@'ia concordar con esta m@'ascara@*
 @*
 
 @end table
+
+@node FIFO pipe, , Comandos WeeChat, Uso
+@section FIFO pipe
+
+You can remote control WeeChat, by sending commands or text to a FIFO pipe
+(you have to enable option "irc_fifo_pipe", it is disabled by default).@*
+The FIFO pipe is located in ~/.weechat/ and is called "weechat_fifo_xxxxx"
+(where xxxxx is the process ID (PID) of running WeeChat).@*
+So if many WeeChat are running, you have many FIFO pipe, one for each session.@*
+@*
+The syntax for the FIFO pipe commands/text is:@*
+@command{server,channel *text or command here}@*
+where server and channel are optional, but if channel is here, server should be too.@*
+@*
+Some examples:
+@table @asis
+@item @bullet{} change your nick on freenode to "mynick|out":
+@*
+@command{echo "freenode */nick mynick|out" >~/.weechat/weechat_fifo_12345}
+@item @bullet{} display text on #weechat channel:
+@*
+@command{echo "freenode,#weechat *hello everybody!" >~/.weechat/weechat_fifo_12345}
+@item @bullet{} display text on current channel (buffer displayed by WeeChat):
+@*
+@command{echo "*hello!" >~/.weechat/weechat_fifo_12345}@*
+@*
+@b{Warning:} this is dangerous and you should not do that except if you know what you do!
+@item @bullet{} send 2 commands to unload/reload Perl scripts (you have to separate them with \n):
+@command{echo -e "freenode */perl unload\nfreenode */perl autoload" >~/.weechat/weechat_fifo_12345}
+@end table
+@*
+You can write a script to send command to all running WeeChat at same time, for example:@*
+@verbatim
+ #!/bin/sh
+ if [ $# -eq 1 ]; then
+     for fifo in $(/bin/ls ~/.weechat/weechat_fifo_* 2>/dev/null); do
+         echo -e "$1" >$fifo
+     done
+ fi
+@end verbatim
+@*
+If the script is called "auto_weechat_command", you can run it with:@*
+@command{./auto_weechat_command "freenode,#weechat *hello"}
 
 
 @c ******************************* Extensions *********************************

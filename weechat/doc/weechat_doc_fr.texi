@@ -35,7 +35,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.1-cvs - 11 Mars 2005
+@subtitle Documentation pour WeeChat v0.1.1 - 20 Mars 2005
 
 @image{weechat_image}
 
@@ -209,6 +209,7 @@ Suivez alors les instructions du paquet sources - @xref{Paquet source}.
 * Fichier de configuration::
 * Raccourcis clavier::
 * Commandes WeeChat::
+* Tube FIFO::
 @end menu
 
 @node Lancer WeeChat, Fichier de configuration, Utilisation, Utilisation
@@ -487,7 +488,7 @@ Message de fin par d@'efaut ('%v' sera remplac@'e par la version de WeeChat dans
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: 'WeeChat %v'@*
 @item irc_away_check
 Intervalle entre deux v@'erifications des absences (en minutes, 0 = ne jemais v@'erifier)@*
-Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 1@*
+Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 0@*
 @item irc_lag_check
 Intervalle entre deux mesures de lag (en secondes)@*
 Type: entier (valeurs: entre 30 et 2147483647), valeur par d@'efaut: 60@*
@@ -497,6 +498,9 @@ Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 1@*
 @item irc_lag_disconnect
 D@'econnexion apr@`es un lag important (en minutes, 0 = ne jamais se d@'econnecter)@*
 Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 5@*
+@item irc_fifo_pipe
+Cr@'eer un tube FIFO pour le contr@^ole @`a distance@*
+Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
 @item dcc_auto_accept_files
 Accepte automatiquement les fichiers dcc entrants@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
@@ -693,7 +697,7 @@ Sauter au tampon avec ce num@'ero@*
 @*
 @end table
 
-@node Commandes WeeChat, , Raccourcis clavier, Utilisation
+@node Commandes WeeChat, Tube FIFO, Raccourcis clavier, Utilisation
 @section Commandes WeeChat
 
 Commandes internes WeeChat :@*
@@ -710,7 +714,7 @@ param@`etres: param@`etres pour la commande@*
 @*
 @item buffer  [action | nombre]
 @*
-g@`ere les buffers@*
+gestion des buffers@*
 @*
 action: action @`a effectuer:@*
   move: d@'eplacer le tampon dans la liste (peut @^etre relatif, par exemple -1)@*
@@ -818,6 +822,13 @@ basculer le statut absent@*
 -all: basculer le statut absent sur tous les serveurs connect@'es@*
 message: message pour l'absence (si pas de message donn@'e, le statut d'absence est supprim@'e)@*
 @*
+@item ban  [canal] [pseudo [pseudo ...]]
+@*
+bannit des pseudos ou masques@*
+@*
+canal: nom du canal pour le bannissement@*
+pseudo: pseudo ou masque pour le bannissement@*
+@*
 @item ctcp  pseudo type
 @*
 envoyer un message ctcp@*
@@ -833,6 +844,10 @@ action: 'send' (envoi de fichier) ou 'chat' (discussion) ou 'close' (fermeture d
 pseudo: pseudo pour envoyer le fichier ou discuter@*
 fichier: nom du fichier (sur la machine locale)@*
 @*
+@item dehalfop  pseudo [pseudo]
+@*
+retire le statut de demi-op@'erateur du canal @`a/aux nick(s)@*
+@*
 @item deop  pseudo [pseudo]
 @*
 retire le statut d'op@'erateur du canal @`a/aux nick(s)@*
@@ -844,6 +859,10 @@ retire la voix du/des pseudo(s)@*
 @item die
 @*
 arr@^eter le serveur@*
+@*
+@item halfop  pseudo [pseudo]
+@*
+donner le statut de demi-op@'erateur @`a un/des utilisateur(s)@*
 @*
 @item info  [cible]
 @*
@@ -877,6 +896,14 @@ retirer par la force un utilisateur d'un canal@*
 @*
 canal: canal o@`u l'utilisateur se trouve@*
 pseudo: utilisateur @`a @'eliminer@*
+commentaire: commentaire pour l'@'elimination@*
+@*
+@item kickban  [canal] pseudo [commentaire]
+@*
+retirer par la force un utilisateur d'un canal et le bannir@*
+@*
+canal: canal o@`u l'utilisateur se trouve@*
+pseudo: utilisateur @`a @'eliminer et bannir@*
 commentaire: commentaire pour l'@'elimination@*
 @*
 @item kill  pseudo commentaire
@@ -1021,7 +1048,7 @@ donn@'ees: donn@'ees brutes @`a envoyer@*
 @*
 @item rehash
 @*
-demander au serveur de recharger son fichier de config@*
+demander au serveur de recharger son fichier de configuration@*
 @*
 @item restart
 @*
@@ -1089,6 +1116,13 @@ trouver le chemin jusqu'@`a un serveur sp@'ecifique@*
 @*
 cible: serveur@*
 @*
+@item unban  [canal] pseudo [pseudo ...]
+@*
+supprime le bannissement sur des pseudos ou masques@*
+@*
+canal: nom du canal pour supprimer le bannissement@*
+pseudo: pseudo ou masque pour supprimer le bannissement@*
+@*
 @item userhost  pseudo [pseudo ...]
 @*
 retourne une liste d'informations sur des utilisateurs@*
@@ -1142,6 +1176,50 @@ cible: la r@'eponse doit correspondre @`a ce masque@*
 @*
 
 @end table
+
+@node Tube FIFO, , Commandes WeeChat, Utilisation
+@section Tube FIFO
+
+Vous pouvez contr@^oler WeeChat @`a distance, en envoyant des commandes ou du
+texte dans un tube FIFO (l'option "irc_fifo_pipe" doit @^etre activ@'ee, elle
+est d@'esactiv@'ee par d@'efaut).@*
+Le tube FIFO est dans le r@'epertoire ~/.weechat/ et s'appelle "weechat_fifo_xxxxx"
+(o@`u xxxxx est l'ID du processus (PID) du WeeChat qui tourne).@*
+Donc si plusieurs WeeChat tournent, vous avez plusieurs tubes FIFO, un pour
+chaque session.@*
+@*
+La syntaxe pour envoyer des commandes ou du texte dans le tube FIFO est la suivante :@*
+@command{serveur,canal *texte ou commande ici}@*
+o@`u le serveur et le canal sont facultatifs, mais si le canal est l@`a, le
+serveur doit l'@^etre aussi.@*
+@*
+Quelques exemples :
+@table @asis
+@item @bullet{} changement du pseudo sur freenode en "pseudo|absent":
+@command{echo "freenode */nick pseudo|absent" >~/.weechat/weechat_fifo_12345}
+@item @bullet{} affichage de texte sur le canal #weechat :
+@command{echo "freenode,#weechat *bonjour tout le monde !" >~/.weechat/weechat_fifo_12345}
+@item @bullet{} affichage de texte sur le canal courant (le tampon affich@'e par WeeChat):
+@command{echo "*bonjour !" >~/.weechat/weechat_fifo_12345}@*
+@*
+@b{Attention :} ceci est dangereux et vous ne devriez pas le faire sauf si vous savez ce que vous faites !
+@item @bullet{} envoyer deux commandes pour décharger/recharger les scripts Perl (vous devez les séparer par \n):
+@command{echo -e "freenode */perl unload\nfreenode */perl autoload" >~/.weechat/weechat_fifo_12345}
+@end table
+@*
+Vous pouvez @'ecrire un script qui envoie les commandes @`a tous les WeeChat qui
+tournent en m@^eme temps, par exemple :@*
+@verbatim
+ #!/bin/sh
+ if [ $# -eq 1 ]; then
+     for fifo in $(/bin/ls ~/.weechat/weechat_fifo_* 2>/dev/null); do
+         echo -e "$1" >$fifo
+     done
+ fi
+@end verbatim
+@*
+Si le script s'appelle "auto_weechat_command", vous pouvez le lancer ainsi :@*
+@command{./auto_weechat_command "freenode,#weechat *bonjour"}
 
 
 @c ******************************* Extensions *********************************

@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.1.1-cvs - March, 11 2005
+@subtitle Documentation for WeeChat v0.1.1 - March, 20 2005
 
 @image{weechat_image}
 
@@ -209,6 +209,7 @@ Then follow instructions for source package - @xref{Source package}.
 * Config file::
 * Key bindings::
 * WeeChat commands::
+* FIFO pipe::
 @end menu
 
 @node Run WeeChat, Config file, Usage, Usage
@@ -487,7 +488,7 @@ Default quit message ('%v' will be replaced by WeeChat version in string)@*
 Type: string (any string), default value: 'WeeChat %v'@*
 @item irc_away_check
 Interval between two checks for away (in minutes, 0 = never check)@*
-Type: integer (values: between 0 and 2147483647), default value: 1@*
+Type: integer (values: between 0 and 2147483647), default value: 0@*
 @item irc_lag_check
 Interval between two checks for lag (in seconds)@*
 Type: integer (values: between 30 and 2147483647), default value: 60@*
@@ -693,7 +694,7 @@ Switch to buffer by number@*
 @*
 @end table
 
-@node WeeChat commands, , Key bindings, Usage
+@node WeeChat commands, FIFO pipe, Key bindings, Usage
 @section WeeChat commands
 
 WeeChat internal commands:@*
@@ -818,6 +819,13 @@ toggle away status@*
 -all: toggle away status on all connected servers@*
 message: message for away (if no message is given, away status is removed)@*
 @*
+@item ban  [channel] [nickname [nickname ...]]
+@*
+bans nicks or hosts@*
+@*
+channel: channel for ban@*
+nickname: user or host to ban@*
+@*
 @item ctcp  nickname type
 @*
 send a ctcp message@*
@@ -833,6 +841,10 @@ action: 'send' (file) or 'chat' or 'close' (chat)@*
 nickname: nickname to send file or chat@*
 file: filename (on local host)@*
 @*
+@item dehalfop  nickname [nickname]
+@*
+removes half channel operator status from nickname(s)@*
+@*
 @item deop  nickname [nickname]
 @*
 removes channel operator status from nickname(s)@*
@@ -844,6 +856,10 @@ removes voice from nickname(s)@*
 @item die
 @*
 shutdown the server@*
+@*
+@item halfop  nickname [nickname]
+@*
+gives half channel operator status to nickname(s)@*
 @*
 @item info  [target]
 @*
@@ -877,6 +893,14 @@ forcibly remove a user from a channel@*
 @*
 channel: channel where user is@*
 nickname: nickname to kick@*
+comment: comment for kick@*
+@*
+@item kickban  [channel] nickname [comment]
+@*
+kicks and bans a nick from a channel@*
+@*
+channel: channel where user is@*
+nickname: nickname to kick and ban@*
 comment: comment for kick@*
 @*
 @item kill  nickname comment
@@ -1089,6 +1113,13 @@ find the route to specific server@*
 @*
 target: server@*
 @*
+@item unban  [channel] nickname [nickname ...]
+@*
+unbans nicks or hosts@*
+@*
+channel: channel for unban@*
+nickname: user or host to unban@*
+@*
 @item userhost  nickname [nickname ...]
 @*
 return a list of information about nicknames@*
@@ -1142,6 +1173,49 @@ target: reply should match this mask@*
 @*
 
 @end table
+
+@node FIFO pipe, , WeeChat commands, Usage
+@section FIFO pipe
+
+You can remote control WeeChat, by sending commands or text to a FIFO pipe
+(you have to enable option "irc_fifo_pipe", it is disabled by default).@*
+The FIFO pipe is located in ~/.weechat/ and is called "weechat_fifo_xxxxx"
+(where xxxxx is the process ID (PID) of running WeeChat).@*
+So if many WeeChat are running, you have many FIFO pipe, one for each session.@*
+@*
+The syntax for the FIFO pipe commands/text is:@*
+@command{server,channel *text or command here}@*
+where server and channel are optional, but if channel is here, server should be too.@*
+@*
+Some examples:
+@table @asis
+@item @bullet{} change your nick on freenode to "mynick|out":
+@*
+@command{echo "freenode */nick mynick|out" >~/.weechat/weechat_fifo_12345}
+@item @bullet{} display text on #weechat channel:
+@*
+@command{echo "freenode,#weechat *hello everybody!" >~/.weechat/weechat_fifo_12345}
+@item @bullet{} display text on current channel (buffer displayed by WeeChat):
+@*
+@command{echo "*hello!" >~/.weechat/weechat_fifo_12345}@*
+@*
+@b{Warning:} this is dangerous and you should not do that except if you know what you do!
+@item @bullet{} send 2 commands to unload/reload Perl scripts (you have to separate them with \n):
+@command{echo -e "freenode */perl unload\nfreenode */perl autoload" >~/.weechat/weechat_fifo_12345}
+@end table
+@*
+You can write a script to send command to all running WeeChat at same time, for example:@*
+@verbatim
+ #!/bin/sh
+ if [ $# -eq 1 ]; then
+     for fifo in $(/bin/ls ~/.weechat/weechat_fifo_* 2>/dev/null); do
+         echo -e "$1" >$fifo
+     done
+ fi
+@end verbatim
+@*
+If the script is called "auto_weechat_command", you can run it with:@*
+@command{./auto_weechat_command "freenode,#weechat *hello"}
 
 
 @c ******************************* Extensions *********************************

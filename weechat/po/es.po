@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.1.1-cvs\n"
+"Project-Id-Version: WeeChat 0.1.1\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-03-16 22:36+0100\n"
-"PO-Revision-Date: 2005-03-16 22:39+0100\n"
+"POT-Creation-Date: 2005-03-20 08:00+0100\n"
+"PO-Revision-Date: 2005-03-20 08:00+0100\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -159,7 +159,7 @@ msgstr ""
 
 #: src/irc/irc-commands.c:43
 msgid "bans nicks or hosts"
-msgstr ""
+msgstr "banea usuarios o máquinas"
 
 #: src/irc/irc-commands.c:44
 msgid "[channel] [nickname [nickname ...]]"
@@ -170,6 +170,8 @@ msgid ""
 "channel: channel for ban\n"
 "nickname: user or host to ban"
 msgstr ""
+"canal: canal en el que banear\n"
+"usuario: nombre de usuario o máquina a banear"
 
 #: src/irc/irc-commands.c:47
 msgid "send a ctcp message"
@@ -308,7 +310,7 @@ msgstr ""
 
 #: src/irc/irc-commands.c:93
 msgid "kicks and bans a nick from a channel"
-msgstr ""
+msgstr "expulsa y banea a un usuario de un canal"
 
 #: src/irc/irc-commands.c:95
 msgid ""
@@ -316,6 +318,9 @@ msgid ""
 "nickname: nickname to kick and ban\n"
 "comment: comment for kick"
 msgstr ""
+"canal: canal donde está el usuario\n"
+"usuario: nombre de usuario a expulsar y banear\n"
+"comentario: comentario para la expulsión"
 
 #: src/irc/irc-commands.c:97
 msgid "close client-server connection"
@@ -761,7 +766,7 @@ msgstr "encontrar la ruta hacia el servidor especificado"
 
 #: src/irc/irc-commands.c:235
 msgid "unbans nicks or hosts"
-msgstr ""
+msgstr "desbanea usuarios o máquinas"
 
 #: src/irc/irc-commands.c:236
 msgid "[channel] nickname [nickname ...]"
@@ -772,6 +777,8 @@ msgid ""
 "channel: channel for unban\n"
 "nickname: user or host to unban"
 msgstr ""
+"canal: canal en el que desbanear (quitar la prohibición)\n"
+"usuario: usuario o máquina a desbanear"
 
 #: src/irc/irc-commands.c:239
 msgid "return a list of information about nicknames"
@@ -1023,11 +1030,11 @@ msgstr "fin de la lista /names"
 
 #: src/irc/irc-commands.c:332
 msgid "banlist"
-msgstr ""
+msgstr "lista de baneos"
 
 #: src/irc/irc-commands.c:333
 msgid "end of banlist"
-msgstr ""
+msgstr "fin de la lista de baneos"
 
 #: src/irc/irc-commands.c:334
 msgid "end of /whowas list"
@@ -1120,7 +1127,7 @@ msgstr "colisión en el nombre de usuario"
 
 #: src/irc/irc-commands.c:386
 msgid "not authorized to change nickname"
-msgstr ""
+msgstr "no autorizado a cambiar el nombre de usuario"
 
 #: src/irc/irc-commands.c:388
 msgid "user not in channel"
@@ -1310,7 +1317,7 @@ msgstr "%s, compilado en %s %s\n"
 
 #: src/irc/irc-recv.c:182
 msgid "You have been invited to "
-msgstr ""
+msgstr "Has sido invitado a "
 
 #: src/irc/irc-recv.c:185
 msgid "by"
@@ -1494,7 +1501,7 @@ msgstr "En %s: * %s %s"
 #: src/irc/irc-recv.c:1168
 #, c-format
 msgid "Received a CTCP SOUND \"%s\" from "
-msgstr ""
+msgstr "Recibido un sonido CTCP \\\"%s\\\" de "
 
 #: src/irc/irc-recv.c:1189
 #, c-format
@@ -1696,7 +1703,7 @@ msgstr "normal"
 
 #: src/irc/irc-recv.c:3334
 msgid "banned by"
-msgstr ""
+msgstr "baneado por"
 
 #: src/irc/irc-recv.c:3423
 #, c-format
@@ -2105,7 +2112,7 @@ msgstr "nombre_del_servidor: nombre del servidor del que desconectarse"
 
 #: src/common/command.c:68
 msgid "print debug messages"
-msgstr ""
+msgstr "imprime mensajes de depuración"
 
 #: src/common/command.c:69
 msgid "dump"
@@ -2116,6 +2123,8 @@ msgid ""
 "dump: save memory dump in WeeChat log file (same dump is written when "
 "WeeChat crashes)"
 msgstr ""
+"volcado: almacena un volcado de memoria en el archivo de registro de Weechat "
+"(se escribe el mismo volcado cuando Weechat se cuelga)"
 
 #: src/common/command.c:72
 msgid "display help about commands"
@@ -2618,44 +2627,45 @@ msgstr "Ventanas abiertas:\n"
 #, c-format
 msgid "%s unable to create FIFO pipe for remote control (%s)\n"
 msgstr ""
+"%s no ha sido posible crear la tubería FIFO para el control remoto (%s)\n"
 
 #: src/common/fifo.c:82 src/common/fifo.c:84
 #, c-format
 msgid "%s unable to open FIFO pipe (%s) for reading\n"
-msgstr ""
+msgstr "%s no ha sido posible abrir la tubería FIFO (%s) para leer\n"
 
 #: src/common/fifo.c:89
 msgid "FIFO pipe is open\n"
-msgstr ""
+msgstr "la tubería FIFO está abierta\n"
 
 #: src/common/fifo.c:121
 #, c-format
 msgid "%s invalid buffer for displaying text via FIFO pipe\n"
-msgstr ""
+msgstr "%s búfer inválido para mostrar texto mediante la tubería FIFO\n"
 
 #: src/common/fifo.c:132 src/common/fifo.c:178
 #, c-format
 msgid "%s invalid text received on FIFO pipe\n"
-msgstr ""
+msgstr "%s texto inválido recibido en la tubería FIFO\n"
 
 #: src/common/fifo.c:154
 #, c-format
 msgid "%s server \"%s\" not found (FIFO pipe data)\n"
-msgstr ""
+msgstr "%s servidor \"%s\" no encontrado (datos de la tubería FIFO)\n"
 
 #: src/common/fifo.c:166
 #, c-format
 msgid "%s channel \"%s\" not found (FIFO pipe data)\n"
-msgstr ""
+msgstr "%s canal \"%s\" no encontrado (datos de la tubería FIFO)\n"
 
 #: src/common/fifo.c:265 src/common/fifo.c:267
 #, c-format
 msgid "%s error reading FIFO pipe, closing it\n"
-msgstr ""
+msgstr "%s error al leer la tubería FIFO, cerrándola\n"
 
 #: src/common/fifo.c:309
 msgid "FIFO pipe is closed\n"
-msgstr ""
+msgstr "la tubería FIFO está cerrada\n"
 
 #: src/common/hotlist.c:102
 #, c-format
@@ -3336,7 +3346,7 @@ msgstr ""
 
 #: src/common/weeconfig.c:528 src/common/weeconfig.c:529
 msgid "create a FIFO pipe for remote control"
-msgstr ""
+msgstr "crea una tubería FIFO para control remoto"
 
 #: src/common/weeconfig.c:548
 msgid "automatically accept dcc files"
