@@ -83,7 +83,7 @@ struct t_irc_channel
     char *key;                      /* channel key (NULL if no key is set)  */
     t_irc_nick *nicks;              /* nicks on the channel                 */
     t_irc_nick *last_nick;          /* last nick on the channel             */
-    t_gui_window *window;           /* GUI window allocated for channel     */
+    t_gui_view *view;               /* GUI view allocated for channel       */
     t_irc_channel *prev_channel;    /* link to previous channel             */
     t_irc_channel *next_channel;    /* link to next channel                 */
 };
@@ -116,7 +116,7 @@ struct t_irc_server
     int is_away;                    /* 1 is user is marker as away          */
     int server_read;                /* pipe for reading server data         */
     int server_write;               /* pipe for sending data to server      */
-    t_gui_window *window;           /* GUI window allocated for server      */
+    t_gui_view *view;               /* GUI view allocated for server        */
     t_irc_channel *channels;        /* opened channels on server            */
     t_irc_channel *last_channel;    /* last opened channal on server        */
     t_irc_server *prev_server;      /* link to previous server              */
@@ -204,9 +204,9 @@ extern void dcc_send ();
 
 /* IRC display (irc-diplay.c) */
 
-extern void irc_display_prefix (/*@null@*/ t_gui_window *, char *);
-extern void irc_display_nick (t_gui_window *, t_irc_nick *, int, int, int, int);
-extern void irc_display_mode (t_gui_window *, char *, char, char *, char *,
+extern void irc_display_prefix (/*@null@*/ t_gui_view *, char *);
+extern void irc_display_nick (t_gui_view *, t_irc_nick *, int, int, int, int);
+extern void irc_display_mode (t_gui_view *, char *, char, char *, char *,
                               char *, char *);
 
 /* IRC protocol (irc-commands.c) */

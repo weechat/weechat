@@ -41,151 +41,200 @@
 int gui_ready;                              /* = 1 if GUI is initialized    */
 
 t_gui_window *gui_windows = NULL;           /* pointer to first window      */
-t_gui_window *last_gui_window = NULL;       /* pointer to last window       */
-t_gui_window *gui_current_window = NULL;    /* pointer to current window    */
+
+t_gui_view *gui_views = NULL;               /* pointer to first view        */
+t_gui_view *last_gui_view = NULL;           /* pointer to last view         */
+t_gui_view *gui_current_view = NULL;        /* pointer to current view      */
 t_gui_infobar *gui_infobar;                 /* pointer to infobar content   */
 
 
 /*
  * gui_window_new: create a new window
- *                 (TODO: add coordinates and size, for splited windows)
  */
 
 t_gui_window *
-gui_window_new (void *server, void *channel, int switch_to_window
-                /*int x, int y, int width, int height*/)
+gui_window_new (int x, int y, int width, int height)
 {
-    t_gui_window *new_window;
+    t_gui_window *window;
     
-    if (gui_windows)
+    if ((window = (t_gui_window *)(malloc (sizeof (t_gui_window)))))
     {
-        /* use first window if no server was assigned to this window */
-        if (!SERVER(gui_windows))
-        {
-            if (server)
-                ((t_irc_server *)(server))->window = gui_windows;
-            if (channel)
-                ((t_irc_channel *)(channel))->window = gui_windows;
-            SERVER(gui_windows) = server;
-            CHANNEL(gui_windows) = channel;
-            return gui_windows;
-        }
-    }
-    
-    if ((new_window = (t_gui_window *)(malloc (sizeof (t_gui_window)))))
-    {
-        new_window->is_displayed = 0;
+        window->win_x = x;
+        window->win_y = y;
+        window->win_width = width;
+        window->win_height = height;
         
-        /* assign server and channel to window */
-        SERVER(new_window) = server;
-        CHANNEL(new_window) = channel;
-        /* assign window to server and channel */
-        if (server && !channel)
-            SERVER(new_window)->window = new_window;
-        if (channel)
-            CHANNEL(new_window)->window = new_window;
+        window->win_chat_x = 0;
+        window->win_chat_y = 0;
+        window->win_chat_width = 0;
+        window->win_chat_height = 0;
+        window->win_chat_cursor_x = 0;
+        window->win_chat_cursor_y = 0;
         
-        gui_calculate_pos_size (new_window);
+        window->win_nick_x = 0;
+        window->win_nick_y = 0;
+        window->win_nick_width = 0;
+        window->win_nick_height = 0;
         
-        /* init windows */
-        gui_window_init_subwindows(new_window);
-        
-        /* init lines */
-        new_window->lines = NULL;
-        new_window->last_line = NULL;
-        new_window->num_lines = 0;
-        new_window->first_line_displayed = 1;
-        new_window->sub_lines = 0;
-        new_window->line_complete = 1;
-        new_window->unread_data = 0;
-        
-        /* init input buffer */
-        new_window->input_buffer_alloc = INPUT_BUFFER_BLOCK_SIZE;
-        new_window->input_buffer = (char *) malloc (INPUT_BUFFER_BLOCK_SIZE);
-        new_window->input_buffer[0] = '\0';
-        new_window->input_buffer_size = 0;
-        new_window->input_buffer_pos = 0;
-        new_window->input_buffer_1st_display = 0;
-        
-        /* init completion */
-        completion_init (&(new_window->completion));
-        
-        /* init history */
-        new_window->history = NULL;
-        new_window->last_history = NULL;
-        new_window->ptr_history = NULL;
-        new_window->num_history = 0;
-        
-        /* switch to new window */
-        if (switch_to_window)
-            gui_switch_to_window (new_window);
-        
-        /* add window to windows queue */
-        new_window->prev_window = last_gui_window;
-        if (gui_windows)
-            last_gui_window->next_window = new_window;
-        else
-            gui_windows = new_window;
-        last_gui_window = new_window;
-        new_window->next_window = NULL;
-        
-        /* redraw whole screen */
-        gui_redraw_window (gui_current_window);
+        window->win_title = NULL;
+        window->win_chat = NULL;
+        window->win_nick = NULL;
+        window->win_status = NULL;
+        window->win_infobar = NULL;
+        window->win_input = NULL;
+        window->textview_chat = NULL;
+        window->textbuffer_chat = NULL;
+        window->texttag_chat = NULL;
+        window->textview_nicklist = NULL;
+        window->textbuffer_nicklist = NULL;
     }
     else
         return NULL;
     
-    return new_window;
+    return window;
 }
 
 /*
- * gui_window_clear: clear window content
+ * gui_view_new: create a new view in current window
+ */
+
+t_gui_view *
+gui_view_new (t_gui_window *window, void *server, void *channel, int switch_to_view)
+{
+    t_gui_view *new_view;
+    
+    if (gui_views)
+    {
+        /* use first view if no server was assigned to this view */
+        if (!SERVER(gui_views))
+        {
+            if (server)
+                ((t_irc_server *)(server))->view = gui_views;
+            if (channel)
+                ((t_irc_channel *)(channel))->view = gui_views;
+            SERVER(gui_views) = server;
+            CHANNEL(gui_views) = channel;
+            return gui_views;
+        }
+    }
+    
+    if ((new_view = (t_gui_view *)(malloc (sizeof (t_gui_view)))))
+    {
+        new_view->is_displayed = 0;
+        
+        /* assign server and channel to view */
+        SERVER(new_view) = server;
+        CHANNEL(new_view) = channel;
+        /* assign view to server and channel */
+        if (server && !channel)
+            SERVER(new_view)->view = new_view;
+        if (channel)
+            CHANNEL(new_view)->view = new_view;
+        
+        new_view->window = window;
+        
+        gui_calculate_pos_size (new_view);
+        
+        /* init views */
+        gui_view_init_subviews(new_view);
+        
+        /* init lines */
+        new_view->lines = NULL;
+        new_view->last_line = NULL;
+        new_view->num_lines = 0;
+        new_view->first_line_displayed = 1;
+        new_view->sub_lines = 0;
+        new_view->line_complete = 1;
+        new_view->unread_data = 0;
+        
+        /* init input buffer */
+        new_view->input_buffer_alloc = INPUT_BUFFER_BLOCK_SIZE;
+        new_view->input_buffer = (char *) malloc (INPUT_BUFFER_BLOCK_SIZE);
+        new_view->input_buffer[0] = '\0';
+        new_view->input_buffer_size = 0;
+        new_view->input_buffer_pos = 0;
+        new_view->input_buffer_1st_display = 0;
+        
+        /* init completion */
+        completion_init (&(new_view->completion));
+        
+        /* init history */
+        new_view->history = NULL;
+        new_view->last_history = NULL;
+        new_view->ptr_history = NULL;
+        new_view->num_history = 0;
+        
+        /* switch to new view */
+        if (switch_to_view)
+            gui_switch_to_view (new_view);
+        
+        /* add view to views queue */
+        new_view->prev_view = last_gui_view;
+        if (gui_views)
+            last_gui_view->next_view = new_view;
+        else
+            gui_views = new_view;
+        last_gui_view = new_view;
+        new_view->next_view = NULL;
+        
+        /* redraw whole screen */
+        /* TODO: manage splited windows */
+        gui_redraw_view (gui_current_view);
+    }
+    else
+        return NULL;
+    
+    return new_view;
+}
+
+/*
+ * gui_view_clear: clear view content
  */
 
 void
-gui_window_clear (t_gui_window *window)
+gui_view_clear (t_gui_view *view)
 {
     t_gui_line *ptr_line;
     t_gui_message *ptr_message;
     
-    while (window->lines)
+    while (view->lines)
     {
-        ptr_line = window->lines->next_line;
-        while (window->lines->messages)
+        ptr_line = view->lines->next_line;
+        while (view->lines->messages)
         {
-            ptr_message = window->lines->messages->next_message;
-            if (window->lines->messages->message)
-                free (window->lines->messages->message);
-            free (window->lines->messages);
-            window->lines->messages = ptr_message;
+            ptr_message = view->lines->messages->next_message;
+            if (view->lines->messages->message)
+                free (view->lines->messages->message);
+            free (view->lines->messages);
+            view->lines->messages = ptr_message;
         }
-        free (window->lines);
-        window->lines = ptr_line;
+        free (view->lines);
+        view->lines = ptr_line;
     }
     
-    window->lines = NULL;
-    window->last_line = NULL;
-    window->num_lines = 0;
-    window->first_line_displayed = 1;
-    window->sub_lines = 0;
-    window->line_complete = 1;
-    window->unread_data = 0;
+    view->lines = NULL;
+    view->last_line = NULL;
+    view->num_lines = 0;
+    view->first_line_displayed = 1;
+    view->sub_lines = 0;
+    view->line_complete = 1;
+    view->unread_data = 0;
     
-    if (window == gui_current_window)
-        gui_redraw_window_chat (window);
+    if (view == gui_current_view)
+        gui_redraw_view_chat (view);
 }
 
 /*
- * gui_window_clear_all: clear all windows content
+ * gui_view_clear_all: clear all views content
  */
 
 void
-gui_window_clear_all ()
+gui_view_clear_all ()
 {
-    t_gui_window *ptr_win;
+    t_gui_view *ptr_view;
     
-    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-        gui_window_clear (ptr_win);
+    for (ptr_view = gui_views; ptr_view; ptr_view = ptr_view->next_view)
+        gui_view_clear (ptr_view);
 }
 
 /* 
@@ -215,8 +264,8 @@ gui_infobar_printf (int time_displayed, int color, char *message, ...)
         ptr_infobar->remaining_time = (time_displayed <= 0) ? -1 : time_displayed;
         ptr_infobar->next_infobar = gui_infobar;
         gui_infobar = ptr_infobar;
-        /* TODO: manage splitted windows! */
-        gui_redraw_window_infobar (gui_current_window);
+        /* TODO: manage splited windows! */
+        gui_redraw_view_infobar (gui_current_view);
     }
     else
         wee_log_printf (_("%s not enough memory for infobar message\n"),
@@ -239,13 +288,13 @@ gui_infobar_remove ()
             free (gui_infobar->text);
         free (gui_infobar);
         gui_infobar = new_infobar;
-        /* TODO: manage splitted windows! */
-        gui_redraw_window_infobar (gui_current_window);
+        /* TODO: manage splited windows! */
+        gui_redraw_view_infobar (gui_current_view);
     }
 }
 
 /*
- * gui_line_free: delete a line from a window
+ * gui_line_free: delete a line from a view
  */
 
 void
@@ -265,57 +314,57 @@ gui_line_free (t_gui_line *line)
 }
 
 /*
- * gui_window_free: delete a window
+ * gui_view_free: delete a view
  */
 
 void
-gui_window_free (t_gui_window *window)
+gui_view_free (t_gui_view *view)
 {
     t_gui_line *ptr_line;
     int create_new;
     
-    create_new = (window->server || window->channel);
+    create_new = (view->server || view->channel);
     
-    /* TODO: manage splitted windows! */
-    if ((window == gui_current_window) &&
-        ((window->next_window) || (window->prev_window)))
-        gui_switch_to_previous_window ();
+    /* TODO: manage splited windows! */
+    if ((view == gui_current_view) &&
+        ((view->next_view) || (view->prev_view)))
+        gui_switch_to_previous_view ();
     
     /* free lines and messages */
-    while (window->lines)
+    while (view->lines)
     {
-        ptr_line = window->lines->next_line;
-        gui_line_free (window->lines);
-        window->lines = ptr_line;
+        ptr_line = view->lines->next_line;
+        gui_line_free (view->lines);
+        view->lines = ptr_line;
     }
-    if (window->input_buffer)
-        free (window->input_buffer);
+    if (view->input_buffer)
+        free (view->input_buffer);
     
-    completion_free (&(window->completion));
+    completion_free (&(view->completion));
     
-    /* remove window from windows list */
-    if (window->prev_window)
-        window->prev_window->next_window = window->next_window;
-    if (window->next_window)
-        window->next_window->prev_window = window->prev_window;
-    if (gui_windows == window)
-        gui_windows = window->next_window;
-    if (last_gui_window == window)
-        last_gui_window = window->prev_window;
+    /* remove view from views list */
+    if (view->prev_view)
+        view->prev_view->next_view = view->next_view;
+    if (view->next_view)
+        view->next_view->prev_view = view->prev_view;
+    if (gui_views == view)
+        gui_views = view->next_view;
+    if (last_gui_view == view)
+        last_gui_view = view->prev_view;
     
-    free (window);
+    free (view);
     
-    /* always at least one window */
-    if (!gui_windows && create_new)
-        (void) gui_window_new (NULL, NULL, 1);
+    /* always at least one view */
+    if (!gui_views && create_new)
+        (void) gui_view_new (gui_windows, NULL, NULL, 1);
 }
 
 /*
- * gui_new_line: create new line for a window
+ * gui_new_line: create new line for a view
  */
 
 t_gui_line *
-gui_new_line (t_gui_window *window)
+gui_new_line (t_gui_view *view)
 {
     t_gui_line *new_line, *ptr_line;
     
@@ -326,14 +375,14 @@ gui_new_line (t_gui_window *window)
         new_line->line_with_message = 0;
         new_line->messages = NULL;
         new_line->last_message = NULL;
-        if (!window->lines)
-            window->lines = new_line;
+        if (!view->lines)
+            view->lines = new_line;
         else
-            window->last_line->next_line = new_line;
-        new_line->prev_line = window->last_line;
+            view->last_line->next_line = new_line;
+        new_line->prev_line = view->last_line;
         new_line->next_line = NULL;
-        window->last_line = new_line;
-        window->num_lines++;
+        view->last_line = new_line;
+        view->num_lines++;
     }
     else
     {
@@ -343,40 +392,40 @@ gui_new_line (t_gui_window *window)
     
     /* remove one line if necessary */
     if ((cfg_history_max_lines > 0)
-        && (window->num_lines > cfg_history_max_lines))
+        && (view->num_lines > cfg_history_max_lines))
     {
-        if (window->last_line == window->lines)
-            window->last_line = NULL;
-        ptr_line = window->lines->next_line;
-        gui_line_free (window->lines);
-        window->lines = ptr_line;
+        if (view->last_line == view->lines)
+            view->last_line = NULL;
+        ptr_line = view->lines->next_line;
+        gui_line_free (view->lines);
+        view->lines = ptr_line;
         ptr_line->prev_line = NULL;
-        window->num_lines--;
-        if (window->first_line_displayed)
-            gui_redraw_window_chat (window);
+        view->num_lines--;
+        if (view->first_line_displayed)
+            gui_redraw_view_chat (view);
     }
     
     return new_line;
 }
 
 /*
- * gui_new_message: create a new message for last line of window
+ * gui_new_message: create a new message for last line of a view
  */
 
 t_gui_message *
-gui_new_message (t_gui_window *window)
+gui_new_message (t_gui_view *view)
 {
     t_gui_message *new_message;
     
     if ((new_message = (t_gui_message *) malloc (sizeof (struct t_gui_message))))
     {
-        if (!window->last_line->messages)
-            window->last_line->messages = new_message;
+        if (!view->last_line->messages)
+            view->last_line->messages = new_message;
         else
-            window->last_line->last_message->next_message = new_message;
-        new_message->prev_message = window->last_line->last_message;
+            view->last_line->last_message->next_message = new_message;
+        new_message->prev_message = view->last_line->last_message;
         new_message->next_message = NULL;
-        window->last_line->last_message = new_message;
+        view->last_line->last_message = new_message;
     }
     else
     {
@@ -392,16 +441,16 @@ gui_new_message (t_gui_window *window)
  */
 
 void
-gui_optimize_input_buffer_size (t_gui_window *window)
+gui_optimize_input_buffer_size (t_gui_view *view)
 {
     int optimal_size;
     
-    optimal_size = ((window->input_buffer_size / INPUT_BUFFER_BLOCK_SIZE) *
+    optimal_size = ((view->input_buffer_size / INPUT_BUFFER_BLOCK_SIZE) *
                    INPUT_BUFFER_BLOCK_SIZE) + INPUT_BUFFER_BLOCK_SIZE;
-    if (window->input_buffer_alloc != optimal_size)
+    if (view->input_buffer_alloc != optimal_size)
     {
-        window->input_buffer_alloc = optimal_size;
-        window->input_buffer = realloc (window->input_buffer, optimal_size);
+        view->input_buffer_alloc = optimal_size;
+        view->input_buffer = realloc (view->input_buffer, optimal_size);
     }
 }
 
@@ -414,21 +463,21 @@ gui_delete_previous_word ()
 {
     int i, j, num_char_deleted, num_char_end;
     
-    if (gui_current_window->input_buffer_pos > 0)
+    if (gui_current_view->input_buffer_pos > 0)
     {
-        i = gui_current_window->input_buffer_pos - 1;
+        i = gui_current_view->input_buffer_pos - 1;
         while ((i >= 0) &&
-            (gui_current_window->input_buffer[i] == ' '))
+            (gui_current_view->input_buffer[i] == ' '))
             i--;
         if (i >= 0)
         {
             while ((i >= 0) &&
-                (gui_current_window->input_buffer[i] != ' '))
+                (gui_current_view->input_buffer[i] != ' '))
                 i--;
             if (i >= 0)
             {
                 while ((i >= 0) &&
-                    (gui_current_window->input_buffer[i] == ' '))
+                    (gui_current_view->input_buffer[i] == ' '))
                     i--;
             }
         }
@@ -436,20 +485,20 @@ gui_delete_previous_word ()
         if (i >= 0)
             i++;
         i++;
-        num_char_deleted = gui_current_window->input_buffer_pos - i;
-        num_char_end = gui_current_window->input_buffer_size -
-            gui_current_window->input_buffer_pos;
+        num_char_deleted = gui_current_view->input_buffer_pos - i;
+        num_char_end = gui_current_view->input_buffer_size -
+            gui_current_view->input_buffer_pos;
         
         for (j = 0; j < num_char_end; j++)
-            gui_current_window->input_buffer[i + j] =
-                gui_current_window->input_buffer[gui_current_window->input_buffer_pos + j];
+            gui_current_view->input_buffer[i + j] =
+                gui_current_view->input_buffer[gui_current_view->input_buffer_pos + j];
         
-        gui_current_window->input_buffer_size -= num_char_deleted;
-        gui_current_window->input_buffer[gui_current_window->input_buffer_size] = '\0';
-        gui_current_window->input_buffer_pos = i;
-        gui_draw_window_input (gui_current_window);
-        gui_optimize_input_buffer_size (gui_current_window);
-        gui_current_window->completion.position = -1;
+        gui_current_view->input_buffer_size -= num_char_deleted;
+        gui_current_view->input_buffer[gui_current_view->input_buffer_size] = '\0';
+        gui_current_view->input_buffer_pos = i;
+        gui_draw_view_input (gui_current_view);
+        gui_optimize_input_buffer_size (gui_current_view);
+        gui_current_view->completion.position = -1;
     }
 }
 
@@ -462,22 +511,22 @@ gui_move_previous_word ()
 {
     int i;
     
-    if (gui_current_window->input_buffer_pos > 0)
+    if (gui_current_view->input_buffer_pos > 0)
     {
-        i = gui_current_window->input_buffer_pos - 1;
+        i = gui_current_view->input_buffer_pos - 1;
         while ((i >= 0) &&
-            (gui_current_window->input_buffer[i] == ' '))
+            (gui_current_view->input_buffer[i] == ' '))
             i--;
         if (i < 0)
-            gui_current_window->input_buffer_pos = 0;
+            gui_current_view->input_buffer_pos = 0;
         else
         {
             while ((i >= 0) &&
-                (gui_current_window->input_buffer[i] != ' '))
+                (gui_current_view->input_buffer[i] != ' '))
                 i--;
-            gui_current_window->input_buffer_pos = i + 1;
+            gui_current_view->input_buffer_pos = i + 1;
         }
-        gui_draw_window_input (gui_current_window);
+        gui_draw_view_input (gui_current_view);
     }
 }
 
@@ -490,28 +539,28 @@ gui_move_next_word ()
 {
     int i;
     
-    if (gui_current_window->input_buffer_pos <
-        gui_current_window->input_buffer_size + 1)
+    if (gui_current_view->input_buffer_pos <
+        gui_current_view->input_buffer_size + 1)
     {
-        i = gui_current_window->input_buffer_pos;
-        while ((i <= gui_current_window->input_buffer_size) &&
-            (gui_current_window->input_buffer[i] == ' '))
+        i = gui_current_view->input_buffer_pos;
+        while ((i <= gui_current_view->input_buffer_size) &&
+            (gui_current_view->input_buffer[i] == ' '))
             i++;
-        if (i > gui_current_window->input_buffer_size)
-            gui_current_window->input_buffer_pos = i - 1;
+        if (i > gui_current_view->input_buffer_size)
+            gui_current_view->input_buffer_pos = i - 1;
         else
         {
-            while ((i <= gui_current_window->input_buffer_size) &&
-                (gui_current_window->input_buffer[i] != ' '))
+            while ((i <= gui_current_view->input_buffer_size) &&
+                (gui_current_view->input_buffer[i] != ' '))
                 i++;
-            if (i > gui_current_window->input_buffer_size)
-                gui_current_window->input_buffer_pos =
-                    gui_current_window->input_buffer_size;
+            if (i > gui_current_view->input_buffer_size)
+                gui_current_view->input_buffer_pos =
+                    gui_current_view->input_buffer_size;
             else
-                gui_current_window->input_buffer_pos = i;
+                gui_current_view->input_buffer_pos = i;
             
         }
-        gui_draw_window_input (gui_current_window);
+        gui_draw_view_input (gui_current_view);
     }
 }
 
@@ -527,17 +576,17 @@ gui_buffer_insert_string (char *string, int pos)
     length = strlen (string);
     
     /* increase buffer size */
-    gui_current_window->input_buffer_size += length;
-    gui_optimize_input_buffer_size (gui_current_window);
-    gui_current_window->input_buffer[gui_current_window->input_buffer_size] = '\0';
+    gui_current_view->input_buffer_size += length;
+    gui_optimize_input_buffer_size (gui_current_view);
+    gui_current_view->input_buffer[gui_current_view->input_buffer_size] = '\0';
     
     /* move end of string to the right */
     start = pos + length;
-    end = gui_current_window->input_buffer_size - 1;
+    end = gui_current_view->input_buffer_size - 1;
     for (i = end; i >= start; i--)
-         gui_current_window->input_buffer[i] =
-         gui_current_window->input_buffer[i - length];
+         gui_current_view->input_buffer[i] =
+         gui_current_view->input_buffer[i - length];
     
     /* insert new string */
-    strncpy (gui_current_window->input_buffer + pos, string, length);
+    strncpy (gui_current_view->input_buffer + pos, string, length);
 }

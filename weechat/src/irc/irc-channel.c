@@ -41,7 +41,7 @@ char *channel_modes = "iklmnst";
 
 t_irc_channel *
 channel_new (t_irc_server *server, int channel_type, char *channel_name,
-             int switch_to_window)
+             int switch_to_view)
 {
     t_irc_channel *new_channel;
     
@@ -72,7 +72,7 @@ channel_new (t_irc_server *server, int channel_type, char *channel_name,
         server->channels = new_channel;
     server->last_channel = new_channel;
 
-    gui_window_new (server, new_channel, switch_to_window);
+    gui_view_new (gui_current_view->window, server, new_channel, switch_to_view);
     
     /* all is ok, return address of new channel */
     return new_channel;

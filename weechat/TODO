@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2004-06-13
+TODO - 2004-06-23
 
 Legend:
   #  done
@@ -21,6 +21,7 @@ v0.0.7:
     + "/dcc" command (for chat and sending/receiving files)
 
  * Interface:
+    + split terminal in multiple windows (horizontally/vertically)
     + internationalization (traduce WeeChat in many languages)
 
  * Configuration:

@@ -182,7 +182,7 @@ nick_new (t_irc_channel *channel, char *nick_name,
     /* alloc memory for new nick */
     if ((new_nick = (t_irc_nick *) malloc (sizeof (t_irc_nick))) == NULL)
     {
-        gui_printf (channel->window,
+        gui_printf (channel->view,
                     _("%s cannot allocate new nick\n"), WEECHAT_ERROR);
         return NULL;
     }
@@ -192,7 +192,7 @@ nick_new (t_irc_channel *channel, char *nick_name,
     new_nick->is_op = is_op;
     new_nick->is_halfop = is_halfop;
     new_nick->has_voice = has_voice;
-    if (strcasecmp (new_nick->nick, SERVER(channel->window)->nick) == 0)
+    if (strcasecmp (new_nick->nick, SERVER(channel->view)->nick) == 0)
         new_nick->color = COLOR_WIN_NICK_SELF;
     else
         new_nick->color = nick_find_color (channel);

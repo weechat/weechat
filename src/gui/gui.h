@@ -59,23 +59,23 @@
 #define COLOR_WIN_NICK_LAST         38
 #define COLOR_WIN_NICK_NUMBER       (COLOR_WIN_NICK_LAST - COLOR_WIN_NICK_FIRST + 1)
 
-#define SERVER(window)  ((t_irc_server *)(window->server))
-#define CHANNEL(window) ((t_irc_channel *)(window->channel))
+#define SERVER(view)  ((t_irc_server *)(view->server))
+#define CHANNEL(view) ((t_irc_channel *)(view->channel))
 
-#define WIN_IS_SERVER(window)  (SERVER(window) && !CHANNEL(window))
-#define WIN_IS_CHANNEL(window) (CHANNEL(window) && (CHANNEL(window)->type == CHAT_CHANNEL))
-#define WIN_IS_PRIVATE(window) (CHANNEL(window) && (CHANNEL(window)->type == CHAT_PRIVATE))
+#define VIEW_IS_SERVER(view)  (SERVER(view) && !CHANNEL(view))
+#define VIEW_IS_CHANNEL(view) (CHANNEL(view) && (CHANNEL(view)->type == CHAT_CHANNEL))
+#define VIEW_IS_PRIVATE(view) (CHANNEL(view) && (CHANNEL(view)->type == CHAT_PRIVATE))
 
 #define MSG_TYPE_TIME  0
 #define MSG_TYPE_NICK  1
 #define MSG_TYPE_INFO  2
 #define MSG_TYPE_MSG   3
 
-#define gui_printf_color(window, color, fmt, argz...) \
-    gui_printf_color_type(window, MSG_TYPE_INFO, color, fmt, ##argz)
+#define gui_printf_color(view, color, fmt, argz...) \
+    gui_printf_color_type(view, MSG_TYPE_INFO, color, fmt, ##argz)
 
-#define gui_printf(window, fmt, argz...) \
-    gui_printf_color_type(window, MSG_TYPE_INFO, -1, fmt, ##argz)
+#define gui_printf(view, fmt, argz...) \
+    gui_printf_color_type(view, MSG_TYPE_INFO, -1, fmt, ##argz)
 
 typedef struct t_gui_message t_gui_message;
 
@@ -125,12 +125,6 @@ typedef struct t_gui_window t_gui_window;
 
 struct t_gui_window
 {
-    int is_displayed;               /* = 1 if window is displayed           */
-    
-    /* server/channel */
-    void *server;                   /* window's server                      */
-    void *channel;                  /* window's channel                     */
-    
     /* global position & size */
     int win_x, win_y;               /* position of window                   */
     int win_width, win_height;      /* window geometry                      */
@@ -149,7 +143,7 @@ struct t_gui_window
     
     /* windows for Curses GUI */
     void *win_title;                /* title window                         */
-    void *win_chat;                 /* chat window (exemple: channel)       */
+    void *win_chat;                 /* chat window (example: channel)       */
     void *win_nick;                 /* nick window                          */
     void *win_status;               /* status window                        */
     void *win_infobar;              /* info bar window                      */
@@ -164,6 +158,22 @@ struct t_gui_window
     
     /* windows for Qt GUI */
     /* TODO: declare Qt window */
+    
+    t_gui_window *prev_window;      /* link to previous window              */
+    t_gui_window *next_window;      /* link to next window                  */
+};
+
+typedef struct t_gui_view t_gui_view;
+
+struct t_gui_view
+{
+    int is_displayed;               /* = 1 if view is displayed             */
+    
+    /* server/channel */
+    void *server;                   /* view's server                        */
+    void *channel;                  /* view's channel                       */
+    
+    t_gui_window *window;           /* Curses or Gtk window                 */
     
     /* chat content (lines, line is composed by many messages) */
     t_gui_line *lines;              /* lines of chat window                 */
@@ -191,29 +201,31 @@ struct t_gui_window
     int num_history;                /* number of commands in history        */
     
     /* link to next window */
-    t_gui_window *prev_window;      /* link to previous window              */
-    t_gui_window *next_window;      /* link to next window                  */
+    t_gui_view *prev_view;          /* link to previous view                */
+    t_gui_view *next_view;          /* link to next view                    */
 };
 
 /* variables */
 
 extern int gui_ready;
 extern t_gui_window *gui_windows;
-extern t_gui_window *last_gui_window;
-extern t_gui_window *gui_current_window;
+extern t_gui_view *gui_views;
+extern t_gui_view *last_gui_view;
+extern t_gui_view *gui_current_view;
 extern t_gui_infobar *gui_infobar;
 
 /* prototypes */
 
 /* GUI independent functions */
-extern t_gui_window *gui_window_new (/*@null@*/ void *, /*@null@*/ void *, int /*int, int, int, int*/); /* TODO: add coordinates and size */
-extern void gui_window_clear (t_gui_window *);
-extern void gui_window_clear_all ();
+extern t_gui_window *gui_window_new (int, int, int, int);
+extern t_gui_view *gui_view_new (t_gui_window *, void *, void *, int);
+extern void gui_view_clear (t_gui_view *);
+extern void gui_view_clear_all ();
 extern void gui_infobar_printf (int, int, char *, ...);
 extern void gui_infobar_remove ();
-extern t_gui_line *gui_new_line (t_gui_window *);
-extern t_gui_message *gui_new_message (t_gui_window *);
-extern void gui_optimize_input_buffer_size (t_gui_window *);
+extern t_gui_line *gui_new_line (t_gui_view *);
+extern t_gui_message *gui_new_message (t_gui_view *);
+extern void gui_optimize_input_buffer_size (t_gui_view *);
 extern void gui_delete_previous_word ();
 extern void gui_move_previous_word ();
 extern void gui_move_next_word ();
@@ -222,34 +234,34 @@ extern void gui_buffer_insert_string (char *, int);
 extern int gui_assign_color (int *, char *);
 extern int gui_get_color_by_name (char *);
 extern char *gui_get_color_by_value (int);
-extern int gui_window_has_nicklist (t_gui_window *);
-extern void gui_calculate_pos_size (t_gui_window *);
-extern void gui_draw_window_title (t_gui_window *);
-extern void gui_redraw_window_title (t_gui_window *);
-extern void gui_draw_window_chat (t_gui_window *);
-extern void gui_redraw_window_chat (t_gui_window *);
-extern void gui_draw_window_nick (t_gui_window *);
-extern void gui_redraw_window_nick (t_gui_window *);
-extern void gui_draw_window_status (t_gui_window *);
-extern void gui_redraw_window_status (t_gui_window *);
-extern void gui_draw_window_infobar (t_gui_window *);
-extern void gui_redraw_window_infobar (t_gui_window *);
-extern void gui_draw_window_input (t_gui_window *);
-extern void gui_redraw_window_input (t_gui_window *);
-extern void gui_redraw_window (t_gui_window *);
-extern void gui_switch_to_window (t_gui_window *);
-extern void gui_switch_to_previous_window ();
-extern void gui_switch_to_next_window ();
+extern int gui_view_has_nicklist (t_gui_view *);
+extern void gui_calculate_pos_size (t_gui_view *);
+extern void gui_draw_view_title (t_gui_view *);
+extern void gui_redraw_view_title (t_gui_view *);
+extern void gui_draw_view_chat (t_gui_view *);
+extern void gui_redraw_view_chat (t_gui_view *);
+extern void gui_draw_view_nick (t_gui_view *);
+extern void gui_redraw_view_nick (t_gui_view *);
+extern void gui_draw_view_status (t_gui_view *);
+extern void gui_redraw_view_status (t_gui_view *);
+extern void gui_draw_view_infobar (t_gui_view *);
+extern void gui_redraw_view_infobar (t_gui_view *);
+extern void gui_draw_view_input (t_gui_view *);
+extern void gui_redraw_view_input (t_gui_view *);
+extern void gui_redraw_view (t_gui_view *);
+extern void gui_switch_to_view (t_gui_view *);
+extern void gui_switch_to_previous_view ();
+extern void gui_switch_to_next_view ();
 extern void gui_move_page_up ();
 extern void gui_move_page_down ();
-extern void gui_window_init_subwindows (t_gui_window *);
+extern void gui_view_init_subviews (t_gui_view *);
 extern void gui_pre_init (int *, char **[]);
 extern void gui_init_colors ();
 extern void gui_set_window_title ();
 extern void gui_init ();
-extern void gui_window_free (t_gui_window *);
+extern void gui_view_free (t_gui_view *);
 extern void gui_end ();
-extern void gui_printf_color_type (/*@null@*/ t_gui_window *, int, int, char *, ...);
+extern void gui_printf_color_type (/*@null@*/ t_gui_view *, int, int, char *, ...);
 extern void gui_main_loop ();
 
 #endif /* gui.h */

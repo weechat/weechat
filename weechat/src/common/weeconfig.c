@@ -109,33 +109,33 @@ t_config_option weechat_options_look[] =
   { "look_nicklist", N_("display nicklist window"),
     N_("display nicklist window (for channel windows)"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_look_nicklist, NULL, config_change_windows },
+    NULL, NULL, &cfg_look_nicklist, NULL, config_change_views },
   { "look_nicklist_position", N_("nicklist position"),
     N_("nicklist position (top, left, right (default), bottom)"),
     OPTION_TYPE_INT_WITH_STRING, 0, 0, 0,
-    "right", cfg_look_nicklist_position_values, &cfg_look_nicklist_position, NULL, config_change_windows },
+    "right", cfg_look_nicklist_position_values, &cfg_look_nicklist_position, NULL, config_change_views },
   { "look_nicklist_min_size", N_("min size for nicklist"),
     N_("min size for nicklist (width or height, depending on look_nicklist_position "
     "(0 = no min size))"),
     OPTION_TYPE_INT, 0, 100, 0,
-    NULL, NULL, &cfg_look_nicklist_min_size, NULL, config_change_windows },
+    NULL, NULL, &cfg_look_nicklist_min_size, NULL, config_change_views },
   { "look_nicklist_max_size", N_("max size for nicklist"),
     N_("max size for nicklist (width or height, depending on look_nicklist_position "
     "(0 = no max size; if min == max and > 0, then size is fixed))"),
     OPTION_TYPE_INT, 0, 100, 0,
-    NULL, NULL, &cfg_look_nicklist_max_size, NULL, config_change_windows },
+    NULL, NULL, &cfg_look_nicklist_max_size, NULL, config_change_views },
   { "look_no_nickname", N_("text to display instead of nick when not connected"),
     N_("text to display instead of nick when not connected"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "-cmd-", NULL, NULL, &cfg_look_no_nickname, config_change_window_content },
+    "-cmd-", NULL, NULL, &cfg_look_no_nickname, config_change_view_content },
   { "look_nickmode", N_("display nick mode ((half)op/voice) before each nick"),
     N_("display nick mode ((half)op/voice) before each nick"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_look_nickmode, NULL, config_change_windows },
+    NULL, NULL, &cfg_look_nickmode, NULL, config_change_views },
   { "look_nickmode_empty", N_("display space if nick mode is not (half)op/voice"),
     N_("display space if nick mode is not (half)op/voice"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
-    NULL, NULL, &cfg_look_nickmode_empty, NULL, config_change_windows },
+    NULL, NULL, &cfg_look_nickmode_empty, NULL, config_change_views },
   { "look_nick_completor", N_("the string inserted after nick completion"),
     N_("the string inserted after nick completion"),
     OPTION_TYPE_STRING, 0, 0, 0,
@@ -143,11 +143,11 @@ t_config_option weechat_options_look[] =
   { "look_infobar", N_("enable info bar"),
     N_("enable info bar"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_look_infobar, NULL, config_change_windows },
+    NULL, NULL, &cfg_look_infobar, NULL, config_change_views },
   { "look_infobar_timestamp", N_("timestamp for time in infobar"),
     N_("timestamp for time in infobar"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "%B, %A %d %G - %H:%M", NULL, NULL, &cfg_look_infobar_timestamp, config_change_window_content },
+    "%B, %A %d %G - %H:%M", NULL, NULL, &cfg_look_infobar_timestamp, config_change_view_content },
   { "look_infobar_delay_highlight", N_("delay (in seconds) for highlight messages in infobar"),
     N_("delay (in seconds) for highlight messages in infobar "
     "(0 = disable highlight notifications in infobar)"),
@@ -615,24 +615,24 @@ config_change_title ()
 }
 
 /*
- * config_change_windows: called when windows change (for example nicklist)
+ * config_change_views: called when views change (for example nicklist)
  */
 
 void
-config_change_windows ()
+config_change_views ()
 {
-    gui_switch_to_window (gui_current_window);
-    gui_redraw_window (gui_current_window);
+    gui_switch_to_view (gui_current_view);
+    gui_redraw_view (gui_current_view);
 }
 
 /*
- * config_change_window_content: called when content of a window changes
+ * config_change_view_content: called when content of a view changes
  */
 
 void
-config_change_window_content ()
+config_change_view_content ()
 {
-    gui_redraw_window (gui_current_window);
+    gui_redraw_view (gui_current_view);
 }
 
 /*

@@ -76,5 +76,6 @@ extern int weechat_cmd_save (int, char **);
 extern int weechat_cmd_server (int, char **);
 extern int weechat_cmd_set (char *);
 extern int weechat_cmd_unalias (char *);
+extern int weechat_cmd_window (int, char **);
 
 #endif /* command.h */

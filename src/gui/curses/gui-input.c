@@ -49,7 +49,7 @@ void
 gui_read_keyb ()
 {
     int key, i;
-    t_gui_window *ptr_window;
+    t_gui_view *ptr_view;
     char new_char[2];
 
     key = getch ();
@@ -59,16 +59,16 @@ gui_read_keyb ()
         {
             /* resize event */
             case KEY_RESIZE:
-                gui_calculate_pos_size (gui_current_window);
-                gui_redraw_window (gui_current_window);
+                gui_calculate_pos_size (gui_current_view);
+                gui_redraw_view (gui_current_view);
                 break;
-            /* previous window */
+            /* previous view */
             case KEY_F(6):
-                gui_switch_to_previous_window ();
+                gui_switch_to_previous_view ();
                 break;
-            /* next window */
+            /* next view */
             case KEY_F(7):
-                gui_switch_to_next_window ();
+                gui_switch_to_next_view ();
                 break;
             /* remove last infobar message */
             case KEY_F(10):
@@ -76,82 +76,82 @@ gui_read_keyb ()
                 break;
             /* cursor up */
             case KEY_UP:
-                if (gui_current_window->ptr_history)
+                if (gui_current_view->ptr_history)
                 {
-                    gui_current_window->ptr_history =
-                        gui_current_window->ptr_history->next_history;
-                    if (!gui_current_window->ptr_history)
-                        gui_current_window->ptr_history =
-                            gui_current_window->history;
+                    gui_current_view->ptr_history =
+                        gui_current_view->ptr_history->next_history;
+                    if (!gui_current_view->ptr_history)
+                        gui_current_view->ptr_history =
+                            gui_current_view->history;
                 }
                 else
-                    gui_current_window->ptr_history =
-                        gui_current_window->history;
-                if (gui_current_window->ptr_history)
+                    gui_current_view->ptr_history =
+                        gui_current_view->history;
+                if (gui_current_view->ptr_history)
                 {
-                    gui_current_window->input_buffer_size =
-                        strlen (gui_current_window->ptr_history->text);
-                    gui_optimize_input_buffer_size (gui_current_window);
-                    gui_current_window->input_buffer_pos =
-                        gui_current_window->input_buffer_size;
-                    strcpy (gui_current_window->input_buffer,
-                        gui_current_window->ptr_history->text);
-                    gui_draw_window_input (gui_current_window);
+                    gui_current_view->input_buffer_size =
+                        strlen (gui_current_view->ptr_history->text);
+                    gui_optimize_input_buffer_size (gui_current_view);
+                    gui_current_view->input_buffer_pos =
+                        gui_current_view->input_buffer_size;
+                    strcpy (gui_current_view->input_buffer,
+                        gui_current_view->ptr_history->text);
+                    gui_draw_view_input (gui_current_view);
                 }
                 break;
             /* cursor down */
             case KEY_DOWN:
-                if (gui_current_window->ptr_history)
+                if (gui_current_view->ptr_history)
                 {
-                    gui_current_window->ptr_history =
-                        gui_current_window->ptr_history->prev_history;
-                    if (gui_current_window->ptr_history)
-                        gui_current_window->input_buffer_size =
-                            strlen (gui_current_window->ptr_history->text);
+                    gui_current_view->ptr_history =
+                        gui_current_view->ptr_history->prev_history;
+                    if (gui_current_view->ptr_history)
+                        gui_current_view->input_buffer_size =
+                            strlen (gui_current_view->ptr_history->text);
                     else
-                        gui_current_window->input_buffer_size = 0;
-                    gui_optimize_input_buffer_size (gui_current_window);
-                    gui_current_window->input_buffer_pos =
-                        gui_current_window->input_buffer_size;
-                    if (gui_current_window->ptr_history)
-                        strcpy (gui_current_window->input_buffer,
-                            gui_current_window->ptr_history->text);
-                    gui_draw_window_input (gui_current_window);
+                        gui_current_view->input_buffer_size = 0;
+                    gui_optimize_input_buffer_size (gui_current_view);
+                    gui_current_view->input_buffer_pos =
+                        gui_current_view->input_buffer_size;
+                    if (gui_current_view->ptr_history)
+                        strcpy (gui_current_view->input_buffer,
+                            gui_current_view->ptr_history->text);
+                    gui_draw_view_input (gui_current_view);
                 }
                 break;
             /* cursor left */
             case KEY_LEFT:
-                if (gui_current_window->input_buffer_pos > 0)
+                if (gui_current_view->input_buffer_pos > 0)
                 {
-                    gui_current_window->input_buffer_pos--;
-                    gui_draw_window_input (gui_current_window);
+                    gui_current_view->input_buffer_pos--;
+                    gui_draw_view_input (gui_current_view);
                 }
                 break;
             /* cursor right */
             case KEY_RIGHT:
-                if (gui_current_window->input_buffer_pos <
-                    gui_current_window->input_buffer_size)
+                if (gui_current_view->input_buffer_pos <
+                    gui_current_view->input_buffer_size)
                 {
-                    gui_current_window->input_buffer_pos++;
-                    gui_draw_window_input (gui_current_window);
+                    gui_current_view->input_buffer_pos++;
+                    gui_draw_view_input (gui_current_view);
                 }
                 break;
             /* home key */
             case KEY_HOME:
-                if (gui_current_window->input_buffer_pos > 0)
+                if (gui_current_view->input_buffer_pos > 0)
                 {
-                    gui_current_window->input_buffer_pos = 0;
-                    gui_draw_window_input (gui_current_window);
+                    gui_current_view->input_buffer_pos = 0;
+                    gui_draw_view_input (gui_current_view);
                 }
                 break;
             /* end key */
             case KEY_END:
-                if (gui_current_window->input_buffer_pos <
-                    gui_current_window->input_buffer_size)
+                if (gui_current_view->input_buffer_pos <
+                    gui_current_view->input_buffer_size)
                 {
-                    gui_current_window->input_buffer_pos =
-                        gui_current_window->input_buffer_size;
-                    gui_draw_window_input (gui_current_window);
+                    gui_current_view->input_buffer_pos =
+                        gui_current_view->input_buffer_size;
+                    gui_draw_view_input (gui_current_view);
                 }
                 break;
             /* page up */
@@ -165,21 +165,21 @@ gui_read_keyb ()
             /* erase before cursor and move cursor to the left */
             case 127:
             case KEY_BACKSPACE:
-                if (gui_current_window->input_buffer_pos > 0)
+                if (gui_current_view->input_buffer_pos > 0)
                 {
-                    i = gui_current_window->input_buffer_pos-1;
-                    while (gui_current_window->input_buffer[i])
+                    i = gui_current_view->input_buffer_pos-1;
+                    while (gui_current_view->input_buffer[i])
                     {
-                        gui_current_window->input_buffer[i] =
-                            gui_current_window->input_buffer[i+1];
+                        gui_current_view->input_buffer[i] =
+                            gui_current_view->input_buffer[i+1];
                         i++;
                     }
-                    gui_current_window->input_buffer_size--;
-                    gui_current_window->input_buffer_pos--;
-                    gui_current_window->input_buffer[gui_current_window->input_buffer_size] = '\0';
-                    gui_draw_window_input (gui_current_window);
-                    gui_optimize_input_buffer_size (gui_current_window);
-                    gui_current_window->completion.position = -1;
+                    gui_current_view->input_buffer_size--;
+                    gui_current_view->input_buffer_pos--;
+                    gui_current_view->input_buffer[gui_current_view->input_buffer_size] = '\0';
+                    gui_draw_view_input (gui_current_view);
+                    gui_optimize_input_buffer_size (gui_current_view);
+                    gui_current_view->completion.position = -1;
                 }
                 break;
             /* Control + Backspace */
@@ -188,93 +188,93 @@ gui_read_keyb ()
                 break;
             /* erase char under cursor */
             case KEY_DC:
-                if (gui_current_window->input_buffer_pos <
-                    gui_current_window->input_buffer_size)
+                if (gui_current_view->input_buffer_pos <
+                    gui_current_view->input_buffer_size)
                 {
-                    i = gui_current_window->input_buffer_pos;
-                    while (gui_current_window->input_buffer[i])
+                    i = gui_current_view->input_buffer_pos;
+                    while (gui_current_view->input_buffer[i])
                     {
-                        gui_current_window->input_buffer[i] =
-                            gui_current_window->input_buffer[i+1];
+                        gui_current_view->input_buffer[i] =
+                            gui_current_view->input_buffer[i+1];
                         i++;
                     }
-                    gui_current_window->input_buffer_size--;
-                    gui_current_window->input_buffer[gui_current_window->input_buffer_size] = '\0';
-                    gui_draw_window_input (gui_current_window);
-                    gui_optimize_input_buffer_size (gui_current_window);
-                    gui_current_window->completion.position = -1;
+                    gui_current_view->input_buffer_size--;
+                    gui_current_view->input_buffer[gui_current_view->input_buffer_size] = '\0';
+                    gui_draw_view_input (gui_current_view);
+                    gui_optimize_input_buffer_size (gui_current_view);
+                    gui_current_view->completion.position = -1;
                 }
                 break;
             /* Tab : completion */
             case '\t':
-                completion_search (&(gui_current_window->completion),
-                                   CHANNEL(gui_current_window),
-                                   gui_current_window->input_buffer,
-                                   gui_current_window->input_buffer_size,
-                                   gui_current_window->input_buffer_pos);
-                if (gui_current_window->completion.word_found)
+                completion_search (&(gui_current_view->completion),
+                                   CHANNEL(gui_current_view),
+                                   gui_current_view->input_buffer,
+                                   gui_current_view->input_buffer_size,
+                                   gui_current_view->input_buffer_pos);
+                if (gui_current_view->completion.word_found)
                 {
                     // replace word with new completed word into input buffer
-                    gui_current_window->input_buffer_size +=
-                        gui_current_window->completion.diff_size;
-                    gui_optimize_input_buffer_size (gui_current_window);
-                    gui_current_window->input_buffer[gui_current_window->input_buffer_size] = '\0';
+                    gui_current_view->input_buffer_size +=
+                        gui_current_view->completion.diff_size;
+                    gui_optimize_input_buffer_size (gui_current_view);
+                    gui_current_view->input_buffer[gui_current_view->input_buffer_size] = '\0';
                     
-                    if (gui_current_window->completion.diff_size > 0)
+                    if (gui_current_view->completion.diff_size > 0)
                     {
-                        for (i = gui_current_window->input_buffer_size - 1;
-                            i >=  gui_current_window->completion.position_replace +
-                            (int)strlen (gui_current_window->completion.word_found); i--)
-                            gui_current_window->input_buffer[i] =
-                                gui_current_window->input_buffer[i -
-                                gui_current_window->completion.diff_size];
+                        for (i = gui_current_view->input_buffer_size - 1;
+                            i >=  gui_current_view->completion.position_replace +
+                            (int)strlen (gui_current_view->completion.word_found); i--)
+                            gui_current_view->input_buffer[i] =
+                                gui_current_view->input_buffer[i -
+                                gui_current_view->completion.diff_size];
                     }
                     else
                     {
-                        for (i = gui_current_window->completion.position_replace +
-                            strlen (gui_current_window->completion.word_found);
-                            i < gui_current_window->input_buffer_size; i++)
-                            gui_current_window->input_buffer[i] =
-                                gui_current_window->input_buffer[i -
-                                gui_current_window->completion.diff_size];
+                        for (i = gui_current_view->completion.position_replace +
+                            strlen (gui_current_view->completion.word_found);
+                            i < gui_current_view->input_buffer_size; i++)
+                            gui_current_view->input_buffer[i] =
+                                gui_current_view->input_buffer[i -
+                                gui_current_view->completion.diff_size];
                     }
                     
-                    strncpy (gui_current_window->input_buffer + gui_current_window->completion.position_replace,
-                             gui_current_window->completion.word_found,
-                             strlen (gui_current_window->completion.word_found));
-                    gui_current_window->input_buffer_pos =
-                        gui_current_window->completion.position_replace +
-                        strlen (gui_current_window->completion.word_found);
-                    gui_current_window->completion.position =
-                        gui_current_window->input_buffer_pos;
+                    strncpy (gui_current_view->input_buffer + gui_current_view->completion.position_replace,
+                             gui_current_view->completion.word_found,
+                             strlen (gui_current_view->completion.word_found));
+                    gui_current_view->input_buffer_pos =
+                        gui_current_view->completion.position_replace +
+                        strlen (gui_current_view->completion.word_found);
+                    gui_current_view->completion.position =
+                        gui_current_view->input_buffer_pos;
                     
                     /* add space or completor to the end of completion, if needed */
-                    if (gui_current_window->completion.base_word[0] == '/')
+                    if (gui_current_view->completion.base_word[0] == '/')
                     {
-                        if (gui_current_window->input_buffer[gui_current_window->input_buffer_pos] != ' ')
+                        if (gui_current_view->input_buffer[gui_current_view->input_buffer_pos] != ' ')
                             gui_buffer_insert_string (" ",
-                                                      gui_current_window->input_buffer_pos);
-                        gui_current_window->completion.position++;
-                        gui_current_window->input_buffer_pos++;
+                                                      gui_current_view->input_buffer_pos);
+                        gui_current_view->completion.position++;
+                        gui_current_view->input_buffer_pos++;
                     }
                     else
                     {
-                        if (gui_current_window->completion.base_word_pos == 0)
+                        if (gui_current_view->completion.base_word_pos == 0)
                         {
-                            if (strncmp (gui_current_window->input_buffer + gui_current_window->input_buffer_pos,
+                            if (strncmp (gui_current_view->input_buffer + gui_current_view->input_buffer_pos,
                                 cfg_look_completor, strlen (cfg_look_completor)) != 0)
                                 gui_buffer_insert_string (cfg_look_completor,
-                                                          gui_current_window->input_buffer_pos);
-                            gui_current_window->completion.position += strlen (cfg_look_completor);
-                            gui_current_window->input_buffer_pos += strlen (cfg_look_completor);
-                            if (gui_current_window->input_buffer[gui_current_window->input_buffer_pos] != ' ')
+                                                          gui_current_view->input_buffer_pos);
+                            gui_current_view->completion.position += strlen (cfg_look_completor);
+                            gui_current_view->input_buffer_pos += strlen (cfg_look_completor);
+                            if (gui_current_view->input_buffer[gui_current_view->input_buffer_pos] != ' ')
                                 gui_buffer_insert_string (" ",
-                                                          gui_current_window->input_buffer_pos);
-                            gui_current_window->completion.position++;
-                            gui_current_window->input_buffer_pos++;
+                                                          gui_current_view->input_buffer_pos);
+                            gui_current_view->completion.position++;
+                            gui_current_view->input_buffer_pos++;
                         }
                     }
-                    gui_draw_window_input (gui_current_window);
+                    gui_draw_view_input (gui_current_view);
                 }
                 break;
             /* escape code (for control-key) */
@@ -284,10 +284,10 @@ gui_read_keyb ()
                     switch (key)
                     {
                         case KEY_LEFT:
-                            gui_switch_to_previous_window ();
+                            gui_switch_to_previous_view ();
                             break;
                         case KEY_RIGHT:
-                            gui_switch_to_next_window ();
+                            gui_switch_to_next_view ();
                             break;
                         case 79:
                             /* TODO: replace 79 by constant name! */
@@ -314,35 +314,35 @@ gui_read_keyb ()
                 break;
             /* send command/message */
             case '\n':
-                if (gui_current_window->input_buffer_size > 0)
+                if (gui_current_view->input_buffer_size > 0)
                 {
-                    gui_current_window->input_buffer[gui_current_window->input_buffer_size] = '\0';
-                    history_add (gui_current_window, gui_current_window->input_buffer);
-                    gui_current_window->input_buffer_size = 0;
-                    gui_current_window->input_buffer_pos = 0;
-                    gui_current_window->input_buffer_1st_display = 0;
-                    gui_current_window->completion.position = -1;
-                    gui_current_window->ptr_history = NULL;
-                    ptr_window = gui_current_window;
-                    user_command (SERVER(gui_current_window),
-                                  gui_current_window->input_buffer);
-                    if (ptr_window == gui_current_window)
-                        gui_draw_window_input (ptr_window);
-                    if (ptr_window)
-                        ptr_window->input_buffer[0] = '\0';
+                    gui_current_view->input_buffer[gui_current_view->input_buffer_size] = '\0';
+                    history_add (gui_current_view, gui_current_view->input_buffer);
+                    gui_current_view->input_buffer_size = 0;
+                    gui_current_view->input_buffer_pos = 0;
+                    gui_current_view->input_buffer_1st_display = 0;
+                    gui_current_view->completion.position = -1;
+                    gui_current_view->ptr_history = NULL;
+                    ptr_view = gui_current_view;
+                    user_command (SERVER(gui_current_view),
+                                  gui_current_view->input_buffer);
+                    if (ptr_view == gui_current_view)
+                        gui_draw_view_input (ptr_view);
+                    if (ptr_view)
+                        ptr_view->input_buffer[0] = '\0';
                 }
                 break;
             /* other key => add to input buffer */
             default:
-                /*gui_printf (gui_current_window,
+                /*gui_printf (gui_current_view,
                     "[Debug] key pressed = %d, as octal: %o\n", key, key);*/
                 new_char[0] = key;
                 new_char[1] = '\0';
                 gui_buffer_insert_string (new_char,
-                                          gui_current_window->input_buffer_pos);
-                gui_current_window->input_buffer_pos++;
-                gui_draw_window_input (gui_current_window);
-                gui_current_window->completion.position = -1;
+                                          gui_current_view->input_buffer_pos);
+                gui_current_view->input_buffer_pos++;
+                gui_draw_view_input (gui_current_view);
+                gui_current_view->completion.position = -1;
                 break;
         }
     }
@@ -374,14 +374,14 @@ gui_main_loop ()
         if (local_time->tm_min != old_min)
         {
             old_min = local_time->tm_min;
-            gui_redraw_window_infobar (gui_current_window);
+            gui_redraw_view_infobar (gui_current_view);
         }
         
         /* second has changed ? => count down time for infobar, if needed */
         if (local_time->tm_sec != old_sec)
         {
             old_sec = local_time->tm_sec;
-            /* TODO: manage splitted windows! */
+            /* TODO: manage splited windows! */
             if (gui_infobar && gui_infobar->remaining_time > 0)
             {
                 gui_infobar->remaining_time--;
