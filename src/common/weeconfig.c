@@ -409,11 +409,11 @@ t_config_option weechat_options_history[] =
     N_("maximum number of lines in history "
     "for one server/channel/private window (0 = unlimited)"),
     OPTION_TYPE_INT, 0, INT_MAX, 4096,
-    NULL, NULL, &cfg_history_max_lines, NULL, NULL },
+    NULL, NULL, &cfg_history_max_lines, NULL, config_change_noop },
   { "history_max_commands", N_("max user commands in history"),
     N_("maximum number of user commands in history (0 = unlimited)"),
     OPTION_TYPE_INT, 0, INT_MAX, 100,
-    NULL, NULL, &cfg_history_max_commands, NULL, NULL },
+    NULL, NULL, &cfg_history_max_commands, NULL, config_change_noop },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
@@ -442,15 +442,15 @@ t_config_option weechat_options_log[] =
   { "log_path", N_("path for log files"),
     N_("path for WeeChat log files"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "~/.weechat/logs/", NULL, NULL, &cfg_log_path, NULL },
+    "~/.weechat/logs/", NULL, NULL, &cfg_log_path, config_change_noop },
   { "log_timestamp", N_("timestamp for log"),
     N_("timestamp for log (see man strftime for date/time specifiers)"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "%Y %b %d %H:%M:%S", NULL, NULL, &cfg_log_timestamp, NULL },
+    "%Y %b %d %H:%M:%S", NULL, NULL, &cfg_log_timestamp, config_change_noop },
   { "log_hide_nickserv_pwd", N_("hide password displayed by nickserv"),
     N_("hide password displayed by nickserv"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_log_hide_nickserv_pwd, NULL, NULL },
+    NULL, NULL, &cfg_log_hide_nickserv_pwd, NULL, config_change_noop },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
@@ -539,19 +539,19 @@ t_config_option weechat_options_proxy[] =
 { { "proxy_use", N_("use proxy"),
     N_("use a proxy server to connect to irc server"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
-    NULL, NULL, &cfg_proxy_use, NULL, NULL },
+    NULL, NULL, &cfg_proxy_use, NULL, config_change_noop },
   { "proxy_address", N_("proxy address"),
     N_("proxy server address (IP or hostname)"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "", NULL, NULL, &cfg_proxy_address, NULL },
+    "", NULL, NULL, &cfg_proxy_address, config_change_noop },
   { "proxy_port", N_("port for proxy"),
     N_("port for connecting to proxy server"),
     OPTION_TYPE_INT, 0, 65535, 1080,
-    NULL, NULL, &cfg_proxy_port, NULL, NULL },
+    NULL, NULL, &cfg_proxy_port, NULL, config_change_noop },
   { "proxy_password", N_("proxy password"),
     N_("password for proxy server"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "", NULL, NULL, &cfg_proxy_password, NULL },
+    "", NULL, NULL, &cfg_proxy_password, config_change_noop },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
@@ -775,6 +775,117 @@ config_option_set_value (t_config_option *option, char *value)
             if (*(option->ptr_string))
                 free (*(option->ptr_string));
             *(option->ptr_string) = strdup (value);
+            break;
+    }
+    return 0;
+}
+
+/*
+ * config_get_server_option_ptr: get a pointer to a server config option
+ */
+
+void *
+config_get_server_option_ptr (t_irc_server *server, char *option_name)
+{
+    if (strcasecmp (option_name, "server_name") == 0)
+        return (void *)(&server->name);
+    if (strcasecmp (option_name, "server_autoconnect") == 0)
+        return (void *)(&server->autoconnect);
+    if (strcasecmp (option_name, "server_autoreconnect") == 0)
+        return (void *)(&server->autoreconnect);
+    if (strcasecmp (option_name, "server_autoreconnect_delay") == 0)
+        return (void *)(&server->autoreconnect_delay);
+    if (strcasecmp (option_name, "server_address") == 0)
+        return (void *)(&server->address);
+    if (strcasecmp (option_name, "server_port") == 0)
+        return (void *)(&server->port);
+    if (strcasecmp (option_name, "server_password") == 0)
+        return (void *)(&server->password);
+    if (strcasecmp (option_name, "server_nick1") == 0)
+        return (void *)(&server->nick1);
+    if (strcasecmp (option_name, "server_nick2") == 0)
+        return (void *)(&server->nick2);
+    if (strcasecmp (option_name, "server_nick3") == 0)
+        return (void *)(&server->nick3);
+    if (strcasecmp (option_name, "server_username") == 0)
+        return (void *)(&server->username);
+    if (strcasecmp (option_name, "server_realname") == 0)
+        return (void *)(&server->realname);
+    if (strcasecmp (option_name, "server_command") == 0)
+        return (void *)(&server->command);
+    if (strcasecmp (option_name, "server_command_delay") == 0)
+        return (void *)(&server->command_delay);
+    if (strcasecmp (option_name, "server_autojoin") == 0)
+        return (void *)(&server->autojoin);
+    if (strcasecmp (option_name, "server_autorejoin") == 0)
+        return (void *)(&server->autorejoin);
+    /* option not found */
+    return NULL;
+}
+
+/*
+ * config_set_server_value: set new value for an option
+ *                          return:  0 if success
+ *                                  -1 if option not found
+ *                                  -2 if bad value
+ */
+
+int
+config_set_server_value (t_irc_server *server, char *option_name,
+                                char *value)
+{
+    t_config_option *ptr_option;
+    int i;
+    void *ptr_data;
+    int int_value;
+    
+    ptr_data = config_get_server_option_ptr (server, option_name);
+    if (!ptr_data)
+        return -1;
+    
+    ptr_option = NULL;
+    for (i = 0; weechat_options[CONFIG_SECTION_SERVER][i].option_name; i++)
+    {
+        /* if option found, return pointer */
+        if (strcasecmp (weechat_options[CONFIG_SECTION_SERVER][i].option_name, option_name) == 0)
+        {
+            ptr_option = &weechat_options[CONFIG_SECTION_SERVER][i];
+            break;
+        }
+    }
+    if (!ptr_option)
+        return -1;
+    
+    switch (ptr_option->option_type)
+    {
+        case OPTION_TYPE_BOOLEAN:
+            if (strcasecmp (value, "on") == 0)
+                *((int *)(ptr_data)) = BOOL_TRUE;
+            else if (strcasecmp (value, "off") == 0)
+                *((int *)(ptr_data)) = BOOL_FALSE;
+            else
+                return -2;
+            break;
+        case OPTION_TYPE_INT:
+            int_value = atoi (value);
+            if ((int_value < ptr_option->min) || (int_value > ptr_option->max))
+                return -2;
+            *((int *)(ptr_data)) = int_value;
+            break;
+        case OPTION_TYPE_INT_WITH_STRING:
+            int_value = get_pos_array_values (ptr_option->array_values, value);
+            if (int_value < 0)
+                return -2;
+            *((int *)(ptr_data)) = int_value;
+            break;
+        case OPTION_TYPE_COLOR:
+            if (!gui_assign_color ((int *)ptr_data, value))
+                return -2;
+            break;
+        case OPTION_TYPE_STRING:
+            if (*((char **)ptr_data))
+                free (*((char **)ptr_data));
+            *((char **)ptr_data) = strdup (value);
             break;
     }
     return 0;

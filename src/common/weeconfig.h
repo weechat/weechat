@@ -21,6 +21,8 @@
 #ifndef __WEECHAT_CONFIG_H
 #define __WEECHAT_CONFIG_H 1
 
+#include "../irc/irc.h"
+
 #define WEECHAT_CONFIG_NAME "weechat.rc"
 
 #define CONFIG_SECTION_NONE    -1
@@ -179,6 +181,8 @@ extern void config_change_color ();
 extern int config_option_set_value (t_config_option *, char *);
 extern t_config_option *config_option_search (char *);
 extern int config_set_value (char *, char *);
+extern void *config_get_server_option_ptr (t_irc_server *, char *);
+extern int config_set_server_value (t_irc_server *, char *, char *);
 extern int config_read ();
 extern int config_create_default ();
 extern int config_write ();

@@ -1593,16 +1593,89 @@ weechat_cmd_server (int argc, char **argv)
 }
 
 /*
+ * weechat_set_cmd_display_option: display config option
+ */
+
+void
+weechat_set_cmd_display_option (t_config_option *option, char *prefix, void *value)
+{
+    char *color_name, *pos_nickserv, *pos_pwd, *value2;
+    
+    gui_printf (NULL, "  %s%s%s",
+                (prefix) ? prefix : "",
+                (prefix) ? "." : "",
+                option->option_name);
+    gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, " = ");
+    if (!value)
+    {
+        if (option->option_type == OPTION_TYPE_STRING)
+            value = option->ptr_string;
+        else
+            value = option->ptr_int;
+    }
+    switch (option->option_type)
+    {
+        case OPTION_TYPE_BOOLEAN:
+            gui_printf_color (NULL, COLOR_WIN_CHAT_HOST,
+                              "%s\n", (*((int *)value)) ? "ON" : "OFF");
+            break;
+        case OPTION_TYPE_INT:
+            gui_printf_color (NULL, COLOR_WIN_CHAT_HOST,
+                              "%d\n", *((int *)value));
+            break;
+        case OPTION_TYPE_INT_WITH_STRING:
+            gui_printf_color (NULL, COLOR_WIN_CHAT_HOST,
+                              "%s\n", option->array_values[*((int *)value)]);
+            break;
+        case OPTION_TYPE_COLOR:
+            color_name = gui_get_color_by_value (*((int *)value));
+            gui_printf_color (NULL, COLOR_WIN_CHAT_HOST,
+                              "%s\n", (color_name) ? color_name : _("(unknown)"));
+            break;
+        case OPTION_TYPE_STRING:
+            if (*((char **)value))
+            {
+                value2 = strdup (*((char **)value));
+                pos_nickserv = NULL;
+                pos_pwd = NULL;
+                pos_nickserv = strstr (value2, "nickserv");
+                if (pos_nickserv)
+                {
+                    pos_pwd = strstr (value2, "identify ");
+                    if (!pos_pwd)
+                        pos_pwd = strstr (value2, "register ");
+                }
+                if (cfg_log_hide_nickserv_pwd && pos_nickserv && pos_pwd)
+                {
+                    pos_pwd += 9;
+                    while (pos_pwd[0])
+                    {
+                        pos_pwd[0] = '*';
+                        pos_pwd++;
+                    }
+                    gui_printf (NULL, _("(password hidden) "));
+                }
+                gui_printf_color (NULL, COLOR_WIN_CHAT_HOST, "%s", value2);
+                free (value2);
+            }
+            gui_printf (NULL, "\n");
+            break;
+    }
+}
+
+/*
  * weechat_cmd_set: set options
  */
 
 int
 weechat_cmd_set (char *arguments)
 {
-    char *option, *value;
+    char *option, *value, *pos;
     int i, j, section_displayed;
-    char *color_name;
     t_config_option *ptr_option;
+    t_irc_server *ptr_server;
+    char option_name[256];
+    void *ptr_option_value;
     int number_found;
 
     option = NULL;
@@ -1620,32 +1693,86 @@ weechat_cmd_set (char *arguments)
     
     if (value)
     {
-        ptr_option = config_option_search (option);
-        if (ptr_option)
+        pos = strchr (option, '.');
+        if (pos)
         {
-            if (ptr_option->handler_change == NULL)
-            {
+            /* server config option modification */
+            pos[0] = '\0';
+            ptr_server = server_search (option);
+            if (!ptr_server)
                 gui_printf (NULL,
-                            _("%s option \"%s\" can not be changed while WeeChat is running\n"),
+                            _("%s server \"%s\" not found\n"),
                             WEECHAT_ERROR, option);
-            }
             else
             {
-                if (config_option_set_value (ptr_option, value) == 0)
+                switch (config_set_server_value (ptr_server, pos + 1, value))
                 {
-                    (void) (ptr_option->handler_change());
-                    gui_printf (NULL, "[%s]\n", config_get_section (ptr_option));
-                    gui_printf (NULL, "  %s = %s\n", option, value);
+                    case 0:
+                        gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "[");
+                        gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "%s",
+                                          config_sections[CONFIG_SECTION_SERVER].section_name);
+                        gui_printf_color (NULL, COLOR_WIN_CHAT_NICK, " %s",
+                                          ptr_server->name);
+                        gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "]\n");
+                        for (i = 0; weechat_options[CONFIG_SECTION_SERVER][i].option_name; i++)
+                        {
+                            if (strcmp (weechat_options[CONFIG_SECTION_SERVER][i].option_name, pos + 1) == 0)
+                                break;
+                        }
+                        if (weechat_options[CONFIG_SECTION_SERVER][i].option_name)
+                        {
+                            ptr_option_value = config_get_server_option_ptr (ptr_server,
+                                weechat_options[CONFIG_SECTION_SERVER][i].option_name);
+                            weechat_set_cmd_display_option (&weechat_options[CONFIG_SECTION_SERVER][i],
+                                                            ptr_server->name,
+                                                            ptr_option_value);
+                        }
+                        config_change_buffer_content ();
+                        break;
+                    case -1:
+                        gui_printf (NULL, _("%s config option \"%s\" not found\n"),
+                                    WEECHAT_ERROR, pos + 1);
+                        break;
+                    case -2:
+                        gui_printf (NULL, _("%s incorrect value for option \"%s\"\n"),
+                                    WEECHAT_ERROR, pos + 1);
+                        break;
                 }
-                else
-                    gui_printf (NULL, _("%s incorrect value for option \"%s\"\n"),
-                                WEECHAT_ERROR, option);
             }
+            pos[0] = '.';
         }
         else
         {
-            gui_printf (NULL, _("%s config option \"%s\" not found\n"),
-                        WEECHAT_ERROR, option);
+            ptr_option = config_option_search (option);
+            if (ptr_option)
+            {
+                if (ptr_option->handler_change == NULL)
+                {
+                    gui_printf (NULL,
+                                _("%s option \"%s\" can not be changed while WeeChat is running\n"),
+                                WEECHAT_ERROR, option);
+                }
+                else
+                {
+                    if (config_option_set_value (ptr_option, value) == 0)
+                    {
+                        (void) (ptr_option->handler_change());
+                        gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "[");
+                        gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
+                                          "%s", config_get_section (ptr_option));
+                        gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "]\n");
+                        weechat_set_cmd_display_option (ptr_option, NULL, NULL);
+                    }
+                    else
+                        gui_printf (NULL, _("%s incorrect value for option \"%s\"\n"),
+                                    WEECHAT_ERROR, option);
+                }
+            }
+            else
+            {
+                gui_printf (NULL, _("%s config option \"%s\" not found\n"),
+                            WEECHAT_ERROR, option);
+            }
         }
     }
     else
@@ -1665,47 +1792,49 @@ weechat_cmd_set (char *arguments)
                     {
                         if (!section_displayed)
                         {
-                            gui_printf (NULL, "[%s]\n",
-                                                 config_sections[i].section_name);
+                            gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "[");
+                            gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
+                                              "%s",
+                                              config_sections[i].section_name);
+                            gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "]\n");
                             section_displayed = 1;
                         }
-                        switch (weechat_options[i][j].option_type)
-                        {
-                            case OPTION_TYPE_BOOLEAN:
-                                gui_printf (NULL, "  %s = %s\n",
-                                            weechat_options[i][j].option_name,
-                                            (*weechat_options[i][j].ptr_int) ?
-                                                "ON" : "OFF");
-                                break;
-                            case OPTION_TYPE_INT:
-                                gui_printf (NULL,
-                                            "  %s = %d\n",
-                                            weechat_options[i][j].option_name,
-                                            *weechat_options[i][j].ptr_int);
-                                break;
-                            case OPTION_TYPE_INT_WITH_STRING:
-                                gui_printf (NULL,
-                                            "  %s = %s\n",
-                                            weechat_options[i][j].option_name,
-                                            weechat_options[i][j].array_values[*weechat_options[i][j].ptr_int]);
-                                break;
-                            case OPTION_TYPE_COLOR:
-                                color_name = gui_get_color_by_value (*weechat_options[i][j].ptr_int);
-                                gui_printf (NULL,
-                                            "  %s = %s\n",
-                                            weechat_options[i][j].option_name,
-                                            (color_name) ? color_name : _("(unknown)"));
-                                break;
-                            case OPTION_TYPE_STRING:
-                                gui_printf (NULL, "  %s = %s\n",
-                                            weechat_options[i][j].
-                                            option_name,
-                                            (*weechat_options[i][j].
-                                             ptr_string) ?
-                                            *weechat_options[i][j].
-                                            ptr_string : "");
-                                break;
-                        }
+                        weechat_set_cmd_display_option (&weechat_options[i][j], NULL, NULL);
+                        number_found++;
+                    }
+                }
+            }
+        }
+        for (ptr_server = irc_servers; ptr_server;
+             ptr_server = ptr_server->next_server)
+        {
+            section_displayed = 0;
+            for (i = 0; weechat_options[CONFIG_SECTION_SERVER][i].option_name; i++)
+            {
+                snprintf (option_name, sizeof (option_name), "%s.%s",
+                          ptr_server->name, 
+                          weechat_options[CONFIG_SECTION_SERVER][i].option_name);
+                if ((!option) ||
+                        ((option) && (option[0])
+                         && (strstr (option_name, option) != NULL)))
+                {
+                    if (!section_displayed)
+                    {
+                        gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "[");
+                        gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "%s",
+                                          config_sections[CONFIG_SECTION_SERVER].section_name);
+                        gui_printf_color (NULL, COLOR_WIN_CHAT_NICK, " %s",
+                                          ptr_server->name);
+                        gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "]\n");
+                        section_displayed = 1;
+                    }
+                    ptr_option_value = config_get_server_option_ptr (ptr_server,
+                        weechat_options[CONFIG_SECTION_SERVER][i].option_name);
+                    if (ptr_option_value)
+                    {
+                        weechat_set_cmd_display_option (&weechat_options[CONFIG_SECTION_SERVER][i],
+                                                        ptr_server->name,
+                                                        ptr_option_value);
                         number_found++;
                     }
                 }
@@ -1721,12 +1850,12 @@ weechat_cmd_set (char *arguments)
         }
         else
         {
+            gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "%d ", number_found);
             if (option)
-                gui_printf (NULL, _("%d config option(s) found with \"%s\"\n"),
-                            number_found, option);
+                gui_printf (NULL, _("config option(s) found with \"%s\"\n"),
+                            option);
             else
-                gui_printf (NULL, _("%d config option(s) found\n"),
-                            number_found);
+                gui_printf (NULL, _("config option(s) found\n"));
         }
     }
     return 0;

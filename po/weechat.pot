@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-01-04 23:15+0100\n"
+"POT-Creation-Date: 2005-01-05 23:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "%s cannot allocate new nick\n"
 msgstr ""
 
-#: src/irc/irc-server.c:136 src/common/weeconfig.c:1286
+#: src/irc/irc-server.c:136 src/common/weeconfig.c:1397
 msgid "Unable to get user's name"
 msgstr ""
 
@@ -1641,51 +1641,51 @@ msgstr ""
 msgid "%s unable to add handler for \"%s\" message (not enough memory)\n"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:574
+#: src/gui/curses/gui-display.c:572
 msgid "bytes"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:574
+#: src/gui/curses/gui-display.c:572
 msgid "Kb"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:574
+#: src/gui/curses/gui-display.c:572
 msgid "Mb"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:574
+#: src/gui/curses/gui-display.c:572
 msgid "Gb"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1008
+#: src/gui/curses/gui-display.c:1006
 #, c-format
 msgid "%d:[not connected] "
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1016
+#: src/gui/curses/gui-display.c:1014
 msgid "[Act: "
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1055 src/gui/curses/gui-display.c:1058
+#: src/gui/curses/gui-display.c:1053 src/gui/curses/gui-display.c:1056
 msgid "-MORE-"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1227
+#: src/gui/curses/gui-display.c:1225
 msgid "  [A] Accept"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1228 src/gui/curses/gui-display.c:1234
-#: src/gui/curses/gui-display.c:1241
+#: src/gui/curses/gui-display.c:1226 src/gui/curses/gui-display.c:1232
+#: src/gui/curses/gui-display.c:1239
 msgid "  [C] Cancel"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1229 src/gui/curses/gui-display.c:1235
-#: src/gui/curses/gui-display.c:1242 src/gui/curses/gui-display.c:1249
-#: src/gui/curses/gui-display.c:1254
+#: src/gui/curses/gui-display.c:1227 src/gui/curses/gui-display.c:1233
+#: src/gui/curses/gui-display.c:1240 src/gui/curses/gui-display.c:1247
+#: src/gui/curses/gui-display.c:1252
 msgid "  [Q] Close DCC view"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1248
+#: src/gui/curses/gui-display.c:1246
 msgid "  [R] Remove"
 msgstr ""
 
@@ -2020,6 +2020,7 @@ msgid "%s already connected to server \"%s\"!\n"
 msgstr ""
 
 #: src/common/command.c:1090 src/common/command.c:1128
+#: src/common/command.c:1704
 #, c-format
 msgid "%s server \"%s\" not found\n"
 msgstr ""
@@ -2093,7 +2094,7 @@ msgstr ""
 msgid "Perl scripts unloaded\n"
 msgstr ""
 
-#: src/common/command.c:1325 src/common/command.c:1789
+#: src/common/command.c:1325 src/common/command.c:1917
 #, c-format
 msgid "%s unknown option for \"%s\" command\n"
 msgstr ""
@@ -2171,50 +2172,53 @@ msgstr ""
 msgid "%s unable to create server\n"
 msgstr ""
 
-#: src/common/command.c:1629
-#, c-format
-msgid "%s option \"%s\" can not be changed while WeeChat is running\n"
+#: src/common/command.c:1633
+msgid "(unknown)"
 msgstr ""
 
-#: src/common/command.c:1641
-#, c-format
-msgid "%s incorrect value for option \"%s\"\n"
+#: src/common/command.c:1656
+msgid "(password hidden) "
 msgstr ""
 
-#: src/common/command.c:1647
+#: src/common/command.c:1732 src/common/command.c:1772
 #, c-format
 msgid "%s config option \"%s\" not found\n"
 msgstr ""
 
-#: src/common/command.c:1697
-msgid "(unknown)"
+#: src/common/command.c:1736 src/common/command.c:1766
+#, c-format
+msgid "%s incorrect value for option \"%s\"\n"
 msgstr ""
 
-#: src/common/command.c:1717
+#: src/common/command.c:1751
+#, c-format
+msgid "%s option \"%s\" can not be changed while WeeChat is running\n"
+msgstr ""
+
+#: src/common/command.c:1845
 #, c-format
 msgid "No config option found with \"%s\"\n"
 msgstr ""
 
-#: src/common/command.c:1720
+#: src/common/command.c:1848
 msgid "No config option found\n"
 msgstr ""
 
-#: src/common/command.c:1725
+#: src/common/command.c:1854
 #, c-format
-msgid "%d config option(s) found with \"%s\"\n"
+msgid "config option(s) found with \"%s\"\n"
 msgstr ""
 
-#: src/common/command.c:1728
-#, c-format
-msgid "%d config option(s) found\n"
+#: src/common/command.c:1857
+msgid "config option(s) found\n"
 msgstr ""
 
-#: src/common/command.c:1748
+#: src/common/command.c:1876
 #, c-format
 msgid "%s alias or command \"%s\" not found\n"
 msgstr ""
 
-#: src/common/command.c:1757
+#: src/common/command.c:1885
 #, c-format
 msgid "Alias \"%s\" removed\n"
 msgstr ""
@@ -3003,103 +3007,103 @@ msgstr ""
 msgid "automatically rejoin channels when kicked"
 msgstr ""
 
-#: src/common/weeconfig.c:846
+#: src/common/weeconfig.c:957
 #, c-format
 msgid "%s %s, line %d: new server, but previous was incomplete\n"
 msgstr ""
 
-#: src/common/weeconfig.c:855
+#: src/common/weeconfig.c:966
 #, c-format
 msgid "%s %s, line %d: server '%s' already exists\n"
 msgstr ""
 
-#: src/common/weeconfig.c:869
+#: src/common/weeconfig.c:980
 #, c-format
 msgid "%s %s, line %d: unable to create server\n"
 msgstr ""
 
-#: src/common/weeconfig.c:908
+#: src/common/weeconfig.c:1019
 #, c-format
 msgid "%s unable to assign default int with string (\"%s\")\n"
 msgstr ""
 
-#: src/common/weeconfig.c:919
+#: src/common/weeconfig.c:1030
 #, c-format
 msgid "%s unable to assign default color (\"%s\")\n"
 msgstr ""
 
-#: src/common/weeconfig.c:958
+#: src/common/weeconfig.c:1069
 #, c-format
 msgid "%s config file \"%s\" not found.\n"
 msgstr ""
 
-#: src/common/weeconfig.c:990
+#: src/common/weeconfig.c:1101
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"]\"\n"
 msgstr ""
 
-#: src/common/weeconfig.c:1007
+#: src/common/weeconfig.c:1118
 #, c-format
 msgid "%s %s, line %d: unknown section identifier (\"%s\")\n"
 msgstr ""
 
-#: src/common/weeconfig.c:1025
+#: src/common/weeconfig.c:1136
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"=\"\n"
 msgstr ""
 
-#: src/common/weeconfig.c:1059
+#: src/common/weeconfig.c:1170
 #, c-format
 msgid "%s %s, line %d: invalid option \"%s\"\n"
 msgstr ""
 
-#: src/common/weeconfig.c:1070
+#: src/common/weeconfig.c:1181
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value foroption '%s'\n"
 "Expected: boolean value: 'off' or 'on'\n"
 msgstr ""
 
-#: src/common/weeconfig.c:1079
+#: src/common/weeconfig.c:1190
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
 "Expected: integer between %d and %d\n"
 msgstr ""
 
-#: src/common/weeconfig.c:1090
+#: src/common/weeconfig.c:1201
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
 "Expected: one of these strings: "
 msgstr ""
 
-#: src/common/weeconfig.c:1106
+#: src/common/weeconfig.c:1217
 #, c-format
 msgid "%s %s, line %d: invalid color name for option '%s'\n"
 msgstr ""
 
-#: src/common/weeconfig.c:1165 src/common/weeconfig.c:1338
+#: src/common/weeconfig.c:1276 src/common/weeconfig.c:1449
 #, c-format
 msgid "%s cannot create file \"%s\"\n"
 msgstr ""
 
-#: src/common/weeconfig.c:1171
+#: src/common/weeconfig.c:1282
 #, c-format
 msgid "%s: creating default config file...\n"
 msgstr ""
 
-#: src/common/weeconfig.c:1172
+#: src/common/weeconfig.c:1283
 msgid "creating default config file\n"
 msgstr ""
 
-#: src/common/weeconfig.c:1175 src/common/weeconfig.c:1347
+#: src/common/weeconfig.c:1286 src/common/weeconfig.c:1458
 #, c-format
 msgid ""
 "#\n"
 "# %s configuration file, created by %s v%s on %s#\n"
 msgstr ""
 
-#: src/common/weeconfig.c:1344
+#: src/common/weeconfig.c:1455
 msgid "saving config to disk\n"
 msgstr ""

@@ -344,10 +344,8 @@ gui_draw_buffer_title (t_gui_buffer *buffer, int erase)
                 {
                     /* TODO: change this copyright as title? */
                     mvwprintw (ptr_win->win_title, 0, 0,
-                               "%s", PACKAGE_STRING " - " WEECHAT_WEBSITE);
-                    mvwprintw (ptr_win->win_title, 0,
-                               ptr_win->win_width - strlen (WEECHAT_COPYRIGHT),
-                               "%s", WEECHAT_COPYRIGHT);
+                               "%s",
+                               PACKAGE_STRING " " WEECHAT_COPYRIGHT_DATE " - " WEECHAT_WEBSITE);
                 }
             }
             wrefresh (ptr_win->win_title);

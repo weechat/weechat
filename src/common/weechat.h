@@ -43,7 +43,7 @@
 #endif
 
 
-#define WEECHAT_COPYRIGHT PACKAGE_NAME " (c) 2003-2005 by Wee Team"
+#define WEECHAT_COPYRIGHT_DATE "(c) 2003-2005"
 #define WEECHAT_WEBSITE "http://weechat.flashtux.org"
 
 #define WEECHAT_ERROR   _(PACKAGE_NAME " Error:")
@@ -57,10 +57,7 @@
 
 #define WEE_LICENSE \
     PACKAGE_STRING " (c) Copyright 2003-2005, compiled on " __DATE__ " " __TIME__ \
-    "\nDeveloped by FlashCode <flashcode@flashtux.org>\n" \
-    "             Bounga <bounga@altern.org>\n" \
-    "             Xahlexx <xahlexx@weeland.org>\n" \
-    "Website: " WEECHAT_WEBSITE "\n\n" \
+    "\nDeveloped by FlashCode <flashcode@flashtux.org> - " WEECHAT_WEBSITE "\n\n" \
     "This program is free software; you can redistribute it and/or modify\n" \
     "it under the terms of the GNU General Public License as published by\n" \
     "the Free Software Foundation; either version 2 of the License, or\n" \
@@ -78,7 +75,7 @@
     
 #define WEE_USAGE1 \
     PACKAGE_STRING " (c) Copyright 2003-2005, compiled on " __DATE__ " " __TIME__ \
-    "\nDeveloped by FlashCode, Bounga and Xahlexx - " WEECHAT_WEBSITE "\n\n" \
+    "\nDeveloped by FlashCode <flashcode@flashtux.org> - " WEECHAT_WEBSITE "\n\n" \
     "Usage: %s [options ...]\n" \
     "   or: %s [irc://[nickname[:password]@]irc.example.org[:port][/channel] ...]\n\n"
 
