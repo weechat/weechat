@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2004-12-27
+ChangeLog - 2004-12-31
 
 
 Version 0.0.9 (under dev!):
@@ -12,8 +12,11 @@ Version 0.0.9 (under dev!):
      visible, and buffer will be used again if reconnection to server)
    * option "look_remove_colors_from_msgs" is now working
    * fixed display of nick mode changes
+   * new command "/buffer close" (close any server/channel/private buffer)
    * /notice command fixed (and display when received from server)
-   * new keys: ctrl+A (=home), ctrl+E (=end), ctrl+W (=ctrl+backspace)
+   * new keys: Ctrl+A (=home), Ctrl+E (=end), Ctrl+W (=Ctrl+Backspace),
+     Alt-S (switch to server buffer), Alt-X (switch to first channel of next
+     server)
    * added new config option: "server_command_delay" (delay in seconds after
      startup command for each server)
 

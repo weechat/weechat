@@ -6,7 +6,7 @@
 
 @c WeeChat documentation (french version)
 @c
-@c Copyright (c) 2004 by FlashCode <flashcode@flashtux.org>
+@c Copyright (c) 2005 by FlashCode <flashcode@flashtux.org>
 @c
 @c This manual is free software; you can redistribute it and/or modify
 @c it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.0.9-pre1 - 22 D@'ecembre 2004
+@subtitle Documentation pour WeeChat v0.0.9 - 1er Janvier 2005
 
 @image{weechat_image}
 
@@ -48,7 +48,7 @@ Ce manuel documente le client IRC WeeChat, il fait partie de WeeChat.@*
 La derni@`ere version de ce document peut @^etre t@'el@'echarg@'ee sur cette page :@*
 @uref{http://weechat.flashtux.org/doc.php}@*
 @*
-Copyright @copyright{} 2004 FlashCode
+Copyright @copyright{} 2005 FlashCode
 <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>@*
 @*
 Ce document peut @^etre utilis@'e sous les termes de la licence GNU General Public
@@ -496,6 +496,12 @@ Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
 @item server_autoconnect
 Connexion automatique au serveur quand WeeChat d@'emarre@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
+@item server_autoreconnect
+Reconnexion automatique au serveur apr@`es une d@'econnexion@*
+Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
+@item server_autoreconnect_delay
+D@'elai (en secondes) avant de tenter une reconnexion au serveur@*
+Type: entier (valeurs: entre 0 et 65535), valeur par d@'efaut: 30@*
 @item server_address
 Adresse IP ou nom du serveur IRC@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
@@ -630,6 +636,12 @@ Afficher les DCC en cours@*
 @*
 @item Alt + R
 Vide la hotlist (notification d'activité sur les autres tampons)@*
+@*
+@item Alt + S
+Sauter au tampon du serveur@*
+@*
+@item Alt + X
+Sauter au premier canal du serveur suivant (ou tampon du serveur si aucun canal ouvert)@*
 @*
 @item Alt + chiffre (1-9)
 Sauter au tampon avec ce num@'ero@*
@@ -904,7 +916,7 @@ Voir la page support WeeChat pour plus de d@'etails :@*
 
 Ce manuel documente le client IRC WeeChat, il fait partie de WeeChat.@*
 
-Copyright @copyright{} 2004 FlashCode
+Copyright @copyright{} 2005 FlashCode
 <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>@*
 @*
 Ce document peut @^etre utilis@'e sous les termes de la licence GNU General Public

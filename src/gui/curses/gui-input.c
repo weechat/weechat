@@ -51,6 +51,7 @@ gui_read_keyb ()
 {
     int key, i;
     t_gui_buffer *ptr_buffer;
+    t_irc_server *ptr_server;
     char new_char[2];
     t_dcc *dcc_selected;
 
@@ -417,7 +418,7 @@ gui_read_keyb ()
                                 }
                             }
                             break;
-                        /* Alt-number */
+                        /* Alt-number: jump to window by number */
                         case 48: /* Alt-0 */
                         case 49: /* Alt-1 */
                         case 50: /* Alt-2 */
@@ -430,7 +431,7 @@ gui_read_keyb ()
                         case 57: /* Alt-9 */
                             gui_switch_to_buffer_by_number (gui_current_window, (key == 48) ? 10 : key - 48);
                             break;
-                        /* Alt-A */
+                        /* Alt-A: jump to buffer with activity */
                         case 'a':
                         case 'A':
                             if (hotlist)
@@ -450,7 +451,7 @@ gui_read_keyb ()
                                 }
                             }
                             break;
-                        /* Alt-D */
+                        /* Alt-D: jump to DCC buffer */
                         case 'd':
                         case 'D':
                             if (gui_current_window->buffer->dcc)
@@ -468,7 +469,7 @@ gui_read_keyb ()
                                 gui_switch_to_dcc_buffer ();
                             }
                             break;
-                        /* Alt-R */
+                        /* Alt-R: clear hotlist */
                         case 'r':
                         case 'R':
                             if (hotlist)
@@ -477,6 +478,38 @@ gui_read_keyb ()
                                 gui_redraw_buffer (gui_current_window->buffer);
                             }
                             hotlist_initial_buffer = gui_current_window->buffer;
+                            break;
+                        /* Alt-S: jump to server buffer */
+                        case 's':
+                        case 'S':
+                            if (SERVER(gui_current_window->buffer)->buffer !=
+                                gui_current_window->buffer)
+                            {
+                                gui_switch_to_buffer (gui_current_window,
+                                                      SERVER(gui_current_window->buffer)->buffer);
+                                gui_redraw_buffer (gui_current_window->buffer);
+                            }
+                            break;
+                        /* Alt-X: jump to first channel/private of next server */
+                        case 'x':
+                        case 'X':
+                            ptr_server = SERVER(gui_current_window->buffer)->next_server;
+                            if (!ptr_server)
+                                ptr_server = irc_servers;
+                            while (ptr_server != SERVER(gui_current_window->buffer))
+                            {
+                                if (ptr_server->buffer)
+                                    break;
+                                ptr_server = (ptr_server->next_server) ?
+                                             ptr_server->next_server : irc_servers;
+                            }
+                            if (ptr_server != SERVER(gui_current_window->buffer))
+                            {
+                                ptr_buffer = (ptr_server->channels) ?
+                                             ptr_server->channels->buffer : ptr_server->buffer;
+                                gui_switch_to_buffer (gui_current_window, ptr_buffer);
+                                gui_redraw_buffer (gui_current_window->buffer);
+                            }
                             break;
                     }
                 }

@@ -47,6 +47,7 @@ t_weechat_command weechat_commands[] =
     N_("[action | number]"),
     N_("action: action to do:\n"
     "  move    move buffer in the list (may be relative, for example -1)\n"
+    "  close   close buffer (for channel: same as /part without part message)\n"
     "  list    list opened buffers (no parameter implies this list)\n"
     "  notify  set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)\n"
     "number: jump to buffer by number"),
@@ -834,6 +835,7 @@ int
 weechat_cmd_buffer (int argc, char **argv)
 {
     t_gui_buffer *ptr_buffer;
+    t_irc_server *ptr_server;
     long number;
     char *error;
     
@@ -915,6 +917,36 @@ weechat_cmd_buffer (int argc, char **argv)
                             WEECHAT_ERROR);
                 return -1;
             }
+        }
+        else if (strcasecmp (argv[0], "close") == 0)
+        {
+            /* close buffer (server or channel/private) */
+            
+            if ((!gui_current_window->buffer->next_buffer)
+                && (gui_current_window->buffer == gui_buffers))
+            {
+                gui_printf (gui_current_window->buffer,
+                            _("%s can not close the single buffer\n"),
+                            WEECHAT_ERROR);
+                return -1;
+            }
+            if (BUFFER_IS_SERVER(gui_current_window->buffer))
+            {
+                if (SERVER(gui_current_window->buffer)->channels)
+                {
+                    gui_printf (gui_current_window->buffer,
+                                _("%s can not close server buffer while channels "
+                                "are opened\n"),
+                                WEECHAT_ERROR);
+                    return -1;
+                }
+                server_disconnect (SERVER(gui_current_window->buffer), 0);
+                ptr_server = SERVER(gui_current_window->buffer);
+                gui_buffer_free (gui_current_window->buffer, 1);
+                ptr_server->buffer = NULL;
+            }
+            else
+                irc_cmd_send_part (SERVER(gui_current_window->buffer), NULL);
         }
         else if (strcasecmp (argv[0], "notify") == 0)
         {

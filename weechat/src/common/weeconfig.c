@@ -1189,6 +1189,7 @@ config_create_default ()
     fprintf (file, "SIGNOFF=quit\n");
     fprintf (file, "C=clear\n");
     fprintf (file, "CL=clear\n");
+    fprintf (file, "CLOSE=buffer close\n");
     fprintf (file, "# CHAT=dcc chat\n");
     fprintf (file, "# GET=dcc get\n");
     fprintf (file, "# IG=ignore\n");

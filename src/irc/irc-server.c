@@ -802,6 +802,7 @@ server_disconnect (t_irc_server *server, int reconnect)
     server->sock4 = -1;
     
     server->is_connected = 0;
+    server->is_away = 0;
     
     if ((reconnect) && (server->autoreconnect))
     {

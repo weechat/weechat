@@ -6,7 +6,7 @@
 
 @c WeeChat documentation (english version)
 @c
-@c Copyright (c) 2004 by FlashCode <flashcode@flashtux.org>
+@c Copyright (c) 2005 by FlashCode <flashcode@flashtux.org>
 @c
 @c This manual is free software; you can redistribute it and/or modify
 @c it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.0.9-pre1 - December, 22 2004
+@subtitle Documentation for WeeChat v0.0.9 - January, 01 2005
 
 @image{weechat_image}
 
@@ -48,7 +48,7 @@ This manual documents WeeChat IRC client, it is part of WeeChat.@*
 Latest version of this document can be found on this page:@*
 @uref{http://weechat.flashtux.org/doc.php?lang=en}@*
 @*
-Copyright @copyright{} 2004 FlashCode
+Copyright @copyright{} 2005 FlashCode
 <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>@*
 @*
 This document may be used under the terms the GNU General Public License
@@ -247,7 +247,6 @@ set parameters with @kbd{/set} command in WeeChat - @xref{WeeChat commands}.
 Here is a list of all options for config file:@*
 
 @table @kbd
-
 @item look_set_title
 Set title for window (terminal for Curses GUI) with name & version@*
 Type: boolean (values: 'on' or 'off'), default value: 'on'@*
@@ -497,6 +496,12 @@ Type: string (any string), default value: ''@*
 @item server_autoconnect
 Automatically connect to server when WeeChat is starting@*
 Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+@item server_autoreconnect
+Automatically reconnect to server when disconnected@*
+Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+@item server_autoreconnect_delay
+Delay (in deconds) before trying again to reconnect to server@*
+Type: integer (values: between 0 and 65535), default value: 30@*
 @item server_address
 IP address or hostname of IRC server@*
 Type: string (any string), default value: ''@*
@@ -631,6 +636,12 @@ Display current DCC@*
 @*
 @item Alt + R
 Clear hotlist (activity notification on other buffers)@*
+@*
+@item Alt + S
+Switch to server buffer@*
+@*
+@item Alt + X
+Switch to first channel of next server (or server buffer if no channel is opened)@*
 @*
 @item Alt + digit (1-9)
 Switch to buffer by number@*
@@ -905,7 +916,7 @@ Look for WeeChat support page for detail:@*
 
 This manual documents WeeChat IRC client, it is part of WeeChat.@*
 
-Copyright @copyright{} 2004 FlashCode
+Copyright @copyright{} 2005 FlashCode
 <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>@*
 @*
 This document may be used under the terms the GNU General Public License

@@ -6,7 +6,7 @@
 
 @c WeeChat documentation (vers@~ao partuguesa)
 @c
-@c Copyright (c) 2004 by FlashCode <flashcode@flashtux.org>
+@c Copyright (c) 2005 by FlashCode <flashcode@flashtux.org>
 @c
 @c This manual is free software; you can redistribute it and/or modify
 @c it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@
 
 @title WeeChat - Guia do Utilizador
 @subtitle Cliente de IRC rapido, leve e extencivel
-@subtitle Documenta@,{c}@~ao do WeeChat v0.0.9-pre1 - 22 de Dezembro de 2004
+@subtitle Documenta@,{c}@~ao do WeeChat v0.0.9 - 1 de Janeiro de 2005
 
 @image{weechat_image}
 
@@ -48,7 +48,7 @@ Este manual documenta o cliente de IRC WeeChat, ele faz parte do WeeChat.@*
 A ultima versão deste documento pode ser descarregada de :@*
 @uref{http://weechat.flashtux.org/doc.php}@*
 @*
-Copyright @copyright{} 2004 FlashCode
+Copyright @copyright{} 2005 FlashCode
 <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>@*
 @*
 Este documento pode ser utilizado sobre os termos da Licen@,{c}a P@'ublica geral GNU (GNU General Public
@@ -297,6 +297,12 @@ Exposi@,{c}@~ao DCC atual@*
 @*
 @item Alt + R
 Hotlist desobstru@'ido (notifica@,{c}@~ao da atividade em outros amortecedores)@*
+@*
+@item Alt + S
+Comute ao amortecedor do servidor@*
+@*
+@item Alt + X
+Comute @`a primeira canaleta do servidor seguinte (ou do amortecedor do servidor se nenhuma canaleta for aberta)@*
 @*
 @item Alt + d@'igito (1-9)
 Comute ao amortecedor pelo n@'umero@*
@@ -564,7 +570,7 @@ Para mais detalhes, v@^e tamb@'em a p@'agina de suporte do WeeChat :@*
 
 Este manual documenta o cliente de IRC WeeChat, Ele faz parte do WeeChat.@*
 
-Copyright @copyright{} 2004 FlashCode
+Copyright @copyright{} 2005 FlashCode
 <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>@*
 Tradu@,{c}@~ao portuguesa de Jo@~ao Jer@'onimo <@email{j_j_b_o@@sapo.pt, j_j_b_o AT sapo.pt}>@*
 @*
