@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2004-01-11
+ChangeLog - 2004-01-16
 
 
 Version 0.0.5 (under dev!):
+   * fixed crash when config file cannot be written
    * -c (or --config) command line parameter added to see config file options
    * highlight action messages
 
