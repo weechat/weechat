@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-01-19 07:22+0100\n"
+"POT-Creation-Date: 2005-01-19 17:52+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1697,17 +1697,17 @@ msgstr ""
 msgid "server"
 msgstr ""
 
-#: src/gui/gui-common.c:322
+#: src/gui/gui-common.c:326
 #, c-format
 msgid "%s not enough memory for infobar message\n"
 msgstr ""
 
-#: src/gui/gui-common.c:465
+#: src/gui/gui-common.c:471
 #, c-format
 msgid "%s not enough memory for new line!\n"
 msgstr ""
 
-#: src/gui/gui-common.c:508
+#: src/gui/gui-common.c:514
 msgid "not enough memory!\n"
 msgstr ""
 

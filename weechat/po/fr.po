@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.0-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-01-19 07:22+0100\n"
+"POT-Creation-Date: 2005-01-19 17:52+0100\n"
 "PO-Revision-Date: 2005-01-01 13:00+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1432,7 +1432,7 @@ msgstr "%s impossible d'analyser la commande \"%s\"\n"
 #: src/irc/irc-recv.c:1266
 #, c-format
 msgid "Private %s> %s"
-msgstr "Privé %s> %s"
+msgstr "Prive %s> %s"
 
 #: src/irc/irc-recv.c:1342
 msgid "has quit"
@@ -1809,17 +1809,17 @@ msgstr "  [R] Retirer"
 msgid "server"
 msgstr "serveur"
 
-#: src/gui/gui-common.c:322
+#: src/gui/gui-common.c:326
 #, c-format
 msgid "%s not enough memory for infobar message\n"
 msgstr "%s pas assez de mémoire pour un message de la barre d'infos\n"
 
-#: src/gui/gui-common.c:465
+#: src/gui/gui-common.c:471
 #, c-format
 msgid "%s not enough memory for new line!\n"
 msgstr "%s pas assez de mémoire pour une nouvelle ligne !\n"
 
-#: src/gui/gui-common.c:508
+#: src/gui/gui-common.c:514
 msgid "not enough memory!\n"
 msgstr "pas assez de mémoire !\n"
 

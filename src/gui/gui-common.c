@@ -299,17 +299,21 @@ gui_infobar_printf (int time_displayed, int color, char *message, ...)
     static char buffer[1024];
     va_list argptr;
     t_gui_infobar *ptr_infobar;
-    char *pos;
+    char *pos, *buf2;
     
     va_start (argptr, message);
     vsnprintf (buffer, sizeof (buffer) - 1, message, argptr);
     va_end (argptr);
     
+    buf2 = weechat_convert_encoding (cfg_look_charset_decode,
+                                     local_charset,
+                                     buffer);
+    
     ptr_infobar = (t_gui_infobar *)malloc (sizeof (t_gui_infobar));
     if (ptr_infobar)
     {
         ptr_infobar->color = color;
-        ptr_infobar->text = strdup (buffer);
+        ptr_infobar->text = strdup (buf2);
         pos = strchr (ptr_infobar->text, '\n');
         if (pos)
             pos[0] = '\0';
@@ -321,6 +325,8 @@ gui_infobar_printf (int time_displayed, int color, char *message, ...)
     else
         wee_log_printf (_("%s not enough memory for infobar message\n"),
                         WEECHAT_ERROR);
+    
+    free (buf2);
 }
 
 /*
