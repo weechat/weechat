@@ -1065,10 +1065,13 @@ server_remove_away ()
     
     for (ptr_server = irc_servers; ptr_server; ptr_server = ptr_server->next_server)
     {
-        for (ptr_channel = ptr_server->channels; ptr_channel; ptr_channel = ptr_channel->next_channel)
+        if (ptr_server->is_connected)
         {
-            if (ptr_channel->type == CHAT_CHANNEL)
-                channel_remove_away (ptr_channel);
+            for (ptr_channel = ptr_server->channels; ptr_channel; ptr_channel = ptr_channel->next_channel)
+            {
+                if (ptr_channel->type == CHAT_CHANNEL)
+                    channel_remove_away (ptr_channel);
+            }
         }
     }
 }
@@ -1085,10 +1088,13 @@ server_check_away ()
     
     for (ptr_server = irc_servers; ptr_server; ptr_server = ptr_server->next_server)
     {
-        for (ptr_channel = ptr_server->channels; ptr_channel; ptr_channel = ptr_channel->next_channel)
+        if (ptr_server->is_connected)
         {
-            if (ptr_channel->type == CHAT_CHANNEL)
-                channel_check_away (ptr_server, ptr_channel);
+            for (ptr_channel = ptr_server->channels; ptr_channel; ptr_channel = ptr_channel->next_channel)
+            {
+                if (ptr_channel->type == CHAT_CHANNEL)
+                    channel_check_away (ptr_server, ptr_channel);
+            }
         }
     }
 }
@@ -1104,7 +1110,10 @@ server_set_away (t_irc_server *server, char *nick, int is_away)
     
     for (ptr_channel = server->channels; ptr_channel; ptr_channel = ptr_channel->next_channel)
     {
-        if (ptr_channel->type == CHAT_CHANNEL)
-            channel_set_away (ptr_channel, nick, is_away);
+        if (server->is_connected)
+        {
+            if (ptr_channel->type == CHAT_CHANNEL)
+                channel_set_away (ptr_channel, nick, is_away);
+        }
     }
 }
