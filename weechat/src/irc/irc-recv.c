@@ -391,6 +391,41 @@ void irc_get_channel_modes (t_irc_channel *ptr_channel, char *channel_name,
                     parm = pos;
                 }
                 break;
+            case 'h':
+                pos = NULL;
+                if (parm)
+                {
+                    pos = strchr (parm, ' ');
+                    if (pos)
+                        pos[0] = '\0';
+                }
+                if (nick_host)
+                    irc_display_mode (ptr_channel->buffer,
+                                      channel_name, set_flag, "o", nick_host,
+                                      (set_flag == '+') ?
+                                          _("gives half channel operator status to") :
+                                          _("removes half channel operator status from"),
+                                      (parm) ? parm : NULL);
+                if (parm)
+                {
+                    ptr_nick = nick_search (ptr_channel, parm);
+                    if (ptr_nick)
+                    {
+                        ptr_nick->is_halfop = (set_flag == '+') ? 1 : 0;
+                        nick_resort (ptr_channel, ptr_nick);
+                        gui_draw_buffer_nick (ptr_channel->buffer, 1);
+                    }
+                }
+                
+                /* look for next parameter */
+                if (parm && pos)
+                {
+                    pos++;
+                    while (pos[0] == ' ')
+                        pos++;
+                    parm = pos;
+                }
+                break;
             case 'i':
                 if (nick_host)
                     irc_display_mode (ptr_channel->buffer,

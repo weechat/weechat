@@ -402,6 +402,32 @@ irc_cmd_send_dcc (t_irc_server *server, char *arguments)
 }
 
 /*
+ * irc_cmd_send_dehalfop: remove half operator privileges from nickname(s)
+ */
+
+int
+irc_cmd_send_dehalfop (t_irc_server *server, int argc, char **argv)
+{
+    int i;
+    
+    if (BUFFER_IS_CHANNEL(gui_current_window->buffer))
+    {
+        for (i = 0; i < argc; i++)
+            server_sendf (server, "MODE %s -h %s\r\n",
+                          CHANNEL(gui_current_window->buffer)->name,
+                          argv[i]);
+    }
+    else
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s \"%s\" command can only be executed in a channel window\n"),
+                          WEECHAT_ERROR, "dehalfop");
+    }
+    return 0;
+}
+
+/*
  * irc_cmd_send_deop: remove operator privileges from nickname(s)
  */
 
@@ -465,6 +491,33 @@ irc_cmd_send_die (t_irc_server *server, char *arguments)
     (void) arguments;
     
     server_sendf (server, "DIE\r\n");
+    return 0;
+}
+
+/*
+ * irc_cmd_send_halfop: give half operator privileges to nickname(s)
+ */
+
+int
+irc_cmd_send_halfop (t_irc_server *server, int argc, char **argv)
+{
+    int i;
+    
+    if (BUFFER_IS_CHANNEL(gui_current_window->buffer))
+    {
+        for (i = 0; i < argc; i++)
+            server_sendf (server, "MODE %s +h %s\r\n",
+                          CHANNEL(gui_current_window->buffer)->name,
+                          argv[i]);
+    }
+    else
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s \"%s\" command can only be executed in a channel window\n"),
+                          WEECHAT_ERROR, "halfop");
+        return -1;
+    }
     return 0;
 }
 
