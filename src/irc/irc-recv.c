@@ -2973,7 +2973,7 @@ irc_cmd_recv_366 (t_irc_server *server, char *host, char *arguments)
                 for (ptr_nick = ptr_channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
                 {
                     irc_display_nick (ptr_channel->buffer, ptr_nick,
-                                      MSG_TYPE_INFO, 0, 0, 1);
+                                      MSG_TYPE_MSG, 0, 0, 1);
                     if (ptr_nick != ptr_channel->last_nick)
                         gui_printf (ptr_channel->buffer, " ");
                 }

@@ -2220,7 +2220,6 @@ gui_init ()
     curs_set (1);
     keypad (stdscr, TRUE);
     noecho ();
-    /*nonl();*/
     nodelay (stdscr, TRUE);
 
     gui_init_colors ();
@@ -2329,7 +2328,7 @@ gui_add_message (t_gui_buffer *buffer, int type, int color, char *message)
         buffer->last_line->line_with_message = 1;
     if (type & MSG_TYPE_HIGHLIGHT)
         buffer->last_line->line_with_highlight = 1;
-    if ((type & MSG_TYPE_TIME) || (type & MSG_TYPE_NICK))
+    if ((type & MSG_TYPE_TIME) || (type & MSG_TYPE_NICK) || (type & MSG_TYPE_PREFIX))
         buffer->last_line->length_align += length;
     if (type & MSG_TYPE_NOLOG)
         buffer->last_line->log_write = 0;
@@ -2458,9 +2457,6 @@ gui_printf_color_type (t_gui_buffer *buffer, int type, int color, char *message,
             if (pos && !pos[1])
                 pos = NULL;
         }
-        
-        /*wrefresh (buffer->window->win_chat);
-        refresh ();*/
     }
     else
         printf ("%s", buf3);

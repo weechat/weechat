@@ -45,7 +45,8 @@ irc_display_prefix (t_gui_buffer *buffer, char *prefix)
 {
     int type;
     
-    type = MSG_TYPE_INFO;
+    type = MSG_TYPE_INFO | MSG_TYPE_PREFIX;
+    
     if (!cfg_log_plugin_msg && (prefix == PREFIX_PLUGIN))
         type |= MSG_TYPE_NOLOG;
     

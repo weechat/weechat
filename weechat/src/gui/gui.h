@@ -78,11 +78,12 @@
 #define BUFFER_IS_PRIVATE(buffer) (CHANNEL(buffer) && (CHANNEL(buffer)->type == CHAT_PRIVATE))
 
 #define MSG_TYPE_TIME      1
-#define MSG_TYPE_NICK      2
-#define MSG_TYPE_INFO      4
-#define MSG_TYPE_MSG       8
-#define MSG_TYPE_HIGHLIGHT 16
-#define MSG_TYPE_NOLOG     32
+#define MSG_TYPE_PREFIX    2
+#define MSG_TYPE_NICK      4
+#define MSG_TYPE_INFO      8
+#define MSG_TYPE_MSG       16
+#define MSG_TYPE_HIGHLIGHT 32
+#define MSG_TYPE_NOLOG     64
 
 #define gui_printf_color(buffer, color, fmt, argz...) \
     gui_printf_color_type(buffer, MSG_TYPE_INFO, color, fmt, ##argz)
