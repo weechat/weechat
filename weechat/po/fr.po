@@ -1592,7 +1592,7 @@ msgstr "Réception fichier DCC de "
 
 #: src/irc/irc-dcc.c:288
 msgid " bytes\n"
-msgstr "octets\n"
+msgstr " octets\n"
 
 #: src/irc/irc-dcc.c:341
 msgid "DCC: file "
