@@ -47,10 +47,10 @@ t_weechat_command weechat_commands[] =
   { "buffer", N_("manage buffers"),
     N_("[action | number]"),
     N_("action: action to do:\n"
-    "  move    move buffer in the list (may be relative, for example -1)\n"
-    "  close   close buffer (for channel: same as /part without part message)\n"
-    "  list    list opened buffers (no parameter implies this list)\n"
-    "  notify  set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)\n"
+    "  move: move buffer in the list (may be relative, for example -1)\n"
+    "  close: close buffer (for channel: same as /part without part message)\n"
+    "  list: list opened buffers (no parameter implies this list)\n"
+    "  notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)\n"
     "number: jump to buffer by number"),
     0, MAX_ARGS, weechat_cmd_buffer, NULL },
   { "clear", N_("clear window(s)"),
@@ -105,10 +105,10 @@ t_weechat_command weechat_commands[] =
   { "window", N_("manage windows"),
     N_("[list | splith | splitv | [merge [down | up | left | right | all]]]"),
     N_(
-    "  list  list opened windows (no parameter implies this list)\n"
-    "splith  split current window horizontally\n"
-    "splitv  split current window vertically\n"
-    " merge  merge window with another"),
+    "list: list opened windows (no parameter implies this list)\n"
+    "splith: split current window horizontally\n"
+    "splitv: split current window vertically\n"
+    "merge: merge window with another"),
     0, 2, weechat_cmd_window, NULL },
   { NULL, NULL, NULL, NULL, 0, 0, NULL, NULL }
 };

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-03-07 20:17+0100\n"
+"POT-Creation-Date: 2005-03-10 18:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -115,7 +115,7 @@ msgstr ""
 msgid "%s: Reconnecting to server...\n"
 msgstr ""
 
-#: src/irc/irc-server.c:972 src/irc/irc-server.c:979
+#: src/irc/irc-server.c:972 src/irc/irc-server.c:981
 msgid "Disconnected from server!\n"
 msgstr ""
 
@@ -1346,7 +1346,7 @@ msgstr ""
 msgid "%s unknown DCC CHAT type received from "
 msgstr ""
 
-#: src/irc/irc-recv.c:1404 src/irc/irc-dcc.c:753
+#: src/irc/irc-recv.c:1404 src/irc/irc-dcc.c:759
 #, c-format
 msgid "Private %s> %s"
 msgstr ""
@@ -1557,112 +1557,112 @@ msgstr ""
 msgid "Aborted"
 msgstr ""
 
-#: src/irc/irc-dcc.c:156
+#: src/irc/irc-dcc.c:158
 msgid "DCC: file "
 msgstr ""
 
-#: src/irc/irc-dcc.c:161 src/irc/irc-dcc.c:408
+#: src/irc/irc-dcc.c:163 src/irc/irc-dcc.c:414
 msgid " (local filename: "
 msgstr ""
 
-#: src/irc/irc-dcc.c:167
+#: src/irc/irc-dcc.c:169
 msgid ") sent to "
 msgstr ""
 
-#: src/irc/irc-dcc.c:169
+#: src/irc/irc-dcc.c:171
 msgid ") received from "
 msgstr ""
 
-#: src/irc/irc-dcc.c:174
+#: src/irc/irc-dcc.c:176
 msgid ": ok!\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:182
+#: src/irc/irc-dcc.c:188
 msgid "DCC chat closed with "
 msgstr ""
 
-#: src/irc/irc-dcc.c:220
+#: src/irc/irc-dcc.c:226
 #, c-format
 msgid ""
 "%s can't associate DCC chat with private buffer (maybe private buffer has "
 "already DCC CHAT?)\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:230
+#: src/irc/irc-dcc.c:236
 msgid "Connected to "
 msgstr ""
 
-#: src/irc/irc-dcc.c:239
+#: src/irc/irc-dcc.c:245
 msgid "via DCC chat\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:349
+#: src/irc/irc-dcc.c:355
 #, c-format
 msgid "%s not enough memory for new DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:367
+#: src/irc/irc-dcc.c:373
 msgid "DCC chat"
 msgstr ""
 
-#: src/irc/irc-dcc.c:388
+#: src/irc/irc-dcc.c:394
 msgid "Incoming DCC file from "
 msgstr ""
 
-#: src/irc/irc-dcc.c:399 src/irc/irc-dcc.c:412
+#: src/irc/irc-dcc.c:405 src/irc/irc-dcc.c:418
 msgid " bytes\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:404
+#: src/irc/irc-dcc.c:410
 msgid "Sending DCC file to "
 msgstr ""
 
-#: src/irc/irc-dcc.c:417
+#: src/irc/irc-dcc.c:423
 msgid "Incoming DCC chat request from "
 msgstr ""
 
-#: src/irc/irc-dcc.c:428
+#: src/irc/irc-dcc.c:434
 msgid "Sending DCC chat request to "
 msgstr ""
 
-#: src/irc/irc-dcc.c:492
+#: src/irc/irc-dcc.c:498
 #, c-format
 msgid "%s not enough memory for DCC SEND\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:514
+#: src/irc/irc-dcc.c:520
 #, c-format
 msgid "%s cannot access file \"%s\"\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:535
+#: src/irc/irc-dcc.c:541
 #, c-format
 msgid "%s cannot create socket for DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:548
+#: src/irc/irc-dcc.c:554
 #, c-format
 msgid "%s cannot find port for DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:595
+#: src/irc/irc-dcc.c:601
 #, c-format
 msgid "%s cannot send DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:674
+#: src/irc/irc-dcc.c:680
 #, c-format
 msgid "%s error sending data to \"%s\" via DCC CHAT\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:932
+#: src/irc/irc-dcc.c:938
 #, c-format
 msgid ""
 "%s DCC failed because blocksize is too big. Check value of \"dcc_blocksize\" "
 "option, max is %d.\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1005
+#: src/irc/irc-dcc.c:1011
 #, c-format
 msgid "aborting active DCC: \"%s\" from %s\n"
 msgstr ""
@@ -1842,10 +1842,10 @@ msgstr ""
 #: src/common/command.c:49
 msgid ""
 "action: action to do:\n"
-"  move    move buffer in the list (may be relative, for example -1)\n"
-"  close   close buffer (for channel: same as /part without part message)\n"
-"  list    list opened buffers (no parameter implies this list)\n"
-"  notify  set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2"
+"  move: move buffer in the list (may be relative, for example -1)\n"
+"  close: close buffer (for channel: same as /part without part message)\n"
+"  list: list opened buffers (no parameter implies this list)\n"
+"  notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2"
 "+join/part)\n"
 "number: jump to buffer by number"
 msgstr ""
@@ -1994,10 +1994,10 @@ msgstr ""
 
 #: src/common/command.c:108
 msgid ""
-"  list  list opened windows (no parameter implies this list)\n"
-"splith  split current window horizontally\n"
-"splitv  split current window vertically\n"
-" merge  merge window with another"
+"list: list opened windows (no parameter implies this list)\n"
+"splith: split current window horizontally\n"
+"splitv: split current window vertically\n"
+"merge: merge window with another"
 msgstr ""
 
 #: src/common/command.c:254
@@ -2166,12 +2166,13 @@ msgstr ""
 msgid "Auto-reconnection is cancelled\n"
 msgstr ""
 
-#: src/common/command.c:1196
+#: src/common/command.c:1196 src/common/weechat.c:260
 #, c-format
 msgid "%s internal commands:\n"
 msgstr ""
 
-#: src/common/command.c:1205
+#: src/common/command.c:1205 src/common/weechat.c:280
+#, c-format
 msgid "IRC commands:\n"
 msgstr ""
 
@@ -2439,57 +2440,57 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/common/weechat.c:293
+#: src/common/weechat.c:358
 #, c-format
 msgid "%s invalid syntax for IRC server ('%s'), ignored\n"
 msgstr ""
 
-#: src/common/weechat.c:305
+#: src/common/weechat.c:370
 #, c-format
 msgid "%s unable to create server ('%s'), ignored\n"
 msgstr ""
 
-#: src/common/weechat.c:314
+#: src/common/weechat.c:379
 #, c-format
 msgid "%s unknown parameter '%s', ignored\n"
 msgstr ""
 
-#: src/common/weechat.c:334
+#: src/common/weechat.c:399
 #, c-format
 msgid "%s cannot create directory \"%s\"\n"
 msgstr ""
 
-#: src/common/weechat.c:360
+#: src/common/weechat.c:425
 #, c-format
 msgid "%s unable to get HOME directory\n"
 msgstr ""
 
-#: src/common/weechat.c:369
+#: src/common/weechat.c:434
 #, c-format
 msgid "%s not enough memory for home directory\n"
 msgstr ""
 
-#: src/common/weechat.c:379
+#: src/common/weechat.c:444
 #, c-format
 msgid "%s unable to create ~/.weechat directory\n"
 msgstr ""
 
-#: src/common/weechat.c:431
+#: src/common/weechat.c:496
 #, c-format
 msgid "%s unable to create ~/.weechat/logs directory\n"
 msgstr ""
 
-#: src/common/weechat.c:467
+#: src/common/weechat.c:532
 #, c-format
 msgid "%s unable to create/append to log file (~/.weechat/%s)"
 msgstr ""
 
-#: src/common/weechat.c:490
+#: src/common/weechat.c:555
 #, c-format
 msgid "%sWelcome to "
 msgstr ""
 
-#: src/common/weechat.c:503
+#: src/common/weechat.c:568
 msgid "compiled on"
 msgstr ""
 

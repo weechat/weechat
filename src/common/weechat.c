@@ -267,6 +267,7 @@ void wee_display_commands (int weechat_cmd, int irc_cmd)
                 printf ("  %s\n\n", _(weechat_commands[i].arguments));
             else
                 printf ("\n\n");
+            printf ("%s\n\n", _(weechat_commands[i].command_description));
             if (weechat_commands[i].arguments_description &&
                 weechat_commands[i].arguments_description[0])
                 printf ("%s\n\n",
@@ -289,6 +290,7 @@ void wee_display_commands (int weechat_cmd, int irc_cmd)
                     printf ("  %s\n\n", _(irc_commands[i].arguments));
                 else
                     printf ("\n\n");
+                printf ("%s\n\n", _(irc_commands[i].command_description));
                 if (irc_commands[i].arguments_description &&
                     irc_commands[i].arguments_description[0])
                     printf ("%s\n\n",
