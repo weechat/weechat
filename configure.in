@@ -45,8 +45,6 @@ AC_HEADER_TIME
 AC_STRUCT_TM
 
 # Checks for library functions.
-AC_FUNC_MALLOC
-AC_FUNC_REALLOC
 AC_FUNC_SELECT_ARGTYPES
 AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([gethostbyname gethostname gettimeofday inet_ntoa memset mkdir select setlocale socket strcasecmp strchr strdup strncasecmp strpbrk strrchr strstr uname])
