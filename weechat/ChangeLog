@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2004-02-25
+ChangeLog - 2004-02-29
 
 
 Version 0.0.6 (under dev!):
+   * /mode command is now ok and channel flags are displayed in status bar
    * fixed display bug (text was blinking when scrolling)
    * CTCP Version reply is now in english only and doesn't show host (security reason)
 

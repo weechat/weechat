@@ -808,6 +808,7 @@ gui_redraw_window_nick (t_gui_window *window)
     if (has_colors ())
         gui_window_set_color (window->win_nick, COLOR_WIN_NICK);
     
+    snprintf (format_empty, 32, "%%-%ds", window->win_nick_width);
     for (i = 0; i < window->win_nick_height; i++)
     {
         mvwprintw (window->win_nick, i, 0, format_empty, " ");
@@ -825,6 +826,7 @@ gui_draw_window_status (t_gui_window *window)
 {
     t_gui_window *ptr_win;
     char format_more[32];
+    int i;
     
     /* TODO: manage splitted windows! */
     if (window != gui_current_window)
@@ -913,7 +915,28 @@ gui_draw_window_status (t_gui_window *window)
                     gui_window_set_color (window->win_status,
                                           COLOR_WIN_STATUS);
             }
-            wprintw (window->win_status, "%s ", CHANNEL(ptr_win)->name);
+            wprintw (window->win_status, "%s", CHANNEL(ptr_win)->name);
+            if (gui_current_window == CHANNEL(ptr_win)->window)
+            {
+                /* display channel modes */
+                wprintw (window->win_status, "(+");
+                i = 0;
+                while (CHANNEL(ptr_win)->modes[i])
+                {
+                    if (CHANNEL(ptr_win)->modes[i] != ' ')
+                        wprintw (window->win_status, "%c",
+                                 CHANNEL(ptr_win)->modes[i]);
+                    i++;
+                }
+                if (CHANNEL(ptr_win)->modes[CHANNEL_MODE_KEY] != ' ')
+                    wprintw (window->win_status, ",%s",
+                             CHANNEL(ptr_win)->key);
+                if (CHANNEL(ptr_win)->modes[CHANNEL_MODE_LIMIT] != ' ')
+                    wprintw (window->win_status, ",%d",
+                             CHANNEL(ptr_win)->limit);
+                wprintw (window->win_status, ")");
+            }
+            wprintw (window->win_status, " ");
         }
         if (!SERVER(ptr_win))
         {

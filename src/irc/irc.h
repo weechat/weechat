@@ -34,6 +34,20 @@
 
 #define CHANNEL_PREFIX "#&+!"
 
+#define NUM_CHANNEL_MODES       7
+#define CHANNEL_MODE_INVITE     0
+#define CHANNEL_MODE_KEY        1
+#define CHANNEL_MODE_LIMIT      2
+#define CHANNEL_MODE_MODERATED  3
+#define CHANNEL_MODE_NO_MSG_OUT 4
+#define CHANNEL_MODE_SECRET     5
+#define CHANNEL_MODE_TOPIC      6
+#define SET_CHANNEL_MODE(channel, set, mode) \
+    if (set) \
+        channel->modes[mode] = channel_modes[mode]; \
+    else \
+        channel->modes[mode] = ' ';
+
 #define DEFAULT_IRC_PORT 6667
 
 /* nick types */
@@ -64,6 +78,9 @@ struct t_irc_channel
     int type;                       /* channel type                         */
     char *name;                     /* name of channel (exemple: "#abc")    */
     char *topic;                    /* topic of channel (host for private)  */
+    char modes[NUM_CHANNEL_MODES+1];/* channel modes                        */
+    int limit;                      /* user limit (0 is limit not set)      */
+    char *key;                      /* channel key (NULL if no key is set)  */
     t_irc_nick *nicks;              /* nicks on the channel                 */
     t_irc_nick *last_nick;          /* last nick on the channel             */
     t_gui_window *window;           /* GUI window allocated for channel     */
@@ -139,6 +156,7 @@ extern t_irc_command irc_commands[];
 extern t_irc_server *irc_servers, *current_irc_server;
 extern t_irc_message *recv_msgq, *msgq_last_msg;
 extern t_irc_channel *current_channel;
+extern char *channel_modes;
 
 /* server functions (irc-server.c) */
 
@@ -180,6 +198,10 @@ extern t_irc_nick *nick_search (t_irc_channel *, char *);
 extern void nick_count (t_irc_channel *, int *, int *, int *, int *, int *);
 extern int nick_get_max_length (t_irc_channel *);
 
+/* DCC functions (irc-dcc.c) */
+
+extern void dcc_send ();
+
 /* IRC display (irc-diplay.c) */
 
 extern void irc_display_prefix (/*@null@*/ t_gui_window *, char *);
@@ -195,6 +217,7 @@ extern void irc_login (t_irc_server *);
 extern int irc_cmd_send_admin (t_irc_server *, char *);
 extern int irc_cmd_send_away (t_irc_server *, char *);
 extern int irc_cmd_send_ctcp (t_irc_server *, char *);
+extern int irc_cmd_send_dcc (t_irc_server *, char *);
 extern int irc_cmd_send_deop (t_irc_server *, int, char **);
 extern int irc_cmd_send_devoice (t_irc_server *, int, char **);
 extern int irc_cmd_send_die (t_irc_server *, char *);

@@ -32,6 +32,7 @@
 
 
 t_irc_channel *current_channel = NULL;
+char *channel_modes = "iklmnst";
 
 
 /*
@@ -55,6 +56,10 @@ channel_new (t_irc_server *server, int channel_type, char *channel_name,
     new_channel->type = channel_type;
     new_channel->name = strdup (channel_name);
     new_channel->topic = NULL;
+    memset (new_channel->modes, ' ', sizeof (new_channel->modes));
+    new_channel->modes[sizeof (new_channel->modes) - 1] = '\0';
+    new_channel->limit = 0;
+    new_channel->key = NULL;
     new_channel->nicks = NULL;
     new_channel->last_nick = NULL;
 

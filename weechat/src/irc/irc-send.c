@@ -179,6 +179,17 @@ irc_cmd_send_ctcp (t_irc_server *server, char *arguments)
 }
 
 /*
+ * irc_cmd_send_dcc: starts DCC (file or chat)
+ */
+
+int
+irc_cmd_send_dcc (t_irc_server *server, char *arguments)
+{
+    /* TODO: write this command! */
+    return 0;
+}
+
+/*
  * irc_cmd_send_deop: remove operator privileges from nickname(s)
  */
 

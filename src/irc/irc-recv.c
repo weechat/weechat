@@ -317,9 +317,6 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *arguments)
         pos_parm++;
         while (pos_parm[0] == ' ')
             pos_parm++;
-        pos2 = strchr (pos_parm, ' ');
-        if (pos2)
-            pos2[0] = '\0';
     }
     
     set_flag = '+';
@@ -347,7 +344,6 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *arguments)
                                               _("sets ban on") :
                                               _("removes ban on"),
                                           pos_parm);
-                        /* TODO: change & redraw channel modes */
                         break;
                     case 'i':
                         irc_display_mode (ptr_channel->window,
@@ -356,16 +352,68 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *arguments)
                                               _("sets invite-only channel flag") :
                                               _("removes invite-only channel flag"),
                                           NULL);
-                        /* TODO: change & redraw channel modes */
+                        SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
+                            CHANNEL_MODE_INVITE);
+                        break;
+                    case 'k':
+                        pos2 = NULL;
+                        if (pos_parm)
+                        {
+                            pos2 = strchr (pos_parm, ' ');
+                            if (pos2)
+                                pos2[0] = '\0';
+                        }
+                        irc_display_mode (ptr_channel->window,
+                                          arguments, set_flag, "k", host,
+                                          (set_flag == '+') ?
+                                              _("sets channel key to") :
+                                              _("removes channel key"),
+                                          (set_flag == '+') ?
+                                            ((pos_parm) ? pos_parm : NULL) :
+                                            NULL);
+                        SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
+                            CHANNEL_MODE_KEY);
+                        if (ptr_channel->key)
+                            free (ptr_channel->key);
+                        ptr_channel->key = strdup (pos_parm);
+                        
+                        /* look for next parameter */
+                        if (pos_parm && pos2)
+                        {
+                            pos2++;
+                            while (pos2[0] == ' ')
+                                pos2++;
+                            pos_parm = pos2;
+                        }
                         break;
                     case 'l':
+                        pos2 = NULL;
+                        if (pos_parm)
+                        {
+                            pos2 = strchr (pos_parm, ' ');
+                            if (pos2)
+                                pos2[0] = '\0';
+                        }
                         irc_display_mode (ptr_channel->window,
                                           arguments, set_flag, "l", host,
                                           (set_flag == '+') ?
                                               _("sets the user limit to") :
                                               _("removes user limit"),
-                                          (set_flag == '+') ? pos_parm : NULL);
-                        /* TODO: change & redraw channel modes */
+                                          (set_flag == '+') ?
+                                            ((pos_parm) ? pos_parm : NULL) :
+                                            NULL);
+                        SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
+                            CHANNEL_MODE_LIMIT);
+                        ptr_channel->limit = atoi (pos_parm);
+                        
+                        /* look for next parameter */
+                        if (pos_parm && pos2)
+                        {
+                            pos2++;
+                            while (pos2[0] == ' ')
+                                pos2++;
+                            pos_parm = pos2;
+                        }
                         break;
                     case 'm':
                         irc_display_mode (ptr_channel->window,
@@ -374,7 +422,18 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *arguments)
                                               _("sets moderated channel flag") :
                                               _("removes moderated channel flag"),
                                           NULL);
-                        /* TODO: change & redraw channel modes */
+                        SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
+                            CHANNEL_MODE_MODERATED);
+                        break;
+                    case 'n':
+                        irc_display_mode (ptr_channel->window,
+                                          arguments, set_flag, "n", host,
+                                          (set_flag == '+') ?
+                                              _("sets messages from channel only flag") :
+                                              _("removes messages from channel only flag"),
+                                          NULL);
+                        SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
+                            CHANNEL_MODE_NO_MSG_OUT);
                         break;
                     case 'o':
                         irc_display_mode (ptr_channel->window,
@@ -391,7 +450,6 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *arguments)
                             gui_redraw_window_nick (ptr_channel->window);
                         }
                         break;
-                    /* TODO: remove this obsolete (?) channel flag? */
                     case 'p':
                         irc_display_mode (ptr_channel->window,
                                           arguments, set_flag, "p", host,
@@ -399,7 +457,8 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *arguments)
                                               _("sets private channel flag") :
                                               _("removes private channel flag"),
                                           NULL);
-                        /* TODO: change & redraw channel modes */
+                        SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
+                            CHANNEL_MODE_SECRET);
                         break;
                     case 's':
                         irc_display_mode (ptr_channel->window,
@@ -408,7 +467,8 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *arguments)
                                               _("sets secret channel flag") :
                                               _("removes secret channel flag"),
                                           NULL);
-                        /* TODO: change & redraw channel modes */
+                        SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
+                            CHANNEL_MODE_SECRET);
                         break;
                     case 't':
                         irc_display_mode (ptr_channel->window,
@@ -417,7 +477,8 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *arguments)
                                               _("sets topic protection") :
                                               _("removes topic protection"),
                                           NULL);
-                        /* TODO: change & redraw channel modes */
+                        SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
+                            CHANNEL_MODE_TOPIC);
                         break;
                     case 'v':
                         irc_display_mode (ptr_channel->window,
@@ -438,6 +499,7 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *arguments)
                 }
                 pos++;
             }
+            gui_draw_window_status (gui_current_window);
         }
         else
         {
@@ -741,6 +803,7 @@ int
 irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
 {
     char *pos, *pos2, *host2;
+    char *pos_file, *pos_addr, *pos_port, *pos_size;    /* for DCC */
     t_irc_channel *ptr_channel;
     t_irc_nick *ptr_nick;
     struct utsname *buf;
@@ -893,79 +956,144 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                                   COLOR_WIN_CHAT, _("from"));
                 gui_printf_color (server->window,
                                   COLOR_WIN_CHAT_NICK, " %s\n", host);
+                return 0;
+            }
+            
+            /* ping request from another user => answer */
+            if (strncmp (pos, "\01PING", 5) == 0)
+            {
+                pos += 5;
+                while (pos[0] == ' ')
+                    pos++;
+                pos2 = strchr (pos, '\01');
+                if (pos2)
+                    pos2[0] = '\0';
+                else
+                    pos = NULL;
+                if (pos && !pos[0])
+                    pos = NULL;
+                if (pos)
+                    server_sendf (server, "NOTICE %s :\01PING %s\01\r\n",
+                                  host, pos);
+                else
+                    server_sendf (server, "NOTICE %s :\01PING\01\r\n",
+                                  host);
+                return 0;
+            }
+            
+            /* incoming DCC file */
+            if (strncmp (pos, "\01DCC SEND", 9) == 0)
+            {
+                pos2 = strchr (pos, '\01');
+                if (!pos2)
+                {
+                    gui_printf (server->window,
+                                _("%s cannot parse \"%s\" command\n"),
+                                WEECHAT_ERROR, "privmsg");
+                    return -1;
+                }
+                pos2[0] = '\0';
+                pos_file = pos + 9;
+                while (pos_file[0] == ' ')
+                    pos_file++;
+                
+                /* look for file size */
+                pos_size = strrchr (pos_file, ' ');
+                if (!pos_size)
+                {
+                    gui_printf (server->window,
+                                _("%s cannot parse \"%s\" command\n"),
+                                WEECHAT_ERROR, "privmsg");
+                    return -1;
+                }
+                pos2 = pos_size;
+                pos_size++;
+                while (pos2[0] == ' ')
+                    pos2--;
+                pos2[1] = '\0';
+                
+                /* look for DCC port */
+                pos_port = strrchr (pos_file, ' ');
+                if (!pos_port)
+                {
+                    gui_printf (server->window,
+                                _("%s cannot parse \"%s\" command\n"),
+                                WEECHAT_ERROR, "privmsg");
+                    return -1;
+                }
+                pos2 = pos_port;
+                pos_port++;
+                while (pos2[0] == ' ')
+                    pos2--;
+                pos2[1] = '\0';
+                
+                /* look for DCC address (IP) */
+                pos_addr = strrchr (pos_file, ' ');
+                if (!pos_addr)
+                {
+                    gui_printf (server->window,
+                                _("%s cannot parse \"%s\" command\n"),
+                                WEECHAT_ERROR, "privmsg");
+                    return -1;
+                }
+                pos2 = pos_addr;
+                pos_addr++;
+                while (pos2[0] == ' ')
+                    pos2--;
+                pos2[1] = '\0';
+                
+                wee_log_printf ("Incoming DCC file (NOT DEVELOPED!): "
+                                "\"%s\", address=\"%s\", port=\"%s\", size=\"%s\"\n",
+                                pos_file, pos_addr, pos_port, pos_size);
+                return 0;
+            }
+            
+            /* private message received => display it */
+            ptr_channel = channel_search (server, host);
+            if (!ptr_channel)
+            {
+                ptr_channel = channel_new (server, CHAT_PRIVATE, host, 0);
+                if (!ptr_channel)
+                {
+                    gui_printf (server->window,
+                                _("%s cannot create new private window \"%s\"\n"),
+                                WEECHAT_ERROR, host);
+                    return -1;
+                }
+            }
+            if (!ptr_channel->topic)
+            {
+                ptr_channel->topic = strdup (host2);
+                gui_redraw_window_title (ptr_channel->window);
+            }
+            
+            gui_printf_color_type (ptr_channel->window,
+                                   MSG_TYPE_NICK,
+                                   COLOR_WIN_CHAT_DARK, "<");
+            if (strstr (pos, server->nick))
+            {
+                gui_printf_color_type (ptr_channel->window,
+                                       MSG_TYPE_NICK,
+                                       COLOR_WIN_CHAT_HIGHLIGHT,
+                                       "%s", host);
+                if ( (cfg_look_infobar_delay_highlight > 0)
+                    && (ptr_channel->window != gui_current_window) )
+                    gui_infobar_printf (cfg_look_infobar_delay_highlight,
+                                        COLOR_WIN_INFOBAR_HIGHLIGHT,
+                                        _("Private %s> %s"),
+                                        host, pos);
             }
             else
-            {
-                /* ping request from another user => answer */
-                if (strncmp (pos, "\01PING", 5) == 0)
-                {
-                    pos += 5;
-                    while (pos[0] == ' ')
-                        pos++;
-                    pos2 = strchr (pos, '\01');
-                    if (pos2)
-                        pos2[0] = '\0';
-                    else
-                        pos = NULL;
-                    if (pos && !pos[0])
-                        pos = NULL;
-                    if (pos)
-                        server_sendf (server, "NOTICE %s :\01PING %s\01\r\n",
-                                      host, pos);
-                    else
-                        server_sendf (server, "NOTICE %s :\01PING\01\r\n",
-                                      host);
-                }
-                else
-                {
-                    /* private message received => display it */
-                    ptr_channel = channel_search (server, host);
-                    if (!ptr_channel)
-                    {
-                        ptr_channel = channel_new (server, CHAT_PRIVATE, host, 0);
-                        if (!ptr_channel)
-                        {
-                            gui_printf (server->window,
-                                        _("%s cannot create new private window \"%s\"\n"),
-                                        WEECHAT_ERROR, host);
-                            return -1;
-                        }
-                    }
-                    if (!ptr_channel->topic)
-                    {
-                        ptr_channel->topic = strdup (host2);
-                        gui_redraw_window_title (ptr_channel->window);
-                    }
-                    
-                    gui_printf_color_type (ptr_channel->window,
-                                           MSG_TYPE_NICK,
-                                           COLOR_WIN_CHAT_DARK, "<");
-                    if (strstr (pos, server->nick))
-                    {
-                        gui_printf_color_type (ptr_channel->window,
-                                               MSG_TYPE_NICK,
-                                               COLOR_WIN_CHAT_HIGHLIGHT,
-                                               "%s", host);
-                        if ( (cfg_look_infobar_delay_highlight > 0)
-                            && (ptr_channel->window != gui_current_window) )
-                            gui_infobar_printf (cfg_look_infobar_delay_highlight,
-                                                COLOR_WIN_INFOBAR_HIGHLIGHT,
-                                                _("Private %s> %s"),
-                                                host, pos);
-                    }
-                    else
-                        gui_printf_color_type (ptr_channel->window,
-                                               MSG_TYPE_NICK,
-                                               COLOR_WIN_NICK_PRIVATE,
-                                               "%s", host);
-                    gui_printf_color_type (ptr_channel->window,
-                                           MSG_TYPE_NICK,
-                                           COLOR_WIN_CHAT_DARK, "> ");
-                    gui_printf_color_type (ptr_channel->window,
-                                           MSG_TYPE_MSG,
-                                           COLOR_WIN_CHAT, "%s\n", pos);
-                }
-            }
+                gui_printf_color_type (ptr_channel->window,
+                                       MSG_TYPE_NICK,
+                                       COLOR_WIN_NICK_PRIVATE,
+                                       "%s", host);
+            gui_printf_color_type (ptr_channel->window,
+                                   MSG_TYPE_NICK,
+                                   COLOR_WIN_CHAT_DARK, "> ");
+            gui_printf_color_type (ptr_channel->window,
+                                   MSG_TYPE_MSG,
+                                   COLOR_WIN_CHAT, "%s\n", pos);
         }
         else
         {

@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2004-02-07
+TODO - 2004-02-29
 
 Legend:
   #  done
@@ -10,38 +10,33 @@ Legend:
   ?  is this really necessary?
 
 
-v0.0.5:
+v0.0.6:
 ------
 
  * General:
-    # debug messages can be enabled via ./configure --enbale-debug option
+    - Windows version
     + Solaris version
 
- * WeeChat commands:
-    # "/set" command: allow the user to set the WeeChat variables
-      under WeeChat without editing the config file (colors, time
-      format, etc)
- 
+ * IRC protocol:
+    + "/mode" command: change the user/channels modes
+    + "/dcc" command (for chat and sending/receiving files)
+
  * Interface:
     + internationalization (traduce WeeChat in many languages)
-    # info bar
-    # add clock
+    - display current channel modes (example : #weechat(+nt))
 
  * Configuration:
     + add missing options for config file
-    + add key bindings to config file
-    
+    - add key bindings to config file
+
 
 Future versions:
 ---------------
 
  * General:
-    - Windows version
     - *BSD version
 
  * IRC protocol:
-    + "/mode" command: change the user/channels modes
-    - "/dcc" command (for chat and sending/receiving files)
     - complete "/list" command: add regexp search, display only channels that
       match regexp
     - "/ignore" and "/unignore" commands: hide all that is write by a given
@@ -64,7 +59,6 @@ Future versions:
 
  * Interface:
     + Gtk GUI
-    - display current channel modes (example : #weechat(+nt))
     - interpret special chars in messages (color & bold for example)
     - many channel windows in one window/term (window split)
     - add lag indicator
