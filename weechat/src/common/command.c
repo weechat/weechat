@@ -540,7 +540,7 @@ exec_weechat_command (t_irc_server *server, char *string)
             ptr_args = NULL;
     }
     
-    if (!plugin_exec_command (command + 1, server->name, ptr_args))
+    if (!plugin_exec_command (command + 1, (server) ? server->name : "", ptr_args))
     {
         argv = explode_string (ptr_args, " ", 0, &argc);
         
