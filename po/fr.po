@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.1.1-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2005-02-27 14:13+0100\n"
-"PO-Revision-Date: 2005-02-12 12:00+0100\n"
+"PO-Revision-Date: 2005-02-27 23:48+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 #: src/irc/irc-nick.c:175
 #, c-format
 msgid "%s cannot allocate new nick\n"
-msgstr "%s ompossible d'allouer un nouveau pseudo\n"
+msgstr "%s impossible d'allouer un nouveau pseudo\n"
 
 #: src/irc/irc-server.c:146 src/common/weeconfig.c:1471
 msgid "Unable to get user's name"
@@ -219,7 +219,7 @@ msgstr "erreur reçue du serveur IRC"
 
 #: src/irc/irc-commands.c:63
 msgid "get information describing the server"
-msgstr "voir les informations concernant le serveur"
+msgstr "voir les informations décrivant le serveur"
 
 #: src/irc/irc-commands.c:65 src/irc/irc-commands.c:130
 msgid "target: server name"
@@ -231,14 +231,14 @@ msgstr "inviter un utilisateur sur un canal"
 
 #: src/irc/irc-commands.c:68
 msgid "nickname channel"
-msgstr "nick canal"
+msgstr "pseudo canal"
 
 #: src/irc/irc-commands.c:69
 msgid ""
 "nickname: nick to invite\n"
 "channel: channel to invite"
 msgstr ""
-"nickname: utilisateur à inviter\n"
+"pseudo: utilisateur à inviter\n"
 "channel: canal pour l'invitation"
 
 #: src/irc/irc-commands.c:71
@@ -305,8 +305,7 @@ msgstr ""
 
 #: src/irc/irc-commands.c:87
 msgid "list all servernames which are known by the server answering the query"
-msgstr ""
-"lister tous les noms de serveurs connus du serveur qui répond à la requête"
+msgstr "lister tous les noms de serveurs connus du serveur qui répondent à la requête"
 
 #: src/irc/irc-commands.c:88
 msgid "[[server] server_mask]"
@@ -406,14 +405,13 @@ msgstr ""
 "  i: indicateur de canal avec invitation seulement\n"
 "  t: le titre est modifiable seulement par un opérateur du canal\n"
 "  n: aucun message au canal depuis l'extérieur\n"
-"  m: channel modéré\n"
+"  m: canal modéré\n"
 "  l: fixer la limite d'utilisateurs pour le canal\n"
-"  b: paramétrer un masque de banissement pour garder des utilisateurs "
-"dehors\n"
+"  b: paramétrer un masque de banissement pour garder des utilisateurs dehors\n"
 "  v: donner/reprendre la possibilité de parler sur un canal modéré\n"
 "  k: définir une clé (mot de passe) pour accéder au canal\n"
 "modes utilisateur :\n"
-"  nick: utilisateur à modifier\n"
+"  pseudo: utilisateur à modifier\n"
 "  i: marquer un utilisateur comme invisible\n"
 "  s: marquer un utilisateur pour recevoir les notices du serveur\n"
 "  w: l'utilisateur reçoit les wallops\n"
@@ -453,7 +451,7 @@ msgstr "canal: nom du canal"
 
 #: src/irc/irc-commands.c:140
 msgid "change current nickname"
-msgstr "changer le nick courant"
+msgstr "changer le pseudo courant"
 
 #: src/irc/irc-commands.c:141
 msgid "nickname"
@@ -461,7 +459,7 @@ msgstr "pseudo"
 
 #: src/irc/irc-commands.c:141
 msgid "nickname: new nickname for current IRC server"
-msgstr "nick: nouveau nick pour le serveur IRC courant"
+msgstr "pseudo: nouveau pseudo pour le serveur IRC courant"
 
 #: src/irc/irc-commands.c:143
 msgid "send notice message to user"
@@ -469,14 +467,14 @@ msgstr "envoyer un message notice à un utilisateur"
 
 #: src/irc/irc-commands.c:144
 msgid "nickname text"
-msgstr "nick texte"
+msgstr "pseudo texte"
 
 #: src/irc/irc-commands.c:144
 msgid ""
 "nickname: user to send notice to\n"
 "text: text to send"
 msgstr ""
-"nick: utilisateur cible pour la notice\n"
+"pseudo: utilisateur cible pour la notice\n"
 "texte: texte à envoyer"
 
 #: src/irc/irc-commands.c:146
@@ -555,19 +553,19 @@ msgstr "envoyer un message privé à un utilisateur"
 
 #: src/irc/irc-commands.c:169
 msgid "nickname [text]"
-msgstr "nick [texte]"
+msgstr "pseudo [texte]"
 
 #: src/irc/irc-commands.c:170
 msgid ""
 "nickname: nickname for private conversation\n"
 "text: text to send"
 msgstr ""
-"nick: utilisateur pour la conversation privée\n"
+"pseudo: utilisateur pour la conversation privée\n"
 "texte: texte à envoyer"
 
 #: src/irc/irc-commands.c:173
-msgid "close all connections & quit "
-msgstr "fermer toutes les connexions et quitter "
+msgid "close all connections & quit"
+msgstr "fermer toutes les connexions et quitter"
 
 #: src/irc/irc-commands.c:174
 msgid "[quit_message]"
@@ -575,7 +573,7 @@ msgstr "[message_de_fin]"
 
 #: src/irc/irc-commands.c:175
 msgid "quit_message: quit message (displayed to other users)"
-msgstr "quit_message: message de fin (affiché aux autres utilisateurs)"
+msgstr "message_de_fin: message de fin (affiché aux autres utilisateurs)"
 
 #: src/irc/irc-commands.c:177
 msgid "send raw data to server without parsing"
@@ -603,7 +601,7 @@ msgstr "enregister un nouveau service"
 
 #: src/irc/irc-commands.c:188
 msgid "nickname reserved distribution type reserved info"
-msgstr "nick réservé distribution type réservé info"
+msgstr "pseudo réservé distribution type réservé info"
 
 #: src/irc/irc-commands.c:189
 msgid ""
@@ -663,7 +661,7 @@ msgstr ""
 
 #: src/irc/irc-commands.c:202
 msgid "query statistics about server"
-msgstr "demande les informations sur le serveur"
+msgstr "demander des statistiques sur le serveur"
 
 #: src/irc/irc-commands.c:203
 msgid "[query [server]]"
@@ -681,7 +679,7 @@ msgstr ""
 msgid ""
 "give users who are on a host running an IRC server a message asking them to "
 "please join IRC"
-msgstr "envoyer un message aux serveurs leur demandant de rejoindre IRC"
+msgstr "envoyer aux utilisateurs d'un serveur IRC un message leur demandant de rejoindre IRC"
 
 #: src/irc/irc-commands.c:208
 msgid "user [target [channel]]"
@@ -699,7 +697,7 @@ msgstr ""
 
 #: src/irc/irc-commands.c:211
 msgid "query local time from server"
-msgstr "demander l'heure locale d'un serveur"
+msgstr "demander l'heure locale de serveur"
 
 #: src/irc/irc-commands.c:212
 msgid "target: query time from specified server"
@@ -741,7 +739,7 @@ msgstr ""
 
 #: src/irc/irc-commands.c:228
 msgid "[server | nickname]"
-msgstr "[serveur | nick]"
+msgstr "[serveur | pseudo]"
 
 #: src/irc/irc-commands.c:228
 msgid ""
@@ -749,7 +747,7 @@ msgid ""
 "nickname: nickname"
 msgstr ""
 "serveur: nom du serveur\n"
-"nick: utilisateur"
+"pseudo: utilisateur"
 
 #: src/irc/irc-commands.c:230
 msgid "gives voice to nickname(s)"
@@ -793,7 +791,7 @@ msgstr "demande les informations sur le(s) utilisateur(s)"
 
 #: src/irc/irc-commands.c:242
 msgid "[server] nickname[,nickname]"
-msgstr "[serveur] nick[,nick]"
+msgstr "[serveur] pseudo[,pseudo]"
 
 #: src/irc/irc-commands.c:242
 msgid ""
@@ -801,7 +799,7 @@ msgid ""
 "nickname: nickname (may be a mask)"
 msgstr ""
 "serveur: nom du serveur\n"
-"nick: utilisateur (peut être un masque)"
+"pseudo: utilisateur (peut être un masque)"
 
 #: src/irc/irc-commands.c:245
 msgid "ask for information about a nickname which no longer exists"
@@ -809,7 +807,7 @@ msgstr "demander de l'information sur un nick qui n'existe plus"
 
 #: src/irc/irc-commands.c:246
 msgid "nickname [,nickname [,nickname ...]] [count [target]]"
-msgstr "nick [,nick [,nick ...]] [nombre [cible]]"
+msgstr "pseudo [,pseudo [,pseudo ...]] [nombre [cible]]"
 
 #: src/irc/irc-commands.c:247
 msgid ""
@@ -817,9 +815,8 @@ msgid ""
 "count: number of replies to return (full search if negative number)\n"
 "target: reply should match this mask"
 msgstr ""
-"nick: pseudo à chercher\n"
-"nombre: nombre de réponses à retourner (recherche complète si nombre "
-"négatif)\n"
+"pseudo: pseudo à chercher\n"
+"nombre: nombre de réponses à retourner (recherche complète si nombre négatif)\n"
 "cible: la réponse doit correspondre à ce masque"
 
 #: src/irc/irc-commands.c:251 src/irc/irc-commands.c:252
@@ -884,7 +881,7 @@ msgstr "fin de /who list"
 
 #: src/irc/irc-commands.c:288
 msgid "whois (idle)"
-msgstr "qui est (idle)"
+msgstr "qui est (inactif)"
 
 #: src/irc/irc-commands.c:289
 msgid "whois (end)"
@@ -952,7 +949,7 @@ msgstr "liste des utilisateurs sur un canal"
 
 #: src/irc/irc-commands.c:308
 msgid "channel :[[@|+]nick ...]"
-msgstr "canal :[[@|+]nick ...]"
+msgstr "canal :[[@|+]pseudo ...]"
 
 #: src/irc/irc-commands.c:309
 msgid ""
@@ -960,7 +957,7 @@ msgid ""
 "nick: nick on the channel"
 msgstr ""
 "canal: nom du canal\n"
-"nick: utilisateur sur le canal"
+"pseudo: utilisateur sur le canal"
 
 #: src/irc/irc-commands.c:311
 msgid "links"
@@ -1157,7 +1154,7 @@ msgstr "vous ne pouvez pas supprimer un serveur !"
 
 #: src/irc/irc-commands.c:412
 msgid "no O-lines for your host"
-msgstr "pas de O-lines pour votre host"
+msgstr "pas de O-lines pour votre nom de machine"
 
 #: src/irc/irc-commands.c:414
 msgid "unknown mode flag"
@@ -1618,9 +1615,7 @@ msgstr ""
 #: src/irc/irc-recv.c:3152
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\"\n"
-msgstr ""
-"%s: l'utilisateur \"%s\" est déjà en cours d'utilisation, essai du 3ème nom "
-"d'utilisateur \"%s\"\n"
+msgstr "%s: l'utilisateur \"%s\" est déjà en cours d'utilisation, essai avec le 3ème nom d'utilisateur \"%s\"\n"
 
 #: src/irc/irc-recv.c:3164
 #, c-format
@@ -1968,14 +1963,11 @@ msgid ""
 "number: jump to buffer by number"
 msgstr ""
 "action: action à effectuer:\n"
-"  move    déplacer le tampon dans la liste (peut être relatif, par exemple -"
-"1)\n"
-"  close   fermer le tampon (pour un canal: équivalent à /part sans message "
-"de fin)\n"
+"  move    déplacer le tampon dans la liste (peut être relatif, par exemple -1)\n"
+"  close   fermer le tampon (pour un canal: équivalent à /part sans message de fin)\n"
 "  list    liste les tampons ouverts (pas de paramètre affiche cette liste)\n"
-"  notify  fixer le niveau de notification (0=jamais, 1=highlight, 2=1+msg, "
-"3=2+join/part)\n"
-"nombre: sauter au buffer qui a ce numéro"
+"  notify  fixer le niveau de notification (0=jamais, 1=highlight, 2=1+msg, 3=2+join/part)\n"
+"nombre: sauter au tampon qui a ce numéro"
 
 #: src/common/command.c:56
 msgid "clear window(s)"
@@ -3436,7 +3428,7 @@ msgstr "%s %s, ligne %d: impossible de créer le serveur\n"
 #: src/common/weeconfig.c:1084
 #, c-format
 msgid "%s unable to assign default int with string (\"%s\")\n"
-msgstr "%s impossible d'assigner la valeur entière avec la chaîne (\"%s\")\n"
+msgstr "%s impossible d'assigner la valeur entière par défaut avec la chaîne (\"%s\")\n"
 
 #: src/common/weeconfig.c:1095
 #, c-format

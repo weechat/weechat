@@ -170,7 +170,7 @@ t_irc_command irc_commands[] =
     N_("nickname: nickname for private conversation"
     "\ntext: text to send"),
     1, MAX_ARGS, 1, NULL, irc_cmd_send_query, NULL },
-  { "quit", N_("close all connections & quit " PACKAGE_NAME),
+  { "quit", N_("close all connections & quit"),
     N_("[quit_message]"),
     N_("quit_message: quit message (displayed to other users)"),
     0, MAX_ARGS, 0, NULL, irc_cmd_send_quit, irc_cmd_recv_quit },

@@ -567,8 +567,8 @@ msgstr ""
 "texto: texto a enviar"
 
 #: src/irc/irc-commands.c:173
-msgid "close all connections & quit "
-msgstr "cerrar todas las conexiones y salir "
+msgid "close all connections & quit"
+msgstr "cerrar todas las conexiones y salir"
 
 #: src/irc/irc-commands.c:174
 msgid "[quit_message]"
