@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2004-01-01
+TODO - 2004-01-11
 
 Legend:
   #  done
@@ -10,30 +10,27 @@ Legend:
   ?  is this really necessary?
 
 
-v0.0.4:
+v0.0.5:
 ------
 
  * General:
     # debug messages can be enabled via ./configure --enbale-debug option
+    + Solaris version
 
  * Interface:
     + internationalization (traduce WeeChat in many languages)
-    # intercept Ctrl-C
-    # when private window is created (another user is talking), WeeChat does not
-      switch to this window
-    # highlight when our nick is written in a channel/private window
 
- * Plugins:
-    # Perl plugin
-    # "/perl load" and "/perl unload" commands to (un)load Perl scripts
-    # auto-load Perl scripts at startup
-
+ * Configuration:
+    + add missing options for config file
+    + add key bindings to config file
+    
 
 Future versions:
 ---------------
 
  * General:
     - Windows version
+    - *BSD version
 
  * IRC protocol:
     + "/mode" command: change the user/channels modes
@@ -82,8 +79,6 @@ Future versions:
     - IPv6 protocol implementation
 
  * Configuration:
-    - add missing options for config file
-    - add key bindings to config file
     - load config file after GUI (so init values by default (colors, ...) before
       loading config)
 

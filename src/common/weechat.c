@@ -109,12 +109,66 @@ wee_log_printf (char *message, ...)
 void
 wee_parse_args (int argc, char *argv[])
 {
-    int i;
+    int i, j, k, m;
 
     for (i = 1; i < argc; i++)
     {
-        if ((strcmp (argv[i], "-h") == 0)
-            || (strcmp (argv[i], "--help") == 0))
+        if ((strcmp (argv[i], "-c") == 0)
+            || (strcmp (argv[i], "--config") == 0))
+        {
+            printf(_("WeeChat configuration options (~/.weechat/weechat.rc):\n\n"));
+            for (j = 0; j < CONFIG_NUMBER_SECTIONS; j++)
+            {
+                if (weechat_options[j])
+                {
+                    k = 0;
+                    while (weechat_options[j][k].option_name)
+                    {
+                        printf ("* %s:\n",
+                            weechat_options[j][k].option_name);
+                        switch (weechat_options[j][k].option_type)
+                        {
+                            case OPTION_TYPE_BOOLEAN:
+                                printf (_("  . type boolean (values: 'on' or 'off')\n"));
+                                break;
+                            case OPTION_TYPE_INT:
+                                printf (_("  . type integer (values: between %d and %d)\n"),
+                                    weechat_options[j][k].min,
+                                    weechat_options[j][k].max);
+                                break;
+                            case OPTION_TYPE_INT_WITH_STRING:
+                                printf (_("  . type string (values: "));
+                                m = 0;
+                                while (weechat_options[j][k].array_values[m])
+                                {
+                                    printf ("'%s'",
+                                        weechat_options[j][k].array_values[m]);
+                                    if (weechat_options[j][k].array_values[m + 1])
+                                        printf (", ");
+                                    m++;
+                                }
+                                printf (")\n");
+                                break;
+                            case OPTION_TYPE_COLOR:
+                                printf (_("  . type color (Curses or Gtk color, look at WeeChat doc)\n"));
+                                break;
+                            case OPTION_TYPE_STRING:
+                                printf (_("  . type string (any string)\n"));
+                                break;
+                        }
+                        printf (_("  . description: %s\n\n"),
+                            gettext (weechat_options[j][k].long_description));
+                        k++;
+                    }
+                }
+            }
+            printf (_("Moreover, you can define aliases in [alias] section, by adding lines like:\n"));
+            printf ("j=join\n");
+            printf (_("where 'j' is alias name, and 'join' associated command.\n\n"));
+            exit (0);
+        }
+        else if ((strcmp (argv[i], "-h") == 0)
+                || (strcmp (argv[i], "--help") == 0))
         {
             printf ("\n%s%s", WEE_USAGE);
             exit (0);
