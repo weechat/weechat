@@ -11,7 +11,7 @@ Version 0.0.3 (under dev!):
    * french translation
    * new IRC command: /stats, /service, /squit, /motd, /lusers, /links, /time,
      /trace, /admin, /info, /servlist, /squery, /who, /whowas, /die, /summon,
-     /users, /wallops, /userhost, /ison
+     /users, /wallops, /userhost, /ison, /ctcp ping
    * code cleanup
 
 Version 0.0.2 (2003-10-05):

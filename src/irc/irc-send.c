@@ -28,6 +28,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/time.h>
 #include <time.h>
 #include <sys/utsname.h>
 
@@ -126,6 +127,8 @@ int
 irc_cmd_send_ctcp (t_irc_server *server, char *arguments)
 {
     char *pos, *pos2;
+    struct timeval tv;
+    struct timezone tz;
     
     pos = strchr (arguments, ' ');
     if (pos)
@@ -162,6 +165,12 @@ irc_cmd_send_ctcp (t_irc_server *server, char *arguments)
             else
                 server_sendf (server, "PRIVMSG %s :\01ACTION\01\r\n",
                               arguments);
+        }
+        if (strcasecmp (pos, "ping") == 0)
+        {
+            gettimeofday (&tv, &tz);
+            server_sendf (server, "PRIVMSG %s :\01PING %d %d\01\r\n",
+                          arguments, tv.tv_sec, tv.tv_usec);
         }
         
     }

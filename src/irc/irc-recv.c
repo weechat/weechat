@@ -28,6 +28,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/time.h>
 #include <time.h>
 #include <sys/utsname.h>
 
@@ -522,7 +523,10 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *arguments)
 int
 irc_cmd_recv_notice (t_irc_server *server, char *host, char *arguments)
 {
-    char *pos, *pos2;
+    char *pos, *pos2, *pos_usec;
+    struct timeval tv;
+    struct timezone tz;
+    long sec1, usec1, sec2, usec2, difftime;
     
     if (host)
     {
@@ -548,13 +552,13 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *arguments)
                     WEECHAT_ERROR, "notice");
         return -1;
     }
-    irc_display_prefix (server->window, PREFIX_SERVER);
     if (strncmp (pos, "\01VERSION", 8) == 0)
     {
         pos += 9;
         pos2 = strchr (pos, '\01');
         if (pos2)
             pos2[0] = '\0';
+        irc_display_prefix (server->window, PREFIX_SERVER);
         gui_printf_color (server->window, COLOR_WIN_CHAT, "CTCP ");
         gui_printf_color (server->window, COLOR_WIN_CHAT_CHANNEL, "VERSION ");
         gui_printf_color (server->window, COLOR_WIN_CHAT, _("reply from"));
@@ -562,7 +566,48 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *arguments)
         gui_printf_color (server->window, COLOR_WIN_CHAT, ": %s\n", pos);
     }
     else
-        gui_printf_color (server->window, COLOR_WIN_CHAT, "%s\n", pos);
+    {
+        if (strncmp (pos, "\01PING", 5) == 0)
+        {
+            pos += 5;
+            while (pos[0] == ' ')
+                pos++;
+            pos_usec = strchr (pos, ' ');
+            if (pos_usec)
+            {
+                pos_usec[0] = '\0';
+                pos_usec++;
+                pos2 = strchr (pos_usec, '\01');
+                if (pos2)
+                {
+                    pos2[0] = '\0';
+                    
+                    gettimeofday (&tv, &tz);
+                    sec1 = atol (pos);
+                    usec1 = atol (pos_usec);
+                    sec2 = tv.tv_sec;
+                    usec2 = tv.tv_usec;
+                    
+                    difftime = ((sec2 * 1000000) + usec2) - ((sec1 * 1000000) + usec1);
+                    
+                    irc_display_prefix (server->window, PREFIX_SERVER);
+                    gui_printf_color (server->window, COLOR_WIN_CHAT, "CTCP ");
+                    gui_printf_color (server->window, COLOR_WIN_CHAT_CHANNEL, "PING ");
+                    gui_printf_color (server->window, COLOR_WIN_CHAT, _("reply from"));
+                    gui_printf_color (server->window, COLOR_WIN_CHAT_NICK, " %s", host);
+                    gui_printf_color (server->window, COLOR_WIN_CHAT,
+                                      _(": %ld.%ld seconds\n"),
+                                      difftime / 1000000,
+                                      (difftime % 1000000) / 1000);
+                }
+            }
+        }
+        else
+        {
+            irc_display_prefix (server->window, PREFIX_SERVER);
+            gui_printf_color (server->window, COLOR_WIN_CHAT, "%s\n", pos);
+        }
+    }
     return 0;
 }
 
@@ -784,6 +829,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
             if (pos[0] == ':')
                 pos++;
             
+            /* version asked by another user => answer with WeeChat version */
             if (strcmp (pos, "\01VERSION\01") == 0)
             {
                 buf = (struct utsname *) malloc (sizeof (struct utsname));
@@ -808,38 +854,61 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
             }
             else
             {
-                /* private message received */
-                ptr_channel = channel_search (server, host);
-                if (!ptr_channel)
+                /* ping request from another user => answer */
+                if (strncmp (pos, "\01PING", 5) == 0)
                 {
-                    ptr_channel = channel_new (server, CHAT_PRIVATE, host);
+                    pos += 5;
+                    while (pos[0] == ' ')
+                        pos++;
+                    pos2 = strchr (pos, '\01');
+                    if (pos2)
+                        pos2[0] = '\0';
+                    else
+                        pos = NULL;
+                    if (pos && !pos[0])
+                        pos = NULL;
+                    if (pos)
+                        server_sendf (server, "NOTICE %s :\01PING %s\01\r\n",
+                                      host, pos);
+                    else
+                        server_sendf (server, "NOTICE %s :\01PING\01\r\n",
+                                      host);
+                }
+                else
+                {
+                    /* private message received => display it */
+                    ptr_channel = channel_search (server, host);
                     if (!ptr_channel)
                     {
-                        gui_printf (server->window,
-                                    _("%s cannot create new private window \"%s\"\n"),
-                                    WEECHAT_ERROR, host);
-                        return -1;
+                        ptr_channel = channel_new (server, CHAT_PRIVATE, host);
+                        if (!ptr_channel)
+                        {
+                            gui_printf (server->window,
+                                        _("%s cannot create new private window \"%s\"\n"),
+                                        WEECHAT_ERROR, host);
+                            return -1;
+                        }
                     }
+                    if (!ptr_channel->topic)
+                    {
+                        ptr_channel->topic = strdup (host2);
+                        gui_redraw_window_title (ptr_channel->window);
+                    }
+                    
+                    gui_printf_color_type (ptr_channel->window,
+                                           MSG_TYPE_NICK,
+                                           COLOR_WIN_CHAT_DARK, "<");
+                    gui_printf_color_type (ptr_channel->window,
+                                           MSG_TYPE_NICK,
+                                           COLOR_WIN_NICK_PRIVATE,
+                                           "%s", host);
+                    gui_printf_color_type (ptr_channel->window,
+                                           MSG_TYPE_NICK,
+                                           COLOR_WIN_CHAT_DARK, "> ");
+                    gui_printf_color_type (ptr_channel->window,
+                                           MSG_TYPE_MSG,
+                                           COLOR_WIN_CHAT, "%s\n", pos);
                 }
-                if (!ptr_channel->topic)
-                {
-                    ptr_channel->topic = strdup (host2);
-                    gui_redraw_window_title (ptr_channel->window);
-                }
-                
-                gui_printf_color_type (ptr_channel->window,
-                                       MSG_TYPE_NICK,
-                                       COLOR_WIN_CHAT_DARK, "<");
-                gui_printf_color_type (ptr_channel->window,
-                                       MSG_TYPE_NICK,
-                                       COLOR_WIN_NICK_PRIVATE,
-                                       "%s", host);
-                gui_printf_color_type (ptr_channel->window,
-                                       MSG_TYPE_NICK,
-                                       COLOR_WIN_CHAT_DARK, "> ");
-                gui_printf_color_type (ptr_channel->window,
-                                       MSG_TYPE_MSG,
-                                       COLOR_WIN_CHAT, "%s\n", pos);
             }
         }
         else

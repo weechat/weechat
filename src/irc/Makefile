@@ -23,6 +23,18 @@ OUTPUT=irc.a
 OBJS=irc-commands.o irc-send.o irc-recv.o irc-display.o irc-server.o irc-channel.o irc-nick.o
 DEFINES=WEE_CURSES
 
+ifeq ($(GUI), curses)
+DEFINES=WEE_CURSES
+endif
+ifeq ($(GUI), gtk)
+INCLUDES=`pkg-config --cflags gtk+-2.0`
+DEFINES=WEE_GTK
+endif
+ifeq ($(GUI), qt)
+DEFINES=WEE_QT
+endif
+
+
 all: $(OBJS)
 	ar r $(OUTPUT) $(OBJS)
 
