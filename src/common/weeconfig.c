@@ -511,7 +511,7 @@ t_config_option weechat_options_irc[] =
     "WeeChat %v", NULL, NULL, &cfg_irc_default_msg_quit, config_change_noop },
   { "irc_away_check", N_("interval between two checks for away"),
     N_("interval between two checks for away (in minutes, 0 = never check)"),
-    OPTION_TYPE_INT, 0, INT_MAX, 1,
+    OPTION_TYPE_INT, 0, INT_MAX, 0,
     NULL, NULL, &cfg_irc_away_check, NULL, config_change_away_check },
   { "irc_lag_check", N_("interval between two checks for lag"),
     N_("interval between two checks for lag (in seconds)"),
