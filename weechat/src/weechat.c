@@ -292,13 +292,16 @@ main (int argc, char *argv[])
         gui_printf_color (NULL, COLOR_WIN_CHAT_PREFIX1,
             "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
     
-    /* connect to all servers */
+    /* connect to all servers (with autoconnect flag) */
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        server_create_window (ptr_server);
-        if (server_connect (ptr_server))
-            irc_login (ptr_server);
+        if (ptr_server->autoconnect)
+        {
+            server_create_window (ptr_server);
+            if (server_connect (ptr_server))
+                irc_login (ptr_server);
+        }
     }
     gui_main_loop ();
     server_disconnect_all ();

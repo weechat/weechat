@@ -441,6 +441,10 @@ t_config_option weechat_options_server[] =
     N_("name associated to IRC server (for display only)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "", NULL, NULL, &(cfg_server.name), NULL },
+  { "server_autoconnect", N_("automatically connect to server"),
+    N_("automatically connect to server when " WEECHAT_NAME " is starting"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
+    NULL, NULL, &(cfg_server.autoconnect), NULL, NULL },
   { "server_address", N_("server address or hostname"),
     N_("IP address or hostname of IRC server"),
     OPTION_TYPE_STRING, 0, 0, 0,
@@ -507,24 +511,6 @@ get_pos_array_values (char **array, char *string)
 }
 
 /*
- * config_init_server: init server struct
- */
-
-void
-config_init_server ()
-{
-    cfg_server.name = NULL;
-    cfg_server.address = NULL;
-    cfg_server.port = -1;
-    cfg_server.password = NULL;
-    cfg_server.nick1 = NULL;
-    cfg_server.nick2 = NULL;
-    cfg_server.nick3 = NULL;
-    cfg_server.username = NULL;
-    cfg_server.realname = NULL;
-}
-
-/*
  * config_allocate_server: allocate a new server
  */
 
@@ -556,9 +542,9 @@ config_allocate_server (char *filename, int line_number)
         return 0;
     }
     if (!server_new (cfg_server.name,
-        cfg_server.address, cfg_server.port, cfg_server.password,
-        cfg_server.nick1, cfg_server.nick2, cfg_server.nick3,
-        cfg_server.username, cfg_server.realname))
+        cfg_server.autoconnect, cfg_server.address, cfg_server.port,
+        cfg_server.password, cfg_server.nick1, cfg_server.nick2,
+        cfg_server.nick3, cfg_server.username, cfg_server.realname))
     {
         server_free_all ();
         gui_printf (NULL,
@@ -566,26 +552,9 @@ config_allocate_server (char *filename, int line_number)
                     WEECHAT_WARNING, filename, line_number);
         return 0;
     }
-    if (cfg_server.name)
-        free (cfg_server.name);
-    if (cfg_server.address)
-        free (cfg_server.address);
-    if (cfg_server.password)
-        free (cfg_server.password);
-    if (cfg_server.nick1)
-        free (cfg_server.nick1);
-    if (cfg_server.nick2)
-        free (cfg_server.nick2);
-    if (cfg_server.nick3)
-        free (cfg_server.nick3);
-    if (cfg_server.username)
-        free (cfg_server.username);
-    if (cfg_server.realname)
-        free (cfg_server.realname);
-    if (cfg_server.nick)
-        free (cfg_server.nick);
     
-    config_init_server ();
+    server_destroy (&cfg_server);
+    server_init (&cfg_server);
     
     return 1;
 }
@@ -670,7 +639,7 @@ config_read ()
     }
     
     config_default_values ();
-    config_init_server ();
+    server_init (&cfg_server);
     
     /* read config file */
     section = CONFIG_SECTION_NONE;
@@ -996,6 +965,7 @@ config_create_default ()
     /* default server is freenode */
     fputs ("\n[server]\n", file);
     fputs ("server_name=freenode\n", file);
+    fputs ("server_autoconnect=on\n", file);
     fputs ("server_address=irc.freenode.net\n", file);
     fputs ("server_port=6667\n", file);
     fputs ("server_password=\n", file);

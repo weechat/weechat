@@ -50,6 +50,34 @@ char *unterminated_message = NULL;
 
 
 /*
+ * server_init: init server struct with default values
+ */
+
+void
+server_init (t_irc_server *server)
+{
+    server->name = NULL;
+    server->autoconnect = 0;
+    server->address = NULL;
+    server->port = -1;
+    server->password = NULL;
+    server->nick1 = NULL;
+    server->nick2 = NULL;
+    server->nick3 = NULL;
+    server->username = NULL;
+    server->realname = NULL;
+    server->nick = NULL;
+    server->is_connected = 0;
+    server->sock4 = -1;
+    server->is_away = 0;
+    server->server_read = -1;
+    server->server_write = -1;
+    server->window = NULL;
+    server->channels = NULL;
+    server->last_channel = NULL;
+}
+
+/*
  * server_alloc: allocate a new server and add it to the servers queue
  */
 
@@ -70,23 +98,7 @@ server_alloc ()
     }
 
     /* initialize new server */
-    new_server->name = NULL;
-    new_server->address = NULL;
-    new_server->password = NULL;
-    new_server->nick1 = NULL;
-    new_server->nick2 = NULL;
-    new_server->nick3 = NULL;
-    new_server->username = NULL;
-    new_server->realname = NULL;
-    new_server->nick = NULL;
-    new_server->is_connected = 0;
-    new_server->sock4 = -1;
-    new_server->is_away = 0;
-    new_server->server_read = -1;
-    new_server->server_write = -1;
-    new_server->window = NULL;
-    new_server->channels = NULL;
-    new_server->last_channel = NULL;
+    server_init (new_server);
 
     /* add new server to queue */
     new_server->prev_server = last_irc_server;
@@ -118,26 +130,12 @@ server_create_window (t_irc_server *server)
 }
 
 /*
- * server_free: free a server and remove it from servers queue
+ * server_destroy: free server data (not struct himself)
  */
 
 void
-server_free (t_irc_server *server)
+server_destroy (t_irc_server *server)
 {
-    t_irc_server *new_irc_servers;
-
-    /* remove server from queue */
-    if (server->prev_server)
-    {
-        (server->prev_server)->next_server = server->next_server;
-        new_irc_servers = irc_servers;
-    }
-    else
-        new_irc_servers = server->next_server;
-    
-    if (server->next_server)
-        (server->next_server)->prev_server = server->prev_server;
-
     /* free data */
     if (server->name)
         free (server->name);
@@ -159,8 +157,30 @@ server_free (t_irc_server *server)
         free (server->nick);
     if (server->channels)
         channel_free_all (server);
-    /* TODO: free weechat window (???) */
-    /* (...) */
+}
+
+/*
+ * server_free: free a server and remove it from servers queue
+ */
+
+void
+server_free (t_irc_server *server)
+{
+    t_irc_server *new_irc_servers;
+
+    /* remove server from queue */
+    if (server->prev_server)
+    {
+        (server->prev_server)->next_server = server->next_server;
+        new_irc_servers = irc_servers;
+    }
+    else
+        new_irc_servers = server->next_server;
+    
+    if (server->next_server)
+        (server->next_server)->prev_server = server->prev_server;
+    
+    server_destroy (server);
     free (server);
     irc_servers = new_irc_servers;
 }
@@ -182,8 +202,8 @@ server_free_all ()
  */
 
 t_irc_server *
-server_new (char *name, char *address, int port, char *password,
-            char *nick1, char *nick2, char *nick3,
+server_new (char *name, int autoconnect, char *address, int port,
+            char *password, char *nick1, char *nick2, char *nick3,
             char *username, char *realname)
 {
     t_irc_server *new_server;
@@ -202,6 +222,7 @@ server_new (char *name, char *address, int port, char *password,
     if ((new_server = server_alloc ()))
     {
         new_server->name = strdup (name);
+        new_server->autoconnect = autoconnect;
         new_server->address = strdup (address);
         new_server->port = port;
         new_server->password = (password) ? strdup (password) : strdup ("");

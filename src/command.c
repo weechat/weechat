@@ -28,8 +28,8 @@
 
 #include "weechat.h"
 #include "command.h"
-#include "irc/irc.h"
 #include "config.h"
+#include "irc/irc.h"
 #include "gui/gui.h"
 
 
@@ -48,6 +48,21 @@ t_weechat_command weechat_commands[] =
   { "help", N_("display help about commands"),
     N_("[command]"), N_("command: name of a " WEECHAT_NAME " or IRC command"),
     0, 1, weechat_cmd_help, NULL },
+  { "server", N_("list, add or remove servers"),
+    N_("[list] | "
+    "[[add] servername [-auto | -noauto] hostname [-port port] [-pwd password] [-nicks nick1 "
+    "[nick2 [nick3]]] [-username username] [-realname realname]] | "
+    "[del servername]"),
+    N_("servername: server name, for internal & display use\n"
+    "hostname: name or IP address of server\n"
+    "port: port for server (integer)\n"
+    "password: password for server\n"
+    "nick1: first nick for server\n"
+    "nick2: alternate nick for server\n"
+    "nick3: second alternate nick for server\n"
+    "username: user name\n"
+    "realname: real name of user\n"),
+    0, MAX_ARGS, weechat_cmd_server, NULL },
   { "set", N_("set config parameters"),
     N_("[option [value]]"), N_("option: name of an option\nvalue: value for option"),
     0, 2, weechat_cmd_set, NULL },
@@ -574,6 +589,219 @@ weechat_cmd_help (int argc, char **argv)
         gui_printf (NULL,
                     _("No help available, \"%s\" is an unknown command\n"),
                     argv[0]);
+    }
+    return 0;
+}
+
+/*
+ * weechat_cmd_server: list, add or remove server(s)
+ */
+
+int
+weechat_cmd_server (int argc, char **argv)
+{
+    int i;
+    t_irc_server server, *ptr_server, *server_found;
+    
+    if ((argc == 0) || ((argc == 1) && (strcasecmp (argv[0], "list") == 0)))
+    {
+        /* list all servers */
+        if (irc_servers)
+        {
+            for (ptr_server = irc_servers; ptr_server;
+                 ptr_server = ptr_server->next_server)
+            {
+                irc_display_prefix (NULL, PREFIX_INFO);
+                gui_printf_color (NULL,
+                                  COLOR_WIN_CHAT,
+                                  _("Server: "));
+                gui_printf_color (NULL,
+                                  COLOR_WIN_CHAT_CHANNEL,
+                                  "%s", ptr_server->name);
+                gui_printf_color (NULL,
+                                  COLOR_WIN_CHAT_DARK,
+                                  " [");
+                gui_printf_color (NULL,
+                                  COLOR_WIN_CHAT,
+                                  "%s",
+                                  (ptr_server->is_connected) ?
+                                      _("connected") : _("not connected"));
+                gui_printf_color (NULL,
+                                  COLOR_WIN_CHAT_DARK,
+                                  "]\n");
+                irc_display_prefix (NULL, PREFIX_INFO);
+                gui_printf_color (NULL,
+                                  COLOR_WIN_CHAT,
+                                  "  Autoconnect: %s\n",
+                                  (ptr_server->autoconnect) ? _("yes") : _("no"));
+                irc_display_prefix (NULL, PREFIX_INFO);
+                gui_printf_color (NULL,
+                                  COLOR_WIN_CHAT,
+                                  "  Hostname   : %s\n",
+                                  ptr_server->address);
+                irc_display_prefix (NULL, PREFIX_INFO);
+                gui_printf_color (NULL,
+                                  COLOR_WIN_CHAT,
+                                  _("  Port       : %d\n"),
+                                  ptr_server->port);
+                irc_display_prefix (NULL, PREFIX_INFO);
+                if (ptr_server->password && ptr_server->password[0])
+                    gui_printf_color (NULL,
+                                      COLOR_WIN_CHAT,
+                                      _("  Password   : (hidden)\n"));
+                else
+                    gui_printf_color (NULL,
+                                      COLOR_WIN_CHAT,
+                                      _("  Password   : (none)\n"));
+                irc_display_prefix (NULL, PREFIX_INFO);
+                gui_printf_color (NULL,
+                                  COLOR_WIN_CHAT,
+                                  _("  Nicks      : %s"),
+                                  ptr_server->nick1);
+                gui_printf_color (NULL,
+                                  COLOR_WIN_CHAT_DARK,
+                                  " / ");
+                gui_printf_color (NULL,
+                                  COLOR_WIN_CHAT,
+                                  "%s", ptr_server->nick2);
+                gui_printf_color (NULL,
+                                  COLOR_WIN_CHAT_DARK,
+                                  " / ");
+                gui_printf_color (NULL,
+                                  COLOR_WIN_CHAT,
+                                  "%s\n", ptr_server->nick3);
+                irc_display_prefix (NULL, PREFIX_INFO);
+                gui_printf_color (NULL,
+                                  COLOR_WIN_CHAT,
+                                  _("  Username   : %s\n"),
+                                  ptr_server->username);
+                irc_display_prefix (NULL, PREFIX_INFO);
+                gui_printf_color (NULL,
+                                  COLOR_WIN_CHAT,
+                                  _("  Realname   : %s\n"),
+                                  ptr_server->realname);
+            }
+        }
+        else
+            gui_printf (NULL, _("No server.\n"));
+    }
+    else
+    {
+        if (strcasecmp (argv[0], "del") == 0)
+        {
+            if (argc == 1)
+            {
+                gui_printf (NULL,
+                            _("%s missing servername for \"/server del\" command\n"),
+                            WEECHAT_ERROR);
+                return -1;
+            }
+            if (argc > 2)
+                gui_printf (NULL,
+                            _("%s too much arguments for \"/server del\" command, ignoring arguments\n"),
+                            WEECHAT_WARNING);
+            
+            /* look for server by name */
+            server_found = NULL;
+            for (ptr_server = irc_servers; ptr_server;
+                 ptr_server = ptr_server->next_server)
+            {
+                if (strcmp (ptr_server->name, argv[1]) == 0)
+                {
+                    server_found = ptr_server;
+                    break;
+                }
+            }
+            if (!server_found)
+            {
+                gui_printf (NULL,
+                            _("%s server \"%s\" not found for \"/server del\" command\n"),
+                            WEECHAT_ERROR, argv[1]);
+                return -1;
+            }
+            server_free (server_found);
+            gui_redraw_window (gui_current_window);
+        }
+        
+        /* init server struct */
+        server_init (&server);
+        
+        /* parse arguments */
+        for (i = 0; i < argc; i++)
+        {
+            if (argv[i][0] == '-')
+            {
+                if (strcasecmp (argv[0], "-auto") == 0)
+                    server.autoconnect = 1;
+                if (strcasecmp (argv[0], "-noauto") == 0)
+                    server.autoconnect = 0;
+                if (strcasecmp (argv[0], "-port") == 0)
+                {
+                    if (i == (argc - 1))
+                    {
+                        gui_printf (NULL,
+                                    _("%s missing port for \"-port\" parameter\n"),
+                                    WEECHAT_ERROR);
+                        server_destroy (&server);
+                        return -1;
+                    }
+                    server.port = atoi (argv[i]);
+                }
+                if (strcasecmp (argv[0], "-pwd") == 0)
+                {
+                    if (i == (argc - 1))
+                    {
+                        gui_printf (NULL,
+                                    _("%s missing password for \"-pwd\" parameter\n"),
+                                    WEECHAT_ERROR);
+                        server_destroy (&server);
+                        return -1;
+                    }
+                    server.password = strdup (argv[++i]);
+                }
+                if (strcasecmp (argv[0], "-nicks") == 0)
+                {
+                    if (i >= (argc - 3))
+                    {
+                        gui_printf (NULL,
+                                    _("%s missing nick(s) for \"-nicks\" parameter\n"),
+                                    WEECHAT_ERROR);
+                        server_destroy (&server);
+                        return -1;
+                    }
+                    server.nick1 = strdup (argv[++i]);
+                    server.nick2 = strdup (argv[++i]);
+                    server.nick3 = strdup (argv[++i]);
+                }
+                if (strcasecmp (argv[0], "-username") == 0)
+                {
+                    if (i == (argc - 1))
+                    {
+                        gui_printf (NULL,
+                                    _("%s missing password for \"-username\" parameter\n"),
+                                    WEECHAT_ERROR);
+                        server_destroy (&server);
+                        return -1;
+                    }
+                    server.username = strdup (argv[++i]);
+                }
+                if (strcasecmp (argv[0], "-realname") == 0)
+                {
+                    if (i == (argc - 1))
+                    {
+                        gui_printf (NULL,
+                                    _("%s missing password for \"-realname\" parameter\n"),
+                                    WEECHAT_ERROR);
+                        server_destroy (&server);
+                        return -1;
+                    }
+                    server.realname = strdup (argv[++i]);
+                }
+            }
+            else
+            {
+            }
+        }
     }
     return 0;
 }

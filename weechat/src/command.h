@@ -57,6 +57,7 @@ extern void user_command (t_irc_server *, char *);
 extern int weechat_cmd_alias(int, char **);
 extern int weechat_cmd_clear(int, char **);
 extern int weechat_cmd_help (int, char **);
+extern int weechat_cmd_server (int, char **);
 extern int weechat_cmd_set (int, char **);
 extern int weechat_cmd_unalias (int, char **);
 

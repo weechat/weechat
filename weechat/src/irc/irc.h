@@ -78,6 +78,7 @@ struct t_irc_server
 {
     /* user choices */
     char *name;                     /* name of server (only for display)    */
+    int autoconnect;                /* = 1 if auto connect at startup       */
     char *address;                  /* address of server (IP or name)       */
     int port;                       /* port for server (6667 by default)    */
     char *password;                 /* password for server                  */
@@ -137,12 +138,14 @@ extern t_irc_channel *current_channel;
 
 /* server functions (irc-server.c) */
 
+extern void server_init (t_irc_server *);
 extern t_irc_server *server_alloc ();
 extern void server_create_window (t_irc_server *);
+extern void server_destroy (t_irc_server *);
 extern void server_free (t_irc_server *);
 extern void server_free_all ();
-extern t_irc_server *server_new (char *, char *, int, char *, char *, char *,
-                                 char *, char *, char *);
+extern t_irc_server *server_new (char *, int, char *, int, char *, char *,
+                                 char *, char *, char *, char *);
 extern int server_send (t_irc_server *, char *, int);
 extern int server_sendf (t_irc_server *, char *, ...);
 extern void server_recv (t_irc_server *);
