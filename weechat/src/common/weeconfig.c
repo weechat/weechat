@@ -487,7 +487,7 @@ t_config_option weechat_options_irc[] =
     NULL, NULL, &cfg_irc_lag_check, NULL, config_change_noop },
   { "irc_lag_min_show", N_("minimum lag to show"),
     N_("minimum lag to show (in seconds)"),
-    OPTION_TYPE_INT, 1, INT_MAX, 1,
+    OPTION_TYPE_INT, 0, INT_MAX, 1,
     NULL, NULL, &cfg_irc_lag_min_show, NULL, config_change_noop },
   { "irc_lag_disconnect", N_("disconnect after important lag"),
     N_("disconnect after important lag (in minutes, 0 = never disconnect)"),
