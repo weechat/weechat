@@ -401,7 +401,7 @@ void irc_get_channel_modes (t_irc_channel *ptr_channel, char *channel_name,
                 }
                 if (nick_host)
                     irc_display_mode (ptr_channel->buffer,
-                                      channel_name, set_flag, "o", nick_host,
+                                      channel_name, set_flag, "h", nick_host,
                                       (set_flag == '+') ?
                                           _("gives half channel operator status to") :
                                           _("removes half channel operator status from"),
