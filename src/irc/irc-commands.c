@@ -1993,7 +1993,7 @@ irc_cmd_recv_topic (t_irc_server *server, char *host, char *arguments)
     if (pos)
         pos[0] = '\0';
     
-    if (string_is_channel (arguments))
+    if (!string_is_channel (arguments))
     {
         gui_printf (server->window,
                     _("%s \"topic\" command received without channel\n"),
