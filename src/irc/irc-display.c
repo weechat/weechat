@@ -19,9 +19,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
 /* irc-display.c: display functions for IRC */
 
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -30,7 +33,7 @@
 
 #include "../common/weechat.h"
 #include "irc.h"
-#include "../common/config.h"
+#include "../common/weeconfig.h"
 #include "../gui/gui.h"
 
 

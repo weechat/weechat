@@ -31,15 +31,11 @@
 #define _(string) gettext(string)
 #define N_(string) (string)
 
-#define WEECHAT_NAME    "WeeChat"
-#define WEECHAT_VERSION "0.0.3-pre2"
-
-#define WEECHAT_NAME_AND_VERSION WEECHAT_NAME " " WEECHAT_VERSION
-#define WEECHAT_COPYRIGHT WEECHAT_NAME " (c) 2003 by Wee Team"
+#define WEECHAT_COPYRIGHT PACKAGE_NAME " (c) 2003 by Wee Team"
 #define WEECHAT_WEBSITE "http://weechat.flashtux.org"
 
-#define WEECHAT_ERROR   _(WEECHAT_NAME " Error:")
-#define WEECHAT_WARNING _(WEECHAT_NAME " Warning:")
+#define WEECHAT_ERROR   _(PACKAGE_NAME " Error:")
+#define WEECHAT_WARNING _(PACKAGE_NAME " Warning:")
 
 /* debug mode, 0=normal use, 1=some debug msg, 2=full debug (developers only) */
 #define DEBUG           0
@@ -51,7 +47,7 @@
 /* license */
 
 #define WEE_LICENSE \
-    WEECHAT_NAME_AND_VERSION " (c) Copyright 2003, compiled on " __DATE__ __TIME__ \
+    PACKAGE_STRING " (c) Copyright 2003, compiled on " __DATE__ __TIME__ \
     "Developed by FlashCode <flashcode@flashtux.org>\n" \
     "             Bounga <bounga@altern.org>\n" \
     "             Xahlexx <xahlexx@tuxisland.org>\n\n" \
@@ -71,7 +67,7 @@
     "Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n\n"
     
 #define WEE_USAGE \
-    WEECHAT_NAME_AND_VERSION " (c) Copyright 2003, compiled on " __DATE__ __TIME__ \
+    PACKAGE_STRING " (c) Copyright 2003, compiled on " __DATE__ __TIME__ \
     "Developed by FlashCode <flashcode@flashtux.org>\n" \
     "             Bounga <bounga@altern.org>\n" \
     "             Xahlexx <xahlexx@tuxisland.org>\n\n" \

@@ -19,10 +19,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
 /* irc-recv.c: implementation of IRC commands (server to client),
                according to RFC 1459,2810,2811,2812 */
 
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -35,7 +38,7 @@
 #include "../common/weechat.h"
 #include "irc.h"
 #include "../common/command.h"
-#include "../common/config.h"
+#include "../common/weeconfig.h"
 #include "../gui/gui.h"
 
 
@@ -838,7 +841,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                               _("NOTICE %s :%sVERSION %s v%s"
                               " compiled on %s, host \"%s\" is running "
                               "%s %s / %s%s"),
-                              host, "\01", WEECHAT_NAME, WEECHAT_VERSION, __DATE__,
+                              host, "\01", PACKAGE_NAME, PACKAGE_VERSION, __DATE__,
                               &buf->nodename, &buf->sysname,
                               &buf->release, &buf->machine, "\01\r\n");
                 free (buf);
@@ -2418,7 +2421,7 @@ irc_cmd_recv_433 (t_irc_server *server, char *host, char *arguments)
             gui_printf (server->window,
                         _("%s: nickname \"%s\" is already in use, "
                         "trying 2nd nickname \"%s\"\n"),
-                        WEECHAT_NAME, server->nick, server->nick2);
+                        PACKAGE_NAME, server->nick, server->nick2);
             free (server->nick);
             server->nick = strdup (server->nick2);
         }
@@ -2429,7 +2432,7 @@ irc_cmd_recv_433 (t_irc_server *server, char *host, char *arguments)
                 gui_printf (server->window,
                             _("%s: nickname \"%s\" is already in use, "
                             "trying 3rd nickname \"%s\"\n"),
-                            WEECHAT_NAME, server->nick, server->nick3);
+                            PACKAGE_NAME, server->nick, server->nick3);
                 free (server->nick);
                 server->nick = strdup (server->nick3);
             }
@@ -2438,7 +2441,7 @@ irc_cmd_recv_433 (t_irc_server *server, char *host, char *arguments)
                 gui_printf (server->window,
                             _("%s: all declared nicknames are already in use, "
                             "closing connection with server!\n"),
-                            WEECHAT_NAME);
+                            PACKAGE_NAME);
                 server_disconnect (server);
                 return 0;
             }

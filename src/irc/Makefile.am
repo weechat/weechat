@@ -17,7 +17,8 @@
 
 noinst_LIBRARIES = lib_weechat_irc.a
 
-lib_weechat_irc_a_SOURCES = irc-commands.c \
+lib_weechat_irc_a_SOURCES = irc.h \
+                            irc-commands.c \
                             irc-send.c \
                             irc-recv.c \
                             irc-server.c \

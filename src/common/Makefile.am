@@ -18,7 +18,12 @@
 noinst_LIBRARIES = lib_weechat_main.a
 
 lib_weechat_main_a_SOURCES = weechat.c \
+                             weechat.h \
                              command.c \
+                             command.h \
                              completion.c \
-                             config.c \
-                             history.c
+                             completion.h \
+                             weeconfig.c \
+                             weeconfig.h \
+                             history.c \
+                             history.h

@@ -19,16 +19,19 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
 /* command.c: WeeChat internal commands */
 
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 #include <stdlib.h>
 #include <string.h>
 
 #include "weechat.h"
 #include "command.h"
-#include "config.h"
+#include "weeconfig.h"
 #include "../irc/irc.h"
 #include "../gui/gui.h"
 
@@ -528,7 +531,7 @@ exec_weechat_command (t_irc_server *server, char *string)
                     gui_printf (NULL,
                                 _("%s wrong argument count for %s command \"%s\" "
                                 "(expected: %d arg%s)\n"),
-                                WEECHAT_ERROR, WEECHAT_NAME, 
+                                WEECHAT_ERROR, PACKAGE_NAME, 
                                 command + 1,
                                 weechat_commands[i].max_arg,
                                 (weechat_commands[i].max_arg >
@@ -537,7 +540,7 @@ exec_weechat_command (t_irc_server *server, char *string)
                     gui_printf (NULL,
                                 _("%s wrong argument count for %s command \"%s\" "
                                 "(expected: between %d and %d arg%s)\n"),
-                                WEECHAT_ERROR, WEECHAT_NAME,
+                                WEECHAT_ERROR, PACKAGE_NAME,
                                 command + 1,
                                 weechat_commands[i].min_arg,
                                 weechat_commands[i].max_arg,
@@ -555,7 +558,7 @@ exec_weechat_command (t_irc_server *server, char *string)
                 if (return_code < 0)
                     gui_printf (NULL,
                                 _("%s %s command \"%s\" failed\n"),
-                                WEECHAT_ERROR, WEECHAT_NAME, command + 1);
+                                WEECHAT_ERROR, PACKAGE_NAME, command + 1);
             }
             if (argv)
             {
@@ -906,7 +909,7 @@ weechat_cmd_help (int argc, char **argv)
     if (argc == 0)
     {
         gui_printf (NULL,
-                    _("> List of %s internal commands:\n"), WEECHAT_NAME);
+                    _("> List of %s internal commands:\n"), PACKAGE_NAME);
         for (i = 0; weechat_commands[i].command_name; i++)
             gui_printf (NULL, "    %s - %s\n",
                         weechat_commands[i].command_name,
@@ -927,7 +930,7 @@ weechat_cmd_help (int argc, char **argv)
                 gui_printf
                     (NULL,
                      _("> Help on %s internal command \"%s\":\n"),
-                     WEECHAT_NAME, weechat_commands[i].command_name);
+                     PACKAGE_NAME, weechat_commands[i].command_name);
                 gui_printf (NULL,
                             _("Syntax: /%s %s\n"),
                             weechat_commands[i].command_name,

@@ -19,9 +19,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
 /* gui-input: user input functions for Curses GUI */
 
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -34,7 +37,7 @@
 
 #include "../../common/weechat.h"
 #include "../gui.h"
-#include "../../common/config.h"
+#include "../../common/weeconfig.h"
 #include "../../common/command.h"
 #include "../../irc/irc.h"
 

@@ -19,10 +19,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
 /* irc-commands.c: implementation of IRC commands, according to
                    RFC 1459,2810,2811,2812 */
 
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 #include "../common/weechat.h"
 #include "irc.h"
@@ -157,7 +160,7 @@ t_irc_command irc_commands[] =
   { "privmsg", N_("message received"),
     "", "",
     0, 0, 1, NULL, NULL, irc_cmd_recv_privmsg },
-  { "quit", N_("close all connections & quit " WEECHAT_NAME),
+  { "quit", N_("close all connections & quit " PACKAGE_NAME),
     N_("[quit_message]"),
     N_("quit_message: quit message (displayed to other users)"),
     0, MAX_ARGS, 0, NULL, irc_cmd_send_quit, irc_cmd_recv_quit },

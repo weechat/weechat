@@ -36,9 +36,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
 /* weechat.c: core functions for WeeChat */
 
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 #include <errno.h>
 #include <stdlib.h>
@@ -49,7 +52,7 @@
 #include <time.h>
 
 #include "weechat.h"
-#include "config.h"
+#include "weeconfig.h"
 #include "command.h"
 #include "../irc/irc.h"
 #include "../gui/gui.h"
@@ -128,7 +131,7 @@ wee_parse_args (int argc, char *argv[])
         else if ((strcmp (argv[i], "-v") == 0)
                  || (strcmp (argv[i], "--version") == 0))
         {
-            printf (WEECHAT_VERSION "\n");
+            printf (PACKAGE_VERSION "\n");
             exit (0);
         }
         else
@@ -280,14 +283,14 @@ main (int argc, char *argv[])
     {
         gui_printf_color (NULL, COLOR_WIN_CHAT, _("%sWelcome to "),
                           (cfg_look_startup_logo) ? "      " : "");
-        gui_printf_color (NULL, COLOR_WIN_CHAT_PREFIX2, WEECHAT_NAME);
+        gui_printf_color (NULL, COLOR_WIN_CHAT_PREFIX2, PACKAGE_NAME);
         gui_printf_color (NULL, COLOR_WIN_CHAT,
                           ", %s\n", cfg_look_weechat_slogan);
     }
     if (cfg_look_startup_version)
     {
         gui_printf_color (NULL, COLOR_WIN_CHAT_PREFIX2,
-                          "%s" WEECHAT_NAME_AND_VERSION,
+                          "%s" PACKAGE_STRING,
                           (cfg_look_startup_logo) ? "    " : "");
         gui_printf_color (NULL, COLOR_WIN_CHAT,
                           ", %s %s %s\n",

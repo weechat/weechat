@@ -23,6 +23,7 @@ weechat_gtk_LDADD = ../../common/lib_weechat_main.a \
                     ../../irc/lib_weechat_irc.a \
                     $(GTK_LIBS)
 
-weechat_gtk_SOURCES = ../gui-common.c \
+weechat_gtk_SOURCES = ../gui.h \
+                      ../gui-common.c \
                       gui-display.c \
 			          gui-input.c

@@ -19,9 +19,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
 /* irc-server.c: (dis)connection and communication with irc server */
 
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -480,7 +483,7 @@ server_connect (t_irc_server *server)
 
     gui_printf (server->window,
                 _("%s: connecting to %s:%d...\n"),
-                WEECHAT_NAME, server->address, server->port);
+                PACKAGE_NAME, server->address, server->port);
     log_printf (_("connecting to server %s:%d...\n"),
                 server->address, server->port);
     server->is_connected = 0;
@@ -551,7 +554,7 @@ server_connect (t_irc_server *server)
 
     /* connection to server */
     gui_printf (server->window,
-                _("%s: server IP is: %s\n"), WEECHAT_NAME, ip_address);
+                _("%s: server IP is: %s\n"), PACKAGE_NAME, ip_address);
 
     error = connect (server->sock4, (struct sockaddr *) &addr, sizeof (addr));
     if (error != 0)

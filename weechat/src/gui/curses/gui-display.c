@@ -19,9 +19,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
 /* gui-display.c: display functions for Curses GUI */
 
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -33,7 +36,7 @@
 
 #include "../../common/weechat.h"
 #include "../gui.h"
-#include "../../common/config.h"
+#include "../../common/weeconfig.h"
 #include "../../irc/irc.h"
 
 
@@ -302,7 +305,7 @@ gui_draw_window_title (t_gui_window *window)
     {
         /* TODO: change this copyright as title? */
         mvwprintw (window->win_title, 0, 0,
-                   "%s", WEECHAT_NAME_AND_VERSION " - " WEECHAT_WEBSITE);
+                   "%s", PACKAGE_STRING " - " WEECHAT_WEBSITE);
         mvwprintw (window->win_title, 0, COLS - strlen (WEECHAT_COPYRIGHT),
                    "%s", WEECHAT_COPYRIGHT);
     }
@@ -1396,7 +1399,7 @@ gui_init ()
     #ifdef __linux__
     /* set title for term window, not for console */
     if (cfg_look_set_title && (strcmp (getenv ("TERM"), "linux") != 0))
-        printf ("\e]2;" WEECHAT_NAME " " WEECHAT_VERSION "\a\e]1;" WEECHAT_NAME " " WEECHAT_VERSION "\a");
+        printf ("\e]2;" PACKAGE_NAME " " PACKAGE_VERSION "\a\e]1;" PACKAGE_NAME " " PACKAGE_VERSION "\a");
     #endif
     
     gui_ready = 1;

@@ -19,10 +19,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
 /* irc-send.c: implementation of IRC commands (client to server),
                according to RFC 1459,2810,2811,2812 */
 
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -35,7 +38,7 @@
 #include "../common/weechat.h"
 #include "irc.h"
 #include "../common/command.h"
-#include "../common/config.h"
+#include "../common/weeconfig.h"
 #include "../gui/gui.h"
 
 
@@ -57,7 +60,7 @@ irc_login (t_irc_server *server)
         strcpy (hostname, _("unknown"));
     gui_printf (server->window,
                 _("%s: using local hostname \"%s\"\n"),
-                WEECHAT_NAME, hostname);
+                PACKAGE_NAME, hostname);
     server_sendf (server,
                   "NICK %s\r\n"
                   "USER %s %s %s :%s\r\n",
@@ -973,7 +976,7 @@ irc_cmd_send_version (t_irc_server *server, char *arguments)
     {
         irc_display_prefix (server->window, PREFIX_INFO);
         gui_printf (server->window, _("%s, compiled on %s %s\n"),
-                    WEECHAT_NAME_AND_VERSION,
+                    PACKAGE_STRING,
                     __DATE__, __TIME__);
         server_sendf (server, "VERSION\r\n");
     }

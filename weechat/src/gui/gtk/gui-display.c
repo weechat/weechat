@@ -19,9 +19,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
 /* gui-display.c: display functions for Gtk GUI */
 
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -33,7 +36,7 @@
 
 #include "../../common/weechat.h"
 #include "../gui.h"
-#include "../../common/config.h"
+#include "../../common/weeconfig.h"
 #include "../../irc/irc.h"
 
 
@@ -577,7 +580,7 @@ void
 gui_init ()
 {
     gtk_main_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title (GTK_WINDOW (gtk_main_window), WEECHAT_NAME_AND_VERSION);
+    gtk_window_set_title (GTK_WINDOW (gtk_main_window), PACKAGE_STRING);
     
     vbox1 = gtk_vbox_new (FALSE, 0);
     gtk_widget_show (vbox1);
