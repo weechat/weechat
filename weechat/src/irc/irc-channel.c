@@ -164,7 +164,7 @@ channel_check_away (t_irc_server *server, t_irc_channel *channel)
 {
     if (channel->type == CHAT_CHANNEL)
     {
-        channel->checking_away = 1;
+        channel->checking_away++;
         server_sendf (server, "WHO %s\r\n", channel->name);
     }
 }

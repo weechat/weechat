@@ -2055,9 +2055,9 @@ irc_cmd_recv_315 (t_irc_server *server, char *host, char *arguments)
         pos[0] = '\0';
         pos++;
         ptr_channel = channel_search (server, arguments);
-        if (ptr_channel && (ptr_channel->checking_away))
+        if (ptr_channel && (ptr_channel->checking_away > 0))
         {
-            ptr_channel->checking_away = 0;
+            ptr_channel->checking_away--;
             return 0;
         }
         gui_printf_color (server->buffer, COLOR_WIN_CHAT_CHANNEL, "%s", arguments);
@@ -2760,7 +2760,7 @@ irc_cmd_recv_352 (t_irc_server *server, char *host, char *arguments)
                                         pos_realname++;
                                     
                                     ptr_channel = channel_search (server, pos_channel);
-                                    if (ptr_channel && (ptr_channel->checking_away))
+                                    if (ptr_channel && (ptr_channel->checking_away > 0))
                                     {
                                         ptr_nick = nick_search (ptr_channel, pos_nick);
                                         if (ptr_nick)
