@@ -630,7 +630,8 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *arguments)
             {
                 if ((SERVER(ptr_window) == server) && WIN_IS_PRIVATE(ptr_window))
                 {
-                    if (CHANNEL(ptr_window)->name)
+                    if ((CHANNEL(ptr_window)->name)
+                        && (strcmp (ptr_nick->nick, CHANNEL(ptr_window)->name) == 0))
                     {
                         free (CHANNEL(ptr_window)->name);
                         CHANNEL(ptr_window)->name = strdup (arguments);
