@@ -22,9 +22,11 @@
 #define __WEECHAT_LOG_H 1
 
 #include "../irc/irc.h"
+#include "../gui/gui.h"
 
 extern void log_write_date (t_gui_buffer *);
 extern void log_write (t_gui_buffer *, char *);
+extern void log_write_line (t_gui_buffer *, t_gui_line *);
 extern void log_start (t_gui_buffer *);
 extern void log_end (t_gui_buffer *);
 

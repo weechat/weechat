@@ -475,6 +475,7 @@ gui_new_line (t_gui_buffer *buffer)
     {
         new_line->length = 0;
         new_line->length_align = 0;
+        new_line->log_write = 1;
         new_line->line_with_message = 0;
         new_line->line_with_highlight = 0;
         new_line->messages = NULL;

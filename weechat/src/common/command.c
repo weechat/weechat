@@ -704,8 +704,8 @@ user_command (t_irc_server *server, char *command)
         else
         {
             irc_display_prefix ((server) ? server->buffer : NULL, PREFIX_ERROR);
-            gui_printf ((server) ? server->buffer : NULL,
-                        _("This window is not a channel!\n"));
+            gui_printf_nolog ((server) ? server->buffer : NULL,
+                              _("This window is not a channel!\n"));
         }
     }
 }

@@ -148,6 +148,7 @@ extern int cfg_history_max_commands;
 extern int cfg_log_auto_server;
 extern int cfg_log_auto_channel;
 extern int cfg_log_auto_private;
+extern int cfg_log_plugin_msg;
 extern char *cfg_log_path;
 extern char *cfg_log_timestamp;
 extern int cfg_log_hide_nickserv_pwd;

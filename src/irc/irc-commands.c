@@ -337,6 +337,8 @@ t_irc_command irc_commands[] =
     "", "", 0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_error },
   { "409", N_("no origin"),
     "", "", 0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_error },
+  { "410", N_("no services"),
+    "", "", 0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_error },
   { "411", N_("no recipient"),
     "", "", 0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_error },
   { "412", N_("no text to send"),

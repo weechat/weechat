@@ -432,6 +432,7 @@ t_config_option weechat_options_history[] =
 int cfg_log_auto_server;
 int cfg_log_auto_channel;
 int cfg_log_auto_private;
+int cfg_log_plugin_msg;
 char *cfg_log_path;
 char *cfg_log_timestamp;
 int cfg_log_hide_nickserv_pwd;
@@ -449,6 +450,10 @@ t_config_option weechat_options_log[] =
     N_("automatically log private chats"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
     NULL, NULL, &cfg_log_auto_private, NULL, NULL },
+  { "log_plugin_msg", N_("log messages from plugins (scripts)"),
+    N_("log messages from plugins (scripts)"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
+    NULL, NULL, &cfg_log_plugin_msg, NULL, NULL },
   { "log_path", N_("path for log files"),
     N_("path for WeeChat log files"),
     OPTION_TYPE_STRING, 0, 0, 0,

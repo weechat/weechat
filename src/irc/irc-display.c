@@ -43,11 +43,17 @@
 void
 irc_display_prefix (t_gui_buffer *buffer, char *prefix)
 {
+    int type;
+    
+    type = MSG_TYPE_INFO;
+    if (!cfg_log_plugin_msg && (prefix == PREFIX_PLUGIN))
+        type |= MSG_TYPE_NOLOG;
+    
     if (prefix[0] == prefix[2])
     {
-        gui_printf_color (buffer, COLOR_WIN_CHAT_PREFIX1, "%c", prefix[0]);
-        gui_printf_color (buffer, COLOR_WIN_CHAT_PREFIX2, "%c", prefix[1]);
-        gui_printf_color (buffer, COLOR_WIN_CHAT_PREFIX1, "%c ", prefix[2]);
+        gui_printf_color_type (buffer, type, COLOR_WIN_CHAT_PREFIX1, "%c", prefix[0]);
+        gui_printf_color_type (buffer, type, COLOR_WIN_CHAT_PREFIX2, "%c", prefix[1]);
+        gui_printf_color_type (buffer, type, COLOR_WIN_CHAT_PREFIX1, "%c ", prefix[2]);
     }
     else
         gui_printf_color (buffer, COLOR_WIN_CHAT_PREFIX1, "%s ", prefix);

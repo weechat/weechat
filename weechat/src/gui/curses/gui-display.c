@@ -2222,6 +2222,8 @@ gui_add_message (t_gui_buffer *buffer, int type, int color, char *message)
         buffer->last_line->line_with_highlight = 1;
     if ((type & MSG_TYPE_TIME) || (type & MSG_TYPE_NICK))
         buffer->last_line->length_align += length;
+    if (type & MSG_TYPE_NOLOG)
+        buffer->last_line->log_write = 0;
     if (pos)
     {
         pos[0] = '\n';
@@ -2247,6 +2249,8 @@ gui_add_message (t_gui_buffer *buffer, int type, int color, char *message)
             }
         }
     }
+    if (buffer->line_complete && buffer->log_file && buffer->last_line->log_write)
+        log_write_line (buffer, buffer->last_line);
 }
 
 /*
@@ -2271,6 +2275,7 @@ gui_printf_color_type (t_gui_buffer *buffer, int type, int color, char *message,
     
         if (buffer == NULL)
         {
+            type |= MSG_TYPE_NOLOG;
             if (SERVER(gui_current_window->buffer))
                 buffer = SERVER(gui_current_window->buffer)->buffer;
             else
@@ -2342,12 +2347,8 @@ gui_printf_color_type (t_gui_buffer *buffer, int type, int color, char *message,
                 snprintf (timestamp, 16, "%02d", date_tmp->tm_sec);
                 gui_add_message (buffer, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME, timestamp);
                 gui_add_message (buffer, MSG_TYPE_TIME, COLOR_WIN_CHAT_DARK, "] ");
-                if (buffer->log_file)
-                    log_write_date (buffer);
             }
             gui_add_message (buffer, type, color, pos + 1);
-            if (buffer->log_file)
-                log_write (buffer, pos +  1);
             pos = strchr (pos + 1, '\n');
             if (pos && !pos[1])
                 pos = NULL;

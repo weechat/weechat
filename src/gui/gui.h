@@ -80,12 +80,16 @@
 #define MSG_TYPE_INFO      4
 #define MSG_TYPE_MSG       8
 #define MSG_TYPE_HIGHLIGHT 16
+#define MSG_TYPE_NOLOG     32
 
 #define gui_printf_color(buffer, color, fmt, argz...) \
     gui_printf_color_type(buffer, MSG_TYPE_INFO, color, fmt, ##argz)
 
 #define gui_printf(buffer, fmt, argz...) \
     gui_printf_color_type(buffer, MSG_TYPE_INFO, -1, fmt, ##argz)
+
+#define gui_printf_nolog(buffer, fmt, argz...) \
+    gui_printf_color_type(buffer, MSG_TYPE_INFO | MSG_TYPE_NOLOG, -1, fmt, ##argz)
 
 typedef struct t_gui_message t_gui_message;
 
@@ -104,6 +108,7 @@ struct t_gui_line
 {
     int length;                     /* length of the line (in char)         */
     int length_align;               /* alignment length (time or time/nick) */
+    int log_write;                  /* = 1 if line will be written to log   */
     int line_with_message;          /* line contains a message from a user? */
     int line_with_highlight;        /* line contains highlight              */
     t_gui_message *messages;        /* messages for the line                */
