@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-01-26
+ChangeLog - 2005-01-27
 
 
 Version 0.1.0 (under dev!):
@@ -13,6 +13,7 @@ Version 0.1.0 (under dev!):
      complete command arg for example)
    * fixed colors bug: removed "gray" color (replaced by "default"), colors are
      ok when terminal has white (or light) background
+   * fixed crash when multiple servers and big messages received from server
    * fixed crash when closing some private buffers
    * fixed crash when unknown section with option(s) in config file
    * improved /set command: empty strings are allowed, new colors, server

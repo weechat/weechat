@@ -832,12 +832,14 @@ server_disconnect (t_irc_server *server, int reconnect)
         close (server->server_write);
     server->server_write = -1;
     
-    
     if (server->sock4 >= 0)
         close (server->sock4);
     server->sock4 = -1;
     
+    if (server->unterminated_message)
+        free (server->unterminated_message);
     server->unterminated_message = NULL;
+    
     server->is_connected = 0;
     server->is_away = 0;
     server->away_time = 0;
