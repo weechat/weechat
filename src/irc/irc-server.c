@@ -975,8 +975,11 @@ server_disconnect (t_irc_server *server, int reconnect)
     
     server_close_connection (server);
     
-    irc_display_prefix (server->buffer, PREFIX_INFO);
-    gui_printf (server->buffer, _("Disconnected from server!\n"));
+    if (server->buffer)
+    {
+        irc_display_prefix (server->buffer, PREFIX_INFO);
+        gui_printf (server->buffer, _("Disconnected from server!\n"));
+    }
     
     server->is_away = 0;
     server->away_time = 0;
