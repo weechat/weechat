@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.1-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-03-12 04:08+0100\n"
-"PO-Revision-Date: 2005-03-12 04:09+0100\n"
+"POT-Creation-Date: 2005-03-12 14:40+0100\n"
+"PO-Revision-Date: 2005-03-12 14:41+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2535,27 +2535,32 @@ msgstr "%s impossible d'ouvrir le tube FIFO (%s) en lecture\n"
 msgid "FIFO pipe is open\n"
 msgstr "le tube FIFO est ouvert\n"
 
-#: src/common/fifo.c:124 src/common/fifo.c:170
+#: src/common/fifo.c:121
+#, c-format
+msgid "%s invalid buffer for displaying text via FIFO pipe\n"
+msgstr "%s tampon invalide pour afficher le texte via le tube FIFO\n"
+
+#: src/common/fifo.c:132 src/common/fifo.c:178
 #, c-format
 msgid "%s invalid text received on FIFO pipe\n"
 msgstr "%s texte invalide reçu sur le tube FIFO\n"
 
-#: src/common/fifo.c:146
+#: src/common/fifo.c:154
 #, c-format
 msgid "%s server \"%s\" not found (FIFO pipe data)\n"
 msgstr "%s serveur \"%s\" non trouvé (données du tube FIFO)\n"
 
-#: src/common/fifo.c:158
+#: src/common/fifo.c:166
 #, c-format
 msgid "%s channel \"%s\" not found (FIFO pipe data)\n"
 msgstr "%s canal \"%s\" non trouvé (données du tube FIFO)\n"
 
-#: src/common/fifo.c:257 src/common/fifo.c:259
+#: src/common/fifo.c:265 src/common/fifo.c:267
 #, c-format
 msgid "%s error reading FIFO pipe, closing it\n"
 msgstr "%s erreur en lecture du tube FIFO, fermeture\n"
 
-#: src/common/fifo.c:301
+#: src/common/fifo.c:309
 msgid "FIFO pipe is closed\n"
 msgstr "le tube FIFO est fermé\n"
 

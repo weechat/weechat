@@ -114,6 +114,14 @@ fifo_exec (char *text)
         pos_msg = text + 1;
         ptr_server = SERVER(gui_current_window->buffer);
         ptr_buffer = gui_current_window->buffer;
+        
+        if (!ptr_server)
+        {
+            irc_display_prefix (NULL, PREFIX_ERROR);
+            gui_printf (NULL, _("%s invalid buffer for displaying text via FIFO pipe\n"),
+                        WEECHAT_WARNING);
+            return;
+        }
     }
     else
     {

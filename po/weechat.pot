@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-03-12 04:08+0100\n"
+"POT-Creation-Date: 2005-03-12 14:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2366,27 +2366,32 @@ msgstr ""
 msgid "FIFO pipe is open\n"
 msgstr ""
 
-#: src/common/fifo.c:124 src/common/fifo.c:170
+#: src/common/fifo.c:121
+#, c-format
+msgid "%s invalid buffer for displaying text via FIFO pipe\n"
+msgstr ""
+
+#: src/common/fifo.c:132 src/common/fifo.c:178
 #, c-format
 msgid "%s invalid text received on FIFO pipe\n"
 msgstr ""
 
-#: src/common/fifo.c:146
+#: src/common/fifo.c:154
 #, c-format
 msgid "%s server \"%s\" not found (FIFO pipe data)\n"
 msgstr ""
 
-#: src/common/fifo.c:158
+#: src/common/fifo.c:166
 #, c-format
 msgid "%s channel \"%s\" not found (FIFO pipe data)\n"
 msgstr ""
 
-#: src/common/fifo.c:257 src/common/fifo.c:259
+#: src/common/fifo.c:265 src/common/fifo.c:267
 #, c-format
 msgid "%s error reading FIFO pipe, closing it\n"
 msgstr ""
 
-#: src/common/fifo.c:301
+#: src/common/fifo.c:309
 msgid "FIFO pipe is closed\n"
 msgstr ""
 
