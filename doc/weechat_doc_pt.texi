@@ -1,0 +1,364 @@
+\input texinfo  @c -*-texinfo-*-
+@c %**start of header
+@setfilename weechat_doc_pt.info
+@settitle WeeChat - Um cliente de IRC r@'apido, leve e extenc@'ivel
+@c %**end of header
+
+@c WeeChat documentation (vers@~ao partuguesa)
+@c
+@c Copyright (c) 2003 by FlashCode <flashcode@flashtux.org>
+@c
+@c Permission is granted to copy, distribute and/or modify this document
+@c under the terms of the GNU Free Documentation License, Version 1.2
+@c or any later version published by the Free Software Foundation;
+@c with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+@c A copy of the license is included in the section entitled "GNU
+@c Free Documentation License".
+
+@c pdf : texi2pdf weechat_doc_pt.texi
+@c html: makeinfo --html --no-split --number-sections weechat_doc_pt.texi
+
+@c tex
+@c \overfullrule=0pt
+@c end tex
+
+@documentlanguage pt
+
+@titlepage
+
+@title WeeChat - Guia do Utilizador
+@subtitle Cliente de IRC rapido, leve e extenc@'ivel
+@subtitle Documenta@,{c}@~ao do WeeChat v0.0.3 - 26 de Outubro de 2003
+
+@image{weechat_image}
+
+@author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
+
+@page
+
+Este manual documenta o cliente de IRC WeeChat, ele faz parte do WeeChat.@*
+@*
+A ultima versão deste documento pode ser descarregada de :@*
+@uref{http://weechat.flashtux.org/doc.php}@*
+@*
+Copyright @copyright{} 2003 FlashCode
+<@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>@*
+@*
+Este documento pode ser utilizado sobre os termos da Licença P@'ublica geral GNU (GNU General Public
+License) vers@~ao 2 ou superior.
+
+@end titlepage
+
+@everyheading @thischapter @| @|
+@everyfooting @thistitle @| @| Pagina @thispage
+
+@contents
+
+@node Top, Introduç@~ao, (dir), (dir)
+@menu
+* Introduç@~ao:: Descriç@~ao do WeeChat
+* Instalaç@~ao:: Instalaç@~ao do WeeChat
+* Utilizaç@~ao:: Utilizaç@~ao do WeeChat
+* Autores / Suporte:: Contactar os autores e obter suporte
+@end menu
+
+
+@c ******************************* Introduç@~ao *******************************
+
+@node Introduç@~ao, Instalaç@~ao, Top, Top
+@chapter Introduç@~ao
+@menu
+* Descriç@~ao::
+* Pre-requisitos::
+@end menu
+
+@node Descriç@~ao, Pre-requisitos, Introduç@~ao, Introduç@~ao
+@section Descriç@~ao
+
+O WeeChat (Wee Enhanced Environment for Chat) @'e um cliente de IRC livre, r@'apido e leve,
+concebido para funcionar em diversos sistemas operativos.@*
+@*
+As suas caracter@'isticas prinicpais s@~ao as seguintes :
+@itemize @minus
+@item
+liga@,{c}@~ao a m@'ultiplos servidores
+@item
+v@'arias interfaces : Curses, Gtk e Qt
+@item
+pequeno r@'apido e leve
+@item
+configuravel e extenc@'ivel com scripts
+@item
+compat@'ivel com RFCs 1459, 2810, 2811, 2812, e 2813
+@item
+multiplataforma (Gnu/Linux, *BSD, Windows e outros)
+@item
+100% GPL, Software Livre
+@end itemize
+
+@*
+A p@'agina Web do Weechat @'e aqui :@*
+@uref{http://weechat.flashtux.org}@*
+
+@node Pre-requisitos, ,Descriç@~ao, Introduç@~ao
+@section Pr@'e-requisitos
+
+Para instalar o Weechat, vais @b{precisar} de ter :@*
+
+@itemize @bullet
+@item
+Um sistema Gnu/Linux (com um compilador e outros utilit@'arios associados aos pacotes de c@'odigo fonte)
+@item
+Direitos de "root" (para instalar)
+@item
+Consoante a interface escolhida, uma das seguintes bibliotecas :
+@itemize @minus
+@item
+Curses: a biblioteca ncurses,
+@item
+Gtk: *** interface n@~ao desenvolvida ***,
+@item
+Qt: *** interface n@~ao desenvolvida ***,
+@end itemize
+@end itemize
+
+
+@c ******************************* Instalaç@~ao *******************************
+
+@node Instalaç@~ao, Utilizaç@~ao, Introduç@~ao, Top
+@chapter Instalaç@~ao
+@menu
+* Binarios::
+* Codigo Fonte::
+* Codigo Fonte via CVS::
+@end menu
+
+@node Binarios, Codigo Fonte, Instalaç@~ao, Instalaç@~ao
+@section Bin@'arios
+
+Os pacotes bin@'arios est@'ao dispon@'iveis para as seguintes distribui@,{c}@~oes :
+@itemize @bullet
+@item
+Debian (ou compat@'ivel)@*
+Instala@,{c}@~ao : @kbd{dpkg -i /chemin/weechat_x.y.z-1_i386.deb}
+@item
+Mandrake/Redhat (ou outra distro compat@'ivel com RPMs)@*
+Instala@,{c}@~ao : @kbd{rpm -i /chemin/weechat-x.y.z-1.i386.rpm}
+@item
+Gentoo@*
+Instala@,{c}@~ao : ver a documenta@,{c}@~ao da Gentoo
+@item
+*BSD (non disponible !)
+@item
+Slackware (n@~ao dispon@'ivel !)
+@item
+Windows (n@~ao dispon@'ivel !)
+@end itemize
+
+Onde x.y.z @'e a vers@~ao (por exemplo 0.0.1)
+@*
+
+@node Codigo Fonte, Codigo Fonte via CVS, Binarios, Instalaç@~ao
+@section C@'odigo Fonte
+
+Escreve simplesmente numa consola ou num terminal :@*
+@kbd{./configure}@*
+@kbd{make}@*
+Nota: Para compilar certas interfaces, podes passar par@^ametros
+ao ./configure, escreve @kbd{./configure --help} para veres as op@,{c}@~oes.@*
+
+Obter os direitos do root e instalar o Weechat :@*
+@kbd{su -}@*
+(escreve aqui a palavra-passe do superutilizador)@*
+@kbd{make install}@*
+
+@node Codigo Fonte via CVS, , Codigo Fonte, Instalaç@~ao
+@section C@'odigo Fonte via CVS
+
+Aten@,{c}@~ao: o c@'odigo fonte CVS est@'a reservado aos utilizadores avan@,{c}ados : o WeeChat pode n@~ao compilar ou ficar inst@'avel.@*
+Considera-te avisado !@*
+
+Para sacares o c@'odigo fonte via CVS, escreve estes comandos :@*
+@kbd{cvs -d:pserver:anoncvs@@subversions.gnu.org:/cvsroot/weechat login}@*
+@kbd{cvs -z3 -d:pserver:anoncvs@@subversions.gnu.org:/cvsroot/weechat co weechat}@*
+(quando te pedirem a palavra-passe, primen simplesmente Enter)@*
+
+Executa o script :@*
+@kbd{./autogen.sh}@*
+
+Segue agora as instru@,{c}@~oes para compilar o c@'odigo fonte - @xref{Codigo Fonte}.
+
+
+@c ******************************* Utilizaç@~ao ********************************
+
+@node Utilizaç@~ao, Autores / Suporte, Instalaç@~ao, Top
+@chapter Utilizaç@~ao
+
+@menu
+* Invocar o WeeChat::
+* Recursos de teclado::
+* Comandos do WeeChat::
+@end menu
+
+@node Invocar o WeeChat, Recursos de teclado, Utilizaç@~ao, Utilizaç@~ao
+@section Invocar o WeeChat
+
+@subsection Par@^ametros de linha de comandos
+
+@table @code
+@item -h, --help
+Mostrar a ajuda@*
+@item -l, --license
+Mostrar a licen@,{c}a do WeeChat@*
+@item -v, --version
+Mostrar a vers@~ao do WeeChat@*
+@end table
+
+@subsection Invocar o WeeChat
+
+Escreve simplesmente este comando para invoceres o WeeChat :@*
+@kbd{weechat-curses}@*
+ou @kbd{weechat-gtk} (para a interface em Gtk)@*
+ou @kbd{weechat-qt} (para a interface em Qt)@*
+
+Logo que lan@,{c}ares o WeeChat pela primeira vez, um ficheiro de configura@,{c}@~ao
+por defeito @'e criado, com as configura@,{c}@~oes por defeito.@*
+O ficheiro de configura@,{c}@~ao por defeito @'e : ~/.weechat/weechat.rc@*
+
+Podes editar esse ficheiro para configurar o WeeChat @`a tua maneira, man tamb@'em podes modificar os par@^ametros dentro do WeeChat utilizando o comando @kbd{/set} - @xref{Comandos do WeeChat}.
+
+@node Recursos de teclado, Comandos do WeeChat, Invocar o WeeChat, Utilizaç@~ao
+@section Recursos de teclado
+
+@table @kbd
+@item Seta esquerda / Seta direita
+Ir um caractere para traz / para a frente na linha de comando@*
+@*
+@item Ctrl + Seta esquerda / Ctrl + Seta Direita
+Ir uma palavra para traz / para a frente na linha de comando@*
+@*
+@item Home / End
+Ir para o in@'icio / para o fim da linha de comando@*
+@*
+@item Backspace / Delete
+Apagar o caractere anterior / seguinte na linha de comando@*
+@*
+@item Ctrl + Backspace
+Apagar a palavra anterior na linha de comando
+@*
+@item Tab
+Completar o comando ou o nick (@kbd{Tab} novamente : encontrar a pr@'oxima sugest@~ao)@*
+@*
+@item Qualquer caractere
+Inserir o caractere na linha de comando, no s@'itio do cursor@*
+@*
+@item Enter
+Executa o comando ou envia a mensagem@*
+@*
+@item Seta para cima / Seta para baixo
+Repetir os ultimos comandos/mensagens@*
+@*
+@item PageUp / PageDown
+Navegar no hist@'orico da janela@*
+@*
+@item F6 / F7
+Ir para a janela anterior/seguinte@*
+@*
+@item Alt + Seta da esquerda / Alt + Seta da direita
+Identico a F6 / F7@*
+@*
+@end table
+
+@node Comandos do WeeChat, , Recursos de teclado, Utilizaç@~ao
+@section Comandos do WeeChat
+
+N@~AO ESCRITO !
+
+
+@c **************************** Autores / Suporte *****************************
+
+@node Autores / Suporte, , Utilizaç@~ao, Top
+@chapter Autores / Suporte
+
+@ifhtml
+@menu
+* Autores::
+* Obter Suporte::
+* Copyright::
+@end menu
+@end ifhtml
+@ifnothtml
+@menu
+* Autores::
+* Obter Suporte::
+@end menu
+@end ifnothtml
+
+@node Autores, Obter Suporte, Autores / Suporte, Autores / Suporte
+@section Autores
+
+O WeeChat @'e desenvolvido por :@*
+
+@itemize @bullet
+@item 
+FlashCode
+<@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
+@item
+Bounga
+<@email{bounga@@altern.org, bounga AT altern.org}>
+@item
+Xahlexx
+<@email{xahlexx@@tuxfamily.org, xahlexx AT tuxfamily.org}>
+@item
+Crevetor
+<@email{crevetor@@caramail.com, crevetor AT caramail.com}>
+
+@end itemize
+
+@ifhtml
+@node Obter Suporte, Copyright, Autores, Autores / Suporte
+@end ifhtml
+@ifnothtml
+@node Obter Suporte, , Autores, Autores / Suporte
+@end ifnothtml
+@section Obter Suporte
+
+Antes de pedires suporte, agradecemos se leres toda a documenta@,{c}@~ao e a FAQ.@*
+(a documenta@,{c}@~ao @'e este documento que est@'as a ler, se n@~ao leste tudo at@'e aqui, est@'a na hora de come@,{c}ares do in@'icio !)@*
+
+@itemize @bullet
+@item
+Suporte por IRC:@*
+- servidor : @b{irc.freenode.net}@*
+- canal : @b{#weechat}@*@*
+@item
+Forum do WeeChat : mais tarde !@*@*
+@item
+Suporte por lista de correio-e :@*
+- para te inscreveres/desinscreveres :@*@uref{http://mail.nongnu.org/mailman/listinfo/weechat-support}.@*
+- para enviares uma mensagem para a lista :@*@email{weechat-support@@nongnu.org}.@*
+
+Os arquivos da lista est@~ao aqui :@*
+@uref{http://mail.nongnu.org/archive/html/weechat-support}@*@*
+@item
+Para mais detalhes, v@^e tamb@'em a p@'agina de suporte do WeeChat :@*
+@uref{http://weechat.flashtux.org/support.php}
+
+@end itemize
+
+@ifhtml
+@node Copyright, , Obter Suporte, Autores / Suporte
+@section Copyright
+
+Este manual documenta o cliente de IRC WeeChat, Ele faz parte do WeeChat.@*
+
+Copyright @copyright{} 2003 FlashCode
+<@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>@*
+Tradu@,{c}@~ao portuguesa de Jo@~ao Jer@'onimo <@email{j_j_b_o@@sapo.pt, j_j_b_o AT sapo.pt}>@*
+@*
+A utiliza@,{c}@~ao deste documento @'e regida pela GNU General Public
+License vers@~ao 2 ou posterior.@*
+
+@end ifhtml
+
+@bye

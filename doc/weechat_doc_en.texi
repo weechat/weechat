@@ -1,0 +1,495 @@
+\input texinfo  @c -*-texinfo-*-
+@c %**start of header
+@setfilename weechat_doc_en.info
+@settitle WeeChat - fast, light and extensible IRC client
+@c %**end of header
+
+@c WeeChat documentation (english version)
+@c
+@c Copyright (c) 2003 by FlashCode <flashcode@flashtux.org>
+@c
+@c Permission is granted to copy, distribute and/or modify this document
+@c under the terms of the GNU Free Documentation License, Version 1.2
+@c or any later version published by the Free Software Foundation;
+@c with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+@c A copy of the license is included in the section entitled "GNU
+@c Free Documentation License".
+
+@c pdf : texi2pdf weechat_doc_en.texi
+@c html: makeinfo --html --no-split --number-sections weechat_doc_en.texi
+
+@c tex
+@c \overfullrule=0pt
+@c end tex
+
+@documentlanguage en
+
+@titlepage
+
+@title WeeChat - User guide
+@subtitle Fast, light and extensible IRC client
+@subtitle Documentation for WeeChat v0.0.4 - November, 23 2003
+
+@image{weechat_image}
+
+@author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
+
+@page
+
+This manual documents WeeChat IRC client, it is part of WeeChat.@*
+@*
+Latest version of this document can be found on this page:@*
+@uref{http://weechat.flashtux.org/doc.php?lang=en}@*
+@*
+Copyright @copyright{} 2003 FlashCode
+<@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>@*
+@*
+This document may be used under the terms the GNU General Public License
+version 2 or higher.
+
+@end titlepage
+
+@everyheading @thischapter @| @|
+@everyfooting @thistitle @| @| Page @thispage
+
+@contents
+
+@node Top, Introduction, (dir), (dir)
+@menu
+* Introduction:: What is WeeChat ?
+* Installation:: WeeChat installation
+* Usage:: WeeChat usage
+* Extensions:: WeeChat extensions
+* Authors / Support:: Contact authors and get support
+@end menu
+
+
+@c ******************************* Introduction *******************************
+
+@node Introduction, Installation, Top, Top
+@chapter Introduction
+
+@menu
+* Description::
+* Pre-requisites::
+@end menu
+
+@node Description, Pre-requisites, Introduction, Introduction
+@section Description
+
+WeeChat (Wee Enhanced Environment for Chat) is a free IRC client, fast and light,
+designed for many operating systems.@*
+@*
+Main features are:
+@itemize @minus
+@item
+multi-servers connection
+@item
+many GUI (Graphical User Interface): Curses, Gtk and Qt
+@item
+small, fast and light
+@item
+customizable and extensible with scripts
+@item
+compliant with RFCs 1459, 2810, 2811, 2812, and 2813
+@item
+multi-platform (Gnu/Linux, *BSD, Windows and other)
+@item
+100% GPL, free software
+@end itemize
+
+@*
+WeeChat homepage is here:@*
+@uref{http://weechat.flashtux.org}@*
+
+@node Pre-requisites, , Description, Introduction
+@section Pre-requisites
+
+In order to install WeeChat, you @b{need}:@*
+
+@itemize @bullet
+@item
+A running Gnu/Linux system (with compiler tools for source package)
+@item
+"root" privileges (to install WeeChat)
+@item
+According to GUI, one of the following libraries:
+@itemize @minus
+@item
+Curses: ncurses library,
+@item
+Gtk: *** GUI not developed ***,
+@item
+Qt: *** GUI not developed ***,
+@end itemize
+@end itemize
+
+
+@c ******************************* Installation *******************************
+
+@node Installation, Usage, Introduction, Top
+@chapter Installation
+
+@menu
+* Binary package::
+* Source package::
+* CVS sources::
+@end menu
+
+@node Binary package, Source package, Installation, Installation
+@section Binary package
+
+Binary packages are available for these distributions:
+@itemize @bullet
+@item
+Debian (or any Debian compatible distribution)@*
+To install: @kbd{dpkg -i /path/weechat_x.y.z-1_i386.deb}
+@item
+Mandrake/Redhat (or any RPM compatible distribution)@*
+To install: @kbd{rpm -i /path/weechat-x.y.z-1.i386.rpm}
+@item
+Gentoo@*
+To install: see Gentoo documentation
+@item
+*BSD (not available!)
+@item
+Slackware (not available!)
+@item
+Windows (not available!)
+@end itemize
+
+where x.y.z is the version (for example 0.0.1)
+@*
+
+@node Source package, CVS sources, Binary package, Installation
+@section Source package
+
+All you have to do is to run in a console or a terminal:@*
+@kbd{./configure}@*
+@kbd{make}@*
+Nota: to build only some interfaces, you can give parameters
+to ./configure, type @kbd{./configure --help} for help about options.@*
+
+Then get root privileges and install WeeChat:@*
+@kbd{su -}@*
+(enter root password)@*
+@kbd{make install}@*
+
+@node CVS sources, , Source package, Installation
+@section CVS sources
+
+Warning: CVS sources are for advanced users: it may not compile or not be stable.
+You're warned!@*
+
+To get CVS sources, issue these commands:@*
+@kbd{cvs -d:pserver:anoncvs@@subversions.gnu.org:/cvsroot/weechat login}@*
+@kbd{cvs -z3 -d:pserver:anoncvs@@subversions.gnu.org:/cvsroot/weechat co weechat}@*
+(when prompted for a password, just press Enter key)@*
+
+Execute this script:@*
+@kbd{./autogen.sh}@*
+
+Then follow instructions for source package - @xref{Source package}.
+
+
+@c ********************************** Usage ***********************************
+
+@node Usage, Extensions, Installation, Top
+@chapter Usage
+
+@menu
+* Run WeeChat::
+* Key bindings::
+* WeeChat commands::
+@end menu
+
+@node Run WeeChat, Key bindings, Usage, Usage
+@section Run WeeChat
+
+@subsection Command line parameters
+
+@table @code
+@item -h, --help
+Display help screen@*
+@item -l, --license
+Display WeeChat license@*
+@item -v, --version
+Display WeeChat version@*
+@end table
+
+@subsection Run WeeChat
+
+Just issue this command to run WeeChat:@*
+@kbd{weechat}@*
+or @kbd{weechat-gtk} (for Gtk front-end)@*
+or @kbd{weechat-qt} (for Qt front-end)@*
+
+When you run WeeChat for the first time, a default configuration file is
+created, with default options.@*
+The default configuration file is: ~/.weechat/weechat.rc@*
+
+You can edit this file at your convenience to configure WeeChat, or you can
+set parameters with @kbd{/set} command in WeeChat - @xref{WeeChat commands}.
+
+@node Key bindings, WeeChat commands, Run WeeChat, Usage
+@section Key bindings
+
+@table @kbd
+@item Left arrow / Right arrow
+Go to previous / next char in command line@*
+@*
+@item Ctrl + left arrow / Ctrl + right arrow
+Go to previous / next word in command line@*
+@*
+@item Home / End
+Go to the beginning / end of command line@*
+@*
+@item Backspace / Delete
+Erase previous / next char of command line@*
+@*
+@item Ctrl + Backspace
+Erase previous word of command line@*
+@*
+@item Tab
+Complete command or nick (@kbd{Tab} again: find next completion)@*
+@*
+@item Any char
+Insert char to cursor position in the command line@*
+@*
+@item Enter
+Execute command or send message@*
+@*
+@item Up arrow / Down arrow
+Call again last commands/messages@*
+@*
+@item PageUp / PageDown
+Show window history@*
+@*
+@item F6 / F7
+Switch to previous / next window@*
+@*
+@item Alt + left arrow / Alt + right arrow
+Same as F6 / F7@*
+@*
+@end table
+
+@node WeeChat commands, , Key bindings, Usage
+@section WeeChat commands
+
+NOT WRITTEN!
+
+
+@c ******************************* Extensions *********************************
+
+@node Extensions, Authors / Support, Usage, Top
+@chapter Extensions
+
+@menu
+* Perl scripts::
+* Python scripts::
+* Ruby scripts::
+@end menu
+
+@node Perl scripts, Python scripts, Extensions, Extensions
+@section Perl scripts
+
+@subsection Load/unload Perl scripts
+
+Perl scripts are loaded and unloaded with @command{/perl} command.
+(type @kbd{/help perl} within WeeChat to get help about command).@*
+
+@itemize @bullet
+@item
+Perl script loading example:@*
+@kbd{/perl load /tmp/sample.pl}@*
+@item
+Perl script unloading example:@*
+@kbd{/perl unload sample}@*
+Notice: "sample" is the first parameter of @command{IRC::register} function.@*
+@item
+List all Perl script loaded:@*
+@kbd{/perl}@*
+@end itemize
+
+@subsection WeeChat / Perl API
+
+@itemize @bullet
+@item
+@command{IRC::register ( name, version, shutdown_function, description );}@*
+@*
+This is first function to call in Perl script.@*
+All Perl scripts for WeeChat should call this function.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{name}: unique name to identify script (each script must have
+unique name)
+@item @option{version}: script's version
+@item @option{shutdown_function}: Perl function called when script is
+unloaded (optional parameter, empty string means nothing is called at the end)
+@item @option{description}: short description of script.
+@end itemize
+@*
+@emph{Example:}@*
+@code{IRC::register ("sample", "1.0", "sample_end", "Sample script!");}@*
+
+@item
+@command{IRC::print ( message );}@*
+@*
+Print message in current window (channel or server).@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{message}: message to display
+@end itemize
+@*
+@emph{Example:}@*
+@code{IRC::print ("message");}@*
+
+@item
+@command{IRC::add_message_handler ( name, function );}@*
+@*
+Attach a Perl function to an IRC message.@*
+Function will be called each time IRC message will be received.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{name}: name of IRC message@*
+To know list of IRC messages, please refer to RFC 1459 and/or 2812:@*
+RFC 1459: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc1459.txt}@*
+RFC 2812: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
+@item @option{function}: Perl function called when message is received
+@end itemize
+@*
+@emph{Example:}@*
+@code{IRC::add_message_handler ("privmsg", my_function);}@*
+@code{sub my_function}@*
+@code{@{ }@*
+@code{@ @ @ @ ($null, $channel, $message) = split ":",@@_[0],3;}@*
+@code{@ @ @ @ ($hostmask, $null, $channel) = split " ", $channel;}@*
+@code{@ @ @ @ IRC::print ("host=$hostmask, chan=$channel, msg=$message\n");}@*
+@code{@} }@*
+
+@item
+@command{IRC::add_command_handler ( name, function );}@*
+@*
+Create new WeeChat command, linked with Perl function.@*
+Function will be called when user will launch command with @kbd{/name}.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{name}: name of new command@*
+This name may be existing command, so that the command is overrided by
+Perl function. Be careful when overriding WeeChat commands, they'll not be
+available until your Perl script will be unloaded.
+@item @option{function}: Perl function linked with command
+@end itemize
+@*
+@emph{Example:}@*
+@code{IRC::add_command_handler ("command", my_command);}@*
+@code{sub my_command}@*
+@code{@{ }@*
+@code{@ @ @ @ IRC::print("Arguments: ".@@_[0]);}@*
+@code{@ @ @ @ return 0;}@*
+@code{@} }@*
+
+@end itemize
+
+@node Python scripts, Ruby scripts, Perl scripts, Extensions
+@section Python scripts
+
+Not developed!
+
+@node Ruby scripts, , Python scripts, Extensions
+@section Ruby scripts
+
+Not developed!
+
+
+@c **************************** Authors / Support *****************************
+
+@node Authors / Support, , Extensions, Top
+@chapter Authors / Support
+
+@ifhtml
+@menu
+* Authors::
+* Get support::
+* Copyright::
+@end menu
+@end ifhtml
+@ifnothtml
+@menu
+* Authors::
+* Get support::
+@end menu
+@end ifnothtml
+
+@node Authors, Get support, Authors / Support, Authors / Support
+@section Authors
+
+WeeChat is developed by:@*
+
+@itemize @bullet
+@item 
+FlashCode
+<@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
+@item
+Bounga
+<@email{bounga@@altern.org, bounga AT altern.org}>
+@item
+Xahlexx
+<@email{xahlexx@@tuxfamily.org, xahlexx AT tuxfamily.org}>
+@item
+Crevetor
+<@email{crevetor@@caramail.com, crevetor AT caramail.com}>
+
+@end itemize
+
+@ifhtml
+@node Get support, Copyright, Authors, Authors / Support
+@end ifhtml
+@ifnothtml
+@node Get support, , Authors, Authors / Support
+@end ifnothtml
+@section Get support
+
+Before asking for support, be sure you've read documentation and FAQ provided
+with WeeChat.@*
+(documentation is this document, if you don't read all lines until this sentence,
+you can start again!)@*
+
+@itemize @bullet
+@item
+Support with IRC:@*
+- server: @b{irc.freenode.net}@*
+- channel: @b{#weechat}@*@*
+@item
+WeeChat forum: soon!@*@*
+@item
+Support with mailing list:@*
+- to subscribe/unsubscribe:@*@uref{http://mail.nongnu.org/mailman/listinfo/weechat-support}.@*
+- to send mail to all mailing list subscribers, send your mail to@*@email{weechat-support@@nongnu.org}.@*
+
+Mailing archives are available here:@*
+@uref{http://mail.nongnu.org/archive/html/weechat-support}@*@*
+@item
+Look for WeeChat support page for detail:@*
+@uref{http://weechat.flashtux.org/support.php?lang=en}
+
+@end itemize
+
+@ifhtml
+@node Copyright, , Get support, Authors / Support
+@section Copyright
+
+This manual documents WeeChat IRC client, it is part of WeeChat.@*
+
+Copyright @copyright{} 2003 FlashCode
+<@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>@*
+@*
+This document may be used under the terms the GNU General Public License
+version 2 or higher.
+@end ifhtml
+
+@bye

@@ -1,0 +1,496 @@
+\input texinfo  @c -*-texinfo-*-
+@c %**start of header
+@setfilename weechat_doc_fr.info
+@settitle WeeChat - Client IRC rapide, leger et extensible
+@c %**end of header
+
+@c WeeChat documentation (french version)
+@c
+@c Copyright (c) 2003 by FlashCode <flashcode@flashtux.org>
+@c
+@c Permission is granted to copy, distribute and/or modify this document
+@c under the terms of the GNU Free Documentation License, Version 1.2
+@c or any later version published by the Free Software Foundation;
+@c with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+@c A copy of the license is included in the section entitled "GNU
+@c Free Documentation License".
+
+@c pdf : texi2pdf weechat_doc_fr.texi
+@c html: makeinfo --html --no-split --number-sections weechat_doc_fr.texi
+
+@c tex
+@c \overfullrule=0pt
+@c end tex
+
+@documentlanguage fr
+
+@titlepage
+
+@title WeeChat - Guide utilisateur
+@subtitle Client IRC rapide, l@'eger et extensible
+@subtitle Documentation pour WeeChat v0.0.4 - 23 novembre 2003
+
+@image{weechat_image}
+
+@author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
+
+@page
+
+Ce manuel documente le client IRC WeeChat, il fait partie de WeeChat.@*
+@*
+La derni@`ere version de ce document peut @^etre t@'el@'echarg@'ee sur cette page :@*
+@uref{http://weechat.flashtux.org/doc.php}@*
+@*
+Copyright @copyright{} 2003 FlashCode
+<@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>@*
+@*
+Ce document peut @^etre utilis@'e sous les termes de la licence GNU General Public
+License version 2 ou plus.
+
+@end titlepage
+
+@everyheading @thischapter @| @|
+@everyfooting @thistitle @| @| Page @thispage
+
+@contents
+
+@node Top, Introduction, (dir), (dir)
+@menu
+* Introduction:: Description de WeeChat
+* Installation:: Installation de WeeChat
+* Utilisation:: Utilisation de WeeChat
+* Extensions:: Extensions de WeeChat
+* Auteurs / Support:: Contacter les auteurs et obtenir du support
+@end menu
+
+
+@c ******************************* Introduction *******************************
+
+@node Introduction, Installation, Top, Top
+@chapter Introduction
+@menu
+* Description::
+* Pre-requis::
+@end menu
+
+@node Description, Pre-requis, Introduction, Introduction
+@section Description
+
+WeeChat (Wee Enhanced Environment for Chat) est un client IRC libre, rapide et l@'eger,
+concu pour diff@'erents syst@`emes d'exploitation.@*
+@*
+Ses principales caract@'eristiques sont les suivantes :
+@itemize @minus
+@item
+connexion multi-serveurs
+@item
+plusieurs interfaces : Curses, Gtk et Qt
+@item
+petit, rapide et l@'eger
+@item
+param@'etrable et extensible avec des scripts
+@item
+conforme aux RFCs 1459, 2810, 2811, 2812, et 2813
+@item
+multi-plateformes (Gnu/Linux, *BSD, Windows et d'autres syst@`emes)
+@item
+100% GPL, logiciel libre
+@end itemize
+
+@*
+La page d'accueil de WeeChat est ici :@*
+@uref{http://weechat.flashtux.org}@*
+
+@node Pre-requis, , Description, Introduction
+@section Pr@'e-requis
+
+Pour installer WeeChat, vous @b{devez} avoir :@*
+
+@itemize @bullet
+@item
+Un syst@`eme Gnu/Linux (avec le compilateur et les outils associ@'es pour le paquet des sources)
+@item
+Droits "root" (pour installer WeeChat)
+@item
+Selon l'interface, une des biblioth@`eques suivantes :
+@itemize @minus
+@item
+Curses: la librairie ncurses,
+@item
+Gtk: *** interface non d@'evelopp@'ee ***,
+@item
+Qt: *** interface non d@'evelopp@'ee ***,
+@end itemize
+@end itemize
+
+
+@c ******************************* Installation *******************************
+
+@node Installation, Utilisation, Introduction, Top
+@chapter Installation
+
+@menu
+* Paquet binaire::
+* Paquet source::
+* Sources CVS::
+@end menu
+
+@node Paquet binaire, Paquet source, Installation, Installation
+@section Paquet binaire
+
+Les paquets binaires sont disponibles pour les distributions suivantes :
+@itemize @bullet
+@item
+Debian (ou toute distribution compatible Debian)@*
+Pour installer : @kbd{dpkg -i /chemin/weechat_x.y.z-1_i386.deb}
+@item
+Mandrake/Redhat (ou toute distribution compatible avec les RPM)@*
+Pour installer : @kbd{rpm -i /chemin/weechat-x.y.z-1.i386.rpm}
+@item
+Gentoo@*
+Pour installer : voir la documentation Gentoo
+@item
+*BSD (non disponible !)
+@item
+Slackware (non disponible !)
+@item
+Windows (non disponible !)
+@end itemize
+
+o@`u x.y.z est la version (par exemple 0.0.1)
+@*
+
+@node Paquet source, Sources CVS, Paquet binaire, Installation
+@section Paquet source
+
+Tapez simplement dans une console ou un terminal :@*
+@kbd{./configure}@*
+@kbd{make}@*
+Note: pour ne construire que certaines interfaces, vous pouvez passer des param@`etres
+@`a ./configure, tapez @kbd{./configure --help} pour de l'aide sur ces options.@*
+
+Obtenez les droits root et installez WeeChat :@*
+@kbd{su -}@*
+(entrez le mot de passe de root)@*
+@kbd{make install}@*
+
+@node Sources CVS, , Paquet source, Installation
+@section Sources CVS
+
+Attention: les sources CVS sont r@'eserv@'es aux utilisateurs avanc@'es : il se peut
+que WeeChat ne compile pas et qu'il soit tr@`s instable.
+Vous @^etes pr@'evenus !@*
+
+Pour r@'ecup@'erer les sources CVS, tapez ces commandes :@*
+@kbd{cvs -d:pserver:anoncvs@@subversions.gnu.org:/cvsroot/weechat login}@*
+@kbd{cvs -z3 -d:pserver:anoncvs@@subversions.gnu.org:/cvsroot/weechat co weechat}@*
+(lorsqu'un mot de passe est demand@'e, tapez simplement sur Entr@'ee)@*
+
+Ex@'ecutez ce script :@*
+@kbd{./autogen.sh}@*
+
+Suivez alors les instructions du paquet sources - @xref{Paquet source}.
+
+
+@c ******************************* Utilisation ********************************
+
+@node Utilisation, Extensions, Installation, Top
+@chapter Utilisation
+
+@menu
+* Lancer WeeChat::
+* Raccourcis clavier::
+* Commandes WeeChat::
+@end menu
+
+@node Lancer WeeChat, Raccourcis clavier, Utilisation, Utilisation
+@section Lancer WeeChat
+
+@subsection Param@`etres de ligne de commande
+
+@table @code
+@item -h, --help
+Afficher l'aide@*
+@item -l, --license
+Afficher la licence de WeeChat@*
+@item -v, --version
+Afficher la version de WeeChat@*
+@end table
+
+@subsection Lancer WeeChat
+
+Tapez simplement cette commande pour lancer WeeChat :@*
+@kbd{weechat-curses}@*
+ou @kbd{weechat-gtk} (pour l'interface Gtk)@*
+ou @kbd{weechat-qt} (pour l'interface Qt)@*
+
+Lorsque vous lancez WeeChat pour la premi@`ere fois, un fichier de configuration
+par d@'efaut est cr@'e@'e, avec les options par d@'efaut.@*
+Le fichier de configuration par d@'efaut est : ~/.weechat/weechat.rc@*
+
+Vous pouvez @'editer ce fichier pour configurer WeeChat @`a votre convenance, ou
+vous pouvez modifier les param@`etres dans WeeChat avec la commande @kbd{/set} - @xref{Commandes WeeChat}.
+
+@node Raccourcis clavier, Commandes WeeChat, Lancer WeeChat, Utilisation
+@section Raccourcis clavier
+
+@table @kbd
+@item Fl@`eche gauche / Fl@`eche droite
+Aller au caract@`ere pr@'ec@'edent / suivant sur la ligne de commande@*
+@*
+@item Ctrl + fl@`eche gauche / Ctrl + fl@`eche droite
+Aller au mot pr@'ec@'edent / suivant sur la ligne de commande@*
+@*
+@item Home / End
+Aller au d@'ebut / @`a la fin de la ligne de commande@*
+@*
+@item Backspace / Delete
+Effacer le mot pr@'ec@'edent / suivant sur la ligne de commande@*
+@*
+@item Ctrl + Backspace
+Effacer le mot pr@'ec@'edent sur la ligne de commande@*
+@*
+@item Tab
+Compl@'eter la commande ou le pseudo (@kbd{Tab} @`a nouveau : trouver la compl@'etion suivante)@*
+@*
+@item Tout caract@`ere
+Ins@'erer le caract@`ere @`a la position du curseur sur la ligne de commande@*
+@*
+@item Entr@'ee
+Ex@'ecuter la commande ou envoyer le message@*
+@*
+@item Fl@`eche haut / Fl@`eche bas
+Rappeler les derni@`eres commandes/messages@*
+@*
+@item PageUp / PageDown
+Afficher l'historique de la fen@^etre@*
+@*
+@item F6 / F7
+Aller @`a la fen@^etre pr@'ec@'edente / suivante@*
+@*
+@item Alt + fl@`eche gauche / Alt + fl@`eche droite
+Identique @`a F6 / F7@*
+@*
+@end table
+
+@node Commandes WeeChat, , Raccourcis clavier, Utilisation
+@section Commandes WeeChat
+
+NON ECRIT !
+
+
+@c ******************************* Extensions *********************************
+
+@node Extensions, Auteurs / Support, Utilisation, Top
+@chapter Extensions
+
+@menu
+* Scripts Perl::
+* Scripts Python::
+* Scripts Ruby::
+@end menu
+
+@node Scripts Perl, Scripts Python, Extensions, Extensions
+@section Scripts Perl
+
+@subsection Charger/d@'echarger des scripts Perl
+
+Les scripts Perl sont charg@'es et d@'echarg@'es avec la commande @command{/perl}
+(tapez @kbd{/help perl} dans WeeChat pour obtenir de l'aide sur la commande).@*
+
+@itemize @bullet
+@item
+Exemple de chargement d'un script Perl :@*
+@kbd{/perl load /tmp/essai.pl}@*
+@item
+Exemple de d@'echargement d'un script Perl :@*
+@kbd{/perl unload essai}@*
+A noter: le nom "essai" est le premier param@`etre de la fonction @command{IRC::register.}@*
+@item
+Liste des scripts Perl charg@'es :@*
+@kbd{/perl}@*
+@end itemize
+
+@subsection Interface WeeChat / Perl
+
+@itemize @bullet
+@item
+@command{IRC::register ( nom, version, fonction_de_fin, description );}@*
+@*
+C'est la premi@`ere fonction @`a appeler dans le script Perl.@*
+Tout script Perl pour WeeChat doit appeler cette fonction.@*
+
+@emph{Param@`etres :}
+@itemize @minus
+@item @option{nom}: nom unique pour identifier le script (chaque script doit
+avoir un nom diff@'erent)
+@item @option{version}: version du script
+@item @option{fonction_de_fin}: fonction Perl appel@'ee quand le script est
+d@'echarg@'e (param@`etre facultatif, une cha@^ine vide signifiant qu'il n'y a pas
+de fonction @`a appeler)
+@item @option{description}: description br@`eve du script.
+@end itemize
+@*
+@emph{Exemple :}@*
+@code{IRC::register ("essai", "1.0", "fin_essai", "Script d'essai !");}@*
+
+@item
+@command{IRC::print ( message );}@*
+@*
+Affiche un message dans la fen@^etre courante (canal ou serveur).@*
+
+@emph{Param@`etres :}
+@itemize @minus
+@item @option{message}: message @`a afficher
+@end itemize
+@*
+@emph{Exemple :}@*
+@code{IRC::print ("message");}@*
+
+@item
+@command{IRC::add_message_handler ( nom, fonction );}@*
+@*
+Attache une fonction Perl @`a un message IRC particulier.@*
+La fonction sera appel@'ee @`a chaque fois que le message IRC sera re@,{c}u.@*
+
+@emph{Param@`etres :}
+@itemize @minus
+@item @option{nom}: nom du message IRC pour lequel la fonction est appel@'ee@*
+Pour conna@^itre la liste des messages IRC disponibles, merci de consulter les
+RFC 1459 et/ou 2812 :@*
+RFC 1459 : @uref{ftp://ftp.rfc-editor.org/in-notes/rfc1459.txt}@*
+RFC 2812 : @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
+@item @option{fonction}: fonction Perl appel@'ee lorsque le message est re@,{c}u
+@end itemize
+@*
+@emph{Exemple :}@*
+@code{IRC::add_message_handler ("privmsg", ma_fonction);}@*
+@code{sub ma_fonction}@*
+@code{@{ }@*
+@code{@ @ @ @ ($null, $canal, $message) = split ":",@@_[0],3;}@*
+@code{@ @ @ @ ($masque, $null, $canal) = split " ", $canal;}@*
+@code{@ @ @ @ IRC::print ("masque=$masque, canal=$canal, message=$message\n");}@*
+@code{@} }@*
+
+@item
+@command{IRC::add_command_handler ( nom, fonction );}@*
+@*
+Cr@'e@'e une nouvelle commande WeeChat, associ@'ee @`a une fonction Perl.@*
+La fonction sera appel@'ee lorsque l'utilisateur lancera la commande par @kbd{/nom}.@*
+
+@emph{Param@`etres :}
+@itemize @minus
+@item @option{nom}: nom de la nouvelle commande@*
+Il peut s'agir d'une commande existante, auquel cas celle-ci est @'ecras@'ee par
+la fonction Perl. Soyez prudent en @'ecrasant les commandes WeeChat, car elles
+ne seront plus accessibles tant que le script Perl sera charg@'e.
+@item @option{fonction}: fonction Perl associ@'ee @`a la commande
+@end itemize
+@*
+@emph{Exemple :}@*
+@code{IRC::add_command_handler ("commande", ma_commande);}@*
+@code{sub ma_commande}@*
+@code{@{ }@*
+@code{@ @ @ @ IRC::print("Param@`etres : ".@@_[0]);}@*
+@code{@ @ @ @ return 0;}@*
+@code{@} }@*
+
+@end itemize
+
+@node Scripts Python, Scripts Ruby, Scripts Perl, Extensions
+@section Scripts Python
+
+Non d@'evelopp@'e !
+
+@node Scripts Ruby, , Scripts Python, Extensions
+@section Scripts Ruby
+
+Non d@'evelopp@'e !
+
+@c **************************** Auteurs / Support *****************************
+
+@node Auteurs / Support, , Extensions, Top
+@chapter Auteurs / Support
+
+@ifhtml
+@menu
+* Auteurs::
+* Obtenir du support::
+* Copyright::
+@end menu
+@end ifhtml
+@ifnothtml
+@menu
+* Auteurs::
+* Obtenir du support::
+@end menu
+@end ifnothtml
+
+@node Auteurs, Obtenir du support, Auteurs / Support, Auteurs / Support
+@section Auteurs
+
+WeeChat est d@'evelopp@'e par :@*
+
+@itemize @bullet
+@item 
+FlashCode
+<@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
+@item
+Bounga
+<@email{bounga@@altern.org, bounga AT altern.org}>
+@item
+Xahlexx
+<@email{xahlexx@@tuxfamily.org, xahlexx AT tuxfamily.org}>
+@item
+Crevetor
+<@email{crevetor@@caramail.com, crevetor AT caramail.com}>
+
+@end itemize
+
+@ifhtml
+@node Obtenir du support, Copyright, Auteurs, Auteurs / Support
+@end ifhtml
+@ifnothtml
+@node Obtenir du support, , Auteurs, Auteurs / Support
+@end ifnothtml
+@section Obtenir du support
+
+Avant de faire appel au support, merci de lire la documentation et la
+FAQ de WeeChat.@*
+(la documentation est le document que vous @^etes en train de lire, si vous
+n'avez pas tout lu jusqu'ici, il est encore temps de recommencer !)@*
+
+@itemize @bullet
+@item
+Support par IRC:@*
+- serveur : @b{irc.freenode.net}@*
+- canal : @b{#weechat}@*@*
+@item
+Forum WeeChat : bient@^ot !@*@*
+@item
+Support par la liste de diffusion :@*
+- pour souscrire/d@'esinscrire :@*@uref{http://mail.nongnu.org/mailman/listinfo/weechat-support}.@*
+- pour envoyer un mail @`a la liste de diffusion, envoyer @`a :@*@email{weechat-support@@nongnu.org}.@*
+
+Les archives de la liste de diffusion sont ici :@*
+@uref{http://mail.nongnu.org/archive/html/weechat-support}@*@*
+@item
+Voir la page support WeeChat pour plus de d@'etails :@*
+@uref{http://weechat.flashtux.org/support.php}
+
+@end itemize
+
+@ifhtml
+@node Copyright, , Obtenir du support, Auteurs / Support
+@section Copyright
+
+Ce manuel documente le client IRC WeeChat, il fait partie de WeeChat.@*
+
+Copyright @copyright{} 2003 FlashCode
+<@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>@*
+@*
+Ce document peut @^etre utilis@'e sous les termes de la licence GNU General Public
+License version 2 ou plus.
+@end ifhtml
+
+@bye
