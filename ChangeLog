@@ -1,0 +1,88 @@
+WeeChat - Wee Enhanced Environment for Chat
+===========================================
+
+ChangeLog - 2003-09-27
+
+* 2003-09-27:
+  - WeeChat 0.0.1 released!
+
+* 2003-09-26:
+  - added completor prefix (in config: look_nick_completor)
+  - fixef log_printf command (bug with year & month)
+  - added "/kill" command
+  - fixed /version and /ctcp commands (missing ":" before message)
+
+* 2003-09-25:
+  - added "/kick" command
+  - added IRC errors 402 to 407
+  - added "/invite" command
+
+* 2003-09-24:
+  - "ctcp version" received is now correctly displayed
+  - "/version" command is ok
+
+* 2003-09-23:
+  - log file (~/.weechat/weechat.log)
+  - renamed config file (~/.weechat/weechatrc to ~/.weechat/weechat.rc)
+
+* 2003-09-21:
+  - "demi-highlight": 2 types of windows highlight: lightred for windows with
+    unread messages (from other users), lightmagenta for windows with other
+    unread data (join, part, quit, away, ...)
+  - "320" IRC message management
+  - "/clear" command
+
+* 2003-09-19:
+  - préparation des sources pour l'internationalisation avec gettext
+  - "301" IRC command (away message)
+  - functions renamed in rc-commands.c, irc-server.c,
+    command.c and config.c (all functions are beginning with a prefix:
+    irc_cmd_recv_xxx, irc_cmd_send_xxx, server_xxx, weechat_cmd_xxx and
+    config_xxx). Moreover, all commands (sent and received) return a value
+    (success or not)
+  - "/quote" command
+  - "/whois" command (and colored display of /whois result in server window)
+
+* 2003-09-18:
+  - use of alternate nickname (and 2nd alternate) if nick is already used
+    on server (changed/added in config file: options "nick1", "nick2", "nick3"
+    for a server, all are mandatory)
+  - "433" IRC error management (nickname already in use)
+  - "mode" command received correctly for "channel flags" and
+    op/deop/voice/devoice actions for a nick
+  - "401" IRC error management (no such nick/channel)
+  - private windows management (when received and opened, with /privmsg),
+    "/privmsg" completed consequently
+
+* 2003-09-17:
+  - nickmode display ((half)op/voice) before nicks (as option, look at config
+    options beginning with "look_nickmode")
+  - windows history is now ok (pgup/pgdn on any window type)
+  - "/me" command (and OK when received)
+  - display nicks count when joining channel or with "/names" command
+    (total, ops, halfops, voices et normaux)
+
+* 2003-09-16:
+  - added and normalized chat window colors
+    (new colors in config file)
+  - "/topic" command
+  - nicklist can be moved on top, bottom, left or right of window
+
+* 2003-09-15:
+  - auto-resize of nicklist, according to nick max length
+  - IRC multi-servers is OK
+
+* 2003-09-14:
+  - no hangup if "/part" command is executed on server window
+  - continue if no server is declared in config file
+    (empty window will be opened for executing WeeChat commands)
+  - string array for strings in config file
+    example: cfg_look_nicklist_position can take values "left", "right",
+    "top", "bottom", which are converted to int (from 0 for "left" to 3 for
+    "bottom")
+  - messages are aligned under time (server window) or under time + nick
+    (channel window)
+
+* 2003-09-13:
+  - sources exploded in many directories: ./irc, ./gui/curses, ./gui/gtk,
+    ./gui/qt and ./gui/text

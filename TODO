@@ -1,0 +1,130 @@
+WeeChat - Wee Enhanced Environment for Chat
+===========================================
+
+TODO - 2003-09-27
+
+Legend:
+  #  done
+  +  currently in development
+  -  pending
+  ?  is this really necessary?
+
+
+v0.0.1:
+
+ * IRC protocol:
+    # "/quote" command: send a raw string to the server without parsing it
+    # "/me" command (for user actions description)
+    # "/away" command (to toggle the away status)
+    # "/op", "/deop", "/voice", "/devoice" commands
+    # "/invite" command
+    # "/kick", "/ban", "/unban" commands
+    # "/kill" command
+    # "/list" command: list of channels
+    # "/names" command: view who is on a given channel without being
+      on it (for example /names #weechat gives all the nicks present on
+      #weechat, except those who have the +i flag (server side))
+    # "/oper" command: become operator on the irc network
+    # "/topic" command: change the topic of a channel
+    # "/version" command: give the irc client version (CTCP VERSION)
+      of a given nick/channel (without parameter: gives WeeChat version)
+    # "/whois" command
+
+ * WeeChat commands:
+    # "/clear": to clear window content
+ 
+ * Interface:
+    # "demi-highlight" when joins/quits etc
+    # log messages/warning/errors to ~/.weechat/log file
+    # improve editing zone (left arrow <> backspace)
+    # sort nick list
+    # choose nick list position (top, left, right (default), bottom)
+    # auto-resize nicklist (when nick too long)
+    # do pretty cutting of long lines (align on the nick or after hour for server)
+    # keep history of commands and call them again with up/down arrow
+    # text GUI
+    # ncurses GUI:
+       # one window for each channel
+       # color display
+       # private windows
+       # redraw window when term size is modified
+       # chat history (pgup/pgdn for displaying history)
+       # switch to other channel window
+
+ * TCP/IP communication:
+    # IPv4 protocol implementation
+
+ * Configuration:
+    # write default config file
+
+
+Future versions:
+
+ * IRC protocol:
+    - implement RFC 2812
+    + "/mode" command: change the user/channels modes
+    - "/dcc" command (for chat and sending/receiving files)
+    - manage "halfop" status
+    - complete "/list" command: add regexp search, display only channels that
+      match regexp
+    - "/connect" and "/disconnect" commands (for multiservers use)
+    - "/ignore" and "/unignore" commands: hide all that is write by a given
+      nick/host
+    - when we're away, WeeChat should log all the lines begenning by our nick.
+      When we come back from our away it should print it to the current window
+    - "/rehash" command: tell the server to reload its config file
+    - "/restart" command: tell the server to restart itself
+    - "/notify" and "/unnotify" command to be warn by WeeChat when a given
+      nick/host connect to the given irc network
+    - "/wallops" command: write the same string to all the
+      persons with the flag +w enable
+
+ * WeeChat commands:
+    - "/completion" command: do shortcuts (for example when we type "u"
+      in the text bar it send it to the server as "you")
+    - "/exec" command: execute a command as if we was in shell
+      and show us the output on the current window. An option to exec
+      like -o could send the output to the server, on the current
+      channel/private
+    - "/reload" command: reload the WeeChat's config file
+    - "/set" command: allow the user to set the WeeChat variables
+      under WeeChat without editing the config file (colours, time
+      format, etc)
+    - "/highlight" command: highlight a given word when it appears on
+      channels/privates
+
+ * Interface:
+    - display current channel modes (example : #weechat(+nt))
+    - interpret ^B in messages (this means bold text)
+    - internationalization (traduce WeeChat in many languages)
+    - many channel windows in one window/term (window split)
+    - add lag indicator
+    - log chats to file
+    - forget some old lines that were displayed long time ago (now all is saved,
+      if WeeChat is running for long time, a lot of memory is used!)
+    - improve completion (for example complete command parameters when possible)
+    - understand incomplete commands if unambigous (for example: /he for /help is ok)
+    - add clock (in status bar?)
+    - Gtk GUI
+    ? Qt GUI
+
+ * TCP/IP communication:
+    - IPv6 protocol implementation
+ 
+ * Configuration:
+    - add key bindings to config file
+    - add missing options for config file
+    - write config file
+    - add an option for each server in order to run commands on join
+      (example: /msg nickserv identify password)
+    - channel list for auto-join (for each server)
+    - do not stop program if problem with options in config file
+    - load config file after GUI (so init values by default (colors, ...) before
+      loading config)
+
+ * Plugins:
+    - add Perl plugin
+    - add Python plugin
+    - add Ruby plugin
+    - "/load" and "/unload" commands to (un)load extension scripts
+      (perl, python, ruby, ...)
