@@ -1899,8 +1899,8 @@ gui_curses_resize_handler ()
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        gui_calculate_pos_size (ptr_win);
         gui_switch_to_buffer (ptr_win, ptr_win->buffer);
+        gui_redraw_buffer (ptr_win->buffer);
         gui_draw_window_separator (ptr_win);
     }
     
