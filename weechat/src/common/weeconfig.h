@@ -144,6 +144,7 @@ extern int cfg_log_auto_channel;
 extern int cfg_log_auto_private;
 extern char *cfg_log_path;
 extern char *cfg_log_timestamp;
+extern int cfg_log_hide_nickserv_pwd;
 
 extern int cfg_dcc_auto_accept_files;
 extern int cfg_dcc_auto_accept_chats;

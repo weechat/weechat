@@ -417,6 +417,7 @@ int cfg_log_auto_channel;
 int cfg_log_auto_private;
 char *cfg_log_path;
 char *cfg_log_timestamp;
+int cfg_log_hide_nickserv_pwd;
 
 t_config_option weechat_options_log[] =
 { { "log_auto_server", N_("automatically log server messages"),
@@ -439,6 +440,10 @@ t_config_option weechat_options_log[] =
     N_("timestamp for log (see man strftime for date/time specifiers)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "%Y %b %d %H:%M:%S", NULL, NULL, &cfg_log_timestamp, NULL },
+  { "log_hide_nickserv_pwd", N_("hide password displayed by nickserv"),
+    N_("hide password displayed by nickserv"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
+    NULL, NULL, &cfg_log_hide_nickserv_pwd, NULL, NULL },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 

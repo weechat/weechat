@@ -5,6 +5,7 @@ ChangeLog - 2004-10-17
 
 
 Version 0.0.8 (under dev!):
+   * nickserv passwords hidden (new config option: log_hide_nickserv_pwd on/off)
    * auto-rejoin channels when kicked (new config option: server_autorejoin on/off)
    * added IRC::command function for Perl scripts
    * fixed bug when adding alias with same name as other

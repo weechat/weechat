@@ -513,6 +513,7 @@ int
 irc_cmd_send_msg (t_irc_server *server, char *arguments)
 {
     char *pos, *pos_comma;
+    char *msg_pwd_hidden, *pos_pwd;
     t_irc_channel *ptr_channel;
     t_irc_nick *ptr_nick;
     
@@ -582,6 +583,41 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
                 }
                 else
                 {
+                    /* message to nickserv with identify ? */
+                    if (strcmp (arguments, "nickserv") == 0)
+                    {
+                        msg_pwd_hidden = strdup (pos);
+                        if (cfg_log_hide_nickserv_pwd)
+                        {
+                            pos_pwd = strstr (msg_pwd_hidden, "identify ");
+                            if (!pos_pwd)
+                                pos_pwd = strstr (msg_pwd_hidden, "register ");
+                            if (pos_pwd)
+                            {
+                                pos_pwd += 9;
+                                while (pos_pwd[0])
+                                {
+                                    pos_pwd[0] = '*';
+                                    pos_pwd++;
+                                }
+                            }
+                        }
+                        gui_printf_color_type (server->buffer,
+                                               MSG_TYPE_NICK,
+                                               COLOR_WIN_CHAT_DARK, "-");
+                        gui_printf_color_type (server->buffer,
+                                               MSG_TYPE_NICK,
+                                               COLOR_WIN_CHAT_NICK, "%s", arguments);
+                        gui_printf_color_type (server->buffer,
+                                               MSG_TYPE_NICK,
+                                               COLOR_WIN_CHAT_DARK, "-");
+                        gui_printf_color (server->buffer,
+                                          COLOR_WIN_CHAT, " %s\n", msg_pwd_hidden);
+                        server_sendf (server, "PRIVMSG %s :%s\r\n", arguments, pos);
+                        free (msg_pwd_hidden);
+                        return 0;
+                    }
+                    
                     ptr_channel = channel_search (server, arguments);
                     if (!ptr_channel)
                     {
