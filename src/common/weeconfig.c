@@ -268,11 +268,11 @@ t_config_option weechat_options_colors[] =
   { "col_infobar", N_("color for info bar text"),
     N_("color for info bar text"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "gray", NULL, &cfg_col_infobar, NULL, NULL },
+    "black", NULL, &cfg_col_infobar, NULL, NULL },
   { "col_infobar_bg", N_("background for info bar window"),
     N_("background for info bar window"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "blue", NULL, &cfg_col_infobar_bg, NULL, NULL },
+    "cyan", NULL, &cfg_col_infobar_bg, NULL, NULL },
   
   /* input window */
   { "col_input", N_("color for input text"),
