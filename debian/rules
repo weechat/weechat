@@ -14,7 +14,8 @@ endif
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
-	./configure --prefix=/usr --sysconfdir=/etc --enable-perl
+	./configure --prefix=/usr --sysconfdir=/etc --mandir=\$${prefix}/share/man \
+	--enable-perl
 	touch configure-stamp
 
 
@@ -29,7 +30,7 @@ clean:
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp configure-stamp
-	-$(MAKE) clean
+	-$(MAKE) distclean
 	dh_clean
 
 install: build
@@ -40,32 +41,33 @@ install: build
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/weechat
 	dh_install --sourcedir=debian/weechat
 	install -o root -g root -m 755 src/gui/curses/weechat-curses $(CURDIR)/debian/weechat-curses/usr/bin
-	#install -o root -g root -m 755 src/gui/gtk/weechat-gtk $(CURDIR)/debian/weechat-gtk/usr/bin
+	# install -o root -g root -m 755 src/gui/gtk/weechat-gtk $(CURDIR)/debian/weechat-gtk/usr/bin
 
 
 # Build architecture-independent files here.
 binary-indep: build install
-	dh_testdir -pweechat-common
-	dh_testroot -pweechat-common
+	dh_testdir -pweechat-common -pweechat
+	dh_testroot -pweechat-common -pweechat
 	dh_installchangelogs ChangeLog -pweechat-common
 	dh_installdocs -pweechat-common
 	dh_installexamples -pweechat-common
-	dh_compress -pweechat-common
-	dh_fixperms -pweechat-common
-	dh_installdeb -pweechat-common
-	dh_shlibdeps -pweechat-common
-	dh_gencontrol -pweechat-common
-	dh_md5sums -pweechat-common
-	dh_builddeb -pweechat-common
+	dh_compress -pweechat-common -pweechat
+	dh_link -pweechat usr/share/doc/weechat-common usr/share/doc/weechat
+	dh_fixperms -pweechat-common -pweechat
+	dh_installdeb -pweechat-common -pweechat
+	dh_shlibdeps -pweechat-common -pweechat
+	dh_gencontrol -pweechat-common -pweechat
+	dh_md5sums -pweechat-common -pweechat
+	dh_builddeb -pweechat-common -pweechat
 
 # Build architecture-dependent files here.
 binary-arch: build install
 	dh_testdir -a
 	dh_testroot -a
-	dh_installchangelogs -a
-	dh_installdocs -a
+	# dh_installchangelogs -a
+	# dh_installdocs -a
 	dh_installman weechat-curses.1 -pweechat-curses
-	dh_link -a
+	dh_link -a usr/share/doc/weechat-common usr/share/doc/weechat-curses
 	dh_strip -a
 	dh_compress -a
 	dh_fixperms -a

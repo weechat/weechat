@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.1.0-cvs - February, 05 2005
+@subtitle Documentation for WeeChat v0.1.0 - February, 12 2005
 
 @image{weechat_image}
 
