@@ -254,6 +254,7 @@ wee_create_home_dirs ()
     
     dir_name = (char *) malloc ((strlen (weechat_home) + 64) * sizeof (char));
     
+    #ifdef PLUGIN_PERL
     /* create "~/.weechat/perl" */
     sprintf (dir_name, "%s%s%s", weechat_home, DIR_SEPARATOR, "perl");
     if (wee_create_dir (dir_name))
@@ -263,7 +264,9 @@ wee_create_home_dirs ()
                  DIR_SEPARATOR, "autoload");
         wee_create_dir (dir_name);
     }
+    #endif
     
+    #ifdef PLUGIN_PYTHON
     /* create "~/.weechat/python" */
     sprintf (dir_name, "%s%s%s", weechat_home, DIR_SEPARATOR, "python");
     if (wee_create_dir (dir_name))
@@ -273,7 +276,9 @@ wee_create_home_dirs ()
                  DIR_SEPARATOR, "autoload");
         wee_create_dir (dir_name);
     }
+    #endif
     
+    #ifdef PLUGIN_RUBY
     /* create "~/.weechat/ruby" */
     sprintf (dir_name, "%s%s%s", weechat_home, DIR_SEPARATOR, "ruby");
     if (wee_create_dir (dir_name))
@@ -283,6 +288,7 @@ wee_create_home_dirs ()
                  DIR_SEPARATOR, "autoload");
         wee_create_dir (dir_name);
     }
+    #endif
     
     free (dir_name);
 }
