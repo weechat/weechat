@@ -789,14 +789,14 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
             {
                 ptr_line = buffer->last_line;
                 lines_used = 0;
+                ptr_win->win_chat_cursor_x = 0;
+                ptr_win->win_chat_cursor_y = 0;
                 while (ptr_line
                     && (lines_used < (ptr_win->win_chat_height + ptr_win->sub_lines)))
                 {
                     lines_used += gui_display_line (ptr_win, ptr_line, 0, 1);
                     ptr_line = ptr_line->prev_line;
                 }
-                ptr_win->win_chat_cursor_x = 0;
-                ptr_win->win_chat_cursor_y = 0;
                 if (lines_used > (ptr_win->win_chat_height + ptr_win->sub_lines))
                 {
                     /* screen will be full (we'll display only end of 1st line) */
