@@ -648,7 +648,9 @@ my_sigsegv ()
     fprintf (stderr, "\n");
     fprintf (stderr, "*** Very bad! WeeChat has crashed (SIGSEGV received)\n");
     fprintf (stderr, "*** Full crash dump was saved to ~/.weechat/weechat.log file\n");
-    fprintf (stderr, "*** Please send this file to WeeChat developers.\n\n");
+    fprintf (stderr, "*** Please send this file to WeeChat developers.\n");
+    fprintf (stderr, "*** (be careful, private info may be in this file since\n");
+    fprintf (stderr, "*** part of chats are displayed, so remove lines if needed)\n\n");
     wee_shutdown (EXIT_FAILURE);
 }
 
