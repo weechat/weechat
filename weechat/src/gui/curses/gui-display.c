@@ -857,7 +857,7 @@ gui_draw_window_status (t_gui_window *window)
         mvwprintw (window->win_status, 0, COLS - 7, _("-MORE-"));
     else
     {
-        sprintf (format_more, "%%-%ds", strlen (_("-MORE")));
+        sprintf (format_more, "%%-%ds", strlen (_("-MORE-")));
         mvwprintw (window->win_status, 0, COLS - 7, format_more, " ");
     }
     

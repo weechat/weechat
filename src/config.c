@@ -353,12 +353,12 @@ t_config_option weechat_options_log[] =
     OPTION_TYPE_STRING, 0, 0, 0,
     "~", NULL, NULL, &cfg_log_timestamp, NULL },
   { "log_start_string", N_("start string for log files"),
-    N_("text writed when starting new log file "
+    N_("text written when starting new log file "
     "(see man strftime for date/time specifiers)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "--- Log started %a %b %d %Y %H:%M:%s", NULL, NULL, &cfg_log_start_string, NULL },
   { "log_end_string", N_("end string for log files"),
-    N_("text writed when ending log file "
+    N_("text written when ending log file "
     "(see man strftime for date/time specifiers)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "--- Log ended %a %b %d %Y %H:%M:%s", NULL, NULL, &cfg_log_end_string, NULL },
@@ -406,7 +406,7 @@ t_config_option weechat_options_dcc[] =
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
     NULL, NULL, &cfg_dcc_auto_rename, NULL, NULL },
   { "dcc_auto_resume", N_("automatically resume aborted transfers"),
-    N_("automatically resume dcc trsnafer if connection with remote host is loosed"),
+    N_("automatically resume dcc transfer if connection with remote host is loosed"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
     NULL, NULL, &cfg_dcc_auto_resume, NULL, NULL },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
@@ -804,7 +804,7 @@ config_read ()
                                             [option_number].max))
                                     {
                                         gui_printf (NULL,
-                                                    _("%s %s, line %d: invalid value for"
+                                                    _("%s %s, line %d: invalid value for "
                                                     "option '%s'\n"
                                                     "Expected: integer between %d "
                                                     "and %d\n"),
@@ -826,7 +826,7 @@ config_read ()
                                     if (int_value < 0)
                                     {
                                         gui_printf (NULL,
-                                                    _("%s %s, line %d: invalid value for"
+                                                    _("%s %s, line %d: invalid value for "
                                                     "option '%s'\n"
                                                     "Expected: one of these strings: "),
                                                     WEECHAT_WARNING, filename,

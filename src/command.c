@@ -38,8 +38,8 @@
 t_weechat_command weechat_commands[] =
 { { "alias", N_("create an alias for a command"),
     N_("[alias_name [command [arguments]]"),
-    N_("alias_name: name of alias\ncommand: command name (" WEECHAT_NAME
-    " or IRC command, without first '/')\n" "arguments: arguments for command"),
+    N_("alias_name: name of alias\ncommand: command name (WeeChat "
+    "or IRC command, without first '/')\n" "arguments: arguments for command"),
     0, MAX_ARGS, NULL, weechat_cmd_alias },
   { "clear", N_("clear window(s)"),
     N_("[-all]"),
@@ -54,7 +54,7 @@ t_weechat_command weechat_commands[] =
     N_("servername: server name to disconnect"),
     1, 1, weechat_cmd_disconnect, NULL },
   { "help", N_("display help about commands"),
-    N_("[command]"), N_("command: name of a " WEECHAT_NAME " or IRC command"),
+    N_("[command]"), N_("command: name of a WeeChat or IRC command"),
     0, 1, weechat_cmd_help, NULL },
   { "server", N_("list, add or remove servers"),
     N_("[list] | "
@@ -526,7 +526,7 @@ exec_weechat_command (t_irc_server *server, char *string)
                 if (weechat_commands[i].min_arg ==
                     weechat_commands[i].max_arg)
                     gui_printf (NULL,
-                                _("%s wrong argument count for %s command '%s' "
+                                _("%s wrong argument count for %s command \"%s\" "
                                 "(expected: %d arg%s)\n"),
                                 WEECHAT_ERROR, WEECHAT_NAME, 
                                 command + 1,
@@ -535,7 +535,7 @@ exec_weechat_command (t_irc_server *server, char *string)
                                  1) ? "s" : "");
                 else
                     gui_printf (NULL,
-                                _("%s wrong argument count for %s command '%s' "
+                                _("%s wrong argument count for %s command \"%s\" "
                                 "(expected: between %d and %d arg%s)\n"),
                                 WEECHAT_ERROR, WEECHAT_NAME,
                                 command + 1,
@@ -578,7 +578,7 @@ exec_weechat_command (t_irc_server *server, char *string)
                 if (irc_commands[i].min_arg == irc_commands[i].max_arg)
                     gui_printf
                         (NULL,
-                         _("%s wrong argument count for IRC command '%s' "
+                         _("%s wrong argument count for IRC command \"%s\" "
                          "(expected: %d arg%s)\n"),
                          WEECHAT_ERROR,
                          command + 1,
@@ -587,7 +587,7 @@ exec_weechat_command (t_irc_server *server, char *string)
                 else
                     gui_printf
                         (NULL,
-                         _("%s wrong argument count for IRC command '%s' "
+                         _("%s wrong argument count for IRC command \"%s\" "
                          "(expected: between %d and %d arg%s)\n"),
                          WEECHAT_ERROR,
                          command + 1,
@@ -600,7 +600,7 @@ exec_weechat_command (t_irc_server *server, char *string)
                     ((!server) || (!server->is_connected)))
                 {
                     gui_printf (NULL,
-                                _("%s command '%s' needs a server connection!\n"),
+                                _("%s command \"%s\" needs a server connection!\n"),
                                 WEECHAT_ERROR, irc_commands[i].command_name);
                     return 0;
                 }
@@ -653,7 +653,7 @@ exec_weechat_command (t_irc_server *server, char *string)
         }
     }
     gui_printf (NULL,
-                _("%s unknown command '%s' (type /help for help)\n"),
+                _("%s unknown command \"%s\" (type /help for help)\n"),
                 WEECHAT_ERROR,
                 command + 1);
     if (argv)
@@ -925,7 +925,7 @@ weechat_cmd_help (int argc, char **argv)
             {
                 gui_printf
                     (NULL,
-                     _("> Help on %s internal command '%s':\n"),
+                     _("> Help on %s internal command \"%s\":\n"),
                      WEECHAT_NAME, weechat_commands[i].command_name);
                 gui_printf (NULL,
                             _("Syntax: /%s %s\n"),
@@ -947,7 +947,7 @@ weechat_cmd_help (int argc, char **argv)
             if (strcasecmp (irc_commands[i].command_name, argv[0]) == 0)
             {
                 gui_printf (NULL,
-                            _("> Help on IRC command '%s':\n"),
+                            _("> Help on IRC command \"%s\":\n"),
                             irc_commands[i].command_name);
                 gui_printf (NULL, _("Syntax: /%s %s\n"),
                             irc_commands[i].command_name,
