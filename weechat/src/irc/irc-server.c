@@ -70,6 +70,7 @@ server_init (t_irc_server *server)
     server->username = NULL;
     server->realname = NULL;
     server->command = NULL;
+    server->command_delay = 1;
     server->autojoin = NULL;
     server->nick = NULL;
     server->is_connected = 0;
@@ -292,8 +293,8 @@ server_free_all ()
 t_irc_server *
 server_new (char *name, int autoconnect, int command_line, char *address,
             int port, char *password, char *nick1, char *nick2, char *nick3,
-            char *username, char *realname, char *command, char *autojoin,
-            int autorejoin)
+            char *username, char *realname, char *command, int command_delay,
+            char *autojoin, int autorejoin)
 {
     t_irc_server *new_server;
     
@@ -328,6 +329,7 @@ server_new (char *name, int autoconnect, int command_line, char *address,
             (realname) ? strdup (realname) : strdup ("realname");
         new_server->command =
             (command) ? strdup (command) : NULL;
+        new_server->command_delay = command_delay;
         new_server->autojoin =
             (autojoin) ? strdup (autojoin) : NULL;
         new_server->autorejoin = autorejoin;

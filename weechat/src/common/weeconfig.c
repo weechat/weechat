@@ -570,6 +570,10 @@ t_config_option weechat_options_server[] =
     N_("first command to run when connected to server"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "", NULL, NULL, &(cfg_server.command), NULL },
+  { "server_command_delay", N_("delay (in seconds) after command was executed"),
+    N_("delay (in seconds) after command was executed (example: give some time for authentication)"),
+    OPTION_TYPE_INT, 0, 3600, 1,
+    NULL, NULL, &(cfg_server.command_delay), NULL, NULL },
   { "server_autojoin", N_("list of channels to join when connected to server"),
     N_("comma separated list of channels to join when connected to server"),
     OPTION_TYPE_STRING, 0, 0, 0,
@@ -814,7 +818,8 @@ config_allocate_server (char *filename, int line_number)
         cfg_server.autoconnect, 0, cfg_server.address, cfg_server.port,
         cfg_server.password, cfg_server.nick1, cfg_server.nick2,
         cfg_server.nick3, cfg_server.username, cfg_server.realname,
-        cfg_server.command, cfg_server.autojoin, cfg_server.autorejoin))
+        cfg_server.command, cfg_server.command_delay, cfg_server.autojoin,
+        cfg_server.autorejoin))
     {
         server_free_all ();
         gui_printf (NULL,
@@ -1380,6 +1385,7 @@ config_write (char *config_name)
             fprintf (file, "server_realname=%s\n", ptr_server->realname);
             fprintf (file, "server_command=%s\n",
                      (ptr_server->command) ? ptr_server->command : "");
+            fprintf (file, "server_command_delay=%d\n", ptr_server->command_delay);
             fprintf (file, "server_autojoin=%s\n",
                      (ptr_server->autojoin) ? ptr_server->autojoin : "");
             fprintf (file, "server_autorejoin=%s\n",
