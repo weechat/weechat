@@ -410,7 +410,8 @@ main (int argc, char *argv[])
         case 0:                     /* config file OK                       */
             break;
         case -1:                    /* config file not found                */
-            config_create_default ();
+            if (config_create_default () < 0)
+                return 1;
             config_read ();
             break;
         default:                    /* other error (fatal)                  */
