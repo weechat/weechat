@@ -1116,13 +1116,13 @@ weechat_cmd_help (int argc, char **argv)
         for (i = 0; weechat_commands[i].command_name; i++)
             gui_printf (NULL, "    %s - %s\n",
                         weechat_commands[i].command_name,
-                        weechat_commands[i].command_description);
+                        _(weechat_commands[i].command_description));
         gui_printf (NULL, _("> List of IRC commands:\n"));
         for (i = 0; irc_commands[i].command_name; i++)
             if (irc_commands[i].cmd_function_args || irc_commands[i].cmd_function_1arg)
                 gui_printf (NULL, "    %s - %s\n",
                             irc_commands[i].command_name,
-                            irc_commands[i].command_description);
+                            _(irc_commands[i].command_description));
     }
     if (argc == 1)
     {
@@ -1137,14 +1137,12 @@ weechat_cmd_help (int argc, char **argv)
                 gui_printf (NULL,
                             _("Syntax: /%s %s\n"),
                             weechat_commands[i].command_name,
-                            (weechat_commands[i].
-                             arguments) ? weechat_commands[i].
-                            arguments : "");
+                            (weechat_commands[i].arguments) ?
+                            _(weechat_commands[i].arguments) : "");
                 if (weechat_commands[i].arguments_description)
                 {
                     gui_printf (NULL, "%s\n",
-                                weechat_commands[i].
-                                arguments_description);
+                                _(weechat_commands[i].arguments_description));
                 }
                 return 0;
             }
@@ -1159,12 +1157,11 @@ weechat_cmd_help (int argc, char **argv)
                 gui_printf (NULL, _("Syntax: /%s %s\n"),
                             irc_commands[i].command_name,
                             (irc_commands[i].arguments) ?
-                            irc_commands[i].arguments : "");
+                            _(irc_commands[i].arguments) : "");
                 if (irc_commands[i].arguments_description)
                 {
                     gui_printf (NULL, "%s\n",
-                                irc_commands[i].
-                                arguments_description);
+                                _(irc_commands[i].arguments_description));
                 }
                 return 0;
             }
