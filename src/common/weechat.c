@@ -58,7 +58,6 @@
 #include "../plugins/plugins.h"
 
 
-char *var_LANG;         /* LANG environment variable                         */
 int quit_weechat;       /* = 1 if quit request from user... why ? :'(        */
 char *weechat_home;     /* WeeChat home dir. (example: /home/toto/.weechat)  */
 FILE *log_file;         /* WeeChat log file (~/.weechat/weechat.log)         */
@@ -429,8 +428,6 @@ wee_shutdown ()
 int
 main (int argc, char *argv[])
 {
-    var_LANG = getenv ("LANG");     /* get LANG environment variable        */
-    
     #ifdef ENABLE_NLS
     setlocale (LC_ALL, "");         /* initialize gettext                   */
     bindtextdomain (PACKAGE, LOCALEDIR);

@@ -74,6 +74,7 @@ int cfg_look_nickmode_empty;
 char *cfg_look_no_nickname;
 char *cfg_look_completor;
 int cfg_look_infobar;
+char *cfg_look_infobar_timestamp;
 
 t_config_option weechat_options_look[] =
 { { "look_set_title", N_("set title for terminal window (curses GUI) with name & version"),
@@ -142,6 +143,10 @@ t_config_option weechat_options_look[] =
     N_("enable info bar"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
     NULL, NULL, &cfg_look_infobar, NULL, NULL },
+  { "look_infobar_timestamp", N_("timestamp for time in infobar"),
+    N_("timestamp for time in infobar"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    "%B, %A %d %G - %H:%M", NULL, NULL, &cfg_look_infobar_timestamp, NULL },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 

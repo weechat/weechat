@@ -926,7 +926,7 @@ gui_draw_window_infobar (t_gui_window *window)
 {
     time_t time_seconds;
     struct tm *local_time;
-    char text[256];
+    char text[1024 + 1];
     
     /* TODO: manage splitted windows! */
     if (window != gui_current_window)
@@ -943,10 +943,7 @@ gui_draw_window_infobar (t_gui_window *window)
     
     time_seconds = time (NULL);
     local_time = localtime (&time_seconds);
-    if (strncmp (var_LANG, "fr", 2) == 0)
-        strftime (text, 255, "%A %d %B %G - %H:%M", local_time);
-    else
-        strftime (text, 255, "%B, %A %d %G - %H:%M", local_time);
+    strftime (text, 1024, cfg_look_infobar_timestamp, local_time);
     wprintw (window->win_infobar, "%s", text);
     
     wrefresh (window->win_infobar);
