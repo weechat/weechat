@@ -805,31 +805,28 @@ gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
                 
                 if (has_colors ())
                 {
+                    gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_SEP);
                     switch (cfg_look_nicklist_position)
                     {
                         case CFG_LOOK_NICKLIST_LEFT:
-                            gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_SEP);
-                            for (i = 0; i < ptr_win->win_chat_height; i++)
-                                mvwprintw (ptr_win->win_nick,
-                                           i, ptr_win->win_nick_width - 1, " ");
+                            mvwvline (ptr_win->win_nick,
+                                      0, ptr_win->win_nick_width - 1, ACS_VLINE,
+                                      ptr_win->win_chat_height);
                             break;
                         case CFG_LOOK_NICKLIST_RIGHT:
-                            gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_SEP);
-                            for (i = 0; i < ptr_win->win_chat_height; i++)
-                                mvwprintw (ptr_win->win_nick,
-                                           i, 0, " ");
+                            mvwvline (ptr_win->win_nick,
+                                      0, 0, ACS_VLINE,
+                                      ptr_win->win_chat_height);
                             break;
                         case CFG_LOOK_NICKLIST_TOP:
-                            gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK);
-                            for (i = 0; i < ptr_win->win_chat_width; i += 2)
-                                mvwprintw (ptr_win->win_nick,
-                                           ptr_win->win_nick_height - 1, i, "-");
+                            mvwhline (ptr_win->win_nick,
+                                      ptr_win->win_nick_height - 1, 0, ACS_HLINE,
+                                      ptr_win->win_chat_width);
                             break;
                         case CFG_LOOK_NICKLIST_BOTTOM:
-                            gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK);
-                            for (i = 0; i < ptr_win->win_chat_width; i += 2)
-                                mvwprintw (ptr_win->win_nick,
-                                           0, i, "-");
+                            mvwhline (ptr_win->win_nick,
+                                      0, 0, ACS_HLINE,
+                                      ptr_win->win_chat_width);
                             break;
                     }
                 }
@@ -2019,7 +2016,7 @@ gui_init_colors ()
         init_pair (COLOR_WIN_NICK_VOICE,
             cfg_col_nick_voice & A_CHARTEXT, cfg_col_nick_bg);
         init_pair (COLOR_WIN_NICK_SEP,
-            COLOR_BLACK & A_CHARTEXT, cfg_col_nick_sep);
+            cfg_col_nick_sep & A_CHARTEXT, cfg_col_nick_bg);
         init_pair (COLOR_WIN_NICK_SELF,
             cfg_col_nick_self & A_CHARTEXT, cfg_col_nick_bg);
         init_pair (COLOR_WIN_NICK_PRIVATE,
