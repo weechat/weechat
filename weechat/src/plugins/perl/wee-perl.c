@@ -507,7 +507,10 @@ wee_perl_exec (char *function, char *server, char *arguments)
     ENTER;
     SAVETMPS;
     PUSHMARK(sp);
-    argv[0] = server;
+    if (!server)
+        argv[0] = strdup ("");
+    else
+        argv[0] = server;
     argv[1] = arguments;
     argv[2] = NULL;
     count = perl_call_argv (function, G_EVAL | G_SCALAR, argv);
