@@ -721,12 +721,21 @@ irc_cmd_send_pong (t_irc_server *server, char *arguments)
 int
 irc_cmd_send_quit (t_irc_server *server, char *arguments)
 {
-    if (server && server->is_connected)
+    t_irc_server *ptr_server;
+    
+    /* make gcc happy */
+    (void) server;
+    
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
     {
-        if (arguments)
-            server_sendf (server, "QUIT :%s\r\n", arguments);
-        else
-            server_sendf (server, "QUIT\r\n");
+        if (ptr_server->is_connected)
+        {
+            if (arguments)
+                server_sendf (ptr_server, "QUIT :%s\r\n", arguments);
+            else
+                server_sendf (ptr_server, "QUIT\r\n");
+        }
     }
     quit_weechat = 1;
     return 0;
