@@ -24,6 +24,7 @@
 ./src/common/command.h
 ./src/common/completion.h
 ./src/common/history.h
+./src/common/log.c
 ./src/common/weechat.h
 ./src/common/weeconfig.c
 ./src/common/weeconfig.h

@@ -73,7 +73,6 @@
 #define BUFFER_IS_SERVER(buffer)  (SERVER(buffer) && !CHANNEL(buffer))
 #define BUFFER_IS_CHANNEL(buffer) (CHANNEL(buffer) && (CHANNEL(buffer)->type == CHAT_CHANNEL))
 #define BUFFER_IS_PRIVATE(buffer) (CHANNEL(buffer) && (CHANNEL(buffer)->type == CHAT_PRIVATE))
-#define BUFFER_IS_DCC(buffer)     (!SERVER(buffer) && !CHANNEL(buffer))
 
 #define MSG_TYPE_TIME      1
 #define MSG_TYPE_NICK      2
@@ -143,8 +142,6 @@ struct t_gui_buffer
     /* server/channel */
     void *server;                   /* buffer's server                      */
     void *channel;                  /* buffer's channel                     */
-    
-    /* dcc buffer */
     int dcc;                        /* buffer is dcc status                 */
     
     /* chat content (lines, line is composed by many messages) */
@@ -152,6 +149,10 @@ struct t_gui_buffer
     t_gui_line *last_line;          /* last line of chat window             */
     int num_lines;                  /* number of lines in the window        */
     int line_complete;              /* current line complete ? (\n ending)  */
+    
+    /* file to save buffer content */
+    char *log_filename;             /* filename for saving buffer content   */
+    FILE *log_file;                 /* for logging buffer to file           */
     
     /* inupt buffer */
     char *input_buffer;             /* input buffer                         */

@@ -36,6 +36,7 @@
 #include "gui.h"
 #include "../common/weeconfig.h"
 #include "../common/hotlist.h"
+#include "../common/log.h"
 #include "../irc/irc.h"
 
 
@@ -146,6 +147,8 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int dcc,
             ((t_irc_channel *)(channel))->buffer = gui_buffers;
         SERVER(gui_buffers) = server;
         CHANNEL(gui_buffers) = channel;
+        if (cfg_log_auto_server)
+            log_start (gui_buffers);
         return gui_buffers;
     }
     
@@ -178,6 +181,14 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int dcc,
         new_buffer->last_line = NULL;
         new_buffer->num_lines = 0;
         new_buffer->line_complete = 1;
+        
+        /* create/append to log file */
+        new_buffer->log_filename = NULL;
+        new_buffer->log_file = NULL;
+        if ((cfg_log_auto_server && BUFFER_IS_SERVER(new_buffer))
+            || (cfg_log_auto_channel && BUFFER_IS_CHANNEL(new_buffer))
+            || (cfg_log_auto_private && BUFFER_IS_PRIVATE(new_buffer)))
+            log_start (new_buffer);
         
         /* init input buffer */
         new_buffer->input_buffer_alloc = INPUT_BUFFER_BLOCK_SIZE;
@@ -390,6 +401,11 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
         gui_line_free (buffer->lines);
         buffer->lines = ptr_line;
     }
+    
+    /* close log if opened */
+    if (buffer->log_file)
+        log_end (buffer);
+    
     if (buffer->input_buffer)
         free (buffer->input_buffer);
     

@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2004-08-08
+TODO - 2004-09-19
 
 Legend:
   #  done
@@ -21,7 +21,8 @@ v0.0.8:
     + "/dcc" command (for chat and sending/receiving files)
 
  * Interface:
-    + "/buffer" command, buffers ordered by number, auto-jump to active
+    # log chats to file
+    # "/buffer" command, buffers ordered by number, auto-jump to active
       buffers (alt-a), jump to buffers by number (alt-number)
     + "/window" command, split terminal in multiple windows
       (horizontally/vertically)
@@ -67,8 +68,7 @@ Future versions:
     - add lag indicator
     - improve completion (for example complete command parameters when possible)
     - understand incomplete commands if unambigous (for example: /he for /help is ok)
-    - tab key with empty command line should switch to next window (like F7)
-    - log chats to file
+    - tab key with empty command line should switch to next window (like F7) 
     ? Qt GUI
 
  * TCP/IP communication:

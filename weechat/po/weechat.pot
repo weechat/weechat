@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2004-09-19 11:19+0200\n"
+"POT-Creation-Date: 2004-09-19 22:20+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "%s cannot allocate new nick\n"
 msgstr ""
 
-#: src/irc/irc-server.c:130 src/common/weeconfig.c:1240
+#: src/irc/irc-server.c:130 src/common/weeconfig.c:1227
 msgid "Unable to get user's name"
 msgstr ""
 
@@ -1574,51 +1574,51 @@ msgstr ""
 msgid "%s unable to add handler for \"%s\" message (not enough memory)\n"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:568
+#: src/gui/curses/gui-display.c:569
 msgid "bytes"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:568
+#: src/gui/curses/gui-display.c:569
 msgid "Kb"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:568
+#: src/gui/curses/gui-display.c:569
 msgid "Mb"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:568
+#: src/gui/curses/gui-display.c:569
 msgid "Gb"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:997
+#: src/gui/curses/gui-display.c:998
 #, c-format
 msgid "%d:[not connected] "
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1005
+#: src/gui/curses/gui-display.c:1006
 msgid "[Act: "
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1044 src/gui/curses/gui-display.c:1047
+#: src/gui/curses/gui-display.c:1045 src/gui/curses/gui-display.c:1048
 msgid "-MORE-"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1216
+#: src/gui/curses/gui-display.c:1217
 msgid "  [A] Accept"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1217 src/gui/curses/gui-display.c:1223
-#: src/gui/curses/gui-display.c:1230
+#: src/gui/curses/gui-display.c:1218 src/gui/curses/gui-display.c:1224
+#: src/gui/curses/gui-display.c:1231
 msgid "  [C] Cancel"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1218 src/gui/curses/gui-display.c:1224
-#: src/gui/curses/gui-display.c:1231 src/gui/curses/gui-display.c:1238
-#: src/gui/curses/gui-display.c:1243
+#: src/gui/curses/gui-display.c:1219 src/gui/curses/gui-display.c:1225
+#: src/gui/curses/gui-display.c:1232 src/gui/curses/gui-display.c:1239
+#: src/gui/curses/gui-display.c:1244
 msgid "  [Q] Close DCC view"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1237
+#: src/gui/curses/gui-display.c:1238
 msgid "  [R] Remove"
 msgstr ""
 
@@ -1626,17 +1626,17 @@ msgstr ""
 msgid "server"
 msgstr ""
 
-#: src/gui/gui-common.c:308
+#: src/gui/gui-common.c:319
 #, c-format
 msgid "%s not enough memory for infobar message\n"
 msgstr ""
 
-#: src/gui/gui-common.c:443
+#: src/gui/gui-common.c:459
 #, c-format
 msgid "%s not enough memory for new line!\n"
 msgstr ""
 
-#: src/gui/gui-common.c:486
+#: src/gui/gui-common.c:502
 msgid "not enough memory!\n"
 msgstr ""
 
@@ -2299,18 +2299,39 @@ msgstr ""
 msgid "%s unable to create ~/.weechat directory\n"
 msgstr ""
 
-#: src/common/weechat.c:388
+#: src/common/weechat.c:362
+#, c-format
+msgid "%s unable to create ~/.weechat/logs directory\n"
+msgstr ""
+
+#: src/common/weechat.c:397
 #, c-format
 msgid "%s unable to create/append to log file (~/.weechat/%s)"
 msgstr ""
 
-#: src/common/weechat.c:411
+#: src/common/weechat.c:420
 #, c-format
 msgid "%sWelcome to "
 msgstr ""
 
-#: src/common/weechat.c:424
+#: src/common/weechat.c:433
 msgid "compiled on"
+msgstr ""
+
+#: src/common/log.c:95
+msgid "Not enough memory to write log file for a buffer\n"
+msgstr ""
+
+#: src/common/log.c:123
+msgid "Unable to write log file for a buffer\n"
+msgstr ""
+
+#: src/common/log.c:127
+msgid "****  Beginning of log  "
+msgstr ""
+
+#: src/common/log.c:141
+msgid "****  End of log  "
 msgstr ""
 
 #: src/common/weechat.h:49
@@ -2669,348 +2690,323 @@ msgstr ""
 msgid "maximum number of user commands in history (0 = unlimited)"
 msgstr ""
 
-#: src/common/weeconfig.c:424 src/common/weeconfig.c:425
+#: src/common/weeconfig.c:422 src/common/weeconfig.c:423
+msgid "automatically log server messages"
+msgstr ""
+
+#: src/common/weeconfig.c:426 src/common/weeconfig.c:427
 msgid "automatically log channel chats"
 msgstr ""
 
-#: src/common/weeconfig.c:428 src/common/weeconfig.c:429
+#: src/common/weeconfig.c:430 src/common/weeconfig.c:431
 msgid "automatically log private chats"
 msgstr ""
 
-#: src/common/weeconfig.c:432
+#: src/common/weeconfig.c:434
 msgid "path for log files"
 msgstr ""
 
-#: src/common/weeconfig.c:433
+#: src/common/weeconfig.c:435
 msgid "path for WeeChat log files"
 msgstr ""
 
-#: src/common/weeconfig.c:436
-msgid "name for log files"
-msgstr ""
-
-#: src/common/weeconfig.c:437
-msgid ""
-"name for log files (%S == irc server name, %N == channel name (or nickname "
-"if private chat)"
-msgstr ""
-
-#: src/common/weeconfig.c:441
+#: src/common/weeconfig.c:438
 msgid "timestamp for log"
 msgstr ""
 
-#: src/common/weeconfig.c:442
+#: src/common/weeconfig.c:439
 msgid "timestamp for log (see man strftime for date/time specifiers)"
 msgstr ""
 
-#: src/common/weeconfig.c:445
-msgid "start string for log files"
-msgstr ""
-
-#: src/common/weeconfig.c:446
-msgid ""
-"text written when starting new log file (see man strftime for date/time "
-"specifiers)"
-msgstr ""
-
-#: src/common/weeconfig.c:450
-msgid "end string for log files"
-msgstr ""
-
-#: src/common/weeconfig.c:451
-msgid ""
-"text written when ending log file (see man strftime for date/time specifiers)"
-msgstr ""
-
-#: src/common/weeconfig.c:470
+#: src/common/weeconfig.c:457
 msgid "automatically accept dcc files"
 msgstr ""
 
-#: src/common/weeconfig.c:471
+#: src/common/weeconfig.c:458
 msgid "automatically accept incoming dcc files"
 msgstr ""
 
-#: src/common/weeconfig.c:474
+#: src/common/weeconfig.c:461
 msgid "automatically accept dcc chats"
 msgstr ""
 
-#: src/common/weeconfig.c:475
+#: src/common/weeconfig.c:462
 msgid "automatically accept dcc chats (use carefully!)"
 msgstr ""
 
-#: src/common/weeconfig.c:478
+#: src/common/weeconfig.c:465
 msgid "timeout for dcc request"
 msgstr ""
 
-#: src/common/weeconfig.c:479
+#: src/common/weeconfig.c:466
 msgid "timeout for dcc request (in seconds)"
 msgstr ""
 
-#: src/common/weeconfig.c:482
+#: src/common/weeconfig.c:469
 msgid "block size for dcc packets"
 msgstr ""
 
-#: src/common/weeconfig.c:483
+#: src/common/weeconfig.c:470
 msgid "block size for dcc packets in bytes (default: 1024)"
 msgstr ""
 
-#: src/common/weeconfig.c:486
+#: src/common/weeconfig.c:473
 msgid "path for incoming files with dcc"
 msgstr ""
 
-#: src/common/weeconfig.c:487
+#: src/common/weeconfig.c:474
 msgid "path for writing incoming files with dcc (default: user home)"
 msgstr ""
 
-#: src/common/weeconfig.c:490
+#: src/common/weeconfig.c:477
 msgid "default path for sending files with dcc"
 msgstr ""
 
-#: src/common/weeconfig.c:491
+#: src/common/weeconfig.c:478
 msgid ""
 "path for reading files when sending thru dcc (when no path is specified)"
 msgstr ""
 
-#: src/common/weeconfig.c:494
+#: src/common/weeconfig.c:481
 msgid "automatically rename dcc files if already exists"
 msgstr ""
 
-#: src/common/weeconfig.c:495
+#: src/common/weeconfig.c:482
 msgid "rename incoming files if already exists (add '.1', '.2', ...)"
 msgstr ""
 
-#: src/common/weeconfig.c:498
+#: src/common/weeconfig.c:485
 msgid "automatically resume aborted transfers"
 msgstr ""
 
-#: src/common/weeconfig.c:499
+#: src/common/weeconfig.c:486
 msgid ""
 "automatically resume dcc transfer if connection with remote host is loosed"
 msgstr ""
 
-#: src/common/weeconfig.c:513
+#: src/common/weeconfig.c:500
 msgid "use proxy"
 msgstr ""
 
-#: src/common/weeconfig.c:514
+#: src/common/weeconfig.c:501
 msgid "use a proxy server to connect to irc server"
 msgstr ""
 
-#: src/common/weeconfig.c:517
+#: src/common/weeconfig.c:504
 msgid "proxy address"
 msgstr ""
 
-#: src/common/weeconfig.c:518
+#: src/common/weeconfig.c:505
 msgid "proxy server address (IP or hostname)"
 msgstr ""
 
-#: src/common/weeconfig.c:521
+#: src/common/weeconfig.c:508
 msgid "port for proxy"
 msgstr ""
 
-#: src/common/weeconfig.c:522
+#: src/common/weeconfig.c:509
 msgid "port for connecting to proxy server"
 msgstr ""
 
-#: src/common/weeconfig.c:525
+#: src/common/weeconfig.c:512
 msgid "proxy password"
 msgstr ""
 
-#: src/common/weeconfig.c:526
+#: src/common/weeconfig.c:513
 msgid "password for proxy server"
 msgstr ""
 
-#: src/common/weeconfig.c:537
+#: src/common/weeconfig.c:524
 msgid "server name"
 msgstr ""
 
-#: src/common/weeconfig.c:538
+#: src/common/weeconfig.c:525
 msgid "name associated to IRC server (for display only)"
 msgstr ""
 
-#: src/common/weeconfig.c:541
+#: src/common/weeconfig.c:528
 msgid "automatically connect to server"
 msgstr ""
 
-#: src/common/weeconfig.c:542
+#: src/common/weeconfig.c:529
 msgid "automatically connect to server when WeeChat is starting"
 msgstr ""
 
-#: src/common/weeconfig.c:545
+#: src/common/weeconfig.c:532
 msgid "server address or hostname"
 msgstr ""
 
-#: src/common/weeconfig.c:546
+#: src/common/weeconfig.c:533
 msgid "IP address or hostname of IRC server"
 msgstr ""
 
-#: src/common/weeconfig.c:549
+#: src/common/weeconfig.c:536
 msgid "port for IRC server"
 msgstr ""
 
-#: src/common/weeconfig.c:550
+#: src/common/weeconfig.c:537
 msgid "port for connecting to server"
 msgstr ""
 
-#: src/common/weeconfig.c:553
+#: src/common/weeconfig.c:540
 msgid "server password"
 msgstr ""
 
-#: src/common/weeconfig.c:554
+#: src/common/weeconfig.c:541
 msgid "password for IRC server"
 msgstr ""
 
-#: src/common/weeconfig.c:557
+#: src/common/weeconfig.c:544
 msgid "nickname for server"
 msgstr ""
 
-#: src/common/weeconfig.c:558
+#: src/common/weeconfig.c:545
 msgid "nickname to use on IRC server"
 msgstr ""
 
-#: src/common/weeconfig.c:561
+#: src/common/weeconfig.c:548
 msgid "alternate nickname for server"
 msgstr ""
 
-#: src/common/weeconfig.c:562
+#: src/common/weeconfig.c:549
 msgid "alternate nickname to use on IRC server (if nickname is already used)"
 msgstr ""
 
-#: src/common/weeconfig.c:565
+#: src/common/weeconfig.c:552
 msgid "2nd alternate nickname for server"
 msgstr ""
 
-#: src/common/weeconfig.c:566
+#: src/common/weeconfig.c:553
 msgid ""
 "2nd alternate nickname to use on IRC server (if alternate nickname is "
 "already used)"
 msgstr ""
 
-#: src/common/weeconfig.c:569
+#: src/common/weeconfig.c:556
 msgid "user name for server"
 msgstr ""
 
-#: src/common/weeconfig.c:570
+#: src/common/weeconfig.c:557
 msgid "user name to use on IRC server"
 msgstr ""
 
-#: src/common/weeconfig.c:573
+#: src/common/weeconfig.c:560
 msgid "real name for server"
 msgstr ""
 
-#: src/common/weeconfig.c:574
+#: src/common/weeconfig.c:561
 msgid "real name to use on IRC server"
 msgstr ""
 
-#: src/common/weeconfig.c:577 src/common/weeconfig.c:578
+#: src/common/weeconfig.c:564 src/common/weeconfig.c:565
 msgid "first command to run when connected to server"
 msgstr ""
 
-#: src/common/weeconfig.c:581
+#: src/common/weeconfig.c:568
 msgid "list of channels to join when connected to server"
 msgstr ""
 
-#: src/common/weeconfig.c:582
+#: src/common/weeconfig.c:569
 msgid "comma separated list of channels to join when connected to server"
 msgstr ""
 
-#: src/common/weeconfig.c:804
+#: src/common/weeconfig.c:791
 #, c-format
 msgid "%s %s, line %d: new server, but previous was incomplete\n"
 msgstr ""
 
-#: src/common/weeconfig.c:813
+#: src/common/weeconfig.c:800
 #, c-format
 msgid "%s %s, line %d: server '%s' already exists\n"
 msgstr ""
 
-#: src/common/weeconfig.c:825
+#: src/common/weeconfig.c:812
 #, c-format
 msgid "%s %s, line %d: unable to create server\n"
 msgstr ""
 
-#: src/common/weeconfig.c:864
+#: src/common/weeconfig.c:851
 #, c-format
 msgid "%s unable to assign default int with string (\"%s\")\n"
 msgstr ""
 
-#: src/common/weeconfig.c:875
+#: src/common/weeconfig.c:862
 #, c-format
 msgid "%s unable to assign default color (\"%s\")\n"
 msgstr ""
 
-#: src/common/weeconfig.c:914
+#: src/common/weeconfig.c:901
 #, c-format
 msgid "%s config file \"%s\" not found.\n"
 msgstr ""
 
-#: src/common/weeconfig.c:946
+#: src/common/weeconfig.c:933
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"]\"\n"
 msgstr ""
 
-#: src/common/weeconfig.c:963
+#: src/common/weeconfig.c:950
 #, c-format
 msgid "%s %s, line %d: unknown section identifier (\"%s\")\n"
 msgstr ""
 
-#: src/common/weeconfig.c:981
+#: src/common/weeconfig.c:968
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"=\"\n"
 msgstr ""
 
-#: src/common/weeconfig.c:1015
+#: src/common/weeconfig.c:1002
 #, c-format
 msgid "%s %s, line %d: invalid option \"%s\"\n"
 msgstr ""
 
-#: src/common/weeconfig.c:1026
+#: src/common/weeconfig.c:1013
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value foroption '%s'\n"
 "Expected: boolean value: 'off' or 'on'\n"
 msgstr ""
 
-#: src/common/weeconfig.c:1035
+#: src/common/weeconfig.c:1022
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
 "Expected: integer between %d and %d\n"
 msgstr ""
 
-#: src/common/weeconfig.c:1046
+#: src/common/weeconfig.c:1033
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
 "Expected: one of these strings: "
 msgstr ""
 
-#: src/common/weeconfig.c:1062
+#: src/common/weeconfig.c:1049
 #, c-format
 msgid "%s %s, line %d: invalid color name for option '%s'\n"
 msgstr ""
 
-#: src/common/weeconfig.c:1121 src/common/weeconfig.c:1289
+#: src/common/weeconfig.c:1108 src/common/weeconfig.c:1276
 #, c-format
 msgid "%s cannot create file \"%s\"\n"
 msgstr ""
 
-#: src/common/weeconfig.c:1127
+#: src/common/weeconfig.c:1114
 #, c-format
 msgid "%s: creating default config file...\n"
 msgstr ""
 
-#: src/common/weeconfig.c:1128
+#: src/common/weeconfig.c:1115
 msgid "creating default config file\n"
 msgstr ""
 
-#: src/common/weeconfig.c:1131 src/common/weeconfig.c:1298
+#: src/common/weeconfig.c:1118 src/common/weeconfig.c:1285
 #, c-format
 msgid ""
 "#\n"
 "# %s configuration file, created by %s v%s on %s#\n"
 msgstr ""
 
-#: src/common/weeconfig.c:1295
+#: src/common/weeconfig.c:1282
 msgid "saving config to disk\n"
 msgstr ""

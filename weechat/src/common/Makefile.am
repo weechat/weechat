@@ -30,4 +30,6 @@ lib_weechat_main_a_SOURCES = weechat.c \
                              history.c \
                              history.h \
                              hotlist.c \
-                             hotlist.h
+                             hotlist.h \
+                             log.c \
+                             log.h

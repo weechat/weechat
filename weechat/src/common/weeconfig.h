@@ -139,13 +139,11 @@ extern int cfg_col_dcc_aborted;
 extern int cfg_history_max_lines;
 extern int cfg_history_max_commands;
 
-extern int cfg_log_auto_channels;
+extern int cfg_log_auto_server;
+extern int cfg_log_auto_channel;
 extern int cfg_log_auto_private;
 extern char *cfg_log_path;
-extern char *cfg_log_name;
 extern char *cfg_log_timestamp;
-extern char *cfg_log_start_string;
-extern char *cfg_log_end_string;
 
 extern int cfg_dcc_auto_accept_files;
 extern int cfg_dcc_auto_accept_chats;

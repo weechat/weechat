@@ -412,19 +412,21 @@ t_config_option weechat_options_history[] =
 
 /* config, log section */
 
-int cfg_log_auto_channels;
+int cfg_log_auto_server;
+int cfg_log_auto_channel;
 int cfg_log_auto_private;
 char *cfg_log_path;
-char *cfg_log_name;
 char *cfg_log_timestamp;
-char *cfg_log_start_string;
-char *cfg_log_end_string;
 
 t_config_option weechat_options_log[] =
-{ { "log_auto_channels", N_("automatically log channel chats"),
+{ { "log_auto_server", N_("automatically log server messages"),
+    N_("automatically log server messages"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
+    NULL, NULL, &cfg_log_auto_server, NULL, NULL },
+  { "log_auto_channel", N_("automatically log channel chats"),
     N_("automatically log channel chats"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_log_auto_channels, NULL, NULL },
+    NULL, NULL, &cfg_log_auto_channel, NULL, NULL },
   { "log_auto_private", N_("automatically log private chats"),
     N_("automatically log private chats"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
@@ -433,25 +435,10 @@ t_config_option weechat_options_log[] =
     N_("path for WeeChat log files"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "~/.weechat/logs/", NULL, NULL, &cfg_log_path, NULL },
-  { "log_name", N_("name for log files"),
-    N_("name for log files (%S == irc server name, "
-    "%N == channel name (or nickname if private chat)"),
-    OPTION_TYPE_STRING, 0, 0, 0,
-    "%S,%N.weechatlog", NULL, NULL, &cfg_log_name, NULL },
   { "log_timestamp", N_("timestamp for log"),
     N_("timestamp for log (see man strftime for date/time specifiers)"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "~", NULL, NULL, &cfg_log_timestamp, NULL },
-  { "log_start_string", N_("start string for log files"),
-    N_("text written when starting new log file "
-    "(see man strftime for date/time specifiers)"),
-    OPTION_TYPE_STRING, 0, 0, 0,
-    "--- Log started %a %b %d %Y %H:%M:%s", NULL, NULL, &cfg_log_start_string, NULL },
-  { "log_end_string", N_("end string for log files"),
-    N_("text written when ending log file "
-    "(see man strftime for date/time specifiers)"),
-    OPTION_TYPE_STRING, 0, 0, 0,
-    "--- Log ended %a %b %d %Y %H:%M:%s", NULL, NULL, &cfg_log_end_string, NULL },
+    "%Y %b %d %H:%M:%S", NULL, NULL, &cfg_log_timestamp, NULL },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
@@ -1305,7 +1292,7 @@ config_write (char *config_name)
         if ((i != CONFIG_SECTION_ALIAS) && (i != CONFIG_SECTION_SERVER))
         {
             fprintf (file, "\n[%s]\n", config_sections[i].section_name);
-            if ((i == CONFIG_SECTION_LOG) || (i == CONFIG_SECTION_PROXY))
+            if (i == CONFIG_SECTION_PROXY)
                 fprintf (file,
                          "# WARNING!!! Options for section \"%s\" are not developed!\n",
                          config_sections[i].section_name);

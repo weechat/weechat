@@ -5,6 +5,7 @@ ChangeLog - 2004-09-19
 
 
 Version 0.0.8 (under dev!):
+   * logging buffers to disk (server/channel/private according to user prefs)
    * /buffer command developed (buffers list and move function)
    * Away now announced in channels, and config option "look_display_away" added
      to enable/disable this feature

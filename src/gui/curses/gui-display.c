@@ -36,6 +36,7 @@
 #include "../gui.h"
 #include "../../common/weeconfig.h"
 #include "../../common/hotlist.h"
+#include "../../common/log.h"
 #include "../../irc/irc.h"
 
 
@@ -1409,7 +1410,7 @@ gui_get_dcc_buffer ()
     /* check if dcc buffer exists */
     for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
     {
-        if (BUFFER_IS_DCC (ptr_buffer))
+        if (ptr_buffer->dcc)
             break;
     }
     if (ptr_buffer)
@@ -1433,7 +1434,7 @@ gui_switch_to_dcc_buffer ()
     /* check if dcc buffer exists */
     for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
     {
-        if (BUFFER_IS_DCC (ptr_buffer))
+        if (ptr_buffer->dcc)
             break;
     }
     if (ptr_buffer)
@@ -2032,8 +2033,12 @@ gui_printf_color_type (t_gui_buffer *buffer, int type, int color, char *message,
                 snprintf (timestamp, 16, "%02d", date_tmp->tm_sec);
                 gui_add_message (buffer, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME, timestamp);
                 gui_add_message (buffer, MSG_TYPE_TIME, COLOR_WIN_CHAT_DARK, "] ");
+                if (buffer->log_file)
+                    log_write_date (buffer);
             }
             gui_add_message (buffer, type, color, pos + 1);
+            if (buffer->log_file)
+                log_write (buffer, pos +  1);
             pos = strchr (pos + 1, '\n');
             if (pos && !pos[1])
                 pos = NULL;

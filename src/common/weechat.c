@@ -60,7 +60,7 @@
 
 int quit_weechat;       /* = 1 if quit request from user... why ? :'(        */
 char *weechat_home;     /* WeeChat home dir. (example: /home/toto/.weechat)  */
-FILE *log_file;         /* WeeChat log file (~/.weechat/weechat.log)         */
+FILE *weechat_log_file; /* WeeChat log file (~/.weechat/weechat.log)         */
 
 int server_cmd_line;    /* at least one server on WeeChat command line       */
 
@@ -88,7 +88,7 @@ wee_log_printf (char *message, ...)
     static time_t seconds;
     struct tm *date_tmp;
     
-    if (!log_file)
+    if (!weechat_log_file)
         return;
     
     va_start (argptr, message);
@@ -98,13 +98,13 @@ wee_log_printf (char *message, ...)
     seconds = time (NULL);
     date_tmp = localtime (&seconds);
     if (date_tmp)
-        fprintf (log_file, "[%04d-%02d-%02d %02d:%02d:%02d] %s",
+        fprintf (weechat_log_file, "[%04d-%02d-%02d %02d:%02d:%02d] %s",
                  date_tmp->tm_year + 1900, date_tmp->tm_mon + 1, date_tmp->tm_mday,
                  date_tmp->tm_hour, date_tmp->tm_min, date_tmp->tm_sec,
                  buffer);
     else
-        fprintf (log_file, "%s", buffer);
-    fflush (log_file);
+        fprintf (weechat_log_file, "%s", buffer);
+    fflush (weechat_log_file);
 }
 
 /*
@@ -354,6 +354,15 @@ wee_create_home_dirs ()
     }
     #endif
     
+    /* create "~/.weechat/logs" */
+    snprintf (dir_name, dir_length, "%s%s%s", weechat_home, DIR_SEPARATOR,
+              "logs");
+    if (!wee_create_dir (dir_name))
+    {
+        fprintf (stderr, _("%s unable to create ~/.weechat/logs directory\n"),
+                 WEECHAT_WARNING);
+    }
+    
     free (dir_name);
 }
 
@@ -383,7 +392,7 @@ wee_init_log ()
     filename =
         (char *) malloc (filename_length * sizeof (char));
     snprintf (filename, filename_length, "%s/" WEECHAT_LOG_NAME, weechat_home);
-    if ((log_file = fopen (filename, "wt")) == NULL)
+    if ((weechat_log_file = fopen (filename, "wt")) == NULL)
         fprintf (stderr,
                  _("%s unable to create/append to log file (~/.weechat/%s)"),
                  WEECHAT_WARNING, WEECHAT_LOG_NAME);
@@ -440,8 +449,8 @@ wee_shutdown ()
     dcc_end ();
     server_free_all ();
     gui_end ();
-    if (log_file)
-        fclose (log_file);
+    if (weechat_log_file)
+        fclose (weechat_log_file);
     exit (EXIT_SUCCESS);
 }
 
