@@ -808,31 +808,58 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
         
         /* display number of buffers */
         gui_window_set_color (ptr_win->win_status,
+                              COLOR_WIN_STATUS_DELIMITERS);
+        wprintw (ptr_win->win_status, "[");
+        gui_window_set_color (ptr_win->win_status,
                               COLOR_WIN_STATUS);
-        wprintw (ptr_win->win_status, "[%d] ",
+        wprintw (ptr_win->win_status, "%d",
                  (last_gui_buffer) ? last_gui_buffer->number : 0);
+        gui_window_set_color (ptr_win->win_status,
+                              COLOR_WIN_STATUS_DELIMITERS);
+        wprintw (ptr_win->win_status, "] ");
         
         /* display current server */
         if (SERVER(ptr_win->buffer) && SERVER(ptr_win->buffer)->name)
-            wprintw (ptr_win->win_status, "[%s] ", SERVER(ptr_win->buffer)->name);
+        {
+            wprintw (ptr_win->win_status, "[");
+            gui_window_set_color (ptr_win->win_status,
+                                  COLOR_WIN_STATUS);
+            wprintw (ptr_win->win_status, "%s", SERVER(ptr_win->buffer)->name);
+            gui_window_set_color (ptr_win->win_status,
+                              COLOR_WIN_STATUS_DELIMITERS);
+            wprintw (ptr_win->win_status, "] ");
+        }
         
         if (SERVER(ptr_win->buffer) && !CHANNEL(ptr_win->buffer))
         {
             gui_window_set_color (ptr_win->win_status,
                                   COLOR_WIN_STATUS);
+            wprintw (ptr_win->win_status, "%d",
+                     ptr_win->buffer->number);
+            gui_window_set_color (ptr_win->win_status,
+                                  COLOR_WIN_STATUS_DELIMITERS);
+            wprintw (ptr_win->win_status, ":");
+            gui_window_set_color (ptr_win->win_status,
+                                  COLOR_WIN_STATUS);
             if (SERVER(ptr_win->buffer)->is_connected)
-                wprintw (ptr_win->win_status, "%d:[%s] ",
-                         ptr_win->buffer->number, SERVER(ptr_win->buffer)->name);
+                wprintw (ptr_win->win_status, "[%s] ",
+                         SERVER(ptr_win->buffer)->name);
             else
-                wprintw (ptr_win->win_status, "%d:(%s) ",
+                wprintw (ptr_win->win_status, "(%s) ",
                          ptr_win->buffer->number, SERVER(ptr_win->buffer)->name);
         }
         if (SERVER(ptr_win->buffer) && CHANNEL(ptr_win->buffer))
         {
             gui_window_set_color (ptr_win->win_status,
                                   COLOR_WIN_STATUS);
-            wprintw (ptr_win->win_status, "%d:%s",
-                     ptr_win->buffer->number,
+            wprintw (ptr_win->win_status, "%d",
+                     ptr_win->buffer->number);
+            gui_window_set_color (ptr_win->win_status,
+                                  COLOR_WIN_STATUS_DELIMITERS);
+            wprintw (ptr_win->win_status, ":");
+            gui_window_set_color (ptr_win->win_status,
+                                  COLOR_WIN_STATUS);
+            wprintw (ptr_win->win_status, "%s",
                      CHANNEL(ptr_win->buffer)->name);
             if (ptr_win->buffer == CHANNEL(ptr_win->buffer)->buffer)
             {
@@ -1482,6 +1509,8 @@ gui_init_colors ()
             cfg_col_chat_highlight & A_CHARTEXT, cfg_col_chat_bg);
         init_pair (COLOR_WIN_STATUS,
             cfg_col_status & A_CHARTEXT, cfg_col_status_bg);
+        init_pair (COLOR_WIN_STATUS_DELIMITERS,
+            cfg_col_status_delimiters & A_CHARTEXT, cfg_col_status_bg);
         init_pair (COLOR_WIN_STATUS_DATA_MSG,
             cfg_col_status_data_msg & A_CHARTEXT, cfg_col_status_bg);
         init_pair (COLOR_WIN_STATUS_DATA_HIGHLIGHT,
@@ -1536,6 +1565,7 @@ gui_init_colors ()
         color_attr[COLOR_WIN_CHAT_DARK - 1] = cfg_col_chat_dark & A_BOLD;
         color_attr[COLOR_WIN_CHAT_HIGHLIGHT - 1] = cfg_col_chat_highlight & A_BOLD;
         color_attr[COLOR_WIN_STATUS - 1] = cfg_col_status & A_BOLD;
+        color_attr[COLOR_WIN_STATUS_DELIMITERS - 1] = cfg_col_status_delimiters & A_BOLD;
         color_attr[COLOR_WIN_STATUS_DATA_MSG - 1] = cfg_col_status_data_msg & A_BOLD;
         color_attr[COLOR_WIN_STATUS_DATA_HIGHLIGHT - 1] = cfg_col_status_data_highlight & A_BOLD;
         color_attr[COLOR_WIN_STATUS_DATA_OTHER - 1] = cfg_col_status_data_other & A_BOLD;

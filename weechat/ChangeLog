@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2004-07-04
+ChangeLog - 2004-07-06
 
 
 Version 0.0.7 (under dev!):
+   * new "col_status_delimiters" config option
    * /buffer command added, buffers ordered by number, auto-jump to active
      buffers (alt-a), jump to buffers by number (alt-number)
    * /window command added, split terminal horizontally/vertically

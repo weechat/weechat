@@ -106,6 +106,7 @@ extern int cfg_col_chat_dark;
 extern int cfg_col_chat_highlight;
 extern int cfg_col_chat_bg;
 extern int cfg_col_status;
+extern int cfg_col_status_delimiters;
 extern int cfg_col_status_data_msg;
 extern int cfg_col_status_data_highlight;
 extern int cfg_col_status_data_other;
