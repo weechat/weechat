@@ -1067,6 +1067,20 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                     gui_printf_color (ptr_channel->buffer,
                                       COLOR_WIN_CHAT, " %s\n", pos);
                 }
+                else if (strncmp (pos, "\01SOUND ", 7) == 0)
+                {
+                    pos += 7;
+                    pos2 = strchr (pos, '\01');
+                    if (pos2)
+                        pos2[0] = '\0';
+                    irc_display_prefix (ptr_channel->buffer, PREFIX_INFO);
+                    gui_printf (ptr_channel->buffer,
+                                _("Received a CTCP SOUND \"%s\" from "),
+                                pos);
+                    gui_printf_color (ptr_channel->buffer,
+                                      COLOR_WIN_CHAT_NICK,
+                                      "%s\n", host);
+                }
                 else
                 {
                     ptr_nick = nick_search (ptr_channel, host);
