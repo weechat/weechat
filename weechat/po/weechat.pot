@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2003-11-16 20:00+0100\n"
+"POT-Creation-Date: 2003-11-16 21:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1375,19 +1375,34 @@ msgid ""
 "server!\n"
 msgstr ""
 
-#: src/plugins/perl/wee-perl.c:73
+#: src/plugins/perl/wee-perl.c:69
+#, c-format
+msgid "registered Perl script \"%s\", version %s (%s)\n"
+msgstr ""
+
+#: src/plugins/perl/wee-perl.c:74
 #, c-format
 msgid "%s unable to load Perl script \"%s\"\n"
 msgstr ""
 
-#: src/plugins/perl/wee-perl.c:201
+#: src/plugins/perl/wee-perl.c:206
 #, c-format
 msgid "Perl error: %s\n"
 msgstr ""
 
-#: src/plugins/perl/wee-perl.c:210
+#: src/plugins/perl/wee-perl.c:215
 #, c-format
 msgid "Perl error: too much values from \"%s\" (%d). Expected: 1.\n"
+msgstr ""
+
+#: src/plugins/perl/wee-perl.c:237
+#, c-format
+msgid "loading Perl script \"%s\"\n"
+msgstr ""
+
+#: src/plugins/perl/wee-perl.c:250
+#, c-format
+msgid "unloading Perl script \"%s\"\n"
 msgstr ""
 
 #: src/gui/curses/gui-display.c:863
@@ -1480,7 +1495,7 @@ msgstr ""
 
 #: src/common/command.c:65
 msgid ""
-"filename: Perl script (file) to load/unload\n"
+"filename: Perl script (file) to load\n"
 "scriptname: name of script to unload\n"
 "Without argument, /perl command lists all loaded Perl scripts."
 msgstr ""

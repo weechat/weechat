@@ -31,6 +31,7 @@ struct t_perl_script
     char *version;                  /* version of script                    */
     char *shutdown_func;            /* function when script ends            */
     char *description;              /* description of script                */
+    t_perl_script *prev_script;     /* link to previous Perl script         */
     t_perl_script *next_script;     /* link to next Perl script             */
 };
 

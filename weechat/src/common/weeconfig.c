@@ -19,7 +19,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* config.c: WeeChat configuration */
+/* weeconfig.c: WeeChat configuration */
 
 
 #ifdef HAVE_CONFIG_H

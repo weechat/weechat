@@ -154,4 +154,4 @@ extern int config_read ();
 extern int config_create_default ();
 extern int config_write ();
 
-#endif /* config.h */
+#endif /* weeconfig.h */

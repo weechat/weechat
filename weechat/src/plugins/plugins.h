@@ -20,17 +20,30 @@
  */
 
 
-#ifndef __WEECHAT_PLUGIN_H
-#define __WEECHAT_PLUGIN_H 1
+#ifndef __WEECHAT_PLUGINS_H
+#define __WEECHAT_PLUGINS_H 1
 
 #define PLUGIN_UNKNOWN 0
 #define PLUGIN_PERL    1
 #define PLUGIN_PYTHON  2
 #define PLUGIN_RUBY    3
 
+typedef struct t_plugin_handler t_plugin_handler;
+
+struct t_plugin_handler
+{
+    int plugin_type;                /* plugin type (Perl, Python, Ruby)     */
+    char *name;                     /* name (message or command)            */
+    char *function_name;            /* name of function (handler)           */
+    t_plugin_handler *prev_handler; /* link to previous handler             */
+    t_plugin_handler *next_handler; /* link to next handler                 */
+};
+
+
 extern void plugins_init ();
 extern void plugins_load (int, char *);
 extern void plugins_unload (int, char *);
+extern void plugins_msg_handler_add (int, char *, char *);
 extern void plugins_end ();
 
 #endif /* plugins.h */

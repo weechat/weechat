@@ -32,11 +32,14 @@
 #include <XSUB.h>
 #include "../../common/weechat.h"
 #include "wee-perl.h"
+#include "../plugins.h"
 #include "../../gui/gui.h"
 
 
 static PerlInterpreter *my_perl = NULL;
-static t_perl_script *perl_scripts = NULL;
+
+t_perl_script *perl_scripts = NULL;
+t_perl_script *last_perl_script = NULL;
 
 extern void boot_DynaLoader (pTHX_ CV* cv);
 
@@ -64,13 +67,22 @@ static XS (XS_IRC_register)
         new_perl_script->version = strdup (version);
         new_perl_script->shutdown_func = strdup (shutdown_func);
         new_perl_script->description = strdup (description);
-        new_perl_script->next_script = perl_scripts;
-        perl_scripts = new_perl_script;
-        wee_log_printf (_("registered Perl script: \"%s\"\n"), name);
+        
+        /* add new script to list */
+        new_perl_script->prev_script = last_perl_script;
+        new_perl_script->next_script = NULL;
+        if (perl_scripts)
+            last_perl_script->next_script = new_perl_script;
+        else
+            perl_scripts = new_perl_script;
+        last_perl_script = new_perl_script;
+        
+        wee_log_printf (_("registered Perl script: \"%s\", version %s (%s)\n"),
+                        name, version, description);
     }
     else
         gui_printf (NULL,
-                    _("%s unable to load Perl script \"%s\"\n"),
+                    _("%s unable to load Perl script \"%s\" (not enough memory)\n"),
                     WEECHAT_ERROR, name);
     XST_mPV (0, VERSION);
     XSRETURN (1);
@@ -96,6 +108,22 @@ static XS (XS_IRC_print)
 }
 
 /*
+ * IRC::add_message_handler: add handler for messages (privmsg, ...)
+ */
+
+static XS (XS_IRC_add_message_handler)
+{
+    char *name, *function;
+    int integer;
+    dXSARGS;
+    
+    name = SvPV (ST (0), integer);
+    function = SvPV (ST (1), integer);
+    plugins_msg_handler_add (PLUGIN_PERL, name, function);
+    XSRETURN_EMPTY;
+}
+
+/*
  * xs_init: initialize subroutines
  */
 
@@ -105,6 +133,7 @@ xs_init (pTHX)
     newXS ("DynaLoader::boot_DynaLoader", boot_DynaLoader, __FILE__);
     newXS ("IRC::register", XS_IRC_register, "IRC");
     newXS ("IRC::print", XS_IRC_print, "IRC");
+    newXS ("IRC::add_message_handler", XS_IRC_add_message_handler, "IRC");
 }
 
 /*
@@ -238,6 +267,42 @@ wee_perl_load (char *filename)
 }
 
 /*
+ * wee_perl_script_free: free a Perl script
+ */
+
+void
+wee_perl_script_free (t_perl_script *ptr_perl_script)
+{
+    t_perl_script *new_perl_scripts;
+
+    /* remove script from list */
+    if (last_perl_script == ptr_perl_script)
+        last_perl_script = ptr_perl_script->prev_script;
+    if (ptr_perl_script->prev_script)
+    {
+        (ptr_perl_script->prev_script)->next_script = ptr_perl_script->next_script;
+        new_perl_scripts = perl_scripts;
+    }
+    else
+        new_perl_scripts = ptr_perl_script->next_script;
+    
+    if (ptr_perl_script->next_script)
+        (ptr_perl_script->next_script)->prev_script = ptr_perl_script->prev_script;
+
+    /* free data */
+    if (ptr_perl_script->name)
+        free (ptr_perl_script->name);
+    if (ptr_perl_script->version)
+        free (ptr_perl_script->version);
+    if (ptr_perl_script->shutdown_func)
+        free (ptr_perl_script->shutdown_func);
+    if (ptr_perl_script->description)
+        free (ptr_perl_script->description);
+    free (ptr_perl_script);
+    perl_scripts = new_perl_scripts;
+}
+
+/*
  * wee_perl_unload: unload a Perl script
  */
 
@@ -252,16 +317,7 @@ wee_perl_unload (t_perl_script *ptr_perl_script)
         /* call shutdown callback function */
         if (ptr_perl_script->shutdown_func[0])
             wee_perl_exec (ptr_perl_script->shutdown_func, "");
-        
-        /* free data */
-        if (ptr_perl_script->name)
-            free (ptr_perl_script->name);
-        if (ptr_perl_script->version)
-            free (ptr_perl_script->version);
-        if (ptr_perl_script->shutdown_func)
-            free (ptr_perl_script->shutdown_func);
-        if (ptr_perl_script->description)
-            free (ptr_perl_script->description);
+        wee_perl_script_free (ptr_perl_script);
     }
 }
 
@@ -272,15 +328,8 @@ wee_perl_unload (t_perl_script *ptr_perl_script)
 void
 wee_perl_unload_all ()
 {
-    t_perl_script *ptr_perl_script;
-    
     while (perl_scripts)
-    {
         wee_perl_unload (perl_scripts);
-        ptr_perl_script = perl_scripts->next_script;
-        free (perl_scripts);
-        perl_scripts = ptr_perl_script;
-    }
 }
 
 /*

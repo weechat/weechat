@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.0.2\n"
+"Project-Id-Version: WeeChat 0.0.4-pre1\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2003-11-16 20:00+0100\n"
+"POT-Creation-Date: 2003-11-16 21:36+0100\n"
 "PO-Revision-Date: 2003-10-04 21:21+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1471,22 +1471,37 @@ msgid ""
 "server!\n"
 msgstr ""
 "%s: tous les noms d'utilisateurs déclarés sont déjà en cours d'utilisation, "
-"fermeture de la connexion avec server!\n"
+"fermeture de la connexion avec le serveur !\n"
 
-#: src/plugins/perl/wee-perl.c:73
+#: src/plugins/perl/wee-perl.c:69
 #, c-format
-msgid "%s unable to load Perl script \"%s\"\n"
-msgstr "%s impossible de charger le script Perl \"%s\"\n"
+msgid "registered Perl script: \"%s\", version %s (%s)\n"
+msgstr "script Perl enregistré: \"%s\", version %s (%s)\n"
 
-#: src/plugins/perl/wee-perl.c:201
+#: src/plugins/perl/wee-perl.c:74
+#, c-format
+msgid "%s unable to load Perl script \"%s\" (not enough memory)\n"
+msgstr "%s impossible de charger le script Perl \"%s\" (mémoire insuffisante)\n"
+
+#: src/plugins/perl/wee-perl.c:206
 #, c-format
 msgid "Perl error: %s\n"
 msgstr "Erreur Perl: %s\n"
 
-#: src/plugins/perl/wee-perl.c:210
+#: src/plugins/perl/wee-perl.c:215
 #, c-format
 msgid "Perl error: too much values from \"%s\" (%d). Expected: 1.\n"
 msgstr "Erreur Perl: trop de valeurs de \"%s\" (%d). Attendue: 1.\n"
+
+#: src/plugins/perl/wee-perl.c:237
+#, c-format
+msgid "loading Perl script \"%s\"\n"
+msgstr "chargement du script Perl \"%s\"\n"
+
+#: src/plugins/perl/wee-perl.c:250
+#, c-format
+msgid "unloading Perl script \"%s\"\n"
+msgstr "déchargement du script Perl \"%s\"\n"
 
 #: src/gui/curses/gui-display.c:863
 msgid "[not connected] "
@@ -1819,7 +1834,8 @@ msgid ""
 "Please rebuild WeeChat with \"--enable-perl\" option for ./configure script\n"
 msgstr ""
 "WeeChat a été construit sans le support Perl.\n"
-"Merci de reconstruire WeeChat avec l'option \"--enable-perl\" pour le script ./configure\n"
+"Merci de reconstruire WeeChat avec l'option \"--enable-perl\" pour le "
+"script ./configure\n"
 
 #: src/common/command.c:1062
 msgid "Server: "
