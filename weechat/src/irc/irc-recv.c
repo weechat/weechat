@@ -1389,8 +1389,7 @@ irc_cmd_recv_quit (t_irc_server *server, char *host, char *arguments)
                               arguments);
             gui_printf_color (ptr_channel->buffer,
                               COLOR_WIN_CHAT_DARK, ")\n");
-            if ((ptr_channel->buffer == gui_current_window->buffer) &&
-                (gui_buffer_has_nicklist (ptr_channel->buffer)))
+            if (gui_buffer_has_nicklist (ptr_channel->buffer))
                 gui_draw_buffer_nick (ptr_channel->buffer, 1);
         }
     }
