@@ -97,7 +97,7 @@ int quit_weechat;
 
 extern int quit_weechat;
 
-extern void log_printf (char *, ...);
+extern void wee_log_printf (char *, ...);
 extern void wee_shutdown ();
 
 #endif /* weechat.h */

@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2003-11-09
+TODO - 2003-11-16
 
 Legend:
   #  done
@@ -29,9 +29,8 @@ v0.0.4:
     - add missing options for config file
 
  * Plugins:
-    - add Perl plugin
-    - "/load" and "/unload" commands to (un)load extension scripts
-      (perl, python, ruby, ...)
+    + Perl plugin
+    # "/perl load" and "/perl unload" commands to (un)load Perl scripts
 
 
 Future versions:
@@ -87,5 +86,7 @@ Future versions:
       loading config)
 
  * Plugins:
-    - add Python plugin
-    - add Ruby plugin
+    - Python plugin
+    - "/python load" and "/python unload" commands to (un)load Python scripts
+    - Ruby plugin
+    - "/ruby load" and "/ruby unload" commands to (un)load Ruby scripts

@@ -19,7 +19,8 @@ bin_PROGRAMS = weechat-curses
 
 weechat_curses_LDADD = ../../common/lib_weechat_main.a \
                        ../../irc/lib_weechat_irc.a \
-                       $(CURSES_LIBS) $(PLUGIN_LIBS)
+                       $(CURSES_LIBS) \
+                       ../../plugins/lib_weechat_plugins.a $(PLUGINS_LIBS)
 
 weechat_curses_SOURCES = ../gui.h \
                          ../gui-common.c \

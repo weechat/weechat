@@ -710,7 +710,7 @@ gui_printf_color_type (t_gui_window *window, int type, int color, char *message,
     
         if (window == NULL)
         {
-            log_printf ("gui_printf without window! this is a bug, please send to developers - thanks\n");
+            wee_log_printf ("gui_printf without window! this is a bug, please send to developers - thanks\n");
             return;
         }
     }

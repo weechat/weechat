@@ -56,6 +56,7 @@
 #include "command.h"
 #include "../irc/irc.h"
 #include "../gui/gui.h"
+#include "../plugins/plugins.h"
 
 
 /* char *display_name; */
@@ -65,11 +66,11 @@ FILE *log_file;             /* WeeChat log file (~/.weechat/weechat.log     */
 
 
 /*
- * log_printf: displays a message in WeeChat log (~/.weechat/weechat.log)
+ * wee_log_printf: displays a message in WeeChat log (~/.weechat/weechat.log)
  */
 
 void
-log_printf (char *message, ...)
+wee_log_printf (char *message, ...)
 {
     static char buffer[4096];
     va_list argptr;
@@ -271,6 +272,9 @@ main (int argc, char *argv[])
     /* init gui */
     gui_init ();
     
+    /* init plugin interface(s) */
+    plugins_init ();
+    
     /* Welcome message - yeah! */
     if (cfg_look_startup_logo)
     {
@@ -315,7 +319,14 @@ main (int argc, char *argv[])
                 irc_login (ptr_server);
         }
     }
+    
+    /* WeeChat main loop */
     gui_main_loop ();
+    
+    /* end plugin interface(s) */
+    plugins_end ();
+    
+    /* disconnect from all servers */
     server_disconnect_all ();
 
     /* save config file */

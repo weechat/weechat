@@ -264,7 +264,7 @@ gui_new_line (t_gui_window *window)
     }
     else
     {
-        log_printf (_("%s not enough memory for new line!\n"));
+        wee_log_printf (_("%s not enough memory for new line!\n"));
         return NULL;
     }
     return new_line;
@@ -291,7 +291,7 @@ gui_new_message (t_gui_window *window)
     }
     else
     {
-        log_printf (_("not enough memory!\n"));
+        wee_log_printf (_("not enough memory!\n"));
         return NULL;
     }
     return new_message;

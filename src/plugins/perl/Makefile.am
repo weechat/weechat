@@ -19,4 +19,5 @@ INCLUDES = $(PERL_CFLAGS)
 
 noinst_LIBRARIES = lib_weechat_perl.a
 
-lib_weechat_perl_a_SOURCES = perl.c
+lib_weechat_perl_a_SOURCES = wee-perl.h \
+                             wee-perl.c

@@ -205,13 +205,13 @@ server_new (char *name, int autoconnect, char *address, int port,
         return NULL;
     
     #ifdef DEBUG
-    log_printf ("creating new server (name:%s, address:%s, port:%d, pwd:%s, "
-                "nick1:%s, nick2:%s, nick3:%s, username:%s, realname:%s, "
-                "command:%s, autojoin:%s)\n",
-                name, address, port, (password) ? password : "",
-                (nick1) ? nick1 : "", (nick2) ? nick2 : "", (nick3) ? nick3 : "",
-                (username) ? username : "", (realname) ? realname : "",
-                (command) ? command : "", (autojoin) ? autojoin : "");
+    wee_log_printf ("creating new server (name:%s, address:%s, port:%d, pwd:%s, "
+                    "nick1:%s, nick2:%s, nick3:%s, username:%s, realname:%s, "
+                    "command:%s, autojoin:%s)\n",
+                    name, address, port, (password) ? password : "",
+                    (nick1) ? nick1 : "", (nick2) ? nick2 : "", (nick3) ? nick3 : "",
+                    (username) ? username : "", (realname) ? realname : "",
+                    (command) ? command : "", (autojoin) ? autojoin : "");
     #endif
     
     if ((new_server = server_alloc ()))
@@ -480,8 +480,8 @@ server_connect (t_irc_server *server)
     gui_printf (server->window,
                 _("%s: connecting to %s:%d...\n"),
                 PACKAGE_NAME, server->address, server->port);
-    log_printf (_("connecting to server %s:%d...\n"),
-                server->address, server->port);
+    wee_log_printf (_("connecting to server %s:%d...\n"),
+                    server->address, server->port);
     server->is_connected = 0;
 
     /* create pipe */

@@ -34,6 +34,7 @@
 #include "weeconfig.h"
 #include "../irc/irc.h"
 #include "../gui/gui.h"
+#include "../plugins/plugins.h"
 
 
 /* WeeChat internal commands */
@@ -59,6 +60,12 @@ t_weechat_command weechat_commands[] =
   { "help", N_("display help about commands"),
     N_("[command]"), N_("command: name of a WeeChat or IRC command"),
     0, 1, weechat_cmd_help, NULL },
+  { "perl", N_("list/load/unload Perl scripts"),
+    N_("[load filename] | [unload scriptname]"),
+    N_("filename: Perl script (file) to load\n"
+    "scriptname: name of script to unload\n"
+    "Without argument, /perl command lists all loaded Perl scripts."),
+    0, 2, weechat_cmd_perl, NULL },
   { "server", N_("list, add or remove servers"),
     N_("[list] | "
     "[servername hostname port [-auto | -noauto] [-pwd password] [-nicks nick1 "
@@ -531,7 +538,7 @@ exec_weechat_command (t_irc_server *server, char *string)
                     gui_printf (NULL,
                                 _("%s wrong argument count for %s command \"%s\" "
                                 "(expected: %d arg%s)\n"),
-                                WEECHAT_ERROR, PACKAGE_NAME, 
+                                WEECHAT_ERROR, PACKAGE_NAME,
                                 command + 1,
                                 weechat_commands[i].max_arg,
                                 (weechat_commands[i].max_arg >
@@ -974,6 +981,64 @@ weechat_cmd_help (int argc, char **argv)
 }
 
 /*
+ * weechat_cmd_perl: list/load/unload Perl scripts
+ */
+
+int
+weechat_cmd_perl (int argc, char **argv)
+{
+    #ifdef PLUGIN_PERL
+    switch (argc)
+    {
+        case 0:
+            /* list all Perl scripts */
+            /* TODO: get list and display it */
+            break;
+        case 2:
+            if (strcmp (argv[0], "load") == 0)
+            {
+                /* load Perl script */
+                plugins_load (PLUGIN_PERL, argv[1]);
+            }
+            else
+            {
+                if (strcmp (argv[0], "unload") == 0)
+                {
+                    /* unload Perl script */
+                }
+                else
+                {
+                    gui_printf (NULL,
+                                _("%s unknown option for \"%s\" command\n"),
+                                WEECHAT_ERROR, "perl");
+                }
+            }
+            break;
+        default:
+            gui_printf (NULL,
+                        _("%s wrong argument count for \"%s\" command\n"),
+                        WEECHAT_ERROR, "perl");
+    }
+    #else
+    gui_printf (NULL,
+                _("WeeChat was build without Perl support.\n"
+                "Please rebuild WeeChat with "
+                "\"--enable-perl\" option for ./configure script\n");
+    #endif
+    return 0;
+}
+
+/*
+ * weechat_cmd_save: save options to disk
+ */
+
+int
+weechat_cmd_save (int argc, char **argv)
+{
+    return (config_write ((argc == 1) ? argv[0] : NULL));
+}
+
+/*
  * weechat_cmd_server: list, add or remove server(s)
  */
 
@@ -1276,16 +1341,6 @@ weechat_cmd_server (int argc, char **argv)
         server_destroy (&server);
     }
     return 0;
-}
-
-/*
- * weechat_cmd_save: set options
- */
-
-int
-weechat_cmd_save (int argc, char **argv)
-{
-    return (config_write ((argc == 1) ? argv[0] : NULL));
 }
 
 /*

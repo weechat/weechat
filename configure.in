@@ -51,6 +51,7 @@ AC_FUNC_SELECT_ARGTYPES
 AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([gethostbyname gethostname gettimeofday inet_ntoa memset mkdir select setlocale socket strcasecmp strchr strdup strncasecmp strpbrk strrchr strstr uname])
 
+AH_VERBATIM([PLUGIN_PERL], [#undef PLUGIN_PERL])
 AH_VERBATIM([DEBUG], [#undef DEBUG])
 
 AC_ARG_ENABLE(curses, [  --disable-curses        Turn off Curses interface (default=auto)],,enable_curses=yes)
@@ -90,18 +91,17 @@ if test "x$enable_gtk" = "xyes" ; then
     AC_SUBST(GTK_LIBS)
 fi
 
-PLUGIN_LIBS=
+PLUGINS_LIBS=
 
 if test "x$enable_perl" = "xyes" ; then
     enable_plugins="yes"
-    PLUGIN_LIBS="$PLUGIN_LIBS ../../plugins/perl/lib_weechat_perl.a"
+    PLUGINS_LIBS="$PLUGINS_LIBS ../../plugins/perl/lib_weechat_perl.a `perl -MExtUtils::Embed -e ldopts`"
     PERL_CFLAGS=`perl -MExtUtils::Embed -e ccopts`
-    PERL_LIBS=`perl -MExtUtils::Embed -e ldopts`
     AC_SUBST(PERL_CFLAGS)
-    AC_SUBST(PERL_LIBS)
+    AC_DEFINE(PLUGIN_PERL)
 fi
 
-AC_SUBST(PLUGIN_LIBS)
+AC_SUBST(PLUGINS_LIBS)
 
 if test "x$enable_debug" = "xyes" ; then
     AC_DEFINE(DEBUG)

@@ -16,16 +16,21 @@
 #
 
 if PLUGIN_PERL
-perl_dir=perl
+perl_dir = perl
 endif
 
 # if PLUGIN_PYTHON
-# python_dir=python
+# python_dir = python
 # endif
 
 # if PLUGIN_RUBY
-# ruby_dir=ruby
+# ruby_dir = ruby
 # endif
 
 # SUBDIRS = $(perl_dir) $(python_dir) $(ruby_dir)
 SUBDIRS = $(perl_dir)
+
+noinst_LIBRARIES = lib_weechat_plugins.a
+
+lib_weechat_plugins_a_SOURCES = plugins.h \
+                                plugins.c
