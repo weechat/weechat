@@ -26,7 +26,7 @@
 
 #define INPUT_BUFFER_BLOCK_SIZE 256
 
-#define NUM_COLORS                      45
+#define NUM_COLORS                      46
 #define COLOR_WIN_TITLE                 1
 #define COLOR_WIN_CHAT                  2
 #define COLOR_WIN_CHAT_TIME             3
@@ -59,12 +59,13 @@
 #define COLOR_WIN_NICK_FIRST            30
 #define COLOR_WIN_NICK_LAST             39
 #define COLOR_WIN_NICK_NUMBER           (COLOR_WIN_NICK_LAST - COLOR_WIN_NICK_FIRST + 1)
-#define COLOR_DCC_WAITING               40
-#define COLOR_DCC_CONNECTING            41
-#define COLOR_DCC_ACTIVE                42
-#define COLOR_DCC_DONE                  43
-#define COLOR_DCC_FAILED                44
-#define COLOR_DCC_ABORTED               45
+#define COLOR_DCC_SELECTED              40
+#define COLOR_DCC_WAITING               41
+#define COLOR_DCC_CONNECTING            42
+#define COLOR_DCC_ACTIVE                43
+#define COLOR_DCC_DONE                  44
+#define COLOR_DCC_FAILED                45
+#define COLOR_DCC_ABORTED               46
 
 #define SERVER(buffer)  ((t_irc_server *)(buffer->server))
 #define CHANNEL(buffer) ((t_irc_channel *)(buffer->channel))
@@ -142,6 +143,8 @@ struct t_gui_buffer
     /* server/channel */
     void *server;                   /* buffer's server                      */
     void *channel;                  /* buffer's channel                     */
+    
+    /* dcc buffer */
     int dcc;                        /* buffer is dcc status                 */
     
     /* chat content (lines, line is composed by many messages) */
@@ -209,6 +212,11 @@ struct t_gui_window
     
     /* windows for Qt GUI */
     /* TODO: declare Qt window */
+    
+    /* DCC */
+    void *dcc_first;                /* first dcc displayed                  */
+    void *dcc_selected;             /* selected dcc                         */
+    void *dcc_last_displayed;       /* last dcc displayed (for scroll)      */
     
     t_gui_buffer *buffer;           /* buffer currently displayed in window */
     

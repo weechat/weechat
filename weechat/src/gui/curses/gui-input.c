@@ -90,7 +90,24 @@ gui_read_keyb ()
                 break;
             /* cursor up */
             case KEY_UP:
-                if (!gui_current_window->buffer->dcc)
+                if (gui_current_window->buffer->dcc)
+                {
+                    if (dcc_list)
+                    {
+                        if (gui_current_window->dcc_selected
+                            && ((t_dcc *)(gui_current_window->dcc_selected))->prev_dcc)
+                        {
+                            if (gui_current_window->dcc_selected ==
+                                gui_current_window->dcc_first)
+                                gui_current_window->dcc_first =
+                                    ((t_dcc *)(gui_current_window->dcc_first))->prev_dcc;
+                            gui_current_window->dcc_selected =
+                                ((t_dcc *)(gui_current_window->dcc_selected))->prev_dcc;
+                            gui_draw_buffer_chat (gui_current_window->buffer, 1);
+                        }
+                    }
+                }
+                else
                 {
                     if (gui_current_window->buffer->ptr_history)
                     {
@@ -118,7 +135,35 @@ gui_read_keyb ()
                 break;
             /* cursor down */
             case KEY_DOWN:
-                if (!gui_current_window->buffer->dcc)
+                if (gui_current_window->buffer->dcc)
+                {
+                    if (dcc_list)
+                    {
+                        if (!gui_current_window->dcc_selected
+                            || ((t_dcc *)(gui_current_window->dcc_selected))->next_dcc)
+                        {
+                            if (gui_current_window->dcc_last_displayed
+                                && (gui_current_window->dcc_selected ==
+                                    gui_current_window->dcc_last_displayed))
+                            {
+                                if (gui_current_window->dcc_first)
+                                    gui_current_window->dcc_first =
+                                        ((t_dcc *)(gui_current_window->dcc_first))->next_dcc;
+                                else
+                                    gui_current_window->dcc_first =
+                                        dcc_list->next_dcc;
+                            }
+                            if (gui_current_window->dcc_selected)
+                                gui_current_window->dcc_selected =
+                                    ((t_dcc *)(gui_current_window->dcc_selected))->next_dcc;
+                            else
+                                gui_current_window->dcc_selected =
+                                    dcc_list->next_dcc;
+                            gui_draw_buffer_chat (gui_current_window->buffer, 1);
+                        }
+                    }
+                }
+                else
                 {
                     if (gui_current_window->buffer->ptr_history)
                     {

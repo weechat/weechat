@@ -99,6 +99,10 @@ gui_window_new (int x, int y, int width, int height)
         new_window->textview_nicklist = NULL;
         new_window->textbuffer_nicklist = NULL;
         
+        new_window->dcc_first = NULL;
+        new_window->dcc_selected = NULL;
+        new_window->dcc_last_displayed = NULL;
+        
         new_window->buffer = NULL;
         
         new_window->first_line_displayed = 0;

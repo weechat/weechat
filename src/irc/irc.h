@@ -186,11 +186,12 @@ struct t_dcc
     char *nick;                     /* remote nick                          */
     int sock;                       /* socket for connection                */
     int file;                       /* local file (for reading or writing)  */
-    char *filename;                 /* filename                             */
-    char *local_filename;           /* local filename                       */
+    char *filename;                 /* filename (given by sender)           */
+    char *local_filename;           /* local filename (with path)           */
     int filename_suffix;            /* suffix (.1 for ex) if renaming file  */
     unsigned long size;             /* file size                            */
     unsigned long pos;              /* number of bytes received/sent        */
+    t_dcc *prev_dcc;                /* link to previous dcc file/chat       */
     t_dcc *next_dcc;                /* link to next dcc file/chat           */
 };
 

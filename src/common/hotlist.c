@@ -83,6 +83,10 @@ hotlist_add (int priority, t_gui_buffer *buffer)
     if (!buffer)
         return;
     
+    /* do not highlight current buffer */
+    if (buffer == gui_current_window->buffer)
+        return;
+    
     if ((pos_hotlist = hotlist_search (buffer)))
     {
         /* return if priority is greater or equal than the one to add */

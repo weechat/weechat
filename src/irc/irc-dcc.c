@@ -46,25 +46,40 @@ char *dcc_status_string[] =     /* strings for DCC status                   */
 
 
 /*
+ * dcc_redraw: redraw DCC buffer (and add to hotlist)
+ */
+
+void
+dcc_redraw (int highlight)
+{
+    gui_draw_buffer_chat (gui_get_dcc_buffer (), 0);
+    if (highlight)
+    {
+        hotlist_add (1, gui_get_dcc_buffer ());
+        gui_draw_buffer_status (gui_current_window->buffer, 0);
+    }
+}
+
+/*
  * dcc_connect: connect to another host
  */
 
 void
-dcc_connect (t_dcc *dcc)
+dcc_connect (t_dcc *ptr_dcc)
 {
     struct sockaddr_in addr;
     
-    dcc->status = DCC_CONNECTING;
+    ptr_dcc->status = DCC_CONNECTING;
     
-    dcc->sock = socket (AF_INET, SOCK_STREAM, 0);
-    if (dcc->sock == -1)
+    ptr_dcc->sock = socket (AF_INET, SOCK_STREAM, 0);
+    if (ptr_dcc->sock == -1)
         return;
     memset (&addr, 0, sizeof (addr));
-    addr.sin_port = htons (dcc->port);
+    addr.sin_port = htons (ptr_dcc->port);
     addr.sin_family = AF_INET;
-    addr.sin_addr.s_addr = htonl (dcc->addr);
-    fcntl (dcc->sock, F_SETFL, O_NONBLOCK);
-    connect (dcc->sock, (struct sockaddr *) &addr, sizeof (addr));
+    addr.sin_addr.s_addr = htonl (ptr_dcc->addr);
+    fcntl (ptr_dcc->sock, F_SETFL, O_NONBLOCK);
+    connect (ptr_dcc->sock, (struct sockaddr *) &addr, sizeof (addr));
 }
 
 /*
@@ -134,6 +149,7 @@ dcc_accept (t_dcc *ptr_dcc)
         if (!ptr_dcc->local_filename)
         {
             ptr_dcc->status = DCC_FAILED;
+            dcc_redraw (1);
             return;
         }
         if (cfg_dcc_download_path[0] == '~')
@@ -156,6 +172,7 @@ dcc_accept (t_dcc *ptr_dcc)
             if (!cfg_dcc_auto_rename)
             {
                 ptr_dcc->status = DCC_FAILED;
+                dcc_redraw (1);
                 return;
             }
             
@@ -163,6 +180,7 @@ dcc_accept (t_dcc *ptr_dcc)
             if (!filename2)
             {
                 ptr_dcc->status = DCC_FAILED;
+                dcc_redraw (1);
                 return;
             }
             ptr_dcc->filename_suffix = 0;
@@ -183,6 +201,7 @@ dcc_accept (t_dcc *ptr_dcc)
                               O_CREAT | O_TRUNC | O_WRONLY,
                               0644);
     }
+    dcc_redraw (1);
 }
 
 /*
@@ -194,7 +213,6 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
          unsigned int size)
 {
     t_dcc *new_dcc;
-    t_gui_buffer *dcc_buffer;
     
     if ((new_dcc = (t_dcc *) malloc (sizeof (t_dcc))) == NULL)
     {
@@ -214,26 +232,52 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
     new_dcc->filename_suffix = -1;
     new_dcc->size = size;
     new_dcc->pos = 0;
+    new_dcc->prev_dcc = NULL;
     new_dcc->next_dcc = dcc_list;
+    if (dcc_list)
+        dcc_list->prev_dcc = new_dcc;
     dcc_list = new_dcc;
     
-    gui_printf (NULL, "Incoming DCC file: from %s, address:%d.%d.%d.%d, "
-                "port=%d, name=%s, size=%lu bytes\n",
-                nick,
-                addr >> 24, (addr >> 16) & 0xff, (addr >> 8) & 0xff, addr & 0xff,
-                port, filename, size);
+    gui_current_window->dcc_first = NULL;
+    gui_current_window->dcc_selected = NULL;
     
-    dcc_buffer = gui_get_dcc_buffer ();
+    if (type == DCC_FILE_RECV)
+    {
+        irc_display_prefix (server->buffer, PREFIX_INFO);
+        gui_printf (server->buffer, _("Incoming DCC file from "));
+        gui_printf_color (server->buffer,
+                          COLOR_WIN_CHAT_NICK,
+                          "%s",
+                          nick);
+        gui_printf_color (server->buffer,
+                          COLOR_WIN_CHAT_DARK,
+                          " (");
+        gui_printf_color (server->buffer,
+                          COLOR_WIN_CHAT_HOST,
+                          "%d.%d.%d.%d",
+                          addr >> 24, (addr >> 16) & 0xff, (addr >> 8) & 0xff, addr & 0xff);
+        gui_printf_color (server->buffer,
+                          COLOR_WIN_CHAT_DARK,
+                          ")");
+        gui_printf (server->buffer, ": ");
+        gui_printf_color (server->buffer,
+                          COLOR_WIN_CHAT_CHANNEL,
+                          "%s",
+                          filename);
+        gui_printf (server->buffer, ", ");
+        gui_printf_color (server->buffer,
+                          COLOR_WIN_CHAT_CHANNEL,
+                          "%lu",
+                          size);
+        gui_printf (server->buffer, _(" bytes\n"));
+    }
     
     if ( ( (type == DCC_CHAT_RECV) && (cfg_dcc_auto_accept_chats) )
         || ( (type == DCC_FILE_RECV) && (cfg_dcc_auto_accept_files) ) )
-    {
         dcc_accept (new_dcc);
-        hotlist_add (1, dcc_buffer);
-    }
     else
-        hotlist_add (2, dcc_buffer);
-    gui_draw_buffer_status (dcc_buffer, 0);
+        hotlist_add (2, gui_get_dcc_buffer ());
+    gui_draw_buffer_status (gui_current_window->buffer, 0);
     
     return new_dcc;
 }
@@ -260,12 +304,16 @@ dcc_handle ()
                 if (num != -1)
                 {
                     if (num == 0)
+                    {
                         dcc_close (ptr_dcc, DCC_FAILED);
+                        dcc_redraw (1);
+                    }
                     else
                     {
                         if (write (ptr_dcc->file, buffer, num) == -1)
                         {
                             dcc_close (ptr_dcc, DCC_FAILED);
+                            dcc_redraw (1);
                             return;
                         }
                         ptr_dcc->pos += (unsigned long) num;
@@ -273,11 +321,27 @@ dcc_handle ()
                         send (ptr_dcc->sock, (char *) &pos, 4, 0);
                         if (ptr_dcc->pos >= ptr_dcc->size)
                         {
-                            gui_printf (NULL,
-                                        _("DCC: file \"%s\" received from \"%s\": ok!\n"),
-                                        ptr_dcc->filename, ptr_dcc->nick);
+                            irc_display_prefix (ptr_dcc->server->buffer, PREFIX_INFO);
+                            gui_printf (ptr_dcc->server->buffer, _("DCC: file "));
+                            gui_printf_color (ptr_dcc->server->buffer,
+                                              COLOR_WIN_CHAT_CHANNEL,
+                                              "%s",
+                                              ptr_dcc->filename);
+                            gui_printf (ptr_dcc->server->buffer, _(" (local filename: "));
+                            gui_printf_color (ptr_dcc->server->buffer,
+                                              COLOR_WIN_CHAT_CHANNEL,
+                                              "%s",
+                                              ptr_dcc->local_filename);
+                            gui_printf (ptr_dcc->server->buffer, _(") from "));
+                            gui_printf_color (ptr_dcc->server->buffer,
+                                              COLOR_WIN_CHAT_NICK,
+                                              "%s",
+                                              ptr_dcc->nick);
+                            gui_printf (ptr_dcc->server->buffer, _(": ok!\n"));
                             dcc_close (ptr_dcc, DCC_DONE);
+                            dcc_redraw (1);
                         }
+                        dcc_redraw (0);
                     }
                 }
             }

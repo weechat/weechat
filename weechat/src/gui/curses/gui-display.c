@@ -562,7 +562,7 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
 {
     t_gui_window *ptr_win;
     t_gui_line *ptr_line;
-    t_dcc *ptr_dcc;
+    t_dcc *dcc_first, *dcc_selected, *ptr_dcc;
     char format_empty[32];
     int i, j, lines_used, num_bars;
     char *unit_name[] = { N_("bytes"), N_("Kb"), N_("Mb"), N_("Gb") };
@@ -594,28 +594,38 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
             if (buffer->dcc)
             {
                 i = 0;
-                for (ptr_dcc = dcc_list; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
+                dcc_first = (ptr_win->dcc_first) ? (t_dcc *) ptr_win->dcc_first : dcc_list;
+                dcc_selected = (ptr_win->dcc_selected) ? (t_dcc *) ptr_win->dcc_selected : dcc_list;
+                for (ptr_dcc = dcc_first; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
                 {
                     if (i >= ptr_win->win_chat_height - 1)
                         break;
                     if ((ptr_dcc->type == DCC_FILE_RECV)
                         || (ptr_dcc->type == DCC_FILE_SEND))
                     {
-                        gui_window_set_color (ptr_win->win_chat, COLOR_WIN_CHAT);
-                        mvwprintw (ptr_win->win_chat, i, 0, " %-16s %s",
+                        gui_window_set_color (ptr_win->win_chat,
+                                              (ptr_dcc == dcc_selected) ?
+                                                  COLOR_DCC_SELECTED : COLOR_WIN_CHAT);
+                        mvwprintw (ptr_win->win_chat, i, 0, "%s %-16s %s",
+                                   (ptr_dcc == dcc_selected) ? ">>" : "  ",
                                    ptr_dcc->nick, ptr_dcc->filename);
                         if (ptr_dcc->filename_suffix > 0)
                             wprintw (ptr_win->win_chat, " (.%d)",
                                      ptr_dcc->filename_suffix);
-                        gui_window_set_color (ptr_win->win_chat, COLOR_WIN_CHAT);
-                        mvwprintw (ptr_win->win_chat, i + 1, 0, " %s ",
+                        gui_window_set_color (ptr_win->win_chat,
+                                              (ptr_dcc == dcc_selected) ?
+                                                  COLOR_DCC_SELECTED : COLOR_WIN_CHAT);
+                        mvwprintw (ptr_win->win_chat, i + 1, 0, "%s %s ",
+                                   (ptr_dcc == dcc_selected) ? ">>" : "  ",
                                    (ptr_dcc->type == DCC_FILE_RECV) ?
                                    "--->" : "<---");
                         gui_window_set_color (ptr_win->win_chat,
                                               COLOR_DCC_WAITING + ptr_dcc->status);
                         wprintw (ptr_win->win_chat, "%-10s",
                                  dcc_status_string[ptr_dcc->status]);
-                        gui_window_set_color (ptr_win->win_chat, COLOR_WIN_CHAT);
+                        gui_window_set_color (ptr_win->win_chat,
+                                              (ptr_dcc == dcc_selected) ?
+                                                  COLOR_DCC_SELECTED : COLOR_WIN_CHAT);
                         wprintw (ptr_win->win_chat, "  [",
                                  dcc_status_string[ptr_dcc->status]);
                         if (ptr_dcc->size == 0)
@@ -647,10 +657,10 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                                  unit_name[num_unit],
                                  ((long double) ptr_dcc->size) / ((long double)(unit_divide[num_unit])),
                                  unit_name[num_unit]);
+                        ptr_win->dcc_last_displayed = ptr_dcc;
                         i += 2;
                     }
                 }
-                move (ptr_win->win_y + 1, ptr_win->win_x);
             }
             else
             {
@@ -1195,6 +1205,9 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
                     snprintf (format, 32, "%%-%ds", input_width);
                     mvwprintw (ptr_win->win_input, 0, 0, format, "");
                     wclrtoeol (ptr_win->win_input);
+                    if (ptr_win == gui_current_window)
+                        move (ptr_win->win_y + ptr_win->win_height - 1,
+                              ptr_win->win_x);
                 }
                 else
                 {
@@ -1519,6 +1532,8 @@ gui_curses_resize_handler ()
     /* TODO: manage when some windows are outside new term size */
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
+        ptr_win->dcc_first = NULL;
+        ptr_win->dcc_selected = NULL;
         if (ptr_win->win_x + ptr_win->win_width == old_width)
             ptr_win->win_width = new_width - ptr_win->win_x;
         if (ptr_win->win_y + ptr_win->win_height == old_height)
@@ -1720,6 +1735,8 @@ gui_init_colors ()
                 (color & A_BOLD) ? A_BOLD : 0;
         }
         
+        init_pair (COLOR_DCC_SELECTED,
+            cfg_col_dcc_selected & A_CHARTEXT, cfg_col_chat_bg);
         init_pair (COLOR_DCC_WAITING,
             cfg_col_dcc_waiting & A_CHARTEXT, cfg_col_chat_bg);
         init_pair (COLOR_DCC_CONNECTING,
@@ -1763,6 +1780,7 @@ gui_init_colors ()
         color_attr[COLOR_WIN_NICK_SEP - 1] = 0;
         color_attr[COLOR_WIN_NICK_SELF - 1] = cfg_col_nick_self & A_BOLD;
         color_attr[COLOR_WIN_NICK_PRIVATE - 1] = cfg_col_nick_private & A_BOLD;
+        color_attr[COLOR_DCC_SELECTED - 1] = cfg_col_dcc_selected & A_BOLD;
         color_attr[COLOR_DCC_WAITING - 1] = cfg_col_dcc_waiting & A_BOLD;
         color_attr[COLOR_DCC_CONNECTING - 1] = cfg_col_dcc_connecting & A_BOLD;
         color_attr[COLOR_DCC_ACTIVE - 1] = cfg_col_dcc_active & A_BOLD;

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.0.8-pre2\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2004-09-09 23:11+0200\n"
+"POT-Creation-Date: 2004-09-11 15:10+0200\n"
 "PO-Revision-Date: 2004-08-08 20:47+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1557,41 +1557,49 @@ msgstr ""
 "%s: tous les noms d'utilisateurs déclarés sont déjà en cours d'utilisation, "
 "fermeture de la connexion avec le serveur !\n"
 
-#: src/irc/irc-dcc.c:43
+#: src/irc/irc-dcc.c:44
 msgid "Waiting"
 msgstr "Attente"
 
-#: src/irc/irc-dcc.c:43
+#: src/irc/irc-dcc.c:44
 msgid "Connecting"
 msgstr "Connexion"
 
-#: src/irc/irc-dcc.c:43
+#: src/irc/irc-dcc.c:44
 msgid "Active"
 msgstr "Actif"
 
-#: src/irc/irc-dcc.c:43
+#: src/irc/irc-dcc.c:44
 msgid "Done"
 msgstr "Terminé"
 
-#: src/irc/irc-dcc.c:43
+#: src/irc/irc-dcc.c:44
 msgid "Failed"
 msgstr "Echoué"
 
-#: src/irc/irc-dcc.c:44
+#: src/irc/irc-dcc.c:45
 msgid "Aborted"
 msgstr "Interrompu"
 
-#: src/irc/irc-dcc.c:191
+#: src/irc/irc-dcc.c:219
 #, c-format
 msgid "%s not enough memory for new DCC\n"
 msgstr "%s pas assez de mémoire pour un nouveau DCC\n"
 
-#: src/irc/irc-dcc.c:259
+#: src/irc/irc-dcc.c:244
+msgid "Incoming DCC file from "
+msgstr "Réception fichier DCC de "
+
+#: src/irc/irc-dcc.c:269
+msgid " bytes\n"
+msgstr "octets\n"
+
+#: src/irc/irc-dcc.c:323
 #, c-format
 msgid "DCC: file \"%s\" received from \"%s\": ok!\n"
 msgstr "DCC: fichier \"%s\" reçu de \"%s\": ok !\n"
 
-#: src/irc/irc-dcc.c:284
+#: src/irc/irc-dcc.c:350
 #, c-format
 msgid "aborting active DCC: \"%s\" from %s\n"
 msgstr "abandon du DCC actif: \"%s\" de %s\n"
@@ -1673,16 +1681,16 @@ msgstr "Mo"
 msgid "Gb"
 msgstr "Go"
 
-#: src/gui/curses/gui-display.c:987
+#: src/gui/curses/gui-display.c:992
 #, c-format
 msgid "%d:[not connected] "
 msgstr "%d:[non connecté] "
 
-#: src/gui/curses/gui-display.c:995
+#: src/gui/curses/gui-display.c:1000
 msgid "[Act: "
 msgstr "[Act: "
 
-#: src/gui/curses/gui-display.c:1030 src/gui/curses/gui-display.c:1033
+#: src/gui/curses/gui-display.c:1039 src/gui/curses/gui-display.c:1042
 msgid "-MORE-"
 msgstr "-PLUS-"
 
@@ -1690,17 +1698,17 @@ msgstr "-PLUS-"
 msgid "server"
 msgstr "serveur"
 
-#: src/gui/gui-common.c:304
+#: src/gui/gui-common.c:306
 #, c-format
 msgid "%s not enough memory for infobar message\n"
 msgstr "%s pas assez de mémoire pour un message de la barre d'infos\n"
 
-#: src/gui/gui-common.c:439
+#: src/gui/gui-common.c:441
 #, c-format
 msgid "%s not enough memory for new line!\n"
 msgstr "%s pas assez de mémoire pour une nouvelle ligne !\n"
 
-#: src/gui/gui-common.c:482
+#: src/gui/gui-common.c:484
 msgid "not enough memory!\n"
 msgstr "pas assez de mémoire !\n"
 

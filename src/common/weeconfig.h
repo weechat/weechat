@@ -127,6 +127,7 @@ extern int cfg_col_nick_sep;
 extern int cfg_col_nick_self;
 extern int cfg_col_nick_private;
 extern int cfg_col_nick_bg;
+extern int cfg_col_dcc_selected;
 extern int cfg_col_dcc_waiting;
 extern int cfg_col_dcc_connecting;
 extern int cfg_col_dcc_active;

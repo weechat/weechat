@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2004-09-09 23:11+0200\n"
+"POT-Creation-Date: 2004-09-11 15:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1456,41 +1456,49 @@ msgid ""
 "server!\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:43
+#: src/irc/irc-dcc.c:44
 msgid "Waiting"
 msgstr ""
 
-#: src/irc/irc-dcc.c:43
+#: src/irc/irc-dcc.c:44
 msgid "Connecting"
 msgstr ""
 
-#: src/irc/irc-dcc.c:43
+#: src/irc/irc-dcc.c:44
 msgid "Active"
 msgstr ""
 
-#: src/irc/irc-dcc.c:43
+#: src/irc/irc-dcc.c:44
 msgid "Done"
 msgstr ""
 
-#: src/irc/irc-dcc.c:43
+#: src/irc/irc-dcc.c:44
 msgid "Failed"
 msgstr ""
 
-#: src/irc/irc-dcc.c:44
+#: src/irc/irc-dcc.c:45
 msgid "Aborted"
 msgstr ""
 
-#: src/irc/irc-dcc.c:191
+#: src/irc/irc-dcc.c:219
 #, c-format
 msgid "%s not enough memory for new DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:259
+#: src/irc/irc-dcc.c:244
+msgid "Incoming DCC file from "
+msgstr ""
+
+#: src/irc/irc-dcc.c:269
+msgid " bytes\n"
+msgstr ""
+
+#: src/irc/irc-dcc.c:323
 #, c-format
 msgid "DCC: file \"%s\" received from \"%s\": ok!\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:284
+#: src/irc/irc-dcc.c:350
 #, c-format
 msgid "aborting active DCC: \"%s\" from %s\n"
 msgstr ""
@@ -1566,16 +1574,16 @@ msgstr ""
 msgid "Gb"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:987
+#: src/gui/curses/gui-display.c:992
 #, c-format
 msgid "%d:[not connected] "
 msgstr ""
 
-#: src/gui/curses/gui-display.c:995
+#: src/gui/curses/gui-display.c:1000
 msgid "[Act: "
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1030 src/gui/curses/gui-display.c:1033
+#: src/gui/curses/gui-display.c:1039 src/gui/curses/gui-display.c:1042
 msgid "-MORE-"
 msgstr ""
 
@@ -1583,17 +1591,17 @@ msgstr ""
 msgid "server"
 msgstr ""
 
-#: src/gui/gui-common.c:304
+#: src/gui/gui-common.c:306
 #, c-format
 msgid "%s not enough memory for infobar message\n"
 msgstr ""
 
-#: src/gui/gui-common.c:439
+#: src/gui/gui-common.c:441
 #, c-format
 msgid "%s not enough memory for new line!\n"
 msgstr ""
 
-#: src/gui/gui-common.c:482
+#: src/gui/gui-common.c:484
 msgid "not enough memory!\n"
 msgstr ""
 

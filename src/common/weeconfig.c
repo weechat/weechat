@@ -193,6 +193,7 @@ int cfg_col_nick_sep;
 int cfg_col_nick_self;
 int cfg_col_nick_private;
 int cfg_col_nick_bg;
+int cfg_col_dcc_selected;
 int cfg_col_dcc_waiting;
 int cfg_col_dcc_connecting;
 int cfg_col_dcc_active;
@@ -354,6 +355,10 @@ t_config_option weechat_options_colors[] =
     "default", NULL, &cfg_col_nick_bg, NULL, &config_change_color },
   
   /* DCC */
+  { "col_chat_dcc_selected", N_("color for selected DCC"),
+    N_("color for selected DCC (chat window)"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "white", NULL, &cfg_col_dcc_selected, NULL, &config_change_color },
   { "col_dcc_waiting", N_("color for \"waiting\" dcc status"),
     N_("color for \"waiting\" dcc status"),
     OPTION_TYPE_COLOR, 0, 0, 0,
