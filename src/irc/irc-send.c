@@ -56,7 +56,7 @@ irc_login (t_irc_server *server)
     hostname[sizeof (hostname) - 1] = '\0';
     if (!hostname[0])
         strcpy (hostname, _("unknown"));
-    irc_display_prefix (server->buffer, PREFIX_SERVER);
+    irc_display_prefix (server->buffer, PREFIX_INFO);
     gui_printf (server->buffer,
                 _("%s: using local hostname \"%s\"\n"),
                 PACKAGE_NAME, hostname);
