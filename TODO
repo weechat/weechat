@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2004-02-29
+TODO - 2004-03-20
 
 Legend:
   #  done
@@ -18,12 +18,13 @@ v0.0.6:
     + Solaris version
 
  * IRC protocol:
-    + "/mode" command: change the user/channels modes
+    # "/mode" command: change the user/channels modes
     + "/dcc" command (for chat and sending/receiving files)
+    # "/query" command: start private conversation
 
  * Interface:
     + internationalization (traduce WeeChat in many languages)
-    - display current channel modes (example : #weechat(+nt))
+    # display current channel modes (example : #weechat(+nt))
 
  * Configuration:
     + add missing options for config file

@@ -1143,6 +1143,7 @@ config_create_default ()
     fprintf (file, "M=msg\n");
     fprintf (file, "# MUB=unban *\n");
     fprintf (file, "N=names\n");
+    fprintf (file, "Q=query\n");
     fprintf (file, "T=topic\n");
     fprintf (file, "# UB=unban\n");
     fprintf (file, "# UNIG=unignore\n");

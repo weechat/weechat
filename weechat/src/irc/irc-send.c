@@ -417,6 +417,20 @@ irc_cmd_send_mode (t_irc_server *server, char *arguments)
 }
 
 /*
+ * irc_cmd_send_motd: get the "Message Of The Day"
+ */
+
+int
+irc_cmd_send_motd (t_irc_server *server, char *arguments)
+{
+    if (arguments)
+        server_sendf (server, "MOTD %s\r\n", arguments);
+    else
+        server_sendf (server, "MOTD\r\n");
+    return 0;
+}
+
+/*
  * irc_cmd_send_msg: send a message to a nick or channel
  */
 
@@ -534,20 +548,6 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
                     WEECHAT_ERROR, "msg");
         return -1;
     }
-    return 0;
-}
-
-/*
- * irc_cmd_send_motd: get the "Message Of The Day"
- */
-
-int
-irc_cmd_send_motd (t_irc_server *server, char *arguments)
-{
-    if (arguments)
-        server_sendf (server, "MOTD %s\r\n", arguments);
-    else
-        server_sendf (server, "MOTD\r\n");
     return 0;
 }
 
@@ -722,6 +722,64 @@ int
 irc_cmd_send_pong (t_irc_server *server, char *arguments)
 {
     server_sendf (server, "PONG %s\r\n", arguments);
+    return 0;
+}
+
+/*
+ * irc_cmd_send_query: start private conversation with a nick
+ */
+
+int
+irc_cmd_send_query (t_irc_server *server, char *arguments)
+{
+    char *pos;
+    t_irc_channel *ptr_channel;
+    
+    pos = strchr (arguments, ' ');
+    if (pos)
+    {
+        pos[0] = '\0';
+        pos++;
+        while (pos[0] == ' ')
+            pos++;
+        if (!pos[0])
+            pos = NULL;
+    }
+    
+    /* create private window if not already opened */
+    ptr_channel = channel_search (server, arguments);
+    if (!ptr_channel)
+    {
+        ptr_channel = channel_new (server, CHAT_PRIVATE, arguments, 1);
+        if (!ptr_channel)
+        {
+            gui_printf (server->window,
+                        _("%s cannot create new private window \"%s\"\n"),
+                        WEECHAT_ERROR,
+                        arguments);
+            return -1;
+        }
+        gui_redraw_window_title (ptr_channel->window);
+    }
+    
+    /* display text if given */
+    if (pos)
+    {        
+        gui_printf_color_type (ptr_channel->window,
+                               MSG_TYPE_NICK,
+                               COLOR_WIN_CHAT_DARK, "<");
+        gui_printf_color_type (ptr_channel->window,
+                                MSG_TYPE_NICK,
+                                COLOR_WIN_NICK_SELF,
+                                "%s", server->nick);
+        gui_printf_color_type (ptr_channel->window,
+                                MSG_TYPE_NICK,
+                                COLOR_WIN_CHAT_DARK, "> ");
+        gui_printf_color_type (ptr_channel->window,
+                                MSG_TYPE_MSG,
+                                COLOR_WIN_CHAT, "%s\n", pos);
+        server_sendf (server, "PRIVMSG %s :%s\r\n", arguments, pos);
+    }
     return 0;
 }
 
