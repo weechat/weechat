@@ -831,8 +831,8 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
                 {
                     irc_display_prefix (server->buffer, PREFIX_ERROR);
                     gui_printf_nolog (server->buffer,
-                                      _("%s nick not found for \"%s\" command\n"),
-                                      WEECHAT_ERROR, "msg");
+                                      _("%s nick \"%s\" not found for \"%s\" command\n"),
+                                      WEECHAT_ERROR, server->nick, "msg");
                 }
                 server_sendf (server, "PRIVMSG %s :%s\r\n", ptr_channel->name, pos);
             }
@@ -856,8 +856,8 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
                         {
                             irc_display_prefix (server->buffer, PREFIX_ERROR);
                             gui_printf_nolog (server->buffer,
-                                              _("%s nick not found for \"%s\" command\n"),
-                                              WEECHAT_ERROR, "msg");
+                                              _("%s nick \"%s\" not found for \"%s\" command\n"),
+                                              WEECHAT_ERROR, server->nick, "msg");
                         }
                     }
                     server_sendf (server, "PRIVMSG %s :%s\r\n", arguments, pos);

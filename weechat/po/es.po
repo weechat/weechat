@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.1-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-03-14 00:32+0100\n"
+"POT-Creation-Date: 2005-03-15 19:59+0100\n"
 "PO-Revision-Date: 2005-03-14 00:26+0100\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1285,8 +1285,8 @@ msgstr ""
 #: src/irc/irc-send.c:834 src/irc/irc-send.c:859 src/irc/irc-recv.c:321
 #: src/irc/irc-recv.c:1167
 #, c-format
-msgid "%s nick not found for \"%s\" command\n"
-msgstr "%s usuario no encontrado para el comando \"%s\"\n"
+msgid "%s nick \"%s\" not found for \"%s\" command\n"
+msgstr "%s usuario \"%s\" no encontrado para el comando \"%s\"\n"
 
 #: src/irc/irc-send.c:911 src/irc/irc-send.c:1188 src/irc/irc-recv.c:1405
 #, c-format
@@ -1310,8 +1310,8 @@ msgstr "por"
 #: src/irc/irc-recv.c:989 src/irc/irc-recv.c:1177 src/irc/irc-recv.c:2711
 #: src/irc/irc-recv.c:2778
 #, c-format
-msgid "%s channel not found for \"%s\" command\n"
-msgstr "%s canal no encontrado para el comando \"%s\"\n"
+msgid "%s channel \"%s\" not found for \"%s\" command\n"
+msgstr "%s canal \"%s\" no encontrado para el comando \"%s\"\n"
 
 #: src/irc/irc-recv.c:221
 #, c-format

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-03-14 00:32+0100\n"
+"POT-Creation-Date: 2005-03-15 19:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1185,7 +1185,7 @@ msgstr ""
 #: src/irc/irc-send.c:834 src/irc/irc-send.c:859 src/irc/irc-recv.c:321
 #: src/irc/irc-recv.c:1167
 #, c-format
-msgid "%s nick not found for \"%s\" command\n"
+msgid "%s nick \"%s\" not found for \"%s\" command\n"
 msgstr ""
 
 #: src/irc/irc-send.c:911 src/irc/irc-send.c:1188 src/irc/irc-recv.c:1405
@@ -1210,7 +1210,7 @@ msgstr ""
 #: src/irc/irc-recv.c:989 src/irc/irc-recv.c:1177 src/irc/irc-recv.c:2711
 #: src/irc/irc-recv.c:2778
 #, c-format
-msgid "%s channel not found for \"%s\" command\n"
+msgid "%s channel \"%s\" not found for \"%s\" command\n"
 msgstr ""
 
 #: src/irc/irc-recv.c:221

@@ -192,8 +192,8 @@ irc_cmd_recv_invite (t_irc_server *server, char *host, char *arguments)
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf_nolog (server->buffer,
-                          _("%s channel not found for \"%s\" command\n"),
-                          WEECHAT_ERROR, "invite");
+                          _("%s channel \"%s\" not found for \"%s\" command\n"),
+                          WEECHAT_ERROR, "", "invite");
         return -1;
     }
     return 0;
@@ -285,8 +285,8 @@ irc_cmd_recv_kick (t_irc_server *server, char *host, char *arguments)
         {
             irc_display_prefix (server->buffer, PREFIX_ERROR);
             gui_printf_nolog (server->buffer,
-                              _("%s channel not found for \"%s\" command\n"),
-                              WEECHAT_ERROR, "kick");
+                              _("%s channel \"%s\" not found for \"%s\" command\n"),
+                              WEECHAT_ERROR, arguments, "kick");
             return -1;
         }
     
@@ -318,8 +318,8 @@ irc_cmd_recv_kick (t_irc_server *server, char *host, char *arguments)
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf_nolog (server->buffer,
-                          _("%s nick not found for \"%s\" command\n"),
-                          WEECHAT_ERROR, "kick");
+                          _("%s nick \"%s\" not found for \"%s\" command\n"),
+                          WEECHAT_ERROR, "", "kick");
         return -1;
     }
     if (strcmp (pos_nick, server->nick) == 0)
@@ -653,8 +653,8 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *arguments)
         {
             irc_display_prefix (server->buffer, PREFIX_ERROR);
             gui_printf_nolog (server->buffer,
-                              _("%s channel not found for \"%s\" command\n"),
-                              WEECHAT_ERROR, "mode");
+                              _("%s channel \"%s\" not found for \"%s\" command\n"),
+                              WEECHAT_ERROR, arguments, "mode");
             return -1;
         }
     }
@@ -986,8 +986,8 @@ irc_cmd_recv_part (t_irc_server *server, char *host, char *arguments)
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf_nolog (server->buffer,
-                          _("%s channel not found for \"%s\" command\n"),
-                          WEECHAT_ERROR, "part");
+                          _("%s channel \"%s\" not found for \"%s\" command\n"),
+                          WEECHAT_ERROR, arguments, "part");
         return -1;
     }
     
@@ -1164,8 +1164,8 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                     {
                         irc_display_prefix (server->buffer, PREFIX_ERROR);
                         gui_printf_nolog (server->buffer,
-                                          _("%s nick not found for \"%s\" command\n"),
-                                          WEECHAT_ERROR, "privmsg");
+                                          _("%s nick \"%s\" not found for \"%s\" command\n"),
+                                          WEECHAT_ERROR, host, "privmsg");
                         return -1;
                     }
                 }
@@ -1174,8 +1174,8 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
             {
                 irc_display_prefix (server->buffer, PREFIX_ERROR);
                 gui_printf_nolog (server->buffer,
-                                  _("%s channel not found for \"%s\" command\n"),
-                                  WEECHAT_ERROR, "privmsg");
+                                  _("%s channel \"%s\" not found for \"%s\" command\n"),
+                                  WEECHAT_ERROR, arguments, "privmsg");
                 return -1;
             }
         }
@@ -2708,8 +2708,8 @@ irc_cmd_recv_332 (t_irc_server *server, char *host, char *arguments)
             {
                 irc_display_prefix (server->buffer, PREFIX_ERROR);
                 gui_printf_nolog (server->buffer,
-                                  _("%s channel not found for \"%s\" command\n"),
-                                  WEECHAT_ERROR, "332");
+                                  _("%s channel \"%s\" not found for \"%s\" command\n"),
+                                  WEECHAT_ERROR, pos, "332");
                 return -1;
             }
         }
@@ -2775,8 +2775,8 @@ irc_cmd_recv_333 (t_irc_server *server, char *host, char *arguments)
                 {
                     irc_display_prefix (server->buffer, PREFIX_ERROR);
                     gui_printf_nolog (server->buffer,
-                                      _("%s channel not found for \"%s\" command\n"),
-                                      WEECHAT_ERROR, "333");
+                                      _("%s channel \"%s\" not found for \"%s\" command\n"),
+                                      WEECHAT_ERROR, pos_channel, "333");
                     return -1;
                 }
             }
