@@ -8,11 +8,9 @@
  * ###             WeeChat - Wee Enhanced Environment for Chat              ###
  * ###                 Fast & light environment for Chat                    ###
  * ###                                                                      ###
- * ###               By: FlashCode <flashcode@flashtux.org>                 ###
- * ###                   Bounga <bounga@altern.org>                         ###
- * ###                   Xahlexx <xahlexx@weeland.org>                      ###
- * ###                                                                      ###
- * ###                   http://weechat.flashtux.org                        ###
+ * ###                By FlashCode <flashcode@flashtux.org>                 ###
+   ###                                                                      ###
+ * ###                     http://weechat.flashtux.org                      ###
  * ###                                                                      ###
  * ############################################################################
  *
@@ -49,7 +47,11 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <signal.h>
+
+#ifdef HAVE_ICONV
 #include <iconv.h>
+#endif
+
 #include <langinfo.h>
 
 #include "weechat.h"
@@ -87,8 +89,11 @@ my_sigint ()
 char *
 weechat_convert_encoding (char *from_code, char *to_code, char *string)
 {
+    char *outbuf;
+    
+    #ifdef HAVE_ICONV
     iconv_t cd;
-    char *inbuf, *ptr_inbuf, *outbuf, *ptr_outbuf;
+    char *inbuf, *ptr_inbuf, *ptr_outbuf;
     int inbytesleft, outbytesleft;
     
     if (from_code && from_code[0] && to_code && to_code[0]
@@ -119,6 +124,12 @@ weechat_convert_encoding (char *from_code, char *to_code, char *string)
     }
     else
         outbuf = strdup (string);
+    #else
+    /* make gcc happy */
+    (void) from_code;
+    (void) to_code;
+    outbuf = strdup (string);
+    #endif /* HAVE_ICONV */
     
     return outbuf;
 }
