@@ -558,6 +558,15 @@ completion_find_context (t_completion *completion, void *channel, char *buffer,
         }
     }
     
+    /* nick completion with nothing as base word is disabled,
+       in order to prevent completion when pasting messages with [tab] inside */
+    if ((completion->context == COMPLETION_NICK)
+        && ((!completion->base_word) || (!completion->base_word[0])))
+    {
+        completion->context = COMPLETION_NULL;
+        return;
+    }
+    
     if (!completion->completion_list && channel &&
         (((t_irc_channel *)channel)->type == CHAT_PRIVATE)
         && (completion->context == COMPLETION_NICK))
