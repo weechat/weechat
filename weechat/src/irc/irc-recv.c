@@ -272,16 +272,264 @@ irc_cmd_recv_kick (t_irc_server *server, char *host, char *arguments)
 }
 
 /*
+ * irc_get_channel_modes: get channel modes
+ */
+
+void irc_get_channel_modes (t_irc_channel *ptr_channel, char *channel_name,
+                            char *nick_host, char *modes, char *parm)
+{
+    char *pos, set_flag;
+    t_irc_nick *ptr_nick;
+    
+    set_flag = '+';
+    while (modes && modes[0])
+    {
+        switch (modes[0])
+        {
+            case '+':
+                set_flag = '+';
+                break;
+            case '-':
+                set_flag = '-';
+                break;
+            case 'b':
+                pos = NULL;
+                if (parm)
+                {
+                    pos = strchr (parm, ' ');
+                    if (pos)
+                        pos[0] = '\0';
+                }
+                if (nick_host)
+                    irc_display_mode (ptr_channel->window,
+                                      channel_name, set_flag, "b", nick_host,
+                                      (set_flag == '+') ?
+                                          _("sets ban on") :
+                                          _("removes ban on"),
+                                      (parm) ? parm : NULL);
+                
+                /* look for next parameter */
+                if (parm && pos)
+                {
+                    pos++;
+                    while (pos[0] == ' ')
+                        pos++;
+                    parm = pos;
+                }
+                break;
+            case 'i':
+                if (nick_host)
+                    irc_display_mode (ptr_channel->window,
+                                      channel_name, set_flag, "i", nick_host,
+                                      (set_flag == '+') ?
+                                          _("sets invite-only channel flag") :
+                                          _("removes invite-only channel flag"),
+                                      NULL);
+                SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
+                    CHANNEL_MODE_INVITE);
+                break;
+            case 'k':
+                pos = NULL;
+                if (parm)
+                {
+                    pos = strchr (parm, ' ');
+                    if (pos)
+                        pos[0] = '\0';
+                }
+                if (nick_host)
+                    irc_display_mode (ptr_channel->window,
+                                      channel_name, set_flag, "k", nick_host,
+                                      (set_flag == '+') ?
+                                          _("sets channel key to") :
+                                          _("removes channel key"),
+                                      (set_flag == '+') ?
+                                      ((parm) ? parm : NULL) :
+                                      NULL);
+                SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
+                    CHANNEL_MODE_KEY);
+                if (ptr_channel->key)
+                    free (ptr_channel->key);
+                ptr_channel->key = strdup (parm);
+                
+                /* look for next parameter */
+                if (parm && pos)
+                {
+                    pos++;
+                    while (pos[0] == ' ')
+                        pos++;
+                    parm = pos;
+                }
+                break;
+            case 'l':
+                pos = NULL;
+                if (parm)
+                {
+                    pos = strchr (parm, ' ');
+                    if (pos)
+                        pos[0] = '\0';
+                }
+                if (nick_host)
+                    irc_display_mode (ptr_channel->window,
+                                      channel_name, set_flag, "l", nick_host,
+                                      (set_flag == '+') ?
+                                          _("sets the user limit to") :
+                                          _("removes user limit"),
+                                      (set_flag == '+') ?
+                                      ((parm) ? parm : NULL) :
+                                      NULL);
+                SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
+                    CHANNEL_MODE_LIMIT);
+                ptr_channel->limit = atoi (parm);
+                
+                /* look for next parameter */
+                if (parm && pos)
+                {
+                    pos++;
+                    while (pos[0] == ' ')
+                        pos++;
+                    parm = pos;
+                }
+                break;
+            case 'm':
+                if (nick_host)
+                    irc_display_mode (ptr_channel->window,
+                                      channel_name, set_flag, "m", nick_host,
+                                      (set_flag == '+') ?
+                                          _("sets moderated channel flag") :
+                                          _("removes moderated channel flag"),
+                                      NULL);
+                SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
+                    CHANNEL_MODE_MODERATED);
+                break;
+            case 'n':
+                if (nick_host)
+                    irc_display_mode (ptr_channel->window,
+                                      channel_name, set_flag, "n", nick_host,
+                                      (set_flag == '+') ?
+                                          _("sets messages from channel only flag") :
+                                          _("removes messages from channel only flag"),
+                                      NULL);
+                SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
+                    CHANNEL_MODE_NO_MSG_OUT);
+                break;
+            case 'o':
+                pos = NULL;
+                if (parm)
+                {
+                    pos = strchr (parm, ' ');
+                    if (pos)
+                        pos[0] = '\0';
+                }
+                if (nick_host)
+                    irc_display_mode (ptr_channel->window,
+                                      channel_name, set_flag, "o", nick_host,
+                                      (set_flag == '+') ?
+                                          _("gives channel operator status to") :
+                                          _("removes channel operator status from"),
+                                      (parm) ? parm : NULL);
+                if (parm)
+                {
+                    ptr_nick = nick_search (ptr_channel, parm);
+                    if (ptr_nick)
+                    {
+                        ptr_nick->is_op = (set_flag == '+') ? 1 : 0;
+                        nick_resort (ptr_channel, ptr_nick);
+                        gui_redraw_window_nick (ptr_channel->window);
+                    }
+                }
+                
+                /* look for next parameter */
+                if (parm && pos)
+                {
+                    pos++;
+                    while (pos[0] == ' ')
+                        pos++;
+                    parm = pos;
+                }
+                break;
+            case 'p':
+                if (nick_host)
+                    irc_display_mode (ptr_channel->window,
+                                      channel_name, set_flag, "p", nick_host,
+                                      (set_flag == '+') ?
+                                          _("sets private channel flag") :
+                                          _("removes private channel flag"),
+                                      NULL);
+                SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
+                    CHANNEL_MODE_SECRET);
+                break;
+            case 's':
+                if (nick_host)
+                    irc_display_mode (ptr_channel->window,
+                                      channel_name, set_flag, "s", nick_host,
+                                      (set_flag == '+') ?
+                                          _("sets secret channel flag") :
+                                          _("removes secret channel flag"),
+                                      NULL);
+                SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
+                    CHANNEL_MODE_SECRET);
+                break;
+            case 't':
+                if (nick_host)
+                    irc_display_mode (ptr_channel->window,
+                                      channel_name, set_flag, "t", nick_host,
+                                      (set_flag == '+') ?
+                                          _("sets topic protection") :
+                                          _("removes topic protection"),
+                                      NULL);
+                SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
+                    CHANNEL_MODE_TOPIC);
+                break;
+            case 'v':
+                pos = NULL;
+                if (parm)
+                {
+                    pos = strchr (parm, ' ');
+                    if (pos)
+                        pos[0] = '\0';
+                }
+                if (nick_host)
+                    irc_display_mode (ptr_channel->window,
+                                      channel_name, set_flag, "v", nick_host,
+                                      (set_flag == '+') ?
+                                          _("gives voice to") :
+                                          _("removes voice from"),
+                                      (parm) ? parm : NULL);
+                
+                if (parm)
+                {
+                    ptr_nick = nick_search (ptr_channel, parm);
+                    if (ptr_nick)
+                    {
+                        ptr_nick->has_voice = (set_flag == '+') ? 1 : 0;
+                        nick_resort (ptr_channel, ptr_nick);
+                        gui_redraw_window_nick (ptr_channel->window);
+                    }
+                }
+                
+                /* look for next parameter */
+                if (parm && pos)
+                {
+                    pos++;
+                    while (pos[0] == ' ')
+                        pos++;
+                    parm = pos;
+                }
+                break;
+        }
+        modes++;
+    }
+}
+
+/*
  * irc_cmd_recv_mode: 'mode' message received
  */
 
 int
 irc_cmd_recv_mode (t_irc_server *server, char *host, char *arguments)
 {
-    char *pos, *pos2, *pos_parm;
-    char set_flag;
+    char *pos, *pos_parm;
     t_irc_channel *ptr_channel;
-    t_irc_nick *ptr_nick;
     
     /* no host => we can't identify sender of message! */
     if (host == NULL)
@@ -319,186 +567,12 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *arguments)
             pos_parm++;
     }
     
-    set_flag = '+';
-    
     if (string_is_channel (arguments))
     {
         ptr_channel = channel_search (server, arguments);
         if (ptr_channel)
         {
-            /* channel modes */
-            while (pos && pos[0])
-            {
-                switch (pos[0])
-                {
-                    case '+':
-                        set_flag = '+';
-                        break;
-                    case '-':
-                        set_flag = '-';
-                        break;
-                    case 'b':
-                        irc_display_mode (ptr_channel->window,
-                                          arguments, set_flag, "b", host,
-                                          (set_flag == '+') ?
-                                              _("sets ban on") :
-                                              _("removes ban on"),
-                                          pos_parm);
-                        break;
-                    case 'i':
-                        irc_display_mode (ptr_channel->window,
-                                          arguments, set_flag, "i", host,
-                                          (set_flag == '+') ?
-                                              _("sets invite-only channel flag") :
-                                              _("removes invite-only channel flag"),
-                                          NULL);
-                        SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
-                            CHANNEL_MODE_INVITE);
-                        break;
-                    case 'k':
-                        pos2 = NULL;
-                        if (pos_parm)
-                        {
-                            pos2 = strchr (pos_parm, ' ');
-                            if (pos2)
-                                pos2[0] = '\0';
-                        }
-                        irc_display_mode (ptr_channel->window,
-                                          arguments, set_flag, "k", host,
-                                          (set_flag == '+') ?
-                                              _("sets channel key to") :
-                                              _("removes channel key"),
-                                          (set_flag == '+') ?
-                                            ((pos_parm) ? pos_parm : NULL) :
-                                            NULL);
-                        SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
-                            CHANNEL_MODE_KEY);
-                        if (ptr_channel->key)
-                            free (ptr_channel->key);
-                        ptr_channel->key = strdup (pos_parm);
-                        
-                        /* look for next parameter */
-                        if (pos_parm && pos2)
-                        {
-                            pos2++;
-                            while (pos2[0] == ' ')
-                                pos2++;
-                            pos_parm = pos2;
-                        }
-                        break;
-                    case 'l':
-                        pos2 = NULL;
-                        if (pos_parm)
-                        {
-                            pos2 = strchr (pos_parm, ' ');
-                            if (pos2)
-                                pos2[0] = '\0';
-                        }
-                        irc_display_mode (ptr_channel->window,
-                                          arguments, set_flag, "l", host,
-                                          (set_flag == '+') ?
-                                              _("sets the user limit to") :
-                                              _("removes user limit"),
-                                          (set_flag == '+') ?
-                                            ((pos_parm) ? pos_parm : NULL) :
-                                            NULL);
-                        SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
-                            CHANNEL_MODE_LIMIT);
-                        ptr_channel->limit = atoi (pos_parm);
-                        
-                        /* look for next parameter */
-                        if (pos_parm && pos2)
-                        {
-                            pos2++;
-                            while (pos2[0] == ' ')
-                                pos2++;
-                            pos_parm = pos2;
-                        }
-                        break;
-                    case 'm':
-                        irc_display_mode (ptr_channel->window,
-                                          arguments, set_flag, "m", host,
-                                          (set_flag == '+') ?
-                                              _("sets moderated channel flag") :
-                                              _("removes moderated channel flag"),
-                                          NULL);
-                        SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
-                            CHANNEL_MODE_MODERATED);
-                        break;
-                    case 'n':
-                        irc_display_mode (ptr_channel->window,
-                                          arguments, set_flag, "n", host,
-                                          (set_flag == '+') ?
-                                              _("sets messages from channel only flag") :
-                                              _("removes messages from channel only flag"),
-                                          NULL);
-                        SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
-                            CHANNEL_MODE_NO_MSG_OUT);
-                        break;
-                    case 'o':
-                        irc_display_mode (ptr_channel->window,
-                                          arguments, set_flag, "o", host,
-                                          (set_flag == '+') ?
-                                              _("gives channel operator status to") :
-                                              _("removes channel operator status from"),
-                                          pos_parm);
-                        ptr_nick = nick_search (ptr_channel, pos_parm);
-                        if (ptr_nick)
-                        {
-                            ptr_nick->is_op = (set_flag == '+') ? 1 : 0;
-                            nick_resort (ptr_channel, ptr_nick);
-                            gui_redraw_window_nick (ptr_channel->window);
-                        }
-                        break;
-                    case 'p':
-                        irc_display_mode (ptr_channel->window,
-                                          arguments, set_flag, "p", host,
-                                          (set_flag == '+') ?
-                                              _("sets private channel flag") :
-                                              _("removes private channel flag"),
-                                          NULL);
-                        SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
-                            CHANNEL_MODE_SECRET);
-                        break;
-                    case 's':
-                        irc_display_mode (ptr_channel->window,
-                                          arguments, set_flag, "s", host,
-                                          (set_flag == '+') ?
-                                              _("sets secret channel flag") :
-                                              _("removes secret channel flag"),
-                                          NULL);
-                        SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
-                            CHANNEL_MODE_SECRET);
-                        break;
-                    case 't':
-                        irc_display_mode (ptr_channel->window,
-                                          arguments, set_flag, "t", host,
-                                          (set_flag == '+') ?
-                                              _("sets topic protection") :
-                                              _("removes topic protection"),
-                                          NULL);
-                        SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
-                            CHANNEL_MODE_TOPIC);
-                        break;
-                    case 'v':
-                        irc_display_mode (ptr_channel->window,
-                                          arguments, set_flag, "v", host,
-                                          (set_flag == '+') ?
-                                              _("gives voice to") :
-                                              _("removes voice from"),
-                                          pos_parm);
-                        
-                        ptr_nick = nick_search (ptr_channel, pos_parm);
-                        if (ptr_nick)
-                        {
-                            ptr_nick->has_voice = (set_flag == '+') ? 1 : 0;
-                            nick_resort (ptr_channel, ptr_nick);
-                            gui_redraw_window_nick (ptr_channel->window);
-                        }
-                        break;
-                }
-                pos++;
-            }
+            irc_get_channel_modes (ptr_channel, arguments, host, pos, pos_parm);
             gui_draw_window_status (gui_current_window);
         }
         else
@@ -2135,6 +2209,69 @@ irc_cmd_recv_323 (t_irc_server *server, char *host, char *arguments)
 }
 
 /*
+ * irc_cmd_recv_324: '324' command (channel mode)
+ */
+
+int
+irc_cmd_recv_324 (t_irc_server *server, char *host, char *arguments)
+{
+    char *pos_chan, *pos, *pos_parm;
+    t_irc_channel *ptr_channel;
+    
+    /* make gcc happy */
+    (void) host;
+    
+    pos_chan = strchr (arguments, ' ');
+    if (pos_chan)
+    {
+        pos_chan[0] = '\0';
+        pos_chan++;
+        while (pos_chan[0] == ' ')
+            pos_chan++;
+        
+        pos = strchr (pos_chan, ' ');
+        if (pos)
+        {
+            pos[0] = '\0';
+            pos++;
+            while (pos[0] == ' ')
+                pos++;
+        
+            pos_parm = strchr (pos, ' ');
+            if (pos_parm)
+            {
+                pos_parm[0] = '\0';
+                pos_parm++;
+                while (pos_parm[0] == ' ')
+                    pos_parm++;
+            }
+            ptr_channel = channel_search (server, pos_chan);
+            if (ptr_channel)
+            {
+                irc_get_channel_modes (ptr_channel, NULL, NULL, pos, pos_parm);
+                gui_draw_window_status (gui_current_window);
+            }
+        }
+    }
+    return 0;
+}
+
+/*
+ * irc_cmd_recv_329: '329' command (???)
+ */
+
+int
+irc_cmd_recv_329 (t_irc_server *server, char *host, char *arguments)
+{
+    /* make gcc happy */
+    (void) server;
+    (void) host;
+    (void) arguments;
+    
+    return 0;
+}
+
+/*
  * irc_cmd_recv_331: '331' command received (no topic for channel)
  */
 
@@ -2643,6 +2780,7 @@ irc_cmd_recv_366 (t_irc_server *server, char *host, char *arguments)
                                   _("normal"));
                 gui_printf_color (ptr_channel->window,
                                   COLOR_WIN_CHAT_DARK, ")\n");
+                irc_cmd_send_mode (server, ptr_channel->name);
             }
             else
             {

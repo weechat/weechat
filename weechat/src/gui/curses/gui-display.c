@@ -826,7 +826,7 @@ gui_draw_window_status (t_gui_window *window)
 {
     t_gui_window *ptr_win;
     char format_more[32];
-    int i;
+    int i, first_mode;
     
     /* TODO: manage splitted windows! */
     if (window != gui_current_window)
@@ -919,13 +919,21 @@ gui_draw_window_status (t_gui_window *window)
             if (gui_current_window == CHANNEL(ptr_win)->window)
             {
                 /* display channel modes */
-                wprintw (window->win_status, "(+");
+                wprintw (window->win_status, "(");
                 i = 0;
+                first_mode = 1;
                 while (CHANNEL(ptr_win)->modes[i])
                 {
                     if (CHANNEL(ptr_win)->modes[i] != ' ')
+                    {
+                        if (first_mode)
+                        {
+                            wprintw (window->win_status, "+");
+                            first_mode = 0;
+                        }
                         wprintw (window->win_status, "%c",
                                  CHANNEL(ptr_win)->modes[i]);
+                    }
                     i++;
                 }
                 if (CHANNEL(ptr_win)->modes[CHANNEL_MODE_KEY] != ' ')

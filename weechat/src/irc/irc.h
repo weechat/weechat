@@ -295,6 +295,8 @@ extern int irc_cmd_recv_320 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_321 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_322 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_323 (t_irc_server *, char *, char *);
+extern int irc_cmd_recv_324 (t_irc_server *, char *, char *);
+extern int irc_cmd_recv_329 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_331 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_332 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_333 (t_irc_server *, char *, char *);

@@ -286,6 +286,8 @@ t_irc_command irc_commands[] =
   { "321", N_("/list start"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_321 },  
   { "322", N_("channel (for /list)"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_322 },
   { "323", N_("/list end"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_323 },
+  { "324", N_("channel mode"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_324 },
+  { "329", "???", "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_329 },
   { "331", N_("no topic for channel"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_331 },
   { "332", N_("topic of channel"),
     N_("channel :topic"),
