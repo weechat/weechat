@@ -110,9 +110,10 @@ AC_SUBST(PLUGINS_LIBS)
 
 if test "x$enable_debug" = "xyes" ; then
     AC_DEFINE(DEBUG)
+    CFLAGS="-Wall -W -pipe -O2 -g"
+else
+    CFLAGS="-Wall -W -pipe -O2"
 fi
-
-CFLAGS="-Wall -W -pipe -O2"
 
 AC_OUTPUT([Makefile
            src/Makefile

@@ -120,7 +120,7 @@ static XS (XS_IRC_register)
 }
 
 /*
- * IRC::print: print message to current view
+ * IRC::print: print message to current buffer
  */
 
 static XS (XS_IRC_print)
@@ -135,8 +135,8 @@ static XS (XS_IRC_print)
     for (i = 0; i < items; i++)
     {
         message = SvPV (ST (i), integer);
-        irc_display_prefix (gui_current_view, PREFIX_PLUGIN);
-        gui_printf (gui_current_view, "%s", message);
+        irc_display_prefix (gui_current_window->buffer, PREFIX_PLUGIN);
+        gui_printf (gui_current_window->buffer, "%s", message);
     }
     
     XSRETURN_EMPTY;
@@ -151,7 +151,7 @@ static XS (XS_IRC_print_with_channel)
 {
     int integer;
     char *message, *channel, *server = NULL;
-    t_gui_view *ptr_view;
+    t_gui_buffer *ptr_buffer;
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
     dXSARGS;
@@ -167,9 +167,9 @@ static XS (XS_IRC_print_with_channel)
             server = NULL;
     }
     
-    /* look for view for printing message */
+    /* look for buffer for printing message */
     channel = SvPV (ST (1), integer);
-    ptr_view = NULL;
+    ptr_buffer = NULL;
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
@@ -180,25 +180,25 @@ static XS (XS_IRC_print_with_channel)
             {
                 if (strcasecmp (ptr_channel->name, channel) == 0)
                 {
-                    ptr_view = ptr_channel->view;
+                    ptr_buffer = ptr_channel->buffer;
                     break;
                 }
             }
         }
-        if (ptr_view)
+        if (ptr_buffer)
             break;
     }
     
-    /* view found => display message & return 1 */
-    if (ptr_view)
+    /* buffer found => display message & return 1 */
+    if (ptr_buffer)
     {
         message = SvPV (ST (0), integer);
-        irc_display_prefix (ptr_view, PREFIX_PLUGIN);
-        gui_printf (ptr_view, "%s", message);
+        irc_display_prefix (ptr_buffer, PREFIX_PLUGIN);
+        gui_printf (ptr_buffer, "%s", message);
         XSRETURN_YES;
     }
         
-    /* no view found => return 0 */
+    /* no buffer found => return 0 */
     XSRETURN_NO;
 }
 
@@ -307,8 +307,8 @@ static XS (XS_IRC_get_info)
         }
         else if ( (strcasecmp (arg, "2") == 0) || (strcasecmp (arg, "channel") == 0) )
         {
-            if (VIEW_IS_CHANNEL (gui_current_view))
-                info = CHANNEL (gui_current_view)->name;
+            if (BUFFER_IS_CHANNEL (gui_current_window->buffer))
+                info = CHANNEL (gui_current_window->buffer)->name;
         }
         else if ( (strcasecmp (arg, "3") == 0) || (strcasecmp (arg, "server") == 0) )
         {

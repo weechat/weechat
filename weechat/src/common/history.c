@@ -44,7 +44,7 @@ int num_history_general = 0;
  */
 
 void
-history_add (void *view, char *string)
+history_add (void *buffer, char *string)
 {
     t_history *new_history, *ptr_history;
     
@@ -83,26 +83,26 @@ history_add (void *view, char *string)
     {
         new_history->text = strdup (string);
         
-        if (((t_gui_view *)(view))->history)
-            ((t_gui_view *)(view))->history->prev_history = new_history;
+        if (((t_gui_buffer *)(buffer))->history)
+            ((t_gui_buffer *)(buffer))->history->prev_history = new_history;
         else
-            ((t_gui_view *)(view))->last_history = new_history;
-        new_history->next_history = ((t_gui_view *)(view))->history;
+            ((t_gui_buffer *)(buffer))->last_history = new_history;
+        new_history->next_history = ((t_gui_buffer *)(buffer))->history;
         new_history->prev_history = NULL;
-        ((t_gui_view *)view)->history = new_history;
-        ((t_gui_view *)(view))->num_history++;
+        ((t_gui_buffer *)buffer)->history = new_history;
+        ((t_gui_buffer *)(buffer))->num_history++;
         
         /* remove one command if necessary */
         if ((cfg_history_max_commands > 0)
-            && (((t_gui_view *)(view))->num_history > cfg_history_max_commands))
+            && (((t_gui_buffer *)(buffer))->num_history > cfg_history_max_commands))
         {
-            ptr_history = ((t_gui_view *)view)->last_history->prev_history;
-            ((t_gui_view *)view)->last_history->prev_history->next_history = NULL;
-            if (((t_gui_view *)view)->last_history->text)
-                free (((t_gui_view *)view)->last_history->text);
-            free (((t_gui_view *)view)->last_history);
-            ((t_gui_view *)view)->last_history = ptr_history;
-            ((t_gui_view *)(view))->num_history++;
+            ptr_history = ((t_gui_buffer *)buffer)->last_history->prev_history;
+            ((t_gui_buffer *)buffer)->last_history->prev_history->next_history = NULL;
+            if (((t_gui_buffer *)buffer)->last_history->text)
+                free (((t_gui_buffer *)buffer)->last_history->text);
+            free (((t_gui_buffer *)buffer)->last_history);
+            ((t_gui_buffer *)buffer)->last_history = ptr_history;
+            ((t_gui_buffer *)(buffer))->num_history++;
         }
     }
 }

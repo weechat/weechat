@@ -91,7 +91,7 @@ t_weechat_command weechat_commands[] =
   { "window", N_("manage windows"),
     N_("[action]"),
     N_("action: action to do:\n"
-    "   close  close current window\n"
+    "   close  close current window (under development!)\n"
     "    list  list opened windows (no parameter implies this list)\n"
     "  splith  split current window horizontally\n"
     "  splitv  split current window vertically"),
@@ -715,46 +715,46 @@ user_command (t_irc_server *server, char *command)
     {
         if ((command[0] == '/') && (command[1] == '/'))
             command++;
-        if (server && (!VIEW_IS_SERVER(gui_current_view)))
+        if (server && (!BUFFER_IS_SERVER(gui_current_window->buffer)))
         {
             server_sendf (server, "PRIVMSG %s :%s\r\n",
-                          CHANNEL(gui_current_view)->name,
+                          CHANNEL(gui_current_window->buffer)->name,
                           command);
 
-            if (VIEW_IS_PRIVATE(gui_current_view))
+            if (BUFFER_IS_PRIVATE(gui_current_window->buffer))
             {
-                gui_printf_color_type (CHANNEL(gui_current_view)->view,
+                gui_printf_color_type (CHANNEL(gui_current_window->buffer)->buffer,
                                        MSG_TYPE_NICK,
                                        COLOR_WIN_CHAT_DARK, "<");
-                gui_printf_color_type (CHANNEL(gui_current_view)->view,
+                gui_printf_color_type (CHANNEL(gui_current_window->buffer)->buffer,
                                        MSG_TYPE_NICK,
                                        COLOR_WIN_NICK_SELF,
                                        "%s", server->nick);
-                gui_printf_color_type (CHANNEL(gui_current_view)->view,
+                gui_printf_color_type (CHANNEL(gui_current_window->buffer)->buffer,
                                        MSG_TYPE_NICK,
                                        COLOR_WIN_CHAT_DARK, "> ");
-                gui_printf_color_type (CHANNEL(gui_current_view)->view,
+                gui_printf_color_type (CHANNEL(gui_current_window->buffer)->buffer,
                                        MSG_TYPE_MSG,
                                        COLOR_WIN_CHAT, "%s\n", command);
             }
             else
             {
-                ptr_nick = nick_search (CHANNEL(gui_current_view), server->nick);
+                ptr_nick = nick_search (CHANNEL(gui_current_window->buffer), server->nick);
                 if (ptr_nick)
                 {
-                    irc_display_nick (CHANNEL(gui_current_view)->view, ptr_nick,
+                    irc_display_nick (CHANNEL(gui_current_window->buffer)->buffer, ptr_nick,
                                       MSG_TYPE_NICK, 1, 1, 0);
-                    gui_printf_color (CHANNEL(gui_current_view)->view,
+                    gui_printf_color (CHANNEL(gui_current_window->buffer)->buffer,
                                       COLOR_WIN_CHAT, "%s\n", command);
                 }
                 else
-                    gui_printf (server->view,
+                    gui_printf (server->buffer,
                                 _("%s cannot find nick for sending message\n"),
                                 WEECHAT_ERROR);
             }
         }
         else
-            gui_printf ((server) ? server->view : NULL,
+            gui_printf ((server) ? server->buffer : NULL,
                         _("This window is not a channel!\n"));
     }
 }
@@ -828,7 +828,7 @@ weechat_cmd_clear (int argc, char **argv)
     if (argc == 1)
     {
         if (strcmp (argv[0], "-all") == 0)
-            gui_view_clear_all ();
+            gui_buffer_clear_all ();
         else
         {
             gui_printf (NULL,
@@ -838,7 +838,7 @@ weechat_cmd_clear (int argc, char **argv)
         }
     }
     else
-        gui_view_clear (gui_current_view);
+        gui_buffer_clear (gui_current_window->buffer);
     return 0;
 }
 
@@ -865,9 +865,9 @@ weechat_cmd_connect (int argc, char **argv)
                         WEECHAT_ERROR, argv[0]);
             return -1;
         }
-        if (!ptr_server->view)
+        if (!ptr_server->buffer)
         {
-            if (!gui_view_new (gui_current_view->window, ptr_server, NULL, 1))
+            if (!gui_buffer_new (gui_current_window, ptr_server, NULL, 1))
                 return -1;
         }
         if (server_connect (ptr_server))
@@ -914,7 +914,7 @@ weechat_cmd_disconnect (int argc, char **argv)
             return -1;
         }
         server_disconnect (ptr_server);
-        gui_redraw_view_status (gui_current_view);
+        gui_draw_buffer_status (gui_current_window->buffer, 1);
     }
     else
     {
@@ -1308,7 +1308,7 @@ weechat_cmd_server (int argc, char **argv)
             gui_printf_color (NULL, COLOR_WIN_CHAT, _("has been deleted\n"));
             
             server_free (server_found);
-            gui_redraw_view (gui_current_view);
+            gui_redraw_buffer (gui_current_window->buffer);
             
             return 0;
         }
@@ -1449,7 +1449,7 @@ weechat_cmd_server (int argc, char **argv)
         
         if (new_server->autoconnect)
         {
-            (void) gui_view_new (gui_current_view->window, new_server, NULL, 1);
+            (void) gui_buffer_new (gui_current_window, new_server, NULL, 1);
             if (server_connect (new_server))
                 irc_login (new_server);
         }
@@ -1648,12 +1648,12 @@ weechat_cmd_window (int argc, char **argv)
         if (strcasecmp (argv[0], "splith") == 0)
         {
             /* split window horizontally */
-            gui_printf (NULL, "window splith -- NOT DEVELOPED!\n");
+            gui_window_split_horiz (gui_current_window);
         }
         else if (strcasecmp (argv[0], "splitv") == 0)
         {
             /* split window vertically */
-            gui_printf (NULL, "window splitv -- NOT DEVELOPED!\n");
+            gui_window_split_vertic (gui_current_window);
         }
         else
             return -1;

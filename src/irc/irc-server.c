@@ -78,7 +78,7 @@ server_init (t_irc_server *server)
     server->is_away = 0;
     server->server_read = -1;
     server->server_write = -1;
-    server->view = NULL;
+    server->buffer = NULL;
     server->channels = NULL;
     server->last_channel = NULL;
 }
@@ -270,8 +270,8 @@ server_free (t_irc_server *server)
         (server->next_server)->prev_server = server->prev_server;
     
     server_destroy (server);
-    if (server->view)
-        gui_view_free (server->view);
+    if (server->buffer)
+        gui_buffer_free (server->buffer);
     free (server);
     irc_servers = new_irc_servers;
 }
@@ -377,11 +377,11 @@ server_sendf (t_irc_server * server, char *fmt, ...)
         size_buf = strlen (buffer);
     buffer[size_buf - 2] = '\0';
     #ifdef DEBUG
-    gui_printf (server->view, "[DEBUG] Sending to server >>> %s\n", buffer);
+    gui_printf (server->buffer, "[DEBUG] Sending to server >>> %s\n", buffer);
     #endif
     buffer[size_buf - 2] = '\r';
     if (server_send (server, buffer, size_buf) <= 0)
-        gui_printf (server->view, _("%s error sending data to IRC server\n"),
+        gui_printf (server->buffer, _("%s error sending data to IRC server\n"),
                     WEECHAT_ERROR);
 }
 
@@ -397,7 +397,7 @@ server_msgq_add_msg (t_irc_server *server, char *msg)
     message = (t_irc_message *) malloc (sizeof (t_irc_message));
     if (!message)
     {
-        gui_printf (server->view,
+        gui_printf (server->buffer,
                     _("%s not enough memory for received IRC message\n"),
                     WEECHAT_ERROR);
         return;
@@ -408,7 +408,7 @@ server_msgq_add_msg (t_irc_server *server, char *msg)
         message->data = (char *) malloc (strlen (unterminated_message) +
                                          strlen (msg) + 1);
         if (!message->data)
-            gui_printf (server->view,
+            gui_printf (server->buffer,
                         _("%s not enough memory for received IRC message\n"),
                         WEECHAT_ERROR);
         else
@@ -462,14 +462,14 @@ server_msgq_add_buffer (t_irc_server * server, char *buffer)
                     (char *) realloc (unterminated_message,
                                       strlen (buffer) + 1);
                 if (!unterminated_message)
-                    gui_printf (server->view,
+                    gui_printf (server->buffer,
                                 _("%s not enough memory for received IRC message\n"),
                                 WEECHAT_ERROR);
                 else
                     strcpy (unterminated_message, buffer);
                 return;
             }
-            gui_printf (server->view,
+            gui_printf (server->buffer,
                         _("%s unable to explode received buffer\n"),
                         WEECHAT_ERROR);
         }
@@ -493,7 +493,7 @@ server_msgq_flush ()
         if (recv_msgq->data)
         {
             #ifdef DEBUG
-            gui_printf (gui_current_view, "[DEBUG] %s\n", recv_msgq->data);
+            gui_printf (gui_current_window->buffer, "[DEBUG] %s\n", recv_msgq->data);
             #endif
             
             ptr_data = recv_msgq->data;
@@ -542,15 +542,15 @@ server_msgq_flush ()
                                           command, args))
                 {
                     case -1:
-                        gui_printf (recv_msgq->server->view,
+                        gui_printf (recv_msgq->server->buffer,
                                     _("Command '%s' failed!\n"), command);
                         break;
                     case -2:
-                        gui_printf (recv_msgq->server->view,
+                        gui_printf (recv_msgq->server->buffer,
                                     _("No command to execute!\n"));
                         break;
                     case -3:
-                        gui_printf (recv_msgq->server->view,
+                        gui_printf (recv_msgq->server->buffer,
                                     _("Unknown command: cmd=%s, args=%s\n"),
                                     command, args);
                         break;
@@ -602,7 +602,7 @@ server_connect (t_irc_server *server)
     int error;
     int server_pipe[2];
 
-    gui_printf (server->view,
+    gui_printf (server->buffer,
                 _("%s: connecting to %s:%d...\n"),
                 PACKAGE_NAME, server->address, server->port);
     wee_log_printf (_("connecting to server %s:%d...\n"),
@@ -612,7 +612,7 @@ server_connect (t_irc_server *server)
     /* create pipe */
     if (pipe (server_pipe) < 0)
     {
-        gui_printf (server->view,
+        gui_printf (server->buffer,
                     _("%s cannot create pipe\n"), WEECHAT_ERROR);
         server_free (server);
         return 0;
@@ -626,14 +626,14 @@ server_connect (t_irc_server *server)
     if (setsockopt
         (server->sock4, SOL_SOCKET, SO_REUSEADDR, (char *) &set,
          sizeof (set)) == -1)
-        gui_printf (server->view,
+        gui_printf (server->buffer,
                     _("%s cannot set socket option \"SO_REUSEADDR\"\n"),
                     WEECHAT_ERROR);
     set = 1;
     if (setsockopt
         (server->sock4, SOL_SOCKET, SO_KEEPALIVE, (char *) &set,
          sizeof (set)) == -1)
-        gui_printf (server->view,
+        gui_printf (server->buffer,
                     _("%s cannot set socket option \"SO_KEEPALIVE\"\n"),
                     WEECHAT_ERROR);
 
@@ -641,7 +641,7 @@ server_connect (t_irc_server *server)
     ip4_hostent = gethostbyname (server->address);
     if (!ip4_hostent)
     {
-        gui_printf (server->view,
+        gui_printf (server->buffer,
                     _("%s address \"%s\" not found\n"),
                     WEECHAT_ERROR, server->address);
         close (server->server_read);
@@ -657,14 +657,14 @@ server_connect (t_irc_server *server)
     /*error = bind(server->sock4, (struct sockaddr *)(&addr), sizeof(addr));
     if (error != 0)
     {
-        gui_printf (server->view,
+        gui_printf (server->buffer,
                     WEECHAT_ERORR "server_connect: can't bind to hostname\n");
         return 0;
     } */
     ip_address = inet_ntoa (addr.sin_addr);
     if (!ip_address)
     {
-        gui_printf (server->view,
+        gui_printf (server->buffer,
                     _("%s IP address not found\n"), WEECHAT_ERROR);
         close (server->server_read);
         close (server->server_write);
@@ -674,13 +674,13 @@ server_connect (t_irc_server *server)
     }
 
     /* connection to server */
-    gui_printf (server->view,
+    gui_printf (server->buffer,
                 _("%s: server IP is: %s\n"), PACKAGE_NAME, ip_address);
 
     error = connect (server->sock4, (struct sockaddr *) &addr, sizeof (addr));
     if (error != 0)
     {
-        gui_printf (server->view,
+        gui_printf (server->buffer,
                     _("%s cannot connect to irc server\n"), WEECHAT_ERROR);
         close (server->server_read);
         close (server->server_write);
@@ -708,7 +708,7 @@ server_auto_connect (int command_line)
         if ( ((command_line) && (ptr_server->command_line))
             || ((!command_line) && (ptr_server->autoconnect)) )
         {
-            (void) gui_view_new (gui_current_view->window, ptr_server, NULL, 1);
+            (void) gui_buffer_new (gui_current_window, ptr_server, NULL, 1);
             if (server_connect (ptr_server))
                 irc_login (ptr_server);
         }
@@ -726,12 +726,12 @@ server_disconnect (t_irc_server *server)
     
     if (server->is_connected)
     {
-        /* write disconnection message on each channel/private view */
+        /* write disconnection message on each channel/private buffer */
         for (ptr_channel = server->channels; ptr_channel;
              ptr_channel = ptr_channel->next_channel)
         {
-            irc_display_prefix (ptr_channel->view, PREFIX_INFO);
-            gui_printf (ptr_channel->view, _("Disconnected from server!\n"));
+            irc_display_prefix (ptr_channel->buffer, PREFIX_INFO);
+            gui_printf (ptr_channel->buffer, _("Disconnected from server!\n"));
         }
         
         /* close communication with server */

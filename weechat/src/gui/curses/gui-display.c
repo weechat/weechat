@@ -153,138 +153,130 @@ gui_window_set_color (WINDOW *window, int num_color)
 }
 
 /*
- * gui_view_has_nicklist: returns 1 if view has nicklist
+ * gui_buffer_has_nicklist: returns 1 if buffer has nicklist
  */
 
 int
-gui_view_has_nicklist (t_gui_view *view)
+gui_buffer_has_nicklist (t_gui_buffer *buffer)
 {
-    return (((CHANNEL(view)) && (CHANNEL(view)->type == CHAT_CHANNEL)) ? 1 : 0);
+    return (((CHANNEL(buffer)) && (CHANNEL(buffer)->type == CHAT_CHANNEL)) ? 1 : 0);
 }
 
 
 /*
- * gui_calculate_pos_size: calculate position and size for a view & subviews
+ * gui_calculate_pos_size: calculate position and size for a buffer & subwindows
  */
 
 void
-gui_calculate_pos_size (t_gui_view *view)
+gui_calculate_pos_size (t_gui_window *window)
 {
     int max_length, lines;
     int num_nicks, num_op, num_halfop, num_voice, num_normal;
     
-    /* global position & size */
-    /* TODO: get values from function parameters */
-    view->window->win_x = 0;
-    view->window->win_y = 0;
-    view->window->win_width = COLS;
-    view->window->win_height = LINES;
-    
     /* init chat & nicklist settings */
-    /* TODO: calculate values from function parameters */
-    if (cfg_look_nicklist && VIEW_IS_CHANNEL(view))
+    if (cfg_look_nicklist && BUFFER_IS_CHANNEL(window->buffer))
     {
-        max_length = nick_get_max_length (CHANNEL(view));
+        max_length = nick_get_max_length (CHANNEL(window->buffer));
         
         switch (cfg_look_nicklist_position)
         {
             case CFG_LOOK_NICKLIST_LEFT:
-                view->window->win_chat_x = max_length + 2;
-                view->window->win_chat_y = 1;
-                view->window->win_chat_width = COLS - max_length - 2;
-                view->window->win_nick_x = 0;
-                view->window->win_nick_y = 1;
-                view->window->win_nick_width = max_length + 2;
+                window->win_chat_x = window->win_x + max_length + 2;
+                window->win_chat_y = window->win_y + 1;
+                window->win_chat_width = window->win_width - max_length - 2;
+                window->win_nick_x = window->win_x + 0;
+                window->win_nick_y = window->win_y + 1;
+                window->win_nick_width = max_length + 2;
                 if (cfg_look_infobar)
                 {
-                    view->window->win_chat_height = LINES - 4;    
-                    view->window->win_nick_height = LINES - 4;
+                    window->win_chat_height = window->win_height - 4;
+                    window->win_nick_height = window->win_height - 4;
                 }
                 else
                 {
-                    view->window->win_chat_height = LINES - 3;    
-                    view->window->win_nick_height = LINES - 3;
+                    window->win_chat_height = window->win_height - 3;
+                    window->win_nick_height = window->win_height - 3;
                 }
                 break;
             case CFG_LOOK_NICKLIST_RIGHT:
-                view->window->win_chat_x = 0;
-                view->window->win_chat_y = 1;
-                view->window->win_chat_width = COLS - max_length - 2;
-                view->window->win_nick_x = COLS - max_length - 2;
-                view->window->win_nick_y = 1;
-                view->window->win_nick_width = max_length + 2;
+                window->win_chat_x = window->win_x;
+                window->win_chat_y = window->win_y + 1;
+                window->win_chat_width = window->win_width - max_length - 2;
+                window->win_nick_x = window->win_x + window->win_width - max_length - 2;
+                window->win_nick_y = window->win_y + 1;
+                window->win_nick_width = max_length + 2;
                 if (cfg_look_infobar)
                 {
-                    view->window->win_chat_height = LINES - 4;
-                    view->window->win_nick_height = LINES - 4;
+                    window->win_chat_height = window->win_height - 4;
+                    window->win_nick_height = window->win_height - 4;
                 }
                 else
                 {
-                    view->window->win_chat_height = LINES - 3;
-                    view->window->win_nick_height = LINES - 3;
+                    window->win_chat_height = window->win_height - 3;
+                    window->win_nick_height = window->win_height - 3;
                 }
                 break;
             case CFG_LOOK_NICKLIST_TOP:
-                nick_count (CHANNEL(view), &num_nicks, &num_op, &num_halfop,
-                            &num_voice, &num_normal);
-                if (((max_length + 2) * num_nicks) % COLS == 0)
-                    lines = ((max_length + 2) * num_nicks) / COLS;
+                nick_count (CHANNEL(window->buffer), &num_nicks, &num_op,
+                            &num_halfop, &num_voice, &num_normal);
+                if (((max_length + 2) * num_nicks) % window->win_width == 0)
+                    lines = ((max_length + 2) * num_nicks) / window->win_width;
                 else
-                    lines = (((max_length + 2) * num_nicks) / COLS) + 1;
-                view->window->win_chat_x = 0;
-                view->window->win_chat_y = 1 + (lines + 1);
-                view->window->win_chat_width = COLS;
+                    lines = (((max_length + 2) * num_nicks) / window->win_width) + 1;
+                window->win_chat_x = window->win_x;
+                window->win_chat_y = window->win_y + 1 + (lines + 1);
+                window->win_chat_width = window->win_width;
                 if (cfg_look_infobar)
-                    view->window->win_chat_height = LINES - 3 - (lines + 1) - 1;
+                    window->win_chat_height = window->win_height - 3 - (lines + 1) - 1;
                 else
-                    view->window->win_chat_height = LINES - 3 - (lines + 1);
-                view->window->win_nick_x = 0;
-                view->window->win_nick_y = 1;
-                view->window->win_nick_width = COLS;
-                view->window->win_nick_height = lines + 1;
+                    window->win_chat_height = window->win_height - 3 - (lines + 1);
+                window->win_nick_x = window->win_x;
+                window->win_nick_y = window->win_y + 1;
+                window->win_nick_width = window->win_width;
+                window->win_nick_height = lines + 1;
                 break;
             case CFG_LOOK_NICKLIST_BOTTOM:
-                nick_count (CHANNEL(view), &num_nicks, &num_op, &num_halfop,
-                            &num_voice, &num_normal);
-                if (((max_length + 2) * num_nicks) % COLS == 0)
-                    lines = ((max_length + 2) * num_nicks) / COLS;
+                nick_count (CHANNEL(window->buffer), &num_nicks, &num_op,
+                            &num_halfop, &num_voice, &num_normal);
+                if (((max_length + 2) * num_nicks) % window->win_width == 0)
+                    lines = ((max_length + 2) * num_nicks) / window->win_width;
                 else
-                    lines = (((max_length + 2) * num_nicks) / COLS) + 1;
-                view->window->win_chat_x = 0;
-                view->window->win_chat_y = 1;
-                view->window->win_chat_width = COLS;
+                    lines = (((max_length + 2) * num_nicks) / window->win_width) + 1;
+                window->win_chat_x = window->win_x;
+                window->win_chat_y = window->win_y + 1;
+                window->win_chat_width = window->win_width;
                 if (cfg_look_infobar)
-                    view->window->win_chat_height = LINES - 3 - (lines + 1) - 1;
+                    window->win_chat_height = window->win_height - 3 - (lines + 1) - 1;
                 else
-                    view->window->win_chat_height = LINES - 3 - (lines + 1);
-                view->window->win_nick_x = 0;
+                    window->win_chat_height = window->win_height - 3 - (lines + 1);
+                window->win_nick_x = window->win_x;
                 if (cfg_look_infobar)
-                    view->window->win_nick_y = LINES - 2 - (lines + 1) - 1;
+                    window->win_nick_y = window->win_y + window->win_height - 2 - (lines + 1) - 1;
                 else
-                    view->window->win_nick_y = LINES - 2 - (lines + 1);
-                view->window->win_nick_width = COLS;
-                view->window->win_nick_height = lines + 1;
+                    window->win_nick_y = window->win_y + window->win_height - 2 - (lines + 1);
+                window->win_nick_width = window->win_width;
+                window->win_nick_height = lines + 1;
                 break;
         }
         
-        view->window->win_chat_cursor_x = 0;
-        view->window->win_chat_cursor_y = 0;
+        window->win_chat_cursor_x = window->win_x;
+        window->win_chat_cursor_y = window->win_y;
     }
     else
     {
-        view->window->win_chat_x = 0;
-        view->window->win_chat_y = 1;
-        view->window->win_chat_width = COLS;
+        window->win_chat_x = window->win_x;
+        window->win_chat_y = window->win_y + 1;
+        window->win_chat_width = window->win_width;
         if (cfg_look_infobar)
-            view->window->win_chat_height = LINES - 4;
+            window->win_chat_height = window->win_height - 4;
         else
-            view->window->win_chat_height = LINES - 3;
-        view->window->win_chat_cursor_x = 0;
-        view->window->win_chat_cursor_y = 0;
-        view->window->win_nick_x = -1;
-        view->window->win_nick_y = -1;
-        view->window->win_nick_width = -1;
-        view->window->win_nick_height = -1;
+            window->win_chat_height = window->win_height - 3;
+        window->win_chat_cursor_x = window->win_x;
+        window->win_chat_cursor_y = window->win_y;
+        window->win_nick_x = -1;
+        window->win_nick_y = -1;
+        window->win_nick_width = -1;
+        window->win_nick_height = -1;
     }
 }
 
@@ -300,57 +292,49 @@ gui_curses_window_clear (WINDOW *window)
 }
 
 /*
- * gui_draw_view_title: draw title window for a view
+ * gui_draw_buffer_title: draw title window for a buffer
  */
 
 void
-gui_draw_view_title (t_gui_view *view)
+gui_draw_buffer_title (t_gui_buffer *buffer, int erase)
 {
+    t_gui_window *ptr_win;
     char format[32];
     
-    /* TODO: manage splited windows! */
-    if (view != gui_current_view)
-        return;
-    
-    if (has_colors ())
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        gui_window_set_color (view->window->win_title, COLOR_WIN_TITLE);
-        wborder (view->window->win_title, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
-        wrefresh (view->window->win_title);
-        refresh ();
+        if (ptr_win->buffer == buffer)
+        {
+            if (erase)
+                gui_curses_window_clear (ptr_win->win_title);
+            
+            if (has_colors ())
+            {
+                gui_window_set_color (ptr_win->win_title, COLOR_WIN_TITLE);
+                wborder (ptr_win->win_title, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
+                wrefresh (ptr_win->win_title);
+                refresh ();
+            }
+            if (CHANNEL(buffer))
+            {
+                snprintf (format, 32, "%%-%ds", ptr_win->win_width);
+                if (CHANNEL(buffer)->topic)
+                    mvwprintw (ptr_win->win_title, 0, 0, format,
+                               CHANNEL(buffer)->topic);
+            }
+            else
+            {
+                /* TODO: change this copyright as title? */
+                mvwprintw (ptr_win->win_title, 0, 0,
+                           "%s", PACKAGE_STRING " - " WEECHAT_WEBSITE);
+                mvwprintw (ptr_win->win_title, 0,
+                           ptr_win->win_width - strlen (WEECHAT_COPYRIGHT),
+                           "%s", WEECHAT_COPYRIGHT);
+            }
+            wrefresh (ptr_win->win_title);
+            refresh ();
+        }
     }
-    if (CHANNEL(view))
-    {
-        snprintf (format, 32, "%%-%ds", view->window->win_width);
-        if (CHANNEL(view)->topic)
-            mvwprintw (view->window->win_title, 0, 0, format,
-                       CHANNEL(view)->topic);
-    }
-    else
-    {
-        /* TODO: change this copyright as title? */
-        mvwprintw (view->window->win_title, 0, 0,
-                   "%s", PACKAGE_STRING " - " WEECHAT_WEBSITE);
-        mvwprintw (view->window->win_title, 0, COLS - strlen (WEECHAT_COPYRIGHT),
-                   "%s", WEECHAT_COPYRIGHT);
-    }
-    wrefresh (view->window->win_title);
-    refresh ();
-}
-
-/*
- * gui_redraw_view_title: redraw title window for a view
- */
-
-void
-gui_redraw_view_title (t_gui_view *view)
-{
-    /* TODO: manage splited windows! */
-    if (view != gui_current_view)
-        return;
-    
-    gui_curses_window_clear (view->window->win_title);
-    gui_draw_view_title (view);
 }
 
 /*
@@ -360,20 +344,20 @@ gui_redraw_view_title (t_gui_view *view)
  */
 
 int
-gui_get_line_num_splits (t_gui_view *view, t_gui_line *line)
+gui_get_line_num_splits (t_gui_window *window, t_gui_line *line)
 {
     int length, width;
     
     /* TODO: modify arbitraty value for non aligning messages on time/nick? */
-    if (line->length_align >= view->window->win_chat_width - 5)
+    if (line->length_align >= window->win_chat_width - 5)
     {
         length = line->length;
-        width = view->window->win_chat_width;
+        width = window->win_chat_width;
     }
     else
     {
         length = line->length - line->length_align;
-        width = view->window->win_chat_width - line->length_align;
+        width = window->win_chat_width - line->length_align;
     }
     
     return (length % width == 0) ? (length / width) : ((length / width) + 1);
@@ -384,14 +368,14 @@ gui_get_line_num_splits (t_gui_view *view, t_gui_line *line)
  */
 
 void
-gui_display_end_of_line (t_gui_view *view, t_gui_line *line, int count)
+gui_display_end_of_line (t_gui_window *window, t_gui_line *line, int count)
 {
     int lines_displayed, num_lines, offset, remainder, num_displayed;
     t_gui_message *ptr_message;
     char saved_char, format_align[32], format_empty[32];
     
     snprintf (format_align, 32, "%%-%ds", line->length_align);
-    num_lines = gui_get_line_num_splits (view, line);
+    num_lines = gui_get_line_num_splits (window, line);
     ptr_message = line->messages;
     offset = 0;
     lines_displayed = 0;
@@ -399,31 +383,31 @@ gui_display_end_of_line (t_gui_view *view, t_gui_line *line, int count)
     {
         /* set text color if beginning of message */
         if (offset == 0)
-            gui_window_set_color (view->window->win_chat, ptr_message->color);
+            gui_window_set_color (window->win_chat, ptr_message->color);
         
         /* insert spaces for align text under time/nick */
-        if ((lines_displayed > 0) && (view->window->win_chat_cursor_x == 0))
+        if ((lines_displayed > 0) && (window->win_chat_cursor_x == 0))
         {
             if (lines_displayed >= num_lines - count)
-                mvwprintw (view->window->win_chat,
-                           view->window->win_chat_cursor_y,
-                           view->window->win_chat_cursor_x,
+                mvwprintw (window->win_chat,
+                           window->win_chat_cursor_y,
+                           window->win_chat_cursor_x,
                            format_align, " ");
-            view->window->win_chat_cursor_x += line->length_align;
+            window->win_chat_cursor_x += line->length_align;
         }
         
         remainder = strlen (ptr_message->message + offset);
-        if (view->window->win_chat_cursor_x + remainder >
-            view->window->win_chat_width - 1)
+        if (window->win_chat_cursor_x + remainder >
+            window->win_chat_width - 1)
         {
-            num_displayed = view->window->win_chat_width -
-                view->window->win_chat_cursor_x;
+            num_displayed = window->win_chat_width -
+                window->win_chat_cursor_x;
             saved_char = ptr_message->message[offset + num_displayed];
             ptr_message->message[offset + num_displayed] = '\0';
             if (lines_displayed >= num_lines - count)
-                mvwprintw (view->window->win_chat,
-                           view->window->win_chat_cursor_y, 
-                           view->window->win_chat_cursor_x,
+                mvwprintw (window->win_chat,
+                           window->win_chat_cursor_y, 
+                           window->win_chat_cursor_x,
                            "%s", ptr_message->message + offset);
             ptr_message->message[offset + num_displayed] = saved_char;
             offset += num_displayed;
@@ -432,28 +416,28 @@ gui_display_end_of_line (t_gui_view *view, t_gui_line *line, int count)
         {
             num_displayed = remainder;
             if (lines_displayed >= num_lines - count)
-                mvwprintw (view->window->win_chat,
-                           view->window->win_chat_cursor_y, 
-                           view->window->win_chat_cursor_x,
+                mvwprintw (window->win_chat,
+                           window->win_chat_cursor_y, 
+                           window->win_chat_cursor_x,
                            "%s", ptr_message->message + offset);
             ptr_message = ptr_message->next_message;
             offset = 0;
         }
-        view->window->win_chat_cursor_x += num_displayed;
+        window->win_chat_cursor_x += num_displayed;
         if (!ptr_message ||
-            (view->window->win_chat_cursor_x > (view->window->win_chat_width - 1)))
+            (window->win_chat_cursor_x > (window->win_chat_width - 1)))
         {
             if (lines_displayed >= num_lines - count)
             {
-                if (view->window->win_chat_cursor_x <= view->window->win_chat_width - 1)
+                if (window->win_chat_cursor_x <= window->win_chat_width - 1)
                 {
                     snprintf (format_empty, 32, "%%-%ds",
-                              view->window->win_chat_width - view->window->win_chat_cursor_x);
-                    wprintw (view->window->win_chat, format_empty, " ");
+                              window->win_chat_width - window->win_chat_cursor_x);
+                    wprintw (window->win_chat, format_empty, " ");
                 }
-                view->window->win_chat_cursor_y++;
+                window->win_chat_cursor_y++;
             }
-            view->window->win_chat_cursor_x = 0;
+            window->win_chat_cursor_x = 0;
             lines_displayed++;
         }
     }
@@ -468,7 +452,7 @@ gui_display_end_of_line (t_gui_view *view, t_gui_line *line, int count)
  */
 
 int
-gui_display_line (t_gui_view *view, t_gui_line *line, int stop_at_end)
+gui_display_line (t_gui_window *window, t_gui_line *line, int stop_at_end)
 {
     int offset, remainder, num_displayed;
     t_gui_message *ptr_message;
@@ -480,46 +464,46 @@ gui_display_line (t_gui_view *view, t_gui_line *line, int stop_at_end)
     while (ptr_message)
     {
         /* cursor is below end line of chat window */
-        if (view->window->win_chat_cursor_y > view->window->win_chat_height - 1)
+        if (window->win_chat_cursor_y > window->win_chat_height - 1)
         {
             /*if (!stop_at_end)
-                wscrl (view->window->win_chat, +1);*/
-            view->window->win_chat_cursor_x = 0;
-            view->window->win_chat_cursor_y = view->window->win_chat_height - 1;
+                wscrl (buffer->window->win_chat, +1);*/
+            window->win_chat_cursor_x = 0;
+            window->win_chat_cursor_y = window->win_chat_height - 1;
             if (stop_at_end)
                 return 0;
-            view->first_line_displayed = 0;
+            window->first_line_displayed = 0;
         }
         
         /* set text color if beginning of message */
         if (offset == 0)
-            gui_window_set_color (view->window->win_chat, ptr_message->color);
+            gui_window_set_color (window->win_chat, ptr_message->color);
         
         /* insert spaces for align text under time/nick */
-        if ((view->window->win_chat_cursor_x == 0) &&
+        if ((window->win_chat_cursor_x == 0) &&
             (ptr_message->type != MSG_TYPE_TIME) &&
             (ptr_message->type != MSG_TYPE_NICK) &&
             (line->length_align > 0) &&
             /* TODO: modify arbitraty value for non aligning messages on time/nick? */
-            (line->length_align < (view->window->win_chat_width - 5)))
+            (line->length_align < (window->win_chat_width - 5)))
         {
-            mvwprintw (view->window->win_chat,
-                       view->window->win_chat_cursor_y, 
-                       view->window->win_chat_cursor_x,
+            mvwprintw (window->win_chat,
+                       window->win_chat_cursor_y, 
+                       window->win_chat_cursor_x,
                        format_align, " ");
-            view->window->win_chat_cursor_x += line->length_align;
+            window->win_chat_cursor_x += line->length_align;
         }
         
         remainder = strlen (ptr_message->message + offset);
-        if (view->window->win_chat_cursor_x + remainder > view->window->win_chat_width)
+        if (window->win_chat_cursor_x + remainder > window->win_chat_width)
         {
-            num_displayed = view->window->win_chat_width -
-                view->window->win_chat_cursor_x;
+            num_displayed = window->win_chat_width -
+                window->win_chat_cursor_x;
             saved_char = ptr_message->message[offset + num_displayed];
             ptr_message->message[offset + num_displayed] = '\0';
-            mvwprintw (view->window->win_chat,
-                       view->window->win_chat_cursor_y, 
-                       view->window->win_chat_cursor_x,
+            mvwprintw (window->win_chat,
+                       window->win_chat_cursor_y, 
+                       window->win_chat_cursor_x,
                        "%s", ptr_message->message + offset);
             ptr_message->message[offset + num_displayed] = saved_char;
             offset += num_displayed;
@@ -527,515 +511,475 @@ gui_display_line (t_gui_view *view, t_gui_line *line, int stop_at_end)
         else
         {
             num_displayed = remainder;
-            mvwprintw (view->window->win_chat,
-                       view->window->win_chat_cursor_y, 
-                       view->window->win_chat_cursor_x,
+            mvwprintw (window->win_chat,
+                       window->win_chat_cursor_y, 
+                       window->win_chat_cursor_x,
                        "%s", ptr_message->message + offset);
             offset = 0;
             ptr_message = ptr_message->next_message;
         }
-        view->window->win_chat_cursor_x += num_displayed;
+        window->win_chat_cursor_x += num_displayed;
         if (!ptr_message ||
-            (view->window->win_chat_cursor_x > (view->window->win_chat_width - 1)))
+            (window->win_chat_cursor_x > (window->win_chat_width - 1)))
         {
             if (!ptr_message ||
-                ((view->window->win_chat_cursor_y <= view->window->win_chat_height - 1) &&
-                (view->window->win_chat_cursor_x > view->window->win_chat_width - 1)))
+                ((window->win_chat_cursor_y <= window->win_chat_height - 1) &&
+                (window->win_chat_cursor_x > window->win_chat_width - 1)))
             {
-                if (view->window->win_chat_cursor_x <= view->window->win_chat_width - 1)
+                if (window->win_chat_cursor_x <= window->win_chat_width - 1)
                 {
                     snprintf (format_empty, 32, "%%-%ds",
-                              view->window->win_chat_width - view->window->win_chat_cursor_x);
-                    wprintw (view->window->win_chat, format_empty, " ");
+                              window->win_chat_width - window->win_chat_cursor_x);
+                    wprintw (window->win_chat, format_empty, " ");
                 }
-                view->window->win_chat_cursor_y++;
+                window->win_chat_cursor_y++;
             }
-            view->window->win_chat_cursor_x = 0;
+            window->win_chat_cursor_x = 0;
         }
     }
     return 1;
 }
 
 /*
- * gui_draw_view_chat: draw chat window for a view
+ * gui_draw_buffer_chat: draw chat window for a buffer
  */
 
 void
-gui_draw_view_chat (t_gui_view *view)
+gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
 {
+    t_gui_window *ptr_win;
     t_gui_line *ptr_line;
-    int lines_used;
-    
-    /* TODO: manage splited windows! */
-    if (view != gui_current_view)
-        return;
-    
-    if (has_colors ())
-        gui_window_set_color (view->window->win_chat, COLOR_WIN_CHAT);
-    
-    ptr_line = view->last_line;
-    lines_used = 0;
-    while (ptr_line
-           && (lines_used < (view->window->win_chat_height + view->sub_lines)))
-    {
-        lines_used += gui_get_line_num_splits (view, ptr_line);
-        ptr_line = ptr_line->prev_line;
-    }
-    view->window->win_chat_cursor_x = 0;
-    view->window->win_chat_cursor_y = 0;
-    if (lines_used > (view->window->win_chat_height + view->sub_lines))
-    {
-        /* screen will be full (we'll display only end of 1st line) */
-        ptr_line = (ptr_line) ? ptr_line->next_line : view->lines;
-        gui_display_end_of_line (view, ptr_line,
-                                 gui_get_line_num_splits (view, ptr_line) -
-                                 (lines_used - (view->window->win_chat_height + view->sub_lines)));
-        ptr_line = ptr_line->next_line;
-        view->first_line_displayed = 0;
-    }
-    else
-    {
-        /* all lines are displayed */
-        if (!ptr_line)
-        {
-            view->first_line_displayed = 1;
-            ptr_line = view->lines;
-        }
-        else
-        {
-            view->first_line_displayed = 0;
-            ptr_line = ptr_line->next_line;
-        }
-    }
-    while (ptr_line)
-    {
-        if (!gui_display_line (view, ptr_line, 1))
-            break;
-  
-        ptr_line = ptr_line->next_line;
-    }
-    /*if (view->window->win_chat_cursor_y <= view->window->win_chat_height - 1)
-        view->sub_lines = 0;*/
-    wrefresh (view->window->win_chat);
-    refresh ();
-}
-
-/*
- * gui_redraw_view_chat: redraw chat window for a view
- */
-
-void
-gui_redraw_view_chat (t_gui_view *view)
-{
     char format_empty[32];
-    int i;
+    int i, lines_used;
     
-    /* TODO: manage splited windows! */
-    if (view != gui_current_view)
-        return;
-    
-    if (has_colors ())
-        gui_window_set_color (view->window->win_chat, COLOR_WIN_CHAT);
-    
-    snprintf (format_empty, 32, "%%-%ds", view->window->win_chat_width);
-    for (i = 0; i < view->window->win_chat_height; i++)
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        mvwprintw (view->window->win_chat, i, 0, format_empty, " ");
+        if (ptr_win->buffer == buffer)
+        {
+            if (erase)
+            {
+                if (has_colors ())
+                    gui_window_set_color (ptr_win->win_chat, COLOR_WIN_CHAT);
+                
+                snprintf (format_empty, 32, "%%-%ds", ptr_win->win_chat_width);
+                for (i = 0; i < ptr_win->win_chat_height; i++)
+                {
+                    mvwprintw (ptr_win->win_chat, i, 0, format_empty, " ");
+                }
+            }
+            
+            if (has_colors ())
+                gui_window_set_color (ptr_win->win_chat, COLOR_WIN_CHAT);
+            
+            ptr_line = buffer->last_line;
+            lines_used = 0;
+            while (ptr_line
+                && (lines_used < (ptr_win->win_chat_height + ptr_win->sub_lines)))
+            {
+                lines_used += gui_get_line_num_splits (ptr_win, ptr_line);
+                ptr_line = ptr_line->prev_line;
+            }
+            ptr_win->win_chat_cursor_x = 0;
+            ptr_win->win_chat_cursor_y = 0;
+            if (lines_used > (ptr_win->win_chat_height + ptr_win->sub_lines))
+            {
+                /* screen will be full (we'll display only end of 1st line) */
+                ptr_line = (ptr_line) ? ptr_line->next_line : buffer->lines;
+                gui_display_end_of_line (ptr_win, ptr_line,
+                                         gui_get_line_num_splits (ptr_win, ptr_line) -
+                                         (lines_used - (ptr_win->win_chat_height + ptr_win->sub_lines)));
+                ptr_line = ptr_line->next_line;
+                ptr_win->first_line_displayed = 0;
+            }
+            else
+            {
+                /* all lines are displayed */
+                if (!ptr_line)
+                {
+                    ptr_win->first_line_displayed = 1;
+                    ptr_line = buffer->lines;
+                }
+                else
+                {
+                    ptr_win->first_line_displayed = 0;
+                    ptr_line = ptr_line->next_line;
+                }
+            }
+            while (ptr_line)
+            {
+                if (!gui_display_line (ptr_win, ptr_line, 1))
+                    break;
+                
+                ptr_line = ptr_line->next_line;
+            }
+            /*if (ptr_win->win_chat_cursor_y <= ptr_win->win_chat_height - 1)
+                buffer->sub_lines = 0;*/
+            wrefresh (ptr_win->win_chat);
+            refresh ();
+        }
     }
-    
-    gui_draw_view_chat (view);
 }
 
 /*
- * gui_draw_view_nick: draw nick window for a view
+ * gui_draw_buffer_nick: draw nick window for a buffer
  */
 
 void
-gui_draw_view_nick (t_gui_view *view)
+gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
 {
+    t_gui_window *ptr_win;
     int i, x, y, column, max_length;
     char format[32], format_empty[32];
     t_irc_nick *ptr_nick;
     
-    /* TODO: manage splited windows! */
-    if (view != gui_current_view)
-        return;
-    
-    if (CHANNEL(view) && CHANNEL(view)->nicks)
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        max_length = nick_get_max_length (CHANNEL(view));
-        if ((view == gui_current_view) &&
-            ((max_length + 2) != view->window->win_nick_width))
+        if (ptr_win->buffer == buffer)
         {
-            gui_calculate_pos_size (view);
-            delwin (view->window->win_chat);
-            delwin (view->window->win_nick);
-            view->window->win_chat = newwin (view->window->win_chat_height,
-                                             view->window->win_chat_width,
-                                             view->window->win_chat_y,
-                                             view->window->win_chat_x);
-            view->window->win_nick = newwin (view->window->win_nick_height,
-                                             view->window->win_nick_width,
-                                             view->window->win_nick_y,
-                                             view->window->win_nick_x);
-            gui_redraw_view_chat (view);
-            
-            if (has_colors ())
-                gui_window_set_color (view->window->win_nick, COLOR_WIN_NICK);
-            
-            snprintf (format_empty, 32, "%%-%ds", view->window->win_nick_width);
-            for (i = 0; i < view->window->win_nick_height; i++)
+            if (erase)
             {
-                mvwprintw (view->window->win_nick, i, 0, format_empty, " ");
-            }
-        }
-        snprintf (format, 32, "%%-%ds", max_length);
-            
-        if (has_colors ())
-        {
-            switch (cfg_look_nicklist_position)
-            {
-                case CFG_LOOK_NICKLIST_LEFT:
-                    gui_window_set_color (view->window->win_nick, COLOR_WIN_NICK_SEP);
-                    for (i = 0; i < view->window->win_chat_height; i++)
-                        mvwprintw (view->window->win_nick,
-                                   i, view->window->win_nick_width - 1, " ");
-                    break;
-                case CFG_LOOK_NICKLIST_RIGHT:
-                    gui_window_set_color (view->window->win_nick, COLOR_WIN_NICK_SEP);
-                    for (i = 0; i < view->window->win_chat_height; i++)
-                        mvwprintw (view->window->win_nick,
-                                   i, 0, " ");
-                    break;
-                case CFG_LOOK_NICKLIST_TOP:
-                    gui_window_set_color (view->window->win_nick, COLOR_WIN_NICK);
-                    for (i = 0; i < view->window->win_chat_width; i += 2)
-                        mvwprintw (view->window->win_nick,
-                                   view->window->win_nick_height - 1, i, "-");
-                    break;
-                case CFG_LOOK_NICKLIST_BOTTOM:
-                    gui_window_set_color (view->window->win_nick, COLOR_WIN_NICK);
-                    for (i = 0; i < view->window->win_chat_width; i += 2)
-                        mvwprintw (view->window->win_nick,
-                                   0, i, "-");
-                    break;
-            }
-        }
-    
-        gui_window_set_color (view->window->win_nick, COLOR_WIN_NICK);
-        x = 0;
-        y = (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM) ? 1 : 0;
-        column = 0;
-        for (ptr_nick = CHANNEL(view)->nicks; ptr_nick;
-             ptr_nick = ptr_nick->next_nick)
-        {
-            switch (cfg_look_nicklist_position)
-            {
-                case CFG_LOOK_NICKLIST_LEFT:
-                    x = 0;
-                    break;
-                case CFG_LOOK_NICKLIST_RIGHT:
-                    x = 1;
-                    break;
-                case CFG_LOOK_NICKLIST_TOP:
-                case CFG_LOOK_NICKLIST_BOTTOM:
-                    x = column;
-                    break;
-            }
-            if (ptr_nick->is_op)
-            {
-                gui_window_set_color (view->window->win_nick, COLOR_WIN_NICK_OP);
-                mvwprintw (view->window->win_nick, y, x, "@");
-                x++;
-            }
-            else
-            {
-                if (ptr_nick->is_halfop)
+                if (has_colors ())
+                    gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK);
+                
+                snprintf (format_empty, 32, "%%-%ds", ptr_win->win_nick_width);
+                for (i = 0; i < ptr_win->win_nick_height; i++)
                 {
-                    gui_window_set_color (view->window->win_nick, COLOR_WIN_NICK_HALFOP);
-                    mvwprintw (view->window->win_nick, y, x, "%%");
-                    x++;
+                    mvwprintw (ptr_win->win_nick, i, 0, format_empty, " ");
                 }
-                else
+            }
+            
+            if (CHANNEL(buffer) && CHANNEL(buffer)->nicks)
+            {
+                max_length = nick_get_max_length (CHANNEL(buffer));
+                if ((buffer == gui_current_window->buffer) &&
+                    ((max_length + 2) != ptr_win->win_nick_width))
                 {
-                    if (ptr_nick->has_voice)
+                    gui_calculate_pos_size (ptr_win);
+                    delwin (ptr_win->win_chat);
+                    delwin (ptr_win->win_nick);
+                    ptr_win->win_chat = newwin (ptr_win->win_chat_height,
+                                                ptr_win->win_chat_width,
+                                                ptr_win->win_chat_y,
+                                                ptr_win->win_chat_x);
+                    ptr_win->win_nick = newwin (ptr_win->win_nick_height,
+                                                ptr_win->win_nick_width,
+                                                ptr_win->win_nick_y,
+                                                ptr_win->win_nick_x);
+                    gui_draw_buffer_chat (buffer, 1);
+                    
+                    if (has_colors ())
+                        gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK);
+                    
+                    snprintf (format_empty, 32, "%%-%ds", ptr_win->win_nick_width);
+                    for (i = 0; i < ptr_win->win_nick_height; i++)
                     {
-                        gui_window_set_color (view->window->win_nick, COLOR_WIN_NICK_VOICE);
-                        mvwprintw (view->window->win_nick, y, x, "+");
+                        mvwprintw (ptr_win->win_nick, i, 0, format_empty, " ");
+                    }
+                }
+                snprintf (format, 32, "%%-%ds", max_length);
+                
+                if (has_colors ())
+                {
+                    switch (cfg_look_nicklist_position)
+                    {
+                        case CFG_LOOK_NICKLIST_LEFT:
+                            gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_SEP);
+                            for (i = 0; i < ptr_win->win_chat_height; i++)
+                                mvwprintw (ptr_win->win_nick,
+                                           i, ptr_win->win_nick_width - 1, " ");
+                            break;
+                        case CFG_LOOK_NICKLIST_RIGHT:
+                            gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_SEP);
+                            for (i = 0; i < ptr_win->win_chat_height; i++)
+                                mvwprintw (ptr_win->win_nick,
+                                           i, 0, " ");
+                            break;
+                        case CFG_LOOK_NICKLIST_TOP:
+                            gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK);
+                            for (i = 0; i < ptr_win->win_chat_width; i += 2)
+                                mvwprintw (ptr_win->win_nick,
+                                           ptr_win->win_nick_height - 1, i, "-");
+                            break;
+                        case CFG_LOOK_NICKLIST_BOTTOM:
+                            gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK);
+                            for (i = 0; i < ptr_win->win_chat_width; i += 2)
+                                mvwprintw (ptr_win->win_nick,
+                                           0, i, "-");
+                            break;
+                    }
+                }
+                
+                gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK);
+                x = 0;
+                y = (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM) ? 1 : 0;
+                column = 0;
+                for (ptr_nick = CHANNEL(buffer)->nicks; ptr_nick;
+                     ptr_nick = ptr_nick->next_nick)
+                {
+                    switch (cfg_look_nicklist_position)
+                    {
+                        case CFG_LOOK_NICKLIST_LEFT:
+                            x = 0;
+                            break;
+                        case CFG_LOOK_NICKLIST_RIGHT:
+                            x = 1;
+                            break;
+                        case CFG_LOOK_NICKLIST_TOP:
+                        case CFG_LOOK_NICKLIST_BOTTOM:
+                            x = column;
+                            break;
+                    }
+                    if (ptr_nick->is_op)
+                    {
+                        gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_OP);
+                        mvwprintw (ptr_win->win_nick, y, x, "@");
                         x++;
                     }
                     else
                     {
-                        gui_window_set_color (view->window->win_nick, COLOR_WIN_NICK);
-                        mvwprintw (view->window->win_nick, y, x, " ");
-                        x++;
+                        if (ptr_nick->is_halfop)
+                        {
+                            gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_HALFOP);
+                            mvwprintw (ptr_win->win_nick, y, x, "%%");
+                            x++;
+                        }
+                        else
+                        {
+                            if (ptr_nick->has_voice)
+                            {
+                                gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_VOICE);
+                                mvwprintw (ptr_win->win_nick, y, x, "+");
+                                x++;
+                            }
+                            else
+                            {
+                                gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK);
+                                mvwprintw (ptr_win->win_nick, y, x, " ");
+                                x++;
+                            }
+                        }
+                    }
+                    gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK);
+                    mvwprintw (ptr_win->win_nick, y, x, format, ptr_nick->nick);
+                    y++;
+                    if ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_TOP) ||
+                        (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM))
+                    {
+                        if (y - ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM) ? 1 : 0) >= ptr_win->win_nick_height - 1)
+                        {
+                            column += max_length + 2;
+                            y = (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_TOP) ?
+                                0 : 1;
+                        }
                     }
                 }
             }
-            gui_window_set_color (view->window->win_nick, COLOR_WIN_NICK);
-            mvwprintw (view->window->win_nick, y, x, format, ptr_nick->nick);
-            y++;
-            if ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_TOP) ||
-                (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM))
-            {
-                if (y - ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM) ? 1 : 0) >= view->window->win_nick_height - 1)
-                {
-                    column += max_length + 2;
-                    y = (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_TOP) ?
-                        0 : 1;
-                }
-            }
+            wrefresh (ptr_win->win_nick);
+            refresh ();
         }
     }
-    wrefresh (view->window->win_nick);
-    refresh ();
 }
 
 /*
- * gui_redraw_view_nick: redraw nick window for a view
+ * gui_draw_buffer_status: draw status window for a buffer
  */
 
 void
-gui_redraw_view_nick (t_gui_view *view)
+gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
 {
-    char format_empty[32];
-    int i;
-    
-    /* TODO: manage splitted windows! */
-    if (view != gui_current_view)
-        return;
-    
-    if (has_colors ())
-        gui_window_set_color (view->window->win_nick, COLOR_WIN_NICK);
-    
-    snprintf (format_empty, 32, "%%-%ds", view->window->win_nick_width);
-    for (i = 0; i < view->window->win_nick_height; i++)
-    {
-        mvwprintw (view->window->win_nick, i, 0, format_empty, " ");
-    }
-    
-    gui_draw_view_nick (view);
-}
-
-/*
- * gui_draw_view_status: draw status window for a view
- */
-
-void
-gui_draw_view_status (t_gui_view *view)
-{
-    t_gui_view *ptr_view;
+    t_gui_window *ptr_win;
+    t_gui_buffer *ptr_buffer;
     char format_more[32];
     int i, first_mode;
     
-    /* TODO: manage splitted windows! */
-    if (view != gui_current_view)
-        return;
-    
-    if (has_colors ())
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        gui_window_set_color (view->window->win_status, COLOR_WIN_STATUS);
-        wborder (view->window->win_status, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
-        wrefresh (view->window->win_status);
-    }
-    wmove (view->window->win_status, 0, 0);
-    for (ptr_view = gui_views; ptr_view; ptr_view = ptr_view->next_view)
-    {
-        if (SERVER(ptr_view) && !CHANNEL(ptr_view))
+        if (erase)
+            gui_curses_window_clear (ptr_win->win_status);
+        
+        if (has_colors ())
         {
-            if (gui_current_view == SERVER(ptr_view)->view)
-            {
-                if (ptr_view->unread_data)
-                {
-                    if (ptr_view->unread_data > 1)
-                        gui_window_set_color (view->window->win_status,
-                                              COLOR_WIN_STATUS_DATA_MSG);
-                    else
-                        gui_window_set_color (view->window->win_status,
-                                              COLOR_WIN_STATUS_DATA_OTHER);
-                }
-                else
-                    gui_window_set_color (view->window->win_status,
-                                          COLOR_WIN_STATUS_ACTIVE);
-            }
-            else
-            {
-                if (SERVER(ptr_view)->view &&
-                    ((SERVER(ptr_view)->view)->unread_data))
-                {
-                    if (SERVER(ptr_view)->view->unread_data > 1)
-                        gui_window_set_color (view->window->win_status,
-                                              COLOR_WIN_STATUS_DATA_MSG);
-                    else
-                        gui_window_set_color (view->window->win_status,
-                                              COLOR_WIN_STATUS_DATA_OTHER);
-                }
-                else
-                    gui_window_set_color (view->window->win_status,
-                                          COLOR_WIN_STATUS);
-            }
-            if (SERVER(ptr_view)->is_connected)
-                wprintw (view->window->win_status, "[%s] ",
-                         SERVER(ptr_view)->name);
-            else
-                wprintw (view->window->win_status, "(%s) ",
-                         SERVER(ptr_view)->name);
+            gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS);
+            wborder (ptr_win->win_status, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
+            wrefresh (ptr_win->win_status);
         }
-        if (SERVER(ptr_view) && CHANNEL(ptr_view))
+        wmove (ptr_win->win_status, 0, 0);
+        for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
         {
-            if (gui_current_view == CHANNEL(ptr_view)->view)
+            if (SERVER(ptr_buffer) && !CHANNEL(ptr_buffer))
             {
-                if ((CHANNEL(ptr_view)->view) &&
-                    (CHANNEL(ptr_view)->view->unread_data))
+                if (ptr_win->buffer == SERVER(ptr_buffer)->buffer)
                 {
-                    if (CHANNEL(ptr_view)->view->unread_data > 1)
-                        gui_window_set_color (view->window->win_status,
-                                              COLOR_WIN_STATUS_DATA_MSG);
-                    else
-                        gui_window_set_color (view->window->win_status,
-                                              COLOR_WIN_STATUS_DATA_OTHER);
-                }
-                else
-                    gui_window_set_color (view->window->win_status,
-                                          COLOR_WIN_STATUS_ACTIVE);
-            }
-            else
-            {
-                if ((CHANNEL(ptr_view)->view) &&
-                    (CHANNEL(ptr_view)->view->unread_data))
-                {
-                    if (CHANNEL(ptr_view)->view->unread_data > 1)
-                        gui_window_set_color (view->window->win_status,
-                                              COLOR_WIN_STATUS_DATA_MSG);
-                    else
-                        gui_window_set_color (view->window->win_status,
-                                              COLOR_WIN_STATUS_DATA_OTHER);
-                }
-                else
-                    gui_window_set_color (view->window->win_status,
-                                          COLOR_WIN_STATUS);
-            }
-            wprintw (view->window->win_status, "%s", CHANNEL(ptr_view)->name);
-            if (gui_current_view == CHANNEL(ptr_view)->view)
-            {
-                /* display channel modes */
-                wprintw (view->window->win_status, "(");
-                i = 0;
-                first_mode = 1;
-                while (CHANNEL(ptr_view)->modes[i])
-                {
-                    if (CHANNEL(ptr_view)->modes[i] != ' ')
+                    if (ptr_buffer->unread_data)
                     {
-                        if (first_mode)
-                        {
-                            wprintw (view->window->win_status, "+");
-                            first_mode = 0;
-                        }
-                        wprintw (view->window->win_status, "%c",
-                                 CHANNEL(ptr_view)->modes[i]);
+                        if (ptr_buffer->unread_data > 1)
+                            gui_window_set_color (ptr_win->win_status,
+                                                  COLOR_WIN_STATUS_DATA_MSG);
+                        else
+                            gui_window_set_color (ptr_win->win_status,
+                                                  COLOR_WIN_STATUS_DATA_OTHER);
                     }
-                    i++;
+                    else
+                        gui_window_set_color (ptr_win->win_status,
+                                              COLOR_WIN_STATUS_ACTIVE);
                 }
-                if (CHANNEL(ptr_view)->modes[CHANNEL_MODE_KEY] != ' ')
-                    wprintw (view->window->win_status, ",%s",
-                             CHANNEL(ptr_view)->key);
-                if (CHANNEL(ptr_view)->modes[CHANNEL_MODE_LIMIT] != ' ')
-                    wprintw (view->window->win_status, ",%d",
-                             CHANNEL(ptr_view)->limit);
-                wprintw (view->window->win_status, ")");
+                else
+                {
+                    if (SERVER(ptr_buffer)->buffer &&
+                        ((SERVER(ptr_buffer)->buffer)->unread_data))
+                    {
+                        if (SERVER(ptr_buffer)->buffer->unread_data > 1)
+                            gui_window_set_color (ptr_win->win_status,
+                                                  COLOR_WIN_STATUS_DATA_MSG);
+                        else
+                            gui_window_set_color (ptr_win->win_status,
+                                                  COLOR_WIN_STATUS_DATA_OTHER);
+                    }
+                    else
+                        gui_window_set_color (ptr_win->win_status,
+                                              COLOR_WIN_STATUS);
+                }
+                if (SERVER(ptr_buffer)->is_connected)
+                    wprintw (ptr_win->win_status, "[%s] ",
+                             SERVER(ptr_buffer)->name);
+                else
+                    wprintw (ptr_win->win_status, "(%s) ",
+                             SERVER(ptr_buffer)->name);
             }
-            wprintw (view->window->win_status, " ");
+            if (SERVER(ptr_buffer) && CHANNEL(ptr_buffer))
+            {
+                if (ptr_win->buffer == CHANNEL(ptr_buffer)->buffer)
+                {
+                    if ((CHANNEL(ptr_buffer)->buffer) &&
+                        (CHANNEL(ptr_buffer)->buffer->unread_data))
+                    {
+                        if (CHANNEL(ptr_buffer)->buffer->unread_data > 1)
+                            gui_window_set_color (ptr_win->win_status,
+                                                  COLOR_WIN_STATUS_DATA_MSG);
+                        else
+                            gui_window_set_color (ptr_win->win_status,
+                                                  COLOR_WIN_STATUS_DATA_OTHER);
+                    }
+                    else
+                        gui_window_set_color (ptr_win->win_status,
+                                              COLOR_WIN_STATUS_ACTIVE);
+                }
+                else
+                {
+                    if ((CHANNEL(ptr_buffer)->buffer) &&
+                        (CHANNEL(ptr_buffer)->buffer->unread_data))
+                    {
+                        if (CHANNEL(ptr_buffer)->buffer->unread_data > 1)
+                            gui_window_set_color (ptr_win->win_status,
+                                                  COLOR_WIN_STATUS_DATA_MSG);
+                        else
+                            gui_window_set_color (ptr_win->win_status,
+                                                  COLOR_WIN_STATUS_DATA_OTHER);
+                    }
+                    else
+                        gui_window_set_color (ptr_win->win_status,
+                                              COLOR_WIN_STATUS);
+                }
+                wprintw (ptr_win->win_status, "%s", CHANNEL(ptr_buffer)->name);
+                if (ptr_win->buffer == CHANNEL(ptr_buffer)->buffer)
+                {
+                    /* display channel modes */
+                    wprintw (ptr_win->win_status, "(");
+                    i = 0;
+                    first_mode = 1;
+                    while (CHANNEL(ptr_buffer)->modes[i])
+                    {
+                        if (CHANNEL(ptr_buffer)->modes[i] != ' ')
+                        {
+                            if (first_mode)
+                            {
+                                wprintw (ptr_win->win_status, "+");
+                                first_mode = 0;
+                            }
+                            wprintw (ptr_win->win_status, "%c",
+                                     CHANNEL(ptr_buffer)->modes[i]);
+                        }
+                        i++;
+                    }
+                    if (CHANNEL(ptr_buffer)->modes[CHANNEL_MODE_KEY] != ' ')
+                        wprintw (ptr_win->win_status, ",%s",
+                                 CHANNEL(ptr_buffer)->key);
+                    if (CHANNEL(ptr_buffer)->modes[CHANNEL_MODE_LIMIT] != ' ')
+                        wprintw (ptr_win->win_status, ",%d",
+                                 CHANNEL(ptr_buffer)->limit);
+                    wprintw (ptr_win->win_status, ")");
+                }
+                wprintw (ptr_win->win_status, " ");
+            }
+            if (!SERVER(ptr_buffer))
+            {
+                gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS);
+                wprintw (ptr_win->win_status, _("[not connected] "));
+            }
         }
-        if (!SERVER(ptr_view))
+        
+        /* display "-MORE-" if last line is not displayed */
+        gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS_MORE);
+        if (ptr_win->sub_lines > 0)
+            mvwprintw (ptr_win->win_status, 0, ptr_win->win_width - 7,
+                       _("-MORE-"));
+        else
         {
-            gui_window_set_color (view->window->win_status, COLOR_WIN_STATUS);
-            wprintw (view->window->win_status, _("[not connected] "));
+            snprintf (format_more, 32, "%%-%ds", strlen (_("-MORE-")));
+            mvwprintw (ptr_win->win_status, 0, ptr_win->win_width - 7,
+                       format_more, " ");
         }
+        
+        wrefresh (ptr_win->win_status);
+        refresh ();
     }
-    
-    /* display "-MORE-" if last line is not displayed */
-    gui_window_set_color (view->window->win_status, COLOR_WIN_STATUS_MORE);
-    if (view->sub_lines > 0)
-        mvwprintw (view->window->win_status, 0, COLS - 7, _("-MORE-"));
-    else
-    {
-        snprintf (format_more, 32, "%%-%ds", strlen (_("-MORE-")));
-        mvwprintw (view->window->win_status, 0, COLS - 7, format_more, " ");
-    }
-    
-    wrefresh (view->window->win_status);
-    refresh ();
 }
 
 /*
- * gui_redraw_view_status: redraw status window for a view
+ * gui_draw_buffer_infobar: draw infobar window for a buffer
  */
 
 void
-gui_redraw_view_status (t_gui_view *view)
+gui_draw_buffer_infobar (t_gui_buffer *buffer, int erase)
 {
-    /* TODO: manage splited windows! */
-    if (view != gui_current_view)
-        return;
-    
-    gui_curses_window_clear (view->window->win_status);
-    gui_draw_view_status (view);
-}
-
-/*
- * gui_draw_view_infobar: draw infobar window for a view
- */
-
-void
-gui_draw_view_infobar (t_gui_view *view)
-{
+    t_gui_window *ptr_win;
     time_t time_seconds;
     struct tm *local_time;
     char text[1024 + 1];
     
-    /* TODO: manage splited windows! */
-    if (view != gui_current_view)
-        return;
-    
-    if (has_colors ())
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        gui_window_set_color (view->window->win_infobar, COLOR_WIN_INFOBAR);
-        wborder (view->window->win_infobar, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
-        wrefresh (view->window->win_infobar);
-    }
-    wmove (view->window->win_infobar, 0, 0);
+        if (ptr_win->buffer == buffer)
+        {
+            if (erase)
+                gui_curses_window_clear (ptr_win->win_infobar);
     
-    time_seconds = time (NULL);
-    local_time = localtime (&time_seconds);
-    if (local_time)
-    {
-        strftime (text, 1024, cfg_look_infobar_timestamp, local_time);
-        gui_window_set_color (view->window->win_infobar, COLOR_WIN_INFOBAR);
-        wprintw (view->window->win_infobar, "%s", text);
+            if (has_colors ())
+            {
+                gui_window_set_color (ptr_win->win_infobar, COLOR_WIN_INFOBAR);
+                wborder (ptr_win->win_infobar, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
+                wrefresh (ptr_win->win_infobar);
+            }
+            wmove (ptr_win->win_infobar, 0, 0);
+            
+            time_seconds = time (NULL);
+            local_time = localtime (&time_seconds);
+            if (local_time)
+            {
+                strftime (text, 1024, cfg_look_infobar_timestamp, local_time);
+                gui_window_set_color (ptr_win->win_infobar, COLOR_WIN_INFOBAR);
+                wprintw (ptr_win->win_infobar, "%s", text);
+            }
+            if (gui_infobar)
+            {
+                gui_window_set_color (ptr_win->win_infobar, gui_infobar->color);
+                wprintw (ptr_win->win_infobar, " | %s", gui_infobar->text);
+            }
+            
+            wrefresh (ptr_win->win_infobar);
+            refresh ();
+        }
     }
-    if (gui_infobar)
-    {
-        gui_window_set_color (view->window->win_infobar, gui_infobar->color);
-        wprintw (view->window->win_infobar, " | %s", gui_infobar->text);
-    }
-    
-    wrefresh (view->window->win_infobar);
-    refresh ();
-}
-
-/*
- * gui_redraw_view_infobar: redraw infobar window for a view
- */
-
-void
-gui_redraw_view_infobar (t_gui_view *view)
-{
-    /* TODO: manage splited windows! */
-    if (view != gui_current_view)
-        return;
-    
-    gui_curses_window_clear (view->window->win_infobar);
-    gui_draw_view_infobar (view);
 }
 
 /*
@@ -1043,337 +987,342 @@ gui_redraw_view_infobar (t_gui_view *view)
  */
 
 int
-gui_get_input_width (t_gui_view *view)
+gui_get_input_width (t_gui_window *window)
 {
-    if (CHANNEL(view))
-        return (COLS - strlen (CHANNEL(view)->name) -
-                strlen (SERVER(view)->nick) - 3);
+    if (CHANNEL(window->buffer))
+        return (window->win_width - strlen (CHANNEL(window->buffer)->name) -
+                strlen (SERVER(window->buffer)->nick) - 3);
     else
     {
-        if (SERVER(view) && (SERVER(view)->is_connected))
-            return (COLS - strlen (SERVER(view)->nick) - 2);
+        if (SERVER(window->buffer) && (SERVER(window->buffer)->is_connected))
+            return (window->win_width - strlen (SERVER(window->buffer)->nick) - 2);
         else
-            return (COLS - strlen (cfg_look_no_nickname) - 2);
+            return (window->win_width - strlen (cfg_look_no_nickname) - 2);
     }
 }
 
 /*
- * gui_draw_view_input: draw input window for a view
+ * gui_draw_buffer_input: draw input window for a buffer
  */
 
 void
-gui_draw_view_input (t_gui_view *view)
+gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
 {
+    t_gui_window *ptr_win;
     char format[32];
     char *ptr_nickname;
     int input_width;
     
-    /* TODO: manage splited windows! */
-    if (view != gui_current_view)
-        return;
-    
-    if (has_colors ())
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        gui_window_set_color (view->window->win_input, COLOR_WIN_INPUT);
-        wborder (view->window->win_input, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
-        wrefresh (view->window->win_input);
-    }
-    
-    if (view->input_buffer_size == 0)
-        view->input_buffer[0] = '\0';
-    
-    input_width = gui_get_input_width (view);
-    
-    if (view->input_buffer_pos - view->input_buffer_1st_display + 1 >
-        input_width)
-        view->input_buffer_1st_display = view->input_buffer_pos -
-            input_width + 1;
-    else
-    {
-        if (view->input_buffer_pos < view->input_buffer_1st_display)
-            view->input_buffer_1st_display = view->input_buffer_pos;
-        else
+        if (ptr_win->buffer == buffer)
         {
-            if ((view->input_buffer_1st_display > 0) &&
-                (view->input_buffer_pos -
-                view->input_buffer_1st_display + 1) < input_width)
+            if (erase)
+                gui_curses_window_clear (ptr_win->win_input);
+    
+            if (has_colors ())
             {
-                view->input_buffer_1st_display =
-                    view->input_buffer_pos - input_width + 1;
-                if (view->input_buffer_1st_display < 0)
-                    view->input_buffer_1st_display = 0;
+                gui_window_set_color (ptr_win->win_input, COLOR_WIN_INPUT);
+                wborder (ptr_win->win_input, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
+                wrefresh (ptr_win->win_input);
             }
-        }
-    }
-    if (CHANNEL(view))
-    {
-        snprintf (format, 32, "%%s %%s> %%-%ds", input_width);
-        mvwprintw (view->window->win_input, 0, 0, format,
-                   CHANNEL(view)->name,
-                   SERVER(view)->nick,
-                   view->input_buffer + view->input_buffer_1st_display);
-        wclrtoeol (view->window->win_input);
-        move (LINES - 1, strlen (CHANNEL(view)->name) +
-              strlen (SERVER(view)->nick) + 3 +
-              (view->input_buffer_pos - view->input_buffer_1st_display));
-    }
-    else
-    {
-        if (SERVER(view))
-        {
-            snprintf (format, 32, "%%s> %%-%ds", input_width);
-            if (SERVER(view) && (SERVER(view)->is_connected))
-                ptr_nickname = SERVER(view)->nick;
+            
+            if (buffer->input_buffer_size == 0)
+                buffer->input_buffer[0] = '\0';
+            
+            input_width = gui_get_input_width (ptr_win);
+            
+            if (buffer->input_buffer_pos - buffer->input_buffer_1st_display + 1 >
+                input_width)
+                buffer->input_buffer_1st_display = buffer->input_buffer_pos -
+                    input_width + 1;
             else
-                ptr_nickname = cfg_look_no_nickname;
-            mvwprintw (view->window->win_input, 0, 0, format,
-                       ptr_nickname,
-                       view->input_buffer + view->input_buffer_1st_display);
-            wclrtoeol (view->window->win_input);
-            move (LINES - 1, strlen (ptr_nickname) + 2 +
-                  (view->input_buffer_pos - view->input_buffer_1st_display));
-        }
-        else
-        {
-            snprintf (format, 32, "%%s> %%-%ds", input_width);
-            if (SERVER(view) && (SERVER(view)->is_connected))
-                ptr_nickname = SERVER(view)->nick;
-            else
-                ptr_nickname = cfg_look_no_nickname;
-            mvwprintw (view->window->win_input, 0, 0, format,
-                       ptr_nickname,
-                       view->input_buffer + view->input_buffer_1st_display);
-            wclrtoeol (view->window->win_input);
-            move (LINES - 1, strlen (ptr_nickname) + 2 +
-                  (view->input_buffer_pos - view->input_buffer_1st_display));
-        }
-    }
-    
-    wrefresh (view->window->win_input);
-    refresh ();
-}
-
-/*
- * gui_redraw_view_input: redraw input window for a view
- */
-
-void
-gui_redraw_view_input (t_gui_view *view)
-{
-    /* TODO: manage splited windows! */
-    if (view != gui_current_view)
-        return;
-    
-    gui_curses_window_clear (view->window->win_input);
-    gui_draw_view_input (view);
-}
-
-/*
- * gui_redraw_view: redraw a view
- */
-
-void
-gui_redraw_view (t_gui_view *view)
-{
-    /* TODO: manage splited windows! */
-    if (view != gui_current_view)
-        return;
-    
-    gui_redraw_view_title (view);
-    gui_redraw_view_chat (view);
-    if (view->window->win_nick)
-        gui_redraw_view_nick (view);
-    gui_redraw_view_status (view);
-    if (cfg_look_infobar)
-        gui_redraw_view_infobar (view);
-    gui_redraw_view_input (view);
-}
-
-/*
- * gui_switch_to_view: switch to another view
- */
-
-void
-gui_switch_to_view (t_gui_view *view)
-{
-    int another_view;
-    t_gui_view *ptr_view;
-    
-    another_view = 0;
-    /*for (ptr_view = gui_views; ptr_view; ptr_view = ptr_view->next_view)
-    {
-        if (ptr_view->is_displayed)
-        {*/
-            /* TODO: manage splited windows */
-            /*another_view = 1;
-            view->window->win_title = ptr_view->window->win_title;
-            view->window->win_chat = ptr_view->window->win_chat;
-            view->window->win_nick = ptr_view->window->win_nick;
-            view->window->win_status = ptr_view->window->win_status;
-            view->window->win_infobar = ptr_view->window->win_infobar;
-            view->window->win_input = ptr_view->window->win_input;
-            if (ptr_view != view)
             {
-                ptr_view->window->win_title = NULL;
-                ptr_view->window->win_chat = NULL;
-                ptr_view->window->win_nick = NULL;
-                ptr_view->window->win_status = NULL;
-                ptr_view->window->win_infobar = NULL;
-                ptr_view->window->win_input = NULL;
-                ptr_view->is_displayed = 0;
+                if (buffer->input_buffer_pos < buffer->input_buffer_1st_display)
+                    buffer->input_buffer_1st_display = buffer->input_buffer_pos;
+                else
+                {
+                    if ((buffer->input_buffer_1st_display > 0) &&
+                        (buffer->input_buffer_pos -
+                        buffer->input_buffer_1st_display + 1) < input_width)
+                    {
+                        buffer->input_buffer_1st_display =
+                            buffer->input_buffer_pos - input_width + 1;
+                        if (buffer->input_buffer_1st_display < 0)
+                            buffer->input_buffer_1st_display = 0;
+                    }
+                }
             }
-            break;
+            if (CHANNEL(buffer))
+            {
+                snprintf (format, 32, "%%s %%s> %%-%ds", input_width);
+                if (ptr_win == gui_current_window)
+                    mvwprintw (ptr_win->win_input, 0, 0, format,
+                               CHANNEL(buffer)->name,
+                               SERVER(buffer)->nick,
+                               buffer->input_buffer + buffer->input_buffer_1st_display);
+                else
+                    mvwprintw (ptr_win->win_input, 0, 0, format,
+                               CHANNEL(buffer)->name,
+                               SERVER(buffer)->nick,
+                               "");
+                wclrtoeol (ptr_win->win_input);
+                if (ptr_win == gui_current_window)
+                    move (ptr_win->win_y + ptr_win->win_height - 1,
+                          ptr_win->win_x + strlen (CHANNEL(buffer)->name) +
+                          strlen (SERVER(buffer)->nick) + 3 +
+                          (buffer->input_buffer_pos - buffer->input_buffer_1st_display));
+            }
+            else
+            {
+                if (SERVER(buffer))
+                {
+                    snprintf (format, 32, "%%s> %%-%ds", input_width);
+                    if (SERVER(buffer) && (SERVER(buffer)->is_connected))
+                        ptr_nickname = SERVER(buffer)->nick;
+                    else
+                        ptr_nickname = cfg_look_no_nickname;
+                    if (ptr_win == gui_current_window)
+                        mvwprintw (ptr_win->win_input, 0, 0, format,
+                                   ptr_nickname,
+                                   buffer->input_buffer + buffer->input_buffer_1st_display);
+                    else
+                        mvwprintw (ptr_win->win_input, 0, 0, format,
+                                   ptr_nickname,
+                                   "");
+                    wclrtoeol (ptr_win->win_input);
+                    if (ptr_win == gui_current_window)
+                        move (ptr_win->win_y + ptr_win->win_height - 1,
+                              ptr_win->win_x + strlen (ptr_nickname) + 2 +
+                              (buffer->input_buffer_pos - buffer->input_buffer_1st_display));
+                }
+                else
+                {
+                    snprintf (format, 32, "%%s> %%-%ds", input_width);
+                    if (SERVER(buffer) && (SERVER(buffer)->is_connected))
+                        ptr_nickname = SERVER(buffer)->nick;
+                    else
+                        ptr_nickname = cfg_look_no_nickname;
+                    if (ptr_win == gui_current_window)
+                        mvwprintw (ptr_win->win_input, 0, 0, format,
+                                   ptr_nickname,
+                                   buffer->input_buffer + buffer->input_buffer_1st_display);
+                    else
+                        mvwprintw (ptr_win->win_input, 0, 0, format,
+                                   ptr_nickname,
+                                   "");
+                    wclrtoeol (ptr_win->win_input);
+                    if (ptr_win == gui_current_window)
+                        move (ptr_win->win_y + ptr_win->win_height - 1,
+                              ptr_win->win_x + strlen (ptr_nickname) + 2 +
+                              (buffer->input_buffer_pos - buffer->input_buffer_1st_display));
+                }
+            }
+            
+            wrefresh (ptr_win->win_input);
+            refresh ();
         }
-    }*/
-    
-    gui_calculate_pos_size (view);
-    
-    /* first time creation for views */
-    if (!another_view)
-    {
-        /* create new views */
-        view->window->win_title = newwin (1, COLS, 0, 0);
-        view->window->win_chat = newwin (view->window->win_chat_height,
-                                         view->window->win_chat_width,
-                                         view->window->win_chat_y,
-                                         view->window->win_chat_x);
-        if (cfg_look_nicklist && CHANNEL(view))
-            view->window->win_nick = newwin (view->window->win_nick_height,
-                                             view->window->win_nick_width,
-                                             view->window->win_nick_y,
-                                             view->window->win_nick_x);
-        else
-            view->window->win_nick = NULL;
-        view->window->win_input = newwin (1, COLS, LINES - 1, 0);
     }
-    else
+}
+
+/*
+ * gui_redraw_buffer: redraw a buffer
+ */
+
+void
+gui_redraw_buffer (t_gui_buffer *buffer)
+{
+    t_gui_window *ptr_win;
+    
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        /* remove some views */
-        if (view->window->win_nick)
+        if (ptr_win->buffer == buffer)
         {
-            delwin (view->window->win_nick);
-            view->window->win_nick = NULL;
+            gui_draw_buffer_title (buffer, 1);
+            gui_draw_buffer_chat (buffer, 1);
+            if (ptr_win->win_nick)
+                gui_draw_buffer_nick (buffer, 1);
+            gui_draw_buffer_status (buffer, 1);
+            if (cfg_look_infobar)
+                gui_draw_buffer_infobar (buffer, 1);
+            gui_draw_buffer_input (buffer, 1);
         }
-        if (view->window->win_status)
-        {
-            delwin (view->window->win_status);
-            view->window->win_status = NULL;
-        }
-        if (view->window->win_infobar)
-        {
-            delwin (view->window->win_infobar);
-            view->window->win_infobar = NULL;
-        }
+    }
+}
+
+/*
+ * gui_switch_to_buffer: switch to another buffer
+ */
+
+void
+gui_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
+{
+    if (gui_current_window->buffer->num_displayed > 0)
+        gui_current_window->buffer->num_displayed--;
+    
+    window->buffer = buffer;
+    gui_calculate_pos_size (window);
+    
+    /* destroy Curses windows */
+    if (window->win_title)
+    {
+        delwin (window->win_title);
+        window->win_title = NULL;
+    }
+    if (window->win_nick)
+    {
+        delwin (window->win_nick);
+        window->win_nick = NULL;
+    }
+    if (window->win_status)
+    {
+        delwin (window->win_status);
+        window->win_status = NULL;
+    }
+    if (window->win_infobar)
+    {
+        delwin (window->win_infobar);
+        window->win_infobar = NULL;
+    }
+    if (window->win_input)
+    {
+        delwin (window->win_input);
+        window->win_input = NULL;
+    }
         
-        /* create views */
-        if (VIEW_IS_CHANNEL(view))
-        {
-            delwin (view->window->win_chat);
-            view->window->win_chat = newwin (view->window->win_chat_height,
-                                             view->window->win_chat_width,
-                                             view->window->win_chat_y,
-                                             view->window->win_chat_x);
-            if (cfg_look_nicklist)
-                view->window->win_nick = newwin (view->window->win_nick_height,
-                                                 view->window->win_nick_width,
-                                                 view->window->win_nick_y,
-                                                 view->window->win_nick_x);
-            else
-                view->window->win_nick = NULL;
-        }
-        if (!(VIEW_IS_CHANNEL(view)))
-        {
-            delwin (view->window->win_chat);
-            view->window->win_chat = newwin (view->window->win_chat_height,
-                                             view->window->win_chat_width,
-                                             view->window->win_chat_y,
-                                             view->window->win_chat_x);
-        }
+    /* create Curses windows */
+    window->win_title = newwin (1,
+                                window->win_width,
+                                window->win_y,
+                                window->win_x);
+    window->win_input = newwin (1,
+                                window->win_width,
+                                window->win_y + window->win_height - 1,
+                                window->win_x);
+    if (BUFFER_IS_CHANNEL(buffer))
+    {
+        if (window->win_chat)
+            delwin (window->win_chat);
+        window->win_chat = newwin (window->win_chat_height,
+                                   window->win_chat_width,
+                                   window->win_chat_y,
+                                   window->win_chat_x);
+        if (cfg_look_nicklist)
+            window->win_nick = newwin (window->win_nick_height,
+                                       window->win_nick_width,
+                                       window->win_nick_y,
+                                       window->win_nick_x);
+        else
+            window->win_nick = NULL;
+    }
+    if (!(BUFFER_IS_CHANNEL(buffer)))
+    {
+        if (window->win_chat)
+            delwin (window->win_chat);
+        window->win_chat = newwin (window->win_chat_height,
+                                   window->win_chat_width,
+                                   window->win_chat_y,
+                                   window->win_chat_x);
     }
     
     /* create status/infobar windows */
     if (cfg_look_infobar)
     {
-        view->window->win_infobar = newwin (1, COLS, LINES - 2, 0);
-        view->window->win_status = newwin (1, COLS, LINES - 3, 0);
+        window->win_infobar = newwin (1, window->win_width, window->win_y + window->win_height - 2, window->win_x);
+        window->win_status = newwin (1, window->win_width, window->win_y + window->win_height - 3, window->win_x);
     }
     else
-        view->window->win_status = newwin (1, COLS, LINES - 2, 0);
+        window->win_status = newwin (1, window->win_width, window->win_y + window->win_height - 2, window->win_x);
     
-    /* change current view to the new view */
-    gui_current_view = view;
-    
-    view->is_displayed = 1;
-    view->unread_data = 0;
+    buffer->num_displayed++;
+    buffer->unread_data = 0;
 }
 
 /*
- * gui_switch_to_previous_view: switch to previous view
+ * gui_switch_to_previous_buffer: switch to previous buffer
  */
 
 void
-gui_switch_to_previous_view ()
+gui_switch_to_previous_buffer (t_gui_window *window)
 {
-    /* if only one view then return */
-    if (gui_views == last_gui_view)
+    /* if only one buffer then return */
+    if (gui_buffers == last_gui_buffer)
         return;
     
-    if (gui_current_view->prev_view)
-        gui_switch_to_view (gui_current_view->prev_view);
+    if (window->buffer->prev_buffer)
+        gui_switch_to_buffer (window, window->buffer->prev_buffer);
     else
-        gui_switch_to_view (last_gui_view);
-    gui_redraw_view (gui_current_view);
+        gui_switch_to_buffer (window, last_gui_buffer);
+    
+    gui_redraw_buffer (window->buffer);
 }
 
 /*
- * gui_switch_to_next_view: switch to next view
+ * gui_switch_to_next_buffer: switch to next buffer
  */
 
 void
-gui_switch_to_next_view ()
+gui_switch_to_next_buffer (t_gui_window *window)
 {
-    /* if only one view then return */
-    if (gui_views == last_gui_view)
+    /* if only one buffer then return */
+    if (gui_buffers == last_gui_buffer)
         return;
     
-    if (gui_current_view->next_view)
-        gui_switch_to_view (gui_current_view->next_view);
+    if (window->buffer->next_buffer)
+        gui_switch_to_buffer (window, window->buffer->next_buffer);
     else
-        gui_switch_to_view (gui_views);
-    gui_redraw_view (gui_current_view);
+        gui_switch_to_buffer (window, gui_buffers);
+    
+    gui_redraw_buffer (window->buffer);
 }
 
 /*
- * gui_move_page_up: display previous page on view
+ * gui_switch_to_next_window: switch to next window
  */
 
 void
-gui_move_page_up ()
+gui_switch_to_next_window (t_gui_window *window)
 {
-    if (!gui_current_view->first_line_displayed)
+    /* if only one window then return */
+    if (gui_windows == last_gui_window)
+        return;
+    
+    gui_current_window = (window->next_window) ? window->next_window : gui_windows;
+    gui_switch_to_buffer (gui_current_window, gui_current_window->buffer);
+    gui_redraw_buffer (gui_current_window->buffer);
+}
+
+/*
+ * gui_move_page_up: display previous page on buffer
+ */
+
+void
+gui_move_page_up (t_gui_window *window)
+{
+    if (!window->first_line_displayed)
     {
-        gui_current_view->sub_lines += gui_current_view->window->win_chat_height - 1;
-        gui_draw_view_chat (gui_current_view);
-        gui_draw_view_status (gui_current_view);
+        window->sub_lines += window->win_chat_height - 1;
+        gui_draw_buffer_chat (window->buffer, 0);
+        gui_draw_buffer_status (window->buffer, 0);
     }
 }
 
 /*
- * gui_move_page_down: display next page on view
+ * gui_move_page_down: display next page on buffer
  */
 
 void
-gui_move_page_down ()
+gui_move_page_down (t_gui_window *window)
 {
-    if (gui_current_view->sub_lines > 0)
+    if (window->sub_lines > 0)
     {
-        gui_current_view->sub_lines -= gui_current_view->window->win_chat_height - 1;
-        if (gui_current_view->sub_lines < 0)
-            gui_current_view->sub_lines = 0;
-        if (gui_current_view->sub_lines == 0)
-            gui_current_view->unread_data = 0;
-        gui_draw_view_chat (gui_current_view);
-        gui_draw_view_status (gui_current_view);
+        window->sub_lines -= window->win_chat_height - 1;
+        if (window->sub_lines < 0)
+            window->sub_lines = 0;
+        if (window->sub_lines == 0)
+            window->buffer->unread_data = 0;
+        gui_draw_buffer_chat (window->buffer, 0);
+        gui_draw_buffer_status (window->buffer, 0);
     }
 }
 
@@ -1384,41 +1333,32 @@ gui_move_page_down ()
 void
 gui_curses_resize_handler ()
 {
-    t_gui_view *ptr_view;
-    int width, height;
+    t_gui_window *ptr_win, *old_current_window;
+    int old_width, old_height;
+    int new_width, new_height;
+    
+    getmaxyx (stdscr, old_height, old_width);
     
     endwin ();
     refresh ();
     
-    getmaxyx (stdscr, height, width);
+    getmaxyx (stdscr, new_height, new_width);
     
-    for (ptr_view = gui_views; ptr_view; ptr_view = ptr_view->next_view)
+    old_current_window = gui_current_window;
+    
+    /* TODO: manage when some windows are outside new term size */
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        // TODO: manage splited windows!
-        if (ptr_view->window->win_title)
-        {
-            ptr_view->is_displayed = 0;
-            if (ptr_view->window->win_title)
-                delwin (ptr_view->window->win_title);
-            if (ptr_view->window->win_chat)
-                delwin (ptr_view->window->win_chat);
-            if (ptr_view->window->win_nick)
-                delwin (ptr_view->window->win_nick);
-            if (ptr_view->window->win_status)
-                delwin (ptr_view->window->win_status);
-            if (ptr_view->window->win_infobar)
-                delwin (ptr_view->window->win_infobar);
-            if (ptr_view->window->win_input)
-                delwin (ptr_view->window->win_input);
-            ptr_view->window->win_title = NULL;
-            ptr_view->window->win_chat = NULL;
-            ptr_view->window->win_nick = NULL;
-            ptr_view->window->win_status = NULL;
-            ptr_view->window->win_infobar = NULL;
-            ptr_view->window->win_input = NULL;
-            gui_switch_to_view (ptr_view);
-        }
+        wee_log_printf ("win_x = %d, win_width = %d, old_width = %d\n", ptr_win->win_x, ptr_win->win_width, old_width);
+        if (ptr_win->win_x + ptr_win->win_width == old_width)
+            ptr_win->win_width = new_width - ptr_win->win_x;
+        if (ptr_win->win_y + ptr_win->win_height == old_height)
+            ptr_win->win_height = new_height - ptr_win->win_y;
+        gui_switch_to_buffer (ptr_win, ptr_win->buffer);
     }
+    
+    gui_current_window = old_current_window;
+    gui_draw_buffer_input (gui_current_window->buffer, 1);
 }
 
 /*
@@ -1426,14 +1366,83 @@ gui_curses_resize_handler ()
  */
 
 void
-gui_view_init_subviews (t_gui_view *view)
+gui_window_init_subwindows (t_gui_window *window)
 {
-    view->window->win_title = NULL;
-    view->window->win_chat = NULL;
-    view->window->win_nick = NULL;
-    view->window->win_status = NULL;
-    view->window->win_infobar = NULL;
-    view->window->win_input = NULL;
+    window->win_title = NULL;
+    window->win_chat = NULL;
+    window->win_nick = NULL;
+    window->win_status = NULL;
+    window->win_infobar = NULL;
+    window->win_input = NULL;
+}
+
+/*
+ * gui_window_split_horiz: split a window horizontally
+ */
+
+void
+gui_window_split_horiz (t_gui_window *window)
+{
+    t_gui_window *new_window;
+    int height1, height2;
+    
+    height1 = window->win_height / 2;
+    height2 = window->win_height - height1;
+    if ((new_window = gui_window_new (window->win_x, window->win_y,
+                                      window->win_width, height1)))
+    {
+        /* reduce old window height (bottom window) */
+        window->win_y = new_window->win_y + new_window->win_height;
+        window->win_height = height2;
+        
+        /* assign same buffer for new window (top window) */
+        new_window->buffer = window->buffer;
+        
+        gui_switch_to_buffer (window, window->buffer);
+        
+        gui_current_window = new_window;
+        gui_switch_to_buffer (gui_current_window, gui_current_window->buffer);
+        gui_redraw_buffer (gui_current_window->buffer);
+    }
+}
+
+/*
+ * gui_window_split_vertic: split a window vertically
+ */
+
+void
+gui_window_split_vertic (t_gui_window *window)
+{
+    t_gui_window *new_window;
+    int width1, width2;
+    
+    width1 = window->win_width / 2;
+    width2 = window->win_width - width1 - 1;
+    if ((new_window = gui_window_new (window->win_x + width1 + 1, window->win_y,
+                                      width2, window->win_height)))
+    {
+        /* reduce old window height (left window) */
+        window->win_width = width1;
+        
+        /* assign same buffer for new window (right window) */
+        new_window->buffer = window->buffer;
+        
+        gui_switch_to_buffer (window, window->buffer);
+        
+        gui_current_window = new_window;
+        gui_switch_to_buffer (gui_current_window, gui_current_window->buffer);
+        gui_redraw_buffer (gui_current_window->buffer);
+        
+        /* create & draw separator if window is not on the left */
+        gui_current_window->win_separator = newwin (gui_current_window->win_height,
+                                                    1,
+                                                    gui_current_window->win_y,
+                                                    gui_current_window->win_x - 1);
+        gui_window_set_color (gui_current_window->win_separator, COLOR_WIN_TITLE);
+        wborder (gui_current_window->win_separator, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
+        wrefresh (gui_current_window->win_separator);
+        refresh ();
+    }
 }
 
 /*
@@ -1592,10 +1601,11 @@ gui_init ()
 
     gui_infobar = NULL;
     
-    /* create a new view */
-    if ((gui_windows = gui_window_new (0, 0, COLS, LINES)))
+    /* create a new buffer */
+    if (gui_window_new (0, 0, COLS, LINES))
     {
-        gui_current_view = gui_view_new (gui_windows, NULL, NULL, 1 /*0, 0, COLS, LINES*/);
+        gui_current_window = gui_windows;
+        gui_buffer_new (gui_windows, NULL, NULL, 1);
     
         signal (SIGWINCH, gui_curses_resize_handler);
     
@@ -1613,23 +1623,23 @@ gui_init ()
 void
 gui_end ()
 {
-    t_gui_view *ptr_view;
+    t_gui_window *ptr_win;
     
-    /* delete all views */
-    for (ptr_view = gui_views; ptr_view; ptr_view = ptr_view->next_view)
+    /* delete all windows */
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        if (ptr_view->window->win_title)
-            delwin (ptr_view->window->win_title);
-        if (ptr_view->window->win_chat)
-            delwin (ptr_view->window->win_chat);
-        if (ptr_view->window->win_nick)
-            delwin (ptr_view->window->win_nick);
-        if (ptr_view->window->win_status)
-            delwin (ptr_view->window->win_status);
-        if (ptr_view->window->win_infobar)
-            delwin (ptr_view->window->win_infobar);
-        if (ptr_view->window->win_input)
-            delwin (ptr_view->window->win_input);
+        if (ptr_win->win_title)
+            delwin (ptr_win->win_title);
+        if (ptr_win->win_chat)
+            delwin (ptr_win->win_chat);
+        if (ptr_win->win_nick)
+            delwin (ptr_win->win_nick);
+        if (ptr_win->win_status)
+            delwin (ptr_win->win_status);
+        if (ptr_win->win_infobar)
+            delwin (ptr_win->win_infobar);
+        if (ptr_win->win_input)
+            delwin (ptr_win->win_input);
         /* TODO: free input buffer, lines, messages, completion */
     }
     
@@ -1639,99 +1649,99 @@ gui_end ()
 }
 
 /*
- * gui_add_message: add a message to a view
+ * gui_add_message: add a message to a buffer
  */
 
 void
-gui_add_message (t_gui_view *view, int type, int color, char *message)
+gui_add_message (t_gui_buffer *buffer, int type, int color, char *message)
 {
     char *pos;
     int length;
     
     /* create new line if previous was ending by '\n' (or if 1st line) */
-    if (view->line_complete)
+    if (buffer->line_complete)
     {
-        view->line_complete = 0;
-        if (!gui_new_line (view))
+        buffer->line_complete = 0;
+        if (!gui_new_line (buffer))
             return;
     }
-    if (!gui_new_message (view))
+    if (!gui_new_message (buffer))
         return;
     
-    view->last_line->last_message->type = type;
-    view->last_line->last_message->color = color;
+    buffer->last_line->last_message->type = type;
+    buffer->last_line->last_message->color = color;
     pos = strchr (message, '\n');
     if (pos)
     {
         pos[0] = '\0';
-        view->line_complete = 1;
+        buffer->line_complete = 1;
     }
-    view->last_line->last_message->message = strdup (message);
+    buffer->last_line->last_message->message = strdup (message);
     length = strlen (message);
-    view->last_line->length += length;
+    buffer->last_line->length += length;
     if (type == MSG_TYPE_MSG)
-        view->last_line->line_with_message = 1;
+        buffer->last_line->line_with_message = 1;
     if ((type == MSG_TYPE_TIME) || (type == MSG_TYPE_NICK))
-        view->last_line->length_align += length;
+        buffer->last_line->length_align += length;
     if (pos)
     {
         pos[0] = '\n';
-        if ((view == gui_current_view) && (view->sub_lines == 0))
+        if ((buffer->num_displayed > 0) && (gui_current_window->sub_lines == 0))
         {
-            if ((view->window->win_chat_cursor_y
-                + gui_get_line_num_splits (view, view->last_line)) >
-                (view->window->win_chat_height - 1))
-                gui_draw_view_chat (view);
-            else
-                gui_display_line (view, view->last_line, 1);
+            /*if ((buffer->window->win_chat_cursor_y
+                + gui_get_line_num_splits (buffer, buffer->last_line)) >
+                (buffer->window->win_chat_height - 1))*/
+                gui_draw_buffer_chat (buffer, 0);
+            /*else
+                gui_display_line (buffer, buffer->last_line, 1);*/
         }
-        if ((view != gui_current_view) || (view->sub_lines > 0))
+        if ((buffer->num_displayed == 0) || (gui_current_window->sub_lines > 0))
         {
-            if (view->unread_data < 1 + view->last_line->line_with_message)
+            if (buffer->unread_data < 1 + buffer->last_line->line_with_message)
             {
-                view->unread_data = 1 + view->last_line->line_with_message;
-                gui_redraw_view_status (gui_current_view);
+                buffer->unread_data = 1 + buffer->last_line->line_with_message;
+                gui_draw_buffer_status (buffer, 1);
             }
         }
     }
 }
 
 /*
- * gui_printf_color_type: display a message in a view
+ * gui_printf_color_type: display a message in a buffer
  */
 
 void
-gui_printf_color_type (t_gui_view *view, int type, int color, char *message, ...)
+gui_printf_color_type (t_gui_buffer *buffer, int type, int color, char *message, ...)
 {
-    static char buffer[8192];
+    static char buf[8192];
     char timestamp[16];
     char *pos;
     va_list argptr;
     static time_t seconds;
     struct tm *date_tmp;
-
+    
     if (gui_ready)
     {
         if (color == -1)
             color = COLOR_WIN_CHAT;
     
-        if (view == NULL)
+        if (buffer == NULL)
         {
-            if (SERVER(gui_current_view))
-                view = SERVER(gui_current_view)->view;
+            if (SERVER(gui_current_window->buffer))
+                buffer = SERVER(gui_current_window->buffer)->buffer;
             else
-                view = gui_current_view;
+                buffer = gui_current_window->buffer;
         }
     
-        if (view == NULL)
+        if (buffer == NULL)
         {
-            wee_log_printf ("gui_printf without view! this is a bug, please send to developers - thanks\n");
+            wee_log_printf ("gui_printf without buffer! this is a bug, please send to developers - thanks\n");
             return;
         }
     }
     
     va_start (argptr, message);
-    vsnprintf (buffer, sizeof (buffer) - 1, message, argptr);
+    vsnprintf (buf, sizeof (buf) - 1, message, argptr);
     va_end (argptr);
     
     if (gui_ready)
@@ -1739,32 +1749,32 @@ gui_printf_color_type (t_gui_view *view, int type, int color, char *message, ...
         seconds = time (NULL);
         date_tmp = localtime (&seconds);
         
-        pos = buffer - 1;
+        pos = buf - 1;
         while (pos)
         {
             /* TODO: read timestamp format from config! */
-            if ((!view->last_line) || (view->line_complete))
+            if ((!buffer->last_line) || (buffer->line_complete))
             {
-                gui_add_message (view, MSG_TYPE_TIME, COLOR_WIN_CHAT_DARK, "[");
+                gui_add_message (buffer, MSG_TYPE_TIME, COLOR_WIN_CHAT_DARK, "[");
                 snprintf (timestamp, 16, "%02d", date_tmp->tm_hour);
-                gui_add_message (view, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME, timestamp);
-                gui_add_message (view, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME_SEP, ":");
+                gui_add_message (buffer, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME, timestamp);
+                gui_add_message (buffer, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME_SEP, ":");
                 snprintf (timestamp, 16, "%02d", date_tmp->tm_min);
-                gui_add_message (view, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME, timestamp);
-                gui_add_message (view, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME_SEP, ":");
+                gui_add_message (buffer, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME, timestamp);
+                gui_add_message (buffer, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME_SEP, ":");
                 snprintf (timestamp, 16, "%02d", date_tmp->tm_sec);
-                gui_add_message (view, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME, timestamp);
-                gui_add_message (view, MSG_TYPE_TIME, COLOR_WIN_CHAT_DARK, "] ");
+                gui_add_message (buffer, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME, timestamp);
+                gui_add_message (buffer, MSG_TYPE_TIME, COLOR_WIN_CHAT_DARK, "] ");
             }
-            gui_add_message (view, type, color, pos + 1);
+            gui_add_message (buffer, type, color, pos + 1);
             pos = strchr (pos + 1, '\n');
             if (pos && !pos[1])
                 pos = NULL;
         }
         
-        wrefresh (view->window->win_chat);
-        refresh ();
+        /*wrefresh (buffer->window->win_chat);
+        refresh ();*/
     }
     else
-        printf ("%s", buffer);
+        printf ("%s", buf);
 }
