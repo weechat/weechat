@@ -182,7 +182,7 @@ gui_calculate_pos_size (t_gui_window *window)
     
     /* init chat & nicklist settings */
     /* TODO: calculate values from function parameters */
-    if (WIN_IS_CHANNEL(window))
+    if (cfg_look_nicklist && WIN_IS_CHANNEL(window))
     {
         max_length = nick_get_max_length (CHANNEL(window));
         
@@ -1147,13 +1147,16 @@ gui_switch_to_window (t_gui_window *window)
             window->win_status = ptr_win->win_status;
             window->win_infobar = ptr_win->win_infobar;
             window->win_input = ptr_win->win_input;
-            ptr_win->win_title = NULL;
-            ptr_win->win_chat = NULL;
-            ptr_win->win_nick = NULL;
-            ptr_win->win_status = NULL;
-            ptr_win->win_infobar = NULL;
-            ptr_win->win_input = NULL;
-            ptr_win->is_displayed = 0;
+            if (ptr_win != window)
+            {
+                ptr_win->win_title = NULL;
+                ptr_win->win_chat = NULL;
+                ptr_win->win_nick = NULL;
+                ptr_win->win_status = NULL;
+                ptr_win->win_infobar = NULL;
+                ptr_win->win_input = NULL;
+                ptr_win->is_displayed = 0;
+            }
             break;
         }
     }
@@ -1169,46 +1172,52 @@ gui_switch_to_window (t_gui_window *window)
                                    window->win_chat_width,
                                    window->win_chat_y,
                                    window->win_chat_x);
-        if (CHANNEL(window))
+        if (cfg_look_nicklist && CHANNEL(window))
             window->win_nick = newwin (window->win_nick_height,
                                        window->win_nick_width,
                                        window->win_nick_y,
                                        window->win_nick_x);
         else
             window->win_nick = NULL;
-        if (cfg_look_infobar)
-        {
-            window->win_infobar = newwin (1, COLS, LINES - 2, 0);
-            window->win_status = newwin (1, COLS, LINES - 3, 0);
-        }
-        else
-            window->win_status = newwin (1, COLS, LINES - 2, 0);
         window->win_input = newwin (1, COLS, LINES - 1, 0);
     }
     else
     {
-        /* create chat & nick windows */
+        /* remove some windows */
+        if (window->win_nick)
+        {
+            delwin (window->win_nick);
+            window->win_nick = NULL;
+        }
+        if (window->win_status)
+        {
+            delwin (window->win_status);
+            window->win_status = NULL;
+        }
+        if (window->win_infobar)
+        {
+            delwin (window->win_infobar);
+            window->win_infobar = NULL;
+        }
+        
+        /* create windows */
         if (WIN_IS_CHANNEL(window))
         {
-            /* (re)create nicklist window */
-            if (window->win_nick)
-                delwin (window->win_nick);
             delwin (window->win_chat);
             window->win_chat = newwin (window->win_chat_height,
                                        window->win_chat_width,
                                        window->win_chat_y,
                                        window->win_chat_x);
-            window->win_nick = newwin (window->win_nick_height,
-                                       window->win_nick_width,
-                                       window->win_nick_y,
-                                       window->win_nick_x);
+            if (cfg_look_nicklist)
+                window->win_nick = newwin (window->win_nick_height,
+                                           window->win_nick_width,
+                                           window->win_nick_y,
+                                           window->win_nick_x);
+            else
+                window->win_nick = NULL;
         }
         if (!(WIN_IS_CHANNEL(window)))
         {
-            /* remove nick list window */
-            if (window->win_nick)
-                delwin (window->win_nick);
-            window->win_nick = NULL;
             delwin (window->win_chat);
             window->win_chat = newwin (window->win_chat_height,
                                        window->win_chat_width,
@@ -1216,6 +1225,15 @@ gui_switch_to_window (t_gui_window *window)
                                        window->win_chat_x);
         }
     }
+    
+    /* create status/infobar windows */
+    if (cfg_look_infobar)
+    {
+        window->win_infobar = newwin (1, COLS, LINES - 2, 0);
+        window->win_status = newwin (1, COLS, LINES - 3, 0);
+    }
+    else
+        window->win_status = newwin (1, COLS, LINES - 2, 0);
     
     /* change current window to the new window */
     gui_current_window = window;
@@ -1477,6 +1495,20 @@ gui_init_colors ()
 }
 
 /*
+ * gui_set_window_title: set terminal title
+ */
+
+void
+gui_set_window_title ()
+{
+    #ifdef __linux__
+    /* set title for term window, not for console */
+    if (strcmp (getenv ("TERM"), "linux") != 0)
+        printf ("\e]2;" PACKAGE_NAME " " PACKAGE_VERSION "\a\e]1;" PACKAGE_NAME " " PACKAGE_VERSION "\a");
+    #endif
+}
+
+/*
  * gui_init: init GUI
  */
 
@@ -1500,11 +1532,8 @@ gui_init ()
     
     signal (SIGWINCH, gui_curses_resize_handler);
     
-    #ifdef __linux__
-    /* set title for term window, not for console */
-    if (cfg_look_set_title && (strcmp (getenv ("TERM"), "linux") != 0))
-        printf ("\e]2;" PACKAGE_NAME " " PACKAGE_VERSION "\a\e]1;" PACKAGE_NAME " " PACKAGE_VERSION "\a");
-    #endif
+    if (cfg_look_set_title)
+        gui_set_window_title ();
     
     gui_ready = 1;
 }

@@ -78,81 +78,81 @@ char *cfg_look_infobar_timestamp;
 int cfg_look_infobar_delay_highlight;
 
 t_config_option weechat_options_look[] =
-{ { "look_set_title", N_("set title for terminal window (curses GUI) with name & version"),
-    N_("set title for terminal window (curses GUI) with name & version"),
+{ { "look_set_title", N_("set title for window (terminal for Curses GUI) with name & version"),
+    N_("set title for window (terminal for Curses GUI) with name & version"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_look_set_title, NULL, NULL },
+    NULL, NULL, &cfg_look_set_title, NULL, config_change_title },
   { "look_startup_logo", N_("display WeeChat logo at startup"),
     N_("display WeeChat logo at startup"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_look_startup_logo, NULL, NULL },
+    NULL, NULL, &cfg_look_startup_logo, NULL, config_change_noop },
   { "look_startup_version", N_("display WeeChat version at startup"),
     N_("display WeeChat version at startup"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_look_startup_version, NULL, NULL },
+    NULL, NULL, &cfg_look_startup_version, NULL, config_change_noop },
   { "look_weechat_slogan", N_("WeeChat slogan"),
     N_("WeeChat slogan (if empty, slogan is not used)"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "the geekest IRC client!", NULL, NULL, &cfg_look_weechat_slogan, NULL },
+    "the geekest IRC client!", NULL, NULL, &cfg_look_weechat_slogan, config_change_noop },
   { "look_color_nicks", N_("display nick names with different colors"),
     N_("display nick names with different colors"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_look_color_nicks, NULL, NULL },
+    NULL, NULL, &cfg_look_color_nicks, NULL, config_change_noop },
   { "look_color_actions", N_("display actions with different colors"),
     N_("display actions with different colors"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_look_color_actions, NULL, NULL },
+    NULL, NULL, &cfg_look_color_actions, NULL, config_change_noop },
   { "look_remove_colors_from_msgs", N_("remove colors from incoming messages"),
     N_("remove colors from incoming messages"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_look_remove_colors_from_msgs, NULL, NULL },
+    NULL, NULL, &cfg_look_remove_colors_from_msgs, NULL, config_change_noop },
   { "look_nicklist", N_("display nicklist window"),
     N_("display nicklist window (for channel windows)"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_look_nicklist, NULL, NULL },
+    NULL, NULL, &cfg_look_nicklist, NULL, config_change_windows },
   { "look_nicklist_position", N_("nicklist position"),
     N_("nicklist position (top, left, right (default), bottom)"),
     OPTION_TYPE_INT_WITH_STRING, 0, 0, 0,
-    "right", cfg_look_nicklist_position_values, &cfg_look_nicklist_position, NULL, NULL },
+    "right", cfg_look_nicklist_position_values, &cfg_look_nicklist_position, NULL, config_change_windows },
   { "look_nicklist_min_size", N_("min size for nicklist"),
     N_("min size for nicklist (width or height, depending on look_nicklist_position "
     "(0 = no min size))"),
     OPTION_TYPE_INT, 0, 100, 0,
-    NULL, NULL, &cfg_look_nicklist_min_size, NULL, NULL },
+    NULL, NULL, &cfg_look_nicklist_min_size, NULL, config_change_windows },
   { "look_nicklist_max_size", N_("max size for nicklist"),
     N_("max size for nicklist (width or height, depending on look_nicklist_position "
     "(0 = no max size; if min == max and > 0, then size is fixed))"),
     OPTION_TYPE_INT, 0, 100, 0,
-    NULL, NULL, &cfg_look_nicklist_max_size, NULL, NULL },
+    NULL, NULL, &cfg_look_nicklist_max_size, NULL, config_change_windows },
   { "look_no_nickname", N_("text to display instead of nick when not connected"),
     N_("text to display instead of nick when not connected"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "-cmd-", NULL, NULL, &cfg_look_no_nickname, NULL },
+    "-cmd-", NULL, NULL, &cfg_look_no_nickname, config_change_window_content },
   { "look_nickmode", N_("display nick mode ((half)op/voice) before each nick"),
     N_("display nick mode ((half)op/voice) before each nick"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_look_nickmode, NULL, NULL },
+    NULL, NULL, &cfg_look_nickmode, NULL, config_change_windows },
   { "look_nickmode_empty", N_("display space if nick mode is not (half)op/voice"),
     N_("display space if nick mode is not (half)op/voice"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
-    NULL, NULL, &cfg_look_nickmode_empty, NULL, NULL },
+    NULL, NULL, &cfg_look_nickmode_empty, NULL, config_change_windows },
   { "look_nick_completor", N_("the string inserted after nick completion"),
     N_("the string inserted after nick completion"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    ":", NULL, NULL, &cfg_look_completor, NULL },
+    ":", NULL, NULL, &cfg_look_completor, config_change_noop },
   { "look_infobar", N_("enable info bar"),
     N_("enable info bar"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_look_infobar, NULL, NULL },
+    NULL, NULL, &cfg_look_infobar, NULL, config_change_windows },
   { "look_infobar_timestamp", N_("timestamp for time in infobar"),
     N_("timestamp for time in infobar"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "%B, %A %d %G - %H:%M", NULL, NULL, &cfg_look_infobar_timestamp, NULL },
+    "%B, %A %d %G - %H:%M", NULL, NULL, &cfg_look_infobar_timestamp, config_change_window_content },
   { "look_infobar_delay_highlight", N_("delay (in seconds) for highlight messages in infobar"),
     N_("delay (in seconds) for highlight messages in infobar "
     "(0 = disable highlight notifications in infobar)"),
     OPTION_TYPE_INT, 0, INT_MAX, 7,
-    NULL, NULL, &cfg_look_infobar_delay_highlight, NULL, NULL },
+    NULL, NULL, &cfg_look_infobar_delay_highlight, NULL, config_change_noop },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
@@ -198,149 +198,149 @@ t_config_option weechat_options_colors[] =
   { "col_title", N_("color for title bar"),
     N_("color for title bar"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "gray", NULL, &cfg_col_title, NULL, NULL },
+    "gray", NULL, &cfg_col_title, NULL, &config_change_color },
   { "col_title_bg", N_("background for title bar"),
     N_("background for title bar"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "blue", NULL, &cfg_col_title_bg, NULL, NULL },
+    "blue", NULL, &cfg_col_title_bg, NULL, &config_change_color },
   
   /* chat window */
   { "col_chat", N_("color for chat text"),
     N_("color for chat text"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "gray", NULL, &cfg_col_chat, NULL, NULL },
+    "gray", NULL, &cfg_col_chat, NULL, &config_change_color },
   { "col_chat_time", N_("color for time"),
     N_("color for time in chat window"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "gray", NULL, &cfg_col_chat_time, NULL, NULL },
+    "gray", NULL, &cfg_col_chat_time, NULL, &config_change_color },
   { "col_chat_time_sep", N_("color for time separator"),
     N_("color for time separator (chat window)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "brown", NULL, &cfg_col_chat_time_sep, NULL, NULL },
+    "brown", NULL, &cfg_col_chat_time_sep, NULL, &config_change_color },
   { "col_chat_prefix1", N_("color for 1st and 3rd char of prefix"),
     N_("color for 1st and 3rd char of prefix"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "lightcyan", NULL, &cfg_col_chat_prefix1, NULL, NULL },
+    "lightcyan", NULL, &cfg_col_chat_prefix1, NULL, &config_change_color },
   { "col_chat_prefix2", N_("color for middle char of prefix"),
     N_("color for middle char of prefix"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "white", NULL, &cfg_col_chat_prefix2, NULL, NULL },
+    "white", NULL, &cfg_col_chat_prefix2, NULL, &config_change_color },
   { "col_chat_nick", N_("color for nicks in actions"),
     N_("color for nicks in actions (chat window)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "lightcyan", NULL, &cfg_col_chat_nick, NULL, NULL },
+    "lightcyan", NULL, &cfg_col_chat_nick, NULL, &config_change_color },
   { "col_chat_host", N_("color for hostnames"),
     N_("color for hostnames (chat window)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "cyan", NULL, &cfg_col_chat_host, NULL, NULL },
+    "cyan", NULL, &cfg_col_chat_host, NULL, &config_change_color },
   { "col_chat_channel", N_("color for channel names in actions"),
     N_("color for channel names in actions (chat window)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "white", NULL, &cfg_col_chat_channel, NULL, NULL },
+    "white", NULL, &cfg_col_chat_channel, NULL, &config_change_color },
   { "col_chat_dark", N_("color for dark separators"),
     N_("color for dark separators (chat window)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "green", NULL, &cfg_col_chat_dark, NULL, NULL },
+    "green", NULL, &cfg_col_chat_dark, NULL, &config_change_color },
   { "col_chat_highlight", N_("color for highlighted nick"),
     N_("color for highlighted nick (chat window)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "yellow", NULL, &cfg_col_chat_highlight, NULL, NULL },
+    "yellow", NULL, &cfg_col_chat_highlight, NULL, &config_change_color },
   { "col_chat_bg", N_("background for chat"),
     N_("background for chat window"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "default", NULL, &cfg_col_chat_bg, NULL, NULL },
+    "default", NULL, &cfg_col_chat_bg, NULL, &config_change_color },
   
   /* status window */
   { "col_status", N_("color for status bar"),
     N_("color for status bar"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "gray", NULL, &cfg_col_status, NULL, NULL },
+    "gray", NULL, &cfg_col_status, NULL, &config_change_color },
   { "col_status_active", N_("color for active window"),
     N_("color for active window (status bar)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "yellow", NULL, &cfg_col_status_active, NULL, NULL },
+    "yellow", NULL, &cfg_col_status_active, NULL, &config_change_color },
   { "col_status_data_msg", N_("color for window with new messages"),
     N_("color for window with new messages (status bar)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "lightred", NULL, &cfg_col_status_data_msg, NULL, NULL },
+    "lightred", NULL, &cfg_col_status_data_msg, NULL, &config_change_color },
   { "col_status_data_other", N_("color for window with new data (not messages)"),
     N_("color for window with new data (not messages) (status bar)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "lightmagenta", NULL, &cfg_col_status_data_other, NULL, NULL },
+    "lightmagenta", NULL, &cfg_col_status_data_other, NULL, &config_change_color },
   { "col_status_more", N_("color for \"*MORE*\" text"),
     N_("color for window with new data (status bar)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "white", NULL, &cfg_col_status_more, NULL, NULL },
+    "white", NULL, &cfg_col_status_more, NULL, &config_change_color },
   { "col_status_bg", N_("background for status window"),
     N_("background for status window"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "blue", NULL, &cfg_col_status_bg, NULL, NULL },
+    "blue", NULL, &cfg_col_status_bg, NULL, &config_change_color },
 
   /* infobar window */
   { "col_infobar", N_("color for info bar text"),
     N_("color for info bar text"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "black", NULL, &cfg_col_infobar, NULL, NULL },
+    "black", NULL, &cfg_col_infobar, NULL, &config_change_color },
   { "col_infobar_highlight", N_("color for info bar highlight notification"),
     N_("color for info bar highlight notification"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "white", NULL, &cfg_col_infobar_highlight, NULL, NULL },
+    "white", NULL, &cfg_col_infobar_highlight, NULL, &config_change_color },
   { "col_infobar_bg", N_("background for info bar window"),
     N_("background for info bar window"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "cyan", NULL, &cfg_col_infobar_bg, NULL, NULL },
+    "cyan", NULL, &cfg_col_infobar_bg, NULL, &config_change_color },
   
   /* input window */
   { "col_input", N_("color for input text"),
     N_("color for input text"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "gray", NULL, &cfg_col_input, NULL, NULL },
+    "gray", NULL, &cfg_col_input, NULL, &config_change_color },
   { "col_input_channel", N_("color for input text (channel name)"),
     N_("color for input text (channel name)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "white", NULL, &cfg_col_input_channel, NULL, NULL },
+    "white", NULL, &cfg_col_input_channel, NULL, &config_change_color },
   { "col_input_nick", N_("color for input text (nick name)"),
     N_("color for input text (nick name)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "lightgreen", NULL, &cfg_col_input_nick, NULL, NULL },
+    "lightgreen", NULL, &cfg_col_input_nick, NULL, &config_change_color },
   { "col_input_bg", N_("background for input window"),
     N_("background for input window"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "default", NULL, &cfg_col_input_bg, NULL, NULL },
+    "default", NULL, &cfg_col_input_bg, NULL, &config_change_color },
   
   /* nick window */
   { "col_nick", N_("color for nicknames"),
     N_("color for nicknames"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "gray", NULL, &cfg_col_nick, NULL, NULL },
+    "gray", NULL, &cfg_col_nick, NULL, &config_change_color },
   { "col_nick_op", N_("color for operator symbol"),
     N_("color for operator symbol"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "lightgreen", NULL, &cfg_col_nick_op, NULL, NULL },
+    "lightgreen", NULL, &cfg_col_nick_op, NULL, &config_change_color },
   { "col_nick_halfop", N_("color for half-operator symbol"),
     N_("color for half-operator symbol"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "lightmagenta", NULL, &cfg_col_nick_halfop, NULL, NULL },
+    "lightmagenta", NULL, &cfg_col_nick_halfop, NULL, &config_change_color },
   { "col_nick_voice", N_("color for voice symbol"),
     N_("color for voice symbol"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "yellow", NULL, &cfg_col_nick_voice, NULL, NULL },
+    "yellow", NULL, &cfg_col_nick_voice, NULL, &config_change_color },
   { "col_nick_sep", N_("color for nick separator"),
     N_("color for nick separator"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "blue", NULL, &cfg_col_nick_sep, NULL, NULL },
+    "blue", NULL, &cfg_col_nick_sep, NULL, &config_change_color },
   { "col_nick_self", N_("color for local nick"),
     N_("color for local nick"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "white", NULL, &cfg_col_nick_self, NULL, NULL },
+    "white", NULL, &cfg_col_nick_self, NULL, &config_change_color },
   { "col_nick_private", N_("color for other nick in private window"),
     N_("color for other nick in private window"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "gray", NULL, &cfg_col_nick_private, NULL, NULL },
+    "gray", NULL, &cfg_col_nick_private, NULL, &config_change_color },
   { "col_nick_bg", N_("background for nicknames"),
     N_("background for nicknames"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "default", NULL, &cfg_col_nick_bg, NULL, NULL },
+    "default", NULL, &cfg_col_nick_bg, NULL, &config_change_color },
   
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
@@ -569,6 +569,83 @@ get_pos_array_values (char **array, char *string)
 }
 
 /*
+ * config_get_section: get section name from option pointer
+ */
+
+char *
+config_get_section (t_config_option *ptr_option)
+{
+    int i, j;
+    
+    for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
+    {
+        if ((i != CONFIG_SECTION_ALIAS) && (i != CONFIG_SECTION_SERVER))
+        {
+            for (j = 0; weechat_options[i][j].option_name; j++)
+            {
+                /* if option found, return pointer to section name */
+                if (ptr_option == &weechat_options[i][j])
+                    return config_sections[i].section_name;
+            }
+        }
+    }
+    /* option not found */
+    return NULL;
+}
+
+/*
+ * config_change_noop: called when an option is changed by /set command
+ *                     and that no special action is needed after that
+ */
+
+void
+config_change_noop ()
+{
+    /* do nothing */
+}
+
+/*
+ * config_change_title: called when title is changed
+ */
+
+void
+config_change_title ()
+{
+    gui_set_window_title ();
+}
+
+/*
+ * config_change_windows: called when windows change (for example nicklist)
+ */
+
+void
+config_change_windows ()
+{
+    gui_switch_to_window (gui_current_window);
+    gui_redraw_window (gui_current_window);
+}
+
+/*
+ * config_change_window_content: called when content of a window changes
+ */
+
+void
+config_change_window_content ()
+{
+    gui_redraw_window (gui_current_window);
+}
+
+/*
+ * config_change_color: called when a color is changed by /set command
+ */
+
+void
+config_change_color()
+{
+    gui_init_colors ();
+}
+
+/*
  * config_option_set_value: set new value for an option
  *                          return:  0 if success
  *                                  -1 if error (bad value)
@@ -615,14 +692,12 @@ config_option_set_value (t_config_option *option, char *value)
 }
 
 /*
- * config_set_value: set new value for an option (found by name)
- *                   return:  0 if success
- *                           -1 if bad value for option
- *                           -2 if option is not found
+ * config_option_search: look for an option and return pointer to this option
+ *                       if option is not found, NULL is returned
  */
 
-int
-config_set_value (char *option_name, char *value)
+t_config_option *
+config_option_search (char *option_name)
 {
     int i, j;
     
@@ -632,14 +707,33 @@ config_set_value (char *option_name, char *value)
         {
             for (j = 0; weechat_options[i][j].option_name; j++)
             {
-                /* if option found, assign value and exit */
+                /* if option found, return pointer */
                 if (strcasecmp (weechat_options[i][j].option_name, option_name) == 0)
-                    return config_option_set_value (&weechat_options[i][j], value);
+                    return &weechat_options[i][j];
             }
         }
     }
     /* option not found */
-    return -2;
+    return NULL;
+}
+
+/*
+ * config_set_value: set new value for an option (found by name)
+ *                   return:  0 if success
+ *                           -1 if bad value for option
+ *                           -2 if option is not found
+ */
+
+int
+config_set_value (char *option_name, char *value)
+{
+    t_config_option *ptr_option;
+    
+    ptr_option = config_option_search (option_name);
+    if (ptr_option)
+        return config_option_set_value (ptr_option, value);
+    else
+        return -2;
 }
 
 /*

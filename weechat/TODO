@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2004-01-18
+TODO - 2004-01-24
 
 Legend:
   #  done
@@ -17,9 +17,15 @@ v0.0.5:
     # debug messages can be enabled via ./configure --enbale-debug option
     + Solaris version
 
+ * WeeChat commands:
+    # "/set" command: allow the user to set the WeeChat variables
+      under WeeChat without editing the config file (colors, time
+      format, etc)
+ 
  * Interface:
     + internationalization (traduce WeeChat in many languages)
-    + info bar
+    # info bar
+    # add clock
 
  * Configuration:
     + add missing options for config file
@@ -46,9 +52,6 @@ Future versions:
       nick/host connect to the given irc network
 
  * WeeChat commands:
-    + "/set" command: allow the user to set the WeeChat variables
-      under WeeChat without editing the config file (colours, time
-      format, etc)
     - "/reload" command: reload the WeeChat's config file
     - "/highlight" command: highlight a given word when it appears on
       channels/privates
@@ -69,7 +72,6 @@ Future versions:
       if WeeChat is running for long time, a lot of memory is used!)
     - improve completion (for example complete command parameters when possible)
     - understand incomplete commands if unambigous (for example: /he for /help is ok)
-    - add clock (in status bar?)
     - log chats to file
     ? Qt GUI
 

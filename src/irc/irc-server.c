@@ -361,7 +361,7 @@ server_msgq_add_msg (t_irc_server *server, char *msg)
     if (!message)
     {
         gui_printf (server->window,
-                    _("%s not enough memory for received IRC message"),
+                    _("%s not enough memory for received IRC message\n"),
                     WEECHAT_ERROR);
         return;
     }
@@ -372,7 +372,7 @@ server_msgq_add_msg (t_irc_server *server, char *msg)
                                          strlen (msg) + 1);
         if (!message->data)
             gui_printf (server->window,
-                        _("%s not enough memory for received IRC message"),
+                        _("%s not enough memory for received IRC message\n"),
                         WEECHAT_ERROR);
         else
         {
@@ -426,7 +426,7 @@ server_msgq_add_buffer (t_irc_server * server, char *buffer)
                                       strlen (buffer) + 1);
                 if (!unterminated_message)
                     gui_printf (server->window,
-                                _("%s not enough memory for received IRC message"),
+                                _("%s not enough memory for received IRC message\n"),
                                 WEECHAT_ERROR);
                 else
                     strcpy (unterminated_message, buffer);

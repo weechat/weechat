@@ -70,7 +70,7 @@ struct t_config_option
     char **array_values;
     int *ptr_int;
     char **ptr_string;
-    int (*handler_change)(int *, char **);
+    void (*handler_change)();
 };
 
 extern int cfg_look_set_title;
@@ -155,6 +155,15 @@ extern char *cfg_proxy_password;
 extern t_config_section config_sections [CONFIG_NUMBER_SECTIONS];
 extern t_config_option * weechat_options [CONFIG_NUMBER_SECTIONS];
 
+extern char *config_get_section ();
+extern void config_change_noop ();
+extern void config_change_title ();
+extern void config_change_windows ();
+extern void config_change_window_content ();
+extern void config_change_color ();
+extern int config_option_set_value (t_config_option *, char *);
+extern t_config_option *config_option_search (char *);
+extern int config_set_value (char *, char *);
 extern int config_read ();
 extern int config_create_default ();
 extern int config_write ();

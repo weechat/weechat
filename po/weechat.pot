@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2004-01-24 03:16+0100\n"
+"POT-Creation-Date: 2004-01-24 20:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,71 +30,76 @@ msgstr ""
 msgid "%s error sending data to IRC server\n"
 msgstr ""
 
-#: src/irc/irc-server.c:417
+#: src/irc/irc-server.c:364 src/irc/irc-server.c:375 src/irc/irc-server.c:429
+#, c-format
+msgid "%s not enough memory for received IRC message\n"
+msgstr ""
+
+#: src/irc/irc-server.c:436
 #, c-format
 msgid "%s unable to explode received buffer\n"
 msgstr ""
 
-#: src/irc/irc-server.c:490
+#: src/irc/irc-server.c:509
 #, c-format
 msgid "Command '%s' failed!\n"
 msgstr ""
 
-#: src/irc/irc-server.c:494
+#: src/irc/irc-server.c:513
 msgid "No command to execute!\n"
 msgstr ""
 
-#: src/irc/irc-server.c:498
+#: src/irc/irc-server.c:517
 #, c-format
 msgid "Unknown command: cmd=%s, args=%s\n"
 msgstr ""
 
-#: src/irc/irc-server.c:548
+#: src/irc/irc-server.c:569
 #, c-format
 msgid "%s: connecting to %s:%d...\n"
 msgstr ""
 
-#: src/irc/irc-server.c:550
+#: src/irc/irc-server.c:571
 #, c-format
 msgid "connecting to server %s:%d...\n"
 msgstr ""
 
-#: src/irc/irc-server.c:558
+#: src/irc/irc-server.c:579
 #, c-format
 msgid "%s cannot create pipe\n"
 msgstr ""
 
-#: src/irc/irc-server.c:572
+#: src/irc/irc-server.c:593
 #, c-format
 msgid "%s cannot set socket option \"SO_REUSEADDR\"\n"
 msgstr ""
 
-#: src/irc/irc-server.c:579
+#: src/irc/irc-server.c:600
 #, c-format
 msgid "%s cannot set socket option \"SO_KEEPALIVE\"\n"
 msgstr ""
 
-#: src/irc/irc-server.c:587
+#: src/irc/irc-server.c:608
 #, c-format
 msgid "%s address \"%s\" not found\n"
 msgstr ""
 
-#: src/irc/irc-server.c:610
+#: src/irc/irc-server.c:631
 #, c-format
 msgid "%s IP address not found\n"
 msgstr ""
 
-#: src/irc/irc-server.c:620
+#: src/irc/irc-server.c:641
 #, c-format
 msgid "%s: server IP is: %s\n"
 msgstr ""
 
-#: src/irc/irc-server.c:626
+#: src/irc/irc-server.c:647
 #, c-format
 msgid "%s cannot connect to irc server\n"
 msgstr ""
 
-#: src/irc/irc-server.c:676
+#: src/irc/irc-server.c:697
 msgid "Disconnected from server!\n"
 msgstr ""
 
@@ -1445,12 +1450,12 @@ msgstr ""
 msgid "unloading all Perl scripts...\n"
 msgstr ""
 
-#: src/plugins/plugins.c:87
+#: src/plugins/plugins.c:89
 #, c-format
 msgid "auto-loading %s script: %s%s%s\n"
 msgstr ""
 
-#: src/plugins/plugins.c:193
+#: src/plugins/plugins.c:195
 #, c-format
 msgid "%s unable to add handler for \"%s\" message (not enough memory)\n"
 msgstr ""
@@ -1463,7 +1468,7 @@ msgstr ""
 msgid "-MORE-"
 msgstr ""
 
-#: src/gui/gtk/gui-display.c:647
+#: src/gui/gtk/gui-display.c:657
 msgid "server"
 msgstr ""
 
@@ -1935,16 +1940,46 @@ msgstr ""
 msgid "%s unable to create server\n"
 msgstr ""
 
-#: src/common/command.c:1529
+#: src/common/command.c:1490
+#, c-format
+msgid "%s option '%s' can not be changed while WeeChat is running\n"
+msgstr ""
+
+#: src/common/command.c:1502
+#, c-format
+msgid "%s incorrect value for option '%s'\n"
+msgstr ""
+
+#: src/common/command.c:1508
+#, c-format
+msgid "%s config option '%s' not found\n"
+msgstr ""
+
+#: src/common/command.c:1558
 msgid "(unknown)"
 msgstr ""
 
-#: src/common/command.c:1562
+#: src/common/command.c:1578 src/common/command.c:1581
+#, c-format
+msgid "No config option found with '%s'\n"
+msgstr ""
+
+#: src/common/command.c:1586
+#, c-format
+msgid "%d config option(s) found with '%s'\n"
+msgstr ""
+
+#: src/common/command.c:1589
+#, c-format
+msgid "%d config option(s) found\n"
+msgstr ""
+
+#: src/common/command.c:1609
 #, c-format
 msgid "%s alias or command \"%s\" not found\n"
 msgstr ""
 
-#: src/common/command.c:1571
+#: src/common/command.c:1618
 #, c-format
 msgid "Alias \"%s\" removed\n"
 msgstr ""
@@ -2067,7 +2102,7 @@ msgid " Warning:"
 msgstr ""
 
 #: src/common/weeconfig.c:81 src/common/weeconfig.c:82
-msgid "set title for terminal window (curses GUI) with name & version"
+msgid "set title for window (terminal for Curses GUI) with name & version"
 msgstr ""
 
 #: src/common/weeconfig.c:85 src/common/weeconfig.c:86
@@ -2615,107 +2650,107 @@ msgstr ""
 msgid "comma separated list of channels to join when connected to server"
 msgstr ""
 
-#: src/common/weeconfig.c:663
+#: src/common/weeconfig.c:757
 #, c-format
 msgid "%s %s, line %d: new server, but previous was incomplete\n"
 msgstr ""
 
-#: src/common/weeconfig.c:672
+#: src/common/weeconfig.c:766
 #, c-format
 msgid "%s %s, line %d: server '%s' already exists\n"
 msgstr ""
 
-#: src/common/weeconfig.c:684
+#: src/common/weeconfig.c:778
 #, c-format
 msgid "%s %s, line %d: unable to create server\n"
 msgstr ""
 
-#: src/common/weeconfig.c:723
+#: src/common/weeconfig.c:817
 #, c-format
 msgid "%s unable to assign default int with string (\"%s\")\n"
 msgstr ""
 
-#: src/common/weeconfig.c:734
+#: src/common/weeconfig.c:828
 #, c-format
 msgid "%s unable to assign default color (\"%s\")\n"
 msgstr ""
 
-#: src/common/weeconfig.c:773
+#: src/common/weeconfig.c:867
 #, c-format
 msgid "%s config file \"%s\" not found.\n"
 msgstr ""
 
-#: src/common/weeconfig.c:805
+#: src/common/weeconfig.c:899
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"]\"\n"
 msgstr ""
 
-#: src/common/weeconfig.c:822
+#: src/common/weeconfig.c:916
 #, c-format
 msgid "%s %s, line %d: unknown section identifier (\"%s\")\n"
 msgstr ""
 
-#: src/common/weeconfig.c:840
+#: src/common/weeconfig.c:934
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"=\"\n"
 msgstr ""
 
-#: src/common/weeconfig.c:874
+#: src/common/weeconfig.c:968
 #, c-format
 msgid "%s %s, line %d: invalid option \"%s\"\n"
 msgstr ""
 
-#: src/common/weeconfig.c:885
+#: src/common/weeconfig.c:979
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value foroption '%s'\n"
 "Expected: boolean value: 'off' or 'on'\n"
 msgstr ""
 
-#: src/common/weeconfig.c:894
+#: src/common/weeconfig.c:988
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
 "Expected: integer between %d and %d\n"
 msgstr ""
 
-#: src/common/weeconfig.c:905
+#: src/common/weeconfig.c:999
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
 "Expected: one of these strings: "
 msgstr ""
 
-#: src/common/weeconfig.c:921
+#: src/common/weeconfig.c:1015
 #, c-format
 msgid "%s %s, line %d: invalid color name for option '%s'\n"
 msgstr ""
 
-#: src/common/weeconfig.c:980 src/common/weeconfig.c:1147
+#: src/common/weeconfig.c:1074 src/common/weeconfig.c:1241
 #, c-format
 msgid "%s cannot create file \"%s\"\n"
 msgstr ""
 
-#: src/common/weeconfig.c:986
+#: src/common/weeconfig.c:1080
 #, c-format
 msgid "%s: creating default config file...\n"
 msgstr ""
 
-#: src/common/weeconfig.c:987
+#: src/common/weeconfig.c:1081
 msgid "creating default config file\n"
 msgstr ""
 
-#: src/common/weeconfig.c:990 src/common/weeconfig.c:1156
+#: src/common/weeconfig.c:1084 src/common/weeconfig.c:1250
 #, c-format
 msgid ""
 "#\n"
 "# %s configuration file, created by %s v%s on %s#\n"
 msgstr ""
 
-#: src/common/weeconfig.c:1098
+#: src/common/weeconfig.c:1192
 msgid "Unable to get user's name"
 msgstr ""
 
-#: src/common/weeconfig.c:1153
+#: src/common/weeconfig.c:1247
 msgid "saving config to disk\n"
 msgstr ""

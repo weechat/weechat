@@ -600,6 +600,16 @@ gui_init_colors ()
 }
 
 /*
+ * gui_set_window_title: set window title
+ */
+
+void
+gui_set_window_title ()
+{
+    /* TODO: set window title for Gtk */
+}
+
+/*
  * gui_init: init GUI
  */
 
