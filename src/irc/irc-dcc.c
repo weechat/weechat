@@ -52,7 +52,7 @@ char *dcc_status_string[] =     /* strings for DCC status                   */
 void
 dcc_redraw (int highlight)
 {
-    gui_draw_buffer_chat (gui_get_dcc_buffer (), 0);
+    gui_redraw_buffer (gui_get_dcc_buffer ());
     if (highlight)
     {
         hotlist_add (highlight, gui_get_dcc_buffer ());
