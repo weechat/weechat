@@ -35,6 +35,7 @@
 #include "../common/weechat.h"
 #include "irc.h"
 #include "../common/weeconfig.h"
+#include "../common/hotlist.h"
 #include "../gui/gui.h"
 
 
@@ -124,7 +125,6 @@ dcc_accept (t_dcc *ptr_dcc)
     {
         ptr_dcc->status = DCC_ACTIVE;
         ptr_home = getenv ("HOME");
-        gui_printf (NULL, "home = %s\n", ptr_home);
         ptr_dcc->local_filename = (char *) malloc (strlen (cfg_dcc_download_path) +
                                                    strlen (ptr_dcc->nick) +
                                                    strlen (ptr_dcc->filename) +
@@ -143,7 +143,7 @@ dcc_accept (t_dcc *ptr_dcc)
         }
         else
             strcpy (ptr_dcc->local_filename, cfg_dcc_download_path);
-        if (ptr_dcc->local_filename[strlen (ptr_dcc->local_filename) - 1] != DIR_SEPARATOR)
+        if (ptr_dcc->local_filename[strlen (ptr_dcc->local_filename) - 1] != DIR_SEPARATOR_CHAR)
             strcat (ptr_dcc->local_filename, DIR_SEPARATOR);
         strcat (ptr_dcc->local_filename, ptr_dcc->nick);
         strcat (ptr_dcc->local_filename, ".");
