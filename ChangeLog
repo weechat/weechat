@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2004-09-01
+ChangeLog - 2004-09-08
 
 
 Version 0.0.8 (under dev!):
+   * Fixed crash when resizing terminal to very small size
+   * "-MORE-" message is now erased when switching to another buffer
    * DCC window with Alt-D
    * /query command now reopens private buffer if already opened
    * added key for redrawing terminal (Ctrl-L)

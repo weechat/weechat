@@ -174,6 +174,9 @@ gui_calculate_pos_size (t_gui_window *window)
     int max_length, lines;
     int num_nicks, num_op, num_halfop, num_voice, num_normal;
     
+    if (!gui_ok)
+        return;
+    
     /* init chat & nicklist settings */
     if (cfg_look_nicklist && BUFFER_IS_CHANNEL(window->buffer))
     {
@@ -288,6 +291,9 @@ gui_calculate_pos_size (t_gui_window *window)
 void
 gui_curses_window_clear (WINDOW *window)
 {
+    if (!gui_ok)
+        return;
+    
     werase (window);
     wmove (window, 0, 0);
 }
@@ -301,6 +307,9 @@ gui_draw_buffer_title (t_gui_buffer *buffer, int erase)
 {
     t_gui_window *ptr_win;
     char format[32];
+    
+    if (!gui_ok)
+        return;
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
@@ -562,6 +571,9 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
     int num_unit;
     char format[32];
     
+    if (!gui_ok)
+        return;
+    
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
         if (ptr_win->buffer == buffer)
@@ -700,6 +712,9 @@ gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
     int i, x, y, column, max_length;
     char format[32], format_empty[32];
     t_irc_nick *ptr_nick;
+    
+    if (!gui_ok)
+        return;
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
@@ -858,6 +873,9 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
     t_weechat_hotlist *ptr_hotlist;
     char format_more[32];
     int i, first_mode;
+    
+    if (!gui_ok)
+        return;
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
@@ -1031,6 +1049,9 @@ gui_draw_buffer_infobar (t_gui_buffer *buffer, int erase)
     struct tm *local_time;
     char text[1024 + 1];
     
+    if (!gui_ok)
+        return;
+    
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
         if (ptr_win->buffer == buffer)
@@ -1096,6 +1117,9 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
     char format[32];
     char *ptr_nickname;
     int input_width;
+    
+    if (!gui_ok)
+        return;
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
@@ -1203,6 +1227,9 @@ gui_redraw_buffer (t_gui_buffer *buffer)
 {
     t_gui_window *ptr_win;
     
+    if (!gui_ok)
+        return;
+    
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
         if (ptr_win->buffer == buffer)
@@ -1226,6 +1253,9 @@ gui_redraw_buffer (t_gui_buffer *buffer)
 void
 gui_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
 {
+    if (!gui_ok)
+        return;
+    
     if (gui_current_window->buffer->num_displayed > 0)
         gui_current_window->buffer->num_displayed--;
     
@@ -1303,6 +1333,8 @@ gui_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
     else
         window->win_status = newwin (1, window->win_width, window->win_y + window->win_height - 2, window->win_x);
     
+    window->sub_lines = 0;
+    
     buffer->num_displayed++;
     
     hotlist_remove_buffer (buffer);
@@ -1316,6 +1348,9 @@ void
 gui_switch_to_dcc_buffer ()
 {
     t_gui_buffer *ptr_buffer;
+    
+    if (!gui_ok)
+        return;
     
     /* check if dcc buffer exists */
     for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
@@ -1339,6 +1374,9 @@ gui_switch_to_dcc_buffer ()
 void
 gui_switch_to_previous_buffer (t_gui_window *window)
 {
+    if (!gui_ok)
+        return;
+    
     /* if only one buffer then return */
     if (gui_buffers == last_gui_buffer)
         return;
@@ -1358,6 +1396,9 @@ gui_switch_to_previous_buffer (t_gui_window *window)
 void
 gui_switch_to_next_buffer (t_gui_window *window)
 {
+    if (!gui_ok)
+        return;
+    
     /* if only one buffer then return */
     if (gui_buffers == last_gui_buffer)
         return;
@@ -1377,6 +1418,9 @@ gui_switch_to_next_buffer (t_gui_window *window)
 void
 gui_switch_to_next_window (t_gui_window *window)
 {
+    if (!gui_ok)
+        return;
+    
     /* if only one window then return */
     if (gui_windows == last_gui_window)
         return;
@@ -1393,6 +1437,9 @@ gui_switch_to_next_window (t_gui_window *window)
 void
 gui_move_page_up (t_gui_window *window)
 {
+    if (!gui_ok)
+        return;
+    
     if (!window->first_line_displayed)
     {
         window->sub_lines += window->win_chat_height - 1;
@@ -1408,6 +1455,9 @@ gui_move_page_up (t_gui_window *window)
 void
 gui_move_page_down (t_gui_window *window)
 {
+    if (!gui_ok)
+        return;
+    
     if (window->sub_lines > 0)
     {
         window->sub_lines -= window->win_chat_height - 1;
@@ -1449,8 +1499,14 @@ gui_curses_resize_handler ()
     }
     
     gui_current_window = old_current_window;
-    gui_calculate_pos_size (gui_current_window);
-    gui_redraw_buffer (gui_current_window->buffer);
+    if ((new_width > 5) && (new_height > 5))
+    {
+        gui_ok = 1;
+        gui_calculate_pos_size (gui_current_window);
+        gui_redraw_buffer (gui_current_window->buffer);
+    }
+    else
+        gui_ok = 0;
 }
 
 /*
@@ -1477,6 +1533,9 @@ gui_window_split_horiz (t_gui_window *window)
 {
     t_gui_window *new_window;
     int height1, height2;
+    
+    if (!gui_ok)
+        return;
     
     height1 = window->win_height / 2;
     height2 = window->win_height - height1;
@@ -1507,6 +1566,9 @@ gui_window_split_vertic (t_gui_window *window)
 {
     t_gui_window *new_window;
     int width1, width2;
+    
+    if (!gui_ok)
+        return;
     
     width1 = window->win_width / 2;
     width2 = window->win_width - width1 - 1;
@@ -1715,7 +1777,9 @@ gui_init ()
 
     gui_infobar = NULL;
     
-    /* create a new buffer */
+    gui_ok = ((COLS > 5) && (LINES > 5));
+    
+    /* create new window/buffer */
     if (gui_window_new (0, 0, COLS, LINES))
     {
         gui_current_window = gui_windows;
@@ -1726,7 +1790,7 @@ gui_init ()
         if (cfg_look_set_title)
             gui_set_window_title ();
     
-        gui_ready = 1;
+        gui_init_ok = 1;
     }
 }
 
@@ -1840,7 +1904,7 @@ gui_printf_color_type (t_gui_buffer *buffer, int type, int color, char *message,
     static time_t seconds;
     struct tm *date_tmp;
     
-    if (gui_ready)
+    if (gui_init_ok)
     {
         if (color == -1)
             color = COLOR_WIN_CHAT;
@@ -1864,7 +1928,7 @@ gui_printf_color_type (t_gui_buffer *buffer, int type, int color, char *message,
     vsnprintf (buf, sizeof (buf) - 1, message, argptr);
     va_end (argptr);
     
-    if (gui_ready)
+    if (gui_init_ok)
     {
         seconds = time (NULL);
         date_tmp = localtime (&seconds);

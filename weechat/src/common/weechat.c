@@ -364,9 +364,6 @@ wee_create_home_dirs ()
 void
 wee_init_vars ()
 {
-    /* GUI not yet initialized */
-    gui_ready = 0;
-
     /* init received messages queue */
     recv_msgq = NULL;
     msgq_last_msg = NULL;
@@ -440,6 +437,7 @@ weechat_welcome_message ()
 void
 wee_shutdown ()
 {
+    dcc_end ();
     server_free_all ();
     gui_end ();
     if (log_file)

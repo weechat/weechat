@@ -221,7 +221,8 @@ struct t_gui_window
 
 /* variables */
 
-extern int gui_ready;
+extern int gui_init_ok;
+extern int gui_ok;
 extern t_gui_window *gui_windows;
 extern t_gui_window *last_gui_window;
 extern t_gui_window *gui_current_window;

@@ -541,5 +541,8 @@ gui_main_loop ()
                 }
             }
         }
+        
+        /* manages active DCC */
+        dcc_handle ();
     }
 }
