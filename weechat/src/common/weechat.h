@@ -62,7 +62,7 @@
 
 #define WEE_LICENSE \
     PACKAGE_STRING " (c) Copyright 2003, compiled on " __DATE__ __TIME__ \
-    "Developed by FlashCode <flashcode@flashtux.org>\n" \
+    "\nDeveloped by FlashCode <flashcode@flashtux.org>\n" \
     "             Bounga <bounga@altern.org>\n" \
     "             Xahlexx <xahlexx@tuxisland.org>\n\n" \
     "This program is free software; you can redistribute it and/or modify\n" \
@@ -82,11 +82,9 @@
     
 #define WEE_USAGE \
     PACKAGE_STRING " (c) Copyright 2003, compiled on " __DATE__ __TIME__ \
-    "Developed by FlashCode <flashcode@flashtux.org>\n" \
+    "\nDeveloped by FlashCode <flashcode@flashtux.org>\n" \
     "             Bounga <bounga@altern.org>\n" \
     "             Xahlexx <xahlexx@tuxisland.org>\n\n" \
-    "                                    Bounga <bounga@altern.org>\n" \
-    "                                    Xahlexx <xahlexx@tuxisland.org>\n\n" \
     "  -h, --help          this help screen\n", \
     "  -l, --license       display WeeChat license\n" \
     "  -v, --version       display WeeChat version\n\n"
