@@ -248,6 +248,14 @@ int
 irc_cmd_send_dcc (t_irc_server *server, char *arguments)
 {
     /* TODO: write this command! */
+    
+    /* make gcc happy */
+    (void) server;
+    (void) arguments;
+    
+    irc_display_prefix (server->buffer, PREFIX_ERROR);
+    gui_printf (server->buffer, _("This command is not developed!\n"));
+    
     return 0;
 }
 

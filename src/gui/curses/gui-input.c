@@ -311,16 +311,16 @@ gui_read_keyb ()
                                        gui_current_window->buffer->input_buffer,
                                        gui_current_window->buffer->input_buffer_size,
                                        gui_current_window->buffer->input_buffer_pos);
+                    
                     if (gui_current_window->buffer->completion.word_found)
                     {
                         /* replace word with new completed word into input buffer */
-                        gui_current_window->buffer->input_buffer_size +=
-                            gui_current_window->buffer->completion.diff_size;
-                        gui_optimize_input_buffer_size (gui_current_window->buffer);
-                        gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
-                        
                         if (gui_current_window->buffer->completion.diff_size > 0)
                         {
+                            gui_current_window->buffer->input_buffer_size +=
+                            gui_current_window->buffer->completion.diff_size;
+                            gui_optimize_input_buffer_size (gui_current_window->buffer);
+                            gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
                             for (i = gui_current_window->buffer->input_buffer_size - 1;
                                 i >=  gui_current_window->buffer->completion.position_replace +
                                 (int)strlen (gui_current_window->buffer->completion.word_found); i--)
@@ -336,6 +336,10 @@ gui_read_keyb ()
                                 gui_current_window->buffer->input_buffer[i] =
                                     gui_current_window->buffer->input_buffer[i -
                                     gui_current_window->buffer->completion.diff_size];
+                            gui_current_window->buffer->input_buffer_size +=
+                            gui_current_window->buffer->completion.diff_size;
+                            gui_optimize_input_buffer_size (gui_current_window->buffer);
+                            gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
                         }
                         
                         strncpy (gui_current_window->buffer->input_buffer + gui_current_window->buffer->completion.position_replace,
@@ -344,35 +348,45 @@ gui_read_keyb ()
                         gui_current_window->buffer->input_buffer_pos =
                             gui_current_window->buffer->completion.position_replace +
                             strlen (gui_current_window->buffer->completion.word_found);
-                        gui_current_window->buffer->completion.position =
-                            gui_current_window->buffer->input_buffer_pos;
+                        
+                        /* position is < 0 this means only one word was found to complete,
+                           so reinit to stop completion */
+                        if (gui_current_window->buffer->completion.position >= 0)
+                            gui_current_window->buffer->completion.position =
+                                gui_current_window->buffer->input_buffer_pos;
                         
                         /* add space or completor to the end of completion, if needed */
-                        if (gui_current_window->buffer->completion.base_word[0] == '/')
+                        if ((gui_current_window->buffer->completion.context == COMPLETION_COMMAND)
+                            || (gui_current_window->buffer->completion.context == COMPLETION_COMMAND_ARG))
                         {
                             if (gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_pos] != ' ')
                                 gui_buffer_insert_string (gui_current_window->buffer,
                                                           " ",
                                                           gui_current_window->buffer->input_buffer_pos);
-                            gui_current_window->buffer->completion.position++;
+                            if (gui_current_window->buffer->completion.position >= 0)
+                                gui_current_window->buffer->completion.position++;
                             gui_current_window->buffer->input_buffer_pos++;
                         }
                         else
                         {
-                            if (gui_current_window->buffer->completion.base_word_pos == 0)
+                            /* add nick completor if position 0 and completing nick */
+                            if ((gui_current_window->buffer->completion.base_word_pos == 0)
+                                && (gui_current_window->buffer->completion.context == COMPLETION_NICK))
                             {
                                 if (strncmp (gui_current_window->buffer->input_buffer + gui_current_window->buffer->input_buffer_pos,
                                     cfg_look_completor, strlen (cfg_look_completor)) != 0)
                                     gui_buffer_insert_string (gui_current_window->buffer,
                                                               cfg_look_completor,
                                                               gui_current_window->buffer->input_buffer_pos);
-                                gui_current_window->buffer->completion.position += strlen (cfg_look_completor);
+                                if (gui_current_window->buffer->completion.position >= 0)
+                                    gui_current_window->buffer->completion.position += strlen (cfg_look_completor);
                                 gui_current_window->buffer->input_buffer_pos += strlen (cfg_look_completor);
                                 if (gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_pos] != ' ')
                                     gui_buffer_insert_string (gui_current_window->buffer,
                                                               " ",
                                                               gui_current_window->buffer->input_buffer_pos);
-                                gui_current_window->buffer->completion.position++;
+                                if (gui_current_window->buffer->completion.position >= 0)
+                                    gui_current_window->buffer->completion.position++;
                                 gui_current_window->buffer->input_buffer_pos++;
                             }
                         }

@@ -25,6 +25,8 @@ lib_weechat_main_a_SOURCES = weechat.c \
                              command.h \
                              completion.c \
                              completion.h \
+                             weelist.c \
+                             weelist.h \
                              weeconfig.c \
                              weeconfig.h \
                              history.c \

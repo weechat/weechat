@@ -525,7 +525,7 @@ main (int argc, char *argv[])
     wee_parse_args (argc, argv);    /* parse command line args              */
     wee_create_home_dirs ();        /* create WeeChat directories           */
     wee_init_log ();                /* init log file                        */
-    index_command_build ();         /* build commands index  for completion */
+    command_index_build ();         /* build commands index for completion  */
     
     switch (config_read ())         /* read configuration                   */
     {

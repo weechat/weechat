@@ -21,16 +21,33 @@
 #ifndef __WEECHAT_COMPLETION_H
 #define __WEECHAT_COMPLETION_H 1
 
+#include "weelist.h"
+
+#define COMPLETION_NULL         0
+#define COMPLETION_NICK         1
+#define COMPLETION_COMMAND      2
+#define COMPLETION_COMMAND_ARG  3
+
 typedef struct t_completion t_completion;
 
 struct t_completion
 {
-    char *base_word;            /* word to complete (when Tab was pressed)  */
-    int base_word_pos;          /* beggining of base word                   */
-    int position;               /* position where we shoud complete         */
-    char *word_found;           /* word found (to replace base word)        */
-    int position_replace;       /* position where word should be replaced   */
-    int diff_size;              /* size difference (< 0 = char(s) deleted)  */
+    /* completion context */
+    int context;            /* context: null, nick, command, cmd arg        */
+    char *base_command;     /* command with arg to complete (can be NULL)   */
+    int base_command_arg;   /* # arg to complete (if context is cmd arg)    */
+    char *base_word;        /* word to complete (when Tab was pressed)      */
+    int base_word_pos;      /* beggining of base word                       */
+    int position;           /* position where Tab was pressed               */
+    
+    /* for command argument completion */
+    t_weelist *completion_list; /* data list for completion                 */
+    t_weelist *last_completion; /* last data element for completion         */
+    
+    /* completion found */
+    char *word_found;       /* word found (to replace base word)            */
+    int position_replace;   /* position where word has to be replaced       */
+    int diff_size;          /* size difference (< 0 = char(s) deleted)      */
 };
 
 extern void completion_init (t_completion *);

@@ -41,22 +41,21 @@
 
 
 t_gui_color gui_colors[] =
-{ { "default", -1 | A_NORMAL },
-  { "black", COLOR_BLACK | A_NORMAL },
-  { "red", COLOR_RED | A_NORMAL },
-  { "lightred", COLOR_RED | A_BOLD },
-  { "green", COLOR_GREEN | A_NORMAL },
-  { "lightgreen", COLOR_GREEN | A_BOLD },
-  { "brown", COLOR_YELLOW | A_NORMAL },
-  { "yellow", COLOR_YELLOW | A_BOLD },
-  { "blue", COLOR_BLUE | A_NORMAL },
-  { "lightblue", COLOR_BLUE | A_BOLD },
-  { "magenta", COLOR_MAGENTA | A_NORMAL },
+{ { "default",      -1 | A_NORMAL },
+  { "black",        COLOR_BLACK | A_NORMAL },
+  { "red",          COLOR_RED | A_NORMAL },
+  { "lightred",     COLOR_RED | A_BOLD },
+  { "green",        COLOR_GREEN | A_NORMAL },
+  { "lightgreen",   COLOR_GREEN | A_BOLD },
+  { "brown",        COLOR_YELLOW | A_NORMAL },
+  { "yellow",       COLOR_YELLOW | A_BOLD },
+  { "blue",         COLOR_BLUE | A_NORMAL },
+  { "lightblue",    COLOR_BLUE | A_BOLD },
+  { "magenta",      COLOR_MAGENTA | A_NORMAL },
   { "lightmagenta", COLOR_MAGENTA | A_BOLD },
-  { "cyan", COLOR_CYAN | A_NORMAL },
-  { "lightcyan", COLOR_CYAN | A_BOLD },
-  { "gray", COLOR_WHITE },
-  { "white", COLOR_WHITE | A_BOLD },
+  { "cyan",         COLOR_CYAN | A_NORMAL },
+  { "lightcyan",    COLOR_CYAN | A_BOLD },
+  { "white",        COLOR_WHITE | A_BOLD },
   { NULL, 0 }
 };
 
@@ -891,6 +890,9 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
     t_weechat_hotlist *ptr_hotlist;
     char format_more[32];
     int i, first_mode;
+    
+    /* make gcc happy */
+    (void) buffer;
     
     if (!gui_ok)
         return;
@@ -1797,43 +1799,43 @@ gui_init_colors ()
         init_pair (COLOR_DCC_ABORTED,
             cfg_col_dcc_aborted & A_CHARTEXT, cfg_col_chat_bg);
             
-        color_attr[COLOR_WIN_TITLE - 1] = cfg_col_title & A_BOLD;
-        color_attr[COLOR_WIN_CHAT - 1] = cfg_col_chat & A_BOLD;
-        color_attr[COLOR_WIN_CHAT_TIME - 1] = cfg_col_chat_time & A_BOLD;
-        color_attr[COLOR_WIN_CHAT_TIME_SEP - 1] = cfg_col_chat_time_sep & A_BOLD;
-        color_attr[COLOR_WIN_CHAT_DARK - 1] = cfg_col_chat_dark & A_BOLD;
-        color_attr[COLOR_WIN_CHAT_PREFIX1 - 1] = cfg_col_chat_prefix1 & A_BOLD;
-        color_attr[COLOR_WIN_CHAT_PREFIX2 - 1] = cfg_col_chat_prefix2 & A_BOLD;
-        color_attr[COLOR_WIN_CHAT_NICK - 1] = cfg_col_chat_nick & A_BOLD;
-        color_attr[COLOR_WIN_CHAT_HOST - 1] = cfg_col_chat_host & A_BOLD;
-        color_attr[COLOR_WIN_CHAT_CHANNEL - 1] = cfg_col_chat_channel & A_BOLD;
-        color_attr[COLOR_WIN_CHAT_DARK - 1] = cfg_col_chat_dark & A_BOLD;
-        color_attr[COLOR_WIN_CHAT_HIGHLIGHT - 1] = cfg_col_chat_highlight & A_BOLD;
-        color_attr[COLOR_WIN_STATUS - 1] = cfg_col_status & A_BOLD;
-        color_attr[COLOR_WIN_STATUS_DELIMITERS - 1] = cfg_col_status_delimiters & A_BOLD;
-        color_attr[COLOR_WIN_STATUS_DATA_MSG - 1] = cfg_col_status_data_msg & A_BOLD;
-        color_attr[COLOR_WIN_STATUS_DATA_HIGHLIGHT - 1] = cfg_col_status_data_highlight & A_BOLD;
-        color_attr[COLOR_WIN_STATUS_DATA_OTHER - 1] = cfg_col_status_data_other & A_BOLD;
-        color_attr[COLOR_WIN_STATUS_MORE - 1] = cfg_col_status_more & A_BOLD;
-        color_attr[COLOR_WIN_INFOBAR - 1] = cfg_col_infobar & A_BOLD;
-        color_attr[COLOR_WIN_INFOBAR_HIGHLIGHT - 1] = cfg_col_infobar_highlight & A_BOLD;
-        color_attr[COLOR_WIN_INPUT - 1] = cfg_col_input & A_BOLD;
-        color_attr[COLOR_WIN_INPUT_CHANNEL - 1] = cfg_col_input_channel & A_BOLD;
-        color_attr[COLOR_WIN_INPUT_NICK - 1] = cfg_col_input_nick & A_BOLD;
-        color_attr[COLOR_WIN_NICK - 1] = cfg_col_nick & A_BOLD;
-        color_attr[COLOR_WIN_NICK_OP - 1] = cfg_col_nick_op & A_BOLD;
-        color_attr[COLOR_WIN_NICK_HALFOP - 1] = cfg_col_nick_halfop & A_BOLD;
-        color_attr[COLOR_WIN_NICK_VOICE - 1] = cfg_col_nick_voice & A_BOLD;
+        color_attr[COLOR_WIN_TITLE - 1] = (cfg_col_title >= 0) ? cfg_col_title & A_BOLD : 0;
+        color_attr[COLOR_WIN_CHAT - 1] = (cfg_col_chat >= 0) ? cfg_col_chat & A_BOLD : 0;
+        color_attr[COLOR_WIN_CHAT_TIME - 1] = (cfg_col_chat_time >= 0) ? cfg_col_chat_time & A_BOLD : 0;
+        color_attr[COLOR_WIN_CHAT_TIME_SEP - 1] = (cfg_col_chat_time_sep >= 0) ? cfg_col_chat_time_sep & A_BOLD : 0;
+        color_attr[COLOR_WIN_CHAT_DARK - 1] = (cfg_col_chat_dark >= 0) ? cfg_col_chat_dark & A_BOLD : 0;
+        color_attr[COLOR_WIN_CHAT_PREFIX1 - 1] = (cfg_col_chat_prefix1 >= 0) ? cfg_col_chat_prefix1 & A_BOLD : 0;
+        color_attr[COLOR_WIN_CHAT_PREFIX2 - 1] = (cfg_col_chat_prefix2 >= 0) ? cfg_col_chat_prefix2 & A_BOLD : 0;
+        color_attr[COLOR_WIN_CHAT_NICK - 1] = (cfg_col_chat_nick >= 0) ? cfg_col_chat_nick & A_BOLD : 0;
+        color_attr[COLOR_WIN_CHAT_HOST - 1] = (cfg_col_chat_host >= 0) ? cfg_col_chat_host & A_BOLD : 0;
+        color_attr[COLOR_WIN_CHAT_CHANNEL - 1] = (cfg_col_chat_channel >= 0) ? cfg_col_chat_channel & A_BOLD : 0;
+        color_attr[COLOR_WIN_CHAT_DARK - 1] = (cfg_col_chat_dark >= 0) ? cfg_col_chat_dark & A_BOLD : 0;
+        color_attr[COLOR_WIN_CHAT_HIGHLIGHT - 1] = (cfg_col_chat_highlight >= 0) ? cfg_col_chat_highlight & A_BOLD : 0;
+        color_attr[COLOR_WIN_STATUS - 1] = (cfg_col_status >= 0) ? cfg_col_status & A_BOLD : 0;
+        color_attr[COLOR_WIN_STATUS_DELIMITERS - 1] = (cfg_col_status_delimiters >= 0) ? cfg_col_status_delimiters & A_BOLD : 0;
+        color_attr[COLOR_WIN_STATUS_DATA_MSG - 1] = (cfg_col_status_data_msg >= 0) ? cfg_col_status_data_msg & A_BOLD : 0;
+        color_attr[COLOR_WIN_STATUS_DATA_HIGHLIGHT - 1] = (cfg_col_status_data_highlight >= 0) ? cfg_col_status_data_highlight & A_BOLD : 0;
+        color_attr[COLOR_WIN_STATUS_DATA_OTHER - 1] = (cfg_col_status_data_other >= 0) ? cfg_col_status_data_other & A_BOLD : 0;
+        color_attr[COLOR_WIN_STATUS_MORE - 1] = (cfg_col_status_more >= 0) ? cfg_col_status_more & A_BOLD : 0;
+        color_attr[COLOR_WIN_INFOBAR - 1] = (cfg_col_infobar >= 0) ? cfg_col_infobar & A_BOLD : 0;
+        color_attr[COLOR_WIN_INFOBAR_HIGHLIGHT - 1] = (cfg_col_infobar_highlight >= 0) ? cfg_col_infobar_highlight & A_BOLD : 0;
+        color_attr[COLOR_WIN_INPUT - 1] = (cfg_col_input >= 0) ? cfg_col_input & A_BOLD : 0;
+        color_attr[COLOR_WIN_INPUT_CHANNEL - 1] = (cfg_col_input_channel >= 0) ? cfg_col_input_channel & A_BOLD : 0;
+        color_attr[COLOR_WIN_INPUT_NICK - 1] = (cfg_col_input_nick >= 0) ? cfg_col_input_nick & A_BOLD : 0;
+        color_attr[COLOR_WIN_NICK - 1] = (cfg_col_nick >= 0) ? cfg_col_nick & A_BOLD : 0;
+        color_attr[COLOR_WIN_NICK_OP - 1] = (cfg_col_nick_op >= 0) ? cfg_col_nick_op & A_BOLD : 0;
+        color_attr[COLOR_WIN_NICK_HALFOP - 1] = (cfg_col_nick_halfop >= 0) ? cfg_col_nick_halfop & A_BOLD : 0;
+        color_attr[COLOR_WIN_NICK_VOICE - 1] = (cfg_col_nick_voice >= 0) ? cfg_col_nick_voice & A_BOLD : 0;
         color_attr[COLOR_WIN_NICK_SEP - 1] = 0;
-        color_attr[COLOR_WIN_NICK_SELF - 1] = cfg_col_nick_self & A_BOLD;
-        color_attr[COLOR_WIN_NICK_PRIVATE - 1] = cfg_col_nick_private & A_BOLD;
-        color_attr[COLOR_DCC_SELECTED - 1] = cfg_col_dcc_selected & A_BOLD;
-        color_attr[COLOR_DCC_WAITING - 1] = cfg_col_dcc_waiting & A_BOLD;
-        color_attr[COLOR_DCC_CONNECTING - 1] = cfg_col_dcc_connecting & A_BOLD;
-        color_attr[COLOR_DCC_ACTIVE - 1] = cfg_col_dcc_active & A_BOLD;
-        color_attr[COLOR_DCC_DONE - 1] = cfg_col_dcc_done & A_BOLD;
-        color_attr[COLOR_DCC_FAILED - 1] = cfg_col_dcc_failed & A_BOLD;
-        color_attr[COLOR_DCC_ABORTED - 1] = cfg_col_dcc_aborted & A_BOLD;
+        color_attr[COLOR_WIN_NICK_SELF - 1] = (cfg_col_nick_self >= 0) ? cfg_col_nick_self & A_BOLD : 0;
+        color_attr[COLOR_WIN_NICK_PRIVATE - 1] = (cfg_col_nick_private >= 0) ? cfg_col_nick_private & A_BOLD : 0;
+        color_attr[COLOR_DCC_SELECTED - 1] = (cfg_col_dcc_selected >= 0) ? cfg_col_dcc_selected & A_BOLD : 0;
+        color_attr[COLOR_DCC_WAITING - 1] = (cfg_col_dcc_waiting >= 0) ? cfg_col_dcc_waiting & A_BOLD : 0;
+        color_attr[COLOR_DCC_CONNECTING - 1] = (cfg_col_dcc_connecting >= 0) ? cfg_col_dcc_connecting & A_BOLD : 0;
+        color_attr[COLOR_DCC_ACTIVE - 1] = (cfg_col_dcc_active >= 0) ? cfg_col_dcc_active & A_BOLD : 0;
+        color_attr[COLOR_DCC_DONE - 1] = (cfg_col_dcc_done >= 0) ? cfg_col_dcc_done & A_BOLD : 0;
+        color_attr[COLOR_DCC_FAILED - 1] = (cfg_col_dcc_failed >= 0) ? cfg_col_dcc_failed & A_BOLD : 0;
+        color_attr[COLOR_DCC_ABORTED - 1] = (cfg_col_dcc_aborted >= 0) ? cfg_col_dcc_aborted & A_BOLD : 0;
     }
 }
 

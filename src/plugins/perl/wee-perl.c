@@ -313,8 +313,8 @@ static XS (XS_IRC_add_command_handler)
     
     name = SvPV (ST (0), integer);
     function = SvPV (ST (1), integer);
-    if (!index_command_search (name))
-        index_command_new (name);
+    if (!weelist_search (index_commands, name))
+        weelist_add (&index_commands, &last_index_command, name);
     ptr_plugin_handler = plugin_handler_search (plugin_cmd_handlers, name);
     if (ptr_plugin_handler)
     {

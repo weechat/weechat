@@ -218,7 +218,7 @@ t_config_option weechat_options_colors[] =
   { "col_title", N_("color for title bar"),
     N_("color for title bar"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "gray", NULL, &cfg_col_title, NULL, &config_change_color },
+    "default", NULL, &cfg_col_title, NULL, &config_change_color },
   { "col_title_bg", N_("background for title bar"),
     N_("background for title bar"),
     OPTION_TYPE_COLOR, 0, 0, 0,
@@ -228,11 +228,11 @@ t_config_option weechat_options_colors[] =
   { "col_chat", N_("color for chat text"),
     N_("color for chat text"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "gray", NULL, &cfg_col_chat, NULL, &config_change_color },
+    "default", NULL, &cfg_col_chat, NULL, &config_change_color },
   { "col_chat_time", N_("color for time"),
     N_("color for time in chat window"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "gray", NULL, &cfg_col_chat_time, NULL, &config_change_color },
+    "default", NULL, &cfg_col_chat_time, NULL, &config_change_color },
   { "col_chat_time_sep", N_("color for time separator"),
     N_("color for time separator (chat window)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
@@ -274,7 +274,7 @@ t_config_option weechat_options_colors[] =
   { "col_status", N_("color for status bar"),
     N_("color for status bar"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "gray", NULL, &cfg_col_status, NULL, &config_change_color },
+    "default", NULL, &cfg_col_status, NULL, &config_change_color },
   { "col_status_delimiters", N_("color for status bar delimiters"),
     N_("color for status bar delimiters"),
     OPTION_TYPE_COLOR, 0, 0, 0,
@@ -290,7 +290,7 @@ t_config_option weechat_options_colors[] =
   { "col_status_data_other", N_("color for window with new data (not messages)"),
     N_("color for window with new data (not messages) (status bar)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "gray", NULL, &cfg_col_status_data_other, NULL, &config_change_color },
+    "default", NULL, &cfg_col_status_data_other, NULL, &config_change_color },
   { "col_status_more", N_("color for \"*MORE*\" text"),
     N_("color for window with new data (status bar)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
@@ -318,7 +318,7 @@ t_config_option weechat_options_colors[] =
   { "col_input", N_("color for input text"),
     N_("color for input text"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "gray", NULL, &cfg_col_input, NULL, &config_change_color },
+    "default", NULL, &cfg_col_input, NULL, &config_change_color },
   { "col_input_channel", N_("color for input text (channel name)"),
     N_("color for input text (channel name)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
@@ -336,7 +336,7 @@ t_config_option weechat_options_colors[] =
   { "col_nick", N_("color for nicknames"),
     N_("color for nicknames"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "gray", NULL, &cfg_col_nick, NULL, &config_change_color },
+    "default", NULL, &cfg_col_nick, NULL, &config_change_color },
   { "col_nick_op", N_("color for operator symbol"),
     N_("color for operator symbol"),
     OPTION_TYPE_COLOR, 0, 0, 0,
@@ -360,7 +360,7 @@ t_config_option weechat_options_colors[] =
   { "col_nick_private", N_("color for other nick in private window"),
     N_("color for other nick in private window"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "gray", NULL, &cfg_col_nick_private, NULL, &config_change_color },
+    "default", NULL, &cfg_col_nick_private, NULL, &config_change_color },
   { "col_nick_bg", N_("background for nicknames"),
     N_("background for nicknames"),
     OPTION_TYPE_COLOR, 0, 0, 0,
@@ -1017,7 +1017,7 @@ config_default_values ()
                         if (int_value < 0)
                             gui_printf (NULL,
                                         _("%s unable to assign default int with string (\"%s\")\n"),
-                                        weechat_options[i][j].default_string);
+                                        WEECHAT_WARNING, weechat_options[i][j].default_string);
                         else
                             *weechat_options[i][j].ptr_int =
                                 int_value;
@@ -1028,7 +1028,7 @@ config_default_values ()
                             weechat_options[i][j].default_string))
                             gui_printf (NULL,
                                         _("%s unable to assign default color (\"%s\")\n"),
-                                        weechat_options[i][j].default_string);
+                                        WEECHAT_WARNING, weechat_options[i][j].default_string);
                         break;
                     case OPTION_TYPE_STRING:
                         *weechat_options[i][j].ptr_string =
@@ -1130,96 +1130,105 @@ config_read ()
                 }
                 else
                 {
-                    pos = strchr (line, '=');
-                    if (pos == NULL)
+                    if (section == CONFIG_SECTION_NONE)
+                    {
                         gui_printf (NULL,
-                                    _("%s %s, line %d: invalid syntax, missing \"=\"\n"),
+                                    _("%s %s, line %d: invalid section for option, line is ignored\n"),
                                     WEECHAT_WARNING, filename, line_number);
+                    }
                     else
                     {
-                        pos[0] = '\0';
-                        pos++;
-                        pos2 = strchr (pos, '\r');
-                        if (pos2 != NULL)
-                            pos2[0] = '\0';
-                        pos2 = strchr (pos, '\n');
-                        if (pos2 != NULL)
-                            pos2[0] = '\0';
-                        
-                        if (section == CONFIG_SECTION_ALIAS)
-                        {
-                            if (alias_new (line, pos))
-                                index_command_new (line);
-                        }
+                        pos = strchr (line, '=');
+                        if (pos == NULL)
+                            gui_printf (NULL,
+                                        _("%s %s, line %d: invalid syntax, missing \"=\"\n"),
+                                        WEECHAT_WARNING, filename, line_number);
                         else
                         {
-                            option_number = -1;
-                            for (i = 0;
-                                 weechat_options[section][i].option_name; i++)
+                            pos[0] = '\0';
+                            pos++;
+                            pos2 = strchr (pos, '\r');
+                            if (pos2 != NULL)
+                                pos2[0] = '\0';
+                            pos2 = strchr (pos, '\n');
+                            if (pos2 != NULL)
+                                pos2[0] = '\0';
+                            
+                            if (section == CONFIG_SECTION_ALIAS)
                             {
-                                if (strcmp
-                                    (weechat_options[section][i].option_name,
-                                     ptr_line) == 0)
-                                {
-                                    option_number = i;
-                                    break;
-                                }
+                                if (alias_new (line, pos))
+                                    weelist_add (&index_commands, &last_index_command, line);
                             }
-                            if (option_number < 0)
-                                gui_printf (NULL,
-                                            _("%s %s, line %d: invalid option \"%s\"\n"),
-                                            WEECHAT_WARNING, filename, line_number, ptr_line);
                             else
                             {
-                                if (config_option_set_value (&weechat_options[section][option_number], pos) < 0)
+                                option_number = -1;
+                                for (i = 0;
+                                     weechat_options[section][i].option_name; i++)
                                 {
-                                    switch (weechat_options[section]
-                                            [option_number].option_type)
+                                    if (strcmp
+                                        (weechat_options[section][i].option_name,
+                                         ptr_line) == 0)
                                     {
-                                        case OPTION_TYPE_BOOLEAN:
-                                            gui_printf (NULL,
-                                                _("%s %s, line %d: invalid value for"
-                                                "option '%s'\n"
-                                                "Expected: boolean value: "
-                                                "'off' or 'on'\n"),
-                                                WEECHAT_WARNING, filename,
-                                                line_number, ptr_line);
-                                            break;
-                                        case OPTION_TYPE_INT:
-                                            gui_printf (NULL,
-                                                        _("%s %s, line %d: invalid value for "
-                                                        "option '%s'\n"
-                                                        "Expected: integer between %d "
-                                                        "and %d\n"),
-                                                        WEECHAT_WARNING, filename,
-                                                        line_number, ptr_line,
-                                                        weechat_options[section][option_number].min,
-                                                        weechat_options[section][option_number].max);
-                                            break;
-                                        case OPTION_TYPE_INT_WITH_STRING:
-                                            gui_printf (NULL,
-                                                        _("%s %s, line %d: invalid value for "
-                                                        "option '%s'\n"
-                                                        "Expected: one of these strings: "),
-                                                        WEECHAT_WARNING, filename,
-                                                        line_number, ptr_line);
-                                            i = 0;
-                                            while (weechat_options[section][option_number].array_values[i])
-                                            {
-                                                gui_printf (NULL, "\"%s\" ",
-                                                    weechat_options[section][option_number].array_values[i]);
-                                                i++;
-                                            }
-                                            gui_printf (NULL, "\n");
-                                            break;
-                                        case OPTION_TYPE_COLOR:
-                                            gui_printf (NULL,
-                                                        _("%s %s, line %d: invalid color "
-                                                        "name for option '%s'\n"),
-                                                        WEECHAT_WARNING, filename,
-                                                        line_number,
-                                                        ptr_line);
-                                            break;
+                                        option_number = i;
+                                        break;
+                                    }
+                                }
+                                if (option_number < 0)
+                                    gui_printf (NULL,
+                                                _("%s %s, line %d: invalid option \"%s\"\n"),
+                                                WEECHAT_WARNING, filename, line_number, ptr_line);
+                                else
+                                {
+                                    if (config_option_set_value (&weechat_options[section][option_number], pos) < 0)
+                                    {
+                                        switch (weechat_options[section]
+                                                [option_number].option_type)
+                                        {
+                                            case OPTION_TYPE_BOOLEAN:
+                                                gui_printf (NULL,
+                                                    _("%s %s, line %d: invalid value for"
+                                                    "option '%s'\n"
+                                                    "Expected: boolean value: "
+                                                    "'off' or 'on'\n"),
+                                                    WEECHAT_WARNING, filename,
+                                                    line_number, ptr_line);
+                                                break;
+                                            case OPTION_TYPE_INT:
+                                                gui_printf (NULL,
+                                                            _("%s %s, line %d: invalid value for "
+                                                            "option '%s'\n"
+                                                            "Expected: integer between %d "
+                                                            "and %d\n"),
+                                                            WEECHAT_WARNING, filename,
+                                                            line_number, ptr_line,
+                                                            weechat_options[section][option_number].min,
+                                                            weechat_options[section][option_number].max);
+                                                break;
+                                            case OPTION_TYPE_INT_WITH_STRING:
+                                                gui_printf (NULL,
+                                                            _("%s %s, line %d: invalid value for "
+                                                            "option '%s'\n"
+                                                            "Expected: one of these strings: "),
+                                                            WEECHAT_WARNING, filename,
+                                                            line_number, ptr_line);
+                                                i = 0;
+                                                while (weechat_options[section][option_number].array_values[i])
+                                                {
+                                                    gui_printf (NULL, "\"%s\" ",
+                                                        weechat_options[section][option_number].array_values[i]);
+                                                    i++;
+                                                }
+                                                gui_printf (NULL, "\n");
+                                                break;
+                                            case OPTION_TYPE_COLOR:
+                                                gui_printf (NULL,
+                                                            _("%s %s, line %d: invalid color "
+                                                            "name for option '%s'\n"),
+                                                            WEECHAT_WARNING, filename,
+                                                            line_number,
+                                                            ptr_line);
+                                                break;
+                                        }
                                     }
                                 }
                             }

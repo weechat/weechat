@@ -21,6 +21,7 @@
 #ifndef __WEECHAT_COMMAND_H
 #define __WEECHAT_COMMAND_H 1
 
+#include "weelist.h"
 #include "../irc/irc.h"
 
 #define MAX_ARGS 8192
@@ -48,21 +49,13 @@ struct t_weechat_alias
     t_weechat_alias *next_alias;
 };
 
-typedef struct t_index_command t_index_command;
-
-struct t_index_command
-{
-    char *command_name;
-    t_index_command *prev_index;
-    t_index_command *next_index;
-};
+extern t_weechat_command weechat_commands[];
 
 extern t_weechat_alias *weechat_alias;
-extern t_index_command *index_commands;
+extern t_weelist *index_commands;
+extern t_weelist *last_index_command;
 
-extern t_index_command *index_command_search (char *);
-extern t_index_command *index_command_new (char *);
-extern void index_command_build ();
+extern void command_index_build ();
 extern t_weechat_alias *alias_new (char *, char *);
 extern int exec_weechat_command (t_irc_server *, char *);
 extern void user_command (t_irc_server *, char *);

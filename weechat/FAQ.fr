@@ -1,4 +1,4 @@
-WeeChat FAQ, 2004-05-31
+WeeChat FAQ, 2005-01-16
 =======================
 
 Public concerné :
@@ -57,7 +57,7 @@ R:	Parce que WeeChat est très léger et a de nouvelles fonctionnalités.
 	  * développé à partir de zéro (non basé sur un quelconque client IRC)
 	  * multi-platformes
 	  * 100% GPL et libre
-	C'est le client le plus "geek" ;)
+	C'est le client IRC le plus "geek" ;)
 
 
 2.2
@@ -85,7 +85,7 @@ R:	La commande /perl permet de charger les scripts Perl
 	(le chemin par défaut est ~/.weechat/perl).
 	Notez que les scripts dans ~/.weechat/perl/autoload sont automatiquement
 	chargés par WeeChat lorsqu'il démarre.
-	Les scripts Perl WeeChat sont compatibles avec X-Chat, pas Irssi,
+	Les scripts Perl WeeChat sont compatibles avec X-Chat, mais pas Irssi,
 	désolé ;)
 
 
@@ -169,4 +169,4 @@ R:	Il y a plusieurs choses à faire (code, documentation, ...)
 ================================================================================
 Q:	Puis-je donner de l'argent ou d'autres choses aux développeurs WeeChat ?
 
-R:	Non.
+R:	La bière est la bienvenue :)

@@ -1,29 +1,35 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-Developers:
-----------
-
-All developers are connected to IRC:
-server: irc.freenode.net, channel: #weechat
+Developer:
+---------
 
 FlashCode <flashcode@flashtux.org>
-    Web   : http://www.flashtux.org
-    IRC   : nick is "FlashCode"
+    Web   : http://weechat.flashtux.org
+    IRC   : nick is "FlashCode" @ irc.freenode.net
     Jabber: flashcode@jabber.org
     ICQ   : 160677660
     AIM   : FlashCode AIM
     Yahoo : FlashCode_Y
 
+Testers:
+-------
+
 Bounga <bounga@altern.org>
     Web   : http://bounga.ath.cx
-    IRC   : nick is "Bounga"
+    IRC   : nick is "Bounga" @ irc.freenode.net
     Jabber: Bounga@jabber.org
     ICQ   : 178297842
 
 Xahlexx <xahlexx@weeland.org>
     Web   : http://www.weeland.org
-    IRC   : nick is "xahlexx"
+    IRC   : nick is "xahlexx" @ irc.freenode.net
+
+
+=====
+
+Whole team is connected to IRC:
+server: irc.freenode.net, channel: #weechat
 
 
 See README file for licence detail.

@@ -6,7 +6,7 @@ WeeChat - Installation instructions
             --disable-curses : do not build Curses interface
             --enable-gtk     : build Gtk+ interface (under development!)
             --enable-qt      : build Qt interface (not developed!)
-            --with-debug     : 1 for debug compilation, 2 for debug messages
+            --with-debug=X   : X=1 for debug compilation, 2 for debug messages
 
 2) Run 'make'
 

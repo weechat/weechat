@@ -145,8 +145,8 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int dcc,
             ((t_irc_server *)(server))->buffer = gui_buffers;
         if (channel)
             ((t_irc_channel *)(channel))->buffer = gui_buffers;
-        SERVER(gui_buffers) = server;
-        CHANNEL(gui_buffers) = channel;
+        gui_buffers->server = server;
+        gui_buffers->channel = channel;
         if (cfg_log_auto_server)
             log_start (gui_buffers);
         return gui_buffers;
@@ -158,8 +158,8 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int dcc,
         new_buffer->number = (last_gui_buffer) ? last_gui_buffer->number + 1 : 1;
         
         /* assign server and channel to buffer */
-        SERVER(new_buffer) = server;
-        CHANNEL(new_buffer) = channel;
+        new_buffer->server = server;
+        new_buffer->channel = channel;
         new_buffer->dcc = dcc;
         /* assign buffer to server and channel */
         if (server && !channel)
@@ -380,6 +380,9 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
     hotlist_remove_buffer (buffer);
     if (hotlist_initial_buffer == buffer)
         hotlist_initial_buffer = NULL;
+    
+    if (buffer_before_dcc == buffer)
+        buffer_before_dcc = NULL;
     
     if (switch_to_another)
     {

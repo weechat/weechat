@@ -337,6 +337,9 @@ plugin_exec_command (char *user_command, char *arguments, char *server)
 void
 plugin_unload (int plugin_type, char *scriptname)
 {
+    /* make gcc happy */
+    (void) scriptname;
+    
     #ifdef PLUGINS
     switch (plugin_type)
     {
