@@ -87,7 +87,7 @@ server_init (t_irc_server *server)
     server->lag = 0;
     server->lag_check_time.tv_sec = 0;
     server->lag_check_time.tv_usec = 0;
-    server->lag_next_check = 0;
+    server->lag_next_check = time (NULL) + cfg_irc_lag_check;
     server->buffer = NULL;
     server->channels = NULL;
     server->last_channel = NULL;
@@ -844,7 +844,7 @@ server_disconnect (t_irc_server *server, int reconnect)
     server->lag = 0;
     server->lag_check_time.tv_sec = 0;
     server->lag_check_time.tv_usec = 0;
-    server->lag_next_check = 0;
+    server->lag_next_check = time (NULL) + cfg_irc_lag_check;
     
     if ((reconnect) && (server->autoreconnect))
     {

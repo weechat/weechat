@@ -1576,6 +1576,7 @@ irc_cmd_recv_004 (t_irc_server *server, char *host, char *arguments)
     
     /* connection to IRC server is ok! */
     server->is_connected = 1;
+    server->lag_next_check = time (NULL) + cfg_irc_lag_check;
     gui_draw_buffer_status (server->buffer, 1);
     gui_draw_buffer_input (server->buffer, 1);
     
