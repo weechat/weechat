@@ -150,6 +150,6 @@ extern t_config_option * weechat_options [CONFIG_NUMBER_SECTIONS];
 
 extern int config_read ();
 extern int config_create_default ();
-extern void config_write ();
+extern int config_write ();
 
 #endif /* config.h */

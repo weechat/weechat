@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2003-09-29
+TODO - 2003-10-01
 
 Legend:
   #  done
@@ -23,6 +23,7 @@ v0.0.2:
     # "/connect" and "/disconnect" commands (for multiservers use)
     # "/server" command to add, remove or list servers
     - "/reload" command: reload the WeeChat's config file
+    # "/save" command: save configuration to disk
     + "/set" command: allow the user to set the WeeChat variables
       under WeeChat without editing the config file (colours, time
       format, etc)
@@ -36,7 +37,7 @@ v0.0.2:
     - connect to server with child process (background)
  
  * Configuration:
-    - write config file
+    # write config file
     - add an option for each server in order to run commands on join
       (example: /msg nickserv identify password)
     - channel list for auto-join (for each server)

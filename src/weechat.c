@@ -306,6 +306,9 @@ main (int argc, char *argv[])
     gui_main_loop ();
     server_disconnect_all ();
 
+    /* save config file */
+    config_write (NULL);
+    
     /* program ending */
     wee_shutdown ();
 

@@ -71,6 +71,9 @@ t_weechat_command weechat_commands[] =
     "username: user name\n"
     "realname: real name of user\n"),
     0, MAX_ARGS, weechat_cmd_server, NULL },
+  { "save", N_("save config to disk"),
+    N_("[file]"), N_("file: filename for writing config"),
+    0, 1, weechat_cmd_save, NULL },
   { "set", N_("set config parameters"),
     N_("[option [value]]"), N_("option: name of an option\nvalue: value for option"),
     0, 2, weechat_cmd_set, NULL },
@@ -940,6 +943,16 @@ weechat_cmd_server (int argc, char **argv)
         server_destroy (&server);
     }
     return 0;
+}
+
+/*
+ * weechat_cmd_save: set options
+ */
+
+int
+weechat_cmd_save (int argc, char **argv)
+{
+    return (config_write ((argc == 1) ? argv[0] : NULL));
 }
 
 /*

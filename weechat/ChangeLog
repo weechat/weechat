@@ -1,11 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2003-09-29
+ChangeLog - 2003-10-01
 
 
 Version 0.0.2 (under dev!):
-   * added new WeeChat commands: server, connect, disconnect
+   * config is now saved automatically when quitting WeeChat
+   * added new WeeChat commands: server, connect, disconnect, save
    * added autoconnect flag for each server in config file
    * term window title is modified with WeeChat name and version
    * fixed nicklist display bug

@@ -60,6 +60,7 @@ extern int weechat_cmd_connect (int, char **);
 extern int weechat_cmd_disconnect (int, char **);
 extern int weechat_cmd_help (int, char **);
 extern int weechat_cmd_server (int, char **);
+extern int weechat_cmd_save (int, char **);
 extern int weechat_cmd_set (int, char **);
 extern int weechat_cmd_unalias (int, char **);
 
