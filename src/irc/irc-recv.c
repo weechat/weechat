@@ -76,7 +76,7 @@ irc_recv_command (t_irc_server *server, char *entire_line,
     if (irc_commands[i].recv_function != NULL)
     {
         return_code = (int) (irc_commands[i].recv_function) (server, host, arguments);
-        plugin_event_msg (irc_commands[i].command_name, entire_line);
+        plugin_event_msg (irc_commands[i].command_name, server->name, entire_line);
         return return_code;
     }
     

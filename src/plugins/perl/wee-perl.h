@@ -25,7 +25,7 @@
 
 extern void wee_perl_init ();
 extern t_plugin_script *wee_perl_search (char *);
-extern int wee_perl_exec (char *, char *);
+extern int wee_perl_exec (char *, char *, char *);
 extern int wee_perl_load (char *);
 extern void wee_perl_unload (t_plugin_script *);
 extern void wee_perl_unload_all ();

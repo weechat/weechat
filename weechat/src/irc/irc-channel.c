@@ -31,7 +31,6 @@
 #include "irc.h"
 
 
-t_irc_channel *current_channel = NULL;
 char *channel_modes = "iklmnst";
 
 

@@ -227,6 +227,55 @@ static XS (XS_IRC_print_infobar)
 }
 
 /*
+ * IRC::command: send command to server
+ */
+
+static XS (XS_IRC_command)
+{
+    int integer;
+    char *server, *command, *command2;
+    t_irc_server *ptr_server;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if (items == 2)
+    {
+        server = SvPV (ST (0), integer);
+        command = SvPV (ST (1), integer);
+        for (ptr_server = irc_servers; ptr_server; ptr_server = ptr_server->next_server)
+        {
+            if (strcasecmp (ptr_server->name, server) == 0)
+                break;
+        }
+        if (!ptr_server)
+        {
+            irc_display_prefix (NULL, PREFIX_ERROR);
+            gui_printf (NULL,
+                        _("Perl error: server not found for IRC::command Perl function\n"));
+        }
+    }
+    else
+    {
+        ptr_server = SERVER(gui_current_window->buffer);
+        command = SvPV (ST (0), integer);
+    }
+    
+    if (ptr_server)
+    {
+        command2 = (char *) malloc (strlen (command) + 8);
+        strcpy (command2, command);
+        if (!strstr (command2, "\r\n"))
+            strcat (command2, "\r\n");
+        server_sendf (ptr_server, command2);
+        free (command2);
+    }
+    
+    XSRETURN_EMPTY;
+}
+
+/*
  * IRC::add_message_handler: add handler for messages (privmsg, ...)
  */
 
@@ -284,17 +333,37 @@ static XS (XS_IRC_add_command_handler)
 
 static XS (XS_IRC_get_info)
 {
-    char *arg, *info = NULL;
+    char *arg, *info = NULL, *server;
+    t_irc_server *ptr_server;
     int integer;
     dXSARGS;
     
     /* make gcc happy */
-    (void) items;
     (void) cv;
     
-    arg = SvPV (ST (0), integer);
+    if (items == 2)
+    {
+        server = SvPV (ST (0), integer);
+        arg = SvPV (ST (1), integer);
+        for (ptr_server = irc_servers; ptr_server; ptr_server = ptr_server->next_server)
+        {
+            if (strcasecmp (ptr_server->name, server) == 0)
+                break;
+        }
+        if (!ptr_server)
+        {
+            irc_display_prefix (NULL, PREFIX_ERROR);
+            gui_printf (NULL,
+                        _("Perl error: server not found for IRC::get_info Perl function\n"));
+        }
+    }
+    else
+    {
+        ptr_server = SERVER(gui_current_window->buffer);
+        arg = SvPV (ST (0), integer);
+    }
     
-    if (arg)
+    if (ptr_server && arg)
     {
     
         if ( (strcasecmp (arg, "0") == 0) || (strcasecmp (arg, "version") == 0) )
@@ -303,7 +372,8 @@ static XS (XS_IRC_get_info)
         }
         else if ( (strcasecmp (arg, "1") == 0) || (strcasecmp (arg, "nick") == 0) )
         {
-            info = current_irc_server->nick;
+            if (ptr_server->nick)
+                info = ptr_server->nick;
         }
         else if ( (strcasecmp (arg, "2") == 0) || (strcasecmp (arg, "channel") == 0) )
         {
@@ -312,7 +382,8 @@ static XS (XS_IRC_get_info)
         }
         else if ( (strcasecmp (arg, "3") == 0) || (strcasecmp (arg, "server") == 0) )
         {
-            info = current_irc_server->name;
+            if (ptr_server->name)
+                info = ptr_server->name;
         }
         else if ( (strcasecmp (arg, "4") == 0) || (strcasecmp (arg, "weechatdir") == 0) )
         {
@@ -320,7 +391,7 @@ static XS (XS_IRC_get_info)
         }
         else if ( (strcasecmp (arg, "5") == 0) || (strcasecmp (arg, "away") == 0) )
         {
-            XST_mIV (0, current_irc_server->is_away);
+            XST_mIV (0, SERVER(gui_current_window->buffer)->is_away);
             XSRETURN (1);
             return;
         }
@@ -346,6 +417,7 @@ xs_init (pTHX)
     newXS ("IRC::print", XS_IRC_print, "IRC");
     newXS ("IRC::print_with_channel", XS_IRC_print_with_channel, "IRC");
     newXS ("IRC::print_infobar", XS_IRC_print_infobar, "IRC");
+    newXS ("IRC::command", XS_IRC_command, "IRC");
     newXS ("IRC::add_message_handler", XS_IRC_add_message_handler, "IRC");
     newXS ("IRC::add_command_handler", XS_IRC_add_command_handler, "IRC");
     newXS ("IRC::get_info", XS_IRC_get_info, "IRC");
@@ -424,9 +496,9 @@ wee_perl_search (char *name)
  */
 
 int
-wee_perl_exec (char *function, char *arguments)
+wee_perl_exec (char *function, char *server, char *arguments)
 {
-    char *argv[2];
+    char *argv[3];
     int count, return_code;
     SV *sv;
     
@@ -435,8 +507,9 @@ wee_perl_exec (char *function, char *arguments)
     ENTER;
     SAVETMPS;
     PUSHMARK(sp);
-    argv[0] = arguments;
-    argv[1] = NULL;
+    argv[0] = server;
+    argv[1] = arguments;
+    argv[2] = NULL;
     count = perl_call_argv (function, G_EVAL | G_SCALAR, argv);
     SPAGAIN;
     
@@ -482,7 +555,7 @@ wee_perl_load (char *filename)
     wee_log_printf (_("loading Perl script \"%s\"\n"), filename);
     irc_display_prefix (NULL, PREFIX_PLUGIN);
     gui_printf (NULL, _("Loading Perl script \"%s\"\n"), filename);
-    return wee_perl_exec ("wee_perl_load_eval_file", filename);
+    return wee_perl_exec ("wee_perl_load_eval_file", filename, "");
 }
 
 /*
@@ -535,7 +608,7 @@ wee_perl_unload (t_plugin_script *ptr_perl_script)
         
         /* call shutdown callback function */
         if (ptr_perl_script->shutdown_func[0])
-            wee_perl_exec (ptr_perl_script->shutdown_func, "");
+            wee_perl_exec (ptr_perl_script->shutdown_func, "", "");
         wee_perl_script_free (ptr_perl_script);
     }
 }

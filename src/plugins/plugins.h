@@ -68,8 +68,8 @@ extern void plugin_handler_add (t_plugin_handler **, t_plugin_handler **,
                                 int, char *, char *);
 extern void plugin_handler_free_all_type (t_plugin_handler **,
                                           t_plugin_handler **, int);
-extern void plugin_event_msg (char *, char *);
-extern int plugin_exec_command (char *, /*@null@*/ char *);
+extern void plugin_event_msg (char *, char *, char *);
+extern int plugin_exec_command (char *, /*@null@*/ char *, char *);
 extern void plugin_end ();
 
 #endif /* plugins.h */

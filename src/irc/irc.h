@@ -198,9 +198,8 @@ struct t_dcc
 };
 
 extern t_irc_command irc_commands[];
-extern t_irc_server *irc_servers, *current_irc_server;
+extern t_irc_server *irc_servers;
 extern t_irc_message *recv_msgq, *msgq_last_msg;
-extern t_irc_channel *current_channel;
 extern t_dcc *dcc_list;
 extern char *dcc_status_string[6];
 extern char *channel_modes;

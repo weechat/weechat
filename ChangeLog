@@ -5,6 +5,7 @@ ChangeLog - 2004-10-03
 
 
 Version 0.0.8 (under dev!):
+   * added IRC::command function for Perl scripts
    * fixed bug when adding alias with same name as other
    * /buffer command developed (buffers list, move and notify)
    * logging buffers to disk (server/channel/private according to user prefs)

@@ -44,7 +44,6 @@
 
 t_irc_server *irc_servers = NULL;
 t_irc_server *last_irc_server = NULL;
-t_irc_server *current_irc_server = NULL;
 
 t_irc_message *recv_msgq, *msgq_last_msg;
 
@@ -686,8 +685,7 @@ server_connect (t_irc_server *server)
         server->sock4 = -1;
         return 0;
     }
-
-    current_irc_server = server;
+    
     return 1;
 }
 

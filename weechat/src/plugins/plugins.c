@@ -273,7 +273,7 @@ plugin_handler_free_all_type (t_plugin_handler **plugin_handlers,
  */
 
 void
-plugin_event_msg (char *irc_command, char *arguments)
+plugin_event_msg (char *irc_command, char *arguments, char *server)
 {
     #ifdef PLUGINS
     t_plugin_handler *ptr_plugin_handler;
@@ -285,7 +285,7 @@ plugin_event_msg (char *irc_command, char *arguments)
         {
             #ifdef PLUGIN_PERL
             if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PERL)
-                wee_perl_exec (ptr_plugin_handler->function_name, arguments);
+                wee_perl_exec (ptr_plugin_handler->function_name, arguments, server);
             #endif
         }
     }
@@ -301,7 +301,7 @@ plugin_event_msg (char *irc_command, char *arguments)
  */
 
 int
-plugin_exec_command (char *user_command, char *arguments)
+plugin_exec_command (char *user_command, char *arguments, char *server)
 {
     #ifdef PLUGINS
     t_plugin_handler *ptr_plugin_handler;
@@ -313,7 +313,7 @@ plugin_exec_command (char *user_command, char *arguments)
         {
             #ifdef PLUGIN_PERL
             if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PERL)
-                wee_perl_exec (ptr_plugin_handler->function_name, arguments);
+                wee_perl_exec (ptr_plugin_handler->function_name, arguments, server);
             #endif
             
             /* command executed */
