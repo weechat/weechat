@@ -777,7 +777,7 @@ gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
             if (gui_buffer_has_nicklist (buffer))
             {
                 max_length = nick_get_max_length (CHANNEL(buffer));
-                if ((buffer == gui_current_window->buffer) &&
+                if ((buffer->num_displayed > 0) &&
                     ((max_length + 2) != ptr_win->win_nick_width))
                 {
                     gui_calculate_pos_size (ptr_win);
