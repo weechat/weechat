@@ -46,10 +46,26 @@ fi
 
 echo "running aclocal..."
 aclocal -I /usr/share/aclocal
+if [ $? -ne 0 ]; then
+    echo "ERROR: 'aclocal -I /usr/share/aclocal' failed!"
+    exit 1
+fi
 echo "running autoconf..."
 autoconf
+if [ $? -ne 0 ]; then
+    echo "ERROR: 'autoconf' failed!"
+    exit 1
+fi
 echo "running autoheader..."
 autoheader
+if [ $? -ne 0 ]; then
+    echo "ERROR: 'autoheader' failed!"
+    exit 1
+fi
 echo "running automake..."
 automake -a
+if [ $? -ne 0 ]; then
+    echo "ERROR: 'automake -a' failed!"
+    exit 1
+fi
 echo "autogen.sh ok, now run ./configure script"

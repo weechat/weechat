@@ -15,6 +15,13 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
+INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\"
+
+noinst_LIBRARIES = lib_weechat_gui_common.a
+
+lib_weechat_gui_common_a_SOURCES = gui-common.c \
+                                   gui.h
+
 if GUI_NCURSES
 curses_dir=curses
 endif
@@ -27,4 +34,4 @@ if GUI_QT
 qt_dir=qt
 endif
 
-SUBDIRS = $(curses_dir) $(gtk_dir) $(qt_dir)
+SUBDIRS = . $(curses_dir) $(gtk_dir) $(qt_dir)
