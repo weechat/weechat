@@ -29,11 +29,14 @@
 
 #include "weechat.h"
 #include "history.h"
+#include "weeconfig.h"
 #include "../gui/gui.h"
 
 
 t_history *history_general = NULL;
+t_history *history_general_last = NULL;
 t_history *history_general_ptr = NULL;
+int num_history_general = 0;
 
 
 /*
@@ -43,25 +46,63 @@ t_history *history_general_ptr = NULL;
 void
 history_add (void *window, char *string)
 {
-    t_history *new_history;
+    t_history *new_history, *ptr_history;
     
+    /* add history to general history */
     new_history = (t_history *)malloc (sizeof (t_history));
     if (new_history)
     {
         new_history->text = strdup (string);
         
-        /* add history to general history */
         if (history_general)
             history_general->prev_history = new_history;
+        else
+            history_general_last = new_history;
         new_history->next_history = history_general;
         new_history->prev_history = NULL;
         history_general = new_history;
+        num_history_general++;
         
-        /* add history to local history */
+        /* remove one command if necessary */
+        if ((cfg_history_max_commands > 0)
+            && (num_history_general > cfg_history_max_commands))
+        {
+            ptr_history = history_general_last->prev_history;
+            history_general_last->prev_history->next_history = NULL;
+            if (history_general_last->text)
+                free (history_general_last->text);
+            free (history_general_last);
+            history_general_last = ptr_history;
+            num_history_general--;
+        }
+    }
+    
+    /* add history to local history */
+    new_history = (t_history *)malloc (sizeof (t_history));
+    if (new_history)
+    {
+        new_history->text = strdup (string);
+        
         if (((t_gui_window *)(window))->history)
             ((t_gui_window *)(window))->history->prev_history = new_history;
+        else
+            ((t_gui_window *)(window))->last_history = new_history;
         new_history->next_history = ((t_gui_window *)(window))->history;
         new_history->prev_history = NULL;
         ((t_gui_window *)window)->history = new_history;
+        ((t_gui_window *)(window))->num_history++;
+        
+        /* remove one command if necessary */
+        if ((cfg_history_max_commands > 0)
+            && (((t_gui_window *)(window))->num_history > cfg_history_max_commands))
+        {
+            ptr_history = ((t_gui_window *)window)->last_history->prev_history;
+            ((t_gui_window *)window)->last_history->prev_history->next_history = NULL;
+            if (((t_gui_window *)window)->last_history->text)
+                free (((t_gui_window *)window)->last_history->text);
+            free (((t_gui_window *)window)->last_history);
+            ((t_gui_window *)window)->last_history = ptr_history;
+            ((t_gui_window *)(window))->num_history++;
+        }
     }
 }

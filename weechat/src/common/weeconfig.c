@@ -1258,8 +1258,8 @@ config_write (char *config_name)
         if ((i != CONFIG_SECTION_ALIAS) && (i != CONFIG_SECTION_SERVER))
         {
             fprintf (file, "\n[%s]\n", config_sections[i].section_name);
-            if ((i == CONFIG_SECTION_HISTORY) || (i == CONFIG_SECTION_LOG) ||
-                (i == CONFIG_SECTION_DCC) || (i == CONFIG_SECTION_PROXY))
+            if ((i == CONFIG_SECTION_LOG) || (i == CONFIG_SECTION_DCC) ||
+                (i == CONFIG_SECTION_PROXY))
                 fprintf (file,
                          "# WARNING!!! Options for section \"%s\" are not developed!\n",
                          config_sections[i].section_name);

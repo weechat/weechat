@@ -168,6 +168,7 @@ struct t_gui_window
     /* chat content (lines, line is composed by many messages) */
     t_gui_line *lines;              /* lines of chat window                 */
     t_gui_line *last_line;          /* last line of chat window             */
+    int num_lines;                  /* number of lines in the window        */
     int first_line_displayed;       /* = 1 if first line is displayed       */
     int sub_lines;                  /* if > 0 then do not display until end */
     int line_complete;              /* current line complete ? (\n ending)  */
@@ -185,7 +186,9 @@ struct t_gui_window
     
     /* history */
     t_history *history;             /* commands history                     */
+    t_history *last_history;        /* last command in history              */
     t_history *ptr_history;         /* current command in history           */
+    int num_history;                /* number of commands in history        */
     
     /* link to next window */
     t_gui_window *prev_window;      /* link to previous window              */

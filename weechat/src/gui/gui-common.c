@@ -34,6 +34,7 @@
 
 #include "../common/weechat.h"
 #include "gui.h"
+#include "../../common/weeconfig.h"
 #include "../irc/irc.h"
 
 
@@ -92,6 +93,7 @@ gui_window_new (void *server, void *channel, int switch_to_window
         /* init lines */
         new_window->lines = NULL;
         new_window->last_line = NULL;
+        new_window->num_lines = 0;
         new_window->first_line_displayed = 1;
         new_window->sub_lines = 0;
         new_window->line_complete = 1;
@@ -110,7 +112,9 @@ gui_window_new (void *server, void *channel, int switch_to_window
         
         /* init history */
         new_window->history = NULL;
+        new_window->last_history = NULL;
         new_window->ptr_history = NULL;
+        new_window->num_history = 0;
         
         /* switch to new window */
         if (switch_to_window)
@@ -161,6 +165,7 @@ gui_window_clear (t_gui_window *window)
     
     window->lines = NULL;
     window->last_line = NULL;
+    window->num_lines = 0;
     window->first_line_displayed = 1;
     window->sub_lines = 0;
     window->line_complete = 1;
@@ -240,6 +245,26 @@ gui_infobar_remove ()
 }
 
 /*
+ * gui_line_free: delete a line from a window
+ */
+
+void
+gui_line_free (t_gui_line *line)
+{
+    t_gui_message *ptr_message;
+    
+    while (line->messages)
+    {
+        ptr_message = line->messages->next_message;
+        if (line->messages->message)
+            free (line->messages->message);
+        free (line->messages);
+        line->messages = ptr_message;
+    }
+    free (line);
+}
+
+/*
  * gui_window_free: delete a window
  */
 
@@ -247,7 +272,6 @@ void
 gui_window_free (t_gui_window *window)
 {
     t_gui_line *ptr_line;
-    t_gui_message *ptr_message;
     int create_new;
     
     create_new = (window->server || window->channel);
@@ -261,15 +285,7 @@ gui_window_free (t_gui_window *window)
     while (window->lines)
     {
         ptr_line = window->lines->next_line;
-        while (window->lines->messages)
-        {
-            ptr_message = window->lines->messages->next_message;
-            if (window->lines->messages->message)
-                free (window->lines->messages->message);
-            free (window->lines->messages);
-            window->lines->messages = ptr_message;
-        }
-        free (window->lines);
+        gui_line_free (window->lines);
         window->lines = ptr_line;
     }
     if (window->input_buffer)
@@ -301,7 +317,7 @@ gui_window_free (t_gui_window *window)
 t_gui_line *
 gui_new_line (t_gui_window *window)
 {
-    t_gui_line *new_line;
+    t_gui_line *new_line, *ptr_line;
     
     if ((new_line = (t_gui_line *) malloc (sizeof (struct t_gui_line))))
     {
@@ -317,12 +333,29 @@ gui_new_line (t_gui_window *window)
         new_line->prev_line = window->last_line;
         new_line->next_line = NULL;
         window->last_line = new_line;
+        window->num_lines++;
     }
     else
     {
         wee_log_printf (_("%s not enough memory for new line!\n"));
         return NULL;
     }
+    
+    /* remove one line if necessary */
+    if ((cfg_history_max_lines > 0)
+        && (window->num_lines > cfg_history_max_lines))
+    {
+        if (window->last_line == window->lines)
+            window->last_line = NULL;
+        ptr_line = window->lines->next_line;
+        gui_line_free (window->lines);
+        window->lines = ptr_line;
+        ptr_line->prev_line = NULL;
+        window->num_lines--;
+        if (window->first_line_displayed)
+            gui_redraw_window_chat (window);
+    }
+    
     return new_line;
 }
 

@@ -1,8 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2004-06-05
+ChangeLog - 2004-06-13
 
+
+Version 0.0.7 (under dev!):
+   * added history limit (text buffer & commands)
 
 Version 0.0.6 (2004-06-05):
    * improved channel highlight (priority to message vs join/part)
