@@ -464,23 +464,33 @@ server_msgq_add_buffer (t_irc_server * server, char *buffer)
         }
         else
         {
-            pos = strchr (buffer, '\0');
+            pos = strstr (buffer, "\n");
             if (pos)
             {
-                unterminated_message =
-                    (char *) realloc (unterminated_message,
-                                      strlen (buffer) + 1);
-                if (!unterminated_message)
-                    gui_printf (server->buffer,
-                                _("%s not enough memory for received IRC message\n"),
-                                WEECHAT_ERROR);
-                else
-                    strcpy (unterminated_message, buffer);
-                return;
+                pos[0] = '\0';
+                server_msgq_add_msg (server, buffer);
+                buffer = pos + 1;
             }
-            gui_printf (server->buffer,
-                        _("%s unable to explode received buffer\n"),
-                        WEECHAT_ERROR);
+            else
+            {
+                pos = strchr (buffer, '\0');
+                if (pos)
+                {
+                    unterminated_message =
+                        (char *) realloc (unterminated_message,
+                                          strlen (buffer) + 1);
+                    if (!unterminated_message)
+                        gui_printf (server->buffer,
+                                    _("%s not enough memory for received IRC message\n"),
+                                    WEECHAT_ERROR);
+                    else
+                        strcpy (unterminated_message, buffer);
+                    return;
+                }
+                gui_printf (server->buffer,
+                            _("%s unable to explode received buffer\n"),
+                            WEECHAT_ERROR);
+            }
         }
     }
 }
@@ -715,7 +725,8 @@ server_connect (t_irc_server *server)
 void
 server_reconnect (t_irc_server *server)
 {
-    gui_printf (server->buffer, _("Reconnecting to server...\n"));
+    gui_printf (server->buffer, _("%s: Reconnecting to server...\n"),
+                PACKAGE_NAME);
     server->reconnect_start = 0;
     
     if (server_connect (server))
@@ -726,8 +737,8 @@ server_reconnect (t_irc_server *server)
     else
     {
         server->reconnect_start = time (NULL);
-        gui_printf (server->buffer, _("Reconnecting to server in %d seconds\n"),
-                    server->autoreconnect_delay);
+        gui_printf (server->buffer, _("%s: Reconnecting to server in %d seconds\n"),
+                    PACKAGE_NAME, server->autoreconnect_delay);
     }
 }
 
@@ -795,8 +806,8 @@ server_disconnect (t_irc_server *server, int reconnect)
     if ((reconnect) && (server->autoreconnect))
     {
         server->reconnect_start = time (NULL);
-        gui_printf (server->buffer, _("Reconnecting to server in %d seconds\n"),
-                    server->autoreconnect_delay);
+        gui_printf (server->buffer, _("%s: Reconnecting to server in %d seconds\n"),
+                    PACKAGE_NAME, server->autoreconnect_delay);
     }
     else
         server->reconnect_start = 0;
