@@ -39,8 +39,8 @@
 
 static PerlInterpreter *my_perl = NULL;
 
-t_perl_script *perl_scripts = NULL;
-t_perl_script *last_perl_script = NULL;
+t_plugin_script *perl_scripts = NULL;
+t_plugin_script *last_perl_script = NULL;
 
 extern void boot_DynaLoader (pTHX_ CV* cv);
 
@@ -53,7 +53,7 @@ static XS (XS_IRC_register)
 {
     char *name, *version, *shutdown_func, *description;
     int integer;
-    t_perl_script *new_perl_script;
+    t_plugin_script *ptr_perl_script, *perl_script_found, *new_perl_script;
     dXSARGS;
     
     name = SvPV (ST (0), integer);
@@ -61,30 +61,53 @@ static XS (XS_IRC_register)
     shutdown_func = SvPV (ST (2), integer);
     description = SvPV (ST (3), integer);
     
-    new_perl_script = (t_perl_script *)malloc (sizeof (t_perl_script));
-    if (new_perl_script)
+    perl_script_found = NULL;
+    for (ptr_perl_script = perl_scripts; ptr_perl_script;
+         ptr_perl_script = ptr_perl_script->next_script)
     {
-        new_perl_script->name = strdup (name);
-        new_perl_script->version = strdup (version);
-        new_perl_script->shutdown_func = strdup (shutdown_func);
-        new_perl_script->description = strdup (description);
-        
-        /* add new script to list */
-        new_perl_script->prev_script = last_perl_script;
-        new_perl_script->next_script = NULL;
-        if (perl_scripts)
-            last_perl_script->next_script = new_perl_script;
-        else
-            perl_scripts = new_perl_script;
-        last_perl_script = new_perl_script;
-        
-        wee_log_printf (_("registered Perl script: \"%s\", version %s (%s)\n"),
-                        name, version, description);
+        if (strcasecmp (ptr_perl_script->name, name) == 0)
+        {
+            perl_script_found = ptr_perl_script;
+            break;
+        }
+    }
+    
+    if (perl_script_found)
+    {
+        /* error: another scripts already exists with this name! */
+        gui_printf (NULL,
+                    _("Perl error: unable to register Perl script \"%s\" (another script "
+                    "already exists with this name)\n"),
+                    name);
     }
     else
-        gui_printf (gui_current_window,
-                    _("%s unable to load Perl script \"%s\" (not enough memory)\n"),
-                    WEECHAT_ERROR, name);
+    {
+        /* registering script */
+        new_perl_script = (t_plugin_script *)malloc (sizeof (t_plugin_script));
+        if (new_perl_script)
+        {
+            new_perl_script->name = strdup (name);
+            new_perl_script->version = strdup (version);
+            new_perl_script->shutdown_func = strdup (shutdown_func);
+            new_perl_script->description = strdup (description);
+            
+            /* add new script to list */
+            new_perl_script->prev_script = last_perl_script;
+            new_perl_script->next_script = NULL;
+            if (perl_scripts)
+                last_perl_script->next_script = new_perl_script;
+            else
+                perl_scripts = new_perl_script;
+            last_perl_script = new_perl_script;
+            
+            wee_log_printf (_("registered Perl script: \"%s\", version %s (%s)\n"),
+                            name, version, description);
+        }
+        else
+            gui_printf (NULL,
+                        _("%s unable to load Perl script \"%s\" (not enough memory)\n"),
+                        WEECHAT_ERROR, name);
+    }
     XST_mPV (0, VERSION);
     XSRETURN (1);
 }
@@ -102,9 +125,7 @@ static XS (XS_IRC_print)
     for (i = 0; i < items; i++)
     {
         message = SvPV (ST (i), integer);
-        gui_printf (gui_current_window, "%s%s",
-                    message,
-                    (message[strlen (message) - 1] == '\n') ? "" : "\n");
+        gui_printf (gui_current_window, "%s", message);
     }
     
     XSRETURN_EMPTY;
@@ -123,7 +144,7 @@ static XS (XS_IRC_add_message_handler)
     name = SvPV (ST (0), integer);
     function = SvPV (ST (1), integer);
     plugin_handler_add (&plugin_msg_handlers, &last_plugin_msg_handler,
-                        PLUGIN_PERL, name, function);
+                        PLUGIN_TYPE_PERL, name, function);
     XSRETURN_EMPTY;
 }
 
@@ -150,7 +171,7 @@ static XS (XS_IRC_add_command_handler)
     }
     else
         plugin_handler_add (&plugin_cmd_handlers, &last_plugin_cmd_handler,
-                            PLUGIN_PERL, name, function);
+                            PLUGIN_TYPE_PERL, name, function);
     XSRETURN_EMPTY;
 }
 
@@ -220,10 +241,10 @@ wee_perl_init ()
  * wee_perl_search: search a (loaded) Perl script by name
  */
 
-t_perl_script *
+t_plugin_script *
 wee_perl_search (char *name)
 {
-    t_perl_script *ptr_perl_script;
+    t_plugin_script *ptr_perl_script;
     
     for (ptr_perl_script = perl_scripts; ptr_perl_script;
          ptr_perl_script = ptr_perl_script->next_script)
@@ -262,7 +283,7 @@ wee_perl_exec (char *function, char *arguments)
     return_code = 1;
     if (SvTRUE (sv))
     {
-        gui_printf (gui_current_window,
+        gui_printf (NULL,
                     _("Perl error: %s\n"),
                     SvPV (sv, count));
         POPs;
@@ -271,7 +292,7 @@ wee_perl_exec (char *function, char *arguments)
     {
         if (count != 1)
         {
-            gui_printf (gui_current_window,
+            gui_printf (NULL,
                         _("Perl error: too much values from \"%s\" (%d). Expected: 1.\n"),
                         function, count);
         }
@@ -303,9 +324,9 @@ wee_perl_load (char *filename)
  */
 
 void
-wee_perl_script_free (t_perl_script *ptr_perl_script)
+wee_perl_script_free (t_plugin_script *ptr_perl_script)
 {
-    t_perl_script *new_perl_scripts;
+    t_plugin_script *new_perl_scripts;
 
     /* remove script from list */
     if (last_perl_script == ptr_perl_script)
@@ -339,7 +360,7 @@ wee_perl_script_free (t_perl_script *ptr_perl_script)
  */
 
 void
-wee_perl_unload (t_perl_script *ptr_perl_script)
+wee_perl_unload (t_plugin_script *ptr_perl_script)
 {
     if (ptr_perl_script)
     {
@@ -360,6 +381,7 @@ wee_perl_unload (t_perl_script *ptr_perl_script)
 void
 wee_perl_unload_all ()
 {
+    wee_log_printf (_("unloading all Perl scripts...\n"));
     while (perl_scripts)
         wee_perl_unload (perl_scripts);
 }

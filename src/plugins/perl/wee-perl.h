@@ -23,23 +23,13 @@
 #ifndef __WEECHAT_PERL_H
 #define __WEECHAT_PERL_H 1
 
-typedef struct t_perl_script t_perl_script;
-
-struct t_perl_script
-{
-    char *name;                     /* name of script                       */
-    char *version;                  /* version of script                    */
-    char *shutdown_func;            /* function when script ends            */
-    char *description;              /* description of script                */
-    t_perl_script *prev_script;     /* link to previous Perl script         */
-    t_perl_script *next_script;     /* link to next Perl script             */
-};
+#include "../plugins.h"
 
 extern void wee_perl_init ();
-extern t_perl_script *wee_perl_search (char *);
+extern t_plugin_script *wee_perl_search (char *);
 extern int wee_perl_exec (char *, char *);
 extern int wee_perl_load (char *);
-extern void wee_perl_unload (t_perl_script *);
+extern void wee_perl_unload (t_plugin_script *);
 extern void wee_perl_unload_all ();
 extern void wee_perl_end ();
 

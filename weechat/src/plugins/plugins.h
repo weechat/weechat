@@ -23,10 +23,21 @@
 #ifndef __WEECHAT_PLUGINS_H
 #define __WEECHAT_PLUGINS_H 1
 
-#define PLUGIN_TYPE_UNKNOWN 0
-#define PLUGIN_TYPE_PERL    1
-#define PLUGIN_TYPE_PYTHON  2
-#define PLUGIN_TYPE_RUBY    3
+#define PLUGIN_TYPE_PERL    0
+#define PLUGIN_TYPE_PYTHON  1
+#define PLUGIN_TYPE_RUBY    2
+
+typedef struct t_plugin_script t_plugin_script;
+
+struct t_plugin_script
+{
+    char *name;                     /* name of script                       */
+    char *version;                  /* version of script                    */
+    char *shutdown_func;            /* function when script ends            */
+    char *description;              /* description of script                */
+    t_plugin_script *prev_script;   /* link to previous Perl script         */
+    t_plugin_script *next_script;   /* link to next Perl script             */
+};
 
 typedef struct t_plugin_handler t_plugin_handler;
 
@@ -46,6 +57,9 @@ extern t_plugin_handler *last_plugin_msg_handler;
 extern t_plugin_handler *plugin_cmd_handlers;
 extern t_plugin_handler *last_plugin_cmd_handler;
 
+#ifdef PLUGIN_PERL
+extern t_plugin_script *perl_scripts;
+#endif
 
 extern void plugin_init ();
 extern void plugin_load (int, char *);

@@ -61,9 +61,8 @@ t_weechat_command weechat_commands[] =
     N_("[command]"), N_("command: name of a WeeChat or IRC command"),
     0, 1, weechat_cmd_help, NULL },
   { "perl", N_("list/load/unload Perl scripts"),
-    N_("[load filename] | [unload scriptname]"),
+    N_("[load filename] | [unload]"),
     N_("filename: Perl script (file) to load\n"
-    "scriptname: name of script to unload\n"
     "Without argument, /perl command lists all loaded Perl scripts."),
     0, 2, weechat_cmd_perl, NULL },
   { "server", N_("list, add or remove servers"),
@@ -990,31 +989,85 @@ weechat_cmd_help (int argc, char **argv)
 int
 weechat_cmd_perl (int argc, char **argv)
 {
+    #ifdef PLUGINS
+    t_plugin_script *ptr_plugin_script;
+    t_plugin_handler *ptr_plugin_handler;
+    int handler_found;
+    
     #ifdef PLUGIN_PERL
     switch (argc)
     {
         case 0:
-            /* list all Perl scripts */
-            /* TODO: get list and display it */
+            /* list registered Perl scripts */
+            gui_printf (NULL, _("Registered Perl scripts:\n"));
+            if (perl_scripts)
+            {
+                for (ptr_plugin_script = perl_scripts; ptr_plugin_script;
+                     ptr_plugin_script = ptr_plugin_script->next_script)
+                {
+                    gui_printf (NULL, "  %s v%s%s%s\n",
+                                ptr_plugin_script->name,
+                                ptr_plugin_script->version,
+                                (ptr_plugin_script->description[0]) ? " - " : "",
+                                ptr_plugin_script->description);
+                }
+            }
+            else
+                gui_printf (NULL, _("  (none)\n"));
+            
+            /* list Perl message handlers */
+            gui_printf (NULL, _("Perl message handlers:\n"));
+            handler_found = 0;
+            for (ptr_plugin_handler = plugin_msg_handlers; ptr_plugin_handler;
+                 ptr_plugin_handler = ptr_plugin_handler->next_handler)
+            {
+                if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PERL)
+                {
+                    handler_found = 1;
+                    gui_printf (NULL, "  IRC(%s) => Perl(%s)\n",
+                                ptr_plugin_handler->name,
+                                ptr_plugin_handler->function_name);
+                }
+            }
+            if (!handler_found)
+                gui_printf (NULL, _("  (none)\n"));
+            
+            /* list Perl command handlers */
+            gui_printf (NULL, _("Perl command handlers:\n"));
+            handler_found = 0;
+            for (ptr_plugin_handler = plugin_cmd_handlers; ptr_plugin_handler;
+                 ptr_plugin_handler = ptr_plugin_handler->next_handler)
+            {
+                if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PERL)
+                {
+                    handler_found = 1;
+                    gui_printf (NULL, "  Command /%s => Perl(%s)\n",
+                                ptr_plugin_handler->name,
+                                ptr_plugin_handler->function_name);
+                }
+            }
+            if (!handler_found)
+                gui_printf (NULL, _("  (none)\n"));
+            
+            break;
+        case 1:
+            if (strcmp (argv[0], "unload") == 0)
+            {
+                /* unload all Perl scripts */
+                plugin_unload (PLUGIN_TYPE_PERL, NULL);
+            }
             break;
         case 2:
             if (strcmp (argv[0], "load") == 0)
             {
                 /* load Perl script */
-                plugin_load (PLUGIN_PERL, argv[1]);
+                plugin_load (PLUGIN_TYPE_PERL, argv[1]);
             }
             else
             {
-                if (strcmp (argv[0], "unload") == 0)
-                {
-                    /* unload Perl script */
-                }
-                else
-                {
-                    gui_printf (NULL,
-                                _("%s unknown option for \"%s\" command\n"),
-                                WEECHAT_ERROR, "perl");
-                }
+                gui_printf (NULL,
+                            _("%s unknown option for \"%s\" command\n"),
+                            WEECHAT_ERROR, "perl");
             }
             break;
         default:
@@ -1030,7 +1083,9 @@ weechat_cmd_perl (int argc, char **argv)
     /* make gcc happy */
     (void) argc;
     (void) argv;
-    #endif
+    #endif /* PLUGIN_PERL */
+    
+    #endif /* PLUGINS */
     
     return 0;
 }

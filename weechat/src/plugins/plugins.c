@@ -82,31 +82,6 @@ plugin_load (int plugin_type, char *filename)
 }
 
 /*
- * plugin_unload: unload a plugin
- */
-
-void
-plugin_unload (int plugin_type, char *scriptname)
-{
-    #ifdef PLUGINS
-    switch (plugin_type)
-    {
-        case PLUGIN_TYPE_PERL:
-            #ifdef PLUGIN_PERL
-            wee_perl_unload (wee_perl_search (scriptname));
-            #endif
-            break;
-        case PLUGIN_TYPE_PYTHON:
-            /* TODO: load Python script */
-            break;
-        case PLUGIN_TYPE_RUBY:
-            /* TODO: load Ruby script */
-            break;
-    }
-    #endif
-}
-
-/*
  * plugin_handler_search: look for message/command handler
  */
 
@@ -205,6 +180,32 @@ plugin_handler_free_all (t_plugin_handler **plugin_handlers,
 }
 
 /*
+ * plugin_handler_free_all_type: remove all message/command handlers for one type
+ */
+
+void
+plugin_handler_free_all_type (t_plugin_handler **plugin_handlers,
+                              t_plugin_handler **last_plugin_handler,
+                              int plugin_type)
+{
+    t_plugin_handler *ptr_plugin_handler, *new_plugin_handler;
+    
+    ptr_plugin_handler = *plugin_handlers;
+    while (ptr_plugin_handler)
+    {
+        if (ptr_plugin_handler->plugin_type == plugin_type)
+        {
+            new_plugin_handler = ptr_plugin_handler->next_handler;
+            plugin_handler_free (plugin_handlers, last_plugin_handler,
+                                 ptr_plugin_handler);
+            ptr_plugin_handler = new_plugin_handler;
+        }
+        else
+            ptr_plugin_handler = ptr_plugin_handler->next_handler;
+    }
+}
+
+/*
  * plugin_event_msg: IRC message received => call all handlers for this message
  */
 
@@ -264,6 +265,38 @@ plugin_exec_command (char *user_command, char *arguments)
     
     /* no command executed */
     return 0;
+}
+
+/*
+ * plugin_unload: unload all scripts for a plugin type
+ */
+
+void
+plugin_unload (int plugin_type, char *scriptname)
+{
+    #ifdef PLUGINS
+    switch (plugin_type)
+    {
+        case PLUGIN_TYPE_PERL:
+            #ifdef PLUGIN_PERL
+            wee_perl_unload_all ();
+            /* impossible to unload only one Perl script */
+            plugin_handler_free_all_type (&plugin_msg_handlers,
+                                          &last_plugin_msg_handler,
+                                          PLUGIN_TYPE_PERL);
+            plugin_handler_free_all_type (&plugin_cmd_handlers,
+                                          &last_plugin_cmd_handler,
+                                          PLUGIN_TYPE_PERL);
+            #endif
+            break;
+        case PLUGIN_TYPE_PYTHON:
+            /* TODO: unload Python scripts */
+            break;
+        case PLUGIN_TYPE_RUBY:
+            /* TODO: unload Ruby scripts */
+            break;
+    }
+    #endif
 }
 
 /*
