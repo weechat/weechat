@@ -4,6 +4,8 @@ WeeChat - Wee Enhanced Environment for Chat
 ChangeLog - 2003-09-27
 
 * 2003-09-27:
+  - added term window title
+  - fixed nicklist display bug
   - fixed crash when sending command which can not be sent
   - ctcp version returns more info (about OS)
 

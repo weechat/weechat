@@ -60,6 +60,7 @@ v0.0.2:
     ? Qt GUI
 
  * TCP/IP communication:
+    - SSL support
     - IPv6 protocol implementation
  
  * Configuration:
