@@ -378,211 +378,285 @@ gui_draw_buffer_title (t_gui_buffer *buffer, int erase)
 }
 
 /*
- * gui_get_line_num_splits: returns number of lines on window
- *                          (depending on window width and type (server/channel)
- *                          for alignment)
- */
-
-int
-gui_get_line_num_splits (t_gui_window *window, t_gui_line *line)
-{
-    int length, width;
-    
-    /* TODO: modify arbitraty value for non aligning messages on time/nick? */
-    if (line->length_align >= window->win_chat_width - 5)
-    {
-        length = line->length;
-        width = window->win_chat_width;
-    }
-    else
-    {
-        length = line->length - line->length_align;
-        width = window->win_chat_width - line->length_align;
-    }
-    
-    if (length == 0)
-        return 1;
-    else
-        return (length % width == 0) ? (length / width) : ((length / width) + 1);
-}
-
-/*
- * gui_display_end_of_line: display end of a line in the chat window
+ * gui_display_new_line: display a new line
  */
 
 void
-gui_display_end_of_line (t_gui_window *window, t_gui_line *line, int count)
+gui_display_new_line (t_gui_window *window, int num_lines, int count,
+                      int *lines_displayed, int simulate)
 {
-    int lines_displayed, num_lines, offset, remainder, num_displayed;
-    t_gui_message *ptr_message;
-    char saved_char, format_align[32], format_empty[32];
+    char format_empty[32];
+    
+    if ((count == 0) || (*lines_displayed >= num_lines - count))
+    {
+        if ((!simulate) && (window->win_chat_cursor_x <= window->win_chat_width - 1))
+        {
+            snprintf (format_empty, 32, "%%-%ds",
+                      window->win_chat_width - window->win_chat_cursor_x);
+            wprintw (window->win_chat, format_empty, " ");
+        }
+        window->win_chat_cursor_y++;
+    }
+    window->win_chat_cursor_x = 0;
+    (*lines_displayed)++;
+}
+
+/*
+ * gui_message_get_next_char: returns next char of message at offset
+ */
+
+void
+gui_message_get_next_char (t_gui_message **message, int *offset)
+{
+    if (!(*message))
+        return;
+    (*offset)++;
+    if (!((*message)->message[*offset]))
+    {
+        *message = (*message)->next_message;
+        *offset = 0;
+    }
+}
+
+/*
+ * gui_display_word: display a word on chat buffer
+ */
+
+void
+gui_display_word (t_gui_window *window, t_gui_line *line,
+                  t_gui_message *message, int offset,
+                  t_gui_message *end_msg, int end_offset,
+                  int num_lines, int count, int *lines_displayed, int simulate)
+{
+    char format_align[32];
+    char saved_char_end, saved_char;
+    int end_of_word, chars_to_display, num_displayed;
+    
+    if (window->win_chat_cursor_y > window->win_chat_height - 1)
+        return;
     
     snprintf (format_align, 32, "%%-%ds", line->length_align);
-    num_lines = gui_get_line_num_splits (window, line);
-    ptr_message = line->messages;
-    offset = 0;
-    lines_displayed = 0;
-    while (ptr_message)
+    
+    saved_char_end = '\0';
+    if (end_msg)
+    {
+        saved_char_end = end_msg->message[end_offset + 1];
+        end_msg->message[end_offset + 1] = '\0';
+    }
+    
+    end_of_word = 0;
+    while (!end_of_word)
     {
         /* set text color if beginning of message */
-        if (offset == 0)
-            gui_window_set_color (window->win_chat, ptr_message->color);
+        if (!simulate)
+            gui_window_set_color (window->win_chat, message->color);
         
         /* insert spaces for align text under time/nick */
-        if ((lines_displayed > 0) && (window->win_chat_cursor_x == 0))
+        if ((line->length_align > 0) &&
+            (window->win_chat_cursor_x == 0) &&
+            (*lines_displayed > 0) &&
+            /* TODO: modify arbitraty value for non aligning messages on time/nick? */
+            (line->length_align < (window->win_chat_width - 5)))
         {
-            if (lines_displayed >= num_lines - count)
+            if (!simulate)
                 mvwprintw (window->win_chat,
-                           window->win_chat_cursor_y,
+                           window->win_chat_cursor_y, 
                            window->win_chat_cursor_x,
                            format_align, " ");
             window->win_chat_cursor_x += line->length_align;
         }
         
-        remainder = strlen (ptr_message->message + offset);
-        if (window->win_chat_cursor_x + remainder >
-            window->win_chat_width - 1)
+        chars_to_display = strlen (message->message + offset);
+
+        /* too long for current line */
+        if (window->win_chat_cursor_x + chars_to_display > window->win_chat_width)
         {
-            num_displayed = window->win_chat_width -
-                window->win_chat_cursor_x;
-            if (num_displayed < 0)
-                return;
-            saved_char = ptr_message->message[offset + num_displayed];
-            ptr_message->message[offset + num_displayed] = '\0';
-            if (lines_displayed >= num_lines - count)
+            num_displayed = window->win_chat_width - window->win_chat_cursor_x;
+            saved_char = message->message[offset + num_displayed];
+            message->message[offset + num_displayed] = '\0';
+            if ((!simulate) &&
+                ((count == 0) || (*lines_displayed >= num_lines - count)))
                 mvwprintw (window->win_chat,
                            window->win_chat_cursor_y, 
                            window->win_chat_cursor_x,
-                           "%s", ptr_message->message + offset);
-            ptr_message->message[offset + num_displayed] = saved_char;
+                           "%s", message->message + offset);
+            message->message[offset + num_displayed] = saved_char;
             offset += num_displayed;
         }
         else
         {
-            num_displayed = remainder;
-            if (lines_displayed >= num_lines - count)
+
+            num_displayed = chars_to_display;
+            if ((!simulate) &&
+                ((count == 0) || (*lines_displayed >= num_lines - count)))
                 mvwprintw (window->win_chat,
                            window->win_chat_cursor_y, 
                            window->win_chat_cursor_x,
-                           "%s", ptr_message->message + offset);
-            ptr_message = ptr_message->next_message;
-            offset = 0;
-        }
-        window->win_chat_cursor_x += num_displayed;
-        if (!ptr_message ||
-            (window->win_chat_cursor_x > (window->win_chat_width - 1)))
-        {
-            if (lines_displayed >= num_lines - count)
+                           "%s", message->message + offset);
+            if (message == end_msg)
             {
-                if (window->win_chat_cursor_x <= window->win_chat_width - 1)
-                {
-                    snprintf (format_empty, 32, "%%-%ds",
-                              window->win_chat_width - window->win_chat_cursor_x);
-                    wprintw (window->win_chat, format_empty, " ");
-                }
-                window->win_chat_cursor_y++;
+                offset = end_offset;
+                if (end_msg)
+                    end_msg->message[end_offset + 1] = saved_char_end;
+                gui_message_get_next_char (&message, &offset);
             }
-            window->win_chat_cursor_x = 0;
-            lines_displayed++;
+            else
+            {
+                message = message->next_message;
+                offset = 0;
+            }
+        }
+        
+        window->win_chat_cursor_x += num_displayed;
+        
+        /* display new line? */
+        if (!message ||
+            ((window->win_chat_cursor_y <= window->win_chat_height - 1) &&
+            (window->win_chat_cursor_x > (window->win_chat_width - 1))))
+            gui_display_new_line (window, num_lines, count,
+                                  lines_displayed, simulate);
+        
+        /* end of word? */
+        if (!message || (message->prev_message == end_msg) ||
+            ((message == end_msg) && (offset > end_offset)))
+            end_of_word = 1;
+    }
+        
+    if (end_msg)
+        end_msg->message[end_offset + 1] = saved_char_end;
+}
+
+/*
+ * gui_get_word_info: returns info about next word: beginning, end, length
+ */
+
+void
+gui_get_word_info (t_gui_message *message, int offset,
+                   t_gui_message **word_start_msg, int *word_start_offset,
+                   t_gui_message **word_end_msg, int *word_end_offset,
+                   int *word_length_with_spaces, int *word_length)
+{
+    *word_start_msg = NULL;
+    *word_start_offset = 0;
+    *word_end_msg = NULL;
+    *word_end_offset = 0;
+    *word_length_with_spaces = 0;
+    *word_length = 0;
+    
+    /* leading spaces */
+    while (message && (message->message[offset] == ' '))
+    {
+        (*word_length_with_spaces)++;
+        gui_message_get_next_char (&message, &offset);
+    }
+    
+    /* not only spaces? */
+    if (message)
+    {
+        *word_start_msg = message;
+        *word_start_offset = offset;
+        
+        /* find end of word */
+        while (message && (message->message[offset]) && (message->message[offset] != ' '))
+        {
+            *word_end_msg = message;
+            *word_end_offset = offset;
+            (*word_length_with_spaces)++;
+            (*word_length)++;
+            gui_message_get_next_char (&message, &offset);
         }
     }
 }
 
 /*
  * gui_display_line: display a line in the chat window
- *                   if stop_at_end == 1, screen will not scroll and then we
- *                   exit since chat window is full
- *                   returns: 1 if stop_at_end == 0 or screen not full
- *                            0 if screen is full and if stop_at_end == 1
+ *                   if count == 0, display whole line
+ *                   if count > 0, display 'count' lines (beginning from the end)
+ *                   if simulate == 1, nothing is displayed (for counting how
+ *                                     many lines would have been lines displayed)
+ *                   returns: number of lines displayed (or simulated)
  */
 
 int
-gui_display_line (t_gui_window *window, t_gui_line *line, int stop_at_end)
+gui_display_line (t_gui_window *window, t_gui_line *line, int count, int simulate)
 {
-    int offset, remainder, num_displayed;
-    t_gui_message *ptr_message;
-    char saved_char, format_align[32], format_empty[32];
+    int num_lines, x, y, offset, lines_displayed;
+    t_gui_message *ptr_message, *word_start_msg, *word_end_msg;
+    int word_start_offset, word_end_offset;
+    int word_length_with_spaces, word_length;
+    int skip_spaces;
     
-    snprintf (format_align, 32, "%%-%ds", line->length_align);
+    if (window->win_chat_cursor_y > window->win_chat_height - 1)
+        return 0;
+    
+    if (simulate)
+    {
+        x = window->win_chat_cursor_x;
+        y = window->win_chat_cursor_y;
+        window->win_chat_cursor_x = 0;
+        window->win_chat_cursor_y = 0;
+        num_lines = 0;
+    }
+    else
+    {
+        x = window->win_chat_cursor_x;
+        y = window->win_chat_cursor_y;
+        num_lines = gui_display_line (window, line, 0, 1);
+        window->win_chat_cursor_x = x;
+        window->win_chat_cursor_y = y;
+    }
+    
     ptr_message = line->messages;
     offset = 0;
+    lines_displayed = 0;
     while (ptr_message)
     {
-        /* cursor is below end line of chat window */
-        if (window->win_chat_cursor_y > window->win_chat_height - 1)
+        skip_spaces = 0;
+        gui_get_word_info (ptr_message, offset,
+                           &word_start_msg, &word_start_offset,
+                           &word_end_msg, &word_end_offset,
+                           &word_length_with_spaces, &word_length);
+        
+        /* spaces + word too long for current line */
+        if ((window->win_chat_cursor_x + word_length_with_spaces > window->win_chat_width - 1)
+            && (word_length < window->win_chat_width - line->length_align))
         {
-            /*if (!stop_at_end)
-                wscrl (buffer->window->win_chat, +1);*/
-            window->win_chat_cursor_x = 0;
-            window->win_chat_cursor_y = window->win_chat_height - 1;
-            if (stop_at_end)
-                return 0;
-            window->first_line_displayed = 0;
+            gui_display_new_line (window, num_lines, count,
+                                  &lines_displayed, simulate);
+            ptr_message = word_start_msg;
+            offset = word_start_offset;
         }
         
-        /* set text color if beginning of message */
-        if (offset == 0)
-            gui_window_set_color (window->win_chat, ptr_message->color);
+        /* word is exactly width => we'll skip next leading spaces for next line */
+        if (word_length == window->win_chat_width - line->length_align)
+            skip_spaces = 1;
         
-        /* insert spaces for align text under time/nick */
-        if ((window->win_chat_cursor_x == 0) &&
-            (!(ptr_message->type & MSG_TYPE_TIME)) &&
-            (!(ptr_message->type & MSG_TYPE_NICK)) &&
-            (line->length_align > 0) &&
-            /* TODO: modify arbitraty value for non aligning messages on time/nick? */
-            (line->length_align < (window->win_chat_width - 5)))
-        {
-            mvwprintw (window->win_chat,
-                       window->win_chat_cursor_y, 
-                       window->win_chat_cursor_x,
-                       format_align, " ");
-            window->win_chat_cursor_x += line->length_align;
-        }
+        /* display word */
+        gui_display_word (window, line,
+                          ptr_message, offset,
+                          word_end_msg, word_end_offset,
+                          num_lines, count, &lines_displayed, simulate);
         
-        remainder = strlen (ptr_message->message + offset);
-        if (window->win_chat_cursor_x + remainder > window->win_chat_width)
+        /* move pointer after end of word */
+        ptr_message = word_end_msg;
+        offset = word_end_offset;
+        gui_message_get_next_char (&ptr_message, &offset);
+        
+        /* skip leading spaces? */
+        if (skip_spaces)
         {
-            num_displayed = window->win_chat_width -
-                window->win_chat_cursor_x;
-            saved_char = ptr_message->message[offset + num_displayed];
-            ptr_message->message[offset + num_displayed] = '\0';
-            mvwprintw (window->win_chat,
-                       window->win_chat_cursor_y, 
-                       window->win_chat_cursor_x,
-                       "%s", ptr_message->message + offset);
-            ptr_message->message[offset + num_displayed] = saved_char;
-            offset += num_displayed;
-        }
-        else
-        {
-            num_displayed = remainder;
-            mvwprintw (window->win_chat,
-                       window->win_chat_cursor_y, 
-                       window->win_chat_cursor_x,
-                       "%s", ptr_message->message + offset);
-            offset = 0;
-            ptr_message = ptr_message->next_message;
-        }
-        window->win_chat_cursor_x += num_displayed;
-        if (!ptr_message ||
-            (window->win_chat_cursor_x > (window->win_chat_width - 1)))
-        {
-            if (!ptr_message ||
-                ((window->win_chat_cursor_y <= window->win_chat_height - 1) &&
-                (window->win_chat_cursor_x > window->win_chat_width - 1)))
-            {
-                if (window->win_chat_cursor_x <= window->win_chat_width - 1)
-                {
-                    snprintf (format_empty, 32, "%%-%ds",
-                              window->win_chat_width - window->win_chat_cursor_x);
-                    wprintw (window->win_chat, format_empty, " ");
-                }
-                window->win_chat_cursor_y++;
-            }
-            window->win_chat_cursor_x = 0;
+            while (ptr_message && (ptr_message->message[offset] == ' '))
+                gui_message_get_next_char (&ptr_message, &offset);
         }
     }
-    return 1;
+    
+    if (simulate)
+    {
+        window->win_chat_cursor_x = x;
+        window->win_chat_cursor_y = y;
+    }
+    
+    return lines_displayed;
 }
 
 /*
@@ -700,7 +774,7 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                 while (ptr_line
                     && (lines_used < (ptr_win->win_chat_height + ptr_win->sub_lines)))
                 {
-                    lines_used += gui_get_line_num_splits (ptr_win, ptr_line);
+                    lines_used += gui_display_line (ptr_win, ptr_line, 0, 1);
                     ptr_line = ptr_line->prev_line;
                 }
                 ptr_win->win_chat_cursor_x = 0;
@@ -709,9 +783,9 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                 {
                     /* screen will be full (we'll display only end of 1st line) */
                     ptr_line = (ptr_line) ? ptr_line->next_line : buffer->lines;
-                    gui_display_end_of_line (ptr_win, ptr_line,
-                                             gui_get_line_num_splits (ptr_win, ptr_line) -
-                                             (lines_used - (ptr_win->win_chat_height + ptr_win->sub_lines)));
+                    gui_display_line (ptr_win, ptr_line,
+                                      gui_display_line (ptr_win, ptr_line, 0, 1) -
+                                      (lines_used - (ptr_win->win_chat_height + ptr_win->sub_lines)), 0);
                     ptr_line = ptr_line->next_line;
                     ptr_win->first_line_displayed = 0;
                 }
@@ -729,15 +803,20 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                         ptr_line = ptr_line->next_line;
                     }
                 }
-                while (ptr_line)
+                
+                /* display lines */
+                while (ptr_line && (ptr_win->win_chat_cursor_y <= ptr_win->win_chat_height - 1))
                 {
-                    if (!gui_display_line (ptr_win, ptr_line, 1))
-                        break;
-                    
+                    gui_display_line (ptr_win, ptr_line, 0, 0);
                     ptr_line = ptr_line->next_line;
                 }
-                /*if (ptr_win->win_chat_cursor_y <= ptr_win->win_chat_height - 1)
-                    buffer->sub_lines = 0;*/
+                
+                /* cursor is below end line of chat window? */
+                if (ptr_win->win_chat_cursor_y > ptr_win->win_chat_height - 1)
+                {
+                    ptr_win->win_chat_cursor_x = 0;
+                    ptr_win->win_chat_cursor_y = ptr_win->win_chat_height - 1;
+                }
             }
             wrefresh (ptr_win->win_chat);
             refresh ();
