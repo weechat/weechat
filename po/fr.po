@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.0.8\n"
+"Project-Id-Version: WeeChat 0.0.9-pre1\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2004-10-29 20:16+0200\n"
 "PO-Revision-Date: 2004-10-30 11:40+0200\n"
