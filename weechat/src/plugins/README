@@ -2,8 +2,10 @@ WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
 This is plugins directory for WeeChat.
-In the future, you'll find there interfaces with many famous languages for
+
+Today, Perl interface is developed.
+
+In the future, you'll find there interfaces with other famous languages for
 writing extensions to WeeChat:
-- Perl interface,
 - Python interface,
 - Ruby interface.
