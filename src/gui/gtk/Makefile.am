@@ -15,9 +15,9 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
-bin_PROGRAMS = weechat-gtk
+INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(GTK_CFLAGS)
 
-INCLUDES = $(GTK_CFLAGS)
+bin_PROGRAMS = weechat-gtk
 
 weechat_gtk_LDADD = ../../common/lib_weechat_main.a \
                     ../../irc/lib_weechat_irc.a \

@@ -15,6 +15,8 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
+INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\"
+
 if PLUGIN_PERL
 perl_dir = perl
 endif

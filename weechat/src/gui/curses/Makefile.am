@@ -15,6 +15,8 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
+INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\"
+
 bin_PROGRAMS = weechat-curses
 
 weechat_curses_LDADD = ../../common/lib_weechat_main.a \
