@@ -572,6 +572,7 @@ exec_weechat_command (t_irc_server *server, char *string)
                         free (argv[j]);
                     free (argv);
                 }
+                free (command);
                 return 1;
             }
         }
@@ -630,6 +631,7 @@ exec_weechat_command (t_irc_server *server, char *string)
                         free (argv[j]);
                     free (argv);
                 }
+                free (command);
                 return 1;
             }
         }
@@ -658,6 +660,7 @@ exec_weechat_command (t_irc_server *server, char *string)
                         free (argv[j]);
                     free (argv);
                 }
+                free (command);
                 return 1;
             }
         }
@@ -672,6 +675,7 @@ exec_weechat_command (t_irc_server *server, char *string)
             free (argv);
         }
     }
+    free (command);
     return 0;
 }
 
