@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2004-07-04
+TODO - 2004-08-08
 
 Legend:
   #  done
@@ -10,7 +10,7 @@ Legend:
   ?  is this really necessary?
 
 
-v0.0.7:
+v0.0.8:
 ------
 
  * General:
@@ -25,12 +25,9 @@ v0.0.7:
       buffers (alt-a), jump to buffers by number (alt-number)
     + "/window" command, split terminal in multiple windows
       (horizontally/vertically)
-    # forget some old lines that were displayed long time ago (now all is saved,
-      if WeeChat is running for long time, a lot of memory is used!)
     + internationalization (traduce WeeChat in many languages)
 
  * Configuration:
-    # history limit (text buffer & commands)
     + add missing options for config file
     - add key bindings to config file
 
