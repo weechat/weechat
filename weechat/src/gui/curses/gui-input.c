@@ -569,9 +569,8 @@ gui_read_keyb ()
                         case 'a':
                         case 'A':
                             if (dcc_selected
-                                && (((dcc_selected->type == DCC_CHAT_RECV)
-                                || (dcc_selected->type == DCC_FILE_RECV))
-                                && (dcc_selected->status == DCC_WAITING)))
+                                && (DCC_IS_RECV(dcc_selected->status))
+                                && (dcc_selected->status == DCC_WAITING))
                             {
                                 dcc_accept (dcc_selected);
                             }
@@ -580,9 +579,7 @@ gui_read_keyb ()
                         case 'c':
                         case 'C':
                             if (dcc_selected
-                                && ((dcc_selected->status == DCC_WAITING)
-                                || (dcc_selected->status == DCC_CONNECTING)
-                                || (dcc_selected->status == DCC_ACTIVE)))
+                                && (!DCC_ENDED(dcc_selected->status)))
                             {
                                 dcc_close (dcc_selected, DCC_ABORTED);
                                 gui_redraw_buffer (gui_current_window->buffer);
@@ -594,9 +591,7 @@ gui_read_keyb ()
                             gui_current_window->dcc_selected = NULL;
                             for (ptr_dcc = dcc_list; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
                             {
-                                if ((dcc_selected->status == DCC_DONE)
-                                    || (dcc_selected->status == DCC_FAILED)
-                                    || (dcc_selected->status == DCC_ABORTED))
+                                if (DCC_ENDED(ptr_dcc->status))
                                     dcc_free (ptr_dcc);
                             }
                             gui_redraw_buffer (gui_current_window->buffer);
@@ -618,12 +613,7 @@ gui_read_keyb ()
                         case 'r':
                         case 'R':
                             if (dcc_selected
-                                && (((dcc_selected->type == DCC_CHAT_RECV)
-                                || (dcc_selected->type == DCC_FILE_RECV)
-                                || (dcc_selected->type == DCC_FILE_SEND))
-                                && ((dcc_selected->status == DCC_DONE)
-                                || (dcc_selected->status == DCC_FAILED)
-                                || (dcc_selected->status == DCC_ABORTED))))
+                                && (DCC_ENDED(dcc_selected->status)))
                             {
                                 if (dcc_selected->next_dcc)
                                     gui_current_window->dcc_selected = dcc_selected->next_dcc;
@@ -775,8 +765,8 @@ gui_main_loop ()
                     FD_SET (ptr_server->child_read, &read_fd);
                 else
                 {
-                    if (ptr_server->sock4 >= 0)
-                        FD_SET (ptr_server->sock4, &read_fd);
+                    if (ptr_server->sock >= 0)
+                        FD_SET (ptr_server->sock, &read_fd);
                 }
             }
         }
@@ -798,8 +788,8 @@ gui_main_loop ()
                     }
                     else
                     {
-                        if ((ptr_server->sock4 >= 0) &&
-                            (FD_ISSET (ptr_server->sock4, &read_fd)))
+                        if ((ptr_server->sock >= 0) &&
+                            (FD_ISSET (ptr_server->sock, &read_fd)))
                             server_recv (ptr_server);
                     }
                 }

@@ -394,7 +394,7 @@ t_config_option weechat_options_colors[] =
   { "col_dcc_waiting", N_("color for \"waiting\" dcc status"),
     N_("color for \"waiting\" dcc status"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "white", NULL, &cfg_col_dcc_waiting, NULL, &config_change_color },
+    "lightcyan", NULL, &cfg_col_dcc_waiting, NULL, &config_change_color },
   { "col_dcc_connecting", N_("color for \"connecting\" dcc status"),
     N_("color for \"connecting\" dcc status"),
     OPTION_TYPE_COLOR, 0, 0, 0,

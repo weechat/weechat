@@ -339,6 +339,9 @@ completion_build_list (t_completion *completion, void *channel)
         weelist_add (&completion->completion_list,
                      &completion->last_completion,
                      "send");
+        weelist_add (&completion->completion_list,
+                     &completion->last_completion,
+                     "close");
         return;
     }
     if (strcasecmp (completion->base_command, "invite") == 0)

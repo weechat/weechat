@@ -44,12 +44,12 @@ t_irc_command irc_commands[] =
     N_("nickname type"),
     N_("nickname: user to send ctcp to\ntype: \"action\" or \"version\""),
     2, MAX_ARGS, 1, NULL, irc_cmd_send_ctcp, NULL },
-  { "dcc", N_("starts DCC (file or chat)"),
-    N_("action nickname [file]"),
-    N_("action: 'send' (file) or 'chat'\n"
+  { "dcc", N_("starts DCC (file or chat) or close chat"),
+    N_("action [nickname [file]]"),
+    N_("action: 'send' (file) or 'chat' or 'close' (chat)\n"
     "nickname: nickname to send file or chat\n"
     "file: filename (on local host)"),
-    2, MAX_ARGS, 1, NULL, irc_cmd_send_dcc, NULL },
+    1, MAX_ARGS, 1, NULL, irc_cmd_send_dcc, NULL },
   { "deop", N_("removes channel operator status from nickname(s)"),
     N_("nickname [nickname]"), "",
     1, MAX_ARGS, 1, irc_cmd_send_deop, NULL, NULL },

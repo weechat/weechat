@@ -25,6 +25,7 @@
 #endif
 
 #include <stdlib.h>
+#include <unistd.h>
 #include <string.h>
 
 #include "../common/weechat.h"
@@ -53,6 +54,7 @@ channel_new (t_irc_server *server, int channel_type, char *channel_name,
 
     /* initialize new channel */
     new_channel->type = channel_type;
+    new_channel->dcc_chat = NULL;
     new_channel->name = strdup (channel_name);
     new_channel->topic = NULL;
     memset (new_channel->modes, ' ', sizeof (new_channel->modes));
@@ -101,6 +103,14 @@ channel_free (t_irc_server *server, t_irc_channel *channel)
     if (channel->next_channel)
         (channel->next_channel)->prev_channel = channel->prev_channel;
 
+    /* close DCC CHAT */
+    if ((t_irc_dcc *)(channel->dcc_chat) &&
+        (!DCC_ENDED(((t_irc_dcc *)(channel->dcc_chat))->status)))
+    {
+        dcc_close ((t_irc_dcc *)(channel->dcc_chat), DCC_ABORTED);
+        dcc_redraw (1);
+    }
+    
     /* free data */
     if (channel->name)
         free (channel->name);
@@ -202,5 +212,51 @@ channel_set_away (t_irc_channel *channel, char *nick, int is_away)
         ptr_nick = nick_search (channel, nick);
         if (ptr_nick)
             nick_set_away (channel, ptr_nick, is_away);
+    }
+}
+
+/*
+ * channel_create_dcc: create DCC CHAT channel
+ */
+
+int
+channel_create_dcc (t_irc_dcc *ptr_dcc)
+{
+    t_irc_channel *ptr_channel;
+    
+    ptr_channel = channel_search (ptr_dcc->server, ptr_dcc->nick);
+    if (!ptr_channel)
+        ptr_channel = channel_new (ptr_dcc->server, CHAT_PRIVATE,
+                                   ptr_dcc->nick, 0);
+    if (!ptr_channel)
+        return 0;
+    
+    if (ptr_channel->dcc_chat &&
+        (!DCC_ENDED(((t_irc_dcc *)(ptr_channel->dcc_chat))->status)))
+        return 0;
+    
+    ptr_channel->dcc_chat = ptr_dcc;
+    ptr_dcc->channel = ptr_channel;
+    gui_redraw_buffer (ptr_channel->buffer);
+    return 1;
+}
+
+/*
+ * channel_remove_dcc: remove a DCC CHAT
+ */
+
+void
+channel_remove_dcc (t_irc_dcc *ptr_dcc)
+{
+    t_irc_channel *ptr_channel;
+    
+    for (ptr_channel = ptr_dcc->server->channels; ptr_channel;
+        ptr_channel = ptr_channel->next_channel)
+    {
+        if ((t_irc_dcc *)(ptr_channel->dcc_chat) == ptr_dcc)
+        {
+            ptr_channel->dcc_chat = NULL;
+            gui_redraw_buffer (ptr_channel->buffer);
+        }
     }
 }

@@ -706,33 +706,42 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                 {
                     if (i >= ptr_win->win_chat_height - 1)
                         break;
-                    if ((ptr_dcc->type == DCC_FILE_RECV)
-                        || (ptr_dcc->type == DCC_FILE_SEND))
+                    
+                    /* nickname and filename */
+                    gui_window_set_color (ptr_win->win_chat,
+                                          (ptr_dcc == dcc_selected) ?
+                                          COLOR_DCC_SELECTED : COLOR_WIN_CHAT);
+                    mvwprintw (ptr_win->win_chat, i, 0, "%s %-16s %s",
+                               (ptr_dcc == dcc_selected) ? "***" : "   ",
+                               ptr_dcc->nick,
+                               (DCC_IS_CHAT(ptr_dcc->type)) ?
+                               _(ptr_dcc->filename) : ptr_dcc->filename);
+                    if (DCC_IS_FILE(ptr_dcc->type))
                     {
-                        gui_window_set_color (ptr_win->win_chat,
-                                              (ptr_dcc == dcc_selected) ?
-                                                  COLOR_DCC_SELECTED : COLOR_WIN_CHAT);
-                        mvwprintw (ptr_win->win_chat, i, 0, "%s %-16s %s",
-                                   (ptr_dcc == dcc_selected) ? "***" : "   ",
-                                   ptr_dcc->nick, ptr_dcc->filename);
                         if (ptr_dcc->filename_suffix > 0)
                             wprintw (ptr_win->win_chat, " (.%d)",
                                      ptr_dcc->filename_suffix);
+                    }
+                    
+                    /* status */
+                    gui_window_set_color (ptr_win->win_chat,
+                                          (ptr_dcc == dcc_selected) ?
+                                          COLOR_DCC_SELECTED : COLOR_WIN_CHAT);
+                    mvwprintw (ptr_win->win_chat, i + 1, 0, "%s %s ",
+                               (ptr_dcc == dcc_selected) ? "***" : "   ",
+                               (DCC_IS_RECV(ptr_dcc->type)) ? "-->>" : "<<--");
+                    gui_window_set_color (ptr_win->win_chat,
+                                          COLOR_DCC_WAITING + ptr_dcc->status);
+                    wprintw (ptr_win->win_chat, "%-10s",
+                             _(dcc_status_string[ptr_dcc->status]));
+                    
+                    /* other infos */
+                    if (DCC_IS_FILE(ptr_dcc->type))
+                    {
                         gui_window_set_color (ptr_win->win_chat,
                                               (ptr_dcc == dcc_selected) ?
-                                                  COLOR_DCC_SELECTED : COLOR_WIN_CHAT);
-                        mvwprintw (ptr_win->win_chat, i + 1, 0, "%s %s ",
-                                   (ptr_dcc == dcc_selected) ? "***" : "   ",
-                                   (ptr_dcc->type == DCC_FILE_RECV) ? "-->>" : "<<--");
-                        gui_window_set_color (ptr_win->win_chat,
-                                              COLOR_DCC_WAITING + ptr_dcc->status);
-                        wprintw (ptr_win->win_chat, "%-10s",
-                                 dcc_status_string[ptr_dcc->status]);
-                        gui_window_set_color (ptr_win->win_chat,
-                                              (ptr_dcc == dcc_selected) ?
-                                                  COLOR_DCC_SELECTED : COLOR_WIN_CHAT);
-                        wprintw (ptr_win->win_chat, "  [",
-                                 dcc_status_string[ptr_dcc->status]);
+                                              COLOR_DCC_SELECTED : COLOR_WIN_CHAT);
+                        wprintw (ptr_win->win_chat, "  [");
                         if (ptr_dcc->size == 0)
                             num_bars = 10;
                         else
@@ -752,8 +761,7 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                         else
                             num_unit = 3;
                         wprintw (ptr_win->win_chat, "] %3lu%%   ",
-                                 (unsigned long)(((long double)(ptr_dcc->pos)/(long double)(ptr_dcc->size))*100),
-                                 dcc_status_string[ptr_dcc->status]);
+                                 (unsigned long)(((long double)(ptr_dcc->pos)/(long double)(ptr_dcc->size))*100));
                         sprintf (format, "%s %%s / %s %%s",
                                  unit_format[num_unit],
                                  unit_format[num_unit]);
@@ -762,9 +770,14 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                                  unit_name[num_unit],
                                  ((long double) ptr_dcc->size) / ((long double)(unit_divide[num_unit])),
                                  unit_name[num_unit]);
-                        ptr_win->dcc_last_displayed = ptr_dcc;
-                        i += 2;
                     }
+                    else
+                    {
+                        wclrtoeol (ptr_win->win_chat);
+                    }
+                    
+                    ptr_win->dcc_last_displayed = ptr_dcc;
+                    i += 2;
                 }
             }
             else
@@ -1089,42 +1102,61 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
             else
                 wprintw (ptr_win->win_status, "%s",
                          CHANNEL(ptr_win->buffer)->name);
-            if ((ptr_win->buffer == CHANNEL(ptr_win->buffer)->buffer)
-                && (CHANNEL(ptr_win->buffer)->type == CHAT_CHANNEL))
+            if (ptr_win->buffer == CHANNEL(ptr_win->buffer)->buffer)
             {
                 /* display channel modes */
-                gui_window_set_color (ptr_win->win_status,
-                                      COLOR_WIN_STATUS_DELIMITERS);
-                wprintw (ptr_win->win_status, "(");
-                gui_window_set_color (ptr_win->win_status,
-                                      COLOR_WIN_STATUS);
-                i = 0;
-                first_mode = 1;
-                while (CHANNEL(ptr_win->buffer)->modes[i])
+                if (CHANNEL(ptr_win->buffer)->type == CHAT_CHANNEL)
                 {
-                    if (CHANNEL(ptr_win->buffer)->modes[i] != ' ')
+                    gui_window_set_color (ptr_win->win_status,
+                                          COLOR_WIN_STATUS_DELIMITERS);
+                    wprintw (ptr_win->win_status, "(");
+                    gui_window_set_color (ptr_win->win_status,
+                                          COLOR_WIN_STATUS);
+                    i = 0;
+                    first_mode = 1;
+                    while (CHANNEL(ptr_win->buffer)->modes[i])
                     {
-                        if (first_mode)
+                        if (CHANNEL(ptr_win->buffer)->modes[i] != ' ')
                         {
-                            wprintw (ptr_win->win_status, "+");
-                            first_mode = 0;
+                            if (first_mode)
+                            {
+                                wprintw (ptr_win->win_status, "+");
+                                first_mode = 0;
+                            }
+                            wprintw (ptr_win->win_status, "%c",
+                                     CHANNEL(ptr_win->buffer)->modes[i]);
                         }
-                        wprintw (ptr_win->win_status, "%c",
-                                 CHANNEL(ptr_win->buffer)->modes[i]);
+                        i++;
                     }
-                    i++;
+                    if (CHANNEL(ptr_win->buffer)->modes[CHANNEL_MODE_KEY] != ' ')
+                        wprintw (ptr_win->win_status, ",%s",
+                                 CHANNEL(ptr_win->buffer)->key);
+                    if (CHANNEL(ptr_win->buffer)->modes[CHANNEL_MODE_LIMIT] != ' ')
+                        wprintw (ptr_win->win_status, ",%d",
+                                 CHANNEL(ptr_win->buffer)->limit);
+                    gui_window_set_color (ptr_win->win_status,
+                                          COLOR_WIN_STATUS_DELIMITERS);
+                    wprintw (ptr_win->win_status, ")");
+                    gui_window_set_color (ptr_win->win_status,
+                                          COLOR_WIN_STATUS);
                 }
-                if (CHANNEL(ptr_win->buffer)->modes[CHANNEL_MODE_KEY] != ' ')
-                    wprintw (ptr_win->win_status, ",%s",
-                             CHANNEL(ptr_win->buffer)->key);
-                if (CHANNEL(ptr_win->buffer)->modes[CHANNEL_MODE_LIMIT] != ' ')
-                    wprintw (ptr_win->win_status, ",%d",
-                             CHANNEL(ptr_win->buffer)->limit);
-                gui_window_set_color (ptr_win->win_status,
-                                      COLOR_WIN_STATUS_DELIMITERS);
-                wprintw (ptr_win->win_status, ")");
-                gui_window_set_color (ptr_win->win_status,
-                                      COLOR_WIN_STATUS);
+                
+                /* display DCC if private is DCC CHAT */
+                if ((CHANNEL(ptr_win->buffer)->type == CHAT_PRIVATE)
+                    && (CHANNEL(ptr_win->buffer)->dcc_chat))
+                {
+                    gui_window_set_color (ptr_win->win_status,
+                                          COLOR_WIN_STATUS_DELIMITERS);
+                    wprintw (ptr_win->win_status, "(");
+                    gui_window_set_color (ptr_win->win_status,
+                                          COLOR_WIN_STATUS);
+                    wprintw (ptr_win->win_status, "DCC");
+                    gui_window_set_color (ptr_win->win_status,
+                                          COLOR_WIN_STATUS_DELIMITERS);
+                    wprintw (ptr_win->win_status, ")");
+                    gui_window_set_color (ptr_win->win_status,
+                                          COLOR_WIN_STATUS);
+                }
             }
             wprintw (ptr_win->win_status, " ");
         }
@@ -1393,8 +1425,7 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
                         switch (dcc_selected->status)
                         {
                             case DCC_WAITING:
-                                if ((dcc_selected->type == DCC_CHAT_RECV)
-                                    || (dcc_selected->type == DCC_FILE_RECV))
+                                if (DCC_IS_RECV(dcc_selected->type))
                                     wprintw (ptr_win->win_input, _("  [A] Accept"));
                                 wprintw (ptr_win->win_input, _("  [C] Cancel"));
                                 break;
@@ -2271,15 +2302,11 @@ gui_end ()
     
     /* delete all buffers */
     while (gui_buffers)
-    {
         gui_buffer_free (gui_buffers, 0);
-    }
     
     /* delete all windows */
     while (gui_windows)
-    {
         gui_window_free (gui_windows);
-    }
     
     /* delete general history */
     history_general_free ();
@@ -2355,11 +2382,11 @@ gui_add_message (t_gui_buffer *buffer, int type, int color, char *message)
 }
 
 /*
- * gui_printf_color_type: display a message in a buffer
+ * gui_printf_type_color: display a message in a buffer
  */
 
 void
-gui_printf_color_type (t_gui_buffer *buffer, int type, int color, char *message, ...)
+gui_printf_type_color (t_gui_buffer *buffer, int type, int color, char *message, ...)
 {
     static char buf[8192];
     char timestamp[16];

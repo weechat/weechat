@@ -86,13 +86,16 @@
 #define MSG_TYPE_NOLOG     64
 
 #define gui_printf_color(buffer, color, fmt, argz...) \
-    gui_printf_color_type(buffer, MSG_TYPE_INFO, color, fmt, ##argz)
+    gui_printf_type_color(buffer, MSG_TYPE_INFO, color, fmt, ##argz)
+
+#define gui_printf_type(buffer, type, fmt, argz...) \
+    gui_printf_type_color(buffer, type, -1, fmt, ##argz)
 
 #define gui_printf(buffer, fmt, argz...) \
-    gui_printf_color_type(buffer, MSG_TYPE_INFO, -1, fmt, ##argz)
+    gui_printf_type_color(buffer, MSG_TYPE_INFO, -1, fmt, ##argz)
 
 #define gui_printf_nolog(buffer, fmt, argz...) \
-    gui_printf_color_type(buffer, MSG_TYPE_INFO | MSG_TYPE_NOLOG, -1, fmt, ##argz)
+    gui_printf_type_color(buffer, MSG_TYPE_INFO | MSG_TYPE_NOLOG, -1, fmt, ##argz)
 
 typedef struct t_gui_message t_gui_message;
 
@@ -313,7 +316,7 @@ extern void gui_init_colors ();
 extern void gui_set_window_title ();
 extern void gui_init ();
 extern void gui_end ();
-extern void gui_printf_color_type (/*@null@*/ t_gui_buffer *, int, int, char *, ...);
+extern void gui_printf_type_color (/*@null@*/ t_gui_buffer *, int, int, char *, ...);
 extern void gui_main_loop ();
 
 #endif /* gui.h */

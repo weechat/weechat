@@ -662,23 +662,27 @@ user_command (t_irc_server *server, char *command)
             command++;
         if (server && (!BUFFER_IS_SERVER(gui_current_window->buffer)))
         {
-            server_sendf (server, "PRIVMSG %s :%s\r\n",
-                          CHANNEL(gui_current_window->buffer)->name,
-                          command);
+            if (CHANNEL(gui_current_window->buffer)->dcc_chat)
+                dcc_chat_sendf ((t_irc_dcc *)(CHANNEL(gui_current_window->buffer)->dcc_chat),
+                                "%s\r\n", command);
+            else
+                server_sendf (server, "PRIVMSG %s :%s\r\n",
+                              CHANNEL(gui_current_window->buffer)->name,
+                              command);
 
             if (BUFFER_IS_PRIVATE(gui_current_window->buffer))
             {
-                gui_printf_color_type (CHANNEL(gui_current_window->buffer)->buffer,
+                gui_printf_type_color (CHANNEL(gui_current_window->buffer)->buffer,
                                        MSG_TYPE_NICK,
                                        COLOR_WIN_CHAT_DARK, "<");
-                gui_printf_color_type (CHANNEL(gui_current_window->buffer)->buffer,
+                gui_printf_type_color (CHANNEL(gui_current_window->buffer)->buffer,
                                        MSG_TYPE_NICK,
                                        COLOR_WIN_NICK_SELF,
                                        "%s", server->nick);
-                gui_printf_color_type (CHANNEL(gui_current_window->buffer)->buffer,
+                gui_printf_type_color (CHANNEL(gui_current_window->buffer)->buffer,
                                        MSG_TYPE_NICK,
                                        COLOR_WIN_CHAT_DARK, "> ");
-                gui_printf_color_type (CHANNEL(gui_current_window->buffer)->buffer,
+                gui_printf_type_color (CHANNEL(gui_current_window->buffer)->buffer,
                                        MSG_TYPE_MSG,
                                        COLOR_WIN_CHAT, "%s\n", command);
             }

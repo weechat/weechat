@@ -71,6 +71,14 @@
 #define DCC_FAILED              4   /* DCC failed                           */
 #define DCC_ABORTED             5   /* DCC aborted by user                  */
 
+#define DCC_IS_CHAT(type) ((type == DCC_CHAT_RECV) || (type == DCC_CHAT_SEND))
+#define DCC_IS_FILE(type) ((type == DCC_FILE_RECV) || (type == DCC_FILE_SEND))
+#define DCC_IS_RECV(type) ((type == DCC_CHAT_RECV) || (type == DCC_FILE_RECV))
+#define DCC_IS_SEND(type) ((type == DCC_CHAT_SEND) || (type == DCC_FILE_SEND))
+
+#define DCC_ENDED(status) ((status == DCC_DONE) || (status == DCC_FAILED) || \
+                          (status == DCC_ABORTED))
+
 /* nick types */
 
 typedef struct t_irc_nick t_irc_nick;
@@ -100,6 +108,7 @@ typedef struct t_irc_channel t_irc_channel;
 struct t_irc_channel
 {
     int type;                       /* channel type                         */
+    void *dcc_chat;                 /* DCC CHAT pointer (NULL if not DCC)   */
     char *name;                     /* name of channel (exemple: "#abc")    */
     char *topic;                    /* topic of channel (host for private)  */
     char modes[NUM_CHANNEL_MODES+1];/* channel modes                        */
@@ -142,7 +151,7 @@ struct t_irc_server
     pid_t child_pid;                /* pid of child process (connecting)    */
     int child_read;                 /* to read into child pipe              */
     int child_write;                /* to write into child pipe             */
-    int sock4;                      /* socket for server                    */
+    int sock;                       /* socket for server                    */
     int is_connected;               /* 1 if WeeChat is connected to server  */
     char *unterminated_message;     /* beginning of a message in input buf  */
     char *nick;                     /* current nickname                     */
@@ -198,12 +207,14 @@ typedef struct t_irc_dcc t_irc_dcc;
 struct t_irc_dcc
 {
     t_irc_server *server;           /* irc server                           */
+    t_irc_channel *channel;         /* irc channel (for DCC chat only)      */
     int type;                       /* DCC type (send or receive)           */
     int status;                     /* DCC status (waiting, sending, ..)    */
     unsigned long addr;             /* IP address                           */
     int port;                       /* port                                 */
     char *nick;                     /* remote nick                          */
     int sock;                       /* socket for connection                */
+    char *unterminated_message;     /* beginning of a message in input buf  */
     int file;                       /* local file (for reading or writing)  */
     char *filename;                 /* filename (given by sender)           */
     char *local_filename;           /* local filename (with path)           */
@@ -260,6 +271,8 @@ extern int string_is_channel (char *);
 extern void channel_remove_away (t_irc_channel *);
 extern void channel_check_away (t_irc_server *, t_irc_channel *);
 extern void channel_set_away (t_irc_channel *, char *, int);
+extern int channel_create_dcc (t_irc_dcc *);
+extern void channel_remove_dcc (t_irc_dcc *);
 
 /* nick functions (irc-nick.c) */
 
@@ -275,13 +288,15 @@ extern void nick_set_away (t_irc_channel *, t_irc_nick *, int);
 
 /* DCC functions (irc-dcc.c) */
 
+extern void dcc_redraw (int);
 extern void dcc_free (t_irc_dcc *);
 extern void dcc_close (t_irc_dcc *, int);
 extern void dcc_accept (t_irc_dcc *);
 extern t_irc_dcc *dcc_add (t_irc_server *, int, unsigned long, int, char *, int,
                            char *, char *, unsigned long);
+extern void dcc_send_request (t_irc_server *, int, char *, char *);
+extern void dcc_chat_sendf (t_irc_dcc *, char *, ...);
 extern void dcc_handle ();
-extern void dcc_send (t_irc_server *, char *, char *);
 extern void dcc_end ();
 
 /* IRC display (irc-diplay.c) */

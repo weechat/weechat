@@ -82,7 +82,7 @@ server_init (t_irc_server *server)
     server->child_pid = 0;
     server->child_read = -1;
     server->child_write = -1;
-    server->sock4 = -1;
+    server->sock = -1;
     server->is_connected = 0;
     server->unterminated_message = NULL;
     server->nick = NULL;
@@ -271,6 +271,10 @@ server_free (t_irc_server *server)
 {
     t_irc_server *new_irc_servers;
 
+    /* close any opened channel/private */
+    while (server->channels)
+        channel_free (server, server->channels);
+    
     /* remove server from queue */
     if (last_irc_server == server)
         last_irc_server = server->prev_server;
@@ -364,12 +368,12 @@ server_new (char *name, int autoconnect, int autoreconnect, int autoreconnect_de
  */
 
 int
-server_send (t_irc_server * server, char *buffer, int size_buf)
+server_send (t_irc_server *server, char *buffer, int size_buf)
 {
     if (!server)
         return -1;
     
-    return send (server->sock4, buffer, size_buf, 0);
+    return send (server->sock, buffer, size_buf, 0);
 }
 
 /*
@@ -377,23 +381,23 @@ server_send (t_irc_server * server, char *buffer, int size_buf)
  */
 
 void
-server_sendf (t_irc_server * server, char *fmt, ...)
+server_sendf (t_irc_server *server, char *fmt, ...)
 {
     va_list args;
-    static char buffer[1024];
+    static char buffer[4096];
     char *buf2;
     int size_buf;
-
+    
     if (!server)
         return;
-
+    
     va_start (args, fmt);
     size_buf = vsnprintf (buffer, sizeof (buffer) - 1, fmt, args);
     va_end (args);
 
     if ((size_buf == 0) || (strcmp (buffer, "\r\n") == 0))
         return;
-
+    
     buffer[sizeof (buffer) - 1] = '\0';
     if ((size_buf < 0) || (size_buf > (int) (sizeof (buffer) - 1)))
         size_buf = strlen (buffer);
@@ -632,7 +636,7 @@ server_recv (t_irc_server *server)
     static char buffer[4096 + 2];
     int num_read;
 
-    num_read = recv (server->sock4, buffer, sizeof (buffer) - 2, 0);
+    num_read = recv (server->sock, buffer, sizeof (buffer) - 2, 0);
     if (num_read > 0)
     {
         buffer[num_read] = '\0';
@@ -687,10 +691,10 @@ server_close_connection (t_irc_server *server)
     server_kill_child (server);
     
     /* close network socket */
-    if (server->sock4 != -1)
+    if (server->sock != -1)
     {
-        close (server->sock4);
-        server->sock4 = -1;
+        close (server->sock);
+        server->sock = -1;
     }
     
     /* free any pending message */
@@ -804,7 +808,7 @@ server_child (t_irc_server *server)
     }
     
     /* connect to server */
-    error = connect (server->sock4, (struct sockaddr *) &addr, sizeof (addr));
+    error = connect (server->sock, (struct sockaddr *) &addr, sizeof (addr));
     if (error != 0)
     {
         write (server->child_write, "3", 1);
@@ -849,8 +853,8 @@ server_connect (t_irc_server *server)
     server->child_write = child_pipe[1];
     
     /* create socket and set options */
-    server->sock4 = socket (AF_INET, SOCK_STREAM, 0);
-    if (server->sock4 == -1)
+    server->sock = socket (AF_INET, SOCK_STREAM, 0);
+    if (server->sock == -1)
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
@@ -861,7 +865,7 @@ server_connect (t_irc_server *server)
     
     /* set SO_REUSEADDR option for socket */
     set = 1;
-    if (setsockopt (server->sock4, SOL_SOCKET, SO_REUSEADDR,
+    if (setsockopt (server->sock, SOL_SOCKET, SO_REUSEADDR,
         (void *) &set, sizeof (set)) == -1)
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
@@ -872,7 +876,7 @@ server_connect (t_irc_server *server)
     
     /* set SO_KEEPALIVE option for socket */
     set = 1;
-    if (setsockopt (server->sock4, SOL_SOCKET, SO_KEEPALIVE,
+    if (setsockopt (server->sock, SOL_SOCKET, SO_KEEPALIVE,
         (void *) &set, sizeof (set)) == -1)
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);

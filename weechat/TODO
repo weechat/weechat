@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2005-02-20
+TODO - 2005-02-27
 
 Legend:
   #  done
@@ -16,10 +16,11 @@ v0.1.1:
  * General:
     + Windows version
     + Solaris version
-    - *BSD version
+    + *BSD version
 
  * IRC protocol:
     # "/dcc send" command
+    # "/dcc chat" command (and incoming DCC chats)
     - customizable CTCP version reply
 
  * Interface:
@@ -34,7 +35,6 @@ Future versions:
 ---------------
 
  * IRC protocol:
-    - "/dcc chat" command (and incoming DCC chats)
     - complete "/list" command: add regexp search, display only channels that
       match regexp
     - "/ignore" and "/unignore" commands: hide all that is write by a given

@@ -160,9 +160,9 @@ irc_cmd_recv_join (t_irc_server *server, char *host, char *arguments)
         if (!ptr_channel)
         {
             irc_display_prefix (server->buffer, PREFIX_ERROR);
-            gui_printf_nolog (server->buffer,
-                              _("%s cannot create new channel \"%s\"\n"),
-                              WEECHAT_ERROR, arguments);
+            gui_printf (server->buffer,
+                        _("%s cannot create new channel \"%s\"\n"),
+                        WEECHAT_ERROR, arguments);
             return -1;
         }
     }
@@ -227,9 +227,9 @@ irc_cmd_recv_kick (t_irc_server *server, char *host, char *arguments)
         if (!ptr_channel)
         {
             irc_display_prefix (server->buffer, PREFIX_ERROR);
-            gui_printf_nolog (server->buffer,
-                              _("%s channel not found for \"%s\" command\n"),
-                              WEECHAT_ERROR, "kick");
+            gui_printf (server->buffer,
+                        _("%s channel not found for \"%s\" command\n"),
+                        WEECHAT_ERROR, "kick");
             return -1;
         }
     
@@ -260,9 +260,9 @@ irc_cmd_recv_kick (t_irc_server *server, char *host, char *arguments)
     else
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
-        gui_printf_nolog (server->buffer,
-                          _("%s nick not found for \"%s\" command\n"),
-                          WEECHAT_ERROR, "kick");
+        gui_printf (server->buffer,
+                    _("%s nick not found for \"%s\" command\n"),
+                    WEECHAT_ERROR, "kick");
         return -1;
     }
     if (strcmp (pos_nick, server->nick) == 0)
@@ -550,9 +550,9 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *arguments)
     if (host == NULL)
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
-        gui_printf_nolog (server->buffer,
-                          _("%s \"%s\" command received without host\n"),
-                          WEECHAT_ERROR, "mode");
+        gui_printf (server->buffer,
+                    _("%s \"%s\" command received without host\n"),
+                    WEECHAT_ERROR, "mode");
         return -1;
     }
     
@@ -565,9 +565,9 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *arguments)
     if (!pos)
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
-        gui_printf_nolog (server->buffer,
-                          _("%s \"%s\" command received without channel or nickname\n"),
-                          WEECHAT_ERROR, "mode");
+        gui_printf (server->buffer,
+                    _("%s \"%s\" command received without channel or nickname\n"),
+                    WEECHAT_ERROR, "mode");
         return -1;
     }
     pos[0] = '\0';
@@ -595,9 +595,9 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *arguments)
         else
         {
             irc_display_prefix (server->buffer, PREFIX_ERROR);
-            gui_printf_nolog (server->buffer,
-                              _("%s channel not found for \"%s\" command\n"),
-                              WEECHAT_ERROR, "mode");
+            gui_printf (server->buffer,
+                        _("%s channel not found for \"%s\" command\n"),
+                        WEECHAT_ERROR, "mode");
             return -1;
         }
     }
@@ -635,9 +635,9 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *arguments)
     if (host == NULL)
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
-        gui_printf_nolog (server->buffer,
-                          _("%s \"%s\" command received without host\n"),
-                          WEECHAT_ERROR, "nick");
+        gui_printf (server->buffer,
+                    _("%s \"%s\" command received without host\n"),
+                    WEECHAT_ERROR, "nick");
         return -1;
     }
     
@@ -753,9 +753,9 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *arguments)
     else
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
-        gui_printf_nolog (server->buffer,
-                          _("%s nickname not found for \"%s\" command\n"),
-                          WEECHAT_ERROR, "notice");
+        gui_printf (server->buffer,
+                    _("%s nickname not found for \"%s\" command\n"),
+                    WEECHAT_ERROR, "notice");
         return -1;
     }
     if (strncmp (pos, "\01VERSION", 8) == 0)
@@ -846,9 +846,9 @@ irc_cmd_recv_part (t_irc_server *server, char *host, char *arguments)
     if (!host || !arguments)
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
-        gui_printf_nolog (server->buffer,
-                          _("%s \"%s\" command received without host or channel\n"),
-                          WEECHAT_ERROR, "part");
+        gui_printf (server->buffer,
+                    _("%s \"%s\" command received without host or channel\n"),
+                    WEECHAT_ERROR, "part");
         return -1;
     }
     
@@ -921,9 +921,9 @@ irc_cmd_recv_part (t_irc_server *server, char *host, char *arguments)
     else
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
-        gui_printf_nolog (server->buffer,
-                          _("%s channel not found for \"%s\" command\n"),
-                          WEECHAT_ERROR, "part");
+        gui_printf (server->buffer,
+                    _("%s channel not found for \"%s\" command\n"),
+                    WEECHAT_ERROR, "part");
         return -1;
     }
     
@@ -995,9 +995,9 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
     if (host == NULL)
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
-        gui_printf_nolog (server->buffer,
-                          _("%s \"%s\" command received without host\n"),
-                          WEECHAT_ERROR, "privmsg");
+        gui_printf (server->buffer,
+                    _("%s \"%s\" command received without host\n"),
+                    WEECHAT_ERROR, "privmsg");
         return -1;
     }
     
@@ -1036,7 +1036,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                     irc_display_prefix (ptr_channel->buffer, PREFIX_ACTION_ME);
                     if (strstr (pos, server->nick))
                     {
-                        gui_printf_color_type (ptr_channel->buffer,
+                        gui_printf_type_color (ptr_channel->buffer,
                                                MSG_TYPE_MSG | MSG_TYPE_HIGHLIGHT,
                                                COLOR_WIN_CHAT_HIGHLIGHT,
                                                "%s", host);
@@ -1050,7 +1050,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                                                 host, pos);
                     }
                     else
-                        gui_printf_color_type (ptr_channel->buffer,
+                        gui_printf_type_color (ptr_channel->buffer,
                                                MSG_TYPE_MSG,
                                                COLOR_WIN_CHAT_NICK, "%s", host);
                     gui_printf_color (ptr_channel->buffer,
@@ -1078,16 +1078,16 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                         else
                             irc_display_nick (ptr_channel->buffer, ptr_nick,
                                               MSG_TYPE_NICK, 1, 1, 0);
-                        gui_printf_color_type (ptr_channel->buffer,
+                        gui_printf_type_color (ptr_channel->buffer,
                                                MSG_TYPE_MSG,
                                                COLOR_WIN_CHAT, "%s\n", pos);
                     }
                     else
                     {
                         irc_display_prefix (server->buffer, PREFIX_ERROR);
-                        gui_printf_nolog (server->buffer,
-                                          _("%s nick not found for \"%s\" command\n"),
-                                          WEECHAT_ERROR, "privmsg");
+                        gui_printf (server->buffer,
+                                    _("%s nick not found for \"%s\" command\n"),
+                                    WEECHAT_ERROR, "privmsg");
                         return -1;
                     }
                 }
@@ -1095,9 +1095,9 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
             else
             {
                 irc_display_prefix (server->buffer, PREFIX_ERROR);
-                gui_printf_nolog (server->buffer,
-                                  _("%s channel not found for \"%s\" command\n"),
-                                  WEECHAT_ERROR, "privmsg");
+                gui_printf (server->buffer,
+                            _("%s channel not found for \"%s\" command\n"),
+                            WEECHAT_ERROR, "privmsg");
                 return -1;
             }
         }
@@ -1176,16 +1176,19 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
             /* incoming DCC file */
             if (strncmp (pos, "\01DCC SEND", 9) == 0)
             {
-                pos2 = strchr (pos, '\01');
+                /* check if DCC SEND is ok, i.e. with 0x01 at end */
+                pos2 = strchr (pos + 1, '\01');
                 if (!pos2)
                 {
                     irc_display_prefix (server->buffer, PREFIX_ERROR);
-                    gui_printf_nolog (server->buffer,
-                                      _("%s cannot parse \"%s\" command\n"),
-                                      WEECHAT_ERROR, "privmsg");
+                    gui_printf (server->buffer,
+                                _("%s cannot parse \"%s\" command\n"),
+                                WEECHAT_ERROR, "privmsg");
                     return -1;
                 }
                 pos2[0] = '\0';
+                
+                /* DCC filename */
                 pos_file = pos + 9;
                 while (pos_file[0] == ' ')
                     pos_file++;
@@ -1195,9 +1198,9 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                 if (!pos_size)
                 {
                     irc_display_prefix (server->buffer, PREFIX_ERROR);
-                    gui_printf_nolog (server->buffer,
-                                      _("%s cannot parse \"%s\" command\n"),
-                                      WEECHAT_ERROR, "privmsg");
+                    gui_printf (server->buffer,
+                                _("%s cannot parse \"%s\" command\n"),
+                                WEECHAT_ERROR, "privmsg");
                     return -1;
                 }
                 pos2 = pos_size;
@@ -1211,9 +1214,9 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                 if (!pos_port)
                 {
                     irc_display_prefix (server->buffer, PREFIX_ERROR);
-                    gui_printf_nolog (server->buffer,
-                                      _("%s cannot parse \"%s\" command\n"),
-                                      WEECHAT_ERROR, "privmsg");
+                    gui_printf (server->buffer,
+                                _("%s cannot parse \"%s\" command\n"),
+                                WEECHAT_ERROR, "privmsg");
                     return -1;
                 }
                 pos2 = pos_port;
@@ -1222,14 +1225,14 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                     pos2--;
                 pos2[1] = '\0';
                 
-                /* look for DCC address (IP) */
+                /* look for DCC IP address */
                 pos_addr = strrchr (pos_file, ' ');
                 if (!pos_addr)
                 {
                     irc_display_prefix (server->buffer, PREFIX_ERROR);
-                    gui_printf_nolog (server->buffer,
-                                      _("%s cannot parse \"%s\" command\n"),
-                                      WEECHAT_ERROR, "privmsg");
+                    gui_printf (server->buffer,
+                                _("%s cannot parse \"%s\" command\n"),
+                                WEECHAT_ERROR, "privmsg");
                     return -1;
                 }
                 pos2 = pos_addr;
@@ -1244,6 +1247,74 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                 return 0;
             }
             
+            /* incoming DCC CHAT */
+            if (strncmp (pos, "\01DCC CHAT", 9) == 0)
+            {
+                /* check if DCC CHAT is ok, i.e. with 0x01 at end */
+                pos2 = strchr (pos + 1, '\01');
+                if (!pos2)
+                {
+                    irc_display_prefix (server->buffer, PREFIX_ERROR);
+                    gui_printf (server->buffer,
+                                _("%s cannot parse \"%s\" command\n"),
+                                WEECHAT_ERROR, "privmsg");
+                    return -1;
+                }
+                pos2[0] = '\0';
+                
+                /* CHAT type */
+                pos_file = pos + 9;
+                while (pos_file[0] == ' ')
+                    pos_file++;
+                
+                /* DCC IP address */
+                pos_addr = strchr (pos_file, ' ');
+                if (!pos_addr)
+                {
+                    irc_display_prefix (server->buffer, PREFIX_ERROR);
+                    gui_printf (server->buffer,
+                                _("%s cannot parse \"%s\" command\n"),
+                                WEECHAT_ERROR, "privmsg");
+                    return -1;
+                }
+                pos_addr[0] = '\0';
+                pos_addr++;
+                while (pos_addr[0] == ' ')
+                    pos_addr++;
+                
+                /* look for DCC port */
+                pos_port = strchr (pos_addr, ' ');
+                if (!pos_port)
+                {
+                    irc_display_prefix (server->buffer, PREFIX_ERROR);
+                    gui_printf (server->buffer,
+                                _("%s cannot parse \"%s\" command\n"),
+                                WEECHAT_ERROR, "privmsg");
+                    return -1;
+                }
+                pos_port[0] = '\0';
+                pos_port++;
+                while (pos_port[0] == ' ')
+                    pos_port++;
+                
+                if (strcasecmp (pos_file, "chat") != 0)
+                {
+                    irc_display_prefix (server->buffer, PREFIX_ERROR);
+                    gui_printf (server->buffer,
+                                _("%s unknown DCC CHAT type received from "),
+                                WEECHAT_ERROR);
+                    gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK,
+                                      "%s", host);
+                    gui_printf (server->buffer, ": \"%s\"\n", pos_file);
+                    return -1;
+                }
+                
+                dcc_add (server, DCC_CHAT_RECV, (unsigned long) atol (pos_addr),
+                         atoi (pos_port), host, -1, NULL, NULL, 0);
+                
+                return 0;
+            }
+            
             /* private message received => display it */
             ptr_channel = channel_search (server, host);
             if (!ptr_channel)
@@ -1252,9 +1323,9 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                 if (!ptr_channel)
                 {
                     irc_display_prefix (server->buffer, PREFIX_ERROR);
-                    gui_printf_nolog (server->buffer,
-                                      _("%s cannot create new private window \"%s\"\n"),
-                                      WEECHAT_ERROR, host);
+                    gui_printf (server->buffer,
+                                _("%s cannot create new private window \"%s\"\n"),
+                                WEECHAT_ERROR, host);
                     return -1;
                 }
             }
@@ -1270,7 +1341,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                 irc_display_prefix (ptr_channel->buffer, PREFIX_ACTION_ME);
                 if (strstr (pos, server->nick))
                 {
-                    gui_printf_color_type (ptr_channel->buffer,
+                    gui_printf_type_color (ptr_channel->buffer,
                                            MSG_TYPE_MSG | MSG_TYPE_HIGHLIGHT,
                                            COLOR_WIN_CHAT_HIGHLIGHT,
                                            "%s", host);
@@ -1284,7 +1355,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                                             host, pos);
                 }
                 else
-                    gui_printf_color_type (ptr_channel->buffer,
+                    gui_printf_type_color (ptr_channel->buffer,
                                            MSG_TYPE_MSG,
                                            COLOR_WIN_CHAT_NICK, "%s", host);
                 gui_printf_color (ptr_channel->buffer,
@@ -1292,12 +1363,12 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
             }
             else
             {
-                gui_printf_color_type (ptr_channel->buffer,
+                gui_printf_type_color (ptr_channel->buffer,
                                        MSG_TYPE_NICK,
                                        COLOR_WIN_CHAT_DARK, "<");
                 if (strstr (pos, server->nick))
                 {
-                    gui_printf_color_type (ptr_channel->buffer,
+                    gui_printf_type_color (ptr_channel->buffer,
                                            MSG_TYPE_NICK | MSG_TYPE_HIGHLIGHT,
                                            COLOR_WIN_CHAT_HIGHLIGHT,
                                            "%s", host);
@@ -1309,14 +1380,14 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                                             host, pos);
                 }
                 else
-                    gui_printf_color_type (ptr_channel->buffer,
+                    gui_printf_type_color (ptr_channel->buffer,
                                            MSG_TYPE_NICK,
                                            COLOR_WIN_NICK_PRIVATE,
                                            "%s", host);
-                gui_printf_color_type (ptr_channel->buffer,
+                gui_printf_type_color (ptr_channel->buffer,
                                        MSG_TYPE_NICK,
                                        COLOR_WIN_CHAT_DARK, "> ");
-                gui_printf_color_type (ptr_channel->buffer,
+                gui_printf_type_color (ptr_channel->buffer,
                                        MSG_TYPE_MSG,
                                        COLOR_WIN_CHAT, "%s\n", pos);
             }
@@ -1324,9 +1395,9 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
         else
         {
             irc_display_prefix (server->buffer, PREFIX_ERROR);
-            gui_printf_nolog (server->buffer,
-                              _("%s cannot parse \"%s\" command\n"),
-                              WEECHAT_ERROR, "privmsg");
+            gui_printf (server->buffer,
+                        _("%s cannot parse \"%s\" command\n"),
+                        WEECHAT_ERROR, "privmsg");
             return -1;
         }
     }
@@ -1348,9 +1419,9 @@ irc_cmd_recv_quit (t_irc_server *server, char *host, char *arguments)
     if (host == NULL)
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
-        gui_printf_nolog (server->buffer,
-                          _("%s \"%s\" command received without host\n"),
-                          WEECHAT_ERROR, "quit");
+        gui_printf (server->buffer,
+                    _("%s \"%s\" command received without host\n"),
+                    WEECHAT_ERROR, "quit");
         return -1;
     }
     
@@ -1500,9 +1571,9 @@ irc_cmd_recv_topic (t_irc_server *server, char *host, char *arguments)
     if (!string_is_channel (arguments))
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
-        gui_printf_nolog (server->buffer,
-                          _("%s \"%s\" command received without channel\n"),
-                          WEECHAT_ERROR, "topic");
+        gui_printf (server->buffer,
+                    _("%s \"%s\" command received without channel\n"),
+                    WEECHAT_ERROR, "topic");
         return -1;
     }
     
@@ -2558,9 +2629,9 @@ irc_cmd_recv_332 (t_irc_server *server, char *host, char *arguments)
             else
             {
                 irc_display_prefix (server->buffer, PREFIX_ERROR);
-                gui_printf_nolog (server->buffer,
-                                  _("%s channel not found for \"%s\" command\n"),
-                                  WEECHAT_ERROR, "332");
+                gui_printf (server->buffer,
+                            _("%s channel not found for \"%s\" command\n"),
+                            WEECHAT_ERROR, "332");
                 return -1;
             }
         }
@@ -2568,9 +2639,9 @@ irc_cmd_recv_332 (t_irc_server *server, char *host, char *arguments)
     else
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
-        gui_printf_nolog (server->buffer,
-                          _("%s cannot identify channel for \"%s\" command\n"),
-                          WEECHAT_ERROR, "332");
+        gui_printf (server->buffer,
+                    _("%s cannot identify channel for \"%s\" command\n"),
+                    WEECHAT_ERROR, "332");
         return -1;
     }
     return 0;
@@ -2625,36 +2696,36 @@ irc_cmd_recv_333 (t_irc_server *server, char *host, char *arguments)
                 else
                 {
                     irc_display_prefix (server->buffer, PREFIX_ERROR);
-                    gui_printf_nolog (server->buffer,
-                                      _("%s channel not found for \"%s\" command\n"),
-                                      WEECHAT_ERROR, "333");
+                    gui_printf (server->buffer,
+                                _("%s channel not found for \"%s\" command\n"),
+                                WEECHAT_ERROR, "333");
                     return -1;
                 }
             }
             else
             {
                 irc_display_prefix (server->buffer, PREFIX_ERROR);
-                gui_printf_nolog (server->buffer,
-                                  _("%s cannot identify date/time for \"%s\" command\n"),
-                                  WEECHAT_ERROR, "333");
+                gui_printf (server->buffer,
+                            _("%s cannot identify date/time for \"%s\" command\n"),
+                            WEECHAT_ERROR, "333");
                 return -1;
             }
         }
         else
         {
             irc_display_prefix (server->buffer, PREFIX_ERROR);
-            gui_printf_nolog (server->buffer,
-                              _("%s cannot identify nickname for \"%s\" command\n"),
-                              WEECHAT_ERROR, "333");
+            gui_printf (server->buffer,
+                        _("%s cannot identify nickname for \"%s\" command\n"),
+                        WEECHAT_ERROR, "333");
             return -1;
         }
     }
     else
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
-        gui_printf_nolog (server->buffer,
-                          _("%s cannot identify channel for \"%s\" command\n"),
-                          WEECHAT_ERROR, "333");
+        gui_printf (server->buffer,
+                    _("%s cannot identify channel for \"%s\" command\n"),
+                    WEECHAT_ERROR, "333");
         return -1;
     }
     return 0;
@@ -2862,9 +2933,9 @@ irc_cmd_recv_353 (t_irc_server *server, char *host, char *arguments)
         if (pos[0] != ':')
         {
             irc_display_prefix (server->buffer, PREFIX_ERROR);
-            gui_printf_nolog (server->buffer,
-                              _("%s cannot parse \"%s\" command\n"),
-                              WEECHAT_ERROR, "353");
+            gui_printf (server->buffer,
+                        _("%s cannot parse \"%s\" command\n"),
+                        WEECHAT_ERROR, "353");
             return -1;
         }
         pos++;
@@ -2908,9 +2979,9 @@ irc_cmd_recv_353 (t_irc_server *server, char *host, char *arguments)
                                is_op, is_halfop, has_voice))
                 {
                     irc_display_prefix (server->buffer, PREFIX_ERROR);
-                    gui_printf_nolog (server->buffer,
-                                      _("%s cannot create nick \"%s\" for channel \"%s\"\n"),
-                                      WEECHAT_ERROR, pos_nick, ptr_channel->name);
+                    gui_printf (server->buffer,
+                                _("%s cannot create nick \"%s\" for channel \"%s\"\n"),
+                                WEECHAT_ERROR, pos_nick, ptr_channel->name);
                 }
             }
         }
@@ -2919,9 +2990,9 @@ irc_cmd_recv_353 (t_irc_server *server, char *host, char *arguments)
     else
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
-        gui_printf_nolog (server->buffer,
-                          _("%s cannot parse \"%s\" command\n"),
-                          WEECHAT_ERROR, "353");
+        gui_printf (server->buffer,
+                    _("%s cannot parse \"%s\" command\n"),
+                    WEECHAT_ERROR, "353");
         return -1;
     }
     return 0;
