@@ -16,3 +16,7 @@
 #
 
 SUBDIRS = src
+
+EXTRA_DIST = weechat.1
+
+man_MANS = weechat.1
