@@ -768,8 +768,13 @@ gui_main_loop ()
                     }
                 }
             
-                if (ptr_server->sock4 >= 0)
-                    FD_SET (ptr_server->sock4, &read_fd);
+                if (!ptr_server->is_connected && (ptr_server->child_pid > 0))
+                    FD_SET (ptr_server->child_read, &read_fd);
+                else
+                {
+                    if (ptr_server->sock4 >= 0)
+                        FD_SET (ptr_server->sock4, &read_fd);
+                }
             }
         }
         if (select (FD_SETSIZE, &read_fd, NULL, NULL, &timeout) > 0)
@@ -783,9 +788,17 @@ gui_main_loop ()
                 for (ptr_server = irc_servers; ptr_server;
                      ptr_server = ptr_server->next_server)
                 {
-                    if ((ptr_server->sock4 >= 0) &&
-                        (FD_ISSET (ptr_server->sock4, &read_fd)))
-                        server_recv (ptr_server);
+                    if (!ptr_server->is_connected && (ptr_server->child_pid > 0))
+                    {
+                        if (FD_ISSET (ptr_server->child_read, &read_fd))
+                            server_child_read (ptr_server);
+                    }
+                    else
+                    {
+                        if ((ptr_server->sock4 >= 0) &&
+                            (FD_ISSET (ptr_server->sock4, &read_fd)))
+                            server_recv (ptr_server);
+                    }
                 }
             }
         }

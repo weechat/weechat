@@ -1600,7 +1600,7 @@ irc_cmd_recv_004 (t_irc_server *server, char *host, char *arguments)
     }
     
     /* auto-join after disconnection (only rejoins opened channels) */
-    if (server->reconnect_join)
+    if (server->reconnect_join && server->channels)
     {
         for (ptr_channel = server->channels; ptr_channel;
              ptr_channel = ptr_channel->next_channel)

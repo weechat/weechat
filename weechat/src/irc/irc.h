@@ -23,6 +23,7 @@
 
 #include <time.h>
 #include <sys/time.h>
+#include <sys/types.h>
 #include "../gui/gui.h"
 
 /* prefixes for chat window */
@@ -138,14 +139,15 @@ struct t_irc_server
     int autorejoin;                 /* auto rejoin channels when kicked     */
     
     /* internal vars */
+    pid_t child_pid;                /* pid of child process (connecting)    */
+    int child_read;                 /* to read into child pipe              */
+    int child_write;                /* to write into child pipe             */
+    int sock4;                      /* socket for server                    */
+    int is_connected;               /* 1 if WeeChat is connected to server  */
     char *unterminated_message;     /* beginning of a message in input buf  */
     char *nick;                     /* current nickname                     */
-    int is_connected;               /* 1 if WeeChat is connected to server  */
     time_t reconnect_start;         /* this time + delay = reconnect time   */
     int reconnect_join;             /* 1 if channels opened to rejoin       */
-    int sock4;                      /* socket for server                    */
-    int server_read;                /* pipe for reading server data         */
-    int server_write;               /* pipe for sending data to server      */
     int is_away;                    /* 1 is user is marker as away          */
     time_t away_time;               /* time() when user marking as away     */
     int lag;                        /* lag (in milliseconds)                */
@@ -235,6 +237,7 @@ extern t_irc_server *server_new (char *, int, int, int, int, char *, int, char *
 extern int server_send (t_irc_server *, char *, int);
 extern void server_sendf (t_irc_server *, char *, ...);
 extern void server_recv (t_irc_server *);
+extern void server_child_read (t_irc_server *);
 extern int server_connect (t_irc_server *);
 extern void server_reconnect (t_irc_server *);
 extern void server_auto_connect (int);

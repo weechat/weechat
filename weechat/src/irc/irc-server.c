@@ -27,12 +27,14 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
 #include <pwd.h>
-#include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
@@ -57,6 +59,7 @@ int check_away = 0;
 void
 server_init (t_irc_server *server)
 {
+    /* user choices */
     server->name = NULL;
     server->autoconnect = 0;
     server->autoreconnect = 1;
@@ -73,14 +76,18 @@ server_init (t_irc_server *server)
     server->command = NULL;
     server->command_delay = 1;
     server->autojoin = NULL;
+    server->autorejoin = 0;
+    
+    /* internal vars */
+    server->child_pid = 0;
+    server->child_read = -1;
+    server->child_write = -1;
+    server->sock4 = -1;
+    server->is_connected = 0;
     server->unterminated_message = NULL;
     server->nick = NULL;
-    server->is_connected = 0;
     server->reconnect_start = 0;
     server->reconnect_join = 0;
-    server->sock4 = -1;
-    server->server_read = -1;
-    server->server_write = -1;
     server->is_away = 0;
     server->away_time = 0;
     server->lag = 0;
@@ -643,18 +650,182 @@ server_recv (t_irc_server *server)
 }
 
 /*
+ * server_kill_child: kill child process and close pipe
+ */
+
+void
+server_kill_child (t_irc_server *server)
+{
+    /* kill process */
+    if (server->child_pid > 0)
+    {
+        kill (server->child_pid, SIGKILL);
+        waitpid (server->child_pid, NULL, 0);
+        server->child_pid = 0;
+    }
+    
+    /* close pipe used with child */
+    if (server->child_read != -1)
+    {
+        close (server->child_read);
+        server->child_read = -1;
+    }
+    if (server->child_write != -1)
+    {
+        close (server->child_write);
+        server->child_write = -1;
+    }
+}
+
+/*
+ * server_close_connection: close server connection (kill child, close socket/pipes)
+ */
+
+void
+server_close_connection (t_irc_server *server)
+{
+    server_kill_child (server);
+    
+    /* close network socket */
+    if (server->sock4 != -1)
+    {
+        close (server->sock4);
+        server->sock4 = -1;
+    }
+    
+    /* free any pending message */
+    if (server->unterminated_message)
+    {
+        free (server->unterminated_message);
+        server->unterminated_message = NULL;
+    }
+    
+    /* server is now disconnected */
+    server->is_connected = 0;
+}
+
+/*
+ * server_reconnect_schedule: schedule reconnect for a server
+ */
+
+void
+server_reconnect_schedule (t_irc_server *server)
+{
+    if (server->autoreconnect)
+    {
+        server->reconnect_start = time (NULL);
+        irc_display_prefix (server->buffer, PREFIX_INFO);
+        gui_printf (server->buffer, _("%s: Reconnecting to server in %d seconds\n"),
+                    PACKAGE_NAME, server->autoreconnect_delay);
+    }
+    else
+        server->reconnect_start = 0;
+}
+
+/*
+ * server_child_read: read connection progress from child process
+ */
+
+void
+server_child_read (t_irc_server *server)
+{
+    char buffer[1];
+    int num_read;
+    
+    num_read = read (server->child_read, buffer, sizeof (buffer));
+    if (num_read != -1)
+    {
+        switch (buffer[0])
+        {
+            /* connection OK */
+            case '0':
+                server_kill_child (server);
+                irc_login (server);
+                break;
+            /* adress not found */
+            case '1':
+                irc_display_prefix (server->buffer, PREFIX_ERROR);
+                gui_printf (server->buffer,
+                            _("%s address \"%s\" not found\n"),
+                            WEECHAT_ERROR, server->address);
+                server_close_connection (server);
+                server_reconnect_schedule (server);
+                break;
+            /* IP address not found */
+            case '2':
+                irc_display_prefix (server->buffer, PREFIX_ERROR);
+                gui_printf (server->buffer,
+                            _("%s IP address not found\n"), WEECHAT_ERROR);
+                server_close_connection (server);
+                server_reconnect_schedule (server);
+                break;
+            /* connection refused */
+            case '3':
+                irc_display_prefix (server->buffer, PREFIX_ERROR);
+                gui_printf (server->buffer,
+                            _("%s connection refused\n"), WEECHAT_ERROR);
+                server_close_connection (server);
+                server_reconnect_schedule (server);
+                break;
+        }
+    }
+}
+
+/*
+ * server_child: child process trying to connect to server
+ */
+
+int
+server_child (t_irc_server *server)
+{
+    struct hostent *ip4_hostent;
+    struct sockaddr_in addr;
+    char *ip_address;
+    int error;
+    
+    /* bind to hostname */
+    ip4_hostent = gethostbyname (server->address);
+    if (!ip4_hostent)
+    {
+        write (server->child_write, "1", 1);
+        return 0;
+    }
+    memset (&addr, 0, sizeof (addr));
+    memcpy (&addr.sin_addr, ip4_hostent->h_addr, ip4_hostent->h_length);
+    addr.sin_port = htons (server->port);
+    addr.sin_family = AF_INET;
+    
+    /* find IP address */
+    ip_address = inet_ntoa (addr.sin_addr);
+    if (!ip_address)
+    {
+        write (server->child_write, "2", 1);
+        return 0;
+    }
+    
+    /* connect to server */
+    error = connect (server->sock4, (struct sockaddr *) &addr, sizeof (addr));
+    if (error != 0)
+    {
+        write (server->child_write, "3", 1);
+        return 0;
+    }
+    
+    /* connection OK */
+    write (server->child_write, "0", 1);
+    
+    return 0;
+}
+
+/*
  * server_connect: connect to an IRC server
  */
 
 int
 server_connect (t_irc_server *server)
 {
-    int set;
-    struct hostent *ip4_hostent;
-    struct sockaddr_in addr;
-    char *ip_address;
-    int error;
-    int server_pipe[2];
+    int child_pipe[2], set;
+    pid_t pid;
 
     irc_display_prefix (server->buffer, PREFIX_INFO);
     gui_printf (server->buffer,
@@ -662,99 +833,69 @@ server_connect (t_irc_server *server)
                 PACKAGE_NAME, server->address, server->port);
     wee_log_printf (_("connecting to server %s:%d...\n"),
                     server->address, server->port);
-    server->is_connected = 0;
-
-    /* create pipe */
-    if (pipe (server_pipe) < 0)
+    
+    /* close any opened connection and kill child process if running */
+    server_close_connection (server);
+    
+    /* create pipe for child process */
+    if (pipe (child_pipe) < 0)
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
                     _("%s cannot create pipe\n"), WEECHAT_ERROR);
-        server_free (server);
         return 0;
     }
-    server->server_read = server_pipe[0];
-    server->server_write = server_pipe[1];
-
+    server->child_read = child_pipe[0];
+    server->child_write = child_pipe[1];
+    
     /* create socket and set options */
     server->sock4 = socket (AF_INET, SOCK_STREAM, 0);
+    if (server->sock4 == -1)
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf (server->buffer,
+                    _("%s cannot create socket\n"), WEECHAT_ERROR);
+        server_close_connection (server);
+        return 0;
+    }
+    
+    /* set SO_REUSEADDR option for socket */
     set = 1;
-    if (setsockopt
-        (server->sock4, SOL_SOCKET, SO_REUSEADDR, (char *) &set,
-         sizeof (set)) == -1)
+    if (setsockopt (server->sock4, SOL_SOCKET, SO_REUSEADDR,
+        (void *) &set, sizeof (set)) == -1)
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
                     _("%s cannot set socket option \"SO_REUSEADDR\"\n"),
-                    WEECHAT_ERROR);
+                    WEECHAT_WARNING);
     }
+    
+    /* set SO_KEEPALIVE option for socket */
     set = 1;
-    if (setsockopt
-        (server->sock4, SOL_SOCKET, SO_KEEPALIVE, (char *) &set,
-         sizeof (set)) == -1)
+    if (setsockopt (server->sock4, SOL_SOCKET, SO_KEEPALIVE,
+        (void *) &set, sizeof (set)) == -1)
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
                     _("%s cannot set socket option \"SO_KEEPALIVE\"\n"),
-                    WEECHAT_ERROR);
+                    WEECHAT_WARNING);
     }
-
-    /* bind to hostname */
-    ip4_hostent = gethostbyname (server->address);
-    if (!ip4_hostent)
+    
+    switch (pid = fork ())
     {
-        irc_display_prefix (server->buffer, PREFIX_ERROR);
-        gui_printf (server->buffer,
-                    _("%s address \"%s\" not found\n"),
-                    WEECHAT_ERROR, server->address);
-        close (server->server_read);
-        close (server->server_write);
-        close (server->sock4);
-        server->sock4 = -1;
-        return 0;
+        /* fork failed */
+        case -1:
+            server_close_connection (server);
+            return 0;
+        /* child process */
+        case 0:
+            setuid (getuid ());
+            server_child (server);
+            _exit (EXIT_SUCCESS);
     }
-    memset (&addr, 0, sizeof (addr));
-    memcpy (&addr.sin_addr, ip4_hostent->h_addr, ip4_hostent->h_length);
-    addr.sin_port = htons (server->port);
-    addr.sin_family = AF_INET;
-    /*error = bind(server->sock4, (struct sockaddr *)(&addr), sizeof(addr));
-    if (error != 0)
-    {
-        irc_display_prefix (server->buffer, PREFIX_ERROR);
-        gui_printf (server->buffer,
-                    _("%s can't bind to hostname\n"), WEECHAT_ERROR);
-        return 0;
-    }*/
-    ip_address = inet_ntoa (addr.sin_addr);
-    if (!ip_address)
-    {
-        irc_display_prefix (server->buffer, PREFIX_ERROR);
-        gui_printf (server->buffer,
-                    _("%s IP address not found\n"), WEECHAT_ERROR);
-        close (server->server_read);
-        close (server->server_write);
-        close (server->sock4);
-        server->sock4 = -1;
-        return 0;
-    }
-
-    /* connection to server */
-    irc_display_prefix (server->buffer, PREFIX_INFO);
-    gui_printf (server->buffer,
-                _("%s: server IP is: %s\n"), PACKAGE_NAME, ip_address);
-
-    error = connect (server->sock4, (struct sockaddr *) &addr, sizeof (addr));
-    if (error != 0)
-    {
-        irc_display_prefix (server->buffer, PREFIX_ERROR);
-        gui_printf (server->buffer,
-                    _("%s cannot connect to irc server\n"), WEECHAT_ERROR);
-        close (server->server_read);
-        close (server->server_write);
-        close (server->sock4);
-        server->sock4 = -1;
-        return 0;
-    }
+    
+    /* parent process go on here */
+    server->child_pid = pid;
     
     return 1;
 }
@@ -772,17 +913,9 @@ server_reconnect (t_irc_server *server)
     server->reconnect_start = 0;
     
     if (server_connect (server))
-    {
         server->reconnect_join = 1;
-        irc_login (server);
-    }
     else
-    {
-        server->reconnect_start = time (NULL);
-        irc_display_prefix (server->buffer, PREFIX_INFO);
-        gui_printf (server->buffer, _("%s: Reconnecting to server in %d seconds\n"),
-                    PACKAGE_NAME, server->autoreconnect_delay);
-    }
+        server_reconnect_schedule (server);
 }
 
 /*
@@ -801,8 +934,8 @@ server_auto_connect (int command_line)
             || ((!command_line) && (ptr_server->autoconnect)) )
         {
             (void) gui_buffer_new (gui_current_window, ptr_server, NULL, 0, 1);
-            if (server_connect (ptr_server))
-                irc_login (ptr_server);
+            gui_redraw_buffer (gui_current_window->buffer);
+            server_connect (ptr_server);
         }
     }
 }
@@ -828,24 +961,11 @@ server_disconnect (t_irc_server *server, int reconnect)
         }
     }
     
-    /* close communication with server */
-    if (server->server_read >= 0)
-        close (server->server_read);
-    server->server_read = -1;
+    irc_display_prefix (server->buffer, PREFIX_INFO);
+    gui_printf (server->buffer, _("Disconnected from server!\n"));
     
-    if (server->server_write >= 0)
-        close (server->server_write);
-    server->server_write = -1;
+    server_close_connection (server);
     
-    if (server->sock4 >= 0)
-        close (server->sock4);
-    server->sock4 = -1;
-    
-    if (server->unterminated_message)
-        free (server->unterminated_message);
-    server->unterminated_message = NULL;
-    
-    server->is_connected = 0;
     server->is_away = 0;
     server->away_time = 0;
     server->lag = 0;
@@ -854,12 +974,7 @@ server_disconnect (t_irc_server *server, int reconnect)
     server->lag_next_check = time (NULL) + cfg_irc_lag_check;
     
     if ((reconnect) && (server->autoreconnect))
-    {
-        server->reconnect_start = time (NULL);
-        irc_display_prefix (server->buffer, PREFIX_INFO);
-        gui_printf (server->buffer, _("%s: Reconnecting to server in %d seconds\n"),
-                    PACKAGE_NAME, server->autoreconnect_delay);
-    }
+        server_reconnect_schedule (server);
     else
         server->reconnect_start = 0;
     

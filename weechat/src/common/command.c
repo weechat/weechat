@@ -58,13 +58,13 @@ t_weechat_command weechat_commands[] =
     N_("-all: clear all windows"),
     0, 1, weechat_cmd_clear, NULL },
   { "connect", N_("connect to a server"),
-    N_("servername"),
+    N_("[servername]"),
     N_("servername: server name to connect"),
-    1, 1, weechat_cmd_connect, NULL },
+    0, 1, weechat_cmd_connect, NULL },
   { "disconnect", N_("disconnect from a server"),
-    N_("servername"),
+    N_("[servername]"),
     N_("servername: server name to disconnect"),
-    1, 1, weechat_cmd_disconnect, NULL },
+    0, 1, weechat_cmd_disconnect, NULL },
   { "help", N_("display help about commands"),
     N_("[command]"), N_("command: name of a WeeChat or IRC command"),
     0, 1, weechat_cmd_help, NULL },
@@ -506,8 +506,8 @@ exec_weechat_command (t_irc_server *server, char *string)
                     {
                         irc_display_prefix (NULL, PREFIX_ERROR);
                         gui_printf (NULL,
-                                    _("%s %s command \"%s\" failed\n"),
-                                    WEECHAT_ERROR, PACKAGE_NAME, command + 1);
+                                    _("%s command \"%s\" failed\n"),
+                                    WEECHAT_ERROR, command + 1);
                     }
                 }
                 if (argv)
@@ -576,7 +576,7 @@ exec_weechat_command (t_irc_server *server, char *string)
                     {
                         irc_display_prefix (NULL, PREFIX_ERROR);
                         gui_printf (NULL,
-                                    _("%s IRC command \"%s\" failed\n"),
+                                    _("%s command \"%s\" failed\n"),
                                     WEECHAT_ERROR, command + 1);
                     }
                 }
@@ -1060,7 +1060,10 @@ weechat_cmd_connect (int argc, char **argv)
     /* make gcc happy */
     (void) argc;
     
-    ptr_server = server_search (argv[0]);
+    if (argc == 1)
+        ptr_server = server_search (argv[0]);
+    else
+        ptr_server = SERVER(gui_current_window->buffer);
     if (ptr_server)
     {
         if (ptr_server->is_connected)
@@ -1068,6 +1071,14 @@ weechat_cmd_connect (int argc, char **argv)
             irc_display_prefix (NULL, PREFIX_ERROR);
             gui_printf (NULL,
                         _("%s already connected to server \"%s\"!\n"),
+                        WEECHAT_ERROR, argv[0]);
+            return -1;
+        }
+        if (ptr_server->child_pid > 0)
+        {
+            irc_display_prefix (NULL, PREFIX_ERROR);
+            gui_printf (NULL,
+                        _("%s currently connecting to server \"%s\"!\n"),
                         WEECHAT_ERROR, argv[0]);
             return -1;
         }
@@ -1080,15 +1091,12 @@ weechat_cmd_connect (int argc, char **argv)
         {
             ptr_server->reconnect_start = 0;
             ptr_server->reconnect_join = (ptr_server->channels) ? 1 : 0;
-            irc_login (ptr_server);
         }
     }
     else
     {
         irc_display_prefix (NULL, PREFIX_ERROR);
-        gui_printf (NULL,
-                    _("%s server \"%s\" not found\n"),
-                    WEECHAT_ERROR, argv[0]);
+        gui_printf (NULL, _("%s server not found\n"), WEECHAT_ERROR);
         return -1;
     }
     return 0;
@@ -1106,10 +1114,14 @@ weechat_cmd_disconnect (int argc, char **argv)
     /* make gcc happy */
     (void) argc;
     
-    ptr_server = server_search (argv[0]);
+    if (argc == 1)
+        ptr_server = server_search (argv[0]);
+    else
+        ptr_server = SERVER(gui_current_window->buffer);
     if (ptr_server)
     {
-        if ((!ptr_server->is_connected) && (ptr_server->reconnect_start == 0))
+        if ((!ptr_server->is_connected) && (ptr_server->child_pid == 0)
+            && (ptr_server->reconnect_start == 0))
         {
             irc_display_prefix (ptr_server->buffer, PREFIX_ERROR);
             gui_printf (ptr_server->buffer,
@@ -1129,9 +1141,7 @@ weechat_cmd_disconnect (int argc, char **argv)
     else
     {
         irc_display_prefix (NULL, PREFIX_ERROR);
-        gui_printf (NULL,
-                    _("%s server \"%s\" not found\n"),
-                    WEECHAT_ERROR, argv[0]);
+        gui_printf (NULL, _("%s server not found\n"), WEECHAT_ERROR);
         return -1;
     }
     return 0;
@@ -1645,8 +1655,7 @@ weechat_cmd_server (int argc, char **argv)
         if (new_server->autoconnect)
         {
             (void) gui_buffer_new (gui_current_window, new_server, NULL, 0, 1);
-            if (server_connect (new_server))
-                irc_login (new_server);
+            server_connect (new_server);
         }
         
         server_destroy (&server);
