@@ -548,8 +548,9 @@ completion_find_context (t_completion *completion, void *channel, char *buffer,
         }
     }
     
-    if (!completion->completion_list && channel
-        && (((t_irc_channel *)channel)->type == CHAT_PRIVATE))
+    if (!completion->completion_list && channel &&
+        (((t_irc_channel *)channel)->type == CHAT_PRIVATE)
+        && (completion->context == COMPLETION_NICK))
     {
         /* nick completion in private (only other nick and self) */
         completion->context = COMPLETION_NICK;
