@@ -1269,7 +1269,7 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
             x = ptr_win->win_width - strlen (str_nicks) - 4;
         }
         else
-            x = ptr_win->win_width;
+            x = ptr_win->win_width - 2;
         string = weechat_convert_encoding (cfg_look_charset_decode,
                                            (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
                                            cfg_look_charset_internal : local_charset,
