@@ -102,7 +102,7 @@ t_config_option weechat_options_look[] =
   { "look_charset_decode", N_("charset for decoding messages from server"),
     N_("charset for decoding messages from server, examples: UTF-8, ISO-8859-1 (if empty, messages are not converted)"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "", NULL, NULL, &cfg_look_charset_decode, config_change_buffer_content },
+    "UTF-8", NULL, NULL, &cfg_look_charset_decode, config_change_buffer_content },
   { "look_charset_encode", N_("charset for encoding messages sent to server"),
     N_("charset for encoding messages sent to server, examples: UFT-8, ISO-8859-1 (if empty, local charset is used)"),
     OPTION_TYPE_STRING, 0, 0, 0,
