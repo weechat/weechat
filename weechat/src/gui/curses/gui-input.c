@@ -38,6 +38,7 @@
 #include "../../common/weeconfig.h"
 #include "../../common/command.h"
 #include "../../common/hotlist.h"
+#include "../../common/fifo.h"
 #include "../../irc/irc.h"
 
 #define KEY_ESCAPE 27
@@ -548,6 +549,7 @@ gui_read_keyb ()
                         gui_current_window->buffer->ptr_history = NULL;
                         ptr_buffer = gui_current_window->buffer;
                         user_command (SERVER(gui_current_window->buffer),
+                                      gui_current_window->buffer,
                                       gui_current_window->buffer->input_buffer);
                         if (ptr_buffer == gui_current_window->buffer)
                         {
@@ -719,7 +721,11 @@ gui_main_loop ()
         }
         
         FD_ZERO (&read_fd);
+        
         FD_SET (STDIN_FILENO, &read_fd);
+        if (weechat_fifo != -1)
+            FD_SET (weechat_fifo, &read_fd);
+        
         timeout.tv_sec = 0;
         timeout.tv_usec = 10000;
         
@@ -770,28 +776,30 @@ gui_main_loop ()
                 }
             }
         }
+        
         if (select (FD_SETSIZE, &read_fd, NULL, NULL, &timeout) > 0)
         {
             if (FD_ISSET (STDIN_FILENO, &read_fd))
             {
                 gui_read_keyb ();
             }
-            else
+            if ((weechat_fifo != -1) && (FD_ISSET (weechat_fifo, &read_fd)))
             {
-                for (ptr_server = irc_servers; ptr_server;
-                     ptr_server = ptr_server->next_server)
+                fifo_read ();
+            }
+            for (ptr_server = irc_servers; ptr_server;
+                 ptr_server = ptr_server->next_server)
+            {
+                if (!ptr_server->is_connected && (ptr_server->child_pid > 0))
                 {
-                    if (!ptr_server->is_connected && (ptr_server->child_pid > 0))
-                    {
-                        if (FD_ISSET (ptr_server->child_read, &read_fd))
-                            server_child_read (ptr_server);
-                    }
-                    else
-                    {
-                        if ((ptr_server->sock >= 0) &&
-                            (FD_ISSET (ptr_server->sock, &read_fd)))
-                            server_recv (ptr_server);
-                    }
+                    if (FD_ISSET (ptr_server->child_read, &read_fd))
+                        server_child_read (ptr_server);
+                }
+                else
+                {
+                    if ((ptr_server->sock >= 0) &&
+                        (FD_ISSET (ptr_server->sock, &read_fd)))
+                        server_recv (ptr_server);
                 }
             }
         }

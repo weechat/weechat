@@ -23,6 +23,7 @@
 
 #include "weelist.h"
 #include "../irc/irc.h"
+#include "../gui/gui.h"
 
 #define MAX_ARGS 8192
 
@@ -60,7 +61,7 @@ extern void command_index_free ();
 extern t_weechat_alias *alias_new (char *, char *);
 extern void alias_free_all ();
 extern int exec_weechat_command (t_irc_server *, char *);
-extern void user_command (t_irc_server *, char *);
+extern void user_command (t_irc_server *, t_gui_buffer *, char *);
 extern int weechat_cmd_alias (char *);
 extern int weechat_cmd_buffer (int, char **);
 extern int weechat_cmd_clear (int, char **);

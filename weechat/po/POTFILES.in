@@ -21,6 +21,8 @@
 ./src/common/command.h
 ./src/common/completion.c
 ./src/common/completion.h
+./src/common/fifo.c
+./src/common/fifo.h
 ./src/common/history.c
 ./src/common/history.h
 ./src/common/hotlist.c

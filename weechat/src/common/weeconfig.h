@@ -163,6 +163,7 @@ extern int cfg_irc_away_check;
 extern int cfg_irc_lag_check;
 extern int cfg_irc_lag_min_show;
 extern int cfg_irc_lag_disconnect;
+extern int cfg_irc_fifo_pipe;
 
 extern int cfg_dcc_auto_accept_files;
 extern int cfg_dcc_auto_accept_chats;
@@ -189,6 +190,7 @@ extern void config_change_buffers ();
 extern void config_change_buffer_content ();
 extern void config_change_color ();
 extern void config_change_away_check ();
+extern void config_change_fifo_pipe ();
 extern int config_option_set_value (t_config_option *, char *);
 extern t_config_option *config_option_search (char *);
 extern int config_set_value (char *, char *);

@@ -649,12 +649,13 @@ exec_weechat_command (t_irc_server *server, char *string)
  */
 
 void
-user_command (t_irc_server *server, char *command)
+user_command (t_irc_server *server, t_gui_buffer *buffer, char *command)
 {
     t_irc_nick *ptr_nick;
     
     if ((!command) || (!command[0]) || (command[0] == '\r') || (command[0] == '\n'))
         return;
+    
     if ((command[0] == '/') && (command[1] != '/'))
     {
         /* WeeChat internal command (or IRC command) */
@@ -662,42 +663,45 @@ user_command (t_irc_server *server, char *command)
     }
     else
     {
+        if (!buffer)
+            buffer = gui_current_window->buffer;
+        
         if ((command[0] == '/') && (command[1] == '/'))
             command++;
-        if (server && (!BUFFER_IS_SERVER(gui_current_window->buffer)))
+        
+        if (server && (!BUFFER_IS_SERVER(buffer)))
         {
-            if (CHANNEL(gui_current_window->buffer)->dcc_chat)
-                dcc_chat_sendf ((t_irc_dcc *)(CHANNEL(gui_current_window->buffer)->dcc_chat),
+            if (CHANNEL(buffer)->dcc_chat)
+                dcc_chat_sendf ((t_irc_dcc *)(CHANNEL(buffer)->dcc_chat),
                                 "%s\r\n", command);
             else
                 server_sendf (server, "PRIVMSG %s :%s\r\n",
-                              CHANNEL(gui_current_window->buffer)->name,
-                              command);
+                              CHANNEL(buffer)->name, command);
 
-            if (BUFFER_IS_PRIVATE(gui_current_window->buffer))
+            if (CHANNEL(buffer)->type == CHAT_PRIVATE)
             {
-                gui_printf_type_color (CHANNEL(gui_current_window->buffer)->buffer,
+                gui_printf_type_color (CHANNEL(buffer)->buffer,
                                        MSG_TYPE_NICK,
                                        COLOR_WIN_CHAT_DARK, "<");
-                gui_printf_type_color (CHANNEL(gui_current_window->buffer)->buffer,
+                gui_printf_type_color (CHANNEL(buffer)->buffer,
                                        MSG_TYPE_NICK,
                                        COLOR_WIN_NICK_SELF,
                                        "%s", server->nick);
-                gui_printf_type_color (CHANNEL(gui_current_window->buffer)->buffer,
+                gui_printf_type_color (CHANNEL(buffer)->buffer,
                                        MSG_TYPE_NICK,
                                        COLOR_WIN_CHAT_DARK, "> ");
-                gui_printf_type_color (CHANNEL(gui_current_window->buffer)->buffer,
+                gui_printf_type_color (CHANNEL(buffer)->buffer,
                                        MSG_TYPE_MSG,
                                        COLOR_WIN_CHAT, "%s\n", command);
             }
             else
             {
-                ptr_nick = nick_search (CHANNEL(gui_current_window->buffer), server->nick);
+                ptr_nick = nick_search (CHANNEL(buffer), server->nick);
                 if (ptr_nick)
                 {
-                    irc_display_nick (CHANNEL(gui_current_window->buffer)->buffer, ptr_nick,
+                    irc_display_nick (CHANNEL(buffer)->buffer, ptr_nick,
                                       MSG_TYPE_NICK, 1, 1, 0);
-                    gui_printf_color (CHANNEL(gui_current_window->buffer)->buffer,
+                    gui_printf_color (CHANNEL(buffer)->buffer,
                                       COLOR_WIN_CHAT, "%s\n", command);
                 }
                 else

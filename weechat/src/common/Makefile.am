@@ -34,4 +34,6 @@ lib_weechat_main_a_SOURCES = weechat.c \
                              hotlist.c \
                              hotlist.h \
                              log.c \
-                             log.h
+                             log.h \
+                             fifo.c \
+                             fifo.h

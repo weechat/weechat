@@ -38,6 +38,7 @@
 #include "weechat.h"
 #include "weeconfig.h"
 #include "command.h"
+#include "fifo.h"
 #include "../irc/irc.h"
 #include "../gui/gui.h"
 
@@ -489,6 +490,7 @@ int cfg_irc_away_check;
 int cfg_irc_lag_check;
 int cfg_irc_lag_min_show;
 int cfg_irc_lag_disconnect;
+int cfg_irc_fifo_pipe;
 
 t_config_option weechat_options_irc[] =
 { { "irc_display_away", N_("display message to all channels when away"),
@@ -523,6 +525,10 @@ t_config_option weechat_options_irc[] =
     N_("disconnect after important lag (in minutes, 0 = never disconnect)"),
     OPTION_TYPE_INT, 0, INT_MAX, 5,
     NULL, NULL, &cfg_irc_lag_disconnect, NULL, config_change_noop },
+  { "irc_fifo_pipe", N_("create a FIFO pipe for remote control"),
+    N_("create a FIFO pipe for remote control"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
+    NULL, NULL, &cfg_irc_fifo_pipe, NULL, config_change_fifo_pipe },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
@@ -796,6 +802,25 @@ config_change_away_check ()
     {
         /* reset away flag for all nicks/chans/servers */
         server_remove_away ();
+    }
+}
+
+/*
+ * config_change_fifo_pipe: called when FIFO pipe is changed
+ */
+
+void
+config_change_fifo_pipe ()
+{
+    if (cfg_irc_fifo_pipe)
+    {
+        if (weechat_fifo == -1)
+            fifo_create ();
+    }
+    else
+    {
+        if (weechat_fifo != -1)
+            fifo_remove ();
     }
 }
 

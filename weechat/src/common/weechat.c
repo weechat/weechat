@@ -57,6 +57,7 @@
 #include "weechat.h"
 #include "weeconfig.h"
 #include "command.h"
+#include "fifo.h"
 #include "../irc/irc.h"
 #include "../gui/gui.h"
 #include "../plugins/plugins.h"
@@ -593,6 +594,7 @@ wee_gui_shutdown ()
 void
 wee_shutdown (int return_code)
 {
+    fifo_remove ();
     if (weechat_home)
         free (weechat_home);
     if (weechat_log_file)
@@ -763,6 +765,7 @@ main (int argc, char *argv[])
     weechat_welcome_message ();     /* display WeeChat welcome message      */
                                     /* auto-connect to servers              */
     server_auto_connect (server_cmd_line);
+    fifo_create ();                 /* create FIFO pipe for remote control  */
     
     gui_main_loop ();               /* WeeChat main loop                    */
     

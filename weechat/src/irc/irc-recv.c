@@ -1689,7 +1689,7 @@ irc_cmd_recv_004 (t_irc_server *server, char *host, char *arguments)
     /* execute command once connected */
     if (server->command && server->command[0])
     {
-        user_command(server, server->command);
+        user_command(server, NULL, server->command);
         if (server->command_delay > 0)
             sleep (server->command_delay);
     }

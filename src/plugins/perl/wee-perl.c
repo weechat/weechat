@@ -28,6 +28,7 @@
 #include <EXTERN.h>
 #include <perl.h>
 #include <XSUB.h>
+#undef _
 #include "../../common/weechat.h"
 #include "../plugins.h"
 #include "wee-perl.h"
@@ -450,13 +451,13 @@ wee_perl_init ()
         "    my $content = wee_perl_load_file ($filename);"
         "    if ($content eq \"__WEECHAT_ERROR__\")"
         "    {"
-        "        IRC::print \"" WEECHAT_ERROR " Perl script '$filename' not found.\\n\";"
+        "        IRC::print \"WeeChat Error: Perl script '$filename' not found.\\n\";"
         "        return 1;"
         "    }"
         "    eval $content;"
         "    if ($@)"
         "    {"
-        "        IRC::print \"" WEECHAT_ERROR " unable to load Perl script '$filename':\\n\";"
+        "        IRC::print \"WeeChat error: unable to load Perl script '$filename':\\n\";"
         "        IRC::print \"$@\\n\";"
         "        return 2;"
         "    }"
