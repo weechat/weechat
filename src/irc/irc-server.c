@@ -81,6 +81,7 @@ server_init (t_irc_server *server)
     server->reconnect_join = 0;
     server->sock4 = -1;
     server->is_away = 0;
+    server->away_time = 0;
     server->server_read = -1;
     server->server_write = -1;
     server->buffer = NULL;

@@ -118,17 +118,24 @@ irc_cmd_send_away (t_irc_server *server, char *arguments)
                 }
                 else
                 {
-                    server_sendf (ptr_server, "AWAY\r\n");
-                    ptr_server->is_away = 0;
-                    elapsed = time (NULL) - ptr_server->away_time;
-                    if (cfg_look_display_away)
+                    if (ptr_server->is_away)
                     {
-                        snprintf (buffer, sizeof (buffer),
-                                  "is back (gone %.2ld:%.2ld:%.2ld)",
-                                  elapsed / 3600,
-                                  (elapsed / 60) % 60,
-                                  elapsed % 60);
-                        irc_send_me_all_channels (ptr_server, buffer);
+                        server_sendf (ptr_server, "AWAY\r\n");
+                        ptr_server->is_away = 0;
+                        if (server->away_time != 0)
+                        {
+                            elapsed = time (NULL) - ptr_server->away_time;
+                            ptr_server->away_time = 0;
+                            if (cfg_look_display_away)
+                            {
+                                snprintf (buffer, sizeof (buffer),
+                                          "is back (gone %.2ld:%.2ld:%.2ld)",
+                                          elapsed / 3600,
+                                          (elapsed / 60) % 60,
+                                          elapsed % 60);
+                                irc_send_me_all_channels (ptr_server, buffer);
+                            }
+                        }
                     }
                 }
             }
@@ -149,17 +156,24 @@ irc_cmd_send_away (t_irc_server *server, char *arguments)
         }
         else
         {
-            server_sendf (server, "AWAY\r\n");
-            server->is_away = 0;
-            elapsed = time (NULL) - server->away_time;
-            if (cfg_look_display_away)
+            if (server->is_away)
             {
-                snprintf (buffer, sizeof (buffer),
-                          "is back (gone %.2ld:%.2ld:%.2ld)",
-                          elapsed / 3600,
-                          (elapsed / 60) % 60,
-                          elapsed % 60);
-                irc_send_me_all_channels (server, buffer);
+                server_sendf (server, "AWAY\r\n");
+                server->is_away = 0;
+                if (server->away_time != 0)
+                {
+                    elapsed = time (NULL) - server->away_time;
+                    server->away_time = 0;
+                    if (cfg_look_display_away)
+                    {
+                        snprintf (buffer, sizeof (buffer),
+                                  "is back (gone %.2ld:%.2ld:%.2ld)",
+                                  elapsed / 3600,
+                                  (elapsed / 60) % 60,
+                                  elapsed % 60);
+                        irc_send_me_all_channels (server, buffer);
+                    }
+                }
             }
         }
     }

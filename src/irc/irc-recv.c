@@ -1712,6 +1712,7 @@ irc_cmd_recv_305 (t_irc_server *server, char *host, char *arguments)
                           COLOR_WIN_CHAT, "%s\n", arguments);
     }
     server->is_away = 0;
+    server->away_time = 0;
     return 0;
 }
 
@@ -1737,6 +1738,7 @@ irc_cmd_recv_306 (t_irc_server *server, char *host, char *arguments)
                           COLOR_WIN_CHAT, "%s\n", arguments);
     }
     server->is_away = 1;
+    server->away_time = time (NULL);
     return 0;
 }
 
