@@ -388,7 +388,7 @@ gui_display_end_of_line (t_gui_window *window, t_gui_line *line, int count)
 {
     int lines_displayed, num_lines, offset, remainder, num_displayed;
     t_gui_message *ptr_message;
-    char saved_char, format_align[32];
+    char saved_char, format_align[32], format_empty[32];
     
     snprintf (format_align, 32, "%%-%ds", line->length_align);
     num_lines = gui_get_line_num_splits (window, line);
@@ -446,7 +446,11 @@ gui_display_end_of_line (t_gui_window *window, t_gui_line *line, int count)
             if (lines_displayed >= num_lines - count)
             {
                 if (window->win_chat_cursor_x <= window->win_chat_width - 1)
-                    wclrtoeol (window->win_chat);
+                {
+                    snprintf (format_empty, 32, "%%-%ds",
+                              window->win_chat_width - window->win_chat_cursor_x);
+                    wprintw (window->win_chat, format_empty, " ");
+                }
                 window->win_chat_cursor_y++;
             }
             window->win_chat_cursor_x = 0;
@@ -468,7 +472,7 @@ gui_display_line (t_gui_window *window, t_gui_line *line, int stop_at_end)
 {
     int offset, remainder, num_displayed;
     t_gui_message *ptr_message;
-    char saved_char, format_align[32];
+    char saved_char, format_align[32], format_empty[32];
     
     snprintf (format_align, 32, "%%-%ds", line->length_align);
     ptr_message = line->messages;
@@ -539,7 +543,11 @@ gui_display_line (t_gui_window *window, t_gui_line *line, int stop_at_end)
                 (window->win_chat_cursor_x > window->win_chat_width - 1)))
             {
                 if (window->win_chat_cursor_x <= window->win_chat_width - 1)
-                    wclrtoeol (window->win_chat);
+                {
+                    snprintf (format_empty, 32, "%%-%ds",
+                              window->win_chat_width - window->win_chat_cursor_x);
+                    wprintw (window->win_chat, format_empty, " ");
+                }
                 window->win_chat_cursor_y++;
             }
             window->win_chat_cursor_x = 0;
@@ -563,11 +571,7 @@ gui_draw_window_chat (t_gui_window *window)
         return;
     
     if (has_colors ())
-    {
         gui_window_set_color (window->win_chat, COLOR_WIN_CHAT);
-        wborder (window->win_chat, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
-        wrefresh (window->win_chat);
-    }
     
     ptr_line = window->last_line;
     lines_used = 0;
@@ -623,11 +627,22 @@ gui_draw_window_chat (t_gui_window *window)
 void
 gui_redraw_window_chat (t_gui_window *window)
 {
+    char format_empty[32];
+    int i;
+    
     /* TODO: manage splitted windows! */
     if (window != gui_current_window)
         return;
     
-    gui_curses_window_clear (window->win_chat);
+    if (has_colors ())
+        gui_window_set_color (window->win_chat, COLOR_WIN_CHAT);
+    
+    snprintf (format_empty, 32, "%%-%ds", window->win_chat_width);
+    for (i = 0; i < window->win_chat_height; i++)
+    {
+        mvwprintw (window->win_chat, i, 0, format_empty, " ");
+    }
+    
     gui_draw_window_chat (window);
 }
 
@@ -639,7 +654,7 @@ void
 gui_draw_window_nick (t_gui_window *window)
 {
     int i, x, y, column, max_length;
-    char format[32];
+    char format[32], format_empty[32];
     t_irc_nick *ptr_nick;
     
     /* TODO: manage splitted windows! */
@@ -663,7 +678,16 @@ gui_draw_window_nick (t_gui_window *window)
                                        window->win_nick_width,
                                        window->win_nick_y,
                                        window->win_nick_x);
-            gui_draw_window_chat (window);
+            gui_redraw_window_chat (window);
+            
+            if (has_colors ())
+                gui_window_set_color (window->win_nick, COLOR_WIN_NICK);
+            
+            snprintf (format_empty, 32, "%%-%ds", window->win_nick_width);
+            for (i = 0; i < window->win_nick_height; i++)
+            {
+                mvwprintw (window->win_nick, i, 0, format_empty, " ");
+            }
         }
         snprintf (format, 32, "%%-%ds", max_length);
             
@@ -774,11 +798,21 @@ gui_draw_window_nick (t_gui_window *window)
 void
 gui_redraw_window_nick (t_gui_window *window)
 {
+    char format_empty[32];
+    int i;
+    
     /* TODO: manage splitted windows! */
     if (window != gui_current_window)
         return;
     
-    gui_curses_window_clear (window->win_nick);
+    if (has_colors ())
+        gui_window_set_color (window->win_nick, COLOR_WIN_NICK);
+    
+    for (i = 0; i < window->win_nick_height; i++)
+    {
+        mvwprintw (window->win_nick, i, 0, format_empty, " ");
+    }
+    
     gui_draw_window_nick (window);
 }
 
@@ -1288,8 +1322,8 @@ gui_move_page_up ()
     if (!gui_current_window->first_line_displayed)
     {
         gui_current_window->sub_lines += gui_current_window->win_chat_height - 1;
-        gui_redraw_window_chat (gui_current_window);
-        gui_redraw_window_status (gui_current_window);
+        gui_draw_window_chat (gui_current_window);
+        gui_draw_window_status (gui_current_window);
     }
 }
 
@@ -1307,8 +1341,8 @@ gui_move_page_down ()
             gui_current_window->sub_lines = 0;
         if (gui_current_window->sub_lines == 0)
             gui_current_window->unread_data = 0;
-        gui_redraw_window_chat (gui_current_window);
-        gui_redraw_window_status (gui_current_window);
+        gui_draw_window_chat (gui_current_window);
+        gui_draw_window_status (gui_current_window);
     }
 }
 
