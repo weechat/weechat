@@ -981,7 +981,7 @@ config_read ()
                         if (section == CONFIG_SECTION_ALIAS)
                         {
                             if (alias_new (line, pos))
-                                index_command_new (pos);
+                                index_command_new (line);
                         }
                         else
                         {
