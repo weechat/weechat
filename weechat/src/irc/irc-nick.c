@@ -79,8 +79,8 @@ nick_compare (t_irc_nick *nick1, t_irc_nick *nick2)
 {
     int score1, score2, comp;
     
-    score1 = - ( (nick1->is_op * 3) + (nick1->is_halfop * 2) + nick1->has_voice );
-    score2 = - ( (nick2->is_op * 3) + (nick2->is_halfop * 2) + nick2->has_voice );
+    score1 = - ( (nick1->is_op * 4) + (nick1->is_halfop * 3) + (nick1->has_voice * 2));
+    score2 = - ( (nick2->is_op * 4) + (nick2->is_halfop * 3) + (nick2->has_voice * 2));
     
     comp = strcasecmp(nick1->nick, nick2->nick);
     if (comp > 0)

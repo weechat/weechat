@@ -5,6 +5,7 @@ ChangeLog - 2003-10-12
 
 
 Version 0.0.3 (under dev!):
+   * nicks are now correctly sorted (op, halfop, voice, other)
    * fixed crash when entering text without any server connection
    * fixed display bug (text was blinking when scrolling)
    * french translation
