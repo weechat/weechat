@@ -28,7 +28,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.0.5-pre3 - 24 janvier 2004
+@subtitle Documentation pour WeeChat v0.0.6-pre1 - 13 mai 2004
 
 @image{weechat_image}
 
@@ -804,7 +804,7 @@ Support par IRC:@*
 - serveur : @b{irc.freenode.net}@*
 - canal : @b{#weechat}@*@*
 @item
-Forum WeeChat : bient@^ot !@*@*
+Forum WeeChat : @uref{http://forums.flashtux.org}@*@*
 @item
 Support par la liste de diffusion :@*
 - pour souscrire/d@'esinscrire :@*@uref{http://mail.nongnu.org/mailman/listinfo/weechat-support}.@*
