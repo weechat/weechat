@@ -28,7 +28,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.0.4 - January, 03 2004
+@subtitle Documentation for WeeChat v0.0.4 - January, 11 2004
 
 @image{weechat_image}
 
@@ -199,16 +199,19 @@ Then follow instructions for source package - @xref{Source package}.
 
 @menu
 * Run WeeChat::
+* Config file::
 * Key bindings::
 * WeeChat commands::
 @end menu
 
-@node Run WeeChat, Key bindings, Usage, Usage
+@node Run WeeChat, Config file, Usage, Usage
 @section Run WeeChat
 
 @subsection Command line parameters
 
 @table @code
+@item -c, --config
+Display config file help (list of options)@*
 @item -h, --help
 Display help screen@*
 @item -l, --license
@@ -231,7 +234,288 @@ The default configuration file is: ~/.weechat/weechat.rc@*
 You can edit this file at your convenience to configure WeeChat, or you can
 set parameters with @kbd{/set} command in WeeChat - @xref{WeeChat commands}.
 
-@node Key bindings, WeeChat commands, Run WeeChat, Usage
+@node Config file, Key bindings, Run WeeChat, Usage
+@section Config file
+
+Here is a list of all options for config file:@*
+
+@table @kbd
+@item look_set_title
+Set title for terminal window (curses GUI) with name & version@*
+Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+@item look_startup_logo
+Display WeeChat logo at startup@*
+Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+@item look_startup_version
+Display WeeChat version at startup@*
+Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+@item look_weechat_slogan
+WeeChat slogan (if empty, slogan is not used)@*
+Type: string (any string), default value: 'the geekest IRC client!'@*
+@item look_color_nicks
+Display nick names with different colors@*
+Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+@item look_color_actions
+Display actions with different colors@*
+Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+@item look_remove_colors_from_msgs
+Remove colors from incoming messages@*
+Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+@item look_nicklist
+Display nicklist window (for channel windows)@*
+Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+@item look_nicklist_position
+Nicklist position (top, left, right (default), bottom)@*
+Type: string (values: 'left', 'right', 'top', 'bottom'), default value: 'right'@*
+@item look_nicklist_min_size
+Min size for nicklist (width or height, depending on look_nicklist_position (0 = no min size))@*
+Type: integer (values: between 0 and 100), default value: 0@*
+@item look_nicklist_max_size
+Max size for nicklist (width or height, depending on look_nicklist_position (0 = no max size; if min == max and > 0, then size is fixed))@*
+Type: integer (values: between 0 and 100), default value: 0@*
+@item look_no_nickname
+Text to display instead of nick when not connected@*
+Type: string (any string), default value: '-cmd-'@*
+@item look_nickmode
+Display nick mode ((half)op/voice) before each nick@*
+Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+@item look_nickmode_empty
+Display space if nick mode is not (half)op/voice@*
+Type: boolean (values: 'on' or 'off'), default value: 'off'@*
+@item look_nick_completor
+The string inserted after nick completion@*
+Type: string (any string), default value: ':'@*
+@item col_title
+Color for title bar@*
+Type: color (Curses or Gtk color), default value: 'gray'@*
+@item col_title_bg
+Background for title bar@*
+Type: color (Curses or Gtk color), default value: 'blue'@*
+@item col_chat
+Color for chat text@*
+Type: color (Curses or Gtk color), default value: 'gray'@*
+@item col_chat_time
+Color for time in chat window@*
+Type: color (Curses or Gtk color), default value: 'gray'@*
+@item col_chat_time_sep
+Color for time separator (chat window)@*
+Type: color (Curses or Gtk color), default value: 'brown'@*
+@item col_chat_prefix1
+Color for 1st and 3rd char of prefix@*
+Type: color (Curses or Gtk color), default value: 'lightcyan'@*
+@item col_chat_prefix2
+Color for middle char of prefix@*
+Type: color (Curses or Gtk color), default value: 'white'@*
+@item col_chat_nick
+Color for nicks in actions (chat window)@*
+Type: color (Curses or Gtk color), default value: 'lightcyan'@*
+@item col_chat_host
+Color for hostnames (chat window)@*
+Type: color (Curses or Gtk color), default value: 'cyan'@*
+@item col_chat_channel
+Color for channel names in actions (chat window)@*
+Type: color (Curses or Gtk color), default value: 'white'@*
+@item col_chat_dark
+Color for dark separators (chat window)@*
+Type: color (Curses or Gtk color), default value: 'green'@*
+@item col_chat_highlight
+Color for highlighted nick (chat window)@*
+Type: color (Curses or Gtk color), default value: 'yellow'@*
+@item col_chat_bg
+Background for chat window@*
+Type: color (Curses or Gtk color), default value: 'default'@*
+@item col_status
+Color for status bar@*
+Type: color (Curses or Gtk color), default value: 'gray'@*
+@item col_status_active
+Color for active window (status bar)@*
+Type: color (Curses or Gtk color), default value: 'yellow'@*
+@item col_status_data_msg
+Color for window with new messages (status bar)@*
+Type: color (Curses or Gtk color), default value: 'lightred'@*
+@item col_status_data_other
+Color for window with new data (not messages) (status bar)@*
+Type: color (Curses or Gtk color), default value: 'lightmagenta'@*
+@item col_status_more
+Color for window with new data (status bar)@*
+Type: color (Curses or Gtk color), default value: 'white'@*
+@item col_status_bg
+Background for status window@*
+Type: color (Curses or Gtk color), default value: 'blue'@*
+@item col_input
+Color for input text@*
+Type: color (Curses or Gtk color), default value: 'gray'@*
+@item col_input_channel
+Color for input text (channel name)@*
+Type: color (Curses or Gtk color), default value: 'white'@*
+@item col_input_nick
+Color for input text (nick name)@*
+Type: color (Curses or Gtk color), default value: 'lightgreen'@*
+@item col_input_bg
+Background for input window@*
+Type: color (Curses or Gtk color), default value: 'default'@*
+@item col_nick
+Color for nicknames@*
+Type: color (Curses or Gtk color), default value: 'gray'@*
+@item col_nick_op
+Color for operator symbol@*
+Type: color (Curses or Gtk color), default value: 'lightgreen'@*
+@item col_nick_halfop
+Color for half-operator symbol@*
+Type: color (Curses or Gtk color), default value: 'lightmagenta'@*
+@item col_nick_voice
+Color for voice symbol@*
+Type: color (Curses or Gtk color), default value: 'yellow'@*
+@item col_nick_sep
+Color for nick separator@*
+Type: color (Curses or Gtk color), default value: 'blue'@*
+@item col_nick_self
+Color for local nick@*
+Type: color (Curses or Gtk color), default value: 'white'@*
+@item col_nick_private
+Color for other nick in private window@*
+Type: color (Curses or Gtk color), default value: 'gray'@*
+@item col_nick_bg
+Background for nicknames@*
+Type: color (Curses or Gtk color), default value: 'default'@*
+@item history_max_lines
+Maximum number of lines in history for one server/channel/private window (0 = unlimited)@*
+Type: integer (values: between 0 and 2147483647), default value: 4096@*
+@item history_max_commands
+Maximum number of user commands in history (0 = unlimited)@*
+Type: integer (values: between 0 and 2147483647), default value: 100@*
+@item log_auto_channels
+Automatically log channel chats@*
+Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+@item log_auto_private
+Automatically log private chats@*
+Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+@item log_path
+Path for WeeChat log files@*
+Type: string (any string), default value: '~/.weechat/logs/'@*
+@item log_name
+Name for log files (%S == irc server name, %N == channel name (or nickname if private chat)@*
+Type: string (any string), default value: '%S,%N.weechatlog'@*
+@item log_timestamp
+Timestamp for log (see man strftime for date/time specifiers)@*
+Type: string (any string), default value: '~'@*
+@item log_start_string
+Text written when starting new log file (see man strftime for date/time specifiers)@*
+Type: string (any string), default value: '--- Log started %a %b %d %Y %H:%M:%s'@*
+@item log_end_string
+Text written when ending log file (see man strftime for date/time specifiers)@*
+Type: string (any string), default value: '--- Log ended %a %b %d %Y %H:%M:%s'@*
+@item dcc_auto_accept_files
+Automatically accept incoming dcc files@*
+Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+@item dcc_auto_accept_max_size
+Maximum size for incoming file when automatically accepted@*
+Type: integer (values: between 0 and 2147483647), default value: 0@*
+@item dcc_auto_accept_chats
+Automatically accept dcc chats (use carefully!)@*
+Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+@item dcc_timeout
+Timeout for dcc request (in seconds)@*
+Type: integer (values: between 1 and 2147483647), default value: 300@*
+@item dcc_download_path
+Path for writing incoming files with dcc (default: user home)@*
+Type: string (any string), default value: '~'@*
+@item dcc_upload_path
+Path for reading files when sending thru dcc (when no path is specified)@*
+Type: string (any string), default value: '~'@*
+@item dcc_auto_rename
+Rename incoming files if already exists (add '.1', '.2', ...)@*
+Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+@item dcc_auto_resume
+Automatically resume dcc transfer if connection with remote host is loosed@*
+Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+@item proxy_use
+Use a proxy server to connect to irc server@*
+Type: boolean (values: 'on' or 'off'), default value: 'off'@*
+@item proxy_address
+Proxy server address (IP or hostname)@*
+Type: string (any string), default value: ''@*
+@item proxy_port
+Port for connecting to proxy server@*
+Type: integer (values: between 0 and 65535), default value: 1080@*
+@item proxy_password
+Password for proxy server@*
+Type: string (any string), default value: ''@*
+@item server_name
+Name associated to IRC server (for display only)@*
+Type: string (any string), default value: ''@*
+@item server_autoconnect
+Automatically connect to server when WeeChat is starting@*
+Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+@item server_address
+IP address or hostname of IRC server@*
+Type: string (any string), default value: ''@*
+@item server_port
+Port for connecting to server@*
+Type: integer (values: between 0 and 65535), default value: 6667@*
+@item server_password
+Password for IRC server@*
+Type: string (any string), default value: ''@*
+@item server_nick1
+Nickname to use on IRC server@*
+Type: string (any string), default value: ''@*
+@item server_nick2
+Alternate nickname to use on IRC server (if nickname is already used)@*
+Type: string (any string), default value: ''@*
+@item server_nick3
+2nd alternate nickname to use on IRC server (if alternate nickname is already used)@*
+Type: string (any string), default value: ''@*
+@item server_username
+User name to use on IRC server@*
+Type: string (any string), default value: ''@*
+@item server_realname
+Real name to use on IRC server@*
+Type: string (any string), default value: ''@*
+@item server_command
+First command to run when connected to server@*
+Type: string (any string), default value: ''@*
+@item server_autojoin
+Comma separated list of channels to join when connected to server@*
+Type: string (any string), default value: ''@*
+@end table
+
+Colors for Curses GUI are:@*
+@itemize @minus
+@item
+@kbd{default}: default color (transparent for background)
+@item
+@kbd{black}: black
+@item
+@kbd{red}: dark red
+@item
+@kbd{lightred}: light red
+@item
+@kbd{green}: dark green
+@item
+@kbd{lightgreen}: light green
+@item
+@kbd{brown}: brown
+@item
+@kbd{yellow}: yellow
+@item
+@kbd{blue}: dark blue
+@item
+@kbd{lightblue}: light blue
+@item
+@kbd{magenta}: dark magenta
+@item
+@kbd{lightmagenta}: light magenta
+@item
+@kbd{cyan}: dark cyan
+@item
+@kbd{lightcyan}: light cyan
+@item
+@kbd{gray}: gray
+@item
+@kbd{white}: white
+@end itemize
+
+@node Key bindings, WeeChat commands, Config file, Usage
 @section Key bindings
 
 @table @kbd
