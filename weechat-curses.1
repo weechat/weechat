@@ -1,0 +1,69 @@
+.TH WEECHAT 1 "October 2004" "FlashCode"
+
+.SH NAME
+weechat-curses \- Wee Enhanced Environment for Chat (Curses version)
+
+.SH SYNOPSIS
+.B weechat-curses
+.RI [ options... ]
+or
+.RI [ url... ]
+.br
+
+.SH DESCRIPTION
+Fast, light and extensible IRC client for many operating systems.
+.br
+Everything can be done with a keyboard. It is customizable and extensible with scripts.
+Many GUIs are available (Curses, Gtk, Qt, and text).
+It is compliant with RFCs 1459, 2810, 2811, 2812, and 2813.
+
+.SH OPTIONS
+.TP
+.B \-c, \-\-config
+.br
+display config file help (list of options)
+.TP
+.B \-h, \-\-help
+.br
+display summary of options
+.TP
+.B \-l, \-\-license
+.br
+display program license
+.TP
+.B \-v, \-\-version
+.br
+display WeeChat version
+
+.SH URL
+WeeChat can use an URL (Uniform Resource Locator) to automatically connect
+to an IRC server. These are in the following form:
+.TP
+.B irc://[[nickname][:password]@]server[:port][/[#&+!]channel]
+.TP
+Exemple to join WeeChat channel support with nick "FlashCode":
+irc://FlashCode@irc.freenode.net/weechat
+
+.SH FILES
+.TP
+.B $HOME/.weechat/weechat.rc
+configuration file for WeeChat
+.TP
+.B $HOME/.weechat/weechat.log
+WeeChat log file
+
+.SH AUTHOR
+WeeChat is written by:
+.br
+ - FlashCode <flashcode@flashtux.org>
+ - Bounga <bounga@altern.org>
+ - Xahlexx <xahlexx@weeland.org>
+.br
+WeeChat on the web:
+.UR
+http://weechat.flashtux.org
+.br
+Get support there:
+.UR
+http://weechat.flashtux.org/support.php
+.UE
