@@ -795,7 +795,7 @@ dcc_handle ()
     t_irc_dcc *ptr_dcc;
     int num_read, num_sent;
     static char buffer[102400];
-    uint32_t pos;
+    u_int32_t pos;
     fd_set read_fd;
     static struct timeval timeout;
     int sock;
