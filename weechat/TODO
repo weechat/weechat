@@ -93,6 +93,7 @@ Future versions:
  * Configuration:
     - add key bindings to config file
     - add missing options for config file
+    - wrong alias is not created and not saved when quitting WeeChat
 
  * Plugins:
     - add Perl plugin

@@ -730,8 +730,8 @@ config_read ()
                         
                         if (section == CONFIG_SECTION_ALIAS)
                         {
-                            index_command_new (pos);
-                            alias_new (line, pos);
+                            if (alias_new (line, pos))
+                                index_command_new (pos);
                         }
                         else
                         {

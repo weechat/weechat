@@ -324,7 +324,32 @@ alias_insert_sorted (t_weechat_alias *alias)
 t_weechat_alias *
 alias_new (char *alias_name, char *alias_command)
 {
+    char *pos;
     t_weechat_alias *new_alias;
+    
+    if (index_command_search (alias_name))
+    {
+        gui_printf (NULL, _("%s alias or command \"%s\" already exists!\n"),
+                    WEECHAT_ERROR, alias_name);
+        return NULL;
+    }
+    pos = strchr (alias_command, ' ');
+    if (pos)
+        pos[0] = '\0';
+    if (alias_search (alias_command))
+    {
+        gui_printf (NULL, _("%s alias cannot run another alias!\n"),
+                    WEECHAT_ERROR);
+        return NULL;
+    }
+    if (!index_command_search (alias_command))
+    {
+        gui_printf (NULL, _("%s target command \"%s\" does not exist!\n"),
+                    WEECHAT_ERROR, pos);
+        return NULL;
+    }
+    if (pos)
+        pos[0] = ' ';
     
     if ((new_alias = ((t_weechat_alias *) malloc (sizeof (t_weechat_alias)))))
     {
@@ -710,7 +735,7 @@ user_command (t_irc_server *server, char *command)
 int
 weechat_cmd_alias (char *arguments)
 {
-    char *pos, *pos2;
+    char *pos;
     t_weechat_alias *ptr_alias;
     
     if (arguments && arguments[0])
@@ -729,29 +754,6 @@ weechat_cmd_alias (char *arguments)
                             WEECHAT_ERROR);
                 return -1;
             }
-            if (index_command_search (arguments))
-            {
-                gui_printf (NULL, _("%s alias or command \"%s\" already exists!\n"),
-                            WEECHAT_ERROR, arguments);
-                return -1;
-            }
-            pos2 = strchr (pos, ' ');
-            if (pos2)
-                pos2[0] = '\0';
-            if (alias_search (pos))
-            {
-                gui_printf (NULL, _("%s alias cannot run another alias!\n"),
-                            WEECHAT_ERROR);
-                return -1;
-            }
-            if (!index_command_search (pos))
-            {
-                gui_printf (NULL, _("%s target command \"%s\" does not exist!\n"),
-                            WEECHAT_ERROR, pos);
-                return -1;
-            }
-            if (pos2)
-                pos2[0] = ' ';
             index_command_new (arguments);
             if (!alias_new (arguments, pos))
                 return -1;
