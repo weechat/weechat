@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.0.8-pre2 - October, 03 2004
+@subtitle Documentation for WeeChat v0.0.9-pre1 - December, 22 2004
 
 @image{weechat_image}
 
@@ -247,6 +247,7 @@ set parameters with @kbd{/set} command in WeeChat - @xref{WeeChat commands}.
 Here is a list of all options for config file:@*
 
 @table @kbd
+
 @item look_set_title
 Set title for window (terminal for Curses GUI) with name & version@*
 Type: boolean (values: 'on' or 'off'), default value: 'on'@*
@@ -451,6 +452,9 @@ Type: string (any string), default value: '~/.weechat/logs/'@*
 @item log_timestamp
 Timestamp for log (see man strftime for date/time specifiers)@*
 Type: string (any string), default value: '%Y %b %d %H:%M:%S'@*
+@item log_hide_nickserv_pwd
+Hide password displayed by nickserv@*
+Type: boolean (values: 'on' or 'off'), default value: 'on'@*
 @item dcc_auto_accept_files
 Automatically accept incoming dcc files@*
 Type: boolean (values: 'on' or 'off'), default value: 'off'@*
@@ -520,9 +524,15 @@ Type: string (any string), default value: ''@*
 @item server_command
 First command to run when connected to server@*
 Type: string (any string), default value: ''@*
+@item server_command_delay
+Delay (in seconds) after command was executed (example: give some time for authentication)@*
+Type: integer (values: between 0 and 3600), default value: 1@*
 @item server_autojoin
 Comma separated list of channels to join when connected to server@*
 Type: string (any string), default value: ''@*
+@item server_autorejoin
+Automatically rejoin channels when kicked@*
+Type: boolean (values: 'on' or 'off'), default value: 'on'@*
 @end table
 
 Colors for Curses GUI are:@*
@@ -571,13 +581,16 @@ Go to previous / next char in command line@*
 @item Ctrl + left arrow / Ctrl + right arrow
 Go to previous / next word in command line@*
 @*
-@item Home / End
-Go to the beginning / end of command line@*
+@item Home / Ctrl + A
+Go to the beginning of command line@*
+@*
+@item End / Ctrl + E
+Go to the end of command line@*
 @*
 @item Backspace / Delete
 Erase previous / next char of command line@*
 @*
-@item Ctrl + Backspace
+@item Ctrl + Backspace / Ctrl + W
 Erase previous word of command line@*
 @*
 @item Tab
@@ -603,6 +616,9 @@ Switch to next window@*
 @*
 @item F10
 Remove last infobar message@*
+@*
+@item Ctrl + L
+Redraw whole window@*
 @*
 @item Alt + left arrow / Alt + right arrow
 Same as F6 / F7@*
@@ -847,9 +863,6 @@ Bounga
 @item
 Xahlexx
 <@email{xahlexx@@tuxfamily.org, xahlexx AT tuxfamily.org}>
-@item
-Crevetor
-<@email{crevetor@@caramail.com, crevetor AT caramail.com}>
 
 @end itemize
 

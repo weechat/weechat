@@ -35,7 +35,7 @@
 
 @title WeeChat - Guia do Utilizador
 @subtitle Cliente de IRC rapido, leve e extencivel
-@subtitle Documenta@,{c}@~ao do WeeChat v0.0.7 - 27 de Agosto de 2004
+@subtitle Documenta@,{c}@~ao do WeeChat v0.0.9-pre1 - 22 de Dezembro de 2004
 
 @image{weechat_image}
 
@@ -247,13 +247,16 @@ Ir um caractere para traz / para a frente na linha de comando@*
 @item Ctrl + Seta esquerda / Ctrl + Seta Direita
 Ir uma palavra para traz / para a frente na linha de comando@*
 @*
-@item Home / End
-Ir para o in@'icio / para o fim da linha de comando@*
+@item Home / Ctrl + A
+Ir para o in@'icio da linha de comando@*
+@*
+@item End / Ctrl + E
+Ir para o fim da linha de comando@*
 @*
 @item Backspace / Delete
 Apagar o caractere anterior / seguinte na linha de comando@*
 @*
-@item Ctrl + Backspace
+@item Ctrl + Backspace / Ctrl + W
 Apagar a palavra anterior na linha de comando
 @*
 @item Tab
@@ -274,17 +277,29 @@ Navegar no hist@'orico da janela@*
 @item F6 / F7
 Ir para a janela anterior/seguinte@*
 @*
+@item F8
+Comute @`a janela seguinte@*
+@*
+@item F10
+Apagar a @'ultima mensagem da barra do info@*
+@*
+@item Ctrl + L
+Redesenhe a janela inteira@*
+@*
 @item Alt + Seta da esquerda / Alt + Seta da direita
 Identico a F6 / F7@*
 @*
 @item Alt + A
 Comute ao amortecedor seguinte com atividade (com prioridade:  destaque, mensagem, outra)@*
 @*
+@item Alt + D
+Exposi@,{c}@~ao DCC atual@*
+@*
+@item Alt + R
+Hotlist desobstru@'ido (notifica@,{c}@~ao da atividade em outros amortecedores)@*
+@*
 @item Alt + d@'igito (1-9)
 Comute ao amortecedor pelo n@'umero@*
-@*
-@item F10
-Apagar a @'ultima mensagem da barra do info@*
 @*
 @end table
 
@@ -438,6 +453,30 @@ Este nome pode pertencer a um comando já existente, o qual ser@'a sobreposto pel
 @code{@} }@*
 @*
 
+@item
+@command{IRC::get_info ( [servidor,] nome );}@*
+@*
+Comece o v@'ario info sobre WeeChat, servidor ou usu@'ario.@*
+
+@emph{Argumentos:}
+@itemize @minus
+@item @option{servidor}: nome interno da servidor
+@item @option{nome}: nome do info a recuperar:
+@itemize @minus
+@item @option{0 ou version}: comece a vers@~ao de WeeChat
+@item @option{1 ou nick}: comece o nickname
+@item @option{2 ou channel}: comece o nome da canal
+@item @option{3 ou server}: comece o nome do servidor
+@item @option{4 ou weechatdir}: comece a WeeChat o diret@'orio home
+@item @option{5 ou away}: comece a bandeira ausente para o servidor
+@end itemize
+@end itemize
+@*
+@emph{Exemplos:}@*
+@code{$version = get_info("version");}@*
+@code{$nick = get_info("freenode", "nick");}@*
+@*
+
 @end itemize
 
 @node Scripts Python, Scripts Ruby, Scripts Perl, Extencoes
@@ -485,9 +524,6 @@ Bounga
 @item
 Xahlexx
 <@email{xahlexx@@tuxfamily.org, xahlexx AT tuxfamily.org}>
-@item
-Crevetor
-<@email{crevetor@@caramail.com, crevetor AT caramail.com}>
 
 @end itemize
 

@@ -35,7 +35,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.0.8-pre2 - 03 Octobre 2004
+@subtitle Documentation pour WeeChat v0.0.9-pre1 - 22 D@'ecembre 2004
 
 @image{weechat_image}
 
@@ -451,6 +451,9 @@ Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '~/.weechat/logs/'@*
 @item log_timestamp
 Horodatage pour les conversations sauvegard@'ees (voir man strftime pour le format de date/heure)@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '%Y %b %d %H:%M:%S'@*
+@item log_hide_nickserv_pwd
+Masquer le mot de passe affich@'e par nickserv@*
+Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
 @item dcc_auto_accept_files
 Accepte automatiquement les fichiers dcc entrants@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
@@ -520,9 +523,15 @@ Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
 @item server_command
 Commande @`a ex@'ecuter en premier lorsque connect@'e au serveur@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
+@item server_command_delay
+D@'elai (en secondes) apr@`es ex@'ecution de la commande (exemple: donner du temps pour l'authentification)@*
+Type: entier (valeurs: entre 0 et 3600), valeur par d@'efaut: 1@*
 @item server_autojoin
 Liste des canaux (s@'epar@'es par des virgules) @`a rejoindre lorsque connect@'e au serveur@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
+@item server_autorejoin
+Rejoindre automatiquement les canaux quand mis dehors@*
+Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
 @end table
 
 Les couleurs pour l'interface Curses sont :@*
@@ -571,13 +580,16 @@ Aller au caract@`ere pr@'ec@'edent / suivant sur la ligne de commande@*
 @item Ctrl + fl@`eche gauche / Ctrl + fl@`eche droite
 Aller au mot pr@'ec@'edent / suivant sur la ligne de commande@*
 @*
-@item Home / End
-Aller au d@'ebut / @`a la fin de la ligne de commande@*
+@item Home / Ctrl + A
+Aller au d@'ebut de la ligne de commande@*
+@*
+@item End / Ctrl + E
+Aller @`a la fin de la ligne de commande@*
 @*
 @item Backspace / Delete
 Effacer le mot pr@'ec@'edent / suivant sur la ligne de commande@*
 @*
-@item Ctrl + Backspace
+@item Ctrl + Backspace / Ctrl + W
 Effacer le mot pr@'ec@'edent sur la ligne de commande@*
 @*
 @item Tab
@@ -603,6 +615,9 @@ Aller @`a la fen@^etre suivante@*
 @*
 @item F10
 Effacer le dernier message de la barre d'infos@*
+@*
+@item Ctrl + L
+R@'eaffiche toute la fen@^etre@*
 @*
 @item Alt + fl@`eche gauche / Alt + fl@`eche droite
 Identique @`a F6 / F7@*
@@ -847,9 +862,6 @@ Bounga
 @item
 Xahlexx
 <@email{xahlexx@@tuxfamily.org, xahlexx AT tuxfamily.org}>
-@item
-Crevetor
-<@email{crevetor@@caramail.com, crevetor AT caramail.com}>
 
 @end itemize
 
