@@ -92,6 +92,8 @@ irc_cmd_recv_error (t_irc_server *server, char *host, char *arguments)
 {
     char *pos, *pos2;
     int first;
+    t_gui_buffer *ptr_buffer;
+    t_irc_channel *ptr_channel;
     
     /* make gcc happy */
     (void) server;
@@ -114,9 +116,9 @@ irc_cmd_recv_error (t_irc_server *server, char *host, char *arguments)
     else
         pos = arguments;
     
-    irc_display_prefix (server->buffer, PREFIX_ERROR);
     first = 1;
     
+    ptr_buffer = server->buffer;
     while (pos && pos[0])
     {
         pos2 = strchr (pos, ' ');
@@ -124,7 +126,9 @@ irc_cmd_recv_error (t_irc_server *server, char *host, char *arguments)
         {
             if (pos[0] == ':')
                 pos++;
-            gui_printf_color (server->buffer,
+            if (first)
+                irc_display_prefix (ptr_buffer, PREFIX_ERROR);
+            gui_printf_color (ptr_buffer,
                               COLOR_WIN_CHAT,
                               "%s%s\n", (first) ? "" : ": ", pos);
             pos = NULL;
@@ -132,7 +136,14 @@ irc_cmd_recv_error (t_irc_server *server, char *host, char *arguments)
         else
         {
             pos2[0] = '\0';
-            gui_printf_color (server->buffer,
+            if (first)
+            {
+                ptr_channel = channel_search (server, pos);
+                if (ptr_channel)
+                    ptr_buffer = ptr_channel->buffer;
+                irc_display_prefix (ptr_buffer, PREFIX_ERROR);
+            }
+            gui_printf_color (ptr_buffer,
                               COLOR_WIN_CHAT_CHANNEL,
                               "%s%s",
                               (first) ? "" : " ", pos);
