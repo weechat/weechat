@@ -230,9 +230,11 @@ main (int argc, char *argv[])
 {
     t_irc_server *ptr_server;
     
+    #ifdef ENABLE_NLS
     setlocale (LC_ALL, "");
     bindtextdomain (PACKAGE, LOCALEDIR);
     textdomain (PACKAGE);
+    #endif
     
     /* pre-initiliaze interface */
     gui_pre_init (&argc, &argv);

@@ -23,13 +23,27 @@
 #ifndef __WEECHAT_H
 #define __WEECHAT_H 1
 
-#include <stdio.h>
-#include <locale.h>
-#include <libintl.h>
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
-#define PACKAGE "weechat"
-#define _(string) gettext(string)
-#define N_(string) (string)
+#include <stdio.h>
+
+#if defined(ENABLE_NLS) && !defined(_)
+    #include <locale.h>
+    #include <libintl.h>
+    #define _(x) gettext(x)
+    #ifdef gettext_noop
+        #define N_(string) gettext_noop (string)
+    #else
+        #define N_(string) (string)
+    #endif
+#endif
+#if !defined(_)
+    #define _(x) (x)
+    #define N_(string) (string)
+#endif
+
 
 #define WEECHAT_COPYRIGHT PACKAGE_NAME " (c) 2003 by Wee Team"
 #define WEECHAT_WEBSITE "http://weechat.flashtux.org"
