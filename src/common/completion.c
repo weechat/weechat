@@ -514,6 +514,19 @@ completion_find_context (t_completion *completion, void *channel, char *buffer,
             completion_build_list (completion, channel);
         }
     }
+    
+    if (!completion->completion_list && channel
+        && (((t_irc_channel *)channel)->type == CHAT_PRIVATE))
+    {
+        /* nick completion in private (only other nick and self) */
+        completion->context = COMPLETION_NICK;
+        weelist_add (&completion->completion_list,
+                     &completion->last_completion,
+                     ((t_irc_channel *)channel)->name);
+        weelist_add (&completion->completion_list,
+                     &completion->last_completion,
+                     SERVER(gui_current_window->buffer)->nick);
+    }
 }
 
 /*
@@ -564,56 +577,6 @@ completion_command (t_completion *completion)
 }
 
 /*
- * completion_nick: complete a nick
- */
-
-void
-completion_nick (t_completion *completion, t_irc_channel *channel)
-{
-    int length, word_found_seen, other_completion;
-    t_irc_nick *ptr_nick, *ptr_nick2;
-
-    if (!channel)
-        return;
-    
-    length = strlen (completion->base_word);
-    word_found_seen = 0;
-    other_completion = 0;
-    for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
-    {
-        if (strncasecmp (ptr_nick->nick, completion->base_word, length) == 0)
-        {
-            if ((!completion->word_found) || word_found_seen)
-            {
-                completion->word_found = ptr_nick->nick;
-                for (ptr_nick2 = ptr_nick->next_nick; ptr_nick2;
-                     ptr_nick2 = ptr_nick2->next_nick)
-                {
-                    if (strncasecmp (ptr_nick2->nick,
-                        completion->base_word, length) == 0)
-                        other_completion++;
-                }
-                if (other_completion == 0)
-                    completion->position = -1;
-                else
-                    if (completion->position < 0)
-                        completion->position = 0;
-                return;
-            }
-            other_completion++;
-        }
-        if (completion->word_found &&
-            (strcasecmp (ptr_nick->nick, completion->word_found) == 0))
-            word_found_seen = 1;
-    }
-    if (completion->word_found)
-    {
-        completion->word_found = NULL;
-        completion_nick (completion, channel);
-    }
-}
-
-/*
  * completion_command_arg: complete a command argument
  */
 
@@ -658,6 +621,62 @@ completion_command_arg (t_completion *completion, t_irc_channel *channel)
     {
         completion->word_found = NULL;
         completion_command_arg (completion, channel);
+    }
+}
+
+/*
+ * completion_nick: complete a nick
+ */
+
+void
+completion_nick (t_completion *completion, t_irc_channel *channel)
+{
+    int length, word_found_seen, other_completion;
+    t_irc_nick *ptr_nick, *ptr_nick2;
+
+    if (!channel)
+        return;
+    
+    if (((t_irc_channel *)channel)->type == CHAT_PRIVATE)
+    {
+        completion_command_arg (completion, channel);
+        return;
+    }
+    
+    length = strlen (completion->base_word);
+    word_found_seen = 0;
+    other_completion = 0;
+    for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
+    {
+        if (strncasecmp (ptr_nick->nick, completion->base_word, length) == 0)
+        {
+            if ((!completion->word_found) || word_found_seen)
+            {
+                completion->word_found = ptr_nick->nick;
+                for (ptr_nick2 = ptr_nick->next_nick; ptr_nick2;
+                     ptr_nick2 = ptr_nick2->next_nick)
+                {
+                    if (strncasecmp (ptr_nick2->nick,
+                        completion->base_word, length) == 0)
+                        other_completion++;
+                }
+                if (other_completion == 0)
+                    completion->position = -1;
+                else
+                    if (completion->position < 0)
+                        completion->position = 0;
+                return;
+            }
+            other_completion++;
+        }
+        if (completion->word_found &&
+            (strcasecmp (ptr_nick->nick, completion->word_found) == 0))
+            word_found_seen = 1;
+    }
+    if (completion->word_found)
+    {
+        completion->word_found = NULL;
+        completion_nick (completion, channel);
     }
 }
 
