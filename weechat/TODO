@@ -14,7 +14,6 @@ v0.0.2:
 ------
 
  * IRC protocol:
-    + "/mode" command: change the user/channels modes
     # "/rehash" command: tell the server to reload its config file
     # "/restart" command: tell the server to restart itself
 
@@ -23,9 +22,6 @@ v0.0.2:
     # "/server" command to add, remove or list servers
     # "/save" command: save configuration to disk
     # "/alias" and "/unalias" commands
-
- * Interface:
-    - display current channel modes (example : #weechat(+nt))
 
  * Configuration:
     # write config file
@@ -40,6 +36,7 @@ Future versions:
 
  * IRC protocol:
     - implement RFC 2812
+    + "/mode" command: change the user/channels modes
     - "/dcc" command (for chat and sending/receiving files)
     - complete "/list" command: add regexp search, display only channels that
       match regexp
@@ -67,6 +64,7 @@ Future versions:
       format, etc)
 
  * Interface:
+    - display current channel modes (example : #weechat(+nt))
     - interpret special chars in messages (color & bold for example)
     - internationalization (traduce WeeChat in many languages)
     - many channel windows in one window/term (window split)

@@ -4,7 +4,7 @@ WeeChat - Wee Enhanced Environment for Chat
 ChangeLog - 2003-10-05
 
 
-Version 0.0.2 (under dev!):
+Version 0.0.2 (2003-10-05):
    * added commands /rehash and /restart
    * command & auto-join channels when connected to server
    * new commands for alias: /alias, /unalias (new section in config file)
