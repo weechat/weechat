@@ -675,7 +675,7 @@ user_command (t_irc_server *server, char *command)
 {
     t_irc_nick *ptr_nick;
     
-    if ((!command) || (command[0] == '\r') || (command[0] == '\n'))
+    if ((!command) || (!command[0]) || (command[0] == '\r') || (command[0] == '\n'))
         return;
     if ((command[0] == '/') && (command[1] != '/'))
     {
@@ -686,7 +686,7 @@ user_command (t_irc_server *server, char *command)
     {
         if ((command[0] == '/') && (command[1] == '/'))
             command++;
-        if (!WIN_IS_SERVER(gui_current_window))
+        if (server && (!WIN_IS_SERVER(gui_current_window)))
         {
             server_sendf (server, "PRIVMSG %s :%s\r\n",
                           CHANNEL(gui_current_window)->name,
@@ -725,7 +725,8 @@ user_command (t_irc_server *server, char *command)
             }
         }
         else
-            gui_printf (server->window, _("This window is not a channel!\n"));
+            gui_printf ((server) ? server->window : NULL,
+                        _("This window is not a channel!\n"));
     }
 }
 
