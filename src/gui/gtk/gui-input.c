@@ -20,23 +20,40 @@
  */
 
 
-#ifndef __WEECHAT_COMPLETION_H
-#define __WEECHAT_COMPLETION_H 1
+/* gui-input: user input functions for Gtk GUI */
 
-typedef struct t_completion t_completion;
 
-struct t_completion
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+#include <signal.h>
+#include <time.h>
+#include <sys/socket.h>
+
+#include "../../weechat.h"
+#include "../gui.h"
+#include "../../config.h"
+#include "../../command.h"
+#include "../../irc/irc.h"
+
+
+/*
+ * gui_read_keyb: read keyboard line
+ */
+
+void
+gui_read_keyb ()
 {
-    char *base_word;            /* word to complete (when Tab was pressed)  */
-    int base_word_pos;          /* beggining of base word                   */
-    int position;               /* position where we shoud complete         */
-    char *word_found;           /* word found (to replace base word)        */
-    int position_replace;       /* position where word should be replaced   */
-    int diff_size;              /* size difference (< 0 = char(s) deleted)  */
-};
+    /* TODO: read keyboard for Gtk GUI */
+}
 
-extern void completion_init (t_completion *);
-extern void completion_free (t_completion *);
-extern void completion_search (t_completion *, void *, char *, int, int);
+/*
+ * gui_main_loop: main loop for WeeChat with Gtk GUI
+ */
 
-#endif /* completion.h */
+void
+gui_main_loop ()
+{
+    /* TODO: main loop function for Gtk GUI */
+}

@@ -23,7 +23,7 @@ OUTPUT=weechat
 
 OBJS=weechat.o config.o command.o completion.o history.o
 OBJS_IRC=irc/irc.a
-OBJS_GUI=gui/gui.a
+OBJS_GUI=gui/gui.a gui/gui-common.o
 
 
 # WeeChat with Curses interface
@@ -38,7 +38,8 @@ endif
 # WeeChat with Gtk+ interface
 ifeq ($(GUI), gtk)
 OBJS_GTK=gui-gtk.o
-LIBS_GTK=
+LIBS_GTK=`pkg-config --libs gtk+-2.0`
+INCLUDES=`pkg-config --cflags gtk+-2.0`
 DEFINES=WEE_GTK
 gtk: $(OBJS) $(OBJS_IRC) $(OBJS_GUI)
 	$(CC) $(OPTIONS) $(OBJS) $(OBJS_IRC) $(OBJS_GUI) -o $(OUTPUT) $(LIBS_GTK)
@@ -61,7 +62,7 @@ $(OBJS):
 	$(CC) $(OPTIONS) -o $@ -c $< $(INCLUDES) -D$(DEFINES)
 
 irc/irc.a:
-	cd irc && make
+	cd irc && make GUI=$(GUI)
 
 gui/gui.a:
 	cd gui && make $(GUI) GUI=$(GUI)

@@ -32,7 +32,7 @@
 #define N_(string) (string)
 
 #define WEECHAT_NAME    "WeeChat"
-#define WEECHAT_VERSION "0.0.3-pre1"
+#define WEECHAT_VERSION "0.0.3-pre2"
 
 #define WEECHAT_NAME_AND_VERSION WEECHAT_NAME " " WEECHAT_VERSION
 #define WEECHAT_COPYRIGHT WEECHAT_NAME " (c) 2003 by Wee Team"

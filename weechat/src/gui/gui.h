@@ -26,6 +26,9 @@
 #ifdef WEE_CURSES
 #include <curses.h>
 #endif
+#ifdef WEE_GTK
+#include <gtk/gtk.h>
+#endif
 
 #include "../completion.h"
 #include "../history.h"
@@ -149,7 +152,11 @@ struct t_gui_window
     WINDOW *win_input;              /* input window                         */
     #endif
     #ifdef WEE_GTK
-    /* TODO: declare Gtk+ window */
+    GtkWidget *win_title;           /* title window                         */
+    GtkWidget *win_chat;            /* chat window (exemple: channel)       */
+    GtkWidget *win_nick;            /* nick window                          */
+    GtkWidget *win_status;          /* status window                        */
+    GtkWidget *win_input;           /* input window                         */
     #endif
     #ifdef WEE_QT
     /* TODO: declare Qt window */
@@ -186,6 +193,7 @@ struct t_gui_window
 
 extern int gui_ready;
 extern t_gui_window *gui_windows;
+extern t_gui_window *last_gui_window;
 extern t_gui_window *gui_current_window;
 
 /* prototypes */
@@ -193,6 +201,8 @@ extern t_gui_window *gui_current_window;
 extern int gui_assign_color (int *, char *);
 extern int gui_get_color_by_name (char *);
 extern char *gui_get_color_by_value (int);
+
+extern void gui_calculate_pos_size (t_gui_window *);
 
 extern void gui_draw_window_title (t_gui_window *);
 extern void gui_redraw_window_title (t_gui_window *);
@@ -206,6 +216,7 @@ extern void gui_draw_window_input (t_gui_window *);
 extern void gui_redraw_window_input (t_gui_window *);
 extern void gui_redraw_window (t_gui_window *);
 
+extern t_gui_window *gui_window_new (void *, void *);
 extern void gui_window_clear (t_gui_window *);
 extern void gui_window_clear_all ();
 
@@ -221,8 +232,16 @@ extern void gui_init ();
 extern t_gui_window *gui_window_new (void *, void * /*int, int, int, int*/);
 extern void gui_window_free (t_gui_window *);
 extern void gui_end ();
+
+extern t_gui_line *gui_new_line (t_gui_window *);
+extern t_gui_message *gui_new_message (t_gui_window *);
 extern void gui_printf_color_type (t_gui_window *, int, int, char *, ...);
-extern void gui_display_nick (t_gui_window *, void *, int, int, int, int);
+
+extern void gui_optimize_input_buffer_size (t_gui_window *);
+extern void gui_delete_previous_word ();
+extern void gui_move_previous_word ();
+extern void gui_move_next_word ();
+extern void gui_buffer_insert_string (char *, int);
 
 extern void gui_main_loop ();
 

@@ -44,6 +44,17 @@ completion_init (t_completion *completion)
 }
 
 /*
+ * completion_free: free completion
+ */
+
+void
+completion_free (t_completion *completion)
+{
+    if (completion->base_word)
+        free (completion->base_word);
+}
+
+/*
  * completion_command: complete a command
  */
 

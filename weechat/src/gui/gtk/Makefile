@@ -21,6 +21,7 @@ OPTIONS=-Wall -W -pipe -O2
 
 OUTPUT=../gui.a
 OBJS=gui-display.o gui-input.o
+INCLUDES=`pkg-config --cflags gtk+-2.0`
 DEFINES=WEE_GTK
 
 all: $(OBJS)
@@ -32,6 +33,8 @@ $(OBJS):
 clean:
 	rm -f *.o *.a *~ core
 
-gui-display.o: gui-display.c ../../weechat.h ../gui.h ../../config.h \
-  ../../irc/irc.h ../../gui/gui.h
-gui-input.o: gui-input.c ../../weechat.h ../gui.h
+gui-display.o: gui-display.c ../../weechat.h ../gui.h ../../completion.h \
+  ../../history.h ../../config.h ../../irc/irc.h ../../gui/gui.h
+gui-input.o: gui-input.c ../../weechat.h ../gui.h ../../completion.h \
+  ../../history.h ../../config.h ../../command.h ../../irc/irc.h \
+  ../../gui/gui.h

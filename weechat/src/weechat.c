@@ -231,6 +231,11 @@ main (int argc, char *argv[])
     bindtextdomain (PACKAGE, "/usr/share/locale");
     textdomain (PACKAGE);
     
+    /* Gtk init */
+    #ifdef WEE_GTK
+    gtk_init (&argc, &argv);
+    #endif
+    
     /* initialize variables */
     wee_init_vars ();
     

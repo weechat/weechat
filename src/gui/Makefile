@@ -15,23 +15,34 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
+CC=gcc
+
+OPTIONS=-Wall -W -pipe -O2
+
+OUTPUT=../gui.a
+OBJS=gui-common.o
+
 # WeeChat with Curses interface
 ifeq ($(GUI), curses)
-curses: curses/gui.a
+DEFINES=WEE_CURSES
+curses: curses/gui.a $(OBJS)
 curses/gui.a:
 	cd curses && make
 endif
 
 # WeeChat with Gtk+ interface
 ifeq ($(GUI), gtk)
-gtk: gtk/gui.a
+INCLUDES=`pkg-config --cflags gtk+-2.0`
+DEFINES=WEE_GTK
+gtk: gtk/gui.a $(OBJS)
 gtk/gui.a:
 	cd gtk && make
 endif
 
 # WeeChat with Qt interface
 ifeq ($(GUI), qt)
-qt: qt/gui.a
+DEFINES=WEE_QT
+qt: qt/gui.a $(OBJS)
 qt/gui.a:
 	cd qt && make
 endif
@@ -40,8 +51,14 @@ endif
 all:
 	make curses GUI=curses
 
+$(OBJS):
+	$(CC) $(OPTIONS) -o $@ -c $< $(INCLUDES) -D$(DEFINES)
+
 clean:
 	rm -f *.o *.a *~ core
 	cd curses && make clean
 	cd gtk && make clean
 	cd qt && make clean
+
+gui-common.o: gui-common.c ../weechat.h gui.h ../completion.h \
+  ../history.h ../irc/irc.h ../gui/gui.h
