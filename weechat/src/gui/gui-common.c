@@ -35,6 +35,7 @@
 #include "../common/weechat.h"
 #include "gui.h"
 #include "../../common/weeconfig.h"
+#include "../../common/hotlist.h"
 #include "../irc/irc.h"
 
 
@@ -354,6 +355,10 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
     int create_new;
     
     create_new = (buffer->server || buffer->channel);
+    
+    hotlist_remove_buffer (buffer);
+    if (hotlist_initial_buffer == buffer)
+        hotlist_initial_buffer = NULL;
     
     if (switch_to_another)
     {
