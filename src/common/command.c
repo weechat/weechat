@@ -1031,7 +1031,7 @@ weechat_cmd_perl (int argc, char **argv)
                 {
                     handler_found = 1;
                     irc_display_prefix (NULL, PREFIX_PLUGIN);
-                    gui_printf (NULL, "  IRC(%s) => Perl(%s)\n",
+                    gui_printf (NULL, _("  IRC(%s) => Perl(%s)\n"),
                                 ptr_plugin_handler->name,
                                 ptr_plugin_handler->function_name);
                 }
@@ -1053,7 +1053,7 @@ weechat_cmd_perl (int argc, char **argv)
                 {
                     handler_found = 1;
                     irc_display_prefix (NULL, PREFIX_PLUGIN);
-                    gui_printf (NULL, "  Command /%s => Perl(%s)\n",
+                    gui_printf (NULL, _("  Command /%s => Perl(%s)\n"),
                                 ptr_plugin_handler->name,
                                 ptr_plugin_handler->function_name);
                 }
@@ -1070,6 +1070,8 @@ weechat_cmd_perl (int argc, char **argv)
             {
                 /* unload all Perl scripts */
                 plugin_unload (PLUGIN_TYPE_PERL, NULL);
+                irc_display_prefix (NULL, PREFIX_PLUGIN);
+                gui_printf (NULL, _("Perl scripts unloaded\n"));
             }
             break;
         case 2:

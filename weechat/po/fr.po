@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.0.4-pre1\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2003-11-23 18:33+0100\n"
+"POT-Creation-Date: 2003-11-30 14:38+0100\n"
 "PO-Revision-Date: 2003-10-04 21:21+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1112,7 +1112,7 @@ msgstr "%s utilisateur non trouvé pour la commande \"%s\"\n"
 msgid "%s cannot create new private window \"%s\"\n"
 msgstr "%s impossible de créer la fenêtre privée \"%s\"\n"
 
-#: src/irc/irc-send.c:524 src/common/command.c:1075
+#: src/irc/irc-send.c:524 src/common/command.c:1092
 #, c-format
 msgid "%s wrong argument count for \"%s\" command\n"
 msgstr "%s nombre de paramètres erroné pour la commande \"%s\"\n"
@@ -1473,7 +1473,7 @@ msgstr ""
 "%s: tous les noms d'utilisateurs déclarés sont déjà en cours d'utilisation, "
 "fermeture de la connexion avec le serveur !\n"
 
-#: src/plugins/perl/wee-perl.c:79
+#: src/plugins/perl/wee-perl.c:81
 #, c-format
 msgid ""
 "Perl error: unable to register Perl script \"%s\" (another script already "
@@ -1482,42 +1482,42 @@ msgstr ""
 "Erreur Perl: impossible d'enregistrer le script Perl \"%s\" (un autre script "
 "existe déjà avec ce nom)\n"
 
-#: src/plugins/perl/wee-perl.c:103
+#: src/plugins/perl/wee-perl.c:105
 #, c-format
 msgid "registered Perl script: \"%s\", version %s (%s)\n"
 msgstr "script Perl enregistré: \"%s\", version %s (%s)\n"
 
-#: src/plugins/perl/wee-perl.c:108
+#: src/plugins/perl/wee-perl.c:112
 #, c-format
 msgid "%s unable to load Perl script \"%s\" (not enough memory)\n"
 msgstr ""
 "%s impossible de charger le script Perl \"%s\" (mémoire insuffisante)\n"
 
-#: src/plugins/perl/wee-perl.c:287
+#: src/plugins/perl/wee-perl.c:352
 #, c-format
 msgid "Perl error: %s\n"
 msgstr "Erreur Perl: %s\n"
 
-#: src/plugins/perl/wee-perl.c:296
+#: src/plugins/perl/wee-perl.c:362
 #, c-format
 msgid "Perl error: too much values from \"%s\" (%d). Expected: 1.\n"
 msgstr "Erreur Perl: trop de valeurs de \"%s\" (%d). Attendue: 1.\n"
 
-#: src/plugins/perl/wee-perl.c:318
+#: src/plugins/perl/wee-perl.c:384
 #, c-format
 msgid "loading Perl script \"%s\"\n"
 msgstr "chargement du script Perl \"%s\"\n"
 
-#: src/plugins/perl/wee-perl.c:367
+#: src/plugins/perl/wee-perl.c:433
 #, c-format
 msgid "unloading Perl script \"%s\"\n"
 msgstr "déchargement du script Perl \"%s\"\n"
 
-#: src/plugins/perl/wee-perl.c:384
+#: src/plugins/perl/wee-perl.c:450
 msgid "unloading all Perl scripts...\n"
 msgstr "déchargement de tous les scripts Perl...\n"
 
-#: src/plugins/plugins.c:133
+#: src/plugins/plugins.c:136
 #, c-format
 msgid "%s unable to add handler for \"%s\" message (not enough memory)\n"
 msgstr ""
@@ -1842,29 +1842,43 @@ msgstr "> Aide sur la commande IRC \"%s\":\n"
 msgid "No help available, \"%s\" is an unknown command\n"
 msgstr "Pas d'aide disponible, la commande \"%s\" est inconnue\n"
 
-#: src/common/command.c:1002
+#: src/common/command.c:1003
 msgid "Registered Perl scripts:\n"
 msgstr "Scripts Perl enregistrés :\n"
 
-#: src/common/command.c:1016 src/common/command.c:1033
-#: src/common/command.c:1050
+#: src/common/command.c:1020 src/common/command.c:1042
+#: src/common/command.c:1064
 msgid "  (none)\n"
 msgstr "  (aucun)\n"
 
-#: src/common/command.c:1019
+#: src/common/command.c:1025
 msgid "Perl message handlers:\n"
 msgstr "Fonctions Perl pour messages :\n"
 
-#: src/common/command.c:1036
+#: src/common/command.c:1034
+#, c-format
+msgid "  IRC(%s) => Perl(%s)\n"
+msgstr "  IRC(%s) => Perl(%s)\n"
+
+#: src/common/command.c:1047
 msgid "Perl command handlers:\n"
 msgstr "Commandes Perl :\n"
 
-#: src/common/command.c:1069
+#: src/common/command.c:1056
+#, c-format
+msgid "  Command /%s => Perl(%s)\n"
+msgstr "  Commande /%s => Perl(%s)\n"
+
+#: src/common/command.c:1074
+msgid "Perl scripts unloaded\n"
+msgstr "Scripts Perl déchargés\n"
+
+#: src/common/command.c:1086
 #, c-format
 msgid "%s unknown option for \"%s\" command\n"
 msgstr "%s option inconnue pour la commande \"%s\"\n"
 
-#: src/common/command.c:1080
+#: src/common/command.c:1097
 msgid ""
 "WeeChat was build without Perl support.\n"
 "Please rebuild WeeChat with \"--enable-perl\" option for ./configure script\n"
@@ -1873,179 +1887,179 @@ msgstr ""
 "Merci de reconstruire WeeChat avec l'option \"--enable-perl\" pour le "
 "script ./configure\n"
 
-#: src/common/command.c:1124
+#: src/common/command.c:1141
 msgid "Server: "
 msgstr "Serveur: "
 
-#: src/common/command.c:1135
+#: src/common/command.c:1152
 msgid "connected"
 msgstr "connecté"
 
-#: src/common/command.c:1135
+#: src/common/command.c:1152
 msgid "not connected"
 msgstr "non connecté"
 
-#: src/common/command.c:1142
+#: src/common/command.c:1159
 #, c-format
 msgid "  Autoconnect: %s\n"
 msgstr "  Autoconnect: %s\n"
 
-#: src/common/command.c:1143
+#: src/common/command.c:1160
 msgid "yes"
 msgstr "oui"
 
-#: src/common/command.c:1143
+#: src/common/command.c:1160
 msgid "no"
 msgstr "non"
 
-#: src/common/command.c:1147
+#: src/common/command.c:1164
 #, c-format
 msgid "  Hostname   : %s\n"
 msgstr "  Nom/IP     : %s\n"
 
-#: src/common/command.c:1152
+#: src/common/command.c:1169
 #, c-format
 msgid "  Port       : %d\n"
 msgstr "  Port       : %d\n"
 
-#: src/common/command.c:1158
+#: src/common/command.c:1175
 msgid "  Password   : (hidden)\n"
 msgstr "  Mot passe  : (caché)\n"
 
-#: src/common/command.c:1162
+#: src/common/command.c:1179
 msgid "  Password   : (none)\n"
 msgstr "  Mot passe  : (aucun)\n"
 
-#: src/common/command.c:1166
+#: src/common/command.c:1183
 #, c-format
 msgid "  Nicks      : %s"
 msgstr "  Pseudos    : %s"
 
-#: src/common/command.c:1183
+#: src/common/command.c:1200
 #, c-format
 msgid "  Username   : %s\n"
 msgstr "  Nom utilis.: %s\n"
 
-#: src/common/command.c:1188
+#: src/common/command.c:1205
 #, c-format
 msgid "  Realname   : %s\n"
 msgstr "  Nom réel   : %s\n"
 
-#: src/common/command.c:1194
+#: src/common/command.c:1211
 #, c-format
 msgid "  Command    : %s\n"
 msgstr "  Commande   : %s\n"
 
-#: src/common/command.c:1199
+#: src/common/command.c:1216
 msgid "  Command    : (none)\n"
 msgstr "  Commande   : (aucune)\n"
 
-#: src/common/command.c:1204
+#: src/common/command.c:1221
 #, c-format
 msgid "  Auto-join  : %s\n"
 msgstr "  Auto-join  : %s\n"
 
-#: src/common/command.c:1209
+#: src/common/command.c:1226
 msgid "  Auto-join  : (none)\n"
 msgstr "  Auto-join  : (aucun)\n"
 
-#: src/common/command.c:1213
+#: src/common/command.c:1230
 msgid "No server.\n"
 msgstr "Pas de serveur.\n"
 
-#: src/common/command.c:1222
+#: src/common/command.c:1239
 #, c-format
 msgid "%s missing servername for \"%s\" command\n"
 msgstr "%s il manque le nom du serveur pour la commande \"%s\"\n"
 
-#: src/common/command.c:1228
+#: src/common/command.c:1245
 #, c-format
 msgid "%s too much arguments for \"%s\" command, ignoring arguments\n"
 msgstr "%s trop de paramètres pour la commande \"%s\", paramètres ignorés\n"
 
-#: src/common/command.c:1245
+#: src/common/command.c:1262
 #, c-format
 msgid "%s server \"%s\" not found for \"%s\" command\n"
 msgstr "%s le serveur \"%s\" n'existe pas pour la commande \"%s\"\n"
 
-#: src/common/command.c:1251 src/common/command.c:1382
+#: src/common/command.c:1268 src/common/command.c:1399
 msgid "Server"
 msgstr "Serveur"
 
-#: src/common/command.c:1254
+#: src/common/command.c:1271
 msgid "has been deleted\n"
 msgstr "a été supprimé\n"
 
-#: src/common/command.c:1268
+#: src/common/command.c:1285
 #, c-format
 msgid "%s missing parameters for \"%s\" command\n"
 msgstr "%s paramètres manquants pour la commande \"%s\"\n"
 
-#: src/common/command.c:1277
+#: src/common/command.c:1294
 #, c-format
 msgid "%s server \"%s\" already exists, can't create it!\n"
 msgstr "%s le serveur \"%s\" existe déjà, impossible de le créer !\n"
 
-#: src/common/command.c:1301 src/common/command.c:1327
-#: src/common/command.c:1339 src/common/command.c:1363
+#: src/common/command.c:1318 src/common/command.c:1344
+#: src/common/command.c:1356 src/common/command.c:1380
 #, c-format
 msgid "%s missing password for \"%s\" parameter\n"
 msgstr "%s mot de passe manquant pour le paramètre \"%s\"\n"
 
-#: src/common/command.c:1313
+#: src/common/command.c:1330
 #, c-format
 msgid "%s missing nick(s) for \"%s\" parameter\n"
 msgstr "%s pseudo(s) manquant(s) pour le paramètre \"%s\"\n"
 
-#: src/common/command.c:1351
+#: src/common/command.c:1368
 #, c-format
 msgid "%s missing command for \"%s\" parameter\n"
 msgstr "%s commande manquante pour le paramètre \"%s\"\n"
 
-#: src/common/command.c:1385
+#: src/common/command.c:1402
 msgid "created\n"
 msgstr "créé\n"
 
-#: src/common/command.c:1390
+#: src/common/command.c:1407
 #, c-format
 msgid "%s unable to create server\n"
 msgstr "%s impossible de créer le serveur\n"
 
-#: src/common/command.c:1462
+#: src/common/command.c:1479
 msgid "(unknown)"
 msgstr "(inconnu)"
 
-#: src/common/command.c:1495
+#: src/common/command.c:1512
 #, c-format
 msgid "%s alias or command \"%s\" not found\n"
 msgstr "%s alias ou commande \"%s\" non trouvé\n"
 
-#: src/common/command.c:1504
+#: src/common/command.c:1521
 #, c-format
 msgid "Alias \"%s\" removed\n"
 msgstr "Alias \"%s\" supprimé\n"
 
-#: src/common/weechat.c:141
+#: src/common/weechat.c:151
 #, c-format
 msgid "%s unknown parameter '%s', ignored\n"
 msgstr "%s paramètre inconnu '%s', ignoré\n"
 
-#: src/common/weechat.c:165
+#: src/common/weechat.c:175
 #, c-format
 msgid "%s cannot create directory \"%s\"\n"
 msgstr "%s impossible de créer le répertoire \"%s\"\n"
 
-#: src/common/weechat.c:205
+#: src/common/weechat.c:215
 #, c-format
 msgid "%s unable to create/append to log file (~/.weechat/"
 msgstr "%s impossible de créer/ajouter dans le fichier de log (~/.weechat/"
 
-#: src/common/weechat.c:290
+#: src/common/weechat.c:303
 #, c-format
 msgid "%sWelcome to "
 msgstr "%sBienvenue dans "
 
-#: src/common/weechat.c:303
+#: src/common/weechat.c:316
 msgid "compiled on"
 msgstr "compilé le"
 

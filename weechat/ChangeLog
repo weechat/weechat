@@ -1,11 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2003-11-16
+ChangeLog - 2003-11-30
 
 
 Version 0.0.4 (under dev!):
    * Perl plugin
+   * Ctrl-C now intercepted (ignored)
    * debug messages can be enabled via ./configure --enbale-debug option
 
 Version 0.0.3 (2003-11-03):
