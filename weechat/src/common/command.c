@@ -1026,8 +1026,12 @@ weechat_cmd_perl (int argc, char **argv)
     gui_printf (NULL,
                 _("WeeChat was build without Perl support.\n"
                 "Please rebuild WeeChat with "
-                "\"--enable-perl\" option for ./configure script\n");
+                "\"--enable-perl\" option for ./configure script\n"));
+    /* make gcc happy */
+    (void) argc;
+    (void) argv;
     #endif
+    
     return 0;
 }
 

@@ -23,10 +23,10 @@
 #ifndef __WEECHAT_PLUGINS_H
 #define __WEECHAT_PLUGINS_H 1
 
-#define PLUGIN_UNKNOWN 0
-#define PLUGIN_PERL    1
-#define PLUGIN_PYTHON  2
-#define PLUGIN_RUBY    3
+#define PLUGIN_TYPE_UNKNOWN 0
+#define PLUGIN_TYPE_PERL    1
+#define PLUGIN_TYPE_PYTHON  2
+#define PLUGIN_TYPE_RUBY    3
 
 typedef struct t_plugin_handler t_plugin_handler;
 

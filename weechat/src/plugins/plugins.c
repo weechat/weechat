@@ -66,15 +66,15 @@ plugin_load (int plugin_type, char *filename)
     #ifdef PLUGINS
     switch (plugin_type)
     {
-        case PLUGIN_PERL:
+        case PLUGIN_TYPE_PERL:
             #ifdef PLUGIN_PERL
             wee_perl_load (filename);
             #endif
             break;
-        case PLUGIN_PYTHON:
+        case PLUGIN_TYPE_PYTHON:
             /* TODO: load Python script */
             break;
-        case PLUGIN_RUBY:
+        case PLUGIN_TYPE_RUBY:
             /* TODO: load Ruby script */
             break;
     }
@@ -91,15 +91,15 @@ plugin_unload (int plugin_type, char *scriptname)
     #ifdef PLUGINS
     switch (plugin_type)
     {
-        case PLUGIN_PERL:
+        case PLUGIN_TYPE_PERL:
             #ifdef PLUGIN_PERL
             wee_perl_unload (wee_perl_search (scriptname));
             #endif
             break;
-        case PLUGIN_PYTHON:
+        case PLUGIN_TYPE_PYTHON:
             /* TODO: load Python script */
             break;
-        case PLUGIN_RUBY:
+        case PLUGIN_TYPE_RUBY:
             /* TODO: load Ruby script */
             break;
     }
@@ -220,7 +220,7 @@ plugin_event_msg (char *irc_command, char *arguments)
         if (strcasecmp (ptr_plugin_handler->name, irc_command) == 0)
         {
             #ifdef PLUGIN_PERL
-            if (ptr_plugin_handler->plugin_type == PLUGIN_PERL)
+            if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PERL)
                 wee_perl_exec (ptr_plugin_handler->function_name, arguments);
             #endif
         }
@@ -248,7 +248,7 @@ plugin_exec_command (char *user_command, char *arguments)
         if (strcasecmp (ptr_plugin_handler->name, user_command) == 0)
         {
             #ifdef PLUGIN_PERL
-            if (ptr_plugin_handler->plugin_type == PLUGIN_PERL)
+            if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PERL)
                 wee_perl_exec (ptr_plugin_handler->function_name, arguments);
             #endif
             

@@ -135,21 +135,22 @@ static XS (XS_IRC_add_command_handler)
 {
     char *name, *function;
     int integer;
+    t_plugin_handler *ptr_plugin_handler;
     dXSARGS;
     
     name = SvPV (ST (0), integer);
     function = SvPV (ST (1), integer);
-    if (index_command_search (name))
+    if (!index_command_search (name))
+        index_command_new (name);
+    ptr_plugin_handler = plugin_handler_search (plugin_cmd_handlers, name);
+    if (ptr_plugin_handler)
     {
-        gui_printf (gui_current_window,
-                    _("Perl error: alias or command \"%s\" already exists!\n"),
-                    name);
+        free (ptr_plugin_handler->function_name);
+        ptr_plugin_handler->function_name = strdup (function);
     }
     else
-    {
         plugin_handler_add (&plugin_cmd_handlers, &last_plugin_cmd_handler,
                             PLUGIN_PERL, name, function);
-    }
     XSRETURN_EMPTY;
 }
 
