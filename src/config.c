@@ -973,7 +973,30 @@ config_create_default ()
     
     /* default alias */
     fputs ("\n[alias]\n", file);
-    fputs ("say=msg *\n", file);
+    fputs ("SAY=msg *\n", file);
+    fputs ("BYE=quit\n", file);
+    fputs ("EXIT=quit\n", file);
+    fputs ("SIGNOFF=quit\n", file);
+    fputs ("C=clear\n", file);
+    fputs ("CL=clear\n", file);
+    fputs ("CHAT=dcc chat\n", file);
+    fputs ("GET=dcc get\n", file);
+    fputs ("IG=ignore\n", file);
+    fputs ("J=join\n", file);
+    fputs ("K=kick\n", file);
+    fputs ("KB=kickban\n", file);
+    fputs ("KN=knockout\n", file);
+    fputs ("LEAVE=part\n", file);
+    fputs ("M=msg\n", file);
+    fputs ("MUB=unban *\n", file);
+    fputs ("N=names\n", file);
+    fputs ("T=topic\n", file);
+    fputs ("UB=unban\n", file);
+    fputs ("UNIG=unignore\n", file);
+    fputs ("W=who\n", file);
+    fputs ("WC=part\n", file);
+    fputs ("WI=whois\n", file);
+    fputs ("WW=whowas\n", file);
     
     /* default server is freenode */
     fputs ("\n[server]\n", file);
