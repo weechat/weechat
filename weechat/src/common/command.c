@@ -832,37 +832,113 @@ weechat_cmd_alias (char *arguments)
 int
 weechat_cmd_buffer (int argc, char **argv)
 {
-    int number;
+    t_gui_buffer *ptr_buffer;
+    long number;
     char *error;
     
     if ((argc == 0) || ((argc == 1) && (strcasecmp (argv[0], "list") == 0)))
     {
-        /* list opened bufferss */
-        gui_printf (NULL, "buffer list -- NOT DEVELOPED!\n");
+        /* list opened buffers */
+        
+        irc_display_prefix (NULL, PREFIX_INFO);
+        gui_printf (NULL, _("Opened buffers:\n"));
+        
+        for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+        {
+            irc_display_prefix (NULL, PREFIX_INFO);
+            gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "[");
+            gui_printf (NULL, "%d", ptr_buffer->number);
+            gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "] ");
+            
+            if (ptr_buffer->dcc)
+                gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "DCC\n");
+            else if (BUFFER_IS_SERVER (ptr_buffer))
+            {
+                gui_printf (NULL, _("Server: "));
+                gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
+                                  "%s\n", SERVER(ptr_buffer)->name);
+            }
+            else if (BUFFER_IS_CHANNEL (ptr_buffer))
+            {
+                gui_printf (NULL, _("Channel: "));
+                gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
+                                  "%s", CHANNEL(ptr_buffer)->name);
+                gui_printf (NULL, _(" (server: "));
+                gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
+                                  "%s", SERVER(ptr_buffer)->name);
+                gui_printf (NULL, ")\n");
+            }
+            else if (BUFFER_IS_PRIVATE (ptr_buffer))
+            {
+                gui_printf (NULL, _("Private with: "));
+                gui_printf_color (NULL, COLOR_WIN_CHAT_NICK,
+                                  "%s", CHANNEL(ptr_buffer)->name);
+                gui_printf (NULL, _(" (server: "));
+                gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
+                                  "%s", SERVER(ptr_buffer)->name);
+                gui_printf (NULL, ")\n");
+            }
+        }
     }
     else
     {
         if (strcasecmp (argv[0], "move") == 0)
         {
             /* move buffer to another number in the list */
-            gui_printf (NULL, "buffer move -- NOT DEVELOPED!\n");
-        }
-        else
-        {
-            number = strtol (argv[0], &error, 10);
-            if (error)
+            
+            if (argc < 2)
             {
+                gui_printf (NULL, _("%s missing arguments for \"%s\" command\n"),
+                            WEECHAT_ERROR, "buffer");
+                return -1;
+            }
+            
+            error = NULL;
+            number = strtol (((argv[1][0] == '+') || (argv[1][0] == '-')) ? argv[1] + 1 : argv[1],
+                             &error, 10);
+            if ((error) && (error[0] == '\0'))
+            {
+                if (argv[1][0] == '+')
+                    gui_move_buffer_to_number (gui_current_window,
+                                               gui_current_window->buffer->number + ((int) number));
+                else if (argv[1][0] == '-')
+                    gui_move_buffer_to_number (gui_current_window,
+                                               gui_current_window->buffer->number - ((int) number));
+                else
+                    gui_move_buffer_to_number (gui_current_window, (int) number);
+            }
+            else
+            {
+                /* invalid number */
                 gui_printf (NULL, _("%s incorrect buffer number\n"),
                             WEECHAT_ERROR);
                 return -1;
             }
-            if (!gui_switch_to_buffer_by_number (gui_current_window, number))
+        }
+        else
+        {
+            /* jump to buffer by number */
+            
+            error = NULL;
+            number = strtol (argv[0], &error, 10);
+            if ((error) && (error[0] == '\0'))
             {
-                gui_printf (NULL,
-                            _("%s buffer \"%s\" not found for \"%s\" command\n"),
-                            WEECHAT_ERROR, argv[0], "buffer");
+                if (!gui_switch_to_buffer_by_number (gui_current_window, (int) number))
+                {
+                    gui_printf (NULL,
+                                _("%s buffer \"%s\" not found for \"%s\" command\n"),
+                                WEECHAT_ERROR, argv[0], "buffer");
+                    return -1;
+                }
+            }
+            else
+            {
+                /* invalid number */
+                gui_printf (NULL, _("%s incorrect buffer number\n"),
+                            WEECHAT_ERROR);
                 return -1;
             }
+            
         }
     }
     return 0;

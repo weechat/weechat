@@ -257,6 +257,7 @@ extern void gui_move_previous_word (t_gui_buffer *);
 extern void gui_move_next_word (t_gui_buffer *);
 extern void gui_buffer_insert_string (t_gui_buffer *, char *, int);
 extern t_gui_buffer *gui_switch_to_buffer_by_number (t_gui_window *, int);
+extern void gui_move_buffer_to_number (t_gui_window *, int);
 /* GUI dependant functions */
 extern int gui_assign_color (int *, char *);
 extern int gui_get_color_by_name (char *);

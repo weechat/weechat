@@ -672,3 +672,88 @@ gui_switch_to_buffer_by_number (t_gui_window *window, int number)
     /* buffer not found */
     return NULL;
 }
+
+/*
+ * gui_switch_to_buffer_by_number: switch to another buffer with number
+ */
+
+void
+gui_move_buffer_to_number (t_gui_window *window, int number)
+{
+    t_gui_buffer *ptr_buffer;
+    int i;
+    
+    /* buffer number is already ok ? */
+    if (number == window->buffer->number)
+        return;
+    
+    if (number < 1)
+        number = 1;
+    
+    /* remove buffer from list */
+    if (window->buffer == gui_buffers)
+    {
+        gui_buffers = window->buffer->next_buffer;
+        gui_buffers->prev_buffer = NULL;
+    }
+    if (window->buffer == last_gui_buffer)
+    {
+        last_gui_buffer = window->buffer->prev_buffer;
+        last_gui_buffer->next_buffer = NULL;
+    }
+    if (window->buffer->prev_buffer)
+        (window->buffer->prev_buffer)->next_buffer = window->buffer->next_buffer;
+    if (window->buffer->next_buffer)
+        (window->buffer->next_buffer)->prev_buffer = window->buffer->prev_buffer;
+    
+    if (number == 1)
+    {
+        gui_buffers->prev_buffer = window->buffer;
+        window->buffer->prev_buffer = NULL;
+        window->buffer->next_buffer = gui_buffers;
+        gui_buffers = window->buffer;
+    }
+    else
+    {
+        /* assign new number to all buffers */
+        i = 1;
+        for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+        {
+            ptr_buffer->number = i++;
+        }
+        
+        /* search for new position in the list */
+        for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+        {
+            if (ptr_buffer->number == number)
+                break;
+        }
+        if (ptr_buffer)
+        {
+            /* insert before buffer found */
+            window->buffer->prev_buffer = ptr_buffer->prev_buffer;
+            window->buffer->next_buffer = ptr_buffer;
+            if (ptr_buffer->prev_buffer)
+                (ptr_buffer->prev_buffer)->next_buffer = window->buffer;
+            ptr_buffer->prev_buffer = window->buffer;
+        }
+        else
+        {
+            /* number not found (too big)? => add to end */
+            window->buffer->prev_buffer = last_gui_buffer;
+            window->buffer->next_buffer = NULL;
+            last_gui_buffer->next_buffer = window->buffer;
+            last_gui_buffer = window->buffer;
+        }
+        
+    }
+    
+    /* assign new number to all buffers */
+    i = 1;
+    for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    {
+        ptr_buffer->number = i++;
+    }
+    
+    gui_redraw_buffer (window->buffer);
+}
