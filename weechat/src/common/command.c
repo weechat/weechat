@@ -1148,29 +1148,31 @@ weechat_cmd_help (int argc, char **argv)
 
     if (argc == 0)
     {
-        irc_display_prefix (NULL, PREFIX_INFO);
+        gui_printf (NULL, "\n");
         gui_printf (NULL,
-                    _("> List of %s internal commands:\n"),
+                    _("%s internal commands:\n"),
                     PACKAGE_NAME);
+        gui_printf (NULL, "\n");
         for (i = 0; weechat_commands[i].command_name; i++)
         {
-            irc_display_prefix (NULL, PREFIX_INFO);
-            gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "    %s",
+            gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "   %s",
                               weechat_commands[i].command_name);
             gui_printf (NULL, " - %s\n",
                         _(weechat_commands[i].command_description));
         }
-        irc_display_prefix (NULL, PREFIX_INFO);
-        gui_printf (NULL, _("> List of IRC commands:\n"));
+        gui_printf (NULL, "\n");
+        gui_printf (NULL, _("IRC commands:\n"));
+        gui_printf (NULL, "\n");
         for (i = 0; irc_commands[i].command_name; i++)
+        {
             if (irc_commands[i].cmd_function_args || irc_commands[i].cmd_function_1arg)
             {
-                irc_display_prefix (NULL, PREFIX_INFO);
-                gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "    %s",
+                gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "   %s",
                                   irc_commands[i].command_name);
                 gui_printf (NULL, " - %s\n",
                             _(irc_commands[i].command_description));
             }
+        }
     }
     if (argc == 1)
     {
@@ -1178,24 +1180,19 @@ weechat_cmd_help (int argc, char **argv)
         {
             if (strcasecmp (weechat_commands[i].command_name, argv[0]) == 0)
             {
-                irc_display_prefix (NULL, PREFIX_INFO);
-                gui_printf (NULL, _("> Help on %s internal command \""), PACKAGE_NAME);
-                gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "%s",
-                                  weechat_commands[i].command_name);
-                gui_printf (NULL, "\":\n");
-                irc_display_prefix (NULL, PREFIX_INFO);
-                gui_printf (NULL, _("Syntax: "));
-                gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "/%s",
+                gui_printf (NULL, "\n");
+                gui_printf (NULL, "[w]");
+                gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "  /%s",
                                   weechat_commands[i].command_name);
                 if (weechat_commands[i].arguments &&
                     weechat_commands[i].arguments[0])
-                    gui_printf (NULL, " %s\n",
+                    gui_printf (NULL, "  %s\n",
                                 _(weechat_commands[i].arguments));
                 else
                     gui_printf (NULL, "\n");
                 if (weechat_commands[i].arguments_description &&
                     weechat_commands[i].arguments_description[0])
-                    gui_printf (NULL, "%s\n",
+                    gui_printf (NULL, "\n%s\n",
                                 _(weechat_commands[i].arguments_description));
                 return 0;
             }
@@ -1205,24 +1202,19 @@ weechat_cmd_help (int argc, char **argv)
             if ((strcasecmp (irc_commands[i].command_name, argv[0]) == 0)
                 && (irc_commands[i].cmd_function_args || irc_commands[i].cmd_function_1arg))
             {
-                irc_display_prefix (NULL, PREFIX_INFO);
-                gui_printf (NULL, _("> Help on IRC command \""));
-                gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "%s",
-                                  irc_commands[i].command_name);
-                gui_printf (NULL, "\":\n");
-                irc_display_prefix (NULL, PREFIX_INFO);
-                gui_printf (NULL, _("Syntax: "));
-                gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "/%s",
+                gui_printf (NULL, "\n");
+                gui_printf (NULL, "[i]");
+                gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "  /%s",
                                   irc_commands[i].command_name);
                 if (irc_commands[i].arguments &&
                     irc_commands[i].arguments[0])
-                    gui_printf (NULL, " %s\n",
+                    gui_printf (NULL, "  %s\n",
                                 _(irc_commands[i].arguments));
                 else
                     gui_printf (NULL, "\n");
                 if (irc_commands[i].arguments_description &&
                     irc_commands[i].arguments_description[0])
-                    gui_printf (NULL, "%s\n",
+                    gui_printf (NULL, "\n%s\n",
                                 _(irc_commands[i].arguments_description));
                 return 0;
             }

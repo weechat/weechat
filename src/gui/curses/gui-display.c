@@ -401,7 +401,10 @@ gui_get_line_num_splits (t_gui_window *window, t_gui_line *line)
         width = window->win_chat_width - line->length_align;
     }
     
-    return (length % width == 0) ? (length / width) : ((length / width) + 1);
+    if (length == 0)
+        return 1;
+    else
+        return (length % width == 0) ? (length / width) : ((length / width) + 1);
 }
 
 /*
@@ -2241,15 +2244,8 @@ gui_add_message (t_gui_buffer *buffer, int type, int color, char *message)
     if (pos)
     {
         pos[0] = '\n';
-        if ((buffer->num_displayed > 0) /*&& (gui_current_window->sub_lines == 0)*/)
-        {
-            /*if ((buffer->window->win_chat_cursor_y
-                + gui_get_line_num_splits (buffer, buffer->last_line)) >
-                (buffer->window->win_chat_height - 1))*/
-                gui_draw_buffer_chat (buffer, 0);
-            /*else
-                gui_display_line (buffer, buffer->last_line, 1);*/
-        }
+        if (buffer->num_displayed > 0)
+            gui_draw_buffer_chat (buffer, 0);
         if (buffer->num_displayed == 0)
         {
             if (3 - buffer->last_line->line_with_message -
