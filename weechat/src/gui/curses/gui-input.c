@@ -370,6 +370,7 @@ gui_read_keyb ()
                                 hotlist_free_all ();
                                 gui_redraw_buffer (gui_current_window->buffer);
                             }
+                            hotlist_initial_buffer = gui_current_window->buffer;
                             break;
                     }
                 }
