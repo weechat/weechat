@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2004-12-22
+ChangeLog - 2004-12-23
 
 
 Version 0.0.9 (under dev!):
+   * option "look_remove_colors_from_msgs" is now working
    * fixed display of nick mode changes
    * /notice command fixed (and display when received from server)
    * new keys: ctrl+A (=home), ctrl+E (=end), ctrl+W (=ctrl+backspace)

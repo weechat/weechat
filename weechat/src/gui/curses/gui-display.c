@@ -1993,7 +1993,8 @@ gui_printf_color_type (t_gui_buffer *buffer, int type, int color, char *message,
 {
     static char buf[8192];
     char timestamp[16];
-    char *pos;
+    char *pos, *buf2;
+    int i, j;
     va_list argptr;
     static time_t seconds;
     struct tm *date_tmp;
@@ -2022,12 +2023,40 @@ gui_printf_color_type (t_gui_buffer *buffer, int type, int color, char *message,
     vsnprintf (buf, sizeof (buf) - 1, message, argptr);
     va_end (argptr);
     
+    if (cfg_look_remove_colors_from_msgs)
+    {
+        buf2 = (char *) malloc (strlen (buf) + 2);
+        i = 0;
+        j = 0;
+        while (buf[i])
+        {
+            if (buf[i] == 0x02)
+                i++;
+            else
+            {
+                if (buf[i] == 0x03)
+                {
+                    if ((buf[i+1] >= '0') && (buf[i+1] <= '9')
+                    && (buf[i+2] >= '0') && (buf[i+2] <= '9'))
+                        i += 3;
+                    else
+                        i++;
+                }
+                else
+                    buf2[j++] = buf[i++];
+            }
+        }
+        buf2[j] = '\0';
+    }
+    else
+        buf2 = strdup (buf);
+    
     if (gui_init_ok)
     {
         seconds = time (NULL);
         date_tmp = localtime (&seconds);
         
-        pos = buf - 1;
+        pos = buf2 - 1;
         while (pos)
         {
             /* TODO: read timestamp format from config! */
@@ -2058,5 +2087,7 @@ gui_printf_color_type (t_gui_buffer *buffer, int type, int color, char *message,
         refresh ();*/
     }
     else
-        printf ("%s", buf);
+        printf ("%s", buf2);
+    
+    free (buf2);
 }
