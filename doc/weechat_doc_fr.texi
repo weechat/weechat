@@ -35,7 +35,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.0.7 - 27 ao@^ut 2004
+@subtitle Documentation pour WeeChat v0.0.8-pre2 - 03 Octobre 2004
 
 @image{weechat_image}
 
@@ -292,6 +292,9 @@ Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
 @item look_nick_completor
 La cha@^ine affich@'ee apr@`es la compl@'etion des utilisateurs@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ':'@*
+@item look_display_away
+Affiche un message sur tous les canaux pour l'absence/le retour@*
+Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
 @item look_infobar
 Active la barre d'infos@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
@@ -343,15 +346,18 @@ Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
 @item col_status
 Couleur pour la barre de statut@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'gray'@*
+@item col_status_delimiters
+Couleur pour les d@'elimiteurs de la barre de statut@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'cyan'@*
 @item col_status_data_msg
 Couleur pour une fen@^etre avec de nouvelles infos (barre de statut)@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightred'@*
-@item col_status_highlight
-Color for window with highlight (status bar)@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'yellow'@*
+@item col_status_highlight
+Couleur pour une fen@^etre avec un highlight (barre de statut)@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightmagenta'@*
 @item col_status_data_other
 Couleur pour une fen@^etre avec des nouvelles donn@'ees (pas des infos) (barre de statut)@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightmagenta'@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'gray'@*
 @item col_status_more
 Couleur pour une fen@^etre avec des nouvelles donn@'ees (barre de statut)@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'white'@*
@@ -403,13 +409,37 @@ Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'gray'@*
 @item col_nick_bg
 Couleur de fond pour les pseudos@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
+@item col_chat_dcc_selected
+Couleur pour le DCC s@'electionn@'e (fen@^etre de discussion)@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'white'@*
+@item col_dcc_waiting
+Couleur pour le statut dcc "attente"@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'white'@*
+@item col_dcc_connecting
+Couleur pour le statut dcc "connexion"@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'yellow'@*
+@item col_dcc_active
+Couleur pour le statut dcc "actif"@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightblue'@*
+@item col_dcc_done
+Couleur pour le statut dcc "termin@'e"@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightgreen'@*
+@item col_dcc_failed
+Couleur pour le statut dcc "@'echou@'e"@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightred'@*
+@item col_dcc_aborted
+Couleur pour le statut dcc "interrompu"@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightred'@*
 @item history_max_lines
 Nombre maximum de lignes dans l'historique pour un serveur/fen@^etre/fen@^etre priv@'ee (0 = sans limite)@*
 Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 4096@*
 @item history_max_commands
 Nombre maximum de commandes utilisateur dans l'historique (0 = sans limite)@*
 Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 100@*
-@item log_auto_channels
+@item log_auto_server
+Enregistrer automatiquement les messages du serveur@*
+Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
+@item log_auto_channel
 Enregistrer automatiquement les conversations des canaux@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
 @item log_auto_private
@@ -418,30 +448,21 @@ Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
 @item log_path
 Chemin pour les conversations sauvegard@'ees par WeeChat@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '~/.weechat/logs/'@*
-@item log_name
-Nom des conversations saivegard@'ees (%S == nom du serveur irc, %N == nom du canal (ou pseudo si fen@^etre priv@'ee)@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '%S,%N.weechatlog'@*
 @item log_timestamp
 Horodatage pour les conversations sauvegard@'ees (voir man strftime pour le format de date/heure)@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '~'@*
-@item log_start_string
-Texte @'ecrit en d@'emarrant la sauvegarde d'une discussion (voir man strftime pour le format de date/heure)@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '--- Log started %a %b %d %Y %H:%M:%s'@*
-@item log_end_string
-Texte @'ecrit @`a la fin d'une discussion sauvegard@'ees (voir man strftime pour le format de date/heure)@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '--- Log ended %a %b %d %Y %H:%M:%s'@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '%Y %b %d %H:%M:%S'@*
 @item dcc_auto_accept_files
 Accepte automatiquement les fichiers dcc entrants@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
-@item dcc_auto_accept_max_size
-Taille maximum pour un fichier entrant lorsqu'il est accept@'e automatiquement@*
-Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 0@*
+Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
 @item dcc_auto_accept_chats
 Accepte automatiquement les demandes de discussion dcc (@`a utiliser avec pr@'ecaution !)@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
 @item dcc_timeout
 D@'elai d'attente pour les requ@^etes dcc (en secondes)@*
 Type: entier (valeurs: entre 1 et 2147483647), valeur par d@'efaut: 300@*
+@item dcc_blocksize
+Taille de bloc pour les paquets dcc en octets (d@'efaut: 1024)@*
+Type: entier (valeurs: entre 1024 et 102400), valeur par d@'efaut: 1024@*
 @item dcc_download_path
 Chemin pour @'ecrire les fichiers re@,{c}us par dcc (par d@'efaut: r@'epertoire de l'utilisateur)@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '~'@*
@@ -580,17 +601,23 @@ Aller au tampon pr@'ec@'edent@*
 @item F8
 Aller @`a la fen@^etre suivante@*
 @*
+@item F10
+Effacer le dernier message de la barre d'infos@*
+@*
 @item Alt + fl@`eche gauche / Alt + fl@`eche droite
 Identique @`a F6 / F7@*
 @*
 @item Alt + A
 Sauter au tampon avec activit@'e (avec priorit@'e: highlight, message, autre)@*
 @*
+@item Alt + D
+Afficher les DCC en cours@*
+@*
+@item Alt + R
+Vide la hotlist (notification d'activité sur les autres tampons)@*
+@*
 @item Alt + chiffre (1-9)
 Sauter au tampon avec ce num@'ero@*
-@*
-@item F10
-Effacer le dernier message de la barre d'infos@*
 @*
 @end table
 
@@ -719,7 +746,8 @@ RFC 2812 : @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
 @code{IRC::add_message_handler ("privmsg", ma_fonction);}@*
 @code{sub ma_fonction}@*
 @code{@{ }@*
-@code{@ @ @ @ ($null, $canal, $message) = split ":",@@_[0],3;}@*
+@code{@ @ @ @ IRC::print ("serveur=$_[0]\n");}@*
+@code{@ @ @ @ ($null, $canal, $message) = split ":",$_[1],3;}@*
 @code{@ @ @ @ ($masque, $null, $canal) = split " ", $canal;}@*
 @code{@ @ @ @ IRC::print ("masque=$masque, canal=$canal, message=$message\n");}@*
 @code{@} }@*
@@ -744,9 +772,33 @@ ne seront plus accessibles tant que le script Perl sera charg@'e.
 @code{IRC::add_command_handler ("commande", ma_commande);}@*
 @code{sub ma_commande}@*
 @code{@{ }@*
-@code{@ @ @ @ IRC::print("Param@`etres : ".@@_[0]);}@*
+@code{@ @ @ @ IRC::print("Serveur: $_[0], param@`etres: $_[1]\n");}@*
 @code{@ @ @ @ return 0;}@*
 @code{@} }@*
+@*
+
+@item
+@command{IRC::get_info ( [serveur,] nom );}@*
+@*
+Obtenir des informations vari@'ees sur WeeChat, le serveur ou l'utilisateur.@*
+
+@emph{Param@`etres :}
+@itemize @minus
+@item @option{serveur}: nom interne du serveur
+@item @option{nom}: nom de l'info @`a obtenir :
+@itemize @minus
+@item @option{0 ou version}: obtenir la version de WeeChat
+@item @option{1 ou nick}: obtenir le pseudo
+@item @option{2 ou channel}: obtenir le nom du canal
+@item @option{3 ou server}: obtenir le nom du serveur
+@item @option{4 ou weechatdir}: obtenir le r@'epertoire maison de WeeChat
+@item @option{5 ou away}: obtenir le drapeau "away" du serveur
+@end itemize
+@end itemize
+@*
+@emph{Exemples :}@*
+@code{$version = get_info("version");}@*
+@code{$nick = get_info("freenode", "nick");}@*
 @*
 
 @end itemize
