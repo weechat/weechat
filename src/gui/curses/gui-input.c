@@ -362,6 +362,15 @@ gui_read_keyb ()
                                 }
                             }
                             break;
+                        /* Alt-R */
+                        case 'r':
+                        case 'R':
+                            if (hotlist)
+                            {
+                                hotlist_free_all ();
+                                gui_redraw_buffer (gui_current_window->buffer);
+                            }
+                            break;
                     }
                 }
                 break;

@@ -1,8 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2004-08-08
+ChangeLog - 2004-08-10
 
+
+Version 0.0.8 (under dev!):
+   * added key for clearing hotlist (Alt-R)
 
 Version 0.0.7 (2004-08-08):
    * new "col_status_delimiters" config option

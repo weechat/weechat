@@ -160,6 +160,18 @@ hotlist_free (t_weechat_hotlist *ptr_hotlist)
 }
 
 /*
+ * hotlist_free_all: free all hotlists
+ */
+
+void
+hotlist_free_all ()
+{
+    /* remove all hotlists */
+    while (hotlist)
+        hotlist_free (hotlist);
+}
+
+/*
  * hotlist_remove_buffer: remove a buffer from hotlist
  */
 
