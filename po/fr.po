@@ -191,7 +191,7 @@ msgid ""
 "nickname: nickname to send file or chat\n"
 "file: filename (on local host)"
 msgstr ""
-"action: 'send' (envoi de fichier) ou 'chat' (disuccion)\n"
+"action: 'send' (envoi de fichier) ou 'chat' (discussion)\n"
 "pseudo: pseudo pour envoyer le fichier ou discuter\n"
 "fichier: nom du fichier (sur la machine locale)"
 
