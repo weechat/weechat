@@ -28,11 +28,12 @@
 #define CONFIG_SECTION_COLORS  1
 #define CONFIG_SECTION_HISTORY 2
 #define CONFIG_SECTION_LOG     3
-#define CONFIG_SECTION_DCC     4
-#define CONFIG_SECTION_PROXY   5
-#define CONFIG_SECTION_ALIAS   6
-#define CONFIG_SECTION_SERVER  7
-#define CONFIG_NUMBER_SECTIONS 8
+#define CONFIG_SECTION_IRC     4
+#define CONFIG_SECTION_DCC     5
+#define CONFIG_SECTION_PROXY   6
+#define CONFIG_SECTION_ALIAS   7
+#define CONFIG_SECTION_SERVER  8
+#define CONFIG_NUMBER_SECTIONS 9
 
 #define OPTION_TYPE_BOOLEAN         1   /* values: on/off                   */
 #define OPTION_TYPE_INT             2   /* values: from min to max          */
@@ -90,7 +91,6 @@ extern int cfg_look_nickmode;
 extern int cfg_look_nickmode_empty;
 extern char *cfg_look_no_nickname;
 extern char *cfg_look_completor;
-extern int cfg_look_display_away;
 extern int cfg_look_infobar;
 extern char *cfg_look_infobar_timestamp;
 extern int cfg_look_infobar_delay_highlight;
@@ -147,6 +147,11 @@ extern int cfg_log_auto_private;
 extern char *cfg_log_path;
 extern char *cfg_log_timestamp;
 extern int cfg_log_hide_nickserv_pwd;
+
+extern int cfg_irc_display_away;
+extern char *cfg_irc_default_msg_away;
+extern char *cfg_irc_default_msg_part;
+extern char *cfg_irc_default_msg_quit;
 
 extern int cfg_dcc_auto_accept_files;
 extern int cfg_dcc_auto_accept_chats;

@@ -49,6 +49,7 @@ t_config_section config_sections[CONFIG_NUMBER_SECTIONS] =
   { CONFIG_SECTION_COLORS, "colors" },
   { CONFIG_SECTION_HISTORY, "history" },
   { CONFIG_SECTION_LOG, "log" },
+  { CONFIG_SECTION_IRC, "irc" },
   { CONFIG_SECTION_DCC, "dcc" },
   { CONFIG_SECTION_PROXY, "proxy" },
   { CONFIG_SECTION_ALIAS, "alias" },
@@ -76,7 +77,6 @@ int cfg_look_nickmode;
 int cfg_look_nickmode_empty;
 char *cfg_look_no_nickname;
 char *cfg_look_completor;
-int cfg_look_display_away;
 int cfg_look_infobar;
 char *cfg_look_infobar_timestamp;
 int cfg_look_infobar_delay_highlight;
@@ -152,10 +152,6 @@ t_config_option weechat_options_look[] =
     N_("the string inserted after nick completion"),
     OPTION_TYPE_STRING, 0, 0, 0,
     ":", NULL, NULL, &cfg_look_completor, config_change_noop },
-  { "look_display_away", N_("display message to all channels when away"),
-    N_("display message to all channels when (un)marking as away"),
-    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_look_display_away, NULL, config_change_noop },
   { "look_infobar", N_("enable info bar"),
     N_("enable info bar"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
@@ -458,6 +454,33 @@ t_config_option weechat_options_log[] =
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
+/* config, irc section */
+
+int cfg_irc_display_away;
+char *cfg_irc_default_msg_away;
+char *cfg_irc_default_msg_part;
+char *cfg_irc_default_msg_quit;
+
+t_config_option weechat_options_irc[] =
+{ { "irc_display_away", N_("display message to all channels when away"),
+    N_("display message to all channels when (un)marking as away"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
+    NULL, NULL, &cfg_irc_display_away, NULL, config_change_noop },
+  { "irc_default_msg_away", N_("default message when away"),
+    N_("default message when away"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    "away", NULL, NULL, &cfg_irc_default_msg_away, config_change_noop },
+  { "irc_default_msg_part", N_("default part message (leaving channel)"),
+    N_("default part message (leaving channel)"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    "", NULL, NULL, &cfg_irc_default_msg_part, config_change_noop },
+  { "irc_default_msg_quit", N_("default quit message"),
+    N_("default quit message ('%v' will be replaced by WeeChat version in string)"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    "WeeChat %v", NULL, NULL, &cfg_irc_default_msg_quit, config_change_noop },
+  { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
+};
+
 /* config, dcc section */
 
 int cfg_dcc_auto_accept_files;
@@ -608,8 +631,8 @@ t_config_option weechat_options_server[] =
 
 t_config_option *weechat_options[CONFIG_NUMBER_SECTIONS] =
 { weechat_options_look, weechat_options_colors, weechat_options_history,
-  weechat_options_log, weechat_options_dcc, weechat_options_proxy,
-  NULL, weechat_options_server
+  weechat_options_log, weechat_options_irc, weechat_options_dcc,
+  weechat_options_proxy, NULL, weechat_options_server
 };
 
 
@@ -1159,8 +1182,7 @@ config_create_default ()
         if ((i != CONFIG_SECTION_ALIAS) && (i != CONFIG_SECTION_SERVER))
         {
             fprintf (file, "\n[%s]\n", config_sections[i].section_name);
-            if ((i == CONFIG_SECTION_HISTORY) || (i == CONFIG_SECTION_LOG) ||
-                (i == CONFIG_SECTION_DCC) || (i == CONFIG_SECTION_PROXY))
+            if (i == CONFIG_SECTION_PROXY)
                 fprintf (file,
                          "# WARNING!!! Options for section \"%s\" are not developed!\n",
                          config_sections[i].section_name);
@@ -1225,6 +1247,8 @@ config_create_default ()
     fprintf (file, "\n[server]\n");
     fprintf (file, "server_name=freenode\n");
     fprintf (file, "server_autoconnect=on\n");
+    fprintf (file, "server_autoreconnect=on\n");
+    fprintf (file, "server_autoreconnect_delay=30\n");
     fprintf (file, "server_address=irc.freenode.net\n");
     fprintf (file, "server_port=6667\n");
     fprintf (file, "server_password=\n");
@@ -1269,6 +1293,7 @@ config_create_default ()
     }
     
     fprintf (file, "server_command=\n");
+    fprintf (file, "server_command_delay=0\n");
     fprintf (file, "server_autojoin=\n");
     fprintf (file, "server_autorejoin=on\n");
     

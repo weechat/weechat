@@ -88,7 +88,8 @@ irc_cmd_send_admin (t_irc_server *server, char *arguments)
 int
 irc_cmd_send_away (t_irc_server *server, char *arguments)
 {
-    char *pos;
+    char *pos, *ptr_away_msg;
+    char *ptr_away_default_msg = "away";
     t_irc_server *ptr_server;
     time_t elapsed;
     char buffer[4096];
@@ -106,37 +107,37 @@ irc_cmd_send_away (t_irc_server *server, char *arguments)
         {
             if (ptr_server->is_connected)
             {
-                if (pos)
+                if (ptr_server->is_away && (!pos))
                 {
-                    ptr_server->is_away = 1;
-                    ptr_server->away_time = time (NULL);
-                    server_sendf (ptr_server, "AWAY :%s\r\n", pos);
-                    if (cfg_look_display_away)
+                    server_sendf (ptr_server, "AWAY\r\n");
+                    ptr_server->is_away = 0;
+                    if (server->away_time != 0)
                     {
-                        snprintf (buffer, sizeof (buffer), "is away: %s", pos);
-                        irc_send_me_all_channels (ptr_server, buffer);
+                        elapsed = time (NULL) - ptr_server->away_time;
+                        ptr_server->away_time = 0;
+                        if (cfg_irc_display_away)
+                        {
+                            snprintf (buffer, sizeof (buffer),
+                                      "is back (gone %.2ld:%.2ld:%.2ld)",
+                                      elapsed / 3600,
+                                      (elapsed / 60) % 60,
+                                      elapsed % 60);
+                            irc_send_me_all_channels (ptr_server, buffer);
+                        }
                     }
                 }
                 else
                 {
-                    if (ptr_server->is_away)
+                    ptr_server->is_away = 1;
+                    ptr_server->away_time = time (NULL);
+                    ptr_away_msg = (pos) ? pos :
+                                   ((cfg_irc_default_msg_away && cfg_irc_default_msg_away[0]) ?
+                                   cfg_irc_default_msg_away : ptr_away_default_msg);
+                    server_sendf (ptr_server, "AWAY :%s\r\n", ptr_away_msg);
+                    if (cfg_irc_display_away)
                     {
-                        server_sendf (ptr_server, "AWAY\r\n");
-                        ptr_server->is_away = 0;
-                        if (server->away_time != 0)
-                        {
-                            elapsed = time (NULL) - ptr_server->away_time;
-                            ptr_server->away_time = 0;
-                            if (cfg_look_display_away)
-                            {
-                                snprintf (buffer, sizeof (buffer),
-                                          "is back (gone %.2ld:%.2ld:%.2ld)",
-                                          elapsed / 3600,
-                                          (elapsed / 60) % 60,
-                                          elapsed % 60);
-                                irc_send_me_all_channels (ptr_server, buffer);
-                            }
-                        }
+                        snprintf (buffer, sizeof (buffer), "is away: %s", ptr_away_msg);
+                        irc_send_me_all_channels (ptr_server, buffer);
                     }
                 }
             }
@@ -144,37 +145,37 @@ irc_cmd_send_away (t_irc_server *server, char *arguments)
     }
     else
     {
-        if (arguments)
+        if (server->is_away && (!arguments))
         {
-            server->is_away = 1;
-            server->away_time = time (NULL);
-            server_sendf (server, "AWAY :%s\r\n", arguments);
-            if (cfg_look_display_away)
+            server_sendf (server, "AWAY\r\n");
+            server->is_away = 0;
+            if (server->away_time != 0)
             {
-                snprintf (buffer, sizeof (buffer), "is away: %s", arguments);
-                irc_send_me_all_channels (server, buffer);
+                elapsed = time (NULL) - server->away_time;
+                server->away_time = 0;
+                if (cfg_irc_display_away)
+                {
+                    snprintf (buffer, sizeof (buffer),
+                              "is back (gone %.2ld:%.2ld:%.2ld)",
+                              elapsed / 3600,
+                              (elapsed / 60) % 60,
+                              elapsed % 60);
+                    irc_send_me_all_channels (server, buffer);
+                }
             }
         }
         else
         {
-            if (server->is_away)
+            server->is_away = 1;
+            server->away_time = time (NULL);
+            ptr_away_msg = (arguments) ? arguments :
+                                   ((cfg_irc_default_msg_away && cfg_irc_default_msg_away[0]) ?
+                                   cfg_irc_default_msg_away : ptr_away_default_msg);
+            server_sendf (server, "AWAY :%s\r\n", ptr_away_msg);
+            if (cfg_irc_display_away)
             {
-                server_sendf (server, "AWAY\r\n");
-                server->is_away = 0;
-                if (server->away_time != 0)
-                {
-                    elapsed = time (NULL) - server->away_time;
-                    server->away_time = 0;
-                    if (cfg_look_display_away)
-                    {
-                        snprintf (buffer, sizeof (buffer),
-                                  "is back (gone %.2ld:%.2ld:%.2ld)",
-                                  elapsed / 3600,
-                                  (elapsed / 60) % 60,
-                                  elapsed % 60);
-                        irc_send_me_all_channels (server, buffer);
-                    }
-                }
+                snprintf (buffer, sizeof (buffer), "is away: %s", ptr_away_msg);
+                irc_send_me_all_channels (server, buffer);
             }
         }
     }
@@ -881,7 +882,14 @@ irc_cmd_send_part (t_irc_server *server, char *arguments)
     if (pos_args)
         server_sendf (server, "PART %s :%s\r\n", channel_name, pos_args);
     else
-        server_sendf (server, "PART %s\r\n", channel_name);
+    {
+        if (cfg_irc_default_msg_part && cfg_irc_default_msg_part[0])
+            server_sendf (server, "PART %s :%s\r\n",
+                          channel_name, cfg_irc_default_msg_part);
+        else
+            server_sendf (server, "PART %s\r\n", channel_name);
+    }
+        
     return 0;
 }
 
@@ -987,6 +995,7 @@ int
 irc_cmd_send_quit (t_irc_server *server, char *arguments)
 {
     t_irc_server *ptr_server;
+    char *pos, buffer[4096];
     
     /* make gcc happy */
     (void) server;
@@ -999,7 +1008,26 @@ irc_cmd_send_quit (t_irc_server *server, char *arguments)
             if (arguments)
                 server_sendf (ptr_server, "QUIT :%s\r\n", arguments);
             else
-                server_sendf (ptr_server, "QUIT\r\n");
+            {
+                if (cfg_irc_default_msg_quit && cfg_irc_default_msg_quit[0])
+                {
+                    pos = strstr (cfg_irc_default_msg_quit, "%v");
+                    if (pos)
+                    {
+                        pos[0] = '\0';
+                        snprintf (buffer, sizeof (buffer), "%s%s%s",
+                                  cfg_irc_default_msg_quit, PACKAGE_VERSION,
+                                  pos + 2);
+                        pos[0] = '%';
+                    }
+                    else
+                        snprintf (buffer, sizeof (buffer), "%s",
+                                  cfg_irc_default_msg_quit);
+                    server_sendf (ptr_server, "QUIT :%s\r\n", buffer);
+                }
+                else
+                    server_sendf (ptr_server, "QUIT\r\n");
+            }
         }
     }
     quit_weechat = 1;
