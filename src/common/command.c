@@ -92,14 +92,11 @@ t_weechat_command weechat_commands[] =
     N_("[file]"), N_("file: filename for writing config"),
     0, 1, weechat_cmd_save, NULL },
   { "set", N_("set config parameters"),
-    N_("[option [value]]"), N_("option: name of an option\nvalue: value for option"),
+    N_("[option[=value]]"), N_("option: name of an option\nvalue: value for option"),
     0, MAX_ARGS, NULL, weechat_cmd_set },
   { "unalias", N_("remove an alias"),
     N_("alias_name"), N_("alias_name: name of alias to remove"),
     1, 1, NULL, weechat_cmd_unalias },
-  { "unset", N_("reset config parameters"),
-    N_("option"), N_("option: name of an option"),
-    1, 1, NULL, weechat_cmd_unset },
   { "window", N_("manage windows"),
     N_("[action]"),
     N_("action: action to do:\n"
@@ -1687,17 +1684,15 @@ weechat_cmd_set (char *arguments)
     if (arguments && arguments[0])
     {
         option = arguments;
-        value = strchr (option, ' ');
+        value = strchr (option, '=');
         if (value)
         {
             value[0] = '\0';
             value++;
-            while (value[0] == ' ')
-                value++;
         }
     }
     
-    if (value && value[0])
+    if (value)
     {
         ptr_option = config_option_search (option);
         if (ptr_option)
@@ -1792,17 +1787,17 @@ weechat_cmd_set (char *arguments)
         }
         if (number_found == 0)
         {
-            if (value)
+            if (option)
                 gui_printf (NULL, _("No config option found with \"%s\"\n"),
-                            value);
+                            option);
             else
-                gui_printf (NULL, _("No config option found with \"%s\"\n"));
+                gui_printf (NULL, _("No config option found\n"));
         }
         else
         {
-            if (value)
+            if (option)
                 gui_printf (NULL, _("%d config option(s) found with \"%s\"\n"),
-                            number_found, value);
+                            number_found, option);
             else
                 gui_printf (NULL, _("%d config option(s) found\n"),
                             number_found);
@@ -1835,46 +1830,6 @@ weechat_cmd_unalias (char *arguments)
         alias_free (ptr_alias);
     gui_printf (NULL, _("Alias \"%s\" removed\n"),
                 arguments);
-    return 0;
-}
-
-/*
- * weechat_cmd_unset: reset options
- */
-
-int
-weechat_cmd_unset (char *arguments)
-{
-    t_config_option *ptr_option;
-
-    ptr_option = config_option_search (arguments);
-    if (ptr_option)
-    {
-        if (ptr_option->handler_change == NULL)
-        {
-            gui_printf (NULL,
-                        _("%s option \"%s\" can not be changed while WeeChat is running\n"),
-                        WEECHAT_ERROR, arguments);
-        }
-        else
-        {
-            if (config_option_set_value (ptr_option, "") == 0)
-            {
-                (void) (ptr_option->handler_change());
-                gui_printf (NULL, "[%s]\n", config_get_section (ptr_option));
-                gui_printf (NULL, "  %s =\n", arguments);
-            }
-            else
-                gui_printf (NULL, _("%s option \"%s\" can not be reset (use "
-                            "/set command to change this option)\n"),
-                            WEECHAT_ERROR, arguments);
-        }
-    }
-    else
-    {
-        gui_printf (NULL, _("%s config option \"%s\" not found\n"),
-                    WEECHAT_ERROR, arguments);
-    }
     return 0;
 }
 
