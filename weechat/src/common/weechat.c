@@ -248,6 +248,57 @@ void wee_display_config_options ()
 }
 
 /*
+ * wee_display_commands: display WeeChat and/or IRC commands
+ */
+
+void wee_display_commands (int weechat_cmd, int irc_cmd)
+{
+    int i;
+    
+    if (weechat_cmd)
+    {
+        printf (_("%s internal commands:\n"), PACKAGE_NAME);
+        printf ("\n");
+        for (i = 0; weechat_commands[i].command_name; i++)
+        {
+            printf ("* %s", weechat_commands[i].command_name);
+            if (weechat_commands[i].arguments &&
+                weechat_commands[i].arguments[0])
+                printf ("  %s\n", _(weechat_commands[i].arguments));
+            else
+                printf ("\n");
+            if (weechat_commands[i].arguments_description &&
+                weechat_commands[i].arguments_description[0])
+                printf ("\n%s\n\n",
+                    _(weechat_commands[i].arguments_description));
+        }
+    }
+    
+    if (irc_cmd)
+    {
+        printf (_("IRC commands:\n"));
+        printf ("\n");
+        for (i = 0; irc_commands[i].command_name; i++)
+        {
+            if (irc_commands[i].cmd_function_args ||
+                irc_commands[i].cmd_function_1arg)
+            {
+                printf ("* %s", irc_commands[i].command_name);
+                if (irc_commands[i].arguments &&
+                    irc_commands[i].arguments[0])
+                    printf ("  %s\n", _(irc_commands[i].arguments));
+                else
+                    printf ("\n");
+                if (irc_commands[i].arguments_description &&
+                    irc_commands[i].arguments_description[0])
+                    printf ("\n%s\n\n",
+                        _(irc_commands[i].arguments_description));
+            }
+        }
+    }
+}
+
+/*
  * wee_parse_args: parse command line args
  */
 
@@ -274,6 +325,12 @@ wee_parse_args (int argc, char *argv[])
             printf ("%s", WEE_USAGE2);
             wee_shutdown (EXIT_SUCCESS);
         }
+        if ((strcmp (argv[i], "-i") == 0)
+            || (strcmp (argv[i], "--irc-commands") == 0))
+        {
+            wee_display_commands (0, 1);
+            wee_shutdown (EXIT_SUCCESS);
+        }
         else if ((strcmp (argv[i], "-l") == 0)
                  || (strcmp (argv[i], "--license") == 0))
         {
@@ -284,6 +341,12 @@ wee_parse_args (int argc, char *argv[])
                  || (strcmp (argv[i], "--version") == 0))
         {
             printf (PACKAGE_VERSION "\n");
+            wee_shutdown (EXIT_SUCCESS);
+        }
+        if ((strcmp (argv[i], "-w") == 0)
+            || (strcmp (argv[i], "--weechat-commands") == 0))
+        {
+            wee_display_commands (1, 0);
             wee_shutdown (EXIT_SUCCESS);
         }
         else if ((strncasecmp (argv[i], "irc://", 6) == 0))

@@ -81,10 +81,12 @@
     "   or: %s [irc://[nickname[:password]@]irc.example.org[:port][/channel] ...]\n\n"
 
 #define WEE_USAGE2 \
-    "  -c, --config        config file help (list of options)\n" \
-    "  -h, --help          this help screen\n" \
-    "  -l, --license       display WeeChat license\n" \
-    "  -v, --version       display WeeChat version\n\n"
+    "  -c, --config            display config file options\n" \
+    "  -h, --help              this help screen\n" \
+    "  -i, --irc-commands      display IRC commands\n" \
+    "  -l, --license           display WeeChat license\n" \
+    "  -v, --version           display WeeChat version\n" \
+    "  -w, --weechat-commands  display WeeChat commands\n\n"
 
 /* directory separator, depending on OS */
 

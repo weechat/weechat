@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-03-05
+ChangeLog - 2005-03-10
 
 
 Version 0.1.1 (under dev!):
@@ -9,6 +9,7 @@ Version 0.1.1 (under dev!):
    * added new display engine: doesn't cut words at end of lines
    * added DCC send and DCC chat
    * added spanish translation
+   * added --irc-commands and --weechat-commands command line options
    * connection to IRC server is now made by child process (non blocking)
    * added support for UnrealIrcd ("~" for chan owner, "&" for chan admin)
    * new key for window switch (now: F5/F6=switch buffer, F7/F8=switch window)
