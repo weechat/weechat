@@ -103,7 +103,7 @@ wee_log_printf (char *message, ...)
                  date_tmp->tm_hour, date_tmp->tm_min, date_tmp->tm_sec,
                  buffer);
     else
-        fprintf (log_file, "[????-??-?? ??:??:??] %s", buffer);
+        fprintf (log_file, "%s", buffer);
     fflush (log_file);
 }
 
