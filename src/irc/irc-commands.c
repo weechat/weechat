@@ -145,6 +145,12 @@ t_irc_command irc_commands[] =
     N_("data"),
     N_("data: raw data to send"),
     1, MAX_ARGS, 1, NULL, irc_cmd_send_quote, NULL },
+  { "rehash", N_("tell the server to reload its config file"),
+    "", "",
+    0, 0, 1, NULL, irc_cmd_send_rehash, NULL },
+  { "restart", N_("tell the server to restart itself"),
+    "", "",
+    0, 0, 1, NULL, irc_cmd_send_restart, NULL },
   { "topic", N_("get/set channel topic"),
     N_("[channel] [topic]"), N_("channel: channel name\ntopic: new topic for channel "
     "(if topic is \"-delete\" then topic is deleted)"),
@@ -958,6 +964,34 @@ int
 irc_cmd_send_quote (t_irc_server *server, char *arguments)
 {
     server_sendf (server, "%s\r\n", arguments);
+    return 0;
+}
+
+/*
+ * irc_cmd_send_rehash: tell the server to reload its config file
+ */
+
+int
+irc_cmd_send_rehash (t_irc_server *server, char *arguments)
+{
+    /* make gcc happy */
+    (void) arguments;
+    
+    server_sendf (server, "REHASH\r\n");
+    return 0;
+}
+
+/*
+ * irc_cmd_send_restart: tell the server to restart itself
+ */
+
+int
+irc_cmd_send_restart (t_irc_server *server, char *arguments)
+{
+    /* make gcc happy */
+    (void) arguments;
+    
+    server_sendf (server, "RESTART\r\n");
     return 0;
 }
 
