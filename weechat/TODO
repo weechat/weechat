@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2003-10-04
+TODO - 2003-10-05
 
 Legend:
   #  done
@@ -15,8 +15,8 @@ v0.0.2:
 
  * IRC protocol:
     + "/mode" command: change the user/channels modes
-    - "/rehash" command: tell the server to reload its config file
-    - "/restart" command: tell the server to restart itself
+    # "/rehash" command: tell the server to reload its config file
+    # "/restart" command: tell the server to restart itself
 
  * WeeChat commands:
     # "/connect" and "/disconnect" commands (for multiservers use)
@@ -30,9 +30,9 @@ v0.0.2:
  * Configuration:
     # write config file
     # add alias definition
-    - add an option for each server in order to run commands on join
+    # add an option for each server in order to run commands on join
       (example: /msg nickserv identify password)
-    - channel list for auto-join (for each server)
+    # channel list for auto-join (for each server)
 
 
 Future versions:
