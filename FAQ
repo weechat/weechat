@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-WeeChat FAQ, 2004-01-01
+WeeChat FAQ, 2004-03-07
 
 
 1- Compiling
@@ -109,7 +109,7 @@ WeeChat FAQ, 2004-01-01
 3.1  How should I report bugs?
 
   There is 3 ways to report bugs:
-    1. you can join us on IRC: irc.freenode.net, channel #eci
+    1. you can join us on IRC: irc.freenode.net, channel #weechat
        If no one can help you (huh?), try another way, see below.
     2. you can submit your bug at this url:
        http://savannah.nongnu.org/bugs/?func=addbug&group=weechat
@@ -121,7 +121,7 @@ WeeChat FAQ, 2004-01-01
 3.2  How should I submit patches?
 
   There is 3 ways to submit patches:
-    1. you can join us on IRC: irc.freenode.net, channel #eci
+    1. you can join us on IRC: irc.freenode.net, channel #weechat
        If no one can help you (huh?), try another way, see below.
     2. you can submit your patch at this url:
        http://savannah.nongnu.org/patch/?func=addpatch&group=weechat
@@ -133,7 +133,7 @@ WeeChat FAQ, 2004-01-01
 3.3  How should I submit new feature request?
 
   There is 2 ways to submit your feature request:
-    1. you can join us on IRC: irc.freenode.net, channel #eci
+    1. you can join us on IRC: irc.freenode.net, channel #weechat
        If no one can help you (huh?), try another way, see below.
     2. you can mail your feature request, look at support page for developer's
        mails:
