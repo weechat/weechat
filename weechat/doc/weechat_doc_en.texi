@@ -8,12 +8,19 @@
 @c
 @c Copyright (c) 2004 by FlashCode <flashcode@flashtux.org>
 @c
-@c Permission is granted to copy, distribute and/or modify this document
-@c under the terms of the GNU Free Documentation License, Version 1.2
-@c or any later version published by the Free Software Foundation;
-@c with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
-@c A copy of the license is included in the section entitled "GNU
-@c Free Documentation License".
+@c This manual is free software; you can redistribute it and/or modify
+@c it under the terms of the GNU General Public License as published by
+@c the Free Software Foundation; either version 2 of the License, or
+@c (at your option) any later version.
+@c
+@c This manual is distributed in the hope that it will be useful,
+@c but WITHOUT ANY WARRANTY; without even the implied warranty of
+@c MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+@c GNU General Public License for more details.
+@c
+@c You should have received a copy of the GNU General Public License
+@c along with this program; if not, write to the Free Software
+@c Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 @c pdf : texi2pdf weechat_doc_en.texi
 @c html: makeinfo --html --no-split --number-sections weechat_doc_en.texi
@@ -28,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.0.6-pre1 - May, 13 2004
+@subtitle Documentation for WeeChat v0.0.6-pre1 - May, 31 2004
 
 @image{weechat_image}
 
