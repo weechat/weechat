@@ -15,7 +15,7 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
-if GUI_CURSES
+if GUI_NCURSES
 curses_dir=curses
 endif
 
