@@ -502,11 +502,11 @@ server_msgq_add_buffer (t_irc_server *server, char *buffer)
             }
             else
             {
-                pos = strchr (buffer, '\0');
-                if (pos)
+                if (server->unterminated_message)
                 {
                     server->unterminated_message =
                         (char *) realloc (server->unterminated_message,
+                                          strlen (server->unterminated_message) +
                                           strlen (buffer) + 1);
                     if (!server->unterminated_message)
                     {
@@ -516,13 +516,21 @@ server_msgq_add_buffer (t_irc_server *server, char *buffer)
                                     WEECHAT_ERROR);
                     }
                     else
-                        strcpy (server->unterminated_message, buffer);
-                    return;
+                        strcat (server->unterminated_message, buffer);
                 }
-                irc_display_prefix (server->buffer, PREFIX_ERROR);
-                gui_printf (server->buffer,
-                            _("%s unable to explode received buffer\n"),
-                            WEECHAT_ERROR);
+                else
+                {
+                    server->unterminated_message = strdup (buffer);
+                    if (!server->unterminated_message)
+                    {
+                        irc_display_prefix (server->buffer, PREFIX_ERROR);
+                        gui_printf (server->buffer,
+                                    _("%s not enough memory for received IRC message\n"),
+                                    WEECHAT_ERROR);
+                    }
+                }
+                
+                return;
             }
         }
     }
@@ -565,9 +573,9 @@ server_msgq_flush ()
                 
                 if (ptr_data[0] == ':')
                 {
-                    pos = strchr(ptr_data, ' ');
+                    pos = strchr (ptr_data, ' ');
                     pos[0] = '\0';
-                    host = ptr_data+1;
+                    host = ptr_data + 1;
                     pos++;
                 }
                 else
@@ -577,15 +585,15 @@ server_msgq_flush ()
                 {
                     while (pos[0] == ' ')
                         pos++;
-                    pos2 = strchr(pos, ' ');
+                    pos2 = strchr (pos, ' ');
                     if (pos2 != NULL)
                     {
                         pos2[0] = '\0';
-                        command = strdup(pos);
+                        command = strdup (pos);
                         pos2++;
                         while (pos2[0] == ' ')
                             pos2++;
-                        args = (pos2[0] == ':') ? pos2+1 : pos2;
+                        args = (pos2[0] == ':') ? pos2 + 1 : pos2;
                     }
                 }
                 
