@@ -1,13 +1,14 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2003-10-27
+ChangeLog - 2003-11-02
 
 
 Version 0.0.3 (under dev!):
    * ./configure script to build WeeChat
    * nicks are now correctly sorted (op, halfop, voice, other)
    * fixed crash when entering text without any server connection
+   * fixed crash when /set command is executed
    * fixed display bug (text was blinking when scrolling)
    * french translation
    * new IRC command: /stats, /service, /squit, /motd, /lusers, /links, /time,
