@@ -51,29 +51,32 @@ AC_FUNC_SELECT_ARGTYPES
 AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([gethostbyname gethostname gettimeofday inet_ntoa memset mkdir select setlocale socket strcasecmp strchr strdup strncasecmp strpbrk strrchr strstr uname])
 
+AH_VERBATIM([DEBUG], [#undef DEBUG])
+
 AC_ARG_ENABLE(curses, [  --disable-curses        Turn off Curses interface (default=auto)],,enable_curses=yes)
 AC_ARG_ENABLE(gtk,    [  --enable-gtk            Turn on Gtk+ interface (default=no)],enable_gtk=yes,enable_gtk=no)
 AC_ARG_ENABLE(qt,     [  --enable-qt             Turn on Qt interface (default=no)],enable_qt=yes,enable_qt=no)
+AC_ARG_ENABLE(perl,   [  --enable-perl           Turn on Perl plugins (default=no)],enable_perl=yes,enable_perl=no)
+AC_ARG_ENABLE(debug,  [  --enable-debug          Turn on debugging messages (default=no)],enable_debug=yes,enable_debug=no)
 
-enable_plugins=no
-enable_perl=no
-PERL_CFLAGS=
-enable_python=no
+enable_plugins="no"
+enable_python="no"
 PYTHON_CFLAGS=
-enable_ruby=no
+enable_ruby="no"
 RUBY_CFLAGS=
-enable_debug=no
-DEBUG_CFLAGS=
 
-AM_CONDITIONAL(GUI_CURSES, test "$enable_curses" = "yes")
-AM_CONDITIONAL(GUI_GTK,    test "$enable_gtk" = "yes")
-AM_CONDITIONAL(GUI_QT,     test "$enable_qt" = "yes")
+AM_CONDITIONAL(GUI_CURSES,    test "$enable_curses" = "yes")
+AM_CONDITIONAL(GUI_GTK,       test "$enable_gtk" = "yes")
+AM_CONDITIONAL(GUI_QT,        test "$enable_qt" = "yes")
+AM_CONDITIONAL(PLUGIN_PERL,   test "$enable_perl" = "yes")
+# AM_CONDITIONAL(PLUGIN_PYTHON, test "$enable_python" = "yes")
+# AM_CONDITIONAL(PLUGIN_RUBY,   test "$enable_ruby" = "yes")
 
 if test "x$enable_curses" = "xyes" ; then
     if test "$LIBCURSES_FOUND" = "0" ; then
         AC_MSG_ERROR([Curses library not found! Install Curses library or run ./configure with --disable-curses parameter.])
     fi
-    CURSES_LIBS=-lcurses
+    CURSES_LIBS="-lcurses"
     AC_SUBST(CURSES_LIBS)
 fi
 
@@ -87,12 +90,31 @@ if test "x$enable_gtk" = "xyes" ; then
     AC_SUBST(GTK_LIBS)
 fi
 
+PLUGIN_LIBS=
+
+if test "x$enable_perl" = "xyes" ; then
+    enable_plugins="yes"
+    PLUGIN_LIBS="$PLUGIN_LIBS ../../plugins/perl/lib_weechat_perl.a"
+    PERL_CFLAGS=`perl -MExtUtils::Embed -e ccopts`
+    PERL_LIBS=`perl -MExtUtils::Embed -e ldopts`
+    AC_SUBST(PERL_CFLAGS)
+    AC_SUBST(PERL_LIBS)
+fi
+
+AC_SUBST(PLUGIN_LIBS)
+
+if test "x$enable_debug" = "xyes" ; then
+    AC_DEFINE(DEBUG)
+fi
+
 CFLAGS="-Wall -W -pipe -O2"
 
 AC_OUTPUT([Makefile
            src/Makefile
            src/common/Makefile
            src/irc/Makefile
+           src/plugins/Makefile
+           src/plugins/perl/Makefile
            src/gui/Makefile
            src/gui/curses/Makefile
            src/gui/gtk/Makefile

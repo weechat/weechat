@@ -21,7 +21,7 @@ INCLUDES = $(GTK_CFLAGS)
 
 weechat_gtk_LDADD = ../../common/lib_weechat_main.a \
                     ../../irc/lib_weechat_irc.a \
-                    $(GTK_LIBS)
+                    $(GTK_LIBS) $(PLUGIN_LIBS)
 
 weechat_gtk_SOURCES = ../gui.h \
                       ../gui-common.c \

@@ -15,4 +15,17 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
-SUBDIRS = common irc plugins gui
+if PLUGIN_PERL
+perl_dir=perl
+endif
+
+# if PLUGIN_PYTHON
+# python_dir=python
+# endif
+
+# if PLUGIN_RUBY
+# ruby_dir=ruby
+# endif
+
+# SUBDIRS = $(perl_dir) $(python_dir) $(ruby_dir)
+SUBDIRS = $(perl_dir)

@@ -15,4 +15,8 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
-SUBDIRS = common irc plugins gui
+INCLUDES = $(PERL_CFLAGS)
+
+noinst_LIBRARIES = lib_weechat_perl.a
+
+lib_weechat_perl_a_SOURCES = perl.c

@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2003-11-03
+TODO - 2003-11-09
 
 Legend:
   #  done
@@ -10,17 +10,11 @@ Legend:
   ?  is this really necessary?
 
 
-v0.0.3:
+v0.0.4:
 ------
-
- * General:
-    # use of ./configure script for building WeeChat
  
  * IRC protocol:
-    # implement RFC 2812
     + "/mode" command: change the user/channels modes
-    # "/wallops" command: write the same string to all the
-      persons with the flag +w enable
 
  * WeeChat commands:
     + "/set" command: allow the user to set the WeeChat variables
@@ -28,14 +22,23 @@ v0.0.3:
       format, etc)
 
  * Interface:
+    + Gtk GUI
     + internationalization (traduce WeeChat in many languages)
 
  * Configuration:
-    # do not stop program if problem with options in config file
+    - add missing options for config file
+
+ * Plugins:
+    - add Perl plugin
+    - "/load" and "/unload" commands to (un)load extension scripts
+      (perl, python, ruby, ...)
 
 
 Future versions:
 ---------------
+
+ * General
+    - Windows version
 
  * IRC protocol:
     - "/dcc" command (for chat and sending/receiving files)
@@ -60,7 +63,6 @@ Future versions:
       channel/private
 
  * Interface:
-    + Gtk GUI
     - display current channel modes (example : #weechat(+nt))
     - interpret special chars in messages (color & bold for example)
     - many channel windows in one window/term (window split)
@@ -81,13 +83,9 @@ Future versions:
 
  * Configuration:
     - add key bindings to config file
-    - add missing options for config file
     - load config file after GUI (so init values by default (colors, ...) before
       loading config)
 
  * Plugins:
-    - add Perl plugin
     - add Python plugin
     - add Ruby plugin
-    - "/load" and "/unload" commands to (un)load extension scripts
-      (perl, python, ruby, ...)
