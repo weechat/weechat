@@ -210,7 +210,7 @@ Luego, lee las instructiones para Paquetes de fuentes - @xref{Paquetes de fuente
 * Ficheros de configuracion::
 * Atajos de teclado::
 * Comandos WeeChat::
-* FIFO pipe::
+* Canal FIFO::
 @end menu
 
 @node Iniciar WeeChat, Ficheros de configuracion, Uso, Uso
@@ -697,7 +697,7 @@ Saltar a la memoria temporal con ese n@'umero@*
 @*
 @end table
 
-@node Comandos WeeChat, FIFO pipe, Atajos de teclado, Uso
+@node Comandos WeeChat, Canal FIFO, Atajos de teclado, Uso
 @section Comandos WeeChat
 
 Comandos internos WeeChat:@*
@@ -1177,37 +1177,40 @@ destinatario: la respuesta deber@'ia concordar con esta m@'ascara@*
 
 @end table
 
-@node FIFO pipe, , Comandos WeeChat, Uso
-@section FIFO pipe
+@node Canal FIFO, , Comandos WeeChat, Uso
+@section Canal FIFO
 
-You can remote control WeeChat, by sending commands or text to a FIFO pipe
-(you have to enable option "irc_fifo_pipe", it is disabled by default).@*
-The FIFO pipe is located in ~/.weechat/ and is called "weechat_fifo_xxxxx"
-(where xxxxx is the process ID (PID) of running WeeChat).@*
-So if many WeeChat are running, you have many FIFO pipe, one for each session.@*
+Puedes controlar WeeChat a distantia, enviando comandos o texto a un canal FIFO
+(debes activar la opci@'on "irc_fifo_pipe" que est@'a desactivada por defecto).@*
+El canal FIFO est@'a dentro del directorio ~/.weechat/ y se llama
+"weechat_fifo_xxxxx" (donde xxxxx es el ID del proceso (PID) de WeeChat).@*
+Entonces si tienes varios WeeChat que se est@'an ejecutando, tendr@'as varios
+canales FIFO, uno por cada sesi@'on.@*
 @*
-The syntax for the FIFO pipe commands/text is:@*
-@command{server,channel *text or command here}@*
-where server and channel are optional, but if channel is here, server should be too.@*
+La sintaxis para enviar comandos o texto dentro del canal FIFO es la siguiente:@*
+@command{servidor,canal *texto o comando aqu@'i}@*
+donde el serviros y el canal son opcionales pero si precisa el canal, debes
+precisar tambi@'en el servidor.@*
 @*
-Some examples:
+Algunos ejemplos:
 @table @asis
-@item @bullet{} change your nick on freenode to "mynick|out":
+@item @bullet{} cambiar el seud@'onimo en freenode por "mynick|out":
 @*
 @command{echo "freenode */nick mynick|out" >~/.weechat/weechat_fifo_12345}
-@item @bullet{} display text on #weechat channel:
+@item @bullet{} escribir texto en el canal #weechat:
 @*
-@command{echo "freenode,#weechat *hello everybody!" >~/.weechat/weechat_fifo_12345}
-@item @bullet{} display text on current channel (buffer displayed by WeeChat):
+@command{echo "freenode,#weechat *@exclamdown{}Hola a todos!" >~/.weechat/weechat_fifo_12345}
+@item @bullet{} escribir texto en el canal corriente (el que se puede visualizar en WeeChat actualmente)
 @*
-@command{echo "*hello!" >~/.weechat/weechat_fifo_12345}@*
+@command{echo "*¡Hola!" >~/.weechat/weechat_fifo_12345}@*
 @*
-@b{Warning:} this is dangerous and you should not do that except if you know what you do!
-@item @bullet{} send 2 commands to unload/reload Perl scripts (you have to separate them with \n):
+@b{Advertencia:} esto es peligroso y no deber@'ias hacerlo.. salvo si lo que est@'as haciendo.
+@item @bullet{} enviar dos comandos para descargar y recargar los scripts Perl (tienes que separarlos con un \n):
 @command{echo -e "freenode */perl unload\nfreenode */perl autoload" >~/.weechat/weechat_fifo_12345}
 @end table
 @*
-You can write a script to send command to all running WeeChat at same time, for example:@*
+Puedes escribir un script que envia los comandos a todos los programas WeeChat
+que se est@'an ejecutando de momento. Por ejemplo:@*
 @verbatim
  #!/bin/sh
  if [ $# -eq 1 ]; then
@@ -1217,8 +1220,8 @@ You can write a script to send command to all running WeeChat at same time, for 
  fi
 @end verbatim
 @*
-If the script is called "auto_weechat_command", you can run it with:@*
-@command{./auto_weechat_command "freenode,#weechat *hello"}
+Si el script se llama "auto_weechat_command", puedes ejecutarlo hac@'i:@*
+@command{./auto_weechat_command "freenode,#weechat *Hola"}
 
 
 @c ******************************* Extensions *********************************
