@@ -3,10 +3,7 @@
 # GNU copyright 1997 to 1999 by Joey Hess.
 
 # Uncomment this to turn on verbose mode.
-#export DH_VERBOSE=1
-
-
-
+export DH_VERBOSE=1
 
 CFLAGS = -Wall -g
 
@@ -22,8 +19,7 @@ endif
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
-	# Add here commands to configure the package.
-
+	./configure --prefix=/usr --sysconfdir=/etc --enable-gtk
 	touch configure-stamp
 
 
@@ -31,21 +27,14 @@ build: build-stamp
 
 build-stamp: configure-stamp 
 	dh_testdir
-
-	# Add here commands to compile the package.
 	$(MAKE)
-	#/usr/bin/docbook-to-man debian/weechat.sgml > weechat.1
-
 	touch build-stamp
 
 clean:
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp configure-stamp
-
-	# Add here commands to clean up after the build process.
 	-$(MAKE) clean
-
 	dh_clean
 
 install: build
@@ -53,45 +42,40 @@ install: build
 	dh_testroot
 	dh_clean -k
 	dh_installdirs
-
-	# Add here commands to install the package into debian/weechat.
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/weechat
+	install -o root -g root -m 755 src/gui/curses/weechat-curses $(CURDIR)/debian/weechat-curses/usr/bin
+	install -o root -g root -m 755 src/gui/gtk/weechat-gtk $(CURDIR)/debian/weechat-gtk/usr/bin
 
 
 # Build architecture-independent files here.
 binary-indep: build install
-# We have nothing to do by default.
+	dh_testdir -pweechat-common
+	dh_testroot -pweechat-common
+	dh_installchangelogs -pweechat-common
+	dh_installdocs -pweechat-common
+	dh_installexamples -pweechat-common
+	dh_installman weechat.1 -pweechat-common
+	dh_compress -pweechat-common
+	dh_fixperms -pweechat-common
+	dh_installdeb -pweechat-common
+	dh_shlibdeps -pweechat-common
+	dh_gencontrol -pweechat-common
+	dh_md5sums -pweechat-common
+	dh_builddeb -pweechat-common
 
 # Build architecture-dependent files here.
 binary-arch: build install
-	dh_testdir
-	dh_testroot
-	dh_installchangelogs
-	dh_installdocs
-	dh_installexamples
-#	dh_install
-#	dh_installmenu
-#	dh_installdebconf	
-#	dh_installlogrotate
-#	dh_installemacsen
-#	dh_installpam
-#	dh_installmime
-#	dh_installinit
-#	dh_installcron
-#	dh_installinfo
-	dh_installman weechat.1
-	dh_link
-	dh_strip
-	dh_compress
-	dh_fixperms
-#	dh_perl
-#	dh_python
-#	dh_makeshlibs
-	dh_installdeb
-	dh_shlibdeps
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb
+	dh_testdir -a
+	dh_testroot -a
+	dh_link -a
+	dh_strip -a
+	dh_compress -a
+	dh_fixperms -a
+	dh_installdeb -a
+	dh_shlibdeps -a
+	dh_gencontrol -a
+	dh_md5sums -a
+	dh_builddeb -a
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install configure
