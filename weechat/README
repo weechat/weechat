@@ -46,6 +46,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 
 ---
-(1) only curses interface is available today
-(2) plugin interfaces are not yet developed
+(1) only Curses interface is available today
+(2) only Perl interface is available today
 (3) only GNU/Linux version is available today
