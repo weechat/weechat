@@ -124,7 +124,7 @@ t_irc_command irc_commands[] =
     N_("user/password: used to get privileges on current IRC server"),
     2, 2, 1, irc_cmd_send_oper, NULL, NULL },
   { "part", N_("leave a channel"),
-    N_("[channel[,channel]]"), N_("channel: channel name to join"),
+    N_("[channel[,channel]]"), N_("channel: channel name to leave"),
     0, MAX_ARGS, 1, NULL, irc_cmd_send_part, irc_cmd_recv_part },
   { "ping", N_("ping server"),
     N_("server1 [server2]"),
