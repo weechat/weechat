@@ -35,7 +35,7 @@
 
 @title WeeChat - Gui@'on de usuario.
 @subtitle Cliente IRC r@'apido, peque@~no y extensible
-@subtitle Documentaci@'on para WeeChat v0.1.1-cvs - 10 de marzo de 2005
+@subtitle Documentaci@'on para WeeChat v0.1.1-cvs - 11 de marzo de 2005
 
 @image{weechat_image}
 
@@ -246,6 +246,343 @@ Puedes editarlo para configurar WeeChat con las opciones deseadas, o tambi@'en p
 Enumeraci@'on de las opciones del fichero de configuraci@'on:@*
 
 @table @kbd
+
+@item look_set_title
+Define el t@'itulo de la ventana (el terminal para la interfaz Curses) con el nombre y la versi@'on@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
+@item look_startup_logo
+Mostrar el logotipo de WeeChat en el arranque@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
+@item look_startup_version
+Mostrar la versi@'on de Weechat en el arranque@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
+@item look_weechat_slogan
+Esl@'ogan de WeeChat (si est@'a vac@'io, el esl@'ogan no ser@'a utilizado)@*
+Typo: cadena (cualquier cadena), valor por defecto: 'the geekest IRC client!'@*
+@item look_charset_decode
+Juego de caracteres para decodificar los mensajes del servidor, ejemplos: UTF-8, ISO-8859-1 (si no se especifica, los mensajes no son convertidos)@*
+Typo: cadena (cualquier cadena), valor por defecto: 'UTF-8'@*
+@item look_charset_encode
+Juego de caracteres para codificar los mensajes enviados al servidor, ejemplos: UFT-8, ISO-8859-1 (si no se especifica, se utiliza el juego de caracteres local)@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
+@item look_charset_internal
+Juego de caracteres interno de WeeChat, deber@'ia ser ISO-xxxx aunque el locale sea UTF-8 (si no se especifica, se utiliza el juego de caracteres local)@*
+Typo: cadena (cualquier cadena), valor por defecto: 'ISO-8859-1'@*
+@item look_color_nicks
+Mostrar nombres de usuario con colores diferentes@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
+@item look_color_actions
+Mostrar acciones con colores diferentes@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
+@item look_remove_colors_from_msgs
+Quitar colores en los mensajes entrantes@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
+@item look_nicklist
+Mostrar ventana de usuarios (para las ventanas de canal)@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
+@item look_nicklist_position
+Posici@'on de la ventana de usuarios (arriba (top), izquierda (left), derecha (right, por defecto), abajo (bottom))@*
+Typo: cadena (valores: 'left', 'right', 'top', 'bottom'), valor por defecto: 'right'@*
+@item look_nicklist_min_size
+Tama@~no m@'inimo para la ventana de usuarios (ancho o alto, dependiendo de look_nicklist_position (0 = sin tama@~no m@'inimo))@*
+Typo: entero (valores: entre 0 y 100), valor por defecto: 0@*
+@item look_nicklist_max_size
+Tama@~no m@'aximo para la ventana de usuarios (ancho o alto, dependiendo de look_nicklist_position (0 = sin tama@~no m@'aximo, si min == max y > 0, entonces se fija el tama@~no))@*
+Typo: entero (valores: entre 0 y 100), valor por defecto: 0@*
+@item look_no_nickname
+Texto a mostrar en lugar del nick cuando no se est@'a conectado@*
+Typo: cadena (cualquier cadena), valor por defecto: '-cmd-'@*
+@item look_nickmode
+Mostrar modo del usuario ((half)op/voice) antes de cada usuario@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
+@item look_nickmode_empty
+Mostrar un espacio si el modo de usuario no es (half)op/voice@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
+@item look_nick_completor
+La cadena mostrada tras la finalizaci@'on de los nombres de usuario@*
+Typo: cadena (cualquier cadena), valor por defecto: ':'@*
+@item look_infobar
+Activa la barra de informaci@'on@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
+@item look_infobar_timestamp
+Fecha y hora para las conversaciones guardadas@*
+Typo: cadena (cualquier cadena), valor por defecto: '%B, %A %d %Y - %H:%M'@*
+@item look_infobar_delay_highlight
+Retraso (en segundos) para la notificaci@'on de mensajes en la barra de informaci@'on (0 = desactivar las notificaciones en la barra de informaci@'on)@*
+Typo: entero (valores: entre 0 y 2147483647), valor por defecto: 7@*
+@item col_title
+Color para la barra de t@'itulo@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
+@item col_title_bg
+Color de fondo para la barra de t@'itulo@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'blue'@*
+@item col_chat
+Color para el texto de conversaci@'on@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
+@item col_chat_time
+Color para la hora en la ventana de conversaci@'on@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
+@item col_chat_time_sep
+Color para el separador de la hora (ventana de conversaci@'on)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'brown'@*
+@item col_chat_prefix1
+Color para el primer o tercer car@'acter de prefijo@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightcyan'@*
+@item col_chat_prefix2
+Color para el car@'acter de en medio del prefijo@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'white'@*
+@item col_chat_nick
+Color para los nombres de usuario en las acciones (ventana de conversaci@'on)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightcyan'@*
+@item col_chat_host
+Color para los nombres de m@'aquina (ventana de conversaci@'on)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'cyan'@*
+@item col_chat_channel
+Color para los nombres de canal en las acciones (ventana de conversaci@'on)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'white'@*
+@item col_chat_dark
+Color para los separadores oscuros (ventana de conversaci@'on)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'green'@*
+@item col_chat_highlight
+Color para el alias subrayado (ventana de conversaci@'on)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'yellow'@*
+@item col_chat_bg
+Color de fondo para la ventana de conversaci@'on@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
+@item col_status
+Color para la barra de estado@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
+@item col_status_delimiters
+Color para los delimitadores de la barra de estado@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'cyan'@*
+@item col_status_data_msg
+Color para una ventana con mensajes nuevos (barra de estado)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'yellow'@*
+@item col_status_highlight
+Color para una ventana con resaltado (barra de estado)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightmagenta'@*
+@item col_status_data_other
+Color para una ventana con nuevos datos (no mensajes) (barra de estado)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
+@item col_status_more
+Color para una ventana con nuevos datos (barra de estado)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'white'@*
+@item col_status_bg
+Color de fondo para la ventana de estado@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'blue'@*
+@item col_infobar
+Color para el texto de la barra de informaci@'on@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'black'@*
+@item col_infobar_highlight
+Color para la notificaci@'on en la barra de informaci@'on@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'white'@*
+@item col_infobar_bg
+Color de fondo para la ventana de la barra de informaci@'on@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'cyan'@*
+@item col_input
+Color para el texto de entrada@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
+@item col_input_channel
+Color para el texto de entrada (nombre de canal)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'white'@*
+@item col_input_nick
+Color para el texto de entrada (alias)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightgreen'@*
+@item col_input_bg
+Color de fondo para la ventana de entrada@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
+@item col_nick
+Color para los nombres de usuario@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
+@item col_nick_away
+Color para los usuarios ausentes@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'cyan'@*
+@item col_nick_chanowner
+Color para el s@'imbolo de propietario de canal (especificado en unrealircd)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightgreen'@*
+@item col_nick_chanadmin
+Color para el s@'imbolo de administrador de canal (especificado en unrealircd)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightgreen'@*
+@item col_nick_op
+Color para el s@'imbolo de operador@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightgreen'@*
+@item col_nick_halfop
+Color para el s@'imbolo de semi-operador@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightmagenta'@*
+@item col_nick_voice
+Color para el s@'imbolo de voz@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'yellow'@*
+@item col_nick_sep
+Color para el separador de alias@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'blue'@*
+@item col_nick_self
+Color para el alias local@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'white'@*
+@item col_nick_private
+Color para el otro alias en la ventana privada@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
+@item col_nick_bg
+Color de fondo para los nombres de usuario@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
+@item col_chat_dcc_selected
+Color para el DCC seleccionado (ventana de conversaci@'on)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'white'@*
+@item col_dcc_waiting
+Color para el estado dcc "esperando"@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightcyan'@*
+@item col_dcc_connecting
+Color para el estado dcc "conectando"@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'yellow'@*
+@item col_dcc_active
+Color para el estado dcc "activo"@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightblue'@*
+@item col_dcc_done
+Color para el estado dcc "terminado"@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightgreen'@*
+@item col_dcc_failed
+Color para el estado dcc "fallo"@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightred'@*
+@item col_dcc_aborted
+Color para el estado dcc "abortado"@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightred'@*
+@item history_max_lines
+Número m@'aximo de l@'ineas en el hist@'orico para un servidor/canal/privado (0 = ilimitado)@*
+Typo: entero (valores: entre 0 y 2147483647), valor por defecto: 4096@*
+@item history_max_commands
+Número m@'aximo de comandos de usuario en el hist@'orico (0 = ilimitado)@*
+Typo: entero (valores: entre 0 y 2147483647), valor por defecto: 100@*
+@item log_auto_server
+Registrar autom@'aticamente los mensajes de servidor@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
+@item log_auto_channel
+Registrar autom@'aticamente las conversaciones de canal@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
+@item log_auto_private
+Registrar autom@'aticamente las conversaciones privadas@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
+@item log_plugin_msg
+Registrar mensajes de plugins (scripts)@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
+@item log_path
+Ruta para los archivos de registro (logs) de WeeChat@*
+Typo: cadena (cualquier cadena), valor por defecto: '~/.weechat/logs/'@*
+@item log_timestamp
+Fecha y hora para los registros (ver man strftime para el formato de fecha/hora)@*
+Typo: cadena (cualquier cadena), valor por defecto: '%Y %b %d %H:%M:%S'@*
+@item log_hide_nickserv_pwd
+Ocultar contrase@~na mostrada por nickserv@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
+@item irc_display_away
+Mostrar mensaje en todos los canales cuando se vuelva del estado ausente@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
+@item irc_default_msg_away
+Mensaje por defecto para el estado ausente@*
+Typo: cadena (cualquier cadena), valor por defecto: 'away'@*
+@item irc_default_msg_part
+Mensaje por defecto de salida (saliendo de un canal)@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
+@item irc_default_msg_quit
+Mensaje de fin por defecto ('%v' ser@'a reemplazado por la versi@'on de WeeChat en la cadena)@*
+Typo: cadena (cualquier cadena), valor por defecto: 'WeeChat %v'@*
+@item irc_away_check
+Intervalo entre dos comprobaciones de ausencia (en minutos, 0 = no comprobar)@*
+Typo: entero (valores: entre 0 y 2147483647), valor por defecto: 1@*
+@item irc_lag_check
+Intervalo entre dos medidas de lag (en segundos)@*
+Typo: entero (valores: entre 30 y 2147483647), valor por defecto: 60@*
+@item irc_lag_min_show
+Lag m@'inimo a mostrar (en segundos)@*
+Typo: entero (valores: entre 0 y 2147483647), valor por defecto: 1@*
+@item irc_lag_disconnect
+Desconexi@'on tras un lag importante (en minutos, 0 = no desconectar nunca)@*
+Typo: entero (valores: entre 0 y 2147483647), valor por defecto: 5@*
+@item dcc_auto_accept_files
+Aceptar autom@'aticamente los ficheros dcc entrantes@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
+@item dcc_auto_accept_chats
+Aceptar autom@'aticamente las peticiones de conversaci@'on dcc (¡utilizar con precauci@'on!)@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
+@item dcc_timeout
+Tiempo de espera para la petici@'on dcc (en segundos)@*
+Typo: entero (valores: entre 1 y 2147483647), valor por defecto: 300@*
+@item dcc_blocksize
+Tama@~no de bloque para los paquetes dcc en bytes (por defecto: 65536)@*
+Typo: entero (valores: entre 1024 y 102400), valor por defecto: 65536@*
+@item dcc_download_path
+Ruta para los ficheros recibidos con dcc (por defecto: directorio home del usuario)@*
+Typo: cadena (cualquier cadena), valor por defecto: '~'@*
+@item dcc_upload_path
+Ruta para la lectura de ficheros cuando se env@'ian a trav@'es de dcc (cuando no se especifica una ruta)@*
+Typo: cadena (cualquier cadena), valor por defecto: '~'@*
+@item dcc_convert_spaces
+Convertir los espacios a subrayados cuando se env@'ian los ficheros@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
+@item dcc_auto_rename
+Renombrar los ficheros recibidos si ya existen (a@~nadir '.1', '.2', ...)@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
+@item dcc_auto_resume
+Continuar autom@'aticamente la transferencia dcc si se ha perdido la conexi@'on con la m@'aquina remota@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
+@item proxy_use
+Utilizar un proxy para conectarse al servidor irc@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
+@item proxy_address
+Direcci@'on del servidor proxy (IP o nombre de m@'aquina)@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
+@item proxy_port
+Puerto para conectarse al servidor proxy@*
+Typo: entero (valores: entre 0 y 65535), valor por defecto: 1080@*
+@item proxy_password
+Contrase@~na para el servidor proxy@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
+@item server_name
+Nombre asociado al servidor IRC (para mostrar solamente)@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
+@item server_autoconnect
+Conexi@'on autom@'atica al servidor cuando WeeChat est@'e arrancando@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
+@item server_autoreconnect
+Reconexi@'on autom@'atica al servidor tras una desconexi@'on@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
+@item server_autoreconnect_delay
+Espera (en segundos) antes de intentar de nuevo una reconexi@'on al servidor@*
+Typo: entero (valores: entre 0 y 65535), valor por defecto: 30@*
+@item server_address
+Direcci@'on IP o nombre de m@'aquina del servidor IRC@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
+@item server_port
+Puerto para conectarse al servidor@*
+Typo: entero (valores: entre 0 y 65535), valor por defecto: 6667@*
+@item server_password
+Contrase@~na para el servidor IRC@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
+@item server_nick1
+Nombre de usuario a utilizar en el servidor IRC@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
+@item server_nick2
+Nombre de usuario alternativo para el servidor IRC (si el nombre de usuario ya est@'a en uso)@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
+@item server_nick3
+Segundo nombre de usuario alternativo a utilizar en el servidor IRC (si el nombre de usuario alternativo ya est@'a en uso)@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
+@item server_username
+Nombre de usuario para el servidor IRC@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
+@item server_realname
+Nombre real para el servidor IRC@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
+@item server_command
+Primer comando a ejecutar cuando se conecte a un servidor@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
+@item server_command_delay
+Espera (en segundos) despu@'es de que el comando sea ejecutado (ejemplo: dar algo de tiempo para la autenticaci@'on)@*
+Typo: entero (valores: entre 0 y 5), valor por defecto: 0@*
+@item server_autojoin
+Lista de canales (separados por comas) a unirse cuando se conecte a un servidor@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
+@item server_autorejoin
+Unirse de nuevo autom@'aticamente a los canales cuando sea expulsado@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 
 @end table
 
@@ -1020,12 +1357,6 @@ WeeChat est@'a desarollado por:@*
 @item 
 FlashCode
 <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
-@item
-Bounga
-<@email{bounga@@altern.org, bounga AT altern.org}>
-@item
-Xahlexx
-<@email{xahlexx@@tuxfamily.org, xahlexx AT tuxfamily.org}>
 
 @end itemize
 
@@ -1069,6 +1400,7 @@ Este manual documenta el cliente IRC WeeChat y hace parte del mismo proyecto Wee
 
 Copyright @copyright{} 2005 FlashCode
 <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>@*
+Traducido en espa@~nol por Iznogoud <@email{iznogoud@@dlfp.org, iznogoud AT dlfp.org}>@*
 @*
 Este documento puede ser utilizado seg@'un los t@'erminos de la licencia GNU General Public License
 versi@'on 2 o posterior.

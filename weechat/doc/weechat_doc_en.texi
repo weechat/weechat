@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.1.1-cvs - March, 10 2005
+@subtitle Documentation for WeeChat v0.1.1-cvs - March, 11 2005
 
 @image{weechat_image}
 
@@ -1358,12 +1358,6 @@ WeeChat is developed by:@*
 @item 
 FlashCode
 <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
-@item
-Bounga
-<@email{bounga@@altern.org, bounga AT altern.org}>
-@item
-Xahlexx
-<@email{xahlexx@@tuxfamily.org, xahlexx AT tuxfamily.org}>
 
 @end itemize
 
