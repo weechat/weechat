@@ -1158,9 +1158,19 @@ irc_cmd_recv_topic (t_irc_server *server, char *host, char *arguments)
 int
 irc_cmd_recv_004 (t_irc_server *server, char *host, char *arguments)
 {
+    char *pos;
+    
     /* make gcc happy */
     (void) host;
-    (void) arguments;
+    
+    pos = strchr (arguments, ' ');
+    if (pos)
+        pos[0] = '\0';
+    if (strcmp (server->nick, arguments) != 0)
+    {
+        free (server->nick);
+        server->nick = strdup (arguments);
+    }
     
     irc_cmd_recv_server_msg (server, host, arguments);
     
@@ -2222,6 +2232,18 @@ irc_cmd_recv_353 (t_irc_server *server, char *host, char *arguments)
     pos = strstr (arguments, " = ");
     if (pos)
         arguments = pos + 3;
+    else
+    {
+        pos = strstr (arguments, " * ");
+        if (pos)
+            arguments = pos + 3;
+        else
+        {
+            pos = strstr (arguments, " @ ");
+            if (pos)
+                arguments = pos + 3;
+        }
+    }
     pos = strchr (arguments, ' ');
     if (pos)
     {
