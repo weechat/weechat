@@ -35,7 +35,7 @@
 
 @title WeeChat - Guia do Utilizador
 @subtitle Cliente de IRC rapido, leve e extencivel
-@subtitle Documenta@,{c}@~ao do WeeChat v0.0.6 - 05 de Junho de 2004
+@subtitle Documenta@,{c}@~ao do WeeChat v0.0.6 - 12 de Junho de 2004
 
 @image{weechat_image}
 
@@ -154,7 +154,7 @@ Mandrake/Redhat (ou outra distro compat@'ivel com RPMs)@*
 Instala@,{c}@~ao : @kbd{rpm -i /chemin/weechat-x.y.z-1.i386.rpm}
 @item
 Gentoo@*
-Instala@,{c}@~ao : ver a documenta@,{c}@~ao da Gentoo
+Instala@,{c}@~ao : @kbd{emerge weechat}
 @item
 *BSD (non disponible !)
 @item
@@ -176,7 +176,7 @@ Nota: Para compilar certas interfaces, podes passar par@^ametros
 ao ./configure, escreve @kbd{./configure --help} para veres as op@,{c}@~oes.@*
 
 Obter os direitos do root e instalar o Weechat :@*
-@kbd{su -}@*
+@kbd{su}@*
 (escreve aqui a palavra-passe do superutilizador)@*
 @kbd{make install}@*
 
