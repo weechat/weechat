@@ -330,6 +330,7 @@ gui_read_keyb ()
                             }
                             break;
                         /* Alt-number */
+                        case 48: /* Alt-0 */
                         case 49: /* Alt-1 */
                         case 50: /* Alt-2 */
                         case 51: /* Alt-3 */
@@ -339,7 +340,7 @@ gui_read_keyb ()
                         case 55: /* Alt-7 */
                         case 56: /* Alt-8 */
                         case 57: /* Alt-9 */
-                            gui_switch_to_buffer_by_number (gui_current_window, key - 48);
+                            gui_switch_to_buffer_by_number (gui_current_window, (key == 48) ? 10 : key - 48);
                             break;
                         /* Alt-A */
                         case 'a':
