@@ -89,6 +89,26 @@ dcc_free (t_dcc *ptr_dcc)
 }
 
 /*
+ * dcc_close: close a DCC connection
+ */
+
+void
+dcc_close (t_dcc *ptr_dcc, int status)
+{
+    ptr_dcc->status = status;
+    if (ptr_dcc->sock != -1)
+    {
+        close (ptr_dcc->sock);
+        ptr_dcc->sock = -1;
+    }
+    if (ptr_dcc->file != -1)
+    {
+        close (ptr_dcc->file);
+        ptr_dcc->file = -1;
+    }
+}
+
+/*
  * dcc_add: add a DCC file to queue
  */
 
@@ -97,6 +117,8 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
          unsigned int size)
 {
     t_dcc *new_dcc;
+    int num;
+    char *filename2;
     
     if ((new_dcc = (t_dcc *) malloc (sizeof (t_dcc))) == NULL)
     {
@@ -112,14 +134,15 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
     new_dcc->sock = -1;
     new_dcc->file = -1;
     new_dcc->filename = strdup (filename);
+    new_dcc->local_filename = NULL;
     new_dcc->size = size;
     new_dcc->pos = 0;
     new_dcc->next_dcc = dcc_list;
     dcc_list = new_dcc;
     
-    gui_printf (NULL, "Incoming DCC file: type:%d, nick:%s, address:%d.%d.%d.%d, "
-                "port=%d, name=%s, size=%lu\n",
-                type, nick,
+    gui_printf (NULL, "Incoming DCC file: from %s, address:%d.%d.%d.%d, "
+                "port=%d, name=%s, size=%lu bytes\n",
+                nick,
                 addr >> 24, (addr >> 16) & 0xff, (addr >> 8) & 0xff, addr & 0xff,
                 port, filename, size);
     
@@ -129,9 +152,47 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
         if (new_dcc->sock == -1)
             new_dcc->status = DCC_FAILED;
         else
+        {
             new_dcc->status = DCC_ACTIVE;
+            new_dcc->local_filename = (char *) malloc (strlen (cfg_dcc_download_path) +
+                                                       strlen (nick) +
+                                                       strlen (filename) + 4);
+            if (!new_dcc->local_filename)
+            {
+                new_dcc->status = DCC_FAILED;
+                return NULL;
+            }
+            strcpy (new_dcc->local_filename, cfg_dcc_download_path);
+            if (new_dcc->local_filename[strlen (new_dcc->local_filename) - 1] != '/')
+                strcat (new_dcc->local_filename, "/");
+            strcat (new_dcc->local_filename, nick);
+            strcat (new_dcc->local_filename, ".");
+            strcat (new_dcc->local_filename, filename);
+            if (access (new_dcc->local_filename, F_OK) == 0)
+            {
+                filename2 = (char *) malloc (strlen (new_dcc->local_filename) + 16);
+                if (!filename2)
+                {
+                    new_dcc->status = DCC_FAILED;
+                    return NULL;
+                }
+                num = 0;
+                do
+                {
+                    num++;
+                    sprintf (filename2, "%s.%d", new_dcc->local_filename, num);
+                }
+                while (access (filename2, F_OK) == 0);
+                
+                free (new_dcc->local_filename);
+                new_dcc->local_filename = strdup (filename2);
+                free (filename2);
+            }
+            new_dcc->file = open (new_dcc->local_filename,
+                                  O_CREAT | O_TRUNC | O_WRONLY,
+                                  0644);
+        }
     }
-        
     
     return new_dcc;
 }
@@ -158,25 +219,23 @@ dcc_handle ()
                 if (num != -1)
                 {
                     if (num == 0)
-                    {
-                        ptr_dcc->status = DCC_FAILED;
-                        close (ptr_dcc->sock);
-                        ptr_dcc->sock = -1;
-                    }
+                        dcc_close (ptr_dcc, DCC_FAILED);
                     else
                     {
-                        gui_printf (NULL, "DCC: file \"%s\": %d bytes received\n",
-                                    ptr_dcc->filename, num);
+                        if (write (ptr_dcc->file, buffer, num) == -1)
+                        {
+                            dcc_close (ptr_dcc, DCC_FAILED);
+                            return;
+                        }
                         ptr_dcc->pos += (unsigned long) num;
                         pos = htonl (ptr_dcc->pos);
                         send (ptr_dcc->sock, (char *) &pos, 4, 0);
                         if (ptr_dcc->pos >= ptr_dcc->size)
                         {
-                            ptr_dcc->status = DCC_DONE;
-                            gui_printf (NULL, "DCC: file \"%s\": done!\n",
-                                        ptr_dcc->filename);
-                            close (ptr_dcc->sock);
-                            ptr_dcc->sock = -1;
+                            gui_printf (NULL,
+                                        _("DCC: file \"%s\" received from \"%s\": done!\n"),
+                                        ptr_dcc->filename, ptr_dcc->nick);
+                            dcc_close (ptr_dcc, DCC_DONE);
                         }
                     }
                 }

@@ -186,7 +186,8 @@ struct t_dcc
     char *nick;                     /* remote nick                          */
     int sock;                       /* socket for connection                */
     int file;                       /* local file (for reading or writing)  */
-    char *filename;                 /* local filename                       */
+    char *filename;                 /* filename                             */
+    char *local_filename;           /* local filename                       */
     unsigned long size;             /* file size                            */
     unsigned long pos;              /* number of bytes received/sent        */
     t_dcc *next_dcc;                /* link to next dcc file/chat           */
@@ -245,6 +246,8 @@ extern int nick_get_max_length (t_irc_channel *);
 extern void dcc_send ();
 extern t_dcc *dcc_add (t_irc_server *, int, unsigned long, int, char *, char *,
                        unsigned int);
+extern void dcc_handle ();
+extern void dcc_end ();
 
 /* IRC display (irc-diplay.c) */
 
