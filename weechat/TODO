@@ -22,7 +22,7 @@ v0.0.7:
 
  * Interface:
     + split terminal in multiple windows (horizontally/vertically)
-    + hotlist (channels with activity) and auto-jump to channels
+    + hotlist (channels with activity) and auto-switch to channels
     + internationalization (traduce WeeChat in many languages)
 
  * Configuration:

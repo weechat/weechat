@@ -37,12 +37,12 @@
  */
 
 int
-nick_find_color (t_irc_channel *channel, t_irc_nick *nick)
+nick_find_color (t_irc_nick *nick)
 {
     int i, color;
     
     color = 0;
-    for (i = 0; i < strlen(nick->nick); i++)
+    for (i = strlen (nick->nick) - 1; i >= 0; i--)
     {
         color += (int)(nick->nick[i]);
     }
@@ -179,7 +179,7 @@ nick_new (t_irc_channel *channel, char *nick_name,
     if (strcasecmp (new_nick->nick, SERVER(channel->buffer)->nick) == 0)
         new_nick->color = COLOR_WIN_NICK_SELF;
     else
-        new_nick->color = nick_find_color (channel, new_nick);
+        new_nick->color = nick_find_color (new_nick);
 
     nick_insert_sorted (channel, new_nick);
     
@@ -222,7 +222,7 @@ nick_change (t_irc_channel *channel, t_irc_nick *nick, char *new_nick)
     if (strcasecmp (nick->nick, SERVER(channel->buffer)->nick) == 0)
         nick->color = COLOR_WIN_NICK_SELF;
     else
-        nick->color = nick_find_color (channel, nick);
+        nick->color = nick_find_color (nick);
     
     /* insert again nick into sorted list */
     nick_resort (channel, nick);

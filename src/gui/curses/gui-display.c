@@ -35,6 +35,7 @@
 #include "../../common/weechat.h"
 #include "../gui.h"
 #include "../../common/weeconfig.h"
+#include "../../common/hotlist.h"
 #include "../../irc/irc.h"
 
 
@@ -788,7 +789,7 @@ void
 gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
 {
     t_gui_window *ptr_win;
-    t_gui_buffer *ptr_buffer;
+    t_weechat_hotlist *ptr_hotlist;
     char format_more[32];
     int i, first_mode;
     
@@ -804,120 +805,96 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
             wrefresh (ptr_win->win_status);
         }
         wmove (ptr_win->win_status, 0, 0);
-        for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+        if (SERVER(ptr_win->buffer) && SERVER(ptr_win->buffer)->name)
         {
-            if (SERVER(ptr_buffer) && !CHANNEL(ptr_buffer))
+            gui_window_set_color (ptr_win->win_status,
+                                  COLOR_WIN_STATUS);
+            wprintw (ptr_win->win_status, "[%s] ", SERVER(ptr_win->buffer)->name);
+        }
+        if (SERVER(ptr_win->buffer) && !CHANNEL(ptr_win->buffer))
+        {
+            gui_window_set_color (ptr_win->win_status,
+                                  COLOR_WIN_STATUS);
+            if (SERVER(ptr_win->buffer)->is_connected)
+                wprintw (ptr_win->win_status, "%d:[%s] ",
+                         ptr_win->buffer->number, SERVER(ptr_win->buffer)->name);
+            else
+                wprintw (ptr_win->win_status, "%d:(%s) ",
+                         ptr_win->buffer->number, SERVER(ptr_win->buffer)->name);
+        }
+        if (SERVER(ptr_win->buffer) && CHANNEL(ptr_win->buffer))
+        {
+            gui_window_set_color (ptr_win->win_status,
+                                  COLOR_WIN_STATUS);
+            wprintw (ptr_win->win_status, "%d:%s",
+                     ptr_win->buffer->number,
+                     CHANNEL(ptr_win->buffer)->name);
+            if (ptr_win->buffer == CHANNEL(ptr_win->buffer)->buffer)
             {
-                if (ptr_win->buffer == SERVER(ptr_buffer)->buffer)
+                /* display channel modes */
+                wprintw (ptr_win->win_status, "(");
+                i = 0;
+                first_mode = 1;
+                while (CHANNEL(ptr_win->buffer)->modes[i])
                 {
-                    if (ptr_buffer->unread_data)
+                    if (CHANNEL(ptr_win->buffer)->modes[i] != ' ')
                     {
-                        if (ptr_buffer->unread_data > 1)
-                            gui_window_set_color (ptr_win->win_status,
-                                                  COLOR_WIN_STATUS_DATA_MSG);
-                        else
-                            gui_window_set_color (ptr_win->win_status,
-                                                  COLOR_WIN_STATUS_DATA_OTHER);
-                    }
-                    else
-                        gui_window_set_color (ptr_win->win_status,
-                                              COLOR_WIN_STATUS_ACTIVE);
-                }
-                else
-                {
-                    if (SERVER(ptr_buffer)->buffer &&
-                        ((SERVER(ptr_buffer)->buffer)->unread_data))
-                    {
-                        if (SERVER(ptr_buffer)->buffer->unread_data > 1)
-                            gui_window_set_color (ptr_win->win_status,
-                                                  COLOR_WIN_STATUS_DATA_MSG);
-                        else
-                            gui_window_set_color (ptr_win->win_status,
-                                                  COLOR_WIN_STATUS_DATA_OTHER);
-                    }
-                    else
-                        gui_window_set_color (ptr_win->win_status,
-                                              COLOR_WIN_STATUS);
-                }
-                if (SERVER(ptr_buffer)->is_connected)
-                    wprintw (ptr_win->win_status, "%d:[%s] ",
-                             ptr_buffer->number, SERVER(ptr_buffer)->name);
-                else
-                    wprintw (ptr_win->win_status, "%d:(%s) ",
-                             ptr_buffer->number, SERVER(ptr_buffer)->name);
-            }
-            if (SERVER(ptr_buffer) && CHANNEL(ptr_buffer))
-            {
-                if (ptr_win->buffer == CHANNEL(ptr_buffer)->buffer)
-                {
-                    if ((CHANNEL(ptr_buffer)->buffer) &&
-                        (CHANNEL(ptr_buffer)->buffer->unread_data))
-                    {
-                        if (CHANNEL(ptr_buffer)->buffer->unread_data > 1)
-                            gui_window_set_color (ptr_win->win_status,
-                                                  COLOR_WIN_STATUS_DATA_MSG);
-                        else
-                            gui_window_set_color (ptr_win->win_status,
-                                                  COLOR_WIN_STATUS_DATA_OTHER);
-                    }
-                    else
-                        gui_window_set_color (ptr_win->win_status,
-                                              COLOR_WIN_STATUS_ACTIVE);
-                }
-                else
-                {
-                    if ((CHANNEL(ptr_buffer)->buffer) &&
-                        (CHANNEL(ptr_buffer)->buffer->unread_data))
-                    {
-                        if (CHANNEL(ptr_buffer)->buffer->unread_data > 1)
-                            gui_window_set_color (ptr_win->win_status,
-                                                  COLOR_WIN_STATUS_DATA_MSG);
-                        else
-                            gui_window_set_color (ptr_win->win_status,
-                                                  COLOR_WIN_STATUS_DATA_OTHER);
-                    }
-                    else
-                        gui_window_set_color (ptr_win->win_status,
-                                              COLOR_WIN_STATUS);
-                }
-                wprintw (ptr_win->win_status, "%d:%s",
-                         ptr_buffer->number,
-                         CHANNEL(ptr_buffer)->name);
-                if (ptr_win->buffer == CHANNEL(ptr_buffer)->buffer)
-                {
-                    /* display channel modes */
-                    wprintw (ptr_win->win_status, "(");
-                    i = 0;
-                    first_mode = 1;
-                    while (CHANNEL(ptr_buffer)->modes[i])
-                    {
-                        if (CHANNEL(ptr_buffer)->modes[i] != ' ')
+                        if (first_mode)
                         {
-                            if (first_mode)
-                            {
-                                wprintw (ptr_win->win_status, "+");
-                                first_mode = 0;
-                            }
-                            wprintw (ptr_win->win_status, "%c",
-                                     CHANNEL(ptr_buffer)->modes[i]);
+                            wprintw (ptr_win->win_status, "+");
+                            first_mode = 0;
                         }
-                        i++;
+                        wprintw (ptr_win->win_status, "%c",
+                                 CHANNEL(ptr_win->buffer)->modes[i]);
                     }
-                    if (CHANNEL(ptr_buffer)->modes[CHANNEL_MODE_KEY] != ' ')
-                        wprintw (ptr_win->win_status, ",%s",
-                                 CHANNEL(ptr_buffer)->key);
-                    if (CHANNEL(ptr_buffer)->modes[CHANNEL_MODE_LIMIT] != ' ')
-                        wprintw (ptr_win->win_status, ",%d",
-                                 CHANNEL(ptr_buffer)->limit);
-                    wprintw (ptr_win->win_status, ")");
+                    i++;
                 }
-                wprintw (ptr_win->win_status, " ");
+                if (CHANNEL(ptr_win->buffer)->modes[CHANNEL_MODE_KEY] != ' ')
+                    wprintw (ptr_win->win_status, ",%s",
+                             CHANNEL(ptr_win->buffer)->key);
+                if (CHANNEL(ptr_win->buffer)->modes[CHANNEL_MODE_LIMIT] != ' ')
+                    wprintw (ptr_win->win_status, ",%d",
+                             CHANNEL(ptr_win->buffer)->limit);
+                wprintw (ptr_win->win_status, ")");
             }
-            if (!SERVER(ptr_buffer))
+            wprintw (ptr_win->win_status, " ");
+        }
+        if (!SERVER(ptr_win->buffer))
+        {
+            gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS);
+            wprintw (ptr_win->win_status, _("%d:[not connected] "),
+                     ptr_win->buffer->number);
+        }
+    
+        /* display list of other active windows (if any) with numbers */
+        if (hotlist)
+        {
+            gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS);
+            wprintw (ptr_win->win_status, _("Act: "));
+            for (ptr_hotlist = hotlist; ptr_hotlist;
+                 ptr_hotlist = ptr_hotlist->next_hotlist)
             {
-                gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS);
-                wprintw (ptr_win->win_status, _("%d:[not connected] "),
-                         ptr_buffer->number);
+                switch (ptr_hotlist->priority)
+                {
+                    case 0:
+                        gui_window_set_color (ptr_win->win_status,
+                                              COLOR_WIN_STATUS_DATA_OTHER);
+                        break;
+                    case 1:
+                        gui_window_set_color (ptr_win->win_status,
+                                              COLOR_WIN_STATUS_DATA_MSG);
+                        break;
+                    case 2:
+                        gui_window_set_color (ptr_win->win_status,
+                                              COLOR_WIN_STATUS_DATA_HIGHLIGHT);
+                        break;
+                }
+                wprintw (ptr_win->win_status, "%d",
+                         ptr_hotlist->buffer->number);
+                gui_window_set_color (ptr_win->win_status,
+                                      COLOR_WIN_STATUS);
+                if (ptr_hotlist->next_hotlist)
+                    wprintw (ptr_win->win_status, ",");
             }
         }
         
@@ -1239,6 +1216,8 @@ gui_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
     
     buffer->num_displayed++;
     buffer->unread_data = 0;
+    
+    hotlist_remove_buffer (buffer);
 }
 
 /*
@@ -1498,10 +1477,10 @@ gui_init_colors ()
             cfg_col_chat_highlight & A_CHARTEXT, cfg_col_chat_bg);
         init_pair (COLOR_WIN_STATUS,
             cfg_col_status & A_CHARTEXT, cfg_col_status_bg);
-        init_pair (COLOR_WIN_STATUS_ACTIVE,
-            cfg_col_status_active & A_CHARTEXT, cfg_col_status_bg);
         init_pair (COLOR_WIN_STATUS_DATA_MSG,
             cfg_col_status_data_msg & A_CHARTEXT, cfg_col_status_bg);
+        init_pair (COLOR_WIN_STATUS_DATA_HIGHLIGHT,
+            cfg_col_status_data_highlight & A_CHARTEXT, cfg_col_status_bg);
         init_pair (COLOR_WIN_STATUS_DATA_OTHER,
             cfg_col_status_data_other & A_CHARTEXT, cfg_col_status_bg);
         init_pair (COLOR_WIN_STATUS_MORE,
@@ -1552,8 +1531,8 @@ gui_init_colors ()
         color_attr[COLOR_WIN_CHAT_DARK - 1] = cfg_col_chat_dark & A_BOLD;
         color_attr[COLOR_WIN_CHAT_HIGHLIGHT - 1] = cfg_col_chat_highlight & A_BOLD;
         color_attr[COLOR_WIN_STATUS - 1] = cfg_col_status & A_BOLD;
-        color_attr[COLOR_WIN_STATUS_ACTIVE - 1] = cfg_col_status_active & A_BOLD;
         color_attr[COLOR_WIN_STATUS_DATA_MSG - 1] = cfg_col_status_data_msg & A_BOLD;
+        color_attr[COLOR_WIN_STATUS_DATA_HIGHLIGHT - 1] = cfg_col_status_data_highlight & A_BOLD;
         color_attr[COLOR_WIN_STATUS_DATA_OTHER - 1] = cfg_col_status_data_other & A_BOLD;
         color_attr[COLOR_WIN_STATUS_MORE - 1] = cfg_col_status_more & A_BOLD;
         color_attr[COLOR_WIN_INFOBAR - 1] = cfg_col_infobar & A_BOLD;
@@ -1703,6 +1682,7 @@ gui_add_message (t_gui_buffer *buffer, int type, int color, char *message)
             if (buffer->unread_data < 1 + buffer->last_line->line_with_message)
             {
                 buffer->unread_data = 1 + buffer->last_line->line_with_message;
+                hotlist_add (buffer->last_line->line_with_message, buffer);
                 gui_draw_buffer_status (buffer, 1);
             }
         }

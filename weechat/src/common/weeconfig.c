@@ -172,8 +172,8 @@ int cfg_col_chat_dark;
 int cfg_col_chat_highlight;
 int cfg_col_chat_bg;
 int cfg_col_status;
-int cfg_col_status_active;
 int cfg_col_status_data_msg;
+int cfg_col_status_data_highlight;
 int cfg_col_status_data_other;
 int cfg_col_status_more;
 int cfg_col_status_bg;
@@ -255,14 +255,14 @@ t_config_option weechat_options_colors[] =
     N_("color for status bar"),
     OPTION_TYPE_COLOR, 0, 0, 0,
     "gray", NULL, &cfg_col_status, NULL, &config_change_color },
-  { "col_status_active", N_("color for active window"),
-    N_("color for active window (status bar)"),
-    OPTION_TYPE_COLOR, 0, 0, 0,
-    "yellow", NULL, &cfg_col_status_active, NULL, &config_change_color },
   { "col_status_data_msg", N_("color for window with new messages"),
     N_("color for window with new messages (status bar)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
     "lightred", NULL, &cfg_col_status_data_msg, NULL, &config_change_color },
+  { "col_status_highlight", N_("color for window with highlight"),
+    N_("color for window with highlight (status bar)"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "yellow", NULL, &cfg_col_status_data_highlight, NULL, &config_change_color },
   { "col_status_data_other", N_("color for window with new data (not messages)"),
     N_("color for window with new data (not messages) (status bar)"),
     OPTION_TYPE_COLOR, 0, 0, 0,

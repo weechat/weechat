@@ -37,6 +37,7 @@
 #include "../gui.h"
 #include "../../common/weeconfig.h"
 #include "../../common/command.h"
+#include "../../common/hotlist.h"
 #include "../../irc/irc.h"
 
 #define KEY_ESCAPE 27
@@ -61,6 +62,16 @@ gui_read_keyb ()
             case KEY_RESIZE:
                 gui_calculate_pos_size (gui_current_window);
                 gui_redraw_buffer (gui_current_window->buffer);
+                break;
+            /* inactive function keys */
+            case KEY_F(1):
+            case KEY_F(2):
+            case KEY_F(3):
+            case KEY_F(4):
+            case KEY_F(5):
+            case KEY_F(9):
+            case KEY_F(11):
+            case KEY_F(12):
                 break;
             /* previous buffer in window */
             case KEY_F(6):
@@ -316,6 +327,26 @@ gui_read_keyb ()
                                 }
                             }
                             break;
+                        /* Alt-A */
+                        case 'a':
+                        case 'A':
+                            if (hotlist)
+                            {
+                                if (!hotlist_initial_buffer)
+                                    hotlist_initial_buffer = gui_current_window->buffer;
+                                gui_switch_to_buffer (gui_current_window, hotlist->buffer);
+                                gui_redraw_buffer (gui_current_window->buffer);
+                            }
+                            else
+                            {
+                                if (hotlist_initial_buffer)
+                                {
+                                    gui_switch_to_buffer (gui_current_window, hotlist_initial_buffer);
+                                    gui_redraw_buffer (gui_current_window->buffer);
+                                    hotlist_initial_buffer = NULL;
+                                }
+                            }
+                            break;
                     }
                 }
                 break;
@@ -341,8 +372,8 @@ gui_read_keyb ()
                 break;
             /* other key => add to input buffer */
             default:
-                /*gui_printf (gui_current_buffer,
-                    "[Debug] key pressed = %d, as octal: %o\n", key, key);*/
+                /*gui_printf (gui_current_window->buffer,
+                            "[Debug] key pressed = %d, as octal: %o\n", key, key);*/
                 new_char[0] = key;
                 new_char[1] = '\0';
                 gui_buffer_insert_string (gui_current_window->buffer,
