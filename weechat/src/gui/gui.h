@@ -26,7 +26,7 @@
 
 #define INPUT_BUFFER_BLOCK_SIZE 256
 
-#define NUM_COLORS                      39
+#define NUM_COLORS                      45
 #define COLOR_WIN_TITLE                 1
 #define COLOR_WIN_CHAT                  2
 #define COLOR_WIN_CHAT_TIME             3
@@ -59,6 +59,12 @@
 #define COLOR_WIN_NICK_FIRST            30
 #define COLOR_WIN_NICK_LAST             39
 #define COLOR_WIN_NICK_NUMBER           (COLOR_WIN_NICK_LAST - COLOR_WIN_NICK_FIRST + 1)
+#define COLOR_DCC_WAITING               40
+#define COLOR_DCC_CONNECTING            41
+#define COLOR_DCC_ACTIVE                42
+#define COLOR_DCC_DONE                  43
+#define COLOR_DCC_FAILED                44
+#define COLOR_DCC_ABORTED               45
 
 #define SERVER(buffer)  ((t_irc_server *)(buffer->server))
 #define CHANNEL(buffer) ((t_irc_channel *)(buffer->channel))

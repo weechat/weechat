@@ -6,6 +6,7 @@
 ./src/irc/irc-display.c
 ./src/irc/irc-send.c
 ./src/irc/irc-recv.c
+./src/irc/irc-dcc.c
 ./src/plugins/perl/wee-perl.c
 ./src/plugins/perl/wee-perl.h
 ./src/plugins/plugins.c

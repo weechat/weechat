@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2004-08-25
+ChangeLog - 2004-09-01
 
 
 Version 0.0.8 (under dev!):
+   * DCC window with Alt-D
+   * /query command now reopens private buffer if already opened
    * added key for redrawing terminal (Ctrl-L)
    * added key for clearing hotlist (Alt-R)
 

@@ -1140,9 +1140,8 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                     pos2--;
                 pos2[1] = '\0';
                 
-                wee_log_printf ("Incoming DCC file (NOT DEVELOPED!): "
-                                "\"%s\", address=\"%s\", port=\"%s\", size=\"%s\"\n",
-                                pos_file, pos_addr, pos_port, pos_size);
+                dcc_add (server, DCC_FILE_RECV, (unsigned long) atol (pos_addr),
+                         atoi (pos_port), host, pos_file, (unsigned int) atoi (pos_size));
                 return 0;
             }
             

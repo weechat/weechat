@@ -553,8 +553,14 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
 {
     t_gui_window *ptr_win;
     t_gui_line *ptr_line;
+    t_dcc *ptr_dcc;
     char format_empty[32];
-    int i, lines_used;
+    int i, j, lines_used, num_bars;
+    char *unit_name[] = { N_("bytes"), N_("Kb"), N_("Mb"), N_("Gb") };
+    char *unit_format[] = { "%.0Lf", "%.1Lf", "%.02Lf", "%.02Lf" };
+    long unit_divide[] = { 1, 1024, 1024*1024, 1024*1024,1024 };
+    int num_unit;
+    char format[32];
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
@@ -562,8 +568,7 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
         {
             if (erase)
             {
-                if (has_colors ())
-                    gui_window_set_color (ptr_win->win_chat, COLOR_WIN_CHAT);
+                gui_window_set_color (ptr_win->win_chat, COLOR_WIN_CHAT);
                 
                 snprintf (format_empty, 32, "%%-%ds", ptr_win->win_chat_width);
                 for (i = 0; i < ptr_win->win_chat_height; i++)
@@ -572,16 +577,65 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                 }
             }
             
-            if (has_colors ())
-                gui_window_set_color (ptr_win->win_chat, COLOR_WIN_CHAT);
+            gui_window_set_color (ptr_win->win_chat, COLOR_WIN_CHAT);
             
             if (buffer->dcc)
             {
-                mvwprintw (ptr_win->win_chat, ptr_win->win_y, ptr_win->win_x,
-                           "%s", _(" Type   Status   Filename / progress"));
-                for (i = 0; i < ptr_win->win_width; i++)
-                    mvwprintw (ptr_win->win_chat, 1, i, "%c", '-');
-                move (ptr_win->win_y + 3, ptr_win->win_x);
+                i = 0;
+                for (ptr_dcc = dcc_list; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
+                {
+                    if (i >= ptr_win->win_chat_height - 1)
+                        break;
+                    if ((ptr_dcc->type == DCC_FILE_RECV)
+                        || (ptr_dcc->type == DCC_FILE_SEND))
+                    {
+                        gui_window_set_color (ptr_win->win_chat, COLOR_WIN_CHAT);
+                        mvwprintw (ptr_win->win_chat, i, 0, " %-16s %s",
+                                   ptr_dcc->nick, ptr_dcc->filename);
+                        gui_window_set_color (ptr_win->win_chat, COLOR_WIN_CHAT);
+                        mvwprintw (ptr_win->win_chat, i + 1, 0, " %s ",
+                                   (ptr_dcc->type == DCC_FILE_RECV) ?
+                                   "--->" : "<---");
+                        gui_window_set_color (ptr_win->win_chat,
+                                              COLOR_DCC_WAITING + ptr_dcc->status);
+                        wprintw (ptr_win->win_chat, "%-10s",
+                                 dcc_status_string[ptr_dcc->status]);
+                        gui_window_set_color (ptr_win->win_chat, COLOR_WIN_CHAT);
+                        wprintw (ptr_win->win_chat, "  [",
+                                 dcc_status_string[ptr_dcc->status]);
+                        if (ptr_dcc->size == 0)
+                            num_bars = 10;
+                        else
+                            num_bars = (int)((((long double)(ptr_dcc->pos)/(long double)(ptr_dcc->size))*100) / 10);
+                        for (j = 0; j < num_bars - 1; j++)
+                            wprintw (ptr_win->win_chat, "=");
+                        if (num_bars > 0)
+                            wprintw (ptr_win->win_chat, ">");
+                        for (j = 0; j < 10 - num_bars; j++)
+                            wprintw (ptr_win->win_chat, " ");
+                        if (ptr_dcc->size < 1024*10)
+                            num_unit = 0;
+                        else if (ptr_dcc->size < 1024*1024)
+                            num_unit = 1;
+                        else if (ptr_dcc->size < 1024*1024*1024)
+                            num_unit = 2;
+                        else
+                            num_unit = 3;
+                        wprintw (ptr_win->win_chat, "] %3lu%%   ",
+                                 (unsigned long)(((long double)(ptr_dcc->pos)/(long double)(ptr_dcc->size))*100),
+                                 dcc_status_string[ptr_dcc->status]);
+                        sprintf (format, "%s %%s / %s %%s",
+                                 unit_format[num_unit],
+                                 unit_format[num_unit]);
+                        wprintw (ptr_win->win_chat, format,
+                                 ((long double) ptr_dcc->pos) / ((long double)(unit_divide[num_unit])),
+                                 unit_name[num_unit],
+                                 ((long double) ptr_dcc->size) / ((long double)(unit_divide[num_unit])),
+                                 unit_name[num_unit]);
+                        i += 2;
+                    }
+                }
+                move (ptr_win->win_y + 1, ptr_win->win_x);
             }
             else
             {
@@ -653,8 +707,7 @@ gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
         {
             if (erase)
             {
-                if (has_colors ())
-                    gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK);
+                gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK);
                 
                 snprintf (format_empty, 32, "%%-%ds", ptr_win->win_nick_width);
                 for (i = 0; i < ptr_win->win_nick_height; i++)
@@ -682,8 +735,7 @@ gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
                                                 ptr_win->win_nick_x);
                     gui_draw_buffer_chat (buffer, 1);
                     
-                    if (has_colors ())
-                        gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK);
+                    gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK);
                     
                     snprintf (format_empty, 32, "%%-%ds", ptr_win->win_nick_width);
                     for (i = 0; i < ptr_win->win_nick_height; i++)
@@ -908,7 +960,7 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
         {
             gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS);
             if (ptr_win->buffer->dcc)
-                wprintw (ptr_win->win_status, _("%d:<DCC> "),
+                wprintw (ptr_win->win_status, "%d:<DCC> ",
                          ptr_win->buffer->number);
             else
                 wprintw (ptr_win->win_status, _("%d:[not connected] "),
@@ -1577,6 +1629,19 @@ gui_init_colors ()
             color_attr[COLOR_WIN_NICK_FIRST + i - 1] =
                 (color & A_BOLD) ? A_BOLD : 0;
         }
+        
+        init_pair (COLOR_DCC_WAITING,
+            cfg_col_dcc_waiting & A_CHARTEXT, cfg_col_chat_bg);
+        init_pair (COLOR_DCC_CONNECTING,
+            cfg_col_dcc_connecting & A_CHARTEXT, cfg_col_chat_bg);
+        init_pair (COLOR_DCC_ACTIVE,
+            cfg_col_dcc_active & A_CHARTEXT, cfg_col_chat_bg);
+        init_pair (COLOR_DCC_DONE,
+            cfg_col_dcc_done & A_CHARTEXT, cfg_col_chat_bg);
+        init_pair (COLOR_DCC_FAILED,
+            cfg_col_dcc_failed & A_CHARTEXT, cfg_col_chat_bg);
+        init_pair (COLOR_DCC_ABORTED,
+            cfg_col_dcc_aborted & A_CHARTEXT, cfg_col_chat_bg);
             
         color_attr[COLOR_WIN_TITLE - 1] = cfg_col_title & A_BOLD;
         color_attr[COLOR_WIN_CHAT - 1] = cfg_col_chat & A_BOLD;
@@ -1608,6 +1673,12 @@ gui_init_colors ()
         color_attr[COLOR_WIN_NICK_SEP - 1] = 0;
         color_attr[COLOR_WIN_NICK_SELF - 1] = cfg_col_nick_self & A_BOLD;
         color_attr[COLOR_WIN_NICK_PRIVATE - 1] = cfg_col_nick_private & A_BOLD;
+        color_attr[COLOR_DCC_WAITING - 1] = cfg_col_dcc_waiting & A_BOLD;
+        color_attr[COLOR_DCC_CONNECTING - 1] = cfg_col_dcc_connecting & A_BOLD;
+        color_attr[COLOR_DCC_ACTIVE - 1] = cfg_col_dcc_active & A_BOLD;
+        color_attr[COLOR_DCC_DONE - 1] = cfg_col_dcc_done & A_BOLD;
+        color_attr[COLOR_DCC_FAILED - 1] = cfg_col_dcc_failed & A_BOLD;
+        color_attr[COLOR_DCC_ABORTED - 1] = cfg_col_dcc_aborted & A_BOLD;
     }
 }
 

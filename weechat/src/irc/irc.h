@@ -23,6 +23,8 @@
 
 #include "../gui/gui.h"
 
+/* prefixes for chat window */
+
 #define PREFIX_SERVER    "-@-"
 #define PREFIX_INFO      "-=-"
 #define PREFIX_ACTION_ME "-*-"
@@ -33,6 +35,8 @@
 #define PREFIX_PLUGIN    "-P-"
 
 #define CHANNEL_PREFIX "#&+!"
+
+/* channel modes */
 
 #define NUM_CHANNEL_MODES       7
 #define CHANNEL_MODE_INVITE     0
@@ -49,6 +53,20 @@
         channel->modes[mode] = ' ';
 
 #define DEFAULT_IRC_PORT 6667
+
+/* DCC types & status */
+
+#define DCC_CHAT_RECV           0   /* receiving DCC chat                   */
+#define DCC_CHAT_SEND           1   /* sending DCC chat                     */
+#define DCC_FILE_RECV           2   /* incoming DCC file                    */
+#define DCC_FILE_SEND           3   /* sending DCC file                     */
+
+#define DCC_WAITING             0   /* waiting for host answer              */
+#define DCC_CONNECTING          1   /* connecting to host                   */
+#define DCC_ACTIVE              2   /* sending/receiving data               */
+#define DCC_DONE                3   /* transfer done                        */
+#define DCC_FAILED              4   /* DCC failed                           */
+#define DCC_ABORTED             5   /* DCC aborted by user                  */
 
 /* nick types */
 
@@ -143,6 +161,8 @@ struct t_irc_command
                                     /* function called when cmd is received */
 };
 
+/* irc messages */
+
 typedef struct t_irc_message t_irc_message;
 
 struct t_irc_message
@@ -152,10 +172,31 @@ struct t_irc_message
     t_irc_message *next_message;    /* link to next message                 */
 };
 
+/* DCC */
+
+typedef struct t_dcc t_dcc;
+
+struct t_dcc
+{
+    t_irc_server *server;           /* irc server                           */
+    int type;                       /* DCC type (send or receive)           */
+    int status;                     /* DCC status (waiting, sending, ..)    */
+    unsigned long addr;             /* IP address                           */
+    int port;                       /* port                                 */
+    char *nick;                     /* remote nick                          */
+    int file;                       /* local file (for reading or writing)  */
+    char *filename;                 /* local filename                       */
+    unsigned long size;             /* file size                            */
+    unsigned long pos;              /* number of bytes received/sent        */
+    t_dcc *next_dcc;                /* link to next dcc file/chat           */
+};
+
 extern t_irc_command irc_commands[];
 extern t_irc_server *irc_servers, *current_irc_server;
 extern t_irc_message *recv_msgq, *msgq_last_msg;
 extern t_irc_channel *current_channel;
+extern t_dcc *dcc_list;
+extern char *dcc_status_string[6];
 extern char *channel_modes;
 
 /* server functions (irc-server.c) */
@@ -201,6 +242,8 @@ extern int nick_get_max_length (t_irc_channel *);
 /* DCC functions (irc-dcc.c) */
 
 extern void dcc_send ();
+extern t_dcc *dcc_add (t_irc_server *, int, unsigned long, int, char *, char *,
+                       unsigned int);
 
 /* IRC display (irc-diplay.c) */
 

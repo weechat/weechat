@@ -734,6 +734,7 @@ irc_cmd_send_query (t_irc_server *server, char *arguments)
 {
     char *pos;
     t_irc_channel *ptr_channel;
+    t_gui_buffer *ptr_buffer;
     
     pos = strchr (arguments, ' ');
     if (pos)
@@ -760,6 +761,18 @@ irc_cmd_send_query (t_irc_server *server, char *arguments)
             return -1;
         }
         gui_draw_buffer_title (ptr_channel->buffer, 1);
+    }
+    else
+    {
+        for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+        {
+            if (ptr_buffer->channel == ptr_channel)
+            {
+                gui_switch_to_buffer (gui_current_window, ptr_buffer);
+                gui_redraw_buffer (ptr_buffer);
+                break;
+            }
+        }
     }
     
     /* display text if given */

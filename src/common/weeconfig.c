@@ -193,6 +193,12 @@ int cfg_col_nick_sep;
 int cfg_col_nick_self;
 int cfg_col_nick_private;
 int cfg_col_nick_bg;
+int cfg_col_dcc_waiting;
+int cfg_col_dcc_connecting;
+int cfg_col_dcc_active;
+int cfg_col_dcc_done;
+int cfg_col_dcc_failed;
+int cfg_col_dcc_aborted;
 
 t_config_option weechat_options_colors[] =
 { /* title window */
@@ -347,6 +353,32 @@ t_config_option weechat_options_colors[] =
     OPTION_TYPE_COLOR, 0, 0, 0,
     "default", NULL, &cfg_col_nick_bg, NULL, &config_change_color },
   
+  /* DCC */
+  { "col_dcc_waiting", N_("color for \"waiting\" dcc status"),
+    N_("color for \"waiting\" dcc status"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "white", NULL, &cfg_col_dcc_waiting, NULL, &config_change_color },
+  { "col_dcc_connecting", N_("color for \"connecting\" dcc status"),
+    N_("color for \"connecting\" dcc status"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "yellow", NULL, &cfg_col_dcc_connecting, NULL, &config_change_color },
+  { "col_dcc_active", N_("color for \"active\" dcc status"),
+    N_("color for \"active\" dcc status"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "lightblue", NULL, &cfg_col_dcc_active, NULL, &config_change_color },
+  { "col_dcc_done", N_("color for \"done\" dcc status"),
+    N_("color for \"done\" dcc status"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "lightgreen", NULL, &cfg_col_dcc_done, NULL, &config_change_color },
+  { "col_dcc_failed", N_("color for \"failed\" dcc status"),
+    N_("color for \"failed\" dcc status"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "lightred", NULL, &cfg_col_dcc_failed, NULL, &config_change_color },
+  { "col_dcc_aborted", N_("color for \"aborted\" dcc status"),
+    N_("color for \"aborted\" dcc status"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "lightred", NULL, &cfg_col_dcc_aborted, NULL, &config_change_color },
+  
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
@@ -419,6 +451,7 @@ int cfg_dcc_auto_accept_files;
 int cfg_dcc_auto_accept_max_size;
 int cfg_dcc_auto_accept_chats;
 int cfg_dcc_timeout;
+int cfg_dcc_blocksize;
 char *cfg_dcc_download_path;
 char *cfg_dcc_upload_path;
 int cfg_dcc_auto_rename;
@@ -441,6 +474,10 @@ t_config_option weechat_options_dcc[] =
     N_("timeout for dcc request (in seconds)"),
     OPTION_TYPE_INT, 1, INT_MAX, 300,
     NULL, NULL, &cfg_dcc_timeout, NULL, NULL },
+  { "dcc_blocksize", N_("block size for dcc packets"),
+    N_("block size for dcc packets in bytes (default: 1024)"),
+    OPTION_TYPE_INT, 1024, 102400, 1024,
+    NULL, NULL, &cfg_dcc_blocksize, NULL, NULL },
   { "dcc_download_path", N_("path for incoming files with dcc"),
     N_("path for writing incoming files with dcc (default: user home)"),
     OPTION_TYPE_STRING, 0, 0, 0,
@@ -1263,8 +1300,7 @@ config_write (char *config_name)
         if ((i != CONFIG_SECTION_ALIAS) && (i != CONFIG_SECTION_SERVER))
         {
             fprintf (file, "\n[%s]\n", config_sections[i].section_name);
-            if ((i == CONFIG_SECTION_LOG) || (i == CONFIG_SECTION_DCC) ||
-                (i == CONFIG_SECTION_PROXY))
+            if ((i == CONFIG_SECTION_LOG) || (i == CONFIG_SECTION_PROXY))
                 fprintf (file,
                          "# WARNING!!! Options for section \"%s\" are not developed!\n",
                          config_sections[i].section_name);
