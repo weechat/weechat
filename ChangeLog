@@ -18,7 +18,8 @@ Version 0.1.0 (under dev!):
    * new [irc] section in config file, option "look_display_away" moved to
      "irc_display_away"
    * server messages & errors are all prefixed (by 3 chars, like '-@-')
-   * added new options for charset: look_charset_decode and look_charset_encode
+   * added new options for charset (UTF-8 support): look_charset_decode,
+     look_charset_encode and look_charset_internal
    * fixed many memory leaks
    * fixed colors bug: removed "gray" color (replaced by "default"), colors are
      ok when terminal has white (or light) background

@@ -1,4 +1,4 @@
-WeeChat FAQ, 2005-01-16
+WeeChat FAQ, 2005-02-06
 =======================
 
 Intended audience:
@@ -65,12 +65,23 @@ A:	For help you can type /help. For help about a command, type /help command.
 
 2.3
 ================================================================================
+Q:	I don't see come chars with accents, what can I do?
+
+A:	You have to setup charset used for decoding, encoding, and internal WeeChat
+	charset.
+	Change value of option "look_charset_decode" to "UTF-8".
+	Option "look_charset_internal" should not be changed (default is
+	"ISO-8859-1").
+
+
+2.4
+================================================================================
 Q:	How can I customize key bindings?
 
 A:	Today you can't do that. This is planed for a future version.
 
 
-2.4
+2.5
 ================================================================================
 Q:	How can I load Perl scripts?
 	Are Perl scripts compatible with X-chat or/and Irssi ?
@@ -83,14 +94,14 @@ A:	You can use /perl command to load scripts
 	sorry ;)
 
 
-2.5
+2.6
 ================================================================================
 Q:	How can I load Python scripts?
 
 A:	Today Python interface is not developed, so you can't load any Python script.
 
 
-2.6
+2.7
 ================================================================================
 Q:	How can I load Ruby scripts?
 

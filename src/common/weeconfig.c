@@ -64,6 +64,7 @@ int cfg_look_startup_version;
 char *cfg_look_weechat_slogan;
 char *cfg_look_charset_decode;
 char *cfg_look_charset_encode;
+char *cfg_look_charset_internal;
 int cfg_look_color_nicks;
 int cfg_look_color_actions;
 int cfg_look_remove_colors_from_msgs;
@@ -106,6 +107,10 @@ t_config_option weechat_options_look[] =
     N_("charset for encoding messages sent to server, examples: UFT-8, ISO-8859-1 (if empty, local charset is used)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "", NULL, NULL, &cfg_look_charset_encode, config_change_buffer_content },
+  { "look_charset_internal", N_("internal WeeChat charset (should be ISO)"),
+    N_("internal WeeChat charset, should be ISO-xxxx even if locale is UTF-8 (if empty, local charset is used)"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    "ISO-8859-1", NULL, NULL, &cfg_look_charset_internal, config_change_buffer_content },
   { "look_color_nicks", N_("display nick names with different colors"),
     N_("display nick names with different colors"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,

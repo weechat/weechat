@@ -306,7 +306,8 @@ gui_infobar_printf (int time_displayed, int color, char *message, ...)
     va_end (argptr);
     
     buf2 = weechat_convert_encoding (cfg_look_charset_decode,
-                                     local_charset,
+                                     (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
+                                     cfg_look_charset_internal : local_charset,
                                      buffer);
     
     ptr_infobar = (t_gui_infobar *)malloc (sizeof (t_gui_infobar));

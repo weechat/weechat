@@ -1,4 +1,4 @@
-WeeChat FAQ, 2005-01-16
+WeeChat FAQ, 2005-02-06
 =======================
 
 Public concerné :
@@ -70,13 +70,24 @@ R:	Pour obtenir de l'aide tapez /help. Pour de l'aide sur une commande,
 
 2.3
 ================================================================================
+Q:	Je ne vois pas bien certains accents dans WeeChat, que faire ?
+
+R:	Il faut configurer le charset utilisé pour le décodage, l'encodage ainsi que
+	le charset interne à WeeChat.
+	Modifiez la valeur de l'option "look_charset_decode" en "UTF-8".
+	L'option "look_charset_internal" ne devrait pas être modifiée (par défaut
+	"ISO-8859-1").
+
+
+2.4
+================================================================================
 Q:	Comment puis-je configurer les raccourcis clavier ?
 
 R:	Aujourd'hui vous ne pouvez pas le faire. Ce sera possible dans une
 	version future.
 
 
-2.4
+2.5
 ================================================================================
 Q:	Comment puis-je charger des scripts Perl ?
 	Les scripts Perl sont-ils compatibles avec X-chat et/ou Irssi ?
@@ -89,7 +100,7 @@ R:	La commande /perl permet de charger les scripts Perl
 	désolé ;)
 
 
-2.5
+2.6
 ================================================================================
 Q:	Comment puis-je charger les scripts Python ?
 
@@ -97,7 +108,7 @@ R:	Aujourd'hui l'interface Python n'est pas déceloppée.
 	Vous ne pouvez donc charger aucun script Python.
 
 
-2.6
+2.7
 ================================================================================
 Q:	Comment puis-je charger des scripts Ruby ?
 

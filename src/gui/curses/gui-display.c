@@ -354,7 +354,8 @@ gui_draw_buffer_title (t_gui_buffer *buffer, int erase)
                 if (CHANNEL(buffer)->topic)
                 {
                     buf = weechat_convert_encoding (cfg_look_charset_decode,
-                                                    local_charset,
+                                                    (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
+                                                    cfg_look_charset_internal : local_charset,
                                                     CHANNEL(buffer)->topic);
                     mvwprintw (ptr_win->win_title, 0, 0, format, buf);
                     free (buf);
@@ -915,7 +916,7 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
 {
     t_gui_window *ptr_win;
     t_weechat_hotlist *ptr_hotlist;
-    char format_more[32];
+    char format_more[32], *string;
     int i, first_mode;
     
     /* make gcc happy */
@@ -957,7 +958,14 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                                   COLOR_WIN_STATUS);
             wprintw (ptr_win->win_status, "%s", SERVER(ptr_win->buffer)->name);
             if (SERVER(ptr_win->buffer)->is_away)
-                wprintw (ptr_win->win_status, _("(away)"));
+            {
+                string = weechat_convert_encoding (cfg_look_charset_decode,
+                                                  (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
+                                                  cfg_look_charset_internal : local_charset,
+                                                  _("(away)"));
+                wprintw (ptr_win->win_status, string);
+                free (string);
+            }
             gui_window_set_color (ptr_win->win_status,
                               COLOR_WIN_STATUS_DELIMITERS);
             wprintw (ptr_win->win_status, "] ");
@@ -1035,8 +1043,15 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                 wprintw (ptr_win->win_status, "%d:<DCC> ",
                          ptr_win->buffer->number);
             else
-                wprintw (ptr_win->win_status, _("%d:[not connected] "),
+            {
+                string = weechat_convert_encoding (cfg_look_charset_decode,
+                                                  (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
+                                                  cfg_look_charset_internal : local_charset,
+                                                  _("%d:[not connected] "));
+                wprintw (ptr_win->win_status, string,
                          ptr_win->buffer->number);
+                free (string);
+            }
         }
         
         /* display list of other active windows (if any) with numbers */
@@ -1046,7 +1061,12 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                                   COLOR_WIN_STATUS_DELIMITERS);
             wprintw (ptr_win->win_status, "[");
             gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS);
-            wprintw (ptr_win->win_status, _("Act: "));
+            string = weechat_convert_encoding (cfg_look_charset_decode,
+                                               (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
+                                               cfg_look_charset_internal : local_charset,
+                                               _("Act: "));
+            wprintw (ptr_win->win_status, string);
+            free (string);
             for (ptr_hotlist = hotlist; ptr_hotlist;
                  ptr_hotlist = ptr_hotlist->next_hotlist)
             {
@@ -1090,8 +1110,13 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                                       COLOR_WIN_STATUS_DELIMITERS);
                 wprintw (ptr_win->win_status, "[");
                 gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS);
-                wprintw (ptr_win->win_status, _("Lag: %.1f"),
+                string = weechat_convert_encoding (cfg_look_charset_decode,
+                                                  (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
+                                                  cfg_look_charset_internal : local_charset,
+                                                  _("Lag: %.1f"));
+                wprintw (ptr_win->win_status, string,
                          ((float)(SERVER(ptr_win->buffer)->lag)) / 1000);
+                free (string);
                 gui_window_set_color (ptr_win->win_status,
                                       COLOR_WIN_STATUS_DELIMITERS);
                 wprintw (ptr_win->win_status, "]");
@@ -1100,15 +1125,20 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
         
         /* display "-MORE-" if last line is not displayed */
         gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS_MORE);
+        string = weechat_convert_encoding (cfg_look_charset_decode,
+                                           (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
+                                           cfg_look_charset_internal : local_charset,
+                                           _("-MORE-"));
         if (ptr_win->sub_lines > 0)
             mvwprintw (ptr_win->win_status, 0, ptr_win->win_width - 7,
-                       _("-MORE-"));
+                       "%s", string);
         else
         {
-            snprintf (format_more, 32, "%%-%ds", strlen (_("-MORE-")));
+            snprintf (format_more, 32, "%%-%ds", strlen (string));
             mvwprintw (ptr_win->win_status, 0, ptr_win->win_width - 7,
                        format_more, " ");
         }
+        free (string);
         
         wrefresh (ptr_win->win_status);
         refresh ();
@@ -2289,7 +2319,10 @@ gui_printf_color_type (t_gui_buffer *buffer, int type, int color, char *message,
     else
         buf2 = strdup (buf);
     
-    buf3 = weechat_convert_encoding (cfg_look_charset_decode, local_charset, buf2);
+    buf3 = weechat_convert_encoding (cfg_look_charset_decode,
+                                     (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
+                                     cfg_look_charset_internal : local_charset,
+                                     buf2);
     
     if (gui_init_ok)
     {

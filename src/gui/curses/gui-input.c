@@ -52,7 +52,7 @@ gui_read_keyb ()
     int key, i;
     t_gui_buffer *ptr_buffer;
     t_irc_server *ptr_server;
-    char new_char[2];
+    char new_char[3], *decoded_string;
     t_dcc *dcc_selected;
 
     key = getch ();
@@ -616,12 +616,28 @@ gui_read_keyb ()
                                 "[Debug] key pressed = %d, hex = %02X, octal = %o\n", key, key, key);*/
                     new_char[0] = key;
                     new_char[1] = '\0';
+                    decoded_string = NULL;
+                    
+                    /* UTF-8 input */
+                    if (key == 0xC3)
+                    {
+                        if ((key = getch()) != ERR)
+                        {
+                            new_char[1] = key;
+                            new_char[2] = '\0';
+                            decoded_string = weechat_convert_encoding (local_charset, cfg_look_charset_internal, new_char);
+                        }
+                    }
+                    
                     gui_buffer_insert_string (gui_current_window->buffer,
-                                              new_char,
+                                              (decoded_string) ? decoded_string : new_char,
                                               gui_current_window->buffer->input_buffer_pos);
                     gui_current_window->buffer->input_buffer_pos++;
                     gui_draw_buffer_input (gui_current_window->buffer, 0);
                     gui_current_window->buffer->completion.position = -1;
+                    
+                    if (decoded_string)
+                        free (decoded_string);
                 }
                 break;
         }

@@ -395,7 +395,10 @@ server_sendf (t_irc_server * server, char *fmt, ...)
     gui_printf (server->buffer, "[DEBUG] Sending to server >>> %s\n", buffer);
     buffer[size_buf - 2] = '\r';
     #endif
-    buf2 = weechat_convert_encoding (local_charset, cfg_look_charset_encode, buffer);
+    buf2 = weechat_convert_encoding ((cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
+                                     cfg_look_charset_internal : local_charset,
+                                     cfg_look_charset_encode,
+                                     buffer);
     if (server_send (server, buf2, strlen (buf2)) <= 0)
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
