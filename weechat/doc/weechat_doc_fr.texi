@@ -35,7 +35,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.0-cvs - 23 Janvier 2005
+@subtitle Documentation pour WeeChat v0.1.0-cvs - 05 F@'evrier 2005
 
 @image{weechat_image}
 
@@ -391,6 +391,9 @@ Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
 @item col_nick
 Couleur pour les pseudos@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
+@item col_nick_away
+Couleur pour les pseudos absents@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'cyan'@*
 @item col_nick_op
 Couleur pour le symbole op@'erateur@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightgreen'@*
@@ -469,6 +472,9 @@ Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
 @item irc_default_msg_quit
 Message de fin par d@'efaut ('%v' sera remplac@'e par la version de WeeChat dans la cha@^ine)@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: 'WeeChat %v'@*
+@item irc_away_check
+Intervalle entre deux v@'erifications des absences (en minutes, 0 = ne jemais v@'erifier)@*
+Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 1@*
 @item irc_lag_check
 Intervalle entre deux mesures de lag (en secondes)@*
 Type: entier (valeurs: entre 30 et 2147483647), valeur par d@'efaut: 60@*

@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.1.0-cvs - January, 23 2005
+@subtitle Documentation for WeeChat v0.1.0-cvs - February, 05 2005
 
 @image{weechat_image}
 
@@ -391,6 +391,9 @@ Type: color (Curses or Gtk color), default value: 'default'@*
 @item col_nick
 Color for nicknames@*
 Type: color (Curses or Gtk color), default value: 'default'@*
+@item col_nick_away
+Color for away nicknames@*
+Type: color (Curses or Gtk color), default value: 'cyan'@*
 @item col_nick_op
 Color for operator symbol@*
 Type: color (Curses or Gtk color), default value: 'lightgreen'@*
@@ -469,6 +472,9 @@ Type: string (any string), default value: ''@*
 @item irc_default_msg_quit
 Default quit message ('%v' will be replaced by WeeChat version in string)@*
 Type: string (any string), default value: 'WeeChat %v'@*
+@item irc_away_check
+Interval between two checks for away (in minutes, 0 = never check)@*
+Type: integer (values: between 0 and 2147483647), default value: 1@*
 @item irc_lag_check
 Interval between two checks for lag (in seconds)@*
 Type: integer (values: between 30 and 2147483647), default value: 60@*
