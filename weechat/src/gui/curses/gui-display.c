@@ -1673,6 +1673,7 @@ gui_window_split_horiz (t_gui_window *window)
         
         /* assign same buffer for new window (top window) */
         new_window->buffer = window->buffer;
+        new_window->buffer->num_displayed++;
         
         gui_switch_to_buffer (window, window->buffer);
         
@@ -1705,6 +1706,7 @@ gui_window_split_vertic (t_gui_window *window)
         
         /* assign same buffer for new window (right window) */
         new_window->buffer = window->buffer;
+        new_window->buffer->num_displayed++;
         
         gui_switch_to_buffer (window, window->buffer);
         
@@ -2227,7 +2229,7 @@ gui_add_message (t_gui_buffer *buffer, int type, int color, char *message)
     if (pos)
     {
         pos[0] = '\n';
-        if ((buffer->num_displayed > 0) && (gui_current_window->sub_lines == 0))
+        if ((buffer->num_displayed > 0) /*&& (gui_current_window->sub_lines == 0)*/)
         {
             /*if ((buffer->window->win_chat_cursor_y
                 + gui_get_line_num_splits (buffer, buffer->last_line)) >

@@ -1,12 +1,13 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-02-12
+ChangeLog - 2005-02-13
 
 
 Version 0.1.1 (under dev!):
    * on server buffer, only server messages are logged
    * plugins messages are logged with new config option (log_plugin_msg)
+   * fixed display bugs when many windows are opened
 
 Version 0.1.0 (2005-02-12):
    * improved /window command: now split and merge are ok

@@ -628,6 +628,7 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *arguments)
     t_irc_channel *ptr_channel;
     t_irc_nick *ptr_nick;
     int nick_is_me;
+    t_gui_window *ptr_win;
     t_gui_buffer *ptr_buffer;
     
     /* no host => we can't identify sender of message! */
@@ -698,9 +699,18 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *arguments)
     {
         free (server->nick);
         server->nick = strdup (arguments);
+        gui_draw_buffer_status (gui_current_window->buffer, 1);
+        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        {
+            if (ptr_win->buffer->server == server)
+                gui_draw_buffer_input (ptr_win->buffer, 1);
+        }
     }
-    gui_draw_buffer_status (gui_current_window->buffer, 1);
-    gui_draw_buffer_input (gui_current_window->buffer, 1);
+    else
+    {
+        gui_draw_buffer_status (gui_current_window->buffer, 1);
+        gui_draw_buffer_input (gui_current_window->buffer, 1);
+    }
     
     return 0;
 }
