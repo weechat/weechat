@@ -1222,10 +1222,10 @@ gui_curses_resize_handler ()
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        gui_calculate_pos_size (ptr_win);
         // TODO: manage splitted windows!
         if (ptr_win->win_title)
         {
+            ptr_win->is_displayed = 0;
             if (ptr_win->win_title)
                 delwin (ptr_win->win_title);
             if (ptr_win->win_chat)
