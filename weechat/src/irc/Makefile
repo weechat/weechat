@@ -20,7 +20,7 @@ CC=gcc
 OPTIONS=-Wall -W -pipe -O2
 
 OUTPUT=irc.a
-OBJS=irc-commands.o irc-display.o irc-server.o irc-channel.o irc-nick.o
+OBJS=irc-commands.o irc-send.o irc-recv.o irc-display.o irc-server.o irc-channel.o irc-nick.o
 DEFINES=WEE_CURSES
 
 all: $(OBJS)
@@ -37,8 +37,12 @@ irc-channel.o: irc-channel.c ../weechat.h irc.h ../gui/gui.h \
 irc-commands.o: irc-commands.c ../weechat.h irc.h ../gui/gui.h \
   ../completion.h ../history.h ../command.h ../irc/irc.h ../config.h
 irc-display.o: irc-display.c ../weechat.h irc.h ../gui/gui.h \
-  ../completion.h ../history.h
+  ../completion.h ../history.h ../config.h
 irc-nick.o: irc-nick.c ../weechat.h irc.h ../gui/gui.h ../completion.h \
   ../history.h
+irc-recv.o: irc-recv.c ../weechat.h irc.h ../gui/gui.h ../completion.h \
+  ../history.h ../command.h ../irc/irc.h ../config.h
+irc-send.o: irc-send.c ../weechat.h irc.h ../gui/gui.h ../completion.h \
+  ../history.h ../command.h ../irc/irc.h ../config.h
 irc-server.o: irc-server.c ../weechat.h irc.h ../gui/gui.h \
   ../completion.h ../history.h

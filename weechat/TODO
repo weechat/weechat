@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2003-10-05
+TODO - 2003-10-07
 
 Legend:
   #  done
@@ -14,7 +14,7 @@ v0.0.3:
 ------
 
  * IRC protocol:
-    - implement RFC 2812
+    + implement RFC 2812
     + "/mode" command: change the user/channels modes
 
  * WeeChat commands:
@@ -28,7 +28,7 @@ v0.0.3:
  * Interface:
     - display current channel modes (example : #weechat(+nt))
     - interpret special chars in messages (color & bold for example)
-    - internationalization (traduce WeeChat in many languages)
+    + internationalization (traduce WeeChat in many languages)
     - log chats to file
 
  * TCP/IP communication:

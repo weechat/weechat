@@ -212,6 +212,7 @@ extern int irc_cmd_send_quit (t_irc_server *, char *);
 extern int irc_cmd_send_quote (t_irc_server *, char *);
 extern int irc_cmd_send_rehash (t_irc_server *, char *);
 extern int irc_cmd_send_restart (t_irc_server *, char *);
+extern int irc_cmd_send_stats (t_irc_server *, char *);
 extern int irc_cmd_send_topic (t_irc_server *, char *);
 extern int irc_cmd_send_version (t_irc_server *, char *);
 extern int irc_cmd_send_voice (t_irc_server *, int, char **);
