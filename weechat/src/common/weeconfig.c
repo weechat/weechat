@@ -33,6 +33,7 @@
 #include <time.h>
 #include <pwd.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 
 #include "weechat.h"
 #include "weeconfig.h"
@@ -1272,6 +1273,7 @@ config_create_default ()
     fprintf (file, "server_autorejoin=on\n");
     
     fclose (file);
+    chmod (filename, 0600);
     free (filename);
     return 0;
 }
@@ -1418,6 +1420,7 @@ config_write (char *config_name)
     }
     
     fclose (file);
+    chmod (filename, 0600);
     free (filename);
     return 0;
 }
