@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-02-27 03:28+0100\n"
+"POT-Creation-Date: 2005-02-27 14:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -119,7 +119,7 @@ msgstr ""
 msgid "%s: Reconnecting to server...\n"
 msgstr ""
 
-#: src/irc/irc-server.c:968 src/irc/irc-server.c:973
+#: src/irc/irc-server.c:964 src/irc/irc-server.c:971
 msgid "Disconnected from server!\n"
 msgstr ""
 
@@ -289,12 +289,12 @@ msgid "list all servernames which are known by the server answering the query"
 msgstr ""
 
 #: src/irc/irc-commands.c:88
-msgid "[[remove_server] server_mask]"
+msgid "[[server] server_mask]"
 msgstr ""
 
 #: src/irc/irc-commands.c:89
 msgid ""
-"remote_server: this server should answer the query\n"
+"server: this server should answer the query\n"
 "server_mask: list of servers must match this mask"
 msgstr ""
 
@@ -345,7 +345,7 @@ msgstr ""
 #: src/irc/irc-commands.c:106
 msgid ""
 "{ channel {[+|-]|o|p|s|i|t|n|b|v} [limit] [user] [ban mask] } | { nickname "
-"{[+|-]|i|w|s|o}"
+"{[+|-]|i|w|s|o} }"
 msgstr ""
 
 #: src/irc/irc-commands.c:108
@@ -1344,7 +1344,7 @@ msgstr ""
 msgid "%s unknown DCC CHAT type received from "
 msgstr ""
 
-#: src/irc/irc-recv.c:1379 src/irc/irc-dcc.c:751
+#: src/irc/irc-recv.c:1379 src/irc/irc-dcc.c:753
 #, c-format
 msgid "Private %s> %s"
 msgstr ""
@@ -1531,136 +1531,136 @@ msgstr ""
 msgid "%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\"\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:46
+#: src/irc/irc-dcc.c:47
 msgid "Waiting"
 msgstr ""
 
-#: src/irc/irc-dcc.c:46
+#: src/irc/irc-dcc.c:47
 msgid "Connecting"
 msgstr ""
 
-#: src/irc/irc-dcc.c:46
+#: src/irc/irc-dcc.c:47
 msgid "Active"
 msgstr ""
 
-#: src/irc/irc-dcc.c:46
+#: src/irc/irc-dcc.c:47
 msgid "Done"
 msgstr ""
 
-#: src/irc/irc-dcc.c:46
+#: src/irc/irc-dcc.c:47
 msgid "Failed"
 msgstr ""
 
-#: src/irc/irc-dcc.c:47
+#: src/irc/irc-dcc.c:48
 msgid "Aborted"
 msgstr ""
 
-#: src/irc/irc-dcc.c:155
+#: src/irc/irc-dcc.c:156
 msgid "DCC: file "
 msgstr ""
 
-#: src/irc/irc-dcc.c:160 src/irc/irc-dcc.c:406
+#: src/irc/irc-dcc.c:161 src/irc/irc-dcc.c:408
 msgid " (local filename: "
 msgstr ""
 
-#: src/irc/irc-dcc.c:166
+#: src/irc/irc-dcc.c:167
 msgid ") sent to "
 msgstr ""
 
-#: src/irc/irc-dcc.c:168
+#: src/irc/irc-dcc.c:169
 msgid ") received from "
 msgstr ""
 
-#: src/irc/irc-dcc.c:173
+#: src/irc/irc-dcc.c:174
 msgid ": ok!\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:181
+#: src/irc/irc-dcc.c:182
 msgid "DCC chat closed with "
 msgstr ""
 
-#: src/irc/irc-dcc.c:219
+#: src/irc/irc-dcc.c:220
 #, c-format
 msgid ""
 "%s can't associate DCC chat with private buffer (maybe private buffer has "
 "already DCC CHAT?)\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:229
+#: src/irc/irc-dcc.c:230
 msgid "Connected to "
 msgstr ""
 
-#: src/irc/irc-dcc.c:238
+#: src/irc/irc-dcc.c:239
 msgid "via DCC chat\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:348
+#: src/irc/irc-dcc.c:349
 #, c-format
 msgid "%s not enough memory for new DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:365
+#: src/irc/irc-dcc.c:367
 msgid "DCC chat"
 msgstr ""
 
-#: src/irc/irc-dcc.c:386
+#: src/irc/irc-dcc.c:388
 msgid "Incoming DCC file from "
 msgstr ""
 
-#: src/irc/irc-dcc.c:397 src/irc/irc-dcc.c:410
+#: src/irc/irc-dcc.c:399 src/irc/irc-dcc.c:412
 msgid " bytes\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:402
+#: src/irc/irc-dcc.c:404
 msgid "Sending DCC file to "
 msgstr ""
 
-#: src/irc/irc-dcc.c:415
+#: src/irc/irc-dcc.c:417
 msgid "Incoming DCC chat request from "
 msgstr ""
 
-#: src/irc/irc-dcc.c:426
+#: src/irc/irc-dcc.c:428
 msgid "Sending DCC chat request to "
 msgstr ""
 
-#: src/irc/irc-dcc.c:490
+#: src/irc/irc-dcc.c:492
 #, c-format
 msgid "%s not enough memory for DCC SEND\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:512
+#: src/irc/irc-dcc.c:514
 #, c-format
 msgid "%s cannot access file \"%s\"\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:533
+#: src/irc/irc-dcc.c:535
 #, c-format
 msgid "%s cannot create socket for DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:546
+#: src/irc/irc-dcc.c:548
 #, c-format
 msgid "%s cannot find port for DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:593
+#: src/irc/irc-dcc.c:595
 #, c-format
 msgid "%s cannot send DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:672
+#: src/irc/irc-dcc.c:674
 #, c-format
 msgid "%s error sending data to \"%s\" via DCC CHAT\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:930
+#: src/irc/irc-dcc.c:932
 #, c-format
 msgid ""
 "%s DCC failed because blocksize is too big. Check value of \"dcc_blocksize\" "
 "option, max is %d.\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1003
+#: src/irc/irc-dcc.c:1005
 #, c-format
 msgid "aborting active DCC: \"%s\" from %s\n"
 msgstr ""
@@ -1754,45 +1754,45 @@ msgstr ""
 msgid "Gb"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1061
+#: src/gui/curses/gui-display.c:1066
 msgid "(away)"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1174
+#: src/gui/curses/gui-display.c:1179
 #, c-format
 msgid "%d:[not connected] "
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1191
+#: src/gui/curses/gui-display.c:1196
 msgid "Act: "
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1240
+#: src/gui/curses/gui-display.c:1245
 #, c-format
 msgid "Lag: %.1f"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1255
+#: src/gui/curses/gui-display.c:1260
 msgid "-MORE-"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1429
+#: src/gui/curses/gui-display.c:1434
 msgid "  [A] Accept"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1430 src/gui/curses/gui-display.c:1434
+#: src/gui/curses/gui-display.c:1435 src/gui/curses/gui-display.c:1439
 msgid "  [C] Cancel"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1439
+#: src/gui/curses/gui-display.c:1444
 msgid "  [R] Remove"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1443
+#: src/gui/curses/gui-display.c:1448
 msgid "  [P] Purge old DCC"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1444
+#: src/gui/curses/gui-display.c:1449
 msgid "  [Q] Close DCC view"
 msgstr ""
 
@@ -2335,6 +2335,27 @@ msgstr ""
 msgid "Opened windows:\n"
 msgstr ""
 
+#: src/common/hotlist.c:102
+#, c-format
+msgid "%s cannot add a buffer to hotlist\n"
+msgstr ""
+
+#: src/common/log.c:118
+msgid "Not enough memory to write log file for a buffer\n"
+msgstr ""
+
+#: src/common/log.c:146
+msgid "Unable to write log file for a buffer\n"
+msgstr ""
+
+#: src/common/log.c:150
+msgid "****  Beginning of log  "
+msgstr ""
+
+#: src/common/log.c:164
+msgid "****  End of log  "
+msgstr ""
+
 #: src/common/weechat.c:195
 #, c-format
 msgid ""
@@ -2454,22 +2475,6 @@ msgstr ""
 
 #: src/common/weechat.c:513
 msgid "compiled on"
-msgstr ""
-
-#: src/common/log.c:118
-msgid "Not enough memory to write log file for a buffer\n"
-msgstr ""
-
-#: src/common/log.c:146
-msgid "Unable to write log file for a buffer\n"
-msgstr ""
-
-#: src/common/log.c:150
-msgid "****  Beginning of log  "
-msgstr ""
-
-#: src/common/log.c:164
-msgid "****  End of log  "
 msgstr ""
 
 #: src/common/weechat.h:50
@@ -2729,7 +2734,7 @@ msgid "color for window with new data (not messages) (status bar)"
 msgstr ""
 
 #: src/common/weeconfig.c:302
-msgid "color for \"*MORE*\" text"
+msgid "color for \"-MORE-\" text"
 msgstr ""
 
 #: src/common/weeconfig.c:303
@@ -2992,7 +2997,7 @@ msgid "block size for dcc packets"
 msgstr ""
 
 #: src/common/weeconfig.c:555
-msgid "block size for dcc packets in bytes (default: 1024)"
+msgid "block size for dcc packets in bytes (default: 65536)"
 msgstr ""
 
 #: src/common/weeconfig.c:558

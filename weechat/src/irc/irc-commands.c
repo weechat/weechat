@@ -85,8 +85,8 @@ t_irc_command irc_commands[] =
     N_("nickname: nickname\ncomment: comment for kill"),
     2, MAX_ARGS, 1, NULL, irc_cmd_send_kill, NULL },
   { "links", N_("list all servernames which are known by the server answering the query"),
-    N_("[[remove_server] server_mask]"),
-    N_("remote_server: this server should answer the query\n"
+    N_("[[server] server_mask]"),
+    N_("server: this server should answer the query\n"
     "server_mask: list of servers must match this mask"),
     0, 2, 1, NULL, irc_cmd_send_links, NULL },
   { "list", N_("list channels and their topic"),
@@ -104,7 +104,7 @@ t_irc_command irc_commands[] =
     0, MAX_ARGS, 1, NULL, irc_cmd_send_me, NULL },
   { "mode", N_("change channel or user mode"),
     N_("{ channel {[+|-]|o|p|s|i|t|n|b|v} [limit] [user] [ban mask] } | "
-    "{ nickname {[+|-]|i|w|s|o}"),
+    "{ nickname {[+|-]|i|w|s|o} }"),
     N_("channel modes:\n"
     "  channel: channel name to modify\n"
     "  o: give/take channel operator privileges\n"
