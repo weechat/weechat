@@ -1,10 +1,10 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2004-10-24
+ChangeLog - 2004-10-30
 
 
-Version 0.0.8 (under dev!):
+Version 0.0.8 (2004-10-30):
    * /kick command fixed: now ok with many words as reason
    * nickserv passwords hidden (new config option: log_hide_nickserv_pwd on/off)
    * auto-rejoin channels when kicked (new config option: server_autorejoin on/off)

@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.0.8-pre2\n"
+"Project-Id-Version: WeeChat 0.0.8\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2004-10-17 13:31+0200\n"
-"PO-Revision-Date: 2004-08-08 20:47+0200\n"
+"POT-Creation-Date: 2004-10-29 20:16+0200\n"
+"PO-Revision-Date: 2004-10-30 11:40+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1146,38 +1146,38 @@ msgstr "inconnu"
 msgid "%s: using local hostname \"%s\"\n"
 msgstr "%s: utilisation du nom de machine local \"%s\"\n"
 
-#: src/irc/irc-send.c:256 src/irc/irc-send.c:280 src/irc/irc-send.c:368
-#: src/irc/irc-send.c:679 src/irc/irc-send.c:733 src/irc/irc-send.c:1205
+#: src/irc/irc-send.c:256 src/irc/irc-send.c:280 src/irc/irc-send.c:380
+#: src/irc/irc-send.c:691 src/irc/irc-send.c:745 src/irc/irc-send.c:1217
 #, c-format
 msgid "%s \"%s\" command can only be executed in a channel window\n"
 msgstr ""
 "%s la commande \"%s\" peut seulement être exécutée dans une fenêtre de "
 "canal\n"
 
-#: src/irc/irc-send.c:475 src/irc/irc-send.c:541 src/irc/irc-send.c:780
-#: src/irc/irc-send.c:793 src/irc/irc-send.c:1100
+#: src/irc/irc-send.c:487 src/irc/irc-send.c:553 src/irc/irc-send.c:792
+#: src/irc/irc-send.c:805 src/irc/irc-send.c:1112
 #, c-format
 msgid "%s \"%s\" command can not be executed on a server window\n"
 msgstr ""
 "%s la commande \"%s\" ne peut pas être exécutée dans une fenêtre serveur\n"
 
-#: src/irc/irc-send.c:557 src/irc/irc-send.c:579 src/irc/irc-recv.c:261
+#: src/irc/irc-send.c:569 src/irc/irc-send.c:591 src/irc/irc-recv.c:261
 #: src/irc/irc-recv.c:1008
 #, c-format
 msgid "%s nick not found for \"%s\" command\n"
 msgstr "%s utilisateur non trouvé pour la commande \"%s\"\n"
 
-#: src/irc/irc-send.c:628 src/irc/irc-send.c:869 src/irc/irc-recv.c:1168
+#: src/irc/irc-send.c:640 src/irc/irc-send.c:881 src/irc/irc-recv.c:1168
 #, c-format
 msgid "%s cannot create new private window \"%s\"\n"
 msgstr "%s impossible de créer la fenêtre privée \"%s\"\n"
 
-#: src/irc/irc-send.c:658 src/common/command.c:1304
+#: src/irc/irc-send.c:670 src/common/command.c:1304
 #, c-format
 msgid "%s wrong argument count for \"%s\" command\n"
 msgstr "%s nombre de paramètres erroné pour la commande \"%s\"\n"
 
-#: src/irc/irc-send.c:1178
+#: src/irc/irc-send.c:1190
 #, c-format
 msgid "%s, compiled on %s %s\n"
 msgstr "%s, compilé le %s %s\n"

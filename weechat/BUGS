@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-WeeChat known bugs, 2004-08-08
+WeeChat known bugs, 2004-10-30
 
 - ./configure does not check that Curses headers are installed
 - ./configure does not check that Gtk 2.0 libraries are installed
@@ -10,8 +10,6 @@ WeeChat known bugs, 2004-08-08
 - problem when resizing terminal and that some windows are outside new term size
 - some IRC commands are marked as 'unknown' when received
   (IRC protocol is under dev!)
-- too much opened channels => display bug
-- when kicked, channel is not prefixed by '(' and sufixed by ')'
 - when function key (non used by WeeChat) is pressed, prompt is deleted
 - when quitting WeeChat term title is not restored (if look_set_title is ON)
 - command name for /server can not contain spaces

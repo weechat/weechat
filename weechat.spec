@@ -1,5 +1,5 @@
 %define name weechat
-%define version 0.0.7
+%define version 0.0.8
 %define release 1
 
 Name:      %{name}
@@ -37,10 +37,12 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(-,root,root,0755) 
 %doc AUTHORS BUGS ChangeLog COPYING FAQ FAQ.fr INSTALL NEWS README TODO
-/usr/local/man/man1/weechat.1*
+/usr/local/man/man1/weechat-curses.1*
 /usr/local/bin/weechat-curses
 
 %changelog 
+* Sat Oct 30 2004 FlashCode <flashcode@flashtux.org> 0.0.8-1
+- Released version 0.0.8
 * Sat Aug 08 2004 FlashCode <flashcode@flashtux.org> 0.0.7-1
 - Released version 0.0.7
 * Sat Jun 05 2004 FlashCode <flashcode@flashtux.org> 0.0.6-1

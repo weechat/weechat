@@ -1,9 +1,6 @@
 #!/usr/bin/make -f
-# Sample debian/rules that uses debhelper.
-# GNU copyright 1997 to 1999 by Joey Hess.
 
-# Uncomment this to turn on verbose mode.
-export DH_VERBOSE=1
+#export DH_VERBOSE=1
 
 ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
 	CFLAGS += -O0
@@ -50,10 +47,9 @@ install: build
 binary-indep: build install
 	dh_testdir -pweechat-common
 	dh_testroot -pweechat-common
-	dh_installchangelogs -pweechat-common
+	dh_installchangelogs ChangeLog -pweechat-common
 	dh_installdocs -pweechat-common
 	dh_installexamples -pweechat-common
-	dh_installman weechat.1 -pweechat-common
 	dh_compress -pweechat-common
 	dh_fixperms -pweechat-common
 	dh_installdeb -pweechat-common
@@ -66,6 +62,9 @@ binary-indep: build install
 binary-arch: build install
 	dh_testdir -a
 	dh_testroot -a
+	dh_installchangelogs -a
+	dh_installdocs -a
+	dh_installman weechat-curses.1 -pweechat-curses
 	dh_link -a
 	dh_strip -a
 	dh_compress -a

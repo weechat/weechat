@@ -1,3 +1,9 @@
+weechat (0.0.8-1) unstable; urgency=low
+
+  * WeeChat version 0.0.8, see ChangeLog for detail.
+  
+ -- FlashCode <flashcode@flashtux.org>  Sat, 30 Oct 2004 11:40:00 +0200
+
 weechat (0.0.7-1) unstable; urgency=low
 
   * WeeChat version 0.0.7, see ChangeLog for detail.
