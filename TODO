@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2004-10-30
+TODO - 2004-12-27
 
 Legend:
   #  done
@@ -10,7 +10,7 @@ Legend:
   ?  is this really necessary?
 
 
-v0.0.8:
+v0.0.9:
 ------
 
  * General:
@@ -21,9 +21,6 @@ v0.0.8:
     + "/dcc" command (for chat and sending/receiving files)
 
  * Interface:
-    # log chats to file
-    # "/buffer" command, buffers ordered by number, auto-jump to active
-      buffers (alt-a), jump to buffers by number (alt-number)
     + "/window" command, split terminal in multiple windows
       (horizontally/vertically)
     + internationalization (traduce WeeChat in many languages)

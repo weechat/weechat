@@ -588,6 +588,12 @@ server_recv (t_irc_server *server)
         server_msgq_add_buffer (server, buffer);
         server_msgq_flush ();
     }
+    else
+    {
+        gui_printf (server->buffer,
+                    _("%s cannot read data from socket, disconnecting from server...\n"));
+        server_disconnect (server);
+    }
 }
 
 /*
