@@ -101,7 +101,7 @@ irc_cmd_send_away (t_irc_server *server, char *arguments)
         for (ptr_server = irc_servers; ptr_server;
              ptr_server = ptr_server->next_server)
         {
-            if (server->is_connected)
+            if (ptr_server->is_connected)
             {
                 if (pos)
                     server_sendf (ptr_server, "AWAY :%s\r\n", pos);
