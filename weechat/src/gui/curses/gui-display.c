@@ -1013,8 +1013,11 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
         /* display list of other active windows (if any) with numbers */
         if (hotlist)
         {
+            gui_window_set_color (ptr_win->win_status,
+                                  COLOR_WIN_STATUS_DELIMITERS);
+            wprintw (ptr_win->win_status, "[");
             gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS);
-            wprintw (ptr_win->win_status, _("[Act: "));
+            wprintw (ptr_win->win_status, _("Act: "));
             for (ptr_hotlist = hotlist; ptr_hotlist;
                  ptr_hotlist = ptr_hotlist->next_hotlist)
             {
@@ -1045,8 +1048,25 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                     wprintw (ptr_win->win_status, ",");
             }
             gui_window_set_color (ptr_win->win_status,
-                                  COLOR_WIN_STATUS);
+                                  COLOR_WIN_STATUS_DELIMITERS);
             wprintw (ptr_win->win_status, "]");
+        }
+        
+        /* display lag */
+        if (SERVER(ptr_win->buffer))
+        {
+            if (SERVER(ptr_win->buffer)->lag / 1000 >= cfg_irc_lag_min_show)
+            {
+                gui_window_set_color (ptr_win->win_status,
+                                      COLOR_WIN_STATUS_DELIMITERS);
+                wprintw (ptr_win->win_status, "[");
+                gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS);
+                wprintw (ptr_win->win_status, _("Lag: %.1f"),
+                         ((float)(SERVER(ptr_win->buffer)->lag)) / 1000);
+                gui_window_set_color (ptr_win->win_status,
+                                      COLOR_WIN_STATUS_DELIMITERS);
+                wprintw (ptr_win->win_status, "]");
+            }
         }
         
         /* display "-MORE-" if last line is not displayed */

@@ -55,7 +55,7 @@ AH_VERBATIM([PLUGINS], [#undef PLUGINS])
 AH_VERBATIM([PLUGIN_PERL], [#undef PLUGIN_PERL])
 AH_VERBATIM([DEBUG], [#undef DEBUG])
 
-AC_ARG_ENABLE(ncurses, [  --disable-ncurses       Turn off NCurses interface (default=auto)],,enable_ncurses=yes)
+AC_ARG_ENABLE(ncurses, [  --disable-ncurses       Turn off ncurses interface (default=auto)],,enable_ncurses=yes)
 AC_ARG_ENABLE(gtk,     [  --enable-gtk            Turn on Gtk+ interface (default=no)],enable_gtk=yes,enable_gtk=no)
 AC_ARG_ENABLE(qt,      [  --enable-qt             Turn on Qt interface (default=no)],enable_qt=yes,enable_qt=no)
 AC_ARG_ENABLE(perl,    [  --enable-perl           Turn on Perl plugins (default=no)],enable_perl=yes,enable_perl=no)
@@ -76,7 +76,7 @@ AM_CONDITIONAL(PLUGIN_PERL,   test "$enable_perl" = "yes")
 
 if test "x$enable_ncurses" = "xyes" ; then
     if test "$LIBNCURSES_FOUND" = "0" ; then
-        AC_MSG_ERROR([NCurses library not found! Install NCurses library or run ./configure with --disable-ncurses parameter.])
+        AC_MSG_ERROR([ncurses library not found! Install ncurses library or run ./configure with --disable-ncurses parameter.])
     fi
     NCURSES_LIBS="-lncurses"
     AC_SUBST(NCURSES_LIBS)
@@ -140,7 +140,7 @@ echo $PACKAGE $VERSION
 
 listgui=
 if test "x$enable_ncurses" = "xyes" ; then
-    listgui="$listgui NCurses"
+    listgui="$listgui ncurses"
 fi
 if test "x$enable_gtk" = "xyes" ; then
     listgui="$listgui Gtk+"
@@ -150,16 +150,16 @@ if test "x$enable_qt" = "xyes" ; then
 fi
 
 if test "x$listgui" = "x" ; then
-    AC_MSG_ERROR([No interface specified... Please specify at least NCurses, Gtk or Qt.])
+    AC_MSG_ERROR([No interface specified... Please specify at least ncurses, Gtk or Qt.])
 fi
 
-msg_debug_compiler="No"
-msg_debug_verbose="No"
+msg_debug_compiler="no"
+msg_debug_verbose="no"
 if test "x$debug" = "x1" || test "x$debug" = "x2" ; then
-    msg_debug_compiler="Yes"
+    msg_debug_compiler="yes"
 fi
 if test "x$debug" = "x2" ; then
-    msg_debug_verbose="Yes"
+    msg_debug_verbose="yes"
 fi
 
 echo

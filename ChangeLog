@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-01-16
+ChangeLog - 2005-01-23
 
 
 Version 0.1.0 (under dev!):
+   * added lag indicator (and auto-disconnect after a delay if important lag)
    * improved completion: now completes commands arguments (IRC and internal),
      when only one completion matches, completion mechanism is stoped (to
      complete command arg for example)

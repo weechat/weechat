@@ -84,6 +84,10 @@ server_init (t_irc_server *server)
     server->away_time = 0;
     server->server_read = -1;
     server->server_write = -1;
+    server->lag = 0;
+    server->lag_check_time.tv_sec = 0;
+    server->lag_check_time.tv_usec = 0;
+    server->lag_next_check = 0;
     server->buffer = NULL;
     server->channels = NULL;
     server->last_channel = NULL;
@@ -818,8 +822,6 @@ server_disconnect (t_irc_server *server, int reconnect)
             irc_display_prefix (ptr_channel->buffer, PREFIX_INFO);
             gui_printf (ptr_channel->buffer, _("Disconnected from server!\n"));
         }
-        gui_draw_buffer_nick (gui_current_window->buffer, 1);
-        gui_draw_buffer_status (gui_current_window->buffer, 1);
     }
     
     /* close communication with server */
@@ -839,6 +841,10 @@ server_disconnect (t_irc_server *server, int reconnect)
     server->is_connected = 0;
     server->is_away = 0;
     server->away_time = 0;
+    server->lag = 0;
+    server->lag_check_time.tv_sec = 0;
+    server->lag_check_time.tv_usec = 0;
+    server->lag_next_check = 0;
     
     if ((reconnect) && (server->autoreconnect))
     {
@@ -849,6 +855,8 @@ server_disconnect (t_irc_server *server, int reconnect)
     }
     else
         server->reconnect_start = 0;
+    
+    gui_redraw_buffer (gui_current_window->buffer);
 }
 
 /*

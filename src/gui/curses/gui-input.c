@@ -634,9 +634,10 @@ void
 gui_main_loop ()
 {
     fd_set read_fd;
-    static struct timeval timeout;
+    static struct timeval timeout, tv;
+    static struct timezone tz;
     t_irc_server *ptr_server;
-    int old_min, old_sec;
+    int old_min, old_sec, diff;
     time_t new_time;
     struct tm *local_time;
 
@@ -680,8 +681,38 @@ gui_main_loop ()
                 && (new_time >= (ptr_server->reconnect_start + ptr_server->autoreconnect_delay)))
                 server_reconnect (ptr_server);
             else
+            {
+                if (ptr_server->is_connected)
+                {
+                    /* check for lag */
+                    if ((ptr_server->lag_check_time.tv_sec == 0)
+                        && (new_time >= ptr_server->lag_next_check))
+                    {
+                        server_sendf (ptr_server, "PING %s\r\n", ptr_server->address);
+                        gettimeofday (&(ptr_server->lag_check_time), &tz);
+                    }
+                    
+                    /* lag timeout => disconnect */
+                    if ((ptr_server->lag_check_time.tv_sec != 0)
+                        && (cfg_irc_lag_disconnect > 0))
+                    {
+                        gettimeofday (&tv, &tz);
+                        diff = (int) get_timeval_diff (&(ptr_server->lag_check_time), &tv);
+                        if (diff / 1000 > cfg_irc_lag_disconnect * 60)
+                        {
+                            irc_display_prefix (ptr_server->buffer, PREFIX_ERROR);
+                            gui_printf (ptr_server->buffer,
+                                        _("%s lag is high, disconnecting from server...\n"),
+                                        WEECHAT_WARNING);
+                            server_disconnect (ptr_server, 1);
+                            continue;
+                        }
+                    }
+                }
+            
                 if (ptr_server->sock4 >= 0)
                     FD_SET (ptr_server->sock4, &read_fd);
+            }
         }
         if (select (FD_SETSIZE, &read_fd, NULL, NULL, &timeout))
         {

@@ -154,6 +154,9 @@ extern int cfg_irc_display_away;
 extern char *cfg_irc_default_msg_away;
 extern char *cfg_irc_default_msg_part;
 extern char *cfg_irc_default_msg_quit;
+extern int cfg_irc_lag_check;
+extern int cfg_irc_lag_min_show;
+extern int cfg_irc_lag_disconnect;
 
 extern int cfg_dcc_auto_accept_files;
 extern int cfg_dcc_auto_accept_chats;

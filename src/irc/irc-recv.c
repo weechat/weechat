@@ -938,6 +938,37 @@ irc_cmd_recv_ping (t_irc_server *server, char *host, char *arguments)
 }
 
 /*
+ * irc_cmd_recv_pong: 'pong' command received
+ */
+
+int
+irc_cmd_recv_pong (t_irc_server *server, char *host, char *arguments)
+{
+    struct timeval tv;
+    struct timezone tz;
+    int old_lag;
+    
+    (void)host;
+    (void)arguments;
+    
+    if (server->lag_check_time.tv_sec != 0)
+    {
+        /* calculate lag (time diff with lag check) */
+        old_lag = server->lag;
+        gettimeofday (&tv, &tz);
+        server->lag = (int) get_timeval_diff (&(server->lag_check_time), &tv);
+        if (old_lag != server->lag)
+            gui_draw_buffer_status (gui_current_window->buffer, 1);
+        
+        /* schedule next lag check */
+        server->lag_check_time.tv_sec = 0;
+        server->lag_check_time.tv_usec = 0;
+        server->lag_next_check = time (NULL) + cfg_irc_lag_check;
+    }
+    return 0;
+}
+
+/*
  * irc_cmd_recv_privmsg: 'privmsg' command received
  */
 

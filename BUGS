@@ -1,12 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-WeeChat known bugs, 2005-01-01
+WeeChat known bugs, 2005-01-23
 
 - ./configure does not check that Curses headers are installed
 - ./configure does not check that Gtk 2.0 libraries are installed
 - ./configure does not check that Perl headers & libraries are installed
-- too much nicks in the channel (> height of window) => display bug
+- too much nicks in the channel (> height of window) => some nicks are hidden
 - problem when resizing terminal and that some windows are outside new term size
 - some IRC commands are marked as 'unknown' when received
   (IRC protocol is under dev!)

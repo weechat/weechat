@@ -161,7 +161,7 @@ t_irc_command irc_commands[] =
   { "pong", N_("answer to a ping message"),
     N_("daemon [daemon2]"), N_("daemon: daemon who has responded to Ping message\n"
     "daemon2: forward message to this daemon"),
-    1, 2, 1, NULL, irc_cmd_send_pong, NULL },
+    1, 2, 1, NULL, irc_cmd_send_pong, irc_cmd_recv_pong },
   { "privmsg", N_("message received"),
     "", "",
     0, 0, 1, NULL, NULL, irc_cmd_recv_privmsg },

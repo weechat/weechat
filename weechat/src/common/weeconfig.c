@@ -460,6 +460,9 @@ int cfg_irc_display_away;
 char *cfg_irc_default_msg_away;
 char *cfg_irc_default_msg_part;
 char *cfg_irc_default_msg_quit;
+int cfg_irc_lag_check;
+int cfg_irc_lag_min_show;
+int cfg_irc_lag_disconnect;
 
 t_config_option weechat_options_irc[] =
 { { "irc_display_away", N_("display message to all channels when away"),
@@ -478,6 +481,18 @@ t_config_option weechat_options_irc[] =
     N_("default quit message ('%v' will be replaced by WeeChat version in string)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "WeeChat %v", NULL, NULL, &cfg_irc_default_msg_quit, config_change_noop },
+  { "irc_lag_check", N_("interval between two checks for lag"),
+    N_("interval between two checks for lag (in seconds)"),
+    OPTION_TYPE_INT, 30, INT_MAX, 60,
+    NULL, NULL, &cfg_irc_lag_check, NULL, config_change_noop },
+  { "irc_lag_min_show", N_("minimum lag to show"),
+    N_("minimum lag to show (in seconds)"),
+    OPTION_TYPE_INT, 1, INT_MAX, 1,
+    NULL, NULL, &cfg_irc_lag_min_show, NULL, config_change_noop },
+  { "irc_lag_disconnect", N_("disconnect after important lag"),
+    N_("disconnect after important lag (in minutes, 0 = never disconnect)"),
+    OPTION_TYPE_INT, 0, INT_MAX, 5,
+    NULL, NULL, &cfg_irc_lag_disconnect, NULL, config_change_noop },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 

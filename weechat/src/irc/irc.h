@@ -22,6 +22,7 @@
 #define __WEECHAT_IRC_H 1
 
 #include <time.h>
+#include <sys/time.h>
 #include "../gui/gui.h"
 
 /* prefixes for chat window */
@@ -142,6 +143,9 @@ struct t_irc_server
     time_t away_time;               /* time() when user marking as away     */
     int server_read;                /* pipe for reading server data         */
     int server_write;               /* pipe for sending data to server      */
+    int lag;                        /* lag (in milliseconds)                */
+    struct timeval lag_check_time;  /* last time lag was checked (ping sent)*/
+    time_t lag_next_check;          /* time for next check                  */
     t_gui_buffer *buffer;           /* GUI buffer allocated for server      */
     t_irc_channel *channels;        /* opened channels on server            */
     t_irc_channel *last_channel;    /* last opened channal on server        */
@@ -337,6 +341,7 @@ extern int irc_cmd_recv_nick (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_notice (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_part (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_ping (t_irc_server *, char *, char *);
+extern int irc_cmd_recv_pong (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_privmsg (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_quit (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_server_msg (t_irc_server *, char *, char *);

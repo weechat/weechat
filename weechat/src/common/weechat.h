@@ -26,6 +26,7 @@
 #endif
 
 #include <stdio.h>
+#include <sys/time.h>
 
 #if defined(ENABLE_NLS) && !defined(_)
     #include <locale.h>
@@ -102,6 +103,7 @@ extern char *weechat_home;
 extern char *local_charset;
 
 extern char *weechat_convert_encoding (char *, char *, char *);
+extern long get_timeval_diff (struct timeval *, struct timeval *);
 extern void wee_log_printf (char *, ...);
 extern void wee_shutdown ();
 

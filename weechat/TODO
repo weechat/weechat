@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2005-01-02
+TODO - 2005-01-23
 
 Legend:
   #  done
@@ -14,21 +14,17 @@ v0.1.0:
 ------
 
  * General:
-    - Windows version
+    + Windows version
     + Solaris version
 
  * IRC protocol:
     + "/dcc" command (for chat and sending/receiving files)
-    - lets user configure his CTCP version reply (partially)
 
  * Interface:
+    # add lag indicator
     + "/window" command, split terminal in multiple windows
       (horizontally/vertically)
     + internationalization (traduce WeeChat in many languages)
-
- * Configuration:
-    + add missing options for config file
-    - add key bindings to config file
 
 
 Future versions:
@@ -38,6 +34,7 @@ Future versions:
     - *BSD version
 
  * IRC protocol:
+    - customizable CTCP version reply
     - complete "/list" command: add regexp search, display only channels that
       match regexp
     - "/ignore" and "/unignore" commands: hide all that is write by a given
@@ -63,7 +60,6 @@ Future versions:
     + Gtk GUI
     - color for nicks (except own nick) when nick colors are disabled
     - interpret special chars in messages (color & bold for example)
-    - add lag indicator
     - improve completion (for example complete command parameters when possible)
     - understand incomplete commands if unambigous (for example: /he for /help is ok)
     - tab key with empty command line should switch to next window (like F7) 
@@ -80,3 +76,6 @@ Future versions:
     - "/python load" and "/python unload" commands to (un)load Python scripts
     - Ruby plugin
     - "/ruby load" and "/ruby unload" commands to (un)load Ruby scripts
+
+ * Configuration:
+    - add key bindings to config file

@@ -124,6 +124,25 @@ weechat_convert_encoding (char *from_code, char *to_code, char *string)
 }
 
 /*
+ * get_timeval_diff: calculates difference between two times (return in milliseconds)
+ */
+
+long get_timeval_diff(struct timeval *tv1, struct timeval *tv2)
+{
+    long diff_sec, diff_usec;
+    
+    diff_sec = tv2->tv_sec - tv1->tv_sec;
+    diff_usec = tv2->tv_usec - tv1->tv_usec;
+    
+    if (diff_usec < 0)
+    {
+        diff_usec += 1000000;
+        diff_sec--;
+    }
+    return ((diff_usec / 1000) + (diff_sec * 1000));
+}
+
+/*
  * wee_log_printf: displays a message in WeeChat log (~/.weechat/weechat.log)
  */
 
