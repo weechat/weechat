@@ -366,7 +366,7 @@ server_msgq_flush ()
     t_irc_message *next;
     /*char **argv;
     int argc;*/
-    char *ptr_data, *pos, *pos2;
+    char *entire_line, *ptr_data, *pos, *pos2;
     char *host, *command, *args;
 
     /* TODO: optimize this function, parse only a few messages (for low CPU time!) */
@@ -377,6 +377,7 @@ server_msgq_flush ()
         #endif
 
         ptr_data = recv_msgq->data;
+        entire_line = strdup (ptr_data);
         
         while (ptr_data[0] == ' ')
             ptr_data++;
@@ -417,7 +418,8 @@ server_msgq_flush ()
                 }
             }
             
-            switch (irc_recv_command (recv_msgq->server, host, command, args))
+            switch (irc_recv_command (recv_msgq->server, entire_line, host,
+                                      command, args))
             {
                 case -1:
                     gui_printf (recv_msgq->server->window,
@@ -435,6 +437,7 @@ server_msgq_flush ()
             }
         }
 
+        free (entire_line);
         free (recv_msgq->data);
         next = recv_msgq->next_message;
         free (recv_msgq);

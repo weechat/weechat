@@ -101,7 +101,9 @@ static XS (XS_IRC_print)
     for (i = 0; i < items; i++)
     {
         message = SvPV (ST (i), integer);
-        gui_printf (NULL, "%s\n", message);
+        gui_printf (gui_current_window, "%s%s",
+                    message,
+                    (message[strlen (message) - 1] == '\n') ? "" : "\n");
     }
     
     XSRETURN_EMPTY;
@@ -144,7 +146,7 @@ void
 wee_perl_init ()
 {
     char *perl_args[] = { "", "-e", "0" };
-    /* This Perl code is extracted/modified from X-Chat IRC client */
+    /* Following Perl code is extracted/modified from X-Chat IRC client */
     /* X-Chat is (c) 1998-2002 Peter Zelezny */
     char *weechat_perl_func =
     {

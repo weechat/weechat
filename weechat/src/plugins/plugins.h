@@ -44,6 +44,7 @@ extern void plugins_init ();
 extern void plugins_load (int, char *);
 extern void plugins_unload (int, char *);
 extern void plugins_msg_handler_add (int, char *, char *);
+extern void plugins_event_msg (char *, char *);
 extern void plugins_end ();
 
 #endif /* plugins.h */

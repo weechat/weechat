@@ -62,6 +62,7 @@ plugins_init ()
 void
 plugins_load (int plugin_type, char *filename)
 {
+    #ifdef PLUGINS
     switch (plugin_type)
     {
         case PLUGIN_PERL:
@@ -76,6 +77,7 @@ plugins_load (int plugin_type, char *filename)
             /* TODO: load Ruby script */
             break;
     }
+    #endif
 }
 
 /*
@@ -85,6 +87,7 @@ plugins_load (int plugin_type, char *filename)
 void
 plugins_unload (int plugin_type, char *scriptname)
 {
+    #ifdef PLUGINS
     switch (plugin_type)
     {
         case PLUGIN_PERL:
@@ -99,6 +102,7 @@ plugins_unload (int plugin_type, char *scriptname)
             /* TODO: load Ruby script */
             break;
     }
+    #endif
 }
 
 /*
@@ -171,6 +175,33 @@ plugins_msg_handlers_free_all ()
 {
     while (plugins_msg_handlers)
         plugins_msg_handler_free (plugins_msg_handlers);
+}
+
+/*
+ * plugins_event_msg: IRC message received => call all handlers for this message
+ */
+
+void
+plugins_event_msg (char *command, char *arguments)
+{
+    #ifdef PLUGINS
+    t_plugin_handler *ptr_plugin_handler;
+    
+    for (ptr_plugin_handler = plugins_msg_handlers; ptr_plugin_handler;
+         ptr_plugin_handler = ptr_plugin_handler->next_handler)
+    {
+        if (strcasecmp (ptr_plugin_handler->name, command) == 0)
+        {
+            #ifdef PLUGIN_PERL
+            if (ptr_plugin_handler->plugin_type == PLUGIN_PERL)
+                wee_perl_exec (ptr_plugin_handler->function_name, arguments);
+            #endif
+        }
+    }
+    #else
+    /* make gcc happy */
+    (void) command;
+    #endif
 }
 
 /*

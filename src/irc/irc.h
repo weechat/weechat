@@ -185,7 +185,7 @@ extern void irc_display_mode (t_gui_window *, char *, char, char *, char *,
 
 /* IRC protocol (irc-commands.c) */
 
-extern int irc_recv_command (t_irc_server *, char *, char *, char *);
+extern int irc_recv_command (t_irc_server *, char *, char *, char *, char *);
 extern void irc_login (t_irc_server *);
 /* IRC commands issued by user */
 extern int irc_cmd_send_admin (t_irc_server *, char *);

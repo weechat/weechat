@@ -37,6 +37,7 @@ struct t_perl_script
 
 extern void wee_perl_init ();
 extern t_perl_script *wee_perl_search (char *);
+extern int wee_perl_exec (char *, char *);
 extern int wee_perl_load (char *);
 extern void wee_perl_unload (t_perl_script *);
 extern void wee_perl_unload_all ();

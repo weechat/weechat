@@ -51,6 +51,7 @@ AC_FUNC_SELECT_ARGTYPES
 AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([gethostbyname gethostname gettimeofday inet_ntoa memset mkdir select setlocale socket strcasecmp strchr strdup strncasecmp strpbrk strrchr strstr uname])
 
+AH_VERBATIM([PLUGINS], [#undef PLUGINS])
 AH_VERBATIM([PLUGIN_PERL], [#undef PLUGIN_PERL])
 AH_VERBATIM([DEBUG], [#undef DEBUG])
 
@@ -99,6 +100,10 @@ if test "x$enable_perl" = "xyes" ; then
     PERL_CFLAGS=`perl -MExtUtils::Embed -e ccopts`
     AC_SUBST(PERL_CFLAGS)
     AC_DEFINE(PLUGIN_PERL)
+fi
+
+if test "x$enable_plugins" = "xyes" ; then
+    AC_DEFINE(PLUGINS)
 fi
 
 AC_SUBST(PLUGINS_LIBS)

@@ -40,6 +40,7 @@
 #include "../common/command.h"
 #include "../common/weeconfig.h"
 #include "../gui/gui.h"
+#include "../plugins/plugins.h"
 
 
 /*
@@ -51,29 +52,35 @@
  */
 
 int
-irc_recv_command (t_irc_server *server,
+irc_recv_command (t_irc_server *server, char *entire_line,
                   char *host, char *command, char *arguments)
 {
-    int i, cmd_found;
+    int i, cmd_found, return_code;
 
     if (command == NULL)
         return -2;
 
-    /* looks for irc command */
+    /* look for IRC command */
     cmd_found = -1;
     for (i = 0; irc_commands[i].command_name; i++)
+    {
         if (strcasecmp (irc_commands[i].command_name, command) == 0)
         {
             cmd_found = i;
             break;
         }
+    }
 
     /* command not found */
     if (cmd_found < 0)
         return -3;
 
     if (irc_commands[i].recv_function != NULL)
-        return (int) (irc_commands[i].recv_function) (server, host, arguments);
+    {
+        return_code = (int) (irc_commands[i].recv_function) (server, host, arguments);
+        plugins_event_msg (irc_commands[i].command_name, entire_line);
+        return return_code;
+    }
     
     return 0;
 }
