@@ -35,7 +35,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(-,root,root,0755) 
-%doc AUTHORS BUGS ChangeLog COPYING FAQ INSTALL NEWS README TODO
+%doc AUTHORS BUGS ChangeLog COPYING FAQ FAQ.fr INSTALL NEWS README TODO
 /usr/local/man/man1/weechat.1*
 /usr/local/bin/weechat-curses
 
