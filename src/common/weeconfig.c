@@ -534,6 +534,7 @@ int cfg_dcc_timeout;
 int cfg_dcc_blocksize;
 char *cfg_dcc_download_path;
 char *cfg_dcc_upload_path;
+int cfg_dcc_convert_spaces;
 int cfg_dcc_auto_rename;
 int cfg_dcc_auto_resume;
 
@@ -544,7 +545,7 @@ t_config_option weechat_options_dcc[] =
     NULL, NULL, &cfg_dcc_auto_accept_files, NULL, config_change_noop },
   { "dcc_auto_accept_chats", N_("automatically accept dcc chats"),
     N_("automatically accept dcc chats (use carefully!)"),
-    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
     NULL, NULL, &cfg_dcc_auto_accept_chats, NULL, config_change_noop },
   { "dcc_timeout", N_("timeout for dcc request"),
     N_("timeout for dcc request (in seconds)"),
@@ -552,7 +553,7 @@ t_config_option weechat_options_dcc[] =
     NULL, NULL, &cfg_dcc_timeout, NULL, config_change_noop },
   { "dcc_blocksize", N_("block size for dcc packets"),
     N_("block size for dcc packets in bytes (default: 1024)"),
-    OPTION_TYPE_INT, 1024, 102400, 1024,
+    OPTION_TYPE_INT, 1024, 102400, 65536,
     NULL, NULL, &cfg_dcc_blocksize, NULL, config_change_noop },
   { "dcc_download_path", N_("path for incoming files with dcc"),
     N_("path for writing incoming files with dcc (default: user home)"),
@@ -562,6 +563,10 @@ t_config_option weechat_options_dcc[] =
     N_("path for reading files when sending thru dcc (when no path is specified)"),
     OPTION_TYPE_STRING, 0, 0, 0, "~",
     NULL, NULL, &cfg_dcc_upload_path, config_change_noop },
+  { "dcc_convert_spaces", N_("convert spaces to underscores when sending files"),
+    N_("convert spaces to underscores when sending files"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
+    NULL, NULL, &cfg_dcc_convert_spaces, NULL, config_change_noop },
   { "dcc_auto_rename", N_("automatically rename dcc files if already exists"),
     N_("rename incoming files if already exists (add '.1', '.2', ...)"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,

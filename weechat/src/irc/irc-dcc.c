@@ -28,6 +28,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <fcntl.h>
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -39,7 +40,7 @@
 #include "../gui/gui.h"
 
 
-t_dcc *dcc_list = NULL;         /* DCC files & chat list                    */
+t_irc_dcc *dcc_list = NULL;     /* DCC files & chat list                    */
 char *dcc_status_string[] =     /* strings for DCC status                   */
 { N_("Waiting"), N_("Connecting"), N_("Active"), N_("Done"), N_("Failed"),
   N_("Aborted") };
@@ -64,31 +65,42 @@ dcc_redraw (int highlight)
  * dcc_connect: connect to another host
  */
 
-void
-dcc_connect (t_dcc *ptr_dcc)
+int
+dcc_connect (t_irc_dcc *ptr_dcc)
 {
     struct sockaddr_in addr;
     
     ptr_dcc->status = DCC_CONNECTING;
     
-    ptr_dcc->sock = socket (AF_INET, SOCK_STREAM, 0);
     if (ptr_dcc->sock == -1)
-        return;
-    memset (&addr, 0, sizeof (addr));
-    addr.sin_port = htons (ptr_dcc->port);
-    addr.sin_family = AF_INET;
-    addr.sin_addr.s_addr = htonl (ptr_dcc->addr);
-    fcntl (ptr_dcc->sock, F_SETFL, O_NONBLOCK);
-    connect (ptr_dcc->sock, (struct sockaddr *) &addr, sizeof (addr));
-}
-
-/*
- * dcc_send: send DCC request (file or chat)
- */
-
-void
-dcc_send ()
-{
+    {
+        ptr_dcc->sock = socket (AF_INET, SOCK_STREAM, 0);
+        if (ptr_dcc->sock == -1)
+            return 0;
+    }
+    if (fcntl (ptr_dcc->sock, F_SETFL, O_NONBLOCK) == -1)
+        return 0;
+    
+    /* for DCC SEND, listen to socket for a connection */
+    if (ptr_dcc->type == DCC_FILE_SEND)
+    {
+        if (listen (ptr_dcc->sock, 1) == -1)
+            return 0;
+        if (fcntl (ptr_dcc->sock, F_SETFL, 0) == -1)
+            return 0;
+    }
+    
+    /* for DCC RECV, connect to listening host */
+    if (ptr_dcc->type == DCC_FILE_RECV)
+    {
+        memset (&addr, 0, sizeof (addr));
+        addr.sin_port = htons (ptr_dcc->port);
+        addr.sin_family = AF_INET;
+        addr.sin_addr.s_addr = htonl (ptr_dcc->addr);
+        connect (ptr_dcc->sock, (struct sockaddr *) &addr, sizeof (addr));
+    }
+    
+    return 1;
 }
 
 /*
@@ -96,9 +108,9 @@ dcc_send ()
  */
 
 void
-dcc_free (t_dcc *ptr_dcc)
+dcc_free (t_irc_dcc *ptr_dcc)
 {
-    t_dcc *new_dcc_list;
+    t_irc_dcc *new_dcc_list;
     
     if (ptr_dcc->prev_dcc)
     {
@@ -125,9 +137,37 @@ dcc_free (t_dcc *ptr_dcc)
  */
 
 void
-dcc_close (t_dcc *ptr_dcc, int status)
+dcc_close (t_irc_dcc *ptr_dcc, int status)
 {
     ptr_dcc->status = status;
+    
+    if (status == DCC_DONE)
+    {
+        if ((ptr_dcc->type == DCC_FILE_SEND) || (ptr_dcc->type == DCC_FILE_RECV))
+        {
+            irc_display_prefix (ptr_dcc->server->buffer, PREFIX_INFO);
+            gui_printf (ptr_dcc->server->buffer, _("DCC: file "));
+            gui_printf_color (ptr_dcc->server->buffer,
+                              COLOR_WIN_CHAT_CHANNEL,
+                              "%s",
+                              ptr_dcc->filename);
+            gui_printf (ptr_dcc->server->buffer, _(" (local filename: "));
+            gui_printf_color (ptr_dcc->server->buffer,
+                              COLOR_WIN_CHAT_CHANNEL,
+                              "%s",
+                              ptr_dcc->local_filename);
+            if (ptr_dcc->type == DCC_FILE_SEND)
+                gui_printf (ptr_dcc->server->buffer, _(") sent to "));
+            else
+                gui_printf (ptr_dcc->server->buffer, _(") received from "));
+            gui_printf_color (ptr_dcc->server->buffer,
+                              COLOR_WIN_CHAT_NICK,
+                              "%s",
+                              ptr_dcc->nick);
+            gui_printf (ptr_dcc->server->buffer, _(": ok!\n"));
+        }
+    }
+    
     if (ptr_dcc->sock != -1)
     {
         close (ptr_dcc->sock);
@@ -145,13 +185,15 @@ dcc_close (t_dcc *ptr_dcc, int status)
  */
 
 void
-dcc_accept (t_dcc *ptr_dcc)
+dcc_accept (t_irc_dcc *ptr_dcc)
 {
     char *ptr_home, *filename2;
     
-    dcc_connect (ptr_dcc);
-    if (ptr_dcc->sock == -1)
-        ptr_dcc->status = DCC_FAILED;
+    if (!dcc_connect (ptr_dcc))
+    {
+        dcc_close (ptr_dcc, DCC_FAILED);
+        dcc_redraw (1);
+    }
     else
     {
         ptr_dcc->status = DCC_ACTIVE;
@@ -164,7 +206,7 @@ dcc_accept (t_dcc *ptr_dcc)
                                                    4);
         if (!ptr_dcc->local_filename)
         {
-            ptr_dcc->status = DCC_FAILED;
+            dcc_close (ptr_dcc, DCC_FAILED);
             dcc_redraw (1);
             return;
         }
@@ -187,7 +229,7 @@ dcc_accept (t_dcc *ptr_dcc)
             /* if auto rename is not set, then abort DCC */
             if (!cfg_dcc_auto_rename)
             {
-                ptr_dcc->status = DCC_FAILED;
+                dcc_close (ptr_dcc, DCC_FAILED);
                 dcc_redraw (1);
                 return;
             }
@@ -195,7 +237,7 @@ dcc_accept (t_dcc *ptr_dcc)
             filename2 = (char *) malloc (strlen (ptr_dcc->local_filename) + 16);
             if (!filename2)
             {
-                ptr_dcc->status = DCC_FAILED;
+                dcc_close (ptr_dcc, DCC_FAILED);
                 dcc_redraw (1);
                 return;
             }
@@ -214,7 +256,7 @@ dcc_accept (t_dcc *ptr_dcc)
             free (filename2);
         }
         ptr_dcc->file = open (ptr_dcc->local_filename,
-                              O_CREAT | O_TRUNC | O_WRONLY,
+                              O_CREAT | O_TRUNC | O_WRONLY | O_NONBLOCK,
                               0644);
     }
     dcc_redraw (1);
@@ -224,15 +266,17 @@ dcc_accept (t_dcc *ptr_dcc)
  * dcc_add: add a DCC file to queue
  */
 
-t_dcc *
-dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nick, char *filename,
-         unsigned int size)
+t_irc_dcc *
+dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nick,
+         int sock, char *filename, char *local_filename, unsigned long size)
 {
-    t_dcc *new_dcc;
+    t_irc_dcc *new_dcc;
     
-    if ((new_dcc = (t_dcc *) malloc (sizeof (t_dcc))) == NULL)
+    if ((new_dcc = (t_irc_dcc *) malloc (sizeof (t_irc_dcc))) == NULL)
     {
-        gui_printf (NULL, _("%s not enough memory for new DCC\n"), WEECHAT_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s not enough memory for new DCC\n"),
+                          WEECHAT_ERROR);
         return NULL;
     }
     new_dcc->server = server;
@@ -241,13 +285,14 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
     new_dcc->addr = addr;
     new_dcc->port = port;
     new_dcc->nick = strdup (nick);
-    new_dcc->sock = -1;
+    new_dcc->sock = sock;
     new_dcc->file = -1;
     new_dcc->filename = strdup (filename);
-    new_dcc->local_filename = NULL;
+    new_dcc->local_filename = (local_filename) ? strdup (local_filename) : NULL;
     new_dcc->filename_suffix = -1;
     new_dcc->size = size;
     new_dcc->pos = 0;
+    new_dcc->ack = 0;
     new_dcc->prev_dcc = NULL;
     new_dcc->next_dcc = dcc_list;
     if (dcc_list)
@@ -261,31 +306,45 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
     {
         irc_display_prefix (server->buffer, PREFIX_INFO);
         gui_printf (server->buffer, _("Incoming DCC file from "));
-        gui_printf_color (server->buffer,
-                          COLOR_WIN_CHAT_NICK,
-                          "%s",
-                          nick);
-        gui_printf_color (server->buffer,
-                          COLOR_WIN_CHAT_DARK,
-                          " (");
-        gui_printf_color (server->buffer,
-                          COLOR_WIN_CHAT_HOST,
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK, "%s", nick);
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, " (");
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_HOST,
                           "%d.%d.%d.%d",
                           addr >> 24, (addr >> 16) & 0xff, (addr >> 8) & 0xff, addr & 0xff);
-        gui_printf_color (server->buffer,
-                          COLOR_WIN_CHAT_DARK,
-                          ")");
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, ")");
         gui_printf (server->buffer, ": ");
-        gui_printf_color (server->buffer,
-                          COLOR_WIN_CHAT_CHANNEL,
-                          "%s",
-                          filename);
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_CHANNEL, "%s", filename);
         gui_printf (server->buffer, ", ");
-        gui_printf_color (server->buffer,
-                          COLOR_WIN_CHAT_CHANNEL,
-                          "%lu",
-                          size);
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_CHANNEL, "%lu", size);
         gui_printf (server->buffer, _(" bytes\n"));
+    }
+    
+    if (type == DCC_FILE_SEND)
+    {
+        irc_display_prefix (server->buffer, PREFIX_INFO);
+        gui_printf (server->buffer, _("Sending DCC file to "));
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK, "%s", nick);
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, " (");
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_HOST,
+                          "%d.%d.%d.%d",
+                          addr >> 24, (addr >> 16) & 0xff, (addr >> 8) & 0xff, addr & 0xff);
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, ")");
+        gui_printf (server->buffer, ": ");
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_CHANNEL, "%s", filename);
+        gui_printf (server->buffer, _(" (local filename: "));
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_CHANNEL, "%s", local_filename);
+        gui_printf (server->buffer, "), ");
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_CHANNEL, "%lu", size);
+        gui_printf (server->buffer, _(" bytes\n"));
+    }
+    
+    if (type == DCC_FILE_SEND)
+    {
+        if (!dcc_connect (new_dcc))
+        {
+            dcc_close (new_dcc, DCC_FAILED);
+            return NULL;
+        }
     }
     
     if ( ( (type == DCC_CHAT_RECV) && (cfg_dcc_auto_accept_chats) )
@@ -299,66 +358,297 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
 }
 
 /*
+ * dcc_send: send DCC request (file or chat)
+ */
+
+void
+dcc_send (t_irc_server *server, char *nick, char *filename)
+{
+    char *ptr_home, *filename2, *short_filename, *pos;
+    int spaces;
+    struct stat st;
+    int sock, port;
+    struct sockaddr_in addr;
+    socklen_t length;
+    unsigned long local_addr;
+    
+    /* add home if filename not beginning with '/' (not for Win32) */
+    #ifdef _WIN32
+    filename2 = strdup (filename);
+    #else
+    if (filename[0] == '/')
+        filename2 = strdup (filename);
+    else
+    {
+        ptr_home = getenv ("HOME");
+        filename2 = (char *) malloc (strlen (cfg_dcc_upload_path) +
+                                     strlen (filename) +
+                                     ((cfg_dcc_upload_path[0] == '~') ?
+                                         strlen (ptr_home) : 0) +
+                                     4);
+        if (!filename2)
+        {
+            irc_display_prefix (server->buffer, PREFIX_ERROR);
+            gui_printf_nolog (server->buffer,
+                              _("%s not enough memory for DCC SEND\n"),
+                              WEECHAT_ERROR);
+            return;
+        }
+        if (cfg_dcc_upload_path[0] == '~')
+        {
+            strcpy (filename2, ptr_home);
+            strcat (filename2, cfg_dcc_upload_path + 1);
+        }
+        else
+            strcpy (filename2, cfg_dcc_upload_path);
+        if (filename2[strlen (filename2) - 1] != DIR_SEPARATOR_CHAR)
+            strcat (filename2, DIR_SEPARATOR);
+        strcat (filename2, filename);
+    }
+    #endif
+    
+    /* check if file exists */
+    if (stat (filename2, &st) == -1)
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s cannot access file \"%s\"\n"),
+                          WEECHAT_ERROR, filename2);
+        free (filename2);
+        return;
+    }
+    
+    /* get local IP address */
+    memset (&addr, 0, sizeof (struct sockaddr_in));
+    length = sizeof (addr);
+    getsockname (server->sock4, (struct sockaddr *) &addr, &length);
+    addr.sin_family = AF_INET;
+    local_addr = ntohl (addr.sin_addr.s_addr);
+    
+    /* open socket for DCC */
+    sock = socket (AF_INET, SOCK_STREAM, 0);
+    if (sock == -1)
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s cannot create socket for DCC\n"),
+                          WEECHAT_ERROR);
+        free (filename2);
+        return;
+    }
+    
+    /* find port automatically */
+    addr.sin_port = 0;
+    if (bind (sock, (struct sockaddr *) &addr, sizeof (addr)) == -1)
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s cannot find port for DCC\n"),
+                          WEECHAT_ERROR);
+        close (sock);
+        free (filename2);
+        return;
+    }
+    length = sizeof (addr);
+    getsockname (sock, (struct sockaddr *) &addr, &length);
+    port = ntohs (addr.sin_port);
+    
+    /* extract short filename (without path) */
+    pos = strrchr (filename2, DIR_SEPARATOR_CHAR);
+    if (pos)
+        short_filename = strdup (pos + 1);
+    else
+        short_filename = strdup (filename2);
+    
+    /* convert spaces to underscore if asked and needed */
+    pos = short_filename;
+    spaces = 0;
+    while (pos[0])
+    {
+        if (pos[0] == ' ')
+        {
+            if (cfg_dcc_convert_spaces)
+                pos[0] = '_';
+            else
+                spaces = 1;
+        }
+        pos++;
+    }
+    
+    /* add DCC entry and listen to socket */
+    if (!dcc_add (server, DCC_FILE_SEND, local_addr, port, nick, sock,
+                  short_filename, filename2, st.st_size))
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s cannot send DCC\n"),
+                          WEECHAT_ERROR);
+        close (sock);
+        free (short_filename);
+        free (filename2);
+        return;
+    }
+    
+    /* send DCC request to nick */
+    server_sendf (server, 
+                  (spaces) ?
+                      "PRIVMSG %s :\01DCC SEND \"%s\" %lu %d %u\01\r\n" :
+                      "PRIVMSG %s :\01DCC SEND %s %lu %d %u\01\r\n",
+                  nick, short_filename, local_addr, port,
+                  (unsigned long) st.st_size);
+    
+    free (short_filename);
+    free (filename2);
+}
+
+
+/*
  * dcc_handle: receive/send data for each active DCC
  */
 
 void
 dcc_handle ()
 {
-    t_dcc *ptr_dcc;
-    int num;
-    char buffer[8192];
+    t_irc_dcc *ptr_dcc;
+    int num_read, num_sent;
+    static char buffer[102400];
     uint32_t pos;
+    fd_set read_fd;
+    static struct timeval timeout;
+    int sock;
+    struct sockaddr_in addr;
+    socklen_t length;
     
     for (ptr_dcc = dcc_list; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
     {
-        if (ptr_dcc->status == DCC_ACTIVE)
+        if (ptr_dcc->status == DCC_CONNECTING)
         {
-            if (ptr_dcc->type == DCC_FILE_RECV)
+            if (ptr_dcc->type == DCC_FILE_SEND)
             {
-                num = recv (ptr_dcc->sock, buffer, sizeof (buffer), 0);
-                if (num != -1)
+                FD_ZERO (&read_fd);
+                FD_SET (ptr_dcc->sock, &read_fd);
+                timeout.tv_sec = 0;
+                timeout.tv_usec = 0;
+                
+                /* something to read on socket? */
+                if (select (FD_SETSIZE, &read_fd, NULL, NULL, &timeout) > 0)
                 {
-                    if (num == 0)
+                    if (FD_ISSET (ptr_dcc->sock, &read_fd))
                     {
-                        dcc_close (ptr_dcc, DCC_FAILED);
-                        dcc_redraw (1);
-                    }
-                    else
-                    {
-                        if (write (ptr_dcc->file, buffer, num) == -1)
+                        length = sizeof (addr);
+                        sock = accept (ptr_dcc->sock, (struct sockaddr *) &addr, &length);
+                        close (ptr_dcc->sock);
+                        ptr_dcc->sock = -1;
+                        if (sock < 0)
                         {
                             dcc_close (ptr_dcc, DCC_FAILED);
                             dcc_redraw (1);
                             return;
                         }
-                        ptr_dcc->pos += (unsigned long) num;
-                        pos = htonl (ptr_dcc->pos);
-                        send (ptr_dcc->sock, (char *) &pos, 4, 0);
-                        if (ptr_dcc->pos >= ptr_dcc->size)
+                        ptr_dcc->sock = sock;
+                        if (fcntl (ptr_dcc->sock, F_SETFL, O_NONBLOCK) == -1)
                         {
-                            irc_display_prefix (ptr_dcc->server->buffer, PREFIX_INFO);
-                            gui_printf (ptr_dcc->server->buffer, _("DCC: file "));
-                            gui_printf_color (ptr_dcc->server->buffer,
-                                              COLOR_WIN_CHAT_CHANNEL,
-                                              "%s",
-                                              ptr_dcc->filename);
-                            gui_printf (ptr_dcc->server->buffer, _(" (local filename: "));
-                            gui_printf_color (ptr_dcc->server->buffer,
-                                              COLOR_WIN_CHAT_CHANNEL,
-                                              "%s",
-                                              ptr_dcc->local_filename);
-                            gui_printf (ptr_dcc->server->buffer, _(") from "));
-                            gui_printf_color (ptr_dcc->server->buffer,
-                                              COLOR_WIN_CHAT_NICK,
-                                              "%s",
-                                              ptr_dcc->nick);
-                            gui_printf (ptr_dcc->server->buffer, _(": ok!\n"));
+                            dcc_close (ptr_dcc, DCC_FAILED);
+                            dcc_redraw (1);
+                            return;
+                        }
+                        ptr_dcc->addr = ntohl (addr.sin_addr.s_addr);
+                        ptr_dcc->status = DCC_ACTIVE;
+                        ptr_dcc->file = open (ptr_dcc->local_filename, O_RDONLY | O_NONBLOCK, 0644);
+                    }
+                }
+            }
+        }
+        
+        if (ptr_dcc->status == DCC_ACTIVE)
+        {
+            if (ptr_dcc->type == DCC_FILE_RECV)
+            {
+                num_read = recv (ptr_dcc->sock, buffer, sizeof (buffer), 0);
+                if (num_read != -1)
+                {
+                    if (num_read == 0)
+                    {
+                        dcc_close (ptr_dcc, DCC_FAILED);
+                        dcc_redraw (1);
+                        return;
+                    }
+                    
+                    if (write (ptr_dcc->file, buffer, num_read) == -1)
+                    {
+                        dcc_close (ptr_dcc, DCC_FAILED);
+                        dcc_redraw (1);
+                        return;
+                    }
+                    ptr_dcc->pos += (unsigned long) num_read;
+                    pos = htonl (ptr_dcc->pos);
+                    send (ptr_dcc->sock, (char *) &pos, 4, 0);
+                    if (ptr_dcc->pos >= ptr_dcc->size)
+                    {
+                        dcc_close (ptr_dcc, DCC_DONE);
+                        dcc_redraw (1);
+                    }
+                    else
+                        dcc_redraw (0);
+                }
+            }
+            if (ptr_dcc->type == DCC_FILE_SEND)
+            {
+                if (cfg_dcc_blocksize > (int) sizeof (buffer))
+                {
+                    gui_printf (NULL, _("%s DCC failed because blocksize is too "
+                                "big. Check value of \"dcc_blocksize\" option, "
+                                "max is %d.\n"),
+                                sizeof (buffer));
+                    dcc_close (ptr_dcc, DCC_FAILED);
+                    dcc_redraw (1);
+                    return;
+                }
+                if (ptr_dcc->pos > ptr_dcc->ack)
+                {
+                    /* we should receive ACK for packets sent previously */
+                    num_read = recv (ptr_dcc->sock, (char *) &pos, 4, MSG_PEEK);
+                    if (num_read != -1)
+                    {
+                        if (num_read == 0)
+                        {
+                            dcc_close (ptr_dcc, DCC_FAILED);
+                            dcc_redraw (1);
+                            return;
+                        }
+                        if (num_read < 4)
+                            return;
+                        recv (ptr_dcc->sock, (char *) &pos, 4, 0);
+                        ptr_dcc->ack = ntohl (pos);
+                        
+                        if ((ptr_dcc->pos >= ptr_dcc->size)
+                            && (ptr_dcc->ack >= ptr_dcc->size))
+                        {
                             dcc_close (ptr_dcc, DCC_DONE);
                             dcc_redraw (1);
+                            return;
                         }
-                        dcc_redraw (0);
                     }
+                }
+                if (ptr_dcc->pos <= ptr_dcc->ack)
+                {
+                    lseek (ptr_dcc->file, ptr_dcc->pos, SEEK_SET);
+                    num_read = read (ptr_dcc->file, buffer, cfg_dcc_blocksize);
+                    if (num_read < 1)
+                    {
+                        dcc_close (ptr_dcc, DCC_FAILED);
+                        dcc_redraw (1);
+                        return;
+                    }
+                    num_sent = send (ptr_dcc->sock, buffer, num_read, 0);
+                    if (num_sent < 0)
+                    {
+                        dcc_close (ptr_dcc, DCC_FAILED);
+                        dcc_redraw (1);
+                        return;
+                    }
+                    ptr_dcc->pos += (unsigned long) num_sent;
+                    dcc_redraw (0);
                 }
             }
         }
@@ -372,7 +662,7 @@ dcc_handle ()
 void
 dcc_end ()
 {
-    t_dcc *ptr_dcc;
+    t_irc_dcc *ptr_dcc;
     
     for (ptr_dcc = dcc_list; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
     {

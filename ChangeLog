@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-02-17
+ChangeLog - 2005-02-20
 
 
 Version 0.1.1 (under dev!):
+   * added DCC send
    * added support for UnrealIrcd ("~" for chan owner, "&" for chan admin)
    * on server buffer, only server messages are logged
    * improved /help command output

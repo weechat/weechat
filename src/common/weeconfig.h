@@ -170,6 +170,7 @@ extern int cfg_dcc_timeout;
 extern int cfg_dcc_blocksize;
 extern char *cfg_dcc_download_path;
 extern char *cfg_dcc_upload_path;
+extern int cfg_dcc_convert_spaces;
 extern int cfg_dcc_auto_rename;
 extern int cfg_dcc_auto_resume;
 

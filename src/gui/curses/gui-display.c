@@ -365,7 +365,6 @@ gui_draw_buffer_title (t_gui_buffer *buffer, int erase)
             {
                 if (!buffer->dcc)
                 {
-                    /* TODO: change this copyright as title? */
                     mvwprintw (ptr_win->win_title, 0, 0,
                                format,
                                PACKAGE_STRING " " WEECHAT_COPYRIGHT_DATE " - "
@@ -595,7 +594,7 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
 {
     t_gui_window *ptr_win;
     t_gui_line *ptr_line;
-    t_dcc *dcc_first, *dcc_selected, *ptr_dcc;
+    t_irc_dcc *dcc_first, *dcc_selected, *ptr_dcc;
     char format_empty[32];
     int i, j, lines_used, num_bars;
     char *unit_name[] = { N_("bytes"), N_("Kb"), N_("Mb"), N_("Gb") };
@@ -627,8 +626,8 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
             if (buffer->dcc)
             {
                 i = 0;
-                dcc_first = (ptr_win->dcc_first) ? (t_dcc *) ptr_win->dcc_first : dcc_list;
-                dcc_selected = (ptr_win->dcc_selected) ? (t_dcc *) ptr_win->dcc_selected : dcc_list;
+                dcc_first = (ptr_win->dcc_first) ? (t_irc_dcc *) ptr_win->dcc_first : dcc_list;
+                dcc_selected = (ptr_win->dcc_selected) ? (t_irc_dcc *) ptr_win->dcc_selected : dcc_list;
                 for (ptr_dcc = dcc_first; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
                 {
                     if (i >= ptr_win->win_chat_height - 1)
@@ -640,7 +639,7 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                                               (ptr_dcc == dcc_selected) ?
                                                   COLOR_DCC_SELECTED : COLOR_WIN_CHAT);
                         mvwprintw (ptr_win->win_chat, i, 0, "%s %-16s %s",
-                                   (ptr_dcc == dcc_selected) ? ">>" : "  ",
+                                   (ptr_dcc == dcc_selected) ? "**" : "  ",
                                    ptr_dcc->nick, ptr_dcc->filename);
                         if (ptr_dcc->filename_suffix > 0)
                             wprintw (ptr_win->win_chat, " (.%d)",
@@ -649,9 +648,8 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                                               (ptr_dcc == dcc_selected) ?
                                                   COLOR_DCC_SELECTED : COLOR_WIN_CHAT);
                         mvwprintw (ptr_win->win_chat, i + 1, 0, "%s %s ",
-                                   (ptr_dcc == dcc_selected) ? ">>" : "  ",
-                                   (ptr_dcc->type == DCC_FILE_RECV) ?
-                                   "--->" : "<---");
+                                   (ptr_dcc == dcc_selected) ? "**" : "  ",
+                                   (ptr_dcc->type == DCC_FILE_RECV) ? "-->>" : "<<--");
                         gui_window_set_color (ptr_win->win_chat,
                                               COLOR_DCC_WAITING + ptr_dcc->status);
                         wprintw (ptr_win->win_chat, "%-10s",
@@ -1231,7 +1229,7 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
     char format[32];
     char *ptr_nickname;
     int input_width;
-    t_dcc *dcc_selected;
+    t_irc_dcc *dcc_selected;
     
     if (!gui_ok)
         return;
@@ -1300,7 +1298,8 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
             {
                 if (buffer->dcc)
                 {
-                    dcc_selected = (ptr_win->dcc_selected) ? (t_dcc *) ptr_win->dcc_selected : dcc_list;
+                    dcc_selected = (ptr_win->dcc_selected) ? (t_irc_dcc *) ptr_win->dcc_selected : dcc_list;
+                    wmove (ptr_win->win_input, 0, 0);
                     if (dcc_selected)
                     {
                         switch (dcc_selected->status)
@@ -1308,36 +1307,22 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
                             case DCC_WAITING:
                                 if ((dcc_selected->type == DCC_CHAT_RECV)
                                     || (dcc_selected->type == DCC_FILE_RECV))
-                                {
-                                    mvwprintw (ptr_win->win_input, 0, 0,
-                                               _("  [A] Accept"));
-                                    wprintw (ptr_win->win_input, _("  [C] Cancel"));
-                                    wprintw (ptr_win->win_input, _("  [Q] Close DCC view"));
-                                }
-                                else
-                                {
-                                    mvwprintw (ptr_win->win_input, 0, 0,
-                                               _("  [C] Cancel"));
-                                    wprintw (ptr_win->win_input, _("  [Q] Close DCC view"));
-                                }
+                                    wprintw (ptr_win->win_input, _("  [A] Accept"));
+                                wprintw (ptr_win->win_input, _("  [C] Cancel"));
                                 break;
                             case DCC_CONNECTING:
                             case DCC_ACTIVE:
-                                mvwprintw (ptr_win->win_input, 0, 0,
-                                           _("  [C] Cancel"));
-                                wprintw (ptr_win->win_input, _("  [Q] Close DCC view"));
+                                wprintw (ptr_win->win_input, _("  [C] Cancel"));
                                 break;
                             case DCC_DONE:
                             case DCC_FAILED:
                             case DCC_ABORTED:
-                                mvwprintw (ptr_win->win_input, 0, 0,
-                                           _("  [R] Remove"));
-                                wprintw (ptr_win->win_input, _("  [Q] Close DCC view"));
+                                wprintw (ptr_win->win_input, _("  [R] Remove"));
                                 break;
                         }
                     }
-                    else
-                        mvwprintw (ptr_win->win_input, 0, 0, _("  [Q] Close DCC view"));
+                    wprintw (ptr_win->win_input, _("  [P] Purge old DCC"));
+                    wprintw (ptr_win->win_input, _("  [Q] Close DCC view"));
                     wclrtoeol (ptr_win->win_input);
                     if (ptr_win == gui_current_window)
                         move (ptr_win->win_y + ptr_win->win_height - 1,
@@ -2290,6 +2275,9 @@ gui_printf_color_type (t_gui_buffer *buffer, int type, int color, char *message,
                 buffer = SERVER(gui_current_window->buffer)->buffer;
             else
                 buffer = gui_current_window->buffer;
+            
+            if (buffer->dcc)
+                buffer = gui_buffers;
         }
     
         if (buffer == NULL)

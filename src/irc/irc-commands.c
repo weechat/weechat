@@ -49,7 +49,7 @@ t_irc_command irc_commands[] =
     N_("action: 'send' (file) or 'chat'\n"
     "nickname: nickname to send file or chat\n"
     "file: filename (on local host)"),
-    2, 3, 1, NULL, irc_cmd_send_dcc, NULL },
+    2, MAX_ARGS, 1, NULL, irc_cmd_send_dcc, NULL },
   { "deop", N_("removes channel operator status from nickname(s)"),
     N_("nickname [nickname]"), "",
     1, MAX_ARGS, 1, irc_cmd_send_deop, NULL, NULL },

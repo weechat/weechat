@@ -52,8 +52,9 @@ gui_read_keyb ()
     int key, i;
     t_gui_buffer *ptr_buffer;
     t_irc_server *ptr_server;
+    t_irc_dcc *ptr_dcc;
     char new_char[3], *decoded_string;
-    t_dcc *dcc_selected;
+    t_irc_dcc *dcc_selected;
 
     key = getch ();
     if (key != ERR)
@@ -98,14 +99,14 @@ gui_read_keyb ()
                     if (dcc_list)
                     {
                         if (gui_current_window->dcc_selected
-                            && ((t_dcc *)(gui_current_window->dcc_selected))->prev_dcc)
+                            && ((t_irc_dcc *)(gui_current_window->dcc_selected))->prev_dcc)
                         {
                             if (gui_current_window->dcc_selected ==
                                 gui_current_window->dcc_first)
                                 gui_current_window->dcc_first =
-                                    ((t_dcc *)(gui_current_window->dcc_first))->prev_dcc;
+                                    ((t_irc_dcc *)(gui_current_window->dcc_first))->prev_dcc;
                             gui_current_window->dcc_selected =
-                                ((t_dcc *)(gui_current_window->dcc_selected))->prev_dcc;
+                                ((t_irc_dcc *)(gui_current_window->dcc_selected))->prev_dcc;
                             gui_draw_buffer_chat (gui_current_window->buffer, 1);
                             gui_draw_buffer_input (gui_current_window->buffer, 1);
                         }
@@ -144,7 +145,7 @@ gui_read_keyb ()
                     if (dcc_list)
                     {
                         if (!gui_current_window->dcc_selected
-                            || ((t_dcc *)(gui_current_window->dcc_selected))->next_dcc)
+                            || ((t_irc_dcc *)(gui_current_window->dcc_selected))->next_dcc)
                         {
                             if (gui_current_window->dcc_last_displayed
                                 && (gui_current_window->dcc_selected ==
@@ -152,14 +153,14 @@ gui_read_keyb ()
                             {
                                 if (gui_current_window->dcc_first)
                                     gui_current_window->dcc_first =
-                                        ((t_dcc *)(gui_current_window->dcc_first))->next_dcc;
+                                        ((t_irc_dcc *)(gui_current_window->dcc_first))->next_dcc;
                                 else
                                     gui_current_window->dcc_first =
                                         dcc_list->next_dcc;
                             }
                             if (gui_current_window->dcc_selected)
                                 gui_current_window->dcc_selected =
-                                    ((t_dcc *)(gui_current_window->dcc_selected))->next_dcc;
+                                    ((t_irc_dcc *)(gui_current_window->dcc_selected))->next_dcc;
                             else
                                 gui_current_window->dcc_selected =
                                     dcc_list->next_dcc;
@@ -558,7 +559,7 @@ gui_read_keyb ()
                 if (gui_current_window->buffer->dcc)
                 {
                     dcc_selected = (gui_current_window->dcc_selected) ?
-                        (t_dcc *) gui_current_window->dcc_selected : dcc_list;
+                        (t_irc_dcc *) gui_current_window->dcc_selected : dcc_list;
                     switch (key)
                     {
                         /* accept DCC */
@@ -584,10 +585,30 @@ gui_read_keyb ()
                                 gui_redraw_buffer (gui_current_window->buffer);
                             }
                             break;
+                        /* purge old DCC */
+                        case 'p':
+                        case 'P':
+                            gui_current_window->dcc_selected = NULL;
+                            for (ptr_dcc = dcc_list; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
+                            {
+                                if ((dcc_selected->status == DCC_DONE)
+                                    || (dcc_selected->status == DCC_FAILED)
+                                    || (dcc_selected->status == DCC_ABORTED))
+                                    dcc_free (ptr_dcc);
+                            }
+                            gui_redraw_buffer (gui_current_window->buffer);
+                            break;
                         /* close DCC window */
                         case 'q':
                         case 'Q':
-                            gui_buffer_free (gui_current_window->buffer, 1);
+                            if (buffer_before_dcc)
+                            {
+                                gui_buffer_free (gui_current_window->buffer, 1);
+                                gui_switch_to_buffer (gui_current_window,
+                                                      buffer_before_dcc);
+                            }
+                            else
+                                gui_buffer_free (gui_current_window->buffer, 1);
                             gui_redraw_buffer (gui_current_window->buffer);
                             break;
                         /* remove from DCC list */
@@ -595,7 +616,8 @@ gui_read_keyb ()
                         case 'R':
                             if (dcc_selected
                                 && (((dcc_selected->type == DCC_CHAT_RECV)
-                                || (dcc_selected->type == DCC_FILE_RECV))
+                                || (dcc_selected->type == DCC_FILE_RECV)
+                                || (dcc_selected->type == DCC_FILE_SEND))
                                 && ((dcc_selected->status == DCC_DONE)
                                 || (dcc_selected->status == DCC_FAILED)
                                 || (dcc_selected->status == DCC_ABORTED))))
@@ -703,10 +725,11 @@ gui_main_loop ()
             }
         }
         
-        timeout.tv_sec = 0;
-        timeout.tv_usec = 10000;
         FD_ZERO (&read_fd);
         FD_SET (STDIN_FILENO, &read_fd);
+        timeout.tv_sec = 0;
+        timeout.tv_usec = 10000;
+        
         for (ptr_server = irc_servers; ptr_server;
              ptr_server = ptr_server->next_server)
         {
@@ -749,7 +772,7 @@ gui_main_loop ()
                     FD_SET (ptr_server->sock4, &read_fd);
             }
         }
-        if (select (FD_SETSIZE, &read_fd, NULL, NULL, &timeout))
+        if (select (FD_SETSIZE, &read_fd, NULL, NULL, &timeout) > 0)
         {
             if (FD_ISSET (STDIN_FILENO, &read_fd))
             {

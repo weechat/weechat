@@ -47,8 +47,8 @@
 #define WEECHAT_COPYRIGHT_DATE "(c) 2003-2005"
 #define WEECHAT_WEBSITE "http://weechat.flashtux.org"
 
-#define WEECHAT_ERROR   _(PACKAGE_NAME " Error:")
-#define WEECHAT_WARNING _(PACKAGE_NAME " Warning:")
+#define WEECHAT_ERROR   _("WeeChat Error:")
+#define WEECHAT_WARNING _("WeeChat Warning:")
 
 /* log file */
 

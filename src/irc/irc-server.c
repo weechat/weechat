@@ -527,8 +527,7 @@ server_msgq_flush ()
     t_irc_message *next;
     char *entire_line, *ptr_data, *pos, *pos2;
     char *host, *command, *args;
-
-    /* TODO: optimize this function, parse only a few messages (for low CPU time!) */
+    
     while (recv_msgq)
     {
         if (recv_msgq->data)
@@ -596,7 +595,7 @@ server_msgq_flush ()
                         irc_display_prefix (recv_msgq->server->buffer, PREFIX_ERROR);
                         gui_printf (recv_msgq->server->buffer,
                                     _("%s Unknown command: cmd=%s, args=%s\n"),
-                                    WEECHAT_ERROR, command, args);
+                                    WEECHAT_WARNING, command, args);
                         break;
                 }
                 

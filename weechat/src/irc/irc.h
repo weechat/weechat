@@ -191,9 +191,9 @@ struct t_irc_message
 
 /* DCC */
 
-typedef struct t_dcc t_dcc;
+typedef struct t_irc_dcc t_irc_dcc;
 
-struct t_dcc
+struct t_irc_dcc
 {
     t_irc_server *server;           /* irc server                           */
     int type;                       /* DCC type (send or receive)           */
@@ -208,15 +208,16 @@ struct t_dcc
     int filename_suffix;            /* suffix (.1 for ex) if renaming file  */
     unsigned long size;             /* file size                            */
     unsigned long pos;              /* number of bytes received/sent        */
-    t_dcc *prev_dcc;                /* link to previous dcc file/chat       */
-    t_dcc *next_dcc;                /* link to next dcc file/chat           */
+    unsigned long ack;              /* number of bytes received OK          */
+    t_irc_dcc *prev_dcc;            /* link to previous dcc file/chat       */
+    t_irc_dcc *next_dcc;            /* link to next dcc file/chat           */
 };
 
 extern t_irc_command irc_commands[];
 extern t_irc_server *irc_servers;
 extern t_irc_message *recv_msgq, *msgq_last_msg;
 extern int check_away;
-extern t_dcc *dcc_list;
+extern t_irc_dcc *dcc_list;
 extern char *dcc_status_string[6];
 extern char *channel_modes;
 
@@ -271,13 +272,13 @@ extern void nick_set_away (t_irc_channel *, t_irc_nick *, int);
 
 /* DCC functions (irc-dcc.c) */
 
-extern void dcc_send ();
-extern void dcc_free (t_dcc *);
-extern void dcc_close (t_dcc *, int);
-extern void dcc_accept (t_dcc *);
-extern t_dcc *dcc_add (t_irc_server *, int, unsigned long, int, char *, char *,
-                       unsigned int);
+extern void dcc_free (t_irc_dcc *);
+extern void dcc_close (t_irc_dcc *, int);
+extern void dcc_accept (t_irc_dcc *);
+extern t_irc_dcc *dcc_add (t_irc_server *, int, unsigned long, int, char *, int,
+                           char *, char *, unsigned long);
 extern void dcc_handle ();
+extern void dcc_send (t_irc_server *, char *, char *);
 extern void dcc_end ();
 
 /* IRC display (irc-diplay.c) */
