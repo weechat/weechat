@@ -60,8 +60,7 @@ gui_read_keyb ()
         {
             /* resize event */
             case KEY_RESIZE:
-                gui_calculate_pos_size (gui_current_window);
-                gui_redraw_buffer (gui_current_window->buffer);
+                gui_curses_resize_handler ();
                 break;
             /* inactive function keys */
             case KEY_F(1):
@@ -200,6 +199,10 @@ gui_read_keyb ()
             /* Control + Backspace */
             case 0x08:
                 gui_delete_previous_word (gui_current_window->buffer);
+                break;
+            /* Control + L */
+            case 0x0C:
+                gui_curses_resize_handler ();
                 break;
             /* erase char under cursor */
             case KEY_DC:
@@ -398,7 +401,7 @@ gui_read_keyb ()
             /* other key => add to input buffer */
             default:
                 /*gui_printf (gui_current_window->buffer,
-                            "[Debug] key pressed = %d, as octal: %o\n", key, key);*/
+                            "[Debug] key pressed = %d, hex = %02X, octal = %o\n", key, key, key);*/
                 new_char[0] = key;
                 new_char[1] = '\0';
                 gui_buffer_insert_string (gui_current_window->buffer,

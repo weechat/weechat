@@ -1372,7 +1372,6 @@ gui_curses_resize_handler ()
     gui_current_window = old_current_window;
     gui_calculate_pos_size (gui_current_window);
     gui_redraw_buffer (gui_current_window->buffer);
-    //gui_draw_buffer_input (gui_current_window->buffer, 1);
 }
 
 /*
