@@ -51,6 +51,7 @@ t_config_section config_sections[CONFIG_NUMBER_SECTIONS] =
 
 /* config, look & feel section */
 
+int cfg_look_set_title;
 int cfg_look_startup_logo;
 int cfg_look_startup_version;
 char *cfg_look_weechat_slogan;
@@ -69,7 +70,11 @@ char *cfg_look_no_nickname;
 char *cfg_look_completor;
 
 t_config_option weechat_options_look[] =
-{ { "look_startup_logo", N_("display " WEECHAT_NAME " logo at startup"),
+{ { "look_set_title", N_("set title for terminal window (curses GUI) with name & version"),
+    N_("set title for terminal window (curses GUI) with name & version"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
+    NULL, NULL, &cfg_look_set_title, NULL, NULL },
+  { "look_startup_logo", N_("display " WEECHAT_NAME " logo at startup"),
     N_("display " WEECHAT_NAME " logo at startup"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
     NULL, NULL, &cfg_look_startup_logo, NULL, NULL },

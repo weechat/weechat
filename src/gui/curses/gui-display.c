@@ -1545,9 +1545,9 @@ gui_init ()
     
     signal (SIGWINCH, gui_resize_term_handler);
     
-    #ifdef __LINUX__
+    #ifdef __linux__
     /* set title for term window, not for console */
-    if (strcmp (getenv ("TERM"), "linux") != 0)
+    if (cfg_look_set_title && (strcmp (getenv ("TERM"), "linux") != 0))
         printf ("\e]2;" WEECHAT_NAME " " WEECHAT_VERSION "\a\e]1;" WEECHAT_NAME " " WEECHAT_VERSION "\a");
     #endif
     

@@ -1,15 +1,15 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-WeeChat known bugs, 2003-10-03
+WeeChat known bugs, 2003-10-04
 
 - too much nicks in the channel (> height of window) => display bug
 - some IRC commands are marked as 'unknown' when received
   (IRC protocol is under dev!)
-- config is not saved (to ~/.weechat/weechatrc)
 - intercept Ctrl-C (do not quit immediately if Ctrl-C pressed!)
 - program is stopped when bad option in config file (it should not, only display
   warning)
-- too much opened channel => display bug
+- too much opened channels => display bug
 - when kicked, channel is not prefixed by '(' and sufixed by ')'
 - when function key (non used by WeeChat) is pressed, prompt is deleted
+- when quitting WeeChat term title is not restored (if look_set_title is ON)

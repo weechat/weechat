@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2003-10-03
+TODO - 2003-10-04
 
 Legend:
   #  done
@@ -14,7 +14,6 @@ v0.0.2:
 ------
 
  * IRC protocol:
-    - implement RFC 2812
     + "/mode" command: change the user/channels modes
     - "/rehash" command: tell the server to reload its config file
     - "/restart" command: tell the server to restart itself
@@ -22,36 +21,25 @@ v0.0.2:
  * WeeChat commands:
     # "/connect" and "/disconnect" commands (for multiservers use)
     # "/server" command to add, remove or list servers
-    - "/reload" command: reload the WeeChat's config file
     # "/save" command: save configuration to disk
-    + "/set" command: allow the user to set the WeeChat variables
-      under WeeChat without editing the config file (colours, time
-      format, etc)
     # "/alias" and "/unalias" commands
-    - "/highlight" command: highlight a given word when it appears on
-      channels/privates
 
  * Interface:
     - display current channel modes (example : #weechat(+nt))
 
- * TCP/IP communication:
-    - connect to server with child process (background)
- 
  * Configuration:
     # write config file
-    + add alias definition
+    # add alias definition
     - add an option for each server in order to run commands on join
       (example: /msg nickserv identify password)
     - channel list for auto-join (for each server)
-    - do not stop program if problem with options in config file
-    - load config file after GUI (so init values by default (colors, ...) before
-      loading config)
 
 
 Future versions:
 ---------------
 
  * IRC protocol:
+    - implement RFC 2812
     - "/dcc" command (for chat and sending/receiving files)
     - complete "/list" command: add regexp search, display only channels that
       match regexp
@@ -71,6 +59,12 @@ Future versions:
       and show us the output on the current window. An option to exec
       like -o could send the output to the server, on the current
       channel/private
+    - "/reload" command: reload the WeeChat's config file
+    - "/highlight" command: highlight a given word when it appears on
+      channels/privates
+    + "/set" command: allow the user to set the WeeChat variables
+      under WeeChat without editing the config file (colours, time
+      format, etc)
 
  * Interface:
     - interpret special chars in messages (color & bold for example)
@@ -87,6 +81,7 @@ Future versions:
     ? Qt GUI
 
  * TCP/IP communication:
+    - connect to server with child process (background)
     - SSL support
     - IPv6 protocol implementation
 
@@ -94,6 +89,9 @@ Future versions:
     - add key bindings to config file
     - add missing options for config file
     - wrong alias is not created and not saved when quitting WeeChat
+    - do not stop program if problem with options in config file
+    - load config file after GUI (so init values by default (colors, ...) before
+      loading config)
 
  * Plugins:
     - add Perl plugin

@@ -75,6 +75,7 @@ struct t_config_option
     int (*handler_change)(int *, char **);
 };
 
+extern int cfg_look_set_title;
 extern int cfg_look_startup_logo;
 extern int cfg_look_startup_version;
 extern char *cfg_look_weechat_slogan;
