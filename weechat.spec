@@ -1,5 +1,5 @@
 %define name weechat
-%define version 0.0.8
+%define version 0.0.9
 %define release 1
 
 Name:      %{name}
@@ -41,6 +41,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/local/bin/weechat-curses
 
 %changelog 
+* Sat Jan 01 2005 FlashCode <flashcode@flashtux.org> 0.0.9-1
+- Released version 0.0.9
 * Sat Oct 30 2004 FlashCode <flashcode@flashtux.org> 0.0.8-1
 - Released version 0.0.8
 * Sat Aug 08 2004 FlashCode <flashcode@flashtux.org> 0.0.7-1

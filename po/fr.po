@@ -1,14 +1,14 @@
 # WeeChat: fast & light, IRC client for many operating systems. 
-# Copyright (c) 2004 FlashCode <flashcode@flashtux.org>
+# Copyright (c) 2003-2005 FlashCode <flashcode@flashtux.org>
 # This file is distributed under the same license as the WeeChat package.
 # FlashCode <flashcode@flashtux.org>, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.0.9-pre1\n"
+"Project-Id-Version: WeeChat 0.0.9\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2004-12-31 16:28+0100\n"
-"PO-Revision-Date: 2004-12-21 20:51+0100\n"
+"POT-Creation-Date: 2005-01-01 13:00+0100\n"
+"PO-Revision-Date: 2005-01-01 13:00+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"

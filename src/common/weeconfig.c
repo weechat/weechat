@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004 by FlashCode <flashcode@flashtux.org>
+ * Copyright (c) 2003-2005 by FlashCode <flashcode@flashtux.org>
  * See README for License detail, AUTHORS for developers list.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -152,7 +152,7 @@ t_config_option weechat_options_look[] =
   { "look_infobar_timestamp", N_("timestamp for time in infobar"),
     N_("timestamp for time in infobar"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "%B, %A %d %G - %H:%M", NULL, NULL, &cfg_look_infobar_timestamp, config_change_buffer_content },
+    "%B, %A %d %Y - %H:%M", NULL, NULL, &cfg_look_infobar_timestamp, config_change_buffer_content },
   { "look_infobar_delay_highlight", N_("delay (in seconds) for highlight messages in infobar"),
     N_("delay (in seconds) for highlight messages in infobar "
     "(0 = disable highlight notifications in infobar)"),

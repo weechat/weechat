@@ -1,10 +1,10 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2004-12-31
+ChangeLog - 2005-01-01
 
 
-Version 0.0.9 (under dev!):
+Version 0.0.9 (2005-01-01):
    * auto-reconnection to server (new options: server_autoreconnect (on/off),
      server_autoreconnect_delay (in seconds))
    * major bug fixed when socket is closed by server (100% CPU usage fixed),
