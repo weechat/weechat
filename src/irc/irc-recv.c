@@ -243,6 +243,7 @@ irc_cmd_recv_join (t_irc_server *server, char *host, char *arguments)
                       "%s\n", arguments);
     (void) nick_new (ptr_channel, host, 0, 0, 0, 0, 0);
     gui_draw_buffer_nick (ptr_channel->buffer, 1);
+    gui_draw_buffer_status (ptr_channel->buffer, 1);
     return 0;
 }
 
@@ -338,6 +339,7 @@ irc_cmd_recv_kick (t_irc_server *server, char *host, char *arguments)
         {
             nick_free (ptr_channel, ptr_nick);
             gui_draw_buffer_nick (ptr_channel->buffer, 1);
+            gui_draw_buffer_status (ptr_channel->buffer, 1);
         }
     }
     return 0;
@@ -975,10 +977,10 @@ irc_cmd_recv_part (t_irc_server *server, char *host, char *arguments)
                                       COLOR_WIN_CHAT_DARK, ")");
                 }
                 gui_printf (ptr_channel->buffer, "\n");
-            
-                /* redraw nick list if this is current buffer */
+                
                 if (gui_buffer_has_nicklist (ptr_channel->buffer))
                     gui_draw_buffer_nick (ptr_channel->buffer, 1);
+                gui_draw_buffer_status (ptr_channel->buffer, 1);
             }
         }
     }
@@ -1540,6 +1542,7 @@ irc_cmd_recv_quit (t_irc_server *server, char *host, char *arguments)
                               COLOR_WIN_CHAT_DARK, ")\n");
             if (gui_buffer_has_nicklist (ptr_channel->buffer))
                 gui_draw_buffer_nick (ptr_channel->buffer, 1);
+            gui_draw_buffer_status (ptr_channel->buffer, 1);
         }
     }
     
@@ -3064,6 +3067,7 @@ irc_cmd_recv_353 (t_irc_server *server, char *host, char *arguments)
             }
         }
         gui_draw_buffer_nick (ptr_channel->buffer, 1);
+        gui_draw_buffer_status (ptr_channel->buffer, 1);
     }
     else
     {

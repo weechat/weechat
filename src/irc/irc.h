@@ -114,6 +114,7 @@ struct t_irc_channel
     char modes[NUM_CHANNEL_MODES+1];/* channel modes                        */
     int limit;                      /* user limit (0 is limit not set)      */
     char *key;                      /* channel key (NULL if no key is set)  */
+    int nicks_count;                /* # nicks on channel (0 if dcc/pv)     */
     int checking_away;              /* = 1 if checking away with WHO cmd    */
     t_irc_nick *nicks;              /* nicks on the channel                 */
     t_irc_nick *last_nick;          /* last nick on the channel             */

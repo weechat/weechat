@@ -1027,8 +1027,8 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
 {
     t_gui_window *ptr_win;
     t_weechat_hotlist *ptr_hotlist;
-    char format_more[32], *string;
-    int i, first_mode;
+    char format_more[32], str_nicks[32], *string;
+    int i, first_mode, x;
     
     /* make gcc happy */
     (void) buffer;
@@ -1262,20 +1262,39 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
             }
         }
         
-        /* display "-MORE-" if last line is not displayed */
-        gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS_MORE);
+        /* display "-MORE-" (if last line is not displayed) & nicks count */
+        if (gui_buffer_has_nicklist (ptr_win->buffer))
+        {
+            snprintf (str_nicks, sizeof (str_nicks) - 1, "%d", CHANNEL(ptr_win->buffer)->nicks_count);
+            x = ptr_win->win_width - strlen (str_nicks) - 4;
+        }
+        else
+            x = ptr_win->win_width;
         string = weechat_convert_encoding (cfg_look_charset_decode,
                                            (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
                                            cfg_look_charset_internal : local_charset,
                                            _("-MORE-"));
+        x -= strlen (string) - 1;
+        if (x < 0)
+            x = 0;
+        gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS_MORE);
         if (ptr_win->sub_lines > 0)
-            mvwprintw (ptr_win->win_status, 0, ptr_win->win_width - 7,
-                       "%s", string);
+            mvwprintw (ptr_win->win_status, 0, x, "%s", string);
         else
         {
-            snprintf (format_more, 32, "%%-%ds", strlen (string));
-            mvwprintw (ptr_win->win_status, 0, ptr_win->win_width - 7,
-                       format_more, " ");
+            snprintf (format_more, sizeof (format_more) - 1, "%%-%ds", strlen (string));
+            mvwprintw (ptr_win->win_status, 0, x, format_more, " ");
+        }
+        if (gui_buffer_has_nicklist (ptr_win->buffer))
+        {
+            gui_window_set_color (ptr_win->win_status,
+                                  COLOR_WIN_STATUS_DELIMITERS);
+            wprintw (ptr_win->win_status, " [");
+            gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS);
+            wprintw (ptr_win->win_status, "%s", str_nicks);
+            gui_window_set_color (ptr_win->win_status,
+                                  COLOR_WIN_STATUS_DELIMITERS);
+            wprintw (ptr_win->win_status, "]");
         }
         free (string);
         

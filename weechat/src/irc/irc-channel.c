@@ -61,6 +61,7 @@ channel_new (t_irc_server *server, int channel_type, char *channel_name,
     new_channel->modes[sizeof (new_channel->modes) - 1] = '\0';
     new_channel->limit = 0;
     new_channel->key = NULL;
+    new_channel->nicks_count = 0;
     new_channel->checking_away = 0;
     new_channel->nicks = NULL;
     new_channel->last_nick = NULL;

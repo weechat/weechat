@@ -191,6 +191,8 @@ nick_new (t_irc_channel *channel, char *nick_name,
 
     nick_insert_sorted (channel, new_nick);
     
+    channel->nicks_count++;
+    
     /* all is ok, return address of new nick */
     return new_nick;
 }
@@ -263,6 +265,8 @@ nick_free (t_irc_channel *channel, t_irc_nick *nick)
     if (nick->next_nick)
         (nick->next_nick)->prev_nick = nick->prev_nick;
 
+    channel->nicks_count--;
+    
     /* free data */
     if (nick->nick)
         free (nick->nick);
@@ -280,6 +284,9 @@ nick_free_all (t_irc_channel *channel)
     /* remove all nicks for the channel */
     while (channel->nicks)
         nick_free (channel, channel->nicks);
+    
+    /* sould be zero, but prevent any bug :D */
+    channel->nicks_count = 0;
 }
 
 /*
