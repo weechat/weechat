@@ -69,6 +69,10 @@ gui_read_keyb ()
             case KEY_F(7):
                 gui_switch_to_next_window ();
                 break;
+            /* remove last infobar message */
+            case KEY_F(10):
+                gui_infobar_remove ();
+                break;
             /* cursor up */
             case KEY_UP:
                 if (gui_current_window->ptr_history)
@@ -353,20 +357,36 @@ gui_main_loop ()
     fd_set read_fd;
     static struct timeval timeout;
     t_irc_server *ptr_server;
-    int old_min;
+    int old_min, old_sec;
     time_t new_time;
     struct tm *local_time;
 
     quit_weechat = 0;
-    old_min = 0;
+    old_min = -1;
+    old_sec = -1;
     while (!quit_weechat)
     {
         new_time = time (NULL);
         local_time = localtime (&new_time);
+        
+        /* minute has changed ? => redraw infobar */
         if (local_time->tm_min != old_min)
         {
             old_min = local_time->tm_min;
             gui_redraw_window_infobar (gui_current_window);
+        }
+        
+        /* second has changed ? => count down time for infobar, if needed */
+        if (local_time->tm_sec != old_sec)
+        {
+            old_sec = local_time->tm_sec;
+            /* TODO: manage splitted windows! */
+            if (gui_infobar && gui_infobar->remaining_time > 0)
+            {
+                gui_infobar->remaining_time--;
+                if (gui_infobar->remaining_time == 0)
+                    gui_infobar_remove ();
+            }
         }
         
         timeout.tv_sec = 0;

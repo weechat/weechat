@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2004-01-20
+ChangeLog - 2004-01-21
 
 
 Version 0.0.5 (under dev!):
+   * new Perl script function to display message in info bar ("IRC::print_infobar")
    * info bar timestamp is added to config ("look_infobar_timestamp")
    * added info bar (optional, "look_infobar" to enable it, "on" by default)
    * fixed crash with /oper command

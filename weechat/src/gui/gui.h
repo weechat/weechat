@@ -113,8 +113,8 @@ typedef struct t_gui_infobar t_gui_infobar;
 struct t_gui_infobar
 {
     char *text;                     /* infobar text                         */
-    int time_displayed;             /* delay (ms) before erasing this text  */
-                                    /* if 0, text is never erased (except   */
+    int remaining_time;             /* delay (sec) before erasing this text */
+                                    /* if < 0, text is never erased (except */
                                     /* by user action to erase it)          */
     t_gui_infobar *next_infobar;    /* next message for infobar             */
 };
@@ -153,14 +153,14 @@ struct t_gui_window
     void *win_infobar;              /* info bar window                      */
     void *win_input;                /* input window                         */
     
-    /* windows for Curses GUI */
+    /* windows for Gtk GUI */
     void *textview_chat;            /* textview widget for chat             */
     void *textbuffer_chat;          /* textbuffer widget for chat           */
     void *texttag_chat;             /* texttag widget for chat              */
     void *textview_nicklist;        /* textview widget for nicklist         */
     void *textbuffer_nicklist;      /* textbuffer widget for nicklist       */
     
-    /* windows for Curses GUI */
+    /* windows for Qt GUI */
     /* TODO: declare Qt window */
     
     /* chat content (lines, line is composed by many messages) */
@@ -170,10 +170,6 @@ struct t_gui_window
     int sub_lines;                  /* if > 0 then do not display until end */
     int line_complete;              /* current line complete ? (\n ending)  */
     int unread_data;                /* highlight windows with unread data   */
-    
-    /* infobar content */
-    t_gui_infobar *infobar;         /* infobar content (stack of messages)  */
-    int infobar_length;             /* length of infobar (width of win + 1) */
     
     /* inupt buffer */
     char *input_buffer;             /* input buffer                         */
@@ -200,6 +196,7 @@ extern int gui_ready;
 extern t_gui_window *gui_windows;
 extern t_gui_window *last_gui_window;
 extern t_gui_window *gui_current_window;
+extern t_gui_infobar *gui_infobar;
 
 /* prototypes */
 
@@ -207,6 +204,8 @@ extern t_gui_window *gui_current_window;
 extern t_gui_window *gui_window_new (void *, void *, int /*int, int, int, int*/); /* TODO: add coordinates and size */
 extern void gui_window_clear (t_gui_window *);
 extern void gui_window_clear_all ();
+extern void gui_infobar_print (char *, int);
+extern void gui_infobar_remove ();
 extern t_gui_line *gui_new_line (t_gui_window *);
 extern t_gui_message *gui_new_message (t_gui_window *);
 extern void gui_optimize_input_buffer_size (t_gui_window *);

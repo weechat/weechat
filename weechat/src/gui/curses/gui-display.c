@@ -888,7 +888,7 @@ gui_draw_window_status (t_gui_window *window)
         }
     }
     
-    /* display "*MORE*" if last line is not displayed */
+    /* display "-MORE-" if last line is not displayed */
     gui_window_set_color (window->win_status, COLOR_WIN_STATUS_MORE);
     if (window->sub_lines > 0)
         mvwprintw (window->win_status, 0, COLS - 7, _("-MORE-"));
@@ -944,7 +944,10 @@ gui_draw_window_infobar (t_gui_window *window)
     time_seconds = time (NULL);
     local_time = localtime (&time_seconds);
     strftime (text, 1024, cfg_look_infobar_timestamp, local_time);
-    wprintw (window->win_infobar, "%s", text);
+    if (gui_infobar)
+        wprintw (window->win_infobar, "%s | %s", text, gui_infobar->text);
+    else
+        wprintw (window->win_infobar, "%s", text);
     
     wrefresh (window->win_infobar);
     refresh ();
@@ -1482,6 +1485,8 @@ gui_init ()
 
     gui_init_colors ();
 
+    gui_infobar = NULL;
+    
     /* create a new window */
     gui_current_window = gui_window_new (NULL, NULL, 1 /*0, 0, COLS, LINES*/);
     

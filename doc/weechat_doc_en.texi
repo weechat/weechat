@@ -28,7 +28,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.0.4 - January, 11 2004
+@subtitle Documentation for WeeChat v0.0.5-pre2 - January, 21 2004
 
 @image{weechat_image}
 
@@ -285,6 +285,12 @@ Type: boolean (values: 'on' or 'off'), default value: 'off'@*
 @item look_nick_completor
 The string inserted after nick completion@*
 Type: string (any string), default value: ':'@*
+@item look_infobar
+Enable info bar@*
+Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+@item look_infobar_timestamp
+Timestamp for time in infobar@*
+Type: string (any string), default value: '%B, %A %d %G - %H:%M'@*
 @item col_title
 Color for title bar@*
 Type: color (Curses or Gtk color), default value: 'gray'@*
@@ -342,6 +348,12 @@ Type: color (Curses or Gtk color), default value: 'white'@*
 @item col_status_bg
 Background for status window@*
 Type: color (Curses or Gtk color), default value: 'blue'@*
+@item col_infobar
+Color for info bar text@*
+Type: color (Curses or Gtk color), default value: 'black'@*
+@item col_infobar_bg
+Background for info bar window@*
+Type: color (Curses or Gtk color), default value: 'cyan'@*
 @item col_input
 Color for input text@*
 Type: color (Curses or Gtk color), default value: 'gray'@*
@@ -555,6 +567,9 @@ Switch to previous / next window@*
 @item Alt + left arrow / Alt + right arrow
 Same as F6 / F7@*
 @*
+@item F10
+Remove last infobar message@*
+@*
 @end table
 
 @node WeeChat commands, , Key bindings, Usage
@@ -627,6 +642,39 @@ Print message in current window (channel or server).@*
 @*
 @emph{Example:}@*
 @code{IRC::print ("message");}@*
+@*
+
+@item
+@command{IRC::print_with_channel ( channel, [server,] message );}@*
+@*
+Print message in a channel.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{channel}: name of channel
+@item @option{server}: internal name of server
+@item @option{message}: message to display
+@end itemize
+@*
+@emph{Examples:}@*
+@code{IRC::print_with_channel ("#weechat", "freenode", "message");}@*
+@code{IRC::print_with_channel ("#weechat", "message");}@*
+@*
+
+@item
+@command{IRC::print_infobar ( delay, message );}@*
+@*
+Print message in infobar.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{delay}: after this delay (in seconds), message will be erased
+(if 0, message will not be erased).
+@item @option{message}: message to display
+@end itemize
+@*
+@emph{Example:}@*
+@code{IRC::print_infobar (5, "message");}@*
 @*
 
 @item

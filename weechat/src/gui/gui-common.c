@@ -42,6 +42,7 @@ int gui_ready;                              /* = 1 if GUI is initialized    */
 t_gui_window *gui_windows = NULL;           /* pointer to first window      */
 t_gui_window *last_gui_window = NULL;       /* pointer to last window       */
 t_gui_window *gui_current_window = NULL;    /* pointer to current window    */
+t_gui_infobar *gui_infobar;                 /* pointer to infobar content   */
 
 
 /*
@@ -95,10 +96,6 @@ gui_window_new (void *server, void *channel, int switch_to_window
         new_window->sub_lines = 0;
         new_window->line_complete = 1;
         new_window->unread_data = 0;
-        
-        /* init infobar */
-        new_window->infobar = NULL;
-        new_window->infobar_length = new_window->win_width + 1;
         
         /* init input buffer */
         new_window->input_buffer_alloc = INPUT_BUFFER_BLOCK_SIZE;
@@ -184,6 +181,55 @@ gui_window_clear_all ()
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
         gui_window_clear (ptr_win);
+}
+
+/* 
+ * gui_infobar_print: display message in infobar
+ */
+
+void
+gui_infobar_print (char *message, int time_displayed)
+{
+    t_gui_infobar *ptr_infobar;
+    char *pos;
+    
+    ptr_infobar = (t_gui_infobar *)malloc (sizeof (t_gui_infobar));
+    if (ptr_infobar)
+    {
+        ptr_infobar->text = strdup (message);
+        pos = strchr (ptr_infobar->text, '\n');
+        if (pos)
+            pos[0] = '\0';
+        ptr_infobar->remaining_time = (time_displayed <= 0) ? -1 : time_displayed;
+        ptr_infobar->next_infobar = gui_infobar;
+        gui_infobar = ptr_infobar;
+        /* TODO: manage splitted windows! */
+        gui_redraw_window_infobar (gui_current_window);
+    }
+    else
+        wee_log_printf (_("%s not enough memory for infobar message\n"),
+                        WEECHAT_ERROR);
+}
+
+/*
+ * gui_infobar_remove: remove last displayed message in infobar
+ */
+
+void
+gui_infobar_remove ()
+{
+    t_gui_infobar *new_infobar;
+    
+    if (gui_infobar)
+    {
+        new_infobar = gui_infobar->next_infobar;
+        if (gui_infobar->text)
+            free (gui_infobar->text);
+        free (gui_infobar);
+        gui_infobar = new_infobar;
+        /* TODO: manage splitted windows! */
+        gui_redraw_window_infobar (gui_current_window);
+    }
 }
 
 /*

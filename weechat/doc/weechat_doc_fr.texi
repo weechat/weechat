@@ -28,7 +28,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.0.4 - 11 janvier 2004
+@subtitle Documentation pour WeeChat v0.0.5-pre2 - 21 janvier 2004
 
 @image{weechat_image}
 
@@ -285,6 +285,12 @@ Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
 @item look_nick_completor
 La cha@^ine affich@'ee apr@`es la compl@'etion des utilisateurs@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ':'@*
+@item look_infobar
+Active la barre d'infos@*
+Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
+@item look_infobar_timestamp
+Horodatage pour les conversations sauvegard@'ees@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '%B, %A %d %G - %H:%M'@*
 @item col_title
 Couleur pour la barre de titre@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'gray'@*
@@ -342,6 +348,12 @@ Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'white'@*
 @item col_status_bg
 Couleur de fond pour la fen@^etre de statut@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'blue'@*
+@item col_infobar
+Couleur pour la barre d'infos@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'black'@*
+@item col_infobar_bg
+Couleur de fond pour la fen@^etre de barre d'infos@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'cyan'@*
 @item col_input
 Couleur pour le texte saisi@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'gray'@*
@@ -555,6 +567,9 @@ Aller @`a la fen@^etre pr@'ec@'edente / suivante@*
 @item Alt + fl@`eche gauche / Alt + fl@`eche droite
 Identique @`a F6 / F7@*
 @*
+@item F10
+Effacer le dernier message de la barre d'infos@*
+@*
 @end table
 
 @node Commandes WeeChat, , Raccourcis clavier, Utilisation
@@ -627,6 +642,39 @@ Affiche un message dans la fen@^etre courante (canal ou serveur).@*
 @*
 @emph{Exemple :}@*
 @code{IRC::print ("message");}@*
+@*
+
+@item
+@command{IRC::print_with_channel ( canal, [serveur,] message );}@*
+@*
+Affiche un message dans un canal.@*
+
+@emph{Param@`etres :}
+@itemize @minus
+@item @option{canal}: nom du canal
+@item @option{serveur}: nom interne du serveur
+@item @option{message}: message @`a afficher
+@end itemize
+@*
+@emph{Exemples :}@*
+@code{IRC::print_with_channel ("#weechat", "freenode", "message");}@*
+@code{IRC::print_with_channel ("#weechat", "message");}@*
+@*
+
+@item
+@command{IRC::print_infobar ( d@'elai, message );}@*
+@*
+Affiche un message dans la barre d'infos.@*
+
+@emph{Param@`etres :}
+@itemize @minus
+@item @option{d@'elai}: d@'elai (en secondes) pendant lequel le message est affich@'e
+(si 0, le message ne sera pas effac@'e).
+@item @option{message}: message @`a afficher
+@end itemize
+@*
+@emph{Exemple :}@*
+@code{IRC::print_infobar (5, "message");}@*
 @*
 
 @item

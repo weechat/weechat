@@ -28,7 +28,7 @@
 
 @title WeeChat - Guia do Utilizador
 @subtitle Cliente de IRC rapido, leve e extencivel
-@subtitle Documenta@,{c}@~ao do WeeChat v0.0.4 - 03 de Janeiro de 2004
+@subtitle Documenta@,{c}@~ao do WeeChat v0.0.5-pre2 - 21 de Janeiro de 2004
 
 @image{weechat_image}
 
@@ -207,6 +207,8 @@ Segue agora as instru@,{c}@~oes para compilar o c@'odigo fonte - @xref{Codigo Fo
 @subsection Par@^ametros de linha de comandos
 
 @table @code
+@item -c, --config
+Mostrar da lima dos config da exposi@,{c}@~ao (lista das op@,{c}@~oes)
 @item -h, --help
 Mostrar a ajuda@*
 @item -l, --license
@@ -267,6 +269,9 @@ Ir para a janela anterior/seguinte@*
 @*
 @item Alt + Seta da esquerda / Alt + Seta da direita
 Identico a F6 / F7@*
+@*
+@item F10
+Apagar a @'ultima mensagem da barra do info@*
 @*
 @end table
 
@@ -338,6 +343,39 @@ Imprimne uma mensagem na janela actual (canal ou servidor).@*
 @*
 @emph{Exemplo:}@*
 @code{IRC::print ("mensagem");}@*
+@*
+
+@item
+@command{IRC::print_with_channel ( canal, [servidor,] mensagem );}@*
+@*
+Imprimne uma mensagem na canal.@*
+
+@emph{Argumentos:}
+@itemize @minus
+@item @option{canal}: nome da canal
+@item @option{servidor}: nome interno da servidor
+@item @option{mensagem}: mensagem a mostrar
+@end itemize
+@*
+@emph{Exemplos:}@*
+@code{IRC::print_with_channel ("#weechat", "freenode", "mensagem");}@*
+@code{IRC::print_with_channel ("#weechat", "mensagem");}@*
+@*
+
+@item
+@command{IRC::print_infobar ( atrasa, mensagem );}@*
+@*
+Imprimne uma mensagem na barra do info.@*
+
+@emph{Argumentos:}
+@itemize @minus
+@item @option{atrasa}: depois que isto atrasa (nos segundos), a mensagem estar@'a apagada
+(se 0, mensagem n@~ao forem apagados).
+@item @option{mensagem}: mensagem a mostrar
+@end itemize
+@*
+@emph{Exemplo:}@*
+@code{IRC::print_infobar (5, "mensagem");}@*
 @*
 
 @item

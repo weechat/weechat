@@ -203,6 +203,30 @@ static XS (XS_IRC_print_with_channel)
 }
 
 /*
+ * IRC::print_infobar: print message to infobar
+ */
+
+static XS (XS_IRC_print_infobar)
+{
+    int integer;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if (items == 2)
+        gui_infobar_print (SvPV (ST (1), integer), SvIV (ST (0)));
+    else
+    {
+        irc_display_prefix (NULL, PREFIX_ERROR);
+        gui_printf (NULL,
+                    _("Perl error: wrong parameters for IRC::print_infobar Perl function\n"));
+    }
+    
+    XSRETURN_EMPTY;
+}
+
+/*
  * IRC::add_message_handler: add handler for messages (privmsg, ...)
  */
 
@@ -321,6 +345,7 @@ xs_init (pTHX)
     newXS ("IRC::register", XS_IRC_register, "IRC");
     newXS ("IRC::print", XS_IRC_print, "IRC");
     newXS ("IRC::print_with_channel", XS_IRC_print_with_channel, "IRC");
+    newXS ("IRC::print_infobar", XS_IRC_print_infobar, "IRC");
     newXS ("IRC::add_message_handler", XS_IRC_add_message_handler, "IRC");
     newXS ("IRC::add_command_handler", XS_IRC_add_command_handler, "IRC");
     newXS ("IRC::get_info", XS_IRC_get_info, "IRC");
