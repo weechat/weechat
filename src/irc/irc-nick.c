@@ -215,11 +215,15 @@ nick_resort (t_irc_channel *channel, t_irc_nick *nick)
 void
 nick_change (t_irc_channel *channel, t_irc_nick *nick, char *new_nick)
 {
+    int nick_is_me;
+    
+    nick_is_me = (strcmp (nick->nick, SERVER(channel->buffer)->nick) == 0) ? 1 : 0;
+    
     /* change nickname */
     if (nick->nick)
         free (nick->nick);
     nick->nick = strdup (new_nick);
-    if (strcasecmp (nick->nick, SERVER(channel->buffer)->nick) == 0)
+    if (nick_is_me)
         nick->color = COLOR_WIN_NICK_SELF;
     else
         nick->color = nick_find_color (nick);
