@@ -1234,6 +1234,10 @@ weechat_cmd_help (int argc, char **argv)
                                 _(weechat_commands[i].arguments));
                 else
                     gui_printf (NULL, "\n");
+                if (weechat_commands[i].command_description &&
+                    weechat_commands[i].command_description[0])
+                    gui_printf (NULL, "\n%s\n",
+                                _(weechat_commands[i].command_description));
                 if (weechat_commands[i].arguments_description &&
                     weechat_commands[i].arguments_description[0])
                     gui_printf (NULL, "\n%s\n",
@@ -1256,6 +1260,10 @@ weechat_cmd_help (int argc, char **argv)
                                 _(irc_commands[i].arguments));
                 else
                     gui_printf (NULL, "\n");
+                if (irc_commands[i].command_description &&
+                    irc_commands[i].command_description[0])
+                    gui_printf (NULL, "\n%s\n",
+                                _(irc_commands[i].command_description));
                 if (irc_commands[i].arguments_description &&
                     irc_commands[i].arguments_description[0])
                     gui_printf (NULL, "\n%s\n",

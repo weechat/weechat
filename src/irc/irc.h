@@ -318,6 +318,7 @@ extern void irc_login (t_irc_server *);
 /* IRC commands issued by user */
 extern int irc_cmd_send_admin (t_irc_server *, char *);
 extern int irc_cmd_send_away (t_irc_server *, char *);
+extern int irc_cmd_send_ban (t_irc_server *, char *);
 extern int irc_cmd_send_ctcp (t_irc_server *, char *);
 extern int irc_cmd_send_dcc (t_irc_server *, char *);
 extern int irc_cmd_send_deop (t_irc_server *, int, char **);
@@ -328,6 +329,7 @@ extern int irc_cmd_send_invite (t_irc_server *, int, char **);
 extern int irc_cmd_send_ison (t_irc_server *, char *);
 extern int irc_cmd_send_join (t_irc_server *, char *);
 extern int irc_cmd_send_kick (t_irc_server *, char *);
+extern int irc_cmd_send_kickban (t_irc_server *, char *);
 extern int irc_cmd_send_kill (t_irc_server *, char *);
 extern int irc_cmd_send_links (t_irc_server *, char *);
 extern int irc_cmd_send_list (t_irc_server *, char *);
@@ -360,6 +362,7 @@ extern int irc_cmd_send_summon (t_irc_server *, char *);
 extern int irc_cmd_send_time (t_irc_server *, char *);
 extern int irc_cmd_send_topic (t_irc_server *, char *);
 extern int irc_cmd_send_trace (t_irc_server *, char *);
+extern int irc_cmd_send_unban (t_irc_server *, char *);
 extern int irc_cmd_send_userhost (t_irc_server *, char *);
 extern int irc_cmd_send_users (t_irc_server *, char *);
 extern int irc_cmd_send_version (t_irc_server *, char *);
@@ -413,6 +416,9 @@ extern int irc_cmd_recv_352 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_353 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_365 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_366 (t_irc_server *, char *, char *);
+extern int irc_cmd_recv_367 (t_irc_server *, char *, char *);
+extern int irc_cmd_recv_368 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_433 (t_irc_server *, char *, char *);
+extern int irc_cmd_recv_438 (t_irc_server *, char *, char *);
 
 #endif /* irc.h */

@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-03-12
+ChangeLog - 2005-03-14
 
 
 Version 0.1.1 (under dev!):
@@ -9,6 +9,7 @@ Version 0.1.1 (under dev!):
    * added crash dump when WeeChat receives SIGSEGV (Segmentation fault)
    * added new display engine: doesn't cut words at end of lines
    * added DCC send and DCC chat
+   * added /ban, /unban and /kickban commands
    * added spanish translation
    * added --irc-commands and --weechat-commands command line options
    * connection to IRC server is now made by child process (non blocking)
@@ -17,6 +18,7 @@ Version 0.1.1 (under dev!):
    * on server buffer, only server messages are logged
    * improved /help command output
    * plugins messages are logged with new config option (log_plugin_msg)
+   * fixed /kick command
    * fixed /invite command (and now invite requests are displayed)
    * fixed /buffer close command (now ok when disconnected from server)
    * fixed display bugs when many windows are opened

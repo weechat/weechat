@@ -3201,6 +3201,172 @@ irc_cmd_recv_366 (t_irc_server *server, char *host, char *arguments)
 }
 
 /*
+ * irc_cmd_recv_367: '367' command received (banlist)
+ */
+
+int
+irc_cmd_recv_367 (t_irc_server *server, char *host, char *arguments)
+{
+    char *pos_channel, *pos_ban, *pos_user, *pos_date, *pos;
+    t_irc_channel *ptr_channel;
+    t_gui_buffer *buffer;
+    time_t datetime;
+    
+    /* make gcc happy */
+    (void) host;
+    
+    /* look for channel */
+    pos_channel = strchr (arguments, ' ');
+    if (!pos_channel)
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s cannot parse \"%s\" command\n"),
+                          WEECHAT_ERROR, "367");
+        return -1;
+    }
+    pos_channel[0] = '\0';
+    pos_channel++;
+    while (pos_channel[0] == ' ')
+        pos_channel++;
+    
+    /* look for ban mask */
+    pos_ban = strchr (pos_channel, ' ');
+    if (!pos_ban)
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s cannot parse \"%s\" command\n"),
+                          WEECHAT_ERROR, "367");
+        return -1;
+    }
+    pos_ban[0] = '\0';
+    pos_ban++;
+    while (pos_ban[0] == ' ')
+        pos_ban++;
+    
+    /* look for user who set ban */
+    pos_user = strchr (pos_ban, ' ');
+    if (!pos_user)
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s cannot parse \"%s\" command\n"),
+                          WEECHAT_ERROR, "367");
+        return -1;
+    }
+    pos_user[0] = '\0';
+    pos_user++;
+    while (pos_user[0] == ' ')
+        pos_user++;
+    
+    /* look for date/time */
+    pos_date = strchr (pos_user, ' ');
+    if (!pos_date)
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s cannot parse \"%s\" command\n"),
+                          WEECHAT_ERROR, "367");
+        return -1;
+    }
+    pos_date[0] = '\0';
+    pos_date++;
+    while (pos_date[0] == ' ')
+        pos_date++;
+    
+    if (!pos_date || !pos_date[0])
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s cannot parse \"%s\" command\n"),
+                          WEECHAT_ERROR, "367");
+        return -1;
+    }
+    
+    ptr_channel = channel_search (server, pos_channel);
+    buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
+    
+    irc_display_prefix (buffer, PREFIX_INFO);
+    gui_printf_color (buffer, COLOR_WIN_CHAT_DARK, "[");
+    gui_printf_color (buffer, COLOR_WIN_CHAT_CHANNEL, "%s", pos_channel);
+    gui_printf_color (buffer, COLOR_WIN_CHAT_DARK, "] ");
+    gui_printf_color (buffer, COLOR_WIN_CHAT_HOST, "%s ", pos_ban);
+    gui_printf (buffer, _("banned by"));
+    pos = strchr (pos_user, '!');
+    if (pos)
+    {
+        pos[0] = '\0';
+        gui_printf_color (buffer, COLOR_WIN_CHAT_NICK, " %s ", pos_user);
+        gui_printf_color (buffer, COLOR_WIN_CHAT_DARK, "(");
+        gui_printf_color (buffer, COLOR_WIN_CHAT_HOST, "%s", pos + 1);
+        gui_printf_color (buffer, COLOR_WIN_CHAT_DARK, ")");
+    }
+    else
+        gui_printf_color (buffer, COLOR_WIN_CHAT_NICK, " %s", pos_user);
+    datetime = (time_t)(atol (pos_date));
+    gui_printf_nolog (buffer, ", %s", ctime (&datetime));
+    
+    return 0;
+}
+
+/*
+ * irc_cmd_recv_368: '368' command received (end of banlist)
+ */
+
+int
+irc_cmd_recv_368 (t_irc_server *server, char *host, char *arguments)
+{
+    char *pos_channel, *pos_msg;
+    t_irc_channel *ptr_channel;
+    t_gui_buffer *buffer;
+    
+    /* make gcc happy */
+    (void) host;
+    
+    pos_channel = strchr (arguments, ' ');
+    if (!pos_channel)
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s cannot parse \"%s\" command\n"),
+                          WEECHAT_ERROR, "368");
+        return -1;
+    }
+    pos_channel[0] = '\0';
+    pos_channel++;
+    while (pos_channel[0] == ' ')
+        pos_channel++;
+    
+    pos_msg = strchr (pos_channel, ' ');
+    if (!pos_msg)
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s cannot parse \"%s\" command\n"),
+                          WEECHAT_ERROR, "368");
+        return -1;
+    }
+    pos_msg[0] = '\0';
+    pos_msg++;
+    while (pos_msg[0] == ' ')
+        pos_msg++;
+    if (pos_msg[0] == ':')
+        pos_msg++;
+    
+    ptr_channel = channel_search (server, pos_channel);
+    buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
+    
+    irc_display_prefix (buffer, PREFIX_INFO);
+    gui_printf_color (buffer, COLOR_WIN_CHAT_DARK, "[");
+    gui_printf_color (buffer, COLOR_WIN_CHAT_CHANNEL, "%s", pos_channel);
+    gui_printf_color (buffer, COLOR_WIN_CHAT_DARK, "] ");
+    gui_printf_nolog (buffer, "%s\n", pos_msg);
+    
+    return 0;
+}
+
+/*
  * irc_cmd_recv_433: '433' command received (nickname already in use)
  */
 
@@ -3268,5 +3434,41 @@ irc_cmd_recv_433 (t_irc_server *server, char *host, char *arguments)
     }
     else
         return irc_cmd_recv_error (server, host, arguments);
+    return 0;
+}
+
+/*
+ * irc_cmd_recv_438: '438' command received (not authorized to change nickname)
+ */
+
+int
+irc_cmd_recv_438 (t_irc_server *server, char *host, char *arguments)
+{
+    char *pos, *pos2;
+    
+    /* make gcc happy */
+    (void) server;
+    (void) host;
+    
+    pos = strchr (arguments, ' ');
+    irc_display_prefix (server->buffer, PREFIX_SERVER);
+    if (pos)
+    {
+        pos[0] = '\0';
+        pos++;
+        
+        pos2 = strstr (pos, " :");
+        if (pos2)
+        {
+            pos2[0] = '\0';
+            pos2 += 2;
+            gui_printf (server->buffer, "%s (%s => %s)\n", pos2, arguments, pos);
+        }
+        else
+            gui_printf (server->buffer, "%s (%s)\n", pos, arguments);
+    }
+    else
+        gui_printf (server->buffer, "%s\n", arguments);
+    
     return 0;
 }

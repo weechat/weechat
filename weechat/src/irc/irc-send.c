@@ -188,6 +188,84 @@ irc_cmd_send_away (t_irc_server *server, char *arguments)
 }
 
 /*
+ * irc_cmd_send_ban: bans nicks or hosts
+ */
+
+int
+irc_cmd_send_ban (t_irc_server *server, char *arguments)
+{
+    char *pos_channel, *pos, *pos2;
+    
+    if (arguments)
+    {
+        pos_channel = NULL;
+        pos = strchr (arguments, ' ');
+        if (pos)
+        {
+            pos[0] = '\0';
+            
+            if (string_is_channel (arguments))
+            {
+                pos_channel = arguments;
+                pos++;
+                while (pos[0] == ' ')
+                    pos++;
+            }
+            else
+            {
+                pos[0] = ' ';
+                pos = arguments;
+            }
+        }
+        else
+            pos = arguments;
+        
+        /* channel not given, use default buffer */
+        if (!pos_channel)
+        {
+            if (!BUFFER_IS_CHANNEL(gui_current_window->buffer))
+            {
+                irc_display_prefix (server->buffer, PREFIX_ERROR);
+                gui_printf_nolog (server->buffer,
+                                  _("%s \"%s\" command can only be executed in a channel window\n"),
+                                  WEECHAT_ERROR, "ban");
+                return -1;
+            }
+            pos_channel = CHANNEL(gui_current_window->buffer)->name;
+        }
+        
+        /* loop on users */
+        while (pos && pos[0])
+        {
+            pos2 = strchr (pos, ' ');
+            if (pos2)
+            {
+                pos2[0] = '\0';
+                pos2++;
+                while (pos2[0] == ' ')
+                    pos2++;
+            }
+            server_sendf (server, "MODE %s +b %s\r\n", pos_channel, pos);
+            pos = pos2;
+        }
+    }
+    else
+    {
+        if (!BUFFER_IS_CHANNEL(gui_current_window->buffer))
+        {
+            irc_display_prefix (server->buffer, PREFIX_ERROR);
+            gui_printf_nolog (server->buffer,
+                              _("%s \"%s\" command can only be executed in a channel window\n"),
+                              WEECHAT_ERROR, "ban");
+            return -1;
+        }
+        server_sendf (server, "MODE %s +b\r\n", CHANNEL(gui_current_window->buffer)->name);
+    }
+    
+    return 0;
+}
+
+/*
  * irc_cmd_send_ctcp: send a ctcp message
  */
 
@@ -458,29 +536,28 @@ irc_cmd_send_join (t_irc_server *server, char *arguments)
 int
 irc_cmd_send_kick (t_irc_server *server, char *arguments)
 {
-    char *args, *pos;
+    char *pos_channel, *pos_nick, *pos_comment;
     
     if (string_is_channel (arguments))
-        server_sendf (server, "KICK %s\r\n", arguments);
+    {
+        pos_channel = arguments;
+        pos_nick = strchr (arguments, ' ');
+        if (!pos_nick)
+        {
+            irc_display_prefix (server->buffer, PREFIX_ERROR);
+            gui_printf_nolog (server->buffer,
+                              _("%s wrong arguments for \"%s\" command\n"),
+                              WEECHAT_ERROR, "kick");
+            return -1;
+        }
+        pos_nick[0] = '\0';
+        pos_nick++;
+        while (pos_nick[0] == ' ')
+            pos_nick++;
+    }
     else
     {
-        if (BUFFER_IS_CHANNEL (gui_current_window->buffer))
-        {
-            args = strdup (arguments);
-            pos = strchr (args, ' ');
-            if (pos)
-                pos[0] = '\0';
-            if (pos)
-                server_sendf (server,
-                              "KICK %s %s :%s\r\n",
-                              CHANNEL(gui_current_window->buffer)->name, args, pos + 1);
-            else
-                server_sendf (server,
-                              "KICK %s %s\r\n",
-                              CHANNEL(gui_current_window->buffer)->name, args);
-            free (args);
-        }
-        else
+        if (!BUFFER_IS_CHANNEL(gui_current_window->buffer))
         {
             irc_display_prefix (server->buffer, PREFIX_ERROR);
             gui_printf_nolog (server->buffer,
@@ -488,7 +565,82 @@ irc_cmd_send_kick (t_irc_server *server, char *arguments)
                               WEECHAT_ERROR, "kick");
             return -1;
         }
+        pos_channel = CHANNEL(gui_current_window->buffer)->name;
+        pos_nick = arguments;
     }
+    
+    pos_comment = strchr (pos_nick, ' ');
+    if (pos_comment)
+    {
+        pos_comment[0] = '\0';
+        pos_comment++;
+        while (pos_comment[0] == ' ')
+            pos_comment++;
+    }
+    
+    if (pos_comment)
+        server_sendf (server, "KICK %s %s :%s\r\n", pos_channel, pos_nick, pos_comment);
+    else
+        server_sendf (server, "KICK %s %s\r\n", pos_channel, pos_nick);
+    
+    return 0;
+}
+
+/*
+ * irc_cmd_send_kickban: forcibly remove a user from a channel and ban it
+ */
+
+int
+irc_cmd_send_kickban (t_irc_server *server, char *arguments)
+{
+    char *pos_channel, *pos_nick, *pos_comment;
+    
+    if (string_is_channel (arguments))
+    {
+        pos_channel = arguments;
+        pos_nick = strchr (arguments, ' ');
+        if (!pos_nick)
+        {
+            irc_display_prefix (server->buffer, PREFIX_ERROR);
+            gui_printf_nolog (server->buffer,
+                              _("%s wrong arguments for \"%s\" command\n"),
+                              WEECHAT_ERROR, "kickban");
+            return -1;
+        }
+        pos_nick[0] = '\0';
+        pos_nick++;
+        while (pos_nick[0] == ' ')
+            pos_nick++;
+    }
+    else
+    {
+        if (!BUFFER_IS_CHANNEL(gui_current_window->buffer))
+        {
+            irc_display_prefix (server->buffer, PREFIX_ERROR);
+            gui_printf_nolog (server->buffer,
+                              _("%s \"%s\" command can only be executed in a channel window\n"),
+                              WEECHAT_ERROR, "kickban");
+            return -1;
+        }
+        pos_channel = CHANNEL(gui_current_window->buffer)->name;
+        pos_nick = arguments;
+    }
+    
+    pos_comment = strchr (pos_nick, ' ');
+    if (pos_comment)
+    {
+        pos_comment[0] = '\0';
+        pos_comment++;
+        while (pos_comment[0] == ' ')
+            pos_comment++;
+    }
+    
+    server_sendf (server, "MODE %s +b %s\r\n", pos_channel, pos_nick);
+    if (pos_comment)
+        server_sendf (server, "KICK %s %s :%s\r\n", pos_channel, pos_nick, pos_comment);
+    else
+        server_sendf (server, "KICK %s %s\r\n", pos_channel, pos_nick);
+    
     return 0;
 }
 
@@ -1311,6 +1463,80 @@ irc_cmd_send_trace (t_irc_server *server, char *arguments)
         server_sendf (server, "TRACE %s\r\n", arguments);
     else
         server_sendf (server, "TRACE\r\n");
+    return 0;
+}
+
+/*
+ * irc_cmd_send_unban: unbans nicks or hosts
+ */
+
+int
+irc_cmd_send_unban (t_irc_server *server, char *arguments)
+{
+    char *pos_channel, *pos, *pos2;
+    
+    if (arguments)
+    {
+        pos_channel = NULL;
+        pos = strchr (arguments, ' ');
+        if (pos)
+        {
+            pos[0] = '\0';
+            
+            if (string_is_channel (arguments))
+            {
+                pos_channel = arguments;
+                pos++;
+                while (pos[0] == ' ')
+                    pos++;
+            }
+            else
+            {
+                pos[0] = ' ';
+                pos = arguments;
+            }
+        }
+        else
+            pos = arguments;
+        
+        /* channel not given, use default buffer */
+        if (!pos_channel)
+        {
+            if (!BUFFER_IS_CHANNEL(gui_current_window->buffer))
+            {
+                irc_display_prefix (server->buffer, PREFIX_ERROR);
+                gui_printf_nolog (server->buffer,
+                                  _("%s \"%s\" command can only be executed in a channel window\n"),
+                                  WEECHAT_ERROR, "unban");
+                return -1;
+            }
+            pos_channel = CHANNEL(gui_current_window->buffer)->name;
+        }
+        
+        /* loop on users */
+        while (pos && pos[0])
+        {
+            pos2 = strchr (pos, ' ');
+            if (pos2)
+            {
+                pos2[0] = '\0';
+                pos2++;
+                while (pos2[0] == ' ')
+                    pos2++;
+            }
+            server_sendf (server, "MODE %s -b %s\r\n", pos_channel, pos);
+            pos = pos2;
+        }
+    }
+    else
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s wrong argument count for \"%s\" command\n"),
+                          WEECHAT_ERROR, "unban");
+        return -1;
+    }
+    
     return 0;
 }
 
