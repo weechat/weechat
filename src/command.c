@@ -345,7 +345,7 @@ alias_new (char *alias_name, char *alias_command)
     if (!index_command_search (alias_command))
     {
         gui_printf (NULL, _("%s target command \"%s\" does not exist!\n"),
-                    WEECHAT_ERROR, pos);
+                    WEECHAT_ERROR, alias_command);
         return NULL;
     }
     if (pos)
