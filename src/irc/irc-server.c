@@ -270,8 +270,6 @@ server_free (t_irc_server *server)
         (server->next_server)->prev_server = server->prev_server;
     
     server_destroy (server);
-    if (server->buffer)
-        gui_buffer_free (server->buffer);
     free (server);
     irc_servers = new_irc_servers;
 }

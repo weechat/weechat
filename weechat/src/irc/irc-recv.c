@@ -818,7 +818,7 @@ irc_cmd_recv_part (t_irc_server *server, char *host, char *arguments)
             if (strcmp (ptr_nick->nick, server->nick) == 0)
             {
                 /* part request was issued by local client */
-                gui_buffer_free (ptr_channel->buffer);
+                gui_buffer_free (ptr_channel->buffer, 1);
                 channel_free (server, ptr_channel);
                 gui_draw_buffer_status (gui_current_window->buffer, 1);
                 gui_draw_buffer_input (gui_current_window->buffer, 1);

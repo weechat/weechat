@@ -346,7 +346,7 @@ gui_line_free (t_gui_line *line)
  */
 
 void
-gui_buffer_free (t_gui_buffer *buffer)
+gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
 {
     t_gui_window *ptr_win;
     t_gui_buffer *ptr_buffer;
@@ -355,11 +355,14 @@ gui_buffer_free (t_gui_buffer *buffer)
     
     create_new = (buffer->server || buffer->channel);
     
-    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    if (switch_to_another)
     {
-        if ((buffer == ptr_win->buffer) &&
-            ((buffer->next_buffer) || (buffer->prev_buffer)))
-            gui_switch_to_previous_buffer (ptr_win);
+        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        {
+            if ((buffer == ptr_win->buffer) &&
+                ((buffer->next_buffer) || (buffer->prev_buffer)))
+                gui_switch_to_previous_buffer (ptr_win);
+        }
     }
     
     /* decrease buffer number for all next buffers */
@@ -393,7 +396,7 @@ gui_buffer_free (t_gui_buffer *buffer)
     free (buffer);
     
     /* always at least one buffer */
-    if (!gui_buffers && create_new)
+    if (!gui_buffers && create_new && switch_to_another)
         (void) gui_buffer_new (gui_windows, NULL, NULL, 1);
 }
 

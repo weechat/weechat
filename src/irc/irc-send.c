@@ -686,7 +686,7 @@ irc_cmd_send_part (t_irc_server *server, char *arguments)
         if (BUFFER_IS_PRIVATE(gui_current_window->buffer))
         {
             ptr_channel = CHANNEL(gui_current_window->buffer);
-            gui_buffer_free (ptr_channel->buffer);
+            gui_buffer_free (ptr_channel->buffer, 1);
             channel_free (server, ptr_channel);
             gui_draw_buffer_status (gui_current_window->buffer, 1);
             gui_draw_buffer_input (gui_current_window->buffer, 1);
