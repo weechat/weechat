@@ -1,8 +1,17 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2004-10-30
+ChangeLog - 2004-12-22
 
+
+Version 0.0.9 (under dev!):
+   * fixed display of nick mode changes
+   * /notice command fixed (and display when received from server)
+   * new keys: ctrl+A (=home), ctrl+E (=end), ctrl+W (=ctrl+backspace)
+   * added new config option: "server_command_delay" (delay in seconds after
+     startup command for each server)
+   * improved main loop for events (treats keyboard input & servers messages at
+     same time)
 
 Version 0.0.8 (2004-10-30):
    * /kick command fixed: now ok with many words as reason
