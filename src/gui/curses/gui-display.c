@@ -1806,8 +1806,7 @@ gui_init_colors ()
         {
             gui_assign_color (&color, nicks_colors[i]);
             init_pair (COLOR_WIN_NICK_FIRST + i, color & A_CHARTEXT, cfg_col_chat_bg);
-            color_attr[COLOR_WIN_NICK_FIRST + i - 1] =
-                (color & A_BOLD) ? A_BOLD : 0;
+            color_attr[COLOR_WIN_NICK_FIRST + i - 1] = (color >= 0) ? color & A_BOLD : 0;
         }
         
         init_pair (COLOR_DCC_SELECTED,
