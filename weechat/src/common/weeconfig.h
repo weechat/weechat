@@ -77,6 +77,8 @@ extern int cfg_look_set_title;
 extern int cfg_look_startup_logo;
 extern int cfg_look_startup_version;
 extern char *cfg_look_weechat_slogan;
+extern char *cfg_look_charset_decode;
+extern char *cfg_look_charset_encode;
 extern int cfg_look_color_nicks;
 extern int cfg_look_color_actions;
 extern int cfg_look_remove_colors_from_msgs;

@@ -307,7 +307,7 @@ void
 gui_draw_buffer_title (t_gui_buffer *buffer, int erase)
 {
     t_gui_window *ptr_win;
-    char format[32];
+    char format[32], *buf;
     
     if (!gui_ok)
         return;
@@ -330,8 +330,13 @@ gui_draw_buffer_title (t_gui_buffer *buffer, int erase)
             {
                 snprintf (format, 32, "%%-%ds", ptr_win->win_width);
                 if (CHANNEL(buffer)->topic)
-                    mvwprintw (ptr_win->win_title, 0, 0, format,
-                               CHANNEL(buffer)->topic);
+                {
+                    buf = weechat_convert_encoding (cfg_look_charset_decode,
+                                                    local_charset,
+                                                    CHANNEL(buffer)->topic);
+                    mvwprintw (ptr_win->win_title, 0, 0, format, buf);
+                    free (buf);
+                }
             }
             else
             {
@@ -1993,7 +1998,7 @@ gui_printf_color_type (t_gui_buffer *buffer, int type, int color, char *message,
 {
     static char buf[8192];
     char timestamp[16];
-    char *pos, *buf2;
+    char *pos, *buf2, *buf3;
     int i, j;
     va_list argptr;
     static time_t seconds;
@@ -2051,12 +2056,14 @@ gui_printf_color_type (t_gui_buffer *buffer, int type, int color, char *message,
     else
         buf2 = strdup (buf);
     
+    buf3 = weechat_convert_encoding (cfg_look_charset_decode, local_charset, buf2);
+    
     if (gui_init_ok)
     {
         seconds = time (NULL);
         date_tmp = localtime (&seconds);
         
-        pos = buf2 - 1;
+        pos = buf3 - 1;
         while (pos)
         {
             /* TODO: read timestamp format from config! */
@@ -2087,7 +2094,8 @@ gui_printf_color_type (t_gui_buffer *buffer, int type, int color, char *message,
         refresh ();*/
     }
     else
-        printf ("%s", buf2);
+        printf ("%s", buf3);
     
     free (buf2);
+    free (buf3);
 }

@@ -97,6 +97,9 @@ t_weechat_command weechat_commands[] =
   { "unalias", N_("remove an alias"),
     N_("alias_name"), N_("alias_name: name of alias to remove"),
     1, 1, NULL, weechat_cmd_unalias },
+  { "unset", N_("reset config parameters"),
+    N_("option"), N_("option: name of an option"),
+    1, 1, NULL, weechat_cmd_unset },
   { "window", N_("manage windows"),
     N_("[action]"),
     N_("action: action to do:\n"
@@ -1832,6 +1835,46 @@ weechat_cmd_unalias (char *arguments)
         alias_free (ptr_alias);
     gui_printf (NULL, _("Alias \"%s\" removed\n"),
                 arguments);
+    return 0;
+}
+
+/*
+ * weechat_cmd_unset: reset options
+ */
+
+int
+weechat_cmd_unset (char *arguments)
+{
+    t_config_option *ptr_option;
+
+    ptr_option = config_option_search (arguments);
+    if (ptr_option)
+    {
+        if (ptr_option->handler_change == NULL)
+        {
+            gui_printf (NULL,
+                        _("%s option \"%s\" can not be changed while WeeChat is running\n"),
+                        WEECHAT_ERROR, arguments);
+        }
+        else
+        {
+            if (config_option_set_value (ptr_option, "") == 0)
+            {
+                (void) (ptr_option->handler_change());
+                gui_printf (NULL, "[%s]\n", config_get_section (ptr_option));
+                gui_printf (NULL, "  %s =\n", arguments);
+            }
+            else
+                gui_printf (NULL, _("%s option \"%s\" can not be reset (use "
+                            "/set command to change this option)\n"),
+                            WEECHAT_ERROR, arguments);
+        }
+    }
+    else
+    {
+        gui_printf (NULL, _("%s config option \"%s\" not found\n"),
+                    WEECHAT_ERROR, arguments);
+    }
     return 0;
 }
 

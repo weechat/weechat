@@ -49,6 +49,8 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <signal.h>
+#include <iconv.h>
+#include <langinfo.h>
 
 #include "weechat.h"
 #include "weeconfig.h"
@@ -62,6 +64,8 @@ int quit_weechat;       /* = 1 if quit request from user... why ? :'(        */
 char *weechat_home;     /* WeeChat home dir. (example: /home/toto/.weechat)  */
 FILE *weechat_log_file; /* WeeChat log file (~/.weechat/weechat.log)         */
 
+char *local_charset = NULL;     /* local charset, for example: ISO-8859-1    */
+
 int server_cmd_line;    /* at least one server on WeeChat command line       */
 
 
@@ -74,6 +78,49 @@ void
 my_sigint ()
 {
     /* do nothing */
+}
+
+/*
+ * weechat_convert_encoding: convert string to another encoding
+ */
+
+char *
+weechat_convert_encoding (char *from_code, char *to_code, char *string)
+{
+    iconv_t cd;
+    char *inbuf, *ptr_inbuf, *outbuf, *ptr_outbuf;
+    int inbytesleft, outbytesleft;
+    
+    if (from_code && from_code[0] && to_code && to_code[0]
+        && (strcasecmp(from_code, to_code) != 0))
+    {
+        cd = iconv_open (to_code, from_code);
+        if (cd == (iconv_t)(-1))
+            outbuf = strdup (string);
+        else
+        {
+            inbuf = strdup (string);
+            ptr_inbuf = inbuf;
+            inbytesleft = strlen (inbuf);
+            outbytesleft = inbytesleft * 4;
+            outbuf = (char *) malloc (outbytesleft + 2);
+            ptr_outbuf = outbuf;
+            iconv (cd, &ptr_inbuf, &inbytesleft, &ptr_outbuf, &outbytesleft);
+            if (inbytesleft != 0)
+            {
+                free (outbuf);
+                outbuf = strdup (string);
+            }
+            else
+                ptr_outbuf[0] = '\0';
+            free (inbuf);
+            iconv_close (cd);
+        }
+    }
+    else
+        outbuf = strdup (string);
+    
+    return outbuf;
 }
 
 /*
@@ -468,6 +515,8 @@ main (int argc, char *argv[])
     bindtextdomain (PACKAGE, LOCALEDIR);
     textdomain (PACKAGE);
     #endif
+    
+    local_charset = strdup (nl_langinfo (CODESET));
     
     signal (SIGINT, my_sigint);     /* ignore SIGINT signal                 */
     gui_pre_init (&argc, &argv);    /* pre-initiliaze interface             */

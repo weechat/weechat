@@ -60,6 +60,8 @@ int cfg_look_set_title;
 int cfg_look_startup_logo;
 int cfg_look_startup_version;
 char *cfg_look_weechat_slogan;
+char *cfg_look_charset_decode;
+char *cfg_look_charset_encode;
 int cfg_look_color_nicks;
 int cfg_look_color_actions;
 int cfg_look_remove_colors_from_msgs;
@@ -95,6 +97,14 @@ t_config_option weechat_options_look[] =
     N_("WeeChat slogan (if empty, slogan is not used)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "the geekest IRC client!", NULL, NULL, &cfg_look_weechat_slogan, config_change_noop },
+  { "look_charset_decode", N_("charset for decoding messages from server"),
+    N_("charset for decoding messages from server, examples: UTF-8, ISO-8859-1 (if empty, messages are not converted)"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    "", NULL, NULL, &cfg_look_charset_decode, config_change_buffer_content },
+  { "look_charset_encode", N_("charset for encoding messages sent to server"),
+    N_("charset for encoding messages sent to server, examples: UFT-8, ISO-8859-1 (if empty, local charset is used)"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    "", NULL, NULL, &cfg_look_charset_encode, config_change_buffer_content },
   { "look_color_nicks", N_("display nick names with different colors"),
     N_("display nick names with different colors"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,

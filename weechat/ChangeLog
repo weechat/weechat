@@ -1,8 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-01-01
+ChangeLog - 2005-01-02
 
+
+Version 0.1.0 (under dev!):
+   * added new options for charset: look_charset_decode and look_charset_encode
+   * added /unset command (to remove string value for a config option)
 
 Version 0.0.9 (2005-01-01):
    * auto-reconnection to server (new options: server_autoreconnect (on/off),

@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2005-01-01
+TODO - 2005-01-02
 
 Legend:
   #  done
@@ -10,7 +10,7 @@ Legend:
   ?  is this really necessary?
 
 
-v0.0.9:
+v0.1.0:
 ------
 
  * General:
@@ -19,6 +19,7 @@ v0.0.9:
 
  * IRC protocol:
     + "/dcc" command (for chat and sending/receiving files)
+    - lets user configure his CTCP version reply (partially)
 
  * Interface:
     + "/window" command, split terminal in multiple windows

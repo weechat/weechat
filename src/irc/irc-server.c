@@ -39,6 +39,7 @@
 
 #include "../common/weechat.h"
 #include "irc.h"
+#include "../common/weeconfig.h"
 #include "../gui/gui.h"
 
 
@@ -369,6 +370,7 @@ server_sendf (t_irc_server * server, char *fmt, ...)
 {
     va_list args;
     static char buffer[1024];
+    char *buf2;
     int size_buf;
 
     if (!server)
@@ -384,14 +386,16 @@ server_sendf (t_irc_server * server, char *fmt, ...)
     buffer[sizeof (buffer) - 1] = '\0';
     if ((size_buf < 0) || (size_buf > (int) (sizeof (buffer) - 1)))
         size_buf = strlen (buffer);
-    buffer[size_buf - 2] = '\0';
     #ifdef DEBUG
+    buffer[size_buf - 2] = '\0';
     gui_printf (server->buffer, "[DEBUG] Sending to server >>> %s\n", buffer);
-    #endif
     buffer[size_buf - 2] = '\r';
-    if (server_send (server, buffer, size_buf) <= 0)
+    #endif
+    buf2 = weechat_convert_encoding (local_charset, cfg_look_charset_encode, buffer);
+    if (server_send (server, buf2, strlen (buf2)) <= 0)
         gui_printf (server->buffer, _("%s error sending data to IRC server\n"),
                     WEECHAT_ERROR);
+    free (buf2);
 }
 
 /*

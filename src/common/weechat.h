@@ -102,7 +102,9 @@
 
 extern int quit_weechat;
 extern char *weechat_home;
+extern char *local_charset;
 
+extern char *weechat_convert_encoding (char *, char *, char *);
 extern void wee_log_printf (char *, ...);
 extern void wee_shutdown ();
 
