@@ -956,11 +956,9 @@ config_create_default ()
             fprintf (file, "\n[%s]\n", config_sections[i].section_name);
             if ((i == CONFIG_SECTION_HISTORY) || (i == CONFIG_SECTION_LOG) ||
                 (i == CONFIG_SECTION_DCC) || (i == CONFIG_SECTION_PROXY))
-            {
                 fprintf (file,
                          "# WARNING!!! Options for section \"%s\" are not developed!\n",
                          config_sections[i].section_name);
-            }
             for (j = 0; weechat_options[i][j].option_name; j++)
             {
                 switch (weechat_options[i][j].option_type)
@@ -1031,20 +1029,30 @@ config_create_default ()
         fprintf (file, "server_nick2=%s1\n", my_passwd->pw_name);
         fprintf (file, "server_nick3=%s2\n", my_passwd->pw_name);
         fprintf (file, "server_username=%s\n", my_passwd->pw_name);
-        realname = strdup (my_passwd->pw_gecos);
-        pos = strchr (realname, ',');
-        if (pos)
-            pos[0] = '\0';
-        fprintf (file, "server_realname=%s\n",
-            realname);
-        if (pos)
-            pos[0] = ',';
-        free (realname);
+        if ((!my_passwd->pw_gecos)
+            || (my_passwd->pw_gecos[0] == '\0')
+            || (my_passwd->pw_gecos[0] == ',')
+            || (my_passwd->pw_gecos[0] == ' '))
+            fprintf (file, "server_realname=%s\n", my_passwd->pw_name);
+        else
+        {
+            realname = strdup (my_passwd->pw_gecos);
+            pos = strchr (realname, ',');
+            if (pos)
+                pos[0] = '\0';
+            fprintf (file, "server_realname=%s\n",
+                realname);
+            if (pos)
+                pos[0] = ',';
+            free (realname);
+        }
     }
     else
     {
         /* default values if /etc/passwd can't be read */
-        fprintf (stderr, "%s (%s).", _("Unable to get user's name"),
+        fprintf (stderr, "%s: %s (%s).",
+            WEECHAT_WARNING,
+            _("Unable to get user's name"),
             strerror (errno));
         fprintf (file, "server_nick1=weechat1\n");
         fprintf (file, "server_nick2=weechat2\n");
@@ -1109,11 +1117,9 @@ config_write (char *config_name)
             fprintf (file, "\n[%s]\n", config_sections[i].section_name);
             if ((i == CONFIG_SECTION_HISTORY) || (i == CONFIG_SECTION_LOG) ||
                 (i == CONFIG_SECTION_DCC) || (i == CONFIG_SECTION_PROXY))
-            {
                 fprintf (file,
                          "# WARNING!!! Options for section \"%s\" are not developed!\n",
                          config_sections[i].section_name);
-            }
             for (j = 0; weechat_options[i][j].option_name; j++)
             {
                 switch (weechat_options[i][j].option_type)
