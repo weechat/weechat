@@ -2439,6 +2439,9 @@ gui_printf_type_color (t_gui_buffer *buffer, int type, int color, char *message,
     vsnprintf (buf, sizeof (buf) - 1, message, argptr);
     va_end (argptr);
     
+    if (!buf[0])
+        return;
+    
     if (cfg_look_remove_colors_from_msgs)
     {
         buf2 = (char *) malloc (strlen (buf) + 2);
