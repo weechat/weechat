@@ -633,13 +633,18 @@ gui_main_loop ()
         if (select (FD_SETSIZE, &read_fd, NULL, NULL, &timeout))
         {
             if (FD_ISSET (STDIN_FILENO, &read_fd))
-                gui_read_keyb ();
-            for (ptr_server = irc_servers; ptr_server;
-                 ptr_server = ptr_server->next_server)
             {
-                if ((ptr_server->sock4 >= 0) &&
-                    (FD_ISSET (ptr_server->sock4, &read_fd)))
-                    server_recv (ptr_server);
+                gui_read_keyb ();
+            }
+            else
+            {
+                for (ptr_server = irc_servers; ptr_server;
+                     ptr_server = ptr_server->next_server)
+                {
+                    if ((ptr_server->sock4 >= 0) &&
+                        (FD_ISSET (ptr_server->sock4, &read_fd)))
+                        server_recv (ptr_server);
+                }
             }
         }
         
