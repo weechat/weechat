@@ -22,7 +22,7 @@ rm -rf $RPM_BUILD_ROOT
 %setup
 
 %build
-./configure
+./configure --enable-perl
 make DESTDIR="$RPM_BUILD_ROOT" LOCALRPM="local"
 
 %install 

@@ -17,7 +17,7 @@ endif
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
-	./configure --prefix=/usr --sysconfdir=/etc --enable-gtk
+	./configure --prefix=/usr --sysconfdir=/etc --enable-perl --enable-gtk
 	touch configure-stamp
 
 
