@@ -33,18 +33,28 @@ typedef struct t_plugin_handler t_plugin_handler;
 struct t_plugin_handler
 {
     int plugin_type;                /* plugin type (Perl, Python, Ruby)     */
-    char *name;                     /* name (message or command)            */
+    char *name;                     /* name of IRC command (PRIVMSG, ..)
+                                       or command (without first '/')       */
     char *function_name;            /* name of function (handler)           */
     t_plugin_handler *prev_handler; /* link to previous handler             */
     t_plugin_handler *next_handler; /* link to next handler                 */
 };
 
+extern t_plugin_handler *plugin_msg_handlers;
+extern t_plugin_handler *last_plugin_msg_handler;
 
-extern void plugins_init ();
-extern void plugins_load (int, char *);
-extern void plugins_unload (int, char *);
-extern void plugins_msg_handler_add (int, char *, char *);
-extern void plugins_event_msg (char *, char *);
-extern void plugins_end ();
+extern t_plugin_handler *plugin_cmd_handlers;
+extern t_plugin_handler *last_plugin_cmd_handler;
+
+
+extern void plugin_init ();
+extern void plugin_load (int, char *);
+extern void plugin_unload (int, char *);
+extern t_plugin_handler *plugin_handler_search (t_plugin_handler *, char *);
+extern void plugin_handler_add (t_plugin_handler **, t_plugin_handler **,
+                                 int, char *, char *);
+extern void plugin_event_msg (char *, char *);
+extern int plugin_exec_command (char *, char *);
+extern void plugin_end ();
 
 #endif /* plugins.h */

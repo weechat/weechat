@@ -62,6 +62,7 @@ struct t_index_command
 extern t_weechat_alias *weechat_alias;
 extern t_index_command *index_commands;
 
+extern t_index_command *index_command_search (char *);
 extern t_index_command *index_command_new (char *);
 extern void index_command_build ();
 extern t_weechat_alias *alias_new (char *, char *);

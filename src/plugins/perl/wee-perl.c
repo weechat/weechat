@@ -31,8 +31,9 @@
 #include <perl.h>
 #include <XSUB.h>
 #include "../../common/weechat.h"
-#include "wee-perl.h"
 #include "../plugins.h"
+#include "wee-perl.h"
+#include "../../common/command.h"
 #include "../../gui/gui.h"
 
 
@@ -81,7 +82,7 @@ static XS (XS_IRC_register)
                         name, version, description);
     }
     else
-        gui_printf (NULL,
+        gui_printf (gui_current_window,
                     _("%s unable to load Perl script \"%s\" (not enough memory)\n"),
                     WEECHAT_ERROR, name);
     XST_mPV (0, VERSION);
@@ -121,7 +122,34 @@ static XS (XS_IRC_add_message_handler)
     
     name = SvPV (ST (0), integer);
     function = SvPV (ST (1), integer);
-    plugins_msg_handler_add (PLUGIN_PERL, name, function);
+    plugin_handler_add (&plugin_msg_handlers, &last_plugin_msg_handler,
+                        PLUGIN_PERL, name, function);
+    XSRETURN_EMPTY;
+}
+
+/*
+ * IRC::add_command_handler: add command handler (define/redefine commands)
+ */
+
+static XS (XS_IRC_add_command_handler)
+{
+    char *name, *function;
+    int integer;
+    dXSARGS;
+    
+    name = SvPV (ST (0), integer);
+    function = SvPV (ST (1), integer);
+    if (index_command_search (name))
+    {
+        gui_printf (gui_current_window,
+                    _("Perl error: alias or command \"%s\" already exists!\n"),
+                    name);
+    }
+    else
+    {
+        plugin_handler_add (&plugin_cmd_handlers, &last_plugin_cmd_handler,
+                            PLUGIN_PERL, name, function);
+    }
     XSRETURN_EMPTY;
 }
 
@@ -136,6 +164,7 @@ xs_init (pTHX)
     newXS ("IRC::register", XS_IRC_register, "IRC");
     newXS ("IRC::print", XS_IRC_print, "IRC");
     newXS ("IRC::add_message_handler", XS_IRC_add_message_handler, "IRC");
+    newXS ("IRC::add_command_handler", XS_IRC_add_command_handler, "IRC");
 }
 
 /*
@@ -232,7 +261,7 @@ wee_perl_exec (char *function, char *arguments)
     return_code = 1;
     if (SvTRUE (sv))
     {
-        gui_printf (NULL,
+        gui_printf (gui_current_window,
                     _("Perl error: %s\n"),
                     SvPV (sv, count));
         POPs;
@@ -241,7 +270,7 @@ wee_perl_exec (char *function, char *arguments)
     {
         if (count != 1)
         {
-            gui_printf (NULL,
+            gui_printf (gui_current_window,
                         _("Perl error: too much values from \"%s\" (%d). Expected: 1.\n"),
                         function, count);
         }

@@ -37,18 +37,19 @@
 #endif
 
 
-t_plugin_handler *plugins_msg_handlers = NULL;
+t_plugin_handler *plugin_msg_handlers = NULL;
 t_plugin_handler *last_plugin_msg_handler = NULL;
-t_plugin_handler *plugins_cmd_handlers = NULL;
+
+t_plugin_handler *plugin_cmd_handlers = NULL;
 t_plugin_handler *last_plugin_cmd_handler = NULL;
 
 
 /*
- * plugins_init: initialize all plugins
+ * plugin_init: initialize all plugins
  */
 
 void
-plugins_init ()
+plugin_init ()
 {
     #ifdef PLUGIN_PERL
     wee_perl_init();
@@ -56,11 +57,11 @@ plugins_init ()
 }
 
 /*
- * plugins_load: load a plugin
+ * plugin_load: load a plugin
  */
 
 void
-plugins_load (int plugin_type, char *filename)
+plugin_load (int plugin_type, char *filename)
 {
     #ifdef PLUGINS
     switch (plugin_type)
@@ -81,11 +82,11 @@ plugins_load (int plugin_type, char *filename)
 }
 
 /*
- * plugins_unload: unload a plugin
+ * plugin_unload: unload a plugin
  */
 
 void
-plugins_unload (int plugin_type, char *scriptname)
+plugin_unload (int plugin_type, char *scriptname)
 {
     #ifdef PLUGINS
     switch (plugin_type)
@@ -106,11 +107,33 @@ plugins_unload (int plugin_type, char *scriptname)
 }
 
 /*
- * plugins_msg_handler_add: add a message handler
+ * plugin_handler_search: look for message/command handler
+ */
+
+t_plugin_handler *
+plugin_handler_search (t_plugin_handler *plugin_handlers, char *name)
+{
+    t_plugin_handler *ptr_plugin_handler;
+    
+    for (ptr_plugin_handler = plugin_handlers; ptr_plugin_handler;
+         ptr_plugin_handler = ptr_plugin_handler->next_handler)
+    {
+        /* handler found */
+        if (strcasecmp (ptr_plugin_handler->name, name) == 0)
+            return ptr_plugin_handler;
+    }
+    /* handler not found */
+    return NULL;
+}
+
+/*
+ * plugin_handler_add: add a message/command handler
  */
 
 void
-plugins_msg_handler_add (int plugin_type, char *message, char *function)
+plugin_handler_add (t_plugin_handler **plugin_handlers,
+                    t_plugin_handler **last_plugin_handler,
+                    int plugin_type, char *name, char *function)
 {
     t_plugin_handler *new_plugin_handler;
     
@@ -118,43 +141,45 @@ plugins_msg_handler_add (int plugin_type, char *message, char *function)
     if (new_plugin_handler)
     {
         new_plugin_handler->plugin_type = plugin_type;
-        new_plugin_handler->name = strdup (message);
+        new_plugin_handler->name = strdup (name);
         new_plugin_handler->function_name = strdup (function);
         
         /* add new handler to list */
-        new_plugin_handler->prev_handler = last_plugin_msg_handler;
+        new_plugin_handler->prev_handler = *last_plugin_handler;
         new_plugin_handler->next_handler = NULL;
-        if (plugins_msg_handlers)
-            last_plugin_msg_handler->next_handler = new_plugin_handler;
+        if (*plugin_handlers)
+            (*last_plugin_handler)->next_handler = new_plugin_handler;
         else
-            plugins_msg_handlers = new_plugin_handler;
-        last_plugin_msg_handler = new_plugin_handler;
+            *plugin_handlers = new_plugin_handler;
+        *last_plugin_handler = new_plugin_handler;
     }
     else
         gui_printf (NULL,
                     _("%s unable to add handler for \"%s\" message (not enough memory)\n"),
-                    WEECHAT_ERROR, message);
+                    WEECHAT_ERROR, name);
 }
 
 /*
- * plugins_msg_handler_free: free message handler
+ * plugin_handler_free: free message/command handler
  */
 
 void
-plugins_msg_handler_free (t_plugin_handler *ptr_plugin_handler)
+plugin_handler_free (t_plugin_handler **plugin_handlers,
+                     t_plugin_handler **last_plugin_handler,
+                     t_plugin_handler *ptr_plugin_handler)
 {
-    t_plugin_handler *new_plugins_msg_handlers;
+    t_plugin_handler *new_plugin_handlers;
     
     /* remove handler from list */
-    if (last_plugin_msg_handler == ptr_plugin_handler)
-        last_plugin_msg_handler = ptr_plugin_handler->prev_handler;
+    if (*last_plugin_handler == ptr_plugin_handler)
+        *last_plugin_handler = ptr_plugin_handler->prev_handler;
     if (ptr_plugin_handler->prev_handler)
     {
         (ptr_plugin_handler->prev_handler)->next_handler = ptr_plugin_handler->next_handler;
-        new_plugins_msg_handlers = plugins_msg_handlers;
+        new_plugin_handlers = *plugin_handlers;
     }
     else
-        new_plugins_msg_handlers = ptr_plugin_handler->next_handler;
+        new_plugin_handlers = ptr_plugin_handler->next_handler;
     
     if (ptr_plugin_handler->next_handler)
         (ptr_plugin_handler->next_handler)->prev_handler = ptr_plugin_handler->prev_handler;
@@ -163,34 +188,36 @@ plugins_msg_handler_free (t_plugin_handler *ptr_plugin_handler)
     free (ptr_plugin_handler->name);
     free (ptr_plugin_handler->function_name);
     free (ptr_plugin_handler);
-    plugins_msg_handlers = new_plugins_msg_handlers;
+    *plugin_handlers = new_plugin_handlers;
 }
 
 /*
- * plugins_remove_all_msg_handlers: remove all message handlers
+ * plugin_handler_free_all: remove all message/command handlers
  */
 
 void
-plugins_msg_handlers_free_all ()
+plugin_handler_free_all (t_plugin_handler **plugin_handlers,
+                         t_plugin_handler **last_plugin_handler)
 {
-    while (plugins_msg_handlers)
-        plugins_msg_handler_free (plugins_msg_handlers);
+    while (*plugin_handlers)
+        plugin_handler_free (plugin_handlers, last_plugin_handler,
+                             *plugin_handlers);
 }
 
 /*
- * plugins_event_msg: IRC message received => call all handlers for this message
+ * plugin_event_msg: IRC message received => call all handlers for this message
  */
 
 void
-plugins_event_msg (char *command, char *arguments)
+plugin_event_msg (char *irc_command, char *arguments)
 {
     #ifdef PLUGINS
     t_plugin_handler *ptr_plugin_handler;
     
-    for (ptr_plugin_handler = plugins_msg_handlers; ptr_plugin_handler;
+    for (ptr_plugin_handler = plugin_msg_handlers; ptr_plugin_handler;
          ptr_plugin_handler = ptr_plugin_handler->next_handler)
     {
-        if (strcasecmp (ptr_plugin_handler->name, command) == 0)
+        if (strcasecmp (ptr_plugin_handler->name, irc_command) == 0)
         {
             #ifdef PLUGIN_PERL
             if (ptr_plugin_handler->plugin_type == PLUGIN_PERL)
@@ -200,18 +227,54 @@ plugins_event_msg (char *command, char *arguments)
     }
     #else
     /* make gcc happy */
-    (void) command;
+    (void) irc_command;
+    (void) arguments;
     #endif
 }
 
 /*
- * plugins_end: shutdown plugin interface
+ * plugin_exec_command: execute a command handler
+ */
+
+int
+plugin_exec_command (char *user_command, char *arguments)
+{
+    #ifdef PLUGINS
+    t_plugin_handler *ptr_plugin_handler;
+    
+    for (ptr_plugin_handler = plugin_cmd_handlers; ptr_plugin_handler;
+         ptr_plugin_handler = ptr_plugin_handler->next_handler)
+    {
+        if (strcasecmp (ptr_plugin_handler->name, user_command) == 0)
+        {
+            #ifdef PLUGIN_PERL
+            if (ptr_plugin_handler->plugin_type == PLUGIN_PERL)
+                wee_perl_exec (ptr_plugin_handler->function_name, arguments);
+            #endif
+            
+            /* command executed */
+            return 1;
+        }
+    }
+    #else
+    /* make gcc happy */
+    (void) user_command;
+    (void) arguments;
+    #endif
+    
+    /* no command executed */
+    return 0;
+}
+
+/*
+ * plugin_end: shutdown plugin interface
  */
 
 void
-plugins_end ()
+plugin_end ()
 {
-    plugins_msg_handlers_free_all ();
+    plugin_handler_free_all (&plugin_msg_handlers, &last_plugin_msg_handler);
+    plugin_handler_free_all (&plugin_cmd_handlers, &last_plugin_cmd_handler);
     
     #ifdef PLUGIN_PERL
     wee_perl_end();

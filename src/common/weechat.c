@@ -273,7 +273,7 @@ main (int argc, char *argv[])
     gui_init ();
     
     /* init plugin interface(s) */
-    plugins_init ();
+    plugin_init ();
     
     /* Welcome message - yeah! */
     if (cfg_look_startup_logo)
@@ -324,7 +324,7 @@ main (int argc, char *argv[])
     gui_main_loop ();
     
     /* end plugin interface(s) */
-    plugins_end ();
+    plugin_end ();
     
     /* disconnect from all servers */
     server_disconnect_all ();
