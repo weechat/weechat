@@ -465,6 +465,7 @@ int cfg_irc_display_away;
 char *cfg_irc_default_msg_away;
 char *cfg_irc_default_msg_part;
 char *cfg_irc_default_msg_quit;
+int cfg_irc_away_check;
 int cfg_irc_lag_check;
 int cfg_irc_lag_min_show;
 int cfg_irc_lag_disconnect;
@@ -486,6 +487,10 @@ t_config_option weechat_options_irc[] =
     N_("default quit message ('%v' will be replaced by WeeChat version in string)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "WeeChat %v", NULL, NULL, &cfg_irc_default_msg_quit, config_change_noop },
+  { "irc_away_check", N_("interval between two checks for away"),
+    N_("interval between two checks for away (in minutes, 0 = never check)"),
+    OPTION_TYPE_INT, 0, INT_MAX, 1,
+    NULL, NULL, &cfg_irc_away_check, NULL, config_change_away_check },
   { "irc_lag_check", N_("interval between two checks for lag"),
     N_("interval between two checks for lag (in seconds)"),
     OPTION_TYPE_INT, 30, INT_MAX, 60,
@@ -749,9 +754,24 @@ config_change_buffer_content ()
  */
 
 void
-config_change_color()
+config_change_color ()
 {
     gui_init_colors ();
+}
+
+/*
+ * config_change_away_check: called when away check is changed
+ */
+
+void
+config_change_away_check ()
+{
+    check_away = 0;
+    if (cfg_irc_away_check == 0)
+    {
+        /* reset away flag for all nicks/chans/servers */
+        server_remove_away ();
+    }
 }
 
 /*

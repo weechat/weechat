@@ -3011,7 +3011,8 @@ irc_cmd_recv_366 (t_irc_server *server, char *host, char *arguments)
                 gui_printf_color (ptr_channel->buffer,
                                   COLOR_WIN_CHAT_DARK, ")\n");
                 irc_cmd_send_mode (server, ptr_channel->name);
-                channel_check_away (server, ptr_channel);
+                if (cfg_irc_away_check > 0)
+                    channel_check_away (server, ptr_channel);
             }
             else
             {

@@ -1,12 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-02-01
+ChangeLog - 2005-02-05
 
 
 Version 0.1.0 (under dev!):
-   * away nicks are now displayed with another color
-   * added away indicator
+   * away nicks are now displayed with another color (new option: "irc_away_check")
+   * added away indicator in status bar
    * added lag indicator (and auto-disconnect after a delay if important lag)
    * improved completion: now completes commands arguments (IRC and internal),
      when only one completion matches, completion mechanism is stoped (to

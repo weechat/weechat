@@ -56,8 +56,6 @@
 
 #define DEFAULT_IRC_PORT 6667
 
-#define CHECK_AWAY_DELAY 60
-
 /* DCC types & status */
 
 #define DCC_CHAT_RECV           0   /* receiving DCC chat                   */
@@ -242,6 +240,7 @@ extern void server_disconnect_all ();
 extern t_irc_server *server_search (char *);
 extern int server_get_number_connected ();
 extern int server_name_already_exists (char *);
+extern void server_remove_away ();
 extern void server_check_away ();
 extern void server_set_away (t_irc_server *, char *, int);
 
@@ -252,6 +251,7 @@ extern void channel_free (t_irc_server *, t_irc_channel *);
 extern void channel_free_all (t_irc_server *);
 extern t_irc_channel *channel_search (t_irc_server *, char *);
 extern int string_is_channel (char *);
+extern void channel_remove_away (t_irc_channel *);
 extern void channel_check_away (t_irc_server *, t_irc_channel *);
 extern void channel_set_away (t_irc_channel *, char *, int);
 

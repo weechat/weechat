@@ -933,6 +933,26 @@ server_name_already_exists (char *name)
 }
 
 /*
+ * server_remove_away: remove away for all chans/nicks (for all servers)
+ */
+
+void
+server_remove_away ()
+{
+    t_irc_server *ptr_server;
+    t_irc_channel *ptr_channel;
+    
+    for (ptr_server = irc_servers; ptr_server; ptr_server = ptr_server->next_server)
+    {
+        for (ptr_channel = ptr_server->channels; ptr_channel; ptr_channel = ptr_channel->next_channel)
+        {
+            if (ptr_channel->type == CHAT_CHANNEL)
+                channel_remove_away (ptr_channel);
+        }
+    }
+}
+
+/*
  * server_check_away: check for away on all channels (for all servers)
  */
 

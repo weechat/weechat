@@ -659,10 +659,12 @@ gui_main_loop ()
             gui_draw_buffer_infobar (gui_current_window->buffer, 1);
         }
         
-        /* second has changed ? => count down time for infobar, if needed */
+        /* second has changed ? */
         if (local_time->tm_sec != old_sec)
         {
             old_sec = local_time->tm_sec;
+            
+            /* infobar count down */
             if (gui_infobar && gui_infobar->remaining_time > 0)
             {
                 gui_infobar->remaining_time--;
@@ -672,11 +674,16 @@ gui_main_loop ()
                     gui_draw_buffer_infobar (gui_current_window->buffer, 1);
                 }
             }
-            check_away++;
-            if (check_away >= CHECK_AWAY_DELAY)
+            
+            /* away check */
+            if (cfg_irc_away_check != 0)
             {
-                check_away = 0;
-                server_check_away ();
+                check_away++;
+                if (check_away >= (cfg_irc_away_check * 60))
+                {
+                    check_away = 0;
+                    server_check_away ();
+                }
             }
         }
         

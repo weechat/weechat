@@ -156,6 +156,25 @@ string_is_channel (char *string)
 }
 
 /*
+ * channel_remove_away: remove away for all nicks on a channel
+ */
+
+void
+channel_remove_away (t_irc_channel *channel)
+{
+    t_irc_nick *ptr_nick;
+    
+    if (channel->type == CHAT_CHANNEL)
+    {
+        for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
+        {
+            ptr_nick->is_away = 0;
+        }
+        gui_draw_buffer_nick (channel->buffer, 0);
+    }
+}
+
+/*
  * channel_check_away: check for away on a channel
  */
 
