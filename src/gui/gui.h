@@ -65,13 +65,6 @@
 #define WIN_IS_CHANNEL(window) (CHANNEL(window) && (CHANNEL(window)->type == CHAT_CHANNEL))
 #define WIN_IS_PRIVATE(window) (CHANNEL(window) && (CHANNEL(window)->type == CHAT_PRIVATE))
 
-#ifdef WEE_CURSES
-    //#define WIN_HAS_NICKLIST(window) (window->win_nick)
-#endif
-#ifdef WEE_GTK
-    //#define WIN_HAS_NICKLIST(window) (window->textbuffer_nicklist)
-#endif
-
 #define MSG_TYPE_TIME  0
 #define MSG_TYPE_NICK  1
 #define MSG_TYPE_INFO  2
@@ -149,16 +142,11 @@ struct t_gui_window
     void *win_input;                /* input window                         */
     
     /* windows for Curses GUI */
-    //GtkWidget *textview_chat;           /* textview widget for chat         */
-    //GtkTextBuffer *textbuffer_chat;     /* textbuffer widget for chat       */
-    //GtkTextTag *texttag_chat;           /* texttag widget for chat          */
-    //GtkWidget *textview_nicklist;       /* textview widget for nicklist     */
-    //GtkTextBuffer *textbuffer_nicklist; /* textbuffer widget for nicklist   */
-    void *textview_chat;           /* textview widget for chat         */
-    void *textbuffer_chat;     /* textbuffer widget for chat       */
-    void *texttag_chat;           /* texttag widget for chat          */
-    void *textview_nicklist;       /* textview widget for nicklist     */
-    void *textbuffer_nicklist; /* textbuffer widget for nicklist   */
+    void *textview_chat;            /* textview widget for chat             */
+    void *textbuffer_chat;          /* textbuffer widget for chat           */
+    void *texttag_chat;             /* texttag widget for chat              */
+    void *textview_nicklist;        /* textview widget for nicklist         */
+    void *textbuffer_nicklist;      /* textbuffer widget for nicklist       */
     
     /* windows for Curses GUI */
     /* TODO: declare Qt window */

@@ -61,29 +61,21 @@ RUBY_CFLAGS=
 enable_debug=no
 DEBUG_CFLAGS=
 
-
 AM_CONDITIONAL(GUI_CURSES, test "$enable_curses" = "yes")
 AM_CONDITIONAL(GUI_GTK,    test "$enable_gtk" = "yes")
 AM_CONDITIONAL(GUI_QT,     test "$enable_qt" = "yes")
 
-#if test "x$enable_gtk" = "xyes" ; then
-#    AM_PATH_GTK_2_0(2.0.0, havegtk=yes, havegtk=no)
-#    if test "$havegtk" = no; then
-#        enable_gtk="no"
-#        echo
-#        echo Cannot find Gtk+\! Not building Gtk+ interface...
-#        echo
-#    fi
-#fi
+if test "x$enable_curses" = "xyes" ; then
+    CURSES_LIBS=-lcurses
+    AC_SUBST(CURSES_LIBS)
+fi
 
-CURSES_LIBS=-lcurses
-
-GTK_CFLAGS=`pkg-config --cflags gtk+-2.0`
-GTK_LIBS=`pkg-config --libs gtk+-2.0`
-
-AC_SUBST(CURSES_LIBS)
-AC_SUBST(GTK_CFLAGS)
-AC_SUBST(GTK_LIBS)
+if test "x$enable_gtk" = "xyes" ; then
+    GTK_CFLAGS=`pkg-config --cflags gtk+-2.0`
+    GTK_LIBS=`pkg-config --libs gtk+-2.0`
+    AC_SUBST(GTK_CFLAGS)
+    AC_SUBST(GTK_LIBS)
+fi
 
 CFLAGS="-Wall -W -pipe -O2"
 
