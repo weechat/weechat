@@ -29,6 +29,7 @@
 #include <string.h>
 #include <stdarg.h>
 #include <fcntl.h>
+#include <time.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -355,6 +356,7 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
     new_dcc->channel = NULL;
     new_dcc->type = type;
     new_dcc->status = DCC_WAITING;
+    new_dcc->start_time = time (NULL);
     new_dcc->addr = addr;
     new_dcc->port = port;
     new_dcc->nick = strdup (nick);

@@ -675,7 +675,8 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
     char *unit_format[] = { "%.0Lf", "%.1Lf", "%.02Lf", "%.02Lf" };
     long unit_divide[] = { 1, 1024, 1024*1024, 1024*1024,1024 };
     int num_unit;
-    char format[32];
+    char format[32], date[128];
+    struct tm *date_tmp;
     
     if (!gui_ok)
         return;
@@ -736,11 +737,11 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                              _(dcc_status_string[ptr_dcc->status]));
                     
                     /* other infos */
+                    gui_window_set_color (ptr_win->win_chat,
+                                          (ptr_dcc == dcc_selected) ?
+                                          COLOR_DCC_SELECTED : COLOR_WIN_CHAT);
                     if (DCC_IS_FILE(ptr_dcc->type))
                     {
-                        gui_window_set_color (ptr_win->win_chat,
-                                              (ptr_dcc == dcc_selected) ?
-                                              COLOR_DCC_SELECTED : COLOR_WIN_CHAT);
                         wprintw (ptr_win->win_chat, "  [");
                         if (ptr_dcc->size == 0)
                             num_bars = 10;
@@ -770,9 +771,13 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                                  unit_name[num_unit],
                                  ((long double) ptr_dcc->size) / ((long double)(unit_divide[num_unit])),
                                  unit_name[num_unit]);
+                        wclrtoeol (ptr_win->win_chat);
                     }
                     else
                     {
+                        date_tmp = localtime (&(ptr_dcc->start_time));
+                        strftime (date, sizeof (date) - 1, "%a, %d %b %Y %H:%M:%S", date_tmp);
+                        wprintw (ptr_win->win_chat, "  %s", date);
                         wclrtoeol (ptr_win->win_chat);
                     }
                     

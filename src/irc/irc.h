@@ -210,6 +210,7 @@ struct t_irc_dcc
     t_irc_channel *channel;         /* irc channel (for DCC chat only)      */
     int type;                       /* DCC type (send or receive)           */
     int status;                     /* DCC status (waiting, sending, ..)    */
+    time_t start_time;              /* the time when DCC started            */
     unsigned long addr;             /* IP address                           */
     int port;                       /* port                                 */
     char *nick;                     /* remote nick                          */
