@@ -34,8 +34,8 @@
 
 #include "../common/weechat.h"
 #include "gui.h"
-#include "../../common/weeconfig.h"
-#include "../../common/hotlist.h"
+#include "../common/weeconfig.h"
+#include "../common/hotlist.h"
 #include "../irc/irc.h"
 
 
