@@ -1160,11 +1160,11 @@ weechat_cmd_server (int argc, char **argv)
         {
             if (argv[i][0] == '-')
             {
-                if (strcasecmp (argv[0], "-auto") == 0)
+                if (strcasecmp (argv[i], "-auto") == 0)
                     server.autoconnect = 1;
-                if (strcasecmp (argv[0], "-noauto") == 0)
+                if (strcasecmp (argv[i], "-noauto") == 0)
                     server.autoconnect = 0;
-                if (strcasecmp (argv[0], "-pwd") == 0)
+                if (strcasecmp (argv[i], "-pwd") == 0)
                 {
                     if (i == (argc - 1))
                     {
@@ -1176,7 +1176,7 @@ weechat_cmd_server (int argc, char **argv)
                     }
                     server.password = strdup (argv[++i]);
                 }
-                if (strcasecmp (argv[0], "-nicks") == 0)
+                if (strcasecmp (argv[i], "-nicks") == 0)
                 {
                     if (i >= (argc - 3))
                     {
@@ -1190,7 +1190,7 @@ weechat_cmd_server (int argc, char **argv)
                     server.nick2 = strdup (argv[++i]);
                     server.nick3 = strdup (argv[++i]);
                 }
-                if (strcasecmp (argv[0], "-username") == 0)
+                if (strcasecmp (argv[i], "-username") == 0)
                 {
                     if (i == (argc - 1))
                     {
@@ -1202,7 +1202,7 @@ weechat_cmd_server (int argc, char **argv)
                     }
                     server.username = strdup (argv[++i]);
                 }
-                if (strcasecmp (argv[0], "-realname") == 0)
+                if (strcasecmp (argv[i], "-realname") == 0)
                 {
                     if (i == (argc - 1))
                     {
@@ -1214,7 +1214,7 @@ weechat_cmd_server (int argc, char **argv)
                     }
                     server.realname = strdup (argv[++i]);
                 }
-                if (strcasecmp (argv[0], "-command") == 0)
+                if (strcasecmp (argv[i], "-command") == 0)
                 {
                     if (i == (argc - 1))
                     {
@@ -1226,7 +1226,7 @@ weechat_cmd_server (int argc, char **argv)
                     }
                     server.command = strdup (argv[++i]);
                 }
-                if (strcasecmp (argv[0], "-autojoin") == 0)
+                if (strcasecmp (argv[i], "-autojoin") == 0)
                 {
                     if (i == (argc - 1))
                     {
