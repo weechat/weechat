@@ -66,6 +66,8 @@ server_init (t_irc_server *server)
     server->nick3 = NULL;
     server->username = NULL;
     server->realname = NULL;
+    server->command = NULL;
+    server->autojoin = NULL;
     server->nick = NULL;
     server->is_connected = 0;
     server->sock4 = -1;
@@ -137,6 +139,10 @@ server_destroy (t_irc_server *server)
         free (server->username);
     if (server->realname)
         free (server->realname);
+    if (server->command)
+        free (server->command);
+    if (server->autojoin)
+        free (server->autojoin);
     if (server->nick)
         free (server->nick);
     if (server->channels)
@@ -153,6 +159,8 @@ server_free (t_irc_server *server)
     t_irc_server *new_irc_servers;
 
     /* remove server from queue */
+    if (last_irc_server == server)
+        last_irc_server = server->prev_server;
     if (server->prev_server)
     {
         (server->prev_server)->next_server = server->next_server;
@@ -190,7 +198,7 @@ server_free_all ()
 t_irc_server *
 server_new (char *name, int autoconnect, char *address, int port,
             char *password, char *nick1, char *nick2, char *nick3,
-            char *username, char *realname)
+            char *username, char *realname, char *command, char *autojoin)
 {
     t_irc_server *new_server;
     
@@ -199,10 +207,12 @@ server_new (char *name, int autoconnect, char *address, int port,
     
     #if DEBUG >= 1
     log_printf ("creating new server (name:%s, address:%s, port:%d, pwd:%s, "
-                "nick1:%s, nick2:%s, nick3:%s, username:%s, realname:%s)\n",
+                "nick1:%s, nick2:%s, nick3:%s, username:%s, realname:%s, "
+                "command:%s, autojoin:%s)\n",
                 name, address, port, (password) ? password : "",
                 (nick1) ? nick1 : "", (nick2) ? nick2 : "", (nick3) ? nick3 : "",
-                (username) ? username : "", (realname) ? realname : "");
+                (username) ? username : "", (realname) ? realname : "",
+                (command) ? command : "", (autojoin) ? autojoin : "");
     #endif
     
     if ((new_server = server_alloc ()))
@@ -219,6 +229,8 @@ server_new (char *name, int autoconnect, char *address, int port,
             (username) ? strdup (username) : strdup ("weechat");
         new_server->realname =
             (realname) ? strdup (realname) : strdup ("realname");
+        new_server->command = command;
+        new_server->autojoin = autojoin;
         new_server->nick = strdup (new_server->nick1);
     }
     else

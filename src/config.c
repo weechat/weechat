@@ -484,6 +484,14 @@ t_config_option weechat_options_server[] =
     N_("real name to use on IRC server"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "", NULL, NULL, &(cfg_server.realname), NULL },
+  { "server_command", N_("first command to run when connected to server"),
+    N_("first command to run when connected to server"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    "", NULL, NULL, &(cfg_server.command), NULL },
+  { "server_autojoin", N_("list of channels to join when connected to server"),
+    N_("comma separated list of channels to join when connected to server"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    "", NULL, NULL, &(cfg_server.autojoin), NULL },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
@@ -551,7 +559,8 @@ config_allocate_server (char *filename, int line_number)
     if (!server_new (cfg_server.name,
         cfg_server.autoconnect, cfg_server.address, cfg_server.port,
         cfg_server.password, cfg_server.nick1, cfg_server.nick2,
-        cfg_server.nick3, cfg_server.username, cfg_server.realname))
+        cfg_server.nick3, cfg_server.username, cfg_server.realname,
+        cfg_server.command, cfg_server.autojoin))
     {
         server_free_all ();
         gui_printf (NULL,
@@ -1016,6 +1025,8 @@ config_create_default ()
     fputs ("server_nick3=weechat3\n", file);
     fputs ("server_username=weechat\n", file);
     fputs ("server_realname=WeeChat default realname\n", file);
+    fputs ("server_command=\n", file);
+    fputs ("server_autojoin=\n", file);
     
     fclose (file);
     free (filename);
@@ -1159,6 +1170,12 @@ config_write (char *config_name)
         sprintf (line, "server_username=%s\n", ptr_server->username);
         fputs (line, file);
         sprintf (line, "server_realname=%s\n", ptr_server->realname);
+        fputs (line, file);
+        sprintf (line, "server_command=%s\n",
+                 (ptr_server->command) ? ptr_server->command : "");
+        fputs (line, file);
+        sprintf (line, "server_autojoin=%s\n",
+                 (ptr_server->autojoin) ? ptr_server->autojoin : "");
         fputs (line, file);
     }
     

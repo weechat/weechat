@@ -59,7 +59,8 @@ t_weechat_command weechat_commands[] =
   { "server", N_("list, add or remove servers"),
     N_("[list] | "
     "[servername hostname port [-auto | -noauto] [-pwd password] [-nicks nick1 "
-    "[nick2 [nick3]]] [-username username] [-realname realname]] | "
+    "[nick2 [nick3]]] [-username username] [-realname realname] "
+    "[-command command] [-autojoin channel[,channel]] ] | "
     "[del servername]"),
     N_("servername: server name, for internal & display use\n"
     "hostname: name or IP address of server\n"
@@ -491,15 +492,17 @@ int
 exec_weechat_command (t_irc_server *server, char *string)
 {
     int i, j, argc, return_code, length1, length2;
-    char *pos, *ptr_args, **argv, *alias_command;
+    char *command, *pos, *ptr_args, **argv, *alias_command;
     t_weechat_alias *ptr_alias;
 
     if ((!string[0]) || (string[0] != '/'))
         return 0;
 
+    command = strdup (string);
+    
     /* look for end of command */
     ptr_args = NULL;
-    pos = strchr (string, ' ');
+    pos = strchr (command, ' ');
     if (pos)
     {
         pos[0] = '\0';
@@ -515,7 +518,7 @@ exec_weechat_command (t_irc_server *server, char *string)
 
     for (i = 0; weechat_commands[i].command_name; i++)
     {
-        if (strcasecmp (weechat_commands[i].command_name, string + 1) == 0)
+        if (strcasecmp (weechat_commands[i].command_name, command + 1) == 0)
         {
             if ((argc < weechat_commands[i].min_arg)
                 || (argc > weechat_commands[i].max_arg))
@@ -527,7 +530,7 @@ exec_weechat_command (t_irc_server *server, char *string)
                                 WEECHAT_NAME " command '%s' "
                                 "(expected: %d arg%s)\n"),
                                 WEECHAT_ERROR,
-                                string + 1,
+                                command + 1,
                                 weechat_commands[i].max_arg,
                                 (weechat_commands[i].max_arg >
                                  1) ? "s" : "");
@@ -537,7 +540,7 @@ exec_weechat_command (t_irc_server *server, char *string)
                                 WEECHAT_NAME " command '%s' "
                                 "(expected: between %d and %d arg%s)\n"),
                                 WEECHAT_ERROR,
-                                string + 1,
+                                command + 1,
                                 weechat_commands[i].min_arg,
                                 weechat_commands[i].max_arg,
                                 (weechat_commands[i].max_arg >
@@ -554,7 +557,7 @@ exec_weechat_command (t_irc_server *server, char *string)
                 if (return_code < 0)
                     gui_printf (NULL,
                                 _("%s " WEECHAT_NAME " command \"%s\" failed\n"),
-                                WEECHAT_ERROR, string + 1);
+                                WEECHAT_ERROR, command + 1);
             }
             if (argv)
             {
@@ -567,7 +570,7 @@ exec_weechat_command (t_irc_server *server, char *string)
     }
     for (i = 0; irc_commands[i].command_name; i++)
     {
-        if ((strcasecmp (irc_commands[i].command_name, string + 1) == 0) &&
+        if ((strcasecmp (irc_commands[i].command_name, command + 1) == 0) &&
             ((irc_commands[i].cmd_function_args) ||
             (irc_commands[i].cmd_function_1arg)))
         {
@@ -580,7 +583,7 @@ exec_weechat_command (t_irc_server *server, char *string)
                          _("%s wrong argument count for IRC command '%s' "
                          "(expected: %d arg%s)\n"),
                          WEECHAT_ERROR,
-                         string + 1,
+                         command + 1,
                          irc_commands[i].max_arg,
                          (irc_commands[i].max_arg > 1) ? "s" : "");
                 else
@@ -589,7 +592,7 @@ exec_weechat_command (t_irc_server *server, char *string)
                          _("%s wrong argument count for IRC command '%s' "
                          "(expected: between %d and %d arg%s)\n"),
                          WEECHAT_ERROR,
-                         string + 1,
+                         command + 1,
                          irc_commands[i].min_arg, irc_commands[i].max_arg,
                          (irc_commands[i].max_arg > 1) ? "s" : "");
             }
@@ -612,7 +615,7 @@ exec_weechat_command (t_irc_server *server, char *string)
                 if (return_code < 0)
                     gui_printf (NULL,
                                 _("%s IRC command \"%s\" failed\n"),
-                                WEECHAT_ERROR, string + 1);
+                                WEECHAT_ERROR, command + 1);
             }
             if (argv)
             {
@@ -626,7 +629,7 @@ exec_weechat_command (t_irc_server *server, char *string)
     for (ptr_alias = weechat_alias; ptr_alias;
          ptr_alias = ptr_alias->next_alias)
     {
-        if (strcasecmp (ptr_alias->alias_name, string + 1) == 0)
+        if (strcasecmp (ptr_alias->alias_name, command + 1) == 0)
         {
             if (ptr_args)
             {
@@ -636,11 +639,11 @@ exec_weechat_command (t_irc_server *server, char *string)
                 strcpy (alias_command, ptr_alias->alias_command);
                 alias_command[length1] = ' ';
                 strcpy (alias_command + length1 + 1, ptr_args);
+                exec_weechat_command (server, alias_command);
+                free (alias_command);
             }
             else
-                alias_command = strdup (ptr_alias->alias_command);
-            exec_weechat_command (server, alias_command);
-            free (alias_command);
+                exec_weechat_command (server, ptr_alias->alias_command);
             
             if (argv)
             {
@@ -654,7 +657,7 @@ exec_weechat_command (t_irc_server *server, char *string)
     gui_printf (NULL,
                 _("%s unknown command '%s' (type /help for help)\n"),
                 WEECHAT_ERROR,
-                string + 1);
+                command + 1);
     if (argv)
     {
         for (j = 0; argv[j]; j++)
@@ -1055,6 +1058,26 @@ weechat_cmd_server (int argc, char **argv)
                                   COLOR_WIN_CHAT,
                                   _("  Realname   : %s\n"),
                                   ptr_server->realname);
+                irc_display_prefix (NULL, PREFIX_INFO);
+                if (ptr_server->command && ptr_server->command[0])
+                    gui_printf_color (NULL,
+                                      COLOR_WIN_CHAT,
+                                      _("  Command    : %s\n"),
+                                      ptr_server->command);
+                else
+                    gui_printf_color (NULL,
+                                      COLOR_WIN_CHAT,
+                                      _("  Command    : (none)\n"));
+                irc_display_prefix (NULL, PREFIX_INFO);
+                if (ptr_server->autojoin && ptr_server->autojoin[0])
+                    gui_printf_color (NULL,
+                                      COLOR_WIN_CHAT,
+                                      _("  Auto-join  : %s\n"),
+                                      ptr_server->autojoin);
+                else
+                    gui_printf_color (NULL,
+                                      COLOR_WIN_CHAT,
+                                      _("  Auto-join  : (none)\n"));
             }
         }
         else
@@ -1191,6 +1214,30 @@ weechat_cmd_server (int argc, char **argv)
                     }
                     server.realname = strdup (argv[++i]);
                 }
+                if (strcasecmp (argv[0], "-command") == 0)
+                {
+                    if (i == (argc - 1))
+                    {
+                        gui_printf (NULL,
+                                    _("%s missing command for \"-command\" parameter\n"),
+                                    WEECHAT_ERROR);
+                        server_destroy (&server);
+                        return -1;
+                    }
+                    server.command = strdup (argv[++i]);
+                }
+                if (strcasecmp (argv[0], "-autojoin") == 0)
+                {
+                    if (i == (argc - 1))
+                    {
+                        gui_printf (NULL,
+                                    _("%s missing password for \"-autojoin\" parameter\n"),
+                                    WEECHAT_ERROR);
+                        server_destroy (&server);
+                        return -1;
+                    }
+                    server.autojoin = strdup (argv[++i]);
+                }
             }
         }
         
@@ -1198,7 +1245,8 @@ weechat_cmd_server (int argc, char **argv)
         new_server = server_new (server.name, server.autoconnect, server.address,
                                  server.port, server.password, server.nick1,
                                  server.nick2, server.nick3, server.username,
-                                 server.realname);
+                                 server.realname, server.command,
+                                 server.autojoin);
         if (new_server)
         {
             irc_display_prefix (NULL, PREFIX_INFO);

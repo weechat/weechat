@@ -5,6 +5,7 @@ ChangeLog - 2003-10-04
 
 
 Version 0.0.2 (under dev!):
+   * command & auto-join channels when connected to server
    * new commands for alias: /alias, /unalias (new section in config file)
    * config is now saved automatically when quitting WeeChat, /save command added
    * new commands for servers: /server, /connect, /disconnect

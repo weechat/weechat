@@ -2104,6 +2104,15 @@ irc_cmd_recv_004 (t_irc_server *server, char *host, char *arguments)
     server->is_connected = 1;
     gui_redraw_window_status (server->window);
     gui_redraw_window_input (server->window);
+    
+    /* execute command once connected */
+    if (server->command && server->command[0])
+        user_command(server, server->command);
+    
+    /* autojoin */
+    if (server->autojoin && server->autojoin[0])
+        return irc_cmd_send_join (server, server->autojoin);
+    
     return 0;
 }
 
