@@ -60,9 +60,9 @@
 #include "../plugins/plugins.h"
 
 
-int quit_weechat;       /* = 1 if quit request from user... why ? :'(        */
-char *weechat_home;     /* WeeChat home dir. (example: /home/toto/.weechat)  */
-FILE *weechat_log_file; /* WeeChat log file (~/.weechat/weechat.log)         */
+int quit_weechat;               /* = 1 if quit request from user... why ? :'(        */
+char *weechat_home = NULL;      /* WeeChat home dir. (example: /home/toto/.weechat)  */
+FILE *weechat_log_file = NULL;  /* WeeChat log file (~/.weechat/weechat.log)         */
 
 char *local_charset = NULL;     /* local charset, for example: ISO-8859-1    */
 
@@ -264,26 +264,26 @@ wee_parse_args (int argc, char *argv[])
             || (strcmp (argv[i], "--config") == 0))
         {
             wee_display_config_options ();
-            exit (EXIT_SUCCESS);
+            wee_shutdown (EXIT_SUCCESS);
         }
         else if ((strcmp (argv[i], "-h") == 0)
                 || (strcmp (argv[i], "--help") == 0))
         {
             printf ("\n" WEE_USAGE1, argv[0], argv[0]);
             printf ("%s", WEE_USAGE2);
-            exit (EXIT_SUCCESS);
+            wee_shutdown (EXIT_SUCCESS);
         }
         else if ((strcmp (argv[i], "-l") == 0)
                  || (strcmp (argv[i], "--license") == 0))
         {
             printf ("\n%s%s", WEE_LICENSE);
-            exit (EXIT_SUCCESS);
+            wee_shutdown (EXIT_SUCCESS);
         }
         else if ((strcmp (argv[i], "-v") == 0)
                  || (strcmp (argv[i], "--version") == 0))
         {
             printf (PACKAGE_VERSION "\n");
-            exit (EXIT_SUCCESS);
+            wee_shutdown (EXIT_SUCCESS);
         }
         else if ((strncasecmp (argv[i], "irc://", 6) == 0))
         {
@@ -358,7 +358,7 @@ wee_create_home_dirs ()
     {
         fprintf (stderr, _("%s unable to get HOME directory\n"),
                  WEECHAT_ERROR);
-        exit (EXIT_FAILURE);
+        wee_shutdown (EXIT_FAILURE);
     }
     dir_length = strlen (ptr_home) + 10;
     weechat_home =
@@ -367,7 +367,7 @@ wee_create_home_dirs ()
     {
         fprintf (stderr, _("%s not enough memory for home directory\n"),
                  WEECHAT_ERROR);
-        exit (EXIT_FAILURE);
+        wee_shutdown (EXIT_FAILURE);
     }
     snprintf (weechat_home, dir_length, "%s%s.weechat", ptr_home,
               DIR_SEPARATOR);
@@ -377,7 +377,7 @@ wee_create_home_dirs ()
     {
         fprintf (stderr, _("%s unable to create ~/.weechat directory\n"),
                  WEECHAT_ERROR);
-        exit (EXIT_FAILURE);
+        wee_shutdown (EXIT_FAILURE);
     }
     
     dir_length = strlen (weechat_home) + 64;
@@ -509,18 +509,32 @@ weechat_welcome_message ()
 }
 
 /*
- * wee_shutdown: shutdown WeeChat
+ * wee_gui_shutdown: shutdown WeeChat GUI
  */
 
 void
-wee_shutdown ()
+wee_gui_shutdown ()
 {
     dcc_end ();
     server_free_all ();
     gui_end ();
+}
+
+/*
+ * wee_shutdown: shutdown WeeChat
+ */
+
+void
+wee_shutdown (int return_code)
+{
+    if (weechat_home)
+        free (weechat_home);
     if (weechat_log_file)
         fclose (weechat_log_file);
-    exit (EXIT_SUCCESS);
+    if (local_charset)
+        free (local_charset);
+    alias_free_all ();
+    exit (return_code);
 }
 
 /*
@@ -572,7 +586,9 @@ main (int argc, char *argv[])
     plugin_end ();                  /* end plugin interface(s)              */
     server_disconnect_all ();       /* disconnect from all servers          */
     (void) config_write (NULL);     /* save config file                     */
-    wee_shutdown ();                /* quit WeeChat (oh no, why?)           */
+    command_index_free ();          /* free commands index                  */
+    wee_gui_shutdown ();            /* shut down WeeChat GUI                */
+    wee_shutdown (EXIT_SUCCESS);    /* quit WeeChat (oh no, why?)           */
     
     return EXIT_SUCCESS;            /* make gcc happy (never executed)      */
 }

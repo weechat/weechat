@@ -255,6 +255,7 @@ extern t_gui_buffer *gui_buffer_new (t_gui_window *, void *, void *, int, int);
 extern void gui_buffer_clear (t_gui_buffer *);
 extern void gui_buffer_clear_all ();
 extern void gui_infobar_printf (int, int, char *, ...);
+extern void gui_window_free (t_gui_window *);
 extern void gui_infobar_remove ();
 extern void gui_buffer_free (t_gui_buffer *, int);
 extern t_gui_line *gui_new_line (t_gui_buffer *);

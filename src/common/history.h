@@ -31,5 +31,7 @@ struct t_history
 };
 
 extern void history_add (void *, char *);
+extern void history_general_free ();
+extern void history_buffer_free (void *);
 
 #endif /* history.h */

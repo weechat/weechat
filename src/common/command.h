@@ -56,7 +56,9 @@ extern t_weelist *index_commands;
 extern t_weelist *last_index_command;
 
 extern void command_index_build ();
+extern void command_index_free ();
 extern t_weechat_alias *alias_new (char *, char *);
+extern void alias_free_all ();
 extern int exec_weechat_command (t_irc_server *, char *);
 extern void user_command (t_irc_server *, char *);
 extern int weechat_cmd_alias (char *);

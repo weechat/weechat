@@ -105,6 +105,6 @@ extern char *local_charset;
 extern char *weechat_convert_encoding (char *, char *, char *);
 extern long get_timeval_diff (struct timeval *, struct timeval *);
 extern void wee_log_printf (char *, ...);
-extern void wee_shutdown ();
+extern void wee_shutdown (int);
 
 #endif /* weechat.h */

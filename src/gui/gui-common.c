@@ -330,6 +330,26 @@ gui_infobar_printf (int time_displayed, int color, char *message, ...)
 }
 
 /*
+ * gui_window_free: delete a window
+ */
+
+void
+gui_window_free (t_gui_window *window)
+{
+    /* remove window from windows list */
+    if (window->prev_window)
+        window->prev_window->next_window = window->next_window;
+    if (window->next_window)
+        window->next_window->prev_window = window->prev_window;
+    if (gui_windows == window)
+        gui_windows = window->next_window;
+    if (last_gui_window == window)
+        last_gui_window = window->prev_window;
+    
+    free (window);
+}
+
+/*
  * gui_infobar_remove: remove last displayed message in infobar
  */
 
@@ -345,7 +365,6 @@ gui_infobar_remove ()
             free (gui_infobar->text);
         free (gui_infobar);
         gui_infobar = new_infobar;
-        gui_draw_buffer_infobar (gui_current_window->buffer, 1);
     }
 }
 
@@ -422,6 +441,8 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
         free (buffer->input_buffer);
     
     completion_free (&(buffer->completion));
+    
+    history_buffer_free (buffer);
     
     /* remove buffer from buffers list */
     if (buffer->prev_buffer)

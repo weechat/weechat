@@ -136,3 +136,50 @@ history_add (void *buffer, char *string)
         }
     }
 }
+
+/*
+ * history_general_free: free general history
+ */
+
+void
+history_general_free ()
+{
+    t_history *ptr_history;
+    
+    while (history_general)
+    {
+        ptr_history = history_general->next_history;
+        if (history_general->text)
+            free (history_general->text);
+        free (history_general);
+        history_general = ptr_history;
+    }
+    history_general = NULL;
+    history_general_last = NULL;
+    history_general_ptr = NULL;
+    num_history_general = 0;
+}
+
+
+/*
+ * history_buffer_free: free history for a buffer
+ */
+
+void
+history_buffer_free (void *buffer)
+{
+    t_history *ptr_history;
+    
+    while (((t_gui_buffer *)(buffer))->history)
+    {
+        ptr_history = ((t_gui_buffer *)(buffer))->history->next_history;
+        if (((t_gui_buffer *)(buffer))->history->text)
+            free (((t_gui_buffer *)(buffer))->history->text);
+        free (((t_gui_buffer *)(buffer))->history);
+        ((t_gui_buffer *)(buffer))->history = ptr_history;
+    }
+    ((t_gui_buffer *)(buffer))->history = NULL;
+    ((t_gui_buffer *)(buffer))->last_history = NULL;
+    ((t_gui_buffer *)(buffer))->ptr_history = NULL;
+    ((t_gui_buffer *)(buffer))->num_history = 0;
+}

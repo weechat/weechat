@@ -92,6 +92,7 @@ plugin_auto_load (int plugin_type, char *directory)
                 plugin_load (plugin_type, entry->d_name);
             }
         }
+        closedir (dir);
     }
     
     /* restore working directory */

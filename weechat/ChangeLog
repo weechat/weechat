@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-01-27
+ChangeLog - 2005-02-01
 
 
 Version 0.1.0 (under dev!):
@@ -11,11 +11,6 @@ Version 0.1.0 (under dev!):
    * improved completion: now completes commands arguments (IRC and internal),
      when only one completion matches, completion mechanism is stoped (to
      complete command arg for example)
-   * fixed colors bug: removed "gray" color (replaced by "default"), colors are
-     ok when terminal has white (or light) background
-   * fixed crash when multiple servers and big messages received from server
-   * fixed crash when closing some private buffers
-   * fixed crash when unknown section with option(s) in config file
    * improved /set command: empty strings are allowed, new colors, server
      options can be changed while WeeChat is running
    * added default away/part/quit messages in config file
@@ -23,6 +18,12 @@ Version 0.1.0 (under dev!):
      "irc_display_away"
    * server messages & errors are all prefixed (by 3 chars, like '-@-')
    * added new options for charset: look_charset_decode and look_charset_encode
+   * fixed many memory leaks
+   * fixed colors bug: removed "gray" color (replaced by "default"), colors are
+     ok when terminal has white (or light) background
+   * fixed crash when multiple servers and big messages received from server
+   * fixed crash when closing some private buffers
+   * fixed crash when unknown section with option(s) in config file
    * fixed /op, /deop, /voice, /devoice (now ok with many nicks)
    * fixed /me command (now ok without parameter)
    * fixed /away command (now ok if not away)

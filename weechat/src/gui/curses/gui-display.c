@@ -1947,6 +1947,19 @@ gui_end ()
         gui_buffer_free (gui_buffers, 0);
     }
     
+    /* delete all windows */
+    while (gui_windows)
+    {
+        gui_window_free (gui_windows);
+    }
+    
+    /* delete general history */
+    history_general_free ();
+    
+    /* delete infobar messages */
+    while (gui_infobar)
+        gui_infobar_remove ();
+    
     /* end of curses output */
     refresh ();
     endwin ();

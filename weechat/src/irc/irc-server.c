@@ -596,6 +596,9 @@ server_msgq_flush ()
                                     WEECHAT_ERROR, command, args);
                         break;
                 }
+                
+                if (command)
+                    free (command);
             }
             
             free (entire_line);

@@ -146,6 +146,19 @@ command_index_build ()
 }
 
 /*
+ * command_index_free: remove all commands in index
+ */
+
+void
+command_index_free ()
+{
+    while (index_commands)
+    {
+        weelist_remove (&index_commands, &last_index_command, index_commands);
+    }
+}
+
+/*
  * alias_search: search an alias
  */
 
@@ -304,6 +317,17 @@ alias_free (t_weechat_alias *alias)
         free (alias->alias_command);
     free (alias);
     weechat_alias = new_weechat_alias;
+}
+
+/*
+ * alias_free_all: free all alias
+ */
+
+void
+alias_free_all ()
+{
+    while (weechat_alias)
+        alias_free (weechat_alias);
 }
 
 /*

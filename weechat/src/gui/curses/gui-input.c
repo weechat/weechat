@@ -89,6 +89,7 @@ gui_read_keyb ()
             /* remove last infobar message */
             case KEY_F(10):
                 gui_infobar_remove ();
+                gui_draw_buffer_infobar (gui_current_window->buffer, 1);
                 break;
             /* cursor up */
             case KEY_UP:
@@ -666,7 +667,10 @@ gui_main_loop ()
             {
                 gui_infobar->remaining_time--;
                 if (gui_infobar->remaining_time == 0)
+                {
                     gui_infobar_remove ();
+                    gui_draw_buffer_infobar (gui_current_window->buffer, 1);
+                }
             }
             check_away++;
             if (check_away >= CHECK_AWAY_DELAY)
