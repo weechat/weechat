@@ -90,10 +90,6 @@ t_irc_server *
 server_alloc ()
 {
     t_irc_server *new_server;
-
-    #if DEBUG >= 1
-    log_printf ("allocating new server\n");
-    #endif
     
     /* alloc memory for new server */
     if ((new_server = (t_irc_server *) malloc (sizeof (t_irc_server))) == NULL)
@@ -208,7 +204,7 @@ server_new (char *name, int autoconnect, char *address, int port,
     if (!name || !address || (port < 0))
         return NULL;
     
-    #if DEBUG >= 1
+    #ifdef DEBUG
     log_printf ("creating new server (name:%s, address:%s, port:%d, pwd:%s, "
                 "nick1:%s, nick2:%s, nick3:%s, username:%s, realname:%s, "
                 "command:%s, autojoin:%s)\n",
@@ -281,7 +277,7 @@ server_sendf (t_irc_server * server, char *fmt, ...)
     if ((size_buf < 0) || (size_buf > (int) (sizeof (buffer) - 1)))
         size_buf = strlen (buffer);
     buffer[size_buf - 2] = '\0';
-    #if DEBUG >= 2
+    #ifdef DEBUG
     gui_printf (server->window, "[DEBUG] Sending to server >>> %s\n", buffer);
     #endif
     buffer[size_buf - 2] = '\r';
@@ -376,7 +372,7 @@ server_msgq_flush ()
     /* TODO: optimize this function, parse only a few messages (for low CPU time!) */
     while (recv_msgq)
     {
-        #if DEBUG >= 2
+        #ifdef DEBUG
         gui_printf (gui_current_window, "[DEBUG] %s\n", recv_msgq->data);
         #endif
 
@@ -387,7 +383,7 @@ server_msgq_flush ()
         
         if (ptr_data)
         {
-            #if DEBUG >= 2
+            #ifdef DEBUG
             gui_printf (NULL, "[DEBUG] data received from server: %s\n", ptr_data);
             #endif
             

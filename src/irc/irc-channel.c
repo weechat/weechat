@@ -44,10 +44,6 @@ t_irc_channel *
 channel_new (t_irc_server *server, int channel_type, char *channel_name)
 {
     t_irc_channel *new_channel;
-
-    #if DEBUG >= 1
-    log_printf ("joining channel %s\n", channel_name);
-    #endif
     
     /* alloc memory for new channel */
     if ((new_channel = (t_irc_channel *) malloc (sizeof (t_irc_channel))) == NULL)

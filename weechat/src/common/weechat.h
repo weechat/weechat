@@ -51,9 +51,6 @@
 #define WEECHAT_ERROR   _(PACKAGE_NAME " Error:")
 #define WEECHAT_WARNING _(PACKAGE_NAME " Warning:")
 
-/* debug mode, 0=normal use, 1=some debug msg, 2=full debug (developers only) */
-#define DEBUG           0
-
 /* log file */
 
 #define WEECHAT_LOG_NAME "weechat.log"
