@@ -50,10 +50,6 @@ t_irc_message *recv_msgq, *msgq_last_msg;
 
 int check_away = 0;
 
-/* buffer containing beginning of message if not ending with \r\n */
-char *unterminated_message = NULL;
-
-
 /*
  * server_init: init server struct with default values
  */
@@ -77,6 +73,7 @@ server_init (t_irc_server *server)
     server->command = NULL;
     server->command_delay = 1;
     server->autojoin = NULL;
+    server->unterminated_message = NULL;
     server->nick = NULL;
     server->is_connected = 0;
     server->reconnect_start = 0;
@@ -427,9 +424,9 @@ server_msgq_add_msg (t_irc_server *server, char *msg)
         return;
     }
     message->server = server;
-    if (unterminated_message)
+    if (server->unterminated_message)
     {
-        message->data = (char *) malloc (strlen (unterminated_message) +
+        message->data = (char *) malloc (strlen (server->unterminated_message) +
                                          strlen (msg) + 1);
         if (!message->data)
         {
@@ -440,11 +437,11 @@ server_msgq_add_msg (t_irc_server *server, char *msg)
         }
         else
         {
-            strcpy (message->data, unterminated_message);
+            strcpy (message->data, server->unterminated_message);
             strcat (message->data, msg);
         }
-        free (unterminated_message);
-        unterminated_message = NULL;
+        free (server->unterminated_message);
+        server->unterminated_message = NULL;
     }
     else
         message->data = strdup (msg);
@@ -467,7 +464,7 @@ server_msgq_add_msg (t_irc_server *server, char *msg)
  */
 
 void
-server_msgq_add_buffer (t_irc_server * server, char *buffer)
+server_msgq_add_buffer (t_irc_server *server, char *buffer)
 {
     char *pos;
 
@@ -494,10 +491,10 @@ server_msgq_add_buffer (t_irc_server * server, char *buffer)
                 pos = strchr (buffer, '\0');
                 if (pos)
                 {
-                    unterminated_message =
-                        (char *) realloc (unterminated_message,
+                    server->unterminated_message =
+                        (char *) realloc (server->unterminated_message,
                                           strlen (buffer) + 1);
-                    if (!unterminated_message)
+                    if (!server->unterminated_message)
                     {
                         irc_display_prefix (server->buffer, PREFIX_ERROR);
                         gui_printf (server->buffer,
@@ -505,7 +502,7 @@ server_msgq_add_buffer (t_irc_server * server, char *buffer)
                                     WEECHAT_ERROR);
                     }
                     else
-                        strcpy (unterminated_message, buffer);
+                        strcpy (server->unterminated_message, buffer);
                     return;
                 }
                 irc_display_prefix (server->buffer, PREFIX_ERROR);
@@ -840,6 +837,7 @@ server_disconnect (t_irc_server *server, int reconnect)
         close (server->sock4);
     server->sock4 = -1;
     
+    server->unterminated_message = NULL;
     server->is_connected = 0;
     server->is_away = 0;
     server->away_time = 0;

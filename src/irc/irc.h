@@ -138,6 +138,7 @@ struct t_irc_server
     int autorejoin;                 /* auto rejoin channels when kicked     */
     
     /* internal vars */
+    char *unterminated_message;     /* beginning of a message in input buf  */
     char *nick;                     /* current nickname                     */
     int is_connected;               /* 1 if WeeChat is connected to server  */
     time_t reconnect_start;         /* this time + delay = reconnect time   */
