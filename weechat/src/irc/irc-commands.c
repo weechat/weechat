@@ -298,6 +298,7 @@ t_irc_command irc_commands[] =
   { "303", N_("ison"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_303 },
   { "305", N_("unaway"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_305 },
   { "306", N_("now away"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_306 },
+  { "307", N_("whois (registered nick)"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_307 },
   { "311", N_("whois (user)"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_311 },
   { "312", N_("whois (server)"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_312 },
   { "313", N_("whois (operator)"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_313 },

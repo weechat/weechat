@@ -1,8 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-03-20
+ChangeLog - 2005-03-21
 
+
+Version 0.1.2 (under dev!):
+   * added missing IRC commands (307)
 
 Version 0.1.1 (2005-03-20):
    * added nicks count for channel buffers

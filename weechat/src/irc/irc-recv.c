@@ -1995,6 +1995,48 @@ irc_cmd_recv_306 (t_irc_server *server, char *host, char *arguments)
 }
 
 /*
+ * irc_cmd_recv_307: '307' command (whois, registered nick)
+ */
+
+int
+irc_cmd_recv_307 (t_irc_server *server, char *host, char *arguments)
+{
+    char *pos_nick, *pos_msg;
+    
+    /* make gcc happy */
+    (void) host;
+    
+    pos_nick = strchr (arguments, ' ');
+    if (pos_nick)
+    {
+        while (pos_nick[0] == ' ')
+            pos_nick++;
+        pos_msg = strchr (pos_nick, ' ');
+        if (pos_msg)
+        {
+            pos_msg[0] = '\0';
+            pos_msg++;
+            while (pos_msg[0] == ' ')
+                pos_msg++;
+            if (pos_msg[0] == ':')
+                pos_msg++;
+            
+            irc_display_prefix (server->buffer, PREFIX_SERVER);
+            gui_printf_color (server->buffer,
+                              COLOR_WIN_CHAT_DARK, "[");
+            gui_printf_color (server->buffer,
+                              COLOR_WIN_CHAT_NICK, "%s", pos_nick);
+            gui_printf_color (server->buffer,
+                              COLOR_WIN_CHAT_DARK, "] ");
+            gui_printf_color (server->buffer,
+                              COLOR_WIN_CHAT, "%s\n",
+                              pos_msg);
+        }
+    }
+    return 0;
+}
+
+/*
  * irc_cmd_recv_311: '311' command (whois, user)
  */
 
