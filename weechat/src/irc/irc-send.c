@@ -622,7 +622,7 @@ irc_cmd_send_op (t_irc_server *server, int argc, char **argv)
 int
 irc_cmd_send_oper (t_irc_server *server, char *arguments)
 {
-    server_sendf (server, "OPER %s %s\r\n", arguments);
+    server_sendf (server, "OPER %s\r\n", arguments);
     return 0;
 }
 
