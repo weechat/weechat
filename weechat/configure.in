@@ -29,8 +29,12 @@ AC_PROG_CC
 AC_PROG_MAKE_SET
 AC_PROG_RANLIB
 
+# Gettext
+ALL_LINGUAS="fr"
+AM_GNU_GETTEXT
+
 # Checks for libraries.
-# AC_CHECK_LIB([curses], [initscr])
+AC_CHECK_LIB([curses], [initscr], LIBCURSES_FOUND=1, LIBCURSES_FOUND=0)
 
 # Checks for header files.
 AC_HEADER_STDC
@@ -66,11 +70,17 @@ AM_CONDITIONAL(GUI_GTK,    test "$enable_gtk" = "yes")
 AM_CONDITIONAL(GUI_QT,     test "$enable_qt" = "yes")
 
 if test "x$enable_curses" = "xyes" ; then
+    if test "$LIBCURSES_FOUND" = "0" ; then
+        AC_MSG_ERROR([Curses library not found! Install Curses library or run ./configure with --disable-curses parameter.])
+    fi
     CURSES_LIBS=-lcurses
     AC_SUBST(CURSES_LIBS)
 fi
 
 if test "x$enable_gtk" = "xyes" ; then
+    #if test "$LIBGTK_FOUND" = "0" ; then
+    #    AC_MSG_ERROR([Gtk+ library not found! Install Gtk+ (2.0 or higher) library or run ./configure without --enable-gtk parameter.])
+    #fi
     GTK_CFLAGS=`pkg-config --cflags gtk+-2.0`
     GTK_LIBS=`pkg-config --libs gtk+-2.0`
     AC_SUBST(GTK_CFLAGS)
@@ -86,7 +96,9 @@ AC_OUTPUT([Makefile
            src/gui/Makefile
            src/gui/curses/Makefile
            src/gui/gtk/Makefile
-           src/gui/qt/Makefile])
+           src/gui/qt/Makefile
+           intl/Makefile
+           po/Makefile.in])
 
 echo
 echo $PACKAGE $VERSION
