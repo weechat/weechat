@@ -326,9 +326,9 @@ gui_draw_buffer_title (t_gui_buffer *buffer, int erase)
                 wrefresh (ptr_win->win_title);
                 refresh ();
             }
+            snprintf (format, 32, "%%-%ds", ptr_win->win_width);
             if (CHANNEL(buffer))
             {
-                snprintf (format, 32, "%%-%ds", ptr_win->win_width);
                 if (CHANNEL(buffer)->topic)
                 {
                     buf = weechat_convert_encoding (cfg_look_charset_decode,
@@ -344,8 +344,9 @@ gui_draw_buffer_title (t_gui_buffer *buffer, int erase)
                 {
                     /* TODO: change this copyright as title? */
                     mvwprintw (ptr_win->win_title, 0, 0,
-                               "%s",
-                               PACKAGE_STRING " " WEECHAT_COPYRIGHT_DATE " - " WEECHAT_WEBSITE);
+                               format,
+                               PACKAGE_STRING " " WEECHAT_COPYRIGHT_DATE " - "
+                               WEECHAT_WEBSITE);
                 }
             }
             wrefresh (ptr_win->win_title);
