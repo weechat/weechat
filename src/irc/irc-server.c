@@ -208,15 +208,15 @@ server_new (char *name, int autoconnect, char *address, int port,
 {
     t_irc_server *new_server;
     
-    if (!name || !address || (port < 0) || !nick1 || !nick2 || !nick3
-        || !username || !realname)
+    if (!name || !address || (port < 0))
         return NULL;
     
     #if DEBUG >= 1
     log_printf ("creating new server (name:%s, address:%s, port:%d, pwd:%s, "
                 "nick1:%s, nick2:%s, nick3:%s, username:%s, realname:%s)\n",
-                name, address, port, password, nick1, nick2, nick3,
-                username, realname);
+                name, address, port, (password) ? password : "",
+                (nick1) ? nick1 : "", (nick2) ? nick2 : "", (nick3) ? nick3 : "",
+                (username) ? username : "", (realname) ? realname : "");
     #endif
     
     if ((new_server = server_alloc ()))
@@ -576,12 +576,24 @@ server_connect (t_irc_server *server)
 void
 server_disconnect (t_irc_server *server)
 {
+    t_irc_channel *ptr_channel;
+    
     if (server->is_connected)
     {
+        /* write disconnection message on each channel/private window */
+        for (ptr_channel = server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            irc_display_prefix (ptr_channel->window, PREFIX_INFO);
+            gui_printf (ptr_channel->window, "Disconnected from server!\n");
+        }
+        
+        /* close communication with server */
         close (server->server_read);
         close (server->server_write);
         close (server->sock4);
         server->is_connected = 0;
+        server->sock4 = -1;
     }
 }
 
@@ -596,6 +608,24 @@ server_disconnect_all ()
     
     for (ptr_server = irc_servers; ptr_server; ptr_server = ptr_server->next_server)
         server_disconnect (ptr_server);
+}
+
+/*
+ * server_search: return pointer on a server with a name
+ */
+
+t_irc_server *
+server_search (char *servername)
+{
+    t_irc_server *ptr_server;
+    
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        if (strcmp (ptr_server->name, servername) == 0)
+            return ptr_server;
+    }
+    return NULL;
 }
 
 /*

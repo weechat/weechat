@@ -45,12 +45,20 @@ t_weechat_command weechat_commands[] =
     N_("[-all]"),
     N_("-all: clear all windows"),
     0, 1, weechat_cmd_clear, NULL },
+  { "connect", N_("connect to a server"),
+    N_("servername"),
+    N_("servername: server name to connect"),
+    1, 1, weechat_cmd_connect, NULL },
+  { "disconnect", N_("disconnect from a server"),
+    N_("servername"),
+    N_("servername: server name to disconnect"),
+    1, 1, weechat_cmd_disconnect, NULL },
   { "help", N_("display help about commands"),
     N_("[command]"), N_("command: name of a " WEECHAT_NAME " or IRC command"),
     0, 1, weechat_cmd_help, NULL },
   { "server", N_("list, add or remove servers"),
     N_("[list] | "
-    "[[add] servername [-auto | -noauto] hostname [-port port] [-pwd password] [-nicks nick1 "
+    "[servername hostname port [-auto | -noauto] [-pwd password] [-nicks nick1 "
     "[nick2 [nick3]]] [-username username] [-realname realname]] | "
     "[del servername]"),
     N_("servername: server name, for internal & display use\n"
@@ -518,6 +526,87 @@ weechat_cmd_clear (int argc, char **argv)
 }
 
 /*
+ * weechat_cmd_connect: connect to a server
+ */
+
+int
+weechat_cmd_connect (int argc, char **argv)
+{
+    t_irc_server *ptr_server;
+    t_irc_channel *ptr_channel;
+    
+    /* make gcc happy */
+    (void) argc;
+    
+    ptr_server = server_search (argv[0]);
+    if (ptr_server)
+    {
+        if (ptr_server->is_connected)
+        {
+            gui_printf (NULL,
+                        _("%s already connected to server \"%s\"!\n"),
+                        WEECHAT_ERROR, argv[0]);
+            return -1;
+        }
+        if (!ptr_server->window)
+            server_create_window (ptr_server);
+        if (server_connect (ptr_server))
+        {
+            irc_login (ptr_server);
+            for (ptr_channel = ptr_server->channels; ptr_channel;
+                 ptr_channel = ptr_channel->next_channel)
+            {
+                if (ptr_channel->type == CHAT_CHANNEL)
+                    server_sendf (ptr_server, "JOIN %s\r\n", ptr_channel->name);
+            }
+        }
+    }
+    else
+    {
+        gui_printf (NULL,
+                    _("%s server \"%s\" not found\n"),
+                    WEECHAT_ERROR, argv[0]);
+        return -1;
+    }
+    return 0;
+}
+
+/*
+ * weechat_cmd_disconnect: disconnect from a server
+ */
+
+int
+weechat_cmd_disconnect (int argc, char **argv)
+{
+    t_irc_server *ptr_server;
+    
+    /* make gcc happy */
+    (void) argc;
+    
+    ptr_server = server_search (argv[0]);
+    if (ptr_server)
+    {
+        if (!ptr_server->is_connected)
+        {
+            gui_printf (NULL,
+                        _("%s not connected to server \"%s\"!\n"),
+                        WEECHAT_ERROR, argv[0]);
+            return -1;
+        }
+        server_disconnect (ptr_server);
+        gui_redraw_window_status (gui_current_window);
+    }
+    else
+    {
+        gui_printf (NULL,
+                    _("%s server \"%s\" not found\n"),
+                    WEECHAT_ERROR, argv[0]);
+        return -1;
+    }
+    return 0;
+}
+
+/*
  * weechat_cmd_help: display help
  */
 
@@ -601,7 +690,7 @@ int
 weechat_cmd_server (int argc, char **argv)
 {
     int i;
-    t_irc_server server, *ptr_server, *server_found;
+    t_irc_server server, *ptr_server, *server_found, *new_server;
     
     if ((argc == 0) || ((argc == 1) && (strcasecmp (argv[0], "list") == 0)))
     {
@@ -689,7 +778,7 @@ weechat_cmd_server (int argc, char **argv)
     {
         if (strcasecmp (argv[0], "del") == 0)
         {
-            if (argc == 1)
+            if (argc < 2)
             {
                 gui_printf (NULL,
                             _("%s missing servername for \"/server del\" command\n"),
@@ -719,15 +808,46 @@ weechat_cmd_server (int argc, char **argv)
                             WEECHAT_ERROR, argv[1]);
                 return -1;
             }
+            
+            irc_display_prefix (NULL, PREFIX_INFO);
+            gui_printf_color (NULL, COLOR_WIN_CHAT, _("Server"));
+            gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
+                              " %s ", server_found->name);
+            gui_printf_color (NULL, COLOR_WIN_CHAT, _("has been deleted\n"));
+            
             server_free (server_found);
             gui_redraw_window (gui_current_window);
+            
+            return 0;
         }
         
         /* init server struct */
         server_init (&server);
         
+        if (argc < 3)
+        {
+            gui_printf (NULL,
+                        _("%s missing parameters for \"/server command\"\n"),
+                        WEECHAT_ERROR);
+            server_destroy (&server);
+            return -1;
+        }
+        
+        if (server_name_already_exists (argv[0]))
+        {
+            gui_printf (NULL,
+                        _("%s server \"%s\" already exists, can't create it!\n"),
+                        WEECHAT_ERROR, argv[0]);
+            server_destroy (&server);
+            return -1;
+        }
+        
+        server.name = strdup (argv[0]);
+        server.address = strdup (argv[1]);
+        server.port = atoi (argv[2]);
+        
         /* parse arguments */
-        for (i = 0; i < argc; i++)
+        for (i = 3; i < argc; i++)
         {
             if (argv[i][0] == '-')
             {
@@ -735,18 +855,6 @@ weechat_cmd_server (int argc, char **argv)
                     server.autoconnect = 1;
                 if (strcasecmp (argv[0], "-noauto") == 0)
                     server.autoconnect = 0;
-                if (strcasecmp (argv[0], "-port") == 0)
-                {
-                    if (i == (argc - 1))
-                    {
-                        gui_printf (NULL,
-                                    _("%s missing port for \"-port\" parameter\n"),
-                                    WEECHAT_ERROR);
-                        server_destroy (&server);
-                        return -1;
-                    }
-                    server.port = atoi (argv[i]);
-                }
                 if (strcasecmp (argv[0], "-pwd") == 0)
                 {
                     if (i == (argc - 1))
@@ -798,10 +906,38 @@ weechat_cmd_server (int argc, char **argv)
                     server.realname = strdup (argv[++i]);
                 }
             }
-            else
-            {
-            }
         }
+        
+        /* create new server */
+        new_server = server_new (server.name, server.autoconnect, server.address,
+                                 server.port, server.password, server.nick1,
+                                 server.nick2, server.nick3, server.username,
+                                 server.realname);
+        if (new_server)
+        {
+            irc_display_prefix (NULL, PREFIX_INFO);
+            gui_printf_color (NULL, COLOR_WIN_CHAT, _("Server"));
+            gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
+                              " %s ", server.name);
+            gui_printf_color (NULL, COLOR_WIN_CHAT, _("created\n"));
+        }
+        else
+        {
+            gui_printf (NULL,
+                        _("%s unable to create server\n"),
+                        WEECHAT_ERROR);
+            server_destroy (&server);
+            return -1;
+        }
+        
+        if (new_server->autoconnect)
+        {
+            server_create_window (new_server);
+            if (server_connect (new_server))
+                irc_login (new_server);
+        }
+        
+        server_destroy (&server);
     }
     return 0;
 }

@@ -152,6 +152,7 @@ extern void server_recv (t_irc_server *);
 extern int server_connect ();
 extern void server_disconnect (t_irc_server *);
 extern void server_disconnect_all ();
+extern t_irc_server *server_search (char *);
 extern int server_get_number_connected ();
 extern int server_name_already_exists (char *);
 
