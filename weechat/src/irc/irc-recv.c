@@ -598,7 +598,14 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *arguments)
     else
     {
         /* nickname modes */
-        gui_printf (server->buffer, "(TODO!) nickname modes: channel=%s, args=%s\n", arguments, pos);
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, "[");
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK, "%s", arguments);
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT, "/");
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK,
+                          "%s", (pos[0] == ':') ? pos + 1 : pos);
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, "] ");
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT, _("mode changed by"));
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK, " %s\n", host);
     }
     return 0;
 }
@@ -697,16 +704,18 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *arguments)
 int
 irc_cmd_recv_notice (t_irc_server *server, char *host, char *arguments)
 {
-    char *pos, *pos2, *pos_usec;
+    char *host2, *pos, *pos2, *pos_usec;
     struct timeval tv;
     struct timezone tz;
     long sec1, usec1, sec2, usec2, difftime;
     
+    host2 = NULL;
     if (host)
     {
         pos = strchr (host, '!');
         if (pos)
             pos[0] = '\0';
+        host2 = pos + 1;
     }
     
     pos = strchr (arguments, ' ');
@@ -778,7 +787,20 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *arguments)
         }
         else
         {
-            irc_display_prefix (server->buffer, PREFIX_SERVER);
+            if (host)
+            {
+                gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK, "%s", host);
+                if (host2)
+                {
+                    gui_printf_color (server->buffer,
+                                      COLOR_WIN_CHAT_DARK, " (");
+                    gui_printf_color (server->buffer,
+                                      COLOR_WIN_CHAT_HOST, "%s", host2);
+                    gui_printf_color (server->buffer,
+                                      COLOR_WIN_CHAT_DARK, ")");
+                }
+                gui_printf_color (server->buffer, COLOR_WIN_CHAT, ": ");
+            }
             gui_printf_color (server->buffer, COLOR_WIN_CHAT, "%s\n", pos);
         }
     }

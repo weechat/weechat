@@ -719,7 +719,29 @@ irc_cmd_send_nick (t_irc_server *server, int argc, char **argv)
 int
 irc_cmd_send_notice (t_irc_server *server, char *arguments)
 {
-    server_sendf (server, "NOTICE %s\r\n", arguments);
+    char *pos;
+    
+    pos = strchr (arguments, ' ');
+    if (pos)
+    {
+        pos[0] = '\0';
+        pos++;
+        while (pos[0] == ' ')
+            pos++;
+        server_sendf (server, "NOTICE %s :%s\r\n", arguments, pos);
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT, "notice");
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, "(");
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK, "%s", arguments);
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, ")");
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT, ": %s\n", pos);
+    }
+    else
+    {
+        gui_printf (server->buffer,
+                    _("%s wrong argument count for \"%s\" command\n"),
+                    WEECHAT_ERROR, "notice");
+        return -1;
+    }
     return 0;
 }
 

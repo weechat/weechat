@@ -142,7 +142,7 @@ t_irc_command irc_commands[] =
     1, 1, 1, irc_cmd_send_nick, NULL, irc_cmd_recv_nick },
   { "notice", N_("send notice message to user"),
     N_("nickname text"), N_("nickname: user to send notice to\ntext: text to send"),
-    1, MAX_ARGS, 1, NULL, irc_cmd_send_notice, irc_cmd_recv_notice },
+    2, MAX_ARGS, 1, NULL, irc_cmd_send_notice, irc_cmd_recv_notice },
   { "op", N_("gives channel operator status to nickname(s)"),
     N_("nickname [nickname]"), "",
     1, 1, 1, irc_cmd_send_op, NULL, NULL },
