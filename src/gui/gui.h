@@ -150,6 +150,12 @@ struct t_gui_buffer
     int num_lines;                  /* number of lines in the window        */
     int line_complete;              /* current line complete ? (\n ending)  */
     
+    /* notify level: when activity should be displayed? default: 3 (always) */
+    int notify_level;               /* 0 = never                            */
+                                    /* 1 = highlight only                   */
+                                    /* 2 = highlight + message              */
+                                    /* 3 = highlight + message + join/part  */
+    
     /* file to save buffer content */
     char *log_filename;             /* filename for saving buffer content   */
     FILE *log_file;                 /* for logging buffer to file           */

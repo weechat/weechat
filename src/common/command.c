@@ -46,8 +46,9 @@ t_weechat_command weechat_commands[] =
   { "buffer", N_("manage buffers"),
     N_("[action | number]"),
     N_("action: action to do:\n"
-    "    move  move buffer in the list (may be relative, for example -1)\n"
-    "    list  list opened buffers (no parameter implies this list)\n"
+    "  move    move buffer in the list (may be relative, for example -1)\n"
+    "  list    list opened buffers (no parameter implies this list)\n"
+    "  notify  set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)\n"
     "number: jump to buffer by number"),
     0, MAX_ARGS, weechat_cmd_buffer, NULL },
   { "clear", N_("clear window(s)"),
@@ -913,6 +914,55 @@ weechat_cmd_buffer (int argc, char **argv)
                 gui_printf (NULL, _("%s incorrect buffer number\n"),
                             WEECHAT_ERROR);
                 return -1;
+            }
+        }
+        else if (strcasecmp (argv[0], "notify") == 0)
+        {
+            /* set notify level for buffer */
+            
+            if (argc < 2)
+            {
+                /* display notify level for all buffers */
+                irc_display_prefix (NULL, PREFIX_INFO);
+                gui_printf (NULL, _("Notify levels:  "));
+                for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+                {
+                    gui_printf (NULL, "%d.%s:",
+                                ptr_buffer->number,
+                                (ptr_buffer->dcc) ? "DCC" :
+                                    ((BUFFER_IS_SERVER(ptr_buffer)) ? SERVER(ptr_buffer)->name :
+                                    CHANNEL(ptr_buffer)->name));
+                    if (ptr_buffer->dcc)
+                        gui_printf (NULL, "-");
+                    else
+                        gui_printf (NULL, "%d", ptr_buffer->notify_level);
+                    if (ptr_buffer->next_buffer)
+                        gui_printf (NULL, "  ");
+                }
+                gui_printf (NULL, "\n");
+            }
+            else
+            {
+                error = NULL;
+                number = strtol (argv[1], &error, 10);
+                if ((error) && (error[0] == '\0'))
+                {
+                    if ((number < 0) || (number > 3))
+                    {
+                        /* invalid highlight level */
+                        gui_printf (NULL, _("%s incorrect notify level (must be between 0 and 3)\n"),
+                                    WEECHAT_ERROR);
+                        return -1;
+                    }
+                    gui_current_window->buffer->notify_level = number;
+                }
+                else
+                {
+                    /* invalid number */
+                    gui_printf (NULL, _("%s incorrect notify level (must be between 0 and 3)\n"),
+                                WEECHAT_ERROR);
+                    return -1;
+                }
             }
         }
         else

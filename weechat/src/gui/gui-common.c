@@ -182,6 +182,9 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int dcc,
         new_buffer->num_lines = 0;
         new_buffer->line_complete = 1;
         
+        /* notify level */
+        new_buffer->notify_level = 3;
+        
         /* create/append to log file */
         new_buffer->log_filename = NULL;
         new_buffer->log_file = NULL;

@@ -1,17 +1,17 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2004-09-19
+ChangeLog - 2004-10-03
 
 
 Version 0.0.8 (under dev!):
+   * /buffer command developed (buffers list, move and notify)
    * logging buffers to disk (server/channel/private according to user prefs)
-   * /buffer command developed (buffers list and move function)
    * Away now announced in channels, and config option "look_display_away" added
      to enable/disable this feature
    * Fixed crash when resizing terminal to very small size
    * "-MORE-" message is now erased when switching to another buffer
-   * DCC window with Alt-D
+   * DCC file receive ok (Alt-D for DCC view)
    * /query command now reopens private buffer if already opened
    * added key for redrawing terminal (Ctrl-L)
    * added key for clearing hotlist (Alt-R)

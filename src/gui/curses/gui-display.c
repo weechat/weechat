@@ -1966,10 +1966,15 @@ gui_add_message (t_gui_buffer *buffer, int type, int color, char *message)
         }
         if (buffer->num_displayed == 0)
         {
-            hotlist_add (buffer->last_line->line_with_message +
-                         buffer->last_line->line_with_highlight,
-                         buffer);
-            gui_draw_buffer_status (gui_current_window->buffer, 1);
+            if (3 - buffer->last_line->line_with_message -
+                buffer->last_line->line_with_highlight <=
+                buffer->notify_level)
+            {
+                hotlist_add (buffer->last_line->line_with_message +
+                            buffer->last_line->line_with_highlight,
+                            buffer);
+                gui_draw_buffer_status (gui_current_window->buffer, 1);
+            }
         }
     }
 }
