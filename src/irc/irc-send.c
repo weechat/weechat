@@ -997,39 +997,36 @@ int
 irc_cmd_send_quit (t_irc_server *server, char *arguments)
 {
     t_irc_server *ptr_server;
-    char *pos, buffer[4096];
+    char *ptr_arg, *pos, buffer[4096];
     
     /* make gcc happy */
     (void) server;
     
+    ptr_arg = (arguments) ? arguments :
+              (cfg_irc_default_msg_quit && cfg_irc_default_msg_quit[0]) ?
+              cfg_irc_default_msg_quit : NULL;
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
         if (ptr_server->is_connected)
         {
-            if (arguments)
-                server_sendf (ptr_server, "QUIT :%s\r\n", arguments);
-            else
+            if (ptr_arg)
             {
-                if (cfg_irc_default_msg_quit && cfg_irc_default_msg_quit[0])
+                pos = strstr (ptr_arg, "%v");
+                if (pos)
                 {
-                    pos = strstr (cfg_irc_default_msg_quit, "%v");
-                    if (pos)
-                    {
-                        pos[0] = '\0';
-                        snprintf (buffer, sizeof (buffer), "%s%s%s",
-                                  cfg_irc_default_msg_quit, PACKAGE_VERSION,
-                                  pos + 2);
-                        pos[0] = '%';
-                    }
-                    else
-                        snprintf (buffer, sizeof (buffer), "%s",
-                                  cfg_irc_default_msg_quit);
-                    server_sendf (ptr_server, "QUIT :%s\r\n", buffer);
+                    pos[0] = '\0';
+                    snprintf (buffer, sizeof (buffer), "%s%s%s",
+                              ptr_arg, PACKAGE_VERSION, pos + 2);
+                    pos[0] = '%';
                 }
                 else
-                    server_sendf (ptr_server, "QUIT\r\n");
+                    snprintf (buffer, sizeof (buffer), "%s",
+                              ptr_arg);
+                server_sendf (ptr_server, "QUIT :%s\r\n", buffer);
             }
+            else
+                server_sendf (ptr_server, "QUIT\r\n");
         }
     }
     quit_weechat = 1;
