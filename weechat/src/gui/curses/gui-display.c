@@ -1572,6 +1572,25 @@ gui_switch_to_next_buffer (t_gui_window *window)
 }
 
 /*
+ * gui_switch_to_previous_window: switch to previous window
+ */
+
+void
+gui_switch_to_previous_window (t_gui_window *window)
+{
+    if (!gui_ok)
+        return;
+    
+    /* if only one window then return */
+    if (gui_windows == last_gui_window)
+        return;
+    
+    gui_current_window = (window->prev_window) ? window->prev_window : last_gui_window;
+    gui_switch_to_buffer (gui_current_window, gui_current_window->buffer);
+    gui_redraw_buffer (gui_current_window->buffer);
+}
+
+/*
  * gui_switch_to_next_window: switch to next window
  */
 

@@ -35,7 +35,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.0 - 12 F@'evrier 2005
+@subtitle Documentation pour WeeChat v0.1.1-cvs - 22 F@'evrier 2005
 
 @image{weechat_image}
 
@@ -641,11 +641,11 @@ Rappeler les derni@`eres commandes/messages@*
 @item PageUp / PageDown
 Afficher l'historique du tampon@*
 @*
-@item F6 / F7
-Aller au tampon pr@'ec@'edent@*
+@item F5 / F6
+Aller au tampon pr@'ec@'edent / suivant@*
 @*
-@item F8
-Aller @`a la fen@^etre suivante@*
+@item F7 / F8
+Aller @`a la fen@^etre pr@'ec@'edente / suivante@*
 @*
 @item F10
 Effacer le dernier message de la barre d'infos@*
@@ -654,7 +654,7 @@ Effacer le dernier message de la barre d'infos@*
 R@'eaffiche toute la fen@^etre@*
 @*
 @item Alt + fl@`eche gauche / Alt + fl@`eche droite
-Identique @`a F6 / F7@*
+Identique @`a F5 / F6@*
 @*
 @item Alt + A
 Sauter au tampon avec activit@'e (avec priorit@'e: highlight, message, autre)@*

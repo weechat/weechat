@@ -35,7 +35,7 @@
 
 @title WeeChat - Guia do Utilizador
 @subtitle Cliente de IRC rapido, leve e extencivel
-@subtitle Documenta@,{c}@~ao do WeeChat v0.1.0 - 12 de Fevereiro de 2005
+@subtitle Documenta@,{c}@~ao do WeeChat v0.1.1-cvs - 22 de Fevereiro de 2005
 
 @image{weechat_image}
 
@@ -274,11 +274,11 @@ Repetir os ultimos comandos/mensagens@*
 @item PageUp / PageDown
 Navegar no hist@'orico da janela@*
 @*
-@item F6 / F7
-Ir para a janela anterior/seguinte@*
+@item F5 / F6
+Comute ao amortecedor anterior / seguinte@*
 @*
-@item F8
-Comute @`a janela seguinte@*
+@item F7 / F8
+Comute ao janela anterior / seguinte@*
 @*
 @item F10
 Apagar a @'ultima mensagem da barra do info@*
@@ -287,7 +287,7 @@ Apagar a @'ultima mensagem da barra do info@*
 Redesenhe a janela inteira@*
 @*
 @item Alt + Seta da esquerda / Alt + Seta da direita
-Identico a F6 / F7@*
+Identico a F5 / F6@*
 @*
 @item Alt + A
 Comute ao amortecedor seguinte com atividade (com prioridade:  destaque, mensagem, outra)@*

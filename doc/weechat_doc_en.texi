@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.1.0 - February, 12 2005
+@subtitle Documentation for WeeChat v0.1.1-cvs - February, 22 2005
 
 @image{weechat_image}
 
@@ -641,11 +641,11 @@ Call again last commands/messages@*
 @item PageUp / PageDown
 Show buffer history@*
 @*
-@item F6 / F7
+@item F5 / F6
 Switch to previous / next buffer@*
 @*
-@item F8
-Switch to next window@*
+@item F7 / F8
+Switch to previous / next window@*
 @*
 @item F10
 Remove last infobar message@*
@@ -654,7 +654,7 @@ Remove last infobar message@*
 Redraw whole window@*
 @*
 @item Alt + left arrow / Alt + right arrow
-Same as F6 / F7@*
+Same as F5 / F6@*
 @*
 @item Alt + A
 Switch to next buffer with activity (with priority: highlight, message, other)@*

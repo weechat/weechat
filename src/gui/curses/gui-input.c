@@ -70,18 +70,21 @@ gui_read_keyb ()
             case KEY_F(2):
             case KEY_F(3):
             case KEY_F(4):
-            case KEY_F(5):
             case KEY_F(9):
             case KEY_F(11):
             case KEY_F(12):
                 break;
             /* previous buffer in window */
-            case KEY_F(6):
+            case KEY_F(5):
                 gui_switch_to_previous_buffer (gui_current_window);
                 break;
             /* next buffer in window */
-            case KEY_F(7):
+            case KEY_F(6):
                 gui_switch_to_next_buffer (gui_current_window);
+                break;
+            /* previous window */
+            case KEY_F(7):
+                gui_switch_to_previous_window (gui_current_window);
                 break;
             /* next window */
             case KEY_F(8):

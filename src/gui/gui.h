@@ -293,6 +293,7 @@ extern t_gui_buffer *gui_get_dcc_buffer ();
 extern void gui_switch_to_dcc_buffer ();
 extern void gui_switch_to_previous_buffer (t_gui_window *);
 extern void gui_switch_to_next_buffer (t_gui_window *);
+extern void gui_switch_to_previous_window (t_gui_window *);
 extern void gui_switch_to_next_window (t_gui_window *);
 extern void gui_move_page_up ();
 extern void gui_move_page_down ();
