@@ -944,10 +944,12 @@ gui_draw_window_infobar (t_gui_window *window)
     time_seconds = time (NULL);
     local_time = localtime (&time_seconds);
     strftime (text, 1024, cfg_look_infobar_timestamp, local_time);
+    wprintw (window->win_infobar, "%s", text);
     if (gui_infobar)
-        wprintw (window->win_infobar, "%s | %s", text, gui_infobar->text);
-    else
-        wprintw (window->win_infobar, "%s", text);
+    {
+        gui_window_set_color (window->win_infobar, gui_infobar->color);
+        wprintw (window->win_infobar, " | %s", gui_infobar->text);
+    }
     
     wrefresh (window->win_infobar);
     refresh ();
@@ -1408,6 +1410,8 @@ gui_init_colors ()
             cfg_col_status_more & A_CHARTEXT, cfg_col_status_bg);
         init_pair (COLOR_WIN_INFOBAR,
             cfg_col_infobar & A_CHARTEXT, cfg_col_infobar_bg);
+        init_pair (COLOR_WIN_INFOBAR_HIGHLIGHT,
+            cfg_col_infobar_highlight & A_CHARTEXT, cfg_col_infobar_bg);
         init_pair (COLOR_WIN_INPUT,
             cfg_col_input & A_CHARTEXT, cfg_col_input_bg);
         init_pair (COLOR_WIN_INPUT_CHANNEL,
@@ -1455,6 +1459,7 @@ gui_init_colors ()
         color_attr[COLOR_WIN_STATUS_DATA_OTHER - 1] = cfg_col_status_data_other & A_BOLD;
         color_attr[COLOR_WIN_STATUS_MORE - 1] = cfg_col_status_more & A_BOLD;
         color_attr[COLOR_WIN_INFOBAR - 1] = cfg_col_infobar & A_BOLD;
+        color_attr[COLOR_WIN_INFOBAR_HIGHLIGHT - 1] = cfg_col_infobar_highlight & A_BOLD;
         color_attr[COLOR_WIN_INPUT - 1] = cfg_col_input & A_BOLD;
         color_attr[COLOR_WIN_INPUT_CHANNEL - 1] = cfg_col_input_channel & A_BOLD;
         color_attr[COLOR_WIN_INPUT_NICK - 1] = cfg_col_input_nick & A_BOLD;

@@ -215,7 +215,7 @@ static XS (XS_IRC_print_infobar)
     (void) cv;
     
     if (items == 2)
-        gui_infobar_print (SvPV (ST (1), integer), SvIV (ST (0)));
+        gui_infobar_printf (SvIV (ST (0)), COLOR_WIN_INFOBAR, SvPV (ST (1), integer));
     else
     {
         irc_display_prefix (NULL, PREFIX_ERROR);

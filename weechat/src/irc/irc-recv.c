@@ -788,8 +788,17 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                         pos2[0] = '\0';
                     irc_display_prefix (ptr_channel->window, PREFIX_ACTION_ME);
                     if (strstr (pos, server->nick))
+                    {
                         gui_printf_color (ptr_channel->window,
                                           COLOR_WIN_CHAT_HIGHLIGHT, "%s", host);
+                        if ( (cfg_look_infobar_delay_highlight > 0)
+                            && (ptr_channel->window != gui_current_window) )
+                            gui_infobar_printf (cfg_look_infobar_delay_highlight,
+                                                COLOR_WIN_INFOBAR_HIGHLIGHT,
+                                                _("On %s: * %s %s"),
+                                                ptr_channel->name,
+                                                host, pos);
+                    }
                     else
                         gui_printf_color (ptr_channel->window,
                                           COLOR_WIN_CHAT_NICK, "%s", host);
@@ -802,8 +811,17 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                     if (ptr_nick)
                     {
                         if (strstr (pos, server->nick))
+                        {
                             irc_display_nick (ptr_channel->window, ptr_nick,
                                               MSG_TYPE_NICK, 1, -1, 0);
+                            if ( (cfg_look_infobar_delay_highlight > 0)
+                                && (ptr_channel->window != gui_current_window) )
+                                gui_infobar_printf (cfg_look_infobar_delay_highlight,
+                                                    COLOR_WIN_INFOBAR_HIGHLIGHT,
+                                                    _("On %s: %s> %s"),
+                                                    ptr_channel->name,
+                                                    host, pos);
+                        }
                         else
                             irc_display_nick (ptr_channel->window, ptr_nick,
                                               MSG_TYPE_NICK, 1, 1, 0);
@@ -915,10 +933,18 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                                            MSG_TYPE_NICK,
                                            COLOR_WIN_CHAT_DARK, "<");
                     if (strstr (pos, server->nick))
+                    {
                         gui_printf_color_type (ptr_channel->window,
                                                MSG_TYPE_NICK,
                                                COLOR_WIN_CHAT_HIGHLIGHT,
                                                "%s", host);
+                        if ( (cfg_look_infobar_delay_highlight > 0)
+                            && (ptr_channel->window != gui_current_window) )
+                            gui_infobar_printf (cfg_look_infobar_delay_highlight,
+                                                COLOR_WIN_INFOBAR_HIGHLIGHT,
+                                                _("Private %s> %s"),
+                                                host, pos);
+                    }
                     else
                         gui_printf_color_type (ptr_channel->window,
                                                MSG_TYPE_NICK,

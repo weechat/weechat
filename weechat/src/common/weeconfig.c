@@ -75,6 +75,7 @@ char *cfg_look_no_nickname;
 char *cfg_look_completor;
 int cfg_look_infobar;
 char *cfg_look_infobar_timestamp;
+int cfg_look_infobar_delay_highlight;
 
 t_config_option weechat_options_look[] =
 { { "look_set_title", N_("set title for terminal window (curses GUI) with name & version"),
@@ -147,6 +148,11 @@ t_config_option weechat_options_look[] =
     N_("timestamp for time in infobar"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "%B, %A %d %G - %H:%M", NULL, NULL, &cfg_look_infobar_timestamp, NULL },
+  { "look_infobar_delay_highlight", N_("delay (in seconds) for highlight messages in infobar"),
+    N_("delay (in seconds) for highlight messages in infobar "
+    "(0 = disable highlight notifications in infobar)"),
+    OPTION_TYPE_INT, 0, INT_MAX, 7,
+    NULL, NULL, &cfg_look_infobar_delay_highlight, NULL, NULL },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
@@ -172,6 +178,7 @@ int cfg_col_status_data_other;
 int cfg_col_status_more;
 int cfg_col_status_bg;
 int cfg_col_infobar;
+int cfg_col_infobar_highlight;
 int cfg_col_infobar_bg;
 int cfg_col_input;
 int cfg_col_input_channel;
@@ -274,6 +281,10 @@ t_config_option weechat_options_colors[] =
     N_("color for info bar text"),
     OPTION_TYPE_COLOR, 0, 0, 0,
     "black", NULL, &cfg_col_infobar, NULL, NULL },
+  { "col_infobar_highlight", N_("color for info bar highlight notification"),
+    N_("color for info bar highlight notification"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "white", NULL, &cfg_col_infobar_highlight, NULL, NULL },
   { "col_infobar_bg", N_("background for info bar window"),
     N_("background for info bar window"),
     OPTION_TYPE_COLOR, 0, 0, 0,

@@ -26,7 +26,7 @@
 
 #define INPUT_BUFFER_BLOCK_SIZE 256
 
-#define NUM_COLORS                  37
+#define NUM_COLORS                  38
 #define COLOR_WIN_TITLE             1
 #define COLOR_WIN_CHAT              2
 #define COLOR_WIN_CHAT_TIME         3
@@ -44,18 +44,19 @@
 #define COLOR_WIN_STATUS_DATA_OTHER 15
 #define COLOR_WIN_STATUS_MORE       16
 #define COLOR_WIN_INFOBAR           17
-#define COLOR_WIN_INPUT             18
-#define COLOR_WIN_INPUT_CHANNEL     19
-#define COLOR_WIN_INPUT_NICK        20
-#define COLOR_WIN_NICK              21
-#define COLOR_WIN_NICK_OP           22
-#define COLOR_WIN_NICK_HALFOP       23
-#define COLOR_WIN_NICK_VOICE        24
-#define COLOR_WIN_NICK_SEP          25
-#define COLOR_WIN_NICK_SELF         26
-#define COLOR_WIN_NICK_PRIVATE      27
-#define COLOR_WIN_NICK_FIRST        28
-#define COLOR_WIN_NICK_LAST         37
+#define COLOR_WIN_INFOBAR_HIGHLIGHT 18
+#define COLOR_WIN_INPUT             19
+#define COLOR_WIN_INPUT_CHANNEL     20
+#define COLOR_WIN_INPUT_NICK        21
+#define COLOR_WIN_NICK              22
+#define COLOR_WIN_NICK_OP           23
+#define COLOR_WIN_NICK_HALFOP       24
+#define COLOR_WIN_NICK_VOICE        25
+#define COLOR_WIN_NICK_SEP          26
+#define COLOR_WIN_NICK_SELF         27
+#define COLOR_WIN_NICK_PRIVATE      28
+#define COLOR_WIN_NICK_FIRST        29
+#define COLOR_WIN_NICK_LAST         38
 #define COLOR_WIN_NICK_NUMBER       (COLOR_WIN_NICK_LAST - COLOR_WIN_NICK_FIRST + 1)
 
 #define SERVER(window)  ((t_irc_server *)(window->server))
@@ -112,6 +113,7 @@ typedef struct t_gui_infobar t_gui_infobar;
 
 struct t_gui_infobar
 {
+    int color;                      /* text color                           */
     char *text;                     /* infobar text                         */
     int remaining_time;             /* delay (sec) before erasing this text */
                                     /* if < 0, text is never erased (except */
@@ -204,7 +206,7 @@ extern t_gui_infobar *gui_infobar;
 extern t_gui_window *gui_window_new (void *, void *, int /*int, int, int, int*/); /* TODO: add coordinates and size */
 extern void gui_window_clear (t_gui_window *);
 extern void gui_window_clear_all ();
-extern void gui_infobar_print (char *, int);
+extern void gui_infobar_printf (int, int, char *, ...);
 extern void gui_infobar_remove ();
 extern t_gui_line *gui_new_line (t_gui_window *);
 extern t_gui_message *gui_new_message (t_gui_window *);

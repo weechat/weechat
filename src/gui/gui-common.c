@@ -184,19 +184,26 @@ gui_window_clear_all ()
 }
 
 /* 
- * gui_infobar_print: display message in infobar
+ * gui_infobar_printf: display message in infobar
  */
 
 void
-gui_infobar_print (char *message, int time_displayed)
+gui_infobar_printf (int time_displayed, int color, char *message, ...)
 {
+    static char buffer[1024];
+    va_list argptr;
     t_gui_infobar *ptr_infobar;
     char *pos;
+    
+    va_start (argptr, message);
+    vsnprintf (buffer, sizeof (buffer) - 1, message, argptr);
+    va_end (argptr);
     
     ptr_infobar = (t_gui_infobar *)malloc (sizeof (t_gui_infobar));
     if (ptr_infobar)
     {
-        ptr_infobar->text = strdup (message);
+        ptr_infobar->color = color;
+        ptr_infobar->text = strdup (buffer);
         pos = strchr (ptr_infobar->text, '\n');
         if (pos)
             pos[0] = '\0';
