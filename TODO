@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2004-07-01
+TODO - 2004-07-03
 
 Legend:
   #  done
@@ -22,6 +22,7 @@ v0.0.7:
 
  * Interface:
     + split terminal in multiple windows (horizontally/vertically)
+    + hotlist (channels with activity) and auto-jump to channels
     + internationalization (traduce WeeChat in many languages)
 
  * Configuration:

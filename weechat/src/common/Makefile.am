@@ -28,4 +28,6 @@ lib_weechat_main_a_SOURCES = weechat.c \
                              weeconfig.c \
                              weeconfig.h \
                              history.c \
-                             history.h
+                             history.h \
+                             hotlist.c \
+                             hotlist.h

@@ -127,6 +127,8 @@ struct t_gui_buffer
 {
     int num_displayed;              /* number of windows displaying buffer  */
     
+    int number;                     /* buffer number (for jump/switch)      */
+    
     /* server/channel */
     void *server;                   /* buffer's server                      */
     void *channel;                  /* buffer's channel                     */

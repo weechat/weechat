@@ -37,34 +37,18 @@
  */
 
 int
-nick_find_color (t_irc_channel *channel)
+nick_find_color (t_irc_channel *channel, t_irc_nick *nick)
 {
-    int i, color_less_used, min_used;
-    int count_used[COLOR_WIN_NICK_NUMBER];
-    t_irc_nick *ptr_nick;
+    int i, color;
     
-    /* initialize array for counting usage of color */
-    for (i = 0; i < COLOR_WIN_NICK_NUMBER; i++)
-        count_used[i] = 0;
-    
-    /* summarize each color usage */
-    for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
-        count_used[ptr_nick->color - COLOR_WIN_NICK_FIRST]++;
-    
-    /* look for color less used on channel */
-    color_less_used = -1;
-    min_used = INT_MAX;
-    for (i = 0; i < COLOR_WIN_NICK_NUMBER; i++)
+    color = 0;
+    for (i = 0; i < strlen(nick->nick); i++)
     {
-        if (count_used[i] < min_used)
-        {
-            color_less_used = i;
-            min_used = count_used[i];
-        }
+        color += (int)(nick->nick[i]);
     }
+    color = (color % COLOR_WIN_NICK_NUMBER);
     
-    return (color_less_used < 0) ?
-        COLOR_WIN_NICK_FIRST : COLOR_WIN_NICK_FIRST + color_less_used;
+    return COLOR_WIN_NICK_FIRST + color;
 }
 
 /*
@@ -195,7 +179,7 @@ nick_new (t_irc_channel *channel, char *nick_name,
     if (strcasecmp (new_nick->nick, SERVER(channel->buffer)->nick) == 0)
         new_nick->color = COLOR_WIN_NICK_SELF;
     else
-        new_nick->color = nick_find_color (channel);
+        new_nick->color = nick_find_color (channel, new_nick);
 
     nick_insert_sorted (channel, new_nick);
     
@@ -235,6 +219,10 @@ nick_change (t_irc_channel *channel, t_irc_nick *nick, char *new_nick)
     if (nick->nick)
         free (nick->nick);
     nick->nick = strdup (new_nick);
+    if (strcasecmp (nick->nick, SERVER(channel->buffer)->nick) == 0)
+        nick->color = COLOR_WIN_NICK_SELF;
+    else
+        nick->color = nick_find_color (channel, nick);
     
     /* insert again nick into sorted list */
     nick_resort (channel, nick);

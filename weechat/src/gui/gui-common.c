@@ -145,6 +145,7 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int switch_to
     if ((new_buffer = (t_gui_buffer *)(malloc (sizeof (t_gui_buffer)))))
     {
         new_buffer->num_displayed = 0;
+        new_buffer->number = (gui_buffers) ? last_gui_buffer->number + 1 : 1;
         
         /* assign server and channel to buffer */
         SERVER(new_buffer) = server;

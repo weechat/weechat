@@ -59,7 +59,7 @@ AC_ARG_ENABLE(curses, [  --disable-curses        Turn off Curses interface (defa
 AC_ARG_ENABLE(gtk,    [  --enable-gtk            Turn on Gtk+ interface (default=no)],enable_gtk=yes,enable_gtk=no)
 AC_ARG_ENABLE(qt,     [  --enable-qt             Turn on Qt interface (default=no)],enable_qt=yes,enable_qt=no)
 AC_ARG_ENABLE(perl,   [  --enable-perl           Turn on Perl plugins (default=no)],enable_perl=yes,enable_perl=no)
-AC_ARG_ENABLE(debug,  [  --enable-debug          Turn on debugging messages (default=no)],enable_debug=yes,enable_debug=no)
+AC_ARG_WITH(debug,  [  --with-debug            Debugging: 0=no debug, 1=debug compilation, 2=debug compilation + verbose msgs (default=0)],debug=$withval,debug=0)
 
 enable_plugins="no"
 enable_python="no"
@@ -108,11 +108,14 @@ fi
 
 AC_SUBST(PLUGINS_LIBS)
 
-if test "x$enable_debug" = "xyes" ; then
-    AC_DEFINE(DEBUG)
+if test "x$debug" = "x1" || test "x$debug" = "x2" ; then
     CFLAGS="-Wall -W -pipe -O2 -g"
 else
     CFLAGS="-Wall -W -pipe -O2"
+fi
+
+if test "x$debug" = "x2" ; then
+    AC_DEFINE(DEBUG)
 fi
 
 AC_OUTPUT([Makefile
@@ -146,6 +149,15 @@ if test "x$listgui" = "x" ; then
     AC_MSG_ERROR([No interface specified... Please specify at least Curses, Gtk or Qt.])
 fi
 
+msg_debug_compiler="No"
+msg_debug_verbose="No"
+if test "x$debug" = "x1" || test "x$debug" = "x2" ; then
+    msg_debug_compiler="Yes"
+fi
+if test "x$debug" = "x2" ; then
+    msg_debug_verbose="Yes"
+fi
+
 echo
 echo Interfaces.................... :$listgui
 echo
@@ -154,7 +166,8 @@ echo Build with Perl support....... : $enable_perl
 echo Build with Python support..... : $enable_python
 echo Build with Ruby support....... : $enable_ruby
 echo
-echo Print debugging messages...... : $enable_debug
+echo Compile with debug info....... : $msg_debug_compiler
+echo Print debugging messages...... : $msg_debug_verbose
 echo
 eval eval echo WeeChat will be installed in $bindir.
 echo

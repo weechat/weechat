@@ -1,13 +1,19 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2004-07-01
+ChangeLog - 2004-07-03
 
 
 Version 0.0.7 (under dev!):
-   * windows management (split terminal horizontally/vertically)
+   * windows management improved: buffers ordered by number, split terminal
+     horizontally/vertically
+   * unique color for each nick (based on nickname)
+   * action messages are now considered as messages, not crappy joins/parts
    * fixed display bug when nicklist is displayed at bottom of screen
    * added history limit (text buffer & commands)
+   * replaced --enable-debug with --with-debug option for ./configure, which is
+     now integer: 1 = compiler debug flag, 2 = same 1 with verbose debug messages
+     in WeeChat (default: 0 = no debug)
 
 Version 0.0.6 (2004-06-05):
    * improved channel highlight (priority to message vs join/part)

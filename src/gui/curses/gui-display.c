@@ -840,11 +840,11 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                                               COLOR_WIN_STATUS);
                 }
                 if (SERVER(ptr_buffer)->is_connected)
-                    wprintw (ptr_win->win_status, "[%s] ",
-                             SERVER(ptr_buffer)->name);
+                    wprintw (ptr_win->win_status, "%d:[%s] ",
+                             ptr_buffer->number, SERVER(ptr_buffer)->name);
                 else
-                    wprintw (ptr_win->win_status, "(%s) ",
-                             SERVER(ptr_buffer)->name);
+                    wprintw (ptr_win->win_status, "%d:(%s) ",
+                             ptr_buffer->number, SERVER(ptr_buffer)->name);
             }
             if (SERVER(ptr_buffer) && CHANNEL(ptr_buffer))
             {
@@ -880,7 +880,9 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                         gui_window_set_color (ptr_win->win_status,
                                               COLOR_WIN_STATUS);
                 }
-                wprintw (ptr_win->win_status, "%s", CHANNEL(ptr_buffer)->name);
+                wprintw (ptr_win->win_status, "%d:%s",
+                         ptr_buffer->number,
+                         CHANNEL(ptr_buffer)->name);
                 if (ptr_win->buffer == CHANNEL(ptr_buffer)->buffer)
                 {
                     /* display channel modes */
@@ -914,7 +916,8 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
             if (!SERVER(ptr_buffer))
             {
                 gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS);
-                wprintw (ptr_win->win_status, _("[not connected] "));
+                wprintw (ptr_win->win_status, _("%d:[not connected] "),
+                         ptr_buffer->number);
             }
         }
         
