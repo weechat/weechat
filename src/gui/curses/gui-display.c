@@ -956,11 +956,12 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
             wprintw (ptr_win->win_status, ":");
             gui_window_set_color (ptr_win->win_status,
                                   COLOR_WIN_STATUS);
-            if (CHANNEL(ptr_win->buffer)->nicks)
-                wprintw (ptr_win->win_status, "%s",
+            if ((!CHANNEL(ptr_win->buffer)->nicks)
+                && (CHANNEL(ptr_win->buffer)->type != CHAT_PRIVATE))
+                wprintw (ptr_win->win_status, "(%s)",
                          CHANNEL(ptr_win->buffer)->name);
             else
-                wprintw (ptr_win->win_status, "(%s)",
+                wprintw (ptr_win->win_status, "%s",
                          CHANNEL(ptr_win->buffer)->name);
             if (ptr_win->buffer == CHANNEL(ptr_win->buffer)->buffer)
             {
