@@ -675,7 +675,7 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
                 }
                 else
                     gui_printf (server->window,
-                                _("%s nick not found for \"privmsg\" command\n"),
+                                _("%s nick not found for \"msg\" command\n"),
                                 WEECHAT_ERROR);
                 server_sendf (server, "PRIVMSG %s :%s\r\n", ptr_channel->name, pos);
             }
@@ -697,7 +697,7 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
                         }
                         else
                             gui_printf (server->window,
-                                        _("%s nick not found for \"privmsg\" command\n"),
+                                        _("%s nick not found for \"msg\" command\n"),
                                         WEECHAT_ERROR);
                     }
                     server_sendf (server, "PRIVMSG %s :%s\r\n", arguments, pos);
@@ -739,9 +739,12 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
         }
     }
     else
+    {
         gui_printf (server->window,
-                    _("%s wrong number of args for \"privmsg\" command\n"),
+                    _("%s wrong argument count for \"msg\" command\n"),
                     WEECHAT_ERROR);
+        return -1;
+    }
     return 0;
 }
 

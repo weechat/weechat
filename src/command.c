@@ -167,6 +167,51 @@ index_command_insert_sorted (t_index_command *index)
 }
 
 /*
+ * index_command_new: create new index command and add it to index list
+ */
+
+t_index_command *
+index_command_new (char *command_name)
+{
+    t_index_command *new_index;
+    
+    if ((new_index = ((t_index_command *) malloc (sizeof (t_index_command)))))
+    {
+        new_index->command_name = strdup (command_name);
+        index_command_insert_sorted (new_index);
+        return new_index;
+    }
+    return NULL;
+}
+
+/*
+ * index_command_build: build an index of commands (internal, irc and alias)
+ *                      This list will be sorted, and used for completion
+ */
+
+void
+index_command_build ()
+{
+    int i;
+    
+    index_commands = NULL;
+    last_index_command = NULL;
+    i = 0;
+    while (weechat_commands[i].command_name)
+    {
+        index_command_new (weechat_commands[i].command_name);
+        i++;
+    }
+    i = 0;
+    while (irc_commands[i].command_name)
+    {
+        if (irc_commands[i].cmd_function_args || irc_commands[i].cmd_function_1arg)
+            index_command_new (irc_commands[i].command_name);
+        i++;
+    }
+}
+
+/*
  * index_command_free: free an index command and reomve it from list
  */
 
@@ -194,44 +239,6 @@ index_command_free (t_index_command *index)
         free (index->command_name);
     free (index);
     index_commands = new_index_commands;
-}
-
-/*
- * index_command_build: build an index of commands (internal, irc and alias)
- *                      This list will be sorted, and used for completion
- */
-
-void
-index_command_build ()
-{
-    int i;
-    t_index_command *new_index;
-    
-    index_commands = NULL;
-    last_index_command = NULL;
-    i = 0;
-    while (weechat_commands[i].command_name)
-    {
-        if ((new_index = ((t_index_command *) malloc (sizeof (t_index_command)))))
-        {
-            new_index->command_name = strdup (weechat_commands[i].command_name);
-            index_command_insert_sorted (new_index);
-        }
-        i++;
-    }
-    i = 0;
-    while (irc_commands[i].command_name)
-    {
-        if (irc_commands[i].cmd_function_args || irc_commands[i].cmd_function_1arg)
-        {
-            if ((new_index = ((t_index_command *) malloc (sizeof (t_index_command)))))
-            {
-                new_index->command_name = strdup (irc_commands[i].command_name);
-                index_command_insert_sorted (new_index);
-            }
-        }
-        i++;
-    }
 }
 
 /*
@@ -308,6 +315,28 @@ alias_insert_sorted (t_weechat_alias *alias)
         weechat_alias = alias;
         weechat_last_alias = alias;
     }
+}
+
+/*
+ * alias_new: create new alias and add it to alias list
+ */
+
+t_weechat_alias *
+alias_new (char *alias_name, char *alias_command)
+{
+    t_weechat_alias *new_alias;
+    
+    if ((new_alias = ((t_weechat_alias *) malloc (sizeof (t_weechat_alias)))))
+    {
+        new_alias->alias_name = strdup (alias_name);
+        new_alias->alias_command = (char *)malloc (strlen (alias_command) + 2);
+        new_alias->alias_command[0] = '/';
+        strcpy (new_alias->alias_command + 1, alias_command);
+        alias_insert_sorted (new_alias);
+        return new_alias;
+    }
+    else
+        return NULL;
 }
 
 /*
@@ -436,8 +465,8 @@ explode_string (char *string, char *separators, int num_items_max,
 int
 exec_weechat_command (t_irc_server *server, char *string)
 {
-    int i, j, argc, return_code;
-    char *pos, *ptr_args, **argv;
+    int i, j, argc, return_code, length1, length2;
+    char *pos, *ptr_args, **argv, *alias_command;
     t_weechat_alias *ptr_alias;
 
     if ((!string[0]) || (string[0] != '/'))
@@ -574,7 +603,26 @@ exec_weechat_command (t_irc_server *server, char *string)
     {
         if (strcasecmp (ptr_alias->alias_name, string + 1) == 0)
         {
-            exec_weechat_command (server, ptr_alias->alias_command);
+            if (ptr_args)
+            {
+                length1 = strlen (ptr_alias->alias_command);
+                length2 = strlen (ptr_args);
+                alias_command = (char *)malloc (length1 + 1 + length2 + 1);
+                strcpy (alias_command, ptr_alias->alias_command);
+                alias_command[length1] = ' ';
+                strcpy (alias_command + length1 + 1, ptr_args);
+            }
+            else
+                alias_command = strdup (ptr_alias->alias_command);
+            exec_weechat_command (server, alias_command);
+            free (alias_command);
+            
+            if (argv)
+            {
+                for (j = 0; argv[j]; j++)
+                    free (argv[j]);
+                free (argv);
+            }
             return 1;
         }
     }
@@ -663,8 +711,7 @@ int
 weechat_cmd_alias (char *arguments)
 {
     char *pos, *pos2;
-    t_weechat_alias *ptr_alias, *new_alias;
-    t_index_command *new_index;
+    t_weechat_alias *ptr_alias;
     
     if (arguments && arguments[0])
     {
@@ -705,19 +752,9 @@ weechat_cmd_alias (char *arguments)
             }
             if (pos2)
                 pos2[0] = ' ';
-            if ((new_index = ((t_index_command *) malloc (sizeof (t_index_command)))))
-            {
-                new_index->command_name = strdup (arguments);
-                index_command_insert_sorted (new_index);
-            }
-            if ((new_alias = ((t_weechat_alias *) malloc (sizeof (t_weechat_alias)))))
-            {
-                new_alias->alias_name = strdup (arguments);
-                new_alias->alias_command = (char *)malloc (strlen (pos) + 2);
-                new_alias->alias_command[0] = '/';
-                strcpy (new_alias->alias_command + 1, pos);
-                alias_insert_sorted (new_alias);
-            }
+            index_command_new (arguments);
+            if (!alias_new (arguments, pos))
+                return -1;
             gui_printf (NULL, _("Alias \"%s\" => \"%s\" created\n"),
                         arguments, pos);
         }

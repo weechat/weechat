@@ -31,6 +31,7 @@
 
 #include "weechat.h"
 #include "config.h"
+#include "command.h"
 #include "irc/irc.h"
 #include "gui/gui.h"
 
@@ -44,6 +45,7 @@ t_config_section config_sections[CONFIG_NUMBER_SECTIONS] =
   { CONFIG_SECTION_LOG, "log" },
   { CONFIG_SECTION_DCC, "dcc" },
   { CONFIG_SECTION_PROXY, "proxy" },
+  { CONFIG_SECTION_ALIAS, "alias" },
   { CONFIG_SECTION_SERVER, "server" }
 };
 
@@ -485,7 +487,7 @@ t_config_option weechat_options_server[] =
 t_config_option *weechat_options[CONFIG_NUMBER_SECTIONS] =
 { weechat_options_look, weechat_options_colors, weechat_options_history,
   weechat_options_log, weechat_options_dcc, weechat_options_proxy,
-  weechat_options_server
+  NULL, weechat_options_server
 };
 
 
@@ -570,7 +572,7 @@ config_default_values ()
     
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
     {
-        if (i != CONFIG_SECTION_SERVER)
+        if ((i != CONFIG_SECTION_ALIAS) && (i != CONFIG_SECTION_SERVER))
         {
             for (j = 0; weechat_options[i][j].option_name; j++)
             {
@@ -725,29 +727,35 @@ config_read ()
                         pos2 = strchr (pos, '\n');
                         if (pos2 != NULL)
                             pos2[0] = '\0';
-                        option_number = -1;
-                        for (i = 0;
-                             weechat_options[section][i].option_name; i++)
+                        
+                        if (section == CONFIG_SECTION_ALIAS)
                         {
-                            if (strcmp
-                                (weechat_options[section][i].option_name,
-                                 ptr_line) == 0)
-                            {
-                                option_number = i;
-                                break;
-                            }
-                        }
-                        if (option_number < 0)
-                        {
-                            gui_printf (NULL,
-                                        _("%s %s, line %d: invalid option \"%s\"\n"),
-                                        WEECHAT_WARNING, filename, line_number, ptr_line);
-                            fclose (file);
-                            free (filename);
-                            return -2;
+                            index_command_new (pos);
+                            alias_new (line, pos);
                         }
                         else
                         {
+                            option_number = -1;
+                            for (i = 0;
+                                 weechat_options[section][i].option_name; i++)
+                            {
+                                if (strcmp
+                                    (weechat_options[section][i].option_name,
+                                     ptr_line) == 0)
+                                {
+                                    option_number = i;
+                                    break;
+                                }
+                            }
+                            if (option_number < 0)
+                            {
+                                gui_printf (NULL,
+                                            _("%s %s, line %d: invalid option \"%s\"\n"),
+                                            WEECHAT_WARNING, filename, line_number, ptr_line);
+                                fclose (file);
+                                free (filename);
+                                return -2;
+                            }
                             switch (weechat_options[section]
                                     [option_number].option_type)
                             {
@@ -923,7 +931,7 @@ config_create_default ()
 
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
     {
-        if (i != CONFIG_SECTION_SERVER)
+        if ((i != CONFIG_SECTION_ALIAS) && (i != CONFIG_SECTION_SERVER))
         {
             sprintf (line, "\n[%s]\n", config_sections[i].section_name);
             fputs (line, file);
@@ -963,6 +971,10 @@ config_create_default ()
         }
     }
     
+    /* default alias */
+    fputs ("\n[alias]\n", file);
+    fputs ("say=msg *\n", file);
+    
     /* default server is freenode */
     fputs ("\n[server]\n", file);
     fputs ("server_name=freenode\n", file);
@@ -996,6 +1008,7 @@ config_write (char *config_name)
     int i, j;
     time_t current_time;
     t_irc_server *ptr_server;
+    t_weechat_alias *ptr_alias;
 
     if (config_name)
         filename = strdup (config_name);
@@ -1023,7 +1036,7 @@ config_write (char *config_name)
 
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
     {
-        if (i != CONFIG_SECTION_SERVER)
+        if ((i != CONFIG_SECTION_ALIAS) && (i != CONFIG_SECTION_SERVER))
         {
             sprintf (line, "\n[%s]\n", config_sections[i].section_name);
             fputs (line, file);
@@ -1080,6 +1093,17 @@ config_write (char *config_name)
         }
     }
     
+    /* alias section */
+    fputs ("\n[alias]\n", file);
+    for (ptr_alias = weechat_alias; ptr_alias;
+         ptr_alias = ptr_alias->next_alias)
+    {
+        sprintf (line, "%s=%s\n",
+                 ptr_alias->alias_name, ptr_alias->alias_command + 1);
+        fputs (line, file);
+    }
+    
+    /* server section */
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {

@@ -32,8 +32,9 @@
 #define CONFIG_SECTION_LOG     3
 #define CONFIG_SECTION_DCC     4
 #define CONFIG_SECTION_PROXY   5
-#define CONFIG_SECTION_SERVER  6
-#define CONFIG_NUMBER_SECTIONS 7
+#define CONFIG_SECTION_ALIAS   6
+#define CONFIG_SECTION_SERVER  7
+#define CONFIG_NUMBER_SECTIONS 8
 
 #define OPTION_TYPE_BOOLEAN         1   /* values: on/off                   */
 #define OPTION_TYPE_INT             2   /* values: from min to max          */

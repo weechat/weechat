@@ -239,6 +239,9 @@ main (int argc, char *argv[])
     /* init log file */
     wee_init_log ();
     
+    /* build commands index (sorted), for completion */
+    index_command_build ();
+    
     /* read configuration */
     switch (config_read ())
     {
@@ -255,9 +258,6 @@ main (int argc, char *argv[])
     
     /* init gui */
     gui_init ();
-    
-    /* build commands index (sorted), for completion */
-    index_command_build ();
     
     /* Welcome message - yeah! */
     if (cfg_look_startup_logo)

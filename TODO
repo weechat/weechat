@@ -27,7 +27,7 @@ v0.0.2:
     + "/set" command: allow the user to set the WeeChat variables
       under WeeChat without editing the config file (colours, time
       format, etc)
-    - "/alias" and "/unalias" commands
+    # "/alias" and "/unalias" commands
     - "/highlight" command: highlight a given word when it appears on
       channels/privates
 
