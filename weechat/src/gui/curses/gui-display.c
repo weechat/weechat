@@ -924,8 +924,6 @@ gui_redraw_window_status (t_gui_window *window)
 void
 gui_draw_window_infobar (t_gui_window *window)
 {
-    t_gui_window *ptr_win;
-    char format_more[32];
     time_t time_seconds;
     struct tm *local_time;
     char text[256];
