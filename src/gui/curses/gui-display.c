@@ -829,7 +829,6 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                               COLOR_WIN_STATUS_DELIMITERS);
             wprintw (ptr_win->win_status, "] ");
         }
-        
         if (SERVER(ptr_win->buffer) && !CHANNEL(ptr_win->buffer))
         {
             gui_window_set_color (ptr_win->win_status,
@@ -846,7 +845,7 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                          SERVER(ptr_win->buffer)->name);
             else
                 wprintw (ptr_win->win_status, "(%s) ",
-                         ptr_win->buffer->number, SERVER(ptr_win->buffer)->name);
+                         SERVER(ptr_win->buffer)->name);
         }
         if (SERVER(ptr_win->buffer) && CHANNEL(ptr_win->buffer))
         {
@@ -897,7 +896,7 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
             wprintw (ptr_win->win_status, _("%d:[not connected] "),
                      ptr_win->buffer->number);
         }
-    
+        
         /* display list of other active windows (if any) with numbers */
         if (hotlist)
         {
@@ -1363,7 +1362,6 @@ gui_curses_resize_handler ()
     /* TODO: manage when some windows are outside new term size */
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        wee_log_printf ("win_x = %d, win_width = %d, old_width = %d\n", ptr_win->win_x, ptr_win->win_width, old_width);
         if (ptr_win->win_x + ptr_win->win_width == old_width)
             ptr_win->win_width = new_width - ptr_win->win_x;
         if (ptr_win->win_y + ptr_win->win_height == old_height)
