@@ -1302,7 +1302,7 @@ weechat_cmd_set (int argc, char **argv)
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
     {
         section_displayed = 0;
-        if (i != CONFIG_SECTION_SERVER)
+        if ((i != CONFIG_SECTION_ALIAS) && (i != CONFIG_SECTION_SERVER))
         {
             for (j = 0; weechat_options[i][j].option_name; j++)
             {
@@ -1358,7 +1358,7 @@ weechat_cmd_set (int argc, char **argv)
             }
         }
     }
-    gui_printf (NULL, "(TODO) \"/set\" command not developed!\n");
+    gui_printf (NULL, "(TODO) \"/set\" command not fully developed!\n");
     return 0;
 }
 
