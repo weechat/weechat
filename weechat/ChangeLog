@@ -1,16 +1,17 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2003-10-11
+ChangeLog - 2003-10-12
 
 
 Version 0.0.3 (under dev!):
    * fixed crash when entering text without any server connection
    * fixed display bug (text was blinking when scrolling)
+   * french translation
    * new IRC command: /stats, /service, /squit, /motd, /lusers, /links, /time,
      /trace, /admin, /info, /servlist, /squery, /who, /whowas, /die, /summon,
      /users, /wallops, /userhost, /ison
-   * french translation
+   * code cleanup
 
 Version 0.0.2 (2003-10-05):
    * added commands /rehash and /restart

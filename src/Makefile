@@ -53,15 +53,6 @@ qt: $(OBJS) $(OBJS_IRC) $(OBJS_GUI)
 	$(CC) $(OPTIONS) $(OBJS) $(OBJS_IRC) $(OBJS_GUI) -o $(OUTPUT) $(LIBS_QT)
 endif
 
-# WeeChat with Text interface
-ifeq ($(GUI), text)
-OBJS_TEXT=gui-text.o
-LIBS_TEXT=
-DEFINES=WEE_TEXT
-text: $(OBJS) $(OBJS_IRC) $(OBJS_GUI)
-	$(CC) $(OPTIONS) $(OBJS) $(OBJS_IRC) $(OBJS_GUI) -o $(OUTPUT) $(LIBS_TEXT)
-endif
-
 
 all:
 	make curses GUI=curses

@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2003-10-11
+TODO - 2003-10-12
 
 Legend:
   #  done
@@ -16,6 +16,8 @@ v0.0.3:
  * IRC protocol:
     # implement RFC 2812
     + "/mode" command: change the user/channels modes
+    # "/wallops" command: write the same string to all the
+      persons with the flag +w enable
 
  * WeeChat commands:
     - "/reload" command: reload the WeeChat's config file
@@ -55,8 +57,6 @@ Future versions:
       When we come back from our away it should print it to the current window
     - "/notify" and "/unnotify" command to be warn by WeeChat when a given
       nick/host connect to the given irc network
-    - "/wallops" command: write the same string to all the
-      persons with the flag +w enable
 
  * WeeChat commands:
     - "/completion" command: do shortcuts (for example when we type "u"

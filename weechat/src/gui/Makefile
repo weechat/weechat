@@ -36,13 +36,6 @@ qt/gui.a:
 	cd qt && make
 endif
 
-# WeeChat with Text interface
-ifeq ($(GUI), text)
-text: text/gui.a
-text/gui.a:
-	cd text && make
-endif
-
 
 all:
 	make curses GUI=curses
@@ -52,4 +45,3 @@ clean:
 	cd curses && make clean
 	cd gtk && make clean
 	cd qt && make clean
-	cd text && make clean
