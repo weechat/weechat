@@ -714,8 +714,12 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *arguments)
     {
         pos = strchr (host, '!');
         if (pos)
+        {
             pos[0] = '\0';
-        host2 = pos + 1;
+            host2 = pos + 1;
+        }
+        else
+            host2 = NULL;
     }
     
     pos = strchr (arguments, ' ');
