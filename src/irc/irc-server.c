@@ -318,7 +318,7 @@ server_send (t_irc_server * server, char *buffer, int size_buf)
  * server_sendf: send formatted data to irc server
  */
 
-int
+void
 server_sendf (t_irc_server * server, char *fmt, ...)
 {
     va_list args;
@@ -326,14 +326,14 @@ server_sendf (t_irc_server * server, char *fmt, ...)
     int size_buf;
 
     if (!server)
-        return -1;
+        return;
 
     va_start (args, fmt);
     size_buf = vsnprintf (buffer, sizeof (buffer) - 1, fmt, args);
     va_end (args);
 
     if ((size_buf == 0) || (strcmp (buffer, "\r\n") == 0))
-        return 0;
+        return;
 
     buffer[sizeof (buffer) - 1] = '\0';
     if ((size_buf < 0) || (size_buf > (int) (sizeof (buffer) - 1)))
@@ -343,7 +343,9 @@ server_sendf (t_irc_server * server, char *fmt, ...)
     gui_printf (server->window, "[DEBUG] Sending to server >>> %s\n", buffer);
     #endif
     buffer[size_buf - 2] = '\r';
-    return server_send (server, buffer, size_buf);
+    if (server_send (server, buffer, size_buf) <= 0)
+        gui_printf (server->window, _("%s error sending data to IRC server\n"),
+                    WEECHAT_ERROR);
 }
 
 /*

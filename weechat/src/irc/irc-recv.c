@@ -183,7 +183,7 @@ irc_cmd_recv_join (t_irc_server *server, char *host, char *arguments)
                       _(" has joined "));
     gui_printf_color (ptr_channel->window, COLOR_WIN_CHAT_CHANNEL,
                       "%s\n", arguments);
-    nick_new (ptr_channel, host, 0, 0, 0);
+    (void) nick_new (ptr_channel, host, 0, 0, 0);
     gui_redraw_window_nick (gui_current_window);
     return 0;
 }
@@ -487,7 +487,7 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *arguments)
         ptr_nick = nick_search (ptr_channel, host);
         if (ptr_nick)
         {
-            nick_is_me = (strcmp (ptr_nick->nick, server->nick) == 0);
+            nick_is_me = (strcmp (ptr_nick->nick, server->nick) == 0) ? 1 : 0;
             nick_change (ptr_channel, ptr_nick, arguments);
             irc_display_prefix (ptr_channel->window, PREFIX_INFO);
             if (nick_is_me)
@@ -867,15 +867,23 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
             if (strcmp (pos, "\01VERSION\01") == 0)
             {
                 buf = (struct utsname *) malloc (sizeof (struct utsname));
-                uname (buf);
-                server_sendf (server,
-                              _("NOTICE %s :%sVERSION %s v%s"
-                              " compiled on %s, host \"%s\" is running "
-                              "%s %s / %s%s"),
-                              host, "\01", PACKAGE_NAME, PACKAGE_VERSION, __DATE__,
-                              &buf->nodename, &buf->sysname,
-                              &buf->release, &buf->machine, "\01\r\n");
-                free (buf);
+                if (buf && (uname (buf) == 0))
+                {
+                    server_sendf (server,
+                                  _("NOTICE %s :%sVERSION %s v%s"
+                                  " compiled on %s, host \"%s\" is running "
+                                  "%s %s / %s%s"),
+                                  host, "\01", PACKAGE_NAME, PACKAGE_VERSION, __DATE__,
+                                  &buf->nodename, &buf->sysname,
+                                  &buf->release, &buf->machine, "\01\r\n");
+                    free (buf);
+                }
+                else
+                    server_sendf (server,
+                                  _("NOTICE %s :%sVERSION %s v%s"
+                                  " compiled on %s%s"),
+                                  host, "\01", PACKAGE_NAME, PACKAGE_VERSION, __DATE__,
+                                  "\01\r\n");
                 irc_display_prefix (server->window, PREFIX_INFO);
                 gui_printf_color (server->window,
                                   COLOR_WIN_CHAT, _("Received a "));

@@ -151,7 +151,7 @@ extern void server_free_all ();
 extern t_irc_server *server_new (char *, int, int, char *, int, char *, char *,
                                  char *, char *, char *, char *, char *, char *);
 extern int server_send (t_irc_server *, char *, int);
-extern int server_sendf (t_irc_server *, char *, ...);
+extern void server_sendf (t_irc_server *, char *, ...);
 extern void server_recv (t_irc_server *);
 extern int server_connect ();
 extern void server_auto_connect (int);
@@ -182,7 +182,7 @@ extern int nick_get_max_length (t_irc_channel *);
 
 /* IRC display (irc-diplay.c) */
 
-extern void irc_display_prefix (t_gui_window *, char *);
+extern void irc_display_prefix (/*@null@*/ t_gui_window *, char *);
 extern void irc_display_nick (t_gui_window *, t_irc_nick *, int, int, int, int);
 extern void irc_display_mode (t_gui_window *, char *, char, char *, char *,
                               char *, char *);

@@ -754,15 +754,20 @@ config_default_values ()
 int
 config_read ()
 {
+    int filename_length;
     char *filename;
     FILE *file;
     int section, line_number, i, option_number;
     int server_found;
     char line[1024], *ptr_line, *pos, *pos2;
 
+    filename_length = strlen (weechat_home) + 64;
     filename =
-        (char *) malloc ((strlen (weechat_home) + 64) * sizeof (char));
-    sprintf (filename, "%s%s" WEECHAT_CONFIG_NAME, weechat_home, DIR_SEPARATOR);
+        (char *) malloc (filename_length * sizeof (char));
+    if (!filename)
+        return -2;
+    snprintf (filename, filename_length, "%s%s" WEECHAT_CONFIG_NAME,
+              weechat_home, DIR_SEPARATOR);
     if ((file = fopen (filename, "rt")) == NULL)
     {
         gui_printf (NULL, _("%s config file \"%s\" not found.\n"),
@@ -955,6 +960,7 @@ config_read ()
 int
 config_create_default ()
 {
+    int filename_length;
     char *filename;
     FILE *file;
     int i, j;
@@ -962,9 +968,13 @@ config_create_default ()
     struct passwd *my_passwd;
     char *realname, *pos;
 
+    filename_length = strlen (weechat_home) + 64;
     filename =
-        (char *) malloc ((strlen (weechat_home) + 64) * sizeof (char));
-    sprintf (filename, "%s%s" WEECHAT_CONFIG_NAME, weechat_home, DIR_SEPARATOR);
+        (char *) malloc (filename_length * sizeof (char));
+    if (!filename)
+        return -2;
+    snprintf (filename, filename_length, "%s%s" WEECHAT_CONFIG_NAME,
+              weechat_home, DIR_SEPARATOR);
     if ((file = fopen (filename, "wt")) == NULL)
     {
         gui_printf (NULL, _("%s cannot create file \"%s\"\n"),
@@ -1111,6 +1121,7 @@ config_create_default ()
 int
 config_write (char *config_name)
 {
+    int filename_length;
     char *filename;
     FILE *file;
     int i, j;
@@ -1122,9 +1133,13 @@ config_write (char *config_name)
         filename = strdup (config_name);
     else
     {
+        filename_length = strlen (weechat_home) + 64;
         filename =
-            (char *) malloc ((strlen (weechat_home) + 64) * sizeof (char));
-        sprintf (filename, "%s%s" WEECHAT_CONFIG_NAME, weechat_home, DIR_SEPARATOR);
+            (char *) malloc (filename_length * sizeof (char));
+        if (!filename)
+            return -2;
+        snprintf (filename, filename_length, "%s%s" WEECHAT_CONFIG_NAME,
+                  weechat_home, DIR_SEPARATOR);
     }
     
     if ((file = fopen (filename, "wt")) == NULL)

@@ -97,10 +97,13 @@ wee_log_printf (char *message, ...)
     
     seconds = time (NULL);
     date_tmp = localtime (&seconds);
-    fprintf (log_file, "[%04d-%02d-%02d %02d:%02d:%02d] %s",
-             date_tmp->tm_year + 1900, date_tmp->tm_mon + 1, date_tmp->tm_mday,
-             date_tmp->tm_hour, date_tmp->tm_min, date_tmp->tm_sec,
-             buffer);
+    if (date_tmp)
+        fprintf (log_file, "[%04d-%02d-%02d %02d:%02d:%02d] %s",
+                 date_tmp->tm_year + 1900, date_tmp->tm_mon + 1, date_tmp->tm_mday,
+                 date_tmp->tm_hour, date_tmp->tm_min, date_tmp->tm_sec,
+                 buffer);
+    else
+        fprintf (log_file, "[????-??-?? ??:??:??] %s", buffer);
     fflush (log_file);
 }
 
@@ -195,26 +198,26 @@ wee_parse_args (int argc, char *argv[])
             || (strcmp (argv[i], "--config") == 0))
         {
             wee_display_config_options ();
-            exit (0);
+            exit (EXIT_SUCCESS);
         }
         else if ((strcmp (argv[i], "-h") == 0)
                 || (strcmp (argv[i], "--help") == 0))
         {
             printf ("\n" WEE_USAGE1, argv[0]);
             printf ("%s", WEE_USAGE2);
-            exit (0);
+            exit (EXIT_SUCCESS);
         }
         else if ((strcmp (argv[i], "-l") == 0)
                  || (strcmp (argv[i], "--license") == 0))
         {
             printf ("\n%s%s", WEE_LICENSE);
-            exit (0);
+            exit (EXIT_SUCCESS);
         }
         else if ((strcmp (argv[i], "-v") == 0)
                  || (strcmp (argv[i], "--version") == 0))
         {
             printf (PACKAGE_VERSION "\n");
-            exit (0);
+            exit (EXIT_SUCCESS);
         }
         else if ((strncasecmp (argv[i], "irc://", 6) == 0))
         {
@@ -278,51 +281,75 @@ wee_create_dir (char *directory)
 void
 wee_create_home_dirs ()
 {
-    char *dir_name;
+    char *ptr_home, *dir_name;
+    int dir_length;
 
     /* TODO: rewrite this code for Windows version */
+    ptr_home = getenv ("HOME");
+    if (!ptr_home)
+    {
+        fprintf (stderr, _("%s unable to get HOME directory\n"),
+                 WEECHAT_ERROR);
+        exit (EXIT_FAILURE);
+    }
+    dir_length = strlen (ptr_home) + 10;
     weechat_home =
-        (char *) malloc ((strlen (getenv ("HOME")) + 10) * sizeof (char));
-    sprintf (weechat_home, "%s%s.weechat", getenv ("HOME"), DIR_SEPARATOR);
+        (char *) malloc (dir_length * sizeof (char));
+    if (!weechat_home)
+    {
+        fprintf (stderr, _("%s not enough memory for home directory\n"),
+                 WEECHAT_ERROR);
+        exit (EXIT_FAILURE);
+    }
+    snprintf (weechat_home, dir_length, "%s%s.weechat", ptr_home,
+              DIR_SEPARATOR);
     
     /* create home directory "~/.weechat" ; error is fatal */
     if (!wee_create_dir (weechat_home))
-        exit (1);
+    {
+        fprintf (stderr, _("%s unable to create ~/.weechat directory\n"),
+                 WEECHAT_ERROR);
+        exit (EXIT_FAILURE);
+    }
     
-    dir_name = (char *) malloc ((strlen (weechat_home) + 64) * sizeof (char));
+    dir_length = strlen (weechat_home) + 64;
+    dir_name = (char *) malloc (dir_length * sizeof (char));
     
     #ifdef PLUGIN_PERL
     /* create "~/.weechat/perl" */
-    sprintf (dir_name, "%s%s%s", weechat_home, DIR_SEPARATOR, "perl");
+    snprintf (dir_name, dir_length, "%s%s%s", weechat_home, DIR_SEPARATOR,
+              "perl");
     if (wee_create_dir (dir_name))
     {
         /* create "~/.weechat/perl/autoload" */
-        sprintf (dir_name, "%s%s%s%s%s", weechat_home, DIR_SEPARATOR, "perl",
-                 DIR_SEPARATOR, "autoload");
+        snprintf (dir_name, dir_length, "%s%s%s%s%s", weechat_home,
+                 DIR_SEPARATOR, "perl", DIR_SEPARATOR, "autoload");
         wee_create_dir (dir_name);
     }
     #endif
     
     #ifdef PLUGIN_PYTHON
     /* create "~/.weechat/python" */
-    sprintf (dir_name, "%s%s%s", weechat_home, DIR_SEPARATOR, "python");
+    snprintf (dir_name, dir_length, "%s%s%s", weechat_home, DIR_SEPARATOR,
+             "python");
     if (wee_create_dir (dir_name))
     {
         /* create "~/.weechat/python/autoload" */
-        sprintf (dir_name, "%s%s%s%s%s", weechat_home, DIR_SEPARATOR, "python",
-                 DIR_SEPARATOR, "autoload");
+        snprintf (dir_name, dir_length, "%s%s%s%s%s", weechat_home,
+                 DIR_SEPARATOR, "python", DIR_SEPARATOR, "autoload");
         wee_create_dir (dir_name);
     }
     #endif
     
     #ifdef PLUGIN_RUBY
     /* create "~/.weechat/ruby" */
-    sprintf (dir_name, "%s%s%s", weechat_home, DIR_SEPARATOR, "ruby");
+    snprintf (dir_name, dir_length, "%s%s%s", weechat_home, DIR_SEPARATOR,
+             "ruby");
     if (wee_create_dir (dir_name))
     {
         /* create "~/.weechat/ruby/autoload" */
-        sprintf (dir_name, "%s%s%s%s%s", weechat_home, DIR_SEPARATOR, "ruby",
-                 DIR_SEPARATOR, "autoload");
+        snprintf (dir_name, dir_length, "%s%s%s%s%s", weechat_home,
+                 DIR_SEPARATOR, "ruby", DIR_SEPARATOR, "autoload");
         wee_create_dir (dir_name);
     }
     #endif
@@ -352,18 +379,17 @@ wee_init_vars ()
 void
 wee_init_log ()
 {
+    int filename_length;
     char *filename;
     
+    filename_length = strlen (weechat_home) + 64;
     filename =
-        (char *) malloc ((strlen (weechat_home) + 64) * sizeof (char));
-    sprintf (filename, "%s/" WEECHAT_LOG_NAME, weechat_home);
+        (char *) malloc (filename_length * sizeof (char));
+    snprintf (filename, filename_length, "%s/" WEECHAT_LOG_NAME, weechat_home);
     if ((log_file = fopen (filename, "wt")) == NULL)
-    {
-        free (filename);
         fprintf (stderr,
                  _("%s unable to create/append to log file (~/.weechat/%s)"),
-                 WEECHAT_ERROR, WEECHAT_LOG_NAME);
-    }
+                 WEECHAT_WARNING, WEECHAT_LOG_NAME);
     free (filename);
 }
 
@@ -418,7 +444,7 @@ wee_shutdown ()
     gui_end ();
     if (log_file)
         fclose (log_file);
-    exit (0);
+    exit (EXIT_SUCCESS);
 }
 
 /*
@@ -448,12 +474,13 @@ main (int argc, char *argv[])
             break;
         case -1:                    /* config file not found                */
             if (config_create_default () < 0)
-                return 1;
-            config_read ();
+                return EXIT_FAILURE;
+            if (config_read () != 0)
+                return EXIT_FAILURE;
             break;
         default:                    /* other error (fatal)                  */
             server_free_all ();
-            return 1;
+            return EXIT_FAILURE;
     }
     
     gui_init ();                    /* init WeeChat interface               */
@@ -466,8 +493,8 @@ main (int argc, char *argv[])
     
     plugin_end ();                  /* end plugin interface(s)              */
     server_disconnect_all ();       /* disconnect from all servers          */
-    config_write (NULL);            /* save config file                     */
+    (void) config_write (NULL);     /* save config file                     */
     wee_shutdown ();                /* quit WeeChat (oh no, why?)           */
     
-    return 0;                       /* make gcc happy (never executed)      */
+    return EXIT_SUCCESS;            /* make gcc happy (never executed)      */
 }

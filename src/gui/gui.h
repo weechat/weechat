@@ -203,7 +203,7 @@ extern t_gui_infobar *gui_infobar;
 /* prototypes */
 
 /* GUI independent functions */
-extern t_gui_window *gui_window_new (void *, void *, int /*int, int, int, int*/); /* TODO: add coordinates and size */
+extern t_gui_window *gui_window_new (/*@null@*/ void *, /*@null@*/ void *, int /*int, int, int, int*/); /* TODO: add coordinates and size */
 extern void gui_window_clear (t_gui_window *);
 extern void gui_window_clear_all ();
 extern void gui_infobar_printf (int, int, char *, ...);
@@ -245,7 +245,7 @@ extern void gui_pre_init (int *, char **[]);
 extern void gui_init ();
 extern void gui_window_free (t_gui_window *);
 extern void gui_end ();
-extern void gui_printf_color_type (t_gui_window *, int, int, char *, ...);
+extern void gui_printf_color_type (/*@null@*/ t_gui_window *, int, int, char *, ...);
 extern void gui_main_loop ();
 
 #endif /* gui.h */

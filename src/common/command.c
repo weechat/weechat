@@ -84,7 +84,7 @@ t_weechat_command weechat_commands[] =
     0, 1, weechat_cmd_save, NULL },
   { "set", N_("set config parameters"),
     N_("[option [value]]"), N_("option: name of an option\nvalue: value for option"),
-    0, 2, weechat_cmd_set, NULL },
+    0, 2, NULL, weechat_cmd_set },
   { "unalias", N_("remove an alias"),
     N_("alias_name"), N_("alias_name: name of alias to remove"),
     1, 1, NULL, weechat_cmd_unalias },
@@ -207,14 +207,14 @@ index_command_build ()
     i = 0;
     while (weechat_commands[i].command_name)
     {
-        index_command_new (weechat_commands[i].command_name);
+        (void) index_command_new (weechat_commands[i].command_name);
         i++;
     }
     i = 0;
     while (irc_commands[i].command_name)
     {
         if (irc_commands[i].cmd_function_args || irc_commands[i].cmd_function_1arg)
-            index_command_new (irc_commands[i].command_name);
+            (void) index_command_new (irc_commands[i].command_name);
         i++;
     }
 }
@@ -363,8 +363,11 @@ alias_new (char *alias_name, char *alias_command)
     {
         new_alias->alias_name = strdup (alias_name);
         new_alias->alias_command = (char *)malloc (strlen (alias_command) + 2);
-        new_alias->alias_command[0] = '/';
-        strcpy (new_alias->alias_command + 1, alias_command);
+        if (new_alias->alias_command)
+        {
+            new_alias->alias_command[0] = '/';
+            strcpy (new_alias->alias_command + 1, alias_command);
+        }
         alias_insert_sorted (new_alias);
         return new_alias;
     }
@@ -409,7 +412,7 @@ alias_free (t_weechat_alias *alias)
  */
 
 char **
-explode_string (char *string, char *separators, int num_items_max,
+explode_string (/*@null@*/ char *string, char *separators, int num_items_max,
                 int *num_items)
 {
     int i, n_items;
@@ -502,7 +505,7 @@ exec_weechat_command (t_irc_server *server, char *string)
     char *command, *pos, *ptr_args, **argv, *alias_command;
     t_weechat_alias *ptr_alias;
 
-    if ((!string[0]) || (string[0] != '/'))
+    if ((!string) || (!string[0]) || (string[0] != '/'))
         return 0;
 
     command = strdup (string);
@@ -645,14 +648,18 @@ exec_weechat_command (t_irc_server *server, char *string)
                     length1 = strlen (ptr_alias->alias_command);
                     length2 = strlen (ptr_args);
                     alias_command = (char *)malloc (length1 + 1 + length2 + 1);
-                    strcpy (alias_command, ptr_alias->alias_command);
-                    alias_command[length1] = ' ';
-                    strcpy (alias_command + length1 + 1, ptr_args);
-                    exec_weechat_command (server, alias_command);
-                    free (alias_command);
+                    if (alias_command)
+                    {
+                        strcpy (alias_command, ptr_alias->alias_command);
+                        alias_command[length1] = ' ';
+                        strcpy (alias_command + length1 + 1, ptr_args);
+                    }
+                    (void) exec_weechat_command (server, alias_command);
+                    if (alias_command)
+                        free (alias_command);
                 }
                 else
-                    exec_weechat_command (server, ptr_alias->alias_command);
+                    (void) exec_weechat_command (server, ptr_alias->alias_command);
                 
                 if (argv)
                 {
@@ -694,7 +701,7 @@ user_command (t_irc_server *server, char *command)
     if ((command[0] == '/') && (command[1] != '/'))
     {
         /* WeeChat internal command (or IRC command) */
-        exec_weechat_command (server, command);
+        (void) exec_weechat_command (server, command);
     }
     else
     {
@@ -772,7 +779,7 @@ weechat_cmd_alias (char *arguments)
             }
             if (!alias_new (arguments, pos))
                 return -1;
-            index_command_new (arguments);
+            (void) index_command_new (arguments);
             gui_printf (NULL, _("Alias \"%s\" => \"%s\" created\n"),
                         arguments, pos);
         }
@@ -851,7 +858,10 @@ weechat_cmd_connect (int argc, char **argv)
             return -1;
         }
         if (!ptr_server->window)
-            gui_window_new (ptr_server, NULL, 1);
+        {
+            if (!gui_window_new (ptr_server, NULL, 1))
+                return -1;
+        }
         if (server_connect (ptr_server))
         {
             irc_login (ptr_server);
@@ -994,7 +1004,7 @@ weechat_cmd_perl (int argc, char **argv)
     #ifdef PLUGINS
     t_plugin_script *ptr_plugin_script;
     t_plugin_handler *ptr_plugin_handler;
-    int handler_found;
+    int handler_found, path_length;
     char *path_script;
     
     #ifdef PLUGIN_PERL
@@ -1085,10 +1095,11 @@ weechat_cmd_perl (int argc, char **argv)
                     path_script = NULL;
                 else
                 {
-                    path_script = (char *) malloc ((strlen (weechat_home) +
-                        strlen (argv[1]) + 7) * sizeof (char));
-                    sprintf (path_script, "%s%s%s%s%s", weechat_home,
-                             DIR_SEPARATOR, "perl", DIR_SEPARATOR, argv[1]);
+                    path_length = strlen (weechat_home) + strlen (argv[1]) + 7;
+                    path_script = (char *) malloc (path_length * sizeof (char));
+                    snprintf (path_script, path_length, "%s%s%s%s%s",
+                              weechat_home, DIR_SEPARATOR, "perl",
+                              DIR_SEPARATOR, argv[1]);
                 }
                 plugin_load (PLUGIN_TYPE_PERL,
                              (path_script) ? path_script : argv[1]);
@@ -1430,7 +1441,7 @@ weechat_cmd_server (int argc, char **argv)
         
         if (new_server->autoconnect)
         {
-            gui_window_new (new_server, NULL, 1);
+            (void) gui_window_new (new_server, NULL, 1);
             if (server_connect (new_server))
                 irc_login (new_server);
         }
@@ -1445,72 +1456,93 @@ weechat_cmd_server (int argc, char **argv)
  */
 
 int
-weechat_cmd_set (int argc, char **argv)
+weechat_cmd_set (char *arguments)
 {
+    char *option, *value;
     int i, j, section_displayed;
     char *color_name;
 
-    /* TODO: complete /set command */
-    for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
+    option = NULL;
+    value = NULL;
+    if (arguments && arguments[0])
     {
-        section_displayed = 0;
-        if ((i != CONFIG_SECTION_ALIAS) && (i != CONFIG_SECTION_SERVER))
+        option = arguments;
+        value = strchr (option, ' ');
+        if (value)
         {
-            for (j = 0; weechat_options[i][j].option_name; j++)
+            value[0] = '\0';
+            value++;
+            while (value[0] == ' ')
+                value++;
+        }
+    }
+    
+    if (value && value[0])
+    {
+        gui_printf (NULL, "TODO: set value!\n");
+    }
+    else
+    {
+        for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
+        {
+            section_displayed = 0;
+            if ((i != CONFIG_SECTION_ALIAS) && (i != CONFIG_SECTION_SERVER))
             {
-                if ((argc == 0) ||
-                    ((argc > 0)
-                     && (strstr (weechat_options[i][j].option_name, argv[0])
-                         != NULL)))
+                for (j = 0; weechat_options[i][j].option_name; j++)
                 {
-                    if (!section_displayed)
+                    if ((!option) ||
+                        ((option) && (option[0])
+                         && (strstr (weechat_options[i][j].option_name, option)
+                             != NULL)))
                     {
-                        gui_printf (NULL, "[%s]\n",
-                                             config_sections[i].section_name);
-                        section_displayed = 1;
-                    }
-                    switch (weechat_options[i][j].option_type)
-                    {
-                    case OPTION_TYPE_BOOLEAN:
-                        gui_printf (NULL, "  %s = %s\n",
-                                    weechat_options[i][j].option_name,
-                                    (*weechat_options[i][j].ptr_int) ?
-                                        "ON" : "OFF");
-                        break;
-                    case OPTION_TYPE_INT:
-                        gui_printf (NULL,
-                                    "  %s = %d\n",
-                                    weechat_options[i][j].option_name,
-                                    *weechat_options[i][j].ptr_int);
-                        break;
-                    case OPTION_TYPE_INT_WITH_STRING:
-                        gui_printf (NULL,
-                                    "  %s = %s\n",
-                                    weechat_options[i][j].option_name,
-                                    weechat_options[i][j].array_values[*weechat_options[i][j].ptr_int]);
-                        break;
-                    case OPTION_TYPE_COLOR:
-                        color_name = gui_get_color_by_value (*weechat_options[i][j].ptr_int);
-                        gui_printf (NULL,
-                                    "  %s = %s\n",
-                                    weechat_options[i][j].option_name,
-                                    (color_name) ? color_name : _("(unknown)"));
-                        break;
-                    case OPTION_TYPE_STRING:
-                        gui_printf (NULL, "  %s = %s\n",
-                                    weechat_options[i][j].
-                                    option_name,
-                                    (*weechat_options[i][j].
-                                     ptr_string) ?
-                                    *weechat_options[i][j].
-                                    ptr_string : "");
-                        break;
+                        if (!section_displayed)
+                        {
+                            gui_printf (NULL, "[%s]\n",
+                                                 config_sections[i].section_name);
+                            section_displayed = 1;
+                        }
+                        switch (weechat_options[i][j].option_type)
+                        {
+                        case OPTION_TYPE_BOOLEAN:
+                            gui_printf (NULL, "  %s = %s\n",
+                                        weechat_options[i][j].option_name,
+                                        (*weechat_options[i][j].ptr_int) ?
+                                            "ON" : "OFF");
+                            break;
+                        case OPTION_TYPE_INT:
+                            gui_printf (NULL,
+                                        "  %s = %d\n",
+                                        weechat_options[i][j].option_name,
+                                        *weechat_options[i][j].ptr_int);
+                            break;
+                        case OPTION_TYPE_INT_WITH_STRING:
+                            gui_printf (NULL,
+                                        "  %s = %s\n",
+                                        weechat_options[i][j].option_name,
+                                        weechat_options[i][j].array_values[*weechat_options[i][j].ptr_int]);
+                            break;
+                        case OPTION_TYPE_COLOR:
+                            color_name = gui_get_color_by_value (*weechat_options[i][j].ptr_int);
+                            gui_printf (NULL,
+                                        "  %s = %s\n",
+                                        weechat_options[i][j].option_name,
+                                        (color_name) ? color_name : _("(unknown)"));
+                            break;
+                        case OPTION_TYPE_STRING:
+                            gui_printf (NULL, "  %s = %s\n",
+                                        weechat_options[i][j].
+                                        option_name,
+                                        (*weechat_options[i][j].
+                                         ptr_string) ?
+                                        *weechat_options[i][j].
+                                        ptr_string : "");
+                            break;
+                        }
                     }
                 }
             }
         }
     }
-    gui_printf (NULL, "(TODO) \"/set\" command not fully developed!\n");
     return 0;
 }
 

@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2004-01-21
+ChangeLog - 2004-01-24
 
 
 Version 0.0.5 (under dev!):
+   * secured code to prevent buffer overflows and memory leaks
    * fixed QUIT IRC command: now sent to all connected servers (not only current)
    * new Perl script function to display message in info bar ("IRC::print_infobar")
    * info bar highlight notifications
