@@ -50,6 +50,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <time.h>
+#include <signal.h>
 
 #include "weechat.h"
 #include "weeconfig.h"
@@ -64,6 +65,15 @@ int quit_weechat;           /* = 1 if quit request from user... why ? :'(   */
 
 FILE *log_file;             /* WeeChat log file (~/.weechat/weechat.log     */
 
+
+/*
+ * my_sigint: SIGINT handler, do nothing (just ignore this signal)
+ */
+
+void
+my_sigint ()
+{
+}
 
 /*
  * wee_log_printf: displays a message in WeeChat log (~/.weechat/weechat.log)
@@ -236,6 +246,9 @@ main (int argc, char *argv[])
     bindtextdomain (PACKAGE, LOCALEDIR);
     textdomain (PACKAGE);
     #endif
+    
+    /* ignore SIGINT signal (for example Ctrl-C) */
+    signal (SIGINT, my_sigint);
     
     /* pre-initiliaze interface */
     gui_pre_init (&argc, &argv);
