@@ -39,8 +39,8 @@ t_weechat_command weechat_commands[] =
 { { "alias", N_("create an alias for a command"),
     N_("[alias_name [command [arguments]]"),
     N_("alias_name: name of alias\ncommand: command name (" WEECHAT_NAME
-    " or IRC command)\n" "arguments: arguments for command"),
-    0, MAX_ARGS, weechat_cmd_alias, NULL },
+    " or IRC command, without first '/')\n" "arguments: arguments for command"),
+    0, MAX_ARGS, NULL, weechat_cmd_alias },
   { "clear", N_("clear window(s)"),
     N_("[-all]"),
     N_("-all: clear all windows"),
@@ -79,16 +79,36 @@ t_weechat_command weechat_commands[] =
     0, 2, weechat_cmd_set, NULL },
   { "unalias", N_("remove an alias"),
     N_("alias_name"), N_("alias_name: name of alias to remove"),
-    1, 1, weechat_cmd_unalias, NULL },
+    1, 1, NULL, weechat_cmd_unalias },
   { NULL, NULL, NULL, NULL, 0, 0, NULL, NULL }
 };
+
+t_weechat_alias *weechat_alias = NULL;
+t_weechat_alias *weechat_last_alias = NULL;
 
 t_index_command *index_commands;
 t_index_command *last_index_command;
 
 
 /*
- * index_find_pos: find position for a command index (for sorting index)
+ * index_command_search: search a command
+ */
+
+t_index_command *
+index_command_search (char *command)
+{
+    t_index_command *ptr_index;
+    
+    for (ptr_index = index_commands; ptr_index; ptr_index = ptr_index->next_index)
+    {
+        if (strcasecmp (command, ptr_index->command_name) == 0)
+            return ptr_index;
+    }
+    return NULL;
+}
+
+/*
+ * index_command_find_pos: find position for a command index (for sorting index)
  */
 
 t_index_command *
@@ -144,7 +164,36 @@ index_command_insert_sorted (t_index_command *index)
         index_commands = index;
         last_index_command = index;
     }
-    return;
+}
+
+/*
+ * index_command_free: free an index command and reomve it from list
+ */
+
+void
+index_command_free (t_index_command *index)
+{
+    t_index_command *new_index_commands;
+
+    /* remove index command from list */
+    if (last_index_command == index)
+        last_index_command = index->prev_index;
+    if (index->prev_index)
+    {
+        (index->prev_index)->next_index = index->next_index;
+        new_index_commands = index_commands;
+    }
+    else
+        new_index_commands = index->next_index;
+    
+    if (index->next_index)
+        (index->next_index)->prev_index = index->prev_index;
+
+    /* free data */
+    if (index->command_name)
+        free (index->command_name);
+    free (index);
+    index_commands = new_index_commands;
 }
 
 /*
@@ -183,6 +232,114 @@ index_command_build ()
         }
         i++;
     }
+}
+
+/*
+ * alias_search: search an alias
+ */
+
+t_weechat_alias *
+alias_search (char *alias_name)
+{
+    t_weechat_alias *ptr_alias;
+    
+    for (ptr_alias = weechat_alias; ptr_alias; ptr_alias = ptr_alias->next_alias)
+    {
+        if (strcasecmp (alias_name, ptr_alias->alias_name) == 0)
+            return ptr_alias;
+    }
+    return NULL;
+}
+
+/*
+ * alias_find_pos: find position for an alias (for sorting aliases)
+ */
+
+t_weechat_alias *
+alias_find_pos (char *alias_name)
+{
+    t_weechat_alias *ptr_alias;
+    
+    for (ptr_alias = weechat_alias; ptr_alias; ptr_alias = ptr_alias->next_alias)
+    {
+        if (strcasecmp (alias_name, ptr_alias->alias_name) < 0)
+            return ptr_alias;
+    }
+    return NULL;
+}
+
+/*
+ * alias_insert_sorted: insert alias into sorted list
+ */
+
+void
+alias_insert_sorted (t_weechat_alias *alias)
+{
+    t_weechat_alias *pos_alias;
+    
+    pos_alias = alias_find_pos (alias->alias_name);
+    
+    if (weechat_alias)
+    {
+        if (pos_alias)
+        {
+            /* insert alias into the list (before alias found) */
+            alias->prev_alias = pos_alias->prev_alias;
+            alias->next_alias = pos_alias;
+            if (pos_alias->prev_alias)
+                pos_alias->prev_alias->next_alias = alias;
+            else
+                weechat_alias = alias;
+            pos_alias->prev_alias = alias;
+        }
+        else
+        {
+            /* add alias to the end */
+            alias->prev_alias = weechat_last_alias;
+            alias->next_alias = NULL;
+            weechat_last_alias->next_alias = alias;
+            weechat_last_alias = alias;
+        }
+    }
+    else
+    {
+        alias->prev_alias = NULL;
+        alias->next_alias = NULL;
+        weechat_alias = alias;
+        weechat_last_alias = alias;
+    }
+}
+
+/*
+ * alias_free: free an alias and reomve it from list
+ */
+
+void
+alias_free (t_weechat_alias *alias)
+{
+    t_weechat_alias *new_weechat_alias;
+
+    /* remove alias from list */
+    if (weechat_last_alias == alias)
+        weechat_last_alias = alias->prev_alias;
+    if (alias->prev_alias)
+    {
+        (alias->prev_alias)->next_alias = alias->next_alias;
+        new_weechat_alias = weechat_alias;
+    }
+    else
+        new_weechat_alias = alias->next_alias;
+    
+    if (alias->next_alias)
+        (alias->next_alias)->prev_alias = alias->prev_alias;
+
+    /* free data */
+    if (alias->alias_name)
+        free (alias->alias_name);
+    if (alias->alias_command)
+        free (alias->alias_command);
+    free (alias);
+    weechat_alias = new_weechat_alias;
 }
 
 /*
@@ -281,6 +438,7 @@ exec_weechat_command (t_irc_server *server, char *string)
 {
     int i, j, argc, return_code;
     char *pos, *ptr_args, **argv;
+    t_weechat_alias *ptr_alias;
 
     if ((!string[0]) || (string[0] != '/'))
         return 0;
@@ -411,7 +569,16 @@ exec_weechat_command (t_irc_server *server, char *string)
             return 1;
         }
     }
-    gui_printf (server->window,
+    for (ptr_alias = weechat_alias; ptr_alias;
+         ptr_alias = ptr_alias->next_alias)
+    {
+        if (strcasecmp (ptr_alias->alias_name, string + 1) == 0)
+        {
+            exec_weechat_command (server, ptr_alias->alias_command);
+            return 1;
+        }
+    }
+    gui_printf (NULL,
                 _("%s unknown command '%s' (type /help for help)\n"),
                 WEECHAT_ERROR,
                 string + 1);
@@ -493,14 +660,91 @@ user_command (t_irc_server *server, char *command)
  */
 
 int
-weechat_cmd_alias (int argc, char **argv)
+weechat_cmd_alias (char *arguments)
 {
-    if (argc == 0)
+    char *pos, *pos2;
+    t_weechat_alias *ptr_alias, *new_alias;
+    t_index_command *new_index;
+    
+    if (arguments && arguments[0])
+    {
+        /* Define new alias */
+        pos = strchr (arguments, ' ');
+        if (pos)
+        {
+            pos[0] = '\0';
+            pos++;
+            while (pos[0] == ' ')
+                pos++;
+            if (!pos[0])
+            {
+                gui_printf (NULL, _("%s missing arguments for \"alias\" command\n"),
+                            WEECHAT_ERROR);
+                return -1;
+            }
+            if (index_command_search (arguments))
+            {
+                gui_printf (NULL, _("%s alias or command \"%s\" already exists!\n"),
+                            WEECHAT_ERROR, arguments);
+                return -1;
+            }
+            pos2 = strchr (pos, ' ');
+            if (pos2)
+                pos2[0] = '\0';
+            if (alias_search (pos))
+            {
+                gui_printf (NULL, _("%s alias cannot run another alias!\n"),
+                            WEECHAT_ERROR);
+                return -1;
+            }
+            if (!index_command_search (pos))
+            {
+                gui_printf (NULL, _("%s target command \"%s\" does not exist!\n"),
+                            WEECHAT_ERROR, pos);
+                return -1;
+            }
+            if (pos2)
+                pos2[0] = ' ';
+            if ((new_index = ((t_index_command *) malloc (sizeof (t_index_command)))))
+            {
+                new_index->command_name = strdup (arguments);
+                index_command_insert_sorted (new_index);
+            }
+            if ((new_alias = ((t_weechat_alias *) malloc (sizeof (t_weechat_alias)))))
+            {
+                new_alias->alias_name = strdup (arguments);
+                new_alias->alias_command = (char *)malloc (strlen (pos) + 2);
+                new_alias->alias_command[0] = '/';
+                strcpy (new_alias->alias_command + 1, pos);
+                alias_insert_sorted (new_alias);
+            }
+            gui_printf (NULL, _("Alias \"%s\" => \"%s\" created\n"),
+                        arguments, pos);
+        }
+        else
+        {
+            gui_printf (NULL, _("%s missing arguments for \"alias\" command\n"),
+                        WEECHAT_ERROR);
+            return -1;
+        }
+    }
+    else
     {
         /* List all aliases */
+        if (weechat_alias)
+        {
+            gui_printf (NULL, _("List of aliases:\n"));
+            for (ptr_alias = weechat_alias; ptr_alias;
+                 ptr_alias = ptr_alias->next_alias)
+            {
+                gui_printf (NULL, "  %s => %s\n",
+                            ptr_alias->alias_name,
+                            ptr_alias->alias_command + 1);
+            }
+        }
+        else
+            gui_printf (NULL, _("No alias defined.\n"));
     }
-    argv = NULL;
-    gui_printf (NULL, _("(TODO) \"/alias\" command not developed!\n"));
     return 0;
 }
 
@@ -1034,16 +1278,24 @@ weechat_cmd_set (int argc, char **argv)
  */
 
 int
-weechat_cmd_unalias (int argc, char **argv)
+weechat_cmd_unalias (char *arguments)
 {
-    if (argc != 1)
+    t_index_command *ptr_index;
+    t_weechat_alias *ptr_alias;
+    
+    ptr_index = index_command_search (arguments);
+    if (!ptr_index)
     {
-        gui_printf
-            (NULL,
-             _("Wrong argument count for unalias function (expexted: 1 arg)\n"));
+        gui_printf (NULL, _("%s alias or command \"%s\" not found\n"),
+                    WEECHAT_ERROR, arguments);
         return -1;
     }
-    argv = NULL;
-    gui_printf (NULL, _("(TODO) \"/unalias\" not developed!\n"));
+    
+    index_command_free (ptr_index);
+    ptr_alias = alias_search (arguments);
+    if (ptr_alias)
+        alias_free (ptr_alias);
+    gui_printf (NULL, _("Alias \"%s\" removed\n"),
+                arguments);
     return 0;
 }

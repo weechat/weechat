@@ -1,12 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-WeeChat known bugs, 2003-09-29
+WeeChat known bugs, 2003-10-03
 
 - too much nicks in the channel (> height of window) => display bug
 - some IRC commands are marked as 'unknown' when received
   (IRC protocol is under dev!)
-- alias/unalias commands doesn't work
 - config is not saved (to ~/.weechat/weechatrc)
 - intercept Ctrl-C (do not quit immediately if Ctrl-C pressed!)
 - program is stopped when bad option in config file (it should not, only display

@@ -40,6 +40,16 @@ struct t_weechat_command
     int (*cmd_function_1arg)(char *);
 };
 
+typedef struct t_weechat_alias t_weechat_alias;
+
+struct t_weechat_alias
+{
+    char *alias_name;
+    char *alias_command;
+    t_weechat_alias *prev_alias;
+    t_weechat_alias *next_alias;
+};
+
 typedef struct t_index_command t_index_command;
 
 struct t_index_command
@@ -54,7 +64,7 @@ extern t_index_command *index_commands;
 extern void index_command_build ();
 extern int exec_weechat_command (t_irc_server *, char *);
 extern void user_command (t_irc_server *, char *);
-extern int weechat_cmd_alias (int, char **);
+extern int weechat_cmd_alias (char *);
 extern int weechat_cmd_clear (int, char **);
 extern int weechat_cmd_connect (int, char **);
 extern int weechat_cmd_disconnect (int, char **);
@@ -62,6 +72,6 @@ extern int weechat_cmd_help (int, char **);
 extern int weechat_cmd_server (int, char **);
 extern int weechat_cmd_save (int, char **);
 extern int weechat_cmd_set (int, char **);
-extern int weechat_cmd_unalias (int, char **);
+extern int weechat_cmd_unalias (char *);
 
 #endif /* command.h */

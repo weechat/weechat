@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2003-10-01
+TODO - 2003-10-03
 
 Legend:
   #  done
@@ -27,6 +27,7 @@ v0.0.2:
     + "/set" command: allow the user to set the WeeChat variables
       under WeeChat without editing the config file (colours, time
       format, etc)
+    - "/alias" and "/unalias" commands
     - "/highlight" command: highlight a given word when it appears on
       channels/privates
 
@@ -38,6 +39,7 @@ v0.0.2:
  
  * Configuration:
     # write config file
+    + add alias definition
     - add an option for each server in order to run commands on join
       (example: /msg nickserv identify password)
     - channel list for auto-join (for each server)
