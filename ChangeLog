@@ -1,10 +1,10 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2004-05-31
+ChangeLog - 2004-06-05
 
 
-Version 0.0.6 (under dev!):
+Version 0.0.6 (2004-06-05):
    * improved channel highlight (priority to message vs join/part)
    * fixed bug when opened private win and remote user changes his nick
    * /query command added (starts private conversation)

@@ -1,5 +1,5 @@
 %define name weechat
-%define version 0.0.5
+%define version 0.0.6
 %define release 1
 
 Name:      %{name}
@@ -10,6 +10,7 @@ Source:    http://weechat.flashtux.org/download/%{name}-%{version}.tar.gz
 URL:       http://weechat.flashtux.org
 Group:     Networking/IRC
 BuildRoot: %{_tmppath}/%{name}-buildroot
+Requires:  perl
 License:   GPL
 
 %description
@@ -40,6 +41,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/local/bin/weechat-curses
 
 %changelog 
+* Sat Jun 05 2004 FlashCode <flashcode@flashtux.org> 0.0.6-1
+- Released version 0.0.6
 * Thu Feb 02 2004 FlashCode <flashcode@flashtux.org> 0.0.5-1
 - Released version 0.0.5
 * Thu Jan 01 2004 FlashCode <flashcode@flashtux.org> 0.0.4-1
