@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2003-10-25
+TODO - 2003-10-27
 
 Legend:
   #  done
@@ -14,7 +14,7 @@ v0.0.3:
 ------
 
  * General:
-    + use of ./configure for building WeeChat
+    + use of ./configure script for building WeeChat
  
  * IRC protocol:
     # implement RFC 2812

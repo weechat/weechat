@@ -2,6 +2,9 @@ WeeChat - Installation instructions
 ===================================
 
 1) Run './configure'
+   options: --disable-curses : do not build Curses interface
+            --enable-gtk     : build Gtk+ interface (under development!)
+            --enable-qt      : build Qt interface (not developed!)
 
 2) Run 'make'
 
