@@ -73,6 +73,7 @@ int cfg_look_nickmode;
 int cfg_look_nickmode_empty;
 char *cfg_look_no_nickname;
 char *cfg_look_completor;
+int cfg_look_display_away;
 int cfg_look_infobar;
 char *cfg_look_infobar_timestamp;
 int cfg_look_infobar_delay_highlight;
@@ -140,6 +141,10 @@ t_config_option weechat_options_look[] =
     N_("the string inserted after nick completion"),
     OPTION_TYPE_STRING, 0, 0, 0,
     ":", NULL, NULL, &cfg_look_completor, config_change_noop },
+  { "look_display_away", N_("display message to all channels when away"),
+    N_("display message to all channels when (un)marking as away"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
+    NULL, NULL, &cfg_look_display_away, NULL, config_change_noop },
   { "look_infobar", N_("enable info bar"),
     N_("enable info bar"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,

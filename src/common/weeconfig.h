@@ -88,6 +88,7 @@ extern int cfg_look_nickmode;
 extern int cfg_look_nickmode_empty;
 extern char *cfg_look_no_nickname;
 extern char *cfg_look_completor;
+extern int cfg_look_display_away;
 extern int cfg_look_infobar;
 extern char *cfg_look_infobar_timestamp;
 extern int cfg_look_infobar_delay_highlight;

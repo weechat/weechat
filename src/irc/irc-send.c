@@ -89,6 +89,8 @@ irc_cmd_send_away (t_irc_server *server, char *arguments)
 {
     char *pos;
     t_irc_server *ptr_server;
+    time_t elapsed;
+    char buffer[4096];
     
     if (arguments && (strncmp (arguments, "-all", 4) == 0))
     {
@@ -104,18 +106,62 @@ irc_cmd_send_away (t_irc_server *server, char *arguments)
             if (ptr_server->is_connected)
             {
                 if (pos)
+                {
+                    ptr_server->is_away = 1;
+                    ptr_server->away_time = time (NULL);
                     server_sendf (ptr_server, "AWAY :%s\r\n", pos);
+                    if (cfg_look_display_away)
+                    {
+                        snprintf (buffer, sizeof (buffer), "is away: %s", pos);
+                        irc_send_me_all_channels (ptr_server, buffer);
+                    }
+                }
                 else
+                {
                     server_sendf (ptr_server, "AWAY\r\n");
+                    ptr_server->is_away = 0;
+                    elapsed = time (NULL) - ptr_server->away_time;
+                    if (cfg_look_display_away)
+                    {
+                        snprintf (buffer, sizeof (buffer),
+                                  "is back (gone %.2ld:%.2ld:%.2ld)",
+                                  elapsed / 3600,
+                                  (elapsed / 60) % 60,
+                                  elapsed % 60);
+                        irc_send_me_all_channels (ptr_server, buffer);
+                    }
+                }
             }
         }
     }
     else
     {
         if (arguments)
+        {
+            server->is_away = 1;
+            server->away_time = time (NULL);
             server_sendf (server, "AWAY :%s\r\n", arguments);
+            if (cfg_look_display_away)
+            {
+                snprintf (buffer, sizeof (buffer), "is away: %s", arguments);
+                irc_send_me_all_channels (server, buffer);
+            }
+        }
         else
+        {
             server_sendf (server, "AWAY\r\n");
+            server->is_away = 0;
+            elapsed = time (NULL) - server->away_time;
+            if (cfg_look_display_away)
+            {
+                snprintf (buffer, sizeof (buffer),
+                          "is back (gone %.2ld:%.2ld:%.2ld)",
+                          elapsed / 3600,
+                          (elapsed / 60) % 60,
+                          elapsed % 60);
+                irc_send_me_all_channels (server, buffer);
+            }
+        }
     }
     return 0;
 }
@@ -382,6 +428,41 @@ irc_cmd_send_lusers (t_irc_server *server, char *arguments)
 }
 
 /*
+ * irc_send_me: send a ctcp action to a channel
+ */
+
+int
+irc_send_me (t_irc_server *server, t_irc_channel *channel, char *arguments)
+{
+    server_sendf (server, "PRIVMSG %s :\01ACTION %s\01\r\n",
+                  channel->name, arguments);
+    irc_display_prefix (channel->buffer, PREFIX_ACTION_ME);
+    gui_printf_color (channel->buffer,
+                      COLOR_WIN_CHAT_NICK, "%s", server->nick);
+    gui_printf_color (channel->buffer,
+                      COLOR_WIN_CHAT, " %s\n", arguments);
+    return 0;
+}
+
+/*
+ * irc_send_me_all_channels: send a ctcp action to all channels of a server
+ */
+
+int
+irc_send_me_all_channels (t_irc_server *server, char *arguments)
+{
+    t_irc_channel *ptr_channel;
+    
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        if (ptr_channel->type == CHAT_CHANNEL)
+            irc_send_me (server, ptr_channel, arguments);
+    }
+    return 0;
+}
+
+/*
  * irc_cmd_send_me: send a ctcp action to the current channel
  */
 
@@ -395,13 +476,7 @@ irc_cmd_send_me (t_irc_server *server, char *arguments)
                     WEECHAT_ERROR, "me");
         return -1;
     }
-    server_sendf (server, "PRIVMSG %s :\01ACTION %s\01\r\n",
-                  CHANNEL(gui_current_window->buffer)->name, arguments);
-    irc_display_prefix (gui_current_window->buffer, PREFIX_ACTION_ME);
-    gui_printf_color (gui_current_window->buffer,
-                      COLOR_WIN_CHAT_NICK, "%s", server->nick);
-    gui_printf_color (gui_current_window->buffer,
-                      COLOR_WIN_CHAT, " %s\n", arguments);
+    irc_send_me (server, CHANNEL(gui_current_window->buffer), arguments);
     return 0;
 }
 

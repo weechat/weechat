@@ -21,6 +21,7 @@
 #ifndef __WEECHAT_IRC_H
 #define __WEECHAT_IRC_H 1
 
+#include <time.h>
 #include "../gui/gui.h"
 
 /* prefixes for chat window */
@@ -132,6 +133,7 @@ struct t_irc_server
     int is_connected;               /* 1 if WeeChat is connected to server  */
     int sock4;                      /* socket for server                    */
     int is_away;                    /* 1 is user is marker as away          */
+    time_t away_time;               /* time() when user marking as away     */
     int server_read;                /* pipe for reading server data         */
     int server_write;               /* pipe for sending data to server      */
     t_gui_buffer *buffer;           /* GUI buffer allocated for server      */
@@ -279,6 +281,8 @@ extern int irc_cmd_send_kill (t_irc_server *, char *);
 extern int irc_cmd_send_links (t_irc_server *, char *);
 extern int irc_cmd_send_list (t_irc_server *, char *);
 extern int irc_cmd_send_lusers (t_irc_server *, char *);
+extern int irc_send_me (t_irc_server *, t_irc_channel *, char *);
+extern int irc_send_me_all_channels (t_irc_server *, char *);
 extern int irc_cmd_send_me (t_irc_server *, char *);
 extern int irc_cmd_send_mode (t_irc_server *, char *);
 extern int irc_cmd_send_motd (t_irc_server *, char *);
