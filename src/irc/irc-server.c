@@ -949,6 +949,10 @@ server_disconnect (t_irc_server *server, int reconnect)
 {
     t_irc_channel *ptr_channel;
     
+    /* not connected/connecting to server */
+    if (!server->is_connected && (server->child_pid == 0))
+        return;
+    
     if (server->is_connected)
     {
         /* write disconnection message on each channel/private buffer */

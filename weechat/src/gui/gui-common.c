@@ -337,7 +337,7 @@ gui_infobar_printf (int time_displayed, int color, char *message, ...)
 void
 gui_window_free (t_gui_window *window)
 {
-    if (window->buffer->num_displayed > 0)
+    if (window->buffer && (window->buffer->num_displayed > 0))
         window->buffer->num_displayed--;
     
     /* remove window from windows list */
@@ -457,6 +457,12 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
         gui_buffers = buffer->next_buffer;
     if (last_gui_buffer == buffer)
         last_gui_buffer = buffer->prev_buffer;
+    
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        if (ptr_win->buffer == buffer)
+            ptr_win->buffer = NULL;
+    }
     
     free (buffer);
     
