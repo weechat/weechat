@@ -706,7 +706,7 @@ server_auto_connect (int command_line)
         if ( ((command_line) && (ptr_server->command_line))
             || ((!command_line) && (ptr_server->autoconnect)) )
         {
-            (void) gui_buffer_new (gui_current_window, ptr_server, NULL, 1);
+            (void) gui_buffer_new (gui_current_window, ptr_server, NULL, 0, 1);
             if (server_connect (ptr_server))
                 irc_login (ptr_server);
         }

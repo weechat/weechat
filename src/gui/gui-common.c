@@ -47,6 +47,7 @@ t_gui_window *gui_current_window = NULL;    /* pointer to current window    */
 
 t_gui_buffer *gui_buffers = NULL;           /* pointer to first buffer      */
 t_gui_buffer *last_gui_buffer = NULL;       /* pointer to last buffer       */
+t_gui_buffer *buffer_before_dcc = NULL;     /* buffer before dcc switch     */
 t_gui_infobar *gui_infobar;                 /* pointer to infobar content   */
 
 
@@ -121,26 +122,25 @@ gui_window_new (int x, int y, int width, int height)
  */
 
 t_gui_buffer *
-gui_buffer_new (t_gui_window *window, void *server, void *channel, int switch_to_buffer)
+gui_buffer_new (t_gui_window *window, void *server, void *channel, int dcc,
+                int switch_to_buffer)
 {
     t_gui_buffer *new_buffer;
     
     #ifdef DEBUG
     wee_log_printf ("creating new buffer\n");
     #endif
-    if (gui_buffers)
+    
+    /* use first buffer if no server was assigned to this buffer */
+    if (!dcc && gui_buffers && (!SERVER(gui_buffers)))
     {
-        /* use first buffer if no server was assigned to this buffer */
-        if (!SERVER(gui_buffers))
-        {
-            if (server)
-                ((t_irc_server *)(server))->buffer = gui_buffers;
-            if (channel)
-                ((t_irc_channel *)(channel))->buffer = gui_buffers;
-            SERVER(gui_buffers) = server;
-            CHANNEL(gui_buffers) = channel;
-            return gui_buffers;
-        }
+        if (server)
+            ((t_irc_server *)(server))->buffer = gui_buffers;
+        if (channel)
+            ((t_irc_channel *)(channel))->buffer = gui_buffers;
+        SERVER(gui_buffers) = server;
+        CHANNEL(gui_buffers) = channel;
+        return gui_buffers;
     }
     
     if ((new_buffer = (t_gui_buffer *)(malloc (sizeof (t_gui_buffer)))))
@@ -151,6 +151,7 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int switch_to
         /* assign server and channel to buffer */
         SERVER(new_buffer) = server;
         CHANNEL(new_buffer) = channel;
+        new_buffer->dcc = dcc;
         /* assign buffer to server and channel */
         if (server && !channel)
             SERVER(new_buffer)->buffer = new_buffer;
@@ -402,7 +403,7 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
     
     /* always at least one buffer */
     if (!gui_buffers && create_new && switch_to_another)
-        (void) gui_buffer_new (gui_windows, NULL, NULL, 1);
+        (void) gui_buffer_new (gui_windows, NULL, NULL, 0, 1);
 }
 
 /*

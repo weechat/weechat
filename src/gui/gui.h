@@ -66,6 +66,7 @@
 #define BUFFER_IS_SERVER(buffer)  (SERVER(buffer) && !CHANNEL(buffer))
 #define BUFFER_IS_CHANNEL(buffer) (CHANNEL(buffer) && (CHANNEL(buffer)->type == CHAT_CHANNEL))
 #define BUFFER_IS_PRIVATE(buffer) (CHANNEL(buffer) && (CHANNEL(buffer)->type == CHAT_PRIVATE))
+#define BUFFER_IS_DCC(buffer)     (!SERVER(buffer) && !CHANNEL(buffer))
 
 #define MSG_TYPE_TIME      1
 #define MSG_TYPE_NICK      2
@@ -135,6 +136,7 @@ struct t_gui_buffer
     /* server/channel */
     void *server;                   /* buffer's server                      */
     void *channel;                  /* buffer's channel                     */
+    int dcc;                        /* buffer is dcc status                 */
     
     /* chat content (lines, line is composed by many messages) */
     t_gui_line *lines;              /* lines of chat window                 */
@@ -219,13 +221,14 @@ extern t_gui_window *last_gui_window;
 extern t_gui_window *gui_current_window;
 extern t_gui_buffer *gui_buffers;
 extern t_gui_buffer *last_gui_buffer;
+extern t_gui_buffer *buffer_before_dcc;
 extern t_gui_infobar *gui_infobar;
 
 /* prototypes */
 
 /* GUI independent functions */
 extern t_gui_window *gui_window_new (int, int, int, int);
-extern t_gui_buffer *gui_buffer_new (t_gui_window *, void *, void *, int);
+extern t_gui_buffer *gui_buffer_new (t_gui_window *, void *, void *, int, int);
 extern void gui_buffer_clear (t_gui_buffer *);
 extern void gui_buffer_clear_all ();
 extern void gui_infobar_printf (int, int, char *, ...);
@@ -253,11 +256,13 @@ extern void gui_draw_buffer_infobar (t_gui_buffer *, int);
 extern void gui_draw_buffer_input (t_gui_buffer *, int);
 extern void gui_redraw_buffer (t_gui_buffer *);
 extern void gui_switch_to_buffer (t_gui_window *, t_gui_buffer *);
+extern void gui_switch_to_dcc_buffer ();
 extern void gui_switch_to_previous_buffer (t_gui_window *);
 extern void gui_switch_to_next_buffer (t_gui_window *);
 extern void gui_switch_to_next_window (t_gui_window *);
 extern void gui_move_page_up ();
 extern void gui_move_page_down ();
+extern void gui_curses_resize_handler ();
 extern void gui_window_init_subwindows (t_gui_window *);
 extern void gui_window_split_horiz (t_gui_window *);
 extern void gui_window_split_vertic (t_gui_window *);

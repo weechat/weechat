@@ -325,12 +325,15 @@ gui_draw_buffer_title (t_gui_buffer *buffer, int erase)
             }
             else
             {
-                /* TODO: change this copyright as title? */
-                mvwprintw (ptr_win->win_title, 0, 0,
-                           "%s", PACKAGE_STRING " - " WEECHAT_WEBSITE);
-                mvwprintw (ptr_win->win_title, 0,
-                           ptr_win->win_width - strlen (WEECHAT_COPYRIGHT),
-                           "%s", WEECHAT_COPYRIGHT);
+                if (!buffer->dcc)
+                {
+                    /* TODO: change this copyright as title? */
+                    mvwprintw (ptr_win->win_title, 0, 0,
+                               "%s", PACKAGE_STRING " - " WEECHAT_WEBSITE);
+                    mvwprintw (ptr_win->win_title, 0,
+                               ptr_win->win_width - strlen (WEECHAT_COPYRIGHT),
+                               "%s", WEECHAT_COPYRIGHT);
+                }
             }
             wrefresh (ptr_win->win_title);
             refresh ();
@@ -572,49 +575,60 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
             if (has_colors ())
                 gui_window_set_color (ptr_win->win_chat, COLOR_WIN_CHAT);
             
-            ptr_line = buffer->last_line;
-            lines_used = 0;
-            while (ptr_line
-                && (lines_used < (ptr_win->win_chat_height + ptr_win->sub_lines)))
+            if (buffer->dcc)
             {
-                lines_used += gui_get_line_num_splits (ptr_win, ptr_line);
-                ptr_line = ptr_line->prev_line;
-            }
-            ptr_win->win_chat_cursor_x = 0;
-            ptr_win->win_chat_cursor_y = 0;
-            if (lines_used > (ptr_win->win_chat_height + ptr_win->sub_lines))
-            {
-                /* screen will be full (we'll display only end of 1st line) */
-                ptr_line = (ptr_line) ? ptr_line->next_line : buffer->lines;
-                gui_display_end_of_line (ptr_win, ptr_line,
-                                         gui_get_line_num_splits (ptr_win, ptr_line) -
-                                         (lines_used - (ptr_win->win_chat_height + ptr_win->sub_lines)));
-                ptr_line = ptr_line->next_line;
-                ptr_win->first_line_displayed = 0;
+                mvwprintw (ptr_win->win_chat, ptr_win->win_y, ptr_win->win_x,
+                           "%s", _(" Type   Status   Filename / progress"));
+                for (i = 0; i < ptr_win->win_width; i++)
+                    mvwprintw (ptr_win->win_chat, 1, i, "%c", '-');
+                move (ptr_win->win_y + 3, ptr_win->win_x);
             }
             else
             {
-                /* all lines are displayed */
-                if (!ptr_line)
+                ptr_line = buffer->last_line;
+                lines_used = 0;
+                while (ptr_line
+                    && (lines_used < (ptr_win->win_chat_height + ptr_win->sub_lines)))
                 {
-                    ptr_win->first_line_displayed = 1;
-                    ptr_line = buffer->lines;
+                    lines_used += gui_get_line_num_splits (ptr_win, ptr_line);
+                    ptr_line = ptr_line->prev_line;
+                }
+                ptr_win->win_chat_cursor_x = 0;
+                ptr_win->win_chat_cursor_y = 0;
+                if (lines_used > (ptr_win->win_chat_height + ptr_win->sub_lines))
+                {
+                    /* screen will be full (we'll display only end of 1st line) */
+                    ptr_line = (ptr_line) ? ptr_line->next_line : buffer->lines;
+                    gui_display_end_of_line (ptr_win, ptr_line,
+                                             gui_get_line_num_splits (ptr_win, ptr_line) -
+                                             (lines_used - (ptr_win->win_chat_height + ptr_win->sub_lines)));
+                    ptr_line = ptr_line->next_line;
+                    ptr_win->first_line_displayed = 0;
                 }
                 else
                 {
-                    ptr_win->first_line_displayed = 0;
+                    /* all lines are displayed */
+                    if (!ptr_line)
+                    {
+                        ptr_win->first_line_displayed = 1;
+                        ptr_line = buffer->lines;
+                    }
+                    else
+                    {
+                        ptr_win->first_line_displayed = 0;
+                        ptr_line = ptr_line->next_line;
+                    }
+                }
+                while (ptr_line)
+                {
+                    if (!gui_display_line (ptr_win, ptr_line, 1))
+                        break;
+                    
                     ptr_line = ptr_line->next_line;
                 }
+                /*if (ptr_win->win_chat_cursor_y <= ptr_win->win_chat_height - 1)
+                    buffer->sub_lines = 0;*/
             }
-            while (ptr_line)
-            {
-                if (!gui_display_line (ptr_win, ptr_line, 1))
-                    break;
-                
-                ptr_line = ptr_line->next_line;
-            }
-            /*if (ptr_win->win_chat_cursor_y <= ptr_win->win_chat_height - 1)
-                buffer->sub_lines = 0;*/
             wrefresh (ptr_win->win_chat);
             refresh ();
         }
@@ -893,8 +907,12 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
         if (!SERVER(ptr_win->buffer))
         {
             gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS);
-            wprintw (ptr_win->win_status, _("%d:[not connected] "),
-                     ptr_win->buffer->number);
+            if (ptr_win->buffer->dcc)
+                wprintw (ptr_win->win_status, _("%d:<DCC> "),
+                         ptr_win->buffer->number);
+            else
+                wprintw (ptr_win->win_status, _("%d:[not connected] "),
+                         ptr_win->buffer->number);
         }
         
         /* display list of other active windows (if any) with numbers */
@@ -1089,26 +1107,11 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
             }
             else
             {
-                if (SERVER(buffer))
+                if (buffer->dcc)
                 {
-                    snprintf (format, 32, "%%s> %%-%ds", input_width);
-                    if (SERVER(buffer) && (SERVER(buffer)->is_connected))
-                        ptr_nickname = SERVER(buffer)->nick;
-                    else
-                        ptr_nickname = cfg_look_no_nickname;
-                    if (ptr_win == gui_current_window)
-                        mvwprintw (ptr_win->win_input, 0, 0, format,
-                                   ptr_nickname,
-                                   buffer->input_buffer + buffer->input_buffer_1st_display);
-                    else
-                        mvwprintw (ptr_win->win_input, 0, 0, format,
-                                   ptr_nickname,
-                                   "");
+                    snprintf (format, 32, "%%-%ds", input_width);
+                    mvwprintw (ptr_win->win_input, 0, 0, format, "");
                     wclrtoeol (ptr_win->win_input);
-                    if (ptr_win == gui_current_window)
-                        move (ptr_win->win_y + ptr_win->win_height - 1,
-                              ptr_win->win_x + strlen (ptr_nickname) + 2 +
-                              (buffer->input_buffer_pos - buffer->input_buffer_1st_display));
                 }
                 else
                 {
@@ -1251,6 +1254,30 @@ gui_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
     buffer->num_displayed++;
     
     hotlist_remove_buffer (buffer);
+}
+
+/*
+ * gui_switch_to_dcc_buffer: switch to dcc buffer (create it if it does not exist)
+ */
+
+void
+gui_switch_to_dcc_buffer ()
+{
+    t_gui_buffer *ptr_buffer;
+    
+    /* check if dcc buffer exists */
+    for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (BUFFER_IS_DCC (ptr_buffer))
+            break;
+    }
+    if (ptr_buffer)
+    {
+        gui_switch_to_buffer (gui_current_window, ptr_buffer);
+        gui_redraw_buffer (ptr_buffer);
+    }
+    else
+        gui_buffer_new (gui_current_window, NULL, NULL, 1, 1);
 }
 
 /*
@@ -1621,7 +1648,7 @@ gui_init ()
     if (gui_window_new (0, 0, COLS, LINES))
     {
         gui_current_window = gui_windows;
-        gui_buffer_new (gui_windows, NULL, NULL, 1);
+        gui_buffer_new (gui_windows, NULL, NULL, 0, 1);
     
         signal (SIGWINCH, gui_curses_resize_handler);
     
