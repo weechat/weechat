@@ -1154,41 +1154,41 @@ gui_draw_buffer_infobar (t_gui_buffer *buffer, int erase)
     struct tm *local_time;
     char text[1024 + 1];
     
+    /* make gcc happy */
+    (void) buffer;
+    
     if (!gui_ok)
         return;
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        if (ptr_win->buffer == buffer)
+        if (erase)
+            gui_curses_window_clear (ptr_win->win_infobar);
+
+        if (has_colors ())
         {
-            if (erase)
-                gui_curses_window_clear (ptr_win->win_infobar);
-    
-            if (has_colors ())
-            {
-                gui_window_set_color (ptr_win->win_infobar, COLOR_WIN_INFOBAR);
-                wborder (ptr_win->win_infobar, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
-                wrefresh (ptr_win->win_infobar);
-            }
-            wmove (ptr_win->win_infobar, 0, 0);
-            
-            time_seconds = time (NULL);
-            local_time = localtime (&time_seconds);
-            if (local_time)
-            {
-                strftime (text, 1024, cfg_look_infobar_timestamp, local_time);
-                gui_window_set_color (ptr_win->win_infobar, COLOR_WIN_INFOBAR);
-                wprintw (ptr_win->win_infobar, "%s", text);
-            }
-            if (gui_infobar)
-            {
-                gui_window_set_color (ptr_win->win_infobar, gui_infobar->color);
-                wprintw (ptr_win->win_infobar, " | %s", gui_infobar->text);
-            }
-            
+            gui_window_set_color (ptr_win->win_infobar, COLOR_WIN_INFOBAR);
+            wborder (ptr_win->win_infobar, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
             wrefresh (ptr_win->win_infobar);
-            refresh ();
         }
+        wmove (ptr_win->win_infobar, 0, 0);
+        
+        time_seconds = time (NULL);
+        local_time = localtime (&time_seconds);
+        if (local_time)
+        {
+            strftime (text, 1024, cfg_look_infobar_timestamp, local_time);
+            gui_window_set_color (ptr_win->win_infobar, COLOR_WIN_INFOBAR);
+            wprintw (ptr_win->win_infobar, "%s", text);
+        }
+        if (gui_infobar)
+        {
+            gui_window_set_color (ptr_win->win_infobar, gui_infobar->color);
+            wprintw (ptr_win->win_infobar, " | %s", gui_infobar->text);
+        }
+        
+        wrefresh (ptr_win->win_infobar);
+        refresh ();
     }
 }
 
