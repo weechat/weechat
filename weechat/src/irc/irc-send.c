@@ -468,12 +468,14 @@ int
 irc_send_me (t_irc_server *server, t_irc_channel *channel, char *arguments)
 {
     server_sendf (server, "PRIVMSG %s :\01ACTION %s\01\r\n",
-                  channel->name, arguments);
+                  channel->name,
+                  (arguments && arguments[0]) ? arguments : "");
     irc_display_prefix (channel->buffer, PREFIX_ACTION_ME);
     gui_printf_color (channel->buffer,
                       COLOR_WIN_CHAT_NICK, "%s", server->nick);
     gui_printf_color (channel->buffer,
-                      COLOR_WIN_CHAT, " %s\n", arguments);
+                      COLOR_WIN_CHAT, " %s\n",
+                      (arguments && arguments[0]) ? arguments : "");
     return 0;
 }
 

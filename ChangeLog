@@ -12,6 +12,7 @@ Version 0.1.0 (under dev!):
      "irc_display_away"
    * server messages & errors are all prefixed (by 3 chars, like '-@-')
    * added new options for charset: look_charset_decode and look_charset_encode
+   * fixed /me command (now ok without parameter)
    * fixed /away command (now ok if not away)
    * logs are now disabled by default (server/channel/private)
 

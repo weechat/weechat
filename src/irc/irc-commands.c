@@ -101,7 +101,7 @@ t_irc_command irc_commands[] =
   { "me", N_("send a ctcp action to the current channel"),
     N_("message"),
     N_("message: message to send"),
-    1, MAX_ARGS, 1, NULL, irc_cmd_send_me, NULL },
+    0, MAX_ARGS, 1, NULL, irc_cmd_send_me, NULL },
   { "mode", N_("change channel or user mode"),
     N_("{ channel {[+|-]|o|p|s|i|t|n|b|v} [limit] [user] [ban mask] } | "
     "{ nickname {[+|-]|i|w|s|o}"),
