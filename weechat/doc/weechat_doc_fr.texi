@@ -298,17 +298,13 @@ NON ECRIT !
 Les scripts Perl sont charg@'es et d@'echarg@'es avec la commande @command{/perl}
 (tapez @kbd{/help perl} dans WeeChat pour obtenir de l'aide sur la commande).@*
 
+@emph{Exemples :}@*
 @itemize @bullet
 @item
-Exemple de chargement d'un script Perl :@*
-@kbd{/perl load /tmp/essai.pl}@*
+Charger un script Perl : @kbd{/perl load /tmp/essai.pl}@*
+@item D@'echarger tous les scripts Perl : @kbd{/perl unload}@*
 @item
-Exemple de d@'echargement d'un script Perl :@*
-@kbd{/perl unload essai}@*
-A noter: le nom "essai" est le premier param@`etre de la fonction @command{IRC::register.}@*
-@item
-Liste des scripts Perl charg@'es :@*
-@kbd{/perl}@*
+Lister les scripts Perl charg@'es : @kbd{/perl}@*
 @end itemize
 
 @subsection Interface WeeChat / Perl
@@ -333,6 +329,7 @@ de fonction @`a appeler)
 @*
 @emph{Exemple :}@*
 @code{IRC::register ("essai", "1.0", "fin_essai", "Script d'essai !");}@*
+@*
 
 @item
 @command{IRC::print ( message );}@*
@@ -346,6 +343,7 @@ Affiche un message dans la fen@^etre courante (canal ou serveur).@*
 @*
 @emph{Exemple :}@*
 @code{IRC::print ("message");}@*
+@*
 
 @item
 @command{IRC::add_message_handler ( nom, fonction );}@*
@@ -371,6 +369,7 @@ RFC 2812 : @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
 @code{@ @ @ @ ($masque, $null, $canal) = split " ", $canal;}@*
 @code{@ @ @ @ IRC::print ("masque=$masque, canal=$canal, message=$message\n");}@*
 @code{@} }@*
+@*
 
 @item
 @command{IRC::add_command_handler ( nom, fonction );}@*
@@ -394,6 +393,7 @@ ne seront plus accessibles tant que le script Perl sera charg@'e.
 @code{@ @ @ @ IRC::print("Param@`etres : ".@@_[0]);}@*
 @code{@ @ @ @ return 0;}@*
 @code{@} }@*
+@*
 
 @end itemize
 

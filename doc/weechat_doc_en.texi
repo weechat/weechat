@@ -298,17 +298,14 @@ NOT WRITTEN!
 Perl scripts are loaded and unloaded with @command{/perl} command.
 (type @kbd{/help perl} within WeeChat to get help about command).@*
 
+@emph{Examples:}@*
 @itemize @bullet
 @item
-Perl script loading example:@*
-@kbd{/perl load /tmp/sample.pl}@*
+Load a Perl script: @kbd{/perl load /tmp/sample.pl}@*
 @item
-Perl script unloading example:@*
-@kbd{/perl unload sample}@*
-Notice: "sample" is the first parameter of @command{IRC::register} function.@*
+Unload all Perl scripts: @kbd{/perl unload}@*
 @item
-List all Perl script loaded:@*
-@kbd{/perl}@*
+List all Perl scripts: @kbd{/perl}@*
 @end itemize
 
 @subsection WeeChat / Perl API
@@ -332,6 +329,7 @@ unloaded (optional parameter, empty string means nothing is called at the end)
 @*
 @emph{Example:}@*
 @code{IRC::register ("sample", "1.0", "sample_end", "Sample script!");}@*
+@*
 
 @item
 @command{IRC::print ( message );}@*
@@ -345,6 +343,7 @@ Print message in current window (channel or server).@*
 @*
 @emph{Example:}@*
 @code{IRC::print ("message");}@*
+@*
 
 @item
 @command{IRC::add_message_handler ( name, function );}@*
@@ -369,6 +368,7 @@ RFC 2812: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
 @code{@ @ @ @ ($hostmask, $null, $channel) = split " ", $channel;}@*
 @code{@ @ @ @ IRC::print ("host=$hostmask, chan=$channel, msg=$message\n");}@*
 @code{@} }@*
+@*
 
 @item
 @command{IRC::add_command_handler ( name, function );}@*
@@ -392,6 +392,7 @@ available until your Perl script will be unloaded.
 @code{@ @ @ @ IRC::print("Arguments: ".@@_[0]);}@*
 @code{@ @ @ @ return 0;}@*
 @code{@} }@*
+@*
 
 @end itemize
 

@@ -44,7 +44,7 @@ A ultima versão deste documento pode ser descarregada de :@*
 Copyright @copyright{} 2003 FlashCode
 <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>@*
 @*
-Este documento pode ser utilizado sobre os termos da Licença P@'ublica geral GNU (GNU General Public
+Este documento pode ser utilizado sobre os termos da Licen@,{c}a P@'ublica geral GNU (GNU General Public
 License) vers@~ao 2 ou superior.
 
 @end titlepage
@@ -63,17 +63,17 @@ License) vers@~ao 2 ou superior.
 @end menu
 
 
-@c ******************************* Introduç@~ao *******************************
+@c ******************************* Introdu@,{c}@~ao *******************************
 
 @node Introduç@~ao, Instalaç@~ao, Top, Top
-@chapter Introduç@~ao
+@chapter Introdu@,{c}@~ao
 @menu
 * Descriç@~ao::
 * Pre-requisitos::
 @end menu
 
 @node Descriç@~ao, Pre-requisitos, Introduç@~ao, Introduç@~ao
-@section Descriç@~ao
+@section Descri@,{c}@~ao
 
 O WeeChat (Wee Enhanced Environment for Chat) @'e um cliente de IRC livre, r@'apido e leve,
 concebido para funcionar em diversos sistemas operativos.@*
@@ -123,10 +123,10 @@ Qt: *** interface n@~ao desenvolvida ***,
 @end itemize
 
 
-@c ******************************* Instalaç@~ao *******************************
+@c ******************************* Instala@,{c}@~ao *******************************
 
 @node Instalaç@~ao, Utilizaç@~ao, Introduç@~ao, Top
-@chapter Instalaç@~ao
+@chapter Instala@,{c}@~ao
 @menu
 * Binarios::
 * Codigo Fonte::
@@ -189,10 +189,10 @@ Executa o script :@*
 Segue agora as instru@,{c}@~oes para compilar o c@'odigo fonte - @xref{Codigo Fonte}.
 
 
-@c ******************************* Utilizaç@~ao ********************************
+@c ******************************* Utiliza@,{c}@~ao ********************************
 
 @node Utilizaç@~ao, Autores / Suporte, Instalaç@~ao, Top
-@chapter Utilizaç@~ao
+@chapter Utiliza@,{c}@~ao
 
 @menu
 * Invocar o WeeChat::
