@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2003-10-07
+TODO - 2003-10-08
 
 Legend:
   #  done
@@ -37,7 +37,7 @@ v0.0.3:
  * Configuration:
     - add missing options for config file
     - wrong alias is not created and not saved when quitting WeeChat
-    - do not stop program if problem with options in config file
+    # do not stop program if problem with options in config file
     - load config file after GUI (so init values by default (colors, ...) before
       loading config)
 
