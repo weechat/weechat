@@ -2661,7 +2661,7 @@ msgstr "%sBienvenido a "
 
 #: src/common/weechat.c:513
 msgid "compiled on"
-msgstr "compilado el"
+msgstr "compilado en"
 
 #: src/common/weechat.h:50
 msgid "WeeChat Error:"
