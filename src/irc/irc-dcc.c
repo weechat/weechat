@@ -146,6 +146,8 @@ dcc_free (t_irc_dcc *ptr_dcc)
 void
 dcc_close (t_irc_dcc *ptr_dcc, int status)
 {
+    t_gui_buffer *ptr_buffer;
+    
     ptr_dcc->status = status;
     
     if (status == DCC_DONE)
@@ -178,16 +180,20 @@ dcc_close (t_irc_dcc *ptr_dcc, int status)
     {
         if (DCC_IS_CHAT(ptr_dcc->type))
         {
-            irc_display_prefix (ptr_dcc->channel->buffer, PREFIX_INFO);
-            gui_printf (ptr_dcc->channel->buffer, _("DCC chat closed with "));
-            gui_printf_color (ptr_dcc->channel->buffer, COLOR_WIN_CHAT_NICK,
+            if (ptr_dcc->channel)
+                ptr_buffer = ptr_dcc->channel->buffer;
+            else
+                ptr_buffer = ptr_dcc->server->buffer;
+            irc_display_prefix (ptr_buffer, PREFIX_INFO);
+            gui_printf (ptr_buffer, _("DCC chat closed with "));
+            gui_printf_color (ptr_buffer, COLOR_WIN_CHAT_NICK,
                               "%s", ptr_dcc->nick);
-            gui_printf_color (ptr_dcc->channel->buffer, COLOR_WIN_CHAT_DARK, " (");
-            gui_printf_color (ptr_dcc->channel->buffer, COLOR_WIN_CHAT_HOST,
+            gui_printf_color (ptr_buffer, COLOR_WIN_CHAT_DARK, " (");
+            gui_printf_color (ptr_buffer, COLOR_WIN_CHAT_HOST,
                               "%d.%d.%d.%d",
                               ptr_dcc->addr >> 24, (ptr_dcc->addr >> 16) & 0xff,
                               (ptr_dcc->addr >> 8) & 0xff, ptr_dcc->addr & 0xff);
-            gui_printf_color (ptr_dcc->channel->buffer, COLOR_WIN_CHAT_DARK, ")\n");
+            gui_printf_color (ptr_buffer, COLOR_WIN_CHAT_DARK, ")\n");
         }
     }
     
