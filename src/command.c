@@ -307,7 +307,7 @@ exec_weechat_command (t_irc_server *server, char *string)
             }
             else
             {
-                if (weechat_commands[i].cmd_function_args != NULL)
+                if (weechat_commands[i].cmd_function_args)
                     return_code = (int) (weechat_commands[i].cmd_function_args)
                                         (argc, argv);
                 else
@@ -329,7 +329,9 @@ exec_weechat_command (t_irc_server *server, char *string)
     }
     for (i = 0; irc_commands[i].command_name; i++)
     {
-        if (strcasecmp (irc_commands[i].command_name, string + 1) == 0)
+        if ((strcasecmp (irc_commands[i].command_name, string + 1) == 0) &&
+            ((irc_commands[i].cmd_function_args) ||
+            (irc_commands[i].cmd_function_1arg)))
         {
             if ((argc < irc_commands[i].min_arg)
                 || (argc > irc_commands[i].max_arg))
@@ -363,7 +365,7 @@ exec_weechat_command (t_irc_server *server, char *string)
                                 WEECHAT_ERROR, irc_commands[i].command_name);
                     return 0;
                 }
-                if (irc_commands[i].cmd_function_args != NULL)
+                if (irc_commands[i].cmd_function_args)
                     return_code = (int) (irc_commands[i].cmd_function_args)
                                   (server, argc, argv);
                 else
