@@ -1,7 +1,7 @@
 # WeeChat: fast & light, IRC client for many operating systems. 
-# Copyright (c) 2003 FlashCode <flashcode@flashtux.org>
+# Copyright (c) 2004 FlashCode <flashcode@flashtux.org>
 # This file is distributed under the same license as the WeeChat package.
-# FlashCode <flashcode@flashtux.org>, 2003.
+# FlashCode <flashcode@flashtux.org>, 2004.
 #
 msgid ""
 msgstr ""
