@@ -352,15 +352,27 @@ irc_cmd_send_join (t_irc_server *server, char *arguments)
 int
 irc_cmd_send_kick (t_irc_server *server, char *arguments)
 {
+    char *args, *pos;
+    
     if (string_is_channel (arguments))
         server_sendf (server, "KICK %s\r\n", arguments);
     else
     {
         if (BUFFER_IS_CHANNEL (gui_current_window->buffer))
         {
-            server_sendf (server,
-                          "KICK %s %s\r\n",
-                          CHANNEL(gui_current_window->buffer)->name, arguments);
+            args = strdup (arguments);
+            pos = strchr (args, ' ');
+            if (pos)
+                pos[0] = '\0';
+            if (pos)
+                server_sendf (server,
+                              "KICK %s %s :%s\r\n",
+                              CHANNEL(gui_current_window->buffer)->name, args, pos + 1);
+            else
+                server_sendf (server,
+                              "KICK %s %s\r\n",
+                              CHANNEL(gui_current_window->buffer)->name, args);
+            free (args);
         }
         else
         {
