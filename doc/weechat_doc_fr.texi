@@ -35,7 +35,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.0.6 - 12 juin 2004
+@subtitle Documentation pour WeeChat v0.0.7 - 04 juillet 2004
 
 @image{weechat_image}
 
@@ -343,12 +343,12 @@ Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
 @item col_status
 Couleur pour la barre de statut@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'gray'@*
-@item col_status_active
-Couleur pour la fen@^etre active (barre de statut)@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'yellow'@*
 @item col_status_data_msg
 Couleur pour une fen@^etre avec de nouvelles infos (barre de statut)@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightred'@*
+@item col_status_highlight
+Color for window with highlight (status bar)@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'yellow'@*
 @item col_status_data_other
 Couleur pour une fen@^etre avec des nouvelles donn@'ees (pas des infos) (barre de statut)@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightmagenta'@*
@@ -572,13 +572,22 @@ Ex@'ecuter la commande ou envoyer le message@*
 Rappeler les derni@`eres commandes/messages@*
 @*
 @item PageUp / PageDown
-Afficher l'historique de la fen@^etre@*
+Afficher l'historique du tampon@*
 @*
 @item F6 / F7
-Aller @`a la fen@^etre pr@'ec@'edente / suivante@*
+Aller au tampon pr@'ec@'edent@*
+@*
+@item F8
+Aller @`a la fen@^etre suivante@*
 @*
 @item Alt + fl@`eche gauche / Alt + fl@`eche droite
 Identique @`a F6 / F7@*
+@*
+@item Alt + A
+Sauter au tampon avec activit@'e (avec priorit@'e: highlight, message, autre)@*
+@*
+@item Alt + chiffre (1-9)
+Sauter au tampon avec ce num@'ero@*
 @*
 @item F10
 Effacer le dernier message de la barre d'infos@*

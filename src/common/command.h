@@ -67,6 +67,7 @@ extern t_weechat_alias *alias_new (char *, char *);
 extern int exec_weechat_command (t_irc_server *, char *);
 extern void user_command (t_irc_server *, char *);
 extern int weechat_cmd_alias (char *);
+extern int weechat_cmd_buffer (int, char **);
 extern int weechat_cmd_clear (int, char **);
 extern int weechat_cmd_connect (int, char **);
 extern int weechat_cmd_disconnect (int, char **);

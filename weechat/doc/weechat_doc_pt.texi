@@ -35,7 +35,7 @@
 
 @title WeeChat - Guia do Utilizador
 @subtitle Cliente de IRC rapido, leve e extencivel
-@subtitle Documenta@,{c}@~ao do WeeChat v0.0.6 - 12 de Junho de 2004
+@subtitle Documenta@,{c}@~ao do WeeChat v0.0.7 - 04 de Julho de 2004
 
 @image{weechat_image}
 
@@ -276,6 +276,12 @@ Ir para a janela anterior/seguinte@*
 @*
 @item Alt + Seta da esquerda / Alt + Seta da direita
 Identico a F6 / F7@*
+@*
+@item Alt + A
+Comute ao amortecedor seguinte com atividade (com prioridade:  destaque, mensagem, outra)@*
+@*
+@item Alt + d@'igito (1-9)
+Comute ao amortecedor pelo n@'umero@*
 @*
 @item F10
 Apagar a @'ultima mensagem da barra do info@*

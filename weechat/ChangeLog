@@ -1,12 +1,13 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2004-07-03
+ChangeLog - 2004-07-04
 
 
 Version 0.0.7 (under dev!):
-   * buffers ordered by number, auto-switch to active buffers (alt-a)
-   * split terminal horizontally/vertically
+   * /buffer command added, buffers ordered by number, auto-jump to active
+     buffers (alt-a), jump to buffers by number (alt-number)
+   * /window command added, split terminal horizontally/vertically
    * unique color for each nick (based on nickname)
    * action messages are now considered as messages, not crappy joins/parts
    * fixed display bug when nicklist is displayed at bottom of screen

@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2004-07-03
+TODO - 2004-07-04
 
 Legend:
   #  done
@@ -21,8 +21,12 @@ v0.0.7:
     + "/dcc" command (for chat and sending/receiving files)
 
  * Interface:
-    + split terminal in multiple windows (horizontally/vertically)
-    + hotlist (channels with activity) and auto-switch to channels
+    + "/buffer" command, buffers ordered by number, auto-jump to active
+      buffers (alt-a), jump to buffers by number (alt-number)
+    + "/window" command, split terminal in multiple windows
+      (horizontally/vertically)
+    # forget some old lines that were displayed long time ago (now all is saved,
+      if WeeChat is running for long time, a lot of memory is used!)
     + internationalization (traduce WeeChat in many languages)
 
  * Configuration:
@@ -63,10 +67,7 @@ Future versions:
     + Gtk GUI
     - color for nicks (except own nick) when nick colors are disabled
     - interpret special chars in messages (color & bold for example)
-    - many channel windows in one window/term (window split)
     - add lag indicator
-    - forget some old lines that were displayed long time ago (now all is saved,
-      if WeeChat is running for long time, a lot of memory is used!)
     - improve completion (for example complete command parameters when possible)
     - understand incomplete commands if unambigous (for example: /he for /help is ok)
     - tab key with empty command line should switch to next window (like F7)
@@ -78,10 +79,6 @@ Future versions:
     - proxy support
     - SSL support
     - IPv6 protocol implementation
-
- * Configuration:
-    - load config file after GUI (so init values by default (colors, ...) before
-      loading config)
 
  * Plugins:
     - Python plugin

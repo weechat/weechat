@@ -945,10 +945,11 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                     if (strstr (pos, server->nick))
                     {
                         gui_printf_color_type (ptr_channel->buffer,
-                                               MSG_TYPE_MSG,
+                                               MSG_TYPE_MSG | MSG_TYPE_HIGHLIGHT,
                                                COLOR_WIN_CHAT_HIGHLIGHT,
                                                "%s", host);
-                        if ( (cfg_look_infobar_delay_highlight > 0)
+                        if ( (cfg_look_infobar)
+                            && (cfg_look_infobar_delay_highlight > 0)
                             && (ptr_channel->buffer != gui_current_window->buffer) )
                             gui_infobar_printf (cfg_look_infobar_delay_highlight,
                                                 COLOR_WIN_INFOBAR_HIGHLIGHT,
@@ -971,8 +972,10 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                         if (strstr (pos, server->nick))
                         {
                             irc_display_nick (ptr_channel->buffer, ptr_nick,
-                                              MSG_TYPE_NICK, 1, -1, 0);
-                            if ( (cfg_look_infobar_delay_highlight > 0)
+                                              MSG_TYPE_NICK | MSG_TYPE_HIGHLIGHT,
+                                              1, -1, 0);
+                            if ( (cfg_look_infobar)
+                                && (cfg_look_infobar_delay_highlight > 0)
                                 && (ptr_channel->buffer != gui_current_window->buffer) )
                                 gui_infobar_printf (cfg_look_infobar_delay_highlight,
                                                     COLOR_WIN_INFOBAR_HIGHLIGHT,
@@ -1157,38 +1160,67 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                 }
             }
             if (!ptr_channel->topic)
-            {
                 ptr_channel->topic = strdup (host2);
-                gui_draw_buffer_title (ptr_channel->buffer, 1);
-            }
             
-            gui_printf_color_type (ptr_channel->buffer,
-                                   MSG_TYPE_NICK,
-                                   COLOR_WIN_CHAT_DARK, "<");
-            if (strstr (pos, server->nick))
+            if (strncmp (pos, "\01ACTION ", 8) == 0)
             {
-                gui_printf_color_type (ptr_channel->buffer,
-                                       MSG_TYPE_NICK,
-                                       COLOR_WIN_CHAT_HIGHLIGHT,
-                                       "%s", host);
-                if ( (cfg_look_infobar_delay_highlight > 0)
-                    && (ptr_channel->buffer != gui_current_window->buffer) )
-                    gui_infobar_printf (cfg_look_infobar_delay_highlight,
-                                        COLOR_WIN_INFOBAR_HIGHLIGHT,
-                                        _("Private %s> %s"),
-                                        host, pos);
+                pos += 8;
+                pos2 = strchr (pos, '\01');
+                if (pos2)
+                    pos2[0] = '\0';
+                irc_display_prefix (ptr_channel->buffer, PREFIX_ACTION_ME);
+                if (strstr (pos, server->nick))
+                {
+                    gui_printf_color_type (ptr_channel->buffer,
+                                           MSG_TYPE_MSG | MSG_TYPE_HIGHLIGHT,
+                                           COLOR_WIN_CHAT_HIGHLIGHT,
+                                           "%s", host);
+                    if ( (cfg_look_infobar)
+                        && (cfg_look_infobar_delay_highlight > 0)
+                        && (ptr_channel->buffer != gui_current_window->buffer) )
+                        gui_infobar_printf (cfg_look_infobar_delay_highlight,
+                                            COLOR_WIN_INFOBAR_HIGHLIGHT,
+                                            _("On %s: * %s %s"),
+                                            ptr_channel->name,
+                                            host, pos);
+                }
+                else
+                    gui_printf_color_type (ptr_channel->buffer,
+                                           MSG_TYPE_MSG,
+                                           COLOR_WIN_CHAT_NICK, "%s", host);
+                gui_printf_color (ptr_channel->buffer,
+                                  COLOR_WIN_CHAT, " %s\n", pos);
             }
             else
+            {
                 gui_printf_color_type (ptr_channel->buffer,
                                        MSG_TYPE_NICK,
-                                       COLOR_WIN_NICK_PRIVATE,
-                                       "%s", host);
-            gui_printf_color_type (ptr_channel->buffer,
-                                   MSG_TYPE_NICK,
-                                   COLOR_WIN_CHAT_DARK, "> ");
-            gui_printf_color_type (ptr_channel->buffer,
-                                   MSG_TYPE_MSG,
-                                   COLOR_WIN_CHAT, "%s\n", pos);
+                                       COLOR_WIN_CHAT_DARK, "<");
+                if (strstr (pos, server->nick))
+                {
+                    gui_printf_color_type (ptr_channel->buffer,
+                                           MSG_TYPE_NICK | MSG_TYPE_HIGHLIGHT,
+                                           COLOR_WIN_CHAT_HIGHLIGHT,
+                                           "%s", host);
+                    if ( (cfg_look_infobar_delay_highlight > 0)
+                        && (ptr_channel->buffer != gui_current_window->buffer) )
+                        gui_infobar_printf (cfg_look_infobar_delay_highlight,
+                                            COLOR_WIN_INFOBAR_HIGHLIGHT,
+                                            _("Private %s> %s"),
+                                            host, pos);
+                }
+                else
+                    gui_printf_color_type (ptr_channel->buffer,
+                                           MSG_TYPE_NICK,
+                                           COLOR_WIN_NICK_PRIVATE,
+                                           "%s", host);
+                gui_printf_color_type (ptr_channel->buffer,
+                                       MSG_TYPE_NICK,
+                                       COLOR_WIN_CHAT_DARK, "> ");
+                gui_printf_color_type (ptr_channel->buffer,
+                                       MSG_TYPE_MSG,
+                                       COLOR_WIN_CHAT, "%s\n", pos);
+            }
         }
         else
         {

@@ -66,10 +66,11 @@
 #define BUFFER_IS_CHANNEL(buffer) (CHANNEL(buffer) && (CHANNEL(buffer)->type == CHAT_CHANNEL))
 #define BUFFER_IS_PRIVATE(buffer) (CHANNEL(buffer) && (CHANNEL(buffer)->type == CHAT_PRIVATE))
 
-#define MSG_TYPE_TIME  0
-#define MSG_TYPE_NICK  1
-#define MSG_TYPE_INFO  2
-#define MSG_TYPE_MSG   3
+#define MSG_TYPE_TIME      1
+#define MSG_TYPE_NICK      2
+#define MSG_TYPE_INFO      4
+#define MSG_TYPE_MSG       8
+#define MSG_TYPE_HIGHLIGHT 16
 
 #define gui_printf_color(buffer, color, fmt, argz...) \
     gui_printf_color_type(buffer, MSG_TYPE_INFO, color, fmt, ##argz)
@@ -95,6 +96,7 @@ struct t_gui_line
     int length;                     /* length of the line (in char)         */
     int length_align;               /* alignment length (time or time/nick) */
     int line_with_message;          /* line contains a message from a user? */
+    int line_with_highlight;        /* line contains highlight              */
     t_gui_message *messages;        /* messages for the line                */
     t_gui_message *last_message;    /* last message of the line             */
     t_gui_line *prev_line;          /* link to previous line                */
@@ -138,7 +140,6 @@ struct t_gui_buffer
     t_gui_line *last_line;          /* last line of chat window             */
     int num_lines;                  /* number of lines in the window        */
     int line_complete;              /* current line complete ? (\n ending)  */
-    int unread_data;                /* highlight windows with unread data   */
     
     /* inupt buffer */
     char *input_buffer;             /* input buffer                         */
@@ -235,6 +236,7 @@ extern void gui_delete_previous_word (t_gui_buffer *);
 extern void gui_move_previous_word (t_gui_buffer *);
 extern void gui_move_next_word (t_gui_buffer *);
 extern void gui_buffer_insert_string (t_gui_buffer *, char *, int);
+extern t_gui_buffer *gui_switch_to_buffer_by_number (t_gui_window *, int);
 /* GUI dependant functions */
 extern int gui_assign_color (int *, char *);
 extern int gui_get_color_by_name (char *);

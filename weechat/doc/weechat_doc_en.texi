@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.0.6 - June, 12 2004
+@subtitle Documentation for WeeChat v0.0.7 - July, 04 2004
 
 @image{weechat_image}
 
@@ -343,12 +343,12 @@ Type: color (Curses or Gtk color), default value: 'default'@*
 @item col_status
 Color for status bar@*
 Type: color (Curses or Gtk color), default value: 'gray'@*
-@item col_status_active
-Color for active window (status bar)@*
-Type: color (Curses or Gtk color), default value: 'yellow'@*
 @item col_status_data_msg
 Color for window with new messages (status bar)@*
 Type: color (Curses or Gtk color), default value: 'lightred'@*
+@item col_status_highlight
+Color for window with highlight (status bar)@*
+Type: color (Curses or Gtk color), default value: 'yellow'@*
 @item col_status_data_other
 Color for window with new data (not messages) (status bar)@*
 Type: color (Curses or Gtk color), default value: 'lightmagenta'@*
@@ -572,13 +572,22 @@ Execute command or send message@*
 Call again last commands/messages@*
 @*
 @item PageUp / PageDown
-Show window history@*
+Show buffer history@*
 @*
 @item F6 / F7
-Switch to previous / next window@*
+Switch to previous / next buffer@*
+@*
+@item F8
+Switch to next window@*
 @*
 @item Alt + left arrow / Alt + right arrow
 Same as F6 / F7@*
+@*
+@item Alt + A
+Switch to next buffer with activity (with priority: highlight, message, other)@*
+@*
+@item Alt + digit (1-9)
+Switch to buffer by number@*
 @*
 @item F10
 Remove last infobar message@*

@@ -43,6 +43,13 @@ t_weechat_command weechat_commands[] =
     N_("alias_name: name of alias\ncommand: command name (WeeChat "
     "or IRC command, without first '/')\n" "arguments: arguments for command"),
     0, MAX_ARGS, NULL, weechat_cmd_alias },
+  { "buffer", N_("manage buffers"),
+    N_("[action | number]"),
+    N_("action: action to do:\n"
+    "    move  move buffer in the list (may be relative, for example -1)\n"
+    "    list  list opened buffers (no parameter implies this list)\n"
+    "number: jump to buffer by number"),
+    0, MAX_ARGS, weechat_cmd_buffer, NULL },
   { "clear", N_("clear window(s)"),
     N_("[-all]"),
     N_("-all: clear all windows"),
@@ -77,7 +84,7 @@ t_weechat_command weechat_commands[] =
     "nick2: alternate nick for server\n"
     "nick3: second alternate nick for server\n"
     "username: user name\n"
-    "realname: real name of user\n"),
+    "realname: real name of user"),
     0, MAX_ARGS, weechat_cmd_server, NULL },
   { "save", N_("save config to disk"),
     N_("[file]"), N_("file: filename for writing config"),
@@ -819,6 +826,49 @@ weechat_cmd_alias (char *arguments)
 }
 
 /*
+ * weechat_cmd_buffer: manage buffers
+ */
+
+int
+weechat_cmd_buffer (int argc, char **argv)
+{
+    int number;
+    char *error;
+    
+    if ((argc == 0) || ((argc == 1) && (strcasecmp (argv[0], "list") == 0)))
+    {
+        /* list opened bufferss */
+        gui_printf (NULL, "buffer list -- NOT DEVELOPED!\n");
+    }
+    else
+    {
+        if (strcasecmp (argv[0], "move") == 0)
+        {
+            /* move buffer to another number in the list */
+            gui_printf (NULL, "buffer move -- NOT DEVELOPED!\n");
+        }
+        else
+        {
+            number = strtol (argv[0], &error, 10);
+            if (error)
+            {
+                gui_printf (NULL, _("%s incorrect buffer number\n"),
+                            WEECHAT_ERROR);
+                return -1;
+            }
+            if (!gui_switch_to_buffer_by_number (gui_current_window, number))
+            {
+                gui_printf (NULL,
+                            _("%s buffer \"%s\" not found for \"%s\" command\n"),
+                            WEECHAT_ERROR, argv[0], "buffer");
+                return -1;
+            }
+        }
+    }
+    return 0;
+}
+
+/*
  * weechat_cmd_clear: display or create alias
  */
 
@@ -1495,7 +1545,7 @@ weechat_cmd_set (char *arguments)
             if (ptr_option->handler_change == NULL)
             {
                 gui_printf (NULL,
-                            _("%s option '%s' can not be changed while WeeChat is running\n"),
+                            _("%s option \"%s\" can not be changed while WeeChat is running\n"),
                             WEECHAT_ERROR, option);
             }
             else
@@ -1507,13 +1557,13 @@ weechat_cmd_set (char *arguments)
                     gui_printf (NULL, "  %s = %s\n", option, value);
                 }
                 else
-                    gui_printf (NULL, _("%s incorrect value for option '%s'\n"),
+                    gui_printf (NULL, _("%s incorrect value for option \"%s\"\n"),
                                 WEECHAT_ERROR, option);
             }
         }
         else
         {
-            gui_printf (NULL, _("%s config option '%s' not found\n"),
+            gui_printf (NULL, _("%s config option \"%s\" not found\n"),
                         WEECHAT_ERROR, option);
         }
     }
@@ -1583,15 +1633,15 @@ weechat_cmd_set (char *arguments)
         if (number_found == 0)
         {
             if (value)
-                gui_printf (NULL, _("No config option found with '%s'\n"),
+                gui_printf (NULL, _("No config option found with \"%s\"\n"),
                             value);
             else
-                gui_printf (NULL, _("No config option found with '%s'\n"));
+                gui_printf (NULL, _("No config option found with \"%s\"\n"));
         }
         else
         {
             if (value)
-                gui_printf (NULL, _("%d config option(s) found with '%s'\n"),
+                gui_printf (NULL, _("%d config option(s) found with \"%s\"\n"),
                             number_found, value);
             else
                 gui_printf (NULL, _("%d config option(s) found\n"),
@@ -1635,9 +1685,6 @@ weechat_cmd_unalias (char *arguments)
 int
 weechat_cmd_window (int argc, char **argv)
 {
-    int i;
-    t_irc_server server, *ptr_server, *server_found, *new_server;
-    
     if ((argc == 0) || ((argc == 1) && (strcasecmp (argv[0], "list") == 0)))
     {
         /* list opened windows */
@@ -1656,7 +1703,11 @@ weechat_cmd_window (int argc, char **argv)
             gui_window_split_vertic (gui_current_window);
         }
         else
-            return -1;
+        {
+            gui_printf (NULL,
+                        _("%s unknown option for \"%s\" command\n"),
+                        WEECHAT_ERROR, "window");
+        }
     }
     return 0;
 }

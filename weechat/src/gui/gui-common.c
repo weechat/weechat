@@ -145,7 +145,7 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int switch_to
     if ((new_buffer = (t_gui_buffer *)(malloc (sizeof (t_gui_buffer)))))
     {
         new_buffer->num_displayed = 0;
-        new_buffer->number = (gui_buffers) ? last_gui_buffer->number + 1 : 1;
+        new_buffer->number = (last_gui_buffer) ? last_gui_buffer->number + 1 : 1;
         
         /* assign server and channel to buffer */
         SERVER(new_buffer) = server;
@@ -157,21 +157,19 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int switch_to
             CHANNEL(new_buffer)->buffer = new_buffer;
         
         if (!window->buffer)
+        {
             window->buffer = new_buffer;
-        window->first_line_displayed = 1;
-        window->sub_lines = 0;
-        
-        gui_calculate_pos_size (window);
-        
-        /* init buffers */
-        gui_window_init_subwindows (window);
+            window->first_line_displayed = 1;
+            window->sub_lines = 0;
+            gui_calculate_pos_size (window);
+            gui_window_init_subwindows (window);
+        }
         
         /* init lines */
         new_buffer->lines = NULL;
         new_buffer->last_line = NULL;
         new_buffer->num_lines = 0;
         new_buffer->line_complete = 1;
-        new_buffer->unread_data = 0;
         
         /* init input buffer */
         new_buffer->input_buffer_alloc = INPUT_BUFFER_BLOCK_SIZE;
@@ -242,7 +240,6 @@ gui_buffer_clear (t_gui_buffer *buffer)
     buffer->last_line = NULL;
     buffer->num_lines = 0;
     buffer->line_complete = 1;
-    buffer->unread_data = 0;
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
@@ -407,6 +404,7 @@ gui_new_line (t_gui_buffer *buffer)
         new_line->length = 0;
         new_line->length_align = 0;
         new_line->line_with_message = 0;
+        new_line->line_with_highlight = 0;
         new_line->messages = NULL;
         new_line->last_message = NULL;
         if (!buffer->lines)
@@ -623,4 +621,32 @@ gui_buffer_insert_string (t_gui_buffer *buffer, char *string, int pos)
     
     /* insert new string */
     strncpy (buffer->input_buffer + pos, string, length);
+}
+
+/*
+ * gui_switch_to_buffer_by_number: switch to another buffer with number
+ */
+
+t_gui_buffer *
+gui_switch_to_buffer_by_number (t_gui_window *window, int number)
+{
+    t_gui_buffer *ptr_buffer;
+    
+    /* buffer is currently displayed ? */
+    if (number == window->buffer->number)
+        return window->buffer;
+    
+    /* search for buffer in the list */
+    for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if ((ptr_buffer != window->buffer) && (number == ptr_buffer->number))
+        {
+            gui_switch_to_buffer (window, ptr_buffer);
+            gui_redraw_buffer (window->buffer);
+            return ptr_buffer;
+        }
+    }
+    
+    /* buffer not found */
+    return NULL;
 }

@@ -482,8 +482,8 @@ gui_display_line (t_gui_window *window, t_gui_line *line, int stop_at_end)
         
         /* insert spaces for align text under time/nick */
         if ((window->win_chat_cursor_x == 0) &&
-            (ptr_message->type != MSG_TYPE_TIME) &&
-            (ptr_message->type != MSG_TYPE_NICK) &&
+            (!(ptr_message->type & MSG_TYPE_TIME)) &&
+            (!(ptr_message->type & MSG_TYPE_NICK)) &&
             (line->length_align > 0) &&
             /* TODO: modify arbitraty value for non aligning messages on time/nick? */
             (line->length_align < (window->win_chat_width - 5)))
@@ -805,12 +805,17 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
             wrefresh (ptr_win->win_status);
         }
         wmove (ptr_win->win_status, 0, 0);
+        
+        /* display number of buffers */
+        gui_window_set_color (ptr_win->win_status,
+                              COLOR_WIN_STATUS);
+        wprintw (ptr_win->win_status, "[%d] ",
+                 (last_gui_buffer) ? last_gui_buffer->number : 0);
+        
+        /* display current server */
         if (SERVER(ptr_win->buffer) && SERVER(ptr_win->buffer)->name)
-        {
-            gui_window_set_color (ptr_win->win_status,
-                                  COLOR_WIN_STATUS);
             wprintw (ptr_win->win_status, "[%s] ", SERVER(ptr_win->buffer)->name);
-        }
+        
         if (SERVER(ptr_win->buffer) && !CHANNEL(ptr_win->buffer))
         {
             gui_window_set_color (ptr_win->win_status,
@@ -870,7 +875,7 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
         if (hotlist)
         {
             gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS);
-            wprintw (ptr_win->win_status, _("Act: "));
+            wprintw (ptr_win->win_status, _("[Act: "));
             for (ptr_hotlist = hotlist; ptr_hotlist;
                  ptr_hotlist = ptr_hotlist->next_hotlist)
             {
@@ -896,6 +901,9 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                 if (ptr_hotlist->next_hotlist)
                     wprintw (ptr_win->win_status, ",");
             }
+            gui_window_set_color (ptr_win->win_status,
+                                  COLOR_WIN_STATUS);
+            wprintw (ptr_win->win_status, "]");
         }
         
         /* display "-MORE-" if last line is not displayed */
@@ -1215,7 +1223,6 @@ gui_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
         window->win_status = newwin (1, window->win_width, window->win_y + window->win_height - 2, window->win_x);
     
     buffer->num_displayed++;
-    buffer->unread_data = 0;
     
     hotlist_remove_buffer (buffer);
 }
@@ -1301,8 +1308,6 @@ gui_move_page_down (t_gui_window *window)
         window->sub_lines -= window->win_chat_height - 1;
         if (window->sub_lines < 0)
             window->sub_lines = 0;
-        if (window->sub_lines == 0)
-            window->buffer->unread_data = 0;
         gui_draw_buffer_chat (window->buffer, 0);
         gui_draw_buffer_status (window->buffer, 0);
     }
@@ -1344,7 +1349,7 @@ gui_curses_resize_handler ()
 }
 
 /*
- * gui_view_init_subviews: init subviews for a WeeChat view
+ * gui_window_init_subviews: init subviews for a WeeChat window
  */
 
 void
@@ -1661,9 +1666,11 @@ gui_add_message (t_gui_buffer *buffer, int type, int color, char *message)
     buffer->last_line->last_message->message = strdup (message);
     length = strlen (message);
     buffer->last_line->length += length;
-    if (type == MSG_TYPE_MSG)
+    if (type & MSG_TYPE_MSG)
         buffer->last_line->line_with_message = 1;
-    if ((type == MSG_TYPE_TIME) || (type == MSG_TYPE_NICK))
+    if (type & MSG_TYPE_HIGHLIGHT)
+        buffer->last_line->line_with_highlight = 1;
+    if ((type & MSG_TYPE_TIME) || (type & MSG_TYPE_NICK))
         buffer->last_line->length_align += length;
     if (pos)
     {
@@ -1677,14 +1684,12 @@ gui_add_message (t_gui_buffer *buffer, int type, int color, char *message)
             /*else
                 gui_display_line (buffer, buffer->last_line, 1);*/
         }
-        if ((buffer->num_displayed == 0) || (gui_current_window->sub_lines > 0))
+        if (buffer->num_displayed == 0)
         {
-            if (buffer->unread_data < 1 + buffer->last_line->line_with_message)
-            {
-                buffer->unread_data = 1 + buffer->last_line->line_with_message;
-                hotlist_add (buffer->last_line->line_with_message, buffer);
-                gui_draw_buffer_status (buffer, 1);
-            }
+            hotlist_add (buffer->last_line->line_with_message +
+                         buffer->last_line->line_with_highlight,
+                         buffer);
+            gui_draw_buffer_status (gui_current_window->buffer, 1);
         }
     }
 }
