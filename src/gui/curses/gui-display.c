@@ -1095,7 +1095,6 @@ gui_switch_to_window (t_gui_window *window)
     if (!another_window)
     {
         /* create new windows */
-        gui_calculate_pos_size (window);
         window->win_title = newwin (1, COLS, 0, 0);
         window->win_chat = newwin (window->win_chat_height,
                                    window->win_chat_width,
@@ -1113,12 +1112,12 @@ gui_switch_to_window (t_gui_window *window)
     }
     else
     {
-        gui_calculate_pos_size (window);
-        
         /* create chat & nick windows */
-        if (WIN_IS_CHANNEL(window) && !(window->win_nick))
+        if (WIN_IS_CHANNEL(window))
         {
-            /* add nick list window */
+            /* (re)create nicklist window */
+            if (window->win_nick)
+                delwin (window->win_nick);
             delwin (window->win_chat);
             window->win_chat = newwin (window->win_chat_height,
                                        window->win_chat_width,
@@ -1129,10 +1128,11 @@ gui_switch_to_window (t_gui_window *window)
                                        window->win_nick_y,
                                        window->win_nick_x);
         }
-        if (!(WIN_IS_CHANNEL(window)) && window->win_nick)
+        if (!(WIN_IS_CHANNEL(window)))
         {
             /* remove nick list window */
-            delwin (window->win_nick);
+            if (window->win_nick)
+                delwin (window->win_nick);
             window->win_nick = NULL;
             delwin (window->win_chat);
             window->win_chat = newwin (window->win_chat_height,
@@ -1504,6 +1504,12 @@ gui_init ()
     gui_current_window = gui_window_new (NULL, NULL /*0, 0, COLS, LINES*/);
     
     signal (SIGWINCH, gui_resize_term_handler);
+    
+    #ifdef __LINUX__
+    /* set title for term window, not for console */
+    if (strcmp (getenv ("TERM"), "linux") != 0)
+        printf ("\e]2;" WEECHAT_NAME " " WEECHAT_VERSION "\a\e]1;" WEECHAT_NAME " " WEECHAT_VERSION "\a");
+    #endif
     
     gui_ready = 1;
 }
