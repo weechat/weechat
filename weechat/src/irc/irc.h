@@ -140,7 +140,6 @@ extern t_irc_channel *current_channel;
 
 extern void server_init (t_irc_server *);
 extern t_irc_server *server_alloc ();
-extern void server_create_window (t_irc_server *);
 extern void server_destroy (t_irc_server *);
 extern void server_free (t_irc_server *);
 extern void server_free_all ();

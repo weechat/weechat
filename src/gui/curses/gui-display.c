@@ -958,17 +958,34 @@ gui_draw_window_input (t_gui_window *window)
     }
     else
     {
-        sprintf (format, "%%s> %%-%ds", input_width);
-        if (SERVER(window) && (SERVER(window)->is_connected))
-            ptr_nickname = SERVER(window)->nick;
+        if (SERVER(window))
+        {
+            sprintf (format, "%%s> %%-%ds", input_width);
+            if (SERVER(window) && (SERVER(window)->is_connected))
+                ptr_nickname = SERVER(window)->nick;
+            else
+                ptr_nickname = cfg_look_no_nickname;
+            mvwprintw (window->win_input, 0, 0, format,
+                       ptr_nickname,
+                       window->input_buffer + window->input_buffer_1st_display);
+            wclrtoeol (window->win_input);
+            move (LINES - 1, strlen (ptr_nickname) + 2 +
+                  (window->input_buffer_pos - window->input_buffer_1st_display));
+        }
         else
-            ptr_nickname = cfg_look_no_nickname;
-        mvwprintw (window->win_input, 0, 0, format,
-                   ptr_nickname,
-                   window->input_buffer + window->input_buffer_1st_display);
-        wclrtoeol (window->win_input);
-        move (LINES - 1, strlen (ptr_nickname) + 2 +
-              (window->input_buffer_pos - window->input_buffer_1st_display));
+        {
+            sprintf (format, "%%s> %%-%ds", input_width);
+            if (SERVER(window) && (SERVER(window)->is_connected))
+                ptr_nickname = SERVER(window)->nick;
+            else
+                ptr_nickname = cfg_look_no_nickname;
+            mvwprintw (window->win_input, 0, 0, format,
+                       ptr_nickname,
+                       window->input_buffer + window->input_buffer_1st_display);
+            wclrtoeol (window->win_input);
+            move (LINES - 1, strlen (ptr_nickname) + 2 +
+                  (window->input_buffer_pos - window->input_buffer_1st_display));
+        }
     }
     
     wrefresh (window->win_input);
@@ -1228,7 +1245,21 @@ gui_window_new (void *server, void *channel
                 /*int x, int y, int width, int height*/)
 {
     t_gui_window *new_window;
-
+    
+    if (gui_windows)
+    {
+        if (!SERVER(gui_windows))
+        {
+            if (server)
+                ((t_irc_server *)(server))->window = gui_windows;
+            if (channel)
+                ((t_irc_channel *)(channel))->window = gui_windows;
+            SERVER(gui_windows) = server;
+            CHANNEL(gui_windows) = channel;
+            return gui_windows;
+        }
+    }
+    
     if ((new_window = (t_gui_window *)(malloc (sizeof (t_gui_window)))))
     {
         /* assign server and channel to window */
@@ -1289,6 +1320,7 @@ gui_window_new (void *server, void *channel
     }
     else
         return NULL;
+    
     return new_window;
 }
 
@@ -1301,9 +1333,13 @@ gui_window_free (t_gui_window *window)
 {
     t_gui_line *ptr_line;
     t_gui_message *ptr_message;
+    int create_new;
+    
+    create_new = (window->server || window->channel);
     
     /* TODO: manage splitted windows! */
-    if (window == gui_current_window)
+    if ((window == gui_current_window) &&
+        ((window->next_window) || (window->prev_window)))
         gui_switch_to_previous_window ();
     
     /* free lines and messages */
@@ -1338,6 +1374,10 @@ gui_window_free (t_gui_window *window)
         last_gui_window = window->prev_window;
     
     free (window);
+    
+    /* always at least one window */
+    if (!gui_windows && create_new)
+        gui_window_new (NULL, NULL);
 }
 
 /*
@@ -1539,7 +1579,7 @@ gui_end ()
         /* TODO: free input buffer, lines, messages, completion */
     }
     
-    /* end of ncurses output */
+    /* end of curses output */
     refresh ();
     endwin ();
 }

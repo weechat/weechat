@@ -114,22 +114,6 @@ server_alloc ()
 }
 
 /*
- * server_create_window: create windows for a server
- */
-
-void
-server_create_window (t_irc_server *server)
-{
-    if (!SERVER(gui_windows))
-    {
-        server->window = gui_windows;
-        SERVER(gui_windows) = server;
-    }
-    else
-        gui_window_new (server, NULL);
-}
-
-/*
  * server_destroy: free server data (not struct himself)
  */
 
@@ -181,6 +165,8 @@ server_free (t_irc_server *server)
         (server->next_server)->prev_server = server->prev_server;
     
     server_destroy (server);
+    if (server->window)
+        gui_window_free (server->window);
     free (server);
     irc_servers = new_irc_servers;
 }

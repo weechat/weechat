@@ -211,8 +211,8 @@ wee_init_log ()
 void
 wee_shutdown ()
 {
-    gui_end ();
     server_free_all ();
+    gui_end ();
     if (log_file)
         fclose (log_file);
     exit (0);
@@ -298,7 +298,7 @@ main (int argc, char *argv[])
     {
         if (ptr_server->autoconnect)
         {
-            server_create_window (ptr_server);
+            gui_window_new (ptr_server, NULL);
             if (server_connect (ptr_server))
                 irc_login (ptr_server);
         }
