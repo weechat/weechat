@@ -25,10 +25,14 @@
 #endif
 
 #include <stdlib.h>
+#include <unistd.h>
+#include <errno.h>
 #include <stdio.h>
 #include <string.h>
 #include <limits.h>
 #include <time.h>
+#include <pwd.h>
+#include <sys/types.h>
 
 #include "weechat.h"
 #include "weeconfig.h"
@@ -902,21 +906,6 @@ config_read ()
         }
     }
     
-    /* set default colors for colors not set */
-    /*for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
-    {
-        if (i != CONFIG_SECTION_SERVER)
-        {
-            for (j = 0; weechat_options[i][j].option_name; j++)
-            {
-                if ((weechat_options[i][j].option_type == OPTION_TYPE_COLOR) &&
-                    (*weechat_options[i][j].ptr_int == COLOR_NOT_SET))
-                    *weechat_options[i][j].ptr_int =
-                        gui_get_color_by_name (weechat_options[i][j].default_string);
-            }
-        }
-    }*/
-    
     fclose (file);
     free (filename);
     
@@ -934,10 +923,11 @@ int
 config_create_default ()
 {
     char *filename;
-    char line[1024];
     FILE *file;
     int i, j;
     time_t current_time;
+    struct passwd *my_passwd;
+    char *realname, *pos;
 
     filename =
         (char *) malloc ((strlen (weechat_home) + 64) * sizeof (char));
@@ -954,96 +944,117 @@ config_create_default ()
     wee_log_printf (_("creating default config file\n"));
     
     current_time = time (NULL);
-    sprintf (line, _("#\n# %s configuration file, created by "
+    fprintf (file, _("#\n# %s configuration file, created by "
              "%s v%s on %s#\n"),
              PACKAGE_NAME, PACKAGE_NAME, PACKAGE_VERSION,
              ctime (&current_time));
-    fputs (line, file);
 
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
     {
         if ((i != CONFIG_SECTION_ALIAS) && (i != CONFIG_SECTION_SERVER))
         {
-            sprintf (line, "\n[%s]\n", config_sections[i].section_name);
-            fputs (line, file);
+            fprintf (file, "\n[%s]\n", config_sections[i].section_name);
             if ((i == CONFIG_SECTION_HISTORY) || (i == CONFIG_SECTION_LOG) ||
                 (i == CONFIG_SECTION_DCC) || (i == CONFIG_SECTION_PROXY))
             {
-                sprintf (line,
+                fprintf (file,
                          "# WARNING!!! Options for section \"%s\" are not developed!\n",
                          config_sections[i].section_name);
-                fputs (line, file);
             }
             for (j = 0; weechat_options[i][j].option_name; j++)
             {
                 switch (weechat_options[i][j].option_type)
                 {
                     case OPTION_TYPE_BOOLEAN:
-                        sprintf (line, "%s=%s\n",
+                        fprintf (file, "%s=%s\n",
                                  weechat_options[i][j].option_name,
                                  (weechat_options[i][j].default_int) ?
                                  "on" : "off");
                         break;
                     case OPTION_TYPE_INT:
-                        sprintf (line, "%s=%d\n",
+                        fprintf (file, "%s=%d\n",
                                  weechat_options[i][j].option_name,
                                  weechat_options[i][j].default_int);
                         break;
                     case OPTION_TYPE_INT_WITH_STRING:
                     case OPTION_TYPE_COLOR:
                     case OPTION_TYPE_STRING:
-                        sprintf (line, "%s=%s\n",
+                        fprintf (file, "%s=%s\n",
                                  weechat_options[i][j].option_name,
                                  weechat_options[i][j].default_string);
                         break;
                 }
-                fputs (line, file);
             }
         }
     }
     
     /* default aliases */
     /* TODO: remove comments when missing commands will be ok */
-    fputs ("\n[alias]\n", file);
-    fputs ("SAY=msg *\n", file);
-    fputs ("BYE=quit\n", file);
-    fputs ("EXIT=quit\n", file);
-    fputs ("SIGNOFF=quit\n", file);
-    fputs ("C=clear\n", file);
-    fputs ("CL=clear\n", file);
-    fputs ("# CHAT=dcc chat\n", file);
-    fputs ("# GET=dcc get\n", file);
-    fputs ("# IG=ignore\n", file);
-    fputs ("J=join\n", file);
-    fputs ("K=kick\n", file);
-    fputs ("# KB=kickban\n", file);
-    fputs ("# KN=knockout\n", file);
-    fputs ("LEAVE=part\n", file);
-    fputs ("M=msg\n", file);
-    fputs ("# MUB=unban *\n", file);
-    fputs ("N=names\n", file);
-    fputs ("T=topic\n", file);
-    fputs ("# UB=unban\n", file);
-    fputs ("# UNIG=unignore\n", file);
-    fputs ("# W=who\n", file);
-    fputs ("WC=part\n", file);
-    fputs ("WI=whois\n", file);
-    fputs ("# WW=whowas\n", file);
+    fprintf (file, "\n[alias]\n");
+    fprintf (file, "SAY=msg *\n");
+    fprintf (file, "BYE=quit\n");
+    fprintf (file, "EXIT=quit\n");
+    fprintf (file, "SIGNOFF=quit\n");
+    fprintf (file, "C=clear\n");
+    fprintf (file, "CL=clear\n");
+    fprintf (file, "# CHAT=dcc chat\n");
+    fprintf (file, "# GET=dcc get\n");
+    fprintf (file, "# IG=ignore\n");
+    fprintf (file, "J=join\n");
+    fprintf (file, "K=kick\n");
+    fprintf (file, "# KB=kickban\n");
+    fprintf (file, "# KN=knockout\n");
+    fprintf (file, "LEAVE=part\n");
+    fprintf (file, "M=msg\n");
+    fprintf (file, "# MUB=unban *\n");
+    fprintf (file, "N=names\n");
+    fprintf (file, "T=topic\n");
+    fprintf (file, "# UB=unban\n");
+    fprintf (file, "# UNIG=unignore\n");
+    fprintf (file, "W=who\n");
+    fprintf (file, "WC=part\n");
+    fprintf (file, "WI=whois\n");
+    fprintf (file, "WW=whowas\n");
     
     /* default server is freenode */
-    fputs ("\n[server]\n", file);
-    fputs ("server_name=freenode\n", file);
-    fputs ("server_autoconnect=on\n", file);
-    fputs ("server_address=irc.freenode.net\n", file);
-    fputs ("server_port=6667\n", file);
-    fputs ("server_password=\n", file);
-    fputs ("server_nick1=weechat_user\n", file);
-    fputs ("server_nick2=weechat2\n", file);
-    fputs ("server_nick3=weechat3\n", file);
-    fputs ("server_username=weechat\n", file);
-    fputs ("server_realname=WeeChat default realname\n", file);
-    fputs ("server_command=\n", file);
-    fputs ("server_autojoin=\n", file);
+    fprintf (file, "\n[server]\n");
+    fprintf (file, "server_name=freenode\n");
+    fprintf (file, "server_autoconnect=on\n");
+    fprintf (file, "server_address=irc.freenode.net\n");
+    fprintf (file, "server_port=6667\n");
+    fprintf (file, "server_password=\n");
+    
+    /* Get the user's name from /etc/passwd */
+    if ((my_passwd = getpwuid (geteuid ())) != NULL)
+    {
+        fprintf (file, "server_nick1=%s\n", my_passwd->pw_name);
+        fprintf (file, "server_nick2=%s1\n", my_passwd->pw_name);
+        fprintf (file, "server_nick3=%s2\n", my_passwd->pw_name);
+        fprintf (file, "server_username=%s\n", my_passwd->pw_name);
+        realname = strdup (my_passwd->pw_gecos);
+        pos = strchr (realname, ',');
+        if (pos)
+            pos[0] = '\0';
+        fprintf (file, "server_realname=%s\n",
+            realname);
+        if (pos)
+            pos[0] = ',';
+        free (realname);
+    }
+    else
+    {
+        /* default values if /etc/passwd can't be read */
+        fprintf (stderr, "%s (%s).", _("Unable to get user's name"),
+            strerror (errno));
+        fprintf (file, "server_nick1=weechat1\n");
+        fprintf (file, "server_nick2=weechat2\n");
+        fprintf (file, "server_nick3=weechat3\n");
+        fprintf (file, "server_username=weechat\n");
+        fprintf (file, "server_realname=WeeChat default realname\n");
+    }
+    
+    fprintf (file, "server_command=\n");
+    fprintf (file, "server_autojoin=\n");
     
     fclose (file);
     free (filename);
@@ -1060,7 +1071,6 @@ int
 config_write (char *config_name)
 {
     char *filename;
-    char line[1024];
     FILE *file;
     int i, j;
     time_t current_time;
@@ -1087,115 +1097,97 @@ config_write (char *config_name)
     wee_log_printf (_("saving config to disk\n"));
     
     current_time = time (NULL);
-    sprintf (line, _("#\n# %s configuration file, created by "
+    fprintf (file, _("#\n# %s configuration file, created by "
              "%s v%s on %s#\n"),
              PACKAGE_NAME, PACKAGE_NAME, PACKAGE_VERSION,
              ctime (&current_time));
-    fputs (line, file);
 
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
     {
         if ((i != CONFIG_SECTION_ALIAS) && (i != CONFIG_SECTION_SERVER))
         {
-            sprintf (line, "\n[%s]\n", config_sections[i].section_name);
-            fputs (line, file);
+            fprintf (file, "\n[%s]\n", config_sections[i].section_name);
             if ((i == CONFIG_SECTION_HISTORY) || (i == CONFIG_SECTION_LOG) ||
                 (i == CONFIG_SECTION_DCC) || (i == CONFIG_SECTION_PROXY))
             {
-                sprintf (line,
+                fprintf (file,
                          "# WARNING!!! Options for section \"%s\" are not developed!\n",
                          config_sections[i].section_name);
-                fputs (line, file);
             }
             for (j = 0; weechat_options[i][j].option_name; j++)
             {
                 switch (weechat_options[i][j].option_type)
                 {
                     case OPTION_TYPE_BOOLEAN:
-                        sprintf (line, "%s=%s\n",
+                        fprintf (file, "%s=%s\n",
                                  weechat_options[i][j].option_name,
                                  (weechat_options[i][j].ptr_int &&
                                  *weechat_options[i][j].ptr_int) ? 
                                  "on" : "off");
                         break;
                     case OPTION_TYPE_INT:
-                        sprintf (line, "%s=%d\n",
+                        fprintf (file, "%s=%d\n",
                                  weechat_options[i][j].option_name,
                                  (weechat_options[i][j].ptr_int) ?
                                  *weechat_options[i][j].ptr_int :
                                  weechat_options[i][j].default_int);
                         break;
                     case OPTION_TYPE_INT_WITH_STRING:
-                        sprintf (line, "%s=%s\n",
+                        fprintf (file, "%s=%s\n",
                                  weechat_options[i][j].option_name,
                                  (weechat_options[i][j].ptr_int) ?
                                  weechat_options[i][j].array_values[*weechat_options[i][j].ptr_int] :
                                  weechat_options[i][j].array_values[weechat_options[i][j].default_int]);
                         break;
                     case OPTION_TYPE_COLOR:
-                        sprintf (line, "%s=%s\n",
+                        fprintf (file, "%s=%s\n",
                                  weechat_options[i][j].option_name,
                                  (weechat_options[i][j].ptr_int) ?
                                  gui_get_color_by_value (*weechat_options[i][j].ptr_int) :
                                  weechat_options[i][j].default_string);
                         break;
                     case OPTION_TYPE_STRING:
-                        sprintf (line, "%s=%s\n",
+                        fprintf (file, "%s=%s\n",
                                  weechat_options[i][j].option_name,
                                  (weechat_options[i][j].ptr_string) ?
                                  *weechat_options[i][j].ptr_string :
                                  weechat_options[i][j].default_string);
                         break;
                 }
-                fputs (line, file);
             }
         }
     }
     
     /* alias section */
-    fputs ("\n[alias]\n", file);
+    fprintf (file, "\n[alias]\n");
     for (ptr_alias = weechat_alias; ptr_alias;
          ptr_alias = ptr_alias->next_alias)
     {
-        sprintf (line, "%s=%s\n",
+        fprintf (file, "%s=%s\n",
                  ptr_alias->alias_name, ptr_alias->alias_command + 1);
-        fputs (line, file);
     }
     
     /* server section */
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        /* default server is freenode */
-        fputs ("\n[server]\n", file);
-        sprintf (line, "server_name=%s\n", ptr_server->name);
-        fputs (line, file);
-        sprintf (line, "server_autoconnect=%s\n",
+        fprintf (file, "\n[server]\n");
+        fprintf (file, "server_name=%s\n", ptr_server->name);
+        fprintf (file, "server_autoconnect=%s\n",
                  (ptr_server->autoconnect) ? "on" : "off");
-        fputs (line, file);
-        sprintf (line, "server_address=%s\n", ptr_server->address);
-        fputs (line, file);
-        sprintf (line, "server_port=%d\n", ptr_server->port);
-        fputs (line, file);
-        sprintf (line, "server_password=%s\n",
+        fprintf (file, "server_address=%s\n", ptr_server->address);
+        fprintf (file, "server_port=%d\n", ptr_server->port);
+        fprintf (file, "server_password=%s\n",
                  (ptr_server->password) ? ptr_server->password : "");
-        fputs (line, file);
-        sprintf (line, "server_nick1=%s\n", ptr_server->nick1);
-        fputs (line, file);
-        sprintf (line, "server_nick2=%s\n", ptr_server->nick2);
-        fputs (line, file);
-        sprintf (line, "server_nick3=%s\n", ptr_server->nick3);
-        fputs (line, file);
-        sprintf (line, "server_username=%s\n", ptr_server->username);
-        fputs (line, file);
-        sprintf (line, "server_realname=%s\n", ptr_server->realname);
-        fputs (line, file);
-        sprintf (line, "server_command=%s\n",
+        fprintf (file, "server_nick1=%s\n", ptr_server->nick1);
+        fprintf (file, "server_nick2=%s\n", ptr_server->nick2);
+        fprintf (file, "server_nick3=%s\n", ptr_server->nick3);
+        fprintf (file, "server_username=%s\n", ptr_server->username);
+        fprintf (file, "server_realname=%s\n", ptr_server->realname);
+        fprintf (file, "server_command=%s\n",
                  (ptr_server->command) ? ptr_server->command : "");
-        fputs (line, file);
-        sprintf (line, "server_autojoin=%s\n",
+        fprintf (file, "server_autojoin=%s\n",
                  (ptr_server->autojoin) ? ptr_server->autojoin : "");
-        fputs (line, file);
     }
     
     fclose (file);
