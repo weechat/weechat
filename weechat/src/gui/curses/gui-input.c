@@ -536,6 +536,7 @@ gui_read_keyb ()
                         case 'q':
                         case 'Q':
                             gui_buffer_free (gui_current_window->buffer, 1);
+                            gui_redraw_buffer (gui_current_window->buffer);
                             break;
                         /* remove from DCC list */
                         case 'r':
