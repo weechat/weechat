@@ -545,9 +545,10 @@ gui_read_keyb ()
                         user_command (SERVER(gui_current_window->buffer),
                                       gui_current_window->buffer->input_buffer);
                         if (ptr_buffer == gui_current_window->buffer)
-                            gui_draw_buffer_input (ptr_buffer, 0);
-                        if (ptr_buffer)
+                        {
                             ptr_buffer->input_buffer[0] = '\0';
+                            gui_draw_buffer_input (ptr_buffer, 0);
+                        }
                     }
                 }
                 break;
