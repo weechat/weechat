@@ -534,6 +534,14 @@ t_config_option weechat_options_server[] =
     N_("automatically connect to server when WeeChat is starting"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
     NULL, NULL, &(cfg_server.autoconnect), NULL, NULL },
+  { "server_autoreconnect", N_("automatically reconnect to server"),
+    N_("automatically reconnect to server when disconnected"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
+    NULL, NULL, &(cfg_server.autoreconnect), NULL, NULL },
+  { "server_autoreconnect_delay", N_("delay before trying again to reconnect"),
+    N_("delay (in deconds) before trying again to reconnect to server"),
+    OPTION_TYPE_INT, 0, 65535, 30,
+    NULL, NULL, &(cfg_server.autoreconnect_delay), NULL, NULL },
   { "server_address", N_("server address or hostname"),
     N_("IP address or hostname of IRC server"),
     OPTION_TYPE_STRING, 0, 0, 0,
@@ -815,7 +823,8 @@ config_allocate_server (char *filename, int line_number)
         return 0;
     }
     if (!server_new (cfg_server.name,
-        cfg_server.autoconnect, 0, cfg_server.address, cfg_server.port,
+        cfg_server.autoconnect, cfg_server.autoreconnect,
+        cfg_server.autoreconnect_delay, 0, cfg_server.address, cfg_server.port,
         cfg_server.password, cfg_server.nick1, cfg_server.nick2,
         cfg_server.nick3, cfg_server.username, cfg_server.realname,
         cfg_server.command, cfg_server.command_delay, cfg_server.autojoin,
@@ -1374,6 +1383,10 @@ config_write (char *config_name)
             fprintf (file, "server_name=%s\n", ptr_server->name);
             fprintf (file, "server_autoconnect=%s\n",
                      (ptr_server->autoconnect) ? "on" : "off");
+            fprintf (file, "server_autoreconnect=%s\n",
+                     (ptr_server->autoreconnect) ? "on" : "off");
+            fprintf (file, "server_autoreconnect_delay=%d\n",
+                     ptr_server->autoreconnect_delay);
             fprintf (file, "server_address=%s\n", ptr_server->address);
             fprintf (file, "server_port=%d\n", ptr_server->port);
             fprintf (file, "server_password=%s\n",

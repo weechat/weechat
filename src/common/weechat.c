@@ -228,8 +228,10 @@ wee_parse_args (int argc, char *argv[])
             }
             else
             {
-                if (!server_new (server_tmp.name, 0, 1,
-                                 server_tmp.address, server_tmp.port,
+                if (!server_new (server_tmp.name, server_tmp.autoconnect,
+                                 server_tmp.autoreconnect,
+                                 server_tmp.autoreconnect_delay,
+                                 1, server_tmp.address, server_tmp.port,
                                  server_tmp.password, server_tmp.nick1,
                                  server_tmp.nick2, server_tmp.nick3,
                                  NULL, NULL, NULL, 0, server_tmp.autojoin, 1))

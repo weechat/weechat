@@ -627,8 +627,14 @@ gui_main_loop ()
         for (ptr_server = irc_servers; ptr_server;
              ptr_server = ptr_server->next_server)
         {
-            if (ptr_server->sock4 >= 0)
-                FD_SET (ptr_server->sock4, &read_fd);
+            /* check if reconnection is pending */
+            if ((!ptr_server->is_connected)
+                && (ptr_server->reconnect_start > 0)
+                && (new_time >= (ptr_server->reconnect_start + ptr_server->autoreconnect_delay)))
+                server_reconnect (ptr_server);
+            else
+                if (ptr_server->sock4 >= 0)
+                    FD_SET (ptr_server->sock4, &read_fd);
         }
         if (select (FD_SETSIZE, &read_fd, NULL, NULL, &timeout))
         {

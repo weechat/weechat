@@ -99,7 +99,7 @@ irc_cmd_recv_error (t_irc_server *server, char *host, char *arguments)
     
     if (strncmp (arguments, "Closing Link", 12) == 0)
     {
-        server_disconnect (server);
+        server_disconnect (server, 1);
         return 0;
     }
     
@@ -1500,6 +1500,7 @@ int
 irc_cmd_recv_004 (t_irc_server *server, char *host, char *arguments)
 {
     char *pos;
+    t_irc_channel *ptr_channel;
     
     /* make gcc happy */
     (void) host;
@@ -1528,9 +1529,23 @@ irc_cmd_recv_004 (t_irc_server *server, char *host, char *arguments)
             sleep (server->command_delay);
     }
     
-    /* autojoin */
-    if (server->autojoin && server->autojoin[0])
-        return irc_cmd_send_join (server, server->autojoin);
+    /* auto-join after disconnection (only rejoins opened channels) */
+    if (server->reconnect_join)
+    {
+        for (ptr_channel = server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            if (ptr_channel->type == CHAT_CHANNEL)
+                server_sendf (server, "JOIN %s\r\n", ptr_channel->name);
+        }
+        server->reconnect_join = 0;
+    }
+    else
+    {
+        /* auto-join when connecting to server for first time */
+        if (server->autojoin && server->autojoin[0])
+            return irc_cmd_send_join (server, server->autojoin);
+    }
     
     return 0;
 }
@@ -2919,12 +2934,24 @@ irc_cmd_recv_433 (t_irc_server *server, char *host, char *arguments)
             }
             else
             {
-                gui_printf (server->buffer,
-                            _("%s: all declared nicknames are already in use, "
-                            "closing connection with server!\n"),
-                            PACKAGE_NAME);
-                server_disconnect (server);
-                return 0;
+                if (strcmp (server->nick, server->nick3) == 0)
+                {
+                    gui_printf (server->buffer,
+                                _("%s: all declared nicknames are already in use, "
+                                "closing connection with server!\n"),
+                                PACKAGE_NAME);
+                    server_disconnect (server, 1);
+                    return 0;
+                }
+                else
+                {
+                    gui_printf (server->buffer,
+                                _("%s: nickname \"%s\" is already in use, "
+                                "trying 1st nickname \"%s\"\n"),
+                                PACKAGE_NAME, server->nick, server->nick1);
+                    free (server->nick);
+                    server->nick = strdup (server->nick1);
+                }
             }
         }
     

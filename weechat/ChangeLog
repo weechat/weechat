@@ -5,7 +5,11 @@ ChangeLog - 2004-12-27
 
 
 Version 0.0.9 (under dev!):
-   * major bug fixed when socket is closed by server (100% CPU usage fixed)
+   * auto-reconnection to server (new options: server_autoreconnect (on/off),
+     server_autoreconnect_delay (in seconds))
+   * major bug fixed when socket is closed by server (100% CPU usage fixed),
+     and disconnections are now ok (all channels are "closed", history is still
+     visible, and buffer will be used again if reconnection to server)
    * option "look_remove_colors_from_msgs" is now working
    * fixed display of nick mode changes
    * /notice command fixed (and display when received from server)

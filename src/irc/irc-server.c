@@ -59,7 +59,9 @@ void
 server_init (t_irc_server *server)
 {
     server->name = NULL;
-    server->autoconnect = 0;
+    server->autoconnect = 1;
+    server->autoreconnect = 1;
+    server->autoreconnect_delay = 30;
     server->command_line = 0;
     server->address = NULL;
     server->port = -1;
@@ -74,6 +76,8 @@ server_init (t_irc_server *server)
     server->autojoin = NULL;
     server->nick = NULL;
     server->is_connected = 0;
+    server->reconnect_start = 0;
+    server->reconnect_join = 0;
     server->sock4 = -1;
     server->is_away = 0;
     server->server_read = -1;
@@ -291,10 +295,11 @@ server_free_all ()
  */
 
 t_irc_server *
-server_new (char *name, int autoconnect, int command_line, char *address,
-            int port, char *password, char *nick1, char *nick2, char *nick3,
-            char *username, char *realname, char *command, int command_delay,
-            char *autojoin, int autorejoin)
+server_new (char *name, int autoconnect, int autoreconnect, int autoreconnect_delay,
+            int command_line, char *address, int port, char *password,
+            char *nick1, char *nick2, char *nick3, char *username,
+            char *realname, char *command, int command_delay, char *autojoin,
+            int autorejoin)
 {
     t_irc_server *new_server;
     
@@ -316,6 +321,8 @@ server_new (char *name, int autoconnect, int command_line, char *address,
     {
         new_server->name = strdup (name);
         new_server->autoconnect = autoconnect;
+        new_server->autoreconnect = autoreconnect;
+        new_server->autoreconnect_delay = autoreconnect_delay;
         new_server->command_line = command_line;
         new_server->address = strdup (address);
         new_server->port = port;
@@ -591,8 +598,9 @@ server_recv (t_irc_server *server)
     else
     {
         gui_printf (server->buffer,
-                    _("%s cannot read data from socket, disconnecting from server...\n"));
-        server_disconnect (server);
+                    _("%s cannot read data from socket, disconnecting from server...\n"),
+                    WEECHAT_ERROR);
+        server_disconnect (server, 1);
     }
 }
 
@@ -701,6 +709,29 @@ server_connect (t_irc_server *server)
 }
 
 /*
+ * server_reconnect: reconnect to a server (after disconnection)
+ */
+
+void
+server_reconnect (t_irc_server *server)
+{
+    gui_printf (server->buffer, _("Reconnecting to server...\n"));
+    server->reconnect_start = 0;
+    
+    if (server_connect (server))
+    {
+        server->reconnect_join = 1;
+        irc_login (server);
+    }
+    else
+    {
+        server->reconnect_start = time (NULL);
+        gui_printf (server->buffer, _("Reconnecting to server in %d seconds\n"),
+                    server->autoreconnect_delay);
+    }
+}
+
+/*
  * server_auto_connect: auto-connect to servers (called at startup)
  */
 
@@ -727,7 +758,7 @@ server_auto_connect (int command_line)
  */
 
 void
-server_disconnect (t_irc_server *server)
+server_disconnect (t_irc_server *server, int reconnect)
 {
     t_irc_channel *ptr_channel;
     
@@ -737,17 +768,38 @@ server_disconnect (t_irc_server *server)
         for (ptr_channel = server->channels; ptr_channel;
              ptr_channel = ptr_channel->next_channel)
         {
+            nick_free_all (ptr_channel);
             irc_display_prefix (ptr_channel->buffer, PREFIX_INFO);
             gui_printf (ptr_channel->buffer, _("Disconnected from server!\n"));
         }
-        
-        /* close communication with server */
-        close (server->server_read);
-        close (server->server_write);
-        close (server->sock4);
-        server->is_connected = 0;
-        server->sock4 = -1;
+        gui_draw_buffer_nick (gui_current_window->buffer, 1);
+        gui_draw_buffer_status (gui_current_window->buffer, 1);
     }
+    
+    /* close communication with server */
+    if (server->server_read >= 0)
+        close (server->server_read);
+    server->server_read = -1;
+    
+    if (server->server_write >= 0)
+        close (server->server_write);
+    server->server_write = -1;
+    
+    
+    if (server->sock4 >= 0)
+        close (server->sock4);
+    server->sock4 = -1;
+    
+    server->is_connected = 0;
+    
+    if ((reconnect) && (server->autoreconnect))
+    {
+        server->reconnect_start = time (NULL);
+        gui_printf (server->buffer, _("Reconnecting to server in %d seconds\n"),
+                    server->autoreconnect_delay);
+    }
+    else
+        server->reconnect_start = 0;
 }
 
 /*
@@ -760,7 +812,7 @@ server_disconnect_all ()
     t_irc_server *ptr_server;
     
     for (ptr_server = irc_servers; ptr_server; ptr_server = ptr_server->next_server)
-        server_disconnect (ptr_server);
+        server_disconnect (ptr_server, 0);
 }
 
 /*

@@ -116,6 +116,8 @@ struct t_irc_server
     /* user choices */
     char *name;                     /* name of server (only for display)    */
     int autoconnect;                /* = 1 if auto connect at startup       */
+    int autoreconnect;              /* = 1 if auto reco when disconnected   */
+    int autoreconnect_delay;        /* delay before trying again reconnect  */
     int command_line;               /* server was given on command line     */
     char *address;                  /* address of server (IP or name)       */
     int port;                       /* port for server (6667 by default)    */
@@ -133,6 +135,8 @@ struct t_irc_server
     /* internal vars */
     char *nick;                     /* current nickname                     */
     int is_connected;               /* 1 if WeeChat is connected to server  */
+    time_t reconnect_start;         /* this time + delay = reconnect time   */
+    int reconnect_join;             /* 1 if channels opened to rejoin       */
     int sock4;                      /* socket for server                    */
     int is_away;                    /* 1 is user is marker as away          */
     time_t away_time;               /* time() when user marking as away     */
@@ -214,15 +218,16 @@ extern t_irc_server *server_alloc ();
 extern void server_destroy (t_irc_server *);
 extern void server_free (t_irc_server *);
 extern void server_free_all ();
-extern t_irc_server *server_new (char *, int, int, char *, int, char *, char *,
-                                 char *, char *, char *, char *, char *, int,
-                                 char *, int);
+extern t_irc_server *server_new (char *, int, int, int, int, char *, int, char *,
+                                 char *, char *, char *, char *, char *, char *,
+                                 int, char *, int);
 extern int server_send (t_irc_server *, char *, int);
 extern void server_sendf (t_irc_server *, char *, ...);
 extern void server_recv (t_irc_server *);
-extern int server_connect ();
+extern int server_connect (t_irc_server *);
+extern void server_reconnect (t_irc_server *);
 extern void server_auto_connect (int);
-extern void server_disconnect (t_irc_server *);
+extern void server_disconnect (t_irc_server *, int);
 extern void server_disconnect_all ();
 extern t_irc_server *server_search (char *);
 extern int server_get_number_connected ();

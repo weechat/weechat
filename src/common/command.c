@@ -1026,7 +1026,6 @@ int
 weechat_cmd_connect (int argc, char **argv)
 {
     t_irc_server *ptr_server;
-    t_irc_channel *ptr_channel;
     
     /* make gcc happy */
     (void) argc;
@@ -1048,13 +1047,9 @@ weechat_cmd_connect (int argc, char **argv)
         }
         if (server_connect (ptr_server))
         {
+            ptr_server->reconnect_start = 0;
+            ptr_server->reconnect_join = (ptr_server->channels) ? 1 : 0;
             irc_login (ptr_server);
-            for (ptr_channel = ptr_server->channels; ptr_channel;
-                 ptr_channel = ptr_channel->next_channel)
-            {
-                if (ptr_channel->type == CHAT_CHANNEL)
-                    server_sendf (ptr_server, "JOIN %s\r\n", ptr_channel->name);
-            }
         }
     }
     else
@@ -1082,14 +1077,17 @@ weechat_cmd_disconnect (int argc, char **argv)
     ptr_server = server_search (argv[0]);
     if (ptr_server)
     {
-        if (!ptr_server->is_connected)
+        if ((!ptr_server->is_connected) && (ptr_server->reconnect_start == 0))
         {
-            gui_printf (NULL,
+            gui_printf (ptr_server->buffer,
                         _("%s not connected to server \"%s\"!\n"),
                         WEECHAT_ERROR, argv[0]);
             return -1;
         }
-        server_disconnect (ptr_server);
+        if (ptr_server->reconnect_start > 0)
+            gui_printf (ptr_server->buffer,
+                        _("Auto-reconnection is cancelled\n"));
+        server_disconnect (ptr_server, 0);
         gui_draw_buffer_status (gui_current_window->buffer, 1);
     }
     else
@@ -1603,8 +1601,10 @@ weechat_cmd_server (int argc, char **argv)
         }
         
         /* create new server */
-        new_server = server_new (server.name, server.autoconnect, 0,
-                                 server.address, server.port, server.password,
+        new_server = server_new (server.name, server.autoconnect,
+                                 server.autoreconnect,
+                                 server.autoreconnect_delay,
+                                 0, server.address, server.port, server.password,
                                  server.nick1, server.nick2, server.nick3,
                                  server.username, server.realname,
                                  server.command, 1, server.autojoin, 1);
