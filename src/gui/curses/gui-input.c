@@ -645,6 +645,7 @@ gui_main_loop ()
     quit_weechat = 0;
     old_min = -1;
     old_sec = -1;
+    check_away = 0;
     while (!quit_weechat)
     {
         new_time = time (NULL);
@@ -666,6 +667,12 @@ gui_main_loop ()
                 gui_infobar->remaining_time--;
                 if (gui_infobar->remaining_time == 0)
                     gui_infobar_remove ();
+            }
+            check_away++;
+            if (check_away >= CHECK_AWAY_DELAY)
+            {
+                check_away = 0;
+                server_check_away ();
             }
         }
         

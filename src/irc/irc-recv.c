@@ -185,7 +185,7 @@ irc_cmd_recv_join (t_irc_server *server, char *host, char *arguments)
     gui_printf_color (ptr_channel->buffer, COLOR_WIN_CHAT_CHANNEL,
                       "%s\n", arguments);
     (void) nick_new (ptr_channel, host, 0, 0, 0);
-    gui_draw_buffer_nick (gui_current_window->buffer, 1);
+    gui_draw_buffer_nick (ptr_channel->buffer, 1);
     return 0;
 }
 
@@ -269,8 +269,8 @@ irc_cmd_recv_kick (t_irc_server *server, char *host, char *arguments)
     {
         /* my nick was kicked => free all nicks, channel is not active any more */
         nick_free_all (ptr_channel);
-        gui_draw_buffer_nick (gui_current_window->buffer, 1);
-        gui_draw_buffer_status (gui_current_window->buffer, 1);
+        gui_draw_buffer_nick (ptr_channel->buffer, 1);
+        gui_draw_buffer_status (ptr_channel->buffer, 1);
         if (server->autorejoin)
             irc_cmd_send_join (server, ptr_channel->name);
     }
@@ -280,7 +280,7 @@ irc_cmd_recv_kick (t_irc_server *server, char *host, char *arguments)
         if (ptr_nick)
         {
             nick_free (ptr_channel, ptr_nick);
-            gui_draw_buffer_nick (gui_current_window->buffer, 1);
+            gui_draw_buffer_nick (ptr_channel->buffer, 1);
         }
     }
     return 0;
@@ -590,7 +590,7 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *arguments)
         if (ptr_channel)
         {
             irc_get_channel_modes (ptr_channel, arguments, host, pos, pos_parm);
-            gui_draw_buffer_status (gui_current_window->buffer, 0);
+            gui_draw_buffer_status (ptr_channel->buffer, 0);
         }
         else
         {
@@ -2029,6 +2029,46 @@ irc_cmd_recv_314 (t_irc_server *server, char *host, char *arguments)
 }
 
 /*
+ * irc_cmd_recv_315: '315' command (end of /who)
+ */
+
+int
+irc_cmd_recv_315 (t_irc_server *server, char *host, char *arguments)
+{
+    char *pos;
+    t_irc_channel *ptr_channel;
+    
+    /* make gcc happy */
+    (void) host;
+    
+    /* skip nickname if at beginning of server message */
+    if (strncmp (server->nick, arguments, strlen (server->nick)) == 0)
+    {
+        arguments += strlen (server->nick) + 1;
+        while (arguments[0] == ' ')
+            arguments++;
+    }
+    
+    pos = strchr (arguments, ' ');
+    if (pos)
+    {
+        pos[0] = '\0';
+        pos++;
+        ptr_channel = channel_search (server, arguments);
+        if (ptr_channel && (ptr_channel->checking_away))
+        {
+            ptr_channel->checking_away = 0;
+            return 0;
+        }
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_CHANNEL, "%s", arguments);
+        gui_printf (server->buffer, " %s\n", pos);
+    }
+    else
+        gui_printf (server->buffer, "%s\n", arguments);
+    return 0;
+}
+
+/*
  * irc_cmd_recv_317: '317' command (whois, idle)
  */
 
@@ -2415,7 +2455,7 @@ irc_cmd_recv_324 (t_irc_server *server, char *host, char *arguments)
             if (ptr_channel)
             {
                 irc_get_channel_modes (ptr_channel, NULL, NULL, pos, pos_parm);
-                gui_draw_buffer_status (gui_current_window->buffer, 0);
+                gui_draw_buffer_status (ptr_channel->buffer, 0);
             }
         }
     }
@@ -2656,6 +2696,8 @@ irc_cmd_recv_352 (t_irc_server *server, char *host, char *arguments)
 {
     char *pos_channel, *pos_user, *pos_host, *pos_server, *pos_nick;
     char *pos_attr, *pos_hopcount, *pos_realname;
+    t_irc_channel *ptr_channel;
+    t_irc_nick *ptr_nick;
     
     /* make gcc happy */
     (void) host;
@@ -2716,6 +2758,16 @@ irc_cmd_recv_352 (t_irc_server *server, char *host, char *arguments)
                                     pos_realname++;
                                     while (pos_realname[0] == ' ')
                                         pos_realname++;
+                                    
+                                    ptr_channel = channel_search (server, pos_channel);
+                                    if (ptr_channel && (ptr_channel->checking_away))
+                                    {
+                                        ptr_nick = nick_search (ptr_channel, pos_nick);
+                                        if (ptr_nick)
+                                            nick_set_away (ptr_channel, ptr_nick,
+                                                           (pos_attr[0] == 'G') ? 1 : 0);
+                                        return 0;
+                                    }
                                     
                                     irc_display_prefix (server->buffer,
                                                         PREFIX_SERVER);
@@ -2959,6 +3011,7 @@ irc_cmd_recv_366 (t_irc_server *server, char *host, char *arguments)
                 gui_printf_color (ptr_channel->buffer,
                                   COLOR_WIN_CHAT_DARK, ")\n");
                 irc_cmd_send_mode (server, ptr_channel->name);
+                channel_check_away (server, ptr_channel);
             }
             else
             {

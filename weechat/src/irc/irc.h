@@ -56,6 +56,8 @@
 
 #define DEFAULT_IRC_PORT 6667
 
+#define CHECK_AWAY_DELAY 60
+
 /* DCC types & status */
 
 #define DCC_CHAT_RECV           0   /* receiving DCC chat                   */
@@ -80,7 +82,8 @@ struct t_irc_nick
     int is_op;                      /* operator privileges?                 */
     int is_halfop;                  /* half operaor privileges?             */
     int has_voice;                  /* nick has voice?                      */
-    int color;                      /* color for nickname                   */
+    int is_away;                    /* = 1 if nick is away, otherwise 0     */
+    int color;                      /* color for nickname in chat window    */
     t_irc_nick *prev_nick;          /* link to previous nick on the channel */
     t_irc_nick *next_nick;          /* link to next nick on the channel     */
 };
@@ -101,6 +104,7 @@ struct t_irc_channel
     char modes[NUM_CHANNEL_MODES+1];/* channel modes                        */
     int limit;                      /* user limit (0 is limit not set)      */
     char *key;                      /* channel key (NULL if no key is set)  */
+    int checking_away;              /* = 1 if checking away with WHO cmd    */
     t_irc_nick *nicks;              /* nicks on the channel                 */
     t_irc_nick *last_nick;          /* last nick on the channel             */
     t_gui_buffer *buffer;           /* GUI buffer allocated for channel     */
@@ -139,10 +143,10 @@ struct t_irc_server
     time_t reconnect_start;         /* this time + delay = reconnect time   */
     int reconnect_join;             /* 1 if channels opened to rejoin       */
     int sock4;                      /* socket for server                    */
-    int is_away;                    /* 1 is user is marker as away          */
-    time_t away_time;               /* time() when user marking as away     */
     int server_read;                /* pipe for reading server data         */
     int server_write;               /* pipe for sending data to server      */
+    int is_away;                    /* 1 is user is marker as away          */
+    time_t away_time;               /* time() when user marking as away     */
     int lag;                        /* lag (in milliseconds)                */
     struct timeval lag_check_time;  /* last time lag was checked (ping sent)*/
     time_t lag_next_check;          /* time for next check                  */
@@ -210,6 +214,7 @@ struct t_dcc
 extern t_irc_command irc_commands[];
 extern t_irc_server *irc_servers;
 extern t_irc_message *recv_msgq, *msgq_last_msg;
+extern int check_away;
 extern t_dcc *dcc_list;
 extern char *dcc_status_string[6];
 extern char *channel_modes;
@@ -236,6 +241,8 @@ extern void server_disconnect_all ();
 extern t_irc_server *server_search (char *);
 extern int server_get_number_connected ();
 extern int server_name_already_exists (char *);
+extern void server_check_away ();
+extern void server_set_away (t_irc_server *, char *, int);
 
 /* channel functions (irc-channel.c) */
 
@@ -244,6 +251,8 @@ extern void channel_free (t_irc_server *, t_irc_channel *);
 extern void channel_free_all (t_irc_server *);
 extern t_irc_channel *channel_search (t_irc_server *, char *);
 extern int string_is_channel (char *);
+extern void channel_check_away (t_irc_server *, t_irc_channel *);
+extern void channel_set_away (t_irc_channel *, char *, int);
 
 /* nick functions (irc-nick.c) */
 
@@ -255,6 +264,7 @@ extern void nick_free_all (t_irc_channel *);
 extern t_irc_nick *nick_search (t_irc_channel *, char *);
 extern void nick_count (t_irc_channel *, int *, int *, int *, int *, int *);
 extern int nick_get_max_length (t_irc_channel *);
+extern void nick_set_away (t_irc_channel *, t_irc_nick *, int);
 
 /* DCC functions (irc-dcc.c) */
 
@@ -358,6 +368,7 @@ extern int irc_cmd_recv_311 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_312 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_313 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_314 (t_irc_server *, char *, char *);
+extern int irc_cmd_recv_315 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_317 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_318 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_319 (t_irc_server *, char *, char *);

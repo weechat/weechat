@@ -125,6 +125,7 @@ irc_cmd_send_away (t_irc_server *server, char *arguments)
                             irc_send_me_all_channels (ptr_server, buffer);
                         }
                     }
+                    server_set_away (ptr_server, ptr_server->nick, 0);
                 }
                 else
                 {
@@ -139,6 +140,7 @@ irc_cmd_send_away (t_irc_server *server, char *arguments)
                         snprintf (buffer, sizeof (buffer), "is away: %s", ptr_away_msg);
                         irc_send_me_all_channels (ptr_server, buffer);
                     }
+                    server_set_away (ptr_server, ptr_server->nick, 1);
                 }
             }
         }
@@ -163,6 +165,7 @@ irc_cmd_send_away (t_irc_server *server, char *arguments)
                     irc_send_me_all_channels (server, buffer);
                 }
             }
+            server_set_away (server, server->nick, 0);
         }
         else
         {
@@ -177,6 +180,7 @@ irc_cmd_send_away (t_irc_server *server, char *arguments)
                 snprintf (buffer, sizeof (buffer), "is away: %s", ptr_away_msg);
                 irc_send_me_all_channels (server, buffer);
             }
+            server_set_away (server, server->nick, 1);
         }
     }
     gui_draw_buffer_status (gui_current_window->buffer, 1);

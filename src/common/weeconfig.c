@@ -198,6 +198,7 @@ int cfg_col_input_channel;
 int cfg_col_input_nick;
 int cfg_col_input_bg;
 int cfg_col_nick;
+int cfg_col_nick_away;
 int cfg_col_nick_op;
 int cfg_col_nick_halfop;
 int cfg_col_nick_voice;
@@ -337,6 +338,10 @@ t_config_option weechat_options_colors[] =
     N_("color for nicknames"),
     OPTION_TYPE_COLOR, 0, 0, 0,
     "default", NULL, &cfg_col_nick, NULL, &config_change_color },
+  { "col_nick_away", N_("color for away nicknames"),
+    N_("color for away nicknames"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "cyan", NULL, &cfg_col_nick_away, NULL, &config_change_color },
   { "col_nick_op", N_("color for operator symbol"),
     N_("color for operator symbol"),
     OPTION_TYPE_COLOR, 0, 0, 0,

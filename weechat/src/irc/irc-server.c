@@ -48,6 +48,8 @@ t_irc_server *last_irc_server = NULL;
 
 t_irc_message *recv_msgq, *msgq_last_msg;
 
+int check_away = 0;
+
 /* buffer containing beginning of message if not ending with \r\n */
 char *unterminated_message = NULL;
 
@@ -80,10 +82,10 @@ server_init (t_irc_server *server)
     server->reconnect_start = 0;
     server->reconnect_join = 0;
     server->sock4 = -1;
-    server->is_away = 0;
-    server->away_time = 0;
     server->server_read = -1;
     server->server_write = -1;
+    server->is_away = 0;
+    server->away_time = 0;
     server->lag = 0;
     server->lag_check_time.tv_sec = 0;
     server->lag_check_time.tv_usec = 0;
@@ -925,4 +927,40 @@ server_name_already_exists (char *name)
             return 1;
     }
     return 0;
+}
+
+/*
+ * server_check_away: check for away on all channels (for all servers)
+ */
+
+void
+server_check_away ()
+{
+    t_irc_server *ptr_server;
+    t_irc_channel *ptr_channel;
+    
+    for (ptr_server = irc_servers; ptr_server; ptr_server = ptr_server->next_server)
+    {
+        for (ptr_channel = ptr_server->channels; ptr_channel; ptr_channel = ptr_channel->next_channel)
+        {
+            if (ptr_channel->type == CHAT_CHANNEL)
+                channel_check_away (ptr_server, ptr_channel);
+        }
+    }
+}
+
+/*
+ * server_set_away: set/unset away status for a server (all channels)
+ */
+
+void
+server_set_away (t_irc_server *server, char *nick, int is_away)
+{
+    t_irc_channel *ptr_channel;
+    
+    for (ptr_channel = server->channels; ptr_channel; ptr_channel = ptr_channel->next_channel)
+    {
+        if (ptr_channel->type == CHAT_CHANNEL)
+            channel_set_away (ptr_channel, nick, is_away);
+    }
 }

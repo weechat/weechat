@@ -1318,6 +1318,10 @@ weechat_cmd_perl (int argc, char **argv)
     (void) argv;
     #endif /* PLUGIN_PERL */
     
+    #else
+    /* make gcc happy */
+    (void) argc;
+    (void) argv;
     #endif /* PLUGINS */
     
     return 0;

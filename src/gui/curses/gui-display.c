@@ -60,7 +60,7 @@ t_gui_color gui_colors[] =
 };
 
 char *nicks_colors[COLOR_WIN_NICK_NUMBER] =
-{ "cyan", "magenta", "green", "brown", "lightblue", "gray",
+{ "cyan", "magenta", "green", "brown", "lightblue", "default",
   "lightcyan", "lightmagenta", "lightgreen", "blue" };
 
 int color_attr[NUM_COLORS];
@@ -858,7 +858,9 @@ gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
                             }
                         }
                     }
-                    gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK);
+                    gui_window_set_color (ptr_win->win_nick,
+                                          (ptr_nick->is_away) ?
+                                          COLOR_WIN_NICK_AWAY : COLOR_WIN_NICK);
                     mvwprintw (ptr_win->win_nick, y, x, format, ptr_nick->nick);
                     y++;
                     if ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_TOP) ||
@@ -1785,6 +1787,8 @@ gui_init_colors ()
             cfg_col_input_nick & A_CHARTEXT, cfg_col_input_bg);
         init_pair (COLOR_WIN_NICK,
             cfg_col_nick & A_CHARTEXT, cfg_col_nick_bg);
+        init_pair (COLOR_WIN_NICK_AWAY,
+            cfg_col_nick_away & A_CHARTEXT, cfg_col_nick_bg);
         init_pair (COLOR_WIN_NICK_OP,
             cfg_col_nick_op & A_CHARTEXT, cfg_col_nick_bg);
         init_pair (COLOR_WIN_NICK_HALFOP,
@@ -1845,6 +1849,7 @@ gui_init_colors ()
         color_attr[COLOR_WIN_INPUT_CHANNEL - 1] = (cfg_col_input_channel >= 0) ? cfg_col_input_channel & A_BOLD : 0;
         color_attr[COLOR_WIN_INPUT_NICK - 1] = (cfg_col_input_nick >= 0) ? cfg_col_input_nick & A_BOLD : 0;
         color_attr[COLOR_WIN_NICK - 1] = (cfg_col_nick >= 0) ? cfg_col_nick & A_BOLD : 0;
+        color_attr[COLOR_WIN_NICK_AWAY - 1] = (cfg_col_nick_away >= 0) ? cfg_col_nick_away & A_BOLD : 0;
         color_attr[COLOR_WIN_NICK_OP - 1] = (cfg_col_nick_op >= 0) ? cfg_col_nick_op & A_BOLD : 0;
         color_attr[COLOR_WIN_NICK_HALFOP - 1] = (cfg_col_nick_halfop >= 0) ? cfg_col_nick_halfop & A_BOLD : 0;
         color_attr[COLOR_WIN_NICK_VOICE - 1] = (cfg_col_nick_voice >= 0) ? cfg_col_nick_voice & A_BOLD : 0;

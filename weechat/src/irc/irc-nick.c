@@ -176,6 +176,7 @@ nick_new (t_irc_channel *channel, char *nick_name,
     new_nick->is_op = is_op;
     new_nick->is_halfop = is_halfop;
     new_nick->has_voice = has_voice;
+    new_nick->is_away = 0;
     if (strcasecmp (new_nick->nick, SERVER(channel->buffer)->nick) == 0)
         new_nick->color = COLOR_WIN_NICK_SELF;
     else
@@ -339,12 +340,25 @@ nick_get_max_length (t_irc_channel *channel)
     t_irc_nick *ptr_nick;
     
     max_length = 0;
-    for (ptr_nick = channel->nicks; ptr_nick;
-         ptr_nick = ptr_nick->next_nick)
+    for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
     {
         length = strlen (ptr_nick->nick);
         if (length > max_length)
             max_length = length;
     }
     return max_length;
+}
+
+/*
+ * nick_set_away: set/unset away status for a channel
+ */
+
+void
+nick_set_away (t_irc_channel *channel, t_irc_nick *nick, int is_away)
+{
+    if (nick->is_away != is_away)
+    {
+        nick->is_away = is_away;
+        gui_draw_buffer_nick (channel->buffer, 0);
+    }
 }

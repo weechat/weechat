@@ -59,6 +59,7 @@ channel_new (t_irc_server *server, int channel_type, char *channel_name,
     new_channel->modes[sizeof (new_channel->modes) - 1] = '\0';
     new_channel->limit = 0;
     new_channel->key = NULL;
+    new_channel->checking_away = 0;
     new_channel->nicks = NULL;
     new_channel->last_nick = NULL;
 
@@ -152,4 +153,35 @@ string_is_channel (char *string)
     first_char[0] = string[0];
     first_char[1] = '\0';
     return (strpbrk (first_char, CHANNEL_PREFIX)) ? 1 : 0;    
+}
+
+/*
+ * channel_check_away: check for away on a channel
+ */
+
+void
+channel_check_away (t_irc_server *server, t_irc_channel *channel)
+{
+    if (channel->type == CHAT_CHANNEL)
+    {
+        channel->checking_away = 1;
+        server_sendf (server, "WHO %s\r\n", channel->name);
+    }
+}
+
+/*
+ * channel_set_away: set/unset away status for a channel
+ */
+
+void
+channel_set_away (t_irc_channel *channel, char *nick, int is_away)
+{
+    t_irc_nick *ptr_nick;
+    
+    if (channel->type == CHAT_CHANNEL)
+    {
+        ptr_nick = nick_search (channel, nick);
+        if (ptr_nick)
+            nick_set_away (channel, ptr_nick, is_away);
+    }
 }

@@ -138,6 +138,10 @@ plugin_load (int plugin_type, char *filename)
             /* TODO: load Ruby script */
             break;
     }
+    #else
+    /* make gcc happy */
+    (void) plugin_type;
+    (void) filename;
     #endif
 }
 
@@ -293,6 +297,7 @@ plugin_event_msg (char *irc_command, char *arguments, char *server)
     /* make gcc happy */
     (void) irc_command;
     (void) arguments;
+    (void) server;
     #endif
 }
 
@@ -324,6 +329,7 @@ plugin_exec_command (char *user_command, char *arguments, char *server)
     /* make gcc happy */
     (void) user_command;
     (void) arguments;
+    (void) server;
     #endif
     
     /* no command executed */
@@ -357,6 +363,9 @@ plugin_unload (int plugin_type, char *scriptname)
             /* TODO: unload Ruby scripts */
             break;
     }
+    #else
+    /* make gcc happy */
+    (void) plugin_type;
     #endif
 }
 

@@ -284,7 +284,7 @@ t_irc_command irc_commands[] =
   { "312", N_("whois (server)"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_312 },
   { "313", N_("whois (operator)"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_313 },
   { "314", N_("whowas"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_314 },
-  { "315", N_("end of /who list"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
+  { "315", N_("end of /who list"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_315 },
   { "317", N_("whois (idle)"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_317 },
   { "318", N_("whois (end)"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_318 },
   { "319", N_("whois (channels)"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_319 },
