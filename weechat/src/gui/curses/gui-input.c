@@ -30,13 +30,15 @@
 #include <signal.h>
 #include <time.h>
 #include <sys/socket.h>
+#include <curses.h>
 
-#include "../../weechat.h"
+#include "../../common/weechat.h"
 #include "../gui.h"
-#include "../../config.h"
-#include "../../command.h"
+#include "../../common/config.h"
+#include "../../common/command.h"
 #include "../../irc/irc.h"
 
+#define KEY_ESCAPE 27
 
 /*
  * gui_read_keyb: read keyboard line

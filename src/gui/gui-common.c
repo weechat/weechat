@@ -31,7 +31,7 @@
 #include <time.h>
 #include <curses.h>
 
-#include "../weechat.h"
+#include "../common/weechat.h"
 #include "gui.h"
 #include "../irc/irc.h"
 

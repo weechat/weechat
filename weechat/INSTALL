@@ -1,10 +1,12 @@
 WeeChat - Installation instructions
 ===================================
 
-1) Run 'make'
+1) Run './configure'
 
-2) As root, run 'make install'
+2) Run 'make'
 
-3) Enjoy !  :-)
+3) As root, run 'make install'
+
+4) Enjoy !  :-)
 
 See AUTHORS for any support, feel free to contact us for any problem ;)

@@ -32,10 +32,10 @@
 #include <time.h>
 #include <sys/utsname.h>
 
-#include "../weechat.h"
+#include "../common/weechat.h"
 #include "irc.h"
-#include "../command.h"
-#include "../config.h"
+#include "../common/command.h"
+#include "../common/config.h"
 #include "../gui/gui.h"
 
 
@@ -501,7 +501,7 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *arguments)
                               COLOR_WIN_CHAT_NICK,
                               "%s\n",
                               arguments);
-            if (WIN_HAS_NICKLIST(ptr_channel->window))
+            if (gui_window_has_nicklist (ptr_channel->window))
                 gui_redraw_window_nick (ptr_channel->window);
         }
     }
@@ -692,7 +692,7 @@ irc_cmd_recv_part (t_irc_server *server, char *host, char *arguments)
                 gui_printf (ptr_channel->window, "\n");
             
                 /* redraw nick list if this is current window */
-                if (WIN_HAS_NICKLIST(ptr_channel->window))
+                if (gui_window_has_nicklist (ptr_channel->window))
                     gui_redraw_window_nick (ptr_channel->window);
             }
         }
@@ -978,7 +978,7 @@ irc_cmd_recv_quit (t_irc_server *server, char *host, char *arguments)
             gui_printf_color (ptr_channel->window,
                               COLOR_WIN_CHAT_DARK, ")\n");
             if ((ptr_channel->window == gui_current_window) &&
-                (WIN_HAS_NICKLIST(ptr_channel->window)))
+                (gui_window_has_nicklist (ptr_channel->window)))
                 gui_redraw_window_nick (ptr_channel->window);
         }
     }

@@ -29,10 +29,11 @@
 #include <string.h>
 #include <signal.h>
 #include <time.h>
+#include <gtk/gtk.h>
 
-#include "../../weechat.h"
+#include "../../common/weechat.h"
 #include "../gui.h"
-#include "../../config.h"
+#include "../../common/config.h"
 #include "../../irc/irc.h"
 
 
@@ -141,6 +142,16 @@ gui_get_color_by_value (int color_value)
     
     /* color not found */
     return NULL;
+}
+
+/*
+ * gui_window_has_nicklist: returns 1 if window has nicklist
+ */
+
+int
+gui_window_has_nicklist (t_gui_window *window)
+{
+    return (window->textbuffer_nicklist != NULL);
 }
 
 /*
@@ -379,7 +390,7 @@ gui_redraw_window (t_gui_window *window)
     
     gui_redraw_window_title (window);
     gui_redraw_window_chat (window);
-    if (WIN_HAS_NICKLIST(window))
+    if (gui_window_has_nicklist (window))
         gui_redraw_window_nick (window);
     gui_redraw_window_status (window);
     gui_redraw_window_input (window);
@@ -535,6 +546,17 @@ gui_window_init_subwindows (t_gui_window *window)
     window->texttag_chat = NULL;
     window->textview_nicklist = NULL;
     window->textbuffer_nicklist = NULL;
+}
+
+/*
+ * gui_pre_init: pre-initialize GUI (called before gui_init)
+ */
+
+void
+gui_pre_init (int *argc, char **argv[])
+{
+    /* Initialise Gtk+ */
+    gtk_init (argc, argv);
 }
 
 /*

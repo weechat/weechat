@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-WeeChat known bugs, 2003-10-09
+WeeChat known bugs, 2003-10-25
 
 - too much nicks in the channel (> height of window) => display bug
 - some IRC commands are marked as 'unknown' when received
@@ -12,3 +12,4 @@ WeeChat known bugs, 2003-10-09
 - when function key (non used by WeeChat) is pressed, prompt is deleted
 - when quitting WeeChat term title is not restored (if look_set_title is ON)
 - command name for /server can not contain spaces
+- wrong alias is not created and not saved when quitting WeeChat

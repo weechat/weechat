@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2003-10-12
+TODO - 2003-10-25
 
 Legend:
   #  done
@@ -13,6 +13,9 @@ Legend:
 v0.0.3:
 ------
 
+ * General:
+    + use of ./configure for building WeeChat
+ 
  * IRC protocol:
     # implement RFC 2812
     + "/mode" command: change the user/channels modes
@@ -20,29 +23,15 @@ v0.0.3:
       persons with the flag +w enable
 
  * WeeChat commands:
-    - "/reload" command: reload the WeeChat's config file
-    - "/highlight" command: highlight a given word when it appears on
-      channels/privates
     + "/set" command: allow the user to set the WeeChat variables
       under WeeChat without editing the config file (colours, time
       format, etc)
 
  * Interface:
-    + Gtk GUI
-    - display current channel modes (example : #weechat(+nt))
-    - interpret special chars in messages (color & bold for example)
     + internationalization (traduce WeeChat in many languages)
-    - log chats to file
-
- * TCP/IP communication:
-    - proxy support
 
  * Configuration:
-    - add missing options for config file
-    - wrong alias is not created and not saved when quitting WeeChat
     # do not stop program if problem with options in config file
-    - load config file after GUI (so init values by default (colors, ...) before
-      loading config)
 
 
 Future versions:
@@ -60,6 +49,9 @@ Future versions:
       nick/host connect to the given irc network
 
  * WeeChat commands:
+    - "/reload" command: reload the WeeChat's config file
+    - "/highlight" command: highlight a given word when it appears on
+      channels/privates
     - "/completion" command: do shortcuts (for example when we type "u"
       in the text bar it send it to the server as "you")
     - "/exec" command: execute a command as if we was in shell
@@ -68,6 +60,9 @@ Future versions:
       channel/private
 
  * Interface:
+    + Gtk GUI
+    - display current channel modes (example : #weechat(+nt))
+    - interpret special chars in messages (color & bold for example)
     - many channel windows in one window/term (window split)
     - add lag indicator
     - forget some old lines that were displayed long time ago (now all is saved,
@@ -75,15 +70,20 @@ Future versions:
     - improve completion (for example complete command parameters when possible)
     - understand incomplete commands if unambigous (for example: /he for /help is ok)
     - add clock (in status bar?)
+    - log chats to file
     ? Qt GUI
 
  * TCP/IP communication:
     - connect to server with child process (background)
+    - proxy support
     - SSL support
     - IPv6 protocol implementation
 
  * Configuration:
     - add key bindings to config file
+    - add missing options for config file
+    - load config file after GUI (so init values by default (colors, ...) before
+      loading config)
 
  * Plugins:
     - add Perl plugin

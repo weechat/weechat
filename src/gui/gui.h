@@ -23,19 +23,8 @@
 #ifndef __WEECHAT_GUI_H
 #define __WEECHAT_GUI_H 1
 
-#ifdef WEE_CURSES
-#include <curses.h>
-#endif
-#ifdef WEE_GTK
-#include <gtk/gtk.h>
-#endif
-
-#include "../completion.h"
-#include "../history.h"
-
-#ifdef WEE_CURSES
-#define KEY_ESCAPE 27
-#endif
+#include "../common/completion.h"
+#include "../common/history.h"
 
 #define INPUT_BUFFER_BLOCK_SIZE 256
 
@@ -77,10 +66,10 @@
 #define WIN_IS_PRIVATE(window) (CHANNEL(window) && (CHANNEL(window)->type == CHAT_PRIVATE))
 
 #ifdef WEE_CURSES
-    #define WIN_HAS_NICKLIST(window) (window->win_nick)
+    //#define WIN_HAS_NICKLIST(window) (window->win_nick)
 #endif
 #ifdef WEE_GTK
-    #define WIN_HAS_NICKLIST(window) (window->textbuffer_nicklist)
+    //#define WIN_HAS_NICKLIST(window) (window->textbuffer_nicklist)
 #endif
 
 #define MSG_TYPE_TIME  0
@@ -152,24 +141,27 @@ struct t_gui_window
     int win_nick_width;             /* width of chat window                 */
     int win_nick_height;            /* height of chat window                */
     
-    /* windows */
-    #ifdef WEE_CURSES
-    WINDOW *win_title;              /* title window                         */
-    WINDOW *win_chat;               /* chat window (exemple: channel)       */
-    WINDOW *win_nick;               /* nick window                          */
-    WINDOW *win_status;             /* status window                        */
-    WINDOW *win_input;              /* input window                         */
-    #endif
-    #ifdef WEE_GTK
-    GtkWidget *textview_chat;           /* textview widget for chat         */
-    GtkTextBuffer *textbuffer_chat;     /* textbuffer widget for chat       */
-    GtkTextTag *texttag_chat;           /* texttag widget for chat          */
-    GtkWidget *textview_nicklist;       /* textview widget for nicklist     */
-    GtkTextBuffer *textbuffer_nicklist; /* textbuffer widget for nicklist   */
-    #endif
-    #ifdef WEE_QT
+    /* windows for Curses GUI */
+    void *win_title;                /* title window                         */
+    void *win_chat;                 /* chat window (exemple: channel)       */
+    void *win_nick;                 /* nick window                          */
+    void *win_status;               /* status window                        */
+    void *win_input;                /* input window                         */
+    
+    /* windows for Curses GUI */
+    //GtkWidget *textview_chat;           /* textview widget for chat         */
+    //GtkTextBuffer *textbuffer_chat;     /* textbuffer widget for chat       */
+    //GtkTextTag *texttag_chat;           /* texttag widget for chat          */
+    //GtkWidget *textview_nicklist;       /* textview widget for nicklist     */
+    //GtkTextBuffer *textbuffer_nicklist; /* textbuffer widget for nicklist   */
+    void *textview_chat;           /* textview widget for chat         */
+    void *textbuffer_chat;     /* textbuffer widget for chat       */
+    void *texttag_chat;           /* texttag widget for chat          */
+    void *textview_nicklist;       /* textview widget for nicklist     */
+    void *textbuffer_nicklist; /* textbuffer widget for nicklist   */
+    
+    /* windows for Curses GUI */
     /* TODO: declare Qt window */
-    #endif
     
     /* chat content (lines, line is composed by many messages) */
     t_gui_line *lines;              /* lines of chat window                 */
@@ -222,6 +214,7 @@ extern void gui_buffer_insert_string (char *, int);
 extern int gui_assign_color (int *, char *);
 extern int gui_get_color_by_name (char *);
 extern char *gui_get_color_by_value (int);
+extern int gui_window_has_nicklist (t_gui_window *);
 extern void gui_calculate_pos_size (t_gui_window *);
 extern void gui_draw_window_title (t_gui_window *);
 extern void gui_redraw_window_title (t_gui_window *);
@@ -240,7 +233,8 @@ extern void gui_switch_to_next_window ();
 extern void gui_move_page_up ();
 extern void gui_move_page_down ();
 extern void gui_window_init_subwindows (t_gui_window *);
-extern void gui_init_colors ();
+extern void gui_pre_init (int *, char **[]);
+//extern void gui_init_colors ();
 extern void gui_init ();
 extern void gui_window_free (t_gui_window *);
 extern void gui_end ();

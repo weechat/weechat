@@ -30,11 +30,12 @@
 #include <signal.h>
 #include <time.h>
 #include <sys/socket.h>
+#include <gtk/gtk.h>
 
-#include "../../weechat.h"
+#include "../../common/weechat.h"
 #include "../gui.h"
-#include "../../config.h"
-#include "../../command.h"
+#include "../../common/config.h"
+#include "../../common/command.h"
 #include "../../irc/irc.h"
 
 

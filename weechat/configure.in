@@ -1,0 +1,126 @@
+# Copyright (c) 2003 FlashCode <flashcode@flashtux.org>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+#                                               -*- Autoconf -*-
+# Process this file with autoconf to produce a configure script.
+
+AC_PREREQ(2.56)
+AC_INIT(WeeChat, 0.0.3, flashcode@flashtux.org)
+AC_CONFIG_SRCDIR([src/common/weechat.c])
+AC_CONFIG_HEADER([config.h])
+AM_INIT_AUTOMAKE([weechat], [0.0.3])
+
+# Checks for programs.
+AC_PROG_CC
+AC_PROG_MAKE_SET
+AC_PROG_RANLIB
+
+# Checks for libraries.
+# AC_CHECK_LIB([curses], [initscr])
+
+# Checks for header files.
+AC_HEADER_STDC
+AC_CHECK_HEADERS([arpa/inet.h libintl.h limits.h locale.h netdb.h netinet/in.h stdlib.h string.h sys/socket.h sys/time.h unistd.h])
+
+# Checks for typedefs, structures, and compiler characteristics.
+AC_HEADER_TIME
+AC_STRUCT_TM
+
+# Checks for library functions.
+AC_FUNC_MALLOC
+AC_FUNC_REALLOC
+AC_FUNC_SELECT_ARGTYPES
+AC_TYPE_SIGNAL
+AC_CHECK_FUNCS([gethostbyname gethostname gettimeofday inet_ntoa memset mkdir select setlocale socket strcasecmp strchr strdup strncasecmp strpbrk strrchr strstr uname])
+
+AC_ARG_ENABLE(curses, [  --disable-curses        Turn off Curses interface (default=auto)],,enable_curses=yes)
+AC_ARG_ENABLE(gtk,    [  --disable-gtk           Turn off Gtk+ interface (default=auto)],,enable_gtk=yes)
+AC_ARG_ENABLE(qt,     [  --disable-qt            Turn off Qt interface (default=auto)],,enable_qt=yes)
+
+enable_plugins=no
+enable_perl=no
+PERL_CFLAGS=
+enable_python=no
+PYTHON_CFLAGS=
+enable_ruby=no
+RUBY_CFLAGS=
+enable_debug=no
+DEBUG_CFLAGS=
+
+
+AM_CONDITIONAL(GUI_CURSES, test "$enable_curses" = "yes")
+AM_CONDITIONAL(GUI_GTK,    test "$enable_gtk" = "yes")
+AM_CONDITIONAL(GUI_QT,     test "$enable_qt" = "yes")
+
+#if test "x$enable_gtk" = "xyes" ; then
+#    AM_PATH_GTK_2_0(2.0.0, havegtk=yes, havegtk=no)
+#    if test "$havegtk" = no; then
+#        enable_gtk="no"
+#        echo
+#        echo Cannot find Gtk+\! Not building Gtk+ interface...
+#        echo
+#    fi
+#fi
+
+CURSES_LIBS=-lcurses
+
+GTK_CFLAGS=`pkg-config --cflags gtk+-2.0`
+GTK_LIBS=`pkg-config --libs gtk+-2.0`
+
+AC_SUBST(CURSES_LIBS)
+AC_SUBST(GTK_CFLAGS)
+AC_SUBST(GTK_LIBS)
+
+CFLAGS="-Wall -W -pipe -O2"
+
+AC_OUTPUT([Makefile
+           src/Makefile
+           src/common/Makefile
+           src/irc/Makefile
+           src/gui/Makefile
+           src/gui/curses/Makefile
+           src/gui/gtk/Makefile
+           src/gui/qt/Makefile])
+
+echo
+echo $PACKAGE $VERSION
+
+listgui=
+if test "x$enable_curses" = "xyes" ; then
+    listgui="$listgui Curses"
+fi
+if test "x$enable_gtk" = "xyes" ; then
+    listgui="$listgui Gtk+"
+fi
+if test "x$enable_qt" = "xyes" ; then
+    listgui="$listgui Qt"
+fi
+
+echo
+echo Interfaces.................... :$listgui
+echo
+echo Build with Plugin support..... : $enable_plugins
+echo Build with Perl support....... : $enable_perl
+echo Build with Python support..... : $enable_python
+echo Build with Ruby support....... : $enable_ruby
+echo
+echo Print debugging messages...... : $enable_debug
+echo
+eval eval echo WeeChat will be installed in $bindir.
+echo
+echo configure complete, now type \'make\' to build WeeChat
+echo

@@ -10,7 +10,7 @@ It is customizable and extensible with scripts.
 Features
 --------
     * IRC chat client with multi-server connection
-    * many GUI (curses, Gtk, QT) (1)
+    * many GUI (curses, Gtk, Qt) (1)
     * small, fast and very light
     * customizable and extensible with scripts (Perl, Python, Ruby) (2)
     * compliant with RFC 1459,2810,2811,2812,2813
@@ -46,6 +46,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 
 ---
-(1) only curses & text interfaces are available today
+(1) only curses interface is available today
 (2) plugin interfaces are not yet developed
 (3) only GNU/Linux version is available today

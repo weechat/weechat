@@ -24,9 +24,9 @@
                    RFC 1459,2810,2811,2812 */
 
 
-#include "../weechat.h"
+#include "../common/weechat.h"
 #include "irc.h"
-#include "../command.h"
+#include "../common/command.h"
 
 
 t_irc_command irc_commands[] =

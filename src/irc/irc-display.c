@@ -28,9 +28,9 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../weechat.h"
+#include "../common/weechat.h"
 #include "irc.h"
-#include "../config.h"
+#include "../common/config.h"
 #include "../gui/gui.h"
 
 

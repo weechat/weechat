@@ -34,7 +34,7 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
-#include "../weechat.h"
+#include "../common/weechat.h"
 #include "irc.h"
 #include "../gui/gui.h"
 

@@ -29,10 +29,11 @@
 #include <string.h>
 #include <signal.h>
 #include <time.h>
+#include <curses.h>
 
-#include "../../weechat.h"
+#include "../../common/weechat.h"
 #include "../gui.h"
-#include "../../config.h"
+#include "../../common/config.h"
 #include "../../irc/irc.h"
 
 
@@ -149,6 +150,17 @@ gui_window_set_color (WINDOW *window, int num_color)
         }
     }
 }
+
+/*
+ * gui_window_has_nicklist: returns 1 if window has nicklist
+ */
+
+int
+gui_window_has_nicklist (t_gui_window *window)
+{
+    return (window->win_nick != NULL);
+}
+
 
 /*
  * gui_calculate_pos_size: calculate position and size for a window & sub-win
@@ -1243,6 +1255,18 @@ gui_window_init_subwindows (t_gui_window *window)
     window->win_nick = NULL;
     window->win_status = NULL;
     window->win_input = NULL;
+}
+
+/*
+ * gui_pre_init: pre-initialize GUI (called before gui_init)
+ */
+
+void
+gui_pre_init (int *argc, char **argv[])
+{
+    /* nothing for Curses interface */
+    (void) argc;
+    (void) argv;
 }
 
 /*

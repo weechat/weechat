@@ -32,10 +32,10 @@
 #include <time.h>
 #include <sys/utsname.h>
 
-#include "../weechat.h"
+#include "../common/weechat.h"
 #include "irc.h"
-#include "../command.h"
-#include "../config.h"
+#include "../common/command.h"
+#include "../common/config.h"
 #include "../gui/gui.h"
 
 

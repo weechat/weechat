@@ -27,7 +27,7 @@
 #include <string.h>
 #include <limits.h>
 
-#include "../weechat.h"
+#include "../common/weechat.h"
 #include "irc.h"
 
 
