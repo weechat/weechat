@@ -639,7 +639,7 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                                               (ptr_dcc == dcc_selected) ?
                                                   COLOR_DCC_SELECTED : COLOR_WIN_CHAT);
                         mvwprintw (ptr_win->win_chat, i, 0, "%s %-16s %s",
-                                   (ptr_dcc == dcc_selected) ? "**" : "  ",
+                                   (ptr_dcc == dcc_selected) ? "***" : "   ",
                                    ptr_dcc->nick, ptr_dcc->filename);
                         if (ptr_dcc->filename_suffix > 0)
                             wprintw (ptr_win->win_chat, " (.%d)",
@@ -648,7 +648,7 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                                               (ptr_dcc == dcc_selected) ?
                                                   COLOR_DCC_SELECTED : COLOR_WIN_CHAT);
                         mvwprintw (ptr_win->win_chat, i + 1, 0, "%s %s ",
-                                   (ptr_dcc == dcc_selected) ? "**" : "  ",
+                                   (ptr_dcc == dcc_selected) ? "***" : "   ",
                                    (ptr_dcc->type == DCC_FILE_RECV) ? "-->>" : "<<--");
                         gui_window_set_color (ptr_win->win_chat,
                                               COLOR_DCC_WAITING + ptr_dcc->status);

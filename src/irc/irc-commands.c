@@ -123,7 +123,7 @@ t_irc_command irc_commands[] =
     "  i: mark a user as invisible\n"
     "  s: mark a user for receive server notices\n"
     "  w: user receives wallops\n"
-    "  o: operator flag\n"),
+    "  o: operator flag"),
     1, MAX_ARGS, 1, NULL, irc_cmd_send_mode, irc_cmd_recv_mode },
   { "motd", N_("get the \"Message Of The Day\""),
     N_("[target]"),
@@ -236,7 +236,7 @@ t_irc_command irc_commands[] =
     1, MAX_ARGS, 1, NULL, irc_cmd_send_wallops, NULL },
   { "who", N_("generate a query which returns a list of information"),
     N_("[mask [\"o\"]]"), N_("mask: only information which match this mask\n"
-    "o: only operators are returned according to the mask supplied\n"),
+    "o: only operators are returned according to the mask supplied"),
     0, 2, 1, NULL, irc_cmd_send_who, NULL },
   { "whois", N_("query information about user(s)"),
     N_("[server] nickname[,nickname]"), N_("server: server name\n"

@@ -767,12 +767,11 @@ weechat_cmd_alias (char *arguments)
         /* List all aliases */
         if (weechat_alias)
         {
-            irc_display_prefix (NULL, PREFIX_INFO);
+            gui_printf (NULL, "\n");
             gui_printf (NULL, _("List of aliases:\n"));
             for (ptr_alias = weechat_alias; ptr_alias;
                  ptr_alias = ptr_alias->next_alias)
             {
-                irc_display_prefix (NULL, PREFIX_INFO);
                 gui_printf (NULL, "  %s => %s\n",
                             ptr_alias->alias_name,
                             ptr_alias->alias_command + 1);
@@ -841,12 +840,11 @@ weechat_cmd_buffer (int argc, char **argv)
     {
         /* list opened buffers */
         
-        irc_display_prefix (NULL, PREFIX_INFO);
+        gui_printf (NULL, "\n");
         gui_printf (NULL, _("Opened buffers:\n"));
         
         for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
         {
-            irc_display_prefix (NULL, PREFIX_INFO);
             gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "[");
             gui_printf (NULL, "%d", ptr_buffer->number);
             gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "] ");
@@ -948,7 +946,7 @@ weechat_cmd_buffer (int argc, char **argv)
             if (argc < 2)
             {
                 /* display notify level for all buffers */
-                irc_display_prefix (NULL, PREFIX_INFO);
+                gui_printf (NULL, "\n");
                 gui_printf (NULL, _("Notify levels:  "));
                 for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
                 {
@@ -1057,13 +1055,11 @@ weechat_cmd_connect (int argc, char **argv)
 {
     t_irc_server *ptr_server;
     
-    /* make gcc happy */
-    (void) argc;
-    
     if (argc == 1)
         ptr_server = server_search (argv[0]);
     else
         ptr_server = SERVER(gui_current_window->buffer);
+    
     if (ptr_server)
     {
         if (ptr_server->is_connected)
@@ -1071,7 +1067,7 @@ weechat_cmd_connect (int argc, char **argv)
             irc_display_prefix (NULL, PREFIX_ERROR);
             gui_printf (NULL,
                         _("%s already connected to server \"%s\"!\n"),
-                        WEECHAT_ERROR, argv[0]);
+                        WEECHAT_ERROR, ptr_server->name);
             return -1;
         }
         if (ptr_server->child_pid > 0)
@@ -1079,7 +1075,7 @@ weechat_cmd_connect (int argc, char **argv)
             irc_display_prefix (NULL, PREFIX_ERROR);
             gui_printf (NULL,
                         _("%s currently connecting to server \"%s\"!\n"),
-                        WEECHAT_ERROR, argv[0]);
+                        WEECHAT_ERROR, ptr_server->name);
             return -1;
         }
         if (!ptr_server->buffer)
@@ -1111,13 +1107,11 @@ weechat_cmd_disconnect (int argc, char **argv)
 {
     t_irc_server *ptr_server;
     
-    /* make gcc happy */
-    (void) argc;
-    
     if (argc == 1)
         ptr_server = server_search (argv[0]);
     else
         ptr_server = SERVER(gui_current_window->buffer);
+    
     if (ptr_server)
     {
         if ((!ptr_server->is_connected) && (ptr_server->child_pid == 0)
@@ -1126,7 +1120,7 @@ weechat_cmd_disconnect (int argc, char **argv)
             irc_display_prefix (ptr_server->buffer, PREFIX_ERROR);
             gui_printf (ptr_server->buffer,
                         _("%s not connected to server \"%s\"!\n"),
-                        WEECHAT_ERROR, argv[0]);
+                        WEECHAT_ERROR, ptr_server->name);
             return -1;
         }
         if (ptr_server->reconnect_start > 0)
@@ -1159,10 +1153,7 @@ weechat_cmd_help (int argc, char **argv)
     if (argc == 0)
     {
         gui_printf (NULL, "\n");
-        gui_printf (NULL,
-                    _("%s internal commands:\n"),
-                    PACKAGE_NAME);
-        gui_printf (NULL, "\n");
+        gui_printf (NULL, _("%s internal commands:\n"), PACKAGE_NAME);
         for (i = 0; weechat_commands[i].command_name; i++)
         {
             gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "   %s",
@@ -1172,7 +1163,6 @@ weechat_cmd_help (int argc, char **argv)
         }
         gui_printf (NULL, "\n");
         gui_printf (NULL, _("IRC commands:\n"));
-        gui_printf (NULL, "\n");
         for (i = 0; irc_commands[i].command_name; i++)
         {
             if (irc_commands[i].cmd_function_args || irc_commands[i].cmd_function_1arg)
@@ -1255,7 +1245,7 @@ weechat_cmd_perl (int argc, char **argv)
     {
         case 0:
             /* list registered Perl scripts */
-            irc_display_prefix (NULL, PREFIX_PLUGIN);
+            gui_printf (NULL, "\n");
             gui_printf (NULL, _("Registered Perl scripts:\n"));
             if (perl_scripts)
             {
@@ -1277,7 +1267,7 @@ weechat_cmd_perl (int argc, char **argv)
             }
             
             /* list Perl message handlers */
-            irc_display_prefix (NULL, PREFIX_PLUGIN);
+            gui_printf (NULL, "\n");
             gui_printf (NULL, _("Perl message handlers:\n"));
             handler_found = 0;
             for (ptr_plugin_handler = plugin_msg_handlers; ptr_plugin_handler;
@@ -1299,7 +1289,7 @@ weechat_cmd_perl (int argc, char **argv)
             }
             
             /* list Perl command handlers */
-            irc_display_prefix (NULL, PREFIX_PLUGIN);
+            gui_printf (NULL, "\n");
             gui_printf (NULL, _("Perl command handlers:\n"));
             handler_found = 0;
             for (ptr_plugin_handler = plugin_cmd_handlers; ptr_plugin_handler;
@@ -1672,7 +1662,6 @@ weechat_set_cmd_display_option (t_config_option *option, char *prefix, void *val
 {
     char *color_name, *pos_nickserv, *pos_pwd, *value2;
     
-    irc_display_prefix (NULL, PREFIX_INFO);
     gui_printf (NULL, "  %s%s%s",
                 (prefix) ? prefix : "",
                 (prefix) ? "." : "",
@@ -1797,8 +1786,7 @@ weechat_cmd_set (char *arguments)
                 switch (config_set_server_value (ptr_server, pos + 1, value))
                 {
                     case 0:
-                        irc_display_prefix (NULL, PREFIX_INFO);
-                        gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "[");
+                        gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "\n[");
                         gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "%s",
                                           config_sections[CONFIG_SECTION_SERVER].section_name);
                         gui_printf_color (NULL, COLOR_WIN_CHAT_NICK, " %s",
@@ -1850,8 +1838,7 @@ weechat_cmd_set (char *arguments)
                     if (config_option_set_value (ptr_option, value) == 0)
                     {
                         (void) (ptr_option->handler_change());
-                        irc_display_prefix (NULL, PREFIX_INFO);
-                        gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "[");
+                        gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "\n[");
                         gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
                                           "%s", config_get_section (ptr_option));
                         gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "]\n");
@@ -1890,8 +1877,7 @@ weechat_cmd_set (char *arguments)
                     {
                         if (!section_displayed)
                         {
-                            irc_display_prefix (NULL, PREFIX_INFO);
-                            gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "[");
+                            gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "\n[");
                             gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
                                               "%s",
                                               config_sections[i].section_name);
@@ -1919,8 +1905,7 @@ weechat_cmd_set (char *arguments)
                 {
                     if (!section_displayed)
                     {
-                        irc_display_prefix (NULL, PREFIX_INFO);
-                        gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "[");
+                        gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "\n[");
                         gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "%s",
                                           config_sections[CONFIG_SECTION_SERVER].section_name);
                         gui_printf_color (NULL, COLOR_WIN_CHAT_NICK, " %s",
@@ -1942,7 +1927,6 @@ weechat_cmd_set (char *arguments)
         }
         if (number_found == 0)
         {
-            irc_display_prefix (NULL, PREFIX_INFO);
             if (option)
                 gui_printf (NULL, _("No config option found with \"%s\"\n"),
                             option);
@@ -1951,8 +1935,7 @@ weechat_cmd_set (char *arguments)
         }
         else
         {
-            irc_display_prefix (NULL, PREFIX_INFO);
-            gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "%d ", number_found);
+            gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "\n%d ", number_found);
             if (option)
                 gui_printf (NULL, _("config option(s) found with \"%s\"\n"),
                             option);
@@ -2006,13 +1989,12 @@ weechat_cmd_window (int argc, char **argv)
     {
         /* list opened windows */
         
-        irc_display_prefix (NULL, PREFIX_INFO);
+        gui_printf (NULL, "\n");
         gui_printf (NULL, _("Opened windows:\n"));
         
         i = 1;
         for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
         {
-            irc_display_prefix (NULL, PREFIX_INFO);
             gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "[");
             gui_printf (NULL, "%d", i);
             gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "] (");
