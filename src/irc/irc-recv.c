@@ -491,7 +491,7 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *arguments)
                                   COLOR_WIN_CHAT_NICK,
                                   "%s", host);
                 gui_printf_color (ptr_channel->window,
-                                  COLOR_WIN_CHAT, " is ");
+                                  COLOR_WIN_CHAT, _(" is "));
             }
             gui_printf_color (ptr_channel->window,
                               COLOR_WIN_CHAT,
