@@ -1446,7 +1446,7 @@ msgstr "signé le: "
 
 #: src/irc/irc-recv.c:2093
 msgid "Channels: "
-msgstr "Canauxs: "
+msgstr "Canaux: "
 
 #: src/irc/irc-recv.c:2344
 msgid "No topic set for "
