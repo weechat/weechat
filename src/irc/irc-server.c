@@ -353,18 +353,32 @@ server_sendf (t_irc_server * server, char *fmt, ...)
  */
 
 void
-server_msgq_add_msg (t_irc_server * server, char *msg)
+server_msgq_add_msg (t_irc_server *server, char *msg)
 {
     t_irc_message *message;
 
     message = (t_irc_message *) malloc (sizeof (t_irc_message));
+    if (!message)
+    {
+        gui_printf (server->window,
+                    _("%s not enough memory for received IRC message"),
+                    WEECHAT_ERROR);
+        return;
+    }
     message->server = server;
     if (unterminated_message)
     {
         message->data = (char *) malloc (strlen (unterminated_message) +
                                          strlen (msg) + 1);
-        strcpy (message->data, unterminated_message);
-        strcat (message->data, msg);
+        if (!message->data)
+            gui_printf (server->window,
+                        _("%s not enough memory for received IRC message"),
+                        WEECHAT_ERROR);
+        else
+        {
+            strcpy (message->data, unterminated_message);
+            strcat (message->data, msg);
+        }
         free (unterminated_message);
         unterminated_message = NULL;
     }
@@ -410,7 +424,12 @@ server_msgq_add_buffer (t_irc_server * server, char *buffer)
                 unterminated_message =
                     (char *) realloc (unterminated_message,
                                       strlen (buffer) + 1);
-                strcpy (unterminated_message, buffer);
+                if (!unterminated_message)
+                    gui_printf (server->window,
+                                _("%s not enough memory for received IRC message"),
+                                WEECHAT_ERROR);
+                else
+                    strcpy (unterminated_message, buffer);
                 return;
             }
             gui_printf (server->window,
@@ -428,81 +447,83 @@ void
 server_msgq_flush ()
 {
     t_irc_message *next;
-    /*char **argv;
-    int argc;*/
     char *entire_line, *ptr_data, *pos, *pos2;
     char *host, *command, *args;
 
     /* TODO: optimize this function, parse only a few messages (for low CPU time!) */
     while (recv_msgq)
     {
-        #ifdef DEBUG
-        gui_printf (gui_current_window, "[DEBUG] %s\n", recv_msgq->data);
-        #endif
-
-        ptr_data = recv_msgq->data;
-        entire_line = strdup (ptr_data);
-        
-        while (ptr_data[0] == ' ')
-            ptr_data++;
-        
-        if (ptr_data)
+        if (recv_msgq->data)
         {
             #ifdef DEBUG
-            gui_printf (NULL, "[DEBUG] data received from server: %s\n", ptr_data);
+            gui_printf (gui_current_window, "[DEBUG] %s\n", recv_msgq->data);
             #endif
             
-            host = NULL;
-            command = NULL;
-            args = ptr_data;
+            ptr_data = recv_msgq->data;
+            entire_line = strdup (ptr_data);
             
-            if (ptr_data[0] == ':')
-            {
-                pos = strchr(ptr_data, ' ');
-                pos[0] = '\0';
-                host = ptr_data+1;
-                pos++;
-            }
-            else
-                pos = ptr_data;
+            while (ptr_data[0] == ' ')
+                ptr_data++;
             
-            if (pos != NULL)
+            if (ptr_data)
             {
-                while (pos[0] == ' ')
-                    pos++;
-                pos2 = strchr(pos, ' ');
-                if (pos2 != NULL)
+                #ifdef DEBUG
+                gui_printf (NULL, "[DEBUG] data received from server: %s\n", ptr_data);
+                #endif
+                
+                host = NULL;
+                command = NULL;
+                args = ptr_data;
+                
+                if (ptr_data[0] == ':')
                 {
-                    pos2[0] = '\0';
-                    command = strdup(pos);
-                    pos2++;
-                    while (pos2[0] == ' ')
+                    pos = strchr(ptr_data, ' ');
+                    pos[0] = '\0';
+                    host = ptr_data+1;
+                    pos++;
+                }
+                else
+                    pos = ptr_data;
+                
+                if (pos != NULL)
+                {
+                    while (pos[0] == ' ')
+                        pos++;
+                    pos2 = strchr(pos, ' ');
+                    if (pos2 != NULL)
+                    {
+                        pos2[0] = '\0';
+                        command = strdup(pos);
                         pos2++;
-                    args = (pos2[0] == ':') ? pos2+1 : pos2;
+                        while (pos2[0] == ' ')
+                            pos2++;
+                        args = (pos2[0] == ':') ? pos2+1 : pos2;
+                    }
+                }
+                
+                switch (irc_recv_command (recv_msgq->server, entire_line, host,
+                                          command, args))
+                {
+                    case -1:
+                        gui_printf (recv_msgq->server->window,
+                                    _("Command '%s' failed!\n"), command);
+                        break;
+                    case -2:
+                        gui_printf (recv_msgq->server->window,
+                                    _("No command to execute!\n"));
+                        break;
+                    case -3:
+                        gui_printf (recv_msgq->server->window,
+                                    _("Unknown command: cmd=%s, args=%s\n"),
+                                    command, args);
+                        break;
                 }
             }
             
-            switch (irc_recv_command (recv_msgq->server, entire_line, host,
-                                      command, args))
-            {
-                case -1:
-                    gui_printf (recv_msgq->server->window,
-                                _("Command '%s' failed!\n"), command);
-                    break;
-                case -2:
-                    gui_printf (recv_msgq->server->window,
-                                _("No command to execute!\n"));
-                    break;
-                case -3:
-                    gui_printf (recv_msgq->server->window,
-                                _("Unknown command: cmd=%s, args=%s\n"),
-                                command, args);
-                    break;
-            }
+            free (entire_line);
+            free (recv_msgq->data);
         }
-
-        free (entire_line);
-        free (recv_msgq->data);
+        
         next = recv_msgq->next_message;
         free (recv_msgq);
         recv_msgq = next;
@@ -650,7 +671,7 @@ server_auto_connect (int command_line)
         if ( ((command_line) && (ptr_server->command_line))
             || ((!command_line) && (ptr_server->autoconnect)) )
         {
-            gui_window_new (ptr_server, NULL, 1);
+            (void) gui_window_new (ptr_server, NULL, 1);
             if (server_connect (ptr_server))
                 irc_login (ptr_server);
         }

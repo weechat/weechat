@@ -291,7 +291,7 @@ gui_window_free (t_gui_window *window)
     
     /* always at least one window */
     if (!gui_windows && create_new)
-        gui_window_new (NULL, NULL, 1);
+        (void) gui_window_new (NULL, NULL, 1);
 }
 
 /*

@@ -56,15 +56,17 @@ t_plugin_handler *last_plugin_cmd_handler = NULL;
 void
 plugin_auto_load (int plugin_type, char *directory)
 {
+    int dir_length;
     char *dir_name, *current_dir;
     DIR *dir;
     struct dirent *entry;
     struct stat statbuf;
     
     /* build directory, adding WeeChat home */
+    dir_length = strlen (weechat_home) + strlen (directory) + 2;
     dir_name =
-        (char *) malloc ((strlen (weechat_home) + strlen (directory) + 2) * sizeof (char));
-    sprintf (dir_name, "%s%s%s", weechat_home, DIR_SEPARATOR, directory);
+        (char *) malloc (dir_length * sizeof (char));
+    snprintf (dir_name, dir_length, "%s%s%s", weechat_home, DIR_SEPARATOR, directory);
     
     /* save working directory */
     current_dir = (char *) malloc (1024 * sizeof (char));

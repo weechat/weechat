@@ -159,7 +159,7 @@ gui_window_set_color (WINDOW *window, int num_color)
 int
 gui_window_has_nicklist (t_gui_window *window)
 {
-    return (window->win_nick != NULL);
+    return ((window->win_nick != NULL) ? 1 : 0);
 }
 
 
@@ -321,7 +321,7 @@ gui_draw_window_title (t_gui_window *window)
     }
     if (CHANNEL(window))
     {
-        sprintf (format, "%%-%ds", window->win_width);
+        snprintf (format, 32, "%%-%ds", window->win_width);
         if (CHANNEL(window)->topic)
             mvwprintw (window->win_title, 0, 0, format,
                        CHANNEL(window)->topic);
@@ -390,7 +390,7 @@ gui_display_end_of_line (t_gui_window *window, t_gui_line *line, int count)
     t_gui_message *ptr_message;
     char saved_char, format_align[32];
     
-    sprintf (format_align, "%%-%ds", line->length_align);
+    snprintf (format_align, 32, "%%-%ds", line->length_align);
     num_lines = gui_get_line_num_splits (window, line);
     ptr_message = line->messages;
     offset = 0;
@@ -470,7 +470,7 @@ gui_display_line (t_gui_window *window, t_gui_line *line, int stop_at_end)
     t_gui_message *ptr_message;
     char saved_char, format_align[32];
     
-    sprintf (format_align, "%%-%ds", line->length_align);
+    snprintf (format_align, 32, "%%-%ds", line->length_align);
     ptr_message = line->messages;
     offset = 0;
     while (ptr_message)
@@ -665,7 +665,7 @@ gui_draw_window_nick (t_gui_window *window)
                                        window->win_nick_x);
             gui_draw_window_chat (window);
         }
-        sprintf (format, "%%-%ds", max_length);
+        snprintf (format, 32, "%%-%ds", max_length);
             
         if (has_colors ())
         {
@@ -894,7 +894,7 @@ gui_draw_window_status (t_gui_window *window)
         mvwprintw (window->win_status, 0, COLS - 7, _("-MORE-"));
     else
     {
-        sprintf (format_more, "%%-%ds", strlen (_("-MORE-")));
+        snprintf (format_more, 32, "%%-%ds", strlen (_("-MORE-")));
         mvwprintw (window->win_status, 0, COLS - 7, format_more, " ");
     }
     
@@ -939,12 +939,15 @@ gui_draw_window_infobar (t_gui_window *window)
         wrefresh (window->win_infobar);
     }
     wmove (window->win_infobar, 0, 0);
-    gui_window_set_color (window->win_infobar, COLOR_WIN_INFOBAR);
     
     time_seconds = time (NULL);
     local_time = localtime (&time_seconds);
-    strftime (text, 1024, cfg_look_infobar_timestamp, local_time);
-    wprintw (window->win_infobar, "%s", text);
+    if (local_time)
+    {
+        strftime (text, 1024, cfg_look_infobar_timestamp, local_time);
+        gui_window_set_color (window->win_infobar, COLOR_WIN_INFOBAR);
+        wprintw (window->win_infobar, "%s", text);
+    }
     if (gui_infobar)
     {
         gui_window_set_color (window->win_infobar, gui_infobar->color);
@@ -1039,7 +1042,7 @@ gui_draw_window_input (t_gui_window *window)
     }
     if (CHANNEL(window))
     {
-        sprintf (format, "%%s %%s> %%-%ds", input_width);
+        snprintf (format, 32, "%%s %%s> %%-%ds", input_width);
         mvwprintw (window->win_input, 0, 0, format,
                    CHANNEL(window)->name,
                    SERVER(window)->nick,
@@ -1053,7 +1056,7 @@ gui_draw_window_input (t_gui_window *window)
     {
         if (SERVER(window))
         {
-            sprintf (format, "%%s> %%-%ds", input_width);
+            snprintf (format, 32, "%%s> %%-%ds", input_width);
             if (SERVER(window) && (SERVER(window)->is_connected))
                 ptr_nickname = SERVER(window)->nick;
             else
@@ -1067,7 +1070,7 @@ gui_draw_window_input (t_gui_window *window)
         }
         else
         {
-            sprintf (format, "%%s> %%-%ds", input_width);
+            snprintf (format, 32, "%%s> %%-%ds", input_width);
             if (SERVER(window) && (SERVER(window)->is_connected))
                 ptr_nickname = SERVER(window)->nick;
             else
@@ -1643,13 +1646,13 @@ gui_printf_color_type (t_gui_window *window, int type, int color, char *message,
             if ((!window->last_line) || (window->line_complete))
             {
                 gui_add_message (window, MSG_TYPE_TIME, COLOR_WIN_CHAT_DARK, "[");
-                sprintf (timestamp, "%02d", date_tmp->tm_hour);
+                snprintf (timestamp, 16, "%02d", date_tmp->tm_hour);
                 gui_add_message (window, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME, timestamp);
                 gui_add_message (window, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME_SEP, ":");
-                sprintf (timestamp, "%02d", date_tmp->tm_min);
+                snprintf (timestamp, 16, "%02d", date_tmp->tm_min);
                 gui_add_message (window, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME, timestamp);
                 gui_add_message (window, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME_SEP, ":");
-                sprintf (timestamp, "%02d", date_tmp->tm_sec);
+                snprintf (timestamp, 16, "%02d", date_tmp->tm_sec);
                 gui_add_message (window, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME, timestamp);
                 gui_add_message (window, MSG_TYPE_TIME, COLOR_WIN_CHAT_DARK, "] ");
             }
