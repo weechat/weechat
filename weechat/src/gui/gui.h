@@ -26,7 +26,7 @@
 
 #define INPUT_BUFFER_BLOCK_SIZE 256
 
-#define NUM_COLORS                      47
+#define NUM_COLORS                      49
 #define COLOR_WIN_TITLE                 1
 #define COLOR_WIN_CHAT                  2
 #define COLOR_WIN_CHAT_TIME             3
@@ -51,22 +51,24 @@
 #define COLOR_WIN_INPUT_NICK            22
 #define COLOR_WIN_NICK                  23
 #define COLOR_WIN_NICK_AWAY             24
-#define COLOR_WIN_NICK_OP               25
-#define COLOR_WIN_NICK_HALFOP           26
-#define COLOR_WIN_NICK_VOICE            27
-#define COLOR_WIN_NICK_SEP              28
-#define COLOR_WIN_NICK_SELF             29
-#define COLOR_WIN_NICK_PRIVATE          30
-#define COLOR_WIN_NICK_FIRST            31
-#define COLOR_WIN_NICK_LAST             40
+#define COLOR_WIN_NICK_CHANOWNER        25
+#define COLOR_WIN_NICK_CHANADMIN        26
+#define COLOR_WIN_NICK_OP               27
+#define COLOR_WIN_NICK_HALFOP           28
+#define COLOR_WIN_NICK_VOICE            29
+#define COLOR_WIN_NICK_SEP              30
+#define COLOR_WIN_NICK_SELF             31
+#define COLOR_WIN_NICK_PRIVATE          32
+#define COLOR_WIN_NICK_FIRST            33
+#define COLOR_WIN_NICK_LAST             42
 #define COLOR_WIN_NICK_NUMBER           (COLOR_WIN_NICK_LAST - COLOR_WIN_NICK_FIRST + 1)
-#define COLOR_DCC_SELECTED              41
-#define COLOR_DCC_WAITING               42
-#define COLOR_DCC_CONNECTING            43
-#define COLOR_DCC_ACTIVE                44
-#define COLOR_DCC_DONE                  45
-#define COLOR_DCC_FAILED                46
-#define COLOR_DCC_ABORTED               47
+#define COLOR_DCC_SELECTED              43
+#define COLOR_DCC_WAITING               44
+#define COLOR_DCC_CONNECTING            45
+#define COLOR_DCC_ACTIVE                46
+#define COLOR_DCC_DONE                  47
+#define COLOR_DCC_FAILED                48
+#define COLOR_DCC_ABORTED               49
 
 #define SERVER(buffer)  ((t_irc_server *)(buffer->server))
 #define CHANNEL(buffer) ((t_irc_channel *)(buffer->channel))

@@ -77,6 +77,8 @@ typedef struct t_irc_nick t_irc_nick;
 struct t_irc_nick
 {
     char *nick;                     /* nickname                             */
+    int is_chanowner;               /* chan owner? (specific to unrealircd) */
+    int is_chanadmin;               /* chan admin? (specific to unrealircd) */
     int is_op;                      /* operator privileges?                 */
     int is_halfop;                  /* half operaor privileges?             */
     int has_voice;                  /* nick has voice?                      */
@@ -257,7 +259,7 @@ extern void channel_set_away (t_irc_channel *, char *, int);
 
 /* nick functions (irc-nick.c) */
 
-extern t_irc_nick *nick_new (t_irc_channel *, char *, int, int, int);
+extern t_irc_nick *nick_new (t_irc_channel *, char *, int, int, int, int, int);
 extern void nick_resort (t_irc_channel *, t_irc_nick *);
 extern void nick_change (t_irc_channel *, t_irc_nick *, char *);
 extern void nick_free (t_irc_channel *, t_irc_nick *);

@@ -127,6 +127,8 @@ extern int cfg_col_input_nick;
 extern int cfg_col_input_bg;
 extern int cfg_col_nick;
 extern int cfg_col_nick_away;
+extern int cfg_col_nick_chanowner;
+extern int cfg_col_nick_chanadmin;
 extern int cfg_col_nick_op;
 extern int cfg_col_nick_halfop;
 extern int cfg_col_nick_voice;

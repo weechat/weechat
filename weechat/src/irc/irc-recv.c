@@ -184,7 +184,7 @@ irc_cmd_recv_join (t_irc_server *server, char *host, char *arguments)
                       _(" has joined "));
     gui_printf_color (ptr_channel->buffer, COLOR_WIN_CHAT_CHANNEL,
                       "%s\n", arguments);
-    (void) nick_new (ptr_channel, host, 0, 0, 0);
+    (void) nick_new (ptr_channel, host, 0, 0, 0, 0, 0);
     gui_draw_buffer_nick (ptr_channel->buffer, 1);
     return 0;
 }
@@ -2826,7 +2826,7 @@ int
 irc_cmd_recv_353 (t_irc_server *server, char *host, char *arguments)
 {
     char *pos, *pos_nick;
-    int is_op, is_halfop, has_voice;
+    int is_chanowner, is_chanadmin, is_op, is_halfop, has_voice;
     t_irc_channel *ptr_channel;
     
     /* make gcc happy */
@@ -2872,6 +2872,8 @@ irc_cmd_recv_353 (t_irc_server *server, char *host, char *arguments)
         {
             while (pos && pos[0])
             {
+                is_chanowner = 0;
+                is_chanadmin = 0;
                 is_op = 0;
                 is_halfop = 0;
                 has_voice = 0;
@@ -2885,6 +2887,16 @@ irc_cmd_recv_353 (t_irc_server *server, char *host, char *arguments)
                         has_voice = 1;
                     pos++;
                 }
+                if (pos[0] == '~')
+                {
+                    is_chanowner = 1;
+                    pos++;
+                }
+                if (pos[0] == '&')
+                {
+                    is_chanadmin = 1;
+                    pos++;
+                }
                 pos_nick = pos;
                 pos = strchr (pos, ' ');
                 if (pos)
@@ -2892,7 +2904,8 @@ irc_cmd_recv_353 (t_irc_server *server, char *host, char *arguments)
                     pos[0] = '\0';
                     pos++;
                 }
-                if (!nick_new (ptr_channel, pos_nick, is_op, is_halfop, has_voice))
+                if (!nick_new (ptr_channel, pos_nick, is_chanowner, is_chanadmin,
+                               is_op, is_halfop, has_voice))
                 {
                     irc_display_prefix (server->buffer, PREFIX_ERROR);
                     gui_printf (server->buffer,

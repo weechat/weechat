@@ -851,35 +851,41 @@ gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
                             x = column;
                             break;
                     }
-                    if (ptr_nick->is_op)
+                    if (ptr_nick->is_chanowner)
+                    {
+                        gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_CHANOWNER);
+                        mvwprintw (ptr_win->win_nick, y, x, "~");
+                        x++;
+                    }
+                    else if (ptr_nick->is_chanadmin)
+                    {
+                        gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_CHANADMIN);
+                        mvwprintw (ptr_win->win_nick, y, x, "&");
+                        x++;
+                    }
+                    else if (ptr_nick->is_op)
                     {
                         gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_OP);
                         mvwprintw (ptr_win->win_nick, y, x, "@");
                         x++;
                     }
+                    else if (ptr_nick->is_halfop)
+                    {
+                        gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_HALFOP);
+                        mvwprintw (ptr_win->win_nick, y, x, "%%");
+                        x++;
+                    }
+                    else if (ptr_nick->has_voice)
+                    {
+                        gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_VOICE);
+                        mvwprintw (ptr_win->win_nick, y, x, "+");
+                        x++;
+                    }
                     else
                     {
-                        if (ptr_nick->is_halfop)
-                        {
-                            gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_HALFOP);
-                            mvwprintw (ptr_win->win_nick, y, x, "%%");
-                            x++;
-                        }
-                        else
-                        {
-                            if (ptr_nick->has_voice)
-                            {
-                                gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_VOICE);
-                                mvwprintw (ptr_win->win_nick, y, x, "+");
-                                x++;
-                            }
-                            else
-                            {
-                                gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK);
-                                mvwprintw (ptr_win->win_nick, y, x, " ");
-                                x++;
-                            }
-                        }
+                        gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK);
+                        mvwprintw (ptr_win->win_nick, y, x, " ");
+                        x++;
                     }
                     gui_window_set_color (ptr_win->win_nick,
                                           (ptr_nick->is_away) ?
@@ -2011,6 +2017,10 @@ gui_init_colors ()
             cfg_col_nick & A_CHARTEXT, cfg_col_nick_bg);
         init_pair (COLOR_WIN_NICK_AWAY,
             cfg_col_nick_away & A_CHARTEXT, cfg_col_nick_bg);
+        init_pair (COLOR_WIN_NICK_CHANOWNER,
+            cfg_col_nick_chanowner & A_CHARTEXT, cfg_col_nick_bg);
+        init_pair (COLOR_WIN_NICK_CHANADMIN,
+            cfg_col_nick_chanadmin & A_CHARTEXT, cfg_col_nick_bg);
         init_pair (COLOR_WIN_NICK_OP,
             cfg_col_nick_op & A_CHARTEXT, cfg_col_nick_bg);
         init_pair (COLOR_WIN_NICK_HALFOP,
@@ -2071,6 +2081,8 @@ gui_init_colors ()
         color_attr[COLOR_WIN_INPUT_NICK - 1] = (cfg_col_input_nick >= 0) ? cfg_col_input_nick & A_BOLD : 0;
         color_attr[COLOR_WIN_NICK - 1] = (cfg_col_nick >= 0) ? cfg_col_nick & A_BOLD : 0;
         color_attr[COLOR_WIN_NICK_AWAY - 1] = (cfg_col_nick_away >= 0) ? cfg_col_nick_away & A_BOLD : 0;
+        color_attr[COLOR_WIN_NICK_CHANOWNER - 1] = (cfg_col_nick_chanowner >= 0) ? cfg_col_nick_chanowner & A_BOLD : 0;
+        color_attr[COLOR_WIN_NICK_CHANADMIN - 1] = (cfg_col_nick_chanadmin >= 0) ? cfg_col_nick_chanadmin & A_BOLD : 0;
         color_attr[COLOR_WIN_NICK_OP - 1] = (cfg_col_nick_op >= 0) ? cfg_col_nick_op & A_BOLD : 0;
         color_attr[COLOR_WIN_NICK_HALFOP - 1] = (cfg_col_nick_halfop >= 0) ? cfg_col_nick_halfop & A_BOLD : 0;
         color_attr[COLOR_WIN_NICK_VOICE - 1] = (cfg_col_nick_voice >= 0) ? cfg_col_nick_voice & A_BOLD : 0;

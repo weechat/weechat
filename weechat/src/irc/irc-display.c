@@ -73,29 +73,31 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, int message_type,
                                message_type, COLOR_WIN_CHAT_DARK, "<");
     if (cfg_look_nickmode)
     {
-        if (nick->is_op)
+        if (nick->is_chanowner)
+            gui_printf_color_type (buffer,
+                                   message_type,
+                                   COLOR_WIN_NICK_OP, "~");
+        else if (nick->is_chanadmin)
+            gui_printf_color_type (buffer,
+                                   message_type,
+                                   COLOR_WIN_NICK_OP, "&");
+        else if (nick->is_op)
             gui_printf_color_type (buffer,
                                    message_type,
                                    COLOR_WIN_NICK_OP, "@");
+        else if (nick->is_halfop)
+            gui_printf_color_type (buffer,
+                                   message_type,
+                                   COLOR_WIN_NICK_HALFOP, "%%");
+        else if (nick->has_voice)
+            gui_printf_color_type (buffer,
+                                   message_type,
+                                   COLOR_WIN_NICK_VOICE, "+");
         else
-        {
-            if (nick->is_halfop)
+            if (cfg_look_nickmode_empty && !no_nickmode)
                 gui_printf_color_type (buffer,
                                        message_type,
-                                       COLOR_WIN_NICK_HALFOP, "%%");
-            else
-            {
-                if (nick->has_voice)
-                    gui_printf_color_type (buffer,
-                                           message_type,
-                                           COLOR_WIN_NICK_VOICE, "+");
-                else
-                    if (cfg_look_nickmode_empty && !no_nickmode)
-                        gui_printf_color_type (buffer,
-                                               message_type,
-                                               COLOR_WIN_CHAT, " ");
-            }
-        }
+                                       COLOR_WIN_CHAT, " ");
     }
     if (color_nick < 0)
         gui_printf_color_type (buffer,

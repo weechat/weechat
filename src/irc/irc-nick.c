@@ -64,8 +64,10 @@ nick_compare (t_irc_nick *nick1, t_irc_nick *nick2)
 {
     int score1, score2, comp;
     
-    score1 = - ( (nick1->is_op * 8) + (nick1->is_halfop * 4) + (nick1->has_voice * 2));
-    score2 = - ( (nick2->is_op * 8) + (nick2->is_halfop * 4) + (nick2->has_voice * 2));
+    score1 = - ( (nick1->is_chanowner * 32) + (nick1->is_chanadmin * 16) +
+             (nick1->is_op * 8) + (nick1->is_halfop * 4) + (nick1->has_voice * 2) );
+    score2 = - ( (nick2->is_chanowner * 32) + (nick2->is_chanadmin * 16) +
+             (nick2->is_op * 8) + (nick2->is_halfop * 4) + (nick2->has_voice * 2) );
     
     comp = strcasecmp(nick1->nick, nick2->nick);
     if (comp > 0)
@@ -149,7 +151,8 @@ nick_insert_sorted (t_irc_channel *channel, t_irc_nick *nick)
 
 t_irc_nick *
 nick_new (t_irc_channel *channel, char *nick_name,
-          int is_op, int is_halfop, int has_voice)
+          int is_chanowner, int is_chanadmin, int is_op, int is_halfop,
+          int has_voice)
 {
     t_irc_nick *new_nick;
     
@@ -157,6 +160,8 @@ nick_new (t_irc_channel *channel, char *nick_name,
     if ((new_nick = nick_search (channel, nick_name)))
     {
         /* update nick */
+        new_nick->is_chanowner = is_chanowner;
+        new_nick->is_chanadmin = is_chanadmin;
         new_nick->is_op = is_op;
         new_nick->is_halfop = is_halfop;
         new_nick->has_voice = has_voice;
@@ -173,6 +178,8 @@ nick_new (t_irc_channel *channel, char *nick_name,
 
     /* initialize new nick */
     new_nick->nick = strdup (nick_name);
+    new_nick->is_chanowner = is_chanowner;
+    new_nick->is_chanadmin = is_chanadmin;
     new_nick->is_op = is_op;
     new_nick->is_halfop = is_halfop;
     new_nick->has_voice = has_voice;
@@ -312,7 +319,7 @@ nick_count (t_irc_channel *channel, int *total, int *count_op,
          ptr_nick = ptr_nick->next_nick)
     {
         (*total)++;
-        if (ptr_nick->is_op)
+        if ((ptr_nick->is_chanowner) || (ptr_nick->is_chanadmin) || (ptr_nick->is_op))
             (*count_op)++;
         else
         {

@@ -5,6 +5,7 @@ ChangeLog - 2005-02-15
 
 
 Version 0.1.1 (under dev!):
+   * added support for UnrealIrcd ("~" for chan owner, "&" for chan admin)
    * on server buffer, only server messages are logged
    * plugins messages are logged with new config option (log_plugin_msg)
    * fixed /buffer close command (now ok when disconnected from server)
