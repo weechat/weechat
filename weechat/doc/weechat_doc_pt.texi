@@ -1,7 +1,7 @@
 \input texinfo  @c -*-texinfo-*-
 @c %**start of header
 @setfilename weechat_doc_pt.info
-@settitle WeeChat - Um cliente de IRC r@'apido, leve e extenc@'ivel
+@settitle WeeChat - Um cliente de IRC rapido, leve e extencivel
 @c %**end of header
 
 @c WeeChat documentation (vers@~ao partuguesa)
@@ -27,8 +27,8 @@
 @titlepage
 
 @title WeeChat - Guia do Utilizador
-@subtitle Cliente de IRC rapido, leve e extenc@'ivel
-@subtitle Documenta@,{c}@~ao do WeeChat v0.0.3 - 26 de Outubro de 2003
+@subtitle Cliente de IRC rapido, leve e extencivel
+@subtitle Documenta@,{c}@~ao do WeeChat v0.0.3 - 23 de Novembro de 2003
 
 @image{weechat_image}
 
@@ -54,25 +54,26 @@ License) vers@~ao 2 ou superior.
 
 @contents
 
-@node Top, Introduç@~ao, (dir), (dir)
+@node Top, Introducao, (dir), (dir)
 @menu
-* Introduç@~ao:: Descriç@~ao do WeeChat
-* Instalaç@~ao:: Instalaç@~ao do WeeChat
-* Utilizaç@~ao:: Utilizaç@~ao do WeeChat
-* Autores / Suporte:: Contactar os autores e obter suporte
+* Introducao:: Descri@,{c}@~ao do WeeChat
+* Instalacao:: Instala@,{c}@~ao do WeeChat
+* Utilizacao:: Utiliza@,{c}@~ao do WeeChat
+* Extencoes:: Exten@,{c}@~oes do Weechat
+* Autores/Suporte:: Contactar os autores e obter suporte
 @end menu
 
 
-@c ******************************* Introdu@,{c}@~ao *******************************
+@c ******************************* Introducao *******************************
 
-@node Introduç@~ao, Instalaç@~ao, Top, Top
+@node Introducao, Instalacao, Top, Top
 @chapter Introdu@,{c}@~ao
 @menu
-* Descriç@~ao::
+* Descricao::
 * Pre-requisitos::
 @end menu
 
-@node Descriç@~ao, Pre-requisitos, Introduç@~ao, Introduç@~ao
+@node Descricao, Pre-requisitos, Introducao, Introducao
 @section Descri@,{c}@~ao
 
 O WeeChat (Wee Enhanced Environment for Chat) @'e um cliente de IRC livre, r@'apido e leve,
@@ -100,7 +101,7 @@ multiplataforma (Gnu/Linux, *BSD, Windows e outros)
 A p@'agina Web do Weechat @'e aqui :@*
 @uref{http://weechat.flashtux.org}@*
 
-@node Pre-requisitos, ,Descriç@~ao, Introduç@~ao
+@node Pre-requisitos, ,Descricao, Introducao
 @section Pr@'e-requisitos
 
 Para instalar o Weechat, vais @b{precisar} de ter :@*
@@ -123,9 +124,9 @@ Qt: *** interface n@~ao desenvolvida ***,
 @end itemize
 
 
-@c ******************************* Instala@,{c}@~ao *******************************
+@c ******************************* Instalacao *******************************
 
-@node Instalaç@~ao, Utilizaç@~ao, Introduç@~ao, Top
+@node Instalacao, Utilizacao, Introducao, Top
 @chapter Instala@,{c}@~ao
 @menu
 * Binarios::
@@ -133,7 +134,7 @@ Qt: *** interface n@~ao desenvolvida ***,
 * Codigo Fonte via CVS::
 @end menu
 
-@node Binarios, Codigo Fonte, Instalaç@~ao, Instalaç@~ao
+@node Binarios, Codigo Fonte, Instalacao, Instalacao
 @section Bin@'arios
 
 Os pacotes bin@'arios est@'ao dispon@'iveis para as seguintes distribui@,{c}@~oes :
@@ -158,7 +159,7 @@ Windows (n@~ao dispon@'ivel !)
 Onde x.y.z @'e a vers@~ao (por exemplo 0.0.1)
 @*
 
-@node Codigo Fonte, Codigo Fonte via CVS, Binarios, Instalaç@~ao
+@node Codigo Fonte, Codigo Fonte via CVS, Binarios, Instalacao
 @section C@'odigo Fonte
 
 Escreve simplesmente numa consola ou num terminal :@*
@@ -172,7 +173,7 @@ Obter os direitos do root e instalar o Weechat :@*
 (escreve aqui a palavra-passe do superutilizador)@*
 @kbd{make install}@*
 
-@node Codigo Fonte via CVS, , Codigo Fonte, Instalaç@~ao
+@node Codigo Fonte via CVS, , Codigo Fonte, Instalacao
 @section C@'odigo Fonte via CVS
 
 Aten@,{c}@~ao: o c@'odigo fonte CVS est@'a reservado aos utilizadores avan@,{c}ados : o WeeChat pode n@~ao compilar ou ficar inst@'avel.@*
@@ -189,9 +190,9 @@ Executa o script :@*
 Segue agora as instru@,{c}@~oes para compilar o c@'odigo fonte - @xref{Codigo Fonte}.
 
 
-@c ******************************* Utiliza@,{c}@~ao ********************************
+@c ******************************* Utilizacao ********************************
 
-@node Utilizaç@~ao, Autores / Suporte, Instalaç@~ao, Top
+@node Utilizacao, Extencoes, Instalacao, Top
 @chapter Utiliza@,{c}@~ao
 
 @menu
@@ -200,7 +201,7 @@ Segue agora as instru@,{c}@~oes para compilar o c@'odigo fonte - @xref{Codigo Fo
 * Comandos do WeeChat::
 @end menu
 
-@node Invocar o WeeChat, Recursos de teclado, Utilizaç@~ao, Utilizaç@~ao
+@node Invocar o WeeChat, Recursos de teclado, Utilizacao, Utilizacao
 @section Invocar o WeeChat
 
 @subsection Par@^ametros de linha de comandos
@@ -227,7 +228,7 @@ O ficheiro de configura@,{c}@~ao por defeito @'e : ~/.weechat/weechat.rc@*
 
 Podes editar esse ficheiro para configurar o WeeChat @`a tua maneira, man tamb@'em podes modificar os par@^ametros dentro do WeeChat utilizando o comando @kbd{/set} - @xref{Comandos do WeeChat}.
 
-@node Recursos de teclado, Comandos do WeeChat, Invocar o WeeChat, Utilizaç@~ao
+@node Recursos de teclado, Comandos do WeeChat, Invocar o WeeChat, Utilizacao
 @section Recursos de teclado
 
 @table @kbd
@@ -269,15 +270,139 @@ Identico a F6 / F7@*
 @*
 @end table
 
-@node Comandos do WeeChat, , Recursos de teclado, Utilizaç@~ao
+@node Comandos do WeeChat, , Recursos de teclado, Utilizacao
 @section Comandos do WeeChat
 
 N@~AO ESCRITO !
 
 
-@c **************************** Autores / Suporte *****************************
+@c ******************************* Extencoes *********************************
 
-@node Autores / Suporte, , Utilizaç@~ao, Top
+@node Extencoes, Autores/Suporte, Utilizacao, Top
+@chapter Exten@,{c}@~oes
+
+@menu
+* Scripts Perl::
+* Scripts Python::
+* Scripts Ruby::
+@end menu
+
+@node Scripts Perl, Scripts Python, Extencoes, Extencoes
+@section Scripts Perl
+
+@subsection Carregar/Descarregar Scripts Perl
+
+Os Scripts Perl s@~ao carregados e descarregados com o comando @command{/perl}.
+(escreve @kbd{/help perl} dentro do WeeChat para obteres ajuda acerca do comando).@*
+
+@emph{Exemplos:}@*
+@itemize @bullet
+@item
+Carregar um Script Perl: @kbd{/perl load /tmp/sample.pl}@*
+@item
+Descarregar todos os Scripts Perl: @kbd{/perl unload}@*
+@item
+Listar todos os Scripts Perl: @kbd{/perl}@*
+@end itemize
+
+@subsection Interface WeeChat / Perl
+
+@itemize @bullet
+@item
+@command{IRC::register ( nome, vers@~ao, fun@,{c}@~ao_de_shutdown, descri@,{c}@~ao );}@*
+@*
+Esta @'e a primeira fun@,{c}@~ao a invocar num Script Perl.@*
+Todos os Scripts Perl para o Weechat devem invocar esta fun@,{c}@~ao.@*
+
+@emph{Argumentos:}
+@itemize @minus
+@item @option{nome}: nome @'unico que indentifique o script (cada Script Perl deve ter um @'unico nome)
+@item @option{vers@~ao}: vers@~ao do script
+@item @option{fun@,{c}@~ao_de_shutdown}: fun@,{c}@~ao Perl invocada quando o script é descarregado (par@^ametro opcional, se deixado em branco significa que nada deve ser chamado)
+@item @option{descri@,{c}@~ao}: breve descri@,{c}@~ao do script.
+@end itemize
+@*
+@emph{Exemplo:}@*
+@code{IRC::register ("sample", "1.0", "sample_end", "Sample script!");}@*
+@*
+
+@item
+@command{IRC::print ( mensagem );}@*
+@*
+Imprimne uma mensagem na janela actual (canal ou servidor).@*
+
+@emph{Argumentos:}
+@itemize @minus
+@item @option{mensagem}: mensagem a mostrar
+@end itemize
+@*
+@emph{Exemplo:}@*
+@code{IRC::print ("mensagem");}@*
+@*
+
+@item
+@command{IRC::add_message_handler ( nome, fun@,{c}@~ao );}@*
+@*
+Anexa uma fun@,{c}@~ao Perl a uma mensagem de IRC.@*
+A fun@,{c}@~ao ser@'a invocada de cada vez que a mensagem IRC for recebida.@*
+
+@emph{Argumentos:}
+@itemize @minus
+@item @option{nome}: nome da mensagem IRC@*
+Para conheceres uma lista de mensagens de IRC, por favor lê o RFC 1459 e/ou o 2812:@*
+RFC 1459: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc1459.txt}@*
+RFC 2812: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
+@item @option{fun@,{c}@~ao}: fun@,{c}@~ao Perl invocada quando a mensagem é recebida
+@end itemize
+@*
+@emph{Exemplo:}@*
+@code{IRC::add_message_handler ("privmsg", my_function);}@*
+@code{sub my_function}@*
+@code{@{ }@*
+@code{@ @ @ @ ($null, $channel, $message) = split ":",@@_[0],3;}@*
+@code{@ @ @ @ ($hostmask, $null, $channel) = split " ", $channel;}@*
+@code{@ @ @ @ IRC::print ("host=$hostmask, chan=$channel, msg=$message\n");}@*
+@code{@} }@*
+@*
+
+@item
+@command{IRC::add_command_handler ( nome, fun@,{c}@~ao );}@*
+@*
+Cria um novo comando do Weechat, ligado a uma fun@,{c}@~ao Perl.@*
+A fun@,{c}@~ao ser@'a chamada quando o utilizador a invocar utilizando @command{/nome}@*
+
+@emph{Argumentos:}
+@itemize @minus
+@item @option{nome}: nome do novo comando@*
+Este nome pode pertencer a um comando já existente, o qual ser@'a sobreposto pela fun@,{c}@~ao Perl. Tem cuidado quando fizeres isto: os comandos originais não estar@~ao acessiveis antes de teres descarregado o Script Perl.
+@item @option{fun@,{c}@~ao}: fun@,{c}@~ao Perl ligada ao comando
+@end itemize
+@*
+@emph{Exemplo:}@*
+@code{IRC::add_command_handler ("command", my_command);}@*
+@code{sub my_command}@*
+@code{@{ }@*
+@code{@ @ @ @ IRC::print("Argumentos: ".@@_[0]);}@*
+@code{@ @ @ @ return 0;}@*
+@code{@} }@*
+@*
+
+@end itemize
+
+@node Scripts Python, Scripts Ruby, Scripts Perl, Extencoes
+@section Scripts Python
+
+N@~AO DESENVOLVIDO!
+
+@node Scripts Ruby, , Scripts Python, Extencoes
+@section Scripts Ruby
+
+N@~AO DESENVOLVIDO!
+
+
+@c **************************** Autores/Suporte *****************************
+
+@node Autores/Suporte, , Extencoes, Top
 @chapter Autores / Suporte
 
 @ifhtml
@@ -294,7 +419,7 @@ N@~AO ESCRITO !
 @end menu
 @end ifnothtml
 
-@node Autores, Obter Suporte, Autores / Suporte, Autores / Suporte
+@node Autores, Obter Suporte, Autores/Suporte, Autores/Suporte
 @section Autores
 
 O WeeChat @'e desenvolvido por :@*
@@ -316,10 +441,10 @@ Crevetor
 @end itemize
 
 @ifhtml
-@node Obter Suporte, Copyright, Autores, Autores / Suporte
+@node Obter Suporte, Copyright, Autores, Autores/Suporte
 @end ifhtml
 @ifnothtml
-@node Obter Suporte, , Autores, Autores / Suporte
+@node Obter Suporte, , Autores, Autores/Suporte
 @end ifnothtml
 @section Obter Suporte
 
@@ -347,7 +472,7 @@ Para mais detalhes, v@^e tamb@'em a p@'agina de suporte do WeeChat :@*
 @end itemize
 
 @ifhtml
-@node Copyright, , Obter Suporte, Autores / Suporte
+@node Copyright, , Obter Suporte, Autores/Suporte
 @section Copyright
 
 Este manual documenta o cliente de IRC WeeChat, Ele faz parte do WeeChat.@*
@@ -362,3 +487,4 @@ License vers@~ao 2 ou posterior.@*
 @end ifhtml
 
 @bye
+
