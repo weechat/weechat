@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2005-03-20
+TODO - 2005-04-03
 
 Legend:
   #  done
@@ -10,7 +10,7 @@ Legend:
   ?  is this really necessary?
 
 
-v0.1.1:
+v0.1.2:
 ------
 
  * General:
@@ -19,8 +19,6 @@ v0.1.1:
     + *BSD version
 
  * IRC protocol:
-    # "/dcc send" command
-    # "/dcc chat" command (and incoming DCC chats)
     - customizable CTCP version reply
 
  * Interface:
@@ -28,7 +26,10 @@ v0.1.1:
     + internationalization (traduce WeeChat in many languages)
 
  * TCP/IP communication:
-    # connect to server with child process (background)
+    - SSL support
+
+ * Configuration:
+    - add key bindings to config file
 
 
 Future versions:
@@ -64,7 +65,6 @@ Future versions:
 
  * TCP/IP communication:
     - proxy support
-    - SSL support
     - IPv6 protocol implementation
 
  * Plugins:
@@ -72,6 +72,3 @@ Future versions:
     - "/python load" and "/python unload" commands to (un)load Python scripts
     - Ruby plugin
     - "/ruby load" and "/ruby unload" commands to (un)load Ruby scripts
-
- * Configuration:
-    - add key bindings to config file

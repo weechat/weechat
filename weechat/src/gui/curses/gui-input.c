@@ -53,7 +53,7 @@ gui_read_keyb ()
     int key, i;
     t_gui_buffer *ptr_buffer;
     t_irc_server *ptr_server;
-    t_irc_dcc *ptr_dcc;
+    t_irc_dcc *ptr_dcc, *ptr_dcc_next;
     char new_char[3], *decoded_string;
     t_irc_dcc *dcc_selected;
 
@@ -591,10 +591,13 @@ gui_read_keyb ()
                         case 'p':
                         case 'P':
                             gui_current_window->dcc_selected = NULL;
-                            for (ptr_dcc = dcc_list; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
+                            ptr_dcc = dcc_list;
+                            while (ptr_dcc)
                             {
+                                ptr_dcc_next = ptr_dcc->next_dcc;
                                 if (DCC_ENDED(ptr_dcc->status))
                                     dcc_free (ptr_dcc);
+                                ptr_dcc = ptr_dcc_next;
                             }
                             gui_redraw_buffer (gui_current_window->buffer);
                             break;
