@@ -34,6 +34,7 @@
 #include "../plugins.h"
 #include "wee-perl.h"
 #include "../../common/command.h"
+#include "../../irc/irc.h"
 #include "../../gui/gui.h"
 
 
@@ -75,6 +76,7 @@ static XS (XS_IRC_register)
     if (perl_script_found)
     {
         /* error: another scripts already exists with this name! */
+        irc_display_prefix (NULL, PREFIX_ERROR);
         gui_printf (NULL,
                     _("Perl error: unable to register Perl script \"%s\" (another script "
                     "already exists with this name)\n"),
@@ -104,9 +106,12 @@ static XS (XS_IRC_register)
                             name, version, description);
         }
         else
+        {
+            irc_display_prefix (NULL, PREFIX_ERROR);
             gui_printf (NULL,
                         _("%s unable to load Perl script \"%s\" (not enough memory)\n"),
                         WEECHAT_ERROR, name);
+        }
     }
     XST_mPV (0, VERSION);
     XSRETURN (1);
@@ -125,6 +130,7 @@ static XS (XS_IRC_print)
     for (i = 0; i < items; i++)
     {
         message = SvPV (ST (i), integer);
+        irc_display_prefix (gui_current_window, PREFIX_PLUGIN);
         gui_printf (gui_current_window, "%s", message);
     }
     
@@ -283,6 +289,7 @@ wee_perl_exec (char *function, char *arguments)
     return_code = 1;
     if (SvTRUE (sv))
     {
+        irc_display_prefix (NULL, PREFIX_ERROR);
         gui_printf (NULL,
                     _("Perl error: %s\n"),
                     SvPV (sv, count));
@@ -292,6 +299,7 @@ wee_perl_exec (char *function, char *arguments)
     {
         if (count != 1)
         {
+            irc_display_prefix (NULL, PREFIX_ERROR);
             gui_printf (NULL,
                         _("Perl error: too much values from \"%s\" (%d). Expected: 1.\n"),
                         function, count);

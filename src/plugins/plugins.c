@@ -30,6 +30,7 @@
 #include <string.h>
 #include "../common/weechat.h"
 #include "plugins.h"
+#include "../irc/irc.h"
 #include "../gui/gui.h"
 
 #ifdef PLUGIN_PERL
@@ -129,9 +130,12 @@ plugin_handler_add (t_plugin_handler **plugin_handlers,
         *last_plugin_handler = new_plugin_handler;
     }
     else
+    {
+        irc_display_prefix (NULL, PREFIX_ERROR);
         gui_printf (NULL,
                     _("%s unable to add handler for \"%s\" message (not enough memory)\n"),
                     WEECHAT_ERROR, name);
+    }
 }
 
 /*

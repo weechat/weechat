@@ -999,12 +999,14 @@ weechat_cmd_perl (int argc, char **argv)
     {
         case 0:
             /* list registered Perl scripts */
+            irc_display_prefix (NULL, PREFIX_PLUGIN);
             gui_printf (NULL, _("Registered Perl scripts:\n"));
             if (perl_scripts)
             {
                 for (ptr_plugin_script = perl_scripts; ptr_plugin_script;
                      ptr_plugin_script = ptr_plugin_script->next_script)
                 {
+                    irc_display_prefix (NULL, PREFIX_PLUGIN);
                     gui_printf (NULL, "  %s v%s%s%s\n",
                                 ptr_plugin_script->name,
                                 ptr_plugin_script->version,
@@ -1013,9 +1015,13 @@ weechat_cmd_perl (int argc, char **argv)
                 }
             }
             else
+            {
+                irc_display_prefix (NULL, PREFIX_PLUGIN);
                 gui_printf (NULL, _("  (none)\n"));
+            }
             
             /* list Perl message handlers */
+            irc_display_prefix (NULL, PREFIX_PLUGIN);
             gui_printf (NULL, _("Perl message handlers:\n"));
             handler_found = 0;
             for (ptr_plugin_handler = plugin_msg_handlers; ptr_plugin_handler;
@@ -1024,15 +1030,20 @@ weechat_cmd_perl (int argc, char **argv)
                 if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PERL)
                 {
                     handler_found = 1;
+                    irc_display_prefix (NULL, PREFIX_PLUGIN);
                     gui_printf (NULL, "  IRC(%s) => Perl(%s)\n",
                                 ptr_plugin_handler->name,
                                 ptr_plugin_handler->function_name);
                 }
             }
             if (!handler_found)
+            {
+                irc_display_prefix (NULL, PREFIX_PLUGIN);
                 gui_printf (NULL, _("  (none)\n"));
+            }
             
             /* list Perl command handlers */
+            irc_display_prefix (NULL, PREFIX_PLUGIN);
             gui_printf (NULL, _("Perl command handlers:\n"));
             handler_found = 0;
             for (ptr_plugin_handler = plugin_cmd_handlers; ptr_plugin_handler;
@@ -1041,13 +1052,17 @@ weechat_cmd_perl (int argc, char **argv)
                 if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PERL)
                 {
                     handler_found = 1;
+                    irc_display_prefix (NULL, PREFIX_PLUGIN);
                     gui_printf (NULL, "  Command /%s => Perl(%s)\n",
                                 ptr_plugin_handler->name,
                                 ptr_plugin_handler->function_name);
                 }
             }
             if (!handler_found)
+            {
+                irc_display_prefix (NULL, PREFIX_PLUGIN);
                 gui_printf (NULL, _("  (none)\n"));
+            }
             
             break;
         case 1:

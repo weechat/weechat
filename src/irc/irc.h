@@ -32,6 +32,7 @@
 #define PREFIX_PART      "<--"
 #define PREFIX_QUIT      "<--"
 #define PREFIX_ERROR     "=!="
+#define PREFIX_PLUGIN    "=P="
 
 #define CHANNEL_PREFIX "#&+!"
 
