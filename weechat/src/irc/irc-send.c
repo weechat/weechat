@@ -179,6 +179,7 @@ irc_cmd_send_away (t_irc_server *server, char *arguments)
             }
         }
     }
+    gui_draw_buffer_status (gui_current_window->buffer, 1);
     return 0;
 }
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-01-23 03:05+0100\n"
+"POT-Creation-Date: 2005-01-25 21:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1096,7 +1096,7 @@ msgstr ""
 msgid "(hidden)"
 msgstr ""
 
-#: src/irc/irc-send.c:58 src/irc/irc-recv.c:3037
+#: src/irc/irc-send.c:58 src/irc/irc-recv.c:3038
 msgid "unknown"
 msgstr ""
 
@@ -1105,39 +1105,39 @@ msgstr ""
 msgid "%s: using local hostname \"%s\"\n"
 msgstr ""
 
-#: src/irc/irc-send.c:257
+#: src/irc/irc-send.c:258
 msgid "This command is not developed!\n"
 msgstr ""
 
-#: src/irc/irc-send.c:282 src/irc/irc-send.c:308 src/irc/irc-send.c:409
-#: src/irc/irc-send.c:734 src/irc/irc-send.c:813 src/irc/irc-send.c:1314
+#: src/irc/irc-send.c:283 src/irc/irc-send.c:309 src/irc/irc-send.c:410
+#: src/irc/irc-send.c:735 src/irc/irc-send.c:814 src/irc/irc-send.c:1315
 #, c-format
 msgid "%s \"%s\" command can only be executed in a channel window\n"
 msgstr ""
 
-#: src/irc/irc-send.c:519 src/irc/irc-send.c:586 src/irc/irc-send.c:861
-#: src/irc/irc-send.c:875 src/irc/irc-send.c:1208
+#: src/irc/irc-send.c:520 src/irc/irc-send.c:587 src/irc/irc-send.c:862
+#: src/irc/irc-send.c:876 src/irc/irc-send.c:1209
 #, c-format
 msgid "%s \"%s\" command can not be executed on a server window\n"
 msgstr ""
 
-#: src/irc/irc-send.c:604 src/irc/irc-send.c:629 src/irc/irc-recv.c:264
+#: src/irc/irc-send.c:605 src/irc/irc-send.c:630 src/irc/irc-recv.c:264
 #: src/irc/irc-recv.c:1079
 #, c-format
 msgid "%s nick not found for \"%s\" command\n"
 msgstr ""
 
-#: src/irc/irc-send.c:681 src/irc/irc-send.c:959 src/irc/irc-recv.c:1245
+#: src/irc/irc-send.c:682 src/irc/irc-send.c:960 src/irc/irc-recv.c:1245
 #, c-format
 msgid "%s cannot create new private window \"%s\"\n"
 msgstr ""
 
-#: src/irc/irc-send.c:712 src/irc/irc-send.c:786 src/common/command.c:1307
+#: src/irc/irc-send.c:713 src/irc/irc-send.c:787 src/common/command.c:1307
 #, c-format
 msgid "%s wrong argument count for \"%s\" command\n"
 msgstr ""
 
-#: src/irc/irc-send.c:1286
+#: src/irc/irc-send.c:1287
 #, c-format
 msgid "%s, compiled on %s %s\n"
 msgstr ""
@@ -1152,7 +1152,7 @@ msgid " has joined "
 msgstr ""
 
 #: src/irc/irc-recv.c:231 src/irc/irc-recv.c:599 src/irc/irc-recv.c:915
-#: src/irc/irc-recv.c:1089 src/irc/irc-recv.c:2511 src/irc/irc-recv.c:2578
+#: src/irc/irc-recv.c:1089 src/irc/irc-recv.c:2512 src/irc/irc-recv.c:2579
 #, c-format
 msgid "%s channel not found for \"%s\" command\n"
 msgstr ""
@@ -1326,8 +1326,8 @@ msgid "from"
 msgstr ""
 
 #: src/irc/irc-recv.c:1174 src/irc/irc-recv.c:1189 src/irc/irc-recv.c:1205
-#: src/irc/irc-recv.c:1221 src/irc/irc-recv.c:1317 src/irc/irc-recv.c:2803
-#: src/irc/irc-recv.c:2847
+#: src/irc/irc-recv.c:1221 src/irc/irc-recv.c:1317 src/irc/irc-recv.c:2804
+#: src/irc/irc-recv.c:2848
 #, c-format
 msgid "%s cannot parse \"%s\" command\n"
 msgstr ""
@@ -1359,162 +1359,162 @@ msgstr ""
 msgid " has unset topic for "
 msgstr ""
 
-#: src/irc/irc-recv.c:1643
+#: src/irc/irc-recv.c:1644
 #, c-format
 msgid " is away: %s\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:1717
+#: src/irc/irc-recv.c:1718
 msgid "Users online: "
 msgstr ""
 
-#: src/irc/irc-recv.c:2082
+#: src/irc/irc-recv.c:2083
 msgid "idle: "
 msgstr ""
 
-#: src/irc/irc-recv.c:2090
+#: src/irc/irc-recv.c:2091
 msgid "days"
 msgstr ""
 
-#: src/irc/irc-recv.c:2090
+#: src/irc/irc-recv.c:2091
 msgid "day"
 msgstr ""
 
-#: src/irc/irc-recv.c:2100
+#: src/irc/irc-recv.c:2101
 msgid "hours"
 msgstr ""
 
-#: src/irc/irc-recv.c:2100
+#: src/irc/irc-recv.c:2101
 msgid "hour"
 msgstr ""
 
-#: src/irc/irc-recv.c:2106
+#: src/irc/irc-recv.c:2107
 msgid "minutes"
 msgstr ""
 
-#: src/irc/irc-recv.c:2106
+#: src/irc/irc-recv.c:2107
 msgid "minute"
 msgstr ""
 
-#: src/irc/irc-recv.c:2112
+#: src/irc/irc-recv.c:2113
 msgid "seconds"
 msgstr ""
 
-#: src/irc/irc-recv.c:2112
+#: src/irc/irc-recv.c:2113
 msgid "second"
 msgstr ""
 
-#: src/irc/irc-recv.c:2117
+#: src/irc/irc-recv.c:2118
 msgid "signon at: "
 msgstr ""
 
-#: src/irc/irc-recv.c:2205
+#: src/irc/irc-recv.c:2206
 msgid "Channels: "
 msgstr ""
 
-#: src/irc/irc-recv.c:2457
+#: src/irc/irc-recv.c:2458
 msgid "No topic set for "
 msgstr ""
 
-#: src/irc/irc-recv.c:2499
+#: src/irc/irc-recv.c:2500
 msgid "Topic for "
 msgstr ""
 
-#: src/irc/irc-recv.c:2503
+#: src/irc/irc-recv.c:2504
 #, c-format
 msgid " is: \"%s\"\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:2521 src/irc/irc-recv.c:2605
+#: src/irc/irc-recv.c:2522 src/irc/irc-recv.c:2606
 #, c-format
 msgid "%s cannot identify channel for \"%s\" command\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:2567
+#: src/irc/irc-recv.c:2568
 msgid "Topic set by "
 msgstr ""
 
-#: src/irc/irc-recv.c:2587
+#: src/irc/irc-recv.c:2588
 #, c-format
 msgid "%s cannot identify date/time for \"%s\" command\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:2596
+#: src/irc/irc-recv.c:2597
 #, c-format
 msgid "%s cannot identify nickname for \"%s\" command\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:2726
+#: src/irc/irc-recv.c:2727
 msgid " on "
 msgstr ""
 
-#: src/irc/irc-recv.c:2836
+#: src/irc/irc-recv.c:2837
 #, c-format
 msgid "%s cannot create nick \"%s\" for channel \"%s\"\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:2891
+#: src/irc/irc-recv.c:2892
 msgid "Nicks "
 msgstr ""
 
-#: src/irc/irc-recv.c:2911
+#: src/irc/irc-recv.c:2912
 msgid "Channel "
 msgstr ""
 
-#: src/irc/irc-recv.c:2922
+#: src/irc/irc-recv.c:2923
 msgid "nicks"
 msgstr ""
 
-#: src/irc/irc-recv.c:2922
+#: src/irc/irc-recv.c:2923
 msgid "nick"
 msgstr ""
 
-#: src/irc/irc-recv.c:2930
+#: src/irc/irc-recv.c:2931
 msgid "ops"
 msgstr ""
 
-#: src/irc/irc-recv.c:2930
+#: src/irc/irc-recv.c:2931
 msgid "op"
 msgstr ""
 
-#: src/irc/irc-recv.c:2939
+#: src/irc/irc-recv.c:2940
 msgid "halfops"
 msgstr ""
 
-#: src/irc/irc-recv.c:2939
+#: src/irc/irc-recv.c:2940
 msgid "halfop"
 msgstr ""
 
-#: src/irc/irc-recv.c:2948
+#: src/irc/irc-recv.c:2949
 msgid "voices"
 msgstr ""
 
-#: src/irc/irc-recv.c:2948
+#: src/irc/irc-recv.c:2949
 msgid "voice"
 msgstr ""
 
-#: src/irc/irc-recv.c:2957
+#: src/irc/irc-recv.c:2958
 msgid "normal"
 msgstr ""
 
-#: src/irc/irc-recv.c:2991
+#: src/irc/irc-recv.c:2992
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\"\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:3003
+#: src/irc/irc-recv.c:3004
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\"\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:3015
+#: src/irc/irc-recv.c:3016
 #, c-format
 msgid ""
 "%s: all declared nicknames are already in use, closing connection with "
 "server!\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:3025
+#: src/irc/irc-recv.c:3026
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\"\n"
 msgstr ""
@@ -1645,7 +1645,7 @@ msgstr ""
 msgid "%s unable to add handler for \"%s\" message (not enough memory)\n"
 msgstr ""
 
-#: src/gui/curses/gui-input.c:705
+#: src/gui/curses/gui-input.c:706
 #, c-format
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr ""
@@ -1666,40 +1666,44 @@ msgstr ""
 msgid "Gb"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1009
+#: src/gui/curses/gui-display.c:933
+msgid "(away)"
+msgstr ""
+
+#: src/gui/curses/gui-display.c:1011
 #, c-format
 msgid "%d:[not connected] "
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1020
+#: src/gui/curses/gui-display.c:1022
 msgid "Act: "
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1064
+#: src/gui/curses/gui-display.c:1066
 #, c-format
 msgid "Lag: %.1f"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1076 src/gui/curses/gui-display.c:1079
+#: src/gui/curses/gui-display.c:1078 src/gui/curses/gui-display.c:1081
 msgid "-MORE-"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1248
+#: src/gui/curses/gui-display.c:1250
 msgid "  [A] Accept"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1249 src/gui/curses/gui-display.c:1255
-#: src/gui/curses/gui-display.c:1262
+#: src/gui/curses/gui-display.c:1251 src/gui/curses/gui-display.c:1257
+#: src/gui/curses/gui-display.c:1264
 msgid "  [C] Cancel"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1250 src/gui/curses/gui-display.c:1256
-#: src/gui/curses/gui-display.c:1263 src/gui/curses/gui-display.c:1270
-#: src/gui/curses/gui-display.c:1275
+#: src/gui/curses/gui-display.c:1252 src/gui/curses/gui-display.c:1258
+#: src/gui/curses/gui-display.c:1265 src/gui/curses/gui-display.c:1272
+#: src/gui/curses/gui-display.c:1277
 msgid "  [Q] Close DCC view"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1269
+#: src/gui/curses/gui-display.c:1271
 msgid "  [R] Remove"
 msgstr ""
 
@@ -2039,7 +2043,7 @@ msgid "%s already connected to server \"%s\"!\n"
 msgstr ""
 
 #: src/common/command.c:1042 src/common/command.c:1085
-#: src/common/command.c:1717
+#: src/common/command.c:1731
 #, c-format
 msgid "%s server \"%s\" not found\n"
 msgstr ""
@@ -2111,7 +2115,7 @@ msgstr ""
 msgid "Perl scripts unloaded\n"
 msgstr ""
 
-#: src/common/command.c:1300 src/common/command.c:1948
+#: src/common/command.c:1300 src/common/command.c:1963
 #, c-format
 msgid "%s unknown option for \"%s\" command\n"
 msgstr ""
@@ -2204,45 +2208,45 @@ msgstr ""
 msgid "(password hidden) "
 msgstr ""
 
-#: src/common/command.c:1749 src/common/command.c:1795
+#: src/common/command.c:1763 src/common/command.c:1810
 #, c-format
 msgid "%s config option \"%s\" not found\n"
 msgstr ""
 
-#: src/common/command.c:1754 src/common/command.c:1787
+#: src/common/command.c:1768 src/common/command.c:1802
 #, c-format
 msgid "%s incorrect value for option \"%s\"\n"
 msgstr ""
 
-#: src/common/command.c:1770
+#: src/common/command.c:1784
 #, c-format
 msgid "%s option \"%s\" can not be changed while WeeChat is running\n"
 msgstr ""
 
-#: src/common/command.c:1871
+#: src/common/command.c:1886
 #, c-format
 msgid "No config option found with \"%s\"\n"
 msgstr ""
 
-#: src/common/command.c:1874
+#: src/common/command.c:1889
 msgid "No config option found\n"
 msgstr ""
 
-#: src/common/command.c:1881
+#: src/common/command.c:1896
 #, c-format
 msgid "config option(s) found with \"%s\"\n"
 msgstr ""
 
-#: src/common/command.c:1884
+#: src/common/command.c:1899
 msgid "config option(s) found\n"
 msgstr ""
 
-#: src/common/command.c:1904
+#: src/common/command.c:1919
 #, c-format
 msgid "%s alias or command \"%s\" not found\n"
 msgstr ""
 
-#: src/common/command.c:1914
+#: src/common/command.c:1929
 #, c-format
 msgid "Alias \"%s\" removed\n"
 msgstr ""
