@@ -24,13 +24,14 @@
 #define __WEECHAT_H 1
 
 #include <stdio.h>
+#include <locale.h>
 #include <libintl.h>
 
 #define _(string) gettext(string)
 #define N_(string) (string)
 
 #define WEECHAT_NAME    "WeeChat"
-#define WEECHAT_VERSION "0.0.2-pre2"
+#define WEECHAT_VERSION "0.0.2-pre3"
 
 #define WEECHAT_NAME_AND_VERSION WEECHAT_NAME " " WEECHAT_VERSION
 #define WEECHAT_COPYRIGHT WEECHAT_NAME " (c) 2003 by Wee Team"
@@ -40,7 +41,7 @@
 #define WEECHAT_WARNING _(WEECHAT_NAME " Warning:")
 
 /* debug mode, 0=normal use, 1=some debug msg, 2=full debug (developers only) */
-#define DEBUG           0
+#define DEBUG           1
 
 /* log file */
 
