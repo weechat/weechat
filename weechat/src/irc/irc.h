@@ -324,7 +324,7 @@ extern int irc_cmd_send_deop (t_irc_server *, int, char **);
 extern int irc_cmd_send_devoice (t_irc_server *, int, char **);
 extern int irc_cmd_send_die (t_irc_server *, char *);
 extern int irc_cmd_send_info (t_irc_server *, char *);
-extern int irc_cmd_send_invite (t_irc_server *, char *);
+extern int irc_cmd_send_invite (t_irc_server *, int, char **);
 extern int irc_cmd_send_ison (t_irc_server *, char *);
 extern int irc_cmd_send_join (t_irc_server *, char *);
 extern int irc_cmd_send_kick (t_irc_server *, char *);
@@ -370,6 +370,7 @@ extern int irc_cmd_send_whois (t_irc_server *, char *);
 extern int irc_cmd_send_whowas (t_irc_server *, char *);
 /* IRC commands executed when received from server */
 extern int irc_cmd_recv_error (t_irc_server *, char *, char *);
+extern int irc_cmd_recv_invite (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_join (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_kick (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_mode (t_irc_server *, char *, char *);

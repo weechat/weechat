@@ -17,6 +17,7 @@ Version 0.1.1 (under dev!):
    * on server buffer, only server messages are logged
    * improved /help command output
    * plugins messages are logged with new config option (log_plugin_msg)
+   * fixed /invite command (and now invite requests are displayed)
    * fixed /buffer close command (now ok when disconnected from server)
    * fixed display bugs when many windows are opened
 

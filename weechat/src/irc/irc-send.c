@@ -409,9 +409,23 @@ irc_cmd_send_info (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_invite (t_irc_server *server, char *arguments)
+irc_cmd_send_invite (t_irc_server *server, int argc, char **argv)
 {
-    server_sendf (server, "INVITE %s\r\n", arguments);
+    if (argc == 2)
+        server_sendf (server, "INVITE %s %s\r\n", argv[0], argv[1]);
+    else
+    {
+        if (!BUFFER_IS_CHANNEL(gui_current_window->buffer))
+        {
+            irc_display_prefix (server->buffer, PREFIX_ERROR);
+            gui_printf_nolog (server->buffer,
+                              _("%s \"%s\" command can only be executed in a channel window\n"),
+                              WEECHAT_ERROR, "invite");
+            return -1;
+        }
+        server_sendf (server, "INVITE %s %s\r\n",
+                      argv[0], CHANNEL(gui_current_window->buffer)->name);
+    }
     return 0;
 }
 

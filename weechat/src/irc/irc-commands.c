@@ -67,7 +67,7 @@ t_irc_command irc_commands[] =
   { "invite", N_("invite a nick on a channel"),
     N_("nickname channel"),
     N_("nickname: nick to invite\nchannel: channel to invite"),
-    2, 2, 1, NULL, irc_cmd_send_invite, NULL },
+    1, 2, 1, irc_cmd_send_invite, NULL, irc_cmd_recv_invite },
   { "ison", N_("check if a nickname is currently on IRC"),
     N_("nickname [nickname ...]"),
     N_("nickname: nickname"),
