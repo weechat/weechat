@@ -1,10 +1,10 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2003-12-31
+ChangeLog - 2004-01-01
 
 
-Version 0.0.4 (under dev!):
+Version 0.0.4 (2004-01-01):
    * Perl plugin, with auto-load
    * when private window is created (another user is talking), WeeChat does not
      switch to this window
