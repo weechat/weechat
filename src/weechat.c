@@ -227,6 +227,10 @@ main (int argc, char *argv[])
 {
     t_irc_server *ptr_server;
     
+    setlocale (LC_ALL, "");
+    bindtextdomain (PACKAGE, "/usr/share/locale");
+    textdomain (PACKAGE);
+    
     /* initialize variables */
     wee_init_vars ();
     

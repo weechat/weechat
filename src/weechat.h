@@ -27,6 +27,7 @@
 #include <locale.h>
 #include <libintl.h>
 
+#define PACKAGE "weechat"
 #define _(string) gettext(string)
 #define N_(string) (string)
 

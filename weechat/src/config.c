@@ -935,12 +935,14 @@ config_create_default ()
         return -1;
     }
     
-    printf (_(WEECHAT_NAME ": creating default config file...\n"));
+    printf (_("%s: creating default config file...\n"), WEECHAT_NAME);
     log_printf (_("creating default config file\n"));
     
     current_time = time (NULL);
-    sprintf (line, _("#\n# " WEECHAT_NAME " configuration file, created by "
-             WEECHAT_NAME " " WEECHAT_VERSION " on %s#\n"), ctime (&current_time));
+    sprintf (line, _("#\n# %s configuration file, created by "
+             "%s v%s on %s#\n"),
+             WEECHAT_NAME, WEECHAT_NAME, WEECHAT_VERSION,
+             ctime (&current_time));
     fputs (line, file);
 
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
@@ -1070,8 +1072,10 @@ config_write (char *config_name)
     log_printf (_("saving config to disk\n"));
     
     current_time = time (NULL);
-    sprintf (line, _("#\n# " WEECHAT_NAME " configuration file, created by "
-             WEECHAT_NAME " " WEECHAT_VERSION " on %s#\n"), ctime (&current_time));
+    sprintf (line, _("#\n# %s configuration file, created by "
+             "%s v%s on %s#\n"),
+             WEECHAT_NAME, WEECHAT_NAME, WEECHAT_VERSION,
+             ctime (&current_time));
     fputs (line, file);
 
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)

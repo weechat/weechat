@@ -526,20 +526,18 @@ exec_weechat_command (t_irc_server *server, char *string)
                 if (weechat_commands[i].min_arg ==
                     weechat_commands[i].max_arg)
                     gui_printf (NULL,
-                                _("%s wrong argument count for "
-                                WEECHAT_NAME " command '%s' "
+                                _("%s wrong argument count for %s command '%s' "
                                 "(expected: %d arg%s)\n"),
-                                WEECHAT_ERROR,
+                                WEECHAT_ERROR, WEECHAT_NAME, 
                                 command + 1,
                                 weechat_commands[i].max_arg,
                                 (weechat_commands[i].max_arg >
                                  1) ? "s" : "");
                 else
                     gui_printf (NULL,
-                                _("%s wrong argument count for "
-                                WEECHAT_NAME " command '%s' "
+                                _("%s wrong argument count for %s command '%s' "
                                 "(expected: between %d and %d arg%s)\n"),
-                                WEECHAT_ERROR,
+                                WEECHAT_ERROR, WEECHAT_NAME,
                                 command + 1,
                                 weechat_commands[i].min_arg,
                                 weechat_commands[i].max_arg,
@@ -556,8 +554,8 @@ exec_weechat_command (t_irc_server *server, char *string)
                                         (ptr_args);
                 if (return_code < 0)
                     gui_printf (NULL,
-                                _("%s " WEECHAT_NAME " command \"%s\" failed\n"),
-                                WEECHAT_ERROR, command + 1);
+                                _("%s %s command \"%s\" failed\n"),
+                                WEECHAT_ERROR, WEECHAT_NAME, command + 1);
             }
             if (argv)
             {
@@ -753,8 +751,8 @@ weechat_cmd_alias (char *arguments)
                 pos++;
             if (!pos[0])
             {
-                gui_printf (NULL, _("%s missing arguments for \"alias\" command\n"),
-                            WEECHAT_ERROR);
+                gui_printf (NULL, _("%s missing arguments for \"%s\" command\n"),
+                            WEECHAT_ERROR, "alias");
                 return -1;
             }
             index_command_new (arguments);
@@ -765,8 +763,8 @@ weechat_cmd_alias (char *arguments)
         }
         else
         {
-            gui_printf (NULL, _("%s missing arguments for \"alias\" command\n"),
-                        WEECHAT_ERROR);
+            gui_printf (NULL, _("%s missing arguments for \"%s\" command\n"),
+                        WEECHAT_ERROR, "alias");
             return -1;
         }
     }
@@ -804,8 +802,8 @@ weechat_cmd_clear (int argc, char **argv)
         else
         {
             gui_printf (NULL,
-                        _("unknown parameter \"%s\" for /clear command\n"),
-                        argv[0]);
+                        _("unknown parameter \"%s\" for \"%s\" command\n"),
+                        argv[0], "clear");
             return -1;
         }
     }
@@ -907,7 +905,7 @@ weechat_cmd_help (int argc, char **argv)
     if (argc == 0)
     {
         gui_printf (NULL,
-                    _("> List of " WEECHAT_NAME " internal commands:\n"));
+                    _("> List of %s internal commands:\n"), WEECHAT_NAME);
         for (i = 0; weechat_commands[i].command_name; i++)
             gui_printf (NULL, "    %s - %s\n",
                         weechat_commands[i].command_name,
@@ -927,8 +925,8 @@ weechat_cmd_help (int argc, char **argv)
             {
                 gui_printf
                     (NULL,
-                     _("> Help on " WEECHAT_NAME " internal command '%s':\n"),
-                     weechat_commands[i].command_name);
+                     _("> Help on %s internal command '%s':\n"),
+                     WEECHAT_NAME, weechat_commands[i].command_name);
                 gui_printf (NULL,
                             _("Syntax: /%s %s\n"),
                             weechat_commands[i].command_name,
@@ -1010,12 +1008,12 @@ weechat_cmd_server (int argc, char **argv)
                 irc_display_prefix (NULL, PREFIX_INFO);
                 gui_printf_color (NULL,
                                   COLOR_WIN_CHAT,
-                                  "  Autoconnect: %s\n",
+                                  _("  Autoconnect: %s\n"),
                                   (ptr_server->autoconnect) ? _("yes") : _("no"));
                 irc_display_prefix (NULL, PREFIX_INFO);
                 gui_printf_color (NULL,
                                   COLOR_WIN_CHAT,
-                                  "  Hostname   : %s\n",
+                                  _("  Hostname   : %s\n"),
                                   ptr_server->address);
                 irc_display_prefix (NULL, PREFIX_INFO);
                 gui_printf_color (NULL,
@@ -1090,14 +1088,14 @@ weechat_cmd_server (int argc, char **argv)
             if (argc < 2)
             {
                 gui_printf (NULL,
-                            _("%s missing servername for \"/server del\" command\n"),
-                            WEECHAT_ERROR);
+                            _("%s missing servername for \"%s\" command\n"),
+                            WEECHAT_ERROR, "server del");
                 return -1;
             }
             if (argc > 2)
                 gui_printf (NULL,
-                            _("%s too much arguments for \"/server del\" command, ignoring arguments\n"),
-                            WEECHAT_WARNING);
+                            _("%s too much arguments for \"%s\" command, ignoring arguments\n"),
+                            WEECHAT_WARNING, "server del");
             
             /* look for server by name */
             server_found = NULL;
@@ -1113,8 +1111,8 @@ weechat_cmd_server (int argc, char **argv)
             if (!server_found)
             {
                 gui_printf (NULL,
-                            _("%s server \"%s\" not found for \"/server del\" command\n"),
-                            WEECHAT_ERROR, argv[1]);
+                            _("%s server \"%s\" not found for \"%s\" command\n"),
+                            WEECHAT_ERROR, argv[1], "server del");
                 return -1;
             }
             
@@ -1136,8 +1134,8 @@ weechat_cmd_server (int argc, char **argv)
         if (argc < 3)
         {
             gui_printf (NULL,
-                        _("%s missing parameters for \"/server command\"\n"),
-                        WEECHAT_ERROR);
+                        _("%s missing parameters for \"%s\" command\n"),
+                        WEECHAT_ERROR, "server");
             server_destroy (&server);
             return -1;
         }
@@ -1169,8 +1167,8 @@ weechat_cmd_server (int argc, char **argv)
                     if (i == (argc - 1))
                     {
                         gui_printf (NULL,
-                                    _("%s missing password for \"-pwd\" parameter\n"),
-                                    WEECHAT_ERROR);
+                                    _("%s missing password for \"%s\" parameter\n"),
+                                    WEECHAT_ERROR, "-pwd");
                         server_destroy (&server);
                         return -1;
                     }
@@ -1181,8 +1179,8 @@ weechat_cmd_server (int argc, char **argv)
                     if (i >= (argc - 3))
                     {
                         gui_printf (NULL,
-                                    _("%s missing nick(s) for \"-nicks\" parameter\n"),
-                                    WEECHAT_ERROR);
+                                    _("%s missing nick(s) for \"%s\" parameter\n"),
+                                    WEECHAT_ERROR, "-nicks");
                         server_destroy (&server);
                         return -1;
                     }
@@ -1195,8 +1193,8 @@ weechat_cmd_server (int argc, char **argv)
                     if (i == (argc - 1))
                     {
                         gui_printf (NULL,
-                                    _("%s missing password for \"-username\" parameter\n"),
-                                    WEECHAT_ERROR);
+                                    _("%s missing password for \"%s\" parameter\n"),
+                                    WEECHAT_ERROR, "-username");
                         server_destroy (&server);
                         return -1;
                     }
@@ -1207,8 +1205,8 @@ weechat_cmd_server (int argc, char **argv)
                     if (i == (argc - 1))
                     {
                         gui_printf (NULL,
-                                    _("%s missing password for \"-realname\" parameter\n"),
-                                    WEECHAT_ERROR);
+                                    _("%s missing password for \"%s\" parameter\n"),
+                                    WEECHAT_ERROR, "-realname");
                         server_destroy (&server);
                         return -1;
                     }
@@ -1219,8 +1217,8 @@ weechat_cmd_server (int argc, char **argv)
                     if (i == (argc - 1))
                     {
                         gui_printf (NULL,
-                                    _("%s missing command for \"-command\" parameter\n"),
-                                    WEECHAT_ERROR);
+                                    _("%s missing command for \"%s\" parameter\n"),
+                                    WEECHAT_ERROR, "-command");
                         server_destroy (&server);
                         return -1;
                     }
@@ -1231,8 +1229,8 @@ weechat_cmd_server (int argc, char **argv)
                     if (i == (argc - 1))
                     {
                         gui_printf (NULL,
-                                    _("%s missing password for \"-autojoin\" parameter\n"),
-                                    WEECHAT_ERROR);
+                                    _("%s missing password for \"%s\" parameter\n"),
+                                    WEECHAT_ERROR, "-autojoin");
                         server_destroy (&server);
                         return -1;
                     }
@@ -1356,7 +1354,7 @@ weechat_cmd_set (int argc, char **argv)
             }
         }
     }
-    gui_printf (NULL, _("(TODO) \"/set\" command not developed!\n"));
+    gui_printf (NULL, "(TODO) \"/set\" command not developed!\n");
     return 0;
 }
 

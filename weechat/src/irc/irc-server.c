@@ -95,7 +95,7 @@ server_alloc ()
     /* alloc memory for new server */
     if ((new_server = (t_irc_server *) malloc (sizeof (t_irc_server))) == NULL)
     {
-        fprintf (stderr, _("%s cannot allocate new server"), WEECHAT_ERROR);
+        fprintf (stderr, _("%s cannot allocate new server\n"), WEECHAT_ERROR);
         return NULL;
     }
 
@@ -479,9 +479,9 @@ server_connect (t_irc_server *server)
     int server_pipe[2];
 
     gui_printf (server->window,
-                _(WEECHAT_NAME ": connecting to %s:%d...\n"),
-                server->address, server->port);
-    log_printf ("connecting to server %s:%d...\n",
+                _("%s: connecting to %s:%d...\n"),
+                WEECHAT_NAME, server->address, server->port);
+    log_printf (_("connecting to server %s:%d...\n"),
                 server->address, server->port);
     server->is_connected = 0;
 
@@ -503,7 +503,7 @@ server_connect (t_irc_server *server)
         (server->sock4, SOL_SOCKET, SO_REUSEADDR, (char *) &set,
          sizeof (set)) == -1)
         gui_printf (server->window,
-                    _("%s cannot set socket option 'SO_REUSEADDR'\n"),
+                    _("%s cannot set socket option \"SO_REUSEADDR\"\n"),
                     WEECHAT_ERROR);
     set = 1;
     if (setsockopt
@@ -551,7 +551,7 @@ server_connect (t_irc_server *server)
 
     /* connection to server */
     gui_printf (server->window,
-                _(WEECHAT_NAME ": server IP is: %s\n"), ip_address);
+                _("%s: server IP is: %s\n"), WEECHAT_NAME, ip_address);
 
     error = connect (server->sock4, (struct sockaddr *) &addr, sizeof (addr));
     if (error != 0)
@@ -585,7 +585,7 @@ server_disconnect (t_irc_server *server)
              ptr_channel = ptr_channel->next_channel)
         {
             irc_display_prefix (ptr_channel->window, PREFIX_INFO);
-            gui_printf (ptr_channel->window, "Disconnected from server!\n");
+            gui_printf (ptr_channel->window, _("Disconnected from server!\n"));
         }
         
         /* close communication with server */

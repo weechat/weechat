@@ -752,6 +752,7 @@ void
 gui_draw_window_status (t_gui_window *window)
 {
     t_gui_window *ptr_win;
+    char format_more[32];
     
     /* TODO: manage splitted windows! */
     if (window != gui_current_window)
@@ -853,9 +854,12 @@ gui_draw_window_status (t_gui_window *window)
     /* display "*MORE*" if last line is not displayed */
     gui_window_set_color (window->win_status, COLOR_WIN_STATUS_MORE);
     if (window->sub_lines > 0)
-        mvwprintw (window->win_status, 0, COLS - 7, "-MORE-");
+        mvwprintw (window->win_status, 0, COLS - 7, _("-MORE-"));
     else
-        mvwprintw (window->win_status, 0, COLS - 7, "      ");
+    {
+        sprintf (format_more, "%%-%ds", strlen (_("-MORE")));
+        mvwprintw (window->win_status, 0, COLS - 7, format_more, " ");
+    }
     
     wrefresh (window->win_status);
     refresh ();
@@ -1639,7 +1643,7 @@ gui_new_message (t_gui_window *window)
     }
     else
     {
-        log_printf ("not enough memory!\n");
+        log_printf (_("not enough memory!\n"));
         return NULL;
     }
     return new_message;
