@@ -73,6 +73,7 @@ int cfg_look_nickmode;
 int cfg_look_nickmode_empty;
 char *cfg_look_no_nickname;
 char *cfg_look_completor;
+int cfg_look_infobar;
 
 t_config_option weechat_options_look[] =
 { { "look_set_title", N_("set title for terminal window (curses GUI) with name & version"),
@@ -137,6 +138,10 @@ t_config_option weechat_options_look[] =
     N_("the string inserted after nick completion"),
     OPTION_TYPE_STRING, 0, 0, 0,
     ":", NULL, NULL, &cfg_look_completor, NULL },
+  { "look_infobar", N_("enable info bar"),
+    N_("enable info bar"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
+    NULL, NULL, &cfg_look_infobar, NULL, NULL },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
@@ -161,6 +166,8 @@ int cfg_col_status_data_msg;
 int cfg_col_status_data_other;
 int cfg_col_status_more;
 int cfg_col_status_bg;
+int cfg_col_infobar;
+int cfg_col_infobar_bg;
 int cfg_col_input;
 int cfg_col_input_channel;
 int cfg_col_input_nick;
@@ -256,6 +263,16 @@ t_config_option weechat_options_colors[] =
     N_("background for status window"),
     OPTION_TYPE_COLOR, 0, 0, 0,
     "blue", NULL, &cfg_col_status_bg, NULL, NULL },
+
+  /* infobar window */
+  { "col_infobar", N_("color for info bar text"),
+    N_("color for info bar text"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "gray", NULL, &cfg_col_infobar, NULL, NULL },
+  { "col_infobar_bg", N_("background for info bar window"),
+    N_("background for info bar window"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "blue", NULL, &cfg_col_infobar_bg, NULL, NULL },
   
   /* input window */
   { "col_input", N_("color for input text"),

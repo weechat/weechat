@@ -57,10 +57,11 @@ gui_read_keyb ()
     {
         switch (key)
         {
-            /* resize event: do nothing */
+            /* resize event */
             case KEY_RESIZE:
                 gui_redraw_window (gui_current_window);
                 break;
+            /* previous window */
             case KEY_F(6):
                 gui_switch_to_previous_window ();
                 break;
@@ -352,10 +353,22 @@ gui_main_loop ()
     fd_set read_fd;
     static struct timeval timeout;
     t_irc_server *ptr_server;
+    int old_min;
+    time_t new_time;
+    struct tm *local_time;
 
     quit_weechat = 0;
+    old_min = 0;
     while (!quit_weechat)
     {
+        new_time = time (NULL);
+        local_time = localtime (&new_time);
+        if (local_time->tm_min != old_min)
+        {
+            old_min = local_time->tm_min;
+            gui_redraw_window_infobar (gui_current_window);
+        }
+        
         timeout.tv_sec = 0;
         timeout.tv_usec = 10000;
         FD_ZERO (&read_fd);

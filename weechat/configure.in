@@ -19,10 +19,10 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.56)
-AC_INIT(WeeChat, 0.0.5-pre1, flashcode@flashtux.org)
+AC_INIT(WeeChat, 0.0.5-pre2, flashcode@flashtux.org)
 AC_CONFIG_SRCDIR([src/common/weechat.c])
 AM_CONFIG_HEADER(config.h)
-AM_INIT_AUTOMAKE([weechat], [0.0.5-pre1])
+AM_INIT_AUTOMAKE([weechat], [0.0.5-pre2])
 
 # Checks for programs.
 AC_PROG_CC

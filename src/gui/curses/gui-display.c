@@ -192,21 +192,37 @@ gui_calculate_pos_size (t_gui_window *window)
                 window->win_chat_x = max_length + 2;
                 window->win_chat_y = 1;
                 window->win_chat_width = COLS - max_length - 2;
-                window->win_chat_height = LINES - 3;
                 window->win_nick_x = 0;
                 window->win_nick_y = 1;
                 window->win_nick_width = max_length + 2;
-                window->win_nick_height = LINES - 3;
+                if (cfg_look_infobar)
+                {
+                    window->win_chat_height = LINES - 4;    
+                    window->win_nick_height = LINES - 4;
+                }
+                else
+                {
+                    window->win_chat_height = LINES - 3;    
+                    window->win_nick_height = LINES - 3;
+                }
                 break;
             case CFG_LOOK_NICKLIST_RIGHT:
                 window->win_chat_x = 0;
                 window->win_chat_y = 1;
                 window->win_chat_width = COLS - max_length - 2;
-                window->win_chat_height = LINES - 3;
                 window->win_nick_x = COLS - max_length - 2;
                 window->win_nick_y = 1;
                 window->win_nick_width = max_length + 2;
-                window->win_nick_height = LINES - 3;
+                if (cfg_look_infobar)
+                {
+                    window->win_chat_height = LINES - 4;
+                    window->win_nick_height = LINES - 4;
+                }
+                else
+                {
+                    window->win_chat_height = LINES - 3;
+                    window->win_nick_height = LINES - 3;
+                }
                 break;
             case CFG_LOOK_NICKLIST_TOP:
                 nick_count (CHANNEL(window), &num_nicks, &num_op, &num_halfop,
@@ -218,7 +234,10 @@ gui_calculate_pos_size (t_gui_window *window)
                 window->win_chat_x = 0;
                 window->win_chat_y = 1 + (lines + 1);
                 window->win_chat_width = COLS;
-                window->win_chat_height = LINES - 3 - (lines + 1);
+                if (cfg_look_infobar)
+                    window->win_chat_height = LINES - 3 - (lines + 1) - 1;
+                else
+                    window->win_chat_height = LINES - 3 - (lines + 1);
                 window->win_nick_x = 0;
                 window->win_nick_y = 1;
                 window->win_nick_width = COLS;
@@ -234,9 +253,15 @@ gui_calculate_pos_size (t_gui_window *window)
                 window->win_chat_x = 0;
                 window->win_chat_y = 1;
                 window->win_chat_width = COLS;
-                window->win_chat_height = LINES - 3 - (lines + 1);
+                if (cfg_look_infobar)
+                    window->win_chat_height = LINES - 3 - (lines + 1) - 1;
+                else
+                    window->win_chat_height = LINES - 3 - (lines + 1);
                 window->win_nick_x = 0;
-                window->win_nick_y = LINES - 2 - (lines + 1);
+                if (cfg_look_infobar)
+                    window->win_nick_y = LINES - 2 - (lines + 1) - 1;
+                else
+                    window->win_nick_y = LINES - 2 - (lines + 1);
                 window->win_nick_width = COLS;
                 window->win_nick_height = lines + 1;
                 break;
@@ -250,7 +275,10 @@ gui_calculate_pos_size (t_gui_window *window)
         window->win_chat_x = 0;
         window->win_chat_y = 1;
         window->win_chat_width = COLS;
-        window->win_chat_height = LINES - 3;
+        if (cfg_look_infobar)
+            window->win_chat_height = LINES - 4;
+        else
+            window->win_chat_height = LINES - 3;
         window->win_chat_cursor_x = 0;
         window->win_chat_cursor_y = 0;
         window->win_nick_x = -1;
@@ -269,7 +297,6 @@ gui_curses_window_clear (WINDOW *window)
 {
     werase (window);
     wmove (window, 0, 0);
-    //wrefresh (window);
 }
 
 /*
@@ -775,7 +802,6 @@ gui_draw_window_status (t_gui_window *window)
         wborder (window->win_status, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
         wrefresh (window->win_status);
     }
-    //refresh ();
     wmove (window->win_status, 0, 0);
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
@@ -892,6 +918,59 @@ gui_redraw_window_status (t_gui_window *window)
 }
 
 /*
+ * gui_draw_window_infobar: draw infobar window
+ */
+
+void
+gui_draw_window_infobar (t_gui_window *window)
+{
+    t_gui_window *ptr_win;
+    char format_more[32];
+    time_t time_seconds;
+    struct tm *local_time;
+    char text[256];
+    
+    /* TODO: manage splitted windows! */
+    if (window != gui_current_window)
+        return;
+    
+    if (has_colors ())
+    {
+        gui_window_set_color (window->win_infobar, COLOR_WIN_INFOBAR);
+        wborder (window->win_infobar, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
+        wrefresh (window->win_infobar);
+    }
+    wmove (window->win_infobar, 0, 0);
+    gui_window_set_color (window->win_infobar, COLOR_WIN_INFOBAR);
+    
+    time_seconds = time (NULL);
+    local_time = localtime (&time_seconds);
+    if (strncmp (var_LANG, "fr", 2) == 0)
+        strftime (text, 255, "%A %d %B %G - %H:%M", local_time);
+    else
+        strftime (text, 255, "%B, %A %d %G - %H:%M", local_time);
+    wprintw (window->win_infobar, "%s", text);
+    
+    wrefresh (window->win_infobar);
+    refresh ();
+}
+
+/*
+ * gui_redraw_window_infobar: redraw infobar window
+ */
+
+void
+gui_redraw_window_infobar (t_gui_window *window)
+{
+    /* TODO: manage splitted windows! */
+    if (window != gui_current_window)
+        return;
+    
+    gui_curses_window_clear (window->win_infobar);
+    gui_draw_window_infobar (window);
+}
+
+/*
  * gui_get_input_width: return input width (max # chars displayed)
  */
 
@@ -931,7 +1010,6 @@ gui_draw_window_input (t_gui_window *window)
         wborder (window->win_input, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
         wrefresh (window->win_input);
     }
-    //refresh ();
     
     if (window->input_buffer_size == 0)
         window->input_buffer[0] = '\0';
@@ -1038,6 +1116,8 @@ gui_redraw_window (t_gui_window *window)
     if (window->win_nick)
         gui_redraw_window_nick (window);
     gui_redraw_window_status (window);
+    if (cfg_look_infobar)
+        gui_redraw_window_infobar (window);
     gui_redraw_window_input (window);
 }
 
@@ -1062,11 +1142,13 @@ gui_switch_to_window (t_gui_window *window)
             window->win_chat = ptr_win->win_chat;
             window->win_nick = ptr_win->win_nick;
             window->win_status = ptr_win->win_status;
+            window->win_infobar = ptr_win->win_infobar;
             window->win_input = ptr_win->win_input;
             ptr_win->win_title = NULL;
             ptr_win->win_chat = NULL;
             ptr_win->win_nick = NULL;
             ptr_win->win_status = NULL;
+            ptr_win->win_infobar = NULL;
             ptr_win->win_input = NULL;
             ptr_win->is_displayed = 0;
             break;
@@ -1091,7 +1173,13 @@ gui_switch_to_window (t_gui_window *window)
                                        window->win_nick_x);
         else
             window->win_nick = NULL;
-        window->win_status = newwin (1, COLS, LINES - 2, 0);
+        if (cfg_look_infobar)
+        {
+            window->win_infobar = newwin (1, COLS, LINES - 2, 0);
+            window->win_status = newwin (1, COLS, LINES - 3, 0);
+        }
+        else
+            window->win_status = newwin (1, COLS, LINES - 2, 0);
         window->win_input = newwin (1, COLS, LINES - 1, 0);
     }
     else
@@ -1232,12 +1320,15 @@ gui_curses_resize_handler ()
                 delwin (ptr_win->win_nick);
             if (ptr_win->win_status)
                 delwin (ptr_win->win_status);
+            if (ptr_win->win_infobar)
+                delwin (ptr_win->win_infobar);
             if (ptr_win->win_input)
                 delwin (ptr_win->win_input);
             ptr_win->win_title = NULL;
             ptr_win->win_chat = NULL;
             ptr_win->win_nick = NULL;
             ptr_win->win_status = NULL;
+            ptr_win->win_infobar = NULL;
             ptr_win->win_input = NULL;
             gui_switch_to_window (ptr_win);
         }
@@ -1255,6 +1346,7 @@ gui_window_init_subwindows (t_gui_window *window)
     window->win_chat = NULL;
     window->win_nick = NULL;
     window->win_status = NULL;
+    window->win_infobar = NULL;
     window->win_input = NULL;
 }
 
@@ -1316,6 +1408,8 @@ gui_init_colors ()
             cfg_col_status_data_other & A_CHARTEXT, cfg_col_status_bg);
         init_pair (COLOR_WIN_STATUS_MORE,
             cfg_col_status_more & A_CHARTEXT, cfg_col_status_bg);
+        init_pair (COLOR_WIN_INFOBAR,
+            cfg_col_infobar & A_CHARTEXT, cfg_col_infobar_bg);
         init_pair (COLOR_WIN_INPUT,
             cfg_col_input & A_CHARTEXT, cfg_col_input_bg);
         init_pair (COLOR_WIN_INPUT_CHANNEL,
@@ -1362,6 +1456,7 @@ gui_init_colors ()
         color_attr[COLOR_WIN_STATUS_DATA_MSG - 1] = cfg_col_status_data_msg & A_BOLD;
         color_attr[COLOR_WIN_STATUS_DATA_OTHER - 1] = cfg_col_status_data_other & A_BOLD;
         color_attr[COLOR_WIN_STATUS_MORE - 1] = cfg_col_status_more & A_BOLD;
+        color_attr[COLOR_WIN_INFOBAR - 1] = cfg_col_infobar & A_BOLD;
         color_attr[COLOR_WIN_INPUT - 1] = cfg_col_input & A_BOLD;
         color_attr[COLOR_WIN_INPUT_CHANNEL - 1] = cfg_col_input_channel & A_BOLD;
         color_attr[COLOR_WIN_INPUT_NICK - 1] = cfg_col_input_nick & A_BOLD;
@@ -1426,6 +1521,8 @@ gui_end ()
             delwin (ptr_win->win_nick);
         if (ptr_win->win_status)
             delwin (ptr_win->win_status);
+        if (ptr_win->win_infobar)
+            delwin (ptr_win->win_infobar);
         if (ptr_win->win_input)
             delwin (ptr_win->win_input);
         /* TODO: free input buffer, lines, messages, completion */

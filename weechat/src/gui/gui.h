@@ -26,7 +26,7 @@
 
 #define INPUT_BUFFER_BLOCK_SIZE 256
 
-#define NUM_COLORS                  36
+#define NUM_COLORS                  37
 #define COLOR_WIN_TITLE             1
 #define COLOR_WIN_CHAT              2
 #define COLOR_WIN_CHAT_TIME         3
@@ -43,18 +43,19 @@
 #define COLOR_WIN_STATUS_DATA_MSG   14
 #define COLOR_WIN_STATUS_DATA_OTHER 15
 #define COLOR_WIN_STATUS_MORE       16
-#define COLOR_WIN_INPUT             17
-#define COLOR_WIN_INPUT_CHANNEL     18
-#define COLOR_WIN_INPUT_NICK        19
-#define COLOR_WIN_NICK              20
-#define COLOR_WIN_NICK_OP           21
-#define COLOR_WIN_NICK_HALFOP       22
-#define COLOR_WIN_NICK_VOICE        23
-#define COLOR_WIN_NICK_SEP          24
-#define COLOR_WIN_NICK_SELF         25
-#define COLOR_WIN_NICK_PRIVATE      26
-#define COLOR_WIN_NICK_FIRST        27
-#define COLOR_WIN_NICK_LAST         36
+#define COLOR_WIN_INFOBAR           17
+#define COLOR_WIN_INPUT             18
+#define COLOR_WIN_INPUT_CHANNEL     19
+#define COLOR_WIN_INPUT_NICK        20
+#define COLOR_WIN_NICK              21
+#define COLOR_WIN_NICK_OP           22
+#define COLOR_WIN_NICK_HALFOP       23
+#define COLOR_WIN_NICK_VOICE        24
+#define COLOR_WIN_NICK_SEP          25
+#define COLOR_WIN_NICK_SELF         26
+#define COLOR_WIN_NICK_PRIVATE      27
+#define COLOR_WIN_NICK_FIRST        28
+#define COLOR_WIN_NICK_LAST         37
 #define COLOR_WIN_NICK_NUMBER       (COLOR_WIN_NICK_LAST - COLOR_WIN_NICK_FIRST + 1)
 
 #define SERVER(window)  ((t_irc_server *)(window->server))
@@ -107,6 +108,17 @@ struct t_gui_color
     int color;
 };
 
+typedef struct t_gui_infobar t_gui_infobar;
+
+struct t_gui_infobar
+{
+    char *text;                     /* infobar text                         */
+    int time_displayed;             /* delay (ms) before erasing this text  */
+                                    /* if 0, text is never erased (except   */
+                                    /* by user action to erase it)          */
+    t_gui_infobar *next_infobar;    /* next message for infobar             */
+};
+
 typedef struct t_gui_window t_gui_window;
 
 struct t_gui_window
@@ -138,6 +150,7 @@ struct t_gui_window
     void *win_chat;                 /* chat window (exemple: channel)       */
     void *win_nick;                 /* nick window                          */
     void *win_status;               /* status window                        */
+    void *win_infobar;              /* info bar window                      */
     void *win_input;                /* input window                         */
     
     /* windows for Curses GUI */
@@ -157,6 +170,10 @@ struct t_gui_window
     int sub_lines;                  /* if > 0 then do not display until end */
     int line_complete;              /* current line complete ? (\n ending)  */
     int unread_data;                /* highlight windows with unread data   */
+    
+    /* infobar content */
+    t_gui_infobar *infobar;         /* infobar content (stack of messages)  */
+    int infobar_length;             /* length of infobar (width of win + 1) */
     
     /* inupt buffer */
     char *input_buffer;             /* input buffer                         */
@@ -211,6 +228,8 @@ extern void gui_draw_window_nick (t_gui_window *);
 extern void gui_redraw_window_nick (t_gui_window *);
 extern void gui_draw_window_status (t_gui_window *);
 extern void gui_redraw_window_status (t_gui_window *);
+extern void gui_draw_window_infobar (t_gui_window *);
+extern void gui_redraw_window_infobar (t_gui_window *);
 extern void gui_draw_window_input (t_gui_window *);
 extern void gui_redraw_window_input (t_gui_window *);
 extern void gui_redraw_window (t_gui_window *);

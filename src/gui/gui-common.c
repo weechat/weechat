@@ -96,6 +96,10 @@ gui_window_new (void *server, void *channel, int switch_to_window
         new_window->line_complete = 1;
         new_window->unread_data = 0;
         
+        /* init infobar */
+        new_window->infobar = NULL;
+        new_window->infobar_length = new_window->win_width + 1;
+        
         /* init input buffer */
         new_window->input_buffer_alloc = INPUT_BUFFER_BLOCK_SIZE;
         new_window->input_buffer = (char *) malloc (INPUT_BUFFER_BLOCK_SIZE);

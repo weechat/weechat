@@ -88,6 +88,7 @@ extern int cfg_look_nickmode;
 extern int cfg_look_nickmode_empty;
 extern char *cfg_look_no_nickname;
 extern char *cfg_look_completor;
+extern int cfg_look_infobar;
 
 extern int cfg_col_title;
 extern int cfg_col_title_bg;
@@ -108,6 +109,8 @@ extern int cfg_col_status_data_msg;
 extern int cfg_col_status_data_other;
 extern int cfg_col_status_more;
 extern int cfg_col_status_bg;
+extern int cfg_col_infobar;
+extern int cfg_col_infobar_bg;
 extern int cfg_col_input;
 extern int cfg_col_input_channel;
 extern int cfg_col_input_nick;

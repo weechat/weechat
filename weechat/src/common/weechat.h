@@ -94,6 +94,7 @@
 
 /* global variables and functions */
 
+extern char *var_LANG;
 extern int quit_weechat;
 extern char *weechat_home;
 

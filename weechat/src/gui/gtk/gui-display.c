@@ -350,6 +350,35 @@ gui_redraw_window_status (t_gui_window *window)
 }
 
 /*
+ * gui_draw_window_infobar: draw infobar window
+ */
+
+void
+gui_draw_window_infobar (t_gui_window *window)
+{
+    /* TODO: manage splitted windows! */
+    if (window != gui_current_window)
+        return;
+    
+    /* TODO: draw infobar window! */
+}
+
+/*
+ * gui_redraw_window_infobar: redraw infobar window
+ */
+
+void
+gui_redraw_window_infobar (t_gui_window *window)
+{
+    /* TODO: manage splitted windows! */
+    if (window != gui_current_window)
+        return;
+    
+    /* TODO: first delete window content */
+    gui_draw_window_infobar (window);
+}
+
+/*
  * gui_draw_window_input: draw input window
  */
 
