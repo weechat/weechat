@@ -15,3 +15,4 @@ WeeChat known bugs, 2003-09-27
   warning)
 - too much opened channel => display bug
 - when kicked, channel is not prefixed by '(' and sufixed by ')'
+- when function key (non used by WeeChat) is pressed, prompt is deleted

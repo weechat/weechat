@@ -4,6 +4,10 @@ WeeChat - Wee Enhanced Environment for Chat
 ChangeLog - 2003-09-27
 
 * 2003-09-27:
+  - fixed crash when sending command which can not be sent
+  - ctcp version returns more info (about OS)
+
+* 2003-09-27:
   - WeeChat 0.0.1 released!
 
 * 2003-09-26:
