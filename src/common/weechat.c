@@ -231,7 +231,7 @@ main (int argc, char *argv[])
     t_irc_server *ptr_server;
     
     setlocale (LC_ALL, "");
-    bindtextdomain (PACKAGE, "/usr/share/locale");
+    bindtextdomain (PACKAGE, LOCALEDIR);
     textdomain (PACKAGE);
     
     /* pre-initiliaze interface */

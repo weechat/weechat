@@ -15,6 +15,8 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
+INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\"
+
 noinst_LIBRARIES = lib_weechat_main.a
 
 lib_weechat_main_a_SOURCES = weechat.c \
