@@ -84,8 +84,8 @@ command.o: command.c weechat.h command.h irc/irc.h gui/gui.h completion.h \
   history.h config.h
 completion.o: completion.c weechat.h completion.h irc/irc.h gui/gui.h \
   history.h command.h
-config.o: config.c weechat.h config.h irc/irc.h gui/gui.h completion.h \
-  history.h
+config.o: config.c weechat.h config.h command.h irc/irc.h gui/gui.h \
+  completion.h history.h
 history.o: history.c weechat.h history.h gui/gui.h completion.h
 weechat.o: weechat.c weechat.h config.h command.h irc/irc.h gui/gui.h \
   completion.h history.h
