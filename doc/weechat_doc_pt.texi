@@ -6,7 +6,7 @@
 
 @c WeeChat documentation (vers@~ao partuguesa)
 @c
-@c Copyright (c) 2003 by FlashCode <flashcode@flashtux.org>
+@c Copyright (c) 2004 by FlashCode <flashcode@flashtux.org>
 @c
 @c Permission is granted to copy, distribute and/or modify this document
 @c under the terms of the GNU Free Documentation License, Version 1.2
@@ -28,7 +28,7 @@
 
 @title WeeChat - Guia do Utilizador
 @subtitle Cliente de IRC rapido, leve e extencivel
-@subtitle Documenta@,{c}@~ao do WeeChat v0.0.3 - 23 de Novembro de 2003
+@subtitle Documenta@,{c}@~ao do WeeChat v0.0.4 - 03 de Janeiro de 2004
 
 @image{weechat_image}
 
@@ -41,7 +41,7 @@ Este manual documenta o cliente de IRC WeeChat, ele faz parte do WeeChat.@*
 A ultima versão deste documento pode ser descarregada de :@*
 @uref{http://weechat.flashtux.org/doc.php}@*
 @*
-Copyright @copyright{} 2003 FlashCode
+Copyright @copyright{} 2004 FlashCode
 <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>@*
 @*
 Este documento pode ser utilizado sobre os termos da Licen@,{c}a P@'ublica geral GNU (GNU General Public
@@ -218,7 +218,7 @@ Mostrar a vers@~ao do WeeChat@*
 @subsection Invocar o WeeChat
 
 Escreve simplesmente este comando para invoceres o WeeChat :@*
-@kbd{weechat-curses}@*
+@kbd{weechat-curses} (para a interface em Curses)@*
 ou @kbd{weechat-gtk} (para a interface em Gtk)@*
 ou @kbd{weechat-qt} (para a interface em Qt)@*
 
@@ -477,7 +477,7 @@ Para mais detalhes, v@^e tamb@'em a p@'agina de suporte do WeeChat :@*
 
 Este manual documenta o cliente de IRC WeeChat, Ele faz parte do WeeChat.@*
 
-Copyright @copyright{} 2003 FlashCode
+Copyright @copyright{} 2004 FlashCode
 <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>@*
 Tradu@,{c}@~ao portuguesa de Jo@~ao Jer@'onimo <@email{j_j_b_o@@sapo.pt, j_j_b_o AT sapo.pt}>@*
 @*

@@ -6,7 +6,7 @@
 
 @c WeeChat documentation (english version)
 @c
-@c Copyright (c) 2003 by FlashCode <flashcode@flashtux.org>
+@c Copyright (c) 2004 by FlashCode <flashcode@flashtux.org>
 @c
 @c Permission is granted to copy, distribute and/or modify this document
 @c under the terms of the GNU Free Documentation License, Version 1.2
@@ -28,7 +28,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.0.4 - November, 23 2003
+@subtitle Documentation for WeeChat v0.0.4 - January, 03 2004
 
 @image{weechat_image}
 
@@ -41,7 +41,7 @@ This manual documents WeeChat IRC client, it is part of WeeChat.@*
 Latest version of this document can be found on this page:@*
 @uref{http://weechat.flashtux.org/doc.php?lang=en}@*
 @*
-Copyright @copyright{} 2003 FlashCode
+Copyright @copyright{} 2004 FlashCode
 <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>@*
 @*
 This document may be used under the terms the GNU General Public License
@@ -220,7 +220,7 @@ Display WeeChat version@*
 @subsection Run WeeChat
 
 Just issue this command to run WeeChat:@*
-@kbd{weechat}@*
+@kbd{weechat-curses} (for Curses front-end)@*
 or @kbd{weechat-gtk} (for Gtk front-end)@*
 or @kbd{weechat-qt} (for Qt front-end)@*
 
@@ -486,7 +486,7 @@ Look for WeeChat support page for detail:@*
 
 This manual documents WeeChat IRC client, it is part of WeeChat.@*
 
-Copyright @copyright{} 2003 FlashCode
+Copyright @copyright{} 2004 FlashCode
 <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>@*
 @*
 This document may be used under the terms the GNU General Public License
