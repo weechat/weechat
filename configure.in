@@ -108,10 +108,14 @@ fi
 
 AC_SUBST(PLUGINS_LIBS)
 
+CFLAGS=`echo $CFLAGS | sed s/-g//g`
+if test "x$CFLAGS" = "x" ; then
+    CFLAGS="-O2"
+fi
 if test "x$debug" = "x1" || test "x$debug" = "x2" ; then
-    CFLAGS="-Wall -W -pipe -O2 -g"
+    CFLAGS="-Wall -W $CFLAGS -pipe -g"
 else
-    CFLAGS="-Wall -W -pipe -O2"
+    CFLAGS="-Wall -W $CFLAGS -pipe"
 fi
 
 if test "x$debug" = "x2" ; then
