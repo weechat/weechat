@@ -199,9 +199,11 @@ completion_build_list (t_completion *completion, void *channel)
             {
                 for (j = 0; weechat_options[i][j].option_name; j++)
                 {
+                    snprintf (option_name, sizeof (option_name), "%s =",
+                              weechat_options[i][j].option_name);
                     weelist_add (&completion->completion_list,
                                  &completion->last_completion,
-                                 weechat_options[i][j].option_name);
+                                 option_name);
                 }
             }
         }
@@ -210,7 +212,7 @@ completion_build_list (t_completion *completion, void *channel)
         {
             for (i = 0; weechat_options[CONFIG_SECTION_SERVER][i].option_name; i++)
             {
-                snprintf (option_name, sizeof (option_name), "%s.%s",
+                snprintf (option_name, sizeof (option_name), "%s.%s =",
                           ptr_server->name, 
                           weechat_options[CONFIG_SECTION_SERVER][i].option_name);
                 weelist_add (&completion->completion_list,

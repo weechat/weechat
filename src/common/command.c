@@ -1698,7 +1698,21 @@ weechat_cmd_set (char *arguments)
         if (value)
         {
             value[0] = '\0';
+            
+            /* remove spaces before '=' */
+            pos = value - 1;
+            while ((pos > option) && (pos[0] == ' '))
+            {
+                pos[0] = '\0';
+                pos--;
+            }
+            
+            /* skip spaces after '=' */
             value++;
+            while (value[0] && (value[0] == ' '))
+            {
+                value++;
+            }
         }
     }
     
@@ -1775,6 +1789,7 @@ weechat_cmd_set (char *arguments)
                     if (config_option_set_value (ptr_option, value) == 0)
                     {
                         (void) (ptr_option->handler_change());
+                        irc_display_prefix (NULL, PREFIX_INFO);
                         gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "[");
                         gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
                                           "%s", config_get_section (ptr_option));
