@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.1.1-cvs - February, 22 2005
+@subtitle Documentation for WeeChat v0.1.1-cvs - March, 10 2005
 
 @image{weechat_image}
 
@@ -46,7 +46,7 @@
 This manual documents WeeChat IRC client, it is part of WeeChat.@*
 @*
 Latest version of this document can be found on this page:@*
-@uref{http://weechat.flashtux.org/doc.php?lang=en}@*
+@uref{http://weechat.flashtux.org/doc.php}@*
 @*
 Copyright @copyright{} 2005 FlashCode
 <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>@*
@@ -244,9 +244,10 @@ set parameters with @kbd{/set} command in WeeChat - @xref{WeeChat commands}.
 @node Config file, Key bindings, Run WeeChat, Usage
 @section Config file
 
-Here is a list of all options for config file:@*
+List of options for config file:@*
 
 @table @kbd
+
 @item look_set_title
 Set title for window (terminal for Curses GUI) with name & version@*
 Type: boolean (values: 'on' or 'off'), default value: 'on'@*
@@ -261,10 +262,13 @@ WeeChat slogan (if empty, slogan is not used)@*
 Type: string (any string), default value: 'the geekest IRC client!'@*
 @item look_charset_decode
 Charset for decoding messages from server, examples: UTF-8, ISO-8859-1 (if empty, messages are not converted)@*
-Type: string (any string), default value: ''@*
+Type: string (any string), default value: 'UTF-8'@*
 @item look_charset_encode
 Charset for encoding messages sent to server, examples: UFT-8, ISO-8859-1 (if empty, local charset is used)@*
 Type: string (any string), default value: ''@*
+@item look_charset_internal
+Internal WeeChat charset, should be ISO-xxxx even if locale is UTF-8 (if empty, local charset is used)@*
+Type: string (any string), default value: 'ISO-8859-1'@*
 @item look_color_nicks
 Display nick names with different colors@*
 Type: boolean (values: 'on' or 'off'), default value: 'on'@*
@@ -394,6 +398,12 @@ Type: color (Curses or Gtk color), default value: 'default'@*
 @item col_nick_away
 Color for away nicknames@*
 Type: color (Curses or Gtk color), default value: 'cyan'@*
+@item col_nick_chanowner
+Color for chan owner symbol (specific to unrealircd)@*
+Type: color (Curses or Gtk color), default value: 'lightgreen'@*
+@item col_nick_chanadmin
+Color for chan admin symbol (specific to unrealircd)@*
+Type: color (Curses or Gtk color), default value: 'lightgreen'@*
 @item col_nick_op
 Color for operator symbol@*
 Type: color (Curses or Gtk color), default value: 'lightgreen'@*
@@ -420,7 +430,7 @@ Color for selected DCC (chat window)@*
 Type: color (Curses or Gtk color), default value: 'white'@*
 @item col_dcc_waiting
 Color for "waiting" dcc status@*
-Type: color (Curses or Gtk color), default value: 'white'@*
+Type: color (Curses or Gtk color), default value: 'lightcyan'@*
 @item col_dcc_connecting
 Color for "connecting" dcc status@*
 Type: color (Curses or Gtk color), default value: 'yellow'@*
@@ -450,6 +460,9 @@ Automatically log channel chats@*
 Type: boolean (values: 'on' or 'off'), default value: 'off'@*
 @item log_auto_private
 Automatically log private chats@*
+Type: boolean (values: 'on' or 'off'), default value: 'off'@*
+@item log_plugin_msg
+Log messages from plugins (scripts)@*
 Type: boolean (values: 'on' or 'off'), default value: 'off'@*
 @item log_path
 Path for WeeChat log files@*
@@ -489,19 +502,22 @@ Automatically accept incoming dcc files@*
 Type: boolean (values: 'on' or 'off'), default value: 'off'@*
 @item dcc_auto_accept_chats
 Automatically accept dcc chats (use carefully!)@*
-Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+Type: boolean (values: 'on' or 'off'), default value: 'off'@*
 @item dcc_timeout
 Timeout for dcc request (in seconds)@*
 Type: integer (values: between 1 and 2147483647), default value: 300@*
 @item dcc_blocksize
-Block size for dcc packets in bytes (default: 1024)@*
-Type: integer (values: between 1024 and 102400), default value: 1024@*
+Block size for dcc packets in bytes (default: 65536)@*
+Type: integer (values: between 1024 and 102400), default value: 65536@*
 @item dcc_download_path
 Path for writing incoming files with dcc (default: user home)@*
 Type: string (any string), default value: '~'@*
 @item dcc_upload_path
 Path for reading files when sending thru dcc (when no path is specified)@*
 Type: string (any string), default value: '~'@*
+@item dcc_convert_spaces
+Convert spaces to underscores when sending files@*
+Type: boolean (values: 'on' or 'off'), default value: 'on'@*
 @item dcc_auto_rename
 Rename incoming files if already exists (add '.1', '.2', ...)@*
 Type: boolean (values: 'on' or 'off'), default value: 'on'@*
@@ -530,7 +546,7 @@ Type: boolean (values: 'on' or 'off'), default value: 'on'@*
 Automatically reconnect to server when disconnected@*
 Type: boolean (values: 'on' or 'off'), default value: 'on'@*
 @item server_autoreconnect_delay
-Delay (in deconds) before trying again to reconnect to server@*
+Delay (in seconds) before trying again to reconnect to server@*
 Type: integer (values: between 0 and 65535), default value: 30@*
 @item server_address
 IP address or hostname of IRC server@*
@@ -568,6 +584,7 @@ Type: string (any string), default value: ''@*
 @item server_autorejoin
 Automatically rejoin channels when kicked@*
 Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+
 @end table
 
 Colors for Curses GUI are:@*
@@ -679,7 +696,452 @@ Switch to buffer by number@*
 @node WeeChat commands, , Key bindings, Usage
 @section WeeChat commands
 
-NOT WRITTEN!
+WeeChat internal commands:@*
+
+@table @kbd
+
+@item alias  [alias_name [command [arguments]]
+@*
+create an alias for a command@*
+@*
+alias_name: name of alias@*
+command: command name (WeeChat or IRC command, without first '/')@*
+arguments: arguments for command@*
+@*
+@item buffer  [action | number]
+@*
+manage buffers@*
+@*
+action: action to do:@*
+  move: move buffer in the list (may be relative, for example -1)@*
+  close: close buffer (for channel: same as /part without part message)@*
+  list: list opened buffers (no parameter implies this list)@*
+  notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)@*
+number: jump to buffer by number@*
+@*
+@item clear  [-all]
+@*
+clear window(s)@*
+@*
+-all: clear all windows@*
+@*
+@item connect  [servername]
+@*
+connect to a server@*
+@*
+servername: server name to connect@*
+@*
+@item disconnect  [servername]
+@*
+disconnect from a server@*
+@*
+servername: server name to disconnect@*
+@*
+@item debug  dump
+@*
+print debug messages@*
+@*
+dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)@*
+@*
+@item help  [command]
+@*
+display help about commands@*
+@*
+command: name of a WeeChat or IRC command@*
+@*
+@item perl  [load filename] | [autoload] | [unload]
+@*
+list/load/unload Perl scripts@*
+@*
+filename: Perl script (file) to load@*
+Without argument, /perl command lists all loaded Perl scripts.@*
+@*
+@item server  [servername] | [servername hostname port [-auto | -noauto] [-pwd password] [-nicks nick1 [nick2 [nick3]]] [-username username] [-realname realname] [-command command] [-autojoin channel[,channel]] ] | [del servername]
+@*
+list, add or remove servers@*
+@*
+servername: server name, for internal & display use@*
+hostname: name or IP address of server@*
+port: port for server (integer)@*
+password: password for server@*
+nick1: first nick for server@*
+nick2: alternate nick for server@*
+nick3: second alternate nick for server@*
+username: user name@*
+realname: real name of user@*
+@*
+@item save  [file]
+@*
+save config to disk@*
+@*
+file: filename for writing config@*
+@*
+@item set  [option[=value]]
+@*
+set config parameters@*
+@*
+option: name of an option@*
+value: value for option@*
+@*
+@item unalias  alias_name
+@*
+remove an alias@*
+@*
+alias_name: name of alias to remove@*
+@*
+@item window  [list | splith | splitv | [merge [down | up | left | right | all]]]
+@*
+manage windows@*
+@*
+list: list opened windows (no parameter implies this list)@*
+splith: split current window horizontally@*
+splitv: split current window vertically@*
+merge: merge window with another@*
+@*
+
+@end table
+
+IRC commands:@*
+
+@table @kbd
+
+@item admin  [target]
+@*
+find information about the administrator of the server@*
+@*
+target: server@*
+@*
+@item away  [-all] [message]
+@*
+toggle away status@*
+@*
+-all: toggle away status on all connected servers@*
+message: message for away (if no message is given, away status is removed)@*
+@*
+@item ctcp  nickname type
+@*
+send a ctcp message@*
+@*
+nickname: user to send ctcp to@*
+type: "action" or "version"@*
+@*
+@item dcc  action [nickname [file]]
+@*
+starts DCC (file or chat) or close chat@*
+@*
+action: 'send' (file) or 'chat' or 'close' (chat)@*
+nickname: nickname to send file or chat@*
+file: filename (on local host)@*
+@*
+@item deop  nickname [nickname]
+@*
+removes channel operator status from nickname(s)@*
+@*
+@item devoice  nickname [nickname]
+@*
+removes voice from nickname(s)@*
+@*
+@item die
+@*
+shutdown the server@*
+@*
+@item info  [target]
+@*
+get information describing the server@*
+@*
+target: server name@*
+@*
+@item invite  nickname channel
+@*
+invite a nick on a channel@*
+@*
+nickname: nick to invite@*
+channel: channel to invite@*
+@*
+@item ison  nickname [nickname ...]
+@*
+check if a nickname is currently on IRC@*
+@*
+nickname: nickname@*
+@*
+@item join  channel[,channel] [key[,key]]
+@*
+join a channel@*
+@*
+channel: channel name to join@*
+key: key to join the channel@*
+@*
+@item kick  [channel] nickname [comment]
+@*
+forcibly remove a user from a channel@*
+@*
+channel: channel where user is@*
+nickname: nickname to kick@*
+comment: comment for kick@*
+@*
+@item kill  nickname comment
+@*
+close client-server connection@*
+@*
+nickname: nickname@*
+comment: comment for kill@*
+@*
+@item links  [[server] server_mask]
+@*
+list all servernames which are known by the server answering the query@*
+@*
+server: this server should answer the query@*
+server_mask: list of servers must match this mask@*
+@*
+@item list  [channel[,channel] [server]]
+@*
+list channels and their topic@*
+@*
+channel: channel to list@*
+server: server name@*
+@*
+@item lusers  [mask [target]]
+@*
+get statistics about the size of the IRC network@*
+@*
+mask: servers matching the mask only@*
+target: server for forwarding request@*
+@*
+@item me  message
+@*
+send a ctcp action to the current channel@*
+@*
+message: message to send@*
+@*
+@item mode  @{ channel @{[+|-]|o|p|s|i|t|n|b|v@} [limit] [user] [ban mask] @} | @{ nickname @{[+|-]|i|w|s|o@} @}
+@*
+change channel or user mode@*
+@*
+channel modes:@*
+  channel: channel name to modify@*
+  o: give/take channel operator privileges@*
+  p: private channel flag@*
+  s: secret channel flag@*
+  i: invite-only channel flag@*
+  t: topic settable by channel operator only flag@*
+  n: no messages to channel from clients on the outside@*
+  m: moderated channel@*
+  l: set the user limit to channel@*
+  b: set a ban mask to keep users out@*
+  v: give/take the ability to speak on a moderated channel@*
+  k: set a channel key (password)@*
+user modes:@*
+  nickname: nickname to modify@*
+  i: mark a user as invisible@*
+  s: mark a user for receive server notices@*
+  w: user receives wallops@*
+  o: operator flag@*
+@*
+@item motd  [target]
+@*
+get the "Message Of The Day"@*
+@*
+target: server name@*
+@*
+@item msg  receiver[,receiver] text
+@*
+send message to a nick or channel@*
+@*
+receiver: nick or channel (may be mask, '*' = current channel)@*
+text: text to send@*
+@*
+@item names  [channel[,channel]]
+@*
+list nicknames on channels@*
+@*
+channel: channel name@*
+@*
+@item nick  nickname
+@*
+change current nickname@*
+@*
+nickname: new nickname for current IRC server@*
+@*
+@item notice  nickname text
+@*
+send notice message to user@*
+@*
+nickname: user to send notice to@*
+text: text to send@*
+@*
+@item op  nickname [nickname]
+@*
+gives channel operator status to nickname(s)@*
+@*
+@item oper  user password
+@*
+get operator privileges@*
+@*
+user/password: used to get privileges on current IRC server@*
+@*
+@item part  [channel[,channel]] [part_message]
+@*
+leave a channel@*
+@*
+channel: channel name to leave@*
+part_message: part message (displayed to other users)@*
+@*
+@item ping  server1 [server2]
+@*
+ping server@*
+@*
+server1: server to ping@*
+server2: forward ping to this server@*
+@*
+@item pong  daemon [daemon2]
+@*
+answer to a ping message@*
+@*
+daemon: daemon who has responded to Ping message@*
+daemon2: forward message to this daemon@*
+@*
+@item query  nickname [text]
+@*
+send a private message to a nick@*
+@*
+nickname: nickname for private conversation@*
+text: text to send@*
+@*
+@item quit  [quit_message]
+@*
+close all connections & quit@*
+@*
+quit_message: quit message (displayed to other users)@*
+@*
+@item quote  data
+@*
+send raw data to server without parsing@*
+@*
+data: raw data to send@*
+@*
+@item rehash
+@*
+tell the server to reload its config file@*
+@*
+@item restart
+@*
+tell the server to restart itself@*
+@*
+@item service  nickname reserved distribution type reserved info
+@*
+register a new service@*
+@*
+distribution: visibility of service@*
+type: reserved for future usage@*
+@*
+@item servlist  [mask [type]]
+@*
+list services currently connected to the network@*
+@*
+mask: list only services matching this mask@*
+type: list only services of this type@*
+@*
+@item squery  service text
+@*
+deliver a message to a service@*
+@*
+service: name of service@*
+text: text to send@*
+@*
+@item squit  server comment
+@*
+disconnect server links@*
+@*
+server: server name@*
+comment: comment for quit@*
+@*
+@item stats  [query [server]]
+@*
+query statistics about server@*
+@*
+query: c/h/i/k/l/m/o/y/u (see RFC1459)@*
+server: server name@*
+@*
+@item summon  user [target [channel]]
+@*
+give users who are on a host running an IRC server a message asking them to please join IRC@*
+@*
+user: username@*
+target: server name@*
+channel: channel name@*
+@*
+@item time  [target]
+@*
+query local time from server@*
+@*
+target: query time from specified server@*
+@*
+@item topic  [channel] [topic]
+@*
+get/set channel topic@*
+@*
+channel: channel name@*
+topic: new topic for channel (if topic is "-delete" then topic is deleted)@*
+@*
+@item trace  [target]
+@*
+find the route to specific server@*
+@*
+target: server@*
+@*
+@item userhost  nickname [nickname ...]
+@*
+return a list of information about nicknames@*
+@*
+nickname: nickname@*
+@*
+@item users  [target]
+@*
+list of users logged into the server@*
+@*
+target: server@*
+@*
+@item version  [server | nickname]
+@*
+gives the version info of nick or server (current or specified)@*
+@*
+server: server name@*
+nickname: nickname@*
+@*
+@item voice  nickname [nickname]
+@*
+gives voice to nickname(s)@*
+@*
+@item wallops  text
+@*
+send a message to all currently connected users who have set the 'w' user mode for themselves@*
+@*
+text to send@*
+@*
+@item who  [mask ["o"]]
+@*
+generate a query which returns a list of information@*
+@*
+mask: only information which match this mask@*
+o: only operators are returned according to the mask supplied@*
+@*
+@item whois  [server] nickname[,nickname]
+@*
+query information about user(s)@*
+@*
+server: server name@*
+nickname: nickname (may be a mask)@*
+@*
+@item whowas  nickname [,nickname [,nickname ...]] [count [target]]
+@*
+ask for information about a nickname which no longer exists@*
+@*
+nickname: nickname to search@*
+count: number of replies to return (full search if negative number)@*
+target: reply should match this mask@*
+@*
+
+@end table
 
 
 @c ******************************* Extensions *********************************

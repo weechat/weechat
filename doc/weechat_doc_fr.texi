@@ -35,7 +35,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.1-cvs - 22 F@'evrier 2005
+@subtitle Documentation pour WeeChat v0.1.1-cvs - 10 Mars 2005
 
 @image{weechat_image}
 
@@ -247,327 +247,7 @@ vous pouvez modifier les param@`etres dans WeeChat avec la commande @kbd{/set} -
 Liste des options du fichier de configuration :@*
 
 @table @kbd
-@item look_set_title
-D@'efinit le titre de la fen@^etre (terminal pour l'interface Curses) avec le nom et la version@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
-@item look_startup_logo
-Afficher le logo WeeChat au d@'emarrage@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
-@item look_startup_version
-Afficher la version de WeeChat au d@'emarrage@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
-@item look_weechat_slogan
-Slogan WeeChat (si vide, le slogan ne sera pas utilis@'e)@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: 'the geekest IRC client!'@*
-@item look_charset_decode
-Jeu de caract@`eres pour d@'ecoder les messages du serveur, exemples: UTF-8, ISO-8859-1 (si non renseign@'e, les messages ne sont pas convertis)@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
-@item look_charset_encode
-Jeu de caract@`eres pour encoder les messages envoy@'es au serveur, exemples: UFT-8, ISO-8859-1 (si non renseign@'e, le jeu de caract@`eres local est utilis@'e)@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
-@item look_color_nicks
-Afficher les utilisateurs avec diff@'erentes couleurs@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
-@item look_color_actions
-Afficher les actions avec diff@'erentes couleurs@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
-@item look_remove_colors_from_msgs
-Supprimer les couleurs dans les messages entrants@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
-@item look_nicklist
-Afficher la fen@^etre des utilisateurs (pour les fen@^etres de canaux)@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
-@item look_nicklist_position
-Position de la fen@^etre d'utilisateurs (haut (top), gauche (left), droite (right, par d@'efaut), bas (bottom))@*
-Type: cha@^ine (valeurs: 'left', 'right', 'top', 'bottom'), valeur par d@'efaut: 'right'@*
-@item look_nicklist_min_size
-Taille minimum pour la fen@^etre d'utilisateurs (largeur ou hauteur, selon look_nicklist_position (0 = pas de taille minimum))@*
-Type: entier (valeurs: entre 0 et 100), valeur par d@'efaut: 0@*
-@item look_nicklist_max_size
-Taille maximum pour la fen@^etre d'utilisateurs (largeur ou hauteur, selon look_nicklist_position (0 = pas de taille maximum; si min == max et > 0, alors la taille est fixe))@*
-Type: entier (valeurs: entre 0 et 100), valeur par d@'efaut: 0@*
-@item look_no_nickname
-Texte @`a afficher en lieu et place du nom d'utilisateur lorsque la connexion n'est pas active@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '-cmd-'@*
-@item look_nickmode
-Afficher le mode de l'utilisateur ((half)op/voice) devant chaque utilisateur@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
-@item look_nickmode_empty
-Afficher un espace si le mode utilisateur n'est pas (half)op/voice@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
-@item look_nick_completor
-La cha@^ine affich@'ee apr@`es la compl@'etion des utilisateurs@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ':'@*
-@item look_infobar
-Active la barre d'infos@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
-@item look_infobar_timestamp
-Horodatage pour les conversations sauvegard@'ees@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '%B, %A %d %Y - %H:%M'@*
-@item look_infobar_delay_highlight
-D@'elai (en secondes) pour la notification des messages dans la barre d'infos (0 = d@'esactiver les notifications dans la barre d'infos)@*
-Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 7@*
-@item col_title
-Couleur pour la barre de titre@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
-@item col_title_bg
-Couleur de fond pour la barre de titre@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'blue'@*
-@item col_chat
-Couleur pour le texte de discussion@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
-@item col_chat_time
-Couleur pour l'heure dans la fen@^etre de discussion@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
-@item col_chat_time_sep
-Couleur pour la s@'eparation de l'heure (fen@^etre de discussion)@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'brown'@*
-@item col_chat_prefix1
-Couleur pour le 1er et le 3@`eme caract@`ere du pr@'efixe@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightcyan'@*
-@item col_chat_prefix2
-Couleur pour le caract@`ere du milieu du pr@'efixe@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'white'@*
-@item col_chat_nick
-Couleur pour les noms d'utilisateurs dans les actions (fen@^etre de discussion)@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightcyan'@*
-@item col_chat_host
-Couleur pour les noms de machines (fen@^etre de discussion)@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'cyan'@*
-@item col_chat_channel
-Couleur pour les canaux dans les actions (fen@^etre de discussion)@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'white'@*
-@item col_chat_dark
-Couleur pour les s@'eparateurs sombres (fen@^etre de discussion)@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'green'@*
-@item col_chat_highlight
-Couleur pour le pseudo surlign@'e (fen@^etre de discussion)@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'yellow'@*
-@item col_chat_bg
-Couleur de fond pour la fen@^etre de discussion@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
-@item col_status
-Couleur pour la barre de statut@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
-@item col_status_delimiters
-Couleur pour les d@'elimiteurs de la barre de statut@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'cyan'@*
-@item col_status_data_msg
-Couleur pour une fen@^etre avec de nouvelles infos (barre de statut)@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'yellow'@*
-@item col_status_highlight
-Couleur pour une fen@^etre avec un highlight (barre de statut)@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightmagenta'@*
-@item col_status_data_other
-Couleur pour une fen@^etre avec des nouvelles donn@'ees (pas des infos) (barre de statut)@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
-@item col_status_more
-Couleur pour une fen@^etre avec des nouvelles donn@'ees (barre de statut)@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'white'@*
-@item col_status_bg
-Couleur de fond pour la fen@^etre de statut@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'blue'@*
-@item col_infobar
-Couleur pour la barre d'infos@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'black'@*
-@item col_infobar_highlight
-Couleur pour la notification dans la barre d'infos@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'white'@*
-@item col_infobar_bg
-Couleur de fond pour la fen@^etre de barre d'infos@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'cyan'@*
-@item col_input
-Couleur pour le texte saisi@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
-@item col_input_channel
-Couleur pour le texte saisi (nom du canal)@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'white'@*
-@item col_input_nick
-Couleur pour le texte saisi (pseudo)@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightgreen'@*
-@item col_input_bg
-Couleur de fond pour la fen@^etre de saisie@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
-@item col_nick
-Couleur pour les pseudos@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
-@item col_nick_away
-Couleur pour les pseudos absents@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'cyan'@*
-@item col_nick_op
-Couleur pour le symbole op@'erateur@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightgreen'@*
-@item col_nick_halfop
-Couleur pour le symbole demi-op@'erateur@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightmagenta'@*
-@item col_nick_voice
-Couleur pour le symbole voix@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'yellow'@*
-@item col_nick_sep
-Couleur pour le s@'eparateur de pseudo@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'blue'@*
-@item col_nick_self
-Couleur pour le pseudo local@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'white'@*
-@item col_nick_private
-Couleur pour l'autre pseudo dans la fen@^etre priv@'ee@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
-@item col_nick_bg
-Couleur de fond pour les pseudos@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
-@item col_chat_dcc_selected
-Couleur pour le DCC s@'electionn@'e (fen@^etre de discussion)@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'white'@*
-@item col_dcc_waiting
-Couleur pour le statut dcc "attente"@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'white'@*
-@item col_dcc_connecting
-Couleur pour le statut dcc "connexion"@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'yellow'@*
-@item col_dcc_active
-Couleur pour le statut dcc "actif"@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightblue'@*
-@item col_dcc_done
-Couleur pour le statut dcc "termin@'e"@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightgreen'@*
-@item col_dcc_failed
-Couleur pour le statut dcc "@'echou@'e"@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightred'@*
-@item col_dcc_aborted
-Couleur pour le statut dcc "interrompu"@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightred'@*
-@item history_max_lines
-Nombre maximum de lignes dans l'historique pour un serveur/fen@^etre/fen@^etre priv@'ee (0 = sans limite)@*
-Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 4096@*
-@item history_max_commands
-Nombre maximum de commandes utilisateur dans l'historique (0 = sans limite)@*
-Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 100@*
-@item log_auto_server
-Enregistrer automatiquement les messages du serveur@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
-@item log_auto_channel
-Enregistrer automatiquement les conversations des canaux@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
-@item log_auto_private
-Enregistrer automatiquement les conversations priv@'ees@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
-@item log_path
-Chemin pour les conversations sauvegard@'ees par WeeChat@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '~/.weechat/logs/'@*
-@item log_timestamp
-Horodatage pour les conversations sauvegard@'ees (voir man strftime pour le format de date/heure)@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '%Y %b %d %H:%M:%S'@*
-@item log_hide_nickserv_pwd
-Masquer le mot de passe affich@'e par nickserv@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
-@item irc_display_away
-Affiche un message sur tous les canaux pour l'absence/le retour@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
-@item irc_default_msg_away
-Message par d@'efaut pour l'absence@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: 'away'@*
-@item irc_default_msg_part
-Message par d@'efaut pour le part (quitte un canal)@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
-@item irc_default_msg_quit
-Message de fin par d@'efaut ('%v' sera remplac@'e par la version de WeeChat dans la cha@^ine)@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: 'WeeChat %v'@*
-@item irc_away_check
-Intervalle entre deux v@'erifications des absences (en minutes, 0 = ne jemais v@'erifier)@*
-Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 1@*
-@item irc_lag_check
-Intervalle entre deux mesures de lag (en secondes)@*
-Type: entier (valeurs: entre 30 et 2147483647), valeur par d@'efaut: 60@*
-@item irc_lag_min_show
-Lag minimum @`a afficher (en secondes)@*
-Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 1@*
-@item irc_lag_disconnect
-D@'econnexion apr@`es un lag important (en minutes, 0 = ne jamais se d@'econnecter)@*
-Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 5@*
-@item dcc_auto_accept_files
-Accepte automatiquement les fichiers dcc entrants@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
-@item dcc_auto_accept_chats
-Accepte automatiquement les demandes de discussion dcc (@`a utiliser avec pr@'ecaution !)@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
-@item dcc_timeout
-D@'elai d'attente pour les requ@^etes dcc (en secondes)@*
-Type: entier (valeurs: entre 1 et 2147483647), valeur par d@'efaut: 300@*
-@item dcc_blocksize
-Taille de bloc pour les paquets dcc en octets (d@'efaut: 1024)@*
-Type: entier (valeurs: entre 1024 et 102400), valeur par d@'efaut: 1024@*
-@item dcc_download_path
-Chemin pour @'ecrire les fichiers re@,{c}us par dcc (par d@'efaut: r@'epertoire de l'utilisateur)@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '~'@*
-@item dcc_upload_path
-Chemin pour lire les fichiers lorsqu'ils sont envoy@'es par dcc (quand aucun chemin n'est sp@'ecifi@'e)@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '~'@*
-@item dcc_auto_rename
-Renommer les fichiers re@,{c}us s'ils existent d@'ej@`a (ajoute '.1', '.2', ...)@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
-@item dcc_auto_resume
-Continuer automatiquement les transferts dcc si la connexion avec la machine distante a @'et@'e perdue@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
-@item proxy_use
-Utiliser un proxy pour se connecter au serveur irc@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
-@item proxy_address
-Adresse du serveur proxy (IP ou nom)@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
-@item proxy_port
-Port pour se connecter au serveur proxy@*
-Type: entier (valeurs: entre 0 et 65535), valeur par d@'efaut: 1080@*
-@item proxy_password
-Mot de passe pour le serveur proxy@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
-@item server_name
-Nom associ@'e au serveur IRC (pour affichage seulement)@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
-@item server_autoconnect
-Connexion automatique au serveur quand WeeChat d@'emarre@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
-@item server_autoreconnect
-Reconnexion automatique au serveur apr@`es une d@'econnexion@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
-@item server_autoreconnect_delay
-D@'elai (en secondes) avant de tenter une reconnexion au serveur@*
-Type: entier (valeurs: entre 0 et 65535), valeur par d@'efaut: 30@*
-@item server_address
-Adresse IP ou nom du serveur IRC@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
-@item server_port
-Port pour se connecter au serveur@*
-Type: entier (valeurs: entre 0 et 65535), valeur par d@'efaut: 6667@*
-@item server_password
-Mot de passe pour le serveur IRC@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
-@item server_nick1
-Pseudo @`a utiliser sur le serveur IRC@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
-@item server_nick2
-Pseudo alternatif pour le serveur IRC (si le pseudo est d@'ej@`a utilis@'e)@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
-@item server_nick3
-2nd pseudo alternatif pour le serveur IRC (si le pseudo alternatif est d@'ej@`a utilis@'e)@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
-@item server_username
-Nom d'utilisateur pour le serveur IRC@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
-@item server_realname
-Nom r@'eel pour le serveur IRC@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
-@item server_command
-Commande @`a ex@'ecuter en premier lorsque connect@'e au serveur@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
-@item server_command_delay
-D@'elai (en secondes) apr@`es ex@'ecution de la commande (exemple: donner du temps pour l'authentification)@*
-Type: entier (valeurs: entre 0 et 5), valeur par d@'efaut: 0@*
-@item server_autojoin
-Liste des canaux (s@'epar@'es par des virgules) @`a rejoindre lorsque connect@'e au serveur@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
-@item server_autorejoin
-Rejoindre automatiquement les canaux quand mis dehors@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
+
 @end table
 
 Les couleurs pour l'interface Curses sont :@*
@@ -679,7 +359,452 @@ Sauter au tampon avec ce num@'ero@*
 @node Commandes WeeChat, , Raccourcis clavier, Utilisation
 @section Commandes WeeChat
 
-NON ECRIT !
+Commandes internes WeeChat :@*
+
+@table @kbd
+
+@item alias  [nom_alias [commande [param@`etres]]
+@*
+cr@'eer un alias pour une commande@*
+@*
+nom_alias: nom de l'alias@*
+commande: nom de la commande (commande WeeChat ou IRC, sans le premier '/')@*
+param@`etres: param@`etres pour la commande@*
+@*
+@item buffer  [action | nombre]
+@*
+g@`ere les buffers@*
+@*
+action: action @`a effectuer:@*
+  move: d@'eplacer le tampon dans la liste (peut @^etre relatif, par exemple -1)@*
+  close: fermer le tampon (pour un canal: @'equivalent @`a /part sans message de fin)@*
+  list: liste les tampons ouverts (pas de param@`etre affiche cette liste)@*
+  notify: fixer le niveau de notification (0=jamais, 1=highlight, 2=1+msg, 3=2+join/part)@*
+nombre: sauter au tampon qui a ce num@'ero@*
+@*
+@item clear  [-all]
+@*
+affacer la/les fen@^etre(s)@*
+@*
+-all: effacer toutes les fen@^etres@*
+@*
+@item connect  [nom_serveur]
+@*
+se connecter @`a un serveur@*
+@*
+nom_serveur: nom du serveur pour se connecter@*
+@*
+@item disconnect  [nom_serveur]
+@*
+se d@'econnecter d'un serveur@*
+@*
+nom_serveur: nom du serveur pour se d@'econnecter@*
+@*
+@item debug  dump
+@*
+affiche des messages de debuggage@*
+@*
+dump: affiche les variables m@'emoire WeeChat dans le fichier log (les m@^emes messages sont affich@'es lorsque WeeChat plante)@*
+@*
+@item help  [commande]
+@*
+afficher l'aide sur les commandes@*
+@*
+commande: nom d'une commande WeeChat ou IRC@*
+@*
+@item perl  [load fichier] | [autoload] | [unload]
+@*
+liste/charge/d@'echarge des scripts Perl@*
+@*
+fichier: script Perl (fichier) @`a charger@*
+Sans param@`etre, la commande /perl liste tous les scripts Perl charg@'es.@*
+@*
+@item server  [nom_serveur] | [nom_serveur nom/IP port [-auto | -noauto] [-pwd mot_de_passe] [-nicks pseudo1 [pseudo2 [pseudo3]]] [-username nom_utilisateur] [-realname nom_r@'eel] [-command commande] [-autojoin canal[,canal]] ] | [del nom_serveur]
+@*
+liste, ajoute ou retire des serveurs@*
+@*
+nom_serveur: nom du serveur, pour usage interne et affichage@*
+nom/IP: nom ou adresse IP du serveur@*
+port: port pour le serveur (nombre entier)@*
+mot_de_passe: mot de passe pour le serveur@*
+pseudo1: premier pseudo pour le serveur@*
+pseudo2: pseudo alternatif pour le serveur@*
+pseudo3: second pseudo alternatif pour le serveur@*
+nom_utilisateur: nom d'utilisateur@*
+nom_r@'eel: nom r@'eel de l'utilisateur@*
+@*
+@item save  [fichier]
+@*
+sauvegarder la configuration sur disque@*
+@*
+fichier: fichier pour sauvegarder la configuration@*
+@*
+@item set  [option[=valeur]]
+@*
+modifier des param@`etres de configuration@*
+@*
+option: nom d'une option@*
+valeur: valeur pour l'option@*
+@*
+@item unalias  nom_alias
+@*
+supprimer un alias@*
+@*
+nom_alias: nom de l'alias @`a supprimer@*
+@*
+@item window  [list | splith | splitv | [merge [down | up | left | right | all]]]
+@*
+gestion des fen@^etres@*
+@*
+list: liste les fen@^etres ouvertes (pas de param@`etre affiche cette liste)@*
+splith: @'eclate la fen@^etre en deux horizontalement@*
+splitv: @'eclate la fen@^etre en deux verticalement@*
+merge: fusionne la fen@^etre avec une autre@*
+@*
+
+@end table
+
+Commandes IRC :@*
+
+@table @kbd
+
+@item admin  [cible]
+@*
+trouver les informations sur l'administrateur du serveur@*
+@*
+cible: serveur@*
+@*
+@item away  [-all] [message]
+@*
+basculer le statut absent@*
+@*
+-all: basculer le statut absent sur tous les serveurs connect@'es@*
+message: message pour l'absence (si pas de message donn@'e, le statut d'absence est supprim@'e)@*
+@*
+@item ctcp  pseudo type
+@*
+envoyer un message ctcp@*
+@*
+pseudo: utilisateur pour envoyer le ctcp@*
+type: "action" ou "version"@*
+@*
+@item dcc  action [pseudo [fichier]]
+@*
+d@'emarre le DCC (fichier ou discussion) ou ferme une discussion@*
+@*
+action: 'send' (envoi de fichier) ou 'chat' (discussion) ou 'close' (fermeture discussion)@*
+pseudo: pseudo pour envoyer le fichier ou discuter@*
+fichier: nom du fichier (sur la machine locale)@*
+@*
+@item deop  pseudo [pseudo]
+@*
+retire le statut d'op@'erateur du canal @`a/aux nick(s)@*
+@*
+@item devoice  pseudo [pseudo]
+@*
+retire la voix du/des pseudo(s)@*
+@*
+@item die
+@*
+arr@^eter le serveur@*
+@*
+@item info  [cible]
+@*
+voir les informations d@'ecrivant le serveur@*
+@*
+cible: nom du serveur@*
+@*
+@item invite  pseudo canal
+@*
+inviter un utilisateur sur un canal@*
+@*
+pseudo: utilisateur @`a inviter@*
+channel: canal pour l'invitation@*
+@*
+@item ison  pseudo [pseudo ...]
+@*
+v@'erifier si un utilisateur est actuellement sur IRC@*
+@*
+pseudo: pseudo@*
+@*
+@item join  canal[,canal] [cl@'e[,cl@'e]]
+@*
+joindre un canal@*
+@*
+canal: nom du canal @`a rejoindre@*
+cl@'e: cl@'e pour rejoindre le canal@*
+@*
+@item kick  [canal] pseudo [commentaire]
+@*
+retirer par la force un utilisateur d'un canal@*
+@*
+canal: canal o@`u l'utilisateur se trouve@*
+pseudo: utilisateur @`a @'eliminer@*
+commentaire: commentaire pour l'@'elimination@*
+@*
+@item kill  pseudo commentaire
+@*
+fermer la connexion client-serveur@*
+@*
+pseudo: utilisateur@*
+commentaire: commentaire pour la mort@*
+@*
+@item links  [[serveur] masque_serveur]
+@*
+lister tous les noms de serveurs connus du serveur qui r@'epondent @`a la requ@^ete@*
+@*
+serveur: ce serveur doit r@'epondre @`a la requ@^ete@*
+masque_serveur: liste des serveurs correspondant au masque@*
+@*
+@item list  [canal[,canall] [serveur]]
+@*
+lister les canaux et leur sujet@*
+@*
+canal: canal @`a lister@*
+serveur: nom du serveur@*
+@*
+@item lusers  [masque [cible]]
+@*
+obtenir des statistiques sur la taille du r@'eseau IRC@*
+@*
+masque: serveurs qui correspondent au masque seulement@*
+cible: serveur pour faire suivre la requ@^ete@*
+@*
+@item me  message
+@*
+envoyer une action ctcp au canal courant@*
+@*
+message: message @`a envoyer@*
+@*
+@item mode  @{ canal @{[+|-]|o|p|s|i|t|n|b|v@} [limite] [utilisateur] [masque de banissement] @} | @{ nick @{[+|-]|i|w|s|o@} @}
+@*
+changer le mode du canal ou de l'utilisateur@*
+@*
+modes de canaux :@*
+  canal: nom du canal @`a modifier@*
+  o: donner/reprendre le statut privil@'egi@'e d'op@'erateur@*
+  p: indicateur de canal priv@'e@*
+  s: indicateur de canal secret@*
+  i: indicateur de canal avec invitation seulement@*
+  t: le titre est modifiable seulement par un op@'erateur du canal@*
+  n: aucun message au canal depuis l'ext@'erieur@*
+  m: canal mod@'er@'e@*
+  l: fixer la limite d'utilisateurs pour le canal@*
+  b: param@'etrer un masque de banissement pour garder des utilisateurs dehors@*
+  v: donner/reprendre la possibilit@'e de parler sur un canal mod@'er@'e@*
+  k: d@'efinir une cl@'e (mot de passe) pour acc@'eder au canal@*
+modes utilisateur :@*
+  pseudo: utilisateur @`a modifier@*
+  i: marquer un utilisateur comme invisible@*
+  s: marquer un utilisateur pour recevoir les notices du serveur@*
+  w: l'utilisateur re@,{c}oit les wallops@*
+  o: drapeau op@'erateur@*
+@*
+@item motd  [cible]
+@*
+obtenir le message du jour@*
+@*
+cible: nom du serveur@*
+@*
+@item msg  cible[,cible] texte
+@*
+envoyer un message @`a un utilisateur ou canal@*
+@*
+cible: utilisateur ou canal (peut-@^etre un masque, '*' = canal courant)@*
+texte: texte @`a envoyer@*
+@*
+@item names  [canal[,canal]]
+@*
+lister les utilisateurs sur des canaux@*
+@*
+canal: nom du canal@*
+@*
+@item nick  pseudo
+@*
+changer le pseudo courant@*
+@*
+pseudo: nouveau pseudo pour le serveur IRC courant@*
+@*
+@item notice  pseudo texte
+@*
+envoyer un message notice @`a un utilisateur@*
+@*
+pseudo: utilisateur cible pour la notice@*
+texte: texte @`a envoyer@*
+@*
+@item op  pseudo [pseudo]
+@*
+donner le statut op@'erateur @`a un/des utilisateur(s)@*
+@*
+@item oper  utilisateur mot_de_passe
+@*
+obtenir le statut d'op@'erateur@*
+@*
+utilisateur/mot_de_passe: utilis@'e pour obtenir les privil@`eges sur le serveur IRC courant@*
+@*
+@item part  [canal[,canall] [message_de_fin]
+@*
+quitter un canal@*
+@*
+canal: canal @`a quitter@*
+message_de_fin: message de fin (affich@'e aux autres utilisateurs)@*
+@*
+@item ping  serveur1 [serveur2]
+@*
+pinguer un serveur@*
+@*
+serveur1: serveur @`a pinguer@*
+serveur2: faire suivre le ping @`a ce serveur@*
+@*
+@item pong  d@'emon [d@'emon2]
+@*
+r@'epondre @`a un message ping@*
+@*
+d@'emon: d@'emon qui a r@'epondu au message Ping@*
+d@'emon2: faire suivre le message @`a ce d@'emon@*
+@*
+@item query  pseudo [texte]
+@*
+envoyer un message priv@'e @`a un utilisateur@*
+@*
+pseudo: utilisateur pour la conversation priv@'ee@*
+texte: texte @`a envoyer@*
+@*
+@item quit  [message_de_fin]
+@*
+fermer toutes les connexions et quitter@*
+@*
+message_de_fin: message de fin (affich@'e aux autres utilisateurs)@*
+@*
+@item quote  donn@'ees
+@*
+envoyer des donn@'ees brutes au serveur sans analyse@*
+@*
+donn@'ees: donn@'ees brutes @`a envoyer@*
+@*
+@item rehash
+@*
+demander au serveur de recharger son fichier de config@*
+@*
+@item restart
+@*
+demander au serveur de red@'emarrer@*
+@*
+@item service  pseudo r@'eserv@'e distribution type r@'eserv@'e info
+@*
+enregister un nouveau service@*
+@*
+distribution: visibilit@'e du service@*
+type: r@'eserv@'e pour une utilisation future@*
+@*
+@item servlist  [masque [type]]
+@*
+lister les services actuellement connect@'es au r@'eseau@*
+@*
+masque: lister seulement les services qui correspondent @`a ce masque@*
+type: lister seulement les services de ce type@*
+@*
+@item squery  service texte
+@*
+envoyer un message @`a un service@*
+@*
+service: nom du service@*
+texte: texte @`a envoyer@*
+@*
+@item squit  serveur commentaire
+@*
+d@'econnecter les liens vers un serveur@*
+@*
+serveur: nom du serveur@*
+commentaire: commentaire pour quitter@*
+@*
+@item stats  [requ@^ete [serveur]]
+@*
+demander des statistiques sur le serveur@*
+@*
+requ@^ete: c/h/i/k/l/m/o/y/u (voir la RFC1459)@*
+serveur: nom du serveur@*
+@*
+@item summon  utilisateur [cible [canal]]
+@*
+envoyer aux utilisateurs d'un serveur IRC un message leur demandant de rejoindre IRC@*
+@*
+utilisateur: nom d'utilisateur@*
+cible: nom du serveur@*
+canal: nom du canal@*
+@*
+@item time  [cible]
+@*
+demander l'heure locale de serveur@*
+@*
+cible: demander l'heure de ce serveur@*
+@*
+@item topic  [canal] [titre]
+@*
+recevoir/d@'efinir le titre du canal@*
+@*
+canal: nom du canal@*
+titre: nouveau titre pour le canal (si le titre est "-delete" alors le titre est supprim@'e)@*
+@*
+@item trace  [cible]
+@*
+trouver le chemin jusqu'@`a un serveur sp@'ecifique@*
+@*
+cible: serveur@*
+@*
+@item userhost  pseudo [pseudo ...]
+@*
+retourne une liste d'informations sur des utilisateurs@*
+@*
+pseudo: pseudo@*
+@*
+@item users  [cible]
+@*
+liste des utilisateurs connect@'es au serveur@*
+@*
+cible: serveur@*
+@*
+@item version  [serveur | pseudo]
+@*
+retourne la version de l'utilisateur ou du serveur (courant ou sp@'ecifi@'e)@*
+@*
+serveur: nom du serveur@*
+pseudo: utilisateur@*
+@*
+@item voice  pseudo [pseudo]
+@*
+donne la voix @`a/aux utilisateur(s)@*
+@*
+@item wallops  texte
+@*
+envoyer un message @`a tous les utilisateurs connect@'es qui ont activ@'e le mode utilisateur 'w' pour eux-m@^emes@*
+@*
+texte @`a envoyer@*
+@*
+@item who  [masque ["o"]]
+@*
+g@'en@`ere une requ@^ete qui retourne une liste d'information@*
+@*
+masque: information qui correspond @`a ce masque uniquement@*
+o: seul les op@'erateurs sont retourn@'es correspondant au masque fourni@*
+@*
+@item whois  [serveur] pseudo[,pseudo]
+@*
+demande les informations sur le(s) utilisateur(s)@*
+@*
+serveur: nom du serveur@*
+pseudo: utilisateur (peut @^etre un masque)@*
+@*
+@item whowas  pseudo [,pseudo [,pseudo ...]] [nombre [cible]]
+@*
+demander de l'information sur un nick qui n'existe plus@*
+@*
+pseudo: pseudo @`a chercher@*
+nombre: nombre de r@'eponses @`a retourner (recherche compl@`ete si nombre n@'egatif)@*
+cible: la r@'eponse doit correspondre @`a ce masque@*
+@*
+
+@end table
 
 
 @c ******************************* Extensions *********************************
