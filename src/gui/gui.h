@@ -189,7 +189,7 @@ extern t_gui_window *gui_current_window;
 /* prototypes */
 
 /* GUI independent functions */
-extern t_gui_window *gui_window_new (void *, void * /*int, int, int, int*/); /* TODO: add coordinates and size */
+extern t_gui_window *gui_window_new (void *, void *, int /*int, int, int, int*/); /* TODO: add coordinates and size */
 extern void gui_window_clear (t_gui_window *);
 extern void gui_window_clear_all ();
 extern t_gui_line *gui_new_line (t_gui_window *);

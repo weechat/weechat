@@ -41,7 +41,8 @@ t_irc_channel *current_channel = NULL;
  */
 
 t_irc_channel *
-channel_new (t_irc_server *server, int channel_type, char *channel_name)
+channel_new (t_irc_server *server, int channel_type, char *channel_name,
+             int switch_to_window)
 {
     t_irc_channel *new_channel;
     
@@ -68,7 +69,7 @@ channel_new (t_irc_server *server, int channel_type, char *channel_name)
         server->channels = new_channel;
     server->last_channel = new_channel;
 
-    gui_window_new (server, new_channel);
+    gui_window_new (server, new_channel, switch_to_window);
     
     /* all is ok, return address of new channel */
     return new_channel;

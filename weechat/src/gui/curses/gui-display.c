@@ -1395,7 +1395,7 @@ gui_init ()
     gui_init_colors ();
 
     /* create a new window */
-    gui_current_window = gui_window_new (NULL, NULL /*0, 0, COLS, LINES*/);
+    gui_current_window = gui_window_new (NULL, NULL, 1 /*0, 0, COLS, LINES*/);
     
     signal (SIGWINCH, gui_curses_resize_handler);
     

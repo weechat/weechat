@@ -585,7 +585,7 @@ server_auto_connect ()
     {
         if (ptr_server->autoconnect)
         {
-            gui_window_new (ptr_server, NULL);
+            gui_window_new (ptr_server, NULL, 1);
             if (server_connect (ptr_server))
                 irc_login (ptr_server);
         }

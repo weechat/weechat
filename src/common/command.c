@@ -849,7 +849,7 @@ weechat_cmd_connect (int argc, char **argv)
             return -1;
         }
         if (!ptr_server->window)
-            gui_window_new (ptr_server, NULL);
+            gui_window_new (ptr_server, NULL, 1);
         if (server_connect (ptr_server))
         {
             irc_login (ptr_server);
@@ -1425,7 +1425,7 @@ weechat_cmd_server (int argc, char **argv)
         
         if (new_server->autoconnect)
         {
-            gui_window_new (new_server, NULL);
+            gui_window_new (new_server, NULL, 1);
             if (server_connect (new_server))
                 irc_login (new_server);
         }

@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2003-12-26
+TODO - 2003-12-31
 
 Legend:
   #  done
@@ -13,8 +13,15 @@ Legend:
 v0.0.4:
 ------
 
+ * General:
+    # debug messages can be enabled via ./configure --enbale-debug option
+
  * Interface:
     + internationalization (traduce WeeChat in many languages)
+    # intercept Ctrl-C
+    # when private window is created (another user is talking), WeeChat does not
+      switch to this window
+    # highlight when our nick is written in a channel/private window
 
  * Configuration:
     - add missing options for config file

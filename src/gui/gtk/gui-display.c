@@ -625,7 +625,7 @@ gui_init ()
     gtk_widget_show_all (gtk_main_window);
     
     /* create a new window */
-    gui_current_window = gui_window_new (NULL, NULL /*0, 0, COLS, LINES*/);
+    gui_current_window = gui_window_new (NULL, NULL, 1 /*0, 0, COLS, LINES*/);
     
     /* TODO: set gui_ready to 1 when Gtk display functions will be ok */
     gui_ready = 1;

@@ -487,7 +487,7 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
                     ptr_channel = channel_search (server, arguments);
                     if (!ptr_channel)
                     {
-                        ptr_channel = channel_new (server, CHAT_PRIVATE, arguments);
+                        ptr_channel = channel_new (server, CHAT_PRIVATE, arguments, 1);
                         if (!ptr_channel)
                         {
                             gui_printf (server->window,

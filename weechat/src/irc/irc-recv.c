@@ -158,7 +158,7 @@ irc_cmd_recv_join (t_irc_server *server, char *host, char *arguments)
     ptr_channel = channel_search (server, arguments);
     if (!ptr_channel)
     {
-        ptr_channel = channel_new (server, CHAT_CHANNEL, arguments);
+        ptr_channel = channel_new (server, CHAT_CHANNEL, arguments, 1);
         if (!ptr_channel)
         {
             gui_printf (server->window,
@@ -894,7 +894,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                     ptr_channel = channel_search (server, host);
                     if (!ptr_channel)
                     {
-                        ptr_channel = channel_new (server, CHAT_PRIVATE, host);
+                        ptr_channel = channel_new (server, CHAT_PRIVATE, host, 0);
                         if (!ptr_channel)
                         {
                             gui_printf (server->window,

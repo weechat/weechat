@@ -161,7 +161,7 @@ extern int server_name_already_exists (char *);
 
 /* channel functions (irc-channel.c) */
 
-extern t_irc_channel *channel_new (t_irc_server *, int, char *);
+extern t_irc_channel *channel_new (t_irc_server *, int, char *, int);
 extern void channel_free (t_irc_server *, t_irc_channel *);
 extern void channel_free_all (t_irc_server *);
 extern t_irc_channel *channel_search (t_irc_server *, char *);

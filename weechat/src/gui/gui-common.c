@@ -52,7 +52,7 @@ t_gui_window *gui_current_window = NULL;    /* pointer to current window    */
  */
 
 t_gui_window *
-gui_window_new (void *server, void *channel
+gui_window_new (void *server, void *channel, int switch_to_window
                 /*int x, int y, int width, int height*/)
 {
     t_gui_window *new_window;
@@ -114,7 +114,8 @@ gui_window_new (void *server, void *channel
         new_window->ptr_history = NULL;
         
         /* switch to new window */
-        gui_switch_to_window (new_window);
+        if (switch_to_window)
+            gui_switch_to_window (new_window);
         
         /* add window to windows queue */
         new_window->prev_window = last_gui_window;
@@ -126,7 +127,7 @@ gui_window_new (void *server, void *channel
         new_window->next_window = NULL;
         
         /* redraw whole screen */
-        gui_redraw_window (new_window);
+        gui_redraw_window (gui_current_window);
     }
     else
         return NULL;
@@ -235,7 +236,7 @@ gui_window_free (t_gui_window *window)
     
     /* always at least one window */
     if (!gui_windows && create_new)
-        gui_window_new (NULL, NULL);
+        gui_window_new (NULL, NULL, 1);
 }
 
 /*
