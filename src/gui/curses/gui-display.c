@@ -1684,8 +1684,11 @@ gui_add_message (t_gui_window *window, int type, int color, char *message)
         }
         if ((window != gui_current_window) || (window->sub_lines > 0))
         {
-            window->unread_data = 1 + window->last_line->line_with_message;
-            gui_redraw_window_status (gui_current_window);
+            if (window->unread_data < 1 + window->last_line->line_with_message)
+            {
+                window->unread_data = 1 + window->last_line->line_with_message;
+                gui_redraw_window_status (gui_current_window);
+            }
         }
     }
 }
