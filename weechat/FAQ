@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-WeeChat FAQ, 2003-10-27
+WeeChat FAQ, 2003-12-31
 
 
 1- Compiling
@@ -11,9 +11,13 @@ WeeChat FAQ, 2003-10-27
 
 2- Using WeeChat
 
-    2.1  Why using WeeChat ? Irssi and xchat are so good...
+    2.1  Why using WeeChat ? X-Chat and Irssi are so good...
     2.2  I've launched WeeChat, but I'm lost, what can I do?
     2.3  How can I customize key bindings?
+    2.4  How can I load Perl scripts?
+         Are Perl scripts compatible with X-chat or/and Irssi ?
+    2.5  How can I load Python scripts?
+    2.6  How can I load Ruby scripts?
 
 3- Development
 
@@ -55,7 +59,7 @@ WeeChat FAQ, 2003-10-27
 \------------------------------------------------------------------------------/
 
 
-2.1  Why using WeeChat ? Irssi and xchat are so good...
+2.1  Why using WeeChat ? X-Chat and Irssi are so good...
 
   Because WeeChat is very light and has new features.
   Some new features:
@@ -75,6 +79,26 @@ WeeChat FAQ, 2003-10-27
 2.3  How can I customize key bindings?
 
   Today you can't do that. This will be available in a future version.
+
+
+2.4  How can I load Perl scripts?
+     Are Perl scripts compatible with X-chat or/and Irssi ?
+
+  Yes, you can use /perl command to launch scripts
+  (default path is ~/.weechat/perl).
+  Note that scripts in ~/.weechat/perl/autoload are automatically loaded
+  when WeeChat is starting up.
+  WeeChat perl scripts are compatible with X-Chat, not with Irssi, sorry ;)
+
+
+2.5  How can I load Python scripts?
+
+  Today Python interface is not developed, so can't load any Python script.
+
+
+2.6  How can I load Ruby scripts?
+
+  Today Ruby interface is not developed, so can't load any Ruby script.
 
 
 /------------------------------------------------------------------------------\
