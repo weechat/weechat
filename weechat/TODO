@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2004-03-20
+TODO - 2004-04-25
 
 Legend:
   #  done
@@ -57,9 +57,11 @@ Future versions:
       and show us the output on the current window. An option to exec
       like -o could send the output to the server, on the current
       channel/private
+    - "/last": command to look for text in previous messages
 
  * Interface:
     + Gtk GUI
+    - color for nicks (except own nick) when nick colors are disabled
     - interpret special chars in messages (color & bold for example)
     - many channel windows in one window/term (window split)
     - add lag indicator
@@ -67,6 +69,7 @@ Future versions:
       if WeeChat is running for long time, a lot of memory is used!)
     - improve completion (for example complete command parameters when possible)
     - understand incomplete commands if unambigous (for example: /he for /help is ok)
+    - tab key with empty command line should switch to next window (like F7)
     - log chats to file
     ? Qt GUI
 
