@@ -86,16 +86,9 @@
     "  -l, --license       display WeeChat license\n" \
     "  -v, --version       display WeeChat version\n\n"
 
-/*    "  -d, --display       choose X display\n" \*/
-
-
-/*#define DEFAULT_DISPLAY         ":0" */
-
-
-/*extern char *display_name; */
-int quit_weechat;
 
 extern int quit_weechat;
+extern char *weechat_home;
 
 extern void wee_log_printf (char *, ...);
 extern void wee_shutdown ();

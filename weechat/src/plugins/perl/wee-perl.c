@@ -57,6 +57,10 @@ static XS (XS_IRC_register)
     t_plugin_script *ptr_perl_script, *perl_script_found, *new_perl_script;
     dXSARGS;
     
+    /* make gcc happy */
+    (void) items;
+    (void) cv;
+    
     name = SvPV (ST (0), integer);
     version = SvPV (ST (1), integer);
     shutdown_func = SvPV (ST (2), integer);
@@ -127,6 +131,9 @@ static XS (XS_IRC_print)
     char *message;
     dXSARGS;
     
+    /* make gcc happy */
+    (void) cv;
+    
     for (i = 0; i < items; i++)
     {
         message = SvPV (ST (i), integer);
@@ -144,12 +151,15 @@ static XS (XS_IRC_print)
 
 static XS (XS_IRC_print_with_channel)
 {
-    int i, integer;
+    int integer;
     char *message, *channel, *server = NULL;
     t_gui_window *ptr_window;
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
     dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
     
     /* server specified */
     if (items > 2)
@@ -204,6 +214,10 @@ static XS (XS_IRC_add_message_handler)
     int integer;
     dXSARGS;
     
+    /* make gcc happy */
+    (void) items;
+    (void) cv;
+    
     name = SvPV (ST (0), integer);
     function = SvPV (ST (1), integer);
     plugin_handler_add (&plugin_msg_handlers, &last_plugin_msg_handler,
@@ -222,6 +236,10 @@ static XS (XS_IRC_add_command_handler)
     t_plugin_handler *ptr_plugin_handler;
     dXSARGS;
     
+    /* make gcc happy */
+    (void) items;
+    (void) cv;
+    
     name = SvPV (ST (0), integer);
     function = SvPV (ST (1), integer);
     if (!index_command_search (name))
@@ -239,6 +257,62 @@ static XS (XS_IRC_add_command_handler)
 }
 
 /*
+ * IRC::get_info: get various infos
+ */
+
+static XS (XS_IRC_get_info)
+{
+    char *arg, *info = NULL;
+    int integer;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) items;
+    (void) cv;
+    
+    arg = SvPV (ST (0), integer);
+    
+    if (arg)
+    {
+    
+        if ( (strcasecmp (arg, "0") == 0) || (strcasecmp (arg, "version") == 0) )
+        {
+            info = PACKAGE_STRING;
+        }
+        else if ( (strcasecmp (arg, "1") == 0) || (strcasecmp (arg, "nick") == 0) )
+        {
+            info = current_irc_server->nick;
+        }
+        else if ( (strcasecmp (arg, "2") == 0) || (strcasecmp (arg, "channel") == 0) )
+        {
+            if (WIN_IS_CHANNEL (gui_current_window))
+                info = CHANNEL (gui_current_window)->name;
+        }
+        else if ( (strcasecmp (arg, "3") == 0) || (strcasecmp (arg, "server") == 0) )
+        {
+            info = current_irc_server->name;
+        }
+        else if ( (strcasecmp (arg, "4") == 0) || (strcasecmp (arg, "weechatdir") == 0) )
+        {
+            info = weechat_home;
+        }
+        else if ( (strcasecmp (arg, "5") == 0) || (strcasecmp (arg, "away") == 0) )
+        {
+            XST_mIV (0, current_irc_server->is_away);
+            XSRETURN (1);
+            return;
+        }
+        
+        if (info)
+            XST_mPV (0, info);
+        else
+            XST_mPV (0, "");
+    }
+    
+    XSRETURN (1);
+}
+
+/*
  * xs_init: initialize subroutines
  */
 
@@ -251,6 +325,7 @@ xs_init (pTHX)
     newXS ("IRC::print_with_channel", XS_IRC_print_with_channel, "IRC");
     newXS ("IRC::add_message_handler", XS_IRC_add_message_handler, "IRC");
     newXS ("IRC::add_command_handler", XS_IRC_add_command_handler, "IRC");
+    newXS ("IRC::get_info", XS_IRC_get_info, "IRC");
 }
 
 /*
@@ -462,10 +537,19 @@ wee_perl_end ()
     /* unload all scripts */
     wee_perl_unload_all ();
     
+    /* free all handlers */
+    plugin_handler_free_all_type (&plugin_msg_handlers,
+                                  &last_plugin_msg_handler,
+                                  PLUGIN_TYPE_PERL);
+    plugin_handler_free_all_type (&plugin_cmd_handlers,
+                                  &last_plugin_cmd_handler,
+                                  PLUGIN_TYPE_PERL);
+    
     /* free Perl interpreter */
     if (my_perl)
     {
         perl_destruct (my_perl);
         perl_free (my_perl);
+        my_perl = NULL;
     }
 }

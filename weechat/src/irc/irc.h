@@ -32,7 +32,7 @@
 #define PREFIX_PART      "<--"
 #define PREFIX_QUIT      "<--"
 #define PREFIX_ERROR     "=!="
-#define PREFIX_PLUGIN    "=P="
+#define PREFIX_PLUGIN    "-P-"
 
 #define CHANNEL_PREFIX "#&+!"
 
@@ -152,6 +152,7 @@ extern int server_send (t_irc_server *, char *, int);
 extern int server_sendf (t_irc_server *, char *, ...);
 extern void server_recv (t_irc_server *);
 extern int server_connect ();
+extern void server_auto_connect ();
 extern void server_disconnect (t_irc_server *);
 extern void server_disconnect_all ();
 extern t_irc_server *server_search (char *);
@@ -256,6 +257,8 @@ extern int irc_cmd_recv_004 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_301 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_302 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_303 (t_irc_server *, char *, char *);
+extern int irc_cmd_recv_305 (t_irc_server *, char *, char *);
+extern int irc_cmd_recv_306 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_311 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_312 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_313 (t_irc_server *, char *, char *);

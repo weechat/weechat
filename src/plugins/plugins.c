@@ -283,14 +283,9 @@ plugin_unload (int plugin_type, char *scriptname)
     {
         case PLUGIN_TYPE_PERL:
             #ifdef PLUGIN_PERL
-            wee_perl_unload_all ();
-            /* impossible to unload only one Perl script */
-            plugin_handler_free_all_type (&plugin_msg_handlers,
-                                          &last_plugin_msg_handler,
-                                          PLUGIN_TYPE_PERL);
-            plugin_handler_free_all_type (&plugin_cmd_handlers,
-                                          &last_plugin_cmd_handler,
-                                          PLUGIN_TYPE_PERL);
+            /* unload one Perl script is not allowed */
+            wee_perl_end ();
+            wee_perl_init ();
             #endif
             break;
         case PLUGIN_TYPE_PYTHON:

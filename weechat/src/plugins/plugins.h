@@ -66,7 +66,9 @@ extern void plugin_load (int, char *);
 extern void plugin_unload (int, char *);
 extern t_plugin_handler *plugin_handler_search (t_plugin_handler *, char *);
 extern void plugin_handler_add (t_plugin_handler **, t_plugin_handler **,
-                                 int, char *, char *);
+                                int, char *, char *);
+extern void plugin_handler_free_all_type (t_plugin_handler **,
+                                          t_plugin_handler **, int);
 extern void plugin_event_msg (char *, char *);
 extern int plugin_exec_command (char *, char *);
 extern void plugin_end ();

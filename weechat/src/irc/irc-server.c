@@ -467,7 +467,7 @@ server_recv (t_irc_server *server)
 }
 
 /*
- * server_connect: connect to an irc server
+ * server_connect: connect to an IRC server
  */
 
 int
@@ -569,6 +569,27 @@ server_connect (t_irc_server *server)
 
     current_irc_server = server;
     return 1;
+}
+
+/*
+ * server_auto_connect: auto-connect to servers (called at startup)
+ */
+
+void
+server_auto_connect ()
+{
+    t_irc_server *ptr_server;
+    
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        if (ptr_server->autoconnect)
+        {
+            gui_window_new (ptr_server, NULL);
+            if (server_connect (ptr_server))
+                irc_login (ptr_server);
+        }
+    }
 }
 
 /*

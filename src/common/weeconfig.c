@@ -721,8 +721,8 @@ config_read ()
     char line[1024], *ptr_line, *pos, *pos2;
 
     filename =
-        (char *) malloc ((strlen (getenv ("HOME")) + 64) * sizeof (char));
-    sprintf (filename, "%s/.weechat/" WEECHAT_CONFIG_NAME, getenv ("HOME"));
+        (char *) malloc ((strlen (weechat_home) + 64) * sizeof (char));
+    sprintf (filename, "%s/" WEECHAT_CONFIG_NAME, weechat_home);
     if ((file = fopen (filename, "rt")) == NULL)
     {
         gui_printf (NULL, _("%s config file \"%s\" not found.\n"),
@@ -937,8 +937,8 @@ config_create_default ()
     time_t current_time;
 
     filename =
-        (char *) malloc ((strlen (getenv ("HOME")) + 64) * sizeof (char));
-    sprintf (filename, "%s/.weechat/" WEECHAT_CONFIG_NAME, getenv ("HOME"));
+        (char *) malloc ((strlen (weechat_home) + 64) * sizeof (char));
+    sprintf (filename, "%s/" WEECHAT_CONFIG_NAME, weechat_home);
     if ((file = fopen (filename, "wt")) == NULL)
     {
         gui_printf (NULL, _("%s cannot create file \"%s\"\n"),
@@ -1069,8 +1069,8 @@ config_write (char *config_name)
     else
     {
         filename =
-            (char *) malloc ((strlen (getenv ("HOME")) + 64) * sizeof (char));
-        sprintf (filename, "%s/.weechat/" WEECHAT_CONFIG_NAME, getenv ("HOME"));
+            (char *) malloc ((strlen (weechat_home) + 64) * sizeof (char));
+        sprintf (filename, "%s/" WEECHAT_CONFIG_NAME, weechat_home);
     }
     
     if ((file = fopen (filename, "wt")) == NULL)

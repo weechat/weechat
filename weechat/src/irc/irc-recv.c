@@ -1334,6 +1334,56 @@ irc_cmd_recv_303 (t_irc_server *server, char *host, char *arguments)
 }
 
 /*
+ * irc_cmd_recv_305: '305' command (unaway)
+ */
+
+int
+irc_cmd_recv_305 (t_irc_server *server, char *host, char *arguments)
+{
+    /* make gcc happy */
+    (void) host;
+    
+    arguments = strchr (arguments, ' ');
+    if (arguments)
+    {
+        while (arguments[0] == ' ')
+            arguments++;
+        if (arguments[0] == ':')
+            arguments++;
+        irc_display_prefix (server->window, PREFIX_SERVER);
+        gui_printf_color (server->window,
+                          COLOR_WIN_CHAT, "%s\n", arguments);
+    }
+    server->is_away = 0;
+    return 0;
+}
+
+/*
+ * irc_cmd_recv_306: '306' command (now away)
+ */
+
+int
+irc_cmd_recv_306 (t_irc_server *server, char *host, char *arguments)
+{
+    /* make gcc happy */
+    (void) host;
+    
+    arguments = strchr (arguments, ' ');
+    if (arguments)
+    {
+        while (arguments[0] == ' ')
+            arguments++;
+        if (arguments[0] == ':')
+            arguments++;
+        irc_display_prefix (server->window, PREFIX_SERVER);
+        gui_printf_color (server->window,
+                          COLOR_WIN_CHAT, "%s\n", arguments);
+    }
+    server->is_away = 1;
+    return 0;
+}
+
+/*
  * irc_cmd_recv_311: '311' command (whois, user)
  */
 

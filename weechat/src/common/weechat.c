@@ -60,14 +60,14 @@
 #include "../plugins/plugins.h"
 
 
-/* char *display_name; */
-int quit_weechat;           /* = 1 if quit request from user... why ? :'(   */
-
-FILE *log_file;             /* WeeChat log file (~/.weechat/weechat.log     */
+int quit_weechat;       /* = 1 if quit request from user... why ? :'(        */
+char *weechat_home;     /* WeeChat home dir. (example: /home/toto/.weechat)  */
+FILE *log_file;         /* WeeChat log file (~/.weechat/weechat.log          */
 
 
 /*
  * my_sigint: SIGINT handler, do nothing (just ignore this signal)
+ *            Prevents user for exiting with Ctrl-C
  */
 
 void
@@ -126,19 +126,6 @@ wee_parse_args (int argc, char *argv[])
             printf ("\n%s%s", WEE_LICENSE);
             exit (0);
         }
-        /*else if ((strcmp (argv[i], "-d") == 0)
-                 || (strcmp (argv[i], "--display") == 0))
-        {
-            if (i == (argc - 1))
-                fprintf (stderr,
-                         _("%s no display specified (parameter '%s'), ignored\n"),
-                         WEECHAT_WARNING, argv[i]);
-            else
-            {
-                display_name = argv[i + 1];
-                i++;
-            }
-        }*/
         else if ((strcmp (argv[i], "-v") == 0)
                  || (strcmp (argv[i], "--version") == 0))
         {
@@ -161,24 +148,25 @@ wee_parse_args (int argc, char *argv[])
 void
 wee_create_home_dir ()
 {
-    char *weechat_home_dir;
     int return_code;
 
-    weechat_home_dir =
-        (char *) malloc ((strlen (getenv ("HOME")) + 64) * sizeof (char));
-    sprintf (weechat_home_dir, "%s/.weechat", getenv ("HOME"));
-    return_code = mkdir (weechat_home_dir, 0755);
+    /* TODO: rewrite this code for Windows version */
+    weechat_home =
+        (char *) malloc ((strlen (getenv ("HOME")) + 10) * sizeof (char));
+    sprintf (weechat_home, "%s/.weechat", getenv ("HOME"));
+    
+    /* try to create home directory */
+    return_code = mkdir (weechat_home, 0755);
     if (return_code < 0)
     {
+        /* exit if error (except if directory already exists) */
         if (errno != EEXIST)
         {
             fprintf (stderr, _("%s cannot create directory \"%s\"\n"),
-                     WEECHAT_ERROR, weechat_home_dir);
-            free (weechat_home_dir);
+                     WEECHAT_ERROR, weechat_home);
             exit (1);
         }
     }
-    free (weechat_home_dir);
 }
 
 /*
@@ -206,8 +194,8 @@ wee_init_log ()
     char *filename;
     
     filename =
-        (char *) malloc ((strlen (getenv ("HOME")) + 64) * sizeof (char));
-    sprintf (filename, "%s/.weechat/" WEECHAT_LOG_NAME, getenv ("HOME"));
+        (char *) malloc ((strlen (weechat_home) + 64) * sizeof (char));
+    sprintf (filename, "%s/" WEECHAT_LOG_NAME, weechat_home);
     if ((log_file = fopen (filename, "wt")) == NULL)
     {
         free (filename);
@@ -219,76 +207,12 @@ wee_init_log ()
 }
 
 /*
- * wee_shutdown: shutdown WeeChat
+ * weechat_welcome_message: display WeeChat welcome message - yeah!
  */
 
 void
-wee_shutdown ()
+weechat_welcome_message ()
 {
-    server_free_all ();
-    gui_end ();
-    if (log_file)
-        fclose (log_file);
-    exit (0);
-}
-
-/*
- * main: WeeChat startup
- */
-
-int
-main (int argc, char *argv[])
-{
-    t_irc_server *ptr_server;
-    
-    #ifdef ENABLE_NLS
-    setlocale (LC_ALL, "");
-    bindtextdomain (PACKAGE, LOCALEDIR);
-    textdomain (PACKAGE);
-    #endif
-    
-    /* ignore SIGINT signal (for example Ctrl-C) */
-    signal (SIGINT, my_sigint);
-    
-    /* pre-initiliaze interface */
-    gui_pre_init (&argc, &argv);
-    
-    /* initialize variables */
-    wee_init_vars ();
-    
-    /* parse command line args */
-    wee_parse_args (argc, argv);
-
-    /* create weechat home directory */
-    wee_create_home_dir ();
-    
-    /* init log file */
-    wee_init_log ();
-    
-    /* build commands index (sorted), for completion */
-    index_command_build ();
-    
-    /* read configuration */
-    switch (config_read ())
-    {
-        case 0:                    /* success */
-            break;
-        case -1:                   /* config file not found */
-            config_create_default ();
-            config_read ();
-            break;
-        default:                   /* other error (fatal) */
-            server_free_all ();
-            return 1;
-    }
-    
-    /* init gui */
-    gui_init ();
-    
-    /* init plugin interface(s) */
-    plugin_init ();
-    
-    /* Welcome message - yeah! */
     if (cfg_look_startup_logo)
     {
         gui_printf_color (NULL, COLOR_WIN_CHAT_PREFIX1,
@@ -320,34 +244,67 @@ main (int argc, char *argv[])
         cfg_look_startup_version)
         gui_printf_color (NULL, COLOR_WIN_CHAT_PREFIX1,
             "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
+}
+
+/*
+ * wee_shutdown: shutdown WeeChat
+ */
+
+void
+wee_shutdown ()
+{
+    server_free_all ();
+    gui_end ();
+    if (log_file)
+        fclose (log_file);
+    exit (0);
+}
+
+/*
+ * main: WeeChat startup
+ */
+
+int
+main (int argc, char *argv[])
+{
+    #ifdef ENABLE_NLS
+    setlocale (LC_ALL, "");         /* initialize gettext                   */
+    bindtextdomain (PACKAGE, LOCALEDIR);
+    textdomain (PACKAGE);
+    #endif
     
-    /* connect to all servers (with autoconnect flag) */
-    for (ptr_server = irc_servers; ptr_server;
-         ptr_server = ptr_server->next_server)
+    signal (SIGINT, my_sigint);     /* ignore SIGINT signal                 */
+    gui_pre_init (&argc, &argv);    /* pre-initiliaze interface             */
+    wee_init_vars ();               /* initialize some variables            */
+    wee_parse_args (argc, argv);    /* parse command line args              */
+    wee_create_home_dir ();         /* create weechat home directory        */
+    wee_init_log ();                /* init log file                        */
+    index_command_build ();         /* build commands index  for completion */
+    
+    switch (config_read ())         /* read configuration                   */
     {
-        if (ptr_server->autoconnect)
-        {
-            gui_window_new (ptr_server, NULL);
-            if (server_connect (ptr_server))
-                irc_login (ptr_server);
-        }
+        case 0:                     /* config file OK                       */
+            break;
+        case -1:                    /* config file not found                */
+            config_create_default ();
+            config_read ();
+            break;
+        default:                    /* other error (fatal)                  */
+            server_free_all ();
+            return 1;
     }
     
-    /* WeeChat main loop */
-    gui_main_loop ();
+    gui_init ();                    /* init WeeChat interface               */
+    plugin_init ();                 /* init plugin interface(s)             */    
+    weechat_welcome_message ();     /* display WeeChat welcome message      */
+    server_auto_connect ();         /* auto-connect to servers              */
     
-    /* end plugin interface(s) */
-    plugin_end ();
+    gui_main_loop ();               /* WeeChat main loop                    */
     
-    /* disconnect from all servers */
-    server_disconnect_all ();
-
-    /* save config file */
-    config_write (NULL);
+    plugin_end ();                  /* end plugin interface(s)              */
+    server_disconnect_all ();       /* disconnect from all servers          */
+    config_write (NULL);            /* save config file                     */
+    wee_shutdown ();                /* quit WeeChat (oh no, why?)           */
     
-    /* program ending */
-    wee_shutdown ();
-
-    /* make gcc happy (statement never executed) */
-    return 0;
+    return 0;                       /* make gcc happy (never executed)      */
 }
