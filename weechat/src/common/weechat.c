@@ -10,7 +10,7 @@
  * ###                                                                      ###
  * ###               By: FlashCode <flashcode@flashtux.org>                 ###
  * ###                   Bounga <bounga@altern.org>                         ###
- * ###                   Xahlexx <xahlexx@tuxisland.org>                    ###
+ * ###                   Xahlexx <xahlexx@weeland.org>                      ###
  * ###                                                                      ###
  * ###                   http://weechat.flashtux.org                        ###
  * ###                                                                      ###
