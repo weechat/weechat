@@ -1,12 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2003-10-09
+ChangeLog - 2003-10-10
 
 
 Version 0.0.3 (under dev!):
    * new IRC command: /stats, /service, /squit, /motd, /lusers, /links, /time,
-     /trace, /admin
+     /trace, /admin, /info, /servlist, /squery, /who, /whowas
    * french translation
 
 Version 0.0.2 (2003-10-05):

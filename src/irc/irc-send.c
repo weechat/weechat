@@ -218,6 +218,20 @@ irc_cmd_send_devoice (t_irc_server *server, int argc, char **argv)
 }
 
 /*
+ * irc_cmd_send_info: get information describing the server
+ */
+
+int
+irc_cmd_send_info (t_irc_server *server, char *arguments)
+{
+    if (arguments)
+        server_sendf (server, "INFO %s\r\n", arguments);
+    else
+        server_sendf (server, "INFO\r\n");
+    return 0;
+}
+
+/*
  * irc_cmd_send_invite: invite a nick on a channel
  */
 
@@ -734,6 +748,31 @@ irc_cmd_send_service (t_irc_server *server, char *arguments)
 }
 
 /*
+ * irc_cmd_send_servlist: list services currently connected to the network
+ */
+
+int
+irc_cmd_send_servlist (t_irc_server *server, char *arguments)
+{
+    if (arguments)
+        server_sendf (server, "SERVLIST %s\r\n", arguments);
+    else
+        server_sendf (server, "SERVLIST\r\n");
+    return 0;
+}
+
+/*
+ * irc_cmd_send_squery: deliver a message to a service
+ */
+
+int
+irc_cmd_send_squery (t_irc_server *server, char *arguments)
+{
+    server_sendf (server, "SQUERY %s\r\n", arguments);
+    return 0;
+}
+
+/*
  * irc_cmd_send_squit: disconnect server links
  */
 
@@ -897,6 +936,20 @@ irc_cmd_send_voice (t_irc_server *server, int argc, char **argv)
 }
 
 /*
+ * irc_cmd_send_who: generate a query which returns a list of information
+ */
+
+int
+irc_cmd_send_who (t_irc_server *server, char *arguments)
+{
+    if (arguments)
+        server_sendf (server, "WHO %s\r\n", arguments);
+    else
+        server_sendf (server, "WHO\r\n");
+    return 0;
+}
+
+/*
  * irc_cmd_send_whois: query information about user(s)
  */
 
@@ -904,5 +957,16 @@ int
 irc_cmd_send_whois (t_irc_server *server, char *arguments)
 {
     server_sendf (server, "WHOIS %s\r\n", arguments);
+    return 0;
+}
+
+/*
+ * irc_cmd_send_whowas: ask for information about a nickname which no longer exists
+ */
+
+int
+irc_cmd_send_whowas (t_irc_server *server, char *arguments)
+{
+    server_sendf (server, "WHOWAS %s\r\n", arguments);
     return 0;
 }
