@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2004-01-24 20:57+0100\n"
+"POT-Creation-Date: 2004-02-07 20:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,86 +20,90 @@ msgstr ""
 msgid "%s cannot allocate new nick\n"
 msgstr ""
 
-#: src/irc/irc-server.c:158
+#: src/irc/irc-server.c:130 src/common/weeconfig.c:1192
+msgid "Unable to get user's name"
+msgstr ""
+
+#: src/irc/irc-server.c:195
 #, c-format
 msgid "%s cannot allocate new server\n"
 msgstr ""
 
-#: src/irc/irc-server.c:347
+#: src/irc/irc-server.c:384
 #, c-format
 msgid "%s error sending data to IRC server\n"
 msgstr ""
 
-#: src/irc/irc-server.c:364 src/irc/irc-server.c:375 src/irc/irc-server.c:429
+#: src/irc/irc-server.c:401 src/irc/irc-server.c:412 src/irc/irc-server.c:466
 #, c-format
 msgid "%s not enough memory for received IRC message\n"
 msgstr ""
 
-#: src/irc/irc-server.c:436
+#: src/irc/irc-server.c:473
 #, c-format
 msgid "%s unable to explode received buffer\n"
 msgstr ""
 
-#: src/irc/irc-server.c:509
+#: src/irc/irc-server.c:546
 #, c-format
 msgid "Command '%s' failed!\n"
 msgstr ""
 
-#: src/irc/irc-server.c:513
+#: src/irc/irc-server.c:550
 msgid "No command to execute!\n"
 msgstr ""
 
-#: src/irc/irc-server.c:517
+#: src/irc/irc-server.c:554
 #, c-format
 msgid "Unknown command: cmd=%s, args=%s\n"
 msgstr ""
 
-#: src/irc/irc-server.c:569
+#: src/irc/irc-server.c:606
 #, c-format
 msgid "%s: connecting to %s:%d...\n"
 msgstr ""
 
-#: src/irc/irc-server.c:571
+#: src/irc/irc-server.c:608
 #, c-format
 msgid "connecting to server %s:%d...\n"
 msgstr ""
 
-#: src/irc/irc-server.c:579
+#: src/irc/irc-server.c:616
 #, c-format
 msgid "%s cannot create pipe\n"
 msgstr ""
 
-#: src/irc/irc-server.c:593
+#: src/irc/irc-server.c:630
 #, c-format
 msgid "%s cannot set socket option \"SO_REUSEADDR\"\n"
 msgstr ""
 
-#: src/irc/irc-server.c:600
+#: src/irc/irc-server.c:637
 #, c-format
 msgid "%s cannot set socket option \"SO_KEEPALIVE\"\n"
 msgstr ""
 
-#: src/irc/irc-server.c:608
+#: src/irc/irc-server.c:645
 #, c-format
 msgid "%s address \"%s\" not found\n"
 msgstr ""
 
-#: src/irc/irc-server.c:631
+#: src/irc/irc-server.c:668
 #, c-format
 msgid "%s IP address not found\n"
 msgstr ""
 
-#: src/irc/irc-server.c:641
+#: src/irc/irc-server.c:678
 #, c-format
 msgid "%s: server IP is: %s\n"
 msgstr ""
 
-#: src/irc/irc-server.c:647
+#: src/irc/irc-server.c:684
 #, c-format
 msgid "%s cannot connect to irc server\n"
 msgstr ""
 
-#: src/irc/irc-server.c:697
+#: src/irc/irc-server.c:734
 msgid "Disconnected from server!\n"
 msgstr ""
 
@@ -2745,10 +2749,6 @@ msgstr ""
 msgid ""
 "#\n"
 "# %s configuration file, created by %s v%s on %s#\n"
-msgstr ""
-
-#: src/common/weeconfig.c:1192
-msgid "Unable to get user's name"
 msgstr ""
 
 #: src/common/weeconfig.c:1247
