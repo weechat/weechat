@@ -1109,7 +1109,7 @@ irc_cmd_recv_004 (t_irc_server *server, char *host, char *arguments)
 }
 
 /*
- * irc_cmd_recv_311: '311' command (away message)
+ * irc_cmd_recv_301: '301' command (away message)
  */
 
 int
@@ -1143,6 +1143,104 @@ irc_cmd_recv_301 (t_irc_server *server, char *host, char *arguments)
                               COLOR_WIN_CHAT, _(" is away: %s\n"), pos_message);
         }
     }
+    return 0;
+}
+
+/*
+ * irc_cmd_recv_302: '302' command (userhost)
+ */
+
+int
+irc_cmd_recv_302 (t_irc_server *server, char *host, char *arguments)
+{
+    char *pos_host, *ptr_next;
+    
+    /* make gcc happy */
+    (void) host;
+    
+    arguments = strchr (arguments, ' ');
+    if (arguments)
+    {
+        while (arguments[0] == ' ')
+            arguments++;
+        if (arguments[0] == ':')
+            arguments++;
+        while (arguments)
+        {
+            pos_host = strchr (arguments, '=');
+            if (pos_host)
+            {
+                pos_host[0] = '\0';
+                pos_host++;
+                
+                ptr_next = strchr (pos_host, ' ');
+                if (ptr_next)
+                {
+                    ptr_next[0] = '\0';
+                    ptr_next++;
+                    while (ptr_next[0] == ' ')
+                        ptr_next++;
+                }
+                
+                irc_display_prefix (server->window, PREFIX_SERVER);
+                gui_printf_color (server->window,
+                                  COLOR_WIN_CHAT_NICK, "%s", arguments);
+                gui_printf_color (server->window,
+                                  COLOR_WIN_CHAT, "=");
+                gui_printf_color (server->window,
+                                  COLOR_WIN_CHAT_HOST, "%s\n", pos_host);
+            }
+            else
+                ptr_next = NULL;
+            arguments = ptr_next;
+            if (arguments && !arguments[0])
+                arguments = NULL;
+        }
+    }
+    return 0;
+}
+
+/*
+ * irc_cmd_recv_303: '303' command (ison)
+ */
+
+int
+irc_cmd_recv_303 (t_irc_server *server, char *host, char *arguments)
+{
+    char *ptr_next;
+    
+    /* make gcc happy */
+    (void) host;
+    
+    irc_display_prefix (server->window, PREFIX_SERVER);
+    gui_printf_color (server->window,
+                      COLOR_WIN_CHAT, _("Users online: "));
+    
+    arguments = strchr (arguments, ' ');
+    if (arguments)
+    {
+        while (arguments[0] == ' ')
+            arguments++;
+        if (arguments[0] == ':')
+            arguments++;
+        while (arguments)
+        {
+            ptr_next = strchr (arguments, ' ');
+            if (ptr_next)
+            {
+                ptr_next[0] = '\0';
+                ptr_next++;
+                while (ptr_next[0] == ' ')
+                    ptr_next++;
+            }
+            gui_printf_color (server->window,
+                              COLOR_WIN_CHAT_NICK, "%s ", arguments);
+            arguments = ptr_next;
+            if (arguments && !arguments[0])
+                arguments = NULL;
+        }
+    }
+    gui_printf (server->window, "\n");
     return 0;
 }
 

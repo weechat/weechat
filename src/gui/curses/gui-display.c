@@ -411,11 +411,13 @@ gui_display_end_of_line (t_gui_window *window, t_gui_line *line, int count)
         if (!ptr_message ||
             (window->win_chat_cursor_x > (window->win_chat_width - 1)))
         {
-            window->win_chat_cursor_x = 0;
             if (lines_displayed >= num_lines - count)
             {
+                if (window->win_chat_cursor_x <= window->win_chat_width - 1)
+                    wclrtoeol (window->win_chat);
                 window->win_chat_cursor_y++;
             }
+            window->win_chat_cursor_x = 0;
             lines_displayed++;
         }
     }
@@ -503,7 +505,11 @@ gui_display_line (t_gui_window *window, t_gui_line *line, int stop_at_end)
             if (!ptr_message ||
                 ((window->win_chat_cursor_y <= window->win_chat_height - 1) &&
                 (window->win_chat_cursor_x > window->win_chat_width - 1)))
+            {
+                if (window->win_chat_cursor_x <= window->win_chat_width - 1)
+                    wclrtoeol (window->win_chat);
                 window->win_chat_cursor_y++;
+            }
             window->win_chat_cursor_x = 0;
         }
     }
@@ -589,7 +595,7 @@ gui_redraw_window_chat (t_gui_window *window)
     if (window != gui_current_window)
         return;
     
-    gui_curses_window_clear (window->win_chat);
+    //gui_curses_window_clear (window->win_chat);
     gui_draw_window_chat (window);
 }
 
@@ -625,7 +631,7 @@ gui_draw_window_nick (t_gui_window *window)
                                        window->win_nick_width,
                                        window->win_nick_y,
                                        window->win_nick_x);
-            gui_redraw_window_chat (window);
+            gui_draw_window_chat (window);
         }
         sprintf (format, "%%-%ds", max_length);
             
@@ -1692,7 +1698,7 @@ gui_add_message (t_gui_window *window, int type, int color, char *message)
             if ((window->win_chat_cursor_y
                 + gui_get_line_num_splits (window, window->last_line)) >
                 (window->win_chat_height - 1))
-                gui_redraw_window_chat (window);
+                gui_draw_window_chat (window);
             else
                 gui_display_line (window, window->last_line, 1);
         }

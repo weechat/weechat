@@ -218,6 +218,20 @@ irc_cmd_send_devoice (t_irc_server *server, int argc, char **argv)
 }
 
 /*
+ * irc_cmd_send_die: shotdown the server
+ */
+
+int
+irc_cmd_send_die (t_irc_server *server, char *arguments)
+{
+    /* make gcc happy */
+    (void) arguments;
+    
+    server_sendf (server, "DIE\r\n");
+    return 0;
+}
+
+/*
  * irc_cmd_send_info: get information describing the server
  */
 
@@ -239,6 +253,17 @@ int
 irc_cmd_send_invite (t_irc_server *server, char *arguments)
 {
     server_sendf (server, "INVITE %s\r\n", arguments);
+    return 0;
+}
+
+/*
+ * irc_cmd_send_ison: check if a nickname is currently on IRC
+ */
+
+int
+irc_cmd_send_ison (t_irc_server *server, char *arguments)
+{
+    server_sendf (server, "ISON %s\r\n", arguments);
     return 0;
 }
 
@@ -798,6 +823,18 @@ irc_cmd_send_stats (t_irc_server *server, char *arguments)
 }
 
 /*
+ * irc_cmd_send_summon: give users who are on a host running an IRC server
+ *                      a message asking them to please join IRC
+ */
+
+int
+irc_cmd_send_summon (t_irc_server *server, char *arguments)
+{
+    server_sendf (server, "SUMMON %s\r\n", arguments);
+    return 0;
+}
+
+/*
  * irc_cmd_send_time: query local time from server
  */
 
@@ -882,6 +919,31 @@ irc_cmd_send_trace (t_irc_server *server, char *arguments)
 }
 
 /*
+ * irc_cmd_send_userhost: return a list of information about nicknames
+ */
+
+int
+irc_cmd_send_userhost (t_irc_server *server, char *arguments)
+{
+    server_sendf (server, "USERHOST %s\r\n", arguments);
+    return 0;
+}
+
+/*
+ * irc_cmd_send_users: list of users logged into the server
+ */
+
+int
+irc_cmd_send_users (t_irc_server *server, char *arguments)
+{
+    if (arguments)
+        server_sendf (server, "USERS %s\r\n", arguments);
+    else
+        server_sendf (server, "USERS\r\n");
+    return 0;
+}
+
+/*
  * irc_cmd_send_version: gives the version info of nick or server (current or specified)
  */
 
@@ -932,6 +994,18 @@ irc_cmd_send_voice (t_irc_server *server, int argc, char **argv)
                     WEECHAT_ERROR, "voice");
         return -1;
     }
+    return 0;
+}
+
+/*
+ * irc_cmd_send_wallops: send a message to all currently connected users who
+ *                       have set the 'w' user mode for themselves
+ */
+
+int
+irc_cmd_send_wallops (t_irc_server *server, char *arguments)
+{
+    server_sendf (server, "WALLOPS %s\r\n", arguments);
     return 0;
 }
 
