@@ -1655,7 +1655,12 @@ gui_end ()
             delwin (ptr_win->win_infobar);
         if (ptr_win->win_input)
             delwin (ptr_win->win_input);
-        /* TODO: free input buffer, lines, messages, completion */
+    }
+    
+    /* delete all buffers */
+    while (gui_buffers)
+    {
+        gui_buffer_free (gui_buffers, 0);
     }
     
     /* end of curses output */
