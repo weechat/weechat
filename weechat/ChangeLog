@@ -1,8 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2004-02-07
+ChangeLog - 2004-02-21
 
+
+Version 0.0.6 (under dev!):
+   * CTCP Version reply is now in english only and doesn't show host (security reason)
 
 Version 0.0.5 (2004-02-07):
    * /set command to modify config options when WeeChat is running

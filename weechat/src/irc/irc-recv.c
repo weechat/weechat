@@ -870,18 +870,18 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                 if (buf && (uname (buf) == 0))
                 {
                     server_sendf (server,
-                                  _("NOTICE %s :%sVERSION %s v%s"
-                                  " compiled on %s, host \"%s\" is running "
-                                  "%s %s / %s%s"),
+                                  "NOTICE %s :%sVERSION %s v%s"
+                                  " compiled on %s, running "
+                                  "%s %s / %s%s",
                                   host, "\01", PACKAGE_NAME, PACKAGE_VERSION, __DATE__,
-                                  &buf->nodename, &buf->sysname,
+                                  &buf->sysname,
                                   &buf->release, &buf->machine, "\01\r\n");
                     free (buf);
                 }
                 else
                     server_sendf (server,
-                                  _("NOTICE %s :%sVERSION %s v%s"
-                                  " compiled on %s%s"),
+                                  "NOTICE %s :%sVERSION %s v%s"
+                                  " compiled on %s%s",
                                   host, "\01", PACKAGE_NAME, PACKAGE_VERSION, __DATE__,
                                   "\01\r\n");
                 irc_display_prefix (server->window, PREFIX_INFO);
