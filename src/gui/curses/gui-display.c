@@ -1010,10 +1010,15 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
             else
                 wprintw (ptr_win->win_status, "%s",
                          CHANNEL(ptr_win->buffer)->name);
-            if (ptr_win->buffer == CHANNEL(ptr_win->buffer)->buffer)
+            if ((ptr_win->buffer == CHANNEL(ptr_win->buffer)->buffer)
+                && (CHANNEL(ptr_win->buffer)->type == CHAT_CHANNEL))
             {
                 /* display channel modes */
+                gui_window_set_color (ptr_win->win_status,
+                                      COLOR_WIN_STATUS_DELIMITERS);
                 wprintw (ptr_win->win_status, "(");
+                gui_window_set_color (ptr_win->win_status,
+                                      COLOR_WIN_STATUS);
                 i = 0;
                 first_mode = 1;
                 while (CHANNEL(ptr_win->buffer)->modes[i])
@@ -1036,7 +1041,11 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                 if (CHANNEL(ptr_win->buffer)->modes[CHANNEL_MODE_LIMIT] != ' ')
                     wprintw (ptr_win->win_status, ",%d",
                              CHANNEL(ptr_win->buffer)->limit);
+                gui_window_set_color (ptr_win->win_status,
+                                      COLOR_WIN_STATUS_DELIMITERS);
                 wprintw (ptr_win->win_status, ")");
+                gui_window_set_color (ptr_win->win_status,
+                                      COLOR_WIN_STATUS);
             }
             wprintw (ptr_win->win_status, " ");
         }
