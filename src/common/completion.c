@@ -145,18 +145,25 @@ completion_build_list (t_completion *completion, void *channel)
                      "-all");
         return;
     }
-    if (((strcasecmp (completion->base_command, "connect") == 0)
-        || (strcasecmp (completion->base_command, "connect") == 0))
-        && (completion->base_command_arg == 1))
+    if ((strcasecmp (completion->base_command, "connect") == 0)
+        || (strcasecmp (completion->base_command, "disconnect") == 0))
     {
-        for (ptr_server = irc_servers; ptr_server;
-             ptr_server = ptr_server->next_server)
+        if (completion->base_command_arg == 1)
         {
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         ptr_server->name);
+            for (ptr_server = irc_servers; ptr_server;
+                 ptr_server = ptr_server->next_server)
+            {
+                weelist_add (&completion->completion_list,
+                             &completion->last_completion,
+                             ptr_server->name);
+            }
+            return;
         }
-        return;
+        else
+        {
+            completion_stop (completion);
+            return;
+        }
     }
     if ((strcasecmp (completion->base_command, "help") == 0)
         && (completion->base_command_arg == 1))

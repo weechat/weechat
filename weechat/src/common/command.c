@@ -833,6 +833,7 @@ weechat_cmd_buffer (int argc, char **argv)
 {
     t_gui_buffer *ptr_buffer;
     t_irc_server *ptr_server;
+    t_irc_channel *ptr_channel;
     long number;
     char *error;
     
@@ -922,10 +923,23 @@ weechat_cmd_buffer (int argc, char **argv)
             else
             {
                 if (SERVER(gui_current_window->buffer))
-                    irc_cmd_send_part (SERVER(gui_current_window->buffer), NULL);
+                {
+                    if (SERVER(gui_current_window->buffer)->is_connected)
+                        irc_cmd_send_part (SERVER(gui_current_window->buffer), NULL);
+                    else
+                    {
+                        ptr_channel = channel_search (SERVER(gui_current_window->buffer),
+                                                      CHANNEL(gui_current_window->buffer)->name);
+                        if (ptr_channel)
+                            channel_free (SERVER(gui_current_window->buffer),
+                                          ptr_channel);
+                        gui_buffer_free (gui_current_window->buffer, 1);
+                    }
+                }
                 else
                     gui_buffer_free (gui_current_window->buffer, 1);
             }
+            gui_draw_buffer_status (gui_current_window->buffer, 1);
         }
         else if (strcasecmp (argv[0], "notify") == 0)
         {
