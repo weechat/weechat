@@ -1041,7 +1041,7 @@ gui_switch_to_window (t_gui_window *window)
     another_window = 0;
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        if (ptr_win->win_title)
+        if (ptr_win->is_displayed)
         {
             /* TODO: manage splitted windows */
             another_window = 1;
@@ -1055,6 +1055,7 @@ gui_switch_to_window (t_gui_window *window)
             ptr_win->win_nick = NULL;
             ptr_win->win_status = NULL;
             ptr_win->win_input = NULL;
+            ptr_win->is_displayed = 0;
             break;
         }
     }
@@ -1115,6 +1116,7 @@ gui_switch_to_window (t_gui_window *window)
     /* change current window to the new window */
     gui_current_window = window;
     
+    window->is_displayed = 1;
     window->unread_data = 0;
 }
 
@@ -1227,6 +1229,20 @@ gui_curses_resize_handler ()
             gui_switch_to_window (ptr_win);
         }
     }
+}
+
+/*
+ * gui_window_init_subwindows: init subwindows for a WeeChat window
+ */
+
+void
+gui_window_init_subwindows (t_gui_window *window)
+{
+    window->win_title = NULL;
+    window->win_chat = NULL;
+    window->win_nick = NULL;
+    window->win_status = NULL;
+    window->win_input = NULL;
 }
 
 /*
@@ -1348,7 +1364,7 @@ gui_init ()
 
     gui_init_colors ();
 
-    /* create windows */
+    /* create a new window */
     gui_current_window = gui_window_new (NULL, NULL /*0, 0, COLS, LINES*/);
     
     signal (SIGWINCH, gui_curses_resize_handler);
@@ -1507,11 +1523,10 @@ gui_printf_color_type (t_gui_window *window, int type, int color, char *message,
                 gui_add_message (window, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME, timestamp);
                 gui_add_message (window, MSG_TYPE_TIME, COLOR_WIN_CHAT_DARK, "] ");
             }
-            gui_add_message (window, type, color, pos+1);
-            pos = strchr (pos+1, '\n');
-            if (pos)
-                if (pos[1] == '\0')
-                    pos = NULL;
+            gui_add_message (window, type, color, pos + 1);
+            pos = strchr (pos + 1, '\n');
+            if (pos && !pos[1])
+                pos = NULL;
         }
         
         wrefresh (window->win_chat);

@@ -63,6 +63,15 @@ char *nicks_colors[COLOR_WIN_NICK_NUMBER] =
 int color_attr[NUM_COLORS];
 
 GtkWidget *gtk_main_window;
+GtkWidget *vbox1;
+GtkWidget *entry_topic;
+GtkWidget *notebook1;
+GtkWidget *vbox2;
+GtkWidget *hbox1;
+GtkWidget *scrolledwindow_chat;
+GtkWidget *scrolledwindow_nick;
+GtkWidget *entry_input;
+GtkWidget *label1;
 
 
 /*
@@ -277,46 +286,11 @@ gui_redraw_window_chat (t_gui_window *window)
 void
 gui_draw_window_nick (t_gui_window *window)
 {
-    int i, x, y, column, max_length;
-    char format[32];
-    t_irc_nick *ptr_nick;
-    
     /* TODO: manage splitted windows! */
     if (window != gui_current_window)
         return;
     
-    if (CHANNEL(window) && CHANNEL(window)->nicks)
-    {
-        max_length = nick_get_max_length (CHANNEL(window));
-        if ((window == gui_current_window) &&
-            ((max_length + 2) != window->win_nick_width))
-        {
-            /* TODO: auto resize nicklist and chat windows */
-        }
-        sprintf (format, "%%-%ds", max_length);
-            
-        switch (cfg_look_nicklist_position)
-        {
-            case CFG_LOOK_NICKLIST_LEFT:
-                /* TODO: init nicklist (left) */
-                break;
-            case CFG_LOOK_NICKLIST_RIGHT:
-                /* TODO: init nicklist (right) */
-                break;
-            case CFG_LOOK_NICKLIST_TOP:
-                /* TODO: init nicklist (top) */
-                break;
-            case CFG_LOOK_NICKLIST_BOTTOM:
-                /* TODO: init nicklist (bottom) */
-                break;
-        }
-        /* TODO: draw nicklist! */
-        (void) i;
-        (void) x;
-        (void) y;
-        (void) column;
-        (void) ptr_nick;
-    }
+    /* TODO: display nicklist for Gtk GUI */
 }
 
 /*
@@ -405,7 +379,7 @@ gui_redraw_window (t_gui_window *window)
     
     gui_redraw_window_title (window);
     gui_redraw_window_chat (window);
-    if (window->win_nick)
+    if (WIN_HAS_NICKLIST(window))
         gui_redraw_window_nick (window);
     gui_redraw_window_status (window);
     gui_redraw_window_input (window);
@@ -418,56 +392,54 @@ gui_redraw_window (t_gui_window *window)
 void
 gui_switch_to_window (t_gui_window *window)
 {
-    int another_window;
     t_gui_window *ptr_win;
+    GtkTextIter start, end;
     
-    another_window = 0;
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        if (ptr_win->win_title)
+        if (ptr_win->is_displayed)
         {
             /* TODO: manage splitted windows */
-            another_window = 1;
-            window->win_title = ptr_win->win_title;
-            window->win_chat = ptr_win->win_chat;
-            window->win_nick = ptr_win->win_nick;
-            window->win_status = ptr_win->win_status;
-            window->win_input = ptr_win->win_input;
-            ptr_win->win_title = NULL;
-            ptr_win->win_chat = NULL;
-            ptr_win->win_nick = NULL;
-            ptr_win->win_status = NULL;
-            ptr_win->win_input = NULL;
+            ptr_win->is_displayed = 0;
             break;
         }
     }
     
     gui_calculate_pos_size (window);
     
-    /* first time creation for windows */
-    if (!another_window)
+    if (!window->textview_chat)
     {
-        /* create new windows */
-        /* TODO: create title, chat, nick, status and input windows */
+        window->textview_chat = gtk_text_view_new ();
+        gtk_widget_show (window->textview_chat);
+        gtk_container_add (GTK_CONTAINER (scrolledwindow_chat), window->textview_chat);
+        gtk_widget_set_size_request (window->textview_chat, 300, -1);
+        gtk_text_view_set_editable (GTK_TEXT_VIEW (window->textview_chat), FALSE);
+        gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (window->textview_chat), FALSE);
+        
+        window->textbuffer_chat = gtk_text_buffer_new (NULL);
+        gtk_text_view_set_buffer (GTK_TEXT_VIEW (window->textview_chat), window->textbuffer_chat);
+        
+        window->texttag_chat = gtk_text_buffer_create_tag(window->textbuffer_chat, "courier", "font_family", "lucida");
+        gtk_text_buffer_get_bounds (window->textbuffer_chat, &start, &end);
+        gtk_text_buffer_apply_tag (window->textbuffer_chat, window->texttag_chat, &start, &end);
     }
-    else
+    if (WIN_IS_CHANNEL (window) && !window->textbuffer_nicklist)
     {
-        /* create chat & nick windows */
-        if (WIN_IS_CHANNEL(window))
-        {
-            /* (re)create nicklist window */
-            /* TODO: delete nick/chat windows and create them */
-        }
-        if (!(WIN_IS_CHANNEL(window)))
-        {
-            /* remove nick list window */
-            /* TODO: remove nicklist window and create full chat window */
-        }
+        
+        window->textview_nicklist = gtk_text_view_new ();
+        gtk_widget_show (window->textview_nicklist);
+        gtk_container_add (GTK_CONTAINER (scrolledwindow_nick), window->textview_nicklist);
+        gtk_text_view_set_editable (GTK_TEXT_VIEW (window->textview_nicklist), FALSE);
+        gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (window->textview_nicklist), FALSE);
+        
+        window->textbuffer_nicklist = gtk_text_buffer_new (NULL);
+        gtk_text_view_set_buffer (GTK_TEXT_VIEW (window->textview_nicklist), window->textbuffer_nicklist);
     }
     
     /* change current window to the new window */
     gui_current_window = window;
     
+    window->is_displayed = 1;
     window->unread_data = 0;
 }
 
@@ -552,6 +524,20 @@ gui_gtk_resize_handler ()
 }
 
 /*
+ * gui_window_init_subwindows: init subwindows for a WeeChat window
+ */
+
+void
+gui_window_init_subwindows (t_gui_window *window)
+{
+    window->textview_chat = NULL;
+    window->textbuffer_chat = NULL;
+    window->texttag_chat = NULL;
+    window->textview_nicklist = NULL;
+    window->textbuffer_nicklist = NULL;
+}
+
+/*
  * gui_init_colors: init GUI colors
  */
 
@@ -568,18 +554,6 @@ gui_init_colors ()
 void
 gui_init ()
 {
-    GtkWidget *vbox1;
-    GtkWidget *entry_topic;
-    GtkWidget *notebook1;
-    GtkWidget *vbox2;
-    GtkWidget *hbox1;
-    GtkWidget *scrolledwindow_chat;
-    GtkWidget *textview_chat;
-    GtkWidget *scrolledwindow_nick;
-    GtkWidget *textview_nick;
-    GtkWidget *entry_input;
-    GtkWidget *label1;
-    
     gtk_main_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title (GTK_WINDOW (gtk_main_window), WEECHAT_NAME_AND_VERSION);
     
@@ -609,23 +583,10 @@ gui_init ()
     gtk_box_pack_start (GTK_BOX (hbox1), scrolledwindow_chat, TRUE, TRUE, 0);
     gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow_chat), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
     
-    textview_chat = gtk_text_view_new ();
-    gtk_widget_show (textview_chat);
-    gtk_container_add (GTK_CONTAINER (scrolledwindow_chat), textview_chat);
-    gtk_widget_set_size_request (textview_chat, 300, -1);
-    gtk_text_view_set_editable (GTK_TEXT_VIEW (textview_chat), FALSE);
-    gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (textview_chat), FALSE);
-    
     scrolledwindow_nick = gtk_scrolled_window_new (NULL, NULL);
     gtk_widget_show (scrolledwindow_nick);
     gtk_box_pack_start (GTK_BOX (hbox1), scrolledwindow_nick, TRUE, TRUE, 0);
     gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow_nick), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
-    
-    textview_nick = gtk_text_view_new ();
-    gtk_widget_show (textview_nick);
-    gtk_container_add (GTK_CONTAINER (scrolledwindow_nick), textview_nick);
-    gtk_text_view_set_editable (GTK_TEXT_VIEW (textview_nick), FALSE);
-    gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (textview_nick), FALSE);
     
     entry_input = gtk_entry_new ();
     gtk_widget_show (entry_input);
@@ -638,8 +599,11 @@ gui_init ()
     
     gtk_widget_show_all (gtk_main_window);
     
+    /* create a new window */
+    gui_current_window = gui_window_new (NULL, NULL /*0, 0, COLS, LINES*/);
+    
     /* TODO: set gui_ready to 1 when Gtk display functions will be ok */
-    gui_ready = 0;
+    gui_ready = 1;
 }
 
 /*
@@ -668,50 +632,28 @@ gui_add_message (t_gui_window *window, int type, int color, char *message)
 {
     char *pos;
     int length;
+    GtkTextIter start, end;
     
     /* create new line if previous was ending by '\n' (or if 1st line) */
     if (window->line_complete)
     {
+        gtk_text_buffer_insert_at_cursor (window->textbuffer_chat, "\n", -1);
         window->line_complete = 0;
-        if (!gui_new_line (window))
-            return;
     }
-    if (!gui_new_message (window))
-        return;
     
-    window->last_line->last_message->type = type;
-    window->last_line->last_message->color = color;
     pos = strchr (message, '\n');
     if (pos)
     {
         pos[0] = '\0';
         window->line_complete = 1;
     }
-    window->last_line->last_message->message = strdup (message);
-    length = strlen (message);
-    window->last_line->length += length;
-    if (type == MSG_TYPE_MSG)
-        window->last_line->line_with_message = 1;
-    if ((type == MSG_TYPE_TIME) || (type == MSG_TYPE_NICK))
-        window->last_line->length_align += length;
+    
+    gtk_text_buffer_insert_at_cursor (window->textbuffer_chat, message, -1);
+    gtk_text_buffer_get_bounds (window->textbuffer_chat, &start, &end);
+    gtk_text_buffer_apply_tag (window->textbuffer_chat, window->texttag_chat, &start, &end);
+    
     if (pos)
-    {
         pos[0] = '\n';
-        if ((window == gui_current_window) && (window->sub_lines == 0))
-        {
-            if ((window->win_chat_cursor_y
-                + gui_get_line_num_splits (window, window->last_line)) >
-                (window->win_chat_height - 1))
-                gui_draw_window_chat (window);
-            else
-                gui_display_line (window, window->last_line, 1);
-        }
-        if ((window != gui_current_window) || (window->sub_lines > 0))
-        {
-            window->unread_data = 1 + window->last_line->line_with_message;
-            gui_redraw_window_status (gui_current_window);
-        }
-    }
 }
 
 /*
@@ -727,12 +669,26 @@ gui_printf_color_type (t_gui_window *window, int type, int color, char *message,
     va_list argptr;
     static time_t seconds;
     struct tm *date_tmp;
-
-    /* make gcc hapy */
-    (void) window;
-    (void) type;
-    (void) color;
-    (void) message;
+    
+    if (gui_ready)
+    {
+        if (color == -1)
+            color = COLOR_WIN_CHAT;
+    
+        if (window == NULL)
+        {
+            if (SERVER(gui_current_window))
+                window = SERVER(gui_current_window)->window;
+            else
+                window = gui_current_window;
+        }
+    
+        if (window == NULL)
+        {
+            log_printf ("gui_printf without window! this is a bug, please send to developers - thanks\n");
+            return;
+        }
+    }
     
     va_start (argptr, message);
     vsnprintf (buffer, sizeof (buffer) - 1, message, argptr);
@@ -747,7 +703,7 @@ gui_printf_color_type (t_gui_window *window, int type, int color, char *message,
         while (pos)
         {
             /* TODO: read timestamp format from config! */
-            if ((!window->last_line) || (window->line_complete))
+            if (window->line_complete)
             {
                 gui_add_message (window, MSG_TYPE_TIME, COLOR_WIN_CHAT_DARK, "[");
                 sprintf (timestamp, "%02d", date_tmp->tm_hour);
@@ -760,11 +716,10 @@ gui_printf_color_type (t_gui_window *window, int type, int color, char *message,
                 gui_add_message (window, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME, timestamp);
                 gui_add_message (window, MSG_TYPE_TIME, COLOR_WIN_CHAT_DARK, "] ");
             }
-            gui_add_message (window, type, color, pos+1);
-            pos = strchr (pos+1, '\n');
-            if (pos)
-                if (pos[1] == '\0')
-                    pos = NULL;
+            gui_add_message (window, type, color, pos + 1);
+            pos = strchr (pos + 1, '\n');
+            if (pos && !pos[1])
+                pos = NULL;
         }
     }
     else

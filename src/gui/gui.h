@@ -76,6 +76,13 @@
 #define WIN_IS_CHANNEL(window) (CHANNEL(window) && (CHANNEL(window)->type == CHAT_CHANNEL))
 #define WIN_IS_PRIVATE(window) (CHANNEL(window) && (CHANNEL(window)->type == CHAT_PRIVATE))
 
+#ifdef WEE_CURSES
+    #define WIN_HAS_NICKLIST(window) (window->win_nick)
+#endif
+#ifdef WEE_GTK
+    #define WIN_HAS_NICKLIST(window) (window->textbuffer_nicklist)
+#endif
+
 #define MSG_TYPE_TIME  0
 #define MSG_TYPE_NICK  1
 #define MSG_TYPE_INFO  2
@@ -123,6 +130,8 @@ typedef struct t_gui_window t_gui_window;
 
 struct t_gui_window
 {
+    int is_displayed;               /* = 1 if window is displayed           */
+    
     /* server/channel */
     void *server;                   /* window's server                      */
     void *channel;                  /* window's channel                     */
@@ -152,11 +161,11 @@ struct t_gui_window
     WINDOW *win_input;              /* input window                         */
     #endif
     #ifdef WEE_GTK
-    GtkWidget *win_title;           /* title window                         */
-    GtkWidget *win_chat;            /* chat window (exemple: channel)       */
-    GtkWidget *win_nick;            /* nick window                          */
-    GtkWidget *win_status;          /* status window                        */
-    GtkWidget *win_input;           /* input window                         */
+    GtkWidget *textview_chat;           /* textview widget for chat         */
+    GtkTextBuffer *textbuffer_chat;     /* textbuffer widget for chat       */
+    GtkTextTag *texttag_chat;           /* texttag widget for chat          */
+    GtkWidget *textview_nicklist;       /* textview widget for nicklist     */
+    GtkTextBuffer *textbuffer_nicklist; /* textbuffer widget for nicklist   */
     #endif
     #ifdef WEE_QT
     /* TODO: declare Qt window */
@@ -198,12 +207,22 @@ extern t_gui_window *gui_current_window;
 
 /* prototypes */
 
+/* GUI independent functions */
+extern t_gui_window *gui_window_new (void *, void * /*int, int, int, int*/); /* TODO: add coordinates and size */
+extern void gui_window_clear (t_gui_window *);
+extern void gui_window_clear_all ();
+extern t_gui_line *gui_new_line (t_gui_window *);
+extern t_gui_message *gui_new_message (t_gui_window *);
+extern void gui_optimize_input_buffer_size (t_gui_window *);
+extern void gui_delete_previous_word ();
+extern void gui_move_previous_word ();
+extern void gui_move_next_word ();
+extern void gui_buffer_insert_string (char *, int);
+/* GUI dependant functions */
 extern int gui_assign_color (int *, char *);
 extern int gui_get_color_by_name (char *);
 extern char *gui_get_color_by_value (int);
-
 extern void gui_calculate_pos_size (t_gui_window *);
-
 extern void gui_draw_window_title (t_gui_window *);
 extern void gui_redraw_window_title (t_gui_window *);
 extern void gui_draw_window_chat (t_gui_window *);
@@ -215,34 +234,17 @@ extern void gui_redraw_window_status (t_gui_window *);
 extern void gui_draw_window_input (t_gui_window *);
 extern void gui_redraw_window_input (t_gui_window *);
 extern void gui_redraw_window (t_gui_window *);
-
-extern t_gui_window *gui_window_new (void *, void *);
-extern void gui_window_clear (t_gui_window *);
-extern void gui_window_clear_all ();
-
 extern void gui_switch_to_window (t_gui_window *);
 extern void gui_switch_to_previous_window ();
 extern void gui_switch_to_next_window ();
-
 extern void gui_move_page_up ();
 extern void gui_move_page_down ();
-
+extern void gui_window_init_subwindows (t_gui_window *);
+extern void gui_init_colors ();
 extern void gui_init ();
-/* TODO: add coordinates and size */
-extern t_gui_window *gui_window_new (void *, void * /*int, int, int, int*/);
 extern void gui_window_free (t_gui_window *);
 extern void gui_end ();
-
-extern t_gui_line *gui_new_line (t_gui_window *);
-extern t_gui_message *gui_new_message (t_gui_window *);
 extern void gui_printf_color_type (t_gui_window *, int, int, char *, ...);
-
-extern void gui_optimize_input_buffer_size (t_gui_window *);
-extern void gui_delete_previous_word ();
-extern void gui_move_previous_word ();
-extern void gui_move_next_word ();
-extern void gui_buffer_insert_string (char *, int);
-
 extern void gui_main_loop ();
 
 #endif /* gui.h */

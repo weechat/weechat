@@ -44,6 +44,94 @@ t_gui_window *gui_current_window = NULL;    /* pointer to current window    */
 
 
 /*
+ * gui_window_new: create a new window
+ *                 (TODO: add coordinates and size, for splited windows)
+ */
+
+t_gui_window *
+gui_window_new (void *server, void *channel
+                /*int x, int y, int width, int height*/)
+{
+    t_gui_window *new_window;
+    
+    if (gui_windows)
+    {
+        /* use first window if no server was assigned to this window */
+        if (!SERVER(gui_windows))
+        {
+            if (server)
+                ((t_irc_server *)(server))->window = gui_windows;
+            if (channel)
+                ((t_irc_channel *)(channel))->window = gui_windows;
+            SERVER(gui_windows) = server;
+            CHANNEL(gui_windows) = channel;
+            return gui_windows;
+        }
+    }
+    
+    if ((new_window = (t_gui_window *)(malloc (sizeof (t_gui_window)))))
+    {
+        new_window->is_displayed = 0;
+        
+        /* assign server and channel to window */
+        SERVER(new_window) = server;
+        CHANNEL(new_window) = channel;
+        /* assign window to server and channel */
+        if (server && !channel)
+            SERVER(new_window)->window = new_window;
+        if (channel)
+            CHANNEL(new_window)->window = new_window;
+        
+        gui_calculate_pos_size (new_window);
+        
+        /* init windows */
+        gui_window_init_subwindows(new_window);
+        
+        /* init lines */
+        new_window->lines = NULL;
+        new_window->last_line = NULL;
+        new_window->first_line_displayed = 1;
+        new_window->sub_lines = 0;
+        new_window->line_complete = 1;
+        new_window->unread_data = 0;
+        
+        /* init input buffer */
+        new_window->input_buffer_alloc = INPUT_BUFFER_BLOCK_SIZE;
+        new_window->input_buffer = (char *) malloc (INPUT_BUFFER_BLOCK_SIZE);
+        new_window->input_buffer[0] = '\0';
+        new_window->input_buffer_size = 0;
+        new_window->input_buffer_pos = 0;
+        new_window->input_buffer_1st_display = 0;
+        
+        /* init completion */
+        completion_init (&(new_window->completion));
+        
+        /* init history */
+        new_window->history = NULL;
+        new_window->ptr_history = NULL;
+        
+        /* switch to new window */
+        gui_switch_to_window (new_window);
+        
+        /* add window to windows queue */
+        new_window->prev_window = last_gui_window;
+        if (gui_windows)
+            last_gui_window->next_window = new_window;
+        else
+            gui_windows = new_window;
+        last_gui_window = new_window;
+        new_window->next_window = NULL;
+        
+        /* redraw whole screen */
+        gui_redraw_window (new_window);
+    }
+    else
+        return NULL;
+    
+    return new_window;
+}
+
+/*
  * gui_window_clear: clear window content
  */
 
@@ -90,96 +178,6 @@ gui_window_clear_all ()
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
         gui_window_clear (ptr_win);
-}
-
-/*
- * gui_window_new: create a new window
- *                 (TODO: add coordinates and size, for splited windows)
- */
-
-t_gui_window *
-gui_window_new (void *server, void *channel
-                /*int x, int y, int width, int height*/)
-{
-    t_gui_window *new_window;
-    
-    if (gui_windows)
-    {
-        /* use first window if no server was assigned to this window */
-        if (!SERVER(gui_windows))
-        {
-            if (server)
-                ((t_irc_server *)(server))->window = gui_windows;
-            if (channel)
-                ((t_irc_channel *)(channel))->window = gui_windows;
-            SERVER(gui_windows) = server;
-            CHANNEL(gui_windows) = channel;
-            return gui_windows;
-        }
-    }
-    
-    if ((new_window = (t_gui_window *)(malloc (sizeof (t_gui_window)))))
-    {
-        /* assign server and channel to window */
-        SERVER(new_window) = server;
-        CHANNEL(new_window) = channel;
-        /* assign window to server and channel */
-        if (server && !channel)
-            SERVER(new_window)->window = new_window;
-        if (channel)
-            CHANNEL(new_window)->window = new_window;
-        
-        gui_calculate_pos_size (new_window);
-        
-        /* init windows */
-        new_window->win_title = NULL;
-        new_window->win_chat = NULL;
-        new_window->win_nick = NULL;
-        new_window->win_status = NULL;
-        new_window->win_input = NULL;
-        
-        /* init lines */
-        new_window->lines = NULL;
-        new_window->last_line = NULL;
-        new_window->first_line_displayed = 1;
-        new_window->sub_lines = 0;
-        new_window->line_complete = 1;
-        new_window->unread_data = 0;
-        
-        /* init input buffer */
-        new_window->input_buffer_alloc = INPUT_BUFFER_BLOCK_SIZE;
-        new_window->input_buffer = (char *) malloc (INPUT_BUFFER_BLOCK_SIZE);
-        new_window->input_buffer[0] = '\0';
-        new_window->input_buffer_size = 0;
-        new_window->input_buffer_pos = 0;
-        new_window->input_buffer_1st_display = 0;
-        
-        /* init completion */
-        completion_init (&(new_window->completion));
-        
-        /* init history */
-        new_window->history = NULL;
-        new_window->ptr_history = NULL;
-        
-        /* switch to new window */
-        gui_switch_to_window (new_window);
-        
-        /* add window to windows queue */
-        new_window->prev_window = last_gui_window;
-        if (gui_windows)
-            last_gui_window->next_window = new_window;
-        else
-            gui_windows = new_window;
-        last_gui_window = new_window;
-        new_window->next_window = NULL;
-        
-        /* redraw whole screen */
-        gui_redraw_window (new_window);
-    }
-    else
-        return NULL;
-    
-    return new_window;
 }
 
 /*
