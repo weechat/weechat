@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2004-12-22 14:28+0100\n"
+"POT-Creation-Date: 2004-12-27 13:52+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,52 +58,57 @@ msgstr ""
 msgid "Unknown command: cmd=%s, args=%s\n"
 msgstr ""
 
-#: src/irc/irc-server.c:608
+#: src/irc/irc-server.c:594
+#, c-format
+msgid "%s cannot read data from socket, disconnecting from server...\n"
+msgstr ""
+
+#: src/irc/irc-server.c:614
 #, c-format
 msgid "%s: connecting to %s:%d...\n"
 msgstr ""
 
-#: src/irc/irc-server.c:610
+#: src/irc/irc-server.c:616
 #, c-format
 msgid "connecting to server %s:%d...\n"
 msgstr ""
 
-#: src/irc/irc-server.c:618
+#: src/irc/irc-server.c:624
 #, c-format
 msgid "%s cannot create pipe\n"
 msgstr ""
 
-#: src/irc/irc-server.c:632
+#: src/irc/irc-server.c:638
 #, c-format
 msgid "%s cannot set socket option \"SO_REUSEADDR\"\n"
 msgstr ""
 
-#: src/irc/irc-server.c:639
+#: src/irc/irc-server.c:645
 #, c-format
 msgid "%s cannot set socket option \"SO_KEEPALIVE\"\n"
 msgstr ""
 
-#: src/irc/irc-server.c:647
+#: src/irc/irc-server.c:653
 #, c-format
 msgid "%s address \"%s\" not found\n"
 msgstr ""
 
-#: src/irc/irc-server.c:670
+#: src/irc/irc-server.c:676
 #, c-format
 msgid "%s IP address not found\n"
 msgstr ""
 
-#: src/irc/irc-server.c:680
+#: src/irc/irc-server.c:686
 #, c-format
 msgid "%s: server IP is: %s\n"
 msgstr ""
 
-#: src/irc/irc-server.c:686
+#: src/irc/irc-server.c:692
 #, c-format
 msgid "%s cannot connect to irc server\n"
 msgstr ""
 
-#: src/irc/irc-server.c:735
+#: src/irc/irc-server.c:741
 msgid "Disconnected from server!\n"
 msgstr ""
 
