@@ -1,7 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2003-09-27
+ChangeLog - 2003-09-29
+
+* 2003-09-28:
+  - added "/connect" and "/disconnect" commands
+  - added "/server" command
+  - added autoconnect flag for each server in config file
 
 * 2003-09-27:
   - added term window title
