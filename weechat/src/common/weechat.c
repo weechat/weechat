@@ -203,7 +203,7 @@ wee_parse_args (int argc, char *argv[])
         else if ((strcmp (argv[i], "-h") == 0)
                 || (strcmp (argv[i], "--help") == 0))
         {
-            printf ("\n" WEE_USAGE1, argv[0]);
+            printf ("\n" WEE_USAGE1, argv[0], argv[0]);
             printf ("%s", WEE_USAGE2);
             exit (EXIT_SUCCESS);
         }
@@ -232,7 +232,7 @@ wee_parse_args (int argc, char *argv[])
                                  server_tmp.address, server_tmp.port,
                                  server_tmp.password, server_tmp.nick1,
                                  server_tmp.nick2, server_tmp.nick3,
-                                 NULL, NULL, NULL, NULL))
+                                 NULL, NULL, NULL, server_tmp.autojoin))
                     fprintf (stderr, _("%s unable to create server ('%s'), ignored\n"),
                              WEECHAT_WARNING, argv[i]);
                 server_destroy (&server_tmp);

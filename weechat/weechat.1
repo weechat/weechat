@@ -5,7 +5,9 @@ weechat \- Wee Enhanced Environment for Chat
 
 .SH SYNOPSIS
 .B weechat
-.RI [ options ]
+.RI [ options... ]
+or
+.RI [ url... ]
 .br
 
 .SH DESCRIPTION
@@ -32,6 +34,12 @@ display program license
 .B \-v, \-\-version
 .br
 display WeeChat version
+
+.SH URL
+WeeChat can use an URL (Uniform Resource Locator) to automatically connect
+to an IRC server. These are in the following form:
+.TP
+.B irc://[[nickname][:password]@]server[:port]
 
 .SH FILES
 .TP

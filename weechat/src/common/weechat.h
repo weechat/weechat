@@ -79,7 +79,8 @@
 #define WEE_USAGE1 \
     PACKAGE_STRING " (c) Copyright 2004, compiled on " __DATE__ " " __TIME__ \
     "\nDeveloped by FlashCode, Bounga and Xahlexx - " WEECHAT_WEBSITE "\n\n" \
-    "Usage: %s [options ...] [irc://nick[:passwd]@irc.example.org[:port] ...]\n\n"
+    "Usage: %s [options ...]\n" \
+    "   or: %s [irc://[nickname[:password]@]irc.example.org[:port][/channel] ...]\n\n"
 
 #define WEE_USAGE2 \
     "  -c, --config        config file help (list of options)\n" \

@@ -26,9 +26,11 @@
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <errno.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
+#include <pwd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -91,42 +93,77 @@ server_init (t_irc_server *server)
 int
 server_init_with_url (char *irc_url, t_irc_server *server)
 {
-    char *url, *pos_address, *pos, *pos2;
+    char *url, *pos_server, *pos_channel, *pos, *pos2;
+    struct passwd *my_passwd;
     
     server_init (server);
     if (strncasecmp (irc_url, "irc://", 6) != 0)
         return -1;
     url = strdup (irc_url);
-    pos_address = strchr (url, '@');
-    if (!pos_address || !pos_address[1])
+    pos_server = strchr (url, '@');
+    if (pos_server)
+    {
+        pos_server[0] = '\0';
+        pos_server++;
+        pos = url + 6;
+        if (!pos[0])
+        {
+            free (url);
+            return -1;
+        }
+        pos2 = strchr (pos, ':');
+        if (pos2)
+        {
+            pos2[0] = '\0';
+            server->password = strdup (pos2 + 1);
+        }
+        server->nick1 = strdup (pos);
+    }
+    else
+    {
+        if ((my_passwd = getpwuid (geteuid ())) != NULL)
+            server->nick1 = strdup (my_passwd->pw_name);
+        else
+        {
+            fprintf (stderr, "%s: %s (%s).",
+                     WEECHAT_WARNING,
+                     _("Unable to get user's name"),
+                     strerror (errno));
+            free (url);
+            return -1;
+        }
+        pos_server = url + 6;
+    }
+    if (!pos_server[0])
     {
         free (url);
         return -1;
     }
-    pos_address[0] = '\0';
-    pos_address++;
-    pos = url + 6;
-    if (!pos[0])
+    pos_channel = strchr (pos_server, '/');
+    if (pos_channel)
     {
-        free (url);
-        return -1;
+        pos_channel[0] = '\0';
+        pos_channel++;
     }
-    pos2 = strchr (pos, ':');
-    if (pos2)
+    pos = strchr (pos_server, ':');
+    if (pos)
     {
-        pos2[0] = '\0';
-        server->password = strdup (pos2 + 1);
+        pos[0] = '\0';
+        server->port = atoi (pos + 1);
     }
-    server->nick1 = strdup (pos);
-    
-    pos2 = strchr (pos_address, ':');
-    if (pos2)
+    server->name = strdup (pos_server);
+    server->address = strdup (pos_server);
+    if (pos_channel && pos_channel[0])
     {
-        pos2[0] = '\0';
-        server->port = atoi (pos2 + 1);
+        if (string_is_channel (pos_channel))
+            server->autojoin = strdup (pos_channel);
+        else
+        {
+            server->autojoin = (char *) malloc (strlen (pos_channel) + 2);
+            strcpy (server->autojoin, "#");
+            strcat (server->autojoin, pos_channel);
+        }
     }
-    server->name = strdup (pos_address);
-    server->address = strdup (pos_address);
     
     free (url);
     
