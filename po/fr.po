@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.1.1-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2005-03-15 19:59+0100\n"
-"PO-Revision-Date: 2005-03-15 20:00+0100\n"
+"PO-Revision-Date: 2005-03-15 23:51+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2542,7 +2542,7 @@ msgstr "(inconnu)"
 
 #: src/common/command.c:1769
 msgid "(password hidden) "
-msgstr "(mot de passe caché)"
+msgstr "(mot de passe caché) "
 
 #: src/common/command.c:1833
 #, c-format
