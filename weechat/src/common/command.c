@@ -73,7 +73,7 @@ t_weechat_command weechat_commands[] =
     "Without argument, /perl command lists all loaded Perl scripts."),
     0, 2, weechat_cmd_perl, NULL },
   { "server", N_("list, add or remove servers"),
-    N_("[list] | "
+    N_("[servername] | "
     "[servername hostname port [-auto | -noauto] [-pwd password] [-nicks nick1 "
     "[nick2 [nick3]]] [-username username] [-realname realname] "
     "[-command command] [-autojoin channel[,channel]] ] | "
@@ -1366,110 +1366,36 @@ weechat_cmd_server (int argc, char **argv)
     int i;
     t_irc_server server, *ptr_server, *server_found, *new_server;
     
-    if ((argc == 0) || ((argc == 1) && (strcasecmp (argv[0], "list") == 0)))
+    if ((argc == 0) || (argc == 1))
     {
         /* list all servers */
-        if (irc_servers)
+        if (argc == 0)
         {
-            for (ptr_server = irc_servers; ptr_server;
-                 ptr_server = ptr_server->next_server)
+            if (irc_servers)
+            {
+                for (ptr_server = irc_servers; ptr_server;
+                     ptr_server = ptr_server->next_server)
+                {
+                    irc_display_server (ptr_server);
+                }
+            }
+            else
             {
                 irc_display_prefix (NULL, PREFIX_INFO);
-                gui_printf_color (NULL,
-                                  COLOR_WIN_CHAT,
-                                  _("Server: "));
-                gui_printf_color (NULL,
-                                  COLOR_WIN_CHAT_CHANNEL,
-                                  "%s", ptr_server->name);
-                gui_printf_color (NULL,
-                                  COLOR_WIN_CHAT_DARK,
-                                  " [");
-                gui_printf_color (NULL,
-                                  COLOR_WIN_CHAT,
-                                  "%s",
-                                  (ptr_server->is_connected) ?
-                                      _("connected") : _("not connected"));
-                gui_printf_color (NULL,
-                                  COLOR_WIN_CHAT_DARK,
-                                  "]\n");
-                irc_display_prefix (NULL, PREFIX_INFO);
-                gui_printf_color (NULL,
-                                  COLOR_WIN_CHAT,
-                                  _("  Autoconnect: %s%s\n"),
-                                  (ptr_server->autoconnect) ? _("yes") : _("no"),
-                                  (ptr_server->command_line) ?
-                                      _(" (temporary server, will not be saved)") :
-                                      "");
-                irc_display_prefix (NULL, PREFIX_INFO);
-                gui_printf_color (NULL,
-                                  COLOR_WIN_CHAT,
-                                  _("  Hostname   : %s\n"),
-                                  ptr_server->address);
-                irc_display_prefix (NULL, PREFIX_INFO);
-                gui_printf_color (NULL,
-                                  COLOR_WIN_CHAT,
-                                  _("  Port       : %d\n"),
-                                  ptr_server->port);
-                irc_display_prefix (NULL, PREFIX_INFO);
-                if (ptr_server->password && ptr_server->password[0])
-                    gui_printf_color (NULL,
-                                      COLOR_WIN_CHAT,
-                                      _("  Password   : (hidden)\n"));
-                else
-                    gui_printf_color (NULL,
-                                      COLOR_WIN_CHAT,
-                                      _("  Password   : (none)\n"));
-                irc_display_prefix (NULL, PREFIX_INFO);
-                gui_printf_color (NULL,
-                                  COLOR_WIN_CHAT,
-                                  _("  Nicks      : %s"),
-                                  ptr_server->nick1);
-                gui_printf_color (NULL,
-                                  COLOR_WIN_CHAT_DARK,
-                                  " / ");
-                gui_printf_color (NULL,
-                                  COLOR_WIN_CHAT,
-                                  "%s", ptr_server->nick2);
-                gui_printf_color (NULL,
-                                  COLOR_WIN_CHAT_DARK,
-                                  " / ");
-                gui_printf_color (NULL,
-                                  COLOR_WIN_CHAT,
-                                  "%s\n", ptr_server->nick3);
-                irc_display_prefix (NULL, PREFIX_INFO);
-                gui_printf_color (NULL,
-                                  COLOR_WIN_CHAT,
-                                  _("  Username   : %s\n"),
-                                  ptr_server->username);
-                irc_display_prefix (NULL, PREFIX_INFO);
-                gui_printf_color (NULL,
-                                  COLOR_WIN_CHAT,
-                                  _("  Realname   : %s\n"),
-                                  ptr_server->realname);
-                irc_display_prefix (NULL, PREFIX_INFO);
-                if (ptr_server->command && ptr_server->command[0])
-                    gui_printf_color (NULL,
-                                      COLOR_WIN_CHAT,
-                                      _("  Command    : %s\n"),
-                                      ptr_server->command);
-                else
-                    gui_printf_color (NULL,
-                                      COLOR_WIN_CHAT,
-                                      _("  Command    : (none)\n"));
-                irc_display_prefix (NULL, PREFIX_INFO);
-                if (ptr_server->autojoin && ptr_server->autojoin[0])
-                    gui_printf_color (NULL,
-                                      COLOR_WIN_CHAT,
-                                      _("  Auto-join  : %s\n"),
-                                      ptr_server->autojoin);
-                else
-                    gui_printf_color (NULL,
-                                      COLOR_WIN_CHAT,
-                                      _("  Auto-join  : (none)\n"));
+                gui_printf (NULL, _("No server.\n"));
             }
         }
         else
-            gui_printf (NULL, _("No server.\n"));
+        {
+            ptr_server = server_search (argv[0]);
+            if (ptr_server)
+                irc_display_server (ptr_server);
+            else
+            {
+                irc_display_prefix (NULL, PREFIX_INFO);
+                gui_printf (NULL, _("Server '%s' not found.\n"), argv[0]);
+            }
+        }
     }
     else
     {

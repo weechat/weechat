@@ -411,6 +411,7 @@ wee_create_home_dirs ()
         fprintf (stderr, _("%s unable to create ~/.weechat/logs directory\n"),
                  WEECHAT_WARNING);
     }
+    chmod (dir_name, 0700);
     
     free (dir_name);
 }

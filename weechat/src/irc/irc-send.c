@@ -56,6 +56,7 @@ irc_login (t_irc_server *server)
     hostname[sizeof (hostname) - 1] = '\0';
     if (!hostname[0])
         strcpy (hostname, _("unknown"));
+    irc_display_prefix (server->buffer, PREFIX_SERVER);
     gui_printf (server->buffer,
                 _("%s: using local hostname \"%s\"\n"),
                 PACKAGE_NAME, hostname);
@@ -266,9 +267,12 @@ irc_cmd_send_deop (t_irc_server *server, int argc, char **argv)
                           argv[i]);
     }
     else
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
                     _("%s \"%s\" command can only be executed in a channel window\n"),
                     WEECHAT_ERROR, "deop");
+    }
     return 0;
 }
 
@@ -290,6 +294,7 @@ irc_cmd_send_devoice (t_irc_server *server, int argc, char **argv)
     }
     else
     {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
                     _("%s \"%s\" command can only be executed in a channel window\n"),
                     WEECHAT_ERROR, "devoice");
@@ -390,6 +395,7 @@ irc_cmd_send_kick (t_irc_server *server, char *arguments)
         }
         else
         {
+            irc_display_prefix (server->buffer, PREFIX_ERROR);
             gui_printf (server->buffer,
                         _("%s \"%s\" command can only be executed in a channel window\n"),
                         WEECHAT_ERROR, "kick");
@@ -497,6 +503,7 @@ irc_cmd_send_me (t_irc_server *server, char *arguments)
 {
     if (BUFFER_IS_SERVER(gui_current_window->buffer))
     {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
                     _("%s \"%s\" command can not be executed on a server window\n"),
                     WEECHAT_ERROR, "me");
@@ -563,6 +570,7 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
             {
                 if (BUFFER_IS_SERVER(gui_current_window->buffer))
                 {
+                    irc_display_prefix (server->buffer, PREFIX_ERROR);
                     gui_printf (server->buffer,
                                 _("%s \"%s\" command can not be executed on a server window\n"),
                                 WEECHAT_ERROR, "msg *");
@@ -579,9 +587,12 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
                                            COLOR_WIN_CHAT, "%s\n", pos);
                 }
                 else
+                {
+                    irc_display_prefix (server->buffer, PREFIX_ERROR);
                     gui_printf (server->buffer,
                                 _("%s nick not found for \"%s\" command\n"),
                                 WEECHAT_ERROR, "msg");
+                }
                 server_sendf (server, "PRIVMSG %s :%s\r\n", ptr_channel->name, pos);
             }
             else
@@ -601,9 +612,12 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
                                                    COLOR_WIN_CHAT, "%s\n", pos);
                         }
                         else
+                        {
+                            irc_display_prefix (server->buffer, PREFIX_ERROR);
                             gui_printf (server->buffer,
                                         _("%s nick not found for \"%s\" command\n"),
                                         WEECHAT_ERROR, "msg");
+                        }
                     }
                     server_sendf (server, "PRIVMSG %s :%s\r\n", arguments, pos);
                 }
@@ -628,6 +642,7 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
                                 }
                             }
                         }
+                        irc_display_prefix (server->buffer, PREFIX_SERVER);
                         gui_printf_color_type (server->buffer,
                                                MSG_TYPE_NICK,
                                                COLOR_WIN_CHAT_DARK, "-");
@@ -650,6 +665,7 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
                         ptr_channel = channel_new (server, CHAT_PRIVATE, arguments, 1);
                         if (!ptr_channel)
                         {
+                            irc_display_prefix (server->buffer, PREFIX_ERROR);
                             gui_printf (server->buffer,
                                         _("%s cannot create new private window \"%s\"\n"),
                                         WEECHAT_ERROR,
@@ -680,6 +696,7 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
     }
     else
     {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
                     _("%s wrong argument count for \"%s\" command\n"),
                     WEECHAT_ERROR, "msg");
@@ -701,6 +718,7 @@ irc_cmd_send_names (t_irc_server *server, char *arguments)
     {
         if (!BUFFER_IS_CHANNEL(gui_current_window->buffer))
         {
+            irc_display_prefix (server->buffer, PREFIX_ERROR);
             gui_printf (server->buffer,
                         _("%s \"%s\" command can only be executed in a channel window\n"),
                         WEECHAT_ERROR, "names");
@@ -742,15 +760,17 @@ irc_cmd_send_notice (t_irc_server *server, char *arguments)
         pos++;
         while (pos[0] == ' ')
             pos++;
-        server_sendf (server, "NOTICE %s :%s\r\n", arguments, pos);
+        irc_display_prefix (server->buffer, PREFIX_SERVER);
         gui_printf_color (server->buffer, COLOR_WIN_CHAT, "notice");
         gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, "(");
         gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK, "%s", arguments);
         gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, ")");
         gui_printf_color (server->buffer, COLOR_WIN_CHAT, ": %s\n", pos);
+        server_sendf (server, "NOTICE %s :%s\r\n", arguments, pos);
     }
     else
     {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
                     _("%s wrong argument count for \"%s\" command\n"),
                     WEECHAT_ERROR, "notice");
@@ -777,6 +797,7 @@ irc_cmd_send_op (t_irc_server *server, int argc, char **argv)
     }
     else
     {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
                     _("%s \"%s\" command can only be executed in a channel window\n"),
                     WEECHAT_ERROR, "op");
@@ -824,6 +845,7 @@ irc_cmd_send_part (t_irc_server *server, char *arguments)
         {
             if (BUFFER_IS_SERVER(gui_current_window->buffer))
             {
+                irc_display_prefix (server->buffer, PREFIX_ERROR);
                 gui_printf (server->buffer,
                             _("%s \"%s\" command can not be executed on a server window\n"),
                             WEECHAT_ERROR, "part");
@@ -837,6 +859,7 @@ irc_cmd_send_part (t_irc_server *server, char *arguments)
     {
         if (BUFFER_IS_SERVER(gui_current_window->buffer))
         {
+            irc_display_prefix (server->buffer, PREFIX_ERROR);
             gui_printf (server->buffer,
                         _("%s \"%s\" command can not be executed on a server window\n"),
                         WEECHAT_ERROR, "part");
@@ -913,6 +936,7 @@ irc_cmd_send_query (t_irc_server *server, char *arguments)
         ptr_channel = channel_new (server, CHAT_PRIVATE, arguments, 1);
         if (!ptr_channel)
         {
+            irc_display_prefix (server->buffer, PREFIX_ERROR);
             gui_printf (server->buffer,
                         _("%s cannot create new private window \"%s\"\n"),
                         WEECHAT_ERROR,
@@ -1144,6 +1168,7 @@ irc_cmd_send_topic (t_irc_server *server, char *arguments)
     {
         if (BUFFER_IS_SERVER(gui_current_window->buffer))
         {
+            irc_display_prefix (server->buffer, PREFIX_ERROR);
             gui_printf (server->buffer,
                         _("%s \"%s\" command can not be executed on a server window\n"),
                         WEECHAT_ERROR, "topic");
@@ -1249,6 +1274,7 @@ irc_cmd_send_voice (t_irc_server *server, int argc, char **argv)
     }
     else
     {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
                     _("%s \"%s\" command can only be executed in a channel window\n"),
                     WEECHAT_ERROR, "voice");

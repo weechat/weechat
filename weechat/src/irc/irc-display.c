@@ -133,3 +133,76 @@ irc_display_mode (t_gui_buffer *buffer, char *channel_name, char set_flag,
     else
         gui_printf_color (buffer, COLOR_WIN_CHAT, " %s\n", message);
 }
+
+/*
+ * irc_display_server: display server description
+ */
+
+void
+irc_display_server (t_irc_server *server)
+{
+    irc_display_prefix (NULL, PREFIX_INFO);
+    gui_printf_color (NULL, COLOR_WIN_CHAT, _("Server: "));
+    gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "%s", server->name);
+    gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, " [");
+    gui_printf_color (NULL, COLOR_WIN_CHAT, "%s",
+                      (server->is_connected) ?
+                          _("connected") : _("not connected"));
+    gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "]\n");
+    irc_display_prefix (NULL, PREFIX_INFO);
+    gui_printf_color (NULL, COLOR_WIN_CHAT,
+                      "  server_autoconnect        : %s%s\n",
+                      (server->autoconnect) ? _("yes") : _("no"),
+                      (server->command_line) ?
+                          _(" (temporary server, will not be saved)") : "");
+    irc_display_prefix (NULL, PREFIX_INFO);
+    gui_printf_color (NULL, COLOR_WIN_CHAT,
+                      "  server_autoreconnect . . .: %s\n",
+                      (server->autoreconnect) ? _("yes") : _("no"));
+    irc_display_prefix (NULL, PREFIX_INFO);
+    gui_printf_color (NULL, COLOR_WIN_CHAT,
+                      "  server_autoreconnect_delay: %d seconds\n",
+                      server->autoreconnect_delay);
+    irc_display_prefix (NULL, PREFIX_INFO);
+    gui_printf_color (NULL, COLOR_WIN_CHAT,
+                      "  server_address . . . . . .: %s\n",
+                      server->address);
+    irc_display_prefix (NULL, PREFIX_INFO);
+    gui_printf_color (NULL, COLOR_WIN_CHAT,
+                      "  server_port  . . . . . . .: %d\n",
+                      server->port);
+    irc_display_prefix (NULL, PREFIX_INFO);
+    gui_printf_color (NULL, COLOR_WIN_CHAT,
+                      "  server_password  . . . . .: %s\n",
+                      (server->password && server->password[0]) ?
+                      _("(hidden)") : "");
+    irc_display_prefix (NULL, PREFIX_INFO);
+    gui_printf_color (NULL, COLOR_WIN_CHAT,
+                      "  server_nick1/2/3 . . . . .: %s", server->nick1);
+    gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, " / ");
+    gui_printf_color (NULL, COLOR_WIN_CHAT, "%s", server->nick2);
+    gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, " / ");
+    gui_printf_color (NULL, COLOR_WIN_CHAT, "%s\n", server->nick3);
+    irc_display_prefix (NULL, PREFIX_INFO);
+    gui_printf_color (NULL, COLOR_WIN_CHAT,
+                      "  server_username  . . . . .: %s\n",
+                      server->username);
+    irc_display_prefix (NULL, PREFIX_INFO);
+    gui_printf_color (NULL, COLOR_WIN_CHAT,
+                      "  server_realname  . . . . .: %s\n",
+                      server->realname);
+    irc_display_prefix (NULL, PREFIX_INFO);
+    gui_printf_color (NULL, COLOR_WIN_CHAT,
+                      "  server_command . . . . . .: %s\n",
+                      (server->command && server->command[0]) ?
+                      server->command : "");
+    irc_display_prefix (NULL, PREFIX_INFO);
+    gui_printf_color (NULL, COLOR_WIN_CHAT,
+                      "  server_command_delay . . .: %d seconds\n",
+                      server->command_delay);
+    irc_display_prefix (NULL, PREFIX_INFO);
+    gui_printf_color (NULL, COLOR_WIN_CHAT,
+                      "  server_autojoin  . . . . .: %s\n",
+                      (server->autojoin && server->autojoin[0]) ?
+                      server->autojoin : "");
+}

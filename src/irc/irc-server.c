@@ -394,8 +394,11 @@ server_sendf (t_irc_server * server, char *fmt, ...)
     #endif
     buf2 = weechat_convert_encoding (local_charset, cfg_look_charset_encode, buffer);
     if (server_send (server, buf2, strlen (buf2)) <= 0)
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer, _("%s error sending data to IRC server\n"),
                     WEECHAT_ERROR);
+    }
     free (buf2);
 }
 
@@ -411,6 +414,7 @@ server_msgq_add_msg (t_irc_server *server, char *msg)
     message = (t_irc_message *) malloc (sizeof (t_irc_message));
     if (!message)
     {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
                     _("%s not enough memory for received IRC message\n"),
                     WEECHAT_ERROR);
@@ -422,9 +426,12 @@ server_msgq_add_msg (t_irc_server *server, char *msg)
         message->data = (char *) malloc (strlen (unterminated_message) +
                                          strlen (msg) + 1);
         if (!message->data)
+        {
+            irc_display_prefix (server->buffer, PREFIX_ERROR);
             gui_printf (server->buffer,
                         _("%s not enough memory for received IRC message\n"),
                         WEECHAT_ERROR);
+        }
         else
         {
             strcpy (message->data, unterminated_message);
@@ -485,13 +492,17 @@ server_msgq_add_buffer (t_irc_server * server, char *buffer)
                         (char *) realloc (unterminated_message,
                                           strlen (buffer) + 1);
                     if (!unterminated_message)
+                    {
+                        irc_display_prefix (server->buffer, PREFIX_ERROR);
                         gui_printf (server->buffer,
                                     _("%s not enough memory for received IRC message\n"),
                                     WEECHAT_ERROR);
+                    }
                     else
                         strcpy (unterminated_message, buffer);
                     return;
                 }
+                irc_display_prefix (server->buffer, PREFIX_ERROR);
                 gui_printf (server->buffer,
                             _("%s unable to explode received buffer\n"),
                             WEECHAT_ERROR);
@@ -566,17 +577,20 @@ server_msgq_flush ()
                                           command, args))
                 {
                     case -1:
+                        irc_display_prefix (recv_msgq->server->buffer, PREFIX_ERROR);
                         gui_printf (recv_msgq->server->buffer,
-                                    _("Command '%s' failed!\n"), command);
+                                    _("%s Command '%s' failed!\n"), WEECHAT_ERROR, command);
                         break;
                     case -2:
+                        irc_display_prefix (recv_msgq->server->buffer, PREFIX_ERROR);
                         gui_printf (recv_msgq->server->buffer,
-                                    _("No command to execute!\n"));
+                                    _("%s No command to execute!\n"), WEECHAT_ERROR);
                         break;
                     case -3:
+                        irc_display_prefix (recv_msgq->server->buffer, PREFIX_ERROR);
                         gui_printf (recv_msgq->server->buffer,
-                                    _("Unknown command: cmd=%s, args=%s\n"),
-                                    command, args);
+                                    _("%s Unknown command: cmd=%s, args=%s\n"),
+                                    WEECHAT_ERROR, command, args);
                         break;
                 }
             }
@@ -612,6 +626,7 @@ server_recv (t_irc_server *server)
     }
     else
     {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
                     _("%s cannot read data from socket, disconnecting from server...\n"),
                     WEECHAT_ERROR);
@@ -633,6 +648,7 @@ server_connect (t_irc_server *server)
     int error;
     int server_pipe[2];
 
+    irc_display_prefix (server->buffer, PREFIX_INFO);
     gui_printf (server->buffer,
                 _("%s: connecting to %s:%d...\n"),
                 PACKAGE_NAME, server->address, server->port);
@@ -643,6 +659,7 @@ server_connect (t_irc_server *server)
     /* create pipe */
     if (pipe (server_pipe) < 0)
     {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
                     _("%s cannot create pipe\n"), WEECHAT_ERROR);
         server_free (server);
@@ -657,21 +674,28 @@ server_connect (t_irc_server *server)
     if (setsockopt
         (server->sock4, SOL_SOCKET, SO_REUSEADDR, (char *) &set,
          sizeof (set)) == -1)
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
                     _("%s cannot set socket option \"SO_REUSEADDR\"\n"),
                     WEECHAT_ERROR);
+    }
     set = 1;
     if (setsockopt
         (server->sock4, SOL_SOCKET, SO_KEEPALIVE, (char *) &set,
          sizeof (set)) == -1)
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
                     _("%s cannot set socket option \"SO_KEEPALIVE\"\n"),
                     WEECHAT_ERROR);
+    }
 
     /* bind to hostname */
     ip4_hostent = gethostbyname (server->address);
     if (!ip4_hostent)
     {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
                     _("%s address \"%s\" not found\n"),
                     WEECHAT_ERROR, server->address);
@@ -688,13 +712,15 @@ server_connect (t_irc_server *server)
     /*error = bind(server->sock4, (struct sockaddr *)(&addr), sizeof(addr));
     if (error != 0)
     {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
-                    WEECHAT_ERORR "server_connect: can't bind to hostname\n");
+                    _("%s can't bind to hostname\n"), WEECHAT_ERROR);
         return 0;
-    } */
+    }*/
     ip_address = inet_ntoa (addr.sin_addr);
     if (!ip_address)
     {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
                     _("%s IP address not found\n"), WEECHAT_ERROR);
         close (server->server_read);
@@ -705,12 +731,14 @@ server_connect (t_irc_server *server)
     }
 
     /* connection to server */
+    irc_display_prefix (server->buffer, PREFIX_INFO);
     gui_printf (server->buffer,
                 _("%s: server IP is: %s\n"), PACKAGE_NAME, ip_address);
 
     error = connect (server->sock4, (struct sockaddr *) &addr, sizeof (addr));
     if (error != 0)
     {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
                     _("%s cannot connect to irc server\n"), WEECHAT_ERROR);
         close (server->server_read);
@@ -730,6 +758,7 @@ server_connect (t_irc_server *server)
 void
 server_reconnect (t_irc_server *server)
 {
+    irc_display_prefix (server->buffer, PREFIX_INFO);
     gui_printf (server->buffer, _("%s: Reconnecting to server...\n"),
                 PACKAGE_NAME);
     server->reconnect_start = 0;
@@ -742,6 +771,7 @@ server_reconnect (t_irc_server *server)
     else
     {
         server->reconnect_start = time (NULL);
+        irc_display_prefix (server->buffer, PREFIX_INFO);
         gui_printf (server->buffer, _("%s: Reconnecting to server in %d seconds\n"),
                     PACKAGE_NAME, server->autoreconnect_delay);
     }
@@ -813,6 +843,7 @@ server_disconnect (t_irc_server *server, int reconnect)
     if ((reconnect) && (server->autoreconnect))
     {
         server->reconnect_start = time (NULL);
+        irc_display_prefix (server->buffer, PREFIX_INFO);
         gui_printf (server->buffer, _("%s: Reconnecting to server in %d seconds\n"),
                     PACKAGE_NAME, server->autoreconnect_delay);
     }

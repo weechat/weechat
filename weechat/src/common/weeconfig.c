@@ -591,7 +591,7 @@ t_config_option weechat_options_server[] =
     "", NULL, NULL, &(cfg_server.command), NULL },
   { "server_command_delay", N_("delay (in seconds) after command was executed"),
     N_("delay (in seconds) after command was executed (example: give some time for authentication)"),
-    OPTION_TYPE_INT, 0, 3600, 1,
+    OPTION_TYPE_INT, 0, 5, 0,
     NULL, NULL, &(cfg_server.command_delay), NULL, NULL },
   { "server_autojoin", N_("list of channels to join when connected to server"),
     N_("comma separated list of channels to join when connected to server"),
