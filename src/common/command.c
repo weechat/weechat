@@ -66,7 +66,7 @@ t_weechat_command weechat_commands[] =
     N_("[command]"), N_("command: name of a WeeChat or IRC command"),
     0, 1, weechat_cmd_help, NULL },
   { "perl", N_("list/load/unload Perl scripts"),
-    N_("[load filename] | [unload]"),
+    N_("[load filename] | [autoload] | [unload]"),
     N_("filename: Perl script (file) to load\n"
     "Without argument, /perl command lists all loaded Perl scripts."),
     0, 2, weechat_cmd_perl, NULL },
@@ -1137,6 +1137,8 @@ weechat_cmd_perl (int argc, char **argv)
             
             break;
         case 1:
+            if (strcmp (argv[0], "autoload") == 0)
+                plugin_auto_load (PLUGIN_TYPE_PERL, "perl/autoload");
             if (strcmp (argv[0], "unload") == 0)
             {
                 /* unload all Perl scripts */

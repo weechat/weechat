@@ -59,6 +59,7 @@ extern t_plugin_handler *last_plugin_cmd_handler;
 extern t_plugin_script *perl_scripts;
 #endif
 
+extern void plugin_auto_load (int, char *);
 extern void plugin_init ();
 extern void plugin_load (int, char *);
 extern void plugin_unload (int, /*@null@*/ char *);

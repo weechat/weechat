@@ -480,6 +480,8 @@ wee_perl_load (char *filename)
 {
     /* execute Perl script */
     wee_log_printf (_("loading Perl script \"%s\"\n"), filename);
+    irc_display_prefix (NULL, PREFIX_PLUGIN);
+    gui_printf (NULL, _("Loading Perl script \"%s\"\n"), filename);
     return wee_perl_exec ("wee_perl_load_eval_file", filename);
 }
 
