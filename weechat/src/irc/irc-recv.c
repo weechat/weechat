@@ -602,6 +602,7 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *arguments)
     t_irc_channel *ptr_channel;
     t_irc_nick *ptr_nick;
     int nick_is_me;
+    t_gui_window *ptr_window;
     
     /* no host => we can't identify sender of message! */
     if (host == NULL)
@@ -623,6 +624,21 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *arguments)
         ptr_nick = nick_search (ptr_channel, host);
         if (ptr_nick)
         {
+            /* change nickname in any opened private window */
+            for (ptr_window = gui_windows; ptr_window;
+                 ptr_window = ptr_window->next_window)
+            {
+                if ((SERVER(ptr_window) == server) && WIN_IS_PRIVATE(ptr_window))
+                {
+                    if (CHANNEL(ptr_window)->name)
+                    {
+                        free (CHANNEL(ptr_window)->name);
+                        CHANNEL(ptr_window)->name = strdup (arguments);
+                    }
+                }
+            }
+            
+            /* change nickname on channel */
             nick_is_me = (strcmp (ptr_nick->nick, server->nick) == 0) ? 1 : 0;
             nick_change (ptr_channel, ptr_nick, arguments);
             irc_display_prefix (ptr_channel->window, PREFIX_INFO);
@@ -655,6 +671,7 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *arguments)
         free (server->nick);
         server->nick = strdup (arguments);
     }
+    gui_redraw_window_status (gui_current_window);
     gui_redraw_window_input (gui_current_window);
     
     return 0;

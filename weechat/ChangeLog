@@ -1,11 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2004-03-20
+ChangeLog - 2004-03-27
 
 
 Version 0.0.6 (under dev!):
-   * command /query added (starts private conversation)
+   * fixed bug when opened private win and remote user changes his nick
+   * /query command added (starts private conversation)
    * IRC messages 476, 477 added
    * /mode command is now ok and channel flags are displayed in status bar
    * fixed display bug (text was blinking when scrolling)
