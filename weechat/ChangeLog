@@ -1,8 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2004-01-01
+ChangeLog - 2004-01-02
 
+
+Version 0.0.5 (under dev!):
+   * highlight action messages
 
 Version 0.0.4 (2004-01-01):
    * Perl plugin, with auto-load

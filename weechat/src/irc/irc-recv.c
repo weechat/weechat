@@ -787,8 +787,12 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                     if (pos2)
                         pos2[0] = '\0';
                     irc_display_prefix (ptr_channel->window, PREFIX_ACTION_ME);
-                    gui_printf_color (ptr_channel->window,
-                                      COLOR_WIN_CHAT_NICK, "%s", host);
+                    if (strstr (pos, server->nick))
+                        gui_printf_color (ptr_channel->window,
+                                          COLOR_WIN_CHAT_HIGHLIGHT, "%s", host);
+                    else
+                        gui_printf_color (ptr_channel->window,
+                                          COLOR_WIN_CHAT_NICK, "%s", host);
                     gui_printf_color (ptr_channel->window,
                                       COLOR_WIN_CHAT, " %s\n", pos);
                 }
