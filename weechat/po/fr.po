@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.0.8-pre2\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2004-09-13 21:42+0200\n"
+"POT-Creation-Date: 2004-09-16 21:57+0200\n"
 "PO-Revision-Date: 2004-08-08 20:47+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1581,36 +1581,36 @@ msgstr "Echoué"
 msgid "Aborted"
 msgstr "Interrompu"
 
-#: src/irc/irc-dcc.c:219
+#: src/irc/irc-dcc.c:235
 #, c-format
 msgid "%s not enough memory for new DCC\n"
 msgstr "%s pas assez de mémoire pour un nouveau DCC\n"
 
-#: src/irc/irc-dcc.c:247
+#: src/irc/irc-dcc.c:263
 msgid "Incoming DCC file from "
 msgstr "Réception fichier DCC de "
 
-#: src/irc/irc-dcc.c:272
+#: src/irc/irc-dcc.c:288
 msgid " bytes\n"
 msgstr "octets\n"
 
-#: src/irc/irc-dcc.c:325
+#: src/irc/irc-dcc.c:341
 msgid "DCC: file "
 msgstr "DCC: fichier "
 
-#: src/irc/irc-dcc.c:330
+#: src/irc/irc-dcc.c:346
 msgid " (local filename: "
 msgstr " (nom local: "
 
-#: src/irc/irc-dcc.c:335
+#: src/irc/irc-dcc.c:351
 msgid ") from "
 msgstr ") de "
 
-#: src/irc/irc-dcc.c:340
+#: src/irc/irc-dcc.c:356
 msgid ": ok!\n"
 msgstr ": ok!\n"
 
-#: src/irc/irc-dcc.c:366
+#: src/irc/irc-dcc.c:382
 #, c-format
 msgid "aborting active DCC: \"%s\" from %s\n"
 msgstr "abandon du DCC actif: \"%s\" de %s\n"
@@ -1709,6 +1709,25 @@ msgstr "[Act: "
 #: src/gui/curses/gui-display.c:1044 src/gui/curses/gui-display.c:1047
 msgid "-MORE-"
 msgstr "-PLUS-"
+
+#: src/gui/curses/gui-display.c:1216
+msgid "  [A] Accept"
+msgstr "  [A] Accepter"
+
+#: src/gui/curses/gui-display.c:1217 src/gui/curses/gui-display.c:1223
+#: src/gui/curses/gui-display.c:1230
+msgid "  [C] Cancel"
+msgstr "  [C] Annuler"
+
+#: src/gui/curses/gui-display.c:1218 src/gui/curses/gui-display.c:1224
+#: src/gui/curses/gui-display.c:1231 src/gui/curses/gui-display.c:1238
+#: src/gui/curses/gui-display.c:1243
+msgid "  [Q] Close DCC view"
+msgstr "  [Q] Fermer la vue DCC"
+
+#: src/gui/curses/gui-display.c:1237
+msgid "  [R] Remove"
+msgstr "  [R] Retirer"
 
 #: src/gui/gtk/gui-display.c:657
 msgid "server"

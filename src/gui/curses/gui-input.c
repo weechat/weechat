@@ -52,6 +52,7 @@ gui_read_keyb ()
     int key, i;
     t_gui_buffer *ptr_buffer;
     char new_char[2];
+    t_dcc *dcc_selected;
 
     key = getch ();
     if (key != ERR)
@@ -104,6 +105,7 @@ gui_read_keyb ()
                             gui_current_window->dcc_selected =
                                 ((t_dcc *)(gui_current_window->dcc_selected))->prev_dcc;
                             gui_draw_buffer_chat (gui_current_window->buffer, 1);
+                            gui_draw_buffer_input (gui_current_window->buffer, 1);
                         }
                     }
                 }
@@ -160,6 +162,7 @@ gui_read_keyb ()
                                 gui_current_window->dcc_selected =
                                     dcc_list->next_dcc;
                             gui_draw_buffer_chat (gui_current_window->buffer, 1);
+                            gui_draw_buffer_input (gui_current_window->buffer, 1);
                         }
                     }
                 }
@@ -500,7 +503,61 @@ gui_read_keyb ()
                 break;
             /* other key => add to input buffer */
             default:
-                if (!gui_current_window->buffer->dcc)
+                if (gui_current_window->buffer->dcc)
+                {
+                    dcc_selected = (gui_current_window->dcc_selected) ?
+                        (t_dcc *) gui_current_window->dcc_selected : dcc_list;
+                    switch (key)
+                    {
+                        /* accept DCC */
+                        case 'a':
+                        case 'A':
+                            if (dcc_selected
+                                && (((dcc_selected->type == DCC_CHAT_RECV)
+                                || (dcc_selected->type == DCC_FILE_RECV))
+                                && (dcc_selected->status == DCC_WAITING)))
+                            {
+                                dcc_accept (dcc_selected);
+                            }
+                            break;
+                        /* cancel DCC */
+                        case 'c':
+                        case 'C':
+                            if (dcc_selected
+                                && ((dcc_selected->status == DCC_WAITING)
+                                || (dcc_selected->status == DCC_CONNECTING)
+                                || (dcc_selected->status == DCC_ACTIVE)))
+                            {
+                                dcc_close (dcc_selected, DCC_ABORTED);
+                                gui_redraw_buffer (gui_current_window->buffer);
+                            }
+                            break;
+                        /* close DCC window */
+                        case 'q':
+                        case 'Q':
+                            gui_buffer_free (gui_current_window->buffer, 1);
+                            break;
+                        /* remove from DCC list */
+                        case 'r':
+                        case 'R':
+                            if (dcc_selected
+                                && (((dcc_selected->type == DCC_CHAT_RECV)
+                                || (dcc_selected->type == DCC_FILE_RECV))
+                                && ((dcc_selected->status == DCC_DONE)
+                                || (dcc_selected->status == DCC_FAILED)
+                                || (dcc_selected->status == DCC_ABORTED))))
+                            {
+                                if (dcc_selected->next_dcc)
+                                    gui_current_window->dcc_selected = dcc_selected->next_dcc;
+                                else
+                                    gui_current_window->dcc_selected = NULL;
+                                dcc_free (dcc_selected);
+                                gui_redraw_buffer (gui_current_window->buffer);
+                            }
+                            break;
+                    }
+                }
+                else
                 {
                     /*gui_printf (gui_current_window->buffer,
                                 "[Debug] key pressed = %d, hex = %02X, octal = %o\n", key, key, key);*/

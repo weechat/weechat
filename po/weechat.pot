@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2004-09-13 21:42+0200\n"
+"POT-Creation-Date: 2004-09-16 21:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1480,36 +1480,36 @@ msgstr ""
 msgid "Aborted"
 msgstr ""
 
-#: src/irc/irc-dcc.c:219
+#: src/irc/irc-dcc.c:235
 #, c-format
 msgid "%s not enough memory for new DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:247
+#: src/irc/irc-dcc.c:263
 msgid "Incoming DCC file from "
 msgstr ""
 
-#: src/irc/irc-dcc.c:272
+#: src/irc/irc-dcc.c:288
 msgid " bytes\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:325
+#: src/irc/irc-dcc.c:341
 msgid "DCC: file "
 msgstr ""
 
-#: src/irc/irc-dcc.c:330
+#: src/irc/irc-dcc.c:346
 msgid " (local filename: "
 msgstr ""
 
-#: src/irc/irc-dcc.c:335
+#: src/irc/irc-dcc.c:351
 msgid ") from "
 msgstr ""
 
-#: src/irc/irc-dcc.c:340
+#: src/irc/irc-dcc.c:356
 msgid ": ok!\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:366
+#: src/irc/irc-dcc.c:382
 #, c-format
 msgid "aborting active DCC: \"%s\" from %s\n"
 msgstr ""
@@ -1601,6 +1601,25 @@ msgstr ""
 
 #: src/gui/curses/gui-display.c:1044 src/gui/curses/gui-display.c:1047
 msgid "-MORE-"
+msgstr ""
+
+#: src/gui/curses/gui-display.c:1216
+msgid "  [A] Accept"
+msgstr ""
+
+#: src/gui/curses/gui-display.c:1217 src/gui/curses/gui-display.c:1223
+#: src/gui/curses/gui-display.c:1230
+msgid "  [C] Cancel"
+msgstr ""
+
+#: src/gui/curses/gui-display.c:1218 src/gui/curses/gui-display.c:1224
+#: src/gui/curses/gui-display.c:1231 src/gui/curses/gui-display.c:1238
+#: src/gui/curses/gui-display.c:1243
+msgid "  [Q] Close DCC view"
+msgstr ""
+
+#: src/gui/curses/gui-display.c:1237
+msgid "  [R] Remove"
 msgstr ""
 
 #: src/gui/gtk/gui-display.c:657

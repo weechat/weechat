@@ -1134,6 +1134,7 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
     char format[32];
     char *ptr_nickname;
     int input_width;
+    t_dcc *dcc_selected;
     
     if (!gui_ok)
         return;
@@ -1202,8 +1203,44 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
             {
                 if (buffer->dcc)
                 {
-                    snprintf (format, 32, "%%-%ds", input_width);
-                    mvwprintw (ptr_win->win_input, 0, 0, format, "");
+                    dcc_selected = (ptr_win->dcc_selected) ? (t_dcc *) ptr_win->dcc_selected : dcc_list;
+                    if (dcc_selected)
+                    {
+                        switch (dcc_selected->status)
+                        {
+                            case DCC_WAITING:
+                                if ((dcc_selected->type == DCC_CHAT_RECV)
+                                    || (dcc_selected->type == DCC_FILE_RECV))
+                                {
+                                    mvwprintw (ptr_win->win_input, 0, 0,
+                                               _("  [A] Accept"));
+                                    wprintw (ptr_win->win_input, _("  [C] Cancel"));
+                                    wprintw (ptr_win->win_input, _("  [Q] Close DCC view"));
+                                }
+                                else
+                                {
+                                    mvwprintw (ptr_win->win_input, 0, 0,
+                                               _("  [C] Cancel"));
+                                    wprintw (ptr_win->win_input, _("  [Q] Close DCC view"));
+                                }
+                                break;
+                            case DCC_CONNECTING:
+                            case DCC_ACTIVE:
+                                mvwprintw (ptr_win->win_input, 0, 0,
+                                           _("  [C] Cancel"));
+                                wprintw (ptr_win->win_input, _("  [Q] Close DCC view"));
+                                break;
+                            case DCC_DONE:
+                            case DCC_FAILED:
+                            case DCC_ABORTED:
+                                mvwprintw (ptr_win->win_input, 0, 0,
+                                           _("  [R] Remove"));
+                                wprintw (ptr_win->win_input, _("  [Q] Close DCC view"));
+                                break;
+                        }
+                    }
+                    else
+                        mvwprintw (ptr_win->win_input, 0, 0, _("  [Q] Close DCC view"));
                     wclrtoeol (ptr_win->win_input);
                     if (ptr_win == gui_current_window)
                         move (ptr_win->win_y + ptr_win->win_height - 1,

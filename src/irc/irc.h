@@ -248,6 +248,9 @@ extern int nick_get_max_length (t_irc_channel *);
 /* DCC functions (irc-dcc.c) */
 
 extern void dcc_send ();
+extern void dcc_free (t_dcc *);
+extern void dcc_close (t_dcc *, int);
+extern void dcc_accept (t_dcc *);
 extern t_dcc *dcc_add (t_irc_server *, int, unsigned long, int, char *, char *,
                        unsigned int);
 extern void dcc_handle ();

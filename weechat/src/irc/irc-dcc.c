@@ -55,7 +55,7 @@ dcc_redraw (int highlight)
     gui_draw_buffer_chat (gui_get_dcc_buffer (), 0);
     if (highlight)
     {
-        hotlist_add (1, gui_get_dcc_buffer ());
+        hotlist_add (highlight, gui_get_dcc_buffer ());
         gui_draw_buffer_status (gui_current_window->buffer, 0);
     }
 }
@@ -92,16 +92,32 @@ dcc_send ()
 }
 
 /*
- * dcc_free: free DCC struct
+ * dcc_free: free DCC struct and remove it from list
  */
 
 void
 dcc_free (t_dcc *ptr_dcc)
 {
+    t_dcc *new_dcc_list;
+    
+    if (ptr_dcc->prev_dcc)
+    {
+        (ptr_dcc->prev_dcc)->next_dcc = ptr_dcc->next_dcc;
+        new_dcc_list = dcc_list;
+    }
+    else
+        new_dcc_list = ptr_dcc->next_dcc;
+    
+    if (ptr_dcc->next_dcc)
+        (ptr_dcc->next_dcc)->prev_dcc = ptr_dcc->prev_dcc;
+    
     if (ptr_dcc->nick)
         free (ptr_dcc->nick);
     if (ptr_dcc->filename)
         free (ptr_dcc->filename);
+    
+    free (ptr_dcc);
+    dcc_list = new_dcc_list;
 }
 
 /*
@@ -276,7 +292,7 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
         || ( (type == DCC_FILE_RECV) && (cfg_dcc_auto_accept_files) ) )
         dcc_accept (new_dcc);
     else
-        hotlist_add (2, gui_get_dcc_buffer ());
+        dcc_redraw (2);
     gui_draw_buffer_status (gui_current_window->buffer, 0);
     
     return new_dcc;
