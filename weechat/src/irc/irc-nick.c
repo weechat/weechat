@@ -369,3 +369,22 @@ nick_set_away (t_irc_channel *channel, t_irc_nick *nick, int is_away)
         gui_draw_buffer_nick (channel->buffer, 0);
     }
 }
+
+/*
+ * nick_print_log: print nick infos in log (usually for crash dump)
+ */
+
+void
+nick_print_log (t_irc_nick *nick)
+{
+    wee_log_printf ("=> nick %s (addr:0x%X)]\n",    nick->nick, nick);
+    wee_log_printf ("     is_chanowner . : %d\n",   nick->is_chanowner);
+    wee_log_printf ("     is_chanadmin . : %d\n",   nick->is_chanadmin);
+    wee_log_printf ("     is_op. . . . . : %d\n",   nick->is_op);
+    wee_log_printf ("     is_halfop. . . : %d\n",   nick->is_halfop);
+    wee_log_printf ("     has_voice. . . : %d\n",   nick->has_voice);
+    wee_log_printf ("     is_away. . . . : %d\n",   nick->is_away);
+    wee_log_printf ("     color. . . . . : %d\n",   nick->color);
+    wee_log_printf ("     prev_nick. . . : 0x%X\n", nick->prev_nick);
+    wee_log_printf ("     next_nick. . . : 0x%X\n", nick->next_nick);
+}

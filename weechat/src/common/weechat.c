@@ -62,9 +62,10 @@
 #include "../plugins/plugins.h"
 
 
-int quit_weechat;               /* = 1 if quit request from user... why ? :'(        */
-char *weechat_home = NULL;      /* WeeChat home dir. (example: /home/toto/.weechat)  */
-FILE *weechat_log_file = NULL;  /* WeeChat log file (~/.weechat/weechat.log)         */
+int quit_weechat;               /* = 1 if quit request from user... why ? :'(       */
+int sigsegv = 0;                /* SIGSEGV received?                                */
+char *weechat_home = NULL;      /* WeeChat home dir. (example: /home/toto/.weechat) */
+FILE *weechat_log_file = NULL;  /* WeeChat log file (~/.weechat/weechat.log)        */
 
 char *local_charset = NULL;     /* local charset, for example: ISO-8859-1    */
 
@@ -72,14 +73,34 @@ int server_cmd_line;    /* at least one server on WeeChat command line       */
 
 
 /*
- * my_sigint: SIGINT handler, do nothing (just ignore this signal)
- *            Prevents user for exiting with Ctrl-C
+ * wee_log_printf: displays a message in WeeChat log (~/.weechat/weechat.log)
  */
 
 void
-my_sigint ()
+wee_log_printf (char *message, ...)
 {
-    /* do nothing */
+    static char buffer[4096];
+    va_list argptr;
+    static time_t seconds;
+    struct tm *date_tmp;
+    
+    if (!weechat_log_file)
+        return;
+    
+    va_start (argptr, message);
+    vsnprintf (buffer, sizeof (buffer) - 1, message, argptr);
+    va_end (argptr);
+    
+    seconds = time (NULL);
+    date_tmp = localtime (&seconds);
+    if (date_tmp)
+        fprintf (weechat_log_file, "[%04d-%02d-%02d %02d:%02d:%02d] %s",
+                 date_tmp->tm_year + 1900, date_tmp->tm_mon + 1, date_tmp->tm_mday,
+                 date_tmp->tm_hour, date_tmp->tm_min, date_tmp->tm_sec,
+                 buffer);
+    else
+        fprintf (weechat_log_file, "%s", buffer);
+    fflush (weechat_log_file);
 }
 
 /*
@@ -151,37 +172,6 @@ long get_timeval_diff(struct timeval *tv1, struct timeval *tv2)
         diff_sec--;
     }
     return ((diff_usec / 1000) + (diff_sec * 1000));
-}
-
-/*
- * wee_log_printf: displays a message in WeeChat log (~/.weechat/weechat.log)
- */
-
-void
-wee_log_printf (char *message, ...)
-{
-    static char buffer[4096];
-    va_list argptr;
-    static time_t seconds;
-    struct tm *date_tmp;
-    
-    if (!weechat_log_file)
-        return;
-    
-    va_start (argptr, message);
-    vsnprintf (buffer, sizeof (buffer) - 1, message, argptr);
-    va_end (argptr);
-    
-    seconds = time (NULL);
-    date_tmp = localtime (&seconds);
-    if (date_tmp)
-        fprintf (weechat_log_file, "[%04d-%02d-%02d %02d:%02d:%02d] %s",
-                 date_tmp->tm_year + 1900, date_tmp->tm_mon + 1, date_tmp->tm_mday,
-                 date_tmp->tm_hour, date_tmp->tm_min, date_tmp->tm_sec,
-                 buffer);
-    else
-        fprintf (weechat_log_file, "%s", buffer);
-    fflush (weechat_log_file);
 }
 
 /*
@@ -549,6 +539,120 @@ wee_shutdown (int return_code)
 }
 
 /*
+ * wee_dump writes dump to WeeChat log file
+ */
+
+void
+wee_dump (int crash)
+{
+    t_irc_server *ptr_server;
+    t_irc_channel *ptr_channel;
+    t_irc_nick *ptr_nick;
+    t_gui_window *ptr_window;
+    t_gui_buffer *ptr_buffer;
+    
+    /* prevent reentrance */
+    if (sigsegv)
+        exit (EXIT_FAILURE);
+    
+    if (crash)
+    {
+        sigsegv = 1;
+        wee_log_printf ("very bad, WeeChat is crashing (SIGSEGV received)...\n");
+    }
+    
+    wee_log_printf ("\n");
+    if (crash)
+    {
+        wee_log_printf ("******             WeeChat CRASH DUMP              ******\n");
+        wee_log_printf ("****** Please send this file to WeeChat developers ******\n");
+        wee_log_printf ("******    and explain when this crash happened     ******\n");
+    }
+    else
+    {
+        wee_log_printf ("******            WeeChat dump request             ******\n");
+    }
+    
+    for (ptr_server = irc_servers; ptr_server; ptr_server = ptr_server->next_server)
+    {
+        wee_log_printf ("\n");
+        server_print_log (ptr_server);
+        
+        for (ptr_channel = ptr_server->channels; ptr_channel;
+            ptr_channel = ptr_channel->next_channel)
+        {
+            wee_log_printf ("\n");
+            channel_print_log (ptr_channel);
+            
+            for (ptr_nick = ptr_channel->nicks; ptr_nick;
+                ptr_nick = ptr_nick->next_nick)
+            {
+                wee_log_printf ("\n");
+                nick_print_log (ptr_nick);
+            }
+            
+        }
+    }
+    
+    wee_log_printf ("\n");
+    wee_log_printf ("[windows/buffers]\n");
+    wee_log_printf ("  => windows:\n");
+    for (ptr_window = gui_windows; ptr_window; ptr_window = ptr_window->next_window)
+    {
+        wee_log_printf ("       0x%X\n", ptr_window);
+    }
+    wee_log_printf ("  => buffers:\n");
+    for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    {
+        wee_log_printf ("       0x%X\n", ptr_buffer);
+    }
+    wee_log_printf ("  => current window = 0x%X\n", gui_current_window);
+    
+    for (ptr_window = gui_windows; ptr_window; ptr_window = ptr_window->next_window)
+    {
+        wee_log_printf ("\n");
+        gui_window_print_log (ptr_window);
+    }
+    
+    for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    {
+        wee_log_printf ("\n");
+        gui_buffer_print_log (ptr_buffer);
+    }
+    
+    wee_log_printf ("\n");
+    wee_log_printf ("******                 End of dump                 ******\n");
+    wee_log_printf ("\n");
+}
+
+/*
+ * my_sigint: SIGINT handler, do nothing (just ignore this signal)
+ *            Prevents user for exiting with Ctrl-C
+ */
+
+void
+my_sigint ()
+{
+    /* do nothing */
+}
+
+/*
+ * my_sigsegv: SIGSEGV handler: save crash log to ~/.weechat/weechat.log and exit
+ */
+
+void
+my_sigsegv ()
+{
+    wee_dump (1);
+    wee_gui_shutdown ();
+    fprintf (stderr, "\n");
+    fprintf (stderr, "*** Very bad! WeeChat has crashed (SIGSEGV received)\n");
+    fprintf (stderr, "*** Full crash dump was saved to ~/.weechat/weechat.log file\n");
+    fprintf (stderr, "*** Please send this file to WeeChat developers.\n\n");
+    wee_shutdown (EXIT_FAILURE);
+}
+
+/*
  * main: WeeChat startup
  */
 
@@ -564,6 +668,7 @@ main (int argc, char *argv[])
     local_charset = strdup (nl_langinfo (CODESET));
     
     signal (SIGINT, my_sigint);     /* ignore SIGINT signal                 */
+    signal (SIGSEGV, my_sigsegv);   /* crash dump when SIGSEGV is received  */
     gui_pre_init (&argc, &argv);    /* pre-initiliaze interface             */
     wee_init_vars ();               /* initialize some variables            */
     wee_parse_args (argc, argv);    /* parse command line args              */

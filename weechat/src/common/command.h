@@ -65,6 +65,7 @@ extern int weechat_cmd_alias (char *);
 extern int weechat_cmd_buffer (int, char **);
 extern int weechat_cmd_clear (int, char **);
 extern int weechat_cmd_connect (int, char **);
+extern int weechat_cmd_debug (int, char **);
 extern int weechat_cmd_disconnect (int, char **);
 extern int weechat_cmd_help (int, char **);
 extern int weechat_cmd_perl (int, char **);

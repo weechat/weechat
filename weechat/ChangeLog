@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-02-27
+ChangeLog - 2005-03-05
 
 
 Version 0.1.1 (under dev!):
+   * added crash dump when WeeChat receives SIGSEGV (Segmentation fault)
    * added new display engine: doesn't cut words at end of lines
    * added DCC send and DCC chat
    * added spanish translation

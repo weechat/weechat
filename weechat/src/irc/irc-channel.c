@@ -260,3 +260,25 @@ channel_remove_dcc (t_irc_dcc *ptr_dcc)
         }
     }
 }
+
+/*
+ * channel_print_log: print channel infos in log (usually for crash dump)
+ */
+
+void
+channel_print_log (t_irc_channel *channel)
+{
+    wee_log_printf ("=> channel %s (addr:0x%X)]\n", channel->name, channel);
+    wee_log_printf ("     type . . . . : %d\n",     channel->type);
+    wee_log_printf ("     dcc_chat . . : 0x%X\n",   channel->dcc_chat);
+    wee_log_printf ("     topic. . . . : '%s'\n",   channel->topic);
+    wee_log_printf ("     modes. . . . : '%s'\n",   channel->modes);
+    wee_log_printf ("     limit. . . . : %d\n",     channel->limit);
+    wee_log_printf ("     key. . . . . : '%s'\n",   channel->key);
+    wee_log_printf ("     checking_away: %d\n",     channel->checking_away);
+    wee_log_printf ("     nicks. . . . : 0x%X\n",   channel->nicks);
+    wee_log_printf ("     last_nick. . : 0x%X\n",   channel->last_nick);
+    wee_log_printf ("     buffer . . . : 0x%X\n",   channel->buffer);
+    wee_log_printf ("     prev_channel : 0x%X\n",   channel->prev_channel);
+    wee_log_printf ("     next_channel : 0x%X\n",   channel->next_channel);
+}

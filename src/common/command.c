@@ -65,6 +65,10 @@ t_weechat_command weechat_commands[] =
     N_("[servername]"),
     N_("servername: server name to disconnect"),
     0, 1, weechat_cmd_disconnect, NULL },
+  { "debug", N_("print debug messages"),
+    N_("dump"),
+    N_("dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)"),
+    1, 1, weechat_cmd_debug, NULL },
   { "help", N_("display help about commands"),
     N_("[command]"), N_("command: name of a WeeChat or IRC command"),
     0, 1, weechat_cmd_help, NULL },
@@ -1034,7 +1038,7 @@ weechat_cmd_clear (int argc, char **argv)
 {
     if (argc == 1)
     {
-        if (strcmp (argv[0], "-all") == 0)
+        if (strcasecmp (argv[0], "-all") == 0)
             gui_buffer_clear_all ();
         else
         {
@@ -1099,6 +1103,38 @@ weechat_cmd_connect (int argc, char **argv)
         gui_printf (NULL, _("%s server not found\n"), WEECHAT_ERROR);
         return -1;
     }
+    return 0;
+}
+
+/*
+ * weechat_cmd_debug: print debug messages
+ */
+
+int
+weechat_cmd_debug (int argc, char **argv)
+{
+    if (argc != 1)
+    {
+        irc_display_prefix (NULL, PREFIX_ERROR);
+        gui_printf (NULL,
+                    _("%s wrong argument count for \"%s\" command\n"),
+                    WEECHAT_ERROR, "debug");
+        return -1;
+    }
+    
+    if (strcasecmp (argv[0], "dump") == 0)
+    {
+        wee_dump (0);
+    }
+    else
+    {
+        irc_display_prefix (NULL, PREFIX_ERROR);
+        gui_printf (NULL,
+                    _("%s unknown option for \"%s\" command\n"),
+                    WEECHAT_ERROR, "perl");
+        return -1;
+    }
+    
     return 0;
 }
 
@@ -1316,9 +1352,9 @@ weechat_cmd_perl (int argc, char **argv)
             
             break;
         case 1:
-            if (strcmp (argv[0], "autoload") == 0)
+            if (strcasecmp (argv[0], "autoload") == 0)
                 plugin_auto_load (PLUGIN_TYPE_PERL, "perl/autoload");
-            if (strcmp (argv[0], "unload") == 0)
+            if (strcasecmp (argv[0], "unload") == 0)
             {
                 /* unload all Perl scripts */
                 plugin_unload (PLUGIN_TYPE_PERL, NULL);
@@ -1327,7 +1363,7 @@ weechat_cmd_perl (int argc, char **argv)
             }
             break;
         case 2:
-            if (strcmp (argv[0], "load") == 0)
+            if (strcasecmp (argv[0], "load") == 0)
             {
                 /* load Perl script */
                 if (strstr(argv[1], DIR_SEPARATOR))

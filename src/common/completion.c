@@ -165,6 +165,16 @@ completion_build_list (t_completion *completion, void *channel)
             return;
         }
     }
+    if (strcasecmp (completion->base_command, "debug") == 0)
+    {
+        if (completion->base_command_arg == 1)
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         "dump");
+        else
+            completion_stop (completion);
+        return;
+    }
     if ((strcasecmp (completion->base_command, "help") == 0)
         && (completion->base_command_arg == 1))
     {

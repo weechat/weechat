@@ -277,6 +277,8 @@ extern void gui_move_next_word (t_gui_buffer *);
 extern void gui_buffer_insert_string (t_gui_buffer *, char *, int);
 extern t_gui_buffer *gui_switch_to_buffer_by_number (t_gui_window *, int);
 extern void gui_move_buffer_to_number (t_gui_window *, int);
+extern void gui_window_print_log (t_gui_window *);
+extern void gui_buffer_print_log (t_gui_buffer *);
 
 /* GUI dependant functions */
 

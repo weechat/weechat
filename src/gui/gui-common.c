@@ -817,3 +817,115 @@ gui_move_buffer_to_number (t_gui_window *window, int number)
     
     gui_redraw_buffer (window->buffer);
 }
+
+/*
+ * gui_window_print_log: print window infos in log (usually for crash dump)
+ */
+
+void
+gui_window_print_log (t_gui_window *window)
+{
+    wee_log_printf ("[window (addr:0x%X)]\n", window);
+    wee_log_printf ("  win_x . . . . . . . : %d\n",   window->win_x);
+    wee_log_printf ("  win_y . . . . . . . : %d\n",   window->win_y);
+    wee_log_printf ("  win_width . . . . . : %d\n",   window->win_width);
+    wee_log_printf ("  win_height. . . . . : %d\n",   window->win_height);
+    wee_log_printf ("  win_chat_x. . . . . : %d\n",   window->win_chat_x);
+    wee_log_printf ("  win_chat_y. . . . . : %d\n",   window->win_chat_y);
+    wee_log_printf ("  win_chat_width. . . : %d\n",   window->win_chat_width);
+    wee_log_printf ("  win_chat_height . . : %d\n",   window->win_chat_height);
+    wee_log_printf ("  win_chat_cursor_x . : %d\n",   window->win_chat_cursor_x);
+    wee_log_printf ("  win_chat_cursor_y . : %d\n",   window->win_chat_cursor_y);
+    wee_log_printf ("  win_nick_x. . . . . : %d\n",   window->win_nick_x);
+    wee_log_printf ("  win_nick_y. . . . . : %d\n",   window->win_nick_y);
+    wee_log_printf ("  win_nick_width. . . : %d\n",   window->win_nick_width);
+    wee_log_printf ("  win_nick_height . . : %d\n",   window->win_nick_height);
+    wee_log_printf ("  win_title . . . . . : 0x%X\n", window->win_title);
+    wee_log_printf ("  win_chat. . . . . . : 0x%X\n", window->win_chat);
+    wee_log_printf ("  win_nick. . . . . . : 0x%X\n", window->win_nick);
+    wee_log_printf ("  win_status. . . . . : 0x%X\n", window->win_status);
+    wee_log_printf ("  win_infobar . . . . : 0x%X\n", window->win_infobar);
+    wee_log_printf ("  win_input . . . . . : 0x%X\n", window->win_input);
+    wee_log_printf ("  win_separator . . . : 0x%X\n", window->win_separator);
+    wee_log_printf ("  textview_chat . . . : 0x%X\n", window->textview_chat);
+    wee_log_printf ("  textbuffer_chat . . : 0x%X\n", window->textbuffer_chat);
+    wee_log_printf ("  texttag_chat. . . . : 0x%X\n", window->texttag_chat);
+    wee_log_printf ("  textview_nicklist . : 0x%X\n", window->textview_nicklist);
+    wee_log_printf ("  textbuffer_nicklist : 0x%X\n", window->textbuffer_nicklist);
+    wee_log_printf ("  dcc_first . . . . . : 0x%X\n", window->dcc_first);
+    wee_log_printf ("  dcc_selected. . . . : 0x%X\n", window->dcc_selected);
+    wee_log_printf ("  dcc_last_displayed. : 0x%X\n", window->dcc_last_displayed);
+    wee_log_printf ("  buffer. . . . . . . : 0x%X\n", window->buffer);
+    wee_log_printf ("  first_line_displayed: %d\n",   window->first_line_displayed);
+    wee_log_printf ("  sub_lines . . . . . : %d\n",   window->sub_lines);
+    wee_log_printf ("  prev_window . . . . : 0x%X\n", window->prev_window);
+    wee_log_printf ("  next_window . . . . : 0x%X\n", window->next_window);
+    
+}
+
+/*
+ * gui_buffer_print_log: print buffer infos in log (usually for crash dump)
+ */
+
+void
+gui_buffer_print_log (t_gui_buffer *buffer)
+{
+    t_gui_line *ptr_line;
+    t_gui_message *ptr_message;
+    int num;
+    char buf[4096];
+    
+    wee_log_printf ("[buffer (addr:0x%X)]\n", buffer);
+    wee_log_printf ("  num_displayed. . . . : %d\n",   buffer->num_displayed);
+    wee_log_printf ("  number . . . . . . . : %d\n",   buffer->number);
+    wee_log_printf ("  server . . . . . . . : 0x%X\n", buffer->server);
+    wee_log_printf ("  channel. . . . . . . : 0x%X\n", buffer->channel);
+    wee_log_printf ("  dcc. . . . . . . . . : %d\n",   buffer->dcc);
+    wee_log_printf ("  lines. . . . . . . . : 0x%X\n", buffer->lines);
+    wee_log_printf ("  last_line. . . . . . : 0x%X\n", buffer->last_line);
+    wee_log_printf ("  num_lines. . . . . . : %d\n",   buffer->num_lines);
+    wee_log_printf ("  line_complete. . . . : %d\n",   buffer->line_complete);
+    wee_log_printf ("  notify_level . . . . : %d\n",   buffer->notify_level);
+    wee_log_printf ("  log_filename . . . . : '%s'\n", buffer->log_filename);
+    wee_log_printf ("  log_file . . . . . . : 0x%X\n", buffer->log_file);
+    wee_log_printf ("  input_buffer . . . . : '%s'\n", buffer->input_buffer);
+    wee_log_printf ("  input_buffer_alloc . : %d\n",   buffer->input_buffer_alloc);
+    wee_log_printf ("  input_buffer_size. . : %d\n",   buffer->input_buffer_size);
+    wee_log_printf ("  input_buffer_pos . . : %d\n",   buffer->input_buffer_pos);
+    wee_log_printf ("  input_buffer_1st_disp: %d\n",   buffer->input_buffer_1st_display);
+    wee_log_printf ("  history. . . . . . . : 0x%X\n", buffer->history);
+    wee_log_printf ("  last_history . . . . : 0x%X\n", buffer->last_history);
+    wee_log_printf ("  ptr_history. . . . . : 0x%X\n", buffer->ptr_history);
+    wee_log_printf ("  prev_buffer. . . . . : 0x%X\n", buffer->prev_buffer);
+    wee_log_printf ("  next_buffer. . . . . : 0x%X\n", buffer->next_buffer);
+    wee_log_printf ("\n");
+    wee_log_printf ("  => last 100 lines:\n");
+    
+    num = 0;
+    ptr_line = buffer->last_line;
+    while (ptr_line && (num < 100))
+    {
+        num++;
+        ptr_line = ptr_line->prev_line;
+    }
+    if (!ptr_line)
+        ptr_line = buffer->lines;
+    else
+        ptr_line = ptr_line->next_line;
+    
+    while (ptr_line)
+    {
+        buf[0] = '\0';
+        for (ptr_message = ptr_line->messages; ptr_message;
+            ptr_message = ptr_message->next_message)
+        {
+            if (strlen (buf) + strlen (ptr_message->message) + 1 >= sizeof (buf))
+                break;
+            strcat (buf, ptr_message->message);
+        }
+        num--;
+        wee_log_printf ("       line N-%05d: %s\n", num, buf);
+        
+        ptr_line = ptr_line->next_line;
+    }
+}

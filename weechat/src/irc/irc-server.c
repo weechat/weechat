@@ -1117,3 +1117,51 @@ server_set_away (t_irc_server *server, char *nick, int is_away)
         }
     }
 }
+
+/*
+ * server_print_log: print server infos in log (usually for crash dump)
+ */
+
+void
+server_print_log (t_irc_server *server)
+{
+    wee_log_printf ("[server %s (addr:0x%X)]\n", server->name, server);
+    wee_log_printf ("  autoconnect . . . . : %d\n",    server->autoconnect);
+    wee_log_printf ("  autoreconnect . . . : %d\n",    server->autoreconnect);
+    wee_log_printf ("  autoreconnect_delay : %d\n",    server->autoreconnect_delay);
+    wee_log_printf ("  command_line. . . . : %d\n",    server->command_line);
+    wee_log_printf ("  address . . . . . . : '%s'\n",  server->address);
+    wee_log_printf ("  port. . . . . . . . : %d\n",    server->port);
+    wee_log_printf ("  password. . . . . . : '%s'\n",
+        (server->password && server->password[0]) ? "(hidden)" : server->password);
+    wee_log_printf ("  nick1 . . . . . . . : '%s'\n",  server->nick1);
+    wee_log_printf ("  nick2 . . . . . . . : '%s'\n",  server->nick2);
+    wee_log_printf ("  nick3 . . . . . . . : '%s'\n",  server->nick3);
+    wee_log_printf ("  username. . . . . . : '%s'\n",  server->username);
+    wee_log_printf ("  realname. . . . . . : '%s'\n",  server->realname);
+    wee_log_printf ("  command . . . . . . : '%s'\n",
+        (server->command && server->command[0]) ? "(hidden)" : server->command);
+    wee_log_printf ("  command_delay . . . : %d\n",    server->command_delay);
+    wee_log_printf ("  autojoin. . . . . . : '%s'\n",  server->autojoin);
+    wee_log_printf ("  autorejoin. . . . . : %d\n",    server->autorejoin);
+    wee_log_printf ("  child_pid . . . . . : %d\n",    server->child_pid);
+    wee_log_printf ("  child_read  . . . . : %d\n",    server->child_read);
+    wee_log_printf ("  child_write . . . . : %d\n",    server->child_write);
+    wee_log_printf ("  sock. . . . . . . . : %d\n",    server->sock);
+    wee_log_printf ("  is_connected. . . . : %d\n",    server->is_connected);
+    wee_log_printf ("  unterminated_message: '%s'\n",  server->unterminated_message);
+    wee_log_printf ("  nick. . . . . . . . : '%s'\n",  server->nick);
+    wee_log_printf ("  reconnect_start . . : %ld\n",   server->reconnect_start);
+    wee_log_printf ("  reconnect_join. . . : %d\n",    server->reconnect_join);
+    wee_log_printf ("  is_away . . . . . . : %d\n",    server->is_away);
+    wee_log_printf ("  away_time . . . . . : %ld\n",   server->away_time);
+    wee_log_printf ("  lag . . . . . . . . : %d\n",    server->lag);
+    wee_log_printf ("  lag_check_time. . . : tv_sec:%d, tv_usec:%d\n",
+        server->lag_check_time.tv_sec, server->lag_check_time.tv_usec);
+    wee_log_printf ("  lag_next_check. . . : %ld\n",   server->lag_next_check);
+    wee_log_printf ("  buffer. . . . . . . : 0x%X\n",  server->buffer);
+    wee_log_printf ("  channels. . . . . . : 0x%X\n",  server->channels);
+    wee_log_printf ("  last_channel. . . . : 0x%X\n",  server->last_channel);
+    wee_log_printf ("  prev_server . . . . : 0x%X\n",  server->prev_server);
+    wee_log_printf ("  next_server . . . . : 0x%X\n",  server->next_server);
+}

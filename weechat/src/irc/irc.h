@@ -261,6 +261,7 @@ extern int server_name_already_exists (char *);
 extern void server_remove_away ();
 extern void server_check_away ();
 extern void server_set_away (t_irc_server *, char *, int);
+extern void server_print_log (t_irc_server *);
 
 /* channel functions (irc-channel.c) */
 
@@ -274,6 +275,7 @@ extern void channel_check_away (t_irc_server *, t_irc_channel *);
 extern void channel_set_away (t_irc_channel *, char *, int);
 extern int channel_create_dcc (t_irc_dcc *);
 extern void channel_remove_dcc (t_irc_dcc *);
+extern void channel_print_log (t_irc_channel *);
 
 /* nick functions (irc-nick.c) */
 
@@ -286,6 +288,7 @@ extern t_irc_nick *nick_search (t_irc_channel *, char *);
 extern void nick_count (t_irc_channel *, int *, int *, int *, int *, int *);
 extern int nick_get_max_length (t_irc_channel *);
 extern void nick_set_away (t_irc_channel *, t_irc_nick *, int);
+extern void nick_print_log (t_irc_nick *);
 
 /* DCC functions (irc-dcc.c) */
 
