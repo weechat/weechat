@@ -1173,10 +1173,14 @@ weechat_cmd_help (int argc, char **argv)
                 gui_printf (NULL, _("Syntax: "));
                 gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "/%s",
                                   weechat_commands[i].command_name);
-                gui_printf (NULL, " %s\n",
-                            (weechat_commands[i].arguments) ?
-                            _(weechat_commands[i].arguments) : "");
-                if (weechat_commands[i].arguments_description)
+                if (weechat_commands[i].arguments &&
+                    weechat_commands[i].arguments[0])
+                    gui_printf (NULL, " %s\n",
+                                _(weechat_commands[i].arguments));
+                else
+                    gui_printf (NULL, "\n");
+                if (weechat_commands[i].arguments_description &&
+                    weechat_commands[i].arguments_description[0])
                     gui_printf (NULL, "%s\n",
                                 _(weechat_commands[i].arguments_description));
                 return 0;
@@ -1196,10 +1200,14 @@ weechat_cmd_help (int argc, char **argv)
                 gui_printf (NULL, _("Syntax: "));
                 gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "/%s",
                                   irc_commands[i].command_name);
-                gui_printf (NULL, "%s\n",
-                            (irc_commands[i].arguments) ?
-                            _(irc_commands[i].arguments) : "");
-                if (irc_commands[i].arguments_description)
+                if (irc_commands[i].arguments &&
+                    irc_commands[i].arguments[0])
+                    gui_printf (NULL, " %s\n",
+                                _(irc_commands[i].arguments));
+                else
+                    gui_printf (NULL, "\n");
+                if (irc_commands[i].arguments_description &&
+                    irc_commands[i].arguments_description[0])
                     gui_printf (NULL, "%s\n",
                                 _(irc_commands[i].arguments_description));
                 return 0;
