@@ -4,7 +4,7 @@ WeeChat - Wee Enhanced Environment for Chat
 ChangeLog - 2003-11-03
 
 
-Version 0.0.3 (under dev!):
+Version 0.0.3 (2003-11-03):
    * ./configure script to build WeeChat
    * nicks are now correctly sorted (op, halfop, voice, other)
    * fixed problem with '353' IRC message (nicklist)

@@ -17,6 +17,6 @@
 
 SUBDIRS = po intl src
 
-EXTRA_DIST = weechat.1
+EXTRA_DIST = weechat.1 BUGS FAQ
 
 man_MANS = weechat.1

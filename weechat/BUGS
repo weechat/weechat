@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-WeeChat known bugs, 2003-10-27
+WeeChat known bugs, 2003-11-03
 
 - ./configure does not check that Curses header is installed
 - ./configure does not check that Gtk 2.0 libraries are installed

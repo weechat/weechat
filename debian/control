@@ -31,6 +31,7 @@ Description: Fast, light and extensible IRC client
 
 Package: weechat-common
 Architecture: all
+Replaces: weechat
 Recommends: weechat-curses | weechat-gtk
 Description: Common files for WeeChat
  Documentation, examples, and locale files for WeeChat - fast, light and
