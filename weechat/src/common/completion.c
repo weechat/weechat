@@ -392,6 +392,11 @@ completion_build_list (t_completion *completion, void *channel)
             completion_stop (completion);
         return;
     }
+    if (strcasecmp (completion->base_command, "me") == 0)
+    {
+        completion->context = COMPLETION_NICK;
+        return;
+    }
     if (strcasecmp (completion->base_command, "notice") == 0)
     {
         if (completion->base_command_arg != 1)
