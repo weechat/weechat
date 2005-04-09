@@ -35,7 +35,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.1 - 20 Mars 2005
+@subtitle Documentation pour WeeChat v0.1.2-cvs - 9 Avril 2005
 
 @image{weechat_image}
 
@@ -270,6 +270,9 @@ Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
 @item look_charset_internal
 Jeu de caract@`eres interne @`a WeeChat, devrait @^etre ISO-xxxx m@^eme si la locale est UTF-8 (si non renseign@'e, le jeu de caract@`eres local est utilis@'e)@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: 'ISO-8859-1'@*
+@item look_buffer_timestamp
+Horodatage pour les tampons@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '[%H:%M:%S]'@*
 @item look_color_nicks
 Afficher les utilisateurs avec diff@'erentes couleurs@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*

@@ -30,6 +30,7 @@
 #include <string.h>
 #include <signal.h>
 #include <time.h>
+#include <ctype.h>
 #include <ncurses.h>
 
 #include "../../common/weechat.h"
@@ -1314,7 +1315,7 @@ gui_draw_buffer_infobar (t_gui_buffer *buffer, int erase)
     t_gui_window *ptr_win;
     time_t time_seconds;
     struct tm *local_time;
-    char text[1024 + 1];
+    char text_time[1024 + 1];
     
     /* make gcc happy */
     (void) buffer;
@@ -1339,9 +1340,9 @@ gui_draw_buffer_infobar (t_gui_buffer *buffer, int erase)
         local_time = localtime (&time_seconds);
         if (local_time)
         {
-            strftime (text, 1024, cfg_look_infobar_timestamp, local_time);
+            strftime (text_time, 1024, cfg_look_infobar_timestamp, local_time);
             gui_window_set_color (ptr_win->win_infobar, COLOR_WIN_INFOBAR);
-            wprintw (ptr_win->win_infobar, "%s", text);
+            wprintw (ptr_win->win_infobar, "%s", text_time);
         }
         if (gui_infobar)
         {
@@ -2424,7 +2425,11 @@ void
 gui_printf_type_color (t_gui_buffer *buffer, int type, int color, char *message, ...)
 {
     static char buf[8192];
-    char timestamp[16];
+    char text_time[1024 + 1];
+    char text_time_char[2];
+    time_t time_seconds;
+    struct tm *local_time;
+    int time_first_digit, time_last_digit;
     char *pos, *buf2, *buf3;
     int i, j;
     va_list argptr;
@@ -2503,19 +2508,52 @@ gui_printf_type_color (t_gui_buffer *buffer, int type, int color, char *message,
         pos = buf3 - 1;
         while (pos)
         {
-            /* TODO: read timestamp format from config! */
             if ((!buffer->last_line) || (buffer->line_complete))
             {
-                gui_add_message (buffer, MSG_TYPE_TIME, COLOR_WIN_CHAT_DARK, "[");
-                snprintf (timestamp, 16, "%02d", date_tmp->tm_hour);
-                gui_add_message (buffer, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME, timestamp);
-                gui_add_message (buffer, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME_SEP, ":");
-                snprintf (timestamp, 16, "%02d", date_tmp->tm_min);
-                gui_add_message (buffer, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME, timestamp);
-                gui_add_message (buffer, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME_SEP, ":");
-                snprintf (timestamp, 16, "%02d", date_tmp->tm_sec);
-                gui_add_message (buffer, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME, timestamp);
-                gui_add_message (buffer, MSG_TYPE_TIME, COLOR_WIN_CHAT_DARK, "] ");
+                time_seconds = time (NULL);
+                local_time = localtime (&time_seconds);
+                strftime (text_time, 1024, cfg_look_buffer_timestamp, local_time);
+                
+                time_first_digit = -1;
+                time_last_digit = -1;
+                i = 0;
+                while (text_time[i])
+                {
+                    if (isdigit (text_time[i]))
+                    {
+                        if (time_first_digit == -1)
+                            time_first_digit = i;
+                        time_last_digit = i;
+                    }
+                    i++;
+                }
+                
+                text_time_char[1] = '\0';
+                i = 0;
+                while (text_time[i])
+                {
+                    text_time_char[0] = text_time[i];
+                    if (time_first_digit < 0)
+                        gui_add_message (buffer, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME,
+                                         text_time_char);
+                    else
+                    {
+                        if ((i < time_first_digit) || (i > time_last_digit))
+                            gui_add_message (buffer, MSG_TYPE_TIME, COLOR_WIN_CHAT_DARK,
+                                             text_time_char);
+                        else
+                        {
+                            if (isdigit (text_time[i]))
+                                gui_add_message (buffer, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME,
+                                                 text_time_char);
+                            else
+                                gui_add_message (buffer, MSG_TYPE_TIME, COLOR_WIN_CHAT_TIME_SEP,
+                                                 text_time_char);
+                        }
+                    }
+                    i++;
+                }
+                gui_add_message (buffer, MSG_TYPE_TIME, COLOR_WIN_CHAT_DARK, " ");
             }
             gui_add_message (buffer, type, color, pos + 1);
             pos = strchr (pos + 1, '\n');

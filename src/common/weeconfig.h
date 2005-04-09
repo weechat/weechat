@@ -83,6 +83,7 @@ extern char *cfg_look_weechat_slogan;
 extern char *cfg_look_charset_decode;
 extern char *cfg_look_charset_encode;
 extern char *cfg_look_charset_internal;
+extern char *cfg_look_buffer_timestamp;
 extern int cfg_look_color_nicks;
 extern int cfg_look_color_actions;
 extern int cfg_look_remove_colors_from_msgs;

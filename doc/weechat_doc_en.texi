@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.1.1 - March, 20 2005
+@subtitle Documentation for WeeChat v0.1.2-cvs - April, 09 2005
 
 @image{weechat_image}
 
@@ -270,6 +270,9 @@ Type: string (any string), default value: ''@*
 @item look_charset_internal
 Internal WeeChat charset, should be ISO-xxxx even if locale is UTF-8 (if empty, local charset is used)@*
 Type: string (any string), default value: 'ISO-8859-1'@*
+@item look_buffer_timestamp
+Timestamp for buffers@*
+Type: string (any string), default value: '[%H:%M:%S]'@*
 @item look_color_nicks
 Display nick names with different colors@*
 Type: boolean (values: 'on' or 'off'), default value: 'on'@*
@@ -498,6 +501,9 @@ Type: integer (values: between 0 and 2147483647), default value: 1@*
 @item irc_lag_disconnect
 Disconnect after important lag (in minutes, 0 = never disconnect)@*
 Type: integer (values: between 0 and 2147483647), default value: 5@*
+@item irc_fifo_pipe
+Create a FIFO pipe for remote control@*
+Type: boolean (values: 'on' or 'off'), default value: 'off'@*
 @item dcc_auto_accept_files
 Automatically accept incoming dcc files@*
 Type: boolean (values: 'on' or 'off'), default value: 'off'@*
