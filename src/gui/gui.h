@@ -250,6 +250,7 @@ struct t_gui_window
 
 extern int gui_init_ok;
 extern int gui_ok;
+extern int gui_add_hotlist;
 extern t_gui_window *gui_windows;
 extern t_gui_window *last_gui_window;
 extern t_gui_window *gui_current_window;

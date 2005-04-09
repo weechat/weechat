@@ -740,29 +740,30 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *arguments)
     if (pos)
         pos[0] = '\0';
     
+    /* change nickname in any opened private window */
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if ((SERVER(ptr_buffer) == server) && BUFFER_IS_PRIVATE(ptr_buffer))
+        {
+            if ((CHANNEL(ptr_buffer)->name)
+                && (strcasecmp (host, CHANNEL(ptr_buffer)->name) == 0))
+            {
+                free (CHANNEL(ptr_buffer)->name);
+                CHANNEL(ptr_buffer)->name = strdup (arguments);
+            }
+        }
+    }
+    
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
         ptr_nick = nick_search (ptr_channel, host);
         if (ptr_nick)
         {
-            /* change nickname in any opened private window */
-            for (ptr_buffer = gui_buffers; ptr_buffer;
-                 ptr_buffer = ptr_buffer->next_buffer)
-            {
-                if ((SERVER(ptr_buffer) == server) && BUFFER_IS_PRIVATE(ptr_buffer))
-                {
-                    if ((CHANNEL(ptr_buffer)->name)
-                        && (strcmp (ptr_nick->nick, CHANNEL(ptr_buffer)->name) == 0))
-                    {
-                        free (CHANNEL(ptr_buffer)->name);
-                        CHANNEL(ptr_buffer)->name = strdup (arguments);
-                    }
-                }
-            }
-            
-            /* change nickname on channel */
             nick_is_me = (strcmp (ptr_nick->nick, server->nick) == 0) ? 1 : 0;
+            if (nick_is_me)
+                gui_add_hotlist = 0;
             nick_change (ptr_channel, ptr_nick, arguments);
             irc_display_prefix (ptr_channel->buffer, PREFIX_INFO);
             if (nick_is_me)
@@ -786,6 +787,7 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *arguments)
                               arguments);
             if (gui_buffer_has_nicklist (ptr_channel->buffer))
                 gui_draw_buffer_nick (ptr_channel->buffer, 1);
+            gui_add_hotlist = 1;
         }
     }
     

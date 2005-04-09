@@ -43,6 +43,8 @@
 int gui_init_ok = 0;                        /* = 1 if GUI is initialized    */
 int gui_ok = 0;                             /* = 1 if GUI is ok             */
                                             /* (0 when term size too small) */
+int gui_add_hotlist = 1;                    /* 0 is for temporarly disable  */
+                                            /* hotlist add for all buffers  */
 
 t_gui_window *gui_windows = NULL;           /* pointer to first window      */
 t_gui_window *last_gui_window = NULL;       /* pointer to last window       */

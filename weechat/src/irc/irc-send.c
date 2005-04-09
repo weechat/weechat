@@ -94,6 +94,7 @@ irc_cmd_send_away (t_irc_server *server, char *arguments)
     time_t elapsed;
     char buffer[4096];
     
+    gui_add_hotlist = 0;
     if (arguments && (strncmp (arguments, "-all", 4) == 0))
     {
         pos = arguments + 4;
@@ -184,6 +185,7 @@ irc_cmd_send_away (t_irc_server *server, char *arguments)
         }
     }
     gui_draw_buffer_status (gui_current_window->buffer, 1);
+    gui_add_hotlist = 1;
     return 0;
 }
 

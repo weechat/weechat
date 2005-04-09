@@ -65,6 +65,7 @@ char *nicks_colors[COLOR_WIN_NICK_NUMBER] =
 
 int color_attr[NUM_COLORS];
 
+
 /*
  * gui_assign_color: assign a color (read from config)
  */
@@ -2398,7 +2399,7 @@ gui_add_message (t_gui_buffer *buffer, int type, int color, char *message)
         pos[0] = '\n';
         if (buffer->num_displayed > 0)
             gui_draw_buffer_chat (buffer, 0);
-        if (buffer->num_displayed == 0)
+        if (gui_add_hotlist && (buffer->num_displayed == 0))
         {
             if (3 - buffer->last_line->line_with_message -
                 buffer->last_line->line_with_highlight <=
