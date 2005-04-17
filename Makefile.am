@@ -19,7 +19,7 @@ SUBDIRS = po intl src
 
 EXTRA_DIST = weechat-curses.1 BUGS FAQ FAQ.fr \
              debian/changelog debian/control \
-             debian/copyright debian/files \
+             debian/copyright \
              debian/rules debian/weechat-common.docs \
              debian/weechat-common.install debian/weechat-curses.dirs \
              debian/weechat-curses.install debian/weechat-gtk.dirs \
