@@ -26,3 +26,5 @@ EXTRA_DIST = weechat-curses.1 BUGS FAQ FAQ.fr \
              debian/weechat-gtk.install
 
 man_MANS = weechat-curses.1
+
+ACLOCAL_AMFLAGS = -I m4

@@ -115,7 +115,9 @@ weechat_convert_encoding (char *from_code, char *to_code, char *string)
     
     #ifdef HAVE_ICONV
     iconv_t cd;
-    char *inbuf, *ptr_inbuf, *ptr_outbuf;
+    char *inbuf;
+    ICONV_CONST char *ptr_inbuf;
+    char *ptr_outbuf;
     size_t inbytesleft, outbytesleft;
     
     if (from_code && from_code[0] && to_code && to_code[0]

@@ -120,6 +120,10 @@ if test "x$debug" = "x2" ; then
     AC_DEFINE(DEBUG)
 fi
 
+dnl For FreeBSD
+LIBS="$LIBS $INTLLIBS"
+CFLAGS="$CFLAGS $CPPFLAGS"
+
 AC_OUTPUT([Makefile
            src/Makefile
            src/common/Makefile

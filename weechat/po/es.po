@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.2-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-04-09 13:00+0200\n"
+"POT-Creation-Date: 2005-04-17 20:03+0200\n"
 "PO-Revision-Date: 2005-04-09 13:07+0200\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2433,12 +2433,12 @@ msgstr "%s ¡no conectado al servidor \"%s\"!\n"
 msgid "Auto-reconnection is cancelled\n"
 msgstr "La reconexión automática está anulada\n"
 
-#: src/common/command.c:1200 src/common/weechat.c:261
+#: src/common/command.c:1200 src/common/weechat.c:263
 #, c-format
 msgid "%s internal commands:\n"
 msgstr "Comandos internos %s :\n"
 
-#: src/common/command.c:1209 src/common/weechat.c:281
+#: src/common/command.c:1209 src/common/weechat.c:283
 #, c-format
 msgid "IRC commands:\n"
 msgstr "Comandos IRC :\n"
@@ -2693,7 +2693,7 @@ msgstr "****  Comienzo del log (registro)  "
 msgid "****  End of log  "
 msgstr "****  Fin del log  "
 
-#: src/common/weechat.c:186
+#: src/common/weechat.c:188
 #, c-format
 msgid ""
 "WeeChat configuration options (~/.weechat/weechat.rc):\n"
@@ -2702,47 +2702,47 @@ msgstr ""
 "Opciones de configuración de WeeChat (~/.weechat/weechat.rc):\n"
 "\n"
 
-#: src/common/weechat.c:199
+#: src/common/weechat.c:201
 #, c-format
 msgid "  . type boolean (values: 'on' or 'off')\n"
 msgstr "  . tipo booleano (valores: 'on' u 'off')\n"
 
-#: src/common/weechat.c:200 src/common/weechat.c:223 src/common/weechat.c:229
-#: src/common/weechat.c:235
+#: src/common/weechat.c:202 src/common/weechat.c:225 src/common/weechat.c:231
+#: src/common/weechat.c:237
 #, c-format
 msgid "  . default value: '%s'\n"
 msgstr "  . valor por defecto: '%s'\n"
 
-#: src/common/weechat.c:205
+#: src/common/weechat.c:207
 #, c-format
 msgid "  . type integer (values: between %d and %d)\n"
 msgstr "  . tipo entero (valores: entre %d y %d)\n"
 
-#: src/common/weechat.c:208
+#: src/common/weechat.c:210
 #, c-format
 msgid "  . default value: %d\n"
 msgstr "  . valor por defecto: %d\n"
 
-#: src/common/weechat.c:212
+#: src/common/weechat.c:214
 #, c-format
 msgid "  . type string (values: "
 msgstr "  . tipo cadena (valores: "
 
-#: src/common/weechat.c:225 src/common/weechat.c:231 src/common/weechat.c:237
+#: src/common/weechat.c:227 src/common/weechat.c:233 src/common/weechat.c:239
 msgid "empty"
 msgstr "vacío"
 
-#: src/common/weechat.c:228
+#: src/common/weechat.c:230
 #, c-format
 msgid "  . type color (Curses or Gtk color, look at WeeChat doc)\n"
 msgstr "  . tipo color (color Curses ó Gtk, ver la documentación de WeeChat)\n"
 
-#: src/common/weechat.c:234
+#: src/common/weechat.c:236
 #, c-format
 msgid "  . type string (any string)\n"
 msgstr "  . tipo cadena (cualquier cadena)\n"
 
-#: src/common/weechat.c:240
+#: src/common/weechat.c:242
 #, c-format
 msgid ""
 "  . description: %s\n"
@@ -2751,7 +2751,7 @@ msgstr ""
 "  . descripción: %s\n"
 "\n"
 
-#: src/common/weechat.c:246
+#: src/common/weechat.c:248
 #, c-format
 msgid ""
 "Moreover, you can define aliases in [alias] section, by adding lines like:\n"
@@ -2759,7 +2759,7 @@ msgstr ""
 "Además, usted puede definir alias en la sección [alias], añadiendo líneas "
 "como:\n"
 
-#: src/common/weechat.c:248
+#: src/common/weechat.c:250
 #, c-format
 msgid ""
 "where 'j' is alias name, and 'join' associated command.\n"
@@ -2768,57 +2768,57 @@ msgstr ""
 "donde 'j' es el nombre del alias, y 'join' el comando asociado.\n"
 "\n"
 
-#: src/common/weechat.c:359
+#: src/common/weechat.c:361
 #, c-format
 msgid "%s invalid syntax for IRC server ('%s'), ignored\n"
 msgstr "%s sintaxis inválida para el servidor IRC ('%s'), ignorado\n"
 
-#: src/common/weechat.c:371
+#: src/common/weechat.c:373
 #, c-format
 msgid "%s unable to create server ('%s'), ignored\n"
 msgstr "%s no es posible crear el servidor ('%s'), ignorado\n"
 
-#: src/common/weechat.c:380
+#: src/common/weechat.c:382
 #, c-format
 msgid "%s unknown parameter '%s', ignored\n"
 msgstr "%s parámetro desconocido '%s', ignorado\n"
 
-#: src/common/weechat.c:400
+#: src/common/weechat.c:402
 #, c-format
 msgid "%s cannot create directory \"%s\"\n"
 msgstr "%s no es posible crear el directorio \"%s\"\n"
 
-#: src/common/weechat.c:426
+#: src/common/weechat.c:428
 #, c-format
 msgid "%s unable to get HOME directory\n"
 msgstr "%s no ha sido posible leer el directorio HOME\n"
 
-#: src/common/weechat.c:435
+#: src/common/weechat.c:437
 #, c-format
 msgid "%s not enough memory for home directory\n"
 msgstr "%s no hay suficiente memoria para el directorio home\n"
 
-#: src/common/weechat.c:445
+#: src/common/weechat.c:447
 #, c-format
 msgid "%s unable to create ~/.weechat directory\n"
 msgstr "%s no es posible crear el directorio ~/.weechat\n"
 
-#: src/common/weechat.c:497
+#: src/common/weechat.c:499
 #, c-format
 msgid "%s unable to create ~/.weechat/logs directory\n"
 msgstr "%s no es posible crear el directorio ~/.weechat/logs\n"
 
-#: src/common/weechat.c:533
+#: src/common/weechat.c:535
 #, c-format
 msgid "%s unable to create/append to log file (~/.weechat/%s)"
 msgstr "%s no es posible crear/añadir en el fichero de log (~/.weechat/%s)"
 
-#: src/common/weechat.c:556
+#: src/common/weechat.c:558
 #, c-format
 msgid "%sWelcome to "
 msgstr "%sBienvenido a "
 
-#: src/common/weechat.c:569 src/common/weechat.c:578
+#: src/common/weechat.c:571 src/common/weechat.c:580
 msgid "compiled on"
 msgstr "compilado en"
 
