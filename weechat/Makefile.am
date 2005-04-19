@@ -17,7 +17,7 @@
 
 SUBDIRS = po intl src
 
-EXTRA_DIST = weechat-curses.1 BUGS FAQ FAQ.fr \
+EXTRA_DIST = config.rpath  weechat-curses.1 BUGS FAQ FAQ.fr \
              debian/changelog debian/control \
              debian/copyright \
              debian/rules debian/weechat-common.docs \
