@@ -1033,9 +1033,28 @@ irc_cmd_send_names (t_irc_server *server, char *arguments)
 int
 irc_cmd_send_nick (t_irc_server *server, int argc, char **argv)
 {
-    if (argc != 1)
-        return -1;
-    server_sendf (server, "NICK %s\r\n", argv[0]);
+    t_irc_server *ptr_server;
+    
+    if (argc == 2)
+    {
+        if (strncmp (argv[0], "-all", 4) != 0)
+            return -1;
+        
+        for (ptr_server = irc_servers; ptr_server;
+             ptr_server = ptr_server->next_server)
+        {
+            if (ptr_server->is_connected)
+                server_sendf (ptr_server, "NICK %s\r\n", argv[1]);
+        }
+    }
+    else
+    {
+        if (argc == 1)
+            server_sendf (server, "NICK %s\r\n", argv[0]);
+        else
+            return -1;
+    }
+    
     return 0;
 }
 

@@ -2892,6 +2892,68 @@ irc_cmd_recv_333 (t_irc_server *server, char *host, char *arguments)
 }
 
 /*
+ * irc_cmd_recv_341: '341' command received (inviting)
+ */
+
+int
+irc_cmd_recv_341 (t_irc_server *server, char *host, char *arguments)
+{
+    char *pos, *pos_nick, *pos_channel;
+    
+    pos = strchr (host, '!');
+    if (pos)
+        pos[0] = '\0';
+    
+    pos_nick = strchr (arguments, ' ');
+    if (pos_nick)
+    {
+        pos_nick[0] = '\0';
+        pos_nick++;
+        while (pos_nick[0] == ' ')
+            pos_nick++;
+        
+        pos_channel = strchr (pos_nick, ' ');
+        if (pos_channel)
+        {
+            pos_channel[0] = '\0';
+            pos_channel++;
+            while (pos_channel[0] == ' ')
+                pos_channel++;
+            if (pos_channel[0] == ':')
+                pos_channel++;
+            
+            irc_display_prefix (server->buffer, PREFIX_SERVER);
+            gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK,
+                              "%s ", arguments);
+            gui_printf (server->buffer, _("has invited"));
+            gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK,
+                              " %s ", pos_nick);
+            gui_printf (server->buffer, _("on"));
+            gui_printf_color (server->buffer, COLOR_WIN_CHAT_CHANNEL,
+                              " %s\n", pos_channel);
+            gui_draw_buffer_status (gui_current_window->buffer, 1);
+        }
+        else
+        {
+            irc_display_prefix (server->buffer, PREFIX_ERROR);
+            gui_printf_nolog (server->buffer,
+                              _("%s cannot identify channel for \"%s\" command\n"),
+                              WEECHAT_ERROR, "341");
+            return -1;
+        }
+    }
+    else
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s cannot identify nickname for \"%s\" command\n"),
+                          WEECHAT_ERROR, "341");
+        return -1;
+    }
+    return 0;
+}
+
+/*
  * irc_cmd_recv_351: '351' command received (server version)
  */
 
@@ -3014,16 +3076,16 @@ irc_cmd_recv_352 (t_irc_server *server, char *host, char *arguments)
                                                         PREFIX_SERVER);
                                     gui_printf_color (server->buffer,
                                                       COLOR_WIN_CHAT_NICK,
-                                                      "%s", pos_nick);
+                                                      "%s ", pos_nick);
                                     gui_printf_color (server->buffer,
                                                       COLOR_WIN_CHAT,
-                                                      _(" on "));
+                                                      _("on"));
                                     gui_printf_color (server->buffer,
                                                       COLOR_WIN_CHAT_CHANNEL,
-                                                      "%s ", pos_channel);
+                                                      " %s", pos_channel);
                                     gui_printf_color (server->buffer,
                                                       COLOR_WIN_CHAT,
-                                                      "%s %s ",
+                                                      " %s %s ",
                                                       pos_attr, pos_hopcount);
                                     gui_printf_color (server->buffer,
                                                       COLOR_WIN_CHAT_HOST,

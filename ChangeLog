@@ -1,14 +1,15 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-04-09
+ChangeLog - 2005-04-19
 
 
 Version 0.1.2 (under dev!):
+   * added "-all" option for /nick command
    * buffers timestamp can now be changed (new option in config file)
    * fixed crash when purging old DCC
    * fixed crash with 64-bits arch (like AMD64) when converting UTF-8
-   * added missing IRC commands (307)
+   * added missing IRC commands (307, 341)
 
 Version 0.1.1 (2005-03-20):
    * added nicks count for channel buffers
