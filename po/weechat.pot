@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-04-19 22:50+0200\n"
+"POT-Creation-Date: 2005-04-20 23:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1127,14 +1127,18 @@ msgid "you can't kill a server!"
 msgstr ""
 
 #: src/irc/irc-commands.c:438
-msgid "no O-lines for your host"
+msgid "user is immune from kick/deop"
 msgstr ""
 
 #: src/irc/irc-commands.c:440
-msgid "unknown mode flag"
+msgid "no O-lines for your host"
 msgstr ""
 
 #: src/irc/irc-commands.c:442
+msgid "unknown mode flag"
+msgstr ""
+
+#: src/irc/irc-commands.c:444
 msgid "can't change mode for other users"
 msgstr ""
 

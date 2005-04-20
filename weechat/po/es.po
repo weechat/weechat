@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.2-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-04-19 22:50+0200\n"
+"POT-Creation-Date: 2005-04-20 23:25+0200\n"
 "PO-Revision-Date: 2005-04-19 22:51+0200\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1232,14 +1232,18 @@ msgid "you can't kill a server!"
 msgstr "!usted no puede matar a un servidor!"
 
 #: src/irc/irc-commands.c:438
+msgid "user is immune from kick/deop"
+msgstr ""
+
+#: src/irc/irc-commands.c:440
 msgid "no O-lines for your host"
 msgstr "no hay O-lines para su máquina"
 
-#: src/irc/irc-commands.c:440
+#: src/irc/irc-commands.c:442
 msgid "unknown mode flag"
 msgstr "indicador de modo desconocido"
 
-#: src/irc/irc-commands.c:442
+#: src/irc/irc-commands.c:444
 msgid "can't change mode for other users"
 msgstr "no es posible cambiar el modo para el resto de usuarios"
 

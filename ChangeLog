@@ -9,7 +9,7 @@ Version 0.1.2 (under dev!):
    * buffers timestamp can now be changed (new option in config file)
    * fixed crash when purging old DCC
    * fixed crash with 64-bits arch (like AMD64) when converting UTF-8
-   * added missing IRC commands (307, 341)
+   * added missing IRC commands (307, 341, 485)
 
 Version 0.1.1 (2005-03-20):
    * added nicks count for channel buffers

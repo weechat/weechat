@@ -435,6 +435,8 @@ t_irc_command irc_commands[] =
     "", "", 0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_error },
   { "483", N_("you can't kill a server!"),
     "", "", 0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_error },
+  { "485", N_("user is immune from kick/deop"),
+    "", "", 0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_error },
   { "491", N_("no O-lines for your host"),
     "", "", 0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_error },
   { "501", N_("unknown mode flag"),
