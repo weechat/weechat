@@ -143,7 +143,7 @@ gui_get_color_by_value (int color_value)
 void
 gui_window_set_color (WINDOW *window, int num_color)
 {
-    if (has_colors)
+    if (has_colors ())
     {
         if (color_attr[num_color - 1] & A_BOLD)
             wattron (window, COLOR_PAIR (num_color) | A_BOLD);
