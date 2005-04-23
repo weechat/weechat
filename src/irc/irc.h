@@ -212,6 +212,7 @@ struct t_irc_dcc
     int type;                       /* DCC type (send or receive)           */
     int status;                     /* DCC status (waiting, sending, ..)    */
     time_t start_time;              /* the time when DCC started            */
+    time_t start_transfer;          /* the time when DCC transfer started   */
     unsigned long addr;             /* IP address                           */
     int port;                       /* port                                 */
     char *nick;                     /* remote nick                          */
@@ -224,6 +225,9 @@ struct t_irc_dcc
     unsigned long size;             /* file size                            */
     unsigned long pos;              /* number of bytes received/sent        */
     unsigned long ack;              /* number of bytes received OK          */
+    time_t last_check_time;         /* last time we looked at bytes sent/rcv*/
+    unsigned long last_check_pos;   /* bytes sent/recv at last check        */
+    unsigned long bytes_per_sec;    /* bytes per second                     */
     t_irc_dcc *prev_dcc;            /* link to previous dcc file/chat       */
     t_irc_dcc *next_dcc;            /* link to next dcc file/chat           */
 };

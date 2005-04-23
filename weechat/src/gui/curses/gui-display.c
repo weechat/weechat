@@ -765,6 +765,7 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                             wprintw (ptr_win->win_chat, ">");
                         for (j = 0; j < 10 - num_bars; j++)
                             wprintw (ptr_win->win_chat, " ");
+                        
                         if (ptr_dcc->size < 1024*10)
                             num_unit = 0;
                         else if (ptr_dcc->size < 1024*1024)
@@ -779,19 +780,30 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                                  unit_format[num_unit],
                                  unit_format[num_unit]);
                         wprintw (ptr_win->win_chat, format,
-                                 ((long double) ptr_dcc->pos) / ((long double)(unit_divide[num_unit])),
+                                 ((long double)(ptr_dcc->pos)) / ((long double)(unit_divide[num_unit])),
                                  unit_name[num_unit],
-                                 ((long double) ptr_dcc->size) / ((long double)(unit_divide[num_unit])),
+                                 ((long double)(ptr_dcc->size)) / ((long double)(unit_divide[num_unit])),
                                  unit_name[num_unit]);
-                        wclrtoeol (ptr_win->win_chat);
+                        
+                        if (ptr_dcc->bytes_per_sec < 1024*1024)
+                            num_unit = 1;
+                        else if (ptr_dcc->bytes_per_sec < 1024*1024*1024)
+                            num_unit = 2;
+                        else
+                            num_unit = 3;
+                        sprintf (format, "  (%s %%s/s)", unit_format[num_unit]);
+                        wprintw (ptr_win->win_chat, format,
+                                 ((long double) ptr_dcc->bytes_per_sec) / ((long double)(unit_divide[num_unit])),
+                                 unit_name[num_unit]);
                     }
                     else
                     {
                         date_tmp = localtime (&(ptr_dcc->start_time));
                         strftime (date, sizeof (date) - 1, "%a, %d %b %Y %H:%M:%S", date_tmp);
                         wprintw (ptr_win->win_chat, "  %s", date);
-                        wclrtoeol (ptr_win->win_chat);
                     }
+                    
+                    wclrtoeol (ptr_win->win_chat);
                     
                     ptr_win->dcc_last_displayed = ptr_dcc;
                     i += 2;

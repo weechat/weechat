@@ -64,6 +64,40 @@ dcc_redraw (int highlight)
 }
 
 /*
+ * dcc_calculate_speed: calculate DCC speed (for files only)
+ */
+
+void
+dcc_calculate_speed (t_irc_dcc *ptr_dcc, int ended)
+{
+    time_t local_time, elapsed;
+    
+    local_time = time (NULL);
+    if (ended || local_time > ptr_dcc->last_check_time)
+    {
+        
+        if (ended)
+        {
+            elapsed = local_time - ptr_dcc->start_transfer;
+            if (elapsed == 0)
+                elapsed = 1;
+            ptr_dcc->bytes_per_sec = ptr_dcc->pos / elapsed;
+        }
+        else
+        {
+            elapsed = local_time - ptr_dcc->last_check_time;
+            if (elapsed == 0)
+                elapsed = 1;
+            ptr_dcc->bytes_per_sec = (ptr_dcc->pos - ptr_dcc->last_check_pos) / elapsed;
+        }
+        ptr_dcc->last_check_time = local_time;
+        ptr_dcc->last_check_pos = ptr_dcc->pos;
+        wee_log_printf ("bytes per sec calculé: %lu\n", ptr_dcc->bytes_per_sec);
+    }
+    wee_log_printf ("bytes per sec calculé pas bon !!!\n");
+}
+
+/*
  * dcc_connect: connect to another host
  */
 
@@ -200,6 +234,9 @@ dcc_close (t_irc_dcc *ptr_dcc, int status)
     if (DCC_IS_CHAT(ptr_dcc->type))
         channel_remove_dcc (ptr_dcc);
     
+    if (DCC_IS_FILE(ptr_dcc->type))
+        dcc_calculate_speed (ptr_dcc, 1);
+    
     if (ptr_dcc->sock != -1)
     {
         close (ptr_dcc->sock);
@@ -327,6 +364,7 @@ dcc_accept (t_irc_dcc *ptr_dcc)
             ptr_dcc->file = open (ptr_dcc->local_filename,
                                   O_CREAT | O_TRUNC | O_WRONLY | O_NONBLOCK,
                                   0644);
+            ptr_dcc->start_transfer = time (NULL);
         }
         else
         {
@@ -363,6 +401,7 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
     new_dcc->type = type;
     new_dcc->status = DCC_WAITING;
     new_dcc->start_time = time (NULL);
+    new_dcc->start_transfer = time (NULL);
     new_dcc->addr = addr;
     new_dcc->port = port;
     new_dcc->nick = strdup (nick);
@@ -378,6 +417,9 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
     new_dcc->size = size;
     new_dcc->pos = 0;
     new_dcc->ack = 0;
+    new_dcc->last_check_time = 0;
+    new_dcc->last_check_pos = 0;
+    new_dcc->bytes_per_sec = 0;
     new_dcc->prev_dcc = NULL;
     new_dcc->next_dcc = dcc_list;
     if (dcc_list)
@@ -786,7 +828,7 @@ dcc_chat_recv (t_irc_dcc *ptr_dcc)
 }
 
 /*
- * dcc_handle: receive/send data for each active DCC (files only)
+ * dcc_handle: receive/send data for all active DCC
  */
 
 void
@@ -838,6 +880,7 @@ dcc_handle ()
                         ptr_dcc->addr = ntohl (addr.sin_addr.s_addr);
                         ptr_dcc->status = DCC_ACTIVE;
                         ptr_dcc->file = open (ptr_dcc->local_filename, O_RDONLY | O_NONBLOCK, 0644);
+                        ptr_dcc->start_transfer = time (NULL);
                         dcc_redraw (1);
                     }
                 }
@@ -921,6 +964,7 @@ dcc_handle ()
                     ptr_dcc->pos += (unsigned long) num_read;
                     pos = htonl (ptr_dcc->pos);
                     send (ptr_dcc->sock, (char *) &pos, 4, 0);
+                    dcc_calculate_speed (ptr_dcc, 0);
                     if (ptr_dcc->pos >= ptr_dcc->size)
                     {
                         dcc_close (ptr_dcc, DCC_DONE);
@@ -987,6 +1031,7 @@ dcc_handle ()
                         return;
                     }
                     ptr_dcc->pos += (unsigned long) num_sent;
+                    dcc_calculate_speed (ptr_dcc, 0);
                     dcc_redraw (0);
                 }
             }
