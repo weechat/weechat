@@ -37,19 +37,7 @@ AM_GNU_GETTEXT
 AC_CHECK_LIB([ncurses], [initscr], LIBNCURSES_FOUND=1, LIBNCURSES_FOUND=0)
 
 AM_OPTIONS_WXCONFIG
-
 AM_PATH_WXCONFIG(2.3.4, wxWin=1)
-if test "$wxWin" != 1; then
-   AC_MSG_ERROR([
-           wxWindows must be installed on your system
-           but wx-config script couldn't be found.
-
-           Please check that wx-config is in path, the directory
-           where wxWindows libraries are installed (returned by
-           'wx-config --libs' command) is in LD_LIBRARY_PATH or
-           equivalent variable and wxWindows version is 2.3.4 or above.
-   ])
-fi
 
 CPPFLAGS="$CPPFLAGS $WX_CPPFLAGS"
 CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS_ONLY"
@@ -103,8 +91,19 @@ if test "x$enable_ncurses" = "xyes" ; then
 fi
 
 if test "x$enable_wxwidgets" = "xyes" ; then
-   WXWIDGETS_CFLAGS=""
-   WXWIDGETS_LIBS=""
+    if test "$wxWin" != 1; then
+        AC_MSG_ERROR([
+            wxWindows must be installed on your system
+            but wx-config script couldn't be found.
+
+            Please check that wx-config is in path, the directory
+            where wxWindows libraries are installed (returned by
+            'wx-config --libs' command) is in LD_LIBRARY_PATH or
+            equivalent variable and wxWindows version is 2.3.4 or above.
+        ])
+    fi
+    WXWIDGETS_CFLAGS=""
+    WXWIDGETS_LIBS=""
 fi
 
 if test "x$enable_gtk" = "xyes" ; then
