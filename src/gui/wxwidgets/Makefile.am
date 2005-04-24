@@ -17,25 +17,13 @@
 
 INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\"
 
-noinst_LIBRARIES = lib_weechat_gui_common.a
+bin_PROGRAMS = weechat-wxwidgets
 
-lib_weechat_gui_common_a_SOURCES = gui-common.c \
-                                   gui.h
+weechat_wxwidgets_LDADD = ../lib_weechat_gui_common.a \
+                       ../../common/lib_weechat_main.a \
+                       ../../irc/lib_weechat_irc.a \
+                       $(WXWIDGETS_LIBS) \
+                       ../../plugins/lib_weechat_plugins.a $(PLUGINS_LIBS)
 
-if GUI_NCURSES
-curses_dir=curses
-endif
-
-if GUI_WXWIDGETS
-wxwidgets_dir=wxwidgets
-endif
-
-if GUI_GTK
-gtk_dir=gtk
-endif
-
-if GUI_QT
-qt_dir=qt
-endif
-
-SUBDIRS = . $(curses_dir) $(wxwidgets_dir) $(gtk_dir) $(qt_dir)
+weechat_wxwidgets_SOURCES = gui-display.c \
+			             gui-input.c

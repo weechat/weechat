@@ -36,6 +36,26 @@ AM_GNU_GETTEXT
 # Checks for libraries.
 AC_CHECK_LIB([ncurses], [initscr], LIBNCURSES_FOUND=1, LIBNCURSES_FOUND=0)
 
+AM_OPTIONS_WXCONFIG
+
+AM_PATH_WXCONFIG(2.3.4, wxWin=1)
+if test "$wxWin" != 1; then
+   AC_MSG_ERROR([
+           wxWindows must be installed on your system
+           but wx-config script couldn't be found.
+
+           Please check that wx-config is in path, the directory
+           where wxWindows libraries are installed (returned by
+           'wx-config --libs' command) is in LD_LIBRARY_PATH or
+           equivalent variable and wxWindows version is 2.3.4 or above.
+   ])
+fi
+
+CPPFLAGS="$CPPFLAGS $WX_CPPFLAGS"
+CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS_ONLY"
+CFLAGS="$CFLAGS $WX_CFLAGS_ONLY"
+LDFLAGS="$LDFLAGS $WX_LIBS"
+
 # Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS([arpa/inet.h libintl.h limits.h locale.h netdb.h netinet/in.h stdlib.h string.h sys/socket.h sys/time.h sys/types.h unistd.h pwd.h errno.h])
@@ -54,6 +74,7 @@ AH_VERBATIM([PLUGIN_PERL], [#undef PLUGIN_PERL])
 AH_VERBATIM([DEBUG], [#undef DEBUG])
 
 AC_ARG_ENABLE(ncurses, [  --disable-ncurses       Turn off ncurses interface (default=auto)],,enable_ncurses=yes)
+AC_ARG_ENABLE(wxwidgets,[  --enable-wxwidgets      Turn on WxWidgets interface (default=no)],enable_wxwidgets=yes,enable_wxwidgets=no)
 AC_ARG_ENABLE(gtk,     [  --enable-gtk            Turn on Gtk+ interface (default=no)],enable_gtk=yes,enable_gtk=no)
 AC_ARG_ENABLE(qt,      [  --enable-qt             Turn on Qt interface (default=no)],enable_qt=yes,enable_qt=no)
 AC_ARG_ENABLE(perl,    [  --enable-perl           Turn on Perl plugins (default=no)],enable_perl=yes,enable_perl=no)
@@ -66,6 +87,7 @@ enable_ruby="no"
 RUBY_CFLAGS=
 
 AM_CONDITIONAL(GUI_NCURSES,   test "$enable_ncurses" = "yes")
+AM_CONDITIONAL(GUI_WXWIDGETS, test "$enable_wxwidgets" = "yes")
 AM_CONDITIONAL(GUI_GTK,       test "$enable_gtk" = "yes")
 AM_CONDITIONAL(GUI_QT,        test "$enable_qt" = "yes")
 AM_CONDITIONAL(PLUGIN_PERL,   test "$enable_perl" = "yes")
@@ -78,6 +100,11 @@ if test "x$enable_ncurses" = "xyes" ; then
     fi
     NCURSES_LIBS="-lncurses"
     AC_SUBST(NCURSES_LIBS)
+fi
+
+if test "x$enable_wxwidgets" = "xyes" ; then
+   WXWIDGETS_CFLAGS=""
+   WXWIDGETS_LIBS=""
 fi
 
 if test "x$enable_gtk" = "xyes" ; then
@@ -132,6 +159,7 @@ AC_OUTPUT([Makefile
            src/plugins/perl/Makefile
            src/gui/Makefile
            src/gui/curses/Makefile
+           src/gui/wxwidgets/Makefile
            src/gui/gtk/Makefile
            src/gui/qt/Makefile
            intl/Makefile
@@ -144,6 +172,9 @@ listgui=
 if test "x$enable_ncurses" = "xyes" ; then
     listgui="$listgui ncurses"
 fi
+if test "x$enable_wxwidgets" = "xyes"; then
+   listgui="$listgui WxWidgets"
+fi
 if test "x$enable_gtk" = "xyes" ; then
     listgui="$listgui Gtk+"
 fi
@@ -152,7 +183,7 @@ if test "x$enable_qt" = "xyes" ; then
 fi
 
 if test "x$listgui" = "x" ; then
-    AC_MSG_ERROR([No interface specified... Please specify at least ncurses, Gtk or Qt.])
+    AC_MSG_ERROR([No interface specified... Please specify at least ncurses, WxWidgets, Gtk or Qt.])
 fi
 
 msg_debug_compiler="no"

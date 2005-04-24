@@ -26,6 +26,10 @@ if GUI_NCURSES
 curses_dir=curses
 endif
 
+if GUI_WXWIDGETS
+wxwidgets_dir=wxwidgets
+endif
+
 if GUI_GTK
 gtk_dir=gtk
 endif
@@ -34,4 +38,4 @@ if GUI_QT
 qt_dir=qt
 endif
 
-SUBDIRS = . $(curses_dir) $(gtk_dir) $(qt_dir)
+SUBDIRS = . $(curses_dir) $(wxwidgets_dir) $(gtk_dir) $(qt_dir)
