@@ -39,11 +39,6 @@ AC_CHECK_LIB([ncurses], [initscr], LIBNCURSES_FOUND=1, LIBNCURSES_FOUND=0)
 AM_OPTIONS_WXCONFIG
 AM_PATH_WXCONFIG(2.3.4, wxWin=1)
 
-CPPFLAGS="$CPPFLAGS $WX_CPPFLAGS"
-CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS_ONLY"
-CFLAGS="$CFLAGS $WX_CFLAGS_ONLY"
-LDFLAGS="$LDFLAGS $WX_LIBS"
-
 # Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS([arpa/inet.h libintl.h limits.h locale.h netdb.h netinet/in.h stdlib.h string.h sys/socket.h sys/time.h sys/types.h unistd.h pwd.h errno.h])
@@ -102,6 +97,12 @@ if test "x$enable_wxwidgets" = "xyes" ; then
             equivalent variable and wxWindows version is 2.3.4 or above.
         ])
     fi
+    
+    CPPFLAGS="$CPPFLAGS $WX_CPPFLAGS"
+    CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS_ONLY"
+    CFLAGS="$CFLAGS $WX_CFLAGS_ONLY"
+    LDFLAGS="$LDFLAGS $WX_LIBS"
+    
     WXWIDGETS_CFLAGS=""
     WXWIDGETS_LIBS=""
 fi
