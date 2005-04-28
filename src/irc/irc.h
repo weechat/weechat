@@ -429,5 +429,6 @@ extern int irc_cmd_recv_367 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_368 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_433 (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_438 (t_irc_server *, char *, char *);
+extern int irc_cmd_recv_671 (t_irc_server *, char *, char *);
 
 #endif /* irc.h */

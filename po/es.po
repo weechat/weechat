@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.2-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-04-20 23:25+0200\n"
-"PO-Revision-Date: 2005-04-19 22:51+0200\n"
+"POT-Creation-Date: 2005-04-28 20:31+0200\n"
+"PO-Revision-Date: 2005-04-28 20:32+0200\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1247,6 +1247,10 @@ msgstr "indicador de modo desconocido"
 msgid "can't change mode for other users"
 msgstr "no es posible cambiar el modo para el resto de usuarios"
 
+#: src/irc/irc-commands.c:446
+msgid "whois (secure connection)"
+msgstr ""
+
 #: src/irc/irc-display.c:154 src/common/command.c:812
 msgid "Server: "
 msgstr "Servidor: "
@@ -1549,7 +1553,7 @@ msgstr "%s no es posible analizar el comando \"%s\"\n"
 msgid "%s unknown DCC CHAT type received from "
 msgstr "%s tipo DCC CHAT desconocido recibido de "
 
-#: src/irc/irc-recv.c:1496 src/irc/irc-dcc.c:759
+#: src/irc/irc-recv.c:1496 src/irc/irc-dcc.c:801
 #, c-format
 msgid "Private %s> %s"
 msgstr "Privado %s> %s"
@@ -1777,31 +1781,31 @@ msgstr "Falló"
 msgid "Aborted"
 msgstr "Abortado"
 
-#: src/irc/irc-dcc.c:158
+#: src/irc/irc-dcc.c:192
 msgid "DCC: file "
 msgstr "DCC: fichero "
 
-#: src/irc/irc-dcc.c:163 src/irc/irc-dcc.c:414
+#: src/irc/irc-dcc.c:197 src/irc/irc-dcc.c:456
 msgid " (local filename: "
 msgstr " (nombre de fichero local: "
 
-#: src/irc/irc-dcc.c:169
+#: src/irc/irc-dcc.c:203
 msgid ") sent to "
 msgstr ") enviado a "
 
-#: src/irc/irc-dcc.c:171
+#: src/irc/irc-dcc.c:205
 msgid ") received from "
 msgstr ") recibido de "
 
-#: src/irc/irc-dcc.c:176
+#: src/irc/irc-dcc.c:210
 msgid ": ok!\n"
 msgstr ": ok!\n"
 
-#: src/irc/irc-dcc.c:188
+#: src/irc/irc-dcc.c:222
 msgid "DCC chat closed with "
 msgstr "DCC chat cerrada con "
 
-#: src/irc/irc-dcc.c:226
+#: src/irc/irc-dcc.c:263
 #, c-format
 msgid ""
 "%s can't associate DCC chat with private buffer (maybe private buffer has "
@@ -1810,74 +1814,74 @@ msgstr ""
 "%s no se puede asociar la conversación DCC con el búfer privado (quizá el "
 "búfer privado ya tiene DCC CHAT)\n"
 
-#: src/irc/irc-dcc.c:236
+#: src/irc/irc-dcc.c:273
 msgid "Connected to "
 msgstr "Conectado al "
 
-#: src/irc/irc-dcc.c:245
+#: src/irc/irc-dcc.c:282
 msgid "via DCC chat\n"
 msgstr "con charla DCC\n"
 
-#: src/irc/irc-dcc.c:355
+#: src/irc/irc-dcc.c:393
 #, c-format
 msgid "%s not enough memory for new DCC\n"
 msgstr "%s no hay memoria suficiente para un nuevo DCC\n"
 
-#: src/irc/irc-dcc.c:373
+#: src/irc/irc-dcc.c:412
 msgid "DCC chat"
 msgstr "Charla DCC"
 
-#: src/irc/irc-dcc.c:394
+#: src/irc/irc-dcc.c:436
 msgid "Incoming DCC file from "
 msgstr "Recibir fichero DCC de "
 
-#: src/irc/irc-dcc.c:405 src/irc/irc-dcc.c:418
+#: src/irc/irc-dcc.c:447 src/irc/irc-dcc.c:460
 msgid " bytes\n"
 msgstr " bytes\n"
 
-#: src/irc/irc-dcc.c:410
+#: src/irc/irc-dcc.c:452
 msgid "Sending DCC file to "
 msgstr "Enviar fichero DCC a "
 
-#: src/irc/irc-dcc.c:423
+#: src/irc/irc-dcc.c:465
 msgid "Incoming DCC chat request from "
 msgstr "Recibir DCC chat de "
 
-#: src/irc/irc-dcc.c:434
+#: src/irc/irc-dcc.c:476
 msgid "Sending DCC chat request to "
 msgstr "Enviar DCC chat a "
 
-#: src/irc/irc-dcc.c:498
+#: src/irc/irc-dcc.c:540
 #, c-format
 msgid "%s not enough memory for DCC SEND\n"
 msgstr "%s no hay memoria suficiente para el DCC SEND\n"
 
-#: src/irc/irc-dcc.c:520
+#: src/irc/irc-dcc.c:562
 #, c-format
 msgid "%s cannot access file \"%s\"\n"
 msgstr "%s no es posible acceder al fichero \"%s\"\n"
 
-#: src/irc/irc-dcc.c:541
+#: src/irc/irc-dcc.c:583
 #, c-format
 msgid "%s cannot create socket for DCC\n"
 msgstr "%s no es posible crear socket para el DCC\n"
 
-#: src/irc/irc-dcc.c:554
+#: src/irc/irc-dcc.c:596
 #, c-format
 msgid "%s cannot find port for DCC\n"
 msgstr "%s no es posible encontrar el puerto para el DCC\n"
 
-#: src/irc/irc-dcc.c:601
+#: src/irc/irc-dcc.c:643
 #, c-format
 msgid "%s cannot send DCC\n"
 msgstr "%s no es posible enviar el DCC\n"
 
-#: src/irc/irc-dcc.c:680
+#: src/irc/irc-dcc.c:722
 #, c-format
 msgid "%s error sending data to \"%s\" via DCC CHAT\n"
 msgstr "%s error enviando datos al \"%s\" con DCC CHAT\n"
 
-#: src/irc/irc-dcc.c:938
+#: src/irc/irc-dcc.c:982
 #, c-format
 msgid ""
 "%s DCC failed because blocksize is too big. Check value of \"dcc_blocksize\" "
@@ -1886,7 +1890,7 @@ msgstr ""
 "%s El DCC ha fallado porque el tamaño de bloque es demasiado grande. "
 "Compruebe el valor de la opción \"dcc_blocksize\", el máximo es %d.\n"
 
-#: src/irc/irc-dcc.c:1011
+#: src/irc/irc-dcc.c:1056
 #, c-format
 msgid "aborting active DCC: \"%s\" from %s\n"
 msgstr "abandonar el DCC activo: \"%s\" de %s\n"
@@ -1989,45 +1993,45 @@ msgstr "MB"
 msgid "Gb"
 msgstr "GB"
 
-#: src/gui/curses/gui-display.c:1078
+#: src/gui/curses/gui-display.c:1090
 msgid "(away)"
 msgstr "(ausente)"
 
-#: src/gui/curses/gui-display.c:1191
+#: src/gui/curses/gui-display.c:1203
 #, c-format
 msgid "%d:[not connected] "
 msgstr "%d:[no conectado] "
 
-#: src/gui/curses/gui-display.c:1208
+#: src/gui/curses/gui-display.c:1220
 msgid "Act: "
 msgstr "Act: "
 
-#: src/gui/curses/gui-display.c:1257
+#: src/gui/curses/gui-display.c:1269
 #, c-format
 msgid "Lag: %.1f"
 msgstr "Lag: %.1f"
 
-#: src/gui/curses/gui-display.c:1278
+#: src/gui/curses/gui-display.c:1290
 msgid "-MORE-"
 msgstr "-MÁS-"
 
-#: src/gui/curses/gui-display.c:1465
+#: src/gui/curses/gui-display.c:1477
 msgid "  [A] Accept"
 msgstr "  [A] Aceptar"
 
-#: src/gui/curses/gui-display.c:1466 src/gui/curses/gui-display.c:1470
+#: src/gui/curses/gui-display.c:1478 src/gui/curses/gui-display.c:1482
 msgid "  [C] Cancel"
 msgstr "  [C] Cancelar"
 
-#: src/gui/curses/gui-display.c:1475
+#: src/gui/curses/gui-display.c:1487
 msgid "  [R] Remove"
 msgstr "  [R] Eliminar"
 
-#: src/gui/curses/gui-display.c:1479
+#: src/gui/curses/gui-display.c:1491
 msgid "  [P] Purge old DCC"
 msgstr "  [P] Purgar los viejos DCC"
 
-#: src/gui/curses/gui-display.c:1480
+#: src/gui/curses/gui-display.c:1492
 msgid "  [Q] Close DCC view"
 msgstr "  [Q] Cerrar la vista DCC"
 

@@ -3617,3 +3617,44 @@ irc_cmd_recv_438 (t_irc_server *server, char *host, char *arguments)
     
     return 0;
 }
+
+/*
+ * irc_cmd_recv_671: '671' command (whois, secure connection)
+ */
+
+int
+irc_cmd_recv_671 (t_irc_server *server, char *host, char *arguments)
+{
+    char *pos_nick, *pos_message;
+    
+    /* make gcc happy */
+    (void) host;
+    
+    pos_nick = strchr (arguments, ' ');
+    if (pos_nick)
+    {
+        while (pos_nick[0] == ' ')
+            pos_nick++;
+        pos_message = strchr (pos_nick, ' ');
+        if (pos_message)
+        {
+            pos_message[0] = '\0';
+            pos_message++;
+            while (pos_message[0] == ' ')
+                pos_message++;
+            if (pos_message[0] == ':')
+                pos_message++;
+            
+            irc_display_prefix (server->buffer, PREFIX_SERVER);
+            gui_printf_color (server->buffer,
+                              COLOR_WIN_CHAT_DARK, "[");
+            gui_printf_color (server->buffer,
+                              COLOR_WIN_CHAT_NICK, "%s", pos_nick);
+            gui_printf_color (server->buffer,
+                              COLOR_WIN_CHAT_DARK, "] ");
+            gui_printf_color (server->buffer,
+                              COLOR_WIN_CHAT, "%s\n", pos_message);
+        }
+    }
+    return 0;
+}

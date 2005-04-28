@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-04-20 23:25+0200\n"
+"POT-Creation-Date: 2005-04-28 20:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1142,6 +1142,10 @@ msgstr ""
 msgid "can't change mode for other users"
 msgstr ""
 
+#: src/irc/irc-commands.c:446
+msgid "whois (secure connection)"
+msgstr ""
+
 #: src/irc/irc-display.c:154 src/common/command.c:812
 msgid "Server: "
 msgstr ""
@@ -1442,7 +1446,7 @@ msgstr ""
 msgid "%s unknown DCC CHAT type received from "
 msgstr ""
 
-#: src/irc/irc-recv.c:1496 src/irc/irc-dcc.c:759
+#: src/irc/irc-recv.c:1496 src/irc/irc-dcc.c:801
 #, c-format
 msgid "Private %s> %s"
 msgstr ""
@@ -1661,112 +1665,112 @@ msgstr ""
 msgid "Aborted"
 msgstr ""
 
-#: src/irc/irc-dcc.c:158
+#: src/irc/irc-dcc.c:192
 msgid "DCC: file "
 msgstr ""
 
-#: src/irc/irc-dcc.c:163 src/irc/irc-dcc.c:414
+#: src/irc/irc-dcc.c:197 src/irc/irc-dcc.c:456
 msgid " (local filename: "
 msgstr ""
 
-#: src/irc/irc-dcc.c:169
+#: src/irc/irc-dcc.c:203
 msgid ") sent to "
 msgstr ""
 
-#: src/irc/irc-dcc.c:171
+#: src/irc/irc-dcc.c:205
 msgid ") received from "
 msgstr ""
 
-#: src/irc/irc-dcc.c:176
+#: src/irc/irc-dcc.c:210
 msgid ": ok!\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:188
+#: src/irc/irc-dcc.c:222
 msgid "DCC chat closed with "
 msgstr ""
 
-#: src/irc/irc-dcc.c:226
+#: src/irc/irc-dcc.c:263
 #, c-format
 msgid ""
 "%s can't associate DCC chat with private buffer (maybe private buffer has "
 "already DCC CHAT?)\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:236
+#: src/irc/irc-dcc.c:273
 msgid "Connected to "
 msgstr ""
 
-#: src/irc/irc-dcc.c:245
+#: src/irc/irc-dcc.c:282
 msgid "via DCC chat\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:355
+#: src/irc/irc-dcc.c:393
 #, c-format
 msgid "%s not enough memory for new DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:373
+#: src/irc/irc-dcc.c:412
 msgid "DCC chat"
 msgstr ""
 
-#: src/irc/irc-dcc.c:394
+#: src/irc/irc-dcc.c:436
 msgid "Incoming DCC file from "
 msgstr ""
 
-#: src/irc/irc-dcc.c:405 src/irc/irc-dcc.c:418
+#: src/irc/irc-dcc.c:447 src/irc/irc-dcc.c:460
 msgid " bytes\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:410
+#: src/irc/irc-dcc.c:452
 msgid "Sending DCC file to "
 msgstr ""
 
-#: src/irc/irc-dcc.c:423
+#: src/irc/irc-dcc.c:465
 msgid "Incoming DCC chat request from "
 msgstr ""
 
-#: src/irc/irc-dcc.c:434
+#: src/irc/irc-dcc.c:476
 msgid "Sending DCC chat request to "
 msgstr ""
 
-#: src/irc/irc-dcc.c:498
+#: src/irc/irc-dcc.c:540
 #, c-format
 msgid "%s not enough memory for DCC SEND\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:520
+#: src/irc/irc-dcc.c:562
 #, c-format
 msgid "%s cannot access file \"%s\"\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:541
+#: src/irc/irc-dcc.c:583
 #, c-format
 msgid "%s cannot create socket for DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:554
+#: src/irc/irc-dcc.c:596
 #, c-format
 msgid "%s cannot find port for DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:601
+#: src/irc/irc-dcc.c:643
 #, c-format
 msgid "%s cannot send DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:680
+#: src/irc/irc-dcc.c:722
 #, c-format
 msgid "%s error sending data to \"%s\" via DCC CHAT\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:938
+#: src/irc/irc-dcc.c:982
 #, c-format
 msgid ""
 "%s DCC failed because blocksize is too big. Check value of \"dcc_blocksize\" "
 "option, max is %d.\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1011
+#: src/irc/irc-dcc.c:1056
 #, c-format
 msgid "aborting active DCC: \"%s\" from %s\n"
 msgstr ""
@@ -1860,45 +1864,45 @@ msgstr ""
 msgid "Gb"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1078
+#: src/gui/curses/gui-display.c:1090
 msgid "(away)"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1191
+#: src/gui/curses/gui-display.c:1203
 #, c-format
 msgid "%d:[not connected] "
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1208
+#: src/gui/curses/gui-display.c:1220
 msgid "Act: "
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1257
+#: src/gui/curses/gui-display.c:1269
 #, c-format
 msgid "Lag: %.1f"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1278
+#: src/gui/curses/gui-display.c:1290
 msgid "-MORE-"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1465
+#: src/gui/curses/gui-display.c:1477
 msgid "  [A] Accept"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1466 src/gui/curses/gui-display.c:1470
+#: src/gui/curses/gui-display.c:1478 src/gui/curses/gui-display.c:1482
 msgid "  [C] Cancel"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1475
+#: src/gui/curses/gui-display.c:1487
 msgid "  [R] Remove"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1479
+#: src/gui/curses/gui-display.c:1491
 msgid "  [P] Purge old DCC"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1480
+#: src/gui/curses/gui-display.c:1492
 msgid "  [Q] Close DCC view"
 msgstr ""
 
