@@ -35,7 +35,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.2-cvs - 9 Avril 2005
+@subtitle Documentation pour WeeChat v0.1.2-cvs - 30 Avril 2005
 
 @image{weechat_image}
 
@@ -417,6 +417,9 @@ Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightmagenta'@*
 @item col_nick_voice
 Couleur pour le symbole voix@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'yellow'@*
+@item col_nick_more
+Color for '+' when scrolling nicks@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightmagenta'@*
 @item col_nick_sep
 Couleur pour le s@'eparateur de pseudo@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'blue'@*
@@ -674,6 +677,9 @@ Aller @`a la fen@^etre pr@'ec@'edente / suivante@*
 @item F10
 Effacer le dernier message de la barre d'infos@*
 @*
+@item F11 / F12
+Faire d@'efiler la liste des pseudos@*
+@*
 @item Ctrl + L
 R@'eaffiche toute la fen@^etre@*
 @*
@@ -697,6 +703,9 @@ Sauter au premier canal du serveur suivant (ou tampon du serveur si aucun canal 
 @*
 @item Alt + chiffre (1-9)
 Sauter au tampon avec ce num@'ero@*
+@*
+@item Alt + PageUp / Alt + PageDown / Alt + Home / Alt + End
+Faire d@'efiler la liste des pseudos@*
 @*
 @end table
 

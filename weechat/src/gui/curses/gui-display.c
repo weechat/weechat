@@ -874,7 +874,7 @@ void
 gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
 {
     t_gui_window *ptr_win;
-    int i, x, y, column, max_length;
+    int i, j, x, y, column, max_length, nicks_displayed;
     char format[32], format_empty[32];
     t_irc_nick *ptr_nick;
     
@@ -957,71 +957,102 @@ gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
                 x = 0;
                 y = (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM) ? 1 : 0;
                 column = 0;
-                for (ptr_nick = CHANNEL(buffer)->nicks; ptr_nick;
-                     ptr_nick = ptr_nick->next_nick)
+                
+                if ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_TOP) ||
+                    (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM))
+                    nicks_displayed = (ptr_win->win_width / (max_length + 2)) * (ptr_win->win_height - 1);
+                else
+                    nicks_displayed = ptr_win->win_height;
+                
+                ptr_nick = CHANNEL(buffer)->nicks;
+                for (i = 0; i < ptr_win->win_nick_start; i++)
                 {
-                    switch (cfg_look_nicklist_position)
+                    if (!ptr_nick)
+                        break;
+                    ptr_nick = ptr_nick->next_nick;
+                }
+                if (ptr_nick)
+                {
+                    for (i = 0; i < nicks_displayed; i++)
                     {
-                        case CFG_LOOK_NICKLIST_LEFT:
-                            x = 0;
-                            break;
-                        case CFG_LOOK_NICKLIST_RIGHT:
-                            x = 1;
-                            break;
-                        case CFG_LOOK_NICKLIST_TOP:
-                        case CFG_LOOK_NICKLIST_BOTTOM:
-                            x = column;
-                            break;
-                    }
-                    if (ptr_nick->is_chanowner)
-                    {
-                        gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_CHANOWNER);
-                        mvwprintw (ptr_win->win_nick, y, x, "~");
-                        x++;
-                    }
-                    else if (ptr_nick->is_chanadmin)
-                    {
-                        gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_CHANADMIN);
-                        mvwprintw (ptr_win->win_nick, y, x, "&");
-                        x++;
-                    }
-                    else if (ptr_nick->is_op)
-                    {
-                        gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_OP);
-                        mvwprintw (ptr_win->win_nick, y, x, "@");
-                        x++;
-                    }
-                    else if (ptr_nick->is_halfop)
-                    {
-                        gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_HALFOP);
-                        mvwprintw (ptr_win->win_nick, y, x, "%%");
-                        x++;
-                    }
-                    else if (ptr_nick->has_voice)
-                    {
-                        gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_VOICE);
-                        mvwprintw (ptr_win->win_nick, y, x, "+");
-                        x++;
-                    }
-                    else
-                    {
-                        gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK);
-                        mvwprintw (ptr_win->win_nick, y, x, " ");
-                        x++;
-                    }
-                    gui_window_set_color (ptr_win->win_nick,
-                                          (ptr_nick->is_away) ?
-                                          COLOR_WIN_NICK_AWAY : COLOR_WIN_NICK);
-                    mvwprintw (ptr_win->win_nick, y, x, format, ptr_nick->nick);
-                    y++;
-                    if ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_TOP) ||
-                        (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM))
-                    {
-                        if (y - ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM) ? 1 : 0) >= ptr_win->win_nick_height - 1)
+                        switch (cfg_look_nicklist_position)
                         {
-                            column += max_length + 2;
-                            y = (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_TOP) ?
-                                0 : 1;
+                            case CFG_LOOK_NICKLIST_LEFT:
+                                x = 0;
+                                break;
+                            case CFG_LOOK_NICKLIST_RIGHT:
+                                x = 1;
+                                break;
+                            case CFG_LOOK_NICKLIST_TOP:
+                            case CFG_LOOK_NICKLIST_BOTTOM:
+                                x = column;
+                                break;
+                        }
+                        if ((i == 0) && (ptr_win->win_nick_start > 0))
+                        {
+                            gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_MORE);
+                            j = (max_length + 1) >= 4 ? 4 : max_length + 1;
+                            for (x = 1; x <= j; x++)
+                                mvwprintw (ptr_win->win_nick, y, x, "+");
+                        }
+                        else
+                        {
+                            if (ptr_nick->is_chanowner)
+                            {
+                                gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_CHANOWNER);
+                                mvwprintw (ptr_win->win_nick, y, x, "~");
+                                x++;
+                            }
+                            else if (ptr_nick->is_chanadmin)
+                            {
+                                gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_CHANADMIN);
+                                mvwprintw (ptr_win->win_nick, y, x, "&");
+                                x++;
+                            }
+                            else if (ptr_nick->is_op)
+                            {
+                                gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_OP);
+                                mvwprintw (ptr_win->win_nick, y, x, "@");
+                                x++;
+                            }
+                            else if (ptr_nick->is_halfop)
+                            {
+                                gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_HALFOP);
+                                mvwprintw (ptr_win->win_nick, y, x, "%%");
+                                x++;
+                            }
+                            else if (ptr_nick->has_voice)
+                            {
+                                gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_VOICE);
+                                mvwprintw (ptr_win->win_nick, y, x, "+");
+                                x++;
+                            }
+                            else
+                            {
+                                gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK);
+                                mvwprintw (ptr_win->win_nick, y, x, " ");
+                                x++;
+                            }
+                            gui_window_set_color (ptr_win->win_nick,
+                                                  (ptr_nick->is_away) ?
+                                                  COLOR_WIN_NICK_AWAY : COLOR_WIN_NICK);
+                            mvwprintw (ptr_win->win_nick, y, x, format, ptr_nick->nick);
+                            
+                            ptr_nick = ptr_nick->next_nick;
+                            
+                            if (!ptr_nick)
+                                break;
+                        }
+                        y++;
+                        if ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_TOP) ||
+                            (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM))
+                        {
+                            if (y - ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM) ? 1 : 0) >= ptr_win->win_nick_height - 1)
+                            {
+                                column += max_length + 2;
+                                y = (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_TOP) ?
+                                    0 : 1;
+                            }
                         }
                     }
                 }
@@ -1566,6 +1597,7 @@ gui_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
         gui_current_window->buffer->num_displayed--;
     
     window->buffer = buffer;
+    window->win_nick_start = 0;
     gui_calculate_pos_size (window);
     
     /* destroy Curses windows */
@@ -1811,6 +1843,99 @@ gui_move_page_down (t_gui_window *window)
             window->sub_lines = 0;
         gui_draw_buffer_chat (window->buffer, 0);
         gui_draw_buffer_status (window->buffer, 0);
+    }
+}
+
+/*
+ * gui_nick_move_beginning: go to beginning of nicklist
+ */
+
+void
+gui_nick_move_beginning (t_gui_window *window)
+{
+    if (!gui_ok)
+        return;
+    
+    if (gui_buffer_has_nicklist (window->buffer))
+    {
+        if (window->win_nick_start > 0)
+        {
+            window->win_nick_start = 0;
+            gui_draw_buffer_nick (window->buffer, 1);
+        }
+    }
+}
+
+/*
+ * gui_nick_move_end: go to the end of nicklist
+ */
+
+void
+gui_nick_move_end (t_gui_window *window)
+{
+    int new_start;
+    
+    if (!gui_ok)
+        return;
+    
+    if (gui_buffer_has_nicklist (window->buffer))
+    {
+        new_start = CHANNEL(window->buffer)->nicks_count - window->win_nick_height;
+        if (new_start < 0)
+            new_start = 0;
+        else if (new_start >= 1)
+            new_start++;
+        
+        if (new_start != window->win_nick_start)
+        {
+            window->win_nick_start = new_start;
+            gui_draw_buffer_nick (window->buffer, 1);
+        }
+    }
+}
+
+/*
+ * gui_nick_move_page_up: scroll one page up in nicklist
+ */
+
+void
+gui_nick_move_page_up (t_gui_window *window)
+{
+    if (!gui_ok)
+        return;
+    
+    if (gui_buffer_has_nicklist (window->buffer))
+    {
+        if (window->win_nick_start > 0)
+        {
+            window->win_nick_start -= (window->win_nick_height - 1);
+            if (window->win_nick_start <= 1)
+                window->win_nick_start = 0;
+            gui_draw_buffer_nick (window->buffer, 1);
+        }
+    }
+}
+
+/*
+ * gui_nick_move_page_down: scroll one page down in nicklist
+ */
+
+void
+gui_nick_move_page_down (t_gui_window *window)
+{
+    if (!gui_ok)
+        return;
+    
+    if (gui_buffer_has_nicklist (window->buffer))
+    {
+        if (window->win_nick_start + window->win_nick_height < CHANNEL(window->buffer)->nicks_count)
+        {
+            if (window->win_nick_start == 0)
+                window->win_nick_start += window->win_nick_height;
+            else
+                window->win_nick_start += (window->win_nick_height - 1);
+            gui_draw_buffer_nick (window->buffer, 1);
+        }
     }
 }
 
@@ -2201,6 +2326,8 @@ gui_init_colors ()
             cfg_col_nick_halfop & A_CHARTEXT, cfg_col_nick_bg);
         init_pair (COLOR_WIN_NICK_VOICE,
             cfg_col_nick_voice & A_CHARTEXT, cfg_col_nick_bg);
+        init_pair (COLOR_WIN_NICK_MORE,
+            cfg_col_nick_more & A_CHARTEXT, cfg_col_nick_bg);
         init_pair (COLOR_WIN_NICK_SEP,
             cfg_col_nick_sep & A_CHARTEXT, cfg_col_nick_bg);
         init_pair (COLOR_WIN_NICK_SELF,
@@ -2260,6 +2387,7 @@ gui_init_colors ()
         color_attr[COLOR_WIN_NICK_OP - 1] = (cfg_col_nick_op >= 0) ? cfg_col_nick_op & A_BOLD : 0;
         color_attr[COLOR_WIN_NICK_HALFOP - 1] = (cfg_col_nick_halfop >= 0) ? cfg_col_nick_halfop & A_BOLD : 0;
         color_attr[COLOR_WIN_NICK_VOICE - 1] = (cfg_col_nick_voice >= 0) ? cfg_col_nick_voice & A_BOLD : 0;
+        color_attr[COLOR_WIN_NICK_MORE - 1] = (cfg_col_nick_more >= 0) ? cfg_col_nick_more & A_BOLD : 0;
         color_attr[COLOR_WIN_NICK_SEP - 1] = 0;
         color_attr[COLOR_WIN_NICK_SELF - 1] = (cfg_col_nick_self >= 0) ? cfg_col_nick_self & A_BOLD : 0;
         color_attr[COLOR_WIN_NICK_PRIVATE - 1] = (cfg_col_nick_private >= 0) ? cfg_col_nick_private & A_BOLD : 0;

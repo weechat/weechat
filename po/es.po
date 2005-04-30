@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.2-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-04-28 20:31+0200\n"
-"PO-Revision-Date: 2005-04-28 20:32+0200\n"
+"POT-Creation-Date: 2005-04-30 19:48+0200\n"
+"PO-Revision-Date: 2005-04-30 19:49+0200\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "%s cannot allocate new nick\n"
 msgstr "%s no ha sido posible crear un nuevo nick\n"
 
-#: src/irc/irc-server.c:146 src/common/weeconfig.c:1501
+#: src/irc/irc-server.c:146 src/common/weeconfig.c:1506
 msgid "Unable to get user's name"
 msgstr "No ha sido posible obtener el nombre de usuario"
 
@@ -1972,7 +1972,7 @@ msgstr ""
 "%s no ha sido posible añadir el manejador para el mensaje \"%s\" (memoria "
 "insuficiente)\n"
 
-#: src/gui/curses/gui-input.c:765
+#: src/gui/curses/gui-input.c:782
 #, c-format
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr "%s el lag (retraso) es alto, desconectando del servidor...\n"
@@ -1993,45 +1993,45 @@ msgstr "MB"
 msgid "Gb"
 msgstr "GB"
 
-#: src/gui/curses/gui-display.c:1090
+#: src/gui/curses/gui-display.c:1121
 msgid "(away)"
 msgstr "(ausente)"
 
-#: src/gui/curses/gui-display.c:1203
+#: src/gui/curses/gui-display.c:1234
 #, c-format
 msgid "%d:[not connected] "
 msgstr "%d:[no conectado] "
 
-#: src/gui/curses/gui-display.c:1220
+#: src/gui/curses/gui-display.c:1251
 msgid "Act: "
 msgstr "Act: "
 
-#: src/gui/curses/gui-display.c:1269
+#: src/gui/curses/gui-display.c:1300
 #, c-format
 msgid "Lag: %.1f"
 msgstr "Lag: %.1f"
 
-#: src/gui/curses/gui-display.c:1290
+#: src/gui/curses/gui-display.c:1321
 msgid "-MORE-"
 msgstr "-MÁS-"
 
-#: src/gui/curses/gui-display.c:1477
+#: src/gui/curses/gui-display.c:1508
 msgid "  [A] Accept"
 msgstr "  [A] Aceptar"
 
-#: src/gui/curses/gui-display.c:1478 src/gui/curses/gui-display.c:1482
+#: src/gui/curses/gui-display.c:1509 src/gui/curses/gui-display.c:1513
 msgid "  [C] Cancel"
 msgstr "  [C] Cancelar"
 
-#: src/gui/curses/gui-display.c:1487
+#: src/gui/curses/gui-display.c:1518
 msgid "  [R] Remove"
 msgstr "  [R] Eliminar"
 
-#: src/gui/curses/gui-display.c:1491
+#: src/gui/curses/gui-display.c:1522
 msgid "  [P] Purge old DCC"
 msgstr "  [P] Purgar los viejos DCC"
 
-#: src/gui/curses/gui-display.c:1492
+#: src/gui/curses/gui-display.c:1523
 msgid "  [Q] Close DCC view"
 msgstr "  [Q] Cerrar la vista DCC"
 
@@ -2039,18 +2039,18 @@ msgstr "  [Q] Cerrar la vista DCC"
 msgid "server"
 msgstr "servidor"
 
-#: src/gui/gui-common.c:329
+#: src/gui/gui-common.c:330
 #, c-format
 msgid "%s not enough memory for infobar message\n"
 msgstr ""
 "%s no hay suficiente memoria para el mensaje de la barra de información\n"
 
-#: src/gui/gui-common.c:505
+#: src/gui/gui-common.c:506
 #, c-format
 msgid "%s not enough memory for new line!\n"
 msgstr "%s ¡no hay suficiente memoria para una nueva línea!\n"
 
-#: src/gui/gui-common.c:548
+#: src/gui/gui-common.c:549
 msgid "not enough memory!\n"
 msgstr "¡no hay suficiente memoria!\n"
 
@@ -2451,12 +2451,12 @@ msgstr "%s ¡no conectado al servidor \"%s\"!\n"
 msgid "Auto-reconnection is cancelled\n"
 msgstr "La reconexión automática está anulada\n"
 
-#: src/common/command.c:1200 src/common/weechat.c:263
+#: src/common/command.c:1200 src/common/weechat.c:265
 #, c-format
 msgid "%s internal commands:\n"
 msgstr "Comandos internos %s :\n"
 
-#: src/common/command.c:1209 src/common/weechat.c:283
+#: src/common/command.c:1209 src/common/weechat.c:285
 #, c-format
 msgid "IRC commands:\n"
 msgstr "Comandos IRC :\n"
@@ -2711,7 +2711,7 @@ msgstr "****  Comienzo del log (registro)  "
 msgid "****  End of log  "
 msgstr "****  Fin del log  "
 
-#: src/common/weechat.c:188
+#: src/common/weechat.c:190
 #, c-format
 msgid ""
 "WeeChat configuration options (~/.weechat/weechat.rc):\n"
@@ -2720,47 +2720,47 @@ msgstr ""
 "Opciones de configuración de WeeChat (~/.weechat/weechat.rc):\n"
 "\n"
 
-#: src/common/weechat.c:201
+#: src/common/weechat.c:203
 #, c-format
 msgid "  . type boolean (values: 'on' or 'off')\n"
 msgstr "  . tipo booleano (valores: 'on' u 'off')\n"
 
-#: src/common/weechat.c:202 src/common/weechat.c:225 src/common/weechat.c:231
-#: src/common/weechat.c:237
+#: src/common/weechat.c:204 src/common/weechat.c:227 src/common/weechat.c:233
+#: src/common/weechat.c:239
 #, c-format
 msgid "  . default value: '%s'\n"
 msgstr "  . valor por defecto: '%s'\n"
 
-#: src/common/weechat.c:207
+#: src/common/weechat.c:209
 #, c-format
 msgid "  . type integer (values: between %d and %d)\n"
 msgstr "  . tipo entero (valores: entre %d y %d)\n"
 
-#: src/common/weechat.c:210
+#: src/common/weechat.c:212
 #, c-format
 msgid "  . default value: %d\n"
 msgstr "  . valor por defecto: %d\n"
 
-#: src/common/weechat.c:214
+#: src/common/weechat.c:216
 #, c-format
 msgid "  . type string (values: "
 msgstr "  . tipo cadena (valores: "
 
-#: src/common/weechat.c:227 src/common/weechat.c:233 src/common/weechat.c:239
+#: src/common/weechat.c:229 src/common/weechat.c:235 src/common/weechat.c:241
 msgid "empty"
 msgstr "vacío"
 
-#: src/common/weechat.c:230
+#: src/common/weechat.c:232
 #, c-format
 msgid "  . type color (Curses or Gtk color, look at WeeChat doc)\n"
 msgstr "  . tipo color (color Curses ó Gtk, ver la documentación de WeeChat)\n"
 
-#: src/common/weechat.c:236
+#: src/common/weechat.c:238
 #, c-format
 msgid "  . type string (any string)\n"
 msgstr "  . tipo cadena (cualquier cadena)\n"
 
-#: src/common/weechat.c:242
+#: src/common/weechat.c:244
 #, c-format
 msgid ""
 "  . description: %s\n"
@@ -2769,7 +2769,7 @@ msgstr ""
 "  . descripción: %s\n"
 "\n"
 
-#: src/common/weechat.c:248
+#: src/common/weechat.c:250
 #, c-format
 msgid ""
 "Moreover, you can define aliases in [alias] section, by adding lines like:\n"
@@ -2777,7 +2777,7 @@ msgstr ""
 "Además, usted puede definir alias en la sección [alias], añadiendo líneas "
 "como:\n"
 
-#: src/common/weechat.c:250
+#: src/common/weechat.c:252
 #, c-format
 msgid ""
 "where 'j' is alias name, and 'join' associated command.\n"
@@ -2786,65 +2786,65 @@ msgstr ""
 "donde 'j' es el nombre del alias, y 'join' el comando asociado.\n"
 "\n"
 
-#: src/common/weechat.c:361
+#: src/common/weechat.c:363
 #, c-format
 msgid "%s invalid syntax for IRC server ('%s'), ignored\n"
 msgstr "%s sintaxis inválida para el servidor IRC ('%s'), ignorado\n"
 
-#: src/common/weechat.c:373
+#: src/common/weechat.c:375
 #, c-format
 msgid "%s unable to create server ('%s'), ignored\n"
 msgstr "%s no es posible crear el servidor ('%s'), ignorado\n"
 
-#: src/common/weechat.c:382
+#: src/common/weechat.c:384
 #, c-format
 msgid "%s unknown parameter '%s', ignored\n"
 msgstr "%s parámetro desconocido '%s', ignorado\n"
 
-#: src/common/weechat.c:402
+#: src/common/weechat.c:404
 #, c-format
 msgid "%s cannot create directory \"%s\"\n"
 msgstr "%s no es posible crear el directorio \"%s\"\n"
 
-#: src/common/weechat.c:428
+#: src/common/weechat.c:430
 #, c-format
 msgid "%s unable to get HOME directory\n"
 msgstr "%s no ha sido posible leer el directorio HOME\n"
 
-#: src/common/weechat.c:437
+#: src/common/weechat.c:439
 #, c-format
 msgid "%s not enough memory for home directory\n"
 msgstr "%s no hay suficiente memoria para el directorio home\n"
 
-#: src/common/weechat.c:447
+#: src/common/weechat.c:449
 #, c-format
 msgid "%s unable to create ~/.weechat directory\n"
 msgstr "%s no es posible crear el directorio ~/.weechat\n"
 
-#: src/common/weechat.c:499
+#: src/common/weechat.c:501
 #, c-format
 msgid "%s unable to create ~/.weechat/logs directory\n"
 msgstr "%s no es posible crear el directorio ~/.weechat/logs\n"
 
-#: src/common/weechat.c:535
+#: src/common/weechat.c:537
 #, c-format
 msgid "%s unable to create/append to log file (~/.weechat/%s)"
 msgstr "%s no es posible crear/añadir en el fichero de log (~/.weechat/%s)"
 
-#: src/common/weechat.c:558
+#: src/common/weechat.c:560
 #, c-format
 msgid "%sWelcome to "
 msgstr "%sBienvenido a "
 
-#: src/common/weechat.c:571 src/common/weechat.c:580
+#: src/common/weechat.c:573 src/common/weechat.c:582
 msgid "compiled on"
 msgstr "compilado en"
 
-#: src/common/weechat.h:50
+#: src/common/weechat.h:54
 msgid "WeeChat Error:"
 msgstr "Error WeeChat:"
 
-#: src/common/weechat.h:51
+#: src/common/weechat.h:55
 msgid "WeeChat Warning:"
 msgstr "Advertencia WeeChat:"
 
@@ -3005,256 +3005,260 @@ msgstr ""
 "retraso (en segundos) para la notificación de mensajes en la barra de "
 "información (0 = desactivar las notificaciones en la barra de información)"
 
-#: src/common/weeconfig.c:232 src/common/weeconfig.c:233
+#: src/common/weeconfig.c:233 src/common/weeconfig.c:234
 msgid "color for title bar"
 msgstr "color para la barra de título"
 
-#: src/common/weeconfig.c:236 src/common/weeconfig.c:237
+#: src/common/weeconfig.c:237 src/common/weeconfig.c:238
 msgid "background for title bar"
 msgstr "color de fondo para la barra de título"
 
-#: src/common/weeconfig.c:242 src/common/weeconfig.c:243
+#: src/common/weeconfig.c:243 src/common/weeconfig.c:244
 msgid "color for chat text"
 msgstr "color para el texto de conversación"
 
-#: src/common/weeconfig.c:246
+#: src/common/weeconfig.c:247
 msgid "color for time"
 msgstr "color para la hora"
 
-#: src/common/weeconfig.c:247
+#: src/common/weeconfig.c:248
 msgid "color for time in chat window"
 msgstr "color para la hora en la ventana de conversación"
 
-#: src/common/weeconfig.c:250
+#: src/common/weeconfig.c:251
 msgid "color for time separator"
 msgstr "color para el separador de la hora"
 
-#: src/common/weeconfig.c:251
+#: src/common/weeconfig.c:252
 msgid "color for time separator (chat window)"
 msgstr "color para el separador de la hora (ventana de conversación)"
 
-#: src/common/weeconfig.c:254 src/common/weeconfig.c:255
+#: src/common/weeconfig.c:255 src/common/weeconfig.c:256
 msgid "color for 1st and 3rd char of prefix"
 msgstr "color para el primer o tercer carácter de prefijo"
 
-#: src/common/weeconfig.c:258 src/common/weeconfig.c:259
+#: src/common/weeconfig.c:259 src/common/weeconfig.c:260
 msgid "color for middle char of prefix"
 msgstr "color para el carácter de en medio del prefijo"
 
-#: src/common/weeconfig.c:262
+#: src/common/weeconfig.c:263
 msgid "color for nicks in actions"
 msgstr "color para los nombres de usuario en las acciones"
 
-#: src/common/weeconfig.c:263
+#: src/common/weeconfig.c:264
 msgid "color for nicks in actions (chat window)"
 msgstr ""
 "color para los nombres de usuario en las acciones (ventana de conversación)"
 
-#: src/common/weeconfig.c:266
+#: src/common/weeconfig.c:267
 msgid "color for hostnames"
 msgstr "color para los nombres de máquina"
 
-#: src/common/weeconfig.c:267
+#: src/common/weeconfig.c:268
 msgid "color for hostnames (chat window)"
 msgstr "color para los nombres de máquina (ventana de conversación)"
 
-#: src/common/weeconfig.c:270
+#: src/common/weeconfig.c:271
 msgid "color for channel names in actions"
 msgstr "color para los nombres de canal en las acciones"
 
-#: src/common/weeconfig.c:271
+#: src/common/weeconfig.c:272
 msgid "color for channel names in actions (chat window)"
 msgstr ""
 "color para los nombres de canal en las acciones (ventana de conversación)"
 
-#: src/common/weeconfig.c:274
+#: src/common/weeconfig.c:275
 msgid "color for dark separators"
 msgstr "color para los separadores oscuros"
 
-#: src/common/weeconfig.c:275
+#: src/common/weeconfig.c:276
 msgid "color for dark separators (chat window)"
 msgstr "color para los separadores oscuros (ventana de conversación)"
 
-#: src/common/weeconfig.c:278
+#: src/common/weeconfig.c:279
 msgid "color for highlighted nick"
 msgstr "color para el alias subrayado"
 
-#: src/common/weeconfig.c:279
+#: src/common/weeconfig.c:280
 msgid "color for highlighted nick (chat window)"
 msgstr "color para el alias subrayado (ventana de conversación)"
 
-#: src/common/weeconfig.c:282
+#: src/common/weeconfig.c:283
 msgid "background for chat"
 msgstr "color de fondo para la conversación"
 
-#: src/common/weeconfig.c:283
+#: src/common/weeconfig.c:284
 msgid "background for chat window"
 msgstr "color de fondo para la ventana de conversación"
 
-#: src/common/weeconfig.c:288 src/common/weeconfig.c:289
+#: src/common/weeconfig.c:289 src/common/weeconfig.c:290
 msgid "color for status bar"
 msgstr "color para la barra de estado"
 
-#: src/common/weeconfig.c:292 src/common/weeconfig.c:293
+#: src/common/weeconfig.c:293 src/common/weeconfig.c:294
 msgid "color for status bar delimiters"
 msgstr "color para los delimitadores de la barra de estado"
 
-#: src/common/weeconfig.c:296
+#: src/common/weeconfig.c:297
 msgid "color for window with new messages"
 msgstr "color para una ventana con mensajes nuevos"
 
-#: src/common/weeconfig.c:297
+#: src/common/weeconfig.c:298
 msgid "color for window with new messages (status bar)"
 msgstr "color para una ventana con mensajes nuevos (barra de estado)"
 
-#: src/common/weeconfig.c:300
+#: src/common/weeconfig.c:301
 msgid "color for window with highlight"
 msgstr "color para una ventana con resaltado"
 
-#: src/common/weeconfig.c:301
+#: src/common/weeconfig.c:302
 msgid "color for window with highlight (status bar)"
 msgstr "color para una ventana con resaltado (barra de estado)"
 
-#: src/common/weeconfig.c:304
+#: src/common/weeconfig.c:305
 msgid "color for window with new data (not messages)"
 msgstr "color para una ventana con nuevos datos (no mensajes)"
 
-#: src/common/weeconfig.c:305
+#: src/common/weeconfig.c:306
 msgid "color for window with new data (not messages) (status bar)"
 msgstr ""
 "color para una ventana con nuevos datos (no mensajes) (barra de estado)"
 
-#: src/common/weeconfig.c:308
+#: src/common/weeconfig.c:309
 msgid "color for \"-MORE-\" text"
 msgstr "color para el texto \"-MÁS-\""
 
-#: src/common/weeconfig.c:309
+#: src/common/weeconfig.c:310
 msgid "color for window with new data (status bar)"
 msgstr "color para una ventana con nuevos datos (barra de estado)"
 
-#: src/common/weeconfig.c:312 src/common/weeconfig.c:313
+#: src/common/weeconfig.c:313 src/common/weeconfig.c:314
 msgid "background for status window"
 msgstr "color de fondo para la ventana de estado"
 
-#: src/common/weeconfig.c:318 src/common/weeconfig.c:319
+#: src/common/weeconfig.c:319 src/common/weeconfig.c:320
 msgid "color for info bar text"
 msgstr "color para el texto de la barra de información"
 
-#: src/common/weeconfig.c:322 src/common/weeconfig.c:323
+#: src/common/weeconfig.c:323 src/common/weeconfig.c:324
 msgid "color for info bar highlight notification"
 msgstr "color para la notificación en la barra de información"
 
-#: src/common/weeconfig.c:326 src/common/weeconfig.c:327
+#: src/common/weeconfig.c:327 src/common/weeconfig.c:328
 msgid "background for info bar window"
 msgstr "color de fondo para la ventana de la barra de información"
 
-#: src/common/weeconfig.c:332 src/common/weeconfig.c:333
+#: src/common/weeconfig.c:333 src/common/weeconfig.c:334
 msgid "color for input text"
 msgstr "color para el texto de entrada"
 
-#: src/common/weeconfig.c:336 src/common/weeconfig.c:337
+#: src/common/weeconfig.c:337 src/common/weeconfig.c:338
 msgid "color for input text (channel name)"
 msgstr "color para el texto de entrada (nombre de canal)"
 
-#: src/common/weeconfig.c:340 src/common/weeconfig.c:341
+#: src/common/weeconfig.c:341 src/common/weeconfig.c:342
 msgid "color for input text (nick name)"
 msgstr "color para el texto de entrada (alias)"
 
-#: src/common/weeconfig.c:344 src/common/weeconfig.c:345
+#: src/common/weeconfig.c:345 src/common/weeconfig.c:346
 msgid "background for input window"
 msgstr "color de fondo para la ventana de entrada"
 
-#: src/common/weeconfig.c:350 src/common/weeconfig.c:351
+#: src/common/weeconfig.c:351 src/common/weeconfig.c:352
 msgid "color for nicknames"
 msgstr "color para los nombres de usuario"
 
-#: src/common/weeconfig.c:354 src/common/weeconfig.c:355
+#: src/common/weeconfig.c:355 src/common/weeconfig.c:356
 msgid "color for away nicknames"
 msgstr "color para los usuarios ausentes"
 
-#: src/common/weeconfig.c:358
+#: src/common/weeconfig.c:359
 msgid "color for chan owner symbol"
 msgstr "color para el símbolo de propietario de canal"
 
-#: src/common/weeconfig.c:359
+#: src/common/weeconfig.c:360
 msgid "color for chan owner symbol (specific to unrealircd)"
 msgstr ""
 "color para el símbolo de propietario de canal (especificado en unrealircd)"
 
-#: src/common/weeconfig.c:362
+#: src/common/weeconfig.c:363
 msgid "color for chan admin symbol"
 msgstr "color para el símbolo de administrador de canal"
 
-#: src/common/weeconfig.c:363
+#: src/common/weeconfig.c:364
 msgid "color for chan admin symbol (specific to unrealircd)"
 msgstr ""
 "color para el símbolo de administrador de canal (especificado en unrealircd)"
 
-#: src/common/weeconfig.c:366 src/common/weeconfig.c:367
+#: src/common/weeconfig.c:367 src/common/weeconfig.c:368
 msgid "color for operator symbol"
 msgstr "color para el símbolo de operador"
 
-#: src/common/weeconfig.c:370 src/common/weeconfig.c:371
+#: src/common/weeconfig.c:371 src/common/weeconfig.c:372
 msgid "color for half-operator symbol"
 msgstr "color para el símbolo de semi-operador"
 
-#: src/common/weeconfig.c:374 src/common/weeconfig.c:375
+#: src/common/weeconfig.c:375 src/common/weeconfig.c:376
 msgid "color for voice symbol"
 msgstr "color para el símbolo de voz"
 
-#: src/common/weeconfig.c:378 src/common/weeconfig.c:379
+#: src/common/weeconfig.c:379 src/common/weeconfig.c:380
+msgid "color for '+' when scrolling nicks"
+msgstr ""
+
+#: src/common/weeconfig.c:383 src/common/weeconfig.c:384
 msgid "color for nick separator"
 msgstr "color para el separador de alias"
 
-#: src/common/weeconfig.c:382 src/common/weeconfig.c:383
+#: src/common/weeconfig.c:387 src/common/weeconfig.c:388
 msgid "color for local nick"
 msgstr "color para el alias local"
 
-#: src/common/weeconfig.c:386 src/common/weeconfig.c:387
+#: src/common/weeconfig.c:391 src/common/weeconfig.c:392
 msgid "color for other nick in private window"
 msgstr "color para el otro alias en la ventana privada"
 
-#: src/common/weeconfig.c:390 src/common/weeconfig.c:391
+#: src/common/weeconfig.c:395 src/common/weeconfig.c:396
 msgid "background for nicknames"
 msgstr "color de fondo para los nombres de usuario"
 
-#: src/common/weeconfig.c:396
+#: src/common/weeconfig.c:401
 msgid "color for selected DCC"
 msgstr "color para el DCC seleccionado"
 
-#: src/common/weeconfig.c:397
+#: src/common/weeconfig.c:402
 msgid "color for selected DCC (chat window)"
 msgstr "color para el DCC seleccionado (ventana de conversación)"
 
-#: src/common/weeconfig.c:400 src/common/weeconfig.c:401
+#: src/common/weeconfig.c:405 src/common/weeconfig.c:406
 msgid "color for \"waiting\" dcc status"
 msgstr "color para el estado dcc \"esperando\""
 
-#: src/common/weeconfig.c:404 src/common/weeconfig.c:405
+#: src/common/weeconfig.c:409 src/common/weeconfig.c:410
 msgid "color for \"connecting\" dcc status"
 msgstr "color para el estado dcc \"conectando\""
 
-#: src/common/weeconfig.c:408 src/common/weeconfig.c:409
+#: src/common/weeconfig.c:413 src/common/weeconfig.c:414
 msgid "color for \"active\" dcc status"
 msgstr "color para el estado dcc \"activo\""
 
-#: src/common/weeconfig.c:412 src/common/weeconfig.c:413
+#: src/common/weeconfig.c:417 src/common/weeconfig.c:418
 msgid "color for \"done\" dcc status"
 msgstr "color para el estado dcc \"terminado\""
 
-#: src/common/weeconfig.c:416 src/common/weeconfig.c:417
+#: src/common/weeconfig.c:421 src/common/weeconfig.c:422
 msgid "color for \"failed\" dcc status"
 msgstr "color para el estado dcc \"fallo\""
 
-#: src/common/weeconfig.c:420 src/common/weeconfig.c:421
+#: src/common/weeconfig.c:425 src/common/weeconfig.c:426
 msgid "color for \"aborted\" dcc status"
 msgstr "color para el estado dcc \"abortado\""
 
-#: src/common/weeconfig.c:434
+#: src/common/weeconfig.c:439
 msgid "max lines in history (per window)"
 msgstr "número máximo de líneas en el histórico (por ventana)"
 
-#: src/common/weeconfig.c:435
+#: src/common/weeconfig.c:440
 msgid ""
 "maximum number of lines in history for one server/channel/private window (0 "
 "= unlimited)"
@@ -3262,309 +3266,309 @@ msgstr ""
 "número máximo de líneas en el histórico para un servidor/canal/privado (0 = "
 "ilimitado)"
 
-#: src/common/weeconfig.c:439
+#: src/common/weeconfig.c:444
 msgid "max user commands in history"
 msgstr "número máximo de comandos de usuario en el histórico"
 
-#: src/common/weeconfig.c:440
+#: src/common/weeconfig.c:445
 msgid "maximum number of user commands in history (0 = unlimited)"
 msgstr "número máximo de comandos de usuario en el histórico (0 = ilimitado)"
 
-#: src/common/weeconfig.c:457 src/common/weeconfig.c:458
+#: src/common/weeconfig.c:462 src/common/weeconfig.c:463
 msgid "automatically log server messages"
 msgstr "registrar automáticamente los mensajes de servidor"
 
-#: src/common/weeconfig.c:461 src/common/weeconfig.c:462
+#: src/common/weeconfig.c:466 src/common/weeconfig.c:467
 msgid "automatically log channel chats"
 msgstr "registrar automáticamente las conversaciones de canal"
 
-#: src/common/weeconfig.c:465 src/common/weeconfig.c:466
+#: src/common/weeconfig.c:470 src/common/weeconfig.c:471
 msgid "automatically log private chats"
 msgstr "registrar automáticamente las conversaciones privadas"
 
-#: src/common/weeconfig.c:469 src/common/weeconfig.c:470
+#: src/common/weeconfig.c:474 src/common/weeconfig.c:475
 msgid "log messages from plugins (scripts)"
 msgstr "registrar mensajes de plugins (scripts)"
 
-#: src/common/weeconfig.c:473
+#: src/common/weeconfig.c:478
 msgid "path for log files"
 msgstr "ruta para los archivos de registro (logs)"
 
-#: src/common/weeconfig.c:474
+#: src/common/weeconfig.c:479
 msgid "path for WeeChat log files"
 msgstr "ruta para los archivos de registro (logs) de WeeChat"
 
-#: src/common/weeconfig.c:477
+#: src/common/weeconfig.c:482
 msgid "timestamp for log"
 msgstr "fecha y hora para las conversaciones registradas"
 
-#: src/common/weeconfig.c:478
+#: src/common/weeconfig.c:483
 msgid "timestamp for log (see man strftime for date/time specifiers)"
 msgstr ""
 "fecha y hora para los registros (ver man strftime para el formato de fecha/"
 "hora)"
 
-#: src/common/weeconfig.c:481 src/common/weeconfig.c:482
+#: src/common/weeconfig.c:486 src/common/weeconfig.c:487
 msgid "hide password displayed by nickserv"
 msgstr "ocultar contraseña mostrada por nickserv"
 
-#: src/common/weeconfig.c:501
+#: src/common/weeconfig.c:506
 msgid "display message to all channels when away"
 msgstr "mostrar mensaje en todos los canales cuando se está ausente"
 
-#: src/common/weeconfig.c:502
+#: src/common/weeconfig.c:507
 msgid "display message to all channels when (un)marking as away"
 msgstr ""
 "mostrar mensaje en todos los canales cuando se vuelva del estado ausente"
 
-#: src/common/weeconfig.c:505 src/common/weeconfig.c:506
+#: src/common/weeconfig.c:510 src/common/weeconfig.c:511
 msgid "default message when away"
 msgstr "mensaje por defecto para el estado ausente"
 
-#: src/common/weeconfig.c:509 src/common/weeconfig.c:510
+#: src/common/weeconfig.c:514 src/common/weeconfig.c:515
 msgid "default part message (leaving channel)"
 msgstr "mensaje por defecto de salida (saliendo de un canal)"
 
-#: src/common/weeconfig.c:513
+#: src/common/weeconfig.c:518
 msgid "default quit message"
 msgstr "mensaje de fin por defecto"
 
-#: src/common/weeconfig.c:514
+#: src/common/weeconfig.c:519
 msgid ""
 "default quit message ('%v' will be replaced by WeeChat version in string)"
 msgstr ""
 "mensaje de fin por defecto ('%v' será reemplazado por la versión de WeeChat "
 "en la cadena)"
 
-#: src/common/weeconfig.c:517
+#: src/common/weeconfig.c:522
 msgid "interval between two checks for away"
 msgstr "intervalo entre dos comprobaciones de ausencia"
 
-#: src/common/weeconfig.c:518
+#: src/common/weeconfig.c:523
 msgid "interval between two checks for away (in minutes, 0 = never check)"
 msgstr ""
 "intervalo entre dos comprobaciones de ausencia (en minutos, 0 = no comprobar)"
 
-#: src/common/weeconfig.c:521
+#: src/common/weeconfig.c:526
 msgid "interval between two checks for lag"
 msgstr "intervalo entre dos medidas de lag (retraso)"
 
-#: src/common/weeconfig.c:522
+#: src/common/weeconfig.c:527
 msgid "interval between two checks for lag (in seconds)"
 msgstr "intervalo entre dos medidas de lag (en segundos)"
 
-#: src/common/weeconfig.c:525
+#: src/common/weeconfig.c:530
 msgid "minimum lag to show"
 msgstr "lag (retraso) mínimo a mostrar"
 
-#: src/common/weeconfig.c:526
+#: src/common/weeconfig.c:531
 msgid "minimum lag to show (in seconds)"
 msgstr "lag mínimo a mostrar (en segundos)"
 
-#: src/common/weeconfig.c:529
+#: src/common/weeconfig.c:534
 msgid "disconnect after important lag"
 msgstr "desconexión tras un lag importante"
 
-#: src/common/weeconfig.c:530
+#: src/common/weeconfig.c:535
 msgid "disconnect after important lag (in minutes, 0 = never disconnect)"
 msgstr ""
 "desconexión tras un lag importante (en minutos, 0 = no desconectar nunca)"
 
-#: src/common/weeconfig.c:533 src/common/weeconfig.c:534
+#: src/common/weeconfig.c:538 src/common/weeconfig.c:539
 msgid "create a FIFO pipe for remote control"
 msgstr "crea una tubería FIFO para control remoto"
 
-#: src/common/weeconfig.c:553
+#: src/common/weeconfig.c:558
 msgid "automatically accept dcc files"
 msgstr "aceptar automáticamente los ficheros dcc"
 
-#: src/common/weeconfig.c:554
+#: src/common/weeconfig.c:559
 msgid "automatically accept incoming dcc files"
 msgstr "aceptar automáticamente los ficheros dcc entrantes"
 
-#: src/common/weeconfig.c:557
+#: src/common/weeconfig.c:562
 msgid "automatically accept dcc chats"
 msgstr "aceptar automáticamente las peticiones de conversación dcc"
 
-#: src/common/weeconfig.c:558
+#: src/common/weeconfig.c:563
 msgid "automatically accept dcc chats (use carefully!)"
 msgstr ""
 "aceptar automáticamente las peticiones de conversación dcc (¡utilizar con "
 "precaución!)"
 
-#: src/common/weeconfig.c:561
+#: src/common/weeconfig.c:566
 msgid "timeout for dcc request"
 msgstr "tiempo de espera (timeout) para la petición dcc"
 
-#: src/common/weeconfig.c:562
+#: src/common/weeconfig.c:567
 msgid "timeout for dcc request (in seconds)"
 msgstr "tiempo de espera para la petición dcc (en segundos)"
 
-#: src/common/weeconfig.c:565
+#: src/common/weeconfig.c:570
 msgid "block size for dcc packets"
 msgstr "tamaño de bloque para los paquetes dcc"
 
-#: src/common/weeconfig.c:566
+#: src/common/weeconfig.c:571
 msgid "block size for dcc packets in bytes (default: 65536)"
 msgstr "tamaño de bloque para los paquetes dcc en bytes (por defecto: 65536)"
 
-#: src/common/weeconfig.c:569
+#: src/common/weeconfig.c:574
 msgid "path for incoming files with dcc"
 msgstr "ruta para los ficheros recibidos con dcc"
 
-#: src/common/weeconfig.c:570
+#: src/common/weeconfig.c:575
 msgid "path for writing incoming files with dcc (default: user home)"
 msgstr ""
 "ruta para los ficheros recibidos con dcc (por defecto: directorio home del "
 "usuario)"
 
-#: src/common/weeconfig.c:573
+#: src/common/weeconfig.c:578
 msgid "default path for sending files with dcc"
 msgstr "ruta por defecto para enviar ficheros con dcc"
 
-#: src/common/weeconfig.c:574
+#: src/common/weeconfig.c:579
 msgid ""
 "path for reading files when sending thru dcc (when no path is specified)"
 msgstr ""
 "ruta para la lectura de ficheros cuando se envían a través de dcc (cuando no "
 "se especifica una ruta)"
 
-#: src/common/weeconfig.c:577 src/common/weeconfig.c:578
+#: src/common/weeconfig.c:582 src/common/weeconfig.c:583
 msgid "convert spaces to underscores when sending files"
 msgstr "convertir los espacios a subrayados cuando se envían los ficheros"
 
-#: src/common/weeconfig.c:581
+#: src/common/weeconfig.c:586
 msgid "automatically rename dcc files if already exists"
 msgstr "renombrar automáticamente los ficheros dcc si ya existen"
 
-#: src/common/weeconfig.c:582
+#: src/common/weeconfig.c:587
 msgid "rename incoming files if already exists (add '.1', '.2', ...)"
 msgstr ""
 "renombrar los ficheros recibidos si ya existen (añadir '.1', '.2', ...)"
 
-#: src/common/weeconfig.c:585
+#: src/common/weeconfig.c:590
 msgid "automatically resume aborted transfers"
 msgstr "continuar automáticamente las transferencias canceladas"
 
-#: src/common/weeconfig.c:586
+#: src/common/weeconfig.c:591
 msgid ""
 "automatically resume dcc transfer if connection with remote host is loosed"
 msgstr ""
 "continuar automáticamente la transferencia dcc si se ha perdido la conexión "
 "con la máquina remota"
 
-#: src/common/weeconfig.c:600
+#: src/common/weeconfig.c:605
 msgid "use proxy"
 msgstr "utilizar un proxy"
 
-#: src/common/weeconfig.c:601
+#: src/common/weeconfig.c:606
 msgid "use a proxy server to connect to irc server"
 msgstr "utilizar un proxy para conectarse al servidor irc"
 
-#: src/common/weeconfig.c:604
+#: src/common/weeconfig.c:609
 msgid "proxy address"
 msgstr "dirección del proxy"
 
-#: src/common/weeconfig.c:605
+#: src/common/weeconfig.c:610
 msgid "proxy server address (IP or hostname)"
 msgstr "dirección del servidor proxy (IP o nombre de máquina)"
 
-#: src/common/weeconfig.c:608
+#: src/common/weeconfig.c:613
 msgid "port for proxy"
 msgstr "puerto para el proxy"
 
-#: src/common/weeconfig.c:609
+#: src/common/weeconfig.c:614
 msgid "port for connecting to proxy server"
 msgstr "puerto para conectarse al servidor proxy"
 
-#: src/common/weeconfig.c:612
+#: src/common/weeconfig.c:617
 msgid "proxy password"
 msgstr "contraseña para el proxy"
 
-#: src/common/weeconfig.c:613
+#: src/common/weeconfig.c:618
 msgid "password for proxy server"
 msgstr "contraseña para el servidor proxy"
 
-#: src/common/weeconfig.c:624
+#: src/common/weeconfig.c:629
 msgid "server name"
 msgstr "nombre de servidor"
 
-#: src/common/weeconfig.c:625
+#: src/common/weeconfig.c:630
 msgid "name associated to IRC server (for display only)"
 msgstr "nombre asociado al servidor IRC (para mostrar solamente)"
 
-#: src/common/weeconfig.c:628
+#: src/common/weeconfig.c:633
 msgid "automatically connect to server"
 msgstr "conexión automática al servidor"
 
-#: src/common/weeconfig.c:629
+#: src/common/weeconfig.c:634
 msgid "automatically connect to server when WeeChat is starting"
 msgstr "conexión automática al servidor cuando WeeChat esté arrancando"
 
-#: src/common/weeconfig.c:632
+#: src/common/weeconfig.c:637
 msgid "automatically reconnect to server"
 msgstr "reconexión automática al servidor"
 
-#: src/common/weeconfig.c:633
+#: src/common/weeconfig.c:638
 msgid "automatically reconnect to server when disconnected"
 msgstr "reconexión automática al servidor tras una desconexión"
 
-#: src/common/weeconfig.c:636
+#: src/common/weeconfig.c:641
 msgid "delay before trying again to reconnect"
 msgstr "esperar antes de intentar de nuevo una reconexión"
 
-#: src/common/weeconfig.c:637
+#: src/common/weeconfig.c:642
 msgid "delay (in seconds) before trying again to reconnect to server"
 msgstr ""
 "espera (en segundos) antes de intentar de nuevo una reconexión al servidor"
 
-#: src/common/weeconfig.c:640
+#: src/common/weeconfig.c:645
 msgid "server address or hostname"
 msgstr "dirección o nombre de máquina del servidor"
 
-#: src/common/weeconfig.c:641
+#: src/common/weeconfig.c:646
 msgid "IP address or hostname of IRC server"
 msgstr "dirección IP o nombre de máquina del servidor IRC"
 
-#: src/common/weeconfig.c:644
+#: src/common/weeconfig.c:649
 msgid "port for IRC server"
 msgstr "puerto para el servidor IRC"
 
-#: src/common/weeconfig.c:645
+#: src/common/weeconfig.c:650
 msgid "port for connecting to server"
 msgstr "puerto para conectarse al servidor"
 
-#: src/common/weeconfig.c:648
+#: src/common/weeconfig.c:653
 msgid "server password"
 msgstr "contraseña para el servidor"
 
-#: src/common/weeconfig.c:649
+#: src/common/weeconfig.c:654
 msgid "password for IRC server"
 msgstr "contraseña para el servidor IRC"
 
-#: src/common/weeconfig.c:652
+#: src/common/weeconfig.c:657
 msgid "nickname for server"
 msgstr "nombre de usuario para el servidor"
 
-#: src/common/weeconfig.c:653
+#: src/common/weeconfig.c:658
 msgid "nickname to use on IRC server"
 msgstr "nombre de usuario a utilizar en el servidor IRC"
 
-#: src/common/weeconfig.c:656
+#: src/common/weeconfig.c:661
 msgid "alternate nickname for server"
 msgstr "nombre de usuario alternativo para el servidor"
 
-#: src/common/weeconfig.c:657
+#: src/common/weeconfig.c:662
 msgid "alternate nickname to use on IRC server (if nickname is already used)"
 msgstr ""
 "nombre de usuario alternativo para el servidor IRC (si el nombre de usuario "
 "ya está en uso)"
 
-#: src/common/weeconfig.c:660
+#: src/common/weeconfig.c:665
 msgid "2nd alternate nickname for server"
 msgstr "segundo nombre de usuario alternativo para el servidor"
 
-#: src/common/weeconfig.c:661
+#: src/common/weeconfig.c:666
 msgid ""
 "2nd alternate nickname to use on IRC server (if alternate nickname is "
 "already used)"
@@ -3572,31 +3576,31 @@ msgstr ""
 "segundo nombre de usuario alternativo a utilizar en el servidor IRC (si el "
 "nombre de usuario alternativo ya está en uso)"
 
-#: src/common/weeconfig.c:664
+#: src/common/weeconfig.c:669
 msgid "user name for server"
 msgstr "nombre de usuario para el servidor"
 
-#: src/common/weeconfig.c:665
+#: src/common/weeconfig.c:670
 msgid "user name to use on IRC server"
 msgstr "nombre de usuario para el servidor IRC"
 
-#: src/common/weeconfig.c:668
+#: src/common/weeconfig.c:673
 msgid "real name for server"
 msgstr "nombre real para el servidor"
 
-#: src/common/weeconfig.c:669
+#: src/common/weeconfig.c:674
 msgid "real name to use on IRC server"
 msgstr "nombre real para el servidor IRC"
 
-#: src/common/weeconfig.c:672 src/common/weeconfig.c:673
+#: src/common/weeconfig.c:677 src/common/weeconfig.c:678
 msgid "first command to run when connected to server"
 msgstr "primer comando a ejecutar cuando se conecte a un servidor"
 
-#: src/common/weeconfig.c:676
+#: src/common/weeconfig.c:681
 msgid "delay (in seconds) after command was executed"
 msgstr "espera (en segundos) después de que el comando sea ejecutado"
 
-#: src/common/weeconfig.c:677
+#: src/common/weeconfig.c:682
 msgid ""
 "delay (in seconds) after command was executed (example: give some time for "
 "authentication)"
@@ -3604,76 +3608,76 @@ msgstr ""
 "espera (en segundos) después de que el comando sea ejecutado (ejemplo: dar "
 "algo de tiempo para la autenticación)"
 
-#: src/common/weeconfig.c:680
+#: src/common/weeconfig.c:685
 msgid "list of channels to join when connected to server"
 msgstr "lista de canales a unirse cuando se conecte a un servidor"
 
-#: src/common/weeconfig.c:681
+#: src/common/weeconfig.c:686
 msgid "comma separated list of channels to join when connected to server"
 msgstr ""
 "lista de canales (separados por comas) a unirse cuando se conecte a un "
 "servidor"
 
-#: src/common/weeconfig.c:684 src/common/weeconfig.c:685
+#: src/common/weeconfig.c:689 src/common/weeconfig.c:690
 msgid "automatically rejoin channels when kicked"
 msgstr "unirse de nuevo automáticamente a los canales cuando sea expulsado"
 
-#: src/common/weeconfig.c:1052
+#: src/common/weeconfig.c:1057
 #, c-format
 msgid "%s %s, line %d: new server, but previous was incomplete\n"
 msgstr "%s %s, línea %d: nuevo servidor, pero el anterior estaba incompleto\n"
 
-#: src/common/weeconfig.c:1061
+#: src/common/weeconfig.c:1066
 #, c-format
 msgid "%s %s, line %d: server '%s' already exists\n"
 msgstr "%s %s, línea %d: el servidor '%s' ya existe\n"
 
-#: src/common/weeconfig.c:1075
+#: src/common/weeconfig.c:1080
 #, c-format
 msgid "%s %s, line %d: unable to create server\n"
 msgstr "%s %s, línea %d: no es posible crear el servidor\n"
 
-#: src/common/weeconfig.c:1114
+#: src/common/weeconfig.c:1119
 #, c-format
 msgid "%s unable to assign default int with string (\"%s\")\n"
 msgstr "%s no es posible asignar el valor entero con la cadena (\"%s\")\n"
 
-#: src/common/weeconfig.c:1125
+#: src/common/weeconfig.c:1130
 #, c-format
 msgid "%s unable to assign default color (\"%s\")\n"
 msgstr "%s no es posible asignar el color por defecto (\"%s\")\n"
 
-#: src/common/weeconfig.c:1164
+#: src/common/weeconfig.c:1169
 #, c-format
 msgid "%s config file \"%s\" not found.\n"
 msgstr "%s fichero de configuración \"%s\" no encontrado.\n"
 
-#: src/common/weeconfig.c:1196
+#: src/common/weeconfig.c:1201
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"]\"\n"
 msgstr "%s %s, línea %d: sintaxis inválida, falta \"]\"\n"
 
-#: src/common/weeconfig.c:1213
+#: src/common/weeconfig.c:1218
 #, c-format
 msgid "%s %s, line %d: unknown section identifier (\"%s\")\n"
 msgstr "%s %s, línea %d: identificador de sección desconocido (\"%s\")\n"
 
-#: src/common/weeconfig.c:1231
+#: src/common/weeconfig.c:1236
 #, c-format
 msgid "%s %s, line %d: invalid section for option, line is ignored\n"
 msgstr "%s %s, línea %d: sección inválida para la opción, línea ignorada\n"
 
-#: src/common/weeconfig.c:1239
+#: src/common/weeconfig.c:1244
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"=\"\n"
 msgstr "%s %s, línea %d: sintaxis inválida, falta \"=\"\n"
 
-#: src/common/weeconfig.c:1273
+#: src/common/weeconfig.c:1278
 #, c-format
 msgid "%s %s, line %d: invalid option \"%s\"\n"
 msgstr "%s %s, línea %d: opción \"%s\" inválida\n"
 
-#: src/common/weeconfig.c:1284
+#: src/common/weeconfig.c:1289
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value foroption '%s'\n"
@@ -3682,7 +3686,7 @@ msgstr ""
 "%s %s, línea %d: valor inválido para la opción '%s'\n"
 "Esperado: valor booleano: 'off' u 'on'\n"
 
-#: src/common/weeconfig.c:1293
+#: src/common/weeconfig.c:1298
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
@@ -3691,7 +3695,7 @@ msgstr ""
 "%s %s, línea %d: valor inválido para la opción %s'\n"
 "Esperado: entero comprendido entre %d y %d\n"
 
-#: src/common/weeconfig.c:1304
+#: src/common/weeconfig.c:1309
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
@@ -3700,26 +3704,26 @@ msgstr ""
 "%s %s, línea %d: valor inválido para la opción '%s'\n"
 "Esperado: una de estas cadenas: "
 
-#: src/common/weeconfig.c:1320
+#: src/common/weeconfig.c:1325
 #, c-format
 msgid "%s %s, line %d: invalid color name for option '%s'\n"
 msgstr "%s %s, línea %d: nombre de color inválido para la opción '%s'\n"
 
-#: src/common/weeconfig.c:1380 src/common/weeconfig.c:1553
+#: src/common/weeconfig.c:1385 src/common/weeconfig.c:1558
 #, c-format
 msgid "%s cannot create file \"%s\"\n"
 msgstr "%s no es posible crear el fichero \"%s\"\n"
 
-#: src/common/weeconfig.c:1386
+#: src/common/weeconfig.c:1391
 #, c-format
 msgid "%s: creating default config file...\n"
 msgstr "%s: creando fichero de configuración por defecto...\n"
 
-#: src/common/weeconfig.c:1387
+#: src/common/weeconfig.c:1392
 msgid "creating default config file\n"
 msgstr "creando fichero de configuración por defecto\n"
 
-#: src/common/weeconfig.c:1390 src/common/weeconfig.c:1562
+#: src/common/weeconfig.c:1395 src/common/weeconfig.c:1567
 #, c-format
 msgid ""
 "#\n"
@@ -3728,7 +3732,7 @@ msgstr ""
 "#\n"
 "# %s: fichero de configuración, creado por %s v%s el %s#\n"
 
-#: src/common/weeconfig.c:1559
+#: src/common/weeconfig.c:1564
 msgid "saving config to disk\n"
 msgstr "guardar configuración a disco\n"
 

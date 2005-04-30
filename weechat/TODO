@@ -23,6 +23,7 @@ v0.1.2:
     - customizable CTCP version reply
 
  * Interface:
+    # nicklist scroll keys
     + Gtk GUI
     + internationalization (traduce WeeChat in many languages)
 
@@ -34,6 +35,7 @@ v0.1.2:
 
  * Plugins:
     + Python plugin
+    + "/python load" and "/python unload" commands to (un)load Python scripts
 
 
 Future versions:
@@ -72,6 +74,5 @@ Future versions:
     - IPv6 protocol implementation
 
  * Plugins:
-    - "/python load" and "/python unload" commands to (un)load Python scripts
     - Ruby plugin
     - "/ruby load" and "/ruby unload" commands to (un)load Ruby scripts

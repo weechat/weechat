@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.1.2-cvs - April, 09 2005
+@subtitle Documentation for WeeChat v0.1.2-cvs - April, 30 2005
 
 @image{weechat_image}
 
@@ -417,6 +417,9 @@ Type: color (Curses or Gtk color), default value: 'lightmagenta'@*
 @item col_nick_voice
 Color for voice symbol@*
 Type: color (Curses or Gtk color), default value: 'yellow'@*
+@item col_nick_more
+Color for '+' when scrolling nicks@*
+Type: color (Curses or Gtk color), default value: 'lightmagenta'@*
 @item col_nick_sep
 Color for nick separator@*
 Type: color (Curses or Gtk color), default value: 'blue'@*
@@ -674,6 +677,9 @@ Switch to previous / next window@*
 @item F10
 Remove last infobar message@*
 @*
+@item F11 / F12
+Scroll nicklist@*
+@*
 @item Ctrl + L
 Redraw whole window@*
 @*
@@ -697,6 +703,9 @@ Switch to first channel of next server (or server buffer if no channel is opened
 @*
 @item Alt + digit (1-9)
 Switch to buffer by number@*
+@*
+@item Alt + PageUp / Alt + PageDown / Alt + Home / Alt + End
+Scroll nicklist@*
 @*
 @end table
 

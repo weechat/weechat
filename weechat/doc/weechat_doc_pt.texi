@@ -35,7 +35,7 @@
 
 @title WeeChat - Guia do Utilizador
 @subtitle Cliente de IRC rapido, leve e extencivel
-@subtitle Documenta@,{c}@~ao do WeeChat v0.1.2-cvs - 9 de Abril de 2005
+@subtitle Documenta@,{c}@~ao do WeeChat v0.1.2-cvs - 30 de Abril de 2005
 
 @image{weechat_image}
 
@@ -284,6 +284,9 @@ Comute ao janela anterior / seguinte@*
 @item F10
 Apagar a @'ultima mensagem da barra do info@*
 @*
+@item F11 / F12
+Scroll nicklist@*
+@*
 @item Ctrl + L
 Redesenhe a janela inteira@*
 @*
@@ -307,6 +310,9 @@ Comute @`a primeira canaleta do servidor seguinte (ou do amortecedor do servidor
 @*
 @item Alt + d@'igito (1-9)
 Comute ao amortecedor pelo n@'umero@*
+@*
+@item Alt + PageUp / Alt + PageDown / Alt + Home / Alt + End
+Scroll nicklist@*
 @*
 @end table
 

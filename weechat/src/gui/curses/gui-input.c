@@ -72,8 +72,6 @@ gui_read_keyb ()
             case KEY_F(3):
             case KEY_F(4):
             case KEY_F(9):
-            case KEY_F(11):
-            case KEY_F(12):
                 break;
             /* previous buffer in window */
             case KEY_F(5):
@@ -95,6 +93,12 @@ gui_read_keyb ()
             case KEY_F(10):
                 gui_infobar_remove ();
                 gui_draw_buffer_infobar (gui_current_window->buffer, 1);
+                break;
+            case KEY_F(11):
+                gui_nick_move_page_up (gui_current_window);
+                break;
+            case KEY_F(12):
+                gui_nick_move_page_down (gui_current_window);
                 break;
             /* cursor up */
             case KEY_UP:
@@ -416,25 +420,38 @@ gui_read_keyb ()
                         case KEY_RIGHT:
                             gui_switch_to_next_buffer (gui_current_window);
                             break;
+                        /* Alt + home */
+                        case KEY_HOME:
+                            gui_nick_move_beginning (gui_current_window);
+                            break;
+                        /* Alt + end */
+                        case KEY_END:
+                            gui_nick_move_end (gui_current_window);
+                            break;
+                        /* Alt + page up */
+                        case KEY_PPAGE:
+                            gui_nick_move_page_up (gui_current_window);
+                            break;
+                        /* Alt + page down */
+                        case KEY_NPAGE:
+                            gui_nick_move_page_down (gui_current_window);
+                            break;
                         case 79:
                             /* TODO: replace 79 by constant name! */
-                            if (key == 79)
+                            if ((key = getch()) != ERR)
                             {
-                                if ((key = getch()) != ERR)
+                                switch (key)
                                 {
-                                    switch (key)
-                                    {
-                                        /* Control + Right */
-                                        case 99:
-                                            if (!gui_current_window->buffer->dcc)    
-                                                gui_move_next_word (gui_current_window->buffer);
-                                            break;
-                                        /* Control + Left */
-                                        case 100:
-                                            if (!gui_current_window->buffer->dcc)
-                                                gui_move_previous_word (gui_current_window->buffer);
-                                            break;
-                                    }
+                                    /* Control + Right */
+                                    case 99:
+                                        if (!gui_current_window->buffer->dcc)    
+                                            gui_move_next_word (gui_current_window->buffer);
+                                        break;
+                                    /* Control + Left */
+                                    case 100:
+                                        if (!gui_current_window->buffer->dcc)
+                                            gui_move_previous_word (gui_current_window->buffer);
+                                        break;
                                 }
                             }
                             break;

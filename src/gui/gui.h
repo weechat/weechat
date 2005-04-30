@@ -26,7 +26,7 @@
 
 #define INPUT_BUFFER_BLOCK_SIZE 256
 
-#define NUM_COLORS                      49
+#define NUM_COLORS                      50
 #define COLOR_WIN_TITLE                 1
 #define COLOR_WIN_CHAT                  2
 #define COLOR_WIN_CHAT_TIME             3
@@ -56,19 +56,20 @@
 #define COLOR_WIN_NICK_OP               27
 #define COLOR_WIN_NICK_HALFOP           28
 #define COLOR_WIN_NICK_VOICE            29
-#define COLOR_WIN_NICK_SEP              30
-#define COLOR_WIN_NICK_SELF             31
-#define COLOR_WIN_NICK_PRIVATE          32
-#define COLOR_WIN_NICK_FIRST            33
-#define COLOR_WIN_NICK_LAST             42
+#define COLOR_WIN_NICK_MORE             30
+#define COLOR_WIN_NICK_SEP              31
+#define COLOR_WIN_NICK_SELF             32
+#define COLOR_WIN_NICK_PRIVATE          33
+#define COLOR_WIN_NICK_FIRST            34
+#define COLOR_WIN_NICK_LAST             43
 #define COLOR_WIN_NICK_NUMBER           (COLOR_WIN_NICK_LAST - COLOR_WIN_NICK_FIRST + 1)
-#define COLOR_DCC_SELECTED              43
-#define COLOR_DCC_WAITING               44
-#define COLOR_DCC_CONNECTING            45
-#define COLOR_DCC_ACTIVE                46
-#define COLOR_DCC_DONE                  47
-#define COLOR_DCC_FAILED                48
-#define COLOR_DCC_ABORTED               49
+#define COLOR_DCC_SELECTED              44
+#define COLOR_DCC_WAITING               45
+#define COLOR_DCC_CONNECTING            46
+#define COLOR_DCC_ACTIVE                47
+#define COLOR_DCC_DONE                  48
+#define COLOR_DCC_FAILED                49
+#define COLOR_DCC_ABORTED               50
 
 #define SERVER(buffer)  ((t_irc_server *)(buffer->server))
 #define CHANNEL(buffer) ((t_irc_channel *)(buffer->channel))
@@ -212,6 +213,7 @@ struct t_gui_window
     int win_nick_x, win_nick_y;     /* chat window position                 */
     int win_nick_width;             /* width of chat window                 */
     int win_nick_height;            /* height of chat window                */
+    int win_nick_start;             /* # of 1st nick for display (scroll)   */
     
     /* windows for Curses GUI */
     void *win_title;                /* title window                         */
@@ -302,8 +304,12 @@ extern void gui_switch_to_previous_buffer (t_gui_window *);
 extern void gui_switch_to_next_buffer (t_gui_window *);
 extern void gui_switch_to_previous_window (t_gui_window *);
 extern void gui_switch_to_next_window (t_gui_window *);
-extern void gui_move_page_up ();
-extern void gui_move_page_down ();
+extern void gui_move_page_up (t_gui_window *);
+extern void gui_move_page_down (t_gui_window *);
+extern void gui_nick_move_beginning (t_gui_window *);
+extern void gui_nick_move_end (t_gui_window *);
+extern void gui_nick_move_page_up (t_gui_window *);
+extern void gui_nick_move_page_down (t_gui_window *);
 extern void gui_curses_resize_handler ();
 extern void gui_window_init_subwindows (t_gui_window *);
 extern void gui_window_split_horiz (t_gui_window *);

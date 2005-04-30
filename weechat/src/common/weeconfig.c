@@ -215,6 +215,7 @@ int cfg_col_nick_chanadmin;
 int cfg_col_nick_op;
 int cfg_col_nick_halfop;
 int cfg_col_nick_voice;
+int cfg_col_nick_more;
 int cfg_col_nick_sep;
 int cfg_col_nick_self;
 int cfg_col_nick_private;
@@ -375,6 +376,10 @@ t_config_option weechat_options_colors[] =
     N_("color for voice symbol"),
     OPTION_TYPE_COLOR, 0, 0, 0,
     "yellow", NULL, &cfg_col_nick_voice, NULL, &config_change_color },
+  { "col_nick_more", N_("color for '+' when scrolling nicks"),
+    N_("color for '+' when scrolling nicks"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "lightmagenta", NULL, &cfg_col_nick_more, NULL, &config_change_color },
   { "col_nick_sep", N_("color for nick separator"),
     N_("color for nick separator"),
     OPTION_TYPE_COLOR, 0, 0, 0,

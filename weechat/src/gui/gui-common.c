@@ -87,6 +87,7 @@ gui_window_new (int x, int y, int width, int height)
         new_window->win_nick_y = 0;
         new_window->win_nick_width = 0;
         new_window->win_nick_height = 0;
+        new_window->win_nick_start = 0;
         
         new_window->win_title = NULL;
         new_window->win_chat = NULL;
@@ -842,6 +843,7 @@ gui_window_print_log (t_gui_window *window)
     wee_log_printf ("  win_nick_y. . . . . : %d\n",   window->win_nick_y);
     wee_log_printf ("  win_nick_width. . . : %d\n",   window->win_nick_width);
     wee_log_printf ("  win_nick_height . . : %d\n",   window->win_nick_height);
+    wee_log_printf ("  win_nick_start. . . : %d\n",   window->win_nick_start);
     wee_log_printf ("  win_title . . . . . : 0x%X\n", window->win_title);
     wee_log_printf ("  win_chat. . . . . . : 0x%X\n", window->win_chat);
     wee_log_printf ("  win_nick. . . . . . : 0x%X\n", window->win_nick);
