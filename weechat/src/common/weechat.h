@@ -30,7 +30,11 @@
 
 #if defined(ENABLE_NLS) && !defined(_)
     #include <locale.h>
-    #include <libintl.h>
+    #ifdef HAVE_LIBINTL_H
+        #include <libintl.h>
+    #else
+        #include "../../intl/libintl.h"
+    #endif
     #define _(x) gettext(x)
     #ifdef gettext_noop
         #define N_(string) gettext_noop (string)

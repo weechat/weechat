@@ -1,13 +1,14 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-04-28
+ChangeLog - 2005-04-30
 
 
 Version 0.1.2 (under dev!):
    * added transfer rate for DCC files
    * added "-all" option for /nick command
    * buffers timestamp can now be changed (new option in config file)
+   * WeeChat now ok under *BSD and Mac OS X
    * fixed crash when purging old DCC
    * fixed crash with 64-bits arch (like AMD64) when converting UTF-8
    * added missing IRC commands (307, 341, 485, 671)

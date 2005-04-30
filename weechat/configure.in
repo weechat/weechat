@@ -47,10 +47,24 @@ AC_CHECK_HEADERS([arpa/inet.h libintl.h limits.h locale.h netdb.h netinet/in.h s
 AC_HEADER_TIME
 AC_STRUCT_TM
 
+AC_MSG_CHECKING([for socklen_t])
+AC_CACHE_VAL(ac_cv_type_socklen_t,
+[AC_TRY_COMPILE([
+#include <sys/types.h>
+#include <sys/socket.h>],
+[socklen_t t;],
+ac_cv_type_socklen_t=yes,
+ac_cv_type_socklen_t=no,
+)])
+if test $ac_cv_type_socklen_t = no; then
+AC_DEFINE(socklen_t, int, Define to 'int' if <sys/socket.h> doesn't define.)
+fi
+AC_MSG_RESULT($ac_cv_type_socklen_t)
+
 # Checks for library functions.
 AC_FUNC_SELECT_ARGTYPES
 AC_TYPE_SIGNAL
-AC_CHECK_FUNCS([gethostbyname gethostname gettimeofday inet_ntoa memset mkdir select setlocale socket strcasecmp strchr strdup strncasecmp strpbrk strrchr strstr uname])
+AC_CHECK_FUNCS([gethostbyname gethostname getsockname gettimeofday inet_ntoa memset mkdir select setlocale socket strcasecmp strchr strdup strncasecmp strpbrk strrchr strstr uname])
 
 AH_VERBATIM([PLUGINS], [#undef PLUGINS])
 AH_VERBATIM([PLUGIN_PERL], [#undef PLUGIN_PERL])

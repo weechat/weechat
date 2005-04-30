@@ -52,7 +52,9 @@
 #include <iconv.h>
 #endif
 
+#ifdef HAVE_LANGINFO_CODESET
 #include <langinfo.h>
+#endif
 
 #include "weechat.h"
 #include "weeconfig.h"
@@ -739,7 +741,9 @@ main (int argc, char *argv[])
     textdomain (PACKAGE);
     #endif
     
+    #ifdef HAVE_LANGINFO_CODESET
     local_charset = strdup (nl_langinfo (CODESET));
+    #endif
     
     signal (SIGINT, my_sigint);     /* ignore SIGINT signal                 */
     signal (SIGSEGV, my_sigsegv);   /* crash dump when SIGSEGV is received  */

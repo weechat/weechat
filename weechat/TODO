@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2005-04-03
+TODO - 2005-04-30
 
 Legend:
   #  done
@@ -16,7 +16,8 @@ v0.1.2:
  * General:
     + Windows version
     + Solaris version
-    + *BSD version
+    # *BSD version
+    # Mac OS X version
 
  * IRC protocol:
     - customizable CTCP version reply
@@ -30,6 +31,9 @@ v0.1.2:
 
  * Configuration:
     - add key bindings to config file
+
+ * Plugins:
+    + Python plugin
 
 
 Future versions:
@@ -68,7 +72,6 @@ Future versions:
     - IPv6 protocol implementation
 
  * Plugins:
-    - Python plugin
     - "/python load" and "/python unload" commands to (un)load Python scripts
     - Ruby plugin
     - "/ruby load" and "/ruby unload" commands to (un)load Ruby scripts
