@@ -39,6 +39,10 @@
 #include "perl/wee-perl.h"
 #endif
 
+#ifdef PLUGIN_PYTHON
+#include "python/wee-python.h"
+#endif
+
 
 char *plugin_name[3] = { "Perl", "Python", "Ruby" };
 
@@ -115,6 +119,11 @@ plugin_init ()
     wee_perl_init();
     plugin_auto_load (PLUGIN_TYPE_PERL, "perl/autoload");
     #endif
+    
+    #ifdef PLUGIN_PYTHON
+    wee_python_init();
+    plugin_auto_load (PLUGIN_TYPE_PYTHON, "python/autoload");
+    #endif
 }
 
 /*
@@ -133,7 +142,9 @@ plugin_load (int plugin_type, char *filename)
             #endif
             break;
         case PLUGIN_TYPE_PYTHON:
-            /* TODO: load Python script */
+            #ifdef PLUGIN_PYTHON
+            wee_python_load (filename);
+            #endif
             break;
         case PLUGIN_TYPE_RUBY:
             /* TODO: load Ruby script */
@@ -292,6 +303,10 @@ plugin_event_msg (char *irc_command, char *arguments, char *server)
             if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PERL)
                 wee_perl_exec (ptr_plugin_handler->function_name, arguments, server);
             #endif
+            #ifdef PLUGIN_PYTHON
+            if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PYTHON)
+                wee_python_exec (ptr_plugin_handler->function_name, arguments, server);
+            #endif
         }
     }
     #else
@@ -320,6 +335,10 @@ plugin_exec_command (char *user_command, char *arguments, char *server)
             #ifdef PLUGIN_PERL
             if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PERL)
                 wee_perl_exec (ptr_plugin_handler->function_name, arguments, server);
+            #endif
+            #ifdef PLUGIN_PYTHON
+            if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PYTHON)
+                wee_python_exec (ptr_plugin_handler->function_name, arguments, server);
             #endif
             
             /* command executed */
@@ -358,7 +377,10 @@ plugin_unload (int plugin_type, char *scriptname)
             #endif
             break;
         case PLUGIN_TYPE_PYTHON:
-            /* TODO: unload Python scripts */
+            #ifdef PLUGIN_PYTHON
+            wee_python_end ();
+            wee_python_init ();
+            #endif
             break;
         case PLUGIN_TYPE_RUBY:
             /* TODO: unload Ruby scripts */
@@ -383,4 +405,8 @@ plugin_end ()
     #ifdef PLUGIN_PERL
     wee_perl_end();
     #endif
+    
+    #ifdef PLUGIN_PYTHON
+    wee_python_end();
+    #endif    
 }

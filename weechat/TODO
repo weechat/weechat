@@ -34,8 +34,8 @@ v0.1.2:
     - add key bindings to config file
 
  * Plugins:
-    + Python plugin
-    + "/python load" and "/python unload" commands to (un)load Python scripts
+    # Python plugin
+    # "/python load" and "/python unload" commands to (un)load Python scripts
 
 
 Future versions:

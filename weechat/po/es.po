@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.2-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-04-30 19:48+0200\n"
-"PO-Revision-Date: 2005-04-30 19:49+0200\n"
+"POT-Creation-Date: 2005-05-01 20:47+0200\n"
+"PO-Revision-Date: 2005-05-01 20:48+0200\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1251,7 +1251,7 @@ msgstr "no es posible cambiar el modo para el resto de usuarios"
 msgid "whois (secure connection)"
 msgstr ""
 
-#: src/irc/irc-display.c:154 src/common/command.c:812
+#: src/irc/irc-display.c:154 src/common/command.c:817
 msgid "Server: "
 msgstr "Servidor: "
 
@@ -1300,7 +1300,8 @@ msgstr ""
 
 #: src/irc/irc-send.c:345 src/irc/irc-send.c:357 src/irc/irc-send.c:375
 #: src/irc/irc-send.c:996 src/irc/irc-send.c:1089 src/irc/irc-send.c:1609
-#: src/common/command.c:1124 src/common/command.c:1407
+#: src/common/command.c:1129 src/common/command.c:1411
+#: src/common/command.c:1552
 #, c-format
 msgid "%s wrong argument count for \"%s\" command\n"
 msgstr "%s número de argumentos incorrecto para el comando \"%s\"\n"
@@ -1960,12 +1961,138 @@ msgstr "descarga del Perl script \"%s\"\n"
 msgid "unloading all Perl scripts...\n"
 msgstr "descargando todos los Perl scripts...\n"
 
-#: src/plugins/plugins.c:89
+#: src/plugins/python/wee-python.c:61 src/plugins/python/wee-python.c:170
+msgid ""
+"Python error: wrong parameters for 'print_with_channel' Python function\n"
+msgstr ""
+"Error de Python: parámetros incorrectos para la función Python "
+"'print_with_channel'\n"
+
+#: src/plugins/python/wee-python.c:81
+#, c-format
+msgid ""
+"Python error: unable to register Python script \"%s\" (another script "
+"already exists with this name)\n"
+msgstr ""
+"Error de Python: no ha sido posible registrar el Python script \"%s\" (ya "
+"existe otro script con ese nombre)\n"
+
+#: src/plugins/python/wee-python.c:105
+#, c-format
+msgid "registered Python script: \"%s\", version %s (%s)\n"
+msgstr "Python script registrado: \"%s\", versión %s (%s)\n"
+
+#: src/plugins/python/wee-python.c:112
+#, c-format
+msgid "%s unable to load Python script \"%s\" (not enough memory)\n"
+msgstr ""
+"%s no ha sido posible cargar el Python script \"%s\" (memoria insuficiente)\n"
+
+#: src/plugins/python/wee-python.c:137
+msgid "Python error: wrong parameters for 'print' Python function\n"
+msgstr ""
+"Error de Python: parámetros incorrectos para la función Python 'print'\n"
+
+#: src/plugins/python/wee-python.c:222
+msgid "Python error: wrong parameters for 'print_infobar' Python function\n"
+msgstr ""
+"Error de Python: parámetros incorrectos para la función Python "
+"'print_infobar'\n"
+
+#: src/plugins/python/wee-python.c:249
+msgid "Python error: wrong parameters for 'command' Python function\n"
+msgstr ""
+"Error de Python: parámetros incorrectos para la función Python 'command'\n"
+
+#: src/plugins/python/wee-python.c:268
+msgid "Python error: server not found for 'command' Python function\n"
+msgstr ""
+"Error de Python: servidor no encontrado para la función Python 'command'\n"
+
+#: src/plugins/python/wee-python.c:303
+msgid ""
+"Python error: wrong parameters for 'add_message_handler' Python function\n"
+msgstr ""
+"Error de Python: parámetros incorrectos para la función Python "
+"'add_message_handler'\n"
+
+#: src/plugins/python/wee-python.c:332
+msgid ""
+"Python error: wrong parameters for 'add_command_handler' Python function\n"
+msgstr ""
+"Error de Python: parámetros incorrectos para la función Python "
+"'add_command_handler'\n"
+
+#: src/plugins/python/wee-python.c:371
+msgid "Python error: wrong parameters for 'get_info' Python function\n"
+msgstr ""
+"Error de Python: parámetros incorrectos para la función Python 'get_info'\n"
+
+#: src/plugins/python/wee-python.c:390
+msgid "Python error: server not found for 'get_info' Python function\n"
+msgstr ""
+"Error de Python: servidor no encontrado para la función Python 'get_info'\n"
+
+#: src/plugins/python/wee-python.c:462
+msgid "Python error: error while launching Python interpreter\n"
+msgstr ""
+
+#: src/plugins/python/wee-python.c:468
+msgid "Loading Python module \"weechat\"\n"
+msgstr ""
+
+#: src/plugins/python/wee-python.c:519 src/plugins/python/wee-python.c:547
+#: src/plugins/python/wee-python.c:578
+#, c-format
+msgid ""
+"Python error: unable to run function \"%s\"in Python script (not enough "
+"memory)\n"
+msgstr ""
+
+#: src/plugins/python/wee-python.c:569
+#, c-format
+msgid "Python error: error while running function \"%s\"\n"
+msgstr ""
+
+#: src/plugins/python/wee-python.c:599
+#, c-format
+msgid "loading Python script \"%s\"\n"
+msgstr "carga del Python script \"%s\"\n"
+
+#: src/plugins/python/wee-python.c:601
+#, c-format
+msgid "Loading Python script \"%s\"\n"
+msgstr "Cargando Python script \"%s\"\n"
+
+#: src/plugins/python/wee-python.c:607
+#, c-format
+msgid "Python error: error while opening file \"%s\"\n"
+msgstr ""
+
+#: src/plugins/python/wee-python.c:615
+#, c-format
+msgid "Python error: error while parsing file \"%s\"\n"
+msgstr ""
+
+#: src/plugins/python/wee-python.c:668
+#, c-format
+msgid "unloading Python script \"%s\"\n"
+msgstr "descarga del Python script \"%s\"\n"
+
+#: src/plugins/python/wee-python.c:685
+msgid "unloading all Python scripts...\n"
+msgstr "descargando todos los Python scripts...\n"
+
+#: src/plugins/python/wee-python.c:711
+msgid "Python error: error while freeing Python interpreter\n"
+msgstr ""
+
+#: src/plugins/plugins.c:93
 #, c-format
 msgid "auto-loading %s script: %s%s%s\n"
 msgstr "carga automática del script %s : %s%s%s\n"
 
-#: src/plugins/plugins.c:200
+#: src/plugins/plugins.c:211
 #, c-format
 msgid "%s unable to add handler for \"%s\" message (not enough memory)\n"
 msgstr ""
@@ -2164,7 +2291,7 @@ msgstr "comando: nombre de un comando de Weechat ó de IRC"
 msgid "list/load/unload Perl scripts"
 msgstr "lista/carga/descarga de los Perl scripts"
 
-#: src/common/command.c:76
+#: src/common/command.c:76 src/common/command.c:81
 msgid "[load filename] | [autoload] | [unload]"
 msgstr "[load fichero] | [autoload] | [unload]"
 
@@ -2177,10 +2304,22 @@ msgstr ""
 "Sin argumentos, el comando /perl lista todos los Perl scripts cargados."
 
 #: src/common/command.c:80
+msgid "list/load/unload Python scripts"
+msgstr "lista/carga/descarga de los Python scripts"
+
+#: src/common/command.c:82
+msgid ""
+"filename: Python script (file) to load\n"
+"Without argument, /python command lists all loaded Python scripts."
+msgstr ""
+"fichero: Python script (archivo) a cargar\n"
+"Sin argumentos, el comando /python lista todos los Python scripts cargados."
+
+#: src/common/command.c:85
 msgid "list, add or remove servers"
 msgstr "lista, añade o elimina servidores"
 
-#: src/common/command.c:81
+#: src/common/command.c:86
 msgid ""
 "[servername] | [servername hostname port [-auto | -noauto] [-pwd password] [-"
 "nicks nick1 [nick2 [nick3]]] [-username username] [-realname realname] [-"
@@ -2191,7 +2330,7 @@ msgstr ""
 "nombre de usuario] [-realname nombre_real] [-command comando] [-autojoin "
 "canal[,canal]] ] | [del nombre_de_servidor]"
 
-#: src/common/command.c:86
+#: src/common/command.c:91
 msgid ""
 "servername: server name, for internal & display use\n"
 "hostname: name or IP address of server\n"
@@ -2213,27 +2352,27 @@ msgstr ""
 "nombre_de_usuario: nombre de usuario\n"
 "nombre_real: nombre real del usuario"
 
-#: src/common/command.c:96
+#: src/common/command.c:101
 msgid "save config to disk"
 msgstr "guardar configuración a disco"
 
-#: src/common/command.c:97
+#: src/common/command.c:102
 msgid "[file]"
 msgstr "[archivo]"
 
-#: src/common/command.c:97
+#: src/common/command.c:102
 msgid "file: filename for writing config"
 msgstr "archivo: fichero en el que guardar la configuración"
 
-#: src/common/command.c:99
+#: src/common/command.c:104
 msgid "set config parameters"
 msgstr "modificar parámetros de configuración"
 
-#: src/common/command.c:100
+#: src/common/command.c:105
 msgid "[option[=value]]"
 msgstr "[opción[=valor]]"
 
-#: src/common/command.c:100
+#: src/common/command.c:105
 msgid ""
 "option: name of an option\n"
 "value: value for option"
@@ -2241,27 +2380,27 @@ msgstr ""
 "opción: nombre de una opción\n"
 "valor: valor para la opción"
 
-#: src/common/command.c:102
+#: src/common/command.c:107
 msgid "remove an alias"
 msgstr "eliminar un alias"
 
-#: src/common/command.c:103
+#: src/common/command.c:108
 msgid "alias_name"
 msgstr "alias"
 
-#: src/common/command.c:103
+#: src/common/command.c:108
 msgid "alias_name: name of alias to remove"
 msgstr "alias: nombre del alias a suprimir"
 
-#: src/common/command.c:105
+#: src/common/command.c:110
 msgid "manage windows"
 msgstr "gestión de ventanas"
 
-#: src/common/command.c:106
+#: src/common/command.c:111
 msgid "[list | splith | splitv | [merge [down | up | left | right | all]]]"
 msgstr "[list | splith | splitv | [merge [down | up | left | right | all]]]"
 
-#: src/common/command.c:108
+#: src/common/command.c:113
 msgid ""
 "list: list opened windows (no parameter implies this list)\n"
 "splith: split current window horizontally\n"
@@ -2274,29 +2413,29 @@ msgstr ""
 "splitv: dividir la ventana actual verticalmente\n"
 "merge: fusionar una ventana con otra"
 
-#: src/common/command.c:254
+#: src/common/command.c:259
 #, c-format
 msgid "%s alias or command \"%s\" already exists!\n"
 msgstr "%s ¡el alias o el comando \"%s\" ya existe!\n"
 
-#: src/common/command.c:264
+#: src/common/command.c:269
 #, c-format
 msgid "%s alias cannot run another alias!\n"
 msgstr "%s ¡el alias no puede ejecutar otro alias!\n"
 
-#: src/common/command.c:271
+#: src/common/command.c:276
 #, c-format
 msgid "%s target command \"%s\" does not exist!\n"
 msgstr "%s ¡el comando objetivo \"%s\" no existe!\n"
 
-#: src/common/command.c:479
+#: src/common/command.c:484
 #, c-format
 msgid "%s wrong argument count for %s command \"%s\" (expected: %d arg%s)\n"
 msgstr ""
 "%s número de argumentos incorrecto para el comando %s \"%s\" (esperado: %d "
 "parámetro%s)\n"
 
-#: src/common/command.c:491
+#: src/common/command.c:496
 #, c-format
 msgid ""
 "%s wrong argument count for %s command \"%s\" (expected: between %d and %d "
@@ -2305,19 +2444,19 @@ msgstr ""
 "%s número de argumentos incorrecto para el comando %s \"%s\" (esperado: "
 "entre %d y %d parámetro%s)\n"
 
-#: src/common/command.c:513 src/common/command.c:583
+#: src/common/command.c:518 src/common/command.c:588
 #, c-format
 msgid "%s command \"%s\" failed\n"
 msgstr "%s el comando \"%s\" ha fallado\n"
 
-#: src/common/command.c:541
+#: src/common/command.c:546
 #, c-format
 msgid "%s wrong argument count for IRC command \"%s\" (expected: %d arg%s)\n"
 msgstr ""
 "%s número de argumentos incorrecto para el comando IRC \"%s\" (esperado: %d "
 "parámetro%s)\n"
 
-#: src/common/command.c:553
+#: src/common/command.c:558
 #, c-format
 msgid ""
 "%s wrong argument count for IRC command \"%s\" (expected: between %d and %d "
@@ -2326,178 +2465,180 @@ msgstr ""
 "%s número de argumentos incorrecto para el comando IRC \"%s\" (esperado: "
 "entre %d y %d parámetro%s)\n"
 
-#: src/common/command.c:568
+#: src/common/command.c:573
 #, c-format
 msgid "%s command \"%s\" needs a server connection!\n"
 msgstr "%s ¡el comando \"%s\" requiere una conexión a servidor!\n"
 
-#: src/common/command.c:632
+#: src/common/command.c:637
 #, c-format
 msgid "%s unknown command \"%s\" (type /help for help)\n"
 msgstr "%s comando \"%s\" desconocido (escriba /help para la ayuda)\n"
 
-#: src/common/command.c:711
+#: src/common/command.c:716
 #, c-format
 msgid "%s cannot find nick for sending message\n"
 msgstr "%s no ha sido posible encontrar el usuario al que enviar el mensaje\n"
 
-#: src/common/command.c:720
+#: src/common/command.c:725
 msgid "This window is not a channel!\n"
 msgstr "¡Esta ventana no es un canal!\n"
 
-#: src/common/command.c:748 src/common/command.c:772 src/common/command.c:876
+#: src/common/command.c:753 src/common/command.c:777 src/common/command.c:881
 #, c-format
 msgid "%s missing arguments for \"%s\" command\n"
 msgstr "%s faltan argumentos para el comando \"%s\"\n"
 
-#: src/common/command.c:757
+#: src/common/command.c:762
 #, c-format
 msgid "Alias \"%s\" => \"%s\" created\n"
 msgstr "Alias \"%s\" => \"%s\" creado\n"
 
-#: src/common/command.c:763
+#: src/common/command.c:768
 #, c-format
 msgid "Failed to create alias \"%s\" => \"%s\" (not enough memory)\n"
 msgstr ""
 "No ha sido posible crear el alias \"%s\" => \"%s\" (no hay suficiente "
 "memoria)\n"
 
-#: src/common/command.c:783
+#: src/common/command.c:788
 msgid "List of aliases:\n"
 msgstr "Lista de alias:\n"
 
-#: src/common/command.c:795
+#: src/common/command.c:800
 msgid "No alias defined.\n"
 msgstr "Ningún alias definido.\n"
 
-#: src/common/command.c:818
+#: src/common/command.c:823
 msgid "Channel: "
 msgstr "Canal: "
 
-#: src/common/command.c:821 src/common/command.c:831
+#: src/common/command.c:826 src/common/command.c:836
 msgid " (server: "
 msgstr " (servidor: "
 
-#: src/common/command.c:828
+#: src/common/command.c:833
 msgid "Private with: "
 msgstr "Privado con: "
 
-#: src/common/command.c:856
+#: src/common/command.c:861
 msgid "Opened buffers:\n"
 msgstr "Búfers abiertos:\n"
 
-#: src/common/command.c:899 src/common/command.c:1026
+#: src/common/command.c:904 src/common/command.c:1031
 #, c-format
 msgid "%s incorrect buffer number\n"
 msgstr "%s número de búfer incorrecto\n"
 
-#: src/common/command.c:913
+#: src/common/command.c:918
 #, c-format
 msgid "%s can not close the single buffer\n"
 msgstr "%s no es posible cerrar el único búfer\n"
 
-#: src/common/command.c:923
+#: src/common/command.c:928
 #, c-format
 msgid "%s can not close server buffer while channels are opened\n"
 msgstr ""
 "%s no se puede cerrar el búfer de servidor mientras haya canales abiertos\n"
 
-#: src/common/command.c:962
+#: src/common/command.c:967
 msgid "Notify levels:  "
 msgstr "Niveles de notificación:  "
 
-#: src/common/command.c:989 src/common/command.c:999
+#: src/common/command.c:994 src/common/command.c:1004
 #, c-format
 msgid "%s incorrect notify level (must be between 0 and 3)\n"
 msgstr "%s nivel de notificación incorrecto (debe estar entre 0 y 3)\n"
 
-#: src/common/command.c:1017
+#: src/common/command.c:1022
 #, c-format
 msgid "%s buffer \"%s\" not found for \"%s\" command\n"
 msgstr "%s búfer \"%s\" no encontrado para el comando \"%s\"\n"
 
-#: src/common/command.c:1051
+#: src/common/command.c:1056
 #, c-format
 msgid "unknown parameter \"%s\" for \"%s\" command\n"
 msgstr "parámetro desconocido \"%s\" para el comando \"%s\"\n"
 
-#: src/common/command.c:1081
+#: src/common/command.c:1086
 #, c-format
 msgid "%s already connected to server \"%s\"!\n"
 msgstr "%s ya conectado al servidor \"%s\"!\n"
 
-#: src/common/command.c:1089
+#: src/common/command.c:1094
 #, c-format
 msgid "%s currently connecting to server \"%s\"!\n"
 msgstr "%s actualmente conectando al servidor \"%s\"!\n"
 
-#: src/common/command.c:1107 src/common/command.c:1182
+#: src/common/command.c:1112 src/common/command.c:1187
 #, c-format
 msgid "%s server not found\n"
 msgstr "%s servidor no encontrado\n"
 
-#: src/common/command.c:1137 src/common/command.c:1400
-#: src/common/command.c:2097 src/common/command.c:2109
+#: src/common/command.c:1142 src/common/command.c:1404
+#: src/common/command.c:1545 src/common/command.c:2236
+#: src/common/command.c:2248
 #, c-format
 msgid "%s unknown option for \"%s\" command\n"
 msgstr "%s opción desconocida para el comando \"%s\"\n"
 
-#: src/common/command.c:1166
+#: src/common/command.c:1171
 #, c-format
 msgid "%s not connected to server \"%s\"!\n"
 msgstr "%s ¡no conectado al servidor \"%s\"!\n"
 
-#: src/common/command.c:1174
+#: src/common/command.c:1179
 msgid "Auto-reconnection is cancelled\n"
 msgstr "La reconexión automática está anulada\n"
 
-#: src/common/command.c:1200 src/common/weechat.c:265
+#: src/common/command.c:1205 src/common/weechat.c:265
 #, c-format
 msgid "%s internal commands:\n"
 msgstr "Comandos internos %s :\n"
 
-#: src/common/command.c:1209 src/common/weechat.c:285
+#: src/common/command.c:1214 src/common/weechat.c:285
 #, c-format
 msgid "IRC commands:\n"
 msgstr "Comandos IRC :\n"
 
-#: src/common/command.c:1276
+#: src/common/command.c:1281
 #, c-format
 msgid "No help available, \"%s\" is an unknown command\n"
 msgstr "No hay ayuda disponible, el comando \"%s\" es desconocido\n"
 
-#: src/common/command.c:1301
+#: src/common/command.c:1305
 msgid "Registered Perl scripts:\n"
 msgstr "Perl scripts registrados:\n"
 
-#: src/common/command.c:1318 src/common/command.c:1340
-#: src/common/command.c:1362
+#: src/common/command.c:1322 src/common/command.c:1344
+#: src/common/command.c:1366 src/common/command.c:1463
+#: src/common/command.c:1485 src/common/command.c:1507
 msgid "  (none)\n"
 msgstr "  (ninguno)\n"
 
-#: src/common/command.c:1323
+#: src/common/command.c:1327
 msgid "Perl message handlers:\n"
 msgstr "Funciones Perl para mensajes:\n"
 
-#: src/common/command.c:1332
+#: src/common/command.c:1336
 #, c-format
 msgid "  IRC(%s) => Perl(%s)\n"
 msgstr "  IRC(%s) => Perl(%s)\n"
 
-#: src/common/command.c:1345
+#: src/common/command.c:1349
 msgid "Perl command handlers:\n"
 msgstr "Comandos Perl :\n"
 
-#: src/common/command.c:1354
+#: src/common/command.c:1358
 #, c-format
 msgid "  Command /%s => Perl(%s)\n"
 msgstr "  Comando /%s => Perl(%s)\n"
 
-#: src/common/command.c:1374
+#: src/common/command.c:1378
 msgid "Perl scripts unloaded\n"
 msgstr "Perl scripts descargados\n"
 
-#: src/common/command.c:1413
+#: src/common/command.c:1417
 msgid ""
 "WeeChat was build without Perl support.\n"
 "Please rebuild WeeChat with \"--enable-perl\" option for ./configure script\n"
@@ -2506,32 +2647,68 @@ msgstr ""
 "Por favor, recompile WeeChat con la opción \"--enable-perl\" para el "
 "script ./configure\n"
 
-#: src/common/command.c:1467
+#: src/common/command.c:1446
+msgid "Registered Python scripts:\n"
+msgstr "Python scripts registrados:\n"
+
+#: src/common/command.c:1468
+msgid "Python message handlers:\n"
+msgstr "Funciones Python para mensajes:\n"
+
+#: src/common/command.c:1477
+#, c-format
+msgid "  IRC(%s) => Python(%s)\n"
+msgstr "  IRC(%s) => Python(%s)\n"
+
+#: src/common/command.c:1490
+msgid "Python command handlers:\n"
+msgstr "Comandos Python :\n"
+
+#: src/common/command.c:1499
+#, c-format
+msgid "  Command /%s => Python(%s)\n"
+msgstr "  Comando /%s => Python(%s)\n"
+
+#: src/common/command.c:1519
+msgid "Python scripts unloaded\n"
+msgstr "Python scripts descargados\n"
+
+#: src/common/command.c:1558
+msgid ""
+"WeeChat was build without Python support.\n"
+"Please rebuild WeeChat with \"--enable-python\" option for ./configure "
+"script\n"
+msgstr ""
+"WeeChat ha sido compilado sin soporte para Python.\n"
+"Por favor, recompile WeeChat con la opción \"--enable-python\" para el "
+"script ./configure\n"
+
+#: src/common/command.c:1606
 msgid "No server.\n"
 msgstr "Ningún servidor.\n"
 
-#: src/common/command.c:1478
+#: src/common/command.c:1617
 #, c-format
 msgid "Server '%s' not found.\n"
 msgstr "Servidor '%s' no encontrado.\n"
 
-#: src/common/command.c:1490
+#: src/common/command.c:1629
 #, c-format
 msgid "%s missing servername for \"%s\" command\n"
 msgstr "%s falta el nombre de servidor para el comando \"%s\"\n"
 
-#: src/common/command.c:1498
+#: src/common/command.c:1637
 #, c-format
 msgid "%s too much arguments for \"%s\" command, ignoring arguments\n"
 msgstr ""
 "%s demasiados argumentos para el comando \"%s\", ignorando parámetros\n"
 
-#: src/common/command.c:1517
+#: src/common/command.c:1656
 #, c-format
 msgid "%s server \"%s\" not found for \"%s\" command\n"
 msgstr "%s servidor \"%s\" no encontrado para el comando \"%s\"\n"
 
-#: src/common/command.c:1525
+#: src/common/command.c:1664
 #, c-format
 msgid ""
 "%s you can not delete server \"%s\" because you are connected to. Try /"
@@ -2540,108 +2717,108 @@ msgstr ""
 "%s usted no puede eliminar el servidor \"%s\" ya que está usted conectado a "
 "él. Pruebe /disconnect %s antes.\n"
 
-#: src/common/command.c:1541 src/common/command.c:1682
+#: src/common/command.c:1680 src/common/command.c:1821
 msgid "Server"
 msgstr "Servidor"
 
-#: src/common/command.c:1544
+#: src/common/command.c:1683
 msgid "has been deleted\n"
 msgstr "ha sido eliminado\n"
 
-#: src/common/command.c:1559
+#: src/common/command.c:1698
 #, c-format
 msgid "%s missing parameters for \"%s\" command\n"
 msgstr "%s faltan parámetros para el comando \"%s\"\n"
 
-#: src/common/command.c:1569
+#: src/common/command.c:1708
 #, c-format
 msgid "%s server \"%s\" already exists, can't create it!\n"
 msgstr "%s el servidor \"%s\" ya existe, ¡no se puede crear!\n"
 
-#: src/common/command.c:1594 src/common/command.c:1622
-#: src/common/command.c:1635 src/common/command.c:1661
+#: src/common/command.c:1733 src/common/command.c:1761
+#: src/common/command.c:1774 src/common/command.c:1800
 #, c-format
 msgid "%s missing password for \"%s\" parameter\n"
 msgstr "%s falta contraseña para el comando \"%s\"\n"
 
-#: src/common/command.c:1607
+#: src/common/command.c:1746
 #, c-format
 msgid "%s missing nick(s) for \"%s\" parameter\n"
 msgstr "%s falta(n) usuario(s) para el parámetro \"%s\"\n"
 
-#: src/common/command.c:1648
+#: src/common/command.c:1787
 #, c-format
 msgid "%s missing command for \"%s\" parameter\n"
 msgstr "%s falta comando para el parámetro \"%s\"\n"
 
-#: src/common/command.c:1685
+#: src/common/command.c:1824
 msgid "created\n"
 msgstr "creado\n"
 
-#: src/common/command.c:1691
+#: src/common/command.c:1830
 #, c-format
 msgid "%s unable to create server\n"
 msgstr "%s no es posible crear el servidor\n"
 
-#: src/common/command.c:1746
+#: src/common/command.c:1885
 msgid "(unknown)"
 msgstr "(desconocido)"
 
-#: src/common/command.c:1769
+#: src/common/command.c:1908
 msgid "(password hidden) "
 msgstr "(contraseña oculta) "
 
-#: src/common/command.c:1833
+#: src/common/command.c:1972
 #, c-format
 msgid "%s server \"%s\" not found\n"
 msgstr "%s servidor \"%s\" no encontrado\n"
 
-#: src/common/command.c:1864 src/common/command.c:1910
+#: src/common/command.c:2003 src/common/command.c:2049
 #, c-format
 msgid "%s config option \"%s\" not found\n"
 msgstr "%s opción de configuración \"%s\" no encontrada\n"
 
-#: src/common/command.c:1869 src/common/command.c:1902
+#: src/common/command.c:2008 src/common/command.c:2041
 #, c-format
 msgid "%s incorrect value for option \"%s\"\n"
 msgstr "%s valor incorrecto para la opción \"%s\"\n"
 
-#: src/common/command.c:1885
+#: src/common/command.c:2024
 #, c-format
 msgid "%s option \"%s\" can not be changed while WeeChat is running\n"
 msgstr ""
 "%s la opción \"%s\" no puede ser modificada mientras WeeChat esté en "
 "ejecución\n"
 
-#: src/common/command.c:1983
+#: src/common/command.c:2122
 #, c-format
 msgid "No config option found with \"%s\"\n"
 msgstr "Ninguna opción de configuración encontrada con \"%s\"\n"
 
-#: src/common/command.c:1986
+#: src/common/command.c:2125
 msgid "No config option found\n"
 msgstr "Ninguna opción de configuración encontrada\n"
 
-#: src/common/command.c:1992
+#: src/common/command.c:2131
 #, c-format
 msgid "config option(s) found with \"%s\"\n"
 msgstr "opción/opciones de configuración encontrada(s) con \"%s\"\n"
 
-#: src/common/command.c:1995
+#: src/common/command.c:2134
 msgid "config option(s) found\n"
 msgstr "opción/opciones de configuración encontrada(s)\n"
 
-#: src/common/command.c:2015
+#: src/common/command.c:2154
 #, c-format
 msgid "%s alias or command \"%s\" not found\n"
 msgstr "%s alias o comando \"%s\" no encontrado\n"
 
-#: src/common/command.c:2025
+#: src/common/command.c:2164
 #, c-format
 msgid "Alias \"%s\" removed\n"
 msgstr "Alias \"%s\" eliminado\n"
 
-#: src/common/command.c:2045
+#: src/common/command.c:2184
 msgid "Opened windows:\n"
 msgstr "Ventanas abiertas:\n"
 
@@ -3735,6 +3912,3 @@ msgstr ""
 #: src/common/weeconfig.c:1564
 msgid "saving config to disk\n"
 msgstr "guardar configuración a disco\n"
-
-#~ msgid "nickname: new nickname for current IRC server"
-#~ msgstr "usuario: nuevo nombre de usuario para el servidor IRC actual"

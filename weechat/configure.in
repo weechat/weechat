@@ -68,6 +68,7 @@ AC_CHECK_FUNCS([gethostbyname gethostname getsockname gettimeofday inet_ntoa mem
 
 AH_VERBATIM([PLUGINS], [#undef PLUGINS])
 AH_VERBATIM([PLUGIN_PERL], [#undef PLUGIN_PERL])
+AH_VERBATIM([PLUGIN_PYTHON], [#undef PLUGIN_PYTHON])
 AH_VERBATIM([DEBUG], [#undef DEBUG])
 
 AC_ARG_ENABLE(ncurses, [  --disable-ncurses       Turn off ncurses interface (default=auto)],,enable_ncurses=yes)
@@ -75,11 +76,10 @@ AC_ARG_ENABLE(wxwidgets,[  --enable-wxwidgets      Turn on WxWidgets interface (
 AC_ARG_ENABLE(gtk,     [  --enable-gtk            Turn on Gtk+ interface (default=no)],enable_gtk=yes,enable_gtk=no)
 AC_ARG_ENABLE(qt,      [  --enable-qt             Turn on Qt interface (default=no)],enable_qt=yes,enable_qt=no)
 AC_ARG_ENABLE(perl,    [  --enable-perl           Turn on Perl plugins (default=no)],enable_perl=yes,enable_perl=no)
+AC_ARG_ENABLE(python,  [  --enable-python         Turn on Python plugins (default=no)],enable_python=yes,enable_python=no)
 AC_ARG_WITH(debug,     [  --with-debug            Debugging: 0=no debug, 1=debug compilation, 2=debug compilation + verbose msgs (default=0)],debug=$withval,debug=0)
 
 enable_plugins="no"
-enable_python="no"
-PYTHON_CFLAGS=
 enable_ruby="no"
 RUBY_CFLAGS=
 
@@ -88,7 +88,7 @@ AM_CONDITIONAL(GUI_WXWIDGETS, test "$enable_wxwidgets" = "yes")
 AM_CONDITIONAL(GUI_GTK,       test "$enable_gtk" = "yes")
 AM_CONDITIONAL(GUI_QT,        test "$enable_qt" = "yes")
 AM_CONDITIONAL(PLUGIN_PERL,   test "$enable_perl" = "yes")
-# AM_CONDITIONAL(PLUGIN_PYTHON, test "$enable_python" = "yes")
+AM_CONDITIONAL(PLUGIN_PYTHON, test "$enable_python" = "yes")
 # AM_CONDITIONAL(PLUGIN_RUBY,   test "$enable_ruby" = "yes")
 
 if test "x$enable_ncurses" = "xyes" ; then
@@ -141,6 +141,15 @@ if test "x$enable_perl" = "xyes" ; then
     AC_DEFINE(PLUGIN_PERL)
 fi
 
+if test "x$enable_python" = "xyes" ; then
+    enable_plugins="yes"
+    PYTHON_CFLAGS=`python -c "import distutils.sysconfig,string; print ' -I' + distutils.sysconfig.get_config_var('CONFINCLUDEPY')"`
+    PYTHON_LFLAGS=`python -c "import distutils.sysconfig,string; print string.join(distutils.sysconfig.get_config_vars('LINKFORSHARED', 'BLDLIBRARY', 'SHLIBS'))"`
+    PLUGINS_LIBS="$PLUGINS_LIBS ../../plugins/python/lib_weechat_python.a $PYTHON_LFLAGS"
+    AC_SUBST(PYTHON_CFLAGS)
+    AC_DEFINE(PLUGIN_PYTHON)
+fi
+
 if test "x$enable_plugins" = "xyes" ; then
     AC_DEFINE(PLUGINS)
 fi
@@ -171,6 +180,7 @@ AC_OUTPUT([Makefile
            src/irc/Makefile
            src/plugins/Makefile
            src/plugins/perl/Makefile
+           src/plugins/python/Makefile
            src/gui/Makefile
            src/gui/curses/Makefile
            src/gui/wxwidgets/Makefile

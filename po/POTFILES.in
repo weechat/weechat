@@ -9,6 +9,8 @@
 ./src/irc/irc.h
 ./src/plugins/perl/wee-perl.c
 ./src/plugins/perl/wee-perl.h
+./src/plugins/python/wee-python.c
+./src/plugins/python/wee-python.h
 ./src/plugins/plugins.c
 ./src/plugins/plugins.h
 ./src/gui/curses/gui-input.c

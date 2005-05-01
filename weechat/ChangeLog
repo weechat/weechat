@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-04-30
+ChangeLog - 2005-05-01
 
 
 Version 0.1.2 (under dev!):
+   * added Python plugin support
    * added nicklist scroll keys (Alt+{home/end/pgup/pgdn} or F11/F12)
    * added transfer rate for DCC files
    * added "-all" option for /nick command
