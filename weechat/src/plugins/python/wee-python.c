@@ -41,8 +41,7 @@ t_plugin_script *last_python_script = NULL;
 
 
 /*
- * weechat.register(nom, version, fonction, description): 
- *   startup function for all WeeChat Python scripts
+ * weechat.register: startup function for all WeeChat Python scripts
  */
 
 static PyObject *
@@ -58,7 +57,8 @@ wee_python_register (PyObject *self, PyObject *args)
     {
         irc_display_prefix (NULL, PREFIX_ERROR);
         gui_printf (NULL,
-                    _("Python error: wrong parameters for 'print_with_channel' Python function\n"));
+                    _("%s error: wrong parameters for \"%s\" function\n"),
+                    "Python", "print_with_channel");
         return NULL;
     } 
     
@@ -78,9 +78,9 @@ wee_python_register (PyObject *self, PyObject *args)
         /* error: another scripts already exists with this name! */
         irc_display_prefix (NULL, PREFIX_ERROR);
         gui_printf (NULL,
-                    _("Python error: unable to register Python script \"%s\" (another script "
-                      "already exists with this name)\n"),
-                    name);
+                    _("%s error: unable to register \"%s\" script (another script "
+                    "already exists with this name)\n"),
+                    "Python", name);
     }
     else
     {
@@ -102,15 +102,15 @@ wee_python_register (PyObject *self, PyObject *args)
                 python_scripts = new_python_script;
             last_python_script = new_python_script;
             
-            wee_log_printf (_("registered Python script: \"%s\", version %s (%s)\n"),
-                            name, version, description);
+            wee_log_printf (_("Registered %s script: \"%s\", version %s (%s)\n"),
+                            "Python", name, version, description);
         }
         else
         {
             irc_display_prefix (NULL, PREFIX_ERROR);
             gui_printf (NULL,
-                        _("%s unable to load Python script \"%s\" (not enough memory)\n"),
-                        WEECHAT_ERROR, name);
+                        _("%s error: unable to load script \"%s\" (not enough memory)\n"),
+                        "Python", name);
         }
     }
     
@@ -119,91 +119,45 @@ wee_python_register (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat.print(message): print message to current buffer
+ * weechat.print: print message into a buffer (current or specified one)
  */
 
 static PyObject *
 wee_python_print (PyObject *self, PyObject *args)
 {
-    char *message;
-    
-    /* make gcc happy */
-    (void) self;
-    
-    if (!PyArg_ParseTuple (args, "s", &message))
-    {
-        irc_display_prefix (NULL, PREFIX_ERROR);
-        gui_printf (NULL,
-                    _("Python error: wrong parameters for 'print' Python function\n"));
-        return NULL;
-    }
-    
-    irc_display_prefix (gui_current_window->buffer, PREFIX_PLUGIN);
-    gui_printf (gui_current_window->buffer, "%s\n", message);
-    
-    Py_INCREF (Py_None);
-    return Py_None;
-}
-
-/*
- * weechat.print_with_channel(message, channel, server=None): 
- *       print message to a specific channel/server 
- *         (server is optional) 
- */
-
-static PyObject *
-wee_python_print_with_channel (PyObject *self, PyObject *args)
-{
-    char *message, *channel, *server = NULL;
-    int ret = 0;
+    char *message, *channel_name, *server_name;
     t_gui_buffer *ptr_buffer;
-    t_irc_server *ptr_server;
-    t_irc_channel *ptr_channel;
     
     /* make gcc happy */
     (void) self;
     
-    if (!PyArg_ParseTuple (args, "ss|s", &message, &channel, &server))
+    message = NULL;
+    channel_name = NULL;
+    server_name = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s|ss", &message, &channel_name, &server_name))
     {
         irc_display_prefix (NULL, PREFIX_ERROR);
         gui_printf (NULL,
-                    _("Python error: wrong parameters for 'print_with_channel' Python function\n"));
+                    _("%s error: wrong parameters for \"%s\" function\n"),
+                    "Python", "print");
         return NULL;
     }
     
-    ptr_buffer = NULL;
-    for (ptr_server = irc_servers; ptr_server;
-         ptr_server = ptr_server->next_server)
-    {
-        if (!server || (strcasecmp (ptr_server->name, server)) == 0)
-        {
-            for (ptr_channel = ptr_server->channels; ptr_channel;
-                 ptr_channel = ptr_channel->next_channel)
-            {
-                if (strcasecmp (ptr_channel->name, channel) == 0)
-                {
-                    ptr_buffer = ptr_channel->buffer;
-                    break;
-                }
-            }
-        }
-        if (ptr_buffer)
-            break;
-    }
-  
-    /* buffer found => display message & return 1 ~= True */
+    ptr_buffer = plugin_find_buffer (server_name, channel_name);
     if (ptr_buffer)
     {
         irc_display_prefix (ptr_buffer, PREFIX_PLUGIN);
-        gui_printf (ptr_buffer, "%s", message);
-        ret = 1;
+        gui_printf (ptr_buffer, "%s\n", message);
+        return Py_BuildValue ("i", 1);
     }
     
-    return Py_BuildValue ("i", ret);
+    /* buffer not found */
+    return Py_BuildValue ("i", 0);
 }
 
 /*
- * weechat.print_infobar(delay, message): print message to infobar
+ * weechat.print_infobar: print message to infobar
  */
 
 static PyObject *
@@ -215,11 +169,15 @@ wee_python_print_infobar (PyObject *self, PyObject *args)
     /* make gcc happy */
     (void) self;
     
+    delay = 1;
+    message = NULL;
+    
     if (!PyArg_ParseTuple (args, "is", &delay, &message))
     {
         irc_display_prefix (NULL, PREFIX_ERROR);
         gui_printf (NULL,
-                    _("Python error: wrong parameters for 'print_infobar' Python function\n"));
+                    _("%s error: wrong parameters for \"%s\" function\n"),
+                    "Python", "print_infobar");
         return NULL;
     }
     
@@ -230,62 +188,44 @@ wee_python_print_infobar (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat.command(command, server=None): send command to server
+ * weechat.command: send command to server
  */
 
 static PyObject *
 wee_python_command (PyObject *self, PyObject *args)
 {
-    char *server = NULL, *command, *command2;
-    t_irc_server *ptr_server;
+    char *command, *channel_name, *server_name;
+    t_gui_buffer *ptr_buffer;
     
     /* make gcc happy */
     (void) self;
     
-    if (!PyArg_ParseTuple (args, "s|s", &command, &server))
+    command = NULL;
+    channel_name = NULL;
+    server_name = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s|ss", &command, &channel_name, &server_name))
     {
         irc_display_prefix (NULL, PREFIX_ERROR);
         gui_printf (NULL,
-                    _("Python error: wrong parameters for 'command' Python function\n"));
+                    _("%s error: wrong parameters for \"%s\" function\n"),
+                    "Python", "command");
         return NULL;
     }
     
-    if (server == NULL)
+    ptr_buffer = plugin_find_buffer (server_name, channel_name);
+    if (ptr_buffer)
     {
-        ptr_server = SERVER(gui_current_window->buffer);
-    }
-    else
-    {
-        for (ptr_server = irc_servers; ptr_server; ptr_server = ptr_server->next_server)
-        {
-            if (strcasecmp (ptr_server->name, server) == 0)
-                break;
-        }
-        if (!ptr_server)
-        {
-            irc_display_prefix (NULL, PREFIX_ERROR);
-            gui_printf (NULL,
-                        _("Python error: server not found for 'command' Python function\n"));
-        }
+        user_command (SERVER(ptr_buffer), ptr_buffer, command);
+        return Py_BuildValue ("i", 1);
     }
     
-    if (ptr_server)
-    {
-        command2 = (char *) malloc (strlen (command) + 8);
-        strcpy (command2, command);
-        if (!strstr (command2, "\r\n"))
-            strcat (command2, "\r\n");
-        server_sendf (ptr_server, command2);
-        free (command2);
-    }
-    
-    Py_INCREF (Py_None);
-    return Py_None;
+    /* buffer not found */
+    return Py_BuildValue ("i", 0);
 }
 
 /*
- * weechat.add_message_handler(message, function):
- *   add handler for messages
+ * weechat.add_message_handler: add handler for messages
  */
 
 static PyObject *
@@ -300,7 +240,8 @@ wee_python_add_message_handler (PyObject *self, PyObject *args)
     {
         irc_display_prefix (NULL, PREFIX_ERROR);
         gui_printf (NULL,
-                    _("Python error: wrong parameters for 'add_message_handler' Python function\n"));
+                    _("%s error: wrong parameters for \"%s\" function\n"),
+                    "Python", "add_message_handler");
         return NULL;
     }
     
@@ -312,8 +253,7 @@ wee_python_add_message_handler (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat.add_command_handler(name, function):
- *   define/redefines commands
+ * weechat.add_command_handler: define/redefines commands
  */
 
 static PyObject *
@@ -329,7 +269,8 @@ wee_python_add_command_handler(PyObject *self, PyObject *args)
     {
         irc_display_prefix (NULL, PREFIX_ERROR);
         gui_printf (NULL,
-                    _("Python error: wrong parameters for 'add_command_handler' Python function\n"));
+                    _("%s error: wrong parameters for \"%s\" function\n"),
+                    "Python", "add_command_handler");
         return NULL; 
     }
     
@@ -351,8 +292,7 @@ wee_python_add_command_handler(PyObject *self, PyObject *args)
 }
 
 /*
- * weechat.get_info(info, server=None):
- *   get various infos
+ * weechat.get_info: get various infos
  */
 
 static PyObject *
@@ -368,7 +308,8 @@ wee_python_get_info (PyObject *self, PyObject *args)
     {
         irc_display_prefix (NULL, PREFIX_ERROR);
         gui_printf (NULL,
-                    _("Python error: wrong parameters for 'get_info' Python function\n"));
+                    _("%s error: wrong parameters for \"%s\" function\n"),
+                    "Python", "get_info");
         return NULL; 
     }
     
@@ -387,7 +328,8 @@ wee_python_get_info (PyObject *self, PyObject *args)
         {
             irc_display_prefix (NULL, PREFIX_ERROR);
             gui_printf (NULL,
-                        _("Python error: server not found for 'get_info' Python function\n"));
+                        _("%s error: server not found for \"%s\" function\n"),
+                        "Python", "get_info");
         }
     }
     
@@ -431,20 +373,19 @@ wee_python_get_info (PyObject *self, PyObject *args)
 }
 
 /*
- * initialize subroutines
+ * Python subroutines
  */
 
 static
 PyMethodDef weechat_funcs[] = {
-    {"register", wee_python_register, METH_VARARGS, ""},
-    {"prnt", wee_python_print, METH_VARARGS, ""},
-    {"print_with_channel", wee_python_print_with_channel, METH_VARARGS, ""},
-    {"print_infobar", wee_python_print_infobar, METH_VARARGS, ""},
-    {"command", wee_python_command, METH_VARARGS, ""},
-    {"add_message_handler", wee_python_add_message_handler, METH_VARARGS, ""},
-    {"add_command_handler", wee_python_add_command_handler, METH_VARARGS, ""},
-    {"get_info", wee_python_get_info, METH_VARARGS, ""},
-    {NULL, NULL, 0, NULL}
+    { "register", wee_python_register, METH_VARARGS, "" },
+    { "prnt", wee_python_print, METH_VARARGS, "" },
+    { "print_infobar", wee_python_print_infobar, METH_VARARGS, "" },
+    { "command", wee_python_command, METH_VARARGS, "" },
+    { "add_message_handler", wee_python_add_message_handler, METH_VARARGS, "" },
+    { "add_command_handler", wee_python_add_command_handler, METH_VARARGS, "" },
+    { "get_info", wee_python_get_info, METH_VARARGS, "" },
+    { NULL, NULL, 0, NULL }
 };
 
 /*
@@ -459,13 +400,13 @@ wee_python_init ()
     if (Py_IsInitialized () == 0)
     {
         irc_display_prefix (NULL, PREFIX_PLUGIN);
-        gui_printf (NULL, _("Python error: error while launching Python interpreter\n"));
+        gui_printf (NULL, _("%s error: error while launching interpreter\n"),
+                    "Python");
     }
     else
     {
+        wee_log_printf (_("Loading %s module \"weechat\"\n"), "Python");
         Py_InitModule ("weechat", weechat_funcs);
-        irc_display_prefix (NULL, PREFIX_PLUGIN);
-        gui_printf (NULL, _("Loading Python module \"weechat\"\n"));
     }
 }
 
@@ -516,8 +457,8 @@ wee_python_exec (char *function, char *server, char *arguments)
     {
         irc_display_prefix (NULL, PREFIX_ERROR);
         gui_printf (NULL,
-                    _("Python error: unable to run function \"%s\"in Python script (not enough memory)\n"),
-                    function);
+                    _("%s error: unable to run function \"%s\" in script (not enough memory)\n"),
+                    "Python", function);
         return 0;
     }
     
@@ -544,8 +485,8 @@ wee_python_exec (char *function, char *server, char *arguments)
     {
         irc_display_prefix (NULL, PREFIX_ERROR);
         gui_printf (NULL,
-                    _("Python error: unable to run function \"%s\"in Python script (not enough memory)\n"),
-                    function);
+                    _("%s error: unable to run function \"%s\" in script (not enough memory)\n"),
+                    "Python", function);
         free (args);
         return 0;
     }
@@ -566,7 +507,8 @@ wee_python_exec (char *function, char *server, char *arguments)
         {
             irc_display_prefix (NULL, PREFIX_ERROR);
             gui_printf (NULL,
-                        _("Python error: error while running function \"%s\"\n"), function);
+                        _("%s error: error while running function \"%s\"\n"),
+                        "Python", function);
             return_code = 0;
         }
         free (runstring);
@@ -575,8 +517,8 @@ wee_python_exec (char *function, char *server, char *arguments)
     {
         irc_display_prefix (NULL, PREFIX_ERROR);
         gui_printf (NULL,
-                    _("Python error: unable to run function \"%s\"in Python script (not enough memory)\n"),
-                    function);
+                    _("%s error: unable to run function \"%s\" in script (not enough memory)\n"),
+                    "Python", function);
         return_code = 0;
     }
     
@@ -596,15 +538,16 @@ wee_python_load (char *filename)
     FILE *fp;
     
     /* execute Python script */
-    wee_log_printf (_("loading Python script \"%s\"\n"), filename);
+    wee_log_printf (_("Loading %s script \"%s\"\n"), "Python", filename);
     irc_display_prefix (NULL, PREFIX_PLUGIN);
-    gui_printf (NULL, _("Loading Python script \"%s\"\n"), filename);
+    gui_printf (NULL, _("Loading %s script \"%s\"\n"), "Python", filename);
     
     if ((fp = fopen (filename, "r")) == NULL)
     {
         irc_display_prefix (NULL, PREFIX_ERROR);
         gui_printf (NULL,
-                    _("Python error: error while opening file \"%s\"\n"), filename);
+                    _("%s error: error while opening file \"%s\"\n"),
+                    "Python", filename);
         return 1;
     }
     
@@ -612,7 +555,8 @@ wee_python_load (char *filename)
     {
         irc_display_prefix (NULL, PREFIX_ERROR);
         gui_printf (NULL,
-                    _("Python error: error while parsing file \"%s\"\n"), filename);
+                    _("%s error: error while parsing file \"%s\"\n"),
+                    "Python", filename);
         return 1;
     }
     
@@ -665,8 +609,8 @@ wee_python_unload (t_plugin_script *ptr_python_script)
 {
     if (ptr_python_script)
     {
-        wee_log_printf (_("unloading Python script \"%s\"\n"),
-                        ptr_python_script->name);
+        wee_log_printf (_("Unloading %s script \"%s\"\n"),
+                        "Python", ptr_python_script->name);
         
         /* call shutdown callback function */
         if (ptr_python_script->shutdown_func[0])
@@ -682,9 +626,12 @@ wee_python_unload (t_plugin_script *ptr_python_script)
 void
 wee_python_unload_all ()
 {
-    wee_log_printf (_("unloading all Python scripts...\n"));
+    wee_log_printf (_("Unloading all %s scripts...\n"), "Python");
     while (python_scripts)
         wee_python_unload (python_scripts);
+    
+    irc_display_prefix (NULL, PREFIX_PLUGIN);
+    gui_printf (NULL, _("%s scripts unloaded\n"), "Python");
 }
 
 /*
@@ -705,9 +652,12 @@ wee_python_end ()
                                   &last_plugin_cmd_handler,
                                   PLUGIN_TYPE_PYTHON);
 
+    /* free Python interpreter */
     Py_Finalize ();
-    if (Py_IsInitialized () != 0) {
-      irc_display_prefix (NULL, PREFIX_PLUGIN);
-      gui_printf (NULL, _("Python error: error while freeing Python interpreter\n"));
+    if (Py_IsInitialized () != 0)
+    {
+        irc_display_prefix (NULL, PREFIX_PLUGIN);
+        gui_printf (NULL, _("%s error: error while freeing interpreter\n"),
+                    "Python");
     }
 }

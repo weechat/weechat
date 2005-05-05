@@ -632,7 +632,7 @@ wee_dump (int crash)
     if (crash)
     {
         sigsegv = 1;
-        wee_log_printf ("very bad, WeeChat is crashing (SIGSEGV received)...\n");
+        wee_log_printf ("Very bad, WeeChat is crashing (SIGSEGV received)...\n");
     }
     
     wee_log_printf ("\n");

@@ -1389,7 +1389,7 @@ config_create_default ()
     }
     
     printf (_("%s: creating default config file...\n"), PACKAGE_NAME);
-    wee_log_printf (_("creating default config file\n"));
+    wee_log_printf (_("Creating default config file\n"));
     
     current_time = time (NULL);
     fprintf (file, _("#\n# %s configuration file, created by "
@@ -1561,7 +1561,7 @@ config_write (char *config_name)
         return -1;
     }
     
-    wee_log_printf (_("saving config to disk\n"));
+    wee_log_printf (_("Saving config to disk\n"));
     
     current_time = time (NULL);
     fprintf (file, _("#\n# %s configuration file, created by "

@@ -2600,6 +2600,12 @@ gui_printf_type_color (t_gui_buffer *buffer, int type, int color, char *message,
         }
     }
     
+    if (buffer->dcc)
+        buffer = gui_buffers;
+    
+    if (buffer->dcc)
+        return;
+    
     va_start (argptr, message);
     vsnprintf (buf, sizeof (buf) - 1, message, argptr);
     va_end (argptr);

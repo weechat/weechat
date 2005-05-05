@@ -45,9 +45,13 @@ t_plugin_script *last_perl_script = NULL;
 extern void boot_DynaLoader (pTHX_ CV* cv);
 
 
+/******************************* Old interface ********************************/
+
 /*
  * IRC::register: startup function for all WeeChat Perl scripts
  */
+
+/*** DEPRECATED function, kept for compatibility only, please don't update! ***/
 
 static XS (XS_IRC_register)
 {
@@ -78,12 +82,12 @@ static XS (XS_IRC_register)
     
     if (perl_script_found)
     {
-        /* error: another scripts already exists with this name! */
+        /* error: another script already exists with this name! */
         irc_display_prefix (NULL, PREFIX_ERROR);
         gui_printf (NULL,
-                    _("Perl error: unable to register Perl script \"%s\" (another script "
+                    _("%s error: unable to register \"%s\" script (another script "
                     "already exists with this name)\n"),
-                    name);
+                    "Perl", name);
     }
     else
     {
@@ -105,15 +109,15 @@ static XS (XS_IRC_register)
                 perl_scripts = new_perl_script;
             last_perl_script = new_perl_script;
             
-            wee_log_printf (_("registered Perl script: \"%s\", version %s (%s)\n"),
-                            name, version, description);
+            wee_log_printf (_("Registered %s script: \"%s\", version %s (%s)\n"),
+                            "Perl", name, version, description);
         }
         else
         {
             irc_display_prefix (NULL, PREFIX_ERROR);
             gui_printf (NULL,
-                        _("%s unable to load Perl script \"%s\" (not enough memory)\n"),
-                        WEECHAT_ERROR, name);
+                        _("%s error: unable to load script \"%s\" (not enough memory)\n"),
+                        "Perl", name);
         }
     }
     XST_mPV (0, VERSION);
@@ -123,6 +127,8 @@ static XS (XS_IRC_register)
 /*
  * IRC::print: print message to current buffer
  */
+
+/*** DEPRECATED function, kept for compatibility only, please don't update! ***/
 
 static XS (XS_IRC_print)
 {
@@ -147,6 +153,8 @@ static XS (XS_IRC_print)
  * IRC::print_with_channel: print message to a specific channel/server
  *                          (server is optional)
  */
+
+/*** DEPRECATED function, kept for compatibility only, please don't update! ***/
 
 static XS (XS_IRC_print_with_channel)
 {
@@ -207,6 +215,8 @@ static XS (XS_IRC_print_with_channel)
  * IRC::print_infobar: print message to infobar
  */
 
+/*** DEPRECATED function, kept for compatibility only, please don't update! ***/
+
 static XS (XS_IRC_print_infobar)
 {
     int integer;
@@ -221,7 +231,8 @@ static XS (XS_IRC_print_infobar)
     {
         irc_display_prefix (NULL, PREFIX_ERROR);
         gui_printf (NULL,
-                    _("Perl error: wrong parameters for IRC::print_infobar Perl function\n"));
+                    _("%s error: wrong parameters for \"%s\" function\n"),
+                    "Perl", "print_infobar");
     }
     
     XSRETURN_EMPTY;
@@ -230,6 +241,8 @@ static XS (XS_IRC_print_infobar)
 /*
  * IRC::command: send command to server
  */
+
+/*** DEPRECATED function, kept for compatibility only, please don't update! ***/
 
 static XS (XS_IRC_command)
 {
@@ -254,7 +267,8 @@ static XS (XS_IRC_command)
         {
             irc_display_prefix (NULL, PREFIX_ERROR);
             gui_printf (NULL,
-                        _("Perl error: server not found for IRC::command Perl function\n"));
+                        _("%s error: server not found for \"%s\" function\n"),
+                        "Perl", "command");
         }
     }
     else
@@ -280,6 +294,8 @@ static XS (XS_IRC_command)
  * IRC::add_message_handler: add handler for messages (privmsg, ...)
  */
 
+/*** DEPRECATED function, kept for compatibility only, please don't update! ***/
+
 static XS (XS_IRC_add_message_handler)
 {
     char *name, *function;
@@ -300,6 +316,8 @@ static XS (XS_IRC_add_message_handler)
 /*
  * IRC::add_command_handler: add command handler (define/redefine commands)
  */
+
+/*** DEPRECATED function, kept for compatibility only, please don't update! ***/
 
 static XS (XS_IRC_add_command_handler)
 {
@@ -332,6 +350,8 @@ static XS (XS_IRC_add_command_handler)
  * IRC::get_info: get various infos
  */
 
+/*** DEPRECATED function, kept for compatibility only, please don't update! ***/
+
 static XS (XS_IRC_get_info)
 {
     char *arg, *info = NULL, *server;
@@ -355,7 +375,8 @@ static XS (XS_IRC_get_info)
         {
             irc_display_prefix (NULL, PREFIX_ERROR);
             gui_printf (NULL,
-                        _("Perl error: server not found for IRC::get_info Perl function\n"));
+                        _("%s error: server not found for \"%s\" function\n"),
+                        "Perl", "get_info");
         }
     }
     else
@@ -406,6 +427,355 @@ static XS (XS_IRC_get_info)
     XSRETURN (1);
 }
 
+/******************************* New interface ********************************/
+
+/*
+ * weechat::register: startup function for all WeeChat Perl scripts
+ */
+
+static XS (XS_weechat_register)
+{
+    char *name, *version, *shutdown_func, *description;
+    int integer;
+    t_plugin_script *ptr_perl_script, *perl_script_found, *new_perl_script;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) items;
+    (void) cv;
+    
+    name = SvPV (ST (0), integer);
+    version = SvPV (ST (1), integer);
+    shutdown_func = SvPV (ST (2), integer);
+    description = SvPV (ST (3), integer);
+    
+    perl_script_found = NULL;
+    for (ptr_perl_script = perl_scripts; ptr_perl_script;
+         ptr_perl_script = ptr_perl_script->next_script)
+    {
+        if (strcasecmp (ptr_perl_script->name, name) == 0)
+        {
+            perl_script_found = ptr_perl_script;
+            break;
+        }
+    }
+    
+    if (perl_script_found)
+    {
+        /* error: another script already exists with this name! */
+        irc_display_prefix (NULL, PREFIX_ERROR);
+        gui_printf (NULL,
+                    _("%s error: unable to register \"%s\" script (another script "
+                    "already exists with this name)\n"),
+                    "Perl", name);
+    }
+    else
+    {
+        /* registering script */
+        new_perl_script = (t_plugin_script *)malloc (sizeof (t_plugin_script));
+        if (new_perl_script)
+        {
+            new_perl_script->name = strdup (name);
+            new_perl_script->version = strdup (version);
+            new_perl_script->shutdown_func = strdup (shutdown_func);
+            new_perl_script->description = strdup (description);
+            
+            /* add new script to list */
+            new_perl_script->prev_script = last_perl_script;
+            new_perl_script->next_script = NULL;
+            if (perl_scripts)
+                last_perl_script->next_script = new_perl_script;
+            else
+                perl_scripts = new_perl_script;
+            last_perl_script = new_perl_script;
+            
+            wee_log_printf (_("Registered %s script: \"%s\", version %s (%s)\n"),
+                            "Perl", name, version, description);
+        }
+        else
+        {
+            irc_display_prefix (NULL, PREFIX_ERROR);
+            gui_printf (NULL,
+                        _("%s error: unable to load script \"%s\" (not enough memory)\n"),
+                        "Perl", name);
+        }
+    }
+    XST_mPV (0, VERSION);
+    XSRETURN (1);
+}
+
+/*
+ * weechat::print: print message into a buffer (current or specified one)
+ */
+
+static XS (XS_weechat_print)
+{
+    int integer;
+    char *message, *channel_name, *server_name;
+    t_gui_buffer *ptr_buffer;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if ((items < 1) || (items > 3))
+    {
+        irc_display_prefix (NULL, PREFIX_ERROR);
+        gui_printf (NULL,
+                    _("%s error: wrong parameters for \"%s\" function\n"),
+                    "Perl", "print");
+        XSRETURN_NO;
+        return;
+    }
+    
+    channel_name = NULL;
+    server_name = NULL;
+    
+    if (items > 1)
+    {
+        channel_name = SvPV (ST (1), integer);
+        if (items > 2)
+            server_name = SvPV (ST (2), integer);
+    }
+    
+    ptr_buffer = plugin_find_buffer (server_name, channel_name);
+    if (ptr_buffer)
+    {
+        message = SvPV (ST (0), integer);
+        irc_display_prefix (ptr_buffer, PREFIX_PLUGIN);
+        gui_printf (ptr_buffer, "%s%s",
+                    message,
+                    ((strlen (message) == 0) || (message[strlen (message) - 1] != '\n')) ? "\n" : "");
+                    
+        XSRETURN_YES;
+    }
+    
+    /* buffer not found */
+    XSRETURN_NO;
+}
+
+/*
+ * weechat::print_infobar: print message to infobar
+ */
+
+static XS (XS_weechat_print_infobar)
+{
+    int integer;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if (items != 2)
+    {
+        irc_display_prefix (NULL, PREFIX_ERROR);
+        gui_printf (NULL,
+                    _("%s error: wrong parameters for \"%s\" function\n"),
+                    "Perl", "print_infobar");
+        XSRETURN_NO;
+    }
+    
+    gui_infobar_printf (SvIV (ST (0)), COLOR_WIN_INFOBAR, SvPV (ST (1), integer));
+    XSRETURN_YES;
+}
+
+/*
+ * weechat::command: send command to server
+ */
+
+static XS (XS_weechat_command)
+{
+    int integer;
+    char *command, *channel_name, *server_name;
+    t_gui_buffer *ptr_buffer;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if ((items < 1) || (items > 3))
+    {
+        irc_display_prefix (NULL, PREFIX_ERROR);
+        gui_printf (NULL,
+                    _("%s error: wrong parameters for \"%s\" function\n"),
+                    "Perl", "command");
+        XSRETURN_NO;
+        return;
+    }
+    
+    channel_name = NULL;
+    server_name = NULL;
+    
+    if (items > 1)
+    {
+        channel_name = SvPV (ST (1), integer);
+        if (items > 2)
+            server_name = SvPV (ST (2), integer);
+    }
+    
+    ptr_buffer = plugin_find_buffer (server_name, channel_name);
+    if (ptr_buffer)
+    {
+        command = SvPV (ST (0), integer);
+        user_command (SERVER(ptr_buffer), ptr_buffer, command);
+        XSRETURN_YES;
+    }
+    
+    /* buffer not found */
+    XSRETURN_NO;
+}
+
+/*
+ * weechat::add_message_handler: add handler for messages (privmsg, ...)
+ */
+
+static XS (XS_weechat_add_message_handler)
+{
+    char *name, *function;
+    int integer;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if (items != 2)
+    {
+        irc_display_prefix (NULL, PREFIX_ERROR);
+        gui_printf (NULL,
+                    _("%s error: wrong parameters for \"%s\" function\n"),
+                    "Perl", "add_message_handler");
+        XSRETURN_NO;
+    }
+    
+    name = SvPV (ST (0), integer);
+    function = SvPV (ST (1), integer);
+    plugin_handler_add (&plugin_msg_handlers, &last_plugin_msg_handler,
+                        PLUGIN_TYPE_PERL, name, function);
+    XSRETURN_YES;
+}
+
+/*
+ * weechat::add_command_handler: add command handler (define/redefine commands)
+ */
+
+static XS (XS_weechat_add_command_handler)
+{
+    char *name, *function;
+    int integer;
+    t_plugin_handler *ptr_plugin_handler;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if (items != 2)
+    {
+        irc_display_prefix (NULL, PREFIX_ERROR);
+        gui_printf (NULL,
+                    _("%s error: wrong parameters for \"%s\" function\n"),
+                    "Perl", "add_command_handler");
+        XSRETURN_NO;
+    }
+    
+    name = SvPV (ST (0), integer);
+    function = SvPV (ST (1), integer);
+    if (!weelist_search (index_commands, name))
+        weelist_add (&index_commands, &last_index_command, name);
+    ptr_plugin_handler = plugin_handler_search (plugin_cmd_handlers, name);
+    if (ptr_plugin_handler)
+    {
+        free (ptr_plugin_handler->function_name);
+        ptr_plugin_handler->function_name = strdup (function);
+    }
+    else
+        plugin_handler_add (&plugin_cmd_handlers, &last_plugin_cmd_handler,
+                            PLUGIN_TYPE_PERL, name, function);
+    
+    XSRETURN_YES;
+}
+
+/*
+ * weechat::get_info: get various infos
+ */
+
+static XS (XS_weechat_get_info)
+{
+    char *arg, *info = NULL, *server_name;
+    t_irc_server *ptr_server;
+    int integer;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if ((items < 1) || (items > 2))
+    {
+        irc_display_prefix (NULL, PREFIX_ERROR);
+        gui_printf (NULL,
+                    _("%s error: wrong parameters for \"%s\" function\n"),
+                    "Perl", "get_info");
+        XSRETURN_NO;
+    }
+    
+    if (items == 2)
+    {
+        server_name = SvPV (ST (1), integer);
+        ptr_server = server_search (server_name);
+    }
+    else
+        ptr_server = SERVER(gui_current_window->buffer);
+    
+    if (!ptr_server)
+    {
+        irc_display_prefix (NULL, PREFIX_ERROR);
+        gui_printf (NULL,
+                    _("%s error: server not found for \"%s\" function\n"),
+                    "Perl", "get_info");
+        XSRETURN_NO;
+    }
+    
+    arg = SvPV (ST (0), integer);
+    if (arg)
+    {
+        if ( (strcasecmp (arg, "0") == 0) || (strcasecmp (arg, "version") == 0) )
+        {
+            info = PACKAGE_STRING;
+        }
+        else if ( (strcasecmp (arg, "1") == 0) || (strcasecmp (arg, "nick") == 0) )
+        {
+            if (ptr_server->nick)
+                info = ptr_server->nick;
+        }
+        else if ( (strcasecmp (arg, "2") == 0) || (strcasecmp (arg, "channel") == 0) )
+        {
+            if (BUFFER_IS_CHANNEL (gui_current_window->buffer))
+                info = CHANNEL (gui_current_window->buffer)->name;
+        }
+        else if ( (strcasecmp (arg, "3") == 0) || (strcasecmp (arg, "server") == 0) )
+        {
+            if (ptr_server->name)
+                info = ptr_server->name;
+        }
+        else if ( (strcasecmp (arg, "4") == 0) || (strcasecmp (arg, "weechatdir") == 0) )
+        {
+            info = weechat_home;
+        }
+        else if ( (strcasecmp (arg, "5") == 0) || (strcasecmp (arg, "away") == 0) )
+        {
+            XST_mIV (0, SERVER(gui_current_window->buffer)->is_away);
+            XSRETURN (1);
+            return;
+        }
+        
+        if (info)
+            XST_mPV (0, info);
+        else
+            XST_mPV (0, "");
+    }
+    
+    XSRETURN (1);
+}
+
 /*
  * xs_init: initialize subroutines
  */
@@ -414,6 +784,8 @@ void
 xs_init (pTHX)
 {
     newXS ("DynaLoader::boot_DynaLoader", boot_DynaLoader, __FILE__);
+    
+    /* DEPRECATED & old interface (WeeChat <= 0.1.1), kept for compatibility */
     newXS ("IRC::register", XS_IRC_register, "IRC");
     newXS ("IRC::print", XS_IRC_print, "IRC");
     newXS ("IRC::print_with_channel", XS_IRC_print_with_channel, "IRC");
@@ -422,6 +794,15 @@ xs_init (pTHX)
     newXS ("IRC::add_message_handler", XS_IRC_add_message_handler, "IRC");
     newXS ("IRC::add_command_handler", XS_IRC_add_command_handler, "IRC");
     newXS ("IRC::get_info", XS_IRC_get_info, "IRC");
+    
+    /* new interface (WeeChat >= 0.1.2) */
+    newXS ("weechat::register", XS_weechat_register, "weechat");
+    newXS ("weechat::print", XS_weechat_print, "weechat");
+    newXS ("weechat::print_infobar", XS_weechat_print_infobar, "weechat");
+    newXS ("weechat::command", XS_weechat_command, "weechat");
+    newXS ("weechat::add_message_handler", XS_weechat_add_message_handler, "weechat");
+    newXS ("weechat::add_command_handler", XS_weechat_add_command_handler, "weechat");
+    newXS ("weechat::get_info", XS_weechat_get_info, "weechat");
 }
 
 /*
@@ -433,7 +814,7 @@ wee_perl_init ()
 {
     char *perl_args[] = { "", "-e", "0" };
     /* Following Perl code is extracted/modified from X-Chat IRC client */
-    /* X-Chat is (c) 1998-2002 Peter Zelezny */
+    /* X-Chat is (c) 1998-2005 Peter Zelezny */
     char *weechat_perl_func =
     {
         "sub wee_perl_load_file"
@@ -451,21 +832,22 @@ wee_perl_init ()
         "    my $content = wee_perl_load_file ($filename);"
         "    if ($content eq \"__WEECHAT_ERROR__\")"
         "    {"
-        "        IRC::print \"WeeChat Error: Perl script '$filename' not found.\\n\";"
+        "        weechat::print \"WeeChat Error: Perl script '$filename' not found.\\n\";"
         "        return 1;"
         "    }"
         "    eval $content;"
         "    if ($@)"
         "    {"
-        "        IRC::print \"WeeChat error: unable to load Perl script '$filename':\\n\";"
-        "        IRC::print \"$@\\n\";"
+        "        weechat::print \"WeeChat error: unable to load Perl script '$filename':\\n\";"
+        "        weechat::print \"$@\\n\";"
         "        return 2;"
         "    }"
         "    return 0;"
         "}"
-        "$SIG{__WARN__} = sub { IRC::print \"$_[0]\n\"; };"
+        "$SIG{__WARN__} = sub { weechat::print \"$_[0]\n\"; };"
     };
     
+    wee_log_printf (_("Loading %s module \"weechat\"\n"), "Perl");
     my_perl = perl_alloc ();
     perl_construct (my_perl);
     perl_parse (my_perl, xs_init, 3, perl_args, NULL);
@@ -524,7 +906,7 @@ wee_perl_exec (char *function, char *server, char *arguments)
     {
         irc_display_prefix (NULL, PREFIX_ERROR);
         gui_printf (NULL,
-                    _("Perl error: %s\n"),
+                    _("Perl error: %s"),
                     SvPV (sv, count));
         POPs;
     }
@@ -534,8 +916,8 @@ wee_perl_exec (char *function, char *server, char *arguments)
         {
             irc_display_prefix (NULL, PREFIX_ERROR);
             gui_printf (NULL,
-                        _("Perl error: too much values from \"%s\" (%d). Expected: 1.\n"),
-                        function, count);
+                        _("%s error: too much values from \"%s\" (%d). Expected: 1.\n"),
+                        "Perl", function, count);
         }
         else
             return_code = POPi;
@@ -556,9 +938,9 @@ int
 wee_perl_load (char *filename)
 {
     /* execute Perl script */
-    wee_log_printf (_("loading Perl script \"%s\"\n"), filename);
+    wee_log_printf (_("Loading %s script \"%s\"\n"), "Perl", filename);
     irc_display_prefix (NULL, PREFIX_PLUGIN);
-    gui_printf (NULL, _("Loading Perl script \"%s\"\n"), filename);
+    gui_printf (NULL, _("Loading %s script \"%s\"\n"), "Perl", filename);
     return wee_perl_exec ("wee_perl_load_eval_file", filename, "");
 }
 
@@ -607,8 +989,8 @@ wee_perl_unload (t_plugin_script *ptr_perl_script)
 {
     if (ptr_perl_script)
     {
-        wee_log_printf (_("unloading Perl script \"%s\"\n"),
-                        ptr_perl_script->name);
+        wee_log_printf (_("Unloading %s script \"%s\"\n"),
+                        "Perl", ptr_perl_script->name);
         
         /* call shutdown callback function */
         if (ptr_perl_script->shutdown_func[0])
@@ -624,9 +1006,12 @@ wee_perl_unload (t_plugin_script *ptr_perl_script)
 void
 wee_perl_unload_all ()
 {
-    wee_log_printf (_("unloading all Perl scripts...\n"));
+    wee_log_printf (_("Unloading all %s scripts...\n"), "Perl");
     while (perl_scripts)
         wee_perl_unload (perl_scripts);
+    
+    irc_display_prefix (NULL, PREFIX_PLUGIN);
+    gui_printf (NULL, _("%s scripts unloaded\n"), "Perl");
 }
 
 /*

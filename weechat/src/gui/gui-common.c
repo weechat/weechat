@@ -66,7 +66,7 @@ gui_window_new (int x, int y, int width, int height)
     t_gui_window *new_window;
     
     #ifdef DEBUG
-    wee_log_printf ("creating new window (x:%d, y:%d, width:%d, height:%d)\n",
+    wee_log_printf ("Creating new window (x:%d, y:%d, width:%d, height:%d)\n",
                     x, y, width, height);
     #endif
     if ((new_window = (t_gui_window *)(malloc (sizeof (t_gui_window)))))
@@ -138,7 +138,7 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int dcc,
     t_gui_buffer *new_buffer;
     
     #ifdef DEBUG
-    wee_log_printf ("creating new buffer\n");
+    wee_log_printf ("Creating new buffer\n");
     #endif
     
     /* use first buffer if no server was assigned to this buffer */
@@ -327,8 +327,7 @@ gui_infobar_printf (int time_displayed, int color, char *message, ...)
         gui_draw_buffer_infobar (gui_current_window->buffer, 1);
     }
     else
-        wee_log_printf (_("%s not enough memory for infobar message\n"),
-                        WEECHAT_ERROR);
+        wee_log_printf (_("Not enough memory for infobar message\n"));
     
     free (buf2);
 }
@@ -503,7 +502,7 @@ gui_new_line (t_gui_buffer *buffer)
     }
     else
     {
-        wee_log_printf (_("%s not enough memory for new line!\n"));
+        wee_log_printf (_("Not enough memory for new line\n"));
         return NULL;
     }
     
@@ -546,7 +545,7 @@ gui_new_message (t_gui_buffer *buffer)
     }
     else
     {
-        wee_log_printf (_("not enough memory!\n"));
+        wee_log_printf (_("Not enough memory for new message\n"));
         return NULL;
     }
     return new_message;

@@ -90,7 +90,7 @@ plugin_auto_load (int plugin_type, char *directory)
             lstat (entry->d_name, &statbuf);
             if (! S_ISDIR(statbuf.st_mode))
             {
-                wee_log_printf (_("auto-loading %s script: %s%s%s\n"),
+                wee_log_printf (_("Auto-loading %s script: %s%s%s\n"),
                                 plugin_name[plugin_type],
                                 dir_name, DIR_SEPARATOR, entry->d_name);
                 plugin_load (plugin_type, entry->d_name);
@@ -194,6 +194,7 @@ plugin_handler_add (t_plugin_handler **plugin_handlers,
         new_plugin_handler->plugin_type = plugin_type;
         new_plugin_handler->name = strdup (name);
         new_plugin_handler->function_name = strdup (function);
+        new_plugin_handler->running = 0;
         
         /* add new handler to list */
         new_plugin_handler->prev_handler = *last_plugin_handler;
@@ -301,11 +302,25 @@ plugin_event_msg (char *irc_command, char *arguments, char *server)
         {
             #ifdef PLUGIN_PERL
             if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PERL)
-                wee_perl_exec (ptr_plugin_handler->function_name, arguments, server);
+            {
+                if (ptr_plugin_handler->running == 0)
+                {
+                    ptr_plugin_handler->running = 1;
+                    wee_perl_exec (ptr_plugin_handler->function_name, arguments, server);
+                    ptr_plugin_handler->running = 0;
+                }
+            }
             #endif
             #ifdef PLUGIN_PYTHON
             if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PYTHON)
-                wee_python_exec (ptr_plugin_handler->function_name, arguments, server);
+            {
+                if (ptr_plugin_handler->running == 0)
+                {
+                    ptr_plugin_handler->running = 1;
+                    wee_python_exec (ptr_plugin_handler->function_name, arguments, server);
+                    ptr_plugin_handler->running = 0;
+                }
+            }
             #endif
         }
     }
@@ -334,11 +349,25 @@ plugin_exec_command (char *user_command, char *arguments, char *server)
         {
             #ifdef PLUGIN_PERL
             if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PERL)
-                wee_perl_exec (ptr_plugin_handler->function_name, arguments, server);
+            {
+                if (ptr_plugin_handler->running == 0)
+                {
+                    ptr_plugin_handler->running = 1;
+                    wee_perl_exec (ptr_plugin_handler->function_name, arguments, server);
+                    ptr_plugin_handler->running = 0;
+                }
+            }
             #endif
             #ifdef PLUGIN_PYTHON
             if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PYTHON)
-                wee_python_exec (ptr_plugin_handler->function_name, arguments, server);
+            {
+                if (ptr_plugin_handler->running == 0)
+                {
+                    ptr_plugin_handler->running = 1;
+                    wee_python_exec (ptr_plugin_handler->function_name, arguments, server);
+                    ptr_plugin_handler->running = 0;
+                }
+            }
             #endif
             
             /* command executed */
@@ -354,6 +383,49 @@ plugin_exec_command (char *user_command, char *arguments, char *server)
     
     /* no command executed */
     return 0;
+}
+
+/*
+ * plugin_find_buffer: find a buffer for text display or command execution
+ */
+
+t_gui_buffer *
+plugin_find_buffer (char *server, char *channel)
+{
+    t_irc_server *ptr_server;
+    t_irc_channel *ptr_channel;
+    t_gui_buffer *ptr_buffer;
+    
+    ptr_server = NULL;
+    ptr_channel = NULL;
+    ptr_buffer = NULL;
+    
+    if (server)
+    {
+        ptr_server = server_search (server);
+        if (!ptr_server)
+            return NULL;
+    }
+    else
+    {
+        ptr_server = SERVER(gui_current_window->buffer);
+        if (!ptr_server)
+            ptr_server = SERVER(gui_buffers);
+    }
+    
+    if (channel && ptr_server)
+    {
+        ptr_channel = channel_search (ptr_server, channel);
+        if (ptr_channel)
+            ptr_buffer = ptr_channel->buffer;
+    }
+    else
+        ptr_buffer = gui_current_window->buffer;
+    
+    if (!ptr_buffer)
+        return NULL;
+    
+    return (ptr_buffer->dcc) ? NULL : ptr_buffer;
 }
 
 /*

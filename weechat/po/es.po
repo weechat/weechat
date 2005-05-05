@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.2-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-05-01 20:47+0200\n"
-"PO-Revision-Date: 2005-05-01 20:48+0200\n"
+"POT-Creation-Date: 2005-05-05 17:58+0200\n"
+"PO-Revision-Date: 2005-05-05 17:02+0200\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -88,8 +88,8 @@ msgstr "%s: conectando a %s:%d...\n"
 
 #: src/irc/irc-server.c:846
 #, c-format
-msgid "connecting to server %s:%d...\n"
-msgstr "conectando al servidor %s:%d...\n"
+msgid "Connecting to server %s:%d...\n"
+msgstr "Conectando al servidor %s:%d...\n"
 
 #: src/irc/irc-server.c:857
 #, c-format
@@ -1300,8 +1300,8 @@ msgstr ""
 
 #: src/irc/irc-send.c:345 src/irc/irc-send.c:357 src/irc/irc-send.c:375
 #: src/irc/irc-send.c:996 src/irc/irc-send.c:1089 src/irc/irc-send.c:1609
-#: src/common/command.c:1129 src/common/command.c:1411
-#: src/common/command.c:1552
+#: src/common/command.c:1129 src/common/command.c:1413
+#: src/common/command.c:1556
 #, c-format
 msgid "%s wrong argument count for \"%s\" command\n"
 msgstr "%s número de argumentos incorrecto para el comando \"%s\"\n"
@@ -1554,7 +1554,7 @@ msgstr "%s no es posible analizar el comando \"%s\"\n"
 msgid "%s unknown DCC CHAT type received from "
 msgstr "%s tipo DCC CHAT desconocido recibido de "
 
-#: src/irc/irc-recv.c:1496 src/irc/irc-dcc.c:801
+#: src/irc/irc-recv.c:1496 src/irc/irc-dcc.c:799
 #, c-format
 msgid "Private %s> %s"
 msgstr "Privado %s> %s"
@@ -1782,31 +1782,31 @@ msgstr "Falló"
 msgid "Aborted"
 msgstr "Abortado"
 
-#: src/irc/irc-dcc.c:192
+#: src/irc/irc-dcc.c:190
 msgid "DCC: file "
 msgstr "DCC: fichero "
 
-#: src/irc/irc-dcc.c:197 src/irc/irc-dcc.c:456
+#: src/irc/irc-dcc.c:195 src/irc/irc-dcc.c:454
 msgid " (local filename: "
 msgstr " (nombre de fichero local: "
 
-#: src/irc/irc-dcc.c:203
+#: src/irc/irc-dcc.c:201
 msgid ") sent to "
 msgstr ") enviado a "
 
-#: src/irc/irc-dcc.c:205
+#: src/irc/irc-dcc.c:203
 msgid ") received from "
 msgstr ") recibido de "
 
-#: src/irc/irc-dcc.c:210
+#: src/irc/irc-dcc.c:208
 msgid ": ok!\n"
 msgstr ": ok!\n"
 
-#: src/irc/irc-dcc.c:222
+#: src/irc/irc-dcc.c:220
 msgid "DCC chat closed with "
 msgstr "DCC chat cerrada con "
 
-#: src/irc/irc-dcc.c:263
+#: src/irc/irc-dcc.c:261
 #, c-format
 msgid ""
 "%s can't associate DCC chat with private buffer (maybe private buffer has "
@@ -1815,74 +1815,74 @@ msgstr ""
 "%s no se puede asociar la conversación DCC con el búfer privado (quizá el "
 "búfer privado ya tiene DCC CHAT)\n"
 
-#: src/irc/irc-dcc.c:273
+#: src/irc/irc-dcc.c:271
 msgid "Connected to "
 msgstr "Conectado al "
 
-#: src/irc/irc-dcc.c:282
+#: src/irc/irc-dcc.c:280
 msgid "via DCC chat\n"
 msgstr "con charla DCC\n"
 
-#: src/irc/irc-dcc.c:393
+#: src/irc/irc-dcc.c:391
 #, c-format
 msgid "%s not enough memory for new DCC\n"
 msgstr "%s no hay memoria suficiente para un nuevo DCC\n"
 
-#: src/irc/irc-dcc.c:412
+#: src/irc/irc-dcc.c:410
 msgid "DCC chat"
 msgstr "Charla DCC"
 
-#: src/irc/irc-dcc.c:436
+#: src/irc/irc-dcc.c:434
 msgid "Incoming DCC file from "
 msgstr "Recibir fichero DCC de "
 
-#: src/irc/irc-dcc.c:447 src/irc/irc-dcc.c:460
+#: src/irc/irc-dcc.c:445 src/irc/irc-dcc.c:458
 msgid " bytes\n"
 msgstr " bytes\n"
 
-#: src/irc/irc-dcc.c:452
+#: src/irc/irc-dcc.c:450
 msgid "Sending DCC file to "
 msgstr "Enviar fichero DCC a "
 
-#: src/irc/irc-dcc.c:465
+#: src/irc/irc-dcc.c:463
 msgid "Incoming DCC chat request from "
 msgstr "Recibir DCC chat de "
 
-#: src/irc/irc-dcc.c:476
+#: src/irc/irc-dcc.c:474
 msgid "Sending DCC chat request to "
 msgstr "Enviar DCC chat a "
 
-#: src/irc/irc-dcc.c:540
+#: src/irc/irc-dcc.c:538
 #, c-format
 msgid "%s not enough memory for DCC SEND\n"
 msgstr "%s no hay memoria suficiente para el DCC SEND\n"
 
-#: src/irc/irc-dcc.c:562
+#: src/irc/irc-dcc.c:560
 #, c-format
 msgid "%s cannot access file \"%s\"\n"
 msgstr "%s no es posible acceder al fichero \"%s\"\n"
 
-#: src/irc/irc-dcc.c:583
+#: src/irc/irc-dcc.c:581
 #, c-format
 msgid "%s cannot create socket for DCC\n"
 msgstr "%s no es posible crear socket para el DCC\n"
 
-#: src/irc/irc-dcc.c:596
+#: src/irc/irc-dcc.c:594
 #, c-format
 msgid "%s cannot find port for DCC\n"
 msgstr "%s no es posible encontrar el puerto para el DCC\n"
 
-#: src/irc/irc-dcc.c:643
+#: src/irc/irc-dcc.c:641
 #, c-format
 msgid "%s cannot send DCC\n"
 msgstr "%s no es posible enviar el DCC\n"
 
-#: src/irc/irc-dcc.c:722
+#: src/irc/irc-dcc.c:720
 #, c-format
 msgid "%s error sending data to \"%s\" via DCC CHAT\n"
 msgstr "%s error enviando datos al \"%s\" con DCC CHAT\n"
 
-#: src/irc/irc-dcc.c:982
+#: src/irc/irc-dcc.c:980
 #, c-format
 msgid ""
 "%s DCC failed because blocksize is too big. Check value of \"dcc_blocksize\" "
@@ -1891,208 +1891,127 @@ msgstr ""
 "%s El DCC ha fallado porque el tamaño de bloque es demasiado grande. "
 "Compruebe el valor de la opción \"dcc_blocksize\", el máximo es %d.\n"
 
-#: src/irc/irc-dcc.c:1056
+#: src/irc/irc-dcc.c:1054
 #, c-format
-msgid "aborting active DCC: \"%s\" from %s\n"
-msgstr "abandonar el DCC activo: \"%s\" de %s\n"
+msgid "Aborting active DCC: \"%s\" from %s\n"
+msgstr "Abandonar el DCC activo: \"%s\" de %s\n"
 
-#: src/plugins/perl/wee-perl.c:84
-#, c-format
-msgid ""
-"Perl error: unable to register Perl script \"%s\" (another script already "
-"exists with this name)\n"
-msgstr ""
-"Error de Perl: no ha sido posible registrar el Perl script \"%s\" (ya existe "
-"otro script con ese nombre)\n"
-
-#: src/plugins/perl/wee-perl.c:108
-#, c-format
-msgid "registered Perl script: \"%s\", version %s (%s)\n"
-msgstr "Perl script registrado: \"%s\", versión %s (%s)\n"
-
-#: src/plugins/perl/wee-perl.c:115
-#, c-format
-msgid "%s unable to load Perl script \"%s\" (not enough memory)\n"
-msgstr ""
-"%s no ha sido posible cargar el Perl script \"%s\" (memoria insuficiente)\n"
-
-#: src/plugins/perl/wee-perl.c:224
-msgid "Perl error: wrong parameters for IRC::print_infobar Perl function\n"
-msgstr ""
-"Error de Perl: parámetros incorrectos para la función Perl IRC::"
-"print_infobar\n"
-
-#: src/plugins/perl/wee-perl.c:257
-msgid "Perl error: server not found for IRC::command Perl function\n"
-msgstr ""
-"Error de Perl: servidor no encontrado para la función Perl IRC::command\n"
-
-#: src/plugins/perl/wee-perl.c:358
-msgid "Perl error: server not found for IRC::get_info Perl function\n"
-msgstr ""
-"Error de Perl: servidor no encontrado para la función Perl IRC::get_info\n"
-
-#: src/plugins/perl/wee-perl.c:527
-#, c-format
-msgid "Perl error: %s\n"
-msgstr "Error de Perl: %s\n"
-
-#: src/plugins/perl/wee-perl.c:537
-#, c-format
-msgid "Perl error: too much values from \"%s\" (%d). Expected: 1.\n"
-msgstr "Error de Perl: demasiados valores desde \"%s\" (%d). Esperado: 1.\n"
-
-#: src/plugins/perl/wee-perl.c:559
-#, c-format
-msgid "loading Perl script \"%s\"\n"
-msgstr "carga del Perl script \"%s\"\n"
-
-#: src/plugins/perl/wee-perl.c:561
-#, c-format
-msgid "Loading Perl script \"%s\"\n"
-msgstr "Cargando Perl script \"%s\"\n"
-
-#: src/plugins/perl/wee-perl.c:610
-#, c-format
-msgid "unloading Perl script \"%s\"\n"
-msgstr "descarga del Perl script \"%s\"\n"
-
-#: src/plugins/perl/wee-perl.c:627
-msgid "unloading all Perl scripts...\n"
-msgstr "descargando todos los Perl scripts...\n"
-
-#: src/plugins/python/wee-python.c:61 src/plugins/python/wee-python.c:170
-msgid ""
-"Python error: wrong parameters for 'print_with_channel' Python function\n"
-msgstr ""
-"Error de Python: parámetros incorrectos para la función Python "
-"'print_with_channel'\n"
-
+#: src/plugins/perl/wee-perl.c:88 src/plugins/perl/wee-perl.c:468
 #: src/plugins/python/wee-python.c:81
 #, c-format
 msgid ""
-"Python error: unable to register Python script \"%s\" (another script "
-"already exists with this name)\n"
+"%s error: unable to register \"%s\" script (another script already exists "
+"with this name)\n"
 msgstr ""
-"Error de Python: no ha sido posible registrar el Python script \"%s\" (ya "
-"existe otro script con ese nombre)\n"
+"Error de %s: no ha sido posible registrar el script \"%s\" (ya existe otro "
+"script con ese nombre)\n"
 
+#: src/plugins/perl/wee-perl.c:112 src/plugins/perl/wee-perl.c:492
 #: src/plugins/python/wee-python.c:105
 #, c-format
-msgid "registered Python script: \"%s\", version %s (%s)\n"
-msgstr "Python script registrado: \"%s\", versión %s (%s)\n"
+msgid "Registered %s script: \"%s\", version %s (%s)\n"
+msgstr "%s script registrado: \"%s\", versión %s (%s)\n"
 
+#: src/plugins/perl/wee-perl.c:119 src/plugins/perl/wee-perl.c:499
 #: src/plugins/python/wee-python.c:112
 #, c-format
-msgid "%s unable to load Python script \"%s\" (not enough memory)\n"
+msgid "%s error: unable to load script \"%s\" (not enough memory)\n"
 msgstr ""
-"%s no ha sido posible cargar el Python script \"%s\" (memoria insuficiente)\n"
+"Error de %s: no ha sido posible cargar el script \"%s\" (memoria "
+"insuficiente)\n"
 
-#: src/plugins/python/wee-python.c:137
-msgid "Python error: wrong parameters for 'print' Python function\n"
-msgstr ""
-"Error de Python: parámetros incorrectos para la función Python 'print'\n"
-
-#: src/plugins/python/wee-python.c:222
-msgid "Python error: wrong parameters for 'print_infobar' Python function\n"
-msgstr ""
-"Error de Python: parámetros incorrectos para la función Python "
-"'print_infobar'\n"
-
-#: src/plugins/python/wee-python.c:249
-msgid "Python error: wrong parameters for 'command' Python function\n"
-msgstr ""
-"Error de Python: parámetros incorrectos para la función Python 'command'\n"
-
-#: src/plugins/python/wee-python.c:268
-msgid "Python error: server not found for 'command' Python function\n"
-msgstr ""
-"Error de Python: servidor no encontrado para la función Python 'command'\n"
-
-#: src/plugins/python/wee-python.c:303
-msgid ""
-"Python error: wrong parameters for 'add_message_handler' Python function\n"
-msgstr ""
-"Error de Python: parámetros incorrectos para la función Python "
-"'add_message_handler'\n"
-
-#: src/plugins/python/wee-python.c:332
-msgid ""
-"Python error: wrong parameters for 'add_command_handler' Python function\n"
-msgstr ""
-"Error de Python: parámetros incorrectos para la función Python "
-"'add_command_handler'\n"
-
-#: src/plugins/python/wee-python.c:371
-msgid "Python error: wrong parameters for 'get_info' Python function\n"
-msgstr ""
-"Error de Python: parámetros incorrectos para la función Python 'get_info'\n"
-
-#: src/plugins/python/wee-python.c:390
-msgid "Python error: server not found for 'get_info' Python function\n"
-msgstr ""
-"Error de Python: servidor no encontrado para la función Python 'get_info'\n"
-
-#: src/plugins/python/wee-python.c:462
-msgid "Python error: error while launching Python interpreter\n"
-msgstr ""
-
-#: src/plugins/python/wee-python.c:468
-msgid "Loading Python module \"weechat\"\n"
-msgstr ""
-
-#: src/plugins/python/wee-python.c:519 src/plugins/python/wee-python.c:547
-#: src/plugins/python/wee-python.c:578
+#: src/plugins/perl/wee-perl.c:234 src/plugins/perl/wee-perl.c:525
+#: src/plugins/perl/wee-perl.c:573 src/plugins/perl/wee-perl.c:600
+#: src/plugins/perl/wee-perl.c:645 src/plugins/perl/wee-perl.c:675
+#: src/plugins/perl/wee-perl.c:715 src/plugins/python/wee-python.c:60
+#: src/plugins/python/wee-python.c:142 src/plugins/python/wee-python.c:179
+#: src/plugins/python/wee-python.c:211 src/plugins/python/wee-python.c:243
+#: src/plugins/python/wee-python.c:272 src/plugins/python/wee-python.c:311
 #, c-format
-msgid ""
-"Python error: unable to run function \"%s\"in Python script (not enough "
-"memory)\n"
+msgid "%s error: wrong parameters for \"%s\" function\n"
+msgstr "Error de %s: parámetros incorrectos para la función \"%s\"\n"
+
+#: src/plugins/perl/wee-perl.c:270 src/plugins/perl/wee-perl.c:378
+#: src/plugins/perl/wee-perl.c:732 src/plugins/python/wee-python.c:331
+#, c-format
+msgid "%s error: server not found for \"%s\" function\n"
+msgstr "Error de %s: servidor no encontrado para el comando \"%s\"\n"
+
+#: src/plugins/perl/wee-perl.c:850 src/plugins/python/wee-python.c:408
+#, c-format
+msgid "Loading %s module \"weechat\"\n"
 msgstr ""
 
-#: src/plugins/python/wee-python.c:569
+#: src/plugins/perl/wee-perl.c:909
 #, c-format
-msgid "Python error: error while running function \"%s\"\n"
+msgid "Perl error: %s"
+msgstr "Error de Perl: %s"
+
+#: src/plugins/perl/wee-perl.c:919
+#, c-format
+msgid "%s error: too much values from \"%s\" (%d). Expected: 1.\n"
+msgstr "Error de %s: demasiados valores desde \"%s\" (%d). Esperado: 1.\n"
+
+#: src/plugins/perl/wee-perl.c:941 src/plugins/perl/wee-perl.c:943
+#: src/plugins/python/wee-python.c:541 src/plugins/python/wee-python.c:543
+#, c-format
+msgid "Loading %s script \"%s\"\n"
+msgstr "Cargando %s script \"%s\"\n"
+
+#: src/plugins/perl/wee-perl.c:992 src/plugins/python/wee-python.c:612
+#, c-format
+msgid "Unloading %s script \"%s\"\n"
+msgstr "Descarga del %s script \"%s\"\n"
+
+#: src/plugins/perl/wee-perl.c:1009 src/plugins/python/wee-python.c:629
+#, c-format
+msgid "Unloading all %s scripts...\n"
+msgstr "Descargando todos los %s scripts...\n"
+
+#: src/plugins/perl/wee-perl.c:1014 src/plugins/python/wee-python.c:634
+#, c-format
+msgid "%s scripts unloaded\n"
+msgstr "%s scripts descargados\n"
+
+#: src/plugins/python/wee-python.c:403
+#, c-format
+msgid "%s error: error while launching interpreter\n"
 msgstr ""
 
-#: src/plugins/python/wee-python.c:599
+#: src/plugins/python/wee-python.c:460 src/plugins/python/wee-python.c:488
+#: src/plugins/python/wee-python.c:520
 #, c-format
-msgid "loading Python script \"%s\"\n"
-msgstr "carga del Python script \"%s\"\n"
+msgid "%s error: unable to run function \"%s\" in script (not enough memory)\n"
+msgstr ""
+"Error de %s: no ha sido posible cargar el script \"%s\" (memoria "
+"insuficiente)\n"
 
-#: src/plugins/python/wee-python.c:601
+#: src/plugins/python/wee-python.c:510
 #, c-format
-msgid "Loading Python script \"%s\"\n"
-msgstr "Cargando Python script \"%s\"\n"
-
-#: src/plugins/python/wee-python.c:607
-#, c-format
-msgid "Python error: error while opening file \"%s\"\n"
+msgid "%s error: error while running function \"%s\"\n"
 msgstr ""
 
-#: src/plugins/python/wee-python.c:615
+#: src/plugins/python/wee-python.c:549
 #, c-format
-msgid "Python error: error while parsing file \"%s\"\n"
+msgid "%s error: error while opening file \"%s\"\n"
 msgstr ""
 
-#: src/plugins/python/wee-python.c:668
+#: src/plugins/python/wee-python.c:558
 #, c-format
-msgid "unloading Python script \"%s\"\n"
-msgstr "descarga del Python script \"%s\"\n"
+msgid "%s error: error while parsing file \"%s\"\n"
+msgstr ""
 
-#: src/plugins/python/wee-python.c:685
-msgid "unloading all Python scripts...\n"
-msgstr "descargando todos los Python scripts...\n"
-
-#: src/plugins/python/wee-python.c:711
-msgid "Python error: error while freeing Python interpreter\n"
+#: src/plugins/python/wee-python.c:660
+#, c-format
+msgid "%s error: error while freeing interpreter\n"
 msgstr ""
 
 #: src/plugins/plugins.c:93
 #, c-format
-msgid "auto-loading %s script: %s%s%s\n"
-msgstr "carga automática del script %s : %s%s%s\n"
+msgid "Auto-loading %s script: %s%s%s\n"
+msgstr "Carga automática del script %s : %s%s%s\n"
 
-#: src/plugins/plugins.c:211
+#: src/plugins/plugins.c:212
 #, c-format
 msgid "%s unable to add handler for \"%s\" message (not enough memory)\n"
 msgstr ""
@@ -2167,19 +2086,16 @@ msgid "server"
 msgstr "servidor"
 
 #: src/gui/gui-common.c:330
-#, c-format
-msgid "%s not enough memory for infobar message\n"
-msgstr ""
-"%s no hay suficiente memoria para el mensaje de la barra de información\n"
+msgid "Not enough memory for infobar message\n"
+msgstr "No hay suficiente memoria para el mensaje de la barra de información\n"
 
-#: src/gui/gui-common.c:506
-#, c-format
-msgid "%s not enough memory for new line!\n"
-msgstr "%s ¡no hay suficiente memoria para una nueva línea!\n"
+#: src/gui/gui-common.c:505
+msgid "Not enough memory for new line\n"
+msgstr "No hay suficiente memoria para una nueva línea\n"
 
-#: src/gui/gui-common.c:549
-msgid "not enough memory!\n"
-msgstr "¡no hay suficiente memoria!\n"
+#: src/gui/gui-common.c:548
+msgid "Not enough memory for new message\n"
+msgstr "No hay suficiente memoria para el mensaje de la barra de información\n"
 
 #: src/common/command.c:42
 msgid "create an alias for a command"
@@ -2292,8 +2208,8 @@ msgid "list/load/unload Perl scripts"
 msgstr "lista/carga/descarga de los Perl scripts"
 
 #: src/common/command.c:76 src/common/command.c:81
-msgid "[load filename] | [autoload] | [unload]"
-msgstr "[load fichero] | [autoload] | [unload]"
+msgid "[load filename] | [autoload] | [reload] | [unload]"
+msgstr "[load fichero] | [autoload] | [reload] | [unload]"
 
 #: src/common/command.c:77
 msgid ""
@@ -2575,9 +2491,9 @@ msgstr "%s actualmente conectando al servidor \"%s\"!\n"
 msgid "%s server not found\n"
 msgstr "%s servidor no encontrado\n"
 
-#: src/common/command.c:1142 src/common/command.c:1404
-#: src/common/command.c:1545 src/common/command.c:2236
-#: src/common/command.c:2248
+#: src/common/command.c:1142 src/common/command.c:1406
+#: src/common/command.c:1549 src/common/command.c:2240
+#: src/common/command.c:2252
 #, c-format
 msgid "%s unknown option for \"%s\" command\n"
 msgstr "%s opción desconocida para el comando \"%s\"\n"
@@ -2606,39 +2522,38 @@ msgstr "Comandos IRC :\n"
 msgid "No help available, \"%s\" is an unknown command\n"
 msgstr "No hay ayuda disponible, el comando \"%s\" es desconocido\n"
 
-#: src/common/command.c:1305
-msgid "Registered Perl scripts:\n"
-msgstr "Perl scripts registrados:\n"
+#: src/common/command.c:1305 src/common/command.c:1448
+#, c-format
+msgid "Registered %s scripts:\n"
+msgstr "%s scripts registrados:\n"
 
-#: src/common/command.c:1322 src/common/command.c:1344
-#: src/common/command.c:1366 src/common/command.c:1463
-#: src/common/command.c:1485 src/common/command.c:1507
+#: src/common/command.c:1322 src/common/command.c:1345
+#: src/common/command.c:1368 src/common/command.c:1465
+#: src/common/command.c:1488 src/common/command.c:1511
 msgid "  (none)\n"
 msgstr "  (ninguno)\n"
 
-#: src/common/command.c:1327
-msgid "Perl message handlers:\n"
-msgstr "Funciones Perl para mensajes:\n"
-
-#: src/common/command.c:1336
+#: src/common/command.c:1327 src/common/command.c:1470
 #, c-format
-msgid "  IRC(%s) => Perl(%s)\n"
-msgstr "  IRC(%s) => Perl(%s)\n"
+msgid "%s message handlers:\n"
+msgstr "Funciones %s para mensajes:\n"
 
-#: src/common/command.c:1349
-msgid "Perl command handlers:\n"
-msgstr "Comandos Perl :\n"
-
-#: src/common/command.c:1358
+#: src/common/command.c:1336 src/common/command.c:1479
 #, c-format
-msgid "  Command /%s => Perl(%s)\n"
-msgstr "  Comando /%s => Perl(%s)\n"
+msgid "  IRC(%s) => %s(%s)\n"
+msgstr "  IRC(%s) => %s(%s)\n"
 
-#: src/common/command.c:1378
-msgid "Perl scripts unloaded\n"
-msgstr "Perl scripts descargados\n"
+#: src/common/command.c:1350 src/common/command.c:1493
+#, c-format
+msgid "%s command handlers:\n"
+msgstr "Comandos %s :\n"
 
-#: src/common/command.c:1417
+#: src/common/command.c:1359 src/common/command.c:1502
+#, c-format
+msgid "  Command /%s => %s(%s)\n"
+msgstr "  Comando /%s => %s(%s)\n"
+
+#: src/common/command.c:1419
 msgid ""
 "WeeChat was build without Perl support.\n"
 "Please rebuild WeeChat with \"--enable-perl\" option for ./configure script\n"
@@ -2647,33 +2562,7 @@ msgstr ""
 "Por favor, recompile WeeChat con la opción \"--enable-perl\" para el "
 "script ./configure\n"
 
-#: src/common/command.c:1446
-msgid "Registered Python scripts:\n"
-msgstr "Python scripts registrados:\n"
-
-#: src/common/command.c:1468
-msgid "Python message handlers:\n"
-msgstr "Funciones Python para mensajes:\n"
-
-#: src/common/command.c:1477
-#, c-format
-msgid "  IRC(%s) => Python(%s)\n"
-msgstr "  IRC(%s) => Python(%s)\n"
-
-#: src/common/command.c:1490
-msgid "Python command handlers:\n"
-msgstr "Comandos Python :\n"
-
-#: src/common/command.c:1499
-#, c-format
-msgid "  Command /%s => Python(%s)\n"
-msgstr "  Comando /%s => Python(%s)\n"
-
-#: src/common/command.c:1519
-msgid "Python scripts unloaded\n"
-msgstr "Python scripts descargados\n"
-
-#: src/common/command.c:1558
+#: src/common/command.c:1562
 msgid ""
 "WeeChat was build without Python support.\n"
 "Please rebuild WeeChat with \"--enable-python\" option for ./configure "
@@ -2683,32 +2572,32 @@ msgstr ""
 "Por favor, recompile WeeChat con la opción \"--enable-python\" para el "
 "script ./configure\n"
 
-#: src/common/command.c:1606
+#: src/common/command.c:1610
 msgid "No server.\n"
 msgstr "Ningún servidor.\n"
 
-#: src/common/command.c:1617
+#: src/common/command.c:1621
 #, c-format
 msgid "Server '%s' not found.\n"
 msgstr "Servidor '%s' no encontrado.\n"
 
-#: src/common/command.c:1629
+#: src/common/command.c:1633
 #, c-format
 msgid "%s missing servername for \"%s\" command\n"
 msgstr "%s falta el nombre de servidor para el comando \"%s\"\n"
 
-#: src/common/command.c:1637
+#: src/common/command.c:1641
 #, c-format
 msgid "%s too much arguments for \"%s\" command, ignoring arguments\n"
 msgstr ""
 "%s demasiados argumentos para el comando \"%s\", ignorando parámetros\n"
 
-#: src/common/command.c:1656
+#: src/common/command.c:1660
 #, c-format
 msgid "%s server \"%s\" not found for \"%s\" command\n"
 msgstr "%s servidor \"%s\" no encontrado para el comando \"%s\"\n"
 
-#: src/common/command.c:1664
+#: src/common/command.c:1668
 #, c-format
 msgid ""
 "%s you can not delete server \"%s\" because you are connected to. Try /"
@@ -2717,108 +2606,108 @@ msgstr ""
 "%s usted no puede eliminar el servidor \"%s\" ya que está usted conectado a "
 "él. Pruebe /disconnect %s antes.\n"
 
-#: src/common/command.c:1680 src/common/command.c:1821
+#: src/common/command.c:1684 src/common/command.c:1825
 msgid "Server"
 msgstr "Servidor"
 
-#: src/common/command.c:1683
+#: src/common/command.c:1687
 msgid "has been deleted\n"
 msgstr "ha sido eliminado\n"
 
-#: src/common/command.c:1698
+#: src/common/command.c:1702
 #, c-format
 msgid "%s missing parameters for \"%s\" command\n"
 msgstr "%s faltan parámetros para el comando \"%s\"\n"
 
-#: src/common/command.c:1708
+#: src/common/command.c:1712
 #, c-format
 msgid "%s server \"%s\" already exists, can't create it!\n"
 msgstr "%s el servidor \"%s\" ya existe, ¡no se puede crear!\n"
 
-#: src/common/command.c:1733 src/common/command.c:1761
-#: src/common/command.c:1774 src/common/command.c:1800
+#: src/common/command.c:1737 src/common/command.c:1765
+#: src/common/command.c:1778 src/common/command.c:1804
 #, c-format
 msgid "%s missing password for \"%s\" parameter\n"
 msgstr "%s falta contraseña para el comando \"%s\"\n"
 
-#: src/common/command.c:1746
+#: src/common/command.c:1750
 #, c-format
 msgid "%s missing nick(s) for \"%s\" parameter\n"
 msgstr "%s falta(n) usuario(s) para el parámetro \"%s\"\n"
 
-#: src/common/command.c:1787
+#: src/common/command.c:1791
 #, c-format
 msgid "%s missing command for \"%s\" parameter\n"
 msgstr "%s falta comando para el parámetro \"%s\"\n"
 
-#: src/common/command.c:1824
+#: src/common/command.c:1828
 msgid "created\n"
 msgstr "creado\n"
 
-#: src/common/command.c:1830
+#: src/common/command.c:1834
 #, c-format
 msgid "%s unable to create server\n"
 msgstr "%s no es posible crear el servidor\n"
 
-#: src/common/command.c:1885
+#: src/common/command.c:1889
 msgid "(unknown)"
 msgstr "(desconocido)"
 
-#: src/common/command.c:1908
+#: src/common/command.c:1912
 msgid "(password hidden) "
 msgstr "(contraseña oculta) "
 
-#: src/common/command.c:1972
+#: src/common/command.c:1976
 #, c-format
 msgid "%s server \"%s\" not found\n"
 msgstr "%s servidor \"%s\" no encontrado\n"
 
-#: src/common/command.c:2003 src/common/command.c:2049
+#: src/common/command.c:2007 src/common/command.c:2053
 #, c-format
 msgid "%s config option \"%s\" not found\n"
 msgstr "%s opción de configuración \"%s\" no encontrada\n"
 
-#: src/common/command.c:2008 src/common/command.c:2041
+#: src/common/command.c:2012 src/common/command.c:2045
 #, c-format
 msgid "%s incorrect value for option \"%s\"\n"
 msgstr "%s valor incorrecto para la opción \"%s\"\n"
 
-#: src/common/command.c:2024
+#: src/common/command.c:2028
 #, c-format
 msgid "%s option \"%s\" can not be changed while WeeChat is running\n"
 msgstr ""
 "%s la opción \"%s\" no puede ser modificada mientras WeeChat esté en "
 "ejecución\n"
 
-#: src/common/command.c:2122
+#: src/common/command.c:2126
 #, c-format
 msgid "No config option found with \"%s\"\n"
 msgstr "Ninguna opción de configuración encontrada con \"%s\"\n"
 
-#: src/common/command.c:2125
+#: src/common/command.c:2129
 msgid "No config option found\n"
 msgstr "Ninguna opción de configuración encontrada\n"
 
-#: src/common/command.c:2131
+#: src/common/command.c:2135
 #, c-format
 msgid "config option(s) found with \"%s\"\n"
 msgstr "opción/opciones de configuración encontrada(s) con \"%s\"\n"
 
-#: src/common/command.c:2134
+#: src/common/command.c:2138
 msgid "config option(s) found\n"
 msgstr "opción/opciones de configuración encontrada(s)\n"
 
-#: src/common/command.c:2154
+#: src/common/command.c:2158
 #, c-format
 msgid "%s alias or command \"%s\" not found\n"
 msgstr "%s alias o comando \"%s\" no encontrado\n"
 
-#: src/common/command.c:2164
+#: src/common/command.c:2168
 #, c-format
 msgid "Alias \"%s\" removed\n"
 msgstr "Alias \"%s\" eliminado\n"
 
-#: src/common/command.c:2184
+#: src/common/command.c:2188
 msgid "Opened windows:\n"
 msgstr "Ventanas abiertas:\n"
 
@@ -2835,7 +2724,7 @@ msgstr "%s no ha sido posible abrir la tubería FIFO (%s) para leer\n"
 
 #: src/common/fifo.c:89
 msgid "FIFO pipe is open\n"
-msgstr "la tubería FIFO está abierta\n"
+msgstr "La tubería FIFO está abierta\n"
 
 #: src/common/fifo.c:121
 #, c-format
@@ -2864,7 +2753,7 @@ msgstr "%s error al leer la tubería FIFO, cerrándola\n"
 
 #: src/common/fifo.c:309
 msgid "FIFO pipe is closed\n"
-msgstr "la tubería FIFO está cerrada\n"
+msgstr "La tubería FIFO está cerrada\n"
 
 #: src/common/hotlist.c:102
 #, c-format
@@ -3897,8 +3786,8 @@ msgid "%s: creating default config file...\n"
 msgstr "%s: creando fichero de configuración por defecto...\n"
 
 #: src/common/weeconfig.c:1392
-msgid "creating default config file\n"
-msgstr "creando fichero de configuración por defecto\n"
+msgid "Creating default config file\n"
+msgstr "Creando fichero de configuración por defecto\n"
 
 #: src/common/weeconfig.c:1395 src/common/weeconfig.c:1567
 #, c-format
@@ -3910,5 +3799,5 @@ msgstr ""
 "# %s: fichero de configuración, creado por %s v%s el %s#\n"
 
 #: src/common/weeconfig.c:1564
-msgid "saving config to disk\n"
-msgstr "guardar configuración a disco\n"
+msgid "Saving config to disk\n"
+msgstr "Guardar configuración a disco\n"

@@ -92,9 +92,7 @@ dcc_calculate_speed (t_irc_dcc *ptr_dcc, int ended)
         }
         ptr_dcc->last_check_time = local_time;
         ptr_dcc->last_check_pos = ptr_dcc->pos;
-        wee_log_printf ("bytes per sec calculé: %lu\n", ptr_dcc->bytes_per_sec);
     }
-    wee_log_printf ("bytes per sec calculé pas bon !!!\n");
 }
 
 /*
@@ -1053,7 +1051,7 @@ dcc_end ()
         if (ptr_dcc->sock != -1)
         {
             if (ptr_dcc->status == DCC_ACTIVE)
-                wee_log_printf (_("aborting active DCC: \"%s\" from %s\n"),
+                wee_log_printf (_("Aborting active DCC: \"%s\" from %s\n"),
                                 ptr_dcc->filename, ptr_dcc->nick);
             dcc_close (ptr_dcc, DCC_FAILED);
         }

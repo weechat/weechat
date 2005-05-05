@@ -73,12 +73,12 @@ t_weechat_command weechat_commands[] =
     N_("[command]"), N_("command: name of a WeeChat or IRC command"),
     0, 1, weechat_cmd_help, NULL },
   { "perl", N_("list/load/unload Perl scripts"),
-    N_("[load filename] | [autoload] | [unload]"),
+    N_("[load filename] | [autoload] | [reload] | [unload]"),
     N_("filename: Perl script (file) to load\n"
     "Without argument, /perl command lists all loaded Perl scripts."),
     0, 2, weechat_cmd_perl, NULL },
   { "python", N_("list/load/unload Python scripts"),
-    N_("[load filename] | [autoload] | [unload]"),
+    N_("[load filename] | [autoload] | [reload] | [unload]"),
     N_("filename: Python script (file) to load\n"
     "Without argument, /python command lists all loaded Python scripts."),
     0, 2, weechat_cmd_python, NULL },
@@ -1302,7 +1302,7 @@ weechat_cmd_perl (int argc, char **argv)
         case 0:
             /* list registered Perl scripts */
             gui_printf (NULL, "\n");
-            gui_printf (NULL, _("Registered Perl scripts:\n"));
+            gui_printf (NULL, _("Registered %s scripts:\n"), "Perl");
             if (perl_scripts)
             {
                 for (ptr_plugin_script = perl_scripts; ptr_plugin_script;
@@ -1324,7 +1324,7 @@ weechat_cmd_perl (int argc, char **argv)
             
             /* list Perl message handlers */
             gui_printf (NULL, "\n");
-            gui_printf (NULL, _("Perl message handlers:\n"));
+            gui_printf (NULL, _("%s message handlers:\n"), "Perl");
             handler_found = 0;
             for (ptr_plugin_handler = plugin_msg_handlers; ptr_plugin_handler;
                  ptr_plugin_handler = ptr_plugin_handler->next_handler)
@@ -1333,8 +1333,9 @@ weechat_cmd_perl (int argc, char **argv)
                 {
                     handler_found = 1;
                     irc_display_prefix (NULL, PREFIX_PLUGIN);
-                    gui_printf (NULL, _("  IRC(%s) => Perl(%s)\n"),
+                    gui_printf (NULL, _("  IRC(%s) => %s(%s)\n"),
                                 ptr_plugin_handler->name,
+                                "Perl",
                                 ptr_plugin_handler->function_name);
                 }
             }
@@ -1346,7 +1347,7 @@ weechat_cmd_perl (int argc, char **argv)
             
             /* list Perl command handlers */
             gui_printf (NULL, "\n");
-            gui_printf (NULL, _("Perl command handlers:\n"));
+            gui_printf (NULL, _("%s command handlers:\n"), "Perl");
             handler_found = 0;
             for (ptr_plugin_handler = plugin_cmd_handlers; ptr_plugin_handler;
                  ptr_plugin_handler = ptr_plugin_handler->next_handler)
@@ -1355,8 +1356,9 @@ weechat_cmd_perl (int argc, char **argv)
                 {
                     handler_found = 1;
                     irc_display_prefix (NULL, PREFIX_PLUGIN);
-                    gui_printf (NULL, _("  Command /%s => Perl(%s)\n"),
+                    gui_printf (NULL, _("  Command /%s => %s(%s)\n"),
                                 ptr_plugin_handler->name,
+                                "Perl",
                                 ptr_plugin_handler->function_name);
                 }
             }
@@ -1370,13 +1372,13 @@ weechat_cmd_perl (int argc, char **argv)
         case 1:
             if (strcasecmp (argv[0], "autoload") == 0)
                 plugin_auto_load (PLUGIN_TYPE_PERL, "perl/autoload");
-            if (strcasecmp (argv[0], "unload") == 0)
+            else if (strcasecmp (argv[0], "reload") == 0)
             {
-                /* unload all Perl scripts */
                 plugin_unload (PLUGIN_TYPE_PERL, NULL);
-                irc_display_prefix (NULL, PREFIX_PLUGIN);
-                gui_printf (NULL, _("Perl scripts unloaded\n"));
+                plugin_auto_load (PLUGIN_TYPE_PERL, "perl/autoload");
             }
+            else if (strcasecmp (argv[0], "unload") == 0)
+                plugin_unload (PLUGIN_TYPE_PERL, NULL);
             break;
         case 2:
             if (strcasecmp (argv[0], "load") == 0)
@@ -1443,7 +1445,7 @@ weechat_cmd_python (int argc, char **argv)
         case 0:
             /* list registered Python scripts */
             gui_printf (NULL, "\n");
-            gui_printf (NULL, _("Registered Python scripts:\n"));
+            gui_printf (NULL, _("Registered %s scripts:\n"), "Python");
             if (python_scripts)
             {
                 for (ptr_plugin_script = python_scripts; ptr_plugin_script;
@@ -1465,7 +1467,7 @@ weechat_cmd_python (int argc, char **argv)
             
             /* list Python message handlers */
             gui_printf (NULL, "\n");
-            gui_printf (NULL, _("Python message handlers:\n"));
+            gui_printf (NULL, _("%s message handlers:\n"), "Python");
             handler_found = 0;
             for (ptr_plugin_handler = plugin_msg_handlers; ptr_plugin_handler;
                  ptr_plugin_handler = ptr_plugin_handler->next_handler)
@@ -1474,8 +1476,9 @@ weechat_cmd_python (int argc, char **argv)
                 {
                     handler_found = 1;
                     irc_display_prefix (NULL, PREFIX_PLUGIN);
-                    gui_printf (NULL, _("  IRC(%s) => Python(%s)\n"),
+                    gui_printf (NULL, _("  IRC(%s) => %s(%s)\n"),
                                 ptr_plugin_handler->name,
+                                "Python",
                                 ptr_plugin_handler->function_name);
                 }
             }
@@ -1487,7 +1490,7 @@ weechat_cmd_python (int argc, char **argv)
             
             /* list Python command handlers */
             gui_printf (NULL, "\n");
-            gui_printf (NULL, _("Python command handlers:\n"));
+            gui_printf (NULL, _("%s command handlers:\n"), "Python");
             handler_found = 0;
             for (ptr_plugin_handler = plugin_cmd_handlers; ptr_plugin_handler;
                  ptr_plugin_handler = ptr_plugin_handler->next_handler)
@@ -1496,8 +1499,9 @@ weechat_cmd_python (int argc, char **argv)
                 {
                     handler_found = 1;
                     irc_display_prefix (NULL, PREFIX_PLUGIN);
-                    gui_printf (NULL, _("  Command /%s => Python(%s)\n"),
+                    gui_printf (NULL, _("  Command /%s => %s(%s)\n"),
                                 ptr_plugin_handler->name,
+                                "Python",
                                 ptr_plugin_handler->function_name);
                 }
             }
@@ -1511,13 +1515,13 @@ weechat_cmd_python (int argc, char **argv)
         case 1:
             if (strcasecmp (argv[0], "autoload") == 0)
                 plugin_auto_load (PLUGIN_TYPE_PYTHON, "python/autoload");
-            if (strcasecmp (argv[0], "unload") == 0)
+            else if (strcasecmp (argv[0], "reload") == 0)
             {
-                /* unload all Python scripts */
                 plugin_unload (PLUGIN_TYPE_PYTHON, NULL);
-                irc_display_prefix (NULL, PREFIX_PLUGIN);
-                gui_printf (NULL, _("Python scripts unloaded\n"));
+                plugin_auto_load (PLUGIN_TYPE_PYTHON, "python/autoload");
             }
+            else if (strcasecmp (argv[0], "unload") == 0)
+                plugin_unload (PLUGIN_TYPE_PYTHON, NULL);
             break;
         case 2:
             if (strcasecmp (argv[0], "load") == 0)

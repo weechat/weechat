@@ -323,7 +323,7 @@ server_new (char *name, int autoconnect, int autoreconnect, int autoreconnect_de
         return NULL;
     
     #ifdef DEBUG
-    wee_log_printf ("creating new server (name:%s, address:%s, port:%d, pwd:%s, "
+    wee_log_printf ("Creating new server (name:%s, address:%s, port:%d, pwd:%s, "
                     "nick1:%s, nick2:%s, nick3:%s, username:%s, realname:%s, "
                     "command:%s, autojoin:%s, autorejoin:%s)\n",
                     name, address, port, (password) ? password : "",
@@ -843,7 +843,7 @@ server_connect (t_irc_server *server)
     gui_printf (server->buffer,
                 _("%s: connecting to %s:%d...\n"),
                 PACKAGE_NAME, server->address, server->port);
-    wee_log_printf (_("connecting to server %s:%d...\n"),
+    wee_log_printf (_("Connecting to server %s:%d...\n"),
                     server->address, server->port);
     
     /* close any opened connection and kill child process if running */
