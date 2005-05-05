@@ -413,14 +413,22 @@ plugin_find_buffer (char *server, char *channel)
             ptr_server = SERVER(gui_buffers);
     }
     
-    if (channel && ptr_server)
+    if (channel && channel[0])
     {
-        ptr_channel = channel_search (ptr_server, channel);
-        if (ptr_channel)
-            ptr_buffer = ptr_channel->buffer;
+        if (ptr_server)
+        {
+            ptr_channel = channel_search (ptr_server, channel);
+            if (ptr_channel)
+                ptr_buffer = ptr_channel->buffer;
+        }
     }
     else
-        ptr_buffer = gui_current_window->buffer;
+    {
+        if (ptr_server)
+            ptr_buffer = ptr_server->buffer;
+        else
+            ptr_buffer = gui_current_window->buffer;
+    }
     
     if (!ptr_buffer)
         return NULL;
