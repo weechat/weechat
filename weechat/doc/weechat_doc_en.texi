@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.1.2-cvs - April, 30 2005
+@subtitle Documentation for WeeChat v0.1.2-cvs - May, 08 2005
 
 @image{weechat_image}
 
@@ -765,12 +765,19 @@ display help about commands@*
 @*
 command: name of a WeeChat or IRC command@*
 @*
-@item perl  [load filename] | [autoload] | [unload]
+@item perl  [load filename] | [autoload] | [reload] | [unload]
 @*
 list/load/unload Perl scripts@*
 @*
 filename: Perl script (file) to load@*
 Without argument, /perl command lists all loaded Perl scripts.@*
+@*
+@item python  [load filename] | [autoload] | [reload] | [unload]
+@*
+list/load/unload Python scripts@*
+@*
+filename: Python script (file) to load@*
+Without argument, /python command lists all loaded Python scripts.@*
 @*
 @item server  [servername] | [servername hostname port [-auto | -noauto] [-pwd password] [-nicks nick1 [nick2 [nick3]]] [-username username] [-realname realname] [-command command] [-autojoin channel[,channel]] ] | [del servername]
 @*
@@ -995,11 +1002,12 @@ list nicknames on channels@*
 @*
 channel: channel name@*
 @*
-@item nick  nickname
+@item nick  [-all] nickname
 @*
 change current nickname@*
 @*
-nickname: new nickname for current IRC server@*
+-all: set new nickname for all connected servers@*
+nickname: new nickname@*
 @*
 @item notice  nickname text
 @*
@@ -1266,7 +1274,7 @@ List all Perl scripts: @kbd{/perl}@*
 
 @itemize @bullet
 @item
-@command{IRC::register ( name, version, shutdown_function, description );}@*
+@command{weechat::register ( name, version, shutdown_function, description );}@*
 @*
 This is first function to call in Perl script.@*
 All Perl scripts for WeeChat should call this function.@*
@@ -1282,42 +1290,29 @@ unloaded (optional parameter, empty string means nothing is called at the end)
 @end itemize
 @*
 @emph{Example:}@*
-@code{IRC::register ("sample", "1.0", "sample_end", "Sample script!");}@*
+@code{weechat::register ("sample", "1.0", "sample_end", "Sample script!");}@*
 @*
 
 @item
-@command{IRC::print ( message );}@*
-@*
-Print message in current window (channel or server).@*
-
-@emph{Arguments:}
-@itemize @minus
-@item @option{message}: message to display
-@end itemize
-@*
-@emph{Example:}@*
-@code{IRC::print ("message");}@*
-@*
-
-@item
-@command{IRC::print_with_channel ( channel, [server,] message );}@*
+@command{weechat::print ( message, [channel, [server]] );}@*
 @*
 Print message in a channel.@*
 
 @emph{Arguments:}
 @itemize @minus
+@item @option{message}: message to display
 @item @option{channel}: name of channel
 @item @option{server}: internal name of server
-@item @option{message}: message to display
 @end itemize
 @*
 @emph{Examples:}@*
-@code{IRC::print_with_channel ("#weechat", "freenode", "message");}@*
-@code{IRC::print_with_channel ("#weechat", "message");}@*
+@code{weechat::print ("message");}@*
+@code{weechat::print ("message", "#weechat");}@*
+@code{weechat::print ("message", "#weechat", "freenode");}@*
 @*
 
 @item
-@command{IRC::print_infobar ( delay, message );}@*
+@command{weechat::print_infobar ( delay, message );}@*
 @*
 Print message in infobar.@*
 
@@ -1329,11 +1324,11 @@ Print message in infobar.@*
 @end itemize
 @*
 @emph{Example:}@*
-@code{IRC::print_infobar (5, "message");}@*
+@code{weechat::print_infobar (5, "message");}@*
 @*
 
 @item
-@command{IRC::add_message_handler ( name, function );}@*
+@command{weechat::add_message_handler ( name, function );}@*
 @*
 Attach a Perl function to an IRC message.@*
 Function will be called each time IRC message will be received.@*
@@ -1348,18 +1343,18 @@ RFC 2812: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
 @end itemize
 @*
 @emph{Example:}@*
-@code{IRC::add_message_handler ("privmsg", my_function);}@*
+@code{weechat::add_message_handler ("privmsg", my_function);}@*
 @code{sub my_function}@*
 @code{@{ }@*
-@code{@ @ @ @ IRC::print ("server=$_[0]\n");}@*
+@code{@ @ @ @ weechat::print ("server=$_[0]\n");}@*
 @code{@ @ @ @ ($null, $channel, $message) = split ":",$_[1],3;}@*
 @code{@ @ @ @ ($hostmask, $null, $channel) = split " ", $channel;}@*
-@code{@ @ @ @ IRC::print ("host=$hostmask, chan=$channel, msg=$message\n");}@*
+@code{@ @ @ @ weechat::print ("host=$hostmask, chan=$channel, msg=$message\n");}@*
 @code{@} }@*
 @*
 
 @item
-@command{IRC::add_command_handler ( name, function );}@*
+@command{weechat::add_command_handler ( name, function );}@*
 @*
 Create new WeeChat command, linked with Perl function.@*
 Function will be called when user will launch command with @kbd{/name}.@*
@@ -1374,23 +1369,41 @@ available until your Perl script will be unloaded.
 @end itemize
 @*
 @emph{Example:}@*
-@code{IRC::add_command_handler ("command", my_command);}@*
+@code{weechat::add_command_handler ("command", my_command);}@*
 @code{sub my_command}@*
 @code{@{ }@*
-@code{@ @ @ @ IRC::print("Server: $_[0], arguments: $_[1]\n");}@*
+@code{@ @ @ @ weechat::print("Server: $_[0], arguments: $_[1]\n");}@*
 @code{@ @ @ @ return 0;}@*
 @code{@} }@*
 @*
 
 @item
-@command{IRC::get_info ( [server,] name );}@*
+@command{weechat::command ( command, [channel, [server]] );}@*
+@*
+Execute a command or send a message to a channel.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{command}: command to execute (or message to send in a channel)
+@item @option{channel}: name of channel
+@item @option{server}: internal name of server
+@end itemize
+@*
+@emph{Examples:}@*
+@code{weechat::command ("hello world!");}@*
+@code{weechat::command ("/kick toto please leave this chan", "#weechat");}@*
+@code{weechat::command ("/nick newnick", "", "freenode");}@*
+@*
+
+@item
+@command{weechat::get_info ( name, [server] );}@*
 @*
 Get various info about WeeChat, server or user.@*
 
 @emph{Arguments:}
 @itemize @minus
-@item @option{server}: internal name of server
 @item @option{name}: name of info to retrieve:
+@item @option{server}: internal name of server
 @itemize @minus
 @item @option{0 or version}: get WeeChat version
 @item @option{1 or nick}: get nickname
@@ -1403,7 +1416,7 @@ Get various info about WeeChat, server or user.@*
 @*
 @emph{Examples:}@*
 @code{$version = get_info("version");}@*
-@code{$nick = get_info("freenode", "nick");}@*
+@code{$nick = get_info("nick", "freenode");}@*
 @*
 
 @end itemize
@@ -1411,7 +1424,172 @@ Get various info about WeeChat, server or user.@*
 @node Python scripts, Ruby scripts, Perl scripts, Extensions
 @section Python scripts
 
-Not developed!
+@subsection Load/unload Python scripts
+
+Python scripts are loaded and unloaded with @command{/python} command.
+(type @kbd{/help python} within WeeChat to get help about command).@*
+
+@emph{Examples:}@*
+@itemize @bullet
+@item
+Load a Python script: @kbd{/python load /tmp/sample.py}@*
+@item
+Unload all Python scripts: @kbd{/python unload}@*
+@item
+List all Python scripts: @kbd{/python}@*
+@end itemize
+
+@subsection WeeChat / Python API
+
+@itemize @bullet
+@item
+@command{weechat.register ( name, version, shutdown_function, description );}@*
+@*
+This is first function to call in Python script.@*
+All Python scripts for WeeChat should call this function.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{name}: unique name to identify script (each script must have
+unique name)
+@item @option{version}: script's version
+@item @option{shutdown_function}: Python function called when script is
+unloaded (optional parameter, empty string means nothing is called at the end)
+@item @option{description}: short description of script.
+@end itemize
+@*
+@emph{Example:}@*
+@code{weechat.register ("sample", "1.0", "sample_end", "Sample script!");}@*
+@*
+
+@item
+@command{weechat.prnt ( message, [channel, [server]] );}@*
+@*
+Print message in a channel.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{message}: message to display
+@item @option{channel}: name of channel
+@item @option{server}: internal name of server
+@end itemize
+@*
+@emph{Examples:}@*
+@code{weechat.prnt ("message");}@*
+@code{weechat.prnt ("message", "#weechat");}@*
+@code{weechat.prnt ("message", "#weechat", "freenode");}@*
+@*
+
+@item
+@command{weechat.print_infobar ( delay, message );}@*
+@*
+Print message in infobar.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{delay}: after this delay (in seconds), message will be erased
+(if 0, message will not be erased).
+@item @option{message}: message to display
+@end itemize
+@*
+@emph{Example:}@*
+@code{weechat.print_infobar (5, "message");}@*
+@*
+
+@item
+@command{weechat.add_message_handler ( name, function );}@*
+@*
+Attach a Python function to an IRC message.@*
+Function will be called each time IRC message will be received.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{name}: name of IRC message@*
+To know list of IRC messages, please refer to RFC 1459 and/or 2812:@*
+RFC 1459: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc1459.txt}@*
+RFC 2812: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
+@item @option{function}: Python function called when message is received
+@end itemize
+@*
+@emph{Example:}@*
+@code{weechat.add_message_handler ("privmsg", my_function);}@*
+@code{sub my_function}@*
+@code{@{ }@*
+@code{@ @ @ @ weechat.print ("server=$_[0]\n");}@*
+@code{@ @ @ @ ($null, $channel, $message) = split ":",$_[1],3;}@*
+@code{@ @ @ @ ($hostmask, $null, $channel) = split " ", $channel;}@*
+@code{@ @ @ @ weechat.prnt ("host=$hostmask, chan=$channel, msg=$message\n");}@*
+@code{@} }@*
+@*
+
+@item
+@command{weechat.add_command_handler ( name, function );}@*
+@*
+Create new WeeChat command, linked with Python function.@*
+Function will be called when user will launch command with @kbd{/name}.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{name}: name of new command@*
+This name may be existing command, so that the command is overrided by
+Python function. Be careful when overriding WeeChat commands, they'll not be
+available until your Python script will be unloaded.
+@item @option{function}: Python function linked with command
+@end itemize
+@*
+@emph{Example:}@*
+@code{weechat.add_command_handler ("command", my_command);}@*
+@code{sub my_command}@*
+@code{@{ }@*
+@code{@ @ @ @ weechat.prnt("Server: $_[0], arguments: $_[1]\n");}@*
+@code{@ @ @ @ return 0;}@*
+@code{@} }@*
+@*
+
+@item
+@command{weechat.command ( command, [channel, [server]] );}@*
+@*
+Execute a command or send a message to a channel.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{command}: command to execute (or message to send in a channel)
+@item @option{channel}: name of channel
+@item @option{server}: internal name of server
+@end itemize
+@*
+@emph{Examples:}@*
+@code{weechat.command ("hello world!");}@*
+@code{weechat.command ("/kick toto please leave this chan", "#weechat");}@*
+@code{weechat.command ("/nick newnick", "", "freenode");}@*
+@*
+
+
+@item
+@command{weechat.get_info ( name, [server] );}@*
+@*
+Get various info about WeeChat, server or user.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{name}: name of info to retrieve:
+@item @option{server}: internal name of server
+@itemize @minus
+@item @option{0 or version}: get WeeChat version
+@item @option{1 or nick}: get nickname
+@item @option{2 or channel}: get channel name
+@item @option{3 or server}: get server name
+@item @option{4 or weechatdir}: get WeeChat home directory
+@item @option{5 or away}: get away flag for server
+@end itemize
+@end itemize
+@*
+@emph{Examples:}@*
+@code{$version = weechat.get_info("version");}@*
+@code{$nick = weechat.get_info("nick", "freenode");}@*
+@*
+
+@end itemize
 
 @node Ruby scripts, , Python scripts, Extensions
 @section Ruby scripts
