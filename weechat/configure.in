@@ -93,7 +93,9 @@ AM_CONDITIONAL(PLUGIN_PYTHON, test "$enable_python" = "yes")
 
 if test "x$enable_ncurses" = "xyes" ; then
     if test "$LIBNCURSES_FOUND" = "0" ; then
-        AC_MSG_ERROR([ncurses library not found! Install ncurses library or run ./configure with --disable-ncurses parameter.])
+        AC_MSG_ERROR([
+*** ncurses library not found!
+*** Please install ncurses library or run ./configure with --disable-ncurses parameter.])
     fi
     NCURSES_LIBS="-lncurses"
     AC_SUBST(NCURSES_LIBS)
@@ -102,13 +104,13 @@ fi
 if test "x$enable_wxwidgets" = "xyes" ; then
     if test "$wxWin" != 1; then
         AC_MSG_ERROR([
-            wxWindows must be installed on your system
-            but wx-config script couldn't be found.
+*** wxWindows must be installed on your system
+*** but wx-config script couldn't be found.
 
-            Please check that wx-config is in path, the directory
-            where wxWindows libraries are installed (returned by
-            'wx-config --libs' command) is in LD_LIBRARY_PATH or
-            equivalent variable and wxWindows version is 2.3.4 or above.
+*** Please check that wx-config is in path, the directory
+*** where wxWindows libraries are installed (returned by
+*** 'wx-config --libs' command) is in LD_LIBRARY_PATH or
+*** equivalent variable and wxWindows version is 2.3.4 or above.
         ])
     fi
     
@@ -135,7 +137,29 @@ PLUGINS_LIBS=
 
 if test "x$enable_perl" = "xyes" ; then
     enable_plugins="yes"
-    PLUGINS_LIBS="$PLUGINS_LIBS ../../plugins/perl/lib_weechat_perl.a `perl -MExtUtils::Embed -e ldopts`"
+    
+    AC_PATH_PROG(PERL, perl)
+    if test -z $PERL ; then
+        AC_MSG_ERROR([
+*** Perl must be installed on your system
+*** but perl interpreter couldn't be found in path.
+
+Please check that perl is in path, or install
+it with your software package manager.])
+    fi
+    
+    AC_MSG_CHECKING(for Perl library)
+    PERL_LIB=`$PERL -e 'use Config; print "$Config{installprefix}/lib/$Config{libperl}"'`
+    
+    if test -r "$PERL_LIB"; then
+        PLUGINS_LIBS="$PLUGINS_LIBS ../../plugins/perl/lib_weechat_perl.a `perl -MExtUtils::Embed -e ldopts`"
+    else
+        AC_MSG_ERROR([
+*** Perl library couldn't be found in your system.
+*** Try to install it with your software package manager.])
+    fi
+    AC_MSG_RESULT(found)
+    
     PERL_CFLAGS=`perl -MExtUtils::Embed -e ccopts`
     AC_SUBST(PERL_CFLAGS)
     AC_DEFINE(PLUGIN_PERL)
@@ -143,8 +167,42 @@ fi
 
 if test "x$enable_python" = "xyes" ; then
     enable_plugins="yes"
-    PYTHON_CFLAGS=`python -c "import distutils.sysconfig,string; print ' -I' + distutils.sysconfig.get_config_var('CONFINCLUDEPY')"`
-    PYTHON_LFLAGS=`python -c "import distutils.sysconfig,string; print string.join(distutils.sysconfig.get_config_vars('LINKFORSHARED', 'BLDLIBRARY', 'SHLIBS'))"`
+    
+    AC_PATH_PROG(PYTHON, python)
+    if test -z $PYTHON ; then
+        AC_MSG_ERROR([
+*** Python must be installed on your system
+*** but python interpreter couldn't be found in path.
+
+*** Please check that python is in path, or install
+*** it with your software package manager.])
+    fi
+    
+    PYTHON_INCLUDE=`$PYTHON -c 'import sys ; print "%s/include/python%s" % (sys.prefix, sys.version[[:3]])'`
+    
+    AC_MSG_CHECKING(for Python header files)
+    if test -r "$PYTHON_INCLUDE/Python.h"; then
+        PYTHON_CFLAGS=`$PYTHON -c "import distutils.sysconfig,string; print ' -I' + distutils.sysconfig.get_config_var('CONFINCLUDEPY')"`
+    else
+        AC_MSG_ERROR([
+*** Python header files couldn't be found in your system.
+*** Try to install them with your software package manager.])
+    fi
+    AC_MSG_RESULT(found)
+    
+    PYTHON_LIB=`$PYTHON -c 'import sys; print "%s/lib/python%s/config" % (sys.prefix, sys.version[[:3]])'`
+    PYTHON_VERSION=`$PYTHON -c 'import sys ; print sys.version[[0:3]]'`
+    
+    AC_MSG_CHECKING(for Python library)
+    if test -r "$PYTHON_LIB/libpython$PYTHON_VERSION.so" -a -r "$PYTHON_LIB/libpython$PYTHON_VERSION.a"; then
+        PYTHON_LFLAGS=`$PYTHON -c "import distutils.sysconfig,string; print string.join(distutils.sysconfig.get_config_vars('LINKFORSHARED', 'BLDLIBRARY', 'SHLIBS'))"`
+    else
+        AC_MSG_ERROR([
+*** Python library couldn't be found in your system.            
+*** Try to install it with your software package manager.])
+    fi
+    AC_MSG_RESULT(found)
+    
     PLUGINS_LIBS="$PLUGINS_LIBS ../../plugins/python/lib_weechat_python.a $PYTHON_LFLAGS"
     AC_SUBST(PYTHON_CFLAGS)
     AC_DEFINE(PLUGIN_PYTHON)
@@ -207,7 +265,9 @@ if test "x$enable_qt" = "xyes" ; then
 fi
 
 if test "x$listgui" = "x" ; then
-    AC_MSG_ERROR([No interface specified... Please specify at least ncurses, WxWidgets, Gtk or Qt.])
+    AC_MSG_ERROR([
+*** No interface specified...
+*** Please specify at least ncurses, WxWidgets, Gtk or Qt.])
 fi
 
 msg_debug_compiler="no"
