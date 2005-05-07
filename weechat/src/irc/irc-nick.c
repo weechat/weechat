@@ -52,6 +52,26 @@ nick_find_color (t_irc_nick *nick)
 }
 
 /*
+ * nick_score_for_sort: return score for sorting nick, according to privileges
+ */
+
+int
+nick_score_for_sort (t_irc_nick *nick)
+{
+    if (nick->is_chanowner)
+        return -32;
+    if (nick->is_chanadmin)
+        return -16;
+    if (nick->is_op)
+        return -8;
+    if (nick->is_halfop)
+        return -4;
+    if (nick->has_voice)
+        return -2;
+    return 0;
+}
+
+/*
  * nick_compare: compare two nicks
  *               return: -1 is nick1 < nick2
  *                        0 if nick1 = nick2
@@ -64,10 +84,8 @@ nick_compare (t_irc_nick *nick1, t_irc_nick *nick2)
 {
     int score1, score2, comp;
     
-    score1 = - ( (nick1->is_chanowner * 32) + (nick1->is_chanadmin * 16) +
-             (nick1->is_op * 8) + (nick1->is_halfop * 4) + (nick1->has_voice * 2) );
-    score2 = - ( (nick2->is_chanowner * 32) + (nick2->is_chanadmin * 16) +
-             (nick2->is_op * 8) + (nick2->is_halfop * 4) + (nick2->has_voice * 2) );
+    score1 = nick_score_for_sort (nick1);
+    score2 = nick_score_for_sort (nick2);
     
     comp = strcasecmp(nick1->nick, nick2->nick);
     if (comp > 0)
