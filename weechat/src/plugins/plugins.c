@@ -400,7 +400,7 @@ plugin_find_buffer (char *server, char *channel)
     ptr_channel = NULL;
     ptr_buffer = NULL;
     
-    if (server)
+    if (server && server[0])
     {
         ptr_server = server_search (server);
         if (!ptr_server)
@@ -424,10 +424,9 @@ plugin_find_buffer (char *server, char *channel)
     }
     else
     {
-        if (ptr_server)
-            ptr_buffer = ptr_server->buffer;
-        else
-            ptr_buffer = gui_current_window->buffer;
+        ptr_buffer = gui_current_window->buffer;
+        if (ptr_buffer->dcc)
+            ptr_buffer = gui_buffers;
     }
     
     if (!ptr_buffer)
