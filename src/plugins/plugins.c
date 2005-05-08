@@ -290,7 +290,7 @@ plugin_handler_free_all_type (t_plugin_handler **plugin_handlers,
  */
 
 void
-plugin_event_msg (char *irc_command, char *arguments, char *server)
+plugin_event_msg (char *irc_command, char *server, char *arguments)
 {
     #ifdef PLUGINS
     t_plugin_handler *ptr_plugin_handler;
@@ -306,7 +306,7 @@ plugin_event_msg (char *irc_command, char *arguments, char *server)
                 if (ptr_plugin_handler->running == 0)
                 {
                     ptr_plugin_handler->running = 1;
-                    wee_perl_exec (ptr_plugin_handler->function_name, arguments, server);
+                    wee_perl_exec (ptr_plugin_handler->function_name, server, arguments);
                     ptr_plugin_handler->running = 0;
                 }
             }
@@ -317,7 +317,7 @@ plugin_event_msg (char *irc_command, char *arguments, char *server)
                 if (ptr_plugin_handler->running == 0)
                 {
                     ptr_plugin_handler->running = 1;
-                    wee_python_exec (ptr_plugin_handler->function_name, arguments, server);
+                    wee_python_exec (ptr_plugin_handler->function_name, server, arguments);
                     ptr_plugin_handler->running = 0;
                 }
             }
@@ -337,7 +337,7 @@ plugin_event_msg (char *irc_command, char *arguments, char *server)
  */
 
 int
-plugin_exec_command (char *user_command, char *arguments, char *server)
+plugin_exec_command (char *user_command, char *server, char *arguments)
 {
     #ifdef PLUGINS
     t_plugin_handler *ptr_plugin_handler;
@@ -353,7 +353,7 @@ plugin_exec_command (char *user_command, char *arguments, char *server)
                 if (ptr_plugin_handler->running == 0)
                 {
                     ptr_plugin_handler->running = 1;
-                    wee_perl_exec (ptr_plugin_handler->function_name, arguments, server);
+                    wee_perl_exec (ptr_plugin_handler->function_name, server, arguments);
                     ptr_plugin_handler->running = 0;
                 }
             }
@@ -364,7 +364,7 @@ plugin_exec_command (char *user_command, char *arguments, char *server)
                 if (ptr_plugin_handler->running == 0)
                 {
                     ptr_plugin_handler->running = 1;
-                    wee_python_exec (ptr_plugin_handler->function_name, arguments, server);
+                    wee_python_exec (ptr_plugin_handler->function_name, server, arguments);
                     ptr_plugin_handler->running = 0;
                 }
             }

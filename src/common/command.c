@@ -657,6 +657,8 @@ void
 user_command (t_irc_server *server, t_gui_buffer *buffer, char *command)
 {
     t_irc_nick *ptr_nick;
+    int plugin_args_length;
+    char *plugin_args;
     
     if ((!command) || (!command[0]) || (command[0] == '\r') || (command[0] == '\n'))
         return;
@@ -682,7 +684,7 @@ user_command (t_irc_server *server, t_gui_buffer *buffer, char *command)
             else
                 server_sendf (server, "PRIVMSG %s :%s\r\n",
                               CHANNEL(buffer)->name, command);
-
+            
             if (CHANNEL(buffer)->type == CHAT_PRIVATE)
             {
                 gui_printf_type_color (CHANNEL(buffer)->buffer,
@@ -716,6 +718,27 @@ user_command (t_irc_server *server, t_gui_buffer *buffer, char *command)
                                 _("%s cannot find nick for sending message\n"),
                                 WEECHAT_ERROR);
                 }
+            }
+            
+            /* sending a copy of the message as PRIVMSG to plugins because irc server doesn't */                               
+            plugin_args_length = strlen ("localhost PRIVMSG  :") +
+                strlen (CHANNEL(buffer)->name) + strlen(command) + 16;
+            plugin_args = (char *) malloc (plugin_args_length * sizeof (*plugin_args));
+            
+            if (plugin_args)
+            {
+                snprintf (plugin_args, plugin_args_length,
+                          "localhost PRIVMSG %s :%s", 
+                          CHANNEL(buffer)->name, command);
+                plugin_event_msg ("privmsg", server->name, plugin_args);
+                free (plugin_args);
+            }
+            else
+            {
+                irc_display_prefix (server->buffer, PREFIX_ERROR);
+                gui_printf (server->buffer,
+                            _("%s unable to call handler for message (not enough memory)\n"),
+                            WEECHAT_ERROR);
             }
         }
         else
