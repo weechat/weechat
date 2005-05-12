@@ -2,12 +2,13 @@ Source: weechat
 Section: net
 Priority: optional
 Maintainer: Sebastien Helleu <flashcode@flashtux.org>
+Uploaders: Julien Louis <ptitlouis@sysif.net>
 Build-Depends: debhelper (>> 4.0.0), libncurses5-dev (>= 5.2.20020112a-7), perl (>= 5.6.0-16), libperl-dev
 Standards-Version: 3.6.1
 
 Package: weechat
 Architecture: all
-Depends: weechat-common (= ${Source-Version}), weechat-curses (= ${Source-Version}), weechat-gtk (= ${Source-Version})
+Depends: weechat-common (= ${Source-Version}), weechat-curses (= ${Source-Version})
 Description: Fast, light and extensible IRC client
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light IRC client
  for many operating systems. Everything can be done with a keyboard.

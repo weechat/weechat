@@ -1,3 +1,11 @@
+weechat (0.1.1-2) unstable; urgency=low
+
+  * debian/control:
+    - Add myself to uploaders.
+    - Remove unecessary dependency on weechat-gtk (Closes: #308287).
+
+ -- Julien Louis <ptitlouis@sysif.net>  Tue, 10 May 2005 22:38:52 +0200
+
 weechat (0.1.1-1) unstable; urgency=low
 
   * WeeChat version 0.1.1, see ChangeLog for detail.
