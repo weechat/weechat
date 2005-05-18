@@ -962,7 +962,7 @@ gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
                     (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM))
                     nicks_displayed = (ptr_win->win_width / (max_length + 2)) * (ptr_win->win_height - 1);
                 else
-                    nicks_displayed = ptr_win->win_height;
+                    nicks_displayed = ptr_win->win_nick_height;
                 
                 ptr_nick = CHANNEL(buffer)->nicks;
                 for (i = 0; i < ptr_win->win_nick_start; i++)
@@ -988,7 +988,8 @@ gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
                                 x = column;
                                 break;
                         }
-                        if ((i == 0) && (ptr_win->win_nick_start > 0))
+                        if ( ((i == 0) && (ptr_win->win_nick_start > 0))
+                            || ((i == nicks_displayed - 1) && (ptr_nick->next_nick)) )
                         {
                             gui_window_set_color (ptr_win->win_nick, COLOR_WIN_NICK_MORE);
                             j = (max_length + 1) >= 4 ? 4 : max_length + 1;
@@ -1928,12 +1929,13 @@ gui_nick_move_page_down (t_gui_window *window)
     
     if (gui_buffer_has_nicklist (window->buffer))
     {
-        if (window->win_nick_start + window->win_nick_height < CHANNEL(window->buffer)->nicks_count)
+        if ((CHANNEL(window->buffer)->nicks_count > window->win_nick_height)
+            && (window->win_nick_start + window->win_nick_height - 1 < CHANNEL(window->buffer)->nicks_count))
         {
             if (window->win_nick_start == 0)
-                window->win_nick_start += window->win_nick_height;
-            else
                 window->win_nick_start += (window->win_nick_height - 1);
+            else
+                window->win_nick_start += (window->win_nick_height - 2);
             gui_draw_buffer_nick (window->buffer, 1);
         }
     }

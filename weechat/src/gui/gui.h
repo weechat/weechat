@@ -210,9 +210,9 @@ struct t_gui_window
     int win_chat_cursor_y;          /* position of cursor in chat window    */
     
     /* nicklist window settings */
-    int win_nick_x, win_nick_y;     /* chat window position                 */
-    int win_nick_width;             /* width of chat window                 */
-    int win_nick_height;            /* height of chat window                */
+    int win_nick_x, win_nick_y;     /* nick window position                 */
+    int win_nick_width;             /* width of nick window                 */
+    int win_nick_height;            /* height of nick window                */
     int win_nick_start;             /* # of 1st nick for display (scroll)   */
     
     /* windows for Curses GUI */
