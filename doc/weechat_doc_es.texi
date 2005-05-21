@@ -35,7 +35,7 @@
 
 @title WeeChat - Gui@'on de usuario.
 @subtitle Cliente IRC r@'apido, peque@~no y extensible
-@subtitle Documentaci@'on para WeeChat v0.1.2 - 08 de mayo de 2005
+@subtitle Documentaci@'on para WeeChat v0.1.2 - 21 de mayo de 2005
 
 @image{weechat_image}
 

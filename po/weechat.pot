@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-05-08 14:15+0200\n"
+"POT-Creation-Date: 2005-05-21 07:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1911,45 +1911,45 @@ msgstr ""
 msgid "Gb"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1121
+#: src/gui/curses/gui-display.c:1122
 msgid "(away)"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1234
+#: src/gui/curses/gui-display.c:1235
 #, c-format
 msgid "%d:[not connected] "
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1251
+#: src/gui/curses/gui-display.c:1252
 msgid "Act: "
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1300
+#: src/gui/curses/gui-display.c:1301
 #, c-format
 msgid "Lag: %.1f"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1321
+#: src/gui/curses/gui-display.c:1322
 msgid "-MORE-"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1508
+#: src/gui/curses/gui-display.c:1509
 msgid "  [A] Accept"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1509 src/gui/curses/gui-display.c:1513
+#: src/gui/curses/gui-display.c:1510 src/gui/curses/gui-display.c:1514
 msgid "  [C] Cancel"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1518
+#: src/gui/curses/gui-display.c:1519
 msgid "  [R] Remove"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1522
+#: src/gui/curses/gui-display.c:1523
 msgid "  [P] Purge old DCC"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1523
+#: src/gui/curses/gui-display.c:1524
 msgid "  [Q] Close DCC view"
 msgstr ""
 

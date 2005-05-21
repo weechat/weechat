@@ -1,4 +1,4 @@
-WeeChat FAQ, 2005-02-06
+WeeChat FAQ, 2005-05-21
 =======================
 
 Intended audience:
@@ -22,8 +22,10 @@ finding a solution.
 Q:	I heard about many GUI for WeeChat. How can I compile/use them?
 
 A:	Curses GUI is built by default.
-	To build Gtk or Qt GUI you've to specify extra options to ./configure script:
+	To build Gtk, wxWidgets or Qt GUI you've to specify extra options to
+	./configure script:
 	  --enable-gtk to enable Gtk GUI
+	  --enable-wxwidgets to enable wxWidgets GUI
 	  --enable-qt  to enable Qt QUI
 	Type ./configure --help to see available options.
 	WARNING: only Curses GUI is ok today. Other GUI are under development!
@@ -34,8 +36,8 @@ A:	Curses GUI is built by default.
 Q:	I can't compile WeeChat CVS.
 
 A:	Check that you have latest version of autoconf and automake.
-	WeeChat has been developed with autoconf version 2.56 and automake
-	version 1.7.
+	WeeChat has been developed with autoconf version 2.59 and automake
+	version 1.9.5.
 	You should have at least these versions in order to compile WeeChat CVS.
 	If you can't or don't want to install these versions, you can download and
 	install "devel package", a package built almost every day, based on CVS.
@@ -48,12 +50,14 @@ Q:	Why using WeeChat ? X-Chat and Irssi are so good...
 
 A:	Because WeeChat is very light and has new features.
 	Some new features:
-	  * many GUI (Curses, Gtk, Qt),
+	  * many GUI (Curses, Gtk, wxWidgets, Qt),
 	  * extensible with scripts (Perl, Python, Ruby),
 	  * developed from scratch (not based on any other IRC client)
 	  * multi-platform
 	  * 100% GPL and free
 	This is the "geekest" IRC client ;)
+	
+	More info on this page: http://weechat.flashtux.org/features.php
 
 
 2.2
@@ -61,6 +65,7 @@ A:	Because WeeChat is very light and has new features.
 Q:	I've launched WeeChat, but I'm lost, what can I do?
 
 A:	For help you can type /help. For help about a command, type /help command.
+	Keys and commands are listed in documentation.
 
 
 2.3
@@ -86,19 +91,23 @@ A:	Today you can't do that. This is planed for a future version.
 Q:	How can I load Perl scripts?
 	Are Perl scripts compatible with X-chat or/and Irssi ?
 
-A:	You can use /perl command to load scripts
-	(default path is ~/.weechat/perl).
+A:	You can use /perl command to load scripts (default path is
+	~/.weechat/perl).
 	Note that scripts in ~/.weechat/perl/autoload are automatically loaded
 	when WeeChat is starting up.
-	WeeChat perl scripts are compatible with X-Chat, but not with Irssi,
-	sorry ;)
+	WeeChat Perl scripts are 80% compatible with X-Chat, but not with Irssi.
 
 
 2.6
 ================================================================================
 Q:	How can I load Python scripts?
+	Are Python scripts compatible with X-chat or/and Irssi ?
 
-A:	Today Python interface is not developed, so you can't load any Python script.
+A:	You can use /python command to load scripts	(default path is
+	~/.weechat/python).
+	Note that scripts in ~/.weechat/python/autoload are automatically loaded
+	when WeeChat is starting up.
+	WeeChat Python scripts are 80% compatible with X-Chat, but not with Irssi.
 
 
 2.7
@@ -148,12 +157,26 @@ A:	There is 2 ways to submit your feature request:
 
 3.4
 ================================================================================
-Q:	Will WeeChat be ported to *BSD, QNX, MacOS X, Microsoft Windows ?
+Q:	What is the list of supported platforms for WeeChat?
 
-A:	Yes. Future versions will be available for these OS.
+A:	Today WeeChat was succesfully tested on these platforms:
+	- GNU/Linux (any distribution / i386, AMD64, Sparc)
+	- FreeBSD
+	- NetBSD
+	- OpenBSD
+	- Mac OS X
+	- Microsoft Windows (with Cygwin and some code changes)
 
 
 3.5
+================================================================================
+Q:	Will WeeChat be ported to QNX or other operating systems?
+
+A:	Yes. Future versions will be available for these OS.
+	We need help for such systems, any help is welcome :)
+
+
+3.6
 ================================================================================
 Q:	I want to help WeeChat developers. What can I do?
 
@@ -162,8 +185,9 @@ A:	There's many tasks to do (code, documentation, ...)
 	http://weechat.flashtux.org/support.php
 
 
-3.6
+3.7
 ================================================================================
 Q:	Can I give money or other things to WeeChat developers?
 
 A:	Beer is welcome :)
+	Otherwise Paypal account is: flashcode@free.fr (no limit for gifts :)

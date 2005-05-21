@@ -1,10 +1,10 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-05-07
+ChangeLog - 2005-05-21
 
 
-Version 0.1.2 (under dev!):
+Version 0.1.2 (2005-05-21):
    * added Python plugin support, improved Perl interface (and now Perl/Python
      libraries are checked by configure script)
    * added nicklist scroll keys (Alt+{home/end/pgup/pgdn} or F11/F12)

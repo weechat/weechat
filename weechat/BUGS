@@ -1,10 +1,9 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-WeeChat known bugs, 2005-05-07
+WeeChat known bugs, 2005-05-21
 
 - ./configure does not check that Gtk 2.0 libraries are installed
-- too much nicks in the channel (> height of window) => some nicks are hidden
 - when quitting WeeChat term title is not restored (if look_set_title is ON)
 - command name for /server can not contain spaces
 - wrong alias is not created and not saved when quitting WeeChat

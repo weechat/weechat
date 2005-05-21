@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.1.2-cvs\n"
+"Project-Id-Version: WeeChat 0.1.2\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-05-08 14:15+0200\n"
+"POT-Creation-Date: 2005-05-21 07:26+0200\n"
 "PO-Revision-Date: 2005-05-08 14:16+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2040,45 +2040,45 @@ msgstr "Mo"
 msgid "Gb"
 msgstr "Go"
 
-#: src/gui/curses/gui-display.c:1121
+#: src/gui/curses/gui-display.c:1122
 msgid "(away)"
 msgstr "(absent)"
 
-#: src/gui/curses/gui-display.c:1234
+#: src/gui/curses/gui-display.c:1235
 #, c-format
 msgid "%d:[not connected] "
 msgstr "%d:[non connecté] "
 
-#: src/gui/curses/gui-display.c:1251
+#: src/gui/curses/gui-display.c:1252
 msgid "Act: "
 msgstr "Act: "
 
-#: src/gui/curses/gui-display.c:1300
+#: src/gui/curses/gui-display.c:1301
 #, c-format
 msgid "Lag: %.1f"
 msgstr "Lag: %.1f"
 
-#: src/gui/curses/gui-display.c:1321
+#: src/gui/curses/gui-display.c:1322
 msgid "-MORE-"
 msgstr "-PLUS-"
 
-#: src/gui/curses/gui-display.c:1508
+#: src/gui/curses/gui-display.c:1509
 msgid "  [A] Accept"
 msgstr "  [A] Accepter"
 
-#: src/gui/curses/gui-display.c:1509 src/gui/curses/gui-display.c:1513
+#: src/gui/curses/gui-display.c:1510 src/gui/curses/gui-display.c:1514
 msgid "  [C] Cancel"
 msgstr "  [C] Annuler"
 
-#: src/gui/curses/gui-display.c:1518
+#: src/gui/curses/gui-display.c:1519
 msgid "  [R] Remove"
 msgstr "  [R] Retirer"
 
-#: src/gui/curses/gui-display.c:1522
+#: src/gui/curses/gui-display.c:1523
 msgid "  [P] Purge old DCC"
 msgstr "  [P] Purger anciens DCC"
 
-#: src/gui/curses/gui-display.c:1523
+#: src/gui/curses/gui-display.c:1524
 msgid "  [Q] Close DCC view"
 msgstr "  [Q] Fermer la vue DCC"
 
