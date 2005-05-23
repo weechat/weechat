@@ -151,8 +151,10 @@ it with your software package manager.])
     AC_MSG_CHECKING(for Perl library)
     PERL_LIB=`$PERL -e 'use Config; print "$Config{installprefix}/lib/$Config{libperl}"'`
     
-    if test -r "$PERL_LIB"; then
-        PLUGINS_LIBS="$PLUGINS_LIBS ../../plugins/perl/lib_weechat_perl.a `perl -MExtUtils::Embed -e ldopts`"
+    PERL_TEST=`PT=perltest.c ; echo "int main() { return 0; }" > $PT ; $CC -Wall $PT -o $PT.out $($PERL -MExtUtils::Embed -e ldopts) 1>/dev/null 2>&1; echo $?; rm -f $PT $PT.out 1>/dev/null 2>&1`
+
+    if test "x$PERL_TEST" = "x0" ; then
+        PLUGINS_LIBS="$PLUGINS_LIBS ../../plugins/perl/lib_weechat_perl.a `$PERL -MExtUtils::Embed -e ldopts`"
     else
         AC_MSG_ERROR([
 *** Perl library couldn't be found in your system.
@@ -160,7 +162,7 @@ it with your software package manager.])
     fi
     AC_MSG_RESULT(found)
     
-    PERL_CFLAGS=`perl -MExtUtils::Embed -e ccopts`
+    PERL_CFLAGS=`$PERL -MExtUtils::Embed -e ccopts`
     AC_SUBST(PERL_CFLAGS)
     AC_DEFINE(PLUGIN_PERL)
 fi
@@ -190,11 +192,12 @@ if test "x$enable_python" = "xyes" ; then
     fi
     AC_MSG_RESULT(found)
     
+    PYTHON_SYSPREFIX=`$PYTHON -c 'import sys; print "%s" % sys.prefix'`
     PYTHON_LIB=`$PYTHON -c 'import sys; print "%s/lib/python%s/config" % (sys.prefix, sys.version[[:3]])'`
     PYTHON_VERSION=`$PYTHON -c 'import sys ; print sys.version[[0:3]]'`
     
     AC_MSG_CHECKING(for Python library)
-    if test -r "$PYTHON_LIB/libpython$PYTHON_VERSION.so" -a -r "$PYTHON_LIB/libpython$PYTHON_VERSION.a"; then
+    if test -r "$PYTHON_LIB/libpython$PYTHON_VERSION.so" -o -r "$PYTHON_SYSPREFIX/lib/libpython$PYTHON_VERSION.so"; then
         PYTHON_LFLAGS=`$PYTHON -c "import distutils.sysconfig,string; print string.join(distutils.sysconfig.get_config_vars('LINKFORSHARED', 'BLDLIBRARY', 'SHLIBS'))"`
     else
         AC_MSG_ERROR([
