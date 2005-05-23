@@ -149,7 +149,6 @@ it with your software package manager.])
     fi
     
     AC_MSG_CHECKING(for Perl library)
-    PERL_LIB=`$PERL -e 'use Config; print "$Config{installprefix}/lib/$Config{libperl}"'`
     
     PERL_TEST=`PT=perltest.c ; echo "int main() { return 0; }" > $PT ; $CC -Wall $PT -o $PT.out $($PERL -MExtUtils::Embed -e ldopts) 1>/dev/null 2>&1; echo $?; rm -f $PT $PT.out 1>/dev/null 2>&1`
 
