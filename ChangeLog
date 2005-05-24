@@ -1,8 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-05-21
+ChangeLog - 2005-05-24
 
+
+Version 0.1.3 (under dev!):
+   * fixed startup crash when config file (~/.weechat/weechat.rc) is not found
+   * improved Perl/Python libs detection for ./configure script
 
 Version 0.1.2 (2005-05-21):
    * added Python plugin support, improved Perl interface (and now Perl/Python

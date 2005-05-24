@@ -2600,13 +2600,13 @@ gui_printf_type_color (t_gui_buffer *buffer, int type, int color, char *message,
             wee_log_printf ("gui_printf without buffer! this is a bug, please send to developers - thanks\n");
             return;
         }
+        
+        if (buffer->dcc)
+            buffer = gui_buffers;
+        
+        if (buffer->dcc)
+            return;
     }
-    
-    if (buffer->dcc)
-        buffer = gui_buffers;
-    
-    if (buffer->dcc)
-        return;
     
     va_start (argptr, message);
     vsnprintf (buf, sizeof (buf) - 1, message, argptr);
