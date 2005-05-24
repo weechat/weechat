@@ -148,11 +148,24 @@ Please check that perl is in path, or install
 it with your software package manager.])
     fi
     
-    AC_MSG_CHECKING(for Perl library)
+    AC_MSG_CHECKING(for Perl headers files)
     
-    PERL_TEST=`PT=perltest.c ; echo "int main() { return 0; }" > $PT ; $CC -Wall $PT -o $PT.out $($PERL -MExtUtils::Embed -e ldopts) 1>/dev/null 2>&1; echo $?; rm -f $PT $PT.out 1>/dev/null 2>&1`
+    PERL_HEADER_TEST=`PT=perltest.c ; echo "#include <EXTERN.h>" > $PT;  echo "#include <perl.h>" >> $PT;  echo "#include <XSUB.h>" >> $PT ;  echo "int main() { return 0; }" >> $PT ; $CC -Wall $PT -o $PT.out $($PERL -MExtUtils::Embed -e ccopts) 1>/dev/null 2>&1; echo $?; rm -f $PT $PT.out 1>/dev/null 2>&1`
 
-    if test "x$PERL_TEST" = "x0" ; then
+    if test "x$PERL_HEADER_TEST" = "x0" ; then
+	PERL_CFLAGS=`$PERL -MExtUtils::Embed -e ccopts`
+    else
+        AC_MSG_ERROR([
+*** Perl headers couldn't be found in your system.
+*** Try to install it with your software package manager.])
+    fi
+    AC_MSG_RESULT(found)
+    
+    AC_MSG_CHECKING(for Perl library)
+
+    PERL_LIB_TEST=`PT=perltest.c ; echo "int main() { return 0; }" > $PT ; $CC -Wall $PT -o $PT.out $($PERL -MExtUtils::Embed -e ldopts) 1>/dev/null 2>&1; echo $?; rm -f $PT $PT.out 1>/dev/null 2>&1`
+
+    if test "x$PERL_LIB_TEST" = "x0" ; then
         PLUGINS_LIBS="$PLUGINS_LIBS ../../plugins/perl/lib_weechat_perl.a `$PERL -MExtUtils::Embed -e ldopts`"
     else
         AC_MSG_ERROR([
@@ -160,8 +173,7 @@ it with your software package manager.])
 *** Try to install it with your software package manager.])
     fi
     AC_MSG_RESULT(found)
-    
-    PERL_CFLAGS=`$PERL -MExtUtils::Embed -e ccopts`
+	    
     AC_SUBST(PERL_CFLAGS)
     AC_DEFINE(PLUGIN_PERL)
 fi
