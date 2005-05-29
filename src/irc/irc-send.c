@@ -120,9 +120,9 @@ irc_cmd_send_away (t_irc_server *server, char *arguments)
                         {
                             snprintf (buffer, sizeof (buffer),
                                       "is back (gone %.2ld:%.2ld:%.2ld)",
-                                      elapsed / 3600,
-                                      (elapsed / 60) % 60,
-                                      elapsed % 60);
+                                      (long int)(elapsed / 3600),
+                                      (long int)((elapsed / 60) % 60),
+                                      (long int)(elapsed % 60));
                             irc_send_me_all_channels (ptr_server, buffer);
                         }
                     }
@@ -160,9 +160,9 @@ irc_cmd_send_away (t_irc_server *server, char *arguments)
                 {
                     snprintf (buffer, sizeof (buffer),
                               "is back (gone %.2ld:%.2ld:%.2ld)",
-                              elapsed / 3600,
-                              (elapsed / 60) % 60,
-                              elapsed % 60);
+                              (long int)(elapsed / 3600),
+                              (long int)((elapsed / 60) % 60),
+                              (long int)(elapsed % 60));
                     irc_send_me_all_channels (server, buffer);
                 }
             }
