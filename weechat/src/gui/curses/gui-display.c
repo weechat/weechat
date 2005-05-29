@@ -1328,7 +1328,7 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
             mvwprintw (ptr_win->win_status, 0, x, "%s", string);
         else
         {
-            snprintf (format_more, sizeof (format_more) - 1, "%%-%ds", strlen (string));
+            snprintf (format_more, sizeof (format_more) - 1, "%%-%ds", (int)(strlen (string)));
             mvwprintw (ptr_win->win_status, 0, x, format_more, " ");
         }
         if (gui_buffer_has_nicklist (ptr_win->buffer))
