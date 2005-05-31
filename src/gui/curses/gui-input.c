@@ -519,33 +519,39 @@ gui_read_keyb ()
                         /* Alt-S: jump to server buffer */
                         case 's':
                         case 'S':
-                            if (SERVER(gui_current_window->buffer)->buffer !=
-                                gui_current_window->buffer)
+                            if (!gui_current_window->buffer->dcc)
                             {
-                                gui_switch_to_buffer (gui_current_window,
-                                                      SERVER(gui_current_window->buffer)->buffer);
-                                gui_redraw_buffer (gui_current_window->buffer);
+                                if (SERVER(gui_current_window->buffer)->buffer !=
+                                    gui_current_window->buffer)
+                                {
+                                    gui_switch_to_buffer (gui_current_window,
+                                                          SERVER(gui_current_window->buffer)->buffer);
+                                    gui_redraw_buffer (gui_current_window->buffer);
+                                }
                             }
                             break;
                         /* Alt-X: jump to first channel/private of next server */
                         case 'x':
                         case 'X':
-                            ptr_server = SERVER(gui_current_window->buffer)->next_server;
-                            if (!ptr_server)
-                                ptr_server = irc_servers;
-                            while (ptr_server != SERVER(gui_current_window->buffer))
+                            if (!gui_current_window->buffer->dcc)
                             {
-                                if (ptr_server->buffer)
-                                    break;
-                                ptr_server = (ptr_server->next_server) ?
-                                             ptr_server->next_server : irc_servers;
-                            }
-                            if (ptr_server != SERVER(gui_current_window->buffer))
-                            {
-                                ptr_buffer = (ptr_server->channels) ?
-                                             ptr_server->channels->buffer : ptr_server->buffer;
-                                gui_switch_to_buffer (gui_current_window, ptr_buffer);
-                                gui_redraw_buffer (gui_current_window->buffer);
+                                ptr_server = SERVER(gui_current_window->buffer)->next_server;
+                                if (!ptr_server)
+                                    ptr_server = irc_servers;
+                                while (ptr_server != SERVER(gui_current_window->buffer))
+                                {
+                                    if (ptr_server->buffer)
+                                        break;
+                                    ptr_server = (ptr_server->next_server) ?
+                                                 ptr_server->next_server : irc_servers;
+                                }
+                                if (ptr_server != SERVER(gui_current_window->buffer))
+                                {
+                                    ptr_buffer = (ptr_server->channels) ?
+                                                 ptr_server->channels->buffer : ptr_server->buffer;
+                                    gui_switch_to_buffer (gui_current_window, ptr_buffer);
+                                    gui_redraw_buffer (gui_current_window->buffer);
+                                }
                             }
                             break;
                     }
