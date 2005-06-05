@@ -1445,7 +1445,7 @@ Listar los programas Python cargados: @kbd{/python}@*
 
 @itemize @bullet
 @item
-@command{weechat.register ( nombre, versi@'on, funci@'on_final, descripci@'on );}@*
+@command{weechat.register ( nombre, versi@'on, funci@'on_final, descripci@'on )}@*
 @*
 Es la primera funci@'on a la que llamar en el programa Python.@*
 Todos los programas en Python para WeeChat deben llamar esta funci@'on.@*
@@ -1461,11 +1461,11 @@ tener un nombre distinto)
 @end itemize
 @*
 @emph{Ejemplo:}@*
-@code{weechat.register ("ejemplo", "1.0", "fin_ejemplo", "programa de ejemplo...");}@*
+@code{weechat.register ("ejemplo", "1.0", "fin_ejemplo", "programa de ejemplo...")}@*
 @*
 
 @item
-@command{weechat.prnt ( mensaje, [canal, [servidor]] );}@*
+@command{weechat.prnt ( mensaje, [canal, [servidor]] )}@*
 @*
 Escribe un mensaje en un canal.@*
 
@@ -1477,29 +1477,29 @@ Escribe un mensaje en un canal.@*
 @end itemize
 @*
 @emph{Ejemplo:}@*
-@code{weechat.prnt ("mensaje");}@*
-@code{weechat.prnt ("mensaje", "#weechat");}@*
-@code{weechat.prnt ("mensaje", "#weechat", "freenode");}@*
+@code{weechat.prnt ("mensaje")}@*
+@code{weechat.prnt ("mensaje", "#weechat")}@*
+@code{weechat.prnt ("mensaje", "#weechat", "freenode")}@*
 @*
 
 @item
-@command{weechat.print_infobar ( retraso, mensaje );}@*
+@command{weechat.print_infobar ( retraso, mensaje )}@*
 @*
 Escribir un mensaje en la barra de informaciones.@*
 
 @emph{Par@'ametros:}
 @itemize @minus
-@item @option{plazo}: periodo en segundo durante el cual se mostrar@'a el mensaje
+@item @option{retraso}: periodo en segundo durante el cual se mostrar@'a el mensaje
 (si es 0, el mensaje no se borrar@'a).
-@item @option{message}: mensaje que se escribir@'a en la barra de informaciones.
+@item @option{mensaje}: mensaje que se escribir@'a en la barra de informaciones.
 @end itemize
 @*
 @emph{Ejemplo:}@*
-@code{weechat.print_infobar (5, "mensaje");}@*
+@code{weechat.print_infobar (5, "mensaje")}@*
 @*
 
 @item
-@command{weechat.add_message_handler ( nombre, funci@'on );}@*
+@command{weechat.add_message_handler ( nombre, funci@'on )}@*
 @*
 Adjunta una funci@'on Python a un mensaje IRC.@*
 Se llamar@'a a la funci@'on cada vez que el mensaje IRC se reciba.@*
@@ -1515,18 +1515,16 @@ RFC 2812: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
 @end itemize
 @*
 @emph{Ejemplo:}@*
-@code{weechat.add_message_handler ("privmsg", mi_funcion);}@*
-@code{sub mi_funcion}@*
-@code{@{ }@*
-@code{@ @ @ @ weechat.prnt ("serveur=$_[0]\n");}@*
-@code{@ @ @ @ ($null, $canal, $mensaje) = split ":",$_[1],3;}@*
-@code{@ @ @ @ ($mascara, $null, $canal) = split " ", $canal;}@*
-@code{@ @ @ @ weechat.prnt ("mascara=$mascara, canal=$canal, mensaje=$mensaje\n");}@*
-@code{@} }@*
+@code{weechat.add_message_handler ("privmsg", mi_funcion)}@*
+@code{def mi_funcion(servidor, args):}@*
+@code{@ @ @ @ weechat.prnt("servidor="+servidor)}@*
+@code{@ @ @ @ null, canal, mensaje = string.split(args, ":", 2)}@*
+@code{@ @ @ @ mascara, null, canal = string.split(string.strip(canal), " ", 2)}@*
+@code{@ @ @ @ weechat.prnt("mascara="+mascara+", canal="+canal+", mensaje="+mensaje)}@*
 @*
 
 @item
-@command{weechat.add_command_handler ( nombre, funci@'on );}@*
+@command{weechat.add_command_handler ( nombre, funci@'on )}@*
 @*
 A@~nadir un nuevo comando WeeChat, con un enlace a una funci@'on en Python.@*
 Se llamar@'a a la funci@'on cuando el usuario lance el comando con @kbd{/nombre}.@*
@@ -1541,16 +1539,13 @@ al antiguo comando si el script Python est@'a cargado.
 @end itemize
 @*
 @emph{Ejemplo:}@*
-@code{weechat.add_command_handler ("comando", mi_comando);}@*
-@code{sub mi_comando}@*
-@code{@{ }@*
-@code{@ @ @ @ weechat.prnt("Servidor: $_[0], Par@'ametros: $_[1]\n");}@*
-@code{@ @ @ @ return 0;}@*
-@code{@} }@*
+@code{weechat.add_command_handler ("comando", mi_comando)}@*
+@code{def mi_comando(servidor, args):}@*
+@code{@ @ @ @ weechat.prnt("Servidor:"+servidor+" Par@'ametros:"+args)}@*
 @*
 
 @item
-@command{weechat.command ( command, [channel, [server]] );}@*
+@command{weechat.command ( command, [channel, [server]] )}@*
 @*
 Execute a command or send a message to a channel.@*
 
@@ -1562,13 +1557,13 @@ Execute a command or send a message to a channel.@*
 @end itemize
 @*
 @emph{Examples:}@*
-@code{weechat.command ("hello world!");}@*
-@code{weechat.command ("/kick toto please leave this chan", "#weechat");}@*
-@code{weechat.command ("/nick newnick", "", "freenode");}@*
+@code{weechat.command ("hello world!")}@*
+@code{weechat.command ("/kick toto please leave this chan", "#weechat")}@*
+@code{weechat.command ("/nick newnick", "", "freenode")}@*
 @*
 
 @item
-@command{weechat.get_info ( nombre, [servidor] );}@*
+@command{weechat.get_info ( nombre, [servidor] )}@*
 @*
 Obtener informaciones distintas sobre WeeChat, el servidor o el usuario.@*
 
@@ -1587,8 +1582,8 @@ Obtener informaciones distintas sobre WeeChat, el servidor o el usuario.@*
 @end itemize
 @*
 @emph{Ejemplos:}@*
-@code{$version = weechat.get_info("version");}@*
-@code{$nick = weechat.get_info("nick", "freenode");}@*
+@code{$version = weechat.get_info("version")}@*
+@code{$nick = weechat.get_info("nick", "freenode")}@*
 @*
 
 @end itemize

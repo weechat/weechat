@@ -1444,7 +1444,7 @@ Lister les scripts Python charg@'es : @kbd{/python}@*
 
 @itemize @bullet
 @item
-@command{weechat.register ( nom, version, fonction_de_fin, description );}@*
+@command{weechat.register ( nom, version, fonction_de_fin, description )}@*
 @*
 C'est la premi@`ere fonction @`a appeler dans le script Python.@*
 Tout script Python pour WeeChat doit appeler cette fonction.@*
@@ -1461,11 +1461,11 @@ de fonction @`a appeler)
 @end itemize
 @*
 @emph{Exemple :}@*
-@code{weechat.register ("essai", "1.0", "fin_essai", "Script d'essai !");}@*
+@code{weechat.register ("essai", "1.0", "fin_essai", "Script d'essai !")}@*
 @*
 
 @item
-@command{weechat.prnt ( message, [canal, [serveur]] );}@*
+@command{weechat.prnt ( message, [canal, [serveur]] )}@*
 @*
 Affiche un message dans un canal.@*
 
@@ -1477,13 +1477,13 @@ Affiche un message dans un canal.@*
 @end itemize
 @*
 @emph{Exemple :}@*
-@code{weechat.prnt ("message");}@*
-@code{weechat.prnt ("message", "#weechat");}@*
-@code{weechat.prnt ("message", "#weechat", "freenode");}@*
+@code{weechat.prnt ("message")}@*
+@code{weechat.prnt ("message", "#weechat")}@*
+@code{weechat.prnt ("message", "#weechat", "freenode")}@*
 @*
 
 @item
-@command{weechat.print_infobar ( d@'elai, message );}@*
+@command{weechat.print_infobar ( d@'elai, message )}@*
 @*
 Affiche un message dans la barre d'infos.@*
 
@@ -1495,11 +1495,11 @@ Affiche un message dans la barre d'infos.@*
 @end itemize
 @*
 @emph{Exemple :}@*
-@code{weechat.print_infobar (5, "message");}@*
+@code{weechat.print_infobar (5, "message")}@*
 @*
 
 @item
-@command{weechat.add_message_handler ( nom, fonction );}@*
+@command{weechat.add_message_handler ( nom, fonction )}@*
 @*
 Attache une fonction Python @`a un message IRC particulier.@*
 La fonction sera appel@'ee @`a chaque fois que le message IRC sera re@,{c}u.@*
@@ -1515,18 +1515,16 @@ RFC 2812 : @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
 @end itemize
 @*
 @emph{Exemple :}@*
-@code{weechat.add_message_handler ("privmsg", ma_fonction);}@*
-@code{sub ma_fonction}@*
-@code{@{ }@*
-@code{@ @ @ @ weechat.prnt ("serveur=$_[0]\n");}@*
-@code{@ @ @ @ ($null, $canal, $message) = split ":",$_[1],3;}@*
-@code{@ @ @ @ ($masque, $null, $canal) = split " ", $canal;}@*
-@code{@ @ @ @ weechat.prnt ("masque=$masque, canal=$canal, message=$message\n");}@*
-@code{@} }@*
+@code{weechat.add_message_handler ("privmsg", ma_fonction)}@*
+@code{def ma_fonction(serveur, args):}@*
+@code{@ @ @ @ weechat.prnt("serveur="+serveur)}@*
+@code{@ @ @ @ null, canal, message = string.split(args, ":", 2)}@*
+@code{@ @ @ @ masque, null, canal = string.split(string.strip(canal), " ", 2)}@*
+@code{@ @ @ @ weechat.prnt("masque="+masque+", canal="+canal+", message="+message)}@*
 @*
 
 @item
-@command{weechat.add_command_handler ( nom, fonction );}@*
+@command{weechat.add_command_handler ( nom, fonction )}@*
 @*
 Cr@'e@'e une nouvelle commande WeeChat, associ@'ee @`a une fonction Python.@*
 La fonction sera appel@'ee lorsque l'utilisateur lancera la commande par @kbd{/nom}.@*
@@ -1541,16 +1539,13 @@ ne seront plus accessibles tant que le script Python sera charg@'e.
 @end itemize
 @*
 @emph{Exemple :}@*
-@code{weechat.add_command_handler ("commande", ma_commande);}@*
-@code{sub ma_commande}@*
-@code{@{ }@*
-@code{@ @ @ @ weechat.prnt("Serveur: $_[0], param@`etres: $_[1]\n");}@*
-@code{@ @ @ @ return 0;}@*
-@code{@} }@*
+@code{weechat.add_command_handler ("commande", ma_commande)}@*
+@code{def ma_commande(serveur, args):}@*
+@code{@ @ @ @ weechat.prnt("serveur:"+serveur+" param@`etres:"+args)}@*
 @*
 
 @item
-@command{weechat.command ( commande, [canal, [serveur]] );}@*
+@command{weechat.command ( commande, [canal, [serveur]] )}@*
 @*
 Ex@'ecute une commande ou envoie un message @'a un canal.@*
 
@@ -1562,13 +1557,13 @@ Ex@'ecute une commande ou envoie un message @'a un canal.@*
 @end itemize
 @*
 @emph{Exemples :}@*
-@code{weechat.command ("bonjour tout le monde !");}@*
-@code{weechat.command ("/kick toto merci de quitter ce canal", "#weechat");}@*
-@code{weechat.command ("/nick newnick", "", "freenode");}@*
+@code{weechat.command ("bonjour tout le monde !")}@*
+@code{weechat.command ("/kick toto merci de quitter ce canal", "#weechat")}@*
+@code{weechat.command ("/nick newnick", "", "freenode")}@*
 @*
 
 @item
-@command{weechat.get_info ( nom, [serveur] );}@*
+@command{weechat.get_info ( nom, [serveur] )}@*
 @*
 Obtenir des informations vari@'ees sur WeeChat, le serveur ou l'utilisateur.@*
 
@@ -1587,8 +1582,8 @@ Obtenir des informations vari@'ees sur WeeChat, le serveur ou l'utilisateur.@*
 @end itemize
 @*
 @emph{Exemples :}@*
-@code{$version = weechat.get_info("version");}@*
-@code{$nick = weechat.get_info("nick", "freenode");}@*
+@code{$version = weechat.get_info("version")}@*
+@code{$nick = weechat.get_info("nick", "freenode")}@*
 @*
 
 @end itemize

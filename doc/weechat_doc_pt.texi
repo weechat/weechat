@@ -576,11 +576,11 @@ Todos os Scripts Python para o Weechat devem invocar esta fun@,{c}@~ao.@*
 @end itemize
 @*
 @emph{Exemplo:}@*
-@code{weechat.register ("sample", "1.0", "sample_end", "Sample script!");}@*
+@code{weechat.register ("sample", "1.0", "sample_end", "Sample script!")}@*
 @*
 
 @item
-@command{weechat.prnt ( mensagem, [canal, [servidor]] );}@*
+@command{weechat.prnt ( mensagem, [canal, [servidor]] )}@*
 @*
 Imprimne uma mensagem na canal.@*
 
@@ -592,13 +592,13 @@ Imprimne uma mensagem na canal.@*
 @end itemize
 @*
 @emph{Exemplo:}@*
-@code{weechat.prnt ("mensagem");}@*
-@code{weechat.prnt ("mensagem", "#weechat");}@*
-@code{weechat.prnt ("mensagem", "#weechat", "freenode");}@*
+@code{weechat.prnt ("mensagem")}@*
+@code{weechat.prnt ("mensagem", "#weechat")}@*
+@code{weechat.prnt ("mensagem", "#weechat", "freenode")}@*
 @*
 
 @item
-@command{weechat.print_infobar ( atrasa, mensagem );}@*
+@command{weechat.print_infobar ( atrasa, mensagem )}@*
 @*
 Imprimne uma mensagem na barra do info.@*
 
@@ -610,11 +610,11 @@ Imprimne uma mensagem na barra do info.@*
 @end itemize
 @*
 @emph{Exemplo:}@*
-@code{weechat.print_infobar (5, "mensagem");}@*
+@code{weechat.print_infobar (5, "mensagem")}@*
 @*
 
 @item
-@command{weechat.add_message_handler ( nome, fun@,{c}@~ao );}@*
+@command{weechat.add_message_handler ( nome, fun@,{c}@~ao )}@*
 @*
 Anexa uma fun@,{c}@~ao Python a uma mensagem de IRC.@*
 A fun@,{c}@~ao ser@'a invocada de cada vez que a mensagem IRC for recebida.@*
@@ -629,17 +629,16 @@ RFC 2812: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
 @end itemize
 @*
 @emph{Exemplo:}@*
-@code{weechat.add_message_handler ("privmsg", my_function);}@*
-@code{sub my_function}@*
-@code{@{ }@*
-@code{@ @ @ @ ($null, $channel, $message) = split ":",@@_[0],3;}@*
-@code{@ @ @ @ ($hostmask, $null, $channel) = split " ", $channel;}@*
-@code{@ @ @ @ weechat.prnt ("host=$hostmask, chan=$channel, msg=$message\n");}@*
-@code{@} }@*
+@code{weechat.add_message_handler ("privmsg", my_function)}@*
+@code{def my_function(server, args):}@*
+@code{@ @ @ @ weechat.prnt("server="+server)}@*
+@code{@ @ @ @ null, channel, message = string.split(args, ":", 2)}@*
+@code{@ @ @ @ hostmask, null, channel = string.split(string.strip(channel), " ", 2)}@*
+@code{@ @ @ @ weechat.prnt("host="+hostmask+", channel="+channel+", message="+message)}@*
 @*
 
 @item
-@command{weechat.add_command_handler ( nome, fun@,{c}@~ao );}@*
+@command{weechat.add_command_handler ( nome, fun@,{c}@~ao )}@*
 @*
 Cria um novo comando do Weechat, ligado a uma fun@,{c}@~ao Python.@*
 A fun@,{c}@~ao ser@'a chamada quando o utilizador a invocar utilizando @command{/nome}@*
@@ -652,16 +651,13 @@ Este nome pode pertencer a um comando já existente, o qual ser@'a sobreposto pel
 @end itemize
 @*
 @emph{Exemplo:}@*
-@code{weechat.add_command_handler ("command", my_command);}@*
-@code{sub my_command}@*
-@code{@{ }@*
-@code{@ @ @ @ weechat.prnt("Argumentos: ".@@_[0]);}@*
-@code{@ @ @ @ return 0;}@*
-@code{@} }@*
+@code{weechat.add_command_handler ("command", my_command)}@*
+@code{def my_command(server, args):}@*
+@code{@ @ @ @ weechat.prnt("Servidor:"+server+" Argumentos:"+args)}@*
 @*
 
 @item
-@command{weechat.command ( command, [channel, [server]] );}@*
+@command{weechat.command ( command, [channel, [server]] )}@*
 @*
 Execute a command or send a message to a channel.@*
 
@@ -673,13 +669,13 @@ Execute a command or send a message to a channel.@*
 @end itemize
 @*
 @emph{Examples:}@*
-@code{weechat.command ("hello world!");}@*
-@code{weechat.command ("/kick toto please leave this chan", "#weechat");}@*
-@code{weechat.command ("/nick newnick", "", "freenode");}@*
+@code{weechat.command ("hello world!")}@*
+@code{weechat.command ("/kick toto please leave this chan", "#weechat")}@*
+@code{weechat.command ("/nick newnick", "", "freenode")}@*
 @*
 
 @item
-@command{weechat.get_info ( nome, [servidor] );}@*
+@command{weechat.get_info ( nome, [servidor] )}@*
 @*
 Comece o v@'ario info sobre WeeChat, servidor ou usu@'ario.@*
 
@@ -698,8 +694,8 @@ Comece o v@'ario info sobre WeeChat, servidor ou usu@'ario.@*
 @end itemize
 @*
 @emph{Exemplos:}@*
-@code{$version = weechat.get_info("version");}@*
-@code{$nick = weechat.get_info("nick", "freenode");}@*
+@code{$version = weechat.get_info("version")}@*
+@code{$nick = weechat.get_info("nick", "freenode")}@*
 @*
 
 @end itemize

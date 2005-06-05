@@ -1443,7 +1443,7 @@ List all Python scripts: @kbd{/python}@*
 
 @itemize @bullet
 @item
-@command{weechat.register ( name, version, shutdown_function, description );}@*
+@command{weechat.register ( name, version, shutdown_function, description )}@*
 @*
 This is first function to call in Python script.@*
 All Python scripts for WeeChat should call this function.@*
@@ -1459,11 +1459,11 @@ unloaded (optional parameter, empty string means nothing is called at the end)
 @end itemize
 @*
 @emph{Example:}@*
-@code{weechat.register ("sample", "1.0", "sample_end", "Sample script!");}@*
+@code{weechat.register ("sample", "1.0", "sample_end", "Sample script!")}@*
 @*
 
 @item
-@command{weechat.prnt ( message, [channel, [server]] );}@*
+@command{weechat.prnt ( message, [channel, [server]] )}@*
 @*
 Print message in a channel.@*
 
@@ -1475,13 +1475,13 @@ Print message in a channel.@*
 @end itemize
 @*
 @emph{Examples:}@*
-@code{weechat.prnt ("message");}@*
-@code{weechat.prnt ("message", "#weechat");}@*
-@code{weechat.prnt ("message", "#weechat", "freenode");}@*
+@code{weechat.prnt ("message")}@*
+@code{weechat.prnt ("message", "#weechat")}@*
+@code{weechat.prnt ("message", "#weechat", "freenode")}@*
 @*
 
 @item
-@command{weechat.print_infobar ( delay, message );}@*
+@command{weechat.print_infobar ( delay, message )}@*
 @*
 Print message in infobar.@*
 
@@ -1493,11 +1493,11 @@ Print message in infobar.@*
 @end itemize
 @*
 @emph{Example:}@*
-@code{weechat.print_infobar (5, "message");}@*
+@code{weechat.print_infobar (5, "message")}@*
 @*
 
 @item
-@command{weechat.add_message_handler ( name, function );}@*
+@command{weechat.add_message_handler ( name, function )}@*
 @*
 Attach a Python function to an IRC message.@*
 Function will be called each time IRC message will be received.@*
@@ -1512,18 +1512,16 @@ RFC 2812: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
 @end itemize
 @*
 @emph{Example:}@*
-@code{weechat.add_message_handler ("privmsg", my_function);}@*
-@code{sub my_function}@*
-@code{@{ }@*
-@code{@ @ @ @ weechat.print ("server=$_[0]\n");}@*
-@code{@ @ @ @ ($null, $channel, $message) = split ":",$_[1],3;}@*
-@code{@ @ @ @ ($hostmask, $null, $channel) = split " ", $channel;}@*
-@code{@ @ @ @ weechat.prnt ("host=$hostmask, chan=$channel, msg=$message\n");}@*
-@code{@} }@*
+@code{weechat.add_message_handler ("privmsg", my_function)}@*
+@code{def my_function(server, args):}@*
+@code{@ @ @ @ weechat.prnt("server="+server)}@*
+@code{@ @ @ @ null, channel, message = string.split(args, ":", 2)}@*
+@code{@ @ @ @ hostmask, null, channel = string.split(string.strip(channel), " ", 2)}@*
+@code{@ @ @ @ weechat.prnt("host="+hostmask+", channel="+channel+", message="+message)}@*
 @*
 
 @item
-@command{weechat.add_command_handler ( name, function );}@*
+@command{weechat.add_command_handler ( name, function )}@*
 @*
 Create new WeeChat command, linked with Python function.@*
 Function will be called when user will launch command with @kbd{/name}.@*
@@ -1538,16 +1536,13 @@ available until your Python script will be unloaded.
 @end itemize
 @*
 @emph{Example:}@*
-@code{weechat.add_command_handler ("command", my_command);}@*
-@code{sub my_command}@*
-@code{@{ }@*
-@code{@ @ @ @ weechat.prnt("Server: $_[0], arguments: $_[1]\n");}@*
-@code{@ @ @ @ return 0;}@*
-@code{@} }@*
+@code{weechat.add_command_handler ("command", my_command)}@*
+@code{def my_command(server, args):}@*
+@code{@ @ @ @ weechat.prnt("server:"+server+" arguments:"+args)}@*
 @*
 
 @item
-@command{weechat.command ( command, [channel, [server]] );}@*
+@command{weechat.command ( command, [channel, [server]] )}@*
 @*
 Execute a command or send a message to a channel.@*
 
@@ -1559,14 +1554,14 @@ Execute a command or send a message to a channel.@*
 @end itemize
 @*
 @emph{Examples:}@*
-@code{weechat.command ("hello world!");}@*
-@code{weechat.command ("/kick toto please leave this chan", "#weechat");}@*
-@code{weechat.command ("/nick newnick", "", "freenode");}@*
+@code{weechat.command ("hello world!")}@*
+@code{weechat.command ("/kick toto please leave this chan", "#weechat")}@*
+@code{weechat.command ("/nick newnick", "", "freenode")}@*
 @*
 
 
 @item
-@command{weechat.get_info ( name, [server] );}@*
+@command{weechat.get_info ( name, [server] )}@*
 @*
 Get various info about WeeChat, server or user.@*
 
@@ -1585,8 +1580,8 @@ Get various info about WeeChat, server or user.@*
 @end itemize
 @*
 @emph{Examples:}@*
-@code{$version = weechat.get_info("version");}@*
-@code{$nick = weechat.get_info("nick", "freenode");}@*
+@code{$version = weechat.get_info("version")}@*
+@code{$nick = weechat.get_info("nick", "freenode")}@*
 @*
 
 @end itemize
