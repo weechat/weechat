@@ -2271,93 +2271,93 @@ gui_init_colors ()
         use_default_colors ();
         
         init_pair (COLOR_WIN_TITLE,
-            cfg_col_title & A_CHARTEXT, cfg_col_title_bg);
+            cfg_col_title, cfg_col_title_bg);
         init_pair (COLOR_WIN_CHAT,
-            cfg_col_chat & A_CHARTEXT, cfg_col_chat_bg);
+            cfg_col_chat, cfg_col_chat_bg);
         init_pair (COLOR_WIN_CHAT_TIME,
-            cfg_col_chat_time & A_CHARTEXT, cfg_col_chat_bg);
+            cfg_col_chat_time, cfg_col_chat_bg);
         init_pair (COLOR_WIN_CHAT_TIME_SEP,
-            cfg_col_chat_time_sep & A_CHARTEXT, cfg_col_chat_bg);
+            cfg_col_chat_time_sep, cfg_col_chat_bg);
         init_pair (COLOR_WIN_CHAT_PREFIX1,
-            cfg_col_chat_prefix1 & A_CHARTEXT, cfg_col_chat_bg);
+            cfg_col_chat_prefix1, cfg_col_chat_bg);
         init_pair (COLOR_WIN_CHAT_PREFIX2,
-            cfg_col_chat_prefix2 & A_CHARTEXT, cfg_col_chat_bg);
+            cfg_col_chat_prefix2, cfg_col_chat_bg);
         init_pair (COLOR_WIN_CHAT_NICK,
-            cfg_col_chat_nick & A_CHARTEXT, cfg_col_chat_bg);
+            cfg_col_chat_nick, cfg_col_chat_bg);
         init_pair (COLOR_WIN_CHAT_HOST,
-            cfg_col_chat_host & A_CHARTEXT, cfg_col_chat_bg);
+            cfg_col_chat_host, cfg_col_chat_bg);
         init_pair (COLOR_WIN_CHAT_CHANNEL,
-            cfg_col_chat_channel & A_CHARTEXT, cfg_col_chat_bg);
+            cfg_col_chat_channel, cfg_col_chat_bg);
         init_pair (COLOR_WIN_CHAT_DARK,
-            cfg_col_chat_dark & A_CHARTEXT, cfg_col_chat_bg);
+            cfg_col_chat_dark, cfg_col_chat_bg);
         init_pair (COLOR_WIN_CHAT_HIGHLIGHT,
-            cfg_col_chat_highlight & A_CHARTEXT, cfg_col_chat_bg);
+            cfg_col_chat_highlight, cfg_col_chat_bg);
         init_pair (COLOR_WIN_STATUS,
-            cfg_col_status & A_CHARTEXT, cfg_col_status_bg);
+            cfg_col_status, cfg_col_status_bg);
         init_pair (COLOR_WIN_STATUS_DELIMITERS,
-            cfg_col_status_delimiters & A_CHARTEXT, cfg_col_status_bg);
+            cfg_col_status_delimiters, cfg_col_status_bg);
         init_pair (COLOR_WIN_STATUS_DATA_MSG,
-            cfg_col_status_data_msg & A_CHARTEXT, cfg_col_status_bg);
+            cfg_col_status_data_msg, cfg_col_status_bg);
         init_pair (COLOR_WIN_STATUS_DATA_HIGHLIGHT,
-            cfg_col_status_data_highlight & A_CHARTEXT, cfg_col_status_bg);
+            cfg_col_status_data_highlight, cfg_col_status_bg);
         init_pair (COLOR_WIN_STATUS_DATA_OTHER,
-            cfg_col_status_data_other & A_CHARTEXT, cfg_col_status_bg);
+            cfg_col_status_data_other, cfg_col_status_bg);
         init_pair (COLOR_WIN_STATUS_MORE,
-            cfg_col_status_more & A_CHARTEXT, cfg_col_status_bg);
+            cfg_col_status_more, cfg_col_status_bg);
         init_pair (COLOR_WIN_INFOBAR,
-            cfg_col_infobar & A_CHARTEXT, cfg_col_infobar_bg);
+            cfg_col_infobar, cfg_col_infobar_bg);
         init_pair (COLOR_WIN_INFOBAR_HIGHLIGHT,
-            cfg_col_infobar_highlight & A_CHARTEXT, cfg_col_infobar_bg);
+            cfg_col_infobar_highlight, cfg_col_infobar_bg);
         init_pair (COLOR_WIN_INPUT,
-            cfg_col_input & A_CHARTEXT, cfg_col_input_bg);
+            cfg_col_input, cfg_col_input_bg);
         init_pair (COLOR_WIN_INPUT_CHANNEL,
-            cfg_col_input_channel & A_CHARTEXT, cfg_col_input_bg);
+            cfg_col_input_channel, cfg_col_input_bg);
         init_pair (COLOR_WIN_INPUT_NICK,
-            cfg_col_input_nick & A_CHARTEXT, cfg_col_input_bg);
+            cfg_col_input_nick, cfg_col_input_bg);
         init_pair (COLOR_WIN_NICK,
-            cfg_col_nick & A_CHARTEXT, cfg_col_nick_bg);
+            cfg_col_nick, cfg_col_nick_bg);
         init_pair (COLOR_WIN_NICK_AWAY,
-            cfg_col_nick_away & A_CHARTEXT, cfg_col_nick_bg);
+            cfg_col_nick_away, cfg_col_nick_bg);
         init_pair (COLOR_WIN_NICK_CHANOWNER,
-            cfg_col_nick_chanowner & A_CHARTEXT, cfg_col_nick_bg);
+            cfg_col_nick_chanowner, cfg_col_nick_bg);
         init_pair (COLOR_WIN_NICK_CHANADMIN,
-            cfg_col_nick_chanadmin & A_CHARTEXT, cfg_col_nick_bg);
+            cfg_col_nick_chanadmin, cfg_col_nick_bg);
         init_pair (COLOR_WIN_NICK_OP,
-            cfg_col_nick_op & A_CHARTEXT, cfg_col_nick_bg);
+            cfg_col_nick_op, cfg_col_nick_bg);
         init_pair (COLOR_WIN_NICK_HALFOP,
-            cfg_col_nick_halfop & A_CHARTEXT, cfg_col_nick_bg);
+            cfg_col_nick_halfop, cfg_col_nick_bg);
         init_pair (COLOR_WIN_NICK_VOICE,
-            cfg_col_nick_voice & A_CHARTEXT, cfg_col_nick_bg);
+            cfg_col_nick_voice, cfg_col_nick_bg);
         init_pair (COLOR_WIN_NICK_MORE,
-            cfg_col_nick_more & A_CHARTEXT, cfg_col_nick_bg);
+            cfg_col_nick_more, cfg_col_nick_bg);
         init_pair (COLOR_WIN_NICK_SEP,
-            cfg_col_nick_sep & A_CHARTEXT, cfg_col_nick_bg);
+            cfg_col_nick_sep, cfg_col_nick_bg);
         init_pair (COLOR_WIN_NICK_SELF,
-            cfg_col_nick_self & A_CHARTEXT, cfg_col_nick_bg);
+            cfg_col_nick_self, cfg_col_nick_bg);
         init_pair (COLOR_WIN_NICK_PRIVATE,
-            cfg_col_nick_private & A_CHARTEXT, cfg_col_nick_bg);
+            cfg_col_nick_private, cfg_col_nick_bg);
         
         for (i = 0; i < COLOR_WIN_NICK_NUMBER; i++)
         {
             gui_assign_color (&color, nicks_colors[i]);
-            init_pair (COLOR_WIN_NICK_FIRST + i, color & A_CHARTEXT, cfg_col_chat_bg);
+            init_pair (COLOR_WIN_NICK_FIRST + i, color, cfg_col_chat_bg);
             color_attr[COLOR_WIN_NICK_FIRST + i - 1] = (color >= 0) ? color & A_BOLD : 0;
         }
         
         init_pair (COLOR_DCC_SELECTED,
-            cfg_col_dcc_selected & A_CHARTEXT, cfg_col_chat_bg);
+            cfg_col_dcc_selected, cfg_col_chat_bg);
         init_pair (COLOR_DCC_WAITING,
-            cfg_col_dcc_waiting & A_CHARTEXT, cfg_col_chat_bg);
+            cfg_col_dcc_waiting, cfg_col_chat_bg);
         init_pair (COLOR_DCC_CONNECTING,
-            cfg_col_dcc_connecting & A_CHARTEXT, cfg_col_chat_bg);
+            cfg_col_dcc_connecting, cfg_col_chat_bg);
         init_pair (COLOR_DCC_ACTIVE,
-            cfg_col_dcc_active & A_CHARTEXT, cfg_col_chat_bg);
+            cfg_col_dcc_active, cfg_col_chat_bg);
         init_pair (COLOR_DCC_DONE,
-            cfg_col_dcc_done & A_CHARTEXT, cfg_col_chat_bg);
+            cfg_col_dcc_done, cfg_col_chat_bg);
         init_pair (COLOR_DCC_FAILED,
-            cfg_col_dcc_failed & A_CHARTEXT, cfg_col_chat_bg);
+            cfg_col_dcc_failed, cfg_col_chat_bg);
         init_pair (COLOR_DCC_ABORTED,
-            cfg_col_dcc_aborted & A_CHARTEXT, cfg_col_chat_bg);
+            cfg_col_dcc_aborted, cfg_col_chat_bg);
             
         color_attr[COLOR_WIN_TITLE - 1] = (cfg_col_title >= 0) ? cfg_col_title & A_BOLD : 0;
         color_attr[COLOR_WIN_CHAT - 1] = (cfg_col_chat >= 0) ? cfg_col_chat & A_BOLD : 0;
