@@ -1203,8 +1203,8 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                     {
                         irc_display_prefix (server->buffer, PREFIX_ERROR);
                         gui_printf_nolog (server->buffer,
-                                          _("%s nick \"%s\" not found for \"%s\" command\n"),
-                                          WEECHAT_ERROR, host, "privmsg");
+                                          _("%s nick \"%s\" not found for \"%s\" command (message: \"%s\")\n"),
+                                          WEECHAT_ERROR, host, "privmsg", pos);
                         return -1;
                     }
                 }
