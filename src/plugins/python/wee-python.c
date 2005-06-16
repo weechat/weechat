@@ -58,7 +58,7 @@ wee_python_register (PyObject *self, PyObject *args)
         irc_display_prefix (NULL, PREFIX_ERROR);
         gui_printf (NULL,
                     _("%s error: wrong parameters for \"%s\" function\n"),
-                    "Python", "print_with_channel");
+                    "Python", "register");
         return NULL;
     } 
     
@@ -140,7 +140,7 @@ wee_python_print (PyObject *self, PyObject *args)
         irc_display_prefix (NULL, PREFIX_ERROR);
         gui_printf (NULL,
                     _("%s error: wrong parameters for \"%s\" function\n"),
-                    "Python", "print");
+                    "Python", "prnt");
         return NULL;
     }
     
@@ -407,6 +407,31 @@ wee_python_init ()
     {
         wee_log_printf (_("Loading %s module \"weechat\"\n"), "Python");
         Py_InitModule ("weechat", weechat_funcs);
+
+	if (PyRun_SimpleString (
+				"import weechat, sys, string\n"
+
+				"class weechatStdout:\n"
+				"\tdef write(self, str):\n"
+				"\t\tstr = string.strip(str)\n"
+				"\t\tif str != \"\":\n"
+				"\t\t\tweechat.prnt(\"Python stdout : \" + str, \"\")\n"
+
+				"class weechatStderr:\n"
+				"\tdef write(self, str):\n"
+				"\t\tstr = string.strip(str)\n"
+				"\t\tif str != \"\":\n"
+				"\t\t\tweechat.prnt(\"Python stderr : \" + str, \"\")\n"
+
+				"sys.stdout = weechatStdout()\n"
+				"sys.stderr = weechatStderr()\n"
+				) != 0)
+	  {
+	    irc_display_prefix (NULL, PREFIX_PLUGIN);
+            gui_printf (NULL,
+                        _("%s error: error while redirecting stdout and stderr\n"),
+                        "Python");
+	  }
     }
 }
 
