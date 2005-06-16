@@ -5,6 +5,8 @@ ChangeLog - 2005-06-16
 
 
 Version 0.1.3 (under dev!):
+   * in python scripts, all messages written in stdin and stderr are redirect in server window
+   * fix a filename error while loading a python script manually
    * fixed plugins "print" and "prnt" functions: now ok for writing on server
      buffers
    * fixed color problem with new libcurses version
