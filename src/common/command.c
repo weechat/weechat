@@ -1554,7 +1554,7 @@ weechat_cmd_python (int argc, char **argv)
                     path_script = NULL;
                 else
                 {
-                    path_length = strlen (weechat_home) + strlen (argv[1]) + 7;
+                    path_length = strlen (weechat_home) + strlen (argv[1]) + 9;
                     path_script = (char *) malloc (path_length * sizeof (char));
                     snprintf (path_script, path_length, "%s%s%s%s%s",
                               weechat_home, DIR_SEPARATOR, "python",
