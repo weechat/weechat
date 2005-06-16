@@ -832,19 +832,19 @@ wee_perl_init ()
         "    my $content = wee_perl_load_file ($filename);"
         "    if ($content eq \"__WEECHAT_ERROR__\")"
         "    {"
-        "        weechat::print \"WeeChat Error: Perl script '$filename' not found.\\n\";"
+        "        weechat::print \"WeeChat Error: Perl script '$filename' not found.\\n\", \"\";"
         "        return 1;"
         "    }"
         "    eval $content;"
         "    if ($@)"
         "    {"
-        "        weechat::print \"WeeChat error: unable to load Perl script '$filename':\\n\";"
+        "        weechat::print \"WeeChat error: unable to load Perl script '$filename':\\n\", \"\";"
         "        weechat::print \"$@\\n\";"
         "        return 2;"
         "    }"
         "    return 0;"
         "}"
-        "$SIG{__WARN__} = sub { weechat::print \"$_[0]\n\"; };"
+        "$SIG{__WARN__} = sub { weechat::print \"$_[0]\n\", \"\"; };"
     };
     
     wee_log_printf (_("Loading %s module \"weechat\"\n"), "Perl");
