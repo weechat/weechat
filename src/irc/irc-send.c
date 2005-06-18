@@ -1138,7 +1138,7 @@ irc_cmd_send_oper (t_irc_server *server, char *arguments)
 int
 irc_cmd_send_part (t_irc_server *server, char *arguments)
 {
-    char *channel_name, *pos_args;
+    char *channel_name, *pos_args, *ptr_arg, *pos, buffer[4096];
     t_irc_channel *ptr_channel;
     
     if (arguments)
@@ -1192,16 +1192,28 @@ irc_cmd_send_part (t_irc_server *server, char *arguments)
         pos_args = NULL;
     }
     
-    if (pos_args)
-        server_sendf (server, "PART %s :%s\r\n", channel_name, pos_args);
-    else
+    ptr_arg = (pos_args) ? pos_args :
+              (cfg_irc_default_msg_part && cfg_irc_default_msg_part[0]) ?
+              cfg_irc_default_msg_part : NULL;
+    
+    if (ptr_arg)
     {
-        if (cfg_irc_default_msg_part && cfg_irc_default_msg_part[0])
-            server_sendf (server, "PART %s :%s\r\n",
-                          channel_name, cfg_irc_default_msg_part);
+        pos = strstr (ptr_arg, "%v");
+        if (pos)
+        {
+            pos[0] = '\0';
+            snprintf (buffer, sizeof (buffer), "%s%s%s",
+                      ptr_arg, PACKAGE_VERSION, pos + 2);
+            pos[0] = '%';
+        }
         else
-            server_sendf (server, "PART %s\r\n", channel_name);
+            snprintf (buffer, sizeof (buffer), "%s",
+                      ptr_arg);
+        server_sendf (server, "PART %s :%s\r\n",
+                      channel_name, buffer);
     }
+    else
+        server_sendf (server, "PART %s\r\n", channel_name);
         
     return 0;
 }

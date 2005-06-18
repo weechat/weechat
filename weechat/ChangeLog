@@ -1,12 +1,15 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-06-16
+ChangeLog - 2005-06-18
 
 
 Version 0.1.3 (under dev!):
-   * errors while loading perl scripts are now displayed in server buffer (instead of current buffer)
-   * in python scripts, all messages written in stdin and stderr are redirect in server buffer
+   * part message now accepts %v (replaced by WeeChat version), like quit message
+   * errors while loading perl scripts are now displayed in server buffer
+     (instead of current buffer)
+   * in python scripts, all messages written in stdin and stderr are redirected
+     in server buffer
    * fix a filename error while loading a python script manually
    * fixed plugins "print" and "prnt" functions: now ok for writing on server
      buffers
