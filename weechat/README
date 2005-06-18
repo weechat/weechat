@@ -14,7 +14,7 @@ Features
     * small, fast and very light
     * customizable and extensible with scripts (Perl, Python, Ruby) (2)
     * compliant with RFC 1459,2810,2811,2812,2813
-    * developed from scratch (not based on any other IRC client, except for look ;)
+    * developed from scratch
     * multi-platform (GNU/Linux, *BSD, Windows & other) (3)
     * 100% GPL & free
 
@@ -44,5 +44,5 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 ---
 (1) only Curses interface is available today
-(2) only Perl interface is available today
-(3) only GNU/Linux version is available today
+(2) only Perl and Python interfaces are available today
+(3) only GNU/Linux and *BSD versions are available today
