@@ -1,16 +1,34 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-Developer:
----------
+Developers:
+----------
 
-FlashCode <flashcode@flashtux.org>
-    Web   : http://weechat.flashtux.org
-    IRC   : nick is "FlashCode" @ irc.freenode.net
-    Jabber: flashcode@jabber.org
-    ICQ   : 160677660
-    AIM   : FlashCode AIM
-    Yahoo : FlashCode_Y
+* General code
+
+  FlashCode <flashcode@flashtux.org>
+      Web   : http://weechat.flashtux.org
+      IRC   : nick is "FlashCode" @ irc.freenode.net
+      Jabber: flashcode@jabber.org
+      ICQ   : 160677660
+      AIM   : FlashCode AIM
+      Yahoo : FlashCode_Y
+
+* Python plugin
+
+  Kolter <kolter@free.fr>
+      Web   : http://kolter.free.fr
+      IRC   : nick is "kolter" @ irc.freenode.net
+      Jabber: kolter@jabber.org
+
+
+Debian packager:
+---------------
+
+Julien Louis <ptitlouis@sysif.net>
+    IRC   : nicks are "ptitlouis" or "tioui" @ irc.freenode.net
+    Jabber: ptitlouis@amessage.info
+
 
 Testers:
 -------
