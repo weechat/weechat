@@ -1,3 +1,10 @@
+weechat (0.1.2-2) unstable; urgency=low
+
+  * Patch src/gui/curse/gui-display.c to fix segfault
+    when config file does not exists (Closes: #310589).
+
+ -- Julien Louis <ptitlouis@sysif.net>  Tue, 24 May 2005 20:55:02 +0200
+
 weechat (0.1.2-1) unstable; urgency=low
 
   * WeeChat version 0.1.2, see ChangeLog for detail.
