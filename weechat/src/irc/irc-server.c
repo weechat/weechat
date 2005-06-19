@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* irc-server.c: (dis)connection and communication with irc server */
+/* irc-server.c: connection and communication with IRC server */
 
 
 #ifdef HAVE_CONFIG_H
@@ -38,6 +38,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+#include <gnutls/gnutls.h>
 
 #include "../common/weechat.h"
 #include "irc.h"
@@ -67,6 +68,7 @@ server_init (t_irc_server *server)
     server->command_line = 0;
     server->address = NULL;
     server->port = -1;
+    server->ssl = 0;
     server->password = NULL;
     server->nick1 = NULL;
     server->nick2 = NULL;
@@ -317,7 +319,7 @@ server_free_all ()
 
 t_irc_server *
 server_new (char *name, int autoconnect, int autoreconnect, int autoreconnect_delay,
-            int command_line, char *address, int port, char *password,
+            int command_line, char *address, int port, int ssl, char *password,
             char *nick1, char *nick2, char *nick3, char *username,
             char *realname, char *command, int command_delay, char *autojoin,
             int autorejoin, char *notify_levels)
@@ -347,6 +349,7 @@ server_new (char *name, int autoconnect, int autoreconnect, int autoreconnect_de
         new_server->command_line = command_line;
         new_server->address = strdup (address);
         new_server->port = port;
+        new_server->ssl = ssl;
         new_server->password = (password) ? strdup (password) : strdup ("");
         new_server->nick1 = (nick1) ? strdup (nick1) : strdup ("weechat_user");
         new_server->nick2 = (nick2) ? strdup (nick2) : strdup ("weechat2");
@@ -371,7 +374,7 @@ server_new (char *name, int autoconnect, int autoreconnect, int autoreconnect_de
 }
 
 /*
- * server_send: send data to irc server
+ * server_send: send data to IRC server
  */
 
 int
@@ -380,11 +383,14 @@ server_send (t_irc_server *server, char *buffer, int size_buf)
     if (!server)
         return -1;
     
-    return send (server->sock, buffer, size_buf, 0);
+    if (server->ssl)
+        return gnutls_record_send (server->gnutls_sess, buffer, size_buf);
+    else
+        return send (server->sock, buffer, size_buf, 0);
 }
 
 /*
- * server_sendf: send formatted data to irc server
+ * server_sendf: send formatted data to IRC server
  */
 
 void
@@ -651,7 +657,14 @@ server_recv (t_irc_server *server)
     static char buffer[4096 + 2];
     int num_read;
 
-    num_read = recv (server->sock, buffer, sizeof (buffer) - 2, 0);
+    if (!server)
+        return;
+    
+    if (server->ssl)
+        num_read = gnutls_record_recv (server->gnutls_sess, buffer, sizeof (buffer) - 2);
+    else
+        num_read = recv (server->sock, buffer, sizeof (buffer) - 2, 0);
+    
     if (num_read > 0)
     {
         buffer[num_read] = '\0';
@@ -708,8 +721,12 @@ server_close_connection (t_irc_server *server)
     /* close network socket */
     if (server->sock != -1)
     {
+        if (server->ssl)
+            gnutls_bye (server->gnutls_sess, GNUTLS_SHUT_RDWR);
         close (server->sock);
         server->sock = -1;
+        if (server->ssl)
+            gnutls_deinit (server->gnutls_sess);
     }
     
     /* free any pending message */
@@ -758,6 +775,22 @@ server_child_read (t_irc_server *server)
         {
             /* connection OK */
             case '0':
+                /* enable SSL if asked */
+                if (server->ssl)
+                {
+                    gnutls_transport_set_ptr (server->gnutls_sess, (gnutls_transport_ptr) server->sock);
+                    if (gnutls_handshake (server->gnutls_sess) < 0)
+                    {
+                        irc_display_prefix (server->buffer, PREFIX_ERROR);
+                        gui_printf (server->buffer,
+                                    _("%s gnutls handshake failed\n"),
+                                    WEECHAT_ERROR);
+                        server_close_connection (server);
+                        server_reconnect_schedule (server);
+                        return;
+                    }
+                }
+                /* kill child and login to server */
                 server_kill_child (server);
                 irc_login (server);
                 break;
@@ -845,16 +878,36 @@ server_connect (t_irc_server *server)
 {
     int child_pipe[2], set;
     pid_t pid;
+    const int proto_prio[] = { GNUTLS_TLS1, GNUTLS_SSL3, 0 };
+    const int kx_prio[] = { GNUTLS_KX_ANON_DH, 0 };
 
     irc_display_prefix (server->buffer, PREFIX_INFO);
     gui_printf (server->buffer,
-                _("%s: connecting to %s:%d...\n"),
-                PACKAGE_NAME, server->address, server->port);
-    wee_log_printf (_("Connecting to server %s:%d...\n"),
-                    server->address, server->port);
+                _("%s: connecting to %s:%d%s...\n"),
+                PACKAGE_NAME, server->address, server->port,
+                (server->ssl) ? "(ssl)" : "");
+    wee_log_printf (_("Connecting to server %s:%d%s...\n"),
+                    server->address, server->port,
+                    (server->ssl) ? "(ssl)" : "");
     
     /* close any opened connection and kill child process if running */
     server_close_connection (server);
+    
+    /* init SSL if asked */
+    if (server->ssl)
+    {
+        if (gnutls_init (&server->gnutls_sess, GNUTLS_CLIENT) != 0)
+        {
+            irc_display_prefix (server->buffer, PREFIX_ERROR);
+            gui_printf (server->buffer,
+                        _("%s gnutls init error\n"), WEECHAT_ERROR);
+            return 0;
+        }
+        gnutls_set_default_priority (server->gnutls_sess);
+        gnutls_protocol_set_priority (server->gnutls_sess, proto_prio);
+        gnutls_kx_set_priority (server->gnutls_sess, kx_prio);
+        gnutls_credentials_set (server->gnutls_sess, GNUTLS_CRD_ANON, &gnutls_anoncred);
+    }
     
     /* create pipe for child process */
     if (pipe (child_pipe) < 0)

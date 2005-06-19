@@ -5,6 +5,7 @@ ChangeLog - 2005-06-19
 
 
 Version 0.1.3 (under dev!):
+   * SSL support (currently in development, NOT WORKING!)
    * channel notify levels are saved in config file (new option
      "server_notify_levels" for server sections)
    * part message now accepts %v (replaced by WeeChat version), like quit message

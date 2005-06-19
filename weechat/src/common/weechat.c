@@ -47,6 +47,7 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <signal.h>
+#include <gnutls/gnutls.h>
 
 #ifdef HAVE_ICONV
 #include <iconv.h>
@@ -70,9 +71,11 @@ int sigsegv = 0;                /* SIGSEGV received?                            
 char *weechat_home = NULL;      /* WeeChat home dir. (example: /home/toto/.weechat) */
 FILE *weechat_log_file = NULL;  /* WeeChat log file (~/.weechat/weechat.log)        */
 
-char *local_charset = NULL;     /* local charset, for example: ISO-8859-1    */
+char *local_charset = NULL;     /* local charset, for example: ISO-8859-1   */
 
-int server_cmd_line;    /* at least one server on WeeChat command line       */
+int server_cmd_line;    /* at least one server on WeeChat command line      */
+
+gnutls_anon_client_credentials gnutls_anoncred;  /* gnutls client credentials */
 
 
 /*
@@ -368,7 +371,7 @@ wee_parse_args (int argc, char *argv[])
                 if (!server_new (server_tmp.name, server_tmp.autoconnect,
                                  server_tmp.autoreconnect,
                                  server_tmp.autoreconnect_delay,
-                                 1, server_tmp.address, server_tmp.port,
+                                 1, server_tmp.address, server_tmp.port, 0,
                                  server_tmp.password, server_tmp.nick1,
                                  server_tmp.nick2, server_tmp.nick3,
                                  NULL, NULL, NULL, 0, server_tmp.autojoin, 1, NULL))
@@ -516,6 +519,10 @@ wee_init_vars ()
     /* init received messages queue */
     recv_msgq = NULL;
     msgq_last_msg = NULL;
+    
+    /* init gnutls */
+    gnutls_global_init ();
+    gnutls_anon_allocate_client_credentials (&gnutls_anoncred);
 }
 
 /*
@@ -609,6 +616,8 @@ wee_shutdown (int return_code)
     if (local_charset)
         free (local_charset);
     alias_free_all ();
+    gnutls_anon_free_client_credentials (gnutls_anoncred);
+    gnutls_global_deinit();
     exit (return_code);
 }
 

@@ -24,6 +24,7 @@
 #include <time.h>
 #include <sys/time.h>
 #include <sys/types.h>
+#include <gnutls/gnutls.h>
 #include "../gui/gui.h"
 
 /* prefixes for chat window */
@@ -137,6 +138,7 @@ struct t_irc_server
     int command_line;               /* server was given on command line     */
     char *address;                  /* address of server (IP or name)       */
     int port;                       /* port for server (6667 by default)    */
+    int ssl;                        /* SSL protocol                         */
     char *password;                 /* password for server                  */
     char *nick1;                    /* first nickname for the server        */
     char *nick2;                    /* alternate nickname                   */
@@ -154,6 +156,7 @@ struct t_irc_server
     int child_read;                 /* to read into child pipe              */
     int child_write;                /* to write into child pipe             */
     int sock;                       /* socket for server                    */
+    gnutls_session gnutls_sess;     /* gnutls session (only if SSL is used) */
     int is_connected;               /* 1 if WeeChat is connected to server  */
     char *unterminated_message;     /* beginning of a message in input buf  */
     char *nick;                     /* current nickname                     */
@@ -249,9 +252,9 @@ extern t_irc_server *server_alloc ();
 extern void server_destroy (t_irc_server *);
 extern void server_free (t_irc_server *);
 extern void server_free_all ();
-extern t_irc_server *server_new (char *, int, int, int, int, char *, int, char *,
+extern t_irc_server *server_new (char *, int, int, int, int, char *, int, int,
                                  char *, char *, char *, char *, char *, char *,
-                                 int, char *, int, char *);
+                                 char *, int, char *, int, char *);
 extern int server_send (t_irc_server *, char *, int);
 extern void server_sendf (t_irc_server *, char *, ...);
 extern void server_recv (t_irc_server *);
