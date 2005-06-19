@@ -995,7 +995,8 @@ weechat_cmd_buffer (int argc, char **argv)
                                 (ptr_buffer->dcc) ? "DCC" :
                                     ((BUFFER_IS_SERVER(ptr_buffer)) ? SERVER(ptr_buffer)->name :
                                     CHANNEL(ptr_buffer)->name));
-                    if (ptr_buffer->dcc)
+                    if ((!BUFFER_IS_CHANNEL(ptr_buffer))
+                        && (!BUFFER_IS_PRIVATE(ptr_buffer)))
                         gui_printf (NULL, "-");
                     else
                         gui_printf (NULL, "%d", ptr_buffer->notify_level);
@@ -1010,22 +1011,34 @@ weechat_cmd_buffer (int argc, char **argv)
                 number = strtol (argv[1], &error, 10);
                 if ((error) && (error[0] == '\0'))
                 {
-                    if ((number < 0) || (number > 3))
+                    if ((number < NOTIFY_LEVEL_MIN) || (number > NOTIFY_LEVEL_MAX))
                     {
                         /* invalid highlight level */
                         irc_display_prefix (NULL, PREFIX_ERROR);
-                        gui_printf (NULL, _("%s incorrect notify level (must be between 0 and 3)\n"),
+                        gui_printf (NULL, _("%s incorrect notify level (must be between %d and %d)\n"),
+                                    WEECHAT_ERROR, NOTIFY_LEVEL_MIN, NOTIFY_LEVEL_MAX);
+                        return -1;
+                    }
+                    if ((!BUFFER_IS_CHANNEL(gui_current_window->buffer))
+                        && (!BUFFER_IS_PRIVATE(gui_current_window->buffer)))
+                    {
+                        /* invalid buffer type (only ok on channel or private) */
+                        irc_display_prefix (NULL, PREFIX_ERROR);
+                        gui_printf (NULL, _("%s incorrect buffer for notify (must be channel or private)\n"),
                                     WEECHAT_ERROR);
                         return -1;
                     }
                     gui_current_window->buffer->notify_level = number;
+                    channel_set_notify_level (SERVER(gui_current_window->buffer),
+                                              CHANNEL(gui_current_window->buffer),
+                                              number);
                 }
                 else
                 {
                     /* invalid number */
                     irc_display_prefix (NULL, PREFIX_ERROR);
-                    gui_printf (NULL, _("%s incorrect notify level (must be between 0 and 3)\n"),
-                                WEECHAT_ERROR);
+                    gui_printf (NULL, _("%s incorrect notify level (must be between %d and %d)\n"),
+                                WEECHAT_ERROR, NOTIFY_LEVEL_MIN, NOTIFY_LEVEL_MAX);
                     return -1;
                 }
             }
@@ -1841,7 +1854,7 @@ weechat_cmd_server (int argc, char **argv)
                                  0, server.address, server.port, server.password,
                                  server.nick1, server.nick2, server.nick3,
                                  server.username, server.realname,
-                                 server.command, 1, server.autojoin, 1);
+                                 server.command, 1, server.autojoin, 1, NULL);
         if (new_server)
         {
             irc_display_prefix (NULL, PREFIX_INFO);

@@ -202,4 +202,8 @@ irc_display_server (t_irc_server *server)
                       "  server_autojoin  . . . . .: %s\n",
                       (server->autojoin && server->autojoin[0]) ?
                       server->autojoin : "");
+    gui_printf_color (NULL, COLOR_WIN_CHAT,
+                      "  server_notify_levels . . .: %s\n",
+                      (server->notify_levels && server->notify_levels[0]) ?
+                      server->notify_levels : "");
 }

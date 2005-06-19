@@ -147,6 +147,7 @@ struct t_irc_server
     int command_delay;              /* delay after execution of command     */
     char *autojoin;					/* channels to automatically join       */
     int autorejoin;                 /* auto rejoin channels when kicked     */
+    char *notify_levels;            /* channels notify levels               */
     
     /* internal vars */
     pid_t child_pid;                /* pid of child process (connecting)    */
@@ -250,7 +251,7 @@ extern void server_free (t_irc_server *);
 extern void server_free_all ();
 extern t_irc_server *server_new (char *, int, int, int, int, char *, int, char *,
                                  char *, char *, char *, char *, char *, char *,
-                                 int, char *, int);
+                                 int, char *, int, char *);
 extern int server_send (t_irc_server *, char *, int);
 extern void server_sendf (t_irc_server *, char *, ...);
 extern void server_recv (t_irc_server *);
@@ -280,6 +281,9 @@ extern void channel_check_away (t_irc_server *, t_irc_channel *);
 extern void channel_set_away (t_irc_channel *, char *, int);
 extern int channel_create_dcc (t_irc_dcc *);
 extern void channel_remove_dcc (t_irc_dcc *);
+extern int channel_get_notify_level (t_irc_server *, t_irc_channel *);
+extern void channel_remove_notify_level (t_irc_server *, t_irc_channel *);
+extern void channel_set_notify_level (t_irc_server *, t_irc_channel *, int);
 extern void channel_print_log (t_irc_channel *);
 
 /* nick functions (irc-nick.c) */

@@ -98,6 +98,10 @@
 #define gui_printf_nolog(buffer, fmt, argz...) \
     gui_printf_type_color(buffer, MSG_TYPE_INFO | MSG_TYPE_NOLOG, -1, fmt, ##argz)
 
+#define NOTIFY_LEVEL_MIN        0
+#define NOTIFY_LEVEL_MAX        3
+#define NOTIFY_LEVEL_DEFAULT    NOTIFY_LEVEL_MAX
+
 typedef struct t_gui_message t_gui_message;
 
 struct t_gui_message

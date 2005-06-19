@@ -30,6 +30,7 @@
 
 #include "../common/weechat.h"
 #include "irc.h"
+#include "../gui/gui.h"
 
 
 char *channel_modes = "iklmnst";
@@ -260,6 +261,136 @@ channel_remove_dcc (t_irc_dcc *ptr_dcc)
             gui_redraw_buffer (ptr_channel->buffer);
         }
     }
+}
+
+/*
+ * channel_get_notify_level: get channel notify level
+ */
+
+int
+channel_get_notify_level (t_irc_server *server, t_irc_channel *channel)
+{
+    char *name, *pos, *pos2, notify;
+    
+    if ((!server) || (!channel))
+        return NOTIFY_LEVEL_DEFAULT;
+    
+    if ((!server->notify_levels) || (!server->notify_levels[0]))
+        return NOTIFY_LEVEL_DEFAULT;
+    
+    name = (char *) malloc (strlen (channel->name) + 2);
+    strcpy (name, channel->name);
+    strcat (name, ":");
+    pos = strstr (server->notify_levels, name);
+    free (name);
+    if (!pos)
+        return NOTIFY_LEVEL_DEFAULT;
+    
+    pos2 = pos + strlen (channel->name);
+    if (pos2[0] != ':')
+        return NOTIFY_LEVEL_DEFAULT;
+    pos2++;
+    if (!pos2[0])
+        return NOTIFY_LEVEL_DEFAULT;
+    
+    notify = (int)(pos2[0] - '0');
+    if ((notify < NOTIFY_LEVEL_MIN) || (notify > NOTIFY_LEVEL_MAX))
+        return NOTIFY_LEVEL_DEFAULT;
+    else
+        return notify;
+}
+
+/*
+ * server_remove_notify_level: remove channel notify from list
+ */
+
+void
+channel_remove_notify_level (t_irc_server *server, t_irc_channel *channel)
+{
+    char *name, *pos, *pos2;
+    
+    if ((!server) || (!channel))
+        return;
+    
+    name = (char *) malloc (strlen (channel->name) + 2);
+    strcpy (name, channel->name);
+    strcat (name, ":");
+    pos = strstr (server->notify_levels, name);
+    free (name);
+    if (pos)
+    {
+        pos2 = pos + strlen (channel->name);
+        if (pos2[0] == ':')
+        {
+            pos2++;
+            if (pos2[0])
+            {
+                pos2++;
+                if (pos2[0] == ',')
+                    pos2++;
+                if (!pos2[0] && (pos != server->notify_levels))
+                    pos--;
+                strcpy (pos, pos2);
+                server->notify_levels = (char *) realloc (server->notify_levels,
+                                                          strlen (server->notify_levels) + 1);
+            }
+        }
+    }
+}
+
+/*
+ * server_set_notify_level: set channel notify level
+ */
+
+void
+channel_set_notify_level (t_irc_server *server, t_irc_channel *channel, int notify)
+{
+    char *name, *pos, *pos2, level_string[2];
+    
+    if ((!server) || (!channel))
+        return;
+    
+    if (notify == NOTIFY_LEVEL_DEFAULT)
+    {
+        channel_remove_notify_level (server, channel);
+        return;
+    }
+    
+    if (!server->notify_levels)
+    {
+        server->notify_levels = (char *) malloc (strlen (channel->name) + 3);
+        server->notify_levels[0] = '\0';
+    }
+    else
+    {
+        name = (char *) malloc (strlen (channel->name) + 2);
+        strcpy (name, channel->name);
+        strcat (name, ":");
+        pos = strstr (server->notify_levels, name);
+        free (name);
+        if (pos)
+        {
+            pos2 = pos + strlen (channel->name) + 1;
+            if (pos2[0])
+            {
+                pos2[0] = '0' + notify;
+                return;
+            }
+        }
+        /* realloc notify list to add channel */
+        server->notify_levels = (char *) realloc (server->notify_levels,
+                                                  strlen (server->notify_levels) + 1 +
+                                                  strlen (channel->name) + 2 + 1);
+    }
+    
+    /* channel not in notify list => add it */
+    if (server->notify_levels[0])
+        strcat (server->notify_levels, ",");
+    strcat (server->notify_levels, channel->name);
+    strcat (server->notify_levels, ":");
+    level_string[0] = notify + '0';
+    level_string[1] = '\0';
+    strcat (server->notify_levels, level_string);
 }
 
 /*

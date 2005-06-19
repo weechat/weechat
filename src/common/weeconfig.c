@@ -690,6 +690,10 @@ t_config_option weechat_options_server[] =
     N_("automatically rejoin channels when kicked"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
     NULL, NULL, &(cfg_server.autorejoin), NULL, NULL },
+  { "server_notify_levels", N_("notify levels for channels of this server"),
+    N_("comma separated list of notify levels for channels of this server (format: #channel:1,..)"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    "", NULL, NULL, &(cfg_server.notify_levels), config_change_notify_levels },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
@@ -835,6 +839,23 @@ config_change_fifo_pipe ()
 }
 
 /*
+ * config_change_notify_levels: called when notify levels is changed for a server
+ */
+
+void
+config_change_notify_levels ()
+{
+    t_gui_buffer *ptr_buffer;
+    
+    for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (BUFFER_IS_CHANNEL(ptr_buffer) || BUFFER_IS_PRIVATE(ptr_buffer))
+            ptr_buffer->notify_level =
+                channel_get_notify_level (SERVER(ptr_buffer), CHANNEL(ptr_buffer));
+    }
+}
+
+/*
  * config_option_set_value: set new value for an option
  *                          return:  0 if success
  *                                  -1 if error (bad value)
@@ -919,6 +940,8 @@ config_get_server_option_ptr (t_irc_server *server, char *option_name)
         return (void *)(&server->autojoin);
     if (strcasecmp (option_name, "server_autorejoin") == 0)
         return (void *)(&server->autorejoin);
+    if (strcasecmp (option_name, "server_notify_levels") == 0)
+        return (void *)(&server->notify_levels);
     /* option not found */
     return NULL;
 }
@@ -988,6 +1011,8 @@ config_set_server_value (t_irc_server *server, char *option_name,
             *((char **)ptr_data) = strdup (value);
             break;
     }
+    if (ptr_option->handler_change != NULL)
+        (void) (ptr_option->handler_change());
     return 0;
 }
 
@@ -1073,7 +1098,7 @@ config_allocate_server (char *filename, int line_number)
         cfg_server.password, cfg_server.nick1, cfg_server.nick2,
         cfg_server.nick3, cfg_server.username, cfg_server.realname,
         cfg_server.command, cfg_server.command_delay, cfg_server.autojoin,
-        cfg_server.autorejoin))
+        cfg_server.autorejoin, cfg_server.notify_levels))
     {
         server_free_all ();
         gui_printf (NULL,
@@ -1661,6 +1686,8 @@ config_write (char *config_name)
                      (ptr_server->autojoin) ? ptr_server->autojoin : "");
             fprintf (file, "server_autorejoin=%s\n",
                      (ptr_server->autorejoin) ? "on" : "off");
+            fprintf (file, "server_notify_levels=%s\n",
+                     (ptr_server->notify_levels) ? ptr_server->notify_levels : "");
         }
     }
     

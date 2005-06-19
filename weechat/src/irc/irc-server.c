@@ -77,6 +77,7 @@ server_init (t_irc_server *server)
     server->command_delay = 1;
     server->autojoin = NULL;
     server->autorejoin = 0;
+    server->notify_levels = NULL;
     
     /* internal vars */
     server->child_pid = 0;
@@ -256,6 +257,10 @@ server_destroy (t_irc_server *server)
         free (server->command);
     if (server->autojoin)
         free (server->autojoin);
+    if (server->notify_levels)
+        free (server->notify_levels);
+    if (server->unterminated_message)
+        free (server->unterminated_message);
     if (server->nick)
         free (server->nick);
     if (server->channels)
@@ -315,7 +320,7 @@ server_new (char *name, int autoconnect, int autoreconnect, int autoreconnect_de
             int command_line, char *address, int port, char *password,
             char *nick1, char *nick2, char *nick3, char *username,
             char *realname, char *command, int command_delay, char *autojoin,
-            int autorejoin)
+            int autorejoin, char *notify_levels)
 {
     t_irc_server *new_server;
     
@@ -325,12 +330,12 @@ server_new (char *name, int autoconnect, int autoreconnect, int autoreconnect_de
     #ifdef DEBUG
     wee_log_printf ("Creating new server (name:%s, address:%s, port:%d, pwd:%s, "
                     "nick1:%s, nick2:%s, nick3:%s, username:%s, realname:%s, "
-                    "command:%s, autojoin:%s, autorejoin:%s)\n",
+                    "command:%s, autojoin:%s, autorejoin:%s, notify_levels:%s)\n",
                     name, address, port, (password) ? password : "",
                     (nick1) ? nick1 : "", (nick2) ? nick2 : "", (nick3) ? nick3 : "",
                     (username) ? username : "", (realname) ? realname : "",
                     (command) ? command : "", (autojoin) ? autojoin : "",
-                    (autorejoin) ? "on" : "off");
+                    (autorejoin) ? "on" : "off", (notify_levels) ? notify_levels : "");
     #endif
     
     if ((new_server = server_alloc ()))
@@ -357,6 +362,8 @@ server_new (char *name, int autoconnect, int autoreconnect, int autoreconnect_de
             (autojoin) ? strdup (autojoin) : NULL;
         new_server->autorejoin = autorejoin;
         new_server->nick = strdup (new_server->nick1);
+        new_server->notify_levels =
+            (notify_levels) ? strdup (notify_levels) : NULL;
     }
     else
         return NULL;
@@ -1155,6 +1162,7 @@ server_print_log (t_irc_server *server)
     wee_log_printf ("  command_delay . . . : %d\n",    server->command_delay);
     wee_log_printf ("  autojoin. . . . . . : '%s'\n",  server->autojoin);
     wee_log_printf ("  autorejoin. . . . . : %d\n",    server->autorejoin);
+    wee_log_printf ("  notify_levels . . . : %s\n",    server->notify_levels);
     wee_log_printf ("  child_pid . . . . . : %d\n",    server->child_pid);
     wee_log_printf ("  child_read  . . . . : %d\n",    server->child_read);
     wee_log_printf ("  child_write . . . . : %d\n",    server->child_write);

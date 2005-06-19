@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2005-05-21
+TODO - 2005-06-19
 
 Legend:
   #  done
@@ -10,20 +10,17 @@ Legend:
   ?  is this really necessary?
 
 
-v0.1.2:
+v0.1.3:
 ------
 
  * General:
     + Windows version
     + Solaris version
-    # *BSD version
-    # Mac OS X version
 
  * IRC protocol:
     - customizable CTCP version reply
 
  * Interface:
-    # nicklist scroll keys
     + Gtk GUI
     + internationalization (traduce WeeChat in many languages)
 
@@ -32,10 +29,7 @@ v0.1.2:
 
  * Configuration:
     - add key bindings to config file
-
- * Plugins:
-    # Python plugin
-    # "/python load" and "/python unload" commands to (un)load Python scripts
+    # save buffer notify levels
 
 
 Future versions:
@@ -52,15 +46,10 @@ Future versions:
       nick/host connect to the given irc network
 
  * WeeChat commands:
-    - "/reload" command: reload the WeeChat's config file
     - "/highlight" command: highlight a given word when it appears on
       channels/privates
     - "/completion" command: do shortcuts (for example when we type "u"
       in the text bar it send it to the server as "you")
-    - "/exec" command: execute a command as if we was in shell
-      and show us the output on the current window. An option to exec
-      like -o could send the output to the server, on the current
-      channel/private
     - "/last": command to look for text in previous messages
 
  * Interface:
