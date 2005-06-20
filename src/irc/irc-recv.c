@@ -346,6 +346,76 @@ irc_cmd_recv_kick (t_irc_server *server, char *host, char *arguments)
 }
 
 /*
+ * irc_cmd_recv_kill: 'kill' message received
+ */
+
+int
+irc_cmd_recv_kill (t_irc_server *server, char *host, char *arguments)
+{
+    char *pos, *pos_host2, *pos_comment;
+    t_irc_channel *ptr_channel;
+    
+    pos = strchr (host, '!');
+    if (pos)
+        pos[0] = '\0';
+    
+    pos_host2 = strchr (arguments, ' ');
+    if (pos_host2)
+    {
+        pos_host2[0] = '\0';
+        pos_host2++;
+        while (pos_host2[0] == ' ')
+            pos_host2++;
+        
+        pos_comment = strchr (pos_host2, ' ');
+        if (pos_comment)
+        {
+            pos_comment[0] = '\0';
+            pos_comment++;
+            while (pos_comment[0] == ' ')
+                pos_comment++;
+            if (pos_comment[0] == ':')
+                pos_comment++;
+        }
+        
+        for (ptr_channel = server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            irc_display_prefix (ptr_channel->buffer, PREFIX_PART);
+            gui_printf_color (ptr_channel->buffer, COLOR_WIN_CHAT_NICK,
+                              "%s", host);
+            gui_printf_color (ptr_channel->buffer, COLOR_WIN_CHAT,
+                              _(" has killed "));
+            gui_printf_color (ptr_channel->buffer, COLOR_WIN_CHAT_NICK,
+                              "%s", arguments);
+            if (pos_comment)
+            {
+                gui_printf_color (ptr_channel->buffer, COLOR_WIN_CHAT,
+                                  _(" from server"));
+                gui_printf_color (ptr_channel->buffer, COLOR_WIN_CHAT_DARK,
+                                  " (");
+                gui_printf_color (ptr_channel->buffer, COLOR_WIN_CHAT,
+                                  "%s", pos_comment);
+                gui_printf_color (ptr_channel->buffer, COLOR_WIN_CHAT_DARK,
+                                  ")\n");
+            }
+            else
+                gui_printf_color (ptr_channel->buffer, COLOR_WIN_CHAT,
+                                  _(" from server\n"));
+        }
+    }
+    else
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s host \"%s\" not found for \"%s\" command\n"),
+                          WEECHAT_ERROR, "", "kill");
+        return -1;
+    }
+    return 0;
+}
+
+/*
  * irc_get_channel_modes: get channel modes
  */
 

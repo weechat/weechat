@@ -97,7 +97,7 @@ t_irc_command irc_commands[] =
   { "kill", N_("close client-server connection"),
     N_("nickname comment"),
     N_("nickname: nickname\ncomment: comment for kill"),
-    2, MAX_ARGS, 1, NULL, irc_cmd_send_kill, NULL },
+    2, MAX_ARGS, 1, NULL, irc_cmd_send_kill, irc_cmd_recv_kill },
   { "links", N_("list all servernames which are known by the server answering the query"),
     N_("[[server] server_mask]"),
     N_("server: this server should answer the query\n"

@@ -390,6 +390,7 @@ extern int irc_cmd_recv_error (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_invite (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_join (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_kick (t_irc_server *, char *, char *);
+extern int irc_cmd_recv_kill (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_mode (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_nick (t_irc_server *, char *, char *);
 extern int irc_cmd_recv_notice (t_irc_server *, char *, char *);
