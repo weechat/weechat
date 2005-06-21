@@ -878,8 +878,7 @@ server_connect (t_irc_server *server)
 {
     int child_pipe[2], set;
     pid_t pid;
-    const int proto_prio[] = { GNUTLS_TLS1, GNUTLS_SSL3, 0 };
-    const int kx_prio[] = { GNUTLS_KX_ANON_DH, 0 };
+    const int cert_type_prio[] = { GNUTLS_CRT_X509, GNUTLS_CRT_OPENPGP, 0 };
 
     irc_display_prefix (server->buffer, PREFIX_INFO);
     gui_printf (server->buffer,
@@ -904,9 +903,8 @@ server_connect (t_irc_server *server)
             return 0;
         }
         gnutls_set_default_priority (server->gnutls_sess);
-        gnutls_protocol_set_priority (server->gnutls_sess, proto_prio);
-        gnutls_kx_set_priority (server->gnutls_sess, kx_prio);
-        gnutls_credentials_set (server->gnutls_sess, GNUTLS_CRD_ANON, &gnutls_anoncred);
+        gnutls_certificate_type_set_priority (server->gnutls_sess, cert_type_prio);
+        gnutls_credentials_set (server->gnutls_sess, GNUTLS_CRD_CERTIFICATE, gnutls_xcred);
     }
     
     /* create pipe for child process */

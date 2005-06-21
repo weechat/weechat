@@ -75,7 +75,7 @@ char *local_charset = NULL;     /* local charset, for example: ISO-8859-1   */
 
 int server_cmd_line;    /* at least one server on WeeChat command line      */
 
-gnutls_anon_client_credentials gnutls_anoncred;  /* gnutls client credentials */
+gnutls_certificate_credentials gnutls_xcred;   /* gnutls client credentials */
 
 
 /*
@@ -522,7 +522,8 @@ wee_init_vars ()
     
     /* init gnutls */
     gnutls_global_init ();
-    gnutls_anon_allocate_client_credentials (&gnutls_anoncred);
+    gnutls_certificate_allocate_credentials (&gnutls_xcred);
+    gnutls_certificate_set_x509_trust_file (gnutls_xcred, "ca.pem", GNUTLS_X509_FMT_PEM);
 }
 
 /*
@@ -616,7 +617,7 @@ wee_shutdown (int return_code)
     if (local_charset)
         free (local_charset);
     alias_free_all ();
-    gnutls_anon_free_client_credentials (gnutls_anoncred);
+    gnutls_certificate_free_credentials (gnutls_xcred);
     gnutls_global_deinit();
     exit (return_code);
 }

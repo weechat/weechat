@@ -145,9 +145,9 @@ struct t_irc_server
     char *nick3;                    /* 2nd alternate nickname               */
     char *username;                 /* user name                            */
     char *realname;                 /* real name                            */
-    char *command;					/* command to run once connected        */
+    char *command;                  /* command to run once connected        */
     int command_delay;              /* delay after execution of command     */
-    char *autojoin;					/* channels to automatically join       */
+    char *autojoin;                 /* channels to automatically join       */
     int autorejoin;                 /* auto rejoin channels when kicked     */
     char *notify_levels;            /* channels notify levels               */
     

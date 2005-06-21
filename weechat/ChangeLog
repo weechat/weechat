@@ -1,12 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-06-20
+ChangeLog - 2005-06-21
 
 
 Version 0.1.3 (under dev!):
    * kill command now received and displayed
-   * SSL support (currently in development, NOT WORKING!)
+   * added SSL support
    * channel notify levels are saved in config file (new option
      "server_notify_levels" for server sections)
    * part message now accepts %v (replaced by WeeChat version), like quit message

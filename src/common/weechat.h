@@ -108,7 +108,7 @@
 extern int quit_weechat;
 extern char *weechat_home;
 extern char *local_charset;
-extern gnutls_anon_client_credentials gnutls_anoncred;
+extern gnutls_certificate_credentials gnutls_xcred;
 
 extern void wee_log_printf (char *, ...);
 extern void wee_dump (int);
