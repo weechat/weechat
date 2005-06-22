@@ -21,10 +21,18 @@
 #ifndef __WEECHAT_IRC_H
 #define __WEECHAT_IRC_H 1
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <time.h>
 #include <sys/time.h>
 #include <sys/types.h>
+
+#ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
+#endif
+
 #include "../gui/gui.h"
 
 /* prefixes for chat window */
@@ -156,8 +164,12 @@ struct t_irc_server
     int child_read;                 /* to read into child pipe              */
     int child_write;                /* to write into child pipe             */
     int sock;                       /* socket for server                    */
-    gnutls_session gnutls_sess;     /* gnutls session (only if SSL is used) */
     int is_connected;               /* 1 if WeeChat is connected to server  */
+    #ifdef HAVE_GNUTLS
+    int ssl_connected;              /* = 1 if connected with SSL            */
+    gnutls_session gnutls_sess;     /* gnutls session (only if SSL is used) */
+    #endif
+
     char *unterminated_message;     /* beginning of a message in input buf  */
     char *nick;                     /* current nickname                     */
     time_t reconnect_start;         /* this time + delay = reconnect time   */

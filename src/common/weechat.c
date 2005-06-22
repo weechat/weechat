@@ -47,7 +47,10 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <signal.h>
+
+#ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
+#endif
 
 #ifdef HAVE_ICONV
 #include <iconv.h>
@@ -75,7 +78,9 @@ char *local_charset = NULL;     /* local charset, for example: ISO-8859-1   */
 
 int server_cmd_line;    /* at least one server on WeeChat command line      */
 
+#ifdef HAVE_GNUTLS
 gnutls_certificate_credentials gnutls_xcred;   /* gnutls client credentials */
+#endif
 
 
 /*
@@ -521,9 +526,11 @@ wee_init_vars ()
     msgq_last_msg = NULL;
     
     /* init gnutls */
+    #ifdef HAVE_GNUTLS
     gnutls_global_init ();
     gnutls_certificate_allocate_credentials (&gnutls_xcred);
     gnutls_certificate_set_x509_trust_file (gnutls_xcred, "ca.pem", GNUTLS_X509_FMT_PEM);
+    #endif
 }
 
 /*
@@ -617,8 +624,12 @@ wee_shutdown (int return_code)
     if (local_charset)
         free (local_charset);
     alias_free_all ();
+    
+    #ifdef HAVE_GNUTLS
     gnutls_certificate_free_credentials (gnutls_xcred);
     gnutls_global_deinit();
+    #endif
+    
     exit (return_code);
 }
 

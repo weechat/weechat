@@ -27,7 +27,10 @@
 
 #include <stdio.h>
 #include <sys/time.h>
+
+#ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
+#endif
 
 #if defined(ENABLE_NLS) && !defined(_)
     #include <locale.h>
@@ -108,7 +111,10 @@
 extern int quit_weechat;
 extern char *weechat_home;
 extern char *local_charset;
+
+#ifdef HAVE_GNUTLS
 extern gnutls_certificate_credentials gnutls_xcred;
+#endif
 
 extern void wee_log_printf (char *, ...);
 extern void wee_dump (int);

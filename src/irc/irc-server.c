@@ -38,7 +38,10 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+
+#ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
+#endif
 
 #include "../common/weechat.h"
 #include "irc.h"
@@ -87,6 +90,9 @@ server_init (t_irc_server *server)
     server->child_write = -1;
     server->sock = -1;
     server->is_connected = 0;
+    #ifdef HAVE_GNUTLS
+    server->ssl_connected = 0;
+    #endif
     server->unterminated_message = NULL;
     server->nick = NULL;
     server->reconnect_start = 0;
@@ -383,9 +389,11 @@ server_send (t_irc_server *server, char *buffer, int size_buf)
     if (!server)
         return -1;
     
-    if (server->ssl)
+    #ifdef HAVE_GNUTLS
+    if (server->ssl_connected)
         return gnutls_record_send (server->gnutls_sess, buffer, size_buf);
     else
+    #endif
         return send (server->sock, buffer, size_buf, 0);
 }
 
@@ -660,9 +668,11 @@ server_recv (t_irc_server *server)
     if (!server)
         return;
     
-    if (server->ssl)
+    #ifdef HAVE_GNUTLS
+    if (server->ssl_connected)
         num_read = gnutls_record_recv (server->gnutls_sess, buffer, sizeof (buffer) - 2);
     else
+    #endif
         num_read = recv (server->sock, buffer, sizeof (buffer) - 2, 0);
     
     if (num_read > 0)
@@ -721,12 +731,16 @@ server_close_connection (t_irc_server *server)
     /* close network socket */
     if (server->sock != -1)
     {
-        if (server->ssl)
+        #ifdef HAVE_GNUTLS
+        if (server->ssl_connected)
             gnutls_bye (server->gnutls_sess, GNUTLS_SHUT_RDWR);
+        #endif
         close (server->sock);
         server->sock = -1;
-        if (server->ssl)
+        #ifdef HAVE_GNUTLS
+        if (server->ssl_connected)
             gnutls_deinit (server->gnutls_sess);
+        #endif
     }
     
     /* free any pending message */
@@ -738,6 +752,9 @@ server_close_connection (t_irc_server *server)
     
     /* server is now disconnected */
     server->is_connected = 0;
+    #ifdef HAVE_GNUTLS
+    server->ssl_connected = 0;
+    #endif
 }
 
 /*
@@ -776,7 +793,8 @@ server_child_read (t_irc_server *server)
             /* connection OK */
             case '0':
                 /* enable SSL if asked */
-                if (server->ssl)
+                #ifdef HAVE_GNUTLS
+                if (server->ssl_connected)
                 {
                     gnutls_transport_set_ptr (server->gnutls_sess, (gnutls_transport_ptr) server->sock);
                     if (gnutls_handshake (server->gnutls_sess) < 0)
@@ -790,6 +808,7 @@ server_child_read (t_irc_server *server)
                         return;
                     }
                 }
+                #endif
                 /* kill child and login to server */
                 server_kill_child (server);
                 irc_login (server);
@@ -878,8 +897,20 @@ server_connect (t_irc_server *server)
 {
     int child_pipe[2], set;
     pid_t pid;
+    #ifdef HAVE_GNUTLS
     const int cert_type_prio[] = { GNUTLS_CRT_X509, GNUTLS_CRT_OPENPGP, 0 };
-
+    #endif
+    
+    #ifndef HAVE_GNUTLS
+    if (server->ssl)
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf (server->buffer,
+                    _("%s cannot connect with SSL since WeeChat was not built "
+                    "with GNUtls support\n"), WEECHAT_ERROR);
+        return 0;
+    }
+    #endif
     irc_display_prefix (server->buffer, PREFIX_INFO);
     gui_printf (server->buffer,
                 _("%s: connecting to %s:%d%s...\n"),
@@ -893,6 +924,8 @@ server_connect (t_irc_server *server)
     server_close_connection (server);
     
     /* init SSL if asked */
+    #ifdef HAVE_GNUTLS
+    server->ssl_connected = 0;
     if (server->ssl)
     {
         if (gnutls_init (&server->gnutls_sess, GNUTLS_CLIENT) != 0)
@@ -905,7 +938,9 @@ server_connect (t_irc_server *server)
         gnutls_set_default_priority (server->gnutls_sess);
         gnutls_certificate_type_set_priority (server->gnutls_sess, cert_type_prio);
         gnutls_credentials_set (server->gnutls_sess, GNUTLS_CRD_CERTIFICATE, gnutls_xcred);
+        server->ssl_connected = 1;
     }
+    #endif
     
     /* create pipe for child process */
     if (pipe (child_pipe) < 0)
