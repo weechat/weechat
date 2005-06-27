@@ -376,7 +376,7 @@ wee_parse_args (int argc, char *argv[])
                 if (!server_new (server_tmp.name, server_tmp.autoconnect,
                                  server_tmp.autoreconnect,
                                  server_tmp.autoreconnect_delay,
-                                 1, server_tmp.address, server_tmp.port, 0,
+                                 1, server_tmp.address, server_tmp.port, 0, 0,
                                  server_tmp.password, server_tmp.nick1,
                                  server_tmp.nick2, server_tmp.nick3,
                                  NULL, NULL, NULL, 0, server_tmp.autojoin, 1, NULL))

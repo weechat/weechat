@@ -650,6 +650,10 @@ t_config_option weechat_options_server[] =
     N_("port for connecting to server"),
     OPTION_TYPE_INT, 0, 65535, 6667,
     NULL, NULL, &(cfg_server.port), NULL, NULL },
+  { "server_ipv6", N_("use IPv6 protocol for server communication"),
+    N_("use IPv6 protocol for server communication"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
+    NULL, NULL, &(cfg_server.ipv6), NULL, NULL },
   { "server_ssl", N_("use SSL for server communication"),
     N_("use SSL for server communication"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
@@ -924,6 +928,8 @@ config_get_server_option_ptr (t_irc_server *server, char *option_name)
         return (void *)(&server->address);
     if (strcasecmp (option_name, "server_port") == 0)
         return (void *)(&server->port);
+    if (strcasecmp (option_name, "server_ipv6") == 0)
+        return (void *)(&server->ipv6);
     if (strcasecmp (option_name, "server_ssl") == 0)
         return (void *)(&server->ssl);
     if (strcasecmp (option_name, "server_password") == 0)
@@ -1099,12 +1105,13 @@ config_allocate_server (char *filename, int line_number)
         return 0;
     }
     if (!server_new (cfg_server.name,
-        cfg_server.autoconnect, cfg_server.autoreconnect,
-        cfg_server.autoreconnect_delay, 0, cfg_server.address, cfg_server.port,
-        cfg_server.ssl, cfg_server.password, cfg_server.nick1, cfg_server.nick2,
-        cfg_server.nick3, cfg_server.username, cfg_server.realname,
-        cfg_server.command, cfg_server.command_delay, cfg_server.autojoin,
-        cfg_server.autorejoin, cfg_server.notify_levels))
+                     cfg_server.autoconnect, cfg_server.autoreconnect,
+                     cfg_server.autoreconnect_delay, 0, cfg_server.address,
+                     cfg_server.port, cfg_server.ipv6, cfg_server.ssl,
+                     cfg_server.password, cfg_server.nick1, cfg_server.nick2,
+                     cfg_server.nick3, cfg_server.username, cfg_server.realname,
+                     cfg_server.command, cfg_server.command_delay, cfg_server.autojoin,
+                     cfg_server.autorejoin, cfg_server.notify_levels))
     {
         server_free_all ();
         gui_printf (NULL,
@@ -1502,6 +1509,8 @@ config_create_default ()
     fprintf (file, "server_autoreconnect_delay=30\n");
     fprintf (file, "server_address=irc.freenode.net\n");
     fprintf (file, "server_port=6667\n");
+    fprintf (file, "server_ipv6=off\n");
+    fprintf (file, "server_ssl=off\n");
     fprintf (file, "server_password=\n");
     
     /* Get the user's name from /etc/passwd */
@@ -1678,6 +1687,8 @@ config_write (char *config_name)
                      ptr_server->autoreconnect_delay);
             fprintf (file, "server_address=%s\n", ptr_server->address);
             fprintf (file, "server_port=%d\n", ptr_server->port);
+            fprintf (file, "server_ipv6=%s\n",
+                     (ptr_server->ipv6) ? "on" : "off");
             fprintf (file, "server_ssl=%s\n",
                      (ptr_server->ssl) ? "on" : "off");
             fprintf (file, "server_password=%s\n",

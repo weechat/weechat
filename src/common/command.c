@@ -84,13 +84,14 @@ t_weechat_command weechat_commands[] =
     0, 2, weechat_cmd_python, NULL },
   { "server", N_("list, add or remove servers"),
     N_("[servername] | "
-    "[servername hostname port [-auto | -noauto] [-ssl] [-pwd password] [-nicks nick1 "
+    "[servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 "
     "[nick2 [nick3]]] [-username username] [-realname realname] "
     "[-command command] [-autojoin channel[,channel]] ] | "
     "[del servername]"),
     N_("servername: server name, for internal & display use\n"
     "hostname: name or IP address of server\n"
     "port: port for server (integer)\n"
+    "ipv6: use IPv6 protocol\n"
     "ssl: use SSL protocol\n"
     "password: password for server\n"
     "nick1: first nick for server\n"
@@ -1765,6 +1766,8 @@ weechat_cmd_server (int argc, char **argv)
                     server.autoconnect = 1;
                 if (strcasecmp (argv[i], "-noauto") == 0)
                     server.autoconnect = 0;
+                if (strcasecmp (argv[i], "-ipv6") == 0)
+                    server.ipv6 = 1;
                 if (strcasecmp (argv[i], "-ssl") == 0)
                     server.ssl = 1;
                 if (strcasecmp (argv[i], "-pwd") == 0)
@@ -1854,8 +1857,8 @@ weechat_cmd_server (int argc, char **argv)
         new_server = server_new (server.name, server.autoconnect,
                                  server.autoreconnect,
                                  server.autoreconnect_delay,
-                                 0, server.address, server.port, server.ssl,
-                                 server.password,
+                                 0, server.address, server.port, server.ipv6,
+                                 server.ssl, server.password,
                                  server.nick1, server.nick2, server.nick3,
                                  server.username, server.realname,
                                  server.command, 1, server.autojoin, 1, NULL);

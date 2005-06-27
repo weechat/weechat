@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-06-21
+ChangeLog - 2005-06-27
 
 
 Version 0.1.3 (under dev!):
+   * added IPv6 support
    * kill command now received and displayed
    * added SSL support
    * channel notify levels are saved in config file (new option

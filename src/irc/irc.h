@@ -146,6 +146,7 @@ struct t_irc_server
     int command_line;               /* server was given on command line     */
     char *address;                  /* address of server (IP or name)       */
     int port;                       /* port for server (6667 by default)    */
+    int ipv6;                       /* use IPv6 protocol                    */
     int ssl;                        /* SSL protocol                         */
     char *password;                 /* password for server                  */
     char *nick1;                    /* first nickname for the server        */
@@ -163,7 +164,7 @@ struct t_irc_server
     pid_t child_pid;                /* pid of child process (connecting)    */
     int child_read;                 /* to read into child pipe              */
     int child_write;                /* to write into child pipe             */
-    int sock;                       /* socket for server                    */
+    int sock;                       /* socket for server (IPv4 or IPv6)     */
     int is_connected;               /* 1 if WeeChat is connected to server  */
     #ifdef HAVE_GNUTLS
     int ssl_connected;              /* = 1 if connected with SSL            */
@@ -264,7 +265,7 @@ extern t_irc_server *server_alloc ();
 extern void server_destroy (t_irc_server *);
 extern void server_free (t_irc_server *);
 extern void server_free_all ();
-extern t_irc_server *server_new (char *, int, int, int, int, char *, int, int,
+extern t_irc_server *server_new (char *, int, int, int, int, char *, int, int, int,
                                  char *, char *, char *, char *, char *, char *,
                                  char *, int, char *, int, char *);
 extern int server_send (t_irc_server *, char *, int);

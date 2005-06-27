@@ -71,6 +71,7 @@ server_init (t_irc_server *server)
     server->command_line = 0;
     server->address = NULL;
     server->port = -1;
+    server->ipv6 = 0;
     server->ssl = 0;
     server->password = NULL;
     server->nick1 = NULL;
@@ -90,9 +91,9 @@ server_init (t_irc_server *server)
     server->child_write = -1;
     server->sock = -1;
     server->is_connected = 0;
-    #ifdef HAVE_GNUTLS
+#ifdef HAVE_GNUTLS
     server->ssl_connected = 0;
-    #endif
+#endif
     server->unterminated_message = NULL;
     server->nick = NULL;
     server->reconnect_start = 0;
@@ -325,7 +326,7 @@ server_free_all ()
 
 t_irc_server *
 server_new (char *name, int autoconnect, int autoreconnect, int autoreconnect_delay,
-            int command_line, char *address, int port, int ssl, char *password,
+            int command_line, char *address, int port, int ipv6, int ssl, char *password,
             char *nick1, char *nick2, char *nick3, char *username,
             char *realname, char *command, int command_delay, char *autojoin,
             int autorejoin, char *notify_levels)
@@ -335,7 +336,7 @@ server_new (char *name, int autoconnect, int autoreconnect, int autoreconnect_de
     if (!name || !address || (port < 0))
         return NULL;
     
-    #ifdef DEBUG
+#ifdef DEBUG
     wee_log_printf ("Creating new server (name:%s, address:%s, port:%d, pwd:%s, "
                     "nick1:%s, nick2:%s, nick3:%s, username:%s, realname:%s, "
                     "command:%s, autojoin:%s, autorejoin:%s, notify_levels:%s)\n",
@@ -344,7 +345,7 @@ server_new (char *name, int autoconnect, int autoreconnect, int autoreconnect_de
                     (username) ? username : "", (realname) ? realname : "",
                     (command) ? command : "", (autojoin) ? autojoin : "",
                     (autorejoin) ? "on" : "off", (notify_levels) ? notify_levels : "");
-    #endif
+#endif
     
     if ((new_server = server_alloc ()))
     {
@@ -355,6 +356,7 @@ server_new (char *name, int autoconnect, int autoreconnect, int autoreconnect_de
         new_server->command_line = command_line;
         new_server->address = strdup (address);
         new_server->port = port;
+        new_server->ipv6 = ipv6;
         new_server->ssl = ssl;
         new_server->password = (password) ? strdup (password) : strdup ("");
         new_server->nick1 = (nick1) ? strdup (nick1) : strdup ("weechat_user");
@@ -389,11 +391,11 @@ server_send (t_irc_server *server, char *buffer, int size_buf)
     if (!server)
         return -1;
     
-    #ifdef HAVE_GNUTLS
+#ifdef HAVE_GNUTLS
     if (server->ssl_connected)
         return gnutls_record_send (server->gnutls_sess, buffer, size_buf);
     else
-    #endif
+#endif
         return send (server->sock, buffer, size_buf, 0);
 }
 
@@ -422,11 +424,11 @@ server_sendf (t_irc_server *server, char *fmt, ...)
     buffer[sizeof (buffer) - 1] = '\0';
     if ((size_buf < 0) || (size_buf > (int) (sizeof (buffer) - 1)))
         size_buf = strlen (buffer);
-    #ifdef DEBUG
+#ifdef DEBUG
     buffer[size_buf - 2] = '\0';
     gui_printf (server->buffer, "[DEBUG] Sending to server >>> %s\n", buffer);
     buffer[size_buf - 2] = '\r';
-    #endif
+#endif
     buf2 = weechat_convert_encoding ((cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
                                      cfg_look_charset_internal : local_charset,
                                      cfg_look_charset_encode,
@@ -572,9 +574,9 @@ server_msgq_flush ()
     {
         if (recv_msgq->data)
         {
-            #ifdef DEBUG
+#ifdef DEBUG
             gui_printf (gui_current_window->buffer, "[DEBUG] %s\n", recv_msgq->data);
-            #endif
+#endif
             
             ptr_data = recv_msgq->data;
             entire_line = strdup (ptr_data);
@@ -584,9 +586,9 @@ server_msgq_flush ()
             
             if (ptr_data)
             {
-                #ifdef DEBUG
+#ifdef DEBUG
                 gui_printf (NULL, "[DEBUG] data received from server: %s\n", ptr_data);
-                #endif
+#endif
                 
                 host = NULL;
                 command = NULL;
@@ -668,11 +670,11 @@ server_recv (t_irc_server *server)
     if (!server)
         return;
     
-    #ifdef HAVE_GNUTLS
+#ifdef HAVE_GNUTLS
     if (server->ssl_connected)
         num_read = gnutls_record_recv (server->gnutls_sess, buffer, sizeof (buffer) - 2);
     else
-    #endif
+#endif
         num_read = recv (server->sock, buffer, sizeof (buffer) - 2, 0);
     
     if (num_read > 0)
@@ -731,16 +733,16 @@ server_close_connection (t_irc_server *server)
     /* close network socket */
     if (server->sock != -1)
     {
-        #ifdef HAVE_GNUTLS
+#ifdef HAVE_GNUTLS
         if (server->ssl_connected)
             gnutls_bye (server->gnutls_sess, GNUTLS_SHUT_RDWR);
-        #endif
+#endif
         close (server->sock);
         server->sock = -1;
-        #ifdef HAVE_GNUTLS
+#ifdef HAVE_GNUTLS
         if (server->ssl_connected)
             gnutls_deinit (server->gnutls_sess);
-        #endif
+#endif
     }
     
     /* free any pending message */
@@ -752,9 +754,9 @@ server_close_connection (t_irc_server *server)
     
     /* server is now disconnected */
     server->is_connected = 0;
-    #ifdef HAVE_GNUTLS
+#ifdef HAVE_GNUTLS
     server->ssl_connected = 0;
-    #endif
+#endif
 }
 
 /*
@@ -793,7 +795,7 @@ server_child_read (t_irc_server *server)
             /* connection OK */
             case '0':
                 /* enable SSL if asked */
-                #ifdef HAVE_GNUTLS
+#ifdef HAVE_GNUTLS
                 if (server->ssl_connected)
                 {
                     gnutls_transport_set_ptr (server->gnutls_sess, (gnutls_transport_ptr) server->sock);
@@ -808,7 +810,7 @@ server_child_read (t_irc_server *server)
                         return;
                     }
                 }
-                #endif
+#endif
                 /* kill child and login to server */
                 server_kill_child (server);
                 irc_login (server);
@@ -849,42 +851,34 @@ server_child_read (t_irc_server *server)
 int
 server_child (t_irc_server *server)
 {
-    struct hostent *ip4_hostent;
-    struct sockaddr_in addr;
-    char *ip_address;
-    int error;
+    struct addrinfo hints, *res;
     
-    /* bind to hostname */
-    ip4_hostent = gethostbyname (server->address);
-    if (!ip4_hostent)
+    memset (&hints, 0, sizeof(hints));
+    hints.ai_family = (server->ipv6) ? AF_INET6 : AF_INET;
+    hints.ai_socktype = SOCK_STREAM;
+    if (getaddrinfo (server->address, NULL, &hints, &res) !=0)
     {
-        write (server->child_write, "1", 1);
+        write(server->child_write, "1", 1);
         return 0;
     }
-    memset (&addr, 0, sizeof (addr));
-    memcpy (&addr.sin_addr, ip4_hostent->h_addr, ip4_hostent->h_length);
-    addr.sin_port = htons (server->port);
-    addr.sin_family = AF_INET;
-    
-    /* find IP address */
-    ip_address = inet_ntoa (addr.sin_addr);
-    if (!ip_address)
+    if ((server->ipv6 && (res->ai_family != AF_INET6))
+        || ((!server->ipv6 && (res->ai_family != AF_INET))))
     {
-        write (server->child_write, "2", 1);
+        write(server->child_write, "2", 1);
         return 0;
     }
     
-    /* connect to server */
-    error = connect (server->sock, (struct sockaddr *) &addr, sizeof (addr));
-    if (error != 0)
+    if (server->ipv6)
+        ((struct sockaddr_in6 *)(res->ai_addr))->sin6_port = htons (server->port);
+    else
+        ((struct sockaddr_in *)(res->ai_addr))->sin_port = htons (server->port);
+    
+    if (connect (server->sock, res->ai_addr, res->ai_addrlen) != 0)
     {
-        write (server->child_write, "3", 1);
+        write(server->child_write, "3", 1);
         return 0;
     }
-    
-    /* connection OK */
     write (server->child_write, "0", 1);
-    
     return 0;
 }
 
@@ -897,11 +891,11 @@ server_connect (t_irc_server *server)
 {
     int child_pipe[2], set;
     pid_t pid;
-    #ifdef HAVE_GNUTLS
+#ifdef HAVE_GNUTLS
     const int cert_type_prio[] = { GNUTLS_CRT_X509, GNUTLS_CRT_OPENPGP, 0 };
-    #endif
+#endif
     
-    #ifndef HAVE_GNUTLS
+#ifndef HAVE_GNUTLS
     if (server->ssl)
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
@@ -910,21 +904,23 @@ server_connect (t_irc_server *server)
                     "with GNUtls support\n"), WEECHAT_ERROR);
         return 0;
     }
-    #endif
+#endif
     irc_display_prefix (server->buffer, PREFIX_INFO);
     gui_printf (server->buffer,
-                _("%s: connecting to %s:%d%s...\n"),
+                _("%s: connecting to server %s:%d%s%s...\n"),
                 PACKAGE_NAME, server->address, server->port,
-                (server->ssl) ? "(ssl)" : "");
-    wee_log_printf (_("Connecting to server %s:%d%s...\n"),
+                (server->ipv6) ? " (IPv6)" : "",
+                (server->ssl) ? " (SSL)" : "");
+    wee_log_printf (_("Connecting to server %s:%d%s%s...\n"),
                     server->address, server->port,
-                    (server->ssl) ? "(ssl)" : "");
+                    (server->ipv6) ? " (IPv6)" : "",
+                    (server->ssl) ? " (SSL)" : "");
     
     /* close any opened connection and kill child process if running */
     server_close_connection (server);
     
     /* init SSL if asked */
-    #ifdef HAVE_GNUTLS
+#ifdef HAVE_GNUTLS
     server->ssl_connected = 0;
     if (server->ssl)
     {
@@ -940,7 +936,7 @@ server_connect (t_irc_server *server)
         gnutls_credentials_set (server->gnutls_sess, GNUTLS_CRD_CERTIFICATE, gnutls_xcred);
         server->ssl_connected = 1;
     }
-    #endif
+#endif
     
     /* create pipe for child process */
     if (pipe (child_pipe) < 0)
@@ -954,13 +950,12 @@ server_connect (t_irc_server *server)
     server->child_write = child_pipe[1];
     
     /* create socket and set options */
-    server->sock = socket (AF_INET, SOCK_STREAM, 0);
+    server->sock = socket ((server->ipv6) ? AF_INET6 : AF_INET, SOCK_STREAM, 0);
     if (server->sock == -1)
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
                     _("%s cannot create socket\n"), WEECHAT_ERROR);
-        server_close_connection (server);
         return 0;
     }
     
@@ -1040,7 +1035,8 @@ server_auto_connect (int command_line)
         {
             (void) gui_buffer_new (gui_current_window, ptr_server, NULL, 0, 1);
             gui_redraw_buffer (gui_current_window->buffer);
-            server_connect (ptr_server);
+            if (!server_connect (ptr_server))
+                server_reconnect_schedule (ptr_server);
         }
     }
 }
@@ -1236,6 +1232,8 @@ server_print_log (t_irc_server *server)
     wee_log_printf ("  command_line. . . . : %d\n",    server->command_line);
     wee_log_printf ("  address . . . . . . : '%s'\n",  server->address);
     wee_log_printf ("  port. . . . . . . . : %d\n",    server->port);
+    wee_log_printf ("  ipv6. . . . . . . . : %d\n",    server->ipv6);
+    wee_log_printf ("  ssl . . . . . . . . : %d\n",    server->ssl);
     wee_log_printf ("  password. . . . . . : '%s'\n",
         (server->password && server->password[0]) ? "(hidden)" : server->password);
     wee_log_printf ("  nick1 . . . . . . . : '%s'\n",  server->nick1);
@@ -1254,6 +1252,9 @@ server_print_log (t_irc_server *server)
     wee_log_printf ("  child_write . . . . : %d\n",    server->child_write);
     wee_log_printf ("  sock. . . . . . . . : %d\n",    server->sock);
     wee_log_printf ("  is_connected. . . . : %d\n",    server->is_connected);
+#ifdef HAVE_GNUTLS
+    wee_log_printf("   ssl_connected . . . : %d\n",    server->ssl_connected);
+#endif
     wee_log_printf ("  unterminated_message: '%s'\n",  server->unterminated_message);
     wee_log_printf ("  nick. . . . . . . . : '%s'\n",  server->nick);
     wee_log_printf ("  reconnect_start . . : %ld\n",   server->reconnect_start);

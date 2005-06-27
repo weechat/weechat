@@ -176,6 +176,9 @@ irc_display_server (t_irc_server *server)
                       "  server_port  . . . . . . .: %d\n",
                       server->port);
     gui_printf_color (NULL, COLOR_WIN_CHAT,
+                      "  server_ipv6  . . . . . . .: %s\n",
+                      (server->ipv6) ? _("yes") : _("no"));
+    gui_printf_color (NULL, COLOR_WIN_CHAT,
                       "  server_ssl . . . . . . . .: %s\n",
                       (server->ssl) ? _("yes") : _("no"));
     gui_printf_color (NULL, COLOR_WIN_CHAT,
