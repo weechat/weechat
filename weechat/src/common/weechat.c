@@ -364,7 +364,7 @@ wee_parse_args (int argc, char *argv[])
             wee_display_commands (1, 0);
             wee_shutdown (EXIT_SUCCESS);
         }
-        else if ((strncasecmp (argv[i], "irc://", 6) == 0))
+        else if ((strncasecmp (argv[i], "irc", 3) == 0))
         {
             if (server_init_with_url (argv[i], &server_tmp) < 0)
             {
@@ -376,7 +376,8 @@ wee_parse_args (int argc, char *argv[])
                 if (!server_new (server_tmp.name, server_tmp.autoconnect,
                                  server_tmp.autoreconnect,
                                  server_tmp.autoreconnect_delay,
-                                 1, server_tmp.address, server_tmp.port, 0, 0,
+                                 1, server_tmp.address, server_tmp.port,
+                                 server_tmp.ipv6, server_tmp.ssl,
                                  server_tmp.password, server_tmp.nick1,
                                  server_tmp.nick2, server_tmp.nick3,
                                  NULL, NULL, NULL, 0, server_tmp.autojoin, 1, NULL))

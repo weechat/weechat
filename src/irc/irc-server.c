@@ -120,18 +120,42 @@ int
 server_init_with_url (char *irc_url, t_irc_server *server)
 {
     char *url, *pos_server, *pos_channel, *pos, *pos2;
+    int ipv6, ssl;
     struct passwd *my_passwd;
     
     server_init (server);
-    if (strncasecmp (irc_url, "irc://", 6) != 0)
+    ipv6 = 0;
+    ssl = 0;
+    if (strncasecmp (irc_url, "irc6://", 7) == 0)
+    {
+        pos = irc_url + 7;
+        ipv6 = 1;
+    }
+    else if (strncasecmp (irc_url, "ircs://", 7) == 0)
+    {
+        pos = irc_url + 7;
+        ssl = 1;
+    }
+    else if ((strncasecmp (irc_url, "irc6s://", 8) == 0)
+        || (strncasecmp (irc_url, "ircs6://", 8) == 0))
+    {
+        pos = irc_url + 8;
+        ipv6 = 1;
+        ssl = 1;
+    }
+    else if (strncasecmp (irc_url, "irc://", 6) == 0)
+    {
+        pos = irc_url + 6;
+    }
+    else
         return -1;
+    
     url = strdup (irc_url);
     pos_server = strchr (url, '@');
     if (pos_server)
     {
         pos_server[0] = '\0';
         pos_server++;
-        pos = url + 6;
         if (!pos[0])
         {
             free (url);
@@ -193,6 +217,9 @@ server_init_with_url (char *irc_url, t_irc_server *server)
     
     free (url);
     
+    server->ipv6 = ipv6;
+    server->ssl = ssl;
+
     /* some default values */
     if (server->port < 0)
         server->port = DEFAULT_IRC_PORT;

@@ -86,7 +86,7 @@
     PACKAGE_STRING " (c) Copyright 2003-2005, compiled on " __DATE__ " " __TIME__ \
     "\nDeveloped by FlashCode <flashcode@flashtux.org> - " WEECHAT_WEBSITE "\n\n" \
     "Usage: %s [options ...]\n" \
-    "   or: %s [irc://[nickname[:password]@]irc.example.org[:port][/channel] ...]\n\n"
+    "   or: %s [irc[6][s]://[nickname[:password]@]irc.example.org[:port][/channel][,channel[...]]\n\n"
 
 #define WEE_USAGE2 \
     "  -c, --config            display config file options\n" \
