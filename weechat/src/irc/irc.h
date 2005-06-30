@@ -331,7 +331,7 @@ extern void dcc_end ();
 /* IRC display (irc-diplay.c) */
 
 extern void irc_display_prefix (/*@null@*/ t_gui_buffer *, char *);
-extern void irc_display_nick (t_gui_buffer *, t_irc_nick *, int, int, int, int);
+extern void irc_display_nick (t_gui_buffer *, t_irc_nick *, char *, int, int, int, int);
 extern void irc_display_mode (t_gui_buffer *, char *, char, char *, char *,
                               char *, char *);
 extern void irc_display_server (t_irc_server *ptr_server);

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.3-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-06-27 18:18+0200\n"
+"POT-Creation-Date: 2005-06-30 14:30+0200\n"
 "PO-Revision-Date: 2005-06-27 18:19+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -20,73 +20,73 @@ msgstr ""
 msgid "%s cannot allocate new nick\n"
 msgstr "%s impossible d'allouer un nouveau pseudo\n"
 
-#: src/irc/irc-server.c:156 src/common/weeconfig.c:1546
+#: src/irc/irc-server.c:180 src/common/weeconfig.c:1612
 msgid "Unable to get user's name"
 msgstr "Impossible de déterminer le nom d'utilisateur"
 
-#: src/irc/irc-server.c:221
+#: src/irc/irc-server.c:248
 #, c-format
 msgid "%s cannot allocate new server\n"
 msgstr "%s impossible d'allouer un nouveau serveur\n"
 
-#: src/irc/irc-server.c:439
+#: src/irc/irc-server.c:466
 #, c-format
 msgid "%s error sending data to IRC server\n"
 msgstr "%s erreur d'envoi de données au serveur IRC\n"
 
-#: src/irc/irc-server.c:459 src/irc/irc-server.c:472 src/irc/irc-server.c:538
-#: src/irc/irc-server.c:551
+#: src/irc/irc-server.c:486 src/irc/irc-server.c:499 src/irc/irc-server.c:565
+#: src/irc/irc-server.c:578
 #, c-format
 msgid "%s not enough memory for received IRC message\n"
 msgstr "%s mémoire insuffisante pour un message IRC reçu\n"
 
-#: src/irc/irc-server.c:629
+#: src/irc/irc-server.c:656
 #, c-format
 msgid "%s Command '%s' failed!\n"
 msgstr "%s La commande '%s' a échoué !\n"
 
-#: src/irc/irc-server.c:634
+#: src/irc/irc-server.c:661
 #, c-format
 msgid "%s No command to execute!\n"
 msgstr "%s Pas de commande à exécuter !\n"
 
-#: src/irc/irc-server.c:639
+#: src/irc/irc-server.c:666
 #, c-format
 msgid "%s Unknown command: cmd=%s, args=%s\n"
 msgstr "%s Commande inconnue: cmd=%s, params=%s\n"
 
-#: src/irc/irc-server.c:690
+#: src/irc/irc-server.c:717
 #, c-format
 msgid "%s cannot read data from socket, disconnecting from server...\n"
 msgstr ""
 "%s impossible de lire des données sur la socket, déconnexion du serveur...\n"
 
-#: src/irc/irc-server.c:773
+#: src/irc/irc-server.c:800
 #, c-format
 msgid "%s: Reconnecting to server in %d seconds\n"
 msgstr "%s: Reconnexion au serveur dans %d secondes\n"
 
-#: src/irc/irc-server.c:806
+#: src/irc/irc-server.c:833
 #, c-format
 msgid "%s gnutls handshake failed\n"
 msgstr "%s le handshake gnutls a échoué\n"
 
-#: src/irc/irc-server.c:822
+#: src/irc/irc-server.c:849
 #, c-format
 msgid "%s address \"%s\" not found\n"
 msgstr "%s adresse \"%s\" introuvable\n"
 
-#: src/irc/irc-server.c:831
+#: src/irc/irc-server.c:858
 #, c-format
 msgid "%s IP address not found\n"
 msgstr "%s adresse IP introuvable\n"
 
-#: src/irc/irc-server.c:839
+#: src/irc/irc-server.c:866
 #, c-format
 msgid "%s connection refused\n"
 msgstr "%s connexion refusée\n"
 
-#: src/irc/irc-server.c:903
+#: src/irc/irc-server.c:930
 #, c-format
 msgid ""
 "%s cannot connect with SSL since WeeChat was not built with GNUtls support\n"
@@ -94,47 +94,47 @@ msgstr ""
 "%s impossible de se connecter en SSL car WeeChat n'a pas été construit avec "
 "le support GNUtls\n"
 
-#: src/irc/irc-server.c:910
+#: src/irc/irc-server.c:937
 #, c-format
 msgid "%s: connecting to server %s:%d%s%s...\n"
 msgstr "%s: connexion au serveur %s:%d%s%s...\n"
 
-#: src/irc/irc-server.c:914
+#: src/irc/irc-server.c:941
 #, c-format
 msgid "Connecting to server %s:%d%s%s...\n"
 msgstr "Connexion au serveur %s:%d%s%s...\n"
 
-#: src/irc/irc-server.c:931
+#: src/irc/irc-server.c:958
 #, c-format
 msgid "%s gnutls init error\n"
 msgstr "%s erreur d'initialisation gnutls\n"
 
-#: src/irc/irc-server.c:946
+#: src/irc/irc-server.c:973
 #, c-format
 msgid "%s cannot create pipe\n"
 msgstr "%s impossible de créer le pipe\n"
 
-#: src/irc/irc-server.c:958
+#: src/irc/irc-server.c:985
 #, c-format
 msgid "%s cannot create socket\n"
 msgstr "%s impossible de créer la socket\n"
 
-#: src/irc/irc-server.c:969
+#: src/irc/irc-server.c:996
 #, c-format
 msgid "%s cannot set socket option \"SO_REUSEADDR\"\n"
 msgstr "%s impossible de paramétrer l'option socket \"SO_REUSEADDR\"\n"
 
-#: src/irc/irc-server.c:980
+#: src/irc/irc-server.c:1007
 #, c-format
 msgid "%s cannot set socket option \"SO_KEEPALIVE\"\n"
 msgstr "%s impossible de paramétrer l'option socket \"SO_KEEPALIVE\"\n"
 
-#: src/irc/irc-server.c:1011
+#: src/irc/irc-server.c:1038
 #, c-format
 msgid "%s: Reconnecting to server...\n"
 msgstr "%s: Reconnexion au serveur...\n"
 
-#: src/irc/irc-server.c:1061 src/irc/irc-server.c:1070
+#: src/irc/irc-server.c:1088 src/irc/irc-server.c:1097
 msgid "Disconnected from server!\n"
 msgstr "Déconnecté du serveur !\n"
 
@@ -1270,37 +1270,37 @@ msgstr "impossible de changer le mode pour les autres utilisateurs"
 msgid "whois (secure connection)"
 msgstr "qui est (connexion sécurisée)"
 
-#: src/irc/irc-display.c:154 src/common/command.c:842
+#: src/irc/irc-display.c:156 src/common/command.c:842
 msgid "Server: "
 msgstr "Serveur: "
 
-#: src/irc/irc-display.c:159
+#: src/irc/irc-display.c:161
 msgid "connected"
 msgstr "connecté"
 
-#: src/irc/irc-display.c:159
+#: src/irc/irc-display.c:161
 msgid "not connected"
 msgstr "non connecté"
 
-#: src/irc/irc-display.c:163 src/irc/irc-display.c:168
-#: src/irc/irc-display.c:180 src/irc/irc-display.c:183
+#: src/irc/irc-display.c:165 src/irc/irc-display.c:170
+#: src/irc/irc-display.c:182 src/irc/irc-display.c:185
 msgid "yes"
 msgstr "oui"
 
-#: src/irc/irc-display.c:163 src/irc/irc-display.c:168
-#: src/irc/irc-display.c:180 src/irc/irc-display.c:183
+#: src/irc/irc-display.c:165 src/irc/irc-display.c:170
+#: src/irc/irc-display.c:182 src/irc/irc-display.c:185
 msgid "no"
 msgstr "non"
 
-#: src/irc/irc-display.c:165
+#: src/irc/irc-display.c:167
 msgid " (temporary server, will not be saved)"
 msgstr " (serveur temporaire, ne sera pas sauvé)"
 
-#: src/irc/irc-display.c:187
+#: src/irc/irc-display.c:189
 msgid "(hidden)"
 msgstr "(caché)"
 
-#: src/irc/irc-send.c:58 src/irc/irc-recv.c:3645
+#: src/irc/irc-send.c:58 src/irc/irc-recv.c:3636
 msgid "unknown"
 msgstr "inconnu"
 
@@ -1345,7 +1345,7 @@ msgstr ""
 msgid "%s nick \"%s\" not found for \"%s\" command\n"
 msgstr "%s pseudo \"%s\" non trouvé pour la commande \"%s\"\n"
 
-#: src/irc/irc-send.c:966 src/irc/irc-send.c:1274 src/irc/irc-recv.c:1514
+#: src/irc/irc-send.c:966 src/irc/irc-send.c:1274 src/irc/irc-recv.c:1505
 #, c-format
 msgid "%s cannot create new private window \"%s\"\n"
 msgstr "%s impossible de créer la fenêtre privée \"%s\"\n"
@@ -1364,8 +1364,8 @@ msgid "by"
 msgstr "par"
 
 #: src/irc/irc-recv.c:195 src/irc/irc-recv.c:289 src/irc/irc-recv.c:763
-#: src/irc/irc-recv.c:1098 src/irc/irc-recv.c:1286 src/irc/irc-recv.c:2863
-#: src/irc/irc-recv.c:2930
+#: src/irc/irc-recv.c:1098 src/irc/irc-recv.c:1277 src/irc/irc-recv.c:2854
+#: src/irc/irc-recv.c:2921
 #, c-format
 msgid "%s channel \"%s\" not found for \"%s\" command\n"
 msgstr "%s canal \"%s\" non trouvé pour la commande \"%s\"\n"
@@ -1501,7 +1501,7 @@ msgid "removes voice from"
 msgstr "supprime la voix de"
 
 #: src/irc/irc-recv.c:718 src/irc/irc-recv.c:803 src/irc/irc-recv.c:1172
-#: src/irc/irc-recv.c:1610
+#: src/irc/irc-recv.c:1601
 #, c-format
 msgid "%s \"%s\" command received without host\n"
 msgstr "%s commande \"%s\" reçue sans host\n"
@@ -1550,7 +1550,7 @@ msgstr "%s commande \"%s\" reçue sans host ou canal\n"
 msgid " has left "
 msgstr " a quitté "
 
-#: src/irc/irc-recv.c:1221 src/irc/irc-recv.c:1540
+#: src/irc/irc-recv.c:1221 src/irc/irc-recv.c:1531
 #, c-format
 msgid "On %s: * %s %s"
 msgstr "Sur %s: * %s %s"
@@ -1560,233 +1560,227 @@ msgstr "Sur %s: * %s %s"
 msgid "Received a CTCP SOUND \"%s\" from "
 msgstr "CTCP SOUND \"%s\" reçu de "
 
-#: src/irc/irc-recv.c:1261
+#: src/irc/irc-recv.c:1260
 #, c-format
 msgid "On %s: %s> %s"
 msgstr "Sur %s: %s> %s"
 
-#: src/irc/irc-recv.c:1276
-#, c-format
-msgid "%s nick \"%s\" not found for \"%s\" command (message: \"%s\")\n"
-msgstr ""
-"%s pseudo \"%s\" non trouvé pour la commande \"%s\" (message: \"%s\")\n"
-
-#: src/irc/irc-recv.c:1331
+#: src/irc/irc-recv.c:1322
 msgid "Received a "
 msgstr "Reçu un "
 
-#: src/irc/irc-recv.c:1333
+#: src/irc/irc-recv.c:1324
 msgid "CTCP VERSION "
 msgstr "CTCP VERSION "
 
-#: src/irc/irc-recv.c:1335
+#: src/irc/irc-recv.c:1326
 msgid "from"
 msgstr "de"
 
-#: src/irc/irc-recv.c:1372 src/irc/irc-recv.c:1389 src/irc/irc-recv.c:1405
-#: src/irc/irc-recv.c:1421 src/irc/irc-recv.c:1446 src/irc/irc-recv.c:1463
-#: src/irc/irc-recv.c:1478 src/irc/irc-recv.c:1586 src/irc/irc-recv.c:3229
-#: src/irc/irc-recv.c:3287 src/irc/irc-recv.c:3439 src/irc/irc-recv.c:3454
-#: src/irc/irc-recv.c:3469 src/irc/irc-recv.c:3484 src/irc/irc-recv.c:3497
-#: src/irc/irc-recv.c:3547 src/irc/irc-recv.c:3561
+#: src/irc/irc-recv.c:1363 src/irc/irc-recv.c:1380 src/irc/irc-recv.c:1396
+#: src/irc/irc-recv.c:1412 src/irc/irc-recv.c:1437 src/irc/irc-recv.c:1454
+#: src/irc/irc-recv.c:1469 src/irc/irc-recv.c:1577 src/irc/irc-recv.c:3220
+#: src/irc/irc-recv.c:3278 src/irc/irc-recv.c:3430 src/irc/irc-recv.c:3445
+#: src/irc/irc-recv.c:3460 src/irc/irc-recv.c:3475 src/irc/irc-recv.c:3488
+#: src/irc/irc-recv.c:3538 src/irc/irc-recv.c:3552
 #, c-format
 msgid "%s cannot parse \"%s\" command\n"
 msgstr "%s impossible d'analyser la commande \"%s\"\n"
 
-#: src/irc/irc-recv.c:1491
+#: src/irc/irc-recv.c:1482
 #, c-format
 msgid "%s unknown DCC CHAT type received from "
 msgstr "%s type de DCC CHAT inconnu reçu de "
 
-#: src/irc/irc-recv.c:1566 src/irc/irc-dcc.c:799
+#: src/irc/irc-recv.c:1557 src/irc/irc-dcc.c:799
 #, c-format
 msgid "Private %s> %s"
 msgstr "Prive %s> %s"
 
-#: src/irc/irc-recv.c:1642
+#: src/irc/irc-recv.c:1633
 msgid "has quit"
 msgstr "a quitté"
 
-#: src/irc/irc-recv.c:1763
+#: src/irc/irc-recv.c:1754
 #, c-format
 msgid "%s \"%s\" command received without channel\n"
 msgstr "%s commande \"%s\" reçue sans canal\n"
 
-#: src/irc/irc-recv.c:1791
+#: src/irc/irc-recv.c:1782
 msgid " has changed topic for "
 msgstr " a changé le titre pour "
 
-#: src/irc/irc-recv.c:1796
+#: src/irc/irc-recv.c:1787
 #, c-format
 msgid " to: \"%s\"\n"
 msgstr " en: \"%s\"\n"
 
-#: src/irc/irc-recv.c:1802
+#: src/irc/irc-recv.c:1793
 msgid " has unset topic for "
 msgstr " a retiré le titre pour "
 
-#: src/irc/irc-recv.c:1913
+#: src/irc/irc-recv.c:1904
 #, c-format
 msgid " is away: %s\n"
 msgstr " est absent: %s\n"
 
-#: src/irc/irc-recv.c:1987
+#: src/irc/irc-recv.c:1978
 msgid "Users online: "
 msgstr "Utilisateurs en ligne: "
 
-#: src/irc/irc-recv.c:2434
+#: src/irc/irc-recv.c:2425
 msgid "idle: "
 msgstr "inactivité: "
 
-#: src/irc/irc-recv.c:2442
+#: src/irc/irc-recv.c:2433
 msgid "days"
 msgstr "jours"
 
-#: src/irc/irc-recv.c:2442
+#: src/irc/irc-recv.c:2433
 msgid "day"
 msgstr "jour"
 
-#: src/irc/irc-recv.c:2452
+#: src/irc/irc-recv.c:2443
 msgid "hours"
 msgstr "heures"
 
-#: src/irc/irc-recv.c:2452
+#: src/irc/irc-recv.c:2443
 msgid "hour"
 msgstr "heure"
 
-#: src/irc/irc-recv.c:2458
+#: src/irc/irc-recv.c:2449
 msgid "minutes"
 msgstr "minutes"
 
-#: src/irc/irc-recv.c:2458
+#: src/irc/irc-recv.c:2449
 msgid "minute"
 msgstr "minute"
 
-#: src/irc/irc-recv.c:2464
+#: src/irc/irc-recv.c:2455
 msgid "seconds"
 msgstr "secondes"
 
-#: src/irc/irc-recv.c:2464
+#: src/irc/irc-recv.c:2455
 msgid "second"
 msgstr "seconde"
 
-#: src/irc/irc-recv.c:2469
+#: src/irc/irc-recv.c:2460
 msgid "signon at: "
 msgstr "signé le: "
 
-#: src/irc/irc-recv.c:2557
+#: src/irc/irc-recv.c:2548
 msgid "Channels: "
 msgstr "Canaux: "
 
-#: src/irc/irc-recv.c:2809
+#: src/irc/irc-recv.c:2800
 msgid "No topic set for "
 msgstr "Pas de titre défini pour "
 
-#: src/irc/irc-recv.c:2851
+#: src/irc/irc-recv.c:2842
 msgid "Topic for "
 msgstr "Le titre pour "
 
-#: src/irc/irc-recv.c:2855
+#: src/irc/irc-recv.c:2846
 #, c-format
 msgid " is: \"%s\"\n"
 msgstr " est: \"%s\"\n"
 
-#: src/irc/irc-recv.c:2873 src/irc/irc-recv.c:2957 src/irc/irc-recv.c:3010
+#: src/irc/irc-recv.c:2864 src/irc/irc-recv.c:2948 src/irc/irc-recv.c:3001
 #, c-format
 msgid "%s cannot identify channel for \"%s\" command\n"
 msgstr "%s impossible de déterminer le canal pour la commande \"%s\"\n"
 
-#: src/irc/irc-recv.c:2919
+#: src/irc/irc-recv.c:2910
 msgid "Topic set by "
 msgstr "Titre défini par "
 
-#: src/irc/irc-recv.c:2939
+#: src/irc/irc-recv.c:2930
 #, c-format
 msgid "%s cannot identify date/time for \"%s\" command\n"
 msgstr "%s impossible d'identifier la date/heure pour la commande \"%s\"\n"
 
-#: src/irc/irc-recv.c:2948 src/irc/irc-recv.c:3019
+#: src/irc/irc-recv.c:2939 src/irc/irc-recv.c:3010
 #, c-format
 msgid "%s cannot identify nickname for \"%s\" command\n"
 msgstr ""
 "%s impossible de déterminer le nom d'utilisateur pour la commande \"%s\"\n"
 
-#: src/irc/irc-recv.c:2998
+#: src/irc/irc-recv.c:2989
 msgid "has invited"
 msgstr "a invité"
 
-#: src/irc/irc-recv.c:3001 src/irc/irc-recv.c:3152
+#: src/irc/irc-recv.c:2992 src/irc/irc-recv.c:3143
 msgid "on"
 msgstr "sur"
 
-#: src/irc/irc-recv.c:3275
+#: src/irc/irc-recv.c:3266
 #, c-format
 msgid "%s cannot create nick \"%s\" for channel \"%s\"\n"
 msgstr "%s impossible de créer l'utilisateur \"%s\" pour le canal \"%s\"\n"
 
-#: src/irc/irc-recv.c:3331
+#: src/irc/irc-recv.c:3322
 msgid "Nicks "
 msgstr "Utilisateurs "
 
-#: src/irc/irc-recv.c:3351
+#: src/irc/irc-recv.c:3342
 msgid "Channel "
 msgstr "Canal "
 
-#: src/irc/irc-recv.c:3362
+#: src/irc/irc-recv.c:3353
 msgid "nicks"
 msgstr "utilisateurs"
 
-#: src/irc/irc-recv.c:3362
+#: src/irc/irc-recv.c:3353
 msgid "nick"
 msgstr "utilisateur"
 
-#: src/irc/irc-recv.c:3370
+#: src/irc/irc-recv.c:3361
 msgid "ops"
 msgstr "ops"
 
-#: src/irc/irc-recv.c:3370
+#: src/irc/irc-recv.c:3361
 msgid "op"
 msgstr "op"
 
-#: src/irc/irc-recv.c:3379
+#: src/irc/irc-recv.c:3370
 msgid "halfops"
 msgstr "halfops"
 
-#: src/irc/irc-recv.c:3379
+#: src/irc/irc-recv.c:3370
 msgid "halfop"
 msgstr "halfop"
 
-#: src/irc/irc-recv.c:3388
+#: src/irc/irc-recv.c:3379
 msgid "voices"
 msgstr "voices"
 
-#: src/irc/irc-recv.c:3388
+#: src/irc/irc-recv.c:3379
 msgid "voice"
 msgstr "voice"
 
-#: src/irc/irc-recv.c:3397
+#: src/irc/irc-recv.c:3388
 msgid "normal"
 msgstr "normal"
 
-#: src/irc/irc-recv.c:3510
+#: src/irc/irc-recv.c:3501
 msgid "banned by"
 msgstr "banni par"
 
-#: src/irc/irc-recv.c:3599
+#: src/irc/irc-recv.c:3590
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\"\n"
 msgstr ""
 "%s: l'utilisateur \"%s\" est déjà en cours d'utilisation, essai avec le 2nd "
 "nom d'utilisateur \"%s\"\n"
 
-#: src/irc/irc-recv.c:3611
+#: src/irc/irc-recv.c:3602
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\"\n"
 msgstr ""
 "%s: l'utilisateur \"%s\" est déjà en cours d'utilisation, essai avec le 3ème "
 "nom d'utilisateur \"%s\"\n"
 
-#: src/irc/irc-recv.c:3623
+#: src/irc/irc-recv.c:3614
 #, c-format
 msgid ""
 "%s: all declared nicknames are already in use, closing connection with "
@@ -1795,7 +1789,7 @@ msgstr ""
 "%s: tous les noms d'utilisateurs déclarés sont déjà en cours d'utilisation, "
 "fermeture de la connexion avec le serveur !\n"
 
-#: src/irc/irc-recv.c:3633
+#: src/irc/irc-recv.c:3624
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\"\n"
 msgstr ""
@@ -2915,52 +2909,52 @@ msgstr ""
 msgid "%s invalid syntax for IRC server ('%s'), ignored\n"
 msgstr "%s syntaxe invalide pour le serveur IRC ('%s'), ignoré\n"
 
-#: src/common/weechat.c:383
+#: src/common/weechat.c:384
 #, c-format
 msgid "%s unable to create server ('%s'), ignored\n"
 msgstr "%s impossible de créer le serveur ('%s'), ignoré\n"
 
-#: src/common/weechat.c:392
+#: src/common/weechat.c:393
 #, c-format
 msgid "%s unknown parameter '%s', ignored\n"
 msgstr "%s paramètre inconnu '%s', ignoré\n"
 
-#: src/common/weechat.c:412
+#: src/common/weechat.c:413
 #, c-format
 msgid "%s cannot create directory \"%s\"\n"
 msgstr "%s impossible de créer le répertoire \"%s\"\n"
 
-#: src/common/weechat.c:438
+#: src/common/weechat.c:439
 #, c-format
 msgid "%s unable to get HOME directory\n"
 msgstr "%s impossible de lire le répertoire personnel\n"
 
-#: src/common/weechat.c:447
+#: src/common/weechat.c:448
 #, c-format
 msgid "%s not enough memory for home directory\n"
 msgstr "%s pas assez de mémoire pour le répertoire personnel\n"
 
-#: src/common/weechat.c:457
+#: src/common/weechat.c:458
 #, c-format
 msgid "%s unable to create ~/.weechat directory\n"
 msgstr "%s impossible de créer le répertoire ~/.weechat\n"
 
-#: src/common/weechat.c:509
+#: src/common/weechat.c:510
 #, c-format
 msgid "%s unable to create ~/.weechat/logs directory\n"
 msgstr "%s impossible de créer le répertoire ~/.weechat/logs\n"
 
-#: src/common/weechat.c:552
+#: src/common/weechat.c:553
 #, c-format
 msgid "%s unable to create/append to log file (~/.weechat/%s)"
 msgstr "%s impossible de créer/ajouter dans le fichier de log (~/.weechat/%s)"
 
-#: src/common/weechat.c:575
+#: src/common/weechat.c:576
 #, c-format
 msgid "%sWelcome to "
 msgstr "%sBienvenue dans "
 
-#: src/common/weechat.c:588 src/common/weechat.c:597
+#: src/common/weechat.c:589 src/common/weechat.c:598
 msgid "compiled on"
 msgstr "compilé le"
 
@@ -3764,64 +3758,64 @@ msgstr ""
 "liste des niveaux de notifications (séparés par des virgules) pour les "
 "canaux de ce serveur (format: #canal:1,..)"
 
-#: src/common/weeconfig.c:1094
+#: src/common/weeconfig.c:1160
 #, c-format
 msgid "%s %s, line %d: new server, but previous was incomplete\n"
 msgstr "%s %s, ligne %d: nouveau serveur, mais le précédent était incomplet\n"
 
-#: src/common/weeconfig.c:1103
+#: src/common/weeconfig.c:1169
 #, c-format
 msgid "%s %s, line %d: server '%s' already exists\n"
 msgstr "%s %s, ligne %d: le serveur '%s' existe déjà\n"
 
-#: src/common/weeconfig.c:1118
+#: src/common/weeconfig.c:1184
 #, c-format
 msgid "%s %s, line %d: unable to create server\n"
 msgstr "%s %s, ligne %d: impossible de créer le serveur\n"
 
-#: src/common/weeconfig.c:1157
+#: src/common/weeconfig.c:1223
 #, c-format
 msgid "%s unable to assign default int with string (\"%s\")\n"
 msgstr ""
 "%s impossible d'assigner la valeur entière par défaut avec la chaîne (\"%s"
 "\")\n"
 
-#: src/common/weeconfig.c:1168
+#: src/common/weeconfig.c:1234
 #, c-format
 msgid "%s unable to assign default color (\"%s\")\n"
 msgstr "%s impossible d'assigner la couleur par défaut (\"%s\")\n"
 
-#: src/common/weeconfig.c:1207
+#: src/common/weeconfig.c:1273
 #, c-format
 msgid "%s config file \"%s\" not found.\n"
 msgstr "%s fichier de configuration \"%s\" non trouvé.\n"
 
-#: src/common/weeconfig.c:1239
+#: src/common/weeconfig.c:1305
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"]\"\n"
 msgstr "%s %s, ligne %d: syntaxe invalide, il manque \"]\"\n"
 
-#: src/common/weeconfig.c:1256
+#: src/common/weeconfig.c:1322
 #, c-format
 msgid "%s %s, line %d: unknown section identifier (\"%s\")\n"
 msgstr "%s %s, ligne %d: section inconnue (\"%s\")\n"
 
-#: src/common/weeconfig.c:1274
+#: src/common/weeconfig.c:1340
 #, c-format
 msgid "%s %s, line %d: invalid section for option, line is ignored\n"
 msgstr "%s %s, ligne %d: section invalide pour l'option, ligne ignorée\n"
 
-#: src/common/weeconfig.c:1282
+#: src/common/weeconfig.c:1348
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"=\"\n"
 msgstr "%s %s, ligne %d: syntaxe invalide, il manque \"=\"\n"
 
-#: src/common/weeconfig.c:1316
+#: src/common/weeconfig.c:1382
 #, c-format
 msgid "%s %s, line %d: invalid option \"%s\"\n"
 msgstr "%s %s, ligne %d: option \"%s\" invalide\n"
 
-#: src/common/weeconfig.c:1327
+#: src/common/weeconfig.c:1393
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value foroption '%s'\n"
@@ -3830,7 +3824,7 @@ msgstr ""
 "%s %s, ligne %d: valeur invalide pour l'option '%s'\n"
 "Attendu: valeur booléenne: 'off' ou 'on'\n"
 
-#: src/common/weeconfig.c:1336
+#: src/common/weeconfig.c:1402
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
@@ -3839,7 +3833,7 @@ msgstr ""
 "%s %s, ligne %d: valeur invalide pour l'option '%s'\n"
 "Attendu: entier compris entre %d et %d\n"
 
-#: src/common/weeconfig.c:1347
+#: src/common/weeconfig.c:1413
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
@@ -3848,26 +3842,26 @@ msgstr ""
 "%s %s, ligne %d: valeur invalide pour l'option '%s'\n"
 "Attendu: une de ces chaînes: "
 
-#: src/common/weeconfig.c:1363
+#: src/common/weeconfig.c:1429
 #, c-format
 msgid "%s %s, line %d: invalid color name for option '%s'\n"
 msgstr "%s %s, ligne %d: nom de couleur invalide pour l'option '%s'\n"
 
-#: src/common/weeconfig.c:1423 src/common/weeconfig.c:1598
+#: src/common/weeconfig.c:1489 src/common/weeconfig.c:1664
 #, c-format
 msgid "%s cannot create file \"%s\"\n"
 msgstr "%s impossible de créer le fichier \"%s\"\n"
 
-#: src/common/weeconfig.c:1429
+#: src/common/weeconfig.c:1495
 #, c-format
 msgid "%s: creating default config file...\n"
 msgstr "%s: création du fichier de configuration par défaut...\n"
 
-#: src/common/weeconfig.c:1430
+#: src/common/weeconfig.c:1496
 msgid "Creating default config file\n"
 msgstr "Création du fichier de configuration par défaut\n"
 
-#: src/common/weeconfig.c:1433 src/common/weeconfig.c:1607
+#: src/common/weeconfig.c:1499 src/common/weeconfig.c:1673
 #, c-format
 msgid ""
 "#\n"
@@ -3876,9 +3870,7 @@ msgstr ""
 "#\n"
 "# %s: fichier de configuration, créé par %s v%s le %s#\n"
 
-#: src/common/weeconfig.c:1604
+#: src/common/weeconfig.c:1670
 msgid "Saving config to disk\n"
 msgstr "Sauvegarde de la configuration sur disque\n"
 
-#~ msgid "%s: connecting to %s:%d%s...\n"
-#~ msgstr "%s: connexion à %s:%d%s...\n"

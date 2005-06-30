@@ -47,6 +47,7 @@ completion_init (t_completion *completion)
     completion->base_command_arg = 0;
     completion->position = -1;
     completion->base_word = NULL;
+    completion->args = NULL;
     
     completion->completion_list = NULL;
     completion->last_completion = NULL;
@@ -66,6 +67,10 @@ completion_free (t_completion *completion)
     if (completion->base_word)
         free (completion->base_word);
     completion->base_word = NULL;
+    
+    if (completion->args)
+        free (completion->args);
+    completion->args = NULL;
     
     while (completion->completion_list)
         weelist_remove (&completion->completion_list,
@@ -97,8 +102,11 @@ completion_build_list (t_completion *completion, void *channel)
     int i, j;
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
-    char option_name[256];
+    char *pos, option_name[256];
     t_weechat_alias *ptr_alias;
+    t_config_option *option;
+    void *option_value;
+    char option_string[2048];
     
     /* WeeChat internal commands */
     
@@ -211,32 +219,92 @@ completion_build_list (t_completion *completion, void *channel)
                      "unload");
         return;
     }
-    if ((strcasecmp (completion->base_command, "set") == 0)
-        && (completion->base_command_arg == 1))
+    if (strcasecmp (completion->base_command, "set") == 0)
     {
-        for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
+        if (completion->base_command_arg == 1)
         {
-            if ((i != CONFIG_SECTION_ALIAS) && (i != CONFIG_SECTION_SERVER))
+            for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
             {
-                for (j = 0; weechat_options[i][j].option_name; j++)
+                if ((i != CONFIG_SECTION_ALIAS) && (i != CONFIG_SECTION_SERVER))
                 {
+                    for (j = 0; weechat_options[i][j].option_name; j++)
+                    {
+                        weelist_add (&completion->completion_list,
+                                     &completion->last_completion,
+                                     weechat_options[i][j].option_name);
+                    }
+                }
+            }
+            for (ptr_server = irc_servers; ptr_server;
+                 ptr_server = ptr_server->next_server)
+            {
+                for (i = 0; weechat_options[CONFIG_SECTION_SERVER][i].option_name; i++)
+                {
+                    snprintf (option_name, sizeof (option_name), "%s.%s",
+                              ptr_server->name, 
+                              weechat_options[CONFIG_SECTION_SERVER][i].option_name);
                     weelist_add (&completion->completion_list,
                                  &completion->last_completion,
-                                 weechat_options[i][j].option_name);
+                                 option_name);
                 }
             }
         }
-        for (ptr_server = irc_servers; ptr_server;
-             ptr_server = ptr_server->next_server)
+        else if (completion->base_command_arg == 3)
         {
-            for (i = 0; weechat_options[CONFIG_SECTION_SERVER][i].option_name; i++)
+            if (completion->args)
             {
-                snprintf (option_name, sizeof (option_name), "%s.%s",
-                          ptr_server->name, 
-                          weechat_options[CONFIG_SECTION_SERVER][i].option_name);
-                weelist_add (&completion->completion_list,
-                             &completion->last_completion,
-                             option_name);
+                pos = strchr (completion->args, ' ');
+                if (pos)
+                    pos[0] = '\0';
+                option = NULL;
+                option_value = NULL;
+                config_option_search_option_value (completion->args, &option, &option_value);
+                if (option && option_value)
+                {
+                    switch (option->option_type)
+                    {
+                        case OPTION_TYPE_BOOLEAN:
+                            if (option_value && (*((int *)(option_value))))
+                                weelist_add (&completion->completion_list,
+                                             &completion->last_completion,
+                                             "on");
+                            else
+                                weelist_add (&completion->completion_list,
+                                             &completion->last_completion,
+                                             "off");
+                            break;
+                        case OPTION_TYPE_INT:
+                            snprintf (option_string, sizeof (option_string) - 1,
+                                      "%d", (option_value) ? *((int *)(option_value)) : option->default_int);
+                            weelist_add (&completion->completion_list,
+                                         &completion->last_completion,
+                                         option_string);
+                            break;
+                        case OPTION_TYPE_INT_WITH_STRING:
+                            weelist_add (&completion->completion_list,
+                                         &completion->last_completion,
+                                         (option_value) ?
+                                             option->array_values[*((int *)(option_value))] :
+                                             option->array_values[option->default_int]);
+                            break;
+                        case OPTION_TYPE_COLOR:
+                            weelist_add (&completion->completion_list,
+                                         &completion->last_completion,
+                                         (option_value) ?
+                                             gui_get_color_by_value (*((int *)(option_value))) :
+                                             option->default_string);
+                            break;
+                        case OPTION_TYPE_STRING:
+                            weelist_add (&completion->completion_list,
+                                         &completion->last_completion,
+                                         (option_value) ?
+                                             *((char **)(option_value)) :
+                                             option->default_string);
+                            break;
+                    }
+                }
+                if (pos)
+                    pos[0] = ' ';
             }
         }
         return;
@@ -471,6 +539,8 @@ completion_find_context (t_completion *completion, void *channel, char *buffer,
             command_arg++;
             i++;
             while ((i < pos) && (buffer[i] == ' ')) i++;
+            if (!completion->args)
+                completion->args = strdup (buffer + i);
         }
         else
             i++;

@@ -1055,6 +1055,72 @@ config_option_search (char *option_name)
 }
 
 /*
+ * config_option_search_option_value: look for type and value of an option
+ *                                    (including server options)
+ *                                    if option is not found, NULL is returned
+ */
+
+void
+config_option_search_option_value (char *option_name, t_config_option **option,
+                                   void **option_value)
+{
+    t_config_option *ptr_option;
+    t_irc_server *ptr_server;
+    int i;
+    void *ptr_value;
+    char *pos;
+    
+    ptr_option = NULL;
+    ptr_value = NULL;
+    
+    ptr_option = config_option_search (option_name);
+    if (!ptr_option)
+    {
+        pos = strchr (option_name, '.');
+        if (pos)
+        {
+            pos[0] = '\0';
+            ptr_server = server_search (option_name);
+            if (ptr_server)
+            {
+                for (i = 0; weechat_options[CONFIG_SECTION_SERVER][i].option_name; i++)
+                {
+                    if (strcmp (weechat_options[CONFIG_SECTION_SERVER][i].option_name,
+                                pos + 1) == 0)
+                    {
+                        ptr_option = &weechat_options[CONFIG_SECTION_SERVER][i];
+                        ptr_value = config_get_server_option_ptr (ptr_server, pos + 1);
+                        break;
+                    }
+                }
+            }
+            pos[0] = '.';
+        }
+    }
+    else
+    {
+        switch (ptr_option->option_type)
+        {
+            case OPTION_TYPE_BOOLEAN:
+            case OPTION_TYPE_INT:
+            case OPTION_TYPE_INT_WITH_STRING:
+            case OPTION_TYPE_COLOR:
+                ptr_value = (void *)(ptr_option->ptr_int);
+                break;
+            case OPTION_TYPE_STRING:
+                ptr_value = (void *)(ptr_option->ptr_string);
+                break;
+        }
+    }
+    
+    if (ptr_option)
+    {
+        *option = ptr_option;
+        *option_value = ptr_value;
+    }
+}
+
+/*
  * config_set_value: set new value for an option (found by name)
  *                   return:  0 if success
  *                           -1 if bad value for option

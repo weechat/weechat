@@ -876,7 +876,7 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
                 ptr_nick = nick_search (ptr_channel, server->nick);
                 if (ptr_nick)
                 {
-                    irc_display_nick (ptr_channel->buffer, ptr_nick,
+                    irc_display_nick (ptr_channel->buffer, ptr_nick, NULL,
                                       MSG_TYPE_NICK, 1, 1, 0);
                     gui_printf_type_color (ptr_channel->buffer,
                                            MSG_TYPE_MSG,
@@ -901,7 +901,7 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
                         ptr_nick = nick_search (ptr_channel, server->nick);
                         if (ptr_nick)
                         {
-                            irc_display_nick (ptr_channel->buffer, ptr_nick,
+                            irc_display_nick (ptr_channel->buffer, ptr_nick, NULL,
                                               MSG_TYPE_NICK, 1, 1, 0);
                             gui_printf_type_color (ptr_channel->buffer,
                                                    MSG_TYPE_MSG,

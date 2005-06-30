@@ -39,6 +39,7 @@ struct t_completion
     char *base_word;        /* word to complete (when Tab was pressed)      */
     int base_word_pos;      /* beggining of base word                       */
     int position;           /* position where Tab was pressed               */
+    char *args;             /* command line args (including base word)      */
     
     /* for command argument completion */
     t_weelist *completion_list; /* data list for completion                 */

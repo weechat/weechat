@@ -66,13 +66,14 @@ irc_display_prefix (t_gui_buffer *buffer, char *prefix)
  */
 
 void
-irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, int message_type,
-                  int display_around, int color_nick, int no_nickmode)
+irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
+                  int message_type, int display_around, int color_nick, int no_nickmode)
 {
     if (display_around)
         gui_printf_type_color (buffer,
-                               message_type, COLOR_WIN_CHAT_DARK, "<");
-    if (cfg_look_nickmode)
+                               message_type, COLOR_WIN_CHAT_DARK,
+                               (nick) ? "<" : ">");
+    if (nick && cfg_look_nickmode)
     {
         if (nick->is_chanowner)
             gui_printf_type_color (buffer,
@@ -104,19 +105,20 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, int message_type,
         gui_printf_type_color (buffer,
                                message_type,
                                COLOR_WIN_CHAT_HIGHLIGHT,
-                               "%s", nick->nick);
+                               "%s", (nick) ? nick->nick : nickname);
     else
         gui_printf_type_color (buffer,
                                message_type,
-                               (color_nick) ?
+                               (nick && color_nick) ?
                                    ((cfg_look_color_nicks) ?
                                    nick->color : COLOR_WIN_CHAT) :
                                    COLOR_WIN_CHAT,
-                               "%s", nick->nick);
+                               "%s", (nick) ? nick->nick : nickname);
     
     if (display_around)
         gui_printf_type_color (buffer,
-                               message_type, COLOR_WIN_CHAT_DARK, "> ");
+                               message_type, COLOR_WIN_CHAT_DARK,
+                               (nick) ? "> " : "< ");
 }
 
 /*

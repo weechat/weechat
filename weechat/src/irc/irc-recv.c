@@ -1246,37 +1246,28 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                 else
                 {
                     ptr_nick = nick_search (ptr_channel, host);
-                    if (ptr_nick)
+                    if (strstr (pos, server->nick))
                     {
-                        if (strstr (pos, server->nick))
-                        {
-                            irc_display_nick (ptr_channel->buffer, ptr_nick,
-                                              MSG_TYPE_NICK | MSG_TYPE_HIGHLIGHT,
-                                              1, -1, 0);
-                            if ( (cfg_look_infobar)
-                                && (cfg_look_infobar_delay_highlight > 0)
-                                && (ptr_channel->buffer != gui_current_window->buffer) )
-                                gui_infobar_printf (cfg_look_infobar_delay_highlight,
-                                                    COLOR_WIN_INFOBAR_HIGHLIGHT,
-                                                    _("On %s: %s> %s"),
-                                                    ptr_channel->name,
-                                                    host, pos);
-                        }
-                        else
-                            irc_display_nick (ptr_channel->buffer, ptr_nick,
-                                              MSG_TYPE_NICK, 1, 1, 0);
-                        gui_printf_type_color (ptr_channel->buffer,
-                                               MSG_TYPE_MSG,
-                                               COLOR_WIN_CHAT, "%s\n", pos);
+                        irc_display_nick (ptr_channel->buffer, ptr_nick,
+                                          (ptr_nick) ? NULL : host,
+                                          MSG_TYPE_NICK | MSG_TYPE_HIGHLIGHT,
+                                          1, -1, 0);
+                        if ( (cfg_look_infobar)
+                             && (cfg_look_infobar_delay_highlight > 0)
+                             && (ptr_channel->buffer != gui_current_window->buffer) )
+                            gui_infobar_printf (cfg_look_infobar_delay_highlight,
+                                                COLOR_WIN_INFOBAR_HIGHLIGHT,
+                                                _("On %s: %s> %s"),
+                                                ptr_channel->name,
+                                                host, pos);
                     }
                     else
-                    {
-                        irc_display_prefix (server->buffer, PREFIX_ERROR);
-                        gui_printf_nolog (server->buffer,
-                                          _("%s nick \"%s\" not found for \"%s\" command (message: \"%s\")\n"),
-                                          WEECHAT_ERROR, host, "privmsg", pos);
-                        return -1;
-                    }
+                        irc_display_nick (ptr_channel->buffer, ptr_nick,
+                                          (ptr_nick) ? NULL : host,
+                                          MSG_TYPE_NICK, 1, 1, 0);
+                    gui_printf_type_color (ptr_channel->buffer,
+                                           MSG_TYPE_MSG,
+                                           COLOR_WIN_CHAT, "%s\n", pos);
                 }
             }
             else
@@ -3336,7 +3327,7 @@ irc_cmd_recv_366 (t_irc_server *server, char *host, char *arguments)
                 
                 for (ptr_nick = ptr_channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
                 {
-                    irc_display_nick (ptr_channel->buffer, ptr_nick,
+                    irc_display_nick (ptr_channel->buffer, ptr_nick, NULL,
                                       MSG_TYPE_MSG, 0, 0, 1);
                     if (ptr_nick != ptr_channel->last_nick)
                         gui_printf (ptr_channel->buffer, " ");

@@ -196,6 +196,7 @@ extern void config_change_fifo_pipe ();
 extern void config_change_notify_levels ();
 extern int config_option_set_value (t_config_option *, char *);
 extern t_config_option *config_option_search (char *);
+extern void config_option_search_option_value (char *, t_config_option **, void **);
 extern int config_set_value (char *, char *);
 extern void *config_get_server_option_ptr (t_irc_server *, char *);
 extern int config_set_server_value (t_irc_server *, char *, char *);
