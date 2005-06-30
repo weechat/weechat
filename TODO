@@ -27,6 +27,8 @@ v0.1.3:
  * TCP/IP communication:
     # SSL support
     # IPv6 protocol implementation
+    # proxy support (http, socks4, socks5) with authentification
+   (http, socks5) and ipv6 support (client to proxy)
 
  * Configuration:
     - add key bindings to config file
@@ -58,9 +60,6 @@ Future versions:
     - interpret special chars in messages (color & bold for example)
     - understand incomplete commands if unambigous (for example: /he for /help is ok)
     ? Qt GUI
-
- * TCP/IP communication:
-    - proxy support
 
  * Plugins:
     - Ruby plugin

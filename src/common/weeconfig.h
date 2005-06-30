@@ -178,8 +178,12 @@ extern int cfg_dcc_auto_rename;
 extern int cfg_dcc_auto_resume;
 
 extern int cfg_proxy_use;
+extern int cfg_proxy_type;
+extern char *cfg_proxy_type_values[];
+extern int cfg_proxy_ipv6;
 extern char *cfg_proxy_address;
 extern int cfg_proxy_port;
+extern char *cfg_proxy_username;
 extern char *cfg_proxy_password;
 
 extern t_config_section config_sections [CONFIG_NUMBER_SECTIONS];

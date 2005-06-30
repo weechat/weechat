@@ -845,30 +845,398 @@ server_child_read (t_irc_server *server)
             /* adress not found */
             case '1':
                 irc_display_prefix (server->buffer, PREFIX_ERROR);
-                gui_printf (server->buffer,
-                            _("%s address \"%s\" not found\n"),
-                            WEECHAT_ERROR, server->address);
+		if (cfg_proxy_use)
+		  gui_printf (server->buffer,
+			      _("%s proxy address \"%s\" not found\n"),
+			      WEECHAT_ERROR, server->address);
+		else
+		  gui_printf (server->buffer,
+			      _("%s address \"%s\" not found\n"),
+			      WEECHAT_ERROR, server->address);
                 server_close_connection (server);
                 server_reconnect_schedule (server);
                 break;
             /* IP address not found */
             case '2':
                 irc_display_prefix (server->buffer, PREFIX_ERROR);
-                gui_printf (server->buffer,
-                            _("%s IP address not found\n"), WEECHAT_ERROR);
+		if (cfg_proxy_use)
+		  gui_printf (server->buffer,
+			      _("%s proxy IP address not found\n"), WEECHAT_ERROR);
+		else
+		  gui_printf (server->buffer,
+			      _("%s IP address not found\n"), WEECHAT_ERROR);
                 server_close_connection (server);
                 server_reconnect_schedule (server);
                 break;
-            /* connection refused */
+	     /* connection refused */
             case '3':
                 irc_display_prefix (server->buffer, PREFIX_ERROR);
-                gui_printf (server->buffer,
-                            _("%s connection refused\n"), WEECHAT_ERROR);
+		if (cfg_proxy_use)
+		  gui_printf (server->buffer,
+			      _("%s proxy connection refused\n"), WEECHAT_ERROR);
+		else
+		  gui_printf (server->buffer,
+			      _("%s connection refused\n"), WEECHAT_ERROR);
+                server_close_connection (server);
+                server_reconnect_schedule (server);
+                break;
+	    /* proxy fails to connect to server */
+            case '4':
+                irc_display_prefix (server->buffer, PREFIX_ERROR);
+		gui_printf (server->buffer,
+			    _("%s proxy fails to establish connection to server (check username/password if used)\n"), WEECHAT_ERROR);
                 server_close_connection (server);
                 server_reconnect_schedule (server);
                 break;
         }
     }
+}
+
+/*
+ * convbase64_8x3_to_6x4 : convert 3 bytes of 8 bits in 4 bytes of 6 bits
+ */
+
+void
+convbase64_8x3_to_6x4(char *from, char* to)
+{
+
+  unsigned char base64_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+  to[0] = base64_table [ (from[0] & 0xfc) >> 2 ];
+  to[1] = base64_table [ ((from[0] & 0x03) << 4) + ((from[1] & 0xf0) >> 4) ];
+  to[2] = base64_table [ ((from[1] & 0x0f) << 2) + ((from[2] & 0xc0) >> 6) ];
+  to[3] = base64_table [ from[2] & 0x3f ];
+}
+
+/*
+ * base64encode: encode a string in base64
+ */
+
+void
+base64encode(char *from, char *to)
+{
+
+  char *f, *t;
+  int from_len;
+
+  from_len = strlen(from);
+
+  f = from;
+  t = to;
+  
+  while(from_len >= 3)
+    {
+      convbase64_8x3_to_6x4(f, t);
+      f += 3 * sizeof(*f);
+      t += 4 * sizeof(*t);
+      from_len -= 3;
+    }
+
+  if (from_len > 0)
+    {
+      char rest[3] = { 0, 0, 0 };
+      switch(from_len)
+        {
+        case 1 :
+          rest[0] = f[0];
+          convbase64_8x3_to_6x4(rest, t);
+          t[2] = t[3] = '=';
+          break;
+        case 2 :
+          rest[0] = f[0];
+          rest[1] = f[1];
+          convbase64_8x3_to_6x4(rest, t);
+          t[3] = '=';
+          break;
+        }
+      t[4] = 0;
+    }
+}
+
+/*
+ * pass_httpproxy: establish connection/authentification to an http proxy
+ *      return : 
+ *           - 0 if connexion throw proxy was successful
+ *           - 1 if connexion fails
+ */
+int
+pass_httpproxy(t_irc_server *server)
+{
+
+  char buffer[256];
+  char authbuf[128]; // seems to be enougth to store username + password
+  char authbuf_base64[196]; // enougth to store base64 encoded authbuf
+  int n, m;
+
+  if (strlen(cfg_proxy_username) > 0) 
+    {
+      // authentification
+      snprintf(authbuf, sizeof(authbuf), "%s:%s", cfg_proxy_username, cfg_proxy_password);
+      base64encode(authbuf, authbuf_base64);
+      n = snprintf(buffer, sizeof(buffer), "CONNECT %s:%d HTTP/1.0\r\nProxy-Authorization: Basic %s\r\n\r\n", server->address, server->port, authbuf_base64);
+    }
+  else 
+    {
+      // no authentification 
+      n = snprintf(buffer, sizeof(buffer), "CONNECT %s:%d HTTP/1.0\r\n\r\n", server->address, server->port);
+    }
+  
+  m = send (server->sock, buffer, n, 0);
+  if (n != m)
+    return 1;
+
+  n = recv(server->sock, buffer, sizeof(buffer), 0);
+
+  /* success result must be like : "HTTP/1.0 200 OK"  */
+  if (n < 12)
+    return 1;
+
+  if (memcmp (buffer, "HTTP/", 5) || memcmp (buffer + 9, "200", 3))
+    return 1;
+  
+  return 0;
+}
+
+/*
+ * resolve: resolve hostname on its IP address
+ *          (works with ipv4 and ipv6)
+ *      return :
+ *           - 0 if resolution was successful
+ *           - 1 if resolution fails
+ */
+
+int
+resolve(char *hostname, char *ip, int *version)
+{
+
+  char ipbuffer[NI_MAXHOST];
+  struct addrinfo *res;
+
+  if (version != NULL)
+    *version = 0;
+
+  if (getaddrinfo(hostname, NULL, NULL, &res) != 0)
+    return 1;
+
+  if (!res)
+    return 1;
+
+  if (getnameinfo(res->ai_addr, res->ai_addrlen, ipbuffer, sizeof(ipbuffer), NULL, 0, NI_NUMERICHOST) != 0)
+    return 1;
+
+  if ((res->ai_family == AF_INET) && (version != NULL))
+    *version = 4;
+  if ((res->ai_family == AF_INET6) && (version != NULL))
+    *version = 6;
+
+  strcpy(ip, ipbuffer);
+
+  return 0;
+}
+
+/*
+ * pass_socks4proxy: establish connection/authentification throw a socks4 proxy
+ *      return : 
+ *           - 0 if connexion throw proxy was successful
+ *           - 1 if connexion fails
+ */
+int
+pass_socks4proxy(t_irc_server *server)
+{
+  /* 
+   * socks4 protocol is explain here: 
+   *  http://archive.socks.permeo.com/protocol/socks4.protocol
+   *
+   */
+  
+  struct s_socks4
+  {
+    char version;           /* 1 byte  */ /* socks version : 4 or 5 */
+    char method;            /* 1 byte  */ /* socks method : connect (1) or bind (2) */
+    unsigned short port;    /* 2 bytes */ /* destination port */
+    unsigned long address;  /* 4 bytes */ /* destination address */
+    char user[64];          /* username (64 characters seems to be enought) */
+  } socks4;
+  unsigned char buffer[24];
+  char ip_addr[NI_MAXHOST];
+
+  socks4.version = 4;
+  socks4.method = 1;
+  socks4.port = htons (server->port);
+  resolve(server->address, ip_addr, NULL);
+  socks4.address = inet_addr (ip_addr);
+  strncpy (socks4.user, server->username, sizeof(socks4.user) - 1);
+  
+  send (server->sock, (char *) &socks4, 8 + strlen(socks4.user) + 1, 0);
+  recv (server->sock, buffer, sizeof(buffer), 0);
+
+  if (buffer[0] == 0 && buffer[1] == 90)
+    return 0;
+
+  return 1;
+}
+
+/*
+ * pass_socks5proxy: establish connection/authentification throw a socks5 proxy
+ *      return : 
+ *           - 0 if connexion throw proxy was successful
+ *           - 1 if connexion fails
+ */
+int
+pass_socks5proxy(t_irc_server *server)
+{
+  /* 
+   * socks5 protocol is explained in RFC 1928
+   * socks5 authentication with username/pass is explained in RFC 1929
+   */
+  
+  struct s_sock5
+  {
+    char version;   /* 1 byte      */ /* socks version : 4 or 5 */
+    char nmethods;  /* 1 byte      */ /* size in byte(s) of field 'method', here 1 byte */
+    char method;    /* 1-255 bytes */ /* socks method : noauth (0), auth(user/pass) (2), ... */
+  } socks5;
+  unsigned char buffer[288];
+  int username_len, password_len, addr_len, addr_buffer_len;
+  unsigned char *addr_buffer;
+  
+  socks5.version = 5;
+  socks5.nmethods = 1;
+  
+  if (strlen(cfg_proxy_username) > 0)
+    /* with authentication */
+    socks5.method = 2;
+  else
+    /* without authentication */
+    socks5.method = 0;
+     
+  send (server->sock, (char *) &socks5, sizeof(socks5), 0);
+  /* server socks5 must respond with 2 bytes */
+  if (recv (server->sock, buffer, 2, 0) != 2)
+    return 1;
+  
+  if (strlen(cfg_proxy_username) > 0)
+    {
+      /* with authentication */
+      /*   -> socks server must respond with :
+       *       - socks version (buffer[0]) = 5 => socks5
+       *       - socks method  (buffer[1]) = 2 => authentication
+       */
+
+      //if (!(buffer[0] == 5 && buffer[1] == 2))
+      if (buffer[0] != 5 || buffer[1] != 2)
+	return 1;
+
+      /* authentication as in RFC 1929 */
+      username_len = strlen(cfg_proxy_username);
+      password_len = strlen(cfg_proxy_password);
+      
+      /* make username/password buffer */
+      buffer[0] = 1;
+      buffer[1] = (unsigned char) username_len;
+      memcpy(buffer + 2, cfg_proxy_username, username_len);
+      buffer[2 + username_len] = (unsigned char) password_len;
+      memcpy(buffer + 3 + username_len, cfg_proxy_password, password_len);
+     
+      send (server->sock, buffer, 3 + username_len + password_len, 0);
+
+      /* server socks5 must respond with 2 bytes */
+      if (recv (server->sock, buffer, 2, 0) != 2)
+	return 1;
+
+      /* buffer[1] = auth state, must be 0 for success */
+      if (buffer[1] != 0)
+	return 1;
+    }
+  else
+    {
+      /* without authentication */
+      /*   -> socks server must respond with :
+       *       - socks version (buffer[0]) = 5 => socks5
+       *       - socks method  (buffer[1]) = 0 => no authentication
+       */
+      if (!(buffer[0] == 5 && buffer[1] == 0))
+	return 1;
+    }
+  
+  /* authentication successful then giving address/port to connect */
+  addr_len = strlen(server->address);
+  addr_buffer_len = 4 + 1 + addr_len + 2;
+  addr_buffer = (unsigned char *) malloc ( addr_buffer_len * sizeof(*addr_buffer));
+  if (!addr_buffer)
+    return 1;
+  addr_buffer[0] = 5;   /* version 5 */
+  addr_buffer[1] = 1;   /* command: 1 for connect */
+  addr_buffer[2] = 0;   /* reserved */
+  addr_buffer[3] = 3;   /* address type : ipv4 (1), domainname (3), ipv6 (4) */
+  addr_buffer[4] = (unsigned char) addr_len;
+  memcpy (addr_buffer + 5, server->address, addr_len); /* server address */
+  *((unsigned short *) (addr_buffer + 5 + addr_len)) = htons (server->port); /* server port */
+
+  send (server->sock, addr_buffer, addr_buffer_len, 0);
+  free(addr_buffer);
+
+  /* dialog with proxy server */
+  if (recv (server->sock, buffer, 4, 0) != 4)
+    return 1;
+
+  if (!(buffer[0] == 5 && buffer[1] == 0))
+    return 1;
+
+  switch(buffer[3]) {
+    /* buffer[3] = address type */
+  case 1 :
+    /* ipv4 
+     * server socks return server bound address and port
+     * address of 4 bytes and port of 2 bytes (= 6 bytes)
+     */
+    if (recv (server->sock, buffer, 6, 0) != 6)
+      return 1;
+    break;
+  case 3:
+    /* domainname
+     * server socks return server bound address and port
+     */
+    /* reading address length */
+    if (recv (server->sock, buffer, 1, 0) != 1)
+      return 1;    
+    addr_len = buffer[0];
+    /* reading address + port = addr_len + 2 */
+    if (recv (server->sock, buffer, addr_len + 2, 0) != (addr_len + 2))
+      return 1;
+    break;
+  case 4 :
+    /* ipv6
+     * server socks return server bound address and port
+     * address of 16 bytes and port of 2 bytes (= 18 bytes)
+     */
+    if (recv (server->sock, buffer, 18, 0) != 18)
+      return 1;
+    break;
+  default:
+    return 1;
+  }
+ 
+  return 0;
+}
+
+/*
+ * pass_proxy: establish connection/authentification to a proxy
+ *      return : 
+ *           - 0 if connexion throw proxy was successful
+ *           - 1 if connexion fails
+ */
+int
+pass_proxy(t_irc_server *server)
+{  
+  if (strcmp(cfg_proxy_type_values[cfg_proxy_type], "http") == 0)
+    return pass_httpproxy(server);
+  if (strcmp(cfg_proxy_type_values[cfg_proxy_type], "socks4") == 0)
+    return pass_socks4proxy(server);
+  if (strcmp(cfg_proxy_type_values[cfg_proxy_type], "socks5") == 0)
+    return pass_socks5proxy(server);
+
+  return 1;
 }
 
 /*
@@ -880,31 +1248,69 @@ server_child (t_irc_server *server)
 {
     struct addrinfo hints, *res;
     
-    memset (&hints, 0, sizeof(hints));
-    hints.ai_family = (server->ipv6) ? AF_INET6 : AF_INET;
-    hints.ai_socktype = SOCK_STREAM;
-    if (getaddrinfo (server->address, NULL, &hints, &res) !=0)
-    {
-        write(server->child_write, "1", 1);
-        return 0;
-    }
-    if ((server->ipv6 && (res->ai_family != AF_INET6))
-        || ((!server->ipv6 && (res->ai_family != AF_INET))))
-    {
-        write(server->child_write, "2", 1);
-        return 0;
-    }
+    if (cfg_proxy_use)
+      {
+	memset (&hints, 0, sizeof(hints));
+	hints.ai_family = (cfg_proxy_ipv6) ? AF_INET6 : AF_INET;
+	hints.ai_socktype = SOCK_STREAM;
+	if (getaddrinfo (cfg_proxy_address, NULL, &hints, &res) !=0)
+	  {
+	    write(server->child_write, "1", 1);
+	    return 0;
+	  }
+	if ((cfg_proxy_ipv6 && (res->ai_family != AF_INET6))
+	    || ((!cfg_proxy_ipv6 && (res->ai_family != AF_INET))))
+	  {
+	    write(server->child_write, "2", 1);
+	    return 0;
+	  }
     
-    if (server->ipv6)
-        ((struct sockaddr_in6 *)(res->ai_addr))->sin6_port = htons (server->port);
+	if (cfg_proxy_ipv6)
+	  ((struct sockaddr_in6 *)(res->ai_addr))->sin6_port = htons (cfg_proxy_port);
+	else
+	  ((struct sockaddr_in *)(res->ai_addr))->sin_port = htons (cfg_proxy_port);
+	
+	if (connect (server->sock, res->ai_addr, res->ai_addrlen) != 0)
+	  {
+	    write(server->child_write, "3", 1);
+	    return 0;
+	  }
+	
+	if (pass_proxy(server))
+	  {
+	    write(server->child_write, "4", 1);
+	    return 0;
+	  }
+      }
     else
-        ((struct sockaddr_in *)(res->ai_addr))->sin_port = htons (server->port);
+      {
+	memset (&hints, 0, sizeof(hints));
+	hints.ai_family = (server->ipv6) ? AF_INET6 : AF_INET;
+	hints.ai_socktype = SOCK_STREAM;
+	if (getaddrinfo (server->address, NULL, &hints, &res) !=0)
+	  {
+	    write(server->child_write, "1", 1);
+	    return 0;
+	  }
+	if ((server->ipv6 && (res->ai_family != AF_INET6))
+	    || ((!server->ipv6 && (res->ai_family != AF_INET))))
+	  {
+	    write(server->child_write, "2", 1);
+	    return 0;
+	  }
     
-    if (connect (server->sock, res->ai_addr, res->ai_addrlen) != 0)
-    {
-        write(server->child_write, "3", 1);
-        return 0;
-    }
+	if (server->ipv6)
+	  ((struct sockaddr_in6 *)(res->ai_addr))->sin6_port = htons (server->port);
+	else
+	  ((struct sockaddr_in *)(res->ai_addr))->sin_port = htons (server->port);
+	
+	if (connect (server->sock, res->ai_addr, res->ai_addrlen) != 0)
+	  {
+	    write(server->child_write, "3", 1);
+	    return 0;
+	  }
+      }
+
     write (server->child_write, "0", 1);
     return 0;
 }
@@ -933,15 +1339,34 @@ server_connect (t_irc_server *server)
     }
 #endif
     irc_display_prefix (server->buffer, PREFIX_INFO);
-    gui_printf (server->buffer,
-                _("%s: connecting to server %s:%d%s%s...\n"),
-                PACKAGE_NAME, server->address, server->port,
-                (server->ipv6) ? " (IPv6)" : "",
-                (server->ssl) ? " (SSL)" : "");
-    wee_log_printf (_("Connecting to server %s:%d%s%s...\n"),
-                    server->address, server->port,
-                    (server->ipv6) ? " (IPv6)" : "",
-                    (server->ssl) ? " (SSL)" : "");
+    if (cfg_proxy_use)
+      {
+	gui_printf (server->buffer,
+		    _("%s: connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"),
+		    PACKAGE_NAME, server->address, server->port,
+		    (server->ipv6) ? " (IPv6)" : "",
+		    (server->ssl) ? " (SSL)" : "",
+		    cfg_proxy_type_values[cfg_proxy_type], cfg_proxy_address, cfg_proxy_port,
+		    (cfg_proxy_ipv6) ? " (IPv6)" : "");
+	wee_log_printf (_("Connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"),
+			server->address, server->port,
+			(server->ipv6) ? " (IPv6)" : "",
+			(server->ssl) ? " (SSL)" : "",
+			cfg_proxy_type_values[cfg_proxy_type], cfg_proxy_address, cfg_proxy_port,
+			(cfg_proxy_ipv6) ? " (IPv6)" : "");
+      }
+    else
+      {
+	gui_printf (server->buffer,
+		    _("%s: connecting to server %s:%d%s%s...\n"),
+		    PACKAGE_NAME, server->address, server->port,
+		    (server->ipv6) ? " (IPv6)" : "",
+		    (server->ssl) ? " (SSL)" : "");
+	wee_log_printf (_("Connecting to server %s:%d%s%s...\n"),
+			server->address, server->port,
+			(server->ipv6) ? " (IPv6)" : "",
+			(server->ssl) ? " (SSL)" : "");
+      }
     
     /* close any opened connection and kill child process if running */
     server_close_connection (server);

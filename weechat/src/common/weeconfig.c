@@ -597,8 +597,13 @@ t_config_option weechat_options_dcc[] =
 /* config, proxy section */
 
 int cfg_proxy_use;
+int cfg_proxy_type;
+int cfg_proxy_ipv6;
+char *cfg_proxy_type_values[] =
+{ "http", "socks4", "socks5", NULL };
 char *cfg_proxy_address;
 int cfg_proxy_port;
+char *cfg_proxy_username;
 char *cfg_proxy_password;
 
 t_config_option weechat_options_proxy[] =
@@ -606,14 +611,26 @@ t_config_option weechat_options_proxy[] =
     N_("use a proxy server to connect to irc server"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
     NULL, NULL, &cfg_proxy_use, NULL, config_change_noop },
+  { "proxy_type", N_("proxy type"),
+    N_("proxy type (http (default), socks4, socks5)"),
+    OPTION_TYPE_INT_WITH_STRING, 0, 0, 0,
+    "http", cfg_proxy_type_values, &cfg_proxy_type, NULL, config_change_noop },
+  { "proxy_ipv6", N_("use ipv6 proxy"),
+    N_("connect to proxy in ipv6"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
+    NULL, NULL, &cfg_proxy_ipv6, NULL, config_change_noop },
   { "proxy_address", N_("proxy address"),
     N_("proxy server address (IP or hostname)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "", NULL, NULL, &cfg_proxy_address, config_change_noop },
   { "proxy_port", N_("port for proxy"),
     N_("port for connecting to proxy server"),
-    OPTION_TYPE_INT, 0, 65535, 1080,
+    OPTION_TYPE_INT, 0, 65535, 3128,
     NULL, NULL, &cfg_proxy_port, NULL, config_change_noop },
+  { "proxy_username", N_("proxy username"),
+    N_("username for proxy server"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    "", NULL, NULL, &cfg_proxy_username, config_change_noop },
   { "proxy_password", N_("proxy password"),
     N_("password for proxy server"),
     OPTION_TYPE_STRING, 0, 0, 0,
@@ -1506,10 +1523,6 @@ config_create_default ()
         if ((i != CONFIG_SECTION_ALIAS) && (i != CONFIG_SECTION_SERVER))
         {
             fprintf (file, "\n[%s]\n", config_sections[i].section_name);
-            if (i == CONFIG_SECTION_PROXY)
-                fprintf (file,
-                         "# WARNING!!! Options for section \"%s\" are not developed!\n",
-                         config_sections[i].section_name);
             for (j = 0; weechat_options[i][j].option_name; j++)
             {
                 switch (weechat_options[i][j].option_type)
@@ -1680,10 +1693,6 @@ config_write (char *config_name)
         if ((i != CONFIG_SECTION_ALIAS) && (i != CONFIG_SECTION_SERVER))
         {
             fprintf (file, "\n[%s]\n", config_sections[i].section_name);
-            if (i == CONFIG_SECTION_PROXY)
-                fprintf (file,
-                         "# WARNING!!! Options for section \"%s\" are not developed!\n",
-                         config_sections[i].section_name);
             for (j = 0; weechat_options[i][j].option_name; j++)
             {
                 switch (weechat_options[i][j].option_type)
