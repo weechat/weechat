@@ -1006,32 +1006,36 @@ pass_httpproxy(t_irc_server *server)
  */
 
 int
-resolve(char *hostname, char *ip, int *version)
+resolve (char *hostname, char *ip, int *version)
 {
+    char ipbuffer[NI_MAXHOST];
+    struct addrinfo *res;
+    
+    if (version != NULL)
+        *version = 0;
+    
+    if (getaddrinfo(hostname, NULL, NULL, &res) != 0)
+        return 1;
+    
+    if (!res)
+        return 1;
+    
+    if (getnameinfo(res->ai_addr, res->ai_addrlen, ipbuffer, sizeof(ipbuffer), NULL, 0, NI_NUMERICHOST) != 0)
+    {
+        freeaddrinfo (res);
+        return 1;
+    }
+    
+    if ((res->ai_family == AF_INET) && (version != NULL))
+        *version = 4;
+    if ((res->ai_family == AF_INET6) && (version != NULL))
+        *version = 6;
+    
+    strcpy(ip, ipbuffer);
 
-  char ipbuffer[NI_MAXHOST];
-  struct addrinfo *res;
-
-  if (version != NULL)
-    *version = 0;
-
-  if (getaddrinfo(hostname, NULL, NULL, &res) != 0)
-    return 1;
-
-  if (!res)
-    return 1;
-
-  if (getnameinfo(res->ai_addr, res->ai_addrlen, ipbuffer, sizeof(ipbuffer), NULL, 0, NI_NUMERICHOST) != 0)
-    return 1;
-
-  if ((res->ai_family == AF_INET) && (version != NULL))
-    *version = 4;
-  if ((res->ai_family == AF_INET6) && (version != NULL))
-    *version = 6;
-
-  strcpy(ip, ipbuffer);
-
-  return 0;
+    freeaddrinfo (res);
+    
+    return 0;
 }
 
 /*
@@ -1249,69 +1253,75 @@ server_child (t_irc_server *server)
     struct addrinfo hints, *res;
     
     if (cfg_proxy_use)
-      {
+    {
 	memset (&hints, 0, sizeof(hints));
 	hints.ai_family = (cfg_proxy_ipv6) ? AF_INET6 : AF_INET;
 	hints.ai_socktype = SOCK_STREAM;
 	if (getaddrinfo (cfg_proxy_address, NULL, &hints, &res) !=0)
-	  {
+        {
 	    write(server->child_write, "1", 1);
 	    return 0;
-	  }
+        }
 	if ((cfg_proxy_ipv6 && (res->ai_family != AF_INET6))
 	    || ((!cfg_proxy_ipv6 && (res->ai_family != AF_INET))))
-	  {
+        {
 	    write(server->child_write, "2", 1);
+            freeaddrinfo (res);
 	    return 0;
-	  }
-    
+        }
+        
 	if (cfg_proxy_ipv6)
-	  ((struct sockaddr_in6 *)(res->ai_addr))->sin6_port = htons (cfg_proxy_port);
+            ((struct sockaddr_in6 *)(res->ai_addr))->sin6_port = htons (cfg_proxy_port);
 	else
-	  ((struct sockaddr_in *)(res->ai_addr))->sin_port = htons (cfg_proxy_port);
+            ((struct sockaddr_in *)(res->ai_addr))->sin_port = htons (cfg_proxy_port);
 	
 	if (connect (server->sock, res->ai_addr, res->ai_addrlen) != 0)
-	  {
+        {
 	    write(server->child_write, "3", 1);
+            freeaddrinfo (res);
 	    return 0;
-	  }
+        }
 	
 	if (pass_proxy(server))
-	  {
+        {
 	    write(server->child_write, "4", 1);
+            freeaddrinfo (res);
 	    return 0;
-	  }
-      }
+        }
+    }
     else
-      {
+    {
 	memset (&hints, 0, sizeof(hints));
 	hints.ai_family = (server->ipv6) ? AF_INET6 : AF_INET;
 	hints.ai_socktype = SOCK_STREAM;
 	if (getaddrinfo (server->address, NULL, &hints, &res) !=0)
-	  {
+        {
 	    write(server->child_write, "1", 1);
 	    return 0;
-	  }
+        }
 	if ((server->ipv6 && (res->ai_family != AF_INET6))
 	    || ((!server->ipv6 && (res->ai_family != AF_INET))))
-	  {
+        {
 	    write(server->child_write, "2", 1);
+            freeaddrinfo (res);
 	    return 0;
-	  }
-    
+        }
+        
 	if (server->ipv6)
-	  ((struct sockaddr_in6 *)(res->ai_addr))->sin6_port = htons (server->port);
+            ((struct sockaddr_in6 *)(res->ai_addr))->sin6_port = htons (server->port);
 	else
-	  ((struct sockaddr_in *)(res->ai_addr))->sin_port = htons (server->port);
+            ((struct sockaddr_in *)(res->ai_addr))->sin_port = htons (server->port);
 	
 	if (connect (server->sock, res->ai_addr, res->ai_addrlen) != 0)
-	  {
+        {
 	    write(server->child_write, "3", 1);
+            freeaddrinfo (res);
 	    return 0;
-	  }
-      }
-
+        }
+    }
+    
     write (server->child_write, "0", 1);
+    freeaddrinfo (res);
     return 0;
 }
 
