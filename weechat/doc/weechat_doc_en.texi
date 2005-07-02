@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.1.2 - May, 21 2005
+@subtitle Documentation for WeeChat v0.1.3 - July, 03 2005
 
 @image{weechat_image}
 
@@ -90,9 +90,9 @@ designed for many operating systems.@*
 Main features are:
 @itemize @minus
 @item
-multi-servers connection
+multi-servers connection (with SSL, IPv6, proxy)
 @item
-many GUI (Graphical User Interface): Curses, Gtk and Qt
+many GUI: Curses, wxWidgets, Gtk and Qt
 @item
 small, fast and light
 @item
@@ -100,7 +100,7 @@ customizable and extensible with scripts
 @item
 compliant with RFCs 1459, 2810, 2811, 2812, and 2813
 @item
-multi-platform (Gnu/Linux, *BSD, Windows and other)
+multi-platform (Gnu/Linux, *BSD, MacOS X, Windows and other)
 @item
 100% GPL, free software
 @end itemize
@@ -152,7 +152,7 @@ Binary packages are available for these distributions:
 Debian (or any Debian compatible distribution)@*
 To install: @kbd{dpkg -i /path/weechat_x.y.z-1_i386.deb}
 @item
-Mandrake/Redhat (or any RPM compatible distribution)@*
+Mandriva/Redhat (or any RPM compatible distribution)@*
 To install: @kbd{rpm -i /path/weechat-x.y.z-1.i386.rpm}
 @item
 Gentoo@*
@@ -222,16 +222,21 @@ Then follow instructions for source package - @xref{Source package}.
 Display config file help (list of options)@*
 @item -h, --help
 Display help screen@*
+@item -i, --irc-commands
+Display IRC commands list@*
 @item -l, --license
 Display WeeChat license@*
 @item -v, --version
 Display WeeChat version@*
+@item -w, --weechat-commands
+Display WeeChat commands list@*
 @end table
 
 @subsection Run WeeChat
 
 Just issue this command to run WeeChat:@*
 @kbd{weechat-curses} (for Curses front-end)@*
+or @kbd{weechat-wxwidgets} (for wxWidgets front-end)@*
 or @kbd{weechat-gtk} (for Gtk front-end)@*
 or @kbd{weechat-qt} (for Qt front-end)@*
 
@@ -248,7 +253,6 @@ set parameters with @kbd{/set} command in WeeChat - @xref{WeeChat commands}.
 List of options for config file:@*
 
 @table @kbd
-
 @item look_set_title
 Set title for window (terminal for Curses GUI) with name & version@*
 Type: boolean (values: 'on' or 'off'), default value: 'on'@*
@@ -488,7 +492,7 @@ Default message when away@*
 Type: string (any string), default value: 'away'@*
 @item irc_default_msg_part
 Default part message (leaving channel)@*
-Type: string (any string), default value: ''@*
+Type: string (any string), default value: 'WeeChat %v'@*
 @item irc_default_msg_quit
 Default quit message ('%v' will be replaced by WeeChat version in string)@*
 Type: string (any string), default value: 'WeeChat %v'@*
@@ -537,12 +541,21 @@ Type: boolean (values: 'on' or 'off'), default value: 'on'@*
 @item proxy_use
 Use a proxy server to connect to irc server@*
 Type: boolean (values: 'on' or 'off'), default value: 'off'@*
+@item proxy_type
+Proxy type (http (default), socks4, socks5)@*
+Type: string (values: 'http', 'socks4', 'socks5'), default value: 'http'@*
+@item proxy_ipv6
+Connect to proxy in ipv6@*
+Type: boolean (values: 'on' or 'off'), default value: 'off'@*
 @item proxy_address
 Proxy server address (IP or hostname)@*
 Type: string (any string), default value: ''@*
 @item proxy_port
 Port for connecting to proxy server@*
-Type: integer (values: between 0 and 65535), default value: 1080@*
+Type: integer (values: between 0 and 65535), default value: 3128@*
+@item proxy_username
+Username for proxy server@*
+Type: string (any string), default value: ''@*
 @item proxy_password
 Password for proxy server@*
 Type: string (any string), default value: ''@*
@@ -564,6 +577,12 @@ Type: string (any string), default value: ''@*
 @item server_port
 Port for connecting to server@*
 Type: integer (values: between 0 and 65535), default value: 6667@*
+@item server_ipv6
+Use IPv6 protocol for server communication@*
+Type: boolean (values: 'on' or 'off'), default value: 'off'@*
+@item server_ssl
+Use SSL for server communication@*
+Type: boolean (values: 'on' or 'off'), default value: 'off'@*
 @item server_password
 Password for IRC server@*
 Type: string (any string), default value: ''@*
@@ -594,7 +613,9 @@ Type: string (any string), default value: ''@*
 @item server_autorejoin
 Automatically rejoin channels when kicked@*
 Type: boolean (values: 'on' or 'off'), default value: 'on'@*
-
+@item server_notify_levels
+Comma separated list of notify levels for channels of this server (format: #channel:1,..)@*
+Type: string (any string), default value: ''@*
 @end table
 
 Colors for Curses GUI are:@*
@@ -715,7 +736,6 @@ Scroll nicklist@*
 WeeChat internal commands:@*
 
 @table @kbd
-
 @item alias  [alias_name [command [arguments]]
 @*
 create an alias for a command@*
@@ -779,13 +799,15 @@ list/load/unload Python scripts@*
 filename: Python script (file) to load@*
 Without argument, /python command lists all loaded Python scripts.@*
 @*
-@item server  [servername] | [servername hostname port [-auto | -noauto] [-pwd password] [-nicks nick1 [nick2 [nick3]]] [-username username] [-realname realname] [-command command] [-autojoin channel[,channel]] ] | [del servername]
+@item server  [servername] | [servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 [nick2 [nick3]]] [-username username] [-realname realname] [-command command] [-autojoin channel[,channel]] ] | [del servername]
 @*
 list, add or remove servers@*
 @*
 servername: server name, for internal & display use@*
 hostname: name or IP address of server@*
 port: port for server (integer)@*
+ipv6: use IPv6 protocol@*
+ssl: use SSL protocol@*
 password: password for server@*
 nick1: first nick for server@*
 nick2: alternate nick for server@*
@@ -821,13 +843,11 @@ splith: split current window horizontally@*
 splitv: split current window vertically@*
 merge: merge window with another@*
 @*
-
 @end table
 
 IRC commands:@*
 
 @table @kbd
-
 @item admin  [target]
 @*
 find information about the administrator of the server@*
@@ -1194,7 +1214,6 @@ nickname: nickname to search@*
 count: number of replies to return (full search if negative number)@*
 target: reply should match this mask@*
 @*
-
 @end table
 
 @node FIFO pipe, , WeeChat commands, Usage

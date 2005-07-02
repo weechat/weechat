@@ -35,7 +35,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.2 - 21 Mai 2005
+@subtitle Documentation pour WeeChat v0.1.3 - 03 Juillet 2005
 
 @image{weechat_image}
 
@@ -89,9 +89,9 @@ concu pour diff@'erents syst@`emes d'exploitation.@*
 Ses principales caract@'eristiques sont les suivantes :
 @itemize @minus
 @item
-connexion multi-serveurs
+connexion multi-serveurs (avec SSL, IPv6, proxy)
 @item
-plusieurs interfaces : Curses, Gtk et Qt
+plusieurs interfaces : Curses, wxWidgets, Gtk et Qt
 @item
 petit, rapide et l@'eger
 @item
@@ -99,7 +99,7 @@ param@'etrable et extensible avec des scripts
 @item
 conforme aux RFCs 1459, 2810, 2811, 2812, et 2813
 @item
-multi-plateformes (Gnu/Linux, *BSD, Windows et d'autres syst@`emes)
+multi-plateformes (Gnu/Linux, *BSD, MacOS X, Windows et d'autres syst@`emes)
 @item
 100% GPL, logiciel libre
 @end itemize
@@ -222,16 +222,21 @@ Suivez alors les instructions du paquet sources - @xref{Paquet source}.
 Afficher l'aide sur le fichier de config (liste des options)@*
 @item -h, --help
 Afficher l'aide@*
+@item -i, --irc-commands
+Afficher la liste des commandes IRC@*
 @item -l, --license
 Afficher la licence de WeeChat@*
 @item -v, --version
 Afficher la version de WeeChat@*
+@item -w, --weechat-commands
+Afficher la liste des commandes WeeChat@*
 @end table
 
 @subsection Lancer WeeChat
 
 Tapez simplement cette commande pour lancer WeeChat :@*
 @kbd{weechat-curses} (pour l'interface Curses)@*
+ou @kbd{weechat-wxwidgets} (pour l'interface wxWidgets)@*
 ou @kbd{weechat-gtk} (pour l'interface Gtk)@*
 ou @kbd{weechat-qt} (pour l'interface Qt)@*
 
@@ -248,7 +253,6 @@ vous pouvez modifier les param@`etres dans WeeChat avec la commande @kbd{/set} -
 Liste des options du fichier de configuration :@*
 
 @table @kbd
-
 @item look_set_title
 D@'efinit le titre de la fen@^etre (terminal pour l'interface Curses) avec le nom et la version@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
@@ -418,7 +422,7 @@ Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightmagenta'@*
 Couleur pour le symbole voix@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'yellow'@*
 @item col_nick_more
-Color for '+' when scrolling nicks@*
+Couleur pour les '+' lors du scroll sur les pseudos@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightmagenta'@*
 @item col_nick_sep
 Couleur pour le s@'eparateur de pseudo@*
@@ -488,7 +492,7 @@ Message par d@'efaut pour l'absence@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: 'away'@*
 @item irc_default_msg_part
 Message par d@'efaut pour le part (quitte un canal)@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: 'WeeChat %v'@*
 @item irc_default_msg_quit
 Message de fin par d@'efaut ('%v' sera remplac@'e par la version de WeeChat dans la cha@^ine)@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: 'WeeChat %v'@*
@@ -537,12 +541,21 @@ Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
 @item proxy_use
 Utiliser un proxy pour se connecter au serveur irc@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
+@item proxy_type
+Type de proxy (http (d@'efaut), socks4, socks5)@*
+Type: cha@^ine (valeurs: 'http', 'socks4', 'socks5'), valeur par d@'efaut: 'http'@*
+@item proxy_ipv6
+Se connecter au proxy en ipv6@*
+Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
 @item proxy_address
 Adresse du serveur proxy (IP ou nom)@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
 @item proxy_port
 Port pour se connecter au serveur proxy@*
-Type: entier (valeurs: entre 0 et 65535), valeur par d@'efaut: 1080@*
+Type: entier (valeurs: entre 0 et 65535), valeur par d@'efaut: 3128@*
+@item proxy_username
+Nom d'utilisateur pour le serveur proxy@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
 @item proxy_password
 Mot de passe pour le serveur proxy@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
@@ -564,6 +577,12 @@ Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
 @item server_port
 Port pour se connecter au serveur@*
 Type: entier (valeurs: entre 0 et 65535), valeur par d@'efaut: 6667@*
+@item server_ipv6
+Utiliser le protocole IPv6 pour la communication avec le serveur@*
+Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
+@item server_ssl
+Utiliser SSL pour la communication avec le serveur@*
+Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
 @item server_password
 Mot de passe pour le serveur IRC@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
@@ -594,7 +613,9 @@ Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
 @item server_autorejoin
 Rejoindre automatiquement les canaux quand mis dehors@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
-
+@item server_notify_levels
+Liste des niveaux de notifications (s@'epar@'es par des virgules) pour les canaux de ce serveur (format: #canal:1,..)@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
 @end table
 
 Les couleurs pour l'interface Curses sont :@*
@@ -715,7 +736,6 @@ Faire d@'efiler la liste des pseudos@*
 Commandes internes WeeChat :@*
 
 @table @kbd
-
 @item alias  [nom_alias [commande [param@`etres]]
 @*
 cr@'eer un alias pour une commande@*
@@ -779,13 +799,15 @@ liste/charge/d@'echarge des scripts Python@*
 fichier: script Python (fichier) @`a charger@*
 Sans param@`etre, la commande /python liste tous les scripts Python charg@'es.@*
 @*
-@item server  [nom_serveur] | [nom_serveur nom/IP port [-auto | -noauto] [-pwd mot_de_passe] [-nicks pseudo1 [pseudo2 [pseudo3]]] [-username nom_utilisateur] [-realname nom_r@'eel] [-command commande] [-autojoin canal[,canal]] ] | [del nom_serveur]
+@item server  [nom_serveur] | [nom_serveur nom/IP port [-auto | -noauto] [-ipv6] [-ssl] [-pwd mot_de_passe] [-nicks pseudo1 [pseudo2 [pseudo3]]] [-username nom_utilisateur] [-realname nom_r@'eel] [-command commande] [-autojoin canal[,canal]] ] | [del nom_serveur]
 @*
 liste, ajoute ou retire des serveurs@*
 @*
 nom_serveur: nom du serveur, pour usage interne et affichage@*
 nom/IP: nom ou adresse IP du serveur@*
 port: port pour le serveur (nombre entier)@*
+ipv6: utiliser le protocole IPv6@*
+ssl: utiliser le protocole SSL@*
 mot_de_passe: mot de passe pour le serveur@*
 pseudo1: premier pseudo pour le serveur@*
 pseudo2: pseudo alternatif pour le serveur@*
@@ -821,13 +843,11 @@ splith: @'eclate la fen@^etre en deux horizontalement@*
 splitv: @'eclate la fen@^etre en deux verticalement@*
 merge: fusionne la fen@^etre avec une autre@*
 @*
-
 @end table
 
 Commandes IRC :@*
 
 @table @kbd
-
 @item admin  [cible]
 @*
 trouver les informations sur l'administrateur du serveur@*
@@ -1194,7 +1214,6 @@ pseudo: pseudo @`a chercher@*
 nombre: nombre de r@'eponses @`a retourner (recherche compl@`ete si nombre n@'egatif)@*
 cible: la r@'eponse doit correspondre @`a ce masque@*
 @*
-
 @end table
 
 @node Tube FIFO, , Commandes WeeChat, Utilisation

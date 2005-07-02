@@ -35,7 +35,7 @@
 
 @title WeeChat - Gui@'on de usuario.
 @subtitle Cliente IRC r@'apido, peque@~no y extensible
-@subtitle Documentaci@'on para WeeChat v0.1.2 - 21 de mayo de 2005
+@subtitle Documentaci@'on para WeeChat v0.1.3 - 03 de Julio de 2005
 
 @image{weechat_image}
 
@@ -90,9 +90,9 @@ dise@~nado para diferentes sistemas operativos.@*
 Las caracter@'isticas principales son las siguientes:
 @itemize @minus
 @item
-conexi@'on multi-servidores
+conexi@'on multi-servidores (con SSL, IPv6, proxy)
 @item
-m@'ultiples interfaces: Curses, Gtk y Qt
+m@'ultiples interfaces: Curses, wxWidgets, Gtk y Qt
 @item
 peque@~no, r@'apido y ligero.
 @item
@@ -100,7 +100,7 @@ parametrizable y extensible mediante guiones (scripts)
 @item
 conforme a las RFCs 1459, 2810, 2811, 2812, y 2813
 @item
-multi-plataforma (Gnu/Linux, *BSD, Windows y otros sistemas operativos)
+multi-plataforma (Gnu/Linux, *BSD, MacOS X, Windows y otros sistemas operativos)
 @item
 100% GPL, con Licencia Libre
 @end itemize
@@ -223,16 +223,21 @@ Luego, lee las instructiones para Paquetes de fuentes - @xref{Paquetes de fuente
 Obtener la ayuda del fichero de configuraci@'on (lista de opciones)@*
 @item -h, --help
 Obtener la ayuda@*
+@item -i, --irc-commands
+Display IRC commands list@*
 @item -l, --license
 Obtener la licencia de WeeChat@*
 @item -v, --version
 Obtener la versi@'on de WeeChat@*
+@item -w, --weechat-commands
+Display WeeChat commands list@*
 @end table
 
 @subsection Lanzar WeeChat
 
 Para ejecutar WeeChat, basta escribir la l@'inea siguiente:@*
 @kbd{weechat-curses} (para el interfaz con Curses)@*
+o @kbd{weechat-wxwidgets} (para el interfaz con wxWidgets)@*
 o @kbd{weechat-gtk} (para el interfaz con Gtk)@*
 o @kbd{weechat-qt} (para el interfaz con Qt)@*
 
@@ -247,7 +252,6 @@ Puedes editarlo para configurar WeeChat con las opciones deseadas, o tambi@'en p
 Enumeraci@'on de las opciones del fichero de configuraci@'on:@*
 
 @table @kbd
-
 @item look_set_title
 Define el t@'itulo de la ventana (el terminal para la interfaz Curses) con el nombre y la versi@'on@*
 Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
@@ -487,7 +491,7 @@ Mensaje por defecto para el estado ausente@*
 Typo: cadena (cualquier cadena), valor por defecto: 'away'@*
 @item irc_default_msg_part
 Mensaje por defecto de salida (saliendo de un canal)@*
-Typo: cadena (cualquier cadena), valor por defecto: ''@*
+Typo: cadena (cualquier cadena), valor por defecto: 'WeeChat %v'@*
 @item irc_default_msg_quit
 Mensaje de fin por defecto ('%v' ser@'a reemplazado por la versi@'on de WeeChat en la cadena)@*
 Typo: cadena (cualquier cadena), valor por defecto: 'WeeChat %v'@*
@@ -536,12 +540,21 @@ Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item proxy_use
 Utilizar un proxy para conectarse al servidor irc@*
 Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
+@item proxy_type
+Proxy type (http (default), socks4, socks5)@*
+Typo: cadena (valores: 'http', 'socks4', 'socks5'), valor por defecto: 'http'@*
+@item proxy_ipv6
+Connect to proxy in ipv6@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
 @item proxy_address
 Direcci@'on del servidor proxy (IP o nombre de m@'aquina)@*
 Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @item proxy_port
 Puerto para conectarse al servidor proxy@*
-Typo: entero (valores: entre 0 y 65535), valor por defecto: 1080@*
+Typo: entero (valores: entre 0 y 65535), valor por defecto: 3128@*
+@item proxy_username
+Username for proxy server@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @item proxy_password
 Contrase@~na para el servidor proxy@*
 Typo: cadena (cualquier cadena), valor por defecto: ''@*
@@ -563,6 +576,12 @@ Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @item server_port
 Puerto para conectarse al servidor@*
 Typo: entero (valores: entre 0 y 65535), valor por defecto: 6667@*
+@item server_ipv6
+Use IPv6 protocol for server communication@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
+@item server_ssl
+Use SSL for server communication@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
 @item server_password
 Contrase@~na para el servidor IRC@*
 Typo: cadena (cualquier cadena), valor por defecto: ''@*
@@ -593,7 +612,9 @@ Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @item server_autorejoin
 Unirse de nuevo autom@'aticamente a los canales cuando sea expulsado@*
 Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
-
+@item server_notify_levels
+Comma separated list of notify levels for channels of this server (format: #channel:1,..)@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @end table
 
 Los colores para el interfaz Curses son:@*
@@ -629,7 +650,6 @@ Los colores para el interfaz Curses son:@*
 @item
 @kbd{white}: blanco
 @end itemize
-
 
 @node Atajos de teclado, Comandos WeeChat, Ficheros de configuracion, Uso
 @section Atajos de teclado
@@ -715,7 +735,6 @@ Scroll nicklist@*
 Comandos internos WeeChat:@*
 
 @table @kbd
-
 @item alias  [nombre_alias [comando [argumentos]]
 @*
 crear un alias para un comando@*
@@ -779,19 +798,21 @@ lista/carga/descarga de los Python scripts@*
 fichero: Python script (archivo) a cargar@*
 Sin argumentos, el comando /python lista todos los Python scripts cargados.@*
 @*
-@item server  [nombre_de_servidor] | [nombre_de_servidor nombre/IP puerto [-auto | -noauto] [-pwd contrase@~na] [-nicks alias1 [alias2 [alias3]]] [-username nombre de usuario] [-realname nombre_real] [-command comando] [-autojoin canal[,canal]] ] | [del nombre_de_servidor]
+@item server  [nombre_de_servidor] | [nombre_de_servidor nombre/IP puerto [-auto | -noauto] [-ipv6] [-ssl] [-pwd contrase@~na] [-nicks alias1 [alias2 [alias3]]] [-username nombre de usuario] [-realname nombre_real] [-command comando] [-autojoin canal[,canal]] ] | [del nombre_de_servidor]
 @*
 lista, a@~nade o elimina servidores@*
 @*
-nombre_de_servidor: nombre del servidor, para uso interno y para mostrar@*
-nombre/IP: nombre o direcci@'on IP del servidor@*
-puerto: puerto para el servidor (número entero)@*
-contrase@~na: contrase@~na para el servidor@*
-alias1: primer alias para el servidor@*
-alias2: alias alternativo para el servidor@*
-alias3: segundo alias alternativo para el servidor@*
-nombre_de_usuario: nombre de usuario@*
-nombre_real: nombre real del usuario@*
+servername: server name, for internal & display use@*
+hostname: name or IP address of server@*
+port: port for server (integer)@*
+ipv6: use IPv6 protocol@*
+ssl: use SSL protocol@*
+password: password for server@*
+nick1: first nick for server@*
+nick2: alternate nick for server@*
+nick3: second alternate nick for server@*
+username: user name@*
+realname: real name of user@*
 @*
 @item save  [archivo]
 @*
@@ -821,13 +842,11 @@ splith: dividir la ventana actual horizontalmente@*
 splitv: dividir la ventana actual verticalmente@*
 merge: fusionar una ventana con otra@*
 @*
-
 @end table
 
 Comandos IRC:@*
 
 @table @kbd
-
 @item admin  [target]
 @*
 encontrar informaci@'on sobre el administrador del servidor@*
@@ -1194,7 +1213,6 @@ usuario: nombre de usuario a buscar@*
 número: número de respuestas a devolver (búsqueda completa si el número es negativo)@*
 destinatario: la respuesta deber@'ia concordar con esta m@'ascara@*
 @*
-
 @end table
 
 @node Canal FIFO, , Comandos WeeChat, Uso
