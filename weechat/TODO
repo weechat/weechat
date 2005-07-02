@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2005-06-28
+TODO - 2005-07-02
 
 Legend:
   #  done
@@ -17,9 +17,6 @@ v0.1.3:
     + Windows version
     + Solaris version
 
- * IRC protocol:
-    - customizable CTCP version reply
-
  * Interface:
     + Gtk GUI
     + internationalization (traduce WeeChat in many languages)
@@ -28,10 +25,9 @@ v0.1.3:
     # SSL support
     # IPv6 protocol implementation
     # proxy support (http, socks4, socks5) with authentification
-   (http, socks5) and ipv6 support (client to proxy)
+      (http, socks5) and ipv6 support (client to proxy)
 
  * Configuration:
-    - add key bindings to config file
     # save buffer notify levels
 
 
@@ -39,6 +35,7 @@ Future versions:
 ---------------
 
  * IRC protocol:
+    - customizable CTCP version reply
     - complete "/list" command: add regexp search, display only channels that
       match regexp
     - "/ignore" and "/unignore" commands: hide all that is write by a given
@@ -64,3 +61,6 @@ Future versions:
  * Plugins:
     - Ruby plugin
     - "/ruby load" and "/ruby unload" commands to (un)load Ruby scripts
+
+ * Configuration:
+    - add key bindings to config file
