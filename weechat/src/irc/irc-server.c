@@ -1014,13 +1014,15 @@ resolve (char *hostname, char *ip, int *version)
     if (version != NULL)
         *version = 0;
     
-    if (getaddrinfo(hostname, NULL, NULL, &res) != 0)
+    res = NULL;
+
+    if (getaddrinfo (hostname, NULL, NULL, &res) != 0)
         return 1;
     
     if (!res)
         return 1;
     
-    if (getnameinfo(res->ai_addr, res->ai_addrlen, ipbuffer, sizeof(ipbuffer), NULL, 0, NI_NUMERICHOST) != 0)
+    if (getnameinfo (res->ai_addr, res->ai_addrlen, ipbuffer, sizeof(ipbuffer), NULL, 0, NI_NUMERICHOST) != 0)
     {
         freeaddrinfo (res);
         return 1;
@@ -1031,8 +1033,8 @@ resolve (char *hostname, char *ip, int *version)
     if ((res->ai_family == AF_INET6) && (version != NULL))
         *version = 6;
     
-    strcpy(ip, ipbuffer);
-
+    strcpy (ip, ipbuffer);
+    
     freeaddrinfo (res);
     
     return 0;
@@ -1252,9 +1254,11 @@ server_child (t_irc_server *server)
 {
     struct addrinfo hints, *res;
     
+    res = NULL;
+    
     if (cfg_proxy_use)
     {
-	memset (&hints, 0, sizeof(hints));
+	memset (&hints, 0, sizeof (hints));
 	hints.ai_family = (cfg_proxy_ipv6) ? AF_INET6 : AF_INET;
 	hints.ai_socktype = SOCK_STREAM;
 	if (getaddrinfo (cfg_proxy_address, NULL, &hints, &res) !=0)
@@ -1262,10 +1266,15 @@ server_child (t_irc_server *server)
 	    write(server->child_write, "1", 1);
 	    return 0;
         }
+        if (!res)
+        {
+            write(server->child_write, "1", 1);
+	    return 0;
+        }
 	if ((cfg_proxy_ipv6 && (res->ai_family != AF_INET6))
 	    || ((!cfg_proxy_ipv6 && (res->ai_family != AF_INET))))
         {
-	    write(server->child_write, "2", 1);
+	    write (server->child_write, "2", 1);
             freeaddrinfo (res);
 	    return 0;
         }
@@ -1297,6 +1306,11 @@ server_child (t_irc_server *server)
 	if (getaddrinfo (server->address, NULL, &hints, &res) !=0)
         {
 	    write(server->child_write, "1", 1);
+	    return 0;
+        }
+        if (!res)
+        {
+            write(server->child_write, "1", 1);
 	    return 0;
         }
 	if ((server->ipv6 && (res->ai_family != AF_INET6))
