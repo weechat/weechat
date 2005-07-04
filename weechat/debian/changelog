@@ -1,3 +1,16 @@
+weechat (0.1.3-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Julien Louis <ptitlouis@sysif.net>  Sat,  2 Jul 2005 20:06:29 +0200
+
+weechat (0.1.2-3) unstable; urgency=low
+
+  * Apply patch against gui-display.c to fix curses color bug.
+  * remove dh_install --sourcedir to allow builds on woody.
+
+ -- Julien Louis <ptitlouis@sysif.net>  Sun, 19 Jun 2005 22:37:11 +0200
+
 weechat (0.1.2-2) unstable; urgency=low
 
   * Patch src/gui/curse/gui-display.c to fix segfault

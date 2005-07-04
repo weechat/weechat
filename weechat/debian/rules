@@ -38,9 +38,9 @@ install: build
 	dh_testroot
 	dh_clean -k
 	dh_installdirs
-	$(MAKE) install DESTDIR=$(CURDIR)/debian/weechat
-	dh_install --sourcedir=debian/weechat
-	install -o root -g root -m 755 src/gui/curses/weechat-curses $(CURDIR)/debian/weechat-curses/usr/bin
+	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
+	dh_install
+#	install -o root -g root -m 755 src/gui/curses/weechat-curses $(CURDIR)/debian/weechat-curses/usr/bin
 	# install -o root -g root -m 755 src/gui/gtk/weechat-gtk $(CURDIR)/debian/weechat-gtk/usr/bin
 
 
