@@ -580,7 +580,10 @@ irc_cmd_send_ison (t_irc_server *server, char *arguments)
 int
 irc_cmd_send_join (t_irc_server *server, char *arguments)
 {
-    server_sendf (server, "JOIN %s\r\n", arguments);
+    if (string_is_channel (arguments))
+        server_sendf (server, "JOIN %s\r\n", arguments);
+    else
+        server_sendf (server, "JOIN #%s\r\n", arguments);
     return 0;
 }
 

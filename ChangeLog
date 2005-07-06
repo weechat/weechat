@@ -1,8 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-06-30
+ChangeLog - 2005-07-06
 
+
+Versoin 0.1.4 (under dev!):
+   * channels auto-prefixed by "#" (if no prefix found) for /join command
 
 Version 0.1.3 (2005-07-02):
    * proxy support (http, socks4, socks5) with authentification (http, socks5)
