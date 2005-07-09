@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2005-07-02
+TODO - 2005-07-10
 
 Legend:
   #  done
@@ -29,6 +29,7 @@ v0.1.3:
 
  * Configuration:
     # save buffer notify levels
+    # key bindings added to config file
 
 
 Future versions:
@@ -51,6 +52,7 @@ Future versions:
     - "/completion" command: do shortcuts (for example when we type "u"
       in the text bar it send it to the server as "you")
     - "/last": command to look for text in previous messages
+    - completion system for scripts arguments
 
  * Interface:
     - color for nicks (except own nick) when nick colors are disabled
@@ -61,6 +63,3 @@ Future versions:
  * Plugins:
     - Ruby plugin
     - "/ruby load" and "/ruby unload" commands to (un)load Ruby scripts
-
- * Configuration:
-    - add key bindings to config file
