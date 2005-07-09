@@ -26,7 +26,7 @@
 
 #define INPUT_BUFFER_BLOCK_SIZE 256
 
-#define NUM_COLORS                      50
+#define NUM_COLORS                      51
 #define COLOR_WIN_TITLE                 1
 #define COLOR_WIN_CHAT                  2
 #define COLOR_WIN_CHAT_TIME             3
@@ -45,31 +45,32 @@
 #define COLOR_WIN_STATUS_DATA_OTHER     16
 #define COLOR_WIN_STATUS_MORE           17
 #define COLOR_WIN_INFOBAR               18
-#define COLOR_WIN_INFOBAR_HIGHLIGHT     19
-#define COLOR_WIN_INPUT                 20
-#define COLOR_WIN_INPUT_CHANNEL         21
-#define COLOR_WIN_INPUT_NICK            22
-#define COLOR_WIN_NICK                  23
-#define COLOR_WIN_NICK_AWAY             24
-#define COLOR_WIN_NICK_CHANOWNER        25
-#define COLOR_WIN_NICK_CHANADMIN        26
-#define COLOR_WIN_NICK_OP               27
-#define COLOR_WIN_NICK_HALFOP           28
-#define COLOR_WIN_NICK_VOICE            29
-#define COLOR_WIN_NICK_MORE             30
-#define COLOR_WIN_NICK_SEP              31
-#define COLOR_WIN_NICK_SELF             32
-#define COLOR_WIN_NICK_PRIVATE          33
-#define COLOR_WIN_NICK_FIRST            34
-#define COLOR_WIN_NICK_LAST             43
+#define COLOR_WIN_INFOBAR_DELIMITERS    19
+#define COLOR_WIN_INFOBAR_HIGHLIGHT     20
+#define COLOR_WIN_INPUT                 21
+#define COLOR_WIN_INPUT_CHANNEL         22
+#define COLOR_WIN_INPUT_NICK            23
+#define COLOR_WIN_NICK                  24
+#define COLOR_WIN_NICK_AWAY             25
+#define COLOR_WIN_NICK_CHANOWNER        26
+#define COLOR_WIN_NICK_CHANADMIN        27
+#define COLOR_WIN_NICK_OP               28
+#define COLOR_WIN_NICK_HALFOP           29
+#define COLOR_WIN_NICK_VOICE            30
+#define COLOR_WIN_NICK_MORE             31
+#define COLOR_WIN_NICK_SEP              32
+#define COLOR_WIN_NICK_SELF             33
+#define COLOR_WIN_NICK_PRIVATE          34
+#define COLOR_WIN_NICK_FIRST            35
+#define COLOR_WIN_NICK_LAST             44
 #define COLOR_WIN_NICK_NUMBER           (COLOR_WIN_NICK_LAST - COLOR_WIN_NICK_FIRST + 1)
-#define COLOR_DCC_SELECTED              44
-#define COLOR_DCC_WAITING               45
-#define COLOR_DCC_CONNECTING            46
-#define COLOR_DCC_ACTIVE                47
-#define COLOR_DCC_DONE                  48
-#define COLOR_DCC_FAILED                49
-#define COLOR_DCC_ABORTED               50
+#define COLOR_DCC_SELECTED              45
+#define COLOR_DCC_WAITING               46
+#define COLOR_DCC_CONNECTING            47
+#define COLOR_DCC_ACTIVE                48
+#define COLOR_DCC_DONE                  49
+#define COLOR_DCC_FAILED                40
+#define COLOR_DCC_ABORTED               51
 
 #define SERVER(buffer)  ((t_irc_server *)(buffer->server))
 #define CHANNEL(buffer) ((t_irc_channel *)(buffer->channel))
@@ -219,6 +220,9 @@ struct t_gui_window
     int win_nick_height;            /* height of nick window                */
     int win_nick_start;             /* # of 1st nick for display (scroll)   */
     
+    /* input window settings */
+    int win_input_x;                /* position of cursor in input window   */
+    
     /* windows for Curses GUI */
     void *win_title;                /* title window                         */
     void *win_chat;                 /* chat window (example: channel)       */
@@ -252,6 +256,26 @@ struct t_gui_window
     t_gui_window *next_window;      /* link to next window                  */
 };
 
+typedef struct t_gui_key t_gui_key;
+
+struct t_gui_key
+{
+    char *key;                      /* key combo (ex: a, ^W, ^W^C, meta-a)  */
+    char *command;                  /* associated command (may be NULL)     */
+    void (*function)();             /* associated function (if cmd is NULL) */
+    t_gui_key *prev_key;            /* link to previous key                 */
+    t_gui_key *next_key;            /* link to next key                     */
+};
+
+typedef struct t_gui_key_function t_gui_key_function;
+
+struct t_gui_key_function
+{
+    char *function_name;            /* name of function                     */
+    void (*function)();             /* associated function                  */
+    char *description;              /* description of function              */
+};
+
 /* variables */
 
 extern int gui_init_ok;
@@ -264,8 +288,11 @@ extern t_gui_buffer *gui_buffers;
 extern t_gui_buffer *last_gui_buffer;
 extern t_gui_buffer *buffer_before_dcc;
 extern t_gui_infobar *gui_infobar;
+extern t_gui_key *gui_keys;
+extern t_gui_key *last_gui_key;
+extern t_gui_key_function gui_key_functions[];
 
-/* GUI independent functions */
+/* GUI independent functions: windows & buffers */
 
 extern t_gui_window *gui_window_new (int, int, int, int);
 extern t_gui_buffer *gui_buffer_new (t_gui_window *, void *, void *, int, int);
@@ -277,17 +304,53 @@ extern void gui_infobar_remove ();
 extern void gui_buffer_free (t_gui_buffer *, int);
 extern t_gui_line *gui_new_line (t_gui_buffer *);
 extern t_gui_message *gui_new_message (t_gui_buffer *);
-extern void gui_optimize_input_buffer_size (t_gui_buffer *);
-extern void gui_delete_previous_word (t_gui_buffer *);
-extern void gui_move_previous_word (t_gui_buffer *);
-extern void gui_move_next_word (t_gui_buffer *);
-extern void gui_buffer_insert_string (t_gui_buffer *, char *, int);
+extern void gui_input_insert_char ();
+extern void gui_input_return ();
+extern void gui_input_tab ();
+extern void gui_input_backspace ();
+extern void gui_input_delete ();
+extern void gui_input_delete_previous_word ();
+extern void gui_input_delete_next_word ();
+extern void gui_input_delete_begin_of_line ();
+extern void gui_input_delete_end_of_line ();
+extern void gui_input_delete_line ();
+extern void gui_input_home ();
+extern void gui_input_end ();
+extern void gui_input_left ();
+extern void gui_input_previous_word ();
+extern void gui_input_right ();
+extern void gui_input_next_word ();
+extern void gui_input_up ();
+extern void gui_input_down ();
+extern void gui_input_jump_smart ();
+extern void gui_input_jump_dcc ();
+extern void gui_input_jump_server ();
+extern void gui_input_jump_next_server ();
+extern void gui_input_hotlist_clear ();
+extern void gui_input_infobar_clear ();
+extern void gui_switch_to_previous_buffer ();
+extern void gui_switch_to_next_buffer ();
+extern void gui_switch_to_previous_window ();
+extern void gui_switch_to_next_window ();
 extern t_gui_buffer *gui_switch_to_buffer_by_number (t_gui_window *, int);
 extern void gui_move_buffer_to_number (t_gui_window *, int);
 extern void gui_window_print_log (t_gui_window *);
 extern void gui_buffer_print_log (t_gui_buffer *);
 
-/* GUI dependant functions */
+/* GUI independent functions: keys */
+
+extern void gui_key_init ();
+extern char *gui_key_get_internal_code (char *);
+extern char *gui_key_get_expanded_name (char *);
+extern void *gui_key_function_search_by_name (char *);
+extern char *gui_key_function_search_by_ptr (void *);
+extern t_gui_key *gui_key_bind (char *, char *);
+extern int gui_key_unbind (char *);
+extern int gui_key_pressed (char *);
+extern void gui_key_free (t_gui_key *);
+extern void gui_key_free_all ();
+
+/* GUI dependant functions: display */
 
 extern int gui_assign_color (int *, char *);
 extern int gui_get_color_by_name (char *);
@@ -298,22 +361,19 @@ extern void gui_draw_buffer_title (t_gui_buffer *, int);
 extern void gui_draw_buffer_chat (t_gui_buffer *, int);
 extern void gui_draw_buffer_nick (t_gui_buffer *, int);
 extern void gui_draw_buffer_status (t_gui_buffer *, int);
+extern void gui_draw_buffer_infobar_time (t_gui_buffer *);
 extern void gui_draw_buffer_infobar (t_gui_buffer *, int);
 extern void gui_draw_buffer_input (t_gui_buffer *, int);
 extern void gui_redraw_buffer (t_gui_buffer *);
 extern void gui_switch_to_buffer (t_gui_window *, t_gui_buffer *);
 extern t_gui_buffer *gui_get_dcc_buffer ();
 extern void gui_switch_to_dcc_buffer ();
-extern void gui_switch_to_previous_buffer (t_gui_window *);
-extern void gui_switch_to_next_buffer (t_gui_window *);
-extern void gui_switch_to_previous_window (t_gui_window *);
-extern void gui_switch_to_next_window (t_gui_window *);
-extern void gui_move_page_up (t_gui_window *);
-extern void gui_move_page_down (t_gui_window *);
-extern void gui_nick_move_beginning (t_gui_window *);
-extern void gui_nick_move_end (t_gui_window *);
-extern void gui_nick_move_page_up (t_gui_window *);
-extern void gui_nick_move_page_down (t_gui_window *);
+extern void gui_input_page_up ();
+extern void gui_input_page_down ();
+extern void gui_input_nick_beginning ();
+extern void gui_input_nick_end ();
+extern void gui_input_nick_page_up ();
+extern void gui_input_nick_page_down ();
 extern void gui_curses_resize_handler ();
 extern void gui_window_init_subwindows (t_gui_window *);
 extern void gui_window_split_horiz (t_gui_window *);
@@ -330,6 +390,7 @@ extern void gui_set_window_title ();
 extern void gui_init ();
 extern void gui_end ();
 extern void gui_printf_type_color (/*@null@*/ t_gui_buffer *, int, int, char *, ...);
+extern void gui_input_default_key_bindings ();
 extern void gui_main_loop ();
 
 #endif /* gui.h */

@@ -19,7 +19,7 @@ INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\"
 
 bin_PROGRAMS = weechat-curses
 
-weechat_curses_LDADD = ../lib_weechat_gui_common.a \
+weechat_curses_LDADD = ../gui-common.o ../gui-keyboard.o \
                        ../../common/lib_weechat_main.a \
                        ../../irc/lib_weechat_irc.a \
                        $(NCURSES_LIBS) \
@@ -27,4 +27,4 @@ weechat_curses_LDADD = ../lib_weechat_gui_common.a \
                        $(GNUTLS_LIBS)
 
 weechat_curses_SOURCES = gui-display.c \
-			             gui-input.c
+                         gui-input.c

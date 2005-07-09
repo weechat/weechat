@@ -1,10 +1,14 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-07-06
+ChangeLog - 2005-07-09
 
 
 Versoin 0.1.4 (under dev!):
+   * new keyboard management: keys are setup in config file, new command
+     /key was added and some new default keys were added
+   * added seconds in infobar time (optional thanks to new setting)
+   * fixed some curses refreshs
    * channels auto-prefixed by "#" (if no prefix found) for /join command
 
 Version 0.1.3 (2005-07-02):

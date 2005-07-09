@@ -201,6 +201,23 @@ completion_build_list (t_completion *completion, void *channel)
         }
         return;
     }
+    if ((strcasecmp (completion->base_command, "key") == 0)
+        && (completion->base_command_arg == 1))
+    {
+        weelist_add (&completion->completion_list,
+                     &completion->last_completion,
+                     "bind");
+        weelist_add (&completion->completion_list,
+                     &completion->last_completion,
+                     "unbind");
+        weelist_add (&completion->completion_list,
+                     &completion->last_completion,
+                     "functions");
+        weelist_add (&completion->completion_list,
+                     &completion->last_completion,
+                     "reset");
+        return;
+    }
     if (((strcasecmp (completion->base_command, "perl") == 0)
         || (strcasecmp (completion->base_command, "python") == 0))
         && (completion->base_command_arg == 1))
@@ -225,7 +242,8 @@ completion_build_list (t_completion *completion, void *channel)
         {
             for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
             {
-                if ((i != CONFIG_SECTION_ALIAS) && (i != CONFIG_SECTION_SERVER))
+                if ((i != CONFIG_SECTION_KEYS) && (i != CONFIG_SECTION_ALIAS)
+                    && (i != CONFIG_SECTION_SERVER))
                 {
                     for (j = 0; weechat_options[i][j].option_name; j++)
                     {

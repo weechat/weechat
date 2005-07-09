@@ -314,6 +314,47 @@ void wee_display_commands (int weechat_cmd, int irc_cmd)
 }
 
 /*
+ * wee_display_key_functions: display WeeChat key functions
+ */
+
+void wee_display_key_functions ()
+{
+    int i;
+    
+    printf (_("Internal key functions:\n"));
+    printf ("\n");
+    i = 0;
+    while (gui_key_functions[i].function_name)
+    {
+        printf ("  %s\n",
+                gui_key_functions[i].function_name);
+        i++;
+    }
+}
+
+/*
+ * wee_display_keys: display WeeChat default keys
+ */
+
+void wee_display_keys ()
+{
+    t_gui_key *ptr_key;
+    char *expanded_name;
+    
+    printf (_("%s default keys:\n"), PACKAGE_NAME);
+    printf ("\n");
+    for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
+    {
+        expanded_name = gui_key_get_expanded_name (ptr_key->key);
+        printf ("  %20s => %s\n",
+                (expanded_name) ? expanded_name : ptr_key->key,
+                (ptr_key->function) ? gui_key_function_search_by_ptr (ptr_key->function) : ptr_key->command);
+        if (expanded_name)
+            free (expanded_name);
+    }
+}
+
+/*
  * wee_parse_args: parse command line args
  */
 
@@ -333,6 +374,12 @@ wee_parse_args (int argc, char *argv[])
             wee_display_config_options ();
             wee_shutdown (EXIT_SUCCESS);
         }
+        else if ((strcmp (argv[i], "-f") == 0)
+            || (strcmp (argv[i], "--key-functions") == 0))
+        {
+            wee_display_key_functions ();
+            wee_shutdown (EXIT_SUCCESS);
+        }
         else if ((strcmp (argv[i], "-h") == 0)
                 || (strcmp (argv[i], "--help") == 0))
         {
@@ -340,10 +387,16 @@ wee_parse_args (int argc, char *argv[])
             printf ("%s", WEE_USAGE2);
             wee_shutdown (EXIT_SUCCESS);
         }
-        if ((strcmp (argv[i], "-i") == 0)
+        else if ((strcmp (argv[i], "-i") == 0)
             || (strcmp (argv[i], "--irc-commands") == 0))
         {
             wee_display_commands (0, 1);
+            wee_shutdown (EXIT_SUCCESS);
+        }
+        else if ((strcmp (argv[i], "-k") == 0)
+            || (strcmp (argv[i], "--keys") == 0))
+        {
+            wee_display_keys ();
             wee_shutdown (EXIT_SUCCESS);
         }
         else if ((strcmp (argv[i], "-l") == 0)
@@ -358,7 +411,7 @@ wee_parse_args (int argc, char *argv[])
             printf (PACKAGE_VERSION "\n");
             wee_shutdown (EXIT_SUCCESS);
         }
-        if ((strcmp (argv[i], "-w") == 0)
+        else if ((strcmp (argv[i], "-w") == 0)
             || (strcmp (argv[i], "--weechat-commands") == 0))
         {
             wee_display_commands (1, 0);
@@ -771,6 +824,7 @@ main (int argc, char *argv[])
     signal (SIGSEGV, my_sigsegv);   /* crash dump when SIGSEGV is received  */
     gui_pre_init (&argc, &argv);    /* pre-initiliaze interface             */
     wee_init_vars ();               /* initialize some variables            */
+    gui_key_init ();                /* init keyboard (default key bindings) */
     wee_parse_args (argc, argv);    /* parse command line args              */
     wee_create_home_dirs ();        /* create WeeChat directories           */
     wee_init_log ();                /* init log file                        */

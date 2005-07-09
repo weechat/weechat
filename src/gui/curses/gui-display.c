@@ -318,7 +318,7 @@ gui_draw_window_separator (t_gui_window *window)
                                         window->win_x - 1);
         gui_window_set_color (window->win_separator, COLOR_WIN_TITLE);
         wborder (window->win_separator, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
-        wrefresh (window->win_separator);
+        wnoutrefresh (window->win_separator);
         refresh ();
     }
 }
@@ -341,15 +341,9 @@ gui_draw_buffer_title (t_gui_buffer *buffer, int erase)
         if (ptr_win->buffer == buffer)
         {
             if (erase)
-                gui_curses_window_clear (ptr_win->win_title);
+              gui_curses_window_clear (ptr_win->win_title);
             
-            if (has_colors ())
-            {
-                gui_window_set_color (ptr_win->win_title, COLOR_WIN_TITLE);
-                wborder (ptr_win->win_title, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
-                wrefresh (ptr_win->win_title);
-                refresh ();
-            }
+            gui_window_set_color (ptr_win->win_title, COLOR_WIN_TITLE);
             snprintf (format, 32, "%%-%ds", ptr_win->win_width);
             if (CHANNEL(buffer))
             {
@@ -362,6 +356,8 @@ gui_draw_buffer_title (t_gui_buffer *buffer, int erase)
                     mvwprintw (ptr_win->win_title, 0, 0, format, buf);
                     free (buf);
                 }
+                else
+                    mvwprintw (ptr_win->win_title, 0, 0, format, " ");
             }
             else
             {
@@ -372,8 +368,10 @@ gui_draw_buffer_title (t_gui_buffer *buffer, int erase)
                                PACKAGE_STRING " " WEECHAT_COPYRIGHT_DATE " - "
                                WEECHAT_WEBSITE);
                 }
+                else
+                    mvwprintw (ptr_win->win_title, 0, 0, format, " ");
             }
-            wrefresh (ptr_win->win_title);
+            wnoutrefresh (ptr_win->win_title);
             refresh ();
         }
     }
@@ -860,7 +858,7 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                     ptr_win->win_chat_cursor_y = ptr_win->win_chat_height - 1;
                 }
             }
-            wrefresh (ptr_win->win_chat);
+            wnoutrefresh (ptr_win->win_chat);
             refresh ();
         }
     }
@@ -1058,7 +1056,7 @@ gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
                     }
                 }
             }
-            wrefresh (ptr_win->win_nick);
+            wnoutrefresh (ptr_win->win_nick);
             refresh ();
         }
     }
@@ -1087,12 +1085,8 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
         if (erase)
             gui_curses_window_clear (ptr_win->win_status);
         
-        if (has_colors ())
-        {
-            gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS);
-            wborder (ptr_win->win_status, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
-            wrefresh (ptr_win->win_status);
-        }
+        gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS);
+        wborder (ptr_win->win_status, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
         wmove (ptr_win->win_status, 0, 0);
         
         /* display number of buffers */
@@ -1224,17 +1218,20 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
         if (!SERVER(ptr_win->buffer))
         {
             gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS);
+            wprintw (ptr_win->win_status, "%d",
+                     ptr_win->buffer->number);
+            gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS_DELIMITERS);
+            wprintw (ptr_win->win_status, ":");
+            gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS);
             if (ptr_win->buffer->dcc)
-                wprintw (ptr_win->win_status, "%d:<DCC> ",
-                         ptr_win->buffer->number);
+                wprintw (ptr_win->win_status, "<DCC> ");
             else
             {
                 string = weechat_convert_encoding (cfg_look_charset_decode,
                                                   (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
                                                   cfg_look_charset_internal : local_charset,
-                                                  _("%d:[not connected] "));
-                wprintw (ptr_win->win_status, string,
-                         ptr_win->buffer->number);
+                                                  _("[not connected]"));
+                wprintw (ptr_win->win_status, "%s " , string);
                 free (string);
             }
         }
@@ -1344,8 +1341,45 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
         }
         free (string);
         
-        wrefresh (ptr_win->win_status);
+        wnoutrefresh (ptr_win->win_status);
         refresh ();
+    }
+}
+
+/*
+ * gui_draw_buffer_infobar_time: draw time in infobar window
+ */
+
+void
+gui_draw_buffer_infobar_time (t_gui_buffer *buffer)
+{
+    t_gui_window *ptr_win;
+    time_t time_seconds;
+    struct tm *local_time;
+    
+    /* make gcc happy */
+    (void) buffer;
+    
+    if (!gui_ok)
+        return;
+    
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {        
+        time_seconds = time (NULL);
+        local_time = localtime (&time_seconds);
+        if (local_time)
+        {
+            gui_window_set_color (ptr_win->win_infobar, COLOR_WIN_INFOBAR);
+            mvwprintw (ptr_win->win_infobar,
+                       0, 1,
+                       "%02d:%02d",
+                       local_time->tm_hour, local_time->tm_min);
+            if (cfg_look_infobar_seconds)
+                wprintw (ptr_win->win_infobar,
+                         ":%02d",
+                         local_time->tm_sec);
+        }
+        wnoutrefresh (ptr_win->win_infobar);
     }
 }
 
@@ -1376,7 +1410,7 @@ gui_draw_buffer_infobar (t_gui_buffer *buffer, int erase)
         {
             gui_window_set_color (ptr_win->win_infobar, COLOR_WIN_INFOBAR);
             wborder (ptr_win->win_infobar, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
-            wrefresh (ptr_win->win_infobar);
+            wnoutrefresh (ptr_win->win_infobar);
         }
         wmove (ptr_win->win_infobar, 0, 0);
         
@@ -1385,16 +1419,31 @@ gui_draw_buffer_infobar (t_gui_buffer *buffer, int erase)
         if (local_time)
         {
             strftime (text_time, 1024, cfg_look_infobar_timestamp, local_time);
+            gui_window_set_color (ptr_win->win_infobar, COLOR_WIN_INFOBAR_DELIMITERS);
+            wprintw (ptr_win->win_infobar, "[");
             gui_window_set_color (ptr_win->win_infobar, COLOR_WIN_INFOBAR);
-            wprintw (ptr_win->win_infobar, "%s", text_time);
+            wprintw (ptr_win->win_infobar,
+                     "%02d:%02d",
+                     local_time->tm_hour, local_time->tm_min);
+            if (cfg_look_infobar_seconds)
+                wprintw (ptr_win->win_infobar,
+                         ":%02d",
+                         local_time->tm_sec);
+            gui_window_set_color (ptr_win->win_infobar, COLOR_WIN_INFOBAR_DELIMITERS);
+            wprintw (ptr_win->win_infobar, "]");
+            gui_window_set_color (ptr_win->win_infobar, COLOR_WIN_INFOBAR);
+            wprintw (ptr_win->win_infobar,
+                     " %s", text_time);
         }
         if (gui_infobar)
         {
+            gui_window_set_color (ptr_win->win_infobar, COLOR_WIN_INFOBAR_DELIMITERS);
+            wprintw (ptr_win->win_infobar, " | ");
             gui_window_set_color (ptr_win->win_infobar, gui_infobar->color);
-            wprintw (ptr_win->win_infobar, " | %s", gui_infobar->text);
+            wprintw (ptr_win->win_infobar, "%s", gui_infobar->text);
         }
         
-        wrefresh (ptr_win->win_infobar);
+        wnoutrefresh (ptr_win->win_infobar);
         refresh ();
     }
 }
@@ -1445,7 +1494,7 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
             {
                 gui_window_set_color (ptr_win->win_input, COLOR_WIN_INPUT);
                 wborder (ptr_win->win_input, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
-                wrefresh (ptr_win->win_input);
+                wnoutrefresh (ptr_win->win_input);
             }
             
             if (buffer->input_buffer_size == 0)
@@ -1488,11 +1537,12 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
                                SERVER(buffer)->nick,
                                "");
                 wclrtoeol (ptr_win->win_input);
+                ptr_win->win_input_x = strlen (CHANNEL(buffer)->name) +
+                    strlen (SERVER(buffer)->nick) + 3 +
+                    (buffer->input_buffer_pos - buffer->input_buffer_1st_display);
                 if (ptr_win == gui_current_window)
                     move (ptr_win->win_y + ptr_win->win_height - 1,
-                          ptr_win->win_x + strlen (CHANNEL(buffer)->name) +
-                          strlen (SERVER(buffer)->nick) + 3 +
-                          (buffer->input_buffer_pos - buffer->input_buffer_1st_display));
+                          ptr_win->win_x + ptr_win->win_input_x);
             }
             else
             {
@@ -1523,6 +1573,7 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
                     wprintw (ptr_win->win_input, _("  [P] Purge old DCC"));
                     wprintw (ptr_win->win_input, _("  [Q] Close DCC view"));
                     wclrtoeol (ptr_win->win_input);
+                    ptr_win->win_input_x = 0;
                     if (ptr_win == gui_current_window)
                         move (ptr_win->win_y + ptr_win->win_height - 1,
                               ptr_win->win_x);
@@ -1543,14 +1594,15 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
                                    ptr_nickname,
                                    "");
                     wclrtoeol (ptr_win->win_input);
+                    ptr_win->win_input_x = strlen (ptr_nickname) + 2 +
+                        (buffer->input_buffer_pos - buffer->input_buffer_1st_display);
                     if (ptr_win == gui_current_window)
                         move (ptr_win->win_y + ptr_win->win_height - 1,
-                              ptr_win->win_x + strlen (ptr_nickname) + 2 +
-                              (buffer->input_buffer_pos - buffer->input_buffer_1st_display));
+                              ptr_win->win_x + ptr_win->win_input_x);
                 }
             }
             
-            wrefresh (ptr_win->win_input);
+            wnoutrefresh (ptr_win->win_input);
             refresh ();
         }
     }
@@ -1728,215 +1780,143 @@ gui_switch_to_dcc_buffer ()
 }
 
 /*
- * gui_switch_to_previous_buffer: switch to previous buffer
+ * gui_input_page_up: display previous page on buffer
  */
 
 void
-gui_switch_to_previous_buffer (t_gui_window *window)
+gui_input_page_up ()
 {
     if (!gui_ok)
         return;
     
-    /* if only one buffer then return */
-    if (gui_buffers == last_gui_buffer)
-        return;
-    
-    if (window->buffer->prev_buffer)
-        gui_switch_to_buffer (window, window->buffer->prev_buffer);
-    else
-        gui_switch_to_buffer (window, last_gui_buffer);
-    
-    gui_redraw_buffer (window->buffer);
-}
-
-/*
- * gui_switch_to_next_buffer: switch to next buffer
- */
-
-void
-gui_switch_to_next_buffer (t_gui_window *window)
-{
-    if (!gui_ok)
-        return;
-    
-    /* if only one buffer then return */
-    if (gui_buffers == last_gui_buffer)
-        return;
-    
-    if (window->buffer->next_buffer)
-        gui_switch_to_buffer (window, window->buffer->next_buffer);
-    else
-        gui_switch_to_buffer (window, gui_buffers);
-    
-    gui_redraw_buffer (window->buffer);
-}
-
-/*
- * gui_switch_to_previous_window: switch to previous window
- */
-
-void
-gui_switch_to_previous_window (t_gui_window *window)
-{
-    if (!gui_ok)
-        return;
-    
-    /* if only one window then return */
-    if (gui_windows == last_gui_window)
-        return;
-    
-    gui_current_window = (window->prev_window) ? window->prev_window : last_gui_window;
-    gui_switch_to_buffer (gui_current_window, gui_current_window->buffer);
-    gui_redraw_buffer (gui_current_window->buffer);
-}
-
-/*
- * gui_switch_to_next_window: switch to next window
- */
-
-void
-gui_switch_to_next_window (t_gui_window *window)
-{
-    if (!gui_ok)
-        return;
-    
-    /* if only one window then return */
-    if (gui_windows == last_gui_window)
-        return;
-    
-    gui_current_window = (window->next_window) ? window->next_window : gui_windows;
-    gui_switch_to_buffer (gui_current_window, gui_current_window->buffer);
-    gui_redraw_buffer (gui_current_window->buffer);
-}
-
-/*
- * gui_move_page_up: display previous page on buffer
- */
-
-void
-gui_move_page_up (t_gui_window *window)
-{
-    if (!gui_ok)
-        return;
-    
-    if (!window->first_line_displayed)
+    if (!gui_current_window->first_line_displayed)
     {
-        window->sub_lines += window->win_chat_height - 1;
-        gui_draw_buffer_chat (window->buffer, 0);
-        gui_draw_buffer_status (window->buffer, 0);
+        gui_current_window->sub_lines +=
+            gui_current_window->win_chat_height - 1;
+        gui_draw_buffer_chat (gui_current_window->buffer, 0);
+        gui_draw_buffer_status (gui_current_window->buffer, 0);
     }
 }
 
 /*
- * gui_move_page_down: display next page on buffer
+ * gui_input_page_down: display next page on buffer
  */
 
 void
-gui_move_page_down (t_gui_window *window)
+gui_input_page_down ()
 {
     if (!gui_ok)
         return;
     
-    if (window->sub_lines > 0)
+    if (gui_current_window->sub_lines > 0)
     {
-        window->sub_lines -= window->win_chat_height - 1;
-        if (window->sub_lines < 0)
-            window->sub_lines = 0;
-        gui_draw_buffer_chat (window->buffer, 0);
-        gui_draw_buffer_status (window->buffer, 0);
+        gui_current_window->sub_lines -=
+            gui_current_window->win_chat_height - 1;
+        if (gui_current_window->sub_lines < 0)
+            gui_current_window->sub_lines = 0;
+        gui_draw_buffer_chat (gui_current_window->buffer, 0);
+        gui_draw_buffer_status (gui_current_window->buffer, 0);
     }
 }
 
 /*
- * gui_nick_move_beginning: go to beginning of nicklist
+ * gui_input_nick_beginning: go to beginning of nicklist
  */
 
 void
-gui_nick_move_beginning (t_gui_window *window)
+gui_input_nick_beginning ()
 {
     if (!gui_ok)
         return;
     
-    if (gui_buffer_has_nicklist (window->buffer))
+    if (gui_buffer_has_nicklist (gui_current_window->buffer))
     {
-        if (window->win_nick_start > 0)
+        if (gui_current_window->win_nick_start > 0)
         {
-            window->win_nick_start = 0;
-            gui_draw_buffer_nick (window->buffer, 1);
+            gui_current_window->win_nick_start = 0;
+            gui_draw_buffer_nick (gui_current_window->buffer, 1);
         }
     }
 }
 
 /*
- * gui_nick_move_end: go to the end of nicklist
+ * gui_input_nick_end: go to the end of nicklist
  */
 
 void
-gui_nick_move_end (t_gui_window *window)
+gui_input_nick_end ()
 {
     int new_start;
     
     if (!gui_ok)
         return;
     
-    if (gui_buffer_has_nicklist (window->buffer))
+    if (gui_buffer_has_nicklist (gui_current_window->buffer))
     {
-        new_start = CHANNEL(window->buffer)->nicks_count - window->win_nick_height;
+        new_start =
+            CHANNEL(gui_current_window->buffer)->nicks_count -
+            gui_current_window->win_nick_height;
         if (new_start < 0)
             new_start = 0;
         else if (new_start >= 1)
             new_start++;
         
-        if (new_start != window->win_nick_start)
+        if (new_start != gui_current_window->win_nick_start)
         {
-            window->win_nick_start = new_start;
-            gui_draw_buffer_nick (window->buffer, 1);
+            gui_current_window->win_nick_start = new_start;
+            gui_draw_buffer_nick (gui_current_window->buffer, 1);
         }
     }
 }
 
 /*
- * gui_nick_move_page_up: scroll one page up in nicklist
+ * gui_input_nick_page_up: scroll one page up in nicklist
  */
 
 void
-gui_nick_move_page_up (t_gui_window *window)
+gui_input_nick_page_up ()
 {
     if (!gui_ok)
         return;
     
-    if (gui_buffer_has_nicklist (window->buffer))
+    if (gui_buffer_has_nicklist (gui_current_window->buffer))
     {
-        if (window->win_nick_start > 0)
+        if (gui_current_window->win_nick_start > 0)
         {
-            window->win_nick_start -= (window->win_nick_height - 1);
-            if (window->win_nick_start <= 1)
-                window->win_nick_start = 0;
-            gui_draw_buffer_nick (window->buffer, 1);
+            gui_current_window->win_nick_start -=
+                (gui_current_window->win_nick_height - 1);
+            if (gui_current_window->win_nick_start <= 1)
+                gui_current_window->win_nick_start = 0;
+            gui_draw_buffer_nick (gui_current_window->buffer, 1);
         }
     }
 }
 
 /*
- * gui_nick_move_page_down: scroll one page down in nicklist
+ * gui_input_nick_page_down: scroll one page down in nicklist
  */
 
 void
-gui_nick_move_page_down (t_gui_window *window)
+gui_input_nick_page_down ()
 {
     if (!gui_ok)
         return;
     
-    if (gui_buffer_has_nicklist (window->buffer))
+    if (gui_buffer_has_nicklist (gui_current_window->buffer))
     {
-        if ((CHANNEL(window->buffer)->nicks_count > window->win_nick_height)
-            && (window->win_nick_start + window->win_nick_height - 1 < CHANNEL(window->buffer)->nicks_count))
+        if ((CHANNEL(gui_current_window->buffer)->nicks_count >
+             gui_current_window->win_nick_height)
+            && (gui_current_window->win_nick_start +
+                gui_current_window->win_nick_height - 1
+                < CHANNEL(gui_current_window->buffer)->nicks_count))
         {
-            if (window->win_nick_start == 0)
-                window->win_nick_start += (window->win_nick_height - 1);
+            if (gui_current_window->win_nick_start == 0)
+                gui_current_window->win_nick_start +=
+                    (gui_current_window->win_nick_height - 1);
             else
-                window->win_nick_start += (window->win_nick_height - 2);
-            gui_draw_buffer_nick (window->buffer, 1);
+                gui_current_window->win_nick_start +=
+                    (gui_current_window->win_nick_height - 2);
+            gui_draw_buffer_nick (gui_current_window->buffer, 1);
         }
     }
 }
@@ -2306,6 +2286,8 @@ gui_init_colors ()
             cfg_col_status_more, cfg_col_status_bg);
         init_pair (COLOR_WIN_INFOBAR,
             cfg_col_infobar, cfg_col_infobar_bg);
+        init_pair (COLOR_WIN_INFOBAR_DELIMITERS,
+            cfg_col_infobar_delimiters, cfg_col_infobar_bg);
         init_pair (COLOR_WIN_INFOBAR_HIGHLIGHT,
             cfg_col_infobar_highlight, cfg_col_infobar_bg);
         init_pair (COLOR_WIN_INPUT,
@@ -2378,6 +2360,7 @@ gui_init_colors ()
         color_attr[COLOR_WIN_STATUS_DATA_OTHER - 1] = (cfg_col_status_data_other >= 0) ? cfg_col_status_data_other & A_BOLD : 0;
         color_attr[COLOR_WIN_STATUS_MORE - 1] = (cfg_col_status_more >= 0) ? cfg_col_status_more & A_BOLD : 0;
         color_attr[COLOR_WIN_INFOBAR - 1] = (cfg_col_infobar >= 0) ? cfg_col_infobar & A_BOLD : 0;
+        color_attr[COLOR_WIN_INFOBAR_DELIMITERS - 1] = (cfg_col_infobar_delimiters >= 0) ? cfg_col_infobar_delimiters & A_BOLD : 0;
         color_attr[COLOR_WIN_INFOBAR_HIGHLIGHT - 1] = (cfg_col_infobar_highlight >= 0) ? cfg_col_infobar_highlight & A_BOLD : 0;
         color_attr[COLOR_WIN_INPUT - 1] = (cfg_col_input >= 0) ? cfg_col_input & A_BOLD : 0;
         color_attr[COLOR_WIN_INPUT_CHANNEL - 1] = (cfg_col_input_channel >= 0) ? cfg_col_input_channel & A_BOLD : 0;
@@ -2427,15 +2410,16 @@ gui_init ()
     initscr ();
     
     curs_set (1);
-    keypad (stdscr, TRUE);
     noecho ();
     nodelay (stdscr, TRUE);
 
     gui_init_colors ();
-
+    
     gui_infobar = NULL;
     
     gui_ok = ((COLS > 5) && (LINES > 5));
+
+    refresh ();
     
     /* create new window/buffer */
     if (gui_window_new (0, 0, COLS, LINES))

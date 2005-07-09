@@ -33,9 +33,10 @@
 #define CONFIG_SECTION_IRC     4
 #define CONFIG_SECTION_DCC     5
 #define CONFIG_SECTION_PROXY   6
-#define CONFIG_SECTION_ALIAS   7
-#define CONFIG_SECTION_SERVER  8
-#define CONFIG_NUMBER_SECTIONS 9
+#define CONFIG_SECTION_KEYS    7
+#define CONFIG_SECTION_ALIAS   8
+#define CONFIG_SECTION_SERVER  9
+#define CONFIG_NUMBER_SECTIONS 10
 
 #define OPTION_TYPE_BOOLEAN         1   /* values: on/off                   */
 #define OPTION_TYPE_INT             2   /* values: from min to max          */
@@ -97,6 +98,7 @@ extern char *cfg_look_no_nickname;
 extern char *cfg_look_completor;
 extern int cfg_look_infobar;
 extern char *cfg_look_infobar_timestamp;
+extern int cfg_look_infobar_seconds;
 extern int cfg_look_infobar_delay_highlight;
 
 extern int cfg_col_title;
@@ -120,6 +122,7 @@ extern int cfg_col_status_data_other;
 extern int cfg_col_status_more;
 extern int cfg_col_status_bg;
 extern int cfg_col_infobar;
+extern int cfg_col_infobar_delimiters;
 extern int cfg_col_infobar_highlight;
 extern int cfg_col_infobar_bg;
 extern int cfg_col_input;

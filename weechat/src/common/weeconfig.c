@@ -53,6 +53,7 @@ t_config_section config_sections[CONFIG_NUMBER_SECTIONS] =
   { CONFIG_SECTION_IRC, "irc" },
   { CONFIG_SECTION_DCC, "dcc" },
   { CONFIG_SECTION_PROXY, "proxy" },
+  { CONFIG_SECTION_KEYS, "keys" },
   { CONFIG_SECTION_ALIAS, "alias" },
   { CONFIG_SECTION_SERVER, "server" }
 };
@@ -82,6 +83,7 @@ char *cfg_look_no_nickname;
 char *cfg_look_completor;
 int cfg_look_infobar;
 char *cfg_look_infobar_timestamp;
+int cfg_look_infobar_seconds;
 int cfg_look_infobar_delay_highlight;
 
 t_config_option weechat_options_look[] =
@@ -170,7 +172,11 @@ t_config_option weechat_options_look[] =
   { "look_infobar_timestamp", N_("timestamp for time in infobar"),
     N_("timestamp for time in infobar"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "%B, %A %d %Y - %H:%M", NULL, NULL, &cfg_look_infobar_timestamp, config_change_buffer_content },
+    "%B, %A %d %Y", NULL, NULL, &cfg_look_infobar_timestamp, config_change_buffer_content },
+  { "look_infobar_seconds", N_("display seconds in infobar time"),
+    N_("display seconds in infobar time"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
+    NULL, NULL, &cfg_look_infobar_seconds, NULL, config_change_buffer_content },
   { "look_infobar_delay_highlight", N_("delay (in seconds) for highlight messages in infobar"),
     N_("delay (in seconds) for highlight messages in infobar "
     "(0 = disable highlight notifications in infobar)"),
@@ -202,6 +208,7 @@ int cfg_col_status_data_other;
 int cfg_col_status_more;
 int cfg_col_status_bg;
 int cfg_col_infobar;
+int cfg_col_infobar_delimiters;
 int cfg_col_infobar_highlight;
 int cfg_col_infobar_bg;
 int cfg_col_input;
@@ -320,6 +327,10 @@ t_config_option weechat_options_colors[] =
     N_("color for info bar text"),
     OPTION_TYPE_COLOR, 0, 0, 0,
     "black", NULL, &cfg_col_infobar, NULL, &config_change_color },
+  { "col_infobar_delimiters", N_("color for infobar delimiters"),
+    N_("color for infobar delimiters"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "blue", NULL, &cfg_col_infobar_delimiters, NULL, &config_change_color },
   { "col_infobar_highlight", N_("color for info bar highlight notification"),
     N_("color for info bar highlight notification"),
     OPTION_TYPE_COLOR, 0, 0, 0,
@@ -727,7 +738,7 @@ t_config_option weechat_options_server[] =
 t_config_option *weechat_options[CONFIG_NUMBER_SECTIONS] =
 { weechat_options_look, weechat_options_colors, weechat_options_history,
   weechat_options_log, weechat_options_irc, weechat_options_dcc,
-  weechat_options_proxy, NULL, weechat_options_server
+  weechat_options_proxy, NULL, NULL, weechat_options_server
 };
 
 
@@ -763,7 +774,8 @@ config_get_section (t_config_option *ptr_option)
     
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
     {
-        if ((i != CONFIG_SECTION_ALIAS) && (i != CONFIG_SECTION_SERVER))
+        if ((i != CONFIG_SECTION_KEYS) && (i != CONFIG_SECTION_ALIAS)
+            && (i != CONFIG_SECTION_SERVER))
         {
             for (j = 0; weechat_options[i][j].option_name; j++)
             {
@@ -1057,7 +1069,8 @@ config_option_search (char *option_name)
     
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
     {
-        if ((i != CONFIG_SECTION_ALIAS) && (i != CONFIG_SECTION_SERVER))
+        if ((i != CONFIG_SECTION_KEYS) && (i != CONFIG_SECTION_ALIAS)
+            && (i != CONFIG_SECTION_SERVER))
         {
             for (j = 0; weechat_options[i][j].option_name; j++)
             {
@@ -1220,7 +1233,8 @@ config_default_values ()
     
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
     {
-        if ((i != CONFIG_SECTION_ALIAS) && (i != CONFIG_SECTION_SERVER))
+        if ((i != CONFIG_SECTION_KEYS) && (i != CONFIG_SECTION_ALIAS)
+            && (i != CONFIG_SECTION_SERVER))
         {
             for (j = 0; weechat_options[i][j].option_name; j++)
             {
@@ -1375,8 +1389,22 @@ config_read ()
                             if (pos2 != NULL)
                                 pos2[0] = '\0';
                             
-                            if (section == CONFIG_SECTION_ALIAS)
+                            if (section == CONFIG_SECTION_KEYS)
                             {
+                                if (pos[0])
+                                {
+                                    /* bind key (overwrite any binding with same key) */
+                                    gui_key_bind (line, pos);
+                                }
+                                else
+                                {
+                                    /* unbin key if no value given */
+                                    gui_key_unbind (line);
+                                }
+                            }
+                            else if (section == CONFIG_SECTION_ALIAS)
+                            {
+                                /* create new alias */
                                 if (alias_new (line, pos))
                                     weelist_add (&index_commands, &last_index_command, line);
                             }
@@ -1493,6 +1521,8 @@ config_create_default ()
     time_t current_time;
     struct passwd *my_passwd;
     char *realname, *pos;
+    t_gui_key *ptr_key;
+    char *expanded_name, *function_name;
 
     filename_length = strlen (weechat_home) + 64;
     filename =
@@ -1520,7 +1550,8 @@ config_create_default ()
 
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
     {
-        if ((i != CONFIG_SECTION_ALIAS) && (i != CONFIG_SECTION_SERVER))
+        if ((i != CONFIG_SECTION_KEYS) && (i != CONFIG_SECTION_ALIAS)
+            && (i != CONFIG_SECTION_SERVER))
         {
             fprintf (file, "\n[%s]\n", config_sections[i].section_name);
             for (j = 0; weechat_options[i][j].option_name; j++)
@@ -1550,6 +1581,27 @@ config_create_default ()
         }
     }
     
+    /* default key bindings */
+    fprintf (file, "\n[keys]\n");
+    for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
+    {
+        expanded_name = gui_key_get_expanded_name (ptr_key->key);
+        if (ptr_key->function)
+        {
+            function_name = gui_key_function_search_by_ptr (ptr_key->function);
+            if (function_name)
+                fprintf (file, "%s=%s\n",
+                         (expanded_name) ? expanded_name : ptr_key->key,
+                         function_name);
+        }
+        else
+            fprintf (file, "%s=%s\n",
+                     (expanded_name) ? expanded_name : ptr_key->key,
+                     ptr_key->command);
+        if (expanded_name)
+            free (expanded_name);
+    }
+    
     /* default aliases */
     /* TODO: remove comments when missing commands will be ok */
     fprintf (file, "\n[alias]\n");
@@ -1560,20 +1612,20 @@ config_create_default ()
     fprintf (file, "C=clear\n");
     fprintf (file, "CL=clear\n");
     fprintf (file, "CLOSE=buffer close\n");
-    fprintf (file, "# CHAT=dcc chat\n");
+    fprintf (file, "CHAT=dcc chat\n");
     fprintf (file, "# GET=dcc get\n");
     fprintf (file, "# IG=ignore\n");
     fprintf (file, "J=join\n");
     fprintf (file, "K=kick\n");
-    fprintf (file, "# KB=kickban\n");
+    fprintf (file, "KB=kickban\n");
     fprintf (file, "# KN=knockout\n");
     fprintf (file, "LEAVE=part\n");
     fprintf (file, "M=msg\n");
-    fprintf (file, "# MUB=unban *\n");
+    fprintf (file, "MUB=unban *\n");
     fprintf (file, "N=names\n");
     fprintf (file, "Q=query\n");
     fprintf (file, "T=topic\n");
-    fprintf (file, "# UB=unban\n");
+    fprintf (file, "UB=unban\n");
     fprintf (file, "# UNIG=unignore\n");
     fprintf (file, "W=who\n");
     fprintf (file, "WC=part\n");
@@ -1658,6 +1710,8 @@ config_write (char *config_name)
     time_t current_time;
     t_irc_server *ptr_server;
     t_weechat_alias *ptr_alias;
+    t_gui_key *ptr_key;
+    char *expanded_name, *function_name;
 
     if (config_name)
         filename = strdup (config_name);
@@ -1690,7 +1744,8 @@ config_write (char *config_name)
 
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
     {
-        if ((i != CONFIG_SECTION_ALIAS) && (i != CONFIG_SECTION_SERVER))
+        if ((i != CONFIG_SECTION_KEYS) && (i != CONFIG_SECTION_ALIAS)
+            && (i != CONFIG_SECTION_SERVER))
         {
             fprintf (file, "\n[%s]\n", config_sections[i].section_name);
             for (j = 0; weechat_options[i][j].option_name; j++)
@@ -1735,6 +1790,27 @@ config_write (char *config_name)
                 }
             }
         }
+    }
+    
+    /* keys section */
+    fprintf (file, "\n[keys]\n");
+    for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
+    {
+        expanded_name = gui_key_get_expanded_name (ptr_key->key);
+        if (ptr_key->function)
+        {
+            function_name = gui_key_function_search_by_ptr (ptr_key->function);
+            if (function_name)
+                fprintf (file, "%s=%s\n",
+                         (expanded_name) ? expanded_name : ptr_key->key,
+                         function_name);
+        }
+        else
+            fprintf (file, "%s=%s\n",
+                     (expanded_name) ? expanded_name : ptr_key->key,
+                     ptr_key->command);
+        if (expanded_name)
+            free (expanded_name);
     }
     
     /* alias section */

@@ -90,8 +90,10 @@
 
 #define WEE_USAGE2 \
     "  -c, --config            display config file options\n" \
-    "  -h, --help              this help screen\n" \
+    "  -f, --key-functions     display WeeChat internal functions for keys\n" \
+    "  -h, --help              this help\n" \
     "  -i, --irc-commands      display IRC commands\n" \
+    "  -k, --keys              display WeeChat default keys\n" \
     "  -l, --license           display WeeChat license\n" \
     "  -v, --version           display WeeChat version\n" \
     "  -w, --weechat-commands  display WeeChat commands\n\n"

@@ -47,11 +47,11 @@ t_weechat_command weechat_commands[] =
   { "buffer", N_("manage buffers"),
     N_("[action | number]"),
     N_("action: action to do:\n"
-    "  move: move buffer in the list (may be relative, for example -1)\n"
-    "  close: close buffer (for channel: same as /part without part message)\n"
-    "  list: list opened buffers (no parameter implies this list)\n"
-    "  notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)\n"
-    "number: jump to buffer by number"),
+       "  move: move buffer in the list (may be relative, for example -1)\n"
+       "  close: close buffer (for channel: same as /part without part message)\n"
+       "  list: list opened buffers (no parameter implies this list)\n"
+       "  notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)\n"
+       "number: jump to buffer by number"),
     0, MAX_ARGS, weechat_cmd_buffer, NULL },
   { "clear", N_("clear window(s)"),
     N_("[-all]"),
@@ -72,33 +72,40 @@ t_weechat_command weechat_commands[] =
   { "help", N_("display help about commands"),
     N_("[command]"), N_("command: name of a WeeChat or IRC command"),
     0, 1, weechat_cmd_help, NULL },
+  { "key", N_("bind/unbind keys"),
+    N_("[key function/command] [unbind key] [functions] [reset -yes]"),
+    N_("key: bind this key to an internal function or a command (beginning by \"/\")\n"
+       "unbind: unbind a key (if \"all\", default bindings are restored)\n"
+       "functions: list internal functions for key bindings\n"
+       "reset: restore bindings to the default values and delete ALL personal binding (use carefully!)"),
+    0, MAX_ARGS, NULL, weechat_cmd_key },
   { "perl", N_("list/load/unload Perl scripts"),
     N_("[load filename] | [autoload] | [reload] | [unload]"),
     N_("filename: Perl script (file) to load\n"
-    "Without argument, /perl command lists all loaded Perl scripts."),
+       "Without argument, /perl command lists all loaded Perl scripts."),
     0, 2, weechat_cmd_perl, NULL },
   { "python", N_("list/load/unload Python scripts"),
     N_("[load filename] | [autoload] | [reload] | [unload]"),
     N_("filename: Python script (file) to load\n"
-    "Without argument, /python command lists all loaded Python scripts."),
+       "Without argument, /python command lists all loaded Python scripts."),
     0, 2, weechat_cmd_python, NULL },
   { "server", N_("list, add or remove servers"),
     N_("[servername] | "
-    "[servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 "
-    "[nick2 [nick3]]] [-username username] [-realname realname] "
-    "[-command command] [-autojoin channel[,channel]] ] | "
-    "[del servername]"),
+       "[servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 "
+       "[nick2 [nick3]]] [-username username] [-realname realname] "
+       "[-command command] [-autojoin channel[,channel]] ] | "
+       "[del servername]"),
     N_("servername: server name, for internal & display use\n"
-    "hostname: name or IP address of server\n"
-    "port: port for server (integer)\n"
-    "ipv6: use IPv6 protocol\n"
-    "ssl: use SSL protocol\n"
-    "password: password for server\n"
-    "nick1: first nick for server\n"
-    "nick2: alternate nick for server\n"
-    "nick3: second alternate nick for server\n"
-    "username: user name\n"
-    "realname: real name of user"),
+       "hostname: name or IP address of server\n"
+       "port: port for server (integer)\n"
+       "ipv6: use IPv6 protocol\n"
+       "ssl: use SSL protocol\n"
+       "password: password for server\n"
+       "nick1: first nick for server\n"
+       "nick2: alternate nick for server\n"
+       "nick3: second alternate nick for server\n"
+       "username: user name\n"
+       "realname: real name of user"),
     0, MAX_ARGS, weechat_cmd_server, NULL },
   { "save", N_("save config to disk"),
     N_("[file]"), N_("file: filename for writing config"),
@@ -111,11 +118,10 @@ t_weechat_command weechat_commands[] =
     1, 1, NULL, weechat_cmd_unalias },
   { "window", N_("manage windows"),
     N_("[list | splith | splitv | [merge [down | up | left | right | all]]]"),
-    N_(
-    "list: list opened windows (no parameter implies this list)\n"
-    "splith: split current window horizontally\n"
-    "splitv: split current window vertically\n"
-    "merge: merge window with another"),
+    N_("list: list opened windows (no parameter implies this list)\n"
+       "splith: split current window horizontally\n"
+       "splitv: split current window vertically\n"
+       "merge: merge window with another"),
     0, 2, weechat_cmd_window, NULL },
   { NULL, NULL, NULL, NULL, 0, 0, NULL, NULL }
 };
@@ -877,6 +883,7 @@ weechat_cmd_buffer (int argc, char **argv)
     t_irc_channel *ptr_channel;
     long number;
     char *error;
+    int target_buffer;
     
     if ((argc == 0) || ((argc == 1) && (strcasecmp (argv[0], "list") == 0)))
     {
@@ -1049,26 +1056,41 @@ weechat_cmd_buffer (int argc, char **argv)
         {
             /* jump to buffer by number */
             
-            error = NULL;
-            number = strtol (argv[0], &error, 10);
-            if ((error) && (error[0] == '\0'))
+            if (argv[0][0] == '-')
             {
-                if (!gui_switch_to_buffer_by_number (gui_current_window, (int) number))
+                /* relative jump '-' */
+                error = NULL;
+                number = strtol (argv[0] + 1, &error, 10);
+                if ((error) && (error[0] == '\0'))
                 {
-                    irc_display_prefix (NULL, PREFIX_ERROR);
-                    gui_printf (NULL,
-                                _("%s buffer \"%s\" not found for \"%s\" command\n"),
-                                WEECHAT_ERROR, argv[0], "buffer");
-                    return -1;
+                    target_buffer = gui_current_window->buffer->number - (int) number;
+                    if (target_buffer < 1)
+                        target_buffer = (last_gui_buffer) ? last_gui_buffer->number + target_buffer : 1;
+                    gui_switch_to_buffer_by_number (gui_current_window,
+                                                    target_buffer);
+                }
+            }
+            else if (argv[0][0] == '+')
+            {
+                /* relative jump '+' */
+                error = NULL;
+                number = strtol (argv[0] + 1, &error, 10);
+                if ((error) && (error[0] == '\0'))
+                {
+                    target_buffer = gui_current_window->buffer->number + (int) number;
+                    if (last_gui_buffer && target_buffer > last_gui_buffer->number)
+                        target_buffer -= last_gui_buffer->number;
+                    gui_switch_to_buffer_by_number (gui_current_window,
+                                                    target_buffer);
                 }
             }
             else
             {
-                /* invalid number */
-                irc_display_prefix (NULL, PREFIX_ERROR);
-                gui_printf (NULL, _("%s incorrect buffer number\n"),
-                            WEECHAT_ERROR);
-                return -1;
+                /* absolute jump by number */
+                error = NULL;
+                number = strtol (argv[0], &error, 10);
+                if ((error) && (error[0] == '\0'))
+                    gui_switch_to_buffer_by_number (gui_current_window, (int) number);
             }
             
         }
@@ -1319,6 +1341,138 @@ weechat_cmd_help (int argc, char **argv)
                     _("No help available, \"%s\" is an unknown command\n"),
                     argv[0]);
     }
+    return 0;
+}
+
+/*
+ * weechat_cmd_key_display: display a key binding
+ */
+
+void
+weechat_cmd_key_display (t_gui_key *key, int new_key)
+{
+    char *expanded_name;
+
+    expanded_name = gui_key_get_expanded_name (key->key);
+    if (new_key)
+    {
+        gui_printf (NULL, _("New key binding:\n"));
+        gui_printf (NULL, "  %s", (expanded_name) ? expanded_name : key->key);
+    }
+    else
+        gui_printf (NULL, "  %20s", (expanded_name) ? expanded_name : key->key);
+    gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, " => ");
+    gui_printf (NULL, "%s\n",
+                (key->function) ?
+                gui_key_function_search_by_ptr (key->function) : key->command);
+    if (expanded_name)
+        free (expanded_name);
+}
+
+/*
+ * weechat_cmd_key: bind/unbind keys
+ */
+
+int
+weechat_cmd_key (char *arguments)
+{
+    char *pos;
+    int i;
+    t_gui_key *ptr_key;
+    
+    if (arguments)
+    {
+        while (arguments[0] == ' ')
+            arguments++;
+    }
+
+    if (!arguments || (arguments[0] == '\0'))
+    {
+        gui_printf (NULL, "\n");
+        gui_printf (NULL, _("Key bindings:\n"));
+        for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
+        {
+            weechat_cmd_key_display (ptr_key, 0);
+        }
+    }
+    else if (strncasecmp (arguments, "unbind ", 7) == 0)
+    {
+        arguments += 7;
+        while (arguments[0] == ' ')
+            arguments++;
+        if (gui_key_unbind (arguments))
+            gui_printf (NULL, _("Key \"%s\" unbinded\n"), arguments);
+        else
+        {
+            irc_display_prefix (NULL, PREFIX_ERROR);
+            gui_printf (NULL,
+                        _("%s unable to unbind key \"%s\"\n"),
+                        WEECHAT_ERROR, arguments);
+            return -1;
+        }
+    }
+    else if (strcasecmp (arguments, "functions") == 0)
+    {
+        gui_printf (NULL, "\n");
+        gui_printf (NULL, _("Internal key functions:\n"));
+        i = 0;
+        while (gui_key_functions[i].function_name)
+        {
+            gui_printf (NULL, "  %s\n",
+                        gui_key_functions[i].function_name);
+            i++;
+        }
+    }
+    else if (strncasecmp (arguments, "reset", 5) == 0)
+    {
+        arguments += 5;
+        while (arguments[0] == ' ')
+            arguments++;
+        if (strcmp (arguments, "-yes") == 0)
+        {
+            gui_key_free_all ();
+            gui_key_init ();
+            gui_printf (NULL, _("Default key bindings restored\n"));
+        }
+        else
+        {
+            irc_display_prefix (NULL, PREFIX_ERROR);
+            gui_printf (NULL,
+                        _("%s \"-yes\" argument is required for keys reset (securuty reason)\n"),
+                        WEECHAT_ERROR);
+            return -1;
+        }
+    }
+    else
+    {
+        while (arguments[0] == ' ')
+            arguments++;
+        pos = strchr (arguments, ' ');
+        if (!pos)
+        {
+            irc_display_prefix (NULL, PREFIX_ERROR);
+            gui_printf (NULL,
+                        _("%s wrong argument count for \"%s\" command\n"),
+                        WEECHAT_ERROR, "key");
+            return -1;
+        }
+        pos[0] = '\0';
+        pos++;
+        while (pos[0] == ' ')
+            pos++;
+        ptr_key = gui_key_bind (arguments, pos);
+        if (ptr_key)
+            weechat_cmd_key_display (ptr_key, 1);
+        else
+        {
+            irc_display_prefix (NULL, PREFIX_ERROR);
+            gui_printf (NULL,
+                        _("%s unable to bind key \"%s\"\n"),
+                        WEECHAT_ERROR, arguments);
+            return -1;
+        }
+    }
+    
     return 0;
 }
 
@@ -1892,11 +2046,11 @@ weechat_cmd_server (int argc, char **argv)
 }
 
 /*
- * weechat_set_cmd_display_option: display config option
+ * weechat_cmd_set_display_option: display config option
  */
 
 void
-weechat_set_cmd_display_option (t_config_option *option, char *prefix, void *value)
+weechat_cmd_set_display_option (t_config_option *option, char *prefix, void *value)
 {
     char *color_name, *pos_nickserv, *pos_pwd, *value2;
     
@@ -2039,7 +2193,7 @@ weechat_cmd_set (char *arguments)
                         {
                             ptr_option_value = config_get_server_option_ptr (ptr_server,
                                 weechat_options[CONFIG_SECTION_SERVER][i].option_name);
-                            weechat_set_cmd_display_option (&weechat_options[CONFIG_SECTION_SERVER][i],
+                            weechat_cmd_set_display_option (&weechat_options[CONFIG_SECTION_SERVER][i],
                                                             ptr_server->name,
                                                             ptr_option_value);
                         }
@@ -2080,7 +2234,7 @@ weechat_cmd_set (char *arguments)
                         gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
                                           "%s", config_get_section (ptr_option));
                         gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "]\n");
-                        weechat_set_cmd_display_option (ptr_option, NULL, NULL);
+                        weechat_cmd_set_display_option (ptr_option, NULL, NULL);
                     }
                     else
                     {
@@ -2104,7 +2258,8 @@ weechat_cmd_set (char *arguments)
         for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
         {
             section_displayed = 0;
-            if ((i != CONFIG_SECTION_ALIAS) && (i != CONFIG_SECTION_SERVER))
+            if ((i != CONFIG_SECTION_KEYS) && (i != CONFIG_SECTION_ALIAS)
+                && (i != CONFIG_SECTION_SERVER))
             {
                 for (j = 0; weechat_options[i][j].option_name; j++)
                 {
@@ -2122,7 +2277,7 @@ weechat_cmd_set (char *arguments)
                             gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "]\n");
                             section_displayed = 1;
                         }
-                        weechat_set_cmd_display_option (&weechat_options[i][j], NULL, NULL);
+                        weechat_cmd_set_display_option (&weechat_options[i][j], NULL, NULL);
                         number_found++;
                     }
                 }
@@ -2155,7 +2310,7 @@ weechat_cmd_set (char *arguments)
                         weechat_options[CONFIG_SECTION_SERVER][i].option_name);
                     if (ptr_option_value)
                     {
-                        weechat_set_cmd_display_option (&weechat_options[CONFIG_SECTION_SERVER][i],
+                        weechat_cmd_set_display_option (&weechat_options[CONFIG_SECTION_SERVER][i],
                                                         ptr_server->name,
                                                         ptr_option_value);
                         number_found++;
@@ -2288,6 +2443,10 @@ weechat_cmd_window (int argc, char **argv)
             else
                 gui_window_merge_auto (gui_current_window);
         }
+        else if (strcasecmp (argv[0], "-1") == 0)
+            gui_switch_to_previous_window ();
+        else if (strcasecmp (argv[0], "+1") == 0)
+            gui_switch_to_next_window ();
         else
         {
             irc_display_prefix (NULL, PREFIX_ERROR);
