@@ -69,7 +69,7 @@
 #define COLOR_DCC_CONNECTING            47
 #define COLOR_DCC_ACTIVE                48
 #define COLOR_DCC_DONE                  49
-#define COLOR_DCC_FAILED                40
+#define COLOR_DCC_FAILED                50
 #define COLOR_DCC_ABORTED               51
 
 #define SERVER(buffer)  ((t_irc_server *)(buffer->server))
