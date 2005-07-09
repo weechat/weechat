@@ -326,8 +326,9 @@ void wee_display_key_functions ()
     i = 0;
     while (gui_key_functions[i].function_name)
     {
-        printf ("  %s\n",
-                gui_key_functions[i].function_name);
+        printf ("* %s: %s\n",
+                gui_key_functions[i].function_name,
+                _(gui_key_functions[i].description));
         i++;
     }
 }
@@ -346,7 +347,7 @@ void wee_display_keys ()
     for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
     {
         expanded_name = gui_key_get_expanded_name (ptr_key->key);
-        printf ("  %20s => %s\n",
+        printf ("* %s => %s\n",
                 (expanded_name) ? expanded_name : ptr_key->key,
                 (ptr_key->function) ? gui_key_function_search_by_ptr (ptr_key->function) : ptr_key->command);
         if (expanded_name)

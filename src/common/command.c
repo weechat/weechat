@@ -1418,8 +1418,9 @@ weechat_cmd_key (char *arguments)
         i = 0;
         while (gui_key_functions[i].function_name)
         {
-            gui_printf (NULL, "  %s\n",
-                        gui_key_functions[i].function_name);
+            gui_printf (NULL, "%25s  %s\n",
+                        gui_key_functions[i].function_name,
+                        _(gui_key_functions[i].description));
             i++;
         }
     }
@@ -1428,7 +1429,7 @@ weechat_cmd_key (char *arguments)
         arguments += 5;
         while (arguments[0] == ' ')
             arguments++;
-        if (strcmp (arguments, "-yes") == 0)
+        if (strcasecmp (arguments, "-yes") == 0)
         {
             gui_key_free_all ();
             gui_key_init ();

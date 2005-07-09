@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-07-09 17:25+0200\n"
+"POT-Creation-Date: 2005-07-09 18:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2039,6 +2039,141 @@ msgstr ""
 msgid "Not enough memory for new message\n"
 msgstr ""
 
+#: src/gui/gui-keyboard.c:43
+msgid "terminate line"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:45
+msgid "complete word"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:47
+msgid "delete previous char"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:49
+msgid "delete next char"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:51
+msgid "delete until end of line"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:53
+msgid "delete until beginning of line"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:55
+msgid "delete entire line"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:57
+msgid "delete previous word"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:59
+msgid "delete next word"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:61
+msgid "go to beginning of line"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:63
+msgid "go to end of line"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:65
+msgid "move one char left"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:67
+msgid "move to previous word"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:69
+msgid "move one char right"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:71
+msgid "move to next word"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:73
+msgid "call previous command in history"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:75
+msgid "call next command in history"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:77
+msgid "scroll one page up"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:79
+msgid "scroll one page down"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:81
+msgid "clear infobar"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:83
+msgid "scroll nicklist one page up"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:85
+msgid "scroll nicklist one page down"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:87
+msgid "display beginning of nicklist"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:89
+msgid "display end of nicklist"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:91
+msgid "refresh screen"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:93
+msgid "jump to buffer with activity"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:95
+msgid "jump to DCC buffer"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:97
+msgid "jump to server buffer"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:99
+msgid "jump to next server"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:101
+msgid "clear hotlist"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:399 src/common/command.c:1470
+#, c-format
+msgid "%s unable to bind key \"%s\"\n"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:410
+#, c-format
+msgid "%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:423
+#, c-format
+msgid "%s not enough memory for key binding\n"
+msgstr ""
+
 #: src/common/command.c:42
 msgid "create an alias for a command"
 msgstr ""
@@ -2471,11 +2606,6 @@ msgstr ""
 #: src/common/command.c:1441
 #, c-format
 msgid "%s \"-yes\" argument is required for keys reset (securuty reason)\n"
-msgstr ""
-
-#: src/common/command.c:1470
-#, c-format
-msgid "%s unable to bind key \"%s\"\n"
 msgstr ""
 
 #: src/common/command.c:1497 src/common/command.c:1640

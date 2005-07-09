@@ -18,6 +18,7 @@
 ./src/gui/gtk/gui-display.c
 ./src/gui/gtk/gui-input.c
 ./src/gui/gui-common.c
+./src/gui/gui-keyboard.c
 ./src/gui/gui.h
 ./src/common/command.c
 ./src/common/command.h

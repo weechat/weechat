@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.4-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-07-09 17:25+0200\n"
-"PO-Revision-Date: 2005-07-09 14:34+0200\n"
+"POT-Creation-Date: 2005-07-09 18:34+0200\n"
+"PO-Revision-Date: 2005-07-09 18:48+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2172,6 +2172,142 @@ msgstr "Pas assez de mémoire pour une nouvelle ligne !\n"
 msgid "Not enough memory for new message\n"
 msgstr "Pas assez de mémoire pour un message de la barre d'infos\n"
 
+#: src/gui/gui-keyboard.c:43
+msgid "terminate line"
+msgstr "terminer la ligne"
+
+#: src/gui/gui-keyboard.c:45
+msgid "complete word"
+msgstr "compléter le mot"
+
+#: src/gui/gui-keyboard.c:47
+msgid "delete previous char"
+msgstr "effacer le caractère précédent"
+
+#: src/gui/gui-keyboard.c:49
+msgid "delete next char"
+msgstr "effacer le caractère suivant"
+
+#: src/gui/gui-keyboard.c:51
+msgid "delete until end of line"
+msgstr "effacer jusqu'à la fin de la ligne"
+
+#: src/gui/gui-keyboard.c:53
+msgid "delete until beginning of line"
+msgstr "effacer jusqu'au début de la ligne"
+
+#: src/gui/gui-keyboard.c:55
+msgid "delete entire line"
+msgstr "effacer la ligne entière"
+
+#: src/gui/gui-keyboard.c:57
+msgid "delete previous word"
+msgstr "effacer le mot précédent"
+
+#: src/gui/gui-keyboard.c:59
+msgid "delete next word"
+msgstr "effacer le mot suivant"
+
+#: src/gui/gui-keyboard.c:61
+msgid "go to beginning of line"
+msgstr "aller au début de la ligne"
+
+#: src/gui/gui-keyboard.c:63
+msgid "go to end of line"
+msgstr "aller à la fin de la ligne"
+
+#: src/gui/gui-keyboard.c:65
+msgid "move one char left"
+msgstr "se déplacer d'un caractère à gauche"
+
+#: src/gui/gui-keyboard.c:67
+msgid "move to previous word"
+msgstr "se déplacer au mot précédent"
+
+#: src/gui/gui-keyboard.c:69
+msgid "move one char right"
+msgstr "se déplacer d'un caractère à droite"
+
+#: src/gui/gui-keyboard.c:71
+msgid "move to next word"
+msgstr "se déplacer au mot suivant"
+
+#: src/gui/gui-keyboard.c:73
+msgid "call previous command in history"
+msgstr "appeler la commande précédente dans l'historique"
+
+#: src/gui/gui-keyboard.c:75
+msgid "call next command in history"
+msgstr "appeler la commande suivante dans l'historique"
+
+#: src/gui/gui-keyboard.c:77
+msgid "scroll one page up"
+msgstr "faire défiler d'une page vers le haut"
+
+#: src/gui/gui-keyboard.c:79
+msgid "scroll one page down"
+msgstr "faire défiler d'une page vers le bas"
+
+#: src/gui/gui-keyboard.c:81
+msgid "clear infobar"
+msgstr "effacer la barre d'infos"
+
+#: src/gui/gui-keyboard.c:83
+msgid "scroll nicklist one page up"
+msgstr "faire défiler la liste des pseudos d'une page vers le haut"
+
+#: src/gui/gui-keyboard.c:85
+msgid "scroll nicklist one page down"
+msgstr "faire défiler la liste des pseudos d'une page vers le bas"
+
+#: src/gui/gui-keyboard.c:87
+msgid "display beginning of nicklist"
+msgstr "afficher le début de la liste des pseudos"
+
+#: src/gui/gui-keyboard.c:89
+msgid "display end of nicklist"
+msgstr "afficher la fin de la liste des pseudos"
+
+#: src/gui/gui-keyboard.c:91
+msgid "refresh screen"
+msgstr "rafraichir l'écran"
+
+#: src/gui/gui-keyboard.c:93
+msgid "jump to buffer with activity"
+msgstr "sauter au tampon avec de l'activité"
+
+#: src/gui/gui-keyboard.c:95
+msgid "jump to DCC buffer"
+msgstr "sauter au tampon DCC"
+
+#: src/gui/gui-keyboard.c:97
+msgid "jump to server buffer"
+msgstr "sauter au tampon du serveur"
+
+#: src/gui/gui-keyboard.c:99
+msgid "jump to next server"
+msgstr "sauter au prochain serveur"
+
+#: src/gui/gui-keyboard.c:101
+msgid "clear hotlist"
+msgstr "effacer la liste d'activité"
+
+#: src/gui/gui-keyboard.c:399 src/common/command.c:1470
+#, c-format
+msgid "%s unable to bind key \"%s\"\n"
+msgstr "%s impossible de créer la touche \"%s\"\n"
+
+#: src/gui/gui-keyboard.c:410
+#, c-format
+msgid "%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"
+msgstr ""
+"%s impossible de créer la touche \"%s\" (nom fonction incorrect: \"%s\")\n"
+
+#: src/gui/gui-keyboard.c:423
+#, c-format
+msgid "%s not enough memory for key binding\n"
+msgstr "%s pas assez de mémoire pour la touche\n"
+
 #: src/common/command.c:42
 msgid "create an alias for a command"
 msgstr "créer un alias pour une commande"
@@ -2666,11 +2802,6 @@ msgid "%s \"-yes\" argument is required for keys reset (securuty reason)\n"
 msgstr ""
 "%s le paramètre \"-yes\" est requis pour la réinitialisation des touches "
 "(raison de sécurité)\n"
-
-#: src/common/command.c:1470
-#, c-format
-msgid "%s unable to bind key \"%s\"\n"
-msgstr "%s impossible de créer la touche \"%s\"\n"
 
 #: src/common/command.c:1497 src/common/command.c:1640
 #, c-format
