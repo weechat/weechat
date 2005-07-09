@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.1.3 - July, 03 2005
+@subtitle Documentation for WeeChat v0.1.4-cvs - July, 10 2005
 
 @image{weechat_image}
 
@@ -220,6 +220,8 @@ Then follow instructions for source package - @xref{Source package}.
 @table @code
 @item -c, --config
 Display config file help (list of options)@*
+@item -f, --key-functions
+Display WeeChat internal functions for keys@*
 @item -h, --help
 Display help screen@*
 @item -i, --irc-commands
@@ -315,7 +317,10 @@ Enable info bar@*
 Type: boolean (values: 'on' or 'off'), default value: 'on'@*
 @item look_infobar_timestamp
 Timestamp for time in infobar@*
-Type: string (any string), default value: '%B, %A %d %Y - %H:%M'@*
+Type: string (any string), default value: '%B, %A %d %Y'@*
+@item look_infobar_seconds
+Display seconds in infobar time@*
+Type: boolean (values: 'on' or 'off'), default value: 'on'@*
 @item look_infobar_delay_highlight
 Delay (in seconds) for highlight messages in infobar (0 = disable highlight notifications in infobar)@*
 Type: integer (values: between 0 and 2147483647), default value: 7@*
@@ -382,6 +387,9 @@ Type: color (Curses or Gtk color), default value: 'blue'@*
 @item col_infobar
 Color for info bar text@*
 Type: color (Curses or Gtk color), default value: 'black'@*
+@item col_infobar_delimiters
+Color for infobar delimiters@*
+Type: color (Curses or Gtk color), default value: 'blue'@*
 @item col_infobar_highlight
 Color for info bar highlight notification@*
 Type: color (Curses or Gtk color), default value: 'white'@*
@@ -668,11 +676,20 @@ Go to the beginning of command line@*
 @item End / Ctrl + E
 Go to the end of command line@*
 @*
+@item Ctrl + K
+Delete until end of line@*
+@*
+@item Ctrl + L
+Redraw whole window@*
+@*
+@item Ctrl + U
+Delete until beginning of line@*
+@*
+@item Ctrl + W
+Erase previous word of command line@*
+@*
 @item Backspace / Delete
 Erase previous / next char of command line@*
-@*
-@item Ctrl + Backspace / Ctrl + W
-Erase previous word of command line@*
 @*
 @item Tab
 Complete command or nick (@kbd{Tab} again: find next completion)@*
@@ -701,29 +718,41 @@ Remove last infobar message@*
 @item F11 / F12
 Scroll nicklist@*
 @*
-@item Ctrl + L
-Redraw whole window@*
-@*
 @item Alt + left arrow / Alt + right arrow
 Same as F5 / F6@*
 @*
 @item Alt + A
 Switch to next buffer with activity (with priority: highlight, message, other)@*
 @*
-@item Alt + D
-Display current DCC@*
+@item Alt + B
+Go to previous word@*
 @*
-@item Alt + R
+@item Alt + D
+Delete next word@*
+@*
+@item Alt + F
+Go to next word@*
+@*
+@item Alt + H
 Clear hotlist (activity notification on other buffers)@*
 @*
-@item Alt + S
+@item Alt + J then Alt + D
+Display current DCC@*
+@*
+@item Alt + J then Alt + S
 Switch to server buffer@*
 @*
-@item Alt + X
+@item Alt + J then Alt + X
 Switch to first channel of next server (or server buffer if no channel is opened)@*
 @*
 @item Alt + digit (1-9)
 Switch to buffer by number@*
+@*
+@item Alt + J then number (01-99)
+Switch to buffer by number@*
+@*
+@item Alt + R
+Delete entire line@*
 @*
 @item Alt + PageUp / Alt + PageDown / Alt + Home / Alt + End
 Scroll nicklist@*
@@ -784,6 +813,15 @@ dump: save memory dump in WeeChat log file (same dump is written when WeeChat cr
 display help about commands@*
 @*
 command: name of a WeeChat or IRC command@*
+@*
+@item key  [key function/command] [unbind key] [functions] [reset -yes]
+@*
+bind/unbind keys@*
+@*
+key: bind this key to an internal function or a command (beginning by "/")@*
+unbind: unbind a key (if "all", default bindings are restored)@*
+functions: list internal functions for key bindings@*
+reset: restore bindings to the default values and delete ALL personal binding (use carefully!)@*
 @*
 @item perl  [load filename] | [autoload] | [reload] | [unload]
 @*
@@ -1214,6 +1252,71 @@ nickname: nickname to search@*
 count: number of replies to return (full search if negative number)@*
 target: reply should match this mask@*
 @*
+@end table
+
+Internal functions for keys:@*
+
+@table @kbd
+@item return
+terminate line@*
+@item tab
+complete word@*
+@item backspace
+delete previous char@*
+@item delete
+delete next char@*
+@item delete_end_line
+delete until end of line@*
+@item delete_beginning_line
+delete until beginning of line@*
+@item delete_line
+delete entire line@*
+@item delete_previous_word
+delete previous word@*
+@item delete_next_word
+delete next word@*
+@item home
+go to beginning of line@*
+@item end
+go to end of line@*
+@item left
+move one char left@*
+@item previous_word
+move to previous word@*
+@item right
+move one char right@*
+@item next_word
+move to next word@*
+@item up
+call previous command in history@*
+@item down
+call next command in history@*
+@item page_up
+scroll one page up@*
+@item page_down
+scroll one page down@*
+@item infobar_clear
+clear infobar@*
+@item nick_page_up
+scroll nicklist one page up@*
+@item nick_page_down
+scroll nicklist one page down@*
+@item nick_beginning
+display beginning of nicklist@*
+@item nick_end
+display end of nicklist@*
+@item refresh
+refresh screen@*
+@item jump_smart
+jump to buffer with activity@*
+@item jump_dcc
+jump to DCC buffer@*
+@item jump_server
+jump to server buffer@*
+@item jump_next_server
+jump to next server@*
+@item hotlist_clear
+clear hotlist@*
 @end table
 
 @node FIFO pipe, , WeeChat commands, Usage

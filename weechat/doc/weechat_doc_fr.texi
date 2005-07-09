@@ -35,7 +35,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.3 - 03 Juillet 2005
+@subtitle Documentation pour WeeChat v0.1.4-cvs - 10 Juillet 2005
 
 @image{weechat_image}
 
@@ -222,6 +222,8 @@ Suivez alors les instructions du paquet sources - @xref{Paquet source}.
 Afficher l'aide sur le fichier de config (liste des options)@*
 @item -h, --help
 Afficher l'aide@*
+@item -f, --key-functions
+Afficher la liste des fonctions internes WeeChat pour les touches@*
 @item -i, --irc-commands
 Afficher la liste des commandes IRC@*
 @item -l, --license
@@ -315,7 +317,10 @@ Active la barre d'infos@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
 @item look_infobar_timestamp
 Horodatage pour les conversations sauvegard@'ees@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '%B, %A %d %Y - %H:%M'@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '%B, %A %d %Y'@*
+@item look_infobar_seconds
+Afficher les secondes pour l'heure dans la barre d'infos@*
+Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
 @item look_infobar_delay_highlight
 D@'elai (en secondes) pour la notification des messages dans la barre d'infos (0 = d@'esactiver les notifications dans la barre d'infos)@*
 Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 7@*
@@ -382,6 +387,9 @@ Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'blue'@*
 @item col_infobar
 Couleur pour la barre d'infos@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'black'@*
+@item col_infobar_delimiters
+Couleur pour les d@'elimiteurs de la barre d'infos@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'blue'@*
 @item col_infobar_highlight
 Couleur pour la notification dans la barre d'infos@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'white'@*
@@ -668,11 +676,20 @@ Aller au d@'ebut de la ligne de commande@*
 @item End / Ctrl + E
 Aller @`a la fin de la ligne de commande@*
 @*
+@item Ctrl + K
+Efface jusqu'@`a la fin de la ligne@*
+@*
+@item Ctrl + L
+R@'eaffiche toute la fen@^etre@*
+@*
+@item Ctrl + U
+Efface jusqu'au d@'ebut de la ligne@*
+@*
+@item Ctrl + W
+Effacer le mot pr@'ec@'edent sur la ligne de commande@*
+@*
 @item Backspace / Delete
 Effacer le mot pr@'ec@'edent / suivant sur la ligne de commande@*
-@*
-@item Ctrl + Backspace / Ctrl + W
-Effacer le mot pr@'ec@'edent sur la ligne de commande@*
 @*
 @item Tab
 Compl@'eter la commande ou le pseudo (@kbd{Tab} @`a nouveau : trouver la compl@'etion suivante)@*
@@ -701,29 +718,41 @@ Effacer le dernier message de la barre d'infos@*
 @item F11 / F12
 Faire d@'efiler la liste des pseudos@*
 @*
-@item Ctrl + L
-R@'eaffiche toute la fen@^etre@*
-@*
 @item Alt + fl@`eche gauche / Alt + fl@`eche droite
 Identique @`a F5 / F6@*
 @*
 @item Alt + A
 Sauter au tampon avec activit@'e (avec priorit@'e: highlight, message, autre)@*
 @*
-@item Alt + D
-Afficher les DCC en cours@*
+@item Alt + B
+Aller au mot pr@'ec@'edent@*
 @*
-@item Alt + R
+@item Alt + D
+Effacer le mot suivant@*
+@*
+@item Alt + F
+Aller au mot suivant@*
+@*
+@item Alt + H
 Vide la hotlist (notification d'activité sur les autres tampons)@*
 @*
-@item Alt + S
+@item Alt + J puis Alt + D
+Afficher les DCC en cours@*
+@*
+@item Alt + J puis Alt + S
 Sauter au tampon du serveur@*
 @*
-@item Alt + X
+@item Alt + J then Alt + X
 Sauter au premier canal du serveur suivant (ou tampon du serveur si aucun canal ouvert)@*
 @*
 @item Alt + chiffre (1-9)
 Sauter au tampon avec ce num@'ero@*
+@*
+@item Alt + J puis nombre (01-99)
+Sauter au tampon avec ce num@'ero@*
+@*
+@item Alt + R
+Effacer la ligne enti@`ere@*
 @*
 @item Alt + PageUp / Alt + PageDown / Alt + Home / Alt + End
 Faire d@'efiler la liste des pseudos@*
@@ -784,6 +813,15 @@ dump: affiche les variables m@'emoire WeeChat dans le fichier log (les m@^emes m
 afficher l'aide sur les commandes@*
 @*
 commande: nom d'une commande WeeChat ou IRC@*
+@*
+@item key  [touche fonction/commande] [unbind touche] [functions] [reset -yes]
+@*
+associer/lib@'erer des touches@*
+@*
+touche: associer cette touche @`a une fonction interne ou une commande (commen@,{c}ant par "/")@*
+unbind: supprimer l'association @`a une touche (si "all", toutes les associations de touches par d@'efaut sont restaur@'ees)@*
+functions: lister la liste des fonctions internes pour les associations de touches@*
+reset: restaur les touches aux valeurs par d@'efaut et supprime TOUTES les touches personnelles (utiliser avec pr@'ecaution !)@*
 @*
 @item perl  [load fichier] | [autoload] | [reload] | [unload]
 @*
@@ -1214,6 +1252,71 @@ pseudo: pseudo @`a chercher@*
 nombre: nombre de r@'eponses @`a retourner (recherche compl@`ete si nombre n@'egatif)@*
 cible: la r@'eponse doit correspondre @`a ce masque@*
 @*
+@end table
+
+Fonctions internes pour les touches :@*
+
+@table @kbd
+@item return
+terminer la ligne@*
+@item tab
+compl@'eter le mot@*
+@item backspace
+effacer le caract@`ere pr@'ec@'edent@*
+@item delete
+effacer le caract@`ere suivant@*
+@item delete_end_line
+effacer jusqu'@`a la fin de la ligne@*
+@item delete_beginning_line
+effacer jusqu'au d@'ebut de la ligne@*
+@item delete_line
+effacer la ligne enti@`ere@*
+@item delete_previous_word
+effacer le mot pr@'ec@'edent@*
+@item delete_next_word
+effacer le mot suivant@*
+@item home
+aller au d@'ebut de la ligne@*
+@item end
+aller @`a la fin de la ligne@*
+@item left
+se d@'eplacer d'un caract@`ere @`a gauche@*
+@item previous_word
+se d@'eplacer au mot pr@'ec@'edent@*
+@item right
+se d@'eplacer d'un caract@`ere @`a droite@*
+@item next_word
+se d@'eplacer au mot suivant@*
+@item up
+appeler la commande pr@'ec@'edente dans l'historique@*
+@item down
+appeler la commande suivante dans l'historique@*
+@item page_up
+faire d@'efiler d'une page vers le haut@*
+@item page_down
+faire d@'efiler d'une page vers le bas@*
+@item infobar_clear
+effacer la barre d'infos@*
+@item nick_page_up
+faire d@'efiler la liste des pseudos d'une page vers le haut@*
+@item nick_page_down
+faire d@'efiler la liste des pseudos d'une page vers le bas@*
+@item nick_beginning
+afficher le d@'ebut de la liste des pseudos@*
+@item nick_end
+afficher la fin de la liste des pseudos@*
+@item refresh
+rafraichir l'@'ecran@*
+@item jump_smart
+sauter au tampon avec de l'activit@'e@*
+@item jump_dcc
+sauter au tampon DCC@*
+@item jump_server
+sauter au tampon du serveur@*
+@item jump_next_server
+sauter au prochain serveur@*
+@item hotlist_clear
+effacer la liste d'activit@'e@*
 @end table
 
 @node Tube FIFO, , Commandes WeeChat, Utilisation

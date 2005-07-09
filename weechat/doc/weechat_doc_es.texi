@@ -35,7 +35,7 @@
 
 @title WeeChat - Gui@'on de usuario.
 @subtitle Cliente IRC r@'apido, peque@~no y extensible
-@subtitle Documentaci@'on para WeeChat v0.1.3 - 03 de Julio de 2005
+@subtitle Documentaci@'on para WeeChat v0.1.4-cvs - 10 de Julio de 2005
 
 @image{weechat_image}
 
@@ -221,6 +221,8 @@ Luego, lee las instructiones para Paquetes de fuentes - @xref{Paquetes de fuente
 @table @code
 @item -c, --config
 Obtener la ayuda del fichero de configuraci@'on (lista de opciones)@*
+@item -f, --key-functions
+Display WeeChat internal functions for keys@*
 @item -h, --help
 Obtener la ayuda@*
 @item -i, --irc-commands
@@ -314,7 +316,10 @@ Activa la barra de informaci@'on@*
 Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item look_infobar_timestamp
 Fecha y hora para las conversaciones guardadas@*
-Typo: cadena (cualquier cadena), valor por defecto: '%B, %A %d %Y - %H:%M'@*
+Typo: cadena (cualquier cadena), valor por defecto: '%B, %A %d %Y'@*
+@item look_infobar_seconds
+Display seconds in infobar time@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item look_infobar_delay_highlight
 Retraso (en segundos) para la notificaci@'on de mensajes en la barra de informaci@'on (0 = desactivar las notificaciones en la barra de informaci@'on)@*
 Typo: entero (valores: entre 0 y 2147483647), valor por defecto: 7@*
@@ -381,6 +386,9 @@ Typo: color (color Curses @'o Gtk), valor por defecto: 'blue'@*
 @item col_infobar
 Color para el texto de la barra de informaci@'on@*
 Typo: color (color Curses @'o Gtk), valor por defecto: 'black'@*
+@item col_infobar_delimiters
+Color para los delimitadores de la barra de informaci@'on@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'blue'@*
 @item col_infobar_highlight
 Color para la notificaci@'on en la barra de informaci@'on@*
 Typo: color (color Curses @'o Gtk), valor por defecto: 'white'@*
@@ -667,11 +675,20 @@ Ir al inicio de la l@'inea de comandos@*
 @item Fin / Ctrl + E
 Ir al final de la l@'inea de comandos@*
 @*
+@item Ctrl + K
+Delete until end of line@*
+@*
+@item Ctrl + L
+Refrescar toda la ventana@*
+@*
+@item Ctrl + U
+Delete until beginning of line@*
+@*
+@item Ctrl + W
+Borrar la palabra anterior en la l@'inea de comandos@*
+@*
 @item Backspace / Supr
 Borrar el caracter anterior / siguiente en la l@'inea de comandos@*
-@*
-@item Ctrl + Backspace / Ctrl + W
-Borrar la palabra anterior en la l@'inea de comandos@*
 @*
 @item Tab
 Completar el comando o el seud@'onimo (@kbd{Tab} de nuevo: encontrar la pr@'oxima autocompletaci@'on)@*
@@ -700,29 +717,41 @@ Borrar el @'ultimo mensaje en la barra de informaciones@*
 @item F11 / F12
 Scroll nicklist@*
 @*
-@item Ctrl + L
-Refrescar toda la ventana@*
-@*
 @item Alt + flecha izquierda / Alt + flecha derecha
 Como F5 / F6@*
 @*
 @item Alt + A
 Ir a la memoria temporal donde hay actividad (con el orden de prioridad siguiente: resaltado, mensaje, otros)@*
 @*
-@item Alt + D
-Obtener la lista de DCC actual@*
+@item Alt + B
+Go to previous word@*
 @*
-@item Alt + R
+@item Alt + D
+Delete next word@*
+@*
+@item Alt + F
+Go to next word@*
+@*
+@item Alt + H
 Borrar la 'hotlist' (notificaci@'on de actividad en otras memorias temporales)@*
 @*
-@item Alt + S
+@item Alt + J then Alt + D
+Obtener la lista de DCC actual@*
+@*
+@item Alt + J then Alt + S
 Ir a la memoria temporal del servidor@*
 @*
-@item Alt + X
+@item Alt + J then Alt + X
 Ir al primer canal del servidor siguiente (o a la memoria temporal del servidor si ning@'un canal est@'a abierto)@*
 @*
 @item Alt + (1-9)
 Saltar a la memoria temporal con ese n@'umero@*
+@*
+@item Alt + J then number (01-99)
+Saltar a la memoria temporal con ese n@'umero@*
+@*
+@item Alt + R
+Delete entire line@*
 @*
 @item Alt + PageUp / Alt + PageDown / Alt + Home / Alt + End
 Scroll nicklist@*
@@ -783,6 +812,15 @@ volcado: almacena un volcado de memoria en el archivo de registro de Weechat (se
 mostrar ayuda sobre los comandos@*
 @*
 comando: nombre de un comando de Weechat @'o de IRC@*
+@*
+@item key  [key function/command] [unbind key] [functions] [reset -yes]
+@*
+bind/unbind keys@*
+@*
+key: bind this key to an internal function or a command (beginning by "/")@*
+unbind: unbind a key (if "all", default bindings are restored)@*
+functions: list internal functions for key bindings@*
+reset: restore bindings to the default values and delete ALL personal binding (use carefully!)@*
 @*
 @item perl  [load fichero] | [autoload] | [reload] | [unload]
 @*
@@ -1213,6 +1251,71 @@ usuario: nombre de usuario a buscar@*
 número: número de respuestas a devolver (búsqueda completa si el número es negativo)@*
 destinatario: la respuesta deber@'ia concordar con esta m@'ascara@*
 @*
+@end table
+
+Internal functions for keys:@*
+
+@table @kbd
+@item return
+terminate line@*
+@item tab
+complete word@*
+@item backspace
+delete previous char@*
+@item delete
+delete next char@*
+@item delete_end_line
+delete until end of line@*
+@item delete_beginning_line
+delete until beginning of line@*
+@item delete_line
+delete entire line@*
+@item delete_previous_word
+delete previous word@*
+@item delete_next_word
+delete next word@*
+@item home
+go to beginning of line@*
+@item end
+go to end of line@*
+@item left
+move one char left@*
+@item previous_word
+move to previous word@*
+@item right
+move one char right@*
+@item next_word
+move to next word@*
+@item up
+call previous command in history@*
+@item down
+call next command in history@*
+@item page_up
+scroll one page up@*
+@item page_down
+scroll one page down@*
+@item infobar_clear
+clear infobar@*
+@item nick_page_up
+scroll nicklist one page up@*
+@item nick_page_down
+scroll nicklist one page down@*
+@item nick_beginning
+display beginning of nicklist@*
+@item nick_end
+display end of nicklist@*
+@item refresh
+refresh screen@*
+@item jump_smart
+jump to buffer with activity@*
+@item jump_dcc
+jump to DCC buffer@*
+@item jump_server
+jump to server buffer@*
+@item jump_next_server
+jump to next server@*
+@item hotlist_clear
+clear hotlist@*
 @end table
 
 @node Canal FIFO, , Comandos WeeChat, Uso
