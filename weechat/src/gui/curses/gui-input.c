@@ -91,8 +91,8 @@ gui_input_default_key_bindings ()
     gui_key_bind ( /* m-h     */ "meta-h",        "hotlist_clear");
     gui_key_bind ( /* m-j,m-d */ "meta-jmeta-d",  "jump_dcc");
     gui_key_bind ( /* m-r     */ "meta-r",        "delete_line");
-    gui_key_bind ( /* m-s     */ "meta-s",        "jump_server");
-    gui_key_bind ( /* m-x     */ "meta-x",        "jump_next_server");
+    gui_key_bind ( /* m-j,m-s */ "meta-jmeta-s",  "jump_server");
+    gui_key_bind ( /* m-j,m-x */ "meta-jmeta-x",  "jump_next_server");
     
     /* keys binded with commands */
     gui_key_bind ( /* m-left  */ "meta-meta2-D", "/buffer -1");
