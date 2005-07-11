@@ -150,7 +150,7 @@ server_init_with_url (char *irc_url, t_irc_server *server)
     else
         return -1;
     
-    url = strdup (irc_url);
+    url = strdup (pos);
     pos_server = strchr (url, '@');
     if (pos_server)
     {
@@ -161,13 +161,13 @@ server_init_with_url (char *irc_url, t_irc_server *server)
             free (url);
             return -1;
         }
-        pos2 = strchr (pos, ':');
+        pos2 = strchr (url, ':');
         if (pos2)
         {
             pos2[0] = '\0';
             server->password = strdup (pos2 + 1);
         }
-        server->nick1 = strdup (pos);
+        server->nick1 = strdup (url);
     }
     else
     {
@@ -182,7 +182,7 @@ server_init_with_url (char *irc_url, t_irc_server *server)
             free (url);
             return -1;
         }
-        pos_server = url + 6;
+        pos_server = url;
     }
     if (!pos_server[0])
     {
