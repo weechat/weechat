@@ -102,7 +102,7 @@ completion_build_list (t_completion *completion, void *channel)
     int i, j;
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
-    char *pos, option_name[256];
+    char *pos, option_name[256], *string;
     t_weechat_alias *ptr_alias;
     t_config_option *option;
     void *option_value;
@@ -525,9 +525,16 @@ completion_build_list (t_completion *completion, void *channel)
                 || !((t_irc_channel *)channel)->topic[0])
                 completion_stop (completion);
             else
+            {
+                string = weechat_convert_encoding (cfg_look_charset_decode,
+                                                   (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
+                                                   cfg_look_charset_internal : local_charset,
+                                                   ((t_irc_channel *)channel)->topic);
                 weelist_add (&completion->completion_list,
                              &completion->last_completion,
-                             ((t_irc_channel *)channel)->topic);
+                             string);
+                free (string);
+            }
         }
         else
             completion_stop (completion);

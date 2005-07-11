@@ -5,6 +5,7 @@ ChangeLog - 2005-07-11
 
 
 Versoin 0.1.4 (under dev!):
+   * topic completion now decodes UTF-8 string
    * fixed bug with IRC URL on command line (irc://)
    * new keyboard management: keys are setup in config file, new command
      /key was added and some new default keys were added
