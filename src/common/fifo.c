@@ -112,16 +112,8 @@ fifo_exec (char *text)
     if (text[0] == '*')
     {
         pos_msg = text + 1;
-        ptr_server = SERVER(gui_current_window->buffer);
-        ptr_buffer = gui_current_window->buffer;
-        
-        if (!ptr_server)
-        {
-            irc_display_prefix (NULL, PREFIX_ERROR);
-            gui_printf (NULL, _("%s invalid buffer for displaying text via FIFO pipe\n"),
-                        WEECHAT_WARNING);
-            return;
-        }
+        ptr_buffer = (gui_current_window->buffer->dcc) ? gui_buffers : gui_current_window->buffer;
+        ptr_server = SERVER(ptr_buffer);
     }
     else
     {
@@ -172,20 +164,12 @@ fifo_exec (char *text)
         }
     }
     
-    if (!ptr_server)
-    {
-        irc_display_prefix (NULL, PREFIX_ERROR);
-        gui_printf (NULL, _("%s invalid text received on FIFO pipe\n"),
-                    WEECHAT_WARNING);
-        return;
-    }
-    
     if (!ptr_buffer)
     {
         if (ptr_channel)
             ptr_buffer = ptr_channel->buffer;
         else
-            ptr_buffer = ptr_server->buffer;
+            ptr_buffer = gui_buffers;
     }
     
     user_command (ptr_server, ptr_buffer, pos_msg);

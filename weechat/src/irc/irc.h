@@ -98,7 +98,7 @@ struct t_irc_nick
     int is_chanowner;               /* chan owner? (specific to unrealircd) */
     int is_chanadmin;               /* chan admin? (specific to unrealircd) */
     int is_op;                      /* operator privileges?                 */
-    int is_halfop;                  /* half operaor privileges?             */
+    int is_halfop;                  /* half operator privileges?            */
     int has_voice;                  /* nick has voice?                      */
     int is_away;                    /* = 1 if nick is away, otherwise 0     */
     int color;                      /* color for nickname in chat window    */
@@ -245,6 +245,7 @@ struct t_irc_dcc
     time_t last_check_time;         /* last time we looked at bytes sent/rcv*/
     unsigned long last_check_pos;   /* bytes sent/recv at last check        */
     unsigned long bytes_per_sec;    /* bytes per second                     */
+    time_t last_activity;           /* time of last byte received/sent      */
     t_irc_dcc *prev_dcc;            /* link to previous dcc file/chat       */
     t_irc_dcc *next_dcc;            /* link to next dcc file/chat           */
 };

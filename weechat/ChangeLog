@@ -5,7 +5,10 @@ ChangeLog - 2005-07-12
 
 
 Versoin 0.1.4 (under dev!):
+   * added DCC timeout
    * added function for Perl/Python to get DCC list
+   * fixed FIFO pipe (command now authorized on a buffer not connected
+     to an IRC server)
    * topic completion now decodes UTF-8 string
    * fixed bug with IRC URL on command line (irc://)
    * new keyboard management: keys are setup in config file, new command

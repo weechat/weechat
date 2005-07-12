@@ -354,7 +354,7 @@ static XS (XS_IRC_add_command_handler)
 
 static XS (XS_IRC_get_info)
 {
-    char *arg, *info = NULL, *server;
+    char *arg, *info = NULL, *server_name;
     t_irc_server *ptr_server;
     int integer;
     dXSARGS;
@@ -364,13 +364,9 @@ static XS (XS_IRC_get_info)
     
     if (items == 2)
     {
-        server = SvPV (ST (0), integer);
+        server_name = SvPV (ST (0), integer);
         arg = SvPV (ST (1), integer);
-        for (ptr_server = irc_servers; ptr_server; ptr_server = ptr_server->next_server)
-        {
-            if (strcasecmp (ptr_server->name, server) == 0)
-                break;
-        }
+        ptr_server = server_search (server_name);
         if (!ptr_server)
         {
             irc_display_prefix (NULL, PREFIX_ERROR);
@@ -720,18 +716,17 @@ static XS (XS_weechat_get_info)
     {
         server_name = SvPV (ST (1), integer);
         ptr_server = server_search (server_name);
+        if (!ptr_server)
+        {
+            irc_display_prefix (NULL, PREFIX_ERROR);
+            gui_printf (NULL,
+                        _("%s error: server not found for \"%s\" function\n"),
+                        "Perl", "get_info");
+            XSRETURN_NO;
+        }
     }
     else
         ptr_server = SERVER(gui_current_window->buffer);
-    
-    if (!ptr_server)
-    {
-        irc_display_prefix (NULL, PREFIX_ERROR);
-        gui_printf (NULL,
-                    _("%s error: server not found for \"%s\" function\n"),
-                    "Perl", "get_info");
-        XSRETURN_NO;
-    }
     
     arg = SvPV (ST (0), integer);
     if (arg)

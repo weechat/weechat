@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.4-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-07-12 09:51+0200\n"
+"POT-Creation-Date: 2005-07-12 19:01+0200\n"
 "PO-Revision-Date: 2005-07-11 23:57+0200\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1627,7 +1627,7 @@ msgstr "%s no es posible analizar el comando \"%s\"\n"
 msgid "%s unknown DCC CHAT type received from "
 msgstr "%s tipo DCC CHAT desconocido recibido de "
 
-#: src/irc/irc-recv.c:1557 src/irc/irc-dcc.c:799
+#: src/irc/irc-recv.c:1557 src/irc/irc-dcc.c:808
 #, c-format
 msgid "Private %s> %s"
 msgstr "Privado %s> %s"
@@ -1859,7 +1859,7 @@ msgstr "Abortado"
 msgid "DCC: file "
 msgstr "DCC: fichero "
 
-#: src/irc/irc-dcc.c:195 src/irc/irc-dcc.c:454
+#: src/irc/irc-dcc.c:195 src/irc/irc-dcc.c:463
 msgid " (local filename: "
 msgstr " (nombre de fichero local: "
 
@@ -1879,7 +1879,7 @@ msgstr ": ok!\n"
 msgid "DCC chat closed with "
 msgstr "DCC chat cerrada con "
 
-#: src/irc/irc-dcc.c:261
+#: src/irc/irc-dcc.c:269
 #, c-format
 msgid ""
 "%s can't associate DCC chat with private buffer (maybe private buffer has "
@@ -1888,74 +1888,74 @@ msgstr ""
 "%s no se puede asociar la conversación DCC con el búfer privado (quizá el "
 "búfer privado ya tiene DCC CHAT)\n"
 
-#: src/irc/irc-dcc.c:271
+#: src/irc/irc-dcc.c:279
 msgid "Connected to "
 msgstr "Conectado al "
 
-#: src/irc/irc-dcc.c:280
+#: src/irc/irc-dcc.c:288
 msgid "via DCC chat\n"
 msgstr "con charla DCC\n"
 
-#: src/irc/irc-dcc.c:391
+#: src/irc/irc-dcc.c:399
 #, c-format
 msgid "%s not enough memory for new DCC\n"
 msgstr "%s no hay memoria suficiente para un nuevo DCC\n"
 
-#: src/irc/irc-dcc.c:410
+#: src/irc/irc-dcc.c:418
 msgid "DCC chat"
 msgstr "Charla DCC"
 
-#: src/irc/irc-dcc.c:434
+#: src/irc/irc-dcc.c:443
 msgid "Incoming DCC file from "
 msgstr "Recibir fichero DCC de "
 
-#: src/irc/irc-dcc.c:445 src/irc/irc-dcc.c:458
+#: src/irc/irc-dcc.c:454 src/irc/irc-dcc.c:467
 msgid " bytes\n"
 msgstr " bytes\n"
 
-#: src/irc/irc-dcc.c:450
+#: src/irc/irc-dcc.c:459
 msgid "Sending DCC file to "
 msgstr "Enviar fichero DCC a "
 
-#: src/irc/irc-dcc.c:463
+#: src/irc/irc-dcc.c:472
 msgid "Incoming DCC chat request from "
 msgstr "Recibir DCC chat de "
 
-#: src/irc/irc-dcc.c:474
+#: src/irc/irc-dcc.c:483
 msgid "Sending DCC chat request to "
 msgstr "Enviar DCC chat a "
 
-#: src/irc/irc-dcc.c:538
+#: src/irc/irc-dcc.c:547
 #, c-format
 msgid "%s not enough memory for DCC SEND\n"
 msgstr "%s no hay memoria suficiente para el DCC SEND\n"
 
-#: src/irc/irc-dcc.c:560
+#: src/irc/irc-dcc.c:569
 #, c-format
 msgid "%s cannot access file \"%s\"\n"
 msgstr "%s no es posible acceder al fichero \"%s\"\n"
 
-#: src/irc/irc-dcc.c:581
+#: src/irc/irc-dcc.c:590
 #, c-format
 msgid "%s cannot create socket for DCC\n"
 msgstr "%s no es posible crear socket para el DCC\n"
 
-#: src/irc/irc-dcc.c:594
+#: src/irc/irc-dcc.c:603
 #, c-format
 msgid "%s cannot find port for DCC\n"
 msgstr "%s no es posible encontrar el puerto para el DCC\n"
 
-#: src/irc/irc-dcc.c:641
+#: src/irc/irc-dcc.c:650
 #, c-format
 msgid "%s cannot send DCC\n"
 msgstr "%s no es posible enviar el DCC\n"
 
-#: src/irc/irc-dcc.c:720
+#: src/irc/irc-dcc.c:729
 #, c-format
 msgid "%s error sending data to \"%s\" via DCC CHAT\n"
 msgstr "%s error enviando datos al \"%s\" con DCC CHAT\n"
 
-#: src/irc/irc-dcc.c:980
+#: src/irc/irc-dcc.c:1002
 #, c-format
 msgid ""
 "%s DCC failed because blocksize is too big. Check value of \"dcc_blocksize\" "
@@ -1964,12 +1964,12 @@ msgstr ""
 "%s El DCC ha fallado porque el tamaño de bloque es demasiado grande. "
 "Compruebe el valor de la opción \"dcc_blocksize\", el máximo es %d.\n"
 
-#: src/irc/irc-dcc.c:1054
+#: src/irc/irc-dcc.c:1077
 #, c-format
 msgid "Aborting active DCC: \"%s\" from %s\n"
 msgstr "Abandonar el DCC activo: \"%s\" de %s\n"
 
-#: src/plugins/perl/wee-perl.c:88 src/plugins/perl/wee-perl.c:468
+#: src/plugins/perl/wee-perl.c:88 src/plugins/perl/wee-perl.c:463
 #: src/plugins/python/wee-python.c:81
 #, c-format
 msgid ""
@@ -1979,13 +1979,13 @@ msgstr ""
 "Error de %s: no ha sido posible registrar el script \"%s\" (ya existe otro "
 "script con ese nombre)\n"
 
-#: src/plugins/perl/wee-perl.c:112 src/plugins/perl/wee-perl.c:492
+#: src/plugins/perl/wee-perl.c:112 src/plugins/perl/wee-perl.c:487
 #: src/plugins/python/wee-python.c:105
 #, c-format
 msgid "Registered %s script: \"%s\", version %s (%s)\n"
 msgstr "%s script registrado: \"%s\", versión %s (%s)\n"
 
-#: src/plugins/perl/wee-perl.c:119 src/plugins/perl/wee-perl.c:499
+#: src/plugins/perl/wee-perl.c:119 src/plugins/perl/wee-perl.c:494
 #: src/plugins/python/wee-python.c:112
 #, c-format
 msgid "%s error: unable to load script \"%s\" (not enough memory)\n"
@@ -1993,10 +1993,10 @@ msgstr ""
 "Error de %s: no ha sido posible cargar el script \"%s\" (memoria "
 "insuficiente)\n"
 
-#: src/plugins/perl/wee-perl.c:234 src/plugins/perl/wee-perl.c:525
-#: src/plugins/perl/wee-perl.c:573 src/plugins/perl/wee-perl.c:600
-#: src/plugins/perl/wee-perl.c:645 src/plugins/perl/wee-perl.c:675
-#: src/plugins/perl/wee-perl.c:715 src/plugins/python/wee-python.c:60
+#: src/plugins/perl/wee-perl.c:234 src/plugins/perl/wee-perl.c:520
+#: src/plugins/perl/wee-perl.c:568 src/plugins/perl/wee-perl.c:595
+#: src/plugins/perl/wee-perl.c:640 src/plugins/perl/wee-perl.c:670
+#: src/plugins/perl/wee-perl.c:710 src/plugins/python/wee-python.c:60
 #: src/plugins/python/wee-python.c:142 src/plugins/python/wee-python.c:179
 #: src/plugins/python/wee-python.c:211 src/plugins/python/wee-python.c:243
 #: src/plugins/python/wee-python.c:272 src/plugins/python/wee-python.c:311
@@ -2004,82 +2004,82 @@ msgstr ""
 msgid "%s error: wrong parameters for \"%s\" function\n"
 msgstr "Error de %s: parámetros incorrectos para la función \"%s\"\n"
 
-#: src/plugins/perl/wee-perl.c:270 src/plugins/perl/wee-perl.c:378
-#: src/plugins/perl/wee-perl.c:732 src/plugins/python/wee-python.c:331
+#: src/plugins/perl/wee-perl.c:270 src/plugins/perl/wee-perl.c:374
+#: src/plugins/perl/wee-perl.c:723 src/plugins/python/wee-python.c:331
 #, c-format
 msgid "%s error: server not found for \"%s\" function\n"
 msgstr "Error de %s: servidor no encontrado para el comando \"%s\"\n"
 
-#: src/plugins/perl/wee-perl.c:879 src/plugins/python/wee-python.c:408
+#: src/plugins/perl/wee-perl.c:873 src/plugins/python/wee-python.c:456
 #, c-format
 msgid "Loading %s module \"weechat\"\n"
 msgstr "Cargando módulo %s \"weechat\"\n"
 
-#: src/plugins/perl/wee-perl.c:938
+#: src/plugins/perl/wee-perl.c:932
 #, c-format
 msgid "Perl error: %s"
 msgstr "Error de Perl: %s"
 
-#: src/plugins/perl/wee-perl.c:948
+#: src/plugins/perl/wee-perl.c:942
 #, c-format
 msgid "%s error: too much values from \"%s\" (%d). Expected: 1.\n"
 msgstr "Error de %s: demasiados valores desde \"%s\" (%d). Esperado: 1.\n"
 
-#: src/plugins/perl/wee-perl.c:970 src/plugins/perl/wee-perl.c:972
-#: src/plugins/python/wee-python.c:566 src/plugins/python/wee-python.c:568
+#: src/plugins/perl/wee-perl.c:964 src/plugins/perl/wee-perl.c:966
+#: src/plugins/python/wee-python.c:614 src/plugins/python/wee-python.c:616
 #, c-format
 msgid "Loading %s script \"%s\"\n"
 msgstr "Cargando %s script \"%s\"\n"
 
-#: src/plugins/perl/wee-perl.c:1021 src/plugins/python/wee-python.c:637
+#: src/plugins/perl/wee-perl.c:1015 src/plugins/python/wee-python.c:685
 #, c-format
 msgid "Unloading %s script \"%s\"\n"
 msgstr "Descarga del %s script \"%s\"\n"
 
-#: src/plugins/perl/wee-perl.c:1038 src/plugins/python/wee-python.c:654
+#: src/plugins/perl/wee-perl.c:1032 src/plugins/python/wee-python.c:702
 #, c-format
 msgid "Unloading all %s scripts...\n"
 msgstr "Descargando todos los %s scripts...\n"
 
-#: src/plugins/perl/wee-perl.c:1043 src/plugins/python/wee-python.c:659
+#: src/plugins/perl/wee-perl.c:1037 src/plugins/python/wee-python.c:707
 #, c-format
 msgid "%s scripts unloaded\n"
 msgstr "%s scripts descargados\n"
 
-#: src/plugins/python/wee-python.c:403
+#: src/plugins/python/wee-python.c:451
 #, c-format
 msgid "%s error: error while launching interpreter\n"
 msgstr "%s error: error al lanzar el intérprete\n"
 
-#: src/plugins/python/wee-python.c:432
+#: src/plugins/python/wee-python.c:480
 #, c-format
 msgid "%s error: error while redirecting stdout and stderr\n"
 msgstr "%s error: error al redireccionar stdout y stderr\n"
 
-#: src/plugins/python/wee-python.c:485 src/plugins/python/wee-python.c:513
-#: src/plugins/python/wee-python.c:545
+#: src/plugins/python/wee-python.c:533 src/plugins/python/wee-python.c:561
+#: src/plugins/python/wee-python.c:593
 #, c-format
 msgid "%s error: unable to run function \"%s\" in script (not enough memory)\n"
 msgstr ""
 "Error de %s: no ha sido posible cargar el script \"%s\" (memoria "
 "insuficiente)\n"
 
-#: src/plugins/python/wee-python.c:535
+#: src/plugins/python/wee-python.c:583
 #, c-format
 msgid "%s error: error while running function \"%s\"\n"
 msgstr "%s error: error al ejecutar la función \"%s\"\n"
 
-#: src/plugins/python/wee-python.c:574
+#: src/plugins/python/wee-python.c:622
 #, c-format
 msgid "%s error: error while opening file \"%s\"\n"
 msgstr "%s error: error al abrir el fichero \"%s\"\n"
 
-#: src/plugins/python/wee-python.c:583
+#: src/plugins/python/wee-python.c:631
 #, c-format
 msgid "%s error: error while parsing file \"%s\"\n"
 msgstr "%s error: error al comparar el fichero \"%s\"\n"
 
-#: src/plugins/python/wee-python.c:685
+#: src/plugins/python/wee-python.c:733
 #, c-format
 msgid "%s error: error while freeing interpreter\n"
 msgstr "%s error: error al liberar el intérprete\n"
@@ -2096,7 +2096,7 @@ msgstr ""
 "%s no ha sido posible añadir el manejador para el mensaje \"%s\" (memoria "
 "insuficiente)\n"
 
-#: src/gui/curses/gui-input.c:298
+#: src/gui/curses/gui-input.c:300
 #, c-format
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr "%s el lag (retraso) es alto, desconectando del servidor...\n"
@@ -2162,15 +2162,15 @@ msgstr "  [Q] Cerrar la vista DCC"
 msgid "server"
 msgstr "servidor"
 
-#: src/gui/gui-common.c:333
+#: src/gui/gui-common.c:334
 msgid "Not enough memory for infobar message\n"
 msgstr "No hay suficiente memoria para el mensaje de la barra de información\n"
 
-#: src/gui/gui-common.c:508
+#: src/gui/gui-common.c:509
 msgid "Not enough memory for new line\n"
 msgstr "No hay suficiente memoria para una nueva línea\n"
 
-#: src/gui/gui-common.c:551
+#: src/gui/gui-common.c:552
 msgid "Not enough memory for new message\n"
 msgstr "No hay suficiente memoria para el mensaje de la barra de información\n"
 
@@ -2211,102 +2211,110 @@ msgid "delete next word"
 msgstr "borrar la palabra siguiente"
 
 #: src/gui/gui-keyboard.c:61
+msgid "paste current clipboard content"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:63
+msgid "transpose chars"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:65
 msgid "go to beginning of line"
 msgstr "ir al principio de línea"
 
-#: src/gui/gui-keyboard.c:63
+#: src/gui/gui-keyboard.c:67
 msgid "go to end of line"
 msgstr "ir al final de línea"
 
-#: src/gui/gui-keyboard.c:65
+#: src/gui/gui-keyboard.c:69
 msgid "move one char left"
 msgstr "mover un carácter a la izquierda"
 
-#: src/gui/gui-keyboard.c:67
+#: src/gui/gui-keyboard.c:71
 msgid "move to previous word"
 msgstr "mover a la palabra anterior"
 
-#: src/gui/gui-keyboard.c:69
+#: src/gui/gui-keyboard.c:73
 msgid "move one char right"
 msgstr "mover un carácter a la derecha"
 
-#: src/gui/gui-keyboard.c:71
+#: src/gui/gui-keyboard.c:75
 msgid "move to next word"
 msgstr "mover a la palabra siguiente"
 
-#: src/gui/gui-keyboard.c:73
+#: src/gui/gui-keyboard.c:77
 msgid "call previous command in history"
 msgstr "llamar al comando anterior en el historial"
 
-#: src/gui/gui-keyboard.c:75
+#: src/gui/gui-keyboard.c:79
 msgid "call next command in history"
 msgstr "llamar al comando siguiente en el historial"
 
-#: src/gui/gui-keyboard.c:77
+#: src/gui/gui-keyboard.c:81
 msgid "scroll one page up"
 msgstr "desplazarse una página hacia arriba"
 
-#: src/gui/gui-keyboard.c:79
+#: src/gui/gui-keyboard.c:83
 msgid "scroll one page down"
 msgstr "desplazarse una página hacia abajo"
 
-#: src/gui/gui-keyboard.c:81
+#: src/gui/gui-keyboard.c:85
 msgid "clear infobar"
 msgstr "limpiar barra de información"
 
-#: src/gui/gui-keyboard.c:83
+#: src/gui/gui-keyboard.c:87
 msgid "scroll nicklist one page up"
 msgstr "desplazar la lista de nicks una página hacia arriba"
 
-#: src/gui/gui-keyboard.c:85
+#: src/gui/gui-keyboard.c:89
 msgid "scroll nicklist one page down"
 msgstr "desplazar la lista de nicks una página hacia abajo"
 
-#: src/gui/gui-keyboard.c:87
+#: src/gui/gui-keyboard.c:91
 msgid "display beginning of nicklist"
 msgstr "mostrar el principio de la lista de nicks"
 
-#: src/gui/gui-keyboard.c:89
+#: src/gui/gui-keyboard.c:93
 msgid "display end of nicklist"
 msgstr "mostrar el final de la lista de nicks"
 
-#: src/gui/gui-keyboard.c:91
+#: src/gui/gui-keyboard.c:95
 msgid "refresh screen"
 msgstr "recargar la pantalla"
 
-#: src/gui/gui-keyboard.c:93
+#: src/gui/gui-keyboard.c:97
 msgid "jump to buffer with activity"
 msgstr "saltar al búfer con actividad"
 
-#: src/gui/gui-keyboard.c:95
+#: src/gui/gui-keyboard.c:99
 msgid "jump to DCC buffer"
 msgstr "saltar al búfer DCC"
 
-#: src/gui/gui-keyboard.c:97
+#: src/gui/gui-keyboard.c:101
 msgid "jump to server buffer"
 msgstr "saltar al búfer servidor"
 
-#: src/gui/gui-keyboard.c:99
+#: src/gui/gui-keyboard.c:103
 msgid "jump to next server"
 msgstr "saltar al servidor siguiente"
 
-#: src/gui/gui-keyboard.c:101
+#: src/gui/gui-keyboard.c:105
 msgid "clear hotlist"
 msgstr "limpiar hotlist"
 
-#: src/gui/gui-keyboard.c:399 src/common/command.c:1471
+#: src/gui/gui-keyboard.c:403 src/common/command.c:1471
 #, c-format
 msgid "%s unable to bind key \"%s\"\n"
 msgstr "%s No ha sido posible atar la clave \"%s\"\n"
 
-#: src/gui/gui-keyboard.c:410
+#: src/gui/gui-keyboard.c:414
 #, c-format
 msgid "%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"
 msgstr ""
 "%s No ha sido posible atar la clave \"%s\" (nombre de función inválido: \"%s"
 "\")\n"
 
-#: src/gui/gui-keyboard.c:423
+#: src/gui/gui-keyboard.c:427
 #, c-format
 msgid "%s not enough memory for key binding\n"
 msgstr "%s no hay suficiente memoria para atar la clave\n"
@@ -3011,32 +3019,27 @@ msgstr "%s no ha sido posible abrir la tubería FIFO (%s) para leer\n"
 msgid "FIFO pipe is open\n"
 msgstr "La tubería FIFO está abierta\n"
 
-#: src/common/fifo.c:121
-#, c-format
-msgid "%s invalid buffer for displaying text via FIFO pipe\n"
-msgstr "%s búfer inválido para mostrar texto mediante la tubería FIFO\n"
-
-#: src/common/fifo.c:132 src/common/fifo.c:178
+#: src/common/fifo.c:124
 #, c-format
 msgid "%s invalid text received on FIFO pipe\n"
 msgstr "%s texto inválido recibido en la tubería FIFO\n"
 
-#: src/common/fifo.c:154
+#: src/common/fifo.c:146
 #, c-format
 msgid "%s server \"%s\" not found (FIFO pipe data)\n"
 msgstr "%s servidor \"%s\" no encontrado (datos de la tubería FIFO)\n"
 
-#: src/common/fifo.c:166
+#: src/common/fifo.c:158
 #, c-format
 msgid "%s channel \"%s\" not found (FIFO pipe data)\n"
 msgstr "%s canal \"%s\" no encontrado (datos de la tubería FIFO)\n"
 
-#: src/common/fifo.c:265 src/common/fifo.c:267
+#: src/common/fifo.c:249 src/common/fifo.c:251
 #, c-format
 msgid "%s error reading FIFO pipe, closing it\n"
 msgstr "%s error al leer la tubería FIFO, cerrándola\n"
 
-#: src/common/fifo.c:309
+#: src/common/fifo.c:293
 msgid "FIFO pipe is closed\n"
 msgstr "La tubería FIFO está cerrada\n"
 
@@ -4143,3 +4146,6 @@ msgstr ""
 #: src/common/weeconfig.c:1737
 msgid "Saving config to disk\n"
 msgstr "Guardar configuración a disco\n"
+
+#~ msgid "%s invalid buffer for displaying text via FIFO pipe\n"
+#~ msgstr "%s búfer inválido para mostrar texto mediante la tubería FIFO\n"

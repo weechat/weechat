@@ -229,6 +229,14 @@ dcc_close (t_irc_dcc *ptr_dcc, int status)
         }
     }
     
+    /* remove empty file if received file failed and nothing was transfered */
+    if (((status == DCC_FAILED) || (status == DCC_ABORTED))
+        && DCC_IS_FILE(ptr_dcc->type)
+        && DCC_IS_RECV(ptr_dcc->type)
+        && ptr_dcc->local_filename
+        && ptr_dcc->pos == 0)
+        unlink (ptr_dcc->local_filename);
+    
     if (DCC_IS_CHAT(ptr_dcc->type))
         channel_remove_dcc (ptr_dcc);
     
@@ -418,6 +426,7 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
     new_dcc->last_check_time = 0;
     new_dcc->last_check_pos = 0;
     new_dcc->bytes_per_sec = 0;
+    new_dcc->last_activity = time (NULL);
     new_dcc->prev_dcc = NULL;
     new_dcc->next_dcc = dcc_list;
     if (dcc_list)
@@ -844,6 +853,17 @@ dcc_handle ()
     
     for (ptr_dcc = dcc_list; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
     {
+        /* check DCC timeout */
+        if (DCC_IS_FILE(ptr_dcc->type) && !DCC_ENDED(ptr_dcc->status))
+        {
+            if ((cfg_dcc_timeout != 0) && (time (NULL) > ptr_dcc->last_activity + cfg_dcc_timeout))
+            {
+                dcc_close (ptr_dcc, DCC_FAILED);
+                dcc_redraw (1);
+                continue;
+            }
+        }
+        
         if (ptr_dcc->status == DCC_CONNECTING)
         {
             if (ptr_dcc->type == DCC_FILE_SEND)
@@ -858,6 +878,7 @@ dcc_handle ()
                 {
                     if (FD_ISSET (ptr_dcc->sock, &read_fd))
                     {
+                        ptr_dcc->last_activity = time (NULL);
                         length = sizeof (addr);
                         sock = accept (ptr_dcc->sock, (struct sockaddr *) &addr, &length);
                         close (ptr_dcc->sock);
@@ -866,14 +887,14 @@ dcc_handle ()
                         {
                             dcc_close (ptr_dcc, DCC_FAILED);
                             dcc_redraw (1);
-                            return;
+                            continue;
                         }
                         ptr_dcc->sock = sock;
                         if (fcntl (ptr_dcc->sock, F_SETFL, O_NONBLOCK) == -1)
                         {
                             dcc_close (ptr_dcc, DCC_FAILED);
                             dcc_redraw (1);
-                            return;
+                            continue;
                         }
                         ptr_dcc->addr = ntohl (addr.sin_addr.s_addr);
                         ptr_dcc->status = DCC_ACTIVE;
@@ -907,14 +928,14 @@ dcc_handle ()
                         {
                             dcc_close (ptr_dcc, DCC_FAILED);
                             dcc_redraw (1);
-                            return;
+                            continue;
                         }
                         ptr_dcc->sock = sock;
                         if (fcntl (ptr_dcc->sock, F_SETFL, O_NONBLOCK) == -1)
                         {
                             dcc_close (ptr_dcc, DCC_FAILED);
                             dcc_redraw (1);
-                            return;
+                            continue;
                         }
                         ptr_dcc->addr = ntohl (addr.sin_addr.s_addr);
                         ptr_dcc->status = DCC_ACTIVE;
@@ -950,15 +971,16 @@ dcc_handle ()
                     {
                         dcc_close (ptr_dcc, DCC_FAILED);
                         dcc_redraw (1);
-                        return;
+                        continue;
                     }
                     
                     if (write (ptr_dcc->file, buffer, num_read) == -1)
                     {
                         dcc_close (ptr_dcc, DCC_FAILED);
                         dcc_redraw (1);
-                        return;
+                        continue;
                     }
+                    ptr_dcc->last_activity = time (NULL);
                     ptr_dcc->pos += (unsigned long) num_read;
                     pos = htonl (ptr_dcc->pos);
                     send (ptr_dcc->sock, (char *) &pos, 4, 0);
@@ -983,7 +1005,7 @@ dcc_handle ()
                                 sizeof (buffer));
                     dcc_close (ptr_dcc, DCC_FAILED);
                     dcc_redraw (1);
-                    return;
+                    continue;
                 }
                 if (ptr_dcc->pos > ptr_dcc->ack)
                 {
@@ -995,10 +1017,10 @@ dcc_handle ()
                         {
                             dcc_close (ptr_dcc, DCC_FAILED);
                             dcc_redraw (1);
-                            return;
+                            continue;
                         }
                         if (num_read < 4)
-                            return;
+                            continue;
                         recv (ptr_dcc->sock, (char *) &pos, 4, 0);
                         ptr_dcc->ack = ntohl (pos);
                         
@@ -1007,7 +1029,7 @@ dcc_handle ()
                         {
                             dcc_close (ptr_dcc, DCC_DONE);
                             dcc_redraw (1);
-                            return;
+                            continue;
                         }
                     }
                 }
@@ -1019,15 +1041,16 @@ dcc_handle ()
                     {
                         dcc_close (ptr_dcc, DCC_FAILED);
                         dcc_redraw (1);
-                        return;
+                        continue;
                     }
                     num_sent = send (ptr_dcc->sock, buffer, num_read, 0);
                     if (num_sent < 0)
                     {
                         dcc_close (ptr_dcc, DCC_FAILED);
                         dcc_redraw (1);
-                        return;
+                        continue;
                     }
+                    ptr_dcc->last_activity = time (NULL);
                     ptr_dcc->pos += (unsigned long) num_sent;
                     dcc_calculate_speed (ptr_dcc, 0);
                     dcc_redraw (0);
