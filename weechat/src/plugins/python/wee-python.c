@@ -373,17 +373,17 @@ wee_python_get_info (PyObject *self, PyObject *args)
 	  if (nbdccs == 0)
 	    return Py_None;
 	  
-	  PyObject *tuple = PyTuple_New(nbdccs);
+	  PyObject *list = PyList_New(nbdccs);
 
-	  if (!tuple)
+	  if (!list)
 	    return Py_None;
 	  
-	  PyObject *tuplevalue;
+	  PyObject *listvalue;
 	  
 	  int pos = 0;
 	  for(; p; p = p->next_dcc)
             {
-	      tuplevalue = Py_BuildValue("{s:k,s:k,s:s,s:s,s:s,s:i,s:k,s:k,s:i,s:i}",
+	      listvalue = Py_BuildValue("{s:k,s:k,s:s,s:s,s:s,s:i,s:k,s:k,s:i,s:i}",
 					 "address32", p->addr,
 					 "cps", p->bytes_per_sec,
 					 "remote_file", p->filename,
@@ -394,12 +394,12 @@ wee_python_get_info (PyObject *self, PyObject *args)
 					 "size", p->size,
 					 "status", p->status,
 					 "type", p->type);
-	      if (tuplevalue) 
+	      if (listvalue) 
 		{
-		  if (PyTuple_SetItem(tuple, pos, tuplevalue) != 0)
+		  if (PyList_SetItem(list, pos, listvalue) != 0)
 		    {
-		      PyMem_Free(tuplevalue);
-		      PyMem_Free(tuple);
+		      PyMem_Free(listvalue);
+		      PyMem_Free(list);
 		      return Py_None;
 		    }
 		}
@@ -408,7 +408,7 @@ wee_python_get_info (PyObject *self, PyObject *args)
 	      pos++;
             }
 	  
-	  return tuple;
+	  return list;
 	}
         
         if (info)
