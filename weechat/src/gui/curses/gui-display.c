@@ -2421,6 +2421,9 @@ gui_init ()
 
     refresh ();
     
+    /* init clipboard buffer */
+    gui_input_clipboard = NULL;
+
     /* create new window/buffer */
     if (gui_window_new (0, 0, COLS, LINES))
     {
@@ -2445,6 +2448,10 @@ gui_end ()
 {
     t_gui_window *ptr_win;
     
+    /* free clipboard buffer */
+    if (gui_input_clipboard)
+      free(gui_input_clipboard);
+
     /* delete all windows */
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {

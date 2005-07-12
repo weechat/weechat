@@ -56,6 +56,7 @@ t_gui_buffer *last_gui_buffer = NULL;       /* pointer to last buffer       */
 t_gui_buffer *buffer_before_dcc = NULL;     /* buffer before dcc switch     */
 t_gui_infobar *gui_infobar;                 /* pointer to infobar content   */
 
+char *gui_input_clipboard = NULL;           /* buffer to store clipboard content */
 
 /*
  * gui_window_new: create a new window
@@ -921,6 +922,10 @@ gui_input_delete_previous_word ()
         num_char_deleted = gui_current_window->buffer->input_buffer_pos - i;
         num_char_end = gui_current_window->buffer->input_buffer_size -
             gui_current_window->buffer->input_buffer_pos;
+
+	gui_input_clipboard_copy(gui_current_window->buffer->input_buffer +
+				 gui_current_window->buffer->input_buffer_pos - num_char_deleted,
+				 num_char_deleted);
         
         for (j = 0; j < num_char_end; j++)
             gui_current_window->buffer->input_buffer[i + j] =
@@ -953,6 +958,9 @@ gui_input_delete_next_word ()
         i++;
     }
     num_char_deleted = i - gui_current_window->buffer->input_buffer_pos;
+
+    gui_input_clipboard_copy(gui_current_window->buffer->input_buffer +
+                             gui_current_window->buffer->input_buffer_pos, num_char_deleted);
     
     for (j = i; j < gui_current_window->buffer->input_buffer_size; j++)
         gui_current_window->buffer->input_buffer[j - num_char_deleted] =
@@ -973,6 +981,9 @@ void
 gui_input_delete_begin_of_line ()
 {
     int i;
+    
+    gui_input_clipboard_copy(gui_current_window->buffer->input_buffer,
+			     gui_current_window->buffer->input_buffer_pos);
     
     for (i = gui_current_window->buffer->input_buffer_pos;
          i < gui_current_window->buffer->input_buffer_size; i++)
@@ -995,6 +1006,10 @@ gui_input_delete_begin_of_line ()
 void
 gui_input_delete_end_of_line ()
 {
+    gui_input_clipboard_copy(gui_current_window->buffer->input_buffer +
+			     gui_current_window->buffer->input_buffer_pos,
+			     gui_current_window->buffer->input_buffer_size-1);
+
     gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_pos] = ' ';
     gui_current_window->buffer->input_buffer_size = gui_current_window->buffer->input_buffer_pos ;
     gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
@@ -1016,6 +1031,70 @@ gui_input_delete_line ()
     gui_draw_buffer_input (gui_current_window->buffer, 0);
     gui_input_optimize_buffer_size (gui_current_window->buffer);
     gui_current_window->buffer->completion.position = -1;
+}
+
+/*
+ * gui_input_transpose_chars: transpose chars (on lth left) at cursor pos
+ */
+
+void
+gui_input_transpose_chars ()
+{
+    char buf;
+    int curpos;
+    
+    if (gui_current_window->buffer->input_buffer_pos > 0)
+      {
+	curpos = gui_current_window->buffer->input_buffer_pos;
+	if (curpos == gui_current_window->buffer->input_buffer_size)
+	  curpos--;
+	else
+	  gui_current_window->buffer->input_buffer_pos++;
+	
+	buf = gui_current_window->buffer->input_buffer[curpos];
+	gui_current_window->buffer->input_buffer[curpos] = 
+	  gui_current_window->buffer->input_buffer[curpos-1];
+	gui_current_window->buffer->input_buffer[curpos-1] = buf;
+	
+	gui_draw_buffer_input (gui_current_window->buffer, 0);	
+	gui_current_window->buffer->completion.position = -1;
+      }
+}
+
+/*
+ * gui_input_clipboard_paste: paste clipboard at cursor pos in input line
+ */
+
+void
+gui_input_clipboard_paste ()
+{
+  if (gui_input_clipboard) 
+    {
+      gui_input_insert_string(gui_input_clipboard, gui_current_window->buffer->input_buffer_pos);
+      gui_current_window->buffer->input_buffer_pos += strlen(gui_input_clipboard);
+      gui_draw_buffer_input (gui_current_window->buffer, 0);
+      gui_current_window->buffer->completion.position = -1;
+    }
+}
+
+/*
+ * gui_input_clipboard_copy: copy string into clipboard
+ */
+
+void
+gui_input_clipboard_copy (char *buffer, int size)
+{
+  
+  if (gui_input_clipboard != NULL)
+    free(gui_input_clipboard);
+
+  gui_input_clipboard = (char *) malloc( (size + 1) * sizeof(*gui_input_clipboard));
+
+  if (gui_input_clipboard)
+    {
+      memcpy(gui_input_clipboard, buffer, size);
+      gui_input_clipboard[size] = '\0';
+    }
 }
 
 /*

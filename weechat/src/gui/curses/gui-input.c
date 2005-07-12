@@ -62,6 +62,8 @@ gui_input_default_key_bindings ()
     gui_key_bind ( /* ^K      */ "ctrl-K",        "delete_end_line");
     gui_key_bind ( /* ^U      */ "ctrl-U",        "delete_beginning_line");
     gui_key_bind ( /* ^W      */ "ctrl-W",        "delete_previous_word");
+    gui_key_bind ( /* ^Y      */ "ctrl-Y",        "clipboard_paste");
+    gui_key_bind ( /* ^T      */ "ctrl-T",        "transpose_chars");
     gui_key_bind ( /* home    */ "meta2-1~",      "home");
     gui_key_bind ( /* home    */ "meta2-H",       "home");
     gui_key_bind ( /* home    */ "meta2-7~",      "home");

@@ -291,6 +291,7 @@ extern t_gui_infobar *gui_infobar;
 extern t_gui_key *gui_keys;
 extern t_gui_key *last_gui_key;
 extern t_gui_key_function gui_key_functions[];
+extern char *gui_input_clipboard;
 
 /* GUI independent functions: windows & buffers */
 
@@ -304,6 +305,8 @@ extern void gui_infobar_remove ();
 extern void gui_buffer_free (t_gui_buffer *, int);
 extern t_gui_line *gui_new_line (t_gui_buffer *);
 extern t_gui_message *gui_new_message (t_gui_buffer *);
+extern void gui_input_clipboard_paste ();
+extern void gui_input_clipboard_copy (char *, int);
 extern void gui_input_insert_char ();
 extern void gui_input_return ();
 extern void gui_input_tab ();
@@ -314,6 +317,7 @@ extern void gui_input_delete_next_word ();
 extern void gui_input_delete_begin_of_line ();
 extern void gui_input_delete_end_of_line ();
 extern void gui_input_delete_line ();
+extern void gui_input_transpose_chars ();
 extern void gui_input_home ();
 extern void gui_input_end ();
 extern void gui_input_left ();
