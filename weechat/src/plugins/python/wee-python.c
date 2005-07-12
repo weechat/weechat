@@ -362,6 +362,54 @@ wee_python_get_info (PyObject *self, PyObject *args)
         {	 
             return Py_BuildValue ("i", SERVER(gui_current_window->buffer)->is_away);
         }
+	else if ( (strcasecmp (arg, "100") == 0) || (strcasecmp (arg, "dccs") == 0) )
+        {
+	  t_irc_dcc *p = dcc_list;
+	  int nbdccs = 0;
+	  
+	  for(; p; p = p->next_dcc)
+	    nbdccs++;
+	  
+	  if (nbdccs == 0)
+	    return Py_None;
+	  
+	  PyObject *tuple = PyTuple_New(nbdccs);
+
+	  if (!tuple)
+	    return Py_None;
+	  
+	  PyObject *tuplevalue;
+	  
+	  int pos = 0;
+	  for(; p; p = p->next_dcc)
+            {
+	      tuplevalue = Py_BuildValue("{s:k,s:k,s:s,s:s,s:s,s:i,s:k,s:k,s:i,s:i}",
+					 "address32", p->addr,
+					 "cps", p->bytes_per_sec,
+					 "remote_file", p->filename,
+					 "local_file", p->local_filename,
+					 "nick", p->nick,
+					 "port", p->port, 
+					 "pos", p->pos,
+					 "size", p->size,
+					 "status", p->status,
+					 "type", p->type);
+	      if (tuplevalue) 
+		{
+		  if (PyTuple_SetItem(tuple, pos, tuplevalue) != 0)
+		    {
+		      PyMem_Free(tuplevalue);
+		      PyMem_Free(tuple);
+		      return Py_None;
+		    }
+		}
+	      else
+		return Py_None;
+	      pos++;
+            }
+	  
+	  return tuple;
+	}
         
         if (info)
             return Py_BuildValue ("s", info);
