@@ -385,14 +385,13 @@ static XS (XS_IRC_get_info)
         arg = SvPV (ST (0), integer);
     }
     
-    if (ptr_server && arg)
+    if (arg)
     {
-    
         if ( (strcasecmp (arg, "0") == 0) || (strcasecmp (arg, "version") == 0) )
         {
             info = PACKAGE_STRING;
         }
-        else if ( (strcasecmp (arg, "1") == 0) || (strcasecmp (arg, "nick") == 0) )
+        else if ( ptr_server && ( (strcasecmp (arg, "1") == 0) || (strcasecmp (arg, "nick") == 0) ) )
         {
             if (ptr_server->nick)
                 info = ptr_server->nick;
@@ -402,7 +401,7 @@ static XS (XS_IRC_get_info)
             if (BUFFER_IS_CHANNEL (gui_current_window->buffer))
                 info = CHANNEL (gui_current_window->buffer)->name;
         }
-        else if ( (strcasecmp (arg, "3") == 0) || (strcasecmp (arg, "server") == 0) )
+        else if ( ptr_server && ( (strcasecmp (arg, "3") == 0) || (strcasecmp (arg, "server") == 0) ) )
         {
             if (ptr_server->name)
                 info = ptr_server->name;
@@ -411,7 +410,7 @@ static XS (XS_IRC_get_info)
         {
             info = weechat_home;
         }
-        else if ( (strcasecmp (arg, "5") == 0) || (strcasecmp (arg, "away") == 0) )
+        else if ( ptr_server && ( (strcasecmp (arg, "5") == 0) || (strcasecmp (arg, "away") == 0) ) )
         {
             XST_mIV (0, SERVER(gui_current_window->buffer)->is_away);
             XSRETURN (1);
@@ -741,7 +740,7 @@ static XS (XS_weechat_get_info)
         {
             info = PACKAGE_STRING;
         }
-        else if ( (strcasecmp (arg, "1") == 0) || (strcasecmp (arg, "nick") == 0) )
+        else if ( ptr_server && ( (strcasecmp (arg, "1") == 0) || (strcasecmp (arg, "nick") == 0) ) )
         {
             if (ptr_server->nick)
                 info = ptr_server->nick;
@@ -751,7 +750,7 @@ static XS (XS_weechat_get_info)
             if (BUFFER_IS_CHANNEL (gui_current_window->buffer))
                 info = CHANNEL (gui_current_window->buffer)->name;
         }
-        else if ( (strcasecmp (arg, "3") == 0) || (strcasecmp (arg, "server") == 0) )
+        else if ( ptr_server && ( (strcasecmp (arg, "3") == 0) || (strcasecmp (arg, "server") == 0) ) )
         {
             if (ptr_server->name)
                 info = ptr_server->name;
@@ -760,10 +759,39 @@ static XS (XS_weechat_get_info)
         {
             info = weechat_home;
         }
-        else if ( (strcasecmp (arg, "5") == 0) || (strcasecmp (arg, "away") == 0) )
+        else if ( ptr_server && ( (strcasecmp (arg, "5") == 0) || (strcasecmp (arg, "away") == 0) ) )
         {
             XST_mIV (0, SERVER(gui_current_window->buffer)->is_away);
             XSRETURN (1);
+            return;
+        }
+        else if ( (strcasecmp (arg, "100") == 0) || (strcasecmp (arg, "dccs") == 0) )
+        {
+            int nItems = 0;
+            t_irc_dcc *p = dcc_list;
+            
+            POPs;
+            if (items == 2)
+                POPs;
+            
+            for(; p; p = p->next_dcc)
+            {
+                HV *infohash = (HV *) sv_2mortal((SV *) newHV());
+                hv_store (infohash, "address32",    9, newSViv(p->addr), 0);
+                hv_store (infohash, "cps",          3, newSViv(p->bytes_per_sec), 0);
+                hv_store (infohash, "remote_file", 11, newSVpv(p->filename, 0), 0);
+                hv_store (infohash, "local_file",  10, newSVpv(p->local_filename, 0), 0);
+                hv_store (infohash, "nick",         4, newSVpv(p->nick, 0), 0);
+                hv_store (infohash, "port",         4, newSViv(p->port), 0);
+                hv_store (infohash, "pos",          3, newSVnv(p->pos), 0);
+                hv_store (infohash, "size",         4, newSVnv(p->size), 0);
+                hv_store (infohash, "status",       6, newSViv(p->status), 0);
+                hv_store (infohash, "type",         4, newSViv(p->type), 0);
+                
+                XPUSHs(newRV((SV *) infohash));
+                ++nItems;
+            }
+            XSRETURN(nItems);
             return;
         }
         

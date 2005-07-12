@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-07-11
+ChangeLog - 2005-07-12
 
 
 Versoin 0.1.4 (under dev!):
+   * added function for Perl/Python to get DCC list
    * topic completion now decodes UTF-8 string
    * fixed bug with IRC URL on command line (irc://)
    * new keyboard management: keys are setup in config file, new command
