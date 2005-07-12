@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-07-12 19:01+0200\n"
+"POT-Creation-Date: 2005-07-12 19:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1513,7 +1513,7 @@ msgstr ""
 msgid "%s unknown DCC CHAT type received from "
 msgstr ""
 
-#: src/irc/irc-recv.c:1557 src/irc/irc-dcc.c:808
+#: src/irc/irc-recv.c:1557 src/irc/irc-dcc.c:809
 #, c-format
 msgid "Private %s> %s"
 msgstr ""
@@ -1736,7 +1736,7 @@ msgstr ""
 msgid "DCC: file "
 msgstr ""
 
-#: src/irc/irc-dcc.c:195 src/irc/irc-dcc.c:463
+#: src/irc/irc-dcc.c:195 src/irc/irc-dcc.c:464
 msgid " (local filename: "
 msgstr ""
 
@@ -1748,96 +1748,100 @@ msgstr ""
 msgid ") received from "
 msgstr ""
 
-#: src/irc/irc-dcc.c:208
+#: src/irc/irc-dcc.c:209
 msgid ": ok!\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:220
+#: src/irc/irc-dcc.c:209
+msgid ": FAILED\n"
+msgstr ""
+
+#: src/irc/irc-dcc.c:221
 msgid "DCC chat closed with "
 msgstr ""
 
-#: src/irc/irc-dcc.c:269
+#: src/irc/irc-dcc.c:270
 #, c-format
 msgid ""
 "%s can't associate DCC chat with private buffer (maybe private buffer has "
 "already DCC CHAT?)\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:279
+#: src/irc/irc-dcc.c:280
 msgid "Connected to "
 msgstr ""
 
-#: src/irc/irc-dcc.c:288
+#: src/irc/irc-dcc.c:289
 msgid "via DCC chat\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:399
+#: src/irc/irc-dcc.c:400
 #, c-format
 msgid "%s not enough memory for new DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:418
+#: src/irc/irc-dcc.c:419
 msgid "DCC chat"
 msgstr ""
 
-#: src/irc/irc-dcc.c:443
+#: src/irc/irc-dcc.c:444
 msgid "Incoming DCC file from "
 msgstr ""
 
-#: src/irc/irc-dcc.c:454 src/irc/irc-dcc.c:467
+#: src/irc/irc-dcc.c:455 src/irc/irc-dcc.c:468
 msgid " bytes\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:459
+#: src/irc/irc-dcc.c:460
 msgid "Sending DCC file to "
 msgstr ""
 
-#: src/irc/irc-dcc.c:472
+#: src/irc/irc-dcc.c:473
 msgid "Incoming DCC chat request from "
 msgstr ""
 
-#: src/irc/irc-dcc.c:483
+#: src/irc/irc-dcc.c:484
 msgid "Sending DCC chat request to "
 msgstr ""
 
-#: src/irc/irc-dcc.c:547
+#: src/irc/irc-dcc.c:548
 #, c-format
 msgid "%s not enough memory for DCC SEND\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:569
+#: src/irc/irc-dcc.c:570
 #, c-format
 msgid "%s cannot access file \"%s\"\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:590
+#: src/irc/irc-dcc.c:591
 #, c-format
 msgid "%s cannot create socket for DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:603
+#: src/irc/irc-dcc.c:604
 #, c-format
 msgid "%s cannot find port for DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:650
+#: src/irc/irc-dcc.c:651
 #, c-format
 msgid "%s cannot send DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:729
+#: src/irc/irc-dcc.c:730
 #, c-format
 msgid "%s error sending data to \"%s\" via DCC CHAT\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1002
+#: src/irc/irc-dcc.c:1003
 #, c-format
 msgid ""
 "%s DCC failed because blocksize is too big. Check value of \"dcc_blocksize\" "
 "option, max is %d.\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1077
+#: src/irc/irc-dcc.c:1078
 #, c-format
 msgid "Aborting active DCC: \"%s\" from %s\n"
 msgstr ""

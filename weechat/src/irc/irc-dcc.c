@@ -182,7 +182,7 @@ dcc_close (t_irc_dcc *ptr_dcc, int status)
     
     ptr_dcc->status = status;
     
-    if (status == DCC_DONE)
+    if ((status == DCC_DONE) || (status == DCC_ABORTED) || (status == DCC_FAILED))
     {
         if (DCC_IS_FILE(ptr_dcc->type))
         {
@@ -205,7 +205,8 @@ dcc_close (t_irc_dcc *ptr_dcc, int status)
                               COLOR_WIN_CHAT_NICK,
                               "%s",
                               ptr_dcc->nick);
-            gui_printf (ptr_dcc->server->buffer, _(": ok!\n"));
+            gui_printf (ptr_dcc->server->buffer,
+                        (status == DCC_DONE) ? _(": ok!\n") : _(": FAILED\n"));
         }
     }
     if (status == DCC_ABORTED)
