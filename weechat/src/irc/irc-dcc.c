@@ -192,15 +192,19 @@ dcc_close (t_irc_dcc *ptr_dcc, int status)
                               COLOR_WIN_CHAT_CHANNEL,
                               "%s",
                               ptr_dcc->filename);
-            gui_printf (ptr_dcc->server->buffer, _(" (local filename: "));
-            gui_printf_color (ptr_dcc->server->buffer,
-                              COLOR_WIN_CHAT_CHANNEL,
-                              "%s",
-                              ptr_dcc->local_filename);
+            if (ptr_dcc->local_filename)
+            {
+                gui_printf (ptr_dcc->server->buffer, _(" (local filename: "));
+                gui_printf_color (ptr_dcc->server->buffer,
+                                  COLOR_WIN_CHAT_CHANNEL,
+                                  "%s",
+                                  ptr_dcc->local_filename);
+                gui_printf (ptr_dcc->server->buffer, ") ");
+            }
             if (ptr_dcc->type == DCC_FILE_SEND)
-                gui_printf (ptr_dcc->server->buffer, _(") sent to "));
+                gui_printf (ptr_dcc->server->buffer, _(" sent to "));
             else
-                gui_printf (ptr_dcc->server->buffer, _(") received from "));
+                gui_printf (ptr_dcc->server->buffer, _(" received from "));
             gui_printf_color (ptr_dcc->server->buffer,
                               COLOR_WIN_CHAT_NICK,
                               "%s",

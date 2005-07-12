@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.4-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-07-12 19:14+0200\n"
-"PO-Revision-Date: 2005-07-11 23:57+0200\n"
+"POT-Creation-Date: 2005-07-12 21:22+0200\n"
+"PO-Revision-Date: 2005-07-12 21:23+0200\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1627,7 +1627,7 @@ msgstr "%s no es posible analizar el comando \"%s\"\n"
 msgid "%s unknown DCC CHAT type received from "
 msgstr "%s tipo DCC CHAT desconocido recibido de "
 
-#: src/irc/irc-recv.c:1557 src/irc/irc-dcc.c:809
+#: src/irc/irc-recv.c:1557 src/irc/irc-dcc.c:813
 #, c-format
 msgid "Private %s> %s"
 msgstr "Privado %s> %s"
@@ -1859,31 +1859,31 @@ msgstr "Abortado"
 msgid "DCC: file "
 msgstr "DCC: fichero "
 
-#: src/irc/irc-dcc.c:195 src/irc/irc-dcc.c:464
+#: src/irc/irc-dcc.c:197 src/irc/irc-dcc.c:468
 msgid " (local filename: "
 msgstr " (nombre de fichero local: "
 
-#: src/irc/irc-dcc.c:201
-msgid ") sent to "
-msgstr ") enviado a "
+#: src/irc/irc-dcc.c:205
+msgid " sent to "
+msgstr " enviado a "
 
-#: src/irc/irc-dcc.c:203
-msgid ") received from "
-msgstr ") recibido de "
+#: src/irc/irc-dcc.c:207
+msgid " received from "
+msgstr " recibido de "
 
-#: src/irc/irc-dcc.c:209
+#: src/irc/irc-dcc.c:213
 msgid ": ok!\n"
 msgstr ": ok!\n"
 
-#: src/irc/irc-dcc.c:209
+#: src/irc/irc-dcc.c:213
 msgid ": FAILED\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:221
+#: src/irc/irc-dcc.c:225
 msgid "DCC chat closed with "
 msgstr "DCC chat cerrada con "
 
-#: src/irc/irc-dcc.c:270
+#: src/irc/irc-dcc.c:274
 #, c-format
 msgid ""
 "%s can't associate DCC chat with private buffer (maybe private buffer has "
@@ -1892,74 +1892,74 @@ msgstr ""
 "%s no se puede asociar la conversación DCC con el búfer privado (quizá el "
 "búfer privado ya tiene DCC CHAT)\n"
 
-#: src/irc/irc-dcc.c:280
+#: src/irc/irc-dcc.c:284
 msgid "Connected to "
 msgstr "Conectado al "
 
-#: src/irc/irc-dcc.c:289
+#: src/irc/irc-dcc.c:293
 msgid "via DCC chat\n"
 msgstr "con charla DCC\n"
 
-#: src/irc/irc-dcc.c:400
+#: src/irc/irc-dcc.c:404
 #, c-format
 msgid "%s not enough memory for new DCC\n"
 msgstr "%s no hay memoria suficiente para un nuevo DCC\n"
 
-#: src/irc/irc-dcc.c:419
+#: src/irc/irc-dcc.c:423
 msgid "DCC chat"
 msgstr "Charla DCC"
 
-#: src/irc/irc-dcc.c:444
+#: src/irc/irc-dcc.c:448
 msgid "Incoming DCC file from "
 msgstr "Recibir fichero DCC de "
 
-#: src/irc/irc-dcc.c:455 src/irc/irc-dcc.c:468
+#: src/irc/irc-dcc.c:459 src/irc/irc-dcc.c:472
 msgid " bytes\n"
 msgstr " bytes\n"
 
-#: src/irc/irc-dcc.c:460
+#: src/irc/irc-dcc.c:464
 msgid "Sending DCC file to "
 msgstr "Enviar fichero DCC a "
 
-#: src/irc/irc-dcc.c:473
+#: src/irc/irc-dcc.c:477
 msgid "Incoming DCC chat request from "
 msgstr "Recibir DCC chat de "
 
-#: src/irc/irc-dcc.c:484
+#: src/irc/irc-dcc.c:488
 msgid "Sending DCC chat request to "
 msgstr "Enviar DCC chat a "
 
-#: src/irc/irc-dcc.c:548
+#: src/irc/irc-dcc.c:552
 #, c-format
 msgid "%s not enough memory for DCC SEND\n"
 msgstr "%s no hay memoria suficiente para el DCC SEND\n"
 
-#: src/irc/irc-dcc.c:570
+#: src/irc/irc-dcc.c:574
 #, c-format
 msgid "%s cannot access file \"%s\"\n"
 msgstr "%s no es posible acceder al fichero \"%s\"\n"
 
-#: src/irc/irc-dcc.c:591
+#: src/irc/irc-dcc.c:595
 #, c-format
 msgid "%s cannot create socket for DCC\n"
 msgstr "%s no es posible crear socket para el DCC\n"
 
-#: src/irc/irc-dcc.c:604
+#: src/irc/irc-dcc.c:608
 #, c-format
 msgid "%s cannot find port for DCC\n"
 msgstr "%s no es posible encontrar el puerto para el DCC\n"
 
-#: src/irc/irc-dcc.c:651
+#: src/irc/irc-dcc.c:655
 #, c-format
 msgid "%s cannot send DCC\n"
 msgstr "%s no es posible enviar el DCC\n"
 
-#: src/irc/irc-dcc.c:730
+#: src/irc/irc-dcc.c:734
 #, c-format
 msgid "%s error sending data to \"%s\" via DCC CHAT\n"
 msgstr "%s error enviando datos al \"%s\" con DCC CHAT\n"
 
-#: src/irc/irc-dcc.c:1003
+#: src/irc/irc-dcc.c:1007
 #, c-format
 msgid ""
 "%s DCC failed because blocksize is too big. Check value of \"dcc_blocksize\" "
@@ -1968,7 +1968,7 @@ msgstr ""
 "%s El DCC ha fallado porque el tamaño de bloque es demasiado grande. "
 "Compruebe el valor de la opción \"dcc_blocksize\", el máximo es %d.\n"
 
-#: src/irc/irc-dcc.c:1078
+#: src/irc/irc-dcc.c:1082
 #, c-format
 msgid "Aborting active DCC: \"%s\" from %s\n"
 msgstr "Abandonar el DCC activo: \"%s\" de %s\n"
@@ -4150,4 +4150,3 @@ msgstr ""
 #: src/common/weeconfig.c:1737
 msgid "Saving config to disk\n"
 msgstr "Guardar configuración a disco\n"
-
