@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-07-09 18:34+0200\n"
+"POT-Creation-Date: 2005-07-12 09:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1244,8 +1244,8 @@ msgstr ""
 
 #: src/irc/irc-send.c:345 src/irc/irc-send.c:357 src/irc/irc-send.c:375
 #: src/irc/irc-send.c:999 src/irc/irc-send.c:1092 src/irc/irc-send.c:1624
-#: src/common/command.c:1189 src/common/command.c:1455
-#: src/common/command.c:1605 src/common/command.c:1748
+#: src/common/command.c:1189 src/common/command.c:1456
+#: src/common/command.c:1606 src/common/command.c:1749
 #, c-format
 msgid "%s wrong argument count for \"%s\" command\n"
 msgstr ""
@@ -1879,38 +1879,38 @@ msgstr ""
 msgid "%s error: server not found for \"%s\" function\n"
 msgstr ""
 
-#: src/plugins/perl/wee-perl.c:850 src/plugins/python/wee-python.c:408
+#: src/plugins/perl/wee-perl.c:879 src/plugins/python/wee-python.c:408
 #, c-format
 msgid "Loading %s module \"weechat\"\n"
 msgstr ""
 
-#: src/plugins/perl/wee-perl.c:909
+#: src/plugins/perl/wee-perl.c:938
 #, c-format
 msgid "Perl error: %s"
 msgstr ""
 
-#: src/plugins/perl/wee-perl.c:919
+#: src/plugins/perl/wee-perl.c:948
 #, c-format
 msgid "%s error: too much values from \"%s\" (%d). Expected: 1.\n"
 msgstr ""
 
-#: src/plugins/perl/wee-perl.c:941 src/plugins/perl/wee-perl.c:943
+#: src/plugins/perl/wee-perl.c:970 src/plugins/perl/wee-perl.c:972
 #: src/plugins/python/wee-python.c:566 src/plugins/python/wee-python.c:568
 #, c-format
 msgid "Loading %s script \"%s\"\n"
 msgstr ""
 
-#: src/plugins/perl/wee-perl.c:992 src/plugins/python/wee-python.c:637
+#: src/plugins/perl/wee-perl.c:1021 src/plugins/python/wee-python.c:637
 #, c-format
 msgid "Unloading %s script \"%s\"\n"
 msgstr ""
 
-#: src/plugins/perl/wee-perl.c:1009 src/plugins/python/wee-python.c:654
+#: src/plugins/perl/wee-perl.c:1038 src/plugins/python/wee-python.c:654
 #, c-format
 msgid "Unloading all %s scripts...\n"
 msgstr ""
 
-#: src/plugins/perl/wee-perl.c:1014 src/plugins/python/wee-python.c:659
+#: src/plugins/perl/wee-perl.c:1043 src/plugins/python/wee-python.c:659
 #, c-format
 msgid "%s scripts unloaded\n"
 msgstr ""
@@ -2159,7 +2159,7 @@ msgstr ""
 msgid "clear hotlist"
 msgstr ""
 
-#: src/gui/gui-keyboard.c:399 src/common/command.c:1470
+#: src/gui/gui-keyboard.c:399 src/common/command.c:1471
 #, c-format
 msgid "%s unable to bind key \"%s\"\n"
 msgstr ""
@@ -2545,9 +2545,9 @@ msgstr ""
 msgid "%s server not found\n"
 msgstr ""
 
-#: src/common/command.c:1202 src/common/command.c:1598
-#: src/common/command.c:1741 src/common/command.c:2438
-#: src/common/command.c:2454
+#: src/common/command.c:1202 src/common/command.c:1599
+#: src/common/command.c:1742 src/common/command.c:2439
+#: src/common/command.c:2455
 #, c-format
 msgid "%s unknown option for \"%s\" command\n"
 msgstr ""
@@ -2599,190 +2599,190 @@ msgstr ""
 msgid "Internal key functions:\n"
 msgstr ""
 
-#: src/common/command.c:1435
+#: src/common/command.c:1436
 msgid "Default key bindings restored\n"
 msgstr ""
 
-#: src/common/command.c:1441
+#: src/common/command.c:1442
 #, c-format
 msgid "%s \"-yes\" argument is required for keys reset (securuty reason)\n"
 msgstr ""
 
-#: src/common/command.c:1497 src/common/command.c:1640
+#: src/common/command.c:1498 src/common/command.c:1641
 #, c-format
 msgid "Registered %s scripts:\n"
 msgstr ""
 
-#: src/common/command.c:1514 src/common/command.c:1537
-#: src/common/command.c:1560 src/common/command.c:1657
-#: src/common/command.c:1680 src/common/command.c:1703
+#: src/common/command.c:1515 src/common/command.c:1538
+#: src/common/command.c:1561 src/common/command.c:1658
+#: src/common/command.c:1681 src/common/command.c:1704
 msgid "  (none)\n"
 msgstr ""
 
-#: src/common/command.c:1519 src/common/command.c:1662
+#: src/common/command.c:1520 src/common/command.c:1663
 #, c-format
 msgid "%s message handlers:\n"
 msgstr ""
 
-#: src/common/command.c:1528 src/common/command.c:1671
+#: src/common/command.c:1529 src/common/command.c:1672
 #, c-format
 msgid "  IRC(%s) => %s(%s)\n"
 msgstr ""
 
-#: src/common/command.c:1542 src/common/command.c:1685
+#: src/common/command.c:1543 src/common/command.c:1686
 #, c-format
 msgid "%s command handlers:\n"
 msgstr ""
 
-#: src/common/command.c:1551 src/common/command.c:1694
+#: src/common/command.c:1552 src/common/command.c:1695
 #, c-format
 msgid "  Command /%s => %s(%s)\n"
 msgstr ""
 
-#: src/common/command.c:1611
+#: src/common/command.c:1612
 msgid ""
 "WeeChat was build without Perl support.\n"
 "Please rebuild WeeChat with \"--enable-perl\" option for ./configure script\n"
 msgstr ""
 
-#: src/common/command.c:1754
+#: src/common/command.c:1755
 msgid ""
 "WeeChat was build without Python support.\n"
 "Please rebuild WeeChat with \"--enable-python\" option for ./configure "
 "script\n"
 msgstr ""
 
-#: src/common/command.c:1802
+#: src/common/command.c:1803
 msgid "No server.\n"
 msgstr ""
 
-#: src/common/command.c:1813
+#: src/common/command.c:1814
 #, c-format
 msgid "Server '%s' not found.\n"
 msgstr ""
 
-#: src/common/command.c:1825
+#: src/common/command.c:1826
 #, c-format
 msgid "%s missing servername for \"%s\" command\n"
 msgstr ""
 
-#: src/common/command.c:1833
+#: src/common/command.c:1834
 #, c-format
 msgid "%s too much arguments for \"%s\" command, ignoring arguments\n"
 msgstr ""
 
-#: src/common/command.c:1852
+#: src/common/command.c:1853
 #, c-format
 msgid "%s server \"%s\" not found for \"%s\" command\n"
 msgstr ""
 
-#: src/common/command.c:1860
+#: src/common/command.c:1861
 #, c-format
 msgid ""
 "%s you can not delete server \"%s\" because you are connected to. Try /"
 "disconnect %s before.\n"
 msgstr ""
 
-#: src/common/command.c:1876 src/common/command.c:2022
+#: src/common/command.c:1877 src/common/command.c:2023
 msgid "Server"
 msgstr ""
 
-#: src/common/command.c:1879
+#: src/common/command.c:1880
 msgid "has been deleted\n"
 msgstr ""
 
-#: src/common/command.c:1894
+#: src/common/command.c:1895
 #, c-format
 msgid "%s missing parameters for \"%s\" command\n"
 msgstr ""
 
-#: src/common/command.c:1904
+#: src/common/command.c:1905
 #, c-format
 msgid "%s server \"%s\" already exists, can't create it!\n"
 msgstr ""
 
-#: src/common/command.c:1933 src/common/command.c:1961
-#: src/common/command.c:1974 src/common/command.c:2000
+#: src/common/command.c:1934 src/common/command.c:1962
+#: src/common/command.c:1975 src/common/command.c:2001
 #, c-format
 msgid "%s missing password for \"%s\" parameter\n"
 msgstr ""
 
-#: src/common/command.c:1946
+#: src/common/command.c:1947
 #, c-format
 msgid "%s missing nick(s) for \"%s\" parameter\n"
 msgstr ""
 
-#: src/common/command.c:1987
+#: src/common/command.c:1988
 #, c-format
 msgid "%s missing command for \"%s\" parameter\n"
 msgstr ""
 
-#: src/common/command.c:2025
+#: src/common/command.c:2026
 msgid "created\n"
 msgstr ""
 
-#: src/common/command.c:2031
+#: src/common/command.c:2032
 #, c-format
 msgid "%s unable to create server\n"
 msgstr ""
 
-#: src/common/command.c:2086
+#: src/common/command.c:2087
 msgid "(unknown)"
 msgstr ""
 
-#: src/common/command.c:2109
+#: src/common/command.c:2110
 msgid "(password hidden) "
 msgstr ""
 
-#: src/common/command.c:2173
+#: src/common/command.c:2174
 #, c-format
 msgid "%s server \"%s\" not found\n"
 msgstr ""
 
-#: src/common/command.c:2204 src/common/command.c:2250
+#: src/common/command.c:2205 src/common/command.c:2251
 #, c-format
 msgid "%s config option \"%s\" not found\n"
 msgstr ""
 
-#: src/common/command.c:2209 src/common/command.c:2242
+#: src/common/command.c:2210 src/common/command.c:2243
 #, c-format
 msgid "%s incorrect value for option \"%s\"\n"
 msgstr ""
 
-#: src/common/command.c:2225
+#: src/common/command.c:2226
 #, c-format
 msgid "%s option \"%s\" can not be changed while WeeChat is running\n"
 msgstr ""
 
-#: src/common/command.c:2324
+#: src/common/command.c:2325
 #, c-format
 msgid "No config option found with \"%s\"\n"
 msgstr ""
 
-#: src/common/command.c:2327
+#: src/common/command.c:2328
 msgid "No config option found\n"
 msgstr ""
 
-#: src/common/command.c:2333
+#: src/common/command.c:2334
 #, c-format
 msgid "config option(s) found with \"%s\"\n"
 msgstr ""
 
-#: src/common/command.c:2336
+#: src/common/command.c:2337
 msgid "config option(s) found\n"
 msgstr ""
 
-#: src/common/command.c:2356
+#: src/common/command.c:2357
 #, c-format
 msgid "%s alias or command \"%s\" not found\n"
 msgstr ""
 
-#: src/common/command.c:2366
+#: src/common/command.c:2367
 #, c-format
 msgid "Alias \"%s\" removed\n"
 msgstr ""
 
-#: src/common/command.c:2386
+#: src/common/command.c:2387
 msgid "Opened windows:\n"
 msgstr ""
 
@@ -2917,62 +2917,62 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/common/weechat.c:344
+#: src/common/weechat.c:345
 #, c-format
 msgid "%s default keys:\n"
 msgstr ""
 
-#: src/common/weechat.c:424
+#: src/common/weechat.c:425
 #, c-format
 msgid "%s invalid syntax for IRC server ('%s'), ignored\n"
 msgstr ""
 
-#: src/common/weechat.c:437
+#: src/common/weechat.c:438
 #, c-format
 msgid "%s unable to create server ('%s'), ignored\n"
 msgstr ""
 
-#: src/common/weechat.c:446
+#: src/common/weechat.c:447
 #, c-format
 msgid "%s unknown parameter '%s', ignored\n"
 msgstr ""
 
-#: src/common/weechat.c:466
+#: src/common/weechat.c:467
 #, c-format
 msgid "%s cannot create directory \"%s\"\n"
 msgstr ""
 
-#: src/common/weechat.c:492
+#: src/common/weechat.c:493
 #, c-format
 msgid "%s unable to get HOME directory\n"
 msgstr ""
 
-#: src/common/weechat.c:501
+#: src/common/weechat.c:502
 #, c-format
 msgid "%s not enough memory for home directory\n"
 msgstr ""
 
-#: src/common/weechat.c:511
+#: src/common/weechat.c:512
 #, c-format
 msgid "%s unable to create ~/.weechat directory\n"
 msgstr ""
 
-#: src/common/weechat.c:563
+#: src/common/weechat.c:564
 #, c-format
 msgid "%s unable to create ~/.weechat/logs directory\n"
 msgstr ""
 
-#: src/common/weechat.c:606
+#: src/common/weechat.c:607
 #, c-format
 msgid "%s unable to create/append to log file (~/.weechat/%s)"
 msgstr ""
 
-#: src/common/weechat.c:629
+#: src/common/weechat.c:630
 #, c-format
 msgid "%sWelcome to "
 msgstr ""
 
-#: src/common/weechat.c:642 src/common/weechat.c:651
+#: src/common/weechat.c:643 src/common/weechat.c:652
 msgid "compiled on"
 msgstr ""
 
