@@ -166,10 +166,10 @@ struct t_irc_server
     int child_write;                /* to write into child pipe             */
     int sock;                       /* socket for server (IPv4 or IPv6)     */
     int is_connected;               /* 1 if WeeChat is connected to server  */
-    #ifdef HAVE_GNUTLS
+#ifdef HAVE_GNUTLS
     int ssl_connected;              /* = 1 if connected with SSL            */
     gnutls_session gnutls_sess;     /* gnutls session (only if SSL is used) */
-    #endif
+#endif
 
     char *unterminated_message;     /* beginning of a message in input buf  */
     char *nick;                     /* current nickname                     */
@@ -242,6 +242,7 @@ struct t_irc_dcc
     unsigned long size;             /* file size                            */
     unsigned long pos;              /* number of bytes received/sent        */
     unsigned long ack;              /* number of bytes received OK          */
+    unsigned long start_resume;     /* start of resume (in bytes)           */
     time_t last_check_time;         /* last time we looked at bytes sent/rcv*/
     unsigned long last_check_pos;   /* bytes sent/recv at last check        */
     unsigned long bytes_per_sec;    /* bytes per second                     */
@@ -331,6 +332,8 @@ extern void dcc_redraw (int);
 extern void dcc_free (t_irc_dcc *);
 extern void dcc_close (t_irc_dcc *, int);
 extern void dcc_accept (t_irc_dcc *);
+extern void dcc_accept_resume (t_irc_server *, char *, int, unsigned long);
+extern void dcc_start_resume (t_irc_server *, char *, int, unsigned long);
 extern t_irc_dcc *dcc_add (t_irc_server *, int, unsigned long, int, char *, int,
                            char *, char *, unsigned long);
 extern void dcc_send_request (t_irc_server *, int, char *, char *);

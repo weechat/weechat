@@ -1159,7 +1159,7 @@ int
 irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
 {
     char *pos, *pos2, *host2;
-    char *pos_file, *pos_addr, *pos_port, *pos_size;    /* for DCC */
+    char *pos_file, *pos_addr, *pos_port, *pos_size, *pos_start_resume;  /* for DCC */
     t_irc_channel *ptr_channel;
     t_irc_nick *ptr_nick;
     struct utsname *buf;
@@ -1422,6 +1422,120 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                 dcc_add (server, DCC_FILE_RECV, (unsigned long) atol (pos_addr),
                          atoi (pos_port), host, -1, pos_file, NULL,
                          (unsigned long) atol (pos_size));
+                return 0;
+            }
+            
+            /* incoming DCC RESUME (asked by receiver) */
+            if (strncmp (pos, "\01DCC RESUME", 11) == 0)
+            {
+                /* check if DCC RESUME is ok, i.e. with 0x01 at end */
+                pos2 = strchr (pos + 1, '\01');
+                if (!pos2)
+                {
+                    irc_display_prefix (server->buffer, PREFIX_ERROR);
+                    gui_printf_nolog (server->buffer,
+                                      _("%s cannot parse \"%s\" command\n"),
+                                      WEECHAT_ERROR, "privmsg");
+                    return -1;
+                }
+                pos2[0] = '\0';
+                
+                /* DCC filename */
+                pos_file = pos + 11;
+                while (pos_file[0] == ' ')
+                    pos_file++;
+                
+                /* look for resume start position */
+                pos_start_resume = strrchr (pos_file, ' ');
+                if (!pos_start_resume)
+                {
+                    irc_display_prefix (server->buffer, PREFIX_ERROR);
+                    gui_printf_nolog (server->buffer,
+                                      _("%s cannot parse \"%s\" command\n"),
+                                      WEECHAT_ERROR, "privmsg");
+                    return -1;
+                }
+                pos2 = pos_start_resume;
+                pos_start_resume++;
+                while (pos2[0] == ' ')
+                    pos2--;
+                pos2[1] = '\0';
+                
+                /* look for DCC port */
+                pos_port = strrchr (pos_file, ' ');
+                if (!pos_port)
+                {
+                    irc_display_prefix (server->buffer, PREFIX_ERROR);
+                    gui_printf_nolog (server->buffer,
+                                      _("%s cannot parse \"%s\" command\n"),
+                                      WEECHAT_ERROR, "privmsg");
+                    return -1;
+                }
+                pos2 = pos_port;
+                pos_port++;
+                while (pos2[0] == ' ')
+                    pos2--;
+                pos2[1] = '\0';
+                
+                dcc_accept_resume (server, pos_file, atoi (pos_port),
+                                   (unsigned long) atol (pos_start_resume));
+                return 0;
+            }
+            
+            /* incoming DCC ACCEPT (resume accepted by sender) */
+            if (strncmp (pos, "\01DCC ACCEPT", 11) == 0)
+            {
+                /* check if DCC ACCEPT is ok, i.e. with 0x01 at end */
+                pos2 = strchr (pos + 1, '\01');
+                if (!pos2)
+                {
+                    irc_display_prefix (server->buffer, PREFIX_ERROR);
+                    gui_printf_nolog (server->buffer,
+                                      _("%s cannot parse \"%s\" command\n"),
+                                      WEECHAT_ERROR, "privmsg");
+                    return -1;
+                }
+                pos2[0] = '\0';
+                
+                /* DCC filename */
+                pos_file = pos + 11;
+                while (pos_file[0] == ' ')
+                    pos_file++;
+                
+                /* look for resume start position */
+                pos_start_resume = strrchr (pos_file, ' ');
+                if (!pos_start_resume)
+                {
+                    irc_display_prefix (server->buffer, PREFIX_ERROR);
+                    gui_printf_nolog (server->buffer,
+                                      _("%s cannot parse \"%s\" command\n"),
+                                      WEECHAT_ERROR, "privmsg");
+                    return -1;
+                }
+                pos2 = pos_start_resume;
+                pos_start_resume++;
+                while (pos2[0] == ' ')
+                    pos2--;
+                pos2[1] = '\0';
+                
+                /* look for DCC port */
+                pos_port = strrchr (pos_file, ' ');
+                if (!pos_port)
+                {
+                    irc_display_prefix (server->buffer, PREFIX_ERROR);
+                    gui_printf_nolog (server->buffer,
+                                      _("%s cannot parse \"%s\" command\n"),
+                                      WEECHAT_ERROR, "privmsg");
+                    return -1;
+                }
+                pos2 = pos_port;
+                pos_port++;
+                while (pos2[0] == ' ')
+                    pos2--;
+                pos2[1] = '\0';
+                
+                dcc_start_resume (server, pos_file, atoi (pos_port),
+                                  (unsigned long) atol (pos_start_resume));
                 return 0;
             }
             

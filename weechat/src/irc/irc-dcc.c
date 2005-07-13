@@ -64,6 +64,133 @@ dcc_redraw (int highlight)
 }
 
 /*
+ * dcc_search: search a DCC
+ */
+
+t_irc_dcc *
+dcc_search (t_irc_server *server, int type, int status, int port)
+{
+    t_irc_dcc *ptr_dcc;
+    
+    for (ptr_dcc = dcc_list; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
+    {
+        if ((ptr_dcc->server == server)
+            && (ptr_dcc->type == type)
+            && (ptr_dcc->status = status)
+            && (ptr_dcc->port == port))
+            return ptr_dcc;
+    }
+    
+    /* DCC not found */
+    return NULL;
+}
+
+/*
+ * dcc_file_is_resumable: check if a file can be used for resuming a download
+ */
+
+int
+dcc_file_is_resumable (t_irc_dcc *ptr_dcc, char *filename)
+{
+    struct stat st;
+    
+    if (access (filename, W_OK) == 0)
+    {
+        if (stat (filename, &st) != -1)
+        {
+            if ((unsigned long) st.st_size < ptr_dcc->size)
+            {
+                ptr_dcc->start_resume = (unsigned long) st.st_size;
+                ptr_dcc->pos = st.st_size;
+                ptr_dcc->last_check_pos = st.st_size;
+                return 1;
+            }
+        }
+    }
+    
+    /* not resumable */
+    return 0;
+}
+
+/*
+ * dcc_find_filename: find local filename for a DCC
+ *                    if type if file/recv, add a suffix (like .1) if needed
+ *                    if download is resumable, set "start_resume" to good value
+ */
+
+void
+dcc_find_filename (t_irc_dcc *ptr_dcc)
+{
+    char *ptr_home, *filename2;
+    
+    ptr_home = getenv ("HOME");
+    ptr_dcc->local_filename = (char *) malloc (strlen (cfg_dcc_download_path) +
+                                               strlen (ptr_dcc->nick) +
+                                               strlen (ptr_dcc->filename) +
+                                               ((cfg_dcc_download_path[0] == '~') ?
+                                                strlen (ptr_home) : 0) +
+                                               4);
+    if (!ptr_dcc->local_filename)
+        return;
+    
+    if (cfg_dcc_download_path[0] == '~')
+    {
+        strcpy (ptr_dcc->local_filename, ptr_home);
+        strcat (ptr_dcc->local_filename, cfg_dcc_download_path + 1);
+    }
+    else
+        strcpy (ptr_dcc->local_filename, cfg_dcc_download_path);
+    if (ptr_dcc->local_filename[strlen (ptr_dcc->local_filename) - 1] != DIR_SEPARATOR_CHAR)
+        strcat (ptr_dcc->local_filename, DIR_SEPARATOR);
+    strcat (ptr_dcc->local_filename, ptr_dcc->nick);
+    strcat (ptr_dcc->local_filename, ".");
+    strcat (ptr_dcc->local_filename, ptr_dcc->filename);
+    
+    /* file already exists? */
+    if (access (ptr_dcc->local_filename, F_OK) == 0)
+    {
+        if (dcc_file_is_resumable (ptr_dcc, ptr_dcc->local_filename))
+            return;
+        
+        /* if auto rename is not set, then abort DCC */
+        if (!cfg_dcc_auto_rename)
+        {
+            dcc_close (ptr_dcc, DCC_FAILED);
+            dcc_redraw (1);
+            return;
+        }
+        
+        filename2 = (char *) malloc (strlen (ptr_dcc->local_filename) + 16);
+        if (!filename2)
+        {
+            dcc_close (ptr_dcc, DCC_FAILED);
+            dcc_redraw (1);
+            return;
+        }
+        ptr_dcc->filename_suffix = 0;
+        do
+        {
+            ptr_dcc->filename_suffix++;
+            sprintf (filename2, "%s.%d",
+                     ptr_dcc->local_filename,
+                     ptr_dcc->filename_suffix);
+            if (access (filename2, F_OK) == 0)
+            {
+                if (dcc_file_is_resumable (ptr_dcc, filename2))
+                    break;
+            }
+            else
+                break;
+        }
+        while (1);
+        
+        free (ptr_dcc->local_filename);
+        ptr_dcc->local_filename = strdup (filename2);
+        free (filename2);
+    }
+}
+
+/*
  * dcc_calculate_speed: calculate DCC speed (for files only)
  */
 
@@ -81,7 +208,7 @@ dcc_calculate_speed (t_irc_dcc *ptr_dcc, int ended)
             elapsed = local_time - ptr_dcc->start_transfer;
             if (elapsed == 0)
                 elapsed = 1;
-            ptr_dcc->bytes_per_sec = ptr_dcc->pos / elapsed;
+            ptr_dcc->bytes_per_sec = (ptr_dcc->pos - ptr_dcc->start_resume) / elapsed;
         }
         else
         {
@@ -199,7 +326,7 @@ dcc_close (t_irc_dcc *ptr_dcc, int status)
                                   COLOR_WIN_CHAT_CHANNEL,
                                   "%s",
                                   ptr_dcc->local_filename);
-                gui_printf (ptr_dcc->server->buffer, ") ");
+                gui_printf (ptr_dcc->server->buffer, ")");
             }
             if (ptr_dcc->type == DCC_FILE_SEND)
                 gui_printf (ptr_dcc->server->buffer, _(" sent to "));
@@ -294,14 +421,12 @@ dcc_channel_for_chat (t_irc_dcc *ptr_dcc)
 }
 
 /*
- * dcc_accept: accepts a DCC file or chat request
+ * dcc_recv_connect_init: connect to sender and init file or chat
  */
 
 void
-dcc_accept (t_irc_dcc *ptr_dcc)
+dcc_recv_connect_init (t_irc_dcc *ptr_dcc)
 {
-    char *ptr_home, *filename2;
-    
     if (!dcc_connect (ptr_dcc))
     {
         dcc_close (ptr_dcc, DCC_FAILED);
@@ -314,68 +439,15 @@ dcc_accept (t_irc_dcc *ptr_dcc)
         /* DCC file => look for local filename and open it in writing mode */
         if (DCC_IS_FILE(ptr_dcc->type))
         {
-            ptr_home = getenv ("HOME");
-            ptr_dcc->local_filename = (char *) malloc (strlen (cfg_dcc_download_path) +
-                                                       strlen (ptr_dcc->nick) +
-                                                       strlen (ptr_dcc->filename) +
-                                                       ((cfg_dcc_download_path[0] == '~') ?
-                                                           strlen (ptr_home) : 0) +
-                                                       4);
-            if (!ptr_dcc->local_filename)
-            {
-                dcc_close (ptr_dcc, DCC_FAILED);
-                dcc_redraw (1);
-                return;
-            }
-            if (cfg_dcc_download_path[0] == '~')
-            {
-                strcpy (ptr_dcc->local_filename, ptr_home);
-                strcat (ptr_dcc->local_filename, cfg_dcc_download_path + 1);
-            }
+            if (ptr_dcc->start_resume > 0)
+                ptr_dcc->file = open (ptr_dcc->local_filename,
+                                      O_APPEND | O_WRONLY | O_NONBLOCK);
             else
-                strcpy (ptr_dcc->local_filename, cfg_dcc_download_path);
-            if (ptr_dcc->local_filename[strlen (ptr_dcc->local_filename) - 1] != DIR_SEPARATOR_CHAR)
-                strcat (ptr_dcc->local_filename, DIR_SEPARATOR);
-            strcat (ptr_dcc->local_filename, ptr_dcc->nick);
-            strcat (ptr_dcc->local_filename, ".");
-            strcat (ptr_dcc->local_filename, ptr_dcc->filename);
-            
-            /* file already exists? */
-            if (access (ptr_dcc->local_filename, F_OK) == 0)
-            {
-                /* if auto rename is not set, then abort DCC */
-                if (!cfg_dcc_auto_rename)
-                {
-                    dcc_close (ptr_dcc, DCC_FAILED);
-                    dcc_redraw (1);
-                    return;
-                }
-                
-                filename2 = (char *) malloc (strlen (ptr_dcc->local_filename) + 16);
-                if (!filename2)
-                {
-                    dcc_close (ptr_dcc, DCC_FAILED);
-                    dcc_redraw (1);
-                    return;
-                }
-                ptr_dcc->filename_suffix = 0;
-                do
-                {
-                    ptr_dcc->filename_suffix++;
-                    sprintf (filename2, "%s.%d",
-                             ptr_dcc->local_filename,
-                             ptr_dcc->filename_suffix);
-                }
-                while (access (filename2, F_OK) == 0);
-                
-                free (ptr_dcc->local_filename);
-                ptr_dcc->local_filename = strdup (filename2);
-                free (filename2);
-            }
-            ptr_dcc->file = open (ptr_dcc->local_filename,
-                                  O_CREAT | O_TRUNC | O_WRONLY | O_NONBLOCK,
-                                  0644);
+                ptr_dcc->file = open (ptr_dcc->local_filename,
+                                      O_CREAT | O_TRUNC | O_WRONLY | O_NONBLOCK,
+                                      0644);
             ptr_dcc->start_transfer = time (NULL);
+            ptr_dcc->last_check_time = time (NULL);
         }
         else
         {
@@ -384,6 +456,93 @@ dcc_accept (t_irc_dcc *ptr_dcc)
         }
     }
     dcc_redraw (1);
+}
+
+/*
+ * dcc_accept: accepts a DCC file or chat request
+ */
+
+void
+dcc_accept (t_irc_dcc *ptr_dcc)
+{
+    if (DCC_IS_FILE(ptr_dcc->type) && (ptr_dcc->start_resume > 0))
+    {
+        ptr_dcc->status = DCC_CONNECTING;
+        server_sendf (ptr_dcc->server,
+                      (strchr (ptr_dcc->filename, ' ')) ?
+                          "PRIVMSG %s :\01DCC RESUME \"%s\" %d %u\01\r\n" :
+                          "PRIVMSG %s :\01DCC RESUME %s %d %u\01\r\n",
+                      ptr_dcc->nick, ptr_dcc->filename,
+                      ptr_dcc->port, ptr_dcc->start_resume);
+        dcc_redraw (1);
+    }
+    else
+        dcc_recv_connect_init (ptr_dcc);
+}
+
+/*
+ * dcc_accept_resume: accepts a resume and inform the receiver
+ */
+
+void
+dcc_accept_resume (t_irc_server *server, char *filename, int port,
+                   unsigned long pos_start)
+{
+    t_irc_dcc *ptr_dcc;
+    
+    ptr_dcc = dcc_search (server, DCC_FILE_SEND, DCC_CONNECTING, port);
+    if (ptr_dcc)
+    {
+        ptr_dcc->pos = pos_start;
+        ptr_dcc->ack = pos_start;
+        ptr_dcc->start_resume = pos_start;
+        ptr_dcc->last_check_pos = pos_start;
+        server_sendf (ptr_dcc->server,
+                      (strchr (ptr_dcc->filename, ' ')) ?
+                          "PRIVMSG %s :\01DCC ACCEPT \"%s\" %d %u\01\r\n" :
+                          "PRIVMSG %s :\01DCC ACCEPT %s %d %u\01\r\n",
+                      ptr_dcc->nick, ptr_dcc->filename,
+                      ptr_dcc->port, ptr_dcc->start_resume);
+        
+        irc_display_prefix (ptr_dcc->server->buffer, PREFIX_INFO);
+        gui_printf (ptr_dcc->server->buffer, _("DCC: file "));
+        gui_printf_color (ptr_dcc->server->buffer,
+                          COLOR_WIN_CHAT_CHANNEL,
+                          "%s ",
+                          ptr_dcc->filename);
+        gui_printf (ptr_dcc->server->buffer, _("resumed at position %u\n"),
+                    ptr_dcc->start_resume);
+        dcc_redraw (1);
+    }
+    else
+        gui_printf (server->buffer,
+                    _("%s can't resume file \"%s\" (port: %d, start position: %u): DCC not found or ended\n"),
+                    WEECHAT_ERROR, filename, port, pos_start);
+}
+
+/*
+ * dcc_start_resume: called when "DCC ACCEPT" is received (resume accepted by sender)
+ */
+
+void
+dcc_start_resume (t_irc_server *server, char *filename, int port,
+                  unsigned long pos_start)
+{
+    t_irc_dcc *ptr_dcc;
+    
+    ptr_dcc = dcc_search (server, DCC_FILE_RECV, DCC_CONNECTING, port);
+    if (ptr_dcc)
+    {
+        ptr_dcc->pos = pos_start;
+        ptr_dcc->ack = pos_start;
+        ptr_dcc->start_resume = pos_start;
+        ptr_dcc->last_check_pos = pos_start;
+        dcc_recv_connect_init (ptr_dcc);
+    }
+    else
+        gui_printf (server->buffer,
+                    _("%s can't resume file \"%s\" (port: %d, start position: %u): DCC not found or ended\n"),
+                    WEECHAT_ERROR, filename, port, pos_start);
 }
 
 /*
@@ -423,15 +582,20 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
         new_dcc->filename = strdup (_("DCC chat"));
     else
         new_dcc->filename = (filename) ? strdup (filename) : NULL;
-    new_dcc->local_filename = (local_filename) ? strdup (local_filename) : NULL;
+    new_dcc->local_filename = NULL;
     new_dcc->filename_suffix = -1;
     new_dcc->size = size;
     new_dcc->pos = 0;
     new_dcc->ack = 0;
-    new_dcc->last_check_time = 0;
+    new_dcc->start_resume = 0;
+    new_dcc->last_check_time = time (NULL);
     new_dcc->last_check_pos = 0;
     new_dcc->bytes_per_sec = 0;
     new_dcc->last_activity = time (NULL);
+    if (local_filename)
+        new_dcc->local_filename = strdup (local_filename);
+    else
+        dcc_find_filename (new_dcc);
     new_dcc->prev_dcc = NULL;
     new_dcc->next_dcc = dcc_list;
     if (dcc_list)
@@ -457,6 +621,7 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
         gui_printf (server->buffer, ", ");
         gui_printf_color (server->buffer, COLOR_WIN_CHAT_CHANNEL, "%lu", size);
         gui_printf (server->buffer, _(" bytes\n"));
+        dcc_redraw (1);
     }
     if (type == DCC_FILE_SEND)
     {
@@ -470,6 +635,7 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
         gui_printf (server->buffer, "), ");
         gui_printf_color (server->buffer, COLOR_WIN_CHAT_CHANNEL, "%lu", size);
         gui_printf (server->buffer, _(" bytes\n"));
+        dcc_redraw (1);
     }
     if (type == DCC_CHAT_RECV)
     {
@@ -481,12 +647,40 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
                           "%d.%d.%d.%d",
                           addr >> 24, (addr >> 16) & 0xff, (addr >> 8) & 0xff, addr & 0xff);
         gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, ")\n");
+        dcc_redraw (1);
     }
     if (type == DCC_CHAT_SEND)
     {
         irc_display_prefix (server->buffer, PREFIX_INFO);
         gui_printf (server->buffer, _("Sending DCC chat request to "));
         gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK, "%s\n", nick);
+        dcc_redraw (1);
+    }
+    
+    if (DCC_IS_FILE(type) && (!new_dcc->local_filename))
+    {
+        dcc_close (new_dcc, DCC_FAILED);
+        dcc_redraw (1);
+        return NULL;
+    }
+    
+    if (DCC_IS_FILE(type) && (new_dcc->start_resume > 0))
+    {
+        irc_display_prefix (new_dcc->server->buffer, PREFIX_INFO);
+        gui_printf (new_dcc->server->buffer, _("DCC: file "));
+        gui_printf_color (new_dcc->server->buffer,
+                          COLOR_WIN_CHAT_CHANNEL,
+                          "%s",
+                          new_dcc->filename);
+        gui_printf (new_dcc->server->buffer, _(" (local filename: "));
+        gui_printf_color (new_dcc->server->buffer,
+                          COLOR_WIN_CHAT_CHANNEL,
+                          "%s",
+                          new_dcc->local_filename);
+        gui_printf (new_dcc->server->buffer, ") ");
+        gui_printf (new_dcc->server->buffer, _("will be resumed at position %u\n"),
+                    new_dcc->start_resume);
+        dcc_redraw (1);
     }
     
     /* connect if needed and redraw DCC buffer */
@@ -495,6 +689,7 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
         if (!dcc_connect (new_dcc))
         {
             dcc_close (new_dcc, DCC_FAILED);
+            dcc_redraw (1);
             return NULL;
         }
     }
@@ -532,9 +727,9 @@ dcc_send_request (t_irc_server *server, int type, char *nick, char *filename)
     if (type == DCC_FILE_SEND)
     {
         /* add home if filename not beginning with '/' (not for Win32) */
-        #ifdef _WIN32
+#ifdef _WIN32
         filename2 = strdup (filename);
-        #else
+#else
         if (filename[0] == '/')
             filename2 = strdup (filename);
         else
@@ -564,7 +759,7 @@ dcc_send_request (t_irc_server *server, int type, char *nick, char *filename)
                 strcat (filename2, DIR_SEPARATOR);
             strcat (filename2, filename);
         }
-        #endif
+#endif
         
         /* check if file exists */
         if (stat (filename2, &st) == -1)
@@ -719,11 +914,11 @@ dcc_chat_sendf (t_irc_dcc *ptr_dcc, char *fmt, ...)
     buffer[sizeof (buffer) - 1] = '\0';
     if ((size_buf < 0) || (size_buf > (int) (sizeof (buffer) - 1)))
         size_buf = strlen (buffer);
-    #ifdef DEBUG
+#ifdef DEBUG
     buffer[size_buf - 2] = '\0';
     gui_printf (ptr_dcc->server->buffer, "[DEBUG] Sending to remote host (DCC CHAT) >>> %s\n", buffer);
     buffer[size_buf - 2] = '\r';
-    #endif
+#endif
     buf2 = weechat_convert_encoding ((cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
                                      cfg_look_charset_internal : local_charset,
                                      cfg_look_charset_encode,
