@@ -1419,9 +1419,9 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                     pos2--;
                 pos2[1] = '\0';
                 
-                dcc_add (server, DCC_FILE_RECV, (unsigned long) atol (pos_addr),
+                dcc_add (server, DCC_FILE_RECV, strtoul (pos_addr, NULL, 10),
                          atoi (pos_port), host, -1, pos_file, NULL,
-                         (unsigned long) atol (pos_size));
+                         strtoul (pos_size, NULL, 10));
                 return 0;
             }
             
@@ -1478,7 +1478,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                 pos2[1] = '\0';
                 
                 dcc_accept_resume (server, pos_file, atoi (pos_port),
-                                   (unsigned long) atol (pos_start_resume));
+                                   strtoul (pos_start_resume, NULL, 10));
                 return 0;
             }
             
@@ -1535,7 +1535,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                 pos2[1] = '\0';
                 
                 dcc_start_resume (server, pos_file, atoi (pos_port),
-                                  (unsigned long) atol (pos_start_resume));
+                                  strtoul (pos_start_resume, NULL, 10));
                 return 0;
             }
             
@@ -1601,7 +1601,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                     return -1;
                 }
                 
-                dcc_add (server, DCC_CHAT_RECV, (unsigned long) atol (pos_addr),
+                dcc_add (server, DCC_CHAT_RECV, strtoul (pos_addr, NULL, 10),
                          atoi (pos_port), host, -1, NULL, NULL, 0);
                 
                 return 0;

@@ -94,6 +94,9 @@ dcc_file_is_resumable (t_irc_dcc *ptr_dcc, char *filename)
 {
     struct stat st;
     
+    if (!cfg_dcc_auto_resume)
+        return 0;
+    
     if (access (filename, W_OK) == 0)
     {
         if (stat (filename, &st) != -1)
