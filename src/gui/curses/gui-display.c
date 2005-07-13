@@ -2498,6 +2498,7 @@ gui_add_message (t_gui_buffer *buffer, int type, int color, char *message)
 {
     char *pos;
     int length;
+    char *ptr_string;
     
     /* create new line if previous was ending by '\n' (or if 1st line) */
     if (buffer->line_complete)
@@ -2518,6 +2519,13 @@ gui_add_message (t_gui_buffer *buffer, int type, int color, char *message)
         buffer->line_complete = 1;
     }
     buffer->last_line->last_message->message = strdup (message);
+    ptr_string = buffer->last_line->last_message->message;
+    while (ptr_string[0])
+    {
+        if ((ptr_string[0] > 0) && (ptr_string[0] < 32))
+            ptr_string[0] = 32;
+        ptr_string++;
+    }
     length = strlen (message);
     buffer->last_line->length += length;
     if (type & MSG_TYPE_MSG)
