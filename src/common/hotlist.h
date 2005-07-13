@@ -23,12 +23,17 @@
 
 #include "../irc/irc.h"
 
+#define HOTLIST_LOW       0
+#define HOTLIST_MSG       1
+#define HOTLIST_PRIVATE   2
+#define HOTLIST_HIGHLIGHT 3
+
 typedef struct t_weechat_hotlist t_weechat_hotlist;
 
 struct t_weechat_hotlist
 {
     int priority;                       /* 0=crappy msg (join/part), 1=msg, */
-                                        /* 2=nick highlight                 */
+                                        /* 2=pv, 3=nick highlight           */
     t_gui_buffer *buffer;               /* associated buffer                */
     t_weechat_hotlist *prev_hotlist;    /* link to previous hotlist         */
     t_weechat_hotlist *next_hotlist;    /* link to next hotlist             */

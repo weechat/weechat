@@ -4,7 +4,8 @@ WeeChat - Wee Enhanced Environment for Chat
 ChangeLog - 2005-07-13
 
 
-Versoin 0.1.4 (under dev!):
+Version 0.1.4 (under dev!):
+   * added color for private in hotlist (different than color for highlight)
    * added DCC resume and timeout
    * added function for Perl/Python to get DCC list
    * fixed FIFO pipe (command now authorized on a buffer not connected

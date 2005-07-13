@@ -1254,15 +1254,19 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
             {
                 switch (ptr_hotlist->priority)
                 {
-                    case 0:
+                    case HOTLIST_LOW:
                         gui_window_set_color (ptr_win->win_status,
                                               COLOR_WIN_STATUS_DATA_OTHER);
                         break;
-                    case 1:
+                    case HOTLIST_MSG:
                         gui_window_set_color (ptr_win->win_status,
                                               COLOR_WIN_STATUS_DATA_MSG);
                         break;
-                    case 2:
+                    case HOTLIST_PRIVATE:
+                        gui_window_set_color (ptr_win->win_status,
+                                              COLOR_WIN_STATUS_DATA_PRIVATE);
+                        break;
+                    case HOTLIST_HIGHLIGHT:
                         gui_window_set_color (ptr_win->win_status,
                                               COLOR_WIN_STATUS_DATA_HIGHLIGHT);
                         break;
@@ -2278,6 +2282,8 @@ gui_init_colors ()
             cfg_col_status_delimiters, cfg_col_status_bg);
         init_pair (COLOR_WIN_STATUS_DATA_MSG,
             cfg_col_status_data_msg, cfg_col_status_bg);
+        init_pair (COLOR_WIN_STATUS_DATA_PRIVATE,
+            cfg_col_status_data_private, cfg_col_status_bg);
         init_pair (COLOR_WIN_STATUS_DATA_HIGHLIGHT,
             cfg_col_status_data_highlight, cfg_col_status_bg);
         init_pair (COLOR_WIN_STATUS_DATA_OTHER,
@@ -2356,6 +2362,7 @@ gui_init_colors ()
         color_attr[COLOR_WIN_STATUS - 1] = (cfg_col_status >= 0) ? cfg_col_status & A_BOLD : 0;
         color_attr[COLOR_WIN_STATUS_DELIMITERS - 1] = (cfg_col_status_delimiters >= 0) ? cfg_col_status_delimiters & A_BOLD : 0;
         color_attr[COLOR_WIN_STATUS_DATA_MSG - 1] = (cfg_col_status_data_msg >= 0) ? cfg_col_status_data_msg & A_BOLD : 0;
+        color_attr[COLOR_WIN_STATUS_DATA_PRIVATE - 1] = (cfg_col_status_data_private >= 0) ? cfg_col_status_data_private & A_BOLD : 0;
         color_attr[COLOR_WIN_STATUS_DATA_HIGHLIGHT - 1] = (cfg_col_status_data_highlight >= 0) ? cfg_col_status_data_highlight & A_BOLD : 0;
         color_attr[COLOR_WIN_STATUS_DATA_OTHER - 1] = (cfg_col_status_data_other >= 0) ? cfg_col_status_data_other & A_BOLD : 0;
         color_attr[COLOR_WIN_STATUS_MORE - 1] = (cfg_col_status_more >= 0) ? cfg_col_status_more & A_BOLD : 0;
@@ -2547,9 +2554,14 @@ gui_add_message (t_gui_buffer *buffer, int type, int color, char *message)
                 buffer->last_line->line_with_highlight <=
                 buffer->notify_level)
             {
-                hotlist_add (buffer->last_line->line_with_message +
-                            buffer->last_line->line_with_highlight,
-                            buffer);
+                if (buffer->last_line->line_with_highlight)
+                    hotlist_add (HOTLIST_HIGHLIGHT, buffer);
+                else if (BUFFER_IS_PRIVATE(buffer))
+                    hotlist_add (HOTLIST_PRIVATE, buffer);
+                else if (buffer->last_line->line_with_message)
+                    hotlist_add (HOTLIST_MSG, buffer);
+                else
+                    hotlist_add (HOTLIST_LOW, buffer);
                 gui_draw_buffer_status (gui_current_window->buffer, 1);
             }
         }

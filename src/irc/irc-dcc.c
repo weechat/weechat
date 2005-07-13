@@ -159,7 +159,7 @@ dcc_find_filename (t_irc_dcc *ptr_dcc)
         if (!cfg_dcc_auto_rename)
         {
             dcc_close (ptr_dcc, DCC_FAILED);
-            dcc_redraw (1);
+            dcc_redraw (HOTLIST_MSG);
             return;
         }
         
@@ -167,7 +167,7 @@ dcc_find_filename (t_irc_dcc *ptr_dcc)
         if (!filename2)
         {
             dcc_close (ptr_dcc, DCC_FAILED);
-            dcc_redraw (1);
+            dcc_redraw (HOTLIST_MSG);
             return;
         }
         ptr_dcc->filename_suffix = 0;
@@ -405,7 +405,7 @@ dcc_channel_for_chat (t_irc_dcc *ptr_dcc)
                     "(maybe private buffer has already DCC CHAT?)\n"),
                     WEECHAT_ERROR);
         dcc_close (ptr_dcc, DCC_FAILED);
-        dcc_redraw (1);
+        dcc_redraw (HOTLIST_MSG);
         return;
     }
     
@@ -433,7 +433,7 @@ dcc_recv_connect_init (t_irc_dcc *ptr_dcc)
     if (!dcc_connect (ptr_dcc))
     {
         dcc_close (ptr_dcc, DCC_FAILED);
-        dcc_redraw (1);
+        dcc_redraw (HOTLIST_MSG);
     }
     else
     {
@@ -458,7 +458,7 @@ dcc_recv_connect_init (t_irc_dcc *ptr_dcc)
             dcc_channel_for_chat (ptr_dcc);
         }
     }
-    dcc_redraw (1);
+    dcc_redraw (HOTLIST_MSG);
 }
 
 /*
@@ -477,7 +477,7 @@ dcc_accept (t_irc_dcc *ptr_dcc)
                           "PRIVMSG %s :\01DCC RESUME %s %d %u\01\r\n",
                       ptr_dcc->nick, ptr_dcc->filename,
                       ptr_dcc->port, ptr_dcc->start_resume);
-        dcc_redraw (1);
+        dcc_redraw (HOTLIST_MSG);
     }
     else
         dcc_recv_connect_init (ptr_dcc);
@@ -515,7 +515,7 @@ dcc_accept_resume (t_irc_server *server, char *filename, int port,
                           ptr_dcc->filename);
         gui_printf (ptr_dcc->server->buffer, _("resumed at position %u\n"),
                     ptr_dcc->start_resume);
-        dcc_redraw (1);
+        dcc_redraw (HOTLIST_MSG);
     }
     else
         gui_printf (server->buffer,
@@ -624,7 +624,7 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
         gui_printf (server->buffer, ", ");
         gui_printf_color (server->buffer, COLOR_WIN_CHAT_CHANNEL, "%lu", size);
         gui_printf (server->buffer, _(" bytes\n"));
-        dcc_redraw (1);
+        dcc_redraw (HOTLIST_MSG);
     }
     if (type == DCC_FILE_SEND)
     {
@@ -638,7 +638,7 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
         gui_printf (server->buffer, "), ");
         gui_printf_color (server->buffer, COLOR_WIN_CHAT_CHANNEL, "%lu", size);
         gui_printf (server->buffer, _(" bytes\n"));
-        dcc_redraw (1);
+        dcc_redraw (HOTLIST_MSG);
     }
     if (type == DCC_CHAT_RECV)
     {
@@ -650,20 +650,20 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
                           "%d.%d.%d.%d",
                           addr >> 24, (addr >> 16) & 0xff, (addr >> 8) & 0xff, addr & 0xff);
         gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, ")\n");
-        dcc_redraw (1);
+        dcc_redraw (HOTLIST_MSG);
     }
     if (type == DCC_CHAT_SEND)
     {
         irc_display_prefix (server->buffer, PREFIX_INFO);
         gui_printf (server->buffer, _("Sending DCC chat request to "));
         gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK, "%s\n", nick);
-        dcc_redraw (1);
+        dcc_redraw (HOTLIST_MSG);
     }
     
     if (DCC_IS_FILE(type) && (!new_dcc->local_filename))
     {
         dcc_close (new_dcc, DCC_FAILED);
-        dcc_redraw (1);
+        dcc_redraw (HOTLIST_MSG);
         return NULL;
     }
     
@@ -683,7 +683,7 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
         gui_printf (new_dcc->server->buffer, ") ");
         gui_printf (new_dcc->server->buffer, _("will be resumed at position %u\n"),
                     new_dcc->start_resume);
-        dcc_redraw (1);
+        dcc_redraw (HOTLIST_MSG);
     }
     
     /* connect if needed and redraw DCC buffer */
@@ -692,7 +692,7 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
         if (!dcc_connect (new_dcc))
         {
             dcc_close (new_dcc, DCC_FAILED);
-            dcc_redraw (1);
+            dcc_redraw (HOTLIST_MSG);
             return NULL;
         }
     }
@@ -701,7 +701,7 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
         || ( (type == DCC_FILE_RECV) && (cfg_dcc_auto_accept_files) ) )
         dcc_accept (new_dcc);
     else
-        dcc_redraw (2);
+        dcc_redraw (HOTLIST_PRIVATE);
     gui_draw_buffer_status (gui_current_window->buffer, 0);
     
     return new_dcc;
@@ -1033,7 +1033,7 @@ dcc_chat_recv (t_irc_dcc *ptr_dcc)
     else
     {
         dcc_close (ptr_dcc, DCC_ABORTED);
-        dcc_redraw (1);
+        dcc_redraw (HOTLIST_MSG);
     }
 }
 
@@ -1062,7 +1062,7 @@ dcc_handle ()
             if ((cfg_dcc_timeout != 0) && (time (NULL) > ptr_dcc->last_activity + cfg_dcc_timeout))
             {
                 dcc_close (ptr_dcc, DCC_FAILED);
-                dcc_redraw (1);
+                dcc_redraw (HOTLIST_MSG);
                 continue;
             }
         }
@@ -1089,21 +1089,21 @@ dcc_handle ()
                         if (sock < 0)
                         {
                             dcc_close (ptr_dcc, DCC_FAILED);
-                            dcc_redraw (1);
+                            dcc_redraw (HOTLIST_MSG);
                             continue;
                         }
                         ptr_dcc->sock = sock;
                         if (fcntl (ptr_dcc->sock, F_SETFL, O_NONBLOCK) == -1)
                         {
                             dcc_close (ptr_dcc, DCC_FAILED);
-                            dcc_redraw (1);
+                            dcc_redraw (HOTLIST_MSG);
                             continue;
                         }
                         ptr_dcc->addr = ntohl (addr.sin_addr.s_addr);
                         ptr_dcc->status = DCC_ACTIVE;
                         ptr_dcc->file = open (ptr_dcc->local_filename, O_RDONLY | O_NONBLOCK, 0644);
                         ptr_dcc->start_transfer = time (NULL);
-                        dcc_redraw (1);
+                        dcc_redraw (HOTLIST_MSG);
                     }
                 }
             }
@@ -1130,19 +1130,19 @@ dcc_handle ()
                         if (sock < 0)
                         {
                             dcc_close (ptr_dcc, DCC_FAILED);
-                            dcc_redraw (1);
+                            dcc_redraw (HOTLIST_MSG);
                             continue;
                         }
                         ptr_dcc->sock = sock;
                         if (fcntl (ptr_dcc->sock, F_SETFL, O_NONBLOCK) == -1)
                         {
                             dcc_close (ptr_dcc, DCC_FAILED);
-                            dcc_redraw (1);
+                            dcc_redraw (HOTLIST_MSG);
                             continue;
                         }
                         ptr_dcc->addr = ntohl (addr.sin_addr.s_addr);
                         ptr_dcc->status = DCC_ACTIVE;
-                        dcc_redraw (1);
+                        dcc_redraw (HOTLIST_MSG);
                         dcc_channel_for_chat (ptr_dcc);
                     }
                 }
@@ -1173,14 +1173,14 @@ dcc_handle ()
                     if (num_read == 0)
                     {
                         dcc_close (ptr_dcc, DCC_FAILED);
-                        dcc_redraw (1);
+                        dcc_redraw (HOTLIST_MSG);
                         continue;
                     }
                     
                     if (write (ptr_dcc->file, buffer, num_read) == -1)
                     {
                         dcc_close (ptr_dcc, DCC_FAILED);
-                        dcc_redraw (1);
+                        dcc_redraw (HOTLIST_MSG);
                         continue;
                     }
                     ptr_dcc->last_activity = time (NULL);
@@ -1191,10 +1191,10 @@ dcc_handle ()
                     if (ptr_dcc->pos >= ptr_dcc->size)
                     {
                         dcc_close (ptr_dcc, DCC_DONE);
-                        dcc_redraw (1);
+                        dcc_redraw (HOTLIST_MSG);
                     }
                     else
-                        dcc_redraw (0);
+                        dcc_redraw (HOTLIST_LOW);
                 }
             }
             if (ptr_dcc->type == DCC_FILE_SEND)
@@ -1207,7 +1207,7 @@ dcc_handle ()
                                 "max is %d.\n"),
                                 sizeof (buffer));
                     dcc_close (ptr_dcc, DCC_FAILED);
-                    dcc_redraw (1);
+                    dcc_redraw (HOTLIST_MSG);
                     continue;
                 }
                 if (ptr_dcc->pos > ptr_dcc->ack)
@@ -1219,7 +1219,7 @@ dcc_handle ()
                         if (num_read == 0)
                         {
                             dcc_close (ptr_dcc, DCC_FAILED);
-                            dcc_redraw (1);
+                            dcc_redraw (HOTLIST_MSG);
                             continue;
                         }
                         if (num_read < 4)
@@ -1231,7 +1231,7 @@ dcc_handle ()
                             && (ptr_dcc->ack >= ptr_dcc->size))
                         {
                             dcc_close (ptr_dcc, DCC_DONE);
-                            dcc_redraw (1);
+                            dcc_redraw (HOTLIST_MSG);
                             continue;
                         }
                     }
@@ -1243,20 +1243,20 @@ dcc_handle ()
                     if (num_read < 1)
                     {
                         dcc_close (ptr_dcc, DCC_FAILED);
-                        dcc_redraw (1);
+                        dcc_redraw (HOTLIST_MSG);
                         continue;
                     }
                     num_sent = send (ptr_dcc->sock, buffer, num_read, 0);
                     if (num_sent < 0)
                     {
                         dcc_close (ptr_dcc, DCC_FAILED);
-                        dcc_redraw (1);
+                        dcc_redraw (HOTLIST_MSG);
                         continue;
                     }
                     ptr_dcc->last_activity = time (NULL);
                     ptr_dcc->pos += (unsigned long) num_sent;
                     dcc_calculate_speed (ptr_dcc, 0);
-                    dcc_redraw (0);
+                    dcc_redraw (HOTLIST_LOW);
                 }
             }
         }
