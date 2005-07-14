@@ -1087,16 +1087,18 @@ gui_input_clipboard_paste ()
 void
 gui_input_clipboard_copy (char *buffer, int size)
 {
-  
-  if (gui_input_clipboard != NULL)
-    free(gui_input_clipboard);
-
-  gui_input_clipboard = (char *) malloc( (size + 1) * sizeof(*gui_input_clipboard));
-
-  if (gui_input_clipboard)
+    if (size <= 0)
+        return;
+    
+    if (gui_input_clipboard != NULL)
+        free(gui_input_clipboard);
+    
+    gui_input_clipboard = (char *) malloc( (size + 1) * sizeof(*gui_input_clipboard));
+    
+    if (gui_input_clipboard)
     {
-      memcpy(gui_input_clipboard, buffer, size);
-      gui_input_clipboard[size] = '\0';
+        memcpy(gui_input_clipboard, buffer, size);
+        gui_input_clipboard[size] = '\0';
     }
 }
 
