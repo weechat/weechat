@@ -1009,20 +1009,16 @@ gui_input_delete_begin_of_line ()
 void
 gui_input_delete_end_of_line ()
 {
-    if (gui_current_window->buffer->input_buffer_pos > 0)
-      {
-	gui_input_clipboard_copy(gui_current_window->buffer->input_buffer +
-				 gui_current_window->buffer->input_buffer_pos,
-				 gui_current_window->buffer->input_buffer_size - 
-				 gui_current_window->buffer->input_buffer_pos);
-      }
-
-	gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_pos] = ' ';
-	gui_current_window->buffer->input_buffer_size = gui_current_window->buffer->input_buffer_pos ;
-	gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
-	gui_draw_buffer_input (gui_current_window->buffer, 0);
-	gui_input_optimize_buffer_size (gui_current_window->buffer);
-	gui_current_window->buffer->completion.position = -1;
+    gui_input_clipboard_copy(gui_current_window->buffer->input_buffer +
+                             gui_current_window->buffer->input_buffer_pos,
+                             gui_current_window->buffer->input_buffer_size - 
+                             gui_current_window->buffer->input_buffer_pos);
+    gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_pos] = ' ';
+    gui_current_window->buffer->input_buffer_size = gui_current_window->buffer->input_buffer_pos ;
+    gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
+    gui_draw_buffer_input (gui_current_window->buffer, 0);
+    gui_input_optimize_buffer_size (gui_current_window->buffer);
+    gui_current_window->buffer->completion.position = -1;
 }
 
 /*

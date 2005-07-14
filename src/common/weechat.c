@@ -373,50 +373,50 @@ wee_parse_args (int argc, char *argv[])
             || (strcmp (argv[i], "--config") == 0))
         {
             wee_display_config_options ();
-            wee_shutdown (EXIT_SUCCESS);
+            wee_shutdown (EXIT_SUCCESS, 0);
         }
         else if ((strcmp (argv[i], "-f") == 0)
             || (strcmp (argv[i], "--key-functions") == 0))
         {
             wee_display_key_functions ();
-            wee_shutdown (EXIT_SUCCESS);
+            wee_shutdown (EXIT_SUCCESS, 0);
         }
         else if ((strcmp (argv[i], "-h") == 0)
                 || (strcmp (argv[i], "--help") == 0))
         {
             printf ("\n" WEE_USAGE1, argv[0], argv[0]);
             printf ("%s", WEE_USAGE2);
-            wee_shutdown (EXIT_SUCCESS);
+            wee_shutdown (EXIT_SUCCESS, 0);
         }
         else if ((strcmp (argv[i], "-i") == 0)
             || (strcmp (argv[i], "--irc-commands") == 0))
         {
             wee_display_commands (0, 1);
-            wee_shutdown (EXIT_SUCCESS);
+            wee_shutdown (EXIT_SUCCESS, 0);
         }
         else if ((strcmp (argv[i], "-k") == 0)
             || (strcmp (argv[i], "--keys") == 0))
         {
             wee_display_keys ();
-            wee_shutdown (EXIT_SUCCESS);
+            wee_shutdown (EXIT_SUCCESS, 0);
         }
         else if ((strcmp (argv[i], "-l") == 0)
                  || (strcmp (argv[i], "--license") == 0))
         {
             printf ("\n%s%s", WEE_LICENSE);
-            wee_shutdown (EXIT_SUCCESS);
+            wee_shutdown (EXIT_SUCCESS, 0);
         }
         else if ((strcmp (argv[i], "-v") == 0)
                  || (strcmp (argv[i], "--version") == 0))
         {
             printf (PACKAGE_VERSION "\n");
-            wee_shutdown (EXIT_SUCCESS);
+            wee_shutdown (EXIT_SUCCESS, 0);
         }
         else if ((strcmp (argv[i], "-w") == 0)
             || (strcmp (argv[i], "--weechat-commands") == 0))
         {
             wee_display_commands (1, 0);
-            wee_shutdown (EXIT_SUCCESS);
+            wee_shutdown (EXIT_SUCCESS, 0);
         }
         else if ((strncasecmp (argv[i], "irc", 3) == 0))
         {
@@ -492,7 +492,7 @@ wee_create_home_dirs ()
     {
         fprintf (stderr, _("%s unable to get HOME directory\n"),
                  WEECHAT_ERROR);
-        wee_shutdown (EXIT_FAILURE);
+        wee_shutdown (EXIT_FAILURE, 0);
     }
     dir_length = strlen (ptr_home) + 10;
     weechat_home =
@@ -501,7 +501,7 @@ wee_create_home_dirs ()
     {
         fprintf (stderr, _("%s not enough memory for home directory\n"),
                  WEECHAT_ERROR);
-        wee_shutdown (EXIT_FAILURE);
+        wee_shutdown (EXIT_FAILURE, 0);
     }
     snprintf (weechat_home, dir_length, "%s%s.weechat", ptr_home,
               DIR_SEPARATOR);
@@ -511,7 +511,7 @@ wee_create_home_dirs ()
     {
         fprintf (stderr, _("%s unable to create ~/.weechat directory\n"),
                  WEECHAT_ERROR);
-        wee_shutdown (EXIT_FAILURE);
+        wee_shutdown (EXIT_FAILURE, 0);
     }
     
     dir_length = strlen (weechat_home) + 64;
@@ -581,11 +581,11 @@ wee_init_vars ()
     msgq_last_msg = NULL;
     
     /* init gnutls */
-    #ifdef HAVE_GNUTLS
+#ifdef HAVE_GNUTLS
     gnutls_global_init ();
     gnutls_certificate_allocate_credentials (&gnutls_xcred);
     gnutls_certificate_set_x509_trust_file (gnutls_xcred, "ca.pem", GNUTLS_X509_FMT_PEM);
-    #endif
+#endif
 }
 
 /*
@@ -669,7 +669,7 @@ wee_gui_shutdown ()
  */
 
 void
-wee_shutdown (int return_code)
+wee_shutdown (int return_code, int crash)
 {
     fifo_remove ();
     if (weechat_home)
@@ -680,12 +680,15 @@ wee_shutdown (int return_code)
         free (local_charset);
     alias_free_all ();
     
-    #ifdef HAVE_GNUTLS
+#ifdef HAVE_GNUTLS
     gnutls_certificate_free_credentials (gnutls_xcred);
     gnutls_global_deinit();
-    #endif
+#endif
     
-    exit (return_code);
+    if (crash)
+        abort();
+    else
+        exit (return_code);
 }
 
 /*
@@ -776,17 +779,6 @@ wee_dump (int crash)
 }
 
 /*
- * my_sigint: SIGINT handler, do nothing (just ignore this signal)
- *            Prevents user for exiting with Ctrl-C
- */
-
-void
-my_sigint ()
-{
-    /* do nothing */
-}
-
-/*
  * my_sigsegv: SIGSEGV handler: save crash log to ~/.weechat/weechat.log and exit
  */
 
@@ -801,7 +793,7 @@ my_sigsegv ()
     fprintf (stderr, "*** Please send this file to WeeChat developers.\n");
     fprintf (stderr, "*** (be careful, private info may be in this file since\n");
     fprintf (stderr, "*** part of chats are displayed, so remove lines if needed)\n\n");
-    wee_shutdown (EXIT_FAILURE);
+    wee_shutdown (EXIT_FAILURE, 1);
 }
 
 /*
@@ -821,7 +813,7 @@ main (int argc, char *argv[])
     local_charset = strdup (nl_langinfo (CODESET));
     #endif
     
-    signal (SIGINT, my_sigint);     /* ignore SIGINT signal                 */
+    signal (SIGINT, SIG_IGN);       /* ignore SIGINT signal                 */
     signal (SIGSEGV, my_sigsegv);   /* crash dump when SIGSEGV is received  */
     gui_pre_init (&argc, &argv);    /* pre-initiliaze interface             */
     wee_init_vars ();               /* initialize some variables            */
@@ -860,7 +852,7 @@ main (int argc, char *argv[])
     (void) config_write (NULL);     /* save config file                     */
     command_index_free ();          /* free commands index                  */
     wee_gui_shutdown ();            /* shut down WeeChat GUI                */
-    wee_shutdown (EXIT_SUCCESS);    /* quit WeeChat (oh no, why?)           */
+    wee_shutdown (EXIT_SUCCESS, 0); /* quit WeeChat (oh no, why?)           */
     
     return EXIT_SUCCESS;            /* make gcc happy (never executed)      */
 }

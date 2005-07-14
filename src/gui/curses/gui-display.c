@@ -1082,11 +1082,14 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
+        if (has_colors ())
+            wbkgdset(ptr_win->win_status, ' ' | COLOR_PAIR (COLOR_WIN_STATUS));
+        
         if (erase)
             gui_curses_window_clear (ptr_win->win_status);
         
         gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS);
-        wborder (ptr_win->win_status, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
+        /* wborder (ptr_win->win_status, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '); */
         wmove (ptr_win->win_status, 0, 0);
         
         /* display number of buffers */
@@ -1407,15 +1410,14 @@ gui_draw_buffer_infobar (t_gui_buffer *buffer, int erase)
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
+        if (has_colors ())
+            wbkgdset(ptr_win->win_infobar, ' ' | COLOR_PAIR (COLOR_WIN_INFOBAR));
+        
         if (erase)
             gui_curses_window_clear (ptr_win->win_infobar);
 
-        if (has_colors ())
-        {
-            gui_window_set_color (ptr_win->win_infobar, COLOR_WIN_INFOBAR);
-            wborder (ptr_win->win_infobar, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
-            wnoutrefresh (ptr_win->win_infobar);
-        }
+        gui_window_set_color (ptr_win->win_infobar, COLOR_WIN_INFOBAR);
+        /* wborder (ptr_win->win_infobar, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '); */
         wmove (ptr_win->win_infobar, 0, 0);
         
         time_seconds = time (NULL);
