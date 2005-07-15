@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.1.4-cvs - July, 10 2005
+@subtitle Documentation for WeeChat v0.1.4-cvs - July, 15 2005
 
 @image{weechat_image}
 
@@ -1337,15 +1337,19 @@ Some examples:
 @item @bullet{} change your nick on freenode to "mynick|out":
 @*
 @command{echo "freenode */nick mynick|out" >~/.weechat/weechat_fifo_12345}
+@*
 @item @bullet{} display text on #weechat channel:
 @*
 @command{echo "freenode,#weechat *hello everybody!" >~/.weechat/weechat_fifo_12345}
+@*
 @item @bullet{} display text on current channel (buffer displayed by WeeChat):
 @*
-@command{echo "*hello!" >~/.weechat/weechat_fifo_12345}@*
+@command{echo "*hello!" >~/.weechat/weechat_fifo_12345}
 @*
 @b{Warning:} this is dangerous and you should not do that except if you know what you do!
+@*
 @item @bullet{} send 2 commands to unload/reload Perl scripts (you have to separate them with \n):
+@*
 @command{echo -e "freenode */perl unload\nfreenode */perl autoload" >~/.weechat/weechat_fifo_12345}
 @end table
 @*

@@ -35,7 +35,7 @@
 
 @title WeeChat - Guia do Utilizador
 @subtitle Cliente de IRC rapido, leve e extencivel
-@subtitle Documenta@,{c}@~ao do WeeChat v0.1.4-cvs - 10 de Julho de 2005
+@subtitle Documenta@,{c}@~ao do WeeChat v0.1.4-cvs - 15 de Julho de 2005
 
 @image{weechat_image}
 
@@ -1334,15 +1334,19 @@ Some examples:
 @item @bullet{} change your nick on freenode to "mynick|out":
 @*
 @command{echo "freenode */nick mynick|out" >~/.weechat/weechat_fifo_12345}
+@*
 @item @bullet{} display text on #weechat channel:
 @*
 @command{echo "freenode,#weechat *hello everybody!" >~/.weechat/weechat_fifo_12345}
+@*
 @item @bullet{} display text on current channel (buffer displayed by WeeChat):
 @*
-@command{echo "*hello!" >~/.weechat/weechat_fifo_12345}@*
+@command{echo "*hello!" >~/.weechat/weechat_fifo_12345}
 @*
 @b{Warning:} this is dangerous and you should not do that except if you know what you do!
+@*
 @item @bullet{} send 2 commands to unload/reload Perl scripts (you have to separate them with \n):
+@*
 @command{echo -e "freenode */perl unload\nfreenode */perl autoload" >~/.weechat/weechat_fifo_12345}
 @end table
 @*
@@ -1629,7 +1633,7 @@ RFC 2812: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
 @code{@ @ @ @ weechat.prnt("server="+server)}@*
 @code{@ @ @ @ null, channel, message = string.split(args, ":", 2)}@*
 @code{@ @ @ @ hostmask, null, channel = string.split(string.strip(channel), " ", 2)}@*
-@code{@ @ @ @ weechat.prnt("host="+hostmask+", channel="+channel+", message="+message)}@*
+@code{@ @ @ @ weechat.prnt("host="+hostmask+", chan="+channel+", msg="+message)}@*
 @*
 
 @item

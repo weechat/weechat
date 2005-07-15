@@ -35,7 +35,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.4-cvs - 10 Juillet 2005
+@subtitle Documentation pour WeeChat v0.1.4-cvs - 15 Juillet 2005
 
 @image{weechat_image}
 
@@ -1338,14 +1338,21 @@ serveur doit l'@^etre aussi.@*
 Quelques exemples :
 @table @asis
 @item @bullet{} changement du pseudo sur freenode en "pseudo|absent":
+@*
 @command{echo "freenode */nick pseudo|absent" >~/.weechat/weechat_fifo_12345}
+@*
 @item @bullet{} affichage de texte sur le canal #weechat :
+@*
 @command{echo "freenode,#weechat *bonjour tout le monde !" >~/.weechat/weechat_fifo_12345}
+@*
 @item @bullet{} affichage de texte sur le canal courant (le tampon affich@'e par WeeChat):
-@command{echo "*bonjour !" >~/.weechat/weechat_fifo_12345}@*
+@*
+@command{echo "*bonjour !" >~/.weechat/weechat_fifo_12345}
 @*
 @b{Attention :} ceci est dangereux et vous ne devriez pas le faire sauf si vous savez ce que vous faites !
-@item @bullet{} envoyer deux commandes pour décharger/recharger les scripts Perl (vous devez les séparer par \n):
+@*
+@item @bullet{} envoyer deux commandes pour d@'echarger/recharger les scripts Perl (vous devez les s@'eparer par \n):
+@*
 @command{echo -e "freenode */perl unload\nfreenode */perl autoload" >~/.weechat/weechat_fifo_12345}
 @end table
 @*
@@ -1473,7 +1480,7 @@ RFC 2812 : @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
 @code{@ @ @ @ weechat::print ("serveur=$_[0]\n");}@*
 @code{@ @ @ @ ($null, $canal, $message) = split ":",$_[1],3;}@*
 @code{@ @ @ @ ($masque, $null, $canal) = split " ", $canal;}@*
-@code{@ @ @ @ weechat::print ("masque=$masque, canal=$canal, message=$message\n");}@*
+@code{@ @ @ @ weechat::print ("masque=$masque, canal=$canal, msg=$message\n");}@*
 @code{@} }@*
 @*
 

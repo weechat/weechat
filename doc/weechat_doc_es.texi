@@ -35,7 +35,7 @@
 
 @title WeeChat - Gui@'on de usuario.
 @subtitle Cliente IRC r@'apido, peque@~no y extensible
-@subtitle Documentaci@'on para WeeChat v0.1.4-cvs - 10 de Julio de 2005
+@subtitle Documentaci@'on para WeeChat v0.1.4-cvs - 15 de Julio de 2005
 
 @image{weechat_image}
 
@@ -1338,15 +1338,19 @@ Algunos ejemplos:
 @item @bullet{} cambiar el seud@'onimo en freenode por "mynick|out":
 @*
 @command{echo "freenode */nick mynick|out" >~/.weechat/weechat_fifo_12345}
+@*
 @item @bullet{} escribir texto en el canal #weechat:
 @*
 @command{echo "freenode,#weechat *@exclamdown{}Hola a todos!" >~/.weechat/weechat_fifo_12345}
+@*
 @item @bullet{} escribir texto en el canal corriente (el que se puede visualizar en WeeChat actualmente)
 @*
-@command{echo "*¡Hola!" >~/.weechat/weechat_fifo_12345}@*
+@command{echo "*¡Hola!" >~/.weechat/weechat_fifo_12345}
 @*
 @b{Advertencia:} esto es peligroso y no deber@'ias hacerlo.. salvo si lo que est@'as haciendo.
+@*
 @item @bullet{} enviar dos comandos para descargar y recargar los scripts Perl (tienes que separarlos con un \n):
+@*
 @command{echo -e "freenode */perl unload\nfreenode */perl autoload" >~/.weechat/weechat_fifo_12345}
 @end table
 @*
