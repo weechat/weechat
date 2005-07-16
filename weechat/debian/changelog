@@ -1,3 +1,9 @@
+weechat (0.1.3-2) unstable; urgency=low
+
+  * Update config.{guess,sub} to fix FTBFS on k*BSD (Closes: #316791)
+
+ -- Julien Louis <ptitlouis@sysif.net>  Fri,  8 Jul 2005 21:30:38 +0200
+
 weechat (0.1.3-1) unstable; urgency=low
 
   * New upstream release.
