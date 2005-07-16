@@ -35,7 +35,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.4-cvs - 15 Juillet 2005
+@subtitle Documentation pour WeeChat v0.1.4-cvs - 16 Juillet 2005
 
 @image{weechat_image}
 
@@ -149,7 +149,7 @@ Les paquets binaires sont disponibles pour les distributions suivantes :
 @itemize @bullet
 @item
 Debian (ou toute distribution compatible Debian)@*
-Pour installer : @kbd{dpkg -i /chemin/weechat_x.y.z-1_i386.deb}
+Pour installer : @kbd{apt-get install weechat-curses}
 @item
 Mandrake/Redhat (ou toute distribution compatible avec les RPM)@*
 Pour installer : @kbd{rpm -i /chemin/weechat-x.y.z-1.i386.rpm}
@@ -739,14 +739,20 @@ Vide la hotlist (notification d'activité sur les autres tampons)@*
 @item Alt + J puis Alt + D
 Afficher les DCC en cours@*
 @*
+@item Alt + J puis Alt + L
+Sauter au dernier tampon@*
+@*
 @item Alt + J puis Alt + S
 Sauter au tampon du serveur@*
+@*
+@item Alt + chiffre (1-9)
+Sauter au tampon avec ce num@'ero@*
 @*
 @item Alt + J then Alt + X
 Sauter au premier canal du serveur suivant (ou tampon du serveur si aucun canal ouvert)@*
 @*
-@item Alt + chiffre (1-9)
-Sauter au tampon avec ce num@'ero@*
+@item Alt + K
+Capturer une touche
 @*
 @item Alt + J puis nombre (01-99)
 Sauter au tampon avec ce num@'ero@*
@@ -1317,6 +1323,8 @@ sauter au tampon du serveur@*
 sauter au prochain serveur@*
 @item hotlist_clear
 effacer la liste d'activit@'e@*
+@item grab_key
+capturer une touche@*
 @end table
 
 @node Tube FIFO, , Commandes WeeChat, Utilisation

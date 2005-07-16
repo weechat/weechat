@@ -99,6 +99,8 @@ t_gui_key_function gui_key_functions[] =
     N_("jump to buffer with activity") },
   { "jump_dcc",              gui_input_jump_dcc,
     N_("jump to DCC buffer") },
+  { "jump_last_buffer",      gui_input_jump_last_buffer,
+    N_("jump to last buffer") },
   { "jump_server",           gui_input_jump_server,
     N_("jump to server buffer") },
   { "jump_next_server",      gui_input_jump_next_server,

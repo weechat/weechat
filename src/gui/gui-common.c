@@ -1434,6 +1434,17 @@ gui_input_jump_dcc ()
 }
 
 /*
+ * gui_input_jump_last_buffer: jump to last buffer
+ */
+
+void
+gui_input_jump_last_buffer ()
+{
+    if (last_gui_buffer)
+        gui_switch_to_buffer_by_number (gui_current_window, last_gui_buffer->number);
+}
+
+/*
  * gui_input_jump_server: jump to server buffer
  */
 

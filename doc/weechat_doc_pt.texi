@@ -35,7 +35,7 @@
 
 @title WeeChat - Guia do Utilizador
 @subtitle Cliente de IRC rapido, leve e extencivel
-@subtitle Documenta@,{c}@~ao do WeeChat v0.1.4-cvs - 15 de Julho de 2005
+@subtitle Documenta@,{c}@~ao do WeeChat v0.1.4-cvs - 16 de Julho de 2005
 
 @image{weechat_image}
 
@@ -148,7 +148,7 @@ Os pacotes bin@'arios est@'ao dispon@'iveis para as seguintes distribui@,{c}@~oe
 @itemize @bullet
 @item
 Debian (ou compat@'ivel)@*
-Instala@,{c}@~ao : @kbd{dpkg -i /chemin/weechat_x.y.z-1_i386.deb}
+Instala@,{c}@~ao : @kbd{apt-get install weechat-curses}
 @item
 Mandrake/Redhat (ou outra distro compat@'ivel com RPMs)@*
 Instala@,{c}@~ao : @kbd{rpm -i /chemin/weechat-x.y.z-1.i386.rpm}
@@ -736,6 +736,9 @@ Hotlist desobstru@'ido (notifica@,{c}@~ao da atividade em outros amortecedores)@
 @item Alt + J then Alt + D
 Exposi@,{c}@~ao DCC atual@*
 @*
+@item Alt + J then Alt + L
+Switch to last buffer@*
+@*
 @item Alt + J then Alt +  S
 Comute ao amortecedor do servidor@*
 @*
@@ -747,6 +750,9 @@ Comute ao amortecedor pelo n@'umero@*
 @*
 @item Alt + J then number (01-99)
 Comute ao amortecedor pelo n@'umero@*
+@*
+@item Alt + K
+Grab a key
 @*
 @item Alt + R
 Delete entire line@*
@@ -1314,6 +1320,8 @@ jump to server buffer@*
 jump to next server@*
 @item hotlist_clear
 clear hotlist@*
+@item grab_key
+grab a key@*
 @end table
 
 @node FIFO pipe, , Comandos do WeeChat, Utilizacao

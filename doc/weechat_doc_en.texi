@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.1.4-cvs - July, 15 2005
+@subtitle Documentation for WeeChat v0.1.4-cvs - July, 16 2005
 
 @image{weechat_image}
 
@@ -150,7 +150,7 @@ Binary packages are available for these distributions:
 @itemize @bullet
 @item
 Debian (or any Debian compatible distribution)@*
-To install: @kbd{dpkg -i /path/weechat_x.y.z-1_i386.deb}
+To install: @kbd{apt-get install weechat-curses}
 @item
 Mandriva/Redhat (or any RPM compatible distribution)@*
 To install: @kbd{rpm -i /path/weechat-x.y.z-1.i386.rpm}
@@ -739,6 +739,9 @@ Clear hotlist (activity notification on other buffers)@*
 @item Alt + J then Alt + D
 Display current DCC@*
 @*
+@item Alt + J then Alt + L
+Switch to last buffer@*
+@*
 @item Alt + J then Alt + S
 Switch to server buffer@*
 @*
@@ -750,6 +753,9 @@ Switch to buffer by number@*
 @*
 @item Alt + J then number (01-99)
 Switch to buffer by number@*
+@*
+@item Alt + K
+Grab a key
 @*
 @item Alt + R
 Delete entire line@*
@@ -1317,6 +1323,8 @@ jump to server buffer@*
 jump to next server@*
 @item hotlist_clear
 clear hotlist@*
+@item grab_key
+grab a key@*
 @end table
 
 @node FIFO pipe, , WeeChat commands, Usage

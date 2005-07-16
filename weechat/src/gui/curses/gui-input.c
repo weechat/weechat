@@ -92,6 +92,7 @@ gui_input_default_key_bindings ()
     gui_key_bind ( /* ^right  */ "meta-Oc",       "next_word");
     gui_key_bind ( /* m-h     */ "meta-h",        "hotlist_clear");
     gui_key_bind ( /* m-j,m-d */ "meta-jmeta-d",  "jump_dcc");
+    gui_key_bind ( /* m-j,m-l */ "meta-jmeta-l",  "jump_last_buffer");
     gui_key_bind ( /* m-j,m-s */ "meta-jmeta-s",  "jump_server");
     gui_key_bind ( /* m-j,m-x */ "meta-jmeta-x",  "jump_next_server");
     gui_key_bind ( /* m-k     */ "meta-k",        "grab_key");

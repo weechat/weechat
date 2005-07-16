@@ -337,6 +337,7 @@ extern void gui_input_up ();
 extern void gui_input_down ();
 extern void gui_input_jump_smart ();
 extern void gui_input_jump_dcc ();
+extern void gui_input_jump_last_buffer ();
 extern void gui_input_jump_server ();
 extern void gui_input_jump_next_server ();
 extern void gui_input_hotlist_clear ();

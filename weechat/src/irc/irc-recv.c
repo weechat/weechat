@@ -637,6 +637,31 @@ void irc_get_channel_modes (t_irc_channel *ptr_channel, char *channel_name,
                 SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
                     CHANNEL_MODE_SECRET);
                 break;
+            case 'q':
+                pos = NULL;
+                if (parm)
+                {
+                    pos = strchr (parm, ' ');
+                    if (pos)
+                        pos[0] = '\0';
+                }
+                if (nick_host)
+                    irc_display_mode (ptr_channel->buffer,
+                                      channel_name, set_flag, "q", nick_host,
+                                      (set_flag == '+') ?
+                                          _("sets quiet on") :
+                                          _("removes quiet on"),
+                                      (parm) ? parm : NULL);
+                
+                /* look for next parameter */
+                if (parm && pos)
+                {
+                    pos++;
+                    while (pos[0] == ' ')
+                        pos++;
+                    parm = pos;
+                }
+                break;
             case 's':
                 if (nick_host)
                     irc_display_mode (ptr_channel->buffer,

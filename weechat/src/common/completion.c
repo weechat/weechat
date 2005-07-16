@@ -322,6 +322,8 @@ completion_build_list (t_completion *completion, void *channel)
                     pos[0] = ' ';
             }
         }
+        else
+            completion_stop (completion);
         return;
     }
     if ((strcasecmp (completion->base_command, "unalias") == 0)

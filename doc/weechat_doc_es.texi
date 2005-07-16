@@ -35,7 +35,7 @@
 
 @title WeeChat - Gui@'on de usuario.
 @subtitle Cliente IRC r@'apido, peque@~no y extensible
-@subtitle Documentaci@'on para WeeChat v0.1.4-cvs - 15 de Julio de 2005
+@subtitle Documentaci@'on para WeeChat v0.1.4-cvs - 16 de Julio de 2005
 
 @image{weechat_image}
 
@@ -150,7 +150,7 @@ Los paquetes binarios est@'an disponibles para las siguientes distribuciones:
 @itemize @bullet
 @item
 Debian (o compatible con Debian)@*
-Para instalar WeeChat: @kbd{dpkg -i /direccion/weechat_x.y.z-1_i386.deb}
+Para instalar WeeChat: @kbd{apt-get install weechat-curses}
 @item
 Mandrake/Redhat (o cualquier distribuci@'on compatible con los paquetes RPM)@*
 Para instalar WeeChat: @kbd{rpm -i /direccion/weechat-x.y.z-1.i386.rpm}
@@ -738,6 +738,9 @@ Borrar la 'hotlist' (notificaci@'on de actividad en otras memorias temporales)@*
 @item Alt + J then Alt + D
 Obtener la lista de DCC actual@*
 @*
+@item Alt + J then Alt + L
+Switch to last buffer@*
+@*
 @item Alt + J then Alt + S
 Ir a la memoria temporal del servidor@*
 @*
@@ -749,6 +752,9 @@ Saltar a la memoria temporal con ese n@'umero@*
 @*
 @item Alt + J then number (01-99)
 Saltar a la memoria temporal con ese n@'umero@*
+@*
+@item Alt + K
+Grab a key
 @*
 @item Alt + R
 Delete entire line@*
@@ -1316,6 +1322,8 @@ jump to server buffer@*
 jump to next server@*
 @item hotlist_clear
 clear hotlist@*
+@item grab_key
+grab a key@*
 @end table
 
 @node Canal FIFO, , Comandos WeeChat, Uso
