@@ -1503,86 +1503,86 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
                 wnoutrefresh (ptr_win->win_input);
             }
             
-            if (buffer->input_buffer_size == 0)
-                buffer->input_buffer[0] = '\0';
-            
-            input_width = gui_get_input_width (ptr_win);
-            
-            if (buffer->input_buffer_pos - buffer->input_buffer_1st_display + 1 >
-                input_width)
-                buffer->input_buffer_1st_display = buffer->input_buffer_pos -
-                    input_width + 1;
-            else
+            if (buffer->dcc)
             {
-                if (buffer->input_buffer_pos < buffer->input_buffer_1st_display)
-                    buffer->input_buffer_1st_display = buffer->input_buffer_pos;
-                else
+                dcc_selected = (ptr_win->dcc_selected) ? (t_irc_dcc *) ptr_win->dcc_selected : dcc_list;
+                wmove (ptr_win->win_input, 0, 0);
+                if (dcc_selected)
                 {
-                    if ((buffer->input_buffer_1st_display > 0) &&
-                        (buffer->input_buffer_pos -
-                        buffer->input_buffer_1st_display + 1) < input_width)
+                    switch (dcc_selected->status)
                     {
-                        buffer->input_buffer_1st_display =
-                            buffer->input_buffer_pos - input_width + 1;
-                        if (buffer->input_buffer_1st_display < 0)
-                            buffer->input_buffer_1st_display = 0;
+                        case DCC_WAITING:
+                            if (DCC_IS_RECV(dcc_selected->type))
+                                wprintw (ptr_win->win_input, _("  [A] Accept"));
+                            wprintw (ptr_win->win_input, _("  [C] Cancel"));
+                            break;
+                        case DCC_CONNECTING:
+                        case DCC_ACTIVE:
+                            wprintw (ptr_win->win_input, _("  [C] Cancel"));
+                            break;
+                        case DCC_DONE:
+                        case DCC_FAILED:
+                        case DCC_ABORTED:
+                            wprintw (ptr_win->win_input, _("  [R] Remove"));
+                            break;
                     }
                 }
-            }
-            if (CHANNEL(buffer))
-            {
-                snprintf (format, 32, "%%s %%s> %%-%ds", input_width);
-                if (ptr_win == gui_current_window)
-                    mvwprintw (ptr_win->win_input, 0, 0, format,
-                               CHANNEL(buffer)->name,
-                               SERVER(buffer)->nick,
-                               buffer->input_buffer + buffer->input_buffer_1st_display);
-                else
-                    mvwprintw (ptr_win->win_input, 0, 0, format,
-                               CHANNEL(buffer)->name,
-                               SERVER(buffer)->nick,
-                               "");
+                wprintw (ptr_win->win_input, _("  [P] Purge old DCC"));
+                wprintw (ptr_win->win_input, _("  [Q] Close DCC view"));
                 wclrtoeol (ptr_win->win_input);
-                ptr_win->win_input_x = strlen (CHANNEL(buffer)->name) +
-                    strlen (SERVER(buffer)->nick) + 3 +
-                    (buffer->input_buffer_pos - buffer->input_buffer_1st_display);
+                ptr_win->win_input_x = 0;
                 if (ptr_win == gui_current_window)
                     move (ptr_win->win_y + ptr_win->win_height - 1,
-                          ptr_win->win_x + ptr_win->win_input_x);
+                          ptr_win->win_x);
             }
-            else
+            else if (buffer->has_input)
             {
-                if (buffer->dcc)
+                if (buffer->input_buffer_size == 0)
+                    buffer->input_buffer[0] = '\0';
+                
+                input_width = gui_get_input_width (ptr_win);
+                
+                if (buffer->input_buffer_pos - buffer->input_buffer_1st_display + 1 >
+                    input_width)
+                    buffer->input_buffer_1st_display = buffer->input_buffer_pos -
+                        input_width + 1;
+                else
                 {
-                    dcc_selected = (ptr_win->dcc_selected) ? (t_irc_dcc *) ptr_win->dcc_selected : dcc_list;
-                    wmove (ptr_win->win_input, 0, 0);
-                    if (dcc_selected)
+                    if (buffer->input_buffer_pos < buffer->input_buffer_1st_display)
+                        buffer->input_buffer_1st_display = buffer->input_buffer_pos;
+                    else
                     {
-                        switch (dcc_selected->status)
+                        if ((buffer->input_buffer_1st_display > 0) &&
+                            (buffer->input_buffer_pos -
+                             buffer->input_buffer_1st_display + 1) < input_width)
                         {
-                            case DCC_WAITING:
-                                if (DCC_IS_RECV(dcc_selected->type))
-                                    wprintw (ptr_win->win_input, _("  [A] Accept"));
-                                wprintw (ptr_win->win_input, _("  [C] Cancel"));
-                                break;
-                            case DCC_CONNECTING:
-                            case DCC_ACTIVE:
-                                wprintw (ptr_win->win_input, _("  [C] Cancel"));
-                                break;
-                            case DCC_DONE:
-                            case DCC_FAILED:
-                            case DCC_ABORTED:
-                                wprintw (ptr_win->win_input, _("  [R] Remove"));
-                                break;
+                            buffer->input_buffer_1st_display =
+                                buffer->input_buffer_pos - input_width + 1;
+                            if (buffer->input_buffer_1st_display < 0)
+                                buffer->input_buffer_1st_display = 0;
                         }
                     }
-                    wprintw (ptr_win->win_input, _("  [P] Purge old DCC"));
-                    wprintw (ptr_win->win_input, _("  [Q] Close DCC view"));
+                }
+                if (CHANNEL(buffer))
+                {
+                    snprintf (format, 32, "%%s %%s> %%-%ds", input_width);
+                    if (ptr_win == gui_current_window)
+                        mvwprintw (ptr_win->win_input, 0, 0, format,
+                                   CHANNEL(buffer)->name,
+                                   SERVER(buffer)->nick,
+                                   buffer->input_buffer + buffer->input_buffer_1st_display);
+                    else
+                        mvwprintw (ptr_win->win_input, 0, 0, format,
+                                   CHANNEL(buffer)->name,
+                                   SERVER(buffer)->nick,
+                                   "");
                     wclrtoeol (ptr_win->win_input);
-                    ptr_win->win_input_x = 0;
+                    ptr_win->win_input_x = strlen (CHANNEL(buffer)->name) +
+                        strlen (SERVER(buffer)->nick) + 3 +
+                        (buffer->input_buffer_pos - buffer->input_buffer_1st_display);
                     if (ptr_win == gui_current_window)
                         move (ptr_win->win_y + ptr_win->win_height - 1,
-                              ptr_win->win_x);
+                              ptr_win->win_x + ptr_win->win_input_x);
                 }
                 else
                 {
@@ -1756,33 +1756,6 @@ gui_get_dcc_buffer ()
         return ptr_buffer;
     else
         return gui_buffer_new (gui_current_window, NULL, NULL, 1, 0);
-}
-
-/*
- * gui_switch_to_dcc_buffer: switch to dcc buffer (create it if it does not exist)
- */
-
-void
-gui_switch_to_dcc_buffer ()
-{
-    t_gui_buffer *ptr_buffer;
-    
-    if (!gui_ok)
-        return;
-    
-    /* check if dcc buffer exists */
-    for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
-    {
-        if (ptr_buffer->dcc)
-            break;
-    }
-    if (ptr_buffer)
-    {
-        gui_switch_to_buffer (gui_current_window, ptr_buffer);
-        gui_redraw_buffer (ptr_buffer);
-    }
-    else
-        gui_buffer_new (gui_current_window, NULL, NULL, 1, 1);
 }
 
 /*

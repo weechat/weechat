@@ -1604,6 +1604,30 @@ gui_switch_to_next_window ()
 }
 
 /*
+ * gui_switch_to_dcc_buffer: switch to dcc buffer (create it if it does not exist)
+ */
+
+void
+gui_switch_to_dcc_buffer ()
+{
+    t_gui_buffer *ptr_buffer;
+    
+    /* check if dcc buffer exists */
+    for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->dcc)
+            break;
+    }
+    if (ptr_buffer)
+    {
+        gui_switch_to_buffer (gui_current_window, ptr_buffer);
+        gui_redraw_buffer (ptr_buffer);
+    }
+    else
+        gui_buffer_new (gui_current_window, NULL, NULL, 1, 1);
+}
+
+/*
  * gui_switch_to_buffer_by_number: switch to another buffer with number
  */
 
