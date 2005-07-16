@@ -35,6 +35,10 @@ t_irc_command irc_commands[] =
     N_("[target]"),
     N_("target: server"),
     0, 1, 1, NULL, irc_cmd_send_admin, NULL },
+  { "amsg", N_("send message to all channels of all connected servers"),
+    N_("text"),
+    N_("text: text to send"),
+    1, MAX_ARGS, 1, NULL, irc_cmd_send_amsg, NULL },
   { "away", N_("toggle away status"),
     N_("[-all] [message]"),
     N_("-all: toggle away status on all connected servers\n"

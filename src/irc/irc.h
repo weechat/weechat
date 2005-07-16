@@ -355,6 +355,7 @@ extern int irc_recv_command (t_irc_server *, char *, char *, char *, char *);
 extern void irc_login (t_irc_server *);
 /* IRC commands issued by user */
 extern int irc_cmd_send_admin (t_irc_server *, char *);
+extern int irc_cmd_send_amsg (t_irc_server *, char *);
 extern int irc_cmd_send_away (t_irc_server *, char *);
 extern int irc_cmd_send_ban (t_irc_server *, char *);
 extern int irc_cmd_send_ctcp (t_irc_server *, char *);
