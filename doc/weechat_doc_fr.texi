@@ -38,8 +38,6 @@
 @subtitle Client IRC rapide, l@'eger et extensible
 @subtitle Documentation pour WeeChat v0.1.4-cvs - 16 Juillet 2005
 
-@image{weechat_image}
-
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
 @page

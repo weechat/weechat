@@ -30,15 +30,13 @@
 @c end tex
 
 @documentlanguage pt
-@documentlanguage ISO-8859-1
+@documentencoding ISO-8859-1
 
 @titlepage
 
 @title WeeChat - Guia do Utilizador
 @subtitle Cliente de IRC rapido, leve e extencivel
 @subtitle Documenta@,{c}@~ao do WeeChat v0.1.4-cvs - 16 de Julho de 2005
-
-@image{weechat_image}
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 

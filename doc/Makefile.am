@@ -15,14 +15,14 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
-SUBDIRS = po doc intl src
+man_MANS = weechat-curses.1
 
-EXTRA_DIST = config.rpath BUGS FAQ FAQ.fr \
-             debian/changelog debian/control \
-             debian/copyright \
-             debian/rules debian/weechat-common.docs \
-             debian/weechat-common.install debian/weechat-curses.dirs \
-             debian/weechat-curses.install debian/weechat-gtk.dirs \
-             debian/weechat-gtk.install
+info_TEXINFOS = weechat_doc_fr.texi weechat_doc_en.texi \
+                weechat_doc_es.texi weechat_doc_pt.texi
 
-ACLOCAL_AMFLAGS = -I m4
+#weechat_TEXINFOS = weechat_doc_fr.texi weechat_doc_en.texi \
+#                   weechat_doc_es.texi weechat_doc_pt.texi
+
+AM_MAKEINFOHTMLFLAGS = --no-split --number-sections
+
+EXTRA_DIST = $(man_MANS)

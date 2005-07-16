@@ -265,6 +265,7 @@ LIBS="$LIBS $INTLLIBS"
 CFLAGS="$CFLAGS $CPPFLAGS"
 
 AC_OUTPUT([Makefile
+           doc/Makefile
            src/Makefile
            src/common/Makefile
            src/irc/Makefile
