@@ -30,6 +30,7 @@
 @c end tex
 
 @documentlanguage pt
+@documentlanguage ISO-8859-1
 
 @titlepage
 

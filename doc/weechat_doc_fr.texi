@@ -30,6 +30,7 @@
 @c end tex
 
 @documentlanguage fr
+@documentencoding ISO-8859-1
 
 @titlepage
 
