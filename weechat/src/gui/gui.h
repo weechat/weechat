@@ -104,6 +104,9 @@
 #define NOTIFY_LEVEL_MAX        3
 #define NOTIFY_LEVEL_DEFAULT    NOTIFY_LEVEL_MAX
 
+#define KEY_SHOW_MODE_DISPLAY   1
+#define KEY_SHOW_MODE_BIND      2
+
 typedef struct t_gui_message t_gui_message;
 
 struct t_gui_message
@@ -180,6 +183,7 @@ struct t_gui_buffer
     FILE *log_file;                 /* for logging buffer to file           */
     
     /* inupt buffer */
+    int has_input;                  /* = 1 if buffer has input (DCC has not)*/
     char *input_buffer;             /* input buffer                         */
     int input_buffer_alloc;         /* input buffer: allocated size in mem  */
     int input_buffer_size;          /* buffer size (user input length)      */
@@ -292,6 +296,9 @@ extern t_gui_infobar *gui_infobar;
 extern t_gui_key *gui_keys;
 extern t_gui_key *last_gui_key;
 extern t_gui_key_function gui_key_functions[];
+extern char gui_key_buffer[128];
+extern int gui_key_grab;
+extern int gui_key_grab_count;
 extern char *gui_input_clipboard;
 
 /* GUI independent functions: windows & buffers */
@@ -306,8 +313,9 @@ extern void gui_infobar_remove ();
 extern void gui_buffer_free (t_gui_buffer *, int);
 extern t_gui_line *gui_new_line (t_gui_buffer *);
 extern t_gui_message *gui_new_message (t_gui_buffer *);
-extern void gui_input_clipboard_paste ();
 extern void gui_input_clipboard_copy (char *, int);
+extern void gui_input_clipboard_paste ();
+extern void gui_input_insert_string (char *, int);
 extern void gui_input_insert_char ();
 extern void gui_input_return ();
 extern void gui_input_tab ();
@@ -333,6 +341,7 @@ extern void gui_input_jump_server ();
 extern void gui_input_jump_next_server ();
 extern void gui_input_hotlist_clear ();
 extern void gui_input_infobar_clear ();
+extern void gui_input_grab_key ();
 extern void gui_switch_to_previous_buffer ();
 extern void gui_switch_to_next_buffer ();
 extern void gui_switch_to_previous_window ();
@@ -345,6 +354,7 @@ extern void gui_buffer_print_log (t_gui_buffer *);
 /* GUI independent functions: keys */
 
 extern void gui_key_init ();
+extern void gui_key_init_grab ();
 extern char *gui_key_get_internal_code (char *);
 extern char *gui_key_get_expanded_name (char *);
 extern void *gui_key_function_search_by_name (char *);

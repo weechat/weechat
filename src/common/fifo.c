@@ -112,7 +112,7 @@ fifo_exec (char *text)
     if (text[0] == '*')
     {
         pos_msg = text + 1;
-        ptr_buffer = (gui_current_window->buffer->dcc) ? gui_buffers : gui_current_window->buffer;
+        ptr_buffer = (gui_current_window->buffer->has_input) ? gui_current_window->buffer : gui_buffers;
         ptr_server = SERVER(ptr_buffer);
     }
     else

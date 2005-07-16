@@ -37,6 +37,8 @@ t_gui_key *gui_keys = NULL;
 t_gui_key *last_gui_key = NULL;
 
 char gui_key_buffer[128];
+int gui_key_grab = 0;
+int gui_key_grab_count = 0;
 
 t_gui_key_function gui_key_functions[] =
 { { "return",                gui_input_return,
@@ -57,9 +59,9 @@ t_gui_key_function gui_key_functions[] =
     N_("delete previous word") },
   { "delete_next_word",      gui_input_delete_next_word,
     N_("delete next word") },
-  { "clipboard_paste",  gui_input_clipboard_paste,
+  { "clipboard_paste",       gui_input_clipboard_paste,
     N_("paste current clipboard content") },
-  { "transpose_chars",  gui_input_transpose_chars,
+  { "transpose_chars",       gui_input_transpose_chars,
     N_("transpose chars") },
   { "home",                  gui_input_home,
     N_("go to beginning of line") },
@@ -103,6 +105,8 @@ t_gui_key_function gui_key_functions[] =
     N_("jump to next server") },
   { "hotlist_clear",         gui_input_hotlist_clear,
     N_("clear hotlist") },
+  { "grab_key",              gui_input_grab_key,
+    N_("grab a key") },
   { NULL, NULL, NULL }
 };
 
@@ -115,8 +119,21 @@ void
 gui_key_init ()
 {
     gui_key_buffer[0] = '\0';
+    gui_key_grab = 0;
+    gui_key_grab_count = 0;
     
     gui_input_default_key_bindings ();
+}
+
+/*
+ * gui_key_init_show: init "show mode"
+ */
+
+void
+gui_key_init_grab ()
+{
+    gui_key_grab = 1;
+    gui_key_grab_count = 0;
 }
 
 /*
@@ -187,7 +204,7 @@ gui_key_get_expanded_name (char *key)
                 strcat (result, "meta-");
                 key += 2;
             }
-            else if (key[0] == '^')
+            else if ((key[0] == '^') && (key[1]))
             {
                 strcat (result, "ctrl-");
                 key++;
@@ -466,8 +483,18 @@ gui_key_pressed (char *key_str)
     int first_key;
     t_gui_key *ptr_key;
 
+    /* add key to buffer */
     first_key = (gui_key_buffer[0] == '\0');
     strcat (gui_key_buffer, key_str);
+    
+    /* if we are in "show mode", increase counter and return */
+    if (gui_key_grab)
+    {
+        gui_key_grab_count++;
+        return 0;
+    }
+    
+    /* look for key combo in key table */
     ptr_key = gui_key_search_part (gui_key_buffer);
     if (ptr_key)
     {
@@ -482,8 +509,6 @@ gui_key_pressed (char *key_str)
             else
                 (void)(ptr_key->function)();
         }
-        //else
-        //    gui_printf (gui_current_window->buffer, "partial key found\n");
         return 0;
     }
     

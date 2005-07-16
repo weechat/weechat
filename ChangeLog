@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-07-14
+ChangeLog - 2005-07-16
 
 
 Version 0.1.4 (under dev!):
@@ -15,7 +15,8 @@ Version 0.1.4 (under dev!):
    * topic completion now decodes UTF-8 string
    * fixed bug with IRC URL on command line (irc://)
    * new keyboard management: keys are setup in config file, new command
-     /key was added and some new default keys were added
+     /key was added and some new default keys were added, alt-k key is
+     used to grab key (useful for /key command)
    * added seconds in infobar time (optional thanks to new setting)
    * fixed some curses refreshs
    * channels auto-prefixed by "#" (if no prefix found) for /join command

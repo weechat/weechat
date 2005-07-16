@@ -92,9 +92,10 @@ gui_input_default_key_bindings ()
     gui_key_bind ( /* ^right  */ "meta-Oc",       "next_word");
     gui_key_bind ( /* m-h     */ "meta-h",        "hotlist_clear");
     gui_key_bind ( /* m-j,m-d */ "meta-jmeta-d",  "jump_dcc");
-    gui_key_bind ( /* m-r     */ "meta-r",        "delete_line");
     gui_key_bind ( /* m-j,m-s */ "meta-jmeta-s",  "jump_server");
     gui_key_bind ( /* m-j,m-x */ "meta-jmeta-x",  "jump_next_server");
+    gui_key_bind ( /* m-k     */ "meta-k",        "grab_key");
+    gui_key_bind ( /* m-r     */ "meta-r",        "delete_line");
     
     /* keys binded with commands */
     gui_key_bind ( /* m-left  */ "meta-meta2-D", "/buffer -1");
@@ -124,6 +125,35 @@ gui_input_default_key_bindings ()
 }
 
 /*
+ * gui_input_grab_end: insert grabbed key in input buffer
+ */
+
+void
+gui_input_grab_end ()
+{
+    char *expanded_key;
+
+    /* get expanded name (for example: ^U => ctrl-u) */
+    expanded_key = gui_key_get_expanded_name (gui_key_buffer);
+    
+    if (expanded_key)
+    {
+        if (gui_current_window->buffer->has_input)
+        {
+            gui_input_insert_string (expanded_key, -1);
+            gui_current_window->buffer->input_buffer_pos += strlen (expanded_key);
+            gui_draw_buffer_input (gui_current_window->buffer, 1);
+        }
+        free (expanded_key);
+    }
+    
+    /* end grab mode */
+    gui_key_grab = 0;
+    gui_key_grab_count = 0;
+    gui_key_buffer[0] = '\0';
+}
+
+/*
  * gui_input_read: read keyboard chars
  */
 
@@ -138,10 +168,17 @@ gui_input_read ()
        to read also socket & co */
     while (i < 8)
     {
+        if (gui_key_grab && (gui_key_grab_count > 10))
+            gui_input_grab_end ();
+        
         key = getch ();
         
         if (key == ERR)
+        {
+            if (gui_key_grab && (gui_key_grab_count > 0))
+                gui_input_grab_end ();
             break;
+        }
         
         if (key == KEY_RESIZE)
         {
@@ -176,11 +213,11 @@ gui_input_read ()
             }
         }
         
-        if (strcmp (key_str, "^") == 0)
+        /*if (strcmp (key_str, "^") == 0)
         {
             key_str[1] = '^';
             key_str[2] = '\0';
-        }
+        }*/
         
         /*gui_printf (gui_current_window->buffer, "gui_input_read: key = %s (%d)\n", key_str, key);*/
         

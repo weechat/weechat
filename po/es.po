@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.4-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-07-13 19:29+0200\n"
-"PO-Revision-Date: 2005-07-13 19:30+0200\n"
+"POT-Creation-Date: 2005-07-16 13:11+0200\n"
+"PO-Revision-Date: 2005-07-16 13:12+0200\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2119,7 +2119,7 @@ msgstr ""
 "%s no ha sido posible añadir el manejador para el mensaje \"%s\" (memoria "
 "insuficiente)\n"
 
-#: src/gui/curses/gui-input.c:300
+#: src/gui/curses/gui-input.c:337
 #, c-format
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr "%s el lag (retraso) es alto, desconectando del servidor...\n"
@@ -2140,44 +2140,44 @@ msgstr "MB"
 msgid "Gb"
 msgstr "GB"
 
-#: src/gui/curses/gui-display.c:1116
+#: src/gui/curses/gui-display.c:1119
 msgid "(away)"
 msgstr "(ausente)"
 
-#: src/gui/curses/gui-display.c:1233
+#: src/gui/curses/gui-display.c:1236
 msgid "[not connected]"
 msgstr "[no conectado]"
 
-#: src/gui/curses/gui-display.c:1249
+#: src/gui/curses/gui-display.c:1252
 msgid "Act: "
 msgstr "Act: "
 
-#: src/gui/curses/gui-display.c:1302
+#: src/gui/curses/gui-display.c:1305
 #, c-format
 msgid "Lag: %.1f"
 msgstr "Lag: %.1f"
 
-#: src/gui/curses/gui-display.c:1323
+#: src/gui/curses/gui-display.c:1326
 msgid "-MORE-"
 msgstr "-MÁS-"
 
-#: src/gui/curses/gui-display.c:1563
+#: src/gui/curses/gui-display.c:1565
 msgid "  [A] Accept"
 msgstr "  [A] Aceptar"
 
-#: src/gui/curses/gui-display.c:1564 src/gui/curses/gui-display.c:1568
+#: src/gui/curses/gui-display.c:1566 src/gui/curses/gui-display.c:1570
 msgid "  [C] Cancel"
 msgstr "  [C] Cancelar"
 
-#: src/gui/curses/gui-display.c:1573
+#: src/gui/curses/gui-display.c:1575
 msgid "  [R] Remove"
 msgstr "  [R] Eliminar"
 
-#: src/gui/curses/gui-display.c:1577
+#: src/gui/curses/gui-display.c:1579
 msgid "  [P] Purge old DCC"
 msgstr "  [P] Purgar los viejos DCC"
 
-#: src/gui/curses/gui-display.c:1578
+#: src/gui/curses/gui-display.c:1580
 msgid "  [Q] Close DCC view"
 msgstr "  [Q] Cerrar la vista DCC"
 
@@ -2185,159 +2185,163 @@ msgstr "  [Q] Cerrar la vista DCC"
 msgid "server"
 msgstr "servidor"
 
-#: src/gui/gui-common.c:334
+#: src/gui/gui-common.c:340
 msgid "Not enough memory for infobar message\n"
 msgstr "No hay suficiente memoria para el mensaje de la barra de información\n"
 
-#: src/gui/gui-common.c:509
+#: src/gui/gui-common.c:515
 msgid "Not enough memory for new line\n"
 msgstr "No hay suficiente memoria para una nueva línea\n"
 
-#: src/gui/gui-common.c:552
+#: src/gui/gui-common.c:558
 msgid "Not enough memory for new message\n"
 msgstr "No hay suficiente memoria para el mensaje de la barra de información\n"
 
-#: src/gui/gui-keyboard.c:43
+#: src/gui/gui-keyboard.c:45
 msgid "terminate line"
 msgstr "terminar línea"
 
-#: src/gui/gui-keyboard.c:45
+#: src/gui/gui-keyboard.c:47
 msgid "complete word"
 msgstr "completar palabra"
 
-#: src/gui/gui-keyboard.c:47
+#: src/gui/gui-keyboard.c:49
 msgid "delete previous char"
 msgstr "borrar el carácter anterior"
 
-#: src/gui/gui-keyboard.c:49
+#: src/gui/gui-keyboard.c:51
 msgid "delete next char"
 msgstr "borrar el carácter siguiente"
 
-#: src/gui/gui-keyboard.c:51
+#: src/gui/gui-keyboard.c:53
 msgid "delete until end of line"
 msgstr "borrar hasta fin de línea"
 
-#: src/gui/gui-keyboard.c:53
+#: src/gui/gui-keyboard.c:55
 msgid "delete until beginning of line"
 msgstr "borrar hasta principio de línea"
 
-#: src/gui/gui-keyboard.c:55
+#: src/gui/gui-keyboard.c:57
 msgid "delete entire line"
 msgstr "borrar línea entera"
 
-#: src/gui/gui-keyboard.c:57
+#: src/gui/gui-keyboard.c:59
 msgid "delete previous word"
 msgstr "borrar la palabra anterior"
 
-#: src/gui/gui-keyboard.c:59
+#: src/gui/gui-keyboard.c:61
 msgid "delete next word"
 msgstr "borrar la palabra siguiente"
 
-#: src/gui/gui-keyboard.c:61
+#: src/gui/gui-keyboard.c:63
 msgid "paste current clipboard content"
 msgstr ""
 
-#: src/gui/gui-keyboard.c:63
+#: src/gui/gui-keyboard.c:65
 msgid "transpose chars"
 msgstr ""
 
-#: src/gui/gui-keyboard.c:65
+#: src/gui/gui-keyboard.c:67
 msgid "go to beginning of line"
 msgstr "ir al principio de línea"
 
-#: src/gui/gui-keyboard.c:67
+#: src/gui/gui-keyboard.c:69
 msgid "go to end of line"
 msgstr "ir al final de línea"
 
-#: src/gui/gui-keyboard.c:69
+#: src/gui/gui-keyboard.c:71
 msgid "move one char left"
 msgstr "mover un carácter a la izquierda"
 
-#: src/gui/gui-keyboard.c:71
+#: src/gui/gui-keyboard.c:73
 msgid "move to previous word"
 msgstr "mover a la palabra anterior"
 
-#: src/gui/gui-keyboard.c:73
+#: src/gui/gui-keyboard.c:75
 msgid "move one char right"
 msgstr "mover un carácter a la derecha"
 
-#: src/gui/gui-keyboard.c:75
+#: src/gui/gui-keyboard.c:77
 msgid "move to next word"
 msgstr "mover a la palabra siguiente"
 
-#: src/gui/gui-keyboard.c:77
+#: src/gui/gui-keyboard.c:79
 msgid "call previous command in history"
 msgstr "llamar al comando anterior en el historial"
 
-#: src/gui/gui-keyboard.c:79
+#: src/gui/gui-keyboard.c:81
 msgid "call next command in history"
 msgstr "llamar al comando siguiente en el historial"
 
-#: src/gui/gui-keyboard.c:81
+#: src/gui/gui-keyboard.c:83
 msgid "scroll one page up"
 msgstr "desplazarse una página hacia arriba"
 
-#: src/gui/gui-keyboard.c:83
+#: src/gui/gui-keyboard.c:85
 msgid "scroll one page down"
 msgstr "desplazarse una página hacia abajo"
 
-#: src/gui/gui-keyboard.c:85
+#: src/gui/gui-keyboard.c:87
 msgid "clear infobar"
 msgstr "limpiar barra de información"
 
-#: src/gui/gui-keyboard.c:87
+#: src/gui/gui-keyboard.c:89
 msgid "scroll nicklist one page up"
 msgstr "desplazar la lista de nicks una página hacia arriba"
 
-#: src/gui/gui-keyboard.c:89
+#: src/gui/gui-keyboard.c:91
 msgid "scroll nicklist one page down"
 msgstr "desplazar la lista de nicks una página hacia abajo"
 
-#: src/gui/gui-keyboard.c:91
+#: src/gui/gui-keyboard.c:93
 msgid "display beginning of nicklist"
 msgstr "mostrar el principio de la lista de nicks"
 
-#: src/gui/gui-keyboard.c:93
+#: src/gui/gui-keyboard.c:95
 msgid "display end of nicklist"
 msgstr "mostrar el final de la lista de nicks"
 
-#: src/gui/gui-keyboard.c:95
+#: src/gui/gui-keyboard.c:97
 msgid "refresh screen"
 msgstr "recargar la pantalla"
 
-#: src/gui/gui-keyboard.c:97
+#: src/gui/gui-keyboard.c:99
 msgid "jump to buffer with activity"
 msgstr "saltar al búfer con actividad"
 
-#: src/gui/gui-keyboard.c:99
+#: src/gui/gui-keyboard.c:101
 msgid "jump to DCC buffer"
 msgstr "saltar al búfer DCC"
 
-#: src/gui/gui-keyboard.c:101
+#: src/gui/gui-keyboard.c:103
 msgid "jump to server buffer"
 msgstr "saltar al búfer servidor"
 
-#: src/gui/gui-keyboard.c:103
+#: src/gui/gui-keyboard.c:105
 msgid "jump to next server"
 msgstr "saltar al servidor siguiente"
 
-#: src/gui/gui-keyboard.c:105
+#: src/gui/gui-keyboard.c:107
 msgid "clear hotlist"
 msgstr "limpiar hotlist"
 
-#: src/gui/gui-keyboard.c:403 src/common/command.c:1471
+#: src/gui/gui-keyboard.c:109
+msgid "grab a key"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:420 src/common/command.c:1471
 #, c-format
 msgid "%s unable to bind key \"%s\"\n"
 msgstr "%s No ha sido posible atar la clave \"%s\"\n"
 
-#: src/gui/gui-keyboard.c:414
+#: src/gui/gui-keyboard.c:431
 #, c-format
 msgid "%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"
 msgstr ""
 "%s No ha sido posible atar la clave \"%s\" (nombre de función inválido: \"%s"
 "\")\n"
 
-#: src/gui/gui-keyboard.c:427
+#: src/gui/gui-keyboard.c:444
 #, c-format
 msgid "%s not enough memory for key binding\n"
 msgstr "%s no hay suficiente memoria para atar la clave\n"

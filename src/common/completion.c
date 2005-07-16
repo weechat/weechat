@@ -206,9 +206,6 @@ completion_build_list (t_completion *completion, void *channel)
     {
         weelist_add (&completion->completion_list,
                      &completion->last_completion,
-                     "bind");
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
                      "unbind");
         weelist_add (&completion->completion_list,
                      &completion->last_completion,
