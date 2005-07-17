@@ -214,11 +214,11 @@ gui_input_read ()
             }
         }
         
-        /*if (strcmp (key_str, "^") == 0)
+        if (strcmp (key_str, "^") == 0)
         {
             key_str[1] = '^';
             key_str[2] = '\0';
-        }*/
+        }
         
         /*gui_printf (gui_current_window->buffer, "gui_input_read: key = %s (%d)\n", key_str, key);*/
         
