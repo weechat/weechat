@@ -290,11 +290,11 @@ extern void server_print_log (t_irc_server *);
 /* proxy functions (irc-server.c) */
 extern void convbase64_8x3_to_6x4(char *from, char* to);
 extern void base64encode(char *from, char *to);
-extern int pass_httpproxy(t_irc_server *server);
-extern int resolve(char *hostname, char *ip, int *version);
-extern int pass_socks4proxy(t_irc_server *server);
-extern int pass_socks5proxy(t_irc_server *server);
-extern int pass_proxy(t_irc_server *server);
+extern int pass_httpproxy(int, char*, int);
+extern int resolve(char *, char *, int *);
+extern int pass_socks4proxy(int, char*, int, char*);
+extern int pass_socks5proxy(int, char*, int);
+extern int pass_proxy(int, char*, int, char*);
 
 /* channel functions (irc-channel.c) */
 

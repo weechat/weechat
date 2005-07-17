@@ -960,7 +960,7 @@ base64encode(char *from, char *to)
  *           - 1 if connexion fails
  */
 int
-pass_httpproxy(t_irc_server *server)
+pass_httpproxy(int server_sock, char *server_address, int server_port)
 {
 
   char buffer[256];
@@ -973,19 +973,19 @@ pass_httpproxy(t_irc_server *server)
       // authentification
       snprintf(authbuf, sizeof(authbuf), "%s:%s", cfg_proxy_username, cfg_proxy_password);
       base64encode(authbuf, authbuf_base64);
-      n = snprintf(buffer, sizeof(buffer), "CONNECT %s:%d HTTP/1.0\r\nProxy-Authorization: Basic %s\r\n\r\n", server->address, server->port, authbuf_base64);
+      n = snprintf(buffer, sizeof(buffer), "CONNECT %s:%d HTTP/1.0\r\nProxy-Authorization: Basic %s\r\n\r\n", server_address, server_port, authbuf_base64);
     }
   else 
     {
       // no authentification 
-      n = snprintf(buffer, sizeof(buffer), "CONNECT %s:%d HTTP/1.0\r\n\r\n", server->address, server->port);
+      n = snprintf(buffer, sizeof(buffer), "CONNECT %s:%d HTTP/1.0\r\n\r\n", server_address, server_port);
     }
   
-  m = send (server->sock, buffer, n, 0);
+  m = send (server_sock, buffer, n, 0);
   if (n != m)
     return 1;
 
-  n = recv(server->sock, buffer, sizeof(buffer), 0);
+  n = recv(server_sock, buffer, sizeof(buffer), 0);
 
   /* success result must be like : "HTTP/1.0 200 OK"  */
   if (n < 12)
@@ -1047,7 +1047,7 @@ resolve (char *hostname, char *ip, int *version)
  *           - 1 if connexion fails
  */
 int
-pass_socks4proxy(t_irc_server *server)
+pass_socks4proxy(int server_sock, char *server_address, int server_port, char *server_username)
 {
   /* 
    * socks4 protocol is explain here: 
@@ -1068,13 +1068,13 @@ pass_socks4proxy(t_irc_server *server)
 
   socks4.version = 4;
   socks4.method = 1;
-  socks4.port = htons (server->port);
-  resolve(server->address, ip_addr, NULL);
+  socks4.port = htons (server_port);
+  resolve(server_address, ip_addr, NULL);
   socks4.address = inet_addr (ip_addr);
-  strncpy (socks4.user, server->username, sizeof(socks4.user) - 1);
+  strncpy (socks4.user, server_username, sizeof(socks4.user) - 1);
   
-  send (server->sock, (char *) &socks4, 8 + strlen(socks4.user) + 1, 0);
-  recv (server->sock, buffer, sizeof(buffer), 0);
+  send (server_sock, (char *) &socks4, 8 + strlen(socks4.user) + 1, 0);
+  recv (server_sock, buffer, sizeof(buffer), 0);
 
   if (buffer[0] == 0 && buffer[1] == 90)
     return 0;
@@ -1089,7 +1089,7 @@ pass_socks4proxy(t_irc_server *server)
  *           - 1 if connexion fails
  */
 int
-pass_socks5proxy(t_irc_server *server)
+pass_socks5proxy(int server_sock, char *server_address, int server_port)
 {
   /* 
    * socks5 protocol is explained in RFC 1928
@@ -1116,9 +1116,9 @@ pass_socks5proxy(t_irc_server *server)
     /* without authentication */
     socks5.method = 0;
      
-  send (server->sock, (char *) &socks5, sizeof(socks5), 0);
+  send (server_sock, (char *) &socks5, sizeof(socks5), 0);
   /* server socks5 must respond with 2 bytes */
-  if (recv (server->sock, buffer, 2, 0) != 2)
+  if (recv (server_sock, buffer, 2, 0) != 2)
     return 1;
   
   if (strlen(cfg_proxy_username) > 0)
@@ -1144,10 +1144,10 @@ pass_socks5proxy(t_irc_server *server)
       buffer[2 + username_len] = (unsigned char) password_len;
       memcpy(buffer + 3 + username_len, cfg_proxy_password, password_len);
      
-      send (server->sock, buffer, 3 + username_len + password_len, 0);
+      send (server_sock, buffer, 3 + username_len + password_len, 0);
 
       /* server socks5 must respond with 2 bytes */
-      if (recv (server->sock, buffer, 2, 0) != 2)
+      if (recv (server_sock, buffer, 2, 0) != 2)
 	return 1;
 
       /* buffer[1] = auth state, must be 0 for success */
@@ -1166,7 +1166,7 @@ pass_socks5proxy(t_irc_server *server)
     }
   
   /* authentication successful then giving address/port to connect */
-  addr_len = strlen(server->address);
+  addr_len = strlen(server_address);
   addr_buffer_len = 4 + 1 + addr_len + 2;
   addr_buffer = (unsigned char *) malloc ( addr_buffer_len * sizeof(*addr_buffer));
   if (!addr_buffer)
@@ -1176,14 +1176,14 @@ pass_socks5proxy(t_irc_server *server)
   addr_buffer[2] = 0;   /* reserved */
   addr_buffer[3] = 3;   /* address type : ipv4 (1), domainname (3), ipv6 (4) */
   addr_buffer[4] = (unsigned char) addr_len;
-  memcpy (addr_buffer + 5, server->address, addr_len); /* server address */
-  *((unsigned short *) (addr_buffer + 5 + addr_len)) = htons (server->port); /* server port */
+  memcpy (addr_buffer + 5, server_address, addr_len); /* server address */
+  *((unsigned short *) (addr_buffer + 5 + addr_len)) = htons (server_port); /* server port */
 
-  send (server->sock, addr_buffer, addr_buffer_len, 0);
+  send (server_sock, addr_buffer, addr_buffer_len, 0);
   free(addr_buffer);
 
   /* dialog with proxy server */
-  if (recv (server->sock, buffer, 4, 0) != 4)
+  if (recv (server_sock, buffer, 4, 0) != 4)
     return 1;
 
   if (!(buffer[0] == 5 && buffer[1] == 0))
@@ -1196,7 +1196,7 @@ pass_socks5proxy(t_irc_server *server)
      * server socks return server bound address and port
      * address of 4 bytes and port of 2 bytes (= 6 bytes)
      */
-    if (recv (server->sock, buffer, 6, 0) != 6)
+    if (recv (server_sock, buffer, 6, 0) != 6)
       return 1;
     break;
   case 3:
@@ -1204,11 +1204,11 @@ pass_socks5proxy(t_irc_server *server)
      * server socks return server bound address and port
      */
     /* reading address length */
-    if (recv (server->sock, buffer, 1, 0) != 1)
+    if (recv (server_sock, buffer, 1, 0) != 1)
       return 1;    
     addr_len = buffer[0];
     /* reading address + port = addr_len + 2 */
-    if (recv (server->sock, buffer, addr_len + 2, 0) != (addr_len + 2))
+    if (recv (server_sock, buffer, addr_len + 2, 0) != (addr_len + 2))
       return 1;
     break;
   case 4 :
@@ -1216,7 +1216,7 @@ pass_socks5proxy(t_irc_server *server)
      * server socks return server bound address and port
      * address of 16 bytes and port of 2 bytes (= 18 bytes)
      */
-    if (recv (server->sock, buffer, 18, 0) != 18)
+    if (recv (server_sock, buffer, 18, 0) != 18)
       return 1;
     break;
   default:
@@ -1233,14 +1233,14 @@ pass_socks5proxy(t_irc_server *server)
  *           - 1 if connexion fails
  */
 int
-pass_proxy(t_irc_server *server)
+pass_proxy(int server_sock, char *server_address, int server_port, char *server_username)
 {  
   if (strcmp(cfg_proxy_type_values[cfg_proxy_type], "http") == 0)
-    return pass_httpproxy(server);
+    return pass_httpproxy(server_sock, server_address, server_port);
   if (strcmp(cfg_proxy_type_values[cfg_proxy_type], "socks4") == 0)
-    return pass_socks4proxy(server);
+    return pass_socks4proxy(server_sock, server_address, server_port, server_username);
   if (strcmp(cfg_proxy_type_values[cfg_proxy_type], "socks5") == 0)
-    return pass_socks5proxy(server);
+    return pass_socks5proxy(server_sock, server_address, server_port);
 
   return 1;
 }
@@ -1291,7 +1291,7 @@ server_child (t_irc_server *server)
 	    return 0;
         }
 	
-	if (pass_proxy(server))
+	if (pass_proxy(server->sock, server->address, server->port, server->username))
         {
 	    write(server->child_write, "4", 1);
             freeaddrinfo (res);
@@ -1426,7 +1426,8 @@ server_connect (t_irc_server *server)
     server->child_write = child_pipe[1];
     
     /* create socket and set options */
-    server->sock = socket ((server->ipv6) ? AF_INET6 : AF_INET, SOCK_STREAM, 0);
+    server->sock = socket ((cfg_proxy_ipv6 || server->ipv6) ? AF_INET6 : AF_INET, SOCK_STREAM, 0);
+          
     if (server->sock == -1)
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
