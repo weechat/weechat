@@ -66,7 +66,7 @@ binary-arch: build install
 	dh_testroot -a
 	# dh_installchangelogs -a
 	# dh_installdocs -a
-	dh_installman weechat-curses.1 -pweechat-curses
+	dh_installman doc/weechat-curses.1 -pweechat-curses
 	dh_link -a usr/share/doc/weechat-common usr/share/doc/weechat-curses
 	dh_strip -a
 	dh_compress -a
