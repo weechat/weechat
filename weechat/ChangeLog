@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-07-16
+ChangeLog - 2005-07-17
 
 
 Version 0.1.4 (under dev!):
+   * added /amsg command (send text to all channels of all connected servers)
    * fixed SIGSEGV handler (now write a core file by aborting program)
    * fixed statusbar & infobar background refresh problem with some systems
    * added color for private in hotlist (different than color for highlight)
