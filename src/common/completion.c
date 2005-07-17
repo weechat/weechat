@@ -426,6 +426,9 @@ completion_build_list (t_completion *completion, void *channel)
                      "action");
         weelist_add (&completion->completion_list,
                      &completion->last_completion,
+                     "ping");
+        weelist_add (&completion->completion_list,
+                     &completion->last_completion,
                      "version");
         return;
     }

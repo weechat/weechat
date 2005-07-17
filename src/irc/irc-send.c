@@ -29,6 +29,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include <sys/time.h>
 #include <time.h>
 #include <sys/utsname.h>
@@ -329,53 +330,67 @@ irc_cmd_send_ban (t_irc_server *server, char *arguments)
 int
 irc_cmd_send_ctcp (t_irc_server *server, char *arguments)
 {
-    char *pos, *pos2;
+    char *pos_type, *pos_args, *pos;
     struct timeval tv;
     struct timezone tz;
     
-    pos = strchr (arguments, ' ');
-    if (pos)
+    pos_type = strchr (arguments, ' ');
+    if (pos_type)
     {
-        pos[0] = '\0';
-        pos++;
-        while (pos[0] == ' ')
-            pos++;
-        pos2 = strchr (pos, ' ');
-        if (pos2)
+        pos_type[0] = '\0';
+        pos_type++;
+        while (pos_type[0] == ' ')
+            pos_type++;
+        pos_args = strchr (pos_type, ' ');
+        if (pos_args)
         {
-            pos2[0] = '\0';
-            pos2++;
-            while (pos2[0] == ' ')
-                pos2++;
+            pos_args[0] = '\0';
+            pos_args++;
+            while (pos_args[0] == ' ')
+                pos_args++;
         }
         else
-            pos2 = NULL;
+            pos_args = NULL;
         
-        if (strcasecmp (pos, "version") == 0)
+        pos = pos_type;
+        while (pos[0])
         {
-            if (pos2)
-                server_sendf (server, "PRIVMSG %s :\01VERSION %s\01\r\n",
-                              arguments, pos2);
-            else
-                server_sendf (server, "PRIVMSG %s :\01VERSION\01\r\n",
-                              arguments);
+            pos[0] = toupper (pos[0]);
+            pos++;
         }
-        if (strcasecmp (pos, "action") == 0)
-        {
-            if (pos2)
-                server_sendf (server, "PRIVMSG %s :\01ACTION %s\01\r\n",
-                              arguments, pos2);
-            else
-                server_sendf (server, "PRIVMSG %s :\01ACTION\01\r\n",
-                              arguments);
-        }
-        if (strcasecmp (pos, "ping") == 0)
+
+        irc_display_prefix (server->buffer, PREFIX_SERVER);
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT, "CTCP");
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, "(");
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK, "%s", arguments);
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, ")");
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT, ": ");
+        gui_printf_color (server->buffer, COLOR_WIN_CHAT_CHANNEL, "%s", pos_type);
+        
+        if ((strcasecmp (pos_type, "ping") == 0) && (!pos_args))
         {
             gettimeofday (&tv, &tz);
             server_sendf (server, "PRIVMSG %s :\01PING %d %d\01\r\n",
                           arguments, tv.tv_sec, tv.tv_usec);
+            gui_printf_color (server->buffer, COLOR_WIN_CHAT, " %d %d\n",
+                              tv.tv_sec, tv.tv_usec);
         }
-        
+        else
+        {
+            if (pos_args)
+            {
+                server_sendf (server, "PRIVMSG %s :\01%s %s\01\r\n",
+                              arguments, pos_type, pos_args);
+                gui_printf_color (server->buffer, COLOR_WIN_CHAT, " %s\n",
+                                  pos_args);
+            }
+            else
+            {
+                server_sendf (server, "PRIVMSG %s :\01%s\01\r\n",
+                              arguments, pos_type);
+                gui_printf (server->buffer, "\n");
+            }
+        }
     }
     return 0;
 }

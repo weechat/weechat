@@ -1260,7 +1260,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                     pos2 = strchr (pos, '\01');
                     if (pos2)
                         pos2[0] = '\0';
-                    irc_display_prefix (ptr_channel->buffer, PREFIX_INFO);
+                    irc_display_prefix (ptr_channel->buffer, PREFIX_SERVER);
                     gui_printf (ptr_channel->buffer,
                                 _("Received a CTCP SOUND \"%s\" from "),
                                 pos);
@@ -1322,8 +1322,19 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                 pos++;
             
             /* version asked by another user => answer with WeeChat version */
-            if (strcmp (pos, "\01VERSION\01") == 0)
+            if (strncmp (pos, "\01VERSION", 8) == 0)
             {
+                pos2 = strchr (pos + 8, ' ');
+                if (pos2)
+                {
+                    while (pos2[0] == ' ')
+                        pos2++;
+                    if (pos2[0] == '\01')
+                        pos2 = NULL;
+                    else if (!pos2[0])
+                        pos2 = NULL;
+                }
+                
                 buf = (struct utsname *) malloc (sizeof (struct utsname));
                 if (buf && (uname (buf) == 0))
                 {
@@ -1342,15 +1353,20 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                                   " compiled on %s%s",
                                   host, "\01", PACKAGE_NAME, PACKAGE_VERSION, __DATE__,
                                   "\01\r\n");
-                irc_display_prefix (server->buffer, PREFIX_INFO);
+                irc_display_prefix (server->buffer, PREFIX_SERVER);
                 gui_printf_color (server->buffer,
-                                  COLOR_WIN_CHAT, _("Received a "));
+                                  COLOR_WIN_CHAT, "CTCP ");
                 gui_printf_color (server->buffer,
-                                  COLOR_WIN_CHAT_CHANNEL, _("CTCP VERSION "));
+                                  COLOR_WIN_CHAT_CHANNEL, "VERSION ");
                 gui_printf_color (server->buffer,
-                                  COLOR_WIN_CHAT, _("from"));
+                                  COLOR_WIN_CHAT, _("received from"));
                 gui_printf_color (server->buffer,
-                                  COLOR_WIN_CHAT_NICK, " %s\n", host);
+                                  COLOR_WIN_CHAT_NICK, " %s", host);
+                if (pos2)
+                    gui_printf_color (server->buffer,
+                                      COLOR_WIN_CHAT, ": %s\n", pos2);
+                else
+                    gui_printf (server->buffer, "\n");
                 return 0;
             }
             
@@ -1373,6 +1389,15 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                 else
                     server_sendf (server, "NOTICE %s :\01PING\01\r\n",
                                   host);
+                irc_display_prefix (server->buffer, PREFIX_SERVER);
+                gui_printf_color (server->buffer,
+                                  COLOR_WIN_CHAT, "CTCP ");
+                gui_printf_color (server->buffer,
+                                  COLOR_WIN_CHAT_CHANNEL, "PING ");
+                gui_printf_color (server->buffer,
+                                  COLOR_WIN_CHAT, _("received from"));
+                gui_printf_color (server->buffer,
+                                  COLOR_WIN_CHAT_NICK, " %s\n", host);
                 return 0;
             }
             
@@ -1629,6 +1654,39 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                 dcc_add (server, DCC_CHAT_RECV, strtoul (pos_addr, NULL, 10),
                          atoi (pos_port), host, -1, NULL, NULL, 0);
                 
+                return 0;
+            }
+            
+            /* unknown CTCP ? */
+            pos2 = strchr (pos + 1, '\01');
+            if ((pos[0] == '\01') && pos2 && (pos2[1] == '\0'))
+            {
+                pos++;
+                pos2[0] = '\0';
+                pos2 = strchr (pos, ' ');
+                if (pos2)
+                {
+                    pos2[0] = '\0';
+                    pos2++;
+                    while (pos2[0] == ' ')
+                        pos2++;
+                    if (!pos2[0])
+                        pos2 = NULL;
+                }
+                irc_display_prefix (server->buffer, PREFIX_SERVER);
+                gui_printf_color (server->buffer,
+                                  COLOR_WIN_CHAT, _("Unknown CTCP "));
+                gui_printf_color (server->buffer,
+                                  COLOR_WIN_CHAT_CHANNEL, "%s ", pos);
+                gui_printf_color (server->buffer,
+                                  COLOR_WIN_CHAT, _("received from"));
+                gui_printf_color (server->buffer,
+                                  COLOR_WIN_CHAT_NICK, " %s", host);
+                if (pos2)
+                    gui_printf_color (server->buffer,
+                                      COLOR_WIN_CHAT, ": %s\n", pos2);
+                else
+                    gui_printf (server->buffer, "\n");
                 return 0;
             }
             
