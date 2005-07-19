@@ -733,7 +733,7 @@ Effacer le mot suivant@*
 Aller au mot suivant@*
 @*
 @item Alt + H
-Vide la hotlist (notification d'activité sur les autres tampons)@*
+Vide la hotlist (notification d'activit@'e sur les autres tampons)@*
 @*
 @item Alt + J puis Alt + D
 Afficher les DCC en cours@*
