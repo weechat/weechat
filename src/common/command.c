@@ -971,7 +971,9 @@ weechat_cmd_buffer (int argc, char **argv)
             {
                 if (SERVER(gui_current_window->buffer))
                 {
-                    if (SERVER(gui_current_window->buffer)->is_connected)
+                    if (SERVER(gui_current_window->buffer)->is_connected
+                        && CHANNEL(gui_current_window->buffer)
+                        && CHANNEL(gui_current_window->buffer)->nicks)
                         irc_cmd_send_part (SERVER(gui_current_window->buffer), NULL);
                     else
                     {

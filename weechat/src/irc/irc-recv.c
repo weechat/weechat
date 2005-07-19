@@ -2052,7 +2052,14 @@ irc_cmd_recv_004 (t_irc_server *server, char *host, char *arguments)
              ptr_channel = ptr_channel->next_channel)
         {
             if (ptr_channel->type == CHAT_CHANNEL)
-                server_sendf (server, "JOIN %s\r\n", ptr_channel->name);
+            {
+                if (ptr_channel->key)
+                    server_sendf (server, "JOIN %s %s\r\n",
+                                  ptr_channel->name, ptr_channel->key);
+                else
+                    server_sendf (server, "JOIN %s\r\n",
+                                  ptr_channel->name);
+            }
         }
         server->reconnect_join = 0;
     }
