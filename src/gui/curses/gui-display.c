@@ -2531,7 +2531,7 @@ gui_add_message (t_gui_buffer *buffer, int type, int color, char *message)
             {
                 if (buffer->last_line->line_with_highlight)
                     hotlist_add (HOTLIST_HIGHLIGHT, buffer);
-                else if (BUFFER_IS_PRIVATE(buffer))
+                else if (BUFFER_IS_PRIVATE(buffer) && (buffer->last_line->line_with_message))
                     hotlist_add (HOTLIST_PRIVATE, buffer);
                 else if (buffer->last_line->line_with_message)
                     hotlist_add (HOTLIST_MSG, buffer);
