@@ -5,6 +5,7 @@ ChangeLog - 2005-07-19
 
 
 Version 0.1.4 (under dev!):
+   * added "irc_highlight" setting, to get highlight with any word
    * fixed auto-rejoin for channels with key
    * fixed /ctcp command (now any command/data allowed)
    * added /amsg command (send text to all channels of all connected servers)

@@ -43,6 +43,70 @@
 
 
 /*
+ * irc_is_highlight: returns 1 if given message contains highlight (with given nick
+ *                   or at least one of string in "irc_higlight" setting
+ */
+
+int
+irc_is_highlight (char *message, char *nick)
+{
+    char *highlight, *pos, *pos_end;
+    int end, length;
+    
+    /* empty message ? */
+    if (!message || !message[0])
+        return 0;
+    
+    /* highlight by nickname */
+    if (strstr (message, nick))
+        return 1;
+    
+    /* no highlight by nickname and "irc_highlight" is empty */
+    if (!cfg_irc_highlight || !cfg_irc_highlight[0])
+        return 0;
+    
+    /* look in "irc_highlight" for highlight */
+    if ((highlight = strdup (cfg_irc_highlight)) == NULL)
+        return 0;
+    pos = highlight;
+    end = 0;
+    while (!end)
+    {
+        pos_end = strchr (pos, ',');
+        if (!pos_end)
+        {
+            pos_end = strchr (pos, '\0');
+            end = 1;
+        }
+        /* error parsing string! */
+        if (!pos_end)
+        {
+            free (highlight);
+            return 0;
+        }
+        
+        length = pos_end - pos;
+        pos_end[0] = '\0';
+        if (length > 0)
+        {
+            /* highlight found! */
+            if (strstr (message, pos))
+            {
+                free (highlight);
+                return 1;
+            }
+        }
+        
+        if (!end)
+            pos = pos_end + 1;
+    }
+    
+    /* no highlight found with "irc_highlight" list */
+    free (highlight);
+    return 0;
+}
+
+/*
  * irc_recv_command: executes action when receiving IRC command
  *                   returns:  0 = all ok, command executed
  *                            -1 = command failed
@@ -1232,7 +1296,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                     if (pos2)
                         pos2[0] = '\0';
                     irc_display_prefix (ptr_channel->buffer, PREFIX_ACTION_ME);
-                    if (strstr (pos, server->nick))
+                    if (irc_is_highlight (pos, server->nick))
                     {
                         gui_printf_type_color (ptr_channel->buffer,
                                                MSG_TYPE_MSG | MSG_TYPE_HIGHLIGHT,
@@ -1271,7 +1335,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                 else
                 {
                     ptr_nick = nick_search (ptr_channel, host);
-                    if (strstr (pos, server->nick))
+                    if (irc_is_highlight (pos, server->nick))
                     {
                         irc_display_nick (ptr_channel->buffer, ptr_nick,
                                           (ptr_nick) ? NULL : host,
@@ -1714,7 +1778,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                 if (pos2)
                     pos2[0] = '\0';
                 irc_display_prefix (ptr_channel->buffer, PREFIX_ACTION_ME);
-                if (strstr (pos, server->nick))
+                if (irc_is_highlight (pos, server->nick))
                 {
                     gui_printf_type_color (ptr_channel->buffer,
                                            MSG_TYPE_MSG | MSG_TYPE_HIGHLIGHT,
@@ -1741,7 +1805,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                 gui_printf_type_color (ptr_channel->buffer,
                                        MSG_TYPE_NICK,
                                        COLOR_WIN_CHAT_DARK, "<");
-                if (strstr (pos, server->nick))
+                if (irc_is_highlight (pos, server->nick))
                 {
                     gui_printf_type_color (ptr_channel->buffer,
                                            MSG_TYPE_NICK | MSG_TYPE_HIGHLIGHT,

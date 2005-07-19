@@ -517,6 +517,7 @@ int cfg_irc_lag_check;
 int cfg_irc_lag_min_show;
 int cfg_irc_lag_disconnect;
 int cfg_irc_fifo_pipe;
+char *cfg_irc_highlight;
 
 t_config_option weechat_options_irc[] =
 { { "irc_display_away", N_("display message to all channels when away"),
@@ -555,6 +556,10 @@ t_config_option weechat_options_irc[] =
     N_("create a FIFO pipe for remote control"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
     NULL, NULL, &cfg_irc_fifo_pipe, NULL, config_change_fifo_pipe },
+  { "irc_highlight", N_("list of words to highlight"),
+    N_("comma separated list of words to highlight (case sensitive comparison)"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    "", NULL, NULL, &cfg_irc_highlight, config_change_noop },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 

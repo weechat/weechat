@@ -170,6 +170,7 @@ extern int cfg_irc_lag_check;
 extern int cfg_irc_lag_min_show;
 extern int cfg_irc_lag_disconnect;
 extern int cfg_irc_fifo_pipe;
+extern char *cfg_irc_highlight;
 
 extern int cfg_dcc_auto_accept_files;
 extern int cfg_dcc_auto_accept_chats;

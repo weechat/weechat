@@ -351,6 +351,7 @@ extern void irc_display_server (t_irc_server *ptr_server);
 
 /* IRC protocol (irc-commands.c) */
 
+extern int irc_is_highlight (char *, char *);
 extern int irc_recv_command (t_irc_server *, char *, char *, char *, char *);
 extern void irc_login (t_irc_server *);
 /* IRC commands issued by user */

@@ -90,7 +90,15 @@ void
 channel_free (t_irc_server *server, t_irc_channel *channel)
 {
     t_irc_channel *new_channels;
-
+    
+    /* close DCC CHAT */
+    if ((t_irc_dcc *)(channel->dcc_chat) &&
+        (!DCC_ENDED(((t_irc_dcc *)(channel->dcc_chat))->status)))
+    {
+        dcc_close ((t_irc_dcc *)(channel->dcc_chat), DCC_ABORTED);
+        dcc_redraw (1);
+    }
+    
     /* remove channel from queue */
     if (server->last_channel == channel)
         server->last_channel = channel->prev_channel;
@@ -104,14 +112,6 @@ channel_free (t_irc_server *server, t_irc_channel *channel)
     
     if (channel->next_channel)
         (channel->next_channel)->prev_channel = channel->prev_channel;
-
-    /* close DCC CHAT */
-    if ((t_irc_dcc *)(channel->dcc_chat) &&
-        (!DCC_ENDED(((t_irc_dcc *)(channel->dcc_chat))->status)))
-    {
-        dcc_close ((t_irc_dcc *)(channel->dcc_chat), DCC_ABORTED);
-        dcc_redraw (1);
-    }
     
     /* free data */
     if (channel->name)

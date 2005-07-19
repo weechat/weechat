@@ -998,7 +998,7 @@ dcc_chat_recv (t_irc_dcc *ptr_dcc)
                 gui_printf_type_color (ptr_dcc->channel->buffer,
                                        MSG_TYPE_NICK,
                                        COLOR_WIN_CHAT_DARK, "<");
-                if (strstr (ptr_buf, ptr_dcc->server->nick))
+                if (irc_is_highlight (ptr_buf, ptr_dcc->server->nick))
                 {
                     gui_printf_type_color (ptr_dcc->channel->buffer,
                                            MSG_TYPE_NICK | MSG_TYPE_HIGHLIGHT,
