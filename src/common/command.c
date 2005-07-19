@@ -1202,7 +1202,7 @@ weechat_cmd_debug (int argc, char **argv)
         irc_display_prefix (NULL, PREFIX_ERROR);
         gui_printf (NULL,
                     _("%s unknown option for \"%s\" command\n"),
-                    WEECHAT_ERROR, "perl");
+                    WEECHAT_ERROR, "debug");
         return -1;
     }
     

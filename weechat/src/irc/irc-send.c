@@ -484,10 +484,17 @@ irc_cmd_send_dehalfop (t_irc_server *server, int argc, char **argv)
     
     if (BUFFER_IS_CHANNEL(gui_current_window->buffer))
     {
-        for (i = 0; i < argc; i++)
+        if (argc == 0)
             server_sendf (server, "MODE %s -h %s\r\n",
                           CHANNEL(gui_current_window->buffer)->name,
-                          argv[i]);
+                          server->nick);
+        else
+        {
+            for (i = 0; i < argc; i++)
+                server_sendf (server, "MODE %s -h %s\r\n",
+                              CHANNEL(gui_current_window->buffer)->name,
+                              argv[i]);
+        }
     }
     else
     {
@@ -510,10 +517,17 @@ irc_cmd_send_deop (t_irc_server *server, int argc, char **argv)
     
     if (BUFFER_IS_CHANNEL(gui_current_window->buffer))
     {
-        for (i = 0; i < argc; i++)
+        if (argc == 0)
             server_sendf (server, "MODE %s -o %s\r\n",
                           CHANNEL(gui_current_window->buffer)->name,
-                          argv[i]);
+                          server->nick);
+        else
+        {
+            for (i = 0; i < argc; i++)
+                server_sendf (server, "MODE %s -o %s\r\n",
+                              CHANNEL(gui_current_window->buffer)->name,
+                              argv[i]);
+        }
     }
     else
     {
@@ -536,10 +550,17 @@ irc_cmd_send_devoice (t_irc_server *server, int argc, char **argv)
     
     if (BUFFER_IS_CHANNEL(gui_current_window->buffer))
     {
-        for (i = 0; i < argc; i++)
+        if (argc == 0)
             server_sendf (server, "MODE %s -v %s\r\n",
                           CHANNEL(gui_current_window->buffer)->name,
-                          argv[i]);
+                          server->nick);
+        else
+        {
+            for (i = 0; i < argc; i++)
+                server_sendf (server, "MODE %s -v %s\r\n",
+                              CHANNEL(gui_current_window->buffer)->name,
+                              argv[i]);
+        }
     }
     else
     {
@@ -577,10 +598,17 @@ irc_cmd_send_halfop (t_irc_server *server, int argc, char **argv)
     
     if (BUFFER_IS_CHANNEL(gui_current_window->buffer))
     {
-        for (i = 0; i < argc; i++)
+        if (argc == 0)
             server_sendf (server, "MODE %s +h %s\r\n",
                           CHANNEL(gui_current_window->buffer)->name,
-                          argv[i]);
+                          server->nick);
+        else
+        {
+            for (i = 0; i < argc; i++)
+                server_sendf (server, "MODE %s +h %s\r\n",
+                              CHANNEL(gui_current_window->buffer)->name,
+                              argv[i]);
+        }
     }
     else
     {
@@ -1763,10 +1791,17 @@ irc_cmd_send_voice (t_irc_server *server, int argc, char **argv)
     
     if (BUFFER_IS_CHANNEL(gui_current_window->buffer))
     {
-        for (i = 0; i < argc; i++)
+        if (argc == 0)
             server_sendf (server, "MODE %s +v %s\r\n",
                           CHANNEL(gui_current_window->buffer)->name,
-                          argv[i]);
+                          server->nick);
+        else
+        {
+            for (i = 0; i < argc; i++)
+                server_sendf (server, "MODE %s +v %s\r\n",
+                              CHANNEL(gui_current_window->buffer)->name,
+                              argv[i]);
+        }
     }
     else
     {
