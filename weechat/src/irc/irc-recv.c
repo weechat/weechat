@@ -29,6 +29,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include <sys/time.h>
 #include <time.h>
 #include <sys/utsname.h>
@@ -50,7 +51,7 @@
 int
 irc_is_highlight (char *message, char *nick)
 {
-    char *highlight, *pos, *pos_end;
+    char *msg, *highlight, *pos, *pos_end;
     int end, length;
     
     /* empty message ? */
@@ -65,9 +66,28 @@ irc_is_highlight (char *message, char *nick)
     if (!cfg_irc_highlight || !cfg_irc_highlight[0])
         return 0;
     
-    /* look in "irc_highlight" for highlight */
-    if ((highlight = strdup (cfg_irc_highlight)) == NULL)
+    /* convert both strings to lower case */
+    if ((msg = strdup (message)) == NULL)
         return 0;
+    if ((highlight = strdup (cfg_irc_highlight)) == NULL)
+    {
+        free (msg);
+        return 0;
+    }
+    pos = msg;
+    while (pos[0])
+    {
+        pos[0] = tolower (pos[0]);
+        pos++;
+    }
+    pos = highlight;
+    while (pos[0])
+    {
+        pos[0] = tolower (pos[0]);
+        pos++;
+    }
+    
+    /* look in "irc_highlight" for highlight */
     pos = highlight;
     end = 0;
     while (!end)
@@ -81,6 +101,7 @@ irc_is_highlight (char *message, char *nick)
         /* error parsing string! */
         if (!pos_end)
         {
+            free (msg);
             free (highlight);
             return 0;
         }
@@ -90,8 +111,9 @@ irc_is_highlight (char *message, char *nick)
         if (length > 0)
         {
             /* highlight found! */
-            if (strstr (message, pos))
+            if (strstr (msg, pos))
             {
+                free (msg);
                 free (highlight);
                 return 1;
             }
@@ -102,6 +124,7 @@ irc_is_highlight (char *message, char *nick)
     }
     
     /* no highlight found with "irc_highlight" list */
+    free (msg);
     free (highlight);
     return 0;
 }
