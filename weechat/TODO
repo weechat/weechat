@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2005-07-11
+TODO - 2005-07-20
 
 Legend:
   #  done
@@ -32,6 +32,7 @@ v0.1.4:
     - be able to make an alias running more than one command
 
  * Configuration:
+    # irc_highlight setting to highlight custom words
     # save buffer notify levels
     # add key bindings to config file, and create /key command
 
@@ -51,8 +52,6 @@ Future versions:
       nick/host connect to the given irc network
 
  * WeeChat commands:
-    - "/highlight" command: highlight a given word when it appears on
-      channels/privates
     - "/completion" command: do shortcuts (for example when we type "u"
       in the text bar it send it to the server as "you")
     - "/last": command to look for text in previous messages
