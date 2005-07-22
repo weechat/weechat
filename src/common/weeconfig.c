@@ -194,6 +194,8 @@ int cfg_col_chat_time;
 int cfg_col_chat_time_sep;
 int cfg_col_chat_prefix1;
 int cfg_col_chat_prefix2;
+int cfg_col_chat_join;
+int cfg_col_chat_part;
 int cfg_col_chat_nick;
 int cfg_col_chat_host;
 int cfg_col_chat_channel;
@@ -268,6 +270,14 @@ t_config_option weechat_options_colors[] =
     N_("color for middle char of prefix"),
     OPTION_TYPE_COLOR, 0, 0, 0,
     "white", NULL, &cfg_col_chat_prefix2, NULL, &config_change_color },
+  { "col_chat_join", N_("color for join arrow (prefix)"),
+    N_("color for join arrow (prefix)"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "lightgreen", NULL, &cfg_col_chat_join, NULL, &config_change_color },
+  { "col_chat_part", N_("color for part/quit arrow (prefix)"),
+    N_("color for part/quit arrow (prefix)"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "lightred", NULL, &cfg_col_chat_part, NULL, &config_change_color },
   { "col_chat_nick", N_("color for nicks in actions"),
     N_("color for nicks in actions (chat window)"),
     OPTION_TYPE_COLOR, 0, 0, 0,

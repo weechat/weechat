@@ -2241,6 +2241,10 @@ gui_init_colors ()
             cfg_col_chat_prefix1, cfg_col_chat_bg);
         init_pair (COLOR_WIN_CHAT_PREFIX2,
             cfg_col_chat_prefix2, cfg_col_chat_bg);
+        init_pair (COLOR_WIN_CHAT_JOIN,
+            cfg_col_chat_join, cfg_col_chat_bg);
+        init_pair (COLOR_WIN_CHAT_PART,
+            cfg_col_chat_part, cfg_col_chat_bg);
         init_pair (COLOR_WIN_CHAT_NICK,
             cfg_col_chat_nick, cfg_col_chat_bg);
         init_pair (COLOR_WIN_CHAT_HOST,
@@ -2329,6 +2333,8 @@ gui_init_colors ()
         color_attr[COLOR_WIN_CHAT_DARK - 1] = (cfg_col_chat_dark >= 0) ? cfg_col_chat_dark & A_BOLD : 0;
         color_attr[COLOR_WIN_CHAT_PREFIX1 - 1] = (cfg_col_chat_prefix1 >= 0) ? cfg_col_chat_prefix1 & A_BOLD : 0;
         color_attr[COLOR_WIN_CHAT_PREFIX2 - 1] = (cfg_col_chat_prefix2 >= 0) ? cfg_col_chat_prefix2 & A_BOLD : 0;
+        color_attr[COLOR_WIN_CHAT_JOIN - 1] = (cfg_col_chat_join >= 0) ? cfg_col_chat_join & A_BOLD : 0;
+        color_attr[COLOR_WIN_CHAT_PART - 1] = (cfg_col_chat_part >= 0) ? cfg_col_chat_part & A_BOLD : 0;
         color_attr[COLOR_WIN_CHAT_NICK - 1] = (cfg_col_chat_nick >= 0) ? cfg_col_chat_nick & A_BOLD : 0;
         color_attr[COLOR_WIN_CHAT_HOST - 1] = (cfg_col_chat_host >= 0) ? cfg_col_chat_host & A_BOLD : 0;
         color_attr[COLOR_WIN_CHAT_CHANNEL - 1] = (cfg_col_chat_channel >= 0) ? cfg_col_chat_channel & A_BOLD : 0;

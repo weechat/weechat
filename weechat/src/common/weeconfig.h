@@ -108,6 +108,8 @@ extern int cfg_col_chat_time;
 extern int cfg_col_chat_time_sep;
 extern int cfg_col_chat_prefix1;
 extern int cfg_col_chat_prefix2;
+extern int cfg_col_chat_join;
+extern int cfg_col_chat_part;
 extern int cfg_col_chat_nick;
 extern int cfg_col_chat_host;
 extern int cfg_col_chat_channel;

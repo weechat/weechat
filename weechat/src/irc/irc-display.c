@@ -57,7 +57,14 @@ irc_display_prefix (t_gui_buffer *buffer, char *prefix)
         gui_printf_type_color (buffer, type, COLOR_WIN_CHAT_PREFIX1, "%c ", prefix[2]);
     }
     else
-        gui_printf_color (buffer, COLOR_WIN_CHAT_PREFIX1, "%s ", prefix);
+    {
+        if (strcmp (prefix, PREFIX_JOIN) == 0)
+            gui_printf_color (buffer, COLOR_WIN_CHAT_JOIN, "%s ", prefix);
+        else if (strcmp (prefix, PREFIX_PART) == 0)
+            gui_printf_color (buffer, COLOR_WIN_CHAT_PART, "%s ", prefix);
+        else
+            gui_printf_color (buffer, COLOR_WIN_CHAT_PREFIX1, "%s ", prefix);
+    }
 }
 
 /*
