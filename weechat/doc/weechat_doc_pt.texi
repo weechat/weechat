@@ -36,7 +36,7 @@
 
 @title WeeChat - Guia do Utilizador
 @subtitle Cliente de IRC rapido, leve e extencivel
-@subtitle Documenta@,{c}@~ao do WeeChat v0.1.4-cvs - 16 de Julho de 2005
+@subtitle Documenta@,{c}@~ao do WeeChat v0.1.4 - 30 de Julho de 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
