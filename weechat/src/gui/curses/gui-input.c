@@ -75,7 +75,9 @@ gui_input_default_key_bindings ()
     gui_key_bind ( /* left    */ "meta2-D",       "left");
     gui_key_bind ( /* right   */ "meta2-C",       "right");
     gui_key_bind ( /* up      */ "meta2-A",       "up");
+    gui_key_bind ( /* ^up     */ "meta-Oa",       "up_global");
     gui_key_bind ( /* down    */ "meta2-B",       "down");
+    gui_key_bind ( /* ^down   */ "meta-Ob",       "down_global");
     gui_key_bind ( /* pgup    */ "meta2-5~",      "page_up");
     gui_key_bind ( /* pgdn    */ "meta2-6~",      "page_down");
     gui_key_bind ( /* F10     */ "meta2-21~",     "infobar_clear");

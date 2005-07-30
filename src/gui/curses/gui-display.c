@@ -2465,8 +2465,8 @@ gui_end ()
     while (gui_windows)
         gui_window_free (gui_windows);
     
-    /* delete general history */
-    history_general_free ();
+    /* delete global history */
+    history_global_free ();
     
     /* delete infobar messages */
     while (gui_infobar)

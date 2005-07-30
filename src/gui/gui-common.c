@@ -36,6 +36,7 @@
 #include "gui.h"
 #include "../common/command.h"
 #include "../common/weeconfig.h"
+#include "../common/history.h"
 #include "../common/hotlist.h"
 #include "../common/log.h"
 #include "../irc/irc.h"
@@ -1328,6 +1329,37 @@ gui_input_up ()
 }
 
 /*
+ * gui_input_up_global: recall last command in global history
+ */
+
+void
+gui_input_up_global ()
+{
+    if (gui_current_window->buffer->has_input)
+    {
+        if (history_global_ptr)
+        {
+            history_global_ptr = history_global_ptr->next_history;
+            if (!history_global_ptr)
+                history_global_ptr = history_global;
+        }
+        else
+            history_global_ptr = history_global;
+        if (history_global_ptr)
+        {
+            gui_current_window->buffer->input_buffer_size =
+                strlen (history_global_ptr->text);
+            gui_input_optimize_buffer_size (gui_current_window->buffer);
+            gui_current_window->buffer->input_buffer_pos =
+                gui_current_window->buffer->input_buffer_size;
+            strcpy (gui_current_window->buffer->input_buffer,
+                    history_global_ptr->text);
+            gui_draw_buffer_input (gui_current_window->buffer, 0);
+        }
+    }
+}
+
+/*
  * gui_input_down: recall next command or move to next DCC in list
  */
 
@@ -1380,6 +1412,34 @@ gui_input_down ()
             if (gui_current_window->buffer->ptr_history)
                 strcpy (gui_current_window->buffer->input_buffer,
                         gui_current_window->buffer->ptr_history->text);
+            gui_draw_buffer_input (gui_current_window->buffer, 0);
+        }
+    }
+}
+
+/*
+ * gui_input_down_global: recall next command in global history
+ */
+
+void
+gui_input_down_global ()
+{
+    if (gui_current_window->buffer->has_input)
+    {
+        if (history_global_ptr)
+        {
+            history_global_ptr = history_global_ptr->prev_history;
+            if (history_global_ptr)
+                gui_current_window->buffer->input_buffer_size =
+                    strlen (history_global_ptr->text);
+            else
+                gui_current_window->buffer->input_buffer_size = 0;
+            gui_input_optimize_buffer_size (gui_current_window->buffer);
+            gui_current_window->buffer->input_buffer_pos =
+                gui_current_window->buffer->input_buffer_size;
+            if (history_global_ptr)
+                strcpy (gui_current_window->buffer->input_buffer,
+                        history_global_ptr->text);
             gui_draw_buffer_input (gui_current_window->buffer, 0);
         }
     }

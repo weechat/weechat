@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.5-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-07-30 09:47+0200\n"
-"PO-Revision-Date: 2005-07-30 10:59+0200\n"
+"POT-Creation-Date: 2005-07-30 20:35+0200\n"
+"PO-Revision-Date: 2005-07-30 20:38+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2143,7 +2143,7 @@ msgstr ""
 "%s impossible d'ajouter la fonction pour le message \"%s\" (mémoire "
 "insuffisante)\n"
 
-#: src/gui/curses/gui-input.c:338
+#: src/gui/curses/gui-input.c:340
 #, c-format
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr "%s le lag est élevé, déconnexion du serveur...\n"
@@ -2209,15 +2209,15 @@ msgstr "  [Q] Fermer la vue DCC"
 msgid "server"
 msgstr "serveur"
 
-#: src/gui/gui-common.c:340
+#: src/gui/gui-common.c:341
 msgid "Not enough memory for infobar message\n"
 msgstr "Pas assez de mémoire pour un message de la barre d'infos\n"
 
-#: src/gui/gui-common.c:515
+#: src/gui/gui-common.c:516
 msgid "Not enough memory for new line\n"
 msgstr "Pas assez de mémoire pour une nouvelle ligne !\n"
 
-#: src/gui/gui-common.c:558
+#: src/gui/gui-common.c:559
 msgid "Not enough memory for new message\n"
 msgstr "Pas assez de mémoire pour un message de la barre d'infos\n"
 
@@ -2294,81 +2294,89 @@ msgid "call previous command in history"
 msgstr "appeler la commande précédente dans l'historique"
 
 #: src/gui/gui-keyboard.c:81
+msgid "call previous command in global history"
+msgstr "appeler la commande précédente dans l'historique global"
+
+#: src/gui/gui-keyboard.c:83
 msgid "call next command in history"
 msgstr "appeler la commande suivante dans l'historique"
 
-#: src/gui/gui-keyboard.c:83
+#: src/gui/gui-keyboard.c:85
+msgid "call next command in global history"
+msgstr "appeler la commande suivante dans l'historique global"
+
+#: src/gui/gui-keyboard.c:87
 msgid "scroll one page up"
 msgstr "faire défiler d'une page vers le haut"
 
-#: src/gui/gui-keyboard.c:85
+#: src/gui/gui-keyboard.c:89
 msgid "scroll one page down"
 msgstr "faire défiler d'une page vers le bas"
 
-#: src/gui/gui-keyboard.c:87
+#: src/gui/gui-keyboard.c:91
 msgid "clear infobar"
 msgstr "effacer la barre d'infos"
 
-#: src/gui/gui-keyboard.c:89
+#: src/gui/gui-keyboard.c:93
 msgid "scroll nicklist one page up"
 msgstr "faire défiler la liste des pseudos d'une page vers le haut"
 
-#: src/gui/gui-keyboard.c:91
+#: src/gui/gui-keyboard.c:95
 msgid "scroll nicklist one page down"
 msgstr "faire défiler la liste des pseudos d'une page vers le bas"
 
-#: src/gui/gui-keyboard.c:93
+#: src/gui/gui-keyboard.c:97
 msgid "display beginning of nicklist"
 msgstr "afficher le début de la liste des pseudos"
 
-#: src/gui/gui-keyboard.c:95
+#: src/gui/gui-keyboard.c:99
 msgid "display end of nicklist"
 msgstr "afficher la fin de la liste des pseudos"
 
-#: src/gui/gui-keyboard.c:97
+#: src/gui/gui-keyboard.c:101
 msgid "refresh screen"
 msgstr "rafraichir l'écran"
 
-#: src/gui/gui-keyboard.c:99
+#: src/gui/gui-keyboard.c:103
 msgid "jump to buffer with activity"
 msgstr "sauter au tampon avec de l'activité"
 
-#: src/gui/gui-keyboard.c:101
+#: src/gui/gui-keyboard.c:105
 msgid "jump to DCC buffer"
 msgstr "sauter au tampon DCC"
 
-#: src/gui/gui-keyboard.c:103
+#: src/gui/gui-keyboard.c:107
 msgid "jump to last buffer"
 msgstr "sauter au dernier tampon"
 
-#: src/gui/gui-keyboard.c:105
+#: src/gui/gui-keyboard.c:109
 msgid "jump to server buffer"
 msgstr "sauter au tampon du serveur"
 
-#: src/gui/gui-keyboard.c:107
+#: src/gui/gui-keyboard.c:111
 msgid "jump to next server"
 msgstr "sauter au prochain serveur"
 
-#: src/gui/gui-keyboard.c:109
+#: src/gui/gui-keyboard.c:113
 msgid "clear hotlist"
 msgstr "effacer la liste d'activité"
 
-#: src/gui/gui-keyboard.c:111
+#: src/gui/gui-keyboard.c:115
 msgid "grab a key"
 msgstr "capturer une touche"
 
-#: src/gui/gui-keyboard.c:422 src/common/command.c:1473
+#: src/gui/gui-keyboard.c:426 src/common/command.c:1473
 #, c-format
 msgid "%s unable to bind key \"%s\"\n"
 msgstr "%s impossible de créer la touche \"%s\"\n"
 
-#: src/gui/gui-keyboard.c:433
+#: src/gui/gui-keyboard.c:437
 #, c-format
 msgid "%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"
 msgstr ""
 "%s impossible de créer la touche \"%s\" (nom fonction incorrect: \"%s\")\n"
 
-#: src/gui/gui-keyboard.c:446
+#: src/gui/gui-keyboard.c:450
 #, c-format
 msgid "%s not enough memory for key binding\n"
 msgstr "%s pas assez de mémoire pour la touche\n"
@@ -3448,14 +3456,12 @@ msgid "color for middle char of prefix"
 msgstr "couleur pour le caractère du milieu du préfixe"
 
 #: src/common/weeconfig.c:273 src/common/weeconfig.c:274
-#, fuzzy
 msgid "color for join arrow (prefix)"
-msgstr "couleur pour le caractère du milieu du préfixe"
+msgstr "couleur pour la flèche du join (préfixe)"
 
 #: src/common/weeconfig.c:277 src/common/weeconfig.c:278
-#, fuzzy
 msgid "color for part/quit arrow (prefix)"
-msgstr "couleur pour le caractère du milieu du préfixe"
+msgstr "couleur pour la flèche du part/quit (préfixe)"
 
 #: src/common/weeconfig.c:281
 msgid "color for nicks in actions"

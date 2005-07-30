@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* history.c: memorize and call again commands or text */
+/* history.c: memorize commands or text */
 
 
 #ifdef HAVE_CONFIG_H
@@ -33,10 +33,10 @@
 #include "../gui/gui.h"
 
 
-t_history *history_general = NULL;
-t_history *history_general_last = NULL;
-t_history *history_general_ptr = NULL;
-int num_history_general = 0;
+t_history *history_global = NULL;
+t_history *history_global_last = NULL;
+t_history *history_global_ptr = NULL;
+int num_history_global = 0;
 
 
 /*
@@ -74,7 +74,7 @@ history_add (void *buffer, char *string)
 {
     t_history *new_history, *ptr_history;
     
-    /* add history to general history */
+    /* add history to global history */
     new_history = (t_history *)malloc (sizeof (t_history));
     if (new_history)
     {
@@ -82,26 +82,26 @@ history_add (void *buffer, char *string)
         if (cfg_log_hide_nickserv_pwd)
             history_hide_password (new_history->text);
         
-        if (history_general)
-            history_general->prev_history = new_history;
+        if (history_global)
+            history_global->prev_history = new_history;
         else
-            history_general_last = new_history;
-        new_history->next_history = history_general;
+            history_global_last = new_history;
+        new_history->next_history = history_global;
         new_history->prev_history = NULL;
-        history_general = new_history;
-        num_history_general++;
+        history_global = new_history;
+        num_history_global++;
         
         /* remove one command if necessary */
         if ((cfg_history_max_commands > 0)
-            && (num_history_general > cfg_history_max_commands))
+            && (num_history_global > cfg_history_max_commands))
         {
-            ptr_history = history_general_last->prev_history;
-            history_general_last->prev_history->next_history = NULL;
-            if (history_general_last->text)
-                free (history_general_last->text);
-            free (history_general_last);
-            history_general_last = ptr_history;
-            num_history_general--;
+            ptr_history = history_global_last->prev_history;
+            history_global_last->prev_history->next_history = NULL;
+            if (history_global_last->text)
+                free (history_global_last->text);
+            free (history_global_last);
+            history_global_last = ptr_history;
+            num_history_global--;
         }
     }
     
@@ -138,26 +138,26 @@ history_add (void *buffer, char *string)
 }
 
 /*
- * history_general_free: free general history
+ * history_global_free: free global history
  */
 
 void
-history_general_free ()
+history_global_free ()
 {
     t_history *ptr_history;
     
-    while (history_general)
+    while (history_global)
     {
-        ptr_history = history_general->next_history;
-        if (history_general->text)
-            free (history_general->text);
-        free (history_general);
-        history_general = ptr_history;
+        ptr_history = history_global->next_history;
+        if (history_global->text)
+            free (history_global->text);
+        free (history_global);
+        history_global = ptr_history;
     }
-    history_general = NULL;
-    history_general_last = NULL;
-    history_general_ptr = NULL;
-    num_history_general = 0;
+    history_global = NULL;
+    history_global_last = NULL;
+    history_global_ptr = NULL;
+    num_history_global = 0;
 }
 
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-07-30 09:47+0200\n"
+"POT-Creation-Date: 2005-07-30 20:35+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2007,7 +2007,7 @@ msgstr ""
 msgid "%s unable to add handler for \"%s\" message (not enough memory)\n"
 msgstr ""
 
-#: src/gui/curses/gui-input.c:338
+#: src/gui/curses/gui-input.c:340
 #, c-format
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr ""
@@ -2073,15 +2073,15 @@ msgstr ""
 msgid "server"
 msgstr ""
 
-#: src/gui/gui-common.c:340
+#: src/gui/gui-common.c:341
 msgid "Not enough memory for infobar message\n"
 msgstr ""
 
-#: src/gui/gui-common.c:515
+#: src/gui/gui-common.c:516
 msgid "Not enough memory for new line\n"
 msgstr ""
 
-#: src/gui/gui-common.c:558
+#: src/gui/gui-common.c:559
 msgid "Not enough memory for new message\n"
 msgstr ""
 
@@ -2158,80 +2158,88 @@ msgid "call previous command in history"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:81
-msgid "call next command in history"
+msgid "call previous command in global history"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:83
-msgid "scroll one page up"
+msgid "call next command in history"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:85
-msgid "scroll one page down"
+msgid "call next command in global history"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:87
-msgid "clear infobar"
+msgid "scroll one page up"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:89
-msgid "scroll nicklist one page up"
+msgid "scroll one page down"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:91
-msgid "scroll nicklist one page down"
+msgid "clear infobar"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:93
-msgid "display beginning of nicklist"
+msgid "scroll nicklist one page up"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:95
-msgid "display end of nicklist"
+msgid "scroll nicklist one page down"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:97
-msgid "refresh screen"
+msgid "display beginning of nicklist"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:99
-msgid "jump to buffer with activity"
+msgid "display end of nicklist"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:101
-msgid "jump to DCC buffer"
+msgid "refresh screen"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:103
-msgid "jump to last buffer"
+msgid "jump to buffer with activity"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:105
-msgid "jump to server buffer"
+msgid "jump to DCC buffer"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:107
-msgid "jump to next server"
+msgid "jump to last buffer"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:109
-msgid "clear hotlist"
+msgid "jump to server buffer"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:111
+msgid "jump to next server"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:113
+msgid "clear hotlist"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:115
 msgid "grab a key"
 msgstr ""
 
-#: src/gui/gui-keyboard.c:422 src/common/command.c:1473
+#: src/gui/gui-keyboard.c:426 src/common/command.c:1473
 #, c-format
 msgid "%s unable to bind key \"%s\"\n"
 msgstr ""
 
-#: src/gui/gui-keyboard.c:433
+#: src/gui/gui-keyboard.c:437
 #, c-format
 msgid "%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"
 msgstr ""
 
-#: src/gui/gui-keyboard.c:446
+#: src/gui/gui-keyboard.c:450
 #, c-format
 msgid "%s not enough memory for key binding\n"
 msgstr ""

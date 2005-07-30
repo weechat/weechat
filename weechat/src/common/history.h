@@ -30,8 +30,12 @@ struct t_history
     t_history *prev_history;    /* link to previous text/command            */
 };
 
+extern t_history *history_global;
+extern t_history *history_global_last;
+extern t_history *history_global_ptr;
+
 extern void history_add (void *, char *);
-extern void history_general_free ();
+extern void history_global_free ();
 extern void history_buffer_free (void *);
 
 #endif /* history.h */
