@@ -1,10 +1,10 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-07-22
+ChangeLog - 2005-07-30
 
 
-Version 0.1.4 (under dev!):
+Version 0.1.4 (2005-07-30):
    * join and part/quit prefixes (arrows) now displayed with different colors
    * added "irc_highlight" setting, to get highlight with any word
    * fixed auto-rejoin for channels with key

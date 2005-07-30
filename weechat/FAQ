@@ -1,4 +1,4 @@
-WeeChat FAQ, 2005-05-21
+WeeChat FAQ, 2005-07-30
 =======================
 
 Intended audience:
@@ -50,8 +50,12 @@ Q:	Why using WeeChat ? X-Chat and Irssi are so good...
 
 A:	Because WeeChat is very light and has new features.
 	Some new features:
-	  * many GUI (Curses, Gtk, wxWidgets, Qt),
-	  * extensible with scripts (Perl, Python, Ruby),
+	  * many GUI (Curses, Gtk, wxWidgets, Qt)
+	  * nicklist available in all GUI
+	  * extensible with scripts (Perl, Python, Ruby)
+	  * horizontal and vertical window split
+	  * infobar highlight
+	  * FIFO pipe for remote control
 	  * developed from scratch (not based on any other IRC client)
 	  * multi-platform
 	  * 100% GPL and free
@@ -83,7 +87,9 @@ A:	You have to setup charset used for decoding, encoding, and internal WeeChat
 ================================================================================
 Q:	How can I customize key bindings?
 
-A:	Today you can't do that. This is planed for a future version.
+A:	Key bindings are customizable with /key command.
+	Default key Meta-k (usually Alt-k) lets you grab key code and insert it
+	in input zone.
 
 
 2.5
@@ -103,7 +109,7 @@ A:	You can use /perl command to load scripts (default path is
 Q:	How can I load Python scripts?
 	Are Python scripts compatible with X-chat or/and Irssi ?
 
-A:	You can use /python command to load scripts	(default path is
+A:	You can use /python command to load scripts (default path is
 	~/.weechat/python).
 	Note that scripts in ~/.weechat/python/autoload are automatically loaded
 	when WeeChat is starting up.

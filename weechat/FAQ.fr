@@ -1,4 +1,4 @@
-WeeChat FAQ, 2005-05-21
+WeeChat FAQ, 2005-07-30
 =======================
 
 Public concerné :
@@ -53,8 +53,12 @@ Q:	Pourquoi utiliser WeeChat ? X-Chat et Irssi sont si bien...
 
 R:	Parce que WeeChat est très léger et a de nouvelles fonctionnalités.
 	Quelques nouvelles fonctionnalités :
-	  * plusieurs interfaces (Curses, Gtk, wxWidgets, Qt),
-	  * extensible par des scripts (Perl, Python, Ruby),
+	  * plusieurs interfaces (Curses, Gtk, wxWidgets, Qt)
+	  * liste des pseudos disponible dans toutes les interfaces
+	  * extensible par des scripts (Perl, Python, Ruby)
+	  * découpage de la fenêtre horizontalement et verticalement
+	  * highlight dans la barre d'infos
+	  * tube FIFO pour contrôle à distance
 	  * développé à partir de zéro (non basé sur un quelconque client IRC)
 	  * multi-platformes
 	  * 100% GPL et libre
@@ -87,8 +91,9 @@ R:	Il faut configurer le charset utilisé pour le décodage, l'encodage ainsi que
 ================================================================================
 Q:	Comment puis-je configurer les raccourcis clavier ?
 
-R:	Aujourd'hui vous ne pouvez pas le faire. Ce sera possible dans une
-	version future.
+R:	Les raccourcis clavier sont modifiables avec la commande /key.
+	La touche par défaut Meta-k (souvent Alt-k) permet de capturer le code
+	d'une touche et de l'inclure dans la zone de saisie.
 
 
 2.5

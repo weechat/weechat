@@ -1,5 +1,5 @@
 %define name weechat
-%define version 0.1.3
+%define version 0.1.4
 %define release 1
 
 Name:      %{name}
@@ -26,12 +26,12 @@ rm -rf $RPM_BUILD_ROOT
 ./configure --enable-perl --enable-python
 make DESTDIR="$RPM_BUILD_ROOT" LOCALRPM="local"
 
-%install 
+%install
 make DESTDIR="$RPM_BUILD_ROOT" LOCALRPM="local" install
 
 %find_lang %name
 
-%clean 
+%clean
 rm -rf $RPM_BUILD_ROOT 
 
 %files -f %{name}.lang
@@ -40,7 +40,9 @@ rm -rf $RPM_BUILD_ROOT
 /usr/local/man/man1/weechat-curses.1*
 /usr/local/bin/weechat-curses
 
-%changelog 
+%changelog
+* Sat Jul 30 2005 FlashCode <flashcode@flashtux.org> 0.1.4-1
+- Released version 0.1.4
 * Sat Jul 02 2005 FlashCode <flashcode@flashtux.org> 0.1.3-1
 - Released version 0.1.3
 * Sat May 21 2005 FlashCode <flashcode@flashtux.org> 0.1.2-1
