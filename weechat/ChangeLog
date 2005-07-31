@@ -5,6 +5,7 @@ ChangeLog - 2005-07-31
 
 
 Version 0.1.5 (under dev!):
+   * fixed refrech bug when changing channel modes
    * jump to next server now saves current channel buffer for each server
    * ctrl-up/ctrl-down keys added to call previous/next command in global
      history (common to all buffers)

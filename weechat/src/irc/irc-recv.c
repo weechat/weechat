@@ -866,7 +866,7 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *arguments)
         if (ptr_channel)
         {
             irc_get_channel_modes (ptr_channel, arguments, host, pos, pos_parm);
-            gui_draw_buffer_status (ptr_channel->buffer, 0);
+            gui_draw_buffer_status (ptr_channel->buffer, 1);
         }
         else
         {
