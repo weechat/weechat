@@ -224,6 +224,8 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int dcc,
         new_buffer->ptr_history = NULL;
         new_buffer->num_history = 0;
         
+        new_buffer->old_channel_buffer = NULL;
+        
         /* add buffer to buffers queue */
         new_buffer->prev_buffer = last_gui_buffer;
         if (gui_buffers)
@@ -425,6 +427,12 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
     
     if (buffer_before_dcc == buffer)
         buffer_before_dcc = NULL;
+    
+    for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->old_channel_buffer == buffer)
+            ptr_buffer->old_channel_buffer = NULL;
+    }
     
     if (switch_to_another)
     {
@@ -1547,8 +1555,16 @@ gui_input_jump_next_server ()
         }
         if (ptr_server != SERVER(gui_current_window->buffer))
         {
-            ptr_buffer = (ptr_server->channels) ?
-                ptr_server->channels->buffer : ptr_server->buffer;
+            /* save current buffer */
+            SERVER(gui_current_window->buffer)->buffer->old_channel_buffer =
+                gui_current_window->buffer;
+            
+            /* come back to memorized chan if found */
+            if (ptr_server->buffer->old_channel_buffer)
+                ptr_buffer = ptr_server->buffer->old_channel_buffer;
+            else
+                ptr_buffer = (ptr_server->channels) ?
+                    ptr_server->channels->buffer : ptr_server->buffer;
             gui_switch_to_buffer (gui_current_window, ptr_buffer);
             gui_redraw_buffer (gui_current_window->buffer);
         }
