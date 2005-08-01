@@ -699,9 +699,9 @@ irc_cmd_send_join (t_irc_server *server, char *arguments)
 	}
       
       if (string_is_channel (arguments))
-        server_sendf (server, "JOIN %s\r\n", arguments);
+        server_sendf (server, "JOIN %s\r\n", buffer);
       else
-	server_sendf (server, "JOIN #%s\r\n", arguments);
+	server_sendf (server, "JOIN #%s\r\n", buffer);
       
       if (!p) break;
   }
