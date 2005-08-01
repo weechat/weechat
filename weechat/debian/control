@@ -3,7 +3,7 @@ Section: net
 Priority: optional
 Maintainer: Sebastien Helleu <flashcode@flashtux.org>
 Uploaders: Julien Louis <ptitlouis@sysif.net>
-Build-Depends: debhelper (>> 4.0.0), libncurses5-dev (>= 5.2.20020112a-7), libperl-dev, python-dev, libgnutls11-dev
+Build-Depends: debhelper (>> 4.0.0), libncurses5-dev (>= 5.2.20020112a-7), libperl-dev, python-dev, libgnutls-dev, autotools-dev
 Standards-Version: 3.6.2.1
 
 Package: weechat

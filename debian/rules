@@ -15,7 +15,7 @@ configure: configure-stamp
 configure-stamp:
 	dh_testdir
 	./configure --prefix=/usr --sysconfdir=/etc --mandir=\$${prefix}/share/man \
-	--enable-perl --enable-python
+	--infodir=\$${prefix}/share/info	--enable-perl --enable-python
 	touch configure-stamp
 
 
@@ -31,6 +31,10 @@ clean:
 	dh_testroot
 	rm -f build-stamp configure-stamp
 	-$(MAKE) distclean
+	test -r /usr/share/misc/config.guess && \
+		cp -f /usr/share/misc/config.guess config.guess
+	test -r /usr/share/misc/config.sub && \
+		cp -f /usr/share/misc/config.sub config.sub
 	dh_clean
 
 install: build
@@ -50,6 +54,7 @@ binary-indep: build install
 	dh_testroot -pweechat-common -pweechat
 	dh_installchangelogs ChangeLog -pweechat-common
 	dh_installdocs -pweechat-common
+	dh_installinfo -pweechat-common
 	dh_installexamples -pweechat-common
 	dh_compress -pweechat-common -pweechat
 	dh_link -pweechat usr/share/doc/weechat-common usr/share/doc/weechat
