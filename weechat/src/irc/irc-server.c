@@ -1426,7 +1426,10 @@ server_connect (t_irc_server *server)
     server->child_write = child_pipe[1];
     
     /* create socket and set options */
-    server->sock = socket ((server->ipv6) ? AF_INET6 : AF_INET, SOCK_STREAM, 0);
+    if (cfg_proxy_use)
+      server->sock = socket ((cfg_proxy_ipv6) ? AF_INET6 : AF_INET, SOCK_STREAM, 0);
+    else
+      server->sock = socket ((server->ipv6) ? AF_INET6 : AF_INET, SOCK_STREAM, 0);
     if (server->sock == -1)
     {
         irc_display_prefix (server->buffer, PREFIX_ERROR);
