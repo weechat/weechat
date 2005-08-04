@@ -34,6 +34,8 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
 
 #include "../common/weechat.h"
 #include "irc.h"
@@ -233,6 +235,8 @@ int
 dcc_connect (t_irc_dcc *ptr_dcc)
 {
     struct sockaddr_in addr;
+    struct hostent *hostent;
+    char *ip4;
     
     if (ptr_dcc->type == DCC_CHAT_SEND)
         ptr_dcc->status = DCC_WAITING;
@@ -245,12 +249,12 @@ dcc_connect (t_irc_dcc *ptr_dcc)
         if (ptr_dcc->sock == -1)
             return 0;
     }
-    if (fcntl (ptr_dcc->sock, F_SETFL, O_NONBLOCK) == -1)
-        return 0;
-    
+
     /* for sending (chat or file), listen to socket for a connection */
     if (DCC_IS_SEND(ptr_dcc->type))
-    {
+      {
+        if (fcntl (ptr_dcc->sock, F_SETFL, O_NONBLOCK) == -1)
+	  return 0;	
         if (listen (ptr_dcc->sock, 1) == -1)
             return 0;
         if (fcntl (ptr_dcc->sock, F_SETFL, 0) == -1)
@@ -260,11 +264,35 @@ dcc_connect (t_irc_dcc *ptr_dcc)
     /* for receiving (chat or file), connect to listening host */
     if (DCC_IS_RECV(ptr_dcc->type))
     {
-        memset (&addr, 0, sizeof (addr));
-        addr.sin_port = htons (ptr_dcc->port);
-        addr.sin_family = AF_INET;
-        addr.sin_addr.s_addr = htonl (ptr_dcc->addr);
-        connect (ptr_dcc->sock, (struct sockaddr *) &addr, sizeof (addr));
+      if (cfg_proxy_use)
+	{
+	  memset (&addr, 0, sizeof (addr));
+	  addr.sin_addr.s_addr = htonl (ptr_dcc->addr);
+	  ip4 = inet_ntoa(addr.sin_addr);
+
+	  memset (&addr, 0, sizeof (addr));
+	  addr.sin_port = htons (cfg_proxy_port);
+	  addr.sin_family = AF_INET;
+	  if ((hostent = gethostbyname (cfg_proxy_address)) == NULL)
+	    return 0;
+	  memcpy(&(addr.sin_addr),*(hostent->h_addr_list), sizeof(struct in_addr));
+
+	  if (connect (ptr_dcc->sock, (struct sockaddr *) &addr, sizeof (addr)) == -1)
+	    return 0;
+	  if (pass_proxy(ptr_dcc->sock, ip4, ptr_dcc->port, ptr_dcc->server->username) == -1)
+	    return 0;
+	}
+      else
+	{
+	  memset (&addr, 0, sizeof (addr));
+	  addr.sin_port = htons (ptr_dcc->port);
+	  addr.sin_family = AF_INET;
+	  addr.sin_addr.s_addr = htonl (ptr_dcc->addr);
+	  if (connect (ptr_dcc->sock, (struct sockaddr *) &addr, sizeof (addr)) == -1)
+	    return 0;
+	}      
+      if (fcntl (ptr_dcc->sock, F_SETFL, O_NONBLOCK) == -1)
+        return 0;      
     }
     
     return 1;
