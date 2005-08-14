@@ -698,13 +698,15 @@ irc_cmd_send_join (t_irc_server *server, char *arguments)
 	  arguments = ++p;
 	}
       
-      if (string_is_channel (arguments))
+      if (string_is_channel (buffer))
         server_sendf (server, "JOIN %s\r\n", buffer);
       else
 	server_sendf (server, "JOIN #%s\r\n", buffer);
       
       if (!p) break;
   }
+  
+  free (buffer);
   
   return 0;
 }
