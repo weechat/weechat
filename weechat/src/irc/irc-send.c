@@ -678,37 +678,11 @@ irc_cmd_send_ison (t_irc_server *server, char *arguments)
 int
 irc_cmd_send_join (t_irc_server *server, char *arguments)
 {
-  char *p, *buffer;
-  
-  buffer = (char *) malloc( (strlen(arguments) + 1) * sizeof (*buffer));
-  if (!buffer)
+    if (string_is_channel (arguments))
+        server_sendf (server, "JOIN %s\r\n", arguments);
+    else
+        server_sendf (server, "JOIN #%s\r\n", arguments);
     return 0;
-  
-  while(arguments != NULL) 
-    {
-      p = strchr(arguments, ',');
-      if (!p) 
-	{
-	  strcpy(buffer, arguments);
-	}
-      else
-	{
-	  memcpy(buffer, arguments, p - arguments);
-	  buffer[p - arguments] = '\0';	  
-	  arguments = ++p;
-	}
-      
-      if (string_is_channel (buffer))
-        server_sendf (server, "JOIN %s\r\n", buffer);
-      else
-	server_sendf (server, "JOIN #%s\r\n", buffer);
-      
-      if (!p) break;
-  }
-  
-  free (buffer);
-  
-  return 0;
 }
 
 /*
