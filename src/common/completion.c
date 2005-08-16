@@ -201,19 +201,33 @@ completion_build_list (t_completion *completion, void *channel)
         }
         return;
     }
-    if ((strcasecmp (completion->base_command, "key") == 0)
-        && (completion->base_command_arg == 1))
+    if (strcasecmp (completion->base_command, "key") == 0)
     {
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     "unbind");
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     "functions");
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     "reset");
-        return;
+        if (completion->base_command_arg == 1)
+        {
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         "unbind");
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         "functions");
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         "reset");
+            return;
+        }
+        if (completion->base_command_arg == 2)
+        {
+            i = 0;
+            while (gui_key_functions[i].function_name)
+            {
+                weelist_add (&completion->completion_list,
+                             &completion->last_completion,
+                             gui_key_functions[i].function_name);
+                i++;
+            }
+            return;
+        }
     }
     if (((strcasecmp (completion->base_command, "perl") == 0)
         || (strcasecmp (completion->base_command, "python") == 0))
