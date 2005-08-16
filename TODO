@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2005-07-20
+TODO - 2005-08-16
 
 Legend:
   #  done
@@ -10,7 +10,7 @@ Legend:
   ?  is this really necessary?
 
 
-v0.1.4:
+v0.1.5:
 ------
 
  * General:
@@ -32,9 +32,7 @@ v0.1.4:
     - be able to make an alias running more than one command
 
  * Configuration:
-    # irc_highlight setting to highlight custom words
-    # save buffer notify levels
-    # add key bindings to config file, and create /key command
+    - be able to launch more than one command when connecting to server
 
 
 Future versions:
