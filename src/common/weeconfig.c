@@ -739,7 +739,7 @@ t_config_option weechat_options_server[] =
     OPTION_TYPE_INT, 0, 5, 0,
     NULL, NULL, &(cfg_server.command_delay), NULL, NULL },
   { "server_autojoin", N_("list of channels to join when connected to server"),
-    N_("comma separated list of channels to join when connected to server"),
+    N_("comma separated list of channels to join when connected to server (example: \"#chan1,#chan2,#chan3 #key1,#key2\")"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "", NULL, NULL, &(cfg_server.autojoin), NULL },
   { "server_autorejoin", N_("automatically rejoin channels when kicked"),

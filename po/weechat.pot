@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-07-30 20:35+0200\n"
+"POT-Creation-Date: 2005-08-16 16:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -143,27 +143,27 @@ msgstr ""
 msgid "%s cannot create pipe\n"
 msgstr ""
 
-#: src/irc/irc-server.c:1434
+#: src/irc/irc-server.c:1437
 #, c-format
 msgid "%s cannot create socket\n"
 msgstr ""
 
-#: src/irc/irc-server.c:1445
+#: src/irc/irc-server.c:1448
 #, c-format
 msgid "%s cannot set socket option \"SO_REUSEADDR\"\n"
 msgstr ""
 
-#: src/irc/irc-server.c:1456
+#: src/irc/irc-server.c:1459
 #, c-format
 msgid "%s cannot set socket option \"SO_KEEPALIVE\"\n"
 msgstr ""
 
-#: src/irc/irc-server.c:1487
+#: src/irc/irc-server.c:1490
 #, c-format
 msgid "%s: Reconnecting to server...\n"
 msgstr ""
 
-#: src/irc/irc-server.c:1537 src/irc/irc-server.c:1546
+#: src/irc/irc-server.c:1540 src/irc/irc-server.c:1549
 msgid "Disconnected from server!\n"
 msgstr ""
 
@@ -1538,7 +1538,7 @@ msgstr ""
 msgid "%s unknown DCC CHAT type received from "
 msgstr ""
 
-#: src/irc/irc-recv.c:1905 src/irc/irc-dcc.c:1011
+#: src/irc/irc-recv.c:1905 src/irc/irc-dcc.c:1039
 #, c-format
 msgid "Private %s> %s"
 msgstr ""
@@ -1733,157 +1733,157 @@ msgstr ""
 msgid "%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\"\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:47
+#: src/irc/irc-dcc.c:49
 msgid "Waiting"
 msgstr ""
 
-#: src/irc/irc-dcc.c:47
+#: src/irc/irc-dcc.c:49
 msgid "Connecting"
 msgstr ""
 
-#: src/irc/irc-dcc.c:47
+#: src/irc/irc-dcc.c:49
 msgid "Active"
 msgstr ""
 
-#: src/irc/irc-dcc.c:47
+#: src/irc/irc-dcc.c:49
 msgid "Done"
 msgstr ""
 
-#: src/irc/irc-dcc.c:47
+#: src/irc/irc-dcc.c:49
 msgid "Failed"
 msgstr ""
 
-#: src/irc/irc-dcc.c:48
+#: src/irc/irc-dcc.c:50
 msgid "Aborted"
 msgstr ""
 
-#: src/irc/irc-dcc.c:320 src/irc/irc-dcc.c:511 src/irc/irc-dcc.c:673
+#: src/irc/irc-dcc.c:348 src/irc/irc-dcc.c:539 src/irc/irc-dcc.c:701
 msgid "DCC: file "
 msgstr ""
 
-#: src/irc/irc-dcc.c:327 src/irc/irc-dcc.c:636 src/irc/irc-dcc.c:678
+#: src/irc/irc-dcc.c:355 src/irc/irc-dcc.c:664 src/irc/irc-dcc.c:706
 msgid " (local filename: "
 msgstr ""
 
-#: src/irc/irc-dcc.c:335
+#: src/irc/irc-dcc.c:363
 msgid " sent to "
 msgstr ""
 
-#: src/irc/irc-dcc.c:337
+#: src/irc/irc-dcc.c:365
 msgid " received from "
 msgstr ""
 
-#: src/irc/irc-dcc.c:343
+#: src/irc/irc-dcc.c:371
 msgid ": ok!\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:343
+#: src/irc/irc-dcc.c:371
 msgid ": FAILED\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:355
+#: src/irc/irc-dcc.c:383
 msgid "DCC chat closed with "
 msgstr ""
 
-#: src/irc/irc-dcc.c:404
+#: src/irc/irc-dcc.c:432
 #, c-format
 msgid ""
 "%s can't associate DCC chat with private buffer (maybe private buffer has "
 "already DCC CHAT?)\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:414
+#: src/irc/irc-dcc.c:442
 msgid "Connected to "
 msgstr ""
 
-#: src/irc/irc-dcc.c:423
+#: src/irc/irc-dcc.c:451
 msgid "via DCC chat\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:516
+#: src/irc/irc-dcc.c:544
 #, c-format
 msgid "resumed at position %u\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:522 src/irc/irc-dcc.c:547
+#: src/irc/irc-dcc.c:550 src/irc/irc-dcc.c:575
 #, c-format
 msgid ""
 "%s can't resume file \"%s\" (port: %d, start position: %u): DCC not found or "
 "ended\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:566
+#: src/irc/irc-dcc.c:594
 #, c-format
 msgid "%s not enough memory for new DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:585
+#: src/irc/irc-dcc.c:613
 msgid "DCC chat"
 msgstr ""
 
-#: src/irc/irc-dcc.c:615
+#: src/irc/irc-dcc.c:643
 msgid "Incoming DCC file from "
 msgstr ""
 
-#: src/irc/irc-dcc.c:626 src/irc/irc-dcc.c:640
+#: src/irc/irc-dcc.c:654 src/irc/irc-dcc.c:668
 msgid " bytes\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:632
+#: src/irc/irc-dcc.c:660
 msgid "Sending DCC file to "
 msgstr ""
 
-#: src/irc/irc-dcc.c:646
+#: src/irc/irc-dcc.c:674
 msgid "Incoming DCC chat request from "
 msgstr ""
 
-#: src/irc/irc-dcc.c:658
+#: src/irc/irc-dcc.c:686
 msgid "Sending DCC chat request to "
 msgstr ""
 
-#: src/irc/irc-dcc.c:684
+#: src/irc/irc-dcc.c:712
 #, c-format
 msgid "will be resumed at position %u\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:750
+#: src/irc/irc-dcc.c:778
 #, c-format
 msgid "%s not enough memory for DCC SEND\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:772
+#: src/irc/irc-dcc.c:800
 #, c-format
 msgid "%s cannot access file \"%s\"\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:793
+#: src/irc/irc-dcc.c:821
 #, c-format
 msgid "%s cannot create socket for DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:806
+#: src/irc/irc-dcc.c:834
 #, c-format
 msgid "%s cannot find port for DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:853
+#: src/irc/irc-dcc.c:881
 #, c-format
 msgid "%s cannot send DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:932
+#: src/irc/irc-dcc.c:960
 #, c-format
 msgid "%s error sending data to \"%s\" via DCC CHAT\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1205
+#: src/irc/irc-dcc.c:1233
 #, c-format
 msgid ""
 "%s DCC failed because blocksize is too big. Check value of \"dcc_blocksize\" "
 "option, max is %d.\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1280
+#: src/irc/irc-dcc.c:1308
 #, c-format
 msgid "Aborting active DCC: \"%s\" from %s\n"
 msgstr ""
@@ -2073,15 +2073,15 @@ msgstr ""
 msgid "server"
 msgstr ""
 
-#: src/gui/gui-common.c:341
+#: src/gui/gui-common.c:343
 msgid "Not enough memory for infobar message\n"
 msgstr ""
 
-#: src/gui/gui-common.c:516
+#: src/gui/gui-common.c:524
 msgid "Not enough memory for new line\n"
 msgstr ""
 
-#: src/gui/gui-common.c:559
+#: src/gui/gui-common.c:567
 msgid "Not enough memory for new message\n"
 msgstr ""
 
@@ -3823,7 +3823,9 @@ msgid "list of channels to join when connected to server"
 msgstr ""
 
 #: src/common/weeconfig.c:742
-msgid "comma separated list of channels to join when connected to server"
+msgid ""
+"comma separated list of channels to join when connected to server (example: "
+"\"#chan1,#chan2,#chan3 #key1,#key2\")"
 msgstr ""
 
 #: src/common/weeconfig.c:745 src/common/weeconfig.c:746

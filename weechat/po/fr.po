@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.5-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-07-30 20:35+0200\n"
-"PO-Revision-Date: 2005-07-30 20:38+0200\n"
+"POT-Creation-Date: 2005-08-16 16:52+0200\n"
+"PO-Revision-Date: 2005-08-16 16:53+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -148,27 +148,27 @@ msgstr "%s erreur d'initialisation gnutls\n"
 msgid "%s cannot create pipe\n"
 msgstr "%s impossible de créer le pipe\n"
 
-#: src/irc/irc-server.c:1434
+#: src/irc/irc-server.c:1437
 #, c-format
 msgid "%s cannot create socket\n"
 msgstr "%s impossible de créer la socket\n"
 
-#: src/irc/irc-server.c:1445
+#: src/irc/irc-server.c:1448
 #, c-format
 msgid "%s cannot set socket option \"SO_REUSEADDR\"\n"
 msgstr "%s impossible de paramétrer l'option socket \"SO_REUSEADDR\"\n"
 
-#: src/irc/irc-server.c:1456
+#: src/irc/irc-server.c:1459
 #, c-format
 msgid "%s cannot set socket option \"SO_KEEPALIVE\"\n"
 msgstr "%s impossible de paramétrer l'option socket \"SO_KEEPALIVE\"\n"
 
-#: src/irc/irc-server.c:1487
+#: src/irc/irc-server.c:1490
 #, c-format
 msgid "%s: Reconnecting to server...\n"
 msgstr "%s: Reconnexion au serveur...\n"
 
-#: src/irc/irc-server.c:1537 src/irc/irc-server.c:1546
+#: src/irc/irc-server.c:1540 src/irc/irc-server.c:1549
 msgid "Disconnected from server!\n"
 msgstr "Déconnecté du serveur !\n"
 
@@ -1652,7 +1652,7 @@ msgstr "%s impossible d'analyser la commande \"%s\"\n"
 msgid "%s unknown DCC CHAT type received from "
 msgstr "%s type de DCC CHAT inconnu reçu de "
 
-#: src/irc/irc-recv.c:1905 src/irc/irc-dcc.c:1011
+#: src/irc/irc-recv.c:1905 src/irc/irc-dcc.c:1039
 #, c-format
 msgid "Private %s> %s"
 msgstr "Prive %s> %s"
@@ -1856,59 +1856,59 @@ msgstr ""
 "%s: l'utilisateur \"%s\" est déjà en cours d'utilisation, essai avec le 1er "
 "nom d'utilisateur \"%s\"\n"
 
-#: src/irc/irc-dcc.c:47
+#: src/irc/irc-dcc.c:49
 msgid "Waiting"
 msgstr "Attente"
 
-#: src/irc/irc-dcc.c:47
+#: src/irc/irc-dcc.c:49
 msgid "Connecting"
 msgstr "Connexion"
 
-#: src/irc/irc-dcc.c:47
+#: src/irc/irc-dcc.c:49
 msgid "Active"
 msgstr "Actif"
 
-#: src/irc/irc-dcc.c:47
+#: src/irc/irc-dcc.c:49
 msgid "Done"
 msgstr "Terminé"
 
-#: src/irc/irc-dcc.c:47
+#: src/irc/irc-dcc.c:49
 msgid "Failed"
 msgstr "Echoué"
 
-#: src/irc/irc-dcc.c:48
+#: src/irc/irc-dcc.c:50
 msgid "Aborted"
 msgstr "Interrompu"
 
-#: src/irc/irc-dcc.c:320 src/irc/irc-dcc.c:511 src/irc/irc-dcc.c:673
+#: src/irc/irc-dcc.c:348 src/irc/irc-dcc.c:539 src/irc/irc-dcc.c:701
 msgid "DCC: file "
 msgstr "DCC: fichier "
 
-#: src/irc/irc-dcc.c:327 src/irc/irc-dcc.c:636 src/irc/irc-dcc.c:678
+#: src/irc/irc-dcc.c:355 src/irc/irc-dcc.c:664 src/irc/irc-dcc.c:706
 msgid " (local filename: "
 msgstr " (nom local: "
 
-#: src/irc/irc-dcc.c:335
+#: src/irc/irc-dcc.c:363
 msgid " sent to "
 msgstr " envoyé à "
 
-#: src/irc/irc-dcc.c:337
+#: src/irc/irc-dcc.c:365
 msgid " received from "
 msgstr " reçu de "
 
-#: src/irc/irc-dcc.c:343
+#: src/irc/irc-dcc.c:371
 msgid ": ok!\n"
 msgstr ": ok!\n"
 
-#: src/irc/irc-dcc.c:343
+#: src/irc/irc-dcc.c:371
 msgid ": FAILED\n"
 msgstr ": ECHOUE\n"
 
-#: src/irc/irc-dcc.c:355
+#: src/irc/irc-dcc.c:383
 msgid "DCC chat closed with "
 msgstr "Discussion DCC fermée avec "
 
-#: src/irc/irc-dcc.c:404
+#: src/irc/irc-dcc.c:432
 #, c-format
 msgid ""
 "%s can't associate DCC chat with private buffer (maybe private buffer has "
@@ -1917,20 +1917,20 @@ msgstr ""
 "%s impossible d'associer la discussion DCC avec un tampon privé (le tampon "
 "privé a peut-être déjà un DCC CHAT ?)\n"
 
-#: src/irc/irc-dcc.c:414
+#: src/irc/irc-dcc.c:442
 msgid "Connected to "
 msgstr "Connecté à "
 
-#: src/irc/irc-dcc.c:423
+#: src/irc/irc-dcc.c:451
 msgid "via DCC chat\n"
 msgstr "via une discussion DCC\n"
 
-#: src/irc/irc-dcc.c:516
+#: src/irc/irc-dcc.c:544
 #, c-format
 msgid "resumed at position %u\n"
 msgstr "recommencé en position %u\n"
 
-#: src/irc/irc-dcc.c:522 src/irc/irc-dcc.c:547
+#: src/irc/irc-dcc.c:550 src/irc/irc-dcc.c:575
 #, c-format
 msgid ""
 "%s can't resume file \"%s\" (port: %d, start position: %u): DCC not found or "
@@ -1939,71 +1939,71 @@ msgstr ""
 "%s impossible de continuer le fichier \"%s\" (port: %d, position de départ: %"
 "u): DCC non trouvé ou terminé\n"
 
-#: src/irc/irc-dcc.c:566
+#: src/irc/irc-dcc.c:594
 #, c-format
 msgid "%s not enough memory for new DCC\n"
 msgstr "%s pas assez de mémoire pour un nouveau DCC\n"
 
-#: src/irc/irc-dcc.c:585
+#: src/irc/irc-dcc.c:613
 msgid "DCC chat"
 msgstr "Discussion DCC"
 
-#: src/irc/irc-dcc.c:615
+#: src/irc/irc-dcc.c:643
 msgid "Incoming DCC file from "
 msgstr "Réception fichier DCC de "
 
-#: src/irc/irc-dcc.c:626 src/irc/irc-dcc.c:640
+#: src/irc/irc-dcc.c:654 src/irc/irc-dcc.c:668
 msgid " bytes\n"
 msgstr " octets\n"
 
-#: src/irc/irc-dcc.c:632
+#: src/irc/irc-dcc.c:660
 msgid "Sending DCC file to "
 msgstr "Envoi fichier DCC à "
 
-#: src/irc/irc-dcc.c:646
+#: src/irc/irc-dcc.c:674
 msgid "Incoming DCC chat request from "
 msgstr "Demande de discussion DCC reçue de "
 
-#: src/irc/irc-dcc.c:658
+#: src/irc/irc-dcc.c:686
 msgid "Sending DCC chat request to "
 msgstr "Envoi d'une demande discussion DCC à "
 
-#: src/irc/irc-dcc.c:684
+#: src/irc/irc-dcc.c:712
 #, c-format
 msgid "will be resumed at position %u\n"
 msgstr "sera redémarré à la position %u\n"
 
-#: src/irc/irc-dcc.c:750
+#: src/irc/irc-dcc.c:778
 #, c-format
 msgid "%s not enough memory for DCC SEND\n"
 msgstr "%s pas assez de mémoire pour le DCC SEND\n"
 
-#: src/irc/irc-dcc.c:772
+#: src/irc/irc-dcc.c:800
 #, c-format
 msgid "%s cannot access file \"%s\"\n"
 msgstr "%s impossible d'accéder au fichier \"%s\"\n"
 
-#: src/irc/irc-dcc.c:793
+#: src/irc/irc-dcc.c:821
 #, c-format
 msgid "%s cannot create socket for DCC\n"
 msgstr "%s impossible de créer la socket pour le DCC\n"
 
-#: src/irc/irc-dcc.c:806
+#: src/irc/irc-dcc.c:834
 #, c-format
 msgid "%s cannot find port for DCC\n"
 msgstr "%s impossible de trouver le port pour le DCC\n"
 
-#: src/irc/irc-dcc.c:853
+#: src/irc/irc-dcc.c:881
 #, c-format
 msgid "%s cannot send DCC\n"
 msgstr "%s impossible d'envoyer le DCC\n"
 
-#: src/irc/irc-dcc.c:932
+#: src/irc/irc-dcc.c:960
 #, c-format
 msgid "%s error sending data to \"%s\" via DCC CHAT\n"
 msgstr "%s erreur d'envoi de données à \"%s\" via DCC CHAT\n"
 
-#: src/irc/irc-dcc.c:1205
+#: src/irc/irc-dcc.c:1233
 #, c-format
 msgid ""
 "%s DCC failed because blocksize is too big. Check value of \"dcc_blocksize\" "
@@ -2012,7 +2012,7 @@ msgstr ""
 "%s le DCC a échoué car la taille de bloc est trop grande. Vérifiez la valeur "
 "de l'option \"dcc_blocksize\", le maximum est %d.\n"
 
-#: src/irc/irc-dcc.c:1280
+#: src/irc/irc-dcc.c:1308
 #, c-format
 msgid "Aborting active DCC: \"%s\" from %s\n"
 msgstr "Abandon du DCC actif: \"%s\" de %s\n"
@@ -2209,15 +2209,15 @@ msgstr "  [Q] Fermer la vue DCC"
 msgid "server"
 msgstr "serveur"
 
-#: src/gui/gui-common.c:341
+#: src/gui/gui-common.c:343
 msgid "Not enough memory for infobar message\n"
 msgstr "Pas assez de mémoire pour un message de la barre d'infos\n"
 
-#: src/gui/gui-common.c:516
+#: src/gui/gui-common.c:524
 msgid "Not enough memory for new line\n"
 msgstr "Pas assez de mémoire pour une nouvelle ligne !\n"
 
-#: src/gui/gui-common.c:559
+#: src/gui/gui-common.c:567
 msgid "Not enough memory for new message\n"
 msgstr "Pas assez de mémoire pour un message de la barre d'infos\n"
 
@@ -4088,10 +4088,12 @@ msgid "list of channels to join when connected to server"
 msgstr "liste des canaux à rejoindre lorsque connecté au serveur"
 
 #: src/common/weeconfig.c:742
-msgid "comma separated list of channels to join when connected to server"
+msgid ""
+"comma separated list of channels to join when connected to server (example: "
+"\"#chan1,#chan2,#chan3 #key1,#key2\")"
 msgstr ""
 "liste des canaux (séparés par des virgules) à rejoindre lorsque connecté au "
-"serveur"
+"serveur (exemple: \"#chan1,#chan2,#chan3 #key1,#key2\")"
 
 #: src/common/weeconfig.c:745 src/common/weeconfig.c:746
 msgid "automatically rejoin channels when kicked"
