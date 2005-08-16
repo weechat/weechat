@@ -184,6 +184,13 @@ gui_calculate_pos_size (t_gui_window *window)
     {
         max_length = nick_get_max_length (CHANNEL(window->buffer));
         
+        if ((cfg_look_nicklist_min_size > 0)
+            && (max_length < cfg_look_nicklist_min_size))
+            max_length = cfg_look_nicklist_min_size;
+        else if ((cfg_look_nicklist_max_size > 0)
+                 && (max_length > cfg_look_nicklist_max_size))
+            max_length = cfg_look_nicklist_max_size;
+        
         switch (cfg_look_nicklist_position)
         {
             case CFG_LOOK_NICKLIST_LEFT:
@@ -921,7 +928,13 @@ gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
                         mvwprintw (ptr_win->win_nick, i, 0, format_empty, " ");
                     }
                 }
-                snprintf (format, 32, "%%-%ds", max_length);
+                snprintf (format, 32, "%%.%ds",
+                          ((cfg_look_nicklist_min_size > 0)
+                           && (max_length < cfg_look_nicklist_min_size)) ?
+                          cfg_look_nicklist_min_size :
+                          (((cfg_look_nicklist_max_size > 0)
+                           && (max_length > cfg_look_nicklist_max_size)) ?
+                          cfg_look_nicklist_max_size : max_length));
                 
                 if (has_colors ())
                 {

@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-07-31
+ChangeLog - 2005-08-16
 
 
 Version 0.1.5 (under dev!):
+   * fixed look_nicklist_min_size and look_nicklist_max_size options
    * fixed refresh bug when changing channel modes
    * jump to next server now saves current channel buffer for each server
    * ctrl-up/ctrl-down keys added to call previous/next command in global
