@@ -440,7 +440,7 @@ gui_display_word (t_gui_window *window, t_gui_line *line,
     int end_of_word, chars_to_display, num_displayed;
     
     if (!message || !end_msg ||
-        (window->win_chat_cursor_y > window->win_chat_height - 1))
+        ((!simulate) && (window->win_chat_cursor_y > window->win_chat_height - 1)))
         return;
     
     snprintf (format_align, 32, "%%-%ds", line->length_align);
@@ -493,7 +493,6 @@ gui_display_word (t_gui_window *window, t_gui_line *line,
         }
         else
         {
-
             num_displayed = chars_to_display;
             if ((!simulate) &&
                 ((count == 0) || (*lines_displayed >= num_lines - count)))
@@ -832,7 +831,7 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                     ptr_line = (ptr_line) ? ptr_line->next_line : buffer->lines;
                     gui_display_line (ptr_win, ptr_line,
                                       gui_display_line (ptr_win, ptr_line, 0, 1) -
-                                      (lines_used - (ptr_win->win_chat_height + ptr_win->sub_lines)), 0);
+                                      (lines_used - (ptr_win->win_chat_height + ptr_win->sub_lines)), 0);;
                     ptr_line = ptr_line->next_line;
                     ptr_win->first_line_displayed = 0;
                 }
