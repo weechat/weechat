@@ -1809,23 +1809,24 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
             
             /* private message received => display it */
             ptr_channel = channel_search (server, host);
-            if (!ptr_channel)
-            {
-                ptr_channel = channel_new (server, CHAT_PRIVATE, host, 0);
-                if (!ptr_channel)
-                {
-                    irc_display_prefix (server->buffer, PREFIX_ERROR);
-                    gui_printf_nolog (server->buffer,
-                                      _("%s cannot create new private window \"%s\"\n"),
-                                      WEECHAT_ERROR, host);
-                    return -1;
-                }
-            }
-            if (!ptr_channel->topic)
-                ptr_channel->topic = strdup (host2);
             
             if (strncmp (pos, "\01ACTION ", 8) == 0)
             {
+                if (!ptr_channel)
+                {
+                    ptr_channel = channel_new (server, CHAT_PRIVATE, host, 0);
+                    if (!ptr_channel)
+                    {
+                        irc_display_prefix (server->buffer, PREFIX_ERROR);
+                        gui_printf_nolog (server->buffer,
+                                          _("%s cannot create new private window \"%s\"\n"),
+                                          WEECHAT_ERROR, host);
+                        return -1;
+                    }
+                }
+                if (!ptr_channel->topic)
+                    ptr_channel->topic = strdup (host2);
+                
                 pos += 8;
                 pos2 = strchr (pos, '\01');
                 if (pos2)
@@ -1889,6 +1890,21 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                 }
                 else
                 {
+                    if (!ptr_channel)
+                    {
+                        ptr_channel = channel_new (server, CHAT_PRIVATE, host, 0);
+                        if (!ptr_channel)
+                        {
+                            irc_display_prefix (server->buffer, PREFIX_ERROR);
+                            gui_printf_nolog (server->buffer,
+                                              _("%s cannot create new private window \"%s\"\n"),
+                                              WEECHAT_ERROR, host);
+                            return -1;
+                        }
+                    }
+                    if (!ptr_channel->topic)
+                        ptr_channel->topic = strdup (host2);
+                    
                     gui_printf_type_color (ptr_channel->buffer,
                                            MSG_TYPE_NICK,
                                            COLOR_WIN_CHAT_DARK, "<");
