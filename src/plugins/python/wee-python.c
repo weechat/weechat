@@ -330,6 +330,7 @@ wee_python_get_info (PyObject *self, PyObject *args)
             gui_printf (NULL,
                         _("%s error: server not found for \"%s\" function\n"),
                         "Python", "get_info");
+            return NULL;
         }
     }
     

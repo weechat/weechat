@@ -15,23 +15,9 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
-INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\"
+INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(RUBY_CFLAGS) 
 
-if PLUGIN_PERL
-perl_dir = perl
-endif
+noinst_LIBRARIES = lib_weechat_ruby.a
 
-if PLUGIN_PYTHON
-python_dir = python
-endif
-
-if PLUGIN_RUBY
-ruby_dir = ruby
-endif
-
-SUBDIRS = $(perl_dir) $(python_dir) $(ruby_dir)
-
-noinst_LIBRARIES = lib_weechat_plugins.a
-
-lib_weechat_plugins_a_SOURCES = plugins.h \
-                                plugins.c
+lib_weechat_ruby_a_SOURCES = wee-ruby.h \
+                             wee-ruby.c

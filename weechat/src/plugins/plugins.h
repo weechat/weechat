@@ -67,6 +67,10 @@ extern t_plugin_script *perl_scripts;
 extern t_plugin_script *python_scripts;
 #endif
 
+#ifdef PLUGIN_RUBY
+extern t_plugin_script *ruby_scripts;
+#endif
+
 extern void plugin_auto_load (int, char *);
 extern void plugin_init ();
 extern void plugin_load (int, char *);

@@ -43,6 +43,10 @@
 #include "python/wee-python.h"
 #endif
 
+#ifdef PLUGIN_RUBY
+#include "ruby/wee-ruby.h"
+#endif
+
 
 char *plugin_name[3] = { "Perl", "Python", "Ruby" };
 
@@ -115,15 +119,20 @@ plugin_auto_load (int plugin_type, char *directory)
 void
 plugin_init ()
 {
-    #ifdef PLUGIN_PERL
+#ifdef PLUGIN_PERL
     wee_perl_init();
     plugin_auto_load (PLUGIN_TYPE_PERL, "perl/autoload");
-    #endif
+#endif
     
-    #ifdef PLUGIN_PYTHON
+#ifdef PLUGIN_PYTHON
     wee_python_init();
     plugin_auto_load (PLUGIN_TYPE_PYTHON, "python/autoload");
-    #endif
+#endif
+
+#ifdef PLUGIN_RUBY
+    wee_ruby_init();
+    plugin_auto_load (PLUGIN_TYPE_RUBY, "ruby/autoload");
+#endif
 }
 
 /*
@@ -133,28 +142,30 @@ plugin_init ()
 void
 plugin_load (int plugin_type, char *filename)
 {
-    #ifdef PLUGINS
+#ifdef PLUGINS
     switch (plugin_type)
     {
         case PLUGIN_TYPE_PERL:
-            #ifdef PLUGIN_PERL
+#ifdef PLUGIN_PERL
             wee_perl_load (filename);
-            #endif
+#endif
             break;
         case PLUGIN_TYPE_PYTHON:
-            #ifdef PLUGIN_PYTHON
+#ifdef PLUGIN_PYTHON
             wee_python_load (filename);
-            #endif
+#endif
             break;
         case PLUGIN_TYPE_RUBY:
-            /* TODO: load Ruby script */
+#ifdef PLUGIN_RUBY
+            wee_ruby_load (filename);
+#endif
             break;
     }
-    #else
+#else
     /* make gcc happy */
     (void) plugin_type;
     (void) filename;
-    #endif
+#endif /* PLUGINS */
 }
 
 /*
@@ -292,7 +303,7 @@ plugin_handler_free_all_type (t_plugin_handler **plugin_handlers,
 void
 plugin_event_msg (char *irc_command, char *server, char *arguments)
 {
-    #ifdef PLUGINS
+#ifdef PLUGINS
     t_plugin_handler *ptr_plugin_handler;
     
     for (ptr_plugin_handler = plugin_msg_handlers; ptr_plugin_handler;
@@ -300,7 +311,7 @@ plugin_event_msg (char *irc_command, char *server, char *arguments)
     {
         if (strcasecmp (ptr_plugin_handler->name, irc_command) == 0)
         {
-            #ifdef PLUGIN_PERL
+#ifdef PLUGIN_PERL
             if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PERL)
             {
                 if (ptr_plugin_handler->running == 0)
@@ -310,8 +321,8 @@ plugin_event_msg (char *irc_command, char *server, char *arguments)
                     ptr_plugin_handler->running = 0;
                 }
             }
-            #endif
-            #ifdef PLUGIN_PYTHON
+#endif
+#ifdef PLUGIN_PYTHON
             if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PYTHON)
             {
                 if (ptr_plugin_handler->running == 0)
@@ -321,15 +332,26 @@ plugin_event_msg (char *irc_command, char *server, char *arguments)
                     ptr_plugin_handler->running = 0;
                 }
             }
-            #endif
+#endif
+#ifdef PLUGIN_RUBY
+            if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_RUBY)
+            {
+                if (ptr_plugin_handler->running == 0)
+                {
+                    ptr_plugin_handler->running = 1;
+                    wee_ruby_exec (ptr_plugin_handler->function_name, server, arguments);
+                    ptr_plugin_handler->running = 0;
+                }
+            }
+#endif
         }
     }
-    #else
+#else
     /* make gcc happy */
     (void) irc_command;
     (void) arguments;
     (void) server;
-    #endif
+#endif /* PLUGINS */
 }
 
 /*
@@ -339,7 +361,7 @@ plugin_event_msg (char *irc_command, char *server, char *arguments)
 int
 plugin_exec_command (char *user_command, char *server, char *arguments)
 {
-    #ifdef PLUGINS
+#ifdef PLUGINS
     t_plugin_handler *ptr_plugin_handler;
     
     for (ptr_plugin_handler = plugin_cmd_handlers; ptr_plugin_handler;
@@ -347,7 +369,7 @@ plugin_exec_command (char *user_command, char *server, char *arguments)
     {
         if (strcasecmp (ptr_plugin_handler->name, user_command) == 0)
         {
-            #ifdef PLUGIN_PERL
+#ifdef PLUGIN_PERL
             if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PERL)
             {
                 if (ptr_plugin_handler->running == 0)
@@ -357,8 +379,8 @@ plugin_exec_command (char *user_command, char *server, char *arguments)
                     ptr_plugin_handler->running = 0;
                 }
             }
-            #endif
-            #ifdef PLUGIN_PYTHON
+#endif
+#ifdef PLUGIN_PYTHON
             if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PYTHON)
             {
                 if (ptr_plugin_handler->running == 0)
@@ -368,18 +390,29 @@ plugin_exec_command (char *user_command, char *server, char *arguments)
                     ptr_plugin_handler->running = 0;
                 }
             }
-            #endif
+#endif
+#ifdef PLUGIN_RUBY
+            if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_RUBY)
+            {
+                if (ptr_plugin_handler->running == 0)
+                {
+                    ptr_plugin_handler->running = 1;
+                    wee_ruby_exec (ptr_plugin_handler->function_name, server, arguments);
+                    ptr_plugin_handler->running = 0;
+                }
+            }
+#endif
             
             /* command executed */
             return 1;
         }
     }
-    #else
+#else
     /* make gcc happy */
     (void) user_command;
     (void) arguments;
     (void) server;
-    #endif
+#endif /* PLUGINS */
     
     /* no command executed */
     return 0;
@@ -453,30 +486,33 @@ plugin_unload (int plugin_type, char *scriptname)
     /* make gcc happy */
     (void) scriptname;
     
-    #ifdef PLUGINS
+#ifdef PLUGINS
     switch (plugin_type)
     {
         case PLUGIN_TYPE_PERL:
-            #ifdef PLUGIN_PERL
+#ifdef PLUGIN_PERL
             /* unload one Perl script is not allowed */
             wee_perl_end ();
             wee_perl_init ();
-            #endif
+#endif
             break;
         case PLUGIN_TYPE_PYTHON:
-            #ifdef PLUGIN_PYTHON
+#ifdef PLUGIN_PYTHON
             wee_python_end ();
             wee_python_init ();
-            #endif
+#endif
             break;
         case PLUGIN_TYPE_RUBY:
-            /* TODO: unload Ruby scripts */
+#ifdef PLUGIN_RUBY
+            wee_ruby_end ();
+            wee_ruby_init ();
+#endif
             break;
     }
-    #else
+#else
     /* make gcc happy */
     (void) plugin_type;
-    #endif
+#endif /* PLUGINS */
 }
 
 /*
@@ -489,11 +525,15 @@ plugin_end ()
     plugin_handler_free_all (&plugin_msg_handlers, &last_plugin_msg_handler);
     plugin_handler_free_all (&plugin_cmd_handlers, &last_plugin_cmd_handler);
     
-    #ifdef PLUGIN_PERL
+#ifdef PLUGIN_PERL
     wee_perl_end();
-    #endif
+#endif
     
-    #ifdef PLUGIN_PYTHON
+#ifdef PLUGIN_PYTHON
     wee_python_end();
-    #endif    
+#endif
+
+#ifdef PLUGIN_RUBY
+    wee_ruby_end();
+#endif
 }

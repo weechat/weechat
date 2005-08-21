@@ -11,6 +11,8 @@
 ./src/plugins/perl/wee-perl.h
 ./src/plugins/python/wee-python.c
 ./src/plugins/python/wee-python.h
+./src/plugins/ruby/wee-ruby.c
+./src/plugins/ruby/wee-ruby.h
 ./src/plugins/plugins.c
 ./src/plugins/plugins.h
 ./src/gui/curses/gui-input.c

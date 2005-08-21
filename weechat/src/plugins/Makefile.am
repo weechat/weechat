@@ -25,12 +25,11 @@ if PLUGIN_PYTHON
 python_dir = python
 endif
 
-# if PLUGIN_RUBY
-# ruby_dir = ruby
-# endif
+if PLUGIN_RUBY
+ruby_dir = ruby
+endif
 
-# SUBDIRS = $(perl_dir) $(python_dir) $(ruby_dir)
-SUBDIRS = $(perl_dir) $(python_dir)
+SUBDIRS = $(perl_dir) $(python_dir) $(ruby_dir)
 
 noinst_LIBRARIES = lib_weechat_plugins.a
 

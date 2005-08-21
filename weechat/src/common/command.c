@@ -89,6 +89,11 @@ t_weechat_command weechat_commands[] =
     N_("filename: Python script (file) to load\n"
        "Without argument, /python command lists all loaded Python scripts."),
     0, 2, weechat_cmd_python, NULL },
+  { "ruby", N_("list/load/unload Ruby scripts"),
+    N_("[load filename] | [autoload] | [reload] | [unload]"),
+    N_("filename: Ruby script (file) to load\n"
+       "Without argument, /ruby command lists all loaded Ruby scripts."),
+    0, 2, weechat_cmd_ruby, NULL },
   { "server", N_("list, add or remove servers"),
     N_("[servername] | "
        "[servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 "
@@ -1486,7 +1491,7 @@ weechat_cmd_key (char *arguments)
 int
 weechat_cmd_perl (int argc, char **argv)
 {
-    #ifdef PLUGIN_PERL
+#ifdef PLUGIN_PERL
     t_plugin_script *ptr_plugin_script;
     t_plugin_handler *ptr_plugin_handler;
     int handler_found, path_length;
@@ -1608,7 +1613,7 @@ weechat_cmd_perl (int argc, char **argv)
                         _("%s wrong argument count for \"%s\" command\n"),
                         WEECHAT_ERROR, "perl");
     }
-    #else
+#else
     irc_display_prefix (NULL, PREFIX_ERROR);
     gui_printf (NULL,
                 _("WeeChat was build without Perl support.\n"
@@ -1617,7 +1622,7 @@ weechat_cmd_perl (int argc, char **argv)
     /* make gcc happy */
     (void) argc;
     (void) argv;
-    #endif /* PLUGIN_PERL */
+#endif /* PLUGIN_PERL */
     
     return 0;
 }
@@ -1629,7 +1634,7 @@ weechat_cmd_perl (int argc, char **argv)
 int
 weechat_cmd_python (int argc, char **argv)
 {
-    #ifdef PLUGIN_PYTHON
+#ifdef PLUGIN_PYTHON
     t_plugin_script *ptr_plugin_script;
     t_plugin_handler *ptr_plugin_handler;
     int handler_found, path_length;
@@ -1751,7 +1756,7 @@ weechat_cmd_python (int argc, char **argv)
                         _("%s wrong argument count for \"%s\" command\n"),
                         WEECHAT_ERROR, "python");
     }
-    #else
+#else
     irc_display_prefix (NULL, PREFIX_ERROR);
     gui_printf (NULL,
                 _("WeeChat was build without Python support.\n"
@@ -1760,7 +1765,150 @@ weechat_cmd_python (int argc, char **argv)
     /* make gcc happy */
     (void) argc;
     (void) argv;
-    #endif /* PLUGIN_PYTHON */
+#endif /* PLUGIN_PYTHON */
+    
+    return 0;
+}
+
+/*
+ * weechat_cmd_ruby: list/load/unload Ruby scripts
+ */
+
+int
+weechat_cmd_ruby (int argc, char **argv)
+{
+#ifdef PLUGIN_RUBY
+    t_plugin_script *ptr_plugin_script;
+    t_plugin_handler *ptr_plugin_handler;
+    int handler_found, path_length;
+    char *path_script;
+    
+    switch (argc)
+    {
+        case 0:
+            /* list registered Ruby scripts */
+            gui_printf (NULL, "\n");
+            gui_printf (NULL, _("Registered %s scripts:\n"), "Ruby");
+            if (ruby_scripts)
+            {
+                for (ptr_plugin_script = ruby_scripts; ptr_plugin_script;
+                     ptr_plugin_script = ptr_plugin_script->next_script)
+                {
+                    irc_display_prefix (NULL, PREFIX_PLUGIN);
+                    gui_printf (NULL, "  %s v%s%s%s\n",
+                                ptr_plugin_script->name,
+                                ptr_plugin_script->version,
+                                (ptr_plugin_script->description[0]) ? " - " : "",
+                                ptr_plugin_script->description);
+                }
+            }
+            else
+            {
+                irc_display_prefix (NULL, PREFIX_PLUGIN);
+                gui_printf (NULL, _("  (none)\n"));
+            }
+            
+            /* list Ruby message handlers */
+            gui_printf (NULL, "\n");
+            gui_printf (NULL, _("%s message handlers:\n"), "Ruby");
+            handler_found = 0;
+            for (ptr_plugin_handler = plugin_msg_handlers; ptr_plugin_handler;
+                 ptr_plugin_handler = ptr_plugin_handler->next_handler)
+            {
+                if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_RUBY)
+                {
+                    handler_found = 1;
+                    irc_display_prefix (NULL, PREFIX_PLUGIN);
+                    gui_printf (NULL, _("  IRC(%s) => %s(%s)\n"),
+                                ptr_plugin_handler->name,
+                                "Ruby",
+                                ptr_plugin_handler->function_name);
+                }
+            }
+            if (!handler_found)
+            {
+                irc_display_prefix (NULL, PREFIX_PLUGIN);
+                gui_printf (NULL, _("  (none)\n"));
+            }
+            
+            /* list Ruby command handlers */
+            gui_printf (NULL, "\n");
+            gui_printf (NULL, _("%s command handlers:\n"), "Ruby");
+            handler_found = 0;
+            for (ptr_plugin_handler = plugin_cmd_handlers; ptr_plugin_handler;
+                 ptr_plugin_handler = ptr_plugin_handler->next_handler)
+            {
+                if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_RUBY)
+                {
+                    handler_found = 1;
+                    irc_display_prefix (NULL, PREFIX_PLUGIN);
+                    gui_printf (NULL, _("  Command /%s => %s(%s)\n"),
+                                ptr_plugin_handler->name,
+                                "Ruby",
+                                ptr_plugin_handler->function_name);
+                }
+            }
+            if (!handler_found)
+            {
+                irc_display_prefix (NULL, PREFIX_PLUGIN);
+                gui_printf (NULL, _("  (none)\n"));
+            }
+            
+            break;
+        case 1:
+            if (strcasecmp (argv[0], "autoload") == 0)
+                plugin_auto_load (PLUGIN_TYPE_RUBY, "ruby/autoload");
+            else if (strcasecmp (argv[0], "reload") == 0)
+            {
+                plugin_unload (PLUGIN_TYPE_RUBY, NULL);
+                plugin_auto_load (PLUGIN_TYPE_RUBY, "ruby/autoload");
+            }
+            else if (strcasecmp (argv[0], "unload") == 0)
+                plugin_unload (PLUGIN_TYPE_RUBY, NULL);
+            break;
+        case 2:
+            if (strcasecmp (argv[0], "load") == 0)
+            {
+                /* load Ruby script */
+                if (strstr(argv[1], DIR_SEPARATOR))
+                    path_script = NULL;
+                else
+                {
+                    path_length = strlen (weechat_home) + strlen (argv[1]) + 9;
+                    path_script = (char *) malloc (path_length * sizeof (char));
+                    snprintf (path_script, path_length, "%s%s%s%s%s",
+                              weechat_home, DIR_SEPARATOR, "ruby",
+                              DIR_SEPARATOR, argv[1]);
+                }
+                plugin_load (PLUGIN_TYPE_RUBY,
+                             (path_script) ? path_script : argv[1]);
+                if (path_script)
+                    free (path_script);
+            }
+            else
+            {
+                irc_display_prefix (NULL, PREFIX_ERROR);
+                gui_printf (NULL,
+                            _("%s unknown option for \"%s\" command\n"),
+                            WEECHAT_ERROR, "ruby");
+            }
+            break;
+        default:
+            irc_display_prefix (NULL, PREFIX_ERROR);
+            gui_printf (NULL,
+                        _("%s wrong argument count for \"%s\" command\n"),
+                        WEECHAT_ERROR, "ruby");
+    }
+#else
+    irc_display_prefix (NULL, PREFIX_ERROR);
+    gui_printf (NULL,
+                _("WeeChat was build without Ruby support.\n"
+                "Please rebuild WeeChat with "
+                "\"--enable-ruby\" option for ./configure script\n"));
+    /* make gcc happy */
+    (void) argc;
+    (void) argv;
+#endif /* PLUGIN_RUBY */
     
     return 0;
 }
