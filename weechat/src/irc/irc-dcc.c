@@ -264,35 +264,32 @@ dcc_connect (t_irc_dcc *ptr_dcc)
     /* for receiving (chat or file), connect to listening host */
     if (DCC_IS_RECV(ptr_dcc->type))
     {
-      if (cfg_proxy_use)
+        if (fcntl (ptr_dcc->sock, F_SETFL, O_NONBLOCK) == -1)
+            return 0;      
+        if (cfg_proxy_use)
 	{
-	  memset (&addr, 0, sizeof (addr));
-	  addr.sin_addr.s_addr = htonl (ptr_dcc->addr);
-	  ip4 = inet_ntoa(addr.sin_addr);
+            memset (&addr, 0, sizeof (addr));
+            addr.sin_addr.s_addr = htonl (ptr_dcc->addr);
+            ip4 = inet_ntoa(addr.sin_addr);
 
-	  memset (&addr, 0, sizeof (addr));
-	  addr.sin_port = htons (cfg_proxy_port);
-	  addr.sin_family = AF_INET;
-	  if ((hostent = gethostbyname (cfg_proxy_address)) == NULL)
-	    return 0;
-	  memcpy(&(addr.sin_addr),*(hostent->h_addr_list), sizeof(struct in_addr));
-
-	  if (connect (ptr_dcc->sock, (struct sockaddr *) &addr, sizeof (addr)) == -1)
-	    return 0;
-	  if (pass_proxy(ptr_dcc->sock, ip4, ptr_dcc->port, ptr_dcc->server->username) == -1)
-	    return 0;
+            memset (&addr, 0, sizeof (addr));
+            addr.sin_port = htons (cfg_proxy_port);
+            addr.sin_family = AF_INET;
+            if ((hostent = gethostbyname (cfg_proxy_address)) == NULL)
+                return 0;
+            memcpy(&(addr.sin_addr),*(hostent->h_addr_list), sizeof(struct in_addr));
+            connect (ptr_dcc->sock, (struct sockaddr *) &addr, sizeof (addr));
+            if (pass_proxy(ptr_dcc->sock, ip4, ptr_dcc->port, ptr_dcc->server->username) == -1)
+                return 0;
 	}
-      else
+        else
 	{
-	  memset (&addr, 0, sizeof (addr));
-	  addr.sin_port = htons (ptr_dcc->port);
-	  addr.sin_family = AF_INET;
-	  addr.sin_addr.s_addr = htonl (ptr_dcc->addr);
-	  if (connect (ptr_dcc->sock, (struct sockaddr *) &addr, sizeof (addr)) == -1)
-	    return 0;
-	}      
-      if (fcntl (ptr_dcc->sock, F_SETFL, O_NONBLOCK) == -1)
-        return 0;      
+            memset (&addr, 0, sizeof (addr));
+            addr.sin_port = htons (ptr_dcc->port);
+            addr.sin_family = AF_INET;
+            addr.sin_addr.s_addr = htonl (ptr_dcc->addr);
+            connect (ptr_dcc->sock, (struct sockaddr *) &addr, sizeof (addr));
+	}
     }
     
     return 1;
