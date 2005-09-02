@@ -472,6 +472,7 @@ t_irc_command irc_commands[] =
     "", "", 0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_error },
   { "502", N_("can't change mode for other users"),
     "", "", 0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_error },
+  { "505", N_("a server message"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
   { "671", N_("whois (secure connection)"),
     "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_671 },
   { NULL, NULL, NULL, NULL, 0, 0, 1, NULL, NULL, NULL }
