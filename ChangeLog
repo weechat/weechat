@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-08-17
+ChangeLog - 2005-09-02
 
 
 Version 0.1.5 (under dev!):
+   * signal SIGQUIT is now ignored
    * fixed refresh bug when one line is bigger than screen size
    * fixed look_nicklist_min_size and look_nicklist_max_size options
    * fixed refresh bug when changing channel modes

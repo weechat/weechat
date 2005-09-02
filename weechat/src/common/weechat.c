@@ -814,6 +814,7 @@ main (int argc, char *argv[])
     #endif
     
     signal (SIGINT, SIG_IGN);       /* ignore SIGINT signal                 */
+    signal (SIGQUIT, SIG_IGN);      /* ignore SIGQUIT signal                */
     signal (SIGSEGV, my_sigsegv);   /* crash dump when SIGSEGV is received  */
     gui_pre_init (&argc, &argv);    /* pre-initiliaze interface             */
     wee_init_vars ();               /* initialize some variables            */
