@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-09-02
+ChangeLog - 2005-09-03
 
 
 Version 0.1.5 (under dev!):
+   * fixed bug with strings comparison (str[n]casecmp) and some locales
+     (like turkish), now using ASCII comparison (thanks to roktas)
    * signal SIGQUIT is now ignored
    * fixed refresh bug when one line is bigger than screen size
    * fixed look_nicklist_min_size and look_nicklist_max_size options

@@ -147,7 +147,7 @@ channel_search (t_irc_server *server, char *channel_name)
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
-        if (strcasecmp (ptr_channel->name, channel_name) == 0)
+        if (ascii_strcasecmp (ptr_channel->name, channel_name) == 0)
             return ptr_channel;
     }
     return NULL;

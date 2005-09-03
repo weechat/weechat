@@ -150,7 +150,7 @@ irc_recv_command (t_irc_server *server, char *entire_line,
     cmd_found = -1;
     for (i = 0; irc_commands[i].command_name; i++)
     {
-        if (strcasecmp (irc_commands[i].command_name, command) == 0)
+        if (ascii_strcasecmp (irc_commands[i].command_name, command) == 0)
         {
             cmd_found = i;
             break;
@@ -929,7 +929,7 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *arguments)
         if ((SERVER(ptr_buffer) == server) && BUFFER_IS_PRIVATE(ptr_buffer))
         {
             if ((CHANNEL(ptr_buffer)->name)
-                && (strcasecmp (host, CHANNEL(ptr_buffer)->name) == 0))
+                && (ascii_strcasecmp (host, CHANNEL(ptr_buffer)->name) == 0))
             {
                 free (CHANNEL(ptr_buffer)->name);
                 CHANNEL(ptr_buffer)->name = strdup (arguments);
@@ -1104,9 +1104,9 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *arguments)
                 gui_printf_color (server->buffer, COLOR_WIN_CHAT, ": ");
             }
             gui_printf_color (server->buffer, COLOR_WIN_CHAT, "%s\n", pos);
-            if ((host) && (strcasecmp (host, "nickserv") != 0) &&
-                (strcasecmp (host, "chanserv") != 0) &&
-                (strcasecmp (host, "memoserv") != 0))
+            if ((host) && (ascii_strcasecmp (host, "nickserv") != 0) &&
+                (ascii_strcasecmp (host, "chanserv") != 0) &&
+                (ascii_strcasecmp (host, "memoserv") != 0))
             {
                 hotlist_add (HOTLIST_PRIVATE, server->buffer);
                 gui_draw_buffer_status (gui_current_window->buffer, 1);
@@ -1789,7 +1789,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *arguments)
                 while (pos_port[0] == ' ')
                     pos_port++;
                 
-                if (strcasecmp (pos_file, "chat") != 0)
+                if (ascii_strcasecmp (pos_file, "chat") != 0)
                 {
                     irc_display_prefix (server->buffer, PREFIX_ERROR);
                     gui_printf_nolog (server->buffer,

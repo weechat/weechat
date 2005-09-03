@@ -367,7 +367,7 @@ irc_cmd_send_ctcp (t_irc_server *server, char *arguments)
         gui_printf_color (server->buffer, COLOR_WIN_CHAT, ": ");
         gui_printf_color (server->buffer, COLOR_WIN_CHAT_CHANNEL, "%s", pos_type);
         
-        if ((strcasecmp (pos_type, "ping") == 0) && (!pos_args))
+        if ((ascii_strcasecmp (pos_type, "ping") == 0) && (!pos_args))
         {
             gettimeofday (&tv, &tz);
             server_sendf (server, "PRIVMSG %s :\01PING %d %d\01\r\n",
@@ -451,7 +451,7 @@ irc_cmd_send_dcc (t_irc_server *server, char *arguments)
         
         dcc_send_request (server, DCC_CHAT_SEND, pos_nick, NULL);
     }
-    else if (strcasecmp (arguments, "close") == 0)
+    else if (ascii_strcasecmp (arguments, "close") == 0)
     {
         if (BUFFER_IS_PRIVATE(gui_current_window->buffer) &&
             CHANNEL(gui_current_window->buffer)->dcc_chat)

@@ -74,7 +74,7 @@ wee_ruby_register (VALUE class, VALUE name, VALUE version, VALUE shutdown_func, 
     for (ptr_ruby_script = ruby_scripts; ptr_ruby_script;
          ptr_ruby_script = ptr_ruby_script->next_script)
     {
-        if (strcasecmp (ptr_ruby_script->name, c_name) == 0)
+        if (ascii_strcasecmp (ptr_ruby_script->name, c_name) == 0)
         {
             ruby_script_found = ptr_ruby_script;
             break;
@@ -357,7 +357,7 @@ wee_ruby_get_info (VALUE class, VALUE arg, VALUE server_name)
     {
         for (ptr_server = irc_servers; ptr_server; ptr_server = ptr_server->next_server)
         {
-            if (strcasecmp (ptr_server->name, c_server_name) == 0)
+            if (ascii_strcasecmp (ptr_server->name, c_server_name) == 0)
                 break;
         }
         if (!ptr_server)
@@ -372,34 +372,34 @@ wee_ruby_get_info (VALUE class, VALUE arg, VALUE server_name)
     
     if (ptr_server && c_arg)
     {
-        if ( (strcasecmp (c_arg, "0") == 0) || (strcasecmp (c_arg, "version") == 0) )
+        if ( (ascii_strcasecmp (c_arg, "0") == 0) || (ascii_strcasecmp (c_arg, "version") == 0) )
         {
             info = PACKAGE_STRING;
         }
-        else if ( (strcasecmp (c_arg, "1") == 0) || (strcasecmp (c_arg, "nick") == 0) )
+        else if ( (ascii_strcasecmp (c_arg, "1") == 0) || (ascii_strcasecmp (c_arg, "nick") == 0) )
         {
             if (ptr_server->nick)
                 info = ptr_server->nick;
         }
-        else if ( (strcasecmp (c_arg, "2") == 0) || (strcasecmp (c_arg, "channel") == 0) )
+        else if ( (ascii_strcasecmp (c_arg, "2") == 0) || (ascii_strcasecmp (c_arg, "channel") == 0) )
         {
             if (BUFFER_IS_CHANNEL (gui_current_window->buffer))
                 info = CHANNEL (gui_current_window->buffer)->name;
         }
-        else if ( (strcasecmp (c_arg, "3") == 0) || (strcasecmp (c_arg, "server") == 0) )
+        else if ( (ascii_strcasecmp (c_arg, "3") == 0) || (ascii_strcasecmp (c_arg, "server") == 0) )
         {
             if (ptr_server->name)
                 info = ptr_server->name;
         }
-        else if ( (strcasecmp (c_arg, "4") == 0) || (strcasecmp (c_arg, "weechatdir") == 0) )
+        else if ( (ascii_strcasecmp (c_arg, "4") == 0) || (ascii_strcasecmp (c_arg, "weechatdir") == 0) )
         {
             info = weechat_home;
         }
-        else if ( (strcasecmp (c_arg, "5") == 0) || (strcasecmp (c_arg, "away") == 0) )
+        else if ( (ascii_strcasecmp (c_arg, "5") == 0) || (ascii_strcasecmp (c_arg, "away") == 0) )
         {	 
             return INT2FIX (SERVER(gui_current_window->buffer)->is_away);
         }
-	else if ( (strcasecmp (c_arg, "100") == 0) || (strcasecmp (c_arg, "dccs") == 0) )
+	else if ( (ascii_strcasecmp (c_arg, "100") == 0) || (ascii_strcasecmp (c_arg, "dccs") == 0) )
         {
             /* TODO: build dcc list */
 	}

@@ -84,6 +84,78 @@ gnutls_certificate_credentials gnutls_xcred;   /* gnutls client credentials */
 
 
 /*
+ * ascii_strcasecmp: locale and case independent string comparison
+ */
+
+int
+ascii_strcasecmp (char *string1, char *string2)
+{
+    int c1, c2;
+    
+    if (!string1 || !string2)
+        return (string1) ? 1 : ((string2) ? -1 : 0);
+    
+    while (string1[0] && string2[0])
+    {
+        c1 = (int)((unsigned char) string1[0]);
+        c2 = (int)((unsigned char) string2[0]);
+        
+        if ((c1 >= 'A') && (c1 <= 'Z'))
+            c1 += ('a' - 'A');
+        
+        if ((c2 >= 'A') && (c2 <= 'Z'))
+            c2 += ('a' - 'A');
+        
+        if ((c1 - c2) != 0)
+            return c1 - c2;
+        
+        string1++;
+        string2++;
+    }
+    
+    return (string1[0]) ? 1 : ((string2[0]) ? -1 : 0);
+}
+
+/*
+ * ascii_strncasecmp: locale and case independent string comparison
+ *                    with max length
+ */
+
+int
+ascii_strncasecmp (char *string1, char *string2, int max)
+{
+    int c1, c2, count;
+    
+    if (!string1 || !string2)
+        return (string1) ? 1 : ((string2) ? -1 : 0);
+    
+    count = 0;
+    while ((count < max) && string1[0] && string2[0])
+    {
+        c1 = (int)((unsigned char) string1[0]);
+        c2 = (int)((unsigned char) string2[0]);
+        
+        if ((c1 >= 'A') && (c1 <= 'Z'))
+            c1 += ('a' - 'A');
+        
+        if ((c2 >= 'A') && (c2 <= 'Z'))
+            c2 += ('a' - 'A');
+        
+        if ((c1 - c2) != 0)
+            return c1 - c2;
+        
+        string1++;
+        string2++;
+        count++;
+    }
+    
+    if (count >= max)
+        return 0;
+    else
+        return (string1[0]) ? 1 : ((string2[0]) ? -1 : 0);
+}
+
+/*
  * wee_log_printf: displays a message in WeeChat log (~/.weechat/weechat.log)
  */
 
@@ -131,7 +203,7 @@ weechat_convert_encoding (char *from_code, char *to_code, char *string)
     size_t inbytesleft, outbytesleft;
     
     if (from_code && from_code[0] && to_code && to_code[0]
-        && (strcasecmp(from_code, to_code) != 0))
+        && (ascii_strcasecmp(from_code, to_code) != 0))
     {
         cd = iconv_open (to_code, from_code);
         if (cd == (iconv_t)(-1))
@@ -418,7 +490,7 @@ wee_parse_args (int argc, char *argv[])
             wee_display_commands (1, 0);
             wee_shutdown (EXIT_SUCCESS, 0);
         }
-        else if ((strncasecmp (argv[i], "irc", 3) == 0))
+        else if ((ascii_strncasecmp (argv[i], "irc", 3) == 0))
         {
             if (server_init_with_url (argv[i], &server_tmp) < 0)
             {

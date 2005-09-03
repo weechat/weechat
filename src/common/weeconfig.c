@@ -775,7 +775,7 @@ get_pos_array_values (char **array, char *string)
     i = 0;
     while (array[i])
     {
-        if (strcasecmp (array[i], string) == 0)
+        if (ascii_strcasecmp (array[i], string) == 0)
             return i;
         i++;
     }
@@ -926,9 +926,9 @@ config_option_set_value (t_config_option *option, char *value)
     switch (option->option_type)
     {
         case OPTION_TYPE_BOOLEAN:
-            if (strcasecmp (value, "on") == 0)
+            if (ascii_strcasecmp (value, "on") == 0)
                 *(option->ptr_int) = BOOL_TRUE;
-            else if (strcasecmp (value, "off") == 0)
+            else if (ascii_strcasecmp (value, "off") == 0)
                 *(option->ptr_int) = BOOL_FALSE;
             else
                 return -1;
@@ -965,43 +965,43 @@ config_option_set_value (t_config_option *option, char *value)
 void *
 config_get_server_option_ptr (t_irc_server *server, char *option_name)
 {
-    if (strcasecmp (option_name, "server_name") == 0)
+    if (ascii_strcasecmp (option_name, "server_name") == 0)
         return (void *)(&server->name);
-    if (strcasecmp (option_name, "server_autoconnect") == 0)
+    if (ascii_strcasecmp (option_name, "server_autoconnect") == 0)
         return (void *)(&server->autoconnect);
-    if (strcasecmp (option_name, "server_autoreconnect") == 0)
+    if (ascii_strcasecmp (option_name, "server_autoreconnect") == 0)
         return (void *)(&server->autoreconnect);
-    if (strcasecmp (option_name, "server_autoreconnect_delay") == 0)
+    if (ascii_strcasecmp (option_name, "server_autoreconnect_delay") == 0)
         return (void *)(&server->autoreconnect_delay);
-    if (strcasecmp (option_name, "server_address") == 0)
+    if (ascii_strcasecmp (option_name, "server_address") == 0)
         return (void *)(&server->address);
-    if (strcasecmp (option_name, "server_port") == 0)
+    if (ascii_strcasecmp (option_name, "server_port") == 0)
         return (void *)(&server->port);
-    if (strcasecmp (option_name, "server_ipv6") == 0)
+    if (ascii_strcasecmp (option_name, "server_ipv6") == 0)
         return (void *)(&server->ipv6);
-    if (strcasecmp (option_name, "server_ssl") == 0)
+    if (ascii_strcasecmp (option_name, "server_ssl") == 0)
         return (void *)(&server->ssl);
-    if (strcasecmp (option_name, "server_password") == 0)
+    if (ascii_strcasecmp (option_name, "server_password") == 0)
         return (void *)(&server->password);
-    if (strcasecmp (option_name, "server_nick1") == 0)
+    if (ascii_strcasecmp (option_name, "server_nick1") == 0)
         return (void *)(&server->nick1);
-    if (strcasecmp (option_name, "server_nick2") == 0)
+    if (ascii_strcasecmp (option_name, "server_nick2") == 0)
         return (void *)(&server->nick2);
-    if (strcasecmp (option_name, "server_nick3") == 0)
+    if (ascii_strcasecmp (option_name, "server_nick3") == 0)
         return (void *)(&server->nick3);
-    if (strcasecmp (option_name, "server_username") == 0)
+    if (ascii_strcasecmp (option_name, "server_username") == 0)
         return (void *)(&server->username);
-    if (strcasecmp (option_name, "server_realname") == 0)
+    if (ascii_strcasecmp (option_name, "server_realname") == 0)
         return (void *)(&server->realname);
-    if (strcasecmp (option_name, "server_command") == 0)
+    if (ascii_strcasecmp (option_name, "server_command") == 0)
         return (void *)(&server->command);
-    if (strcasecmp (option_name, "server_command_delay") == 0)
+    if (ascii_strcasecmp (option_name, "server_command_delay") == 0)
         return (void *)(&server->command_delay);
-    if (strcasecmp (option_name, "server_autojoin") == 0)
+    if (ascii_strcasecmp (option_name, "server_autojoin") == 0)
         return (void *)(&server->autojoin);
-    if (strcasecmp (option_name, "server_autorejoin") == 0)
+    if (ascii_strcasecmp (option_name, "server_autorejoin") == 0)
         return (void *)(&server->autorejoin);
-    if (strcasecmp (option_name, "server_notify_levels") == 0)
+    if (ascii_strcasecmp (option_name, "server_notify_levels") == 0)
         return (void *)(&server->notify_levels);
     /* option not found */
     return NULL;
@@ -1031,7 +1031,7 @@ config_set_server_value (t_irc_server *server, char *option_name,
     for (i = 0; weechat_options[CONFIG_SECTION_SERVER][i].option_name; i++)
     {
         /* if option found, return pointer */
-        if (strcasecmp (weechat_options[CONFIG_SECTION_SERVER][i].option_name, option_name) == 0)
+        if (ascii_strcasecmp (weechat_options[CONFIG_SECTION_SERVER][i].option_name, option_name) == 0)
         {
             ptr_option = &weechat_options[CONFIG_SECTION_SERVER][i];
             break;
@@ -1043,9 +1043,9 @@ config_set_server_value (t_irc_server *server, char *option_name,
     switch (ptr_option->option_type)
     {
         case OPTION_TYPE_BOOLEAN:
-            if (strcasecmp (value, "on") == 0)
+            if (ascii_strcasecmp (value, "on") == 0)
                 *((int *)(ptr_data)) = BOOL_TRUE;
-            else if (strcasecmp (value, "off") == 0)
+            else if (ascii_strcasecmp (value, "off") == 0)
                 *((int *)(ptr_data)) = BOOL_FALSE;
             else
                 return -2;
@@ -1095,7 +1095,7 @@ config_option_search (char *option_name)
             for (j = 0; weechat_options[i][j].option_name; j++)
             {
                 /* if option found, return pointer */
-                if (strcasecmp (weechat_options[i][j].option_name, option_name) == 0)
+                if (ascii_strcasecmp (weechat_options[i][j].option_name, option_name) == 0)
                     return &weechat_options[i][j];
             }
         }

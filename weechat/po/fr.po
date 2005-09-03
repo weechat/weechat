@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.1.5-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2005-08-21 14:31+0200\n"
-"PO-Revision-Date: 2005-08-21 14:31+0200\n"
+"PO-Revision-Date: 2005-09-03 13:24+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2673,7 +2673,7 @@ msgstr "%s l'alias ou la commande \"%s\" existe déjà !\n"
 #: src/common/command.c:282
 #, c-format
 msgid "%s alias cannot run another alias!\n"
-msgstr "%s l'alias ne peux pas lancer un autre alias !\n"
+msgstr "%s l'alias ne peut pas lancer un autre alias !\n"
 
 #: src/common/command.c:289
 #, c-format

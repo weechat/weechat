@@ -157,17 +157,17 @@ gui_key_get_internal_code (char *key)
         result[0] = '\0';
         while (key[0])
         {
-            if (strncasecmp (key, "meta2-", 6) == 0)
+            if (ascii_strncasecmp (key, "meta2-", 6) == 0)
             {
                 strcat (result, "^[[");
                 key += 6;
             }
-            if (strncasecmp (key, "meta-", 5) == 0)
+            if (ascii_strncasecmp (key, "meta-", 5) == 0)
             {
                 strcat (result, "^[");
                 key += 5;
             }
-            else if (strncasecmp (key, "ctrl-", 5) == 0)
+            else if (ascii_strncasecmp (key, "ctrl-", 5) == 0)
             {
                 strcat (result, "^");
                 key += 5;
@@ -200,12 +200,12 @@ gui_key_get_expanded_name (char *key)
         result[0] = '\0';
         while (key[0])
         {
-            if (strncasecmp (key, "^[[", 3) == 0)
+            if (ascii_strncasecmp (key, "^[[", 3) == 0)
             {
                 strcat (result, "meta2-");
                 key += 3;
             }
-            if (strncasecmp (key, "^[", 2) == 0)
+            if (ascii_strncasecmp (key, "^[", 2) == 0)
             {
                 strcat (result, "meta-");
                 key += 2;
@@ -239,7 +239,7 @@ gui_key_find_pos (t_gui_key *key)
     
     for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
     {
-        if (strcasecmp (key->key, ptr_key->key) < 0)
+        if (ascii_strcasecmp (key->key, ptr_key->key) < 0)
             return ptr_key;
     }
     return NULL;
@@ -324,7 +324,7 @@ gui_key_search (char *key)
 
     for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
     {
-        if (strcasecmp (ptr_key->key, key) == 0)
+        if (ascii_strcasecmp (ptr_key->key, key) == 0)
             return ptr_key;
     }
     
@@ -381,7 +381,7 @@ gui_key_function_search_by_name (char *name)
     i = 0;
     while (gui_key_functions[i].function_name)
     {
-        if (strcasecmp (gui_key_functions[i].function_name, name) == 0)
+        if (ascii_strcasecmp (gui_key_functions[i].function_name, name) == 0)
             return gui_key_functions[i].function;
         i++;
     }
@@ -504,7 +504,7 @@ gui_key_pressed (char *key_str)
     ptr_key = gui_key_search_part (gui_key_buffer);
     if (ptr_key)
     {
-        if (strcasecmp (ptr_key->key, gui_key_buffer) == 0)
+        if (ascii_strcasecmp (ptr_key->key, gui_key_buffer) == 0)
         {
             /* exact combo found => execute function or command */
             gui_key_buffer[0] = '\0';

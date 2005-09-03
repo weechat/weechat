@@ -42,7 +42,7 @@ weelist_search (t_weelist *weelist, char *data)
     
     for (ptr_weelist = weelist; ptr_weelist; ptr_weelist = ptr_weelist->next_weelist)
     {
-        if (strcasecmp (data, ptr_weelist->data) == 0)
+        if (ascii_strcasecmp (data, ptr_weelist->data) == 0)
             return ptr_weelist;
     }
     /* word not found in list */
@@ -60,7 +60,7 @@ weelist_find_pos (t_weelist *weelist, char *data)
     
     for (ptr_weelist = weelist; ptr_weelist; ptr_weelist = ptr_weelist->next_weelist)
     {
-        if (strcasecmp (data, ptr_weelist->data) < 0)
+        if (ascii_strcasecmp (data, ptr_weelist->data) < 0)
             return ptr_weelist;
     }
     /* position not found, best position is at the end */

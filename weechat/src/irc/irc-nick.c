@@ -33,7 +33,7 @@
 
 
 /*
- * nick_find_color: find a color for a nick (less used will be better!)
+ * nick_find_color: find a color for a nick (according to nick letters)
  */
 
 int
@@ -87,12 +87,11 @@ nick_compare (t_irc_nick *nick1, t_irc_nick *nick2)
     score1 = nick_score_for_sort (nick1);
     score2 = nick_score_for_sort (nick2);
     
-    comp = strcasecmp(nick1->nick, nick2->nick);
+    comp = ascii_strcasecmp (nick1->nick, nick2->nick);
     if (comp > 0)
         score1++;
-    else
-        if (comp < 0)
-            score2++;
+    if (comp < 0)
+        score2++;
     
     /* nick1 > nick2 */
     if (score1 > score2)
@@ -202,7 +201,7 @@ nick_new (t_irc_channel *channel, char *nick_name,
     new_nick->is_halfop = is_halfop;
     new_nick->has_voice = has_voice;
     new_nick->is_away = 0;
-    if (strcasecmp (new_nick->nick, SERVER(channel->buffer)->nick) == 0)
+    if (ascii_strcasecmp (new_nick->nick, SERVER(channel->buffer)->nick) == 0)
         new_nick->color = COLOR_WIN_NICK_SELF;
     else
         new_nick->color = nick_find_color (new_nick);
@@ -319,7 +318,7 @@ nick_search (t_irc_channel *channel, char *nickname)
     for (ptr_nick = channel->nicks; ptr_nick;
          ptr_nick = ptr_nick->next_nick)
     {
-        if (strcasecmp (ptr_nick->nick, nickname) == 0)
+        if (ascii_strcasecmp (ptr_nick->nick, nickname) == 0)
             return ptr_nick;
     }
     return NULL;

@@ -89,7 +89,7 @@ gui_assign_color (int *color, char *color_name)
     i = 0;
     while (gui_colors[i].name)
     {
-        if (strcasecmp (gui_colors[i].name, color_name) == 0)
+        if (ascii_strcasecmp (gui_colors[i].name, color_name) == 0)
         {
             *color = gui_colors[i].color;
             return 1;
@@ -114,7 +114,7 @@ gui_get_color_by_name (char *color_name)
     i = 0;
     while (gui_colors[i].name)
     {
-        if (strcasecmp (gui_colors[i].name, color_name) == 0)
+        if (ascii_strcasecmp (gui_colors[i].name, color_name) == 0)
             return gui_colors[i].color;
         i++;
     }

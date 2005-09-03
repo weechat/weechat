@@ -181,7 +181,7 @@ plugin_handler_search (t_plugin_handler *plugin_handlers, char *name)
          ptr_plugin_handler = ptr_plugin_handler->next_handler)
     {
         /* handler found */
-        if (strcasecmp (ptr_plugin_handler->name, name) == 0)
+        if (ascii_strcasecmp (ptr_plugin_handler->name, name) == 0)
             return ptr_plugin_handler;
     }
     /* handler not found */
@@ -309,7 +309,7 @@ plugin_event_msg (char *irc_command, char *server, char *arguments)
     for (ptr_plugin_handler = plugin_msg_handlers; ptr_plugin_handler;
          ptr_plugin_handler = ptr_plugin_handler->next_handler)
     {
-        if (strcasecmp (ptr_plugin_handler->name, irc_command) == 0)
+        if (ascii_strcasecmp (ptr_plugin_handler->name, irc_command) == 0)
         {
 #ifdef PLUGIN_PERL
             if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PERL)
@@ -367,7 +367,7 @@ plugin_exec_command (char *user_command, char *server, char *arguments)
     for (ptr_plugin_handler = plugin_cmd_handlers; ptr_plugin_handler;
          ptr_plugin_handler = ptr_plugin_handler->next_handler)
     {
-        if (strcasecmp (ptr_plugin_handler->name, user_command) == 0)
+        if (ascii_strcasecmp (ptr_plugin_handler->name, user_command) == 0)
         {
 #ifdef PLUGIN_PERL
             if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PERL)

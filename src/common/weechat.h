@@ -118,6 +118,8 @@ extern char *local_charset;
 extern gnutls_certificate_credentials gnutls_xcred;
 #endif
 
+extern int ascii_strcasecmp (char *, char *);
+extern int ascii_strncasecmp (char *, char *, int);
 extern void wee_log_printf (char *, ...);
 extern void wee_dump (int);
 extern char *weechat_convert_encoding (char *, char *, char *);

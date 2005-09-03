@@ -66,7 +66,7 @@ wee_python_register (PyObject *self, PyObject *args)
     for (ptr_python_script = python_scripts; ptr_python_script;
          ptr_python_script = ptr_python_script->next_script)
     {
-        if (strcasecmp (ptr_python_script->name, name) == 0)
+        if (ascii_strcasecmp (ptr_python_script->name, name) == 0)
         {
             python_script_found = ptr_python_script;
             break;
@@ -321,7 +321,7 @@ wee_python_get_info (PyObject *self, PyObject *args)
     {
         for (ptr_server = irc_servers; ptr_server; ptr_server = ptr_server->next_server)
         {
-            if (strcasecmp (ptr_server->name, server) == 0)
+            if (ascii_strcasecmp (ptr_server->name, server) == 0)
                 break;
         }
         if (!ptr_server)
@@ -336,34 +336,34 @@ wee_python_get_info (PyObject *self, PyObject *args)
     
     if (ptr_server && arg)
     {
-        if ( (strcasecmp (arg, "0") == 0) || (strcasecmp (arg, "version") == 0) )
+        if ( (ascii_strcasecmp (arg, "0") == 0) || (ascii_strcasecmp (arg, "version") == 0) )
         {
             info = PACKAGE_STRING;
         }
-        else if ( (strcasecmp (arg, "1") == 0) || (strcasecmp (arg, "nick") == 0) )
+        else if ( (ascii_strcasecmp (arg, "1") == 0) || (ascii_strcasecmp (arg, "nick") == 0) )
         {
             if (ptr_server->nick)
                 info = ptr_server->nick;
         }
-        else if ( (strcasecmp (arg, "2") == 0) || (strcasecmp (arg, "channel") == 0) )
+        else if ( (ascii_strcasecmp (arg, "2") == 0) || (ascii_strcasecmp (arg, "channel") == 0) )
         {
             if (BUFFER_IS_CHANNEL (gui_current_window->buffer))
                 info = CHANNEL (gui_current_window->buffer)->name;
         }
-        else if ( (strcasecmp (arg, "3") == 0) || (strcasecmp (arg, "server") == 0) )
+        else if ( (ascii_strcasecmp (arg, "3") == 0) || (ascii_strcasecmp (arg, "server") == 0) )
         {
             if (ptr_server->name)
                 info = ptr_server->name;
         }
-        else if ( (strcasecmp (arg, "4") == 0) || (strcasecmp (arg, "weechatdir") == 0) )
+        else if ( (ascii_strcasecmp (arg, "4") == 0) || (ascii_strcasecmp (arg, "weechatdir") == 0) )
         {
             info = weechat_home;
         }
-        else if ( (strcasecmp (arg, "5") == 0) || (strcasecmp (arg, "away") == 0) )
+        else if ( (ascii_strcasecmp (arg, "5") == 0) || (ascii_strcasecmp (arg, "away") == 0) )
         {	 
             return Py_BuildValue ("i", SERVER(gui_current_window->buffer)->is_away);
         }
-	else if ( (strcasecmp (arg, "100") == 0) || (strcasecmp (arg, "dccs") == 0) )
+	else if ( (ascii_strcasecmp (arg, "100") == 0) || (ascii_strcasecmp (arg, "dccs") == 0) )
         {
 	  t_irc_dcc *p = dcc_list;
 	  int nbdccs = 0;

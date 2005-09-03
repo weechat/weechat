@@ -73,7 +73,7 @@ static XS (XS_IRC_register)
     for (ptr_perl_script = perl_scripts; ptr_perl_script;
          ptr_perl_script = ptr_perl_script->next_script)
     {
-        if (strcasecmp (ptr_perl_script->name, name) == 0)
+        if (ascii_strcasecmp (ptr_perl_script->name, name) == 0)
         {
             perl_script_found = ptr_perl_script;
             break;
@@ -182,12 +182,12 @@ static XS (XS_IRC_print_with_channel)
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        if (!server || (strcasecmp (ptr_server->name, server)) == 0)
+        if (!server || (ascii_strcasecmp (ptr_server->name, server)) == 0)
         {
             for (ptr_channel = ptr_server->channels; ptr_channel;
                  ptr_channel = ptr_channel->next_channel)
             {
-                if (strcasecmp (ptr_channel->name, channel) == 0)
+                if (ascii_strcasecmp (ptr_channel->name, channel) == 0)
                 {
                     ptr_buffer = ptr_channel->buffer;
                     break;
@@ -260,7 +260,7 @@ static XS (XS_IRC_command)
         command = SvPV (ST (1), integer);
         for (ptr_server = irc_servers; ptr_server; ptr_server = ptr_server->next_server)
         {
-            if (strcasecmp (ptr_server->name, server) == 0)
+            if (ascii_strcasecmp (ptr_server->name, server) == 0)
                 break;
         }
         if (!ptr_server)
@@ -383,30 +383,30 @@ static XS (XS_IRC_get_info)
     
     if (arg)
     {
-        if ( (strcasecmp (arg, "0") == 0) || (strcasecmp (arg, "version") == 0) )
+        if ( (ascii_strcasecmp (arg, "0") == 0) || (ascii_strcasecmp (arg, "version") == 0) )
         {
             info = PACKAGE_STRING;
         }
-        else if ( ptr_server && ( (strcasecmp (arg, "1") == 0) || (strcasecmp (arg, "nick") == 0) ) )
+        else if ( ptr_server && ( (ascii_strcasecmp (arg, "1") == 0) || (ascii_strcasecmp (arg, "nick") == 0) ) )
         {
             if (ptr_server->nick)
                 info = ptr_server->nick;
         }
-        else if ( (strcasecmp (arg, "2") == 0) || (strcasecmp (arg, "channel") == 0) )
+        else if ( (ascii_strcasecmp (arg, "2") == 0) || (ascii_strcasecmp (arg, "channel") == 0) )
         {
             if (BUFFER_IS_CHANNEL (gui_current_window->buffer))
                 info = CHANNEL (gui_current_window->buffer)->name;
         }
-        else if ( ptr_server && ( (strcasecmp (arg, "3") == 0) || (strcasecmp (arg, "server") == 0) ) )
+        else if ( ptr_server && ( (ascii_strcasecmp (arg, "3") == 0) || (ascii_strcasecmp (arg, "server") == 0) ) )
         {
             if (ptr_server->name)
                 info = ptr_server->name;
         }
-        else if ( (strcasecmp (arg, "4") == 0) || (strcasecmp (arg, "weechatdir") == 0) )
+        else if ( (ascii_strcasecmp (arg, "4") == 0) || (ascii_strcasecmp (arg, "weechatdir") == 0) )
         {
             info = weechat_home;
         }
-        else if ( ptr_server && ( (strcasecmp (arg, "5") == 0) || (strcasecmp (arg, "away") == 0) ) )
+        else if ( ptr_server && ( (ascii_strcasecmp (arg, "5") == 0) || (ascii_strcasecmp (arg, "away") == 0) ) )
         {
             XST_mIV (0, SERVER(gui_current_window->buffer)->is_away);
             XSRETURN (1);
@@ -448,7 +448,7 @@ static XS (XS_weechat_register)
     for (ptr_perl_script = perl_scripts; ptr_perl_script;
          ptr_perl_script = ptr_perl_script->next_script)
     {
-        if (strcasecmp (ptr_perl_script->name, name) == 0)
+        if (ascii_strcasecmp (ptr_perl_script->name, name) == 0)
         {
             perl_script_found = ptr_perl_script;
             break;
@@ -731,36 +731,36 @@ static XS (XS_weechat_get_info)
     arg = SvPV (ST (0), integer);
     if (arg)
     {
-        if ( (strcasecmp (arg, "0") == 0) || (strcasecmp (arg, "version") == 0) )
+        if ( (ascii_strcasecmp (arg, "0") == 0) || (ascii_strcasecmp (arg, "version") == 0) )
         {
             info = PACKAGE_STRING;
         }
-        else if ( ptr_server && ( (strcasecmp (arg, "1") == 0) || (strcasecmp (arg, "nick") == 0) ) )
+        else if ( ptr_server && ( (ascii_strcasecmp (arg, "1") == 0) || (ascii_strcasecmp (arg, "nick") == 0) ) )
         {
             if (ptr_server->nick)
                 info = ptr_server->nick;
         }
-        else if ( (strcasecmp (arg, "2") == 0) || (strcasecmp (arg, "channel") == 0) )
+        else if ( (ascii_strcasecmp (arg, "2") == 0) || (ascii_strcasecmp (arg, "channel") == 0) )
         {
             if (BUFFER_IS_CHANNEL (gui_current_window->buffer))
                 info = CHANNEL (gui_current_window->buffer)->name;
         }
-        else if ( ptr_server && ( (strcasecmp (arg, "3") == 0) || (strcasecmp (arg, "server") == 0) ) )
+        else if ( ptr_server && ( (ascii_strcasecmp (arg, "3") == 0) || (ascii_strcasecmp (arg, "server") == 0) ) )
         {
             if (ptr_server->name)
                 info = ptr_server->name;
         }
-        else if ( (strcasecmp (arg, "4") == 0) || (strcasecmp (arg, "weechatdir") == 0) )
+        else if ( (ascii_strcasecmp (arg, "4") == 0) || (ascii_strcasecmp (arg, "weechatdir") == 0) )
         {
             info = weechat_home;
         }
-        else if ( ptr_server && ( (strcasecmp (arg, "5") == 0) || (strcasecmp (arg, "away") == 0) ) )
+        else if ( ptr_server && ( (ascii_strcasecmp (arg, "5") == 0) || (ascii_strcasecmp (arg, "away") == 0) ) )
         {
             XST_mIV (0, SERVER(gui_current_window->buffer)->is_away);
             XSRETURN (1);
             return;
         }
-        else if ( (strcasecmp (arg, "100") == 0) || (strcasecmp (arg, "dccs") == 0) )
+        else if ( (ascii_strcasecmp (arg, "100") == 0) || (ascii_strcasecmp (arg, "dccs") == 0) )
         {
             int nItems = 0;
             t_irc_dcc *p = dcc_list;

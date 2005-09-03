@@ -191,7 +191,7 @@ alias_search (char *alias_name)
     
     for (ptr_alias = weechat_alias; ptr_alias; ptr_alias = ptr_alias->next_alias)
     {
-        if (strcasecmp (alias_name, ptr_alias->alias_name) == 0)
+        if (ascii_strcasecmp (alias_name, ptr_alias->alias_name) == 0)
             return ptr_alias;
     }
     return NULL;
@@ -208,7 +208,7 @@ alias_find_pos (char *alias_name)
     
     for (ptr_alias = weechat_alias; ptr_alias; ptr_alias = ptr_alias->next_alias)
     {
-        if (strcasecmp (alias_name, ptr_alias->alias_name) < 0)
+        if (ascii_strcasecmp (alias_name, ptr_alias->alias_name) < 0)
             return ptr_alias;
     }
     return NULL;
@@ -484,7 +484,7 @@ exec_weechat_command (t_irc_server *server, char *string)
         
         for (i = 0; weechat_commands[i].command_name; i++)
         {
-            if (strcasecmp (weechat_commands[i].command_name, command + 1) == 0)
+            if (ascii_strcasecmp (weechat_commands[i].command_name, command + 1) == 0)
             {
                 if ((argc < weechat_commands[i].min_arg)
                     || (argc > weechat_commands[i].max_arg))
@@ -544,7 +544,7 @@ exec_weechat_command (t_irc_server *server, char *string)
         }
         for (i = 0; irc_commands[i].command_name; i++)
         {
-            if ((strcasecmp (irc_commands[i].command_name, command + 1) == 0) &&
+            if ((ascii_strcasecmp (irc_commands[i].command_name, command + 1) == 0) &&
                 ((irc_commands[i].cmd_function_args) ||
                 (irc_commands[i].cmd_function_1arg)))
             {
@@ -615,7 +615,7 @@ exec_weechat_command (t_irc_server *server, char *string)
         for (ptr_alias = weechat_alias; ptr_alias;
              ptr_alias = ptr_alias->next_alias)
         {
-            if (strcasecmp (ptr_alias->alias_name, command + 1) == 0)
+            if (ascii_strcasecmp (ptr_alias->alias_name, command + 1) == 0)
             {
                 if (ptr_args)
                 {
@@ -890,7 +890,7 @@ weechat_cmd_buffer (int argc, char **argv)
     char *error;
     int target_buffer;
     
-    if ((argc == 0) || ((argc == 1) && (strcasecmp (argv[0], "list") == 0)))
+    if ((argc == 0) || ((argc == 1) && (ascii_strcasecmp (argv[0], "list") == 0)))
     {
         /* list opened buffers */
         
@@ -908,7 +908,7 @@ weechat_cmd_buffer (int argc, char **argv)
     }
     else
     {
-        if (strcasecmp (argv[0], "move") == 0)
+        if (ascii_strcasecmp (argv[0], "move") == 0)
         {
             /* move buffer to another number in the list */
             
@@ -943,7 +943,7 @@ weechat_cmd_buffer (int argc, char **argv)
                 return -1;
             }
         }
-        else if (strcasecmp (argv[0], "close") == 0)
+        else if (ascii_strcasecmp (argv[0], "close") == 0)
         {
             /* close buffer (server or channel/private) */
             
@@ -995,7 +995,7 @@ weechat_cmd_buffer (int argc, char **argv)
             }
             gui_draw_buffer_status (gui_current_window->buffer, 1);
         }
-        else if (strcasecmp (argv[0], "notify") == 0)
+        else if (ascii_strcasecmp (argv[0], "notify") == 0)
         {
             /* set notify level for buffer */
             
@@ -1114,7 +1114,7 @@ weechat_cmd_clear (int argc, char **argv)
 {
     if (argc == 1)
     {
-        if (strcasecmp (argv[0], "-all") == 0)
+        if (ascii_strcasecmp (argv[0], "-all") == 0)
             gui_buffer_clear_all ();
         else
         {
@@ -1198,7 +1198,7 @@ weechat_cmd_debug (int argc, char **argv)
         return -1;
     }
     
-    if (strcasecmp (argv[0], "dump") == 0)
+    if (ascii_strcasecmp (argv[0], "dump") == 0)
     {
         wee_dump (0);
     }
@@ -1294,7 +1294,7 @@ weechat_cmd_help (int argc, char **argv)
     {
         for (i = 0; weechat_commands[i].command_name; i++)
         {
-            if (strcasecmp (weechat_commands[i].command_name, argv[0]) == 0)
+            if (ascii_strcasecmp (weechat_commands[i].command_name, argv[0]) == 0)
             {
                 gui_printf (NULL, "\n");
                 gui_printf (NULL, "[w]");
@@ -1319,7 +1319,7 @@ weechat_cmd_help (int argc, char **argv)
         }
         for (i = 0; irc_commands[i].command_name; i++)
         {
-            if ((strcasecmp (irc_commands[i].command_name, argv[0]) == 0)
+            if ((ascii_strcasecmp (irc_commands[i].command_name, argv[0]) == 0)
                 && (irc_commands[i].cmd_function_args || irc_commands[i].cmd_function_1arg))
             {
                 gui_printf (NULL, "\n");
@@ -1402,7 +1402,7 @@ weechat_cmd_key (char *arguments)
             weechat_cmd_key_display (ptr_key, 0);
         }
     }
-    else if (strncasecmp (arguments, "unbind ", 7) == 0)
+    else if (ascii_strncasecmp (arguments, "unbind ", 7) == 0)
     {
         arguments += 7;
         while (arguments[0] == ' ')
@@ -1418,7 +1418,7 @@ weechat_cmd_key (char *arguments)
             return -1;
         }
     }
-    else if (strcasecmp (arguments, "functions") == 0)
+    else if (ascii_strcasecmp (arguments, "functions") == 0)
     {
         gui_printf (NULL, "\n");
         gui_printf (NULL, _("Internal key functions:\n"));
@@ -1431,12 +1431,12 @@ weechat_cmd_key (char *arguments)
             i++;
         }
     }
-    else if (strncasecmp (arguments, "reset", 5) == 0)
+    else if (ascii_strncasecmp (arguments, "reset", 5) == 0)
     {
         arguments += 5;
         while (arguments[0] == ' ')
             arguments++;
-        if (strcasecmp (arguments, "-yes") == 0)
+        if (ascii_strcasecmp (arguments, "-yes") == 0)
         {
             gui_key_free_all ();
             gui_key_init ();
@@ -1570,18 +1570,18 @@ weechat_cmd_perl (int argc, char **argv)
             
             break;
         case 1:
-            if (strcasecmp (argv[0], "autoload") == 0)
+            if (ascii_strcasecmp (argv[0], "autoload") == 0)
                 plugin_auto_load (PLUGIN_TYPE_PERL, "perl/autoload");
-            else if (strcasecmp (argv[0], "reload") == 0)
+            else if (ascii_strcasecmp (argv[0], "reload") == 0)
             {
                 plugin_unload (PLUGIN_TYPE_PERL, NULL);
                 plugin_auto_load (PLUGIN_TYPE_PERL, "perl/autoload");
             }
-            else if (strcasecmp (argv[0], "unload") == 0)
+            else if (ascii_strcasecmp (argv[0], "unload") == 0)
                 plugin_unload (PLUGIN_TYPE_PERL, NULL);
             break;
         case 2:
-            if (strcasecmp (argv[0], "load") == 0)
+            if (ascii_strcasecmp (argv[0], "load") == 0)
             {
                 /* load Perl script */
                 if (strstr(argv[1], DIR_SEPARATOR))
@@ -1713,18 +1713,18 @@ weechat_cmd_python (int argc, char **argv)
             
             break;
         case 1:
-            if (strcasecmp (argv[0], "autoload") == 0)
+            if (ascii_strcasecmp (argv[0], "autoload") == 0)
                 plugin_auto_load (PLUGIN_TYPE_PYTHON, "python/autoload");
-            else if (strcasecmp (argv[0], "reload") == 0)
+            else if (ascii_strcasecmp (argv[0], "reload") == 0)
             {
                 plugin_unload (PLUGIN_TYPE_PYTHON, NULL);
                 plugin_auto_load (PLUGIN_TYPE_PYTHON, "python/autoload");
             }
-            else if (strcasecmp (argv[0], "unload") == 0)
+            else if (ascii_strcasecmp (argv[0], "unload") == 0)
                 plugin_unload (PLUGIN_TYPE_PYTHON, NULL);
             break;
         case 2:
-            if (strcasecmp (argv[0], "load") == 0)
+            if (ascii_strcasecmp (argv[0], "load") == 0)
             {
                 /* load Python script */
                 if (strstr(argv[1], DIR_SEPARATOR))
@@ -1856,18 +1856,18 @@ weechat_cmd_ruby (int argc, char **argv)
             
             break;
         case 1:
-            if (strcasecmp (argv[0], "autoload") == 0)
+            if (ascii_strcasecmp (argv[0], "autoload") == 0)
                 plugin_auto_load (PLUGIN_TYPE_RUBY, "ruby/autoload");
-            else if (strcasecmp (argv[0], "reload") == 0)
+            else if (ascii_strcasecmp (argv[0], "reload") == 0)
             {
                 plugin_unload (PLUGIN_TYPE_RUBY, NULL);
                 plugin_auto_load (PLUGIN_TYPE_RUBY, "ruby/autoload");
             }
-            else if (strcasecmp (argv[0], "unload") == 0)
+            else if (ascii_strcasecmp (argv[0], "unload") == 0)
                 plugin_unload (PLUGIN_TYPE_RUBY, NULL);
             break;
         case 2:
-            if (strcasecmp (argv[0], "load") == 0)
+            if (ascii_strcasecmp (argv[0], "load") == 0)
             {
                 /* load Ruby script */
                 if (strstr(argv[1], DIR_SEPARATOR))
@@ -1967,7 +1967,7 @@ weechat_cmd_server (int argc, char **argv)
     }
     else
     {
-        if (strcasecmp (argv[0], "del") == 0)
+        if (ascii_strcasecmp (argv[0], "del") == 0)
         {
             if (argc < 2)
             {
@@ -2067,15 +2067,15 @@ weechat_cmd_server (int argc, char **argv)
         {
             if (argv[i][0] == '-')
             {
-                if (strcasecmp (argv[i], "-auto") == 0)
+                if (ascii_strcasecmp (argv[i], "-auto") == 0)
                     server.autoconnect = 1;
-                if (strcasecmp (argv[i], "-noauto") == 0)
+                if (ascii_strcasecmp (argv[i], "-noauto") == 0)
                     server.autoconnect = 0;
-                if (strcasecmp (argv[i], "-ipv6") == 0)
+                if (ascii_strcasecmp (argv[i], "-ipv6") == 0)
                     server.ipv6 = 1;
-                if (strcasecmp (argv[i], "-ssl") == 0)
+                if (ascii_strcasecmp (argv[i], "-ssl") == 0)
                     server.ssl = 1;
-                if (strcasecmp (argv[i], "-pwd") == 0)
+                if (ascii_strcasecmp (argv[i], "-pwd") == 0)
                 {
                     if (i == (argc - 1))
                     {
@@ -2088,7 +2088,7 @@ weechat_cmd_server (int argc, char **argv)
                     }
                     server.password = strdup (argv[++i]);
                 }
-                if (strcasecmp (argv[i], "-nicks") == 0)
+                if (ascii_strcasecmp (argv[i], "-nicks") == 0)
                 {
                     if (i >= (argc - 3))
                     {
@@ -2103,7 +2103,7 @@ weechat_cmd_server (int argc, char **argv)
                     server.nick2 = strdup (argv[++i]);
                     server.nick3 = strdup (argv[++i]);
                 }
-                if (strcasecmp (argv[i], "-username") == 0)
+                if (ascii_strcasecmp (argv[i], "-username") == 0)
                 {
                     if (i == (argc - 1))
                     {
@@ -2116,7 +2116,7 @@ weechat_cmd_server (int argc, char **argv)
                     }
                     server.username = strdup (argv[++i]);
                 }
-                if (strcasecmp (argv[i], "-realname") == 0)
+                if (ascii_strcasecmp (argv[i], "-realname") == 0)
                 {
                     if (i == (argc - 1))
                     {
@@ -2129,7 +2129,7 @@ weechat_cmd_server (int argc, char **argv)
                     }
                     server.realname = strdup (argv[++i]);
                 }
-                if (strcasecmp (argv[i], "-command") == 0)
+                if (ascii_strcasecmp (argv[i], "-command") == 0)
                 {
                     if (i == (argc - 1))
                     {
@@ -2142,7 +2142,7 @@ weechat_cmd_server (int argc, char **argv)
                     }
                     server.command = strdup (argv[++i]);
                 }
-                if (strcasecmp (argv[i], "-autojoin") == 0)
+                if (ascii_strcasecmp (argv[i], "-autojoin") == 0)
                 {
                     if (i == (argc - 1))
                     {
@@ -2529,7 +2529,7 @@ weechat_cmd_window (int argc, char **argv)
     t_gui_window *ptr_win;
     int i;
     
-    if ((argc == 0) || ((argc == 1) && (strcasecmp (argv[0], "list") == 0)))
+    if ((argc == 0) || ((argc == 1) && (ascii_strcasecmp (argv[0], "list") == 0)))
     {
         /* list opened windows */
         
@@ -2558,29 +2558,29 @@ weechat_cmd_window (int argc, char **argv)
     }
     else
     {
-        if (strcasecmp (argv[0], "splith") == 0)
+        if (ascii_strcasecmp (argv[0], "splith") == 0)
         {
             /* split window horizontally */
             gui_window_split_horiz (gui_current_window);
         }
-        else if (strcasecmp (argv[0], "splitv") == 0)
+        else if (ascii_strcasecmp (argv[0], "splitv") == 0)
         {
             /* split window vertically */
             gui_window_split_vertic (gui_current_window);
         }
-        else if (strcasecmp (argv[0], "merge") == 0)
+        else if (ascii_strcasecmp (argv[0], "merge") == 0)
         {
             if (argc >= 2)
             {
-                if (strcasecmp (argv[1], "down") == 0)
+                if (ascii_strcasecmp (argv[1], "down") == 0)
                     gui_window_merge_down (gui_current_window);
-                else if (strcasecmp (argv[1], "up") == 0)
+                else if (ascii_strcasecmp (argv[1], "up") == 0)
                     gui_window_merge_up (gui_current_window);
-                else if (strcasecmp (argv[1], "left") == 0)
+                else if (ascii_strcasecmp (argv[1], "left") == 0)
                     gui_window_merge_left (gui_current_window);
-                else if (strcasecmp (argv[1], "right") == 0)
+                else if (ascii_strcasecmp (argv[1], "right") == 0)
                     gui_window_merge_right (gui_current_window);
-                else if (strcasecmp (argv[1], "all") == 0)
+                else if (ascii_strcasecmp (argv[1], "all") == 0)
                     gui_window_merge_all (gui_current_window);
                 else
                 {
@@ -2594,9 +2594,9 @@ weechat_cmd_window (int argc, char **argv)
             else
                 gui_window_merge_auto (gui_current_window);
         }
-        else if (strcasecmp (argv[0], "-1") == 0)
+        else if (ascii_strcasecmp (argv[0], "-1") == 0)
             gui_switch_to_previous_window ();
-        else if (strcasecmp (argv[0], "+1") == 0)
+        else if (ascii_strcasecmp (argv[0], "+1") == 0)
             gui_switch_to_next_window ();
         else
         {

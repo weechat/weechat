@@ -111,13 +111,13 @@ completion_build_list (t_completion *completion, void *channel)
     /* WeeChat internal commands */
     
     /* no completion for some commands */
-    if ((strcasecmp (completion->base_command, "server") == 0)
-        || (strcasecmp (completion->base_command, "save") == 0))
+    if ((ascii_strcasecmp (completion->base_command, "server") == 0)
+        || (ascii_strcasecmp (completion->base_command, "save") == 0))
     {
         completion_stop (completion);
         return;
     }
-    if ((strcasecmp (completion->base_command, "alias") == 0)
+    if ((ascii_strcasecmp (completion->base_command, "alias") == 0)
         && (completion->base_command_arg == 1))
     {
         for (ptr_list = index_commands; ptr_list; ptr_list = ptr_list->next_weelist)
@@ -128,7 +128,7 @@ completion_build_list (t_completion *completion, void *channel)
         }
         return;
     }
-    if ((strcasecmp (completion->base_command, "buffer") == 0)
+    if ((ascii_strcasecmp (completion->base_command, "buffer") == 0)
         && (completion->base_command_arg == 1))
     {
         weelist_add (&completion->completion_list,
@@ -145,7 +145,7 @@ completion_build_list (t_completion *completion, void *channel)
                      "notify");
         return;
     }
-    if ((strcasecmp (completion->base_command, "clear") == 0)
+    if ((ascii_strcasecmp (completion->base_command, "clear") == 0)
         && (completion->base_command_arg == 1))
     {
         weelist_add (&completion->completion_list,
@@ -153,8 +153,8 @@ completion_build_list (t_completion *completion, void *channel)
                      "-all");
         return;
     }
-    if ((strcasecmp (completion->base_command, "connect") == 0)
-        || (strcasecmp (completion->base_command, "disconnect") == 0))
+    if ((ascii_strcasecmp (completion->base_command, "connect") == 0)
+        || (ascii_strcasecmp (completion->base_command, "disconnect") == 0))
     {
         if (completion->base_command_arg == 1)
         {
@@ -173,7 +173,7 @@ completion_build_list (t_completion *completion, void *channel)
             return;
         }
     }
-    if (strcasecmp (completion->base_command, "debug") == 0)
+    if (ascii_strcasecmp (completion->base_command, "debug") == 0)
     {
         if (completion->base_command_arg == 1)
             weelist_add (&completion->completion_list,
@@ -183,7 +183,7 @@ completion_build_list (t_completion *completion, void *channel)
             completion_stop (completion);
         return;
     }
-    if ((strcasecmp (completion->base_command, "help") == 0)
+    if ((ascii_strcasecmp (completion->base_command, "help") == 0)
         && (completion->base_command_arg == 1))
     {
         for (i = 0; weechat_commands[i].command_name; i++)
@@ -201,7 +201,7 @@ completion_build_list (t_completion *completion, void *channel)
         }
         return;
     }
-    if (strcasecmp (completion->base_command, "key") == 0)
+    if (ascii_strcasecmp (completion->base_command, "key") == 0)
     {
         if (completion->base_command_arg == 1)
         {
@@ -229,8 +229,8 @@ completion_build_list (t_completion *completion, void *channel)
             return;
         }
     }
-    if (((strcasecmp (completion->base_command, "perl") == 0)
-        || (strcasecmp (completion->base_command, "python") == 0))
+    if (((ascii_strcasecmp (completion->base_command, "perl") == 0)
+        || (ascii_strcasecmp (completion->base_command, "python") == 0))
         && (completion->base_command_arg == 1))
     {
         weelist_add (&completion->completion_list,
@@ -247,7 +247,7 @@ completion_build_list (t_completion *completion, void *channel)
                      "unload");
         return;
     }
-    if (strcasecmp (completion->base_command, "set") == 0)
+    if (ascii_strcasecmp (completion->base_command, "set") == 0)
     {
         if (completion->base_command_arg == 1)
         {
@@ -340,7 +340,7 @@ completion_build_list (t_completion *completion, void *channel)
             completion_stop (completion);
         return;
     }
-    if ((strcasecmp (completion->base_command, "unalias") == 0)
+    if ((ascii_strcasecmp (completion->base_command, "unalias") == 0)
         && (completion->base_command_arg == 1))
     {
         for (ptr_alias = weechat_alias; ptr_alias; ptr_alias = ptr_alias->next_alias)
@@ -351,7 +351,7 @@ completion_build_list (t_completion *completion, void *channel)
         }
         return;
     }
-    if (strcasecmp (completion->base_command, "window") == 0)
+    if (ascii_strcasecmp (completion->base_command, "window") == 0)
     {
         if (completion->base_command_arg == 1)
         {
@@ -397,33 +397,33 @@ completion_build_list (t_completion *completion, void *channel)
     /* IRC commands */
     
     /* no completion for some commands */
-    if ((strcasecmp (completion->base_command, "admin") == 0)
-        || (strcasecmp (completion->base_command, "die") == 0)
-        || (strcasecmp (completion->base_command, "info") == 0)
-        || (strcasecmp (completion->base_command, "join") == 0)
-        || (strcasecmp (completion->base_command, "links") == 0)
-        || (strcasecmp (completion->base_command, "list") == 0)
-        || (strcasecmp (completion->base_command, "lusers") == 0)
-        || (strcasecmp (completion->base_command, "motd") == 0)
-        || (strcasecmp (completion->base_command, "oper") == 0)
-        || (strcasecmp (completion->base_command, "rehash") == 0)
-        || (strcasecmp (completion->base_command, "restart") == 0)
-        || (strcasecmp (completion->base_command, "service") == 0)
-        || (strcasecmp (completion->base_command, "servlist") == 0)
-        || (strcasecmp (completion->base_command, "squery") == 0)
-        || (strcasecmp (completion->base_command, "squit") == 0)
-        || (strcasecmp (completion->base_command, "stats") == 0)
-        || (strcasecmp (completion->base_command, "summon") == 0)
-        || (strcasecmp (completion->base_command, "time") == 0)
-        || (strcasecmp (completion->base_command, "trace") == 0)
-        || (strcasecmp (completion->base_command, "users") == 0)
-        || (strcasecmp (completion->base_command, "wallops") == 0)
-        || (strcasecmp (completion->base_command, "who") == 0))
+    if ((ascii_strcasecmp (completion->base_command, "admin") == 0)
+        || (ascii_strcasecmp (completion->base_command, "die") == 0)
+        || (ascii_strcasecmp (completion->base_command, "info") == 0)
+        || (ascii_strcasecmp (completion->base_command, "join") == 0)
+        || (ascii_strcasecmp (completion->base_command, "links") == 0)
+        || (ascii_strcasecmp (completion->base_command, "list") == 0)
+        || (ascii_strcasecmp (completion->base_command, "lusers") == 0)
+        || (ascii_strcasecmp (completion->base_command, "motd") == 0)
+        || (ascii_strcasecmp (completion->base_command, "oper") == 0)
+        || (ascii_strcasecmp (completion->base_command, "rehash") == 0)
+        || (ascii_strcasecmp (completion->base_command, "restart") == 0)
+        || (ascii_strcasecmp (completion->base_command, "service") == 0)
+        || (ascii_strcasecmp (completion->base_command, "servlist") == 0)
+        || (ascii_strcasecmp (completion->base_command, "squery") == 0)
+        || (ascii_strcasecmp (completion->base_command, "squit") == 0)
+        || (ascii_strcasecmp (completion->base_command, "stats") == 0)
+        || (ascii_strcasecmp (completion->base_command, "summon") == 0)
+        || (ascii_strcasecmp (completion->base_command, "time") == 0)
+        || (ascii_strcasecmp (completion->base_command, "trace") == 0)
+        || (ascii_strcasecmp (completion->base_command, "users") == 0)
+        || (ascii_strcasecmp (completion->base_command, "wallops") == 0)
+        || (ascii_strcasecmp (completion->base_command, "who") == 0))
     {
         completion_stop (completion);
         return;
     }
-    if ((strcasecmp (completion->base_command, "away") == 0)
+    if ((ascii_strcasecmp (completion->base_command, "away") == 0)
         && (completion->base_command_arg == 1))
     {
         if (cfg_irc_default_msg_away && cfg_irc_default_msg_away[0])
@@ -432,7 +432,7 @@ completion_build_list (t_completion *completion, void *channel)
                          cfg_irc_default_msg_away);
         return;
     }
-    if ((strcasecmp (completion->base_command, "ctcp") == 0)
+    if ((ascii_strcasecmp (completion->base_command, "ctcp") == 0)
         && (completion->base_command_arg == 2))
     {
         weelist_add (&completion->completion_list,
@@ -446,7 +446,7 @@ completion_build_list (t_completion *completion, void *channel)
                      "version");
         return;
     }
-    if ((strcasecmp (completion->base_command, "dcc") == 0)
+    if ((ascii_strcasecmp (completion->base_command, "dcc") == 0)
         && (completion->base_command_arg == 1))
     {
         weelist_add (&completion->completion_list,
@@ -460,7 +460,7 @@ completion_build_list (t_completion *completion, void *channel)
                      "close");
         return;
     }
-    if (strcasecmp (completion->base_command, "invite") == 0)
+    if (ascii_strcasecmp (completion->base_command, "invite") == 0)
     {
         /* arg1: nickname */
         if (completion->base_command_arg == 1)
@@ -486,30 +486,30 @@ completion_build_list (t_completion *completion, void *channel)
         }
         return;
     }
-    if (strcasecmp (completion->base_command, "kick") == 0)
+    if (ascii_strcasecmp (completion->base_command, "kick") == 0)
     {
         if (completion->base_command_arg != 1)
             completion_stop (completion);
         return;
     }
-    if (strcasecmp (completion->base_command, "kill") == 0)
+    if (ascii_strcasecmp (completion->base_command, "kill") == 0)
     {
         if (completion->base_command_arg != 1)
             completion_stop (completion);
         return;
     }
-    if (strcasecmp (completion->base_command, "me") == 0)
+    if (ascii_strcasecmp (completion->base_command, "me") == 0)
     {
         completion->context = COMPLETION_NICK;
         return;
     }
-    if (strcasecmp (completion->base_command, "notice") == 0)
+    if (ascii_strcasecmp (completion->base_command, "notice") == 0)
     {
         if (completion->base_command_arg != 1)
             completion_stop (completion);
         return;
     }
-    if ((strcasecmp (completion->base_command, "part") == 0)
+    if ((ascii_strcasecmp (completion->base_command, "part") == 0)
         && (completion->base_command_arg == 1))
     {
         if (cfg_irc_default_msg_part && cfg_irc_default_msg_part[0])
@@ -518,13 +518,13 @@ completion_build_list (t_completion *completion, void *channel)
                          cfg_irc_default_msg_part);
         return;
     }
-    if (strcasecmp (completion->base_command, "query") == 0)
+    if (ascii_strcasecmp (completion->base_command, "query") == 0)
     {
         if (completion->base_command_arg != 1)
             completion_stop (completion);
         return;
     }
-    if ((strcasecmp (completion->base_command, "quit") == 0)
+    if ((ascii_strcasecmp (completion->base_command, "quit") == 0)
         && (completion->base_command_arg == 1))
     {
         if (cfg_irc_default_msg_quit && cfg_irc_default_msg_quit[0])
@@ -533,7 +533,7 @@ completion_build_list (t_completion *completion, void *channel)
                          cfg_irc_default_msg_quit);
         return;
     }
-    if (strcasecmp (completion->base_command, "topic") == 0)
+    if (ascii_strcasecmp (completion->base_command, "topic") == 0)
     {
         if (completion->base_command_arg == 1)
         {
@@ -717,7 +717,7 @@ completion_command (t_completion *completion)
     other_completion = 0;
     for (ptr_weelist = index_commands; ptr_weelist; ptr_weelist = ptr_weelist->next_weelist)
     {
-        if (strncasecmp (ptr_weelist->data, completion->base_word + 1, length) == 0)
+        if (ascii_strncasecmp (ptr_weelist->data, completion->base_word + 1, length) == 0)
         {
             if ((!completion->word_found) || word_found_seen)
             {
@@ -725,7 +725,7 @@ completion_command (t_completion *completion)
                 for (ptr_weelist2 = ptr_weelist->next_weelist; ptr_weelist2;
                      ptr_weelist2 = ptr_weelist2->next_weelist)
                 {
-                    if (strncasecmp (ptr_weelist2->data,
+                    if (ascii_strncasecmp (ptr_weelist2->data,
                         completion->base_word + 1, length) == 0)
                         other_completion++;
                 }
@@ -739,7 +739,7 @@ completion_command (t_completion *completion)
             other_completion++;
         }
         if (completion->word_found &&
-            (strcasecmp (ptr_weelist->data, completion->word_found) == 0))
+            (ascii_strcasecmp (ptr_weelist->data, completion->word_found) == 0))
             word_found_seen = 1;
     }
     if (completion->word_found)
@@ -765,7 +765,7 @@ completion_command_arg (t_completion *completion, t_irc_channel *channel)
     for (ptr_weelist = completion->completion_list; ptr_weelist;
          ptr_weelist = ptr_weelist->next_weelist)
     {
-        if (strncasecmp (ptr_weelist->data, completion->base_word, length) == 0)
+        if (ascii_strncasecmp (ptr_weelist->data, completion->base_word, length) == 0)
         {
             if ((!completion->word_found) || word_found_seen)
             {
@@ -773,7 +773,7 @@ completion_command_arg (t_completion *completion, t_irc_channel *channel)
                 for (ptr_weelist2 = ptr_weelist->next_weelist; ptr_weelist2;
                      ptr_weelist2 = ptr_weelist2->next_weelist)
                 {
-                    if (strncasecmp (ptr_weelist2->data,
+                    if (ascii_strncasecmp (ptr_weelist2->data,
                         completion->base_word, length) == 0)
                         other_completion++;
                 }
@@ -787,7 +787,7 @@ completion_command_arg (t_completion *completion, t_irc_channel *channel)
             other_completion++;
         }
         if (completion->word_found &&
-            (strcasecmp (ptr_weelist->data, completion->word_found) == 0))
+            (ascii_strcasecmp (ptr_weelist->data, completion->word_found) == 0))
             word_found_seen = 1;
     }
     if (completion->word_found)
@@ -821,7 +821,7 @@ completion_nick (t_completion *completion, t_irc_channel *channel)
     other_completion = 0;
     for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
     {
-        if (strncasecmp (ptr_nick->nick, completion->base_word, length) == 0)
+        if (ascii_strncasecmp (ptr_nick->nick, completion->base_word, length) == 0)
         {
             if ((!completion->word_found) || word_found_seen)
             {
@@ -829,7 +829,7 @@ completion_nick (t_completion *completion, t_irc_channel *channel)
                 for (ptr_nick2 = ptr_nick->next_nick; ptr_nick2;
                      ptr_nick2 = ptr_nick2->next_nick)
                 {
-                    if (strncasecmp (ptr_nick2->nick,
+                    if (ascii_strncasecmp (ptr_nick2->nick,
                         completion->base_word, length) == 0)
                         other_completion++;
                 }
@@ -843,7 +843,7 @@ completion_nick (t_completion *completion, t_irc_channel *channel)
             other_completion++;
         }
         if (completion->word_found &&
-            (strcasecmp (ptr_nick->nick, completion->word_found) == 0))
+            (ascii_strcasecmp (ptr_nick->nick, completion->word_found) == 0))
             word_found_seen = 1;
     }
     if (completion->word_found)
