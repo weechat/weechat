@@ -945,7 +945,7 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *nick, char *arguments
         if ((SERVER(ptr_buffer) == server) && BUFFER_IS_PRIVATE(ptr_buffer))
         {
             if ((CHANNEL(ptr_buffer)->name)
-                && (ascii_strcasecmp (host, CHANNEL(ptr_buffer)->name) == 0))
+                && (ascii_strcasecmp (nick, CHANNEL(ptr_buffer)->name) == 0))
             {
                 free (CHANNEL(ptr_buffer)->name);
                 CHANNEL(ptr_buffer)->name = strdup (arguments);
@@ -993,7 +993,7 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *nick, char *arguments
         }
     }
     
-    if (strcmp (server->nick, host) == 0)
+    if (strcmp (server->nick, nick) == 0)
     {
         free (server->nick);
         server->nick = strdup (arguments);
@@ -2222,7 +2222,7 @@ irc_cmd_recv_topic (t_irc_server *server, char *host, char *nick, char *argument
         irc_display_prefix (buffer, PREFIX_INFO);
         gui_printf_color (buffer,
                           COLOR_WIN_CHAT_NICK, "%s",
-                          host);
+                          nick);
         if (pos)
         {
             gui_printf_color (buffer,
