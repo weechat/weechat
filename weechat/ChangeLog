@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-09-03
+ChangeLog - 2005-09-04
 
 
 Version 0.1.5 (under dev!):
+   * added /ignore and /unignore commands
    * fixed bug with strings comparison (str[n]casecmp) and some locales
      (like turkish), now using ASCII comparison (thanks to roktas)
    * signal SIGQUIT is now ignored

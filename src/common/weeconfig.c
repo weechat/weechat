@@ -55,6 +55,7 @@ t_config_section config_sections[CONFIG_NUMBER_SECTIONS] =
   { CONFIG_SECTION_PROXY, "proxy" },
   { CONFIG_SECTION_KEYS, "keys" },
   { CONFIG_SECTION_ALIAS, "alias" },
+  { CONFIG_SECTION_IGNORE, "ignore" },
   { CONFIG_SECTION_SERVER, "server" }
 };
 
@@ -758,7 +759,7 @@ t_config_option weechat_options_server[] =
 t_config_option *weechat_options[CONFIG_NUMBER_SECTIONS] =
 { weechat_options_look, weechat_options_colors, weechat_options_history,
   weechat_options_log, weechat_options_irc, weechat_options_dcc,
-  weechat_options_proxy, NULL, NULL, weechat_options_server
+  weechat_options_proxy, NULL, NULL, NULL, weechat_options_server
 };
 
 
@@ -795,7 +796,7 @@ config_get_section (t_config_option *ptr_option)
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
     {
         if ((i != CONFIG_SECTION_KEYS) && (i != CONFIG_SECTION_ALIAS)
-            && (i != CONFIG_SECTION_SERVER))
+            && (i != CONFIG_SECTION_IGNORE) && (i != CONFIG_SECTION_SERVER))
         {
             for (j = 0; weechat_options[i][j].option_name; j++)
             {
@@ -1090,7 +1091,7 @@ config_option_search (char *option_name)
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
     {
         if ((i != CONFIG_SECTION_KEYS) && (i != CONFIG_SECTION_ALIAS)
-            && (i != CONFIG_SECTION_SERVER))
+            && (i != CONFIG_SECTION_IGNORE) && (i != CONFIG_SECTION_SERVER))
         {
             for (j = 0; weechat_options[i][j].option_name; j++)
             {
@@ -1254,7 +1255,7 @@ config_default_values ()
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
     {
         if ((i != CONFIG_SECTION_KEYS) && (i != CONFIG_SECTION_ALIAS)
-            && (i != CONFIG_SECTION_SERVER))
+            && (i != CONFIG_SECTION_IGNORE) && (i != CONFIG_SECTION_SERVER))
         {
             for (j = 0; weechat_options[i][j].option_name; j++)
             {
@@ -1428,6 +1429,21 @@ config_read ()
                                 if (alias_new (line, pos))
                                     weelist_add (&index_commands, &last_index_command, line);
                             }
+                            else if (section == CONFIG_SECTION_IGNORE)
+                            {
+                                /* create new ignore */
+                                if (ascii_strcasecmp (line, "ignore") != 0)
+                                    gui_printf (NULL,
+                                                _("%s %s, line %d: invalid option \"%s\"\n"),
+                                                WEECHAT_WARNING, filename, line_number, line);
+                                else
+                                {
+                                    if (!ignore_add_from_config (pos))
+                                        gui_printf (NULL,
+                                                    _("%s %s, line %d: invalid ignore options \"%s\"\n"),
+                                                    WEECHAT_WARNING, filename, line_number, pos);
+                                }
+                            }
                             else
                             {
                                 option_number = -1;
@@ -1571,7 +1587,7 @@ config_create_default ()
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
     {
         if ((i != CONFIG_SECTION_KEYS) && (i != CONFIG_SECTION_ALIAS)
-            && (i != CONFIG_SECTION_SERVER))
+            && (i != CONFIG_SECTION_IGNORE) && (i != CONFIG_SECTION_SERVER))
         {
             fprintf (file, "\n[%s]\n", config_sections[i].section_name);
             for (j = 0; weechat_options[i][j].option_name; j++)
@@ -1623,7 +1639,6 @@ config_create_default ()
     }
     
     /* default aliases */
-    /* TODO: remove comments when missing commands will be ok */
     fprintf (file, "\n[alias]\n");
     fprintf (file, "SAY=msg *\n");
     fprintf (file, "BYE=quit\n");
@@ -1633,12 +1648,10 @@ config_create_default ()
     fprintf (file, "CL=clear\n");
     fprintf (file, "CLOSE=buffer close\n");
     fprintf (file, "CHAT=dcc chat\n");
-    fprintf (file, "# GET=dcc get\n");
-    fprintf (file, "# IG=ignore\n");
+    fprintf (file, "IG=ignore\n");
     fprintf (file, "J=join\n");
     fprintf (file, "K=kick\n");
     fprintf (file, "KB=kickban\n");
-    fprintf (file, "# KN=knockout\n");
     fprintf (file, "LEAVE=part\n");
     fprintf (file, "M=msg\n");
     fprintf (file, "MUB=unban *\n");
@@ -1646,11 +1659,13 @@ config_create_default ()
     fprintf (file, "Q=query\n");
     fprintf (file, "T=topic\n");
     fprintf (file, "UB=unban\n");
-    fprintf (file, "# UNIG=unignore\n");
+    fprintf (file, "UNIG=unignore\n");
     fprintf (file, "W=who\n");
     fprintf (file, "WC=part\n");
     fprintf (file, "WI=whois\n");
     fprintf (file, "WW=whowas\n");
+    
+    /* no ignore by default */
     
     /* default server is freenode */
     fprintf (file, "\n[server]\n");
@@ -1730,6 +1745,7 @@ config_write (char *config_name)
     time_t current_time;
     t_irc_server *ptr_server;
     t_weechat_alias *ptr_alias;
+    t_irc_ignore *ptr_ignore;
     t_gui_key *ptr_key;
     char *expanded_name, *function_name;
 
@@ -1765,7 +1781,7 @@ config_write (char *config_name)
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
     {
         if ((i != CONFIG_SECTION_KEYS) && (i != CONFIG_SECTION_ALIAS)
-            && (i != CONFIG_SECTION_SERVER))
+            && (i != CONFIG_SECTION_IGNORE) && (i != CONFIG_SECTION_SERVER))
         {
             fprintf (file, "\n[%s]\n", config_sections[i].section_name);
             for (j = 0; weechat_options[i][j].option_name; j++)
@@ -1840,6 +1856,18 @@ config_write (char *config_name)
     {
         fprintf (file, "%s=%s\n",
                  ptr_alias->alias_name, ptr_alias->alias_command + 1);
+    }
+    
+    /* ignore section */
+    fprintf (file, "\n[ignore]\n");
+    for (ptr_ignore = irc_ignore; ptr_ignore;
+         ptr_ignore = ptr_ignore->next_ignore)
+    {
+        fprintf (file, "ignore=%s,%s,%s,%s\n",
+                 ptr_ignore->mask,
+                 ptr_ignore->type,
+                 ptr_ignore->channel_name,
+                 ptr_ignore->server_name);
     }
     
     /* server section */

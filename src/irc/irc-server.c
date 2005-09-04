@@ -900,12 +900,12 @@ void
 convbase64_8x3_to_6x4(char *from, char* to)
 {
 
-  unsigned char base64_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    unsigned char base64_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-  to[0] = base64_table [ (from[0] & 0xfc) >> 2 ];
-  to[1] = base64_table [ ((from[0] & 0x03) << 4) + ((from[1] & 0xf0) >> 4) ];
-  to[2] = base64_table [ ((from[1] & 0x0f) << 2) + ((from[2] & 0xc0) >> 6) ];
-  to[3] = base64_table [ from[2] & 0x3f ];
+    to[0] = base64_table [ (from[0] & 0xfc) >> 2 ];
+    to[1] = base64_table [ ((from[0] & 0x03) << 4) + ((from[1] & 0xf0) >> 4) ];
+    to[2] = base64_table [ ((from[1] & 0x0f) << 2) + ((from[2] & 0xc0) >> 6) ];
+    to[3] = base64_table [ from[2] & 0x3f ];
 }
 
 /*
@@ -916,91 +916,92 @@ void
 base64encode(char *from, char *to)
 {
 
-  char *f, *t;
-  int from_len;
+    char *f, *t;
+    int from_len;
 
-  from_len = strlen(from);
+    from_len = strlen(from);
 
-  f = from;
-  t = to;
+    f = from;
+    t = to;
   
-  while(from_len >= 3)
+    while(from_len >= 3)
     {
-      convbase64_8x3_to_6x4(f, t);
-      f += 3 * sizeof(*f);
-      t += 4 * sizeof(*t);
-      from_len -= 3;
+        convbase64_8x3_to_6x4(f, t);
+        f += 3 * sizeof(*f);
+        t += 4 * sizeof(*t);
+        from_len -= 3;
     }
 
-  if (from_len > 0)
+    if (from_len > 0)
     {
-      char rest[3] = { 0, 0, 0 };
-      switch(from_len)
+        char rest[3] = { 0, 0, 0 };
+        switch(from_len)
         {
         case 1 :
-          rest[0] = f[0];
-          convbase64_8x3_to_6x4(rest, t);
-          t[2] = t[3] = '=';
-          break;
+            rest[0] = f[0];
+            convbase64_8x3_to_6x4(rest, t);
+            t[2] = t[3] = '=';
+            break;
         case 2 :
-          rest[0] = f[0];
-          rest[1] = f[1];
-          convbase64_8x3_to_6x4(rest, t);
-          t[3] = '=';
-          break;
+            rest[0] = f[0];
+            rest[1] = f[1];
+            convbase64_8x3_to_6x4(rest, t);
+            t[3] = '=';
+            break;
         }
-      t[4] = 0;
+        t[4] = 0;
     }
 }
 
 /*
  * pass_httpproxy: establish connection/authentification to an http proxy
- *      return : 
- *           - 0 if connexion throw proxy was successful
- *           - 1 if connexion fails
+ *                 return : 
+ *                  - 0 if connexion throw proxy was successful
+ *                  - 1 if connexion fails
  */
+
 int
 pass_httpproxy(int sock, char *address, int port)
 {
 
-  char buffer[256];
-  char authbuf[128]; // seems to be enougth to store username + password
-  char authbuf_base64[196]; // enougth to store base64 encoded authbuf
-  int n, m;
+    char buffer[256];
+    char authbuf[128]; // seems to be enougth to store username + password
+    char authbuf_base64[196]; // enougth to store base64 encoded authbuf
+    int n, m;
 
-  if (strlen(cfg_proxy_username) > 0) 
+    if (strlen(cfg_proxy_username) > 0) 
     {
-      // authentification
-      snprintf(authbuf, sizeof(authbuf), "%s:%s", cfg_proxy_username, cfg_proxy_password);
-      base64encode(authbuf, authbuf_base64);
-      n = snprintf(buffer, sizeof(buffer), "CONNECT %s:%d HTTP/1.0\r\nProxy-Authorization: Basic %s\r\n\r\n", address, port, authbuf_base64);
+        // authentification
+        snprintf(authbuf, sizeof(authbuf), "%s:%s", cfg_proxy_username, cfg_proxy_password);
+        base64encode(authbuf, authbuf_base64);
+        n = snprintf(buffer, sizeof(buffer), "CONNECT %s:%d HTTP/1.0\r\nProxy-Authorization: Basic %s\r\n\r\n", address, port, authbuf_base64);
     }
-  else 
+    else 
     {
-      // no authentification 
-      n = snprintf(buffer, sizeof(buffer), "CONNECT %s:%d HTTP/1.0\r\n\r\n", address, port);
+        // no authentification 
+        n = snprintf(buffer, sizeof(buffer), "CONNECT %s:%d HTTP/1.0\r\n\r\n", address, port);
     }
   
-  m = send (sock, buffer, n, 0);
-  if (n != m)
-    return 1;
+    m = send (sock, buffer, n, 0);
+    if (n != m)
+        return 1;
 
-  n = recv(sock, buffer, sizeof(buffer), 0);
+    n = recv(sock, buffer, sizeof(buffer), 0);
 
-  /* success result must be like : "HTTP/1.0 200 OK"  */
-  if (n < 12)
-    return 1;
+    /* success result must be like : "HTTP/1.0 200 OK"  */
+    if (n < 12)
+        return 1;
 
-  if (memcmp (buffer, "HTTP/", 5) || memcmp (buffer + 9, "200", 3))
-    return 1;
+    if (memcmp (buffer, "HTTP/", 5) || memcmp (buffer + 9, "200", 3))
+        return 1;
   
-  return 0;
+    return 0;
 }
 
 /*
  * resolve: resolve hostname on its IP address
  *          (works with ipv4 and ipv6)
- *      return :
+ *          return :
  *           - 0 if resolution was successful
  *           - 1 if resolution fails
  */
@@ -1042,207 +1043,210 @@ resolve (char *hostname, char *ip, int *version)
 
 /*
  * pass_socks4proxy: establish connection/authentification throw a socks4 proxy
- *      return : 
- *           - 0 if connexion throw proxy was successful
- *           - 1 if connexion fails
+ *                   return : 
+ *                    - 0 if connexion throw proxy was successful
+ *                    - 1 if connexion fails
  */
+
 int
 pass_socks4proxy(int sock, char *address, int port, char *username)
 {
-  /* 
-   * socks4 protocol is explain here: 
-   *  http://archive.socks.permeo.com/protocol/socks4.protocol
-   *
-   */
+    /* 
+     * socks4 protocol is explain here: 
+     *  http://archive.socks.permeo.com/protocol/socks4.protocol
+     *
+     */
   
-  struct s_socks4
-  {
-    char version;           /* 1 byte  */ /* socks version : 4 or 5 */
-    char method;            /* 1 byte  */ /* socks method : connect (1) or bind (2) */
-    unsigned short port;    /* 2 bytes */ /* destination port */
-    unsigned long address;  /* 4 bytes */ /* destination address */
-    char user[64];          /* username (64 characters seems to be enought) */
-  } socks4;
-  unsigned char buffer[24];
-  char ip_addr[NI_MAXHOST];
+    struct s_socks4
+    {
+        char version;           /* 1 byte  */ /* socks version : 4 or 5 */
+        char method;            /* 1 byte  */ /* socks method : connect (1) or bind (2) */
+        unsigned short port;    /* 2 bytes */ /* destination port */
+        unsigned long address;  /* 4 bytes */ /* destination address */
+        char user[64];          /* username (64 characters seems to be enought) */
+    } socks4;
+    unsigned char buffer[24];
+    char ip_addr[NI_MAXHOST];
 
-  socks4.version = 4;
-  socks4.method = 1;
-  socks4.port = htons (port);
-  resolve(address, ip_addr, NULL);
-  socks4.address = inet_addr (ip_addr);
-  strncpy (socks4.user, username, sizeof(socks4.user) - 1);
+    socks4.version = 4;
+    socks4.method = 1;
+    socks4.port = htons (port);
+    resolve(address, ip_addr, NULL);
+    socks4.address = inet_addr (ip_addr);
+    strncpy (socks4.user, username, sizeof(socks4.user) - 1);
   
-  send (sock, (char *) &socks4, 8 + strlen(socks4.user) + 1, 0);
-  recv (sock, buffer, sizeof(buffer), 0);
+    send (sock, (char *) &socks4, 8 + strlen(socks4.user) + 1, 0);
+    recv (sock, buffer, sizeof(buffer), 0);
 
-  if (buffer[0] == 0 && buffer[1] == 90)
-    return 0;
+    if (buffer[0] == 0 && buffer[1] == 90)
+        return 0;
 
-  return 1;
+    return 1;
 }
 
 /*
  * pass_socks5proxy: establish connection/authentification throw a socks5 proxy
- *      return : 
- *           - 0 if connexion throw proxy was successful
- *           - 1 if connexion fails
+ *                   return : 
+ *                    - 0 if connexion throw proxy was successful
+ *                    - 1 if connexion fails
  */
+
 int
 pass_socks5proxy(int sock, char *address, int port)
 {
-  /* 
-   * socks5 protocol is explained in RFC 1928
-   * socks5 authentication with username/pass is explained in RFC 1929
-   */
+    /* 
+     * socks5 protocol is explained in RFC 1928
+     * socks5 authentication with username/pass is explained in RFC 1929
+     */
   
-  struct s_sock5
-  {
-    char version;   /* 1 byte      */ /* socks version : 4 or 5 */
-    char nmethods;  /* 1 byte      */ /* size in byte(s) of field 'method', here 1 byte */
-    char method;    /* 1-255 bytes */ /* socks method : noauth (0), auth(user/pass) (2), ... */
-  } socks5;
-  unsigned char buffer[288];
-  int username_len, password_len, addr_len, addr_buffer_len;
-  unsigned char *addr_buffer;
-  
-  socks5.version = 5;
-  socks5.nmethods = 1;
-  
-  if (strlen(cfg_proxy_username) > 0)
-    /* with authentication */
-    socks5.method = 2;
-  else
-    /* without authentication */
-    socks5.method = 0;
-     
-  send (sock, (char *) &socks5, sizeof(socks5), 0);
-  /* server socks5 must respond with 2 bytes */
-  if (recv (sock, buffer, 2, 0) != 2)
-    return 1;
-  
-  if (strlen(cfg_proxy_username) > 0)
+    struct s_sock5
     {
-      /* with authentication */
-      /*   -> socks server must respond with :
-       *       - socks version (buffer[0]) = 5 => socks5
-       *       - socks method  (buffer[1]) = 2 => authentication
-       */
+        char version;   /* 1 byte      */ /* socks version : 4 or 5 */
+        char nmethods;  /* 1 byte      */ /* size in byte(s) of field 'method', here 1 byte */
+        char method;    /* 1-255 bytes */ /* socks method : noauth (0), auth(user/pass) (2), ... */
+    } socks5;
+    unsigned char buffer[288];
+    int username_len, password_len, addr_len, addr_buffer_len;
+    unsigned char *addr_buffer;
+  
+    socks5.version = 5;
+    socks5.nmethods = 1;
+  
+    if (strlen(cfg_proxy_username) > 0)
+        /* with authentication */
+        socks5.method = 2;
+    else
+        /* without authentication */
+        socks5.method = 0;
+     
+    send (sock, (char *) &socks5, sizeof(socks5), 0);
+    /* server socks5 must respond with 2 bytes */
+    if (recv (sock, buffer, 2, 0) != 2)
+        return 1;
+  
+    if (strlen(cfg_proxy_username) > 0)
+    {
+        /* with authentication */
+        /*   -> socks server must respond with :
+         *       - socks version (buffer[0]) = 5 => socks5
+         *       - socks method  (buffer[1]) = 2 => authentication
+         */
 
-      //if (!(buffer[0] == 5 && buffer[1] == 2))
-      if (buffer[0] != 5 || buffer[1] != 2)
-	return 1;
+        //if (!(buffer[0] == 5 && buffer[1] == 2))
+        if (buffer[0] != 5 || buffer[1] != 2)
+            return 1;
 
-      /* authentication as in RFC 1929 */
-      username_len = strlen(cfg_proxy_username);
-      password_len = strlen(cfg_proxy_password);
+        /* authentication as in RFC 1929 */
+        username_len = strlen(cfg_proxy_username);
+        password_len = strlen(cfg_proxy_password);
       
-      /* make username/password buffer */
-      buffer[0] = 1;
-      buffer[1] = (unsigned char) username_len;
-      memcpy(buffer + 2, cfg_proxy_username, username_len);
-      buffer[2 + username_len] = (unsigned char) password_len;
-      memcpy(buffer + 3 + username_len, cfg_proxy_password, password_len);
+        /* make username/password buffer */
+        buffer[0] = 1;
+        buffer[1] = (unsigned char) username_len;
+        memcpy(buffer + 2, cfg_proxy_username, username_len);
+        buffer[2 + username_len] = (unsigned char) password_len;
+        memcpy(buffer + 3 + username_len, cfg_proxy_password, password_len);
      
-      send (sock, buffer, 3 + username_len + password_len, 0);
+        send (sock, buffer, 3 + username_len + password_len, 0);
 
-      /* server socks5 must respond with 2 bytes */
-      if (recv (sock, buffer, 2, 0) != 2)
-	return 1;
+        /* server socks5 must respond with 2 bytes */
+        if (recv (sock, buffer, 2, 0) != 2)
+            return 1;
 
-      /* buffer[1] = auth state, must be 0 for success */
-      if (buffer[1] != 0)
-	return 1;
+        /* buffer[1] = auth state, must be 0 for success */
+        if (buffer[1] != 0)
+            return 1;
     }
-  else
+    else
     {
-      /* without authentication */
-      /*   -> socks server must respond with :
-       *       - socks version (buffer[0]) = 5 => socks5
-       *       - socks method  (buffer[1]) = 0 => no authentication
-       */
-      if (!(buffer[0] == 5 && buffer[1] == 0))
-	return 1;
+        /* without authentication */
+        /*   -> socks server must respond with :
+         *       - socks version (buffer[0]) = 5 => socks5
+         *       - socks method  (buffer[1]) = 0 => no authentication
+         */
+        if (!(buffer[0] == 5 && buffer[1] == 0))
+            return 1;
     }
   
-  /* authentication successful then giving address/port to connect */
-  addr_len = strlen(address);
-  addr_buffer_len = 4 + 1 + addr_len + 2;
-  addr_buffer = (unsigned char *) malloc ( addr_buffer_len * sizeof(*addr_buffer));
-  if (!addr_buffer)
-    return 1;
-  addr_buffer[0] = 5;   /* version 5 */
-  addr_buffer[1] = 1;   /* command: 1 for connect */
-  addr_buffer[2] = 0;   /* reserved */
-  addr_buffer[3] = 3;   /* address type : ipv4 (1), domainname (3), ipv6 (4) */
-  addr_buffer[4] = (unsigned char) addr_len;
-  memcpy (addr_buffer + 5, address, addr_len); /* server address */
-  *((unsigned short *) (addr_buffer + 5 + addr_len)) = htons (port); /* server port */
+    /* authentication successful then giving address/port to connect */
+    addr_len = strlen(address);
+    addr_buffer_len = 4 + 1 + addr_len + 2;
+    addr_buffer = (unsigned char *) malloc ( addr_buffer_len * sizeof(*addr_buffer));
+    if (!addr_buffer)
+        return 1;
+    addr_buffer[0] = 5;   /* version 5 */
+    addr_buffer[1] = 1;   /* command: 1 for connect */
+    addr_buffer[2] = 0;   /* reserved */
+    addr_buffer[3] = 3;   /* address type : ipv4 (1), domainname (3), ipv6 (4) */
+    addr_buffer[4] = (unsigned char) addr_len;
+    memcpy (addr_buffer + 5, address, addr_len); /* server address */
+    *((unsigned short *) (addr_buffer + 5 + addr_len)) = htons (port); /* server port */
 
-  send (sock, addr_buffer, addr_buffer_len, 0);
-  free(addr_buffer);
+    send (sock, addr_buffer, addr_buffer_len, 0);
+    free(addr_buffer);
 
-  /* dialog with proxy server */
-  if (recv (sock, buffer, 4, 0) != 4)
-    return 1;
+    /* dialog with proxy server */
+    if (recv (sock, buffer, 4, 0) != 4)
+        return 1;
 
-  if (!(buffer[0] == 5 && buffer[1] == 0))
-    return 1;
+    if (!(buffer[0] == 5 && buffer[1] == 0))
+        return 1;
 
-  switch(buffer[3]) {
-    /* buffer[3] = address type */
-  case 1 :
-    /* ipv4 
-     * server socks return server bound address and port
-     * address of 4 bytes and port of 2 bytes (= 6 bytes)
-     */
-    if (recv (sock, buffer, 6, 0) != 6)
-      return 1;
-    break;
-  case 3:
-    /* domainname
-     * server socks return server bound address and port
-     */
-    /* reading address length */
-    if (recv (sock, buffer, 1, 0) != 1)
-      return 1;    
-    addr_len = buffer[0];
-    /* reading address + port = addr_len + 2 */
-    if (recv (sock, buffer, addr_len + 2, 0) != (addr_len + 2))
-      return 1;
-    break;
-  case 4 :
-    /* ipv6
-     * server socks return server bound address and port
-     * address of 16 bytes and port of 2 bytes (= 18 bytes)
-     */
-    if (recv (sock, buffer, 18, 0) != 18)
-      return 1;
-    break;
-  default:
-    return 1;
-  }
+    switch(buffer[3]) {
+        /* buffer[3] = address type */
+    case 1 :
+        /* ipv4 
+         * server socks return server bound address and port
+         * address of 4 bytes and port of 2 bytes (= 6 bytes)
+         */
+        if (recv (sock, buffer, 6, 0) != 6)
+            return 1;
+        break;
+    case 3:
+        /* domainname
+         * server socks return server bound address and port
+         */
+        /* reading address length */
+        if (recv (sock, buffer, 1, 0) != 1)
+            return 1;    
+        addr_len = buffer[0];
+        /* reading address + port = addr_len + 2 */
+        if (recv (sock, buffer, addr_len + 2, 0) != (addr_len + 2))
+            return 1;
+        break;
+    case 4 :
+        /* ipv6
+         * server socks return server bound address and port
+         * address of 16 bytes and port of 2 bytes (= 18 bytes)
+         */
+        if (recv (sock, buffer, 18, 0) != 18)
+            return 1;
+        break;
+    default:
+        return 1;
+    }
  
-  return 0;
+    return 0;
 }
 
 /*
  * pass_proxy: establish connection/authentification to a proxy
- *      return : 
- *           - 0 if connexion throw proxy was successful
- *           - 1 if connexion fails
+ *             return : 
+ *              - 0 if connexion throw proxy was successful
+ *              - 1 if connexion fails
  */
+
 int
 pass_proxy(int sock, char *address, int port, char *username)
 {  
-  if (strcmp(cfg_proxy_type_values[cfg_proxy_type], "http") == 0)
-    return pass_httpproxy(sock, address, port);
-  if (strcmp(cfg_proxy_type_values[cfg_proxy_type], "socks4") == 0)
-    return pass_socks4proxy(sock, address, port, username);
-  if (strcmp(cfg_proxy_type_values[cfg_proxy_type], "socks5") == 0)
-    return pass_socks5proxy(sock, address, port);
+    if (strcmp(cfg_proxy_type_values[cfg_proxy_type], "http") == 0)
+        return pass_httpproxy(sock, address, port);
+    if (strcmp(cfg_proxy_type_values[cfg_proxy_type], "socks4") == 0)
+        return pass_socks4proxy(sock, address, port, username);
+    if (strcmp(cfg_proxy_type_values[cfg_proxy_type], "socks5") == 0)
+        return pass_socks5proxy(sock, address, port);
 
-  return 1;
+    return 1;
 }
 
 /*
@@ -1586,6 +1590,9 @@ server_search (char *servername)
 {
     t_irc_server *ptr_server;
     
+    if (!servername)
+        return NULL;
+    
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
@@ -1623,6 +1630,9 @@ int
 server_name_already_exists (char *name)
 {
     t_irc_server *ptr_server;
+    
+    if (!name)
+        return 0;
     
     for (ptr_server = irc_servers; ptr_server; ptr_server = ptr_server->next_server)
     {

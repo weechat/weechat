@@ -102,6 +102,7 @@ completion_build_list (t_completion *completion, void *channel)
     int i, j;
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
+    t_irc_nick *ptr_nick;
     char *pos, option_name[256], *string;
     t_weechat_alias *ptr_alias;
     t_config_option *option;
@@ -201,6 +202,88 @@ completion_build_list (t_completion *completion, void *channel)
         }
         return;
     }
+    if (ascii_strcasecmp (completion->base_command, "ignore") == 0)
+    {
+        /* arg 1: nicks of current channel and "*" */
+        if (completion->base_command_arg == 1)
+        {
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         "*");
+            if (channel)
+            {
+                if (((t_irc_channel *)channel)->type == CHAT_CHANNEL)
+                {
+                    for (ptr_nick = ((t_irc_channel *)channel)->nicks; ptr_nick;
+                         ptr_nick = ptr_nick->next_nick)
+                    {
+                        weelist_add (&completion->completion_list,
+                                     &completion->last_completion,
+                                     ptr_nick->nick);
+                    }
+                }
+                if (((t_irc_channel *)channel)->type == CHAT_PRIVATE)
+                {
+                    weelist_add (&completion->completion_list,
+                                 &completion->last_completion,
+                                 ((t_irc_channel *)channel)->name);
+                }
+            }
+            return;
+        }
+        
+        /* arg 2: type / command and "*" */
+        if (completion->base_command_arg == 2)
+        {
+            weelist_add(&completion->completion_list,
+                        &completion->last_completion,
+                        "*");
+            i = 0;
+            while (ignore_types[i])
+            {
+                weelist_add (&completion->completion_list,
+                             &completion->last_completion,
+                             ignore_types[i]);
+                i++;
+            }
+            i = 0;
+            while (irc_commands[i].command_name)
+            {
+                if (irc_commands[i].recv_function)
+                    weelist_add(&completion->completion_list,
+                                &completion->last_completion,
+                                irc_commands[i].command_name);
+                i++;
+            }
+            return;
+        }
+        
+        /* arg 3: channel and "*" */
+        if (completion->base_command_arg == 3)
+        {
+            weelist_add(&completion->completion_list,
+                        &completion->last_completion,
+                        "*");
+            if (((t_irc_channel *)channel)->type == CHAT_CHANNEL)
+                weelist_add(&completion->completion_list,
+                            &completion->last_completion,
+                            ((t_irc_channel *)channel)->name);
+            return;
+        }
+        
+        /* arg 4: server */
+        if (completion->base_command_arg == 4)
+        {
+            weelist_add(&completion->completion_list,
+                        &completion->last_completion,
+                        "*");
+            if (SERVER(gui_current_window->buffer))
+                weelist_add(&completion->completion_list,
+                            &completion->last_completion,
+                            SERVER(gui_current_window->buffer)->name);
+            return;
+        }
+    }
     if (ascii_strcasecmp (completion->base_command, "key") == 0)
     {
         if (completion->base_command_arg == 1)
@@ -254,7 +337,7 @@ completion_build_list (t_completion *completion, void *channel)
             for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
             {
                 if ((i != CONFIG_SECTION_KEYS) && (i != CONFIG_SECTION_ALIAS)
-                    && (i != CONFIG_SECTION_SERVER))
+                    && (i != CONFIG_SECTION_IGNORE) && (i != CONFIG_SECTION_SERVER))
                 {
                     for (j = 0; weechat_options[i][j].option_name; j++)
                     {

@@ -72,6 +72,16 @@ t_weechat_command weechat_commands[] =
   { "help", N_("display help about commands"),
     N_("[command]"), N_("command: name of a WeeChat or IRC command"),
     0, 1, weechat_cmd_help, NULL },
+  { "ignore", N_("ignore IRC messages and/or hosts"),
+    N_("[mask [[type | command] [channel [server]]]]"),
+    N_("   mask: nick or host mask to ignore\n"
+       "   type: type of message to ignore (action, ctcp, dcc, pv)\n"
+       "command: IRC command\n"
+       "channel: name of channel for ignore\n"
+       " server: name of server for ignore\n\n"
+       "For each argument, '*' means all.\n"
+       "Without argument, /ignore command lists all defined ignore."),
+    0, 4, weechat_cmd_ignore, NULL },
   { "key", N_("bind/unbind keys"),
     N_("[key function/command] [unbind key] [functions] [reset -yes]"),
     N_("key: bind this key to an internal function or a command (beginning by \"/\")\n"
@@ -81,17 +91,17 @@ t_weechat_command weechat_commands[] =
     0, MAX_ARGS, NULL, weechat_cmd_key },
   { "perl", N_("list/load/unload Perl scripts"),
     N_("[load filename] | [autoload] | [reload] | [unload]"),
-    N_("filename: Perl script (file) to load\n"
+    N_("filename: Perl script (file) to load\n\n"
        "Without argument, /perl command lists all loaded Perl scripts."),
     0, 2, weechat_cmd_perl, NULL },
   { "python", N_("list/load/unload Python scripts"),
     N_("[load filename] | [autoload] | [reload] | [unload]"),
-    N_("filename: Python script (file) to load\n"
+    N_("filename: Python script (file) to load\n\n"
        "Without argument, /python command lists all loaded Python scripts."),
     0, 2, weechat_cmd_python, NULL },
   { "ruby", N_("list/load/unload Ruby scripts"),
     N_("[load filename] | [autoload] | [reload] | [unload]"),
-    N_("filename: Ruby script (file) to load\n"
+    N_("filename: Ruby script (file) to load\n\n"
        "Without argument, /ruby command lists all loaded Ruby scripts."),
     0, 2, weechat_cmd_ruby, NULL },
   { "server", N_("list, add or remove servers"),
@@ -121,6 +131,17 @@ t_weechat_command weechat_commands[] =
   { "unalias", N_("remove an alias"),
     N_("alias_name"), N_("alias_name: name of alias to remove"),
     1, 1, NULL, weechat_cmd_unalias },
+  { "unignore", N_("unignore IRC messages and/or hosts"),
+    N_("[number | [mask [[type | command] [channel [server]]]]]"),
+    N_(" number: # of ignore to unignore (number is displayed by list of ignore)\n"
+       "   mask: nick or host mask to unignore\n"
+       "   type: type of message to unignore (action, ctcp, dcc, pv)\n"
+       "command: IRC command\n"
+       "channel: name of channel for unignore\n"
+       " server: name of server for unignore\n\n"
+       "For each argument, '*' means all.\n"
+       "Without argument, /unignore command lists all defined ignore."),
+    0, 4, weechat_cmd_unignore, NULL },
   { "window", N_("manage windows"),
     N_("[list | splith | splitv | [merge [down | up | left | right | all]]]"),
     N_("list: list opened windows (no parameter implies this list)\n"
@@ -874,6 +895,11 @@ weechat_cmd_buffer_display_info (t_gui_buffer *buffer)
                           "%s", SERVER(buffer)->name);
         gui_printf (NULL, ")\n");
     }
+    else
+    {
+        gui_printf (NULL, _("not connected"));
+        gui_printf (NULL, "\n");
+    }
 }
 
 /*
@@ -1349,6 +1375,93 @@ weechat_cmd_help (int argc, char **argv)
                     argv[0]);
     }
     return 0;
+}
+
+/*
+ * weechat_cmd_ignore_display: display an ignore entry
+ */
+
+void
+weechat_cmd_ignore_display (char *text, t_irc_ignore *ptr_ignore)
+{
+    if (text)
+        gui_printf (NULL, "%s ", text);
+    
+    gui_printf (NULL, _("on"));
+    gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, " %s", ptr_ignore->server_name);
+    gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "/");
+    gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "%s", ptr_ignore->channel_name);
+    gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, ":");
+    gui_printf (NULL, _(" ignoring "));
+    gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "%s", ptr_ignore->type);
+    gui_printf (NULL, _(" from "));
+    gui_printf_color (NULL, COLOR_WIN_CHAT_HOST, "%s\n", ptr_ignore->mask);
+}
+
+/*
+ * weechat_cmd_ignore: ignore IRC commands and/or hosts
+ */
+
+int
+weechat_cmd_ignore (int argc, char **argv)
+{
+    t_irc_ignore *ptr_ignore;
+    int i;
+    
+    ptr_ignore = NULL;
+    switch (argc)
+    {
+        case 0:
+            /* List all ignore */
+            if (irc_ignore)
+            {
+                gui_printf (NULL, "\n");
+                gui_printf (NULL, _("List of ignore:\n"));
+                i = 0;
+                for (ptr_ignore = irc_ignore; ptr_ignore;
+                     ptr_ignore = ptr_ignore->next_ignore)
+                {
+                    i++;
+                    gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "[");
+                    gui_printf (NULL, "%d", i);
+                    gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "] ");
+                    weechat_cmd_ignore_display (NULL, ptr_ignore);
+                }
+            }
+            else
+            {
+                irc_display_prefix (NULL, PREFIX_INFO);
+                gui_printf (NULL, _("No ignore defined.\n"));
+            }
+            return 0;
+            break;
+        case 1:
+            ptr_ignore = ignore_add (argv[0], "*", "*",
+                                     (SERVER(gui_current_window->buffer)) ?
+                                     SERVER(gui_current_window->buffer)->name : "*");
+            break;
+        case 2:
+            ptr_ignore = ignore_add (argv[0], argv[1], "*",
+                                     (SERVER(gui_current_window->buffer)) ?
+                                     SERVER(gui_current_window->buffer)->name : "*");
+            break;
+        case 3:
+            ptr_ignore = ignore_add (argv[0], argv[1], argv[2],
+                                     (SERVER(gui_current_window->buffer)) ?
+                                     SERVER(gui_current_window->buffer)->name : "*");
+            break;
+        case 4:
+            ptr_ignore = ignore_add (argv[0], argv[1], argv[2], argv[3]);
+            break;
+    }
+    if (ptr_ignore)
+    {
+        gui_printf (NULL, "\n");
+        weechat_cmd_ignore_display (_("New ignore:"), ptr_ignore);
+        return 0;
+    }
+    else
+        return -1;
 }
 
 /*
@@ -2410,7 +2523,7 @@ weechat_cmd_set (char *arguments)
         {
             section_displayed = 0;
             if ((i != CONFIG_SECTION_KEYS) && (i != CONFIG_SECTION_ALIAS)
-                && (i != CONFIG_SECTION_SERVER))
+                && (i != CONFIG_SECTION_IGNORE) && (i != CONFIG_SECTION_SERVER))
             {
                 for (j = 0; weechat_options[i][j].option_name; j++)
                 {
@@ -2516,6 +2629,69 @@ weechat_cmd_unalias (char *arguments)
     irc_display_prefix (NULL, PREFIX_INFO);
     gui_printf (NULL, _("Alias \"%s\" removed\n"),
                 arguments);
+    return 0;
+}
+
+/*
+ * weechat_cmd_unignore: unignore IRC commands and/or hosts
+ */
+
+int
+weechat_cmd_unignore (int argc, char **argv)
+{
+    char *error;
+    int number, ret;
+    
+    ret = 0;
+    switch (argc)
+    {
+        case 0:
+            /* List all ignore */
+            weechat_cmd_ignore (argc, argv);
+            return 0;
+            break;
+        case 1:
+            error = NULL;
+            number = strtol (argv[0], &error, 10);
+            if ((error) && (error[0] == '\0'))
+                ret = ignore_search_free_by_number (number);
+            else
+                ret = ignore_search_free (argv[0], "*", "*",
+                                    (SERVER(gui_current_window->buffer)) ?
+                                     SERVER(gui_current_window->buffer)->name : "*");
+            break;
+        case 2:
+            ret = ignore_search_free (argv[0], argv[1], "*",
+                                      (SERVER(gui_current_window->buffer)) ?
+                                      SERVER(gui_current_window->buffer)->name : "*");
+            break;
+        case 3:
+            ret = ignore_search_free (argv[0], argv[1], argv[2],
+                                      (SERVER(gui_current_window->buffer)) ?
+                                      SERVER(gui_current_window->buffer)->name : "*");
+            break;
+        case 4:
+            ret = ignore_search_free (argv[0], argv[1], argv[2], argv[3]);
+            break;
+    }
+    
+    if (ret)
+    {
+        irc_display_prefix (NULL, PREFIX_INFO);
+        gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "%d ", ret);
+        if (ret > 1)
+            gui_printf (NULL, _("ignore were removed.\n"));
+        else
+            gui_printf (NULL, _("ignore was removed.\n"));
+    }
+    else
+    {
+        irc_display_prefix (NULL, PREFIX_ERROR);
+        gui_printf (NULL, _("%s no ignore found\n"),
+                    WEECHAT_ERROR);
+        return -1;
+    }
+    
     return 0;
 }
 

@@ -314,7 +314,10 @@ t_irc_nick *
 nick_search (t_irc_channel *channel, char *nickname)
 {
     t_irc_nick *ptr_nick;
-                    
+    
+    if (!nickname)
+        return NULL;
+    
     for (ptr_nick = channel->nicks; ptr_nick;
          ptr_nick = ptr_nick->next_nick)
     {

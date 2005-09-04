@@ -844,6 +844,9 @@ wee_dump (int crash)
         wee_log_printf ("\n");
         gui_buffer_print_log (ptr_buffer);
     }
+
+    wee_log_printf ("\n");
+    ignore_print_log ();
     
     wee_log_printf ("\n");
     wee_log_printf ("******                 End of dump                 ******\n");

@@ -143,7 +143,10 @@ t_irc_channel *
 channel_search (t_irc_server *server, char *channel_name)
 {
     t_irc_channel *ptr_channel;
-                    
+    
+    if (!server || !channel_name)
+        return NULL;
+    
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
@@ -161,6 +164,9 @@ int
 string_is_channel (char *string)
 {
     char first_char[2];
+    
+    if (!string)
+        return 0;
     
     first_char[0] = string[0];
     first_char[1] = '\0';

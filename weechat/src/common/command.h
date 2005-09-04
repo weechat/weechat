@@ -69,6 +69,8 @@ extern int weechat_cmd_connect (int, char **);
 extern int weechat_cmd_debug (int, char **);
 extern int weechat_cmd_disconnect (int, char **);
 extern int weechat_cmd_help (int, char **);
+extern void weechat_cmd_ignore_display (char *, t_irc_ignore *);
+extern int weechat_cmd_ignore (int, char **);
 extern int weechat_cmd_key (char *);
 extern int weechat_cmd_perl (int, char **);
 extern int weechat_cmd_python (int, char **);
@@ -77,6 +79,7 @@ extern int weechat_cmd_save (int, char **);
 extern int weechat_cmd_server (int, char **);
 extern int weechat_cmd_set (char *);
 extern int weechat_cmd_unalias (char *);
+extern int weechat_cmd_unignore (int, char **);
 extern int weechat_cmd_unset (char *);
 extern int weechat_cmd_window (int, char **);
 

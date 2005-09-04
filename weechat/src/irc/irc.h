@@ -203,7 +203,7 @@ struct t_irc_command
                                     /* function called when user enters cmd */
     int (*cmd_function_1arg)(t_irc_server *, char *);
                                     /* function called when user enters cmd */
-    int (*recv_function)(t_irc_server *, char *, char *);
+    int (*recv_function)(t_irc_server *, char *, char *, char *);
                                     /* function called when cmd is received */
 };
 
@@ -218,7 +218,7 @@ struct t_irc_message
     t_irc_message *next_message;    /* link to next message                 */
 };
 
-/* DCC */
+/* DCC types */
 
 typedef struct t_irc_dcc t_irc_dcc;
 
@@ -251,6 +251,30 @@ struct t_irc_dcc
     t_irc_dcc *next_dcc;            /* link to next dcc file/chat           */
 };
 
+/* ignore types */
+
+/* pre-defined ignore types, all other types are made with IRC commands     */
+/* for example:  part  join  quit  notice  invite  ...                      */
+
+#define IGNORE_ACTION  "action"
+#define IGNORE_CTCP    "ctcp"
+#define IGNORE_DCC     "dcc"
+#define IGNORE_PRIVATE "pv"
+
+typedef struct t_irc_ignore t_irc_ignore;
+
+struct t_irc_ignore
+{
+    char *mask;                     /* nickname or mask                     */
+    char *type;                     /* type of ignore                       */
+    char *channel_name;             /* name of channel, "*" == all          */
+    char *server_name;              /* name of server, "*" == all           */
+    t_irc_ignore *prev_ignore;      /* pointer to previous ignore           */
+    t_irc_ignore *next_ignore;      /* pointer to next ignore               */
+};
+
+/* variables */
+
 extern t_irc_command irc_commands[];
 extern t_irc_server *irc_servers;
 extern t_irc_message *recv_msgq, *msgq_last_msg;
@@ -258,6 +282,9 @@ extern int check_away;
 extern t_irc_dcc *dcc_list;
 extern char *dcc_status_string[6];
 extern char *channel_modes;
+extern char *ignore_types[];
+extern t_irc_ignore *irc_ignore;
+extern t_irc_ignore *irc_last_ignore;
 
 /* server functions (irc-server.c) */
 
@@ -414,57 +441,67 @@ extern int irc_cmd_send_who (t_irc_server *, char *);
 extern int irc_cmd_send_whois (t_irc_server *, char *);
 extern int irc_cmd_send_whowas (t_irc_server *, char *);
 /* IRC commands executed when received from server */
-extern int irc_cmd_recv_error (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_invite (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_join (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_kick (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_kill (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_mode (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_nick (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_notice (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_part (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_ping (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_pong (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_privmsg (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_quit (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_server_msg (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_server_reply (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_topic (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_001 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_004 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_301 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_302 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_303 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_305 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_306 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_307 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_311 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_312 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_313 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_314 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_315 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_317 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_318 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_319 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_320 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_321 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_322 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_323 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_324 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_329 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_331 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_332 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_333 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_341 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_351 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_352 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_353 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_365 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_366 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_367 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_368 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_433 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_438 (t_irc_server *, char *, char *);
-extern int irc_cmd_recv_671 (t_irc_server *, char *, char *);
+extern int irc_cmd_recv_error (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_invite (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_join (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_kick (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_kill (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_mode (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_nick (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_notice (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_part (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_ping (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_pong (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_privmsg (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_quit (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_server_msg (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_server_reply (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_topic (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_001 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_004 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_301 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_302 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_303 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_305 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_306 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_307 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_311 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_312 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_313 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_314 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_315 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_317 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_318 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_319 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_320 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_321 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_322 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_323 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_324 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_329 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_331 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_332 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_333 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_341 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_351 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_352 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_353 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_365 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_366 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_367 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_368 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_433 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_438 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_671 (t_irc_server *, char *, char *, char *);
+
+/* ignore functions (irc-ignore.c) */
+
+extern int ignore_check (char *, char *, char *, char *);
+extern t_irc_ignore *ignore_add (char *, char *, char *, char *);
+extern t_irc_ignore *ignore_add_from_config (char *);
+extern void ignore_free_all ();
+extern int ignore_search_free (char *, char *, char *, char *);
+extern int ignore_search_free_by_number (int);
+extern void ignore_print_log ();
 
 #endif /* irc.h */

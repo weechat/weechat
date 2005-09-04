@@ -384,8 +384,6 @@ t_irc_command irc_commands[] =
     "", "", 0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_error },
   { "406", N_("was no such nick"),
     "", "", 0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_error },
-  { "406", N_("was no such nick"),
-    "", "", 0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_error },
   { "407", N_("was no such nick"),
     "", "", 0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_error },
   { "409", N_("no origin"),

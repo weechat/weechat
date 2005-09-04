@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2005-08-16
+TODO - 2005-09-04
 
 Legend:
   #  done
@@ -30,6 +30,7 @@ v0.1.5:
  * WeeChat commands
     - be able to bind a key on more than one command
     - be able to make an alias running more than one command
+    # /ignore and /unignore commands
 
  * Configuration:
     - be able to launch more than one command when connecting to server
@@ -42,8 +43,6 @@ Future versions:
     - customizable CTCP version reply
     - complete "/list" command: add regexp search, display only channels that
       match regexp
-    - "/ignore" and "/unignore" commands: hide all that is write by a given
-      nick/host
     - when we're away, WeeChat should log all the lines begenning by our nick.
       When we come back from our away it should print it to the current window
     - "/notify" and "/unnotify" command to be warn by WeeChat when a given
