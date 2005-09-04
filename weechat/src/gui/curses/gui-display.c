@@ -1045,7 +1045,7 @@ gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
                                 x++;
                             }
                             gui_window_set_color (ptr_win->win_nick,
-                                                  (ptr_nick->is_away) ?
+                                                  ((cfg_irc_away_check > 0) && (ptr_nick->is_away)) ?
                                                   COLOR_WIN_NICK_AWAY : COLOR_WIN_NICK);
                             mvwprintw (ptr_win->win_nick, y, x, format, ptr_nick->nick);
                             
