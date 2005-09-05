@@ -36,7 +36,7 @@
 
 @title WeeChat - Guia do Utilizador
 @subtitle Cliente de IRC rapido, leve e extencivel
-@subtitle Documenta@,{c}@~ao do WeeChat v0.1.4 - 30 de Julho de 2005
+@subtitle Documenta@,{c}@~ao do WeeChat v0.1.5-cvs - 5 de Setembro de 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -341,6 +341,12 @@ Type: color (Curses or Gtk color), default value: 'lightcyan'@*
 @item col_chat_prefix2
 Color for middle char of prefix@*
 Type: color (Curses or Gtk color), default value: 'white'@*
+@item col_chat_join
+Color for join arrow (prefix)@*
+Type: color (Curses or Gtk color), default value: 'lightgreen'@*
+@item col_chat_part
+Color for part/quit arrow (prefix)@*
+Type: color (Curses or Gtk color), default value: 'lightred'@*
 @item col_chat_nick
 Color for nicks in actions (chat window)@*
 Type: color (Curses or Gtk color), default value: 'lightcyan'@*
@@ -368,9 +374,12 @@ Type: color (Curses or Gtk color), default value: 'cyan'@*
 @item col_status_data_msg
 Color for window with new messages (status bar)@*
 Type: color (Curses or Gtk color), default value: 'yellow'@*
+@item col_status_private
+Color for window with private message (status bar)@*
+Type: color (Curses or Gtk color), default value: 'lightmagenta'@*
 @item col_status_highlight
 Color for window with highlight (status bar)@*
-Type: color (Curses or Gtk color), default value: 'lightmagenta'@*
+Type: color (Curses or Gtk color), default value: 'lightred'@*
 @item col_status_data_other
 Color for window with new data (not messages) (status bar)@*
 Type: color (Curses or Gtk color), default value: 'default'@*
@@ -515,6 +524,9 @@ Type: integer (values: between 0 and 2147483647), default value: 5@*
 @item irc_fifo_pipe
 Create a FIFO pipe for remote control@*
 Type: boolean (values: 'on' or 'off'), default value: 'off'@*
+@item irc_highlight
+Comma separated list of words to highlight (case insensitive comparison)@*
+Type: string (any string), default value: ''@*
 @item dcc_auto_accept_files
 Automatically accept incoming dcc files@*
 Type: boolean (values: 'on' or 'off'), default value: 'off'@*
@@ -612,7 +624,7 @@ Type: string (any string), default value: ''@*
 Delay (in seconds) after command was executed (example: give some time for authentication)@*
 Type: integer (values: between 0 and 5), default value: 0@*
 @item server_autojoin
-Comma separated list of channels to join when connected to server@*
+Comma separated list of channels to join when connected to server (example: "#chan1,#chan2,#chan3 #key1,#key2")@*
 Type: string (any string), default value: ''@*
 @item server_autorejoin
 Automatically rejoin channels when kicked@*
@@ -816,6 +828,19 @@ display help about commands@*
 @*
 command: name of a WeeChat or IRC command@*
 @*
+@item ignore  [mask [[type | command] [channel [server]]]]
+@*
+ignore IRC messages and/or hosts@*
+@*
+   mask: nick or host mask to ignore@*
+   type: type of message to ignore (action, ctcp, dcc, pv)@*
+command: IRC command@*
+channel: name of channel for ignore@*
+ server: name of server for ignore@*
+@*
+For each argument, '*' means all.@*
+Without argument, /ignore command lists all defined ignore.@*
+@*
 @item key  [key function/command] [unbind key] [functions] [reset -yes]
 @*
 bind/unbind keys@*
@@ -830,6 +855,7 @@ reset: restore bindings to the default values and delete ALL personal binding (u
 list/load/unload Perl scripts@*
 @*
 filename: Perl script (file) to load@*
+@*
 Without argument, /perl command lists all loaded Perl scripts.@*
 @*
 @item python  [load filename] | [autoload] | [reload] | [unload]
@@ -837,7 +863,16 @@ Without argument, /perl command lists all loaded Perl scripts.@*
 list/load/unload Python scripts@*
 @*
 filename: Python script (file) to load@*
+@*
 Without argument, /python command lists all loaded Python scripts.@*
+@*
+@item ruby  [load filename] | [autoload] | [reload] | [unload]
+@*
+list/load/unload Ruby scripts@*
+@*
+filename: Ruby script (file) to load@*
+@*
+Without argument, /ruby command lists all loaded Ruby scripts.@*
 @*
 @item server  [servername] | [servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 [nick2 [nick3]]] [-username username] [-realname realname] [-command command] [-autojoin channel[,channel]] ] | [del servername]
 @*
@@ -874,6 +909,20 @@ remove an alias@*
 @*
 alias_name: name of alias to remove@*
 @*
+@item unignore  [number | [mask [[type | command] [channel [server]]]]]
+@*
+unignore IRC messages and/or hosts@*
+@*
+ number: # of ignore to unignore (number is displayed by list of ignore)@*
+   mask: nick or host mask to unignore@*
+   type: type of message to unignore (action, ctcp, dcc, pv)@*
+command: IRC command@*
+channel: name of channel for unignore@*
+ server: name of server for unignore@*
+@*
+For each argument, '*' means all.@*
+Without argument, /unignore command lists all defined ignore.@*
+@*
 @item window  [list | splith | splitv | [merge [down | up | left | right | all]]]
 @*
 manage windows@*
@@ -894,6 +943,12 @@ find information about the administrator of the server@*
 @*
 target: server@*
 @*
+@item amsg  text
+@*
+send message to all channels of all connected servers@*
+@*
+text: text to send@*
+@*
 @item away  [-all] [message]
 @*
 toggle away status@*
@@ -908,12 +963,13 @@ bans nicks or hosts@*
 channel: channel for ban@*
 nickname: user or host to ban@*
 @*
-@item ctcp  nickname type
+@item ctcp  nickname type [arguments]
 @*
-send a ctcp message@*
+send a CTCP message (Client-To-Client Protocol)@*
 @*
-nickname: user to send ctcp to@*
-type: "action" or "version"@*
+nickname: user to send CTCP to@*
+type: CTCP type (examples: "version", "ping", ..)@*
+arguments: arguments for CTCP@*
 @*
 @item dcc  action [nickname [file]]
 @*
@@ -923,15 +979,15 @@ action: 'send' (file) or 'chat' or 'close' (chat)@*
 nickname: nickname to send file or chat@*
 file: filename (on local host)@*
 @*
-@item dehalfop  nickname [nickname]
+@item dehalfop  [nickname [nickname]]
 @*
 removes half channel operator status from nickname(s)@*
 @*
-@item deop  nickname [nickname]
+@item deop  [nickname [nickname]]
 @*
 removes channel operator status from nickname(s)@*
 @*
-@item devoice  nickname [nickname]
+@item devoice  [nickname [nickname]]
 @*
 removes voice from nickname(s)@*
 @*
@@ -939,7 +995,7 @@ removes voice from nickname(s)@*
 @*
 shutdown the server@*
 @*
-@item halfop  nickname [nickname]
+@item halfop  [nickname [nickname]]
 @*
 gives half channel operator status to nickname(s)@*
 @*
@@ -1222,7 +1278,7 @@ gives the version info of nick or server (current or specified)@*
 server: server name@*
 nickname: nickname@*
 @*
-@item voice  nickname [nickname]
+@item voice  [nickname [nickname]]
 @*
 gives voice to nickname(s)@*
 @*
@@ -1277,6 +1333,10 @@ delete entire line@*
 delete previous word@*
 @item delete_next_word
 delete next word@*
+@item clipboard_paste
+paste current clipboard content@*
+@item transpose_chars
+transpose chars@*
 @item home
 go to beginning of line@*
 @item end
@@ -1291,8 +1351,12 @@ move one char right@*
 move to next word@*
 @item up
 call previous command in history@*
+@item up_global
+call previous command in global history@*
 @item down
 call next command in history@*
+@item down_global
+call next command in global history@*
 @item page_up
 scroll one page up@*
 @item page_down
@@ -1313,6 +1377,8 @@ refresh screen@*
 jump to buffer with activity@*
 @item jump_dcc
 jump to DCC buffer@*
+@item jump_last_buffer
+jump to last buffer@*
 @item jump_server
 jump to server buffer@*
 @item jump_next_server

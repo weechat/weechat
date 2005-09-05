@@ -36,7 +36,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.4 - 30 Juillet 2005
+@subtitle Documentation pour WeeChat v0.1.5-cvs - 5 Septembre 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -344,6 +344,12 @@ Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightcyan'@*
 @item col_chat_prefix2
 Couleur pour le caract@`ere du milieu du pr@'efixe@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'white'@*
+@item col_chat_join
+Couleur pour la fl@`eche du join (pr@'efixe)@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightgreen'@*
+@item col_chat_part
+Couleur pour la fl@`eche du part/quit (pr@'efixe)@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightred'@*
 @item col_chat_nick
 Couleur pour les noms d'utilisateurs dans les actions (fen@^etre de discussion)@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightcyan'@*
@@ -371,9 +377,12 @@ Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'cyan'@*
 @item col_status_data_msg
 Couleur pour une fen@^etre avec de nouvelles infos (barre de statut)@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'yellow'@*
+@item col_status_private
+Couleur pour une fen@^etre avec un message priv@'e (barre de statut)@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightmagenta'@*
 @item col_status_highlight
 Couleur pour une fen@^etre avec un highlight (barre de statut)@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightmagenta'@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightred'@*
 @item col_status_data_other
 Couleur pour une fen@^etre avec des nouvelles donn@'ees (pas des infos) (barre de statut)@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
@@ -518,6 +527,9 @@ Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 5@*
 @item irc_fifo_pipe
 Cr@'eer un tube FIFO pour le contr@^ole @`a distance@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
+@item irc_highlight
+Liste des mots pour la notification (s@'epar@'es par des virgules, le comparaison ne tient pas compte de la casse)@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
 @item dcc_auto_accept_files
 Accepte automatiquement les fichiers dcc entrants@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
@@ -615,7 +627,7 @@ Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
 D@'elai (en secondes) apr@`es ex@'ecution de la commande (exemple: donner du temps pour l'authentification)@*
 Type: entier (valeurs: entre 0 et 5), valeur par d@'efaut: 0@*
 @item server_autojoin
-Liste des canaux (s@'epar@'es par des virgules) @`a rejoindre lorsque connect@'e au serveur@*
+Liste des canaux (s@'epar@'es par des virgules) @`a rejoindre lorsque connect@'e au serveur (exemple: "#chan1,#chan2,#chan3 #key1,#key2")@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
 @item server_autorejoin
 Rejoindre automatiquement les canaux quand mis dehors@*
@@ -819,6 +831,19 @@ afficher l'aide sur les commandes@*
 @*
 commande: nom d'une commande WeeChat ou IRC@*
 @*
+@item ignore  [masque [[type | commande] [canal [serveur]]]]
+@*
+ignorer des messages IRC et/ou des masques@*
+@*
+  masque: pseudo ou masque @`a ignorer@*
+    type: type de message @`a ignorer (action, ctcp, dcc, pv)@*
+commande: commande IRC@*
+   canal: nom du canal pour le ignore@*
+ serveur: nom du serveur pour le ignore@*
+@*
+Pour chaque param@`etre, '*' signifie tou(te)s.@*
+Sans param@`etre, la commande /ignore liste les ignore d@'efinis.@*
+@*
 @item key  [touche fonction/commande] [unbind touche] [functions] [reset -yes]
 @*
 associer/lib@'erer des touches@*
@@ -833,6 +858,7 @@ reset: restaur les touches aux valeurs par d@'efaut et supprime TOUTES les touch
 liste/charge/d@'echarge des scripts Perl@*
 @*
 fichier: script Perl (fichier) @`a charger@*
+@*
 Sans param@`etre, la commande /perl liste tous les scripts Perl charg@'es.@*
 @*
 @item python  [load fichier] | [autoload] | [reload] | [unload]
@@ -840,7 +866,16 @@ Sans param@`etre, la commande /perl liste tous les scripts Perl charg@'es.@*
 liste/charge/d@'echarge des scripts Python@*
 @*
 fichier: script Python (fichier) @`a charger@*
+@*
 Sans param@`etre, la commande /python liste tous les scripts Python charg@'es.@*
+@*
+@item ruby  [load fichier] | [autoload] | [reload] | [unload]
+@*
+liste/charge/d@'echarge des scripts Ruby@*
+@*
+fichier: script Ruby (fichier) @`a charger@*
+@*
+Sans param@`etre, la commande /ruby liste tous les scripts Ruby charg@'es.@*
 @*
 @item server  [nom_serveur] | [nom_serveur nom/IP port [-auto | -noauto] [-ipv6] [-ssl] [-pwd mot_de_passe] [-nicks pseudo1 [pseudo2 [pseudo3]]] [-username nom_utilisateur] [-realname nom_r@'eel] [-command commande] [-autojoin canal[,canal]] ] | [del nom_serveur]
 @*
@@ -877,6 +912,20 @@ supprimer un alias@*
 @*
 nom_alias: nom de l'alias @`a supprimer@*
 @*
+@item unignore  [nombre | [masque [[type | commande] [canal [serveur]]]]]
+@*
+supprimer le ignore des messages IRC et/ou des masques@*
+@*
+  nombre: num@'ero de ignore @`a supprimer (le nombre est affich@'e sur la liste des ignore)@*
+  masque: pseudo ou masque @`a ignorer@*
+    type: type de message @`a ignorer (action, ctcp, dcc, pv)@*
+commande: commande IRC@*
+   canal: nom du canal pour le ignore@*
+ serveur: nom du serveur pour le ignore@*
+@*
+Pour chaque param@`etre, '*' signifie tou(te)s.@*
+Sans param@`etre, /ignore liste les ignore d@'efinis.@*
+@*
 @item window  [list | splith | splitv | [merge [down | up | left | right | all]]]
 @*
 gestion des fen@^etres@*
@@ -897,6 +946,12 @@ trouver les informations sur l'administrateur du serveur@*
 @*
 cible: serveur@*
 @*
+@item amsg  texte
+@*
+envoyer un message @`a tous les canaux de tous les serveurs connect@'es@*
+@*
+texte: texte @`a envoyer@*
+@*
 @item away  [-all] [message]
 @*
 basculer le statut absent@*
@@ -911,12 +966,13 @@ bannit des pseudos ou masques@*
 canal: nom du canal pour le bannissement@*
 pseudo: pseudo ou masque pour le bannissement@*
 @*
-@item ctcp  pseudo type
+@item ctcp  pseudo type [arguments]
 @*
-envoyer un message ctcp@*
+envoyer un message CTCP (Client-To-Client Protocol)@*
 @*
-pseudo: utilisateur pour envoyer le ctcp@*
-type: "action" ou "version"@*
+pseudo: utilisateur @`a qui envoyer le CTCP@*
+type: type de CTCP (exemples: "version", "ping", etc...)@*
+arguments: arguments pour le CTCP@*
 @*
 @item dcc  action [pseudo [fichier]]
 @*
@@ -926,15 +982,15 @@ action: 'send' (envoi de fichier) ou 'chat' (discussion) ou 'close' (fermeture d
 pseudo: pseudo pour envoyer le fichier ou discuter@*
 fichier: nom du fichier (sur la machine locale)@*
 @*
-@item dehalfop  pseudo [pseudo]
+@item dehalfop  [pseudo [pseudo]]
 @*
 retire le statut de demi-op@'erateur du canal @`a/aux nick(s)@*
 @*
-@item deop  pseudo [pseudo]
+@item deop  [pseudo [pseudo]]
 @*
 retire le statut d'op@'erateur du canal @`a/aux nick(s)@*
 @*
-@item devoice  pseudo [pseudo]
+@item devoice  [pseudo [pseudo]]
 @*
 retire la voix du/des pseudo(s)@*
 @*
@@ -942,7 +998,7 @@ retire la voix du/des pseudo(s)@*
 @*
 arr@^eter le serveur@*
 @*
-@item halfop  pseudo [pseudo]
+@item halfop  [pseudo [pseudo]]
 @*
 donner le statut de demi-op@'erateur @`a un/des utilisateur(s)@*
 @*
@@ -1225,7 +1281,7 @@ retourne la version de l'utilisateur ou du serveur (courant ou sp@'ecifi@'e)@*
 serveur: nom du serveur@*
 pseudo: utilisateur@*
 @*
-@item voice  pseudo [pseudo]
+@item voice  [pseudo [pseudo]]
 @*
 donne la voix @`a/aux utilisateur(s)@*
 @*
@@ -1280,6 +1336,10 @@ effacer la ligne enti@`ere@*
 effacer le mot pr@'ec@'edent@*
 @item delete_next_word
 effacer le mot suivant@*
+@item clipboard_paste
+coller le contenu du presse-papier@*
+@item transpose_chars
+inverser les caract@`eres@*
 @item home
 aller au d@'ebut de la ligne@*
 @item end
@@ -1294,8 +1354,12 @@ se d@'eplacer d'un caract@`ere @`a droite@*
 se d@'eplacer au mot suivant@*
 @item up
 appeler la commande pr@'ec@'edente dans l'historique@*
+@item up_global
+appeler la commande pr@'ec@'edente dans l'historique global@*
 @item down
 appeler la commande suivante dans l'historique@*
+@item down_global
+appeler la commande suivante dans l'historique global@*
 @item page_up
 faire d@'efiler d'une page vers le haut@*
 @item page_down
@@ -1316,6 +1380,8 @@ rafraichir l'@'ecran@*
 sauter au tampon avec de l'activit@'e@*
 @item jump_dcc
 sauter au tampon DCC@*
+@item jump_last_buffer
+sauter au dernier tampon@*
 @item jump_server
 sauter au tampon du serveur@*
 @item jump_next_server
