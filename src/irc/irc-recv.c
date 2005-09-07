@@ -3315,20 +3315,35 @@ irc_cmd_recv_329 (t_irc_server *server, char *host, char *nick, char *arguments)
 int
 irc_cmd_recv_331 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
-    char *pos;
+    char *pos_channel, *pos;
     t_irc_channel *ptr_channel;
     
     /* make gcc happy */
     (void) server;
-    (void) host;
     (void) nick;
     
     if (!command_ignored)
     {
-        pos = strchr (arguments, ' ');
-        if (pos)
-            pos[0] = '\0';
-        ptr_channel = channel_search (server, arguments);
+        pos_channel = strchr (arguments, ' ');
+        if (pos_channel)
+        {
+            pos_channel++;
+            while (pos_channel[0] == ' ')
+                pos_channel++;
+            pos = strchr (pos_channel, ' ');
+            if (pos)
+                pos[0] = '\0';
+        }
+        else
+        {
+            irc_display_prefix (server->buffer, PREFIX_ERROR);
+            gui_printf_nolog (server->buffer,
+                              _("%s channel \"%s\" not found for \"%s\" command\n"),
+                              WEECHAT_ERROR, "", "331");
+            return -1;
+        }
+        
+        ptr_channel = channel_search (server, pos_channel);
         if (ptr_channel)
         {
             command_ignored |= ignore_check (host, "331", ptr_channel->name, server->name);
@@ -3338,7 +3353,7 @@ irc_cmd_recv_331 (t_irc_server *server, char *host, char *nick, char *arguments)
                 gui_printf_color (ptr_channel->buffer,
                                   COLOR_WIN_CHAT, _("No topic set for "));
                 gui_printf_color (ptr_channel->buffer,
-                                  COLOR_WIN_CHAT_CHANNEL, "%s\n", arguments);
+                                  COLOR_WIN_CHAT_CHANNEL, "%s\n", pos_channel);
             }
         }
         else
@@ -3346,7 +3361,7 @@ irc_cmd_recv_331 (t_irc_server *server, char *host, char *nick, char *arguments)
             irc_display_prefix (server->buffer, PREFIX_ERROR);
             gui_printf_nolog (server->buffer,
                               _("%s channel \"%s\" not found for \"%s\" command\n"),
-                              WEECHAT_ERROR, arguments, "331");
+                              WEECHAT_ERROR, pos_channel, "331");
             return -1;
         }
     }
@@ -3628,7 +3643,6 @@ irc_cmd_recv_352 (t_irc_server *server, char *host, char *nick, char *arguments)
     t_irc_nick *ptr_nick;
     
     /* make gcc happy */
-    (void) host;
     (void) nick;
     
     pos_channel = strchr (arguments, ' ');
@@ -3866,7 +3880,6 @@ irc_cmd_recv_366 (t_irc_server *server, char *host, char *nick, char *arguments)
     int num_nicks, num_op, num_halfop, num_voice, num_normal;
     
     /* make gcc happy */
-    (void) host;
     (void) nick;
     
     pos = strchr (arguments, ' ');
@@ -3998,7 +4011,6 @@ irc_cmd_recv_367 (t_irc_server *server, char *host, char *nick, char *arguments)
     time_t datetime;
     
     /* make gcc happy */
-    (void) host;
     (void) nick;
     
     /* look for channel */
@@ -4112,7 +4124,6 @@ irc_cmd_recv_368 (t_irc_server *server, char *host, char *nick, char *arguments)
     t_gui_buffer *buffer;
     
     /* make gcc happy */
-    (void) host;
     (void) nick;
     
     pos_channel = strchr (arguments, ' ');
