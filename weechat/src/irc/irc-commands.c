@@ -302,6 +302,7 @@ t_irc_command irc_commands[] =
   { "020", N_("a server message"),        "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
   { "212", N_("a server message"),        "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
   { "219", N_("a server message"),        "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
+  { "221", N_("user mode string"),        "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_221 },
   { "250", N_("a server message"),        "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
   { "251", N_("a server message"),        "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
   { "252", N_("a server message"),        "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },

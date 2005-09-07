@@ -170,10 +170,7 @@ irc_recv_command (t_irc_server *server, char *entire_line,
     if (irc_commands[i].recv_function != NULL)
     {
         command_ignored = ignore_check (host, irc_commands[i].command_name, NULL, server->name);
-        if (host)
-            pos = strchr (host, '!');
-        else
-            pos = NULL;
+        pos = (host) ? strchr (host, '!') : NULL;
         if (pos)
             pos[0] = '\0';
         nick = (host) ? strdup (host) : NULL;
@@ -2319,6 +2316,49 @@ irc_cmd_recv_004 (t_irc_server *server, char *host, char *nick, char *arguments)
     }
     
     return 0;
+}
+
+/*
+ * irc_cmd_recv_221: '221' command (user mode string)
+ */
+
+int
+irc_cmd_recv_221 (t_irc_server *server, char *host, char *nick, char *arguments)
+{
+    char *pos_mode;
+    
+    /* make gcc happy */
+    (void) server;
+    (void) host;
+    (void) nick;
+    
+    pos_mode = strchr (arguments, ' ');
+    if (pos_mode)
+    {
+        pos_mode[0] = '\0';
+        pos_mode++;
+        while (pos_mode[0] == ' ')
+            pos_mode++;
+        
+        if (!command_ignored)
+        {
+            irc_display_prefix (server->buffer, PREFIX_SERVER);
+            gui_printf_color (server->buffer, COLOR_WIN_CHAT, _("User mode"));
+            gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, " [");
+            gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK, "%s", arguments);
+            gui_printf_color (server->buffer, COLOR_WIN_CHAT, "/");
+            gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK, pos_mode);
+            gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, "]\n");
+        }
+    }
+    else
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s cannot parse \"%s\" command\n"),
+                          WEECHAT_ERROR, "221");
+        return -1;
+    }
 }
 
 /*

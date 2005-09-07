@@ -663,8 +663,8 @@ server_msgq_flush ()
                     case -3:
                         irc_display_prefix (recv_msgq->server->buffer, PREFIX_ERROR);
                         gui_printf (recv_msgq->server->buffer,
-                                    _("%s Unknown command: cmd=%s, args=%s\n"),
-                                    WEECHAT_WARNING, command, args);
+                                    _("%s Unknown command: cmd=%s, host=%s, args=%s\n"),
+                                    WEECHAT_WARNING, command, host, args);
                         break;
                 }
                 
