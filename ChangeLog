@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-09-04
+ChangeLog - 2005-09-07
 
 
 Version 0.1.5 (under dev!):
+   * fixed DCC display bug (now decodes string according to charset)
    * added /ignore and /unignore commands
    * fixed bug with strings comparison (str[n]casecmp) and some locales
      (like turkish), now using ASCII comparison (thanks to roktas)

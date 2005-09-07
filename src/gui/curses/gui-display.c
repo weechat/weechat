@@ -691,7 +691,7 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
     char *unit_format[] = { "%.0Lf", "%.1Lf", "%.02Lf", "%.02Lf" };
     long unit_divide[] = { 1, 1024, 1024*1024, 1024*1024,1024 };
     int num_unit;
-    char format[32], date[128];
+    char format[32], date[128], *buf;
     struct tm *date_tmp;
     
     if (!gui_ok)
@@ -728,11 +728,16 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                     gui_window_set_color (ptr_win->win_chat,
                                           (ptr_dcc == dcc_selected) ?
                                           COLOR_DCC_SELECTED : COLOR_WIN_CHAT);
-                    mvwprintw (ptr_win->win_chat, i, 0, "%s %-16s %s",
+                    mvwprintw (ptr_win->win_chat, i, 0, "%s %-16s ",
                                (ptr_dcc == dcc_selected) ? "***" : "   ",
-                               ptr_dcc->nick,
-                               (DCC_IS_CHAT(ptr_dcc->type)) ?
-                               _(ptr_dcc->filename) : ptr_dcc->filename);
+                               ptr_dcc->nick);
+                    buf = weechat_convert_encoding (cfg_look_charset_decode,
+                                                    (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
+                                                    cfg_look_charset_internal : local_charset,
+                                                    (DCC_IS_CHAT(ptr_dcc->type)) ?
+                                                    _(ptr_dcc->filename) : ptr_dcc->filename);
+                    wprintw (ptr_win->win_chat, "%s", buf);
+                    free (buf);
                     if (DCC_IS_FILE(ptr_dcc->type))
                     {
                         if (ptr_dcc->filename_suffix > 0)
@@ -749,8 +754,12 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                                (DCC_IS_RECV(ptr_dcc->type)) ? "-->>" : "<<--");
                     gui_window_set_color (ptr_win->win_chat,
                                           COLOR_DCC_WAITING + ptr_dcc->status);
-                    wprintw (ptr_win->win_chat, "%-10s",
-                             _(dcc_status_string[ptr_dcc->status]));
+                    buf = weechat_convert_encoding (cfg_look_charset_decode,
+                                                    (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
+                                                    cfg_look_charset_internal : local_charset,
+                                                    _(dcc_status_string[ptr_dcc->status]));
+                    wprintw (ptr_win->win_chat, "%-10s", buf);
+                    free (buf);
                     
                     /* other infos */
                     gui_window_set_color (ptr_win->win_chat,
@@ -796,9 +805,14 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                         else
                             num_unit = 3;
                         sprintf (format, "  (%s %%s/s)", unit_format[num_unit]);
+                        buf = weechat_convert_encoding (cfg_look_charset_decode,
+                                                        (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
+                                                        cfg_look_charset_internal : local_charset,
+                                                        unit_name[num_unit]);
                         wprintw (ptr_win->win_chat, format,
                                  ((long double) ptr_dcc->bytes_per_sec) / ((long double)(unit_divide[num_unit])),
-                                 unit_name[num_unit]);
+                                 buf);
+                        free (buf);
                     }
                     else
                     {
