@@ -2897,6 +2897,7 @@ irc_cmd_recv_315 (t_irc_server *server, char *host, char *nick, char *arguments)
         }
         if (!command_ignored)
         {
+            irc_display_prefix (server->buffer, PREFIX_SERVER);
             gui_printf_color (server->buffer, COLOR_WIN_CHAT_CHANNEL, "%s", arguments);
             gui_printf (server->buffer, " %s\n", pos);
         }
@@ -2904,7 +2905,10 @@ irc_cmd_recv_315 (t_irc_server *server, char *host, char *nick, char *arguments)
     else
     {
         if (!command_ignored)
+        {
+            irc_display_prefix (server->buffer, PREFIX_SERVER);
             gui_printf (server->buffer, "%s\n", arguments);
+        }
     }
     return 0;
 }
@@ -3625,6 +3629,93 @@ irc_cmd_recv_341 (t_irc_server *server, char *host, char *nick, char *arguments)
                           _("%s cannot identify nickname for \"%s\" command\n"),
                           WEECHAT_ERROR, "341");
         return -1;
+    }
+    return 0;
+}
+
+/*
+ * irc_cmd_recv_344: '344' command (channel reop)
+ */
+
+int
+irc_cmd_recv_344 (t_irc_server *server, char *host, char *nick, char *arguments)
+{
+    char *pos_channel, *pos_host;
+    
+    /* make gcc happy */
+    (void) host;
+    (void) nick;
+
+    if (!command_ignored)
+    {
+        pos_channel = strchr (arguments, ' ');
+        if (pos_channel)
+        {
+            while (pos_channel[0] == ' ')
+                pos_channel++;
+            pos_host = strchr (pos_channel, ' ');
+            if (pos_host)
+            {
+                pos_host[0] = '\0';
+                pos_host++;
+                while (pos_host[0] == ' ')
+                    pos_host++;
+                
+                irc_display_prefix (server->buffer, PREFIX_SERVER);
+                gui_printf_color (server->buffer,
+                                  COLOR_WIN_CHAT, _("Channel reop"));
+                gui_printf_color (server->buffer,
+                                  COLOR_WIN_CHAT_CHANNEL, " %s", pos_channel);
+                gui_printf_color (server->buffer,
+                                  COLOR_WIN_CHAT, ": ");
+                gui_printf_color (server->buffer,
+                                  COLOR_WIN_CHAT_HOST, "%s\n", pos_host);
+            }
+        }
+    }
+    return 0;
+}
+
+/*
+ * irc_cmd_recv_345: '345' command (end of channel reop)
+ */
+
+int
+irc_cmd_recv_345 (t_irc_server *server, char *host, char *nick, char *arguments)
+{
+    char *pos;
+    
+    /* make gcc happy */
+    (void) host;
+    (void) nick;
+    
+    /* skip nickname if at beginning of server message */
+    if (strncmp (server->nick, arguments, strlen (server->nick)) == 0)
+    {
+        arguments += strlen (server->nick) + 1;
+        while (arguments[0] == ' ')
+            arguments++;
+    }
+    
+    pos = strchr (arguments, ' ');
+    if (pos)
+    {
+        pos[0] = '\0';
+        pos++;
+        if (!command_ignored)
+        {
+            irc_display_prefix (server->buffer, PREFIX_SERVER);
+            gui_printf_color (server->buffer, COLOR_WIN_CHAT_CHANNEL, "%s", arguments);
+            gui_printf (server->buffer, " %s\n", pos);
+        }
+    }
+    else
+    {
+        if (!command_ignored)
+        {
+            irc_display_prefix (server->buffer, PREFIX_SERVER);
+            gui_printf (server->buffer, "%s\n", arguments);
+        }
     }
     return 0;
 }
