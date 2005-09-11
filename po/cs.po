@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.1.5-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2005-09-10 10:40+0200\n"
-"PO-Revision-Date: 2005-09-10 10:48+0200\n"
+"PO-Revision-Date: 2005-09-11 15:40+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -961,7 +961,7 @@ msgstr "zpráva serveru"
 
 #: src/irc/irc-commands.c:306
 msgid "user mode string"
-msgstr ""
+msgstr "řetězec uživatelského módu"
 
 #: src/irc/irc-commands.c:327
 msgid "away message"
@@ -1069,11 +1069,11 @@ msgstr "pozvání"
 
 #: src/irc/irc-commands.c:357
 msgid "channel reop"
-msgstr ""
+msgstr "reop kanálu"
 
 #: src/irc/irc-commands.c:358
 msgid "end of channel reop list"
-msgstr ""
+msgstr "konec seznamu lidí při opnutých při reopu kanálu"
 
 #: src/irc/irc-commands.c:359
 msgid "server version"
@@ -1305,7 +1305,7 @@ msgstr "nemůžeš zabít server!"
 
 #: src/irc/irc-commands.c:469
 msgid "your connection is restricted!"
-msgstr ""
+msgstr "tvé připojení je omezené"
 
 #: src/irc/irc-commands.c:471
 msgid "user is immune from kick/deop"
@@ -1689,7 +1689,7 @@ msgstr " zrušil téma pro "
 
 #: src/irc/irc-recv.c:2346
 msgid "User mode"
-msgstr ""
+msgstr "Uživatelský mód"
 
 #: src/irc/irc-recv.c:2399
 #, c-format
@@ -1786,7 +1786,7 @@ msgstr "na"
 
 #: src/irc/irc-recv.c:3666
 msgid "Channel reop"
-msgstr ""
+msgstr "reop kanálu"
 
 #: src/irc/irc-recv.c:3982
 #, c-format
@@ -2032,31 +2032,31 @@ msgstr "Ruším aktivní DCC: \"%s\" od %s\n"
 #: src/irc/irc-ignore.c:195
 #, c-format
 msgid "%s too few arguments for ignore\n"
-msgstr ""
+msgstr "%s příliš málo argumentů pro ignorování\n"
 
 #: src/irc/irc-ignore.c:212
 #, c-format
 msgid "%s mask or type/command should be non generic value for ignore\n"
-msgstr ""
+msgstr "%s maska nebo typ/příkaz by neměla být obecná hodnota pro ignorování\n"
 
 #: src/irc/irc-ignore.c:221
 #, c-format
 msgid "%s ignore already exists\n"
-msgstr ""
+msgstr "%s ignorování již existuje\n"
 
 #: src/irc/irc-ignore.c:257
 #, c-format
 msgid "%s unknown type or IRC command \"%s\" for ignore\n"
-msgstr ""
+msgstr "%s neznámý typ nebo IRC příkaz \"%s\" pro ignorování\n"
 
 #: src/irc/irc-ignore.c:285
 #, c-format
 msgid "%s not enough memory to create ignore\n"
-msgstr ""
+msgstr "%s nedostatek paměti pro vytvoření ignorování\n"
 
 #: src/irc/irc-ignore.c:406 src/irc/irc-ignore.c:442
 msgid "Removing ignore:"
-msgstr ""
+msgstr "Odebírám ignorování:"
 
 #: src/plugins/perl/wee-perl.c:88 src/plugins/perl/wee-perl.c:463
 #: src/plugins/python/wee-python.c:81 src/plugins/ruby/wee-ruby.c:89
@@ -2338,18 +2338,16 @@ msgid "call previous command in history"
 msgstr "zavolej předchozí příkaz v historii"
 
 #: src/gui/gui-keyboard.c:81
-#, fuzzy
 msgid "call previous command in global history"
-msgstr "zavolej předchozí příkaz v historii"
+msgstr "zavolej předchozí příkaz v globální historii"
 
 #: src/gui/gui-keyboard.c:83
 msgid "call next command in history"
 msgstr "zavolej další příkaz v historii"
 
 #: src/gui/gui-keyboard.c:85
-#, fuzzy
 msgid "call next command in global history"
-msgstr "zavolej další příkaz v historii"
+msgstr "zavolej další příkaz v globální historii"
 
 #: src/gui/gui-keyboard.c:87
 msgid "scroll one page up"
@@ -2534,11 +2532,11 @@ msgstr "příkaz: jméno WeeChat nebo IRC příkazu"
 
 #: src/common/command.c:75
 msgid "ignore IRC messages and/or hosts"
-msgstr ""
+msgstr "ignoruje IRC příkaz a/nebo hosta"
 
 #: src/common/command.c:76
 msgid "[mask [[type | command] [channel [server]]]]"
-msgstr ""
+msgstr "[maska [[typ | příkaz] [kanál [server]]]]"
 
 #: src/common/command.c:77
 msgid ""
@@ -2551,6 +2549,14 @@ msgid ""
 "For each argument, '*' means all.\n"
 "Without argument, /ignore command lists all defined ignore."
 msgstr ""
+" maska: přezdívka nebo maska hosta pro ignorování\n"
+"   typ: typ zprávy pro ignorování (action, ctcp, dcc, pv)\n"
+"příkaz: IRC příkaz\n"
+" kanál: jméno kanálu pro ignorování\n"
+"server: jméno serveru pro ignorování\n"
+"\n"
+"Pro každý argument, znamená '*' vše.\n"
+"Bez arumentů vypíše příkaz /ignore seznam všech definovaných ignorování."
 
 #: src/common/command.c:85
 msgid "bind/unbind keys"
@@ -2610,7 +2616,7 @@ msgstr ""
 
 #: src/common/command.c:102
 msgid "list/load/unload Ruby scripts"
-msgstr ""
+msgstr "vypíše/načte/zruší Ruby skripty"
 
 #: src/common/command.c:104
 msgid ""
@@ -2618,6 +2624,9 @@ msgid ""
 "\n"
 "Without argument, /ruby command lists all loaded Ruby scripts."
 msgstr ""
+"jméno_souboru: Ruby skript (soubor) pro načtení\n"
+"\n"
+"Bez argumentů, vypíše příkaz /ruby seznam všech načtených ruby skriptů."
 
 #: src/common/command.c:107
 msgid "list, add or remove servers"
@@ -2703,11 +2712,11 @@ msgstr "jméno_aliasu: jméno aliasu pro odebrání"
 
 #: src/common/command.c:134
 msgid "unignore IRC messages and/or hosts"
-msgstr ""
+msgstr "zruší ignorování IRC zprávy a/nebo hosta"
 
 #: src/common/command.c:135
 msgid "[number | [mask [[type | command] [channel [server]]]]]"
-msgstr ""
+msgstr "[číslo | [maska [[typ | příkaz] [kanál [server]]]]]"
 
 #: src/common/command.c:136
 msgid ""
@@ -2721,6 +2730,16 @@ msgid ""
 "For each argument, '*' means all.\n"
 "Without argument, /unignore command lists all defined ignore."
 msgstr ""
+" číslo: číslo ignorování pro zrušení ignorování (je zobrazeno v seznamu "
+"ignorování)\n"
+" maska: přezdívka nebo maska hosta pro zrušení ignorování\n"
+"   typ: typ zprávy pro zrušení ignorování (action, ctcp, dcc, pv)\n"
+"příkaz: IRC příkaz\n"
+" kanál: jméno kanálu pro zrušení ignorování\n"
+" server: jméno serveru pro zrušení ignorování\n"
+"\n"
+"Pro každý argument znamená '*' všechno.\n"
+"Bez argunetů, vypíše příkaz /unignore seznam definovaných ignorací."
 
 #: src/common/command.c:145
 msgid "manage windows"
@@ -2932,19 +2951,19 @@ msgstr "Není dostupná žádná nápověda, \"%s\" je neznámý příkaz\n"
 
 #: src/common/command.c:1395
 msgid " ignoring "
-msgstr ""
+msgstr " ignoruji "
 
 #: src/common/command.c:1419
 msgid "List of ignore:\n"
-msgstr ""
+msgstr "Seznam ignorování:\n"
 
 #: src/common/command.c:1434
 msgid "No ignore defined.\n"
-msgstr ""
+msgstr "Žádné ignorování není definováno.\n"
 
 #: src/common/command.c:1460
 msgid "New ignore:"
-msgstr ""
+msgstr "Nové ignorování:"
 
 #: src/common/command.c:1479
 msgid "New key binding:\n"
@@ -3041,6 +3060,9 @@ msgid ""
 "WeeChat was build without Ruby support.\n"
 "Please rebuild WeeChat with \"--enable-ruby\" option for ./configure script\n"
 msgstr ""
+"WeeChat byl přeložen bez podpory Ruby.\n"
+"Prosím přeložte WeeChat znovu s \"--enable-ruby\" volbou pro ./configure "
+"skript\n"
 
 #: src/common/command.c:2066
 msgid "No server.\n"
@@ -3176,16 +3198,16 @@ msgstr "Alias \"%s\" odebrán\n"
 
 #: src/common/command.c:2683
 msgid "ignore were removed.\n"
-msgstr ""
+msgstr "ignorování bylo odebráno.\n"
 
 #: src/common/command.c:2685
 msgid "ignore was removed.\n"
-msgstr ""
+msgstr "ignorování bylo odebrán\n"
 
 #: src/common/command.c:2690
 #, c-format
 msgid "%s no ignore found\n"
-msgstr ""
+msgstr "%s žádné ignorování nenaleyeno\n"
 
 #: src/common/command.c:2713
 msgid "Opened windows:\n"
@@ -4203,6 +4225,8 @@ msgid ""
 "comma separated list of channels to join when connected to server (example: "
 "\"#chan1,#chan2,#chan3 #key1,#key2\")"
 msgstr ""
+"čárkou rozdělený seznam kanálů na které přistoupit po připojení na server "
+"(příklad: \"#kanál1,#kanál2,#kanál3 #klíč1,#klíč2\")"
 
 #: src/common/weeconfig.c:746 src/common/weeconfig.c:747
 msgid "automatically rejoin channels when kicked"
@@ -4278,7 +4302,7 @@ msgstr "%s %s, řádek %d: nevalidní volba \"%s\"\n"
 #: src/common/weeconfig.c:1443
 #, c-format
 msgid "%s %s, line %d: invalid ignore options \"%s\"\n"
-msgstr ""
+msgstr "%s %s, řádek %d: nevalidní volba \"%s\" pro ignorování\n"
 
 #: src/common/weeconfig.c:1474
 #, c-format
