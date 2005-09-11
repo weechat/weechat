@@ -2359,6 +2359,8 @@ irc_cmd_recv_221 (t_irc_server *server, char *host, char *nick, char *arguments)
                           WEECHAT_ERROR, "221");
         return -1;
     }
+    
+    return 0;
 }
 
 /*
