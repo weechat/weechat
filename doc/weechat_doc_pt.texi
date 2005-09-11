@@ -36,7 +36,7 @@
 
 @title WeeChat - Guia do Utilizador
 @subtitle Cliente de IRC rapido, leve e extencivel
-@subtitle Documenta@,{c}@~ao do WeeChat v0.1.5-cvs - 5 de Setembro de 2005
+@subtitle Documenta@,{c}@~ao do WeeChat v0.1.5-cvs - 11 de Setembro de 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -710,6 +710,9 @@ Executa o comando ou envia a mensagem@*
 @*
 @item Seta para cima / Seta para baixo
 Repetir os ultimos comandos/mensagens@*
+@*
+@item Ctrl + up arrow / Ctrl + down arrow
+Call again last commands/messages in global history@*
 @*
 @item PageUp / PageDown
 Navegar no hist@'orico da janela@*
