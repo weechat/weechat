@@ -1,12 +1,15 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-WeeChat known bugs, 2005-07-30
+WeeChat known bugs, 2005-09-11
 
+- infinite loop when displaying some messages (very rare, but important bug)
+- when scrolling back in history, if a new message is displayed, screen moves
+- color display problems when term has white background
+- ./configure does not check that Ruby libraries are installed
 - ./configure does not check that Gtk 2.0 libraries are installed
 - when quitting WeeChat term title is not restored (if look_set_title is ON)
 - command name for /server can not contain spaces
-- wrong alias is not created and not saved when quitting WeeChat
 - when many WeeChat are launched, log file is not properly written (cleared by
   each WeeChat at startup)
 - display problems with old Konsole versions (Kde terminal) (???)
