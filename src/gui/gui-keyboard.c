@@ -513,7 +513,7 @@ gui_key_pressed (char *key_str)
                               gui_current_window->buffer,
                               ptr_key->command);
             else
-                (void)(ptr_key->function)();
+                (void)(ptr_key->function)(gui_current_window);
         }
         return 0;
     }

@@ -272,7 +272,8 @@ struct t_gui_key
 {
     char *key;                      /* key combo (ex: a, ^W, ^W^C, meta-a)  */
     char *command;                  /* associated command (may be NULL)     */
-    void (*function)();             /* associated function (if cmd is NULL) */
+    void (*function)(t_gui_window *);
+                                    /* associated function (if cmd is NULL) */
     t_gui_key *prev_key;            /* link to previous key                 */
     t_gui_key *next_key;            /* link to next key                     */
 };
@@ -319,42 +320,42 @@ extern void gui_buffer_free (t_gui_buffer *, int);
 extern t_gui_line *gui_new_line (t_gui_buffer *);
 extern t_gui_message *gui_new_message (t_gui_buffer *);
 extern void gui_input_clipboard_copy (char *, int);
-extern void gui_input_clipboard_paste ();
-extern void gui_input_insert_string (char *, int);
-extern void gui_input_insert_char ();
-extern void gui_input_return ();
-extern void gui_input_tab ();
-extern void gui_input_backspace ();
-extern void gui_input_delete ();
-extern void gui_input_delete_previous_word ();
-extern void gui_input_delete_next_word ();
-extern void gui_input_delete_begin_of_line ();
-extern void gui_input_delete_end_of_line ();
-extern void gui_input_delete_line ();
-extern void gui_input_transpose_chars ();
-extern void gui_input_home ();
-extern void gui_input_end ();
-extern void gui_input_left ();
-extern void gui_input_previous_word ();
-extern void gui_input_right ();
-extern void gui_input_next_word ();
-extern void gui_input_up ();
-extern void gui_input_up_global ();
-extern void gui_input_down ();
-extern void gui_input_down_global ();
-extern void gui_input_jump_smart ();
-extern void gui_input_jump_dcc ();
-extern void gui_input_jump_last_buffer ();
-extern void gui_input_jump_server ();
-extern void gui_input_jump_next_server ();
-extern void gui_input_hotlist_clear ();
-extern void gui_input_infobar_clear ();
-extern void gui_input_grab_key ();
-extern void gui_switch_to_previous_buffer ();
-extern void gui_switch_to_next_buffer ();
-extern void gui_switch_to_previous_window ();
-extern void gui_switch_to_next_window ();
-extern void gui_switch_to_dcc_buffer ();
+extern void gui_input_clipboard_paste (t_gui_window *);
+extern void gui_input_insert_string (t_gui_window *, char *, int);
+extern void gui_input_insert_char (t_gui_window *, int);
+extern void gui_input_return (t_gui_window *);
+extern void gui_input_tab (t_gui_window *);
+extern void gui_input_backspace (t_gui_window *);
+extern void gui_input_delete (t_gui_window *);
+extern void gui_input_delete_previous_word (t_gui_window *);
+extern void gui_input_delete_next_word (t_gui_window *);
+extern void gui_input_delete_begin_of_line (t_gui_window *);
+extern void gui_input_delete_end_of_line (t_gui_window *);
+extern void gui_input_delete_line (t_gui_window *);
+extern void gui_input_transpose_chars (t_gui_window *);
+extern void gui_input_home (t_gui_window *);
+extern void gui_input_end (t_gui_window *);
+extern void gui_input_left (t_gui_window *);
+extern void gui_input_previous_word (t_gui_window *);
+extern void gui_input_right (t_gui_window *);
+extern void gui_input_next_word (t_gui_window *);
+extern void gui_input_up (t_gui_window *);
+extern void gui_input_up_global (t_gui_window *);
+extern void gui_input_down (t_gui_window *);
+extern void gui_input_down_global (t_gui_window *);
+extern void gui_input_jump_smart (t_gui_window *);
+extern void gui_input_jump_dcc (t_gui_window *);
+extern void gui_input_jump_last_buffer (t_gui_window *);
+extern void gui_input_jump_server (t_gui_window *);
+extern void gui_input_jump_next_server (t_gui_window *);
+extern void gui_input_hotlist_clear (t_gui_window *);
+extern void gui_input_infobar_clear (t_gui_window *);
+extern void gui_input_grab_key (t_gui_window *);
+extern void gui_switch_to_previous_buffer (t_gui_window *);
+extern void gui_switch_to_next_buffer (t_gui_window *);
+extern void gui_switch_to_previous_window (t_gui_window *);
+extern void gui_switch_to_next_window (t_gui_window *);
+extern void gui_switch_to_dcc_buffer (t_gui_window *);
 extern t_gui_buffer *gui_switch_to_buffer_by_number (t_gui_window *, int);
 extern void gui_move_buffer_to_number (t_gui_window *, int);
 extern void gui_window_print_log (t_gui_window *);

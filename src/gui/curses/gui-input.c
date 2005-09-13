@@ -143,7 +143,7 @@ gui_input_grab_end ()
     {
         if (gui_current_window->buffer->has_input)
         {
-            gui_input_insert_string (expanded_key, -1);
+            gui_input_insert_string (gui_current_window, expanded_key, -1);
             gui_current_window->buffer->input_buffer_pos += strlen (expanded_key);
             gui_draw_buffer_input (gui_current_window->buffer, 1);
         }
@@ -225,7 +225,7 @@ gui_input_read ()
         /*gui_printf (gui_current_window->buffer, "gui_input_read: key = %s (%d)\n", key_str, key);*/
         
         if (gui_key_pressed (key_str) != 0)
-            gui_input_insert_char (key);
+            gui_input_insert_char (gui_current_window, key);
         
         i++;
     }

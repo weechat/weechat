@@ -2771,9 +2771,9 @@ weechat_cmd_window (int argc, char **argv)
                 gui_window_merge_auto (gui_current_window);
         }
         else if (ascii_strcasecmp (argv[0], "-1") == 0)
-            gui_switch_to_previous_window ();
+            gui_switch_to_previous_window (gui_current_window);
         else if (ascii_strcasecmp (argv[0], "+1") == 0)
-            gui_switch_to_next_window ();
+            gui_switch_to_next_window (gui_current_window);
         else
         {
             irc_display_prefix (NULL, PREFIX_ERROR);
