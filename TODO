@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2005-09-04
+TODO - 2005-09-13
 
 Legend:
   #  done
@@ -56,6 +56,7 @@ Future versions:
 
  * Interface:
     - color for nicks (except own nick) when nick colors are disabled
+    - allow decode/encode charsets for servers or chan (not globally)
     - interpret special chars in messages (color & bold for example)
     - understand incomplete commands if unambigous (for example: /he for /help is ok)
     ? Qt GUI
