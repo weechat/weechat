@@ -288,8 +288,7 @@ gui_buffer_clear (t_gui_buffer *buffer)
         }
     }
     
-    if (buffer == gui_current_window->buffer)
-        gui_draw_buffer_chat (buffer, 1);
+    gui_draw_buffer_chat (buffer, 1);
 }
 
 /*
