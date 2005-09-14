@@ -525,7 +525,8 @@ gui_display_word (t_gui_window *window, t_gui_line *line,
         
         /* end of word? */
         if (!message || (message->prev_message == end_msg) ||
-            ((message == end_msg) && (offset > end_offset)))
+            ((message == end_msg) && (offset > end_offset)) ||
+            (window->win_chat_cursor_y >= window->win_chat_height))
             end_of_word = 1;
     }
         
@@ -646,16 +647,21 @@ gui_display_line (t_gui_window *window, t_gui_line *line, int count, int simulat
                               word_end_msg, word_end_offset,
                               num_lines, count, &lines_displayed, simulate);
             
-            /* move pointer after end of word */
-            ptr_message = word_end_msg;
-            offset = word_end_offset;
-            gui_message_get_next_char (&ptr_message, &offset);
-            
-            /* skip leading spaces? */
-            if (skip_spaces)
+            if (window->win_chat_cursor_y >= window->win_chat_height)
+                ptr_message = NULL;
+            else
             {
-                while (ptr_message && (ptr_message->message[offset] == ' '))
-                    gui_message_get_next_char (&ptr_message, &offset);
+                /* move pointer after end of word */
+                ptr_message = word_end_msg;
+                offset = word_end_offset;
+                gui_message_get_next_char (&ptr_message, &offset);
+                
+                /* skip leading spaces? */
+                if (skip_spaces)
+                {
+                    while (ptr_message && (ptr_message->message[offset] == ' '))
+                        gui_message_get_next_char (&ptr_message, &offset);
+                }
             }
         }
         else
