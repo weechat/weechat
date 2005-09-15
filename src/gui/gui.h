@@ -260,7 +260,8 @@ struct t_gui_window
     t_gui_buffer *buffer;           /* buffer currently displayed in window */
     
     int first_line_displayed;       /* = 1 if first line is displayed       */
-    int sub_lines;                  /* if > 0 then do not display until end */
+    t_gui_line *start_line;         /* pointer to line if scrolling         */
+    int start_line_pos;             /* position in first line displayed     */
     
     t_gui_window *prev_window;      /* link to previous window              */
     t_gui_window *next_window;      /* link to next window                  */
@@ -391,13 +392,13 @@ extern void gui_draw_buffer_infobar (t_gui_buffer *, int);
 extern void gui_draw_buffer_input (t_gui_buffer *, int);
 extern void gui_redraw_buffer (t_gui_buffer *);
 extern void gui_switch_to_buffer (t_gui_window *, t_gui_buffer *);
-extern t_gui_buffer *gui_get_dcc_buffer ();
-extern void gui_input_page_up ();
-extern void gui_input_page_down ();
-extern void gui_input_nick_beginning ();
-extern void gui_input_nick_end ();
-extern void gui_input_nick_page_up ();
-extern void gui_input_nick_page_down ();
+extern t_gui_buffer *gui_get_dcc_buffer (t_gui_window *);
+extern void gui_input_page_up (t_gui_window *);
+extern void gui_input_page_down (t_gui_window *);
+extern void gui_input_nick_beginning (t_gui_window *);
+extern void gui_input_nick_end (t_gui_window *);
+extern void gui_input_nick_page_up (t_gui_window *);
+extern void gui_input_nick_page_down (t_gui_window *);
 extern void gui_curses_resize_handler ();
 extern void gui_window_init_subwindows (t_gui_window *);
 extern void gui_window_split_horiz (t_gui_window *);

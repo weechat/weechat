@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-09-14
+ChangeLog - 2005-09-15
 
 
 Version 0.1.5 (under dev!):
+   * fixed scroll problem (screen moving when scrolling and new line
+     displayed)
    * fixed infinite loop when scrolling back and displaying long lines
    * fixed crash when closing a buffer used by more than one window
    * added some missing IRC commands

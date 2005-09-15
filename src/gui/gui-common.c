@@ -115,7 +115,8 @@ gui_window_new (int x, int y, int width, int height)
         new_window->buffer = NULL;
         
         new_window->first_line_displayed = 0;
-        new_window->sub_lines = 0;
+        new_window->start_line = NULL;
+        new_window->start_line_pos = 0;
         
         /* add window to windows queue */
         new_window->prev_window = last_gui_window;
@@ -179,7 +180,8 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int dcc,
         {
             window->buffer = new_buffer;
             window->first_line_displayed = 1;
-            window->sub_lines = 0;
+            window->start_line = NULL;
+            window->start_line_pos = 0;
             gui_calculate_pos_size (window);
             gui_window_init_subwindows (window);
         }
@@ -284,7 +286,8 @@ gui_buffer_clear (t_gui_buffer *buffer)
         if (ptr_win->buffer == buffer)
         {
             ptr_win->first_line_displayed = 1;
-            ptr_win->sub_lines = 0;
+            ptr_win->start_line = NULL;
+            ptr_win->start_line_pos = 0;
         }
     }
     
@@ -1867,7 +1870,8 @@ gui_window_print_log (t_gui_window *window)
     wee_log_printf ("  dcc_last_displayed. : 0x%X\n", window->dcc_last_displayed);
     wee_log_printf ("  buffer. . . . . . . : 0x%X\n", window->buffer);
     wee_log_printf ("  first_line_displayed: %d\n",   window->first_line_displayed);
-    wee_log_printf ("  sub_lines . . . . . : %d\n",   window->sub_lines);
+    wee_log_printf ("  start_line. . . . . : 0x%X\n", window->start_line);
+    wee_log_printf ("  start_line_pos. . . : %d\n",   window->start_line_pos);
     wee_log_printf ("  prev_window . . . . : 0x%X\n", window->prev_window);
     wee_log_printf ("  next_window . . . . : 0x%X\n", window->next_window);
     

@@ -594,9 +594,6 @@ gui_display_line (t_gui_window *window, t_gui_line *line, int count, int simulat
     int word_length_with_spaces, word_length;
     int skip_spaces;
     
-    if (window->win_chat_cursor_y > window->win_chat_height - 1)
-        return 0;
-    
     if (simulate)
     {
         x = window->win_chat_cursor_x;
@@ -607,6 +604,8 @@ gui_display_line (t_gui_window *window, t_gui_line *line, int count, int simulat
     }
     else
     {
+        if (window->win_chat_cursor_y > window->win_chat_height - 1)
+            return 0;
         x = window->win_chat_cursor_x;
         y = window->win_chat_cursor_y;
         num_lines = gui_display_line (window, line, 0, 1);
@@ -682,6 +681,105 @@ gui_display_line (t_gui_window *window, t_gui_line *line, int count, int simulat
 }
 
 /*
+ * gui_calculate_line_diff: returns pointer to line & offset for a difference
+ *                          with given line
+ */
+
+void
+gui_calculate_line_diff (t_gui_window *window, t_gui_line **line, int *line_pos,
+                         int difference)
+{
+    int backward, current_size;
+    
+    if (!line || !line_pos)
+        return;
+    
+    backward = (difference < 0);
+    
+    if (!(*line))
+    {
+        /* if looking backward, start at last line of buffer */
+        if (backward)
+        {
+            *line = window->buffer->last_line;
+            if (!(*line))
+                return;
+            current_size = gui_display_line (window, *line, 0, 1);
+            if (current_size == 0)
+                current_size = 1;
+            *line_pos = current_size - 1;
+        }
+        /* if looking forward, start at first line of buffer */
+        else
+        {
+            *line = window->buffer->lines;
+            if (!(*line))
+                return;
+            *line_pos = 0;
+            current_size = gui_display_line (window, *line, 0, 1);
+        }
+    }
+    else
+        current_size = gui_display_line (window, *line, 0, 1);
+    
+    while ((*line) && (difference != 0))
+    {
+        /* looking backward */
+        if (backward)
+        {
+            if (*line_pos > 0)
+                (*line_pos)--;
+            else
+            {
+                *line = (*line)->prev_line;
+                if (*line)
+                {
+                    current_size = gui_display_line (window, *line, 0, 1);
+                    if (current_size == 0)
+                        current_size = 1;
+                    *line_pos = current_size - 1;
+                }
+            }
+            difference++;
+        }
+        /* looking forward */
+        else
+        {
+            if (*line_pos < current_size - 1)
+                (*line_pos)++;
+            else
+            {
+                *line = (*line)->next_line;
+                if (*line)
+                {
+                    current_size = gui_display_line (window, *line, 0, 1);
+                    if (current_size == 0)
+                        current_size = 1;
+                    *line_pos = 0;
+                }
+            }
+            difference--;
+        }
+    }
+    
+    /* first or last line reached */
+    if (!(*line))
+    {
+        if (backward)
+        {
+            /* first line reached */
+            *line = window->buffer->lines;
+            *line_pos = 0;
+        }
+        else
+        {
+            /* last line reached => consider we'll display all until the end */
+            *line_pos = 0;
+        }
+    }
+}
+
+/*
  * gui_draw_buffer_chat: draw chat window for a buffer
  */
 
@@ -692,7 +790,7 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
     t_gui_line *ptr_line;
     t_irc_dcc *dcc_first, *dcc_selected, *ptr_dcc;
     char format_empty[32];
-    int i, j, lines_used, num_bars;
+    int i, j, line_pos, count, num_bars;
     char *unit_name[] = { N_("bytes"), N_("Kb"), N_("Mb"), N_("Gb") };
     char *unit_format[] = { "%.0Lf", "%.1Lf", "%.02Lf", "%.02Lf" };
     long unit_divide[] = { 1, 1024, 1024*1024, 1024*1024,1024 };
@@ -835,46 +933,54 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
             }
             else
             {
-                ptr_line = buffer->last_line;
-                lines_used = 0;
                 ptr_win->win_chat_cursor_x = 0;
                 ptr_win->win_chat_cursor_y = 0;
-                while (ptr_line
-                    && (lines_used < (ptr_win->win_chat_height + ptr_win->sub_lines)))
+                
+                /* display at position of scrolling */
+                if (ptr_win->start_line)
                 {
-                    lines_used += gui_display_line (ptr_win, ptr_line, 0, 1);
-                    ptr_line = ptr_line->prev_line;
+                    ptr_line = ptr_win->start_line;
+                    line_pos = ptr_win->start_line_pos;
                 }
-                if (lines_used > (ptr_win->win_chat_height + ptr_win->sub_lines))
+                else
                 {
-                    /* screen will be full (we'll display only end of 1st line) */
-                    ptr_line = (ptr_line) ? ptr_line->next_line : buffer->lines;
+                    /* look for first line to display, sarting from last line */
+                    ptr_line = NULL;
+                    line_pos = 0;
+                    gui_calculate_line_diff (ptr_win, &ptr_line, &line_pos,
+                                             (-1) * (ptr_win->win_chat_height - 1));
+                }
+
+                if (line_pos > 0)
+                {
+                    /* display end of first line at top of screen */
                     gui_display_line (ptr_win, ptr_line,
                                       gui_display_line (ptr_win, ptr_line, 0, 1) -
-                                      (lines_used - (ptr_win->win_chat_height + ptr_win->sub_lines)), 0);;
+                                      line_pos, 0);
                     ptr_line = ptr_line->next_line;
                     ptr_win->first_line_displayed = 0;
                 }
                 else
-                {
-                    /* all lines are displayed */
-                    if (!ptr_line)
-                    {
-                        ptr_win->first_line_displayed = 1;
-                        ptr_line = buffer->lines;
-                    }
-                    else
-                    {
-                        ptr_win->first_line_displayed = 0;
-                        ptr_line = ptr_line->next_line;
-                    }
-                }
+                    ptr_win->first_line_displayed =
+                        (ptr_line == ptr_win->buffer->lines);
                 
                 /* display lines */
+                count = 0;
                 while (ptr_line && (ptr_win->win_chat_cursor_y <= ptr_win->win_chat_height - 1))
                 {
-                    gui_display_line (ptr_win, ptr_line, 0, 0);
+                    count = gui_display_line (ptr_win, ptr_line, 0, 0);
                     ptr_line = ptr_line->next_line;
+                }
+                
+                /* check if last line of buffer is entirely displayed and scrolling */
+                /* if so, disable scroll (to remove status bar indicator) */
+                if (!ptr_line && ptr_win->start_line)
+                {
+                    if (count == gui_display_line (ptr_win, ptr_win->buffer->last_line, 0, 1))
+                    {
+                        ptr_win->start_line = NULL;
+                        ptr_win->start_line_pos = 0;
+                    }
                 }
                 
                 /* cursor is below end line of chat window? */
@@ -1360,7 +1466,7 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
         if (x < 0)
             x = 0;
         gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS_MORE);
-        if (ptr_win->sub_lines > 0)
+        if (ptr_win->start_line)
             mvwprintw (ptr_win->win_status, 0, x, "%s", string);
         else
         {
@@ -1762,7 +1868,8 @@ gui_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
     else
         window->win_status = newwin (1, window->win_width, window->win_y + window->win_height - 2, window->win_x);
     
-    window->sub_lines = 0;
+    window->start_line = NULL;
+    window->start_line_pos = 0;
     
     buffer->num_displayed++;
     
@@ -1774,7 +1881,7 @@ gui_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
  */
 
 t_gui_buffer *
-gui_get_dcc_buffer ()
+gui_get_dcc_buffer (t_gui_window *window)
 {
     t_gui_buffer *ptr_buffer;
     
@@ -1787,7 +1894,7 @@ gui_get_dcc_buffer ()
     if (ptr_buffer)
         return ptr_buffer;
     else
-        return gui_buffer_new (gui_current_window, NULL, NULL, 1, 0);
+        return gui_buffer_new (window, NULL, NULL, 1, 0);
 }
 
 /*
@@ -1795,17 +1902,20 @@ gui_get_dcc_buffer ()
  */
 
 void
-gui_input_page_up ()
+gui_input_page_up (t_gui_window *window)
 {
     if (!gui_ok)
         return;
     
-    if (!gui_current_window->first_line_displayed)
+    if (!window->first_line_displayed)
     {
-        gui_current_window->sub_lines +=
-            gui_current_window->win_chat_height - 1;
-        gui_draw_buffer_chat (gui_current_window->buffer, 0);
-        gui_draw_buffer_status (gui_current_window->buffer, 0);
+        gui_calculate_line_diff (window, &window->start_line,
+                                 &window->start_line_pos,
+                                 (window->start_line) ?
+                                 (-1) * (window->win_chat_height - 1) :
+                                 (-1) * ((window->win_chat_height - 1) * 2));
+        gui_draw_buffer_chat (window->buffer, 0);
+        gui_draw_buffer_status (window->buffer, 0);
     }
 }
 
@@ -1814,19 +1924,34 @@ gui_input_page_up ()
  */
 
 void
-gui_input_page_down ()
+gui_input_page_down (t_gui_window *window)
 {
+    t_gui_line *ptr_line;
+    int line_pos;
+    
     if (!gui_ok)
         return;
     
-    if (gui_current_window->sub_lines > 0)
+    if (window->start_line)
     {
-        gui_current_window->sub_lines -=
-            gui_current_window->win_chat_height - 1;
-        if (gui_current_window->sub_lines < 0)
-            gui_current_window->sub_lines = 0;
-        gui_draw_buffer_chat (gui_current_window->buffer, 0);
-        gui_draw_buffer_status (gui_current_window->buffer, 0);
+        gui_calculate_line_diff (window, &window->start_line,
+                                 &window->start_line_pos,
+                                 window->win_chat_height - 1);
+        
+        /* check if we can display all */
+        ptr_line = window->start_line;
+        line_pos = window->start_line_pos;
+        gui_calculate_line_diff (window, &ptr_line,
+                                 &line_pos,
+                                 window->win_chat_height - 1);
+        if (!ptr_line)
+        {
+            window->start_line = NULL;
+            window->start_line_pos = 0;
+        }
+        
+        gui_draw_buffer_chat (window->buffer, 0);
+        gui_draw_buffer_status (window->buffer, 0);
     }
 }
 
@@ -1835,17 +1960,17 @@ gui_input_page_down ()
  */
 
 void
-gui_input_nick_beginning ()
+gui_input_nick_beginning (t_gui_window *window)
 {
     if (!gui_ok)
         return;
     
-    if (gui_buffer_has_nicklist (gui_current_window->buffer))
+    if (gui_buffer_has_nicklist (window->buffer))
     {
-        if (gui_current_window->win_nick_start > 0)
+        if (window->win_nick_start > 0)
         {
-            gui_current_window->win_nick_start = 0;
-            gui_draw_buffer_nick (gui_current_window->buffer, 1);
+            window->win_nick_start = 0;
+            gui_draw_buffer_nick (window->buffer, 1);
         }
     }
 }
@@ -1855,27 +1980,26 @@ gui_input_nick_beginning ()
  */
 
 void
-gui_input_nick_end ()
+gui_input_nick_end (t_gui_window *window)
 {
     int new_start;
     
     if (!gui_ok)
         return;
     
-    if (gui_buffer_has_nicklist (gui_current_window->buffer))
+    if (gui_buffer_has_nicklist (window->buffer))
     {
         new_start =
-            CHANNEL(gui_current_window->buffer)->nicks_count -
-            gui_current_window->win_nick_height;
+            CHANNEL(window->buffer)->nicks_count - window->win_nick_height;
         if (new_start < 0)
             new_start = 0;
         else if (new_start >= 1)
             new_start++;
         
-        if (new_start != gui_current_window->win_nick_start)
+        if (new_start != window->win_nick_start)
         {
-            gui_current_window->win_nick_start = new_start;
-            gui_draw_buffer_nick (gui_current_window->buffer, 1);
+            window->win_nick_start = new_start;
+            gui_draw_buffer_nick (window->buffer, 1);
         }
     }
 }
@@ -1885,20 +2009,19 @@ gui_input_nick_end ()
  */
 
 void
-gui_input_nick_page_up ()
+gui_input_nick_page_up (t_gui_window *window)
 {
     if (!gui_ok)
         return;
     
-    if (gui_buffer_has_nicklist (gui_current_window->buffer))
+    if (gui_buffer_has_nicklist (window->buffer))
     {
-        if (gui_current_window->win_nick_start > 0)
+        if (window->win_nick_start > 0)
         {
-            gui_current_window->win_nick_start -=
-                (gui_current_window->win_nick_height - 1);
-            if (gui_current_window->win_nick_start <= 1)
-                gui_current_window->win_nick_start = 0;
-            gui_draw_buffer_nick (gui_current_window->buffer, 1);
+            window->win_nick_start -= (window->win_nick_height - 1);
+            if (window->win_nick_start <= 1)
+                window->win_nick_start = 0;
+            gui_draw_buffer_nick (window->buffer, 1);
         }
     }
 }
@@ -1908,26 +2031,22 @@ gui_input_nick_page_up ()
  */
 
 void
-gui_input_nick_page_down ()
+gui_input_nick_page_down (t_gui_window *window)
 {
     if (!gui_ok)
         return;
     
-    if (gui_buffer_has_nicklist (gui_current_window->buffer))
+    if (gui_buffer_has_nicklist (window->buffer))
     {
-        if ((CHANNEL(gui_current_window->buffer)->nicks_count >
-             gui_current_window->win_nick_height)
-            && (gui_current_window->win_nick_start +
-                gui_current_window->win_nick_height - 1
-                < CHANNEL(gui_current_window->buffer)->nicks_count))
+        if ((CHANNEL(window->buffer)->nicks_count > window->win_nick_height)
+            && (window->win_nick_start + window->win_nick_height - 1
+                < CHANNEL(window->buffer)->nicks_count))
         {
-            if (gui_current_window->win_nick_start == 0)
-                gui_current_window->win_nick_start +=
-                    (gui_current_window->win_nick_height - 1);
+            if (window->win_nick_start == 0)
+                window->win_nick_start += (window->win_nick_height - 1);
             else
-                gui_current_window->win_nick_start +=
-                    (gui_current_window->win_nick_height - 2);
-            gui_draw_buffer_nick (gui_current_window->buffer, 1);
+                window->win_nick_start += (window->win_nick_height - 2);
+            gui_draw_buffer_nick (window->buffer, 1);
         }
     }
 }

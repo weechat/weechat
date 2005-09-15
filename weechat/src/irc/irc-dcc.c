@@ -57,10 +57,10 @@ char *dcc_status_string[] =     /* strings for DCC status                   */
 void
 dcc_redraw (int highlight)
 {
-    gui_redraw_buffer (gui_get_dcc_buffer ());
+    gui_redraw_buffer (gui_get_dcc_buffer (gui_current_window));
     if (highlight)
     {
-        hotlist_add (highlight, gui_get_dcc_buffer ());
+        hotlist_add (highlight, gui_get_dcc_buffer (gui_current_window));
         gui_draw_buffer_status (gui_current_window->buffer, 0);
     }
 }
