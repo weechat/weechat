@@ -524,6 +524,42 @@ server_msgq_add_msg (t_irc_server *server, char *msg)
 }
 
 /*
+ * server_msgq_add_unterminated: add an unterminated message to queue
+ */
+
+void
+server_msgq_add_unterminated (t_irc_server *server, char *string)
+{
+    if (server->unterminated_message)
+    {
+        server->unterminated_message =
+            (char *) realloc (server->unterminated_message,
+                              strlen (server->unterminated_message) +
+                              strlen (string) + 1);
+        if (!server->unterminated_message)
+        {
+            irc_display_prefix (server->buffer, PREFIX_ERROR);
+            gui_printf (server->buffer,
+                        _("%s not enough memory for received IRC message\n"),
+                        WEECHAT_ERROR);
+        }
+        else
+            strcat (server->unterminated_message, string);
+    }
+    else
+    {
+        server->unterminated_message = strdup (string);
+        if (!server->unterminated_message)
+        {
+            irc_display_prefix (server->buffer, PREFIX_ERROR);
+            gui_printf (server->buffer,
+                        _("%s not enough memory for received IRC message\n"),
+                        WEECHAT_ERROR);
+        }
+    }
+}
+
+/*
  * server_msgq_add_buffer: explode received buffer, creating queued messages
  */
 
@@ -543,44 +579,27 @@ server_msgq_add_buffer (t_irc_server *server, char *buffer)
         }
         else
         {
-            pos = strstr (buffer, "\n");
-            if (pos)
+            pos = strstr (buffer, "\r");
+            if (pos && !pos[1])
             {
                 pos[0] = '\0';
-                server_msgq_add_msg (server, buffer);
-                buffer = pos + 1;
+                server_msgq_add_unterminated (server, buffer);
+                return;
             }
             else
             {
-                if (server->unterminated_message)
+                pos = strstr (buffer, "\n");
+                if (pos)
                 {
-                    server->unterminated_message =
-                        (char *) realloc (server->unterminated_message,
-                                          strlen (server->unterminated_message) +
-                                          strlen (buffer) + 1);
-                    if (!server->unterminated_message)
-                    {
-                        irc_display_prefix (server->buffer, PREFIX_ERROR);
-                        gui_printf (server->buffer,
-                                    _("%s not enough memory for received IRC message\n"),
-                                    WEECHAT_ERROR);
-                    }
-                    else
-                        strcat (server->unterminated_message, buffer);
+                    pos[0] = '\0';
+                    server_msgq_add_msg (server, buffer);
+                    buffer = pos + 1;
                 }
                 else
                 {
-                    server->unterminated_message = strdup (buffer);
-                    if (!server->unterminated_message)
-                    {
-                        irc_display_prefix (server->buffer, PREFIX_ERROR);
-                        gui_printf (server->buffer,
-                                    _("%s not enough memory for received IRC message\n"),
-                                    WEECHAT_ERROR);
-                    }
+                    server_msgq_add_unterminated (server, buffer);
+                    return;
                 }
-                
-                return;
             }
         }
     }

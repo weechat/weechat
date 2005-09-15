@@ -5,6 +5,7 @@ ChangeLog - 2005-09-15
 
 
 Version 0.1.5 (under dev!):
+   * fixed IRC message parser bug
    * fixed scroll problem (screen moving when scrolling and new line
      displayed)
    * fixed infinite loop when scrolling back and displaying long lines
