@@ -1676,7 +1676,7 @@ gui_switch_to_previous_window (t_gui_window *window)
         return;
     
     gui_current_window = (window->prev_window) ? window->prev_window : last_gui_window;
-    gui_switch_to_buffer (gui_current_window, window->buffer);
+    gui_switch_to_buffer (gui_current_window, gui_current_window->buffer);
     gui_redraw_buffer (gui_current_window->buffer);
 }
 
@@ -1695,7 +1695,7 @@ gui_switch_to_next_window (t_gui_window *window)
         return;
     
     gui_current_window = (window->next_window) ? window->next_window : gui_windows;
-    gui_switch_to_buffer (gui_current_window, window->buffer);
+    gui_switch_to_buffer (gui_current_window, gui_current_window->buffer);
     gui_redraw_buffer (gui_current_window->buffer);
 }
 
