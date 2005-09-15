@@ -292,6 +292,7 @@ gui_buffer_clear (t_gui_buffer *buffer)
     }
     
     gui_draw_buffer_chat (buffer, 1);
+    gui_draw_buffer_status (buffer, 0);
 }
 
 /*
@@ -396,8 +397,17 @@ gui_infobar_remove ()
 void
 gui_line_free (t_gui_line *line)
 {
+    t_gui_window *ptr_win;
     t_gui_message *ptr_message;
-    
+
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        if (ptr_win->start_line == line)
+        {
+            ptr_win->start_line = NULL;
+            ptr_win->start_line_pos = 0;
+        }
+    }
     while (line->messages)
     {
         ptr_message = line->messages->next_message;
@@ -1665,9 +1675,9 @@ gui_switch_to_previous_window (t_gui_window *window)
     if (gui_windows == last_gui_window)
         return;
     
-    window = (window->prev_window) ? window->prev_window : last_gui_window;
-    gui_switch_to_buffer (window, window->buffer);
-    gui_redraw_buffer (window->buffer);
+    gui_current_window = (window->prev_window) ? window->prev_window : last_gui_window;
+    gui_switch_to_buffer (gui_current_window, window->buffer);
+    gui_redraw_buffer (gui_current_window->buffer);
 }
 
 /*
@@ -1684,9 +1694,9 @@ gui_switch_to_next_window (t_gui_window *window)
     if (gui_windows == last_gui_window)
         return;
     
-    window = (window->next_window) ? window->next_window : gui_windows;
-    gui_switch_to_buffer (window, window->buffer);
-    gui_redraw_buffer (window->buffer);
+    gui_current_window = (window->next_window) ? window->next_window : gui_windows;
+    gui_switch_to_buffer (gui_current_window, window->buffer);
+    gui_redraw_buffer (gui_current_window->buffer);
 }
 
 /*
