@@ -334,6 +334,7 @@ void
 dcc_close (t_irc_dcc *ptr_dcc, int status)
 {
     t_gui_buffer *ptr_buffer;
+    struct stat st;
     
     ptr_dcc->status = status;
     
@@ -395,7 +396,14 @@ dcc_close (t_irc_dcc *ptr_dcc, int status)
         && DCC_IS_RECV(ptr_dcc->type)
         && ptr_dcc->local_filename
         && ptr_dcc->pos == 0)
-        unlink (ptr_dcc->local_filename);
+    {
+        /* erase file only if really empty on disk */
+        if (stat (ptr_dcc->local_filename, &st) != -1)
+        {
+            if ((unsigned long) st.st_size == 0)
+                unlink (ptr_dcc->local_filename);
+        }
+    }
     
     if (DCC_IS_CHAT(ptr_dcc->type))
         channel_remove_dcc (ptr_dcc);
