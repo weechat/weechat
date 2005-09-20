@@ -70,6 +70,7 @@ char *cfg_look_charset_encode;
 char *cfg_look_charset_internal;
 char *cfg_look_buffer_timestamp;
 int cfg_look_color_nicks;
+int cfg_look_color_nicks_number;
 int cfg_look_color_actions;
 int cfg_look_remove_colors_from_msgs;
 int cfg_look_nicklist;
@@ -124,6 +125,10 @@ t_config_option weechat_options_look[] =
     N_("display nick names with different colors"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
     NULL, NULL, &cfg_look_color_nicks, NULL, config_change_noop },
+  { "look_color_nicks_number", N_("number of colors to use for nicks colors"),
+    N_("number of colors to use for nicks colors"),
+    OPTION_TYPE_INT, 1, 10, 10,
+    NULL, NULL, &cfg_look_color_nicks_number, NULL, config_change_nicks_colors },
   { "look_color_actions", N_("display actions with different colors"),
     N_("display actions with different colors"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
@@ -229,6 +234,7 @@ int cfg_col_nick_voice;
 int cfg_col_nick_more;
 int cfg_col_nick_sep;
 int cfg_col_nick_self;
+int cfg_col_nick_colors[COLOR_WIN_NICK_NUMBER];
 int cfg_col_nick_private;
 int cfg_col_nick_bg;
 int cfg_col_dcc_selected;
@@ -415,6 +421,46 @@ t_config_option weechat_options_colors[] =
     N_("color for local nick"),
     OPTION_TYPE_COLOR, 0, 0, 0,
     "white", NULL, &cfg_col_nick_self, NULL, &config_change_color },
+  { "col_nick_color1", N_("color for nick"),
+    N_("color for nick"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "cyan", NULL, &cfg_col_nick_colors[0], NULL, &config_change_color },
+  { "col_nick_color2", N_("color for nick"),
+    N_("color for nick"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "magenta", NULL, &cfg_col_nick_colors[1], NULL, &config_change_color },
+  { "col_nick_color3", N_("color for nick"),
+    N_("color for nick"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "green", NULL, &cfg_col_nick_colors[2], NULL, &config_change_color },
+  { "col_nick_color4", N_("color for nick"),
+    N_("color for nick"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "brown", NULL, &cfg_col_nick_colors[3], NULL, &config_change_color },
+  { "col_nick_color5", N_("color for nick"),
+    N_("color for nick"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "lightblue", NULL, &cfg_col_nick_colors[4], NULL, &config_change_color },
+  { "col_nick_color6", N_("color for nick"),
+    N_("color for nick"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "default", NULL, &cfg_col_nick_colors[5], NULL, &config_change_color },
+  { "col_nick_color7", N_("color for nick"),
+    N_("color for nick"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "lightcyan", NULL, &cfg_col_nick_colors[6], NULL, &config_change_color },
+  { "col_nick_color8", N_("color for nick"),
+    N_("color for nick"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "lightmagenta", NULL, &cfg_col_nick_colors[7], NULL, &config_change_color },
+  { "col_nick_color9", N_("color for nick"),
+    N_("color for nick"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "lightgreen", NULL, &cfg_col_nick_colors[8], NULL, &config_change_color },
+  { "col_nick_color10", N_("color for nick"),
+    N_("color for nick"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "blue", NULL, &cfg_col_nick_colors[9], NULL, &config_change_color },
   { "col_nick_private", N_("color for other nick in private window"),
     N_("color for other nick in private window"),
     OPTION_TYPE_COLOR, 0, 0, 0,
@@ -859,7 +905,41 @@ config_change_buffer_content ()
 void
 config_change_color ()
 {
+    t_gui_window *ptr_win;
+    
     gui_init_colors ();
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        gui_redraw_buffer (ptr_win->buffer);
+}
+
+/*
+ * config_change_nicks_colors: called when number of nicks color changed
+ */
+
+void
+config_change_nicks_colors ()
+{
+    t_irc_server *ptr_server;
+    t_irc_channel *ptr_channel;
+    t_irc_nick *ptr_nick;
+    
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        if (ptr_server->is_connected)
+        {
+            for (ptr_channel = ptr_server->channels; ptr_channel;
+                 ptr_channel = ptr_channel->next_channel)
+            {
+                for (ptr_nick = ptr_channel->nicks; ptr_nick;
+                     ptr_nick = ptr_nick->next_nick)
+                {
+                    if (ptr_nick->color != COLOR_WIN_NICK_SELF)
+                        ptr_nick->color = nick_find_color (ptr_nick);
+                }
+            }
+        }
+    }
 }
 
 /*

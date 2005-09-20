@@ -342,6 +342,7 @@ extern void channel_print_log (t_irc_channel *);
 
 /* nick functions (irc-nick.c) */
 
+extern int nick_find_color (t_irc_nick *);
 extern t_irc_nick *nick_new (t_irc_channel *, char *, int, int, int, int, int);
 extern void nick_resort (t_irc_channel *, t_irc_nick *);
 extern void nick_change (t_irc_channel *, t_irc_nick *, char *);

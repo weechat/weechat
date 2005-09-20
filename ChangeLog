@@ -5,6 +5,7 @@ ChangeLog - 2005-09-20
 
 
 Version 0.1.5 (under dev!):
+   * added nicks colors in setup file
    * fixed DCC bug: delete failed file only if really empty (on disk)
    * fixed IRC message parser bug
    * fixed scroll problem (screen moving when scrolling and new line

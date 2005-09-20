@@ -30,6 +30,7 @@
 
 #include "../common/weechat.h"
 #include "irc.h"
+#include "../common/weeconfig.h"
 
 
 /*
@@ -46,7 +47,7 @@ nick_find_color (t_irc_nick *nick)
     {
         color += (int)(nick->nick[i]);
     }
-    color = (color % COLOR_WIN_NICK_NUMBER);
+    color = (color % cfg_look_color_nicks_number);
     
     return COLOR_WIN_NICK_FIRST + color;
 }

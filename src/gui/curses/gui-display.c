@@ -60,10 +60,6 @@ t_gui_color gui_colors[] =
   { NULL, 0 }
 };
 
-char *nicks_colors[COLOR_WIN_NICK_NUMBER] =
-{ "cyan", "magenta", "green", "brown", "lightblue", "default",
-  "lightcyan", "lightmagenta", "lightgreen", "blue" };
-
 int color_attr[NUM_COLORS];
 
 
@@ -2373,7 +2369,7 @@ gui_pre_init (int *argc, char **argv[])
 void
 gui_init_colors ()
 {
-    int i, color;
+    int i;
     
     if (has_colors ())
     {
@@ -2457,9 +2453,8 @@ gui_init_colors ()
         
         for (i = 0; i < COLOR_WIN_NICK_NUMBER; i++)
         {
-            gui_assign_color (&color, nicks_colors[i]);
-            init_pair (COLOR_WIN_NICK_FIRST + i, color, cfg_col_chat_bg);
-            color_attr[COLOR_WIN_NICK_FIRST + i - 1] = (color >= 0) ? color & A_BOLD : 0;
+            init_pair (COLOR_WIN_NICK_FIRST + i, cfg_col_nick_colors[i], cfg_col_chat_bg);
+            color_attr[COLOR_WIN_NICK_FIRST + i - 1] = (cfg_col_nick_colors[i] >= 0) ? cfg_col_nick_colors[i] & A_BOLD : 0;
         }
         
         init_pair (COLOR_DCC_SELECTED,
