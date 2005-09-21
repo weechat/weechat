@@ -36,7 +36,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.5-cvs - 11 Septembre 2005
+@subtitle Documentation pour WeeChat v0.1.5-cvs - 21 Septembre 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -281,6 +281,9 @@ Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '[%H:%M:%S]'@*
 @item look_color_nicks
 Afficher les utilisateurs avec diff@'erentes couleurs@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
+@item look_color_nicks_number
+Nombre de couleurs @`a utiliser pour les couleurs des pseudos@*
+Type: entier (valeurs: entre 1 et 10), valeur par d@'efaut: 10@*
 @item look_color_actions
 Afficher les actions avec diff@'erentes couleurs@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
@@ -446,6 +449,36 @@ Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'blue'@*
 @item col_nick_self
 Couleur pour le pseudo local@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'white'@*
+@item col_nick_color1
+Couleur pour le pseudo@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'cyan'@*
+@item col_nick_color2
+Couleur pour le pseudo@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'magenta'@*
+@item col_nick_color3
+Couleur pour le pseudo@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'green'@*
+@item col_nick_color4
+Couleur pour le pseudo@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'brown'@*
+@item col_nick_color5
+Couleur pour le pseudo@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightblue'@*
+@item col_nick_color6
+Couleur pour le pseudo@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
+@item col_nick_color7
+Couleur pour le pseudo@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightcyan'@*
+@item col_nick_color8
+Couleur pour le pseudo@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightmagenta'@*
+@item col_nick_color9
+Couleur pour le pseudo@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightgreen'@*
+@item col_nick_color10
+Couleur pour le pseudo@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'blue'@*
 @item col_nick_private
 Couleur pour l'autre pseudo dans la fen@^etre priv@'ee@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*

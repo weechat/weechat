@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.1.5-cvs - September, 11 2005
+@subtitle Documentation for WeeChat v0.1.5-cvs - September, 21 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -280,6 +280,9 @@ Type: string (any string), default value: '[%H:%M:%S]'@*
 @item look_color_nicks
 Display nick names with different colors@*
 Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+@item look_color_nicks_number
+Number of colors to use for nicks colors@*
+Type: integer (values: between 1 and 10), default value: 10@*
 @item look_color_actions
 Display actions with different colors@*
 Type: boolean (values: 'on' or 'off'), default value: 'on'@*
@@ -445,6 +448,36 @@ Type: color (Curses or Gtk color), default value: 'blue'@*
 @item col_nick_self
 Color for local nick@*
 Type: color (Curses or Gtk color), default value: 'white'@*
+@item col_nick_color1
+Color for nick@*
+Type: color (Curses or Gtk color), default value: 'cyan'@*
+@item col_nick_color2
+Color for nick@*
+Type: color (Curses or Gtk color), default value: 'magenta'@*
+@item col_nick_color3
+Color for nick@*
+Type: color (Curses or Gtk color), default value: 'green'@*
+@item col_nick_color4
+Color for nick@*
+Type: color (Curses or Gtk color), default value: 'brown'@*
+@item col_nick_color5
+Color for nick@*
+Type: color (Curses or Gtk color), default value: 'lightblue'@*
+@item col_nick_color6
+Color for nick@*
+Type: color (Curses or Gtk color), default value: 'default'@*
+@item col_nick_color7
+Color for nick@*
+Type: color (Curses or Gtk color), default value: 'lightcyan'@*
+@item col_nick_color8
+Color for nick@*
+Type: color (Curses or Gtk color), default value: 'lightmagenta'@*
+@item col_nick_color9
+Color for nick@*
+Type: color (Curses or Gtk color), default value: 'lightgreen'@*
+@item col_nick_color10
+Color for nick@*
+Type: color (Curses or Gtk color), default value: 'blue'@*
 @item col_nick_private
 Color for other nick in private window@*
 Type: color (Curses or Gtk color), default value: 'default'@*
