@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.1.5-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2005-09-22 10:20+0200\n"
-"PO-Revision-Date: 2005-09-22 10:19+0200\n"
+"PO-Revision-Date: 2005-09-22 19:16+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -3480,7 +3480,7 @@ msgstr "zobrazit přezdívky různými barvami"
 
 #: src/common/weeconfig.c:128 src/common/weeconfig.c:129
 msgid "number of colors to use for nicks colors"
-msgstr ""
+msgstr "počet barev použitých pro barvy přezdívek"
 
 #: src/common/weeconfig.c:132 src/common/weeconfig.c:133
 msgid "display actions with different colors"
@@ -3806,7 +3806,7 @@ msgstr "barva lokální přezdívky"
 #: src/common/weeconfig.c:456 src/common/weeconfig.c:457
 #: src/common/weeconfig.c:460 src/common/weeconfig.c:461
 msgid "color for nick"
-msgstr ""
+msgstr "barva přezdívky"
 
 #: src/common/weeconfig.c:464 src/common/weeconfig.c:465
 msgid "color for other nick in private window"
@@ -3932,7 +3932,7 @@ msgstr ""
 
 #: src/common/weeconfig.c:597 src/common/weeconfig.c:598
 msgid "display notices as private messages"
-msgstr ""
+msgstr "zobrazit upozornění jako soukromé zprávy"
 
 #: src/common/weeconfig.c:601
 msgid "interval between two checks for away"
