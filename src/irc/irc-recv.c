@@ -1021,6 +1021,7 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *nick, char *argumen
     struct timeval tv;
     struct timezone tz;
     long sec1, usec1, sec2, usec2, difftime;
+    t_irc_channel *ptr_channel;
     
     host2 = NULL;
     if (host)
@@ -1103,28 +1104,77 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *nick, char *argumen
             }
             else
             {
-                irc_display_prefix (server->buffer, PREFIX_SERVER);
-                if (host)
+                if (nick && nick[0] && cfg_irc_notice_as_pv)
                 {
-                    gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK, "%s", nick);
-                    if (host2)
+                    ptr_channel = channel_search (server, nick);
+                    if (!ptr_channel)
                     {
-                        gui_printf_color (server->buffer,
-                                          COLOR_WIN_CHAT_DARK, " (");
-                        gui_printf_color (server->buffer,
-                                          COLOR_WIN_CHAT_HOST, "%s", host2);
-                        gui_printf_color (server->buffer,
-                                          COLOR_WIN_CHAT_DARK, ")");
+                        ptr_channel = channel_new (server, CHAT_PRIVATE, nick, 0);
+                        if (!ptr_channel)
+                        {
+                            irc_display_prefix (server->buffer, PREFIX_ERROR);
+                            gui_printf_nolog (server->buffer,
+                                              _("%s cannot create new private window \"%s\"\n"),
+                                              WEECHAT_ERROR, nick);
+                            return -1;
+                        }
                     }
-                    gui_printf_color (server->buffer, COLOR_WIN_CHAT, ": ");
+                    if (!ptr_channel->topic)
+                        ptr_channel->topic = strdup ((host2) ? host2 : "");
+                    
+                    gui_printf_type_color (ptr_channel->buffer,
+                                           MSG_TYPE_NICK,
+                                           COLOR_WIN_CHAT_DARK, "<");
+                    if (irc_is_highlight (pos, server->nick))
+                    {
+                        gui_printf_type_color (ptr_channel->buffer,
+                                               MSG_TYPE_NICK | MSG_TYPE_HIGHLIGHT,
+                                               COLOR_WIN_CHAT_HIGHLIGHT,
+                                               "%s", nick);
+                        if ( (cfg_look_infobar_delay_highlight > 0)
+                             && (ptr_channel->buffer != gui_current_window->buffer) )
+                            gui_infobar_printf (cfg_look_infobar_delay_highlight,
+                                                COLOR_WIN_INFOBAR_HIGHLIGHT,
+                                                _("Private %s> %s"),
+                                                nick, pos);
+                    }
+                    else
+                        gui_printf_type_color (ptr_channel->buffer,
+                                               MSG_TYPE_NICK,
+                                               COLOR_WIN_NICK_PRIVATE,
+                                               "%s", nick);
+                    gui_printf_type_color (ptr_channel->buffer,
+                                           MSG_TYPE_NICK,
+                                           COLOR_WIN_CHAT_DARK, "> ");
+                    gui_printf_type_color (ptr_channel->buffer,
+                                           MSG_TYPE_MSG,
+                                           COLOR_WIN_CHAT, "%s\n", pos);
                 }
-                gui_printf_color (server->buffer, COLOR_WIN_CHAT, "%s\n", pos);
-                if ((nick) && (ascii_strcasecmp (nick, "nickserv") != 0) &&
-                    (ascii_strcasecmp (nick, "chanserv") != 0) &&
-                    (ascii_strcasecmp (nick, "memoserv") != 0))
+                else
                 {
-                    hotlist_add (HOTLIST_PRIVATE, server->buffer);
-                    gui_draw_buffer_status (gui_current_window->buffer, 1);
+                    irc_display_prefix (server->buffer, PREFIX_SERVER);
+                    if (host)
+                    {
+                        gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK, "%s", nick);
+                        if (host2)
+                        {
+                            gui_printf_color (server->buffer,
+                                              COLOR_WIN_CHAT_DARK, " (");
+                            gui_printf_color (server->buffer,
+                                              COLOR_WIN_CHAT_HOST, "%s", host2);
+                            gui_printf_color (server->buffer,
+                                              COLOR_WIN_CHAT_DARK, ")");
+                        }
+                        gui_printf_color (server->buffer, COLOR_WIN_CHAT, ": ");
+                    }
+                    gui_printf_color (server->buffer, COLOR_WIN_CHAT, "%s\n", pos);
+                    if ((nick) && (ascii_strcasecmp (nick, "nickserv") != 0) &&
+                        (ascii_strcasecmp (nick, "chanserv") != 0) &&
+                        (ascii_strcasecmp (nick, "memoserv") != 0))
+                    {
+                        hotlist_add (HOTLIST_PRIVATE, server->buffer);
+                        gui_draw_buffer_status (gui_current_window->buffer, 1);
+                    }
                 }
             }
         }

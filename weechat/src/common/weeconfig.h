@@ -170,6 +170,7 @@ extern int cfg_irc_display_away;
 extern char *cfg_irc_default_msg_away;
 extern char *cfg_irc_default_msg_part;
 extern char *cfg_irc_default_msg_quit;
+extern int cfg_irc_notice_as_pv;
 extern int cfg_irc_away_check;
 extern int cfg_irc_lag_check;
 extern int cfg_irc_lag_min_show;

@@ -569,6 +569,7 @@ int cfg_irc_display_away;
 char *cfg_irc_default_msg_away;
 char *cfg_irc_default_msg_part;
 char *cfg_irc_default_msg_quit;
+int cfg_irc_notice_as_pv;
 int cfg_irc_away_check;
 int cfg_irc_lag_check;
 int cfg_irc_lag_min_show;
@@ -593,6 +594,10 @@ t_config_option weechat_options_irc[] =
     N_("default quit message ('%v' will be replaced by WeeChat version in string)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "WeeChat %v", NULL, NULL, &cfg_irc_default_msg_quit, config_change_noop },
+  { "irc_notice_as_pv", N_("display notices as private messages"),
+    N_("display notices as private messages"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
+    NULL, NULL, &cfg_irc_notice_as_pv, NULL, config_change_noop },
   { "irc_away_check", N_("interval between two checks for away"),
     N_("interval between two checks for away (in minutes, 0 = never check)"),
     OPTION_TYPE_INT, 0, INT_MAX, 0,

@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-09-20
+ChangeLog - 2005-09-22
 
 
 Version 0.1.5 (under dev!):
+   * added setting "irc_notice_as_pv" to see notices as pv
    * added nicks colors in setup file
    * fixed DCC bug: delete failed file only if really empty (on disk)
    * fixed IRC message parser bug
