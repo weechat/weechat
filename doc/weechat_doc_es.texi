@@ -36,7 +36,7 @@
 
 @title WeeChat - Gui@'on de usuario.
 @subtitle Cliente IRC r@'apido, peque@~no y extensible
-@subtitle Documentaci@'on para WeeChat v0.1.5-cvs - 21 de Septiembre de 2005
+@subtitle Documentaci@'on para WeeChat v0.1.5-cvs - 22 de Septiembre de 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -544,6 +544,9 @@ Type: string (any string), default value: 'WeeChat %v'@*
 @item irc_default_msg_quit
 Default quit message ('%v' will be replaced by WeeChat version in string)@*
 Type: string (any string), default value: 'WeeChat %v'@*
+@item irc_notice_as_pv
+Display notices as private messages@*
+Type: boolean (values: 'on' or 'off'), default value: 'off'@*
 @item irc_away_check
 Interval between two checks for away (in minutes, 0 = never check)@*
 Type: integer (values: between 0 and 2147483647), default value: 0@*

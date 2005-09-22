@@ -36,7 +36,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.5-cvs - 21 Septembre 2005
+@subtitle Documentation pour WeeChat v0.1.5-cvs - 22 Septembre 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -545,6 +545,9 @@ Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: 'WeeChat %v'@*
 @item irc_default_msg_quit
 Message de fin par d@'efaut ('%v' sera remplac@'e par la version de WeeChat dans la cha@^ine)@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: 'WeeChat %v'@*
+@item irc_notice_as_pv
+Afficher les notices comme des messages priv@'es@*
+Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
 @item irc_away_check
 Intervalle entre deux v@'erifications des absences (en minutes, 0 = ne jemais v@'erifier)@*
 Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 0@*
