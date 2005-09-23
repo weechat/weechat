@@ -83,6 +83,47 @@ irc_cmd_send_admin (t_irc_server *server, char *arguments)
 }
 
 /*
+ * irc_cmd_send_ame: send a ctcp action to all channels of all connected servers
+ */
+
+int
+irc_cmd_send_ame (t_irc_server *server, char *arguments)
+{
+    t_irc_server *ptr_server;
+    t_irc_channel *ptr_channel;
+    
+    /* make gcc happy */
+    (void) server;
+    
+    gui_add_hotlist = 0;
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        if (ptr_server->is_connected)
+        {
+            for (ptr_channel = ptr_server->channels; ptr_channel;
+                 ptr_channel = ptr_channel->next_channel)
+            {
+                if (ptr_channel->type == CHAT_CHANNEL)
+                {
+                    server_sendf (ptr_server, "PRIVMSG %s :\01ACTION %s\01\r\n",
+                                  ptr_channel->name,
+                                  (arguments && arguments[0]) ? arguments : "");
+                    irc_display_prefix (ptr_channel->buffer, PREFIX_ACTION_ME);
+                    gui_printf_color (ptr_channel->buffer,
+                                      COLOR_WIN_CHAT_NICK, "%s", ptr_server->nick);
+                    gui_printf_color (ptr_channel->buffer,
+                                      COLOR_WIN_CHAT, " %s\n",
+                                      (arguments && arguments[0]) ? arguments : "");
+                }
+            }
+        }
+    }
+    gui_add_hotlist = 1;
+    return 0;
+}
+
+/*
  * irc_cmd_send_amsg: send message to all channels of all connected servers
  */
 
