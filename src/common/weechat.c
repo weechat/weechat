@@ -322,7 +322,7 @@ void wee_display_config_options ()
                         break;
                 }
                 printf (_("  . description: %s\n\n"),
-                    gettext (weechat_options[i][j].long_description));
+                    _(weechat_options[i][j].long_description));
                 j++;
             }
         }
