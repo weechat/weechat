@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-WeeChat known bugs, 2005-09-15
+WeeChat known bugs, 2005-09-24
 
 - color display problems when term has white background
 - ./configure does not check that Ruby libraries are installed

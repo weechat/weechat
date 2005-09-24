@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.1.5-cvs - September, 22 2005
+@subtitle Documentation for WeeChat v0.1.5 - September, 24 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -984,6 +984,12 @@ find information about the administrator of the server@*
 @*
 target: server@*
 @*
+@item ame  message
+@*
+send a CTCP action to all channels of all connected servers@*
+@*
+message: message to send@*
+@*
 @item amsg  text
 @*
 send message to all channels of all connected servers@*
@@ -1112,7 +1118,7 @@ target: server for forwarding request@*
 @*
 @item me  message
 @*
-send a ctcp action to the current channel@*
+send a CTCP action to the current channel@*
 @*
 message: message to send@*
 @*

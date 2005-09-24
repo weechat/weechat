@@ -1,4 +1,4 @@
-WeeChat FAQ, 2005-07-30
+WeeChat FAQ, 2005-09-24
 =======================
 
 Public concerné :
@@ -206,6 +206,5 @@ R:	Il y a plusieurs choses à faire (code, documentation, ...)
 ================================================================================
 Q:	Puis-je donner de l'argent ou d'autres choses aux développeurs WeeChat ?
 
-R:	La bière est la bienvenue :)
-	Sinon le compte Paypal est: flashcode@free.fr (il n'y a pas de limite pour
-	les dons :)
+R:	Vous pouvez donner de l'argent pour aider le développement.
+	Plus de détails sur http://weechat.flashtux.org/donate.php

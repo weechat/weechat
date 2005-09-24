@@ -1,10 +1,10 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-09-23
+ChangeLog - 2005-09-24
 
 
-Version 0.1.5 (under dev!):
+Version 0.1.5 (2005-09-24):
    * added /ame command (send CTCP action to all channels of all
      connected servers)
    * added setting "irc_notice_as_pv" to see notices as pv

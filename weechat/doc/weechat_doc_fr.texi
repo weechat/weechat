@@ -36,7 +36,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.5-cvs - 22 Septembre 2005
+@subtitle Documentation pour WeeChat v0.1.5 - 24 Septembre 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -985,6 +985,12 @@ trouver les informations sur l'administrateur du serveur@*
 @*
 cible: serveur@*
 @*
+@item ame  message
+@*
+envoyer une action CTCP @`a tous les canaux de tous les serveurs connect@'es@*
+@*
+message: message @`a envoyer@*
+@*
 @item amsg  texte
 @*
 envoyer un message @`a tous les canaux de tous les serveurs connect@'es@*
@@ -1113,7 +1119,7 @@ cible: serveur pour faire suivre la requ@^ete@*
 @*
 @item me  message
 @*
-envoyer une action ctcp au canal courant@*
+envoyer une action CTCP au canal courant@*
 @*
 message: message @`a envoyer@*
 @*

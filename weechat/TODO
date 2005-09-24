@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2005-09-13
+TODO - 2005-09-24
 
 Legend:
   #  done
@@ -10,7 +10,7 @@ Legend:
   ?  is this really necessary?
 
 
-v0.1.5:
+v0.1.6:
 ------
 
  * General:
@@ -21,16 +21,10 @@ v0.1.5:
     + Gtk GUI
     + internationalization (traduce WeeChat in many languages)
 
- * TCP/IP communication:
-    # SSL support
-    # IPv6 protocol implementation
-    # proxy support (http, socks4, socks5) with authentification
-      (http, socks5) and ipv6 support (client to proxy)
-
  * WeeChat commands
     - be able to bind a key on more than one command
     - be able to make an alias running more than one command
-    # /ignore and /unignore commands
+    - host with "*" possible with /ignore command
 
  * Configuration:
     - be able to launch more than one command when connecting to server
