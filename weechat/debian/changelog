@@ -1,3 +1,9 @@
+weechat (0.1.5-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Julien Louis <ptitlouis@sysif.net>  Sat, 24 Sep 2005 14:08:55 +0200
+
 weechat (0.1.4-2) unstable; urgency=low
 
   * Add autotools-dev to Build-Depends.
