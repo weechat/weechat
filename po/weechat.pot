@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-09-23 11:53+0200\n"
+"POT-Creation-Date: 2005-09-25 09:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4009,7 +4009,7 @@ msgstr ""
 #: src/common/weeconfig.c:794
 msgid ""
 "comma separated list of channels to join when connected to server (example: "
-"\"#chan1,#chan2,#chan3 #key1,#key2\")"
+"\"#chan1,#chan2,#chan3 key1,key2\")"
 msgstr ""
 
 #: src/common/weeconfig.c:797 src/common/weeconfig.c:798

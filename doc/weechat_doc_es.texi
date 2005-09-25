@@ -662,7 +662,7 @@ Typo: cadena (cualquier cadena), valor por defecto: ''@*
 Espera (en segundos) despu@'es de que el comando sea ejecutado (ejemplo: dar algo de tiempo para la autenticaci@'on)@*
 Typo: entero (valores: entre 0 y 5), valor por defecto: 0@*
 @item server_autojoin
-Lista de canales (separados por comas) a unirse cuando se conecte a un servidor (ejemplo: "#chan1,#chan2,#chan3 #key1,#key2")@*
+Lista de canales (separados por comas) a unirse cuando se conecte a un servidor (ejemplo: "#chan1,#chan2,#chan3 key1,key2")@*
 Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @item server_autorejoin
 Unirse de nuevo autom@'aticamente a los canales cuando sea expulsado@*

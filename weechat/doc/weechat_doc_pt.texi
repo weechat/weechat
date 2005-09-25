@@ -660,7 +660,7 @@ Type: string (any string), default value: ''@*
 Delay (in seconds) after command was executed (example: give some time for authentication)@*
 Type: integer (values: between 0 and 5), default value: 0@*
 @item server_autojoin
-Comma separated list of channels to join when connected to server (example: "#chan1,#chan2,#chan3 #key1,#key2")@*
+Comma separated list of channels to join when connected to server (example: "#chan1,#chan2,#chan3 key1,key2")@*
 Type: string (any string), default value: ''@*
 @item server_autorejoin
 Automatically rejoin channels when kicked@*

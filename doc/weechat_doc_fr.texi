@@ -663,7 +663,7 @@ Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
 D@'elai (en secondes) apr@`es ex@'ecution de la commande (exemple: donner du temps pour l'authentification)@*
 Type: entier (valeurs: entre 0 et 5), valeur par d@'efaut: 0@*
 @item server_autojoin
-Liste des canaux (s@'epar@'es par des virgules) @`a rejoindre lorsque connect@'e au serveur (exemple: "#chan1,#chan2,#chan3 #key1,#key2")@*
+Liste des canaux (s@'epar@'es par des virgules) @`a rejoindre lorsque connect@'e au serveur (exemple: "#chan1,#chan2,#chan3 key1,key2")@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
 @item server_autorejoin
 Rejoindre automatiquement les canaux quand mis dehors@*
