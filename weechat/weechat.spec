@@ -39,6 +39,10 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS BUGS ChangeLog COPYING FAQ FAQ.fr INSTALL NEWS README TODO
 /usr/local/man/man1/weechat-curses.1*
 /usr/local/bin/weechat-curses
+/usr/local/info/weechat_doc_en.info
+/usr/local/info/weechat_doc_es.info
+/usr/local/info/weechat_doc_fr.info
+/usr/local/info/weechat_doc_pt.info
 
 %changelog
 * Sat Sep 24 2005 FlashCode <flashcode@flashtux.org> 0.1.5-1
