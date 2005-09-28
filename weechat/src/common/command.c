@@ -107,7 +107,7 @@ t_weechat_command weechat_commands[] =
   { "server", N_("list, add or remove servers"),
     N_("[servername] | "
        "[servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 "
-       "[nick2 [nick3]]] [-username username] [-realname realname] "
+       "nick2 nick3] [-username username] [-realname realname] "
        "[-command command] [-autojoin channel[,channel]] ] | "
        "[del servername]"),
     N_("servername: server name, for internal & display use\n"
