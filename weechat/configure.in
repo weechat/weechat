@@ -231,7 +231,7 @@ if test "x$enable_ruby" = "xyes" ; then
     # TODO: check that ruby lib and headers are installed
     
     RUBY_CFLAGS=-I`ruby -rrbconfig -e "puts Config::CONFIG[['archdir']]"`
-    RUBY_LFLAGS=-L`ruby -rrbconfig -e "puts Config::CONFIG[['archdir']]"` -lruby
+    RUBY_LFLAGS=`ruby -rrbconfig -e "puts Config::CONFIG[['LIBRUBYARG_SHARED']]"`
     PLUGINS_LIBS="$PLUGINS_LIBS ../../plugins/ruby/lib_weechat_ruby.a $RUBY_LFLAGS"
     AC_SUBST(RUBY_CFLAGS)
     AC_DEFINE(PLUGIN_RUBY)
