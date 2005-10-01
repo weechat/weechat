@@ -36,7 +36,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.5 - 24 Septembre 2005
+@subtitle Documentation pour WeeChat v0.1.6-cvs - 2 octobre 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -326,6 +326,15 @@ Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
 @item look_infobar_delay_highlight
 D@'elai (en secondes) pour la notification des messages dans la barre d'infos (0 = d@'esactiver les notifications dans la barre d'infos)@*
 Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 7@*
+@item look_hotlist_names_count
+Nombre maximum de noms dans la hotlist (0 = pas de nom affich@'e, seulement les num@'eros de tampons)@*
+Type: entier (valeurs: entre 0 et 32), valeur par d@'efaut: 3@*
+@item look_hotlist_names_level
+Niveau pour l'affichage des noms dans la hotlist (combinaison de: 1=join/part, 2=message, 4=priv@'e, 8=highlight, par exemple: 12=priv@'e+highlight)@*
+Type: entier (valeurs: entre 1 et 15), valeur par d@'efaut: 12@*
+@item look_hotlist_names_length
+Nombre maximum des noms dans la hotlist (0 = pas de limite)@*
+Type: entier (valeurs: entre 0 et 32), valeur par d@'efaut: 0@*
 @item col_title
 Couleur pour la barre de titre@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*

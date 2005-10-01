@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.1.5 - September, 24 2005
+@subtitle Documentation for WeeChat v0.1.6-cvs - October, 02 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -325,6 +325,15 @@ Type: boolean (values: 'on' or 'off'), default value: 'on'@*
 @item look_infobar_delay_highlight
 Delay (in seconds) for highlight messages in infobar (0 = disable highlight notifications in infobar)@*
 Type: integer (values: between 0 and 2147483647), default value: 7@*
+@item look_hotlist_names_count
+Max number of names in hotlist (0 = no name displayed, only buffer numbers)@*
+Type: integer (values: between 0 and 32), default value: 3@*
+@item look_hotlist_names_level
+Level for displaying names in hotlist (combination of: 1=join/part, 2=message, 4=private, 8=highlight, for example: 12=private+highlight)@*
+Type: integer (values: between 1 and 15), default value: 12@*
+@item look_hotlist_names_length
+Max length of names in hotlist (0 = no limit)@*
+Type: integer (values: between 0 and 32), default value: 0@*
 @item col_title
 Color for title bar@*
 Type: color (Curses or Gtk color), default value: 'default'@*

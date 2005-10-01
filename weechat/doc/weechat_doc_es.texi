@@ -36,7 +36,7 @@
 
 @title WeeChat - Gui@'on de usuario.
 @subtitle Cliente IRC r@'apido, peque@~no y extensible
-@subtitle Documentaci@'on para WeeChat v0.1.5 - 24 de Septiembre de 2005
+@subtitle Documentaci@'on para WeeChat v0.1.6-cvs - 2 de octubre de 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -325,6 +325,15 @@ Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item look_infobar_delay_highlight
 Retraso (en segundos) para la notificaci@'on de mensajes en la barra de informaci@'on (0 = desactivar las notificaciones en la barra de informaci@'on)@*
 Typo: entero (valores: entre 0 y 2147483647), valor por defecto: 7@*
+@item look_hotlist_names_count
+Max number of names in hotlist (0 = no name displayed, only buffer numbers)@*
+Typo: entero (valores: entre 0 y 32), valor por defecto: 3@*
+@item look_hotlist_names_level
+Level for displaying names in hotlist (combination of: 1=join/part, 2=message, 4=private, 8=highlight, for example: 12=private+highlight)@*
+Typo: entero (valores: entre 1 y 15), valor por defecto: 12@*
+@item look_hotlist_names_length
+Max length of names in hotlist (0 = no limit)@*
+Typo: entero (valores: entre 0 y 32), valor por defecto: 0@*
 @item col_title
 Color para la barra de t@'itulo@*
 Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
