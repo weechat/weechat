@@ -1,8 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-09-24
+ChangeLog - 2005-10-01
 
+
+Version 0.1.6 (under dev!):
+   * enhanced "smart" hotlist, with names (new options:
+     look_hotlist_names_{count|level|length}) 
 
 Version 0.1.5 (2005-09-24):
    * added /ame command (send CTCP action to all channels of all

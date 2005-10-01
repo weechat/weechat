@@ -87,6 +87,9 @@ int cfg_look_infobar;
 char *cfg_look_infobar_timestamp;
 int cfg_look_infobar_seconds;
 int cfg_look_infobar_delay_highlight;
+int cfg_look_hotlist_names_count;
+int cfg_look_hotlist_names_level;
+int cfg_look_hotlist_names_length;
 
 t_config_option weechat_options_look[] =
 { { "look_set_title", N_("set title for window (terminal for Curses GUI) with name & version"),
@@ -147,12 +150,12 @@ t_config_option weechat_options_look[] =
     "right", cfg_look_nicklist_position_values, &cfg_look_nicklist_position, NULL, config_change_buffers },
   { "look_nicklist_min_size", N_("min size for nicklist"),
     N_("min size for nicklist (width or height, depending on look_nicklist_position "
-    "(0 = no min size))"),
+       "(0 = no min size))"),
     OPTION_TYPE_INT, 0, 100, 0,
     NULL, NULL, &cfg_look_nicklist_min_size, NULL, config_change_buffers },
   { "look_nicklist_max_size", N_("max size for nicklist"),
     N_("max size for nicklist (width or height, depending on look_nicklist_position "
-    "(0 = no max size; if min == max and > 0, then size is fixed))"),
+       "(0 = no max size; if min == max and > 0, then size is fixed))"),
     OPTION_TYPE_INT, 0, 100, 0,
     NULL, NULL, &cfg_look_nicklist_max_size, NULL, config_change_buffers },
   { "look_no_nickname", N_("text to display instead of nick when not connected"),
@@ -185,9 +188,22 @@ t_config_option weechat_options_look[] =
     NULL, NULL, &cfg_look_infobar_seconds, NULL, config_change_buffer_content },
   { "look_infobar_delay_highlight", N_("delay (in seconds) for highlight messages in infobar"),
     N_("delay (in seconds) for highlight messages in infobar "
-    "(0 = disable highlight notifications in infobar)"),
+       "(0 = disable highlight notifications in infobar)"),
     OPTION_TYPE_INT, 0, INT_MAX, 7,
     NULL, NULL, &cfg_look_infobar_delay_highlight, NULL, config_change_noop },
+  { "look_hotlist_names_count", N_("max number of names in hotlist"),
+    N_("max number of names in hotlist (0 = no name displayed, only buffer numbers)"),
+    OPTION_TYPE_INT, 0, 32, 3,
+    NULL, NULL, &cfg_look_hotlist_names_count, NULL, config_change_buffer_content },
+  { "look_hotlist_names_level", N_("level for displaying names in hotlist"),
+    N_("level for displaying names in hotlist (combination of: 1=join/part, 2=message, "
+       "4=private, 8=highlight, for example: 12=private+highlight)"),
+    OPTION_TYPE_INT, 1, 15, 12,
+    NULL, NULL, &cfg_look_hotlist_names_level, NULL, config_change_buffer_content },
+  { "look_hotlist_names_length", N_("max length of names in hotlist"),
+    N_("max length of names in hotlist (0 = no limit)"),
+    OPTION_TYPE_INT, 0, 32, 0,
+    NULL, NULL, &cfg_look_hotlist_names_length, NULL, config_change_buffer_content },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 

@@ -1205,8 +1205,9 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
 {
     t_gui_window *ptr_win;
     t_weechat_hotlist *ptr_hotlist;
-    char format_more[32], str_nicks[32], *string;
+    char format[32], str_nicks[32], *string;
     int i, first_mode, x;
+    int display_name, names_count;
     
     /* make gcc happy */
     (void) buffer;
@@ -1386,6 +1387,8 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                                                _("Act: "));
             wprintw (ptr_win->win_status, string);
             free (string);
+            
+            names_count = 0;
             for (ptr_hotlist = hotlist; ptr_hotlist;
                  ptr_hotlist = ptr_hotlist->next_hotlist)
             {
@@ -1394,28 +1397,66 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                     case HOTLIST_LOW:
                         gui_window_set_color (ptr_win->win_status,
                                               COLOR_WIN_STATUS_DATA_OTHER);
+                        display_name = ((cfg_look_hotlist_names_level & 1) != 0);
                         break;
                     case HOTLIST_MSG:
                         gui_window_set_color (ptr_win->win_status,
                                               COLOR_WIN_STATUS_DATA_MSG);
+                        display_name = ((cfg_look_hotlist_names_level & 2) != 0);
                         break;
                     case HOTLIST_PRIVATE:
                         gui_window_set_color (ptr_win->win_status,
                                               COLOR_WIN_STATUS_DATA_PRIVATE);
+                        display_name = ((cfg_look_hotlist_names_level & 4) != 0);
                         break;
                     case HOTLIST_HIGHLIGHT:
                         gui_window_set_color (ptr_win->win_status,
                                               COLOR_WIN_STATUS_DATA_HIGHLIGHT);
+                        display_name = ((cfg_look_hotlist_names_level & 8) != 0);
+                        break;
+                    default:
+                        display_name = 0;
                         break;
                 }
                 if (ptr_hotlist->buffer->dcc)
-                    wprintw (ptr_win->win_status, "%d/DCC",
-                             ptr_hotlist->buffer->number);
-                else
+                {
                     wprintw (ptr_win->win_status, "%d",
                              ptr_hotlist->buffer->number);
-                gui_window_set_color (ptr_win->win_status,
-                                      COLOR_WIN_STATUS);
+                    gui_window_set_color (ptr_win->win_status,
+                                              COLOR_WIN_STATUS_DELIMITERS);
+                    wprintw (ptr_win->win_status, ":");
+                    gui_window_set_color (ptr_win->win_status,
+                                          COLOR_WIN_STATUS);
+                    wprintw (ptr_win->win_status, "DCC");
+                }
+                else
+                {
+                    wprintw (ptr_win->win_status, "%d",
+                             ptr_hotlist->buffer->number);
+                
+                    if (display_name && (cfg_look_hotlist_names_count != 0)
+                        && (names_count < cfg_look_hotlist_names_count))
+                    {
+                        names_count++;
+                        
+                        gui_window_set_color (ptr_win->win_status,
+                                              COLOR_WIN_STATUS_DELIMITERS);
+                        wprintw (ptr_win->win_status, ":");
+                        
+                        gui_window_set_color (ptr_win->win_status,
+                                              COLOR_WIN_STATUS);
+                        if (cfg_look_hotlist_names_length == 0)
+                            snprintf (format, sizeof (format) - 1, "%%s");
+                        else
+                            snprintf (format, sizeof (format) - 1, "%%.%ds", cfg_look_hotlist_names_length);
+                        if (BUFFER_IS_SERVER(ptr_hotlist->buffer))
+                            wprintw (ptr_win->win_status, format, SERVER(ptr_hotlist->buffer)->name);
+                        else if (BUFFER_IS_CHANNEL(ptr_hotlist->buffer)
+                                 || BUFFER_IS_PRIVATE(ptr_hotlist->buffer))
+                            wprintw (ptr_win->win_status, format, CHANNEL(ptr_hotlist->buffer)->name);
+                    }
+                }
+                
                 if (ptr_hotlist->next_hotlist)
                     wprintw (ptr_win->win_status, ",");
             }
@@ -1466,8 +1507,8 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
             mvwprintw (ptr_win->win_status, 0, x, "%s", string);
         else
         {
-            snprintf (format_more, sizeof (format_more) - 1, "%%-%ds", (int)(strlen (string)));
-            mvwprintw (ptr_win->win_status, 0, x, format_more, " ");
+            snprintf (format, sizeof (format) - 1, "%%-%ds", (int)(strlen (string)));
+            mvwprintw (ptr_win->win_status, 0, x, format, " ");
         }
         if (gui_buffer_has_nicklist (ptr_win->buffer))
         {
