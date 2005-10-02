@@ -226,6 +226,7 @@ int cfg_col_chat_highlight;
 int cfg_col_chat_bg;
 int cfg_col_status;
 int cfg_col_status_delimiters;
+int cfg_col_status_channel;
 int cfg_col_status_data_msg;
 int cfg_col_status_data_private;
 int cfg_col_status_data_highlight;
@@ -239,6 +240,7 @@ int cfg_col_infobar_bg;
 int cfg_col_input;
 int cfg_col_input_channel;
 int cfg_col_input_nick;
+int cfg_col_input_delimiters;
 int cfg_col_input_bg;
 int cfg_col_nick;
 int cfg_col_nick_away;
@@ -335,6 +337,10 @@ t_config_option weechat_options_colors[] =
     N_("color for status bar delimiters"),
     OPTION_TYPE_COLOR, 0, 0, 0,
     "cyan", NULL, &cfg_col_status_delimiters, NULL, &config_change_color },
+  { "col_status_channel", N_("color for current channel in status bar"),
+    N_("color for current channel in status bar"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "white", NULL, &cfg_col_status_channel, NULL, &config_change_color },
   { "col_status_data_msg", N_("color for window with new messages"),
     N_("color for window with new messages (status bar)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
@@ -390,7 +396,11 @@ t_config_option weechat_options_colors[] =
   { "col_input_nick", N_("color for input text (nick name)"),
     N_("color for input text (nick name)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "lightgreen", NULL, &cfg_col_input_nick, NULL, &config_change_color },
+    "lightcyan", NULL, &cfg_col_input_nick, NULL, &config_change_color },
+  { "col_input_delimiters", N_("color for input text (delimiters)"),
+    N_("color for input text (delimiters)"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "cyan", NULL, &cfg_col_input_delimiters, NULL, &config_change_color },
   { "col_input_bg", N_("background for input window"),
     N_("background for input window"),
     OPTION_TYPE_COLOR, 0, 0, 0,

@@ -1269,7 +1269,7 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                                   COLOR_WIN_STATUS_DELIMITERS);
             wprintw (ptr_win->win_status, ":");
             gui_window_set_color (ptr_win->win_status,
-                                  COLOR_WIN_STATUS);
+                                  COLOR_WIN_STATUS_CHANNEL);
             if (SERVER(ptr_win->buffer)->is_connected)
                 wprintw (ptr_win->win_status, "[%s] ",
                          SERVER(ptr_win->buffer)->name);
@@ -1287,7 +1287,7 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                                   COLOR_WIN_STATUS_DELIMITERS);
             wprintw (ptr_win->win_status, ":");
             gui_window_set_color (ptr_win->win_status,
-                                  COLOR_WIN_STATUS);
+                                  COLOR_WIN_STATUS_CHANNEL);
             if ((!CHANNEL(ptr_win->buffer)->nicks)
                 && (CHANNEL(ptr_win->buffer)->type != CHAT_PRIVATE))
                 wprintw (ptr_win->win_status, "(%s)",
@@ -1342,7 +1342,7 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                                           COLOR_WIN_STATUS_DELIMITERS);
                     wprintw (ptr_win->win_status, "(");
                     gui_window_set_color (ptr_win->win_status,
-                                          COLOR_WIN_STATUS);
+                                          COLOR_WIN_STATUS_CHANNEL);
                     wprintw (ptr_win->win_status, "DCC");
                     gui_window_set_color (ptr_win->win_status,
                                           COLOR_WIN_STATUS_DELIMITERS);
@@ -1360,7 +1360,7 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                      ptr_win->buffer->number);
             gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS_DELIMITERS);
             wprintw (ptr_win->win_status, ":");
-            gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS);
+            gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS_CHANNEL);
             if (ptr_win->buffer->dcc)
                 wprintw (ptr_win->win_status, "<DCC> ");
             else
@@ -1740,17 +1740,20 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
                 }
                 if (CHANNEL(buffer))
                 {
-                    snprintf (format, 32, "%%s %%s> %%-%ds", input_width);
+                    gui_window_set_color (ptr_win->win_input, COLOR_WIN_INPUT_CHANNEL);
+                    mvwprintw (ptr_win->win_input, 0, 0, "%s ", CHANNEL(buffer)->name);
+                    gui_window_set_color (ptr_win->win_input, COLOR_WIN_INPUT_NICK);
+                    wprintw (ptr_win->win_input, "%s", SERVER(buffer)->nick);
+                    gui_window_set_color (ptr_win->win_input, COLOR_WIN_INPUT_DELIMITERS);
+                    wprintw (ptr_win->win_input, "> ");
+                    gui_window_set_color (ptr_win->win_input, COLOR_WIN_INPUT);
+                    snprintf (format, 32, "%%-%ds", input_width);
                     if (ptr_win == gui_current_window)
-                        mvwprintw (ptr_win->win_input, 0, 0, format,
-                                   CHANNEL(buffer)->name,
-                                   SERVER(buffer)->nick,
-                                   buffer->input_buffer + buffer->input_buffer_1st_display);
+                        wprintw (ptr_win->win_input, format,
+                                 buffer->input_buffer + buffer->input_buffer_1st_display);
                     else
-                        mvwprintw (ptr_win->win_input, 0, 0, format,
-                                   CHANNEL(buffer)->name,
-                                   SERVER(buffer)->nick,
-                                   "");
+                        wprintw (ptr_win->win_input, format,
+                                 "");
                     wclrtoeol (ptr_win->win_input);
                     ptr_win->win_input_x = strlen (CHANNEL(buffer)->name) +
                         strlen (SERVER(buffer)->nick) + 3 +
@@ -1761,19 +1764,22 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
                 }
                 else
                 {
-                    snprintf (format, 32, "%%s> %%-%ds", input_width);
+                    gui_window_set_color (ptr_win->win_input, COLOR_WIN_INPUT_NICK);
                     if (SERVER(buffer) && (SERVER(buffer)->is_connected))
                         ptr_nickname = SERVER(buffer)->nick;
                     else
                         ptr_nickname = cfg_look_no_nickname;
+                    mvwprintw (ptr_win->win_input, 0, 0, "%s", ptr_nickname);
+                    gui_window_set_color (ptr_win->win_input, COLOR_WIN_INPUT_DELIMITERS);
+                    wprintw (ptr_win->win_input, "> ");
+                    gui_window_set_color (ptr_win->win_input, COLOR_WIN_INPUT);
+                    snprintf (format, 32, "%%-%ds", input_width);
                     if (ptr_win == gui_current_window)
-                        mvwprintw (ptr_win->win_input, 0, 0, format,
-                                   ptr_nickname,
-                                   buffer->input_buffer + buffer->input_buffer_1st_display);
+                        wprintw (ptr_win->win_input, format,
+                                 buffer->input_buffer + buffer->input_buffer_1st_display);
                     else
-                        mvwprintw (ptr_win->win_input, 0, 0, format,
-                                   ptr_nickname,
-                                   "");
+                        wprintw (ptr_win->win_input, format,
+                                 "");
                     wclrtoeol (ptr_win->win_input);
                     ptr_win->win_input_x = strlen (ptr_nickname) + 2 +
                         (buffer->input_buffer_pos - buffer->input_buffer_1st_display);
@@ -2447,6 +2453,8 @@ gui_init_colors ()
             cfg_col_status, cfg_col_status_bg);
         init_pair (COLOR_WIN_STATUS_DELIMITERS,
             cfg_col_status_delimiters, cfg_col_status_bg);
+        init_pair (COLOR_WIN_STATUS_CHANNEL,
+            cfg_col_status_channel, cfg_col_status_bg);
         init_pair (COLOR_WIN_STATUS_DATA_MSG,
             cfg_col_status_data_msg, cfg_col_status_bg);
         init_pair (COLOR_WIN_STATUS_DATA_PRIVATE,
@@ -2469,6 +2477,8 @@ gui_init_colors ()
             cfg_col_input_channel, cfg_col_input_bg);
         init_pair (COLOR_WIN_INPUT_NICK,
             cfg_col_input_nick, cfg_col_input_bg);
+        init_pair (COLOR_WIN_INPUT_DELIMITERS,
+            cfg_col_input_delimiters, cfg_col_input_bg);
         init_pair (COLOR_WIN_NICK,
             cfg_col_nick, cfg_col_nick_bg);
         init_pair (COLOR_WIN_NICK_AWAY,
@@ -2529,6 +2539,7 @@ gui_init_colors ()
         color_attr[COLOR_WIN_CHAT_HIGHLIGHT - 1] = (cfg_col_chat_highlight >= 0) ? cfg_col_chat_highlight & A_BOLD : 0;
         color_attr[COLOR_WIN_STATUS - 1] = (cfg_col_status >= 0) ? cfg_col_status & A_BOLD : 0;
         color_attr[COLOR_WIN_STATUS_DELIMITERS - 1] = (cfg_col_status_delimiters >= 0) ? cfg_col_status_delimiters & A_BOLD : 0;
+        color_attr[COLOR_WIN_STATUS_CHANNEL - 1] = (cfg_col_status_channel >= 0) ? cfg_col_status_channel & A_BOLD : 0;
         color_attr[COLOR_WIN_STATUS_DATA_MSG - 1] = (cfg_col_status_data_msg >= 0) ? cfg_col_status_data_msg & A_BOLD : 0;
         color_attr[COLOR_WIN_STATUS_DATA_PRIVATE - 1] = (cfg_col_status_data_private >= 0) ? cfg_col_status_data_private & A_BOLD : 0;
         color_attr[COLOR_WIN_STATUS_DATA_HIGHLIGHT - 1] = (cfg_col_status_data_highlight >= 0) ? cfg_col_status_data_highlight & A_BOLD : 0;
@@ -2540,6 +2551,7 @@ gui_init_colors ()
         color_attr[COLOR_WIN_INPUT - 1] = (cfg_col_input >= 0) ? cfg_col_input & A_BOLD : 0;
         color_attr[COLOR_WIN_INPUT_CHANNEL - 1] = (cfg_col_input_channel >= 0) ? cfg_col_input_channel & A_BOLD : 0;
         color_attr[COLOR_WIN_INPUT_NICK - 1] = (cfg_col_input_nick >= 0) ? cfg_col_input_nick & A_BOLD : 0;
+        color_attr[COLOR_WIN_INPUT_DELIMITERS - 1] = (cfg_col_input_delimiters >= 0) ? cfg_col_input_delimiters & A_BOLD : 0;
         color_attr[COLOR_WIN_NICK - 1] = (cfg_col_nick >= 0) ? cfg_col_nick & A_BOLD : 0;
         color_attr[COLOR_WIN_NICK_AWAY - 1] = (cfg_col_nick_away >= 0) ? cfg_col_nick_away & A_BOLD : 0;
         color_attr[COLOR_WIN_NICK_CHANOWNER - 1] = (cfg_col_nick_chanowner >= 0) ? cfg_col_nick_chanowner & A_BOLD : 0;

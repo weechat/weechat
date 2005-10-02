@@ -385,6 +385,9 @@ Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
 @item col_status_delimiters
 Color para los delimitadores de la barra de estado@*
 Typo: color (color Curses @'o Gtk), valor por defecto: 'cyan'@*
+@item col_status_channel
+Color for current channel in status bar@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'white'@*
 @item col_status_data_msg
 Color para una ventana con mensajes nuevos (barra de estado)@*
 Typo: color (color Curses @'o Gtk), valor por defecto: 'yellow'@*
@@ -423,7 +426,10 @@ Color para el texto de entrada (nombre de canal)@*
 Typo: color (color Curses @'o Gtk), valor por defecto: 'white'@*
 @item col_input_nick
 Color para el texto de entrada (alias)@*
-Typo: color (color Curses @'o Gtk), valor por defecto: 'lightgreen'@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightcyan'@*
+@item col_input_delimiters
+Color for input text (delimiters)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'cyan'@*
 @item col_input_bg
 Color de fondo para la ventana de entrada@*
 Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*

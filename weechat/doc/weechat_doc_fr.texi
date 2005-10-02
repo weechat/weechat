@@ -386,6 +386,9 @@ Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
 @item col_status_delimiters
 Couleur pour les d@'elimiteurs de la barre de statut@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'cyan'@*
+@item col_status_channel
+Couleur pour le canal courant dans la barre de statut@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'white'@*
 @item col_status_data_msg
 Couleur pour une fen@^etre avec de nouvelles infos (barre de statut)@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'yellow'@*
@@ -424,7 +427,10 @@ Couleur pour le texte saisi (nom du canal)@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'white'@*
 @item col_input_nick
 Couleur pour le texte saisi (pseudo)@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightgreen'@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightcyan'@*
+@item col_input_delimiters
+Couleur pour le texte saisi (d@'elimiteurs)@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'cyan'@*
 @item col_input_bg
 Couleur de fond pour la fen@^etre de saisie@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*

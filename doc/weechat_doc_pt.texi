@@ -383,6 +383,9 @@ Type: color (Curses or Gtk color), default value: 'default'@*
 @item col_status_delimiters
 Color for status bar delimiters@*
 Type: color (Curses or Gtk color), default value: 'cyan'@*
+@item col_status_channel
+Color for current channel in status bar@*
+Type: color (Curses or Gtk color), default value: 'white'@*
 @item col_status_data_msg
 Color for window with new messages (status bar)@*
 Type: color (Curses or Gtk color), default value: 'yellow'@*
@@ -421,7 +424,10 @@ Color for input text (channel name)@*
 Type: color (Curses or Gtk color), default value: 'white'@*
 @item col_input_nick
 Color for input text (nick name)@*
-Type: color (Curses or Gtk color), default value: 'lightgreen'@*
+Type: color (Curses or Gtk color), default value: 'lightcyan'@*
+@item col_input_delimiters
+Color for input text (delimiters)@*
+Type: color (Curses or Gtk color), default value: 'cyan'@*
 @item col_input_bg
 Background for input window@*
 Type: color (Curses or Gtk color), default value: 'default'@*
