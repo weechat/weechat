@@ -924,7 +924,7 @@ filename: Ruby script (file) to load@*
 @*
 Without argument, /ruby command lists all loaded Ruby scripts.@*
 @*
-@item server  [servername] | [servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 [nick2 [nick3]]] [-username username] [-realname realname] [-command command] [-autojoin channel[,channel]] ] | [del servername]
+@item server  [servername] | [servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 nick2 nick3] [-username username] [-realname realname] [-command command] [-autojoin channel[,channel]] ] | [del servername]
 @*
 list, add or remove servers@*
 @*
@@ -946,11 +946,11 @@ save config to disk@*
 @*
 file: filename for writing config@*
 @*
-@item set  [option[=value]]
+@item set  [option [ = value]]
 @*
 set config parameters@*
 @*
-option: name of an option@*
+option: name of an option (if name is full and no value is given, then help is displayed on option)@*
 value: value for option@*
 @*
 @item unalias  alias_name

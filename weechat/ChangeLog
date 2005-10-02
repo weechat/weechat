@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-10-01
+ChangeLog - 2005-10-02
 
 
 Version 0.1.6 (under dev!):
+   * added online help for config options (with /set full_option_name)
    * enhanced "smart" hotlist, with names (new options:
      look_hotlist_names_{count|level|length}) 
 

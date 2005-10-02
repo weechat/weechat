@@ -924,7 +924,7 @@ fichero: Ruby script (archivo) a cargar@*
 @*
 Sin argumentos, el comando /ruby lista todos los Ruby scripts cargados.@*
 @*
-@item server  [nombre_de_servidor] | [nombre_de_servidor nombre/IP puerto [-auto | -noauto] [-ipv6] [-ssl] [-pwd contrase@~na] [-nicks alias1 [alias2 [alias3]]] [-username nombre de usuario] [-realname nombre_real] [-command comando] [-autojoin canal[,canal]] ] | [del nombre_de_servidor]
+@item server  [nombre_de_servidor] | [nombre_de_servidor nombre/IP puerto [-auto | -noauto] [-ipv6] [-ssl] [-pwd contrase@~na] [-nicks alias1 alias2 alias3] [-username nombre de usuario] [-realname nombre_real] [-command comando] [-autojoin canal[,canal]] ] | [del nombre_de_servidor]
 @*
 lista, a@~nade o elimina servidores@*
 @*
@@ -946,12 +946,12 @@ guardar configuraci@'on a disco@*
 @*
 archivo: fichero en el que guardar la configuraci@'on@*
 @*
-@item set  [opci@'on[=valor]]
+@item set  [opci@'on [ = valor]]
 @*
 modificar par@'ametros de configuraci@'on@*
 @*
-opci@'on: nombre de una opci@'on@*
-valor: valor para la opci@'on@*
+option: name of an option (if name is full and no value is given, then help is displayed on option)@*
+value: value for option@*
 @*
 @item unalias  alias
 @*

@@ -925,7 +925,7 @@ fichier: script Ruby (fichier) @`a charger@*
 @*
 Sans param@`etre, la commande /ruby liste tous les scripts Ruby charg@'es.@*
 @*
-@item server  [nom_serveur] | [nom_serveur nom/IP port [-auto | -noauto] [-ipv6] [-ssl] [-pwd mot_de_passe] [-nicks pseudo1 [pseudo2 [pseudo3]]] [-username nom_utilisateur] [-realname nom_r@'eel] [-command commande] [-autojoin canal[,canal]] ] | [del nom_serveur]
+@item server  [nom_serveur] | [nom_serveur nom/IP port [-auto | -noauto] [-ipv6] [-ssl] [-pwd mot_de_passe] [-nicks pseudo1 pseudo2 pseudo3] [-username nom_utilisateur] [-realname nom_r@'eel] [-command commande] [-autojoin canal[,canal]] ] | [del nom_serveur]
 @*
 liste, ajoute ou retire des serveurs@*
 @*
@@ -947,11 +947,11 @@ sauvegarder la configuration sur disque@*
 @*
 fichier: fichier pour sauvegarder la configuration@*
 @*
-@item set  [option[=valeur]]
+@item set  [option [ = valeur]]
 @*
 modifier des param@`etres de configuration@*
 @*
-option: nom d'une option@*
+option: nom de l'option (si le nom est complet et qu'aucune valeur n'est donn@'ee, alors l'aide sur l'option est affich@'ee)@*
 valeur: valeur pour l'option@*
 @*
 @item unalias  nom_alias

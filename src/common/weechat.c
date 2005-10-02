@@ -321,8 +321,9 @@ void wee_display_config_options ()
                             weechat_options[i][j].default_string : _("empty"));
                         break;
                 }
-                printf (_("  . description: %s\n\n"),
+                printf (_("  . description: %s\n"),
                     _(weechat_options[i][j].long_description));
+                printf ("\n");
                 j++;
             }
         }
