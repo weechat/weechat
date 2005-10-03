@@ -400,7 +400,7 @@ t_config_option weechat_options_colors[] =
   { "col_input_delimiters", N_("color for input text (delimiters)"),
     N_("color for input text (delimiters)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "cyan", NULL, &cfg_col_input_delimiters, NULL, &config_change_color },
+    "lightgreen", NULL, &cfg_col_input_delimiters, NULL, &config_change_color },
   { "col_input_bg", N_("background for input window"),
     N_("background for input window"),
     OPTION_TYPE_COLOR, 0, 0, 0,
