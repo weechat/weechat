@@ -600,6 +600,10 @@ wee_create_home_dirs ()
         snprintf (dir_name, dir_length, "%s%s%s%s%s", weechat_home,
                  DIR_SEPARATOR, "perl", DIR_SEPARATOR, "autoload");
         wee_create_dir (dir_name);
+        /* create "~/.weechat/perl/config" */
+        snprintf (dir_name, dir_length, "%s%s%s%s%s", weechat_home,
+                 DIR_SEPARATOR, "perl", DIR_SEPARATOR, "config");
+        wee_create_dir (dir_name);
     }
     #endif
     
@@ -612,6 +616,10 @@ wee_create_home_dirs ()
         /* create "~/.weechat/python/autoload" */
         snprintf (dir_name, dir_length, "%s%s%s%s%s", weechat_home,
                  DIR_SEPARATOR, "python", DIR_SEPARATOR, "autoload");
+        wee_create_dir (dir_name);
+        /* create "~/.weechat/python/config" */
+        snprintf (dir_name, dir_length, "%s%s%s%s%s", weechat_home,
+                 DIR_SEPARATOR, "python", DIR_SEPARATOR, "config");
         wee_create_dir (dir_name);
     }
     #endif
