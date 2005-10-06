@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2005-09-24
+TODO - 2005-10-06
 
 Legend:
   #  done
@@ -20,6 +20,7 @@ v0.1.6:
  * Interface:
     + Gtk GUI
     + internationalization (traduce WeeChat in many languages)
+    - highlight should not occur on partial words
 
  * WeeChat commands
     - be able to bind a key on more than one command
@@ -29,6 +30,11 @@ v0.1.6:
  * Configuration:
     - be able to launch more than one command when connecting to server
 
+ * Plugins:
+    - dynamically load plugins as a separate library
+    - allow print function to write on all buffers or all channels of a server
+    - Ruby plugin
+    - "/ruby load" and "/ruby unload" commands to (un)load Ruby scripts
 
 Future versions:
 ---------------
@@ -54,7 +60,3 @@ Future versions:
     - interpret special chars in messages (color & bold for example)
     - understand incomplete commands if unambigous (for example: /he for /help is ok)
     ? Qt GUI
-
- * Plugins:
-    - Ruby plugin
-    - "/ruby load" and "/ruby unload" commands to (un)load Ruby scripts
