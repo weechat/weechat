@@ -89,21 +89,11 @@ t_weechat_command weechat_commands[] =
        "functions: list internal functions for key bindings\n"
        "reset: restore bindings to the default values and delete ALL personal binding (use carefully!)"),
     0, MAX_ARGS, NULL, weechat_cmd_key },
-  { "perl", N_("list/load/unload Perl scripts"),
+  { "plugin", N_("list/load/unload plugins"),
     N_("[load filename] | [autoload] | [reload] | [unload]"),
-    N_("filename: Perl script (file) to load\n\n"
-       "Without argument, /perl command lists all loaded Perl scripts."),
-    0, 2, weechat_cmd_perl, NULL },
-  { "python", N_("list/load/unload Python scripts"),
-    N_("[load filename] | [autoload] | [reload] | [unload]"),
-    N_("filename: Python script (file) to load\n\n"
-       "Without argument, /python command lists all loaded Python scripts."),
-    0, 2, weechat_cmd_python, NULL },
-  { "ruby", N_("list/load/unload Ruby scripts"),
-    N_("[load filename] | [autoload] | [reload] | [unload]"),
-    N_("filename: Ruby script (file) to load\n\n"
-       "Without argument, /ruby command lists all loaded Ruby scripts."),
-    0, 2, weechat_cmd_ruby, NULL },
+    N_("filename: WeeChat plugin (file) to load\n\n"
+       "Without argument, /plugin command lists all loaded plugins."),
+    0, 2, weechat_cmd_plugin, NULL },
   { "server", N_("list, add or remove servers"),
     N_("[servername] | "
        "[servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 "
@@ -381,7 +371,7 @@ alias_free_all ()
  */
 
 char **
-explode_string (/*@null@*/ char *string, char *separators, int num_items_max,
+explode_string (char *string, char *separators, int num_items_max,
                 int *num_items)
 {
     int i, n_items;
@@ -462,6 +452,23 @@ explode_string (/*@null@*/ char *string, char *separators, int num_items_max,
 }
 
 /*
+ * free_exploded_string: free an exploded string
+ */
+
+void
+free_exploded_string (char **exploded_string)
+{
+    int i;
+    
+    if (exploded_string)
+    {
+        for (i = 0; exploded_string[i]; i++)
+            free (exploded_string[i]);
+        free (exploded_string);
+    }
+}
+
+/*
  * exec_weechat_command: executes a command (WeeChat internal or IRC)
  *                       returns: 1 if command was executed succesfully
  *                                0 if error (command not executed)
@@ -470,7 +477,7 @@ explode_string (/*@null@*/ char *string, char *separators, int num_items_max,
 int
 exec_weechat_command (t_irc_server *server, char *string)
 {
-    int i, j, argc, return_code, length1, length2;
+    int i, argc, return_code, length1, length2;
     char *command, *pos, *ptr_args, **argv, *alias_command;
     t_weechat_alias *ptr_alias;
 
@@ -502,7 +509,11 @@ exec_weechat_command (t_irc_server *server, char *string)
             ptr_args = NULL;
     }
     
-    if (!plugin_exec_command (command + 1, (server) ? server->name : "", ptr_args))
+#ifdef PLUGINS
+    if (!plugin_cmd_handler_exec ((server) ? server->name : "", command + 1, ptr_args))
+#else
+    if (1)
+#endif
     {
         argv = explode_string (ptr_args, " ", 0, &argc);
         
@@ -556,12 +567,7 @@ exec_weechat_command (t_irc_server *server, char *string)
                                     WEECHAT_ERROR, command + 1);
                     }
                 }
-                if (argv)
-                {
-                    for (j = 0; argv[j]; j++)
-                        free (argv[j]);
-                    free (argv);
-                }
+                free_exploded_string (argv);
                 free (command);
                 return 1;
             }
@@ -626,12 +632,7 @@ exec_weechat_command (t_irc_server *server, char *string)
                                     WEECHAT_ERROR, command + 1);
                     }
                 }
-                if (argv)
-                {
-                    for (j = 0; argv[j]; j++)
-                        free (argv[j]);
-                    free (argv);
-                }
+                free_exploded_string (argv);
                 free (command);
                 return 1;
             }
@@ -659,12 +660,7 @@ exec_weechat_command (t_irc_server *server, char *string)
                 else
                     (void) exec_weechat_command (server, ptr_alias->alias_command);
                 
-                if (argv)
-                {
-                    for (j = 0; argv[j]; j++)
-                        free (argv[j]);
-                    free (argv);
-                }
+                free_exploded_string (argv);
                 free (command);
                 return 1;
             }
@@ -674,12 +670,7 @@ exec_weechat_command (t_irc_server *server, char *string)
                     _("%s unknown command \"%s\" (type /help for help)\n"),
                     WEECHAT_ERROR,
                     command + 1);
-        if (argv)
-        {
-            for (j = 0; argv[j]; j++)
-                free (argv[j]);
-            free (argv);
-        }
+        free_exploded_string (argv);
     }
     free (command);
     return 0;
@@ -767,7 +758,9 @@ user_command (t_irc_server *server, t_gui_buffer *buffer, char *command)
                 snprintf (plugin_args, plugin_args_length,
                           "localhost PRIVMSG %s :%s", 
                           CHANNEL(buffer)->name, command);
-                plugin_event_msg ("privmsg", server->name, plugin_args);
+#ifdef PLUGINS
+                plugin_msg_handler_exec (server->name, "privmsg", plugin_args);
+#endif
                 free (plugin_args);
             }
             else
@@ -1294,88 +1287,144 @@ int
 weechat_cmd_help (int argc, char **argv)
 {
     int i;
+#ifdef PLUGINS
+    t_weechat_plugin *ptr_plugin;
+    t_plugin_cmd_handler *ptr_cmd_handler;
+#endif
 
-    if (argc == 0)
+    switch (argc)
     {
-        gui_printf (NULL, "\n");
-        gui_printf (NULL, _("%s internal commands:\n"), PACKAGE_NAME);
-        for (i = 0; weechat_commands[i].command_name; i++)
-        {
-            gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "   %s",
-                              weechat_commands[i].command_name);
-            gui_printf (NULL, " - %s\n",
-                        _(weechat_commands[i].command_description));
-        }
-        gui_printf (NULL, "\n");
-        gui_printf (NULL, _("IRC commands:\n"));
-        for (i = 0; irc_commands[i].command_name; i++)
-        {
-            if (irc_commands[i].cmd_function_args || irc_commands[i].cmd_function_1arg)
+        case 0:
+            gui_printf (NULL, "\n");
+            gui_printf (NULL, _("%s internal commands:\n"), PACKAGE_NAME);
+            for (i = 0; weechat_commands[i].command_name; i++)
             {
                 gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "   %s",
-                                  irc_commands[i].command_name);
-                gui_printf (NULL, " - %s\n",
-                            _(irc_commands[i].command_description));
-            }
-        }
-    }
-    if (argc == 1)
-    {
-        for (i = 0; weechat_commands[i].command_name; i++)
-        {
-            if (ascii_strcasecmp (weechat_commands[i].command_name, argv[0]) == 0)
-            {
-                gui_printf (NULL, "\n");
-                gui_printf (NULL, "[w]");
-                gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "  /%s",
                                   weechat_commands[i].command_name);
-                if (weechat_commands[i].arguments &&
-                    weechat_commands[i].arguments[0])
-                    gui_printf (NULL, "  %s\n",
-                                _(weechat_commands[i].arguments));
-                else
-                    gui_printf (NULL, "\n");
-                if (weechat_commands[i].command_description &&
-                    weechat_commands[i].command_description[0])
-                    gui_printf (NULL, "\n%s\n",
-                                _(weechat_commands[i].command_description));
-                if (weechat_commands[i].arguments_description &&
-                    weechat_commands[i].arguments_description[0])
-                    gui_printf (NULL, "\n%s\n",
-                                _(weechat_commands[i].arguments_description));
-                return 0;
+                gui_printf (NULL, " - %s\n",
+                            _(weechat_commands[i].command_description));
             }
-        }
-        for (i = 0; irc_commands[i].command_name; i++)
-        {
-            if ((ascii_strcasecmp (irc_commands[i].command_name, argv[0]) == 0)
-                && (irc_commands[i].cmd_function_args || irc_commands[i].cmd_function_1arg))
+            gui_printf (NULL, "\n");
+            gui_printf (NULL, _("IRC commands:\n"));
+            for (i = 0; irc_commands[i].command_name; i++)
             {
-                gui_printf (NULL, "\n");
-                gui_printf (NULL, "[i]");
-                gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "  /%s",
-                                  irc_commands[i].command_name);
-                if (irc_commands[i].arguments &&
-                    irc_commands[i].arguments[0])
-                    gui_printf (NULL, "  %s\n",
-                                _(irc_commands[i].arguments));
-                else
-                    gui_printf (NULL, "\n");
-                if (irc_commands[i].command_description &&
-                    irc_commands[i].command_description[0])
-                    gui_printf (NULL, "\n%s\n",
+                if (irc_commands[i].cmd_function_args || irc_commands[i].cmd_function_1arg)
+                {
+                    gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "   %s",
+                                      irc_commands[i].command_name);
+                    gui_printf (NULL, " - %s\n",
                                 _(irc_commands[i].command_description));
-                if (irc_commands[i].arguments_description &&
-                    irc_commands[i].arguments_description[0])
-                    gui_printf (NULL, "\n%s\n",
-                                _(irc_commands[i].arguments_description));
-                return 0;
+                }
             }
-        }
-        irc_display_prefix (NULL, PREFIX_ERROR);
-        gui_printf (NULL,
-                    _("No help available, \"%s\" is an unknown command\n"),
-                    argv[0]);
+#ifdef PLUGINS
+            gui_printf (NULL, "\n");
+            gui_printf (NULL, _("Plugin commands:\n"));
+            for (ptr_plugin = weechat_plugins; ptr_plugin;
+                 ptr_plugin = ptr_plugin->next_plugin)
+            {
+                for (ptr_cmd_handler = ptr_plugin->cmd_handlers; ptr_cmd_handler;
+                     ptr_cmd_handler = ptr_cmd_handler->next_handler)
+                {
+                    gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "   %s",
+                                      ptr_cmd_handler->command);
+                    if (ptr_cmd_handler->description
+                        && ptr_cmd_handler->description[0])
+                        gui_printf (NULL, " - %s",
+                                    ptr_cmd_handler->description);
+                    gui_printf (NULL, "\n");
+                }
+            }
+#endif
+            break;
+        case 1:
+            for (i = 0; weechat_commands[i].command_name; i++)
+            {
+                if (ascii_strcasecmp (weechat_commands[i].command_name, argv[0]) == 0)
+                {
+                    gui_printf (NULL, "\n");
+                    gui_printf (NULL, "[w]");
+                    gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "  /%s",
+                                      weechat_commands[i].command_name);
+                    if (weechat_commands[i].arguments &&
+                        weechat_commands[i].arguments[0])
+                        gui_printf (NULL, "  %s\n",
+                                    _(weechat_commands[i].arguments));
+                    else
+                        gui_printf (NULL, "\n");
+                    if (weechat_commands[i].command_description &&
+                        weechat_commands[i].command_description[0])
+                        gui_printf (NULL, "\n%s\n",
+                                    _(weechat_commands[i].command_description));
+                    if (weechat_commands[i].arguments_description &&
+                        weechat_commands[i].arguments_description[0])
+                        gui_printf (NULL, "\n%s\n",
+                                    _(weechat_commands[i].arguments_description));
+                    return 0;
+                }
+            }
+            for (i = 0; irc_commands[i].command_name; i++)
+            {
+                if ((ascii_strcasecmp (irc_commands[i].command_name, argv[0]) == 0)
+                    && (irc_commands[i].cmd_function_args || irc_commands[i].cmd_function_1arg))
+                {
+                    gui_printf (NULL, "\n");
+                    gui_printf (NULL, "[i]");
+                    gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "  /%s",
+                                      irc_commands[i].command_name);
+                    if (irc_commands[i].arguments &&
+                        irc_commands[i].arguments[0])
+                        gui_printf (NULL, "  %s\n",
+                                    _(irc_commands[i].arguments));
+                    else
+                        gui_printf (NULL, "\n");
+                    if (irc_commands[i].command_description &&
+                        irc_commands[i].command_description[0])
+                        gui_printf (NULL, "\n%s\n",
+                                    _(irc_commands[i].command_description));
+                    if (irc_commands[i].arguments_description &&
+                        irc_commands[i].arguments_description[0])
+                        gui_printf (NULL, "\n%s\n",
+                                    _(irc_commands[i].arguments_description));
+                    return 0;
+                }
+            }
+#ifdef PLUGINS
+            for (ptr_plugin = weechat_plugins; ptr_plugin;
+                 ptr_plugin = ptr_plugin->next_plugin)
+            {
+                for (ptr_cmd_handler = ptr_plugin->cmd_handlers; ptr_cmd_handler;
+                     ptr_cmd_handler = ptr_cmd_handler->next_handler)
+                {
+                    if (ascii_strcasecmp (ptr_cmd_handler->command, argv[0]) == 0)
+                    {
+                        gui_printf (NULL, "\n");
+                        gui_printf (NULL, "[p]");
+                        gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "  /%s",
+                                          ptr_cmd_handler->command);
+                        if (ptr_cmd_handler->arguments &&
+                            ptr_cmd_handler->arguments[0])
+                            gui_printf (NULL, "  %s\n",
+                                        ptr_cmd_handler->arguments);
+                        else
+                            gui_printf (NULL, "\n");
+                        if (ptr_cmd_handler->description &&
+                            ptr_cmd_handler->description[0])
+                            gui_printf (NULL, "\n%s\n",
+                                        ptr_cmd_handler->description);
+                        if (ptr_cmd_handler->arguments_description &&
+                            ptr_cmd_handler->arguments_description[0])
+                            gui_printf (NULL, "\n%s\n",
+                                        ptr_cmd_handler->arguments_description);
+                        return 0;
+                    }
+                }
+            }
+#endif
+            irc_display_prefix (NULL, PREFIX_ERROR);
+            gui_printf (NULL,
+                        _("No help available, \"%s\" is an unknown command\n"),
+                        argv[0]);
+            break;
     }
     return 0;
 }
@@ -1601,92 +1650,82 @@ weechat_cmd_key (char *arguments)
 }
 
 /*
- * weechat_cmd_perl: list/load/unload Perl scripts
+ * weechat_cmd_plugin: list/load/unload WeeChat plugins
  */
 
 int
-weechat_cmd_perl (int argc, char **argv)
+weechat_cmd_plugin (int argc, char **argv)
 {
-#ifdef PLUGIN_PERL
-    t_plugin_script *ptr_plugin_script;
-    t_plugin_handler *ptr_plugin_handler;
-    int handler_found, path_length;
-    char *path_script;
+#ifdef PLUGINS
+    t_weechat_plugin *ptr_plugin;
+    t_plugin_msg_handler *ptr_msg_handler;
+    t_plugin_cmd_handler *ptr_cmd_handler;
     
     switch (argc)
     {
         case 0:
-            /* list registered Perl scripts */
+            /* list plugins */
             gui_printf (NULL, "\n");
-            gui_printf (NULL, _("Registered %s scripts:\n"), "Perl");
-            if (perl_scripts)
+            irc_display_prefix (NULL, PREFIX_PLUGIN);
+            gui_printf (NULL, _("Plugins loaded:\n"));
+            for (ptr_plugin = weechat_plugins; ptr_plugin;
+                 ptr_plugin = ptr_plugin->next_plugin)
             {
-                for (ptr_plugin_script = perl_scripts; ptr_plugin_script;
-                     ptr_plugin_script = ptr_plugin_script->next_script)
+                /* plugin info */
+                irc_display_prefix (NULL, PREFIX_PLUGIN);
+                gui_printf (NULL, "  %s v%s - %s (%s)\n",
+                            ptr_plugin->name,
+                            ptr_plugin->version,
+                            ptr_plugin->description,
+                            ptr_plugin->filename);
+                
+                /* message handlers */
+                irc_display_prefix (NULL, PREFIX_PLUGIN);
+                gui_printf (NULL, _("     message handlers:\n"));
+                for (ptr_msg_handler = ptr_plugin->msg_handlers;
+                     ptr_msg_handler;
+                     ptr_msg_handler = ptr_msg_handler->next_handler)
                 {
                     irc_display_prefix (NULL, PREFIX_PLUGIN);
-                    gui_printf (NULL, "  %s v%s%s%s\n",
-                                ptr_plugin_script->name,
-                                ptr_plugin_script->version,
-                                (ptr_plugin_script->description[0]) ? " - " : "",
-                                ptr_plugin_script->description);
+                    gui_printf (NULL, _("       IRC(%s)\n"),
+                                ptr_msg_handler->irc_command);
                 }
-            }
-            else
-            {
-                irc_display_prefix (NULL, PREFIX_PLUGIN);
-                gui_printf (NULL, _("  (none)\n"));
-            }
-            
-            /* list Perl message handlers */
-            gui_printf (NULL, "\n");
-            gui_printf (NULL, _("%s message handlers:\n"), "Perl");
-            handler_found = 0;
-            for (ptr_plugin_handler = plugin_msg_handlers; ptr_plugin_handler;
-                 ptr_plugin_handler = ptr_plugin_handler->next_handler)
-            {
-                if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PERL)
+                if (!ptr_plugin->msg_handlers)
                 {
-                    handler_found = 1;
                     irc_display_prefix (NULL, PREFIX_PLUGIN);
-                    gui_printf (NULL, _("  IRC(%s) => %s(%s)\n"),
-                                ptr_plugin_handler->name,
-                                "Perl",
-                                ptr_plugin_handler->function_name);
+                    gui_printf (NULL, _("       (no message handler)\n"));
                 }
-            }
-            if (!handler_found)
-            {
+                
+                /* command handlers */
                 irc_display_prefix (NULL, PREFIX_PLUGIN);
-                gui_printf (NULL, _("  (none)\n"));
-            }
-            
-            /* list Perl command handlers */
-            gui_printf (NULL, "\n");
-            gui_printf (NULL, _("%s command handlers:\n"), "Perl");
-            handler_found = 0;
-            for (ptr_plugin_handler = plugin_cmd_handlers; ptr_plugin_handler;
-                 ptr_plugin_handler = ptr_plugin_handler->next_handler)
-            {
-                if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PERL)
+                gui_printf (NULL, _("     command handlers:\n"));
+                for (ptr_cmd_handler = ptr_plugin->cmd_handlers;
+                     ptr_cmd_handler;
+                     ptr_cmd_handler = ptr_cmd_handler->next_handler)
                 {
-                    handler_found = 1;
                     irc_display_prefix (NULL, PREFIX_PLUGIN);
-                    gui_printf (NULL, _("  Command /%s => %s(%s)\n"),
-                                ptr_plugin_handler->name,
-                                "Perl",
-                                ptr_plugin_handler->function_name);
+                    gui_printf (NULL, "       /%s",
+                                ptr_cmd_handler->command);
+                    if (ptr_cmd_handler->description
+                        && ptr_cmd_handler->description[0])
+                        gui_printf (NULL, " (%s)",
+                                    ptr_cmd_handler->description);
+                    gui_printf (NULL, "\n");
+                }
+                if (!ptr_plugin->cmd_handlers)
+                {
+                    irc_display_prefix (NULL, PREFIX_PLUGIN);
+                    gui_printf (NULL, _("       (no command handler)\n"));
                 }
             }
-            if (!handler_found)
+            if (!weechat_plugins)
             {
                 irc_display_prefix (NULL, PREFIX_PLUGIN);
-                gui_printf (NULL, _("  (none)\n"));
+                gui_printf (NULL, _("  (no plugin)\n"));
             }
-            
             break;
         case 1:
-            if (ascii_strcasecmp (argv[0], "autoload") == 0)
+            /*if (ascii_strcasecmp (argv[0], "autoload") == 0)
                 plugin_auto_load (PLUGIN_TYPE_PERL, "perl/autoload");
             else if (ascii_strcasecmp (argv[0], "reload") == 0)
             {
@@ -1694,337 +1733,42 @@ weechat_cmd_perl (int argc, char **argv)
                 plugin_auto_load (PLUGIN_TYPE_PERL, "perl/autoload");
             }
             else if (ascii_strcasecmp (argv[0], "unload") == 0)
-                plugin_unload (PLUGIN_TYPE_PERL, NULL);
+            plugin_unload (PLUGIN_TYPE_PERL, NULL);*/
             break;
         case 2:
             if (ascii_strcasecmp (argv[0], "load") == 0)
             {
-                /* load Perl script */
-                if (strstr(argv[1], DIR_SEPARATOR))
-                    path_script = NULL;
-                else
-                {
-                    path_length = strlen (weechat_home) + strlen (argv[1]) + 7;
-                    path_script = (char *) malloc (path_length * sizeof (char));
-                    snprintf (path_script, path_length, "%s%s%s%s%s",
-                              weechat_home, DIR_SEPARATOR, "perl",
-                              DIR_SEPARATOR, argv[1]);
-                }
-                plugin_load (PLUGIN_TYPE_PERL,
-                             (path_script) ? path_script : argv[1]);
-                if (path_script)
-                    free (path_script);
-            }
-            else
-            {
-                irc_display_prefix (NULL, PREFIX_ERROR);
-                gui_printf (NULL,
-                            _("%s unknown option for \"%s\" command\n"),
-                            WEECHAT_ERROR, "perl");
-            }
-            break;
-        default:
-            irc_display_prefix (NULL, PREFIX_ERROR);
-            gui_printf (NULL,
-                        _("%s wrong argument count for \"%s\" command\n"),
-                        WEECHAT_ERROR, "perl");
-    }
-#else
-    irc_display_prefix (NULL, PREFIX_ERROR);
-    gui_printf (NULL,
-                _("WeeChat was build without Perl support.\n"
-                "Please rebuild WeeChat with "
-                "\"--enable-perl\" option for ./configure script\n"));
-    /* make gcc happy */
-    (void) argc;
-    (void) argv;
-#endif /* PLUGIN_PERL */
-    
-    return 0;
-}
-
-/*
- * weechat_cmd_python: list/load/unload Python scripts
- */
-
-int
-weechat_cmd_python (int argc, char **argv)
-{
-#ifdef PLUGIN_PYTHON
-    t_plugin_script *ptr_plugin_script;
-    t_plugin_handler *ptr_plugin_handler;
-    int handler_found, path_length;
-    char *path_script;
-    
-    switch (argc)
-    {
-        case 0:
-            /* list registered Python scripts */
-            gui_printf (NULL, "\n");
-            gui_printf (NULL, _("Registered %s scripts:\n"), "Python");
-            if (python_scripts)
-            {
-                for (ptr_plugin_script = python_scripts; ptr_plugin_script;
-                     ptr_plugin_script = ptr_plugin_script->next_script)
-                {
-                    irc_display_prefix (NULL, PREFIX_PLUGIN);
-                    gui_printf (NULL, "  %s v%s%s%s\n",
-                                ptr_plugin_script->name,
-                                ptr_plugin_script->version,
-                                (ptr_plugin_script->description[0]) ? " - " : "",
-                                ptr_plugin_script->description);
-                }
-            }
-            else
-            {
-                irc_display_prefix (NULL, PREFIX_PLUGIN);
-                gui_printf (NULL, _("  (none)\n"));
-            }
-            
-            /* list Python message handlers */
-            gui_printf (NULL, "\n");
-            gui_printf (NULL, _("%s message handlers:\n"), "Python");
-            handler_found = 0;
-            for (ptr_plugin_handler = plugin_msg_handlers; ptr_plugin_handler;
-                 ptr_plugin_handler = ptr_plugin_handler->next_handler)
-            {
-                if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PYTHON)
-                {
-                    handler_found = 1;
-                    irc_display_prefix (NULL, PREFIX_PLUGIN);
-                    gui_printf (NULL, _("  IRC(%s) => %s(%s)\n"),
-                                ptr_plugin_handler->name,
-                                "Python",
-                                ptr_plugin_handler->function_name);
-                }
-            }
-            if (!handler_found)
-            {
-                irc_display_prefix (NULL, PREFIX_PLUGIN);
-                gui_printf (NULL, _("  (none)\n"));
-            }
-            
-            /* list Python command handlers */
-            gui_printf (NULL, "\n");
-            gui_printf (NULL, _("%s command handlers:\n"), "Python");
-            handler_found = 0;
-            for (ptr_plugin_handler = plugin_cmd_handlers; ptr_plugin_handler;
-                 ptr_plugin_handler = ptr_plugin_handler->next_handler)
-            {
-                if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_PYTHON)
-                {
-                    handler_found = 1;
-                    irc_display_prefix (NULL, PREFIX_PLUGIN);
-                    gui_printf (NULL, _("  Command /%s => %s(%s)\n"),
-                                ptr_plugin_handler->name,
-                                "Python",
-                                ptr_plugin_handler->function_name);
-                }
-            }
-            if (!handler_found)
-            {
-                irc_display_prefix (NULL, PREFIX_PLUGIN);
-                gui_printf (NULL, _("  (none)\n"));
-            }
-            
-            break;
-        case 1:
-            if (ascii_strcasecmp (argv[0], "autoload") == 0)
-                plugin_auto_load (PLUGIN_TYPE_PYTHON, "python/autoload");
-            else if (ascii_strcasecmp (argv[0], "reload") == 0)
-            {
-                plugin_unload (PLUGIN_TYPE_PYTHON, NULL);
-                plugin_auto_load (PLUGIN_TYPE_PYTHON, "python/autoload");
+                /* load plugin */
+                plugin_load (argv[1]);
             }
             else if (ascii_strcasecmp (argv[0], "unload") == 0)
-                plugin_unload (PLUGIN_TYPE_PYTHON, NULL);
-            break;
-        case 2:
-            if (ascii_strcasecmp (argv[0], "load") == 0)
             {
-                /* load Python script */
-                if (strstr(argv[1], DIR_SEPARATOR))
-                    path_script = NULL;
-                else
-                {
-                    path_length = strlen (weechat_home) + strlen (argv[1]) + 9;
-                    path_script = (char *) malloc (path_length * sizeof (char));
-                    snprintf (path_script, path_length, "%s%s%s%s%s",
-                              weechat_home, DIR_SEPARATOR, "python",
-                              DIR_SEPARATOR, argv[1]);
-                }
-                plugin_load (PLUGIN_TYPE_PYTHON,
-                             (path_script) ? path_script : argv[1]);
-                if (path_script)
-                    free (path_script);
+                /* unload plugin */
+                plugin_unload_name (argv[1]);
             }
             else
             {
                 irc_display_prefix (NULL, PREFIX_ERROR);
                 gui_printf (NULL,
                             _("%s unknown option for \"%s\" command\n"),
-                            WEECHAT_ERROR, "python");
+                            WEECHAT_ERROR, "plugin");
             }
             break;
         default:
             irc_display_prefix (NULL, PREFIX_ERROR);
             gui_printf (NULL,
                         _("%s wrong argument count for \"%s\" command\n"),
-                        WEECHAT_ERROR, "python");
+                        WEECHAT_ERROR, "plugin");
     }
 #else
     irc_display_prefix (NULL, PREFIX_ERROR);
     gui_printf (NULL,
-                _("WeeChat was build without Python support.\n"
-                "Please rebuild WeeChat with "
-                "\"--enable-python\" option for ./configure script\n"));
+                _("Command \"plugin\" is not available, WeeChat was built "
+                  "without plugins support.\n"));
     /* make gcc happy */
     (void) argc;
     (void) argv;
-#endif /* PLUGIN_PYTHON */
-    
-    return 0;
-}
-
-/*
- * weechat_cmd_ruby: list/load/unload Ruby scripts
- */
-
-int
-weechat_cmd_ruby (int argc, char **argv)
-{
-#ifdef PLUGIN_RUBY
-    t_plugin_script *ptr_plugin_script;
-    t_plugin_handler *ptr_plugin_handler;
-    int handler_found, path_length;
-    char *path_script;
-    
-    switch (argc)
-    {
-        case 0:
-            /* list registered Ruby scripts */
-            gui_printf (NULL, "\n");
-            gui_printf (NULL, _("Registered %s scripts:\n"), "Ruby");
-            if (ruby_scripts)
-            {
-                for (ptr_plugin_script = ruby_scripts; ptr_plugin_script;
-                     ptr_plugin_script = ptr_plugin_script->next_script)
-                {
-                    irc_display_prefix (NULL, PREFIX_PLUGIN);
-                    gui_printf (NULL, "  %s v%s%s%s\n",
-                                ptr_plugin_script->name,
-                                ptr_plugin_script->version,
-                                (ptr_plugin_script->description[0]) ? " - " : "",
-                                ptr_plugin_script->description);
-                }
-            }
-            else
-            {
-                irc_display_prefix (NULL, PREFIX_PLUGIN);
-                gui_printf (NULL, _("  (none)\n"));
-            }
-            
-            /* list Ruby message handlers */
-            gui_printf (NULL, "\n");
-            gui_printf (NULL, _("%s message handlers:\n"), "Ruby");
-            handler_found = 0;
-            for (ptr_plugin_handler = plugin_msg_handlers; ptr_plugin_handler;
-                 ptr_plugin_handler = ptr_plugin_handler->next_handler)
-            {
-                if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_RUBY)
-                {
-                    handler_found = 1;
-                    irc_display_prefix (NULL, PREFIX_PLUGIN);
-                    gui_printf (NULL, _("  IRC(%s) => %s(%s)\n"),
-                                ptr_plugin_handler->name,
-                                "Ruby",
-                                ptr_plugin_handler->function_name);
-                }
-            }
-            if (!handler_found)
-            {
-                irc_display_prefix (NULL, PREFIX_PLUGIN);
-                gui_printf (NULL, _("  (none)\n"));
-            }
-            
-            /* list Ruby command handlers */
-            gui_printf (NULL, "\n");
-            gui_printf (NULL, _("%s command handlers:\n"), "Ruby");
-            handler_found = 0;
-            for (ptr_plugin_handler = plugin_cmd_handlers; ptr_plugin_handler;
-                 ptr_plugin_handler = ptr_plugin_handler->next_handler)
-            {
-                if (ptr_plugin_handler->plugin_type == PLUGIN_TYPE_RUBY)
-                {
-                    handler_found = 1;
-                    irc_display_prefix (NULL, PREFIX_PLUGIN);
-                    gui_printf (NULL, _("  Command /%s => %s(%s)\n"),
-                                ptr_plugin_handler->name,
-                                "Ruby",
-                                ptr_plugin_handler->function_name);
-                }
-            }
-            if (!handler_found)
-            {
-                irc_display_prefix (NULL, PREFIX_PLUGIN);
-                gui_printf (NULL, _("  (none)\n"));
-            }
-            
-            break;
-        case 1:
-            if (ascii_strcasecmp (argv[0], "autoload") == 0)
-                plugin_auto_load (PLUGIN_TYPE_RUBY, "ruby/autoload");
-            else if (ascii_strcasecmp (argv[0], "reload") == 0)
-            {
-                plugin_unload (PLUGIN_TYPE_RUBY, NULL);
-                plugin_auto_load (PLUGIN_TYPE_RUBY, "ruby/autoload");
-            }
-            else if (ascii_strcasecmp (argv[0], "unload") == 0)
-                plugin_unload (PLUGIN_TYPE_RUBY, NULL);
-            break;
-        case 2:
-            if (ascii_strcasecmp (argv[0], "load") == 0)
-            {
-                /* load Ruby script */
-                if (strstr(argv[1], DIR_SEPARATOR))
-                    path_script = NULL;
-                else
-                {
-                    path_length = strlen (weechat_home) + strlen (argv[1]) + 9;
-                    path_script = (char *) malloc (path_length * sizeof (char));
-                    snprintf (path_script, path_length, "%s%s%s%s%s",
-                              weechat_home, DIR_SEPARATOR, "ruby",
-                              DIR_SEPARATOR, argv[1]);
-                }
-                plugin_load (PLUGIN_TYPE_RUBY,
-                             (path_script) ? path_script : argv[1]);
-                if (path_script)
-                    free (path_script);
-            }
-            else
-            {
-                irc_display_prefix (NULL, PREFIX_ERROR);
-                gui_printf (NULL,
-                            _("%s unknown option for \"%s\" command\n"),
-                            WEECHAT_ERROR, "ruby");
-            }
-            break;
-        default:
-            irc_display_prefix (NULL, PREFIX_ERROR);
-            gui_printf (NULL,
-                        _("%s wrong argument count for \"%s\" command\n"),
-                        WEECHAT_ERROR, "ruby");
-    }
-#else
-    irc_display_prefix (NULL, PREFIX_ERROR);
-    gui_printf (NULL,
-                _("WeeChat was build without Ruby support.\n"
-                "Please rebuild WeeChat with "
-                "\"--enable-ruby\" option for ./configure script\n"));
-    /* make gcc happy */
-    (void) argc;
-    (void) argv;
-#endif /* PLUGIN_RUBY */
+#endif /* PLUGINS */
     
     return 0;
 }

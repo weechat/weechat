@@ -140,6 +140,9 @@ weelist_remove (t_weelist **weelist, t_weelist **last_weelist, t_weelist *elemen
 {
     t_weelist *new_weelist;
     
+    if (!element)
+        return;
+    
     /* remove element from list */
     if (*last_weelist == element)
         *last_weelist = element->prev_weelist;

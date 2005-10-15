@@ -33,11 +33,12 @@
 #define CONFIG_SECTION_IRC     4
 #define CONFIG_SECTION_DCC     5
 #define CONFIG_SECTION_PROXY   6
-#define CONFIG_SECTION_KEYS    7
-#define CONFIG_SECTION_ALIAS   8
-#define CONFIG_SECTION_IGNORE  9
-#define CONFIG_SECTION_SERVER  10
-#define CONFIG_NUMBER_SECTIONS 11
+#define CONFIG_SECTION_PLUGINS 7
+#define CONFIG_SECTION_KEYS    8
+#define CONFIG_SECTION_ALIAS   9
+#define CONFIG_SECTION_IGNORE  10
+#define CONFIG_SECTION_SERVER  11
+#define CONFIG_NUMBER_SECTIONS 12
 
 #define OPTION_TYPE_BOOLEAN         1   /* values: on/off                   */
 #define OPTION_TYPE_INT             2   /* values: from min to max          */
@@ -201,6 +202,10 @@ extern char *cfg_proxy_address;
 extern int cfg_proxy_port;
 extern char *cfg_proxy_username;
 extern char *cfg_proxy_password;
+
+extern char *cfg_plugins_path;
+extern char *cfg_plugins_autoload;
+extern char *cfg_plugins_extension;
 
 extern t_config_section config_sections [CONFIG_NUMBER_SECTIONS];
 extern t_config_option * weechat_options [CONFIG_NUMBER_SECTIONS];

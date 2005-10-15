@@ -53,6 +53,7 @@ t_config_section config_sections[CONFIG_NUMBER_SECTIONS] =
   { CONFIG_SECTION_IRC, "irc" },
   { CONFIG_SECTION_DCC, "dcc" },
   { CONFIG_SECTION_PROXY, "proxy" },
+  { CONFIG_SECTION_PLUGINS, "plugins" },
   { CONFIG_SECTION_KEYS, "keys" },
   { CONFIG_SECTION_ALIAS, "alias" },
   { CONFIG_SECTION_IGNORE, "ignore" },
@@ -747,6 +748,36 @@ t_config_option weechat_options_proxy[] =
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
+/* config, plugins section */
+
+char *cfg_plugins_path;
+char *cfg_plugins_autoload;
+char *cfg_plugins_extension;
+
+t_config_option weechat_options_plugins[] =
+{ { "plugins_path", N_("path for searching plugins"),
+    N_("path for searching plugins"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    "~/.weechat/plugins", NULL, NULL, &cfg_plugins_path, config_change_noop },
+  { "plugins_autoload", N_("list of plugins to load automatically"),
+    N_("comma separated list of plugins to load automatically at startup, "
+       "\"*\" means all plugins found "
+       "(names may be partial, for example \"perl\" is ok for \"libperl.so\")"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    "*", NULL, NULL, &cfg_plugins_autoload, config_change_noop },
+  { "plugins_extension", N_("standard plugins extension in filename"),
+    N_("standard plugins extension in filename, used for autoload "
+       "(if empty, then all files are loaded when autoload is \"*\")"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+#ifdef WIN32
+    ".dll",
+#else
+    ".so",
+#endif
+    NULL, NULL, &cfg_plugins_extension, config_change_noop },
+  { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
+};
+
 /* config, server section */
 
 static t_irc_server cfg_server;
@@ -836,7 +867,8 @@ t_config_option weechat_options_server[] =
 t_config_option *weechat_options[CONFIG_NUMBER_SECTIONS] =
 { weechat_options_look, weechat_options_colors, weechat_options_history,
   weechat_options_log, weechat_options_irc, weechat_options_dcc,
-  weechat_options_proxy, NULL, NULL, NULL, weechat_options_server
+  weechat_options_proxy, weechat_options_plugins, NULL, NULL, NULL,
+  weechat_options_server
 };
 
 

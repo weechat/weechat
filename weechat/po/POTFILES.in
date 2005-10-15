@@ -8,14 +8,9 @@
 ./src/irc/irc-dcc.c
 ./src/irc/irc-ignore.c
 ./src/irc/irc.h
-./src/plugins/perl/wee-perl.c
-./src/plugins/perl/wee-perl.h
-./src/plugins/python/wee-python.c
-./src/plugins/python/wee-python.h
-./src/plugins/ruby/wee-ruby.c
-./src/plugins/ruby/wee-ruby.h
 ./src/plugins/plugins.c
 ./src/plugins/plugins.h
+./src/plugins/weechat-plugin.h
 ./src/gui/curses/gui-input.c
 ./src/gui/curses/gui-display.c
 ./src/gui/gtk/gui-display.c

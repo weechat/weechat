@@ -9,7 +9,7 @@
  * ###                 Fast & light environment for Chat                    ###
  * ###                                                                      ###
  * ###                By FlashCode <flashcode@flashtux.org>                 ###
-   ###                                                                      ###
+ * ###                                                                      ###
  * ###                     http://weechat.flashtux.org                      ###
  * ###                                                                      ###
  * ############################################################################
@@ -66,7 +66,10 @@
 #include "fifo.h"
 #include "../irc/irc.h"
 #include "../gui/gui.h"
+
+#ifdef PLUGINS
 #include "../plugins/plugins.h"
+#endif
 
 
 int quit_weechat;               /* = 1 if quit request from user... why ? :'(       */
@@ -590,53 +593,6 @@ wee_create_home_dirs ()
     dir_length = strlen (weechat_home) + 64;
     dir_name = (char *) malloc (dir_length * sizeof (char));
     
-    #ifdef PLUGIN_PERL
-    /* create "~/.weechat/perl" */
-    snprintf (dir_name, dir_length, "%s%s%s", weechat_home, DIR_SEPARATOR,
-              "perl");
-    if (wee_create_dir (dir_name))
-    {
-        /* create "~/.weechat/perl/autoload" */
-        snprintf (dir_name, dir_length, "%s%s%s%s%s", weechat_home,
-                 DIR_SEPARATOR, "perl", DIR_SEPARATOR, "autoload");
-        wee_create_dir (dir_name);
-        /* create "~/.weechat/perl/config" */
-        snprintf (dir_name, dir_length, "%s%s%s%s%s", weechat_home,
-                 DIR_SEPARATOR, "perl", DIR_SEPARATOR, "config");
-        wee_create_dir (dir_name);
-    }
-    #endif
-    
-    #ifdef PLUGIN_PYTHON
-    /* create "~/.weechat/python" */
-    snprintf (dir_name, dir_length, "%s%s%s", weechat_home, DIR_SEPARATOR,
-             "python");
-    if (wee_create_dir (dir_name))
-    {
-        /* create "~/.weechat/python/autoload" */
-        snprintf (dir_name, dir_length, "%s%s%s%s%s", weechat_home,
-                 DIR_SEPARATOR, "python", DIR_SEPARATOR, "autoload");
-        wee_create_dir (dir_name);
-        /* create "~/.weechat/python/config" */
-        snprintf (dir_name, dir_length, "%s%s%s%s%s", weechat_home,
-                 DIR_SEPARATOR, "python", DIR_SEPARATOR, "config");
-        wee_create_dir (dir_name);
-    }
-    #endif
-    
-    #ifdef PLUGIN_RUBY
-    /* create "~/.weechat/ruby" */
-    snprintf (dir_name, dir_length, "%s%s%s", weechat_home, DIR_SEPARATOR,
-             "ruby");
-    if (wee_create_dir (dir_name))
-    {
-        /* create "~/.weechat/ruby/autoload" */
-        snprintf (dir_name, dir_length, "%s%s%s%s%s", weechat_home,
-                 DIR_SEPARATOR, "ruby", DIR_SEPARATOR, "autoload");
-        wee_create_dir (dir_name);
-    }
-    #endif
-    
     /* create "~/.weechat/logs" */
     snprintf (dir_name, dir_length, "%s%s%s", weechat_home, DIR_SEPARATOR,
               "logs");
@@ -925,14 +881,18 @@ main (int argc, char *argv[])
     
     gui_init ();                    /* init WeeChat interface               */
     weechat_welcome_message ();     /* display WeeChat welcome message      */
-    plugin_init ();                 /* init plugin interface(s)             */    
+#ifdef PLUGINS
+    plugin_init ();                 /* init plugin interface(s)             */
+#endif
                                     /* auto-connect to servers              */
     server_auto_connect (server_cmd_line);
     fifo_create ();                 /* create FIFO pipe for remote control  */
     
     gui_main_loop ();               /* WeeChat main loop                    */
     
+#ifdef PLUGINS    
     plugin_end ();                  /* end plugin interface(s)              */
+#endif
     server_disconnect_all ();       /* disconnect from all servers          */
     (void) config_write (NULL);     /* save config file                     */
     command_index_free ();          /* free commands index                  */

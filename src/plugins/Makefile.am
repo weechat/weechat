@@ -18,20 +18,21 @@
 INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\"
 
 if PLUGIN_PERL
-perl_dir = perl
+script_dir = scripts
 endif
 
 if PLUGIN_PYTHON
-python_dir = python
+script_dir = scripts
 endif
 
 if PLUGIN_RUBY
-ruby_dir = ruby
+script_dir = scripts
 endif
 
-SUBDIRS = $(perl_dir) $(python_dir) $(ruby_dir)
+SUBDIRS = $(script_dir)
 
 noinst_LIBRARIES = lib_weechat_plugins.a
 
-lib_weechat_plugins_a_SOURCES = plugins.h \
+lib_weechat_plugins_a_SOURCES = weechat-plugin.h \
+				plugins.h \
                                 plugins.c

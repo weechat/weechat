@@ -179,8 +179,13 @@ irc_recv_command (t_irc_server *server, char *entire_line,
         return_code = (int) (irc_commands[i].recv_function) (server, host, nick, arguments);
         if (nick)
             free (nick);
+#ifdef PLUGINS
         if (!command_ignored)
-            plugin_event_msg (irc_commands[i].command_name, server->name, entire_line);
+            plugin_msg_handler_exec (server->name, irc_commands[i].command_name, entire_line);
+#else
+        /* make gcc happy */
+        (void) entire_line;
+#endif
         return return_code;
     }
     

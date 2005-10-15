@@ -34,6 +34,10 @@
 #include "weeconfig.h"
 #include "../irc/irc.h"
 
+#ifdef PLUGINS
+#include "../plugins/plugins.h"
+#endif
+
 
 /*
  * completion_init: init completion
@@ -108,6 +112,10 @@ completion_build_list (t_completion *completion, void *channel)
     t_config_option *option;
     void *option_value;
     char option_string[2048];
+#ifdef PLUGINS
+    t_weechat_plugin *ptr_plugin;
+    t_plugin_cmd_handler *ptr_cmd_handler;
+#endif
     
     /* WeeChat internal commands */
     
@@ -200,6 +208,20 @@ completion_build_list (t_completion *completion, void *channel)
                              &completion->last_completion,
                              irc_commands[i].command_name);
         }
+#ifdef PLUGINS
+        for (ptr_plugin = weechat_plugins; ptr_plugin;
+             ptr_plugin = ptr_plugin->next_plugin)
+        {
+            for (ptr_cmd_handler = ptr_plugin->cmd_handlers;
+                 ptr_cmd_handler;
+                 ptr_cmd_handler = ptr_cmd_handler->next_handler)
+            {
+                weelist_add (&completion->completion_list,
+                             &completion->last_completion,
+                             ptr_cmd_handler->command);
+            }
+        }
+#endif
         return;
     }
     if (ascii_strcasecmp (completion->base_command, "ignore") == 0)
@@ -312,8 +334,7 @@ completion_build_list (t_completion *completion, void *channel)
             return;
         }
     }
-    if (((ascii_strcasecmp (completion->base_command, "perl") == 0)
-        || (ascii_strcasecmp (completion->base_command, "python") == 0))
+    if ((ascii_strcasecmp (completion->base_command, "plugin") == 0)
         && (completion->base_command_arg == 1))
     {
         weelist_add (&completion->completion_list,
