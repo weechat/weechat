@@ -531,7 +531,13 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
     (void) handler_args;
     (void) handler_pointer;
     
-    argv = plugin->explode_string (plugin, arguments, " ", 0, &argc);
+    if (arguments)
+        argv = plugin->explode_string (plugin, arguments, " ", 0, &argc);
+    else
+    {
+        argv = NULL;
+        argc = 0;
+    }
     
     switch (argc)
     {
@@ -639,7 +645,10 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
             plugin->printf_server (plugin,
                                    "Perl error: wrong argument count for \"perl\" command");
     }
-    plugin->free_exploded_string (plugin, argv);
+    
+    if (argv)
+        plugin->free_exploded_string (plugin, argv);
+    
     return 1;
 }
 
