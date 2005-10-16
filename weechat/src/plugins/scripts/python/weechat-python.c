@@ -854,11 +854,16 @@ weechat_plugin_end (t_weechat_plugin *plugin)
     weechat_python_unload_all (plugin);
     
     /* free Python interpreter */
-    /*Py_Finalize ();
+    if (python_mainThreadState != NULL)
+    {
+        PyThreadState_Swap (python_mainThreadState);
+        python_mainThreadState = NULL;
+    }
+    Py_Finalize ();
     if (Py_IsInitialized () != 0)
         python_plugin->printf_server (python_plugin,
                                       "Python error: unable to free interpreter");
     
     python_plugin->printf_server (python_plugin,
-    "Python plugin ended");*/
+                                  "Python plugin ended");
 }
