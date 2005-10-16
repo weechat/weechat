@@ -1160,6 +1160,12 @@ weechat_plugin_get_info (t_weechat_plugin *plugin, char *info, char *server, cha
                 return strdup ("0");
         }
     }
+    else if (ascii_strcasecmp (info, "weechatdir") == 0)
+    {
+        /* WARNING: deprecated info, you should use weechat_dir */
+        /* will be removed in a future version */
+        return strdup (weechat_home);
+    }
     else if (ascii_strcasecmp (info, "weechat_dir") == 0)
     {
         return strdup (weechat_home);
