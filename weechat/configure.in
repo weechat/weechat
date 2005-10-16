@@ -112,30 +112,30 @@ if test "x$enable_ncurses" = "xyes" ; then
     AC_SUBST(NCURSES_LIBS)
 fi
 
-if test "x$enable_wxwidgets" = "xyes" ; then
-	AM_OPTIONS_WXCONFIG
-	AM_PATH_WXCONFIG(2.3.4, wxWin=1)
-
-    if test "$wxWin" != 1; then
-        AC_MSG_ERROR([
-*** wxWindows must be installed on your system
-*** but wx-config script couldn't be found.
-
-*** Please check that wx-config is in path, the directory
-*** where wxWindows libraries are installed (returned by
-*** 'wx-config --libs' command) is in LD_LIBRARY_PATH or
-*** equivalent variable and wxWindows version is 2.3.4 or above.
-        ])
-    fi
-    
-    CPPFLAGS="$CPPFLAGS $WX_CPPFLAGS"
-    CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS_ONLY"
-    CFLAGS="$CFLAGS $WX_CFLAGS_ONLY"
-    LDFLAGS="$LDFLAGS $WX_LIBS"
-    
-    WXWIDGETS_CFLAGS=""
-    WXWIDGETS_LIBS=""
-fi
+#if test "x$enable_wxwidgets" = "xyes" ; then
+#    AM_OPTIONS_WXCONFIG
+#    AM_PATH_WXCONFIG(2.3.4, wxWin=1)
+#
+#    if test "$wxWin" != 1; then
+#        AC_MSG_ERROR([
+#*** wxWindows must be installed on your system
+#*** but wx-config script couldn't be found.
+#
+#*** Please check that wx-config is in path, the directory
+#*** where wxWindows libraries are installed (returned by
+#*** 'wx-config --libs' command) is in LD_LIBRARY_PATH or
+#*** equivalent variable and wxWindows version is 2.3.4 or above.
+#        ])
+#    fi
+#
+#    CPPFLAGS="$CPPFLAGS $WX_CPPFLAGS"
+#    CXXFLAGS="$CXXFLAGS $WX_CXXFLAGS_ONLY"
+#    CFLAGS="$CFLAGS $WX_CFLAGS_ONLY"
+#    LDFLAGS="$LDFLAGS $WX_LIBS"
+#
+#    WXWIDGETS_CFLAGS=""
+#    WXWIDGETS_LIBS=""
+#fi
 
 if test "x$enable_gtk" = "xyes" ; then
     #if test "$LIBGTK_FOUND" = "0" ; then
