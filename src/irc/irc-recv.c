@@ -574,6 +574,56 @@ void irc_get_channel_modes (t_irc_channel *ptr_channel, char *channel_name,
                     parm = pos;
                 }
                 break;
+            case 'e':
+                pos = NULL;
+                if (parm)
+                {
+                    pos = strchr (parm, ' ');
+                    if (pos)
+                        pos[0] = '\0';
+                }
+                if (nick_host)
+                    irc_display_mode (ptr_channel->buffer,
+                                      channel_name, set_flag, "e", nick_host,
+                                      (set_flag == '+') ?
+                                          _("sets exception on") :
+                                          _("removes exception on"),
+                                      (parm) ? parm : NULL);
+                
+                /* look for next parameter */
+                if (parm && pos)
+                {
+                    pos++;
+                    while (pos[0] == ' ')
+                        pos++;
+                    parm = pos;
+                }
+                break;
+            case 'f':
+                pos = NULL;
+                if (parm)
+                {
+                    pos = strchr (parm, ' ');
+                    if (pos)
+                        pos[0] = '\0';
+                }
+                if (nick_host)
+                    irc_display_mode (ptr_channel->buffer,
+                                      channel_name, set_flag, "f", nick_host,
+                                      (set_flag == '+') ?
+                                          _("sets mode +f") :
+                                          _("removes mode +f"),
+                                      (parm) ? parm : NULL);
+                
+                /* look for next parameter */
+                if (parm && pos)
+                {
+                    pos++;
+                    while (pos[0] == ' ')
+                        pos++;
+                    parm = pos;
+                }
+                break;
             case 'h':
                 pos = NULL;
                 if (parm)
@@ -3774,6 +3824,181 @@ irc_cmd_recv_345 (t_irc_server *server, char *host, char *nick, char *arguments)
             gui_printf (server->buffer, "%s\n", arguments);
         }
     }
+    return 0;
+}
+
+/*
+ * irc_cmd_recv_348: '348' command received (channel exception list)
+ */
+
+int
+irc_cmd_recv_348 (t_irc_server *server, char *host, char *nick, char *arguments)
+{
+    char *pos_channel, *pos_exception, *pos_user, *pos_date, *pos;
+    t_irc_channel *ptr_channel;
+    t_gui_buffer *buffer;
+    time_t datetime;
+    
+    /* make gcc happy */
+    (void) nick;
+    
+    /* look for channel */
+    pos_channel = strchr (arguments, ' ');
+    if (!pos_channel)
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s cannot parse \"%s\" command\n"),
+                          WEECHAT_ERROR, "348");
+        return -1;
+    }
+    pos_channel[0] = '\0';
+    pos_channel++;
+    while (pos_channel[0] == ' ')
+        pos_channel++;
+    
+    /* look for exception mask */
+    pos_exception = strchr (pos_channel, ' ');
+    if (!pos_exception)
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s cannot parse \"%s\" command\n"),
+                          WEECHAT_ERROR, "348");
+        return -1;
+    }
+    pos_exception[0] = '\0';
+    pos_exception++;
+    while (pos_exception[0] == ' ')
+        pos_exception++;
+    
+    /* look for user who set exception */
+    pos_user = strchr (pos_exception, ' ');
+    if (!pos_user)
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s cannot parse \"%s\" command\n"),
+                          WEECHAT_ERROR, "348");
+        return -1;
+    }
+    pos_user[0] = '\0';
+    pos_user++;
+    while (pos_user[0] == ' ')
+        pos_user++;
+    
+    /* look for date/time */
+    pos_date = strchr (pos_user, ' ');
+    if (!pos_date)
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s cannot parse \"%s\" command\n"),
+                          WEECHAT_ERROR, "348");
+        return -1;
+    }
+    pos_date[0] = '\0';
+    pos_date++;
+    while (pos_date[0] == ' ')
+        pos_date++;
+    
+    if (!pos_date || !pos_date[0])
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s cannot parse \"%s\" command\n"),
+                          WEECHAT_ERROR, "348");
+        return -1;
+    }
+    
+    ptr_channel = channel_search (server, pos_channel);
+    buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
+    
+    command_ignored |= ignore_check (host, "348", pos_channel, server->name);
+    
+    if (!command_ignored)
+    {
+        irc_display_prefix (buffer, PREFIX_INFO);
+        gui_printf_color (buffer, COLOR_WIN_CHAT_DARK, "[");
+        gui_printf_color (buffer, COLOR_WIN_CHAT_CHANNEL, "%s", pos_channel);
+        gui_printf_color (buffer, COLOR_WIN_CHAT_DARK, "] ");
+        gui_printf (buffer, _("exception"));
+        gui_printf_color (buffer, COLOR_WIN_CHAT_HOST, " %s ", pos_exception);
+        gui_printf (buffer, _("by"));
+        pos = strchr (pos_user, '!');
+        if (pos)
+        {
+            pos[0] = '\0';
+            gui_printf_color (buffer, COLOR_WIN_CHAT_NICK, " %s ", pos_user);
+            gui_printf_color (buffer, COLOR_WIN_CHAT_DARK, "(");
+            gui_printf_color (buffer, COLOR_WIN_CHAT_HOST, "%s", pos + 1);
+            gui_printf_color (buffer, COLOR_WIN_CHAT_DARK, ")");
+        }
+        else
+            gui_printf_color (buffer, COLOR_WIN_CHAT_NICK, " %s", pos_user);
+        datetime = (time_t)(atol (pos_date));
+        gui_printf_nolog (buffer, ", %s", ctime (&datetime));
+    }    
+    return 0;
+}
+
+/*
+ * irc_cmd_recv_349: '349' command received (end of channel exception list)
+ */
+
+int
+irc_cmd_recv_349 (t_irc_server *server, char *host, char *nick, char *arguments)
+{
+    char *pos_channel, *pos_msg;
+    t_irc_channel *ptr_channel;
+    t_gui_buffer *buffer;
+    
+    /* make gcc happy */
+    (void) nick;
+    
+    pos_channel = strchr (arguments, ' ');
+    if (!pos_channel)
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s cannot parse \"%s\" command\n"),
+                          WEECHAT_ERROR, "349");
+        return -1;
+    }
+    pos_channel[0] = '\0';
+    pos_channel++;
+    while (pos_channel[0] == ' ')
+        pos_channel++;
+    
+    pos_msg = strchr (pos_channel, ' ');
+    if (!pos_msg)
+    {
+        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s cannot parse \"%s\" command\n"),
+                          WEECHAT_ERROR, "349");
+        return -1;
+    }
+    pos_msg[0] = '\0';
+    pos_msg++;
+    while (pos_msg[0] == ' ')
+        pos_msg++;
+    if (pos_msg[0] == ':')
+        pos_msg++;
+    
+    ptr_channel = channel_search (server, pos_channel);
+    buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
+
+    command_ignored |= ignore_check (host, "349", pos_channel, server->name);
+    
+    if (!command_ignored)
+    {
+        irc_display_prefix (buffer, PREFIX_INFO);
+        gui_printf_color (buffer, COLOR_WIN_CHAT_DARK, "[");
+        gui_printf_color (buffer, COLOR_WIN_CHAT_CHANNEL, "%s", pos_channel);
+        gui_printf_color (buffer, COLOR_WIN_CHAT_DARK, "] ");
+        gui_printf_nolog (buffer, "%s\n", pos_msg);
+    }    
     return 0;
 }
 

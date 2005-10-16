@@ -148,6 +148,7 @@ t_irc_command irc_commands[] =
     "  m: moderated channel\n"
     "  l: set the user limit to channel\n"
     "  b: set a ban mask to keep users out\n"
+    "  e: set exception mask\n"
     "  v: give/take the ability to speak on a moderated channel\n"
     "  k: set a channel key (password)\n"
     "user modes:\n"
@@ -361,6 +362,8 @@ t_irc_command irc_commands[] =
   { "341", N_("inviting"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_341 },
   { "344", N_("channel reop"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_344 },
   { "345", N_("end of channel reop list"),  "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_345 },
+  { "348", N_("channel exception list"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_348 },
+  { "349", N_("end of channel exception list"),  "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_349 },
   { "351", N_("server version"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_351 },
   { "352", N_("who"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_352 },
   { "353", N_("list of nicks on channel"),
@@ -451,6 +454,8 @@ t_irc_command irc_commands[] =
   { "465", N_("you are banned from this server"),
     "", "", 0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_error },
   { "467", N_("channel key already set"),
+    "", "", 0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_error },
+  { "470", N_("forwarding to another channel"),
     "", "", 0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_error },
   { "471", N_("channel is already full"),
     "", "", 0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_error },
