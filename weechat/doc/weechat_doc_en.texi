@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.1.6-cvs - October, 02 2005
+@subtitle Documentation for WeeChat v0.1.6-cvs - October, 17 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -64,7 +64,7 @@ version 2 or higher.
 * Introduction:: What is WeeChat ?
 * Installation:: WeeChat installation
 * Usage:: WeeChat usage
-* Extensions:: WeeChat extensions
+* Plugins:: WeeChat plugins
 * Authors / Support:: Contact authors and get support
 @end menu
 
@@ -199,7 +199,7 @@ Then follow instructions for source package - @xref{Source package}.
 
 @c ********************************** Usage ***********************************
 
-@node Usage, Extensions, Installation, Top
+@node Usage, Plugins, Installation, Top
 @chapter Usage
 
 @menu
@@ -429,7 +429,7 @@ Color for input text (nick name)@*
 Type: color (Curses or Gtk color), default value: 'lightcyan'@*
 @item col_input_delimiters
 Color for input text (delimiters)@*
-Type: color (Curses or Gtk color), default value: 'cyan'@*
+Type: color (Curses or Gtk color), default value: 'lightgreen'@*
 @item col_input_bg
 Background for input window@*
 Type: color (Curses or Gtk color), default value: 'default'@*
@@ -628,6 +628,15 @@ Type: string (any string), default value: ''@*
 @item proxy_password
 Password for proxy server@*
 Type: string (any string), default value: ''@*
+@item plugins_path
+Path for searching plugins@*
+Type: string (any string), default value: '~/.weechat/plugins'@*
+@item plugins_autoload
+Comma separated list of plugins to load automatically at startup, "*" means all plugins found (names may be partial, for example "perl" is ok for "libperl.so")@*
+Type: string (any string), default value: '*'@*
+@item plugins_extension
+Standard plugins extension in filename, used for autoload (if empty, then all files are loaded when autoload is "*")@*
+Type: string (any string), default value: '.so'@*
 @item server_name
 Name associated to IRC server (for display only)@*
 Type: string (any string), default value: ''@*
@@ -906,29 +915,13 @@ unbind: unbind a key (if "all", default bindings are restored)@*
 functions: list internal functions for key bindings@*
 reset: restore bindings to the default values and delete ALL personal binding (use carefully!)@*
 @*
-@item perl  [load filename] | [autoload] | [reload] | [unload]
+@item plugin  [load filename] | [autoload] | [reload] | [unload]
 @*
-list/load/unload Perl scripts@*
+list/load/unload plugins@*
 @*
-filename: Perl script (file) to load@*
+filename: WeeChat plugin (file) to load@*
 @*
-Without argument, /perl command lists all loaded Perl scripts.@*
-@*
-@item python  [load filename] | [autoload] | [reload] | [unload]
-@*
-list/load/unload Python scripts@*
-@*
-filename: Python script (file) to load@*
-@*
-Without argument, /python command lists all loaded Python scripts.@*
-@*
-@item ruby  [load filename] | [autoload] | [reload] | [unload]
-@*
-list/load/unload Ruby scripts@*
-@*
-filename: Ruby script (file) to load@*
-@*
-Without argument, /ruby command lists all loaded Ruby scripts.@*
+Without argument, /plugin command lists all loaded plugins.@*
 @*
 @item server  [servername] | [servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 nick2 nick3] [-username username] [-realname realname] [-command command] [-autojoin channel[,channel]] ] | [del servername]
 @*
@@ -1152,6 +1145,7 @@ channel modes:@*
   m: moderated channel@*
   l: set the user limit to channel@*
   b: set a ban mask to keep users out@*
+  e: set exception mask@*
   v: give/take the ability to speak on a moderated channel@*
   k: set a channel key (password)@*
 user modes:@*
@@ -1499,21 +1493,613 @@ If the script is called "auto_weechat_command", you can run it with:@*
 @command{./auto_weechat_command "freenode,#weechat *hello"}
 
 
-@c ******************************* Extensions *********************************
+@c ******************************** Plugins ***********************************
 
-@node Extensions, Authors / Support, Usage, Top
-@chapter Extensions
+@node Plugins, Authors / Support, Usage, Top
+@chapter Plugins
 
 @menu
-* Perl scripts::
-* Python scripts::
-* Ruby scripts::
+* Plugins in WeeChat::
+* Write a plugin::
+* Plugin example::
+* Scripts plugins::
 @end menu
 
-@node Perl scripts, Python scripts, Extensions, Extensions
-@section Perl scripts
+@node Plugins in WeeChat, Write a plugin, Plugins, Plugins
+@section Plugins in WeeChat
 
-@subsection Load/unload Perl scripts
+A plugin is a C program which can call WeeChat functions defined in an
+interface.@*
+@*
+This C program does not need WeeChat sources to compile and can be
+dynamically loaded into WeeChat with command @command{/plugin}.@*
+@*
+The plugin has to be a dynamic library, for dynamic loading by
+operating system.
+Under GNU/Linux, the file has ``.so'' extension.
+
+@node Write a plugin, Plugin example, Plugins in WeeChat, Plugins
+@section Write a plugin
+
+@subsection Base rules
+
+The plugin should include ``weechat-plugin.h'' file (available in
+WeeChat source code).@*
+This file defines structures and types used to communicate with WeeChat.@*
+@*
+The plugin must have some variables and functions (mandatory, without
+them the plugin can't load):@*
+@itemize @bullet
+@item variables for plugin description:
+@itemize @minus
+@item plugin_name[]: plugin name
+@item plugin_version[]: plugin version
+@item plugin_description[]: short description of plugin
+@end itemize
+@item functions for init and end of plugin:
+@itemize @minus
+@item weechat_plugin_init: function called when plugin is loaded
+@item weechat_plugin_end: function called when plugin is unloaded
+@end itemize
+@end itemize
+
+@subsection API functions
+
+The plugin can call some functions defined in t_weechat_plugin structure.@*
+These functions are detailed below:
+
+@itemize @bullet
+@item
+@command{int ascii_strcasecmp (t_weechat_plugin *plugin,
+char *string1, char *string2)}@*
+@*
+locale and case independent string comparison.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{plugin}: pointer to plugin structure
+@item @option{string1}: first string for comparison
+@item @option{string2}: second string for comparison
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+Difference between two strings: negative if chaine1 < chaine2,
+nul if chaine1 == chaine 2, positive if chaine1 > chaine2@*
+@*
+@emph{Example:}@*
+@*
+@code{if (plugin->ascii_strcasecmp (plugin, "abc", "def") != 0) ...}@*
+
+@*
+
+@item
+@command{char **explode_string (t_weechat_plugin *plugin,
+char *string, char *separators, int num_items_max, int *num_items)}@*
+@*
+Explode a string according to one or more delimiter(s).@*
+
+@emph{Param@`etres :}
+@itemize @minus
+@item @option{plugin}: pointer to plugin structure
+@item @option{string}: string to explode
+@item @option{separators}: delimiters used for explosion
+@item @option{num_items_max}: maximum number of items created (0 means
+no limit)
+@item @option{num_items}: pointer to int which will contain number of
+items created
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+Array of strings, NULL if problem.@*
+Note: the result has to be free by a call to ``free_exploded_string''
+function after use.@*
+@*
+@emph{Example:}@*
+@*
+@code{char *argv;}@*
+@code{int argc;}@*
+@code{argv = plugin->explode_string (plugin, string, " ", 0, &argc);}@*
+@code{...}@*
+@code{if (argv != NULL)}@*
+@code{plugin->free_exploded_string (plugin, argv);}@*
+@*
+
+@item
+@command{char **free_exploded_string (t_weechat_plugin *plugin,
+char **string)}@*
+@*
+Free memory used by a string explosion.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{plugin}: pointer to plugin structure
+@item @option{string}: string exploded by ``explode_string'' function
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+None.@*
+@*
+@emph{Example:}@*
+@*
+@code{char *argv;}@*
+@code{int argc;}@*
+@code{argv = plugin->explode_string (plugin, string, " ", 0, &argc);}@*
+@code{...}@*
+@code{if (argv != NULL)}@*
+@code{plugin->free_exploded_string (plugin, argv);}@*
+@*
+
+@item
+@command{void exec_on_files (t_weechat_plugin *plugin, char *directory,
+int (*callback)(t_weechat_plugin *, char *))}@*
+@*
+Execute a function on all files of a directory.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{plugin}: pointer to plugin structure
+@item @option{directory}: directory for searching files
+@item @option{callback}: function called for each file found
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+Aucune.@*
+@*
+@emph{Exemple :}@*
+@*
+@code{int callback (t_weechat_plugin *plugin, char *file)}@*
+@code{@{}@*
+@code{@ @ @ @ plugin->printf_server (plugin, "file: %s", file);}@*
+@code{@ @ @ @ return 1;}@*
+@code{@}}@*
+@code{}@*
+@code{...}@*
+@code{plugin->exec_on_files (plugin, "/tmp", &callback);}@*
+@*
+
+@item
+@command{void printf (t_weechat_plugin *plugin,
+char *server, char *channel, char *message, ...)}@*
+@*
+Display a message on a WeeChat buffer, identified by server and
+channel (both may be NULL).@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{plugin}: pointer to plugin structure
+@item @option{server}: name of server to find buffer for message
+display (may be NULL)
+@item @option{channel}: name of channel to find buffer for message
+display (may be NULL)
+@item @option{message}: message
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+None.@*
+@*
+@emph{Examples:}@*
+@*
+@code{plugin->printf (NULL, NULL, "hello");}@*
+@code{plugin->printf (NULL, "#weechat", "hello");}@*
+@code{plugin->printf ("freenode", "#weechat", "hello");}@*
+@*
+
+@item
+@command{void printf_server (t_weechat_plugin *plugin,
+char *message, ...)}@*
+@*
+Display a message on server buffer.@*
+
+@emph{Param@`etres :}
+@itemize @minus
+@item @option{plugin}: pointer to plugin structure
+@item @option{message}: message
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+None.@*
+@*
+@emph{Example:}@*
+@*
+@code{plugin->printf_server ("hello");}@*
+@*
+
+@item
+@command{void printf_infobar (t_weechat_plugin *plugin,
+int time, char *message, ...)}@*
+@*
+Display a message in infobar for a specified time.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{plugin}: pointer to plugin structure
+@item @option{time}: time in seconds for displaying message (0 means
+never erased)
+@item @option{message}: message
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+None.@*
+@*
+@emph{Example:}@*
+@*
+@code{plugin->printf_infobar (5, "hello");}@*
+@*
+
+@item
+@command{t_plugin_msg_handler *msg_handler_add (t_weechat_plugin
+*plugin, char *message, t_plugin_handler_func *handler_func,
+char *handler_args, void *handler_pointer)}@*
+@*
+Add an IRC message handler, called when an IRC message is received.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{plugin}: pointer to plugin structure
+@item @option{message}: IRC message (for example: ``PRIVMSG'')
+@item @option{handler_func}: function called when message is received
+@item @option{handler_args}: arguments given to function when called
+@item @option{handler_pointer}: pointer given to function when called
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+Pointer to new message handler.@*
+@*
+@emph{Example:}@*
+@*
+@code{int msg_kick (t_weechat_plugin *plugin, char *server,
+char *command, char *arguments, char *handler_args,
+void *handler_pointer)}@*
+@code{@{}@*
+@code{@ @ @ @ plugin->printf (plugin, server, NULL, "KICK received");}@*
+@code{@}}@*
+@code{...}@*
+@code{plugin->msg_handler_add (plugin, "KICK", &msg_kick, NULL, NULL);}@*
+@*
+
+@item
+@command{void msg_handler_remove (t_weechat_plugin *plugin,
+t_plugin_msg_handler *msg_handler)}@*
+@*
+Remove an IRC message handler.@*
+
+@emph{Param@`etres :}
+@itemize @minus
+@item @option{plugin}: pointer to plugin structure
+@item @option{msg_handler}: handler to remove
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+None.@*
+@*
+@emph{Example:}@*
+@*
+@code{plugin->msg_handler_remove (plugin, my_msg_handler);}@*
+@*
+
+@item
+@command{void msg_handler_remove_all (t_weechat_plugin *plugin)}@*
+@*
+Remove all IRC message handlers for a plugin.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{plugin}: pointer to plugin structure
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+None.@*
+@*
+@emph{Example:}@*
+@*
+@code{plugin->msg_handler_remove_all (plugin);}@*
+@*
+
+@item
+@command{t_plugin_cmd_handler *cmd_handler_add (t_weechat_plugin
+*plugin, char *command, char *description, char *arguments,
+char *arguments_description, t_plugin_handler_func *handler_func,
+char *handler_args, void *handler_pointer)}@*
+@*
+Add a WeeChat command handler, called when user uses command
+(for example /command).@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{plugin}: pointer to plugin structure
+@item @option{commande}: the new command
+@item @option{description}: command description (displayed by /help
+command)
+@item @option{arguments}: short description of command arguments
+(displayed by /help command)
+@item @option{arguments_description}: long description of command
+arguments (displayed by /help command)
+@item @option{handler_func}: function called when comand is executed
+@item @option{handler_args}: arguments given to function when called
+@item @option{handler_pointer}: pointer given to function when called
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+Pointer to new command handler.@*
+@*
+@emph{Example:}@*
+@*
+@code{int cmd_test (t_weechat_plugin *plugin, char *server,
+char *command, char *arguments, char *handler_args,
+void *handler_pointer)}@*
+@code{@{}@*
+@code{@ @ @ @ plugin->printf (plugin, server, NULL, "test command, 
+file: %s", (arguments) ? arguments : "none");}@*
+@code{@}}@*
+@code{...}@*
+@code{plugin->cmd_handler_add (plugin, "test", "Test command",
+"[file]", "file: a file name", &cmd_test, NULL, NULL);}@*
+@*
+
+@item
+@command{void cmd_handler_remove (t_weechat_plugin *plugin,
+t_plugin_cmd_handler *cmd_handler)}@*
+@*
+Remove a command handler.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{plugin}: pointer to plugin structure
+@item @option{cmd_handler}: command handler to remove
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+None.@*
+@*
+@emph{Example:}@*
+@*
+@code{plugin->cmd_handler_remove (plugin, my_cmd_handler);}@*
+@*
+
+@item
+@command{void cmd_handler_remove_all (t_weechat_plugin *plugin)}@*
+@*
+Remove all command handlers for a plugin.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{plugin}: pointer to plugin structure
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+None.@*
+@*
+@emph{Example :}@*
+@*
+@code{plugin->cmd_handler_remove_all (plugin);}@*
+@*
+
+@item
+@command{void exec_command (t_weechat_plugin
+*plugin, char *server, char *channel, char *command)}@*
+@*
+Execute a WeeChat command (or send a message to a channel).@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{plugin}: pointer to plugin structure
+@item @option{server}: name of server for executing command (may be
+NULL)
+@item @option{channel}: name of channel for executing command (may be
+NULL)
+@item @option{command}: command
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+None.@*
+@*
+@emph{Examples:}@*
+@*
+@code{plugin->exec_command (plugin, NULL, NULL, "/help nick");}@*
+@code{plugin->exec_command (plugin, "freenode", "#weechat", "hello");}@*
+@*
+
+@item
+@command{char *get_info (t_weechat_plugin
+*plugin, char *info, char *server, char *channel)}@*
+@*
+Return an info about WeeChat or a channel.@*
+
+@emph{Param@`etres :}
+@itemize @minus
+@item @option{plugin}: pointer to plugin structure
+@item @option{info}: name of info to read:
+@itemize @minus
+@item @option{version}: get WeeChat's version
+@item @option{nick}: get nick
+@item @option{channel}: get channel name
+@item @option{server}: get server name
+@item @option{away}: get ``away'' flag
+@item @option{weechat_dir}: get WeeChat home dir
+@item @option{weechat_libdir}: get WeeChat system lib dir
+@item @option{weechat_sharedir}: get WeeChat system share dir
+@end itemize
+@item @option{server}: name of server for reading info (if needed)
+@item @option{channel}: name of channel for reading info (if needed)
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+Information asked, NULL if not found.@*
+Note: result has to be free by a call to ``free'' function after
+use.@*
+@*
+@emph{Examples:}@*
+@*
+@code{char *version = plugin->get_info (plugin, "version", NULL, NULL);}@*
+@code{char *nick = plugin->get_info (plugin, "nick", "freenode", NULL);}@*
+@*
+
+@item
+@command{t_plugin_info_dcc *get_dcc_info (t_weechat_plugin *plugin)}@*
+@*
+Returns list of DCC currently active or finished.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{plugin}: pointer to plugin structure
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+Chained list of DCC.@*
+Note: result has to be free by a call to ``free_dcc_info'' function
+after use.@*
+@*
+@emph{Example:}@*
+@*
+@code{t_plugin_dcc_info *dcc_info = plugin->get_dcc_info (plugin);}@*
+@code{for (ptr_dcc = dcc_info; ptr_dcc; ptr_dcc =
+ptr_dcc->next_dcc)}@*
+@code{@{}@*
+@code{@ @ @ @ plugin->printf_server (plugin, "DCC type=%d, with: %s",
+ptr_dcc->type, ptr_dcc->nick);}@*
+@code{@}}@*
+@*
+
+@item
+@command{void free_dcc_info (t_weechat_plugin *plugin,
+t_plugin_dcc_info *dcc_info)}@*
+@*
+Free memory used by a DCC list.@*
+
+@emph{Param@`etres :}
+@itemize @minus
+@item @option{plugin}: pointer to plugin structure
+@item @option{dcc_info}: pointer to DCC list returned by
+``get_dcc_info'' function
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+None.@*
+@*
+@emph{Example:}@*
+@*
+@code{plugin->free_dcc_info (plugin, dcc_info);}@*
+@*
+
+@item
+@command{char *get_config (t_weechat_plugin
+*plugin, char *option)}@*
+@*
+Return value of a WeeChat config option.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{plugin}: pointer to plugin structure
+@item @option{option}: name of option to read
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+Value of option, NULL if not found.@*
+Note: result has to be free by a call to ``free'' function after
+use.@*
+@*
+@emph{Examples:}@*
+@*
+@code{char *value1 = plugin->get_config (plugin, "look_set_title");}@*
+@code{char *value2 = plugin->get_config (plugin, "freenode.server_autojoin");}@*
+@*
+
+@end itemize
+
+@subsection Compile plugin
+
+Compile does not need WeeChat sources, only file
+``weechat-plugin.h''.@*
+
+To compile a plugin which has one file ``toto.c'' (sous GNU/Linux):@*
+@*
+gcc -fPIC -Wall -c toto.c@*
+gcc -shared -fPIC -o libtoto.so toto.o
+
+@subsection Load plugin under WeeChat
+
+Copy ``libtoto.so'' file into general plugins dir (for example
+/usr/local/lib/weechat/plugins) or into user's plugins dir (for
+example /home/xxxxx/.weechat/plugins).@*
+@*
+Under WeeChat:@*
+@command{/plugin load toto}
+
+@node Plugin example, Scripts plugins, Write a plugin, Plugins
+@section Plugin example
+
+Full example of plugin, which adds a /double command, which displays
+two times arguments on current channel (ok that's not very useful, but
+that's just an example!):
+
+@verbatim
+#include <stdlib.h>
+
+#include "weechat-plugin.h"
+
+char plugin_name[]        = "Toto";
+char plugin_version[]     = "0.1";
+char plugin_description[] = "Test plugin for WeeChat";
+
+/* gestionnaire de commande "/hello" */
+
+int toto_cmd_double (t_weechat_plugin *plugin, char *server,
+                    char *command, char *arguments,
+                    char *handler_args, void *handler_pointer)
+{
+    if (arguments && arguments[0] && (arguments[0] != '/'))
+    {
+        plugin->exec_command (plugin, NULL, NULL, arguments);
+        plugin->exec_command (plugin, NULL, NULL, arguments);
+    }
+    return 1;
+}
+
+int weechat_plugin_init (t_weechat_plugin *plugin)
+{
+    plugin->cmd_handler_add (plugin, "double",
+                             "Display two times a message",
+                             "msg",
+                             "msg: message",
+                             &toto_cmd_double,
+                             NULL, NULL);
+    return 1;
+}
+
+int weechat_plugin_end (t_weechat_plugin *plugin)
+{
+    /* on ne fait rien ici */
+    return 1;
+}
+@end verbatim
+
+@node Scripts plugins, , Plugin example, Plugins
+@section Scripts plugins
+
+Three plugins are provided with WeeChat to use script languages: Perl,
+Python and Ruby.
+
+@subsection Perl scripts
+
+@subsubsection Load/unload Perl scripts
 
 Perl scripts are loaded and unloaded with @command{/perl} command.
 (type @kbd{/help perl} within WeeChat to get help about command).@*
@@ -1528,7 +2114,7 @@ Unload all Perl scripts: @kbd{/perl unload}@*
 List all Perl scripts: @kbd{/perl}@*
 @end itemize
 
-@subsection WeeChat / Perl API
+@subsubsection WeeChat / Perl API
 
 @itemize @bullet
 @item
@@ -1548,6 +2134,7 @@ unloaded (optional parameter, empty string means nothing is called at the end)
 @end itemize
 @*
 @emph{Example:}@*
+@*
 @code{weechat::register ("sample", "1.0", "sample_end", "Sample script!");}@*
 @*
 
@@ -1564,6 +2151,7 @@ Print message in a channel.@*
 @end itemize
 @*
 @emph{Examples:}@*
+@*
 @code{weechat::print ("message");}@*
 @code{weechat::print ("message", "#weechat");}@*
 @code{weechat::print ("message", "#weechat", "freenode");}@*
@@ -1582,6 +2170,7 @@ Print message in infobar.@*
 @end itemize
 @*
 @emph{Example:}@*
+@*
 @code{weechat::print_infobar (5, "message");}@*
 @*
 
@@ -1601,6 +2190,7 @@ RFC 2812: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
 @end itemize
 @*
 @emph{Example:}@*
+@*
 @code{weechat::add_message_handler ("privmsg", my_function);}@*
 @code{sub my_function}@*
 @code{@{ }@*
@@ -1624,9 +2214,16 @@ This name may be existing command, so that the command is overrided by
 Perl function. Be careful when overriding WeeChat commands, they'll not be
 available until your Perl script will be unloaded.
 @item @option{function}: Perl function linked with command
+@item @option{description}: command description (displayed by /help
+command)
+@item @option{arguments}: short description of command arguments
+(displayed by /help command)
+@item @option{arguments_description}: long description of command
+arguments (displayed by /help command)
 @end itemize
 @*
 @emph{Example:}@*
+@*
 @code{weechat::add_command_handler ("command", my_command);}@*
 @code{sub my_command}@*
 @code{@{ }@*
@@ -1648,6 +2245,7 @@ Execute a command or send a message to a channel.@*
 @end itemize
 @*
 @emph{Examples:}@*
+@*
 @code{weechat::command ("hello world!");}@*
 @code{weechat::command ("/kick toto please leave this chan", "#weechat");}@*
 @code{weechat::command ("/nick newnick", "", "freenode");}@*
@@ -1661,28 +2259,86 @@ Get various info about WeeChat, server or user.@*
 @emph{Arguments:}
 @itemize @minus
 @item @option{name}: name of info to retrieve:
-@item @option{server}: internal name of server
 @itemize @minus
-@item @option{0 or version}: get WeeChat version
-@item @option{1 or nick}: get nickname
-@item @option{2 or channel}: get channel name
-@item @option{3 or server}: get server name
-@item @option{4 or weechatdir}: get WeeChat home directory
-@item @option{5 or away}: get away flag for server
+@item @option{version}: get WeeChat version
+@item @option{nick}: get nickname
+@item @option{channel}: get channel name
+@item @option{server}: get server name
+@item @option{away}: get ``away'' flag
+@item @option{weechat_dir}: get WeeChat home dir
+@item @option{weechat_libdir}: get WeeChat system lib dir
+@item @option{weechat_sharedir}: get WeeChat system share dir
+
 @end itemize
+@item @option{server}: internal name of server
 @end itemize
 @*
 @emph{Examples:}@*
-@code{$version = get_info("version");}@*
-@code{$nick = get_info("nick", "freenode");}@*
+@*
+@code{$version = weechat::get_info("version");}@*
+@code{$nick = weechat::get_info("nick", "freenode");}@*
+@*
+
+@item
+@command{weechat::get_dcc_info ( );}@*
+@*
+Get DCC list.@*
+
+Returned array has following fields:
+@itemize @minus
+@item server: IRC server
+@item channel: IRC channel
+@item type: DCC type:
+@itemize @minus
+@item 0: chat (received)
+@item 1: chat (sent)
+@item 2: file (receiving)
+@item 3: file (sending)
+@end itemize
+@item status: DCC status:
+@itemize @minus
+@item 0: waiting
+@item 1: connecting
+@item 2: active
+@item 3: done
+@item 4: failed
+@item 5: aborted
+@end itemize
+@item start_time: date/time of DCC creation
+@item start_transfer: date/time of transfer start
+@item addr: remote address
+@item port: port used for DCC
+@item nick: remote nick
+@item filename: filename
+@item local_filename: local filename
+@item size: file size
+@item pos: current position in file
+@item start_resume: restart position after interruption
+@item bytes_per_sec: bytes sent/received per second
+@end itemize
+@*
+
+@item
+@command{weechat::get_config ( name );}@*
+@*
+Get WeeChat config option value.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{name}: name of option
+@end itemize
+@*
+@emph{Examples:}@*
+@*
+@code{$value1 = weechat::get_config ("look_set_title");}@*
+@code{$value2 = weechat::get_config ("freenode.server_autojoin");}@*
 @*
 
 @end itemize
 
-@node Python scripts, Ruby scripts, Perl scripts, Extensions
-@section Python scripts
+@subsection Python scripts
 
-@subsection Load/unload Python scripts
+@subsubsection Load/unload Python scripts
 
 Python scripts are loaded and unloaded with @command{/python} command.
 (type @kbd{/help python} within WeeChat to get help about command).@*
@@ -1697,7 +2353,7 @@ Unload all Python scripts: @kbd{/python unload}@*
 List all Python scripts: @kbd{/python}@*
 @end itemize
 
-@subsection WeeChat / Python API
+@subsubsection WeeChat / Python API
 
 @itemize @bullet
 @item
@@ -1717,6 +2373,7 @@ unloaded (optional parameter, empty string means nothing is called at the end)
 @end itemize
 @*
 @emph{Example:}@*
+@*
 @code{weechat.register ("sample", "1.0", "sample_end", "Sample script!")}@*
 @*
 
@@ -1733,6 +2390,7 @@ Print message in a channel.@*
 @end itemize
 @*
 @emph{Examples:}@*
+@*
 @code{weechat.prnt ("message")}@*
 @code{weechat.prnt ("message", "#weechat")}@*
 @code{weechat.prnt ("message", "#weechat", "freenode")}@*
@@ -1751,6 +2409,7 @@ Print message in infobar.@*
 @end itemize
 @*
 @emph{Example:}@*
+@*
 @code{weechat.print_infobar (5, "message")}@*
 @*
 
@@ -1770,6 +2429,7 @@ RFC 2812: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
 @end itemize
 @*
 @emph{Example:}@*
+@*
 @code{weechat.add_message_handler ("privmsg", my_function)}@*
 @code{def my_function(server, args):}@*
 @code{@ @ @ @ weechat.prnt("server="+server)}@*
@@ -1791,9 +2451,16 @@ This name may be existing command, so that the command is overrided by
 Python function. Be careful when overriding WeeChat commands, they'll not be
 available until your Python script will be unloaded.
 @item @option{function}: Python function linked with command
+@item @option{description}: command description (displayed by /help
+command)
+@item @option{arguments}: short description of command arguments
+(displayed by /help command)
+@item @option{arguments_description}: long description of command
+arguments (displayed by /help command)
 @end itemize
 @*
 @emph{Example:}@*
+@*
 @code{weechat.add_command_handler ("command", my_command)}@*
 @code{def my_command(server, args):}@*
 @code{@ @ @ @ weechat.prnt("server:"+server+" arguments:"+args)}@*
@@ -1812,6 +2479,7 @@ Execute a command or send a message to a channel.@*
 @end itemize
 @*
 @emph{Examples:}@*
+@*
 @code{weechat.command ("hello world!")}@*
 @code{weechat.command ("/kick toto please leave this chan", "#weechat")}@*
 @code{weechat.command ("/nick newnick", "", "freenode")}@*
@@ -1826,33 +2494,90 @@ Get various info about WeeChat, server or user.@*
 @emph{Arguments:}
 @itemize @minus
 @item @option{name}: name of info to retrieve:
-@item @option{server}: internal name of server
 @itemize @minus
-@item @option{0 or version}: get WeeChat version
-@item @option{1 or nick}: get nickname
-@item @option{2 or channel}: get channel name
-@item @option{3 or server}: get server name
-@item @option{4 or weechatdir}: get WeeChat home directory
-@item @option{5 or away}: get away flag for server
+@item @option{version}: get WeeChat version
+@item @option{nick}: get nickname
+@item @option{channel}: get channel name
+@item @option{server}: get server name
+@item @option{away}: get ``away'' flag
+@item @option{weechat_dir}: get WeeChat home dir
+@item @option{weechat_libdir}: get WeeChat system lib dir
+@item @option{weechat_sharedir}: get WeeChat system share dir
 @end itemize
+@item @option{server}: internal name of server
 @end itemize
 @*
 @emph{Examples:}@*
+@*
 @code{$version = weechat.get_info("version")}@*
 @code{$nick = weechat.get_info("nick", "freenode")}@*
 @*
 
+@item
+@command{weechat.get_dcc_info ( );}@*
+@*
+Get DCC list.@*
+
+Returned array has following fields:
+@itemize @minus
+@item server: IRC server
+@item channel: IRC channel
+@item type: DCC type:
+@itemize @minus
+@item 0: chat (received)
+@item 1: chat (sent)
+@item 2: file (receiving)
+@item 3: file (sending)
+@end itemize
+@item status: DCC status:
+@itemize @minus
+@item 0: waiting
+@item 1: connecting
+@item 2: active
+@item 3: done
+@item 4: failed
+@item 5: aborted
+@end itemize
+@item start_time: date/time of DCC creation
+@item start_transfer: date/time of transfer start
+@item addr: remote address
+@item port: port used for DCC
+@item nick: remote nick
+@item filename: filename
+@item local_filename: local filename
+@item size: file size
+@item pos: current position in file
+@item start_resume: restart position after interruption
+@item bytes_per_sec: bytes sent/received per second
+@end itemize
+@*
+
+@item
+@command{weechat.get_config ( name );}@*
+@*
+Get WeeChat config option value.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{name}: name of option
+@end itemize
+@*
+@emph{Examples:}@*
+@*
+@code{$value1 = weechat.get_config ("look_set_title");}@*
+@code{$value2 = weechat.get_config ("freenode.server_autojoin");}@*
+@*
+
 @end itemize
 
-@node Ruby scripts, , Python scripts, Extensions
-@section Ruby scripts
+@subsection Ruby scripts
 
 Not developed!
 
 
 @c **************************** Authors / Support *****************************
 
-@node Authors / Support, , Extensions, Top
+@node Authors / Support, , Plugins, Top
 @chapter Authors / Support
 
 @ifhtml
