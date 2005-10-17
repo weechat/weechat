@@ -747,8 +747,28 @@ int plugin_auto_load_file (t_weechat_plugin *plugin, char *filename)
 
 void plugin_auto_load ()
 {
-    char *dir_name;
+    char *ptr_home, *dir_name;
     
+    /* auto-load plugins in WeeChat home dir */
+    if (cfg_plugins_path && cfg_plugins_path[0])
+    {
+        if (cfg_plugins_path[0] == '~')
+        {
+            ptr_home = getenv ("HOME");
+            dir_name = (char *)malloc (strlen (cfg_plugins_path) + strlen (ptr_home) + 2);
+            if (dir_name)
+            {
+                strcpy (dir_name, ptr_home);
+                strcat (dir_name, cfg_plugins_path + 1);
+                plugin_exec_on_files (NULL, dir_name, &plugin_auto_load_file);
+                free (dir_name);
+            }
+        }
+        else
+            plugin_exec_on_files (NULL, cfg_plugins_path, &plugin_auto_load_file);
+    }
+    
+    /* auto-load plugins in WeeChat global lib dir */
     dir_name = (char *)malloc (strlen (WEECHAT_LIBDIR) + 16);
     if (dir_name)
     {
