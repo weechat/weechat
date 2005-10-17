@@ -1016,6 +1016,68 @@ weechat_plugin_exec_on_files (t_weechat_plugin *plugin, char *directory,
 }
 
 /*
+ * weechat_plugin_printf: print a message on a server or channel buffer
+ */
+
+void
+weechat_plugin_printf (t_weechat_plugin *plugin,
+                       char *server, char *channel, char *message, ...)
+{
+    t_gui_buffer *ptr_buffer;
+    va_list argptr;
+    static char buf[8192];
+    
+    if (!plugin || !message)
+        return;
+    
+    ptr_buffer = plugin_find_buffer (server, channel);
+    va_start (argptr, message);
+    vsnprintf (buf, sizeof (buf) - 1, message, argptr);
+    va_end (argptr);
+    irc_display_prefix (ptr_buffer, PREFIX_PLUGIN);
+    gui_printf (ptr_buffer, "%s\n", buf);
+}
+
+/*
+ * weechat_plugin_printf_server: print a message on server buffer
+ */
+
+void
+weechat_plugin_printf_server (t_weechat_plugin *plugin, char *message, ...)
+{
+    va_list argptr;
+    static char buf[8192];
+    
+    if (!plugin || !message)
+        return;
+    
+    va_start (argptr, message);
+    vsnprintf (buf, sizeof (buf) - 1, message, argptr);
+    va_end (argptr);
+    irc_display_prefix (NULL, PREFIX_PLUGIN);
+    gui_printf (NULL, "%s\n", buf);
+}
+
+/*
+ * weechat_plugin_infobar_printf: print a message in infobar
+ */
+
+void
+weechat_plugin_infobar_printf (t_weechat_plugin *plugin, int time_displayed, char *message, ...)
+{
+    va_list argptr;
+    static char buf[1024];
+    
+    if (!plugin || (time_displayed < 0) || !message)
+        return;
+    
+    va_start (argptr, message);
+    vsnprintf (buf, sizeof (buf) - 1, message, argptr);
+    va_end (argptr);
+    gui_infobar_printf (time_displayed, COLOR_WIN_INFOBAR, buf);
+}
+
+/*
  * weechat_plugin_msg_handler_add: add a message handler
  */
 
@@ -1095,68 +1157,6 @@ weechat_plugin_cmd_handler_remove_all (t_weechat_plugin *plugin)
 {
     if (plugin)
         plugin_cmd_handler_remove_all (plugin);
-}
-
-/*
- * weechat_plugin_printf: print a message on a server or channel buffer
- */
-
-void
-weechat_plugin_printf (t_weechat_plugin *plugin,
-                       char *server, char *channel, char *message, ...)
-{
-    t_gui_buffer *ptr_buffer;
-    va_list argptr;
-    static char buf[8192];
-    
-    if (!plugin || !message)
-        return;
-    
-    ptr_buffer = plugin_find_buffer (server, channel);
-    va_start (argptr, message);
-    vsnprintf (buf, sizeof (buf) - 1, message, argptr);
-    va_end (argptr);
-    irc_display_prefix (ptr_buffer, PREFIX_PLUGIN);
-    gui_printf (ptr_buffer, "%s\n", buf);
-}
-
-/*
- * weechat_plugin_printf_server: print a message on server buffer
- */
-
-void
-weechat_plugin_printf_server (t_weechat_plugin *plugin, char *message, ...)
-{
-    va_list argptr;
-    static char buf[8192];
-    
-    if (!plugin || !message)
-        return;
-    
-    va_start (argptr, message);
-    vsnprintf (buf, sizeof (buf) - 1, message, argptr);
-    va_end (argptr);
-    irc_display_prefix (NULL, PREFIX_PLUGIN);
-    gui_printf (NULL, "%s\n", buf);
-}
-
-/*
- * weechat_plugin_infobar_printf: print a message in infobar
- */
-
-void
-weechat_plugin_infobar_printf (t_weechat_plugin *plugin, int time_displayed, char *message, ...)
-{
-    va_list argptr;
-    static char buf[1024];
-    
-    if (!plugin || (time_displayed < 0) || !message)
-        return;
-    
-    va_start (argptr, message);
-    vsnprintf (buf, sizeof (buf) - 1, message, argptr);
-    va_end (argptr);
-    gui_infobar_printf (time_displayed, COLOR_WIN_INFOBAR, buf);
 }
 
 /*

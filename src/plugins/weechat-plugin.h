@@ -121,7 +121,11 @@ struct t_weechat_plugin
     int (*mkdir_home) (t_weechat_plugin *, char *);
     void (*exec_on_files) (t_weechat_plugin *, char *,
                            int (*)(t_weechat_plugin *, char *));
-
+    
+    void (*printf) (t_weechat_plugin *, char *, char *, char *, ...);
+    void (*printf_server) (t_weechat_plugin *, char *, ...);
+    void (*infobar_printf) (t_weechat_plugin *, int, char *, ...);
+    
     t_plugin_msg_handler *(*msg_handler_add) (t_weechat_plugin *, char *,
                                               t_plugin_handler_func *,
                                               char *, void *);
@@ -134,15 +138,10 @@ struct t_weechat_plugin
     void (*cmd_handler_remove) (t_weechat_plugin *, t_plugin_cmd_handler *);
     void (*cmd_handler_remove_all) (t_weechat_plugin *);
     
-    void (*printf) (t_weechat_plugin *, char *, char *, char *, ...);
-    void (*printf_server) (t_weechat_plugin *, char *, ...);
-    void (*infobar_printf) (t_weechat_plugin *, int, char *, ...);
-    
     void (*exec_command) (t_weechat_plugin *, char *, char *, char *);
     char *(*get_info) (t_weechat_plugin *, char *, char *, char *);
     t_plugin_dcc_info *(*get_dcc_info) (t_weechat_plugin *);
     void (*free_dcc_info) (t_weechat_plugin *, t_plugin_dcc_info *);
-    
     char *(*get_config) (t_weechat_plugin *, char *);
     
     /* WeeChat developers: ALWAYS add new functions at the end */
@@ -155,6 +154,11 @@ extern void weechat_free_exploded_string (t_weechat_plugin *, char **);
 extern int weechat_plugin_mkdir_home (t_weechat_plugin *, char *);
 extern void weechat_plugin_exec_on_files (t_weechat_plugin *, char *,
                                           int (*)(t_weechat_plugin *, char *));
+
+/* display functions */
+extern void weechat_plugin_printf (t_weechat_plugin *, char *, char *, char *, ...);
+extern void weechat_plugin_printf_server (t_weechat_plugin *, char *, ...);
+extern void weechat_plugin_infobar_printf (t_weechat_plugin *, int, char *, ...);
 
 /* handler functions */
 extern t_plugin_msg_handler *weechat_plugin_msg_handler_add (t_weechat_plugin *, char *,
@@ -169,18 +173,11 @@ extern t_plugin_cmd_handler *weechat_plugin_cmd_handler_add (t_weechat_plugin *,
 extern void weechat_plugin_cmd_handler_remove (t_weechat_plugin *, t_plugin_cmd_handler *);
 extern void weechat_plugin_cmd_handler_remove_all (t_weechat_plugin *);
 
-/* display functions */
-extern void weechat_plugin_printf (t_weechat_plugin *, char *, char *, char *, ...);
-extern void weechat_plugin_printf_server (t_weechat_plugin *, char *, ...);
-extern void weechat_plugin_infobar_printf (t_weechat_plugin *, int, char *, ...);
-
-/* IRC functions */
+/* other functions */
 extern void weechat_plugin_exec_command (t_weechat_plugin *, char *, char *, char *);
 extern char *weechat_plugin_get_info (t_weechat_plugin *, char *, char *, char *);
 extern t_plugin_dcc_info *weechat_plugin_get_dcc_info (t_weechat_plugin *);
 extern void weechat_plugin_free_dcc_info (t_weechat_plugin *, t_plugin_dcc_info *);
-
-/* other functions */
 extern char *weechat_plugin_get_config (t_weechat_plugin *, char *);
 
 #endif /* weechat-plugin.h */
