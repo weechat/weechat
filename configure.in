@@ -254,18 +254,19 @@ if test "x$enable_ruby" = "xyes" ; then
 fi
 
 if test "x$enable_plugins" = "xyes" ; then
+    PLUGINS_LIBS="../../plugins/lib_weechat_plugins.a"
     AC_CHECK_FUNCS(dlopen, LIBDL_FOUND=yes, LIBDL_FOUND=no)
     if test "$LIBDL_FOUND" != "yes"; then
         AC_CHECK_LIB(dl, dlopen, LIBDL_FOUND=yes, LIBDL_FOUND=no)
-    fi
-    if test "$LIBDL_FOUND" = "yes"; then
-        PLUGINS_LIBS="../../plugins/lib_weechat_plugins.a -ldl"
-        AC_DEFINE(PLUGINS)
-    else
-        AC_MSG_ERROR([
+        if test "$LIBDL_FOUND" = "yes"; then
+            PLUGINS_LIBS="$PLUGINS_LIBS -ldl"
+        else
+            AC_MSG_ERROR([
 *** "dl" library (dynamic library loader) couldn't be found in your system.
 *** Try to install it with your software package manager or disable plugins.])
+        fi
     fi
+    AC_DEFINE(PLUGINS)
 fi
 
 AC_SUBST(PLUGINS_LIBS)
