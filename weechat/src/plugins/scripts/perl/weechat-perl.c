@@ -452,6 +452,44 @@ static XS (XS_weechat_get_dcc_info)
 }
 
 /*
+ * weechat::get_config: get value of a config option
+ */
+
+static XS (XS_weechat_get_config)
+{
+    char *option, *value;
+    unsigned int integer;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if (items != 1)
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                    "Perl error: wrong parameters for "
+                                    "\"get_config\" function");
+        XSRETURN_NO;
+    }
+    
+    option = SvPV (ST (0), integer);
+    if (option)
+    {
+        value = perl_plugin->get_config (perl_plugin, option);
+        
+        if (value)
+        {
+            XST_mPV (0, value);
+            free (value);
+        }
+        else
+            XST_mPV (0, "");
+    }
+    
+    XSRETURN (1);
+}
+
+/*
  * weechat_perl_xs_init: initialize subroutines
  */
 
@@ -468,6 +506,7 @@ weechat_perl_xs_init (pTHX)
     newXS ("weechat::add_command_handler", XS_weechat_add_command_handler, "weechat");
     newXS ("weechat::get_info", XS_weechat_get_info, "weechat");
     newXS ("weechat::get_dcc_info", XS_weechat_get_dcc_info, "weechat");
+    newXS ("weechat::get_config", XS_weechat_get_config, "weechat");
 }
 
 /*

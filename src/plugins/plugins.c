@@ -644,6 +644,9 @@ plugin_load (char *filename)
         new_plugin->version = strdup (version);
         
         /* functions */
+        new_plugin->ascii_strcasecmp = &weechat_ascii_strcasecmp;
+        new_plugin->explode_string = &weechat_explode_string;
+        new_plugin->free_exploded_string = &weechat_free_exploded_string;
         new_plugin->mkdir_home = &weechat_plugin_mkdir_home;
         new_plugin->exec_on_files = &weechat_plugin_exec_on_files;
         new_plugin->msg_handler_add = &weechat_plugin_msg_handler_add;
@@ -659,9 +662,7 @@ plugin_load (char *filename)
         new_plugin->get_info = &weechat_plugin_get_info;
         new_plugin->get_dcc_info = &weechat_plugin_get_dcc_info;
         new_plugin->free_dcc_info = &weechat_plugin_free_dcc_info;
-        new_plugin->explode_string = &weechat_explode_string;
-        new_plugin->free_exploded_string = &weechat_free_exploded_string;
-        new_plugin->ascii_strcasecmp = &weechat_ascii_strcasecmp;
+        new_plugin->get_config = &weechat_plugin_get_config;
         
         /* handlers */
         new_plugin->msg_handlers = NULL;
@@ -919,6 +920,51 @@ plugin_end ()
 /*************************** Public plugin interface **************************/
 
 /*
+ * weechat_ascii_strcasecmp: locale and case independent string comparison
+ */
+
+int
+weechat_ascii_strcasecmp (t_weechat_plugin *plugin,
+                          char *string1, char *string2)
+{
+    /* make gcc happy */
+    (void) plugin;
+    
+    return ascii_strcasecmp (string1, string2);
+}
+
+/*
+ * weechat_explode_string: explode a string
+ */
+
+char **
+weechat_explode_string (t_weechat_plugin *plugin, char *string,
+                        char *separators, int num_items_max,
+                        int *num_items)
+{
+    /* make gcc happy */
+    (void) plugin;
+    
+    if (!plugin || !string || !separators || !num_items)
+        return NULL;
+    
+    return explode_string (string, separators, num_items_max, num_items);
+}
+
+/*
+ * weechat_free_exploded_string: free exploded string
+ */
+
+void
+weechat_free_exploded_string (t_weechat_plugin *plugin, char **exploded_string)
+{
+    /* make gcc happy */
+    (void) plugin;
+    
+    free_exploded_string (exploded_string);
+}
+
+/*
  * weechat_plugin_mkdir_home: create a directory for script in WeeChat home
  */
 
@@ -1151,7 +1197,7 @@ weechat_plugin_get_info (t_weechat_plugin *plugin, char *info, char *server, cha
     
     if (ascii_strcasecmp (info, "version") == 0)
     {
-        return strdup (PACKAGE_STRING);
+        return strdup (PACKAGE_VERSION);
     }
     else if (ascii_strcasecmp (info, "nick") == 0)
     {
@@ -1291,46 +1337,105 @@ weechat_plugin_free_dcc_info (t_weechat_plugin *plugin, t_plugin_dcc_info *dcc_i
 }
 
 /*
- * weechat_explode_string: explode a string
+ * weechat_plugin_get_config_str_value: return string value for any option
+ *                                      This function should never be called directly
+ *                                      (only used by weechat_get_config)
  */
 
-char **
-weechat_explode_string (t_weechat_plugin *plugin, char *string,
-                        char *separators, int num_items_max,
-                        int *num_items)
+char *
+weechat_plugin_get_config_str_value (t_config_option *option, void *value)
 {
-    /* make gcc happy */
-    (void) plugin;
+    char buf_temp[1024], *color_name;
     
-    if (!plugin || !string || !separators || !num_items)
-        return NULL;
+    if (!value)
+    {
+        if (option->option_type == OPTION_TYPE_STRING)
+            value = option->ptr_string;
+        else
+            value = option->ptr_int;
+    }
     
-    return explode_string (string, separators, num_items_max, num_items);
+    switch (option->option_type)
+    {
+        case OPTION_TYPE_BOOLEAN:
+            return (*((int *)value)) ?
+                strdup ("on") : strdup ("off");
+            break;
+        case OPTION_TYPE_INT:
+            snprintf (buf_temp, sizeof (buf_temp), "%d",
+                      *((int *)value));
+            return strdup (buf_temp);
+            break;
+        case OPTION_TYPE_INT_WITH_STRING:
+            return option->array_values[*((int *)value)];
+            break;
+        case OPTION_TYPE_COLOR:
+            color_name = gui_get_color_by_value (*((int *)value));
+            return (color_name) ? strdup (color_name) : strdup ("");
+            break;
+        case OPTION_TYPE_STRING:
+            return (*((char **)value)) ? strdup (*((char **)value)) : strdup ("");
+            break;
+    }
+    
+    /* should never be executed! */
+    return NULL;
 }
 
 /*
- * weechat_free_exploded_string: free exploded string
+ * weechat_get_config: get value of a config option
  */
 
-void
-weechat_free_exploded_string (t_weechat_plugin *plugin, char **exploded_string)
+char *
+weechat_plugin_get_config (t_weechat_plugin *plugin, char *option)
 {
+    int i, j;
+    t_irc_server *ptr_server;
+    char option_name[256];
+    void *ptr_option_value;
+    
     /* make gcc happy */
     (void) plugin;
     
-    free_exploded_string (exploded_string);
-}
-
-/*
- * weechat_ascii_strcasecmp: locale and case independent string comparison
- */
-
-int
-weechat_ascii_strcasecmp (t_weechat_plugin *plugin,
-                          char *string1, char *string2)
-{
-    /* make gcc happy */
-    (void) plugin;
+    for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
+    {
+        if ((i != CONFIG_SECTION_KEYS) && (i != CONFIG_SECTION_ALIAS)
+            && (i != CONFIG_SECTION_IGNORE) && (i != CONFIG_SECTION_SERVER))
+        {
+            for (j = 0; weechat_options[i][j].option_name; j++)
+            {
+                if ((!option) ||
+                    ((option) && (option[0])
+                     && (strstr (weechat_options[i][j].option_name, option) != NULL)))
+                {
+                    return weechat_plugin_get_config_str_value (&weechat_options[i][j], NULL);
+                }
+            }
+        }
+    }
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        for (i = 0; weechat_options[CONFIG_SECTION_SERVER][i].option_name; i++)
+        {
+            snprintf (option_name, sizeof (option_name), "%s.%s",
+                      ptr_server->name, 
+                      weechat_options[CONFIG_SECTION_SERVER][i].option_name);
+            if ((!option) ||
+                ((option) && (option[0])
+                 && (strstr (option_name, option) != NULL)))
+            {
+                ptr_option_value = config_get_server_option_ptr (ptr_server,
+                                                                 weechat_options[CONFIG_SECTION_SERVER][i].option_name);
+                if (ptr_option_value)
+                {
+                    return weechat_plugin_get_config_str_value (&weechat_options[CONFIG_SECTION_SERVER][i],
+                                                                ptr_option_value);
+                }
+            }
+        }
+    }
     
-    return ascii_strcasecmp (string1, string2);
+    /* option not found */
+    return NULL;
 }

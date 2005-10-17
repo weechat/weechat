@@ -456,6 +456,44 @@ weechat_python_get_dcc_info (PyObject *self, PyObject *args)
     
     return list;
 }
+
+/*
+ * weechat.get_config: get value of a config option
+ */
+
+static PyObject *
+weechat_python_get_config (PyObject *self, PyObject *args)
+{
+    char *option, *value;
+    PyObject *object;
+    
+    /* make gcc happy */
+    (void) self;
+    
+    if (!PyArg_ParseTuple (args, "s", &option))
+    {
+        python_plugin->printf_server (python_plugin,
+                                      "Python error: wrong parameters for "
+                                      "\"get_config\" function");
+        return NULL; 
+    }
+    
+    if (option)
+    {
+        value = python_plugin->get_config (python_plugin, option);
+        
+        if (value)
+        {
+            object = Py_BuildValue ("s", value);
+            free (value);
+            return object;
+        }
+        else
+            return Py_BuildValue ("s", "");
+    }
+    
+    return Py_BuildValue ("i", 1);
+}
         
 /*
  * Python subroutines
@@ -471,6 +509,7 @@ PyMethodDef weechat_funcs[] = {
     { "add_command_handler", weechat_python_add_command_handler, METH_VARARGS, "" },
     { "get_info", weechat_python_get_info, METH_VARARGS, "" },
     { "get_dcc_info", weechat_python_get_dcc_info, METH_VARARGS, "" },
+    { "get_config", weechat_python_get_config, METH_VARARGS, "" },
     { NULL, NULL, 0, NULL }
 };
 
