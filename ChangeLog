@@ -5,6 +5,7 @@ ChangeLog - 2005-10-18
 
 
 Version 0.1.6 (under dev!):
+   * added "Day changed to [date]" message when day changes
    * new plugin interface, rewritten from scratch: now loads dynamic C
      library, and perl/python are plugin scripts
    * log options (for server/channel/private) can now be set while

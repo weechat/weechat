@@ -92,6 +92,8 @@ int cfg_look_infobar_delay_highlight;
 int cfg_look_hotlist_names_count;
 int cfg_look_hotlist_names_level;
 int cfg_look_hotlist_names_length;
+int cfg_look_day_change;
+char *cfg_look_day_change_timestamp;
 
 t_config_option weechat_options_look[] =
 { { "look_set_title", N_("set title for window (terminal for Curses GUI) with name & version"),
@@ -206,6 +208,14 @@ t_config_option weechat_options_look[] =
     N_("max length of names in hotlist (0 = no limit)"),
     OPTION_TYPE_INT, 0, 32, 0,
     NULL, NULL, &cfg_look_hotlist_names_length, NULL, config_change_buffer_content },
+  { "look_day_change", N_("display special message when day changes"),
+    N_("display special message when day changes"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
+    NULL, NULL, &cfg_look_day_change, NULL, config_change_noop },
+  { "look_day_change_timestamp", N_("timestamp for date displayed when day changed"),
+    N_("timestamp for date displayed when day changed"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    "%a, %d %b %Y", NULL, NULL, &cfg_look_day_change_timestamp, config_change_noop },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 

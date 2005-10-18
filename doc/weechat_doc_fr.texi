@@ -36,7 +36,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.6-cvs - 17 octobre 2005
+@subtitle Documentation pour WeeChat v0.1.6-cvs - 18 octobre 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -276,7 +276,7 @@ Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
 Jeu de caract@`eres interne @`a WeeChat, devrait @^etre ISO-xxxx m@^eme si la locale est UTF-8 (si non renseign@'e, le jeu de caract@`eres local est utilis@'e)@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: 'ISO-8859-1'@*
 @item look_buffer_timestamp
-Horodatage pour les tampons@*
+Format de date/heure pour les tampons@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '[%H:%M:%S]'@*
 @item look_color_nicks
 Afficher les utilisateurs avec diff@'erentes couleurs@*
@@ -318,7 +318,7 @@ Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ':'@*
 Active la barre d'infos@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
 @item look_infobar_timestamp
-Horodatage pour les conversations sauvegard@'ees@*
+Format de date/heure dans la barre d'info@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '%B, %A %d %Y'@*
 @item look_infobar_seconds
 Afficher les secondes pour l'heure dans la barre d'infos@*
@@ -327,14 +327,20 @@ Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
 D@'elai (en secondes) pour la notification des messages dans la barre d'infos (0 = d@'esactiver les notifications dans la barre d'infos)@*
 Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 7@*
 @item look_hotlist_names_count
-Nombre maximum de noms dans la hotlist (0 = pas de nom affich@'e, seulement les num@'eros de tampons)@*
+Nombre maximum de noms dans la liste d'activit@'e (0 = pas de nom affich@'e, seulement les num@'eros de tampons)@*
 Type: entier (valeurs: entre 0 et 32), valeur par d@'efaut: 3@*
 @item look_hotlist_names_level
-Niveau pour l'affichage des noms dans la hotlist (combinaison de: 1=join/part, 2=message, 4=priv@'e, 8=highlight, par exemple: 12=priv@'e+highlight)@*
+Niveau pour l'affichage des noms dans la liste d'activit@'e (combinaison de: 1=join/part, 2=message, 4=priv@'e, 8=highlight, par exemple: 12=priv@'e+highlight)@*
 Type: entier (valeurs: entre 1 et 15), valeur par d@'efaut: 12@*
 @item look_hotlist_names_length
-Nombre maximum des noms dans la hotlist (0 = pas de limite)@*
+Nombre maximum des noms dans la liste d'activit@'e (0 = pas de limite)@*
 Type: entier (valeurs: entre 0 et 32), valeur par d@'efaut: 0@*
+@item look_day_change
+Affiche un message quand le jour change@*
+Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
+@item look_day_change_timestamp
+Format de date pour la date affich@'ee quand le jour a chang@'e@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '%a, %d %b %Y'@*
 @item col_title
 Couleur pour la barre de titre@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
@@ -543,7 +549,7 @@ Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
 Chemin pour les conversations sauvegard@'ees par WeeChat@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '~/.weechat/logs/'@*
 @item log_timestamp
-Horodatage pour les conversations sauvegard@'ees (voir man strftime pour le format de date/heure)@*
+Format de date/heure pour les conversations sauvegard@'ees (voir man strftime pour le format de date/heure)@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '%Y %b %d %H:%M:%S'@*
 @item log_hide_nickserv_pwd
 Masquer le mot de passe affich@'e par nickserv@*

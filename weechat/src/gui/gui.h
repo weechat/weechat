@@ -93,16 +93,22 @@
 #define MSG_TYPE_NOLOG     64
 
 #define gui_printf_color(buffer, color, fmt, argz...) \
-    gui_printf_type_color(buffer, MSG_TYPE_INFO, color, fmt, ##argz)
+    gui_printf_internal(buffer, 1, MSG_TYPE_INFO, color, fmt, ##argz)
 
 #define gui_printf_type(buffer, type, fmt, argz...) \
-    gui_printf_type_color(buffer, type, -1, fmt, ##argz)
+    gui_printf_internal(buffer, 1, type, -1, fmt, ##argz)
+
+#define gui_printf_type_color(buffer, type, color, fmt, argz...) \
+    gui_printf_internal(buffer, 1, type, color, fmt, ##argz)
 
 #define gui_printf(buffer, fmt, argz...) \
-    gui_printf_type_color(buffer, MSG_TYPE_INFO, -1, fmt, ##argz)
+    gui_printf_internal(buffer, 1, MSG_TYPE_INFO, -1, fmt, ##argz)
 
 #define gui_printf_nolog(buffer, fmt, argz...) \
-    gui_printf_type_color(buffer, MSG_TYPE_INFO | MSG_TYPE_NOLOG, -1, fmt, ##argz)
+    gui_printf_internal(buffer, 1, MSG_TYPE_INFO | MSG_TYPE_NOLOG, -1, fmt, ##argz)
+
+#define gui_printf_nolog_notime(buffer, fmt, argz...) \
+    gui_printf_internal(buffer, 0, MSG_TYPE_INFO | MSG_TYPE_NOLOG, -1, fmt, ##argz)
 
 #define NOTIFY_LEVEL_MIN        0
 #define NOTIFY_LEVEL_MAX        3
@@ -416,7 +422,7 @@ extern void gui_init_colors ();
 extern void gui_set_window_title ();
 extern void gui_init ();
 extern void gui_end ();
-extern void gui_printf_type_color (/*@null@*/ t_gui_buffer *, int, int, char *, ...);
+extern void gui_printf_internal (t_gui_buffer *, int, int, int, char *, ...);
 extern void gui_input_default_key_bindings ();
 extern void gui_main_loop ();
 

@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.1.6-cvs - October, 17 2005
+@subtitle Documentation for WeeChat v0.1.6-cvs - October, 18 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -334,6 +334,12 @@ Type: integer (values: between 1 and 15), default value: 12@*
 @item look_hotlist_names_length
 Max length of names in hotlist (0 = no limit)@*
 Type: integer (values: between 0 and 32), default value: 0@*
+@item look_day_change
+Display special message when day changes@*
+Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+@item look_day_change_timestamp
+Timestamp for date displayed when day changed@*
+Type: string (any string), default value: '%a, %d %b %Y'@*
 @item col_title
 Color for title bar@*
 Type: color (Curses or Gtk color), default value: 'default'@*

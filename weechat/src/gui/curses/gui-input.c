@@ -242,11 +242,18 @@ gui_main_loop ()
     static struct timeval timeout, tv;
     static struct timezone tz;
     t_irc_server *ptr_server;
-    int old_min, old_sec, diff;
+    t_gui_buffer *ptr_buffer;
+    int old_day, old_min, old_sec, diff;
+    char text_time[1024];
     time_t new_time;
     struct tm *local_time;
 
     quit_weechat = 0;
+
+    new_time = time (NULL);
+    local_time = localtime (&new_time);
+    old_day = local_time->tm_mday;
+    
     old_min = -1;
     old_sec = -1;
     check_away = 0;
@@ -260,6 +267,24 @@ gui_main_loop ()
         {
             old_min = local_time->tm_min;
             gui_draw_buffer_infobar (gui_current_window->buffer, 1);
+            
+            if (cfg_look_day_change
+                && (local_time->tm_mday != old_day))
+            {
+                for (ptr_buffer = gui_buffers; ptr_buffer;
+                     ptr_buffer = ptr_buffer->next_buffer)
+                {
+                    if (!ptr_buffer->dcc)
+                    {
+                        strftime (text_time, sizeof (text_time),
+                                  cfg_look_day_change_timestamp, local_time);
+                        gui_printf_nolog_notime (ptr_buffer,
+                                                 _("Day changed to %s\n"),
+                                                 text_time);
+                    }
+                }
+            }
+            old_day = local_time->tm_mday;
         }
         
         /* second has changed ? */

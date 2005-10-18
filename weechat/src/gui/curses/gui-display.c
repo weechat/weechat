@@ -2751,14 +2751,16 @@ gui_add_message (t_gui_buffer *buffer, int type, int color, char *message)
 }
 
 /*
- * gui_printf_type_color: display a message in a buffer
+ * gui_printf_internal: display a message in a buffer
+ *                      This function should NEVER be called directly.
+ *                      You should use macros defined in gui.h
  */
 
 void
-gui_printf_type_color (t_gui_buffer *buffer, int type, int color, char *message, ...)
+gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, int color, char *message, ...)
 {
     static char buf[8192];
-    char text_time[1024 + 1];
+    char text_time[1024];
     char text_time_char[2];
     time_t time_seconds;
     struct tm *local_time;
@@ -2847,11 +2849,13 @@ gui_printf_type_color (t_gui_buffer *buffer, int type, int color, char *message,
         pos = buf3 - 1;
         while (pos)
         {
-            if ((!buffer->last_line) || (buffer->line_complete))
+            if (display_time
+                && cfg_look_buffer_timestamp && cfg_look_buffer_timestamp[0]
+                && ((!buffer->last_line) || (buffer->line_complete)))
             {
                 time_seconds = time (NULL);
                 local_time = localtime (&time_seconds);
-                strftime (text_time, 1024, cfg_look_buffer_timestamp, local_time);
+                strftime (text_time, sizeof (text_time), cfg_look_buffer_timestamp, local_time);
                 
                 time_first_digit = -1;
                 time_last_digit = -1;
