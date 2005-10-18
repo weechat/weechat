@@ -1,12 +1,14 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-10-16
+ChangeLog - 2005-10-18
 
 
 Version 0.1.6 (under dev!):
    * new plugin interface, rewritten from scratch: now loads dynamic C
      library, and perl/python are plugin scripts
+   * log options (for server/channel/private) can now be set while
+     WeeChat is running
    * added some missing IRC commands, channel modes +e and +f
    * added colors for input buffer and current channel of status bar
    * added online help for config options (with /set full_option_name)

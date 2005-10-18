@@ -220,6 +220,7 @@ extern void config_change_nicks_colors ();
 extern void config_change_away_check ();
 extern void config_change_fifo_pipe ();
 extern void config_change_notify_levels ();
+extern void config_change_log ();
 extern int config_option_set_value (t_config_option *, char *);
 extern t_config_option *config_option_search (char *);
 extern void config_option_search_option_value (char *, t_config_option **, void **);

@@ -39,6 +39,7 @@
 #include "weeconfig.h"
 #include "command.h"
 #include "fifo.h"
+#include "log.h"
 #include "../irc/irc.h"
 #include "../gui/gui.h"
 
@@ -540,11 +541,11 @@ t_config_option weechat_options_history[] =
     N_("maximum number of lines in history "
     "for one server/channel/private window (0 = unlimited)"),
     OPTION_TYPE_INT, 0, INT_MAX, 4096,
-    NULL, NULL, &cfg_history_max_lines, NULL, config_change_noop },
+    NULL, NULL, &cfg_history_max_lines, NULL, &config_change_noop },
   { "history_max_commands", N_("max user commands in history"),
     N_("maximum number of user commands in history (0 = unlimited)"),
     OPTION_TYPE_INT, 0, INT_MAX, 100,
-    NULL, NULL, &cfg_history_max_commands, NULL, config_change_noop },
+    NULL, NULL, &cfg_history_max_commands, NULL, &config_change_noop },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
@@ -562,31 +563,31 @@ t_config_option weechat_options_log[] =
 { { "log_auto_server", N_("automatically log server messages"),
     N_("automatically log server messages"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
-    NULL, NULL, &cfg_log_auto_server, NULL, NULL },
+    NULL, NULL, &cfg_log_auto_server, NULL, &config_change_log },
   { "log_auto_channel", N_("automatically log channel chats"),
     N_("automatically log channel chats"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
-    NULL, NULL, &cfg_log_auto_channel, NULL, NULL },
+    NULL, NULL, &cfg_log_auto_channel, NULL, &config_change_log },
   { "log_auto_private", N_("automatically log private chats"),
     N_("automatically log private chats"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
-    NULL, NULL, &cfg_log_auto_private, NULL, NULL },
+    NULL, NULL, &cfg_log_auto_private, NULL, &config_change_log },
   { "log_plugin_msg", N_("log messages from plugins (scripts)"),
     N_("log messages from plugins (scripts)"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
-    NULL, NULL, &cfg_log_plugin_msg, NULL, NULL },
+    NULL, NULL, &cfg_log_plugin_msg, NULL, &config_change_noop },
   { "log_path", N_("path for log files"),
     N_("path for WeeChat log files"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "~/.weechat/logs/", NULL, NULL, &cfg_log_path, config_change_noop },
+    "~/.weechat/logs/", NULL, NULL, &cfg_log_path, &config_change_noop },
   { "log_timestamp", N_("timestamp for log"),
     N_("timestamp for log (see man strftime for date/time specifiers)"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "%Y %b %d %H:%M:%S", NULL, NULL, &cfg_log_timestamp, config_change_noop },
+    "%Y %b %d %H:%M:%S", NULL, NULL, &cfg_log_timestamp, &config_change_noop },
   { "log_hide_nickserv_pwd", N_("hide password displayed by nickserv"),
     N_("hide password displayed by nickserv"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_log_hide_nickserv_pwd, NULL, config_change_noop },
+    NULL, NULL, &cfg_log_hide_nickserv_pwd, NULL, &config_change_noop },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
@@ -608,47 +609,47 @@ t_config_option weechat_options_irc[] =
 { { "irc_display_away", N_("display message to all channels when away"),
     N_("display message to all channels when (un)marking as away"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_irc_display_away, NULL, config_change_noop },
+    NULL, NULL, &cfg_irc_display_away, NULL, &config_change_noop },
   { "irc_default_msg_away", N_("default message when away"),
     N_("default message when away"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "away", NULL, NULL, &cfg_irc_default_msg_away, config_change_noop },
+    "away", NULL, NULL, &cfg_irc_default_msg_away, &config_change_noop },
   { "irc_default_msg_part", N_("default part message (leaving channel)"),
     N_("default part message (leaving channel)"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "WeeChat %v", NULL, NULL, &cfg_irc_default_msg_part, config_change_noop },
+    "WeeChat %v", NULL, NULL, &cfg_irc_default_msg_part, &config_change_noop },
   { "irc_default_msg_quit", N_("default quit message"),
     N_("default quit message ('%v' will be replaced by WeeChat version in string)"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "WeeChat %v", NULL, NULL, &cfg_irc_default_msg_quit, config_change_noop },
+    "WeeChat %v", NULL, NULL, &cfg_irc_default_msg_quit, &config_change_noop },
   { "irc_notice_as_pv", N_("display notices as private messages"),
     N_("display notices as private messages"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
-    NULL, NULL, &cfg_irc_notice_as_pv, NULL, config_change_noop },
+    NULL, NULL, &cfg_irc_notice_as_pv, NULL, &config_change_noop },
   { "irc_away_check", N_("interval between two checks for away"),
     N_("interval between two checks for away (in minutes, 0 = never check)"),
     OPTION_TYPE_INT, 0, INT_MAX, 0,
-    NULL, NULL, &cfg_irc_away_check, NULL, config_change_away_check },
+    NULL, NULL, &cfg_irc_away_check, NULL, &config_change_away_check },
   { "irc_lag_check", N_("interval between two checks for lag"),
     N_("interval between two checks for lag (in seconds)"),
     OPTION_TYPE_INT, 30, INT_MAX, 60,
-    NULL, NULL, &cfg_irc_lag_check, NULL, config_change_noop },
+    NULL, NULL, &cfg_irc_lag_check, NULL, &config_change_noop },
   { "irc_lag_min_show", N_("minimum lag to show"),
     N_("minimum lag to show (in seconds)"),
     OPTION_TYPE_INT, 0, INT_MAX, 1,
-    NULL, NULL, &cfg_irc_lag_min_show, NULL, config_change_noop },
+    NULL, NULL, &cfg_irc_lag_min_show, NULL, &config_change_noop },
   { "irc_lag_disconnect", N_("disconnect after important lag"),
     N_("disconnect after important lag (in minutes, 0 = never disconnect)"),
     OPTION_TYPE_INT, 0, INT_MAX, 5,
-    NULL, NULL, &cfg_irc_lag_disconnect, NULL, config_change_noop },
+    NULL, NULL, &cfg_irc_lag_disconnect, NULL, &config_change_noop },
   { "irc_fifo_pipe", N_("create a FIFO pipe for remote control"),
     N_("create a FIFO pipe for remote control"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
-    NULL, NULL, &cfg_irc_fifo_pipe, NULL, config_change_fifo_pipe },
+    NULL, NULL, &cfg_irc_fifo_pipe, NULL, &config_change_fifo_pipe },
   { "irc_highlight", N_("list of words to highlight"),
     N_("comma separated list of words to highlight (case insensitive comparison)"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "", NULL, NULL, &cfg_irc_highlight, config_change_noop },
+    "", NULL, NULL, &cfg_irc_highlight, &config_change_noop },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
@@ -668,39 +669,39 @@ t_config_option weechat_options_dcc[] =
 { { "dcc_auto_accept_files", N_("automatically accept dcc files"),
     N_("automatically accept incoming dcc files"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
-    NULL, NULL, &cfg_dcc_auto_accept_files, NULL, config_change_noop },
+    NULL, NULL, &cfg_dcc_auto_accept_files, NULL, &config_change_noop },
   { "dcc_auto_accept_chats", N_("automatically accept dcc chats"),
     N_("automatically accept dcc chats (use carefully!)"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
-    NULL, NULL, &cfg_dcc_auto_accept_chats, NULL, config_change_noop },
+    NULL, NULL, &cfg_dcc_auto_accept_chats, NULL, &config_change_noop },
   { "dcc_timeout", N_("timeout for dcc request"),
     N_("timeout for dcc request (in seconds)"),
     OPTION_TYPE_INT, 1, INT_MAX, 300,
-    NULL, NULL, &cfg_dcc_timeout, NULL, config_change_noop },
+    NULL, NULL, &cfg_dcc_timeout, NULL, &config_change_noop },
   { "dcc_blocksize", N_("block size for dcc packets"),
     N_("block size for dcc packets in bytes (default: 65536)"),
     OPTION_TYPE_INT, 1024, 102400, 65536,
-    NULL, NULL, &cfg_dcc_blocksize, NULL, config_change_noop },
+    NULL, NULL, &cfg_dcc_blocksize, NULL, &config_change_noop },
   { "dcc_download_path", N_("path for incoming files with dcc"),
     N_("path for writing incoming files with dcc (default: user home)"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "~", NULL, NULL, &cfg_dcc_download_path, config_change_noop },
+    "~", NULL, NULL, &cfg_dcc_download_path, &config_change_noop },
   { "dcc_upload_path", N_("default path for sending files with dcc"),
     N_("path for reading files when sending thru dcc (when no path is specified)"),
     OPTION_TYPE_STRING, 0, 0, 0, "~",
-    NULL, NULL, &cfg_dcc_upload_path, config_change_noop },
+    NULL, NULL, &cfg_dcc_upload_path, &config_change_noop },
   { "dcc_convert_spaces", N_("convert spaces to underscores when sending files"),
     N_("convert spaces to underscores when sending files"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_dcc_convert_spaces, NULL, config_change_noop },
+    NULL, NULL, &cfg_dcc_convert_spaces, NULL, &config_change_noop },
   { "dcc_auto_rename", N_("automatically rename dcc files if already exists"),
     N_("rename incoming files if already exists (add '.1', '.2', ...)"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_dcc_auto_rename, NULL, config_change_noop },
+    NULL, NULL, &cfg_dcc_auto_rename, NULL, &config_change_noop },
   { "dcc_auto_resume", N_("automatically resume aborted transfers"),
     N_("automatically resume dcc transfer if connection with remote host is loosed"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_dcc_auto_resume, NULL, config_change_noop },
+    NULL, NULL, &cfg_dcc_auto_resume, NULL, &config_change_noop },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
@@ -720,31 +721,31 @@ t_config_option weechat_options_proxy[] =
 { { "proxy_use", N_("use proxy"),
     N_("use a proxy server to connect to irc server"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
-    NULL, NULL, &cfg_proxy_use, NULL, config_change_noop },
+    NULL, NULL, &cfg_proxy_use, NULL, &config_change_noop },
   { "proxy_type", N_("proxy type"),
     N_("proxy type (http (default), socks4, socks5)"),
     OPTION_TYPE_INT_WITH_STRING, 0, 0, 0,
-    "http", cfg_proxy_type_values, &cfg_proxy_type, NULL, config_change_noop },
+    "http", cfg_proxy_type_values, &cfg_proxy_type, NULL, &config_change_noop },
   { "proxy_ipv6", N_("use ipv6 proxy"),
     N_("connect to proxy in ipv6"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
-    NULL, NULL, &cfg_proxy_ipv6, NULL, config_change_noop },
+    NULL, NULL, &cfg_proxy_ipv6, NULL, &config_change_noop },
   { "proxy_address", N_("proxy address"),
     N_("proxy server address (IP or hostname)"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "", NULL, NULL, &cfg_proxy_address, config_change_noop },
+    "", NULL, NULL, &cfg_proxy_address, &config_change_noop },
   { "proxy_port", N_("port for proxy"),
     N_("port for connecting to proxy server"),
     OPTION_TYPE_INT, 0, 65535, 3128,
-    NULL, NULL, &cfg_proxy_port, NULL, config_change_noop },
+    NULL, NULL, &cfg_proxy_port, NULL, &config_change_noop },
   { "proxy_username", N_("proxy username"),
     N_("username for proxy server"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "", NULL, NULL, &cfg_proxy_username, config_change_noop },
+    "", NULL, NULL, &cfg_proxy_username, &config_change_noop },
   { "proxy_password", N_("proxy password"),
     N_("password for proxy server"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "", NULL, NULL, &cfg_proxy_password, config_change_noop },
+    "", NULL, NULL, &cfg_proxy_password, &config_change_noop },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
@@ -758,13 +759,13 @@ t_config_option weechat_options_plugins[] =
 { { "plugins_path", N_("path for searching plugins"),
     N_("path for searching plugins"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "~/.weechat/plugins", NULL, NULL, &cfg_plugins_path, config_change_noop },
+    "~/.weechat/plugins", NULL, NULL, &cfg_plugins_path, &config_change_noop },
   { "plugins_autoload", N_("list of plugins to load automatically"),
     N_("comma separated list of plugins to load automatically at startup, "
        "\"*\" means all plugins found "
        "(names may be partial, for example \"perl\" is ok for \"libperl.so\")"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "*", NULL, NULL, &cfg_plugins_autoload, config_change_noop },
+    "*", NULL, NULL, &cfg_plugins_autoload, &config_change_noop },
   { "plugins_extension", N_("standard plugins extension in filename"),
     N_("standard plugins extension in filename, used for autoload "
        "(if empty, then all files are loaded when autoload is \"*\")"),
@@ -774,7 +775,7 @@ t_config_option weechat_options_plugins[] =
 #else
     ".so",
 #endif
-    NULL, NULL, &cfg_plugins_extension, config_change_noop },
+    NULL, NULL, &cfg_plugins_extension, &config_change_noop },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
@@ -1053,6 +1054,42 @@ config_change_notify_levels ()
         if (BUFFER_IS_CHANNEL(ptr_buffer) || BUFFER_IS_PRIVATE(ptr_buffer))
             ptr_buffer->notify_level =
                 channel_get_notify_level (SERVER(ptr_buffer), CHANNEL(ptr_buffer));
+    }
+}
+
+/*
+ * config_change_log: called when log settings are changed (for server/channel/private logging)
+ */
+
+void
+config_change_log ()
+{
+    t_gui_buffer *ptr_buffer;
+    
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (BUFFER_IS_SERVER(ptr_buffer))
+        {
+            if (cfg_log_auto_server && !ptr_buffer->log_file)
+                log_start (ptr_buffer);
+            else if (!cfg_log_auto_server && ptr_buffer->log_file)
+                log_end (ptr_buffer);
+        }
+        if (BUFFER_IS_CHANNEL(ptr_buffer))
+        {
+            if (cfg_log_auto_channel && !ptr_buffer->log_file)
+                log_start (ptr_buffer);
+            else if (!cfg_log_auto_channel && ptr_buffer->log_file)
+                log_end (ptr_buffer);
+        }
+        if (BUFFER_IS_PRIVATE(ptr_buffer))
+        {
+            if (cfg_log_auto_private && !ptr_buffer->log_file)
+                log_start (ptr_buffer);
+            else if (!cfg_log_auto_private && ptr_buffer->log_file)
+                log_end (ptr_buffer);
+        }
     }
 }
 
