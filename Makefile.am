@@ -19,10 +19,9 @@ SUBDIRS = po doc intl src
 
 EXTRA_DIST = config.rpath BUGS FAQ FAQ.fr \
              debian/changelog debian/control \
-             debian/copyright \
+             debian/copyright debian/compat \
              debian/rules debian/weechat-common.docs \
              debian/weechat-common.install debian/weechat-curses.dirs \
-             debian/weechat-curses.install debian/weechat-gtk.dirs \
-             debian/weechat-gtk.install
+             debian/weechat-curses.install 
 
 ACLOCAL_AMFLAGS = -I m4
