@@ -469,6 +469,8 @@ weechat_python_get_config (PyObject *self, PyObject *args)
     
     /* make gcc happy */
     (void) self;
+
+    option = NULL;
     
     if (!PyArg_ParseTuple (args, "s", &option))
     {
@@ -500,7 +502,7 @@ weechat_python_get_config (PyObject *self, PyObject *args)
  */
 
 static
-PyMethodDef weechat_funcs[] = {
+PyMethodDef weechat_python_funcs[] = {
     { "register", weechat_python_register, METH_VARARGS, "" },
     { "prnt", weechat_python_print, METH_VARARGS, "" },
     { "print_infobar", weechat_python_print_infobar, METH_VARARGS, "" },
@@ -514,6 +516,42 @@ PyMethodDef weechat_funcs[] = {
 };
 
 /*
+ * weechat_python_output : redirection for stdout and stderr
+ */
+
+static PyObject *
+weechat_python_output (PyObject *self, PyObject *args)
+{
+    char *msg;
+    /* make gcc happy */
+    (void) self;
+    
+    msg = NULL;
+
+    if (!PyArg_ParseTuple (args, "s", &msg))
+    {
+        python_plugin->printf_server (python_plugin,
+                                      "Python error: unable to get "
+                                      "stdout/stderr message(s)");
+        return NULL; 
+    }
+    
+    python_plugin->printf_server (python_plugin,
+				  "Python stdin/stdout: %s", msg);
+    return Py_BuildValue ("i", 1);
+}
+
+/*
+ * Outputs subroutines
+ */
+
+static
+PyMethodDef weechat_python_output_funcs[] = {
+    { "write", weechat_python_output, METH_VARARGS, "" },
+    { NULL, NULL, 0, NULL }
+};
+
+/*
  * weechat_python_load: load a Python script
  */
 
@@ -522,6 +560,7 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
 {
     FILE *fp;
     PyThreadState *python_current_interpreter;
+    PyObject *outputs;
     
     plugin->printf_server (plugin, "Loading Python script \"%s\"", filename);
     
@@ -552,7 +591,7 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
 
     PyThreadState_Swap (python_current_interpreter);
 
-    if (Py_InitModule ("weechat", weechat_funcs) == NULL)
+    if (Py_InitModule ("weechat", weechat_python_funcs) == NULL)
     {
         plugin->printf_server (plugin,
                                "Python error: unable to initialize WeeChat module");
@@ -564,29 +603,22 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
         return 0;
     }
 
-    if (PyRun_SimpleString (
-            "import weechat, sys, string\n"
-
-            "class weechatStdout:\n"
-            "\tdef write(self, str):\n"
-            "\t\tstr = string.strip(str)\n"
-            "\t\tif str != \"\":\n"
-            "\t\t\tweechat.prnt(\"Python stdout : \" + str, \"\")\n"
-
-            "class weechatStderr:\n"
-            "\tdef write(self, str):\n"
-            "\t\tstr = string.strip(str)\n"
-            "\t\tif str != \"\":\n"
-            "\t\t\tweechat.prnt(\"Python stderr : \" + str, \"\")\n"
-
-            "sys.stdout = weechatStdout()\n"
-            "sys.stderr = weechatStderr()\n"
-            ) != 0)
+    outputs = Py_InitModule("weechatOutputs", weechat_python_output_funcs);
+    if (outputs == NULL)
     {
         plugin->printf_server (plugin,
                                "Python warning: unable to redirect stdout and stderr");
     }
-    
+    else
+    {
+	if (PySys_SetObject("stdout", outputs) == -1)
+	    plugin->printf_server (plugin,
+				   "Python warning: unable to redirect stdout");
+	if (PySys_SetObject("stderr", outputs) == -1)
+	    plugin->printf_server (plugin,
+				   "Python warning: unable to redirect stderr");
+    }
+	
     python_current_script_filename = strdup (filename);
     
     if (PyRun_SimpleFile (fp, filename) != 0)
