@@ -560,7 +560,7 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
 {
     FILE *fp;
     PyThreadState *python_current_interpreter;
-    PyObject *outputs;
+    PyObject *weechat_module, *weechat_outputs;
     
     plugin->printf_server (plugin, "Loading Python script \"%s\"", filename);
     
@@ -590,8 +590,10 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
     }
 
     PyThreadState_Swap (python_current_interpreter);
+    
+    weechat_module = Py_InitModule ("weechat", weechat_python_funcs);
 
-    if (Py_InitModule ("weechat", weechat_python_funcs) == NULL)
+    if ( weechat_module == NULL)
     {
         plugin->printf_server (plugin,
                                "Python error: unable to initialize WeeChat module");
@@ -603,18 +605,18 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
         return 0;
     }
 
-    outputs = Py_InitModule("weechatOutputs", weechat_python_output_funcs);
-    if (outputs == NULL)
+    weechat_outputs = Py_InitModule("weechatOutputs", weechat_python_output_funcs);
+    if (weechat_outputs == NULL)
     {
         plugin->printf_server (plugin,
                                "Python warning: unable to redirect stdout and stderr");
     }
     else
     {
-	if (PySys_SetObject("stdout", outputs) == -1)
+	if (PySys_SetObject("stdout", weechat_outputs) == -1)
 	    plugin->printf_server (plugin,
 				   "Python warning: unable to redirect stdout");
-	if (PySys_SetObject("stderr", outputs) == -1)
+	if (PySys_SetObject("stderr", weechat_outputs) == -1)
 	    plugin->printf_server (plugin,
 				   "Python warning: unable to redirect stderr");
     }
@@ -632,6 +634,9 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
         PyThreadState_Delete (python_current_interpreter);
         PyEval_ReleaseLock ();
         fclose (fp);
+	/* if script was registered, removing from list */
+	if (python_current_script != NULL)
+	    weechat_script_remove (plugin, &python_scripts, python_current_script);
         return 0;
     }
     
@@ -671,10 +676,12 @@ weechat_python_unload (t_weechat_plugin *plugin, t_plugin_script *script)
     
     if (script->shutdown_func[0])
         weechat_python_exec (plugin, script, script->shutdown_func, "", "");
-    
+
+    PyEval_AcquireLock ();
     PyThreadState_Swap (NULL);
     PyThreadState_Clear (script->interpreter);
     PyThreadState_Delete (script->interpreter);
+    PyEval_ReleaseLock ();
     
     weechat_script_remove (plugin, &python_scripts, script);
 }
@@ -874,6 +881,8 @@ weechat_python_cmd (t_weechat_plugin *plugin,
 int
 weechat_plugin_init (t_weechat_plugin *plugin)
 {
+    char *argv[] = { "__weechat_plugin__" , NULL };
+
     python_plugin = plugin;
     
     plugin->printf_server (plugin, "Loading Python module \"weechat\"");
@@ -886,6 +895,8 @@ weechat_plugin_init (t_weechat_plugin *plugin)
         return 0;
     }
     
+    PySys_SetArgv(1, argv);
+
     PyEval_InitThreads();
     
     python_mainThreadState = PyThreadState_Get();
@@ -924,12 +935,15 @@ weechat_plugin_end (t_weechat_plugin *plugin)
     /* unload all scripts */
     weechat_python_unload_all (plugin);
     
+    PyEval_AcquireLock ();
+
     /* free Python interpreter */
     if (python_mainThreadState != NULL)
     {
         PyThreadState_Swap (python_mainThreadState);
         python_mainThreadState = NULL;
     }
+    
     Py_Finalize ();
     if (Py_IsInitialized () != 0)
         python_plugin->printf_server (python_plugin,
