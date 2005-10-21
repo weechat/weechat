@@ -196,7 +196,8 @@ struct t_gui_buffer
     int has_input;                  /* = 1 if buffer has input (DCC has not)*/
     char *input_buffer;             /* input buffer                         */
     int input_buffer_alloc;         /* input buffer: allocated size in mem  */
-    int input_buffer_size;          /* buffer size (user input length)      */
+    int input_buffer_size;          /* buffer size in bytes                 */
+    int input_buffer_length;        /* number of chars in buffer            */
     int input_buffer_pos;           /* position into buffer                 */
     int input_buffer_1st_display;   /* first char displayed on screen       */
     
@@ -330,8 +331,7 @@ extern t_gui_line *gui_new_line (t_gui_buffer *);
 extern t_gui_message *gui_new_message (t_gui_buffer *);
 extern void gui_input_clipboard_copy (char *, int);
 extern void gui_input_clipboard_paste (t_gui_window *);
-extern void gui_input_insert_string (t_gui_window *, char *, int);
-extern void gui_input_insert_char (t_gui_window *, int);
+extern int gui_input_insert_string (t_gui_window *, char *, int);
 extern void gui_input_return (t_gui_window *);
 extern void gui_input_tab (t_gui_window *);
 extern void gui_input_backspace (t_gui_window *);

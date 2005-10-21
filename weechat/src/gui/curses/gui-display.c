@@ -38,6 +38,7 @@
 #include "../../common/weeconfig.h"
 #include "../../common/hotlist.h"
 #include "../../common/log.h"
+#include "../../common/utf8.h"
 #include "../../irc/irc.h"
 
 
@@ -352,7 +353,8 @@ gui_draw_buffer_title (t_gui_buffer *buffer, int erase)
             {
                 if (CHANNEL(buffer)->topic)
                 {
-                    buf = weechat_convert_encoding (cfg_look_charset_decode,
+                    buf = weechat_convert_encoding ((local_utf8) ?
+                                                    cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
                                                     (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
                                                     cfg_look_charset_internal : local_charset,
                                                     CHANNEL(buffer)->topic);
@@ -413,7 +415,8 @@ gui_message_get_next_char (t_gui_message **message, int *offset)
 {
     if (!(*message))
         return;
-    (*offset)++;
+    
+    (*offset) += utf8_char_size ((*message)->message + (*offset));
     if (!((*message)->message[*offset]))
     {
         *message = (*message)->next_message;
@@ -433,7 +436,7 @@ gui_display_word (t_gui_window *window, t_gui_line *line,
 {
     char format_align[32];
     char saved_char_end, saved_char;
-    int end_of_word, chars_to_display, num_displayed;
+    int pos_saved_char, end_of_word, chars_to_display, num_displayed;
     
     if (!message || !end_msg ||
         ((!simulate) && (window->win_chat_cursor_y > window->win_chat_height - 1)))
@@ -470,22 +473,23 @@ gui_display_word (t_gui_window *window, t_gui_line *line,
             window->win_chat_cursor_x += line->length_align;
         }
         
-        chars_to_display = strlen (message->message + offset);
+        chars_to_display = utf8_strlen (message->message + offset);
 
         /* too long for current line */
         if (window->win_chat_cursor_x + chars_to_display > window->win_chat_width)
         {
             num_displayed = window->win_chat_width - window->win_chat_cursor_x;
-            saved_char = message->message[offset + num_displayed];
-            message->message[offset + num_displayed] = '\0';
+            pos_saved_char = utf8_real_pos (message->message + offset, num_displayed);
+            saved_char = message->message[offset + pos_saved_char];
+            message->message[offset + pos_saved_char] = '\0';
             if ((!simulate) &&
                 ((count == 0) || (*lines_displayed >= num_lines - count)))
                 mvwprintw (window->win_chat,
                            window->win_chat_cursor_y, 
                            window->win_chat_cursor_x,
                            "%s", message->message + offset);
-            message->message[offset + num_displayed] = saved_char;
-            offset += num_displayed;
+            message->message[offset + pos_saved_char] = saved_char;
+            offset += pos_saved_char;
         }
         else
         {
@@ -498,10 +502,15 @@ gui_display_word (t_gui_window *window, t_gui_line *line,
                            "%s", message->message + offset);
             if (message == end_msg)
             {
-                offset = end_offset;
                 if (end_msg)
                     end_msg->message[end_offset + 1] = saved_char_end;
-                gui_message_get_next_char (&message, &offset);
+                if (saved_char_end == '\0')
+                {
+                    message = message->next_message;
+                    offset = 0;
+                }
+                else
+                    offset = end_offset + 1;
             }
             else
             {
@@ -564,9 +573,9 @@ gui_get_word_info (t_gui_message *message, int offset,
         while (message && (message->message[offset]) && (message->message[offset] != ' '))
         {
             *word_end_msg = message;
-            *word_end_offset = offset;
-            (*word_length_with_spaces)++;
-            (*word_length)++;
+            *word_end_offset = offset + utf8_char_size (message->message + offset) - 1;
+            (*word_length_with_spaces) += utf8_char_size (message->message + offset);
+            (*word_length) += utf8_char_size (message->message + offset);
             gui_message_get_next_char (&message, &offset);
         }
     }
@@ -831,7 +840,8 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                     mvwprintw (ptr_win->win_chat, i, 0, "%s %-16s ",
                                (ptr_dcc == dcc_selected) ? "***" : "   ",
                                ptr_dcc->nick);
-                    buf = weechat_convert_encoding (cfg_look_charset_decode,
+                    buf = weechat_convert_encoding ((local_utf8) ?
+                                                    cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
                                                     (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
                                                     cfg_look_charset_internal : local_charset,
                                                     (DCC_IS_CHAT(ptr_dcc->type)) ?
@@ -854,7 +864,8 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                                (DCC_IS_RECV(ptr_dcc->type)) ? "-->>" : "<<--");
                     gui_window_set_color (ptr_win->win_chat,
                                           COLOR_DCC_WAITING + ptr_dcc->status);
-                    buf = weechat_convert_encoding (cfg_look_charset_decode,
+                    buf = weechat_convert_encoding ((local_utf8) ?
+                                                    cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
                                                     (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
                                                     cfg_look_charset_internal : local_charset,
                                                     _(dcc_status_string[ptr_dcc->status]));
@@ -905,7 +916,8 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                         else
                             num_unit = 3;
                         sprintf (format, "  (%s %%s/s)", unit_format[num_unit]);
-                        buf = weechat_convert_encoding (cfg_look_charset_decode,
+                        buf = weechat_convert_encoding ((local_utf8) ?
+                                                        cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
                                                         (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
                                                         cfg_look_charset_internal : local_charset,
                                                         unit_name[num_unit]);
@@ -1248,7 +1260,8 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
             wprintw (ptr_win->win_status, "%s", SERVER(ptr_win->buffer)->name);
             if (SERVER(ptr_win->buffer)->is_away)
             {
-                string = weechat_convert_encoding (cfg_look_charset_decode,
+                string = weechat_convert_encoding ((local_utf8) ?
+                                                   cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
                                                   (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
                                                   cfg_look_charset_internal : local_charset,
                                                   _("(away)"));
@@ -1365,7 +1378,8 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                 wprintw (ptr_win->win_status, "<DCC> ");
             else
             {
-                string = weechat_convert_encoding (cfg_look_charset_decode,
+                string = weechat_convert_encoding ((local_utf8) ?
+                                                   cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
                                                   (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
                                                   cfg_look_charset_internal : local_charset,
                                                   _("[not connected]"));
@@ -1381,7 +1395,8 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                                   COLOR_WIN_STATUS_DELIMITERS);
             wprintw (ptr_win->win_status, "[");
             gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS);
-            string = weechat_convert_encoding (cfg_look_charset_decode,
+            string = weechat_convert_encoding ((local_utf8) ?
+                                               cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
                                                (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
                                                cfg_look_charset_internal : local_charset,
                                                _("Act: "));
@@ -1474,7 +1489,8 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                                       COLOR_WIN_STATUS_DELIMITERS);
                 wprintw (ptr_win->win_status, "[");
                 gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS);
-                string = weechat_convert_encoding (cfg_look_charset_decode,
+                string = weechat_convert_encoding ((local_utf8) ?
+                                                   cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
                                                   (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
                                                   cfg_look_charset_internal : local_charset,
                                                   _("Lag: %.1f"));
@@ -1495,7 +1511,8 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
         }
         else
             x = ptr_win->win_width - 2;
-        string = weechat_convert_encoding (cfg_look_charset_decode,
+        string = weechat_convert_encoding ((local_utf8) ?
+                                           cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
                                            (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
                                            cfg_look_charset_internal : local_charset,
                                            _("-MORE-"));
@@ -1712,7 +1729,7 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
             }
             else if (buffer->has_input)
             {
-                if (buffer->input_buffer_size == 0)
+                if (buffer->input_buffer_length == 0)
                     buffer->input_buffer[0] = '\0';
                 
                 input_width = gui_get_input_width (ptr_win);
@@ -1750,7 +1767,8 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
                     snprintf (format, 32, "%%-%ds", input_width);
                     if (ptr_win == gui_current_window)
                         wprintw (ptr_win->win_input, format,
-                                 buffer->input_buffer + buffer->input_buffer_1st_display);
+                                 utf8_add_offset (buffer->input_buffer,
+                                                  buffer->input_buffer_1st_display));
                     else
                         wprintw (ptr_win->win_input, format,
                                  "");
@@ -1776,7 +1794,8 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
                     snprintf (format, 32, "%%-%ds", input_width);
                     if (ptr_win == gui_current_window)
                         wprintw (ptr_win->win_input, format,
-                                 buffer->input_buffer + buffer->input_buffer_1st_display);
+                                 utf8_add_offset (buffer->input_buffer,
+                                                  buffer->input_buffer_1st_display));
                     else
                         wprintw (ptr_win->win_input, format,
                                  "");
@@ -1789,7 +1808,8 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
                 }
             }
             
-            wnoutrefresh (ptr_win->win_input);
+            doupdate ();
+            wrefresh (ptr_win->win_input);
             refresh ();
         }
     }
@@ -2713,7 +2733,7 @@ gui_add_message (t_gui_buffer *buffer, int type, int color, char *message)
             ptr_string[0] = 32;
         ptr_string++;
     }
-    length = strlen (message);
+    length = utf8_strlen (message);
     buffer->last_line->length += length;
     if (type & MSG_TYPE_MSG)
         buffer->last_line->line_with_message = 1;
@@ -2836,10 +2856,14 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, int color
     else
         buf2 = strdup (buf);
     
-    buf3 = weechat_convert_encoding (cfg_look_charset_decode,
-                                     (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
-                                     cfg_look_charset_internal : local_charset,
-                                     buf2);
+    if (!local_utf8 || !utf8_is_valid (buf2))
+        buf3 = weechat_convert_encoding ((local_utf8) ?
+                                         cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
+                                         (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
+                                         cfg_look_charset_internal : local_charset,
+                                         buf2);
+    else
+        buf3 = strdup (buf2);
     
     if (gui_init_ok)
     {

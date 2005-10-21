@@ -39,6 +39,7 @@
 #include "../../common/command.h"
 #include "../../common/hotlist.h"
 #include "../../common/fifo.h"
+#include "../../common/utf8.h"
 #include "../../irc/irc.h"
 
 
@@ -163,7 +164,7 @@ gui_input_grab_end ()
 void
 gui_input_read ()
 {
-    int key, i;
+    int key, i, insert_ok;
     char key_str[32];
     
     i = 0;
@@ -175,6 +176,7 @@ gui_input_read ()
             gui_input_grab_end ();
         
         key = getch ();
+        insert_ok = 1;
         
         if (key == ERR)
         {
@@ -191,6 +193,7 @@ gui_input_read ()
                 
         if (key < 32)
         {
+            insert_ok = 0;
             key_str[0] = '^';
             key_str[1] = (char) key + '@';
             key_str[2] = '\0';
@@ -203,11 +206,38 @@ gui_input_read ()
         }
         else
         {
-            if (key > 0xff)
+            if (local_utf8)
             {
-                key_str[0] = (char) (key >> 8);
-                key_str[1] = (char) (key & 0xff);
-                key_str[2] = '\0';
+                /* 1 char: 0vvvvvvv */
+                if (key < 0x80)
+                {
+                    key_str[0] = (char) key;
+                    key_str[1] = '\0';
+                }
+                /* 2 chars: 110vvvvv 10vvvvvv */
+                else if ((key & 0xE0) == 0xC0)
+                {
+                    key_str[0] = (char) key;
+                    key_str[1] = (char) (getch ());
+                    key_str[2] = '\0';
+                }
+                 /* 3 chars: 1110vvvv 10vvvvvv 10vvvvvv */
+                else if ((key & 0xF0) == 0xE0)
+                {
+                    key_str[0] = (char) key;
+                    key_str[1] = (char) (getch ());
+                    key_str[2] = (char) (getch ());
+                    key_str[3] = '\0';
+                }
+                /* 4 chars: 11110vvv 10vvvvvv 10vvvvvv 10vvvvvv */
+                else if ((key & 0xF8) == 0xF0)
+                {
+                    key_str[0] = (char) key;
+                    key_str[1] = (char) (getch ());
+                    key_str[2] = (char) (getch ());
+                    key_str[3] = (char) (getch ());
+                    key_str[4] = '\0';
+                }
             }
             else
             {
@@ -224,8 +254,13 @@ gui_input_read ()
         
         /*gui_printf (gui_current_window->buffer, "gui_input_read: key = %s (%d)\n", key_str, key);*/
         
-        if (gui_key_pressed (key_str) != 0)
-            gui_input_insert_char (gui_current_window, key);
+        if ((gui_key_pressed (key_str) != 0) && (insert_ok))
+        {
+            gui_input_insert_string (gui_current_window, key_str, -1);
+            gui_current_window->buffer->input_buffer_pos += utf8_strlen (key_str);
+            gui_draw_buffer_input (gui_current_window->buffer, 0);
+            gui_current_window->buffer->completion.position = -1;
+        }
         
         i++;
     }

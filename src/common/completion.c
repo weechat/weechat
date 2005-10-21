@@ -30,6 +30,7 @@
 #include "weechat.h"
 #include "completion.h"
 #include "command.h"
+#include "utf8.h"
 #include "weelist.h"
 #include "weeconfig.h"
 #include "../irc/irc.h"
@@ -646,7 +647,8 @@ completion_build_list (t_completion *completion, void *channel)
                 completion_stop (completion);
             else
             {
-                string = weechat_convert_encoding (cfg_look_charset_decode,
+                string = weechat_convert_encoding ((local_utf8) ?
+                                                   cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
                                                    (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
                                                    cfg_look_charset_internal : local_charset,
                                                    ((t_irc_channel *)channel)->topic);
@@ -1000,14 +1002,23 @@ completion_search (t_completion *completion, void *channel,
     if (completion->word_found)
     {
         if (old_word_found)
+        {
             completion->diff_size = strlen (completion->word_found) -
-                                    strlen (old_word_found);
+                strlen (old_word_found);
+            completion->diff_length = utf8_strlen (completion->word_found) -
+                utf8_strlen (old_word_found);
+        }
         else
         {
             completion->diff_size = strlen (completion->word_found) -
-                                    strlen (completion->base_word);
+                strlen (completion->base_word);
+            completion->diff_length = utf8_strlen (completion->word_found) -
+                utf8_strlen (completion->base_word);
             if (completion->context == COMPLETION_COMMAND)
+            {
                 completion->diff_size++;
+                completion->diff_length++;
+            }
         }
     }
 }

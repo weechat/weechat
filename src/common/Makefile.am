@@ -36,4 +36,6 @@ lib_weechat_main_a_SOURCES = weechat.c \
                              log.c \
                              log.h \
                              fifo.c \
-                             fifo.h
+                             fifo.h \
+                             utf8.c \
+                             utf8.h

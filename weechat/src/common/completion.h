@@ -49,6 +49,7 @@ struct t_completion
     char *word_found;       /* word found (to replace base word)            */
     int position_replace;   /* position where word has to be replaced       */
     int diff_size;          /* size difference (< 0 = char(s) deleted)      */
+    int diff_length;        /* length difference (<= diff_size)             */
 };
 
 extern void completion_init (t_completion *);

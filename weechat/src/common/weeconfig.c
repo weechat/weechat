@@ -40,6 +40,7 @@
 #include "command.h"
 #include "fifo.h"
 #include "log.h"
+#include "utf8.h"
 #include "../irc/irc.h"
 #include "../gui/gui.h"
 
@@ -67,7 +68,8 @@ int cfg_look_set_title;
 int cfg_look_startup_logo;
 int cfg_look_startup_version;
 char *cfg_look_weechat_slogan;
-char *cfg_look_charset_decode;
+char *cfg_look_charset_decode_iso;
+char *cfg_look_charset_decode_utf;
 char *cfg_look_charset_encode;
 char *cfg_look_charset_internal;
 char *cfg_look_buffer_timestamp;
@@ -112,18 +114,24 @@ t_config_option weechat_options_look[] =
     N_("WeeChat slogan (if empty, slogan is not used)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "the geekest IRC client!", NULL, NULL, &cfg_look_weechat_slogan, config_change_noop },
-  { "look_charset_decode", N_("charset for decoding messages from server"),
-    N_("charset for decoding messages from server, examples: UTF-8, ISO-8859-1 (if empty, messages are not converted)"),
+  { "look_charset_decode_iso", N_("ISO charset for decoding messages from server (used only if locale is UTF-8)"),
+    N_("ISO charset for decoding messages from server (used only if locale is UTF-8) "
+       "(if empty, messages are not converted if locale is UTF-8"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "UTF-8", NULL, NULL, &cfg_look_charset_decode, config_change_buffer_content },
+    "ISO-8859-1", NULL, NULL, &cfg_look_charset_decode_iso, config_change_charset },
+  { "look_charset_decode_utf", N_("UTF charset for decoding messages from server (used only if locale is not UTF-8)"),
+    N_("UTF charset for decoding messages from server (used only if locale is not UTF-8) "
+       "(if empty, messages are not converted if locale is not UTF-8"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    "UTF-8", NULL, NULL, &cfg_look_charset_decode_utf, config_change_charset },
   { "look_charset_encode", N_("charset for encoding messages sent to server"),
-    N_("charset for encoding messages sent to server, examples: UFT-8, ISO-8859-1 (if empty, local charset is used)"),
+    N_("charset for encoding messages sent to server, examples: UFT-8, ISO-8859-1 (if empty, messages are not converted)"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "", NULL, NULL, &cfg_look_charset_encode, config_change_buffer_content },
-  { "look_charset_internal", N_("internal WeeChat charset (should be ISO)"),
-    N_("internal WeeChat charset, should be ISO-xxxx even if locale is UTF-8 (if empty, local charset is used)"),
+    "", NULL, NULL, &cfg_look_charset_encode, config_change_charset },
+  { "look_charset_internal", N_("forces internal WeeChat charset (should be empty in most cases)"),
+    N_("forces internal WeeChat charset (should be empty in most cases, that means detected charset is used)"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "ISO-8859-1", NULL, NULL, &cfg_look_charset_internal, config_change_buffer_content },
+    "", NULL, NULL, &cfg_look_charset_internal, config_change_charset },
   { "look_buffer_timestamp", N_("timestamp for buffers"),
     N_("timestamp for buffers"),
     OPTION_TYPE_STRING, 0, 0, 0,
@@ -969,6 +977,17 @@ config_change_buffers ()
 void
 config_change_buffer_content ()
 {
+    gui_redraw_buffer (gui_current_window->buffer);
+}
+
+/*
+ * config_change_charset: called when charset changes
+ */
+
+void
+config_change_charset ()
+{
+    utf8_init ();
     gui_redraw_buffer (gui_current_window->buffer);
 }
 

@@ -64,6 +64,7 @@
 #include "weeconfig.h"
 #include "command.h"
 #include "fifo.h"
+#include "utf8.h"
 #include "../irc/irc.h"
 #include "../gui/gui.h"
 
@@ -413,7 +414,8 @@ void wee_display_key_functions ()
  * wee_display_keys: display WeeChat default keys
  */
 
-void wee_display_keys ()
+void
+wee_display_keys ()
 {
     t_gui_key *ptr_key;
     char *expanded_name;
@@ -879,6 +881,7 @@ main (int argc, char *argv[])
             return EXIT_FAILURE;
     }
     
+    utf8_init ();                   /* init UTF-8 in WeeChat                */
     gui_init ();                    /* init WeeChat interface               */
     weechat_welcome_message ();     /* display WeeChat welcome message      */
 #ifdef PLUGINS
