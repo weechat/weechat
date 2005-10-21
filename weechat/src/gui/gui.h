@@ -108,7 +108,7 @@
     gui_printf_internal(buffer, 1, MSG_TYPE_INFO | MSG_TYPE_NOLOG, -1, fmt, ##argz)
 
 #define gui_printf_nolog_notime(buffer, fmt, argz...) \
-    gui_printf_internal(buffer, 0, MSG_TYPE_INFO | MSG_TYPE_NOLOG, -1, fmt, ##argz)
+    gui_printf_internal(buffer, 0, MSG_TYPE_NOLOG, -1, fmt, ##argz)
 
 #define NOTIFY_LEVEL_MIN        0
 #define NOTIFY_LEVEL_MAX        3

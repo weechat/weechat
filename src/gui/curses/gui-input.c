@@ -306,18 +306,18 @@ gui_main_loop ()
             if (cfg_look_day_change
                 && (local_time->tm_mday != old_day))
             {
+                strftime (text_time, sizeof (text_time),
+                          cfg_look_day_change_timestamp, local_time);
+                gui_add_hotlist = 0;
                 for (ptr_buffer = gui_buffers; ptr_buffer;
                      ptr_buffer = ptr_buffer->next_buffer)
                 {
                     if (!ptr_buffer->dcc)
-                    {
-                        strftime (text_time, sizeof (text_time),
-                                  cfg_look_day_change_timestamp, local_time);
                         gui_printf_nolog_notime (ptr_buffer,
                                                  _("Day changed to %s\n"),
                                                  text_time);
-                    }
                 }
+                gui_add_hotlist = 1;
             }
             old_day = local_time->tm_mday;
         }
