@@ -256,6 +256,9 @@ gui_input_read ()
         
         if ((gui_key_pressed (key_str) != 0) && (insert_ok))
         {
+            if (strcmp (key_str, "^^") == 0)
+                key_str[1] = '\0';
+            
             if (gui_current_window->buffer->dcc)
                 gui_input_action_dcc (gui_current_window, key_str);
             else
