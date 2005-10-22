@@ -26,11 +26,11 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdarg.h>
 #include <unistd.h>
 #include <string.h>
 #include <signal.h>
 #include <time.h>
-#include <curses.h>
 
 #include "../common/weechat.h"
 #include "gui.h"

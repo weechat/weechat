@@ -31,7 +31,7 @@
 #include <signal.h>
 #include <time.h>
 #include <ctype.h>
-#include <ncurses.h>
+#include <ncursesw/ncurses.h>
 
 #include "../../common/weechat.h"
 #include "../gui.h"
