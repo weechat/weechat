@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-10-21
+ChangeLog - 2005-10-22
 
 
 Version 0.1.6 (under dev!):
+   * added dcc_own_ip and dcc_port_range settings
    * full UTF-8 support, auto-detection of UTF-8 usage (locale)
    * added "Day changed to [date]" message when day changes
    * new plugin interface, rewritten from scratch: now loads dynamic C

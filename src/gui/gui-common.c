@@ -609,78 +609,89 @@ gui_input_optimize_buffer_size (t_gui_buffer *buffer)
 
 /*
  * gui_input_action_dcc: execute an action on a DCC after a user input
+ *                       return -1 if DCC buffer was closed due to action, 0 otherwise
  */
 
 void
-gui_input_action_dcc (t_gui_window *window, char action)
+gui_input_action_dcc (t_gui_window *window, char *actions)
 {
     t_irc_dcc *dcc_selected, *ptr_dcc, *ptr_dcc_next;
+    t_gui_buffer *ptr_buffer;
     
-    dcc_selected = (window->dcc_selected) ?
-        (t_irc_dcc *) window->dcc_selected : dcc_list;
-    
-    switch (action)
+    while (actions[0])
     {
-        /* accept DCC */
-        case 'a':
-        case 'A':
-            if (dcc_selected
-                && (DCC_IS_RECV(dcc_selected->status))
-                && (dcc_selected->status == DCC_WAITING))
+        if (actions[0] >= 32)
+        {
+            dcc_selected = (window->dcc_selected) ?
+                (t_irc_dcc *) window->dcc_selected : dcc_list;
+            
+            switch (actions[0])
             {
-                dcc_accept (dcc_selected);
-            }
-            break;
-        /* cancel DCC */
-        case 'c':
-        case 'C':
-            if (dcc_selected
-                && (!DCC_ENDED(dcc_selected->status)))
-            {
-                dcc_close (dcc_selected, DCC_ABORTED);
-                gui_redraw_buffer (window->buffer);
-            }
-            break;
-        /* purge old DCC */
-        case 'p':
-        case 'P':
-            window->dcc_selected = NULL;
-            ptr_dcc = dcc_list;
-            while (ptr_dcc)
-            {
-                ptr_dcc_next = ptr_dcc->next_dcc;
-                if (DCC_ENDED(ptr_dcc->status))
-                    dcc_free (ptr_dcc);
-                ptr_dcc = ptr_dcc_next;
-            }
-            gui_redraw_buffer (window->buffer);
-            break;
-        /* close DCC window */
-        case 'q':
-        case 'Q':
-            if (buffer_before_dcc)
-            {
-                gui_buffer_free (window->buffer, 1);
-                gui_switch_to_buffer (window, buffer_before_dcc);
-            }
-            else
-                gui_buffer_free (window->buffer, 1);
-            gui_redraw_buffer (window->buffer);
-            break;
-        /* remove from DCC list */
-        case 'r':
-        case 'R':
-            if (dcc_selected
-                && (DCC_ENDED(dcc_selected->status)))
-            {
-                if (dcc_selected->next_dcc)
-                    window->dcc_selected = dcc_selected->next_dcc;
-                else
+                /* accept DCC */
+                case 'a':
+                case 'A':
+                    if (dcc_selected
+                        && (DCC_IS_RECV(dcc_selected->status))
+                        && (dcc_selected->status == DCC_WAITING))
+                    {
+                        dcc_accept (dcc_selected);
+                    }
+                    break;
+                /* cancel DCC */
+                case 'c':
+                case 'C':
+                    if (dcc_selected
+                        && (!DCC_ENDED(dcc_selected->status)))
+                    {
+                        dcc_close (dcc_selected, DCC_ABORTED);
+                        gui_redraw_buffer (window->buffer);
+                    }
+                    break;
+                    /* purge old DCC */
+                case 'p':
+                case 'P':
                     window->dcc_selected = NULL;
-                dcc_free (dcc_selected);
-                gui_redraw_buffer (window->buffer);
+                    ptr_dcc = dcc_list;
+                    while (ptr_dcc)
+                    {
+                        ptr_dcc_next = ptr_dcc->next_dcc;
+                        if (DCC_ENDED(ptr_dcc->status))
+                            dcc_free (ptr_dcc);
+                        ptr_dcc = ptr_dcc_next;
+                    }
+                    gui_redraw_buffer (window->buffer);
+                    break;
+                    /* close DCC window */
+                case 'q':
+                case 'Q':
+                    if (buffer_before_dcc)
+                    {
+                        ptr_buffer = window->buffer;
+                        gui_switch_to_buffer (window, buffer_before_dcc);
+                        gui_buffer_free (ptr_buffer, 0);
+                    }
+                    else
+                        gui_buffer_free (window->buffer, 1);
+                    gui_redraw_buffer (window->buffer);
+                    return;
+                    break;
+                    /* remove from DCC list */
+                case 'r':
+                case 'R':
+                    if (dcc_selected
+                        && (DCC_ENDED(dcc_selected->status)))
+                    {
+                        if (dcc_selected->next_dcc)
+                            window->dcc_selected = dcc_selected->next_dcc;
+                        else
+                            window->dcc_selected = NULL;
+                        dcc_free (dcc_selected);
+                        gui_redraw_buffer (window->buffer);
+                    }
+                    break;
             }
-            break;
+        }
+        actions = utf8_next_char (actions);
     }
 }
 
@@ -697,16 +708,7 @@ gui_input_insert_string (t_gui_window *window, char *string, int pos)
     int size, length;
     char *ptr_start;
     
-    if (window->buffer->dcc)
-    {
-        while (string[0])
-        {
-            if (string[0] >= 32)
-                gui_input_action_dcc (window, string[0]);
-            string = utf8_next_char (string);
-        }
-    }
-    else if (window->buffer->has_input)
+    if (window->buffer->has_input)
     {
         if (pos == -1)
             pos = window->buffer->input_buffer_pos;
@@ -1758,6 +1760,32 @@ gui_switch_to_next_window (t_gui_window *window)
     gui_current_window = (window->next_window) ? window->next_window : gui_windows;
     gui_switch_to_buffer (gui_current_window, gui_current_window->buffer);
     gui_redraw_buffer (gui_current_window->buffer);
+}
+
+/*
+ * gui_switch_to_window_by_buffer: switch to next window displaying a buffer
+ */
+
+void
+gui_switch_to_window_by_buffer (t_gui_window *window, int buffer_number)
+{
+    t_gui_window *ptr_win;
+    
+    if (!gui_ok)
+        return;
+    
+    ptr_win = (window->next_window) ? window->next_window : gui_windows;
+    while (ptr_win != window)
+    {
+        if (ptr_win->buffer->number == buffer_number)
+        {
+            gui_current_window = ptr_win;
+            gui_switch_to_buffer (gui_current_window, gui_current_window->buffer);
+            gui_redraw_buffer (gui_current_window->buffer);
+            return;
+        }
+        ptr_win = (ptr_win->next_window) ? ptr_win->next_window : gui_windows;
+    }
 }
 
 /*

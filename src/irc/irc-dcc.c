@@ -88,6 +88,26 @@ dcc_search (t_irc_server *server, int type, int status, int port)
 }
 
 /*
+ * dcc_port_in_use: return 1 if a port is in used (by an active or connecting DCC)
+ */
+
+int
+dcc_port_in_use (int port)
+{
+    t_irc_dcc *ptr_dcc;
+    
+    /* skip any currently used ports */
+    for (ptr_dcc = dcc_list; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
+    {
+        if ((ptr_dcc->port == port) && (!DCC_ENDED(ptr_dcc->status)))
+            return 1;
+    }
+    
+    /* port not in use */
+    return 0;
+}
+
+/*
  * dcc_file_is_resumable: check if a file can be used for resuming a download
  */
 
@@ -748,9 +768,11 @@ void
 dcc_send_request (t_irc_server *server, int type, char *nick, char *filename)
 {
     char *ptr_home, *filename2, *short_filename, *pos;
-    int spaces;
+    int spaces, args, port_start, port_end;
     struct stat st;
     int sock, port;
+    struct hostent *host;
+    struct in_addr tmpaddr;
     struct sockaddr_in addr;
     socklen_t length;
     unsigned long local_addr;
@@ -811,11 +833,32 @@ dcc_send_request (t_irc_server *server, int type, char *nick, char *filename)
     }
     
     /* get local IP address */
+    
+    /* look up the IP address from dcc_own_ip, if set */
+    local_addr = 0;
+    if (cfg_dcc_own_ip && cfg_dcc_own_ip[0])
+    {
+        host = gethostbyname (cfg_dcc_own_ip);
+        if (host)
+        {
+            memcpy (&tmpaddr, host->h_addr_list[0], sizeof(struct in_addr));
+            local_addr = ntohl (tmpaddr.s_addr);
+        }
+        else
+            gui_printf (server->buffer,
+                        _("%s could not find address for '%s'. Falling back to local IP.\n"),
+                        WEECHAT_WARNING, cfg_dcc_own_ip);
+    }
+    
+    /* use the local interface, from the server socket */
     memset (&addr, 0, sizeof (struct sockaddr_in));
     length = sizeof (addr);
     getsockname (server->sock, (struct sockaddr *) &addr, &length);
     addr.sin_family = AF_INET;
-    local_addr = ntohl (addr.sin_addr.s_addr);
+    
+    /* fallback to the local IP address on the interface, if required */
+    if (local_addr == 0)
+        local_addr = ntohl (addr.sin_addr.s_addr);
     
     /* open socket for DCC */
     sock = socket (AF_INET, SOCK_STREAM, 0);
@@ -830,22 +873,63 @@ dcc_send_request (t_irc_server *server, int type, char *nick, char *filename)
         return;
     }
     
-    /* find port automatically */
-    addr.sin_port = 0;
-    if (bind (sock, (struct sockaddr *) &addr, sizeof (addr)) == -1)
+    /* look for port */
+    
+    port = 0;
+    
+    if (cfg_dcc_port_range && cfg_dcc_port_range[0])
     {
+        /* find a free port in the specified range */
+        args = sscanf (cfg_dcc_port_range, "%d-%d", &port_start, &port_end);
+        if (args > 0)
+        {
+            port = port_start;
+            if (args == 1)
+                port_end = port_start;
+            
+            /* loop through the entire allowed port range */
+            while (port <= port_end)
+            {
+                if (!dcc_port_in_use (port))
+                {
+                    /* attempt to bind to the free port */
+                    addr.sin_port = htons (port);
+                    if (bind (sock, (struct sockaddr *) &addr, sizeof (addr)) == 0)
+                        break;
+                }
+            }
+            
+            if (port > port_end)
+                port = -1;
+        }
+    }
+    
+    if (port == 0)
+    {
+        /* find port automatically */
+        addr.sin_port = 0;
+        if (bind (sock, (struct sockaddr *) &addr, sizeof (addr)) == 0)
+        {
+            length = sizeof (addr);
+            getsockname (sock, (struct sockaddr *) &addr, &length);
+            port = ntohs (addr.sin_port);
+        }
+        else
+            port = -1;
+    }
+
+    if (port == -1)
+    {
+        /* Could not find any port to bind */
         irc_display_prefix (server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
-                    _("%s cannot find port for DCC\n"),
+                    _("%s cannot find available port for DCC\n"),
                     WEECHAT_ERROR);
         close (sock);
         if (filename2)
             free (filename2);
         return;
     }
-    length = sizeof (addr);
-    getsockname (sock, (struct sockaddr *) &addr, &length);
-    port = ntohs (addr.sin_port);
     
     if (type == DCC_FILE_SEND)
     {

@@ -420,7 +420,7 @@ t_config_option weechat_options_colors[] =
   { "col_input_delimiters", N_("color for input text (delimiters)"),
     N_("color for input text (delimiters)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "lightgreen", NULL, &cfg_col_input_delimiters, NULL, &config_change_color },
+    "white", NULL, &cfg_col_input_delimiters, NULL, &config_change_color },
   { "col_input_bg", N_("background for input window"),
     N_("background for input window"),
     OPTION_TYPE_COLOR, 0, 0, 0,
@@ -677,6 +677,8 @@ int cfg_dcc_auto_accept_files;
 int cfg_dcc_auto_accept_chats;
 int cfg_dcc_timeout;
 int cfg_dcc_blocksize;
+char *cfg_dcc_port_range;
+char *cfg_dcc_own_ip;
 char *cfg_dcc_download_path;
 char *cfg_dcc_upload_path;
 int cfg_dcc_convert_spaces;
@@ -700,6 +702,17 @@ t_config_option weechat_options_dcc[] =
     N_("block size for dcc packets in bytes (default: 65536)"),
     OPTION_TYPE_INT, 1024, 102400, 65536,
     NULL, NULL, &cfg_dcc_blocksize, NULL, &config_change_noop },
+  { "dcc_port_range", N_("allowed ports for outgoing dcc"),
+    N_("restricts outgoing dcc to use only ports in the given range "
+       "(useful for NAT) (syntax: a single port, ie. 5000 or a port "
+       "range, ie. 5000-5015, empty value means any port)"),
+    OPTION_TYPE_STRING, 0, 0, 0, "",
+    NULL, NULL, &cfg_dcc_port_range, &config_change_noop },
+  { "dcc_own_ip", N_("IP address for outgoing dcc"),
+    N_("IP or DNS address used for outgoing dcc "
+       "(if empty, local interface IP is used)"),
+    OPTION_TYPE_STRING, 0, 0, 0, "",
+    NULL, NULL, &cfg_dcc_own_ip, &config_change_noop },
   { "dcc_download_path", N_("path for incoming files with dcc"),
     N_("path for writing incoming files with dcc (default: user home)"),
     OPTION_TYPE_STRING, 0, 0, 0,

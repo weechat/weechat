@@ -256,10 +256,15 @@ gui_input_read ()
         
         if ((gui_key_pressed (key_str) != 0) && (insert_ok))
         {
-            gui_input_insert_string (gui_current_window, key_str, -1);
-            gui_current_window->buffer->input_buffer_pos += utf8_strlen (key_str);
-            gui_draw_buffer_input (gui_current_window->buffer, 0);
-            gui_current_window->buffer->completion.position = -1;
+            if (gui_current_window->buffer->dcc)
+                gui_input_action_dcc (gui_current_window, key_str);
+            else
+            {
+                gui_input_insert_string (gui_current_window, key_str, -1);
+                gui_current_window->buffer->input_buffer_pos += utf8_strlen (key_str);
+                gui_draw_buffer_input (gui_current_window->buffer, 0);
+                gui_current_window->buffer->completion.position = -1;
+            }
         }
         
         i++;

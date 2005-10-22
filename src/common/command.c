@@ -136,8 +136,11 @@ t_weechat_command weechat_commands[] =
        "Without argument, /unignore command lists all defined ignore."),
     0, 4, weechat_cmd_unignore, NULL },
   { "window", N_("manage windows"),
-    N_("[list | splith | splitv | [merge [down | up | left | right | all]]]"),
+    N_("[list | -1 | +1 | b# | splith | splitv | [merge [down | up | left | right | all]]]"),
     N_("list: list opened windows (no parameter implies this list)\n"
+       "-1: jump to previous window\n"
+       "+1: jump to next window\n"
+       "b#: jump to next window displaying buffer number #\n"
        "splith: split current window horizontally\n"
        "splitv: split current window vertically\n"
        "merge: merge window with another"),
@@ -2511,6 +2514,8 @@ weechat_cmd_window (int argc, char **argv)
 {
     t_gui_window *ptr_win;
     int i;
+    char *error;
+    long number;
     
     if ((argc == 0) || ((argc == 1) && (ascii_strcasecmp (argv[0], "list") == 0)))
     {
@@ -2576,6 +2581,14 @@ weechat_cmd_window (int argc, char **argv)
             }
             else
                 gui_window_merge_auto (gui_current_window);
+        }
+        else if (ascii_strncasecmp (argv[0], "b", 1) == 0)
+        {
+            /* jump to window by buffer number */
+            error = NULL;
+            number = strtol (argv[0] + 1, &error, 10);
+            if ((error) && (error[0] == '\0'))
+                gui_switch_to_window_by_buffer (gui_current_window, number);
         }
         else if (ascii_strcasecmp (argv[0], "-1") == 0)
             gui_switch_to_previous_window (gui_current_window);
