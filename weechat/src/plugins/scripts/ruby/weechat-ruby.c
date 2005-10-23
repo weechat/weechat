@@ -29,26 +29,72 @@
 #include "../weechat-script.h"
 
 
+char plugin_name[]        = "Ruby";
+char plugin_version[]     = "0.1";
+char plugin_description[] = "Ruby scripts support";
+
+t_weechat_plugin *ruby_plugin;
+
 t_plugin_script *ruby_scripts = NULL;
-t_plugin_script *last_ruby_script = NULL;
+t_plugin_script *ruby_current_script = NULL;
+char *ruby_current_script_filename = NULL;
 
 
 /*
- * register: startup function for all WeeChat Ruby scripts
+ * weechat_ruby_exec: execute a Ruby script
+ */
+
+int
+weechat_ruby_exec (t_weechat_plugin *plugin,
+                   t_plugin_script *script,
+                   char *function, char *server, char *arguments)
+{
+    /* make gcc happy */
+    (void) plugin;
+    (void) script;
+    (void) function;
+    (void) server;
+    (void) arguments;
+    
+    /* TODO: exec Ruby script */
+    return 0;
+}
+
+/*
+ * weechat_ruby_handler: general message and command handler for Ruby
+ */
+
+int
+weechat_ruby_handler (t_weechat_plugin *plugin,
+                      char *server, char *command, char *arguments,
+                      char *handler_args, void *handler_pointer)
+{
+    /* make gcc happy */
+    (void) command;
+    
+    weechat_ruby_exec (plugin, (t_plugin_script *)handler_pointer,
+                       handler_args, server, arguments);
+    return 1;
+}
+
+/*
+ * weechat_ruby_register: startup function for all WeeChat Ruby scripts
  */
 
 static VALUE
-wee_ruby_register (VALUE class, VALUE name, VALUE version, VALUE shutdown_func, VALUE description)
+weechat_ruby_register (VALUE class, VALUE name, VALUE version,
+                       VALUE shutdown_func, VALUE description)
 {
     char *c_name, *c_version, *c_shutdown_func, *c_description;
-    t_plugin_script *ptr_ruby_script, *ruby_script_found, *new_ruby_script;
+    
+    /* make gcc happy */
+    (void) class;
     
     if (NIL_P (name) || NIL_P (version) || NIL_P (shutdown_func) || NIL_P (description))
     {
-        irc_display_prefix (NULL, PREFIX_ERROR);
-        gui_printf (NULL,
-                    _("%s error: wrong parameters for \"%s\" function\n"),
-                    "Ruby", "register");
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: wrong parameters for "
+                                    "\"register\" function");
         return Qnil;
     }
     
@@ -62,70 +108,55 @@ wee_ruby_register (VALUE class, VALUE name, VALUE version, VALUE shutdown_func, 
     c_shutdown_func = STR2CSTR (shutdown_func);
     c_description = STR2CSTR (description);
     
-    ruby_script_found = NULL;
-    for (ptr_ruby_script = ruby_scripts; ptr_ruby_script;
-         ptr_ruby_script = ptr_ruby_script->next_script)
+    if (weechat_script_search (ruby_plugin, &ruby_scripts, c_name))
     {
-        if (ascii_strcasecmp (ptr_ruby_script->name, c_name) == 0)
-        {
-            ruby_script_found = ptr_ruby_script;
-            break;
-        }
+        /* error: another scripts already exists with this name! */
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: unable to register "
+                                    "\"%s\" script (another script "
+                                    "already exists with this name)",
+                                    c_name);
+        return Qnil;
     }
     
-    if (ruby_script_found)
+    /* register script */
+    ruby_current_script = weechat_script_add (ruby_plugin,
+                                              &ruby_scripts,
+                                              (ruby_current_script_filename) ?
+                                              ruby_current_script_filename : "",
+                                              c_name, c_version, c_shutdown_func,
+                                              c_description);
+    if (ruby_current_script)
     {
-        /* error: another script already exists with this name! */
-        irc_display_prefix (NULL, PREFIX_ERROR);
-        gui_printf (NULL,
-                    _("%s error: unable to register \"%s\" script (another script "
-                      "already exists with this name)\n"),
-                    "Ruby", name);
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby: registered script \"%s\", "
+                                    "version %s (%s)",
+                                    c_name, c_version, c_description);
     }
     else
     {
-        /* registering script */
-        new_ruby_script = (t_plugin_script *)malloc (sizeof (t_plugin_script));
-        if (new_ruby_script)
-        {
-            new_ruby_script->name = strdup (c_name);
-            new_ruby_script->version = strdup (c_version);
-            new_ruby_script->shutdown_func = strdup (c_shutdown_func);
-            new_ruby_script->description = strdup (c_description);
-            
-            /* add new script to list */
-            new_ruby_script->prev_script = last_ruby_script;
-            new_ruby_script->next_script = NULL;
-            if (ruby_scripts)
-                last_ruby_script->next_script = new_ruby_script;
-            else
-                ruby_scripts = new_ruby_script;
-            last_ruby_script = new_ruby_script;
-            
-            wee_log_printf (_("Registered %s script: \"%s\", version %s (%s)\n"),
-                            "Ruby", c_name, c_version, c_description);
-        }
-        else
-        {
-            irc_display_prefix (NULL, PREFIX_ERROR);
-            gui_printf (NULL,
-                        _("%s error: unable to load script \"%s\" (not enough memory)\n"),
-                        "Ruby", c_name);
-        }
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: unable to load script "
+                                    "\"%s\" (not enough memory)",
+                                    c_name);
+        return Qnil;
     }
     
-    return Qnil;
+    return INT2FIX (1);
 }
 
 /*
- * print: print message into a buffer (current or specified one)
+ * weechat_ruby_print: print message into a buffer (current or specified one)
  */
 
 static VALUE
-wee_ruby_print (VALUE class, VALUE message, VALUE channel_name, VALUE server_name)
+weechat_ruby_print (VALUE class, VALUE message, VALUE channel_name,
+                    VALUE server_name)
 {
     char *c_message, *c_channel_name, *c_server_name;
-    t_gui_buffer *ptr_buffer;
+    
+    /* make gcc happy */
+    (void) class;
     
     c_message = NULL;
     c_channel_name = NULL;
@@ -133,10 +164,9 @@ wee_ruby_print (VALUE class, VALUE message, VALUE channel_name, VALUE server_nam
     
     if (NIL_P (message))
     {
-        irc_display_prefix (NULL, PREFIX_ERROR);
-        gui_printf (NULL,
-                    _("%s error: wrong parameters for \"%s\" function\n"),
-                    "Ruby", "print");
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: wrong parameters for "
+                                    "\"print\" function");
         return Qnil;
     }
     
@@ -152,38 +182,35 @@ wee_ruby_print (VALUE class, VALUE message, VALUE channel_name, VALUE server_nam
     if (!NIL_P (server_name))
         c_server_name = STR2CSTR (server_name);
     
-    ptr_buffer = plugin_find_buffer (c_server_name, c_channel_name);
-    if (ptr_buffer)
-    {
-        irc_display_prefix (ptr_buffer, PREFIX_PLUGIN);
-        gui_printf (ptr_buffer, "%s\n", c_message);
-        return INT2FIX (1);
-    }
+    ruby_plugin->printf (ruby_plugin,
+                         c_server_name, c_channel_name,
+                         "%s", c_message);
     
-    /* buffer not found */
-    return INT2FIX (0);
+    return INT2FIX (1);
 }
 
 /*
- * print_infobar: print message to infobar
+ * weechat_ruby_print_infobar: print message to infobar
  */
 
 static VALUE
-wee_ruby_print_infobar (VALUE class, VALUE delay, VALUE message)
+weechat_ruby_print_infobar (VALUE class, VALUE delay, VALUE message)
 {
     int c_delay;
     char *c_message;
+
+    /* make gcc happy */
+    (void) class;
     
     c_delay = 1;
     c_message = NULL;
     
     if (NIL_P (delay) || NIL_P (message))
     {
-        irc_display_prefix (NULL, PREFIX_ERROR);
-        gui_printf (NULL,
-                    _("%s error: wrong parameters for \"%s\" function\n"),
-                    "Ruby", "print_infobar");
-        return Qfalse;
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: wrong parameters for "
+                                    "\"print_infobar\" function");
+        return Qnil;
     }
     
     Check_Type (delay, T_FIXNUM);
@@ -192,20 +219,23 @@ wee_ruby_print_infobar (VALUE class, VALUE delay, VALUE message)
     c_delay = FIX2INT (delay);
     c_message = STR2CSTR (message);
     
-    gui_infobar_printf (delay, COLOR_WIN_INFOBAR, c_message);
+    ruby_plugin->infobar_printf (ruby_plugin, c_delay, c_message);
     
-    return Qtrue;
+    return INT2FIX (1);
 }
 
 /*
- * command: send command to server
+ * weechat_ruby_command: send command to server
  */
 
 static VALUE
-wee_ruby_command (VALUE class, VALUE command, VALUE channel_name, VALUE server_name)
+weechat_ruby_command (VALUE class, VALUE command, VALUE channel_name,
+                      VALUE server_name)
 {
     char *c_command, *c_channel_name, *c_server_name;
-    t_gui_buffer *ptr_buffer;
+    
+    /* make gcc happy */
+    (void) class;
     
     c_command = NULL;
     c_channel_name = NULL;
@@ -213,10 +243,9 @@ wee_ruby_command (VALUE class, VALUE command, VALUE channel_name, VALUE server_n
     
     if (NIL_P (command))
     {
-        irc_display_prefix (NULL, PREFIX_ERROR);
-        gui_printf (NULL,
-                    _("%s error: wrong parameters for \"%s\" function\n"),
-                    "Ruby", "command");
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: wrong parameters for "
+                                    "\"command\" function");
         return Qnil;
     }
     
@@ -232,32 +261,33 @@ wee_ruby_command (VALUE class, VALUE command, VALUE channel_name, VALUE server_n
     if (!NIL_P (server_name))
         c_server_name = STR2CSTR (server_name);
     
-    ptr_buffer = plugin_find_buffer (c_server_name, c_channel_name);
-    if (ptr_buffer)
-    {
-        user_command (SERVER(ptr_buffer), ptr_buffer, c_command);
-        return INT2FIX (1);
-    }
-    
-    /* buffer not found */
-    return INT2FIX (0);
+    ruby_plugin->exec_command (ruby_plugin,
+                               c_server_name, c_channel_name,
+                               c_command);
+
+    return INT2FIX (1);
 }
 
 /*
- * add_message_handler: add handler for messages
+ * weechat_ruby_add_message_handler: add handler for messages
  */
 
 static VALUE
-wee_ruby_add_message_handler (VALUE class, VALUE message, VALUE function)
+weechat_ruby_add_message_handler (VALUE class, VALUE message, VALUE function)
 {
     char *c_message, *c_function;
     
+    /* make gcc happy */
+    (void) class;
+    
+    c_message = NULL;
+    c_function = NULL;
+    
     if (NIL_P (message) || NIL_P (function))
     {
-        irc_display_prefix (NULL, PREFIX_ERROR);
-        gui_printf (NULL,
-                    _("%s error: wrong parameters for \"%s\" function\n"),
-                    "Ruby", "add_message_handler");
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: wrong parameters for "
+                                    "\"add_message_handler\" function");
         return Qnil;
     }
     
@@ -267,137 +297,194 @@ wee_ruby_add_message_handler (VALUE class, VALUE message, VALUE function)
     c_message = STR2CSTR (message);
     c_function = STR2CSTR (function);
     
-    plugin_handler_add (&plugin_msg_handlers, &last_plugin_msg_handler,
-                        PLUGIN_TYPE_RUBY, c_message, c_function);
-    
-    return Qtrue;
-}
-
-/*
- * add_command_handler: define/redefines commands
- */
-
-static VALUE
-wee_ruby_add_command_handler (VALUE class, VALUE name, VALUE function)
-{
-    char *c_name, *c_function;
-    t_plugin_handler *ptr_plugin_handler;
-    
-    if (NIL_P (name) || NIL_P (function))
+    if (ruby_current_script)
+        ruby_plugin->msg_handler_add (ruby_plugin, c_message,
+                                      weechat_ruby_handler, c_function,
+                                      (void *)ruby_current_script);
+    else
     {
-        irc_display_prefix (NULL, PREFIX_ERROR);
-        gui_printf (NULL,
-                    _("%s error: wrong parameters for \"%s\" function\n"),
-                    "Ruby", "add_command_handler");
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: unable to add message handler, "
+                                    "script not initialized");
         return Qnil;
     }
     
-    Check_Type (name, T_STRING);
-    Check_Type (function, T_STRING);
-    
-    c_name = STR2CSTR (name);
-    c_function = STR2CSTR (function);
-    
-    if (!weelist_search (index_commands, c_name))
-        weelist_add (&index_commands, &last_index_command, c_name);
-    
-    ptr_plugin_handler = plugin_handler_search (plugin_cmd_handlers, c_name);
-    if (ptr_plugin_handler)
-    {
-        free (ptr_plugin_handler->function_name);
-        ptr_plugin_handler->function_name = strdup (c_function);
-    }
-    else
-        plugin_handler_add (&plugin_cmd_handlers, &last_plugin_cmd_handler,
-                            PLUGIN_TYPE_PYTHON, c_name, c_function);
-    
-    return Qtrue;
+    return INT2FIX (1);
 }
 
 /*
- * get_info: get various infos
+ * weechat_add_command_handler: define/redefines commands
  */
 
 static VALUE
-wee_ruby_get_info (VALUE class, VALUE arg, VALUE server_name)
+weechat_ruby_add_command_handler (VALUE class, VALUE command, VALUE function,
+                                  VALUE description, VALUE arguments,
+                                  VALUE arguments_description)
 {
-    char *c_arg, *info, *c_server_name;
-    t_irc_server *ptr_server;
+    char *c_command, *c_function,*c_description, *c_arguments;
+    char *c_arguments_description;
+    
+    /* make gcc happy */
+    (void) class;
+    
+    c_command = NULL;
+    c_function = NULL;
+    c_description = NULL;
+    c_arguments = NULL;
+    c_arguments_description = NULL;
+    
+    if (NIL_P (command) || NIL_P (function))
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: wrong parameters for "
+                                    "\"add_command_handler\" function");
+        return Qnil;
+    }
+    
+    Check_Type (command, T_STRING);
+    Check_Type (function, T_STRING);
+    if (!NIL_P (description))
+        Check_Type (description, T_STRING);
+    if (!NIL_P (arguments))
+        Check_Type (arguments, T_STRING);
+    if (!NIL_P (arguments_description))
+        Check_Type (arguments_description, T_STRING);
+    
+    c_command = STR2CSTR (command);
+    c_function = STR2CSTR (function);
+    if (!NIL_P (description))
+        c_description = STR2CSTR (description);
+    if (!NIL_P (arguments))
+        c_arguments = STR2CSTR (arguments);
+    if (!NIL_P (arguments_description))
+        c_arguments_description = STR2CSTR (arguments_description);
+    
+    if (ruby_current_script)
+        ruby_plugin->cmd_handler_add (ruby_plugin,
+                                      c_command,
+                                      c_description,
+                                      c_arguments,
+                                      c_arguments_description,
+                                      weechat_ruby_handler,
+                                      c_function,
+                                      (void *)ruby_current_script);
+    else
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: unable to add command handler, "
+                                    "script not initialized");
+        return Qnil;
+    }
+    
+    return INT2FIX (1);
+}
+
+/*
+ * weechat_ruby_get_info: get various infos
+ */
+
+static VALUE
+weechat_ruby_get_info (VALUE class, VALUE arg, VALUE server_name,
+                       VALUE channel_name)
+{
+    char *c_arg, *c_server_name, *c_channel_name, *info;
+    VALUE return_value;
+    
+    /* make gcc happy */
+    (void) class;
+    
+    c_arg = NULL;
+    c_server_name = NULL;
+    c_channel_name = NULL;
     
     if (NIL_P (arg))
     {
-        irc_display_prefix (NULL, PREFIX_ERROR);
-        gui_printf (NULL,
-                    _("%s error: wrong parameters for \"%s\" function\n"),
-                    "Ruby", "get_info");
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: wrong parameters for "
+                                    "\"get_info\" function");
         return Qnil; 
     }
     
     Check_Type (arg, T_STRING);
     if (!NIL_P (server_name))
         Check_Type (server_name, T_STRING);
+    if (!NIL_P (channel_name))
+        Check_Type (channel_name, T_STRING);
     
     c_arg = STR2CSTR (arg);
     if (!NIL_P (server_name))
         c_server_name = STR2CSTR (server_name);
+    if (!NIL_P (channel_name))
+        c_channel_name = STR2CSTR (channel_name);
     
-    if (c_server_name == NULL)
+    if (c_arg)
     {
-        ptr_server = SERVER(gui_current_window->buffer);
-    }
-    else
-    {
-        for (ptr_server = irc_servers; ptr_server; ptr_server = ptr_server->next_server)
-        {
-            if (ascii_strcasecmp (ptr_server->name, c_server_name) == 0)
-                break;
-        }
-        if (!ptr_server)
-        {
-            irc_display_prefix (NULL, PREFIX_ERROR);
-            gui_printf (NULL,
-                        _("%s error: server not found for \"%s\" function\n"),
-                        "Ruby", "get_info");
-            return Qnil;
-        }
-    }
-    
-    if (ptr_server && c_arg)
-    {
-        if ( (ascii_strcasecmp (c_arg, "0") == 0) || (ascii_strcasecmp (c_arg, "version") == 0) )
-        {
-            info = PACKAGE_STRING;
-        }
-        else if ( (ascii_strcasecmp (c_arg, "1") == 0) || (ascii_strcasecmp (c_arg, "nick") == 0) )
-        {
-            if (ptr_server->nick)
-                info = ptr_server->nick;
-        }
-        else if ( (ascii_strcasecmp (c_arg, "2") == 0) || (ascii_strcasecmp (c_arg, "channel") == 0) )
-        {
-            if (BUFFER_IS_CHANNEL (gui_current_window->buffer))
-                info = CHANNEL (gui_current_window->buffer)->name;
-        }
-        else if ( (ascii_strcasecmp (c_arg, "3") == 0) || (ascii_strcasecmp (c_arg, "server") == 0) )
-        {
-            if (ptr_server->name)
-                info = ptr_server->name;
-        }
-        else if ( (ascii_strcasecmp (c_arg, "4") == 0) || (ascii_strcasecmp (c_arg, "weechatdir") == 0) )
-        {
-            info = weechat_home;
-        }
-        else if ( (ascii_strcasecmp (c_arg, "5") == 0) || (ascii_strcasecmp (c_arg, "away") == 0) )
-        {	 
-            return INT2FIX (SERVER(gui_current_window->buffer)->is_away);
-        }
-	else if ( (ascii_strcasecmp (c_arg, "100") == 0) || (ascii_strcasecmp (c_arg, "dccs") == 0) )
-        {
-            /* TODO: build dcc list */
-	}
+        info = ruby_plugin->get_info (ruby_plugin, c_arg,
+                                      c_server_name, c_channel_name);
         
         if (info)
-            return rb_str_new2 (info);
+        {
+            return_value = rb_str_new2 (info);
+            free (info);
+            return return_value;
+        }
+        else
+            return rb_str_new2 ("");
+    }
+    
+    return INT2FIX (1);
+}
+
+/*
+ * weechat_ruby_get_dcc_info: get infos about DCC
+ */
+
+static VALUE
+weechat_ruby_get_dcc_info (VALUE class)
+{
+    /* make gcc happy */
+    (void) class;
+    
+    /* TODO: get dcc info for Ruby */
+    return INT2FIX (1);
+}
+
+/*
+ * weechat_ruby_get_config: get value of a config option
+ */
+
+static VALUE
+weechat_ruby_get_config (VALUE class, VALUE option)
+{
+    char *c_option, *value;
+    VALUE return_value;
+    
+    /* make gcc happy */
+    (void) class;
+    
+    c_option = NULL;
+    
+    if (NIL_P (option))
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: wrong parameters for "
+                                    "\"get_config\" function");
+        return Qnil; 
+    }
+    
+    Check_Type (option, T_STRING);
+    c_option = STR2CSTR (option);
+    
+    if (c_option)
+    {
+        value = ruby_plugin->get_config (ruby_plugin, c_option);
+        
+        if (value)
+        {
+            return_value = rb_str_new2 (value);
+            free (value);
+            return return_value;
+        }
         else
             return rb_str_new2 ("");
     }
@@ -409,191 +496,253 @@ wee_ruby_get_info (VALUE class, VALUE arg, VALUE server_name)
  * Ruby subroutines
  */
 
-/*
- * wee_ruby_init: initialize Ruby interface for WeeChat
- */
-
-void
-wee_ruby_init ()
-{
-
-    /* TODO: init Ruby environment */
-    /* ruby_init ();
-    if ()
-    {
-        irc_display_prefix (NULL, PREFIX_PLUGIN);
-        gui_printf (NULL, _("%s error: error while launching interpreter\n"),
-                    "Ruby");
-    }
-    else
-    {
-        wee_log_printf (_("Loading %s module \"weechat\"\n"), "Ruby");
-    }*/
-}
+/* TODO: write Ruby functions interface */
 
 /*
- * wee_ruby_search: search a (loaded) Ruby script by name
- */
-
-t_plugin_script *
-wee_ruby_search (char *name)
-{
-    t_plugin_script *ptr_ruby_script;
-    
-    for (ptr_ruby_script = ruby_scripts; ptr_ruby_script;
-         ptr_ruby_script = ptr_ruby_script->next_script)
-    {
-        if (strcmp (ptr_ruby_script->name, name) == 0)
-            return ptr_ruby_script;
-    }
-    
-    /* script not found */
-    return NULL;
-}
-
-/*
- * wee_ruby_exec: execute a Ruby script
+ * weechat_ruby_load: load a Ruby script
  */
 
 int
-wee_ruby_exec (char *function, char *server, char *arguments)
-{  
-    /* TODO: exec Ruby script */
-}
-
-/*
- * wee_ruby_load: load a Ruby script
- */
-
-int
-wee_ruby_load (char *filename)
+weechat_ruby_load (t_weechat_plugin *plugin, char *filename)
 {
-    FILE *fp;
+    /* make gcc happy */
+    (void) plugin;
+    (void) filename;
     
     /* TODO: load & exec Ruby script */
-    gui_printf (NULL, "Ruby scripts not developed!\n");
-    /* execute Ruby script */
-    /*wee_log_printf (_("Loading %s script \"%s\"\n"), "Ruby", filename);
-    irc_display_prefix (NULL, PREFIX_PLUGIN);
-    gui_printf (NULL, _("Loading %s script \"%s\"\n"), "Ruby", filename);
-    
-    if ((fp = fopen (filename, "r")) == NULL)
-    {
-        irc_display_prefix (NULL, PREFIX_ERROR);
-        gui_printf (NULL,
-                    _("%s error: error while opening file \"%s\"\n"),
-                    "Ruby", filename);
-        return 1;
-    }
-    
-    if (xxxxxxx (fp, filename) != 0)
-    {
-        irc_display_prefix (NULL, PREFIX_ERROR);
-        gui_printf (NULL,
-                    _("%s error: error while parsing file \"%s\"\n"),
-                    "Ruby", filename);
-        return 1;
-    }
-    
-    fclose (fp);
-    return 0;*/
+    return 0;
 }
 
 /*
- * wee_ruby_script_free: free a Ruby script
+ * weechat_ruby_unload: unload a Ruby script
  */
 
 void
-wee_ruby_script_free (t_plugin_script *ptr_ruby_script)
+weechat_ruby_unload (t_weechat_plugin *plugin, t_plugin_script *script)
 {
-    t_plugin_script *new_ruby_scripts;
+    /* make gcc happy */
+    (void) plugin;
+    (void) script;
+    
+    /* TODO: unload a Ruby script */
+}
 
-    /* remove script from list */
-    if (last_ruby_script == ptr_ruby_script)
-        last_ruby_script = ptr_ruby_script->prev_script;
-    if (ptr_ruby_script->prev_script)
-    {
-        (ptr_ruby_script->prev_script)->next_script = ptr_ruby_script->next_script;
-        new_ruby_scripts = ruby_scripts;
-    }
+/*
+ * weechat_ruby_unload_name: unload a Ruby script by name
+ */
+
+void
+weechat_ruby_unload_name (t_weechat_plugin *plugin, char *name)
+{
+    /* make gcc happy */
+    (void) plugin;
+    (void) name;
+    
+    /* TODO: unload a Ruby script by name */
+}
+
+/*
+ * weechat_ruby_unload_all: unload all Ruby scripts
+ */
+
+void
+weechat_ruby_unload_all (t_weechat_plugin *plugin)
+{
+    /* make gcc happy */
+    (void) plugin;
+    
+    /* TODO: unload all Ruby scripts */
+}
+
+/*
+ * weechat_ruby_cmd: /ruby command handler
+ */
+
+int
+weechat_ruby_cmd (t_weechat_plugin *plugin,
+                  char *server, char *command, char *arguments,
+                  char *handler_args, void *handler_pointer)
+{
+    int argc, path_length, handler_found;
+    char **argv, *path_script, *dir_home;
+    t_plugin_script *ptr_plugin_script;
+    t_plugin_msg_handler *ptr_msg_handler;
+    t_plugin_cmd_handler *ptr_cmd_handler;
+    
+    /* make gcc happy */
+    (void) server;
+    (void) command;
+    (void) handler_args;
+    (void) handler_pointer;
+    
+    if (arguments)
+        argv = plugin->explode_string (plugin, arguments, " ", 0, &argc);
     else
-        new_ruby_scripts = ptr_ruby_script->next_script;
-    
-    if (ptr_ruby_script->next_script)
-        (ptr_ruby_script->next_script)->prev_script = ptr_ruby_script->prev_script;
-
-    /* free data */
-    if (ptr_ruby_script->name)
-        free (ptr_ruby_script->name);
-    if (ptr_ruby_script->version)
-        free (ptr_ruby_script->version);
-    if (ptr_ruby_script->shutdown_func)
-        free (ptr_ruby_script->shutdown_func);
-    if (ptr_ruby_script->description)
-        free (ptr_ruby_script->description);
-    free (ptr_ruby_script);
-    ruby_scripts = new_ruby_scripts;
-}
-
-/*
- * wee_ruby_unload: unload a Ruby script
- */
-
-void
-wee_ruby_unload (t_plugin_script *ptr_ruby_script)
-{
-    if (ptr_ruby_script)
     {
-        wee_log_printf (_("Unloading %s script \"%s\"\n"),
-                        "Ruby", ptr_ruby_script->name);
-        
-        /* call shutdown callback function */
-        if (ptr_ruby_script->shutdown_func[0])
-            wee_ruby_exec (ptr_ruby_script->shutdown_func, "", "");
-        wee_ruby_script_free (ptr_ruby_script);
+        argv = NULL;
+        argc = 0;
     }
-}
-
-/*
- * wee_ruby_unload_all: unload all Ruby scripts
- */
-
-void
-wee_ruby_unload_all ()
-{
-    wee_log_printf (_("Unloading all %s scripts...\n"), "Ruby");
-    while (ruby_scripts)
-        wee_ruby_unload (ruby_scripts);
     
-    irc_display_prefix (NULL, PREFIX_PLUGIN);
-    gui_printf (NULL, _("%s scripts unloaded\n"), "Ruby");
+    switch (argc)
+    {
+        case 0:
+            /* list registered Ruby scripts */
+            plugin->printf_server (plugin, "");
+            plugin->printf_server (plugin, "Registered Ruby scripts:");
+            if (ruby_scripts)
+            {
+                for (ptr_plugin_script = ruby_scripts; ptr_plugin_script;
+                     ptr_plugin_script = ptr_plugin_script->next_script)
+                {
+                    plugin->printf_server (plugin, "  %s v%s%s%s",
+                                           ptr_plugin_script->name,
+                                           ptr_plugin_script->version,
+                                           (ptr_plugin_script->description[0]) ? " - " : "",
+                                           ptr_plugin_script->description);
+                }
+            }
+            else
+                plugin->printf_server (plugin, "  (none)");
+            
+            /* list Ruby message handlers */
+            plugin->printf_server (plugin, "");
+            plugin->printf_server (plugin, "Ruby message handlers:");
+            handler_found = 0;
+            for (ptr_msg_handler = plugin->msg_handlers; ptr_msg_handler;
+                 ptr_msg_handler = ptr_msg_handler->next_handler)
+            {
+                if (ptr_msg_handler->msg_handler_args)
+                {
+                    handler_found = 1;
+                    plugin->printf_server (plugin, "  IRC(%s) => Ruby(%s)",
+                                           ptr_msg_handler->irc_command,
+                                           ptr_msg_handler->msg_handler_args);
+                }
+            }
+            if (!handler_found)
+                plugin->printf_server (plugin, "  (none)");
+            
+            /* list Ruby command handlers */
+            plugin->printf_server (plugin, "");
+            plugin->printf_server (plugin, "Ruby command handlers:");
+            handler_found = 0;
+            for (ptr_cmd_handler = plugin->cmd_handlers; ptr_cmd_handler;
+                 ptr_cmd_handler = ptr_cmd_handler->next_handler)
+            {
+                if (ptr_cmd_handler->cmd_handler_args)
+                {
+                    handler_found = 1;
+                    plugin->printf_server (plugin, "  /%s => Ruby(%s)",
+                                           ptr_cmd_handler->command,
+                                           ptr_cmd_handler->cmd_handler_args);
+                }
+            }
+            if (!handler_found)
+                plugin->printf_server (plugin, "  (none)");
+            break;
+        case 1:
+            if (plugin->ascii_strcasecmp (plugin, argv[0], "autoload") == 0)
+                weechat_script_auto_load (plugin, "ruby", weechat_ruby_load);
+            else if (plugin->ascii_strcasecmp (plugin, argv[0], "reload") == 0)
+            {
+                weechat_ruby_unload_all (plugin);
+                weechat_script_auto_load (plugin, "ruby", weechat_ruby_load);
+            }
+            else if (plugin->ascii_strcasecmp (plugin, argv[0], "unload") == 0)
+                weechat_ruby_unload_all (plugin);
+            break;
+        case 2:
+            if (plugin->ascii_strcasecmp (plugin, argv[0], "load") == 0)
+            {
+                /* load Ruby script */
+                if ((strstr (argv[1], "/")) || (strstr (argv[1], "\\")))
+                    path_script = NULL;
+                else
+                {
+                    dir_home = plugin->get_info (plugin, "weechat_dir", NULL, NULL);
+                    if (dir_home)
+                    {
+                        path_length = strlen (dir_home) + strlen (argv[1]) + 16;
+                        path_script = (char *) malloc (path_length * sizeof (char));
+                        if (path_script)
+                            snprintf (path_script, path_length, "%s/ruby/%s",
+                                      dir_home, argv[1]);
+                        else
+                            path_script = NULL;
+                        free (dir_home);
+                    }
+                    else
+                        path_script = NULL;
+                }
+                weechat_ruby_load (plugin, (path_script) ? path_script : argv[1]);
+                if (path_script)
+                    free (path_script);
+            }
+            else if (plugin->ascii_strcasecmp (plugin, argv[0], "unload") == 0)
+            {
+                /* unload Ruby script */
+                weechat_ruby_unload_name (plugin, argv[1]);
+            }
+            else
+            {
+                plugin->printf_server (plugin,
+                                       "Ruby error: unknown option for "
+                                       "\"ruby\" command");
+            }
+            break;
+        default:
+            plugin->printf_server (plugin,
+                                   "Ruby error: wrong argument count for \"ruby\" command");
+    }
+    
+    if (argv)
+        plugin->free_exploded_string (plugin, argv);
+    
+    return 1;
 }
 
 /*
- * wee_ruby_end: shutdown Ruby interface
+ * weechat_plugin_init: initialize Ruby plugin
+ */
+
+int
+weechat_plugin_init (t_weechat_plugin *plugin)
+{
+    ruby_plugin = plugin;
+    
+    plugin->printf_server (plugin, "Loading Ruby module \"weechat\"");
+    
+    /* TODO: initialize Ruby interpreter */
+    
+    
+    plugin->cmd_handler_add (plugin, "ruby",
+                             "list/load/unload Ruby scripts",
+                             "[load filename] | [autoload] | [reload] | [unload]",
+                             "filename: Ruby script (file) to load\n\n"
+                             "Without argument, /ruby command lists all loaded Ruby scripts.",
+                             weechat_ruby_cmd, NULL, NULL);
+    
+    plugin->mkdir_home (plugin, "ruby");
+    plugin->mkdir_home (plugin, "ruby/autoload");
+    
+    weechat_script_auto_load (plugin, "ruby", weechat_ruby_load);
+    
+    return 1;
+}
+
+/*
+ * weechat_plugin_end: shutdown Ruby interface
  */
 
 void
-wee_ruby_end ()
+weechat_plugin_end (t_weechat_plugin *plugin)
 {
     /* unload all scripts */
-    wee_ruby_unload_all ();
+    weechat_ruby_unload_all (plugin);
     
-    /* free all handlers */
-    plugin_handler_free_all_type (&plugin_msg_handlers,
-                                  &last_plugin_msg_handler,
-                                  PLUGIN_TYPE_RUBY);
-    plugin_handler_free_all_type (&plugin_cmd_handlers,
-                                  &last_plugin_cmd_handler,
-                                  PLUGIN_TYPE_RUBY);
+    /* TODO: free interpreter */
     
-    /* TODO: free Ruby interpreter */
-    /* free Ruby interpreter */
-    /* xxxxx ();
-    if ()
-    {
-        irc_display_prefix (NULL, PREFIX_PLUGIN);
-        gui_printf (NULL, _("%s error: error while freeing interpreter\n"),
-                    "Ruby");
-    }*/
+    
+    ruby_plugin->printf_server (ruby_plugin,
+                                "Ruby plugin ended");
 }

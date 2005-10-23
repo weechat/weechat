@@ -31,7 +31,7 @@ python_dir = python
 endif
 
 if PLUGIN_RUBY
-#ruby_dir = ruby
+ruby_dir = ruby
 endif
 
 SUBDIRS = . $(perl_dir) $(python_dir) $(ruby_dir)

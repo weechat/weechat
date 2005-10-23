@@ -934,6 +934,21 @@ weechat_ascii_strcasecmp (t_weechat_plugin *plugin,
 }
 
 /*
+ * weechat_ascii_strncasecmp: locale and case independent string comparison
+ *                            with max length
+ */
+
+int
+weechat_ascii_strncasecmp (t_weechat_plugin *plugin,
+                          char *string1, char *string2, int max)
+{
+    /* make gcc happy */
+    (void) plugin;
+    
+    return ascii_strncasecmp (string1, string2, max);
+}
+
+/*
  * weechat_explode_string: explode a string
  */
 

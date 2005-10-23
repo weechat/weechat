@@ -116,6 +116,7 @@ struct t_weechat_plugin
        existing plugins */
     
     int (*ascii_strcasecmp) (t_weechat_plugin *, char *, char *);
+    int (*ascii_strncasecmp) (t_weechat_plugin *, char *, char *, int);
     char **(*explode_string) (t_weechat_plugin *, char *, char *, int, int *);
     void (*free_exploded_string) (t_weechat_plugin *, char **);
     int (*mkdir_home) (t_weechat_plugin *, char *);
@@ -149,6 +150,7 @@ struct t_weechat_plugin
 
 /* general useful functions */
 extern int weechat_ascii_strcasecmp (t_weechat_plugin *,char *, char *);
+extern int weechat_ascii_strncasecmp (t_weechat_plugin *,char *, char *, int);
 extern char **weechat_explode_string (t_weechat_plugin *, char *, char *, int, int *);
 extern void weechat_free_exploded_string (t_weechat_plugin *, char **);
 extern int weechat_plugin_mkdir_home (t_weechat_plugin *, char *);
