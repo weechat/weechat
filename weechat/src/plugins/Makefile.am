@@ -35,4 +35,7 @@ noinst_LIBRARIES = lib_weechat_plugins.a
 
 lib_weechat_plugins_a_SOURCES = weechat-plugin.h \
 				plugins.h \
-                                plugins.c
+                                plugins.c \
+                                plugins-interface.c \
+                                plugins-config.h \
+                                plugins-config.c

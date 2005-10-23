@@ -36,7 +36,7 @@
 
 @title WeeChat - Guia do Utilizador
 @subtitle Cliente de IRC rapido, leve e extencivel
-@subtitle Documenta@,{c}@~ao do WeeChat v0.1.6-cvs - 23 de outubro de 2005
+@subtitle Documenta@,{c}@~ao do WeeChat v0.1.6-cvs - 24 de outubro de 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -2062,6 +2062,73 @@ use.@*
 @*
 @code{char *value1 = plugin->get_config (plugin, "look_set_title");}@*
 @code{char *value2 = plugin->get_config (plugin, "freenode.server_autojoin");}@*
+@*
+
+@item
+@command{int set_config (t_weechat_plugin
+*plugin, char *option, char *value)}@*
+@*
+Update value of a WeeChat config option.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{plugin}: pointer to plugin structure
+@item @option{option}: name of option to update
+@item @option{value}: new value for option
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+1 if option was updated successfully, 0 if error occured.@*
+@*
+@emph{Example:}@*
+@*
+@code{plugin->set_config (plugin, "look_nicklist", "off");}@*
+@*
+
+@item
+@command{char *get_plugin_config (t_weechat_plugin
+*plugin, char *option)}@*
+@*
+Return value of a plugin option.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{plugin}: pointer to plugin structure
+@item @option{option}: name of option to read
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+Value of option, NULL if not found.@*
+Note: result has to be free by a call to ``free'' function after
+use.@*
+@*
+@emph{Example:}@*
+@*
+@code{char *value = plugin->get_plugin_config (plugin, "my_var");}@*
+@*
+
+@item
+@command{int set_plugin_config (t_weechat_plugin
+*plugin, char *option, char *value)}@*
+@*
+Update value of a plugin option.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{plugin}: pointer to plugin structure
+@item @option{option}: name of option to update
+@item @option{value}: new value for option
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+1 if option was updated successfully, 0 if error occured.@*
+@*
+@emph{Example:}@*
+@*
+@code{plugin->set_plugin_config (plugin, "my_var", "value");}@*
 @*
 
 @end itemize

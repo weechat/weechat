@@ -36,7 +36,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.6-cvs - 23 octobre 2005
+@subtitle Documentation pour WeeChat v0.1.6-cvs - 24 octobre 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -2088,6 +2088,75 @@ NB: le r@'esultat doit @^etre lib@'er@'e par un appel @`a la fonction
 @*
 @code{char *value1 = plugin->get_config (plugin, "look_set_title");}@*
 @code{char *value2 = plugin->get_config (plugin, "freenode.server_autojoin");}@*
+@*
+
+@item
+@command{int set_config (t_weechat_plugin
+*plugin, char *option, char *value)}@*
+@*
+Modifie la valeur d'une option de configuration WeeChat.@*
+
+@emph{Param@`etres :}
+@itemize @minus
+@item @option{plugin}: un pointeur vers la structure de l'extension
+@item @option{option}: nom de l'option @`a mettre @`a jour
+@item @option{value}: nouvelle valeur pour l'option
+@end itemize
+@*
+@emph{Valeur renvoy@'ee :}@*
+@*
+1 si l'option a @'et@'e modifi@'ee avec succ@`es, 0 si une erreur
+s'est produite.@*
+@*
+@emph{Exemple :}@*
+@*
+@code{plugin->set_config (plugin, "look_nicklist", "off");}@*
+@*
+
+@item
+@command{char *get_plugin_config (t_weechat_plugin
+*plugin, char *option)}@*
+@*
+Renvoie la valeur d'une option de l'extension.@*
+
+@emph{Param@`etres :}
+@itemize @minus
+@item @option{plugin}: un pointeur vers la structure de l'extension
+@item @option{option}: nom de l'option @`a lire
+@end itemize
+@*
+@emph{Valeur renvoy@'ee :}@*
+@*
+La valeur de l'option, NULL si non trouv@'ee.@*
+NB: le r@'esultat doit @^etre lib@'er@'e par un appel @`a la fonction
+``free'' apr@`es utilisation.@*
+@*
+@emph{Exemple :}@*
+@*
+@code{char *value = plugin->get_plugin_config (plugin, "ma_variable");}@*
+@*
+
+@item
+@command{int set_plugin_config (t_weechat_plugin
+*plugin, char *option, char *value)}@*
+@*
+Modifie la valeur d'une option de l'extension.@*
+
+@emph{Param@`etres :}
+@itemize @minus
+@item @option{plugin}: un pointeur vers la structure de l'extension
+@item @option{option}: nom de l'option @`a mettre @`a jour
+@item @option{value}: nouvelle valeur pour l'option
+@end itemize
+@*
+@emph{Valeur renvoy@'ee :}@*
+@*
+1 si l'option a @'et@'e modifi@'ee avec succ@`es, 0 si une erreur
+s'est produite.@*
+@*
+@emph{Exemple :}@*
+@*
+@code{plugin->set_plugin_config (plugin, "ma_variable", "valeur");}@*
 @*
 
 @end itemize

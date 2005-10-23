@@ -144,6 +144,9 @@ struct t_weechat_plugin
     t_plugin_dcc_info *(*get_dcc_info) (t_weechat_plugin *);
     void (*free_dcc_info) (t_weechat_plugin *, t_plugin_dcc_info *);
     char *(*get_config) (t_weechat_plugin *, char *);
+    int (*set_config) (t_weechat_plugin *, char *, char *);
+    char *(*get_plugin_config) (t_weechat_plugin *, char *);
+    int (*set_plugin_config) (t_weechat_plugin *, char *, char *);
     
     /* WeeChat developers: ALWAYS add new functions at the end */
 };
@@ -181,5 +184,8 @@ extern char *weechat_plugin_get_info (t_weechat_plugin *, char *, char *, char *
 extern t_plugin_dcc_info *weechat_plugin_get_dcc_info (t_weechat_plugin *);
 extern void weechat_plugin_free_dcc_info (t_weechat_plugin *, t_plugin_dcc_info *);
 extern char *weechat_plugin_get_config (t_weechat_plugin *, char *);
+extern int weechat_plugin_set_config (t_weechat_plugin *, char *, char *);
+extern char *weechat_plugin_get_plugin_config (t_weechat_plugin *, char *);
+extern int weechat_plugin_set_plugin_config (t_weechat_plugin *, char *, char *);
 
 #endif /* weechat-plugin.h */

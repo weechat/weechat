@@ -30,9 +30,25 @@ typedef void (t_weechat_end_func) (t_weechat_plugin *);
 extern t_weechat_plugin *weechat_plugins;
 extern t_weechat_plugin *last_weechat_plugin;
 
+extern t_gui_buffer *plugin_find_buffer (char *, char *);
+extern void plugin_exec_on_files (t_weechat_plugin *, char *,
+                                  int (*)(t_weechat_plugin *, char *));
 extern t_weechat_plugin *plugin_search (char *);
+extern t_plugin_msg_handler *plugin_msg_handler_add (t_weechat_plugin *, char *,
+                                                     t_plugin_handler_func *,
+                                                     char *, void *);
+extern t_plugin_cmd_handler *plugin_cmd_handler_add (t_weechat_plugin *, char *,
+                                                     char *, char *, char *,
+                                                     t_plugin_handler_func *,
+                                                     char *, void *);
 extern int plugin_msg_handler_exec (char *, char *, char *);
 extern int plugin_cmd_handler_exec (char *, char *, char *);
+extern void plugin_msg_handler_remove (t_weechat_plugin *,
+                                       t_plugin_msg_handler *);
+extern void plugin_cmd_handler_remove (t_weechat_plugin *,
+                                       t_plugin_cmd_handler *);
+extern void plugin_msg_handler_remove_all (t_weechat_plugin *);
+extern void plugin_cmd_handler_remove_all (t_weechat_plugin *);
 extern t_weechat_plugin *plugin_load (char *);
 extern void plugin_remove (t_weechat_plugin *);
 extern void plugin_unload (t_weechat_plugin *);

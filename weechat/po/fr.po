@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.6-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-10-22 15:52+0200\n"
-"PO-Revision-Date: 2005-10-22 15:53+0200\n"
+"POT-Creation-Date: 2005-10-23 23:28+0200\n"
+"PO-Revision-Date: 2005-10-23 23:31+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "%s cannot allocate new nick\n"
 msgstr "%s impossible d'allouer un nouveau pseudo\n"
 
-#: src/irc/irc-server.c:180 src/common/weeconfig.c:1934
+#: src/irc/irc-server.c:180 src/common/weeconfig.c:1938
 msgid "Unable to get user's name"
 msgstr "Impossible de déterminer le nom d'utilisateur"
 
@@ -2197,42 +2197,42 @@ msgstr ""
 "%s la fonction \"weechat_plugin_init\" est introuvable dans l'extension \"%s"
 "\", échec de chargement\n"
 
-#: src/plugins/plugins.c:684
+#: src/plugins/plugins.c:687
 #, c-format
 msgid "Initializing plugin \"%s\" %s\n"
 msgstr "Initialisation de l'extension \"%s\" %s\n"
 
-#: src/plugins/plugins.c:692
+#: src/plugins/plugins.c:695
 #, c-format
 msgid "%s unable to initialize plugin \"%s\"\n"
 msgstr "%s impossible d'initialiser l'extension \"%s\"\n"
 
-#: src/plugins/plugins.c:703
+#: src/plugins/plugins.c:706
 #, c-format
 msgid "%s unable to load plugin \"%s\" (not enough memory)\n"
 msgstr "%s impossible de charger l'extension \"%s\" (mémoire insuffisante)\n"
 
-#: src/plugins/plugins.c:711
+#: src/plugins/plugins.c:714
 #, c-format
 msgid "Plugin \"%s\" (%s) loaded.\n"
 msgstr "Extension \"%s\" (%s) chargée.\n"
 
-#: src/plugins/plugins.c:852
+#: src/plugins/plugins.c:855
 #, c-format
 msgid "Plugin \"%s\" unloaded.\n"
 msgstr "Extension \"%s\" déchargée.\n"
 
-#: src/plugins/plugins.c:858
+#: src/plugins/plugins.c:861
 #, c-format
 msgid "%s plugin \"%s\" not found\n"
 msgstr "%s extension \"%s\" non trouvée\n"
 
-#: src/gui/curses/gui-input.c:322
+#: src/gui/curses/gui-input.c:325
 #, c-format
 msgid "Day changed to %s\n"
 msgstr "Jour changé: %s\n"
 
-#: src/gui/curses/gui-input.c:405
+#: src/gui/curses/gui-input.c:408
 #, c-format
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr "%s le lag est élevé, déconnexion du serveur...\n"
@@ -4132,7 +4132,10 @@ msgid ""
 "restricts outgoing dcc to use only ports in the given range (useful for NAT) "
 "(syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, empty value "
 "means any port)"
-msgstr "restreint le dcc sortant à utiliser des ports dans la plage donnée (pratique pour le NAT) (syntaxe: un port simple, par exemple 5000, une plage de ports, par exemple 5000-5015, si non renseigné tout port peut être utilisé)"
+msgstr ""
+"restreint le dcc sortant à utiliser des ports dans la plage donnée (pratique "
+"pour le NAT) (syntaxe: un port simple, par exemple 5000, une plage de ports, "
+"par exemple 5000-5015, si non renseigné tout port peut être utilisé)"
 
 #: src/common/weeconfig.c:711
 msgid "IP address for outgoing dcc"
@@ -4457,42 +4460,42 @@ msgstr ""
 msgid "%s unable to assign default color (\"%s\")\n"
 msgstr "%s impossible d'assigner la couleur par défaut (\"%s\")\n"
 
-#: src/common/weeconfig.c:1547
+#: src/common/weeconfig.c:1548
 #, c-format
 msgid "%s config file \"%s\" not found.\n"
 msgstr "%s fichier de configuration \"%s\" non trouvé.\n"
 
-#: src/common/weeconfig.c:1579
+#: src/common/weeconfig.c:1580
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"]\"\n"
 msgstr "%s %s, ligne %d: syntaxe invalide, il manque \"]\"\n"
 
-#: src/common/weeconfig.c:1596
+#: src/common/weeconfig.c:1597
 #, c-format
 msgid "%s %s, line %d: unknown section identifier (\"%s\")\n"
 msgstr "%s %s, ligne %d: section inconnue (\"%s\")\n"
 
-#: src/common/weeconfig.c:1614
+#: src/common/weeconfig.c:1615
 #, c-format
 msgid "%s %s, line %d: invalid section for option, line is ignored\n"
 msgstr "%s %s, ligne %d: section invalide pour l'option, ligne ignorée\n"
 
-#: src/common/weeconfig.c:1622
+#: src/common/weeconfig.c:1623
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"=\"\n"
 msgstr "%s %s, ligne %d: syntaxe invalide, il manque \"=\"\n"
 
-#: src/common/weeconfig.c:1659 src/common/weeconfig.c:1685
+#: src/common/weeconfig.c:1660 src/common/weeconfig.c:1686
 #, c-format
 msgid "%s %s, line %d: invalid option \"%s\"\n"
 msgstr "%s %s, ligne %d: option \"%s\" invalide\n"
 
-#: src/common/weeconfig.c:1665
+#: src/common/weeconfig.c:1666
 #, c-format
 msgid "%s %s, line %d: invalid ignore options \"%s\"\n"
 msgstr "%s %s, ligne %d: options \"%s\" invalides pour le ignore\n"
 
-#: src/common/weeconfig.c:1696
+#: src/common/weeconfig.c:1697
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value foroption '%s'\n"
@@ -4501,7 +4504,7 @@ msgstr ""
 "%s %s, ligne %d: valeur invalide pour l'option '%s'\n"
 "Attendu: valeur booléenne: 'off' ou 'on'\n"
 
-#: src/common/weeconfig.c:1705
+#: src/common/weeconfig.c:1706
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
@@ -4510,7 +4513,7 @@ msgstr ""
 "%s %s, ligne %d: valeur invalide pour l'option '%s'\n"
 "Attendu: entier compris entre %d et %d\n"
 
-#: src/common/weeconfig.c:1716
+#: src/common/weeconfig.c:1717
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
@@ -4519,34 +4522,45 @@ msgstr ""
 "%s %s, ligne %d: valeur invalide pour l'option '%s'\n"
 "Attendu: une de ces chaînes: "
 
-#: src/common/weeconfig.c:1732
+#: src/common/weeconfig.c:1733
 #, c-format
 msgid "%s %s, line %d: invalid color name for option '%s'\n"
 msgstr "%s %s, ligne %d: nom de couleur invalide pour l'option '%s'\n"
 
-#: src/common/weeconfig.c:1794 src/common/weeconfig.c:1989
+#: src/common/weeconfig.c:1796 src/common/weeconfig.c:1994
 #, c-format
 msgid "%s cannot create file \"%s\"\n"
 msgstr "%s impossible de créer le fichier \"%s\"\n"
 
-#: src/common/weeconfig.c:1800
+#: src/common/weeconfig.c:1802
 #, c-format
 msgid "%s: creating default config file...\n"
 msgstr "%s: création du fichier de configuration par défaut...\n"
 
-#: src/common/weeconfig.c:1801
+#: src/common/weeconfig.c:1803
 msgid "Creating default config file\n"
 msgstr "Création du fichier de configuration par défaut\n"
 
-#: src/common/weeconfig.c:1804 src/common/weeconfig.c:1998
+#: src/common/weeconfig.c:1806 src/common/weeconfig.c:2003
 #, c-format
 msgid ""
 "#\n"
-"# %s configuration file, created by %s v%s on %s#\n"
+"# %s configuration file, created by %s v%s on %s"
 msgstr ""
 "#\n"
-"# %s: fichier de configuration, créé par %s v%s le %s#\n"
+"# %s: fichier de configuration, créé par %s v%s le %s"
 
-#: src/common/weeconfig.c:1995
+#: src/common/weeconfig.c:1810 src/common/weeconfig.c:2007
+#, c-format
+msgid ""
+"# WARNING! Be careful when editing this file, WeeChat writes this file when "
+"exiting.\n"
+"#\n"
+msgstr ""
+"# ATTENTION ! Soyez prudents en modifiant ce fichier, WeeChat l'écrit en "
+"quittant.\n"
+"#\n"
+
+#: src/common/weeconfig.c:2000
 msgid "Saving config to disk\n"
 msgstr "Sauvegarde de la configuration sur disque\n"

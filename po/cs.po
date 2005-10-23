@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.6-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-10-22 15:52+0200\n"
-"PO-Revision-Date: 2005-10-22 15:32+0200\n"
+"POT-Creation-Date: 2005-10-23 23:28+0200\n"
+"PO-Revision-Date: 2005-10-23 23:31+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "%s cannot allocate new nick\n"
 msgstr "%s nemůžu přidělit novou přezdívku\n"
 
-#: src/irc/irc-server.c:180 src/common/weeconfig.c:1934
+#: src/irc/irc-server.c:180 src/common/weeconfig.c:1938
 msgid "Unable to get user's name"
 msgstr "Nemůžu získat jméno uživatele"
 
@@ -2175,42 +2175,42 @@ msgstr ""
 "%s funkce \"weechat_plugin_init\" nebyla v pluginu \"%s\" nalezena, načtení "
 "selhalo\n"
 
-#: src/plugins/plugins.c:684
+#: src/plugins/plugins.c:687
 #, c-format
 msgid "Initializing plugin \"%s\" %s\n"
 msgstr "Inicializuji plugin \"%s\" %s\n"
 
-#: src/plugins/plugins.c:692
+#: src/plugins/plugins.c:695
 #, c-format
 msgid "%s unable to initialize plugin \"%s\"\n"
 msgstr "%s nemohu načíst plugin \"%s\"\n"
 
-#: src/plugins/plugins.c:703
+#: src/plugins/plugins.c:706
 #, c-format
 msgid "%s unable to load plugin \"%s\" (not enough memory)\n"
 msgstr "%s nemohu načíst plugin \"%s\" (nedostatek paměti)\n"
 
-#: src/plugins/plugins.c:711
+#: src/plugins/plugins.c:714
 #, c-format
 msgid "Plugin \"%s\" (%s) loaded.\n"
 msgstr "Plugin \"%s\" (%s) načten.\n"
 
-#: src/plugins/plugins.c:852
+#: src/plugins/plugins.c:855
 #, c-format
 msgid "Plugin \"%s\" unloaded.\n"
 msgstr "Plugin \"%s\" odebrán.\n"
 
-#: src/plugins/plugins.c:858
+#: src/plugins/plugins.c:861
 #, c-format
 msgid "%s plugin \"%s\" not found\n"
 msgstr "%s plugin \"%s\" nenalezen\n"
 
-#: src/gui/curses/gui-input.c:322
+#: src/gui/curses/gui-input.c:325
 #, c-format
 msgid "Day changed to %s\n"
 msgstr "Změnil se den na %s\n"
 
-#: src/gui/curses/gui-input.c:405
+#: src/gui/curses/gui-input.c:408
 #, c-format
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr "%s zpoždění je veliké, odpojuji se od serveru...\n"
@@ -4395,42 +4395,42 @@ msgstr "%s nemohu přiřadit výchozí číslo s řetězcem (\"%s\")\n"
 msgid "%s unable to assign default color (\"%s\")\n"
 msgstr "%s nemohu přiřadit výchozí barvu (\"%s\")\n"
 
-#: src/common/weeconfig.c:1547
+#: src/common/weeconfig.c:1548
 #, c-format
 msgid "%s config file \"%s\" not found.\n"
 msgstr "%s konfigurační soubor \"%s\" nenalezen\n"
 
-#: src/common/weeconfig.c:1579
+#: src/common/weeconfig.c:1580
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"]\"\n"
 msgstr "%s %s, řádek %d: nevalidní syntaxe, chybí \"]\"\n"
 
-#: src/common/weeconfig.c:1596
+#: src/common/weeconfig.c:1597
 #, c-format
 msgid "%s %s, line %d: unknown section identifier (\"%s\")\n"
 msgstr "%s %s, řádek %d: neznámý identifikátor sekce (\"%s\")\n"
 
-#: src/common/weeconfig.c:1614
+#: src/common/weeconfig.c:1615
 #, c-format
 msgid "%s %s, line %d: invalid section for option, line is ignored\n"
 msgstr "%s %s, řádek %d: nevalidní sekce pro volbu, řádek je ignorován\n"
 
-#: src/common/weeconfig.c:1622
+#: src/common/weeconfig.c:1623
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"=\"\n"
 msgstr "%s %s, řádek %d: nevalidní syntax, chybí \"=\"\n"
 
-#: src/common/weeconfig.c:1659 src/common/weeconfig.c:1685
+#: src/common/weeconfig.c:1660 src/common/weeconfig.c:1686
 #, c-format
 msgid "%s %s, line %d: invalid option \"%s\"\n"
 msgstr "%s %s, řádek %d: nevalidní volba \"%s\"\n"
 
-#: src/common/weeconfig.c:1665
+#: src/common/weeconfig.c:1666
 #, c-format
 msgid "%s %s, line %d: invalid ignore options \"%s\"\n"
 msgstr "%s %s, řádek %d: nevalidní volba \"%s\" pro ignorování\n"
 
-#: src/common/weeconfig.c:1696
+#: src/common/weeconfig.c:1697
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value foroption '%s'\n"
@@ -4439,7 +4439,7 @@ msgstr ""
 "%s %s, řádek %d: nevalidní hodnota pro volbu '%s'\n"
 "Očekáváno: hodnota boolean: 'off' nebo 'on'\n"
 
-#: src/common/weeconfig.c:1705
+#: src/common/weeconfig.c:1706
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
@@ -4448,7 +4448,7 @@ msgstr ""
 "%s %s, řádek %d: nevalidní hodnota pro volbu '%s'\n"
 "Očekáváno: celé číslo mezi %d a %d\n"
 
-#: src/common/weeconfig.c:1716
+#: src/common/weeconfig.c:1717
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
@@ -4457,34 +4457,42 @@ msgstr ""
 "%s %s, řádek %d: nevalidní hodnota pro volbu '%s'\n"
 "Očekáváno: jeden z těchto řetězců: "
 
-#: src/common/weeconfig.c:1732
+#: src/common/weeconfig.c:1733
 #, c-format
 msgid "%s %s, line %d: invalid color name for option '%s'\n"
 msgstr "%s %s, řádek %d: nevalidní jméno barvy pro hodnotu '%s'\n"
 
-#: src/common/weeconfig.c:1794 src/common/weeconfig.c:1989
+#: src/common/weeconfig.c:1796 src/common/weeconfig.c:1994
 #, c-format
 msgid "%s cannot create file \"%s\"\n"
 msgstr "%s nemohu vytvořit soubor \"%s\"\n"
 
-#: src/common/weeconfig.c:1800
+#: src/common/weeconfig.c:1802
 #, c-format
 msgid "%s: creating default config file...\n"
 msgstr "%s: vytvářím výchozí konfigurační soubor...\n"
 
-#: src/common/weeconfig.c:1801
+#: src/common/weeconfig.c:1803
 msgid "Creating default config file\n"
 msgstr "Vytvářím výchozí konfigurační soubor\n"
 
-#: src/common/weeconfig.c:1804 src/common/weeconfig.c:1998
+#: src/common/weeconfig.c:1806 src/common/weeconfig.c:2003
 #, c-format
 msgid ""
 "#\n"
-"# %s configuration file, created by %s v%s on %s#\n"
+"# %s configuration file, created by %s v%s on %s"
 msgstr ""
 "#\n"
-"# %s konfigurační soubor, vytvořil %s v%s %s#\n"
+"# %s konfigurační soubor, vytvořil %s v%s %s"
 
-#: src/common/weeconfig.c:1995
+#: src/common/weeconfig.c:1810 src/common/weeconfig.c:2007
+#, c-format
+msgid ""
+"# WARNING! Be careful when editing this file, WeeChat writes this file when "
+"exiting.\n"
+"#\n"
+msgstr ""
+
+#: src/common/weeconfig.c:2000
 msgid "Saving config to disk\n"
 msgstr "Ukládám konfiguraci na disk\n"

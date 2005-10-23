@@ -1535,7 +1535,8 @@ config_read ()
     int server_found;
     char line[1024], *ptr_line, *pos, *pos2;
 
-    filename_length = strlen (weechat_home) + 64;
+    filename_length = strlen (weechat_home) +
+        strlen (WEECHAT_CONFIG_NAME) + 2;
     filename =
         (char *) malloc (filename_length * sizeof (char));
     if (!filename)
@@ -1782,7 +1783,8 @@ config_create_default ()
     t_gui_key *ptr_key;
     char *expanded_name, *function_name;
 
-    filename_length = strlen (weechat_home) + 64;
+    filename_length = strlen (weechat_home) +
+        strlen (WEECHAT_CONFIG_NAME) + 2;
     filename =
         (char *) malloc (filename_length * sizeof (char));
     if (!filename)
@@ -1802,9 +1804,11 @@ config_create_default ()
     
     current_time = time (NULL);
     fprintf (file, _("#\n# %s configuration file, created by "
-             "%s v%s on %s#\n"),
+             "%s v%s on %s"),
              PACKAGE_NAME, PACKAGE_NAME, PACKAGE_VERSION,
              ctime (&current_time));
+    fprintf (file, _("# WARNING! Be careful when editing this file, "
+                     "WeeChat writes this file when exiting.\n#\n"));
 
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
     {
@@ -1970,12 +1974,13 @@ config_write (char *config_name)
     t_irc_ignore *ptr_ignore;
     t_gui_key *ptr_key;
     char *expanded_name, *function_name;
-
+    
     if (config_name)
         filename = strdup (config_name);
     else
     {
-        filename_length = strlen (weechat_home) + 64;
+        filename_length = strlen (weechat_home) +
+            strlen (WEECHAT_CONFIG_NAME) + 2;
         filename =
             (char *) malloc (filename_length * sizeof (char));
         if (!filename)
@@ -1996,9 +2001,11 @@ config_write (char *config_name)
     
     current_time = time (NULL);
     fprintf (file, _("#\n# %s configuration file, created by "
-             "%s v%s on %s#\n"),
+             "%s v%s on %s"),
              PACKAGE_NAME, PACKAGE_NAME, PACKAGE_VERSION,
              ctime (&current_time));
+    fprintf (file, _("# WARNING! Be careful when editing this file, "
+                     "WeeChat writes this file when exiting.\n#\n"));
 
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
     {
