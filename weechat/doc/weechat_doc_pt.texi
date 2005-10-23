@@ -36,7 +36,7 @@
 
 @title WeeChat - Guia do Utilizador
 @subtitle Cliente de IRC rapido, leve e extencivel
-@subtitle Documenta@,{c}@~ao do WeeChat v0.1.6-cvs - 18 de outubro de 2005
+@subtitle Documenta@,{c}@~ao do WeeChat v0.1.6-cvs - 23 de outubro de 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -263,15 +263,18 @@ Type: boolean (values: 'on' or 'off'), default value: 'on'@*
 @item look_weechat_slogan
 WeeChat slogan (if empty, slogan is not used)@*
 Type: string (any string), default value: 'the geekest IRC client!'@*
-@item look_charset_decode
-Charset for decoding messages from server, examples: UTF-8, ISO-8859-1 (if empty, messages are not converted)@*
+@item look_charset_decode_iso
+ISO charset for decoding messages from server (used only if locale is UTF-8) (if empty, messages are not converted if locale is UTF-8@*
+Type: string (any string), default value: 'ISO-8859-1'@*
+@item look_charset_decode_utf
+UTF charset for decoding messages from server (used only if locale is not UTF-8) (if empty, messages are not converted if locale is not UTF-8@*
 Type: string (any string), default value: 'UTF-8'@*
 @item look_charset_encode
-Charset for encoding messages sent to server, examples: UFT-8, ISO-8859-1 (if empty, local charset is used)@*
+Charset for encoding messages sent to server, examples: UFT-8, ISO-8859-1 (if empty, messages are not converted)@*
 Type: string (any string), default value: ''@*
 @item look_charset_internal
-Internal WeeChat charset, should be ISO-xxxx even if locale is UTF-8 (if empty, local charset is used)@*
-Type: string (any string), default value: 'ISO-8859-1'@*
+Forces internal WeeChat charset (should be empty in most cases, that means detected charset is used)@*
+Type: string (any string), default value: ''@*
 @item look_buffer_timestamp
 Timestamp for buffers@*
 Type: string (any string), default value: '[%H:%M:%S]'@*
@@ -433,7 +436,7 @@ Color for input text (nick name)@*
 Type: color (Curses or Gtk color), default value: 'lightcyan'@*
 @item col_input_delimiters
 Color for input text (delimiters)@*
-Type: color (Curses or Gtk color), default value: 'lightgreen'@*
+Type: color (Curses or Gtk color), default value: 'white'@*
 @item col_input_bg
 Background for input window@*
 Type: color (Curses or Gtk color), default value: 'default'@*
@@ -596,6 +599,12 @@ Type: integer (values: between 1 and 2147483647), default value: 300@*
 @item dcc_blocksize
 Block size for dcc packets in bytes (default: 65536)@*
 Type: integer (values: between 1024 and 102400), default value: 65536@*
+@item dcc_port_range
+Restricts outgoing dcc to use only ports in the given range (useful for NAT) (syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, empty value means any port)@*
+Type: string (any string), default value: ''@*
+@item dcc_own_ip
+IP or DNS address used for outgoing dcc (if empty, local interface IP is used)@*
+Type: string (any string), default value: ''@*
 @item dcc_download_path
 Path for writing incoming files with dcc (default: user home)@*
 Type: string (any string), default value: '~'@*
@@ -976,11 +985,14 @@ channel: name of channel for unignore@*
 For each argument, '*' means all.@*
 Without argument, /unignore command lists all defined ignore.@*
 @*
-@item window  [list | splith | splitv | [merge [down | up | left | right | all]]]
+@item window  [list | -1 | +1 | b# | splith | splitv | [merge [down | up | left | right | all]]]
 @*
 manage windows@*
 @*
 list: list opened windows (no parameter implies this list)@*
+-1: jump to previous window@*
++1: jump to next window@*
+b#: jump to next window displaying buffer number #@*
 splith: split current window horizontally@*
 splitv: split current window vertically@*
 merge: merge window with another@*
@@ -1520,7 +1532,8 @@ dynamically loaded into WeeChat with command @command{/plugin}.@*
 @*
 The plugin has to be a dynamic library, for dynamic loading by
 operating system.
-Under GNU/Linux, the file has ``.so'' extension.
+Under GNU/Linux, the file has ``.so'' extension, ``.dll'' under
+Windows.
 
 @node Write a plugin, Plugin example, Plugins in WeeChat, Plugins
 @section Write a plugin
@@ -1549,8 +1562,10 @@ them the plugin can't load):@*
 
 @subsection API functions
 
-The plugin can call some functions defined in t_weechat_plugin structure.@*
-These functions are detailed below:
+The plugin can call some functions defined in t_weechat_plugin
+structure.@*
+@*
+These functions are detailed below:@*
 
 @itemize @bullet
 @item
@@ -1574,7 +1589,30 @@ nul if chaine1 == chaine 2, positive if chaine1 > chaine2@*
 @emph{Example:}@*
 @*
 @code{if (plugin->ascii_strcasecmp (plugin, "abc", "def") != 0) ...}@*
+@*
 
+@item
+@command{int ascii_strncasecmp (t_weechat_plugin *plugin,
+char *string1, char *string2, int max)}@*
+@*
+locale and case independent string comparison, for ``max'' chars.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{plugin}: pointer to plugin structure
+@item @option{string1}: first string for comparison
+@item @option{string2}: second string for comparison
+@item @option{max}: max number of chars for comparison
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+Difference between two strings: negative if chaine1 < chaine2,
+nul if chaine1 == chaine 2, positive if chaine1 > chaine2@*
+@*
+@emph{Example:}@*
+@*
+@code{if (plugin->ascii_strncasecmp (plugin, "abc", "def", 2) != 0) ...}@*
 @*
 
 @item
@@ -2052,7 +2090,7 @@ Under WeeChat:@*
 
 Full example of plugin, which adds a /double command, which displays
 two times arguments on current channel (ok that's not very useful, but
-that's just an example!):
+that's just an example!):@*
 
 @verbatim
 #include <stdlib.h>
@@ -2251,7 +2289,7 @@ Execute a command or send a message to a channel.@*
 @*
 
 @item
-@command{weechat::get_info ( nome, [servidor] );}@*
+@command{weechat::get_info ( nome, [servidor, [canal] ] );}@*
 @*
 Comece o v@'ario info sobre WeeChat, servidor ou usu@'ario.@*
 
@@ -2269,6 +2307,7 @@ Comece o v@'ario info sobre WeeChat, servidor ou usu@'ario.@*
 @item @option{weechat_sharedir}: get WeeChat system share dir
 @end itemize
 @item @option{servidor}: nome interno da servidor
+@item @option{canal}: nome da canal
 @end itemize
 @*
 @emph{Exemplos:}@*

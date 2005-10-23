@@ -36,7 +36,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.6-cvs - 18 octobre 2005
+@subtitle Documentation pour WeeChat v0.1.6-cvs - 23 octobre 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -266,15 +266,18 @@ Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
 @item look_weechat_slogan
 Slogan WeeChat (si vide, le slogan ne sera pas utilis@'e)@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: 'the geekest IRC client!'@*
-@item look_charset_decode
-Jeu de caract@`eres pour d@'ecoder les messages du serveur, exemples: UTF-8, ISO-8859-1 (si non renseign@'e, les messages ne sont pas convertis)@*
+@item look_charset_decode_iso
+Jeu de caract@`eres ISO pour d@'ecoder les messages du serveur (utilis@'e seulement si la locale est UTF-8) (si non renseign@'e, les messages ne sont pas concertis si la locale est UTF-8)@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: 'ISO-8859-1'@*
+@item look_charset_decode_utf
+Jeu de caract@`eres UTF pour d@'ecoder les messages du serveur (utilis@'e seulement si la locale n'est pas UTF-8) (si non renseign@'e, les messages ne sont pas convertis si la locale n'est pas UTF-8)@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: 'UTF-8'@*
 @item look_charset_encode
-Jeu de caract@`eres pour encoder les messages envoy@'es au serveur, exemples: UFT-8, ISO-8859-1 (si non renseign@'e, le jeu de caract@`eres local est utilis@'e)@*
+Jeu de caract@`eres pour encoder les messages envoy@'es au serveur, exemples: UFT-8, ISO-8859-1 (si non renseign@'e, les messages ne sont pas convertis)@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
 @item look_charset_internal
-Jeu de caract@`eres interne @`a WeeChat, devrait @^etre ISO-xxxx m@^eme si la locale est UTF-8 (si non renseign@'e, le jeu de caract@`eres local est utilis@'e)@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: 'ISO-8859-1'@*
+Force le jeu de caract@`eres interne @`a WeeChat (doit @^etre vide dans la plupart des cas, ce qui signifie que le jeu de caract@`eres d@'etect@'e est utilis@'e)@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
 @item look_buffer_timestamp
 Format de date/heure pour les tampons@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '[%H:%M:%S]'@*
@@ -436,7 +439,7 @@ Couleur pour le texte saisi (pseudo)@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightcyan'@*
 @item col_input_delimiters
 Couleur pour le texte saisi (d@'elimiteurs)@*
-Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightgreen'@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'white'@*
 @item col_input_bg
 Couleur de fond pour la fen@^etre de saisie@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
@@ -599,6 +602,12 @@ Type: entier (valeurs: entre 1 et 2147483647), valeur par d@'efaut: 300@*
 @item dcc_blocksize
 Taille de bloc pour les paquets dcc en octets (d@'efaut: 65536)@*
 Type: entier (valeurs: entre 1024 et 102400), valeur par d@'efaut: 65536@*
+@item dcc_port_range
+Restreint le dcc sortant @`a utiliser des ports dans la plage donn@'ee (pratique pour le NAT) (syntaxe: un port simple, par exemple 5000, une plage de ports, par exemple 5000-5015, si non renseign@'e tout port peut @^etre utilis@'e)@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
+@item dcc_own_ip
+Adresse IP ou DNS utilis@'ee pour le dcc sortant (si non renseign@'e, l'interface IP locale est utilis@'ee)@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
 @item dcc_download_path
 Chemin pour @'ecrire les fichiers re@,{c}us par dcc (par d@'efaut: r@'epertoire de l'utilisateur)@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '~'@*
@@ -979,11 +988,14 @@ commande: commande IRC@*
 Pour chaque param@`etre, '*' signifie tou(te)s.@*
 Sans param@`etre, /ignore liste les ignore d@'efinis.@*
 @*
-@item window  [list | splith | splitv | [merge [down | up | left | right | all]]]
+@item window  [list | -1 | +1 | b# | splith | splitv | [merge [down | up | left | right | all]]]
 @*
 gestion des fen@^etres@*
 @*
 list: liste les fen@^etres ouvertes (pas de param@`etre affiche cette liste)@*
+-1: saute @`a la fen@^etre pr@'ec@'edente@*
++1: saute @`a la fen@^etre suivante@*
+b#: saute @`a la fen@^etre affichant le tampon n°#@*
 splith: @'eclate la fen@^etre en deux horizontalement@*
 splitv: @'eclate la fen@^etre en deux verticalement@*
 merge: fusionne la fen@^etre avec une autre@*
@@ -1528,7 +1540,8 @@ WeeChat via la commande @command{/plugin}.@*
 @*
 L'extension doit @^etre au format biblioth@`eque, chargeable
 dynamiquement par le syst@^eme d'exploitation.@*
-Sous GNU/Linux, il s'agit d'un fichier ayant pour extension ``.so''.
+Sous GNU/Linux, il s'agit d'un fichier ayant pour extension ``.so'',
+sous Windows ``.dll''.
 
 @node Ecrire une extension, Exemple d'extension, Les extensions dans WeeChat, Extensions
 @section Ecrire une extension
@@ -1551,8 +1564,8 @@ obligatoires (sans quoi l'extension ne peut être chargée) :@*
 @end itemize
 @item fonctions d'initialisation et fin de l'extension :
 @itemize @minus
-@item weechat_plugin_init: fonction appel@'e au chargement de l'extension
-@item weechat_plugin_end: fonction appel@'e au d@'echargement de l'extension
+@item weechat_plugin_init: fonction appel@'ee au chargement de l'extension
+@item weechat_plugin_end: fonction appel@'ee au d@'echargement de l'extension
 @end itemize
 @end itemize
 
@@ -1560,7 +1573,8 @@ obligatoires (sans quoi l'extension ne peut être chargée) :@*
 
 L'extension peut appeler un certain nombre de fonctions d@'efinies
 dans la structure t_weechat_plugin.@*
-Ces fonctions sont d@'etaill@'ees ci-dessous :
+@*
+Ces fonctions sont d@'etaill@'ees ci-dessous :@*
 
 @itemize @bullet
 @item
@@ -1585,6 +1599,32 @@ chaine2, nul si chaine1 == chaine 2, positif si chaine1 > chaine2@*
 @emph{Exemple :}@*
 @*
 @code{if (plugin->ascii_strcasecmp (plugin, "abc", "def") != 0) ...}@*
+@*
+
+@item
+@command{int ascii_strncasecmp (t_weechat_plugin *plugin,
+char *string1, char *string2, int max)}@*
+@*
+Effectue une comparaison entre deux cha@^ines, sans tenir compte des
+majuscules/minuscules ni de la locale, en comparant au plus ``max''
+caract@`eres.@*
+
+@emph{Param@`etres :}
+@itemize @minus
+@item @option{plugin}: un pointeur vers la structure de l'extension
+@item @option{string1}: la premi@`ere cha@^ine @`a comparer
+@item @option{string2}: la deuxi@`eme cha@^ine @`a comparer
+@item @option{max}: nombre de caract@`eres max @`a comparer
+@end itemize
+@*
+@emph{Valeur renvoy@'ee :}@*
+@*
+La diff@'erence entre les deux cha@^ines: n@'egatif si chaine1 <
+chaine2, nul si chaine1 == chaine 2, positif si chaine1 > chaine2@*
+@*
+@emph{Exemple :}@*
+@*
+@code{if (plugin->ascii_strncasecmp (plugin, "abc", "def", 2) != 0) ...}@*
 @*
 
 @item
@@ -2077,7 +2117,7 @@ Sous WeeChat :@*
 
 Un exemple complet d'extension, qui ajoute une commande /double
 affichant deux fois les param@`etres pass@'es sur le canal courant
-(d'accord ce n'est pas tr@`es utile mais ceci est un exemple !) :
+(d'accord ce n'est pas tr@`es utile mais ceci est un exemple !) :@*
 
 @verbatim
 #include <stdlib.h>
@@ -2107,7 +2147,7 @@ int weechat_plugin_init (t_weechat_plugin *plugin)
     plugin->cmd_handler_add (plugin, "double",
                              "Affiche deux fois un message",
                              "msg",
-                             "msg: message @`a afficher deux fois",
+                             "msg: message a afficher deux fois",
                              &toto_cmd_double,
                              NULL, NULL);
     return 1;
@@ -2283,7 +2323,7 @@ Ex@'ecute une commande ou envoie un message @'a un canal.@*
 @*
 
 @item
-@command{weechat::get_info ( nom, [serveur] );}@*
+@command{weechat::get_info ( nom, [serveur, [canal] ] );}@*
 @*
 Obtenir des informations vari@'ees sur WeeChat, le serveur ou l'utilisateur.@*
 
@@ -2303,6 +2343,7 @@ syst@`eme de WeeChat
 syst@`eme de partage WeeChat
 @end itemize
 @item @option{serveur}: nom interne du serveur
+@item @option{canal}: nom du canal
 @end itemize
 @*
 @emph{Exemples :}@*
