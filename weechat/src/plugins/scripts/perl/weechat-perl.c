@@ -36,12 +36,10 @@ char plugin_description[] = "Perl scripts support";
 t_weechat_plugin *perl_plugin;
 
 t_plugin_script *perl_scripts = NULL;
-t_plugin_script *current_perl_script = NULL;
-
-static PerlInterpreter *my_perl = NULL;
+t_plugin_script *perl_current_script = NULL;
+char *perl_current_script_filename = NULL;
 
 extern void boot_DynaLoader (pTHX_ CV* cv);
-
 
 /*
  * weechat_perl_exec: execute a Perl script
@@ -61,6 +59,8 @@ weechat_perl_exec (t_weechat_plugin *plugin,
     /* make gcc happy */
     (void) script;
     
+    PERL_SET_CONTEXT (script->interpreter);
+
     dSP;
     ENTER;
     SAVETMPS;
@@ -71,7 +71,9 @@ weechat_perl_exec (t_weechat_plugin *plugin,
         argv[0] = server;
     argv[1] = arguments;
     argv[2] = NULL;
+    
     count = perl_call_argv (function, G_EVAL | G_SCALAR, argv);
+    
     SPAGAIN;
     
     sv = GvSV (gv_fetchpv ("@", TRUE, SVt_PV));
@@ -158,12 +160,12 @@ static XS (XS_weechat_register)
     }
     
     /* register script */
-    current_perl_script = weechat_script_add (perl_plugin,
+    perl_current_script = weechat_script_add (perl_plugin,
                                               &perl_scripts,
                                               "",
                                               name, version, shutdown_func,
                                               description);
-    if (current_perl_script)
+    if (perl_current_script)
     {
         perl_plugin->printf_server (perl_plugin,
                                     "Perl: registered script \"%s\", "
@@ -308,9 +310,19 @@ static XS (XS_weechat_add_message_handler)
     
     name = SvPV (ST (0), integer);
     function = SvPV (ST (1), integer);
-    perl_plugin->msg_handler_add (perl_plugin, name,
-                                  weechat_perl_handler, function,
-                                  (void *)current_perl_script);
+    
+    if (perl_current_script)
+        perl_plugin->msg_handler_add (perl_plugin, name,
+				      weechat_perl_handler, function,
+				      (void *)perl_current_script);
+    else
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                      "Perl error: unable to add message handler, "
+                                      "script not initialized");
+	XSRETURN_NO;
+    }
+    
     XSRETURN_YES;
 }
 
@@ -341,14 +353,23 @@ static XS (XS_weechat_add_command_handler)
     arguments = (items >= 4) ? SvPV (ST (3), integer) : NULL;
     arguments_description = (items >= 5) ? SvPV (ST (4), integer) : NULL;
     
-    perl_plugin->cmd_handler_add (perl_plugin,
-                                  command,
-                                  description,
-                                  arguments,
-                                  arguments_description,
-                                  weechat_perl_handler,
-                                  function,
-                                  (void *)current_perl_script);
+    if (perl_current_script)
+        perl_plugin->cmd_handler_add (perl_plugin,
+				      command,
+				      description,
+				      arguments,
+				      arguments_description,
+				      weechat_perl_handler,
+				      function,
+				      (void *)perl_current_script);
+    else
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                      "Perl error: unable to add command handler, "
+                                      "script not initialized");
+	XSRETURN_NO;
+    }
+
     XSRETURN_YES;
 }
 
@@ -516,8 +537,83 @@ weechat_perl_xs_init (pTHX)
 int
 weechat_perl_load (t_weechat_plugin *plugin, char *filename)
 {
+    FILE *fp;
+    PerlInterpreter *perl_current_interpreter;
+    char *perl_args[] = { "", "" };
+
     plugin->printf_server (plugin, "Loading Perl script \"%s\"", filename);
-    return weechat_perl_exec (plugin, NULL, "wee_perl_load_eval_file", filename, "");
+    
+    if ((fp = fopen (filename, "r")) == NULL)
+    {
+        plugin->printf_server (plugin,
+                               "Perl error: unable to open file \"%s\"",
+                               filename);
+        return 0;
+    }
+
+    perl_current_script = NULL;
+
+    perl_current_interpreter = perl_alloc();
+
+    if (perl_current_interpreter == NULL)
+    {
+        plugin->printf_server (plugin,
+                               "Perl error: unable to create new sub-interpreter");
+        fclose (fp);
+        return 0;
+    }
+
+    PERL_SET_CONTEXT(perl_current_interpreter);
+    perl_construct(perl_current_interpreter);
+
+    perl_args[1] = filename;
+
+    if ( perl_parse (perl_current_interpreter, weechat_perl_xs_init, 2, perl_args, NULL) != 0 )
+    {
+	plugin->printf_server (plugin,
+                               "Perl error: unable to parse file \"%s\"",
+                               filename);
+        perl_destruct (perl_current_interpreter);
+	perl_free (perl_current_interpreter);
+        fclose (fp);
+        return 0;
+    }
+    
+    if ( perl_run (perl_current_interpreter) )
+    {
+	plugin->printf_server (plugin,
+                               "Perl error: unable to run file \"%s\"",
+                               filename);
+        perl_destruct (perl_current_interpreter);
+	perl_free (perl_current_interpreter);
+	/* if script was registered, removing from list */
+	if (perl_current_script != NULL)
+	    weechat_script_remove (plugin, &perl_scripts, perl_current_script);
+        fclose (fp);
+        return 0;
+    }
+
+    eval_pv ("$SIG{__WARN__} = sub { weechat::print \"$_[0]\", \"\"; };", TRUE);
+	 
+    perl_current_script_filename = strdup (filename);
+
+    fclose (fp);
+    free (perl_current_script_filename);
+    
+    if (perl_current_script == NULL)
+    {
+        plugin->printf_server (plugin,
+                               "Perl error: function \"register\" not found "
+                               "in file \"%s\"",
+                               filename);
+	perl_destruct (perl_current_interpreter);
+	perl_free (perl_current_interpreter);
+        return 0;
+    }
+    
+    perl_current_script->interpreter = (PerlInterpreter *) perl_current_interpreter;
+    
+    return 1;
 }
 
 /*
@@ -527,10 +623,43 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
 void
 weechat_perl_unload (t_weechat_plugin *plugin, t_plugin_script *script)
 {
-    if (script->shutdown_func && script->shutdown_func[0])
-        weechat_perl_exec (plugin, script, script->shutdown_func, "", "");
+    plugin->printf_server (plugin,
+                           "Unloading Perl script \"%s\"",
+                           script->name);
     
+    if (script->shutdown_func[0])
+        weechat_perl_exec (plugin, script, script->shutdown_func, "", "");
+
+    PERL_SET_CONTEXT (script->interpreter);
+    perl_destruct (script->interpreter);
+    perl_free (script->interpreter);
+   
     weechat_script_remove (plugin, &perl_scripts, script);
+}
+
+/*
+ * weechat_perl_unload_name: unload a Perl script by name
+ */
+
+void
+weechat_perl_unload_name (t_weechat_plugin *plugin, char *name)
+{
+    t_plugin_script *ptr_script;
+    
+    ptr_script = weechat_script_search (plugin, &perl_scripts, name);
+    if (ptr_script)
+    {
+        weechat_perl_unload (plugin, ptr_script);
+        plugin->printf_server (plugin,
+                               "Perl script \"%s\" unloaded",
+                               name);
+    }
+    else
+    {
+        plugin->printf_server (plugin,
+                               "Perl error: script \"%s\" not loaded",
+                               name);
+    }
 }
 
 /*
@@ -673,6 +802,11 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
                 if (path_script)
                     free (path_script);
             }
+	    else if (plugin->ascii_strcasecmp (plugin, argv[0], "unload") == 0)
+            {
+                /* unload Perl script */
+                weechat_perl_unload_name (plugin, argv[1]);
+            }
             else
             {
                 plugin->printf_server (plugin,
@@ -698,55 +832,9 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
 int
 weechat_plugin_init (t_weechat_plugin *plugin)
 {
-    char *perl_args[] = { "", "-e", "0" };
-    /* Following Perl code is extracted/modified from X-Chat IRC client */
-    /* X-Chat is (c) 1998-2005 Peter Zelezny */
-    char *weechat_perl_func =
-    {
-        "sub wee_perl_load_file"
-        "{"
-        "    my $filename = shift;"
-        "    local $/ = undef;"
-        "    open FILE, $filename or return \"__WEECHAT_ERROR__\";"
-        "    $_ = <FILE>;"
-        "    close FILE;"
-        "    return $_;"
-        "}"
-        "sub wee_perl_load_eval_file"
-        "{"
-        "    my $filename = shift;"
-        "    my $content = wee_perl_load_file ($filename);"
-        "    if ($content eq \"__WEECHAT_ERROR__\")"
-        "    {"
-        "        weechat::print \"Perl error: script '$filename' not found.\", \"\";"
-        "        return 1;"
-        "    }"
-        "    eval $content;"
-        "    if ($@)"
-        "    {"
-        "        weechat::print \"Perl error: unable to load script '$filename':\", \"\";"
-        "        weechat::print \"$@\";"
-        "        return 2;"
-        "    }"
-        "    return 0;"
-        "}"
-        "$SIG{__WARN__} = sub { weechat::print \"$_[0]\", \"\"; };"
-    };
-    
     perl_plugin = plugin;
     
     plugin->printf_server (plugin, "Loading Perl module \"weechat\"");
-    
-    my_perl = perl_alloc ();
-    if (!my_perl)
-    {
-        plugin->printf_server (plugin,
-                               "Perl error: unable to initialize Perl");
-        return 0;
-    }
-    perl_construct (my_perl);
-    perl_parse (my_perl, weechat_perl_xs_init, 3, perl_args, NULL);
-    eval_pv (weechat_perl_func, TRUE);
     
     plugin->cmd_handler_add (plugin, "perl",
                              "list/load/unload Perl scripts",
@@ -773,14 +861,6 @@ weechat_plugin_end (t_weechat_plugin *plugin)
 {
     /* unload all scripts */
     weechat_perl_unload_all (plugin);
-    
-    /* free Perl interpreter */
-    if (my_perl)
-    {
-        perl_destruct (my_perl);
-        perl_free (my_perl);
-        my_perl = NULL;
-    }
     
     perl_plugin->printf_server (perl_plugin,
                                 "Perl plugin ended");
