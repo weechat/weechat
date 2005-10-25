@@ -1793,7 +1793,7 @@ Aucune.@*
 @*
 
 @item
-@command{t_plugin_msg_handler *msg_handler_add (t_weechat_plugin
+@command{t_plugin_handler *msg_handler_add (t_weechat_plugin
 *plugin, char *message, t_plugin_handler_func *handler_func,
 char *handler_args, void *handler_pointer)}@*
 @*
@@ -1829,47 +1829,7 @@ void *handler_pointer)}@*
 @*
 
 @item
-@command{void msg_handler_remove (t_weechat_plugin *plugin,
-t_plugin_msg_handler *msg_handler)}@*
-@*
-Supprime un gestionnaire de messages IRC.@*
-
-@emph{Param@`etres :}
-@itemize @minus
-@item @option{plugin}: un pointeur vers la structure de l'extension
-@item @option{msg_handler}: le gestionnaire de messages @`a supprimer
-@end itemize
-@*
-@emph{Valeur renvoy@'ee :}@*
-@*
-Aucune.@*
-@*
-@emph{Exemple :}@*
-@*
-@code{plugin->msg_handler_remove (plugin, my_msg_handler);}@*
-@*
-
-@item
-@command{void msg_handler_remove_all (t_weechat_plugin *plugin)}@*
-@*
-Supprime tous les gestionnaires de messages IRC d'une extension.@*
-
-@emph{Param@`etres :}
-@itemize @minus
-@item @option{plugin}: un pointeur vers la structure de l'extension
-@end itemize
-@*
-@emph{Valeur renvoy@'ee :}@*
-@*
-Aucune.@*
-@*
-@emph{Exemple :}@*
-@*
-@code{plugin->msg_handler_remove_all (plugin);}@*
-@*
-
-@item
-@command{t_plugin_cmd_handler *cmd_handler_add (t_weechat_plugin
+@command{t_plugin_handler *cmd_handler_add (t_weechat_plugin
 *plugin, char *command, char *description, char *arguments,
 char *arguments_description, t_plugin_handler_func *handler_func,
 char *handler_args, void *handler_pointer)}@*
@@ -1914,15 +1874,15 @@ fichier: %s", (arguments) ? arguments : "aucun");}@*
 @*
 
 @item
-@command{void cmd_handler_remove (t_weechat_plugin *plugin,
-t_plugin_cmd_handler *cmd_handler)}@*
+@command{void handler_remove (t_weechat_plugin *plugin,
+t_plugin_handler *handler)}@*
 @*
-Supprime un gestionnaire de commande.@*
+Supprime un gestionnaire.@*
 
 @emph{Param@`etres :}
 @itemize @minus
 @item @option{plugin}: un pointeur vers la structure de l'extension
-@item @option{cmd_handler}: le gestionnaire de commande @`a supprimer
+@item @option{handler}: le gestionnaire @`a supprimer
 @end itemize
 @*
 @emph{Valeur renvoy@'ee :}@*
@@ -1931,13 +1891,13 @@ Aucune.@*
 @*
 @emph{Exemple :}@*
 @*
-@code{plugin->cmd_handler_remove (plugin, my_cmd_handler);}@*
+@code{plugin->handler_remove (plugin, my_handler);}@*
 @*
 
 @item
-@command{void cmd_handler_remove_all (t_weechat_plugin *plugin)}@*
+@command{void handler_remove_all (t_weechat_plugin *plugin)}@*
 @*
-Supprime tous les gestionnaires de commande d'une extension.@*
+Supprime tous les gestionnaires d'une extension.@*
 
 @emph{Param@`etres :}
 @itemize @minus
@@ -1950,7 +1910,7 @@ Aucune.@*
 @*
 @emph{Exemple :}@*
 @*
-@code{plugin->cmd_handler_remove_all (plugin);}@*
+@code{plugin->handler_remove_all (plugin);}@*
 @*
 
 @item

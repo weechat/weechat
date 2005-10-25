@@ -1783,7 +1783,7 @@ None.@*
 @*
 
 @item
-@command{t_plugin_msg_handler *msg_handler_add (t_weechat_plugin
+@command{t_plugin_handler *msg_handler_add (t_weechat_plugin
 *plugin, char *message, t_plugin_handler_func *handler_func,
 char *handler_args, void *handler_pointer)}@*
 @*
@@ -1815,47 +1815,7 @@ void *handler_pointer)}@*
 @*
 
 @item
-@command{void msg_handler_remove (t_weechat_plugin *plugin,
-t_plugin_msg_handler *msg_handler)}@*
-@*
-Remove an IRC message handler.@*
-
-@emph{Param@`etres :}
-@itemize @minus
-@item @option{plugin}: pointer to plugin structure
-@item @option{msg_handler}: handler to remove
-@end itemize
-@*
-@emph{Return value:}@*
-@*
-None.@*
-@*
-@emph{Example:}@*
-@*
-@code{plugin->msg_handler_remove (plugin, my_msg_handler);}@*
-@*
-
-@item
-@command{void msg_handler_remove_all (t_weechat_plugin *plugin)}@*
-@*
-Remove all IRC message handlers for a plugin.@*
-
-@emph{Arguments:}
-@itemize @minus
-@item @option{plugin}: pointer to plugin structure
-@end itemize
-@*
-@emph{Return value:}@*
-@*
-None.@*
-@*
-@emph{Example:}@*
-@*
-@code{plugin->msg_handler_remove_all (plugin);}@*
-@*
-
-@item
-@command{t_plugin_cmd_handler *cmd_handler_add (t_weechat_plugin
+@command{t_plugin_handler *cmd_handler_add (t_weechat_plugin
 *plugin, char *command, char *description, char *arguments,
 char *arguments_description, t_plugin_handler_func *handler_func,
 char *handler_args, void *handler_pointer)}@*
@@ -1897,15 +1857,15 @@ file: %s", (arguments) ? arguments : "none");}@*
 @*
 
 @item
-@command{void cmd_handler_remove (t_weechat_plugin *plugin,
-t_plugin_cmd_handler *cmd_handler)}@*
+@command{void handler_remove (t_weechat_plugin *plugin,
+t_plugin_handler *handler)}@*
 @*
-Remove a command handler.@*
+Remove a handler.@*
 
 @emph{Arguments:}
 @itemize @minus
 @item @option{plugin}: pointer to plugin structure
-@item @option{cmd_handler}: command handler to remove
+@item @option{handler}: handler to remove
 @end itemize
 @*
 @emph{Return value:}@*
@@ -1914,13 +1874,13 @@ None.@*
 @*
 @emph{Example:}@*
 @*
-@code{plugin->cmd_handler_remove (plugin, my_cmd_handler);}@*
+@code{plugin->handler_remove (plugin, my_handler);}@*
 @*
 
 @item
-@command{void cmd_handler_remove_all (t_weechat_plugin *plugin)}@*
+@command{void handler_remove_all (t_weechat_plugin *plugin)}@*
 @*
-Remove all command handlers for a plugin.@*
+Remove all handlers for a plugin.@*
 
 @emph{Arguments:}
 @itemize @minus
@@ -1933,7 +1893,7 @@ None.@*
 @*
 @emph{Example :}@*
 @*
-@code{plugin->cmd_handler_remove_all (plugin);}@*
+@code{plugin->handler_remove_all (plugin);}@*
 @*
 
 @item
