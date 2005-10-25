@@ -34,7 +34,8 @@ ALL_LINGUAS="fr es cs"
 AM_GNU_GETTEXT
 
 # Checks for libraries
-AC_CHECK_LIB(ncursesw, initscr, LIBNCURSES_FOUND=1, LIBNCURSES_FOUND=0)
+AC_CHECK_LIB(ncurses, initscr, LIBNCURSES_FOUND=1, LIBNCURSES_FOUND=0)
+AC_CHECK_LIB(ncursesw, initscr, LIBNCURSESW_FOUND=1, LIBNCURSESW_FOUND=0)
 
 # Checks for header files
 AC_HEADER_STDC
@@ -103,12 +104,20 @@ AM_CONDITIONAL(HAVE_GNUTLS,   test "$enable_gnutls" = "yes")
 # ------------------------------------------------------------------------------
 
 if test "x$enable_ncurses" = "xyes" ; then
-    if test "$LIBNCURSES_FOUND" = "0" ; then
-        AC_MSG_ERROR([
-*** ncursesw library not found!
+    if test "$LIBNCURSESW_FOUND" = "0" ; then
+        if test "$LIBNCURSES_FOUND" = "0" ; then
+            AC_MSG_ERROR([
+*** ncurses library not found!
 *** Please install ncurses library or run ./configure with --disable-ncurses parameter.])
+        fi
+        AC_MSG_WARN([
+*** ncursesw library not found! Falling back to "ncurses"
+*** Be careful, UTF-8 display will not work properly.])
+        NCURSES_LIBS="-lncurses"
+    else
+        NCURSES_LIBS="-lncursesw"
+        AC_CHECK_HEADERS(ncursesw/curses.h)
     fi
-    NCURSES_LIBS="-lncursesw"
     AC_SUBST(NCURSES_LIBS)
 fi
 

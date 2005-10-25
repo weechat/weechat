@@ -31,7 +31,12 @@
 #include <signal.h>
 #include <time.h>
 #include <sys/socket.h>
+
+#ifdef HAVE_NCURSESW_CURSES_H
 #include <ncursesw/ncurses.h>
+#else
+#include <ncurses.h>
+#endif
 
 #include "../../common/weechat.h"
 #include "../gui.h"
