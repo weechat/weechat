@@ -1292,7 +1292,7 @@ weechat_cmd_help (int argc, char **argv)
     int i;
 #ifdef PLUGINS
     t_weechat_plugin *ptr_plugin;
-    t_plugin_cmd_handler *ptr_cmd_handler;
+    t_plugin_handler *ptr_handler;
 #endif
 
     switch (argc)
@@ -1325,16 +1325,19 @@ weechat_cmd_help (int argc, char **argv)
             for (ptr_plugin = weechat_plugins; ptr_plugin;
                  ptr_plugin = ptr_plugin->next_plugin)
             {
-                for (ptr_cmd_handler = ptr_plugin->cmd_handlers; ptr_cmd_handler;
-                     ptr_cmd_handler = ptr_cmd_handler->next_handler)
+                for (ptr_handler = ptr_plugin->handlers;
+                     ptr_handler; ptr_handler = ptr_handler->next_handler)
                 {
-                    gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "   %s",
-                                      ptr_cmd_handler->command);
-                    if (ptr_cmd_handler->description
-                        && ptr_cmd_handler->description[0])
-                        gui_printf (NULL, " - %s",
-                                    ptr_cmd_handler->description);
-                    gui_printf (NULL, "\n");
+                    if (ptr_handler->type == HANDLER_COMMAND)
+                    {
+                        gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "   %s",
+                                          ptr_handler->command);
+                        if (ptr_handler->description
+                            && ptr_handler->description[0])
+                            gui_printf (NULL, " - %s",
+                                        ptr_handler->description);
+                        gui_printf (NULL, "\n");
+                    }
                 }
             }
 #endif
@@ -1395,29 +1398,30 @@ weechat_cmd_help (int argc, char **argv)
             for (ptr_plugin = weechat_plugins; ptr_plugin;
                  ptr_plugin = ptr_plugin->next_plugin)
             {
-                for (ptr_cmd_handler = ptr_plugin->cmd_handlers; ptr_cmd_handler;
-                     ptr_cmd_handler = ptr_cmd_handler->next_handler)
+                for (ptr_handler = ptr_plugin->handlers;
+                     ptr_handler; ptr_handler = ptr_handler->next_handler)
                 {
-                    if (ascii_strcasecmp (ptr_cmd_handler->command, argv[0]) == 0)
+                    if ((ptr_handler->type == HANDLER_COMMAND)
+                        && (ascii_strcasecmp (ptr_handler->command, argv[0]) == 0))
                     {
                         gui_printf (NULL, "\n");
                         gui_printf (NULL, "[p]");
                         gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "  /%s",
-                                          ptr_cmd_handler->command);
-                        if (ptr_cmd_handler->arguments &&
-                            ptr_cmd_handler->arguments[0])
+                                          ptr_handler->command);
+                        if (ptr_handler->arguments &&
+                            ptr_handler->arguments[0])
                             gui_printf (NULL, "  %s\n",
-                                        ptr_cmd_handler->arguments);
+                                        ptr_handler->arguments);
                         else
                             gui_printf (NULL, "\n");
-                        if (ptr_cmd_handler->description &&
-                            ptr_cmd_handler->description[0])
+                        if (ptr_handler->description &&
+                            ptr_handler->description[0])
                             gui_printf (NULL, "\n%s\n",
-                                        ptr_cmd_handler->description);
-                        if (ptr_cmd_handler->arguments_description &&
-                            ptr_cmd_handler->arguments_description[0])
+                                        ptr_handler->description);
+                        if (ptr_handler->arguments_description &&
+                            ptr_handler->arguments_description[0])
                             gui_printf (NULL, "\n%s\n",
-                                        ptr_cmd_handler->arguments_description);
+                                        ptr_handler->arguments_description);
                         return 0;
                     }
                 }
@@ -1661,8 +1665,8 @@ weechat_cmd_plugin (int argc, char **argv)
 {
 #ifdef PLUGINS
     t_weechat_plugin *ptr_plugin;
-    t_plugin_msg_handler *ptr_msg_handler;
-    t_plugin_cmd_handler *ptr_cmd_handler;
+    t_plugin_handler *ptr_handler;
+    int handler_found;
     
     switch (argc)
     {
@@ -1685,15 +1689,19 @@ weechat_cmd_plugin (int argc, char **argv)
                 /* message handlers */
                 irc_display_prefix (NULL, PREFIX_PLUGIN);
                 gui_printf (NULL, _("     message handlers:\n"));
-                for (ptr_msg_handler = ptr_plugin->msg_handlers;
-                     ptr_msg_handler;
-                     ptr_msg_handler = ptr_msg_handler->next_handler)
+                handler_found = 0;
+                for (ptr_handler = ptr_plugin->handlers;
+                     ptr_handler; ptr_handler = ptr_handler->next_handler)
                 {
-                    irc_display_prefix (NULL, PREFIX_PLUGIN);
-                    gui_printf (NULL, _("       IRC(%s)\n"),
-                                ptr_msg_handler->irc_command);
+                    if (ptr_handler->type == HANDLER_MESSAGE)
+                    {
+                        handler_found = 1;
+                        irc_display_prefix (NULL, PREFIX_PLUGIN);
+                        gui_printf (NULL, _("       IRC(%s)\n"),
+                                    ptr_handler->irc_command);
+                    }
                 }
-                if (!ptr_plugin->msg_handlers)
+                if (!handler_found)
                 {
                     irc_display_prefix (NULL, PREFIX_PLUGIN);
                     gui_printf (NULL, _("       (no message handler)\n"));
@@ -1702,20 +1710,24 @@ weechat_cmd_plugin (int argc, char **argv)
                 /* command handlers */
                 irc_display_prefix (NULL, PREFIX_PLUGIN);
                 gui_printf (NULL, _("     command handlers:\n"));
-                for (ptr_cmd_handler = ptr_plugin->cmd_handlers;
-                     ptr_cmd_handler;
-                     ptr_cmd_handler = ptr_cmd_handler->next_handler)
+                handler_found = 0;
+                for (ptr_handler = ptr_plugin->handlers;
+                     ptr_handler; ptr_handler = ptr_handler->next_handler)
                 {
-                    irc_display_prefix (NULL, PREFIX_PLUGIN);
-                    gui_printf (NULL, "       /%s",
-                                ptr_cmd_handler->command);
-                    if (ptr_cmd_handler->description
-                        && ptr_cmd_handler->description[0])
-                        gui_printf (NULL, " (%s)",
-                                    ptr_cmd_handler->description);
-                    gui_printf (NULL, "\n");
+                    if (ptr_handler->type == HANDLER_COMMAND)
+                    {
+                        handler_found = 1;
+                        irc_display_prefix (NULL, PREFIX_PLUGIN);
+                        gui_printf (NULL, "       /%s",
+                                    ptr_handler->command);
+                        if (ptr_handler->description
+                            && ptr_handler->description[0])
+                            gui_printf (NULL, " (%s)",
+                                        ptr_handler->description);
+                        gui_printf (NULL, "\n");
+                    }
                 }
-                if (!ptr_plugin->cmd_handlers)
+                if (!handler_found)
                 {
                     irc_display_prefix (NULL, PREFIX_PLUGIN);
                     gui_printf (NULL, _("       (no command handler)\n"));
@@ -1728,27 +1740,21 @@ weechat_cmd_plugin (int argc, char **argv)
             }
             break;
         case 1:
-            /*if (ascii_strcasecmp (argv[0], "autoload") == 0)
-                plugin_auto_load (PLUGIN_TYPE_PERL, "perl/autoload");
+            if (ascii_strcasecmp (argv[0], "autoload") == 0)
+                plugin_auto_load ();
             else if (ascii_strcasecmp (argv[0], "reload") == 0)
             {
-                plugin_unload (PLUGIN_TYPE_PERL, NULL);
-                plugin_auto_load (PLUGIN_TYPE_PERL, "perl/autoload");
+                plugin_unload_all ();
+                plugin_auto_load ();
             }
             else if (ascii_strcasecmp (argv[0], "unload") == 0)
-            plugin_unload (PLUGIN_TYPE_PERL, NULL);*/
+                plugin_unload_all ();
             break;
         case 2:
             if (ascii_strcasecmp (argv[0], "load") == 0)
-            {
-                /* load plugin */
                 plugin_load (argv[1]);
-            }
             else if (ascii_strcasecmp (argv[0], "unload") == 0)
-            {
-                /* unload plugin */
                 plugin_unload_name (argv[1]);
-            }
             else
             {
                 irc_display_prefix (NULL, PREFIX_ERROR);

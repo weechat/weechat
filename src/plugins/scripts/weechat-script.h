@@ -48,5 +48,14 @@ extern t_plugin_script *weechat_script_add (t_weechat_plugin *,
                                             char *, char *, char *);
 extern void weechat_script_remove (t_weechat_plugin *,
                                    t_plugin_script **, t_plugin_script *);
+extern void weechat_script_remove_handler (t_weechat_plugin *,
+                                           t_plugin_script *,
+                                           char *, char *);
+extern char *weechat_script_get_plugin_config (t_weechat_plugin *,
+                                               t_plugin_script *,
+                                               char *);
+extern int weechat_script_set_plugin_config (t_weechat_plugin *,
+                                             t_plugin_script *,
+                                             char *, char *);
 
 #endif /* weechat-script.h */

@@ -118,7 +118,7 @@ weechat_python_register (PyObject *self, PyObject *args)
         python_plugin->printf_server (python_plugin,
                                       "Python error: wrong parameters for "
                                       "\"register\" function");
-        return NULL;
+        return Py_BuildValue ("i", 0);
     }
     
     if (weechat_script_search (python_plugin, &python_scripts, name))
@@ -129,7 +129,7 @@ weechat_python_register (PyObject *self, PyObject *args)
                                       "\"%s\" script (another script "
                                       "already exists with this name)",
                                       name);
-        return NULL;
+        return Py_BuildValue ("i", 0);
     }
     
     /* register script */
@@ -152,11 +152,10 @@ weechat_python_register (PyObject *self, PyObject *args)
                                       "Python error: unable to load script "
                                       "\"%s\" (not enough memory)",
                                       name);
-        return NULL;
+        return Py_BuildValue ("i", 0);
     }
     
-    Py_INCREF (Py_None);
-    return Py_None;
+    return Py_BuildValue ("i", 1);
 }
 
 /*
@@ -171,6 +170,14 @@ weechat_python_print (PyObject *self, PyObject *args)
     /* make gcc happy */
     (void) self;
     
+    if (!python_current_script)
+    {
+        python_plugin->printf_server (python_plugin,
+                                      "Python error: unable to print message, "
+                                      "script not initialized");
+        return Py_BuildValue ("i", 0);
+    }
+    
     message = NULL;
     channel_name = NULL;
     server_name = NULL;
@@ -180,12 +187,13 @@ weechat_python_print (PyObject *self, PyObject *args)
         python_plugin->printf_server (python_plugin,
                                       "Python error: wrong parameters for "
                                       "\"print\" function");
-        return NULL;
+        return Py_BuildValue ("i", 0);
     }
     
     python_plugin->printf (python_plugin,
                            server_name, channel_name,
                            "%s", message);
+    
     return Py_BuildValue ("i", 1);
 }
 
@@ -202,6 +210,14 @@ weechat_python_print_infobar (PyObject *self, PyObject *args)
     /* make gcc happy */
     (void) self;
     
+    if (!python_current_script)
+    {
+        python_plugin->printf_server (python_plugin,
+                                      "Python error: unable to print infobar message, "
+                                      "script not initialized");
+        return Py_BuildValue ("i", 0);
+    }
+    
     delay = 1;
     message = NULL;
     
@@ -210,13 +226,12 @@ weechat_python_print_infobar (PyObject *self, PyObject *args)
         python_plugin->printf_server (python_plugin,
                                       "Python error: wrong parameters for "
                                       "\"print_infobar\" function");
-        return NULL;
+        return Py_BuildValue ("i", 0);
     }
     
     python_plugin->infobar_printf (python_plugin, delay, message);
     
-    Py_INCREF (Py_None);
-    return Py_None;
+    return Py_BuildValue ("i", 1);
 }
 
 /*
@@ -231,6 +246,14 @@ weechat_python_command (PyObject *self, PyObject *args)
     /* make gcc happy */
     (void) self;
     
+    if (!python_current_script)
+    {
+        python_plugin->printf_server (python_plugin,
+                                      "Python error: unable to run command, "
+                                      "script not initialized");
+        return Py_BuildValue ("i", 0);
+    }
+    
     command = NULL;
     channel_name = NULL;
     server_name = NULL;
@@ -240,12 +263,13 @@ weechat_python_command (PyObject *self, PyObject *args)
         python_plugin->printf_server (python_plugin,
                                       "Python error: wrong parameters for "
                                       "\"command\" function");
-        return NULL;
+        return Py_BuildValue ("i", 0);
     }
 
     python_plugin->exec_command (python_plugin,
                                  server_name, channel_name,
                                  command);
+    
     return Py_BuildValue ("i", 1);
 }
 
@@ -256,36 +280,36 @@ weechat_python_command (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_add_message_handler (PyObject *self, PyObject *args)
 {
-    char *message, *function;
+    char *irc_command, *function;
     
     /* make gcc happy */
     (void) self;
     
-    message = NULL;
-    function = NULL;
-    
-    if (!PyArg_ParseTuple (args, "ss", &message, &function))
-    {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: wrong parameters for "
-                                      "\"add_message_handler\" function");
-        return NULL;
-    }
-    
-    if (python_current_script)
-        python_plugin->msg_handler_add (python_plugin, message,
-                                        weechat_python_handler, function,
-                                        (void *)python_current_script);
-    else
+    if (!python_current_script)
     {
         python_plugin->printf_server (python_plugin,
                                       "Python error: unable to add message handler, "
                                       "script not initialized");
-        return NULL;
+        return Py_BuildValue ("i", 0);
     }
     
-    Py_INCREF (Py_None);
-    return Py_None;
+    irc_command = NULL;
+    function = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &irc_command, &function))
+    {
+        python_plugin->printf_server (python_plugin,
+                                      "Python error: wrong parameters for "
+                                      "\"add_message_handler\" function");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    if (python_plugin->msg_handler_add (python_plugin, irc_command,
+                                        weechat_python_handler, function,
+                                        (void *)python_current_script))
+        return Py_BuildValue ("i", 1);
+    
+    return Py_BuildValue ("i", 0);
 }
 
 /*
@@ -299,7 +323,15 @@ weechat_python_add_command_handler (PyObject *self, PyObject *args)
     
     /* make gcc happy */
     (void) self;
-
+    
+    if (!python_current_script)
+    {
+        python_plugin->printf_server (python_plugin,
+                                      "Python error: unable to add command handler, "
+                                      "script not initialized");
+        return Py_BuildValue ("i", 0);
+    }
+    
     command = NULL;
     function = NULL;
     description = NULL;
@@ -312,28 +344,57 @@ weechat_python_add_command_handler (PyObject *self, PyObject *args)
         python_plugin->printf_server (python_plugin,
                                       "Python error: wrong parameters for "
                                       "\"add_command_handler\" function");
-        return NULL; 
+        return Py_BuildValue ("i", 0);
     }
     
-    if (python_current_script)
-        python_plugin->cmd_handler_add (python_plugin,
+    if (python_plugin->cmd_handler_add (python_plugin,
                                         command,
                                         description,
                                         arguments,
                                         arguments_description,
                                         weechat_python_handler,
                                         function,
-                                        (void *)python_current_script);
-    else
+                                        (void *)python_current_script))
+        return Py_BuildValue ("i", 1);
+    
+    return Py_BuildValue ("i", 0);
+}
+
+/*
+ * weechat.remove_handler: remove a handler
+ */
+
+static PyObject *
+weechat_python_remove_handler (PyObject *self, PyObject *args)
+{
+    char *command, *function;
+    
+    /* make gcc happy */
+    (void) self;
+    
+    if (!python_current_script)
     {
         python_plugin->printf_server (python_plugin,
-                                      "Python error: unable to add command handler, "
+                                      "Python error: unable to remove handler, "
                                       "script not initialized");
-        return NULL;
+        return Py_BuildValue ("i", 0);
     }
     
-    Py_INCREF (Py_None);
-    return Py_None;
+    command = NULL;
+    function = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &command, &function))
+    {
+        python_plugin->printf_server (python_plugin,
+                                      "Python error: wrong parameters for "
+                                      "\"remove_handler\" function");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    weechat_script_remove_handler (python_plugin, python_current_script,
+                                   command, function);
+    
+    return Py_BuildValue ("i", 1);
 }
 
 /*
@@ -349,6 +410,14 @@ weechat_python_get_info (PyObject *self, PyObject *args)
     /* make gcc happy */
     (void) self;
     
+    if (!python_current_script)
+    {
+        python_plugin->printf_server (python_plugin,
+                                      "Python error: unable to get info, "
+                                      "script not initialized");
+        return Py_BuildValue ("i", 0);
+    }
+    
     arg = NULL;
     server_name = NULL;
     channel_name = NULL;
@@ -358,7 +427,7 @@ weechat_python_get_info (PyObject *self, PyObject *args)
         python_plugin->printf_server (python_plugin,
                                       "Python error: wrong parameters for "
                                       "\"get_info\" function");
-        return NULL; 
+        return Py_BuildValue ("i", 0);
     }
     
     if (arg)
@@ -371,11 +440,9 @@ weechat_python_get_info (PyObject *self, PyObject *args)
             free (info);
             return object;
         }
-        else
-            return Py_BuildValue ("s", "");
     }
     
-    return Py_BuildValue ("i", 1);
+    return Py_BuildValue ("s", "");
 }
 
 /*
@@ -393,11 +460,19 @@ weechat_python_get_dcc_info (PyObject *self, PyObject *args)
     (void) self;
     (void) args;
     
+    if (!python_current_script)
+    {
+        python_plugin->printf_server (python_plugin,
+                                      "Python error: unable to get DCC info, "
+                                      "script not initialized");
+        return Py_BuildValue ("i", 0);
+    }
+    
     dcc_info = python_plugin->get_dcc_info (python_plugin);
     dcc_count = 0;
     
     if (!dcc_info)
-        return Py_None;
+        return Py_BuildValue ("i", 0);
     
     for (ptr_dcc = dcc_info; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
     {
@@ -409,7 +484,7 @@ weechat_python_get_dcc_info (PyObject *self, PyObject *args)
     if (!list)
     {
         python_plugin->free_dcc_info (python_plugin, dcc_info);
-        return Py_None;
+        return Py_BuildValue ("i", 0);
     }
     
     dcc_count = 0;
@@ -440,14 +515,14 @@ weechat_python_get_dcc_info (PyObject *self, PyObject *args)
                 PyMem_Free (listvalue);
                 PyMem_Free (list);
                 python_plugin->free_dcc_info (python_plugin, dcc_info);
-                return Py_None;
+                return Py_BuildValue ("i", 0);
             }
             PyMem_Free (listvalue);
         }
         else
         {
             python_plugin->free_dcc_info (python_plugin, dcc_info);
-            return Py_None;
+            return Py_BuildValue ("i", 0);
         }
         dcc_count++;
     }
@@ -458,18 +533,26 @@ weechat_python_get_dcc_info (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat.get_config: get value of a config option
+ * weechat.get_config: get value of a WeeChat config option
  */
 
 static PyObject *
 weechat_python_get_config (PyObject *self, PyObject *args)
 {
-    char *option, *value;
-    PyObject *object;
+    char *option, *return_value;
+    PyObject *python_return_value;
     
     /* make gcc happy */
     (void) self;
-
+    
+    if (!python_current_script)
+    {
+        python_plugin->printf_server (python_plugin,
+                                      "Python error: unable to get config option, "
+                                      "script not initialized");
+        return Py_BuildValue ("i", 0);
+    }
+    
     option = NULL;
     
     if (!PyArg_ParseTuple (args, "s", &option))
@@ -477,26 +560,150 @@ weechat_python_get_config (PyObject *self, PyObject *args)
         python_plugin->printf_server (python_plugin,
                                       "Python error: wrong parameters for "
                                       "\"get_config\" function");
-        return NULL; 
+        return Py_BuildValue ("i", 0);
     }
     
     if (option)
     {
-        value = python_plugin->get_config (python_plugin, option);
+        return_value = python_plugin->get_config (python_plugin, option);
         
-        if (value)
+        if (return_value)
         {
-            object = Py_BuildValue ("s", value);
-            free (value);
-            return object;
+            python_return_value = Py_BuildValue ("s", return_value);
+            free (return_value);
+            return python_return_value;
         }
-        else
-            return Py_BuildValue ("s", "");
     }
     
-    return Py_BuildValue ("i", 1);
+    return Py_BuildValue ("s", "");
 }
+
+/*
+ * weechat.set_config: set value of a WeeChat config option
+ */
+
+static PyObject *
+weechat_python_set_config (PyObject *self, PyObject *args)
+{
+    char *option, *value;
+    
+    /* make gcc happy */
+    (void) self;
+
+    if (!python_current_script)
+    {
+        python_plugin->printf_server (python_plugin,
+                                      "Python error: unable to set config option, "
+                                      "script not initialized");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    option = NULL;
+    value = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &option, &value))
+    {
+        python_plugin->printf_server (python_plugin,
+                                      "Python error: wrong parameters for "
+                                      "\"set_config\" function");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    if (option && value)
+    {
+        if (python_plugin->set_config (python_plugin, option, value))
+            return Py_BuildValue ("i", 1);
+    }
+    
+    return Py_BuildValue ("i", 0);
+}
+
+/*
+ * weechat.get_plugin_config: get value of a plugin config option
+ */
+
+static PyObject *
+weechat_python_get_plugin_config (PyObject *self, PyObject *args)
+{
+    char *option, *return_value;
+    PyObject *python_return_value;
+    
+    /* make gcc happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        python_plugin->printf_server (python_plugin,
+                                      "Python error: unable to get plugin config option, "
+                                      "script not initialized");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    option = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &option))
+    {
+        python_plugin->printf_server (python_plugin,
+                                      "Python error: wrong parameters for "
+                                      "\"get_plugin_config\" function");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    if (option)
+    {
+        return_value = python_plugin->get_config (python_plugin, option);
         
+        if (return_value)
+        {
+            python_return_value = Py_BuildValue ("s", return_value);
+            free (return_value);
+            return python_return_value;
+        }
+    }
+    
+    return Py_BuildValue ("s", "");
+}
+
+/*
+ * weechat.set_plugin_config: set value of a plugin config option
+ */
+
+static PyObject *
+weechat_python_set_plugin_config (PyObject *self, PyObject *args)
+{
+    char *option, *value;
+    
+    /* make gcc happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        python_plugin->printf_server (python_plugin,
+                                      "Python error: unable to set plugin config option, "
+                                      "script not initialized");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    option = NULL;
+    value = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &option, &value))
+    {
+        python_plugin->printf_server (python_plugin,
+                                      "Python error: wrong parameters for "
+                                      "\"set_plugin_config\" function");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    if (option && value)
+    {
+        if (python_plugin->set_config (python_plugin, option, value))
+            return Py_BuildValue ("i", 1);
+    }
+    
+    return Py_BuildValue ("i", 0);
+}
+
 /*
  * Python subroutines
  */
@@ -509,9 +716,13 @@ PyMethodDef weechat_python_funcs[] = {
     { "command", weechat_python_command, METH_VARARGS, "" },
     { "add_message_handler", weechat_python_add_message_handler, METH_VARARGS, "" },
     { "add_command_handler", weechat_python_add_command_handler, METH_VARARGS, "" },
+    { "remove_handler", weechat_python_remove_handler, METH_VARARGS, "" },
     { "get_info", weechat_python_get_info, METH_VARARGS, "" },
     { "get_dcc_info", weechat_python_get_dcc_info, METH_VARARGS, "" },
     { "get_config", weechat_python_get_config, METH_VARARGS, "" },
+    { "set_config", weechat_python_set_config, METH_VARARGS, "" },
+    { "get_plugin_config", weechat_python_get_plugin_config, METH_VARARGS, "" },
+    { "set_plugin_config", weechat_python_set_plugin_config, METH_VARARGS, "" },
     { NULL, NULL, 0, NULL }
 };
 
@@ -738,9 +949,8 @@ weechat_python_cmd (t_weechat_plugin *plugin,
 {
     int argc, path_length, handler_found;
     char **argv, *path_script, *dir_home;
-    t_plugin_script *ptr_plugin_script;
-    t_plugin_msg_handler *ptr_msg_handler;
-    t_plugin_cmd_handler *ptr_cmd_handler;
+    t_plugin_script *ptr_script;
+    t_plugin_handler *ptr_handler;
     
     /* make gcc happy */
     (void) server;
@@ -764,14 +974,14 @@ weechat_python_cmd (t_weechat_plugin *plugin,
             plugin->printf_server (plugin, "Registered Python scripts:");
             if (python_scripts)
             {
-                for (ptr_plugin_script = python_scripts; ptr_plugin_script;
-                     ptr_plugin_script = ptr_plugin_script->next_script)
+                for (ptr_script = python_scripts;
+                     ptr_script; ptr_script = ptr_script->next_script)
                 {
                     plugin->printf_server (plugin, "  %s v%s%s%s",
-                                           ptr_plugin_script->name,
-                                           ptr_plugin_script->version,
-                                           (ptr_plugin_script->description[0]) ? " - " : "",
-                                           ptr_plugin_script->description);
+                                           ptr_script->name,
+                                           ptr_script->version,
+                                           (ptr_script->description[0]) ? " - " : "",
+                                           ptr_script->description);
                 }
             }
             else
@@ -781,15 +991,16 @@ weechat_python_cmd (t_weechat_plugin *plugin,
             plugin->printf_server (plugin, "");
             plugin->printf_server (plugin, "Python message handlers:");
             handler_found = 0;
-            for (ptr_msg_handler = plugin->msg_handlers; ptr_msg_handler;
-                 ptr_msg_handler = ptr_msg_handler->next_handler)
+            for (ptr_handler = plugin->handlers;
+                 ptr_handler; ptr_handler = ptr_handler->next_handler)
             {
-                if (ptr_msg_handler->msg_handler_args)
+                if ((ptr_handler->type == HANDLER_MESSAGE)
+                    && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
                     plugin->printf_server (plugin, "  IRC(%s) => Python(%s)",
-                                           ptr_msg_handler->irc_command,
-                                           ptr_msg_handler->msg_handler_args);
+                                           ptr_handler->irc_command,
+                                           ptr_handler->handler_args);
                 }
             }
             if (!handler_found)
@@ -799,15 +1010,16 @@ weechat_python_cmd (t_weechat_plugin *plugin,
             plugin->printf_server (plugin, "");
             plugin->printf_server (plugin, "Python command handlers:");
             handler_found = 0;
-            for (ptr_cmd_handler = plugin->cmd_handlers; ptr_cmd_handler;
-                 ptr_cmd_handler = ptr_cmd_handler->next_handler)
+            for (ptr_handler = plugin->handlers;
+                 ptr_handler; ptr_handler = ptr_handler->next_handler)
             {
-                if (ptr_cmd_handler->cmd_handler_args)
+                if ((ptr_handler->type == HANDLER_COMMAND)
+                    && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
                     plugin->printf_server (plugin, "  /%s => Python(%s)",
-                                           ptr_cmd_handler->command,
-                                           ptr_cmd_handler->cmd_handler_args);
+                                           ptr_handler->command,
+                                           ptr_handler->handler_args);
                 }
             }
             if (!handler_found)

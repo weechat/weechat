@@ -139,7 +139,6 @@ static XS (XS_weechat_register)
                                     "Perl error: wrong parameters for "
                                     "\"register\" function");
         XSRETURN (0);
-        return;
     }
     
     name = SvPV (ST (0), integer);
@@ -156,7 +155,6 @@ static XS (XS_weechat_register)
                                     "already exists with this name)",
                                     name);
         XSRETURN (0);
-        return;
     }
     
     /* register script */
@@ -179,8 +177,8 @@ static XS (XS_weechat_register)
                                     "\"%s\" (not enough memory)",
                                     name);
         XSRETURN (0);
-        return;
     }
+    
     XSRETURN (1);
 }
 
@@ -197,13 +195,20 @@ static XS (XS_weechat_print)
     /* make gcc happy */
     (void) cv;
     
+    if (!perl_current_script)
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                    "Perl error: unable to print message, "
+                                    "script not initialized");
+	XSRETURN (0);
+    }
+    
     if ((items < 1) || (items > 3))
     {
         perl_plugin->printf_server (perl_plugin,
                                     "Perl error: wrong parameters for "
                                     "\"print\" function");
-        XSRETURN_NO;
-        return;
+        XSRETURN (0);
     }
     
     channel_name = NULL;
@@ -220,7 +225,8 @@ static XS (XS_weechat_print)
     perl_plugin->printf (perl_plugin,
                          server_name, channel_name,
                          "%s", message);
-    XSRETURN_YES;
+    
+    XSRETURN (1);
 }
 
 /*
@@ -235,18 +241,27 @@ static XS (XS_weechat_print_infobar)
     /* make gcc happy */
     (void) cv;
     
+    if (!perl_current_script)
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                    "Perl error: unable to print infobar message, "
+                                    "script not initialized");
+	XSRETURN (0);
+    }
+    
     if (items != 2)
     {
         perl_plugin->printf_server (perl_plugin,
                                     "Perl error: wrong parameters for "
                                     "\"print_infobar\" function");
-        XSRETURN_NO;
+        XSRETURN (0);
     }
     
     perl_plugin->infobar_printf (perl_plugin,
                                  SvIV (ST (0)),
                                  SvPV (ST (1), integer));
-    XSRETURN_YES;
+    
+    XSRETURN (1);
 }
 
 /*
@@ -262,13 +277,20 @@ static XS (XS_weechat_command)
     /* make gcc happy */
     (void) cv;
     
+    if (!perl_current_script)
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                    "Perl error: unable to run command, "
+                                    "script not initialized");
+	XSRETURN (0);
+    }
+    
     if ((items < 1) || (items > 3))
     {
         perl_plugin->printf_server (perl_plugin,
                                     "Perl error: wrong parameters for "
                                     "\"command\" function");
-        XSRETURN_NO;
-        return;
+        XSRETURN (0);
     }
     
     channel_name = NULL;
@@ -284,7 +306,8 @@ static XS (XS_weechat_command)
     perl_plugin->exec_command (perl_plugin,
                                server_name, channel_name,
                                SvPV (ST (0), integer));
-    XSRETURN_YES;
+    
+    XSRETURN (1);
 }
 
 /*
@@ -293,37 +316,38 @@ static XS (XS_weechat_command)
 
 static XS (XS_weechat_add_message_handler)
 {
-    char *name, *function;
+    char *irc_command, *function;
     unsigned int integer;
     dXSARGS;
     
     /* make gcc happy */
     (void) cv;
     
+    if (!perl_current_script)
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                    "Perl error: unable to add message handler, "
+                                    "script not initialized");
+	XSRETURN (0);
+    }
+    
     if (items != 2)
     {
         perl_plugin->printf_server (perl_plugin,
                                     "Perl error: wrong parameters for "
                                     "\"add_message_handler\" function");
-        XSRETURN_NO;
+        XSRETURN (0);
     }
     
-    name = SvPV (ST (0), integer);
+    irc_command = SvPV (ST (0), integer);
     function = SvPV (ST (1), integer);
     
-    if (perl_current_script)
-        perl_plugin->msg_handler_add (perl_plugin, name,
-				      weechat_perl_handler, function,
-				      (void *)perl_current_script);
-    else
-    {
-        perl_plugin->printf_server (perl_plugin,
-                                      "Perl error: unable to add message handler, "
-                                      "script not initialized");
-	XSRETURN_NO;
-    }
+    if (perl_plugin->msg_handler_add (perl_plugin, irc_command,
+                                      weechat_perl_handler, function,
+                                      (void *)perl_current_script))
+        XSRETURN (1);
     
-    XSRETURN_YES;
+    XSRETURN (0);
 }
 
 /*
@@ -339,12 +363,20 @@ static XS (XS_weechat_add_command_handler)
     /* make gcc happy */
     (void) cv;
     
+    if (!perl_current_script)
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                    "Perl error: unable to add command handler, "
+                                    "script not initialized");
+	XSRETURN (0);
+    }
+    
     if (items < 2)
     {
         perl_plugin->printf_server (perl_plugin,
                                     "Perl error: wrong parameters for "
                                     "\"add_command_handler\" function");
-        XSRETURN_NO;
+        XSRETURN (0);
     }
     
     command = SvPV (ST (0), integer);
@@ -353,24 +385,55 @@ static XS (XS_weechat_add_command_handler)
     arguments = (items >= 4) ? SvPV (ST (3), integer) : NULL;
     arguments_description = (items >= 5) ? SvPV (ST (4), integer) : NULL;
     
-    if (perl_current_script)
-        perl_plugin->cmd_handler_add (perl_plugin,
-				      command,
-				      description,
-				      arguments,
-				      arguments_description,
-				      weechat_perl_handler,
-				      function,
-				      (void *)perl_current_script);
-    else
+    if (perl_plugin->cmd_handler_add (perl_plugin,
+                                      command,
+                                      description,
+                                      arguments,
+                                      arguments_description,
+                                      weechat_perl_handler,
+                                      function,
+                                      (void *)perl_current_script))
+        XSRETURN (1);
+    
+    XSRETURN (0);
+}
+
+/*
+ * weechat::remove_handler: remove a handler
+ */
+
+static XS (XS_weechat_remove_handler)
+{
+    char *command, *function;
+    unsigned int integer;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if (!perl_current_script)
     {
         perl_plugin->printf_server (perl_plugin,
-                                      "Perl error: unable to add command handler, "
-                                      "script not initialized");
-	XSRETURN_NO;
+                                    "Perl error: unable to remove handler, "
+                                    "script not initialized");
+	XSRETURN (0);
     }
-
-    XSRETURN_YES;
+    
+    if (items != 2)
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                    "Perl error: wrong parameters for "
+                                    "\"remove_handler\" function");
+        XSRETURN (0);
+    }
+    
+    command = SvPV (ST (0), integer);
+    function = SvPV (ST (1), integer);
+    
+    weechat_script_remove_handler (perl_plugin, perl_current_script,
+                                   command, function);
+    
+    XSRETURN (1);
 }
 
 /*
@@ -386,12 +449,20 @@ static XS (XS_weechat_get_info)
     /* make gcc happy */
     (void) cv;
     
+    if (!perl_current_script)
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                    "Perl error: unable to get info, "
+                                    "script not initialized");
+	XSRETURN (0);
+    }
+    
     if ((items < 1) || (items > 3))
     {
         perl_plugin->printf_server (perl_plugin,
                                     "Perl error: wrong parameters for "
                                     "\"get_info\" function");
-        XSRETURN_NO;
+        XSRETURN (0);
     }
     
     server_name = NULL;
@@ -411,12 +482,11 @@ static XS (XS_weechat_get_info)
         {
             XST_mPV (0, info);
             free (info);
+            return;
         }
-        else
-            XST_mPV (0, "");
     }
     
-    XSRETURN (1);
+    XST_mPV (0, "");
 }
 
 /*
@@ -433,14 +503,19 @@ static XS (XS_weechat_get_dcc_info)
     (void) cv;
     (void) items;
     
+    if (!perl_current_script)
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                    "Perl error: unable to get DCC info, "
+                                    "script not initialized");
+	XSRETURN (0);
+    }
+    
     dcc_info = perl_plugin->get_dcc_info (perl_plugin);
     dcc_count = 0;
     
     if (!dcc_info)
-    {
         XSRETURN (0);
-        return;
-    }
     
     for (ptr_dcc = dcc_info; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
     {
@@ -473,10 +548,56 @@ static XS (XS_weechat_get_dcc_info)
 }
 
 /*
- * weechat::get_config: get value of a config option
+ * weechat::get_config: get value of a WeeChat config option
  */
 
 static XS (XS_weechat_get_config)
+{
+    char *option, *return_value;
+    unsigned int integer;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                    "Perl error: unable to get config option, "
+                                    "script not initialized");
+	XSRETURN (0);
+    }
+    
+    if (items != 1)
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                    "Perl error: wrong parameters for "
+                                    "\"get_config\" function");
+        XSRETURN (0);
+    }
+    
+    option = SvPV (ST (0), integer);
+    
+    if (option)
+    {
+        return_value = perl_plugin->get_config (perl_plugin, option);
+        
+        if (return_value)
+        {
+            XST_mPV (0, return_value);
+            free (return_value);
+            return;
+        }
+    }
+    
+    XST_mPV (0, "");
+}
+
+/*
+ * weechat::set_config: set value of a WeeChat config option
+ */
+
+static XS (XS_weechat_set_config)
 {
     char *option, *value;
     unsigned int integer;
@@ -485,29 +606,123 @@ static XS (XS_weechat_get_config)
     /* make gcc happy */
     (void) cv;
     
+    if (!perl_current_script)
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                    "Perl error: unable to set config option, "
+                                    "script not initialized");
+	XSRETURN (0);
+    }
+    
+    if (items != 2)
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                    "Perl error: wrong parameters for "
+                                    "\"set_config\" function");
+        XSRETURN (0);
+    }
+    
+    option = SvPV (ST (0), integer);
+    value = SvPV (ST (1), integer);
+    
+    if (option && value)
+    {
+        if (perl_plugin->set_config (perl_plugin, option, value))
+            XSRETURN (1);
+    }
+    
+    XSRETURN (0);
+}
+
+/*
+ * weechat::get_plugin_config: get value of a plugin config option
+ */
+
+static XS (XS_weechat_get_plugin_config)
+{
+    char *option, *return_value;
+    unsigned int integer;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                    "Perl error: unable to get plugin config option, "
+                                    "script not initialized");
+	XSRETURN (0);
+    }
+    
     if (items != 1)
     {
         perl_plugin->printf_server (perl_plugin,
                                     "Perl error: wrong parameters for "
-                                    "\"get_config\" function");
-        XSRETURN_NO;
+                                    "\"get_plugin_config\" function");
+        XSRETURN (0);
     }
     
     option = SvPV (ST (0), integer);
+    
     if (option)
     {
-        value = perl_plugin->get_config (perl_plugin, option);
+        return_value = weechat_script_get_plugin_config (perl_plugin,
+                                                         perl_current_script,
+                                                         option);
         
-        if (value)
+        if (return_value)
         {
-            XST_mPV (0, value);
-            free (value);
+            XST_mPV (0, return_value);
+            free (return_value);
+            return;
         }
-        else
-            XST_mPV (0, "");
+    }    
+    
+    XST_mPV (0, "");
+}
+
+/*
+ * weechat::set_plugin_config: set value of a WeeChat config option
+ */
+
+static XS (XS_weechat_set_plugin_config)
+{
+    char *option, *value;
+    unsigned int integer;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                    "Perl error: unable to set plugin config option, "
+                                    "script not initialized");
+	XSRETURN (0);
     }
     
-    XSRETURN (1);
+    if (items != 2)
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                    "Perl error: wrong parameters for "
+                                    "\"set_plugin_config\" function");
+        XSRETURN (0);
+    }
+    
+    option = SvPV (ST (0), integer);
+    value = SvPV (ST (1), integer);
+    
+    if (option && value)
+    {
+        if (weechat_script_set_plugin_config (perl_plugin,
+                                              perl_current_script,
+                                              option, value))
+            XSRETURN (1);
+    }
+    
+    XSRETURN (0);
 }
 
 /*
@@ -525,13 +740,17 @@ weechat_perl_xs_init (pTHX)
     newXS ("weechat::command", XS_weechat_command, "weechat");
     newXS ("weechat::add_message_handler", XS_weechat_add_message_handler, "weechat");
     newXS ("weechat::add_command_handler", XS_weechat_add_command_handler, "weechat");
+    newXS ("weechat::remove_handler", XS_weechat_remove_handler, "weechat");
     newXS ("weechat::get_info", XS_weechat_get_info, "weechat");
     newXS ("weechat::get_dcc_info", XS_weechat_get_dcc_info, "weechat");
     newXS ("weechat::get_config", XS_weechat_get_config, "weechat");
+    newXS ("weechat::set_config", XS_weechat_set_config, "weechat");
+    newXS ("weechat::get_plugin_config", XS_weechat_get_plugin_config, "weechat");
+    newXS ("weechat::set_plugin_config", XS_weechat_set_plugin_config, "weechat");
 }
 
 /*
- * wee_perl_load: load a Perl script
+ * weechat_perl_load: load a Perl script
  */
 
 int
@@ -689,9 +908,8 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
 {
     int argc, path_length, handler_found;
     char **argv, *path_script, *dir_home;
-    t_plugin_script *ptr_plugin_script;
-    t_plugin_msg_handler *ptr_msg_handler;
-    t_plugin_cmd_handler *ptr_cmd_handler;
+    t_plugin_script *ptr_script;
+    t_plugin_handler *ptr_handler;
     
     /* make gcc happy */
     (void) server;
@@ -715,14 +933,14 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
             plugin->printf_server (plugin, "Registered Perl scripts:");
             if (perl_scripts)
             {
-                for (ptr_plugin_script = perl_scripts; ptr_plugin_script;
-                     ptr_plugin_script = ptr_plugin_script->next_script)
+                for (ptr_script = perl_scripts;
+                     ptr_script; ptr_script = ptr_script->next_script)
                 {
                     plugin->printf_server (plugin, "  %s v%s%s%s",
-                                           ptr_plugin_script->name,
-                                           ptr_plugin_script->version,
-                                           (ptr_plugin_script->description[0]) ? " - " : "",
-                                           ptr_plugin_script->description);
+                                           ptr_script->name,
+                                           ptr_script->version,
+                                           (ptr_script->description[0]) ? " - " : "",
+                                           ptr_script->description);
                 }
             }
             else
@@ -732,15 +950,16 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
             plugin->printf_server (plugin, "");
             plugin->printf_server (plugin, "Perl message handlers:");
             handler_found = 0;
-            for (ptr_msg_handler = plugin->msg_handlers; ptr_msg_handler;
-                 ptr_msg_handler = ptr_msg_handler->next_handler)
+            for (ptr_handler = plugin->handlers;
+                 ptr_handler; ptr_handler = ptr_handler->next_handler)
             {
-                if (ptr_msg_handler->msg_handler_args)
+                if ((ptr_handler->type == HANDLER_MESSAGE)
+                    && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
                     plugin->printf_server (plugin, "  IRC(%s) => Perl(%s)",
-                                           ptr_msg_handler->irc_command,
-                                           ptr_msg_handler->msg_handler_args);
+                                           ptr_handler->irc_command,
+                                           ptr_handler->handler_args);
                 }
             }
             if (!handler_found)
@@ -750,15 +969,16 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
             plugin->printf_server (plugin, "");
             plugin->printf_server (plugin, "Perl command handlers:");
             handler_found = 0;
-            for (ptr_cmd_handler = plugin->cmd_handlers; ptr_cmd_handler;
-                 ptr_cmd_handler = ptr_cmd_handler->next_handler)
+            for (ptr_handler = plugin->handlers;
+                 ptr_handler; ptr_handler = ptr_handler->next_handler)
             {
-                if (ptr_cmd_handler->cmd_handler_args)
+                if ((ptr_handler->type == HANDLER_COMMAND)
+                    && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
                     plugin->printf_server (plugin, "  /%s => Perl(%s)",
-                                           ptr_cmd_handler->command,
-                                           ptr_cmd_handler->cmd_handler_args);
+                                           ptr_handler->command,
+                                           ptr_handler->handler_args);
                 }
             }
             if (!handler_found)

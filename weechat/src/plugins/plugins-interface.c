@@ -216,7 +216,7 @@ weechat_plugin_infobar_printf (t_weechat_plugin *plugin, int time_displayed, cha
  * weechat_plugin_msg_handler_add: add a message handler
  */
 
-t_plugin_msg_handler *
+t_plugin_handler *
 weechat_plugin_msg_handler_add (t_weechat_plugin *plugin, char *message,
                                 t_plugin_handler_func *handler_func,
                                 char *handler_args, void *handler_pointer)
@@ -229,33 +229,10 @@ weechat_plugin_msg_handler_add (t_weechat_plugin *plugin, char *message,
 }
 
 /*
- * weechat_plugin_msg_handler_remove: remove a WeeChat message handler
- */
-
-void
-weechat_plugin_msg_handler_remove (t_weechat_plugin *plugin,
-                                   t_plugin_msg_handler *msg_handler)
-{
-    if (plugin && msg_handler)
-        plugin_msg_handler_remove (plugin, msg_handler);
-}
-
-/*
- * weechat_plugin_msg_handler_remove_all: remove all WeeChat message handlers
- */
-
-void
-weechat_plugin_msg_handler_remove_all (t_weechat_plugin *plugin)
-{
-    if (plugin)
-        plugin_msg_handler_remove_all (plugin);
-}
-
-/*
  * weechat_plugin_cmd_handler_add: add a command handler
  */
 
-t_plugin_cmd_handler *
+t_plugin_handler *
 weechat_plugin_cmd_handler_add (t_weechat_plugin *plugin, char *command,
                                 char *description, char *arguments,
                                 char *arguments_description,
@@ -272,26 +249,26 @@ weechat_plugin_cmd_handler_add (t_weechat_plugin *plugin, char *command,
 }
 
 /*
- * weechat_cmd_plugin_handler_remove: remove a WeeChat command handler
+ * weechat_plugin_handler_remove: remove a WeeChat handler
  */
 
 void
-weechat_plugin_cmd_handler_remove (t_weechat_plugin *plugin,
-                                   t_plugin_cmd_handler *cmd_handler)
+weechat_plugin_handler_remove (t_weechat_plugin *plugin,
+                               t_plugin_handler *handler)
 {
-    if (plugin && cmd_handler)
-        plugin_cmd_handler_remove (plugin, cmd_handler);
+    if (plugin && handler)
+        plugin_handler_remove (plugin, handler);
 }
 
 /*
- * weechat_plugin_cmd_handler_remove_all: remove all WeeChat command handlers
+ * weechat_plugin_handler_remove_all: remove all WeeChat handlers
  */
 
 void
-weechat_plugin_cmd_handler_remove_all (t_weechat_plugin *plugin)
+weechat_plugin_handler_remove_all (t_weechat_plugin *plugin)
 {
     if (plugin)
-        plugin_cmd_handler_remove_all (plugin);
+        plugin_handler_remove_all (plugin);
 }
 
 /*

@@ -10,6 +10,9 @@
 ./src/irc/irc.h
 ./src/plugins/plugins.c
 ./src/plugins/plugins.h
+./src/plugins/plugins-config.c
+./src/plugins/plugins-config.h
+./src/plugins/plugins-interface.c
 ./src/plugins/weechat-plugin.h
 ./src/gui/curses/gui-input.c
 ./src/gui/curses/gui-display.c

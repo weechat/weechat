@@ -115,7 +115,7 @@ completion_build_list (t_completion *completion, void *channel)
     char option_string[2048];
 #ifdef PLUGINS
     t_weechat_plugin *ptr_plugin;
-    t_plugin_cmd_handler *ptr_cmd_handler;
+    t_plugin_handler *ptr_handler;
 #endif
     
     /* WeeChat internal commands */
@@ -213,13 +213,13 @@ completion_build_list (t_completion *completion, void *channel)
         for (ptr_plugin = weechat_plugins; ptr_plugin;
              ptr_plugin = ptr_plugin->next_plugin)
         {
-            for (ptr_cmd_handler = ptr_plugin->cmd_handlers;
-                 ptr_cmd_handler;
-                 ptr_cmd_handler = ptr_cmd_handler->next_handler)
+            for (ptr_handler = ptr_plugin->handlers;
+                 ptr_handler; ptr_handler = ptr_handler->next_handler)
             {
-                weelist_add (&completion->completion_list,
-                             &completion->last_completion,
-                             ptr_cmd_handler->command);
+                if (ptr_handler->type == HANDLER_COMMAND)
+                    weelist_add (&completion->completion_list,
+                                 &completion->last_completion,
+                                 ptr_handler->command);
             }
         }
 #endif

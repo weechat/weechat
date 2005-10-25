@@ -95,7 +95,7 @@ weechat_ruby_register (VALUE class, VALUE name, VALUE version,
         ruby_plugin->printf_server (ruby_plugin,
                                     "Ruby error: wrong parameters for "
                                     "\"register\" function");
-        return Qnil;
+        return INT2FIX (0);
     }
     
     Check_Type (name, T_STRING);
@@ -116,7 +116,7 @@ weechat_ruby_register (VALUE class, VALUE name, VALUE version,
                                     "\"%s\" script (another script "
                                     "already exists with this name)",
                                     c_name);
-        return Qnil;
+        return INT2FIX (0);
     }
     
     /* register script */
@@ -139,7 +139,7 @@ weechat_ruby_register (VALUE class, VALUE name, VALUE version,
                                     "Ruby error: unable to load script "
                                     "\"%s\" (not enough memory)",
                                     c_name);
-        return Qnil;
+        return INT2FIX (0);
     }
     
     return INT2FIX (1);
@@ -158,6 +158,14 @@ weechat_ruby_print (VALUE class, VALUE message, VALUE channel_name,
     /* make gcc happy */
     (void) class;
     
+    if (!ruby_current_script)
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: unable to print message, "
+                                    "script not initialized");
+        return INT2FIX (0);
+    }
+    
     c_message = NULL;
     c_channel_name = NULL;
     c_server_name = NULL;
@@ -167,7 +175,7 @@ weechat_ruby_print (VALUE class, VALUE message, VALUE channel_name,
         ruby_plugin->printf_server (ruby_plugin,
                                     "Ruby error: wrong parameters for "
                                     "\"print\" function");
-        return Qnil;
+        return INT2FIX (0);
     }
     
     Check_Type (message, T_STRING);
@@ -202,6 +210,14 @@ weechat_ruby_print_infobar (VALUE class, VALUE delay, VALUE message)
     /* make gcc happy */
     (void) class;
     
+    if (!ruby_current_script)
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: unable to print infobar message, "
+                                    "script not initialized");
+        return INT2FIX (0);
+    }
+    
     c_delay = 1;
     c_message = NULL;
     
@@ -210,7 +226,7 @@ weechat_ruby_print_infobar (VALUE class, VALUE delay, VALUE message)
         ruby_plugin->printf_server (ruby_plugin,
                                     "Ruby error: wrong parameters for "
                                     "\"print_infobar\" function");
-        return Qnil;
+        return INT2FIX (0);
     }
     
     Check_Type (delay, T_FIXNUM);
@@ -237,6 +253,14 @@ weechat_ruby_command (VALUE class, VALUE command, VALUE channel_name,
     /* make gcc happy */
     (void) class;
     
+    if (!ruby_current_script)
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: unable to run command, "
+                                    "script not initialized");
+        return INT2FIX (0);
+    }
+    
     c_command = NULL;
     c_channel_name = NULL;
     c_server_name = NULL;
@@ -246,7 +270,7 @@ weechat_ruby_command (VALUE class, VALUE command, VALUE channel_name,
         ruby_plugin->printf_server (ruby_plugin,
                                     "Ruby error: wrong parameters for "
                                     "\"command\" function");
-        return Qnil;
+        return INT2FIX (0);
     }
     
     Check_Type (command, T_STRING);
@@ -264,7 +288,7 @@ weechat_ruby_command (VALUE class, VALUE command, VALUE channel_name,
     ruby_plugin->exec_command (ruby_plugin,
                                c_server_name, c_channel_name,
                                c_command);
-
+    
     return INT2FIX (1);
 }
 
@@ -280,6 +304,14 @@ weechat_ruby_add_message_handler (VALUE class, VALUE message, VALUE function)
     /* make gcc happy */
     (void) class;
     
+    if (!ruby_current_script)
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: unable to add message handler, "
+                                    "script not initialized");
+        return INT2FIX (0);
+    }
+    
     c_message = NULL;
     c_function = NULL;
     
@@ -288,7 +320,7 @@ weechat_ruby_add_message_handler (VALUE class, VALUE message, VALUE function)
         ruby_plugin->printf_server (ruby_plugin,
                                     "Ruby error: wrong parameters for "
                                     "\"add_message_handler\" function");
-        return Qnil;
+        return INT2FIX (0);
     }
     
     Check_Type (message, T_STRING);
@@ -297,19 +329,12 @@ weechat_ruby_add_message_handler (VALUE class, VALUE message, VALUE function)
     c_message = STR2CSTR (message);
     c_function = STR2CSTR (function);
     
-    if (ruby_current_script)
-        ruby_plugin->msg_handler_add (ruby_plugin, c_message,
+    if (ruby_plugin->msg_handler_add (ruby_plugin, c_message,
                                       weechat_ruby_handler, c_function,
-                                      (void *)ruby_current_script);
-    else
-    {
-        ruby_plugin->printf_server (ruby_plugin,
-                                    "Ruby error: unable to add message handler, "
-                                    "script not initialized");
-        return Qnil;
-    }
+                                      (void *)ruby_current_script))
+        return INT2FIX (1);
     
-    return INT2FIX (1);
+    return INT2FIX (0);
 }
 
 /*
@@ -321,11 +346,19 @@ weechat_ruby_add_command_handler (VALUE class, VALUE command, VALUE function,
                                   VALUE description, VALUE arguments,
                                   VALUE arguments_description)
 {
-    char *c_command, *c_function,*c_description, *c_arguments;
+    char *c_command, *c_function, *c_description, *c_arguments;
     char *c_arguments_description;
     
     /* make gcc happy */
     (void) class;
+    
+    if (!ruby_current_script)
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: unable to add command handler, "
+                                    "script not initialized");
+        return INT2FIX (0);
+    }
     
     c_command = NULL;
     c_function = NULL;
@@ -338,7 +371,7 @@ weechat_ruby_add_command_handler (VALUE class, VALUE command, VALUE function,
         ruby_plugin->printf_server (ruby_plugin,
                                     "Ruby error: wrong parameters for "
                                     "\"add_command_handler\" function");
-        return Qnil;
+        return INT2FIX (0);
     }
     
     Check_Type (command, T_STRING);
@@ -359,22 +392,58 @@ weechat_ruby_add_command_handler (VALUE class, VALUE command, VALUE function,
     if (!NIL_P (arguments_description))
         c_arguments_description = STR2CSTR (arguments_description);
     
-    if (ruby_current_script)
-        ruby_plugin->cmd_handler_add (ruby_plugin,
+    if (ruby_plugin->cmd_handler_add (ruby_plugin,
                                       c_command,
                                       c_description,
                                       c_arguments,
                                       c_arguments_description,
                                       weechat_ruby_handler,
                                       c_function,
-                                      (void *)ruby_current_script);
-    else
+                                      (void *)ruby_current_script))
+        return INT2FIX (1);
+    
+    return INT2FIX (0);
+}
+
+/*
+ * weechat_remove_handler: remove a handler
+ */
+
+static VALUE
+weechat_ruby_remove_handler (VALUE class, VALUE command, VALUE function)
+{
+    char *c_command, *c_function;
+    
+    /* make gcc happy */
+    (void) class;
+    
+    if (!ruby_current_script)
     {
         ruby_plugin->printf_server (ruby_plugin,
-                                    "Ruby error: unable to add command handler, "
+                                    "Ruby error: unable to remove handler, "
                                     "script not initialized");
-        return Qnil;
+        return INT2FIX (0);
     }
+    
+    c_command = NULL;
+    c_function = NULL;
+    
+    if (NIL_P (command) || NIL_P (function))
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: wrong parameters for "
+                                    "\"remove_handler\" function");
+        return INT2FIX (0);
+    }
+    
+    Check_Type (command, T_STRING);
+    Check_Type (function, T_STRING);
+    
+    c_command = STR2CSTR (command);
+    c_function = STR2CSTR (function);
+    
+    weechat_script_remove_handler (ruby_plugin, ruby_current_script,
+                                   c_command, c_function);
     
     return INT2FIX (1);
 }
@@ -393,6 +462,14 @@ weechat_ruby_get_info (VALUE class, VALUE arg, VALUE server_name,
     /* make gcc happy */
     (void) class;
     
+    if (!ruby_current_script)
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: unable to get info, "
+                                    "script not initialized");
+        return INT2FIX (0);
+    }
+    
     c_arg = NULL;
     c_server_name = NULL;
     c_channel_name = NULL;
@@ -402,7 +479,7 @@ weechat_ruby_get_info (VALUE class, VALUE arg, VALUE server_name,
         ruby_plugin->printf_server (ruby_plugin,
                                     "Ruby error: wrong parameters for "
                                     "\"get_info\" function");
-        return Qnil; 
+        return INT2FIX (0);
     }
     
     Check_Type (arg, T_STRING);
@@ -428,11 +505,9 @@ weechat_ruby_get_info (VALUE class, VALUE arg, VALUE server_name,
             free (info);
             return return_value;
         }
-        else
-            return rb_str_new2 ("");
     }
     
-    return INT2FIX (1);
+    return rb_str_new2 ("");
 }
 
 /*
@@ -445,22 +520,38 @@ weechat_ruby_get_dcc_info (VALUE class)
     /* make gcc happy */
     (void) class;
     
+    if (!ruby_current_script)
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: unable to get DCC info, "
+                                    "script not initialized");
+        return INT2FIX (0);
+    }
+    
     /* TODO: get dcc info for Ruby */
     return INT2FIX (1);
 }
 
 /*
- * weechat_ruby_get_config: get value of a config option
+ * weechat_ruby_get_config: get value of a WeeChat config option
  */
 
 static VALUE
 weechat_ruby_get_config (VALUE class, VALUE option)
 {
-    char *c_option, *value;
-    VALUE return_value;
+    char *c_option, *return_value;
+    VALUE ruby_return_value;
     
     /* make gcc happy */
     (void) class;
+    
+    if (!ruby_current_script)
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: unable to get config option, "
+                                    "script not initialized");
+        return INT2FIX (0);
+    }
     
     c_option = NULL;
     
@@ -469,7 +560,7 @@ weechat_ruby_get_config (VALUE class, VALUE option)
         ruby_plugin->printf_server (ruby_plugin,
                                     "Ruby error: wrong parameters for "
                                     "\"get_config\" function");
-        return Qnil; 
+        return INT2FIX (0);
     }
     
     Check_Type (option, T_STRING);
@@ -477,19 +568,162 @@ weechat_ruby_get_config (VALUE class, VALUE option)
     
     if (c_option)
     {
-        value = ruby_plugin->get_config (ruby_plugin, c_option);
+        return_value = ruby_plugin->get_config (ruby_plugin, c_option);
         
-        if (value)
+        if (return_value)
         {
-            return_value = rb_str_new2 (value);
-            free (value);
-            return return_value;
+            ruby_return_value = rb_str_new2 (return_value);
+            free (return_value);
+            return ruby_return_value;
         }
-        else
-            return rb_str_new2 ("");
     }
     
-    return INT2FIX (1);
+    return rb_str_new2 ("");
+}
+
+/*
+ * weechat_ruby_set_config: set value of a WeeChat config option
+ */
+
+static VALUE
+weechat_ruby_set_config (VALUE class, VALUE option, VALUE value)
+{
+    char *c_option, *c_value;
+    
+    /* make gcc happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: unable to set config option, "
+                                    "script not initialized");
+        return INT2FIX (0);
+    }
+    
+    c_option = NULL;
+    c_value = NULL;
+    
+    if (NIL_P (option))
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: wrong parameters for "
+                                    "\"set_config\" function");
+        return INT2FIX (0);
+    }
+    
+    Check_Type (option, T_STRING);
+    Check_Type (value, T_STRING);
+    
+    c_option = STR2CSTR (option);
+    c_value = STR2CSTR (value);
+    
+    if (c_option && c_value)
+    {
+        if (ruby_plugin->set_config (ruby_plugin, c_option, c_value))
+            return INT2FIX (1);
+    }
+    
+    return INT2FIX (0);
+}
+
+/*
+ * weechat_ruby_get_plugin_config: get value of a plugin config option
+ */
+
+static VALUE
+weechat_ruby_get_plugin_config (VALUE class, VALUE option)
+{
+    char *c_option, *return_value;
+    VALUE ruby_return_value;
+    
+    /* make gcc happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: unable to get plugin config option, "
+                                    "script not initialized");
+        return INT2FIX (0);
+    }
+    
+    c_option = NULL;
+    
+    if (NIL_P (option))
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: wrong parameters for "
+                                    "\"get_plugin_config\" function");
+        return INT2FIX (0);
+    }
+    
+    Check_Type (option, T_STRING);
+    c_option = STR2CSTR (option);
+    
+    if (c_option)
+    {
+        return_value = weechat_script_get_plugin_config (ruby_plugin,
+                                                         ruby_current_script,
+                                                         c_option);
+        
+        if (return_value)
+        {
+            ruby_return_value = rb_str_new2 (return_value);
+            free (return_value);
+            return ruby_return_value;
+        }
+    }
+    
+    return rb_str_new2 ("");
+}
+
+/*
+ * weechat_ruby_set_plugin_config: set value of a plugin config option
+ */
+
+static VALUE
+weechat_ruby_set_plugin_config (VALUE class, VALUE option, VALUE value)
+{
+    char *c_option, *c_value;
+    
+    /* make gcc happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: unable to set plugin config option, "
+                                    "script not initialized");
+        return INT2FIX (0);
+    }
+    
+    c_option = NULL;
+    c_value = NULL;
+    
+    if (NIL_P (option))
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: wrong parameters for "
+                                    "\"set_plugin_config\" function");
+        return INT2FIX (0);
+    }
+    
+    Check_Type (option, T_STRING);
+    Check_Type (value, T_STRING);
+    
+    c_option = STR2CSTR (option);
+    c_value = STR2CSTR (value);
+    
+    if (c_option && c_value)
+    {
+        if (weechat_script_set_plugin_config (ruby_plugin,
+                                              ruby_current_script,
+                                              c_option, c_value))
+            return INT2FIX (1);
+    }
+    
+    return INT2FIX (0);
 }
 
 /*
@@ -565,9 +799,8 @@ weechat_ruby_cmd (t_weechat_plugin *plugin,
 {
     int argc, path_length, handler_found;
     char **argv, *path_script, *dir_home;
-    t_plugin_script *ptr_plugin_script;
-    t_plugin_msg_handler *ptr_msg_handler;
-    t_plugin_cmd_handler *ptr_cmd_handler;
+    t_plugin_script *ptr_script;
+    t_plugin_handler *ptr_handler;
     
     /* make gcc happy */
     (void) server;
@@ -591,14 +824,14 @@ weechat_ruby_cmd (t_weechat_plugin *plugin,
             plugin->printf_server (plugin, "Registered Ruby scripts:");
             if (ruby_scripts)
             {
-                for (ptr_plugin_script = ruby_scripts; ptr_plugin_script;
-                     ptr_plugin_script = ptr_plugin_script->next_script)
+                for (ptr_script = ruby_scripts;
+                     ptr_script; ptr_script = ptr_script->next_script)
                 {
                     plugin->printf_server (plugin, "  %s v%s%s%s",
-                                           ptr_plugin_script->name,
-                                           ptr_plugin_script->version,
-                                           (ptr_plugin_script->description[0]) ? " - " : "",
-                                           ptr_plugin_script->description);
+                                           ptr_script->name,
+                                           ptr_script->version,
+                                           (ptr_script->description[0]) ? " - " : "",
+                                           ptr_script->description);
                 }
             }
             else
@@ -608,15 +841,16 @@ weechat_ruby_cmd (t_weechat_plugin *plugin,
             plugin->printf_server (plugin, "");
             plugin->printf_server (plugin, "Ruby message handlers:");
             handler_found = 0;
-            for (ptr_msg_handler = plugin->msg_handlers; ptr_msg_handler;
-                 ptr_msg_handler = ptr_msg_handler->next_handler)
+            for (ptr_handler = plugin->handlers;
+                 ptr_handler; ptr_handler = ptr_handler->next_handler)
             {
-                if (ptr_msg_handler->msg_handler_args)
+                if ((ptr_handler->type == HANDLER_MESSAGE)
+                    && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
                     plugin->printf_server (plugin, "  IRC(%s) => Ruby(%s)",
-                                           ptr_msg_handler->irc_command,
-                                           ptr_msg_handler->msg_handler_args);
+                                           ptr_handler->irc_command,
+                                           ptr_handler->handler_args);
                 }
             }
             if (!handler_found)
@@ -626,15 +860,16 @@ weechat_ruby_cmd (t_weechat_plugin *plugin,
             plugin->printf_server (plugin, "");
             plugin->printf_server (plugin, "Ruby command handlers:");
             handler_found = 0;
-            for (ptr_cmd_handler = plugin->cmd_handlers; ptr_cmd_handler;
-                 ptr_cmd_handler = ptr_cmd_handler->next_handler)
+            for (ptr_handler = plugin->handlers;
+                 ptr_handler; ptr_handler = ptr_handler->next_handler)
             {
-                if (ptr_cmd_handler->cmd_handler_args)
+                if ((ptr_handler->type == HANDLER_COMMAND)
+                    && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
                     plugin->printf_server (plugin, "  /%s => Ruby(%s)",
-                                           ptr_cmd_handler->command,
-                                           ptr_cmd_handler->cmd_handler_args);
+                                           ptr_handler->command,
+                                           ptr_handler->handler_args);
                 }
             }
             if (!handler_found)

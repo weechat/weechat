@@ -112,7 +112,7 @@ if test "x$enable_ncurses" = "xyes" ; then
         fi
         AC_MSG_WARN([
 *** ncursesw library not found! Falling back to "ncurses"
-*** Be careful, UTF-8 display will not work properly.])
+*** Be careful, UTF-8 display may not work properly if your locale is UTF-8.])
         NCURSES_LIBS="-lncurses"
     else
         NCURSES_LIBS="-lncursesw"

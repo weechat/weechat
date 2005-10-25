@@ -130,38 +130,20 @@ void
 weechat_script_remove (t_weechat_plugin *plugin,
                        t_plugin_script **script_list, t_plugin_script *script)
 {
-    t_plugin_msg_handler *ptr_msg_handler, *next_msg_handler;
-    t_plugin_cmd_handler *ptr_cmd_handler, *next_cmd_handler;
-
-    /* make gcc happy */
-    (void) plugin;
+    t_plugin_handler *ptr_handler, *next_handler;
     
-    /* remove message handlers */
-    ptr_msg_handler = plugin->msg_handlers;
-    while (ptr_msg_handler)
+    /* remove all handlers pointing to script */
+    ptr_handler = plugin->handlers;
+    while (ptr_handler)
     {
-        if ((t_plugin_script *)ptr_msg_handler->msg_handler_pointer == script)
+        if ((t_plugin_script *)ptr_handler->handler_pointer == script)
         {
-            next_msg_handler = ptr_msg_handler->next_handler;
-            plugin->msg_handler_remove (plugin, ptr_msg_handler);
-            ptr_msg_handler = next_msg_handler;
+            next_handler = ptr_handler->next_handler;
+            plugin->handler_remove (plugin, ptr_handler);
+            ptr_handler = next_handler;
         }
         else
-            ptr_msg_handler = ptr_msg_handler->next_handler;
-    }
-    
-    /* remove command handlers */
-    ptr_cmd_handler = plugin->cmd_handlers;
-    while (ptr_cmd_handler)
-    {
-        if ((t_plugin_script *)ptr_cmd_handler->cmd_handler_pointer == script)
-        {
-            next_cmd_handler = ptr_cmd_handler->next_handler;
-            plugin->cmd_handler_remove (plugin, ptr_cmd_handler);
-            ptr_cmd_handler = next_cmd_handler;
-        }
-        else
-            ptr_cmd_handler = ptr_cmd_handler->next_handler;
+            ptr_handler = ptr_handler->next_handler;
     }
     
     /* free data */
@@ -186,4 +168,97 @@ weechat_script_remove (t_weechat_plugin *plugin,
     
     /* free script */
     free (script);
+}
+
+/*
+ * weechat_script_remove_handler: remove a handler for a script
+ *                                for a msg handler, arg1=irc command, arg2=function
+ *                                for a cmd handler, arg1=command, arg2=function
+ */
+
+void
+weechat_script_remove_handler (t_weechat_plugin *plugin,
+                               t_plugin_script *script,
+                               char *arg1, char *arg2)
+{
+    t_plugin_handler *ptr_handler, *next_handler;
+    char *ptr_arg1;
+    
+    /* search and remove message handlers */
+    ptr_handler = plugin->handlers;
+    while (ptr_handler)
+    {
+        ptr_arg1 = NULL;
+        if (ptr_handler->type == HANDLER_MESSAGE)
+            ptr_arg1 = ptr_handler->irc_command;
+        else if (ptr_handler->type == HANDLER_COMMAND)
+            ptr_arg1 = ptr_handler->command;
+        
+        if ((ptr_arg1)
+            && ((t_plugin_script *)ptr_handler->handler_pointer == script)
+            && (plugin->ascii_strcasecmp (plugin, ptr_arg1, arg1) == 0)
+            && (plugin->ascii_strcasecmp (plugin, ptr_handler->handler_args, arg2) == 0))
+        {
+            next_handler = ptr_handler->next_handler;
+            plugin->handler_remove (plugin, ptr_handler);
+            ptr_handler = next_handler;
+        }
+        else
+            ptr_handler = ptr_handler->next_handler;
+    }
+}
+
+/*
+ * weechat_script_get_plugin_config: get a value of a script option
+ *                                   format in file is: plugin.script.option=value
+ */
+
+char *
+weechat_script_get_plugin_config (t_weechat_plugin *plugin,
+                                  t_plugin_script *script,
+                                  char *option)
+{
+    char *option_fullname, *return_value;
+    
+    option_fullname = (char *)malloc (strlen (script->name) +
+                                      strlen (option) + 2);
+    if (!option_fullname)
+        return NULL;
+    
+    strcpy (option_fullname, script->name);
+    strcat (option_fullname, ".");
+    strcat (option_fullname, option);
+    
+    return_value = plugin->get_plugin_config (plugin, option_fullname);
+    free (option_fullname);
+    
+    return return_value;
+}
+
+/*
+ * weechat_script_set_plugin_config: set value of a script config option
+ *                                   format in file is: plugin.script.option=value
+ */
+
+int
+weechat_script_set_plugin_config (t_weechat_plugin *plugin,
+                                  t_plugin_script *script,
+                                  char *option, char *value)
+{
+    char *option_fullname;
+    int return_code;
+    
+    option_fullname = (char *)malloc (strlen (script->name) +
+                                      strlen (option) + 2);
+    if (!option_fullname)
+        return 0;
+    
+    strcpy (option_fullname, script->name);
+    strcat (option_fullname, ".");
+    strcat (option_fullname, option);
+    
+    return_code = plugin->set_plugin_config (plugin, option_fullname, value);
+    free (option_fullname);
+    
+    return return_code;
 }

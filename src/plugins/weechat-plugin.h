@@ -52,40 +52,39 @@ typedef int (t_plugin_handler_func) (t_weechat_plugin *, char *, char *, char *,
 
 /* message handler, called when an IRC messages is received */
 
-typedef struct t_plugin_msg_handler t_plugin_msg_handler;
+typedef enum t_handler_type t_handler_type;
 
-struct t_plugin_msg_handler
+enum t_handler_type
 {
-    char *irc_command;                  /* name of IRC command (PRIVMSG, ..)   */
-    t_plugin_handler_func *msg_handler; /* pointer to message handler          */
-    char *msg_handler_args;             /* arguments sent to message handler   */
-    void *msg_handler_pointer;          /* pointer sent to message handler     */
-    
-    int running;                        /* 1 if currently running              */
-                                        /* (used to prevent circular call)     */
-    t_plugin_msg_handler *prev_handler; /* link to previous handler            */
-    t_plugin_msg_handler *next_handler; /* link to next handler                */
+    HANDLER_MESSAGE,
+    HANDLER_COMMAND
 };
 
-/* command handler, to add new commands to WeeChat */
+typedef struct t_plugin_handler t_plugin_handler;
 
-typedef struct t_plugin_cmd_handler t_plugin_cmd_handler;
-
-struct t_plugin_cmd_handler
+struct t_plugin_handler
 {
+    t_handler_type type;                /* handler type                        */
+    
+    /* data for message handler */
+    char *irc_command;                  /* name of IRC command (PRIVMSG, ..)   */
+    
+    /* data for command handler */
     char *command;                      /* name of command (without first '/') */
     char *description;                  /* (for /help) short cmd description   */
     char *arguments;                    /* (for /help) command arguments       */
     char *arguments_description;        /* (for /help) args long description   */
-    /* command handler */
-    t_plugin_handler_func *cmd_handler; /* pointer to command handler          */
-    char *cmd_handler_args;             /* arguments sent to command handler   */
-    void *cmd_handler_pointer;          /* pointer sent to command handler     */
     
+    /* data common to all handlers */
+    t_plugin_handler_func *handler;     /* pointer to handler                  */
+    char *handler_args;                 /* arguments sent to handler           */
+    void *handler_pointer;              /* pointer sent to handler             */
+    
+    /* for internal use */
     int running;                        /* 1 if currently running              */
                                         /* (used to prevent circular call)     */
-    t_plugin_cmd_handler *prev_handler; /* link to previous handler            */
-    t_plugin_cmd_handler *next_handler; /* link to next handler                */
+    t_plugin_handler *prev_handler;     /* link to previous handler            */
+    t_plugin_handler *next_handler;     /* link to next handler                */
 };
 
 /* plugin, a WeeChat plugin, which is a dynamic library */
@@ -100,11 +99,9 @@ struct t_weechat_plugin
     char *version;                      /* plugin version                      */
     
     /* plugin handlers */
-    t_plugin_msg_handler *msg_handlers; /* IRC message handlers                */
-    t_plugin_msg_handler *last_msg_handler;
-    t_plugin_cmd_handler *cmd_handlers; /* command handlers                    */
-    t_plugin_cmd_handler *last_cmd_handler;
-
+    t_plugin_handler *handlers;         /* pointer to first handler            */
+    t_plugin_handler *last_handler;     /* pointer to last handler             */
+    
     /* links to previous/next plugins */
     t_weechat_plugin *prev_plugin;      /* link to previous plugin             */
     t_weechat_plugin *next_plugin;      /* link to next plugin                 */
@@ -127,17 +124,15 @@ struct t_weechat_plugin
     void (*printf_server) (t_weechat_plugin *, char *, ...);
     void (*infobar_printf) (t_weechat_plugin *, int, char *, ...);
     
-    t_plugin_msg_handler *(*msg_handler_add) (t_weechat_plugin *, char *,
-                                              t_plugin_handler_func *,
-                                              char *, void *);
-    void (*msg_handler_remove) (t_weechat_plugin *, t_plugin_msg_handler *);
-    void (*msg_handler_remove_all) (t_weechat_plugin *);
-    t_plugin_cmd_handler *(*cmd_handler_add) (t_weechat_plugin *, char *,
-                                              char *, char *, char *,
-                                              t_plugin_handler_func *,
-                                              char *, void *);
-    void (*cmd_handler_remove) (t_weechat_plugin *, t_plugin_cmd_handler *);
-    void (*cmd_handler_remove_all) (t_weechat_plugin *);
+    t_plugin_handler *(*msg_handler_add) (t_weechat_plugin *, char *,
+                                          t_plugin_handler_func *,
+                                          char *, void *);
+    t_plugin_handler *(*cmd_handler_add) (t_weechat_plugin *, char *,
+                                          char *, char *, char *,
+                                          t_plugin_handler_func *,
+                                          char *, void *);
+    void (*handler_remove) (t_weechat_plugin *, t_plugin_handler *);
+    void (*handler_remove_all) (t_weechat_plugin *);
     
     void (*exec_command) (t_weechat_plugin *, char *, char *, char *);
     char *(*get_info) (t_weechat_plugin *, char *, char *, char *);
@@ -166,17 +161,15 @@ extern void weechat_plugin_printf_server (t_weechat_plugin *, char *, ...);
 extern void weechat_plugin_infobar_printf (t_weechat_plugin *, int, char *, ...);
 
 /* handler functions */
-extern t_plugin_msg_handler *weechat_plugin_msg_handler_add (t_weechat_plugin *, char *,
-                                                             t_plugin_handler_func *,
-                                                             char *, void *);
-extern void weechat_plugin_msg_handler_remove (t_weechat_plugin *, t_plugin_msg_handler *);
-extern void weechat_plugin_msg_handler_remove_all (t_weechat_plugin *);
-extern t_plugin_cmd_handler *weechat_plugin_cmd_handler_add (t_weechat_plugin *, char *,
-                                                             char *, char *, char *,
-                                                             t_plugin_handler_func *,
-                                                             char *, void *);
-extern void weechat_plugin_cmd_handler_remove (t_weechat_plugin *, t_plugin_cmd_handler *);
-extern void weechat_plugin_cmd_handler_remove_all (t_weechat_plugin *);
+extern t_plugin_handler *weechat_plugin_msg_handler_add (t_weechat_plugin *, char *,
+                                                         t_plugin_handler_func *,
+                                                         char *, void *);
+extern t_plugin_handler *weechat_plugin_cmd_handler_add (t_weechat_plugin *, char *,
+                                                         char *, char *, char *,
+                                                         t_plugin_handler_func *,
+                                                         char *, void *);
+extern void weechat_plugin_handler_remove (t_weechat_plugin *, t_plugin_handler *);
+extern void weechat_plugin_handler_remove_all (t_weechat_plugin *);
 
 /* other functions */
 extern void weechat_plugin_exec_command (t_weechat_plugin *, char *, char *, char *);

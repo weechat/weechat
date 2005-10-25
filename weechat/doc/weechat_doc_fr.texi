@@ -36,7 +36,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.6-cvs - 24 octobre 2005
+@subtitle Documentation pour WeeChat v0.1.6-cvs - 25 octobre 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -1564,8 +1564,10 @@ obligatoires (sans quoi l'extension ne peut être chargée) :@*
 @end itemize
 @item fonctions d'initialisation et fin de l'extension :
 @itemize @minus
-@item weechat_plugin_init: fonction appel@'ee au chargement de l'extension
-@item weechat_plugin_end: fonction appel@'ee au d@'echargement de l'extension
+@item weechat_plugin_init: fonction appel@'ee au chargement de l'extension,
+qui doit renvoyer 1 en cas de succ@`es, 0 en cas d'erreur
+@item weechat_plugin_end: fonction appel@'ee au d@'echargement de l'extension,
+qui doit renvoyer 1 en cas de succ@`es, 0 en cas d'erreur
 @end itemize
 @end itemize
 
@@ -2118,6 +2120,10 @@ s'est produite.@*
 *plugin, char *option)}@*
 @*
 Renvoie la valeur d'une option de l'extension.@*
+L'option est lue depuis le fichier ~/.weechat/plugins.rc et est
+sous cette forme :@*
+@code{extension.option=valeur}@*
+NB: le nom de l'extension est ajout@'e automatiquement.@*
 
 @emph{Param@`etres :}
 @itemize @minus
@@ -2141,6 +2147,10 @@ NB: le r@'esultat doit @^etre lib@'er@'e par un appel @`a la fonction
 *plugin, char *option, char *value)}@*
 @*
 Modifie la valeur d'une option de l'extension.@*
+L'option est @'ecrite dans le fichier ~/.weechat/plugins.rc et est
+sous cette forme :@*
+@code{extension.option=valeur}@*
+NB: le nom de l'extension est ajout@'e automatiquement.@*
 
 @emph{Param@`etres :}
 @itemize @minus
@@ -2271,6 +2281,10 @@ de fonction @`a appeler)
 @item @option{description}: description br@`eve du script.
 @end itemize
 @*
+@emph{Valeur renvoy@'ee :}@*
+@*
+1 si le script a @'et@'e enregistr@'e, 0 si une erreur s'est produite.@*
+@*
 @emph{Exemple :}@*
 @*
 @code{weechat::register ("essai", "1.0", "fin_essai", "Script d'essai !");}@*
@@ -2287,6 +2301,10 @@ Affiche un message dans un canal.@*
 @item @option{canal}: nom du canal
 @item @option{serveur}: nom interne du serveur
 @end itemize
+@*
+@emph{Valeur renvoy@'ee :}@*
+@*
+1 si succ@`es, 0 si une erreur s'est produite.@*
 @*
 @emph{Exemples :}@*
 @*
@@ -2306,6 +2324,10 @@ Affiche un message dans la barre d'infos.@*
 (si 0, le message ne sera pas effac@'e).
 @item @option{message}: message @`a afficher
 @end itemize
+@*
+@emph{Valeur renvoy@'ee :}@*
+@*
+1 si succ@`es, 0 si une erreur s'est produite.@*
 @*
 @emph{Exemple :}@*
 @*
@@ -2327,6 +2349,10 @@ RFC 1459 : @uref{ftp://ftp.rfc-editor.org/in-notes/rfc1459.txt}@*
 RFC 2812 : @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
 @item @option{fonction}: fonction Perl appel@'ee lorsque le message est re@,{c}u
 @end itemize
+@*
+@emph{Valeur renvoy@'ee :}@*
+@*
+1 si la fonction Perl a @'et@'e attach@'ee, 0 si une erreur s'est produite.@*
 @*
 @emph{Exemple :}@*
 @*
@@ -2362,6 +2388,10 @@ commande (affich@'ee par /help commande)
 param@`etres de la commande (affich@'ee par /help commande)
 @end itemize
 @*
+@emph{Valeur renvoy@'ee :}@*
+@*
+1 si la fonction Perl a @'et@'e attach@'ee, 0 si une erreur s'est produite.@*
+@*
 @emph{Exemple :}@*
 @*
 @code{weechat::add_command_handler ("commande", ma_commande);}@*
@@ -2370,6 +2400,26 @@ param@`etres de la commande (affich@'ee par /help commande)
 @code{@ @ @ @ weechat::print("Serveur: $_[0], param@`etres: $_[1]\n");}@*
 @code{@ @ @ @ return 0;}@*
 @code{@} }@*
+@*
+
+@item
+@command{weechat::remove_handler ( nom, fonction );}@*
+@*
+Supprime un gestionnaire de message ou de commande.@*
+
+@emph{Param@`etres :}
+@itemize @minus
+@item @option{nom}: nom du message IRC ou de la commande
+@item @option{fonction}: fonction Perl associ@'ee
+@end itemize
+@*
+@emph{Valeur renvoy@'ee :}@*
+@*
+1 si succ@`es, 0 si une erreur s'est produite.@*
+@*
+@emph{Exemple :}@*
+@*
+@code{weechat::remove_handler ("commande", ma_commande);}@*
 @*
 
 @item
@@ -2383,6 +2433,10 @@ Ex@'ecute une commande ou envoie un message @'a un canal.@*
 @item @option{canal}: nom du canal
 @item @option{serveur}: nom interne du serveur
 @end itemize
+@*
+@emph{Valeur renvoy@'ee :}@*
+@*
+1 si succ@`es, 0 si une erreur s'est produite.@*
 @*
 @emph{Exemples :}@*
 @*
@@ -2414,6 +2468,11 @@ syst@`eme de partage WeeChat
 @item @option{serveur}: nom interne du serveur
 @item @option{canal}: nom du canal
 @end itemize
+@*
+@emph{Valeur renvoy@'ee :}@*
+@*
+L'information demand@'e, blanc si une erreur s'est produite ou que
+l'information n'a pas @'et@'e trouv@'ee.@*
 @*
 @emph{Exemples :}@*
 @*
@@ -2459,21 +2518,99 @@ Le tableau renvoy@'e contient les champs suivants :
 @item bytes_per_sec: nombre d'octets transmis par seconde depuis le d@'ebut
 @end itemize
 @*
+@emph{Valeur renvoy@'ee :}@*
+@*
+La liste des DCC, 0 si une erreur s'est produite.@*
+@*
 
 @item
-@command{weechat::get_config ( nom );}@*
+@command{weechat::get_config ( option );}@*
 @*
 Obtenir la valeur d'une option de configuration WeeChat.@*
 
 @emph{Param@`etres :}
 @itemize @minus
-@item @option{nom}: nom de l'option
+@item @option{option}: nom de l'option
 @end itemize
+@*
+@emph{Valeur renvoy@'ee :}@*
+@*
+La valeur de l'option, blanc si une erreur s'est produite ou que
+l'option n'a pas @'et@'e trouv@'ee.@*
 @*
 @emph{Exemples :}@*
 @*
-@code{$value1 = weechat::get_config ("look_set_title");}@*
+@code{$value1 = weechat::get_config ("look_nicklist");}@*
 @code{$value2 = weechat::get_config ("freenode.server_autojoin");}@*
+@*
+
+@item
+@command{weechat::set_config ( option, valeur );}@*
+@*
+Modifier une otion de configuration WeeChat.@*
+
+@emph{Param@`etres :}
+@itemize @minus
+@item @option{option}: nom de l'option
+@item @option{valeur}: la nouvelle valeur pour l'option
+@end itemize
+@*
+@emph{Valeur renvoy@'ee :}@*
+@*
+1 si succ@`es, 0 si une erreur s'est produite.@*
+@*
+@emph{Exemples :}@*
+@*
+@code{weechat::set_config ("look_nicklist", "off");}@*
+@code{weechat::set_config ("freenode.server_autojoin, "#weechat");}@*
+@*
+
+@item
+@command{weechat::get_plugin_config ( option );}@*
+@*
+Renvoie la valeur d'une option de l'extension.@*
+L'option est lue depuis le fichier ~/.weechat/plugins.rc et est
+sous cette forme :@*
+@code{extension.script.option=valeur}@*
+NB: le nom de l'extension et du script sont ajout@'es automatiquement.@*
+
+@emph{Param@`etres :}
+@itemize @minus
+@item @option{option}: nom de l'option
+@end itemize
+@*
+@emph{Valeur renvoy@'ee :}@*
+@*
+La valeur de l'option, blanc si une erreur s'est produite ou que
+l'option n'a pas @'et@'e trouv@'ee.@*
+@*
+@emph{Exemple :}@*
+@*
+@code{$value = weechat::get_plugin_config ("ma_variable");}@*
+@*
+
+@item
+@command{weechat::set_plugin_config ( option, valeur );}@*
+@*
+Modifie la valeur d'une option de l'extension.@*
+L'option est @'ecrite dans le fichier ~/.weechat/plugins.rc et est
+sous cette forme :@*
+@code{extension.script.option=valeur}@*
+NB: le nom de l'extension et du script sont ajout@'es automatiquement.@*
+
+@emph{Param@`etres :}
+@itemize @minus
+@item @option{option}: nom de l'option
+@item @option{valeur}: la nouvelle valeur pour l'option
+@end itemize
+@*
+@emph{Valeur renvoy@'ee :}@*
+@*
+1 si succ@`es, 0 si une erreur s'est produite.@*
+@*
+@emph{Exemple :}@*
+@*
+@code{weechat::set_plugin_config ("ma_variable", "valeur");}@*
 @*
 
 @end itemize
@@ -2514,6 +2651,10 @@ de fonction @`a appeler)
 @item @option{description}: description br@`eve du script.
 @end itemize
 @*
+@emph{Valeur renvoy@'ee :}@*
+@*
+1 si le script a @'et@'e enregistr@'e, 0 si une erreur s'est produite.@*
+@*
 @emph{Exemple :}@*
 @*
 @code{weechat.register ("essai", "1.0", "fin_essai", "Script d'essai !")}@*
@@ -2530,6 +2671,10 @@ Affiche un message dans un canal.@*
 @item @option{canal}: nom du canal
 @item @option{serveur}: nom interne du serveur
 @end itemize
+@*
+@emph{Valeur renvoy@'ee :}@*
+@*
+1 si succ@`es, 0 si une erreur s'est produite.@*
 @*
 @emph{Exemples :}@*
 @*
@@ -2549,6 +2694,10 @@ Affiche un message dans la barre d'infos.@*
 (si 0, le message ne sera pas effac@'e).
 @item @option{message}: message @`a afficher
 @end itemize
+@*
+@emph{Valeur renvoy@'ee :}@*
+@*
+1 si succ@`es, 0 si une erreur s'est produite.@*
 @*
 @emph{Exemple :}@*
 @*
@@ -2570,6 +2719,10 @@ RFC 1459 : @uref{ftp://ftp.rfc-editor.org/in-notes/rfc1459.txt}@*
 RFC 2812 : @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
 @item @option{fonction}: fonction Python appel@'ee lorsque le message est re@,{c}u
 @end itemize
+@*
+@emph{Valeur renvoy@'ee :}@*
+@*
+1 si la fonction Python a @'et@'e attach@'ee, 0 si une erreur s'est produite.@*
 @*
 @emph{Exemple :}@*
 @*
@@ -2602,11 +2755,35 @@ commande (affich@'ee par /help commande)
 param@`etres de la commande (affich@'ee par /help commande)
 @end itemize
 @*
+@emph{Valeur renvoy@'ee :}@*
+@*
+1 si la fonction Python a @'et@'e attach@'ee, 0 si une erreur s'est produite.@*
+@*
 @emph{Exemple :}@*
 @*
 @code{weechat.add_command_handler ("commande", ma_commande)}@*
 @code{def ma_commande(serveur, args):}@*
 @code{@ @ @ @ weechat.prnt("serveur:"+serveur+" param@`etres:"+args)}@*
+@*
+
+@item
+@command{weechat.remove_handler ( nom, fonction );}@*
+@*
+Supprime un gestionnaire de message ou de commande.@*
+
+@emph{Param@`etres :}
+@itemize @minus
+@item @option{nom}: nom du message IRC ou de la commande
+@item @option{fonction}: fonction Python associ@'ee
+@end itemize
+@*
+@emph{Valeur renvoy@'ee :}@*
+@*
+1 si succ@`es, 0 si une erreur s'est produite.@*
+@*
+@emph{Exemple :}@*
+@*
+@code{weechat.remove_handler ("commande", ma_commande);}@*
 @*
 
 @item
@@ -2620,6 +2797,10 @@ Ex@'ecute une commande ou envoie un message @'a un canal.@*
 @item @option{canal}: nom du canal
 @item @option{serveur}: nom interne du serveur
 @end itemize
+@*
+@emph{Valeur renvoy@'ee :}@*
+@*
+1 si succ@`es, 0 si une erreur s'est produite.@*
 @*
 @emph{Exemples :}@*
 @*
@@ -2650,6 +2831,11 @@ syst@`eme de partage WeeChat
 @end itemize
 @item @option{serveur}: nom interne du serveur
 @end itemize
+@*
+@emph{Valeur renvoy@'ee :}@*
+@*
+L'information demand@'e, blanc si une erreur s'est produite ou que
+l'information n'a pas @'et@'e trouv@'ee.@*
 @*
 @emph{Exemples :}@*
 @*
@@ -2695,6 +2881,10 @@ Le tableau renvoy@'e contient les champs suivants :
 @item bytes_per_sec: nombre d'octets transmis par seconde depuis le d@'ebut
 @end itemize
 @*
+@emph{Valeur renvoy@'ee :}@*
+@*
+La liste des DCC, 0 si une erreur s'est produite.@*
+@*
 
 @item
 @command{weechat.get_config ( nom );}@*
@@ -2706,10 +2896,84 @@ Obtenir la valeur d'une option de configuration WeeChat.@*
 @item @option{nom}: nom de l'option
 @end itemize
 @*
+@emph{Valeur renvoy@'ee :}@*
+@*
+La valeur de l'option, blanc si une erreur s'est produite ou que
+l'option n'a pas @'et@'e trouv@'ee.@*
+@*
 @emph{Exemples :}@*
 @*
-@code{$value1 = weechat.get_config ("look_set_title");}@*
+@code{$value1 = weechat.get_config ("look_nicklist");}@*
 @code{$value2 = weechat.get_config ("freenode.server_autojoin");}@*
+@*
+
+@item
+@command{weechat.set_config ( nom, valeur );}@*
+@*
+Modifier une otion de configuration WeeChat.@*
+
+@emph{Param@`etres :}
+@itemize @minus
+@item @option{nom}: nom de l'option
+@item @option{valeur}: la nouvelle valeur pour l'option
+@end itemize
+@*
+@emph{Valeur renvoy@'ee :}@*
+@*
+1 si succ@`es, 0 si une erreur s'est produite.@*
+@*
+@emph{Exemples :}@*
+@*
+@code{weechat.set_config ("look_nicklist", "off");}@*
+@code{weechat.set_config ("freenode.server_autojoin, "#weechat");}@*
+@*
+
+@item
+@command{weechat.get_plugin_config ( option );}@*
+@*
+Renvoie la valeur d'une option de l'extension.@*
+L'option est lue depuis le fichier ~/.weechat/plugins.rc et est
+sous cette forme :@*
+@code{extension.script.option=valeur}@*
+NB: le nom de l'extension et du script sont ajout@'es automatiquement.@*
+
+@emph{Param@`etres :}
+@itemize @minus
+@item @option{option}: nom de l'option
+@end itemize
+@*
+@emph{Valeur renvoy@'ee :}@*
+@*
+La valeur de l'option, blanc si une erreur s'est produite ou que
+l'option n'a pas @'et@'e trouv@'ee.@*
+@*
+@emph{Exemple :}@*
+@*
+@code{$value = weechat.get_plugin_config ("ma_variable");}@*
+@*
+
+@item
+@command{weechat.set_plugin_config ( option, valeur );}@*
+@*
+Modifie la valeur d'une option de l'extension.@*
+L'option est @'ecrite dans le fichier ~/.weechat/plugins.rc et est
+sous cette forme :@*
+@code{extension.script.option=valeur}@*
+NB: le nom de l'extension et du script sont ajout@'es automatiquement.@*
+
+@emph{Param@`etres :}
+@itemize @minus
+@item @option{option}: nom de l'option
+@item @option{valeur}: la nouvelle valeur pour l'option
+@end itemize
+@*
+@emph{Valeur renvoy@'ee :}@*
+@*
+1 si succ@`es, 0 si une erreur s'est produite.@*
+@*
+@emph{Exemple :}@*
+@*
+@code{weechat.set_plugin_config ("ma_variable", "valeur");}@*
 @*
 
 @end itemize

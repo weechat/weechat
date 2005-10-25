@@ -36,7 +36,7 @@
 
 @title WeeChat - Gui@'on de usuario.
 @subtitle Cliente IRC r@'apido, peque@~no y extensible
-@subtitle Documentaci@'on para WeeChat v0.1.6-cvs - 24 de octubre de 2005
+@subtitle Documentaci@'on para WeeChat v0.1.6-cvs - 25 de octubre de 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -1560,8 +1560,10 @@ them the plugin can't load):@*
 @end itemize
 @item functions for init and end of plugin:
 @itemize @minus
-@item weechat_plugin_init: function called when plugin is loaded
-@item weechat_plugin_end: function called when plugin is unloaded
+@item weechat_plugin_init: function called when plugin is loaded,
+must return 1 if successful, 0 if error
+@item weechat_plugin_end: function called when plugin is unloaded,
+must return 1 if successful, 0 if error
 @end itemize
 @end itemize
 
@@ -2065,7 +2067,7 @@ use.@*
 @*
 @emph{Examples:}@*
 @*
-@code{char *value1 = plugin->get_config (plugin, "look_set_title");}@*
+@code{char *value1 = plugin->get_config (plugin, "look_nicklist");}@*
 @code{char *value2 = plugin->get_config (plugin, "freenode.server_autojoin");}@*
 @*
 
@@ -2246,6 +2248,10 @@ tener un nombre distinto)
 @item @option{descripci@'on}: descripci@'on breve del programa
 @end itemize
 @*
+@emph{Return value:}@*
+@*
+1 if script was registered, 0 if error occured.@*
+@*
 @emph{Ejemplo:}@*
 @*
 @code{weechat::register ("ejemplo", "1.0", "fin_ejemplo", "programa de ejemplo...");}@*
@@ -2262,6 +2268,10 @@ Escribe un mensaje en un canal.@*
 @item @option{canal}: nombre del canal
 @item @option{servidor}: (opcional) nombre interno del servidor
 @end itemize
+@*
+@emph{Return value:}@*
+@*
+1 if successful, 0 if error occured.@*
 @*
 @emph{Ejemplos:}@*
 @*
@@ -2281,6 +2291,10 @@ Escribir un mensaje en la barra de informaciones.@*
 (si es 0, el mensaje no se borrar@'a).
 @item @option{message}: mensaje que se escribir@'a en la barra de informaciones.
 @end itemize
+@*
+@emph{Return value:}@*
+@*
+1 if successful, 0 if error occured.@*
 @*
 @emph{Ejemplo:}@*
 @*
@@ -2302,6 +2316,10 @@ RFC 1459: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc1459.txt}@*
 RFC 2812: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
 @item @option{funci@'on}: funci@'on en Perl llamada cuando se reciba el mensaje.
 @end itemize
+@*
+@emph{Return value:}@*
+@*
+1 if Perl function was attached, 0 if error occured.@*
 @*
 @emph{Ejemplo:}@*
 @*
@@ -2336,6 +2354,10 @@ command)
 arguments (displayed by /help command)
 @end itemize
 @*
+@emph{Return value:}@*
+@*
+1 if Perl function was attached, 0 if error occured.@*
+@*
 @emph{Ejemplo:}@*
 @*
 @code{weechat::add_command_handler ("comando", mi_comando);}@*
@@ -2344,6 +2366,26 @@ arguments (displayed by /help command)
 @code{@ @ @ @ weechat::print("Servidor: $_[0], Par@'ametros: $_[1]\n");}@*
 @code{@ @ @ @ return 0;}@*
 @code{@} }@*
+@*
+
+@item
+@command{weechat::remove_handler ( name, function );}@*
+@*
+Remove a message or command handler.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{name}: name of IRC message or command handler
+@item @option{function}: Perl function
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+1 if successful, 0 if error occured.@*
+@*
+@emph{Example:}@*
+@*
+@code{weechat::remove_handler ("command", my_command);}@*
 @*
 
 @item
@@ -2357,6 +2399,10 @@ Execute a command or send a message to a channel.@*
 @item @option{channel}: name of channel
 @item @option{server}: internal name of server
 @end itemize
+@*
+@emph{Return value:}@*
+@*
+1 if successful, 0 if error occured.@*
 @*
 @emph{Examples:}@*
 @*
@@ -2386,6 +2432,10 @@ Obtener informaciones distintas sobre WeeChat, el servidor o el usuario.@*
 @item @option{servidor}: nombre interno del servidor
 @item @option{canal}: nombre del canal
 @end itemize
+@*
+@emph{Return value:}@*
+@*
+Asked info, empty if error occured or info was not found.@*
 @*
 @emph{Ejemplos:}@*
 @*
@@ -2431,21 +2481,95 @@ Returned array has following fields:
 @item bytes_per_sec: bytes sent/received per second
 @end itemize
 @*
+@emph{Return value:}@*
+@*
+DCC list, 0 if error occured.@*
+@*
 
 @item
-@command{weechat::get_config ( name );}@*
+@command{weechat::get_config ( option );}@*
 @*
 Get WeeChat config option value.@*
 
 @emph{Arguments:}
 @itemize @minus
-@item @option{name}: name of option
+@item @option{option}: name of option
 @end itemize
+@*
+@emph{Return value:}@*
+@*
+Value of option, empty if error occured or option was not found.@*
 @*
 @emph{Examples:}@*
 @*
-@code{$value1 = weechat::get_config ("look_set_title");}@*
+@code{$value1 = weechat::get_config ("look_nicklist");}@*
 @code{$value2 = weechat::get_config ("freenode.server_autojoin");}@*
+@*
+
+@item
+@command{weechat::set_config ( option, value );}@*
+@*
+Get WeeChat config option value.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{option}: name of option
+@item @option{value}: new value for option
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+1 if successful, 0 if error occured.@*
+@*
+@emph{Examples:}@*
+@*
+@code{weechat::set_config ("look_nicklist", "off");}@*
+@code{weechat::set_config ("freenode.server_autojoin"", "#weechat");}@*
+@*
+
+@item
+@command{weechat::get_plugin_config ( option );}@*
+@*
+Return value of a plugin option.@*
+Option is read from file ~/.weechat/plugins.rc and is like:@*
+@code{plugin.script.option=value}@*
+Note: plugin and script names are automatically added.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{option}: name of option
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+Value of option, empty if error occured or option was not found.@*
+@*
+@emph{Example:}@*
+@*
+@code{$value = weechat::get_plugin_config ("my_var");}@*
+@*
+
+@item
+@command{weechat::set_plugin_config ( option, value );}@*
+@*
+Update value of a plugin option.@*
+Option is written in file ~/.weechat/plugins.rc and is like:@*
+@code{plugin.script.option=value}@*
+Note: plugin and script names are automatically added.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{option}: name of option
+@item @option{value}: new value for option
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+1 if successful, 0 if error occured.@*
+@*
+@emph{Example:}@*
+@*
+@code{weechat::set_plugin_config ("my_var", "value");}@*
 @*
 
 @end itemize
@@ -2485,6 +2609,10 @@ tener un nombre distinto)
 @item @option{descripci@'on}: descripci@'on breve del programa
 @end itemize
 @*
+@emph{Return value:}@*
+@*
+1 if script was registered, 0 if error occured.@*
+@*
 @emph{Ejemplo:}@*
 @*
 @code{weechat.register ("ejemplo", "1.0", "fin_ejemplo", "programa de ejemplo...")}@*
@@ -2501,6 +2629,10 @@ Escribe un mensaje en un canal.@*
 @item @option{canal}: nombre del canal
 @item @option{servidor}: (opcional) nombre interno del servidor
 @end itemize
+@*
+@emph{Return value:}@*
+@*
+1 if successful, 0 if error occured.@*
 @*
 @emph{Ejemplos:}@*
 @*
@@ -2520,6 +2652,10 @@ Escribir un mensaje en la barra de informaciones.@*
 (si es 0, el mensaje no se borrar@'a).
 @item @option{mensaje}: mensaje que se escribir@'a en la barra de informaciones.
 @end itemize
+@*
+@emph{Return value:}@*
+@*
+1 if successful, 0 if error occured.@*
 @*
 @emph{Ejemplo:}@*
 @*
@@ -2541,6 +2677,10 @@ RFC 1459: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc1459.txt}@*
 RFC 2812: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
 @item @option{funci@'on}: funci@'on en Python llamada cuando se reciba el mensaje.
 @end itemize
+@*
+@emph{Return value:}@*
+@*
+1 if Python function was attached, 0 if error occured.@*
 @*
 @emph{Ejemplo:}@*
 @*
@@ -2573,11 +2713,35 @@ command)
 arguments (displayed by /help command)
 @end itemize
 @*
+@emph{Return value:}@*
+@*
+1 if Python function was attached, 0 if error occured.@*
+@*
 @emph{Ejemplo:}@*
 @*
 @code{weechat.add_command_handler ("comando", mi_comando)}@*
 @code{def mi_comando(servidor, args):}@*
 @code{@ @ @ @ weechat.prnt("Servidor:"+servidor+" Par@'ametros:"+args)}@*
+@*
+
+@item
+@command{weechat.remove_handler ( name, function );}@*
+@*
+Remove a message or command handler.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{name}: name of IRC message or command handler
+@item @option{function}: Python function
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+1 if successful, 0 if error occured.@*
+@*
+@emph{Example:}@*
+@*
+@code{weechat.remove_handler ("command", my_command);}@*
 @*
 
 @item
@@ -2591,6 +2755,10 @@ Execute a command or send a message to a channel.@*
 @item @option{channel}: name of channel
 @item @option{server}: internal name of server
 @end itemize
+@*
+@emph{Return value:}@*
+@*
+1 if successful, 0 if error occured.@*
 @*
 @emph{Examples:}@*
 @*
@@ -2619,6 +2787,10 @@ Obtener informaciones distintas sobre WeeChat, el servidor o el usuario.@*
 @end itemize
 @item @option{servidor}: nombre interno del servidor
 @end itemize
+@*
+@emph{Return value:}@*
+@*
+Asked info, empty if error occured or info was not found.@*
 @*
 @emph{Ejemplos:}@*
 @*
@@ -2664,21 +2836,95 @@ Returned array has following fields:
 @item bytes_per_sec: bytes sent/received per second
 @end itemize
 @*
+@emph{Return value:}@*
+@*
+DCC list, 0 if error occured.@*
+@*
 
 @item
-@command{weechat.get_config ( name );}@*
+@command{weechat.get_config ( option );}@*
 @*
 Get WeeChat config option value.@*
 
 @emph{Arguments:}
 @itemize @minus
-@item @option{name}: name of option
+@item @option{option}: name of option
 @end itemize
+@*
+@emph{Return value:}@*
+@*
+Value of option, empty if error occured or option was not found.@*
 @*
 @emph{Examples:}@*
 @*
-@code{$value1 = weechat.get_config ("look_set_title");}@*
+@code{$value1 = weechat.get_config ("look_nicklist");}@*
 @code{$value2 = weechat.get_config ("freenode.server_autojoin");}@*
+@*
+
+@item
+@command{weechat.set_config ( option, value );}@*
+@*
+Get WeeChat config option value.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{option}: name of option
+@item @option{value}: new value for option
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+1 if successful, 0 if error occured.@*
+@*
+@emph{Examples:}@*
+@*
+@code{weechat.set_config ("look_nicklist", "off");}@*
+@code{weechat.set_config ("freenode.server_autojoin"", "#weechat");}@*
+@*
+
+@item
+@command{weechat.get_plugin_config ( option );}@*
+@*
+Return value of a plugin option.@*
+Option is read from file ~/.weechat/plugins.rc and is like:@*
+@code{plugin.script.option=value}@*
+Note: plugin and script names are automatically added.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{option}: name of option
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+Value of option, empty if error occured or option was not found.@*
+@*
+@emph{Example:}@*
+@*
+@code{$value = weechat.get_plugin_config ("my_var");}@*
+@*
+
+@item
+@command{weechat.set_plugin_config ( option, value );}@*
+@*
+Update value of a plugin option.@*
+Option is written in file ~/.weechat/plugins.rc and is like:@*
+@code{plugin.script.option=value}@*
+Note: plugin and script names are automatically added.@*
+
+@emph{Arguments:}
+@itemize @minus
+@item @option{option}: name of option
+@item @option{value}: new value for option
+@end itemize
+@*
+@emph{Return value:}@*
+@*
+1 if successful, 0 if error occured.@*
+@*
+@emph{Example:}@*
+@*
+@code{weechat.set_plugin_config ("my_var", "value");}@*
 @*
 
 @end itemize

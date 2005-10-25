@@ -33,6 +33,7 @@
 #include <sys/stat.h>
 #include <dirent.h>
 #include <dlfcn.h>
+
 #include "../common/weechat.h"
 #include "plugins.h"
 #include "plugins-config.h"
@@ -160,21 +161,21 @@ plugin_search (char *name)
  *                            return: pointer to handler, NULL if not found
  */
 
-t_plugin_cmd_handler *
+t_plugin_handler *
 plugin_cmd_handler_search (char *command)
 {
     t_weechat_plugin *ptr_plugin;
-    t_plugin_cmd_handler *ptr_plugin_cmd_handler;
+    t_plugin_handler *ptr_handler;
     
     for (ptr_plugin = weechat_plugins; ptr_plugin;
          ptr_plugin = ptr_plugin->next_plugin)
     {
-        for (ptr_plugin_cmd_handler = ptr_plugin->cmd_handlers;
-             ptr_plugin_cmd_handler;
-             ptr_plugin_cmd_handler = ptr_plugin_cmd_handler->next_handler)
+        for (ptr_handler = ptr_plugin->handlers;
+             ptr_handler; ptr_handler = ptr_handler->next_handler)
         {
-            if (ascii_strcasecmp (ptr_plugin_cmd_handler->command, command) == 0)
-                return ptr_plugin_cmd_handler;
+            if ((ptr_handler->type == HANDLER_COMMAND)
+                && (ascii_strcasecmp (ptr_handler->command, command) == 0))
+                return ptr_handler;
         }
     }
     
@@ -194,30 +195,35 @@ plugin_cmd_handler_search (char *command)
  *                              handler when called (used by scripts)
  */
 
-t_plugin_msg_handler *
+t_plugin_handler *
 plugin_msg_handler_add (t_weechat_plugin *plugin, char *irc_command,
                         t_plugin_handler_func *handler_func,
                         char *handler_args, void *handler_pointer)
 {
-    t_plugin_msg_handler *new_plugin_msg_handler;
+    t_plugin_handler *new_handler;
     
-    new_plugin_msg_handler = (t_plugin_msg_handler *)malloc (sizeof (t_plugin_msg_handler));
-    if (new_plugin_msg_handler)
+    new_handler = (t_plugin_handler *)malloc (sizeof (t_plugin_handler));
+    if (new_handler)
     {
-        new_plugin_msg_handler->irc_command = strdup (irc_command);
-        new_plugin_msg_handler->msg_handler = handler_func;
-        new_plugin_msg_handler->msg_handler_args = (handler_args) ? strdup (handler_args) : NULL;
-        new_plugin_msg_handler->msg_handler_pointer = handler_pointer;
-        new_plugin_msg_handler->running = 0;
+        new_handler->type = HANDLER_MESSAGE;
+        new_handler->irc_command = strdup (irc_command);
+        new_handler->command = NULL;
+        new_handler->description = NULL;
+        new_handler->arguments = NULL;
+        new_handler->arguments_description = NULL;
+        new_handler->handler = handler_func;
+        new_handler->handler_args = (handler_args) ? strdup (handler_args) : NULL;
+        new_handler->handler_pointer = handler_pointer;
+        new_handler->running = 0;
         
         /* add new handler to list */
-        new_plugin_msg_handler->prev_handler = plugin->last_msg_handler;
-        new_plugin_msg_handler->next_handler = NULL;
-        if (plugin->msg_handlers)
-            (plugin->last_msg_handler)->next_handler = new_plugin_msg_handler;
+        new_handler->prev_handler = plugin->last_handler;
+        new_handler->next_handler = NULL;
+        if (plugin->handlers)
+            (plugin->last_handler)->next_handler = new_handler;
         else
-            plugin->msg_handlers = new_plugin_msg_handler;
-        plugin->last_msg_handler = new_plugin_msg_handler;
+            plugin->handlers = new_handler;
+        plugin->last_handler = new_handler;
     }
     else
     {
@@ -227,7 +233,7 @@ plugin_msg_handler_add (t_weechat_plugin *plugin, char *irc_command,
                     WEECHAT_ERROR, plugin->name, irc_command);
         return NULL;
     }
-    return new_plugin_msg_handler;
+    return new_handler;
 }
 
 /*
@@ -245,14 +251,14 @@ plugin_msg_handler_add (t_weechat_plugin *plugin, char *irc_command,
  *                              handler when called (used by scripts)
  */
 
-t_plugin_cmd_handler *
+t_plugin_handler *
 plugin_cmd_handler_add (t_weechat_plugin *plugin, char *command,
                         char *description, char *arguments,
                         char *arguments_description,
                         t_plugin_handler_func *handler_func,
                         char *handler_args, void *handler_pointer)
 {
-    t_plugin_cmd_handler *new_plugin_cmd_handler;
+    t_plugin_handler *new_handler;
     
     if (plugin_cmd_handler_search (command))
     {
@@ -264,26 +270,28 @@ plugin_cmd_handler_add (t_weechat_plugin *plugin, char *command,
         return NULL;
     }
         
-    new_plugin_cmd_handler = (t_plugin_cmd_handler *)malloc (sizeof (t_plugin_cmd_handler));
-    if (new_plugin_cmd_handler)
+    new_handler = (t_plugin_handler *)malloc (sizeof (t_plugin_handler));
+    if (new_handler)
     {
-        new_plugin_cmd_handler->command = strdup (command);
-        new_plugin_cmd_handler->description = (description) ? strdup (description) : NULL;
-        new_plugin_cmd_handler->arguments = (arguments) ? strdup (arguments) : NULL;
-        new_plugin_cmd_handler->arguments_description = (arguments_description) ? strdup (arguments_description) : NULL;
-        new_plugin_cmd_handler->cmd_handler = handler_func;
-        new_plugin_cmd_handler->cmd_handler_args = (handler_args) ? strdup (handler_args) : NULL;
-        new_plugin_cmd_handler->cmd_handler_pointer = handler_pointer;
-        new_plugin_cmd_handler->running = 0;
+        new_handler->type = HANDLER_COMMAND;
+        new_handler->irc_command = NULL;
+        new_handler->command = strdup (command);
+        new_handler->description = (description) ? strdup (description) : NULL;
+        new_handler->arguments = (arguments) ? strdup (arguments) : NULL;
+        new_handler->arguments_description = (arguments_description) ? strdup (arguments_description) : NULL;
+        new_handler->handler = handler_func;
+        new_handler->handler_args = (handler_args) ? strdup (handler_args) : NULL;
+        new_handler->handler_pointer = handler_pointer;
+        new_handler->running = 0;
         
         /* add new handler to list */
-        new_plugin_cmd_handler->prev_handler = plugin->last_cmd_handler;
-        new_plugin_cmd_handler->next_handler = NULL;
-        if (plugin->cmd_handlers)
-            (plugin->last_cmd_handler)->next_handler = new_plugin_cmd_handler;
+        new_handler->prev_handler = plugin->last_handler;
+        new_handler->next_handler = NULL;
+        if (plugin->handlers)
+            (plugin->last_handler)->next_handler = new_handler;
         else
-            plugin->cmd_handlers = new_plugin_cmd_handler;
-        plugin->last_cmd_handler = new_plugin_cmd_handler;
+            plugin->handlers = new_handler;
+        plugin->last_handler = new_handler;
         
         /* add command to WeeChat commands list */
         if (!weelist_search (index_commands, command))
@@ -297,7 +305,7 @@ plugin_cmd_handler_add (t_weechat_plugin *plugin, char *command,
                     WEECHAT_ERROR, plugin->name, command);
         return NULL;
     }
-    return new_plugin_cmd_handler;
+    return new_handler;
 }
 
 /*
@@ -309,30 +317,30 @@ int
 plugin_msg_handler_exec (char *server, char *irc_command, char *irc_message)
 {
     t_weechat_plugin *ptr_plugin;
-    t_plugin_msg_handler *ptr_plugin_msg_handler;
+    t_plugin_handler *ptr_handler;
     int count;
     
     count = 0;
     for (ptr_plugin = weechat_plugins; ptr_plugin;
          ptr_plugin = ptr_plugin->next_plugin)
     {
-        for (ptr_plugin_msg_handler = ptr_plugin->msg_handlers;
-             ptr_plugin_msg_handler;
-             ptr_plugin_msg_handler = ptr_plugin_msg_handler->next_handler)
+        for (ptr_handler = ptr_plugin->handlers;
+             ptr_handler; ptr_handler = ptr_handler->next_handler)
         {
-            if (ascii_strcasecmp (ptr_plugin_msg_handler->irc_command, irc_command) == 0)
+            if ((ptr_handler->type == HANDLER_MESSAGE)
+                && (ascii_strcasecmp (ptr_handler->irc_command, irc_command) == 0))
             {
-                if (ptr_plugin_msg_handler->running == 0)
+                if (ptr_handler->running == 0)
                 {
-                    ptr_plugin_msg_handler->running = 1;
-                    if ((int) (ptr_plugin_msg_handler->msg_handler) (ptr_plugin,
-                                                                     server,
-                                                                     irc_command,
-                                                                     irc_message,
-                                                                     ptr_plugin_msg_handler->msg_handler_args,
-                                                                     ptr_plugin_msg_handler->msg_handler_pointer))
+                    ptr_handler->running = 1;
+                    if ((int) (ptr_handler->handler) (ptr_plugin,
+                                                      server,
+                                                      irc_command,
+                                                      irc_message,
+                                                      ptr_handler->handler_args,
+                                                      ptr_handler->handler_pointer))
                         count++;
-                    ptr_plugin_msg_handler->running = 0;
+                    ptr_handler->running = 0;
                 }
             }
         }
@@ -350,28 +358,28 @@ int
 plugin_cmd_handler_exec (char *server, char *command, char *arguments)
 {
     t_weechat_plugin *ptr_plugin;
-    t_plugin_cmd_handler *ptr_plugin_cmd_handler;
+    t_plugin_handler *ptr_handler;
     int return_code;
     
     for (ptr_plugin = weechat_plugins; ptr_plugin;
          ptr_plugin = ptr_plugin->next_plugin)
     {
-        for (ptr_plugin_cmd_handler = ptr_plugin->cmd_handlers;
-             ptr_plugin_cmd_handler;
-             ptr_plugin_cmd_handler = ptr_plugin_cmd_handler->next_handler)
+        for (ptr_handler = ptr_plugin->handlers;
+             ptr_handler; ptr_handler = ptr_handler->next_handler)
         {
-            if (ascii_strcasecmp (ptr_plugin_cmd_handler->command, command) == 0)
+            if ((ptr_handler->type == HANDLER_COMMAND)
+                && (ascii_strcasecmp (ptr_handler->command, command) == 0))
             {
-                if (ptr_plugin_cmd_handler->running == 0)
+                if (ptr_handler->running == 0)
                 {
-                    ptr_plugin_cmd_handler->running = 1;
-                    return_code = (int) (ptr_plugin_cmd_handler->cmd_handler) (ptr_plugin,
-                                                                               server,
-                                                                               command,
-                                                                               arguments,
-                                                                               ptr_plugin_cmd_handler->cmd_handler_args,
-                                                                               ptr_plugin_cmd_handler->cmd_handler_pointer);
-                    ptr_plugin_cmd_handler->running = 0;
+                    ptr_handler->running = 1;
+                    return_code = (int) (ptr_handler->handler) (ptr_plugin,
+                                                                server,
+                                                                command,
+                                                                arguments,
+                                                                ptr_handler->handler_args,
+                                                                ptr_handler->handler_pointer);
+                    ptr_handler->running = 0;
                     return (return_code) ? 1 : 0;
                 }
             }
@@ -382,99 +390,60 @@ plugin_cmd_handler_exec (char *server, char *command, char *arguments)
 }
 
 /*
- * plugin_msg_handler_remove: remove a message handler for a plugin
+ * plugin_handler_remove: remove a handler for a plugin
  */
 
 void
-plugin_msg_handler_remove (t_weechat_plugin *plugin,
-                           t_plugin_msg_handler *plugin_msg_handler)
+plugin_handler_remove (t_weechat_plugin *plugin,
+                       t_plugin_handler *handler)
 {
-    t_plugin_msg_handler *new_plugin_msg_handlers;
+    t_plugin_handler *new_handlers;
     
     /* remove handler from list */
-    if (plugin->last_msg_handler == plugin_msg_handler)
-        plugin->last_msg_handler = plugin_msg_handler->prev_handler;
-    if (plugin_msg_handler->prev_handler)
+    if (plugin->last_handler == handler)
+        plugin->last_handler = handler->prev_handler;
+    if (handler->prev_handler)
     {
-        (plugin_msg_handler->prev_handler)->next_handler = plugin_msg_handler->next_handler;
-        new_plugin_msg_handlers = plugin->msg_handlers;
+        (handler->prev_handler)->next_handler = handler->next_handler;
+        new_handlers = plugin->handlers;
     }
     else
-        new_plugin_msg_handlers = plugin_msg_handler->next_handler;
+        new_handlers = handler->next_handler;
     
-    if (plugin_msg_handler->next_handler)
-        (plugin_msg_handler->next_handler)->prev_handler = plugin_msg_handler->prev_handler;
-
-    /* free data */
-    if (plugin_msg_handler->irc_command)
-        free (plugin_msg_handler->irc_command);
-    if (plugin_msg_handler->msg_handler_args)
-        free (plugin_msg_handler->msg_handler_args);
-    plugin->msg_handlers = new_plugin_msg_handlers;
-}
-
-/*
- * plugin_cmd_handler_remove: remove a command handler for a plugin
- */
-
-void
-plugin_cmd_handler_remove (t_weechat_plugin *plugin,
-                           t_plugin_cmd_handler *plugin_cmd_handler)
-{
-    t_plugin_cmd_handler *new_plugin_cmd_handlers;
+    if (handler->next_handler)
+        (handler->next_handler)->prev_handler = handler->prev_handler;
     
-    /* remove handler from list */
-    if (plugin->last_cmd_handler == plugin_cmd_handler)
-        plugin->last_cmd_handler = plugin_cmd_handler->prev_handler;
-    if (plugin_cmd_handler->prev_handler)
-    {
-        (plugin_cmd_handler->prev_handler)->next_handler = plugin_cmd_handler->next_handler;
-        new_plugin_cmd_handlers = plugin->cmd_handlers;
-    }
-    else
-        new_plugin_cmd_handlers = plugin_cmd_handler->next_handler;
-    
-    if (plugin_cmd_handler->next_handler)
-        (plugin_cmd_handler->next_handler)->prev_handler = plugin_cmd_handler->prev_handler;
-    
-    /* remove command from WeeChat command list */
-    weelist_remove (&index_commands, &last_index_command,
-                    weelist_search (index_commands, plugin_cmd_handler->command));
+    /* remove command from WeeChat command list, if command handler */
+    if (handler->type == HANDLER_COMMAND)
+        weelist_remove (&index_commands, &last_index_command,
+                        weelist_search (index_commands, handler->command));
     
     /* free data */
-    if (plugin_cmd_handler->command)
-        free (plugin_cmd_handler->command);
-    if (plugin_cmd_handler->description)
-        free (plugin_cmd_handler->description);
-    if (plugin_cmd_handler->arguments)
-        free (plugin_cmd_handler->arguments);
-    if (plugin_cmd_handler->arguments_description)
-        free (plugin_cmd_handler->arguments_description);
-    if (plugin_cmd_handler->cmd_handler_args)
-        free (plugin_cmd_handler->cmd_handler_args);
-    plugin->cmd_handlers = new_plugin_cmd_handlers;
+    if (handler->irc_command)
+        free (handler->irc_command);
+    if (handler->command)
+        free (handler->command);
+    if (handler->description)
+        free (handler->description);
+    if (handler->arguments)
+        free (handler->arguments);
+    if (handler->arguments_description)
+        free (handler->arguments_description);
+    if (handler->handler_args)
+        free (handler->handler_args);
+    
+    plugin->handlers = new_handlers;
 }
 
 /*
- * plugin_msg_handler_remove_all: remove all message handlers for a plugin
+ * plugin_handler_remove_all: remove all handlers for a plugin
  */
 
 void
-plugin_msg_handler_remove_all (t_weechat_plugin *plugin)
+plugin_handler_remove_all (t_weechat_plugin *plugin)
 {
-    while (plugin->msg_handlers)
-        plugin_msg_handler_remove (plugin, plugin->msg_handlers);
-}
-
-/*
- * plugin_cmd_handler_remove_all: remove all command handlers for a plugin
- */
-
-void
-plugin_cmd_handler_remove_all (t_weechat_plugin *plugin)
-{
-    while (plugin->cmd_handlers)
-        plugin_cmd_handler_remove (plugin, plugin->cmd_handlers);
+    while (plugin->handlers)
+        plugin_handler_remove (plugin, plugin->handlers);
 }
 
 /*
@@ -650,11 +619,9 @@ plugin_load (char *filename)
         new_plugin->mkdir_home = &weechat_plugin_mkdir_home;
         new_plugin->exec_on_files = &weechat_plugin_exec_on_files;
         new_plugin->msg_handler_add = &weechat_plugin_msg_handler_add;
-        new_plugin->msg_handler_remove = &weechat_plugin_msg_handler_remove;
-        new_plugin->msg_handler_remove_all = &weechat_plugin_msg_handler_remove_all;
         new_plugin->cmd_handler_add = &weechat_plugin_cmd_handler_add;
-        new_plugin->cmd_handler_remove = &weechat_plugin_cmd_handler_remove;
-        new_plugin->cmd_handler_remove_all = &weechat_plugin_cmd_handler_remove_all;
+        new_plugin->handler_remove = &weechat_plugin_handler_remove;
+        new_plugin->handler_remove_all = &weechat_plugin_handler_remove_all;
         new_plugin->printf = &weechat_plugin_printf;
         new_plugin->printf_server = &weechat_plugin_printf_server;
         new_plugin->infobar_printf = &weechat_plugin_infobar_printf;
@@ -668,10 +635,8 @@ plugin_load (char *filename)
         new_plugin->set_plugin_config = &weechat_plugin_set_plugin_config;
         
         /* handlers */
-        new_plugin->msg_handlers = NULL;
-        new_plugin->last_msg_handler = NULL;
-        new_plugin->cmd_handlers = NULL;
-        new_plugin->last_cmd_handler = NULL;
+        new_plugin->handlers = NULL;
+        new_plugin->last_handler = NULL;
         
         /* add new plugin to list */
         new_plugin->prev_plugin = last_weechat_plugin;
@@ -807,8 +772,7 @@ plugin_remove (t_weechat_plugin *plugin)
         (plugin->next_plugin)->prev_plugin = plugin->prev_plugin;
     
     /* free data */
-    plugin_msg_handler_remove_all (plugin);
-    plugin_cmd_handler_remove_all (plugin);
+    plugin_handler_remove_all (plugin);
     if (plugin->filename)
         free (plugin->filename);
     dlclose (plugin->handle);
