@@ -221,11 +221,11 @@ if test "x$enable_python" = "xyes" ; then
     
     PYTHON_SYSPREFIX=`$PYTHON -c 'import sys; print "%s" % sys.prefix'`
     PYTHON_VERSION=`$PYTHON -c 'import sys ; print sys.version[[:3]]'`
-    PYTHON_INCLUDE="$PYTHON_SYSPREFIX/include/python$PYTHON_VERSION"
+    PYTHON_INCLUDE=`$PYTHON -c "import distutils.sysconfig,string; print distutils.sysconfig.get_config_var('CONFINCLUDEPY')"`
     
     AC_MSG_CHECKING(for Python header files)
     if test -r "$PYTHON_INCLUDE/Python.h"; then
-        PYTHON_CFLAGS=-I`$PYTHON -c "import distutils.sysconfig,string; print distutils.sysconfig.get_config_var('CONFINCLUDEPY')"`
+        PYTHON_CFLAGS="-I$PYTHON_INCLUDE"
     else
         AC_MSG_ERROR([
 *** Python header files couldn't be found in your system.
@@ -233,11 +233,11 @@ if test "x$enable_python" = "xyes" ; then
     fi
     AC_MSG_RESULT(found)
     
-    PYTHON_LIB="$PYTHON_SYSPREFIX/lib/python$PYTHON_VERSION/config"
+    PYTHON_LIB=`$PYTHON -c "import distutils.sysconfig; print distutils.sysconfig.get_config_var('LIBPL')"`
     
     AC_MSG_CHECKING(for Python library)
     if test -r "$PYTHON_LIB/libpython$PYTHON_VERSION.so" -o -r "$PYTHON_SYSPREFIX/lib/libpython$PYTHON_VERSION.so"; then
-        PYTHON_LFLAGS="-lpython$PYTHON_VERSION -lpthread -lutil"
+       PYTHON_LFLAGS="-lpython$PYTHON_VERSION "`$PYTHON -c "import distutils.sysconfig; print distutils.sysconfig.get_config_var('LIBS')+' '+distutils.sysconfig.get_config_var('LINKFORSHARED')"`
     else
         AC_MSG_ERROR([
 *** Python library couldn't be found in your system.            
