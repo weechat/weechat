@@ -665,7 +665,8 @@ t_config_option weechat_options_irc[] =
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
     NULL, NULL, &cfg_irc_fifo_pipe, NULL, &config_change_fifo_pipe },
   { "irc_highlight", N_("list of words to highlight"),
-    N_("comma separated list of words to highlight (case insensitive comparison)"),
+    N_("comma separated list of words to highlight (case insensitive comparison, "
+       "words may begin or end with \"*\" for partial match)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "", NULL, NULL, &cfg_irc_highlight, &config_change_noop },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }

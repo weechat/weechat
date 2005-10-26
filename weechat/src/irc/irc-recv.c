@@ -47,23 +47,54 @@ int command_ignored;
 
 
 /*
+ * irc_is_word_char: return 1 if given character is a "word character"
+ */
+
+int
+irc_is_word_char (char c)
+{
+    if (isalnum (c))
+        return 1;
+    
+    switch (c)
+    {
+        case '-':
+        case '_':
+        case '|':
+            return 1;
+    }
+    
+    /* not a 'word char' */
+    return 0;
+}
+
+
+/*
  * irc_is_highlight: returns 1 if given message contains highlight (with given nick
- *                   or at least one of string in "irc_higlight" setting
+ *                   or at least one of string in "irc_higlight" setting)
  */
 
 int
 irc_is_highlight (char *message, char *nick)
 {
-    char *msg, *highlight, *pos, *pos_end;
-    int end, length;
+    char *msg, *highlight, *match, *match_pre, *match_post, *msg_pos, *pos, *pos_end;
+    int end, length, startswith, endswith, wildcard_start, wildcard_end;
     
     /* empty message ? */
     if (!message || !message[0])
         return 0;
     
     /* highlight by nickname */
-    if (strstr (message, nick))
-        return 1;
+    match = strstr (message, nick);
+    if (match)
+    {
+        match_pre = match - 1;
+        match_post = match + strlen(nick);
+        startswith = ((match == message) || (!irc_is_word_char (match_pre[0])));
+        endswith = ((!match_post[0]) || (!irc_is_word_char (match_post[0])));
+        if (startswith && endswith)
+            return 1;
+    }
     
     /* no highlight by nickname and "irc_highlight" is empty */
     if (!cfg_irc_highlight || !cfg_irc_highlight[0])
@@ -80,15 +111,13 @@ irc_is_highlight (char *message, char *nick)
     pos = msg;
     while (pos[0])
     {
-        if ((pos[0] >= 'A') && (pos[0] <= 'Z'))
-            pos[0] += ('a' - 'A');
+        pos[0] = tolower (pos[0]);
         pos++;
     }
     pos = highlight;
     while (pos[0])
     {
-        if ((pos[0] >= 'A') && (pos[0] <= 'Z'))
-            pos[0] += ('a' - 'A');
+        pos[0] = tolower (pos[0]);
         pos++;
     }
     
@@ -115,12 +144,39 @@ irc_is_highlight (char *message, char *nick)
         pos_end[0] = '\0';
         if (length > 0)
         {
-            /* highlight found! */
-            if (strstr (msg, pos))
+            if ((wildcard_start = (pos[0] == '*')))
             {
-                free (msg);
-                free (highlight);
-                return 1;
+                pos++;
+                length--;
+            }
+            if ((wildcard_end = (*(pos_end - 1) == '*')))
+            {
+                *(pos_end - 1) = '\0';
+                length--;
+            }
+        }
+            
+        if (length > 0)
+        {
+            msg_pos = msg;
+            /* highlight found! */
+            while ((match = strstr (msg_pos, pos)) != NULL)
+            {
+                match_pre = match - 1;
+                match_post = match + length;
+                startswith = ((match == msg) || (!irc_is_word_char (match_pre[0])));
+                endswith = ((!match_post[0]) || (!irc_is_word_char (match_post[0])));
+                if ((wildcard_start && wildcard_end) ||
+                    (!wildcard_start && !wildcard_end && 
+                     startswith && endswith) ||
+                    (wildcard_start && endswith) ||
+                    (wildcard_end && startswith))
+                {
+                    free (msg);
+                    free (highlight);
+                    return 1;
+                }
+                msg_pos = match_post;
             }
         }
         
