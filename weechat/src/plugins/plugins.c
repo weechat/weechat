@@ -88,9 +88,14 @@ plugin_find_buffer (char *server, char *channel)
     {
         if (!channel)
         {
-            ptr_buffer = gui_current_window->buffer;
-            if (ptr_buffer->dcc)
-                ptr_buffer = gui_buffers;
+            if (ptr_server)
+                ptr_buffer = ptr_server->buffer;
+            else
+            {
+                ptr_buffer = gui_current_window->buffer;
+                if (ptr_buffer->dcc)
+                    ptr_buffer = gui_buffers;
+            }
         }
         else
         {
