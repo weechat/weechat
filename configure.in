@@ -234,10 +234,13 @@ if test "x$enable_python" = "xyes" ; then
     AC_MSG_RESULT(found)
     
     PYTHON_LIB=`$PYTHON -c "import distutils.sysconfig; print distutils.sysconfig.get_config_var('LIBPL')"`
+    PYTHON_LFLAGS="-lpython$PYTHON_VERSION "`$PYTHON -c "import distutils.sysconfig; print distutils.sysconfig.get_config_var('LIBS')+' '+distutils.sysconfig.get_config_var('LINKFORSHARED')"`
     
     AC_MSG_CHECKING(for Python library)
-    if test -r "$PYTHON_LIB/libpython$PYTHON_VERSION.so" -o -r "$PYTHON_SYSPREFIX/lib/libpython$PYTHON_VERSION.so"; then
-       PYTHON_LFLAGS="-lpython$PYTHON_VERSION "`$PYTHON -c "import distutils.sysconfig; print distutils.sysconfig.get_config_var('LIBS')+' '+distutils.sysconfig.get_config_var('LINKFORSHARED')"`
+    if test -r "$PYTHON_LIB/libpython$PYTHON_VERSION.so"; then
+       PYTHON_LFLAGS="-L$PYTHON_LIB $PYTHON_LFLAGS"
+    elif test -r "$PYTHON_SYSPREFIX/lib/libpython$PYTHON_VERSION.so"; then
+       PYTHON_LFLAGS="-L$PYTHON_SYSPREFIX/lib/ $PYTHON_LFLAGS"
     else
         AC_MSG_ERROR([
 *** Python library couldn't be found in your system.            
