@@ -477,7 +477,10 @@ void
 server_msgq_add_msg (t_irc_server *server, char *msg)
 {
     t_irc_message *message;
-
+    
+    if (!server->unterminated_message && !msg[0])
+        return;
+    
     message = (t_irc_message *) malloc (sizeof (t_irc_message));
     if (!message)
     {
@@ -530,6 +533,9 @@ server_msgq_add_msg (t_irc_server *server, char *msg)
 void
 server_msgq_add_unterminated (t_irc_server *server, char *string)
 {
+    if (!string[0])
+        return;
+    
     if (server->unterminated_message)
     {
         server->unterminated_message =
@@ -566,41 +572,33 @@ server_msgq_add_unterminated (t_irc_server *server, char *string)
 void
 server_msgq_add_buffer (t_irc_server *server, char *buffer)
 {
-    char *pos;
+    char *pos_cr, *pos_lf;
 
     while (buffer[0])
     {
-        pos = strstr (buffer, "\r\n");
-        if (pos)
+        pos_cr = strchr (buffer, '\r');
+        pos_lf = strchr (buffer, '\n');
+        
+        if (!pos_cr && !pos_lf)
         {
-            pos[0] = '\0';
-            server_msgq_add_msg (server, buffer);
-            buffer = pos + 2;
+            /* no CR/LF found => add to unterminated and return */
+            server_msgq_add_unterminated (server, buffer);
+            return;
+        }
+        
+        if (pos_cr && ((!pos_lf) || (pos_lf > pos_cr)))
+        {
+            /* found '\r' first => ignore this char */
+            pos_cr[0] = '\0';
+            server_msgq_add_unterminated (server, buffer);
+            buffer = pos_cr + 1;
         }
         else
         {
-            pos = strstr (buffer, "\r");
-            if (pos && !pos[1])
-            {
-                pos[0] = '\0';
-                server_msgq_add_unterminated (server, buffer);
-                return;
-            }
-            else
-            {
-                pos = strstr (buffer, "\n");
-                if (pos)
-                {
-                    pos[0] = '\0';
-                    server_msgq_add_msg (server, buffer);
-                    buffer = pos + 1;
-                }
-                else
-                {
-                    server_msgq_add_unterminated (server, buffer);
-                    return;
-                }
-            }
+            /* found: '\n' first => terminate message */
+            pos_lf[0] = '\0';
+            server_msgq_add_msg (server, buffer);
+            buffer = pos_lf + 1;
         }
     }
 }
@@ -630,7 +628,7 @@ server_msgq_flush ()
             while (ptr_data[0] == ' ')
                 ptr_data++;
             
-            if (ptr_data)
+            if (ptr_data && ptr_data[0])
             {
 #ifdef DEBUG
                 gui_printf (NULL, "[DEBUG] data received from server: %s\n", ptr_data);
@@ -650,12 +648,12 @@ server_msgq_flush ()
                 else
                     pos = ptr_data;
                 
-                if (pos != NULL)
+                if (pos && pos[0])
                 {
                     while (pos[0] == ' ')
                         pos++;
                     pos2 = strchr (pos, ' ');
-                    if (pos2 != NULL)
+                    if (pos2)
                     {
                         pos2[0] = '\0';
                         command = strdup (pos);
