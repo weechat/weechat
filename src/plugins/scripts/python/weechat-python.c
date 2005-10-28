@@ -52,31 +52,41 @@ weechat_python_exec (t_weechat_plugin *plugin,
     PyObject *evMain;
     PyObject *evDict;
     PyObject *evFunc;
-
+    PyObject *rc;
+    int ret;
+    
     PyThreadState_Swap (NULL);
-
+    
     PyEval_AcquireLock ();
-
+    
     PyThreadState_Swap (script->interpreter);
-
+    
     evMain = PyImport_AddModule ((char *) "__main__");
     evDict = PyModule_GetDict (evMain);
     evFunc = PyDict_GetItemString (evDict, function);
-
+    
     if ( !(evFunc && PyCallable_Check (evFunc)) )
     {
         plugin->printf_server (plugin,
                                "Python error: unable to run function \"%s\"",
                                function);
         PyEval_ReleaseLock();
-        return 1;
+        return PLUGIN_RC_KO;
     }
-
-    PyObject_CallFunction(evFunc, "ss", server == NULL ? "" : server, arguments == NULL ? "" : arguments);
-
+    
+    ret = -1;
+    rc = PyObject_CallFunction(evFunc, "ss", server == NULL ? "" : server, arguments == NULL ? "" : arguments);
+    if (rc)
+    {
+        ret = (int) PyInt_AsLong(rc);
+        Py_XDECREF(rc);
+    }
     PyEval_ReleaseLock();
-
-    return 0;
+    
+    if (ret < 0)
+        return PLUGIN_RC_OK;
+    else
+        return ret;
 }
 
 /*
@@ -91,9 +101,8 @@ weechat_python_handler (t_weechat_plugin *plugin,
     /* make gcc happy */
     (void) command;
     
-    weechat_python_exec (plugin, (t_plugin_script *)handler_pointer,
-                         handler_args, server, arguments);
-    return 1;
+    return weechat_python_exec (plugin, (t_plugin_script *)handler_pointer,
+                                handler_args, server, arguments);
 }
 
 /*
@@ -1104,7 +1113,7 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     {
         plugin->printf_server (plugin,
                                "Python error: unable to launch global interpreter");
-        return 0;
+        return PLUGIN_RC_KO;
     }
     
     PySys_SetArgv(1, argv);
@@ -1117,7 +1126,7 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     {
         plugin->printf_server (plugin,
                                "Python error: unable to get current interpreter state");
-        return 0;
+        return PLUGIN_RC_KO;
     }
     
     PyEval_ReleaseLock ();
@@ -1134,7 +1143,8 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     
     weechat_script_auto_load (plugin, "python", weechat_python_load);
     
-    return 1;
+    /* init ok */
+    return PLUGIN_RC_OK;
 }
 
 /*

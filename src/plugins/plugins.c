@@ -62,52 +62,46 @@ plugin_find_buffer (char *server, char *channel)
     ptr_channel = NULL;
     ptr_buffer = NULL;
     
-    if (server && server[0])
-    {
-        ptr_server = server_search (server);
-        if (!ptr_server)
-            return NULL;
-    }
+    /* nothing given => print on current buffer */
+    if ((!server || !server[0]) && (!channel || !channel[0]))
+        ptr_buffer = gui_current_window->buffer;
     else
     {
-        ptr_server = SERVER(gui_current_window->buffer);
-        if (!ptr_server)
-            ptr_server = SERVER(gui_buffers);
-    }
-    
-    if (channel && channel[0])
-    {
-        if (ptr_server)
+        if (server && server[0])
         {
-            ptr_channel = channel_search (ptr_server, channel);
-            if (ptr_channel)
-                ptr_buffer = ptr_channel->buffer;
+            ptr_server = server_search (server);
+            if (!ptr_server)
+                return NULL;
         }
-    }
-    else
-    {
-        if (!channel)
+        else
+        {
+            ptr_server = SERVER(gui_current_window->buffer);
+            if (!ptr_server)
+                ptr_server = SERVER(gui_buffers);
+        }
+        
+        if (channel && channel[0])
         {
             if (ptr_server)
-                ptr_buffer = ptr_server->buffer;
-            else
             {
-                ptr_buffer = gui_current_window->buffer;
-                if (ptr_buffer->dcc)
-                    ptr_buffer = gui_buffers;
+                ptr_channel = channel_search (ptr_server, channel);
+                if (ptr_channel)
+                    ptr_buffer = ptr_channel->buffer;
             }
         }
         else
         {
             if (ptr_server)
                 ptr_buffer = ptr_server->buffer;
+            else
+                ptr_buffer = gui_current_window->buffer;
         }
     }
     
     if (!ptr_buffer)
         return NULL;
     
-    return (ptr_buffer->dcc) ? NULL : ptr_buffer;
+    return (ptr_buffer->dcc) ? gui_buffers : ptr_buffer;
 }
 
 /*
@@ -315,7 +309,8 @@ plugin_cmd_handler_add (t_weechat_plugin *plugin, char *command,
 
 /*
  * plugin_msg_handler_exec: execute a message handler
- *                          return: number of handlers executed (0 means no handler found)
+ *                          return: code for informing WeeChat whether message
+ *                          should be ignored or not
  */
 
 int
@@ -323,9 +318,10 @@ plugin_msg_handler_exec (char *server, char *irc_command, char *irc_message)
 {
     t_weechat_plugin *ptr_plugin;
     t_plugin_handler *ptr_handler;
-    int count;
+    int return_code, final_return_code;
     
-    count = 0;
+    final_return_code = PLUGIN_RC_OK;
+    
     for (ptr_plugin = weechat_plugins; ptr_plugin;
          ptr_plugin = ptr_plugin->next_plugin)
     {
@@ -338,20 +334,27 @@ plugin_msg_handler_exec (char *server, char *irc_command, char *irc_message)
                 if (ptr_handler->running == 0)
                 {
                     ptr_handler->running = 1;
-                    if ((int) (ptr_handler->handler) (ptr_plugin,
-                                                      server,
-                                                      irc_command,
-                                                      irc_message,
-                                                      ptr_handler->handler_args,
-                                                      ptr_handler->handler_pointer))
-                        count++;
+                    return_code = ((int) (ptr_handler->handler) (ptr_plugin,
+                                                                 server,
+                                                                 irc_command,
+                                                                 irc_message,
+                                                                 ptr_handler->handler_args,
+                                                                 ptr_handler->handler_pointer));
                     ptr_handler->running = 0;
+                    
+                    if (return_code >= 0)
+                    {
+                        if (return_code & PLUGIN_RC_OK_IGNORE_WEECHAT)
+                            final_return_code = PLUGIN_RC_OK_IGNORE_WEECHAT;
+                        if (return_code & PLUGIN_RC_OK_IGNORE_PLUGINS)
+                            return final_return_code;
+                    }
                 }
             }
         }
     }
     
-    return count;
+    return final_return_code;
 }
 
 /*
@@ -385,7 +388,7 @@ plugin_cmd_handler_exec (char *server, char *command, char *arguments)
                                                                 ptr_handler->handler_args,
                                                                 ptr_handler->handler_pointer);
                     ptr_handler->running = 0;
-                    return (return_code) ? 1 : 0;
+                    return (return_code == PLUGIN_RC_KO) ? 0 : 1;
                 }
             }
         }
@@ -658,7 +661,7 @@ plugin_load (char *filename)
                     new_plugin->name, new_plugin->version);
         
         /* init plugin */
-        if (!((t_weechat_init_func *)init_func) (new_plugin))
+        if (((t_weechat_init_func *)init_func) (new_plugin) < 0)
         {
             irc_display_prefix (NULL, PREFIX_ERROR);
             gui_printf (NULL,

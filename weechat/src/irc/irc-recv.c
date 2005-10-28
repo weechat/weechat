@@ -226,6 +226,21 @@ irc_recv_command (t_irc_server *server, char *entire_line,
     if (irc_commands[i].recv_function != NULL)
     {
         command_ignored = ignore_check (host, irc_commands[i].command_name, NULL, server->name);
+#ifdef PLUGINS
+        if (!command_ignored)
+        {
+            return_code = plugin_msg_handler_exec (server->name,
+                                                   irc_commands[i].command_name,
+                                                   entire_line);
+            /* plugin handler choosed to discard message for WeeChat,
+               so we don't execute WeeChat standard handler for IRC message! */
+            if (return_code & PLUGIN_RC_OK_IGNORE_WEECHAT)
+                return 0;
+        }
+#else
+        /* make gcc happy */
+        (void) entire_line;
+#endif
         pos = (host) ? strchr (host, '!') : NULL;
         if (pos)
             pos[0] = '\0';
@@ -235,13 +250,6 @@ irc_recv_command (t_irc_server *server, char *entire_line,
         return_code = (int) (irc_commands[i].recv_function) (server, host, nick, arguments);
         if (nick)
             free (nick);
-#ifdef PLUGINS
-        if (!command_ignored)
-            plugin_msg_handler_exec (server->name, irc_commands[i].command_name, entire_line);
-#else
-        /* make gcc happy */
-        (void) entire_line;
-#endif
         return return_code;
     }
     

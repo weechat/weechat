@@ -36,7 +36,7 @@
 
 @title WeeChat - Guia do Utilizador
 @subtitle Cliente de IRC rapido, leve e extencivel
-@subtitle Documenta@,{c}@~ao do WeeChat v0.1.6-cvs - 25 de outubro de 2005
+@subtitle Documenta@,{c}@~ao do WeeChat v0.1.6-cvs - 28 de outubro de 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -585,7 +585,7 @@ Type: integer (values: between 0 and 2147483647), default value: 5@*
 Create a FIFO pipe for remote control@*
 Type: boolean (values: 'on' or 'off'), default value: 'off'@*
 @item irc_highlight
-Comma separated list of words to highlight (case insensitive comparison)@*
+Comma separated list of words to highlight (case insensitive comparison, words may begin or end with "*" for partial match)@*
 Type: string (any string), default value: ''@*
 @item dcc_auto_accept_files
 Automatically accept incoming dcc files@*
@@ -1556,9 +1556,8 @@ them the plugin can't load):@*
 @item functions for init and end of plugin:
 @itemize @minus
 @item weechat_plugin_init: function called when plugin is loaded,
-must return 1 if successful, 0 if error
-@item weechat_plugin_end: function called when plugin is unloaded,
-must return 1 if successful, 0 if error
+must return PLUGIN_RC_OK (0) if successful, PLUGIN_RC_KO (-1) if error
+@item weechat_plugin_end: function called when plugin is unloaded
 @end itemize
 @end itemize
 
@@ -1574,7 +1573,7 @@ These functions are detailed below:@*
 @command{int ascii_strcasecmp (t_weechat_plugin *plugin,
 char *string1, char *string2)}@*
 @*
-locale and case independent string comparison.@*
+Locale and case independent string comparison.@*
 
 @emph{Arguments:}
 @itemize @minus
@@ -1597,7 +1596,7 @@ nul if chaine1 == chaine 2, positive if chaine1 > chaine2@*
 @command{int ascii_strncasecmp (t_weechat_plugin *plugin,
 char *string1, char *string2, int max)}@*
 @*
-locale and case independent string comparison, for ``max'' chars.@*
+Locale and case independent string comparison, for ``max'' chars.@*
 
 @emph{Arguments:}
 @itemize @minus
@@ -1710,7 +1709,7 @@ Aucune.@*
 char *server, char *channel, char *message, ...)}@*
 @*
 Display a message on a WeeChat buffer, identified by server and
-channel (both may be NULL).@*
+channel (both may be NULL for current buffer).@*
 
 @emph{Arguments:}
 @itemize @minus
@@ -1804,9 +1803,24 @@ char *command, char *arguments, char *handler_args,
 void *handler_pointer)}@*
 @code{@{}@*
 @code{@ @ @ @ plugin->printf (plugin, server, NULL, "KICK received");}@*
+@code{@ @ @ @ return PLUGIN_RC_OK;}@*
 @code{@}}@*
 @code{...}@*
 @code{plugin->msg_handler_add (plugin, "KICK", &msg_kick, NULL, NULL);}@*
+@*
+@emph{Notes:}@*
+@*
+Function called when message is received has to return one of these values:@*
+@itemize @minus
+@item @option{PLUGIN_RC_KO or -1}: function failed
+@item @option{PLUGIN_RC_OK or 0}: function successfully completed
+@item @option{PLUGIN_RC_OK_IGNORE_WEECHAT or 1}: message will not be sent to
+WeeChat
+@item @option{PLUGIN_RC_OK_IGNORE_PLUGINS or 2}: message will not be sent to
+other plugins
+@item @option{PLUGIN_RC_OK_IGNORE_ALL or 3}: message will not be sent to
+WeeChat neither other plugins
+@end itemize
 @*
 
 @item
@@ -1821,7 +1835,7 @@ Add a WeeChat command handler, called when user uses command
 @emph{Arguments:}
 @itemize @minus
 @item @option{plugin}: pointer to plugin structure
-@item @option{commande}: the new command
+@item @option{command}: the new command
 @item @option{description}: command description (displayed by /help
 command)
 @item @option{arguments}: short description of command arguments
@@ -1845,10 +1859,19 @@ void *handler_pointer)}@*
 @code{@{}@*
 @code{@ @ @ @ plugin->printf (plugin, server, NULL, "test command, 
 file: %s", (arguments) ? arguments : "none");}@*
+@code{@ @ @ @ return PLUGIN_RC_OK;}@*
 @code{@}}@*
 @code{...}@*
 @code{plugin->cmd_handler_add (plugin, "test", "Test command",
 "[file]", "file: a file name", &cmd_test, NULL, NULL);}@*
+@*
+@emph{Notes:}@*
+@*
+Function called when message is received has to return one of these values:@*
+@itemize @minus
+@item @option{PLUGIN_RC_KO or -1}: function failed
+@item @option{PLUGIN_RC_OK or 0}: function successfully completed
+@end itemize
 @*
 
 @item
@@ -2130,7 +2153,7 @@ char plugin_name[]        = "Toto";
 char plugin_version[]     = "0.1";
 char plugin_description[] = "Test plugin for WeeChat";
 
-/* gestionnaire de commande "/hello" */
+/* "/hello" command handler */
 
 int toto_cmd_double (t_weechat_plugin *plugin, char *server,
                     char *command, char *arguments,
@@ -2141,7 +2164,7 @@ int toto_cmd_double (t_weechat_plugin *plugin, char *server,
         plugin->exec_command (plugin, NULL, NULL, arguments);
         plugin->exec_command (plugin, NULL, NULL, arguments);
     }
-    return 1;
+    return PLUGIN_RC_OK;
 }
 
 int weechat_plugin_init (t_weechat_plugin *plugin)
@@ -2152,13 +2175,12 @@ int weechat_plugin_init (t_weechat_plugin *plugin)
                              "msg: message",
                              &toto_cmd_double,
                              NULL, NULL);
-    return 1;
+    return PLUGIN_RC_OK;
 }
 
-int weechat_plugin_end (t_weechat_plugin *plugin)
+void weechat_plugin_end (t_weechat_plugin *plugin)
 {
-    /* on ne fait rien ici */
-    return 1;
+    /* nothing done here */
 }
 @end verbatim
 
@@ -2282,7 +2304,19 @@ RFC 2812: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
 @code{@ @ @ @ ($null, $channel, $message) = split ":",@@_[0],3;}@*
 @code{@ @ @ @ ($hostmask, $null, $channel) = split " ", $channel;}@*
 @code{@ @ @ @ weechat::print ("host=$hostmask, chan=$channel, msg=$message\n");}@*
+@code{@ @ @ @ return 0;}@*
 @code{@} }@*
+@*
+@emph{Notes:}@*
+@*
+Function called when message is received has to return one of these values:@*
+@itemize @minus
+@item @option{-1}: function failed
+@item @option{0}: function successfully completed
+@item @option{1}: message will not be sent to WeeChat
+@item @option{2}: message will not be sent to other plugins
+@item @option{3}: message will not be sent to WeeChat neither other plugins
+@end itemize
 @*
 
 @item
@@ -2316,6 +2350,14 @@ arguments (displayed by /help command)
 @code{@ @ @ @ weechat::print("Argumentos: ".@@_[0]);}@*
 @code{@ @ @ @ return 0;}@*
 @code{@} }@*
+@*
+@emph{Notes:}@*
+@*
+Function called when command is executed has to return one of these values:@*
+@itemize @minus
+@item @option{-1}: function failed
+@item @option{0}: function successfully completed
+@end itemize
 @*
 
 @item
@@ -2638,6 +2680,18 @@ RFC 2812: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
 @code{@ @ @ @ null, channel, message = string.split(args, ":", 2)}@*
 @code{@ @ @ @ hostmask, null, channel = string.split(string.strip(channel), " ", 2)}@*
 @code{@ @ @ @ weechat.prnt("host="+hostmask+", chan="+channel+", msg="+message)}@*
+@code{@ @ @ @ return 0}@*
+@*
+@emph{Notes:}@*
+@*
+Function called when message is received has to return one of these values:@*
+@itemize @minus
+@item @option{-1}: function failed
+@item @option{0}: function successfully completed
+@item @option{1}: message will not be sent to WeeChat
+@item @option{2}: message will not be sent to other plugins
+@item @option{3}: message will not be sent to WeeChat neither other plugins
+@end itemize
 @*
 
 @item
@@ -2668,6 +2722,14 @@ arguments (displayed by /help command)
 @code{weechat.add_command_handler ("command", my_command)}@*
 @code{def my_command(server, args):}@*
 @code{@ @ @ @ weechat.prnt("Servidor:"+server+" Argumentos:"+args)}@*
+@*
+@emph{Notes:}@*
+@*
+Function called when command is executed has to return one of these values:@*
+@itemize @minus
+@item @option{-1}: function failed
+@item @option{0}: function successfully completed
+@end itemize
 @*
 
 @item

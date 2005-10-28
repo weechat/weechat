@@ -57,7 +57,7 @@ weechat_ruby_exec (t_weechat_plugin *plugin,
     (void) arguments;
     
     /* TODO: exec Ruby script */
-    return 0;
+    return PLUGIN_RC_OK;
 }
 
 /*
@@ -72,9 +72,8 @@ weechat_ruby_handler (t_weechat_plugin *plugin,
     /* make gcc happy */
     (void) command;
     
-    weechat_ruby_exec (plugin, (t_plugin_script *)handler_pointer,
-                       handler_args, server, arguments);
-    return 1;
+    return weechat_ruby_exec (plugin, (t_plugin_script *)handler_pointer,
+                              handler_args, server, arguments);
 }
 
 /*
@@ -962,7 +961,8 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     
     weechat_script_auto_load (plugin, "ruby", weechat_ruby_load);
     
-    return 1;
+    /* init ok */
+    return PLUGIN_RC_OK;
 }
 
 /*

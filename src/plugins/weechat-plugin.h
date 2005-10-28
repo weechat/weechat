@@ -22,6 +22,18 @@
 #ifndef __WEECHAT_WEECHAT_PLUGIN_H
 #define __WEECHAT_WEECHAT_PLUGIN_H 1
 
+/* return codes for init function and handlers */
+#define PLUGIN_RC_KO                 -1 /* function/handler failed             */
+#define PLUGIN_RC_OK                 0  /* function/handler ok                 */
+
+/* return codes specific to message handlers: messages can be discarded for
+   WeeChat, for plugins, or both */
+#define PLUGIN_RC_OK_IGNORE_WEECHAT  1  /* ignore WeeChat for this message     */
+#define PLUGIN_RC_OK_IGNORE_PLUGINS  2  /* ignore other plugins for this msg   */
+#define PLUGIN_RC_OK_IGNORE_ALL      (PLUGIN_RC_DISCARD_WEECHAT \
+                                     | PLUGIN_RC_DISCARD_PLUGINS)
+                                        /* ignore WeeChat and other plugins    */
+
 typedef struct t_plugin_dcc_info t_plugin_dcc_info;
 
 struct t_plugin_dcc_info

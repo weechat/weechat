@@ -36,7 +36,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.6-cvs - 25 octobre 2005
+@subtitle Documentation pour WeeChat v0.1.6-cvs - 28 octobre 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -588,7 +588,7 @@ Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 5@*
 Cr@'eer un tube FIFO pour le contr@^ole @`a distance@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
 @item irc_highlight
-Liste des mots pour la notification (s@'epar@'es par des virgules, le comparaison ne tient pas compte de la casse)@*
+Liste des mots pour la notification (s@'epar@'es par des virgules, le comparaison ne tient pas compte de la casse, les mots peuvent commencer ou se terminer par "*" pour une comparaison partielle)@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
 @item dcc_auto_accept_files
 Accepte automatiquement les fichiers dcc entrants@*
@@ -1565,9 +1565,9 @@ obligatoires (sans quoi l'extension ne peut être chargée) :@*
 @item fonctions d'initialisation et fin de l'extension :
 @itemize @minus
 @item weechat_plugin_init: fonction appel@'ee au chargement de l'extension,
-qui doit renvoyer 1 en cas de succ@`es, 0 en cas d'erreur
-@item weechat_plugin_end: fonction appel@'ee au d@'echargement de l'extension,
-qui doit renvoyer 1 en cas de succ@`es, 0 en cas d'erreur
+qui doit renvoyer PLUGIN_RC_OK (0) en cas de succ@`es, PLUGIN_RC_KO (-1)
+en cas d'erreur
+@item weechat_plugin_end: fonction appel@'ee au d@'echargement de l'extension
 @end itemize
 @end itemize
 
@@ -1639,10 +1639,10 @@ Explose une cha@^ine en plusieurs selon un/des d@'elimiteur(s).@*
 @itemize @minus
 @item @option{plugin}: un pointeur vers la structure de l'extension
 @item @option{string}: la cha@^ine @`a exploser
-@item @option{separators}: les d@'elimiteurs utilis@'s pour exploser
+@item @option{separators}: les d@'elimiteurs utilis@'es pour exploser
 la cha@^ine
 @item @option{num_items_max}: nombre maximum de sous-cha@^ines
-cr@'é@'ees (si 0, alors le nombre est infini)
+cr@'e@'ees (si 0, alors le nombre est infini)
 @item @option{num_items}: pointeur vers un entier qui contiendra le
 nombre de sous-cha@^ines cr@'e@'ees en retour
 @end itemize
@@ -1725,7 +1725,7 @@ Aucune.@*
 char *server, char *channel, char *message, ...)}@*
 @*
 Affiche un message sur un tampon WeeChat, identifi@'e par le serveur et
-le canal (tous deux pouvant @^etre NULL).@*
+le canal (tous deux pouvant @^etre NULL pour le tampon courant).@*
 
 @emph{Param@`etres :}
 @itemize @minus
@@ -1797,7 +1797,7 @@ Aucune.@*
 *plugin, char *message, t_plugin_handler_func *handler_func,
 char *handler_args, void *handler_pointer)}@*
 @*
-Ajoute un gestionnaire de messages IRC, appel@'e d@`s qu'un message
+Ajoute un gestionnaire de messages IRC, appel@'e d@`es qu'un message
 IRC est re@,cu.@*
 
 @emph{Param@`etres :}
@@ -1823,9 +1823,25 @@ char *command, char *arguments, char *handler_args,
 void *handler_pointer)}@*
 @code{@{}@*
 @code{@ @ @ @ plugin->printf (plugin, server, NULL, "KICK re@,cu");}@*
+@code{@ @ @ @ return PLUGIN_RC_OK;}@*
 @code{@}}@*
 @code{...}@*
 @code{plugin->msg_handler_add (plugin, "KICK", &msg_kick, NULL, NULL);}@*
+@*
+@emph{Notes :}@*
+@*
+La fonction appel@'ee lorsque le message est re@,cu doit renvoyer une
+des valeurs suivantes :@*
+@itemize @minus
+@item @option{PLUGIN_RC_KO ou -1}: la fonction a @'echou@'e
+@item @option{PLUGIN_RC_OK ou 0}: la fonction a r@'eussi
+@item @option{PLUGIN_RC_OK_IGNORE_WEECHAT ou 1}: le message ne sera pas transmis
+@`a WeeChat
+@item @option{PLUGIN_RC_OK_IGNORE_PLUGINS ou 2}: le message ne sera pas transmis
+@`a d'autres extensions
+@item @option{PLUGIN_RC_OK_IGNORE_ALL ou 3}: le message ne sera transmis ni @`a
+WeeChat ni @`a d'autres extensions
+@end itemize
 @*
 
 @item
@@ -1834,7 +1850,7 @@ void *handler_pointer)}@*
 char *arguments_description, t_plugin_handler_func *handler_func,
 char *handler_args, void *handler_pointer)}@*
 @*
-Ajoute un gestionnaire de commande WeeChat, appel@'e d@`s que
+Ajoute un gestionnaire de commande WeeChat, appel@'e d@`es que
 l'utilisateur utilise la commande (par exemple /commande).@*
 
 @emph{Param@`etres :}
@@ -1867,10 +1883,20 @@ void *handler_pointer)}@*
 @code{@{}@*
 @code{@ @ @ @ plugin->printf (plugin, server, NULL, "commande test, 
 fichier: %s", (arguments) ? arguments : "aucun");}@*
+@code{@ @ @ @ return PLUGIN_RC_OK;}@*
 @code{@}}@*
 @code{...}@*
 @code{plugin->cmd_handler_add (plugin, "test", "Commande test",
 "[fichier]", "fichier: un nom de fichier", &cmd_test, NULL, NULL);}@*
+@*
+@emph{Notes :}@*
+@*
+La fonction appel@'ee lorsque la commande est ex@'ecut@'ee doit
+renvoyer une des valeurs suivantes :@*
+@itemize @minus
+@item @option{PLUGIN_RC_KO ou -1}: la fonction a @'echou@'e
+@item @option{PLUGIN_RC_OK ou 0}: la fonction a r@'eussi
+@end itemize
 @*
 
 @item
@@ -2178,7 +2204,7 @@ int toto_cmd_double (t_weechat_plugin *plugin, char *server,
         plugin->exec_command (plugin, NULL, NULL, arguments);
         plugin->exec_command (plugin, NULL, NULL, arguments);
     }
-    return 1;
+    return PLUGIN_RC_OK;
 }
 
 int weechat_plugin_init (t_weechat_plugin *plugin)
@@ -2189,13 +2215,12 @@ int weechat_plugin_init (t_weechat_plugin *plugin)
                              "msg: message a afficher deux fois",
                              &toto_cmd_double,
                              NULL, NULL);
-    return 1;
+    return PLUGIN_RC_OK;
 }
 
-int weechat_plugin_end (t_weechat_plugin *plugin)
+void weechat_plugin_end (t_weechat_plugin *plugin)
 {
     /* on ne fait rien ici */
-    return 1;
 }
 @end verbatim
 
@@ -2323,7 +2348,21 @@ RFC 2812 : @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
 @code{@ @ @ @ ($null, $canal, $message) = split ":",$_[1],3;}@*
 @code{@ @ @ @ ($masque, $null, $canal) = split " ", $canal;}@*
 @code{@ @ @ @ weechat::print ("masque=$masque, canal=$canal, msg=$message\n");}@*
+@code{@ @ @ @ return 0;}@*
 @code{@} }@*
+@*
+@emph{Notes :}@*
+@*
+La fonction appel@'ee lorsque le message est re@,cu doit renvoyer une
+des valeurs suivantes :@*
+@itemize @minus
+@item @option{-1}: la fonction a @'echou@'e
+@item @option{0}: la fonction a r@'eussi
+@item @option{1}: le message ne sera pas transmis @`a WeeChat
+@item @option{2}: le message ne sera pas transmis @`a d'autres extensions
+@item @option{3}: le message ne sera transmis ni @`a WeeChat ni @`a
+d'autres extensions
+@end itemize
 @*
 
 @item
@@ -2360,6 +2399,15 @@ param@`etres de la commande (affich@'ee par /help commande)
 @code{@ @ @ @ weechat::print("Serveur: $_[0], param@`etres: $_[1]\n");}@*
 @code{@ @ @ @ return 0;}@*
 @code{@} }@*
+@*
+@emph{Notes :}@*
+@*
+La fonction appel@'ee lorsque la commande est ex@'ecut@'ee doit renvoyer une
+des valeurs suivantes :@*
+@itemize @minus
+@item @option{-1}: la fonction a @'echou@'e
+@item @option{0}: la fonction a r@'eussi
+@end itemize
 @*
 
 @item
@@ -2692,6 +2740,20 @@ RFC 2812 : @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
 @code{@ @ @ @ null, canal, message = string.split(args, ":", 2)}@*
 @code{@ @ @ @ masque, null, canal = string.split(string.strip(canal), " ", 2)}@*
 @code{@ @ @ @ weechat.prnt("masque="+masque+", canal="+canal+", message="+message)}@*
+@code{@ @ @ @ return 0}@*
+@*
+@emph{Notes :}@*
+@*
+La fonction appel@'ee lorsque le message est re@,cu doit renvoyer une
+des valeurs suivantes :@*
+@itemize @minus
+@item @option{-1}: la fonction a @'echou@'e
+@item @option{0}: la fonction a r@'eussi
+@item @option{1}: le message ne sera pas transmis @`a WeeChat
+@item @option{2}: le message ne sera pas transmis @`a d'autres extensions
+@item @option{3}: le message ne sera transmis ni @`a WeeChat ni @`a
+d'autres extensions
+@end itemize
 @*
 
 @item
@@ -2724,6 +2786,16 @@ param@`etres de la commande (affich@'ee par /help commande)
 @code{weechat.add_command_handler ("commande", ma_commande)}@*
 @code{def ma_commande(serveur, args):}@*
 @code{@ @ @ @ weechat.prnt("serveur:"+serveur+" param@`etres:"+args)}@*
+@code{@ @ @ @ return 0}@*
+@*
+@emph{Notes :}@*
+@*
+La fonction appel@'ee lorsque la commande est ex@'ecut@'ee doit renvoyer une
+des valeurs suivantes :@*
+@itemize @minus
+@item @option{-1}: la fonction a @'echou@'e
+@item @option{0}: la fonction a r@'eussi
+@end itemize
 @*
 
 @item

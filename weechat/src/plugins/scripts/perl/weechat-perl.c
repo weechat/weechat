@@ -77,7 +77,7 @@ weechat_perl_exec (t_weechat_plugin *plugin,
     SPAGAIN;
     
     sv = GvSV (gv_fetchpv ("@", TRUE, SVt_PV));
-    return_code = 1;
+    return_code = PLUGIN_RC_KO;
     if (SvTRUE (sv))
     {
         plugin->printf_server (plugin, "Perl error: %s", SvPV (sv, count));
@@ -114,9 +114,8 @@ weechat_perl_handler (t_weechat_plugin *plugin,
     /* make gcc happy */
     (void) command;
     
-    weechat_perl_exec (plugin, (t_plugin_script *)handler_pointer,
-                       handler_args, server, arguments);
-    return 1;
+    return weechat_perl_exec (plugin, (t_plugin_script *)handler_pointer,
+                              handler_args, server, arguments);
 }
 
 /*
@@ -211,6 +210,8 @@ static XS (XS_weechat_print)
         XSRETURN_NO;
     }
     
+    message = SvPV (ST (0), integer);
+    
     channel_name = NULL;
     server_name = NULL;
     
@@ -221,7 +222,6 @@ static XS (XS_weechat_print)
             server_name = SvPV (ST (2), integer);
     }
     
-    message = SvPV (ST (0), integer);
     perl_plugin->printf (perl_plugin,
                          server_name, channel_name,
                          "%s", message);
@@ -1072,7 +1072,7 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     weechat_script_auto_load (plugin, "perl", weechat_perl_load);
     
     /* init ok */
-    return 1;
+    return PLUGIN_RC_OK;
 }
 
 /*
