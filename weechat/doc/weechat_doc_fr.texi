@@ -317,6 +317,9 @@ Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
 @item look_nick_completor
 La cha@^ine affich@'ee apr@`es la compl@'etion des utilisateurs@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ':'@*
+@item look_nick_completion_ignore
+Chars ignored for nick completion@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '[]-'@*
 @item look_infobar
 Active la barre d'infos@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*

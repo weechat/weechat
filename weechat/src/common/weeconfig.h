@@ -100,6 +100,7 @@ extern int cfg_look_nickmode;
 extern int cfg_look_nickmode_empty;
 extern char *cfg_look_no_nickname;
 extern char *cfg_look_completor;
+extern char *cfg_look_nick_completion_ignore;
 extern int cfg_look_infobar;
 extern char *cfg_look_infobar_timestamp;
 extern int cfg_look_infobar_seconds;

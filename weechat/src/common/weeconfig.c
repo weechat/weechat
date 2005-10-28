@@ -87,6 +87,7 @@ int cfg_look_nickmode;
 int cfg_look_nickmode_empty;
 char *cfg_look_no_nickname;
 char *cfg_look_completor;
+char *cfg_look_nick_completion_ignore;
 int cfg_look_infobar;
 char *cfg_look_infobar_timestamp;
 int cfg_look_infobar_seconds;
@@ -186,6 +187,10 @@ t_config_option weechat_options_look[] =
     N_("the string inserted after nick completion"),
     OPTION_TYPE_STRING, 0, 0, 0,
     ":", NULL, NULL, &cfg_look_completor, config_change_noop },
+  { "look_nick_completion_ignore", N_("chars ignored for nick completion"),
+    N_("chars ignored for nick completion"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    "[]-", NULL, NULL, &cfg_look_nick_completion_ignore, config_change_noop },
   { "look_infobar", N_("enable info bar"),
     N_("enable info bar"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,

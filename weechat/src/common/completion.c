@@ -904,6 +904,75 @@ completion_command_arg (t_completion *completion, t_irc_channel *channel)
 }
 
 /*
+ * completion_is_only_alphanum: return 1 if there is only alpha/num chars
+ *                              in a string
+ */
+
+int
+completion_is_only_alphanum (char *string)
+{
+    while (string[0])
+    {
+        if (strchr (cfg_look_nick_completion_ignore, string[0]))
+            return 0;
+        string++;
+    }
+    return 1;
+}
+
+/*
+ * completion_strdup_alphanum: duplicate alpha/num chars in a string
+ */
+
+char *
+completion_strdup_alphanum (char *string)
+{
+    char *result, *pos;
+    
+    result = (char *)malloc (strlen (string) + 1);
+    pos = result;
+    while (string[0])
+    {
+        if (!strchr (cfg_look_nick_completion_ignore, string[0]))
+        {
+            pos[0] = string[0];
+            pos++;
+        }
+        string++;
+    }
+    pos[0] = '\0';
+    return result;
+}
+
+/*
+ * completion_nickncmp: locale and case independent string comparison
+ *                      with max length for nicks (alpha or digits only)
+ */
+
+int
+completion_nickncmp (char *base_word, char *nick, int max)
+{
+    char *base_word2, *nick2;
+    int return_cmp;
+    
+    if (!cfg_look_nick_completion_ignore
+        || !cfg_look_nick_completion_ignore[0]
+        || !base_word || !nick || !base_word[0] || !nick[0]
+        || (!completion_is_only_alphanum (base_word)))
+        return ascii_strncasecmp (base_word, nick, max);
+    
+    base_word2 = completion_strdup_alphanum (base_word);
+    nick2 = completion_strdup_alphanum (nick);
+    
+    return_cmp = ascii_strncasecmp (base_word2, nick2, strlen (base_word2));
+    
+    free (base_word2);
+    free (nick2);
+    
+    return return_cmp;
+}
+
+/*
  * completion_nick: complete a nick
  */
 
@@ -927,7 +996,7 @@ completion_nick (t_completion *completion, t_irc_channel *channel)
     other_completion = 0;
     for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
     {
-        if (ascii_strncasecmp (ptr_nick->nick, completion->base_word, length) == 0)
+        if (completion_nickncmp (completion->base_word, ptr_nick->nick, length) == 0)
         {
             if ((!completion->word_found) || word_found_seen)
             {
@@ -935,8 +1004,9 @@ completion_nick (t_completion *completion, t_irc_channel *channel)
                 for (ptr_nick2 = ptr_nick->next_nick; ptr_nick2;
                      ptr_nick2 = ptr_nick2->next_nick)
                 {
-                    if (ascii_strncasecmp (ptr_nick2->nick,
-                        completion->base_word, length) == 0)
+                    if (completion_nickncmp (completion->base_word,
+                                             ptr_nick2->nick,
+                                             length) == 0)
                         other_completion++;
                 }
                 if (other_completion == 0)

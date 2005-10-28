@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.6-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-10-28 05:30+0200\n"
-"PO-Revision-Date: 2005-10-25 11:31+0200\n"
+"POT-Creation-Date: 2005-10-28 15:04+0200\n"
+"PO-Revision-Date: 2005-10-28 15:05+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "%s cannot allocate new nick\n"
 msgstr "%s nemůžu přidělit novou přezdívku\n"
 
-#: src/irc/irc-server.c:180 src/common/weeconfig.c:1939
+#: src/irc/irc-server.c:180 src/common/weeconfig.c:1944
 msgid "Unable to get user's name"
 msgstr "Nemůžu získat jméno uživatele"
 
@@ -2205,13 +2205,13 @@ msgstr "Plugin \"%s\" odebrán.\n"
 msgid "%s plugin \"%s\" not found\n"
 msgstr "%s plugin \"%s\" nenalezen\n"
 
-#: src/plugins/plugins-config.c:215 src/common/weeconfig.c:1624
+#: src/plugins/plugins-config.c:215 src/common/weeconfig.c:1629
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"=\"\n"
 msgstr "%s %s, řádek %d: nevalidní syntax, chybí \"=\"\n"
 
-#: src/plugins/plugins-config.c:265 src/common/weeconfig.c:1797
-#: src/common/weeconfig.c:1995
+#: src/plugins/plugins-config.c:265 src/common/weeconfig.c:1802
+#: src/common/weeconfig.c:2000
 #, c-format
 msgid "%s cannot create file \"%s\"\n"
 msgstr "%s nemohu vytvořit soubor \"%s\"\n"
@@ -3424,34 +3424,34 @@ msgstr "WeeChat chyba:"
 msgid "WeeChat Warning:"
 msgstr "WeeChat Upozornění:"
 
-#: src/common/weeconfig.c:101 src/common/weeconfig.c:102
+#: src/common/weeconfig.c:102 src/common/weeconfig.c:103
 msgid "set title for window (terminal for Curses GUI) with name & version"
 msgstr "nastaví titulek okna (terminálu pro Cruses GUI) s jménem a verzí"
 
-#: src/common/weeconfig.c:105 src/common/weeconfig.c:106
+#: src/common/weeconfig.c:106 src/common/weeconfig.c:107
 msgid "display WeeChat logo at startup"
 msgstr "zobrazí WeeChat logo při spuštění"
 
-#: src/common/weeconfig.c:109 src/common/weeconfig.c:110
+#: src/common/weeconfig.c:110 src/common/weeconfig.c:111
 msgid "display WeeChat version at startup"
 msgstr "zobrazí verzi WeeChat při spuštění"
 
-#: src/common/weeconfig.c:113
+#: src/common/weeconfig.c:114
 msgid "WeeChat slogan"
 msgstr "WeeChat slogan"
 
-#: src/common/weeconfig.c:114
+#: src/common/weeconfig.c:115
 msgid "WeeChat slogan (if empty, slogan is not used)"
 msgstr "WeeChat slogan (pokud je prázdné, není slogan použit)"
 
-#: src/common/weeconfig.c:117
+#: src/common/weeconfig.c:118
 msgid ""
 "ISO charset for decoding messages from server (used only if locale is UTF-8)"
 msgstr ""
 "Znaková sada ISO pro dekódování zpráv ze serveru (použito pouze pokud je "
 "lokalizace UTF-8)"
 
-#: src/common/weeconfig.c:118
+#: src/common/weeconfig.c:119
 msgid ""
 "ISO charset for decoding messages from server (used only if locale is UTF-8) "
 "(if empty, messages are not converted if locale is UTF-8"
@@ -3460,7 +3460,7 @@ msgstr ""
 "lokalizace UTF-8) (pokud je prázdná, pak zprávy nejsou konvertovány v "
 "případě lokalizace UTF-8"
 
-#: src/common/weeconfig.c:122
+#: src/common/weeconfig.c:123
 msgid ""
 "UTF charset for decoding messages from server (used only if locale is not "
 "UTF-8)"
@@ -3468,7 +3468,7 @@ msgstr ""
 "Znaková sada UTF pro dekódování zpráv ze serveru (použito pouze pokud není "
 "lokalizace UTF-8)"
 
-#: src/common/weeconfig.c:123
+#: src/common/weeconfig.c:124
 msgid ""
 "UTF charset for decoding messages from server (used only if locale is not "
 "UTF-8) (if empty, messages are not converted if locale is not UTF-8"
@@ -3477,11 +3477,11 @@ msgstr ""
 "lokalizace UTF-8) (pokud je prázndá, pak zprávy nejsou konvertovány v "
 "případě, žě lokalizace není UTF-8"
 
-#: src/common/weeconfig.c:127
+#: src/common/weeconfig.c:128
 msgid "charset for encoding messages sent to server"
 msgstr "znaková sada pro kódování zpráv posílaných na server"
 
-#: src/common/weeconfig.c:128
+#: src/common/weeconfig.c:129
 msgid ""
 "charset for encoding messages sent to server, examples: UFT-8, ISO-8859-1 "
 "(if empty, messages are not converted)"
@@ -3489,13 +3489,13 @@ msgstr ""
 "znaková sada pro kódování zpráv posílaných na server, příklady: UTF-8, ISO-"
 "8859-1 (pokud je prázdná, zprávy nejsou konvertovány)"
 
-#: src/common/weeconfig.c:131
+#: src/common/weeconfig.c:132
 msgid "forces internal WeeChat charset (should be empty in most cases)"
 msgstr ""
 "přebije vnitřní znakovou sadu WeeChat (ve většině případů by mělo být "
 "prázdné)"
 
-#: src/common/weeconfig.c:132
+#: src/common/weeconfig.c:133
 msgid ""
 "forces internal WeeChat charset (should be empty in most cases, that means "
 "detected charset is used)"
@@ -3503,47 +3503,47 @@ msgstr ""
 "přebije vnitřní znakovou sadu WeeChat (ve většině případů by mělo být "
 "přázdné, to znamená použití detekované znakové sady)"
 
-#: src/common/weeconfig.c:135 src/common/weeconfig.c:136
+#: src/common/weeconfig.c:136 src/common/weeconfig.c:137
 msgid "timestamp for buffers"
 msgstr "časová známka pro buffer"
 
-#: src/common/weeconfig.c:139 src/common/weeconfig.c:140
+#: src/common/weeconfig.c:140 src/common/weeconfig.c:141
 msgid "display nick names with different colors"
 msgstr "zobrazit přezdívky různými barvami"
 
-#: src/common/weeconfig.c:143 src/common/weeconfig.c:144
+#: src/common/weeconfig.c:144 src/common/weeconfig.c:145
 msgid "number of colors to use for nicks colors"
 msgstr "počet barev použitých pro barvy přezdívek"
 
-#: src/common/weeconfig.c:147 src/common/weeconfig.c:148
+#: src/common/weeconfig.c:148 src/common/weeconfig.c:149
 msgid "display actions with different colors"
 msgstr "zobrazit akce různými barvami"
 
-#: src/common/weeconfig.c:151 src/common/weeconfig.c:152
+#: src/common/weeconfig.c:152 src/common/weeconfig.c:153
 msgid "remove colors from incoming messages"
 msgstr "odstranit barvy z příchozích zpráv"
 
-#: src/common/weeconfig.c:155
+#: src/common/weeconfig.c:156
 msgid "display nicklist window"
 msgstr "zobrazit okno se seznamem přezdívek"
 
-#: src/common/weeconfig.c:156
+#: src/common/weeconfig.c:157
 msgid "display nicklist window (for channel windows)"
 msgstr "zobrazit okno se seznamem přezdívek (pouze pro okno kanálu)"
 
-#: src/common/weeconfig.c:159
+#: src/common/weeconfig.c:160
 msgid "nicklist position"
 msgstr "pozice seznamu přezdívek"
 
-#: src/common/weeconfig.c:160
+#: src/common/weeconfig.c:161
 msgid "nicklist position (top, left, right (default), bottom)"
 msgstr "pozice seznamu přezdívek (top, left, right (výchozí), bottom)"
 
-#: src/common/weeconfig.c:163
+#: src/common/weeconfig.c:164
 msgid "min size for nicklist"
 msgstr "minimální velikost pro seznam přezdívek"
 
-#: src/common/weeconfig.c:164
+#: src/common/weeconfig.c:165
 msgid ""
 "min size for nicklist (width or height, depending on look_nicklist_position "
 "(0 = no min size))"
@@ -3551,11 +3551,11 @@ msgstr ""
 "minimální velikost pro seznam přezdívek (šířka nebo výšhak, závisí na "
 "look_nicklist_position (0 = není minimální velikost))"
 
-#: src/common/weeconfig.c:168
+#: src/common/weeconfig.c:169
 msgid "max size for nicklist"
 msgstr "maximální velikost pro seznam přezdívek"
 
-#: src/common/weeconfig.c:169
+#: src/common/weeconfig.c:170
 msgid ""
 "max size for nicklist (width or height, depending on look_nicklist_position "
 "(0 = no max size; if min == max and > 0, then size is fixed))"
@@ -3564,39 +3564,43 @@ msgstr ""
 "look_nicklist_position (0 = není maximální velikost; jestliže min == max a > "
 "0 pak je velikost fixní ))"
 
-#: src/common/weeconfig.c:173 src/common/weeconfig.c:174
+#: src/common/weeconfig.c:174 src/common/weeconfig.c:175
 msgid "text to display instead of nick when not connected"
 msgstr "text pro zobrazení místo přezdívky pokud není připojeno"
 
-#: src/common/weeconfig.c:177 src/common/weeconfig.c:178
+#: src/common/weeconfig.c:178 src/common/weeconfig.c:179
 msgid "display nick mode ((half)op/voice) before each nick"
 msgstr "zobrazit mód přezdívky ((částečný)op/voice) před každou přezdívkou"
 
-#: src/common/weeconfig.c:181 src/common/weeconfig.c:182
+#: src/common/weeconfig.c:182 src/common/weeconfig.c:183
 msgid "display space if nick mode is not (half)op/voice"
 msgstr "zobrazit mezeru pokud mód přezdívkz není (částečný)op/voice"
 
-#: src/common/weeconfig.c:185 src/common/weeconfig.c:186
+#: src/common/weeconfig.c:186 src/common/weeconfig.c:187
 msgid "the string inserted after nick completion"
 msgstr "řetězec vložený za doplňování přezdívky"
 
-#: src/common/weeconfig.c:189 src/common/weeconfig.c:190
+#: src/common/weeconfig.c:190 src/common/weeconfig.c:191
+msgid "chars ignored for nick completion"
+msgstr ""
+
+#: src/common/weeconfig.c:194 src/common/weeconfig.c:195
 msgid "enable info bar"
 msgstr "povolit info bar"
 
-#: src/common/weeconfig.c:193 src/common/weeconfig.c:194
+#: src/common/weeconfig.c:198 src/common/weeconfig.c:199
 msgid "timestamp for time in infobar"
 msgstr "časová značka pro čas v infobaru"
 
-#: src/common/weeconfig.c:197 src/common/weeconfig.c:198
+#: src/common/weeconfig.c:202 src/common/weeconfig.c:203
 msgid "display seconds in infobar time"
 msgstr "zobrazit sekundy v čase v infobaru"
 
-#: src/common/weeconfig.c:201
+#: src/common/weeconfig.c:206
 msgid "delay (in seconds) for highlight messages in infobar"
 msgstr "podržet (v sekundách) zvýrazněnou zprávu v infobaru"
 
-#: src/common/weeconfig.c:202
+#: src/common/weeconfig.c:207
 msgid ""
 "delay (in seconds) for highlight messages in infobar (0 = disable highlight "
 "notifications in infobar)"
@@ -3604,22 +3608,22 @@ msgstr ""
 "podržet (v sekundách) zvýrazněnou zprávu v infobaru (0 = zakázat zvýrazněnou "
 "notifikaci v infobaru)"
 
-#: src/common/weeconfig.c:206
+#: src/common/weeconfig.c:211
 msgid "max number of names in hotlist"
 msgstr "maximální počet jmen v hotlistu"
 
-#: src/common/weeconfig.c:207
+#: src/common/weeconfig.c:212
 msgid ""
 "max number of names in hotlist (0 = no name displayed, only buffer numbers)"
 msgstr ""
 "maximální počet jmen v hotlistu (0 = žádné jméno není zobrazeno, pouze čísla "
 "bufferů)"
 
-#: src/common/weeconfig.c:210
+#: src/common/weeconfig.c:215
 msgid "level for displaying names in hotlist"
 msgstr "úroveň pro zobrazování jmen v hotlistu"
 
-#: src/common/weeconfig.c:211
+#: src/common/weeconfig.c:216
 msgid ""
 "level for displaying names in hotlist (combination of: 1=join/part, "
 "2=message, 4=private, 8=highlight, for example: 12=private+highlight)"
@@ -3627,312 +3631,312 @@ msgstr ""
 "úroveň pro zobrazování jmen v hotlistu (kombinace: 1=připojení/odpojení "
 "2=zpráva, 4=soukromé, 8=zvýraznění, příklad: 12=soukromé+zvýraznění)"
 
-#: src/common/weeconfig.c:215
+#: src/common/weeconfig.c:220
 msgid "max length of names in hotlist"
 msgstr "maximální délka jmen v hotlistu"
 
-#: src/common/weeconfig.c:216
+#: src/common/weeconfig.c:221
 msgid "max length of names in hotlist (0 = no limit)"
 msgstr "maximální délka jmen v hotlistu (0 = bez limitu)"
 
-#: src/common/weeconfig.c:219 src/common/weeconfig.c:220
+#: src/common/weeconfig.c:224 src/common/weeconfig.c:225
 msgid "display special message when day changes"
 msgstr "zobrazit speiální zprávy při změně dne"
 
-#: src/common/weeconfig.c:223 src/common/weeconfig.c:224
+#: src/common/weeconfig.c:228 src/common/weeconfig.c:229
 msgid "timestamp for date displayed when day changed"
 msgstr "časová známka pro zobrazení dne při změně dne"
 
-#: src/common/weeconfig.c:288 src/common/weeconfig.c:289
+#: src/common/weeconfig.c:293 src/common/weeconfig.c:294
 msgid "color for title bar"
 msgstr "barva pro title bar"
 
-#: src/common/weeconfig.c:292 src/common/weeconfig.c:293
+#: src/common/weeconfig.c:297 src/common/weeconfig.c:298
 msgid "background for title bar"
 msgstr "pozadí pro title bar"
 
-#: src/common/weeconfig.c:298 src/common/weeconfig.c:299
+#: src/common/weeconfig.c:303 src/common/weeconfig.c:304
 msgid "color for chat text"
 msgstr "barva pro text rozhovoru"
 
-#: src/common/weeconfig.c:302
+#: src/common/weeconfig.c:307
 msgid "color for time"
 msgstr "barva času"
 
-#: src/common/weeconfig.c:303
+#: src/common/weeconfig.c:308
 msgid "color for time in chat window"
 msgstr "barva času v okně rozhovoru"
 
-#: src/common/weeconfig.c:306
+#: src/common/weeconfig.c:311
 msgid "color for time separator"
 msgstr "barva pro dělič času"
 
-#: src/common/weeconfig.c:307
+#: src/common/weeconfig.c:312
 msgid "color for time separator (chat window)"
 msgstr "barva pro dělič času (okno rozhovoru)"
 
-#: src/common/weeconfig.c:310 src/common/weeconfig.c:311
+#: src/common/weeconfig.c:315 src/common/weeconfig.c:316
 msgid "color for 1st and 3rd char of prefix"
 msgstr "barva pro první a třetí znak prefixu"
 
-#: src/common/weeconfig.c:314 src/common/weeconfig.c:315
+#: src/common/weeconfig.c:319 src/common/weeconfig.c:320
 msgid "color for middle char of prefix"
 msgstr "barva pro vnitřní znak prefixu"
 
-#: src/common/weeconfig.c:318 src/common/weeconfig.c:319
+#: src/common/weeconfig.c:323 src/common/weeconfig.c:324
 msgid "color for join arrow (prefix)"
 msgstr "barva pro šipku pri 'join' (prefix)"
 
-#: src/common/weeconfig.c:322 src/common/weeconfig.c:323
+#: src/common/weeconfig.c:327 src/common/weeconfig.c:328
 msgid "color for part/quit arrow (prefix)"
 msgstr "barva pro šipku při 'quit'/'part' (prefix)"
 
-#: src/common/weeconfig.c:326
+#: src/common/weeconfig.c:331
 msgid "color for nicks in actions"
 msgstr "barva pro přezdívky v akcích"
 
-#: src/common/weeconfig.c:327
+#: src/common/weeconfig.c:332
 msgid "color for nicks in actions (chat window)"
 msgstr "barva přezdívek v akcích (okno rozhovoru)"
 
-#: src/common/weeconfig.c:330
+#: src/common/weeconfig.c:335
 msgid "color for hostnames"
 msgstr "barva jména hosta"
 
-#: src/common/weeconfig.c:331
+#: src/common/weeconfig.c:336
 msgid "color for hostnames (chat window)"
 msgstr "barva jména hosta (okno rozhovoru)"
 
-#: src/common/weeconfig.c:334
+#: src/common/weeconfig.c:339
 msgid "color for channel names in actions"
 msgstr "barva kanálu v akcích"
 
-#: src/common/weeconfig.c:335
+#: src/common/weeconfig.c:340
 msgid "color for channel names in actions (chat window)"
 msgstr "barva kanálu v akcích (okno rozhovoru)"
 
-#: src/common/weeconfig.c:338
+#: src/common/weeconfig.c:343
 msgid "color for dark separators"
 msgstr "barva pro tmavý dělič"
 
-#: src/common/weeconfig.c:339
+#: src/common/weeconfig.c:344
 msgid "color for dark separators (chat window)"
 msgstr "barva pro tmavý dělič (okno rozhovoru)"
 
-#: src/common/weeconfig.c:342
+#: src/common/weeconfig.c:347
 msgid "color for highlighted nick"
 msgstr "barva pro zvýraznění přezdívky"
 
-#: src/common/weeconfig.c:343
+#: src/common/weeconfig.c:348
 msgid "color for highlighted nick (chat window)"
 msgstr "barva pro zvýraznění přezdívky (okno rozhovoru)"
 
-#: src/common/weeconfig.c:346
+#: src/common/weeconfig.c:351
 msgid "background for chat"
 msgstr "pozadí rozhovoru"
 
-#: src/common/weeconfig.c:347
+#: src/common/weeconfig.c:352
 msgid "background for chat window"
 msgstr "pozadí okna rozhovoru"
 
-#: src/common/weeconfig.c:352 src/common/weeconfig.c:353
+#: src/common/weeconfig.c:357 src/common/weeconfig.c:358
 msgid "color for status bar"
 msgstr "barva status baru"
 
-#: src/common/weeconfig.c:356 src/common/weeconfig.c:357
+#: src/common/weeconfig.c:361 src/common/weeconfig.c:362
 msgid "color for status bar delimiters"
 msgstr "barva děličů status barů"
 
-#: src/common/weeconfig.c:360 src/common/weeconfig.c:361
+#: src/common/weeconfig.c:365 src/common/weeconfig.c:366
 msgid "color for current channel in status bar"
 msgstr "barva pro aktuální kanál v stavovém řádku"
 
-#: src/common/weeconfig.c:364
+#: src/common/weeconfig.c:369
 msgid "color for window with new messages"
 msgstr "barva okna s novými zprávami"
 
-#: src/common/weeconfig.c:365
+#: src/common/weeconfig.c:370
 msgid "color for window with new messages (status bar)"
 msgstr "barva okna s novými zprávami (status bar)"
 
-#: src/common/weeconfig.c:368
+#: src/common/weeconfig.c:373
 msgid "color for window with private message"
 msgstr "barva okna se soukroumou zprávou"
 
-#: src/common/weeconfig.c:369
+#: src/common/weeconfig.c:374
 msgid "color for window with private message (status bar)"
 msgstr "barva okna se soukromou zprávou (status bar)"
 
-#: src/common/weeconfig.c:372
+#: src/common/weeconfig.c:377
 msgid "color for window with highlight"
 msgstr "barva okna se zvýrazněním"
 
-#: src/common/weeconfig.c:373
+#: src/common/weeconfig.c:378
 msgid "color for window with highlight (status bar)"
 msgstr "barva okna se zvýrazněním (stavový řádek)"
 
-#: src/common/weeconfig.c:376
+#: src/common/weeconfig.c:381
 msgid "color for window with new data (not messages)"
 msgstr "barva okna s novými daty (ne zprávami)"
 
-#: src/common/weeconfig.c:377
+#: src/common/weeconfig.c:382
 msgid "color for window with new data (not messages) (status bar)"
 msgstr "barva okna s novými daty (ne zprávami) (status bar)"
 
-#: src/common/weeconfig.c:380
+#: src/common/weeconfig.c:385
 msgid "color for \"-MORE-\" text"
 msgstr "barva pro text \"-VÍCE-\""
 
-#: src/common/weeconfig.c:381
+#: src/common/weeconfig.c:386
 msgid "color for window with new data (status bar)"
 msgstr "barva okna s novými daty (status bar)"
 
-#: src/common/weeconfig.c:384 src/common/weeconfig.c:385
+#: src/common/weeconfig.c:389 src/common/weeconfig.c:390
 msgid "background for status window"
 msgstr "pozadí stavového okna"
 
-#: src/common/weeconfig.c:390 src/common/weeconfig.c:391
+#: src/common/weeconfig.c:395 src/common/weeconfig.c:396
 msgid "color for info bar text"
 msgstr "barva textu v info baru"
 
-#: src/common/weeconfig.c:394 src/common/weeconfig.c:395
+#: src/common/weeconfig.c:399 src/common/weeconfig.c:400
 msgid "color for infobar delimiters"
 msgstr "barva děličů v infobaru"
 
-#: src/common/weeconfig.c:398 src/common/weeconfig.c:399
+#: src/common/weeconfig.c:403 src/common/weeconfig.c:404
 msgid "color for info bar highlight notification"
 msgstr "barva upozornění zvýraznění v info baru"
 
-#: src/common/weeconfig.c:402 src/common/weeconfig.c:403
+#: src/common/weeconfig.c:407 src/common/weeconfig.c:408
 msgid "background for info bar window"
 msgstr "pozadí pro okno info baru"
 
-#: src/common/weeconfig.c:408 src/common/weeconfig.c:409
+#: src/common/weeconfig.c:413 src/common/weeconfig.c:414
 msgid "color for input text"
 msgstr "barva pro vstupní text"
 
-#: src/common/weeconfig.c:412 src/common/weeconfig.c:413
+#: src/common/weeconfig.c:417 src/common/weeconfig.c:418
 msgid "color for input text (channel name)"
 msgstr "barva vstupního textu (jména kanálů)"
 
-#: src/common/weeconfig.c:416 src/common/weeconfig.c:417
+#: src/common/weeconfig.c:421 src/common/weeconfig.c:422
 msgid "color for input text (nick name)"
 msgstr "barva vstupního textu (přezdívky)"
 
-#: src/common/weeconfig.c:420 src/common/weeconfig.c:421
+#: src/common/weeconfig.c:425 src/common/weeconfig.c:426
 msgid "color for input text (delimiters)"
 msgstr "barva pro vstupní text (děliče)"
 
-#: src/common/weeconfig.c:424 src/common/weeconfig.c:425
+#: src/common/weeconfig.c:429 src/common/weeconfig.c:430
 msgid "background for input window"
 msgstr "pozadí vstupního okna"
 
-#: src/common/weeconfig.c:430 src/common/weeconfig.c:431
+#: src/common/weeconfig.c:435 src/common/weeconfig.c:436
 msgid "color for nicknames"
 msgstr "barva přezdívek"
 
-#: src/common/weeconfig.c:434 src/common/weeconfig.c:435
+#: src/common/weeconfig.c:439 src/common/weeconfig.c:440
 msgid "color for away nicknames"
 msgstr "barva přezdívek, které jsou pryč"
 
-#: src/common/weeconfig.c:438
+#: src/common/weeconfig.c:443
 msgid "color for chan owner symbol"
 msgstr "barva symbolu majitele kanálu"
 
-#: src/common/weeconfig.c:439
+#: src/common/weeconfig.c:444
 msgid "color for chan owner symbol (specific to unrealircd)"
 msgstr "barva symbolu majitele kanálu (specifický pro unrealircd)"
 
-#: src/common/weeconfig.c:442
+#: src/common/weeconfig.c:447
 msgid "color for chan admin symbol"
 msgstr "barva symbolu administrátora kanálu"
 
-#: src/common/weeconfig.c:443
+#: src/common/weeconfig.c:448
 msgid "color for chan admin symbol (specific to unrealircd)"
 msgstr "barva symbolu administrátora kanálu (specifický pro unrealircd)"
 
-#: src/common/weeconfig.c:446 src/common/weeconfig.c:447
+#: src/common/weeconfig.c:451 src/common/weeconfig.c:452
 msgid "color for operator symbol"
 msgstr "barva symbolu operátora"
 
-#: src/common/weeconfig.c:450 src/common/weeconfig.c:451
+#: src/common/weeconfig.c:455 src/common/weeconfig.c:456
 msgid "color for half-operator symbol"
 msgstr "barva symbolu částečného perátora"
 
-#: src/common/weeconfig.c:454 src/common/weeconfig.c:455
+#: src/common/weeconfig.c:459 src/common/weeconfig.c:460
 msgid "color for voice symbol"
 msgstr "barva symbolu voice"
 
-#: src/common/weeconfig.c:458 src/common/weeconfig.c:459
+#: src/common/weeconfig.c:463 src/common/weeconfig.c:464
 msgid "color for '+' when scrolling nicks"
 msgstr "barva pro '+' při procházení přezdívek"
 
-#: src/common/weeconfig.c:462 src/common/weeconfig.c:463
+#: src/common/weeconfig.c:467 src/common/weeconfig.c:468
 msgid "color for nick separator"
 msgstr "barva děliče přezdívek"
 
-#: src/common/weeconfig.c:466 src/common/weeconfig.c:467
+#: src/common/weeconfig.c:471 src/common/weeconfig.c:472
 msgid "color for local nick"
 msgstr "barva lokální přezdívky"
 
-#: src/common/weeconfig.c:470 src/common/weeconfig.c:471
-#: src/common/weeconfig.c:474 src/common/weeconfig.c:475
-#: src/common/weeconfig.c:478 src/common/weeconfig.c:479
-#: src/common/weeconfig.c:482 src/common/weeconfig.c:483
-#: src/common/weeconfig.c:486 src/common/weeconfig.c:487
-#: src/common/weeconfig.c:490 src/common/weeconfig.c:491
-#: src/common/weeconfig.c:494 src/common/weeconfig.c:495
-#: src/common/weeconfig.c:498 src/common/weeconfig.c:499
-#: src/common/weeconfig.c:502 src/common/weeconfig.c:503
-#: src/common/weeconfig.c:506 src/common/weeconfig.c:507
+#: src/common/weeconfig.c:475 src/common/weeconfig.c:476
+#: src/common/weeconfig.c:479 src/common/weeconfig.c:480
+#: src/common/weeconfig.c:483 src/common/weeconfig.c:484
+#: src/common/weeconfig.c:487 src/common/weeconfig.c:488
+#: src/common/weeconfig.c:491 src/common/weeconfig.c:492
+#: src/common/weeconfig.c:495 src/common/weeconfig.c:496
+#: src/common/weeconfig.c:499 src/common/weeconfig.c:500
+#: src/common/weeconfig.c:503 src/common/weeconfig.c:504
+#: src/common/weeconfig.c:507 src/common/weeconfig.c:508
+#: src/common/weeconfig.c:511 src/common/weeconfig.c:512
 msgid "color for nick"
 msgstr "barva přezdívky"
 
-#: src/common/weeconfig.c:510 src/common/weeconfig.c:511
+#: src/common/weeconfig.c:515 src/common/weeconfig.c:516
 msgid "color for other nick in private window"
 msgstr "barva jiné přezdívky v soukromém okně"
 
-#: src/common/weeconfig.c:514 src/common/weeconfig.c:515
+#: src/common/weeconfig.c:519 src/common/weeconfig.c:520
 msgid "background for nicknames"
 msgstr "pozadí přezdívek"
 
-#: src/common/weeconfig.c:520
+#: src/common/weeconfig.c:525
 msgid "color for selected DCC"
 msgstr "barva vybraného DCC"
 
-#: src/common/weeconfig.c:521
+#: src/common/weeconfig.c:526
 msgid "color for selected DCC (chat window)"
 msgstr "barva vybraného DCC (okno rozhovoru)"
 
-#: src/common/weeconfig.c:524 src/common/weeconfig.c:525
+#: src/common/weeconfig.c:529 src/common/weeconfig.c:530
 msgid "color for \"waiting\" dcc status"
 msgstr "barva pro \"waiting\" status dcc"
 
-#: src/common/weeconfig.c:528 src/common/weeconfig.c:529
+#: src/common/weeconfig.c:533 src/common/weeconfig.c:534
 msgid "color for \"connecting\" dcc status"
 msgstr "barva pro \"connecting\" status dcc"
 
-#: src/common/weeconfig.c:532 src/common/weeconfig.c:533
+#: src/common/weeconfig.c:537 src/common/weeconfig.c:538
 msgid "color for \"active\" dcc status"
 msgstr "barva pro \"active\" status dcc"
 
-#: src/common/weeconfig.c:536 src/common/weeconfig.c:537
+#: src/common/weeconfig.c:541 src/common/weeconfig.c:542
 msgid "color for \"done\" dcc status"
 msgstr "barva pro \"done\" status dcc"
 
-#: src/common/weeconfig.c:540 src/common/weeconfig.c:541
+#: src/common/weeconfig.c:545 src/common/weeconfig.c:546
 msgid "color for \"failed\" dcc status"
 msgstr "barva pro \"failed\" status dcc"
 
-#: src/common/weeconfig.c:544 src/common/weeconfig.c:545
+#: src/common/weeconfig.c:549 src/common/weeconfig.c:550
 msgid "color for \"aborted\" dcc status"
 msgstr "barva pro \"aborted\" status dcc"
 
-#: src/common/weeconfig.c:558
+#: src/common/weeconfig.c:563
 msgid "max lines in history (per window)"
 msgstr "maximální počet řádků v historii (pro okno)"
 
-#: src/common/weeconfig.c:559
+#: src/common/weeconfig.c:564
 msgid ""
 "maximum number of lines in history for one server/channel/private window (0 "
 "= unlimited)"
@@ -3940,123 +3944,123 @@ msgstr ""
 "maximální počet řádků v historii pro jeden server/kanál/soukromé okno (0 = "
 "nekonečeně)"
 
-#: src/common/weeconfig.c:563
+#: src/common/weeconfig.c:568
 msgid "max user commands in history"
 msgstr "maximální počet uživatelských příkazů v historii"
 
-#: src/common/weeconfig.c:564
+#: src/common/weeconfig.c:569
 msgid "maximum number of user commands in history (0 = unlimited)"
 msgstr "maximální počet uživatelských příkazů v historii (0 = nekonečně)"
 
-#: src/common/weeconfig.c:581 src/common/weeconfig.c:582
+#: src/common/weeconfig.c:586 src/common/weeconfig.c:587
 msgid "automatically log server messages"
 msgstr "automati logovat zprávy server"
 
-#: src/common/weeconfig.c:585 src/common/weeconfig.c:586
+#: src/common/weeconfig.c:590 src/common/weeconfig.c:591
 msgid "automatically log channel chats"
 msgstr "automaticky logovat rozhovory kanálu"
 
-#: src/common/weeconfig.c:589 src/common/weeconfig.c:590
+#: src/common/weeconfig.c:594 src/common/weeconfig.c:595
 msgid "automatically log private chats"
 msgstr "automaticky logovat soukromé rozhovory"
 
-#: src/common/weeconfig.c:593 src/common/weeconfig.c:594
+#: src/common/weeconfig.c:598 src/common/weeconfig.c:599
 msgid "log messages from plugins (scripts)"
 msgstr "logovat zprávy y pluginů (skriptů)"
 
-#: src/common/weeconfig.c:597
+#: src/common/weeconfig.c:602
 msgid "path for log files"
 msgstr "cesta pro soubory logů"
 
-#: src/common/weeconfig.c:598
+#: src/common/weeconfig.c:603
 msgid "path for WeeChat log files"
 msgstr "cesta pro soubory WeeChat logů"
 
-#: src/common/weeconfig.c:601
+#: src/common/weeconfig.c:606
 msgid "timestamp for log"
 msgstr "časová značka pro log"
 
-#: src/common/weeconfig.c:602
+#: src/common/weeconfig.c:607
 msgid "timestamp for log (see man strftime for date/time specifiers)"
 msgstr "časová značka pro log (viz man strftime pro specifikaci datumu/času"
 
-#: src/common/weeconfig.c:605 src/common/weeconfig.c:606
+#: src/common/weeconfig.c:610 src/common/weeconfig.c:611
 msgid "hide password displayed by nickserv"
 msgstr "schovat heslo zobrazené nickservem"
 
-#: src/common/weeconfig.c:627
+#: src/common/weeconfig.c:632
 msgid "display message to all channels when away"
 msgstr "zobrazit zprávu na všechny kanály, jestliže jsem pryč"
 
-#: src/common/weeconfig.c:628
+#: src/common/weeconfig.c:633
 msgid "display message to all channels when (un)marking as away"
 msgstr "zobrazit zprávu na všechny kanály, když měním stav z/na pryč"
 
-#: src/common/weeconfig.c:631 src/common/weeconfig.c:632
+#: src/common/weeconfig.c:636 src/common/weeconfig.c:637
 msgid "default message when away"
 msgstr "výchozí zprávy, když jsem pryč"
 
-#: src/common/weeconfig.c:635 src/common/weeconfig.c:636
+#: src/common/weeconfig.c:640 src/common/weeconfig.c:641
 msgid "default part message (leaving channel)"
 msgstr "výchozí zpráva při opouštění kanálu"
 
-#: src/common/weeconfig.c:639
+#: src/common/weeconfig.c:644
 msgid "default quit message"
 msgstr "výchzí zpráva při uknočení"
 
-#: src/common/weeconfig.c:640
+#: src/common/weeconfig.c:645
 msgid ""
 "default quit message ('%v' will be replaced by WeeChat version in string)"
 msgstr ""
 "výchozí zpráva při uknočnení ('%v' bude nahrazeno verzí WeeChat v řetězci)"
 
-#: src/common/weeconfig.c:643 src/common/weeconfig.c:644
+#: src/common/weeconfig.c:648 src/common/weeconfig.c:649
 msgid "display notices as private messages"
 msgstr "zobrazit upozornění jako soukromé zprávy"
 
-#: src/common/weeconfig.c:647
+#: src/common/weeconfig.c:652
 msgid "interval between two checks for away"
 msgstr "interval mezi dvěmi kontrolami pro nepřítomnost"
 
-#: src/common/weeconfig.c:648
+#: src/common/weeconfig.c:653
 msgid "interval between two checks for away (in minutes, 0 = never check)"
 msgstr ""
 "interval mezi dvěmi knotrolami pro nepřítomnost (v minutách, 0 = nikdy "
 "nekontrolovat)"
 
-#: src/common/weeconfig.c:651
+#: src/common/weeconfig.c:656
 msgid "interval between two checks for lag"
 msgstr "interval mezi dvěmi kontrolami lagu"
 
-#: src/common/weeconfig.c:652
+#: src/common/weeconfig.c:657
 msgid "interval between two checks for lag (in seconds)"
 msgstr "interval mezi dvěmi knotrolami lagu (v sekundách)"
 
-#: src/common/weeconfig.c:655
+#: src/common/weeconfig.c:660
 msgid "minimum lag to show"
 msgstr "minimální lag, který zobrazit"
 
-#: src/common/weeconfig.c:656
+#: src/common/weeconfig.c:661
 msgid "minimum lag to show (in seconds)"
 msgstr "minimální lag, který zobrazit (v sekundách)"
 
-#: src/common/weeconfig.c:659
+#: src/common/weeconfig.c:664
 msgid "disconnect after important lag"
 msgstr "odpojit po závažném lagu"
 
-#: src/common/weeconfig.c:660
+#: src/common/weeconfig.c:665
 msgid "disconnect after important lag (in minutes, 0 = never disconnect)"
 msgstr "odpojit po závažném lagu (v minutách, 0 = nikny neodpojit)"
 
-#: src/common/weeconfig.c:663 src/common/weeconfig.c:664
+#: src/common/weeconfig.c:668 src/common/weeconfig.c:669
 msgid "create a FIFO pipe for remote control"
 msgstr "vytvořit FIFO pro vzdálené ovládání"
 
-#: src/common/weeconfig.c:667
+#: src/common/weeconfig.c:672
 msgid "list of words to highlight"
 msgstr "seznam slov pro zvýraznění"
 
-#: src/common/weeconfig.c:668
+#: src/common/weeconfig.c:673
 #, fuzzy
 msgid ""
 "comma separated list of words to highlight (case insensitive comparison, "
@@ -4064,165 +4068,165 @@ msgid ""
 msgstr ""
 "čárkou oddělený seznam slov pro zvýraznění (neporovnává se velikost písmen)"
 
-#: src/common/weeconfig.c:690
+#: src/common/weeconfig.c:695
 msgid "automatically accept dcc files"
 msgstr "automaticky akceptovat dcc soubory"
 
-#: src/common/weeconfig.c:691
+#: src/common/weeconfig.c:696
 msgid "automatically accept incoming dcc files"
 msgstr "automaticky akceptovat příchozí dcc soubory"
 
-#: src/common/weeconfig.c:694
+#: src/common/weeconfig.c:699
 msgid "automatically accept dcc chats"
 msgstr "automaticky akceptovat dcc rozhovor"
 
-#: src/common/weeconfig.c:695
+#: src/common/weeconfig.c:700
 msgid "automatically accept dcc chats (use carefully!)"
 msgstr "automaticky akceptovat dcc rozhovor (používejte opatrně!)"
 
-#: src/common/weeconfig.c:698
+#: src/common/weeconfig.c:703
 msgid "timeout for dcc request"
 msgstr "časový limit pro dcc požadavek"
 
-#: src/common/weeconfig.c:699
+#: src/common/weeconfig.c:704
 msgid "timeout for dcc request (in seconds)"
 msgstr "časový limit pro dcc požadavek (v sekundách)"
 
-#: src/common/weeconfig.c:702
+#: src/common/weeconfig.c:707
 msgid "block size for dcc packets"
 msgstr "velikost bloku pro dcc pakety"
 
-#: src/common/weeconfig.c:703
+#: src/common/weeconfig.c:708
 msgid "block size for dcc packets in bytes (default: 65536)"
 msgstr "velikost bloku pro dcc pakety v bajtech (výchozí: 65536)"
 
-#: src/common/weeconfig.c:706
+#: src/common/weeconfig.c:711
 msgid "allowed ports for outgoing dcc"
 msgstr ""
 
-#: src/common/weeconfig.c:707
+#: src/common/weeconfig.c:712
 msgid ""
 "restricts outgoing dcc to use only ports in the given range (useful for NAT) "
 "(syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, empty value "
 "means any port)"
 msgstr ""
 
-#: src/common/weeconfig.c:712
+#: src/common/weeconfig.c:717
 msgid "IP address for outgoing dcc"
 msgstr ""
 
-#: src/common/weeconfig.c:713
+#: src/common/weeconfig.c:718
 msgid ""
 "IP or DNS address used for outgoing dcc (if empty, local interface IP is "
 "used)"
 msgstr ""
 
-#: src/common/weeconfig.c:717
+#: src/common/weeconfig.c:722
 msgid "path for incoming files with dcc"
 msgstr "cesta pro příchozí dcc soubory"
 
-#: src/common/weeconfig.c:718
+#: src/common/weeconfig.c:723
 msgid "path for writing incoming files with dcc (default: user home)"
 msgstr "cesta pro zápis příchozích dcc souborů (výchozí: uživatelův domov)"
 
-#: src/common/weeconfig.c:721
+#: src/common/weeconfig.c:726
 msgid "default path for sending files with dcc"
 msgstr "výchozí cesta pro odesílaní souborů pomocí dcc"
 
-#: src/common/weeconfig.c:722
+#: src/common/weeconfig.c:727
 msgid ""
 "path for reading files when sending thru dcc (when no path is specified)"
 msgstr ""
 "cesta pro čtení souborů při odesílání přes dcc (když není specifikována "
 "cesta)"
 
-#: src/common/weeconfig.c:725 src/common/weeconfig.c:726
+#: src/common/weeconfig.c:730 src/common/weeconfig.c:731
 msgid "convert spaces to underscores when sending files"
 msgstr "konvertovat mezery na podtržítka při odesílání souborů"
 
-#: src/common/weeconfig.c:729
+#: src/common/weeconfig.c:734
 msgid "automatically rename dcc files if already exists"
 msgstr "automaticky přejmenovat dcc soubory, jestliže již existují"
 
-#: src/common/weeconfig.c:730
+#: src/common/weeconfig.c:735
 msgid "rename incoming files if already exists (add '.1', '.2', ...)"
 msgstr ""
 "přejmenovat příchozí soubory, jestliže již existují (přídat '.1', '.2', ...)"
 
-#: src/common/weeconfig.c:733
+#: src/common/weeconfig.c:738
 msgid "automatically resume aborted transfers"
 msgstr "automaticky obnovit zrušený přenos"
 
-#: src/common/weeconfig.c:734
+#: src/common/weeconfig.c:739
 msgid ""
 "automatically resume dcc transfer if connection with remote host is loosed"
 msgstr "automaticky obnovit dcc přenos pokud bylo ztraceno spojení s hostem"
 
-#: src/common/weeconfig.c:753
+#: src/common/weeconfig.c:758
 msgid "use proxy"
 msgstr "použít proxy"
 
-#: src/common/weeconfig.c:754
+#: src/common/weeconfig.c:759
 msgid "use a proxy server to connect to irc server"
 msgstr "použít proxy server pro připojení na irc server"
 
-#: src/common/weeconfig.c:757
+#: src/common/weeconfig.c:762
 msgid "proxy type"
 msgstr "typ proxy"
 
-#: src/common/weeconfig.c:758
+#: src/common/weeconfig.c:763
 msgid "proxy type (http (default), socks4, socks5)"
 msgstr "typ proxy (http (výchozí), socks4, socks5)"
 
-#: src/common/weeconfig.c:761
+#: src/common/weeconfig.c:766
 msgid "use ipv6 proxy"
 msgstr "použít ipv6 proxy"
 
-#: src/common/weeconfig.c:762
+#: src/common/weeconfig.c:767
 msgid "connect to proxy in ipv6"
 msgstr "připojit na proxy v ipv6"
 
-#: src/common/weeconfig.c:765
+#: src/common/weeconfig.c:770
 msgid "proxy address"
 msgstr "proxy adresa"
 
-#: src/common/weeconfig.c:766
+#: src/common/weeconfig.c:771
 msgid "proxy server address (IP or hostname)"
 msgstr "adresa proxy serveru (IP nebo jméno hosta)"
 
-#: src/common/weeconfig.c:769
+#: src/common/weeconfig.c:774
 msgid "port for proxy"
 msgstr "port proxy"
 
-#: src/common/weeconfig.c:770
+#: src/common/weeconfig.c:775
 msgid "port for connecting to proxy server"
 msgstr "port pro připojení na proxy server"
 
-#: src/common/weeconfig.c:773
+#: src/common/weeconfig.c:778
 msgid "proxy username"
 msgstr "uživatelské jeméno proxy"
 
-#: src/common/weeconfig.c:774
+#: src/common/weeconfig.c:779
 msgid "username for proxy server"
 msgstr "uživatelské jméno pro proxy server"
 
-#: src/common/weeconfig.c:777
+#: src/common/weeconfig.c:782
 msgid "proxy password"
 msgstr "heslo proxy"
 
-#: src/common/weeconfig.c:778
+#: src/common/weeconfig.c:783
 msgid "password for proxy server"
 msgstr "heslo pro proxy server"
 
-#: src/common/weeconfig.c:791 src/common/weeconfig.c:792
+#: src/common/weeconfig.c:796 src/common/weeconfig.c:797
 msgid "path for searching plugins"
 msgstr "cesta pro hledání pluginů"
 
-#: src/common/weeconfig.c:795
+#: src/common/weeconfig.c:800
 msgid "list of plugins to load automatically"
 msgstr "seznam pluginů pro automatické načtení"
 
-#: src/common/weeconfig.c:796
+#: src/common/weeconfig.c:801
 msgid ""
 "comma separated list of plugins to load automatically at startup, \"*\" "
 "means all plugins found (names may be partial, for example \"perl\" is ok "
@@ -4232,11 +4236,11 @@ msgstr ""
 "znamená všechny nalezené pluginy (jména mohou být částečná, například \"perl"
 "\" je OK pro \"libperl.so\")"
 
-#: src/common/weeconfig.c:801
+#: src/common/weeconfig.c:806
 msgid "standard plugins extension in filename"
 msgstr "standardní přípona pluginů v jménu souboru"
 
-#: src/common/weeconfig.c:802
+#: src/common/weeconfig.c:807
 msgid ""
 "standard plugins extension in filename, used for autoload (if empty, then "
 "all files are loaded when autoload is \"*\")"
@@ -4244,93 +4248,93 @@ msgstr ""
 "standardní přípona pluginů v jménu soubor, použita při autonačítání (pokud "
 "prázdná jsou načteny všechny souboru pokud je autoload \"*\")"
 
-#: src/common/weeconfig.c:819
+#: src/common/weeconfig.c:824
 msgid "server name"
 msgstr "jméno serveru"
 
-#: src/common/weeconfig.c:820
+#: src/common/weeconfig.c:825
 msgid "name associated to IRC server (for display only)"
 msgstr "jméno asociované k IRC serveru (pouze pro zobrazení)"
 
-#: src/common/weeconfig.c:823
+#: src/common/weeconfig.c:828
 msgid "automatically connect to server"
 msgstr "automaticky připojit k serveru"
 
-#: src/common/weeconfig.c:824
+#: src/common/weeconfig.c:829
 msgid "automatically connect to server when WeeChat is starting"
 msgstr "automaticky připojit k serveru, když je WeeChat spouštěn"
 
-#: src/common/weeconfig.c:827
+#: src/common/weeconfig.c:832
 msgid "automatically reconnect to server"
 msgstr "automaticky znovupřipojit server"
 
-#: src/common/weeconfig.c:828
+#: src/common/weeconfig.c:833
 msgid "automatically reconnect to server when disconnected"
 msgstr "automaticky znovu připojit server, když je odpojen"
 
-#: src/common/weeconfig.c:831
+#: src/common/weeconfig.c:836
 msgid "delay before trying again to reconnect"
 msgstr "doba před novým zkušením znovupřipojení"
 
-#: src/common/weeconfig.c:832
+#: src/common/weeconfig.c:837
 msgid "delay (in seconds) before trying again to reconnect to server"
 msgstr "doba (v sekundách) před novým zkušením znovupřipojení na server"
 
-#: src/common/weeconfig.c:835
+#: src/common/weeconfig.c:840
 msgid "server address or hostname"
 msgstr "adresa serveru nebo jméno hosta"
 
-#: src/common/weeconfig.c:836
+#: src/common/weeconfig.c:841
 msgid "IP address or hostname of IRC server"
 msgstr "IP adresa nebo jeméno hosta IRC serveru"
 
-#: src/common/weeconfig.c:839
+#: src/common/weeconfig.c:844
 msgid "port for IRC server"
 msgstr "port IRC serveru"
 
-#: src/common/weeconfig.c:840
+#: src/common/weeconfig.c:845
 msgid "port for connecting to server"
 msgstr "port pro připojení na server"
 
-#: src/common/weeconfig.c:843 src/common/weeconfig.c:844
+#: src/common/weeconfig.c:848 src/common/weeconfig.c:849
 msgid "use IPv6 protocol for server communication"
 msgstr "použít protokol IPv6 pro komunikaci se serverem"
 
-#: src/common/weeconfig.c:847 src/common/weeconfig.c:848
+#: src/common/weeconfig.c:852 src/common/weeconfig.c:853
 msgid "use SSL for server communication"
 msgstr "použít SSL pro komunikaci se serverem"
 
-#: src/common/weeconfig.c:851
+#: src/common/weeconfig.c:856
 msgid "server password"
 msgstr "heslo serveru"
 
-#: src/common/weeconfig.c:852
+#: src/common/weeconfig.c:857
 msgid "password for IRC server"
 msgstr "heslo pro IRC server"
 
-#: src/common/weeconfig.c:855
+#: src/common/weeconfig.c:860
 msgid "nickname for server"
 msgstr "přezdívka pro server"
 
-#: src/common/weeconfig.c:856
+#: src/common/weeconfig.c:861
 msgid "nickname to use on IRC server"
 msgstr "přezdívka použitá na IRC serveru"
 
-#: src/common/weeconfig.c:859
+#: src/common/weeconfig.c:864
 msgid "alternate nickname for server"
 msgstr "alternativní přezdívka pro server"
 
-#: src/common/weeconfig.c:860
+#: src/common/weeconfig.c:865
 msgid "alternate nickname to use on IRC server (if nickname is already used)"
 msgstr ""
 "alternativní přezdívka použitá na IRC serveru (pokud přezdívka je již "
 "použita)"
 
-#: src/common/weeconfig.c:863
+#: src/common/weeconfig.c:868
 msgid "2nd alternate nickname for server"
 msgstr "druhá alternativní přezdívka pro server"
 
-#: src/common/weeconfig.c:864
+#: src/common/weeconfig.c:869
 msgid ""
 "2nd alternate nickname to use on IRC server (if alternate nickname is "
 "already used)"
@@ -4338,31 +4342,31 @@ msgstr ""
 "druhá alternativní přezdívka použitá na IRC serveru (pokud alternativní "
 "přezdívka je již použita)"
 
-#: src/common/weeconfig.c:867
+#: src/common/weeconfig.c:872
 msgid "user name for server"
 msgstr "uživatelské jméno pro server"
 
-#: src/common/weeconfig.c:868
+#: src/common/weeconfig.c:873
 msgid "user name to use on IRC server"
 msgstr "uživatelské jméno použité na IRC serveru"
 
-#: src/common/weeconfig.c:871
+#: src/common/weeconfig.c:876
 msgid "real name for server"
 msgstr "skutečné jméno pro server"
 
-#: src/common/weeconfig.c:872
+#: src/common/weeconfig.c:877
 msgid "real name to use on IRC server"
 msgstr "skutečné jméno použité na IRC serveru"
 
-#: src/common/weeconfig.c:875 src/common/weeconfig.c:876
+#: src/common/weeconfig.c:880 src/common/weeconfig.c:881
 msgid "first command to run when connected to server"
 msgstr "první příkaz, který zpustit po připojení na server"
 
-#: src/common/weeconfig.c:879
+#: src/common/weeconfig.c:884
 msgid "delay (in seconds) after command was executed"
 msgstr "počkání (v sekundách) po spuštční příkazu"
 
-#: src/common/weeconfig.c:880
+#: src/common/weeconfig.c:885
 msgid ""
 "delay (in seconds) after command was executed (example: give some time for "
 "authentication)"
@@ -4370,11 +4374,11 @@ msgstr ""
 "počkání (v sekundách) po spuštění příkazu (například: dád nějaký čas pro "
 "autorizaci)"
 
-#: src/common/weeconfig.c:883
+#: src/common/weeconfig.c:888
 msgid "list of channels to join when connected to server"
 msgstr "seznam kanálů na které přistoupit po připojení na server"
 
-#: src/common/weeconfig.c:884
+#: src/common/weeconfig.c:889
 msgid ""
 "comma separated list of channels to join when connected to server (example: "
 "\"#chan1,#chan2,#chan3 key1,key2\")"
@@ -4382,15 +4386,15 @@ msgstr ""
 "čárkou rozdělený seznam kanálů na které přistoupit po připojení na server "
 "(příklad: \"#kanál1,#kanál2,#kanál3 klíč1,klíč2\")"
 
-#: src/common/weeconfig.c:887 src/common/weeconfig.c:888
+#: src/common/weeconfig.c:892 src/common/weeconfig.c:893
 msgid "automatically rejoin channels when kicked"
 msgstr "automaticky znovu přijít na kanál po vykopnutí"
 
-#: src/common/weeconfig.c:891
+#: src/common/weeconfig.c:896
 msgid "notify levels for channels of this server"
 msgstr "level upozornění pro kanály na tomto serveru"
 
-#: src/common/weeconfig.c:892
+#: src/common/weeconfig.c:897
 msgid ""
 "comma separated list of notify levels for channels of this server (format: "
 "#channel:1,..)"
@@ -4398,62 +4402,62 @@ msgstr ""
 "čárkou oddělený seznam levelů upozornění pro kanály na tomto serveru "
 "(formát: #kanál:1,..)"
 
-#: src/common/weeconfig.c:1434
+#: src/common/weeconfig.c:1439
 #, c-format
 msgid "%s %s, line %d: new server, but previous was incomplete\n"
 msgstr "%s %s, řádek %d: nový server, ale předchozí byl nekompletní\n"
 
-#: src/common/weeconfig.c:1443
+#: src/common/weeconfig.c:1448
 #, c-format
 msgid "%s %s, line %d: server '%s' already exists\n"
 msgstr "%s %s, řádek %d: server '%s' již existuje\n"
 
-#: src/common/weeconfig.c:1458
+#: src/common/weeconfig.c:1463
 #, c-format
 msgid "%s %s, line %d: unable to create server\n"
 msgstr "%s %s, řádek %d: nemohu vytvořit server\n"
 
-#: src/common/weeconfig.c:1498
+#: src/common/weeconfig.c:1503
 #, c-format
 msgid "%s unable to assign default int with string (\"%s\")\n"
 msgstr "%s nemohu přiřadit výchozí číslo s řetězcem (\"%s\")\n"
 
-#: src/common/weeconfig.c:1509
+#: src/common/weeconfig.c:1514
 #, c-format
 msgid "%s unable to assign default color (\"%s\")\n"
 msgstr "%s nemohu přiřadit výchozí barvu (\"%s\")\n"
 
-#: src/common/weeconfig.c:1549
+#: src/common/weeconfig.c:1554
 #, c-format
 msgid "%s config file \"%s\" not found.\n"
 msgstr "%s konfigurační soubor \"%s\" nenalezen\n"
 
-#: src/common/weeconfig.c:1581
+#: src/common/weeconfig.c:1586
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"]\"\n"
 msgstr "%s %s, řádek %d: nevalidní syntaxe, chybí \"]\"\n"
 
-#: src/common/weeconfig.c:1598
+#: src/common/weeconfig.c:1603
 #, c-format
 msgid "%s %s, line %d: unknown section identifier (\"%s\")\n"
 msgstr "%s %s, řádek %d: neznámý identifikátor sekce (\"%s\")\n"
 
-#: src/common/weeconfig.c:1616
+#: src/common/weeconfig.c:1621
 #, c-format
 msgid "%s %s, line %d: invalid section for option, line is ignored\n"
 msgstr "%s %s, řádek %d: nevalidní sekce pro volbu, řádek je ignorován\n"
 
-#: src/common/weeconfig.c:1661 src/common/weeconfig.c:1687
+#: src/common/weeconfig.c:1666 src/common/weeconfig.c:1692
 #, c-format
 msgid "%s %s, line %d: invalid option \"%s\"\n"
 msgstr "%s %s, řádek %d: nevalidní volba \"%s\"\n"
 
-#: src/common/weeconfig.c:1667
+#: src/common/weeconfig.c:1672
 #, c-format
 msgid "%s %s, line %d: invalid ignore options \"%s\"\n"
 msgstr "%s %s, řádek %d: nevalidní volba \"%s\" pro ignorování\n"
 
-#: src/common/weeconfig.c:1698
+#: src/common/weeconfig.c:1703
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value foroption '%s'\n"
@@ -4462,7 +4466,7 @@ msgstr ""
 "%s %s, řádek %d: nevalidní hodnota pro volbu '%s'\n"
 "Očekáváno: hodnota boolean: 'off' nebo 'on'\n"
 
-#: src/common/weeconfig.c:1707
+#: src/common/weeconfig.c:1712
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
@@ -4471,7 +4475,7 @@ msgstr ""
 "%s %s, řádek %d: nevalidní hodnota pro volbu '%s'\n"
 "Očekáváno: celé číslo mezi %d a %d\n"
 
-#: src/common/weeconfig.c:1718
+#: src/common/weeconfig.c:1723
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
@@ -4480,21 +4484,21 @@ msgstr ""
 "%s %s, řádek %d: nevalidní hodnota pro volbu '%s'\n"
 "Očekáváno: jeden z těchto řetězců: "
 
-#: src/common/weeconfig.c:1734
+#: src/common/weeconfig.c:1739
 #, c-format
 msgid "%s %s, line %d: invalid color name for option '%s'\n"
 msgstr "%s %s, řádek %d: nevalidní jméno barvy pro hodnotu '%s'\n"
 
-#: src/common/weeconfig.c:1803
+#: src/common/weeconfig.c:1808
 #, c-format
 msgid "%s: creating default config file...\n"
 msgstr "%s: vytvářím výchozí konfigurační soubor...\n"
 
-#: src/common/weeconfig.c:1804
+#: src/common/weeconfig.c:1809
 msgid "Creating default config file\n"
 msgstr "Vytvářím výchozí konfigurační soubor\n"
 
-#: src/common/weeconfig.c:1807 src/common/weeconfig.c:2004
+#: src/common/weeconfig.c:1812 src/common/weeconfig.c:2009
 #, c-format
 msgid ""
 "#\n"
@@ -4503,7 +4507,7 @@ msgstr ""
 "#\n"
 "# %s konfigurační soubor, vytvořil %s v%s %s"
 
-#: src/common/weeconfig.c:1811 src/common/weeconfig.c:2008
+#: src/common/weeconfig.c:1816 src/common/weeconfig.c:2013
 #, c-format
 msgid ""
 "# WARNING! Be careful when editing this file, WeeChat writes this file when "
@@ -4511,6 +4515,6 @@ msgid ""
 "#\n"
 msgstr ""
 
-#: src/common/weeconfig.c:2001
+#: src/common/weeconfig.c:2006
 msgid "Saving config to disk\n"
 msgstr "Ukládám konfiguraci na disk\n"

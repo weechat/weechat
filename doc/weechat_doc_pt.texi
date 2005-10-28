@@ -314,6 +314,9 @@ Type: boolean (values: 'on' or 'off'), default value: 'off'@*
 @item look_nick_completor
 The string inserted after nick completion@*
 Type: string (any string), default value: ':'@*
+@item look_nick_completion_ignore
+Chars ignored for nick completion@*
+Type: string (any string), default value: '[]-'@*
 @item look_infobar
 Enable info bar@*
 Type: boolean (values: 'on' or 'off'), default value: 'on'@*
