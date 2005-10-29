@@ -29,6 +29,16 @@ AC_PROG_CC
 AC_PROG_MAKE_SET
 AM_PROG_LIBTOOL
 
+# Add some flags for some OS
+case "$host_os" in
+freebsd* | openbsd*)
+	CFLAGS="$CFLAGS -I/usr/local/include"
+	LFLAGS="$LFLAGS -L/usr/local/lib"
+        ;;
+*)
+        ;;
+esac
+
 # Gettext
 ALL_LINGUAS="fr es cs"
 AM_GNU_GETTEXT
@@ -300,9 +310,11 @@ if test "x$enable_gnutls" = "xyes" ; then
 *** ftp://ftp.gnutls.org/pub/gnutls/
 *** WeeChat will be built without GnuTLS support.]]))
     if test "x$found_gnutls" = "xyes" ; then
-        GNUTLS_LIBS="-lgnutls"
-        AC_SUBST(GNUTLS_LIBS)
-        AC_DEFINE(HAVE_GNUTLS)
+       GNUTLS_CFLAGS=`libgnutls-config --cflags`
+       GNUTLS_LFLAGS=`libgnutls-config --libs`
+       AC_SUBST(GNUTLS_CFLAGS)
+       AC_SUBST(GNUTLS_LFLAGS)
+       AC_DEFINE(HAVE_GNUTLS)
     else
         enable_gnutls="no"
     fi
@@ -311,22 +323,6 @@ fi
 # ------------------------------------------------------------------------------
 #                                general vars
 # ------------------------------------------------------------------------------
-
-case "$host_os" in
-freebsd*)
-	if test "x$enable_perl" = "xyes" -o "x$enable_python" = "xyes" ; then
-	   CFLAGS="$CFLAGS -pthread"
-	fi
-	CFLAGS="$CFLAGS -I/usr/local/include"
-	LDFLAGS="$LDFLAGS -L/usr/local/lib"
-        ;;
-openbsd*)
-	CFLAGS="$CFLAGS -I/usr/local/include"
-	LDFLAGS="$LDFLAGS -L/usr/local/lib"
-        ;;
-*)
-        ;;
-esac
 
 if test "x$enable_perl_nothread" = "xyes" ; then
    AC_DEFINE(PERL_NOTHREAD)
@@ -365,9 +361,17 @@ if test "x$debug" = "x2" ; then
     AC_DEFINE(DEBUG)
 fi
 
-# for FreeBSD
-LIBS="$LIBS $INTLLIBS"
-CFLAGS="$CFLAGS $CPPFLAGS"
+case "$host_os" in
+freebsd*)
+	if test "x$enable_perl" = "xyes" -o "x$enable_python" = "xyes" ; then
+	   CFLAGS="$CFLAGS -pthread"
+	fi
+	LIBS="$LIBS $INTLLIBS"
+	CFLAGS="$CFLAGS $CPPFLAGS"
+        ;;
+*)
+        ;;
+esac
 
 # ------------------------------------------------------------------------------
 #                                output Makefiles

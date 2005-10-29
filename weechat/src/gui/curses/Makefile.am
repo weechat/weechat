@@ -24,7 +24,7 @@ weechat_curses_LDADD = ../gui-common.o ../gui-keyboard.o \
                        ../../irc/lib_weechat_irc.a \
                        $(PLUGINS_LIBS) \
                        $(NCURSES_LIBS) \
-                       $(GNUTLS_LIBS)
+                       $(GNUTLS_LFLAGS)
 
 weechat_curses_SOURCES = gui-display.c \
                          gui-input.c
