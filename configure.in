@@ -32,8 +32,7 @@ AM_PROG_LIBTOOL
 # Add some flags for some OS
 case "$host_os" in
 freebsd* | openbsd*)
-	CFLAGS="$CFLAGS -I/usr/local/include"
-	LFLAGS="$LFLAGS -L/usr/local/lib"
+	LDFLAGS="$LDFLAGS -L/usr/local/lib"
         ;;
 *)
         ;;
