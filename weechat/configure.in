@@ -75,19 +75,21 @@ AH_VERBATIM([PLUGIN_PYTHON], [#undef PLUGIN_PYTHON])
 AH_VERBATIM([PLUGIN_RUBY], [#undef PLUGIN_RUBY])
 AH_VERBATIM([HAVE_GNUTLS], [#undef HAVE_GNUTLS])
 AH_VERBATIM([DEBUG], [#undef DEBUG])
+AH_VERBATIM([PERL_NOTHREAD], [#undef PERL_NOTHREAD])
 
 # Arguments for ./configure
 
-AC_ARG_ENABLE(ncurses,  [  --disable-ncurses       Turn off ncurses interface (default=compiled if found)],enable_ncurses=$enableval,enable_ncurses=yes)
-AC_ARG_ENABLE(wxwidgets,[  --enable-wxwidgets      Turn on WxWidgets interface (default=no wxwidgets)],enable_wxwidgets=$enableval,enable_wxwidgets=no)
-AC_ARG_ENABLE(gtk,      [  --enable-gtk            Turn on Gtk+ interface (default=no Gtk+)],enable_gtk=$enableval,enable_gtk=no)
-AC_ARG_ENABLE(qt,       [  --enable-qt             Turn on Qt interface (default=no Qt)],enable_qt=$enableval,enable_qt=no)
-AC_ARG_ENABLE(plugins,  [  --disable-plugins       Turn off plugins support (default=plugins enabled)],enable_plugins=$enableval,enable_plugins=yes)
-AC_ARG_ENABLE(perl,     [  --enable-perl           Turn on Perl script plugin (default=no Perl plugin)],enable_perl=$enableval,enable_perl=no)
-AC_ARG_ENABLE(python,   [  --enable-python         Turn on Python script plugin (default=no Python plugin)],enable_python=$enableval,enable_python=no)
-AC_ARG_ENABLE(ruby,     [  --enable-ruby           Turn on Ruby script plugin (default=no Ruby script)],enable_ruby=$enableval,enable_ruby=no)
-AC_ARG_ENABLE(gnutls,   [  --disable-gnutls        Turn off gnutls support (default=compiled if found)],enable_gnutls=$enableval,enable_gnutls=yes)
-AC_ARG_WITH(debug,      [  --with-debug            Debugging: 0=no debug, 1=debug compilation, 2=debug compilation + verbose msgs (default=0)],debug=$withval,debug=0)
+AC_ARG_ENABLE(ncurses,       [  --disable-ncurses       Turn off ncurses interface (default=compiled if found)],enable_ncurses=$enableval,enable_ncurses=yes)
+AC_ARG_ENABLE(wxwidgets,     [  --enable-wxwidgets      Turn on WxWidgets interface (default=no wxwidgets)],enable_wxwidgets=$enableval,enable_wxwidgets=no)
+AC_ARG_ENABLE(gtk,           [  --enable-gtk            Turn on Gtk+ interface (default=no Gtk+)],enable_gtk=$enableval,enable_gtk=no)
+AC_ARG_ENABLE(qt,            [  --enable-qt             Turn on Qt interface (default=no Qt)],enable_qt=$enableval,enable_qt=no)
+AC_ARG_ENABLE(plugins,       [  --disable-plugins       Turn off plugins support (default=plugins enabled)],enable_plugins=$enableval,enable_plugins=yes)
+AC_ARG_ENABLE(perl,          [  --enable-perl           Turn on Perl script plugin (default=no Perl plugin)],enable_perl=$enableval,enable_perl=no)
+AC_ARG_ENABLE(perl_nothread, [  --enable-perl-nothread  Turn on Perl script plugin with Perl compiled without threads support (like some *bsd)],enable_perl_nothread=$enableval,enable_perl_nothread=no)
+AC_ARG_ENABLE(python,        [  --enable-python         Turn on Python script plugin (default=no Python plugin)],enable_python=$enableval,enable_python=no)
+AC_ARG_ENABLE(ruby,          [  --enable-ruby           Turn on Ruby script plugin (default=no Ruby script)],enable_ruby=$enableval,enable_ruby=no)
+AC_ARG_ENABLE(gnutls,        [  --disable-gnutls        Turn off gnutls support (default=compiled if found)],enable_gnutls=$enableval,enable_gnutls=yes)
+AC_ARG_WITH(debug,           [  --with-debug            Debugging: 0=no debug, 1=debug compilation, 2=debug compilation + verbose msgs (default=0)],debug=$withval,debug=0)
 
 AM_CONDITIONAL(GUI_NCURSES,   test "$enable_ncurses" = "yes")
 AM_CONDITIONAL(GUI_WXWIDGETS, test "$enable_wxwidgets" = "yes")
@@ -161,6 +163,10 @@ fi
 # ------------------------------------------------------------------------------
 
 PLUGINS_LIBS=
+
+if test "x$enable_perl_nothread" = "xyes" ; then
+      enable_perl="yes"
+fi
 
 if test "x$enable_perl" = "xyes" ; then
     enable_plugins="yes"
@@ -306,6 +312,20 @@ fi
 #                                general vars
 # ------------------------------------------------------------------------------
 
+case "$host_os" in
+freebsd*)
+	if test "x$enable_perl" = "xyes" -o "x$enable_python" = "xyes" ; then
+	   CFLAGS="$CFLAGS -pthread"
+	fi
+        ;;
+*)
+        ;;
+esac
+
+if test "x$enable_perl_nothread" = "xyes" ; then
+   AC_DEFINE(PERL_NOTHREAD)
+fi
+
 if test "x$prefix" = "xNONE" ; then
    prefix="$ac_default_prefix"
 fi
@@ -399,14 +419,15 @@ if test "x$debug" = "x2" ; then
 fi
 
 echo ""
-echo "Interfaces.................... :$listgui"
-echo "Build with GNUtls support..... : $enable_gnutls"
-echo "Build with Plugin support..... : $enable_plugins"
-echo "              Perl plugin..... : $enable_perl"
-echo "              Python plugin... : $enable_python"
-echo "              Ruby plugin..... : $enable_ruby"
-echo "Compile with debug info....... : $msg_debug_compiler"
-echo "Print debugging messages...... : $msg_debug_verbose"
+echo "Interfaces.................................... :$listgui"
+echo "Build with GNUtls support..................... : $enable_gnutls"
+echo "Build with Plugin support..................... : $enable_plugins"
+echo "              Perl plugin..................... : $enable_perl"
+echo "              Perl plugin (without threads)... : $enable_perl_nothread"
+echo "              Python plugin................... : $enable_python"
+echo "              Ruby plugin..................... : $enable_ruby"
+echo "Compile with debug info....................... : $msg_debug_compiler"
+echo "Print debugging messages...................... : $msg_debug_verbose"
 echo ""
 eval echo "WeeChat will be installed in $bindir."
 echo ""
