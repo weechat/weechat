@@ -368,6 +368,11 @@ freebsd*)
 	LIBS="$LIBS $INTLLIBS"
 	CFLAGS="$CFLAGS $CPPFLAGS"
         ;;
+openbsd*)
+	if test "x$enable_python" = "xyes" ; then
+	   CFLAGS="$CFLAGS -pthread"
+	fi
+	;;
 *)
         ;;
 esac
