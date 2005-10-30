@@ -36,7 +36,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.6-cvs - 28 octobre 2005
+@subtitle Documentation pour WeeChat v0.1.6-cvs - 30 octobre 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -217,16 +217,22 @@ Suivez alors les instructions du paquet sources - @xref{Paquet source}.
 @subsection Param@`etres de ligne de commande
 
 @table @code
+@item -a, --no-connect
+Supprimer la connexion automatique aux serveurs lors du d@'emarrage@*
 @item -c, --config
 Afficher l'aide sur le fichier de config (liste des options)@*
-@item -h, --help
-Afficher l'aide@*
 @item -f, --key-functions
 Afficher la liste des fonctions internes WeeChat pour les touches@*
+@item -h, --help
+Afficher l'aide@*
 @item -i, --irc-commands
 Afficher la liste des commandes IRC@*
+@item -k, --keys
+Afficher les touches par d@'efaut de WeeChat@*
 @item -l, --license
 Afficher la licence de WeeChat@*
+@item -p, --no-plugin
+Ne charger aucune extension lors du d@'emarrage@*
 @item -v, --version
 Afficher la version de WeeChat@*
 @item -w, --weechat-commands
@@ -278,6 +284,9 @@ Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
 @item look_charset_internal
 Force le jeu de caract@`eres interne @`a WeeChat (doit @^etre vide dans la plupart des cas, ce qui signifie que le jeu de caract@`eres d@'etect@'e est utilis@'e)@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
+@item look_one_server_buffer
+Utiliser le m@^eme tampon pour tous les serveurs@*
+Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
 @item look_buffer_timestamp
 Format de date/heure pour les tampons@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '[%H:%M:%S]'@*
@@ -315,10 +324,10 @@ Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
 Afficher un espace si le mode utilisateur n'est pas (half)op/voice@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
 @item look_nick_completor
-La cha@^ine affich@'ee apr@`es la compl@'etion des utilisateurs@*
+La cha@^ine affich@'ee apr@`es la compl@'etion des pseudos@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ':'@*
 @item look_nick_completion_ignore
-Chars ignored for nick completion@*
+Caract@`eres @`a ignorer pour la compl@'etion des pseudos@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '[]-'@*
 @item look_infobar
 Active la barre d'infos@*
@@ -368,6 +377,9 @@ Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightcyan'@*
 @item col_chat_prefix2
 Couleur pour le caract@`ere du milieu du pr@'efixe@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'white'@*
+@item col_chat_server
+Couleur pour le nom du serveur@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'brown'@*
 @item col_chat_join
 Couleur pour la fl@`eche du join (pr@'efixe)@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'lightgreen'@*
@@ -851,6 +863,10 @@ Sauter au tampon avec ce num@'ero@*
 @*
 @item Alt + R
 Effacer la ligne enti@`ere@*
+@*
+@item Alt + S
+Changer de serveur sur le tampon des serveurs@*
+(si l'option ``look_one_server_buffer'' est activ@'ee)@*
 @*
 @item Alt + PageUp / Alt + PageDown / Alt + Home / Alt + End
 Faire d@'efiler la liste des pseudos@*

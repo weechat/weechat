@@ -36,7 +36,7 @@
 
 @title WeeChat - Gui@'on de usuario.
 @subtitle Cliente IRC r@'apido, peque@~no y extensible
-@subtitle Documentaci@'on para WeeChat v0.1.6-cvs - 28 de octubre de 2005
+@subtitle Documentaci@'on para WeeChat v0.1.6-cvs - 30 de octubre de 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -218,6 +218,8 @@ Luego, lee las instructiones para Paquetes de fuentes - @xref{Paquetes de fuente
 @subsection Par@'ametros de l@'inea de comandos
 
 @table @code
+@item -a, --no-connect
+Disable auto-connect to servers at startup@*
 @item -c, --config
 Obtener la ayuda del fichero de configuraci@'on (lista de opciones)@*
 @item -f, --key-functions
@@ -226,8 +228,12 @@ Display WeeChat internal functions for keys@*
 Obtener la ayuda@*
 @item -i, --irc-commands
 Display IRC commands list@*
+@item -k, --keys
+Display WeeChat default keys@*
 @item -l, --license
 Obtener la licencia de WeeChat@*
+@item -p, --no-plugin
+Don't load any plugin at startup
 @item -v, --version
 Obtener la versi@'on de WeeChat@*
 @item -w, --weechat-commands
@@ -254,464 +260,470 @@ Enumeraci@'on de las opciones del fichero de configuraci@'on:@*
 
 @table @kbd
 @item look_set_title
-Set title for window (terminal for Curses GUI) with name & version@*
-Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+Define el t@'itulo de la ventana (el terminal para la interfaz Curses) con el nombre y la versi@'on@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item look_startup_logo
-Display WeeChat logo at startup@*
-Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+Mostrar el logotipo de WeeChat en el arranque@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item look_startup_version
-Display WeeChat version at startup@*
-Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+Mostrar la versi@'on de Weechat en el arranque@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item look_weechat_slogan
-WeeChat slogan (if empty, slogan is not used)@*
-Type: string (any string), default value: 'the geekest IRC client!'@*
+Esl@'ogan de WeeChat (si est@'a vac@'io, el esl@'ogan no ser@'a utilizado)@*
+Typo: cadena (cualquier cadena), valor por defecto: 'the geekest IRC client!'@*
 @item look_charset_decode_iso
 ISO charset for decoding messages from server (used only if locale is UTF-8) (if empty, messages are not converted if locale is UTF-8@*
-Type: string (any string), default value: 'ISO-8859-1'@*
+Typo: cadena (cualquier cadena), valor por defecto: 'ISO-8859-1'@*
 @item look_charset_decode_utf
 UTF charset for decoding messages from server (used only if locale is not UTF-8) (if empty, messages are not converted if locale is not UTF-8@*
-Type: string (any string), default value: 'UTF-8'@*
+Typo: cadena (cualquier cadena), valor por defecto: 'UTF-8'@*
 @item look_charset_encode
 Charset for encoding messages sent to server, examples: UFT-8, ISO-8859-1 (if empty, messages are not converted)@*
-Type: string (any string), default value: ''@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @item look_charset_internal
 Forces internal WeeChat charset (should be empty in most cases, that means detected charset is used)@*
-Type: string (any string), default value: ''@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
+@item look_one_server_buffer
+Use same buffer for all servers@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
 @item look_buffer_timestamp
-Timestamp for buffers@*
-Type: string (any string), default value: '[%H:%M:%S]'@*
+Fecha y hora para las búfers@*
+Typo: cadena (cualquier cadena), valor por defecto: '[%H:%M:%S]'@*
 @item look_color_nicks
-Display nick names with different colors@*
-Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+Mostrar nombres de usuario con colores diferentes@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item look_color_nicks_number
 Number of colors to use for nicks colors@*
-Type: integer (values: between 1 and 10), default value: 10@*
+Typo: entero (valores: entre 1 y 10), valor por defecto: 10@*
 @item look_color_actions
-Display actions with different colors@*
-Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+Mostrar acciones con colores diferentes@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item look_remove_colors_from_msgs
-Remove colors from incoming messages@*
-Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+Quitar colores en los mensajes entrantes@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item look_nicklist
-Display nicklist window (for channel windows)@*
-Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+Mostrar ventana de usuarios (para las ventanas de canal)@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item look_nicklist_position
-Nicklist position (top, left, right (default), bottom)@*
-Type: string (values: 'left', 'right', 'top', 'bottom'), default value: 'right'@*
+Posici@'on de la ventana de usuarios (arriba (top), izquierda (left), derecha (right, por defecto), abajo (bottom))@*
+Typo: cadena (valores: 'left', 'right', 'top', 'bottom'), valor por defecto: 'right'@*
 @item look_nicklist_min_size
-Min size for nicklist (width or height, depending on look_nicklist_position (0 = no min size))@*
-Type: integer (values: between 0 and 100), default value: 0@*
+Tama@~no m@'inimo para la ventana de usuarios (ancho o alto, dependiendo de look_nicklist_position (0 = sin tama@~no m@'inimo))@*
+Typo: entero (valores: entre 0 y 100), valor por defecto: 0@*
 @item look_nicklist_max_size
-Max size for nicklist (width or height, depending on look_nicklist_position (0 = no max size; if min == max and > 0, then size is fixed))@*
-Type: integer (values: between 0 and 100), default value: 0@*
+Tama@~no m@'aximo para la ventana de usuarios (ancho o alto, dependiendo de look_nicklist_position (0 = sin tama@~no m@'aximo, si min == max y > 0, entonces se fija el tama@~no))@*
+Typo: entero (valores: entre 0 y 100), valor por defecto: 0@*
 @item look_no_nickname
-Text to display instead of nick when not connected@*
-Type: string (any string), default value: '-cmd-'@*
+Texto a mostrar en lugar del nick cuando no se est@'a conectado@*
+Typo: cadena (cualquier cadena), valor por defecto: '-cmd-'@*
 @item look_nickmode
-Display nick mode ((half)op/voice) before each nick@*
-Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+Mostrar modo del usuario ((half)op/voice) antes de cada usuario@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item look_nickmode_empty
-Display space if nick mode is not (half)op/voice@*
-Type: boolean (values: 'on' or 'off'), default value: 'off'@*
+Mostrar un espacio si el modo de usuario no es (half)op/voice@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
 @item look_nick_completor
-The string inserted after nick completion@*
-Type: string (any string), default value: ':'@*
+La cadena mostrada tras la finalizaci@'on de los nombres de usuario@*
+Typo: cadena (cualquier cadena), valor por defecto: ':'@*
 @item look_nick_completion_ignore
 Chars ignored for nick completion@*
-Type: string (any string), default value: '[]-'@*
+Typo: cadena (cualquier cadena), valor por defecto: '[]-'@*
 @item look_infobar
-Enable info bar@*
-Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+Activa la barra de informaci@'on@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item look_infobar_timestamp
-Timestamp for time in infobar@*
-Type: string (any string), default value: '%B, %A %d %Y'@*
+Fecha y hora para las conversaciones guardadas@*
+Typo: cadena (cualquier cadena), valor por defecto: '%B, %A %d %Y'@*
 @item look_infobar_seconds
-Display seconds in infobar time@*
-Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+Mostrar segundos en la hora de la barra de herramientas@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item look_infobar_delay_highlight
-Delay (in seconds) for highlight messages in infobar (0 = disable highlight notifications in infobar)@*
-Type: integer (values: between 0 and 2147483647), default value: 7@*
+Retraso (en segundos) para la notificaci@'on de mensajes en la barra de informaci@'on (0 = desactivar las notificaciones en la barra de informaci@'on)@*
+Typo: entero (valores: entre 0 y 2147483647), valor por defecto: 7@*
 @item look_hotlist_names_count
 Max number of names in hotlist (0 = no name displayed, only buffer numbers)@*
-Type: integer (values: between 0 and 32), default value: 3@*
+Typo: entero (valores: entre 0 y 32), valor por defecto: 3@*
 @item look_hotlist_names_level
 Level for displaying names in hotlist (combination of: 1=join/part, 2=message, 4=private, 8=highlight, for example: 12=private+highlight)@*
-Type: integer (values: between 1 and 15), default value: 12@*
+Typo: entero (valores: entre 1 y 15), valor por defecto: 12@*
 @item look_hotlist_names_length
 Max length of names in hotlist (0 = no limit)@*
-Type: integer (values: between 0 and 32), default value: 0@*
+Typo: entero (valores: entre 0 y 32), valor por defecto: 0@*
 @item look_day_change
 Display special message when day changes@*
-Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item look_day_change_timestamp
 Timestamp for date displayed when day changed@*
-Type: string (any string), default value: '%a, %d %b %Y'@*
+Typo: cadena (cualquier cadena), valor por defecto: '%a, %d %b %Y'@*
 @item col_title
-Color for title bar@*
-Type: color (Curses or Gtk color), default value: 'default'@*
+Color para la barra de t@'itulo@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
 @item col_title_bg
-Background for title bar@*
-Type: color (Curses or Gtk color), default value: 'blue'@*
+Color de fondo para la barra de t@'itulo@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'blue'@*
 @item col_chat
-Color for chat text@*
-Type: color (Curses or Gtk color), default value: 'default'@*
+Color para el texto de conversaci@'on@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
 @item col_chat_time
-Color for time in chat window@*
-Type: color (Curses or Gtk color), default value: 'default'@*
+Color para la hora en la ventana de conversaci@'on@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
 @item col_chat_time_sep
-Color for time separator (chat window)@*
-Type: color (Curses or Gtk color), default value: 'brown'@*
+Color para el separador de la hora (ventana de conversaci@'on)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'brown'@*
 @item col_chat_prefix1
-Color for 1st and 3rd char of prefix@*
-Type: color (Curses or Gtk color), default value: 'lightcyan'@*
+Color para el primer o tercer car@'acter de prefijo@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightcyan'@*
 @item col_chat_prefix2
-Color for middle char of prefix@*
-Type: color (Curses or Gtk color), default value: 'white'@*
+Color para el car@'acter de en medio del prefijo@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'white'@*
+@item col_chat_server
+Color for server name@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'brown'@*
 @item col_chat_join
 Color for join arrow (prefix)@*
-Type: color (Curses or Gtk color), default value: 'lightgreen'@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightgreen'@*
 @item col_chat_part
 Color for part/quit arrow (prefix)@*
-Type: color (Curses or Gtk color), default value: 'lightred'@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightred'@*
 @item col_chat_nick
-Color for nicks in actions (chat window)@*
-Type: color (Curses or Gtk color), default value: 'lightcyan'@*
+Color para los nombres de usuario en las acciones (ventana de conversaci@'on)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightcyan'@*
 @item col_chat_host
-Color for hostnames (chat window)@*
-Type: color (Curses or Gtk color), default value: 'cyan'@*
+Color para los nombres de m@'aquina (ventana de conversaci@'on)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'cyan'@*
 @item col_chat_channel
-Color for channel names in actions (chat window)@*
-Type: color (Curses or Gtk color), default value: 'white'@*
+Color para los nombres de canal en las acciones (ventana de conversaci@'on)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'white'@*
 @item col_chat_dark
-Color for dark separators (chat window)@*
-Type: color (Curses or Gtk color), default value: 'green'@*
+Color para los separadores oscuros (ventana de conversaci@'on)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'green'@*
 @item col_chat_highlight
-Color for highlighted nick (chat window)@*
-Type: color (Curses or Gtk color), default value: 'yellow'@*
+Color para el alias subrayado (ventana de conversaci@'on)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'yellow'@*
 @item col_chat_bg
-Background for chat window@*
-Type: color (Curses or Gtk color), default value: 'default'@*
+Color de fondo para la ventana de conversaci@'on@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
 @item col_status
-Color for status bar@*
-Type: color (Curses or Gtk color), default value: 'default'@*
+Color para la barra de estado@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
 @item col_status_delimiters
-Color for status bar delimiters@*
-Type: color (Curses or Gtk color), default value: 'cyan'@*
+Color para los delimitadores de la barra de estado@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'cyan'@*
 @item col_status_channel
 Color for current channel in status bar@*
-Type: color (Curses or Gtk color), default value: 'white'@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'white'@*
 @item col_status_data_msg
-Color for window with new messages (status bar)@*
-Type: color (Curses or Gtk color), default value: 'yellow'@*
+Color para una ventana con mensajes nuevos (barra de estado)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'yellow'@*
 @item col_status_private
 Color for window with private message (status bar)@*
-Type: color (Curses or Gtk color), default value: 'lightmagenta'@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightmagenta'@*
 @item col_status_highlight
-Color for window with highlight (status bar)@*
-Type: color (Curses or Gtk color), default value: 'lightred'@*
+Color para una ventana con resaltado (barra de estado)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightred'@*
 @item col_status_data_other
-Color for window with new data (not messages) (status bar)@*
-Type: color (Curses or Gtk color), default value: 'default'@*
+Color para una ventana con nuevos datos (no mensajes) (barra de estado)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
 @item col_status_more
-Color for window with new data (status bar)@*
-Type: color (Curses or Gtk color), default value: 'white'@*
+Color para una ventana con nuevos datos (barra de estado)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'white'@*
 @item col_status_bg
-Background for status window@*
-Type: color (Curses or Gtk color), default value: 'blue'@*
+Color de fondo para la ventana de estado@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'blue'@*
 @item col_infobar
-Color for info bar text@*
-Type: color (Curses or Gtk color), default value: 'black'@*
+Color para el texto de la barra de informaci@'on@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'black'@*
 @item col_infobar_delimiters
-Color for infobar delimiters@*
-Type: color (Curses or Gtk color), default value: 'blue'@*
+Color para los delimitadores de la barra de informaci@'on@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'blue'@*
 @item col_infobar_highlight
-Color for info bar highlight notification@*
-Type: color (Curses or Gtk color), default value: 'white'@*
+Color para la notificaci@'on en la barra de informaci@'on@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'white'@*
 @item col_infobar_bg
-Background for info bar window@*
-Type: color (Curses or Gtk color), default value: 'cyan'@*
+Color de fondo para la ventana de la barra de informaci@'on@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'cyan'@*
 @item col_input
-Color for input text@*
-Type: color (Curses or Gtk color), default value: 'default'@*
+Color para el texto de entrada@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
 @item col_input_channel
-Color for input text (channel name)@*
-Type: color (Curses or Gtk color), default value: 'white'@*
+Color para el texto de entrada (nombre de canal)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'white'@*
 @item col_input_nick
-Color for input text (nick name)@*
-Type: color (Curses or Gtk color), default value: 'lightcyan'@*
+Color para el texto de entrada (alias)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightcyan'@*
 @item col_input_delimiters
 Color for input text (delimiters)@*
-Type: color (Curses or Gtk color), default value: 'white'@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'white'@*
 @item col_input_bg
-Background for input window@*
-Type: color (Curses or Gtk color), default value: 'default'@*
+Color de fondo para la ventana de entrada@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
 @item col_nick
-Color for nicknames@*
-Type: color (Curses or Gtk color), default value: 'default'@*
+Color para los nombres de usuario@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
 @item col_nick_away
-Color for away nicknames@*
-Type: color (Curses or Gtk color), default value: 'cyan'@*
+Color para los usuarios ausentes@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'cyan'@*
 @item col_nick_chanowner
-Color for chan owner symbol (specific to unrealircd)@*
-Type: color (Curses or Gtk color), default value: 'lightgreen'@*
+Color para el s@'imbolo de propietario de canal (especificado en unrealircd)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightgreen'@*
 @item col_nick_chanadmin
-Color for chan admin symbol (specific to unrealircd)@*
-Type: color (Curses or Gtk color), default value: 'lightgreen'@*
+Color para el s@'imbolo de administrador de canal (especificado en unrealircd)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightgreen'@*
 @item col_nick_op
-Color for operator symbol@*
-Type: color (Curses or Gtk color), default value: 'lightgreen'@*
+Color para el s@'imbolo de operador@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightgreen'@*
 @item col_nick_halfop
-Color for half-operator symbol@*
-Type: color (Curses or Gtk color), default value: 'lightmagenta'@*
+Color para el s@'imbolo de semi-operador@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightmagenta'@*
 @item col_nick_voice
-Color for voice symbol@*
-Type: color (Curses or Gtk color), default value: 'yellow'@*
+Color para el s@'imbolo de voz@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'yellow'@*
 @item col_nick_more
-Color for '+' when scrolling nicks@*
-Type: color (Curses or Gtk color), default value: 'lightmagenta'@*
+Color para '+' al desplazar nicks@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightmagenta'@*
 @item col_nick_sep
-Color for nick separator@*
-Type: color (Curses or Gtk color), default value: 'blue'@*
+Color para el separador de alias@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'blue'@*
 @item col_nick_self
-Color for local nick@*
-Type: color (Curses or Gtk color), default value: 'white'@*
+Color para el alias local@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'white'@*
 @item col_nick_color1
 Color for nick@*
-Type: color (Curses or Gtk color), default value: 'cyan'@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'cyan'@*
 @item col_nick_color2
 Color for nick@*
-Type: color (Curses or Gtk color), default value: 'magenta'@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'magenta'@*
 @item col_nick_color3
 Color for nick@*
-Type: color (Curses or Gtk color), default value: 'green'@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'green'@*
 @item col_nick_color4
 Color for nick@*
-Type: color (Curses or Gtk color), default value: 'brown'@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'brown'@*
 @item col_nick_color5
 Color for nick@*
-Type: color (Curses or Gtk color), default value: 'lightblue'@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightblue'@*
 @item col_nick_color6
 Color for nick@*
-Type: color (Curses or Gtk color), default value: 'default'@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
 @item col_nick_color7
 Color for nick@*
-Type: color (Curses or Gtk color), default value: 'lightcyan'@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightcyan'@*
 @item col_nick_color8
 Color for nick@*
-Type: color (Curses or Gtk color), default value: 'lightmagenta'@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightmagenta'@*
 @item col_nick_color9
 Color for nick@*
-Type: color (Curses or Gtk color), default value: 'lightgreen'@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightgreen'@*
 @item col_nick_color10
 Color for nick@*
-Type: color (Curses or Gtk color), default value: 'blue'@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'blue'@*
 @item col_nick_private
-Color for other nick in private window@*
-Type: color (Curses or Gtk color), default value: 'default'@*
+Color para el otro alias en la ventana privada@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
 @item col_nick_bg
-Background for nicknames@*
-Type: color (Curses or Gtk color), default value: 'default'@*
+Color de fondo para los nombres de usuario@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
 @item col_chat_dcc_selected
-Color for selected DCC (chat window)@*
-Type: color (Curses or Gtk color), default value: 'white'@*
+Color para el DCC seleccionado (ventana de conversaci@'on)@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'white'@*
 @item col_dcc_waiting
-Color for "waiting" dcc status@*
-Type: color (Curses or Gtk color), default value: 'lightcyan'@*
+Color para el estado dcc "esperando"@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightcyan'@*
 @item col_dcc_connecting
-Color for "connecting" dcc status@*
-Type: color (Curses or Gtk color), default value: 'yellow'@*
+Color para el estado dcc "conectando"@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'yellow'@*
 @item col_dcc_active
-Color for "active" dcc status@*
-Type: color (Curses or Gtk color), default value: 'lightblue'@*
+Color para el estado dcc "activo"@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightblue'@*
 @item col_dcc_done
-Color for "done" dcc status@*
-Type: color (Curses or Gtk color), default value: 'lightgreen'@*
+Color para el estado dcc "terminado"@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightgreen'@*
 @item col_dcc_failed
-Color for "failed" dcc status@*
-Type: color (Curses or Gtk color), default value: 'lightred'@*
+Color para el estado dcc "fallo"@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightred'@*
 @item col_dcc_aborted
-Color for "aborted" dcc status@*
-Type: color (Curses or Gtk color), default value: 'lightred'@*
+Color para el estado dcc "abortado"@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'lightred'@*
 @item history_max_lines
-Maximum number of lines in history for one server/channel/private window (0 = unlimited)@*
-Type: integer (values: between 0 and 2147483647), default value: 4096@*
+Número m@'aximo de l@'ineas en el hist@'orico para un servidor/canal/privado (0 = ilimitado)@*
+Typo: entero (valores: entre 0 y 2147483647), valor por defecto: 4096@*
 @item history_max_commands
-Maximum number of user commands in history (0 = unlimited)@*
-Type: integer (values: between 0 and 2147483647), default value: 100@*
+Número m@'aximo de comandos de usuario en el hist@'orico (0 = ilimitado)@*
+Typo: entero (valores: entre 0 y 2147483647), valor por defecto: 100@*
 @item log_auto_server
-Automatically log server messages@*
-Type: boolean (values: 'on' or 'off'), default value: 'off'@*
+Registrar autom@'aticamente los mensajes de servidor@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
 @item log_auto_channel
-Automatically log channel chats@*
-Type: boolean (values: 'on' or 'off'), default value: 'off'@*
+Registrar autom@'aticamente las conversaciones de canal@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
 @item log_auto_private
-Automatically log private chats@*
-Type: boolean (values: 'on' or 'off'), default value: 'off'@*
+Registrar autom@'aticamente las conversaciones privadas@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
 @item log_plugin_msg
-Log messages from plugins (scripts)@*
-Type: boolean (values: 'on' or 'off'), default value: 'off'@*
+Registrar mensajes de plugins (scripts)@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
 @item log_path
-Path for WeeChat log files@*
-Type: string (any string), default value: '~/.weechat/logs/'@*
+Ruta para los archivos de registro (logs) de WeeChat@*
+Typo: cadena (cualquier cadena), valor por defecto: '~/.weechat/logs/'@*
 @item log_timestamp
-Timestamp for log (see man strftime for date/time specifiers)@*
-Type: string (any string), default value: '%Y %b %d %H:%M:%S'@*
+Fecha y hora para los registros (ver man strftime para el formato de fecha/hora)@*
+Typo: cadena (cualquier cadena), valor por defecto: '%Y %b %d %H:%M:%S'@*
 @item log_hide_nickserv_pwd
-Hide password displayed by nickserv@*
-Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+Ocultar contrase@~na mostrada por nickserv@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item irc_display_away
-Display message to all channels when (un)marking as away@*
-Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+Mostrar mensaje en todos los canales cuando se vuelva del estado ausente@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item irc_default_msg_away
-Default message when away@*
-Type: string (any string), default value: 'away'@*
+Mensaje por defecto para el estado ausente@*
+Typo: cadena (cualquier cadena), valor por defecto: 'away'@*
 @item irc_default_msg_part
-Default part message (leaving channel)@*
-Type: string (any string), default value: 'WeeChat %v'@*
+Mensaje por defecto de salida (saliendo de un canal)@*
+Typo: cadena (cualquier cadena), valor por defecto: 'WeeChat %v'@*
 @item irc_default_msg_quit
-Default quit message ('%v' will be replaced by WeeChat version in string)@*
-Type: string (any string), default value: 'WeeChat %v'@*
+Mensaje de fin por defecto ('%v' ser@'a reemplazado por la versi@'on de WeeChat en la cadena)@*
+Typo: cadena (cualquier cadena), valor por defecto: 'WeeChat %v'@*
 @item irc_notice_as_pv
 Display notices as private messages@*
-Type: boolean (values: 'on' or 'off'), default value: 'off'@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
 @item irc_away_check
-Interval between two checks for away (in minutes, 0 = never check)@*
-Type: integer (values: between 0 and 2147483647), default value: 0@*
+Intervalo entre dos comprobaciones de ausencia (en minutos, 0 = no comprobar)@*
+Typo: entero (valores: entre 0 y 2147483647), valor por defecto: 0@*
 @item irc_lag_check
-Interval between two checks for lag (in seconds)@*
-Type: integer (values: between 30 and 2147483647), default value: 60@*
+Intervalo entre dos medidas de lag (en segundos)@*
+Typo: entero (valores: entre 30 y 2147483647), valor por defecto: 60@*
 @item irc_lag_min_show
-Minimum lag to show (in seconds)@*
-Type: integer (values: between 0 and 2147483647), default value: 1@*
+Lag m@'inimo a mostrar (en segundos)@*
+Typo: entero (valores: entre 0 y 2147483647), valor por defecto: 1@*
 @item irc_lag_disconnect
-Disconnect after important lag (in minutes, 0 = never disconnect)@*
-Type: integer (values: between 0 and 2147483647), default value: 5@*
+Desconexi@'on tras un lag importante (en minutos, 0 = no desconectar nunca)@*
+Typo: entero (valores: entre 0 y 2147483647), valor por defecto: 5@*
 @item irc_fifo_pipe
-Create a FIFO pipe for remote control@*
-Type: boolean (values: 'on' or 'off'), default value: 'off'@*
+Crea una tuber@'ia FIFO para control remoto@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
 @item irc_highlight
 Comma separated list of words to highlight (case insensitive comparison, words may begin or end with "*" for partial match)@*
-Type: string (any string), default value: ''@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @item dcc_auto_accept_files
-Automatically accept incoming dcc files@*
-Type: boolean (values: 'on' or 'off'), default value: 'off'@*
+Aceptar autom@'aticamente los ficheros dcc entrantes@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
 @item dcc_auto_accept_chats
-Automatically accept dcc chats (use carefully!)@*
-Type: boolean (values: 'on' or 'off'), default value: 'off'@*
+Aceptar autom@'aticamente las peticiones de conversaci@'on dcc (¡utilizar con precauci@'on!)@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
 @item dcc_timeout
-Timeout for dcc request (in seconds)@*
-Type: integer (values: between 1 and 2147483647), default value: 300@*
+Tiempo de espera para la petici@'on dcc (en segundos)@*
+Typo: entero (valores: entre 1 y 2147483647), valor por defecto: 300@*
 @item dcc_blocksize
-Block size for dcc packets in bytes (default: 65536)@*
-Type: integer (values: between 1024 and 102400), default value: 65536@*
+Tama@~no de bloque para los paquetes dcc en bytes (por defecto: 65536)@*
+Typo: entero (valores: entre 1024 y 102400), valor por defecto: 65536@*
 @item dcc_port_range
 Restricts outgoing dcc to use only ports in the given range (useful for NAT) (syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, empty value means any port)@*
-Type: string (any string), default value: ''@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @item dcc_own_ip
 IP or DNS address used for outgoing dcc (if empty, local interface IP is used)@*
-Type: string (any string), default value: ''@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @item dcc_download_path
-Path for writing incoming files with dcc (default: user home)@*
-Type: string (any string), default value: '~'@*
+Ruta para los ficheros recibidos con dcc (por defecto: directorio home del usuario)@*
+Typo: cadena (cualquier cadena), valor por defecto: '~'@*
 @item dcc_upload_path
-Path for reading files when sending thru dcc (when no path is specified)@*
-Type: string (any string), default value: '~'@*
+Ruta para la lectura de ficheros cuando se env@'ian a trav@'es de dcc (cuando no se especifica una ruta)@*
+Typo: cadena (cualquier cadena), valor por defecto: '~'@*
 @item dcc_convert_spaces
-Convert spaces to underscores when sending files@*
-Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+Convertir los espacios a subrayados cuando se env@'ian los ficheros@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item dcc_auto_rename
-Rename incoming files if already exists (add '.1', '.2', ...)@*
-Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+Renombrar los ficheros recibidos si ya existen (a@~nadir '.1', '.2', ...)@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item dcc_auto_resume
-Automatically resume dcc transfer if connection with remote host is loosed@*
-Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+Continuar autom@'aticamente la transferencia dcc si se ha perdido la conexi@'on con la m@'aquina remota@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item proxy_use
-Use a proxy server to connect to irc server@*
-Type: boolean (values: 'on' or 'off'), default value: 'off'@*
+Utilizar un proxy para conectarse al servidor irc@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
 @item proxy_type
-Proxy type (http (default), socks4, socks5)@*
-Type: string (values: 'http', 'socks4', 'socks5'), default value: 'http'@*
+Tipo de proxy(http (por defecto), socks4, socks5)@*
+Typo: cadena (valores: 'http', 'socks4', 'socks5'), valor por defecto: 'http'@*
 @item proxy_ipv6
-Connect to proxy in ipv6@*
-Type: boolean (values: 'on' or 'off'), default value: 'off'@*
+Conectar al proxy en ipv6@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
 @item proxy_address
-Proxy server address (IP or hostname)@*
-Type: string (any string), default value: ''@*
+Direcci@'on del servidor proxy (IP o nombre de m@'aquina)@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @item proxy_port
-Port for connecting to proxy server@*
-Type: integer (values: between 0 and 65535), default value: 3128@*
+Puerto para conectarse al servidor proxy@*
+Typo: entero (valores: entre 0 y 65535), valor por defecto: 3128@*
 @item proxy_username
-Username for proxy server@*
-Type: string (any string), default value: ''@*
+Nombre de usuario para el servidor proxy@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @item proxy_password
-Password for proxy server@*
-Type: string (any string), default value: ''@*
+Contrase@~na para el servidor proxy@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @item plugins_path
 Path for searching plugins@*
-Type: string (any string), default value: '~/.weechat/plugins'@*
+Typo: cadena (cualquier cadena), valor por defecto: '~/.weechat/plugins'@*
 @item plugins_autoload
 Comma separated list of plugins to load automatically at startup, "*" means all plugins found (names may be partial, for example "perl" is ok for "libperl.so")@*
-Type: string (any string), default value: '*'@*
+Typo: cadena (cualquier cadena), valor por defecto: '*'@*
 @item plugins_extension
 Standard plugins extension in filename, used for autoload (if empty, then all files are loaded when autoload is "*")@*
-Type: string (any string), default value: '.so'@*
+Typo: cadena (cualquier cadena), valor por defecto: '.so'@*
 @item server_name
-Name associated to IRC server (for display only)@*
-Type: string (any string), default value: ''@*
+Nombre asociado al servidor IRC (para mostrar solamente)@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @item server_autoconnect
-Automatically connect to server when WeeChat is starting@*
-Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+Conexi@'on autom@'atica al servidor cuando WeeChat est@'e arrancando@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item server_autoreconnect
-Automatically reconnect to server when disconnected@*
-Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+Reconexi@'on autom@'atica al servidor tras una desconexi@'on@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item server_autoreconnect_delay
-Delay (in seconds) before trying again to reconnect to server@*
-Type: integer (values: between 0 and 65535), default value: 30@*
+Espera (en segundos) antes de intentar de nuevo una reconexi@'on al servidor@*
+Typo: entero (valores: entre 0 y 65535), valor por defecto: 30@*
 @item server_address
-IP address or hostname of IRC server@*
-Type: string (any string), default value: ''@*
+Direcci@'on IP o nombre de m@'aquina del servidor IRC@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @item server_port
-Port for connecting to server@*
-Type: integer (values: between 0 and 65535), default value: 6667@*
+Puerto para conectarse al servidor@*
+Typo: entero (valores: entre 0 y 65535), valor por defecto: 6667@*
 @item server_ipv6
-Use IPv6 protocol for server communication@*
-Type: boolean (values: 'on' or 'off'), default value: 'off'@*
+Usar el protocolo IPv6 para la comunicaci@'on del servidor@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
 @item server_ssl
-Use SSL for server communication@*
-Type: boolean (values: 'on' or 'off'), default value: 'off'@*
+Usar SSL para la comunicaci@'on del servidor@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
 @item server_password
-Password for IRC server@*
-Type: string (any string), default value: ''@*
+Contrase@~na para el servidor IRC@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @item server_nick1
-Nickname to use on IRC server@*
-Type: string (any string), default value: ''@*
+Nombre de usuario a utilizar en el servidor IRC@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @item server_nick2
-Alternate nickname to use on IRC server (if nickname is already used)@*
-Type: string (any string), default value: ''@*
+Nombre de usuario alternativo para el servidor IRC (si el nombre de usuario ya est@'a en uso)@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @item server_nick3
-2nd alternate nickname to use on IRC server (if alternate nickname is already used)@*
-Type: string (any string), default value: ''@*
+Segundo nombre de usuario alternativo a utilizar en el servidor IRC (si el nombre de usuario alternativo ya est@'a en uso)@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @item server_username
-User name to use on IRC server@*
-Type: string (any string), default value: ''@*
+Nombre de usuario para el servidor IRC@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @item server_realname
-Real name to use on IRC server@*
-Type: string (any string), default value: ''@*
+Nombre real para el servidor IRC@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @item server_command
-First command to run when connected to server@*
-Type: string (any string), default value: ''@*
+Primer comando a ejecutar cuando se conecte a un servidor@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @item server_command_delay
-Delay (in seconds) after command was executed (example: give some time for authentication)@*
-Type: integer (values: between 0 and 5), default value: 0@*
+Espera (en segundos) despu@'es de que el comando sea ejecutado (ejemplo: dar algo de tiempo para la autenticaci@'on)@*
+Typo: entero (valores: entre 0 y 5), valor por defecto: 0@*
 @item server_autojoin
-Comma separated list of channels to join when connected to server (example: "#chan1,#chan2,#chan3 key1,key2")@*
-Type: string (any string), default value: ''@*
+Lista de canales (separados por comas) a unirse cuando se conecte a un servidor (ejemplo: "#chan1,#chan2,#chan3 key1,key2")@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @item server_autorejoin
-Automatically rejoin channels when kicked@*
-Type: boolean (values: 'on' or 'off'), default value: 'on'@*
+Unirse de nuevo autom@'aticamente a los canales cuando sea expulsado@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item server_notify_levels
-Comma separated list of notify levels for channels of this server (format: #channel:1,..)@*
-Type: string (any string), default value: ''@*
+Lista separada por comas de niveles de notificaci@'on para canales de este servidor (formato: #canal:1,...)@*
+Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @end table
 
 Los colores para el interfaz Curses son:@*
@@ -850,6 +862,10 @@ Grab a key
 @*
 @item Alt + R
 Delete entire line@*
+@*
+@item Alt + S
+Switch server on servers buffer@*
+(if option ``look_one_server_buffer'' is enabled)@*
 @*
 @item Alt + PageUp / Alt + PageDown / Alt + Home / Alt + End
 Scroll nicklist@*

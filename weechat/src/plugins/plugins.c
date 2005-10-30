@@ -851,7 +851,7 @@ plugin_unload_all ()
  */
 
 void
-plugin_init ()
+plugin_init (int auto_load)
 {
     char *list_plugins, *pos, *pos2;
     
@@ -859,7 +859,7 @@ plugin_init ()
     plugin_config_read ();
     
     /* auto-load plugins if asked */
-    if (cfg_plugins_autoload && cfg_plugins_autoload[0])
+    if (auto_load && cfg_plugins_autoload && cfg_plugins_autoload[0])
     {
         if (ascii_strcasecmp (cfg_plugins_autoload, "*") == 0)
             plugin_auto_load ();

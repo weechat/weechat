@@ -1529,7 +1529,7 @@ server_reconnect (t_irc_server *server)
  */
 
 void
-server_auto_connect (int command_line)
+server_auto_connect (int auto_connect, int command_line)
 {
     t_irc_server *ptr_server;
     
@@ -1537,7 +1537,7 @@ server_auto_connect (int command_line)
          ptr_server = ptr_server->next_server)
     {
         if ( ((command_line) && (ptr_server->command_line))
-            || ((!command_line) && (ptr_server->autoconnect)) )
+            || ((!command_line) && (auto_connect) && (ptr_server->autoconnect)) )
         {
             (void) gui_buffer_new (gui_current_window, ptr_server, NULL, 0, 1);
             gui_redraw_buffer (gui_current_window->buffer);

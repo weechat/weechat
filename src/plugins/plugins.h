@@ -52,7 +52,7 @@ extern void plugin_remove (t_weechat_plugin *);
 extern void plugin_unload (t_weechat_plugin *);
 extern void plugin_unload_name (char *);
 extern void plugin_unload_all ();
-extern void plugin_init ();
+extern void plugin_init (int);
 extern void plugin_end ();
 
 #endif /* plugins.h */

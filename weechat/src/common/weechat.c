@@ -78,9 +78,11 @@ int sigsegv = 0;                /* SIGSEGV received?                            
 char *weechat_home = NULL;      /* WeeChat home dir. (example: /home/toto/.weechat) */
 FILE *weechat_log_file = NULL;  /* WeeChat log file (~/.weechat/weechat.log)        */
 
-char *local_charset = NULL;     /* local charset, for example: ISO-8859-1   */
+char *local_charset = NULL;     /* local charset, for example: ISO-8859-1, UTF-8    */
 
-int server_cmd_line;    /* at least one server on WeeChat command line      */
+int server_cmd_line;            /* at least one server on WeeChat command line      */
+int auto_connect;               /* enabled by default, can by disabled on cmd line  */
+int auto_load_plugins;          /* enabled by default, can by disabled on cmd line  */
 
 #ifdef HAVE_GNUTLS
 gnutls_certificate_credentials gnutls_xcred;   /* gnutls client credentials */
@@ -444,10 +446,15 @@ wee_parse_args (int argc, char *argv[])
     t_irc_server server_tmp;
 
     server_cmd_line = 0;
+    auto_connect = 1;
+    auto_load_plugins = 1;
     
     for (i = 1; i < argc; i++)
     {
-        if ((strcmp (argv[i], "-c") == 0)
+        if ((strcmp (argv[i], "-a") == 0)
+            || (strcmp (argv[i], "--no-connect") == 0))
+            auto_connect = 0;
+        else if ((strcmp (argv[i], "-c") == 0)
             || (strcmp (argv[i], "--config") == 0))
         {
             wee_display_config_options ();
@@ -484,6 +491,9 @@ wee_parse_args (int argc, char *argv[])
             printf ("\n%s%s", WEE_LICENSE);
             wee_shutdown (EXIT_SUCCESS, 0);
         }
+        else if ((strcmp (argv[i], "-p") == 0)
+                 || (strcmp (argv[i], "--no-plugin") == 0))
+            auto_load_plugins = 0;
         else if ((strcmp (argv[i], "-v") == 0)
                  || (strcmp (argv[i], "--version") == 0))
         {
@@ -886,10 +896,10 @@ main (int argc, char *argv[])
     gui_init ();                    /* init WeeChat interface               */
     weechat_welcome_message ();     /* display WeeChat welcome message      */
 #ifdef PLUGINS
-    plugin_init ();                 /* init plugin interface(s)             */
+    plugin_init (auto_load_plugins);/* init plugin interface(s)             */
 #endif
                                     /* auto-connect to servers              */
-    server_auto_connect (server_cmd_line);
+    server_auto_connect (auto_connect, server_cmd_line);
     fifo_create ();                 /* create FIFO pipe for remote control  */
     
     gui_main_loop ();               /* WeeChat main loop                    */

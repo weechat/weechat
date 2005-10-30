@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.1.6-cvs - October, 28 2005
+@subtitle Documentation for WeeChat v0.1.6-cvs - October, 30 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -216,6 +216,8 @@ Then follow instructions for source package - @xref{Source package}.
 @subsection Command line parameters
 
 @table @code
+@item -a, --no-connect
+Disable auto-connect to servers at startup@*
 @item -c, --config
 Display config file help (list of options)@*
 @item -f, --key-functions
@@ -224,8 +226,12 @@ Display WeeChat internal functions for keys@*
 Display help screen@*
 @item -i, --irc-commands
 Display IRC commands list@*
+@item -k, --keys
+Display WeeChat default keys@*
 @item -l, --license
 Display WeeChat license@*
+@item -p, --no-plugin
+Don't load any plugin at startup
 @item -v, --version
 Display WeeChat version@*
 @item -w, --weechat-commands
@@ -277,6 +283,9 @@ Type: string (any string), default value: ''@*
 @item look_charset_internal
 Forces internal WeeChat charset (should be empty in most cases, that means detected charset is used)@*
 Type: string (any string), default value: ''@*
+@item look_one_server_buffer
+Use same buffer for all servers@*
+Type: boolean (values: 'on' or 'off'), default value: 'off'@*
 @item look_buffer_timestamp
 Timestamp for buffers@*
 Type: string (any string), default value: '[%H:%M:%S]'@*
@@ -367,6 +376,9 @@ Type: color (Curses or Gtk color), default value: 'lightcyan'@*
 @item col_chat_prefix2
 Color for middle char of prefix@*
 Type: color (Curses or Gtk color), default value: 'white'@*
+@item col_chat_server
+Color for server name@*
+Type: color (Curses or Gtk color), default value: 'brown'@*
 @item col_chat_join
 Color for join arrow (prefix)@*
 Type: color (Curses or Gtk color), default value: 'lightgreen'@*
@@ -850,6 +862,10 @@ Grab a key
 @*
 @item Alt + R
 Delete entire line@*
+@*
+@item Alt + S
+Switch server on servers buffer@*
+(if option ``look_one_server_buffer'' is enabled)@*
 @*
 @item Alt + PageUp / Alt + PageDown / Alt + Home / Alt + End
 Scroll nicklist@*

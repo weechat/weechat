@@ -303,7 +303,7 @@ extern void server_recv (t_irc_server *);
 extern void server_child_read (t_irc_server *);
 extern int server_connect (t_irc_server *);
 extern void server_reconnect (t_irc_server *);
-extern void server_auto_connect (int);
+extern void server_auto_connect (int, int);
 extern void server_disconnect (t_irc_server *, int);
 extern void server_disconnect_all ();
 extern t_irc_server *server_search (char *);
