@@ -735,8 +735,11 @@ static XS (XS_weechat_set_plugin_config)
 void
 weechat_perl_xs_init (pTHX)
 {
+    HV *stash;
+    
     newXS ("DynaLoader::boot_DynaLoader", boot_DynaLoader, __FILE__);
     
+    /* interface functions */
     newXS ("weechat::register", XS_weechat_register, "weechat");
     newXS ("weechat::print", XS_weechat_print, "weechat");
     newXS ("weechat::print_infobar", XS_weechat_print_infobar, "weechat");
@@ -750,6 +753,14 @@ weechat_perl_xs_init (pTHX)
     newXS ("weechat::set_config", XS_weechat_set_config, "weechat");
     newXS ("weechat::get_plugin_config", XS_weechat_get_plugin_config, "weechat");
     newXS ("weechat::set_plugin_config", XS_weechat_set_plugin_config, "weechat");
+    
+    /* interface constants */
+    stash = gv_stashpv ("weechat", TRUE);
+    newCONSTSUB (stash, "weechat::PLUGIN_RC_KO", newSViv (PLUGIN_RC_KO));
+    newCONSTSUB (stash, "weechat::PLUGIN_RC_OK", newSViv (PLUGIN_RC_OK));
+    newCONSTSUB (stash, "weechat::PLUGIN_RC_OK_IGNORE_WEECHAT", newSViv (PLUGIN_RC_OK_IGNORE_WEECHAT));
+    newCONSTSUB (stash, "weechat::PLUGIN_RC_OK_IGNORE_PLUGINS", newSViv (PLUGIN_RC_OK_IGNORE_PLUGINS));
+    newCONSTSUB (stash, "weechat::PLUGIN_RC_OK_IGNORE_ALL", newSViv (PLUGIN_RC_OK_IGNORE_ALL));
 }
 
 /*
