@@ -30,8 +30,8 @@
    WeeChat, for plugins, or both */
 #define PLUGIN_RC_OK_IGNORE_WEECHAT  1  /* ignore WeeChat for this message     */
 #define PLUGIN_RC_OK_IGNORE_PLUGINS  2  /* ignore other plugins for this msg   */
-#define PLUGIN_RC_OK_IGNORE_ALL      (PLUGIN_RC_DISCARD_WEECHAT \
-                                     | PLUGIN_RC_DISCARD_PLUGINS)
+#define PLUGIN_RC_OK_IGNORE_ALL      (PLUGIN_RC_OK_IGNORE_WEECHAT \
+                                     | PLUGIN_RC_OK_IGNORE_PLUGINS)
                                         /* ignore WeeChat and other plugins    */
 
 typedef struct t_plugin_dcc_info t_plugin_dcc_info;

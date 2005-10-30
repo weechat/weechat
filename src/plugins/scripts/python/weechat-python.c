@@ -780,7 +780,7 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
 {
     FILE *fp;
     PyThreadState *python_current_interpreter;
-    PyObject *weechat_module, *weechat_outputs;
+    PyObject *weechat_module, *weechat_outputs, *weechat_dict;
     
     plugin->printf_server (plugin, "Loading Python script \"%s\"", filename);
     
@@ -825,6 +825,14 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
         return 0;
     }
 
+    /* define some constants */
+    weechat_dict = PyModule_GetDict(weechat_module);
+    PyDict_SetItemString(weechat_dict, "PLUGIN_RC_OK", PyInt_FromLong((long) PLUGIN_RC_OK));
+    PyDict_SetItemString(weechat_dict, "PLUGIN_RC_KO", PyInt_FromLong((long) PLUGIN_RC_KO));
+    PyDict_SetItemString(weechat_dict, "PLUGIN_RC_OK_IGNORE_WEECHAT", PyInt_FromLong((long) PLUGIN_RC_OK_IGNORE_WEECHAT));
+    PyDict_SetItemString(weechat_dict, "PLUGIN_RC_OK_IGNORE_PLUGINS", PyInt_FromLong((long) PLUGIN_RC_OK_IGNORE_PLUGINS));
+    PyDict_SetItemString(weechat_dict, "PLUGIN_RC_OK_IGNORE_ALL", PyInt_FromLong((long) PLUGIN_RC_OK_IGNORE_ALL));
+    
     weechat_outputs = Py_InitModule("weechatOutputs", weechat_python_output_funcs);
     if (weechat_outputs == NULL)
     {
