@@ -105,6 +105,7 @@ gui_input_default_key_bindings ()
     gui_key_bind ( /* m-j,m-x */ "meta-jmeta-x",  "jump_next_server");
     gui_key_bind ( /* m-k     */ "meta-k",        "grab_key");
     gui_key_bind ( /* m-r     */ "meta-r",        "delete_line");
+    gui_key_bind ( /* m-s     */ "meta-s",        "switch_server");
     
     /* keys binded with commands */
     gui_key_bind ( /* m-left  */ "meta-meta2-D", "/buffer -1");
@@ -149,7 +150,7 @@ gui_input_grab_end ()
     {
         if (gui_current_window->buffer->has_input)
         {
-            gui_input_insert_string (gui_current_window, expanded_key, -1);
+            gui_insert_string_input (gui_current_window, expanded_key, -1);
             gui_current_window->buffer->input_buffer_pos += strlen (expanded_key);
             gui_draw_buffer_input (gui_current_window->buffer, 1);
         }
@@ -192,7 +193,7 @@ gui_input_read ()
         
         if (key == KEY_RESIZE)
         {
-            gui_curses_resize_handler ();
+            gui_refresh_screen ();
             continue;
         }
                 
@@ -265,10 +266,10 @@ gui_input_read ()
                 key_str[1] = '\0';
             
             if (gui_current_window->buffer->dcc)
-                gui_input_action_dcc (gui_current_window, key_str);
+                gui_exec_action_dcc (gui_current_window, key_str);
             else
             {
-                gui_input_insert_string (gui_current_window, key_str, -1);
+                gui_insert_string_input (gui_current_window, key_str, -1);
                 gui_current_window->buffer->input_buffer_pos += utf8_strlen (key_str);
                 gui_draw_buffer_input (gui_current_window->buffer, 0);
                 gui_current_window->buffer->completion.position = -1;
@@ -408,7 +409,7 @@ gui_main_loop ()
                         diff = (int) get_timeval_diff (&(ptr_server->lag_check_time), &tv);
                         if (diff / 1000 > cfg_irc_lag_disconnect * 60)
                         {
-                            irc_display_prefix (ptr_server->buffer, PREFIX_ERROR);
+                            irc_display_prefix (ptr_server, ptr_server->buffer, PREFIX_ERROR);
                             gui_printf (ptr_server->buffer,
                                         _("%s lag is high, disconnecting from server...\n"),
                                         WEECHAT_WARNING);

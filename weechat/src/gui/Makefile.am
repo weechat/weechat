@@ -20,6 +20,7 @@ INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\"
 noinst_LIBRARIES = lib_weechat_gui_common.a
 
 lib_weechat_gui_common_a_SOURCES = gui-common.c \
+                                   gui-action.c \
                                    gui-keyboard.c \
                                    gui.h
 

@@ -191,6 +191,7 @@ ignore_add (char *mask, char *type, char *channel_name, char *server_name)
     if (!mask || !mask[0] || !type || !type[0] || !channel_name || !channel_name[0]
         || !server_name || !server_name[0])
     {
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
         gui_printf (NULL,
                     _("%s too few arguments for ignore\n"),
                     WEECHAT_ERROR);
@@ -207,7 +208,7 @@ ignore_add (char *mask, char *type, char *channel_name, char *server_name)
     
     if ((strcmp (mask, "*") == 0) && (strcmp (type, "*") == 0))
     {
-        irc_display_prefix (NULL, PREFIX_ERROR);
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
         gui_printf (NULL,
                     _("%s mask or type/command should be non generic value for ignore\n"),
                     WEECHAT_ERROR);
@@ -216,7 +217,7 @@ ignore_add (char *mask, char *type, char *channel_name, char *server_name)
     
     if (ignore_search (mask, type, channel_name, server_name))
     {
-        irc_display_prefix (NULL, PREFIX_ERROR);
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
         gui_printf (NULL,
                     _("%s ignore already exists\n"),
                     WEECHAT_ERROR);
@@ -252,7 +253,7 @@ ignore_add (char *mask, char *type, char *channel_name, char *server_name)
         /* not a pre-defined command and not an IRC command => error */
         if ((type_index < 0) && (!command_ptr))
         {
-            irc_display_prefix (NULL, PREFIX_ERROR);
+            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
             gui_printf (NULL,
                         _("%s unknown type or IRC command \"%s\" for ignore\n"),
                         WEECHAT_ERROR, type);
@@ -280,7 +281,7 @@ ignore_add (char *mask, char *type, char *channel_name, char *server_name)
     }
     else
     {
-        irc_display_prefix (NULL, PREFIX_ERROR);
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
         gui_printf (NULL,
                     _("%s not enough memory to create ignore\n"),
                     WEECHAT_ERROR);
@@ -402,7 +403,7 @@ ignore_search_free (char *mask, char *type, char *channel_name, char *server_nam
             found++;
             if (found == 1)
                 gui_printf (NULL, "\n");
-            irc_display_prefix (NULL, PREFIX_INFO);
+            irc_display_prefix (NULL, NULL, PREFIX_INFO);
             weechat_cmd_ignore_display (_("Removing ignore:"), ptr_ignore);
             next_ignore = ptr_ignore->next_ignore;
             ignore_free (ptr_ignore);
@@ -438,7 +439,7 @@ ignore_search_free_by_number (int number)
         if (i == number)
         {
             gui_printf (NULL, "\n");
-            irc_display_prefix (NULL, PREFIX_INFO);
+            irc_display_prefix (NULL, NULL, PREFIX_INFO);
             weechat_cmd_ignore_display (_("Removing ignore:"), ptr_ignore);
             ignore_free (ptr_ignore);
             return 1;

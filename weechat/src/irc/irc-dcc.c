@@ -362,7 +362,8 @@ dcc_close (t_irc_dcc *ptr_dcc, int status)
     {
         if (DCC_IS_FILE(ptr_dcc->type))
         {
-            irc_display_prefix (ptr_dcc->server->buffer, PREFIX_INFO);
+            irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
+                                PREFIX_INFO);
             gui_printf (ptr_dcc->server->buffer, _("DCC: file "));
             gui_printf_color (ptr_dcc->server->buffer,
                               COLOR_WIN_CHAT_CHANNEL,
@@ -397,7 +398,7 @@ dcc_close (t_irc_dcc *ptr_dcc, int status)
                 ptr_buffer = ptr_dcc->channel->buffer;
             else
                 ptr_buffer = ptr_dcc->server->buffer;
-            irc_display_prefix (ptr_buffer, PREFIX_INFO);
+            irc_display_prefix (ptr_dcc->server, ptr_buffer, PREFIX_INFO);
             gui_printf (ptr_buffer, _("DCC chat closed with "));
             gui_printf_color (ptr_buffer, COLOR_WIN_CHAT_NICK,
                               "%s", ptr_dcc->nick);
@@ -452,7 +453,8 @@ dcc_channel_for_chat (t_irc_dcc *ptr_dcc)
 {
     if (!channel_create_dcc (ptr_dcc))
     {
-        irc_display_prefix (ptr_dcc->server->buffer, PREFIX_ERROR);
+        irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
+                            PREFIX_ERROR);
         gui_printf (ptr_dcc->server->buffer,
                     _("%s can't associate DCC chat with private buffer "
                     "(maybe private buffer has already DCC CHAT?)\n"),
@@ -462,7 +464,8 @@ dcc_channel_for_chat (t_irc_dcc *ptr_dcc)
         return;
     }
     
-    irc_display_prefix (ptr_dcc->channel->buffer, PREFIX_INFO);
+    irc_display_prefix (ptr_dcc->server, ptr_dcc->channel->buffer,
+                        PREFIX_INFO);
     gui_printf_type (ptr_dcc->channel->buffer, MSG_TYPE_MSG,
                      _("Connected to "));
     gui_printf_color (ptr_dcc->channel->buffer, COLOR_WIN_CHAT_NICK,
@@ -560,7 +563,8 @@ dcc_accept_resume (t_irc_server *server, char *filename, int port,
                       ptr_dcc->nick, ptr_dcc->filename,
                       ptr_dcc->port, ptr_dcc->start_resume);
         
-        irc_display_prefix (ptr_dcc->server->buffer, PREFIX_INFO);
+        irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
+                            PREFIX_INFO);
         gui_printf (ptr_dcc->server->buffer, _("DCC: file "));
         gui_printf_color (ptr_dcc->server->buffer,
                           COLOR_WIN_CHAT_CHANNEL,
@@ -614,7 +618,7 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
     /* create new DCC struct */
     if ((new_dcc = (t_irc_dcc *) malloc (sizeof (t_irc_dcc))) == NULL)
     {
-        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        irc_display_prefix (server, server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
                     _("%s not enough memory for new DCC\n"),
                     WEECHAT_ERROR);
@@ -664,7 +668,7 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
     /* write info message on server buffer */
     if (type == DCC_FILE_RECV)
     {
-        irc_display_prefix (server->buffer, PREFIX_INFO);
+        irc_display_prefix (server, server->buffer, PREFIX_INFO);
         gui_printf (server->buffer, _("Incoming DCC file from "));
         gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK, "%s", nick);
         gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, " (");
@@ -681,7 +685,7 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
     }
     if (type == DCC_FILE_SEND)
     {
-        irc_display_prefix (server->buffer, PREFIX_INFO);
+        irc_display_prefix (server, server->buffer, PREFIX_INFO);
         gui_printf (server->buffer, _("Sending DCC file to "));
         gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK, "%s", nick);
         gui_printf (server->buffer, ": ");
@@ -695,7 +699,7 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
     }
     if (type == DCC_CHAT_RECV)
     {
-        irc_display_prefix (server->buffer, PREFIX_INFO);
+        irc_display_prefix (server, server->buffer, PREFIX_INFO);
         gui_printf (server->buffer, _("Incoming DCC chat request from "));
         gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK, "%s", nick);
         gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, " (");
@@ -707,7 +711,7 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
     }
     if (type == DCC_CHAT_SEND)
     {
-        irc_display_prefix (server->buffer, PREFIX_INFO);
+        irc_display_prefix (server, server->buffer, PREFIX_INFO);
         gui_printf (server->buffer, _("Sending DCC chat request to "));
         gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK, "%s\n", nick);
         dcc_redraw (HOTLIST_MSG);
@@ -722,7 +726,8 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
     
     if (DCC_IS_FILE(type) && (new_dcc->start_resume > 0))
     {
-        irc_display_prefix (new_dcc->server->buffer, PREFIX_INFO);
+        irc_display_prefix (new_dcc->server, new_dcc->server->buffer,
+                            PREFIX_INFO);
         gui_printf (new_dcc->server->buffer, _("DCC: file "));
         gui_printf_color (new_dcc->server->buffer,
                           COLOR_WIN_CHAT_CHANNEL,
@@ -800,7 +805,7 @@ dcc_send_request (t_irc_server *server, int type, char *nick, char *filename)
                                          4);
             if (!filename2)
             {
-                irc_display_prefix (server->buffer, PREFIX_ERROR);
+                irc_display_prefix (server, server->buffer, PREFIX_ERROR);
                 gui_printf (server->buffer,
                             _("%s not enough memory for DCC SEND\n"),
                             WEECHAT_ERROR);
@@ -822,7 +827,7 @@ dcc_send_request (t_irc_server *server, int type, char *nick, char *filename)
         /* check if file exists */
         if (stat (filename2, &st) == -1)
         {
-            irc_display_prefix (server->buffer, PREFIX_ERROR);
+            irc_display_prefix (server, server->buffer, PREFIX_ERROR);
             gui_printf (server->buffer,
                         _("%s cannot access file \"%s\"\n"),
                         WEECHAT_ERROR, filename2);
@@ -864,7 +869,7 @@ dcc_send_request (t_irc_server *server, int type, char *nick, char *filename)
     sock = socket (AF_INET, SOCK_STREAM, 0);
     if (sock == -1)
     {
-        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        irc_display_prefix (server, server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
                     _("%s cannot create socket for DCC\n"),
                     WEECHAT_ERROR);
@@ -897,6 +902,7 @@ dcc_send_request (t_irc_server *server, int type, char *nick, char *filename)
                     if (bind (sock, (struct sockaddr *) &addr, sizeof (addr)) == 0)
                         break;
                 }
+                port++;
             }
             
             if (port > port_end)
@@ -921,7 +927,7 @@ dcc_send_request (t_irc_server *server, int type, char *nick, char *filename)
     if (port == -1)
     {
         /* Could not find any port to bind */
-        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        irc_display_prefix (server, server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
                     _("%s cannot find available port for DCC\n"),
                     WEECHAT_ERROR);
@@ -965,7 +971,7 @@ dcc_send_request (t_irc_server *server, int type, char *nick, char *filename)
                            short_filename, filename2, st.st_size);
     if (!ptr_dcc)
     {
-        irc_display_prefix (server->buffer, PREFIX_ERROR);
+        irc_display_prefix (server, server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
                     _("%s cannot send DCC\n"),
                     WEECHAT_ERROR);
@@ -1045,8 +1051,10 @@ dcc_chat_sendf (t_irc_dcc *ptr_dcc, char *fmt, ...)
                                      buffer);
     if (dcc_chat_send (ptr_dcc, buf2, strlen (buf2)) <= 0)
     {
-        irc_display_prefix (ptr_dcc->server->buffer, PREFIX_ERROR);
-        gui_printf (ptr_dcc->server->buffer, _("%s error sending data to \"%s\" via DCC CHAT\n"),
+        irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
+                            PREFIX_ERROR);
+        gui_printf (ptr_dcc->server->buffer,
+                    _("%s error sending data to \"%s\" via DCC CHAT\n"),
                     WEECHAT_ERROR, ptr_dcc->nick);
         dcc_close (ptr_dcc, DCC_FAILED);
     }
@@ -1318,7 +1326,7 @@ dcc_handle ()
             {
                 if (cfg_dcc_blocksize > (int) sizeof (buffer))
                 {
-                    irc_display_prefix (NULL, PREFIX_ERROR);
+                    irc_display_prefix (NULL, NULL, PREFIX_ERROR);
                     gui_printf (NULL, _("%s DCC failed because blocksize is too "
                                 "big. Check value of \"dcc_blocksize\" option, "
                                 "max is %d.\n"),

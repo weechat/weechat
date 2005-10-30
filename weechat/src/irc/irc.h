@@ -308,6 +308,7 @@ extern void server_disconnect (t_irc_server *, int);
 extern void server_disconnect_all ();
 extern t_irc_server *server_search (char *);
 extern int server_get_number_connected ();
+extern void server_get_number_buffer (t_irc_server *, int *, int *);
 extern int server_name_already_exists (char *);
 extern void server_remove_away ();
 extern void server_check_away ();
@@ -371,10 +372,11 @@ extern void dcc_end ();
 
 /* IRC display (irc-diplay.c) */
 
-extern void irc_display_prefix (/*@null@*/ t_gui_buffer *, char *);
-extern void irc_display_nick (t_gui_buffer *, t_irc_nick *, char *, int, int, int, int);
-extern void irc_display_mode (t_gui_buffer *, char *, char, char *, char *,
-                              char *, char *);
+extern void irc_display_prefix (t_irc_server *, t_gui_buffer *, char *);
+extern void irc_display_nick (t_gui_buffer *, t_irc_nick *, char *, int,
+                              int, int, int);
+extern void irc_display_mode (t_irc_server *, t_gui_buffer *, char *, char,
+                              char *, char *, char *, char *);
 extern void irc_display_server (t_irc_server *ptr_server);
 
 /* IRC protocol (irc-commands.c) */

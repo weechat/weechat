@@ -169,7 +169,7 @@ weechat_plugin_printf (t_weechat_plugin *plugin,
     va_start (argptr, message);
     vsnprintf (buf, sizeof (buf) - 1, message, argptr);
     va_end (argptr);
-    irc_display_prefix (ptr_buffer, PREFIX_PLUGIN);
+    irc_display_prefix (NULL, ptr_buffer, PREFIX_PLUGIN);
     gui_printf (ptr_buffer, "%s\n", buf);
 }
 
@@ -189,7 +189,7 @@ weechat_plugin_printf_server (t_weechat_plugin *plugin, char *message, ...)
     va_start (argptr, message);
     vsnprintf (buf, sizeof (buf) - 1, message, argptr);
     va_end (argptr);
-    irc_display_prefix (NULL, PREFIX_PLUGIN);
+    irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
     gui_printf (NULL, "%s\n", buf);
 }
 

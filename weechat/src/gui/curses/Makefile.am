@@ -20,6 +20,7 @@ INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\"
 bin_PROGRAMS = weechat-curses
 
 weechat_curses_LDADD = ../gui-common.o ../gui-keyboard.o \
+                       ../gui-action.o \
                        ../../common/lib_weechat_main.a \
                        ../../irc/lib_weechat_irc.a \
                        $(PLUGINS_LIBS) \

@@ -120,7 +120,7 @@ fifo_exec (char *text)
         pos_msg = strstr (text, " *");
         if (!pos_msg)
         {
-            irc_display_prefix (NULL, PREFIX_ERROR);
+            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
             gui_printf (NULL, _("%s invalid text received on FIFO pipe\n"),
                         WEECHAT_WARNING);
             return;
@@ -142,7 +142,7 @@ fifo_exec (char *text)
             ptr_server = server_search (text);
             if (!ptr_server || !ptr_server->buffer)
             {
-                irc_display_prefix (NULL, PREFIX_ERROR);
+                irc_display_prefix (NULL, NULL, PREFIX_ERROR);
                 gui_printf (NULL, _("%s server \"%s\" not found (FIFO pipe data)\n"),
                             WEECHAT_WARNING, text);
                 return;
@@ -154,8 +154,9 @@ fifo_exec (char *text)
                     ptr_channel = channel_search (ptr_server, pos + 1);
                     if (!ptr_channel)
                     {
-                        irc_display_prefix (NULL, PREFIX_ERROR);
-                        gui_printf (NULL, _("%s channel \"%s\" not found (FIFO pipe data)\n"),
+                        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                        gui_printf (NULL,
+                                    _("%s channel \"%s\" not found (FIFO pipe data)\n"),
                                     WEECHAT_WARNING, pos + 1);
                         return;
                     }

@@ -226,7 +226,7 @@ plugin_msg_handler_add (t_weechat_plugin *plugin, char *irc_command,
     }
     else
     {
-        irc_display_prefix (NULL, PREFIX_ERROR);
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
         gui_printf (NULL,
                     _("%s plugin %s: unable to add handler for IRC command \"%s\" (not enough memory)\n"),
                     WEECHAT_ERROR, plugin->name, irc_command);
@@ -261,7 +261,7 @@ plugin_cmd_handler_add (t_weechat_plugin *plugin, char *command,
     
     if (plugin_cmd_handler_search (command))
     {
-        irc_display_prefix (NULL, PREFIX_ERROR);
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
         gui_printf (NULL,
                     _("%s plugin %s: unable to add handler for \"%s\" command "
                       "(already exists)\n"),
@@ -298,7 +298,7 @@ plugin_cmd_handler_add (t_weechat_plugin *plugin, char *command,
     }
     else
     {
-        irc_display_prefix (NULL, PREFIX_ERROR);
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
         gui_printf (NULL,
                     _("%s plugin %s: unable to add handler for \"%s\" command (not enough memory)\n"),
                     WEECHAT_ERROR, plugin->name, command);
@@ -546,7 +546,7 @@ plugin_load (char *filename)
     handle = dlopen (full_name, RTLD_GLOBAL | RTLD_NOW);
     if (!handle)
     {
-        irc_display_prefix (NULL, PREFIX_ERROR);
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
         gui_printf (NULL, _("%s unable to load plugin \"%s\": %s\n"),
                     WEECHAT_ERROR, full_name, dlerror());
         free (full_name);
@@ -557,7 +557,7 @@ plugin_load (char *filename)
     if (!name)
     {
         dlclose (handle);
-        irc_display_prefix (NULL, PREFIX_ERROR);
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
         gui_printf (NULL, _("%s symbol \"plugin_name\" not found in plugin \"%s\", failed to load\n"),
                     WEECHAT_ERROR, full_name);
         free (full_name);
@@ -567,7 +567,7 @@ plugin_load (char *filename)
     if (plugin_search (name))
     {
         dlclose (handle);
-        irc_display_prefix (NULL, PREFIX_ERROR);
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
         gui_printf (NULL,
                     _("%s unable to load plugin \"%s\": a plugin with "
                       "same name already exists\n"),
@@ -580,7 +580,7 @@ plugin_load (char *filename)
     if (!description)
     {
         dlclose (handle);
-        irc_display_prefix (NULL, PREFIX_ERROR);
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
         gui_printf (NULL, _("%s symbol \"plugin_description\" not found in plugin \"%s\", failed to load\n"),
                     WEECHAT_ERROR, full_name);
         free (full_name);
@@ -591,7 +591,7 @@ plugin_load (char *filename)
     if (!version)
     {
         dlclose (handle);
-        irc_display_prefix (NULL, PREFIX_ERROR);
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
         gui_printf (NULL, _("%s symbol \"plugin_version\" not found in plugin \"%s\", failed to load\n"),
                     WEECHAT_ERROR, full_name);
         free (full_name);
@@ -602,7 +602,7 @@ plugin_load (char *filename)
     if (!init_func)
     {
         dlclose (handle);
-        irc_display_prefix (NULL, PREFIX_ERROR);
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
         gui_printf (NULL, _("%s function \"weechat_plugin_init\" not found in plugin \"%s\", failed to load\n"),
                     WEECHAT_ERROR, full_name);
         free (full_name);
@@ -655,7 +655,7 @@ plugin_load (char *filename)
             weechat_plugins = new_plugin;
         last_weechat_plugin = new_plugin;
         
-        irc_display_prefix (NULL, PREFIX_PLUGIN);
+        irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
         gui_printf (NULL,
                     _("Initializing plugin \"%s\" %s\n"),
                     new_plugin->name, new_plugin->version);
@@ -663,7 +663,7 @@ plugin_load (char *filename)
         /* init plugin */
         if (((t_weechat_init_func *)init_func) (new_plugin) < 0)
         {
-            irc_display_prefix (NULL, PREFIX_ERROR);
+            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
             gui_printf (NULL,
                         _("%s unable to initialize plugin \"%s\"\n"),
                         WEECHAT_ERROR, full_name);
@@ -674,7 +674,7 @@ plugin_load (char *filename)
     }
     else
     {
-        irc_display_prefix (NULL, PREFIX_ERROR);
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
         gui_printf (NULL,
                     _("%s unable to load plugin \"%s\" (not enough memory)\n"),
                     WEECHAT_ERROR, full_name);
@@ -682,7 +682,7 @@ plugin_load (char *filename)
         return NULL;
     }
     
-    irc_display_prefix (NULL, PREFIX_PLUGIN);
+    irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
     gui_printf (NULL,
                 _("Plugin \"%s\" (%s) loaded.\n"),
                 name, full_name);
@@ -823,12 +823,12 @@ plugin_unload_name (char *name)
     if (ptr_plugin)
     {
         plugin_unload (ptr_plugin);
-        irc_display_prefix (NULL, PREFIX_PLUGIN);
+        irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
         gui_printf (NULL, _("Plugin \"%s\" unloaded.\n"), name);
     }
     else
     {
-        irc_display_prefix (NULL, PREFIX_ERROR);
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
         gui_printf (NULL,
                     _("%s plugin \"%s\" not found\n"),
                     WEECHAT_ERROR, name);

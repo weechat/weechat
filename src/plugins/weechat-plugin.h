@@ -62,7 +62,7 @@ typedef struct t_weechat_plugin t_weechat_plugin;
 
 typedef int (t_plugin_handler_func) (t_weechat_plugin *, char *, char *, char *, char *, void *);
 
-/* message handler, called when an IRC messages is received */
+/* handlers */
 
 typedef enum t_handler_type t_handler_type;
 

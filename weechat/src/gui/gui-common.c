@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* gui-common.c: display functions, used by any GUI */
+/* gui-common.c: display functions, used by all GUI */
 
 
 #ifdef HAVE_CONFIG_H
@@ -58,7 +58,7 @@ t_gui_buffer *last_gui_buffer = NULL;       /* pointer to last buffer       */
 t_gui_buffer *buffer_before_dcc = NULL;     /* buffer before dcc switch     */
 t_gui_infobar *gui_infobar;                 /* pointer to infobar content   */
 
-char *gui_input_clipboard = NULL;           /* buffer to store clipboard content */
+char *gui_input_clipboard = NULL;           /* clipboard content            */
 
 /*
  * gui_window_new: create a new window
@@ -135,6 +135,27 @@ gui_window_new (int x, int y, int width, int height)
 }
 
 /*
+ * gui_buffer_servers_search: search servers buffer
+ *                            (when same buffer is used for all servers)
+ */
+
+t_gui_buffer *
+gui_buffer_servers_search ()
+{
+    t_gui_buffer *ptr_buffer;
+    
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->all_servers)
+            return ptr_buffer;
+    }
+    
+    /* buffer not found */
+    return NULL;
+}
+
+/*
  * gui_buffer_new: create a new buffer in current window
  */
 
@@ -142,7 +163,7 @@ t_gui_buffer *
 gui_buffer_new (t_gui_window *window, void *server, void *channel, int dcc,
                 int switch_to_buffer)
 {
-    t_gui_buffer *new_buffer;
+    t_gui_buffer *new_buffer, *ptr_buffer;
     
     #ifdef DEBUG
     wee_log_printf ("Creating new buffer\n");
@@ -157,9 +178,25 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int dcc,
             ((t_irc_channel *)(channel))->buffer = gui_buffers;
         gui_buffers->server = server;
         gui_buffers->channel = channel;
+        if (cfg_look_one_server_buffer && server && !channel)
+            gui_buffers->all_servers = 1;
         if (cfg_log_auto_server)
             log_start (gui_buffers);
         return gui_buffers;
+    }
+    
+    if (cfg_look_one_server_buffer && !dcc && gui_buffers && server && !channel)
+    {
+        ptr_buffer = gui_buffer_servers_search ();
+        if (ptr_buffer)
+        {
+            ((t_irc_server *)(server))->buffer = gui_buffers;
+            gui_buffers->server = server;
+            if (switch_to_buffer)
+                gui_switch_to_buffer (window, gui_buffers);
+            gui_redraw_buffer (gui_buffers);
+            return gui_buffers;
+        }
     }
     
     if ((new_buffer = (t_gui_buffer *)(malloc (sizeof (t_gui_buffer)))))
@@ -169,11 +206,17 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int dcc,
         
         /* assign server and channel to buffer */
         new_buffer->server = server;
+        new_buffer->all_servers = 0;
         new_buffer->channel = channel;
         new_buffer->dcc = dcc;
         /* assign buffer to server and channel */
         if (server && !channel)
+        {
             SERVER(new_buffer)->buffer = new_buffer;
+            new_buffer->all_servers = (cfg_look_one_server_buffer) ? 1 : 0;
+        }
+        if (!gui_buffers && cfg_look_one_server_buffer)
+            new_buffer->all_servers = 1;
         if (channel)
             CHANNEL(new_buffer)->buffer = new_buffer;
         
@@ -586,12 +629,12 @@ gui_new_message (t_gui_buffer *buffer)
 }
 
 /*
- * gui_input_optimize_buffer_size: optimize input buffer size by adding
+ * gui_optimize_input_buffer_size: optimize input buffer size by adding
  *                                 or deleting data block (predefined size)
  */
 
 void
-gui_input_optimize_buffer_size (t_gui_buffer *buffer)
+gui_optimize_input_buffer_size (t_gui_buffer *buffer)
 {
     int optimal_size;
     
@@ -608,12 +651,12 @@ gui_input_optimize_buffer_size (t_gui_buffer *buffer)
 }
 
 /*
- * gui_input_action_dcc: execute an action on a DCC after a user input
- *                       return -1 if DCC buffer was closed due to action, 0 otherwise
+ * gui_exec_action_dcc: execute an action on a DCC after a user input
+ *                      return -1 if DCC buffer was closed due to action, 0 otherwise
  */
 
 void
-gui_input_action_dcc (t_gui_window *window, char *actions)
+gui_exec_action_dcc (t_gui_window *window, char *actions)
 {
     t_irc_dcc *dcc_selected, *ptr_dcc, *ptr_dcc_next;
     t_gui_buffer *ptr_buffer;
@@ -696,14 +739,14 @@ gui_input_action_dcc (t_gui_window *window, char *actions)
 }
 
 /*
- * gui_input_insert_string: insert a string into the input buffer
+ * gui_insert_string_input: insert a string into the input buffer
  *                          if pos == -1, string is inserted at cursor position
  *                          return: number of chars inserted
  *                          (may be different of strlen if UTF-8 string)
  */
 
 int
-gui_input_insert_string (t_gui_window *window, char *string, int pos)
+gui_insert_string_input (t_gui_window *window, char *string, int pos)
 {
     int size, length;
     char *ptr_start;
@@ -719,7 +762,7 @@ gui_input_insert_string (t_gui_window *window, char *string, int pos)
         /* increase buffer size */
         window->buffer->input_buffer_size += size;
         window->buffer->input_buffer_length += length;
-        gui_input_optimize_buffer_size (window->buffer);
+        gui_optimize_input_buffer_size (window->buffer);
         window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
         
         /* move end of string to the right */
@@ -734,950 +777,142 @@ gui_input_insert_string (t_gui_window *window, char *string, int pos)
 }
 
 /*
- * gui_input_clipboard_copy: copy string into clipboard
+ * gui_merge_servers: merge server buffers in one buffer
  */
 
 void
-gui_input_clipboard_copy (char *buffer, int size)
+gui_merge_servers (t_gui_window *window)
 {
-    if (size <= 0)
+    t_gui_buffer *ptr_buffer_server, *ptr_buffer;
+    t_irc_server *ptr_server;
+    
+    /* new server buffer is the first server buffer found */
+    for (ptr_buffer_server = gui_buffers; ptr_buffer_server;
+         ptr_buffer_server = ptr_buffer_server->next_buffer)
+    {
+        if (BUFFER_IS_SERVER(ptr_buffer_server))
+            break;
+    }
+    
+    /* no server buffer found */
+    if (!ptr_buffer_server)
         return;
     
-    if (gui_input_clipboard != NULL)
-        free (gui_input_clipboard);
-    
-    gui_input_clipboard = (char *) malloc( (size + 1) * sizeof(*gui_input_clipboard));
-    
-    if (gui_input_clipboard)
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
     {
-        memcpy (gui_input_clipboard, buffer, size);
-        gui_input_clipboard[size] = '\0';
+        if ((ptr_buffer != ptr_buffer_server)
+            && (BUFFER_IS_SERVER(ptr_buffer)))
+        {
+            ptr_server = SERVER(ptr_buffer);
+            
+            /* add (by pointer artefact) lines from buffer found to server buffer */
+            if (ptr_buffer->lines)
+            {
+                if (ptr_buffer_server->lines)
+                {
+                    ptr_buffer->lines->prev_line =
+                        ptr_buffer_server->last_line;
+                    ptr_buffer_server->last_line->next_line =
+                        ptr_buffer->lines;
+                    ptr_buffer_server->last_line =
+                        ptr_buffer->last_line;
+                }
+                else
+                {
+                    ptr_buffer_server->lines = ptr_buffer->lines;
+                    ptr_buffer_server->last_line = ptr_buffer->last_line;
+                }
+            }
+            
+            /* free buffer but not lines, because they're now used by 
+               our unique server buffer */
+            ptr_buffer->lines = NULL;
+            gui_buffer_free (ptr_buffer, 1);
+            
+            /* asociate server with new server buffer */
+            ptr_server->buffer = ptr_buffer_server;
+        }
     }
+    
+    ptr_buffer_server->all_servers = 1;
+    gui_redraw_buffer (window->buffer);
 }
 
 /*
- * gui_input_clipboard_paste: paste clipboard at cursor pos in input line
+ * gui_split_server: split the server buffer into many buffers (one by server)
  */
 
 void
-gui_input_clipboard_paste (t_gui_window *window)
-{
-    if (window->buffer->has_input && gui_input_clipboard) 
-    {
-        gui_input_insert_string (window, gui_input_clipboard, -1);
-        window->buffer->input_buffer_pos += utf8_strlen (gui_input_clipboard);
-        gui_draw_buffer_input (window->buffer, 0);
-        window->buffer->completion.position = -1;
-    }
-}
-
-/*
- * gui_input_return: terminate line (return pressed)
- */
-
-void
-gui_input_return (t_gui_window *window)
+gui_split_server (t_gui_window *window)
 {
     t_gui_buffer *ptr_buffer;
-    
-    if (window->buffer->has_input)
-    {
-        if (window->buffer->input_buffer_size > 0)
-        {
-            window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-            history_add (window->buffer, window->buffer->input_buffer);
-            window->buffer->input_buffer_size = 0;
-            window->buffer->input_buffer_length = 0;
-            window->buffer->input_buffer_pos = 0;
-            window->buffer->input_buffer_1st_display = 0;
-            window->buffer->completion.position = -1;
-            window->buffer->ptr_history = NULL;
-            ptr_buffer = window->buffer;
-            user_command (SERVER(window->buffer),
-                          window->buffer,
-                          window->buffer->input_buffer);
-            if (ptr_buffer == window->buffer)
-            {
-                ptr_buffer->input_buffer[0] = '\0';
-                gui_draw_buffer_input (ptr_buffer, 0);
-            }
-        }
-    }
-}
-
-/*
- * gui_input_tab: tab key => completion
- */
-
-void
-gui_input_tab (t_gui_window *window)
-{
-    int i;
-
-    if (window->buffer->has_input)
-    {
-        completion_search (&(window->buffer->completion),
-                           CHANNEL(window->buffer),
-                           window->buffer->input_buffer,
-                           window->buffer->input_buffer_size,
-                           utf8_real_pos (window->buffer->input_buffer,
-                                          window->buffer->input_buffer_pos));
-        
-        if (window->buffer->completion.word_found)
-        {
-            /* replace word with new completed word into input buffer */
-            if (window->buffer->completion.diff_size > 0)
-            {
-                window->buffer->input_buffer_size +=
-                    window->buffer->completion.diff_size;
-                window->buffer->input_buffer_length +=
-                    window->buffer->completion.diff_length;
-                gui_input_optimize_buffer_size (window->buffer);
-                window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-                for (i = window->buffer->input_buffer_size - 1;
-                     i >=  window->buffer->completion.position_replace +
-                         (int)strlen (window->buffer->completion.word_found); i--)
-                    window->buffer->input_buffer[i] =
-                        window->buffer->input_buffer[i - window->buffer->completion.diff_size];
-            }
-            else
-            {
-                for (i = window->buffer->completion.position_replace +
-                         strlen (window->buffer->completion.word_found);
-                     i < window->buffer->input_buffer_size; i++)
-                    window->buffer->input_buffer[i] =
-                        window->buffer->input_buffer[i - window->buffer->completion.diff_size];
-                window->buffer->input_buffer_size +=
-                    window->buffer->completion.diff_size;
-                window->buffer->input_buffer_length +=
-                    window->buffer->completion.diff_length;
-                gui_input_optimize_buffer_size (window->buffer);
-                window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-            }
-            
-            strncpy (window->buffer->input_buffer + window->buffer->completion.position_replace,
-                     window->buffer->completion.word_found,
-                     strlen (window->buffer->completion.word_found));
-            window->buffer->input_buffer_pos =
-                utf8_pos (window->buffer->input_buffer,
-                          window->buffer->completion.position_replace) +
-                utf8_strlen (window->buffer->completion.word_found);
-                        
-            /* position is < 0 this means only one word was found to complete,
-               so reinit to stop completion */
-            if (window->buffer->completion.position >= 0)
-                window->buffer->completion.position =
-                    utf8_real_pos (window->buffer->input_buffer,
-                                   window->buffer->input_buffer_pos);
-                        
-            /* add space or completor to the end of completion, if needed */
-            if ((window->buffer->completion.context == COMPLETION_COMMAND)
-                || (window->buffer->completion.context == COMPLETION_COMMAND_ARG))
-            {
-                if (window->buffer->input_buffer[utf8_real_pos (window->buffer->input_buffer,
-                                                                window->buffer->input_buffer_pos)] != ' ')
-                    gui_input_insert_string (window, " ",
-                                             window->buffer->input_buffer_pos);
-                if (window->buffer->completion.position >= 0)
-                    window->buffer->completion.position++;
-                window->buffer->input_buffer_pos++;
-            }
-            else
-            {
-                /* add nick completor if position 0 and completing nick */
-                if ((window->buffer->completion.base_word_pos == 0)
-                    && (window->buffer->completion.context == COMPLETION_NICK))
-                {
-                    if (strncmp (utf8_add_offset (window->buffer->input_buffer,
-                                                  window->buffer->input_buffer_pos),
-                                 cfg_look_completor, strlen (cfg_look_completor)) != 0)
-                        gui_input_insert_string (window, cfg_look_completor,
-                                                 window->buffer->input_buffer_pos);
-                    if (window->buffer->completion.position >= 0)
-                        window->buffer->completion.position += strlen (cfg_look_completor);
-                    window->buffer->input_buffer_pos += utf8_strlen (cfg_look_completor);
-                    if (window->buffer->input_buffer[utf8_real_pos (window->buffer->input_buffer,
-                                                                    window->buffer->input_buffer_pos)] != ' ')
-                        gui_input_insert_string (window, " ",
-                                                 window->buffer->input_buffer_pos);
-                    if (window->buffer->completion.position >= 0)
-                        window->buffer->completion.position++;
-                    window->buffer->input_buffer_pos++;
-                }
-            }
-            gui_draw_buffer_input (window->buffer, 0);
-        }
-    }
-}
-
-/*
- * gui_input_backspace: backspace key
- */
-
-void
-gui_input_backspace (t_gui_window *window)
-{
-    char *pos, *pos_last;
-    int char_size, size_to_move;
-
-    if (window->buffer->has_input)
-    {
-        if (window->buffer->input_buffer_pos > 0)
-        {
-            pos = utf8_add_offset (window->buffer->input_buffer,
-                                   window->buffer->input_buffer_pos);
-            pos_last = utf8_prev_char (window->buffer->input_buffer, pos);
-            char_size = pos - pos_last;
-            size_to_move = strlen (pos);
-            memmove (pos_last, pos, size_to_move);
-            window->buffer->input_buffer_size -= char_size;
-            window->buffer->input_buffer_length--;
-            window->buffer->input_buffer_pos--;
-            window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-            gui_input_optimize_buffer_size (window->buffer);
-            gui_draw_buffer_input (window->buffer, 0);
-            window->buffer->completion.position = -1;
-        }
-    }
-}
-
-/*
- * gui_input_delete: delete key
- */
-
-void
-gui_input_delete (t_gui_window *window)
-{
-    char *pos, *pos_next;
-    int char_size, size_to_move;
-    
-    if (window->buffer->has_input)
-    {
-        if (window->buffer->input_buffer_pos <
-            window->buffer->input_buffer_length)
-        {
-            pos = utf8_add_offset (window->buffer->input_buffer,
-                                   window->buffer->input_buffer_pos);
-            pos_next = utf8_next_char (pos);
-            char_size = pos_next - pos;
-            size_to_move = strlen (pos_next);
-            memmove (pos, pos_next, size_to_move);
-            window->buffer->input_buffer_size -= char_size;
-            window->buffer->input_buffer_length--;
-            window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-            gui_input_optimize_buffer_size (window->buffer);
-            gui_draw_buffer_input (window->buffer, 0);
-            window->buffer->completion.position = -1;
-        }
-    }
-}
-
-/*
- * gui_input_delete_previous_word: delete previous word 
- */
-
-void
-gui_input_delete_previous_word (t_gui_window *window)
-{
-    int length_deleted, size_deleted;
-    char *start, *string;
-    
-    if (window->buffer->has_input)
-    {
-        if (window->buffer->input_buffer_pos > 0)
-        {
-            start = utf8_add_offset (window->buffer->input_buffer,
-                                      window->buffer->input_buffer_pos - 1);
-            string = start;
-            while (string && (string[0] == ' '))
-            {
-                string = utf8_prev_char (window->buffer->input_buffer, string);
-            }
-            if (string)
-            {
-                while (string && (string[0] != ' '))
-                {
-                    string = utf8_prev_char (window->buffer->input_buffer, string);
-                }
-                if (string)
-                {
-                    while (string && (string[0] == ' '))
-                    {
-                        string = utf8_prev_char (window->buffer->input_buffer, string);
-                    }
-                }
-            }
-            
-            if (string)
-                string = utf8_next_char (utf8_next_char (string));
-            else
-                string = window->buffer->input_buffer;
-            
-            size_deleted = utf8_next_char (start) - string;
-            length_deleted = utf8_strnlen (string, size_deleted);
-            
-            gui_input_clipboard_copy (string, size_deleted);
-            
-            memmove (string, string + size_deleted, size_deleted);
-            
-            window->buffer->input_buffer_size -= size_deleted;
-            window->buffer->input_buffer_length -= length_deleted;
-            window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-            window->buffer->input_buffer_pos -= length_deleted;
-            gui_input_optimize_buffer_size (window->buffer);
-            gui_draw_buffer_input (window->buffer, 0);
-            window->buffer->completion.position = -1;
-        }
-    }
-}
-
-/*
- * gui_input_delete_next_word: delete next word 
- */
-
-void
-gui_input_delete_next_word (t_gui_window *window)
-{
-    int size_deleted, length_deleted;
-    char *start, *string;
-    
-    if (window->buffer->has_input)
-    {
-        start = utf8_add_offset (window->buffer->input_buffer,
-                                 window->buffer->input_buffer_pos);
-        string = start;
-        length_deleted = 0;
-        while (string[0])
-        {
-            if ((string[0] == ' ') && (string > start))
-                break;
-            string = utf8_next_char (string);
-            length_deleted++;
-        }
-        size_deleted = string - start;
-        
-        gui_input_clipboard_copy(start, size_deleted);
-        
-        memmove (start, string, strlen (string));
-        
-        window->buffer->input_buffer_size -= size_deleted;
-        window->buffer->input_buffer_length -= length_deleted;
-        window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-        gui_input_optimize_buffer_size (window->buffer);
-        gui_draw_buffer_input (window->buffer, 0);
-        window->buffer->completion.position = -1;
-    }
-}
-
-/*
- * gui_input_delete_begin_of_line: delete all from cursor pos to beginning of line
- */
-
-void
-gui_input_delete_begin_of_line (t_gui_window *window)
-{
-    int length_deleted, size_deleted;
-    char *start;
-    
-    if (window->buffer->has_input)
-    {
-        if (window->buffer->input_buffer_pos > 0)
-        {
-            start = utf8_add_offset (window->buffer->input_buffer,
-                                     window->buffer->input_buffer_pos);
-            size_deleted = start - window->buffer->input_buffer;
-            length_deleted = utf8_strnlen (window->buffer->input_buffer, size_deleted);
-            gui_input_clipboard_copy (window->buffer->input_buffer,
-                                      start - window->buffer->input_buffer);
-            
-            memmove (window->buffer->input_buffer, start, strlen (start));
-            
-            window->buffer->input_buffer_size -= size_deleted;
-            window->buffer->input_buffer_length -= length_deleted;
-            window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-            window->buffer->input_buffer_pos = 0;
-            gui_input_optimize_buffer_size (window->buffer);
-            gui_draw_buffer_input (window->buffer, 0);
-            window->buffer->completion.position = -1;
-        }
-    }
-}
-
-/*
- * gui_input_delete_end_of_line: delete all from cursor pos to end of line
- */
-
-void
-gui_input_delete_end_of_line (t_gui_window *window)
-{
-    char *start;
-    int size_deleted, length_deleted;
-    
-    if (window->buffer->has_input)
-    {
-        start = utf8_add_offset (window->buffer->input_buffer,
-                                 window->buffer->input_buffer_pos);
-        size_deleted = strlen (start);
-        length_deleted = utf8_strlen (start);
-        gui_input_clipboard_copy(start, size_deleted);
-        start[0] = '\0';
-        window->buffer->input_buffer_size = strlen (window->buffer->input_buffer);
-        window->buffer->input_buffer_length = utf8_strlen (window->buffer->input_buffer);
-        gui_input_optimize_buffer_size (window->buffer);
-        gui_draw_buffer_input (window->buffer, 0);
-        window->buffer->completion.position = -1;
-    }
-}
-
-/*
- * gui_input_delete_line: delete entire line
- */
-
-void
-gui_input_delete_line (t_gui_window *window)
-{
-    if (window->buffer->has_input)
-    {
-        window->buffer->input_buffer[0] = '\0';
-        window->buffer->input_buffer_size = 0;
-        window->buffer->input_buffer_length = 0;
-        window->buffer->input_buffer_pos = 0;
-        gui_input_optimize_buffer_size (window->buffer);
-        gui_draw_buffer_input (window->buffer, 0);
-        window->buffer->completion.position = -1;
-    }
-}
-
-/*
- * gui_input_transpose_chars: transpose chars (on lth left) at cursor pos
- */
-
-void
-gui_input_transpose_chars (t_gui_window *window)
-{
-    char *start, *prev_char, saved_char[4];
-    int size_current_char;
-    
-    if (window->buffer->has_input)
-    {
-        if (window->buffer->input_buffer_pos > 0)
-        {
-            if (window->buffer->input_buffer_pos == window->buffer->input_buffer_length)
-                window->buffer->input_buffer_pos--;
-            
-            start = utf8_add_offset (window->buffer->input_buffer,
-                                     window->buffer->input_buffer_pos);
-            prev_char = utf8_prev_char (window->buffer->input_buffer,
-                                        start);
-            size_current_char = start - prev_char;
-            memcpy (saved_char, prev_char, size_current_char);
-            memcpy (prev_char, start, utf8_char_size (start));
-            start = utf8_next_char (prev_char);
-            memcpy (start, saved_char, size_current_char);
-            
-            window->buffer->input_buffer_pos++;
-            
-            gui_draw_buffer_input (window->buffer, 0);	
-            window->buffer->completion.position = -1;
-        }
-    }
-}
-
-/*
- * gui_input_home: home key
- */
-
-void
-gui_input_home (t_gui_window *window)
-{
-    if (window->buffer->has_input)
-    {
-        if (window->buffer->input_buffer_pos > 0)
-        {
-            window->buffer->input_buffer_pos = 0;
-            gui_draw_buffer_input (window->buffer, 0);
-        }
-    }
-}
-
-/*
- * gui_input_end: end key
- */
-
-void
-gui_input_end (t_gui_window *window)
-{
-    if (window->buffer->has_input)
-    {
-        if (window->buffer->input_buffer_pos <
-            window->buffer->input_buffer_length)
-        {
-            window->buffer->input_buffer_pos =
-                window->buffer->input_buffer_length;
-            gui_draw_buffer_input (window->buffer, 0);
-        }
-    }
-}
-
-/*
- * gui_input_left: move to previous char
- */
-
-void
-gui_input_left (t_gui_window *window)
-{
-    if (window->buffer->has_input)
-    {
-        if (window->buffer->input_buffer_pos > 0)
-        {
-            window->buffer->input_buffer_pos--;
-            gui_draw_buffer_input (window->buffer, 0);
-        }
-    }
-}
-
-/*
- * gui_input_previous_word: move to beginning of previous word
- */
-
-void
-gui_input_previous_word (t_gui_window *window)
-{
-    char *pos;
-    
-    if (window->buffer->has_input)
-    {
-        if (window->buffer->input_buffer_pos > 0)
-        {
-            pos = utf8_add_offset (window->buffer->input_buffer,
-                                   window->buffer->input_buffer_pos - 1);
-            while (pos && (pos[0] == ' '))
-            {
-                pos = utf8_prev_char (window->buffer->input_buffer, pos);
-            }
-            if (pos)
-            {
-                while (pos && (pos[0] != ' '))
-                {
-                    pos = utf8_prev_char (window->buffer->input_buffer, pos);
-                }
-                if (pos)
-                    pos = utf8_next_char (pos);
-                else
-                    pos = window->buffer->input_buffer;
-                window->buffer->input_buffer_pos = utf8_pos (window->buffer->input_buffer,
-                                                             pos - window->buffer->input_buffer);
-            }
-            else
-                window->buffer->input_buffer_pos = 0;
-            
-            gui_draw_buffer_input (window->buffer, 0);
-        }
-    }
-}
-
-/*
- * gui_input_right: move to previous char
- */
-
-void
-gui_input_right (t_gui_window *window)
-{
-    if (window->buffer->has_input)
-    {
-        if (window->buffer->input_buffer_pos <
-            window->buffer->input_buffer_length)
-        {
-            window->buffer->input_buffer_pos++;
-            gui_draw_buffer_input (window->buffer, 0);
-        }
-    }
-}
-
-/*
- * gui_input_next_word: move to the end of next
- */
-
-void
-gui_input_next_word (t_gui_window *window)
-{
-    char *pos;
-    
-    if (window->buffer->has_input)
-    {
-        if (window->buffer->input_buffer_pos <
-            window->buffer->input_buffer_length)
-        {
-            pos = utf8_add_offset (window->buffer->input_buffer,
-                                   window->buffer->input_buffer_pos);
-            while (pos[0] && (pos[0] == ' '))
-            {
-                pos = utf8_next_char (pos);
-            }
-            if (pos[0])
-            {
-                while (pos[0] && (pos[0] != ' '))
-                {
-                    pos = utf8_next_char (pos);
-                }
-                if (pos[0])
-                    window->buffer->input_buffer_pos =
-                        utf8_pos (window->buffer->input_buffer,
-                                  pos - window->buffer->input_buffer);
-                else
-                    window->buffer->input_buffer_pos = 
-                        window->buffer->input_buffer_length;
-            }
-            else
-                window->buffer->input_buffer_pos =
-                    utf8_pos (window->buffer->input_buffer,
-                              utf8_prev_char (window->buffer->input_buffer, pos) - window->buffer->input_buffer);
-            
-            gui_draw_buffer_input (window->buffer, 0);
-        }
-    }
-}
-
-/*
- * gui_input_up: recall last command or move to previous DCC in list
- */
-
-void
-gui_input_up (t_gui_window *window)
-{
-    if (window->buffer->dcc)
-    {
-        if (dcc_list)
-        {
-            if (window->dcc_selected
-                && ((t_irc_dcc *)(window->dcc_selected))->prev_dcc)
-            {
-                if (window->dcc_selected ==
-                    window->dcc_first)
-                    window->dcc_first =
-                        ((t_irc_dcc *)(window->dcc_first))->prev_dcc;
-                window->dcc_selected =
-                    ((t_irc_dcc *)(window->dcc_selected))->prev_dcc;
-                gui_draw_buffer_chat (window->buffer, 1);
-                gui_draw_buffer_input (window->buffer, 1);
-            }
-        }
-    }
-    else if (window->buffer->has_input)
-    {
-        if (window->buffer->ptr_history)
-        {
-            window->buffer->ptr_history =
-                window->buffer->ptr_history->next_history;
-            if (!window->buffer->ptr_history)
-                window->buffer->ptr_history =
-                    window->buffer->history;
-        }
-        else
-            window->buffer->ptr_history =
-                window->buffer->history;
-        if (window->buffer->ptr_history)
-        {
-            window->buffer->input_buffer_size =
-                strlen (window->buffer->ptr_history->text);
-            window->buffer->input_buffer_length =
-                utf8_strlen (window->buffer->ptr_history->text);
-            gui_input_optimize_buffer_size (window->buffer);
-            window->buffer->input_buffer_pos =
-                window->buffer->input_buffer_length;
-            strcpy (window->buffer->input_buffer,
-                    window->buffer->ptr_history->text);
-            gui_draw_buffer_input (window->buffer, 0);
-        }
-    }
-}
-
-/*
- * gui_input_up_global: recall last command in global history
- */
-
-void
-gui_input_up_global (t_gui_window *window)
-{
-    if (window->buffer->has_input)
-    {
-        if (history_global_ptr)
-        {
-            history_global_ptr = history_global_ptr->next_history;
-            if (!history_global_ptr)
-                history_global_ptr = history_global;
-        }
-        else
-            history_global_ptr = history_global;
-        if (history_global_ptr)
-        {
-            window->buffer->input_buffer_size =
-                strlen (history_global_ptr->text);
-            window->buffer->input_buffer_length =
-                utf8_strlen (history_global_ptr->text);
-            gui_input_optimize_buffer_size (window->buffer);
-            window->buffer->input_buffer_pos =
-                window->buffer->input_buffer_length;
-            strcpy (window->buffer->input_buffer,
-                    history_global_ptr->text);
-            gui_draw_buffer_input (window->buffer, 0);
-        }
-    }
-}
-
-/*
- * gui_input_down: recall next command or move to next DCC in list
- */
-
-void
-gui_input_down (t_gui_window *window)
-{
-    if (window->buffer->dcc)
-    {
-        if (dcc_list)
-        {
-            if (!window->dcc_selected
-                || ((t_irc_dcc *)(window->dcc_selected))->next_dcc)
-            {
-                if (window->dcc_last_displayed
-                    && (window->dcc_selected ==
-                        window->dcc_last_displayed))
-                {
-                    if (window->dcc_first)
-                        window->dcc_first =
-                            ((t_irc_dcc *)(window->dcc_first))->next_dcc;
-                    else
-                        window->dcc_first =
-                            dcc_list->next_dcc;
-                }
-                if (window->dcc_selected)
-                    window->dcc_selected =
-                        ((t_irc_dcc *)(window->dcc_selected))->next_dcc;
-                else
-                    window->dcc_selected =
-                        dcc_list->next_dcc;
-                gui_draw_buffer_chat (window->buffer, 1);
-                gui_draw_buffer_input (window->buffer, 1);
-            }
-        }
-    }
-    else if (window->buffer->has_input)
-    {
-        if (window->buffer->ptr_history)
-        {
-            window->buffer->ptr_history =
-                window->buffer->ptr_history->prev_history;
-            if (window->buffer->ptr_history)
-            {
-                window->buffer->input_buffer_size =
-                    strlen (window->buffer->ptr_history->text);
-                window->buffer->input_buffer_length =
-                    utf8_strlen (window->buffer->ptr_history->text);
-            }
-            else
-            {
-                window->buffer->input_buffer_size = 0;
-                window->buffer->input_buffer_length = 0;
-            }
-            gui_input_optimize_buffer_size (window->buffer);
-            window->buffer->input_buffer_pos =
-                window->buffer->input_buffer_length;
-            if (window->buffer->ptr_history)
-                strcpy (window->buffer->input_buffer,
-                        window->buffer->ptr_history->text);
-            gui_draw_buffer_input (window->buffer, 0);
-        }
-    }
-}
-
-/*
- * gui_input_down_global: recall next command in global history
- */
-
-void
-gui_input_down_global (t_gui_window *window)
-{
-    if (window->buffer->has_input)
-    {
-        if (history_global_ptr)
-        {
-            history_global_ptr = history_global_ptr->prev_history;
-            if (history_global_ptr)
-            {
-                window->buffer->input_buffer_size =
-                    strlen (history_global_ptr->text);
-                window->buffer->input_buffer_length =
-                    utf8_strlen (history_global_ptr->text);
-            }
-            else
-            {
-                window->buffer->input_buffer_size = 0;
-                window->buffer->input_buffer_length = 0;
-            }
-            gui_input_optimize_buffer_size (window->buffer);
-            window->buffer->input_buffer_pos =
-                window->buffer->input_buffer_length;
-            if (history_global_ptr)
-                strcpy (window->buffer->input_buffer,
-                        history_global_ptr->text);
-            gui_draw_buffer_input (window->buffer, 0);
-        }
-    }
-}
-
-/*
- * gui_input_jump_smart: jump to buffer with activity (alt-A by default)
- */
-
-void
-gui_input_jump_smart (t_gui_window *window)
-{
-    if (hotlist)
-    {
-        if (!hotlist_initial_buffer)
-            hotlist_initial_buffer = window->buffer;
-        gui_switch_to_buffer (window, hotlist->buffer);
-        gui_redraw_buffer (window->buffer);
-    }
-    else
-    {
-        if (hotlist_initial_buffer)
-        {
-            gui_switch_to_buffer (window, hotlist_initial_buffer);
-            gui_redraw_buffer (window->buffer);
-            hotlist_initial_buffer = NULL;
-        }
-    }
-}
-
-/*
- * gui_input_jump_dcc: jump to DCC buffer
- */
-
-void
-gui_input_jump_dcc (t_gui_window *window)
-{
-    if (window->buffer->dcc)
-    {
-        if (buffer_before_dcc)
-        {
-            gui_switch_to_buffer (window,
-                                  buffer_before_dcc);
-            gui_redraw_buffer (window->buffer);
-        }
-    }
-    else
-    {
-        buffer_before_dcc = window->buffer;
-        gui_switch_to_dcc_buffer (window);
-    }
-}
-
-/*
- * gui_input_jump_last_buffer: jump to last buffer
- */
-
-void
-gui_input_jump_last_buffer (t_gui_window *window)
-{
-    if (last_gui_buffer)
-        gui_switch_to_buffer_by_number (window, last_gui_buffer->number);
-}
-
-/*
- * gui_input_jump_server: jump to server buffer
- */
-
-void
-gui_input_jump_server (t_gui_window *window)
-{
-    if (SERVER(window->buffer))
-    {
-        if (SERVER(window->buffer)->buffer !=
-            window->buffer)
-        {
-            gui_switch_to_buffer (window,
-                                  SERVER(window->buffer)->buffer);
-            gui_redraw_buffer (window->buffer);
-        }
-    }
-}
-
-/*
- * gui_input_jump_next_server: jump to next server
- */
-
-void
-gui_input_jump_next_server (t_gui_window *window)
-{
     t_irc_server *ptr_server;
-    t_gui_buffer *ptr_buffer;
     
-    if (SERVER(window->buffer))
+    ptr_buffer = gui_buffer_servers_search ();
+    
+    if (ptr_buffer)
     {
-        ptr_server = SERVER(window->buffer)->next_server;
-        if (!ptr_server)
-            ptr_server = irc_servers;
+        if (SERVER(ptr_buffer))
+        {
+            for (ptr_server = irc_servers; ptr_server;
+                 ptr_server = ptr_server->next_server)
+            {
+                if (ptr_server->buffer
+                    && (ptr_server != SERVER(ptr_buffer))
+                    && (ptr_server->buffer == ptr_buffer))
+                {
+                    ptr_server->buffer = NULL;
+                    gui_buffer_new (window, ptr_server, NULL, 0, 0);
+                }
+            }
+        }
+        ptr_buffer->all_servers = 0;
+        gui_draw_buffer_status (window->buffer, 1);
+        gui_draw_buffer_input (window->buffer, 1);
+    }
+}
+
+/*
+ * gui_window_switch_server: switch server on servers buffer
+ *                           (if same buffer is used for all buffers)
+ */
+
+void
+gui_window_switch_server (t_gui_window *window)
+{
+    t_gui_buffer *ptr_buffer;
+    t_irc_server *ptr_server;
+    
+    ptr_buffer = gui_buffer_servers_search ();
+    
+    if (ptr_buffer)
+    {
+        ptr_server = (SERVER(ptr_buffer)) ?
+            SERVER(ptr_buffer)->next_server : irc_servers;
         while (ptr_server != SERVER(window->buffer))
         {
             if (ptr_server->buffer)
                 break;
-            ptr_server = (ptr_server->next_server) ?
-                ptr_server->next_server : irc_servers;
-        }
-        if (ptr_server != SERVER(window->buffer))
-        {
-            /* save current buffer */
-            SERVER(window->buffer)->buffer->old_channel_buffer =
-                window->buffer;
-            
-            /* come back to memorized chan if found */
-            if (ptr_server->buffer->old_channel_buffer)
-                ptr_buffer = ptr_server->buffer->old_channel_buffer;
+            if (ptr_server->next_server)
+                ptr_server = ptr_server->next_server;
             else
-                ptr_buffer = (ptr_server->channels) ?
-                    ptr_server->channels->buffer : ptr_server->buffer;
-            gui_switch_to_buffer (window, ptr_buffer);
-            gui_redraw_buffer (window->buffer);
+            {
+                if (SERVER(ptr_buffer) == NULL)
+                {
+                    ptr_server = NULL;
+                    break;
+                }
+                ptr_server = irc_servers;
+            }
+        }
+        if (ptr_server && (ptr_server != SERVER(ptr_buffer)))
+        {
+            ptr_buffer->server = ptr_server;
+            gui_draw_buffer_status (window->buffer, 1);
+            gui_draw_buffer_input (window->buffer, 1);
         }
     }
-}
-
-/*
- * gui_input_hotlist_clear: clear hotlist
- */
-
-void
-gui_input_hotlist_clear (t_gui_window *window)
-{
-    if (hotlist)
-    {
-        hotlist_free_all ();
-        gui_redraw_buffer (window->buffer);
-    }
-    hotlist_initial_buffer = window->buffer;
-}
-
-/*
- * gui_input_infobar_clear: clear infobar
- */
-
-void
-gui_input_infobar_clear (t_gui_window *window)
-{
-    gui_infobar_remove ();
-    gui_draw_buffer_infobar (window->buffer, 1);
-}
-
-/*
- * gui_input_grab_key: init "grab key mode" (next key will be inserted into input buffer)
- */
-
-void
-gui_input_grab_key (t_gui_window *window)
-{
-    if (window->buffer->has_input)
-        gui_key_init_grab ();
 }
 
 /*
@@ -1992,6 +1227,7 @@ gui_buffer_print_log (t_gui_buffer *buffer)
     wee_log_printf ("  num_displayed. . . . : %d\n",   buffer->num_displayed);
     wee_log_printf ("  number . . . . . . . : %d\n",   buffer->number);
     wee_log_printf ("  server . . . . . . . : 0x%X\n", buffer->server);
+    wee_log_printf ("  all_servers. . . . . : %d\n",   buffer->all_servers);
     wee_log_printf ("  channel. . . . . . . : 0x%X\n", buffer->channel);
     wee_log_printf ("  dcc. . . . . . . . . : %d\n",   buffer->dcc);
     wee_log_printf ("  lines. . . . . . . . : 0x%X\n", buffer->lines);

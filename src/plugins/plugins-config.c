@@ -210,7 +210,7 @@ plugin_config_read ()
                 pos = strchr (line, '=');
                 if (pos == NULL)
                 {
-                    irc_display_prefix (NULL, PREFIX_ERROR);
+                    irc_display_prefix (NULL, NULL, PREFIX_ERROR);
                     gui_printf (NULL,
                                 _("%s %s, line %d: invalid syntax, missing \"=\"\n"),
                                 WEECHAT_WARNING, filename, line_number);
@@ -261,7 +261,7 @@ plugin_config_write ()
     
     if ((file = fopen (filename, "wt")) == NULL)
     {
-        irc_display_prefix (NULL, PREFIX_ERROR);
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
         gui_printf (NULL, _("%s cannot create file \"%s\"\n"),
                     WEECHAT_ERROR, filename);
         free (filename);

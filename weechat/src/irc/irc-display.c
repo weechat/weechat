@@ -36,12 +36,12 @@
 
 
 /*
- * irc_display_prefix: display prefix for action or info message
+ * irc_display_prefix: display a prefix for action/info/error msg
  *                     prefix must be 3 chars length
  */
 
 void
-irc_display_prefix (t_gui_buffer *buffer, char *prefix)
+irc_display_prefix (t_irc_server *server, t_gui_buffer *buffer, char *prefix)
 {
     int type;
     
@@ -64,6 +64,12 @@ irc_display_prefix (t_gui_buffer *buffer, char *prefix)
             gui_printf_color (buffer, COLOR_WIN_CHAT_PART, "%s ", prefix);
         else
             gui_printf_color (buffer, COLOR_WIN_CHAT_PREFIX1, "%s ", prefix);
+    }
+    if (server && (server->buffer == buffer) && buffer->all_servers)
+    {
+        gui_printf_type_color (buffer, type, COLOR_WIN_CHAT_DARK, "[");
+        gui_printf_type_color (buffer, type, COLOR_WIN_CHAT_SERVER, "%s", server->name);
+        gui_printf_type_color (buffer, type, COLOR_WIN_CHAT_DARK, "] ");
     }
 }
 
@@ -133,10 +139,11 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
  */
 
 void
-irc_display_mode (t_gui_buffer *buffer, char *channel_name, char set_flag,
+irc_display_mode (t_irc_server *server, t_gui_buffer *buffer,
+                  char *channel_name, char set_flag,
                   char *symbol, char *nick_host, char *message, char *param)
 {
-    irc_display_prefix (buffer, PREFIX_INFO);
+    irc_display_prefix (server, buffer, PREFIX_INFO);
     gui_printf_color (buffer, COLOR_WIN_CHAT_DARK, "[");
     gui_printf_color (buffer, COLOR_WIN_CHAT_CHANNEL, "%s", channel_name);
     gui_printf_color (buffer, COLOR_WIN_CHAT, "/");

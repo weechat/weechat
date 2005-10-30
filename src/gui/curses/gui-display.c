@@ -1222,8 +1222,8 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
 {
     t_gui_window *ptr_win;
     t_weechat_hotlist *ptr_hotlist;
-    char format[32], str_nicks[32], *string;
-    int i, first_mode, x;
+    char format[32], str_nicks[32], *more;
+    int i, first_mode, x, server_pos, server_total;
     int display_name, names_count;
     
     /* make gcc happy */
@@ -1256,27 +1256,31 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                               COLOR_WIN_STATUS_DELIMITERS);
         wprintw (ptr_win->win_status, "] ");
         
-        /* display current server */
-        if (SERVER(ptr_win->buffer) && SERVER(ptr_win->buffer)->name)
+        /* display "<servers>" or current server */
+        if (ptr_win->buffer->all_servers)
+        {
+            wprintw (ptr_win->win_status, "[");
+            gui_window_set_color (ptr_win->win_status,
+                                  COLOR_WIN_STATUS);
+            wprintw (ptr_win->win_status, _("<servers>"));
+            gui_window_set_color (ptr_win->win_status,
+                              COLOR_WIN_STATUS_DELIMITERS);
+            wprintw (ptr_win->win_status, "] ");
+        }
+        else if (SERVER(ptr_win->buffer) && SERVER(ptr_win->buffer)->name)
         {
             wprintw (ptr_win->win_status, "[");
             gui_window_set_color (ptr_win->win_status,
                                   COLOR_WIN_STATUS);
             wprintw (ptr_win->win_status, "%s", SERVER(ptr_win->buffer)->name);
             if (SERVER(ptr_win->buffer)->is_away)
-            {
-                string = weechat_convert_encoding ((local_utf8) ?
-                                                   cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
-                                                  (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
-                                                  cfg_look_charset_internal : local_charset,
-                                                  _("(away)"));
-                wprintw (ptr_win->win_status, string);
-                free (string);
-            }
+                wprintw (ptr_win->win_status, _("(away)"));
             gui_window_set_color (ptr_win->win_status,
                               COLOR_WIN_STATUS_DELIMITERS);
             wprintw (ptr_win->win_status, "] ");
         }
+        
+        /* infos about current buffer */
         if (SERVER(ptr_win->buffer) && !CHANNEL(ptr_win->buffer))
         {
             gui_window_set_color (ptr_win->win_status,
@@ -1294,6 +1298,28 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
             else
                 wprintw (ptr_win->win_status, "(%s) ",
                          SERVER(ptr_win->buffer)->name);
+            if (ptr_win->buffer->all_servers)
+            {
+                server_get_number_buffer (SERVER(ptr_win->buffer),
+                                          &server_pos,
+                                          &server_total);
+                gui_window_set_color (ptr_win->win_status,
+                                      COLOR_WIN_STATUS_DELIMITERS);
+                wprintw (ptr_win->win_status, "(");
+                gui_window_set_color (ptr_win->win_status,
+                                      COLOR_WIN_STATUS);
+                wprintw (ptr_win->win_status, "%d", server_pos);
+                gui_window_set_color (ptr_win->win_status,
+                                      COLOR_WIN_STATUS_DELIMITERS);
+                wprintw (ptr_win->win_status, "/");
+                gui_window_set_color (ptr_win->win_status,
+                                      COLOR_WIN_STATUS);
+                wprintw (ptr_win->win_status, "%d", server_total);
+                gui_window_set_color (ptr_win->win_status,
+                                      COLOR_WIN_STATUS_DELIMITERS);
+                wprintw (ptr_win->win_status, ") ");
+
+            }
         }
         if (SERVER(ptr_win->buffer) && CHANNEL(ptr_win->buffer))
         {
@@ -1382,15 +1408,7 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
             if (ptr_win->buffer->dcc)
                 wprintw (ptr_win->win_status, "<DCC> ");
             else
-            {
-                string = weechat_convert_encoding ((local_utf8) ?
-                                                   cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
-                                                  (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
-                                                  cfg_look_charset_internal : local_charset,
-                                                  _("[not connected]"));
-                wprintw (ptr_win->win_status, "%s " , string);
-                free (string);
-            }
+                wprintw (ptr_win->win_status, _("[not connected] "));
         }
         
         /* display list of other active windows (if any) with numbers */
@@ -1400,13 +1418,7 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                                   COLOR_WIN_STATUS_DELIMITERS);
             wprintw (ptr_win->win_status, "[");
             gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS);
-            string = weechat_convert_encoding ((local_utf8) ?
-                                               cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
-                                               (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
-                                               cfg_look_charset_internal : local_charset,
-                                               _("Act: "));
-            wprintw (ptr_win->win_status, string);
-            free (string);
+            wprintw (ptr_win->win_status, _("Act: "));
             
             names_count = 0;
             for (ptr_hotlist = hotlist; ptr_hotlist;
@@ -1494,14 +1506,8 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                                       COLOR_WIN_STATUS_DELIMITERS);
                 wprintw (ptr_win->win_status, "[");
                 gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS);
-                string = weechat_convert_encoding ((local_utf8) ?
-                                                   cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
-                                                  (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
-                                                  cfg_look_charset_internal : local_charset,
-                                                  _("Lag: %.1f"));
-                wprintw (ptr_win->win_status, string,
+                wprintw (ptr_win->win_status, _("Lag: %.1f"),
                          ((float)(SERVER(ptr_win->buffer)->lag)) / 1000);
-                free (string);
                 gui_window_set_color (ptr_win->win_status,
                                       COLOR_WIN_STATUS_DELIMITERS);
                 wprintw (ptr_win->win_status, "]");
@@ -1516,20 +1522,16 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
         }
         else
             x = ptr_win->win_width - 2;
-        string = weechat_convert_encoding ((local_utf8) ?
-                                           cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
-                                           (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
-                                           cfg_look_charset_internal : local_charset,
-                                           _("-MORE-"));
-        x -= strlen (string) - 1;
+        more = strdup (_("-MORE-"));
+        x -= strlen (more) - 1;
         if (x < 0)
             x = 0;
         gui_window_set_color (ptr_win->win_status, COLOR_WIN_STATUS_MORE);
         if (ptr_win->start_line)
-            mvwprintw (ptr_win->win_status, 0, x, "%s", string);
+            mvwprintw (ptr_win->win_status, 0, x, "%s", more);
         else
         {
-            snprintf (format, sizeof (format) - 1, "%%-%ds", (int)(strlen (string)));
+            snprintf (format, sizeof (format) - 1, "%%-%ds", (int)(strlen (more)));
             mvwprintw (ptr_win->win_status, 0, x, format, " ");
         }
         if (gui_buffer_has_nicklist (ptr_win->buffer))
@@ -1543,7 +1545,7 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                                   COLOR_WIN_STATUS_DELIMITERS);
             wprintw (ptr_win->win_status, "]");
         }
-        free (string);
+        free (more);
         
         wnoutrefresh (ptr_win->win_status);
         refresh ();
@@ -1778,8 +1780,8 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
                         wprintw (ptr_win->win_input, format,
                                  "");
                     wclrtoeol (ptr_win->win_input);
-                    ptr_win->win_input_x = strlen (CHANNEL(buffer)->name) +
-                        strlen (SERVER(buffer)->nick) + 3 +
+                    ptr_win->win_input_x = utf8_strlen (CHANNEL(buffer)->name) +
+                        utf8_strlen (SERVER(buffer)->nick) + 3 +
                         (buffer->input_buffer_pos - buffer->input_buffer_1st_display);
                     if (ptr_win == gui_current_window)
                         move (ptr_win->win_y + ptr_win->win_height - 1,
@@ -1805,7 +1807,7 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
                         wprintw (ptr_win->win_input, format,
                                  "");
                     wclrtoeol (ptr_win->win_input);
-                    ptr_win->win_input_x = strlen (ptr_nickname) + 2 +
+                    ptr_win->win_input_x = utf8_strlen (ptr_nickname) + 2 +
                         (buffer->input_buffer_pos - buffer->input_buffer_1st_display);
                     if (ptr_win == gui_current_window)
                         move (ptr_win->win_y + ptr_win->win_height - 1,
@@ -1966,11 +1968,11 @@ gui_get_dcc_buffer (t_gui_window *window)
 }
 
 /*
- * gui_input_page_up: display previous page on buffer
+ * gui_window_page_up: display previous page on buffer
  */
 
 void
-gui_input_page_up (t_gui_window *window)
+gui_window_page_up (t_gui_window *window)
 {
     if (!gui_ok)
         return;
@@ -1988,11 +1990,11 @@ gui_input_page_up (t_gui_window *window)
 }
 
 /*
- * gui_input_page_down: display next page on buffer
+ * gui_window_page_down: display next page on buffer
  */
 
 void
-gui_input_page_down (t_gui_window *window)
+gui_window_page_down (t_gui_window *window)
 {
     t_gui_line *ptr_line;
     int line_pos;
@@ -2024,11 +2026,11 @@ gui_input_page_down (t_gui_window *window)
 }
 
 /*
- * gui_input_nick_beginning: go to beginning of nicklist
+ * gui_window_nick_beginning: go to beginning of nicklist
  */
 
 void
-gui_input_nick_beginning (t_gui_window *window)
+gui_window_nick_beginning (t_gui_window *window)
 {
     if (!gui_ok)
         return;
@@ -2044,11 +2046,11 @@ gui_input_nick_beginning (t_gui_window *window)
 }
 
 /*
- * gui_input_nick_end: go to the end of nicklist
+ * gui_window_nick_end: go to the end of nicklist
  */
 
 void
-gui_input_nick_end (t_gui_window *window)
+gui_window_nick_end (t_gui_window *window)
 {
     int new_start;
     
@@ -2073,11 +2075,11 @@ gui_input_nick_end (t_gui_window *window)
 }
 
 /*
- * gui_input_nick_page_up: scroll one page up in nicklist
+ * gui_window_nick_page_up: scroll one page up in nicklist
  */
 
 void
-gui_input_nick_page_up (t_gui_window *window)
+gui_window_nick_page_up (t_gui_window *window)
 {
     if (!gui_ok)
         return;
@@ -2095,11 +2097,11 @@ gui_input_nick_page_up (t_gui_window *window)
 }
 
 /*
- * gui_input_nick_page_down: scroll one page down in nicklist
+ * gui_window_nick_page_down: scroll one page down in nicklist
  */
 
 void
-gui_input_nick_page_down (t_gui_window *window)
+gui_window_nick_page_down (t_gui_window *window)
 {
     if (!gui_ok)
         return;
@@ -2120,7 +2122,7 @@ gui_input_nick_page_down (t_gui_window *window)
 }
 
 /*
- * gui_window_init_subviews: init subviews for a WeeChat window
+ * gui_window_init_subwindows: init subviews for a WeeChat window
  */
 
 void
@@ -2363,11 +2365,11 @@ gui_window_merge_all (t_gui_window *window)
 }
 
 /*
- * gui_curses_resize_handler: called when term size is modified
+ * gui_refresh_screen: called when term size is modified
  */
 
 void
-gui_curses_resize_handler ()
+gui_refresh_screen ()
 {
     t_gui_window *ptr_win, *old_current_window;
     int old_width, old_height;
@@ -2460,6 +2462,8 @@ gui_init_colors ()
             cfg_col_chat_prefix1, cfg_col_chat_bg);
         init_pair (COLOR_WIN_CHAT_PREFIX2,
             cfg_col_chat_prefix2, cfg_col_chat_bg);
+        init_pair (COLOR_WIN_CHAT_SERVER,
+            cfg_col_chat_server, cfg_col_chat_bg);
         init_pair (COLOR_WIN_CHAT_JOIN,
             cfg_col_chat_join, cfg_col_chat_bg);
         init_pair (COLOR_WIN_CHAT_PART,
@@ -2555,6 +2559,7 @@ gui_init_colors ()
         color_attr[COLOR_WIN_CHAT_DARK - 1] = (cfg_col_chat_dark >= 0) ? cfg_col_chat_dark & A_BOLD : 0;
         color_attr[COLOR_WIN_CHAT_PREFIX1 - 1] = (cfg_col_chat_prefix1 >= 0) ? cfg_col_chat_prefix1 & A_BOLD : 0;
         color_attr[COLOR_WIN_CHAT_PREFIX2 - 1] = (cfg_col_chat_prefix2 >= 0) ? cfg_col_chat_prefix2 & A_BOLD : 0;
+        color_attr[COLOR_WIN_CHAT_SERVER - 1] = (cfg_col_chat_server >= 0) ? cfg_col_chat_server & A_BOLD : 0;
         color_attr[COLOR_WIN_CHAT_JOIN - 1] = (cfg_col_chat_join >= 0) ? cfg_col_chat_join & A_BOLD : 0;
         color_attr[COLOR_WIN_CHAT_PART - 1] = (cfg_col_chat_part >= 0) ? cfg_col_chat_part & A_BOLD : 0;
         color_attr[COLOR_WIN_CHAT_NICK - 1] = (cfg_col_chat_nick >= 0) ? cfg_col_chat_nick & A_BOLD : 0;
@@ -2642,7 +2647,7 @@ gui_init ()
         gui_current_window = gui_windows;
         gui_buffer_new (gui_windows, NULL, NULL, 0, 1);
     
-        signal (SIGWINCH, gui_curses_resize_handler);
+        signal (SIGWINCH, gui_refresh_screen);
     
         if (cfg_look_set_title)
             gui_set_window_title ();
@@ -2809,13 +2814,14 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, int color
             else
                 buffer = gui_current_window->buffer;
             
-            if (buffer->dcc)
+            if (!buffer || buffer->dcc)
                 buffer = gui_buffers;
         }
     
         if (buffer == NULL)
         {
-            wee_log_printf ("gui_printf without buffer! this is a bug, please send to developers - thanks\n");
+            wee_log_printf ("WARNING: gui_printf_internal without buffer! This is a bug, "
+                            "please send to developers - thanks\n");
             return;
         }
         

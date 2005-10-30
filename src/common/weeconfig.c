@@ -72,6 +72,7 @@ char *cfg_look_charset_decode_iso;
 char *cfg_look_charset_decode_utf;
 char *cfg_look_charset_encode;
 char *cfg_look_charset_internal;
+int cfg_look_one_server_buffer;
 char *cfg_look_buffer_timestamp;
 int cfg_look_color_nicks;
 int cfg_look_color_nicks_number;
@@ -133,6 +134,10 @@ t_config_option weechat_options_look[] =
     N_("forces internal WeeChat charset (should be empty in most cases, that means detected charset is used)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "", NULL, NULL, &cfg_look_charset_internal, config_change_charset },
+  { "look_one_server_buffer", N_("use same buffer for all servers"),
+    N_("use same buffer for all servers"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
+    NULL, NULL, &cfg_look_one_server_buffer, NULL, config_change_one_server_buffer },
   { "look_buffer_timestamp", N_("timestamp for buffers"),
     N_("timestamp for buffers"),
     OPTION_TYPE_STRING, 0, 0, 0,
@@ -241,6 +246,7 @@ int cfg_col_chat_time;
 int cfg_col_chat_time_sep;
 int cfg_col_chat_prefix1;
 int cfg_col_chat_prefix2;
+int cfg_col_chat_server;
 int cfg_col_chat_join;
 int cfg_col_chat_part;
 int cfg_col_chat_nick;
@@ -320,6 +326,10 @@ t_config_option weechat_options_colors[] =
     N_("color for middle char of prefix"),
     OPTION_TYPE_COLOR, 0, 0, 0,
     "white", NULL, &cfg_col_chat_prefix2, NULL, &config_change_color },
+  { "col_chat_server", N_("color for server name"),
+    N_("color for server name"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "brown", NULL, &cfg_col_chat_server, NULL, &config_change_color },
   { "col_chat_join", N_("color for join arrow (prefix)"),
     N_("color for join arrow (prefix)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
@@ -1008,6 +1018,20 @@ config_change_charset ()
 {
     utf8_init ();
     gui_redraw_buffer (gui_current_window->buffer);
+}
+
+/*
+ * config_change_one_server_buffer: called when the "one server buffer"
+ *                                  setting is changed
+ */
+
+void
+config_change_one_server_buffer ()
+{
+    if (cfg_look_one_server_buffer)
+        gui_merge_servers (gui_current_window);
+    else
+        gui_split_server (gui_current_window);
 }
 
 /*
