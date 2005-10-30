@@ -998,15 +998,17 @@ gui_action_jump_next_server (t_gui_window *window)
         if (ptr_server != SERVER(window->buffer))
         {
             /* save current buffer */
-            SERVER(window->buffer)->buffer->old_channel_buffer =
-                window->buffer;
+            SERVER(window->buffer)->saved_buffer = window->buffer;
             
             /* come back to memorized chan if found */
-            if (ptr_server->buffer->old_channel_buffer)
-                ptr_buffer = ptr_server->buffer->old_channel_buffer;
+            if (ptr_server->saved_buffer)
+                ptr_buffer = ptr_server->saved_buffer;
             else
                 ptr_buffer = (ptr_server->channels) ?
                     ptr_server->channels->buffer : ptr_server->buffer;
+            if ((ptr_server->buffer == ptr_buffer)
+                && (ptr_buffer->all_servers))
+                ptr_buffer->server = ptr_server;
             gui_switch_to_buffer (window, ptr_buffer);
             gui_redraw_buffer (window->buffer);
         }

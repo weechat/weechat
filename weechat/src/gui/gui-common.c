@@ -271,8 +271,6 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int dcc,
         new_buffer->ptr_history = NULL;
         new_buffer->num_history = 0;
         
-        new_buffer->old_channel_buffer = NULL;
-        
         /* add buffer to buffers queue */
         new_buffer->prev_buffer = last_gui_buffer;
         if (gui_buffers)
@@ -475,6 +473,7 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
     t_gui_window *ptr_win;
     t_gui_buffer *ptr_buffer;
     t_gui_line *ptr_line;
+    t_irc_server *ptr_server;
     int create_new;
     
     create_new = (buffer->server || buffer->channel);
@@ -486,10 +485,11 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
     if (buffer_before_dcc == buffer)
         buffer_before_dcc = NULL;
     
-    for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
     {
-        if (ptr_buffer->old_channel_buffer == buffer)
-            ptr_buffer->old_channel_buffer = NULL;
+        if (ptr_server->saved_buffer == buffer)
+            ptr_server->saved_buffer = NULL;
     }
     
     if (switch_to_another)

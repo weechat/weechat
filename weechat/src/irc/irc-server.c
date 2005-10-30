@@ -105,6 +105,7 @@ server_init (t_irc_server *server)
     server->lag_check_time.tv_usec = 0;
     server->lag_next_check = time (NULL) + cfg_irc_lag_check;
     server->buffer = NULL;
+    server->saved_buffer = NULL;
     server->channels = NULL;
     server->last_channel = NULL;
 }

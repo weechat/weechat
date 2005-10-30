@@ -212,9 +212,6 @@ struct t_gui_buffer
     t_history *ptr_history;         /* current command in history           */
     int num_history;                /* number of commands in history        */
     
-    /* channel buffer before jumping to next server */
-    t_gui_buffer *old_channel_buffer; /* only used for server buffer        */
-    
     /* link to previous/next buffer */
     t_gui_buffer *prev_buffer;      /* link to previous buffer              */
     t_gui_buffer *next_buffer;      /* link to next buffer                  */
