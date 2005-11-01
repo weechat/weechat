@@ -34,6 +34,10 @@ case "$host_os" in
 freebsd* | openbsd*)
 	LDFLAGS="$LDFLAGS -L/usr/local/lib"
         ;;
+netbsd*)
+	CFLAGS="$CFLAGS -I/usr/pkg/include"
+	LDFLAGS="$LDFLAGS -L/usr/pkg/lib"
+        ;;
 *)
         ;;
 esac
@@ -362,7 +366,7 @@ fi
 LIBS="$LIBS $INTLLIBS"
 
 case "$host_os" in
-freebsd*)
+freebsd* | netbsd*)
         if test "x$enable_perl" = "xyes" -o "x$enable_python" = "xyes" ; then
 	   CFLAGS="$CFLAGS -pthread"
         fi
