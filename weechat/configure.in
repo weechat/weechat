@@ -254,7 +254,7 @@ if test "x$enable_python" = "xyes" ; then
     AC_MSG_RESULT(found)
     
     PYTHON_LIB=`$PYTHON -c "import distutils.sysconfig; print distutils.sysconfig.get_config_var('LIBPL')"`
-    PYTHON_LFLAGS="-lpython$PYTHON_VERSION "`$PYTHON -c "import distutils.sysconfig; print distutils.sysconfig.get_config_var('LIBS')+' '+distutils.sysconfig.get_config_var('LINKFORSHARED')"`
+    PYTHON_LFLAGS="-lpython$PYTHON_VERSION "`$PYTHON -c "import distutils.sysconfig; print distutils.sysconfig.get_config_var('LIBS')+' '+distutils.sysconfig.get_config_var('SYSLIBS')+' '+distutils.sysconfig.get_config_var('LINKFORSHARED')"`
     
     AC_MSG_CHECKING(for Python library)
     if test -r "$PYTHON_LIB/libpython$PYTHON_VERSION.so"; then
