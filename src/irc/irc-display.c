@@ -188,11 +188,11 @@ irc_display_server (t_irc_server *server)
                 GUI_COLOR(COLOR_WIN_CHAT_DARK));
     
     gui_printf (NULL, "  server_autoconnect . . . .: %s%s\n",
-                (server->autoconnect) ? _("yes") : _("no"),
+                (server->autoconnect) ? _("on") : _("off"),
                 (server->command_line) ?
                 _(" (temporary server, will not be saved)") : "");
     gui_printf (NULL, "  server_autoreconnect . . .: %s\n",
-                (server->autoreconnect) ? _("yes") : _("no"));
+                (server->autoreconnect) ? _("on") : _("off"));
     gui_printf (NULL, "  server_autoreconnect_delay: %d seconds\n",
                 server->autoreconnect_delay);
     gui_printf (NULL, "  server_address . . . . . .: %s\n",
@@ -200,9 +200,9 @@ irc_display_server (t_irc_server *server)
     gui_printf (NULL, "  server_port  . . . . . . .: %d\n",
                 server->port);
     gui_printf (NULL, "  server_ipv6  . . . . . . .: %s\n",
-                (server->ipv6) ? _("yes") : _("no"));
+                (server->ipv6) ? _("on") : _("off"));
     gui_printf (NULL, "  server_ssl . . . . . . . .: %s\n",
-                (server->ssl) ? _("yes") : _("no"));
+                (server->ssl) ? _("on") : _("off"));
     gui_printf (NULL, "  server_password  . . . . .: %s\n",
                 (server->password && server->password[0]) ?
                 _("(hidden)") : "");

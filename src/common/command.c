@@ -1055,8 +1055,6 @@ weechat_cmd_buffer (int argc, char **argv)
         }
         else if (ascii_strcasecmp (argv[0], "notify") == 0)
         {
-            /* set notify level for buffer */
-            
             if (argc < 2)
             {
                 /* display notify level for all buffers */
@@ -1081,6 +1079,7 @@ weechat_cmd_buffer (int argc, char **argv)
             }
             else
             {
+                /* set notify level for buffer */
                 error = NULL;
                 number = strtol (argv[1], &error, 10);
                 if ((error) && (error[0] == '\0'))
@@ -1106,6 +1105,32 @@ weechat_cmd_buffer (int argc, char **argv)
                     channel_set_notify_level (SERVER(gui_current_window->buffer),
                                               CHANNEL(gui_current_window->buffer),
                                               number);
+                    irc_display_prefix (NULL, NULL, PREFIX_INFO);
+                    gui_printf (NULL, _("New notify level for %s%s%s: %s%d %s"),
+                                GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                                CHANNEL(gui_current_window->buffer)->name,
+                                GUI_COLOR(COLOR_WIN_CHAT),
+                                GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                                number,
+                                GUI_COLOR(COLOR_WIN_CHAT));
+                    switch (number)
+                    {
+                        case 0:
+                            gui_printf (NULL, _("(hotlist: never)\n"));
+                            break;
+                        case 1:
+                            gui_printf (NULL, _("(hotlist: highlights)\n"));
+                            break;
+                        case 2:
+                            gui_printf (NULL, _("(hotlist: highlights + messages)\n"));
+                            break;
+                        case 3:
+                            gui_printf (NULL, _("(hotlist: highlights + messages + join/part (all))\n"));
+                            break;
+                        default:
+                            gui_printf (NULL, "\n");
+                            break;
+                    }
                 }
                 else
                 {
@@ -1491,9 +1516,8 @@ weechat_cmd_ignore_display (char *text, t_irc_ignore *ptr_ignore)
                     GUI_COLOR(COLOR_WIN_CHAT),
                     text);
     
-    gui_printf (NULL, "%s%s %s%s%s/%s%s%s:%s%s%s%s%s%s%s%s\n",
+    gui_printf (NULL, _("%son %s%s%s/%s%s%s:%s ignoring %s%s%s from %s%s\n"),
                 GUI_COLOR(COLOR_WIN_CHAT),
-                _("on"),
                 GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
                 ptr_ignore->server_name,
                 GUI_COLOR(COLOR_WIN_CHAT_DARK),
@@ -1501,11 +1525,9 @@ weechat_cmd_ignore_display (char *text, t_irc_ignore *ptr_ignore)
                 ptr_ignore->channel_name,
                 GUI_COLOR(COLOR_WIN_CHAT_DARK),
                 GUI_COLOR(COLOR_WIN_CHAT),
-                _(" ignoring "),
                 GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
                 ptr_ignore->type,
                 GUI_COLOR(COLOR_WIN_CHAT),
-                _(" from "),
                 GUI_COLOR(COLOR_WIN_CHAT_HOST),
                 ptr_ignore->mask);
 }
