@@ -897,7 +897,7 @@ weechat_cmd_buffer_display_info (t_gui_buffer *buffer)
     else if (BUFFER_IS_SERVER (buffer))
         gui_printf (NULL, _("%sServer: %s%s\n"),
                     GUI_COLOR(COLOR_WIN_CHAT),
-                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                    GUI_COLOR(COLOR_WIN_CHAT_SERVER),
                     SERVER(buffer)->name);
     else if (BUFFER_IS_CHANNEL (buffer))
         gui_printf (NULL, _("%sChannel: %s%s %s(server: %s%s%s)\n"),
@@ -905,7 +905,7 @@ weechat_cmd_buffer_display_info (t_gui_buffer *buffer)
                     GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
                     CHANNEL(buffer)->name,
                     GUI_COLOR(COLOR_WIN_CHAT),
-                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                    GUI_COLOR(COLOR_WIN_CHAT_SERVER),
                     SERVER(buffer)->name,
                     GUI_COLOR(COLOR_WIN_CHAT));
     else if (BUFFER_IS_PRIVATE (buffer))
@@ -914,8 +914,9 @@ weechat_cmd_buffer_display_info (t_gui_buffer *buffer)
                     GUI_COLOR(COLOR_WIN_CHAT_NICK),
                     CHANNEL(buffer)->name,
                     GUI_COLOR(COLOR_WIN_CHAT),
-                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
-                    SERVER(buffer)->name);
+                    GUI_COLOR(COLOR_WIN_CHAT_SERVER),
+                    SERVER(buffer)->name,
+                    GUI_COLOR(COLOR_WIN_CHAT));
     else
         gui_printf (NULL, _("not connected\n"));
 }
