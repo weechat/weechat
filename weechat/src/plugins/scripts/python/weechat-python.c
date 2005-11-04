@@ -55,11 +55,7 @@ weechat_python_exec (t_weechat_plugin *plugin,
     PyObject *rc;
     int ret;
     
-    PyThreadState_Swap (NULL);
-    
-    PyEval_AcquireLock ();
-    
-    PyThreadState_Swap (script->interpreter);
+    PyEval_RestoreThread (script->interpreter);
     
     evMain = PyImport_AddModule ((char *) "__main__");
     evDict = PyModule_GetDict (evMain);
@@ -70,7 +66,7 @@ weechat_python_exec (t_weechat_plugin *plugin,
         plugin->printf_server (plugin,
                                "Python error: unable to run function \"%s\"",
                                function);
-        PyEval_ReleaseLock();
+	PyEval_SaveThread ();
         return PLUGIN_RC_KO;
     }
     
@@ -81,7 +77,8 @@ weechat_python_exec (t_weechat_plugin *plugin,
         ret = (int) PyInt_AsLong(rc);
         Py_XDECREF(rc);
     }
-    PyEval_ReleaseLock();
+
+    PyEval_SaveThread();
     
     if (ret < 0)
         return PLUGIN_RC_OK;
@@ -778,6 +775,7 @@ PyMethodDef weechat_python_output_funcs[] = {
 int
 weechat_python_load (t_weechat_plugin *plugin, char *filename)
 {
+    char *argv[] = { "__weechat_plugin__" , NULL };
     FILE *fp;
     PyThreadState *python_current_interpreter;
     PyObject *weechat_module, *weechat_outputs, *weechat_dict;
@@ -793,12 +791,10 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
     }
 
     python_current_script = NULL;
-
-    PyThreadState_Swap(NULL);
-
-    PyEval_AcquireLock();
-
-    python_current_interpreter = PyThreadState_New (python_mainThreadState->interp);
+    
+    PyEval_AcquireLock();    
+    python_current_interpreter = Py_NewInterpreter ();
+    PySys_SetArgv(1, argv);
 
     if (python_current_interpreter == NULL)
     {
@@ -817,9 +813,7 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
     {
         plugin->printf_server (plugin,
                                "Python error: unable to initialize WeeChat module");
-        PyThreadState_Swap (NULL);
-        PyThreadState_Clear (python_current_interpreter);
-        PyThreadState_Delete (python_current_interpreter);
+        Py_EndInterpreter (python_current_interpreter);
         PyEval_ReleaseLock ();
         fclose (fp);
         return 0;
@@ -857,9 +851,7 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
                                "Python error: unable to parse file \"%s\"",
                                filename);
         free (python_current_script_filename);
-        PyThreadState_Swap (NULL);
-        PyThreadState_Clear (python_current_interpreter);
-        PyThreadState_Delete (python_current_interpreter);
+	Py_EndInterpreter (python_current_interpreter);
         PyEval_ReleaseLock ();
         fclose (fp);
 	/* if script was registered, removing from list */
@@ -877,16 +869,14 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
                                "Python error: function \"register\" not found "
                                "in file \"%s\"",
                                filename);
-        PyThreadState_Swap (NULL);
-        PyThreadState_Clear (python_current_interpreter);
-        PyThreadState_Delete (python_current_interpreter);
+	Py_EndInterpreter (python_current_interpreter);
         PyEval_ReleaseLock ();
         return 0;
     }
     
     python_current_script->interpreter = (PyThreadState *) python_current_interpreter;
-    PyThreadState_Swap (NULL);
-    PyEval_ReleaseLock ();
+    
+    PyEval_SaveThread();
     
     return 1;
 }
@@ -905,11 +895,10 @@ weechat_python_unload (t_weechat_plugin *plugin, t_plugin_script *script)
     if (script->shutdown_func[0])
         weechat_python_exec (plugin, script, script->shutdown_func, "", "");
 
-    PyEval_AcquireLock ();
-    PyThreadState_Swap (NULL);
-    PyThreadState_Clear (script->interpreter);
-    PyThreadState_Delete (script->interpreter);
-    PyEval_ReleaseLock ();
+
+    PyEval_RestoreThread(script->interpreter);   
+    Py_EndInterpreter(script->interpreter);  
+    PyEval_ReleaseLock();
     
     weechat_script_remove (plugin, &python_scripts, script);
 }
@@ -1110,8 +1099,7 @@ weechat_python_cmd (t_weechat_plugin *plugin,
 int
 weechat_plugin_init (t_weechat_plugin *plugin)
 {
-    char *argv[] = { "__weechat_plugin__" , NULL };
-
+    
     python_plugin = plugin;
     
     plugin->printf_server (plugin, "Loading Python module \"weechat\"");
@@ -1123,8 +1111,6 @@ weechat_plugin_init (t_weechat_plugin *plugin)
                                "Python error: unable to launch global interpreter");
         return PLUGIN_RC_KO;
     }
-    
-    PySys_SetArgv(1, argv);
 
     PyEval_InitThreads();
     
