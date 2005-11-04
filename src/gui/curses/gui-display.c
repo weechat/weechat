@@ -1013,7 +1013,7 @@ gui_display_word (t_gui_window *window,
     int pos_saved_char, chars_to_display, num_displayed;
     
     if (!data ||
-        ((!simulate) && (window->win_chat_cursor_y > window->win_chat_height - 1)))
+        ((!simulate) && (window->win_chat_cursor_y >= window->win_chat_height)))
         return;
     
     end_line = data + strlen (data);
@@ -1082,7 +1082,7 @@ gui_display_word (t_gui_window *window,
                                   lines_displayed, simulate);
         
         if ((data >= end_line) ||
-            (window->win_chat_cursor_y >= window->win_chat_height))
+            ((!simulate) && (window->win_chat_cursor_y >= window->win_chat_height)))
             data = NULL;
     }
     
@@ -1237,7 +1237,7 @@ gui_display_line (t_gui_window *window, t_gui_line *line, int count, int simulat
                               ptr_end_offset,
                               num_lines, count, &lines_displayed, simulate);
             
-            if (window->win_chat_cursor_y >= window->win_chat_height)
+            if ((!simulate) && (window->win_chat_cursor_y >= window->win_chat_height))
                 ptr_data = NULL;
             else
             {
@@ -1548,7 +1548,7 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                 }
                 else
                 {
-                    /* look for first line to display, sarting from last line */
+                    /* look for first line to display, starting from last line */
                     ptr_line = NULL;
                     line_pos = 0;
                     gui_calculate_line_diff (ptr_win, &ptr_line, &line_pos,
