@@ -695,6 +695,7 @@ gui_action_up (t_gui_window *window)
             gui_optimize_input_buffer_size (window->buffer);
             window->buffer->input_buffer_pos =
                 window->buffer->input_buffer_length;
+            window->buffer->input_buffer_1st_display = 0;
             strcpy (window->buffer->input_buffer,
                     window->buffer->ptr_history->text);
             gui_draw_buffer_input (window->buffer, 0);
@@ -728,6 +729,7 @@ gui_action_up_global (t_gui_window *window)
             gui_optimize_input_buffer_size (window->buffer);
             window->buffer->input_buffer_pos =
                 window->buffer->input_buffer_length;
+            window->buffer->input_buffer_1st_display = 0;
             strcpy (window->buffer->input_buffer,
                     history_global_ptr->text);
             gui_draw_buffer_input (window->buffer, 0);
@@ -792,6 +794,7 @@ gui_action_down (t_gui_window *window)
             gui_optimize_input_buffer_size (window->buffer);
             window->buffer->input_buffer_pos =
                 window->buffer->input_buffer_length;
+            window->buffer->input_buffer_1st_display = 0;
             if (window->buffer->ptr_history)
                 strcpy (window->buffer->input_buffer,
                         window->buffer->ptr_history->text);
@@ -827,6 +830,7 @@ gui_action_down_global (t_gui_window *window)
             gui_optimize_input_buffer_size (window->buffer);
             window->buffer->input_buffer_pos =
                 window->buffer->input_buffer_length;
+            window->buffer->input_buffer_1st_display = 0;
             if (history_global_ptr)
                 strcpy (window->buffer->input_buffer,
                         history_global_ptr->text);
