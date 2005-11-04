@@ -59,16 +59,45 @@ log_write_date (t_gui_buffer *buffer)
 }
 
 /*
+ * log_write_line: writes a line to log file
+ */
+
+void
+log_write_line (t_gui_buffer *buffer, char *message)
+{
+    char *msg_no_color;
+    
+    if (buffer->log_file)
+    {
+        wee_log_printf ("avant write line: %s\n", message);
+        msg_no_color = (char *)gui_color_decode ((unsigned char *)message, 0);
+        wee_log_printf ("apres decode: %s\n", msg_no_color);
+        log_write_date (buffer);
+        fprintf (buffer->log_file, "%s\n",
+                 (msg_no_color) ? msg_no_color : message);
+        fflush (buffer->log_file);
+        if (msg_no_color)
+            free (msg_no_color);
+    }
+}
+
+/*
  * log_write: writes a message to log file
  */
 
 void
 log_write (t_gui_buffer *buffer, char *message)
 {
+    char *msg_no_color;
+    
     if (buffer->log_file)
-    {    
-        fprintf (buffer->log_file, "%s", message);
+    {
+        msg_no_color = (char *)gui_color_decode ((unsigned char *)message, 0);
+        fprintf (buffer->log_file, "%s",
+                 (msg_no_color) ? msg_no_color : message);
         fflush (buffer->log_file);
+        if (msg_no_color)
+            free (msg_no_color);
     }
 }
 

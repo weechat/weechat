@@ -494,6 +494,7 @@ gui_new_line (t_gui_buffer *buffer)
         new_line->line_with_message = 0;
         new_line->line_with_highlight = 0;
         new_line->data = NULL;
+        new_line->ofs_after_date = -1;
         if (!buffer->lines)
             buffer->lines = new_line;
         else
@@ -601,10 +602,16 @@ gui_add_to_line (t_gui_buffer *buffer, int type, char *message)
         buffer->last_line->data = (char *) realloc (buffer->last_line->data,
                                                     strlen (buffer->last_line->data) +
                                                     strlen (message) + 1);
+        if (((type & MSG_TYPE_TIME) == 0) && (buffer->last_line->ofs_after_date < 0))
+            buffer->last_line->ofs_after_date = strlen (buffer->last_line->data);
         strcat (buffer->last_line->data, message);
     }
     else
+    {
+        if (((type & MSG_TYPE_TIME) == 0) && (buffer->last_line->ofs_after_date < 0))
+            buffer->last_line->ofs_after_date = 0;
         buffer->last_line->data = strdup (message);
+    }
     
     length = gui_word_strlen (NULL, message);
     buffer->last_line->length += length;
@@ -641,8 +648,11 @@ gui_add_to_line (t_gui_buffer *buffer, int type, char *message)
     }
     if (buffer->line_complete && buffer->log_file && buffer->last_line->log_write)
     {
-        log_write (buffer, buffer->last_line->data);
-        log_write (buffer, "\n");
+        if (buffer->last_line->ofs_after_date >= 0)
+            log_write_line (buffer,
+                            buffer->last_line->data + buffer->last_line->ofs_after_date);
+        else
+            log_write_line (buffer, buffer->last_line->data);
     }
 }
 

@@ -238,6 +238,18 @@ gui_color_decode (unsigned char *string, int keep_colors)
                     }
                 }
                 break;
+            case GUI_ATTR_WEECHAT_COLOR_CHAR:
+                string++;
+                if (isdigit (string[0]) && isdigit (string[1]))
+                {
+                    if (keep_colors)
+                    {
+                        out[out_pos++] = string[0];
+                        out[out_pos++] = string[1];
+                    }
+                    string += 2;
+                }
+                break;
             case GUI_ATTR_WEECHAT_SET_CHAR:
             case GUI_ATTR_WEECHAT_REMOVE_CHAR:
                 string++;

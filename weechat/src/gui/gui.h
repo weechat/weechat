@@ -203,6 +203,7 @@ struct t_gui_line
     int line_with_message;          /* line contains a message from a user? */
     int line_with_highlight;        /* line contains highlight              */
     char *data;                     /* line content                         */
+    int ofs_after_date;             /* offset to first char after date      */
     t_gui_line *prev_line;          /* link to previous line                */
     t_gui_line *next_line;          /* link to next line                    */
 };
