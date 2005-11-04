@@ -69,9 +69,7 @@ log_write_line (t_gui_buffer *buffer, char *message)
     
     if (buffer->log_file)
     {
-        wee_log_printf ("avant write line: %s\n", message);
         msg_no_color = (char *)gui_color_decode ((unsigned char *)message, 0);
-        wee_log_printf ("apres decode: %s\n", msg_no_color);
         log_write_date (buffer);
         fprintf (buffer->log_file, "%s\n",
                  (msg_no_color) ? msg_no_color : message);
