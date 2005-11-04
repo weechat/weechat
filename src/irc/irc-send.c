@@ -110,11 +110,11 @@ irc_cmd_send_ame (t_irc_server *server, char *arguments)
                                   ptr_channel->name,
                                   (arguments && arguments[0]) ? arguments : "");
                     irc_display_prefix (NULL, ptr_channel->buffer, PREFIX_ACTION_ME);
-                    gui_printf_color (ptr_channel->buffer,
-                                      COLOR_WIN_CHAT_NICK, "%s", ptr_server->nick);
-                    gui_printf_color (ptr_channel->buffer,
-                                      COLOR_WIN_CHAT, " %s\n",
-                                      (arguments && arguments[0]) ? arguments : "");
+                    gui_printf (ptr_channel->buffer, "%s%s %s%s\n",
+                                GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                                ptr_server->nick,
+                                GUI_COLOR(COLOR_WIN_CHAT),
+                                (arguments && arguments[0]) ? arguments : "");
                 }
             }
         }
@@ -157,8 +157,7 @@ irc_cmd_send_amsg (t_irc_server *server, char *arguments)
                         {
                             irc_display_nick (ptr_channel->buffer, ptr_nick, NULL,
                                               MSG_TYPE_NICK, 1, 1, 0);
-                            gui_printf_color (ptr_channel->buffer,
-                                              COLOR_WIN_CHAT, "%s\n", arguments);   
+                            gui_printf (ptr_channel->buffer, "%s\n", arguments);   
                         }
                         else
                         {
@@ -401,20 +400,23 @@ irc_cmd_send_ctcp (t_irc_server *server, char *arguments)
         }
 
         irc_display_prefix (server, server->buffer, PREFIX_SERVER);
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT, "CTCP");
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, "(");
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK, "%s", arguments);
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, ")");
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT, ": ");
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT_CHANNEL, "%s", pos_type);
+        gui_printf (server->buffer, "CTCP%s(%s%s%s)%s: %s%s",
+                    GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                    GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                    arguments,
+                    GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                    GUI_COLOR(COLOR_WIN_CHAT),
+                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                    pos_type);
         
         if ((ascii_strcasecmp (pos_type, "ping") == 0) && (!pos_args))
         {
             gettimeofday (&tv, &tz);
             server_sendf (server, "PRIVMSG %s :\01PING %d %d\01\r\n",
                           arguments, tv.tv_sec, tv.tv_usec);
-            gui_printf_color (server->buffer, COLOR_WIN_CHAT, " %d %d\n",
-                              tv.tv_sec, tv.tv_usec);
+            gui_printf (server->buffer, " %s%d %d\n",
+                        GUI_COLOR(COLOR_WIN_CHAT),
+                        tv.tv_sec, tv.tv_usec);
         }
         else
         {
@@ -422,8 +424,9 @@ irc_cmd_send_ctcp (t_irc_server *server, char *arguments)
             {
                 server_sendf (server, "PRIVMSG %s :\01%s %s\01\r\n",
                               arguments, pos_type, pos_args);
-                gui_printf_color (server->buffer, COLOR_WIN_CHAT, " %s\n",
-                                  pos_args);
+                gui_printf (server->buffer, " %s%s\n",
+                            GUI_COLOR(COLOR_WIN_CHAT),
+                            pos_args);
             }
             else
             {
@@ -906,11 +909,11 @@ irc_send_me (t_irc_server *server, t_irc_channel *channel, char *arguments)
                   channel->name,
                   (arguments && arguments[0]) ? arguments : "");
     irc_display_prefix (NULL, channel->buffer, PREFIX_ACTION_ME);
-    gui_printf_color (channel->buffer,
-                      COLOR_WIN_CHAT_NICK, "%s", server->nick);
-    gui_printf_color (channel->buffer,
-                      COLOR_WIN_CHAT, " %s\n",
-                      (arguments && arguments[0]) ? arguments : "");
+    gui_printf (channel->buffer, "%s%s %s%s\n",
+                GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                server->nick,
+                GUI_COLOR(COLOR_WIN_CHAT),
+                (arguments && arguments[0]) ? arguments : "");
     return 0;
 }
 
@@ -1020,9 +1023,7 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
                 {
                     irc_display_nick (ptr_channel->buffer, ptr_nick, NULL,
                                       MSG_TYPE_NICK, 1, 1, 0);
-                    gui_printf_type_color (ptr_channel->buffer,
-                                           MSG_TYPE_MSG,
-                                           COLOR_WIN_CHAT, "%s\n", pos);
+                    gui_printf_type (ptr_channel->buffer, MSG_TYPE_MSG, "%s\n", pos);
                 }
                 else
                 {
@@ -1045,9 +1046,7 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
                         {
                             irc_display_nick (ptr_channel->buffer, ptr_nick, NULL,
                                               MSG_TYPE_NICK, 1, 1, 0);
-                            gui_printf_type_color (ptr_channel->buffer,
-                                                   MSG_TYPE_MSG,
-                                                   COLOR_WIN_CHAT, "%s\n", pos);
+                            gui_printf_type (ptr_channel->buffer, MSG_TYPE_MSG, "%s\n", pos);
                         }
                         else
                         {
@@ -1081,17 +1080,15 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
                             }
                         }
                         irc_display_prefix (server, server->buffer, PREFIX_SERVER);
-                        gui_printf_type_color (server->buffer,
-                                               MSG_TYPE_NICK,
-                                               COLOR_WIN_CHAT_DARK, "-");
-                        gui_printf_type_color (server->buffer,
-                                               MSG_TYPE_NICK,
-                                               COLOR_WIN_CHAT_NICK, "%s", arguments);
-                        gui_printf_type_color (server->buffer,
-                                               MSG_TYPE_NICK,
-                                               COLOR_WIN_CHAT_DARK, "-");
-                        gui_printf_color (server->buffer,
-                                          COLOR_WIN_CHAT, " %s\n", msg_pwd_hidden);
+                        gui_printf_type (server->buffer, MSG_TYPE_NICK,
+                                         "%s-%s%s%s- ",
+                                         GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                                         GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                                         arguments,
+                                         COLOR_WIN_CHAT_DARK);
+                        gui_printf (server->buffer, "%s%s\n",
+                                    GUI_COLOR(COLOR_WIN_CHAT),
+                                    msg_pwd_hidden);
                         server_sendf (server, "PRIVMSG %s :%s\r\n", arguments, pos);
                         free (msg_pwd_hidden);
                         return 0;
@@ -1112,19 +1109,16 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
                         gui_draw_buffer_title (ptr_channel->buffer, 1);
                     }
                         
-                    gui_printf_type_color (ptr_channel->buffer,
-                                           MSG_TYPE_NICK,
-                                           COLOR_WIN_CHAT_DARK, "<");
-                    gui_printf_type_color (ptr_channel->buffer,
-                                           MSG_TYPE_NICK,
-                                           COLOR_WIN_NICK_SELF,
-                                           "%s", server->nick);
-                    gui_printf_type_color (ptr_channel->buffer,
-                                           MSG_TYPE_NICK,
-                                           COLOR_WIN_CHAT_DARK, "> ");
-                    gui_printf_type_color (ptr_channel->buffer,
-                                           MSG_TYPE_MSG,
-                                           COLOR_WIN_CHAT, "%s\n", pos);
+                    gui_printf_type (ptr_channel->buffer, MSG_TYPE_NICK,
+                                     "%s<%s%s%s> ",
+                                     GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                                     GUI_COLOR(COLOR_WIN_NICK_SELF),
+                                     server->nick,
+                                     GUI_COLOR(COLOR_WIN_CHAT_DARK));
+                    gui_printf_type (ptr_channel->buffer, MSG_TYPE_MSG,
+                                     "%s%s\n",
+                                     GUI_COLOR(COLOR_WIN_CHAT),
+                                     pos);
                     server_sendf (server, "PRIVMSG %s :%s\r\n", arguments, pos);
                 }
             }
@@ -1217,11 +1211,13 @@ irc_cmd_send_notice (t_irc_server *server, char *arguments)
         while (pos[0] == ' ')
             pos++;
         irc_display_prefix (server, server->buffer, PREFIX_SERVER);
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT, "notice");
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, "(");
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK, "%s", arguments);
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, ")");
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT, ": %s\n", pos);
+        gui_printf (server->buffer, "notice%s(%s%s%s)%s: %s\n",
+                    GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                    GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                    arguments,
+                    GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                    GUI_COLOR(COLOR_WIN_CHAT),
+                    pos);
         server_sendf (server, "NOTICE %s :%s\r\n", arguments, pos);
     }
     else
@@ -1435,19 +1431,16 @@ irc_cmd_send_query (t_irc_server *server, char *arguments)
     /* display text if given */
     if (pos)
     {        
-        gui_printf_type_color (ptr_channel->buffer,
-                               MSG_TYPE_NICK,
-                               COLOR_WIN_CHAT_DARK, "<");
-        gui_printf_type_color (ptr_channel->buffer,
-                                MSG_TYPE_NICK,
-                                COLOR_WIN_NICK_SELF,
-                                "%s", server->nick);
-        gui_printf_type_color (ptr_channel->buffer,
-                                MSG_TYPE_NICK,
-                                COLOR_WIN_CHAT_DARK, "> ");
-        gui_printf_type_color (ptr_channel->buffer,
-                                MSG_TYPE_MSG,
-                                COLOR_WIN_CHAT, "%s\n", pos);
+        gui_printf_type (ptr_channel->buffer, MSG_TYPE_NICK,
+                         "%s<%s%s%s> ",
+                         GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                         GUI_COLOR(COLOR_WIN_NICK_SELF),
+                         server->nick,
+                         GUI_COLOR(COLOR_WIN_CHAT_DARK));
+        gui_printf_type (ptr_channel->buffer, MSG_TYPE_MSG,
+                         "%s\n",
+                         GUI_COLOR(COLOR_WIN_CHAT),
+                         pos);
         server_sendf (server, "PRIVMSG %s :%s\r\n", arguments, pos);
     }
     return 0;

@@ -31,6 +31,7 @@
 #include <string.h>
 #include <signal.h>
 #include <time.h>
+#include <ctype.h>
 
 #include "../common/weechat.h"
 #include "gui.h"
@@ -302,19 +303,12 @@ gui_buffer_clear (t_gui_buffer *buffer)
 {
     t_gui_window *ptr_win;
     t_gui_line *ptr_line;
-    t_gui_message *ptr_message;
     
     while (buffer->lines)
     {
         ptr_line = buffer->lines->next_line;
-        while (buffer->lines->messages)
-        {
-            ptr_message = buffer->lines->messages->next_message;
-            if (buffer->lines->messages->message)
-                free (buffer->lines->messages->message);
-            free (buffer->lines->messages);
-            buffer->lines->messages = ptr_message;
-        }
+        if (buffer->lines->data)
+            free (buffer->lines->data);
         free (buffer->lines);
         buffer->lines = ptr_line;
     }
@@ -351,47 +345,6 @@ gui_buffer_clear_all ()
         gui_buffer_clear (ptr_buffer);
 }
 
-/* 
- * gui_infobar_printf: display message in infobar
- */
-
-void
-gui_infobar_printf (int time_displayed, int color, char *message, ...)
-{
-    static char buffer[1024];
-    va_list argptr;
-    t_gui_infobar *ptr_infobar;
-    char *pos, *buf2;
-    
-    va_start (argptr, message);
-    vsnprintf (buffer, sizeof (buffer) - 1, message, argptr);
-    va_end (argptr);
-    
-    buf2 = weechat_convert_encoding ((local_utf8) ?
-                                     cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
-                                     (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
-                                     cfg_look_charset_internal : local_charset,
-                                     buffer);
-    
-    ptr_infobar = (t_gui_infobar *)malloc (sizeof (t_gui_infobar));
-    if (ptr_infobar)
-    {
-        ptr_infobar->color = color;
-        ptr_infobar->text = strdup (buf2);
-        pos = strchr (ptr_infobar->text, '\n');
-        if (pos)
-            pos[0] = '\0';
-        ptr_infobar->remaining_time = (time_displayed <= 0) ? -1 : time_displayed;
-        ptr_infobar->next_infobar = gui_infobar;
-        gui_infobar = ptr_infobar;
-        gui_draw_buffer_infobar (gui_current_window->buffer, 1);
-    }
-    else
-        wee_log_printf (_("Not enough memory for infobar message\n"));
-    
-    free (buf2);
-}
-
 /*
  * gui_window_free: delete a window
  */
@@ -416,25 +369,6 @@ gui_window_free (t_gui_window *window)
 }
 
 /*
- * gui_infobar_remove: remove last displayed message in infobar
- */
-
-void
-gui_infobar_remove ()
-{
-    t_gui_infobar *new_infobar;
-    
-    if (gui_infobar)
-    {
-        new_infobar = gui_infobar->next_infobar;
-        if (gui_infobar->text)
-            free (gui_infobar->text);
-        free (gui_infobar);
-        gui_infobar = new_infobar;
-    }
-}
-
-/*
  * gui_line_free: delete a line from a buffer
  */
 
@@ -442,8 +376,7 @@ void
 gui_line_free (t_gui_line *line)
 {
     t_gui_window *ptr_win;
-    t_gui_message *ptr_message;
-
+    
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
         if (ptr_win->start_line == line)
@@ -452,14 +385,8 @@ gui_line_free (t_gui_line *line)
             ptr_win->start_line_pos = 0;
         }
     }
-    while (line->messages)
-    {
-        ptr_message = line->messages->next_message;
-        if (line->messages->message)
-            free (line->messages->message);
-        free (line->messages);
-        line->messages = ptr_message;
-    }
+    if (line->data)
+        free (line->data);
     free (line);
 }
 
@@ -566,8 +493,7 @@ gui_new_line (t_gui_buffer *buffer)
         new_line->log_write = 1;
         new_line->line_with_message = 0;
         new_line->line_with_highlight = 0;
-        new_line->messages = NULL;
-        new_line->last_message = NULL;
+        new_line->data = NULL;
         if (!buffer->lines)
             buffer->lines = new_line;
         else
@@ -602,30 +528,345 @@ gui_new_line (t_gui_buffer *buffer)
 }
 
 /*
- * gui_new_message: create a new message for last line of a buffer
+ * gui_word_strlen: returns length of a word
+ *                  special chars like color, bold, .. are ignored
  */
 
-t_gui_message *
-gui_new_message (t_gui_buffer *buffer)
+int
+gui_word_strlen (t_gui_window *window, char *string)
 {
-    t_gui_message *new_message;
+    int length;
     
-    if ((new_message = (t_gui_message *) malloc (sizeof (struct t_gui_message))))
+    length = 0;
+    while (string && string[0])
     {
-        if (!buffer->last_line->messages)
-            buffer->last_line->messages = new_message;
-        else
-            buffer->last_line->last_message->next_message = new_message;
-        new_message->prev_message = buffer->last_line->last_message;
-        new_message->next_message = NULL;
-        buffer->last_line->last_message = new_message;
+        string = gui_word_get_next_char (window, (unsigned char *)string, 0);
+        if (string)
+            length++;
+    }
+    return length;
+}
+
+/*
+ * gui_word_real_pos: get real position in string (ignoring color/bold/.. chars)
+ */
+
+int
+gui_word_real_pos (t_gui_window *window, char *string, int pos)
+{
+    char *saved_pos;
+    int real_pos;
+    
+    if (pos <= 0)
+        return 0;
+    
+    real_pos = 0;
+    while (string && string[0] && (pos > 0))
+    {
+        saved_pos = string;
+        string = gui_word_get_next_char (window, (unsigned char *)string, 0);
+        pos--;
+        if (string)
+            real_pos += (string - saved_pos);
+    }
+    return real_pos;
+}
+
+/*
+ * gui_add_to_line: add a message to last line of buffer
+ */
+
+void
+gui_add_to_line (t_gui_buffer *buffer, int type, char *message)
+{
+    char *pos;
+    int length;
+    
+    /* create new line if previous was ending by '\n' (or if 1st line) */
+    if (buffer->line_complete)
+    {
+        buffer->line_complete = 0;
+        if (!gui_new_line (buffer))
+            return;
+    }
+    
+    pos = strchr (message, '\n');
+    if (pos)
+    {
+        pos[0] = '\0';
+        buffer->line_complete = 1;
+    }
+    if (buffer->last_line->data)
+    {
+        buffer->last_line->data = (char *) realloc (buffer->last_line->data,
+                                                    strlen (buffer->last_line->data) +
+                                                    strlen (message) + 1);
+        strcat (buffer->last_line->data, message);
     }
     else
+        buffer->last_line->data = strdup (message);
+    
+    length = gui_word_strlen (NULL, message);
+    buffer->last_line->length += length;
+    if (type & MSG_TYPE_MSG)
+        buffer->last_line->line_with_message = 1;
+    if (type & MSG_TYPE_HIGHLIGHT)
+        buffer->last_line->line_with_highlight = 1;
+    if ((type & MSG_TYPE_TIME) || (type & MSG_TYPE_NICK) || (type & MSG_TYPE_PREFIX))
+        buffer->last_line->length_align += length;
+    if (type & MSG_TYPE_NOLOG)
+        buffer->last_line->log_write = 0;
+    if (pos)
     {
-        wee_log_printf (_("Not enough memory for new message\n"));
-        return NULL;
+        pos[0] = '\n';
+        if (buffer->num_displayed > 0)
+            gui_draw_buffer_chat (buffer, 0);
+        if (gui_add_hotlist && (buffer->num_displayed == 0))
+        {
+            if (3 - buffer->last_line->line_with_message -
+                buffer->last_line->line_with_highlight <=
+                buffer->notify_level)
+            {
+                if (buffer->last_line->line_with_highlight)
+                    hotlist_add (HOTLIST_HIGHLIGHT, buffer);
+                else if (BUFFER_IS_PRIVATE(buffer) && (buffer->last_line->line_with_message))
+                    hotlist_add (HOTLIST_PRIVATE, buffer);
+                else if (buffer->last_line->line_with_message)
+                    hotlist_add (HOTLIST_MSG, buffer);
+                else
+                    hotlist_add (HOTLIST_LOW, buffer);
+                gui_draw_buffer_status (gui_current_window->buffer, 1);
+            }
+        }
     }
-    return new_message;
+    if (buffer->line_complete && buffer->log_file && buffer->last_line->log_write)
+    {
+        log_write (buffer, buffer->last_line->data);
+        log_write (buffer, "\n");
+    }
+}
+
+/*
+ * gui_printf_internal: display a message in a buffer
+ *                      This function should NEVER be called directly.
+ *                      You should use macros defined in gui.h
+ */
+
+void
+gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, char *message, ...)
+{
+    static char buf[8192];
+    char text_time[1024];
+    char text_time_char[2];
+    time_t time_seconds;
+    struct tm *local_time;
+    int time_first_digit, time_last_digit;
+    char *pos, *buf2;
+    int i;
+    va_list argptr;
+    static time_t seconds;
+    struct tm *date_tmp;
+    
+    if (gui_init_ok)
+    {
+        if (buffer == NULL)
+        {
+            type |= MSG_TYPE_NOLOG;
+            if (SERVER(gui_current_window->buffer))
+                buffer = SERVER(gui_current_window->buffer)->buffer;
+            else
+                buffer = gui_current_window->buffer;
+            
+            if (!buffer || buffer->dcc)
+                buffer = gui_buffers;
+        }
+    
+        if (buffer == NULL)
+        {
+            wee_log_printf ("WARNING: gui_printf_internal without buffer! This is a bug, "
+                            "please send to developers - thanks\n");
+            return;
+        }
+        
+        if (buffer->dcc)
+            buffer = gui_buffers;
+        
+        if (buffer->dcc)
+            return;
+    }
+    
+    va_start (argptr, message);
+    vsnprintf (buf, sizeof (buf) - 1, message, argptr);
+    va_end (argptr);
+    
+    if (!buf[0])
+        return;
+    
+    if (!local_utf8 || !utf8_is_valid (buf))
+        buf2 = weechat_convert_encoding ((local_utf8) ?
+                                         cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
+                                         (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
+                                         cfg_look_charset_internal : local_charset,
+                                         buf);
+    else
+        buf2 = strdup (buf);
+    
+    if (gui_init_ok)
+    {
+        seconds = time (NULL);
+        date_tmp = localtime (&seconds);
+        
+        pos = buf2 - 1;
+        while (pos)
+        {
+            if (display_time
+                && cfg_look_buffer_timestamp && cfg_look_buffer_timestamp[0]
+                && ((!buffer->last_line) || (buffer->line_complete)))
+            {
+                time_seconds = time (NULL);
+                local_time = localtime (&time_seconds);
+                strftime (text_time, sizeof (text_time), cfg_look_buffer_timestamp, local_time);
+                
+                time_first_digit = -1;
+                time_last_digit = -1;
+                i = 0;
+                while (text_time[i])
+                {
+                    if (isdigit (text_time[i]))
+                    {
+                        if (time_first_digit == -1)
+                            time_first_digit = i;
+                        time_last_digit = i;
+                    }
+                    i++;
+                }
+                
+                text_time_char[1] = '\0';
+                i = 0;
+                while (text_time[i])
+                {
+                    text_time_char[0] = text_time[i];
+                    if (time_first_digit < 0)
+                    {
+                        gui_add_to_line (buffer, MSG_TYPE_TIME,
+                                         GUI_COLOR(COLOR_WIN_CHAT_TIME));
+                        gui_add_to_line (buffer, MSG_TYPE_TIME, text_time_char);
+                    }
+                    else
+                    {
+                        if ((i < time_first_digit) || (i > time_last_digit))
+                        {
+                            gui_add_to_line (buffer, MSG_TYPE_TIME,
+                                             GUI_COLOR(COLOR_WIN_CHAT_DARK));
+                            gui_add_to_line (buffer, MSG_TYPE_TIME, text_time_char);
+                        }
+                        else
+                        {
+                            if (isdigit (text_time[i]))
+                            {
+                                gui_add_to_line (buffer, MSG_TYPE_TIME,
+                                                 GUI_COLOR(COLOR_WIN_CHAT_TIME));
+                                gui_add_to_line (buffer, MSG_TYPE_TIME, text_time_char);
+                            }
+                            else
+                            {
+                                gui_add_to_line (buffer, MSG_TYPE_TIME,
+                                                 GUI_COLOR(COLOR_WIN_CHAT_TIME_SEP));
+                                gui_add_to_line (buffer, MSG_TYPE_TIME, text_time_char);
+                            }
+                        }
+                    }
+                    i++;
+                }
+                gui_add_to_line (buffer, MSG_TYPE_TIME, GUI_COLOR(COLOR_WIN_CHAT));
+                gui_add_to_line (buffer, MSG_TYPE_TIME, " ");
+            }
+            gui_add_to_line (buffer, type, pos + 1);
+            pos = strchr (pos + 1, '\n');
+            if (pos && !pos[1])
+                pos = NULL;
+        }
+    }
+    else
+        printf ("%s", buf2);
+    
+    free (buf2);
+}
+
+/* 
+ * gui_infobar_printf: display message in infobar
+ */
+
+void
+gui_infobar_printf (int time_displayed, int color, char *message, ...)
+{
+    static char buffer[1024];
+    va_list argptr;
+    t_gui_infobar *ptr_infobar;
+    char *pos, *buf2, *buf3;
+    
+    va_start (argptr, message);
+    vsnprintf (buffer, sizeof (buffer) - 1, message, argptr);
+    va_end (argptr);
+    
+    buf2 = (char *)gui_color_decode ((unsigned char *)buffer, 0);
+    
+    if (buf2)
+    {
+        if (!local_utf8 || !utf8_is_valid (buf2))
+            buf3 = weechat_convert_encoding ((local_utf8) ?
+                                             cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
+                                             (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
+                                             cfg_look_charset_internal : local_charset,
+                                             buf2);
+        else
+            buf3 = strdup (buf2);
+    }
+    else
+        buf3 = NULL;
+    
+    if (buf3)
+    {
+        ptr_infobar = (t_gui_infobar *)malloc (sizeof (t_gui_infobar));
+        if (ptr_infobar)
+        {
+            ptr_infobar->color = color;
+            ptr_infobar->text = strdup (buf3);
+            pos = strchr (ptr_infobar->text, '\n');
+            if (pos)
+                pos[0] = '\0';
+            ptr_infobar->remaining_time = (time_displayed <= 0) ? -1 : time_displayed;
+            ptr_infobar->next_infobar = gui_infobar;
+            gui_infobar = ptr_infobar;
+            gui_draw_buffer_infobar (gui_current_window->buffer, 1);
+        }
+        else
+            wee_log_printf (_("Not enough memory for infobar message\n"));
+    }
+    
+    if (buf2)
+        free (buf2);
+    if (buf3)
+        free (buf3);
+}
+
+/*
+ * gui_infobar_remove: remove last displayed message in infobar
+ */
+
+void
+gui_infobar_remove ()
+{
+    t_gui_infobar *new_infobar;
+    
+    if (gui_infobar)
+    {
+        new_infobar = gui_infobar->next_infobar;
+        if (gui_infobar->text)
+            free (gui_infobar->text);
+        free (gui_infobar);
+        gui_infobar = new_infobar;
+    }
 }
 
 /*
@@ -1219,9 +1460,7 @@ void
 gui_buffer_print_log (t_gui_buffer *buffer)
 {
     t_gui_line *ptr_line;
-    t_gui_message *ptr_message;
     int num;
-    char buf[4096];
     
     wee_log_printf ("[buffer (addr:0x%X)]\n", buffer);
     wee_log_printf ("  num_displayed. . . . : %d\n",   buffer->num_displayed);
@@ -1266,16 +1505,10 @@ gui_buffer_print_log (t_gui_buffer *buffer)
     
     while (ptr_line)
     {
-        buf[0] = '\0';
-        for (ptr_message = ptr_line->messages; ptr_message;
-            ptr_message = ptr_message->next_message)
-        {
-            if (strlen (buf) + strlen (ptr_message->message) + 1 >= sizeof (buf))
-                break;
-            strcat (buf, ptr_message->message);
-        }
         num--;
-        wee_log_printf ("       line N-%05d: %s\n", num, buf);
+        wee_log_printf ("       line N-%05d: %s\n",
+                        num,
+                        (ptr_line->data) ? ptr_line->data : "(empty)");
         
         ptr_line = ptr_line->next_line;
     }

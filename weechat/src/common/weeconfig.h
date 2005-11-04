@@ -92,7 +92,6 @@ extern char *cfg_look_buffer_timestamp;
 extern int cfg_look_color_nicks;
 extern int cfg_look_color_nicks_number;
 extern int cfg_look_color_actions;
-extern int cfg_look_remove_colors_from_msgs;
 extern int cfg_look_nicklist;
 extern int cfg_look_nicklist_position;
 extern int cfg_look_nicklist_min_size;
@@ -189,6 +188,8 @@ extern int cfg_irc_lag_min_show;
 extern int cfg_irc_lag_disconnect;
 extern int cfg_irc_fifo_pipe;
 extern char *cfg_irc_highlight;
+extern int cfg_irc_colors_receive;
+extern int cfg_irc_colors_send;
 
 extern int cfg_dcc_auto_accept_files;
 extern int cfg_dcc_auto_accept_chats;

@@ -364,30 +364,26 @@ dcc_close (t_irc_dcc *ptr_dcc, int status)
         {
             irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
                                 PREFIX_INFO);
-            gui_printf (ptr_dcc->server->buffer, _("DCC: file "));
-            gui_printf_color (ptr_dcc->server->buffer,
-                              COLOR_WIN_CHAT_CHANNEL,
-                              "%s",
-                              ptr_dcc->filename);
+            gui_printf (ptr_dcc->server->buffer,
+                        _("DCC: file %s%s%s"),
+                        GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                        ptr_dcc->filename,
+                        GUI_COLOR(COLOR_WIN_CHAT));
             if (ptr_dcc->local_filename)
-            {
-                gui_printf (ptr_dcc->server->buffer, _(" (local filename: "));
-                gui_printf_color (ptr_dcc->server->buffer,
-                                  COLOR_WIN_CHAT_CHANNEL,
-                                  "%s",
-                                  ptr_dcc->local_filename);
-                gui_printf (ptr_dcc->server->buffer, ")");
-            }
+                gui_printf (ptr_dcc->server->buffer,
+                            _(" (local filename: %s%s%s)"),
+                            GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                            ptr_dcc->local_filename,
+                            GUI_COLOR(COLOR_WIN_CHAT));
             if (ptr_dcc->type == DCC_FILE_SEND)
                 gui_printf (ptr_dcc->server->buffer, _(" sent to "));
             else
                 gui_printf (ptr_dcc->server->buffer, _(" received from "));
-            gui_printf_color (ptr_dcc->server->buffer,
-                              COLOR_WIN_CHAT_NICK,
-                              "%s",
-                              ptr_dcc->nick);
-            gui_printf (ptr_dcc->server->buffer,
-                        (status == DCC_DONE) ? _(": ok!\n") : _(": FAILED\n"));
+            gui_printf (ptr_dcc->server->buffer, "%s%s%s: %s\n",
+                        GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                        ptr_dcc->nick,
+                        GUI_COLOR(COLOR_WIN_CHAT),
+                        (status == DCC_DONE) ? _("OK") : _("FAILED"));
         }
     }
     if (status == DCC_ABORTED)
@@ -399,15 +395,17 @@ dcc_close (t_irc_dcc *ptr_dcc, int status)
             else
                 ptr_buffer = ptr_dcc->server->buffer;
             irc_display_prefix (ptr_dcc->server, ptr_buffer, PREFIX_INFO);
-            gui_printf (ptr_buffer, _("DCC chat closed with "));
-            gui_printf_color (ptr_buffer, COLOR_WIN_CHAT_NICK,
-                              "%s", ptr_dcc->nick);
-            gui_printf_color (ptr_buffer, COLOR_WIN_CHAT_DARK, " (");
-            gui_printf_color (ptr_buffer, COLOR_WIN_CHAT_HOST,
-                              "%d.%d.%d.%d",
-                              ptr_dcc->addr >> 24, (ptr_dcc->addr >> 16) & 0xff,
-                              (ptr_dcc->addr >> 8) & 0xff, ptr_dcc->addr & 0xff);
-            gui_printf_color (ptr_buffer, COLOR_WIN_CHAT_DARK, ")\n");
+            gui_printf (ptr_buffer,
+                        _("DCC chat closed with %s%s %s(%s%d.%d.%d.%d%s)\n"),
+                        GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                        ptr_dcc->nick,
+                        GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                        GUI_COLOR(COLOR_WIN_CHAT_HOST),
+                        ptr_dcc->addr >> 24,
+                        (ptr_dcc->addr >> 16) & 0xff,
+                        (ptr_dcc->addr >> 8) & 0xff,
+                        ptr_dcc->addr & 0xff,
+                        GUI_COLOR(COLOR_WIN_CHAT_DARK));
         }
     }
     
@@ -467,16 +465,17 @@ dcc_channel_for_chat (t_irc_dcc *ptr_dcc)
     irc_display_prefix (ptr_dcc->server, ptr_dcc->channel->buffer,
                         PREFIX_INFO);
     gui_printf_type (ptr_dcc->channel->buffer, MSG_TYPE_MSG,
-                     _("Connected to "));
-    gui_printf_color (ptr_dcc->channel->buffer, COLOR_WIN_CHAT_NICK,
-                      "%s", ptr_dcc->nick);
-    gui_printf_color (ptr_dcc->channel->buffer, COLOR_WIN_CHAT_DARK, " (");
-    gui_printf_color (ptr_dcc->channel->buffer, COLOR_WIN_CHAT_HOST,
-                      "%d.%d.%d.%d",
-                      ptr_dcc->addr >> 24, (ptr_dcc->addr >> 16) & 0xff,
-                      (ptr_dcc->addr >> 8) & 0xff, ptr_dcc->addr & 0xff);
-    gui_printf_color (ptr_dcc->channel->buffer, COLOR_WIN_CHAT_DARK, ") ");
-    gui_printf (ptr_dcc->channel->buffer, _("via DCC chat\n"));
+                     _("Connected to %s%s %s(%s%d.%d.%d.%d%s)%s via DCC chat\n"),
+                     GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                     ptr_dcc->nick,
+                     GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                     GUI_COLOR(COLOR_WIN_CHAT_HOST),
+                     ptr_dcc->addr >> 24,
+                     (ptr_dcc->addr >> 16) & 0xff,
+                     (ptr_dcc->addr >> 8) & 0xff,
+                     ptr_dcc->addr & 0xff,
+                     GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                     GUI_COLOR(COLOR_WIN_CHAT));
 }
 
 /*
@@ -565,12 +564,11 @@ dcc_accept_resume (t_irc_server *server, char *filename, int port,
         
         irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
                             PREFIX_INFO);
-        gui_printf (ptr_dcc->server->buffer, _("DCC: file "));
-        gui_printf_color (ptr_dcc->server->buffer,
-                          COLOR_WIN_CHAT_CHANNEL,
-                          "%s ",
-                          ptr_dcc->filename);
-        gui_printf (ptr_dcc->server->buffer, _("resumed at position %u\n"),
+        gui_printf (ptr_dcc->server->buffer,
+                    _("DCC: file %s%s%s resumed at position %u\n"),
+                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                    ptr_dcc->filename,
+                    GUI_COLOR(COLOR_WIN_CHAT),
                     ptr_dcc->start_resume);
         dcc_redraw (HOTLIST_MSG);
     }
@@ -669,51 +667,70 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
     if (type == DCC_FILE_RECV)
     {
         irc_display_prefix (server, server->buffer, PREFIX_INFO);
-        gui_printf (server->buffer, _("Incoming DCC file from "));
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK, "%s", nick);
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, " (");
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT_HOST,
-                          "%d.%d.%d.%d",
-                          addr >> 24, (addr >> 16) & 0xff, (addr >> 8) & 0xff, addr & 0xff);
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, ")");
-        gui_printf (server->buffer, ": ");
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT_CHANNEL, "%s", filename);
-        gui_printf (server->buffer, ", ");
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT_CHANNEL, "%lu", size);
-        gui_printf (server->buffer, _(" bytes\n"));
+        gui_printf (server->buffer,
+                    _("Incoming DCC file from %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s bytes\n"),
+                    GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                    nick,
+                    GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                    GUI_COLOR(COLOR_WIN_CHAT_HOST),
+                    addr >> 24,
+                    (addr >> 16) & 0xff,
+                    (addr >> 8) & 0xff,
+                    addr & 0xff,
+                    GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                    GUI_COLOR(COLOR_WIN_CHAT),
+                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                    filename,
+                    GUI_COLOR(COLOR_WIN_CHAT),
+                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                    size,
+                    GUI_COLOR(COLOR_WIN_CHAT));
         dcc_redraw (HOTLIST_MSG);
     }
     if (type == DCC_FILE_SEND)
     {
         irc_display_prefix (server, server->buffer, PREFIX_INFO);
-        gui_printf (server->buffer, _("Sending DCC file to "));
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK, "%s", nick);
-        gui_printf (server->buffer, ": ");
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT_CHANNEL, "%s", filename);
-        gui_printf (server->buffer, _(" (local filename: "));
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT_CHANNEL, "%s", local_filename);
-        gui_printf (server->buffer, "), ");
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT_CHANNEL, "%lu", size);
-        gui_printf (server->buffer, _(" bytes\n"));
+        gui_printf (server->buffer,
+                    _("Sending DCC file to %s%s%s: %s%s%s "
+                      "(local filename: %s%s%s), %s%lu%s bytes\n"),
+                    GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                    nick,
+                    GUI_COLOR(COLOR_WIN_CHAT),
+                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                    filename,
+                    GUI_COLOR(COLOR_WIN_CHAT),
+                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                    local_filename,
+                    GUI_COLOR(COLOR_WIN_CHAT),
+                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                    size,
+                    GUI_COLOR(COLOR_WIN_CHAT));
         dcc_redraw (HOTLIST_MSG);
     }
     if (type == DCC_CHAT_RECV)
     {
         irc_display_prefix (server, server->buffer, PREFIX_INFO);
-        gui_printf (server->buffer, _("Incoming DCC chat request from "));
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK, "%s", nick);
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, " (");
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT_HOST,
-                          "%d.%d.%d.%d",
-                          addr >> 24, (addr >> 16) & 0xff, (addr >> 8) & 0xff, addr & 0xff);
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT_DARK, ")\n");
+        gui_printf (server->buffer,
+                    _("Incoming DCC chat request from %s%s%s "
+                      "(%s%d.%d.%d.%d%s)\n"),
+                    GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                    nick,
+                    GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                    GUI_COLOR(COLOR_WIN_CHAT_HOST),
+                    addr >> 24,
+                    (addr >> 16) & 0xff,
+                    (addr >> 8) & 0xff,
+                    addr & 0xff,
+                    GUI_COLOR(COLOR_WIN_CHAT_DARK));
         dcc_redraw (HOTLIST_MSG);
     }
     if (type == DCC_CHAT_SEND)
     {
         irc_display_prefix (server, server->buffer, PREFIX_INFO);
-        gui_printf (server->buffer, _("Sending DCC chat request to "));
-        gui_printf_color (server->buffer, COLOR_WIN_CHAT_NICK, "%s\n", nick);
+        gui_printf (server->buffer,
+                    _("Sending DCC chat request to %s%s\n"),
+                    GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                    nick);
         dcc_redraw (HOTLIST_MSG);
     }
     
@@ -728,18 +745,15 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
     {
         irc_display_prefix (new_dcc->server, new_dcc->server->buffer,
                             PREFIX_INFO);
-        gui_printf (new_dcc->server->buffer, _("DCC: file "));
-        gui_printf_color (new_dcc->server->buffer,
-                          COLOR_WIN_CHAT_CHANNEL,
-                          "%s",
-                          new_dcc->filename);
-        gui_printf (new_dcc->server->buffer, _(" (local filename: "));
-        gui_printf_color (new_dcc->server->buffer,
-                          COLOR_WIN_CHAT_CHANNEL,
-                          "%s",
-                          new_dcc->local_filename);
-        gui_printf (new_dcc->server->buffer, ") ");
-        gui_printf (new_dcc->server->buffer, _("will be resumed at position %u\n"),
+        gui_printf (new_dcc->server->buffer,
+                    _("DCC: file %s%s%s (local filename: %s%s%s) "
+                      "will be resumed at position %u\n"),
+                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                    new_dcc->filename,
+                    GUI_COLOR(COLOR_WIN_CHAT),
+                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                    new_dcc->local_filename,
+                    GUI_COLOR(COLOR_WIN_CHAT),
                     new_dcc->start_resume);
         dcc_redraw (HOTLIST_MSG);
     }
@@ -1070,6 +1084,7 @@ dcc_chat_recv (t_irc_dcc *ptr_dcc)
 {
     static char buffer[4096 + 2];
     char *buf2, *pos, *ptr_buf, *next_ptr_buf;
+    char *ptr_buf_color;
     int num_read;
 
     num_read = recv (ptr_dcc->sock, buffer, sizeof (buffer) - 2, 0);
@@ -1120,40 +1135,45 @@ dcc_chat_recv (t_irc_dcc *ptr_dcc)
             
             if (ptr_buf)
             {
-                gui_printf_type_color (ptr_dcc->channel->buffer,
-                                       MSG_TYPE_NICK,
-                                       COLOR_WIN_CHAT_DARK, "<");
+                ptr_buf_color = (char *)gui_color_decode ((unsigned char *)ptr_buf,
+                                                          cfg_irc_colors_receive);
+                gui_printf_type (ptr_dcc->channel->buffer, MSG_TYPE_NICK,
+                                 "%s<", GUI_COLOR(COLOR_WIN_CHAT_DARK));
                 if (irc_is_highlight (ptr_buf, ptr_dcc->server->nick))
                 {
-                    gui_printf_type_color (ptr_dcc->channel->buffer,
-                                           MSG_TYPE_NICK | MSG_TYPE_HIGHLIGHT,
-                                           COLOR_WIN_CHAT_HIGHLIGHT,
-                                           "%s", ptr_dcc->nick);
+                    gui_printf_type (ptr_dcc->channel->buffer,
+                                     MSG_TYPE_NICK | MSG_TYPE_HIGHLIGHT,
+                                     "%s%s",
+                                     GUI_COLOR(COLOR_WIN_CHAT_HIGHLIGHT),
+                                     ptr_dcc->nick);
                     if ( (cfg_look_infobar_delay_highlight > 0)
                         && (ptr_dcc->channel->buffer != gui_current_window->buffer) )
                         gui_infobar_printf (cfg_look_infobar_delay_highlight,
                                             COLOR_WIN_INFOBAR_HIGHLIGHT,
                                             _("Private %s> %s"),
-                                            ptr_dcc->nick, ptr_buf);
+                                            ptr_dcc->nick,
+                                            (ptr_buf_color) ? ptr_buf_color : ptr_buf);
                 }
                 else
-                    gui_printf_type_color (ptr_dcc->channel->buffer,
-                                           MSG_TYPE_NICK,
-                                           COLOR_WIN_NICK_PRIVATE,
-                                           "%s", ptr_dcc->nick);
-                gui_printf_type_color (ptr_dcc->channel->buffer,
-                                       MSG_TYPE_NICK,
-                                       COLOR_WIN_CHAT_DARK, "> ");
-                gui_printf_type_color (ptr_dcc->channel->buffer,
-                                       MSG_TYPE_MSG,
-                                       COLOR_WIN_CHAT, "%s\n", ptr_buf);
+                    gui_printf_type (ptr_dcc->channel->buffer, MSG_TYPE_NICK,
+                                     "%s%s",
+                                     GUI_COLOR(COLOR_WIN_NICK_PRIVATE),
+                                     ptr_dcc->nick);
+                gui_printf_type (ptr_dcc->channel->buffer, MSG_TYPE_NICK,
+                                 "%s> ", GUI_COLOR(COLOR_WIN_CHAT_DARK));
+                gui_printf_type (ptr_dcc->channel->buffer, MSG_TYPE_MSG,
+                                 "%s%s\n",
+                                 GUI_COLOR(COLOR_WIN_CHAT),
+                                 (ptr_buf_color) ? ptr_buf_color : ptr_buf);
+                if (ptr_buf_color)
+                    free (ptr_buf_color);
             }
             
             ptr_buf = next_ptr_buf;
         }
         
         if (buf2)
-            free (buf2);
+free (buf2);
     }
     else
     {

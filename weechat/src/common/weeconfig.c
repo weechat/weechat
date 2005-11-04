@@ -77,7 +77,6 @@ char *cfg_look_buffer_timestamp;
 int cfg_look_color_nicks;
 int cfg_look_color_nicks_number;
 int cfg_look_color_actions;
-int cfg_look_remove_colors_from_msgs;
 int cfg_look_nicklist;
 int cfg_look_nicklist_position;
 char *cfg_look_nicklist_position_values[] =
@@ -154,10 +153,6 @@ t_config_option weechat_options_look[] =
     N_("display actions with different colors"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
     NULL, NULL, &cfg_look_color_actions, NULL, config_change_noop },
-  { "look_remove_colors_from_msgs", N_("remove colors from incoming messages"),
-    N_("remove colors from incoming messages"),
-    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_look_remove_colors_from_msgs, NULL, config_change_noop },
   { "look_nicklist", N_("display nicklist window"),
     N_("display nicklist window (for channel windows)"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
@@ -435,7 +430,7 @@ t_config_option weechat_options_colors[] =
   { "col_input_delimiters", N_("color for input text (delimiters)"),
     N_("color for input text (delimiters)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "white", NULL, &cfg_col_input_delimiters, NULL, &config_change_color },
+    "cyan", NULL, &cfg_col_input_delimiters, NULL, &config_change_color },
   { "col_input_bg", N_("background for input window"),
     N_("background for input window"),
     OPTION_TYPE_COLOR, 0, 0, 0,
@@ -637,6 +632,8 @@ int cfg_irc_lag_min_show;
 int cfg_irc_lag_disconnect;
 int cfg_irc_fifo_pipe;
 char *cfg_irc_highlight;
+int cfg_irc_colors_receive;
+int cfg_irc_colors_send;
 
 t_config_option weechat_options_irc[] =
 { { "irc_display_away", N_("display message to all channels when away"),
@@ -684,6 +681,15 @@ t_config_option weechat_options_irc[] =
        "words may begin or end with \"*\" for partial match)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "", NULL, NULL, &cfg_irc_highlight, &config_change_noop },
+  { "irc_colors_receive", N_("keep colors from incoming messages"),
+    N_("keep colors from incoming messages"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
+    NULL, NULL, &cfg_irc_colors_receive, NULL, config_change_noop },
+  { "irc_colors_send", N_("allow user to send colors"),
+    N_("allow user to send colors with special codes (%B=bold, %Cxx,yy=color, "
+       "%U=underline, %R=reverse)"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
+    NULL, NULL, &cfg_irc_colors_send, NULL, config_change_noop },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
@@ -1043,7 +1049,7 @@ config_change_color ()
 {
     t_gui_window *ptr_win;
     
-    gui_init_colors ();
+    gui_rebuild_weechat_colors ();
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
         gui_redraw_buffer (ptr_win->buffer);
 }
@@ -2072,7 +2078,7 @@ config_write (char *config_name)
                         fprintf (file, "%s=%s\n",
                                  weechat_options[i][j].option_name,
                                  (weechat_options[i][j].ptr_int) ?
-                                 gui_get_color_by_value (*weechat_options[i][j].ptr_int) :
+                                 gui_get_color_name (*weechat_options[i][j].ptr_int) :
                                  weechat_options[i][j].default_string);
                         break;
                     case OPTION_TYPE_STRING:

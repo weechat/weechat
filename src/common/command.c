@@ -303,7 +303,7 @@ alias_new (char *alias_name, char *alias_command)
     if (!weelist_search (index_commands, alias_command))
     {
         irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-        gui_printf (NULL, _("%s target command \"%s\" does not exist!\n"),
+        gui_printf (NULL, _("%s target command \"/%s\" does not exist!\n"),
                     WEECHAT_ERROR, alias_command);
         return NULL;
     }
@@ -689,7 +689,7 @@ user_command (t_irc_server *server, t_gui_buffer *buffer, char *command)
 {
     t_irc_nick *ptr_nick;
     int plugin_args_length;
-    char *plugin_args;
+    char *command_with_colors, *command_with_colors2, *plugin_args;
     
     if ((!command) || (!command[0]) || (command[0] == '\r') || (command[0] == '\n'))
         return;
@@ -709,28 +709,37 @@ user_command (t_irc_server *server, t_gui_buffer *buffer, char *command)
         
         if (server && (!BUFFER_IS_SERVER(buffer)))
         {
+            command_with_colors = (cfg_irc_colors_send) ?
+                (char *)gui_color_encode ((unsigned char *)command) : NULL;
+            
             if (CHANNEL(buffer)->dcc_chat)
                 dcc_chat_sendf ((t_irc_dcc *)(CHANNEL(buffer)->dcc_chat),
-                                "%s\r\n", command);
+                                "%s\r\n",
+                                (command_with_colors) ? command_with_colors : command);
             else
                 server_sendf (server, "PRIVMSG %s :%s\r\n",
-                              CHANNEL(buffer)->name, command);
+                              CHANNEL(buffer)->name,
+                              (command_with_colors) ?
+                              command_with_colors : command);
+            
+            command_with_colors2 = (command_with_colors) ?
+                (char *)gui_color_decode ((unsigned char *)command_with_colors, 1) : NULL;
             
             if (CHANNEL(buffer)->type == CHAT_PRIVATE)
             {
-                gui_printf_type_color (CHANNEL(buffer)->buffer,
-                                       MSG_TYPE_NICK,
-                                       COLOR_WIN_CHAT_DARK, "<");
-                gui_printf_type_color (CHANNEL(buffer)->buffer,
-                                       MSG_TYPE_NICK,
-                                       COLOR_WIN_NICK_SELF,
-                                       "%s", server->nick);
-                gui_printf_type_color (CHANNEL(buffer)->buffer,
-                                       MSG_TYPE_NICK,
-                                       COLOR_WIN_CHAT_DARK, "> ");
-                gui_printf_type_color (CHANNEL(buffer)->buffer,
-                                       MSG_TYPE_MSG,
-                                       COLOR_WIN_CHAT, "%s\n", command);
+                gui_printf_type (CHANNEL(buffer)->buffer,
+                                 MSG_TYPE_NICK,
+                                 "%s<%s%s%s> ",
+                                 GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                                 GUI_COLOR(COLOR_WIN_NICK_SELF),
+                                 server->nick,
+                                 GUI_COLOR(COLOR_WIN_CHAT_DARK));
+                gui_printf_type (CHANNEL(buffer)->buffer,
+                                 MSG_TYPE_MSG,
+                                 "%s%s\n",
+                                 GUI_COLOR(COLOR_WIN_CHAT),
+                                 (command_with_colors2) ?
+                                 command_with_colors2 : command);
             }
             else
             {
@@ -739,8 +748,10 @@ user_command (t_irc_server *server, t_gui_buffer *buffer, char *command)
                 {
                     irc_display_nick (CHANNEL(buffer)->buffer, ptr_nick, NULL,
                                       MSG_TYPE_NICK, 1, 1, 0);
-                    gui_printf_color (CHANNEL(buffer)->buffer,
-                                      COLOR_WIN_CHAT, "%s\n", command);
+                    gui_printf (CHANNEL(buffer)->buffer,
+                                "%s\n",
+                                (command_with_colors2) ?
+                                command_with_colors2 : command);
                 }
                 else
                 {
@@ -750,6 +761,11 @@ user_command (t_irc_server *server, t_gui_buffer *buffer, char *command)
                                 WEECHAT_ERROR);
                 }
             }
+            
+            if (command_with_colors)
+                free (command_with_colors);
+            if (command_with_colors2)
+                free (command_with_colors2);
             
             /* sending a copy of the message as PRIVMSG to plugins because irc server doesn't */                               
             plugin_args_length = strlen ("localhost PRIVMSG  :") +
@@ -810,6 +826,13 @@ weechat_cmd_alias (char *arguments)
                             WEECHAT_ERROR, "alias");
                 return -1;
             }
+            if (arguments[0] == '/')
+            {
+                irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                gui_printf (NULL, _("%s alias can not start with \"/\"\n"),
+                            WEECHAT_ERROR, "alias");
+                return -1;
+            }
             if (!alias_new (arguments, pos))
                 return -1;
             if (weelist_add (&index_commands, &last_index_command, arguments))
@@ -845,8 +868,10 @@ weechat_cmd_alias (char *arguments)
             for (ptr_alias = weechat_alias; ptr_alias;
                  ptr_alias = ptr_alias->next_alias)
             {
-                gui_printf (NULL, "  %s => %s\n",
+                gui_printf (NULL, "  %s %s=>%s %s\n",
                             ptr_alias->alias_name,
+                            GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                            GUI_COLOR(COLOR_WIN_CHAT),
                             ptr_alias->alias_command + 1);
             }
         }
@@ -867,38 +892,32 @@ void
 weechat_cmd_buffer_display_info (t_gui_buffer *buffer)
 {
     if (buffer->dcc)
-        gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "DCC\n");
+        gui_printf (NULL, "%sDCC\n",
+                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL));
     else if (BUFFER_IS_SERVER (buffer))
-    {
-        gui_printf (NULL, _("Server: "));
-        gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
-                          "%s\n", SERVER(buffer)->name);
-    }
+        gui_printf (NULL, _("%sServer: %s%s\n"),
+                    GUI_COLOR(COLOR_WIN_CHAT),
+                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                    SERVER(buffer)->name);
     else if (BUFFER_IS_CHANNEL (buffer))
-    {
-        gui_printf (NULL, _("Channel: "));
-        gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
-                          "%s", CHANNEL(buffer)->name);
-        gui_printf (NULL, _(" (server: "));
-        gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
-                          "%s", SERVER(buffer)->name);
-        gui_printf (NULL, ")\n");
-    }
+        gui_printf (NULL, _("%sChannel: %s%s %s(server: %s%s%s)\n"),
+                    GUI_COLOR(COLOR_WIN_CHAT),
+                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                    CHANNEL(buffer)->name,
+                    GUI_COLOR(COLOR_WIN_CHAT),
+                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                    SERVER(buffer)->name,
+                    GUI_COLOR(COLOR_WIN_CHAT));
     else if (BUFFER_IS_PRIVATE (buffer))
-    {
-        gui_printf (NULL, _("Private with: "));
-        gui_printf_color (NULL, COLOR_WIN_CHAT_NICK,
-                          "%s", CHANNEL(buffer)->name);
-        gui_printf (NULL, _(" (server: "));
-        gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
-                          "%s", SERVER(buffer)->name);
-        gui_printf (NULL, ")\n");
-    }
+        gui_printf (NULL, _("%sPrivate with: %s%s %s(server: %s%s%s)\n"),
+                    GUI_COLOR(COLOR_WIN_CHAT),
+                    GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                    CHANNEL(buffer)->name,
+                    GUI_COLOR(COLOR_WIN_CHAT),
+                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                    SERVER(buffer)->name);
     else
-    {
-        gui_printf (NULL, _("not connected"));
-        gui_printf (NULL, "\n");
-    }
+        gui_printf (NULL, _("not connected\n"));
 }
 
 /*
@@ -924,10 +943,11 @@ weechat_cmd_buffer (int argc, char **argv)
         
         for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
         {
-            gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "[");
-            gui_printf (NULL, "%d", ptr_buffer->number);
-            gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "] ");
-            
+            gui_printf (NULL, "%s[%s%d%s] ",
+                        GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                        GUI_COLOR(COLOR_WIN_CHAT),
+                        ptr_buffer->number,
+                        GUI_COLOR(COLOR_WIN_CHAT_DARK));
             weechat_cmd_buffer_display_info (ptr_buffer);
         }
     }
@@ -1314,9 +1334,10 @@ weechat_cmd_help (int argc, char **argv)
             gui_printf (NULL, _("%s internal commands:\n"), PACKAGE_NAME);
             for (i = 0; weechat_commands[i].command_name; i++)
             {
-                gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "   %s",
-                                  weechat_commands[i].command_name);
-                gui_printf (NULL, " - %s\n",
+                gui_printf (NULL, "   %s%s %s- %s\n",
+                            GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                            weechat_commands[i].command_name,
+                            GUI_COLOR(COLOR_WIN_CHAT),
                             _(weechat_commands[i].command_description));
             }
             gui_printf (NULL, "\n");
@@ -1325,9 +1346,10 @@ weechat_cmd_help (int argc, char **argv)
             {
                 if (irc_commands[i].cmd_function_args || irc_commands[i].cmd_function_1arg)
                 {
-                    gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "   %s",
-                                      irc_commands[i].command_name);
-                    gui_printf (NULL, " - %s\n",
+                    gui_printf (NULL, "   %s%s %s- %s\n",
+                                GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                                irc_commands[i].command_name,
+                                GUI_COLOR(COLOR_WIN_CHAT),
                                 _(irc_commands[i].command_description));
                 }
             }
@@ -1342,11 +1364,13 @@ weechat_cmd_help (int argc, char **argv)
                 {
                     if (ptr_handler->type == HANDLER_COMMAND)
                     {
-                        gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "   %s",
-                                          ptr_handler->command);
+                        gui_printf (NULL, "   %s%s",
+                                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                                    ptr_handler->command);
                         if (ptr_handler->description
                             && ptr_handler->description[0])
-                            gui_printf (NULL, " - %s",
+                            gui_printf (NULL, " %s- %s",
+                                        GUI_COLOR(COLOR_WIN_CHAT),
                                         ptr_handler->description);
                         gui_printf (NULL, "\n");
                     }
@@ -1361,11 +1385,13 @@ weechat_cmd_help (int argc, char **argv)
                 {
                     gui_printf (NULL, "\n");
                     gui_printf (NULL, "[w]");
-                    gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "  /%s",
-                                      weechat_commands[i].command_name);
+                    gui_printf (NULL, "  %s/%s",
+                                GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                                weechat_commands[i].command_name);
                     if (weechat_commands[i].arguments &&
                         weechat_commands[i].arguments[0])
-                        gui_printf (NULL, "  %s\n",
+                        gui_printf (NULL, "  %s%s\n",
+                                    GUI_COLOR(COLOR_WIN_CHAT),
                                     _(weechat_commands[i].arguments));
                     else
                         gui_printf (NULL, "\n");
@@ -1387,11 +1413,13 @@ weechat_cmd_help (int argc, char **argv)
                 {
                     gui_printf (NULL, "\n");
                     gui_printf (NULL, "[i]");
-                    gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "  /%s",
-                                      irc_commands[i].command_name);
+                    gui_printf (NULL, "  %s/%s",
+                                GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                                irc_commands[i].command_name);
                     if (irc_commands[i].arguments &&
                         irc_commands[i].arguments[0])
-                        gui_printf (NULL, "  %s\n",
+                        gui_printf (NULL, "  %s%s\n",
+                                    GUI_COLOR(COLOR_WIN_CHAT),
                                     _(irc_commands[i].arguments));
                     else
                         gui_printf (NULL, "\n");
@@ -1418,11 +1446,13 @@ weechat_cmd_help (int argc, char **argv)
                     {
                         gui_printf (NULL, "\n");
                         gui_printf (NULL, "[p]");
-                        gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "  /%s",
-                                          ptr_handler->command);
+                        gui_printf (NULL, "  %s/%s",
+                                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                                    ptr_handler->command);
                         if (ptr_handler->arguments &&
                             ptr_handler->arguments[0])
-                            gui_printf (NULL, "  %s\n",
+                            gui_printf (NULL, "  %s%s\n",
+                                        GUI_COLOR(COLOR_WIN_CHAT),
                                         ptr_handler->arguments);
                         else
                             gui_printf (NULL, "\n");
@@ -1456,17 +1486,27 @@ void
 weechat_cmd_ignore_display (char *text, t_irc_ignore *ptr_ignore)
 {
     if (text)
-        gui_printf (NULL, "%s ", text);
+        gui_printf (NULL, "%s%s ",
+                    GUI_COLOR(COLOR_WIN_CHAT),
+                    text);
     
-    gui_printf (NULL, _("on"));
-    gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, " %s", ptr_ignore->server_name);
-    gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "/");
-    gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "%s", ptr_ignore->channel_name);
-    gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, ":");
-    gui_printf (NULL, _(" ignoring "));
-    gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "%s", ptr_ignore->type);
-    gui_printf (NULL, _(" from "));
-    gui_printf_color (NULL, COLOR_WIN_CHAT_HOST, "%s\n", ptr_ignore->mask);
+    gui_printf (NULL, "%s%s %s%s%s/%s%s%s:%s%s%s%s%s%s%s%s\n",
+                GUI_COLOR(COLOR_WIN_CHAT),
+                _("on"),
+                GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                ptr_ignore->server_name,
+                GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                ptr_ignore->channel_name,
+                GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                GUI_COLOR(COLOR_WIN_CHAT),
+                _(" ignoring "),
+                GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                ptr_ignore->type,
+                GUI_COLOR(COLOR_WIN_CHAT),
+                _(" from "),
+                GUI_COLOR(COLOR_WIN_CHAT_HOST),
+                ptr_ignore->mask);
 }
 
 /*
@@ -1493,9 +1533,11 @@ weechat_cmd_ignore (int argc, char **argv)
                      ptr_ignore = ptr_ignore->next_ignore)
                 {
                     i++;
-                    gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "[");
-                    gui_printf (NULL, "%d", i);
-                    gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "] ");
+                    gui_printf (NULL, "%s[%s%d%s] ",
+                                GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                                GUI_COLOR(COLOR_WIN_CHAT),
+                                i,
+                                GUI_COLOR(COLOR_WIN_CHAT_DARK));
                     weechat_cmd_ignore_display (NULL, ptr_ignore);
                 }
             }
@@ -1547,13 +1589,15 @@ weechat_cmd_key_display (t_gui_key *key, int new_key)
     expanded_name = gui_key_get_expanded_name (key->key);
     if (new_key)
     {
-        gui_printf (NULL, _("New key binding:\n"));
-        gui_printf (NULL, "  %s", (expanded_name) ? expanded_name : key->key);
+        irc_display_prefix (NULL, NULL, PREFIX_INFO);
+        gui_printf (NULL, _("New key binding:  %s"),
+                    (expanded_name) ? expanded_name : key->key);
     }
     else
         gui_printf (NULL, "  %20s", (expanded_name) ? expanded_name : key->key);
-    gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, " => ");
-    gui_printf (NULL, "%s\n",
+    gui_printf (NULL, "%s => %s%s\n",
+                GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                GUI_COLOR(COLOR_WIN_CHAT),
                 (key->function) ?
                 gui_key_function_search_by_ptr (key->function) : key->command);
     if (expanded_name)
@@ -1592,7 +1636,10 @@ weechat_cmd_key (char *arguments)
         while (arguments[0] == ' ')
             arguments++;
         if (gui_key_unbind (arguments))
+        {
+            irc_display_prefix (NULL, NULL, PREFIX_INFO);
             gui_printf (NULL, _("Key \"%s\" unbinded\n"), arguments);
+        }
         else
         {
             irc_display_prefix (NULL, NULL, PREFIX_ERROR);
@@ -1624,6 +1671,7 @@ weechat_cmd_key (char *arguments)
         {
             gui_key_free_all ();
             gui_key_init ();
+            irc_display_prefix (NULL, NULL, PREFIX_INFO);
             gui_printf (NULL, _("Default key bindings restored\n"));
         }
         else
@@ -1692,8 +1740,10 @@ weechat_cmd_plugin (int argc, char **argv)
             {
                 /* plugin info */
                 irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
-                gui_printf (NULL, "  %s v%s - %s (%s)\n",
+                gui_printf (NULL, "  %s%s%s v%s - %s (%s)\n",
+                            GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
                             ptr_plugin->name,
+                            GUI_COLOR(COLOR_WIN_CHAT),
                             ptr_plugin->version,
                             ptr_plugin->description,
                             ptr_plugin->filename);
@@ -1904,13 +1954,14 @@ weechat_cmd_server (int argc, char **argv)
                 }
             }
             
-            irc_display_prefix (NULL, NULL, PREFIX_INFO);
-            gui_printf_color (NULL, COLOR_WIN_CHAT, _("Server"));
-            gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
-                              " %s ", server_found->name);
-            gui_printf_color (NULL, COLOR_WIN_CHAT, _("has been deleted\n"));
-            
             server_free (server_found);
+            
+            irc_display_prefix (NULL, NULL, PREFIX_INFO);
+            gui_printf (NULL, _("Server %s%s%s has been deleted\n"),
+                        GUI_COLOR(COLOR_WIN_CHAT_SERVER),
+                        server_found->name,
+                        GUI_COLOR(COLOR_WIN_CHAT));
+            
             gui_redraw_buffer (gui_current_window->buffer);
             
             return 0;
@@ -2051,10 +2102,10 @@ weechat_cmd_server (int argc, char **argv)
         if (new_server)
         {
             irc_display_prefix (NULL, NULL, PREFIX_INFO);
-            gui_printf_color (NULL, COLOR_WIN_CHAT, _("Server"));
-            gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
-                              " %s ", server.name);
-            gui_printf_color (NULL, COLOR_WIN_CHAT, _("created\n"));
+            gui_printf (NULL, _("Server %s%s%s created\n"),
+                        GUI_COLOR(COLOR_WIN_CHAT_SERVER),
+                        server.name,
+                        GUI_COLOR(COLOR_WIN_CHAT));
         }
         else
         {
@@ -2086,11 +2137,11 @@ weechat_cmd_set_display_option (t_config_option *option, char *prefix, void *val
 {
     char *color_name, *pos_nickserv, *pos_pwd, *value2;
     
-    gui_printf (NULL, "  %s%s%s",
+    gui_printf (NULL, "  %s%s%s%s = ",
                 (prefix) ? prefix : "",
                 (prefix) ? "." : "",
-                option->option_name);
-    gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, " = ");
+                option->option_name,
+                GUI_COLOR(COLOR_WIN_CHAT_DARK));
     if (!value)
     {
         if (option->option_type == OPTION_TYPE_STRING)
@@ -2101,21 +2152,25 @@ weechat_cmd_set_display_option (t_config_option *option, char *prefix, void *val
     switch (option->option_type)
     {
         case OPTION_TYPE_BOOLEAN:
-            gui_printf_color (NULL, COLOR_WIN_CHAT_HOST,
-                              "%s\n", (*((int *)value)) ? "ON" : "OFF");
+            gui_printf (NULL, "%s%s\n",
+                        GUI_COLOR(COLOR_WIN_CHAT_HOST),
+                        (*((int *)value)) ? "ON" : "OFF");
             break;
         case OPTION_TYPE_INT:
-            gui_printf_color (NULL, COLOR_WIN_CHAT_HOST,
-                              "%d\n", *((int *)value));
+            gui_printf (NULL, "%s%d\n",
+                        GUI_COLOR(COLOR_WIN_CHAT_HOST),
+                        *((int *)value));
             break;
         case OPTION_TYPE_INT_WITH_STRING:
-            gui_printf_color (NULL, COLOR_WIN_CHAT_HOST,
-                              "%s\n", option->array_values[*((int *)value)]);
+            gui_printf (NULL, "%s%s\n",
+                        GUI_COLOR(COLOR_WIN_CHAT_HOST),
+                        option->array_values[*((int *)value)]);
             break;
         case OPTION_TYPE_COLOR:
-            color_name = gui_get_color_by_value (*((int *)value));
-            gui_printf_color (NULL, COLOR_WIN_CHAT_HOST,
-                              "%s\n", (color_name) ? color_name : _("(unknown)"));
+            color_name = gui_get_color_name (*((int *)value));
+            gui_printf (NULL, "%s%s\n",
+                        GUI_COLOR(COLOR_WIN_CHAT_HOST),
+                        (color_name) ? color_name : _("(unknown)"));
             break;
         case OPTION_TYPE_STRING:
             if (*((char **)value))
@@ -2138,9 +2193,12 @@ weechat_cmd_set_display_option (t_config_option *option, char *prefix, void *val
                         pos_pwd[0] = '*';
                         pos_pwd++;
                     }
-                    gui_printf (NULL, _("(password hidden) "));
+                    gui_printf (NULL, _("%s(password hidden) "),
+                                GUI_COLOR(COLOR_WIN_CHAT));
                 }
-                gui_printf_color (NULL, COLOR_WIN_CHAT_HOST, "%s", value2);
+                gui_printf (NULL, "%s%s",
+                            GUI_COLOR(COLOR_WIN_CHAT_HOST),
+                            value2);
                 free (value2);
             }
             gui_printf (NULL, "\n");
@@ -2210,12 +2268,14 @@ weechat_cmd_set (char *arguments)
                 switch (config_set_server_value (ptr_server, pos + 1, value))
                 {
                     case 0:
-                        gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "\n[");
-                        gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "%s",
-                                          config_sections[CONFIG_SECTION_SERVER].section_name);
-                        gui_printf_color (NULL, COLOR_WIN_CHAT_NICK, " %s",
-                                          ptr_server->name);
-                        gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "]\n");
+                        gui_printf (NULL, "\n");
+                        gui_printf (NULL, "%s[%s%s %s%s]\n",
+                                    GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                                    config_sections[CONFIG_SECTION_SERVER].section_name,
+                                    GUI_COLOR(COLOR_WIN_CHAT_SERVER),
+                                    ptr_server->name,
+                                    GUI_COLOR(COLOR_WIN_CHAT_DARK));
                         for (i = 0; weechat_options[CONFIG_SECTION_SERVER][i].option_name; i++)
                         {
                             if (strcmp (weechat_options[CONFIG_SECTION_SERVER][i].option_name, pos + 1) == 0)
@@ -2262,10 +2322,12 @@ weechat_cmd_set (char *arguments)
                     if (config_option_set_value (ptr_option, value) == 0)
                     {
                         (void) (ptr_option->handler_change());
-                        gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "\n[");
-                        gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
-                                          "%s", config_get_section (ptr_option));
-                        gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "]\n");
+                        gui_printf (NULL, "\n");
+                        gui_printf (NULL, "%s[%s%s%s]\n",
+                                    GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                                    config_get_section (ptr_option),
+                                    GUI_COLOR(COLOR_WIN_CHAT_DARK));
                         weechat_cmd_set_display_option (ptr_option, NULL, NULL);
                     }
                     else
@@ -2304,11 +2366,12 @@ weechat_cmd_set (char *arguments)
                     {
                         if (!section_displayed)
                         {
-                            gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "\n[");
-                            gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL,
-                                              "%s",
-                                              config_sections[i].section_name);
-                            gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "]\n");
+                            gui_printf (NULL, "\n");
+                            gui_printf (NULL, "%s[%s%s%s]\n",
+                                        GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                                        GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                                        config_sections[i].section_name,
+                                        GUI_COLOR(COLOR_WIN_CHAT_DARK));
                             section_displayed = 1;
                         }
                         weechat_cmd_set_display_option (&weechat_options[i][j], NULL, NULL);
@@ -2334,12 +2397,14 @@ weechat_cmd_set (char *arguments)
                 {
                     if (!section_displayed)
                     {
-                        gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "\n[");
-                        gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "%s",
-                                          config_sections[CONFIG_SECTION_SERVER].section_name);
-                        gui_printf_color (NULL, COLOR_WIN_CHAT_NICK, " %s",
-                                          ptr_server->name);
-                        gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "]\n");
+                        gui_printf (NULL, "\n");
+                        gui_printf (NULL, "%s[%s%s %s%s%s]\n",
+                                    GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                                    config_sections[CONFIG_SECTION_SERVER].section_name,
+                                    GUI_COLOR(COLOR_WIN_CHAT_SERVER),
+                                    ptr_server->name,
+                                    GUI_COLOR(COLOR_WIN_CHAT_DARK));
                         section_displayed = 1;
                     }
                     ptr_option_value = config_get_server_option_ptr (ptr_server,
@@ -2369,7 +2434,9 @@ weechat_cmd_set (char *arguments)
             if ((number_found == 1) && (last_section >= 0) && (last_option >= 0))
             {
                 gui_printf (NULL, "\n");
-                gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, _("Detail:\n"));
+                gui_printf (NULL, _("%sDetail:\n"),
+                            GUI_COLOR(COLOR_WIN_CHAT_CHANNEL));
+                gui_printf (NULL, GUI_COLOR(COLOR_WIN_CHAT_CHANNEL));
                 switch (weechat_options[last_section][last_option].option_type)
                 {
                     case OPTION_TYPE_BOOLEAN:
@@ -2419,7 +2486,11 @@ weechat_cmd_set (char *arguments)
             }
             else
             {
-                gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "\n%d ", number_found);
+                gui_printf (NULL, "\n");
+                gui_printf (NULL, "%s%d %s",
+                            GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                            number_found,
+                            GUI_COLOR(COLOR_WIN_CHAT));
                 if (option)
                     gui_printf (NULL, _("config option(s) found with \"%s\"\n"),
                                 option);
@@ -2506,7 +2577,10 @@ weechat_cmd_unignore (int argc, char **argv)
     if (ret)
     {
         irc_display_prefix (NULL, NULL, PREFIX_INFO);
-        gui_printf_color (NULL, COLOR_WIN_CHAT_CHANNEL, "%d ", ret);
+        gui_printf (NULL, "%s%d%s ",
+                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                    ret,
+                    GUI_COLOR(COLOR_WIN_CHAT));
         if (ret > 1)
             gui_printf (NULL, _("ignore were removed.\n"));
         else
@@ -2545,17 +2619,19 @@ weechat_cmd_window (int argc, char **argv)
         i = 1;
         for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
         {
-            gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "[");
-            gui_printf (NULL, "%d", i);
-            gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "] (");
-            gui_printf (NULL, "%d", ptr_win->win_x);
-            gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, ":");
-            gui_printf (NULL, "%d", ptr_win->win_y);
-            gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, ";");
-            gui_printf (NULL, "%d", ptr_win->win_width);
-            gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, "x");
-            gui_printf (NULL, "%d", ptr_win->win_height);
-            gui_printf_color (NULL, COLOR_WIN_CHAT_DARK, ") ");
+            gui_printf (NULL, "%s[%s%d%s] (%s%d:%d%s;%s%dx%d%s) ",
+                        GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                        GUI_COLOR(COLOR_WIN_CHAT),
+                        i,
+                        GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                        GUI_COLOR(COLOR_WIN_CHAT),
+                        ptr_win->win_x,
+                        ptr_win->win_y,
+                        GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                        GUI_COLOR(COLOR_WIN_CHAT),
+                        ptr_win->win_width,
+                        ptr_win->win_height,
+                        GUI_COLOR(COLOR_WIN_CHAT_DARK));
             
             weechat_cmd_buffer_display_info (ptr_win->buffer);
             

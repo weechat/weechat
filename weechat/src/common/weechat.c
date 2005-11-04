@@ -169,6 +169,7 @@ void
 wee_log_printf (char *message, ...)
 {
     static char buffer[4096];
+    char *ptr_buffer;
     va_list argptr;
     static time_t seconds;
     struct tm *date_tmp;
@@ -179,6 +180,17 @@ wee_log_printf (char *message, ...)
     va_start (argptr, message);
     vsnprintf (buffer, sizeof (buffer) - 1, message, argptr);
     va_end (argptr);
+    
+    /* keep only valid chars */
+    ptr_buffer = buffer;
+    while (ptr_buffer[0])
+    {
+        if ((ptr_buffer[0] != '\n')
+            && (ptr_buffer[0] != '\r')
+            && ((unsigned char)(ptr_buffer[0]) < 32))
+            ptr_buffer[0] = '.';
+        ptr_buffer++;
+    }
     
     seconds = time (NULL);
     date_tmp = localtime (&seconds);
@@ -667,35 +679,42 @@ weechat_welcome_message ()
 {
     if (cfg_look_startup_logo)
     {
-        gui_printf_color (NULL, COLOR_WIN_CHAT_PREFIX1,
-            "   ___       __         ______________        _____ \n"
-            "   __ |     / /___________  ____/__  /_______ __  /_\n"
-            "   __ | /| / /_  _ \\  _ \\  /    __  __ \\  __ `/  __/\n"
-            "   __ |/ |/ / /  __/  __/ /___  _  / / / /_/ // /_  \n"
-            "   ____/|__/  \\___/\\___/\\____/  /_/ /_/\\__,_/ \\__/  \n");
+        gui_printf (NULL,
+                    "%s   ___       __         ______________        _____ \n"
+                    "%s   __ |     / /___________  ____/__  /_______ __  /_\n"
+                    "%s   __ | /| / /_  _ \\  _ \\  /    __  __ \\  __ `/  __/\n"
+                    "%s   __ |/ |/ / /  __/  __/ /___  _  / / / /_/ // /_  \n"
+                    "%s   ____/|__/  \\___/\\___/\\____/  /_/ /_/\\__,_/ \\__/  \n",
+                    GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                    GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                    GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                    GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                    GUI_COLOR(COLOR_WIN_CHAT_NICK));
     }
     if (cfg_look_weechat_slogan && cfg_look_weechat_slogan[0])
     {
-        gui_printf_color (NULL, COLOR_WIN_CHAT, _("%sWelcome to "),
-                          (cfg_look_startup_logo) ? "      " : "");
-        gui_printf_color (NULL, COLOR_WIN_CHAT_PREFIX2, PACKAGE_NAME);
-        gui_printf_color (NULL, COLOR_WIN_CHAT,
-                          ", %s\n", cfg_look_weechat_slogan);
+        gui_printf (NULL, _("%sWelcome to %s%s%s, %s\n"),
+                    (cfg_look_startup_logo) ? "      " : "",
+                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                    PACKAGE_NAME,
+                    GUI_NO_COLOR,
+                    cfg_look_weechat_slogan);
     }
     if (cfg_look_startup_version)
     {
-        gui_printf_color (NULL, COLOR_WIN_CHAT_PREFIX2,
-                          "%s" PACKAGE_STRING,
-                          (cfg_look_startup_logo) ? "    " : "");
-        gui_printf_color (NULL, COLOR_WIN_CHAT,
-                          ", %s %s %s\n",
-                          _("compiled on"), __DATE__, __TIME__);
+        gui_printf (NULL, "%s%s%s%s, %s %s %s\n",
+                    (cfg_look_startup_logo) ? "    " : "",
+                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                    PACKAGE_STRING,
+                    GUI_NO_COLOR,
+                    _("compiled on"), __DATE__, __TIME__);
     }
     if (cfg_look_startup_logo ||
         (cfg_look_weechat_slogan && cfg_look_weechat_slogan[0]) ||
         cfg_look_startup_version)
-        gui_printf_color (NULL, COLOR_WIN_CHAT_PREFIX1,
-            "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
+        gui_printf (NULL,
+                    "%s-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n",
+                    GUI_COLOR(COLOR_WIN_CHAT_NICK));
     
     wee_log_printf ("%s (%s %s %s)\n",
                     PACKAGE_STRING, _("compiled on"), __DATE__, __TIME__);

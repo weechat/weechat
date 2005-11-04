@@ -384,6 +384,7 @@ t_irc_command irc_commands[] =
   { "375", N_("a server message"),            "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
   { "376", N_("a server message"),            "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
   { "381", N_("you are now an IRC operator"), "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
+  { "382", N_("rehashing"),                   "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
   { "391", N_("server local time"),           "", "", 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
   { "401", N_("no such nick/channel"),
     "", "", 0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_error },

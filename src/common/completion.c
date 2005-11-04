@@ -425,7 +425,7 @@ completion_build_list (t_completion *completion, void *channel)
                             weelist_add (&completion->completion_list,
                                          &completion->last_completion,
                                          (option_value) ?
-                                             gui_get_color_by_value (*((int *)(option_value))) :
+                                             gui_get_color_name (*((int *)(option_value))) :
                                              option->default_string);
                             break;
                         case OPTION_TYPE_STRING:

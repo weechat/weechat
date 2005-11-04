@@ -36,7 +36,7 @@
 
 @title WeeChat - Gui@'on de usuario.
 @subtitle Cliente IRC r@'apido, peque@~no y extensible
-@subtitle Documentaci@'on para WeeChat v0.1.6-cvs - 30 de octubre de 2005
+@subtitle Documentaci@'on para WeeChat v0.1.6-cvs - 4 de noviembre de 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -298,9 +298,6 @@ Typo: entero (valores: entre 1 y 10), valor por defecto: 10@*
 @item look_color_actions
 Mostrar acciones con colores diferentes@*
 Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
-@item look_remove_colors_from_msgs
-Quitar colores en los mensajes entrantes@*
-Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item look_nicklist
 Mostrar ventana de usuarios (para las ventanas de canal)@*
 Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
@@ -453,7 +450,7 @@ Color para el texto de entrada (alias)@*
 Typo: color (color Curses @'o Gtk), valor por defecto: 'lightcyan'@*
 @item col_input_delimiters
 Color for input text (delimiters)@*
-Typo: color (color Curses @'o Gtk), valor por defecto: 'white'@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'cyan'@*
 @item col_input_bg
 Color de fondo para la ventana de entrada@*
 Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
@@ -604,6 +601,12 @@ Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
 @item irc_highlight
 Comma separated list of words to highlight (case insensitive comparison, words may begin or end with "*" for partial match)@*
 Typo: cadena (cualquier cadena), valor por defecto: ''@*
+@item irc_colors_receive
+Keep colors from incoming messages@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
+@item irc_colors_send
+Allow user to send colors with special codes (%B=bold, %Cxx,yy=color, %U=underline, %R=reverse)@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item dcc_auto_accept_files
 Aceptar autom@'aticamente los ficheros dcc entrantes@*
 Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
@@ -1834,15 +1837,17 @@ void *handler_pointer)}@*
 @*
 @emph{Notes:}@*
 @*
-Function called when message is received has to return one of these values:@*
+Function called when message is received has to return one of these
+values (prefixed by ``weechat::'' for Perl and ``weechat.'' for
+Python):@*
 @itemize @minus
-@item @option{PLUGIN_RC_KO or -1}: function failed
-@item @option{PLUGIN_RC_OK or 0}: function successfully completed
-@item @option{PLUGIN_RC_OK_IGNORE_WEECHAT or 1}: message will not be sent to
+@item @option{PLUGIN_RC_KO}: function failed
+@item @option{PLUGIN_RC_OK}: function successfully completed
+@item @option{PLUGIN_RC_OK_IGNORE_WEECHAT}: message will not be sent to
 WeeChat
-@item @option{PLUGIN_RC_OK_IGNORE_PLUGINS or 2}: message will not be sent to
+@item @option{PLUGIN_RC_OK_IGNORE_PLUGINS}: message will not be sent to
 other plugins
-@item @option{PLUGIN_RC_OK_IGNORE_ALL or 3}: message will not be sent to
+@item @option{PLUGIN_RC_OK_IGNORE_ALL}: message will not be sent to
 WeeChat neither other plugins
 @end itemize
 @*
@@ -1891,10 +1896,12 @@ file: %s", (arguments) ? arguments : "none");}@*
 @*
 @emph{Notes:}@*
 @*
-Function called when message is received has to return one of these values:@*
+Function called when message is received has to return one of these
+values (prefixed by ``weechat::'' for Perl and ``weechat.'' for
+Python):@*
 @itemize @minus
-@item @option{PLUGIN_RC_KO or -1}: function failed
-@item @option{PLUGIN_RC_OK or 0}: function successfully completed
+@item @option{PLUGIN_RC_KO}: function failed
+@item @option{PLUGIN_RC_OK}: function successfully completed
 @end itemize
 @*
 
@@ -2214,151 +2221,195 @@ void weechat_plugin_end (t_weechat_plugin *plugin)
 Three plugins are provided with WeeChat to load scripts: Perl,
 Python and Ruby.
 
-@subsection Perl scripts
+@subsection Load/unload scripts
 
-@subsubsection Cargar/descargar programas Perl
+Perl scripts are loaded and unloaded with @command{/perl},
+@command{/python} and @command{/ruby} commands.
+(type @kbd{/help} within WeeChat to get help about commands).@*
 
-Los programas Perl se cargan y descargan con el comando @command{/perl}
-(escribiendo @kbd{/help perl} en WeeChat para obtener la ayuda acerca del comando).@*
-
-@emph{Ejemplos:}@*
+@emph{Examples:}@*
 @itemize @bullet
 @item
-Cargar un programa Perl: @kbd{/perl load /tmp/ejemplo.pl}@*
-@item Descargar todos los programas Perl: @kbd{/perl unload}@*
+Load a Perl script: @kbd{/perl load /tmp/sample.pl}@*
 @item
-Listar los programas Perl cargados: @kbd{/perl}@*
+Unload all Perl scripts: @kbd{/perl unload}@*
+@item
+List all Perl scripts: @kbd{/perl}@*
+@item
+Load a Python script: @kbd{/python load /tmp/sample.py}@*
+@item
+Unload all Python scripts: @kbd{/python unload}@*
+@item
+List all Python scripts: @kbd{/python}@*
 @end itemize
 
-@subsubsection Interfaz WeeChat / Perl
+@subsection WeeChat / Scripts API
 
 @itemize @bullet
 @item
-@command{weechat::register ( nombre, versi@'on, funci@'on_final, descripci@'on );}@*
+Perl: @command{weechat::register ( name, version, shutdown_function,
+description );}@*
+Python: @command{weechat.register ( name, version, shutdown_function,
+description )}@*
 @*
-Es la primera funci@'on a la que llamar en el programa Perl.@*
-Todos los programas en Perl para WeeChat deben llamar esta funci@'on.@*
+This is first function to call in script.@*
+All scripts for WeeChat should call this function.@*
 
-@emph{Par@'ametros:}
+@emph{Arguments:}
 @itemize @minus
-@item @option{nombre}: nombre @'unico para identificar el programa (cada programa debe
-tener un nombre distinto)
-@item @option{versi@'on}: versi@'on del programa
-@item @option{funci@'on_final}: funci@'on Perl llamada cuando el programa finaliza
-(par@'ametro facultativo, una cadena llena significa que no hay ninguna funci@'on que llamar)
-@item @option{descripci@'on}: descripci@'on breve del programa
+@item @option{name}: unique name to identify script (each script must have
+unique name)
+@item @option{version}: script's version
+@item @option{shutdown_function}: function called when script is
+unloaded (optional parameter, empty string means nothing is called at the end)
+@item @option{description}: short description of script.
 @end itemize
 @*
 @emph{Return value:}@*
 @*
 1 if script was registered, 0 if error occured.@*
 @*
-@emph{Ejemplo:}@*
+@emph{Perl example:}@*
 @*
-@code{weechat::register ("ejemplo", "1.0", "fin_ejemplo", "programa de ejemplo...");}@*
+@code{weechat::register ("sample", "1.0", "sample_end", "Sample
+script!");}@*
+@*
+@emph{Python example:}@*
+@*
+@code{weechat.register ("sample", "1.0", "sample_end", "Sample
+script!")}@*
 @*
 
 @item
-@command{weechat::print ( mensaje, [canal, [servidor]] );}@*
+Perl: @command{weechat::print ( message, [channel, [server]] );}@*
+Python: @command{weechat.prnt ( message, [channel, [server]] )}@*
 @*
-Escribe un mensaje en un canal.@*
+Print message in a channel.@*
 
-@emph{Par@'ametros:}
+@emph{Arguments:}
 @itemize @minus
-@item @option{mensaje}: mensaje a escribir
-@item @option{canal}: nombre del canal
-@item @option{servidor}: (opcional) nombre interno del servidor
+@item @option{message}: message to display
+@item @option{channel}: name of channel
+@item @option{server}: internal name of server
 @end itemize
 @*
 @emph{Return value:}@*
 @*
 1 if successful, 0 if error occured.@*
 @*
-@emph{Ejemplos:}@*
+@emph{Perl examples:}@*
 @*
-@code{weechat::print ("mensaje");}@*
-@code{weechat::print ("mensaje", "#weechat");}@*
-@code{weechat::print ("mensaje", "#weechat", "freenode");}@*
+@code{weechat::print ("message");}@*
+@code{weechat::print ("message", "#weechat");}@*
+@code{weechat::print ("message", "#weechat", "freenode");}@*
+@*
+@emph{Python examples:}@*
+@*
+@code{weechat.prnt ("message")}@*
+@code{weechat.prnt ("message", "#weechat")}@*
+@code{weechat.prnt ("message", "#weechat", "freenode")}@*
 @*
 
 @item
-@command{weechat::print_infobar ( retraso, mensaje );}@*
+Perl: @command{weechat::print_infobar ( delay, message );}@*
+Python: @command{weechat.print_infobar ( delay, message )}@*
 @*
-Escribir un mensaje en la barra de informaciones.@*
+Print message in infobar.@*
 
-@emph{Par@'ametros:}
+@emph{Arguments:}
 @itemize @minus
-@item @option{plazo}: periodo en segundo durante el cual se mostrar@'a el mensaje
-(si es 0, el mensaje no se borrar@'a).
-@item @option{message}: mensaje que se escribir@'a en la barra de informaciones.
+@item @option{delay}: after this delay (in seconds), message will be erased
+(if 0, message will not be erased).
+@item @option{message}: message to display
 @end itemize
 @*
 @emph{Return value:}@*
 @*
 1 if successful, 0 if error occured.@*
 @*
-@emph{Ejemplo:}@*
+@emph{Perl example:}@*
 @*
-@code{weechat::print_infobar (5, "mensaje");}@*
+@code{weechat::print_infobar (5, "message");}@*
+@*
+@emph{Python example:}@*
+@*
+@code{weechat.print_infobar (5, "message")}@*
 @*
 
 @item
-@command{weechat::add_message_handler ( nombre, funci@'on );}@*
+Perl: @command{weechat::add_message_handler ( name, function );}@*
+Python: @command{weechat.add_message_handler ( name, function )}@*
 @*
-Adjunta una funci@'on Perl a un mensaje IRC.@*
-Se llamar@'a a la funci@'on cada vez que el mensaje IRC se reciba.@*
+Attach a script function to an IRC message.@*
+Function will be called each time IRC message will be received.@*
 
-@emph{Par@'ametros:}
+@emph{Arguments:}
 @itemize @minus
-@item @option{nombre}: nombre del mensaje IRC que producir@'a la llamada a la funci@'on.@*
-Para saber qu@'e tipo de mensajes IRC existen puede leer las 
-RFC 1459 y/o 2812:@*
+@item @option{name}: name of IRC message@*
+To know list of IRC messages, please refer to RFC 1459 and/or 2812:@*
 RFC 1459: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc1459.txt}@*
 RFC 2812: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
-@item @option{funci@'on}: funci@'on en Perl llamada cuando se reciba el mensaje.
+@item @option{function}: function called when message is received
 @end itemize
 @*
 @emph{Return value:}@*
 @*
-1 if Perl function was attached, 0 if error occured.@*
+1 if function was attached, 0 if error occured.@*
 @*
-@emph{Ejemplo:}@*
+@emph{Perl example:}@*
 @*
-@code{weechat::add_message_handler ("privmsg", mi_funcion);}@*
-@code{sub mi_funcion}@*
+@code{weechat::add_message_handler ("privmsg", my_function);}@*
+@code{sub my_function}@*
 @code{@{ }@*
-@code{@ @ @ @ weechat::print ("serveur=$_[0]\n");}@*
-@code{@ @ @ @ ($null, $canal, $mensaje) = split ":",$_[1],3;}@*
-@code{@ @ @ @ ($mascara, $null, $canal) = split " ", $canal;}@*
-@code{@ @ @ @ weechat::print ("masc=$mascara, canal=$canal, msj=$mensaje\n");}@*
+@code{@ @ @ @ weechat::print ("server=$_[0]\n");}@*
+@code{@ @ @ @ ($null, $channel, $message) = split ":",$_[1],3;}@*
+@code{@ @ @ @ ($hostmask, $null, $channel) = split " ", $channel;}@*
+@code{@ @ @ @ weechat::print ("host=$hostmask, chan=$channel, msg=$message\n");}@*
 @code{@ @ @ @ return 0;}@*
 @code{@} }@*
 @*
+@*
+@emph{Python example:}@*
+@*
+@code{weechat.add_message_handler ("privmsg", my_function)}@*
+@code{def my_function(server, args):}@*
+@code{@ @ @ @ weechat.prnt("server="+server)}@*
+@code{@ @ @ @ null, channel, message = string.split(args, ":", 2)}@*
+@code{@ @ @ @ hostmask, null, channel = string.split(string.strip(channel), " ", 2)}@*
+@code{@ @ @ @ weechat.prnt("host="+hostmask+", channel="+channel+", message="+message)}@*
+@code{@ @ @ @ return 0}@*
+@*
 @emph{Notes:}@*
 @*
-Function called when message is received has to return one of these values:@*
+Function called when message is received has to return one of these
+values (prefixed by ``weechat::'' for Perl and ``weechat.'' for
+Python):@*
 @itemize @minus
-@item @option{-1}: function failed
-@item @option{0}: function successfully completed
-@item @option{1}: message will not be sent to WeeChat
-@item @option{2}: message will not be sent to other plugins
-@item @option{3}: message will not be sent to WeeChat neither other plugins
+@item @option{PLUGIN_RC_KO}: function failed
+@item @option{PLUGIN_RC_OK}: function successfully completed
+@item @option{PLUGIN_RC_OK_IGNORE_WEECHAT}: message will not be sent
+to WeeChat
+@item @option{PLUGIN_RC_OK_IGNORE_PLUGINS}: message will not be sent
+to other plugins
+@item @option{PLUGIN_RC_OK_IGNORE_ALL}: message will not be sent to
+WeeChat neither other plugins
 @end itemize
 @*
 
 @item
-@command{weechat::add_command_handler ( nombre, funci@'on );}@*
+Perl: @command{weechat::add_command_handler ( name, function );}@*
+Python: @command{weechat.add_command_handler ( name, function )}@*
 @*
-A@~nadir un nuevo comando WeeChat, con un enlace a una funci@'on en Perl.@*
-Se llamar@'a a la funci@'on cuando el usuario lance el comando con @kbd{/nombre}.@*
+Create new WeeChat command, linked with script function.@*
+Function will be called when user will launch command with @kbd{/name}.@*
 
-@emph{Par@'ametros:}
+@emph{Arguments:}
 @itemize @minus
-@item @option{nombre}: nombre del nuevo comando@*
-Puede ser un comando que ya existe, y en este caso el nuevo comando sustituir@'a
-el antiguo. Ten cuidado cuando sustituyas a un comando de WeeChat, no podr@'a acceder 
-al antiguo comando si el script Perl est@'a cargado.
-@item @option{funcion}: funci@'on Perl assiciada al comando.
+@item @option{name}: name of new command@*
+This name may be existing command, so that the command is overrided by
+script function. Be careful when overriding WeeChat commands, they'll not be
+available until your script will be unloaded.
+@item @option{function}: function linked with command
 @item @option{description}: command description (displayed by /help
 command)
 @item @option{arguments}: short description of command arguments
@@ -2369,48 +2420,63 @@ arguments (displayed by /help command)
 @*
 @emph{Return value:}@*
 @*
-1 if Perl function was attached, 0 if error occured.@*
+1 if function was attached, 0 if error occured.@*
 @*
-@emph{Ejemplo:}@*
+@emph{Perl example:}@*
 @*
-@code{weechat::add_command_handler ("comando", mi_comando);}@*
-@code{sub mi_comando}@*
+@code{weechat::add_command_handler ("command", my_command);}@*
+@code{sub my_command}@*
 @code{@{ }@*
-@code{@ @ @ @ weechat::print("Servidor: $_[0], Par@'ametros: $_[1]\n");}@*
+@code{@ @ @ @ weechat::print("Server: $_[0], arguments: $_[1]\n");}@*
 @code{@ @ @ @ return 0;}@*
 @code{@} }@*
 @*
+@emph{Python example:}@*
+@*
+@code{weechat.add_command_handler ("command", my_command)}@*
+@code{def my_command(server, args):}@*
+@code{@ @ @ @ weechat.prnt("server:"+server+" arguments:"+args)}@*
+@code{@ @ @ @ return 0}@*
+@*
 @emph{Notes:}@*
 @*
-Function called when command is executed has to return one of these values:@*
+Function called when command is executed has to return one of these
+values (prefixed by ``weechat::'' for Perl and ``weechat.'' for
+Python):@*
 @itemize @minus
-@item @option{-1}: function failed
-@item @option{0}: function successfully completed
+@item @option{PLUGIN_RC_KO}: function failed
+@item @option{PLUGIN_RC_OK}: function successfully completed
 @end itemize
 @*
 
 @item
-@command{weechat::remove_handler ( name, function );}@*
+Perl: @command{weechat::remove_handler ( name, function );}@*
+Python: @command{weechat.remove_handler ( name, function )}@*
 @*
 Remove a message or command handler.@*
 
 @emph{Arguments:}
 @itemize @minus
 @item @option{name}: name of IRC message or command handler
-@item @option{function}: Perl function
+@item @option{function}: function
 @end itemize
 @*
 @emph{Return value:}@*
 @*
 1 if successful, 0 if error occured.@*
 @*
-@emph{Example:}@*
+@emph{Perl example:}@*
 @*
 @code{weechat::remove_handler ("command", my_command);}@*
 @*
+@emph{Python example:}@*
+@*
+@code{weechat.remove_handler ("command", my_command)}@*
+@*
 
 @item
-@command{weechat::command ( command, [channel, [server]] );}@*
+Perl: @command{weechat::command ( command, [channel, [server]] );}@*
+Python: @command{weechat.command ( command, [channel, [server]] )}@*
 @*
 Execute a command or send a message to a channel.@*
 
@@ -2425,384 +2491,13 @@ Execute a command or send a message to a channel.@*
 @*
 1 if successful, 0 if error occured.@*
 @*
-@emph{Examples:}@*
+@emph{Perl examples:}@*
 @*
 @code{weechat::command ("hello world!");}@*
 @code{weechat::command ("/kick toto please leave this chan", "#weechat");}@*
 @code{weechat::command ("/nick newnick", "", "freenode");}@*
 @*
-
-@item
-@command{weechat::get_info ( nombre, [servidor, [canal] ] );}@*
-@*
-Obtener informaciones distintas sobre WeeChat, el servidor o el usuario.@*
-
-@emph{Par@'ametros:}
-@itemize @minus
-@item @option{nombre}: nombre de la informaci@'on que se quiere obtener:
-@itemize @minus
-@item @option{version}: obtener la versi@'on de WeeChat
-@item @option{nick}: obtener el seud@'onimo
-@item @option{channel}: obtener el nombre del canal
-@item @option{server}: obtener el nombre del servidor
-@item @option{away}: get ``away'' flag
-@item @option{weechat_dir}: get WeeChat home dir
-@item @option{weechat_libdir}: get WeeChat system lib dir
-@item @option{weechat_sharedir}: get WeeChat system share dir
-@end itemize
-@item @option{servidor}: nombre interno del servidor
-@item @option{canal}: nombre del canal
-@end itemize
-@*
-@emph{Return value:}@*
-@*
-Asked info, empty if error occured or info was not found.@*
-@*
-@emph{Ejemplos:}@*
-@*
-@code{$version = weechat::get_info("version");}@*
-@code{$nick = weechat::get_info("nick", "freenode");}@*
-@*
-
-@item
-@command{weechat::get_dcc_info ( );}@*
-@*
-Get DCC list.@*
-
-Returned array has following fields:
-@itemize @minus
-@item server: IRC server
-@item channel: IRC channel
-@item type: DCC type:
-@itemize @minus
-@item 0: chat (received)
-@item 1: chat (sent)
-@item 2: file (receiving)
-@item 3: file (sending)
-@end itemize
-@item status: DCC status:
-@itemize @minus
-@item 0: waiting
-@item 1: connecting
-@item 2: active
-@item 3: done
-@item 4: failed
-@item 5: aborted
-@end itemize
-@item start_time: date/time of DCC creation
-@item start_transfer: date/time of transfer start
-@item addr: remote address
-@item port: port used for DCC
-@item nick: remote nick
-@item filename: filename
-@item local_filename: local filename
-@item size: file size
-@item pos: current position in file
-@item start_resume: restart position after interruption
-@item bytes_per_sec: bytes sent/received per second
-@end itemize
-@*
-@emph{Return value:}@*
-@*
-DCC list, 0 if error occured.@*
-@*
-
-@item
-@command{weechat::get_config ( option );}@*
-@*
-Get WeeChat config option value.@*
-
-@emph{Arguments:}
-@itemize @minus
-@item @option{option}: name of option
-@end itemize
-@*
-@emph{Return value:}@*
-@*
-Value of option, empty if error occured or option was not found.@*
-@*
-@emph{Examples:}@*
-@*
-@code{$value1 = weechat::get_config ("look_nicklist");}@*
-@code{$value2 = weechat::get_config ("freenode.server_autojoin");}@*
-@*
-
-@item
-@command{weechat::set_config ( option, value );}@*
-@*
-Get WeeChat config option value.@*
-
-@emph{Arguments:}
-@itemize @minus
-@item @option{option}: name of option
-@item @option{value}: new value for option
-@end itemize
-@*
-@emph{Return value:}@*
-@*
-1 if successful, 0 if error occured.@*
-@*
-@emph{Examples:}@*
-@*
-@code{weechat::set_config ("look_nicklist", "off");}@*
-@code{weechat::set_config ("freenode.server_autojoin"", "#weechat");}@*
-@*
-
-@item
-@command{weechat::get_plugin_config ( option );}@*
-@*
-Return value of a plugin option.@*
-Option is read from file ~/.weechat/plugins.rc and is like:@*
-@code{plugin.script.option=value}@*
-Note: plugin and script names are automatically added.@*
-
-@emph{Arguments:}
-@itemize @minus
-@item @option{option}: name of option
-@end itemize
-@*
-@emph{Return value:}@*
-@*
-Value of option, empty if error occured or option was not found.@*
-@*
-@emph{Example:}@*
-@*
-@code{$value = weechat::get_plugin_config ("my_var");}@*
-@*
-
-@item
-@command{weechat::set_plugin_config ( option, value );}@*
-@*
-Update value of a plugin option.@*
-Option is written in file ~/.weechat/plugins.rc and is like:@*
-@code{plugin.script.option=value}@*
-Note: plugin and script names are automatically added.@*
-
-@emph{Arguments:}
-@itemize @minus
-@item @option{option}: name of option
-@item @option{value}: new value for option
-@end itemize
-@*
-@emph{Return value:}@*
-@*
-1 if successful, 0 if error occured.@*
-@*
-@emph{Example:}@*
-@*
-@code{weechat::set_plugin_config ("my_var", "value");}@*
-@*
-
-@end itemize
-
-@subsection Python scripts
-
-@subsubsection Cargar/descargar programas Python
-
-Los programas Python se cargan y descargan con el comando @command{/python}
-(escribiendo @kbd{/help python} en WeeChat para obtener la ayuda acerca del comando).@*
-
-@emph{Ejemplos:}@*
-@itemize @bullet
-@item
-Cargar un programa Python: @kbd{/python load /tmp/ejemplo.py}@*
-@item Descargar todos los programas Python: @kbd{/python unload}@*
-@item
-Listar los programas Python cargados: @kbd{/python}@*
-@end itemize
-
-@subsubsection Interfaz WeeChat / Python
-
-@itemize @bullet
-@item
-@command{weechat.register ( nombre, versi@'on, funci@'on_final, descripci@'on )}@*
-@*
-Es la primera funci@'on a la que llamar en el programa Python.@*
-Todos los programas en Python para WeeChat deben llamar esta funci@'on.@*
-
-@emph{Par@'ametros:}
-@itemize @minus
-@item @option{nombre}: nombre @'unico para identificar el programa (cada programa debe
-tener un nombre distinto)
-@item @option{versi@'on}: versi@'on del programa
-@item @option{funci@'on_final}: funci@'on Python llamada cuando el programa finaliza
-(par@'ametro facultativo, una cadena llena significa que no hay ninguna funci@'on que llamar)
-@item @option{descripci@'on}: descripci@'on breve del programa
-@end itemize
-@*
-@emph{Return value:}@*
-@*
-1 if script was registered, 0 if error occured.@*
-@*
-@emph{Ejemplo:}@*
-@*
-@code{weechat.register ("ejemplo", "1.0", "fin_ejemplo", "programa de ejemplo...")}@*
-@*
-
-@item
-@command{weechat.prnt ( mensaje, [canal, [servidor]] )}@*
-@*
-Escribe un mensaje en un canal.@*
-
-@emph{Par@'ametros:}
-@itemize @minus
-@item @option{mensaje}: mensaje a escribir
-@item @option{canal}: nombre del canal
-@item @option{servidor}: (opcional) nombre interno del servidor
-@end itemize
-@*
-@emph{Return value:}@*
-@*
-1 if successful, 0 if error occured.@*
-@*
-@emph{Ejemplos:}@*
-@*
-@code{weechat.prnt ("mensaje")}@*
-@code{weechat.prnt ("mensaje", "#weechat")}@*
-@code{weechat.prnt ("mensaje", "#weechat", "freenode")}@*
-@*
-
-@item
-@command{weechat.print_infobar ( retraso, mensaje )}@*
-@*
-Escribir un mensaje en la barra de informaciones.@*
-
-@emph{Par@'ametros:}
-@itemize @minus
-@item @option{retraso}: periodo en segundo durante el cual se mostrar@'a el mensaje
-(si es 0, el mensaje no se borrar@'a).
-@item @option{mensaje}: mensaje que se escribir@'a en la barra de informaciones.
-@end itemize
-@*
-@emph{Return value:}@*
-@*
-1 if successful, 0 if error occured.@*
-@*
-@emph{Ejemplo:}@*
-@*
-@code{weechat.print_infobar (5, "mensaje")}@*
-@*
-
-@item
-@command{weechat.add_message_handler ( nombre, funci@'on )}@*
-@*
-Adjunta una funci@'on Python a un mensaje IRC.@*
-Se llamar@'a a la funci@'on cada vez que el mensaje IRC se reciba.@*
-
-@emph{Par@'ametros:}
-@itemize @minus
-@item @option{nombre}: nombre del mensaje IRC que producir@'a la llamada a la funci@'on.@*
-Para saber qu@'e tipo de mensajes IRC existen puede leer las 
-RFC 1459 y/o 2812:@*
-RFC 1459: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc1459.txt}@*
-RFC 2812: @uref{ftp://ftp.rfc-editor.org/in-notes/rfc2812.txt}
-@item @option{funci@'on}: funci@'on en Python llamada cuando se reciba el mensaje.
-@end itemize
-@*
-@emph{Return value:}@*
-@*
-1 if Python function was attached, 0 if error occured.@*
-@*
-@emph{Ejemplo:}@*
-@*
-@code{weechat.add_message_handler ("privmsg", mi_funcion)}@*
-@code{def mi_funcion(servidor, args):}@*
-@code{@ @ @ @ weechat.prnt("servidor="+servidor)}@*
-@code{@ @ @ @ null, canal, mensaje = string.split(args, ":", 2)}@*
-@code{@ @ @ @ mascara, null, canal = string.split(string.strip(canal), " ", 2)}@*
-@code{@ @ @ @ weechat.prnt("masc="+mascara+", canal="+canal+", msj="+mensaje)}@*
-@code{@ @ @ @ return 0}@*
-@*
-@emph{Notes:}@*
-@*
-Function called when message is received has to return one of these values:@*
-@itemize @minus
-@item @option{-1}: function failed
-@item @option{0}: function successfully completed
-@item @option{1}: message will not be sent to WeeChat
-@item @option{2}: message will not be sent to other plugins
-@item @option{3}: message will not be sent to WeeChat neither other plugins
-@end itemize
-@*
-
-@item
-@command{weechat.add_command_handler ( nombre, funci@'on )}@*
-@*
-A@~nadir un nuevo comando WeeChat, con un enlace a una funci@'on en Python.@*
-Se llamar@'a a la funci@'on cuando el usuario lance el comando con @kbd{/nombre}.@*
-
-@emph{Par@'ametros:}
-@itemize @minus
-@item @option{nombre}: nombre del nuevo comando@*
-Puede ser un comando que ya existe, y en este caso el nuevo comando sustituir@'a
-el antiguo. Ten cuidado cuando sustituyas a un comando de WeeChat, no podr@'a acceder 
-al antiguo comando si el script Python est@'a cargado.
-@item @option{funcion}: funci@'on Python assiciada al comando.
-@item @option{description}: command description (displayed by /help
-command)
-@item @option{arguments}: short description of command arguments
-(displayed by /help command)
-@item @option{arguments_description}: long description of command
-arguments (displayed by /help command)
-@end itemize
-@*
-@emph{Return value:}@*
-@*
-1 if Python function was attached, 0 if error occured.@*
-@*
-@emph{Ejemplo:}@*
-@*
-@code{weechat.add_command_handler ("comando", mi_comando)}@*
-@code{def mi_comando(servidor, args):}@*
-@code{@ @ @ @ weechat.prnt("Servidor:"+servidor+" Par@'ametros:"+args)}@*
-@code{@ @ @ @ return 0}@*
-@*
-@emph{Notes:}@*
-@*
-Function called when command is executed has to return one of these values:@*
-@itemize @minus
-@item @option{-1}: function failed
-@item @option{0}: function successfully completed
-@end itemize
-@*
-
-@item
-@command{weechat.remove_handler ( name, function );}@*
-@*
-Remove a message or command handler.@*
-
-@emph{Arguments:}
-@itemize @minus
-@item @option{name}: name of IRC message or command handler
-@item @option{function}: Python function
-@end itemize
-@*
-@emph{Return value:}@*
-@*
-1 if successful, 0 if error occured.@*
-@*
-@emph{Example:}@*
-@*
-@code{weechat.remove_handler ("command", my_command);}@*
-@*
-
-@item
-@command{weechat.command ( command, [channel, [server]] )}@*
-@*
-Execute a command or send a message to a channel.@*
-
-@emph{Arguments:}
-@itemize @minus
-@item @option{command}: command to execute (or message to send in a channel)
-@item @option{channel}: name of channel
-@item @option{server}: internal name of server
-@end itemize
-@*
-@emph{Return value:}@*
-@*
-1 if successful, 0 if error occured.@*
-@*
-@emph{Examples:}@*
+@emph{Python examples:}@*
 @*
 @code{weechat.command ("hello world!")}@*
 @code{weechat.command ("/kick toto please leave this chan", "#weechat")}@*
@@ -2810,38 +2505,47 @@ Execute a command or send a message to a channel.@*
 @*
 
 @item
-@command{weechat.get_info ( nombre, [servidor] )}@*
+Perl: @command{weechat::get_info ( name, [server, [channel] ] );}@*
+Python: @command{weechat.get_info ( name, [server, [channel] ] )}@*
 @*
-Obtener informaciones distintas sobre WeeChat, el servidor o el usuario.@*
+Get various info about WeeChat, server or user.@*
 
-@emph{Par@'ametros:}
+@emph{Arguments:}
 @itemize @minus
-@item @option{nombre}: nombre de la informaci@'on que se quiere obtener:
+@item @option{name}: name of info to retrieve:
 @itemize @minus
-@item @option{version}: obtener la versi@'on de WeeChat
-@item @option{nick}: obtener el seud@'onimo
-@item @option{channel}: obtener el nombre del canal
-@item @option{server}: obtener el nombre del servidor
+@item @option{version}: get WeeChat version
+@item @option{nick}: get nickname
+@item @option{channel}: get channel name
+@item @option{server}: get server name
 @item @option{away}: get ``away'' flag
 @item @option{weechat_dir}: get WeeChat home dir
 @item @option{weechat_libdir}: get WeeChat system lib dir
 @item @option{weechat_sharedir}: get WeeChat system share dir
+
 @end itemize
-@item @option{servidor}: nombre interno del servidor
+@item @option{server}: internal name of server
+@item @option{channel}: channel name
 @end itemize
 @*
 @emph{Return value:}@*
 @*
 Asked info, empty if error occured or info was not found.@*
 @*
-@emph{Ejemplos:}@*
+@emph{Perl examples:}@*
+@*
+@code{$version = weechat::get_info("version");}@*
+@code{$nick = weechat::get_info("nick", "freenode");}@*
+@*
+@emph{Python examples:}@*
 @*
 @code{$version = weechat.get_info("version")}@*
 @code{$nick = weechat.get_info("nick", "freenode")}@*
 @*
 
 @item
-@command{weechat.get_dcc_info ( );}@*
+Perl: @command{weechat::get_dcc_info ( );}@*
+Python: @command{weechat.get_dcc_info ( );}@*
 @*
 Get DCC list.@*
 
@@ -2884,7 +2588,8 @@ DCC list, 0 if error occured.@*
 @*
 
 @item
-@command{weechat.get_config ( option );}@*
+Perl: @command{weechat::get_config ( option );}@*
+Python: @command{weechat.get_config ( option )}@*
 @*
 Get WeeChat config option value.@*
 
@@ -2897,14 +2602,20 @@ Get WeeChat config option value.@*
 @*
 Value of option, empty if error occured or option was not found.@*
 @*
-@emph{Examples:}@*
+@emph{Perl examples:}@*
 @*
-@code{$value1 = weechat.get_config ("look_nicklist");}@*
-@code{$value2 = weechat.get_config ("freenode.server_autojoin");}@*
+@code{$value1 = weechat::get_config ("look_nicklist");}@*
+@code{$value2 = weechat::get_config ("freenode.server_autojoin");}@*
+@*
+@emph{Python examples:}@*
+@*
+@code{$value1 = weechat.get_config ("look_nicklist")}@*
+@code{$value2 = weechat.get_config ("freenode.server_autojoin")}@*
 @*
 
 @item
-@command{weechat.set_config ( option, value );}@*
+Perl: @command{weechat::set_config ( option, value );}@*
+Python: @command{weechat.set_config ( option, value )}@*
 @*
 Get WeeChat config option value.@*
 
@@ -2918,14 +2629,21 @@ Get WeeChat config option value.@*
 @*
 1 if successful, 0 if error occured.@*
 @*
-@emph{Examples:}@*
+@emph{Perl examples:}@*
 @*
-@code{weechat.set_config ("look_nicklist", "off");}@*
-@code{weechat.set_config ("freenode.server_autojoin"", "#weechat");}@*
+@code{weechat::set_config ("look_nicklist", "off");}@*
+@code{weechat::set_config ("freenode.server_autojoin"",
+"#weechat");}@*
+@*
+@emph{Python examples:}@*
+@*
+@code{weechat.set_config ("look_nicklist", "off")}@*
+@code{weechat.set_config ("freenode.server_autojoin"", "#weechat")}@*
 @*
 
 @item
-@command{weechat.get_plugin_config ( option );}@*
+Perl: @command{weechat::get_plugin_config ( option );}@*
+Python: @command{weechat.get_plugin_config ( option )}@*
 @*
 Return value of a plugin option.@*
 Option is read from file ~/.weechat/plugins.rc and is like:@*
@@ -2941,13 +2659,18 @@ Note: plugin and script names are automatically added.@*
 @*
 Value of option, empty if error occured or option was not found.@*
 @*
-@emph{Example:}@*
+@emph{Perl example:}@*
 @*
-@code{$value = weechat.get_plugin_config ("my_var");}@*
+@code{$value = weechat::get_plugin_config ("my_var");}@*
+@*
+@emph{Python example:}@*
+@*
+@code{$value = weechat.get_plugin_config ("my_var")}@*
 @*
 
 @item
-@command{weechat.set_plugin_config ( option, value );}@*
+Perl: @command{weechat::set_plugin_config ( option, value );}@*
+Python: @command{weechat.set_plugin_config ( option, value )}@*
 @*
 Update value of a plugin option.@*
 Option is written in file ~/.weechat/plugins.rc and is like:@*
@@ -2964,16 +2687,16 @@ Note: plugin and script names are automatically added.@*
 @*
 1 if successful, 0 if error occured.@*
 @*
-@emph{Example:}@*
+@emph{Perl example:}@*
 @*
-@code{weechat.set_plugin_config ("my_var", "value");}@*
+@code{weechat::set_plugin_config ("my_var", "value");}@*
+@*
+@emph{Python example:}@*
+@*
+@code{weechat.set_plugin_config ("my_var", "value")}@*
 @*
 
 @end itemize
-
-@subsection Ruby scripts
-
-@exclamdown{}No desarrollado!
 
 
 @c **************************** Autores / Soporte *****************************

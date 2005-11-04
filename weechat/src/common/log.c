@@ -73,28 +73,6 @@ log_write (t_gui_buffer *buffer, char *message)
 }
 
 /*
- * log_write_line: writes a WeeChat line to log file
- */
-
-void
-log_write_line (t_gui_buffer *buffer, t_gui_line *line)
-{
-    t_gui_message *ptr_msg;
-    
-    if (buffer->log_file)
-    {    
-        log_write_date (buffer);
-        for (ptr_msg = line->messages; ptr_msg; ptr_msg = ptr_msg->next_message)
-        {
-            if (ptr_msg->type != MSG_TYPE_TIME)
-                fprintf (buffer->log_file, "%s", ptr_msg->message);
-        }
-        fprintf (buffer->log_file, "\n");
-        fflush (buffer->log_file);
-    }
-}
-
-/*
  * log_start: starts a log
  */
 

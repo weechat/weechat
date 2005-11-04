@@ -49,7 +49,7 @@ nick_find_color (t_irc_nick *nick)
     }
     color = (color % cfg_look_color_nicks_number);
     
-    return COLOR_WIN_NICK_FIRST + color;
+    return COLOR_WIN_NICK_1 + color;
 }
 
 /*

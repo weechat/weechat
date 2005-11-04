@@ -26,57 +26,114 @@
 
 #define INPUT_BUFFER_BLOCK_SIZE 256
 
-#define NUM_COLORS                      57
-#define COLOR_WIN_TITLE                 1
-#define COLOR_WIN_CHAT                  2
-#define COLOR_WIN_CHAT_TIME             3
-#define COLOR_WIN_CHAT_TIME_SEP         4
-#define COLOR_WIN_CHAT_PREFIX1          5
-#define COLOR_WIN_CHAT_PREFIX2          6
-#define COLOR_WIN_CHAT_SERVER           7
-#define COLOR_WIN_CHAT_JOIN             8
-#define COLOR_WIN_CHAT_PART             9
-#define COLOR_WIN_CHAT_NICK             10
-#define COLOR_WIN_CHAT_HOST             11
-#define COLOR_WIN_CHAT_CHANNEL          12
-#define COLOR_WIN_CHAT_DARK             13
-#define COLOR_WIN_CHAT_HIGHLIGHT        14
-#define COLOR_WIN_STATUS                15
-#define COLOR_WIN_STATUS_DELIMITERS     16
-#define COLOR_WIN_STATUS_CHANNEL        17
-#define COLOR_WIN_STATUS_DATA_MSG       18
-#define COLOR_WIN_STATUS_DATA_PRIVATE   19
-#define COLOR_WIN_STATUS_DATA_HIGHLIGHT 20
-#define COLOR_WIN_STATUS_DATA_OTHER     21
-#define COLOR_WIN_STATUS_MORE           22
-#define COLOR_WIN_INFOBAR               23
-#define COLOR_WIN_INFOBAR_DELIMITERS    24
-#define COLOR_WIN_INFOBAR_HIGHLIGHT     25
-#define COLOR_WIN_INPUT                 26
-#define COLOR_WIN_INPUT_CHANNEL         27
-#define COLOR_WIN_INPUT_NICK            28
-#define COLOR_WIN_INPUT_DELIMITERS      29
-#define COLOR_WIN_NICK                  30
-#define COLOR_WIN_NICK_AWAY             31
-#define COLOR_WIN_NICK_CHANOWNER        32
-#define COLOR_WIN_NICK_CHANADMIN        33
-#define COLOR_WIN_NICK_OP               34
-#define COLOR_WIN_NICK_HALFOP           35
-#define COLOR_WIN_NICK_VOICE            36
-#define COLOR_WIN_NICK_MORE             37
-#define COLOR_WIN_NICK_SEP              38
-#define COLOR_WIN_NICK_SELF             39
-#define COLOR_WIN_NICK_PRIVATE          40
-#define COLOR_WIN_NICK_FIRST            41
-#define COLOR_WIN_NICK_LAST             50
-#define COLOR_WIN_NICK_NUMBER           (COLOR_WIN_NICK_LAST - COLOR_WIN_NICK_FIRST + 1)
-#define COLOR_DCC_SELECTED              51
-#define COLOR_DCC_WAITING               52
-#define COLOR_DCC_CONNECTING            53
-#define COLOR_DCC_ACTIVE                54
-#define COLOR_DCC_DONE                  55
-#define COLOR_DCC_FAILED                56
-#define COLOR_DCC_ABORTED               57
+/* shift ncurses colors for compatibility with colors
+   in IRC messages (same as other IRC clients) */
+
+#define WEECHAT_COLOR_BLACK   COLOR_BLACK
+#define WEECHAT_COLOR_RED     COLOR_BLUE
+#define WEECHAT_COLOR_GREEN   COLOR_GREEN
+#define WEECHAT_COLOR_YELLOW  COLOR_CYAN
+#define WEECHAT_COLOR_BLUE    COLOR_RED
+#define WEECHAT_COLOR_MAGENTA COLOR_MAGENTA
+#define WEECHAT_COLOR_CYAN    COLOR_YELLOW
+#define WEECHAT_COLOR_WHITE   COLOR_WHITE
+
+#define COLOR_WIN_NICK_NUMBER 10
+
+typedef enum t_weechat_color t_weechat_color;
+
+enum t_weechat_color
+{
+    COLOR_WIN_TITLE = 0,
+    COLOR_WIN_CHAT,
+    COLOR_WIN_CHAT_TIME,
+    COLOR_WIN_CHAT_TIME_SEP,
+    COLOR_WIN_CHAT_PREFIX1,
+    COLOR_WIN_CHAT_PREFIX2,
+    COLOR_WIN_CHAT_SERVER,
+    COLOR_WIN_CHAT_JOIN,
+    COLOR_WIN_CHAT_PART,
+    COLOR_WIN_CHAT_NICK,
+    COLOR_WIN_CHAT_HOST,
+    COLOR_WIN_CHAT_CHANNEL,
+    COLOR_WIN_CHAT_DARK,
+    COLOR_WIN_CHAT_HIGHLIGHT,
+    COLOR_WIN_STATUS,
+    COLOR_WIN_STATUS_DELIMITERS,
+    COLOR_WIN_STATUS_CHANNEL,
+    COLOR_WIN_STATUS_DATA_MSG,
+    COLOR_WIN_STATUS_DATA_PRIVATE,
+    COLOR_WIN_STATUS_DATA_HIGHLIGHT,
+    COLOR_WIN_STATUS_DATA_OTHER,
+    COLOR_WIN_STATUS_MORE,
+    COLOR_WIN_INFOBAR,
+    COLOR_WIN_INFOBAR_DELIMITERS,
+    COLOR_WIN_INFOBAR_HIGHLIGHT,
+    COLOR_WIN_INPUT,
+    COLOR_WIN_INPUT_CHANNEL,
+    COLOR_WIN_INPUT_NICK,
+    COLOR_WIN_INPUT_DELIMITERS,
+    COLOR_WIN_NICK,
+    COLOR_WIN_NICK_AWAY,
+    COLOR_WIN_NICK_CHANOWNER,
+    COLOR_WIN_NICK_CHANADMIN,
+    COLOR_WIN_NICK_OP,
+    COLOR_WIN_NICK_HALFOP,
+    COLOR_WIN_NICK_VOICE,
+    COLOR_WIN_NICK_MORE,
+    COLOR_WIN_NICK_SEP,
+    COLOR_WIN_NICK_SELF,
+    COLOR_WIN_NICK_PRIVATE,
+    COLOR_WIN_NICK_1,
+    COLOR_WIN_NICK_2,
+    COLOR_WIN_NICK_3,
+    COLOR_WIN_NICK_4,
+    COLOR_WIN_NICK_5,
+    COLOR_WIN_NICK_6,
+    COLOR_WIN_NICK_7,
+    COLOR_WIN_NICK_8,
+    COLOR_WIN_NICK_9,
+    COLOR_WIN_NICK_10,
+    COLOR_DCC_SELECTED,
+    COLOR_DCC_WAITING,
+    COLOR_DCC_CONNECTING,
+    COLOR_DCC_ACTIVE,
+    COLOR_DCC_DONE,
+    COLOR_DCC_FAILED,
+    COLOR_DCC_ABORTED,
+    NUM_COLORS
+};
+
+/* attributes in IRC messages for color & style (bold, ..) */
+
+#define GUI_ATTR_BOLD_CHAR        '\x02'
+#define GUI_ATTR_BOLD_STR         "\x02"
+#define GUI_ATTR_COLOR_CHAR       '\x03'
+#define GUI_ATTR_COLOR_STR        "\x03"
+#define GUI_ATTR_RESET_CHAR       '\x0F'
+#define GUI_ATTR_RESET_STR        "\x0F"
+#define GUI_ATTR_FIXED_CHAR       '\x11'
+#define GUI_ATTR_FIXED_STR        "\x11"
+#define GUI_ATTR_REVERSE_CHAR     '\x12'
+#define GUI_ATTR_REVERSE_STR      "\x12"
+#define GUI_ATTR_REVERSE2_CHAR    '\x16'
+#define GUI_ATTR_REVERSE2_STR     "\x16"
+#define GUI_ATTR_ITALIC_CHAR      '\x1D'
+#define GUI_ATTR_ITALIC_STR       "\x1D"
+#define GUI_ATTR_UNDERLINE_CHAR   '\x1F'
+#define GUI_ATTR_UNDERLINE_STR    "\x1F"
+
+/* WeeChat internal attributes (should never be in IRC messages) */
+
+#define GUI_ATTR_WEECHAT_COLOR_CHAR  '\x19'
+#define GUI_ATTR_WEECHAT_COLOR_STR   "\x19"
+#define GUI_ATTR_WEECHAT_SET_CHAR    '\x1A'
+#define GUI_ATTR_WEECHAT_SET_STR     "\x1A"
+#define GUI_ATTR_WEECHAT_REMOVE_CHAR '\x1B'
+#define GUI_ATTR_WEECHAT_REMOVE_STR  "\x1B"
+
+#define GUI_COLOR(color) ((gui_color[color]) ? gui_color[color]->string : "")
+#define GUI_NO_COLOR     GUI_ATTR_RESET_STR
 
 #define SERVER(buffer)  ((t_irc_server *)(buffer->server))
 #define CHANNEL(buffer) ((t_irc_channel *)(buffer->channel))
@@ -84,6 +141,8 @@
 #define BUFFER_IS_SERVER(buffer)  ((SERVER(buffer) || (buffer->all_servers)) && !CHANNEL(buffer))
 #define BUFFER_IS_CHANNEL(buffer) (CHANNEL(buffer) && (CHANNEL(buffer)->type == CHAT_CHANNEL))
 #define BUFFER_IS_PRIVATE(buffer) (CHANNEL(buffer) && (CHANNEL(buffer)->type == CHAT_PRIVATE))
+
+#define BUFFER_HAS_NICKLIST(buffer) (BUFFER_IS_CHANNEL(buffer))
 
 #define MSG_TYPE_TIME      1
 #define MSG_TYPE_PREFIX    2
@@ -94,22 +153,16 @@
 #define MSG_TYPE_NOLOG     64
 
 #define gui_printf(buffer, fmt, argz...) \
-    gui_printf_internal(buffer, 1, MSG_TYPE_INFO, -1, fmt, ##argz)
-
-#define gui_printf_color(buffer, color, fmt, argz...) \
-    gui_printf_internal(buffer, 1, MSG_TYPE_INFO, color, fmt, ##argz)
+    gui_printf_internal(buffer, 1, MSG_TYPE_INFO, fmt, ##argz)
 
 #define gui_printf_type(buffer, type, fmt, argz...) \
-    gui_printf_internal(buffer, 1, type, -1, fmt, ##argz)
-
-#define gui_printf_type_color(buffer, type, color, fmt, argz...) \
-    gui_printf_internal(buffer, 1, type, color, fmt, ##argz)
+    gui_printf_internal(buffer, 1, type, fmt, ##argz)
 
 #define gui_printf_nolog(buffer, fmt, argz...) \
-    gui_printf_internal(buffer, 1, MSG_TYPE_INFO | MSG_TYPE_NOLOG, -1, fmt, ##argz)
+    gui_printf_internal(buffer, 1, MSG_TYPE_INFO | MSG_TYPE_NOLOG, fmt, ##argz)
 
 #define gui_printf_nolog_notime(buffer, fmt, argz...) \
-    gui_printf_internal(buffer, 0, MSG_TYPE_NOLOG, -1, fmt, ##argz)
+    gui_printf_internal(buffer, 0, MSG_TYPE_NOLOG, fmt, ##argz)
 
 #define NOTIFY_LEVEL_MIN        0
 #define NOTIFY_LEVEL_MAX        3
@@ -118,38 +171,14 @@
 #define KEY_SHOW_MODE_DISPLAY   1
 #define KEY_SHOW_MODE_BIND      2
 
-typedef struct t_gui_message t_gui_message;
-
-struct t_gui_message
-{
-    int type;                       /* type of message (time, nick, other)  */
-    int color;                      /* color of message                     */
-    char *message;                  /* message content                      */
-    t_gui_message *prev_message;    /* link to previous message for line    */
-    t_gui_message *next_message;    /* link to next message for line        */
-};
-
-typedef struct t_gui_line t_gui_line;
-
-struct t_gui_line
-{
-    int length;                     /* length of the line (in char)         */
-    int length_align;               /* alignment length (time or time/nick) */
-    int log_write;                  /* = 1 if line will be written to log   */
-    int line_with_message;          /* line contains a message from a user? */
-    int line_with_highlight;        /* line contains highlight              */
-    t_gui_message *messages;        /* messages for the line                */
-    t_gui_message *last_message;    /* last message of the line             */
-    t_gui_line *prev_line;          /* link to previous line                */
-    t_gui_line *next_line;          /* link to next line                    */
-};
-
 typedef struct t_gui_color t_gui_color;
 
 struct t_gui_color
 {
-    char *name;
-    int color;
+    int foreground;                 /* foreground color                     */
+    int background;                 /* background color                     */
+    int attributes;                 /* attributes (bold, ..)                */
+    char *string;                   /* WeeChat color: "\x19??", ?? is #color*/
 };
 
 typedef struct t_gui_infobar t_gui_infobar;
@@ -162,6 +191,20 @@ struct t_gui_infobar
                                     /* if < 0, text is never erased (except */
                                     /* by user action to erase it)          */
     t_gui_infobar *next_infobar;    /* next message for infobar             */
+};
+
+typedef struct t_gui_line t_gui_line;
+
+struct t_gui_line
+{
+    int length;                     /* length of the line (in char)         */
+    int length_align;               /* alignment length (time or time/nick) */
+    int log_write;                  /* = 1 if line will be written to log   */
+    int line_with_message;          /* line contains a message from a user? */
+    int line_with_highlight;        /* line contains highlight              */
+    char *data;                     /* line content                         */
+    t_gui_line *prev_line;          /* link to previous line                */
+    t_gui_line *next_line;          /* link to next line                    */
 };
 
 typedef struct t_gui_buffer t_gui_buffer;
@@ -260,6 +303,11 @@ struct t_gui_window
     /* windows for Qt GUI */
     /* TODO: declare Qt window */
     
+    int current_style_fg;;          /* current color used for foreground    */
+    int current_style_bg;;          /* current color used for background    */
+    int current_style_attr;         /* current attributes (bold, ..)        */
+    int current_color_attr;         /* attr sum of last color(s) displayed  */
+    
     /* DCC */
     void *dcc_first;                /* first dcc displayed                  */
     void *dcc_selected;             /* selected dcc                         */
@@ -316,6 +364,8 @@ extern int gui_key_grab;
 extern int gui_key_grab_count;
 extern char *gui_input_clipboard;
 
+extern t_gui_color *gui_color[NUM_COLORS];
+
 /* GUI independent functions: windows & buffers */
 
 extern t_gui_window *gui_window_new (int, int, int, int);
@@ -327,7 +377,9 @@ extern void gui_window_free (t_gui_window *);
 extern void gui_infobar_remove ();
 extern void gui_buffer_free (t_gui_buffer *, int);
 extern t_gui_line *gui_new_line (t_gui_buffer *);
-extern t_gui_message *gui_new_message (t_gui_buffer *);
+extern int gui_word_strlen (t_gui_window *, char *);
+extern int gui_word_real_pos (t_gui_window *, char *, int);
+extern void gui_printf_internal (t_gui_buffer *, int, int, char *, ...);
 extern void gui_optimize_input_buffer_size (t_gui_buffer *);
 extern void gui_exec_action_dcc (t_gui_window *, char *);
 extern int gui_insert_string_input (t_gui_window *, char *, int);
@@ -403,11 +455,13 @@ extern void gui_key_free_all ();
 /* GUI dependant functions: display */
 
 extern int gui_assign_color (int *, char *);
-extern int gui_get_color_by_name (char *);
-extern char *gui_get_color_by_value (int);
+extern char *gui_get_color_name (int);
+extern unsigned char *gui_color_decode (unsigned char *, int);
+extern unsigned char *gui_color_encode (unsigned char *);
 extern int gui_buffer_has_nicklist (t_gui_buffer *);
 extern void gui_calculate_pos_size (t_gui_window *);
 extern void gui_draw_buffer_title (t_gui_buffer *, int);
+extern char *gui_word_get_next_char (t_gui_window *, unsigned char *, int);
 extern void gui_draw_buffer_chat (t_gui_buffer *, int);
 extern void gui_draw_buffer_nick (t_gui_buffer *, int);
 extern void gui_draw_buffer_status (t_gui_buffer *, int);
@@ -434,11 +488,10 @@ extern void gui_window_merge_auto (t_gui_window *);
 extern void gui_window_merge_all (t_gui_window *);
 extern void gui_refresh_screen ();
 extern void gui_pre_init (int *, char **[]);
-extern void gui_init_colors ();
+extern void gui_rebuild_weechat_colors ();
 extern void gui_set_window_title ();
 extern void gui_init ();
 extern void gui_end ();
-extern void gui_printf_internal (t_gui_buffer *, int, int, int, char *, ...);
 extern void gui_input_default_key_bindings ();
 extern void gui_main_loop ();
 

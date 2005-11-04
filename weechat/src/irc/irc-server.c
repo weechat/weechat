@@ -672,7 +672,7 @@ server_msgq_flush ()
                         irc_display_prefix (recv_msgq->server,
                                             recv_msgq->server->buffer, PREFIX_ERROR);
                         gui_printf (recv_msgq->server->buffer,
-                                    _("%s Command '%s' failed!\n"), WEECHAT_ERROR, command);
+                                    _("%s Command \"%s\" failed!\n"), WEECHAT_ERROR, command);
                         break;
                     case -2:
                         irc_display_prefix (recv_msgq->server,
@@ -684,7 +684,7 @@ server_msgq_flush ()
                         irc_display_prefix (recv_msgq->server,
                                             recv_msgq->server->buffer, PREFIX_ERROR);
                         gui_printf (recv_msgq->server->buffer,
-                                    _("%s Unknown command: cmd=%s, host=%s, args=%s\n"),
+                                    _("%s Unknown command: cmd=\"%s\", host=\"%s\", args=\"%s\"\n"),
                                     WEECHAT_WARNING, command, host, args);
                         break;
                 }
