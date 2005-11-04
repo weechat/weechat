@@ -1085,7 +1085,7 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
                                          GUI_COLOR(COLOR_WIN_CHAT_DARK),
                                          GUI_COLOR(COLOR_WIN_CHAT_NICK),
                                          arguments,
-                                         COLOR_WIN_CHAT_DARK);
+                                         GUI_COLOR(COLOR_WIN_CHAT_DARK));
                         gui_printf (server->buffer, "%s%s\n",
                                     GUI_COLOR(COLOR_WIN_CHAT),
                                     msg_pwd_hidden);
