@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-11-05 12:30+0100\n"
+"POT-Creation-Date: 2005-11-05 22:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1289,51 +1289,51 @@ msgstr ""
 msgid "%s: using local hostname \"%s\"\n"
 msgstr ""
 
-#: src/irc/irc-send.c:166 src/common/command.c:779
+#: src/irc/irc-send.c:175 src/common/command.c:779
 #, c-format
 msgid "%s cannot find nick for sending message\n"
 msgstr ""
 
-#: src/irc/irc-send.c:328 src/irc/irc-send.c:356 src/irc/irc-send.c:547
-#: src/irc/irc-send.c:580 src/irc/irc-send.c:613 src/irc/irc-send.c:661
-#: src/irc/irc-send.c:697 src/irc/irc-send.c:764 src/irc/irc-send.c:821
-#: src/irc/irc-send.c:1154 src/irc/irc-send.c:1254 src/irc/irc-send.c:1730
-#: src/irc/irc-send.c:1844
+#: src/irc/irc-send.c:341 src/irc/irc-send.c:369 src/irc/irc-send.c:560
+#: src/irc/irc-send.c:593 src/irc/irc-send.c:626 src/irc/irc-send.c:674
+#: src/irc/irc-send.c:710 src/irc/irc-send.c:777 src/irc/irc-send.c:834
+#: src/irc/irc-send.c:1188 src/irc/irc-send.c:1291 src/irc/irc-send.c:1770
+#: src/irc/irc-send.c:1884
 #, c-format
 msgid "%s \"%s\" command can only be executed in a channel window\n"
 msgstr ""
 
-#: src/irc/irc-send.c:459 src/irc/irc-send.c:471 src/irc/irc-send.c:489
-#: src/irc/irc-send.c:1132 src/irc/irc-send.c:1227 src/irc/irc-send.c:1756
+#: src/irc/irc-send.c:472 src/irc/irc-send.c:484 src/irc/irc-send.c:502
+#: src/irc/irc-send.c:1166 src/irc/irc-send.c:1264 src/irc/irc-send.c:1796
 #: src/common/command.c:1298 src/common/command.c:1737
 #: src/common/command.c:1873
 #, c-format
 msgid "%s wrong argument count for \"%s\" command\n"
 msgstr ""
 
-#: src/irc/irc-send.c:512 src/irc/irc-send.c:749 src/irc/irc-send.c:806
+#: src/irc/irc-send.c:525 src/irc/irc-send.c:762 src/irc/irc-send.c:819
 #, c-format
 msgid "%s wrong arguments for \"%s\" command\n"
 msgstr ""
 
-#: src/irc/irc-send.c:949 src/irc/irc-send.c:1016 src/irc/irc-send.c:1302
-#: src/irc/irc-send.c:1316 src/irc/irc-send.c:1657
+#: src/irc/irc-send.c:968 src/irc/irc-send.c:1036 src/irc/irc-send.c:1339
+#: src/irc/irc-send.c:1353 src/irc/irc-send.c:1697
 #, c-format
 msgid "%s \"%s\" command can not be executed on a server window\n"
 msgstr ""
 
-#: src/irc/irc-send.c:1032 src/irc/irc-send.c:1055 src/irc/irc-recv.c:500
+#: src/irc/irc-send.c:1056 src/irc/irc-send.c:1083 src/irc/irc-recv.c:500
 #, c-format
 msgid "%s nick \"%s\" not found for \"%s\" command\n"
 msgstr ""
 
-#: src/irc/irc-send.c:1105 src/irc/irc-send.c:1412 src/irc/irc-recv.c:1230
+#: src/irc/irc-send.c:1136 src/irc/irc-send.c:1449 src/irc/irc-recv.c:1230
 #: src/irc/irc-recv.c:2042 src/irc/irc-recv.c:2132
 #, c-format
 msgid "%s cannot create new private window \"%s\"\n"
 msgstr ""
 
-#: src/irc/irc-send.c:1809
+#: src/irc/irc-send.c:1849
 #, c-format
 msgid "%s, compiled on %s %s\n"
 msgstr ""
@@ -1997,86 +1997,86 @@ msgstr ""
 msgid "Removing ignore:"
 msgstr ""
 
-#: src/plugins/plugins.c:231
+#: src/plugins/plugins.c:270
 #, c-format
 msgid ""
 "%s plugin %s: unable to add handler for IRC command \"%s\" (not enough "
 "memory)\n"
 msgstr ""
 
-#: src/plugins/plugins.c:266
+#: src/plugins/plugins.c:305
 #, c-format
 msgid ""
 "%s plugin %s: unable to add handler for \"%s\" command (already exists)\n"
 msgstr ""
 
-#: src/plugins/plugins.c:303
+#: src/plugins/plugins.c:342
 #, c-format
 msgid ""
 "%s plugin %s: unable to add handler for \"%s\" command (not enough memory)\n"
 msgstr ""
 
-#: src/plugins/plugins.c:550
+#: src/plugins/plugins.c:589
 #, c-format
 msgid "%s unable to load plugin \"%s\": %s\n"
 msgstr ""
 
-#: src/plugins/plugins.c:561
+#: src/plugins/plugins.c:600
 #, c-format
 msgid "%s symbol \"plugin_name\" not found in plugin \"%s\", failed to load\n"
 msgstr ""
 
-#: src/plugins/plugins.c:572
+#: src/plugins/plugins.c:611
 #, c-format
 msgid ""
 "%s unable to load plugin \"%s\": a plugin with same name already exists\n"
 msgstr ""
 
-#: src/plugins/plugins.c:584
+#: src/plugins/plugins.c:623
 #, c-format
 msgid ""
 "%s symbol \"plugin_description\" not found in plugin \"%s\", failed to load\n"
 msgstr ""
 
-#: src/plugins/plugins.c:595
+#: src/plugins/plugins.c:634
 #, c-format
 msgid ""
 "%s symbol \"plugin_version\" not found in plugin \"%s\", failed to load\n"
 msgstr ""
 
-#: src/plugins/plugins.c:606
+#: src/plugins/plugins.c:645
 #, c-format
 msgid ""
 "%s function \"weechat_plugin_init\" not found in plugin \"%s\", failed to "
 "load\n"
 msgstr ""
 
-#: src/plugins/plugins.c:660
+#: src/plugins/plugins.c:699
 #, c-format
 msgid "Initializing plugin \"%s\" %s\n"
 msgstr ""
 
-#: src/plugins/plugins.c:668
+#: src/plugins/plugins.c:707
 #, c-format
 msgid "%s unable to initialize plugin \"%s\"\n"
 msgstr ""
 
-#: src/plugins/plugins.c:679
+#: src/plugins/plugins.c:718
 #, c-format
 msgid "%s unable to load plugin \"%s\" (not enough memory)\n"
 msgstr ""
 
-#: src/plugins/plugins.c:687
+#: src/plugins/plugins.c:726
 #, c-format
 msgid "Plugin \"%s\" (%s) loaded.\n"
 msgstr ""
 
-#: src/plugins/plugins.c:827
+#: src/plugins/plugins.c:866
 #, c-format
 msgid "Plugin \"%s\" unloaded.\n"
 msgstr ""
 
-#: src/plugins/plugins.c:833
+#: src/plugins/plugins.c:872
 #, c-format
 msgid "%s plugin \"%s\" not found\n"
 msgstr ""
@@ -2117,64 +2117,64 @@ msgstr ""
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1403
+#: src/gui/curses/gui-display.c:1468
 msgid "bytes"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1403
+#: src/gui/curses/gui-display.c:1468
 msgid "Kb"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1403
+#: src/gui/curses/gui-display.c:1468
 msgid "Mb"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1403
+#: src/gui/curses/gui-display.c:1468
 msgid "Gb"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1856
+#: src/gui/curses/gui-display.c:1921
 msgid "<servers>"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1868
+#: src/gui/curses/gui-display.c:1933
 msgid "(away)"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2002
+#: src/gui/curses/gui-display.c:2067
 msgid "[not connected] "
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2012
+#: src/gui/curses/gui-display.c:2077
 msgid "Act: "
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2100
+#: src/gui/curses/gui-display.c:2165
 #, c-format
 msgid "Lag: %.1f"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2116
+#: src/gui/curses/gui-display.c:2181
 msgid "-MORE-"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2294
+#: src/gui/curses/gui-display.c:2359
 msgid "  [A] Accept"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2295 src/gui/curses/gui-display.c:2299
+#: src/gui/curses/gui-display.c:2360 src/gui/curses/gui-display.c:2364
 msgid "  [C] Cancel"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2304
+#: src/gui/curses/gui-display.c:2369
 msgid "  [R] Remove"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2308
+#: src/gui/curses/gui-display.c:2373
 msgid "  [P] Purge old DCC"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2309
+#: src/gui/curses/gui-display.c:2374
 msgid "  [Q] Close DCC view"
 msgstr ""
 
