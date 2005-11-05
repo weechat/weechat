@@ -279,14 +279,14 @@ void
 weechat_plugin_exec_command (t_weechat_plugin *plugin,
                              char *server, char *channel, char *command)
 {
-    t_gui_buffer *ptr_buffer;
+    t_irc_server *ptr_server;
     
     if (!plugin || !command)
         return;
     
-    ptr_buffer = plugin_find_buffer (server, channel);
-    if (ptr_buffer)
-        user_command (SERVER(ptr_buffer), ptr_buffer, command);
+    ptr_server = plugin_find_server (server, channel);
+    if (ptr_server && (ptr_server->buffer))
+        user_command (ptr_server, ptr_server->buffer, command);
 }
 
 /*

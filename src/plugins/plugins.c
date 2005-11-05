@@ -48,7 +48,7 @@ t_weechat_plugin *last_weechat_plugin = NULL;
 
 
 /*
- * plugin_find_buffer: find a buffer for text display or command execution
+ * plugin_find_buffer: find a buffer for text display
  */
 
 t_gui_buffer *
@@ -103,6 +103,45 @@ plugin_find_buffer (char *server, char *channel)
     
     return (ptr_buffer->dcc) ? gui_buffers : ptr_buffer;
 }
+
+/*
+ * plugin_find_server: find a server for command execution
+ */
+
+t_irc_server *
+plugin_find_server (char *server, char *channel)
+{
+    t_irc_server *ptr_server;
+    t_irc_channel *ptr_channel;
+    
+    ptr_server = NULL;
+    ptr_channel = NULL;
+    
+    /* nothing given => return current server */
+    if ((!server || !server[0]) && (!channel || !channel[0]))
+        return SERVER(gui_current_window->buffer);
+    else
+    {
+        if (server && server[0])
+            return server_search (server);
+        else
+        {
+            ptr_server = SERVER(gui_current_window->buffer);
+            if (!ptr_server)
+                ptr_server = SERVER(gui_buffers);
+        }
+        
+        if (channel && channel[0])
+        {
+            if (ptr_server)
+                return (channel_search (ptr_server, channel)) ?
+                    ptr_server : NULL;
+        }
+    }
+    
+    return NULL;
+}
+
 
 /*
  * plugin_exec_on_files: find files in a directory and execute a

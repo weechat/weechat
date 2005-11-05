@@ -22,6 +22,7 @@
 #define __WEECHAT_PLUGINS_H 1
 
 #include "weechat-plugin.h"
+#include "../irc/irc.h"
 #include "../gui/gui.h"
 
 typedef int (t_weechat_init_func) (t_weechat_plugin *);
@@ -31,6 +32,7 @@ extern t_weechat_plugin *weechat_plugins;
 extern t_weechat_plugin *last_weechat_plugin;
 
 extern t_gui_buffer *plugin_find_buffer (char *, char *);
+extern t_irc_server *plugin_find_server (char *, char *);
 extern void plugin_exec_on_files (t_weechat_plugin *, char *,
                                   int (*)(t_weechat_plugin *, char *));
 extern t_weechat_plugin *plugin_search (char *);
