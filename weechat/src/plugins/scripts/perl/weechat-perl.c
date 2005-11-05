@@ -871,7 +871,7 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
     perl_parse (perl_current_interpreter, weechat_perl_xs_init, 3, perl_args, NULL);
     
     eval_pv (weechat_perl_code, TRUE);
-    eval = weechat_perl_exec (plugin, &tempscript, "weechat_perl_load_eval_file", filename);
+    eval = weechat_perl_exec (plugin, &tempscript, "weechat_perl_load_eval_file", filename, "");
 #endif
     
     if ( eval != 0) 
