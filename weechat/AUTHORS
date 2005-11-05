@@ -14,7 +14,7 @@ Developers:
       AIM   : FlashCode AIM
       Yahoo : FlashCode_Y
 
-* Python plugin
+* Scripts plugins
 
   Kolter <kolter@free.fr>
       Web   : http://kolter.free.fr
@@ -26,22 +26,15 @@ Debian packager:
 ---------------
 
 Julien Louis <ptitlouis@sysif.net>
-    IRC   : nicks are "ptitlouis" or "tioui" @ irc.freenode.net
+    IRC   : nick is "ptitlouis" @ irc.freenode.net
     Jabber: ptitlouis@amessage.info
 
 
-Testers:
--------
+Contributors:
+------------
 
-Bounga <bounga@altern.org>
-    Web   : http://bounga.ath.cx
-    IRC   : nick is "Bounga" @ irc.freenode.net
-    Jabber: Bounga@jabber.org
-    ICQ   : 178297842
-
-Xahlexx <xahlexx@weeland.org>
-    Web   : http://www.weeland.org
-    IRC   : nick is "xahlexx" @ irc.freenode.net
+Jiri Golembiovsky <golemj@gmail.com>
+Jim Ramsay <i.am@jimramsay.com>
 
 
 =====
