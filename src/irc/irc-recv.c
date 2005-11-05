@@ -2378,15 +2378,17 @@ irc_cmd_recv_topic (t_irc_server *server, char *host, char *nick, char *argument
     {
         irc_display_prefix (server, buffer, PREFIX_INFO);
         if (pos)
+        {
             gui_printf (buffer,
-                        _("%s%s%s has changed topic for %s%s%s to: \"%s\"\n"),
+                        _("%s%s%s has changed topic for %s%s%s to:"),
                         GUI_COLOR(COLOR_WIN_CHAT_NICK),
                         nick,
                         GUI_COLOR(COLOR_WIN_CHAT),
                         GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
                         arguments,
-                        GUI_COLOR(COLOR_WIN_CHAT),
-                        pos);
+                        GUI_COLOR(COLOR_WIN_CHAT));
+            gui_printf (buffer, " \"%s\"\n", pos);
+        }
         else
             gui_printf (buffer,
                         _("%s%s%s has unset topic for %s%s\n"),

@@ -481,7 +481,7 @@ int
 exec_weechat_command (t_irc_server *server, char *string)
 {
     int i, argc, return_code, length1, length2;
-    char *command, *pos, *ptr_args, **argv, *alias_command;
+    char *command, *pos, *ptr_args, *ptr_args_color, **argv, *alias_command;
     t_weechat_alias *ptr_alias;
 
     if ((!string) || (!string[0]) || (string[0] != '/'))
@@ -510,6 +510,15 @@ exec_weechat_command (t_irc_server *server, char *string)
         ptr_args = pos;
         if (!ptr_args[0])
             ptr_args = NULL;
+    }
+    
+    ptr_args_color = NULL;
+    
+    if (ptr_args && (cfg_irc_colors_send))
+    {
+        ptr_args_color = (char *)gui_color_encode ((unsigned char *)ptr_args);
+        if (ptr_args_color)
+            ptr_args = ptr_args_color;
     }
     
 #ifdef PLUGINS
@@ -572,6 +581,8 @@ exec_weechat_command (t_irc_server *server, char *string)
                 }
                 free_exploded_string (argv);
                 free (command);
+                if (ptr_args_color)
+                    free (ptr_args_color);
                 return 1;
             }
         }
@@ -619,6 +630,8 @@ exec_weechat_command (t_irc_server *server, char *string)
                                     _("%s command \"%s\" needs a server connection!\n"),
                                     WEECHAT_ERROR, irc_commands[i].command_name);
                         free (command);
+                        if (ptr_args_color)
+                            free (ptr_args_color);
                         return 0;
                     }
                     if (irc_commands[i].cmd_function_args)
@@ -637,6 +650,8 @@ exec_weechat_command (t_irc_server *server, char *string)
                 }
                 free_exploded_string (argv);
                 free (command);
+                if (ptr_args_color)
+                    free (ptr_args_color);
                 return 1;
             }
         }
@@ -665,6 +680,8 @@ exec_weechat_command (t_irc_server *server, char *string)
                 
                 free_exploded_string (argv);
                 free (command);
+                if (ptr_args_color)
+                    free (ptr_args_color);
                 return 1;
             }
         }
@@ -676,6 +693,8 @@ exec_weechat_command (t_irc_server *server, char *string)
         free_exploded_string (argv);
     }
     free (command);
+    if (ptr_args_color)
+        free (ptr_args_color);
     return 0;
 }
 

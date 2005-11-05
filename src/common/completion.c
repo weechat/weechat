@@ -108,7 +108,7 @@ completion_build_list (t_completion *completion, void *channel)
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
     t_irc_nick *ptr_nick;
-    char *pos, option_name[256], *string;
+    char *pos, option_name[256], *string, *string2;
     t_weechat_alias *ptr_alias;
     t_config_option *option;
     void *option_value;
@@ -647,15 +647,19 @@ completion_build_list (t_completion *completion, void *channel)
                 completion_stop (completion);
             else
             {
-                string = weechat_convert_encoding ((local_utf8) ?
-                                                   cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
-                                                   (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
-                                                   cfg_look_charset_internal : local_charset,
-                                                   ((t_irc_channel *)channel)->topic);
+                string = (char *)gui_color_decode ((unsigned char *)((t_irc_channel *)channel)->topic, 0);
+                string2 = weechat_convert_encoding ((local_utf8) ?
+                                                    cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
+                                                    (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
+                                                    cfg_look_charset_internal : local_charset,
+                                                    (string) ? string : ((t_irc_channel *)channel)->topic);
                 weelist_add (&completion->completion_list,
                              &completion->last_completion,
-                             string);
-                free (string);
+                             (string2) ? string2 : ((t_irc_channel *)channel)->topic);
+                if (string)
+                    free (string);
+                if (string2)
+                    free (string2);
             }
         }
         else

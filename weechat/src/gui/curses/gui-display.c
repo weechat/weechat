@@ -298,6 +298,10 @@ gui_color_encode (unsigned char *string)
                 string++;
                 switch (string[0])
                 {
+                    case '%': /* double '%' replaced by single '%' */
+                        out[out_pos++] = string[0];
+                        string++;
+                        break;
                     case 'B': /* bold */
                         out[out_pos++] = GUI_ATTR_BOLD_CHAR;
                         string++;
@@ -727,7 +731,7 @@ void
 gui_draw_buffer_title (t_gui_buffer *buffer, int erase)
 {
     t_gui_window *ptr_win;
-    char format[32], *buf;
+    char format[32], *buf, *buf2;
     
     if (!gui_ok)
         return;
@@ -745,13 +749,17 @@ gui_draw_buffer_title (t_gui_buffer *buffer, int erase)
             {
                 if (CHANNEL(buffer)->topic)
                 {
-                    buf = weechat_convert_encoding ((local_utf8) ?
-                                                    cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
-                                                    (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
-                                                    cfg_look_charset_internal : local_charset,
-                                                    CHANNEL(buffer)->topic);
-                    mvwprintw (ptr_win->win_title, 0, 0, format, buf);
-                    free (buf);
+                    buf = (char *)gui_color_decode ((unsigned char *)(CHANNEL(buffer)->topic), 0);
+                    buf2 = weechat_convert_encoding ((local_utf8) ?
+                                                     cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
+                                                     (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
+                                                     cfg_look_charset_internal : local_charset,
+                                                     (buf) ? buf : CHANNEL(buffer)->topic);
+                    mvwprintw (ptr_win->win_title, 0, 0, format, (buf2) ? buf2 : CHANNEL(buffer)->topic);
+                    if (buf)
+                        free (buf);
+                    if (buf2)
+                        free (buf2);
                 }
                 else
                     mvwprintw (ptr_win->win_title, 0, 0, format, " ");
