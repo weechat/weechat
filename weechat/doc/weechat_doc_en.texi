@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.1.6-cvs - November, 4 2005
+@subtitle Documentation for WeeChat v0.1.6-cvs - November, 5 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -602,7 +602,7 @@ Type: boolean (values: 'on' or 'off'), default value: 'off'@*
 Comma separated list of words to highlight (case insensitive comparison, words may begin or end with "*" for partial match)@*
 Type: string (any string), default value: ''@*
 @item irc_colors_receive
-Keep colors from incoming messages@*
+When off, colors codes are ignored in incoming messages@*
 Type: boolean (values: 'on' or 'off'), default value: 'on'@*
 @item irc_colors_send
 Allow user to send colors with special codes (%B=bold, %Cxx,yy=color, %U=underline, %R=reverse)@*

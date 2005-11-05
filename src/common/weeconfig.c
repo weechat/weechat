@@ -681,8 +681,9 @@ t_config_option weechat_options_irc[] =
        "words may begin or end with \"*\" for partial match)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "", NULL, NULL, &cfg_irc_highlight, &config_change_noop },
-  { "irc_colors_receive", N_("keep colors from incoming messages"),
-    N_("keep colors from incoming messages"),
+  { "irc_colors_receive", N_("when off, colors codes are ignored in "
+                             "incoming messages"),
+    N_("when off, colors codes are ignored in incoming messages"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
     NULL, NULL, &cfg_irc_colors_receive, NULL, config_change_noop },
   { "irc_colors_send", N_("allow user to send colors"),

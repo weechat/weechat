@@ -36,7 +36,7 @@
 
 @title WeeChat - Gui@'on de usuario.
 @subtitle Cliente IRC r@'apido, peque@~no y extensible
-@subtitle Documentaci@'on para WeeChat v0.1.6-cvs - 4 de noviembre de 2005
+@subtitle Documentaci@'on para WeeChat v0.1.6-cvs - 5 de noviembre de 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -602,7 +602,7 @@ Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
 Comma separated list of words to highlight (case insensitive comparison, words may begin or end with "*" for partial match)@*
 Typo: cadena (cualquier cadena), valor por defecto: ''@*
 @item irc_colors_receive
-Keep colors from incoming messages@*
+When off, colors codes are ignored in incoming messages@*
 Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item irc_colors_send
 Allow user to send colors with special codes (%B=bold, %Cxx,yy=color, %U=underline, %R=reverse)@*

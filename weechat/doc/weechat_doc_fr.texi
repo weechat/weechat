@@ -36,7 +36,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.6-cvs - 4 novembre 2005
+@subtitle Documentation pour WeeChat v0.1.6-cvs - 5 novembre 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -603,7 +603,7 @@ Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
 Liste des mots pour la notification (s@'epar@'es par des virgules, le comparaison ne tient pas compte de la casse, les mots peuvent commencer ou se terminer par "*" pour une comparaison partielle)@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
 @item irc_colors_receive
-Garder les couleurs dans les messages re@,{c}us@*
+Si d@'esactiv@'e, les codes couleurs des messages entrants sont ignor@'es@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
 @item irc_colors_send
 Autorise l'utilisateur @`a envoyer des couleurs avec des codes sp@'eciaux (%B=gras, %Cxx,yy=couleur, %U=soulign@'e, %R=invers@'e)@*
