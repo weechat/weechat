@@ -458,6 +458,7 @@ extern void gui_key_free_all ();
 extern int gui_assign_color (int *, char *);
 extern char *gui_get_color_name (int);
 extern unsigned char *gui_color_decode (unsigned char *, int);
+extern unsigned char *gui_color_decode_for_user_entry (unsigned char *);
 extern unsigned char *gui_color_encode (unsigned char *);
 extern int gui_buffer_has_nicklist (t_gui_buffer *);
 extern void gui_calculate_pos_size (t_gui_window *);

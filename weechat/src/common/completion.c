@@ -647,7 +647,10 @@ completion_build_list (t_completion *completion, void *channel)
                 completion_stop (completion);
             else
             {
-                string = (char *)gui_color_decode ((unsigned char *)((t_irc_channel *)channel)->topic, 0);
+                if (cfg_irc_colors_send)
+                    string = (char *)gui_color_decode_for_user_entry ((unsigned char *)((t_irc_channel *)channel)->topic);
+                else
+                    string = (char *)gui_color_decode ((unsigned char *)((t_irc_channel *)channel)->topic, 0);
                 string2 = weechat_convert_encoding ((local_utf8) ?
                                                     cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
                                                     (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?

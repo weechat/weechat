@@ -129,7 +129,7 @@ gui_get_color_name (int num_color)
  *                     - remove any color/style in message
  *                   or:
  *                     - change colors by codes to be compatible with
- *                       other IRC clients 
+ *                       other IRC clients
  *                   After use, string returned has to be free()
  */
 
@@ -262,6 +262,71 @@ gui_color_decode (unsigned char *string, int keep_colors)
                     }
                     string++;
                 }
+                break;
+            default:
+                out[out_pos++] = string[0];
+                string++;
+        }
+    }
+    out[out_pos] = '\0';
+    return out;
+}
+
+/*
+ * gui_color_decode_for_user_entry: parses a message (coming from IRC server),
+ *                                  and replaces colors/bold/.. by %C, %B, ..
+ *                                  After use, string returned has to be free()
+ */
+
+unsigned char *
+gui_color_decode_for_user_entry (unsigned char *string)
+{
+    unsigned char *out;
+    int out_length, out_pos;
+    
+    out_length = (strlen ((char *)string) * 2) + 1;
+    out = (unsigned char *)malloc (out_length);
+    if (!out)
+        return NULL;
+    
+    out_pos = 0;
+    while (string[0] && (out_pos < out_length - 1))
+    {
+        switch (string[0])
+        {
+            case GUI_ATTR_BOLD_CHAR:
+                out[out_pos++] = '%';
+                out[out_pos++] = 'B';
+                string++;
+                break;
+            case GUI_ATTR_RESET_CHAR:
+                string++;
+                break;
+            case GUI_ATTR_FIXED_CHAR:
+                string++;
+                break;
+            case GUI_ATTR_REVERSE_CHAR:
+                out[out_pos++] = '%';
+                out[out_pos++] = 'R';
+                string++;
+                break;
+            case GUI_ATTR_REVERSE2_CHAR:
+                out[out_pos++] = '%';
+                out[out_pos++] = 'R';
+                string++;
+                break;
+            case GUI_ATTR_ITALIC_CHAR:
+                string++;
+                break;
+            case GUI_ATTR_UNDERLINE_CHAR:
+                out[out_pos++] = '%';
+                out[out_pos++] = 'R';
+                string++;
+                break;
+            case GUI_ATTR_COLOR_CHAR:
+                out[out_pos++] = '%';
+                out[out_pos++] = 'C';
+                string++;
                 break;
             default:
                 out[out_pos++] = string[0];
