@@ -1139,7 +1139,7 @@ gui_window_switch_server (t_gui_window *window)
     
     if (ptr_buffer)
     {
-        ptr_server = (SERVER(ptr_buffer)) ?
+        ptr_server = (SERVER(ptr_buffer) && SERVER(ptr_buffer)->next_server) ?
             SERVER(ptr_buffer)->next_server : irc_servers;
         while (ptr_server != SERVER(window->buffer))
         {
