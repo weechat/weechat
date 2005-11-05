@@ -863,54 +863,6 @@ completion_command (t_completion *completion)
 }
 
 /*
- * completion_command_arg: complete a command argument
- */
-
-void
-completion_command_arg (t_completion *completion, t_irc_channel *channel)
-{
-    int length, word_found_seen, other_completion;
-    t_weelist *ptr_weelist, *ptr_weelist2;
-    
-    length = strlen (completion->base_word);
-    word_found_seen = 0;
-    other_completion = 0;
-    for (ptr_weelist = completion->completion_list; ptr_weelist;
-         ptr_weelist = ptr_weelist->next_weelist)
-    {
-        if (ascii_strncasecmp (ptr_weelist->data, completion->base_word, length) == 0)
-        {
-            if ((!completion->word_found) || word_found_seen)
-            {
-                completion->word_found = ptr_weelist->data;
-                for (ptr_weelist2 = ptr_weelist->next_weelist; ptr_weelist2;
-                     ptr_weelist2 = ptr_weelist2->next_weelist)
-                {
-                    if (ascii_strncasecmp (ptr_weelist2->data,
-                        completion->base_word, length) == 0)
-                        other_completion++;
-                }
-                if (other_completion == 0)
-                    completion->position = -1;
-                else
-                    if (completion->position < 0)
-                        completion->position = 0;
-                return;
-            }
-            other_completion++;
-        }
-        if (completion->word_found &&
-            (ascii_strcasecmp (ptr_weelist->data, completion->word_found) == 0))
-            word_found_seen = 1;
-    }
-    if (completion->word_found)
-    {
-        completion->word_found = NULL;
-        completion_command_arg (completion, channel);
-    }
-}
-
-/*
  * completion_is_only_alphanum: return 1 if there is only alpha/num chars
  *                              in a string
  */
@@ -980,6 +932,58 @@ completion_nickncmp (char *base_word, char *nick, int max)
 }
 
 /*
+ * completion_command_arg: complete a command argument
+ */
+
+void
+completion_command_arg (t_completion *completion, t_irc_channel *channel,
+                        int nick_completion)
+{
+    int length, word_found_seen, other_completion;
+    t_weelist *ptr_weelist, *ptr_weelist2;
+    
+    length = strlen (completion->base_word);
+    word_found_seen = 0;
+    other_completion = 0;
+    for (ptr_weelist = completion->completion_list; ptr_weelist;
+         ptr_weelist = ptr_weelist->next_weelist)
+    {
+        if ((nick_completion && (completion_nickncmp (completion->base_word, ptr_weelist->data, length) == 0))
+            || ((!nick_completion) && (ascii_strncasecmp (completion->base_word, ptr_weelist->data, length) == 0)))
+        {
+            if ((!completion->word_found) || word_found_seen)
+            {
+                completion->word_found = ptr_weelist->data;
+                for (ptr_weelist2 = ptr_weelist->next_weelist; ptr_weelist2;
+                     ptr_weelist2 = ptr_weelist2->next_weelist)
+                {
+                    if ((nick_completion
+                         && (completion_nickncmp (completion->base_word, ptr_weelist2->data, length) == 0))
+                        || ((!nick_completion)
+                            && (ascii_strncasecmp (completion->base_word, ptr_weelist2->data, length) == 0)))
+                        other_completion++;
+                }
+                if (other_completion == 0)
+                    completion->position = -1;
+                else
+                    if (completion->position < 0)
+                        completion->position = 0;
+                return;
+            }
+            other_completion++;
+        }
+        if (completion->word_found &&
+            (ascii_strcasecmp (ptr_weelist->data, completion->word_found) == 0))
+            word_found_seen = 1;
+    }
+    if (completion->word_found)
+    {
+        completion->word_found = NULL;
+        completion_command_arg (completion, channel, nick_completion);
+    }
+}
+
+/*
  * completion_nick: complete a nick
  */
 
@@ -994,7 +998,7 @@ completion_nick (t_completion *completion, t_irc_channel *channel)
     
     if (((t_irc_channel *)channel)->type == CHAT_PRIVATE)
     {
-        completion_command_arg (completion, channel);
+        completion_command_arg (completion, channel, 1);
         return;
     }
     
@@ -1071,7 +1075,7 @@ completion_search (t_completion *completion, void *channel,
             break;
         case COMPLETION_COMMAND_ARG:
             if (completion->completion_list)
-                completion_command_arg (completion, (t_irc_channel *)channel);
+                completion_command_arg (completion, (t_irc_channel *)channel, 0);
             else
                 completion_nick (completion, (t_irc_channel *)channel);
             break;
