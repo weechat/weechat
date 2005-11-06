@@ -790,8 +790,16 @@ user_command (t_irc_server *server, t_gui_buffer *buffer, char *command)
             if (command_with_colors2)
                 free (command_with_colors2);
             
-            /* sending a copy of the message as PRIVMSG to plugins because irc server doesn't */                               
-            plugin_args_length = strlen ("localhost PRIVMSG  :") +
+            /* sending a copy of the message as PRIVMSG to plugins because irc server doesn't */
+            
+            /* code commented by FlashCode, 2005-11-06: problem when a handler
+               is called after a weechat::command("somethin") in perl, reetrance,
+               and crash at perl script unload */
+            
+            /* make gcc happy */
+            (void) plugin_args_length;
+            (void) plugin_args;
+            /*plugin_args_length = strlen ("localhost PRIVMSG  :") +
                 strlen (CHANNEL(buffer)->name) + strlen(command) + 16;
             plugin_args = (char *) malloc (plugin_args_length * sizeof (*plugin_args));
             
@@ -811,7 +819,7 @@ user_command (t_irc_server *server, t_gui_buffer *buffer, char *command)
                 gui_printf (NULL,
                             _("%s unable to call handler for message (not enough memory)\n"),
                             WEECHAT_ERROR);
-            }
+            }*/
         }
         else
         {
