@@ -409,7 +409,7 @@ weechat_python_remove_handler (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_get_info (PyObject *self, PyObject *args)
 {
-    char *arg, *server_name, *channel_name, *info;
+    char *arg, *server_name, *info;
     PyObject *object;
     
     /* make gcc happy */
@@ -425,9 +425,8 @@ weechat_python_get_info (PyObject *self, PyObject *args)
     
     arg = NULL;
     server_name = NULL;
-    channel_name = NULL;
     
-    if (!PyArg_ParseTuple (args, "s|ss", &arg, &server_name, &channel_name))
+    if (!PyArg_ParseTuple (args, "s|s", &arg, &server_name))
     {
         python_plugin->printf_server (python_plugin,
                                       "Python error: wrong parameters for "
@@ -437,7 +436,7 @@ weechat_python_get_info (PyObject *self, PyObject *args)
     
     if (arg)
     {
-        info = python_plugin->get_info (python_plugin, arg, server_name, channel_name);
+        info = python_plugin->get_info (python_plugin, arg, server_name);
         
         if (info)
         {
@@ -1040,7 +1039,7 @@ weechat_python_cmd (t_weechat_plugin *plugin,
                     path_script = NULL;
                 else
                 {
-                    dir_home = plugin->get_info (plugin, "weechat_dir", NULL, NULL);
+                    dir_home = plugin->get_info (plugin, "weechat_dir", NULL);
                     if (dir_home)
                     {
                         path_length = strlen (dir_home) + strlen (argv[1]) + 16;

@@ -44,7 +44,7 @@ weechat_script_auto_load (t_weechat_plugin *plugin, char *language,
     int dir_length;
     
     /* build directory, adding WeeChat home */
-    dir_home = plugin->get_info (plugin, "weechat_dir", NULL, NULL);
+    dir_home = plugin->get_info (plugin, "weechat_dir", NULL);
     if (!dir_home)
         return;
     dir_length = strlen (dir_home) + strlen (language) + 16;

@@ -147,7 +147,7 @@ struct t_weechat_plugin
     void (*handler_remove_all) (t_weechat_plugin *);
     
     void (*exec_command) (t_weechat_plugin *, char *, char *, char *);
-    char *(*get_info) (t_weechat_plugin *, char *, char *, char *);
+    char *(*get_info) (t_weechat_plugin *, char *, char *);
     t_plugin_dcc_info *(*get_dcc_info) (t_weechat_plugin *);
     void (*free_dcc_info) (t_weechat_plugin *, t_plugin_dcc_info *);
     char *(*get_config) (t_weechat_plugin *, char *);
@@ -185,7 +185,7 @@ extern void weechat_plugin_handler_remove_all (t_weechat_plugin *);
 
 /* other functions */
 extern void weechat_plugin_exec_command (t_weechat_plugin *, char *, char *, char *);
-extern char *weechat_plugin_get_info (t_weechat_plugin *, char *, char *, char *);
+extern char *weechat_plugin_get_info (t_weechat_plugin *, char *, char *);
 extern t_plugin_dcc_info *weechat_plugin_get_dcc_info (t_weechat_plugin *);
 extern void weechat_plugin_free_dcc_info (t_weechat_plugin *, t_plugin_dcc_info *);
 extern char *weechat_plugin_get_config (t_weechat_plugin *, char *);

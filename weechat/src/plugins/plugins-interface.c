@@ -280,12 +280,15 @@ weechat_plugin_exec_command (t_weechat_plugin *plugin,
                              char *server, char *channel, char *command)
 {
     t_irc_server *ptr_server;
+    t_irc_channel *ptr_channel;
     
     if (!plugin || !command)
         return;
     
-    ptr_server = plugin_find_server (server, channel);
-    if (ptr_server && (ptr_server->buffer))
+    plugin_find_server_channel (server, channel, &ptr_server, &ptr_channel);
+    if (ptr_server && ptr_channel)
+        user_command (ptr_server, ptr_channel->buffer, command);
+    else if (ptr_server && (ptr_server->buffer))
         user_command (ptr_server, ptr_server->buffer, command);
 }
 
@@ -296,51 +299,23 @@ weechat_plugin_exec_command (t_weechat_plugin *plugin,
  */
 
 char *
-weechat_plugin_get_info (t_weechat_plugin *plugin, char *info, char *server, char *channel)
+weechat_plugin_get_info (t_weechat_plugin *plugin, char *info, char *server)
 {
-    t_gui_buffer *ptr_buffer;
+    t_irc_server *ptr_server;
+    t_irc_channel *ptr_channel;
     
     if (!plugin || !info)
         return NULL;
     
-    ptr_buffer = plugin_find_buffer (server, channel);
-    if (!ptr_buffer)
-        return NULL;
+    /* below are infos that do NOT need server to return info */
     
     if (ascii_strcasecmp (info, "version") == 0)
     {
         return strdup (PACKAGE_VERSION);
     }
-    else if (ascii_strcasecmp (info, "nick") == 0)
-    {
-        if (SERVER(ptr_buffer) && (SERVER(ptr_buffer)->is_connected)
-            && (SERVER(ptr_buffer)->nick))
-            return strdup (SERVER(ptr_buffer)->nick);
-    }
-    else if (ascii_strcasecmp (info, "channel") == 0)
-    {
-        if (BUFFER_IS_CHANNEL(ptr_buffer))
-            return strdup (CHANNEL(gui_current_window->buffer)->name);
-    }
-    else if (ascii_strcasecmp (info, "server") == 0)
-    {
-        if (SERVER(ptr_buffer) && (SERVER(ptr_buffer)->is_connected)
-            && (SERVER(ptr_buffer)->name))
-            return strdup (SERVER(ptr_buffer)->name);
-    }
-    else if (ascii_strcasecmp (info, "away") == 0)
-    {
-        if (SERVER(ptr_buffer) && (SERVER(ptr_buffer)->is_connected))
-        {
-            if (SERVER(ptr_buffer)->is_away)
-                return strdup ("1");
-            else
-                return strdup ("0");
-        }
-    }
     else if (ascii_strcasecmp (info, "weechatdir") == 0)
     {
-        /* WARNING: deprecated info, you should use weechat_dir */
+        /* WARNING: deprecated info, you should use "weechat_dir" */
         /* will be removed in a future version */
         return strdup (weechat_home);
     }
@@ -355,6 +330,35 @@ weechat_plugin_get_info (t_weechat_plugin *plugin, char *info, char *server, cha
     else if (ascii_strcasecmp (info, "weechat_sharedir") == 0)
     {
         return strdup (WEECHAT_SHAREDIR);
+    }
+    
+    /* below are infos that need server to return value */
+    
+    plugin_find_server_channel (server, NULL, &ptr_server, &ptr_channel);
+    if (!ptr_server)
+        return NULL;
+    
+    if (ascii_strcasecmp (info, "nick") == 0)
+    {
+        if (ptr_server->is_connected && ptr_server->nick)
+            return strdup (ptr_server->nick);
+    }
+    else if (ascii_strcasecmp (info, "channel") == 0)
+    {
+        if (BUFFER_IS_CHANNEL(gui_current_window->buffer))
+            return strdup (CHANNEL(gui_current_window->buffer)->name);
+    }
+    else if (ascii_strcasecmp (info, "server") == 0)
+    {
+        if (ptr_server->is_connected && ptr_server->name)
+            return strdup (ptr_server->name);
+    }
+    else if (ascii_strcasecmp (info, "away") == 0)
+    {
+        if (ptr_server->is_connected && ptr_server->is_away)
+            return strdup ("1");
+        else
+            return strdup ("0");
     }
     
     /* info not found */

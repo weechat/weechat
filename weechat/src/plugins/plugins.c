@@ -105,43 +105,43 @@ plugin_find_buffer (char *server, char *channel)
 }
 
 /*
- * plugin_find_server: find a server for command execution
+ * plugin_find_server_channel: find server/channel for command execution
  */
 
-t_irc_server *
-plugin_find_server (char *server, char *channel)
+void
+plugin_find_server_channel (char *server, char *channel,
+                            t_irc_server **ptr_server,
+                            t_irc_channel **ptr_channel)
 {
-    t_irc_server *ptr_server;
-    t_irc_channel *ptr_channel;
+    (*ptr_server) = NULL;
+    (*ptr_channel) = NULL;
     
-    ptr_server = NULL;
-    ptr_channel = NULL;
-    
-    /* nothing given => return current server */
+    /* nothing given => return current server/channel */
     if ((!server || !server[0]) && (!channel || !channel[0]))
-        return SERVER(gui_current_window->buffer);
+    {
+        (*ptr_server) = SERVER(gui_current_window->buffer);
+        (*ptr_channel) = (BUFFER_IS_CHANNEL(gui_current_window->buffer) ||
+                          BUFFER_IS_PRIVATE(gui_current_window->buffer)) ?
+            CHANNEL(gui_current_window->buffer) : NULL;
+    }
     else
     {
         if (server && server[0])
-            return server_search (server);
+            (*ptr_server) = server_search (server);
         else
         {
-            ptr_server = SERVER(gui_current_window->buffer);
-            if (!ptr_server)
-                ptr_server = SERVER(gui_buffers);
+            (*ptr_server) = SERVER(gui_current_window->buffer);
+            if (!(*ptr_server))
+                (*ptr_server) = SERVER(gui_buffers);
         }
         
         if (channel && channel[0])
         {
-            if (ptr_server)
-                return (channel_search (ptr_server, channel)) ?
-                    ptr_server : NULL;
+            if ((*ptr_server))
+                (*ptr_channel) = channel_search ((*ptr_server), channel);
         }
     }
-    
-    return NULL;
 }
-
 
 /*
  * plugin_exec_on_files: find files in a directory and execute a

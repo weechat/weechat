@@ -508,7 +508,7 @@ static XS (XS_weechat_remove_handler)
 
 static XS (XS_weechat_get_info)
 {
-    char *arg, *info, *server_name, *channel_name;
+    char *arg, *info, *server_name;
     unsigned int integer;
     dXSARGS;
     
@@ -523,7 +523,7 @@ static XS (XS_weechat_get_info)
 	XSRETURN_NO;
     }
     
-    if ((items < 1) || (items > 3))
+    if ((items < 1) || (items > 2))
     {
         perl_plugin->printf_server (perl_plugin,
                                     "Perl error: wrong parameters for "
@@ -531,18 +531,12 @@ static XS (XS_weechat_get_info)
         XSRETURN_NO;
     }
     
-    server_name = NULL;
-    channel_name = NULL;
-    
-    if (items >= 2)
-        server_name = SvPV (ST (1), integer);
-    if (items == 3)
-        channel_name = SvPV (ST (2), integer);
+    server_name = (items == 2) ? SvPV (ST (1), integer) : NULL;
     
     arg = SvPV (ST (0), integer);
     if (arg)
     {
-        info = perl_plugin->get_info (perl_plugin, arg, server_name, channel_name);
+        info = perl_plugin->get_info (perl_plugin, arg, server_name);
         
         if (info)
         {
@@ -1111,7 +1105,7 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
                     path_script = NULL;
                 else
                 {
-                    dir_home = plugin->get_info (plugin, "weechat_dir", NULL, NULL);
+                    dir_home = plugin->get_info (plugin, "weechat_dir", NULL);
                     if (dir_home)
                     {
                         path_length = strlen (dir_home) + strlen (argv[1]) + 16;

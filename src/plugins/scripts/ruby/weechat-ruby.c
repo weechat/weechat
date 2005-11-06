@@ -452,10 +452,9 @@ weechat_ruby_remove_handler (VALUE class, VALUE command, VALUE function)
  */
 
 static VALUE
-weechat_ruby_get_info (VALUE class, VALUE arg, VALUE server_name,
-                       VALUE channel_name)
+weechat_ruby_get_info (VALUE class, VALUE arg, VALUE server_name)
 {
-    char *c_arg, *c_server_name, *c_channel_name, *info;
+    char *c_arg, *c_server_name, *info;
     VALUE return_value;
     
     /* make gcc happy */
@@ -471,7 +470,6 @@ weechat_ruby_get_info (VALUE class, VALUE arg, VALUE server_name,
     
     c_arg = NULL;
     c_server_name = NULL;
-    c_channel_name = NULL;
     
     if (NIL_P (arg))
     {
@@ -484,19 +482,14 @@ weechat_ruby_get_info (VALUE class, VALUE arg, VALUE server_name,
     Check_Type (arg, T_STRING);
     if (!NIL_P (server_name))
         Check_Type (server_name, T_STRING);
-    if (!NIL_P (channel_name))
-        Check_Type (channel_name, T_STRING);
     
     c_arg = STR2CSTR (arg);
     if (!NIL_P (server_name))
         c_server_name = STR2CSTR (server_name);
-    if (!NIL_P (channel_name))
-        c_channel_name = STR2CSTR (channel_name);
     
     if (c_arg)
     {
-        info = ruby_plugin->get_info (ruby_plugin, c_arg,
-                                      c_server_name, c_channel_name);
+        info = ruby_plugin->get_info (ruby_plugin, c_arg, c_server_name);
         
         if (info)
         {
@@ -893,7 +886,7 @@ weechat_ruby_cmd (t_weechat_plugin *plugin,
                     path_script = NULL;
                 else
                 {
-                    dir_home = plugin->get_info (plugin, "weechat_dir", NULL, NULL);
+                    dir_home = plugin->get_info (plugin, "weechat_dir", NULL);
                     if (dir_home)
                     {
                         path_length = strlen (dir_home) + strlen (argv[1]) + 16;
