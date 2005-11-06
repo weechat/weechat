@@ -73,6 +73,7 @@
 #endif
 
 
+time_t weechat_start_time;      /* WeeChat start time (used by /uptime command)     */
 int quit_weechat;               /* = 1 if quit request from user... why ? :'(       */
 int sigsegv = 0;                /* SIGSEGV received?                                */
 char *weechat_home = NULL;      /* WeeChat home dir. (example: /home/toto/.weechat) */
@@ -637,6 +638,9 @@ wee_create_home_dirs ()
 void
 wee_init_vars ()
 {
+    /* start time, used by /uptime command */
+    weechat_start_time = time (NULL);
+    
     /* init received messages queue */
     recv_msgq = NULL;
     msgq_last_msg = NULL;

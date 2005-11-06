@@ -112,6 +112,7 @@
 
 /* global variables and functions */
 
+extern time_t weechat_start_time;
 extern int quit_weechat;
 extern char *weechat_home;
 extern char *local_charset;

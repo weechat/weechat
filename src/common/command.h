@@ -80,7 +80,7 @@ extern int weechat_cmd_server (int, char **);
 extern int weechat_cmd_set (char *);
 extern int weechat_cmd_unalias (char *);
 extern int weechat_cmd_unignore (int, char **);
-extern int weechat_cmd_unset (char *);
+extern int weechat_cmd_uptime (int, char **);
 extern int weechat_cmd_window (int, char **);
 
 #endif /* command.h */

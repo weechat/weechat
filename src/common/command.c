@@ -135,6 +135,10 @@ t_weechat_command weechat_commands[] =
        "For each argument, '*' means all.\n"
        "Without argument, /unignore command lists all defined ignore."),
     0, 4, weechat_cmd_unignore, NULL },
+  { "uptime", N_("show WeeChat uptime"),
+    N_("-o"),
+    N_("-o: send uptime on current channel as an IRC message"),
+    0, 1, weechat_cmd_uptime, NULL },
   { "window", N_("manage windows"),
     N_("[list | -1 | +1 | b# | splith | splitv | [merge [down | up | left | right | all]]]"),
     N_("list: list opened windows (no parameter implies this list)\n"
@@ -2634,6 +2638,68 @@ weechat_cmd_unignore (int argc, char **argv)
         gui_printf (NULL, _("%s no ignore found\n"),
                     WEECHAT_ERROR);
         return -1;
+    }
+    
+    return 0;
+}
+
+/*
+ * weechat_cmd_uptime: display WeeChat uptime
+ */
+
+int
+weechat_cmd_uptime (int argc, char **argv)
+{
+    time_t running_time;
+    int day, hour, min, sec;
+    char string[256];
+    
+    running_time = time (NULL) - weechat_start_time;
+    day = running_time / (60 * 60 * 24);
+    hour = (running_time % (60 * 60 * 24)) / (60 * 60);
+    min = ((running_time % (60 * 60 * 24)) % (60 * 60)) / 60;
+    sec = ((running_time % (60 * 60 * 24)) % (60 * 60)) % 60;
+    
+    if ((argc == 1) && (strcmp (argv[0], "-o") == 0)
+        && ((BUFFER_IS_CHANNEL(gui_current_window->buffer))
+            || (BUFFER_IS_PRIVATE(gui_current_window->buffer))))
+    {
+        snprintf (string, sizeof (string),
+                  "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s",
+                  day,
+                  (day > 1) ? _("days") : _("day"),
+                  hour,
+                  min,
+                  sec,
+                  ctime (&weechat_start_time));
+        string[strlen (string) - 1] = '\0';
+        user_command (SERVER(gui_current_window->buffer),
+                      gui_current_window->buffer,
+                      string);
+    }
+    else
+    {
+        irc_display_prefix (NULL, gui_current_window->buffer,
+                            PREFIX_INFO);
+        gui_printf_nolog (gui_current_window->buffer,
+                          _("WeeChat uptime: %s%d %s%s "
+                            "%s%02d%s:%s%02d%s:%s%02d%s, "
+                            "started on %s%s"),
+                          GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                          day,
+                          GUI_COLOR(COLOR_WIN_CHAT),
+                          (day > 1) ? _("days") : _("day"),
+                          GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                          hour,
+                          GUI_COLOR(COLOR_WIN_CHAT),
+                          GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                          min,
+                          GUI_COLOR(COLOR_WIN_CHAT),
+                          GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                          sec,
+                          GUI_COLOR(COLOR_WIN_CHAT),
+                          GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                          ctime (&weechat_start_time));
     }
     
     return 0;

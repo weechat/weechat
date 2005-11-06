@@ -1010,6 +1010,12 @@ channel: name of channel for unignore@*
 For each argument, '*' means all.@*
 Without argument, /unignore command lists all defined ignore.@*
 @*
+@item uptime  -o
+@*
+show WeeChat uptime@*
+@*
+-o: send uptime on current channel as an IRC message@*
+@*
 @item window  [list | -1 | +1 | b# | splith | splitv | [merge [down | up | left | right | all]]]
 @*
 manage windows@*

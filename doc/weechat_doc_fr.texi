@@ -1013,6 +1013,12 @@ commande: commande IRC@*
 Pour chaque param@`etre, '*' signifie tou(te)s.@*
 Sans param@`etre, /ignore liste les ignore d@'efinis.@*
 @*
+@item uptime  -o
+@*
+montrer l'uptime de WeeChat@*
+@*
+-o: envoyer l'uptime sur le canal courant en tant que message IRC@*
+@*
 @item window  [list | -1 | +1 | b# | splith | splitv | [merge [down | up | left | right | all]]]
 @*
 gestion des fen@^etres@*
