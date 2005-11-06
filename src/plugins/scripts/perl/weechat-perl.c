@@ -268,7 +268,7 @@ static XS (XS_weechat_print)
 	XSRETURN_NO;
     }
 
-    if ((items < 1) || (items > 3))
+    if (items < 1)
     {
         perl_plugin->printf_server (perl_plugin,
                                     "Perl error: wrong parameters for "
@@ -315,7 +315,7 @@ static XS (XS_weechat_print_infobar)
 	XSRETURN_NO;
     }
     
-    if (items != 2)
+    if (items < 2)
     {
         perl_plugin->printf_server (perl_plugin,
                                     "Perl error: wrong parameters for "
@@ -351,7 +351,7 @@ static XS (XS_weechat_command)
 	XSRETURN_NO;
     }
     
-    if ((items < 1) || (items > 3))
+    if (items < 1)
     {
         perl_plugin->printf_server (perl_plugin,
                                     "Perl error: wrong parameters for "
@@ -397,7 +397,7 @@ static XS (XS_weechat_add_message_handler)
 	XSRETURN_NO;
     }
     
-    if (items != 2)
+    if (items < 2)
     {
         perl_plugin->printf_server (perl_plugin,
                                     "Perl error: wrong parameters for "
@@ -485,7 +485,7 @@ static XS (XS_weechat_remove_handler)
 	XSRETURN_NO;
     }
     
-    if (items != 2)
+    if (items < 2)
     {
         perl_plugin->printf_server (perl_plugin,
                                     "Perl error: wrong parameters for "
@@ -523,7 +523,7 @@ static XS (XS_weechat_get_info)
 	XSRETURN_NO;
     }
     
-    if ((items < 1) || (items > 2))
+    if (items < 1)
     {
         perl_plugin->printf_server (perl_plugin,
                                     "Perl error: wrong parameters for "
@@ -629,7 +629,7 @@ static XS (XS_weechat_get_config)
 	XSRETURN_NO;
     }
     
-    if (items != 1)
+    if (items < 1)
     {
         perl_plugin->printf_server (perl_plugin,
                                     "Perl error: wrong parameters for "
@@ -676,7 +676,7 @@ static XS (XS_weechat_set_config)
 	XSRETURN_NO;
     }
     
-    if (items != 2)
+    if (items < 2)
     {
         perl_plugin->printf_server (perl_plugin,
                                     "Perl error: wrong parameters for "
@@ -717,7 +717,7 @@ static XS (XS_weechat_get_plugin_config)
 	XSRETURN_NO;
     }
     
-    if (items != 1)
+    if (items < 1)
     {
         perl_plugin->printf_server (perl_plugin,
                                     "Perl error: wrong parameters for "
@@ -766,7 +766,7 @@ static XS (XS_weechat_set_plugin_config)
 	XSRETURN_NO;
     }
     
-    if (items != 2)
+    if (items < 2)
     {
         perl_plugin->printf_server (perl_plugin,
                                     "Perl error: wrong parameters for "
