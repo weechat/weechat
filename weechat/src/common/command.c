@@ -2665,7 +2665,7 @@ weechat_cmd_uptime (int argc, char **argv)
             || (BUFFER_IS_PRIVATE(gui_current_window->buffer))))
     {
         snprintf (string, sizeof (string),
-                  "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s",
+                  _("WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"),
                   day,
                   (day > 1) ? _("days") : _("day"),
                   hour,

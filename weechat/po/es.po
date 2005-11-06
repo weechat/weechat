@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.6-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-11-06 12:43+0100\n"
+"POT-Creation-Date: 2005-11-06 13:22+0100\n"
 "PO-Revision-Date: 2005-11-06 12:52+0100\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3311,6 +3311,11 @@ msgstr ""
 #: src/common/command.c:2638
 #, c-format
 msgid "%s no ignore found\n"
+msgstr ""
+
+#: src/common/command.c:2668
+#, c-format
+msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
 msgstr ""
 
 #: src/common/command.c:2685

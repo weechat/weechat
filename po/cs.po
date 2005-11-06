@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.6-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-11-06 12:43+0100\n"
-"PO-Revision-Date: 2005-10-30 10:53+0100\n"
+"POT-Creation-Date: 2005-11-06 13:22+0100\n"
+"PO-Revision-Date: 2005-11-06 13:22+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -3334,10 +3334,15 @@ msgstr "ignorování bylo odebrán\n"
 msgid "%s no ignore found\n"
 msgstr "%s žádné ignorování nenaleyeno\n"
 
+#: src/common/command.c:2668
+#, c-format
+msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
+msgstr ""
+
 #: src/common/command.c:2685
-#, fuzzy, c-format
+#, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
-msgstr "%s%02d %s%s %s%02d %s%s %s%02d %s%s, přihlášen v: %s%s"
+msgstr ""
 
 #: src/common/command.c:2725
 msgid "Opened windows:\n"
