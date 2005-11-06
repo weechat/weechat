@@ -36,7 +36,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.6-cvs - 5 novembre 2005
+@subtitle Documentation pour WeeChat v0.1.6-cvs - 6 novembre 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -353,6 +353,9 @@ Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
 @item look_day_change_timestamp
 Format de date pour la date affich@'ee quand le jour a chang@'e@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '%a, %d %b %Y'@*
+@item col_real_white
+Si activ@'e, utilise la vraie couleur blanche, d@'esactiv@'e par d@'efaut pour les terminaux avec un fond blanc (si vous n'utilisez jamais de fond blanc, vous devriez activer cette option pour voir du vrai blanc au lieu de la couleur d'avant plant par d@'efaut du terminal)@*
+Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
 @item col_title
 Couleur pour la barre de titre@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*

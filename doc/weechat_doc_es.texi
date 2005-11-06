@@ -36,7 +36,7 @@
 
 @title WeeChat - Gui@'on de usuario.
 @subtitle Cliente IRC r@'apido, peque@~no y extensible
-@subtitle Documentaci@'on para WeeChat v0.1.6-cvs - 5 de noviembre de 2005
+@subtitle Documentaci@'on para WeeChat v0.1.6-cvs - 6 de noviembre de 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -352,6 +352,9 @@ Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item look_day_change_timestamp
 Timestamp for date displayed when day changed@*
 Typo: cadena (cualquier cadena), valor por defecto: '%a, %d %b %Y'@*
+@item col_real_white
+If set, uses real white color, disabled by default for terms with white background (if you never use white background, you should turn on this option to see real white instead of default term foreground color)@*
+Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
 @item col_title
 Color para la barra de t@'itulo@*
 Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*

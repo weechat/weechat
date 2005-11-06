@@ -234,6 +234,7 @@ t_config_option weechat_options_look[] =
 
 /* config, colors section */
 
+int cfg_col_real_white;
 int cfg_col_title;
 int cfg_col_title_bg;
 int cfg_col_chat;
@@ -290,7 +291,14 @@ int cfg_col_dcc_failed;
 int cfg_col_dcc_aborted;
 
 t_config_option weechat_options_colors[] =
-{ /* title window */
+{ /* general color settings */
+  { "col_real_white", N_("if set, uses real white color"),
+    N_("if set, uses real white color, disabled by default for terms with white "
+       "background (if you never use white background, you should turn on "
+       "this option to see real white instead of default term foreground color)"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
+    NULL, NULL, &cfg_col_real_white, NULL, config_change_color },
+  /* title window */
   { "col_title", N_("color for title bar"),
     N_("color for title bar"),
     OPTION_TYPE_COLOR, 0, 0, 0,
@@ -1050,6 +1058,7 @@ config_change_color ()
 {
     t_gui_window *ptr_win;
     
+    gui_init_color_pairs ();
     gui_rebuild_weechat_colors ();
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
         gui_redraw_buffer (ptr_win->buffer);

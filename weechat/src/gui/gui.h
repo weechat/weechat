@@ -490,6 +490,7 @@ extern void gui_window_merge_auto (t_gui_window *);
 extern void gui_window_merge_all (t_gui_window *);
 extern void gui_refresh_screen ();
 extern void gui_pre_init (int *, char **[]);
+extern void gui_init_color_pairs ();
 extern void gui_rebuild_weechat_colors ();
 extern void gui_set_window_title ();
 extern void gui_init ();

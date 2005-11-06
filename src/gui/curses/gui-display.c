@@ -3092,6 +3092,30 @@ gui_pre_init (int *argc, char **argv[])
 }
 
 /*
+ * gui_init_color_pairs: init color pairs
+ */
+
+void
+gui_init_color_pairs ()
+{
+    int i;
+    char shift_colors[8] = { 0, 4, 2, 6, 1, 5, 3, 7 };
+    
+    if (has_colors ())
+    {
+        for (i = 1; i < COLOR_PAIRS; i++)
+            init_pair (i, shift_colors[i % 8], (i < 8) ? -1 : shift_colors[i / 8]);
+        
+        /* disable white on white, replaced by black on white */
+        init_pair (63, -1, -1);
+        
+        /* white on default bg is default (-1) */
+        if (!cfg_col_real_white)
+            init_pair (WEECHAT_COLOR_WHITE, -1, -1);
+    }
+}
+
+/*
  * gui_init_weechat_colors: init WeeChat colors
  */
 
@@ -3165,17 +3189,20 @@ gui_rebuild_weechat_colors ()
 {
     int i;
     
-    for (i = 0; i < NUM_COLORS; i++)
+    if (has_colors ())
     {
-        if (gui_color[i])
+        for (i = 0; i < NUM_COLORS; i++)
         {
-            if (gui_color[i]->string)
-                free (gui_color[i]->string);
-            free (gui_color[i]);
-            gui_color[i] = NULL;
+            if (gui_color[i])
+            {
+                if (gui_color[i]->string)
+                    free (gui_color[i]->string);
+                free (gui_color[i]);
+                gui_color[i] = NULL;
+            }
         }
+        gui_init_weechat_colors ();
     }
-    gui_init_weechat_colors ();
 }
 
 /*
@@ -3185,23 +3212,11 @@ gui_rebuild_weechat_colors ()
 void
 gui_init_colors ()
 {
-    int i;
-    char shift_colors[8] = { 0, 4, 2, 6, 1, 5, 3, 7 };
-    
     if (has_colors ())
     {
         start_color ();
         use_default_colors ();
-        
-        for (i = 1; i < COLOR_PAIRS; i++)
-            init_pair (i, shift_colors[i % 8], (i < 8) ? -1 : shift_colors[i / 8]);
-        
-        /* disable white on white, replaced by black on white */
-        init_pair (63, -1, -1);
-        
-        /* white on default bg is default (-1) */
-        init_pair (WEECHAT_COLOR_WHITE, -1, -1);
-        
+        gui_init_color_pairs ();
         gui_init_weechat_colors ();
     }
 }

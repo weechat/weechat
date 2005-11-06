@@ -111,6 +111,7 @@ extern int cfg_look_hotlist_names_length;
 extern int cfg_look_day_change;
 extern char *cfg_look_day_change_timestamp;
 
+extern int cfg_col_real_white;
 extern int cfg_col_title;
 extern int cfg_col_title_bg;
 extern int cfg_col_chat;
