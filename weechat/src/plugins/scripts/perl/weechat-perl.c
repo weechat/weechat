@@ -28,10 +28,6 @@
 #include "../../weechat-plugin.h"
 #include "../weechat-script.h"
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 char plugin_name[]        = "Perl";
 char plugin_version[]     = "0.1";
 char plugin_description[] = "Perl scripts support";
@@ -44,7 +40,11 @@ char *perl_current_script_filename = NULL;
 
 extern void boot_DynaLoader (pTHX_ CV* cv);
 
-#ifdef PERL_NOTHREAD
+#ifdef NO_PERL_MULTIPLICITY
+#undef MULTIPLICITY
+#endif
+
+#ifndef MULTIPLICITY
 #define PKG_NAME_PREFIX "WeechatPerlPackage"
 static PerlInterpreter *main_perl = NULL;
 int packnum = 0;
@@ -52,7 +52,7 @@ int packnum = 0;
 
 char *weechat_perl_code =
 {
-#ifdef PERL_NOTHREAD
+#ifndef MULTIPLICITY
     "package WeechatPerlScriptLoader;"
 #endif
     "$weechat_perl_load_eval_file_error = \"\";"
@@ -67,7 +67,7 @@ char *weechat_perl_code =
     "}"
     "sub weechat_perl_load_eval_file"
     "{"
-#ifdef PERL_NOTHREAD
+#ifndef MULTIPLICITY
     "    my ($filename, $package) = @_;"
 #else
     "    my $filename = shift;"
@@ -77,7 +77,7 @@ char *weechat_perl_code =
     "    {"
     "        return 1;"
     "    }"
-#ifdef PERL_NOTHREAD
+#ifndef MULTIPLICITY
     "    my $eval = qq{package $package; $content;};"
 #else
     "    my $eval = $content;"
@@ -112,7 +112,7 @@ weechat_perl_exec (t_weechat_plugin *plugin,
     int return_code;
     SV *sv;
     
-#ifdef PERL_NOTHREAD
+#ifndef MULTIPLICITY
     int size = strlen(script->interpreter) + strlen(function) + 3;
     func = (char *) malloc ( size * sizeof(char));
     if (func == NULL)
@@ -161,7 +161,7 @@ weechat_perl_exec (t_weechat_plugin *plugin,
     FREETMPS;
     LEAVE;
 
-#ifdef PERL_NOTHREAD
+#ifndef MULTIPLICITY
     free(func);
 #endif
     
@@ -840,7 +840,7 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
     t_plugin_script tempscript;
     int eval;
 
-#ifdef PERL_NOTHREAD
+#ifndef MULTIPLICITY
     char pkgname[64];
 #else
     PerlInterpreter *perl_current_interpreter;
@@ -850,7 +850,7 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
     plugin->printf_server (plugin, "Loading Perl script \"%s\"", filename);
     perl_current_script = NULL;
 
-#ifdef PERL_NOTHREAD
+#ifndef MULTIPLICITY
     snprintf(pkgname, sizeof(pkgname), "%s%d", PKG_NAME_PREFIX, packnum);
     packnum++;
     tempscript.interpreter = "WeechatPerlScriptLoader";
@@ -883,7 +883,7 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
 				   filename);	    
 	    plugin->printf_server (plugin,
 				   "Perl error: %s",
-#ifdef PERL_NOTHREAD
+#ifndef MULTIPLICITY
 				   SvPV(perl_get_sv("WeechatPerlScriptLoader::weechat_perl_load_eval_file_error", FALSE), len));
 #else
 				   SvPV(perl_get_sv("weechat_perl_load_eval_file_error", FALSE), len));
@@ -900,7 +900,7 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
 				   "Perl error: unknown error while loading file \"%s\"",
 				   filename);
 	}
-#ifndef PERL_NOTHREAD
+#ifdef MULTIPLICITY
 	perl_destruct (perl_current_interpreter);
         perl_free (perl_current_interpreter);
 #endif
@@ -917,14 +917,14 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
                                "Perl error: function \"register\" not found "
                                "in file \"%s\"",
                                filename);
-#ifndef PERL_NOTHREAD
+#ifdef MULTIPLICITY
         perl_destruct (perl_current_interpreter);
         perl_free (perl_current_interpreter);
 #endif
         return 0;
     }
 
-#ifdef PERL_NOTHREAD
+#ifndef MULTIPLICITY
     perl_current_script->interpreter = strdup(pkgname);
 #else
     perl_current_script->interpreter = (PerlInterpreter *) perl_current_interpreter;
@@ -944,7 +944,7 @@ weechat_perl_unload (t_weechat_plugin *plugin, t_plugin_script *script)
                            "Unloading Perl script \"%s\"",
                            script->name);
 
-#ifdef PERL_NOTHREAD
+#ifndef MULTIPLICITY
     eval_pv(script->interpreter, TRUE);
 #else
     PERL_SET_CONTEXT (script->interpreter);
@@ -953,7 +953,7 @@ weechat_perl_unload (t_weechat_plugin *plugin, t_plugin_script *script)
     if (script->shutdown_func[0])
         weechat_perl_exec (plugin, script, script->shutdown_func, "", "");
 
-#ifdef PERL_NOTHREAD
+#ifndef MULTIPLICITY
     if (script->interpreter)
 	free (script->interpreter);
 #else
@@ -1161,10 +1161,12 @@ int
 weechat_plugin_init (t_weechat_plugin *plugin)
 {
     perl_plugin = plugin;
-    
-    plugin->printf_server (plugin, "Loading Perl module \"weechat\"");
 
-#ifdef PERL_NOTHREAD
+#ifdef MULTIPLICITY
+    plugin->printf_server (plugin, "Loading Perl module \"weechat\"");
+#else
+    plugin->printf_server (plugin, "Loading Perl module \"weechat\" (without multiplicity)");
+
     char *perl_args[] = { "", "-e", "0" };
     
     main_perl = perl_alloc ();
@@ -1207,7 +1209,7 @@ weechat_plugin_end (t_weechat_plugin *plugin)
     /* unload all scripts */
     weechat_perl_unload_all (plugin);
 
-#ifdef PERL_NOTHREAD
+#ifndef MULTIPLICITY
     /* free perl intepreter */
     if (main_perl)
     {
