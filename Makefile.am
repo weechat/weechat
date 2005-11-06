@@ -22,6 +22,7 @@ EXTRA_DIST = config.rpath BUGS FAQ FAQ.fr \
              debian/copyright debian/compat \
              debian/rules debian/weechat-common.docs \
              debian/weechat-common.install debian/weechat-curses.dirs \
-             debian/weechat-curses.install 
+             debian/weechat-curses.install \
+             weechat_icon_32.png
 
 ACLOCAL_AMFLAGS = -I m4
