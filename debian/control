@@ -12,7 +12,16 @@ Depends: weechat-common (= ${Source-Version}), weechat-curses (= ${Source-Versio
 Description: Fast, light and extensible IRC client
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light IRC client
  for many operating systems. Everything can be done with a keyboard.
- It is customizable and extensible with scripts.
+ It is customizable and extensible with plugins/scripts, and includes:
+ - nicklist,
+ - smart hotlist,
+ - infobar with highlight notification,
+ - horizontal and vertical split,
+ - double charset support (decode/encode),
+ - FIFO pipe for remote control,
+ - and much more!
+ .
+ Homepage: http://weechat.flashtux.org/
 
 Package: weechat-curses
 Architecture: any
@@ -20,7 +29,16 @@ Depends: ${shlibs:Depends}, weechat-common (= ${Source-Version})
 Description: Fast, light and extensible IRC client
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light IRC client
  for many operating systems. Everything can be done with a keyboard.
- It is customizable and extensible with scripts.
+ It is customizable and extensible with plugins/scripts, and includes:
+ - nicklist,
+ - smart hotlist,
+ - infobar with highlight notification,
+ - horizontal and vertical split,
+ - double charset support (decode/encode),
+ - FIFO pipe for remote control,
+ - and much more!
+ .
+ Homepage: http://weechat.flashtux.org/
 
 Package: weechat-common
 Architecture: all
@@ -28,4 +46,4 @@ Replaces: weechat
 Recommends: weechat-curses | weechat-gtk
 Description: Common files for WeeChat
  Documentation, examples, and locale files for WeeChat - fast, light and
- extensible IRC client. It is useless without weechat-curses or weechat-gtk.
+ extensible IRC client. It is useless without weechat-curses.
