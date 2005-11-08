@@ -655,7 +655,9 @@ weechat_python_get_plugin_config (PyObject *self, PyObject *args)
     
     if (option)
     {
-        return_value = python_plugin->get_config (python_plugin, option);
+        return_value = weechat_script_get_plugin_config (python_plugin,
+                                                         python_current_script,
+                                                         option);
         
         if (return_value)
         {
@@ -701,7 +703,9 @@ weechat_python_set_plugin_config (PyObject *self, PyObject *args)
     
     if (option && value)
     {
-        if (python_plugin->set_config (python_plugin, option, value))
+        if (weechat_script_set_plugin_config (python_plugin,
+                                              python_current_script,
+                                              option, value))
             return Py_BuildValue ("i", 1);
     }
     
