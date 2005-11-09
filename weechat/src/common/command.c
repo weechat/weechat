@@ -2490,7 +2490,6 @@ weechat_cmd_set (char *arguments)
                 gui_printf (NULL, "\n");
                 gui_printf (NULL, _("%sDetail:\n"),
                             GUI_COLOR(COLOR_WIN_CHAT_CHANNEL));
-                gui_printf (NULL, GUI_COLOR(COLOR_WIN_CHAT_CHANNEL));
                 switch (weechat_options[last_section][last_option].option_type)
                 {
                     case OPTION_TYPE_BOOLEAN:
