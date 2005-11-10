@@ -328,7 +328,7 @@ gui_action_delete_previous_word (t_gui_window *window)
             
             gui_action_clipboard_copy (string, size_deleted);
             
-            memmove (string, string + size_deleted, size_deleted);
+            memmove (string, string + size_deleted, strlen (string + size_deleted));
             
             window->buffer->input_buffer_size -= size_deleted;
             window->buffer->input_buffer_length -= length_deleted;
