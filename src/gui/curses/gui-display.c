@@ -2508,8 +2508,8 @@ gui_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
     if (!gui_ok)
         return;
     
-    if (gui_current_window->buffer->num_displayed > 0)
-        gui_current_window->buffer->num_displayed--;
+    if (window->buffer->num_displayed > 0)
+        window->buffer->num_displayed--;
     
     window->buffer = buffer;
     window->win_nick_start = 0;
