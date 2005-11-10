@@ -424,6 +424,8 @@ dcc_close (t_irc_dcc *ptr_dcc, int status)
         }
     }
     
+    ptr_dcc->channel = NULL;
+    
     if (DCC_IS_CHAT(ptr_dcc->type))
         channel_remove_dcc (ptr_dcc);
     
