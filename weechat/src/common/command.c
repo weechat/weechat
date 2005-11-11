@@ -2323,7 +2323,7 @@ weechat_cmd_set (char *arguments)
                 {
                     case 0:
                         gui_printf (NULL, "\n");
-                        gui_printf (NULL, "%s[%s%s %s%s]\n",
+                        gui_printf (NULL, "%s[%s%s %s%s%s]\n",
                                     GUI_COLOR(COLOR_WIN_CHAT_DARK),
                                     GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
                                     config_sections[CONFIG_SECTION_SERVER].section_name,
