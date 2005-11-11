@@ -1,5 +1,5 @@
 %define name weechat
-%define version 0.1.5
+%define version 0.1.6
 %define release 1
 
 Name:      %{name}
@@ -23,11 +23,17 @@ rm -rf $RPM_BUILD_ROOT
 %setup
 
 %build
-./configure --enable-perl --enable-python
-make DESTDIR="$RPM_BUILD_ROOT" LOCALRPM="local"
+./configure --prefix=/usr --enable-perl --enable-python
+make
 
 %install
-make DESTDIR="$RPM_BUILD_ROOT" LOCALRPM="local" install
+%makeinstall
+mkdir -p $RPM_BUILD_ROOT%{_libdir}/weechat/plugins/
+mv $RPM_BUILD_ROOT%{_libdir}/libperl.so $RPM_BUILD_ROOT%{_libdir}/weechat/plugins/
+mv $RPM_BUILD_ROOT%{_libdir}/libpython.so $RPM_BUILD_ROOT%{_libdir}/weechat/plugins/
+rm -f $RPM_BUILD_ROOT%{_libdir}/*.so.*
+rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
+rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 
 %find_lang %name
 
@@ -37,14 +43,18 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(-,root,root,0755) 
 %doc AUTHORS BUGS ChangeLog COPYING FAQ FAQ.fr INSTALL NEWS README TODO
-/usr/local/man/man1/weechat-curses.1*
-/usr/local/bin/weechat-curses
-/usr/local/info/weechat_doc_en.info
-/usr/local/info/weechat_doc_es.info
-/usr/local/info/weechat_doc_fr.info
-/usr/local/info/weechat_doc_pt.info
+%{_mandir}/man1/weechat-curses.1*
+%{_bindir}/weechat-curses
+%{_libdir}/weechat/plugins/libperl.so
+%{_libdir}/weechat/plugins/libpython.so
+%{_infodir}/weechat_doc_en.info*
+%{_infodir}/weechat_doc_es.info*
+%{_infodir}/weechat_doc_fr.info*
+%{_infodir}/weechat_doc_pt.info*
 
 %changelog
+* Fri Nov 11 2005 FlashCode <flashcode@flashtux.org> 0.1.6-1
+- Released version 0.1.6
 * Sat Sep 24 2005 FlashCode <flashcode@flashtux.org> 0.1.5-1
 - Released version 0.1.5
 * Sat Jul 30 2005 FlashCode <flashcode@flashtux.org> 0.1.4-1

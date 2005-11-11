@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2005-11-06
+TODO - 2005-11-11
 
 Legend:
   #  done
@@ -12,7 +12,7 @@ Legend:
 
  * General:
     + Windows version
-    + Solaris version
+    # Solaris version
 
  * Interface:
     + Gtk GUI

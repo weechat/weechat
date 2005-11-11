@@ -1,4 +1,4 @@
-WeeChat FAQ, 2005-09-24
+WeeChat FAQ, 2005-11-11
 =======================
 
 Intended audience:
@@ -76,11 +76,10 @@ A:	For help you can type /help. For help about a command, type /help command.
 ================================================================================
 Q:	I don't see come chars with accents, what can I do?
 
-A:	You have to setup charset used for decoding, encoding, and internal WeeChat
-	charset.
-	Change value of option "look_charset_decode" to "UTF-8".
-	Option "look_charset_internal" should not be changed (default is
-	"ISO-8859-1").
+A:	You have to setup charset used for decoding (ISO and UTF), encoding, and
+	internal WeeChat charset.
+	Internal charset should be empty value, except if WeeChat failed to
+	detect your locale (WeeChat looks for "UTF-8" in your locale name).
 
 
 2.4

@@ -1,6 +1,25 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
+* FlashCode, 2005-11-11
+
+    WeeChat 0.1.6 released.
+
+    Important release notes:
+
+    - incompatibility with some old scripts: now all handlers have to return
+      a code for completion, and to do some actions about message to ignore
+      (please look at documentation for detail)
+
+    - on OpenBSD, the new option "plugins_extension" should be set to ".so.0.0"
+      since the plugins names are ending by ".so.0.0" and not ".so"
+
+    - with new and full UTF-8 support, the option "look_charset_internal"
+      should be set to blank for most cases. Forces it only if your locale is
+      not properly detected by WeeChat (you can set "UTF-8" or "ISO-8859-15"
+      for example, depending on your locale). WeeChat is looking for "UTF-8" in
+      your locale name at startup.
+
 * FlashCode, 2005-09-24
 
     WeeChat 0.1.5 released.

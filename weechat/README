@@ -12,10 +12,10 @@ Features
     * IRC chat client with multi-server connection
     * many GUI (curses, Gtk, Qt) (1)
     * small, fast and very light
-    * customizable and extensible with scripts (Perl, Python, Ruby) (2)
+    * customizable and extensible with plugins (scripts Perl, Python, Ruby) (2)
     * compliant with RFC 1459,2810,2811,2812,2813
     * developed from scratch
-    * multi-platform (GNU/Linux, *BSD, Windows & other) (3)
+    * multi-platform (GNU/Linux, *BSD, Mac OS X, QNX, Windows & other) (3)
     * 100% GPL & free
 
 
@@ -44,5 +44,5 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 ---
 (1) only Curses interface is available today
-(2) only Perl and Python interfaces are available today
-(3) only GNU/Linux and *BSD versions are available today
+(2) only Perl and Python plugins are available today
+(3) Windows is under construction
