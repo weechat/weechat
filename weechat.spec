@@ -9,9 +9,11 @@ Release:   %{release}
 Source:    http://weechat.flashtux.org/download/%{name}-%{version}.tar.gz
 URL:       http://weechat.flashtux.org
 Group:     Networking/IRC
-BuildRoot: %{_tmppath}/%{name}-buildroot
-Requires:  perl, python, libgnutls
+BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
+Requires:  perl, python, gnutls
 License:   GPL
+Distribution: Any RPM based distro
+Vendor:    FlashCode <flashcode@flashtux.org>
 
 %description
 WeeChat (Wee Enhanced Environment for Chat) is a portable, fast, light and
@@ -29,11 +31,7 @@ make
 %install
 %makeinstall
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/weechat/plugins/
-mv $RPM_BUILD_ROOT%{_libdir}/libperl.so $RPM_BUILD_ROOT%{_libdir}/weechat/plugins/
-mv $RPM_BUILD_ROOT%{_libdir}/libpython.so $RPM_BUILD_ROOT%{_libdir}/weechat/plugins/
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.so.*
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+mv $RPM_BUILD_ROOT%{_libdir}/lib* $RPM_BUILD_ROOT%{_libdir}/weechat/plugins/
 
 %find_lang %name
 
@@ -45,8 +43,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS BUGS ChangeLog COPYING FAQ FAQ.fr INSTALL NEWS README TODO
 %{_mandir}/man1/weechat-curses.1*
 %{_bindir}/weechat-curses
-%{_libdir}/weechat/plugins/libperl.so
-%{_libdir}/weechat/plugins/libpython.so
+%{_libdir}/weechat/plugins/*
 %{_infodir}/weechat_doc_en.info*
 %{_infodir}/weechat_doc_es.info*
 %{_infodir}/weechat_doc_fr.info*
