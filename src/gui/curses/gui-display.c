@@ -349,7 +349,7 @@ gui_color_encode (unsigned char *string)
     unsigned char *out;
     int out_length, out_pos;
     
-    out_length = strlen ((char *)string) + 1;
+    out_length = (strlen ((char *)string) * 2) + 1;
     out = (unsigned char *)malloc (out_length);
     if (!out)
         return NULL;
@@ -363,6 +363,9 @@ gui_color_encode (unsigned char *string)
                 string++;
                 switch (string[0])
                 {
+                    case '\0':
+                        out[out_pos++] = '%';
+                        break;
                     case '%': /* double '%' replaced by single '%' */
                         out[out_pos++] = string[0];
                         string++;
