@@ -1,4 +1,4 @@
-WeeChat FAQ, 2005-11-11
+WeeChat FAQ, 2005-11-12
 =======================
 
 Intended audience:
@@ -164,13 +164,8 @@ A:	There is 2 ways to submit your feature request:
 ================================================================================
 Q:	What is the list of supported platforms for WeeChat?
 
-A:	Today WeeChat was succesfully tested on these platforms:
-	- GNU/Linux (any distribution / i386, AMD64, Sparc)
-	- FreeBSD
-	- NetBSD
-	- OpenBSD
-	- Mac OS X
-	- Microsoft Windows (with Cygwin and some code changes)
+A:	Full list is on this page:
+	http://weechat.flashtux.org/download.php?lang=en&view=supported_os
 
 
 3.5

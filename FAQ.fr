@@ -1,4 +1,4 @@
-WeeChat FAQ, 2005-11-11
+WeeChat FAQ, 2005-11-12
 =======================
 
 Public concerné :
@@ -175,13 +175,8 @@ R:	Il y a 2 manières :
 ================================================================================
 Q:	Quelle est la liste des plate-formes supportées par WeeChat ?
 
-R:	Aujourd'hui WeeChat a été testé avec succès sur ces plate-formes :
-	- GNU/Linux (toute distribution / i386, AMD64, Sparc)
-	- FreeBSD
-	- NetBSD
-	- OpenBSD
-	- Mac OS X
-	- Microsoft Windows (avec Cygwin et quelques modifications de code)
+R:	La liste complète est sur cette page :
+	http://weechat.flashtux.org/download.php?lang=fr&view=supported_os
 
 
 3.5
