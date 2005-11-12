@@ -299,9 +299,6 @@ gui_color_decode_for_user_entry (unsigned char *string)
                 out[out_pos++] = 'B';
                 string++;
                 break;
-            case GUI_ATTR_RESET_CHAR:
-                string++;
-                break;
             case GUI_ATTR_FIXED_CHAR:
                 string++;
                 break;
