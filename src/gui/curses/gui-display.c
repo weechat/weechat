@@ -305,11 +305,12 @@ gui_color_decode_for_user_entry (unsigned char *string)
             case GUI_ATTR_FIXED_CHAR:
                 string++;
                 break;
-            case GUI_ATTR_REVERSE_CHAR:
+            case GUI_ATTR_RESET_CHAR:
                 out[out_pos++] = '%';
-                out[out_pos++] = 'R';
+                out[out_pos++] = 'O';
                 string++;
                 break;
+            case GUI_ATTR_REVERSE_CHAR:
             case GUI_ATTR_REVERSE2_CHAR:
                 out[out_pos++] = '%';
                 out[out_pos++] = 'R';
@@ -402,6 +403,10 @@ gui_color_encode (unsigned char *string)
                                 }
                             }
                         }
+                        break;
+                    case 'O': /* reset */
+                        out[out_pos++] = GUI_ATTR_RESET_CHAR;
+                        string++;
                         break;
                     case 'R': /* reverse */
                         out[out_pos++] = GUI_ATTR_REVERSE_CHAR;
