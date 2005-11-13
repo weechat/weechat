@@ -1,8 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-11-11
+ChangeLog - 2005-11-13
 
+
+Version 0.1.7 (under dev!):
+   * custom window size added, auto-recomputed when terminal is resized
+   * added /history command
 
 Version 0.1.6 (2005-11-11):
    * new color management system, IRC colors are now correctly
