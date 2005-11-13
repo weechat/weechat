@@ -38,6 +38,9 @@ netbsd*)
 	CFLAGS="$CFLAGS -I/usr/pkg/include"
 	LDFLAGS="$LDFLAGS -L/usr/pkg/lib"
         ;;
+solaris*)
+	LDFLAGS="$LDFLAGS -lsocket -lxnet"
+	;;
 *)
         ;;
 esac
