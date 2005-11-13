@@ -290,6 +290,8 @@ weechat_plugin_exec_command (t_weechat_plugin *plugin,
         user_command (ptr_server, ptr_channel->buffer, command);
     else if (ptr_server && (ptr_server->buffer))
         user_command (ptr_server, ptr_server->buffer, command);
+    else
+        user_command (NULL, gui_buffers, command);
 }
 
 /*
