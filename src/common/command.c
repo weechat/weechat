@@ -147,13 +147,14 @@ t_weechat_command weechat_commands[] =
     N_("-o: send uptime on current channel as an IRC message"),
     0, 1, weechat_cmd_uptime, NULL },
   { "window", N_("manage windows"),
-    N_("[list | -1 | +1 | b# | splith [pct] | splitv [pct] | [merge [all]]]"),
+    N_("[list | -1 | +1 | b# | splith [pct] | splitv [pct] | resize pct | merge [all]]"),
     N_("list: list opened windows (no parameter implies this list)\n"
        "-1: jump to previous window\n"
        "+1: jump to next window\n"
        "b#: jump to next window displaying buffer number #\n"
        "splith: split current window horizontally\n"
        "splitv: split current window vertically\n"
+       "resize: resize window size, new size is <pct>%% of parent window\n"
        "merge: merge window with another (all = keep only one window)\n\n"
        "For splith and splitv, pct is a pourcentage which represents "
        "size of new window, computed with current window as size reference. "
@@ -2882,6 +2883,18 @@ weechat_cmd_window (int argc, char **argv)
             }
             else
                 gui_window_split_vertic (gui_current_window, 50);
+        }
+        else if (ascii_strcasecmp (argv[0], "resize") == 0)
+        {
+            /* resize window */
+            if (argc > 1)
+            {
+                error = NULL;
+                number = strtol (argv[1], &error, 10);
+                if ((error) && (error[0] == '\0')
+                    && (number > 0) && (number < 100))
+                    gui_window_resize (gui_current_window, number);
+            }
         }
         else if (ascii_strcasecmp (argv[0], "merge") == 0)
         {

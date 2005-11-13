@@ -5,7 +5,9 @@ ChangeLog - 2005-11-13
 
 
 Version 0.1.7 (under dev!):
-   * custom window size added, auto-recomputed when terminal is resized
+   * new window maganement: custom size for windows, auto resize when
+     terminal is resized
+   * fixed infinite loop when resizing term to small size
    * added /history command
 
 Version 0.1.6 (2005-11-11):

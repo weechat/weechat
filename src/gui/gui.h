@@ -511,6 +511,7 @@ extern void gui_window_nick_page_down (t_gui_window *);
 extern void gui_window_init_subwindows (t_gui_window *);
 extern void gui_window_split_horiz (t_gui_window *, int);
 extern void gui_window_split_vertic (t_gui_window *, int);
+extern void gui_window_resize (t_gui_window *, int);
 extern int gui_window_merge (t_gui_window *);
 extern void gui_window_merge_all (t_gui_window *);
 extern void gui_refresh_screen ();

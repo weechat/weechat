@@ -486,6 +486,9 @@ completion_build_list (t_completion *completion, void *channel)
                          "splitv");
             weelist_add (&completion->completion_list,
                          &completion->last_completion,
+                         "resize");
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
                          "merge");
             return;
         }

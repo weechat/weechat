@@ -1154,7 +1154,8 @@ gui_display_word (t_gui_window *window,
         
         /* display new line? */
         if ((data >= end_line) ||
-            ((window->win_chat_cursor_y <= window->win_chat_height - 1) &&
+            (((simulate) ||
+             (window->win_chat_cursor_y <= window->win_chat_height - 1)) &&
             (window->win_chat_cursor_x > (window->win_chat_width - 1))))
             gui_display_new_line (window, num_lines, count,
                                   lines_displayed, simulate);
@@ -2796,6 +2797,92 @@ gui_window_init_subwindows (t_gui_window *window)
 }
 
 /*
+ * gui_window_auto_resize: auto-resize all windows, according to % of global size
+ *                         This function is called after a terminal resize.
+ *                         Returns 0 if ok, -1 if all window should be merged
+ *                         (not enough space according to windows %)
+ */
+
+int
+gui_window_auto_resize (t_gui_window_tree *tree,
+                        int x, int y, int width, int height,
+                        int simulate)
+{
+    int size1, size2;
+    
+    if (tree)
+    {
+        if (tree->window)
+        {
+            if ((width < WINDOW_MIN_WIDTH) || (height < WINDOW_MIN_HEIGHT))
+                return -1;
+            if (!simulate)
+            {
+                tree->window->win_x = x;
+                tree->window->win_y = y;
+                tree->window->win_width = width;
+                tree->window->win_height = height;
+            }
+        }
+        else
+        {
+            if (tree->split_horiz)
+            {
+                size1 = (height * tree->split_pct) / 100;
+                size2 = height - size1;
+                if (gui_window_auto_resize (tree->child1, x, y + size1,
+                                            width, size2, simulate) < 0)
+                    return -1;
+                if (gui_window_auto_resize (tree->child2, x, y,
+                                            width, size1, simulate) < 0)
+                    return -1;
+            }
+            else
+            {
+                size1 = (width * tree->split_pct) / 100;
+                size2 = width - size1 - 1;
+                if (gui_window_auto_resize (tree->child1, x, y,
+                                            size1, height, simulate) < 0)
+                    return -1;
+                if (gui_window_auto_resize (tree->child2, x + size1 + 1, y,
+                                            size2, height, simulate) < 0)
+                    return -1;
+            }
+        }
+    }
+    return 0;
+}
+
+/*
+ * gui_refresh_windows: auto resize and refresh all windows
+ */
+
+void
+gui_refresh_windows ()
+{
+    t_gui_window *ptr_win, *old_current_window;
+    
+    if (gui_ok)
+    {
+        old_current_window = gui_current_window;
+        
+        if (gui_window_auto_resize (gui_windows_tree, 0, 0, COLS, LINES, 0) < 0)
+            gui_window_merge_all (gui_current_window);
+    
+        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        {
+            gui_switch_to_buffer (ptr_win, ptr_win->buffer);
+            gui_redraw_buffer (ptr_win->buffer);
+            gui_draw_window_separator (ptr_win);
+        }
+        
+        gui_current_window = old_current_window;
+        gui_switch_to_buffer (gui_current_window, gui_current_window->buffer);
+        gui_redraw_buffer (gui_current_window->buffer);
+    }
+}
+
+/*
  * gui_window_split_horiz: split a window horizontally
  */
 
@@ -2882,6 +2969,32 @@ gui_window_split_vertic (t_gui_window *window, int pourcentage)
 }
 
 /*
+ * gui_window_resize: resize window
+ */
+
+void
+gui_window_resize (t_gui_window *window, int pourcentage)
+{
+    t_gui_window_tree *parent;
+    int old_split_pct;
+    
+    parent = window->ptr_tree->parent_node;
+    if (parent)
+    {
+        old_split_pct = parent->split_pct;
+        if (((parent->split_horiz) && (window->ptr_tree == parent->child2))
+            || ((!(parent->split_horiz)) && (window->ptr_tree == parent->child1)))
+            parent->split_pct = pourcentage;
+        else
+            parent->split_pct = 100 - pourcentage;
+        if (gui_window_auto_resize (gui_windows_tree, 0, 0, COLS, LINES, 1) < 0)
+            parent->split_pct = old_split_pct;
+        else
+            gui_refresh_windows ();
+    }
+}
+
+/*
  * gui_window_merge: merge window with its sister
  */
 
@@ -2951,98 +3064,23 @@ gui_window_merge_all (t_gui_window *window)
 }
 
 /*
- * gui_window_auto_resize: auto-resize all windows, according to % of global size
- *                         This function is called after a terminal resize.
- *                         Returns 0 if ok, -1 if all window should be merged
- *                         (not enough space according to windows %)
- */
-
-void
-gui_window_auto_resize (t_gui_window_tree *tree,
-                        int x, int y, int width, int height)
-{
-    int size1, size2;
-    
-    if (tree)
-    {
-        if (tree->window)
-        {
-            tree->window->win_x = x;
-            tree->window->win_y = y;
-            tree->window->win_width = width;
-            tree->window->win_height = height;
-        }
-        else
-        {
-            if (tree->split_horiz)
-            {
-                size1 = (height * tree->split_pct) / 100;
-                size2 = height - size1;
-                gui_window_auto_resize (tree->child1, x, y + size1, width, size2);
-                gui_window_auto_resize (tree->child2, x, y, width, size1);
-            }
-            else
-            {
-                size1 = (width * tree->split_pct) / 100;
-                size2 = width - size1 - 1;
-                gui_window_auto_resize (tree->child1, x, y, size1, height);
-                gui_window_auto_resize (tree->child2, x + size1 + 1, y, size2, height);
-            }
-        }
-    }
-}
-
-/*
  * gui_refresh_screen: called when term size is modified
  */
 
 void
 gui_refresh_screen ()
 {
-    t_gui_window *ptr_win, *old_current_window;
-    int old_width, old_height;
-    int new_width, new_height;
-    int merge_all;
-    
-    getmaxyx (stdscr, old_height, old_width);
+    int new_height, new_width;
     
     endwin ();
     refresh ();
     
     getmaxyx (stdscr, new_height, new_width);
     
-    old_current_window = gui_current_window;
-    
     gui_ok = ((new_width > WINDOW_MIN_WIDTH) && (new_height > WINDOW_MIN_HEIGHT));
     
     if (gui_ok)
-    {
-        gui_window_auto_resize (gui_windows_tree, 0, 0, COLS, LINES);
-        
-        merge_all = 0;
-        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-        {
-            if ((ptr_win->win_width < WINDOW_MIN_WIDTH)
-                || (ptr_win->win_height < WINDOW_MIN_HEIGHT))
-            {
-                merge_all = 1;
-                break;
-            }
-        }
-        if (merge_all)
-            gui_window_merge_all (gui_current_window);
-    
-        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-        {
-            gui_switch_to_buffer (ptr_win, ptr_win->buffer);
-            gui_redraw_buffer (ptr_win->buffer);
-            gui_draw_window_separator (ptr_win);
-        }
-        
-        gui_current_window = old_current_window;
-        gui_switch_to_buffer (gui_current_window, gui_current_window->buffer);
-        gui_redraw_buffer (gui_current_window->buffer);
-    }
+        gui_refresh_windows ();
 }
 
 /*
