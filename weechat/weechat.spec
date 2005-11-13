@@ -1,3 +1,22 @@
+# Copyright (c) 2003-2005 FlashCode <flashcode@flashtux.org>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+# This RPM spec file is designed for SuSE
+#
+
 %define name weechat
 %define version 0.1.6
 %define release 1
@@ -8,12 +27,12 @@ Version:   %{version}
 Release:   %{release}
 Source:    http://weechat.flashtux.org/download/%{name}-%{version}.tar.gz
 URL:       http://weechat.flashtux.org
-Group:     Networking/IRC
+Group:     Productivity/Networking/IRC
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
-Requires:  perl, python, gnutls
+Requires:  perl, python, gnutls, ncurses
 License:   GPL
-Distribution: Any RPM based distro
 Vendor:    FlashCode <flashcode@flashtux.org>
+Packager:  [Odin] <odin@dtdm.org>
 
 %description
 WeeChat (Wee Enhanced Environment for Chat) is a portable, fast, light and
@@ -25,13 +44,12 @@ rm -rf $RPM_BUILD_ROOT
 %setup
 
 %build
-./configure --prefix=/usr --enable-perl --enable-python
+./configure --prefix=/usr --infodir=/usr/share/info --mandir=/usr/share/man --enable-perl --enable-python 
 make
 
 %install
 %makeinstall
-mkdir -p $RPM_BUILD_ROOT%{_libdir}/weechat/plugins/
-mv $RPM_BUILD_ROOT%{_libdir}/lib* $RPM_BUILD_ROOT%{_libdir}/weechat/plugins/
+mkdir -p $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/
 
 %find_lang %name
 
@@ -41,13 +59,13 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(-,root,root,0755) 
 %doc AUTHORS BUGS ChangeLog COPYING FAQ FAQ.fr INSTALL NEWS README TODO
-%{_mandir}/man1/weechat-curses.1*
-%{_bindir}/weechat-curses
-%{_libdir}/weechat/plugins/*
-%{_infodir}/weechat_doc_en.info*
-%{_infodir}/weechat_doc_es.info*
-%{_infodir}/weechat_doc_fr.info*
-%{_infodir}/weechat_doc_pt.info*
+%{_mandir}/man1/%{name}-curses.1*
+%{_bindir}/%{name}-curses
+%{_libdir}/%{name}/plugins/*
+%{_infodir}/%{name}_doc_en.info*
+%{_infodir}/%{name}_doc_es.info*
+%{_infodir}/%{name}_doc_fr.info*
+%{_infodir}/%{name}_doc_pt.info*
 
 %changelog
 * Fri Nov 11 2005 FlashCode <flashcode@flashtux.org> 0.1.6-1
