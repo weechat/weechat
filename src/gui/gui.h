@@ -164,6 +164,9 @@ enum t_weechat_color
 #define gui_printf_nolog_notime(buffer, fmt, argz...) \
     gui_printf_internal(buffer, 0, MSG_TYPE_NOLOG, fmt, ##argz)
 
+#define WINDOW_MIN_WIDTH        10
+#define WINDOW_MIN_HEIGHT       5
+
 #define NOTIFY_LEVEL_MIN        0
 #define NOTIFY_LEVEL_MAX        3
 #define NOTIFY_LEVEL_DEFAULT    NOTIFY_LEVEL_MAX
@@ -261,6 +264,7 @@ struct t_gui_buffer
     t_gui_buffer *next_buffer;      /* link to next buffer                  */
 };
 
+typedef struct t_gui_window_tree t_gui_window_tree;
 typedef struct t_gui_window t_gui_window;
 
 struct t_gui_window
@@ -268,6 +272,11 @@ struct t_gui_window
     /* global position & size */
     int win_x, win_y;               /* position of window                   */
     int win_width, win_height;      /* window geometry                      */
+    int win_width_pct;              /* % of width (compared to term size)   */
+    int win_height_pct;             /* % of height (compared to term size)  */
+    
+    int new_x, new_y;               /* used for computing new position      */
+    int new_width, new_height;      /* used for computing new size          */
     
     /* chat window settings */
     int win_chat_x, win_chat_y;     /* chat window position                 */
@@ -320,8 +329,24 @@ struct t_gui_window
     t_gui_line *start_line;         /* pointer to line if scrolling         */
     int start_line_pos;             /* position in first line displayed     */
     
+    t_gui_window_tree *ptr_tree;    /* pointer to leaf in windows tree      */
+    
     t_gui_window *prev_window;      /* link to previous window              */
     t_gui_window *next_window;      /* link to next window                  */
+};
+
+struct t_gui_window_tree
+{
+    t_gui_window_tree *parent_node; /* pointer to parent node               */
+    
+    /* node info */
+    int split_horiz;                /* 1 if horizontal, 0 if vertical       */
+    int split_pct;                  /* % of split size (represents child1)  */
+    t_gui_window_tree *child1;      /* first child, NULL if a leaf          */
+    t_gui_window_tree *child2;      /* second child, NULL if a leaf         */
+    
+    /* leaf info */
+    t_gui_window *window;           /* pointer to window, NULL if a node    */
 };
 
 typedef struct t_gui_key t_gui_key;
@@ -353,6 +378,7 @@ extern int gui_add_hotlist;
 extern t_gui_window *gui_windows;
 extern t_gui_window *last_gui_window;
 extern t_gui_window *gui_current_window;
+extern t_gui_window_tree *gui_windows_tree;
 extern t_gui_buffer *gui_buffers;
 extern t_gui_buffer *last_gui_buffer;
 extern t_gui_buffer *buffer_before_dcc;
@@ -369,7 +395,10 @@ extern t_gui_color *gui_color[NUM_COLORS];
 
 /* GUI independent functions: windows & buffers */
 
-extern t_gui_window *gui_window_new (int, int, int, int);
+extern int gui_window_tree_init (t_gui_window *);
+extern void gui_window_tree_node_to_leaf (t_gui_window_tree *, t_gui_window *);
+extern void gui_window_tree_free (t_gui_window_tree **);
+extern t_gui_window *gui_window_new (t_gui_window *, int, int, int, int, int, int);
 extern t_gui_buffer *gui_buffer_new (t_gui_window *, void *, void *, int, int);
 extern void gui_buffer_clear (t_gui_buffer *);
 extern void gui_buffer_clear_all ();
@@ -480,13 +509,9 @@ extern void gui_window_nick_end (t_gui_window *);
 extern void gui_window_nick_page_up (t_gui_window *);
 extern void gui_window_nick_page_down (t_gui_window *);
 extern void gui_window_init_subwindows (t_gui_window *);
-extern void gui_window_split_horiz (t_gui_window *);
-extern void gui_window_split_vertic (t_gui_window *);
-extern int gui_window_merge_up (t_gui_window *);
-extern int gui_window_merge_down (t_gui_window *);
-extern int gui_window_merge_left (t_gui_window *);
-extern int gui_window_merge_right (t_gui_window *);
-extern void gui_window_merge_auto (t_gui_window *);
+extern void gui_window_split_horiz (t_gui_window *, int);
+extern void gui_window_split_vertic (t_gui_window *, int);
+extern int gui_window_merge (t_gui_window *);
 extern void gui_window_merge_all (t_gui_window *);
 extern void gui_refresh_screen ();
 extern void gui_pre_init (int *, char **[]);

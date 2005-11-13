@@ -186,9 +186,14 @@ completion_build_list (t_completion *completion, void *channel)
     if (ascii_strcasecmp (completion->base_command, "debug") == 0)
     {
         if (completion->base_command_arg == 1)
+        {
             weelist_add (&completion->completion_list,
                          &completion->last_completion,
                          "dump");
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         "windows");
+        }
         else
             completion_stop (completion);
         return;

@@ -66,8 +66,9 @@ t_weechat_command weechat_commands[] =
     N_("servername: server name to disconnect"),
     0, 1, weechat_cmd_disconnect, NULL },
   { "debug", N_("print debug messages"),
-    N_("dump"),
-    N_("dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)"),
+    N_("dump | windows"),
+    N_("dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)\n"
+       "windows: display windows tree"),
     1, 1, weechat_cmd_debug, NULL },
   { "help", N_("display help about commands"),
     N_("[command]"), N_("command: name of a WeeChat or IRC command"),
@@ -140,14 +141,17 @@ t_weechat_command weechat_commands[] =
     N_("-o: send uptime on current channel as an IRC message"),
     0, 1, weechat_cmd_uptime, NULL },
   { "window", N_("manage windows"),
-    N_("[list | -1 | +1 | b# | splith | splitv | [merge [down | up | left | right | all]]]"),
+    N_("[list | -1 | +1 | b# | splith [pct] | splitv [pct] | [merge [all]]]"),
     N_("list: list opened windows (no parameter implies this list)\n"
        "-1: jump to previous window\n"
        "+1: jump to next window\n"
        "b#: jump to next window displaying buffer number #\n"
        "splith: split current window horizontally\n"
        "splitv: split current window vertically\n"
-       "merge: merge window with another"),
+       "merge: merge window with another (all = keep only one window)\n\n"
+       "For splith and splitv, pct is a pourcentage which represents "
+       "size of new window, computed with current window as size reference. "
+       "For example 25 means create a new window with size = current_size / 4"),
     0, 2, weechat_cmd_window, NULL },
   { NULL, NULL, NULL, NULL, 0, 0, NULL, NULL }
 };
@@ -1297,6 +1301,45 @@ weechat_cmd_connect (int argc, char **argv)
 }
 
 /*
+ * weechat_cmd_debug_display_windows: display tree of windows
+ */
+
+void
+weechat_cmd_debug_display_windows (t_gui_window_tree *tree, int indent)
+{
+    int i;
+    
+    if (tree)
+    {
+        for (i = 0; i < indent; i++)
+            gui_printf_nolog (NULL, "  ");
+        
+        if (tree->window)
+        {
+            /* leaf */
+            gui_printf_nolog (NULL, "leaf: %X (parent:%X), win=%X, child1=%X, child2=%X, %d,%d %dx%d, %d%%x%d%%\n",
+                              tree, tree->parent_node, tree->window,
+                              tree->child1, tree->child2,
+                              tree->window->win_x, tree->window->win_y,
+                              tree->window->win_width, tree->window->win_height,
+                              tree->window->win_width_pct, tree->window->win_height_pct);
+        }
+        else
+        {
+            /* node */
+            gui_printf_nolog (NULL, "node: %X (parent:%X), win=%X, child1=%X, child2=%X)\n",
+                              tree, tree->parent_node, tree->window,
+                              tree->child1, tree->child2);
+        }
+        
+        if (tree->child1)
+            weechat_cmd_debug_display_windows (tree->child1, indent + 1);
+        if (tree->child2)
+            weechat_cmd_debug_display_windows (tree->child2, indent + 1);
+    }
+}
+
+/*
  * weechat_cmd_debug: print debug messages
  */
 
@@ -1315,6 +1358,12 @@ weechat_cmd_debug (int argc, char **argv)
     if (ascii_strcasecmp (argv[0], "dump") == 0)
     {
         wee_dump (0);
+    }
+    else if (ascii_strcasecmp (argv[0], "windows") == 0)
+    {
+        gui_printf_nolog (NULL, "\n");
+        gui_printf_nolog (NULL, "DEBUG: windows tree:\n");
+        weechat_cmd_debug_display_windows (gui_windows_tree, 1);
     }
     else
     {
@@ -1918,6 +1967,7 @@ weechat_cmd_server (int argc, char **argv)
     int i;
     t_irc_server server, *ptr_server, *server_found, *new_server;
     t_gui_buffer *ptr_buffer;
+    char *server_name;
     
     if ((argc == 0) || (argc == 1))
     {
@@ -2008,13 +2058,17 @@ weechat_cmd_server (int argc, char **argv)
                 }
             }
             
+            server_name = strdup (server_found->name);
+            
             server_free (server_found);
             
             irc_display_prefix (NULL, NULL, PREFIX_INFO);
             gui_printf (NULL, _("Server %s%s%s has been deleted\n"),
                         GUI_COLOR(COLOR_WIN_CHAT_SERVER),
-                        server_found->name,
+                        server_name,
                         GUI_COLOR(COLOR_WIN_CHAT));
+            if (server_name)
+                free (server_name);
             
             gui_redraw_buffer (gui_current_window->buffer);
             
@@ -2758,26 +2812,36 @@ weechat_cmd_window (int argc, char **argv)
         if (ascii_strcasecmp (argv[0], "splith") == 0)
         {
             /* split window horizontally */
-            gui_window_split_horiz (gui_current_window);
+            if (argc > 1)
+            {
+                error = NULL;
+                number = strtol (argv[1], &error, 10);
+                if ((error) && (error[0] == '\0')
+                    && (number > 0) && (number < 100))
+                    gui_window_split_horiz (gui_current_window, number);
+            }
+            else
+                gui_window_split_horiz (gui_current_window, 50);
         }
         else if (ascii_strcasecmp (argv[0], "splitv") == 0)
         {
             /* split window vertically */
-            gui_window_split_vertic (gui_current_window);
+            if (argc > 1)
+            {
+                error = NULL;
+                number = strtol (argv[1], &error, 10);
+                if ((error) && (error[0] == '\0')
+                    && (number > 0) && (number < 100))
+                    gui_window_split_vertic (gui_current_window, number);
+            }
+            else
+                gui_window_split_vertic (gui_current_window, 50);
         }
         else if (ascii_strcasecmp (argv[0], "merge") == 0)
         {
             if (argc >= 2)
             {
-                if (ascii_strcasecmp (argv[1], "down") == 0)
-                    gui_window_merge_down (gui_current_window);
-                else if (ascii_strcasecmp (argv[1], "up") == 0)
-                    gui_window_merge_up (gui_current_window);
-                else if (ascii_strcasecmp (argv[1], "left") == 0)
-                    gui_window_merge_left (gui_current_window);
-                else if (ascii_strcasecmp (argv[1], "right") == 0)
-                    gui_window_merge_right (gui_current_window);
-                else if (ascii_strcasecmp (argv[1], "all") == 0)
+                if (ascii_strcasecmp (argv[1], "all") == 0)
                     gui_window_merge_all (gui_current_window);
                 else
                 {
@@ -2789,7 +2853,18 @@ weechat_cmd_window (int argc, char **argv)
                 }
             }
             else
-                gui_window_merge_auto (gui_current_window);
+            {
+                if (!gui_window_merge (gui_current_window))
+                {
+                    irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                    gui_printf (NULL,
+                                _("%s can not merge windows, "
+                                  "there's no other window with same size "
+                                  "near current one.\n"),
+                                WEECHAT_ERROR);
+                    return -1;
+                }
+            }
         }
         else if (ascii_strncasecmp (argv[0], "b", 1) == 0)
         {
