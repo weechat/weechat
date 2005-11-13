@@ -688,6 +688,25 @@ gui_action_up (t_gui_window *window)
                 window->buffer->history;
         if (window->buffer->ptr_history)
         {
+	    /* bash/readline like use of history */
+            if (window->buffer->ptr_history->prev_history == NULL)
+            {
+                if (window->buffer->input_buffer_size > 0)
+                {
+                    window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
+                    history_add (window->buffer, window->buffer->input_buffer);
+                }
+            }
+            else
+            {
+                if (window->buffer->input_buffer_size > 0)
+                {
+                    window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
+                    if (window->buffer->ptr_history->prev_history->text)
+			free(window->buffer->ptr_history->prev_history->text);
+                    window->buffer->ptr_history->prev_history->text = strdup (window->buffer->input_buffer);
+                }
+            }
             window->buffer->input_buffer_size =
                 strlen (window->buffer->ptr_history->text);
             window->buffer->input_buffer_length =

@@ -230,6 +230,16 @@ completion_build_list (t_completion *completion, void *channel)
 #endif
         return;
     }
+    if (ascii_strcasecmp (completion->base_command, "history") == 0)
+    {
+        if (completion->base_command_arg == 1)
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         "clear");
+        else
+            completion_stop (completion);
+        return;
+    }
     if (ascii_strcasecmp (completion->base_command, "ignore") == 0)
     {
         /* arg 1: nicks of current channel and "*" */

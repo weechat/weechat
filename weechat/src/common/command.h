@@ -71,6 +71,7 @@ extern int weechat_cmd_connect (int, char **);
 extern int weechat_cmd_debug (int, char **);
 extern int weechat_cmd_disconnect (int, char **);
 extern int weechat_cmd_help (int, char **);
+extern int weechat_cmd_history (int, char **);
 extern void weechat_cmd_ignore_display (char *, t_irc_ignore *);
 extern int weechat_cmd_ignore (int, char **);
 extern int weechat_cmd_key (char *);

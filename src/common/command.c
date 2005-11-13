@@ -73,6 +73,12 @@ t_weechat_command weechat_commands[] =
   { "help", N_("display help about commands"),
     N_("[command]"), N_("command: name of a WeeChat or IRC command"),
     0, 1, weechat_cmd_help, NULL },
+  { "history", N_("show buffer command history"),
+    N_("[clear | value]"),
+    N_("clear: clear history\n"
+       "value: number of history entries to show"
+        ),
+    0, 1, weechat_cmd_history, NULL },
   { "ignore", N_("ignore IRC messages and/or hosts"),
     N_("[mask [[type | command] [channel [server]]]]"),
     N_("   mask: nick or host mask to ignore\n"
@@ -1581,6 +1587,46 @@ weechat_cmd_help (int argc, char **argv)
                         argv[0]);
             break;
     }
+    return 0;
+}
+
+/*
+ * weechat_cmd_history: display current buffer history
+ */
+
+int
+weechat_cmd_history (int argc, char **argv) {
+
+    t_history *p;
+    int n;
+    int n_total;
+    int n_user = cfg_history_display_default;
+
+    if (argc == 1)
+    {
+        if (ascii_strcasecmp (argv[0], "clear") == 0)
+        {
+            history_buffer_free (gui_current_window->buffer);
+            return 0;
+        }
+        else
+            n_user = atoi (argv[0]);
+    }
+
+    if (gui_current_window->buffer->history != NULL)
+    {
+        for(n_total = 1, p = gui_current_window->buffer->history; p->next_history != NULL; p = p->next_history, n_total++);
+        for(n=0; p != NULL; p=p->prev_history, n++)
+        {
+            if (n_user > 0 && (n_total-n_user) > n)
+                continue;
+            irc_display_prefix (NULL, gui_current_window->buffer,
+                                PREFIX_INFO);
+            gui_printf_nolog (gui_current_window->buffer,
+                              "%s\n", p->text);
+        }
+    }
+
     return 0;
 }
 

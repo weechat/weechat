@@ -169,6 +169,7 @@ extern int cfg_col_dcc_aborted;
 
 extern int cfg_history_max_lines;
 extern int cfg_history_max_commands;
+extern int cfg_history_display_default;
 
 extern int cfg_log_auto_server;
 extern int cfg_log_auto_channel;

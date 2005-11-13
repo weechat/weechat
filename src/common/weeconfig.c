@@ -571,6 +571,7 @@ t_config_option weechat_options_colors[] =
 
 int cfg_history_max_lines;
 int cfg_history_max_commands;
+int cfg_history_display_default;
 
 t_config_option weechat_options_history[] =
 { { "history_max_lines", N_("max lines in history (per window)"),
@@ -582,6 +583,10 @@ t_config_option weechat_options_history[] =
     N_("maximum number of user commands in history (0 = unlimited)"),
     OPTION_TYPE_INT, 0, INT_MAX, 100,
     NULL, NULL, &cfg_history_max_commands, NULL, &config_change_noop },
+  { "history_display_default", N_("max commands to display"),
+    N_("maximum number of commands to display by default in history listing (0 = unlimited)"),
+    OPTION_TYPE_INT, 0, INT_MAX, 5,
+    NULL, NULL, &cfg_history_display_default, NULL, &config_change_noop },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
