@@ -80,7 +80,7 @@ binary-arch: build install
 	      -dRecommends `find $(PKGDIR)/usr/lib/weechat -type f -name "*.so"`
 	dh_shlibdeps -a -l debian/weechat-curses/usr/lib -- -dDepends \
 		debian/weechat-curses/usr/bin/weechat-curses -dRecommends \
-		`find debian/weechat-curses/usr/lib/ -type f -name "*.so"`
+		`find debian/weechat-curses/usr/lib/ -type f -follow -name "*.so"`
 	dh_gencontrol -a
 	dh_md5sums -a
 	dh_builddeb -a
