@@ -26,6 +26,7 @@ Description: Fast, light and extensible IRC client
 Package: weechat-curses
 Architecture: any
 Depends: ${shlibs:Depends}, weechat-common (= ${Source-Version})
+Recommends: ${shlibs:Recommends}
 Description: Fast, light and extensible IRC client
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light IRC client
  for many operating systems. Everything can be done with a keyboard.

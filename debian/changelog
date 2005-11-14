@@ -1,3 +1,11 @@
+weechat (0.1.6-1) unstable; urgency=low
+
+  * New upstream release
+  * Add menu entry
+  * Move libperl5.8 and python2.3 from Depends to Recommends
+
+ -- Julien Louis <ptitlouis@sysif.net>  Fri, 11 Nov 2005 22:21:08 +0100
+
 weechat (0.1.5-1) unstable; urgency=low
 
   * New upstream release
