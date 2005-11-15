@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.7-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-11-13 23:09+0100\n"
+"POT-Creation-Date: 2005-11-15 12:30+0100\n"
 "PO-Revision-Date: 2005-11-13 22:38+0100\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2243,64 +2243,64 @@ msgstr ""
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr "%s el lag (retraso) es alto, desconectando del servidor...\n"
 
-#: src/gui/curses/gui-display.c:1474
+#: src/gui/curses/gui-display.c:1459
 msgid "bytes"
 msgstr "bytes"
 
-#: src/gui/curses/gui-display.c:1474
+#: src/gui/curses/gui-display.c:1459
 msgid "Kb"
 msgstr "KB"
 
-#: src/gui/curses/gui-display.c:1474
+#: src/gui/curses/gui-display.c:1459
 msgid "Mb"
 msgstr "MB"
 
-#: src/gui/curses/gui-display.c:1474
+#: src/gui/curses/gui-display.c:1459
 msgid "Gb"
 msgstr "GB"
 
-#: src/gui/curses/gui-display.c:1927
+#: src/gui/curses/gui-display.c:1912
 msgid "<servers>"
 msgstr "<servidores>"
 
-#: src/gui/curses/gui-display.c:1939
+#: src/gui/curses/gui-display.c:1924
 msgid "(away)"
 msgstr "(ausente)"
 
-#: src/gui/curses/gui-display.c:2073
+#: src/gui/curses/gui-display.c:2058
 msgid "[not connected] "
 msgstr "[no conectado] "
 
-#: src/gui/curses/gui-display.c:2083
+#: src/gui/curses/gui-display.c:2068
 msgid "Act: "
 msgstr "Act: "
 
-#: src/gui/curses/gui-display.c:2171
+#: src/gui/curses/gui-display.c:2156
 #, c-format
 msgid "Lag: %.1f"
 msgstr "Lag: %.1f"
 
-#: src/gui/curses/gui-display.c:2187
+#: src/gui/curses/gui-display.c:2172
 msgid "-MORE-"
 msgstr "-MÁS-"
 
-#: src/gui/curses/gui-display.c:2365
+#: src/gui/curses/gui-display.c:2350
 msgid "  [A] Accept"
 msgstr "  [A] Aceptar"
 
-#: src/gui/curses/gui-display.c:2366 src/gui/curses/gui-display.c:2370
+#: src/gui/curses/gui-display.c:2351 src/gui/curses/gui-display.c:2355
 msgid "  [C] Cancel"
 msgstr "  [C] Cancelar"
 
-#: src/gui/curses/gui-display.c:2375
+#: src/gui/curses/gui-display.c:2360
 msgid "  [R] Remove"
 msgstr "  [R] Eliminar"
 
-#: src/gui/curses/gui-display.c:2379
+#: src/gui/curses/gui-display.c:2364
 msgid "  [P] Purge old DCC"
 msgstr "  [P] Purgar los viejos DCC"
 
-#: src/gui/curses/gui-display.c:2380
+#: src/gui/curses/gui-display.c:2365
 msgid "  [Q] Close DCC view"
 msgstr "  [Q] Cerrar la vista DCC"
 

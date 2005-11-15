@@ -485,12 +485,9 @@ gui_color_get_pair (int num_color)
 void
 gui_window_set_weechat_color (WINDOW *window, int num_color)
 {
-    if (has_colors ())
-    {
-        wattroff (window, A_BOLD | A_UNDERLINE | A_REVERSE);
-        wattron (window, COLOR_PAIR(gui_color_get_pair (num_color)) |
-                 gui_color[num_color]->attributes);
-    }
+    wattroff (window, A_BOLD | A_UNDERLINE | A_REVERSE);
+    wattron (window, COLOR_PAIR(gui_color_get_pair (num_color)) |
+             gui_color[num_color]->attributes);
 }
 
 /*
@@ -501,10 +498,7 @@ gui_window_set_weechat_color (WINDOW *window, int num_color)
 void
 gui_window_chat_set_style (t_gui_window *window, int style)
 {
-    if (has_colors ())
-    {
-        wattron (window->win_chat, style);
-    }
+    wattron (window->win_chat, style);
 }
 
 /*
@@ -515,10 +509,7 @@ gui_window_chat_set_style (t_gui_window *window, int style)
 void
 gui_window_chat_remove_style (t_gui_window *window, int style)
 {
-    if (has_colors ())
-    {
-        wattroff (window->win_chat, style);
-    }
+    wattroff (window->win_chat, style);
 }
 
 /*
@@ -594,19 +585,16 @@ gui_window_chat_reset_color_style (t_gui_window *window)
 void
 gui_window_chat_set_color (t_gui_window *window, int fg, int bg)
 {
-    if (has_colors ())
+    if (((fg == -1) || (fg == 99))
+        && ((bg == -1) || (bg == 99)))
+        wattron (window->win_chat, COLOR_PAIR(63));
+    else
     {
-        if (((fg == -1) || (fg == 99))
-            && ((bg == -1) || (bg == 99)))
-            wattron (window->win_chat, COLOR_PAIR(63));
-        else
-        {
-            if ((fg == -1) || (fg == 99))
-                fg = WEECHAT_COLOR_WHITE;
-            if ((bg == -1) || (bg == 99))
-                bg = 0;
-            wattron (window->win_chat, COLOR_PAIR((bg * 8) + fg));
-        }
+        if ((fg == -1) || (fg == 99))
+            fg = WEECHAT_COLOR_WHITE;
+        if ((bg == -1) || (bg == 99))
+            bg = 0;
+        wattron (window->win_chat, COLOR_PAIR((bg * 8) + fg));
     }
 }
 
@@ -617,15 +605,12 @@ gui_window_chat_set_color (t_gui_window *window, int fg, int bg)
 void
 gui_window_chat_set_weechat_color (t_gui_window *window, int weechat_color)
 {
-    if (has_colors ())
-    {
-        gui_window_chat_reset_style (window);
-        gui_window_chat_set_style (window,
-                                   gui_color[weechat_color]->attributes);
-        gui_window_chat_set_color (window,
-                                   gui_color[weechat_color]->foreground,
-                                   gui_color[weechat_color]->background);
-    }
+    gui_window_chat_reset_style (window);
+    gui_window_chat_set_style (window,
+                               gui_color[weechat_color]->attributes);
+    gui_window_chat_set_color (window,
+                               gui_color[weechat_color]->foreground,
+                               gui_color[weechat_color]->background);
 }
 
 /*
@@ -3220,9 +3205,9 @@ gui_init_colors ()
     {
         start_color ();
         use_default_colors ();
-        gui_init_color_pairs ();
-        gui_init_weechat_colors ();
     }
+    gui_init_color_pairs ();
+    gui_init_weechat_colors ();
 }
 
 /*

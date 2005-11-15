@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.7-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-11-13 23:09+0100\n"
+"POT-Creation-Date: 2005-11-15 12:30+0100\n"
 "PO-Revision-Date: 2005-11-13 22:38+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2257,64 +2257,64 @@ msgstr "Změnil se den na %s\n"
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr "%s zpoždění je veliké, odpojuji se od serveru...\n"
 
-#: src/gui/curses/gui-display.c:1474
+#: src/gui/curses/gui-display.c:1459
 msgid "bytes"
 msgstr "bajtů"
 
-#: src/gui/curses/gui-display.c:1474
+#: src/gui/curses/gui-display.c:1459
 msgid "Kb"
 msgstr "Kb"
 
-#: src/gui/curses/gui-display.c:1474
+#: src/gui/curses/gui-display.c:1459
 msgid "Mb"
 msgstr "Mb"
 
-#: src/gui/curses/gui-display.c:1474
+#: src/gui/curses/gui-display.c:1459
 msgid "Gb"
 msgstr "Gb"
 
-#: src/gui/curses/gui-display.c:1927
+#: src/gui/curses/gui-display.c:1912
 msgid "<servers>"
 msgstr "<serverů>"
 
-#: src/gui/curses/gui-display.c:1939
+#: src/gui/curses/gui-display.c:1924
 msgid "(away)"
 msgstr "(pryč)"
 
-#: src/gui/curses/gui-display.c:2073
+#: src/gui/curses/gui-display.c:2058
 msgid "[not connected] "
 msgstr "[nepřipojen] "
 
-#: src/gui/curses/gui-display.c:2083
+#: src/gui/curses/gui-display.c:2068
 msgid "Act: "
 msgstr "Aktivní: "
 
-#: src/gui/curses/gui-display.c:2171
+#: src/gui/curses/gui-display.c:2156
 #, c-format
 msgid "Lag: %.1f"
 msgstr "Zpoždění: %.1f"
 
-#: src/gui/curses/gui-display.c:2187
+#: src/gui/curses/gui-display.c:2172
 msgid "-MORE-"
 msgstr "-VÍCE-"
 
-#: src/gui/curses/gui-display.c:2365
+#: src/gui/curses/gui-display.c:2350
 msgid "  [A] Accept"
 msgstr "  [A] Akceptovat"
 
-#: src/gui/curses/gui-display.c:2366 src/gui/curses/gui-display.c:2370
+#: src/gui/curses/gui-display.c:2351 src/gui/curses/gui-display.c:2355
 msgid "  [C] Cancel"
 msgstr "  [C] Storno"
 
-#: src/gui/curses/gui-display.c:2375
+#: src/gui/curses/gui-display.c:2360
 msgid "  [R] Remove"
 msgstr "  [R] Odebrat"
 
-#: src/gui/curses/gui-display.c:2379
+#: src/gui/curses/gui-display.c:2364
 msgid "  [P] Purge old DCC"
 msgstr "  [P] Pročistit staré DCC"
 
-#: src/gui/curses/gui-display.c:2380
+#: src/gui/curses/gui-display.c:2365
 msgid "  [Q] Close DCC view"
 msgstr "  [Q] Zavřít DCC pohled"
 
