@@ -164,7 +164,7 @@ irc_display_mode (t_irc_server *server, t_gui_buffer *buffer,
                     GUI_COLOR(COLOR_WIN_CHAT_NICK),
                     param);
     else
-        gui_printf (buffer, " %s\n",
+        gui_printf (buffer, " %s%s\n",
                     GUI_COLOR(COLOR_WIN_CHAT),
                     message);
 }
