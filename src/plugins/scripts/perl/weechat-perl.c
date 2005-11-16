@@ -122,6 +122,7 @@ weechat_perl_exec (t_weechat_plugin *plugin,
     func = function;
     PERL_SET_CONTEXT (script->interpreter);
 #endif    
+    perl_current_script = script;
 
     dSP;
     ENTER;

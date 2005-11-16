@@ -70,6 +70,8 @@ weechat_python_exec (t_weechat_plugin *plugin,
     }
     
     ret = -1;
+    
+    python_current_script = script;
 
     rc = PyObject_CallFunction(evFunc, "ss", server == NULL ? "" : server, arguments == NULL ? "" : arguments);
 
