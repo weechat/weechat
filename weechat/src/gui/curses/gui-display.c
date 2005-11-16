@@ -31,6 +31,7 @@
 #include <signal.h>
 #include <time.h>
 #include <ctype.h>
+#include <libgen.h>
 
 #ifdef HAVE_NCURSESW_CURSES_H
 #include <ncursesw/ncurses.h>
@@ -3217,11 +3218,59 @@ gui_init_colors ()
 void
 gui_set_window_title ()
 {
-    #ifdef __linux__
-    /* set title for term window, not for console */
-    if (strcmp (getenv ("TERM"), "linux") != 0)
-        printf ("\e]2;" PACKAGE_NAME " " PACKAGE_VERSION "\a\e]1;" PACKAGE_NAME " " PACKAGE_VERSION "\a");
-    #endif
+    if (strcmp (getenv ("TERM"), "screen") == 0)
+        printf ("\033k%s %s\033\\", PACKAGE_NAME, PACKAGE_VERSION);    
+    else if (strcmp( getenv ("TERM"), "sun-cmd") == 0)
+	printf ("\033]l%s %s\033\\", PACKAGE_NAME, PACKAGE_VERSION);
+    else if (strcmp( getenv ("TERM"), "hpterm") == 0)
+	printf ("\033&f0k%dD%s %s", strlen(PACKAGE_NAME) + 
+		strlen(PACKAGE_VERSION) + 1,
+		PACKAGE_NAME, PACKAGE_VERSION);
+    /* the following term supports the xterm excapes */
+    else if (strncmp (getenv ("TERM"), "xterm", 5) == 0
+	     || strncmp (getenv ("TERM"), "rxvt", 4) == 0
+	     || strcmp( getenv ("TERM"), "aixterm") == 0
+	     || strcmp( getenv ("TERM"), "iris-ansi") == 0
+	     || strcmp( getenv ("TERM"), "dtterm") == 0)
+	printf ("\33]0;%s %s\7", PACKAGE_NAME, PACKAGE_VERSION);
+}
+
+/*
+ * gui_reset_window_title: reset terminal title
+ */
+
+void
+gui_reset_window_title ()
+{
+    if (strcmp (getenv ("TERM"), "screen") == 0)
+    {
+	char *shell, *shellname;
+	if (getenv ("SHELL"))
+	{
+	    shell  = strdup (getenv ("SHELL"));
+	    shellname = basename(shell);
+	    if (shell)
+	    {
+		printf ("\033k%s\033\\", shellname);
+		free (shell);
+	    }
+	    else
+		printf ("\033k%s\033\\", getenv ("TERM"));
+	}
+	else
+	    printf ("\033k%s\033\\", getenv ("TERM"));
+    }	    
+    else if (strcmp( getenv ("TERM"), "sun-cmd") == 0)
+	printf ("\033]l%s\033\\", "Terminal");
+    else if (strcmp( getenv ("TERM"), "hpterm") == 0)
+	printf ("\033&f0k%dD%s", strlen("Terminal"), "Terminal");
+    /* the following term supports the xterm excapes */
+    else if (strncmp (getenv ("TERM"), "xterm", 5) == 0
+	     || strncmp (getenv ("TERM"), "rxvt", 4) == 0
+	     || strcmp( getenv ("TERM"), "aixterm") == 0
+	     || strcmp( getenv ("TERM"), "iris-ansi") == 0
+	     || strcmp( getenv ("TERM"), "dtterm") == 0)
+        printf ("\33]0;%s\7", "Terminal");
 }
 
 /*
@@ -3255,7 +3304,7 @@ gui_init ()
         gui_buffer_new (gui_windows, NULL, NULL, 0, 1);
     
         signal (SIGWINCH, gui_refresh_screen);
-    
+	
         if (cfg_look_set_title)
             gui_set_window_title ();
     
@@ -3308,6 +3357,10 @@ gui_end ()
     /* delete infobar messages */
     while (gui_infobar)
         gui_infobar_remove ();
+
+    /* reset title */
+    if (cfg_look_set_title)
+	gui_reset_window_title ();
     
     /* end of curses output */
     refresh ();

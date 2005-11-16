@@ -1005,7 +1005,10 @@ config_change_noop ()
 void
 config_change_title ()
 {
-    gui_set_window_title ();
+    if (cfg_look_set_title)
+	gui_set_window_title ();
+    else
+	gui_reset_window_title ();
 }
 
 /*

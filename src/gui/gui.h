@@ -519,6 +519,7 @@ extern void gui_pre_init (int *, char **[]);
 extern void gui_init_color_pairs ();
 extern void gui_rebuild_weechat_colors ();
 extern void gui_set_window_title ();
+extern void gui_reset_window_title ();
 extern void gui_init ();
 extern void gui_end ();
 extern void gui_input_default_key_bindings ();
