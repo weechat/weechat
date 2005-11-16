@@ -3231,6 +3231,7 @@ gui_set_window_title ()
 	/* the following term supports the xterm excapes */
 	else if (strncmp (envterm, "xterm", 5) == 0
 		 || strncmp (envterm, "rxvt", 4) == 0
+		 || strcmp (envterm, "Eterm") == 0
 		 || strcmp (envterm, "aixterm") == 0
 		 || strcmp (envterm, "iris-ansi") == 0
 		 || strcmp (envterm, "dtterm") == 0)
@@ -3263,6 +3264,7 @@ gui_reset_window_title ()
 	/* the following term supports the xterm excapes */
 	else if (strncmp (envterm, "xterm", 5) == 0
 		 || strncmp (envterm, "rxvt", 4) == 0
+		 || strcmp (envterm, "Eterm") == 0
 		 || strcmp( envterm, "aixterm") == 0
 		 || strcmp( envterm, "iris-ansi") == 0
 		 || strcmp( envterm, "dtterm") == 0)
