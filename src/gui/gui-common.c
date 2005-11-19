@@ -362,6 +362,7 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int dcc,
         /* init lines */
         new_buffer->lines = NULL;
         new_buffer->last_line = NULL;
+        new_buffer->last_read_line = NULL;
         new_buffer->num_lines = 0;
         new_buffer->line_complete = 1;
         
@@ -857,66 +858,68 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, char *mes
         pos = buf2 - 1;
         while (pos)
         {
-            if (display_time
-                && cfg_look_buffer_timestamp && cfg_look_buffer_timestamp[0]
-                && ((!buffer->last_line) || (buffer->line_complete)))
+            if ((!buffer->last_line) || (buffer->line_complete))
             {
-                time_seconds = time (NULL);
-                local_time = localtime (&time_seconds);
-                strftime (text_time, sizeof (text_time), cfg_look_buffer_timestamp, local_time);
-                
-                time_first_digit = -1;
-                time_last_digit = -1;
-                i = 0;
-                while (text_time[i])
+                if (display_time && cfg_look_buffer_timestamp &&
+                    cfg_look_buffer_timestamp[0])
                 {
-                    if (isdigit (text_time[i]))
+                    time_seconds = time (NULL);
+                    local_time = localtime (&time_seconds);
+                    strftime (text_time, sizeof (text_time), cfg_look_buffer_timestamp, local_time);
+                    
+                    time_first_digit = -1;
+                    time_last_digit = -1;
+                    i = 0;
+                    while (text_time[i])
                     {
-                        if (time_first_digit == -1)
-                            time_first_digit = i;
-                        time_last_digit = i;
+                        if (isdigit (text_time[i]))
+                        {
+                            if (time_first_digit == -1)
+                                time_first_digit = i;
+                            time_last_digit = i;
+                        }
+                        i++;
                     }
-                    i++;
-                }
-                
-                text_time_char[1] = '\0';
-                i = 0;
-                while (text_time[i])
-                {
-                    text_time_char[0] = text_time[i];
-                    if (time_first_digit < 0)
+                    
+                    text_time_char[1] = '\0';
+                    i = 0;
+                    while (text_time[i])
                     {
-                        gui_add_to_line (buffer, MSG_TYPE_TIME,
-                                         GUI_COLOR(COLOR_WIN_CHAT_TIME));
-                        gui_add_to_line (buffer, MSG_TYPE_TIME, text_time_char);
-                    }
-                    else
-                    {
-                        if ((i < time_first_digit) || (i > time_last_digit))
+                        text_time_char[0] = text_time[i];
+                        if (time_first_digit < 0)
                         {
                             gui_add_to_line (buffer, MSG_TYPE_TIME,
-                                             GUI_COLOR(COLOR_WIN_CHAT_DARK));
+                                             GUI_COLOR(COLOR_WIN_CHAT_TIME));
                             gui_add_to_line (buffer, MSG_TYPE_TIME, text_time_char);
                         }
                         else
                         {
-                            if (isdigit (text_time[i]))
+                            if ((i < time_first_digit) || (i > time_last_digit))
                             {
                                 gui_add_to_line (buffer, MSG_TYPE_TIME,
-                                                 GUI_COLOR(COLOR_WIN_CHAT_TIME));
+                                                 GUI_COLOR(COLOR_WIN_CHAT_DARK));
                                 gui_add_to_line (buffer, MSG_TYPE_TIME, text_time_char);
                             }
                             else
                             {
-                                gui_add_to_line (buffer, MSG_TYPE_TIME,
-                                                 GUI_COLOR(COLOR_WIN_CHAT_TIME_SEP));
-                                gui_add_to_line (buffer, MSG_TYPE_TIME, text_time_char);
+                                if (isdigit (text_time[i]))
+                                {
+                                    gui_add_to_line (buffer, MSG_TYPE_TIME,
+                                                     GUI_COLOR(COLOR_WIN_CHAT_TIME));
+                                    gui_add_to_line (buffer, MSG_TYPE_TIME, text_time_char);
+                                }
+                                else
+                                {
+                                    gui_add_to_line (buffer, MSG_TYPE_TIME,
+                                                     GUI_COLOR(COLOR_WIN_CHAT_TIME_SEP));
+                                    gui_add_to_line (buffer, MSG_TYPE_TIME, text_time_char);
+                                }
                             }
                         }
+                        i++;
                     }
-                    i++;
+                    gui_add_to_line (buffer, MSG_TYPE_TIME, GUI_COLOR(COLOR_WIN_CHAT));
                 }
-                gui_add_to_line (buffer, MSG_TYPE_TIME, GUI_COLOR(COLOR_WIN_CHAT));
                 gui_add_to_line (buffer, MSG_TYPE_TIME, " ");
             }
             gui_add_to_line (buffer, type, pos + 1);
@@ -1611,6 +1614,7 @@ gui_buffer_print_log (t_gui_buffer *buffer)
     wee_log_printf ("  dcc. . . . . . . . . : %d\n",   buffer->dcc);
     wee_log_printf ("  lines. . . . . . . . : 0x%X\n", buffer->lines);
     wee_log_printf ("  last_line. . . . . . : 0x%X\n", buffer->last_line);
+    wee_log_printf ("  last_read_line . . . : 0x%X\n", buffer->last_read_line);
     wee_log_printf ("  num_lines. . . . . . : %d\n",   buffer->num_lines);
     wee_log_printf ("  line_complete. . . . : %d\n",   buffer->line_complete);
     wee_log_printf ("  notify_level . . . . : %d\n",   buffer->notify_level);

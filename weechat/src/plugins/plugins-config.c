@@ -219,12 +219,50 @@ plugin_config_read ()
                 {
                     pos[0] = '\0';
                     pos++;
+                    
+                    /* remove spaces before '=' */
+                    pos2 = pos - 2;
+                    while ((pos2 > line) && (pos2[0] == ' '))
+                    {
+                        pos2[0] = '\0';
+                        pos2--;
+                    }
+                    
+                    /* skip spaces after '=' */
+                    while (pos[0] && (pos[0] == ' '))
+                    {
+                        pos++;
+                    }
+                    
+                    /* remove CR/LF */
                     pos2 = strchr (pos, '\r');
                     if (pos2 != NULL)
                         pos2[0] = '\0';
                     pos2 = strchr (pos, '\n');
                     if (pos2 != NULL)
                         pos2[0] = '\0';
+                    
+                    /* remove simple or double quotes 
+                       and spaces at the end */
+                    if (strlen(pos) > 1)
+                    {
+                        pos2 = pos + strlen (pos) - 1;
+                        while ((pos2 > pos) && (pos2[0] == ' '))
+                        {
+                            pos2[0] = '\0';
+                            pos2--;
+                        }
+                        pos2 = pos + strlen (pos) - 1;
+                        if (((pos[0] == '\'') &&
+                             (pos2[0] == '\'')) ||
+                            ((pos[0] == '"') &&
+                             (pos2[0] == '"')))
+                        {
+                            pos2[0] = '\0';
+                            pos++;
+                        }
+                    }
+                    
                     plugin_config_set_internal (ptr_line, pos);
                 }
             }
@@ -279,7 +317,7 @@ plugin_config_write ()
     for (ptr_plugin_option = plugin_options; ptr_plugin_option;
          ptr_plugin_option = ptr_plugin_option->next_option)
     {
-        fprintf (file, "%s=%s\n",
+        fprintf (file, "%s = \"%s\"\n",
                  ptr_plugin_option->option_name,
                  ptr_plugin_option->value);
     }

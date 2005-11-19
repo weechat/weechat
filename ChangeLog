@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-11-13
+ChangeLog - 2005-11-19
 
 
 Version 0.1.7 (under dev!):
+   * added "read marker": an indicator for first unread line in a
+     server or channel buffer
    * new window maganement: custom size for windows, auto resize when
      terminal is resized
    * fixed infinite loop when resizing term to small size

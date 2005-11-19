@@ -58,6 +58,7 @@ enum t_weechat_color
     COLOR_WIN_CHAT_CHANNEL,
     COLOR_WIN_CHAT_DARK,
     COLOR_WIN_CHAT_HIGHLIGHT,
+    COLOR_WIN_CHAT_MARKER,
     COLOR_WIN_STATUS,
     COLOR_WIN_STATUS_DELIMITERS,
     COLOR_WIN_STATUS_CHANNEL,
@@ -228,6 +229,7 @@ struct t_gui_buffer
     /* chat content (lines, line is composed by many messages) */
     t_gui_line *lines;              /* lines of chat window                 */
     t_gui_line *last_line;          /* last line of chat window             */
+    t_gui_line *last_read_line;     /* last read line before jump           */
     int num_lines;                  /* number of lines in the window        */
     int line_complete;              /* current line complete ? (\n ending)  */
     

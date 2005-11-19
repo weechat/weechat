@@ -196,6 +196,7 @@ irc_cmd_send_away (t_irc_server *server, char *arguments)
     char *pos, *ptr_away_msg;
     char *ptr_away_default_msg = "away";
     t_irc_server *ptr_server;
+    t_gui_window *ptr_window;
     time_t elapsed;
     char buffer[4096];
     char *string;
@@ -251,6 +252,13 @@ irc_cmd_send_away (t_irc_server *server, char *arguments)
                             free (string);
                     }
                     server_set_away (ptr_server, ptr_server->nick, 1);
+                    for (ptr_window = gui_windows; ptr_window;
+                         ptr_window = ptr_window->next_window)
+                    {
+                        if (SERVER(ptr_window->buffer) == ptr_server)
+                            ptr_window->buffer->last_read_line =
+                                ptr_window->buffer->last_line;
+                    }
                 }
             }
         }
@@ -291,6 +299,13 @@ irc_cmd_send_away (t_irc_server *server, char *arguments)
                 irc_send_me_all_channels (server, buffer);
             }
             server_set_away (server, server->nick, 1);
+            for (ptr_window = gui_windows; ptr_window;
+                 ptr_window = ptr_window->next_window)
+            {
+                if (SERVER(ptr_window->buffer) == server)
+                    ptr_window->buffer->last_read_line =
+                        ptr_window->buffer->last_line;
+            }
         }
     }
     gui_draw_buffer_status (gui_current_window->buffer, 1);

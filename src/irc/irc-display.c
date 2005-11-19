@@ -179,7 +179,7 @@ irc_display_server (t_irc_server *server)
     gui_printf (NULL, "\n");
     gui_printf (NULL, _("%sServer: %s%s %s[%s%s%s]\n"),
                 GUI_COLOR(COLOR_WIN_CHAT),
-                GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                GUI_COLOR(COLOR_WIN_CHAT_SERVER),
                 server->name,
                 GUI_COLOR(COLOR_WIN_CHAT_DARK),
                 GUI_COLOR(COLOR_WIN_CHAT),
@@ -193,8 +193,9 @@ irc_display_server (t_irc_server *server)
                 _(" (temporary server, will not be saved)") : "");
     gui_printf (NULL, "  server_autoreconnect . . .: %s\n",
                 (server->autoreconnect) ? _("on") : _("off"));
-    gui_printf (NULL, "  server_autoreconnect_delay: %d seconds\n",
-                server->autoreconnect_delay);
+    gui_printf (NULL, "  server_autoreconnect_delay: %d %s\n",
+                server->autoreconnect_delay,
+                _("seconds"));
     gui_printf (NULL, "  server_address . . . . . .: %s\n",
                 server->address);
     gui_printf (NULL, "  server_port  . . . . . . .: %d\n",
@@ -221,8 +222,9 @@ irc_display_server (t_irc_server *server)
     gui_printf (NULL, "  server_command . . . . . .: %s\n",
                 (server->command && server->command[0]) ?
                 server->command : "");
-    gui_printf (NULL, "  server_command_delay . . .: %d seconds\n",
-                server->command_delay);
+    gui_printf (NULL, "  server_command_delay . . .: %d %s\n",
+                server->command_delay,
+                _("seconds"));
     gui_printf (NULL, "  server_autojoin  . . . . .: %s\n",
                 (server->autojoin && server->autojoin[0]) ?
                 server->autojoin : "");

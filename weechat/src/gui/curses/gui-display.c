@@ -1228,6 +1228,7 @@ int
 gui_display_line (t_gui_window *window, t_gui_line *line, int count, int simulate)
 {
     int num_lines, x, y, lines_displayed;
+    int read_marker_x, read_marker_y;
     int word_start_offset, word_end_offset;
     int word_length_with_spaces, word_length;
     int skip_spaces;
@@ -1252,6 +1253,18 @@ gui_display_line (t_gui_window *window, t_gui_line *line, int count, int simulat
         window->win_chat_cursor_x = x;
         window->win_chat_cursor_y = y;
     }
+    
+    /* calculate marker position (maybe not used for this line!) */
+    if (line->ofs_after_date > 0)
+    {
+        saved_char = line->data[line->ofs_after_date - 1];
+        line->data[line->ofs_after_date - 1] = '\0';
+        read_marker_x = x + gui_word_strlen (NULL, line->data);
+        line->data[line->ofs_after_date - 1] = saved_char;
+    }
+    else
+        read_marker_x = x;
+    read_marker_y = y;
     
     /* reset color & style for a new line */
     gui_window_chat_reset_style (window);
@@ -1341,6 +1354,18 @@ gui_display_line (t_gui_window *window, t_gui_line *line, int count, int simulat
     {
         window->win_chat_cursor_x = x;
         window->win_chat_cursor_y = y;
+    }
+    else
+    {
+        /* display read marker if needed */
+        if (cfg_look_read_marker && cfg_look_read_marker[0] &&
+            window->buffer->last_read_line &&
+            (window->buffer->last_read_line == line->prev_line))
+        {
+            gui_window_chat_set_weechat_color (window, COLOR_WIN_CHAT_MARKER);
+            mvwprintw (window->win_chat, read_marker_y, read_marker_x,
+                       "%c", cfg_look_read_marker[0]);
+        }
     }
     
     return lines_displayed;
@@ -2503,6 +2528,13 @@ gui_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
     if (window->buffer->num_displayed > 0)
         window->buffer->num_displayed--;
     
+    if (window->buffer != buffer)
+    {
+        window->buffer->last_read_line = window->buffer->last_line;
+        if (buffer->last_read_line == buffer->last_line)
+            buffer->last_read_line = NULL;
+    }
+    
     window->buffer = buffer;
     window->win_nick_start = 0;
     gui_calculate_pos_size (window);
@@ -3129,6 +3161,7 @@ gui_init_weechat_colors ()
     gui_color[COLOR_WIN_CHAT_CHANNEL] = gui_color_build (COLOR_WIN_CHAT_CHANNEL, cfg_col_chat_channel, cfg_col_chat_bg);
     gui_color[COLOR_WIN_CHAT_DARK] = gui_color_build (COLOR_WIN_CHAT_DARK, cfg_col_chat_dark, cfg_col_chat_bg);
     gui_color[COLOR_WIN_CHAT_HIGHLIGHT] = gui_color_build (COLOR_WIN_CHAT_HIGHLIGHT, cfg_col_chat_highlight, cfg_col_chat_bg);
+    gui_color[COLOR_WIN_CHAT_MARKER] = gui_color_build (COLOR_WIN_CHAT_MARKER, cfg_col_chat_marker, cfg_col_chat_marker_bg);
     gui_color[COLOR_WIN_STATUS] = gui_color_build (COLOR_WIN_STATUS, cfg_col_status, cfg_col_status_bg);
     gui_color[COLOR_WIN_STATUS_DELIMITERS] = gui_color_build (COLOR_WIN_STATUS_DELIMITERS, cfg_col_status_delimiters, cfg_col_status_bg);
     gui_color[COLOR_WIN_STATUS_CHANNEL] = gui_color_build (COLOR_WIN_STATUS_CHANNEL, cfg_col_status_channel, cfg_col_status_bg);

@@ -2680,6 +2680,8 @@ irc_cmd_recv_303 (t_irc_server *server, char *host, char *nick, char *arguments)
 int
 irc_cmd_recv_305 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
+    t_gui_window *ptr_window;
+    
     /* make gcc happy */
     (void) host;
     (void) nick;
@@ -2699,6 +2701,12 @@ irc_cmd_recv_305 (t_irc_server *server, char *host, char *nick, char *arguments)
     }
     server->is_away = 0;
     server->away_time = 0;
+    for (ptr_window = gui_windows; ptr_window;
+         ptr_window = ptr_window->next_window)
+    {
+        if (SERVER(ptr_window->buffer) == server)
+            gui_draw_buffer_status (ptr_window->buffer, 1);
+    }
     return 0;
 }
 
@@ -2709,6 +2717,8 @@ irc_cmd_recv_305 (t_irc_server *server, char *host, char *nick, char *arguments)
 int
 irc_cmd_recv_306 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
+    t_gui_window *ptr_window;
+    
     /* make gcc happy */
     (void) host;
     (void) nick;
@@ -2728,6 +2738,15 @@ irc_cmd_recv_306 (t_irc_server *server, char *host, char *nick, char *arguments)
     }
     server->is_away = 1;
     server->away_time = time (NULL);
+    for (ptr_window = gui_windows; ptr_window;
+         ptr_window = ptr_window->next_window)
+    {
+        if (SERVER(ptr_window->buffer) == server)
+            gui_draw_buffer_status (ptr_window->buffer, 1);
+        if (SERVER(ptr_window->buffer) == server)
+            ptr_window->buffer->last_read_line =
+                ptr_window->buffer->last_line;
+    }
     return 0;
 }
 

@@ -444,11 +444,14 @@ completion_build_list (t_completion *completion, void *channel)
                                              option->default_string);
                             break;
                         case OPTION_TYPE_STRING:
+                            snprintf (option_string, sizeof (option_string) - 1,
+                                      "\"%s\"",
+                                      (option_value) ?
+                                      *((char **)(option_value)) :
+                                      option->default_string);
                             weelist_add (&completion->completion_list,
                                          &completion->last_completion,
-                                         (option_value) ?
-                                             *((char **)(option_value)) :
-                                             option->default_string);
+                                         option_string);
                             break;
                     }
                 }

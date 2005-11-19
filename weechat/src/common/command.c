@@ -2351,9 +2351,11 @@ weechat_cmd_set_display_option (t_config_option *option, char *prefix, void *val
                     gui_printf (NULL, _("%s(password hidden) "),
                                 GUI_COLOR(COLOR_WIN_CHAT));
                 }
-                gui_printf (NULL, "%s%s",
+                gui_printf (NULL, "%s\"%s%s%s\"",
+                            GUI_COLOR(COLOR_WIN_CHAT_DARK),
                             GUI_COLOR(COLOR_WIN_CHAT_HOST),
-                            value2);
+                            value2,
+                            GUI_COLOR(COLOR_WIN_CHAT_DARK));
                 free (value2);
             }
             gui_printf (NULL, "\n");
@@ -2399,6 +2401,27 @@ weechat_cmd_set (char *arguments)
             while (value[0] && (value[0] == ' '))
             {
                 value++;
+            }
+            
+            /* remove simple or double quotes 
+               and spaces at the end */
+            if (strlen(value) > 1)
+            {
+                pos = value + strlen (value) - 1;
+                while ((pos > value) && (pos[0] == ' '))
+                {
+                    pos[0] = '\0';
+                    pos--;
+                }
+                pos = value + strlen (value) - 1;
+                if (((value[0] == '\'') &&
+                     (pos[0] == '\'')) ||
+                    ((value[0] == '"') &&
+                     (pos[0] == '"')))
+                {
+                    pos[0] = '\0';
+                    value++;
+                }
             }
         }
     }

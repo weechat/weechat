@@ -97,6 +97,7 @@ int cfg_look_hotlist_names_level;
 int cfg_look_hotlist_names_length;
 int cfg_look_day_change;
 char *cfg_look_day_change_timestamp;
+char *cfg_look_read_marker;
 
 t_config_option weechat_options_look[] =
 { { "look_set_title", N_("set title for window (terminal for Curses GUI) with name & version"),
@@ -229,6 +230,10 @@ t_config_option weechat_options_look[] =
     N_("timestamp for date displayed when day changed"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "%a, %d %b %Y", NULL, NULL, &cfg_look_day_change_timestamp, config_change_noop },
+  { "look_read_marker", N_("use a marker on servers/channels to show first unread line"),
+    N_("use a marker on servers/channels to show first unread line"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    " ", NULL, NULL, &cfg_look_read_marker, config_change_read_marker},
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
@@ -251,6 +256,8 @@ int cfg_col_chat_channel;
 int cfg_col_chat_dark;
 int cfg_col_chat_highlight;
 int cfg_col_chat_bg;
+int cfg_col_chat_marker;
+int cfg_col_chat_marker_bg;
 int cfg_col_status;
 int cfg_col_status_delimiters;
 int cfg_col_status_channel;
@@ -365,6 +372,14 @@ t_config_option weechat_options_colors[] =
     N_("background for chat window"),
     OPTION_TYPE_COLOR, 0, 0, 0,
     "default", NULL, &cfg_col_chat_bg, NULL, &config_change_color },
+  { "col_chat_marker", N_("color for unread data marker"),
+    N_("color for unread data marker"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "yellow", NULL, &cfg_col_chat_marker, NULL, &config_change_color },
+  { "col_chat_marker_bg", N_("background for unread data marker"),
+    N_("background for unread data marker"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "magenta", NULL, &cfg_col_chat_marker_bg, NULL, &config_change_color },
   
   /* status window */
   { "col_status", N_("color for status bar"),
@@ -1033,6 +1048,19 @@ config_change_buffer_content ()
 }
 
 /*
+ * config_change_read_marker: called when read marker is changed
+ */
+
+void
+config_change_read_marker ()
+{
+    t_gui_window *ptr_win;
+    
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        gui_redraw_buffer (ptr_win->buffer);
+}
+
+/*
  * config_change_charset: called when charset changes
  */
 
@@ -1680,12 +1708,49 @@ config_read ()
                         {
                             pos[0] = '\0';
                             pos++;
+                            
+                            /* remove spaces before '=' */
+                            pos2 = pos - 2;
+                            while ((pos2 > line) && (pos2[0] == ' '))
+                            {
+                                pos2[0] = '\0';
+                                pos2--;
+                            }
+                            
+                            /* skip spaces after '=' */
+                            while (pos[0] && (pos[0] == ' '))
+                            {
+                                pos++;
+                            }
+                            
+                            /* remove CR/LF */
                             pos2 = strchr (pos, '\r');
                             if (pos2 != NULL)
                                 pos2[0] = '\0';
                             pos2 = strchr (pos, '\n');
                             if (pos2 != NULL)
                                 pos2[0] = '\0';
+                            
+                            /* remove simple or double quotes 
+                               and spaces at the end */
+                            if (strlen(pos) > 1)
+                            {
+                                pos2 = pos + strlen (pos) - 1;
+                                while ((pos2 > pos) && (pos2[0] == ' '))
+                                {
+                                    pos2[0] = '\0';
+                                    pos2--;
+                                }
+                                pos2 = pos + strlen (pos) - 1;
+                                if (((pos[0] == '\'') &&
+                                     (pos2[0] == '\'')) ||
+                                    ((pos[0] == '"') &&
+                                     (pos2[0] == '"')))
+                                {
+                                    pos2[0] = '\0';
+                                    pos++;
+                                }
+                            }
                             
                             if (section == CONFIG_SECTION_KEYS)
                             {
@@ -1875,20 +1940,24 @@ config_create_default ()
                 switch (weechat_options[i][j].option_type)
                 {
                     case OPTION_TYPE_BOOLEAN:
-                        fprintf (file, "%s=%s\n",
+                        fprintf (file, "%s = %s\n",
                                  weechat_options[i][j].option_name,
                                  (weechat_options[i][j].default_int) ?
                                  "on" : "off");
                         break;
                     case OPTION_TYPE_INT:
-                        fprintf (file, "%s=%d\n",
+                        fprintf (file, "%s = %d\n",
                                  weechat_options[i][j].option_name,
                                  weechat_options[i][j].default_int);
                         break;
                     case OPTION_TYPE_INT_WITH_STRING:
                     case OPTION_TYPE_COLOR:
+                        fprintf (file, "%s = %s\n",
+                                 weechat_options[i][j].option_name,
+                                 weechat_options[i][j].default_string);
+                        break;
                     case OPTION_TYPE_STRING:
-                        fprintf (file, "%s=%s\n",
+                        fprintf (file, "%s = \"%s\"\n",
                                  weechat_options[i][j].option_name,
                                  weechat_options[i][j].default_string);
                         break;
@@ -1906,12 +1975,12 @@ config_create_default ()
         {
             function_name = gui_key_function_search_by_ptr (ptr_key->function);
             if (function_name)
-                fprintf (file, "%s=%s\n",
+                fprintf (file, "%s = \"%s\"\n",
                          (expanded_name) ? expanded_name : ptr_key->key,
                          function_name);
         }
         else
-            fprintf (file, "%s=%s\n",
+            fprintf (file, "%s = \"%s\"\n",
                      (expanded_name) ? expanded_name : ptr_key->key,
                      ptr_key->command);
         if (expanded_name)
@@ -1920,64 +1989,64 @@ config_create_default ()
     
     /* default aliases */
     fprintf (file, "\n[alias]\n");
-    fprintf (file, "SAY=msg *\n");
-    fprintf (file, "BYE=quit\n");
-    fprintf (file, "EXIT=quit\n");
-    fprintf (file, "SIGNOFF=quit\n");
-    fprintf (file, "C=clear\n");
-    fprintf (file, "CL=clear\n");
-    fprintf (file, "CLOSE=buffer close\n");
-    fprintf (file, "CHAT=dcc chat\n");
-    fprintf (file, "IG=ignore\n");
-    fprintf (file, "J=join\n");
-    fprintf (file, "K=kick\n");
-    fprintf (file, "KB=kickban\n");
-    fprintf (file, "LEAVE=part\n");
-    fprintf (file, "M=msg\n");
-    fprintf (file, "MUB=unban *\n");
-    fprintf (file, "N=names\n");
-    fprintf (file, "Q=query\n");
-    fprintf (file, "T=topic\n");
-    fprintf (file, "UB=unban\n");
-    fprintf (file, "UNIG=unignore\n");
-    fprintf (file, "W=who\n");
-    fprintf (file, "WC=part\n");
-    fprintf (file, "WI=whois\n");
-    fprintf (file, "WW=whowas\n");
+    fprintf (file, "SAY = \"msg *\"\n");
+    fprintf (file, "BYE = \"quit\"\n");
+    fprintf (file, "EXIT = \"quit\"\n");
+    fprintf (file, "SIGNOFF = \"quit\"\n");
+    fprintf (file, "C = \"clear\"\n");
+    fprintf (file, "CL = \"clear\"\n");
+    fprintf (file, "CLOSE = \"buffer close\"\n");
+    fprintf (file, "CHAT = \"dcc chat\"\n");
+    fprintf (file, "IG = \"ignore\"\n");
+    fprintf (file, "J = \"join\"\n");
+    fprintf (file, "K = \"kick\"\n");
+    fprintf (file, "KB = \"kickban\"\n");
+    fprintf (file, "LEAVE = \"part\"\n");
+    fprintf (file, "M = \"msg\"\n");
+    fprintf (file, "MUB = \"unban *\"\n");
+    fprintf (file, "N = \"names\"\n");
+    fprintf (file, "Q = \"query\"\n");
+    fprintf (file, "T = \"topic\"\n");
+    fprintf (file, "UB = \"unban\"\n");
+    fprintf (file, "UNIG = \"unignore\"\n");
+    fprintf (file, "W = \"who\"\n");
+    fprintf (file, "WC = \"part\"\n");
+    fprintf (file, "WI = \"whois\"\n");
+    fprintf (file, "WW = \"whowas\"\n");
     
     /* no ignore by default */
     
     /* default server is freenode */
     fprintf (file, "\n[server]\n");
-    fprintf (file, "server_name=freenode\n");
-    fprintf (file, "server_autoconnect=on\n");
-    fprintf (file, "server_autoreconnect=on\n");
-    fprintf (file, "server_autoreconnect_delay=30\n");
-    fprintf (file, "server_address=irc.freenode.net\n");
-    fprintf (file, "server_port=6667\n");
-    fprintf (file, "server_ipv6=off\n");
-    fprintf (file, "server_ssl=off\n");
-    fprintf (file, "server_password=\n");
+    fprintf (file, "server_name = \"freenode\"\n");
+    fprintf (file, "server_autoconnect = on\n");
+    fprintf (file, "server_autoreconnect = on\n");
+    fprintf (file, "server_autoreconnect_delay = 30\n");
+    fprintf (file, "server_address = \"irc.freenode.net\"\n");
+    fprintf (file, "server_port = 6667\n");
+    fprintf (file, "server_ipv6 = off\n");
+    fprintf (file, "server_ssl = off\n");
+    fprintf (file, "server_password = \"\"\n");
     
     /* Get the user's name from /etc/passwd */
     if ((my_passwd = getpwuid (geteuid ())) != NULL)
     {
-        fprintf (file, "server_nick1=%s\n", my_passwd->pw_name);
-        fprintf (file, "server_nick2=%s1\n", my_passwd->pw_name);
-        fprintf (file, "server_nick3=%s2\n", my_passwd->pw_name);
-        fprintf (file, "server_username=%s\n", my_passwd->pw_name);
+        fprintf (file, "server_nick1 = \"%s\"\n", my_passwd->pw_name);
+        fprintf (file, "server_nick2 = \"%s1\"\n", my_passwd->pw_name);
+        fprintf (file, "server_nick3 = \"%s2\"\n", my_passwd->pw_name);
+        fprintf (file, "server_username = \"%s\"\n", my_passwd->pw_name);
         if ((!my_passwd->pw_gecos)
             || (my_passwd->pw_gecos[0] == '\0')
             || (my_passwd->pw_gecos[0] == ',')
             || (my_passwd->pw_gecos[0] == ' '))
-            fprintf (file, "server_realname=%s\n", my_passwd->pw_name);
+            fprintf (file, "server_realname = \"%s\"\n", my_passwd->pw_name);
         else
         {
             realname = strdup (my_passwd->pw_gecos);
             pos = strchr (realname, ',');
             if (pos)
                 pos[0] = '\0';
-            fprintf (file, "server_realname=%s\n",
+            fprintf (file, "server_realname = \"%s\"\n",
                 realname);
             if (pos)
                 pos[0] = ',';
@@ -1991,17 +2060,17 @@ config_create_default ()
             WEECHAT_WARNING,
             _("Unable to get user's name"),
             strerror (errno));
-        fprintf (file, "server_nick1=weechat1\n");
-        fprintf (file, "server_nick2=weechat2\n");
-        fprintf (file, "server_nick3=weechat3\n");
-        fprintf (file, "server_username=weechat\n");
-        fprintf (file, "server_realname=WeeChat default realname\n");
+        fprintf (file, "server_nick1 = \"weechat1\"\n");
+        fprintf (file, "server_nick2 = \"weechat2\"\n");
+        fprintf (file, "server_nick3 = \"weechat3\"\n");
+        fprintf (file, "server_username = \"weechat\"\n");
+        fprintf (file, "server_realname = \"WeeChat default realname\"\n");
     }
     
-    fprintf (file, "server_command=\n");
-    fprintf (file, "server_command_delay=0\n");
-    fprintf (file, "server_autojoin=\n");
-    fprintf (file, "server_autorejoin=on\n");
+    fprintf (file, "server_command = \"\"\n");
+    fprintf (file, "server_command_delay = 0\n");
+    fprintf (file, "server_autojoin = \"\"\n");
+    fprintf (file, "server_autorejoin = on\n");
     
     fclose (file);
     chmod (filename, 0600);
@@ -2072,35 +2141,35 @@ config_write (char *config_name)
                 switch (weechat_options[i][j].option_type)
                 {
                     case OPTION_TYPE_BOOLEAN:
-                        fprintf (file, "%s=%s\n",
+                        fprintf (file, "%s = %s\n",
                                  weechat_options[i][j].option_name,
                                  (weechat_options[i][j].ptr_int &&
                                  *weechat_options[i][j].ptr_int) ? 
                                  "on" : "off");
                         break;
                     case OPTION_TYPE_INT:
-                        fprintf (file, "%s=%d\n",
+                        fprintf (file, "%s = %d\n",
                                  weechat_options[i][j].option_name,
                                  (weechat_options[i][j].ptr_int) ?
                                  *weechat_options[i][j].ptr_int :
                                  weechat_options[i][j].default_int);
                         break;
                     case OPTION_TYPE_INT_WITH_STRING:
-                        fprintf (file, "%s=%s\n",
+                        fprintf (file, "%s = %s\n",
                                  weechat_options[i][j].option_name,
                                  (weechat_options[i][j].ptr_int) ?
                                  weechat_options[i][j].array_values[*weechat_options[i][j].ptr_int] :
                                  weechat_options[i][j].array_values[weechat_options[i][j].default_int]);
                         break;
                     case OPTION_TYPE_COLOR:
-                        fprintf (file, "%s=%s\n",
+                        fprintf (file, "%s = %s\n",
                                  weechat_options[i][j].option_name,
                                  (weechat_options[i][j].ptr_int) ?
                                  gui_get_color_name (*weechat_options[i][j].ptr_int) :
                                  weechat_options[i][j].default_string);
                         break;
                     case OPTION_TYPE_STRING:
-                        fprintf (file, "%s=%s\n",
+                        fprintf (file, "%s = \"%s\"\n",
                                  weechat_options[i][j].option_name,
                                  (weechat_options[i][j].ptr_string) ?
                                  *weechat_options[i][j].ptr_string :
@@ -2120,12 +2189,12 @@ config_write (char *config_name)
         {
             function_name = gui_key_function_search_by_ptr (ptr_key->function);
             if (function_name)
-                fprintf (file, "%s=%s\n",
+                fprintf (file, "%s = \"%s\"\n",
                          (expanded_name) ? expanded_name : ptr_key->key,
                          function_name);
         }
         else
-            fprintf (file, "%s=%s\n",
+            fprintf (file, "%s = \"%s\"\n",
                      (expanded_name) ? expanded_name : ptr_key->key,
                      ptr_key->command);
         if (expanded_name)
@@ -2137,7 +2206,7 @@ config_write (char *config_name)
     for (ptr_alias = weechat_alias; ptr_alias;
          ptr_alias = ptr_alias->next_alias)
     {
-        fprintf (file, "%s=%s\n",
+        fprintf (file, "%s = \"%s\"\n",
                  ptr_alias->alias_name, ptr_alias->alias_command + 1);
     }
     
@@ -2146,7 +2215,7 @@ config_write (char *config_name)
     for (ptr_ignore = irc_ignore; ptr_ignore;
          ptr_ignore = ptr_ignore->next_ignore)
     {
-        fprintf (file, "ignore=%s,%s,%s,%s\n",
+        fprintf (file, "ignore = \"%s,%s,%s,%s\"\n",
                  ptr_ignore->mask,
                  ptr_ignore->type,
                  ptr_ignore->channel_name,
@@ -2160,34 +2229,34 @@ config_write (char *config_name)
         if (!ptr_server->command_line)
         {
             fprintf (file, "\n[server]\n");
-            fprintf (file, "server_name=%s\n", ptr_server->name);
-            fprintf (file, "server_autoconnect=%s\n",
+            fprintf (file, "server_name = \"%s\"\n", ptr_server->name);
+            fprintf (file, "server_autoconnect = %s\n",
                      (ptr_server->autoconnect) ? "on" : "off");
-            fprintf (file, "server_autoreconnect=%s\n",
+            fprintf (file, "server_autoreconnect = %s\n",
                      (ptr_server->autoreconnect) ? "on" : "off");
-            fprintf (file, "server_autoreconnect_delay=%d\n",
+            fprintf (file, "server_autoreconnect_delay = %d\n",
                      ptr_server->autoreconnect_delay);
-            fprintf (file, "server_address=%s\n", ptr_server->address);
-            fprintf (file, "server_port=%d\n", ptr_server->port);
-            fprintf (file, "server_ipv6=%s\n",
+            fprintf (file, "server_address = \"%s\"\n", ptr_server->address);
+            fprintf (file, "server_port = %d\n", ptr_server->port);
+            fprintf (file, "server_ipv6 = %s\n",
                      (ptr_server->ipv6) ? "on" : "off");
-            fprintf (file, "server_ssl=%s\n",
+            fprintf (file, "server_ssl = %s\n",
                      (ptr_server->ssl) ? "on" : "off");
-            fprintf (file, "server_password=%s\n",
+            fprintf (file, "server_password = \"%s\"\n",
                      (ptr_server->password) ? ptr_server->password : "");
-            fprintf (file, "server_nick1=%s\n", ptr_server->nick1);
-            fprintf (file, "server_nick2=%s\n", ptr_server->nick2);
-            fprintf (file, "server_nick3=%s\n", ptr_server->nick3);
-            fprintf (file, "server_username=%s\n", ptr_server->username);
-            fprintf (file, "server_realname=%s\n", ptr_server->realname);
-            fprintf (file, "server_command=%s\n",
+            fprintf (file, "server_nick1 = \"%s\"\n", ptr_server->nick1);
+            fprintf (file, "server_nick2 = \"%s\"\n", ptr_server->nick2);
+            fprintf (file, "server_nick3 = \"%s\"\n", ptr_server->nick3);
+            fprintf (file, "server_username = \"%s\"\n", ptr_server->username);
+            fprintf (file, "server_realname = \"%s\"\n", ptr_server->realname);
+            fprintf (file, "server_command = \"%s\"\n",
                      (ptr_server->command) ? ptr_server->command : "");
-            fprintf (file, "server_command_delay=%d\n", ptr_server->command_delay);
-            fprintf (file, "server_autojoin=%s\n",
+            fprintf (file, "server_command_delay = %d\n", ptr_server->command_delay);
+            fprintf (file, "server_autojoin = \"%s\"\n",
                      (ptr_server->autojoin) ? ptr_server->autojoin : "");
-            fprintf (file, "server_autorejoin=%s\n",
+            fprintf (file, "server_autorejoin = %s\n",
                      (ptr_server->autorejoin) ? "on" : "off");
-            fprintf (file, "server_notify_levels=%s\n",
+            fprintf (file, "server_notify_levels = \"%s\"\n",
                      (ptr_server->notify_levels) ? ptr_server->notify_levels : "");
         }
     }
