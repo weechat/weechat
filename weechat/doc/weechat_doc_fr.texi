@@ -36,7 +36,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.6 - 11 novembre 2005
+@subtitle Documentation pour WeeChat v0.1.7-cvs - 20 novembre 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -353,6 +353,9 @@ Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
 @item look_day_change_timestamp
 Format de date pour la date affich@'ee quand le jour a chang@'e@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '%a, %d %b %Y'@*
+@item look_read_marker
+Utiliser un marqueur sur les serveurs/canaux pour montrer la premi@`ere ligne non lue@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ' '@*
 @item col_real_white
 Si activ@'e, utilise la vraie couleur blanche, d@'esactiv@'e par d@'efaut pour les terminaux avec un fond blanc (si vous n'utilisez jamais de fond blanc, vous devriez activer cette option pour voir du vrai blanc au lieu de la couleur d'avant plant par d@'efaut du terminal)@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
@@ -404,6 +407,12 @@ Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'yellow'@*
 @item col_chat_bg
 Couleur de fond pour la fen@^etre de discussion@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
+@item col_chat_read_marker
+Couleur pour le marqueur de donn@'ees non lues@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'yellow'@*
+@item col_chat_read_marker_bg
+Couleur de fond pour le marqueur de donn@'ees non lues@*
+Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'magenta'@*
 @item col_status
 Couleur pour la barre de statut@*
 Type: couleur (couleur Curses ou Gtk), valeur par d@'efaut: 'default'@*
@@ -551,6 +560,9 @@ Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 4096@*
 @item history_max_commands
 Nombre maximum de commandes utilisateur dans l'historique (0 = sans limite)@*
 Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 100@*
+@item history_display_default
+Nombre maximum de commandes @`a afficher par d@'efaut dans le listing d'historique (0 = sans limite)@*
+Type: entier (valeurs: entre 0 et 2147483647), valeur par d@'efaut: 5@*
 @item log_auto_server
 Enregistrer automatiquement les messages du serveur@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
@@ -922,17 +934,25 @@ se d@'econnecter d'un serveur@*
 @*
 nom_serveur: nom du serveur pour se d@'econnecter@*
 @*
-@item debug  dump
+@item debug  dump | windows
 @*
 affiche des messages de debuggage@*
 @*
 dump: affiche les variables m@'emoire WeeChat dans le fichier log (les m@^emes messages sont affich@'es lorsque WeeChat plante)@*
+windows: affiche l'arbre des fen@^etres@*
 @*
 @item help  [commande]
 @*
 afficher l'aide sur les commandes@*
 @*
 commande: nom d'une commande WeeChat ou IRC@*
+@*
+@item history  [clear | valeur]
+@*
+affiche l'historique des commandes du tampon@*
+@*
+clear: effacer l'historique@*
+valeur: nombre d'entr@'ees dans l'historique @`a afficher@*
 @*
 @item ignore  [masque [[type | commande] [canal [serveur]]]]
 @*
@@ -1019,7 +1039,7 @@ montrer l'uptime de WeeChat@*
 @*
 -o: envoyer l'uptime sur le canal courant en tant que message IRC@*
 @*
-@item window  [list | -1 | +1 | b# | splith | splitv | [merge [down | up | left | right | all]]]
+@item window  [list | -1 | +1 | b# | splith [pct] | splitv [ptc] | resize pct | merge [all]]
 @*
 gestion des fen@^etres@*
 @*
@@ -1029,7 +1049,10 @@ list: liste les fen@^etres ouvertes (pas de param@`etre affiche cette liste)@*
 b#: saute @`a la fen@^etre affichant le tampon n°#@*
 splith: @'eclate la fen@^etre en deux horizontalement@*
 splitv: @'eclate la fen@^etre en deux verticalement@*
+resize: redimensionne une fen@^etre, la nouvelle taille est <pct>%% de la fen@^etre parent@*
 merge: fusionne la fen@^etre avec une autre@*
+@*
+Pour splith et splitv, pct est un pourcentage qui repr@'esente la taille de la nouvelle fen@^etre, calcul@'ee par rapport @`a la taille de la fen@^etre courante. Par exemple 25 signifie cr@'eer une fen@^etre qui a pour taille: taille_courante / 4@*
 @*
 @end table
 

@@ -36,7 +36,7 @@
 
 @title WeeChat - Gui@'on de usuario.
 @subtitle Cliente IRC r@'apido, peque@~no y extensible
-@subtitle Documentaci@'on para WeeChat v0.1.6 - 11 de noviembre de 2005
+@subtitle Documentaci@'on para WeeChat v0.1.7-cvs - 20 de noviembre de 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -352,6 +352,9 @@ Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'on'@*
 @item look_day_change_timestamp
 Timestamp for date displayed when day changed@*
 Typo: cadena (cualquier cadena), valor por defecto: '%a, %d %b %Y'@*
+@item look_read_marker
+Use a marker on servers/channels to show first unread line@*
+Typo: cadena (cualquier cadena), valor por defecto: ' '@*
 @item col_real_white
 If set, uses real white color, disabled by default for terms with white background (if you never use white background, you should turn on this option to see real white instead of default term foreground color)@*
 Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
@@ -403,6 +406,12 @@ Typo: color (color Curses @'o Gtk), valor por defecto: 'yellow'@*
 @item col_chat_bg
 Color de fondo para la ventana de conversaci@'on@*
 Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
+@item col_chat_read_marker
+Color for unread data marker@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'yellow'@*
+@item col_chat_read_marker_bg
+Background for unread data marker@*
+Typo: color (color Curses @'o Gtk), valor por defecto: 'magenta'@*
 @item col_status
 Color para la barra de estado@*
 Typo: color (color Curses @'o Gtk), valor por defecto: 'default'@*
@@ -550,6 +559,9 @@ Typo: entero (valores: entre 0 y 2147483647), valor por defecto: 4096@*
 @item history_max_commands
 Número m@'aximo de comandos de usuario en el hist@'orico (0 = ilimitado)@*
 Typo: entero (valores: entre 0 y 2147483647), valor por defecto: 100@*
+@item history_display_default
+Maximum number of commands to display by default in history listing (0 = unlimited)@*
+Typo: entero (valores: entre 0 y 2147483647), valor por defecto: 5@*
 @item log_auto_server
 Registrar autom@'aticamente los mensajes de servidor@*
 Typo: booleano (valores: 'on' u 'off'), valor por defecto: 'off'@*
@@ -921,17 +933,25 @@ desconectarse de un servidor@*
 @*
 nombre_del_servidor: nombre del servidor del que desconectarse@*
 @*
-@item debug  dump
+@item debug  dump | windows
 @*
 imprime mensajes de depuraci@'on@*
 @*
-volcado: almacena un volcado de memoria en el archivo de registro de Weechat (se escribe el mismo volcado cuando Weechat se cuelga)@*
+dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)@*
+windows: display windows tree@*
 @*
 @item help  [comando]
 @*
 mostrar ayuda sobre los comandos@*
 @*
 comando: nombre de un comando de Weechat @'o de IRC@*
+@*
+@item history  [clear | value]
+@*
+show buffer command history@*
+@*
+clear: clear history@*
+value: number of history entries to show@*
 @*
 @item ignore  [mask [[type | command] [channel [server]]]]
 @*
@@ -1018,7 +1038,7 @@ show WeeChat uptime@*
 @*
 -o: send uptime on current channel as an IRC message@*
 @*
-@item window  [list | -1 | +1 | b# | splith | splitv | [merge [down | up | left | right | all]]]
+@item window  [list | -1 | +1 | b# | splith [pct] | splitv [pct] | resize pct | merge [all]]
 @*
 gesti@'on de ventanas@*
 @*
@@ -1028,7 +1048,10 @@ list: list opened windows (no parameter implies this list)@*
 b#: jump to next window displaying buffer number #@*
 splith: split current window horizontally@*
 splitv: split current window vertically@*
-merge: merge window with another@*
+resize: resize window size, new size is <pct>%% of parent window@*
+merge: merge window with another (all = keep only one window)@*
+@*
+For splith and splitv, pct is a pourcentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4@*
 @*
 @end table
 

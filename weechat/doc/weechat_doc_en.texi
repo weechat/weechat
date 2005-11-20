@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.1.6 - November, 11 2005
+@subtitle Documentation for WeeChat v0.1.7-cvs - November, 20 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -352,6 +352,9 @@ Type: boolean (values: 'on' or 'off'), default value: 'on'@*
 @item look_day_change_timestamp
 Timestamp for date displayed when day changed@*
 Type: string (any string), default value: '%a, %d %b %Y'@*
+@item look_read_marker
+Use a marker on servers/channels to show first unread line@*
+Type: string (any string), default value: ' '@*
 @item col_real_white
 If set, uses real white color, disabled by default for terms with white background (if you never use white background, you should turn on this option to see real white instead of default term foreground color)@*
 Type: boolean (values: 'on' or 'off'), default value: 'off'@*
@@ -403,6 +406,12 @@ Type: color (Curses or Gtk color), default value: 'yellow'@*
 @item col_chat_bg
 Background for chat window@*
 Type: color (Curses or Gtk color), default value: 'default'@*
+@item col_chat_read_marker
+Color for unread data marker@*
+Type: color (Curses or Gtk color), default value: 'yellow'@*
+@item col_chat_read_marker_bg
+Background for unread data marker@*
+Type: color (Curses or Gtk color), default value: 'magenta'@*
 @item col_status
 Color for status bar@*
 Type: color (Curses or Gtk color), default value: 'default'@*
@@ -550,6 +559,9 @@ Type: integer (values: between 0 and 2147483647), default value: 4096@*
 @item history_max_commands
 Maximum number of user commands in history (0 = unlimited)@*
 Type: integer (values: between 0 and 2147483647), default value: 100@*
+@item history_display_default
+Maximum number of commands to display by default in history listing (0 = unlimited)@*
+Type: integer (values: between 0 and 2147483647), default value: 5@*
 @item log_auto_server
 Automatically log server messages@*
 Type: boolean (values: 'on' or 'off'), default value: 'off'@*
@@ -921,17 +933,25 @@ disconnect from a server@*
 @*
 servername: server name to disconnect@*
 @*
-@item debug  dump
+@item debug  dump | windows
 @*
 print debug messages@*
 @*
 dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)@*
+windows: display windows tree@*
 @*
 @item help  [command]
 @*
 display help about commands@*
 @*
 command: name of a WeeChat or IRC command@*
+@*
+@item history  [clear | value]
+@*
+show buffer command history@*
+@*
+clear: clear history@*
+value: number of history entries to show@*
 @*
 @item ignore  [mask [[type | command] [channel [server]]]]
 @*
@@ -1018,7 +1038,7 @@ show WeeChat uptime@*
 @*
 -o: send uptime on current channel as an IRC message@*
 @*
-@item window  [list | -1 | +1 | b# | splith | splitv | [merge [down | up | left | right | all]]]
+@item window  [list | -1 | +1 | b# | splith [pct] | splitv [pct] | resize pct | merge [all]]
 @*
 manage windows@*
 @*
@@ -1028,7 +1048,10 @@ list: list opened windows (no parameter implies this list)@*
 b#: jump to next window displaying buffer number #@*
 splith: split current window horizontally@*
 splitv: split current window vertically@*
-merge: merge window with another@*
+resize: resize window size, new size is <pct>%% of parent window@*
+merge: merge window with another (all = keep only one window)@*
+@*
+For splith and splitv, pct is a pourcentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4@*
 @*
 @end table
 
