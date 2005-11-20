@@ -867,17 +867,23 @@ Sauter au dernier tampon@*
 @item Alt + J puis Alt + S
 Sauter au tampon du serveur@*
 @*
+@item Alt + J then Alt + X
+Sauter au premier canal du serveur suivant (ou tampon du serveur si aucun canal ouvert)@*
+@*
 @item Alt + chiffre (1-9)
 Sauter au tampon avec ce num@'ero@*
 @*
-@item Alt + J then Alt + X
-Sauter au premier canal du serveur suivant (ou tampon du serveur si aucun canal ouvert)@*
+@item Alt + J puis nombre (01-99)
+Sauter au tampon avec ce num@'ero@*
 @*
 @item Alt + K
 Capturer une touche
 @*
-@item Alt + J puis nombre (01-99)
-Sauter au tampon avec ce num@'ero@*
+@item Alt + N
+Se positionner sur le highlight suivant@*
+@*
+@item Alt + P
+Se positionner sur le highlight pr@'ec@'edent@*
 @*
 @item Alt + R
 Effacer la ligne enti@`ere@*
@@ -885,6 +891,9 @@ Effacer la ligne enti@`ere@*
 @item Alt + S
 Changer de serveur sur le tampon des serveurs@*
 (si l'option ``look_one_server_buffer'' est activ@'ee)@*
+@*
+@item Alt + U
+Se positionner sur la premi@`ere ligne non lue du tampon@*
 @*
 @item Alt + PageUp / Alt + PageDown / Alt + Home / Alt + End
 Faire d@'efiler la liste des pseudos@*

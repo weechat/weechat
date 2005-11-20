@@ -878,12 +878,21 @@ Switch to buffer by number@*
 @item Alt + K
 Grab a key
 @*
+@item Alt + N
+Scroll to next highlight@*
+@*
+@item Alt + P
+Scroll to previous highlight@*
+@*
 @item Alt + R
 Delete entire line@*
 @*
 @item Alt + S
 Switch server on servers buffer@*
 (if option ``look_one_server_buffer'' is enabled)@*
+@*
+@item Alt + U
+Scroll to first unread line in buffer@*
 @*
 @item Alt + PageUp / Alt + PageDown / Alt + Home / Alt + End
 Scroll nicklist@*

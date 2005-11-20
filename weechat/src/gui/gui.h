@@ -330,7 +330,7 @@ struct t_gui_window
     int first_line_displayed;       /* = 1 if first line is displayed       */
     t_gui_line *start_line;         /* pointer to line if scrolling         */
     int start_line_pos;             /* position in first line displayed     */
-    
+    int scroll;                     /* = 1 if "MORE" should be displayed    */
     t_gui_window_tree *ptr_tree;    /* pointer to leaf in windows tree      */
     
     t_gui_window *prev_window;      /* link to previous window              */
@@ -465,6 +465,9 @@ extern void gui_action_jump_last_buffer (t_gui_window *);
 extern void gui_action_jump_server (t_gui_window *);
 extern void gui_action_jump_next_server (t_gui_window *);
 extern void gui_action_switch_server (t_gui_window *);
+extern void gui_action_scroll_previous_highlight (t_gui_window *);
+extern void gui_action_scroll_next_highlight (t_gui_window *);
+extern void gui_action_scroll_unread (t_gui_window *);
 extern void gui_action_hotlist_clear (t_gui_window *);
 extern void gui_action_infobar_clear (t_gui_window *);
 extern void gui_action_refresh_screen ();

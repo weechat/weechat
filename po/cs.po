@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.7-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-11-19 23:06+0100\n"
+"POT-Creation-Date: 2005-11-20 19:02+0100\n"
 "PO-Revision-Date: 2005-11-19 11:36+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2247,12 +2247,12 @@ msgstr ""
 "tento soubor při aktualizaci nastavení.\n"
 "#\n"
 
-#: src/gui/curses/gui-input.c:331
+#: src/gui/curses/gui-input.c:334
 #, c-format
 msgid "Day changed to %s\n"
 msgstr "Změnil se den na %s\n"
 
-#: src/gui/curses/gui-input.c:414
+#: src/gui/curses/gui-input.c:417
 #, c-format
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr "%s zpoždění je veliké, odpojuji se od serveru...\n"
@@ -2273,48 +2273,48 @@ msgstr "Mb"
 msgid "Gb"
 msgstr "Gb"
 
-#: src/gui/curses/gui-display.c:1938
+#: src/gui/curses/gui-display.c:1943
 msgid "<servers>"
 msgstr "<serverů>"
 
-#: src/gui/curses/gui-display.c:1950
+#: src/gui/curses/gui-display.c:1955
 msgid "(away)"
 msgstr "(pryč)"
 
-#: src/gui/curses/gui-display.c:2084
+#: src/gui/curses/gui-display.c:2089
 msgid "[not connected] "
 msgstr "[nepřipojen] "
 
-#: src/gui/curses/gui-display.c:2094
+#: src/gui/curses/gui-display.c:2099
 msgid "Act: "
 msgstr "Aktivní: "
 
-#: src/gui/curses/gui-display.c:2182
+#: src/gui/curses/gui-display.c:2187
 #, c-format
 msgid "Lag: %.1f"
 msgstr "Zpoždění: %.1f"
 
-#: src/gui/curses/gui-display.c:2198
+#: src/gui/curses/gui-display.c:2203
 msgid "-MORE-"
 msgstr "-VÍCE-"
 
-#: src/gui/curses/gui-display.c:2376
+#: src/gui/curses/gui-display.c:2381
 msgid "  [A] Accept"
 msgstr "  [A] Akceptovat"
 
-#: src/gui/curses/gui-display.c:2377 src/gui/curses/gui-display.c:2381
+#: src/gui/curses/gui-display.c:2382 src/gui/curses/gui-display.c:2386
 msgid "  [C] Cancel"
 msgstr "  [C] Storno"
 
-#: src/gui/curses/gui-display.c:2386
+#: src/gui/curses/gui-display.c:2391
 msgid "  [R] Remove"
 msgstr "  [R] Odebrat"
 
-#: src/gui/curses/gui-display.c:2390
+#: src/gui/curses/gui-display.c:2395
 msgid "  [P] Purge old DCC"
 msgstr "  [P] Pročistit staré DCC"
 
-#: src/gui/curses/gui-display.c:2391
+#: src/gui/curses/gui-display.c:2396
 msgid "  [Q] Close DCC view"
 msgstr "  [Q] Zavřít DCC pohled"
 
@@ -2322,11 +2322,11 @@ msgstr "  [Q] Zavřít DCC pohled"
 msgid "server"
 msgstr "server"
 
-#: src/gui/gui-common.c:638
+#: src/gui/gui-common.c:639
 msgid "Not enough memory for new line\n"
 msgstr "Nedostatek paměti pro nový řádek\n"
 
-#: src/gui/gui-common.c:985
+#: src/gui/gui-common.c:986
 msgid "Not enough memory for infobar message\n"
 msgstr "Nedostatek paměti pro infobar zprávu\n"
 
@@ -2463,32 +2463,44 @@ msgid "switch active server on servers buffer"
 msgstr "přepnout aktivní server na buffer serverů"
 
 #: src/gui/gui-keyboard.c:111
+msgid "scroll to previous highlight in buffer"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:113
+msgid "scroll to next highlight in buffer"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:115
+msgid "scroll to first unread line in buffer"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:117
 msgid "clear hotlist"
 msgstr "vyčisti hotlist"
 
-#: src/gui/gui-keyboard.c:113
+#: src/gui/gui-keyboard.c:119
 msgid "clear infobar"
 msgstr "vyčisti infobar"
 
-#: src/gui/gui-keyboard.c:115
+#: src/gui/gui-keyboard.c:121
 msgid "refresh screen"
 msgstr "obnov obrazovku"
 
-#: src/gui/gui-keyboard.c:117
+#: src/gui/gui-keyboard.c:123
 msgid "grab a key"
 msgstr "zachytit klávesu"
 
-#: src/gui/gui-keyboard.c:428 src/common/command.c:1860
+#: src/gui/gui-keyboard.c:434 src/common/command.c:1860
 #, c-format
 msgid "%s unable to bind key \"%s\"\n"
 msgstr "%s nemohu napojit kalávesu \"%s\"\n"
 
-#: src/gui/gui-keyboard.c:439
+#: src/gui/gui-keyboard.c:445
 #, c-format
 msgid "%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"
 msgstr "%s nemohu napojit kalávesu \"%s\" (nevalidní jméno funkce: \"%s\")\n"
 
-#: src/gui/gui-keyboard.c:452
+#: src/gui/gui-keyboard.c:458
 #, c-format
 msgid "%s not enough memory for key binding\n"
 msgstr "%s nedostatek paměti pro klávesovou zkratku\n"

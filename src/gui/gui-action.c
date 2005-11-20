@@ -1050,6 +1050,92 @@ gui_action_switch_server (t_gui_window *window)
 }
 
 /*
+ * gui_action_scroll_previous_highlight: scroll to previous highlight
+ */
+
+void
+gui_action_scroll_previous_highlight (t_gui_window *window)
+{
+    t_gui_line *ptr_line;
+    
+    if (!window->buffer->dcc)
+    {
+        if (window->buffer->lines)
+        {
+            ptr_line = (window->start_line) ?
+                window->start_line->prev_line : window->buffer->last_line->prev_line;
+            while (ptr_line)
+            {
+                if (ptr_line->line_with_highlight)
+                {
+                    window->start_line = ptr_line;
+                    window->start_line_pos = 0;
+                    window->first_line_displayed =
+                        (window->start_line == window->buffer->lines);
+                    gui_draw_buffer_chat (window->buffer, 1);
+                    gui_draw_buffer_status (window->buffer, 0);
+                    return;
+                }
+                ptr_line = ptr_line->prev_line;
+            }
+        }
+    }
+}
+
+/*
+ * gui_action_scroll_next_highlight: scroll to next highlight
+ */
+
+void
+gui_action_scroll_next_highlight (t_gui_window *window)
+{
+    t_gui_line *ptr_line;
+    
+    if (!window->buffer->dcc)
+    {
+        if (window->buffer->lines)
+        {
+            ptr_line = (window->start_line) ?
+                window->start_line->next_line : window->buffer->lines->next_line;
+            while (ptr_line)
+            {
+                if (ptr_line->line_with_highlight)
+                {
+                    window->start_line = ptr_line;
+                    window->start_line_pos = 0;
+                    window->first_line_displayed =
+                        (window->start_line == window->buffer->lines);
+                    gui_draw_buffer_chat (window->buffer, 1);
+                    gui_draw_buffer_status (window->buffer, 0);
+                    return;
+                }
+                ptr_line = ptr_line->next_line;
+            }
+        }
+    }
+}
+
+/*
+ * gui_action_scroll_unread: scroll to first unread line of buffer
+ */
+
+void
+gui_action_scroll_unread (t_gui_window *window)
+{
+    if (!window->buffer->dcc &&
+        window->buffer->last_read_line &&
+        window->buffer->last_read_line != window->buffer->last_line)
+    {
+        window->start_line = window->buffer->last_read_line->next_line;
+        window->start_line_pos = 0;
+        window->first_line_displayed =
+            (window->start_line == window->buffer->lines);
+        gui_draw_buffer_chat (window->buffer, 1);
+        gui_draw_buffer_status (window->buffer, 0);
+    }
+}
+
+/*
  * gui_action_hotlist_clear: clear hotlist
  */
 

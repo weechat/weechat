@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-11-19 23:06+0100\n"
+"POT-Creation-Date: 2005-11-20 19:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2107,12 +2107,12 @@ msgid ""
 "#\n"
 msgstr ""
 
-#: src/gui/curses/gui-input.c:331
+#: src/gui/curses/gui-input.c:334
 #, c-format
 msgid "Day changed to %s\n"
 msgstr ""
 
-#: src/gui/curses/gui-input.c:414
+#: src/gui/curses/gui-input.c:417
 #, c-format
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr ""
@@ -2133,48 +2133,48 @@ msgstr ""
 msgid "Gb"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1938
+#: src/gui/curses/gui-display.c:1943
 msgid "<servers>"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1950
+#: src/gui/curses/gui-display.c:1955
 msgid "(away)"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2084
+#: src/gui/curses/gui-display.c:2089
 msgid "[not connected] "
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2094
+#: src/gui/curses/gui-display.c:2099
 msgid "Act: "
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2182
+#: src/gui/curses/gui-display.c:2187
 #, c-format
 msgid "Lag: %.1f"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2198
+#: src/gui/curses/gui-display.c:2203
 msgid "-MORE-"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2376
+#: src/gui/curses/gui-display.c:2381
 msgid "  [A] Accept"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2377 src/gui/curses/gui-display.c:2381
+#: src/gui/curses/gui-display.c:2382 src/gui/curses/gui-display.c:2386
 msgid "  [C] Cancel"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2386
+#: src/gui/curses/gui-display.c:2391
 msgid "  [R] Remove"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2390
+#: src/gui/curses/gui-display.c:2395
 msgid "  [P] Purge old DCC"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2391
+#: src/gui/curses/gui-display.c:2396
 msgid "  [Q] Close DCC view"
 msgstr ""
 
@@ -2182,11 +2182,11 @@ msgstr ""
 msgid "server"
 msgstr ""
 
-#: src/gui/gui-common.c:638
+#: src/gui/gui-common.c:639
 msgid "Not enough memory for new line\n"
 msgstr ""
 
-#: src/gui/gui-common.c:985
+#: src/gui/gui-common.c:986
 msgid "Not enough memory for infobar message\n"
 msgstr ""
 
@@ -2323,32 +2323,44 @@ msgid "switch active server on servers buffer"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:111
-msgid "clear hotlist"
+msgid "scroll to previous highlight in buffer"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:113
-msgid "clear infobar"
+msgid "scroll to next highlight in buffer"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:115
-msgid "refresh screen"
+msgid "scroll to first unread line in buffer"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:117
+msgid "clear hotlist"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:119
+msgid "clear infobar"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:121
+msgid "refresh screen"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:123
 msgid "grab a key"
 msgstr ""
 
-#: src/gui/gui-keyboard.c:428 src/common/command.c:1860
+#: src/gui/gui-keyboard.c:434 src/common/command.c:1860
 #, c-format
 msgid "%s unable to bind key \"%s\"\n"
 msgstr ""
 
-#: src/gui/gui-keyboard.c:439
+#: src/gui/gui-keyboard.c:445
 #, c-format
 msgid "%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"
 msgstr ""
 
-#: src/gui/gui-keyboard.c:452
+#: src/gui/gui-keyboard.c:458
 #, c-format
 msgid "%s not enough memory for key binding\n"
 msgstr ""

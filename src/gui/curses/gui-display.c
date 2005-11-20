@@ -1666,15 +1666,20 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                     ptr_line = ptr_line->next_line;
                 }
                 
+                ptr_win->scroll = (ptr_win->win_chat_cursor_y > ptr_win->win_chat_height - 1);
+                
                 /* check if last line of buffer is entirely displayed and scrolling */
-                /* if so, disable scroll (to remove status bar indicator) */
-                if (!ptr_line && ptr_win->start_line)
+                /* if so, disable scroll indicator */
+                if (!ptr_line && ptr_win->scroll)
                 {
                     if (count == gui_display_line (ptr_win, ptr_win->buffer->last_line, 0, 1))
-                    {
-                        ptr_win->start_line = NULL;
-                        ptr_win->start_line_pos = 0;
-                    }
+                        ptr_win->scroll = 0;
+                }
+                
+                if (!ptr_win->scroll && (ptr_win->start_line == ptr_win->buffer->lines))
+                {
+                    ptr_win->start_line = NULL;
+                    ptr_win->start_line_pos = 0;
                 }
                 
                 /* cursor is below end line of chat window? */
@@ -2200,7 +2205,7 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
         if (x < 0)
             x = 0;
         gui_window_set_weechat_color (ptr_win->win_status, COLOR_WIN_STATUS_MORE);
-        if (ptr_win->start_line)
+        if (ptr_win->scroll)
             mvwprintw (ptr_win->win_status, 0, x, "%s", more);
         else
         {

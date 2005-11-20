@@ -104,8 +104,11 @@ gui_input_default_key_bindings ()
     gui_key_bind ( /* m-j,m-s */ "meta-jmeta-s",  "jump_server");
     gui_key_bind ( /* m-j,m-x */ "meta-jmeta-x",  "jump_next_server");
     gui_key_bind ( /* m-k     */ "meta-k",        "grab_key");
+    gui_key_bind ( /* m-n     */ "meta-n",        "scroll_next_highlight");
+    gui_key_bind ( /* m-p     */ "meta-p",        "scroll_previous_highlight");
     gui_key_bind ( /* m-r     */ "meta-r",        "delete_line");
     gui_key_bind ( /* m-s     */ "meta-s",        "switch_server");
+    gui_key_bind ( /* m-u     */ "meta-u",        "scroll_unread");
     
     /* keys binded with commands */
     gui_key_bind ( /* m-left  */ "meta-meta2-D", "/buffer -1");
