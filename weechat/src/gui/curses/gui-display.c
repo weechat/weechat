@@ -1362,7 +1362,7 @@ gui_display_line (t_gui_window *window, t_gui_line *line, int count, int simulat
             window->buffer->last_read_line &&
             (window->buffer->last_read_line == line->prev_line))
         {
-            gui_window_chat_set_weechat_color (window, COLOR_WIN_CHAT_MARKER);
+            gui_window_chat_set_weechat_color (window, COLOR_WIN_CHAT_READ_MARKER);
             mvwprintw (window->win_chat, read_marker_y, read_marker_x,
                        "%c", cfg_look_read_marker[0]);
         }
@@ -3161,7 +3161,7 @@ gui_init_weechat_colors ()
     gui_color[COLOR_WIN_CHAT_CHANNEL] = gui_color_build (COLOR_WIN_CHAT_CHANNEL, cfg_col_chat_channel, cfg_col_chat_bg);
     gui_color[COLOR_WIN_CHAT_DARK] = gui_color_build (COLOR_WIN_CHAT_DARK, cfg_col_chat_dark, cfg_col_chat_bg);
     gui_color[COLOR_WIN_CHAT_HIGHLIGHT] = gui_color_build (COLOR_WIN_CHAT_HIGHLIGHT, cfg_col_chat_highlight, cfg_col_chat_bg);
-    gui_color[COLOR_WIN_CHAT_MARKER] = gui_color_build (COLOR_WIN_CHAT_MARKER, cfg_col_chat_marker, cfg_col_chat_marker_bg);
+    gui_color[COLOR_WIN_CHAT_READ_MARKER] = gui_color_build (COLOR_WIN_CHAT_READ_MARKER, cfg_col_chat_read_marker, cfg_col_chat_read_marker_bg);
     gui_color[COLOR_WIN_STATUS] = gui_color_build (COLOR_WIN_STATUS, cfg_col_status, cfg_col_status_bg);
     gui_color[COLOR_WIN_STATUS_DELIMITERS] = gui_color_build (COLOR_WIN_STATUS_DELIMITERS, cfg_col_status_delimiters, cfg_col_status_bg);
     gui_color[COLOR_WIN_STATUS_CHANNEL] = gui_color_build (COLOR_WIN_STATUS_CHANNEL, cfg_col_status_channel, cfg_col_status_bg);

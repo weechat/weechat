@@ -256,8 +256,8 @@ int cfg_col_chat_channel;
 int cfg_col_chat_dark;
 int cfg_col_chat_highlight;
 int cfg_col_chat_bg;
-int cfg_col_chat_marker;
-int cfg_col_chat_marker_bg;
+int cfg_col_chat_read_marker;
+int cfg_col_chat_read_marker_bg;
 int cfg_col_status;
 int cfg_col_status_delimiters;
 int cfg_col_status_channel;
@@ -372,14 +372,14 @@ t_config_option weechat_options_colors[] =
     N_("background for chat window"),
     OPTION_TYPE_COLOR, 0, 0, 0,
     "default", NULL, &cfg_col_chat_bg, NULL, &config_change_color },
-  { "col_chat_marker", N_("color for unread data marker"),
+  { "col_chat_read_marker", N_("color for unread data marker"),
     N_("color for unread data marker"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "yellow", NULL, &cfg_col_chat_marker, NULL, &config_change_color },
-  { "col_chat_marker_bg", N_("background for unread data marker"),
+    "yellow", NULL, &cfg_col_chat_read_marker, NULL, &config_change_color },
+  { "col_chat_read_marker_bg", N_("background for unread data marker"),
     N_("background for unread data marker"),
     OPTION_TYPE_COLOR, 0, 0, 0,
-    "magenta", NULL, &cfg_col_chat_marker_bg, NULL, &config_change_color },
+    "magenta", NULL, &cfg_col_chat_read_marker_bg, NULL, &config_change_color },
   
   /* status window */
   { "col_status", N_("color for status bar"),
