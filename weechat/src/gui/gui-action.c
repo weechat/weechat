@@ -1122,7 +1122,9 @@ gui_action_scroll_next_highlight (t_gui_window *window)
 void
 gui_action_scroll_unread (t_gui_window *window)
 {
-    if (!window->buffer->dcc &&
+    if (cfg_look_read_marker &&
+        cfg_look_read_marker[0] &&
+        !window->buffer->dcc &&
         window->buffer->last_read_line &&
         window->buffer->last_read_line != window->buffer->last_line)
     {
