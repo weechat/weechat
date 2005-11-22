@@ -3087,6 +3087,153 @@ gui_window_merge_all (t_gui_window *window)
 }
 
 /*
+ * gui_window_side_by_side: return a code about position of 2 windows:
+ *                          0 = they're not side by side
+ *                          1 = side by side (win2 is over the win1)
+ *                          2 = side by side (win2 on the right)
+ *                          3 = side by side (win2 below win1)
+ *                          4 = side by side (win2 on the left)
+ */
+
+int
+gui_window_side_by_side (t_gui_window *win1, t_gui_window *win2)
+{
+    /* win2 over win1 ? */
+    if (win2->win_y + win2->win_height == win1->win_y)
+    {
+        if (win2->win_x >= win1->win_x + win1->win_width)
+            return 0;
+        if (win2->win_x + win2->win_width <= win1->win_x)
+            return 0;
+        return 1;
+    }
+
+    /* win2 on the right ? */
+    if (win2->win_x == win1->win_x + win1->win_width + 1)
+    {
+        if (win2->win_y >= win1->win_y + win1->win_height)
+            return 0;
+        if (win2->win_y + win2->win_height <= win1->win_y)
+            return 0;
+        return 2;
+    }
+
+    /* win2 below win1 ? */
+    if (win2->win_y == win1->win_y + win1->win_height)
+    {
+        if (win2->win_x >= win1->win_x + win1->win_width)
+            return 0;
+        if (win2->win_x + win2->win_width <= win1->win_x)
+            return 0;
+        return 3;
+    }
+    
+    /* win2 on the left ? */
+    if (win2->win_x + win2->win_width + 1 == win1->win_x)
+    {
+        if (win2->win_y >= win1->win_y + win1->win_height)
+            return 0;
+        if (win2->win_y + win2->win_height <= win1->win_y)
+            return 0;
+        return 4;
+    }
+
+    return 0;
+}
+
+/*
+ * gui_window_switch_up: search and switch to a window over current window
+ */
+
+void
+gui_window_switch_up (t_gui_window *window)
+{
+    t_gui_window *ptr_win;
+    
+    for (ptr_win = gui_windows; ptr_win;
+         ptr_win = ptr_win->next_window)
+    {
+        if ((ptr_win != window) &&
+            (gui_window_side_by_side (window, ptr_win) == 1))
+        {
+            gui_current_window = ptr_win;
+            gui_switch_to_buffer (gui_current_window, gui_current_window->buffer);
+            gui_redraw_buffer (gui_current_window->buffer);
+            return;
+        }
+    }
+}
+
+/*
+ * gui_window_switch_down: search and switch to a window below current window
+ */
+
+void
+gui_window_switch_down (t_gui_window *window)
+{
+    t_gui_window *ptr_win;
+    
+    for (ptr_win = gui_windows; ptr_win;
+         ptr_win = ptr_win->next_window)
+    {
+        if ((ptr_win != window) &&
+            (gui_window_side_by_side (window, ptr_win) == 3))
+        {
+            gui_current_window = ptr_win;
+            gui_switch_to_buffer (gui_current_window, gui_current_window->buffer);
+            gui_redraw_buffer (gui_current_window->buffer);
+            return;
+        }
+    }
+}
+
+/*
+ * gui_window_switch_left: search and switch to a window on the left of current window
+ */
+
+void
+gui_window_switch_left (t_gui_window *window)
+{
+    t_gui_window *ptr_win;
+    
+    for (ptr_win = gui_windows; ptr_win;
+         ptr_win = ptr_win->next_window)
+    {
+        if ((ptr_win != window) &&
+            (gui_window_side_by_side (window, ptr_win) == 4))
+        {
+            gui_current_window = ptr_win;
+            gui_switch_to_buffer (gui_current_window, gui_current_window->buffer);
+            gui_redraw_buffer (gui_current_window->buffer);
+            return;
+        }
+    }
+}
+
+/*
+ * gui_window_switch_right: search and switch to a window on the right of current window
+ */
+
+void
+gui_window_switch_right (t_gui_window *window)
+{
+    t_gui_window *ptr_win;
+    
+    for (ptr_win = gui_windows; ptr_win;
+         ptr_win = ptr_win->next_window)
+    {
+        if ((ptr_win != window) &&
+            (gui_window_side_by_side (window, ptr_win) == 2))
+        {
+            gui_current_window = ptr_win;
+            gui_switch_to_buffer (gui_current_window, gui_current_window->buffer);
+            gui_redraw_buffer (gui_current_window->buffer);
+            return;
+        }
+    }
+}
+
+/*
  * gui_refresh_screen: called when term size is modified
  */
 

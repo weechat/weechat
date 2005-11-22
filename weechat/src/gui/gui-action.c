@@ -962,7 +962,7 @@ gui_action_jump_dcc (t_gui_window *window)
     else
     {
         buffer_before_dcc = window->buffer;
-        gui_switch_to_dcc_buffer (window);
+        gui_buffer_switch_dcc (window);
     }
 }
 
@@ -974,7 +974,7 @@ void
 gui_action_jump_last_buffer (t_gui_window *window)
 {
     if (last_gui_buffer)
-        gui_switch_to_buffer_by_number (window, last_gui_buffer->number);
+        gui_buffer_switch_by_number (window, last_gui_buffer->number);
 }
 
 /*

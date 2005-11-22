@@ -1,13 +1,15 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-11-20
+ChangeLog - 2005-11-22
 
 
 Version 0.1.7 (under dev!):
-   * added new keys for scrolling to previous/next highlight (alt-P / alt-N)
+   * added new keys for switching to other windows: alt-w followed by
+     alt-{arrow}
+   * added new keys for scrolling to previous/next highlight: alt-P / alt-N
    * added "read marker": an indicator for first unread line in a
-     server or channel buffer (alt-U to scroll to marker)
+     server or channel buffer (new key alt-U to scroll to marker)
    * new window maganement: custom size for windows, auto resize when
      terminal is resized
    * fixed infinite loop when resizing term to small size

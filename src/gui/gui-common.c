@@ -555,7 +555,7 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
         {
             if ((buffer == ptr_win->buffer) &&
                 ((buffer->next_buffer) || (buffer->prev_buffer)))
-                gui_switch_to_previous_buffer (ptr_win);
+                gui_buffer_switch_previous (ptr_win);
         }
     }
     
@@ -1299,11 +1299,11 @@ gui_window_switch_server (t_gui_window *window)
 }
 
 /*
- * gui_switch_to_previous_buffer: switch to previous buffer
+ * gui_buffer_switch_previous: switch to previous buffer
  */
 
 void
-gui_switch_to_previous_buffer (t_gui_window *window)
+gui_buffer_switch_previous (t_gui_window *window)
 {
     if (!gui_ok)
         return;
@@ -1321,11 +1321,11 @@ gui_switch_to_previous_buffer (t_gui_window *window)
 }
 
 /*
- * gui_switch_to_next_buffer: switch to next buffer
+ * gui_buffer_switch_next: switch to next buffer
  */
 
 void
-gui_switch_to_next_buffer (t_gui_window *window)
+gui_buffer_switch_next (t_gui_window *window)
 {
     if (!gui_ok)
         return;
@@ -1343,11 +1343,11 @@ gui_switch_to_next_buffer (t_gui_window *window)
 }
 
 /*
- * gui_switch_to_previous_window: switch to previous window
+ * gui_window_switch_previous: switch to previous window
  */
 
 void
-gui_switch_to_previous_window (t_gui_window *window)
+gui_window_switch_previous (t_gui_window *window)
 {
     if (!gui_ok)
         return;
@@ -1362,11 +1362,11 @@ gui_switch_to_previous_window (t_gui_window *window)
 }
 
 /*
- * gui_switch_to_next_window: switch to next window
+ * gui_window_switch_next: switch to next window
  */
 
 void
-gui_switch_to_next_window (t_gui_window *window)
+gui_window_switch_next (t_gui_window *window)
 {
     if (!gui_ok)
         return;
@@ -1381,11 +1381,11 @@ gui_switch_to_next_window (t_gui_window *window)
 }
 
 /*
- * gui_switch_to_window_by_buffer: switch to next window displaying a buffer
+ * gui_window_switch_by_buffer: switch to next window displaying a buffer
  */
 
 void
-gui_switch_to_window_by_buffer (t_gui_window *window, int buffer_number)
+gui_window_switch_by_buffer (t_gui_window *window, int buffer_number)
 {
     t_gui_window *ptr_win;
     
@@ -1407,11 +1407,11 @@ gui_switch_to_window_by_buffer (t_gui_window *window, int buffer_number)
 }
 
 /*
- * gui_switch_to_dcc_buffer: switch to dcc buffer (create it if it does not exist)
+ * gui_buffer_switch_dcc: switch to dcc buffer (create it if it does not exist)
  */
 
 void
-gui_switch_to_dcc_buffer (t_gui_window *window)
+gui_buffer_switch_dcc (t_gui_window *window)
 {
     t_gui_buffer *ptr_buffer;
     
@@ -1431,11 +1431,11 @@ gui_switch_to_dcc_buffer (t_gui_window *window)
 }
 
 /*
- * gui_switch_to_buffer_by_number: switch to another buffer with number
+ * gui_buffer_switch_by_number: switch to another buffer with number
  */
 
 t_gui_buffer *
-gui_switch_to_buffer_by_number (t_gui_window *window, int number)
+gui_buffer_switch_by_number (t_gui_window *window, int number)
 {
     t_gui_buffer *ptr_buffer;
     
@@ -1463,11 +1463,11 @@ gui_switch_to_buffer_by_number (t_gui_window *window, int number)
 }
 
 /*
- * gui_switch_to_buffer_by_number: switch to another buffer with number
+ * gui_buffer_move_to_number: move a buffer to another number
  */
 
 void
-gui_move_buffer_to_number (t_gui_window *window, int number)
+gui_buffer_move_to_number (t_gui_window *window, int number)
 {
     t_gui_buffer *ptr_buffer;
     int i;

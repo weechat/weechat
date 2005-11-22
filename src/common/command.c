@@ -1014,13 +1014,13 @@ weechat_cmd_buffer (int argc, char **argv)
             if ((error) && (error[0] == '\0'))
             {
                 if (argv[1][0] == '+')
-                    gui_move_buffer_to_number (gui_current_window,
+                    gui_buffer_move_to_number (gui_current_window,
                                                gui_current_window->buffer->number + ((int) number));
                 else if (argv[1][0] == '-')
-                    gui_move_buffer_to_number (gui_current_window,
+                    gui_buffer_move_to_number (gui_current_window,
                                                gui_current_window->buffer->number - ((int) number));
                 else
-                    gui_move_buffer_to_number (gui_current_window, (int) number);
+                    gui_buffer_move_to_number (gui_current_window, (int) number);
             }
             else
             {
@@ -1197,9 +1197,10 @@ weechat_cmd_buffer (int argc, char **argv)
                 {
                     target_buffer = gui_current_window->buffer->number - (int) number;
                     if (target_buffer < 1)
-                        target_buffer = (last_gui_buffer) ? last_gui_buffer->number + target_buffer : 1;
-                    gui_switch_to_buffer_by_number (gui_current_window,
-                                                    target_buffer);
+                        target_buffer = (last_gui_buffer) ?
+                            last_gui_buffer->number + target_buffer : 1;
+                    gui_buffer_switch_by_number (gui_current_window,
+                                                 target_buffer);
                 }
             }
             else if (argv[0][0] == '+')
@@ -1212,8 +1213,8 @@ weechat_cmd_buffer (int argc, char **argv)
                     target_buffer = gui_current_window->buffer->number + (int) number;
                     if (last_gui_buffer && target_buffer > last_gui_buffer->number)
                         target_buffer -= last_gui_buffer->number;
-                    gui_switch_to_buffer_by_number (gui_current_window,
-                                                    target_buffer);
+                    gui_buffer_switch_by_number (gui_current_window,
+                                                 target_buffer);
                 }
             }
             else
@@ -1222,7 +1223,7 @@ weechat_cmd_buffer (int argc, char **argv)
                 error = NULL;
                 number = strtol (argv[0], &error, 10);
                 if ((error) && (error[0] == '\0'))
-                    gui_switch_to_buffer_by_number (gui_current_window, (int) number);
+                    gui_buffer_switch_by_number (gui_current_window, (int) number);
             }
             
         }
@@ -2954,12 +2955,20 @@ weechat_cmd_window (int argc, char **argv)
             error = NULL;
             number = strtol (argv[0] + 1, &error, 10);
             if ((error) && (error[0] == '\0'))
-                gui_switch_to_window_by_buffer (gui_current_window, number);
+                gui_window_switch_by_buffer (gui_current_window, number);
         }
         else if (ascii_strcasecmp (argv[0], "-1") == 0)
-            gui_switch_to_previous_window (gui_current_window);
+            gui_window_switch_previous (gui_current_window);
         else if (ascii_strcasecmp (argv[0], "+1") == 0)
-            gui_switch_to_next_window (gui_current_window);
+            gui_window_switch_next (gui_current_window);
+        else if (ascii_strcasecmp (argv[0], "up") == 0)
+            gui_window_switch_up (gui_current_window);
+        else if (ascii_strcasecmp (argv[0], "down") == 0)
+            gui_window_switch_down (gui_current_window);
+        else if (ascii_strcasecmp (argv[0], "left") == 0)
+            gui_window_switch_left (gui_current_window);
+        else if (ascii_strcasecmp (argv[0], "right") == 0)
+            gui_window_switch_right (gui_current_window);
         else
         {
             irc_display_prefix (NULL, NULL, PREFIX_ERROR);
