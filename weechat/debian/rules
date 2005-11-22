@@ -66,11 +66,11 @@ binary-indep: build install
 binary-arch: build install
 	dh_testdir -a -pweechat-curses -pweechat-plugins
 	dh_testroot -a -pweechat-curses -pweechat-plugins
-	# dh_installchangelogs -a
-	# dh_installdocs -a
+	dh_installchangelogs ChangeLog -pweechat-plugins
+	dh_installdocs -pweechat-plugins
 	dh_installman doc/weechat-curses.1 -pweechat-curses
-	dh_link -a -pweechat-curses -pweechat-plugins
-	dh_installmenu -a -pweechat-curses
+	dh_link -pweechat-curses
+	dh_installmenu -pweechat-curses
 	dh_strip -a -pweechat-curses -pweechat-plugins --exclude=libperl.a
 	dh_compress -a -pweechat-curses -p weechat-plugins
 	dh_fixperms -a -pweechat-curses -pweechatplugins
