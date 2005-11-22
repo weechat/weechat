@@ -68,19 +68,22 @@ weechat_python_exec (t_weechat_plugin *plugin,
                                function);
         return PLUGIN_RC_KO;
     }
-    
+
     ret = -1;
     
     python_current_script = script;
 
     rc = PyObject_CallFunction(evFunc, "ss", server == NULL ? "" : server, arguments == NULL ? "" : arguments);
-
+        
     if (rc)
     {
         ret = (int) PyInt_AsLong(rc);
         Py_XDECREF(rc);
     }
-        
+    
+    if (PyErr_Occurred ())
+	PyErr_Print ();
+    
     if (ret < 0)
         return PLUGIN_RC_OK;
     else
@@ -757,6 +760,9 @@ weechat_python_output (PyObject *self, PyObject *args)
         return NULL; 
     }
     
+    while (strlen(msg) > 0 && msg[strlen(msg)-1] == '\n')
+	msg[strlen(msg)-1] = '\0';
+
     python_plugin->printf_server (python_plugin,
 				  "Python stdin/stdout: %s", msg);
     return Py_BuildValue ("i", 1);
@@ -859,7 +865,10 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
 	    weechat_script_remove (plugin, &python_scripts, python_current_script);
         return 0;
     }
-    
+
+    if (PyErr_Occurred ())
+	PyErr_Print ();
+
     fclose (fp);
     free (python_current_script_filename);
     
