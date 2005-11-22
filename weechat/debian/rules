@@ -69,7 +69,7 @@ binary-arch: build install
 	dh_installchangelogs ChangeLog -pweechat-plugins
 	dh_installdocs -pweechat-plugins
 	dh_installman doc/weechat-curses.1 -pweechat-curses
-	dh_link -pweechat-curses
+	dh_link -pweechat-curses usr/share/doc/weechat-common usr/share/doc/weechat-curses
 	dh_installmenu -pweechat-curses
 	dh_strip -a -pweechat-curses -pweechat-plugins --exclude=libperl.a
 	dh_compress -a -pweechat-curses -p weechat-plugins
