@@ -64,26 +64,21 @@ binary-indep: build install
 
 # Build architecture-dependent files here.
 binary-arch: build install
-	dh_testdir -a
-	dh_testroot -a
+	dh_testdir -a -pweechat-curses -pweechat-plugins
+	dh_testroot -a -pweechat-curses -pweechat-plugins
 	# dh_installchangelogs -a
 	# dh_installdocs -a
 	dh_installman doc/weechat-curses.1 -pweechat-curses
-	dh_link -a usr/share/doc/weechat-common usr/share/doc/weechat-curses
-	dh_installmenu -a
-	dh_strip -a
-	dh_compress -a
-	dh_fixperms -a
-	dh_installdeb -a
-	#dh_shlibdeps -a
-	#dpkg-shlibdeps -Tdebian/weechat-curses.substvars -dDepends debian/weechat-curses/usr/bin/weechat-curses \
-	      -dRecommends `find $(PKGDIR)/usr/lib/weechat -type f -name "*.so"`
-	dh_shlibdeps -a -l debian/weechat-curses/usr/lib -- -dDepends \
-		debian/weechat-curses/usr/bin/weechat-curses -dRecommends \
-		`find debian/weechat-curses/usr/lib/ -type f -follow -name "*.so"`
-	dh_gencontrol -a
-	dh_md5sums -a
-	dh_builddeb -a
+	dh_link -a -pweechat-curses -pweechat-plugins
+	dh_installmenu -a -pweechat-curses
+	dh_strip -a -pweechat-curses -pweechat-plugins --exclude=libperl.a
+	dh_compress -a -pweechat-curses -p weechat-plugins
+	dh_fixperms -a -pweechat-curses -pweechatplugins
+	dh_installdeb -a -pweechat-curses -pweechat-plugins
+	dh_shlibdeps -a -pweechat-curses -pweechat-plugins
+	dh_gencontrol -a -pweechat-curses -pweechat-plugins
+	dh_md5sums -a -pweechat-curses -pweechat-plugins
+	dh_builddeb -a -pweechat-curses -pweechat-plugins
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install configure
