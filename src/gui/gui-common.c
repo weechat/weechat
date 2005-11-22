@@ -856,7 +856,7 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, char *mes
         seconds = time (NULL);
         date_tmp = localtime (&seconds);
         
-        pos = buf2 - 1;
+        pos = buf2;
         while (pos)
         {
             if ((!buffer->last_line) || (buffer->line_complete))
@@ -923,10 +923,15 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, char *mes
                 }
                 gui_add_to_line (buffer, MSG_TYPE_TIME, " ");
             }
-            gui_add_to_line (buffer, type, pos + 1);
-            pos = strchr (pos + 1, '\n');
-            if (pos && !pos[1])
-                pos = NULL;
+            gui_add_to_line (buffer, type, pos);
+            pos = strchr (pos, '\n');
+            if (pos)
+            {
+                if (!pos[1])
+                    pos = NULL;
+                else
+                    pos++;
+            }
         }
     }
     else
