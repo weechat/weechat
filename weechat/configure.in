@@ -273,11 +273,31 @@ fi
 
 if test "x$enable_ruby" = "xyes" ; then
     enable_plugins="yes"
+
+    AC_PATH_PROG(RUBY, ruby ruby1.9 ruby1.8)
+    if test -z $RUBY ; then
+        AC_MSG_ERROR([
+*** Ruby must be installed on your system
+*** but ruby interpreter couldn't be found in path.
+
+*** Please check that ruby is in path, or install
+*** it with your software package manager.])
+    fi
     
-    # TODO: check that ruby lib and headers are installed
-    
-    RUBY_CFLAGS=-I`ruby -rrbconfig -e "puts Config::CONFIG[['archdir']]"`
-    RUBY_LFLAGS=`ruby -rrbconfig -e "puts Config::CONFIG[['LIBRUBYARG_SHARED']]"`
+    RUBY_INCLUDE=`$RUBY -rrbconfig -e "puts Config::CONFIG[['archdir']]"`
+
+    AC_MSG_CHECKING(for Ruby header files)
+    if test -r "$RUBY_INCLUDE/ruby.h"; then
+        RUBY_CFLAGS="-I$RUBY_INCLUDE"
+    else
+        AC_MSG_ERROR([
+*** Ruby header files couldn't be found in your system.
+*** Try to install them with your software package manager.])
+    fi
+    AC_MSG_RESULT(found)
+   
+    RUBY_LFLAGS=`$RUBY -rrbconfig -e "puts Config::CONFIG[['LIBRUBYARG_SHARED']]"`
+
     AC_SUBST(RUBY_CFLAGS)
     AC_SUBST(RUBY_LFLAGS)
     AC_DEFINE(PLUGIN_RUBY)
