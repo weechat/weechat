@@ -61,6 +61,8 @@ irc_login (t_irc_server *server)
     gui_printf (server->buffer,
                 _("%s: using local hostname \"%s\"\n"),
                 PACKAGE_NAME, hostname);
+    if (!server->nick)
+        server->nick = strdup (server->nick1);
     server_sendf (server,
                   "NICK %s\r\n"
                   "USER %s %s %s :%s\r\n",

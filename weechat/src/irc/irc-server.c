@@ -400,7 +400,6 @@ server_new (char *name, int autoconnect, int autoreconnect, int autoreconnect_de
         new_server->autojoin =
             (autojoin) ? strdup (autojoin) : NULL;
         new_server->autorejoin = autorejoin;
-        new_server->nick = strdup (new_server->nick1);
         new_server->notify_levels =
             (notify_levels) ? strdup (notify_levels) : NULL;
     }
