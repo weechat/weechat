@@ -73,7 +73,7 @@ binary-arch: build install
 	dh_installmenu -pweechat-curses
 	dh_strip -a -pweechat-curses -pweechat-plugins --exclude=libperl.a
 	dh_compress -a -pweechat-curses -p weechat-plugins
-	dh_fixperms -a -pweechat-curses -pweechatplugins
+	dh_fixperms -a -pweechat-curses -pweechat-plugins
 	dh_installdeb -a -pweechat-curses -pweechat-plugins
 	dh_shlibdeps -a -pweechat-curses -pweechat-plugins
 	dh_gencontrol -a -pweechat-curses -pweechat-plugins
