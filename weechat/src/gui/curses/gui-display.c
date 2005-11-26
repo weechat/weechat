@@ -1285,7 +1285,8 @@ gui_display_line (t_gui_window *window, t_gui_line *line, int count, int simulat
         if (word_length > 0)
         {
             /* spaces + word too long for current line */
-            if (window->win_chat_cursor_x + word_length_with_spaces > window->win_chat_width)
+            if ((window->win_chat_cursor_x + word_length_with_spaces > window->win_chat_width)
+                && (word_length < window->win_chat_width - line->length_align))
             {
                 gui_display_new_line (window, num_lines, count,
                                       &lines_displayed, simulate);
