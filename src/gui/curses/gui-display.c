@@ -1285,8 +1285,7 @@ gui_display_line (t_gui_window *window, t_gui_line *line, int count, int simulat
         if (word_length > 0)
         {
             /* spaces + word too long for current line */
-            if ((window->win_chat_cursor_x + word_length_with_spaces > window->win_chat_width - 1)
-                && (word_length < window->win_chat_width - line->length_align))
+            if (window->win_chat_cursor_x + word_length_with_spaces > window->win_chat_width)
             {
                 gui_display_new_line (window, num_lines, count,
                                       &lines_displayed, simulate);
@@ -1306,8 +1305,9 @@ gui_display_line (t_gui_window *window, t_gui_line *line, int count, int simulat
                 ptr_data += word_start_offset;
             }
             
-            /* word is exactly width => we'll skip next leading spaces for next line */
-            if (word_length == window->win_chat_width - line->length_align)
+            /* word is exactly remaining width => we'll skip next leading spaces for next line */
+            if (word_length == window->win_chat_width -
+                ((window->win_chat_cursor_x == 0) ? line->length_align : window->win_chat_cursor_x))
                 skip_spaces = 1;
             
             /* display word */

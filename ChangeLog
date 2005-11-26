@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-11-22
+ChangeLog - 2005-11-26
 
 
 Version 0.1.7 (under dev!):
+   * fixed display bug in chat window when a message length equals to window
+     width
    * added new keys for switching to other windows: alt-w followed by
      alt-{arrow}
    * added new keys for scrolling to previous/next highlight: alt-P / alt-N
