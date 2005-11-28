@@ -36,6 +36,7 @@ t_weechat_plugin *perl_plugin;
 
 t_plugin_script *perl_scripts = NULL;
 t_plugin_script *perl_current_script = NULL;
+char *perl_current_script_filename = NULL;
 
 extern void boot_DynaLoader (pTHX_ CV* cv);
 
@@ -225,7 +226,8 @@ static XS (XS_weechat_register)
     /* register script */
     perl_current_script = weechat_script_add (perl_plugin,
                                               &perl_scripts,
-                                              "",
+                                              (perl_current_script_filename) ?
+					      perl_current_script_filename : "",
                                               name, version, shutdown_func,
                                               description);
     if (perl_current_script)
@@ -859,6 +861,8 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
         return 0;
     }
 
+    perl_current_script_filename = strdup (filename);
+
     PERL_SET_CONTEXT (perl_current_interpreter);
     perl_construct (perl_current_interpreter);
     tempscript.interpreter = (PerlInterpreter *) perl_current_interpreter;
@@ -866,6 +870,9 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
     
     eval_pv (weechat_perl_code, TRUE);
     eval = weechat_perl_exec (plugin, &tempscript, "weechat_perl_load_eval_file", filename, "");
+
+    free (perl_current_script_filename);
+
 #endif
     
     if ( eval != 0) 
@@ -900,9 +907,10 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
 #endif
 	if (perl_current_script != NULL)
             weechat_script_remove (plugin, &perl_scripts, perl_current_script);
+
 	return 0;
     }
-
+    
     if (perl_current_script == NULL) {
 	plugin->printf_server (plugin,
                                "Perl error: function \"register\" not found "
