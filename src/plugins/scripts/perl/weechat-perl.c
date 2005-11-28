@@ -36,7 +36,6 @@ t_weechat_plugin *perl_plugin;
 
 t_plugin_script *perl_scripts = NULL;
 t_plugin_script *perl_current_script = NULL;
-char *perl_current_script_filename = NULL;
 
 extern void boot_DynaLoader (pTHX_ CV* cv);
 
@@ -904,9 +903,6 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
 	return 0;
     }
 
-    perl_current_script_filename = strdup (filename);
-    free (perl_current_script_filename);
-    
     if (perl_current_script == NULL) {
 	plugin->printf_server (plugin,
                                "Perl error: function \"register\" not found "
