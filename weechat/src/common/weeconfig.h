@@ -89,7 +89,6 @@ extern char *cfg_look_charset_encode;
 extern char *cfg_look_charset_internal;
 extern int cfg_look_one_server_buffer;
 extern char *cfg_look_buffer_timestamp;
-extern int cfg_look_color_nicks;
 extern int cfg_look_color_nicks_number;
 extern int cfg_look_color_actions;
 extern int cfg_look_nicklist;

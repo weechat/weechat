@@ -124,9 +124,7 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
     else
         gui_printf_type (buffer, type, "%s%s",
                          GUI_COLOR((nick && color_nick) ?
-                                   ((cfg_look_color_nicks) ?
-                                    nick->color : COLOR_WIN_CHAT) :
-                                   COLOR_WIN_CHAT),
+                                   nick->color : COLOR_WIN_CHAT),
                          (nick) ? nick->nick : nickname);
     
     if (display_around)

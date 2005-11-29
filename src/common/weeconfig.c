@@ -74,7 +74,6 @@ char *cfg_look_charset_encode;
 char *cfg_look_charset_internal;
 int cfg_look_one_server_buffer;
 char *cfg_look_buffer_timestamp;
-int cfg_look_color_nicks;
 int cfg_look_color_nicks_number;
 int cfg_look_color_actions;
 int cfg_look_nicklist;
@@ -142,10 +141,6 @@ t_config_option weechat_options_look[] =
     N_("timestamp for buffers"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "[%H:%M:%S]", NULL, NULL, &cfg_look_buffer_timestamp, config_change_buffer_content },
-  { "look_color_nicks", N_("display nick names with different colors"),
-    N_("display nick names with different colors"),
-    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
-    NULL, NULL, &cfg_look_color_nicks, NULL, config_change_noop },
   { "look_color_nicks_number", N_("number of colors to use for nicks colors"),
     N_("number of colors to use for nicks colors"),
     OPTION_TYPE_INT, 1, 10, 10,
