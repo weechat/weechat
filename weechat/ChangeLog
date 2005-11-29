@@ -5,6 +5,7 @@ ChangeLog - 2005-11-29
 
 
 Version 0.1.7 (under dev!):
+   * /nick command is now allowed when not connected to server
    * added server/channel arg to /buffer command for jumping to buffer
    * fixed display bug in chat window when a message length equals to window
      width

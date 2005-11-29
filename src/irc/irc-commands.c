@@ -174,7 +174,7 @@ t_irc_command irc_commands[] =
     N_("[-all] nickname"),
     N_("-all: set new nickname for all connected servers\n"
     "nickname: new nickname"),
-    1, 2, 1, irc_cmd_send_nick, NULL, irc_cmd_recv_nick },
+    1, 2, 0, irc_cmd_send_nick, NULL, irc_cmd_recv_nick },
   { "notice", N_("send notice message to user"),
     N_("nickname text"), N_("nickname: user to send notice to\ntext: text to send"),
     2, MAX_ARGS, 1, NULL, irc_cmd_send_notice, irc_cmd_recv_notice },

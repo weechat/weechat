@@ -2332,18 +2332,13 @@ gui_draw_buffer_infobar (t_gui_buffer *buffer, int erase)
  */
 
 int
-gui_get_input_width (t_gui_window *window)
+gui_get_input_width (t_gui_window *window, char *nick)
 {
     if (CHANNEL(window->buffer))
         return (window->win_width - strlen (CHANNEL(window->buffer)->name) -
-                strlen (SERVER(window->buffer)->nick) - 4);
+                strlen (nick) - 4);
     else
-    {
-        if (SERVER(window->buffer) && (SERVER(window->buffer)->is_connected))
-            return (window->win_width - strlen (SERVER(window->buffer)->nick) - 3);
-        else
-            return (window->win_width - strlen (cfg_look_no_nickname) - 3);
-    }
+        return (window->win_width - strlen (nick) - 3);
 }
 
 /*
@@ -2406,7 +2401,12 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
                 if (buffer->input_buffer_length == 0)
                     buffer->input_buffer[0] = '\0';
                 
-                input_width = gui_get_input_width (ptr_win);
+                if (SERVER(buffer))
+                    ptr_nickname = (SERVER(buffer)->nick) ?
+                        SERVER(buffer)->nick : SERVER(buffer)->nick1;
+                else
+                    ptr_nickname = cfg_look_no_nickname;
+                input_width = gui_get_input_width (ptr_win, ptr_nickname);
                 
                 if (buffer->input_buffer_pos - buffer->input_buffer_1st_display + 1 >
                     input_width)
@@ -2436,7 +2436,7 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
                     gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_CHANNEL);
                     wprintw (ptr_win->win_input, "%s ", CHANNEL(buffer)->name);
                     gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_NICK);
-                    wprintw (ptr_win->win_input, "%s", SERVER(buffer)->nick);
+                    wprintw (ptr_win->win_input, "%s", ptr_nickname);
                     gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_DELIMITERS);
                     wprintw (ptr_win->win_input, "] ");
                     gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT);
@@ -2461,10 +2461,6 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
                     gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_DELIMITERS);
                     mvwprintw (ptr_win->win_input, 0, 0, "[");
                     gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_NICK);
-                    if (SERVER(buffer) && (SERVER(buffer)->is_connected))
-                        ptr_nickname = SERVER(buffer)->nick;
-                    else
-                        ptr_nickname = cfg_look_no_nickname;
                     wprintw (ptr_win->win_input, "%s", ptr_nickname);
                     gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_DELIMITERS);
                     wprintw (ptr_win->win_input, "] ");

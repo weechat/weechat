@@ -1214,6 +1214,31 @@ irc_cmd_send_names (t_irc_server *server, char *arguments)
 }
 
 /*
+ * irc_cmd_send_nick_server: change nickname on a server
+ */
+
+void
+irc_cmd_send_nick_server (t_irc_server *server, char *nickname)
+{
+    t_irc_channel *ptr_channel;
+    
+    if (server->is_connected)
+        server_sendf (server, "NICK %s\r\n", nickname);
+    else
+    {
+        if (server->nick)
+            free (server->nick);
+        server->nick = strdup (nickname);
+        gui_draw_buffer_input (server->buffer, 1);
+        for (ptr_channel = server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            gui_draw_buffer_input (ptr_channel->buffer, 1);
+        }
+    }
+}
+
+/*
  * irc_cmd_send_nick: change nickname
  */
 
@@ -1221,6 +1246,9 @@ int
 irc_cmd_send_nick (t_irc_server *server, int argc, char **argv)
 {
     t_irc_server *ptr_server;
+    
+    if (!server)
+        return 0;
     
     if (argc == 2)
     {
@@ -1230,14 +1258,13 @@ irc_cmd_send_nick (t_irc_server *server, int argc, char **argv)
         for (ptr_server = irc_servers; ptr_server;
              ptr_server = ptr_server->next_server)
         {
-            if (ptr_server->is_connected)
-                server_sendf (ptr_server, "NICK %s\r\n", argv[1]);
+            irc_cmd_send_nick_server (ptr_server, argv[1]);
         }
     }
     else
     {
         if (argc == 1)
-            server_sendf (server, "NICK %s\r\n", argv[0]);
+            irc_cmd_send_nick_server (server, argv[0]);
         else
             return -1;
     }
