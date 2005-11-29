@@ -1231,7 +1231,6 @@ gui_display_line (t_gui_window *window, t_gui_line *line, int count, int simulat
     int read_marker_x, read_marker_y;
     int word_start_offset, word_end_offset;
     int word_length_with_spaces, word_length;
-    int skip_spaces;
     char *ptr_data, *ptr_end_offset, *next_char, *prev_char;
     char *ptr_style, saved_char;
     
@@ -1273,7 +1272,6 @@ gui_display_line (t_gui_window *window, t_gui_line *line, int count, int simulat
     ptr_data = line->data;
     while (ptr_data && ptr_data[0])
     {
-        skip_spaces = 0;
         gui_get_word_info (window,
                            ptr_data,
                            &word_start_offset,
@@ -1284,9 +1282,9 @@ gui_display_line (t_gui_window *window, t_gui_line *line, int count, int simulat
         
         if (word_length > 0)
         {
-            /* spaces + word too long for current line */
+            /* spaces + word too long for current line but ok for next line */
             if ((window->win_chat_cursor_x + word_length_with_spaces > window->win_chat_width)
-                && (word_length < window->win_chat_width - line->length_align))
+                && (word_length <= window->win_chat_width - line->length_align))
             {
                 gui_display_new_line (window, num_lines, count,
                                       &lines_displayed, simulate);
@@ -1306,11 +1304,6 @@ gui_display_line (t_gui_window *window, t_gui_line *line, int count, int simulat
                 ptr_data += word_start_offset;
             }
             
-            /* word is exactly remaining width => we'll skip next leading spaces for next line */
-            if (word_length == window->win_chat_width -
-                ((window->win_chat_cursor_x == 0) ? line->length_align : window->win_chat_cursor_x))
-                skip_spaces = 1;
-            
             /* display word */
             gui_display_word (window, line, ptr_data,
                               ptr_end_offset,
@@ -1325,8 +1318,7 @@ gui_display_line (t_gui_window *window, t_gui_line *line, int count, int simulat
                 if (*(ptr_data - 1) == '\0')
                     ptr_data = NULL;
                 
-                /* skip leading spaces? */
-                if (skip_spaces)
+                if (window->win_chat_cursor_x == 0)
                 {
                     while (ptr_data && (ptr_data[0] == ' '))
                     {

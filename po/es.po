@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.7-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-11-29 08:55+0100\n"
+"POT-Creation-Date: 2005-11-29 17:13+0100\n"
 "PO-Revision-Date: 2005-11-29 08:55+0100\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1418,15 +1418,15 @@ msgstr "%s no ha sido posible encontrar el usuario al que enviar el mensaje\n"
 #: src/irc/irc-send.c:358 src/irc/irc-send.c:386 src/irc/irc-send.c:577
 #: src/irc/irc-send.c:610 src/irc/irc-send.c:643 src/irc/irc-send.c:691
 #: src/irc/irc-send.c:727 src/irc/irc-send.c:794 src/irc/irc-send.c:851
-#: src/irc/irc-send.c:1205 src/irc/irc-send.c:1308 src/irc/irc-send.c:1787
-#: src/irc/irc-send.c:1901
+#: src/irc/irc-send.c:1205 src/irc/irc-send.c:1335 src/irc/irc-send.c:1814
+#: src/irc/irc-send.c:1928
 #, c-format
 msgid "%s \"%s\" command can only be executed in a channel window\n"
 msgstr ""
 "%s el comando \"%s\" sólo puede ser ejecutado en una ventana de canal\n"
 
 #: src/irc/irc-send.c:489 src/irc/irc-send.c:501 src/irc/irc-send.c:519
-#: src/irc/irc-send.c:1183 src/irc/irc-send.c:1281 src/irc/irc-send.c:1813
+#: src/irc/irc-send.c:1183 src/irc/irc-send.c:1308 src/irc/irc-send.c:1840
 #: src/common/command.c:1380 src/common/command.c:1865
 #: src/common/command.c:2001
 #, c-format
@@ -1438,8 +1438,8 @@ msgstr "%s número de argumentos incorrecto para el comando \"%s\"\n"
 msgid "%s wrong arguments for \"%s\" command\n"
 msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
 
-#: src/irc/irc-send.c:985 src/irc/irc-send.c:1053 src/irc/irc-send.c:1356
-#: src/irc/irc-send.c:1370 src/irc/irc-send.c:1714
+#: src/irc/irc-send.c:985 src/irc/irc-send.c:1053 src/irc/irc-send.c:1383
+#: src/irc/irc-send.c:1397 src/irc/irc-send.c:1741
 #, c-format
 msgid "%s \"%s\" command can not be executed on a server window\n"
 msgstr "%s el comando \"%s\" no puede ejecutarse en una ventana de servidor\n"
@@ -1449,13 +1449,13 @@ msgstr "%s el comando \"%s\" no puede ejecutarse en una ventana de servidor\n"
 msgid "%s nick \"%s\" not found for \"%s\" command\n"
 msgstr "%s usuario \"%s\" no encontrado para el comando \"%s\"\n"
 
-#: src/irc/irc-send.c:1153 src/irc/irc-send.c:1466 src/irc/irc-recv.c:1230
+#: src/irc/irc-send.c:1153 src/irc/irc-send.c:1493 src/irc/irc-recv.c:1230
 #: src/irc/irc-recv.c:2042 src/irc/irc-recv.c:2132
 #, c-format
 msgid "%s cannot create new private window \"%s\"\n"
 msgstr "%s no es posible crear una nueva ventana privada \"%s\"\n"
 
-#: src/irc/irc-send.c:1866
+#: src/irc/irc-send.c:1893
 #, c-format
 msgid "%s, compiled on %s %s\n"
 msgstr "%s, compilado en %s %s\n"
@@ -2280,64 +2280,64 @@ msgstr "Día cambiado a %s\n"
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr "%s el lag (retraso) es alto, desconectando del servidor...\n"
 
-#: src/gui/curses/gui-display.c:1486
+#: src/gui/curses/gui-display.c:1478
 msgid "bytes"
 msgstr "bytes"
 
-#: src/gui/curses/gui-display.c:1486
+#: src/gui/curses/gui-display.c:1478
 msgid "Kb"
 msgstr "KB"
 
-#: src/gui/curses/gui-display.c:1486
+#: src/gui/curses/gui-display.c:1478
 msgid "Mb"
 msgstr "MB"
 
-#: src/gui/curses/gui-display.c:1486
+#: src/gui/curses/gui-display.c:1478
 msgid "Gb"
 msgstr "GB"
 
-#: src/gui/curses/gui-display.c:1944
+#: src/gui/curses/gui-display.c:1936
 msgid "<servers>"
 msgstr "<servidores>"
 
-#: src/gui/curses/gui-display.c:1956
+#: src/gui/curses/gui-display.c:1948
 msgid "(away)"
 msgstr "(ausente)"
 
-#: src/gui/curses/gui-display.c:2090
+#: src/gui/curses/gui-display.c:2082
 msgid "[not connected] "
 msgstr "[no conectado] "
 
-#: src/gui/curses/gui-display.c:2100
+#: src/gui/curses/gui-display.c:2092
 msgid "Act: "
 msgstr "Act: "
 
-#: src/gui/curses/gui-display.c:2188
+#: src/gui/curses/gui-display.c:2180
 #, c-format
 msgid "Lag: %.1f"
 msgstr "Lag: %.1f"
 
-#: src/gui/curses/gui-display.c:2204
+#: src/gui/curses/gui-display.c:2196
 msgid "-MORE-"
 msgstr "-MÁS-"
 
-#: src/gui/curses/gui-display.c:2382
+#: src/gui/curses/gui-display.c:2369
 msgid "  [A] Accept"
 msgstr "  [A] Aceptar"
 
-#: src/gui/curses/gui-display.c:2383 src/gui/curses/gui-display.c:2387
+#: src/gui/curses/gui-display.c:2370 src/gui/curses/gui-display.c:2374
 msgid "  [C] Cancel"
 msgstr "  [C] Cancelar"
 
-#: src/gui/curses/gui-display.c:2392
+#: src/gui/curses/gui-display.c:2379
 msgid "  [R] Remove"
 msgstr "  [R] Eliminar"
 
-#: src/gui/curses/gui-display.c:2396
+#: src/gui/curses/gui-display.c:2383
 msgid "  [P] Purge old DCC"
 msgstr "  [P] Purgar los viejos DCC"
 
-#: src/gui/curses/gui-display.c:2397
+#: src/gui/curses/gui-display.c:2384
 msgid "  [Q] Close DCC view"
 msgstr "  [Q] Cerrar la vista DCC"
 
