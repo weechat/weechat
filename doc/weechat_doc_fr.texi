@@ -2036,7 +2036,7 @@ Aucune.@*
 
 @item
 @command{char *get_info (t_weechat_plugin
-*plugin, char *info, char *server, char *channel)}@*
+*plugin, char *info, char *server)}@*
 @*
 Renvoie une information sur WeeChat ou un canal.@*
 
@@ -2058,8 +2058,6 @@ syst@`eme de partage WeeChat
 @end itemize
 @item @option{server}: nom du serveur o@`u r@'ecup@'erer l'information
 (ni n@'ecessaire)
-@item @option{channel}: nom du canal o@`u r@'ecup@'erer l'information
-(si n@'ecessaire)
 @end itemize
 @*
 @emph{Valeur renvoy@'ee :}@*
@@ -2070,8 +2068,8 @@ NB: le r@'esultat doit @^etre lib@'er@'e par un appel @`a la fonction
 @*
 @emph{Exemples :}@*
 @*
-@code{char *version = plugin->get_info (plugin, "version", NULL, NULL);}@*
-@code{char *nick = plugin->get_info (plugin, "nick", "freenode", NULL);}@*
+@code{char *version = plugin->get_info (plugin, "version", NULL);}@*
+@code{char *nick = plugin->get_info (plugin, "nick", "freenode");}@*
 @*
 
 @item
@@ -2589,8 +2587,8 @@ envoyer au canal)
 @*
 
 @item
-Perl: @command{weechat::get_info ( nom, [serveur, [canal] ] );}@*
-Python: @command{weechat.get_info ( nom, [serveur, [canal] ] )}@*
+Perl: @command{weechat::get_info ( nom, [serveur] );}@*
+Python: @command{weechat.get_info ( nom, [serveur] )}@*
 @*
 Obtenir des informations vari@'ees sur WeeChat, le serveur ou
 l'utilisateur.@*
@@ -2611,7 +2609,6 @@ syst@`eme de WeeChat
 syst@`eme de partage WeeChat
 @end itemize
 @item @option{serveur}: nom interne du serveur
-@item @option{canal}: nom du canal
 @end itemize
 @*
 @emph{Valeur renvoy@'ee :}@*

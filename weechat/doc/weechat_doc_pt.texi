@@ -2013,7 +2013,7 @@ None.@*
 
 @item
 @command{char *get_info (t_weechat_plugin
-*plugin, char *info, char *server, char *channel)}@*
+*plugin, char *info, char *server)}@*
 @*
 Return an info about WeeChat or a channel.@*
 
@@ -2032,7 +2032,6 @@ Return an info about WeeChat or a channel.@*
 @item @option{weechat_sharedir}: get WeeChat system share dir
 @end itemize
 @item @option{server}: name of server for reading info (if needed)
-@item @option{channel}: name of channel for reading info (if needed)
 @end itemize
 @*
 @emph{Return value:}@*
@@ -2043,8 +2042,8 @@ use.@*
 @*
 @emph{Examples:}@*
 @*
-@code{char *version = plugin->get_info (plugin, "version", NULL, NULL);}@*
-@code{char *nick = plugin->get_info (plugin, "nick", "freenode", NULL);}@*
+@code{char *version = plugin->get_info (plugin, "version", NULL);}@*
+@code{char *nick = plugin->get_info (plugin, "nick", "freenode");}@*
 @*
 
 @item
@@ -2545,8 +2544,8 @@ Execute a command or send a message to a channel.@*
 @*
 
 @item
-Perl: @command{weechat::get_info ( name, [server, [channel] ] );}@*
-Python: @command{weechat.get_info ( name, [server, [channel] ] )}@*
+Perl: @command{weechat::get_info ( name, [server] );}@*
+Python: @command{weechat.get_info ( name, [server] )}@*
 @*
 Get various info about WeeChat, server or user.@*
 
@@ -2565,7 +2564,6 @@ Get various info about WeeChat, server or user.@*
 
 @end itemize
 @item @option{server}: internal name of server
-@item @option{channel}: channel name
 @end itemize
 @*
 @emph{Return value:}@*
