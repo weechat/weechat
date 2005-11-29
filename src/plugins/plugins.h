@@ -31,7 +31,6 @@ typedef void (t_weechat_end_func) (t_weechat_plugin *);
 extern t_weechat_plugin *weechat_plugins;
 extern t_weechat_plugin *last_weechat_plugin;
 
-extern t_gui_buffer *plugin_find_buffer (char *, char *);
 extern void plugin_find_server_channel (char *, char *,
                                         t_irc_server **, t_irc_channel **);
 extern void plugin_exec_on_files (t_weechat_plugin *, char *,

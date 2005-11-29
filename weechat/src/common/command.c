@@ -45,12 +45,13 @@ t_weechat_command weechat_commands[] =
     "or IRC command, without first '/')\n" "arguments: arguments for command"),
     0, MAX_ARGS, NULL, weechat_cmd_alias },
   { "buffer", N_("manage buffers"),
-    N_("[action | number]"),
+    N_("[action | number | [[server] [channel]]]"),
     N_("action: action to do:\n"
        "  move: move buffer in the list (may be relative, for example -1)\n"
        "  close: close buffer (for channel: same as /part without part message)\n"
        "  list: list opened buffers (no parameter implies this list)\n"
        "  notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)\n"
+       "server,channel: jump to buffer by server and/or channel name\n"
        "number: jump to buffer by number"),
     0, MAX_ARGS, weechat_cmd_buffer, NULL },
   { "clear", N_("clear window(s)"),
@@ -143,7 +144,7 @@ t_weechat_command weechat_commands[] =
        "Without argument, /unignore command lists all defined ignore."),
     0, 4, weechat_cmd_unignore, NULL },
   { "uptime", N_("show WeeChat uptime"),
-    N_("-o"),
+    N_("[-o]"),
     N_("-o: send uptime on current channel as an IRC message"),
     0, 1, weechat_cmd_uptime, NULL },
   { "window", N_("manage windows"),
@@ -1186,7 +1187,7 @@ weechat_cmd_buffer (int argc, char **argv)
         }
         else
         {
-            /* jump to buffer by number */
+            /* jump to buffer by number or server/channel name */
             
             if (argv[0][0] == '-')
             {
@@ -1219,11 +1220,29 @@ weechat_cmd_buffer (int argc, char **argv)
             }
             else
             {
-                /* absolute jump by number */
+                /* absolute jump by number, or by server/channel name */
                 error = NULL;
                 number = strtol (argv[0], &error, 10);
                 if ((error) && (error[0] == '\0'))
                     gui_buffer_switch_by_number (gui_current_window, (int) number);
+                else
+                {
+                    ptr_buffer = NULL;
+                    if (argc > 1)
+                        ptr_buffer = gui_buffer_search (argv[0], argv[1]);
+                    else
+                    {
+                        if (string_is_channel (argv[0]))
+                            ptr_buffer = gui_buffer_search (NULL, argv[0]);
+                        else
+                            ptr_buffer = gui_buffer_search (argv[0], NULL);
+                    }
+                    if (ptr_buffer)
+                    {
+                        gui_switch_to_buffer (gui_current_window, ptr_buffer);
+                        gui_redraw_buffer (ptr_buffer);
+                    }
+                }
             }
             
         }

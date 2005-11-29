@@ -191,7 +191,7 @@ t_config_option weechat_options_look[] =
   { "look_nick_completion_ignore", N_("chars ignored for nick completion"),
     N_("chars ignored for nick completion"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "[]-", NULL, NULL, &cfg_look_nick_completion_ignore, config_change_noop },
+    "[]-^", NULL, NULL, &cfg_look_nick_completion_ignore, config_change_noop },
   { "look_infobar", N_("enable info bar"),
     N_("enable info bar"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,

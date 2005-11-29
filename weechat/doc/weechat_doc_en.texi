@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.1.7-cvs - November, 20 2005
+@subtitle Documentation for WeeChat v0.1.7-cvs - November, 29 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -324,7 +324,7 @@ The string inserted after nick completion@*
 Type: string (any string), default value: ':'@*
 @item look_nick_completion_ignore
 Chars ignored for nick completion@*
-Type: string (any string), default value: '[]-'@*
+Type: string (any string), default value: '[]-^'@*
 @item look_infobar
 Enable info bar@*
 Type: boolean (values: 'on' or 'off'), default value: 'on'@*
@@ -894,6 +894,9 @@ Switch server on servers buffer@*
 @item Alt + U
 Scroll to first unread line in buffer@*
 @*
+@item Alt + W then Alt + arrow
+Switch to window with direction@*
+@*
 @item Alt + PageUp / Alt + PageDown / Alt + Home / Alt + End
 Scroll nicklist@*
 @*
@@ -913,7 +916,7 @@ alias_name: name of alias@*
 command: command name (WeeChat or IRC command, without first '/')@*
 arguments: arguments for command@*
 @*
-@item buffer  [action | number]
+@item buffer  [action | number | [[server] [channel]]]
 @*
 manage buffers@*
 @*
@@ -922,6 +925,7 @@ action: action to do:@*
   close: close buffer (for channel: same as /part without part message)@*
   list: list opened buffers (no parameter implies this list)@*
   notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)@*
+server,channel: jump to buffer by server and/or channel name@*
 number: jump to buffer by number@*
 @*
 @item clear  [-all]
@@ -1041,7 +1045,7 @@ channel: name of channel for unignore@*
 For each argument, '*' means all.@*
 Without argument, /unignore command lists all defined ignore.@*
 @*
-@item uptime  -o
+@item uptime  [-o]
 @*
 show WeeChat uptime@*
 @*

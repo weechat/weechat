@@ -265,6 +265,63 @@ gui_window_new (t_gui_window *parent, int x, int y, int width, int height,
 }
 
 /*
+ * gui_buffer_search: search a buffer by server and channel name
+ */
+
+t_gui_buffer *
+gui_buffer_search (char *server, char *channel)
+{
+    t_irc_server *ptr_server;
+    t_irc_channel *ptr_channel;
+    t_gui_buffer *ptr_buffer;
+    
+    ptr_server = NULL;
+    ptr_channel = NULL;
+    ptr_buffer = NULL;
+    
+    /* nothing given => print on current buffer */
+    if ((!server || !server[0]) && (!channel || !channel[0]))
+        ptr_buffer = gui_current_window->buffer;
+    else
+    {
+        if (server && server[0])
+        {
+            ptr_server = server_search (server);
+            if (!ptr_server)
+                return NULL;
+        }
+        else
+        {
+            ptr_server = SERVER(gui_current_window->buffer);
+            if (!ptr_server)
+                ptr_server = SERVER(gui_buffers);
+        }
+        
+        if (channel && channel[0])
+        {
+            if (ptr_server)
+            {
+                ptr_channel = channel_search (ptr_server, channel);
+                if (ptr_channel)
+                    ptr_buffer = ptr_channel->buffer;
+            }
+        }
+        else
+        {
+            if (ptr_server)
+                ptr_buffer = ptr_server->buffer;
+            else
+                ptr_buffer = gui_current_window->buffer;
+        }
+    }
+    
+    if (!ptr_buffer)
+        return NULL;
+    
+    return (ptr_buffer->dcc) ? gui_buffers : ptr_buffer;
+}
+
+/*
  * gui_buffer_servers_search: search servers buffer
  *                            (when same buffer is used for all servers)
  */

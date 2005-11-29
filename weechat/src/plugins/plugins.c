@@ -48,63 +48,6 @@ t_weechat_plugin *last_weechat_plugin = NULL;
 
 
 /*
- * plugin_find_buffer: find a buffer for text display
- */
-
-t_gui_buffer *
-plugin_find_buffer (char *server, char *channel)
-{
-    t_irc_server *ptr_server;
-    t_irc_channel *ptr_channel;
-    t_gui_buffer *ptr_buffer;
-    
-    ptr_server = NULL;
-    ptr_channel = NULL;
-    ptr_buffer = NULL;
-    
-    /* nothing given => print on current buffer */
-    if ((!server || !server[0]) && (!channel || !channel[0]))
-        ptr_buffer = gui_current_window->buffer;
-    else
-    {
-        if (server && server[0])
-        {
-            ptr_server = server_search (server);
-            if (!ptr_server)
-                return NULL;
-        }
-        else
-        {
-            ptr_server = SERVER(gui_current_window->buffer);
-            if (!ptr_server)
-                ptr_server = SERVER(gui_buffers);
-        }
-        
-        if (channel && channel[0])
-        {
-            if (ptr_server)
-            {
-                ptr_channel = channel_search (ptr_server, channel);
-                if (ptr_channel)
-                    ptr_buffer = ptr_channel->buffer;
-            }
-        }
-        else
-        {
-            if (ptr_server)
-                ptr_buffer = ptr_server->buffer;
-            else
-                ptr_buffer = gui_current_window->buffer;
-        }
-    }
-    
-    if (!ptr_buffer)
-        return NULL;
-    
-    return (ptr_buffer->dcc) ? gui_buffers : ptr_buffer;
-}
-
-/*
  * plugin_find_server_channel: find server/channel for command execution
  */
 

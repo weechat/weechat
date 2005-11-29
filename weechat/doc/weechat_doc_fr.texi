@@ -36,7 +36,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.7-cvs - 20 novembre 2005
+@subtitle Documentation pour WeeChat v0.1.7-cvs - 29 novembre 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -325,7 +325,7 @@ La cha@^ine affich@'ee apr@`es la compl@'etion des pseudos@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ':'@*
 @item look_nick_completion_ignore
 Caract@`eres @`a ignorer pour la compl@'etion des pseudos@*
-Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '[]-'@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '[]-^'@*
 @item look_infobar
 Active la barre d'infos@*
 Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
@@ -867,7 +867,7 @@ Sauter au dernier tampon@*
 @item Alt + J puis Alt + S
 Sauter au tampon du serveur@*
 @*
-@item Alt + J then Alt + X
+@item Alt + J puis Alt + X
 Sauter au premier canal du serveur suivant (ou tampon du serveur si aucun canal ouvert)@*
 @*
 @item Alt + chiffre (1-9)
@@ -895,6 +895,9 @@ Changer de serveur sur le tampon des serveurs@*
 @item Alt + U
 Se positionner sur la premi@`ere ligne non lue du tampon@*
 @*
+@item Alt + W puis Alt + fl@`eche
+Sauter @`a une fen@^etre avec une direction@*
+@*
 @item Alt + PageUp / Alt + PageDown / Alt + Home / Alt + End
 Faire d@'efiler la liste des pseudos@*
 @*
@@ -914,20 +917,21 @@ nom_alias: nom de l'alias@*
 commande: nom de la commande (commande WeeChat ou IRC, sans le premier '/')@*
 param@`etres: param@`etres pour la commande@*
 @*
-@item buffer  [action | nombre]
+@item buffer  [action | nombre | [[serveur] [canal]]]
 @*
-gestion des buffers@*
+gestion des tampons@*
 @*
 action: action @`a effectuer:@*
   move: d@'eplacer le tampon dans la liste (peut @^etre relatif, par exemple -1)@*
   close: fermer le tampon (pour un canal: @'equivalent @`a /part sans message de fin)@*
   list: liste les tampons ouverts (pas de param@`etre affiche cette liste)@*
   notify: fixer le niveau de notification (0=jamais, 1=highlight, 2=1+msg, 3=2+join/part)@*
+serveur,canal: sauter au tampon par serveur et/ou nom de canal@*
 nombre: sauter au tampon qui a ce num@'ero@*
 @*
 @item clear  [-all]
 @*
-affacer la/les fen@^etre(s)@*
+effacer la/les fen@^etre(s)@*
 @*
 -all: effacer toutes les fen@^etres@*
 @*
@@ -1042,7 +1046,7 @@ commande: commande IRC@*
 Pour chaque param@`etre, '*' signifie tou(te)s.@*
 Sans param@`etre, /ignore liste les ignore d@'efinis.@*
 @*
-@item uptime  -o
+@item uptime  [-o]
 @*
 montrer l'uptime de WeeChat@*
 @*

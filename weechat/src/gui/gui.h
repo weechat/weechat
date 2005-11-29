@@ -401,6 +401,7 @@ extern int gui_window_tree_init (t_gui_window *);
 extern void gui_window_tree_node_to_leaf (t_gui_window_tree *, t_gui_window *);
 extern void gui_window_tree_free (t_gui_window_tree **);
 extern t_gui_window *gui_window_new (t_gui_window *, int, int, int, int, int, int);
+extern t_gui_buffer *gui_buffer_search (char *, char *);
 extern t_gui_buffer *gui_buffer_new (t_gui_window *, void *, void *, int, int);
 extern void gui_buffer_clear (t_gui_buffer *);
 extern void gui_buffer_clear_all ();

@@ -37,6 +37,7 @@
 #include "../common/command.h"
 #include "../common/weeconfig.h"
 #include "../irc/irc.h"
+#include "../gui/gui.h"
 
 
 /*
@@ -165,7 +166,7 @@ weechat_plugin_printf (t_weechat_plugin *plugin,
     if (!plugin || !message)
         return;
     
-    ptr_buffer = plugin_find_buffer (server, channel);
+    ptr_buffer = gui_buffer_search (server, channel);
     va_start (argptr, message);
     vsnprintf (buf, sizeof (buf) - 1, message, argptr);
     va_end (argptr);
