@@ -23,6 +23,9 @@
 #include <Python.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #undef _
 #include "../../weechat-plugin.h"
 #include "../weechat-script.h"
@@ -74,6 +77,8 @@ weechat_python_exec (t_weechat_plugin *plugin,
     python_current_script = script;
 
     rc = PyObject_CallFunction(evFunc, "ss", server == NULL ? "" : server, arguments == NULL ? "" : arguments);
+
+    python_current_script = NULL;
         
     if (rc)
     {
@@ -462,8 +467,11 @@ static PyObject *
 weechat_python_get_dcc_info (PyObject *self, PyObject *args)
 {
     t_plugin_dcc_info *dcc_info, *ptr_dcc;
-    int dcc_count;
-    PyObject *list, *listvalue;
+    PyObject *dcc_list;
+    PyObject *dcc_list_member;
+    char timebuffer1[64];
+    char timebuffer2[64];
+    struct in_addr in;
     
     /* make gcc happy */
     (void) self;
@@ -474,71 +482,84 @@ weechat_python_get_dcc_info (PyObject *self, PyObject *args)
         python_plugin->printf_server (python_plugin,
                                       "Python error: unable to get DCC info, "
                                       "script not initialized");
-        return Py_BuildValue ("i", 0);
+        return Py_None;
     }
+
+    dcc_list = PyList_New (0);
+    
+    if (!dcc_list)
+	return Py_None;
     
     dcc_info = python_plugin->get_dcc_info (python_plugin);
-    dcc_count = 0;
-    
     if (!dcc_info)
-        return Py_BuildValue ("i", 0);
+	return dcc_list;
     
-    for (ptr_dcc = dcc_info; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
-    {
-        dcc_count++;
-    }
-    
-    list = PyList_New (dcc_count);
-    
-    if (!list)
-    {
-        python_plugin->free_dcc_info (python_plugin, dcc_info);
-        return Py_BuildValue ("i", 0);
-    }
-    
-    dcc_count = 0;
     for(ptr_dcc = dcc_info; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
     {
-        listvalue = Py_BuildValue ("{s:s,s:s,s:i,s:i,s:k,s:k,s:k,s:i,s:s,s:s,"
-                                   "s:s,s:s,s:k,s:k,s:k,s:k}",
-                                   "server",          ptr_dcc->server,
-                                   "channel",         ptr_dcc->channel,
-                                   "type",            ptr_dcc->type,
-                                   "status",          ptr_dcc->status,
-                                   "start_time",      ptr_dcc->start_time,
-                                   "start_transfer",  ptr_dcc->start_transfer,
-                                   "address",         ptr_dcc->addr,
-                                   "port",            ptr_dcc->port,
-                                   "nick",            ptr_dcc->nick,
-                                   "remote_file",     ptr_dcc->filename,
-                                   "local_file",      ptr_dcc->local_filename,
-                                   "filename_suffix", ptr_dcc->filename_suffix,
-                                   "size",            ptr_dcc->size,
-                                   "pos",             ptr_dcc->pos,
-                                   "start_resume",    ptr_dcc->start_resume,
-                                   "cps",             ptr_dcc->bytes_per_sec);
-        if (listvalue) 
+	strftime(timebuffer1, sizeof(timebuffer1), "%F %T",
+		 localtime(&ptr_dcc->start_time));
+	strftime(timebuffer2, sizeof(timebuffer2), "%F %T",
+		 localtime(&ptr_dcc->start_transfer));
+	in.s_addr = htonl(ptr_dcc->addr);
+	
+	dcc_list_member= PyDict_New();
+	
+        if (dcc_list_member) 
         {
-            if (PyList_SetItem (list, dcc_count, listvalue) != 0)
+	    
+	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "server"),
+			   Py_BuildValue("s", ptr_dcc->server));
+	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "channel"),
+			   Py_BuildValue("s", ptr_dcc->channel));
+	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "type"),
+			   Py_BuildValue("i", ptr_dcc->type));
+	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "status"),
+			   Py_BuildValue("i", ptr_dcc->status));
+	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "start_time"),
+			   Py_BuildValue("s", timebuffer1));
+	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "start_transfer"),
+			   Py_BuildValue("s", timebuffer2));
+	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "address"),
+			   Py_BuildValue("s", inet_ntoa(in)));
+	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "port"),
+			   Py_BuildValue("i", ptr_dcc->port));
+	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "nick"),
+			   Py_BuildValue("s", ptr_dcc->nick));
+	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "remote_file"),
+			   Py_BuildValue("s", ptr_dcc->filename));
+	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "local_file"),
+			   Py_BuildValue("s", ptr_dcc->local_filename));
+	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "filename_suffix"),
+			   Py_BuildValue("i", ptr_dcc->filename_suffix));
+	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "size"),
+			   Py_BuildValue("k", ptr_dcc->size));
+	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "pos"),
+			   Py_BuildValue("k", ptr_dcc->pos));
+	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "start_resume"),
+			   Py_BuildValue("k", ptr_dcc->start_resume));
+	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "cps"),
+			   Py_BuildValue("k", ptr_dcc->bytes_per_sec));
+	    
+	    
+            if (PyList_Append(dcc_list, dcc_list_member) != 0)
             {
-                PyMem_Free (listvalue);
-                PyMem_Free (list);
+		Py_DECREF(dcc_list_member);
+		Py_DECREF(dcc_list);
                 python_plugin->free_dcc_info (python_plugin, dcc_info);
-                return Py_BuildValue ("i", 0);
+                return Py_None;
             }
-            PyMem_Free (listvalue);
         }
         else
         {
+	    Py_DECREF(dcc_list);
             python_plugin->free_dcc_info (python_plugin, dcc_info);
-            return Py_BuildValue ("i", 0);
+            return Py_None;
         }
-        dcc_count++;
     }
     
     python_plugin->free_dcc_info (python_plugin, dcc_info);
     
-    return list;
+    return dcc_list;
 }
 
 /*

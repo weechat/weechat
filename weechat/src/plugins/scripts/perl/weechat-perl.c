@@ -122,8 +122,7 @@ weechat_perl_exec (t_weechat_plugin *plugin,
     func = function;
     PERL_SET_CONTEXT (script->interpreter);
 #endif    
-    perl_current_script = script;
-
+    
     dSP;
     ENTER;
     SAVETMPS;
@@ -135,8 +134,12 @@ weechat_perl_exec (t_weechat_plugin *plugin,
     argv[1] = arguments;
     argv[2] = NULL;
     
+    perl_current_script = script;
+    
     count = perl_call_argv (func, G_EVAL | G_SCALAR, argv);
     
+    perl_current_script = NULL;
+
     SPAGAIN;
     
     sv = GvSV (gv_fetchpv ("@", TRUE, SVt_PV));
@@ -560,6 +563,9 @@ static XS (XS_weechat_get_dcc_info)
 {
     t_plugin_dcc_info *dcc_info, *ptr_dcc;
     int dcc_count;
+    char timebuffer1[64];
+    char timebuffer2[64];
+    struct in_addr in;
     dXSARGS;
     
     /* make gcc happy */
@@ -582,15 +588,21 @@ static XS (XS_weechat_get_dcc_info)
     
     for (ptr_dcc = dcc_info; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
     {
+	strftime(timebuffer1, sizeof(timebuffer1), "%F %T",
+		 localtime(&ptr_dcc->start_time));
+	strftime(timebuffer2, sizeof(timebuffer2), "%F %T",
+		 localtime(&ptr_dcc->start_transfer));
+	in.s_addr = htonl(ptr_dcc->addr);
+
         HV *infohash = (HV *) sv_2mortal((SV *) newHV());
         
         hv_store (infohash, "server",           6, newSVpv (ptr_dcc->server, 0), 0);
         hv_store (infohash, "channel",          7, newSVpv (ptr_dcc->channel, 0), 0);
         hv_store (infohash, "type",             4, newSViv (ptr_dcc->type), 0);
         hv_store (infohash, "status",           6, newSViv (ptr_dcc->status), 0);
-        hv_store (infohash, "start_time",      10, newSViv (ptr_dcc->start_time), 0);
-        hv_store (infohash, "start_transfer",  14, newSViv (ptr_dcc->start_transfer), 0);
-        hv_store (infohash, "address",          7, newSViv (ptr_dcc->addr), 0);
+        hv_store (infohash, "start_time",      10, newSVpv (timebuffer1, 0), 0);
+        hv_store (infohash, "start_transfer",  14, newSVpv (timebuffer2, 0), 0);
+        hv_store (infohash, "address",          7, newSVpv (inet_ntoa(in), 0), 0);
         hv_store (infohash, "port",             4, newSViv (ptr_dcc->port), 0);
         hv_store (infohash, "nick",             4, newSVpv (ptr_dcc->nick, 0), 0);
         hv_store (infohash, "remote_file",     11, newSVpv (ptr_dcc->filename, 0), 0);
