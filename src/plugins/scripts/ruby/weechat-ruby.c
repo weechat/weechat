@@ -24,6 +24,10 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdarg.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #undef _
 #include "../../weechat-plugin.h"
 #include "../weechat-script.h"
@@ -39,6 +43,67 @@ t_plugin_script *ruby_scripts = NULL;
 t_plugin_script *ruby_current_script = NULL;
 char *ruby_current_script_filename = NULL;
 
+VALUE mWeechat, mWeechatOutputs;
+
+#define MOD_NAME_PREFIX "WeechatRubyModule"
+int modnum = 0;
+
+
+/* 
+ * -- this structure comes from apache mod_ruby --
+ */
+typedef struct protect_call_arg {
+    VALUE recv;
+    ID mid;
+    int argc;
+    VALUE *argv;
+} protect_call_arg_t;
+
+/* 
+ * protect_funcall0 :
+ *
+ * -- this function comes from apache mod_ruby --
+ */
+
+static VALUE 
+protect_funcall0(VALUE arg)
+{
+    return rb_funcall2(((protect_call_arg_t *) arg)->recv,
+                       ((protect_call_arg_t *) arg)->mid,
+                       ((protect_call_arg_t *) arg)->argc,
+                       ((protect_call_arg_t *) arg)->argv);
+}
+
+/* 
+ * rb_protect_funcall :
+ *
+ * -- this function comes from apache mod_ruby --
+ */
+
+VALUE
+rb_protect_funcall(VALUE recv, ID mid, int *state, int argc, ...)
+{
+    va_list ap;
+    VALUE *argv;
+    struct protect_call_arg arg;
+
+    if (argc > 0)
+    {
+        int i;
+        argv = ALLOCA_N(VALUE, argc);
+        va_start(ap, argc);
+        for (i = 0; i < argc; i++)
+            argv[i] = va_arg(ap, VALUE);
+        va_end(ap);
+    }
+    else
+        argv = 0;
+    arg.recv = recv;
+    arg.mid = mid;
+    arg.argc = argc;
+    arg.argv = argv;
+    return rb_protect(protect_funcall0, (VALUE) &arg, state);
+}
 
 /*
  * weechat_ruby_exec: execute a Ruby script
@@ -51,13 +116,31 @@ weechat_ruby_exec (t_weechat_plugin *plugin,
 {
     /* make gcc happy */
     (void) plugin;
-    (void) script;
-    (void) function;
-    (void) server;
-    (void) arguments;
+
+    VALUE ruby_retcode;
+    int ruby_error;
     
-    /* TODO: exec Ruby script */
-    return PLUGIN_RC_OK;
+    ruby_current_script = script;
+
+    ruby_retcode = rb_protect_funcall ((VALUE) script->interpreter, rb_intern(function),
+				       &ruby_error, 2,
+				       rb_str_new2((server == NULL) ? "" : server),
+				       rb_str_new2((arguments == NULL) ? "" : arguments));
+    ruby_current_script = NULL;
+    
+    if (ruby_error)
+    {
+	VALUE ruby_error_info = rb_inspect(ruby_errinfo);
+        rb_backtrace();
+	ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: unable to run function \"%s\"",
+				    function);
+	ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: %s", STR2CSTR(ruby_error_info));	
+	return PLUGIN_RC_KO;
+    }
+ 
+    return NUM2INT(ruby_retcode);
 }
 
 /*
@@ -149,9 +232,9 @@ weechat_ruby_register (VALUE class, VALUE name, VALUE version,
  */
 
 static VALUE
-weechat_ruby_print (VALUE class, VALUE message, VALUE channel_name,
-                    VALUE server_name)
+weechat_ruby_print (int argc, VALUE *argv, VALUE class)
 {
+    VALUE message, channel_name, server_name;
     char *c_message, *c_channel_name, *c_server_name;
     
     /* make gcc happy */
@@ -165,10 +248,15 @@ weechat_ruby_print (VALUE class, VALUE message, VALUE channel_name,
         return INT2FIX (0);
     }
     
+    message = Qnil;
+    channel_name = Qnil;
+    server_name = Qnil;
     c_message = NULL;
     c_channel_name = NULL;
     c_server_name = NULL;
-    
+ 
+    rb_scan_args (argc, argv, "12", &message, &channel_name, &server_name);
+   
     if (NIL_P (message))
     {
         ruby_plugin->printf_server (ruby_plugin,
@@ -178,16 +266,19 @@ weechat_ruby_print (VALUE class, VALUE message, VALUE channel_name,
     }
     
     Check_Type (message, T_STRING);
-    if (!NIL_P (channel_name))
-        Check_Type (channel_name, T_STRING);
-    if (!NIL_P (server_name))
-        Check_Type (server_name, T_STRING);
-    
     c_message = STR2CSTR (message);
+
     if (!NIL_P (channel_name))
-        c_channel_name = STR2CSTR (channel_name);
+    {
+        Check_Type (channel_name, T_STRING);
+	c_channel_name = STR2CSTR (channel_name);
+    }
+
     if (!NIL_P (server_name))
-        c_server_name = STR2CSTR (server_name);
+    {
+        Check_Type (server_name, T_STRING);
+	c_server_name = STR2CSTR (server_name);
+    }
     
     ruby_plugin->printf (ruby_plugin,
                          c_server_name, c_channel_name,
@@ -244,9 +335,9 @@ weechat_ruby_print_infobar (VALUE class, VALUE delay, VALUE message)
  */
 
 static VALUE
-weechat_ruby_command (VALUE class, VALUE command, VALUE channel_name,
-                      VALUE server_name)
+weechat_ruby_command (int argc, VALUE *argv, VALUE class)
 {
+    VALUE command, channel_name, server_name;
     char *c_command, *c_channel_name, *c_server_name;
     
     /* make gcc happy */
@@ -260,9 +351,14 @@ weechat_ruby_command (VALUE class, VALUE command, VALUE channel_name,
         return INT2FIX (0);
     }
     
+    command = Qnil;
+    channel_name = Qnil;
+    server_name = Qnil;
     c_command = NULL;
     c_channel_name = NULL;
     c_server_name = NULL;
+    
+    rb_scan_args(argc, argv, "12", &command, &channel_name, &server_name);
     
     if (NIL_P (command))
     {
@@ -273,16 +369,19 @@ weechat_ruby_command (VALUE class, VALUE command, VALUE channel_name,
     }
     
     Check_Type (command, T_STRING);
-    if (!NIL_P (channel_name))
-        Check_Type (channel_name, T_STRING);
-    if (!NIL_P (server_name))
-        Check_Type (server_name, T_STRING);
-    
     c_command = STR2CSTR (command);
+    
     if (!NIL_P (channel_name))
-        c_channel_name = STR2CSTR (channel_name);
+    {
+        Check_Type (channel_name, T_STRING);
+	c_channel_name = STR2CSTR (channel_name);
+    }
+
     if (!NIL_P (server_name))
-        c_server_name = STR2CSTR (server_name);
+    {
+        Check_Type (server_name, T_STRING);
+	c_server_name = STR2CSTR (server_name);
+    }
     
     ruby_plugin->exec_command (ruby_plugin,
                                c_server_name, c_channel_name,
@@ -341,12 +440,10 @@ weechat_ruby_add_message_handler (VALUE class, VALUE message, VALUE function)
  */
 
 static VALUE
-weechat_ruby_add_command_handler (VALUE class, VALUE command, VALUE function,
-                                  VALUE description, VALUE arguments,
-                                  VALUE arguments_description)
+weechat_ruby_add_command_handler (int argc, VALUE *argv, VALUE class)
 {
-    char *c_command, *c_function, *c_description, *c_arguments;
-    char *c_arguments_description;
+    VALUE command, function, description, arguments, arguments_description;
+    char *c_command, *c_function, *c_description, *c_arguments, *c_arguments_description;
     
     /* make gcc happy */
     (void) class;
@@ -359,11 +456,19 @@ weechat_ruby_add_command_handler (VALUE class, VALUE command, VALUE function,
         return INT2FIX (0);
     }
     
+    command = Qnil;
+    function = Qnil;
+    description = Qnil;
+    arguments = Qnil;
+    arguments_description = Qnil;
     c_command = NULL;
     c_function = NULL;
     c_description = NULL;
     c_arguments = NULL;
     c_arguments_description = NULL;
+    
+    rb_scan_args (argc, argv, "23", &command, &function, &description,
+		 &arguments, &arguments_description);
     
     if (NIL_P (command) || NIL_P (function))
     {
@@ -374,22 +479,26 @@ weechat_ruby_add_command_handler (VALUE class, VALUE command, VALUE function,
     }
     
     Check_Type (command, T_STRING);
-    Check_Type (function, T_STRING);
-    if (!NIL_P (description))
-        Check_Type (description, T_STRING);
-    if (!NIL_P (arguments))
-        Check_Type (arguments, T_STRING);
-    if (!NIL_P (arguments_description))
-        Check_Type (arguments_description, T_STRING);
-    
     c_command = STR2CSTR (command);
+    Check_Type (function, T_STRING);
     c_function = STR2CSTR (function);
+
     if (!NIL_P (description))
-        c_description = STR2CSTR (description);
+    {
+        Check_Type (description, T_STRING);
+	c_description = STR2CSTR (description);
+    }
+    
     if (!NIL_P (arguments))
-        c_arguments = STR2CSTR (arguments);
-    if (!NIL_P (arguments_description))
-        c_arguments_description = STR2CSTR (arguments_description);
+    {
+        Check_Type (arguments, T_STRING);
+	c_arguments = STR2CSTR (arguments);
+    }
+    
+    if (!NIL_P (arguments_description)) {
+        Check_Type (arguments_description, T_STRING);
+	c_arguments_description = STR2CSTR (arguments_description);
+    }
     
     if (ruby_plugin->cmd_handler_add (ruby_plugin,
                                       c_command,
@@ -452,10 +561,10 @@ weechat_ruby_remove_handler (VALUE class, VALUE command, VALUE function)
  */
 
 static VALUE
-weechat_ruby_get_info (VALUE class, VALUE arg, VALUE server_name)
+weechat_ruby_get_info (int argc, VALUE *argv, VALUE class)
 {
     char *c_arg, *c_server_name, *info;
-    VALUE return_value;
+    VALUE arg, server_name, return_value;
     
     /* make gcc happy */
     (void) class;
@@ -468,8 +577,12 @@ weechat_ruby_get_info (VALUE class, VALUE arg, VALUE server_name)
         return INT2FIX (0);
     }
     
+    arg = Qnil;
+    server_name = Qnil;
     c_arg = NULL;
     c_server_name = NULL;
+
+    rb_scan_args (argc, argv, "11", &arg, &server_name);
     
     if (NIL_P (arg))
     {
@@ -480,12 +593,13 @@ weechat_ruby_get_info (VALUE class, VALUE arg, VALUE server_name)
     }
     
     Check_Type (arg, T_STRING);
-    if (!NIL_P (server_name))
-        Check_Type (server_name, T_STRING);
-    
     c_arg = STR2CSTR (arg);
+
     if (!NIL_P (server_name))
-        c_server_name = STR2CSTR (server_name);
+    {
+        Check_Type (server_name, T_STRING);
+	c_server_name = STR2CSTR (server_name);
+    }        
     
     if (c_arg)
     {
@@ -509,6 +623,12 @@ weechat_ruby_get_info (VALUE class, VALUE arg, VALUE server_name)
 static VALUE
 weechat_ruby_get_dcc_info (VALUE class)
 {
+    t_plugin_dcc_info *dcc_info, *ptr_dcc;
+    VALUE dcc_list, dcc_list_member;
+    char timebuffer1[64];
+    char timebuffer2[64];
+    struct in_addr in;
+    
     /* make gcc happy */
     (void) class;
     
@@ -519,9 +639,80 @@ weechat_ruby_get_dcc_info (VALUE class)
                                     "script not initialized");
         return INT2FIX (0);
     }
+
+    dcc_list = rb_ary_new();
     
-    /* TODO: get dcc info for Ruby */
-    return INT2FIX (1);
+    if (NIL_P (dcc_list))
+        return Qnil;
+    
+    dcc_info = ruby_plugin->get_dcc_info (ruby_plugin);    
+    if (!dcc_info)
+        return dcc_list;
+    
+    for(ptr_dcc = dcc_info; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
+    {
+	strftime(timebuffer1, sizeof(timebuffer1), "%F %T",
+		 localtime(&ptr_dcc->start_time));
+	strftime(timebuffer2, sizeof(timebuffer2), "%F %T",
+		 localtime(&ptr_dcc->start_transfer));
+	in.s_addr = htonl(ptr_dcc->addr);
+
+	dcc_list_member = rb_hash_new ();
+
+	if (!NIL_P (dcc_list_member))
+	{
+	    rb_hash_aset (dcc_list_member, rb_str_new2("server"),
+			  rb_str_new2(ptr_dcc->server));
+	    rb_hash_aset (dcc_list_member, rb_str_new2("channel"),
+			  rb_str_new2(ptr_dcc->channel));
+	    rb_hash_aset (dcc_list_member, rb_str_new2("type"), 
+			  INT2FIX(ptr_dcc->type));
+	    rb_hash_aset (dcc_list_member, rb_str_new2("status"),
+			  INT2FIX(ptr_dcc->status));	
+	    rb_hash_aset (dcc_list_member, rb_str_new2("start_time"),
+			  rb_str_new2(timebuffer1));
+	    rb_hash_aset (dcc_list_member, rb_str_new2("start_transfer"),
+			  rb_str_new2(timebuffer2));	    
+	    rb_hash_aset (dcc_list_member, rb_str_new2("address"),
+			  rb_str_new2(inet_ntoa(in)));
+	    rb_hash_aset (dcc_list_member, rb_str_new2("port"),
+			  INT2FIX(ptr_dcc->port));
+	    rb_hash_aset (dcc_list_member, rb_str_new2("nick"),
+			  rb_str_new2(ptr_dcc->nick));
+	    rb_hash_aset (dcc_list_member, rb_str_new2("remote_file"),
+			  rb_str_new2(ptr_dcc->filename));
+	    rb_hash_aset (dcc_list_member, rb_str_new2("local_file"),
+			  rb_str_new2(ptr_dcc->local_filename));
+	    rb_hash_aset (dcc_list_member, rb_str_new2("filename_suffix"),
+			  INT2FIX(ptr_dcc->filename_suffix));
+	    rb_hash_aset (dcc_list_member, rb_str_new2("size"),
+			  INT2FIX(ptr_dcc->size));
+	    rb_hash_aset (dcc_list_member, rb_str_new2("pos"),
+			  INT2FIX(ptr_dcc->pos));
+	    rb_hash_aset (dcc_list_member, rb_str_new2("start_resume"),
+			  INT2FIX(ptr_dcc->start_resume));
+	    rb_hash_aset (dcc_list_member, rb_str_new2("cps"),
+			  INT2FIX(ptr_dcc->bytes_per_sec));
+	    
+	    if (NIL_P (rb_ary_push (dcc_list, dcc_list_member)))
+	    {
+		rb_gc_unregister_address (&dcc_list_member);
+		rb_gc_unregister_address (&dcc_list);
+		ruby_plugin->free_dcc_info (ruby_plugin, dcc_info);
+		return Qnil;
+	    }
+	}
+	else
+	{
+	    rb_gc_unregister_address (&dcc_list);
+	    ruby_plugin->free_dcc_info (ruby_plugin, dcc_info);
+	    return Qnil;
+	}	    
+    }
+    
+    ruby_plugin->free_dcc_info (ruby_plugin, dcc_info);
+
+    return dcc_list;
 }
 
 /*
@@ -719,10 +910,21 @@ weechat_ruby_set_plugin_config (VALUE class, VALUE option, VALUE value)
 }
 
 /*
- * Ruby subroutines
+ * weechat_ruby_output : redirection for stdout and stderr
  */
 
-/* TODO: write Ruby functions interface */
+static VALUE 
+weechat_ruby_output(VALUE self, VALUE str)
+{
+    /* make gcc happy */
+    (void) self;
+    
+    ruby_plugin->printf_server (ruby_plugin,
+				"Ruby stdout/stderr: %s",
+				STR2CSTR(str));
+    return Qnil;
+}
+
 
 /*
  * weechat_ruby_load: load a Ruby script
@@ -731,12 +933,84 @@ weechat_ruby_set_plugin_config (VALUE class, VALUE option, VALUE value)
 int
 weechat_ruby_load (t_weechat_plugin *plugin, char *filename)
 {
-    /* make gcc happy */
-    (void) plugin;
-    (void) filename;
+    char modname[64];
+    VALUE curModule;
+    VALUE ruby_retcode;
+    int ruby_error;
     
-    /* TODO: load & exec Ruby script */
-    return 0;
+    plugin->printf_server (plugin, "Loading Ruby script \"%s\"", filename);
+    ruby_current_script = NULL;
+
+    snprintf(modname, sizeof(modname), "%s%d", MOD_NAME_PREFIX, modnum);
+    modnum++;
+
+    curModule = rb_define_module(modname);
+
+    ruby_current_script_filename = strdup (filename);
+    
+    ruby_retcode = rb_protect_funcall (curModule, rb_intern("load_eval_file"),
+				       &ruby_error, 1, rb_str_new2(filename));
+    
+    free (ruby_current_script_filename);
+
+    if (NUM2INT(ruby_retcode) != 0)
+    {
+	VALUE ruby_eval_error;
+	
+	switch (NUM2INT(ruby_retcode))
+	{
+	case 1:
+	    ruby_plugin->printf_server (ruby_plugin,
+					"Ruby error: unable to read file \"%s\"",
+					filename);
+	    break;
+	case 2:
+	    ruby_plugin->printf_server (ruby_plugin,
+					"Ruby error: error while loading file \"%s\"",
+					filename);
+	    break;
+	case 3:
+	    ruby_plugin->printf_server (ruby_plugin,
+					"Ruby error: unable to find \"weechat_init\" function in file \"%s\"",
+					filename);
+	    break;
+	}
+	
+	if (NUM2INT(ruby_retcode) == 1 || NUM2INT(ruby_retcode) == 2)
+	{
+	    ruby_eval_error = rb_iv_get(curModule, "@load_eval_file_error");
+	    if (ruby_eval_error)		      		
+		ruby_plugin->printf_server (ruby_plugin,
+					    "Ruby error: %s", STR2CSTR(ruby_eval_error));
+	}
+	
+	return 0;
+    }
+    
+    ruby_retcode = rb_protect_funcall (curModule, rb_intern("weechat_init"), &ruby_error, 0);
+    if (ruby_error) {
+	VALUE ruby_error_info = rb_inspect(ruby_errinfo);
+        rb_backtrace();
+	ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: unable to eval weechat_init in file \"%s\"",
+				    filename);
+	ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: %s", STR2CSTR(ruby_error_info));
+	return 0;
+    }
+    
+    if (ruby_current_script == NULL) {
+	plugin->printf_server (plugin,
+                               "Ruby error: function \"register\" not found "
+                               "in file \"%s\"",
+                               filename);
+        return 0;
+    }
+
+    ruby_current_script->interpreter = (VALUE *) curModule;
+    rb_gc_register_address (ruby_current_script->interpreter);
+    
+    return 1;
 }
 
 /*
@@ -746,11 +1020,14 @@ weechat_ruby_load (t_weechat_plugin *plugin, char *filename)
 void
 weechat_ruby_unload (t_weechat_plugin *plugin, t_plugin_script *script)
 {
-    /* make gcc happy */
-    (void) plugin;
-    (void) script;
+    plugin->printf_server (plugin,
+                           "Unloading Ruby script \"%s\"",
+                           script->name);
     
-    /* TODO: unload a Ruby script */
+    if (script->interpreter)
+	rb_gc_unregister_address (script->interpreter);
+    
+    weechat_script_remove (plugin, &ruby_scripts, script);
 }
 
 /*
@@ -760,11 +1037,22 @@ weechat_ruby_unload (t_weechat_plugin *plugin, t_plugin_script *script)
 void
 weechat_ruby_unload_name (t_weechat_plugin *plugin, char *name)
 {
-    /* make gcc happy */
-    (void) plugin;
-    (void) name;
+    t_plugin_script *ptr_script;
     
-    /* TODO: unload a Ruby script by name */
+    ptr_script = weechat_script_search (plugin, &ruby_scripts, name);
+    if (ptr_script)
+    {
+        weechat_ruby_unload (plugin, ptr_script);
+        plugin->printf_server (plugin,
+                               "Ruby script \"%s\" unloaded",
+                               name);
+    }
+    else
+    {
+        plugin->printf_server (plugin,
+                               "Ruby error: script \"%s\" not loaded",
+                               name);
+    }
 }
 
 /*
@@ -774,10 +1062,14 @@ weechat_ruby_unload_name (t_weechat_plugin *plugin, char *name)
 void
 weechat_ruby_unload_all (t_weechat_plugin *plugin)
 {
-    /* make gcc happy */
-    (void) plugin;
+
+    plugin->printf_server (plugin,
+                           "Unloading all Ruby scripts");
+    while (ruby_scripts)
+	weechat_ruby_unload (plugin, ruby_scripts);
     
-    /* TODO: unload all Ruby scripts */
+    plugin->printf_server (plugin,
+                           "Ruby scripts unloaded");
 }
 
 /*
@@ -935,13 +1227,88 @@ weechat_ruby_cmd (t_weechat_plugin *plugin,
 int
 weechat_plugin_init (t_weechat_plugin *plugin)
 {
+    char *weechat_ruby_code =
+	{	    
+	    "class IO\n"
+	    "  def write(msg)\n"
+	    "    msg.each {|s|\n"
+	    "      if (s.chomp != \"\")\n"
+	    "        WeechatOutputs.write(msg.chomp)\n"
+	    "      end\n"
+	    "    }\n"
+	    "  end\n"
+	    "end\n"
+	    "\n"
+	    "class Module\n"
+	    "  @load_eval_file_error = ''\n"
+	    "\n"
+	    "  def load_eval_file (file)\n"
+	    "    lines = ''\n"
+	    "    begin\n"
+	    "      f = File.open(file, 'r')\n"
+	    "      lines = f.readlines.join\n"
+	    "    rescue => e\n"
+	    "      @load_eval_file_error = e\n"
+	    "      return 1\n"
+	    "    end\n"
+	    "\n"	   
+	    "    begin\n"
+	    "      module_eval(lines)\n"
+	    "    rescue => e\n"
+	    "      @load_eval_file_error = e\n"
+	    "      return 2\n"
+	    "    end\n"
+	    "\n"
+	    "    has_init = false\n"
+	    "\n"
+	    "    instance_methods.each do |meth|\n"
+	    "      if meth == 'weechat_init'\n"
+	    "        has_init = true\n"
+	    "      end\n"
+	    "      module_eval('module_function :' + meth)\n"
+	    "    end\n"
+	    "\n"
+	    "    unless has_init\n"
+	    "      return 3\n"
+	    "    end\n"
+	    "\n"
+	    "    return 0\n"
+	    "  end\n"
+	    "end\n"
+	};
     ruby_plugin = plugin;
-    
+    int ruby_error = 0;
+
     plugin->printf_server (plugin, "Loading Ruby module \"weechat\"");
     
-    /* TODO: initialize Ruby interpreter */
+    ruby_init ();
+    ruby_init_loadpath ();
+    ruby_script ("__weechat_plugin__");
     
+    mWeechat = rb_define_module("Weechat");
+    rb_define_const(mWeechat, "PLUGIN_RC_OK", INT2NUM(PLUGIN_RC_OK));
+    rb_define_const(mWeechat, "PLUGIN_RC_KO", INT2NUM(PLUGIN_RC_KO));
+    rb_define_const(mWeechat, "PLUGIN_RC_OK_IGNORE_WEECHAT", INT2NUM(PLUGIN_RC_OK_IGNORE_WEECHAT));
+    rb_define_const(mWeechat, "PLUGIN_RC_OK_IGNORE_PLUGINS", INT2NUM(PLUGIN_RC_OK_IGNORE_PLUGINS));
+    rb_define_const(mWeechat, "PLUGIN_RC_OK_IGNORE_ALL", INT2NUM(PLUGIN_RC_OK_IGNORE_ALL));    
+    rb_define_module_function (mWeechat, "register", weechat_ruby_register, 4);
+    rb_define_module_function (mWeechat, "print", weechat_ruby_print, -1);
+    rb_define_module_function (mWeechat, "print_infobar", weechat_ruby_print_infobar, 2);
+    rb_define_module_function (mWeechat, "command", weechat_ruby_command, -1);
+    rb_define_module_function (mWeechat, "add_message_handler", weechat_ruby_add_message_handler, 2);
+    rb_define_module_function (mWeechat, "add_command_handler", weechat_ruby_add_command_handler, -1);
+    rb_define_module_function (mWeechat, "remove_handler", weechat_ruby_remove_handler, 2);
+    rb_define_module_function (mWeechat, "get_info", weechat_ruby_get_info, -1);
+    rb_define_module_function (mWeechat, "get_dcc_info", weechat_ruby_get_dcc_info, 0);
+    rb_define_module_function (mWeechat, "get_config", weechat_ruby_get_config, 1);
+    rb_define_module_function (mWeechat, "set_config", weechat_ruby_set_config, 2);
+    rb_define_module_function (mWeechat, "get_plugin_config", weechat_ruby_get_plugin_config, 1);
+    rb_define_module_function (mWeechat, "set_plugin_config", weechat_ruby_set_plugin_config, 2);
     
+    /* redirect stdin and stdout */
+    mWeechatOutputs = rb_define_module("WeechatOutputs");
+    rb_define_singleton_method(mWeechatOutputs, "write", weechat_ruby_output, 1);
+
     plugin->cmd_handler_add (plugin, "ruby",
                              "list/load/unload Ruby scripts",
                              "[load filename] | [autoload] | [reload] | [unload]",
@@ -952,6 +1319,17 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     plugin->mkdir_home (plugin, "ruby");
     plugin->mkdir_home (plugin, "ruby/autoload");
     
+    rb_eval_string_protect(weechat_ruby_code, &ruby_error);
+    if (ruby_error) {
+	VALUE ruby_error_info = rb_inspect(ruby_errinfo);
+        rb_backtrace();
+	ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: unable to eval weechat ruby internal code");
+	ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: %s", STR2CSTR(ruby_error_info));
+	return PLUGIN_RC_KO;
+    }
+   
     weechat_script_auto_load (plugin, "ruby", weechat_ruby_load);
     
     /* init ok */
@@ -968,9 +1346,8 @@ weechat_plugin_end (t_weechat_plugin *plugin)
     /* unload all scripts */
     weechat_ruby_unload_all (plugin);
     
-    /* TODO: free interpreter */
-    
-    
+    ruby_finalize();
+        
     ruby_plugin->printf_server (ruby_plugin,
                                 "Ruby plugin ended");
 }
