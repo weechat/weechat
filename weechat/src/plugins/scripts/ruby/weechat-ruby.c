@@ -126,8 +126,6 @@ weechat_ruby_exec (t_weechat_plugin *plugin,
 				       &ruby_error, 2,
 				       rb_str_new2((server == NULL) ? "" : server),
 				       rb_str_new2((arguments == NULL) ? "" : arguments));
-    ruby_current_script = NULL;
-    
     if (ruby_error)
     {
 	VALUE ruby_error_info = rb_inspect(ruby_errinfo);
@@ -996,6 +994,10 @@ weechat_ruby_load (t_weechat_plugin *plugin, char *filename)
 				    filename);
 	ruby_plugin->printf_server (ruby_plugin,
                                     "Ruby error: %s", STR2CSTR(ruby_error_info));
+	
+	if (ruby_current_script != NULL)
+	    weechat_script_remove (plugin, &ruby_scripts, ruby_current_script);
+	
 	return 0;
     }
     

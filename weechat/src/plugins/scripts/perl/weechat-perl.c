@@ -138,8 +138,6 @@ weechat_perl_exec (t_weechat_plugin *plugin,
     
     count = perl_call_argv (func, G_EVAL | G_SCALAR, argv);
     
-    perl_current_script = NULL;
-
     SPAGAIN;
     
     sv = GvSV (gv_fetchpv ("@", TRUE, SVt_PV));
@@ -917,7 +915,7 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
 	perl_destruct (perl_current_interpreter);
         perl_free (perl_current_interpreter);
 #endif
-	if (perl_current_script != NULL)
+	if ((perl_current_script != NULL) && (perl_current_script != &tempscript))
             weechat_script_remove (plugin, &perl_scripts, perl_current_script);
 
 	return 0;

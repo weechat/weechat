@@ -78,8 +78,6 @@ weechat_python_exec (t_weechat_plugin *plugin,
 
     rc = PyObject_CallFunction(evFunc, "ss", server == NULL ? "" : server, arguments == NULL ? "" : arguments);
 
-    python_current_script = NULL;
-        
     if (rc)
     {
         ret = (int) PyInt_AsLong(rc);
