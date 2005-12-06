@@ -1612,10 +1612,8 @@ config_read ()
     int server_found;
     char line[1024], *ptr_line, *pos, *pos2;
 
-    filename_length = strlen (weechat_home) +
-        strlen (WEECHAT_CONFIG_NAME) + 2;
-    filename =
-        (char *) malloc (filename_length * sizeof (char));
+    filename_length = strlen (weechat_home) + strlen (WEECHAT_CONFIG_NAME) + 2;
+    filename = (char *) malloc (filename_length * sizeof (char));
     if (!filename)
         return -2;
     snprintf (filename, filename_length, "%s%s" WEECHAT_CONFIG_NAME,
@@ -1914,7 +1912,7 @@ config_create_default ()
     }
     
     printf (_("%s: creating default config file...\n"), PACKAGE_NAME);
-    wee_log_printf (_("Creating default config file\n"));
+    weechat_log_printf (_("Creating default config file\n"));
     
     current_time = time (NULL);
     fprintf (file, _("#\n# %s configuration file, created by "
@@ -2115,7 +2113,7 @@ config_write (char *config_name)
         return -1;
     }
     
-    wee_log_printf (_("Saving config to disk\n"));
+    weechat_log_printf (_("Saving config to disk\n"));
     
     current_time = time (NULL);
     fprintf (file, _("#\n# %s configuration file, created by "

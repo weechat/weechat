@@ -70,8 +70,9 @@ fifo_create ()
             gui_printf (NULL,
                         _("%s unable to create FIFO pipe for remote control (%s)\n"),
                         WEECHAT_ERROR, weechat_fifo_filename);
-            wee_log_printf (_("%s unable to create FIFO pipe for remote control (%s)\n"),
-                            WEECHAT_ERROR, weechat_fifo_filename);
+            weechat_log_printf (_("%s unable to create FIFO pipe for "
+                                  "remote control (%s)\n"),
+                                WEECHAT_ERROR, weechat_fifo_filename);
             return;
         }
         
@@ -81,12 +82,12 @@ fifo_create ()
             gui_printf (NULL,
                         _("%s unable to open FIFO pipe (%s) for reading\n"),
                         WEECHAT_ERROR, weechat_fifo_filename);
-            wee_log_printf (_("%s unable to open FIFO pipe (%s) for reading\n"),
-                            WEECHAT_ERROR, weechat_fifo_filename);
+            weechat_log_printf (_("%s unable to open FIFO pipe (%s) for reading\n"),
+                                WEECHAT_ERROR, weechat_fifo_filename);
             return;
         }
         
-        wee_log_printf (_("FIFO pipe is open\n"));
+        weechat_log_printf (_("FIFO pipe is open\n"));
     }
 }
 
@@ -249,8 +250,8 @@ fifo_read ()
             gui_printf (NULL,
                         _("%s error reading FIFO pipe, closing it\n"),
                         WEECHAT_ERROR);
-            wee_log_printf (_("%s error reading FIFO pipe, closing it\n"),
-                            WEECHAT_ERROR);
+            weechat_log_printf (_("%s error reading FIFO pipe, closing it\n"),
+                                WEECHAT_ERROR);
             fifo_remove ();
         }
         else
@@ -291,5 +292,5 @@ fifo_remove ()
         weechat_fifo_filename = NULL;
     }
     
-    wee_log_printf (_("FIFO pipe is closed\n"));
+    weechat_log_printf (_("FIFO pipe is closed\n"));
 }

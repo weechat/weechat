@@ -91,9 +91,7 @@ server_init (t_irc_server *server)
     server->child_write = -1;
     server->sock = -1;
     server->is_connected = 0;
-#ifdef HAVE_GNUTLS
     server->ssl_connected = 0;
-#endif
     server->unterminated_message = NULL;
     server->nick = NULL;
     server->reconnect_start = 0;
@@ -365,14 +363,14 @@ server_new (char *name, int autoconnect, int autoreconnect, int autoreconnect_de
         return NULL;
     
 #ifdef DEBUG
-    wee_log_printf ("Creating new server (name:%s, address:%s, port:%d, pwd:%s, "
-                    "nick1:%s, nick2:%s, nick3:%s, username:%s, realname:%s, "
-                    "command:%s, autojoin:%s, autorejoin:%s, notify_levels:%s)\n",
-                    name, address, port, (password) ? password : "",
-                    (nick1) ? nick1 : "", (nick2) ? nick2 : "", (nick3) ? nick3 : "",
-                    (username) ? username : "", (realname) ? realname : "",
-                    (command) ? command : "", (autojoin) ? autojoin : "",
-                    (autorejoin) ? "on" : "off", (notify_levels) ? notify_levels : "");
+    weechat_log_printf ("Creating new server (name:%s, address:%s, port:%d, pwd:%s, "
+                        "nick1:%s, nick2:%s, nick3:%s, username:%s, realname:%s, "
+                        "command:%s, autojoin:%s, autorejoin:%s, notify_levels:%s)\n",
+                        name, address, port, (password) ? password : "",
+                        (nick1) ? nick1 : "", (nick2) ? nick2 : "", (nick3) ? nick3 : "",
+                        (username) ? username : "", (realname) ? realname : "",
+                        (command) ? command : "", (autojoin) ? autojoin : "",
+                        (autorejoin) ? "on" : "off", (notify_levels) ? notify_levels : "");
 #endif
     
     if ((new_server = server_alloc ()))
@@ -801,9 +799,7 @@ server_close_connection (t_irc_server *server)
     
     /* server is now disconnected */
     server->is_connected = 0;
-#ifdef HAVE_GNUTLS
     server->ssl_connected = 0;
-#endif
 }
 
 /*
@@ -1399,12 +1395,12 @@ server_connect (t_irc_server *server)
 		    (server->ssl) ? " (SSL)" : "",
 		    cfg_proxy_type_values[cfg_proxy_type], cfg_proxy_address, cfg_proxy_port,
 		    (cfg_proxy_ipv6) ? " (IPv6)" : "");
-	wee_log_printf (_("Connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"),
-			server->address, server->port,
-			(server->ipv6) ? " (IPv6)" : "",
-			(server->ssl) ? " (SSL)" : "",
-			cfg_proxy_type_values[cfg_proxy_type], cfg_proxy_address, cfg_proxy_port,
-			(cfg_proxy_ipv6) ? " (IPv6)" : "");
+	weechat_log_printf (_("Connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"),
+                            server->address, server->port,
+                            (server->ipv6) ? " (IPv6)" : "",
+                            (server->ssl) ? " (SSL)" : "",
+                            cfg_proxy_type_values[cfg_proxy_type], cfg_proxy_address, cfg_proxy_port,
+                            (cfg_proxy_ipv6) ? " (IPv6)" : "");
       }
     else
       {
@@ -1413,18 +1409,18 @@ server_connect (t_irc_server *server)
 		    PACKAGE_NAME, server->address, server->port,
 		    (server->ipv6) ? " (IPv6)" : "",
 		    (server->ssl) ? " (SSL)" : "");
-	wee_log_printf (_("Connecting to server %s:%d%s%s...\n"),
-			server->address, server->port,
-			(server->ipv6) ? " (IPv6)" : "",
-			(server->ssl) ? " (SSL)" : "");
+	weechat_log_printf (_("Connecting to server %s:%d%s%s...\n"),
+                            server->address, server->port,
+                            (server->ipv6) ? " (IPv6)" : "",
+                            (server->ssl) ? " (SSL)" : "");
       }
     
     /* close any opened connection and kill child process if running */
     server_close_connection (server);
     
     /* init SSL if asked */
-#ifdef HAVE_GNUTLS
     server->ssl_connected = 0;
+#ifdef HAVE_GNUTLS
     if (server->ssl)
     {
         if (gnutls_init (&server->gnutls_sess, GNUTLS_CLIENT) != 0)
@@ -1706,7 +1702,7 @@ server_remove_away ()
         {
             for (ptr_channel = ptr_server->channels; ptr_channel; ptr_channel = ptr_channel->next_channel)
             {
-                if (ptr_channel->type == CHAT_CHANNEL)
+                if (ptr_channel->type == CHANNEL_TYPE_CHANNEL)
                     channel_remove_away (ptr_channel);
             }
         }
@@ -1729,7 +1725,7 @@ server_check_away ()
         {
             for (ptr_channel = ptr_server->channels; ptr_channel; ptr_channel = ptr_channel->next_channel)
             {
-                if (ptr_channel->type == CHAT_CHANNEL)
+                if (ptr_channel->type == CHANNEL_TYPE_CHANNEL)
                     channel_check_away (ptr_server, ptr_channel);
             }
         }
@@ -1749,7 +1745,7 @@ server_set_away (t_irc_server *server, char *nick, int is_away)
     {
         if (server->is_connected)
         {
-            if (ptr_channel->type == CHAT_CHANNEL)
+            if (ptr_channel->type == CHANNEL_TYPE_CHANNEL)
                 channel_set_away (ptr_channel, nick, is_away);
         }
     }
@@ -1762,49 +1758,50 @@ server_set_away (t_irc_server *server, char *nick, int is_away)
 void
 server_print_log (t_irc_server *server)
 {
-    wee_log_printf ("[server %s (addr:0x%X)]\n", server->name, server);
-    wee_log_printf ("  autoconnect . . . . : %d\n",    server->autoconnect);
-    wee_log_printf ("  autoreconnect . . . : %d\n",    server->autoreconnect);
-    wee_log_printf ("  autoreconnect_delay : %d\n",    server->autoreconnect_delay);
-    wee_log_printf ("  command_line. . . . : %d\n",    server->command_line);
-    wee_log_printf ("  address . . . . . . : '%s'\n",  server->address);
-    wee_log_printf ("  port. . . . . . . . : %d\n",    server->port);
-    wee_log_printf ("  ipv6. . . . . . . . : %d\n",    server->ipv6);
-    wee_log_printf ("  ssl . . . . . . . . : %d\n",    server->ssl);
-    wee_log_printf ("  password. . . . . . : '%s'\n",
-        (server->password && server->password[0]) ? "(hidden)" : server->password);
-    wee_log_printf ("  nick1 . . . . . . . : '%s'\n",  server->nick1);
-    wee_log_printf ("  nick2 . . . . . . . : '%s'\n",  server->nick2);
-    wee_log_printf ("  nick3 . . . . . . . : '%s'\n",  server->nick3);
-    wee_log_printf ("  username. . . . . . : '%s'\n",  server->username);
-    wee_log_printf ("  realname. . . . . . : '%s'\n",  server->realname);
-    wee_log_printf ("  command . . . . . . : '%s'\n",
-        (server->command && server->command[0]) ? "(hidden)" : server->command);
-    wee_log_printf ("  command_delay . . . : %d\n",    server->command_delay);
-    wee_log_printf ("  autojoin. . . . . . : '%s'\n",  server->autojoin);
-    wee_log_printf ("  autorejoin. . . . . : %d\n",    server->autorejoin);
-    wee_log_printf ("  notify_levels . . . : %s\n",    server->notify_levels);
-    wee_log_printf ("  child_pid . . . . . : %d\n",    server->child_pid);
-    wee_log_printf ("  child_read  . . . . : %d\n",    server->child_read);
-    wee_log_printf ("  child_write . . . . : %d\n",    server->child_write);
-    wee_log_printf ("  sock. . . . . . . . : %d\n",    server->sock);
-    wee_log_printf ("  is_connected. . . . : %d\n",    server->is_connected);
-#ifdef HAVE_GNUTLS
-    wee_log_printf("   ssl_connected . . . : %d\n",    server->ssl_connected);
-#endif
-    wee_log_printf ("  unterminated_message: '%s'\n",  server->unterminated_message);
-    wee_log_printf ("  nick. . . . . . . . : '%s'\n",  server->nick);
-    wee_log_printf ("  reconnect_start . . : %ld\n",   server->reconnect_start);
-    wee_log_printf ("  reconnect_join. . . : %d\n",    server->reconnect_join);
-    wee_log_printf ("  is_away . . . . . . : %d\n",    server->is_away);
-    wee_log_printf ("  away_time . . . . . : %ld\n",   server->away_time);
-    wee_log_printf ("  lag . . . . . . . . : %d\n",    server->lag);
-    wee_log_printf ("  lag_check_time. . . : tv_sec:%d, tv_usec:%d\n",
-        server->lag_check_time.tv_sec, server->lag_check_time.tv_usec);
-    wee_log_printf ("  lag_next_check. . . : %ld\n",   server->lag_next_check);
-    wee_log_printf ("  buffer. . . . . . . : 0x%X\n",  server->buffer);
-    wee_log_printf ("  channels. . . . . . : 0x%X\n",  server->channels);
-    wee_log_printf ("  last_channel. . . . : 0x%X\n",  server->last_channel);
-    wee_log_printf ("  prev_server . . . . : 0x%X\n",  server->prev_server);
-    wee_log_printf ("  next_server . . . . : 0x%X\n",  server->next_server);
+    weechat_log_printf ("[server %s (addr:0x%X)]\n",      server->name, server);
+    weechat_log_printf ("  autoconnect . . . . : %d\n",   server->autoconnect);
+    weechat_log_printf ("  autoreconnect . . . : %d\n",   server->autoreconnect);
+    weechat_log_printf ("  autoreconnect_delay : %d\n",   server->autoreconnect_delay);
+    weechat_log_printf ("  command_line. . . . : %d\n",   server->command_line);
+    weechat_log_printf ("  address . . . . . . : '%s'\n", server->address);
+    weechat_log_printf ("  port. . . . . . . . : %d\n",   server->port);
+    weechat_log_printf ("  ipv6. . . . . . . . : %d\n",   server->ipv6);
+    weechat_log_printf ("  ssl . . . . . . . . : %d\n",   server->ssl);
+    weechat_log_printf ("  password. . . . . . : '%s'\n",
+                        (server->password && server->password[0]) ?
+                        "(hidden)" : server->password);
+    weechat_log_printf ("  nick1 . . . . . . . : '%s'\n", server->nick1);
+    weechat_log_printf ("  nick2 . . . . . . . : '%s'\n", server->nick2);
+    weechat_log_printf ("  nick3 . . . . . . . : '%s'\n", server->nick3);
+    weechat_log_printf ("  username. . . . . . : '%s'\n", server->username);
+    weechat_log_printf ("  realname. . . . . . : '%s'\n", server->realname);
+    weechat_log_printf ("  command . . . . . . : '%s'\n",
+                        (server->command && server->command[0]) ?
+                        "(hidden)" : server->command);
+    weechat_log_printf ("  command_delay . . . : %d\n",   server->command_delay);
+    weechat_log_printf ("  autojoin. . . . . . : '%s'\n", server->autojoin);
+    weechat_log_printf ("  autorejoin. . . . . : %d\n",   server->autorejoin);
+    weechat_log_printf ("  notify_levels . . . : %s\n",   server->notify_levels);
+    weechat_log_printf ("  child_pid . . . . . : %d\n",   server->child_pid);
+    weechat_log_printf ("  child_read  . . . . : %d\n",   server->child_read);
+    weechat_log_printf ("  child_write . . . . : %d\n",   server->child_write);
+    weechat_log_printf ("  sock. . . . . . . . : %d\n",   server->sock);
+    weechat_log_printf ("  is_connected. . . . : %d\n",   server->is_connected);
+    weechat_log_printf ("  ssl_connected . . . : %d\n",   server->ssl_connected);
+    weechat_log_printf ("  unterminated_message: '%s'\n", server->unterminated_message);
+    weechat_log_printf ("  nick. . . . . . . . : '%s'\n", server->nick);
+    weechat_log_printf ("  reconnect_start . . : %ld\n",  server->reconnect_start);
+    weechat_log_printf ("  reconnect_join. . . : %d\n",   server->reconnect_join);
+    weechat_log_printf ("  is_away . . . . . . : %d\n",   server->is_away);
+    weechat_log_printf ("  away_time . . . . . : %ld\n",  server->away_time);
+    weechat_log_printf ("  lag . . . . . . . . : %d\n",   server->lag);
+    weechat_log_printf ("  lag_check_time. . . : tv_sec:%d, tv_usec:%d\n",
+                        server->lag_check_time.tv_sec,
+                        server->lag_check_time.tv_usec);
+    weechat_log_printf ("  lag_next_check. . . : %ld\n",  server->lag_next_check);
+    weechat_log_printf ("  buffer. . . . . . . : 0x%X\n", server->buffer);
+    weechat_log_printf ("  channels. . . . . . : 0x%X\n", server->channels);
+    weechat_log_printf ("  last_channel. . . . : 0x%X\n", server->last_channel);
+    weechat_log_printf ("  prev_server . . . . : 0x%X\n", server->prev_server);
+    weechat_log_printf ("  next_server . . . . : 0x%X\n", server->next_server);
 }

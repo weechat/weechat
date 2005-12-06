@@ -107,7 +107,7 @@ irc_cmd_send_ame (t_irc_server *server, char *arguments)
             for (ptr_channel = ptr_server->channels; ptr_channel;
                  ptr_channel = ptr_channel->next_channel)
             {
-                if (ptr_channel->type == CHAT_CHANNEL)
+                if (ptr_channel->type == CHANNEL_TYPE_CHANNEL)
                 {
                     server_sendf (ptr_server, "PRIVMSG %s :\01ACTION %s\01\r\n",
                                   ptr_channel->name,
@@ -156,7 +156,7 @@ irc_cmd_send_amsg (t_irc_server *server, char *arguments)
                 for (ptr_channel = ptr_server->channels; ptr_channel;
                      ptr_channel = ptr_channel->next_channel)
                 {
-                    if (ptr_channel->type == CHAT_CHANNEL)
+                    if (ptr_channel->type == CHANNEL_TYPE_CHANNEL)
                     {
                         server_sendf (ptr_server, "PRIVMSG %s :%s\r\n",
                                       ptr_channel->name, arguments);
@@ -965,7 +965,7 @@ irc_send_me_all_channels (t_irc_server *server, char *arguments)
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
-        if (ptr_channel->type == CHAT_CHANNEL)
+        if (ptr_channel->type == CHANNEL_TYPE_CHANNEL)
             irc_send_me (server, ptr_channel, arguments);
     }
     return 0;
@@ -1145,7 +1145,7 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
                     ptr_channel = channel_search (server, arguments);
                     if (!ptr_channel)
                     {
-                        ptr_channel = channel_new (server, CHAT_PRIVATE, arguments, 1);
+                        ptr_channel = channel_new (server, CHANNEL_TYPE_PRIVATE, arguments);
                         if (!ptr_channel)
                         {
                             irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
@@ -1154,6 +1154,7 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
                                               WEECHAT_ERROR, arguments);
                             return -1;
                         }
+                        gui_buffer_new (gui_current_window, server, ptr_channel, 0, 1);
                         gui_draw_buffer_title (ptr_channel->buffer, 1);
                     }
                         
@@ -1485,7 +1486,7 @@ irc_cmd_send_query (t_irc_server *server, char *arguments)
     ptr_channel = channel_search (server, arguments);
     if (!ptr_channel)
     {
-        ptr_channel = channel_new (server, CHAT_PRIVATE, arguments, 1);
+        ptr_channel = channel_new (server, CHANNEL_TYPE_PRIVATE, arguments);
         if (!ptr_channel)
         {
             irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
@@ -1494,6 +1495,7 @@ irc_cmd_send_query (t_irc_server *server, char *arguments)
                               WEECHAT_ERROR, arguments);
             return -1;
         }
+        gui_buffer_new (gui_current_window, server, ptr_channel, 0, 1);
         gui_draw_buffer_title (ptr_channel->buffer, 1);
     }
     else

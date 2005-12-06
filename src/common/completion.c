@@ -250,7 +250,7 @@ completion_build_list (t_completion *completion, void *channel)
                          "*");
             if (channel)
             {
-                if (((t_irc_channel *)channel)->type == CHAT_CHANNEL)
+                if (((t_irc_channel *)channel)->type == CHANNEL_TYPE_CHANNEL)
                 {
                     for (ptr_nick = ((t_irc_channel *)channel)->nicks; ptr_nick;
                          ptr_nick = ptr_nick->next_nick)
@@ -260,7 +260,7 @@ completion_build_list (t_completion *completion, void *channel)
                                      ptr_nick->nick);
                     }
                 }
-                if (((t_irc_channel *)channel)->type == CHAT_PRIVATE)
+                if (((t_irc_channel *)channel)->type == CHANNEL_TYPE_PRIVATE)
                 {
                     weelist_add (&completion->completion_list,
                                  &completion->last_completion,
@@ -302,7 +302,7 @@ completion_build_list (t_completion *completion, void *channel)
             weelist_add(&completion->completion_list,
                         &completion->last_completion,
                         "*");
-            if (((t_irc_channel *)channel)->type == CHAT_CHANNEL)
+            if (((t_irc_channel *)channel)->type == CHANNEL_TYPE_CHANNEL)
                 weelist_add(&completion->completion_list,
                             &completion->last_completion,
                             ((t_irc_channel *)channel)->name);
@@ -822,7 +822,7 @@ completion_find_context (t_completion *completion, void *channel, char *buffer,
     }
     
     if (!completion->completion_list && channel &&
-        (((t_irc_channel *)channel)->type == CHAT_PRIVATE)
+        (((t_irc_channel *)channel)->type == CHANNEL_TYPE_PRIVATE)
         && (completion->context == COMPLETION_NICK))
     {
         /* nick completion in private (only other nick and self) */
@@ -1017,7 +1017,7 @@ completion_nick (t_completion *completion, t_irc_channel *channel)
     if (!channel)
         return;
     
-    if (((t_irc_channel *)channel)->type == CHAT_PRIVATE)
+    if (((t_irc_channel *)channel)->type == CHANNEL_TYPE_PRIVATE)
     {
         completion_command_arg (completion, channel, 1);
         return;

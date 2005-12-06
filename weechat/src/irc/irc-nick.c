@@ -59,15 +59,15 @@ nick_find_color (t_irc_nick *nick)
 int
 nick_score_for_sort (t_irc_nick *nick)
 {
-    if (nick->is_chanowner)
+    if (nick->flags & NICK_CHANOWNER)
         return -32;
-    if (nick->is_chanadmin)
+    if (nick->flags & NICK_CHANADMIN)
         return -16;
-    if (nick->is_op)
+    if (nick->flags & NICK_OP)
         return -8;
-    if (nick->is_halfop)
+    if (nick->flags & NICK_HALFOP)
         return -4;
-    if (nick->has_voice)
+    if (nick->flags & NICK_VOICE)
         return -2;
     return 0;
 }
@@ -168,7 +168,7 @@ nick_insert_sorted (t_irc_channel *channel, t_irc_nick *nick)
  */
 
 t_irc_nick *
-nick_new (t_irc_channel *channel, char *nick_name,
+nick_new (t_irc_server *server, t_irc_channel *channel, char *nick_name,
           int is_chanowner, int is_chanadmin, int is_op, int is_halfop,
           int has_voice)
 {
@@ -178,35 +178,31 @@ nick_new (t_irc_channel *channel, char *nick_name,
     if ((new_nick = nick_search (channel, nick_name)))
     {
         /* update nick */
-        new_nick->is_chanowner = is_chanowner;
-        new_nick->is_chanadmin = is_chanadmin;
-        new_nick->is_op = is_op;
-        new_nick->is_halfop = is_halfop;
-        new_nick->has_voice = has_voice;
+        NICK_SET_FLAG(new_nick, is_chanowner, NICK_CHANOWNER);
+        NICK_SET_FLAG(new_nick, is_chanadmin, NICK_CHANADMIN);
+        NICK_SET_FLAG(new_nick, is_op, NICK_OP);
+        NICK_SET_FLAG(new_nick, is_halfop, NICK_HALFOP);
+        NICK_SET_FLAG(new_nick, has_voice, NICK_VOICE);
         return new_nick;
     }
     
     /* alloc memory for new nick */
     if ((new_nick = (t_irc_nick *) malloc (sizeof (t_irc_nick))) == NULL)
-    {
-        gui_printf (channel->buffer,
-                    _("%s cannot allocate new nick\n"), WEECHAT_ERROR);
         return NULL;
-    }
-
+    
     /* initialize new nick */
     new_nick->nick = strdup (nick_name);
-    new_nick->is_chanowner = is_chanowner;
-    new_nick->is_chanadmin = is_chanadmin;
-    new_nick->is_op = is_op;
-    new_nick->is_halfop = is_halfop;
-    new_nick->has_voice = has_voice;
-    new_nick->is_away = 0;
-    if (ascii_strcasecmp (new_nick->nick, SERVER(channel->buffer)->nick) == 0)
+    new_nick->flags = 0;
+    NICK_SET_FLAG(new_nick, is_chanowner, NICK_CHANOWNER);
+    NICK_SET_FLAG(new_nick, is_chanadmin, NICK_CHANADMIN);
+    NICK_SET_FLAG(new_nick, is_op, NICK_OP);
+    NICK_SET_FLAG(new_nick, is_halfop, NICK_HALFOP);
+    NICK_SET_FLAG(new_nick, has_voice, NICK_VOICE);
+    if (ascii_strcasecmp (new_nick->nick, server->nick) == 0)
         new_nick->color = COLOR_WIN_NICK_SELF;
     else
         new_nick->color = nick_find_color (new_nick);
-
+    
     nick_insert_sorted (channel, new_nick);
     
     channel->nicks_count++;
@@ -347,15 +343,17 @@ nick_count (t_irc_channel *channel, int *total, int *count_op,
          ptr_nick = ptr_nick->next_nick)
     {
         (*total)++;
-        if ((ptr_nick->is_chanowner) || (ptr_nick->is_chanadmin) || (ptr_nick->is_op))
+        if ((ptr_nick->flags & NICK_CHANOWNER) ||
+            (ptr_nick->flags & NICK_CHANADMIN) ||
+            (ptr_nick->flags & NICK_OP))
             (*count_op)++;
         else
         {
-            if (ptr_nick->is_halfop)
+            if (ptr_nick->flags & NICK_HALFOP)
                 (*count_halfop)++;
             else
             {
-                if (ptr_nick->has_voice)
+                if (ptr_nick->flags & NICK_VOICE)
                     (*count_voice)++;
                 else
                     (*count_normal)++;
@@ -391,9 +389,10 @@ nick_get_max_length (t_irc_channel *channel)
 void
 nick_set_away (t_irc_channel *channel, t_irc_nick *nick, int is_away)
 {
-    if (nick->is_away != is_away)
+    if (((is_away) && (!(nick->flags & NICK_AWAY))) ||
+        ((!is_away) && (nick->flags & NICK_AWAY)))
     {
-        nick->is_away = is_away;
+        NICK_SET_FLAG(nick, is_away, NICK_AWAY);
         gui_draw_buffer_nick (channel->buffer, 0);
     }
 }
@@ -405,14 +404,9 @@ nick_set_away (t_irc_channel *channel, t_irc_nick *nick, int is_away)
 void
 nick_print_log (t_irc_nick *nick)
 {
-    wee_log_printf ("=> nick %s (addr:0x%X)]\n",    nick->nick, nick);
-    wee_log_printf ("     is_chanowner . : %d\n",   nick->is_chanowner);
-    wee_log_printf ("     is_chanadmin . : %d\n",   nick->is_chanadmin);
-    wee_log_printf ("     is_op. . . . . : %d\n",   nick->is_op);
-    wee_log_printf ("     is_halfop. . . : %d\n",   nick->is_halfop);
-    wee_log_printf ("     has_voice. . . : %d\n",   nick->has_voice);
-    wee_log_printf ("     is_away. . . . : %d\n",   nick->is_away);
-    wee_log_printf ("     color. . . . . : %d\n",   nick->color);
-    wee_log_printf ("     prev_nick. . . : 0x%X\n", nick->prev_nick);
-    wee_log_printf ("     next_nick. . . : 0x%X\n", nick->next_nick);
+    weechat_log_printf ("=> nick %s (addr:0x%X)]\n",    nick->nick, nick);
+    weechat_log_printf ("     flags. . . . . : %d\n",   nick->flags);
+    weechat_log_printf ("     color. . . . . : %d\n",   nick->color);
+    weechat_log_printf ("     prev_nick. . . : 0x%X\n", nick->prev_nick);
+    weechat_log_printf ("     next_nick. . . : 0x%X\n", nick->next_nick);
 }

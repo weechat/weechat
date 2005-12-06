@@ -24,6 +24,7 @@
 #include "config.h"
 #endif
 
+#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -31,6 +32,7 @@
 #include "command.h"
 #include "weelist.h"
 #include "weeconfig.h"
+#include "session.h"
 #include "../irc/irc.h"
 #include "../gui/gui.h"
 #include "../plugins/plugins.h"
@@ -77,8 +79,7 @@ t_weechat_command weechat_commands[] =
   { "history", N_("show buffer command history"),
     N_("[clear | value]"),
     N_("clear: clear history\n"
-       "value: number of history entries to show"
-        ),
+       "value: number of history entries to show"),
     0, 1, weechat_cmd_history, NULL },
   { "ignore", N_("ignore IRC messages and/or hosts"),
     N_("[mask [[type | command] [channel [server]]]]"),
@@ -143,6 +144,10 @@ t_weechat_command weechat_commands[] =
        "For each argument, '*' means all.\n"
        "Without argument, /unignore command lists all defined ignore."),
     0, 4, weechat_cmd_unignore, NULL },
+  { "upgrade", N_("upgrade WeeChat without disconnecting from servers"),
+    "",
+    "",
+    0, 0, weechat_cmd_upgrade, NULL },
   { "uptime", N_("show WeeChat uptime"),
     N_("[-o]"),
     N_("-o: send uptime on current channel as an IRC message"),
@@ -760,7 +765,7 @@ user_command (t_irc_server *server, t_gui_buffer *buffer, char *command)
             command_with_colors2 = (command_with_colors) ?
                 (char *)gui_color_decode ((unsigned char *)command_with_colors, 1) : NULL;
             
-            if (CHANNEL(buffer)->type == CHAT_PRIVATE)
+            if (CHANNEL(buffer)->type == CHANNEL_TYPE_PRIVATE)
             {
                 gui_printf_type (CHANNEL(buffer)->buffer,
                                  MSG_TYPE_NICK,
@@ -937,11 +942,17 @@ weechat_cmd_buffer_display_info (t_gui_buffer *buffer)
     if (buffer->dcc)
         gui_printf (NULL, "%sDCC\n",
                     GUI_COLOR(COLOR_WIN_CHAT_CHANNEL));
-    else if (BUFFER_IS_SERVER (buffer))
-        gui_printf (NULL, _("%sServer: %s%s\n"),
-                    GUI_COLOR(COLOR_WIN_CHAT),
-                    GUI_COLOR(COLOR_WIN_CHAT_SERVER),
-                    SERVER(buffer)->name);
+    else if (BUFFER_IS_SERVER(buffer))
+    {
+        if (SERVER(buffer))
+            gui_printf (NULL, _("%sServer: %s%s\n"),
+                        GUI_COLOR(COLOR_WIN_CHAT),
+                        GUI_COLOR(COLOR_WIN_CHAT_SERVER),
+                        SERVER(buffer)->name);
+        else
+            gui_printf (NULL, _("%snot connected\n"),
+                        GUI_COLOR(COLOR_WIN_CHAT));
+    }
     else if (BUFFER_IS_CHANNEL (buffer))
         gui_printf (NULL, _("%sChannel: %s%s %s(server: %s%s%s)\n"),
                     GUI_COLOR(COLOR_WIN_CHAT),
@@ -961,7 +972,8 @@ weechat_cmd_buffer_display_info (t_gui_buffer *buffer)
                     SERVER(buffer)->name,
                     GUI_COLOR(COLOR_WIN_CHAT));
     else
-        gui_printf (NULL, _("not connected\n"));
+        gui_printf (NULL, _("%sunknown\n"),
+                    GUI_COLOR(COLOR_WIN_CHAT));
 }
 
 /*
@@ -1384,7 +1396,7 @@ weechat_cmd_debug (int argc, char **argv)
     
     if (ascii_strcasecmp (argv[0], "dump") == 0)
     {
-        wee_dump (0);
+        weechat_dump (0);
     }
     else if (ascii_strcasecmp (argv[0], "windows") == 0)
     {
@@ -2792,6 +2804,87 @@ weechat_cmd_unignore (int argc, char **argv)
     }
     
     return 0;
+}
+
+/*
+ * weechat_cmd_upgrade: upgrade WeeChat
+ */
+
+int
+weechat_cmd_upgrade (int argc, char **argv)
+{
+    t_irc_server *ptr_server;
+    int filename_length;
+    char *filename;
+    char *exec_args[5] = { NULL, "-a", "--session", NULL, NULL };
+    
+    /* make gcc happy */
+    (void) argc;
+    (void) argv;
+    
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        if (ptr_server->child_pid != 0)
+        {
+            irc_display_prefix (NULL, gui_current_window->buffer, PREFIX_ERROR);
+            gui_printf_nolog (NULL,
+                              _("%s can't upgrade: connection to at least "
+                                "one server is pending"),
+                              WEECHAT_ERROR);
+            return -1;
+        }
+    }
+    
+    filename_length = strlen (weechat_home) + strlen (WEECHAT_SESSION_NAME) + 2;
+    filename = (char *) malloc (filename_length * sizeof (char));
+    if (!filename)
+        return -2;
+    snprintf (filename, filename_length, "%s%s" WEECHAT_SESSION_NAME,
+              weechat_home, DIR_SEPARATOR);
+    
+    irc_display_prefix (NULL, NULL, PREFIX_INFO);
+    gui_printf_nolog (NULL, _("Upgrading WeeChat...\n"));
+    
+    if (!session_save (filename))
+    {
+        free (filename);
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        gui_printf_nolog (NULL,
+                          _("%s unable to save session in file\n"),
+                          WEECHAT_ERROR);
+        return -1;
+    }
+    
+    exec_args[0] = strdup (weechat_argv0);
+    exec_args[3] = strdup (filename);
+    
+    /* unload plugins, save config, then upgrade */
+#ifdef PLUGINS    
+    plugin_end ();
+#endif
+    (void) config_write (NULL);
+    gui_end ();
+    
+    execvp (exec_args[0], exec_args);
+    
+    /* this code should not be reached if execvp is ok */
+#ifdef PLUGINS
+    plugin_init (1);
+#endif
+    
+    fprintf (stderr, _("%s exec failed (program: \"%s\"), exiting WeeChat\n"),
+             WEECHAT_ERROR,
+             exec_args[0]);
+                
+    free (exec_args[0]);
+    free (exec_args[3]);
+    free (filename);
+    
+    weechat_shutdown (EXIT_FAILURE, 0);
+    
+    /* never executed */
+    return -1;
 }
 
 /*

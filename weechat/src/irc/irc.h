@@ -46,9 +46,41 @@
 #define PREFIX_ERROR     "=!="
 #define PREFIX_PLUGIN    "-P-"
 
+#define DEFAULT_IRC_PORT 6667
+
+/* nick types */
+
+#define NICK_CHANOWNER 1
+#define NICK_CHANADMIN 2
+#define NICK_OP        4
+#define NICK_HALFOP    8
+#define NICK_VOICE     16
+#define NICK_AWAY      32
+#define NICK_SET_FLAG(nick, set, flag) \
+    if (set) \
+        nick->flags |= flag; \
+    else \
+        nick->flags &= 0xFFFF - flag;
+
+typedef struct t_irc_nick t_irc_nick;
+
+struct t_irc_nick
+{
+    char *nick;                     /* nickname                             */
+    int flags;                      /* chanowner/chanadmin (unrealircd),    */
+                                    /* op, halfop, voice, away              */
+    int color;                      /* color for nickname in chat window    */
+    t_irc_nick *prev_nick;          /* link to previous nick on the channel */
+    t_irc_nick *next_nick;          /* link to next nick on the channel     */
+};
+
+/* channel types */
+
 #define CHANNEL_PREFIX "#&+!"
 
-/* channel modes */
+#define CHANNEL_TYPE_UNKNOWN -1
+#define CHANNEL_TYPE_CHANNEL 0
+#define CHANNEL_TYPE_PRIVATE 1
 
 #define NUM_CHANNEL_MODES       7
 #define CHANNEL_MODE_INVITE     0
@@ -58,61 +90,13 @@
 #define CHANNEL_MODE_NO_MSG_OUT 4
 #define CHANNEL_MODE_SECRET     5
 #define CHANNEL_MODE_TOPIC      6
-#define SET_CHANNEL_MODE(channel, set, mode) \
+#define CHANNEL_SET_MODE(channel, set, mode) \
     if (set) \
         channel->modes[mode] = channel_modes[mode]; \
     else \
         channel->modes[mode] = ' ';
 
-#define DEFAULT_IRC_PORT 6667
-
-/* DCC types & status */
-
-#define DCC_CHAT_RECV           0   /* receiving DCC chat                   */
-#define DCC_CHAT_SEND           1   /* sending DCC chat                     */
-#define DCC_FILE_RECV           2   /* incoming DCC file                    */
-#define DCC_FILE_SEND           3   /* sending DCC file                     */
-
-#define DCC_WAITING             0   /* waiting for host answer              */
-#define DCC_CONNECTING          1   /* connecting to host                   */
-#define DCC_ACTIVE              2   /* sending/receiving data               */
-#define DCC_DONE                3   /* transfer done                        */
-#define DCC_FAILED              4   /* DCC failed                           */
-#define DCC_ABORTED             5   /* DCC aborted by user                  */
-
-#define DCC_IS_CHAT(type) ((type == DCC_CHAT_RECV) || (type == DCC_CHAT_SEND))
-#define DCC_IS_FILE(type) ((type == DCC_FILE_RECV) || (type == DCC_FILE_SEND))
-#define DCC_IS_RECV(type) ((type == DCC_CHAT_RECV) || (type == DCC_FILE_RECV))
-#define DCC_IS_SEND(type) ((type == DCC_CHAT_SEND) || (type == DCC_FILE_SEND))
-
-#define DCC_ENDED(status) ((status == DCC_DONE) || (status == DCC_FAILED) || \
-                          (status == DCC_ABORTED))
-
-/* nick types */
-
-typedef struct t_irc_nick t_irc_nick;
-
-struct t_irc_nick
-{
-    char *nick;                     /* nickname                             */
-    int is_chanowner;               /* chan owner? (specific to unrealircd) */
-    int is_chanadmin;               /* chan admin? (specific to unrealircd) */
-    int is_op;                      /* operator privileges?                 */
-    int is_halfop;                  /* half operator privileges?            */
-    int has_voice;                  /* nick has voice?                      */
-    int is_away;                    /* = 1 if nick is away, otherwise 0     */
-    int color;                      /* color for nickname in chat window    */
-    t_irc_nick *prev_nick;          /* link to previous nick on the channel */
-    t_irc_nick *next_nick;          /* link to next nick on the channel     */
-};
-
-/* channel types */
-
 typedef struct t_irc_channel t_irc_channel;
-
-#define CHAT_UNKNOWN -1
-#define CHAT_CHANNEL 0
-#define CHAT_PRIVATE 1
 
 struct t_irc_channel
 {
@@ -120,7 +104,7 @@ struct t_irc_channel
     void *dcc_chat;                 /* DCC CHAT pointer (NULL if not DCC)   */
     char *name;                     /* name of channel (exemple: "#abc")    */
     char *topic;                    /* topic of channel (host for private)  */
-    char modes[NUM_CHANNEL_MODES+1];/* channel modes                        */
+    char *modes;                    /* channel modes                        */
     int limit;                      /* user limit (0 is limit not set)      */
     char *key;                      /* channel key (NULL if no key is set)  */
     int nicks_count;                /* # nicks on channel (0 if dcc/pv)     */
@@ -166,11 +150,10 @@ struct t_irc_server
     int child_write;                /* to write into child pipe             */
     int sock;                       /* socket for server (IPv4 or IPv6)     */
     int is_connected;               /* 1 if WeeChat is connected to server  */
-#ifdef HAVE_GNUTLS
     int ssl_connected;              /* = 1 if connected with SSL            */
+#ifdef HAVE_GNUTLS
     gnutls_session gnutls_sess;     /* gnutls session (only if SSL is used) */
 #endif
-
     char *unterminated_message;     /* beginning of a message in input buf  */
     char *nick;                     /* current nickname                     */
     time_t reconnect_start;         /* this time + delay = reconnect time   */
@@ -221,6 +204,26 @@ struct t_irc_message
 
 /* DCC types */
 
+#define DCC_CHAT_RECV           0   /* receiving DCC chat                   */
+#define DCC_CHAT_SEND           1   /* sending DCC chat                     */
+#define DCC_FILE_RECV           2   /* incoming DCC file                    */
+#define DCC_FILE_SEND           3   /* sending DCC file                     */
+
+#define DCC_WAITING             0   /* waiting for host answer              */
+#define DCC_CONNECTING          1   /* connecting to host                   */
+#define DCC_ACTIVE              2   /* sending/receiving data               */
+#define DCC_DONE                3   /* transfer done                        */
+#define DCC_FAILED              4   /* DCC failed                           */
+#define DCC_ABORTED             5   /* DCC aborted by user                  */
+
+#define DCC_IS_CHAT(type) ((type == DCC_CHAT_RECV) || (type == DCC_CHAT_SEND))
+#define DCC_IS_FILE(type) ((type == DCC_FILE_RECV) || (type == DCC_FILE_SEND))
+#define DCC_IS_RECV(type) ((type == DCC_CHAT_RECV) || (type == DCC_FILE_RECV))
+#define DCC_IS_SEND(type) ((type == DCC_CHAT_SEND) || (type == DCC_FILE_SEND))
+
+#define DCC_ENDED(status) ((status == DCC_DONE) || (status == DCC_FAILED) || \
+                          (status == DCC_ABORTED))
+
 typedef struct t_irc_dcc t_irc_dcc;
 
 struct t_irc_dcc
@@ -246,8 +249,9 @@ struct t_irc_dcc
     unsigned long start_resume;     /* start of resume (in bytes)           */
     time_t last_check_time;         /* last time we looked at bytes sent/rcv*/
     unsigned long last_check_pos;   /* bytes sent/recv at last check        */
-    unsigned long bytes_per_sec;    /* bytes per second                     */
     time_t last_activity;           /* time of last byte received/sent      */
+    unsigned long bytes_per_sec;    /* bytes per second                     */
+    unsigned long eta;              /* estimated time of arrival            */
     t_irc_dcc *prev_dcc;            /* link to previous dcc file/chat       */
     t_irc_dcc *next_dcc;            /* link to next dcc file/chat           */
 };
@@ -327,7 +331,7 @@ extern int pass_proxy(int, char*, int, char*);
 
 /* channel functions (irc-channel.c) */
 
-extern t_irc_channel *channel_new (t_irc_server *, int, char *, int);
+extern t_irc_channel *channel_new (t_irc_server *, int, char *);
 extern void channel_free (t_irc_server *, t_irc_channel *);
 extern void channel_free_all (t_irc_server *);
 extern t_irc_channel *channel_search (t_irc_server *, char *);
@@ -345,7 +349,8 @@ extern void channel_print_log (t_irc_channel *);
 /* nick functions (irc-nick.c) */
 
 extern int nick_find_color (t_irc_nick *);
-extern t_irc_nick *nick_new (t_irc_channel *, char *, int, int, int, int, int);
+extern t_irc_nick *nick_new (t_irc_server *, t_irc_channel *, char *,
+                             int, int, int, int, int);
 extern void nick_resort (t_irc_channel *, t_irc_nick *);
 extern void nick_change (t_irc_channel *, t_irc_nick *, char *);
 extern void nick_free (t_irc_channel *, t_irc_nick *);
@@ -364,12 +369,14 @@ extern void dcc_close (t_irc_dcc *, int);
 extern void dcc_accept (t_irc_dcc *);
 extern void dcc_accept_resume (t_irc_server *, char *, int, unsigned long);
 extern void dcc_start_resume (t_irc_server *, char *, int, unsigned long);
+extern t_irc_dcc *dcc_alloc ();
 extern t_irc_dcc *dcc_add (t_irc_server *, int, unsigned long, int, char *, int,
                            char *, char *, unsigned long);
 extern void dcc_send_request (t_irc_server *, int, char *, char *);
 extern void dcc_chat_sendf (t_irc_dcc *, char *, ...);
 extern void dcc_handle ();
 extern void dcc_end ();
+extern void dcc_print_log (t_irc_dcc *);
 
 /* IRC display (irc-diplay.c) */
 

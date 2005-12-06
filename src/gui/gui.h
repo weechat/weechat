@@ -140,8 +140,8 @@ enum t_weechat_color
 #define CHANNEL(buffer) ((t_irc_channel *)(buffer->channel))
 
 #define BUFFER_IS_SERVER(buffer)  ((SERVER(buffer) || (buffer->all_servers)) && !CHANNEL(buffer))
-#define BUFFER_IS_CHANNEL(buffer) (CHANNEL(buffer) && (CHANNEL(buffer)->type == CHAT_CHANNEL))
-#define BUFFER_IS_PRIVATE(buffer) (CHANNEL(buffer) && (CHANNEL(buffer)->type == CHAT_PRIVATE))
+#define BUFFER_IS_CHANNEL(buffer) (CHANNEL(buffer) && (CHANNEL(buffer)->type == CHANNEL_TYPE_CHANNEL))
+#define BUFFER_IS_PRIVATE(buffer) (CHANNEL(buffer) && (CHANNEL(buffer)->type == CHANNEL_TYPE_PRIVATE))
 
 #define BUFFER_HAS_NICKLIST(buffer) (BUFFER_IS_CHANNEL(buffer))
 
@@ -409,7 +409,7 @@ extern void gui_infobar_printf (int, int, char *, ...);
 extern void gui_window_free (t_gui_window *);
 extern void gui_infobar_remove ();
 extern void gui_buffer_free (t_gui_buffer *, int);
-extern t_gui_line *gui_new_line (t_gui_buffer *);
+extern t_gui_line *gui_line_new (t_gui_buffer *);
 extern int gui_word_strlen (t_gui_window *, char *);
 extern int gui_word_real_pos (t_gui_window *, char *, int);
 extern void gui_printf_internal (t_gui_buffer *, int, int, char *, ...);

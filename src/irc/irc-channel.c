@@ -41,8 +41,7 @@ char *channel_modes = "iklmnst";
  */
 
 t_irc_channel *
-channel_new (t_irc_server *server, int channel_type, char *channel_name,
-             int switch_to_buffer)
+channel_new (t_irc_server *server, int channel_type, char *channel_name)
 {
     t_irc_channel *new_channel;
     
@@ -58,8 +57,9 @@ channel_new (t_irc_server *server, int channel_type, char *channel_name,
     new_channel->dcc_chat = NULL;
     new_channel->name = strdup (channel_name);
     new_channel->topic = NULL;
-    memset (new_channel->modes, ' ', sizeof (new_channel->modes));
-    new_channel->modes[sizeof (new_channel->modes) - 1] = '\0';
+    new_channel->modes = (char *) malloc (NUM_CHANNEL_MODES + 1);
+    memset (new_channel->modes, ' ', NUM_CHANNEL_MODES);
+    new_channel->modes[NUM_CHANNEL_MODES] = '\0';
     new_channel->limit = 0;
     new_channel->key = NULL;
     new_channel->nicks_count = 0;
@@ -75,8 +75,6 @@ channel_new (t_irc_server *server, int channel_type, char *channel_name,
     else
         server->channels = new_channel;
     server->last_channel = new_channel;
-
-    gui_buffer_new (gui_current_window, server, new_channel, 0, switch_to_buffer);
     
     /* all is ok, return address of new channel */
     return new_channel;
@@ -182,11 +180,11 @@ channel_remove_away (t_irc_channel *channel)
 {
     t_irc_nick *ptr_nick;
     
-    if (channel->type == CHAT_CHANNEL)
+    if (channel->type == CHANNEL_TYPE_CHANNEL)
     {
         for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
         {
-            ptr_nick->is_away = 0;
+            NICK_SET_FLAG(ptr_nick, 0, NICK_AWAY);
         }
         gui_draw_buffer_nick (channel->buffer, 0);
     }
@@ -199,7 +197,7 @@ channel_remove_away (t_irc_channel *channel)
 void
 channel_check_away (t_irc_server *server, t_irc_channel *channel)
 {
-    if (channel->type == CHAT_CHANNEL)
+    if (channel->type == CHANNEL_TYPE_CHANNEL)
     {
         channel->checking_away++;
         server_sendf (server, "WHO %s\r\n", channel->name);
@@ -215,7 +213,7 @@ channel_set_away (t_irc_channel *channel, char *nick, int is_away)
 {
     t_irc_nick *ptr_nick;
     
-    if (channel->type == CHAT_CHANNEL)
+    if (channel->type == CHANNEL_TYPE_CHANNEL)
     {
         ptr_nick = nick_search (channel, nick);
         if (ptr_nick)
@@ -234,10 +232,11 @@ channel_create_dcc (t_irc_dcc *ptr_dcc)
     
     ptr_channel = channel_search (ptr_dcc->server, ptr_dcc->nick);
     if (!ptr_channel)
-        ptr_channel = channel_new (ptr_dcc->server, CHAT_PRIVATE,
-                                   ptr_dcc->nick, 0);
+        ptr_channel = channel_new (ptr_dcc->server, CHANNEL_TYPE_PRIVATE,
+                                   ptr_dcc->nick);
     if (!ptr_channel)
         return 0;
+    gui_buffer_new (gui_current_window, ptr_dcc->server, ptr_channel, 0, 0);
     
     if (ptr_channel->dcc_chat &&
         (!DCC_ENDED(((t_irc_dcc *)(ptr_channel->dcc_chat))->status)))
@@ -406,17 +405,17 @@ channel_set_notify_level (t_irc_server *server, t_irc_channel *channel, int noti
 void
 channel_print_log (t_irc_channel *channel)
 {
-    wee_log_printf ("=> channel %s (addr:0x%X)]\n", channel->name, channel);
-    wee_log_printf ("     type . . . . : %d\n",     channel->type);
-    wee_log_printf ("     dcc_chat . . : 0x%X\n",   channel->dcc_chat);
-    wee_log_printf ("     topic. . . . : '%s'\n",   channel->topic);
-    wee_log_printf ("     modes. . . . : '%s'\n",   channel->modes);
-    wee_log_printf ("     limit. . . . : %d\n",     channel->limit);
-    wee_log_printf ("     key. . . . . : '%s'\n",   channel->key);
-    wee_log_printf ("     checking_away: %d\n",     channel->checking_away);
-    wee_log_printf ("     nicks. . . . : 0x%X\n",   channel->nicks);
-    wee_log_printf ("     last_nick. . : 0x%X\n",   channel->last_nick);
-    wee_log_printf ("     buffer . . . : 0x%X\n",   channel->buffer);
-    wee_log_printf ("     prev_channel : 0x%X\n",   channel->prev_channel);
-    wee_log_printf ("     next_channel : 0x%X\n",   channel->next_channel);
+    weechat_log_printf ("=> channel %s (addr:0x%X)]\n", channel->name, channel);
+    weechat_log_printf ("     type . . . . : %d\n",     channel->type);
+    weechat_log_printf ("     dcc_chat . . : 0x%X\n",   channel->dcc_chat);
+    weechat_log_printf ("     topic. . . . : '%s'\n",   channel->topic);
+    weechat_log_printf ("     modes. . . . : '%s'\n",   channel->modes);
+    weechat_log_printf ("     limit. . . . : %d\n",     channel->limit);
+    weechat_log_printf ("     key. . . . . : '%s'\n",   channel->key);
+    weechat_log_printf ("     checking_away: %d\n",     channel->checking_away);
+    weechat_log_printf ("     nicks. . . . : 0x%X\n",   channel->nicks);
+    weechat_log_printf ("     last_nick. . : 0x%X\n",   channel->last_nick);
+    weechat_log_printf ("     buffer . . . : 0x%X\n",   channel->buffer);
+    weechat_log_printf ("     prev_channel : 0x%X\n",   channel->prev_channel);
+    weechat_log_printf ("     next_channel : 0x%X\n",   channel->next_channel);
 }

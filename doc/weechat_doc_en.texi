@@ -35,7 +35,7 @@
 
 @title WeeChat - User guide
 @subtitle Fast, light and extensible IRC client
-@subtitle Documentation for WeeChat v0.1.7-cvs - November, 29 2005
+@subtitle Documentation for WeeChat v0.1.7-cvs - December, 6 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -1044,6 +1044,10 @@ channel: name of channel for unignore@*
 @*
 For each argument, '*' means all.@*
 Without argument, /unignore command lists all defined ignore.@*
+@*
+@item upgrade
+@*
+upgrade WeeChat without disconnecting from servers@*
 @*
 @item uptime  [-o]
 @*

@@ -34,7 +34,8 @@ extern t_history *history_global;
 extern t_history *history_global_last;
 extern t_history *history_global_ptr;
 
-extern void history_add (void *, char *);
+extern void history_buffer_add (void *, char *);
+extern void history_global_add (char *);
 extern void history_global_free ();
 extern void history_buffer_free (void *);
 

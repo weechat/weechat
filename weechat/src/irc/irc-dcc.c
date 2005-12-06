@@ -148,6 +148,9 @@ dcc_find_filename (t_irc_dcc *ptr_dcc)
 {
     char *ptr_home, *filename2;
     
+    if (!DCC_IS_FILE(ptr_dcc->type))
+        return;
+    
     ptr_home = getenv ("HOME");
     ptr_dcc->local_filename = (char *) malloc (strlen (cfg_dcc_download_path) +
                                                strlen (ptr_dcc->nick) +
@@ -223,20 +226,32 @@ void
 dcc_calculate_speed (t_irc_dcc *ptr_dcc, int ended)
 {
     time_t local_time, elapsed;
+    unsigned long bytes_per_sec_total;
     
     local_time = time (NULL);
     if (ended || local_time > ptr_dcc->last_check_time)
     {
-        
         if (ended)
         {
+            /* calculate bytes per second (global) */
             elapsed = local_time - ptr_dcc->start_transfer;
             if (elapsed == 0)
                 elapsed = 1;
             ptr_dcc->bytes_per_sec = (ptr_dcc->pos - ptr_dcc->start_resume) / elapsed;
+            ptr_dcc->eta = 0;
         }
         else
         {
+            /* calculate ETA */
+            elapsed = local_time - ptr_dcc->start_transfer;
+            if (elapsed == 0)
+                elapsed = 1;
+            bytes_per_sec_total = (ptr_dcc->pos - ptr_dcc->start_resume) / elapsed;
+            if (bytes_per_sec_total == 0)
+                bytes_per_sec_total = 1;
+            ptr_dcc->eta = (ptr_dcc->size - ptr_dcc->pos) / bytes_per_sec_total;
+            
+            /* calculate bytes per second (since last check time) */
             elapsed = local_time - ptr_dcc->last_check_time;
             if (elapsed == 0)
                 elapsed = 1;
@@ -606,6 +621,54 @@ dcc_start_resume (t_irc_server *server, char *filename, int port,
 }
 
 /*
+ * dcc_alloc: allocate a new DCC file
+ */
+
+t_irc_dcc *
+dcc_alloc ()
+{
+    t_irc_dcc *new_dcc;
+    
+    /* create new DCC struct */
+    if ((new_dcc = (t_irc_dcc *) malloc (sizeof (t_irc_dcc))) == NULL)
+        return NULL;
+    
+    /* default values */
+    new_dcc->server = NULL;
+    new_dcc->channel = NULL;
+    new_dcc->type = 0;
+    new_dcc->status = 0;
+    new_dcc->start_time = 0;
+    new_dcc->start_transfer = 0;
+    new_dcc->addr = 0;
+    new_dcc->port = 0;
+    new_dcc->nick = NULL;
+    new_dcc->sock = -1;
+    new_dcc->unterminated_message = NULL;
+    new_dcc->file = -1;
+    new_dcc->filename = NULL;
+    new_dcc->local_filename = NULL;
+    new_dcc->filename_suffix = -1;
+    new_dcc->size = 0;
+    new_dcc->pos = 0;
+    new_dcc->ack = 0;
+    new_dcc->start_resume = 0;
+    new_dcc->last_check_time = 0;
+    new_dcc->last_check_pos = 0;
+    new_dcc->last_activity = 0;
+    new_dcc->bytes_per_sec = 0;
+    new_dcc->eta = 0;
+    
+    new_dcc->prev_dcc = NULL;
+    new_dcc->next_dcc = dcc_list;
+    if (dcc_list)
+        dcc_list->prev_dcc = new_dcc;
+    dcc_list = new_dcc;
+    
+    return new_dcc;
+}
+
+/*
  * dcc_add: add a DCC file to queue
  */
 
@@ -615,8 +678,8 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
 {
     t_irc_dcc *new_dcc;
     
-    /* create new DCC struct */
-    if ((new_dcc = (t_irc_dcc *) malloc (sizeof (t_irc_dcc))) == NULL)
+    new_dcc = dcc_alloc ();
+    if (!new_dcc)
     {
         irc_display_prefix (server, server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
@@ -650,17 +713,13 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
     new_dcc->start_resume = 0;
     new_dcc->last_check_time = time (NULL);
     new_dcc->last_check_pos = 0;
-    new_dcc->bytes_per_sec = 0;
     new_dcc->last_activity = time (NULL);
+    new_dcc->bytes_per_sec = 0;
+    new_dcc->eta = 0;
     if (local_filename)
         new_dcc->local_filename = strdup (local_filename);
     else
         dcc_find_filename (new_dcc);
-    new_dcc->prev_dcc = NULL;
-    new_dcc->next_dcc = dcc_list;
-    if (dcc_list)
-        dcc_list->prev_dcc = new_dcc;
-    dcc_list = new_dcc;
     
     gui_current_window->dcc_first = NULL;
     gui_current_window->dcc_selected = NULL;
@@ -1424,9 +1483,45 @@ dcc_end ()
         if (ptr_dcc->sock != -1)
         {
             if (ptr_dcc->status == DCC_ACTIVE)
-                wee_log_printf (_("Aborting active DCC: \"%s\" from %s\n"),
-                                ptr_dcc->filename, ptr_dcc->nick);
+                weechat_log_printf (_("Aborting active DCC: \"%s\" from %s\n"),
+                                    ptr_dcc->filename, ptr_dcc->nick);
             dcc_close (ptr_dcc, DCC_FAILED);
         }
     }
+}
+
+/*
+ * dcc_print_log: print DCC infos in log (usually for crash dump)
+ */
+
+void
+dcc_print_log (t_irc_dcc *dcc)
+{
+    weechat_log_printf ("[DCC (addr:0x%X)]\n", dcc);
+    weechat_log_printf ("  server. . . . . . . : 0x%X\n", dcc->server);
+    weechat_log_printf ("  channel . . . . . . : 0x%X\n", dcc->channel);
+    weechat_log_printf ("  type. . . . . . . . : %d\n",   dcc->type);
+    weechat_log_printf ("  status. . . . . . . : %d\n",   dcc->status);
+    weechat_log_printf ("  start_time. . . . . : %ld\n",  dcc->start_time);
+    weechat_log_printf ("  start_transfer. . . : %ld\n",  dcc->start_transfer);
+    weechat_log_printf ("  addr. . . . . . . . : %lu\n",  dcc->addr);
+    weechat_log_printf ("  port. . . . . . . . : %d\n",   dcc->port);
+    weechat_log_printf ("  nick. . . . . . . . : '%s'\n", dcc->nick);
+    weechat_log_printf ("  sock. . . . . . . . : %d\n",   dcc->sock);
+    weechat_log_printf ("  unterminated_message: '%s'\n", dcc->unterminated_message);
+    weechat_log_printf ("  file. . . . . . . . : %d\n",   dcc->file);
+    weechat_log_printf ("  filename. . . . . . : '%s'\n", dcc->filename);
+    weechat_log_printf ("  local_filename. . . : '%s'\n", dcc->local_filename);
+    weechat_log_printf ("  filename_suffix . . : %d\n",   dcc->filename_suffix);
+    weechat_log_printf ("  size. . . . . . . . : %lu\n",  dcc->size);
+    weechat_log_printf ("  pos . . . . . . . . : %lu\n",  dcc->pos);
+    weechat_log_printf ("  ack . . . . . . . . : %lu\n",  dcc->ack);
+    weechat_log_printf ("  start_resume. . . . : %lu\n",  dcc->start_resume);
+    weechat_log_printf ("  last_check_time . . : %ld\n",  dcc->last_check_time);
+    weechat_log_printf ("  last_check_pos. . . : %lu\n",  dcc->last_check_pos);
+    weechat_log_printf ("  last_activity . . . : %ld\n",  dcc->last_activity);
+    weechat_log_printf ("  bytes_per_sec . . . : %lu\n",  dcc->bytes_per_sec);
+    weechat_log_printf ("  eta . . . . . . . . : %lu\n",  dcc->eta);
+    weechat_log_printf ("  prev_dcc. . . . . . : 0x%X\n", dcc->prev_dcc);
+    weechat_log_printf ("  next_dcc. . . . . . : 0x%X\n", dcc->next_dcc);
 }

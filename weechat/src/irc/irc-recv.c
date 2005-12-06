@@ -396,7 +396,7 @@ irc_cmd_recv_join (t_irc_server *server, char *host, char *nick, char *arguments
     ptr_channel = channel_search (server, arguments);
     if (!ptr_channel)
     {
-        ptr_channel = channel_new (server, CHAT_CHANNEL, arguments, 1);
+        ptr_channel = channel_new (server, CHANNEL_TYPE_CHANNEL, arguments);
         if (!ptr_channel)
         {
             irc_display_prefix (server, server->buffer, PREFIX_ERROR);
@@ -405,6 +405,7 @@ irc_cmd_recv_join (t_irc_server *server, char *host, char *nick, char *arguments
                               WEECHAT_ERROR, arguments);
             return -1;
         }
+        gui_buffer_new (gui_current_window, server, ptr_channel, 0, 1);
     }
     
     if (!command_ignored)
@@ -423,7 +424,7 @@ irc_cmd_recv_join (t_irc_server *server, char *host, char *nick, char *arguments
                     GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
                     arguments);
     }
-    (void) nick_new (ptr_channel, nick, 0, 0, 0, 0, 0);
+    (void) nick_new (server, ptr_channel, nick, 0, 0, 0, 0, 0);
     gui_draw_buffer_nick (ptr_channel->buffer, 1);
     gui_draw_buffer_status (ptr_channel->buffer, 1);
     return 0;
@@ -705,7 +706,7 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *ptr_channel,
                     ptr_nick = nick_search (ptr_channel, parm);
                     if (ptr_nick)
                     {
-                        ptr_nick->is_halfop = (set_flag == '+') ? 1 : 0;
+                        NICK_SET_FLAG(ptr_nick, (set_flag == '+'), NICK_HALFOP);
                         nick_resort (ptr_channel, ptr_nick);
                         gui_draw_buffer_nick (ptr_channel->buffer, 1);
                     }
@@ -728,8 +729,8 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *ptr_channel,
                                           _("sets invite-only channel flag") :
                                           _("removes invite-only channel flag"),
                                       NULL);
-                SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
-                    CHANNEL_MODE_INVITE);
+                CHANNEL_SET_MODE(ptr_channel, (set_flag == '+'),
+                                 CHANNEL_MODE_INVITE);
                 break;
             case 'k':
                 pos = NULL;
@@ -748,8 +749,8 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *ptr_channel,
                                       (set_flag == '+') ?
                                       ((parm) ? parm : NULL) :
                                       NULL);
-                SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
-                    CHANNEL_MODE_KEY);
+                CHANNEL_SET_MODE(ptr_channel, (set_flag == '+'),
+                                 CHANNEL_MODE_KEY);
                 if (ptr_channel->key)
                     free (ptr_channel->key);
                 ptr_channel->key = strdup (parm);
@@ -780,8 +781,8 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *ptr_channel,
                                       (set_flag == '+') ?
                                       ((parm) ? parm : NULL) :
                                       NULL);
-                SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
-                    CHANNEL_MODE_LIMIT);
+                CHANNEL_SET_MODE(ptr_channel, (set_flag == '+'),
+                                 CHANNEL_MODE_LIMIT);
                 ptr_channel->limit = atoi (parm);
                 
                 /* look for next parameter */
@@ -801,8 +802,8 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *ptr_channel,
                                           _("sets moderated channel flag") :
                                           _("removes moderated channel flag"),
                                       NULL);
-                SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
-                    CHANNEL_MODE_MODERATED);
+                CHANNEL_SET_MODE(ptr_channel, (set_flag == '+'),
+                                 CHANNEL_MODE_MODERATED);
                 break;
             case 'n':
                 if (nick_host)
@@ -812,8 +813,8 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *ptr_channel,
                                           _("sets messages from channel only flag") :
                                           _("removes messages from channel only flag"),
                                       NULL);
-                SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
-                    CHANNEL_MODE_NO_MSG_OUT);
+                CHANNEL_SET_MODE(ptr_channel, (set_flag == '+'),
+                                 CHANNEL_MODE_NO_MSG_OUT);
                 break;
             case 'o':
                 pos = NULL;
@@ -835,7 +836,7 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *ptr_channel,
                     ptr_nick = nick_search (ptr_channel, parm);
                     if (ptr_nick)
                     {
-                        ptr_nick->is_op = (set_flag == '+') ? 1 : 0;
+                        NICK_SET_FLAG(ptr_nick, (set_flag == '+'), NICK_OP);
                         nick_resort (ptr_channel, ptr_nick);
                         gui_draw_buffer_nick (ptr_channel->buffer, 1);
                     }
@@ -858,8 +859,8 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *ptr_channel,
                                           _("sets private channel flag") :
                                           _("removes private channel flag"),
                                       NULL);
-                SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
-                    CHANNEL_MODE_SECRET);
+                CHANNEL_SET_MODE(ptr_channel, (set_flag == '+'),
+                                 CHANNEL_MODE_SECRET);
                 break;
             case 'q':
                 pos = NULL;
@@ -894,8 +895,8 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *ptr_channel,
                                           _("sets secret channel flag") :
                                           _("removes secret channel flag"),
                                       NULL);
-                SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
-                    CHANNEL_MODE_SECRET);
+                CHANNEL_SET_MODE(ptr_channel, (set_flag == '+'),
+                                 CHANNEL_MODE_SECRET);
                 break;
             case 't':
                 if (nick_host)
@@ -905,8 +906,8 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *ptr_channel,
                                           _("sets topic protection") :
                                           _("removes topic protection"),
                                       NULL);
-                SET_CHANNEL_MODE(ptr_channel, (set_flag == '+'),
-                    CHANNEL_MODE_TOPIC);
+                CHANNEL_SET_MODE(ptr_channel, (set_flag == '+'),
+                                 CHANNEL_MODE_TOPIC);
                 break;
             case 'v':
                 pos = NULL;
@@ -929,7 +930,7 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *ptr_channel,
                     ptr_nick = nick_search (ptr_channel, parm);
                     if (ptr_nick)
                     {
-                        ptr_nick->has_voice = (set_flag == '+') ? 1 : 0;
+                        NICK_SET_FLAG(ptr_nick, (set_flag == '+'), NICK_VOICE);
                         nick_resort (ptr_channel, ptr_nick);
                         gui_draw_buffer_nick (ptr_channel->buffer, 1);
                     }
@@ -1222,7 +1223,7 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *nick, char *argumen
                     ptr_channel = channel_search (server, nick);
                     if (!ptr_channel)
                     {
-                        ptr_channel = channel_new (server, CHAT_PRIVATE, nick, 0);
+                        ptr_channel = channel_new (server, CHANNEL_TYPE_PRIVATE, nick);
                         if (!ptr_channel)
                         {
                             irc_display_prefix (server, server->buffer, PREFIX_ERROR);
@@ -1231,6 +1232,7 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *nick, char *argumen
                                               WEECHAT_ERROR, nick);
                             return -1;
                         }
+                        gui_buffer_new (gui_current_window, server, ptr_channel, 0, 0);
                     }
                     if (!ptr_channel->topic)
                         ptr_channel->topic = strdup ((host2) ? host2 : "");
@@ -2034,7 +2036,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                 {
                     if (!ptr_channel)
                     {
-                        ptr_channel = channel_new (server, CHAT_PRIVATE, nick, 0);
+                        ptr_channel = channel_new (server, CHANNEL_TYPE_PRIVATE, nick);
                         if (!ptr_channel)
                         {
                             irc_display_prefix (server, server->buffer, PREFIX_ERROR);
@@ -2043,6 +2045,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                                               WEECHAT_ERROR, nick);
                             return -1;
                         }
+                        gui_buffer_new (gui_current_window, server, ptr_channel, 0, 0);
                     }
                     if (!ptr_channel->topic)
                         ptr_channel->topic = strdup (host2);
@@ -2124,7 +2127,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                     {
                         if (!ptr_channel)
                         {
-                            ptr_channel = channel_new (server, CHAT_PRIVATE, nick, 0);
+                            ptr_channel = channel_new (server, CHANNEL_TYPE_PRIVATE, nick);
                             if (!ptr_channel)
                             {
                                 irc_display_prefix (server, server->buffer, PREFIX_ERROR);
@@ -2133,6 +2136,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                                                   WEECHAT_ERROR, nick);
                                 return -1;
                             }
+                            gui_buffer_new (gui_current_window, server, ptr_channel, 0, 0);
                         }
                         if (!ptr_channel->topic)
                             ptr_channel->topic = strdup (host2);
@@ -2206,7 +2210,7 @@ irc_cmd_recv_quit (t_irc_server *server, char *host, char *nick, char *arguments
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
-        if (ptr_channel->type == CHAT_PRIVATE)
+        if (ptr_channel->type == CHANNEL_TYPE_PRIVATE)
             ptr_nick = NULL;
         else
             ptr_nick = nick_search (ptr_channel, nick);
@@ -2454,7 +2458,7 @@ irc_cmd_recv_004 (t_irc_server *server, char *host, char *nick, char *arguments)
         for (ptr_channel = server->channels; ptr_channel;
              ptr_channel = ptr_channel->next_channel)
         {
-            if (ptr_channel->type == CHAT_CHANNEL)
+            if (ptr_channel->type == CHANNEL_TYPE_CHANNEL)
             {
                 if (ptr_channel->key)
                     server_sendf (server, "JOIN %s %s\r\n",
@@ -4309,8 +4313,8 @@ irc_cmd_recv_353 (t_irc_server *server, char *host, char *nick, char *arguments)
                     pos[0] = '\0';
                     pos++;
                 }
-                if (!nick_new (ptr_channel, pos_nick, is_chanowner, is_chanadmin,
-                               is_op, is_halfop, has_voice))
+                if (!nick_new (server, ptr_channel, pos_nick, is_chanowner,
+                               is_chanadmin, is_op, is_halfop, has_voice))
                 {
                     irc_display_prefix (server, server->buffer, PREFIX_ERROR);
                     gui_printf_nolog (server->buffer,

@@ -137,8 +137,8 @@ gui_window_new (t_gui_window *parent, int x, int y, int width, int height,
     t_gui_window_tree *ptr_tree, *child1, *child2, *ptr_leaf;
     
     #ifdef DEBUG
-    wee_log_printf ("Creating new window (x:%d, y:%d, width:%d, height:%d)\n",
-                    x, y, width, height);
+    weechat_log_printf ("Creating new window (x:%d, y:%d, width:%d, height:%d)\n",
+                        x, y, width, height);
     #endif
     
     if (parent)
@@ -353,7 +353,7 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int dcc,
     t_gui_buffer *new_buffer, *ptr_buffer;
     
     #ifdef DEBUG
-    wee_log_printf ("Creating new buffer\n");
+    weechat_log_printf ("Creating new buffer\n");
     #endif
     
     /* use first buffer if no server was assigned to this buffer */
@@ -665,11 +665,11 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
 }
 
 /*
- * gui_new_line: create new line for a buffer
+ * gui_line_new: create new line for a buffer
  */
 
 t_gui_line *
-gui_new_line (t_gui_buffer *buffer)
+gui_line_new (t_gui_buffer *buffer)
 {
     t_gui_line *new_line, *ptr_line;
     
@@ -693,7 +693,7 @@ gui_new_line (t_gui_buffer *buffer)
     }
     else
     {
-        wee_log_printf (_("Not enough memory for new line\n"));
+        weechat_log_printf (_("Not enough memory for new line\n"));
         return NULL;
     }
     
@@ -708,7 +708,6 @@ gui_new_line (t_gui_buffer *buffer)
         buffer->lines = ptr_line;
         ptr_line->prev_line = NULL;
         buffer->num_lines--;
-        //if (buffer->first_line_displayed)
         gui_draw_buffer_chat (buffer, 1);
     }
     
@@ -774,7 +773,7 @@ gui_add_to_line (t_gui_buffer *buffer, int type, char *message)
     if (buffer->line_complete)
     {
         buffer->line_complete = 0;
-        if (!gui_new_line (buffer))
+        if (!gui_line_new (buffer))
             return;
     }
     
@@ -880,8 +879,8 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, char *mes
     
         if (buffer == NULL)
         {
-            wee_log_printf ("WARNING: gui_printf_internal without buffer! This is a bug, "
-                            "please send to developers - thanks\n");
+            weechat_log_printf ("WARNING: gui_printf_internal without buffer! This is a bug, "
+                                "please send to developers - thanks\n");
             return;
         }
         
@@ -1045,7 +1044,7 @@ gui_infobar_printf (int time_displayed, int color, char *message, ...)
             gui_draw_buffer_infobar (gui_current_window->buffer, 1);
         }
         else
-            wee_log_printf (_("Not enough memory for infobar message\n"));
+            weechat_log_printf (_("Not enough memory for infobar message\n"));
     }
     
     if (buf2)
@@ -1616,45 +1615,45 @@ gui_buffer_move_to_number (t_gui_window *window, int number)
 void
 gui_window_print_log (t_gui_window *window)
 {
-    wee_log_printf ("[window (addr:0x%X)]\n", window);
-    wee_log_printf ("  win_x . . . . . . . : %d\n",   window->win_x);
-    wee_log_printf ("  win_y . . . . . . . : %d\n",   window->win_y);
-    wee_log_printf ("  win_width . . . . . : %d\n",   window->win_width);
-    wee_log_printf ("  win_height. . . . . : %d\n",   window->win_height);
-    wee_log_printf ("  win_width_pct . . . : %d\n",   window->win_width_pct);
-    wee_log_printf ("  win_height_pct. . . : %d\n",   window->win_height_pct);
-    wee_log_printf ("  win_chat_x. . . . . : %d\n",   window->win_chat_x);
-    wee_log_printf ("  win_chat_y. . . . . : %d\n",   window->win_chat_y);
-    wee_log_printf ("  win_chat_width. . . : %d\n",   window->win_chat_width);
-    wee_log_printf ("  win_chat_height . . : %d\n",   window->win_chat_height);
-    wee_log_printf ("  win_chat_cursor_x . : %d\n",   window->win_chat_cursor_x);
-    wee_log_printf ("  win_chat_cursor_y . : %d\n",   window->win_chat_cursor_y);
-    wee_log_printf ("  win_nick_x. . . . . : %d\n",   window->win_nick_x);
-    wee_log_printf ("  win_nick_y. . . . . : %d\n",   window->win_nick_y);
-    wee_log_printf ("  win_nick_width. . . : %d\n",   window->win_nick_width);
-    wee_log_printf ("  win_nick_height . . : %d\n",   window->win_nick_height);
-    wee_log_printf ("  win_nick_start. . . : %d\n",   window->win_nick_start);
-    wee_log_printf ("  win_title . . . . . : 0x%X\n", window->win_title);
-    wee_log_printf ("  win_chat. . . . . . : 0x%X\n", window->win_chat);
-    wee_log_printf ("  win_nick. . . . . . : 0x%X\n", window->win_nick);
-    wee_log_printf ("  win_status. . . . . : 0x%X\n", window->win_status);
-    wee_log_printf ("  win_infobar . . . . : 0x%X\n", window->win_infobar);
-    wee_log_printf ("  win_input . . . . . : 0x%X\n", window->win_input);
-    wee_log_printf ("  win_separator . . . : 0x%X\n", window->win_separator);
-    wee_log_printf ("  textview_chat . . . : 0x%X\n", window->textview_chat);
-    wee_log_printf ("  textbuffer_chat . . : 0x%X\n", window->textbuffer_chat);
-    wee_log_printf ("  texttag_chat. . . . : 0x%X\n", window->texttag_chat);
-    wee_log_printf ("  textview_nicklist . : 0x%X\n", window->textview_nicklist);
-    wee_log_printf ("  textbuffer_nicklist : 0x%X\n", window->textbuffer_nicklist);
-    wee_log_printf ("  dcc_first . . . . . : 0x%X\n", window->dcc_first);
-    wee_log_printf ("  dcc_selected. . . . : 0x%X\n", window->dcc_selected);
-    wee_log_printf ("  dcc_last_displayed. : 0x%X\n", window->dcc_last_displayed);
-    wee_log_printf ("  buffer. . . . . . . : 0x%X\n", window->buffer);
-    wee_log_printf ("  first_line_displayed: %d\n",   window->first_line_displayed);
-    wee_log_printf ("  start_line. . . . . : 0x%X\n", window->start_line);
-    wee_log_printf ("  start_line_pos. . . : %d\n",   window->start_line_pos);
-    wee_log_printf ("  prev_window . . . . : 0x%X\n", window->prev_window);
-    wee_log_printf ("  next_window . . . . : 0x%X\n", window->next_window);
+    weechat_log_printf ("[window (addr:0x%X)]\n", window);
+    weechat_log_printf ("  win_x . . . . . . . : %d\n",   window->win_x);
+    weechat_log_printf ("  win_y . . . . . . . : %d\n",   window->win_y);
+    weechat_log_printf ("  win_width . . . . . : %d\n",   window->win_width);
+    weechat_log_printf ("  win_height. . . . . : %d\n",   window->win_height);
+    weechat_log_printf ("  win_width_pct . . . : %d\n",   window->win_width_pct);
+    weechat_log_printf ("  win_height_pct. . . : %d\n",   window->win_height_pct);
+    weechat_log_printf ("  win_chat_x. . . . . : %d\n",   window->win_chat_x);
+    weechat_log_printf ("  win_chat_y. . . . . : %d\n",   window->win_chat_y);
+    weechat_log_printf ("  win_chat_width. . . : %d\n",   window->win_chat_width);
+    weechat_log_printf ("  win_chat_height . . : %d\n",   window->win_chat_height);
+    weechat_log_printf ("  win_chat_cursor_x . : %d\n",   window->win_chat_cursor_x);
+    weechat_log_printf ("  win_chat_cursor_y . : %d\n",   window->win_chat_cursor_y);
+    weechat_log_printf ("  win_nick_x. . . . . : %d\n",   window->win_nick_x);
+    weechat_log_printf ("  win_nick_y. . . . . : %d\n",   window->win_nick_y);
+    weechat_log_printf ("  win_nick_width. . . : %d\n",   window->win_nick_width);
+    weechat_log_printf ("  win_nick_height . . : %d\n",   window->win_nick_height);
+    weechat_log_printf ("  win_nick_start. . . : %d\n",   window->win_nick_start);
+    weechat_log_printf ("  win_title . . . . . : 0x%X\n", window->win_title);
+    weechat_log_printf ("  win_chat. . . . . . : 0x%X\n", window->win_chat);
+    weechat_log_printf ("  win_nick. . . . . . : 0x%X\n", window->win_nick);
+    weechat_log_printf ("  win_status. . . . . : 0x%X\n", window->win_status);
+    weechat_log_printf ("  win_infobar . . . . : 0x%X\n", window->win_infobar);
+    weechat_log_printf ("  win_input . . . . . : 0x%X\n", window->win_input);
+    weechat_log_printf ("  win_separator . . . : 0x%X\n", window->win_separator);
+    weechat_log_printf ("  textview_chat . . . : 0x%X\n", window->textview_chat);
+    weechat_log_printf ("  textbuffer_chat . . : 0x%X\n", window->textbuffer_chat);
+    weechat_log_printf ("  texttag_chat. . . . : 0x%X\n", window->texttag_chat);
+    weechat_log_printf ("  textview_nicklist . : 0x%X\n", window->textview_nicklist);
+    weechat_log_printf ("  textbuffer_nicklist : 0x%X\n", window->textbuffer_nicklist);
+    weechat_log_printf ("  dcc_first . . . . . : 0x%X\n", window->dcc_first);
+    weechat_log_printf ("  dcc_selected. . . . : 0x%X\n", window->dcc_selected);
+    weechat_log_printf ("  dcc_last_displayed. : 0x%X\n", window->dcc_last_displayed);
+    weechat_log_printf ("  buffer. . . . . . . : 0x%X\n", window->buffer);
+    weechat_log_printf ("  first_line_displayed: %d\n",   window->first_line_displayed);
+    weechat_log_printf ("  start_line. . . . . : 0x%X\n", window->start_line);
+    weechat_log_printf ("  start_line_pos. . . : %d\n",   window->start_line_pos);
+    weechat_log_printf ("  prev_window . . . . : 0x%X\n", window->prev_window);
+    weechat_log_printf ("  next_window . . . . : 0x%X\n", window->next_window);
     
 }
 
@@ -1668,35 +1667,35 @@ gui_buffer_print_log (t_gui_buffer *buffer)
     t_gui_line *ptr_line;
     int num;
     
-    wee_log_printf ("[buffer (addr:0x%X)]\n", buffer);
-    wee_log_printf ("  num_displayed. . . . : %d\n",   buffer->num_displayed);
-    wee_log_printf ("  number . . . . . . . : %d\n",   buffer->number);
-    wee_log_printf ("  server . . . . . . . : 0x%X\n", buffer->server);
-    wee_log_printf ("  all_servers. . . . . : %d\n",   buffer->all_servers);
-    wee_log_printf ("  channel. . . . . . . : 0x%X\n", buffer->channel);
-    wee_log_printf ("  dcc. . . . . . . . . : %d\n",   buffer->dcc);
-    wee_log_printf ("  lines. . . . . . . . : 0x%X\n", buffer->lines);
-    wee_log_printf ("  last_line. . . . . . : 0x%X\n", buffer->last_line);
-    wee_log_printf ("  last_read_line . . . : 0x%X\n", buffer->last_read_line);
-    wee_log_printf ("  num_lines. . . . . . : %d\n",   buffer->num_lines);
-    wee_log_printf ("  line_complete. . . . : %d\n",   buffer->line_complete);
-    wee_log_printf ("  notify_level . . . . : %d\n",   buffer->notify_level);
-    wee_log_printf ("  log_filename . . . . : '%s'\n", buffer->log_filename);
-    wee_log_printf ("  log_file . . . . . . : 0x%X\n", buffer->log_file);
-    wee_log_printf ("  has_input. . . . . . : %d\n",   buffer->has_input);
-    wee_log_printf ("  input_buffer . . . . : '%s'\n", buffer->input_buffer);
-    wee_log_printf ("  input_buffer_alloc . : %d\n",   buffer->input_buffer_alloc);
-    wee_log_printf ("  input_buffer_size. . : %d\n",   buffer->input_buffer_size);
-    wee_log_printf ("  input_buffer_length. : %d\n",   buffer->input_buffer_length);
-    wee_log_printf ("  input_buffer_pos . . : %d\n",   buffer->input_buffer_pos);
-    wee_log_printf ("  input_buffer_1st_disp: %d\n",   buffer->input_buffer_1st_display);
-    wee_log_printf ("  history. . . . . . . : 0x%X\n", buffer->history);
-    wee_log_printf ("  last_history . . . . : 0x%X\n", buffer->last_history);
-    wee_log_printf ("  ptr_history. . . . . : 0x%X\n", buffer->ptr_history);
-    wee_log_printf ("  prev_buffer. . . . . : 0x%X\n", buffer->prev_buffer);
-    wee_log_printf ("  next_buffer. . . . . : 0x%X\n", buffer->next_buffer);
-    wee_log_printf ("\n");
-    wee_log_printf ("  => last 100 lines:\n");
+    weechat_log_printf ("[buffer (addr:0x%X)]\n", buffer);
+    weechat_log_printf ("  num_displayed. . . . : %d\n",   buffer->num_displayed);
+    weechat_log_printf ("  number . . . . . . . : %d\n",   buffer->number);
+    weechat_log_printf ("  server . . . . . . . : 0x%X\n", buffer->server);
+    weechat_log_printf ("  all_servers. . . . . : %d\n",   buffer->all_servers);
+    weechat_log_printf ("  channel. . . . . . . : 0x%X\n", buffer->channel);
+    weechat_log_printf ("  dcc. . . . . . . . . : %d\n",   buffer->dcc);
+    weechat_log_printf ("  lines. . . . . . . . : 0x%X\n", buffer->lines);
+    weechat_log_printf ("  last_line. . . . . . : 0x%X\n", buffer->last_line);
+    weechat_log_printf ("  last_read_line . . . : 0x%X\n", buffer->last_read_line);
+    weechat_log_printf ("  num_lines. . . . . . : %d\n",   buffer->num_lines);
+    weechat_log_printf ("  line_complete. . . . : %d\n",   buffer->line_complete);
+    weechat_log_printf ("  notify_level . . . . : %d\n",   buffer->notify_level);
+    weechat_log_printf ("  log_filename . . . . : '%s'\n", buffer->log_filename);
+    weechat_log_printf ("  log_file . . . . . . : 0x%X\n", buffer->log_file);
+    weechat_log_printf ("  has_input. . . . . . : %d\n",   buffer->has_input);
+    weechat_log_printf ("  input_buffer . . . . : '%s'\n", buffer->input_buffer);
+    weechat_log_printf ("  input_buffer_alloc . : %d\n",   buffer->input_buffer_alloc);
+    weechat_log_printf ("  input_buffer_size. . : %d\n",   buffer->input_buffer_size);
+    weechat_log_printf ("  input_buffer_length. : %d\n",   buffer->input_buffer_length);
+    weechat_log_printf ("  input_buffer_pos . . : %d\n",   buffer->input_buffer_pos);
+    weechat_log_printf ("  input_buffer_1st_disp: %d\n",   buffer->input_buffer_1st_display);
+    weechat_log_printf ("  history. . . . . . . : 0x%X\n", buffer->history);
+    weechat_log_printf ("  last_history . . . . : 0x%X\n", buffer->last_history);
+    weechat_log_printf ("  ptr_history. . . . . : 0x%X\n", buffer->ptr_history);
+    weechat_log_printf ("  prev_buffer. . . . . : 0x%X\n", buffer->prev_buffer);
+    weechat_log_printf ("  next_buffer. . . . . : 0x%X\n", buffer->next_buffer);
+    weechat_log_printf ("\n");
+    weechat_log_printf ("  => last 100 lines:\n");
     
     num = 0;
     ptr_line = buffer->last_line;
@@ -1713,9 +1712,9 @@ gui_buffer_print_log (t_gui_buffer *buffer)
     while (ptr_line)
     {
         num--;
-        wee_log_printf ("       line N-%05d: %s\n",
-                        num,
-                        (ptr_line->data) ? ptr_line->data : "(empty)");
+        weechat_log_printf ("       line N-%05d: %s\n",
+                            num,
+                            (ptr_line->data) ? ptr_line->data : "(empty)");
         
         ptr_line = ptr_line->next_line;
     }

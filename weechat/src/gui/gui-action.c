@@ -88,29 +88,30 @@ gui_action_clipboard_paste (t_gui_window *window)
 void
 gui_action_return (t_gui_window *window)
 {
-    t_gui_buffer *ptr_buffer;
+    char *command;
     
     if (window->buffer->has_input)
     {
         if (window->buffer->input_buffer_size > 0)
         {
             window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-            history_add (window->buffer, window->buffer->input_buffer);
+            command = strdup (window->buffer->input_buffer);
+            if (!command)
+                return;
+            history_buffer_add (window->buffer, window->buffer->input_buffer);
+            history_global_add (window->buffer->input_buffer);
+            window->buffer->input_buffer[0] = '\0';
             window->buffer->input_buffer_size = 0;
             window->buffer->input_buffer_length = 0;
             window->buffer->input_buffer_pos = 0;
             window->buffer->input_buffer_1st_display = 0;
             window->buffer->completion.position = -1;
             window->buffer->ptr_history = NULL;
-            ptr_buffer = window->buffer;
+            gui_draw_buffer_input (window->buffer, 0);
             user_command (SERVER(window->buffer),
                           window->buffer,
-                          window->buffer->input_buffer);
-            if (ptr_buffer == window->buffer)
-            {
-                ptr_buffer->input_buffer[0] = '\0';
-                gui_draw_buffer_input (ptr_buffer, 0);
-            }
+                          command);
+            free (command);
         }
     }
 }
@@ -694,7 +695,8 @@ gui_action_up (t_gui_window *window)
                 if (window->buffer->input_buffer_size > 0)
                 {
                     window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-                    history_add (window->buffer, window->buffer->input_buffer);
+                    history_buffer_add (window->buffer, window->buffer->input_buffer);
+                    history_global_add (window->buffer->input_buffer);
                 }
             }
             else

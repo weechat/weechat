@@ -34,6 +34,8 @@
 ./src/common/hotlist.h
 ./src/common/log.c
 ./src/common/log.h
+./src/common/session.c
+./src/common/session.h
 ./src/common/utf8.c
 ./src/common/utf8.h
 ./src/common/weechat.c

@@ -66,19 +66,63 @@ history_hide_password (char *string)
 }
 
 /*
- * history_add: add a text/command to history
+ * history_buffer_add: add a text/command to buffer's history
  */
 
 void
-history_add (void *buffer, char *string)
+history_buffer_add (void *buffer, char *string)
+{
+    t_history *new_history, *ptr_history;
+    
+    if ( !((t_gui_buffer *)(buffer))->history
+         || ( ((t_gui_buffer *)(buffer))->history
+              && ascii_strcasecmp (((t_gui_buffer *)(buffer))->history->text, string) != 0))
+    {	
+	new_history = (t_history *)malloc (sizeof (t_history));
+	if (new_history)
+	{
+	    new_history->text = strdup (string);
+	    if (cfg_log_hide_nickserv_pwd)
+		history_hide_password (new_history->text);
+	    
+	    if (((t_gui_buffer *)(buffer))->history)
+		((t_gui_buffer *)(buffer))->history->prev_history = new_history;
+	    else
+		((t_gui_buffer *)(buffer))->last_history = new_history;
+	    new_history->next_history = ((t_gui_buffer *)(buffer))->history;
+	    new_history->prev_history = NULL;
+	    ((t_gui_buffer *)buffer)->history = new_history;
+	    ((t_gui_buffer *)buffer)->num_history++;
+	    
+	    /* remove one command if necessary */
+	    if ((cfg_history_max_commands > 0)
+		&& (((t_gui_buffer *)(buffer))->num_history > cfg_history_max_commands))
+	    {
+		ptr_history = ((t_gui_buffer *)buffer)->last_history->prev_history;
+		((t_gui_buffer *)buffer)->last_history->prev_history->next_history = NULL;
+		if (((t_gui_buffer *)buffer)->last_history->text)
+		    free (((t_gui_buffer *)buffer)->last_history->text);
+		free (((t_gui_buffer *)buffer)->last_history);
+		((t_gui_buffer *)buffer)->last_history = ptr_history;
+		((t_gui_buffer *)(buffer))->num_history++;
+	    }
+	}
+    }
+}
+
+/*
+ * history_global_add: add a text/command to buffer's history
+ */
+
+void
+history_global_add (char *string)
 {
     t_history *new_history, *ptr_history;
 
-    if ( !history_global
-         || ( history_global
-              && ascii_strcasecmp (history_global->text, string) != 0))
+    if (!history_global
+        || (history_global
+            && ascii_strcasecmp (history_global->text, string) != 0))
     {    
-	/* add history to global history */
 	new_history = (t_history *)malloc (sizeof (t_history));
 	if (new_history)
 	{
@@ -106,42 +150,6 @@ history_add (void *buffer, char *string)
 		free (history_global_last);
 		history_global_last = ptr_history;
 		num_history_global--;
-	    }
-	}
-    }
-    
-    if ( !((t_gui_buffer *)(buffer))->history
-         || ( ((t_gui_buffer *)(buffer))->history
-              && ascii_strcasecmp (((t_gui_buffer *)(buffer))->history->text, string) != 0))
-    {	
-	/* add history to local history */
-	new_history = (t_history *)malloc (sizeof (t_history));
-	if (new_history)
-	{
-	    new_history->text = strdup (string);
-	    if (cfg_log_hide_nickserv_pwd)
-		history_hide_password (new_history->text);
-	    
-	    if (((t_gui_buffer *)(buffer))->history)
-		((t_gui_buffer *)(buffer))->history->prev_history = new_history;
-	    else
-		((t_gui_buffer *)(buffer))->last_history = new_history;
-	    new_history->next_history = ((t_gui_buffer *)(buffer))->history;
-	    new_history->prev_history = NULL;
-	    ((t_gui_buffer *)buffer)->history = new_history;
-	    ((t_gui_buffer *)(buffer))->num_history++;
-	    
-	    /* remove one command if necessary */
-	    if ((cfg_history_max_commands > 0)
-		&& (((t_gui_buffer *)(buffer))->num_history > cfg_history_max_commands))
-	    {
-		ptr_history = ((t_gui_buffer *)buffer)->last_history->prev_history;
-		((t_gui_buffer *)buffer)->last_history->prev_history->next_history = NULL;
-		if (((t_gui_buffer *)buffer)->last_history->text)
-		    free (((t_gui_buffer *)buffer)->last_history->text);
-		free (((t_gui_buffer *)buffer)->last_history);
-		((t_gui_buffer *)buffer)->last_history = ptr_history;
-		((t_gui_buffer *)(buffer))->num_history++;
 	    }
 	}
     }

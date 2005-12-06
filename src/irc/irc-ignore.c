@@ -459,18 +459,18 @@ ignore_print_log ()
 {
     t_irc_ignore *ptr_ignore;
     
-    wee_log_printf ("[ignore list]\n");
+    weechat_log_printf ("[ignore list]\n");
     
     for (ptr_ignore = irc_ignore; ptr_ignore;
          ptr_ignore = ptr_ignore->next_ignore)
     {
-        wee_log_printf ("\n");
-        wee_log_printf ("  -> ignore at 0x%X:\n", ptr_ignore);
-        wee_log_printf ("     mask. . . . . . . : %s\n",   ptr_ignore->mask);
-        wee_log_printf ("     type. . . . . . . : %s\n",   ptr_ignore->type);
-        wee_log_printf ("     channel_name. . . : %s\n",   ptr_ignore->channel_name);
-        wee_log_printf ("     server_name . . . : %s\n",   ptr_ignore->server_name);
-        wee_log_printf ("     prev_ignore . . . : 0x%X\n", ptr_ignore->prev_ignore);
-        wee_log_printf ("     next_ignore . . . : 0x%X\n", ptr_ignore->next_ignore);
+        weechat_log_printf ("\n");
+        weechat_log_printf ("  -> ignore at 0x%X:\n", ptr_ignore);
+        weechat_log_printf ("     mask. . . . . . . : %s\n",   ptr_ignore->mask);
+        weechat_log_printf ("     type. . . . . . . : %s\n",   ptr_ignore->type);
+        weechat_log_printf ("     channel_name. . . : %s\n",   ptr_ignore->channel_name);
+        weechat_log_printf ("     server_name . . . : %s\n",   ptr_ignore->server_name);
+        weechat_log_printf ("     prev_ignore . . . : 0x%X\n", ptr_ignore->prev_ignore);
+        weechat_log_printf ("     next_ignore . . . : 0x%X\n", ptr_ignore->next_ignore);
     }
 }

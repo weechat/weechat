@@ -1594,7 +1594,16 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                             num_unit = 2;
                         else
                             num_unit = 3;
-                        sprintf (format, "  (%s %%s/s)", unit_format[num_unit]);
+                        wprintw (ptr_win->win_chat, "  (");
+                        if (ptr_dcc->status == DCC_ACTIVE)
+                        {
+                            wprintw (ptr_win->win_chat, _("ETA"));
+                            wprintw (ptr_win->win_chat, ": %.2lu:%.2lu:%.2lu - ",
+                                     ptr_dcc->eta / 3600,
+                                     (ptr_dcc->eta / 60) % 60,
+                                     ptr_dcc->eta % 60);
+                        }
+                        sprintf (format, "%s %%s/s)", unit_format[num_unit]);
                         buf = weechat_convert_encoding ((local_utf8) ?
                                                         cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
                                                         (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
@@ -1824,31 +1833,31 @@ gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
                     }
                     else
                     {
-                        if (ptr_nick->is_chanowner)
+                        if (ptr_nick->flags & NICK_CHANOWNER)
                         {
                             gui_window_set_weechat_color (ptr_win->win_nick, COLOR_WIN_NICK_CHANOWNER);
                             mvwprintw (ptr_win->win_nick, y, x, "~");
                             x++;
                         }
-                        else if (ptr_nick->is_chanadmin)
+                        else if (ptr_nick->flags & NICK_CHANADMIN)
                         {
                             gui_window_set_weechat_color (ptr_win->win_nick, COLOR_WIN_NICK_CHANADMIN);
                             mvwprintw (ptr_win->win_nick, y, x, "&");
                             x++;
                         }
-                        else if (ptr_nick->is_op)
+                        else if (ptr_nick->flags & NICK_OP)
                         {
                             gui_window_set_weechat_color (ptr_win->win_nick, COLOR_WIN_NICK_OP);
                             mvwprintw (ptr_win->win_nick, y, x, "@");
                             x++;
                         }
-                        else if (ptr_nick->is_halfop)
+                        else if (ptr_nick->flags & NICK_HALFOP)
                         {
                             gui_window_set_weechat_color (ptr_win->win_nick, COLOR_WIN_NICK_HALFOP);
                             mvwprintw (ptr_win->win_nick, y, x, "%%");
                             x++;
                         }
-                        else if (ptr_nick->has_voice)
+                        else if (ptr_nick->flags & NICK_VOICE)
                         {
                             gui_window_set_weechat_color (ptr_win->win_nick, COLOR_WIN_NICK_VOICE);
                             mvwprintw (ptr_win->win_nick, y, x, "+");
@@ -1861,7 +1870,7 @@ gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
                             x++;
                         }
                         gui_window_set_weechat_color (ptr_win->win_nick,
-                                                      ((cfg_irc_away_check > 0) && (ptr_nick->is_away)) ?
+                                                      ((cfg_irc_away_check > 0) && (ptr_nick->flags & NICK_AWAY)) ?
                                                       COLOR_WIN_NICK_AWAY : COLOR_WIN_NICK);
                         mvwprintw (ptr_win->win_nick, y, x, format, ptr_nick->nick);
                         
@@ -2004,7 +2013,7 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
             gui_window_set_weechat_color (ptr_win->win_status,
                                           COLOR_WIN_STATUS_CHANNEL);
             if ((!CHANNEL(ptr_win->buffer)->nicks)
-                && (CHANNEL(ptr_win->buffer)->type != CHAT_PRIVATE))
+                && (CHANNEL(ptr_win->buffer)->type != CHANNEL_TYPE_PRIVATE))
                 wprintw (ptr_win->win_status, "(%s)",
                          CHANNEL(ptr_win->buffer)->name);
             else
@@ -2013,7 +2022,7 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
             if (ptr_win->buffer == CHANNEL(ptr_win->buffer)->buffer)
             {
                 /* display channel modes */
-                if (CHANNEL(ptr_win->buffer)->type == CHAT_CHANNEL)
+                if (CHANNEL(ptr_win->buffer)->type == CHANNEL_TYPE_CHANNEL)
                 {
                     gui_window_set_weechat_color (ptr_win->win_status,
                                                   COLOR_WIN_STATUS_DELIMITERS);
@@ -2050,7 +2059,7 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                 }
                 
                 /* display DCC if private is DCC CHAT */
-                if ((CHANNEL(ptr_win->buffer)->type == CHAT_PRIVATE)
+                if ((CHANNEL(ptr_win->buffer)->type == CHANNEL_TYPE_PRIVATE)
                     && (CHANNEL(ptr_win->buffer)->dcc_chat))
                 {
                     gui_window_set_weechat_color (ptr_win->win_status,

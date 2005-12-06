@@ -431,8 +431,8 @@ gui_key_bind (char *key, char *command)
     
     if (!key || !command)
     {
-        wee_log_printf (_("%s unable to bind key \"%s\"\n"),
-                        WEECHAT_ERROR, key);
+        weechat_log_printf (_("%s unable to bind key \"%s\"\n"),
+                            WEECHAT_ERROR, key);
         return NULL;
     }
     
@@ -442,8 +442,8 @@ gui_key_bind (char *key, char *command)
         ptr_function = gui_key_function_search_by_name (command);
         if (!ptr_function)
         {
-            wee_log_printf (_("%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"),
-                            WEECHAT_ERROR, key, command);
+            weechat_log_printf (_("%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"),
+                                WEECHAT_ERROR, key, command);
             return NULL;
         }
     }
@@ -455,8 +455,8 @@ gui_key_bind (char *key, char *command)
                            ptr_function);
     if (!new_key)
     {
-        wee_log_printf (_("%s not enough memory for key binding\n"),
-                        WEECHAT_ERROR);
+        weechat_log_printf (_("%s not enough memory for key binding\n"),
+                            WEECHAT_ERROR);
         return NULL;
     }
     

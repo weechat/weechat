@@ -82,24 +82,6 @@
     "along with this program; if not, write to the Free Software\n" \
     "Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n\n"
     
-#define WEE_USAGE1 \
-    PACKAGE_STRING " (c) Copyright 2003-2005, compiled on " __DATE__ " " __TIME__ \
-    "\nDeveloped by FlashCode <flashcode@flashtux.org> - " WEECHAT_WEBSITE "\n\n" \
-    "Usage: %s [options ...]\n" \
-    "   or: %s [irc[6][s]://[nickname[:password]@]irc.example.org[:port][/channel][,channel[...]]\n\n"
-
-#define WEE_USAGE2 \
-    "  -a, --no-connect        disable auto-connect to servers at startup\n" \
-    "  -c, --config            display config file options\n" \
-    "  -f, --key-functions     display WeeChat internal functions for keys\n" \
-    "  -h, --help              this help\n" \
-    "  -i, --irc-commands      display IRC commands\n" \
-    "  -k, --keys              display WeeChat default keys\n" \
-    "  -l, --license           display WeeChat license\n" \
-    "  -p, --no-plugin         don't load any plugin at startup\n" \
-    "  -v, --version           display WeeChat version\n" \
-    "  -w, --weechat-commands  display WeeChat commands\n\n"
-
 /* directory separator, depending on OS */
 
 #ifdef _WIN32
@@ -112,6 +94,7 @@
 
 /* global variables and functions */
 
+extern char *weechat_argv0;
 extern time_t weechat_start_time;
 extern int quit_weechat;
 extern char *weechat_home;
@@ -123,10 +106,10 @@ extern gnutls_certificate_credentials gnutls_xcred;
 
 extern int ascii_strcasecmp (char *, char *);
 extern int ascii_strncasecmp (char *, char *, int);
-extern void wee_log_printf (char *, ...);
-extern void wee_dump (int);
+extern void weechat_log_printf (char *, ...);
+extern void weechat_dump (int);
 extern char *weechat_convert_encoding (char *, char *, char *);
 extern long get_timeval_diff (struct timeval *, struct timeval *);
-extern void wee_shutdown (int, int);
+extern void weechat_shutdown (int, int);
 
 #endif /* weechat.h */

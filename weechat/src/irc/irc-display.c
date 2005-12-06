@@ -97,19 +97,19 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
                          (nick) ? "<" : ">");
     if (nick && cfg_look_nickmode)
     {
-        if (nick->is_chanowner)
+        if (nick->flags & NICK_CHANOWNER)
             gui_printf_type (buffer, type, "%s~",
                              GUI_COLOR(COLOR_WIN_NICK_OP));
-        else if (nick->is_chanadmin)
+        else if (nick->flags & NICK_CHANADMIN)
             gui_printf_type (buffer, type, "%s&",
                              GUI_COLOR(COLOR_WIN_NICK_OP));
-        else if (nick->is_op)
+        else if (nick->flags & NICK_OP)
             gui_printf_type (buffer, type, "%s@",
                              GUI_COLOR(COLOR_WIN_NICK_OP));
-        else if (nick->is_halfop)
+        else if (nick->flags & NICK_HALFOP)
             gui_printf_type (buffer, type, "%s%%",
                              GUI_COLOR(COLOR_WIN_NICK_HALFOP));
-        else if (nick->has_voice)
+        else if (nick->flags & NICK_VOICE)
             gui_printf_type (buffer, type, "%s+",
                              GUI_COLOR(COLOR_WIN_NICK_VOICE));
         else

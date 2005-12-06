@@ -1,0 +1,1509 @@
+/*
+ * Copyright (c) 2003-2005 by FlashCode <flashcode@flashtux.org>
+ * See README for License detail, AUTHORS for developers list.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+/* session.c: save/restore session data */
+
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdarg.h>
+#include <string.h>
+
+#include "weechat.h"
+#include "session.h"
+#include "../irc/irc.h"
+#include "../gui/gui.h"
+
+
+/* current server/channel (used when loading session) */
+t_irc_server *session_current_server = NULL;
+t_irc_channel *session_current_channel = NULL;
+t_gui_buffer *session_current_buffer = NULL;
+
+long session_last_read_pos = 0;
+int session_last_read_length = 0;
+
+
+/*
+ * session_write_id: write object ID to file
+ */
+
+int
+session_write_id (FILE *file, int id)
+{
+    return (fwrite ((void *)(&id), sizeof (int), 1, file) > 0);
+}
+
+/*
+ * session_write_int: write an integer to file
+ */
+
+int
+session_write_int (FILE *file, int id, int value)
+{
+    char type;
+    
+    if (id >= 0)
+    {
+        if (!session_write_id (file, id))
+            return 0;
+    }
+    type = SESSION_TYPE_INT;
+    if (fwrite ((void *)(&type), sizeof (char), 1, file) == 0)
+        return 0;
+    return (fwrite ((void *)(&value), sizeof (int), 1, file) > 0);
+}
+
+/*
+ * session_write_str: write a string to file
+ */
+
+int
+session_write_str (FILE *file, int id, char *string)
+{
+    char type;
+    int length;
+    
+    if (id >= 0)
+    {
+        if (!session_write_id (file, id))
+            return 0;
+    }
+    type = SESSION_TYPE_STR;
+    if (fwrite ((void *)(&type), sizeof (char), 1, file) == 0)
+        return 0;
+    if (string && string[0])
+    {
+        length = strlen (string);
+        if (fwrite ((void *)(&length), sizeof (int), 1, file) == 0)
+            return 0;
+        return (fwrite ((void *)string, length, 1, file) > 0);
+    }
+    else
+    {
+        length = 0;
+        return (fwrite ((void *)(&length), sizeof (int), 1, file) > 0);
+    }
+}
+
+/*
+ * session_write_buf: write a buffer to file
+ */
+
+int
+session_write_buf (FILE *file, int id, void *buffer, int size)
+{
+    char type;
+    
+    if (id >= 0)
+    {
+        if (!session_write_id (file, id))
+            return 0;
+    }
+    type = SESSION_TYPE_BUF;
+    if (fwrite ((void *)(&type), sizeof (char), 1, file) == 0)
+        return 0;
+    if (fwrite ((void *)(&size), sizeof (int), 1, file) == 0)
+        return 0;
+    return (fwrite (buffer, size, 1, file) > 0);
+}
+
+/*
+ * session_save_nick: save a nick into session file
+ */
+
+int
+session_save_nick (FILE *file, t_irc_nick *nick)
+{
+    int rc;
+    
+    rc = 1;
+    rc = rc && (session_write_id  (file, SESSION_OBJ_NICK));
+    rc = rc && (session_write_str (file, SESSION_NICK_NICK, nick->nick));
+    rc = rc && (session_write_int (file, SESSION_NICK_FLAGS, nick->flags));
+    rc = rc && (session_write_int (file, SESSION_NICK_COLOR, nick->color));
+    rc = rc && (session_write_id  (file, SESSION_NICK_END));
+    return rc;
+}
+
+/*
+ * session_save_channel: save a channel into session file
+ */
+
+int
+session_save_channel (FILE *file, t_irc_channel *channel)
+{
+    int rc;
+    t_irc_nick *ptr_nick;
+    
+    rc = 1;
+    rc = rc && (session_write_id  (file, SESSION_OBJ_CHANNEL));
+    rc = rc && (session_write_int (file, SESSION_CHAN_TYPE, channel->type));
+    rc = rc && (session_write_str (file, SESSION_CHAN_NAME, channel->name));
+    rc = rc && (session_write_str (file, SESSION_CHAN_TOPIC, channel->topic));
+    rc = rc && (session_write_str (file, SESSION_CHAN_MODES, channel->modes));
+    rc = rc && (session_write_int (file, SESSION_CHAN_LIMIT, channel->limit));
+    rc = rc && (session_write_str (file, SESSION_CHAN_KEY, channel->key));
+    rc = rc && (session_write_int (file, SESSION_CHAN_NICKS_COUNT, channel->nicks_count));
+    rc = rc && (session_write_int (file, SESSION_CHAN_CHECKING_AWAY, channel->checking_away));
+    rc = rc && (session_write_id  (file, SESSION_CHAN_END));
+    
+    if (!rc)
+        return 0;
+    
+    for (ptr_nick = channel->nicks; ptr_nick;
+         ptr_nick = ptr_nick->next_nick)
+    {
+        if (!session_save_nick (file, ptr_nick))
+            return 0;
+    }
+    
+    return 1;
+}
+
+/*
+ * session_save_servers: save all servers into session file
+ */
+
+int
+session_save_servers (FILE *file)
+{
+    int rc;
+    t_irc_server *ptr_server;
+    t_irc_channel *ptr_channel;
+    
+    rc = 1;
+    
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        rc = rc && (session_write_id  (file, SESSION_OBJ_SERVER));
+        rc = rc && (session_write_str (file, SESSION_SERV_NAME, ptr_server->name));
+        rc = rc && (session_write_int (file, SESSION_SERV_AUTOCONNECT, ptr_server->autoconnect));
+        rc = rc && (session_write_int (file, SESSION_SERV_AUTORECONNECT, ptr_server->autoreconnect));
+        rc = rc && (session_write_int (file, SESSION_SERV_AUTORECONNECT_DELAY, ptr_server->autoreconnect_delay));
+        rc = rc && (session_write_int (file, SESSION_SERV_COMMAND_LINE, ptr_server->command_line));
+        rc = rc && (session_write_str (file, SESSION_SERV_ADDRESS, ptr_server->address));
+        rc = rc && (session_write_int (file, SESSION_SERV_PORT, ptr_server->port));
+        rc = rc && (session_write_int (file, SESSION_SERV_IPV6, ptr_server->ipv6));
+        rc = rc && (session_write_int (file, SESSION_SERV_SSL, ptr_server->ssl));
+        rc = rc && (session_write_str (file, SESSION_SERV_PASSWORD, ptr_server->password));
+        rc = rc && (session_write_str (file, SESSION_SERV_NICK1, ptr_server->nick1));
+        rc = rc && (session_write_str (file, SESSION_SERV_NICK2, ptr_server->nick2));
+        rc = rc && (session_write_str (file, SESSION_SERV_NICK3, ptr_server->nick3));
+        rc = rc && (session_write_str (file, SESSION_SERV_USERNAME, ptr_server->username));
+        rc = rc && (session_write_str (file, SESSION_SERV_REALNAME, ptr_server->realname));
+        rc = rc && (session_write_str (file, SESSION_SERV_COMMAND, ptr_server->command));
+        rc = rc && (session_write_int (file, SESSION_SERV_COMMAND_DELAY, ptr_server->command_delay));
+        rc = rc && (session_write_str (file, SESSION_SERV_AUTOJOIN, ptr_server->autojoin));
+        rc = rc && (session_write_int (file, SESSION_SERV_AUTOREJOIN, ptr_server->autorejoin));
+        rc = rc && (session_write_str (file, SESSION_SERV_NOTIFY_LEVELS, ptr_server->notify_levels));
+        rc = rc && (session_write_int (file, SESSION_SERV_CHILD_PID, ptr_server->child_pid));
+        rc = rc && (session_write_int (file, SESSION_SERV_CHILD_READ, ptr_server->child_read));
+        rc = rc && (session_write_int (file, SESSION_SERV_CHILD_WRITE, ptr_server->child_write));
+        rc = rc && (session_write_int (file, SESSION_SERV_SOCK, ptr_server->sock));
+        rc = rc && (session_write_int (file, SESSION_SERV_IS_CONNECTED, ptr_server->is_connected));
+        rc = rc && (session_write_int (file, SESSION_SERV_SSL_CONNECTED, ptr_server->ssl_connected));
+#ifdef HAVE_GNUTLS
+        rc = rc && (session_write_buf (file, SESSION_SERV_GNUTLS_SESS, &(ptr_server->gnutls_sess), sizeof (gnutls_session)));
+#endif
+        rc = rc && (session_write_str (file, SESSION_SERV_UNTERMINATED_MESSAGE, ptr_server->unterminated_message));
+        rc = rc && (session_write_str (file, SESSION_SERV_NICK, ptr_server->nick));
+        rc = rc && (session_write_buf (file, SESSION_SERV_RECONNECT_START, &(ptr_server->reconnect_start), sizeof (time_t)));
+        rc = rc && (session_write_int (file, SESSION_SERV_RECONNECT_JOIN, ptr_server->reconnect_join));
+        rc = rc && (session_write_int (file, SESSION_SERV_IS_AWAY, ptr_server->is_away));
+        rc = rc && (session_write_buf (file, SESSION_SERV_AWAY_TIME, &(ptr_server->away_time), sizeof (time_t)));
+        rc = rc && (session_write_int (file, SESSION_SERV_LAG, ptr_server->lag));
+        rc = rc && (session_write_buf (file, SESSION_SERV_LAG_CHECK_TIME, &(ptr_server->lag_check_time), sizeof (struct timeval)));
+        rc = rc && (session_write_buf (file, SESSION_SERV_LAG_NEXT_CHECK, &(ptr_server->lag_next_check), sizeof (time_t)));
+        rc = rc && (session_write_id  (file, SESSION_SERV_END));
+        
+        if (!rc)
+            return 0;
+        
+        for (ptr_channel = ptr_server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            if (!session_save_channel (file, ptr_channel))
+                return 0;
+        }
+    }
+    return 1;
+}
+
+/*
+ * session_save_dcc: save all DCC into session file
+ */
+
+int
+session_save_dcc (FILE *file)
+{
+    int rc;
+    t_irc_dcc *ptr_dcc;
+    
+    rc = 1;
+    
+    for (ptr_dcc = dcc_list; ptr_dcc;
+         ptr_dcc = ptr_dcc->next_dcc)
+    {
+        rc = rc && (session_write_id  (file, SESSION_OBJ_DCC));
+        rc = rc && (session_write_str (file, SESSION_DCC_SERVER, (ptr_dcc->server) ? ptr_dcc->server->name : NULL));
+        rc = rc && (session_write_str (file, SESSION_DCC_CHANNEL, (ptr_dcc->channel) ? ptr_dcc->channel->name : NULL));
+        rc = rc && (session_write_int (file, SESSION_DCC_TYPE, ptr_dcc->type));
+        rc = rc && (session_write_int (file, SESSION_DCC_STATUS, ptr_dcc->status));
+        rc = rc && (session_write_buf (file, SESSION_DCC_START_TIME, &(ptr_dcc->start_time), sizeof (time_t)));
+        rc = rc && (session_write_buf (file, SESSION_DCC_START_TRANSFER, &(ptr_dcc->start_transfer), sizeof (time_t)));
+        rc = rc && (session_write_buf (file, SESSION_DCC_ADDR, &(ptr_dcc->addr), sizeof (unsigned long)));
+        rc = rc && (session_write_int (file, SESSION_DCC_PORT, ptr_dcc->port));
+        rc = rc && (session_write_str (file, SESSION_DCC_NICK, ptr_dcc->nick));
+        rc = rc && (session_write_int (file, SESSION_DCC_SOCK, ptr_dcc->sock));
+        rc = rc && (session_write_str (file, SESSION_DCC_UNTERMINATED_MESSAGE, ptr_dcc->unterminated_message));
+        rc = rc && (session_write_int (file, SESSION_DCC_FILE, ptr_dcc->file));
+        rc = rc && (session_write_str (file, SESSION_DCC_FILENAME, ptr_dcc->filename));
+        rc = rc && (session_write_str (file, SESSION_DCC_LOCAL_FILENAME, ptr_dcc->local_filename));
+        rc = rc && (session_write_int (file, SESSION_DCC_FILENAME_SUFFIX, ptr_dcc->filename_suffix));
+        rc = rc && (session_write_buf (file, SESSION_DCC_SIZE, &(ptr_dcc->size), sizeof (unsigned long)));
+        rc = rc && (session_write_buf (file, SESSION_DCC_POS, &(ptr_dcc->pos), sizeof (unsigned long)));
+        rc = rc && (session_write_buf (file, SESSION_DCC_ACK, &(ptr_dcc->ack), sizeof (unsigned long)));
+        rc = rc && (session_write_buf (file, SESSION_DCC_START_RESUME, &(ptr_dcc->start_resume), sizeof (unsigned long)));
+        rc = rc && (session_write_buf (file, SESSION_DCC_LAST_CHECK_TIME, &(ptr_dcc->last_check_time), sizeof (time_t)));
+        rc = rc && (session_write_buf (file, SESSION_DCC_LAST_CHECK_POS, &(ptr_dcc->last_check_pos), sizeof (unsigned long)));
+        rc = rc && (session_write_buf (file, SESSION_DCC_LAST_ACTIVITY, &(ptr_dcc->last_activity), sizeof (time_t)));
+        rc = rc && (session_write_buf (file, SESSION_DCC_BYTES_PER_SEC, &(ptr_dcc->bytes_per_sec), sizeof (unsigned long)));
+        rc = rc && (session_write_buf (file, SESSION_DCC_ETA, &(ptr_dcc->eta), sizeof (unsigned long)));
+        rc = rc && (session_write_id  (file, SESSION_DCC_END));
+        
+        if (!rc)
+            return 0;
+    }
+    return 1;
+}
+
+/*
+ * session_save_history: save history into session file
+ *                       (from last to first, to restore it in good order)
+ */
+
+int
+session_save_history (FILE *file, t_history *last_history)
+{
+    int rc;
+    t_history *ptr_history;
+    
+    rc = 1;
+    rc = rc && (session_write_id (file, SESSION_OBJ_HISTORY));
+    ptr_history = last_history;
+    while (ptr_history)
+    {
+        rc = rc && (session_write_str (file, SESSION_HIST_TEXT, ptr_history->text));
+        ptr_history = ptr_history->prev_history;
+    }
+    rc = rc && (session_write_id  (file, SESSION_HIST_END));
+    return rc;
+}
+
+/*
+ * session_save_line: save a buffer line into session file
+ */
+
+int
+session_save_line (FILE *file, t_gui_line *line)
+{
+    int rc;
+    
+    rc = 1;
+    rc = rc && (session_write_id  (file, SESSION_OBJ_LINE));
+    rc = rc && (session_write_int (file, SESSION_LINE_LENGTH, line->length));
+    rc = rc && (session_write_int (file, SESSION_LINE_LENGTH_ALIGN, line->length_align));
+    rc = rc && (session_write_int (file, SESSION_LINE_LOG_WRITE, line->log_write));
+    rc = rc && (session_write_int (file, SESSION_LINE_WITH_MESSAGE, line->line_with_message));
+    rc = rc && (session_write_int (file, SESSION_LINE_WITH_HIGHLIGHT, line->line_with_highlight));
+    rc = rc && (session_write_str (file, SESSION_LINE_DATA, line->data));
+    rc = rc && (session_write_int (file, SESSION_LINE_OFS_AFTER_DATE, line->ofs_after_date));
+    rc = rc && (session_write_id  (file, SESSION_LINE_END));
+    return rc;
+}
+
+/*
+ * session_save_buffers: save all buffers into session file
+ */
+
+int
+session_save_buffers (FILE *file)
+{
+    int rc;
+    t_gui_buffer *ptr_buffer;
+    t_gui_line *ptr_line;
+    
+    rc = 1;
+    
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        rc = rc && (session_write_id  (file, SESSION_OBJ_BUFFER));
+        rc = rc && (session_write_str (file, SESSION_BUFF_SERVER, SERVER(ptr_buffer) ? SERVER(ptr_buffer)->name : NULL));
+        rc = rc && (session_write_str (file, SESSION_BUFF_CHANNEL, CHANNEL(ptr_buffer) ? CHANNEL(ptr_buffer)->name : NULL));
+        rc = rc && (session_write_int (file, SESSION_BUFF_DCC, ptr_buffer->dcc));
+        rc = rc && (session_write_id  (file, SESSION_BUFF_END));
+        
+        if (!rc)
+            return 0;
+        
+        for (ptr_line = ptr_buffer->lines; ptr_line;
+             ptr_line = ptr_line->next_line)
+        {
+            if (!session_save_line (file, ptr_line))
+                return 0;
+        }
+        
+        if (!session_save_history (file, ptr_buffer->last_history))
+            return 0;
+    }
+    return 1;
+}
+
+/*
+ * session_save: save current session
+ */
+
+int
+session_save (char *filename)
+{
+    FILE *file;
+    int rc;
+    
+    if ((file = fopen (filename, "wb")) == NULL)
+        return 0;
+    
+    rc = 1;
+    rc = rc && (session_write_str (file, -1, SESSION_SIGNATURE));
+    rc = rc && (session_save_servers (file));
+    rc = rc && (session_save_dcc (file));
+    rc = rc && (session_save_history (file, history_global_last));
+    rc = rc && (session_save_buffers (file));
+    
+    fclose (file);
+    
+    return rc;
+}
+
+/* ========================================================================== */
+
+/*
+ * session_crash: stop WeeChat if problem during session loading
+ */
+
+void
+session_crash (FILE *file, char *message, ...)
+{
+    char buffer[4096];
+    va_list argptr;
+    
+    va_start (argptr, message);
+    vsnprintf (buffer, sizeof (buffer) - 1, message, argptr);
+    va_end (argptr);
+    
+    fclose (file);
+    gui_end ();
+    fprintf (stderr, "%s %s\n",
+             WEECHAT_ERROR, buffer);
+    fprintf (stderr,
+             _("Last operation with session file was at position %ld, "
+               "read of %d bytes\n"),
+             session_last_read_pos,
+             session_last_read_length);
+    fprintf (stderr,
+             _("Please send ~/.weechat/%s, ~/.weechat/%s and "
+               "above messages to WeeChat developers for support.\n"
+               "Be careful, private info may be in these files.\n"),
+             WEECHAT_LOG_NAME,
+             WEECHAT_SESSION_NAME);
+    exit (EXIT_FAILURE);
+}
+
+/*
+ * session_read_int: read integer from file
+ */
+
+int
+session_read_int (FILE *file, int *value)
+{
+    char type;
+    
+    session_last_read_pos = ftell (file);
+    session_last_read_length = sizeof (char);
+    
+    if (fread ((void *)(&type), sizeof (char), 1, file) == 0)
+        return 0;
+    if (type != SESSION_TYPE_INT)
+    {
+        session_crash (file, _("wrong type in file (expected: %d, read: %d)"),
+                       SESSION_TYPE_INT, type);
+        return 0;
+    }
+    
+    session_last_read_pos = ftell (file);
+    session_last_read_length = sizeof (int);
+    
+    if (value)
+        return (fread ((void *)value, sizeof (int), 1, file) > 0);
+    else
+        return (fseek (file, sizeof (int), SEEK_CUR) >= 0);
+}
+
+/*
+ * session_read_str: read string from file
+ */
+
+int
+session_read_str (FILE *file, char **string)
+{
+    char type;
+    int length;
+    
+    if (string && *string)
+        free (*string);
+    
+    session_last_read_pos = ftell (file);
+    session_last_read_length = sizeof (char);
+    
+    if (fread ((void *)(&type), sizeof (char), 1, file) == 0)
+        return 0;
+    if (type != SESSION_TYPE_STR)
+    {
+        session_crash (file, _("wrong type in file (expected: %d, read: %d)"),
+                       SESSION_TYPE_STR, type);
+        return 0;
+    }
+    
+    session_last_read_pos = ftell (file);
+    session_last_read_length = sizeof (int);
+    
+    if (fread ((void *)(&length), sizeof (int), 1, file) == 0)
+        return 0;
+    
+    if (length == 0)
+    {
+        if (string)
+            (*string) = NULL;
+        return 1;
+    }
+    
+    session_last_read_pos = ftell (file);
+    session_last_read_length = length;
+    
+    if (string)
+    {
+        (*string) = (char *) malloc (length + 1);
+        if (!(*string))
+            return 0;
+        
+        if (fread ((void *)(*string), length, 1, file) == 0)
+        {
+            free (*string);
+            return 0;
+        }
+        (*string)[length] = '\0';
+    }
+    else
+        return (fseek (file, length, SEEK_CUR) >= 0);
+    
+    return 1;
+}
+
+/*
+ * session_read_buf: read buffer from file
+ */
+
+int
+session_read_buf (FILE *file, void *buffer, int length_expected)
+{
+    char type;
+    int length;
+    
+    session_last_read_pos = ftell (file);
+    session_last_read_length = sizeof (char);
+    
+    if (fread ((void *)(&type), sizeof (char), 1, file) == 0)
+        return 0;
+    if (type != SESSION_TYPE_BUF)
+    {
+        session_crash (file, _("wrong type in file (expected: %d, read: %d)"),
+                       SESSION_TYPE_BUF, type);
+        return 0;
+    }
+    
+    session_last_read_pos = ftell (file);
+    session_last_read_length = sizeof (int);
+    
+    if (fread ((void *)(&length), sizeof (int), 1, file) == 0)
+        return 0;
+    if ((length_expected > 0) && (length != length_expected))
+    {
+        session_crash (file, _("invalid length for a buffer"));
+        return 0;
+    }
+    
+    session_last_read_pos = ftell (file);
+    session_last_read_length = length;
+    
+    if (buffer)
+        return (fread (buffer, length, 1, file) > 0);
+    else
+        return (fseek (file, length, SEEK_CUR) >= 0);
+}
+
+/*
+ * session_read_object: read an object in file
+ */
+
+int
+session_read_object (FILE *file, int object_id, int type, void *target, int max_buf_length)
+{
+    int object_id_read;
+    char type_read;
+    
+    if (fread ((void *)(&object_id_read), sizeof (int), 1, file) == 0)
+    {
+        session_crash (file, _("object read error"));
+        return 0;
+    }
+    if (object_id_read != object_id)
+    {
+        session_crash (file, _("wrong object (expected: %d, read: %d)"),
+                       object_id, object_id_read);
+        return 0;
+    }
+    
+    session_last_read_pos = ftell (file);
+    session_last_read_length = sizeof (char);
+    
+    if (fread ((void *)(&type_read), sizeof (char), 1, file) == 0)
+    {
+        session_crash (file, _("type read error"));
+        return 0;
+    }
+    if (type_read != type)
+    {
+        session_crash (file, _("wrong type (expected: %d, read: %d)"),
+                       type, type_read);
+        return 0;
+    }
+    if (fseek (file, sizeof (char) * (-1), SEEK_CUR) < 0)
+        return 0;
+    switch (type)
+    {
+        case SESSION_TYPE_INT:
+            return session_read_int (file, (int *)target);
+        case SESSION_TYPE_STR:
+            return session_read_str (file, (char **)target);
+        case SESSION_TYPE_BUF:
+            return session_read_buf (file, target, max_buf_length);
+    }
+    return 0;
+}
+
+/*
+ * session_read_ignore_value: ignore a value from file
+ */
+
+int
+session_read_ignore_value (FILE *file)
+{
+    char type;
+    
+    if (fread ((void *)(&type), sizeof (char), 1, file) == 0)
+        return 0;
+    if (fseek (file, sizeof (char) * (-1), SEEK_CUR) < 0)
+        return 0;
+    switch (type)
+    {
+        case SESSION_TYPE_INT:
+            return session_read_int (file, NULL);
+        case SESSION_TYPE_STR:
+            return session_read_str (file, NULL);
+        case SESSION_TYPE_BUF:
+            return session_read_buf (file, NULL, 0);
+    }
+    return 0;
+}
+
+/*
+ * session_read_ignore_object: ignore an object from file
+ */
+
+int
+session_read_ignore_object (FILE *file)
+{
+    int object_id;
+    
+    while (1)
+    {
+        if (fread ((void *)(&object_id), sizeof (int), 1, file) == 0)
+            return 0;
+        if (feof (file))
+            return 0;
+        if (object_id == SESSION_OBJ_END)
+            return 1;
+        if (!session_read_ignore_value (file))
+            return 0;
+    }
+}
+
+/*
+ * session_load_server: load server from file
+ */
+
+int
+session_load_server (FILE *file)
+{
+    int object_id, rc;
+    char *server_name;
+    
+    /* read server name */
+    server_name = NULL;
+    if (!session_read_object (file, SESSION_SERV_NAME, SESSION_TYPE_STR, &server_name, 0))
+    {
+        session_crash (file, _("server name not found"));
+        return 0;
+    }
+    
+    /* use or allocate server */
+    weechat_log_printf (_("session: loading server \"%s\"\n"),
+                        server_name);
+    session_current_server = server_search (server_name);
+    if (session_current_server)
+        weechat_log_printf (_("server found, updating values\n"));
+    else
+    {
+        weechat_log_printf (_("server not found, creating new one\n"));
+        session_current_server = server_alloc ();
+        if (!session_current_server)
+        {
+            free (server_name);
+            session_crash (file, _("can't create new server"));
+            return 0;
+        }
+        server_init (session_current_server);
+        session_current_server->name = strdup (server_name);
+    }
+    free (server_name);
+    
+    /* read server values */
+    rc = 1;
+    while (rc)
+    {
+        if (feof (file))
+        {
+            session_crash (file, _("unexpected end of file (reading server)"));
+            return 0;
+        }
+        if (fread ((void *)(&object_id), sizeof (int), 1, file) == 0)
+            return 0;
+        switch (object_id)
+        {
+            case SESSION_SERV_END:
+                return 1;
+            case SESSION_SERV_AUTOCONNECT:
+                rc = rc && (session_read_int (file, &(session_current_server->autoconnect)));
+                break;
+            case SESSION_SERV_AUTORECONNECT:
+                rc = rc && (session_read_int (file, &(session_current_server->autoreconnect)));
+                break;
+            case SESSION_SERV_AUTORECONNECT_DELAY:
+                rc = rc && (session_read_int (file, &(session_current_server->autoreconnect_delay)));
+                break;
+            case SESSION_SERV_COMMAND_LINE:
+                rc = rc && (session_read_int (file, &(session_current_server->command_line)));
+                break;
+            case SESSION_SERV_ADDRESS:
+                rc = rc && (session_read_str (file, &(session_current_server->address)));
+                break;
+            case SESSION_SERV_PORT:
+                rc = rc && (session_read_int (file, &(session_current_server->port)));
+                break;
+            case SESSION_SERV_IPV6:
+                rc = rc && (session_read_int (file, &(session_current_server->ipv6)));
+                break;
+            case SESSION_SERV_SSL:
+                rc = rc && (session_read_int (file, &(session_current_server->ssl)));
+                break;
+            case SESSION_SERV_PASSWORD:
+                rc = rc && (session_read_str (file, &(session_current_server->password)));
+                break;
+            case SESSION_SERV_NICK1:
+                rc = rc && (session_read_str (file, &(session_current_server->nick1)));
+                break;
+            case SESSION_SERV_NICK2:
+                rc = rc && (session_read_str (file, &(session_current_server->nick2)));
+                break;
+            case SESSION_SERV_NICK3:
+                rc = rc && (session_read_str (file, &(session_current_server->nick3)));
+                break;
+            case SESSION_SERV_USERNAME:
+                rc = rc && (session_read_str (file, &(session_current_server->username)));
+                break;
+            case SESSION_SERV_REALNAME:
+                rc = rc && (session_read_str (file, &(session_current_server->realname)));
+                break;
+            case SESSION_SERV_COMMAND:
+                rc = rc && (session_read_str (file, &(session_current_server->command)));
+                break;
+            case SESSION_SERV_COMMAND_DELAY:
+                rc = rc && (session_read_int (file, &(session_current_server->command_delay)));
+                break;
+            case SESSION_SERV_AUTOJOIN:
+                rc = rc && (session_read_str (file, &(session_current_server->autojoin)));
+                break;
+            case SESSION_SERV_AUTOREJOIN:
+                rc = rc && (session_read_int (file, &(session_current_server->autorejoin)));
+                break;
+            case SESSION_SERV_NOTIFY_LEVELS:
+                rc = rc && (session_read_str (file, &(session_current_server->notify_levels)));
+                break;
+            case SESSION_SERV_CHILD_PID:
+                rc = rc && (session_read_int (file, &(session_current_server->child_pid)));
+                break;
+            case SESSION_SERV_CHILD_READ:
+                rc = rc && (session_read_int (file, &(session_current_server->child_read)));
+                break;
+            case SESSION_SERV_CHILD_WRITE:
+                rc = rc && (session_read_int (file, &(session_current_server->child_write)));
+                break;
+            case SESSION_SERV_SOCK:
+                rc = rc && (session_read_int (file, &(session_current_server->sock)));
+                break;
+            case SESSION_SERV_IS_CONNECTED:
+                rc = rc && (session_read_int (file, &(session_current_server->is_connected)));
+                break;
+            case SESSION_SERV_SSL_CONNECTED:
+                rc = rc && (session_read_int (file, &(session_current_server->ssl_connected)));
+                break;
+#ifdef HAVE_GNUTLS
+            case SESSION_SERV_GNUTLS_SESS:
+                rc = rc && (session_read_buf (file, &(session_current_server->gnutls_sess), sizeof (gnutls_session)));
+                break;
+#endif
+            case SESSION_SERV_UNTERMINATED_MESSAGE:
+                rc = rc && (session_read_str (file, &(session_current_server->unterminated_message)));
+                break;
+            case SESSION_SERV_NICK:
+                rc = rc && (session_read_str (file, &(session_current_server->nick)));
+                break;
+            case SESSION_SERV_RECONNECT_START:
+                rc = rc && (session_read_buf (file, &(session_current_server->reconnect_start), sizeof (time_t)));
+                break;
+            case SESSION_SERV_RECONNECT_JOIN:
+                rc = rc && (session_read_int (file, &(session_current_server->reconnect_join)));
+                break;
+            case SESSION_SERV_IS_AWAY:
+                rc = rc && (session_read_int (file, &(session_current_server->is_away)));
+                break;
+            case SESSION_SERV_AWAY_TIME:
+                rc = rc && (session_read_buf (file, &(session_current_server->away_time), sizeof (time_t)));
+                break;
+            case SESSION_SERV_LAG:
+                rc = rc && (session_read_int (file, &(session_current_server->lag)));
+                break;
+            case SESSION_SERV_LAG_CHECK_TIME:
+                rc = rc && (session_read_buf (file, &(session_current_server->lag_check_time), sizeof (struct timeval)));
+                break;
+            case SESSION_SERV_LAG_NEXT_CHECK:
+                rc = rc && (session_read_buf (file, &(session_current_server->lag_next_check), sizeof (time_t)));
+                break;
+            default:
+                weechat_log_printf (_("session: warning: ignoring value from "
+                                      "server (object id: %d)\n"));
+                rc = rc && (session_read_ignore_value (file));
+                break;
+        }
+    }
+    return 0;
+}
+
+/*
+ * session_load_channel: load channel from file
+ */
+
+int
+session_load_channel (FILE *file)
+{
+    int object_id, rc, channel_type;
+    char *channel_name;
+    
+    /* check if server is allocated for this channel */
+    if (!session_current_server)
+    {
+        session_crash (file, _("channel found without server"));
+        return 0;
+    }
+    
+    /* read channel type */
+    if (!session_read_object (file, SESSION_CHAN_TYPE, SESSION_TYPE_INT, &channel_type, 0))
+    {
+        session_crash (file, _("channel type not found"));
+        return 0;
+    }
+    
+    /* read channel name */
+    channel_name = NULL;
+    if (!session_read_object (file, SESSION_CHAN_NAME, SESSION_TYPE_STR, &channel_name, 0))
+    {
+        session_crash (file, _("channel name not found"));
+        return 0;
+    }
+    
+    /* allocate channel */
+    weechat_log_printf (_("session: loading channel \"%s\"\n"),
+                        channel_name);
+    session_current_channel = channel_new (session_current_server,
+                                           channel_type,
+                                           channel_name);
+    free (channel_name);
+    if (!session_current_channel)
+    {
+        session_crash (file, _("can't create new channel"));
+        return 0;
+    }
+    
+    /* read channel values */
+    rc = 1;
+    while (rc)
+    {
+        if (feof (file))
+        {
+            session_crash (file, _("unexpected end of file (reading channel)"));
+            return 0;
+        }
+        if (fread ((void *)(&object_id), sizeof (int), 1, file) == 0)
+            return 0;
+        switch (object_id)
+        {
+            case SESSION_CHAN_END:
+                return 1;
+            case SESSION_CHAN_TOPIC:
+                rc = rc && (session_read_str (file, &(session_current_channel->topic)));
+                break;
+            case SESSION_CHAN_MODES:
+                rc = rc && (session_read_str (file, (char **)(&(session_current_channel->modes))));
+                break;
+            case SESSION_CHAN_LIMIT:
+                rc = rc && (session_read_int (file, &(session_current_channel->limit)));
+                break;
+            case SESSION_CHAN_KEY:
+                rc = rc && (session_read_str (file, &(session_current_channel->key)));
+                break;
+            case SESSION_CHAN_NICKS_COUNT:
+                rc = rc && (session_read_int (file, &(session_current_channel->nicks_count)));
+                break;
+            case SESSION_CHAN_CHECKING_AWAY:
+                rc = rc && (session_read_int (file, &(session_current_channel->checking_away)));
+                break;
+            default:
+                weechat_log_printf (_("session: warning: ignoring value from "
+                                      "channel (object id: %d)\n"));
+                rc = rc && (session_read_ignore_value (file));
+                break;
+        }
+    }
+    return 0;
+}
+
+/*
+ * session_load_nick: load nick from file
+ */
+
+int
+session_load_nick (FILE *file)
+{
+    int rc, object_id;
+    char *nick_name;
+    t_irc_nick *nick;
+    
+    /* check if channel is allocated for this nick */
+    if (!session_current_channel)
+    {
+        session_crash (file, _("nick found without channel"));
+        return 0;
+    }
+    
+    /* read nick name */
+    nick_name = NULL;
+    if (!session_read_object (file, SESSION_NICK_NICK, SESSION_TYPE_STR, &nick_name, 0))
+    {
+        session_crash (file, _("nick name not found"));
+        return 0;
+    }
+    
+    /* allocate nick */
+    nick = nick_new (session_current_server, session_current_channel,
+                     nick_name, 0, 0, 0, 0, 0);
+    free (nick_name);
+    if (!nick)
+    {
+        session_crash (file, _("can't create new nick"));
+        return 0;
+    }
+    
+    /* read nick values */
+    rc = 1;
+    while (rc)
+    {
+        if (feof (file))
+        {
+            session_crash (file, _("unexpected end of file (reading nick)"));
+            return 0;
+        }
+        if (fread ((void *)(&object_id), sizeof (int), 1, file) == 0)
+            return 0;
+        switch (object_id)
+        {
+            case SESSION_NICK_END:
+                return 1;
+            case SESSION_NICK_FLAGS:
+                rc = rc && (session_read_int (file, &(nick->flags)));
+                break;
+            case SESSION_NICK_COLOR:
+                rc = rc && (session_read_int (file, &(nick->color)));
+                break;
+            default:
+                weechat_log_printf (_("session: warning: ignoring value from "
+                                      "nick (object id: %d)\n"));
+                rc = rc && (session_read_ignore_value (file));
+                break;
+        }
+    }
+    return 0;
+}
+
+/*
+ * session_load_dcc: load DCC from file
+ */
+
+int
+session_load_dcc (FILE *file)
+{
+    int object_id, rc;
+    t_irc_dcc *dcc;
+    char *string;
+    t_irc_server *ptr_server;
+    t_irc_channel *ptr_channel;
+    
+    /* allocate DCC */
+    dcc = dcc_alloc ();
+    if (!dcc)
+    {
+        session_crash (file, _("can't create new DCC"));
+        return 0;
+    }
+    
+    weechat_log_printf (_("session: loading DCC\n"));
+    
+    /* read DCC values */
+    ptr_server = NULL;
+    ptr_channel = NULL;
+    rc = 1;
+    while (rc)
+    {
+        if (feof (file))
+        {
+            session_crash (file, _("unexpected end of file (reading DCC)"));
+            return 0;
+        }
+        if (fread ((void *)(&object_id), sizeof (int), 1, file) == 0)
+            return 0;
+        switch (object_id)
+        {
+            case SESSION_DCC_END:
+                return 1;
+            case SESSION_DCC_SERVER:
+                string = NULL;
+                rc = rc && (session_read_str (file, &string));
+                if (!rc)
+                    return 0;
+                if (string && string[0])
+                {
+                    ptr_server = server_search (string);
+                    if (!ptr_server)
+                    {
+                        session_crash (file, _("server not found for DCC"));
+                        return 0;
+                    }
+                    dcc->server = ptr_server;
+                }
+                break;
+            case SESSION_DCC_CHANNEL:
+                if (!ptr_server)
+                {
+                    session_crash (file, _("DCC with channel but without server"));
+                    return 0;
+                }
+                string = NULL;
+                rc = rc && (session_read_str (file, &string));
+                if (!rc)
+                    return 0;
+                if (string && string[0])
+                {
+                    ptr_channel = channel_search (ptr_server, string);
+                    if (!ptr_channel)
+                    {
+                        session_crash (file, _("channel not found for DCC"));
+                        return 0;
+                    }
+                    dcc->channel = ptr_channel;
+                    ptr_channel->dcc_chat = dcc;
+                }
+                break;
+            case SESSION_DCC_TYPE:
+                rc = rc && (session_read_int (file, &(dcc->type)));
+                break;
+            case SESSION_DCC_STATUS:
+                rc = rc && (session_read_int (file, &(dcc->status)));
+                break;
+            case SESSION_DCC_START_TIME:
+                rc = rc && (session_read_buf (file, &(dcc->start_time), sizeof (time_t)));
+                break;
+            case SESSION_DCC_START_TRANSFER:
+                rc = rc && (session_read_buf (file, &(dcc->start_transfer), sizeof (time_t)));
+                break;
+            case SESSION_DCC_ADDR:
+                rc = rc && (session_read_buf (file, &(dcc->addr), sizeof (unsigned long)));
+                break;
+            case SESSION_DCC_PORT:
+                rc = rc && (session_read_int (file, &(dcc->port)));
+                break;
+            case SESSION_DCC_NICK:
+                rc = rc && (session_read_str (file, &(dcc->nick)));
+                break;
+            case SESSION_DCC_SOCK:
+                rc = rc && (session_read_int (file, &(dcc->sock)));
+                break;
+            case SESSION_DCC_UNTERMINATED_MESSAGE:
+                rc = rc && (session_read_str (file, &(dcc->unterminated_message)));
+                break;
+            case SESSION_DCC_FILE:
+                rc = rc && (session_read_int (file, &(dcc->file)));
+                break;
+            case SESSION_DCC_FILENAME:
+                rc = rc && (session_read_str (file, &(dcc->filename)));
+                break;
+            case SESSION_DCC_LOCAL_FILENAME:
+                rc = rc && (session_read_str (file, &(dcc->local_filename)));
+                break;
+            case SESSION_DCC_FILENAME_SUFFIX:
+                rc = rc && (session_read_int (file, &(dcc->filename_suffix)));
+                break;
+            case SESSION_DCC_SIZE:
+                rc = rc && (session_read_buf (file, &(dcc->size), sizeof (unsigned long)));
+                break;
+            case SESSION_DCC_POS:
+                rc = rc && (session_read_buf (file, &(dcc->pos), sizeof (unsigned long)));
+                break;
+            case SESSION_DCC_ACK:
+                rc = rc && (session_read_buf (file, &(dcc->ack), sizeof (unsigned long)));
+                break;
+            case SESSION_DCC_START_RESUME:
+                rc = rc && (session_read_buf (file, &(dcc->start_resume), sizeof (unsigned long)));
+                break;
+            case SESSION_DCC_LAST_CHECK_TIME:
+                rc = rc && (session_read_buf (file, &(dcc->last_check_time), sizeof (time_t)));
+                break;
+            case SESSION_DCC_LAST_CHECK_POS:
+                rc = rc && (session_read_buf (file, &(dcc->last_check_pos), sizeof (unsigned long)));
+                break;
+            case SESSION_DCC_LAST_ACTIVITY:
+                rc = rc && (session_read_buf (file, &(dcc->last_activity), sizeof (time_t)));
+                break;
+            case SESSION_DCC_BYTES_PER_SEC:
+                rc = rc && (session_read_buf (file, &(dcc->bytes_per_sec), sizeof (unsigned long)));
+                break;
+            case SESSION_DCC_ETA:
+                rc = rc && (session_read_buf (file, &(dcc->eta), sizeof (unsigned long)));
+                break;
+            default:
+                weechat_log_printf (_("session: warning: ignoring value from "
+                                      "DCC (object id: %d)\n"));
+                rc = rc && (session_read_ignore_value (file));
+                break;
+        }
+    }
+    return 0;
+}
+
+/*
+ * session_load_history: load history from file (global or for a buffer)
+ */
+
+int
+session_load_history (FILE *file)
+{
+    int object_id, rc;
+    char *text;
+    
+    if (session_current_buffer)
+        weechat_log_printf (_("session: loading buffer history\n"));
+    else
+        weechat_log_printf (_("session: loading global history\n"));
+    
+    /* read history values */
+    rc = 1;
+    while (rc)
+    {
+        if (feof (file))
+        {
+            session_crash (file, _("unexpected end of file (reading history)"));
+            return 0;
+        }
+        if (fread ((void *)(&object_id), sizeof (int), 1, file) == 0)
+            return 0;
+        switch (object_id)
+        {
+            case SESSION_HIST_END:
+                return 1;
+            case SESSION_HIST_TEXT:
+                text = NULL;
+                if (!session_read_str (file, &text))
+                    return 0;
+                if (session_current_buffer)
+                    history_buffer_add (session_current_buffer, text);
+                else
+                    history_global_add (text);
+                free (text);
+                break;
+            default:
+                weechat_log_printf (_("session: warning: ignoring value from "
+                                      "history (object id: %d)\n"));
+                rc = rc && (session_read_ignore_value (file));
+                break;
+        }
+    }
+    return 0;
+}
+
+/*
+ * session_load_buffer: load buffer from file
+ */
+
+int
+session_load_buffer (FILE *file)
+{
+    int object_id, rc;
+    char *server_name, *channel_name;
+    int dcc;
+    t_irc_server *ptr_server;
+    t_irc_channel *ptr_channel;
+    
+    /* read server name */
+    server_name = NULL;
+    if (!session_read_object (file, SESSION_BUFF_SERVER, SESSION_TYPE_STR, &server_name, 0))
+    {
+        session_crash (file, _("server name not found for buffer"));
+        return 0;
+    }
+    
+    /* read channel name */
+    channel_name = NULL;
+    if (!session_read_object (file, SESSION_BUFF_CHANNEL, SESSION_TYPE_STR, &channel_name, 0))
+    {
+        session_crash (file, _("channel name not found for buffer"));
+        return 0;
+    }
+    
+    /* read dcc */
+    if (!session_read_object (file, SESSION_BUFF_DCC, SESSION_TYPE_INT, &dcc, 0))
+    {
+        session_crash (file, _("dcc flag not found for buffer"));
+        return 0;
+    }
+    
+    /* allocate buffer */
+    weechat_log_printf (_("session: loading buffer (server: %s, channel: %s, dcc: %d)\n"),
+                        (server_name) ? server_name : "-",
+                        (channel_name) ? channel_name : "-",
+                        dcc);
+    ptr_server = NULL;
+    ptr_channel = NULL;
+    if (server_name)
+    {
+        ptr_server = server_search (server_name);
+        if (!ptr_server)
+        {
+            session_crash (file, _("server not found for buffer"));
+            return 0;
+        }
+    }
+    
+    if (channel_name)
+    {
+        ptr_channel = channel_search (ptr_server, channel_name);
+        if (!ptr_channel)
+        {
+            session_crash (file, _("channel not found for buffer"));
+            return 0;
+        }
+    }
+    
+    session_current_buffer = gui_buffer_new (gui_windows, ptr_server, ptr_channel, dcc, 1);
+    if (!session_current_buffer)
+    {
+        session_crash (file, _("can't create new buffer"));
+        return 0;
+    }
+    
+    free (server_name);
+    free (channel_name);
+    
+    /* read buffer values */
+    rc = 1;
+    while (rc)
+    {
+        if (feof (file))
+        {
+            session_crash (file, _("unexpected end of file (reading buffer)"));
+            return 0;
+        }
+        if (fread ((void *)(&object_id), sizeof (int), 1, file) == 0)
+            return 0;
+        switch (object_id)
+        {
+            case SESSION_BUFF_END:
+                return 1;
+            default:
+                weechat_log_printf (_("session: warning: ignoring value from "
+                                      "buffer (object id: %d)\n"));
+                rc = rc && (session_read_ignore_value (file));
+                break;
+        }
+    }
+    return 0;
+}
+
+/*
+ * session_load_line: load buffer line from file
+ */
+
+int
+session_load_line (FILE *file)
+{
+    int object_id, rc;
+    t_gui_line *line;
+    
+    /* check if buffer is allocated for this line */
+    if (!session_current_buffer)
+    {
+        session_crash (file, _("line found without buffer"));
+        return 0;
+    }
+    
+    /* allocate line */
+    line = gui_line_new (session_current_buffer);
+    if (!line)
+    {
+        session_crash (file, _("can't create new line"));
+        return 0;
+    }
+    
+    /* read line values */
+    rc = 1;
+    while (rc)
+    {
+        if (feof (file))
+        {
+            session_crash (file, _("unexpected end of file (reading line)"));
+            return 0;
+        }
+        if (fread ((void *)(&object_id), sizeof (int), 1, file) == 0)
+            return 0;
+        switch (object_id)
+        {
+            case SESSION_LINE_END:
+                return 1;
+            case SESSION_LINE_LENGTH:
+                rc = rc && (session_read_int (file, &(line->length)));
+                break;
+            case SESSION_LINE_LENGTH_ALIGN:
+                rc = rc && (session_read_int (file, &(line->length_align)));
+                break;
+            case SESSION_LINE_LOG_WRITE:
+                rc = rc && (session_read_int (file, &(line->log_write)));
+                break;
+            case SESSION_LINE_WITH_MESSAGE:
+                rc = rc && (session_read_int (file, &(line->line_with_message)));
+                break;
+            case SESSION_LINE_WITH_HIGHLIGHT:
+                rc = rc && (session_read_int (file, &(line->line_with_highlight)));
+                break;
+            case SESSION_LINE_DATA:
+                rc = rc && (session_read_str (file, &(line->data)));
+                break;
+            case SESSION_LINE_OFS_AFTER_DATE:
+                rc = rc && (session_read_int (file, &(line->ofs_after_date)));
+                break;
+            default:
+                weechat_log_printf (_("session: warning: ignoring value from "
+                                      "line (object id: %d)\n"));
+                rc = rc && (session_read_ignore_value (file));
+                break;
+        }
+    }
+    return 0;
+}
+
+/*
+ * session_load: load session from file
+ */
+
+int
+session_load (char *filename)
+{
+    FILE *file;
+    char *signature;
+    int object_id;
+    t_irc_server *ptr_server;
+    
+    session_current_server = NULL;
+    session_current_channel = NULL;
+    session_current_buffer = NULL;
+    
+    session_last_read_pos = -1;
+    session_last_read_length = -1;
+    
+    if ((file = fopen (filename, "rb")) == NULL)
+    {
+        session_crash (file, _("session file not found"));
+        return 0;
+    }
+    
+    signature = NULL;
+    if (!session_read_str (file, &signature))
+    {
+        session_crash (file, _("signature not found"));
+        return 0;
+    }
+    if (!signature || (strcmp (signature, SESSION_SIGNATURE) != 0))
+    {
+        session_crash (file, _("bad session signature"));
+        return 0;
+    }
+    free (signature);
+    
+    while (!feof (file))
+    {
+        if (fread ((void *)(&object_id), sizeof (int), 1, file) == 0)
+        {
+            if (feof (file))
+                break;
+            session_crash (file, _("object id not found"));
+            return 0;
+        }
+        switch (object_id)
+        {
+            case SESSION_OBJ_SERVER:
+                if (!session_load_server (file))
+                {
+                    session_crash (file, _("failed to load server"));
+                    return 0;
+                }
+                break;
+            case SESSION_OBJ_CHANNEL:
+                if (!session_load_channel (file))
+                {
+                    session_crash (file, _("failed to load channel"));
+                    return 0;
+                }
+                break;
+            case SESSION_OBJ_NICK:
+                if (!session_load_nick (file))
+                {
+                    session_crash (file, _("failed to load nick"));
+                    return 0;
+                }
+                break;
+            case SESSION_OBJ_DCC:
+                if (!session_load_dcc (file))
+                {
+                    session_crash (file, _("failed to load DCC"));
+                    return 0;
+                }
+                break;
+            case SESSION_OBJ_HISTORY:
+                if (!session_load_history (file))
+                {
+                    session_crash (file, _("failed to load history"));
+                    return 0;
+                }
+                break;
+            case SESSION_OBJ_BUFFER:
+                if (!session_load_buffer (file))
+                {
+                    session_crash (file, _("failed to load buffer"));
+                    return 0;
+                }
+                break;
+            case SESSION_OBJ_LINE:
+                if (!session_load_line (file))
+                {
+                    session_crash (file, _("failed to load line"));
+                    return 0;
+                }
+                break;
+            default:
+                weechat_log_printf (_("ignoring object (id: %d)\n"),
+                                    object_id);
+                if (!session_read_ignore_object (file))
+                {
+                    session_crash (file, _("failed to ignore object (id: %d)"),
+                                   object_id);
+                    return 0;
+                }
+        }
+    }
+    
+    /* assign a buffer to all connected servers */
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        if ((ptr_server->is_connected) && (!ptr_server->buffer))
+            ptr_server->buffer = gui_buffers;
+    }
+    
+    gui_switch_to_buffer (gui_windows, gui_buffers);
+    gui_redraw_buffer (gui_current_window->buffer);
+    
+    fclose (file);
+    
+    if (unlink (filename) < 0)
+    {
+        irc_display_prefix (NULL, gui_current_window->buffer, PREFIX_ERROR);
+        gui_printf_nolog (gui_current_window->buffer,
+                          _("%s can't delete session file (%s)\n"),
+                          WEECHAT_ERROR);
+    }
+    
+    irc_display_prefix (NULL, gui_current_window->buffer, PREFIX_INFO);
+    gui_printf_nolog (gui_current_window->buffer,
+                      _("Upgrade completed successfully\n"));
+    
+    return 1;
+}

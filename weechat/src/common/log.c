@@ -120,7 +120,7 @@ log_start (t_gui_buffer *buffer)
     buffer->log_filename = (char *) malloc (length);
     if (!buffer->log_filename)
     {
-        wee_log_printf (_("Not enough memory to write log file for a buffer\n"));
+        weechat_log_printf (_("Not enough memory to write log file for a buffer\n"));
         return;
     }
     if (cfg_log_path[0] == '~')
@@ -148,7 +148,7 @@ log_start (t_gui_buffer *buffer)
     buffer->log_file = fopen (buffer->log_filename, "a");
     if (!buffer->log_file)
     {
-        wee_log_printf (_("Unable to write log file for a buffer\n"));
+        weechat_log_printf (_("Unable to write log file for a buffer\n"));
         free (buffer->log_filename);
         return;
     }
