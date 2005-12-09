@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-12-06
+ChangeLog - 2005-12-09
 
 
 Version 0.1.7 (under dev!):
+   * added Ruby script plugin
    * added /upgrade command
    * added ETA (Estimated Time of Arrival) for DCC files
    * /nick command is now allowed when not connected to server
@@ -36,7 +37,7 @@ Version 0.1.6 (2005-11-11):
    * full UTF-8 support, auto-detection of UTF-8 usage (locale)
    * added "Day changed to [date]" message when day changes
    * new plugin interface, rewritten from scratch: now loads dynamic C
-     library, and perl/python are plugin scripts
+     library, and perl/python are script plugins
    * log options (for server/channel/private) can now be set while
      WeeChat is running
    * added channel modes +e and +f
