@@ -44,7 +44,7 @@ rm -rf $RPM_BUILD_ROOT
 %setup
 
 %build
-./configure --prefix=/usr --infodir=/usr/share/info --mandir=/usr/share/man --enable-perl --enable-python 
+./configure --prefix=/usr --infodir=/usr/share/info --mandir=/usr/share/man --enable-perl --enable-python --with-debug=0
 make
 
 %install
