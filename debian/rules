@@ -15,7 +15,8 @@ configure: configure-stamp
 configure-stamp:
 	dh_testdir
 	./configure --prefix=/usr --sysconfdir=/etc --mandir=\$${prefix}/share/man \
-	--infodir=\$${prefix}/share/info	--enable-perl --enable-python --enable-ruby
+	--infodir=\$${prefix}/share/info --enable-perl --enable-python --enable-ruby \
+	--with-debug=0
 	touch configure-stamp
 
 
