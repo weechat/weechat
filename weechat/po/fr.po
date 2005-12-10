@@ -2702,7 +2702,7 @@ msgstr ""
 "associations de touches par défaut sont restaurées)\n"
 "functions: lister la liste des fonctions internes pour les associations de "
 "touches\n"
-"reset: restaur les touches aux valeurs par défaut et supprime TOUTES les "
+"reset: restaure les touches aux valeurs par défaut et supprime TOUTES les "
 "touches personnelles (utiliser avec précaution !)"
 
 #: src/common/command.c:101
