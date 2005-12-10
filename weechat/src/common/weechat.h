@@ -98,6 +98,7 @@ extern char *weechat_argv0;
 extern time_t weechat_start_time;
 extern int quit_weechat;
 extern char *weechat_home;
+extern FILE *weechat_log_file;
 extern char *local_charset;
 
 #ifdef HAVE_GNUTLS

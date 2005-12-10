@@ -33,6 +33,7 @@
 #include "weelist.h"
 #include "weeconfig.h"
 #include "session.h"
+#include "fifo.h"
 #include "../irc/irc.h"
 #include "../gui/gui.h"
 #include "../plugins/plugins.h"
@@ -2865,6 +2866,13 @@ weechat_cmd_upgrade (int argc, char **argv)
 #endif
     (void) config_write (NULL);
     gui_end ();
+    fifo_remove ();
+    if (weechat_log_file)
+        fclose (weechat_log_file);
+#ifdef HAVE_GNUTLS
+    gnutls_certificate_free_credentials (gnutls_xcred);
+    gnutls_global_deinit();
+#endif
     
     execvp (exec_args[0], exec_args);
     
@@ -2876,12 +2884,12 @@ weechat_cmd_upgrade (int argc, char **argv)
     fprintf (stderr, _("%s exec failed (program: \"%s\"), exiting WeeChat\n"),
              WEECHAT_ERROR,
              exec_args[0]);
-                
+    
     free (exec_args[0]);
     free (exec_args[3]);
     free (filename);
     
-    weechat_shutdown (EXIT_FAILURE, 0);
+    exit (EXIT_FAILURE);
     
     /* never executed */
     return -1;
