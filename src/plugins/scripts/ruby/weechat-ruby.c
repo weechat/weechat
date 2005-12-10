@@ -50,60 +50,80 @@ int modnum = 0;
 
 
 /* 
- * -- this structure comes from apache mod_ruby --
- */
-typedef struct protect_call_arg {
-    VALUE recv;
-    ID mid;
-    int argc;
-    VALUE *argv;
-} protect_call_arg_t;
-
-/* 
  * protect_funcall0 :
  *
- * -- this function comes from apache mod_ruby --
  */
 
 static VALUE 
-protect_funcall0(VALUE arg)
+rb_funcall0 (VALUE args)
 {
-    return rb_funcall2(((protect_call_arg_t *) arg)->recv,
-                       ((protect_call_arg_t *) arg)->mid,
-                       ((protect_call_arg_t *) arg)->argc,
-                       ((protect_call_arg_t *) arg)->argv);
+    VALUE recv = rb_ary_shift (args);
+    VALUE func = rb_ary_shift (args);
+    VALUE argc = rb_ary_shift (args);
+
+    return rb_funcall2(recv, rb_intern(STR2CSTR(func)), NUM2INT(argc), RARRAY(args)->ptr);
 }
 
 /* 
- * rb_protect_funcall :
+ * protect_rescue0 :
  *
- * -- this function comes from apache mod_ruby --
  */
 
 VALUE
-rb_protect_funcall(VALUE recv, ID mid, int *state, int argc, ...)
-{
-    va_list ap;
-    VALUE *argv;
-    struct protect_call_arg arg;
+rb_rescue0 (VALUE func, VALUE error_info)
+{    
+    VALUE str = rb_funcall(error_info, rb_intern("to_s"), 0, NULL);
+    VALUE errinfo = rb_inspect(ruby_errinfo);
+    
+    ruby_plugin->printf_server (ruby_plugin,
+				"Ruby error: unable to run function \"%s\"",
+				STR2CSTR(func));
+    ruby_plugin->printf_server (ruby_plugin,
+				"Ruby error: %s", STR2CSTR(str));
+    ruby_plugin->printf_server (ruby_plugin,
+				"Ruby error: %s", STR2CSTR(errinfo));
+    //rb_backtrace ();
+        
+    return INT2FIX(PLUGIN_RC_KO);
+}
 
+
+/* 
+ * rb_rescue_funcall :
+ *
+ */
+
+
+VALUE
+rb_rescue_funcall (VALUE recv, VALUE func, int argc, ...)
+{
+
+    va_list ap;
+    VALUE argv;
+
+    argv = rb_ary_new ();
+    
+    rb_ary_push (argv, recv);
+    rb_ary_push (argv, func);
+    rb_ary_push (argv, INT2FIX(argc));
+    
     if (argc > 0)
     {
         int i;
-        argv = ALLOCA_N(VALUE, argc);
         va_start(ap, argc);
         for (i = 0; i < argc; i++)
-            argv[i] = va_arg(ap, VALUE);
+	    rb_ary_push (argv, va_arg(ap, VALUE));
         va_end(ap);
     }
-    else
-        argv = 0;
-    arg.recv = recv;
-    arg.mid = mid;
-    arg.argc = argc;
-    arg.argv = argv;
-    return rb_protect(protect_funcall0, (VALUE) &arg, state);
+    
+    VALUE ret = rb_rescue(rb_funcall0, argv, rb_rescue0, func);
+
+    if (NIL_P(ret))
+	ret = INT2FIX(PLUGIN_RC_KO);
+
+    return ret;
 }
+
 
 /*
  * weechat_ruby_exec: execute a Ruby script
@@ -118,26 +138,13 @@ weechat_ruby_exec (t_weechat_plugin *plugin,
     (void) plugin;
 
     VALUE ruby_retcode;
-    int ruby_error;
     
     ruby_current_script = script;
 
-    ruby_retcode = rb_protect_funcall ((VALUE) script->interpreter, rb_intern(function),
-				       &ruby_error, 2,
-				       rb_str_new2((server == NULL) ? "" : server),
-				       rb_str_new2((arguments == NULL) ? "" : arguments));
-    if (ruby_error)
-    {
-	VALUE ruby_error_info = rb_inspect(ruby_errinfo);
-        rb_backtrace();
-	ruby_plugin->printf_server (ruby_plugin,
-                                    "Ruby error: unable to run function \"%s\"",
-				    function);
-	ruby_plugin->printf_server (ruby_plugin,
-                                    "Ruby error: %s", STR2CSTR(ruby_error_info));	
-	return PLUGIN_RC_KO;
-    }
- 
+    ruby_retcode = rb_rescue_funcall ((VALUE) script->interpreter, rb_str_new2(function), 2,
+				      rb_str_new2((server == NULL) ? "" : server),
+				      rb_str_new2((arguments == NULL) ? "" : arguments));
+    
     return NUM2INT(ruby_retcode);
 }
 
@@ -934,7 +941,6 @@ weechat_ruby_load (t_weechat_plugin *plugin, char *filename)
     char modname[64];
     VALUE curModule;
     VALUE ruby_retcode;
-    int ruby_error;
     
     plugin->printf_server (plugin, "Loading Ruby script \"%s\"", filename);
     ruby_current_script = NULL;
@@ -946,11 +952,11 @@ weechat_ruby_load (t_weechat_plugin *plugin, char *filename)
 
     ruby_current_script_filename = strdup (filename);
     
-    ruby_retcode = rb_protect_funcall (curModule, rb_intern("load_eval_file"),
-				       &ruby_error, 1, rb_str_new2(filename));
+    ruby_retcode = rb_rescue_funcall (curModule, rb_str_new2("load_eval_file"),
+				      1, rb_str_new2(filename));
     
     free (ruby_current_script_filename);
-
+    
     if (NUM2INT(ruby_retcode) != 0)
     {
 	VALUE ruby_eval_error;
@@ -985,16 +991,13 @@ weechat_ruby_load (t_weechat_plugin *plugin, char *filename)
 	return 0;
     }
     
-    ruby_retcode = rb_protect_funcall (curModule, rb_intern("weechat_init"), &ruby_error, 0);
-    if (ruby_error) {
-	VALUE ruby_error_info = rb_inspect(ruby_errinfo);
-        rb_backtrace();
+    ruby_retcode = rb_rescue_funcall (curModule, rb_str_new2("weechat_init"), 0);
+    
+    if (NUM2INT(ruby_retcode) != PLUGIN_RC_OK)
+    {
 	ruby_plugin->printf_server (ruby_plugin,
                                     "Ruby error: unable to eval weechat_init in file \"%s\"",
-				    filename);
-	ruby_plugin->printf_server (ruby_plugin,
-                                    "Ruby error: %s", STR2CSTR(ruby_error_info));
-	
+				    filename);	
 	if (ruby_current_script != NULL)
 	    weechat_script_remove (plugin, &ruby_scripts, ruby_current_script);
 	
