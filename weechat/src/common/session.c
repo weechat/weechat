@@ -1012,6 +1012,8 @@ session_load_channel (FILE *file)
                 break;
             case SESSION_CHAN_NICKS_COUNT:
                 rc = rc && (session_read_int (file, &(session_current_channel->nicks_count)));
+                /* will be incremented when adding nicks */
+                session_current_channel->nicks_count = 0;
                 break;
             case SESSION_CHAN_CHECKING_AWAY:
                 rc = rc && (session_read_int (file, &(session_current_channel->checking_away)));
