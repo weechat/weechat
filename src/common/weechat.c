@@ -209,11 +209,11 @@ weechat_log_printf (char *message, ...)
 }
 
 /*
- * weechat_convert_encoding: convert string to another encoding
+ * weechat_iconv: convert string to another charset
  */
 
 char *
-weechat_convert_encoding (char *from_code, char *to_code, char *string)
+weechat_iconv (char *from_code, char *to_code, char *string)
 {
     char *outbuf;
     
@@ -584,7 +584,8 @@ weechat_parse_args (int argc, char *argv[])
                                  server_tmp.ipv6, server_tmp.ssl,
                                  server_tmp.password, server_tmp.nick1,
                                  server_tmp.nick2, server_tmp.nick3,
-                                 NULL, NULL, NULL, 0, server_tmp.autojoin, 1, NULL))
+                                 NULL, NULL, NULL, 0, server_tmp.autojoin, 1, NULL,
+                                 NULL, NULL, NULL))
                     fprintf (stderr, _("%s unable to create server ('%s'), ignored\n"),
                              WEECHAT_WARNING, argv[i]);
                 server_destroy (&server_tmp);

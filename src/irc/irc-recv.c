@@ -2225,14 +2225,16 @@ irc_cmd_recv_quit (t_irc_server *server, char *host, char *nick, char *arguments
                 pos = strchr (host, '!');
                 irc_display_prefix (server, ptr_channel->buffer, PREFIX_QUIT);
                 gui_printf (ptr_channel->buffer,
-                            _("%s%s %s(%s%s%s)%s has quit %s(%s%s%s)\n"),
+                            _("%s%s %s(%s%s%s)%s has quit"),
                             GUI_COLOR(COLOR_WIN_CHAT_NICK),
                             nick,
                             GUI_COLOR(COLOR_WIN_CHAT_DARK),
                             GUI_COLOR(COLOR_WIN_CHAT_HOST),
                             (pos) ? pos + 1 : "",
                             GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                            GUI_COLOR(COLOR_WIN_CHAT),
+                            GUI_COLOR(COLOR_WIN_CHAT));
+                gui_printf (ptr_channel->buffer,
+                            " %s(%s%s%s)\n",
                             GUI_COLOR(COLOR_WIN_CHAT_DARK),
                             GUI_COLOR(COLOR_WIN_CHAT),
                             arguments,
@@ -2447,7 +2449,7 @@ irc_cmd_recv_004 (t_irc_server *server, char *host, char *nick, char *arguments)
     /* execute command once connected */
     if (server->command && server->command[0])
     {
-        user_command(server, NULL, server->command);
+        user_command(NULL, server, server->command);
         if (server->command_delay > 0)
             sleep (server->command_delay);
     }

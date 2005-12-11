@@ -36,7 +36,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.7-cvs - 6 decembre 2005
+@subtitle Documentation pour WeeChat v0.1.7-cvs - 11 decembre 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -290,9 +290,6 @@ Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'off'@*
 @item look_buffer_timestamp
 Format de date/heure pour les tampons@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: '[%H:%M:%S]'@*
-@item look_color_nicks
-Afficher les utilisateurs avec diff@'erentes couleurs@*
-Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
 @item look_color_nicks_number
 Nombre de couleurs @`a utiliser pour les couleurs des pseudos@*
 Type: entier (valeurs: entre 1 et 10), valeur par d@'efaut: 10@*
@@ -743,6 +740,15 @@ Type: bool@'een (valeurs: 'on' ou 'off'), valeur par d@'efaut: 'on'@*
 @item server_notify_levels
 Liste des niveaux de notifications (s@'epar@'es par des virgules) pour les canaux de ce serveur (format: #canal:1,..)@*
 Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
+@item server_charset_decode_iso
+Liste des jeux de caract@`eres (s@'epar@'es par des virgules) pour le serveur et les canaux, pour d@'ecoder l'ISO (format: server:charset,#canal:charset,..)@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
+@item server_charset_decode_utf
+Liste des jeux de caract@`eres (s@'epar@'es par des virgules) pour le serveur et les canaux, pour d@'ecoder l'UTF (format: server:charset,#canal:charset,..)@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
+@item server_charset_encode
+Liste des jeux de caract@`eres (s@'epar@'es par des virgules) pour le serveur et les canaux, pour encoder les messages (format: server:charset,#canal:charset,..)@*
+Type: cha@^ine (toute cha@^ine), valeur par d@'efaut: ''@*
 @end table
 
 Les couleurs pour l'interface Curses sont :@*
@@ -929,6 +935,14 @@ action: action @`a effectuer:@*
 serveur,canal: sauter au tampon par serveur et/ou nom de canal@*
 nombre: sauter au tampon qui a ce num@'ero@*
 @*
+@item charset  [(decode_iso | decode_utf | encode) charset]
+@*
+changer le jeu de caract@`eres pour le serveur ou le canal@*
+@*
+decode_iso: jeu de caract@`ere utilis@'e pour d@'ecoder l'ISO@*
+decode_utf: jeu de caract@`ere utilis@'e pour d@'ecoder l'UTF@*
+    encode: jeu de caract@`ere utilis@'e pour encoder les messages@*
+@*
 @item clear  [-all]
 @*
 effacer la/les fen@^etre(s)@*
@@ -987,7 +1001,7 @@ associer/lib@'erer des touches@*
 touche: associer cette touche @`a une fonction interne ou une commande (commen@,{c}ant par "/")@*
 unbind: supprimer l'association @`a une touche (si "all", toutes les associations de touches par d@'efaut sont restaur@'ees)@*
 functions: lister la liste des fonctions internes pour les associations de touches@*
-reset: restaur les touches aux valeurs par d@'efaut et supprime TOUTES les touches personnelles (utiliser avec pr@'ecaution !)@*
+reset: restaure les touches aux valeurs par d@'efaut et supprime TOUTES les touches personnelles (utiliser avec pr@'ecaution !)@*
 @*
 @item plugin  [load fichier] | [autoload] | [reload] | [unload]
 @*

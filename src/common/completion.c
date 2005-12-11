@@ -101,10 +101,10 @@ completion_stop (t_completion *completion)
  */
 
 void
-completion_build_list (t_completion *completion, void *channel)
+completion_build_list (t_completion *completion, void *server, void *channel)
 {
     t_weelist *ptr_list;
-    int i, j;
+    int i, j, length;
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
     t_irc_nick *ptr_nick;
@@ -153,6 +153,82 @@ completion_build_list (t_completion *completion, void *channel)
         weelist_add (&completion->completion_list,
                      &completion->last_completion,
                      "notify");
+        return;
+    }
+    if (ascii_strcasecmp (completion->base_command, "charset") == 0)
+    {
+        if (completion->base_command_arg == 1)
+        {
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         "decode_iso");
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         "decode_utf");
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         "encode");
+        }
+        else if (completion->base_command_arg == 2)
+        {
+            if (!server)
+            {
+                completion_stop (completion);
+                return;
+            }
+            pos = strchr (completion->args, ' ');
+            if (pos)
+                pos[0] = '\0';
+            string2 = NULL;
+            if (ascii_strcasecmp (completion->args, "decode_iso") == 0)
+            {
+                config_option_list_get_value (&(((t_irc_server *)server)->charset_decode_iso),
+                                              (channel) ? ((t_irc_channel *)channel)->name : "server",
+                                              &string, &length);
+                if (string && (length > 0))
+                {
+                    string2 = strdup (string);
+                    string2[length] = '\0';
+                }
+            }
+            else if (ascii_strcasecmp (completion->args, "decode_utf") == 0)
+            {
+                config_option_list_get_value (&(((t_irc_server *)server)->charset_decode_utf),
+                                              (channel) ? ((t_irc_channel *)channel)->name : "server",
+                                              &string, &length);
+                if (string && (length > 0))
+                {
+                    string2 = strdup (string);
+                    string2[length] = '\0';
+                }
+            }
+            else if (ascii_strcasecmp (completion->args, "encode") == 0)
+            {
+                config_option_list_get_value (&(((t_irc_server *)server)->charset_encode),
+                                              (channel) ? ((t_irc_channel *)channel)->name : "server",
+                                              &string, &length);
+                if (string && (length > 0))
+                {
+                    string2 = strdup (string);
+                    string2[length] = '\0';
+                }
+            }
+            
+            if (string2)
+            {
+                weelist_add (&completion->completion_list,
+                             &completion->last_completion,
+                             string2);
+                free (string2);
+            }
+            else
+                completion_stop (completion);
+            
+            if (pos)
+                pos[0] = ' ';
+        }
+        else
+            completion_stop (completion);
         return;
     }
     if ((ascii_strcasecmp (completion->base_command, "clear") == 0)
@@ -672,11 +748,9 @@ completion_build_list (t_completion *completion, void *channel)
                     string = (char *)gui_color_decode_for_user_entry ((unsigned char *)((t_irc_channel *)channel)->topic);
                 else
                     string = (char *)gui_color_decode ((unsigned char *)((t_irc_channel *)channel)->topic, 0);
-                string2 = weechat_convert_encoding ((local_utf8) ?
-                                                    cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
-                                                    (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
-                                                    cfg_look_charset_internal : local_charset,
-                                                    (string) ? string : ((t_irc_channel *)channel)->topic);
+                string2 = channel_iconv_decode ((t_irc_server *)server,
+                                                (t_irc_channel *)channel,
+                                                (string) ? string : ((t_irc_channel *)channel)->topic);
                 weelist_add (&completion->completion_list,
                              &completion->last_completion,
                              (string2) ? string2 : ((t_irc_channel *)channel)->topic);
@@ -697,8 +771,8 @@ completion_build_list (t_completion *completion, void *channel)
  */
 
 void
-completion_find_context (t_completion *completion, void *channel, char *buffer,
-                         int size, int pos)
+completion_find_context (t_completion *completion, void *server, void *channel,
+                         char *buffer, int size, int pos)
 {
     int i, command, command_arg, pos_start, pos_end;
     
@@ -808,7 +882,7 @@ completion_find_context (t_completion *completion, void *channel, char *buffer,
             for (i = pos_start; i <= pos_end; i++)
                 completion->base_command[i - pos_start] = buffer[i];
             completion->base_command[pos_end - pos_start + 1] = '\0';
-            completion_build_list (completion, channel);
+            completion_build_list (completion, server, channel);
         }
     }
     
@@ -1066,7 +1140,7 @@ completion_nick (t_completion *completion, t_irc_channel *channel)
  */
 
 void
-completion_search (t_completion *completion, void *channel,
+completion_search (t_completion *completion, void *server, void *channel,
                    char *buffer, int size, int pos)
 {
     char *old_word_found;
@@ -1075,7 +1149,7 @@ completion_search (t_completion *completion, void *channel,
     if (pos != completion->position)
     {
         completion->word_found = NULL;
-        completion_find_context (completion, channel, buffer, size, pos);
+        completion_find_context (completion, server, channel, buffer, size, pos);
     }
     
     /* completion */

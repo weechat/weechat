@@ -36,7 +36,7 @@
 
 @title WeeChat - Guia do Utilizador
 @subtitle Cliente de IRC rapido, leve e extencivel
-@subtitle Documenta@,{c}@~ao do WeeChat v0.1.7-cvs - 6 de dezembro de 2005
+@subtitle Documenta@,{c}@~ao do WeeChat v0.1.7-cvs - 11 de dezembro de 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -287,9 +287,6 @@ Type: boolean (values: 'on' or 'off'), default value: 'off'@*
 @item look_buffer_timestamp
 Timestamp for buffers@*
 Type: string (any string), default value: '[%H:%M:%S]'@*
-@item look_color_nicks
-Display nick names with different colors@*
-Type: boolean (values: 'on' or 'off'), default value: 'on'@*
 @item look_color_nicks_number
 Number of colors to use for nicks colors@*
 Type: integer (values: between 1 and 10), default value: 10@*
@@ -740,6 +737,15 @@ Type: boolean (values: 'on' or 'off'), default value: 'on'@*
 @item server_notify_levels
 Comma separated list of notify levels for channels of this server (format: #channel:1,..)@*
 Type: string (any string), default value: ''@*
+@item server_charset_decode_iso
+Comma separated list of charsets for server and channels, to decode ISO (format: server:charset,#channel:charset,..)@*
+Type: string (any string), default value: ''@*
+@item server_charset_decode_utf
+Comma separated list of charsets for server and channels, to decode UTF (format: server:charset,#channel:charset,..)@*
+Type: string (any string), default value: ''@*
+@item server_charset_encode
+Comma separated list of charsets for server and channels, to encode messages (format: server:charset,#channel:charset,..)@*
+Type: string (any string), default value: ''@*
 @end table
 
 Colors for Curses GUI are:@*
@@ -925,6 +931,14 @@ action: action to do:@*
   notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)@*
 server,channel: jump to buffer by server and/or channel name@*
 number: jump to buffer by number@*
+@*
+@item charset  [(decode_iso | decode_utf | encode) charset]
+@*
+change charset for server or channel@*
+@*
+decode_iso: charset used for decoding ISO@*
+decode_utf: charset used for decoding UTF@*
+    encode: charset used for encoding messages@*
 @*
 @item clear  [-all]
 @*

@@ -143,6 +143,9 @@ struct t_irc_server
     char *autojoin;                 /* channels to automatically join       */
     int autorejoin;                 /* auto rejoin channels when kicked     */
     char *notify_levels;            /* channels notify levels               */
+    char *charset_decode_iso;       /* channels charsets for decoding ISO   */
+    char *charset_decode_utf;       /* channels charsets for decoding UTF   */
+    char *charset_encode;           /* channels charsets for encoding msgs  */
     
     /* internal vars */
     pid_t child_pid;                /* pid of child process (connecting)    */
@@ -301,7 +304,11 @@ extern void server_free (t_irc_server *);
 extern void server_free_all ();
 extern t_irc_server *server_new (char *, int, int, int, int, char *, int, int, int,
                                  char *, char *, char *, char *, char *, char *,
-                                 char *, int, char *, int, char *);
+                                 char *, int, char *, int, char *, char *, char *,
+                                 char *);
+extern char *server_get_charset_decode_iso (t_irc_server *);
+extern char *server_get_charset_decode_utf (t_irc_server *);
+extern char *server_get_charset_encode (t_irc_server *);
 extern int server_send (t_irc_server *, char *, int);
 extern void server_sendf (t_irc_server *, char *, ...);
 extern void server_recv (t_irc_server *);
@@ -336,13 +343,17 @@ extern void channel_free (t_irc_server *, t_irc_channel *);
 extern void channel_free_all (t_irc_server *);
 extern t_irc_channel *channel_search (t_irc_server *, char *);
 extern int string_is_channel (char *);
+extern char *channel_get_charset_decode_iso (t_irc_server *, t_irc_channel *);
+extern char *channel_get_charset_decode_utf (t_irc_server *, t_irc_channel *);
+extern char *channel_get_charset_encode (t_irc_server *, t_irc_channel *);
+extern char *channel_iconv_decode (t_irc_server *, t_irc_channel *, char *);
+extern char *channel_iconv_encode (t_irc_server *, t_irc_channel *, char *);
 extern void channel_remove_away (t_irc_channel *);
 extern void channel_check_away (t_irc_server *, t_irc_channel *);
 extern void channel_set_away (t_irc_channel *, char *, int);
 extern int channel_create_dcc (t_irc_dcc *);
 extern void channel_remove_dcc (t_irc_dcc *);
 extern int channel_get_notify_level (t_irc_server *, t_irc_channel *);
-extern void channel_remove_notify_level (t_irc_server *, t_irc_channel *);
 extern void channel_set_notify_level (t_irc_server *, t_irc_channel *, int);
 extern void channel_print_log (t_irc_channel *);
 
@@ -387,12 +398,9 @@ extern void irc_display_mode (t_irc_server *, t_gui_buffer *, char *, char,
                               char *, char *, char *, char *);
 extern void irc_display_server (t_irc_server *ptr_server);
 
-/* IRC protocol (irc-commands.c) */
+/* IRC commands issued by user (irc-send.c) */
 
-extern int irc_is_highlight (char *, char *);
-extern int irc_recv_command (t_irc_server *, char *, char *, char *, char *);
 extern void irc_login (t_irc_server *);
-/* IRC commands issued by user */
 extern int irc_cmd_send_admin (t_irc_server *, char *);
 extern int irc_cmd_send_ame (t_irc_server *, char *);
 extern int irc_cmd_send_amsg (t_irc_server *, char *);
@@ -452,7 +460,11 @@ extern int irc_cmd_send_wallops (t_irc_server *, char *);
 extern int irc_cmd_send_who (t_irc_server *, char *);
 extern int irc_cmd_send_whois (t_irc_server *, char *);
 extern int irc_cmd_send_whowas (t_irc_server *, char *);
-/* IRC commands executed when received from server */
+
+/* IRC commands executed when received from server (irc-recv.c) */
+
+extern int irc_is_highlight (char *, char *);
+extern int irc_recv_command (t_irc_server *, char *, char *, char *, char *);
 extern int irc_cmd_recv_error (t_irc_server *, char *, char *, char *);
 extern int irc_cmd_recv_invite (t_irc_server *, char *, char *, char *);
 extern int irc_cmd_recv_join (t_irc_server *, char *, char *, char *);

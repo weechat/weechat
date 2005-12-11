@@ -174,7 +174,8 @@ fifo_exec (char *text)
             ptr_buffer = gui_buffers;
     }
     
-    user_command (ptr_server, ptr_buffer, pos_msg);
+    user_command (gui_buffer_find_window (ptr_buffer),
+                  ptr_server, pos_msg);
 }
 
 /*

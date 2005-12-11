@@ -237,6 +237,9 @@ session_save_servers (FILE *file)
         rc = rc && (session_write_int (file, SESSION_SERV_LAG, ptr_server->lag));
         rc = rc && (session_write_buf (file, SESSION_SERV_LAG_CHECK_TIME, &(ptr_server->lag_check_time), sizeof (struct timeval)));
         rc = rc && (session_write_buf (file, SESSION_SERV_LAG_NEXT_CHECK, &(ptr_server->lag_next_check), sizeof (time_t)));
+        rc = rc && (session_write_str (file, SESSION_SERV_CHARSET_DECODE_ISO, ptr_server->charset_decode_iso));
+        rc = rc && (session_write_str (file, SESSION_SERV_CHARSET_DECODE_UTF, ptr_server->charset_decode_utf));
+        rc = rc && (session_write_str (file, SESSION_SERV_CHARSET_ENCODE, ptr_server->charset_encode));
         rc = rc && (session_write_id  (file, SESSION_SERV_END));
         
         if (!rc)
@@ -831,6 +834,15 @@ session_load_server (FILE *file)
                 break;
             case SESSION_SERV_LAG_NEXT_CHECK:
                 rc = rc && (session_read_buf (file, &(session_current_server->lag_next_check), sizeof (time_t)));
+                break;
+            case SESSION_SERV_CHARSET_DECODE_ISO:
+                rc = rc && (session_read_str (file, &(session_current_server->charset_decode_iso)));
+                break;
+            case SESSION_SERV_CHARSET_DECODE_UTF:
+                rc = rc && (session_read_str (file, &(session_current_server->charset_decode_utf)));
+                break;
+            case SESSION_SERV_CHARSET_ENCODE:
+                rc = rc && (session_read_str (file, &(session_current_server->charset_encode)));
                 break;
             default:
                 weechat_log_printf (_("session: warning: ignoring value from "

@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-12-09
+ChangeLog - 2005-12-11
 
 
 Version 0.1.7 (under dev!):
+   * added charset by server and channel, new command: /charset
    * added Ruby script plugin
    * added /upgrade command
    * added ETA (Estimated Time of Arrival) for DCC files

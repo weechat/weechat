@@ -108,9 +108,7 @@ gui_action_return (t_gui_window *window)
             window->buffer->completion.position = -1;
             window->buffer->ptr_history = NULL;
             gui_draw_buffer_input (window->buffer, 0);
-            user_command (SERVER(window->buffer),
-                          window->buffer,
-                          command);
+            user_command (window, SERVER(window->buffer), command);
             free (command);
         }
     }
@@ -128,6 +126,7 @@ gui_action_tab (t_gui_window *window)
     if (window->buffer->has_input)
     {
         completion_search (&(window->buffer->completion),
+                           SERVER(window->buffer),
                            CHANNEL(window->buffer),
                            window->buffer->input_buffer,
                            window->buffer->input_buffer_size,

@@ -517,8 +517,8 @@ gui_key_pressed (char *key_str)
             /* exact combo found => execute function or command */
             gui_key_buffer[0] = '\0';
             if (ptr_key->command)
-                user_command (SERVER(gui_current_window->buffer),
-                              gui_current_window->buffer,
+                user_command (gui_current_window,
+                              SERVER(gui_current_window->buffer),
                               ptr_key->command);
             else
                 (void)(ptr_key->function)(gui_current_window);

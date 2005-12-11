@@ -1120,10 +1120,9 @@ dcc_chat_sendf (t_irc_dcc *ptr_dcc, char *fmt, ...)
     gui_printf (ptr_dcc->server->buffer, "[DEBUG] Sending to remote host (DCC CHAT) >>> %s\n", buffer);
     buffer[size_buf - 2] = '\r';
 #endif
-    buf2 = weechat_convert_encoding ((cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
-                                     cfg_look_charset_internal : local_charset,
-                                     cfg_look_charset_encode,
-                                     buffer);
+    buf2 = channel_iconv_encode (ptr_dcc->server,
+                                 ptr_dcc->channel,
+                                 buffer);
     if (dcc_chat_send (ptr_dcc, buf2, strlen (buf2)) <= 0)
     {
         irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
@@ -1144,7 +1143,7 @@ void
 dcc_chat_recv (t_irc_dcc *ptr_dcc)
 {
     static char buffer[4096 + 2];
-    char *buf2, *pos, *ptr_buf, *next_ptr_buf;
+    char *buf2, *pos, *ptr_buf, *ptr_buf2, *next_ptr_buf;
     char *ptr_buf_color;
     int num_read;
 
@@ -1196,7 +1195,11 @@ dcc_chat_recv (t_irc_dcc *ptr_dcc)
             
             if (ptr_buf)
             {
-                ptr_buf_color = (char *)gui_color_decode ((unsigned char *)ptr_buf,
+                ptr_buf2 = channel_iconv_decode (ptr_dcc->server,
+                                                 ptr_dcc->channel,
+                                                 ptr_buf);
+                ptr_buf_color = (char *)gui_color_decode ((ptr_buf2) ?
+                                                          (unsigned char *)ptr_buf2 : (unsigned char *)ptr_buf,
                                                           cfg_irc_colors_receive);
                 gui_printf_type (ptr_dcc->channel->buffer, MSG_TYPE_NICK,
                                  "%s<", GUI_COLOR(COLOR_WIN_CHAT_DARK));
@@ -1213,7 +1216,7 @@ dcc_chat_recv (t_irc_dcc *ptr_dcc)
                                             COLOR_WIN_INFOBAR_HIGHLIGHT,
                                             _("Private %s> %s"),
                                             ptr_dcc->nick,
-                                            (ptr_buf_color) ? ptr_buf_color : ptr_buf);
+                                            (ptr_buf_color) ? ptr_buf_color : ((ptr_buf2) ? ptr_buf2 : ptr_buf));
                 }
                 else
                     gui_printf_type (ptr_dcc->channel->buffer, MSG_TYPE_NICK,
@@ -1228,13 +1231,15 @@ dcc_chat_recv (t_irc_dcc *ptr_dcc)
                                  (ptr_buf_color) ? ptr_buf_color : ptr_buf);
                 if (ptr_buf_color)
                     free (ptr_buf_color);
+                if (ptr_buf2)
+                    free (ptr_buf2);
             }
             
             ptr_buf = next_ptr_buf;
         }
         
         if (buf2)
-free (buf2);
+            free (buf2);
     }
     else
     {

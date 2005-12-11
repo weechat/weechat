@@ -322,6 +322,26 @@ gui_buffer_search (char *server, char *channel)
 }
 
 /*
+ * gui_buffer_find_window: find a window displaying buffer
+ */
+
+t_gui_window *
+gui_buffer_find_window (t_gui_buffer *buffer)
+{
+    t_gui_window *ptr_win;
+    
+    for (ptr_win = gui_windows; ptr_win;
+         ptr_win = ptr_win->next_window)
+    {
+        if (ptr_win->buffer == buffer)
+            return ptr_win;
+    }
+    
+    /* no window found */
+    return NULL;
+}
+
+/*
  * gui_buffer_servers_search: search servers buffer
  *                            (when same buffer is used for all servers)
  */
@@ -857,7 +877,7 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, char *mes
     time_t time_seconds;
     struct tm *local_time;
     int time_first_digit, time_last_digit;
-    char *pos, *buf2;
+    char *buf2, *pos;
     int i;
     va_list argptr;
     static time_t seconds;
@@ -898,12 +918,8 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, char *mes
     if (!buf[0])
         return;
     
-    if (!local_utf8 || !utf8_is_valid (buf))
-        buf2 = weechat_convert_encoding ((local_utf8) ?
-                                         cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
-                                         (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
-                                         cfg_look_charset_internal : local_charset,
-                                         buf);
+    if (gui_init_ok)
+        buf2 = channel_iconv_decode (SERVER(buffer), CHANNEL(buffer), buf);
     else
         buf2 = strdup (buf);
     
@@ -1015,16 +1031,7 @@ gui_infobar_printf (int time_displayed, int color, char *message, ...)
     buf2 = (char *)gui_color_decode ((unsigned char *)buffer, 0);
     
     if (buf2)
-    {
-        if (!local_utf8 || !utf8_is_valid (buf2))
-            buf3 = weechat_convert_encoding ((local_utf8) ?
-                                             cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
-                                             (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
-                                             cfg_look_charset_internal : local_charset,
-                                             buf2);
-        else
-            buf3 = strdup (buf2);
-    }
+        buf3 = channel_iconv_decode (NULL, NULL, buf2);
     else
         buf3 = NULL;
     

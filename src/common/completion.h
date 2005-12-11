@@ -54,6 +54,6 @@ struct t_completion
 
 extern void completion_init (t_completion *);
 extern void completion_free (t_completion *);
-extern void completion_search (t_completion *, void *, char *, int, int);
+extern void completion_search (t_completion *, void *, void *, char *, int, int);
 
 #endif /* completion.h */

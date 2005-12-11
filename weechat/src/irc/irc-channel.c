@@ -30,6 +30,8 @@
 
 #include "../common/weechat.h"
 #include "irc.h"
+#include "../common/utf8.h"
+#include "../common/weeconfig.h"
 #include "../gui/gui.h"
 
 
@@ -172,6 +174,143 @@ string_is_channel (char *string)
 }
 
 /*
+ * channel_get_charset_decode_iso: get decode iso value for channel
+ *                                 if not found for channel, look for server
+ *                                 if not found for server, look for global
+ */
+
+char *
+channel_get_charset_decode_iso (t_irc_server *server, t_irc_channel *channel)
+{
+    char *pos, *result;
+    int length;
+    
+    if (!server)
+        return (cfg_look_charset_decode_iso) ?
+            strdup (cfg_look_charset_decode_iso) : strdup ("");
+    
+    if (!channel)
+        return server_get_charset_decode_iso (server);
+    
+    config_option_list_get_value (&(server->charset_decode_iso),
+                                  channel->name, &pos, &length);
+    if (pos && (length > 0))
+    {
+        result = strdup (pos);
+        result[length] = '\0';
+        return result;
+    }
+    
+    return server_get_charset_decode_iso (server);
+}
+
+/*
+ * channel_get_charset_decode_utf: get decode utf value for channel
+ *                                 if not found for channel, look for server
+ *                                 if not found for server, look for global
+ */
+
+char *
+channel_get_charset_decode_utf (t_irc_server *server, t_irc_channel *channel)
+{
+    char *pos, *result;
+    int length;
+    
+    if (!server)
+        return (cfg_look_charset_decode_utf) ?
+            strdup (cfg_look_charset_decode_utf) : strdup ("");
+    
+    if (!channel)
+        return server_get_charset_decode_utf (server);
+    
+    config_option_list_get_value (&(server->charset_decode_utf),
+                                  channel->name, &pos, &length);
+    if (pos && (length > 0))
+    {
+        result = strdup (pos);
+        result[length] = '\0';
+        return result;
+    }
+    
+    return server_get_charset_decode_utf (server);
+}
+
+/*
+ * channel_get_charset_encode: get encode value for channel
+ *                             if not found for channel, look for server
+ *                             if not found for server, look for global
+ */
+
+char *
+channel_get_charset_encode (t_irc_server *server, t_irc_channel *channel)
+{
+    char *pos, *result;
+    int length;
+    
+    if (!server)
+        return (cfg_look_charset_encode) ?
+            strdup (cfg_look_charset_encode) : strdup ("");
+    
+    if (!channel)
+        return server_get_charset_encode (server);
+    
+    config_option_list_get_value (&(server->charset_encode),
+                                  channel->name, &pos, &length);
+    if (pos && (length > 0))
+    {
+        result = strdup (pos);
+        result[length] = '\0';
+        return result;
+    }
+    
+    return server_get_charset_encode (server);
+}
+
+/*
+ * channel_iconv_decode: convert string to local charset
+ */
+
+char *
+channel_iconv_decode (t_irc_server *server, t_irc_channel *channel, char *string)
+{
+    char *from_charset, *string2;
+    
+    if (!local_utf8 || !utf8_is_valid (string))
+    {
+        if (local_utf8)
+            from_charset = channel_get_charset_decode_iso (server, channel);
+        else
+            from_charset = channel_get_charset_decode_utf (server, channel);
+        string2 = weechat_iconv (from_charset,
+                                 (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
+                                 cfg_look_charset_internal : local_charset,
+                                 string);
+        free (from_charset);
+        return string2;
+    }
+    else
+        return strdup (string);
+}
+
+/*
+ *
+ */
+
+char *
+channel_iconv_encode (t_irc_server *server, t_irc_channel *channel, char *string)
+{
+    char *to_charset, *string2;
+    
+    to_charset = channel_get_charset_encode (server, channel);
+    string2 = weechat_iconv ((cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
+                             cfg_look_charset_internal : local_charset,
+                             to_charset,
+                             string);
+    free (to_charset);
+    return string2;
+}
+
+/*
  * channel_remove_away: remove away for all nicks on a channel
  */
 
@@ -306,96 +445,25 @@ channel_get_notify_level (t_irc_server *server, t_irc_channel *channel)
 }
 
 /*
- * server_remove_notify_level: remove channel notify from list
- */
-
-void
-channel_remove_notify_level (t_irc_server *server, t_irc_channel *channel)
-{
-    char *name, *pos, *pos2;
-    
-    if ((!server) || (!channel))
-        return;
-    
-    name = (char *) malloc (strlen (channel->name) + 2);
-    strcpy (name, channel->name);
-    strcat (name, ":");
-    pos = strstr (server->notify_levels, name);
-    free (name);
-    if (pos)
-    {
-        pos2 = pos + strlen (channel->name);
-        if (pos2[0] == ':')
-        {
-            pos2++;
-            if (pos2[0])
-            {
-                pos2++;
-                if (pos2[0] == ',')
-                    pos2++;
-                if (!pos2[0] && (pos != server->notify_levels))
-                    pos--;
-                strcpy (pos, pos2);
-                server->notify_levels = (char *) realloc (server->notify_levels,
-                                                          strlen (server->notify_levels) + 1);
-            }
-        }
-    }
-}
-
-/*
  * server_set_notify_level: set channel notify level
  */
 
 void
 channel_set_notify_level (t_irc_server *server, t_irc_channel *channel, int notify)
 {
-    char *name, *pos, *pos2, level_string[2];
+    char level_string[2];
     
     if ((!server) || (!channel))
         return;
     
     if (notify == NOTIFY_LEVEL_DEFAULT)
-    {
-        channel_remove_notify_level (server, channel);
-        return;
-    }
-    
-    if (!server->notify_levels)
-    {
-        server->notify_levels = (char *) malloc (strlen (channel->name) + 3);
-        server->notify_levels[0] = '\0';
-    }
+        config_option_list_remove (&(server->notify_levels), channel->name);
     else
     {
-        name = (char *) malloc (strlen (channel->name) + 2);
-        strcpy (name, channel->name);
-        strcat (name, ":");
-        pos = strstr (server->notify_levels, name);
-        free (name);
-        if (pos)
-        {
-            pos2 = pos + strlen (channel->name) + 1;
-            if (pos2[0])
-            {
-                pos2[0] = '0' + notify;
-                return;
-            }
-        }
-        /* realloc notify list to add channel */
-        server->notify_levels = (char *) realloc (server->notify_levels,
-                                                  strlen (server->notify_levels) + 1 +
-                                                  strlen (channel->name) + 2 + 1);
+        level_string[0] = notify + '0';
+        level_string[1] = '\0';
+        config_option_list_set (&(server->notify_levels), channel->name, level_string);
     }
-    
-    /* channel not in notify list => add it */
-    if (server->notify_levels[0])
-        strcat (server->notify_levels, ",");
-    strcat (server->notify_levels, channel->name);
-    strcat (server->notify_levels, ":");
-    level_string[0] = notify + '0';
-    level_string[1] = '\0';
-    strcat (server->notify_levels, level_string);
 }
 
 /*

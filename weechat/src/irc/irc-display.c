@@ -185,27 +185,27 @@ irc_display_server (t_irc_server *server)
                 _("connected") : _("not connected"),
                 GUI_COLOR(COLOR_WIN_CHAT_DARK));
     
-    gui_printf (NULL, "  server_autoconnect . . . .: %s%s\n",
+    gui_printf (NULL, "  server_autoconnect . . . . : %s%s\n",
                 (server->autoconnect) ? _("on") : _("off"),
                 (server->command_line) ?
                 _(" (temporary server, will not be saved)") : "");
-    gui_printf (NULL, "  server_autoreconnect . . .: %s\n",
+    gui_printf (NULL, "  server_autoreconnect . . . : %s\n",
                 (server->autoreconnect) ? _("on") : _("off"));
-    gui_printf (NULL, "  server_autoreconnect_delay: %d %s\n",
+    gui_printf (NULL, "  server_autoreconnect_delay : %d %s\n",
                 server->autoreconnect_delay,
                 _("seconds"));
-    gui_printf (NULL, "  server_address . . . . . .: %s\n",
+    gui_printf (NULL, "  server_address . . . . . . : %s\n",
                 server->address);
-    gui_printf (NULL, "  server_port  . . . . . . .: %d\n",
+    gui_printf (NULL, "  server_port  . . . . . . . : %d\n",
                 server->port);
-    gui_printf (NULL, "  server_ipv6  . . . . . . .: %s\n",
+    gui_printf (NULL, "  server_ipv6  . . . . . . . : %s\n",
                 (server->ipv6) ? _("on") : _("off"));
-    gui_printf (NULL, "  server_ssl . . . . . . . .: %s\n",
+    gui_printf (NULL, "  server_ssl . . . . . . . . : %s\n",
                 (server->ssl) ? _("on") : _("off"));
-    gui_printf (NULL, "  server_password  . . . . .: %s\n",
+    gui_printf (NULL, "  server_password  . . . . . : %s\n",
                 (server->password && server->password[0]) ?
                 _("(hidden)") : "");
-    gui_printf (NULL, "  server_nick1/2/3 . . . . .: %s %s/ %s%s %s/ %s%s\n",
+    gui_printf (NULL, "  server_nick1/2/3 . . . . . : %s %s/ %s%s %s/ %s%s\n",
                 server->nick1,
                 GUI_COLOR(COLOR_WIN_CHAT_DARK),
                 GUI_COLOR(COLOR_WIN_CHAT),
@@ -213,20 +213,29 @@ irc_display_server (t_irc_server *server)
                 GUI_COLOR(COLOR_WIN_CHAT_DARK),
                 GUI_COLOR(COLOR_WIN_CHAT),
                 server->nick3);
-    gui_printf (NULL, "  server_username  . . . . .: %s\n",
+    gui_printf (NULL, "  server_username  . . . . . : %s\n",
                 server->username);
-    gui_printf (NULL, "  server_realname  . . . . .: %s\n",
+    gui_printf (NULL, "  server_realname  . . . . . : %s\n",
                server->realname);
-    gui_printf (NULL, "  server_command . . . . . .: %s\n",
+    gui_printf (NULL, "  server_command . . . . . . : %s\n",
                 (server->command && server->command[0]) ?
                 server->command : "");
-    gui_printf (NULL, "  server_command_delay . . .: %d %s\n",
+    gui_printf (NULL, "  server_command_delay . . . : %d %s\n",
                 server->command_delay,
                 _("seconds"));
-    gui_printf (NULL, "  server_autojoin  . . . . .: %s\n",
+    gui_printf (NULL, "  server_autojoin  . . . . . : %s\n",
                 (server->autojoin && server->autojoin[0]) ?
                 server->autojoin : "");
-    gui_printf (NULL, "  server_notify_levels . . .: %s\n",
+    gui_printf (NULL, "  server_notify_levels . . . : %s\n",
                 (server->notify_levels && server->notify_levels[0]) ?
                 server->notify_levels : "");
+    gui_printf (NULL, "  server_charset_decode_iso. : %s\n",
+                (server->charset_decode_iso && server->charset_decode_iso[0]) ?
+                server->charset_decode_iso : "");
+    gui_printf (NULL, "  server_charset_decode_utf. : %s\n",
+                (server->charset_decode_utf && server->charset_decode_utf[0]) ?
+                server->charset_decode_utf : "");
+    gui_printf (NULL, "  server_charset_encode. . . : %s\n",
+                (server->charset_encode && server->charset_encode[0]) ?
+                server->charset_encode : "");
 }

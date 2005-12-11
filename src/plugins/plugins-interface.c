@@ -288,11 +288,14 @@ weechat_plugin_exec_command (t_weechat_plugin *plugin,
     
     plugin_find_server_channel (server, channel, &ptr_server, &ptr_channel);
     if (ptr_server && ptr_channel)
-        user_command (ptr_server, ptr_channel->buffer, command);
+        user_command (gui_buffer_find_window (ptr_channel->buffer),
+                      ptr_server, command);
     else if (ptr_server && (ptr_server->buffer))
-        user_command (ptr_server, ptr_server->buffer, command);
+        user_command (gui_buffer_find_window (ptr_server->buffer),
+                      ptr_server, command);
     else
-        user_command (NULL, gui_buffers, command);
+        user_command (gui_buffer_find_window (gui_buffers),
+                      NULL, command);
 }
 
 /*

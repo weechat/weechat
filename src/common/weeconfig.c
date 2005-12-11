@@ -937,6 +937,21 @@ t_config_option weechat_options_server[] =
     N_("comma separated list of notify levels for channels of this server (format: #channel:1,..)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "", NULL, NULL, &(cfg_server.notify_levels), config_change_notify_levels },
+  { "server_charset_decode_iso", N_("charset for decoding ISO on server and channels"),
+    N_("comma separated list of charsets for server and channels, "
+       "to decode ISO (format: server:charset,#channel:charset,..)"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    "", NULL, NULL, &(cfg_server.charset_decode_iso), config_change_noop },
+  { "server_charset_decode_utf", N_("charset for decoding UTF on server and channels"),
+    N_("comma separated list of charsets for server and channels, "
+       "to decode UTF (format: server:charset,#channel:charset,..)"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    "", NULL, NULL, &(cfg_server.charset_decode_utf), config_change_noop },
+  { "server_charset_encode", N_("charset for encoding messages on server and channels"),
+    N_("comma separated list of charsets for server and channels, "
+       "to encode messages (format: server:charset,#channel:charset,..)"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    "", NULL, NULL, &(cfg_server.charset_encode), config_change_noop },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
@@ -951,12 +966,12 @@ t_config_option *weechat_options[CONFIG_NUMBER_SECTIONS] =
 
 
 /*
- * get_pos_array_values: returns position of a string in an array of values
- *                       returns -1 if not found, otherwise position
+ * config_get_pos_array_values: return position of a string in an array of values
+ *                              return -1 if not found, otherwise position
  */
 
 int
-get_pos_array_values (char **array, char *string)
+config_get_pos_array_values (char **array, char *string)
 {
     int i;
     
@@ -1240,7 +1255,8 @@ config_option_set_value (t_config_option *option, char *value)
             *(option->ptr_int) = int_value;
             break;
         case OPTION_TYPE_INT_WITH_STRING:
-            int_value = get_pos_array_values (option->array_values, value);
+            int_value = config_get_pos_array_values (option->array_values,
+                                                     value);
             if (int_value < 0)
                 return -1;
             *(option->ptr_int) = int_value;
@@ -1256,6 +1272,116 @@ config_option_set_value (t_config_option *option, char *value)
             break;
     }
     return 0;
+}
+
+/*
+ * config_option_list_remove: remove an item from a list for an option
+ *                            (for options with value like: "abc:1,def:blabla")
+ */
+
+void
+config_option_list_remove (char **string, char *item)
+{
+    char *name, *pos, *pos2;
+    
+    if (!string || !(*string))
+        return;
+    
+    name = (char *) malloc (strlen (item) + 2);
+    strcpy (name, item);
+    strcat (name, ":");
+    pos = strstr (*string, name);
+    free (name);
+    if (pos)
+    {
+        pos2 = pos + strlen (item);
+        if (pos2[0] == ':')
+        {
+            pos2++;
+            if (pos2[0])
+            {
+                while (pos2[0] && (pos2[0] != ','))
+                    pos2++;
+                if (pos2[0] == ',')
+                    pos2++;
+                if (!pos2[0] && (pos != (*string)))
+                    pos--;
+                strcpy (pos, pos2);
+                if (!(*string)[0])
+                {
+                    free (*string);
+                    *string = NULL;
+                }
+                else
+                    (*string) = (char *) realloc (*string, strlen (*string) + 1);
+            }
+        }
+    }
+}
+
+/*
+ * config_option_list_set: set an item from a list for an option
+ *                         (for options with value like: "abc:1,def:blabla")
+ */
+
+void
+config_option_list_set (char **string, char *item, char *value)
+{
+    config_option_list_remove (string, item);
+    
+    if (!(*string))
+    {
+        (*string) = (char *) malloc (strlen (item) + 1 + strlen (value) + 1);
+        (*string)[0] = '\0';
+    }
+    else
+        (*string) = (char *) realloc (*string,
+                                      strlen (*string) + 1 +
+                                      strlen (item) + 1 + strlen (value) + 1);
+    
+    if ((*string)[0])
+        strcat (*string, ",");
+    strcat (*string, item);
+    strcat (*string, ":");
+    strcat (*string, value);
+}
+
+/*
+ * config_option_list_get_value: return position of item value in the list
+ *                               (for options with value like: "abc:1,def:blabla")
+ */
+
+void
+config_option_list_get_value (char **string, char *item,
+                              char **pos_found, int *length)
+{
+    char *name, *pos, *pos2, *pos_comma;
+    
+    *pos_found = NULL;
+    *length = 0;
+    
+    if (!string || !(*string))
+        return;
+    
+    name = (char *) malloc (strlen (item) + 2);
+    strcpy (name, item);
+    strcat (name, ":");
+    pos = strstr (*string, name);
+    free (name);
+    if (pos)
+    {
+        pos2 = pos + strlen (item);
+        if (pos2[0] == ':')
+        {
+            pos2++;
+            *pos_found = pos2;
+            pos_comma = strchr (pos2, ',');
+            if (pos_comma)
+                *length = pos_comma - pos2;
+            else
+                *length = strlen (pos2);
+        }
+    }
 }
 
 /*
@@ -1303,6 +1429,12 @@ config_get_server_option_ptr (t_irc_server *server, char *option_name)
         return (void *)(&server->autorejoin);
     if (ascii_strcasecmp (option_name, "server_notify_levels") == 0)
         return (void *)(&server->notify_levels);
+    if (ascii_strcasecmp (option_name, "server_charset_decode_iso") == 0)
+        return (void *)(&server->charset_decode_iso);
+    if (ascii_strcasecmp (option_name, "server_charset_decode_utf") == 0)
+        return (void *)(&server->charset_decode_utf);
+    if (ascii_strcasecmp (option_name, "server_charset_encode") == 0)
+        return (void *)(&server->charset_encode);
     /* option not found */
     return NULL;
 }
@@ -1357,7 +1489,8 @@ config_set_server_value (t_irc_server *server, char *option_name,
             *((int *)(ptr_data)) = int_value;
             break;
         case OPTION_TYPE_INT_WITH_STRING:
-            int_value = get_pos_array_values (ptr_option->array_values, value);
+            int_value = config_get_pos_array_values (ptr_option->array_values,
+                                                     value);
             if (int_value < 0)
                 return -2;
             *((int *)(ptr_data)) = int_value;
@@ -1527,7 +1660,9 @@ config_allocate_server (char *filename, int line_number)
                      cfg_server.password, cfg_server.nick1, cfg_server.nick2,
                      cfg_server.nick3, cfg_server.username, cfg_server.realname,
                      cfg_server.command, cfg_server.command_delay, cfg_server.autojoin,
-                     cfg_server.autorejoin, cfg_server.notify_levels))
+                     cfg_server.autorejoin, cfg_server.notify_levels,
+                     cfg_server.charset_decode_iso, cfg_server.charset_decode_utf,
+                     cfg_server.charset_encode))
     {
         server_free_all ();
         gui_printf (NULL,
@@ -1566,7 +1701,7 @@ config_default_values ()
                             weechat_options[i][j].default_int;
                         break;
                     case OPTION_TYPE_INT_WITH_STRING:
-                        int_value = get_pos_array_values (
+                        int_value = config_get_pos_array_values (
                             weechat_options[i][j].array_values,
                             weechat_options[i][j].default_string);
                         if (int_value < 0)
@@ -2064,6 +2199,10 @@ config_create_default ()
     fprintf (file, "server_command_delay = 0\n");
     fprintf (file, "server_autojoin = \"\"\n");
     fprintf (file, "server_autorejoin = on\n");
+    fprintf (file, "server_notify_levels = \"\"\n");
+    fprintf (file, "server_charset_decode_iso = \"\"\n");
+    fprintf (file, "server_charset_decode_utf = \"\"\n");
+    fprintf (file, "server_charset_encode = \"\"\n");
     
     fclose (file);
     chmod (filename, 0600);
@@ -2251,6 +2390,12 @@ config_write (char *config_name)
                      (ptr_server->autorejoin) ? "on" : "off");
             fprintf (file, "server_notify_levels = \"%s\"\n",
                      (ptr_server->notify_levels) ? ptr_server->notify_levels : "");
+            fprintf (file, "server_charset_decode_iso = \"%s\"\n",
+                     (ptr_server->charset_decode_iso) ? ptr_server->charset_decode_iso : "");
+            fprintf (file, "server_charset_decode_utf = \"%s\"\n",
+                     (ptr_server->charset_decode_utf) ? ptr_server->charset_decode_utf : "");
+            fprintf (file, "server_charset_encode = \"%s\"\n",
+                     (ptr_server->charset_encode) ? ptr_server->charset_encode : "");
         }
     }
     

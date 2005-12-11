@@ -806,11 +806,9 @@ gui_draw_buffer_title (t_gui_buffer *buffer, int erase)
                 if (CHANNEL(buffer)->topic)
                 {
                     buf = (char *)gui_color_decode ((unsigned char *)(CHANNEL(buffer)->topic), 0);
-                    buf2 = weechat_convert_encoding ((local_utf8) ?
-                                                     cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
-                                                     (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
-                                                     cfg_look_charset_internal : local_charset,
-                                                     (buf) ? buf : CHANNEL(buffer)->topic);
+                    buf2 = channel_iconv_decode (SERVER(buffer),
+                                                 CHANNEL(buffer),
+                                                 (buf) ? buf : CHANNEL(buffer)->topic);
                     mvwprintw (ptr_win->win_title, 0, 0, format, (buf2) ? buf2 : CHANNEL(buffer)->topic);
                     if (buf)
                         free (buf);
@@ -1519,12 +1517,10 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                     mvwprintw (ptr_win->win_chat, i, 0, "%s %-16s ",
                                (ptr_dcc == dcc_selected) ? "***" : "   ",
                                ptr_dcc->nick);
-                    buf = weechat_convert_encoding ((local_utf8) ?
-                                                    cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
-                                                    (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
-                                                    cfg_look_charset_internal : local_charset,
-                                                    (DCC_IS_CHAT(ptr_dcc->type)) ?
-                                                    _(ptr_dcc->filename) : ptr_dcc->filename);
+                    buf = channel_iconv_decode (SERVER(buffer),
+                                                CHANNEL(buffer),
+                                                (DCC_IS_CHAT(ptr_dcc->type)) ?
+                                                _(ptr_dcc->filename) : ptr_dcc->filename);
                     wprintw (ptr_win->win_chat, "%s", buf);
                     free (buf);
                     if (DCC_IS_FILE(ptr_dcc->type))
@@ -1543,11 +1539,9 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                                (DCC_IS_RECV(ptr_dcc->type)) ? "-->>" : "<<--");
                     gui_window_set_weechat_color (ptr_win->win_chat,
                                                   COLOR_DCC_WAITING + ptr_dcc->status);
-                    buf = weechat_convert_encoding ((local_utf8) ?
-                                                    cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
-                                                    (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
-                                                    cfg_look_charset_internal : local_charset,
-                                                    _(dcc_status_string[ptr_dcc->status]));
+                    buf = channel_iconv_decode (SERVER(buffer),
+                                                CHANNEL(buffer),
+                                                _(dcc_status_string[ptr_dcc->status]));
                     wprintw (ptr_win->win_chat, "%-10s", buf);
                     free (buf);
                     
@@ -1604,11 +1598,9 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                                      ptr_dcc->eta % 60);
                         }
                         sprintf (format, "%s %%s/s)", unit_format[num_unit]);
-                        buf = weechat_convert_encoding ((local_utf8) ?
-                                                        cfg_look_charset_decode_iso : cfg_look_charset_decode_utf,
-                                                        (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
-                                                        cfg_look_charset_internal : local_charset,
-                                                        unit_name[num_unit]);
+                        buf = channel_iconv_decode (SERVER(buffer),
+                                                    CHANNEL(buffer),
+                                                    unit_name[num_unit]);
                         wprintw (ptr_win->win_chat, format,
                                  ((long double) ptr_dcc->bytes_per_sec) / ((long double)(unit_divide[num_unit])),
                                  buf);
