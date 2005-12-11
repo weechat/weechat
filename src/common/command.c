@@ -61,7 +61,8 @@ t_weechat_command weechat_commands[] =
     N_("[(decode_iso | decode_utf | encode) charset]"),
     N_("decode_iso: charset used for decoding ISO\n"
        "decode_utf: charset used for decoding UTF\n"
-       "    encode: charset used for encoding messages"),
+       "    encode: charset used for encoding messages\n"
+       "   charset: charset to use (for example: ISO-8859-15, UTF-8,..)"),
     0, 2, weechat_cmd_charset, NULL },
   { "clear", N_("clear window(s)"),
     N_("[-all]"),
@@ -3067,7 +3068,18 @@ weechat_cmd_upgrade (t_gui_window *window, int argc, char **argv)
             irc_display_prefix (NULL, NULL, PREFIX_ERROR);
             gui_printf_nolog (NULL,
                               _("%s can't upgrade: connection to at least "
-                                "one server is pending"),
+                                "one server is pending\n"),
+                              WEECHAT_ERROR);
+            return -1;
+        }
+        /* TODO: remove this test, and fix gnutls save/load in session */
+        if (ptr_server->is_connected && ptr_server->ssl_connected)
+        {
+            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+            gui_printf_nolog (NULL,
+                              _("%s can't upgrade: connection to at least "
+                                "one SSL server is active "
+                                "(should be fixed in a future version)\n"),
                               WEECHAT_ERROR);
             return -1;
         }
@@ -3105,6 +3117,15 @@ weechat_cmd_upgrade (t_gui_window *window, int argc, char **argv)
     fifo_remove ();
     if (weechat_log_file)
         fclose (weechat_log_file);
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        if (ptr_server->ssl_connected)
+        {
+            gnutls_bye (ptr_server->gnutls_sess, GNUTLS_SHUT_RDWR);
+            gnutls_deinit (ptr_server->gnutls_sess);
+        }
+    }
 #ifdef HAVE_GNUTLS
     gnutls_certificate_free_credentials (gnutls_xcred);
     gnutls_global_deinit();

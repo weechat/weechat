@@ -30,6 +30,10 @@
 #include <stdarg.h>
 #include <string.h>
 
+#ifdef HAVE_GNUTLS
+#include <gnutls/gnutls.h>
+#endif
+
 #include "weechat.h"
 #include "session.h"
 #include "../irc/irc.h"
@@ -190,6 +194,8 @@ int
 session_save_servers (FILE *file)
 {
     int rc;
+    void *session_data;
+    size_t session_size;
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
     
@@ -226,7 +232,17 @@ session_save_servers (FILE *file)
         rc = rc && (session_write_int (file, SESSION_SERV_IS_CONNECTED, ptr_server->is_connected));
         rc = rc && (session_write_int (file, SESSION_SERV_SSL_CONNECTED, ptr_server->ssl_connected));
 #ifdef HAVE_GNUTLS
-        rc = rc && (session_write_buf (file, SESSION_SERV_GNUTLS_SESS, &(ptr_server->gnutls_sess), sizeof (gnutls_session)));
+        if (ptr_server->is_connected && ptr_server->ssl_connected)
+        {
+            gnutls_session_get_data (ptr_server->gnutls_sess, NULL, &session_size);
+            if (session_size > 0)
+            {
+                session_data = malloc (session_size);
+                gnutls_session_get_data (ptr_server->gnutls_sess, session_data, &session_size);
+                rc = rc && (session_write_buf (file, SESSION_SERV_GNUTLS_SESS, &(session_data), session_size));
+                free (session_data);
+            }
+        }
 #endif
         rc = rc && (session_write_str (file, SESSION_SERV_UNTERMINATED_MESSAGE, ptr_server->unterminated_message));
         rc = rc && (session_write_str (file, SESSION_SERV_NICK, ptr_server->nick));
@@ -562,7 +578,7 @@ session_read_buf (FILE *file, void *buffer, int length_expected)
     
     if (fread ((void *)(&length), sizeof (int), 1, file) == 0)
         return 0;
-    if ((length_expected > 0) && (length != length_expected))
+    if ((length <= 0) || ((length_expected > 0) && (length != length_expected)))
     {
         session_crash (file, _("invalid length for a buffer"));
         return 0;
@@ -575,6 +591,46 @@ session_read_buf (FILE *file, void *buffer, int length_expected)
         return (fread (buffer, length, 1, file) > 0);
     else
         return (fseek (file, length, SEEK_CUR) >= 0);
+}
+
+/*
+ * session_read_buf_alloc: read buffer from file and allocate it in memory
+ */
+
+int
+session_read_buf_alloc (FILE *file, void **buffer, int *buffer_length)
+{
+    char type;
+    
+    session_last_read_pos = ftell (file);
+    session_last_read_length = sizeof (char);
+    
+    if (fread ((void *)(&type), sizeof (char), 1, file) == 0)
+        return 0;
+    if (type != SESSION_TYPE_BUF)
+    {
+        session_crash (file, _("wrong type in file (expected: %d, read: %d)"),
+                       SESSION_TYPE_BUF, type);
+        return 0;
+    }
+    
+    session_last_read_pos = ftell (file);
+    session_last_read_length = sizeof (int);
+    
+    if (fread ((void *)(buffer_length), sizeof (int), 1, file) == 0)
+        return 0;
+    if (*buffer_length <= 0)
+    {
+        session_crash (file, _("invalid length for a buffer"));
+        return 0;
+    }
+    
+    *buffer = malloc (*buffer_length);
+    
+    session_last_read_pos = ftell (file);
+    session_last_read_length = *buffer_length;
+    
+    return (fread (*buffer, *buffer_length, 1, file) > 0);
 }
 
 /*
@@ -683,6 +739,12 @@ session_load_server (FILE *file)
 {
     int object_id, rc;
     char *server_name;
+    void *session_data;
+    size_t session_size;
+    int session_size_int;
+#ifdef HAVE_GNUTLS
+    const int cert_type_prio[] = { GNUTLS_CRT_X509, GNUTLS_CRT_OPENPGP, 0 };
+#endif
     
     /* read server name */
     server_name = NULL;
@@ -805,7 +867,29 @@ session_load_server (FILE *file)
                 break;
 #ifdef HAVE_GNUTLS
             case SESSION_SERV_GNUTLS_SESS:
-                rc = rc && (session_read_buf (file, &(session_current_server->gnutls_sess), sizeof (gnutls_session)));
+                if (gnutls_init (&(session_current_server->gnutls_sess), GNUTLS_CLIENT) != 0)
+                {
+                    session_crash (file, _("gnutls init error"));
+                    return 0;
+                }
+                gnutls_set_default_priority (session_current_server->gnutls_sess);
+                gnutls_certificate_type_set_priority (session_current_server->gnutls_sess, cert_type_prio);
+                gnutls_credentials_set (session_current_server->gnutls_sess, GNUTLS_CRD_CERTIFICATE, gnutls_xcred);
+                session_data = NULL;
+                rc = rc && (session_read_buf_alloc (file, &session_data, &session_size_int));
+                if (rc)
+                {
+                    session_size = session_size_int;
+                    gnutls_session_set_data (session_current_server->gnutls_sess, session_data, session_size);
+                    free (session_data);
+                    gnutls_transport_set_ptr (session_current_server->gnutls_sess,
+                                              (gnutls_transport_ptr) session_current_server->sock);
+                    if (gnutls_handshake (session_current_server->gnutls_sess) < 0)
+                    {
+                        session_crash (file, _("gnutls handshake failed"));
+                        return 0;
+                    }
+                }
                 break;
 #endif
             case SESSION_SERV_UNTERMINATED_MESSAGE:
