@@ -330,6 +330,9 @@ gui_buffer_find_window (t_gui_buffer *buffer)
 {
     t_gui_window *ptr_win;
     
+    if (gui_current_window->buffer == buffer)
+        return gui_current_window;
+    
     for (ptr_win = gui_windows; ptr_win;
          ptr_win = ptr_win->next_window)
     {
