@@ -36,7 +36,7 @@
 
 @title WeeChat - Guia do Utilizador
 @subtitle Cliente de IRC rapido, leve e extencivel
-@subtitle Documenta@,{c}@~ao do WeeChat v0.1.7-cvs - 11 de dezembro de 2005
+@subtitle Documenta@,{c}@~ao do WeeChat v0.1.7-cvs - 12 de dezembro de 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -939,6 +939,7 @@ change charset for server or channel@*
 decode_iso: charset used for decoding ISO@*
 decode_utf: charset used for decoding UTF@*
     encode: charset used for encoding messages@*
+   charset: charset to use (for example: ISO-8859-15, UTF-8,..)@*
 @*
 @item clear  [-all]
 @*
@@ -1067,7 +1068,7 @@ show WeeChat uptime@*
 @*
 -o: send uptime on current channel as an IRC message@*
 @*
-@item window  [list | -1 | +1 | b# | splith [pct] | splitv [pct] | resize pct | merge [all]]
+@item window  [list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [pct] | resize pct | merge [all]]
 @*
 manage windows@*
 @*
@@ -1075,6 +1076,10 @@ list: list opened windows (no parameter implies this list)@*
 -1: jump to previous window@*
 +1: jump to next window@*
 b#: jump to next window displaying buffer number #@*
+up: switch to window above current one@*
+down: switch to window below current one@*
+left: switch to window on the left@*
+right: switch to window on the right@*
 splith: split current window horizontally@*
 splitv: split current window vertically@*
 resize: resize window size, new size is <pct>%% of parent window@*

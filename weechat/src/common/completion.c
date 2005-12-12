@@ -569,6 +569,18 @@ completion_build_list (t_completion *completion, void *server, void *channel)
             weelist_add (&completion->completion_list,
                          &completion->last_completion,
                          "merge");
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         "up");
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         "down");
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         "left");
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         "right");
             return;
         }
         

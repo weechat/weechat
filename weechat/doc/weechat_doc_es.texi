@@ -36,7 +36,7 @@
 
 @title WeeChat - Gui@'on de usuario.
 @subtitle Cliente IRC r@'apido, peque@~no y extensible
-@subtitle Documentaci@'on para WeeChat v0.1.7-cvs - 11 de diciembre de 2005
+@subtitle Documentaci@'on para WeeChat v0.1.7-cvs - 12 de diciembre de 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -914,17 +914,17 @@ Scroll nicklist@*
 Comandos internos WeeChat:@*
 
 @table @kbd
-@item alias  [nombre_alias [comando [argumentos]]
+@item alias  [alias_name [command [arguments]]
 @*
-crear un alias para un comando@*
+create an alias for a command@*
 @*
-nombre_alias: nombre del seud@'onimo@*
-comando: nombre del comando (comando WeeChat o IRC, sin el primer '/')@*
-argumentos: par@'ametros para el comando@*
+alias_name: name of alias@*
+command: command name (WeeChat or IRC command, without first '/')@*
+arguments: arguments for command@*
 @*
-@item buffer  [acci@'on | número | [[servidor] [canal]]]
+@item buffer  [action | number | [[server] [channel]]]
 @*
-gestionar los búfers@*
+manage buffers@*
 @*
 action: action to do:@*
   move: move buffer in the list (may be relative, for example -1)@*
@@ -941,123 +941,124 @@ change charset for server or channel@*
 decode_iso: charset used for decoding ISO@*
 decode_utf: charset used for decoding UTF@*
     encode: charset used for encoding messages@*
+   charset: charset to use (for example: ISO-8859-15, UTF-8,..)@*
 @*
 @item clear  [-all]
 @*
-limpiar la(s) ventana(s)@*
+clear window(s)@*
 @*
--all: limpiar todas las ventanas@*
+-all: clear all windows@*
 @*
-@item connect  [nombre_del_servidor]
+@item connect  [servername]
 @*
-conectarse a un servidor@*
+connect to a server@*
 @*
-nombre_del_servidor: nombre del servidor al que conectarse@*
+servername: server name to connect@*
 @*
-@item disconnect  [nombre_del_servidor]
+@item disconnect  [servername]
 @*
-desconectarse de un servidor@*
+disconnect from a server@*
 @*
-nombre_del_servidor: nombre del servidor del que desconectarse@*
+servername: server name to disconnect@*
 @*
-@item debug  volcar | ventanas
+@item debug  dump | windows
 @*
-imprime mensajes de depuraci@'on@*
+print debug messages@*
 @*
-volcar: guarda el volcado de memoria en el archivo de registro de WeeChat (se escribe el mismo volcado cuando WeeChat se cuelga)@*
-ventanas: muestra el @'arbol de ventanas@*
+dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)@*
+windows: display windows tree@*
 @*
-@item help  [comando]
+@item help  [command]
 @*
-mostrar ayuda sobre los comandos@*
+display help about commands@*
 @*
-comando: nombre de un comando de Weechat o de IRC@*
+command: name of a WeeChat or IRC command@*
 @*
-@item history  [limpiar | valor]
+@item history  [clear | value]
 @*
-mostrar historial de comandos de búfer@*
+show buffer command history@*
 @*
-limpiar: limpiar historial@*
-valor: número de entradas del historial para mostrar@*
+clear: clear history@*
+value: number of history entries to show@*
 @*
-@item ignore  [m@'ascara [[tipo | comando] [canal [servidor]]]]
+@item ignore  [mask [[type | command] [channel [server]]]]
 @*
-ignorar los mensajes IRC y/o los hosts@*
+ignore IRC messages and/or hosts@*
 @*
-   m@'ascara: m@'ascara de usuario o m@'aquina que ignorar@*
-   tipo: tipo de mensaje que ignorar (action, ctcp, dcc, pv)@*
-comando: comando IRC@*
-canal: nombre del canal que ignorar@*
- servidor: nombre del servidor que ignorar@*
+   mask: nick or host mask to ignore@*
+   type: type of message to ignore (action, ctcp, dcc, pv)@*
+command: IRC command@*
+channel: name of channel for ignore@*
+ server: name of server for ignore@*
 @*
-Para cada argumento, '*' significa todo.@*
-Sin argumentos, el comando /ignore lista todos los ignores definidos.@*
+For each argument, '*' means all.@*
+Without argument, /ignore command lists all defined ignore.@*
 @*
-@item key  [clave funci@'on/comando] [desatar clave] [funciones] [reset -yes]
+@item key  [key function/command] [unbind key] [functions] [reset -yes]
 @*
-atar/desatar claves@*
+bind/unbind keys@*
 @*
-clave: ata esta clave a una funci@'on interna o a un comando (comenzando por "/ ")@*
-desatar: desata una clave(si "all", se restauran los anclajes por defecto)@*
-funciones: lista funciones internas para el anclaje de claves@*
-reset: restaura anclajes a los valores por defecto y elimina todos los anclajes personales (usar cuidadosamente)@*
+key: bind this key to an internal function or a command (beginning by "/")@*
+unbind: unbind a key (if "all", default bindings are restored)@*
+functions: list internal functions for key bindings@*
+reset: restore bindings to the default values and delete ALL personal binding (use carefully!)@*
 @*
-@item plugin  [cargar fichero] | [autocargar] | [recargar] | [descargar]
+@item plugin  [load filename] | [autoload] | [reload] | [unload]
 @*
-listar/cargar/descargar plugins@*
+list/load/unload plugins@*
 @*
-fichero: plugin (archivo) WeeChat para cargar@*
+filename: WeeChat plugin (file) to load@*
 @*
-Sin argumentos, el comando /plugin lista todos los plugins cargados.@*
+Without argument, /plugin command lists all loaded plugins.@*
 @*
-@item server  [nombre_de_servidor] | [nombre_de_servidor nombre/IP puerto [-auto | -noauto] [-ipv6] [-ssl] [-pwd contrase@~na] [-nicks alias1 alias2 alias3] [-username nombre de usuario] [-realname nombre_real] [-command comando] [-autojoin canal[,canal]] ] | [del nombre_de_servidor]
+@item server  [servername] | [servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 nick2 nick3] [-username username] [-realname realname] [-command command] [-autojoin channel[,channel]] ] | [del servername]
 @*
-lista, a@~nde o elimina servidores@*
+list, add or remove servers@*
 @*
-nombre_de_servidor: nombre del servidor, para uso interno y para mostrar@*
-nombre_de_anfitri@'on: nombre o direcci@'on IP del servidor@*
-puerto: puerto para el servidor (número entero)@*
-ipv6: utilizar protocolo IPv6@*
-ssl: utilizar protocolo SSL@*
-contrase@~na: contrase@~na para el servidor@*
-alias1: primer alias para el servidor@*
-alias2: alias alternativo para el servidor@*
-alias3: segundo alias alternativo para el servidor@*
-nombre_de_usuario: nombre de usuario@*
-nombre_real: nombre real del usuario@*
+servername: server name, for internal & display use@*
+hostname: name or IP address of server@*
+port: port for server (integer)@*
+ipv6: use IPv6 protocol@*
+ssl: use SSL protocol@*
+password: password for server@*
+nick1: first nick for server@*
+nick2: alternate nick for server@*
+nick3: second alternate nick for server@*
+username: user name@*
+realname: real name of user@*
 @*
-@item save  [archivo]
+@item save  [file]
 @*
-guardar configuraci@'on a disco@*
+save config to disk@*
 @*
-archivo: fichero en el que guardar la configuraci@'on@*
+file: filename for writing config@*
 @*
-@item set  [opci@'on [ = valor]]
+@item set  [option [ = value]]
 @*
-modificar par@'ametros de configuraci@'on@*
+set config parameters@*
 @*
-opci@'on: nombre de una opci@'on (si el nombre est@'a completo y no se da ningún valor, entonces se muestra la ayuda de la opci@'on)@*
-valor: valor para una opci@'on@*
+option: name of an option (if name is full and no value is given, then help is displayed on option)@*
+value: value for option@*
 @*
-@item unalias  alias
+@item unalias  alias_name
 @*
-eliminar un alias@*
+remove an alias@*
 @*
-alias: nombre del alias a suprimir@*
+alias_name: name of alias to remove@*
 @*
-@item unignore  [número | [m@'ascara [[tipo | comando] [canal [servidor]]]]]
+@item unignore  [number | [mask [[type | command] [channel [server]]]]]
 @*
-no ignorar mensajes IRC y/o hosts@*
+unignore IRC messages and/or hosts@*
 @*
- número: # de ignores para quitar (el número se muestra por la lista de ignores)@*
-   m@'ascara de usuario o m@'aquina para no ignorar@*
-   tipo: tipo de mensaje para no ignorar(action, ctcp, dcc, pv)@*
-comando: comando IRC@*
-canal: nombre del canal para no ignorar@*
- servidor: nombre del servidor para no ignorar@*
+ number: # of ignore to unignore (number is displayed by list of ignore)@*
+   mask: nick or host mask to unignore@*
+   type: type of message to unignore (action, ctcp, dcc, pv)@*
+command: IRC command@*
+channel: name of channel for unignore@*
+ server: name of server for unignore@*
 @*
-Para cada argumento, '*' significa todo.@*
-Sin argumentos, el comando /unignore lista todos los ignores definidos.@*
+For each argument, '*' means all.@*
+Without argument, /unignore command lists all defined ignore.@*
 @*
 @item upgrade
 @*
@@ -1065,24 +1066,28 @@ upgrade WeeChat without disconnecting from servers@*
 @*
 @item uptime  [-o]
 @*
-muestra el tiempo de uso de WeeChat@*
+show WeeChat uptime@*
 @*
--o: env@'ia el tiempo de uso en el canal actual como un mensaje IRC@*
+-o: send uptime on current channel as an IRC message@*
 @*
-@item window  [list | -1 | +1 | b# | splith [pct] | splitv [pct] | resize pct | merge [all]]
+@item window  [list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [pct] | resize pct | merge [all]]
 @*
-gesti@'on de ventanas@*
+manage windows@*
 @*
-list: lista las ventanas abiertas(sin par@'ametros implica esta lista)@*
--1: salta a la ventana previa@*
-+1: salta a la ventana siguiente@*
-b#: salta a la ventana siguiente mostrando el número de búfer@*
-splith: divide la ventana actual horizontalmente@*
-splitv: divide la ventana actual verticalmente@*
-resize: redimensiona el tama@~no de la ventana, el nuevo tama@~no es <pct>%% de la ventana padre@*
-merge: fusionar la ventana con otra(all = mantener s@'olo una ventana)@*
+list: list opened windows (no parameter implies this list)@*
+-1: jump to previous window@*
++1: jump to next window@*
+b#: jump to next window displaying buffer number #@*
+up: switch to window above current one@*
+down: switch to window below current one@*
+left: switch to window on the left@*
+right: switch to window on the right@*
+splith: split current window horizontally@*
+splitv: split current window vertically@*
+resize: resize window size, new size is <pct>%% of parent window@*
+merge: merge window with another (all = keep only one window)@*
 @*
-Para splith y splitv, pct es un porcentaje que representa el tama@~no de la nueva ventana, tomando como referencia el tama@~no de la ventana actual. Por ejemplo 25 significa crear una nueva ventana con tama@~no = tama@~no_actual / 4@*
+For splith and splitv, pct is a pourcentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4@*
 @*
 @end table
 

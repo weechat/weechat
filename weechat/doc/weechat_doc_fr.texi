@@ -36,7 +36,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.7-cvs - 11 decembre 2005
+@subtitle Documentation pour WeeChat v0.1.7-cvs - 12 decembre 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -939,9 +939,10 @@ nombre: sauter au tampon qui a ce num@'ero@*
 @*
 changer le jeu de caract@`eres pour le serveur ou le canal@*
 @*
-decode_iso: jeu de caract@`ere utilis@'e pour d@'ecoder l'ISO@*
-decode_utf: jeu de caract@`ere utilis@'e pour d@'ecoder l'UTF@*
-    encode: jeu de caract@`ere utilis@'e pour encoder les messages@*
+decode_iso: jeu de caract@`eres utilis@'e pour d@'ecoder l'ISO@*
+decode_utf: jeu de caract@`eres utilis@'e pour d@'ecoder l'UTF@*
+    encode: jeu de caract@`eres utilis@'e pour encoder les messages@*
+   charset: jeu de caract@`eres @`a utiliser (par exemple: ISO-8859-15, UTF-8,..)@*
 @*
 @item clear  [-all]
 @*
@@ -1070,7 +1071,7 @@ montrer l'uptime de WeeChat@*
 @*
 -o: envoyer l'uptime sur le canal courant en tant que message IRC@*
 @*
-@item window  [list | -1 | +1 | b# | splith [pct] | splitv [ptc] | resize pct | merge [all]]
+@item window  [list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [ptc] | resize pct | merge [all]]
 @*
 gestion des fen@^etres@*
 @*
@@ -1078,6 +1079,10 @@ list: liste les fen@^etres ouvertes (pas de param@`etre affiche cette liste)@*
 -1: saute @`a la fen@^etre pr@'ec@'edente@*
 +1: saute @`a la fen@^etre suivante@*
 b#: saute @`a la fen@^etre affichant le tampon n°#@*
+up: saute @`a la fen@^etre au dessus@*
+down: saute @`a la fen@^etre au dessous@*
+left: saute @`a la fen@^etre @`a gauche@*
+right: saute @`a la fen@^etre @`a droite@*
 splith: @'eclate la fen@^etre en deux horizontalement@*
 splitv: @'eclate la fen@^etre en deux verticalement@*
 resize: redimensionne une fen@^etre, la nouvelle taille est <pct>%% de la fen@^etre parent@*

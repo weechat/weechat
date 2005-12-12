@@ -161,11 +161,16 @@ t_weechat_command weechat_commands[] =
     N_("-o: send uptime on current channel as an IRC message"),
     0, 1, weechat_cmd_uptime, NULL },
   { "window", N_("manage windows"),
-    N_("[list | -1 | +1 | b# | splith [pct] | splitv [pct] | resize pct | merge [all]]"),
+    N_("[list | -1 | +1 | b# | up | down | left | right | splith [pct] "
+       "| splitv [pct] | resize pct | merge [all]]"),
     N_("list: list opened windows (no parameter implies this list)\n"
        "-1: jump to previous window\n"
        "+1: jump to next window\n"
        "b#: jump to next window displaying buffer number #\n"
+       "up: switch to window above current one\n"
+       "down: switch to window below current one\n"
+       "left: switch to window on the left\n"
+       "right: switch to window on the right\n"
        "splith: split current window horizontally\n"
        "splitv: split current window vertically\n"
        "resize: resize window size, new size is <pct>%% of parent window\n"
