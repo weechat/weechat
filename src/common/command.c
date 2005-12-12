@@ -3122,19 +3122,6 @@ weechat_cmd_upgrade (t_gui_window *window, int argc, char **argv)
     fifo_remove ();
     if (weechat_log_file)
         fclose (weechat_log_file);
-    for (ptr_server = irc_servers; ptr_server;
-         ptr_server = ptr_server->next_server)
-    {
-        if (ptr_server->ssl_connected)
-        {
-            gnutls_bye (ptr_server->gnutls_sess, GNUTLS_SHUT_RDWR);
-            gnutls_deinit (ptr_server->gnutls_sess);
-        }
-    }
-#ifdef HAVE_GNUTLS
-    gnutls_certificate_free_credentials (gnutls_xcred);
-    gnutls_global_deinit();
-#endif
     
     execvp (exec_args[0], exec_args);
     

@@ -194,8 +194,10 @@ int
 session_save_servers (FILE *file)
 {
     int rc;
+#ifdef HAVE_GNUTLS
     void *session_data;
     size_t session_size;
+#endif
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
     
@@ -739,10 +741,10 @@ session_load_server (FILE *file)
 {
     int object_id, rc;
     char *server_name;
+#ifdef HAVE_GNUTLS
     void *session_data;
     size_t session_size;
     int session_size_int;
-#ifdef HAVE_GNUTLS
     const int cert_type_prio[] = { GNUTLS_CRT_X509, GNUTLS_CRT_OPENPGP, 0 };
 #endif
     
