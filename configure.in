@@ -181,7 +181,7 @@ PLUGINS_LIBS=
 if test "x$enable_perl" = "xyes" ; then
     enable_plugins="yes"
     
-    AC_PATH_PROG(PERL, perl perl5)
+    AC_PATH_PROGS(PERL, perl perl5)
     if test -z $PERL ; then
         AC_MSG_ERROR([
 *** Perl must be installed on your system
@@ -225,7 +225,7 @@ fi
 if test "x$enable_python" = "xyes" ; then
     enable_plugins="yes"
     
-    AC_PATH_PROG(PYTHON, python python2.4 python2.3 python2.2)
+    AC_PATH_PROGS(PYTHON, python python2.4 python2.3 python2.2)
     if test -z $PYTHON ; then
         AC_MSG_ERROR([
 *** Python must be installed on your system
@@ -274,7 +274,7 @@ fi
 if test "x$enable_ruby" = "xyes" ; then
     enable_plugins="yes"
 
-    AC_PATH_PROG(RUBY, ruby ruby1.9 ruby1.8)
+    AC_PATH_PROGS(RUBY, ruby ruby1.8 ruby1.9)
     if test -z $RUBY ; then
         AC_MSG_ERROR([
 *** Ruby must be installed on your system
