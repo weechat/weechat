@@ -36,7 +36,7 @@
 
 @title WeeChat - Guia do Utilizador
 @subtitle Cliente de IRC rapido, leve e extencivel
-@subtitle Documenta@,{c}@~ao do WeeChat v0.1.7-cvs - 12 de dezembro de 2005
+@subtitle Documenta@,{c}@~ao do WeeChat v0.1.7-cvs - 15 de dezembro de 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -2459,8 +2459,10 @@ WeeChat neither other plugins
 @*
 
 @item
-Perl: @command{weechat::add_command_handler ( name, function );}@*
-Python: @command{weechat.add_command_handler ( name, function )}@*
+Perl: @command{weechat::add_command_handler ( name, function,
+[description, arguments, arguments_description] );}@*
+Python: @command{weechat.add_command_handler ( name, function,
+[description, arguments, arguments_description] )}@*
 @*
 Create new WeeChat command, linked with script function.@*
 Function will be called when user will launch command with @kbd{/name}.@*
