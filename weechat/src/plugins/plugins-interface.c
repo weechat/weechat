@@ -237,12 +237,14 @@ t_plugin_handler *
 weechat_plugin_cmd_handler_add (t_weechat_plugin *plugin, char *command,
                                 char *description, char *arguments,
                                 char *arguments_description,
+                                char *completion_template,
                                 t_plugin_handler_func *handler_func,
                                 char *handler_args, void *handler_pointer)
 {
     if (plugin && command && handler_func)
         return plugin_cmd_handler_add (plugin, command, description, arguments,
                                        arguments_description,
+                                       completion_template,
                                        handler_func,
                                        handler_args, handler_pointer);
     

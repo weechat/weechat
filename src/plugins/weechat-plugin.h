@@ -86,6 +86,7 @@ struct t_plugin_handler
     char *description;                  /* (for /help) short cmd description   */
     char *arguments;                    /* (for /help) command arguments       */
     char *arguments_description;        /* (for /help) args long description   */
+    char *completion_template;          /* template for completion             */
     
     /* data common to all handlers */
     t_plugin_handler_func *handler;     /* pointer to handler                  */
@@ -141,6 +142,7 @@ struct t_weechat_plugin
                                           char *, void *);
     t_plugin_handler *(*cmd_handler_add) (t_weechat_plugin *, char *,
                                           char *, char *, char *,
+                                          char *,
                                           t_plugin_handler_func *,
                                           char *, void *);
     void (*handler_remove) (t_weechat_plugin *, t_plugin_handler *);
@@ -178,6 +180,7 @@ extern t_plugin_handler *weechat_plugin_msg_handler_add (t_weechat_plugin *, cha
                                                          char *, void *);
 extern t_plugin_handler *weechat_plugin_cmd_handler_add (t_weechat_plugin *, char *,
                                                          char *, char *, char *,
+                                                         char *,
                                                          t_plugin_handler_func *,
                                                          char *, void *);
 extern void weechat_plugin_handler_remove (t_weechat_plugin *, t_plugin_handler *);

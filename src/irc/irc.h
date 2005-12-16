@@ -66,12 +66,12 @@ typedef struct t_irc_nick t_irc_nick;
 
 struct t_irc_nick
 {
-    char *nick;                     /* nickname                             */
-    int flags;                      /* chanowner/chanadmin (unrealircd),    */
-                                    /* op, halfop, voice, away              */
-    int color;                      /* color for nickname in chat window    */
-    t_irc_nick *prev_nick;          /* link to previous nick on the channel */
-    t_irc_nick *next_nick;          /* link to next nick on the channel     */
+    char *nick;                     /* nickname                               */
+    int flags;                      /* chanowner/chanadmin (unrealircd),      */
+                                    /* op, halfop, voice, away                */
+    int color;                      /* color for nickname in chat window      */
+    t_irc_nick *prev_nick;          /* link to previous nick on the channel   */
+    t_irc_nick *next_nick;          /* link to next nick on the channel       */
 };
 
 /* channel types */
@@ -100,20 +100,20 @@ typedef struct t_irc_channel t_irc_channel;
 
 struct t_irc_channel
 {
-    int type;                       /* channel type                         */
-    void *dcc_chat;                 /* DCC CHAT pointer (NULL if not DCC)   */
-    char *name;                     /* name of channel (exemple: "#abc")    */
-    char *topic;                    /* topic of channel (host for private)  */
-    char *modes;                    /* channel modes                        */
-    int limit;                      /* user limit (0 is limit not set)      */
-    char *key;                      /* channel key (NULL if no key is set)  */
-    int nicks_count;                /* # nicks on channel (0 if dcc/pv)     */
-    int checking_away;              /* = 1 if checking away with WHO cmd    */
-    t_irc_nick *nicks;              /* nicks on the channel                 */
-    t_irc_nick *last_nick;          /* last nick on the channel             */
-    t_gui_buffer *buffer;           /* GUI buffer allocated for channel     */
-    t_irc_channel *prev_channel;    /* link to previous channel             */
-    t_irc_channel *next_channel;    /* link to next channel                 */
+    int type;                       /* channel type                           */
+    void *dcc_chat;                 /* DCC CHAT pointer (NULL if not DCC)     */
+    char *name;                     /* name of channel (exemple: "#abc")      */
+    char *topic;                    /* topic of channel (host for private)    */
+    char *modes;                    /* channel modes                          */
+    int limit;                      /* user limit (0 is limit not set)        */
+    char *key;                      /* channel key (NULL if no key is set)    */
+    int nicks_count;                /* # nicks on channel (0 if dcc/pv)       */
+    int checking_away;              /* = 1 if checking away with WHO cmd      */
+    t_irc_nick *nicks;              /* nicks on the channel                   */
+    t_irc_nick *last_nick;          /* last nick on the channel               */
+    t_gui_buffer *buffer;           /* GUI buffer allocated for channel       */
+    t_irc_channel *prev_channel;    /* link to previous channel               */
+    t_irc_channel *next_channel;    /* link to next channel                   */
 };
 
 /* server types */
@@ -123,55 +123,55 @@ typedef struct t_irc_server t_irc_server;
 struct t_irc_server
 {
     /* user choices */
-    char *name;                     /* name of server (only for display)    */
-    int autoconnect;                /* = 1 if auto connect at startup       */
-    int autoreconnect;              /* = 1 if auto reco when disconnected   */
-    int autoreconnect_delay;        /* delay before trying again reconnect  */
-    int command_line;               /* server was given on command line     */
-    char *address;                  /* address of server (IP or name)       */
-    int port;                       /* port for server (6667 by default)    */
-    int ipv6;                       /* use IPv6 protocol                    */
-    int ssl;                        /* SSL protocol                         */
-    char *password;                 /* password for server                  */
-    char *nick1;                    /* first nickname for the server        */
-    char *nick2;                    /* alternate nickname                   */
-    char *nick3;                    /* 2nd alternate nickname               */
-    char *username;                 /* user name                            */
-    char *realname;                 /* real name                            */
-    char *command;                  /* command to run once connected        */
-    int command_delay;              /* delay after execution of command     */
-    char *autojoin;                 /* channels to automatically join       */
-    int autorejoin;                 /* auto rejoin channels when kicked     */
-    char *notify_levels;            /* channels notify levels               */
-    char *charset_decode_iso;       /* channels charsets for decoding ISO   */
-    char *charset_decode_utf;       /* channels charsets for decoding UTF   */
-    char *charset_encode;           /* channels charsets for encoding msgs  */
+    char *name;                     /* name of server (only for display)      */
+    int autoconnect;                /* = 1 if auto connect at startup         */
+    int autoreconnect;              /* = 1 if auto reco when disconnected     */
+    int autoreconnect_delay;        /* delay before trying again reconnect    */
+    int command_line;               /* server was given on command line       */
+    char *address;                  /* address of server (IP or name)         */
+    int port;                       /* port for server (6667 by default)      */
+    int ipv6;                       /* use IPv6 protocol                      */
+    int ssl;                        /* SSL protocol                           */
+    char *password;                 /* password for server                    */
+    char *nick1;                    /* first nickname for the server          */
+    char *nick2;                    /* alternate nickname                     */
+    char *nick3;                    /* 2nd alternate nickname                 */
+    char *username;                 /* user name                              */
+    char *realname;                 /* real name                              */
+    char *command;                  /* command to run once connected          */
+    int command_delay;              /* delay after execution of command       */
+    char *autojoin;                 /* channels to automatically join         */
+    int autorejoin;                 /* auto rejoin channels when kicked       */
+    char *notify_levels;            /* channels notify levels                 */
+    char *charset_decode_iso;       /* channels charsets for decoding ISO     */
+    char *charset_decode_utf;       /* channels charsets for decoding UTF     */
+    char *charset_encode;           /* channels charsets for encoding msgs    */
     
     /* internal vars */
-    pid_t child_pid;                /* pid of child process (connecting)    */
-    int child_read;                 /* to read into child pipe              */
-    int child_write;                /* to write into child pipe             */
-    int sock;                       /* socket for server (IPv4 or IPv6)     */
-    int is_connected;               /* 1 if WeeChat is connected to server  */
-    int ssl_connected;              /* = 1 if connected with SSL            */
+    pid_t child_pid;                /* pid of child process (connecting)      */
+    int child_read;                 /* to read into child pipe                */
+    int child_write;                /* to write into child pipe               */
+    int sock;                       /* socket for server (IPv4 or IPv6)       */
+    int is_connected;               /* 1 if WeeChat is connected to server    */
+    int ssl_connected;              /* = 1 if connected with SSL              */
 #ifdef HAVE_GNUTLS
-    gnutls_session gnutls_sess;     /* gnutls session (only if SSL is used) */
+    gnutls_session gnutls_sess;     /* gnutls session (only if SSL is used)   */
 #endif
-    char *unterminated_message;     /* beginning of a message in input buf  */
-    char *nick;                     /* current nickname                     */
-    time_t reconnect_start;         /* this time + delay = reconnect time   */
-    int reconnect_join;             /* 1 if channels opened to rejoin       */
-    int is_away;                    /* 1 is user is marker as away          */
-    time_t away_time;               /* time() when user marking as away     */
-    int lag;                        /* lag (in milliseconds)                */
-    struct timeval lag_check_time;  /* last time lag was checked (ping sent)*/
-    time_t lag_next_check;          /* time for next check                  */
-    t_gui_buffer *buffer;           /* GUI buffer allocated for server      */
-    t_gui_buffer *saved_buffer;     /* channel before jumping to next server*/
-    t_irc_channel *channels;        /* opened channels on server            */
-    t_irc_channel *last_channel;    /* last opened channal on server        */
-    t_irc_server *prev_server;      /* link to previous server              */
-    t_irc_server *next_server;      /* link to next server                  */
+    char *unterminated_message;     /* beginning of a message in input buf    */
+    char *nick;                     /* current nickname                       */
+    time_t reconnect_start;         /* this time + delay = reconnect time     */
+    int reconnect_join;             /* 1 if channels opened to rejoin         */
+    int is_away;                    /* 1 is user is marker as away            */
+    time_t away_time;               /* time() when user marking as away       */
+    int lag;                        /* lag (in milliseconds)                  */
+    struct timeval lag_check_time;  /* last time lag was checked (ping sent)  */
+    time_t lag_next_check;          /* time for next check                    */
+    t_gui_buffer *buffer;           /* GUI buffer allocated for server        */
+    t_gui_buffer *saved_buffer;     /* channel before jumping to next server  */
+    t_irc_channel *channels;        /* opened channels on server              */
+    t_irc_channel *last_channel;    /* last opened channal on server          */
+    t_irc_server *prev_server;      /* link to previous server                */
+    t_irc_server *next_server;      /* link to next server                    */
 };
 
 /* irc commands */
@@ -180,18 +180,20 @@ typedef struct t_irc_command t_irc_command;
 
 struct t_irc_command
 {
-    char *command_name;             /* command name (internal or IRC cmd)   */
-    char *command_description;      /* command description                  */
-    char *arguments;                /* command parameters                   */
-    char *arguments_description;    /* parameters description               */
-    int min_arg, max_arg;           /* min & max number of parameters       */
-    int need_connection;            /* = 1 if cmd needs server connection   */
+    char *command_name;             /* IRC command name                       */
+    char *command_description;      /* command description (for /help)        */
+    char *arguments;                /* command arguments (for /help)          */
+    char *arguments_description;    /* arguments description (for /help)      */
+    char *completion_template;      /* template for completion                */
+                                    /* NULL=no completion, ""=default (nick)  */
+    int min_arg, max_arg;           /* min & max number of arguments          */
+    int need_connection;            /* = 1 if cmd needs server connection     */
     int (*cmd_function_args)(t_irc_server *, int, char **);
-                                    /* function called when user enters cmd */
+                                    /* function called when user enters cmd   */
     int (*cmd_function_1arg)(t_irc_server *, char *);
-                                    /* function called when user enters cmd */
+                                    /* function called when user enters cmd   */
     int (*recv_function)(t_irc_server *, char *, char *, char *);
-                                    /* function called when cmd is received */
+                                    /* function called when cmd is received   */
 };
 
 /* irc messages */
@@ -200,24 +202,24 @@ typedef struct t_irc_message t_irc_message;
 
 struct t_irc_message
 {
-    t_irc_server *server;           /* server pointer for received msg      */
-    char *data;                     /* message content                      */
-    t_irc_message *next_message;    /* link to next message                 */
+    t_irc_server *server;           /* server pointer for received msg        */
+    char *data;                     /* message content                        */
+    t_irc_message *next_message;    /* link to next message                   */
 };
 
 /* DCC types */
 
-#define DCC_CHAT_RECV           0   /* receiving DCC chat                   */
-#define DCC_CHAT_SEND           1   /* sending DCC chat                     */
-#define DCC_FILE_RECV           2   /* incoming DCC file                    */
-#define DCC_FILE_SEND           3   /* sending DCC file                     */
+#define DCC_CHAT_RECV           0   /* receiving DCC chat                     */
+#define DCC_CHAT_SEND           1   /* sending DCC chat                       */
+#define DCC_FILE_RECV           2   /* incoming DCC file                      */
+#define DCC_FILE_SEND           3   /* sending DCC file                       */
 
-#define DCC_WAITING             0   /* waiting for host answer              */
-#define DCC_CONNECTING          1   /* connecting to host                   */
-#define DCC_ACTIVE              2   /* sending/receiving data               */
-#define DCC_DONE                3   /* transfer done                        */
-#define DCC_FAILED              4   /* DCC failed                           */
-#define DCC_ABORTED             5   /* DCC aborted by user                  */
+#define DCC_WAITING             0   /* waiting for host answer                */
+#define DCC_CONNECTING          1   /* connecting to host                     */
+#define DCC_ACTIVE              2   /* sending/receiving data                 */
+#define DCC_DONE                3   /* transfer done                          */
+#define DCC_FAILED              4   /* DCC failed                             */
+#define DCC_ABORTED             5   /* DCC aborted by user                    */
 
 #define DCC_IS_CHAT(type) ((type == DCC_CHAT_RECV) || (type == DCC_CHAT_SEND))
 #define DCC_IS_FILE(type) ((type == DCC_FILE_RECV) || (type == DCC_FILE_SEND))
@@ -231,38 +233,38 @@ typedef struct t_irc_dcc t_irc_dcc;
 
 struct t_irc_dcc
 {
-    t_irc_server *server;           /* irc server                           */
-    t_irc_channel *channel;         /* irc channel (for DCC chat only)      */
-    int type;                       /* DCC type (send or receive)           */
-    int status;                     /* DCC status (waiting, sending, ..)    */
-    time_t start_time;              /* the time when DCC started            */
-    time_t start_transfer;          /* the time when DCC transfer started   */
-    unsigned long addr;             /* IP address                           */
-    int port;                       /* port                                 */
-    char *nick;                     /* remote nick                          */
-    int sock;                       /* socket for connection                */
-    char *unterminated_message;     /* beginning of a message in input buf  */
-    int file;                       /* local file (for reading or writing)  */
-    char *filename;                 /* filename (given by sender)           */
-    char *local_filename;           /* local filename (with path)           */
-    int filename_suffix;            /* suffix (.1 for ex) if renaming file  */
-    unsigned long size;             /* file size                            */
-    unsigned long pos;              /* number of bytes received/sent        */
-    unsigned long ack;              /* number of bytes received OK          */
-    unsigned long start_resume;     /* start of resume (in bytes)           */
-    time_t last_check_time;         /* last time we looked at bytes sent/rcv*/
-    unsigned long last_check_pos;   /* bytes sent/recv at last check        */
-    time_t last_activity;           /* time of last byte received/sent      */
-    unsigned long bytes_per_sec;    /* bytes per second                     */
-    unsigned long eta;              /* estimated time of arrival            */
-    t_irc_dcc *prev_dcc;            /* link to previous dcc file/chat       */
-    t_irc_dcc *next_dcc;            /* link to next dcc file/chat           */
+    t_irc_server *server;           /* irc server                             */
+    t_irc_channel *channel;         /* irc channel (for DCC chat only)        */
+    int type;                       /* DCC type (send or receive)             */
+    int status;                     /* DCC status (waiting, sending, ..)      */
+    time_t start_time;              /* the time when DCC started              */
+    time_t start_transfer;          /* the time when DCC transfer started     */
+    unsigned long addr;             /* IP address                             */
+    int port;                       /* port                                   */
+    char *nick;                     /* remote nick                            */
+    int sock;                       /* socket for connection                  */
+    char *unterminated_message;     /* beginning of a message in input buf    */
+    int file;                       /* local file (for reading or writing)    */
+    char *filename;                 /* filename (given by sender)             */
+    char *local_filename;           /* local filename (with path)             */
+    int filename_suffix;            /* suffix (.1 for ex) if renaming file    */
+    unsigned long size;             /* file size                              */
+    unsigned long pos;              /* number of bytes received/sent          */
+    unsigned long ack;              /* number of bytes received OK            */
+    unsigned long start_resume;     /* start of resume (in bytes)             */
+    time_t last_check_time;         /* last time we looked at bytes sent/recv */
+    unsigned long last_check_pos;   /* bytes sent/recv at last check          */
+    time_t last_activity;           /* time of last byte received/sent        */
+    unsigned long bytes_per_sec;    /* bytes per second                       */
+    unsigned long eta;              /* estimated time of arrival              */
+    t_irc_dcc *prev_dcc;            /* link to previous dcc file/chat         */
+    t_irc_dcc *next_dcc;            /* link to next dcc file/chat             */
 };
 
 /* ignore types */
 
-/* pre-defined ignore types, all other types are made with IRC commands     */
-/* for example:  part  join  quit  notice  invite  ...                      */
+/* pre-defined ignore types, all other types are made with IRC commands */
+/* for example:  part  join  quit  notice  invite  ...                  */
 
 #define IGNORE_ACTION  "action"
 #define IGNORE_CTCP    "ctcp"
@@ -273,12 +275,12 @@ typedef struct t_irc_ignore t_irc_ignore;
 
 struct t_irc_ignore
 {
-    char *mask;                     /* nickname or mask                     */
-    char *type;                     /* type of ignore                       */
-    char *channel_name;             /* name of channel, "*" == all          */
-    char *server_name;              /* name of server, "*" == all           */
-    t_irc_ignore *prev_ignore;      /* pointer to previous ignore           */
-    t_irc_ignore *next_ignore;      /* pointer to next ignore               */
+    char *mask;                     /* nickname or mask                       */
+    char *type;                     /* type of ignore                         */
+    char *channel_name;             /* name of channel, "*" == all            */
+    char *server_name;              /* name of server, "*" == all             */
+    t_irc_ignore *prev_ignore;      /* pointer to previous ignore             */
+    t_irc_ignore *next_ignore;      /* pointer to next ignore                 */
 };
 
 /* variables */

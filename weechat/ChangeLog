@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-12-11
+ChangeLog - 2005-12-16
 
 
 Version 0.1.7 (under dev!):
+   * added completion system for plugins/scripts commands
+   * fixed plugins autoload
    * added charset by server and channel, new command: /charset
    * added Ruby script plugin
    * added /upgrade command

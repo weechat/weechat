@@ -41,6 +41,7 @@ extern t_plugin_handler *plugin_msg_handler_add (t_weechat_plugin *, char *,
                                                  char *, void *);
 extern t_plugin_handler *plugin_cmd_handler_add (t_weechat_plugin *, char *,
                                                  char *, char *, char *,
+                                                 char *,
                                                  t_plugin_handler_func *,
                                                  char *, void *);
 extern int plugin_msg_handler_exec (char *, char *, char *);

@@ -225,10 +225,11 @@ plugin_msg_handler_add (t_weechat_plugin *plugin, char *irc_command,
  *                           3. command description (for /help)
  *                           4. command arguments (for /help)
  *                           5. command args description (for /help)
- *                           6. the handler function
- *                           7. handler args: a string given to
+ *                           6. completion template
+ *                           7. the handler function
+ *                           8. handler args: a string given to
  *                              handler when called (used by scripts)
- *                           8. handler pointer: a pointer given to
+ *                           9. handler pointer: a pointer given to
  *                              handler when called (used by scripts)
  */
 
@@ -236,6 +237,7 @@ t_plugin_handler *
 plugin_cmd_handler_add (t_weechat_plugin *plugin, char *command,
                         char *description, char *arguments,
                         char *arguments_description,
+                        char *completion_template,
                         t_plugin_handler_func *handler_func,
                         char *handler_args, void *handler_pointer)
 {
@@ -260,6 +262,7 @@ plugin_cmd_handler_add (t_weechat_plugin *plugin, char *command,
         new_handler->description = (description) ? strdup (description) : NULL;
         new_handler->arguments = (arguments) ? strdup (arguments) : NULL;
         new_handler->arguments_description = (arguments_description) ? strdup (arguments_description) : NULL;
+        new_handler->completion_template = (completion_template) ? strdup (completion_template) : NULL;
         new_handler->handler = handler_func;
         new_handler->handler_args = (handler_args) ? strdup (handler_args) : NULL;
         new_handler->handler_pointer = handler_pointer;
@@ -706,35 +709,61 @@ int plugin_auto_load_file (t_weechat_plugin *plugin, char *filename)
 
 void plugin_auto_load ()
 {
-    char *ptr_home, *dir_name;
+    char *ptr_home, *dir_name, *list_plugins, *pos, *pos2;
     
-    /* auto-load plugins in WeeChat home dir */
-    if (cfg_plugins_path && cfg_plugins_path[0])
+    if (cfg_plugins_autoload && cfg_plugins_autoload[0])
     {
-        if (cfg_plugins_path[0] == '~')
+        if (ascii_strcasecmp (cfg_plugins_autoload, "*") == 0)
         {
-            ptr_home = getenv ("HOME");
-            dir_name = (char *)malloc (strlen (cfg_plugins_path) + strlen (ptr_home) + 2);
+            /* auto-load plugins in WeeChat home dir */
+            if (cfg_plugins_path && cfg_plugins_path[0])
+            {
+                if (cfg_plugins_path[0] == '~')
+                {
+                    ptr_home = getenv ("HOME");
+                    dir_name = (char *)malloc (strlen (cfg_plugins_path) + strlen (ptr_home) + 2);
+                    if (dir_name)
+                    {
+                        strcpy (dir_name, ptr_home);
+                        strcat (dir_name, cfg_plugins_path + 1);
+                        plugin_exec_on_files (NULL, dir_name, &plugin_auto_load_file);
+                        free (dir_name);
+                    }
+                }
+                else
+                    plugin_exec_on_files (NULL, cfg_plugins_path, &plugin_auto_load_file);
+            }
+    
+            /* auto-load plugins in WeeChat global lib dir */
+            dir_name = (char *)malloc (strlen (WEECHAT_LIBDIR) + 16);
             if (dir_name)
             {
-                strcpy (dir_name, ptr_home);
-                strcat (dir_name, cfg_plugins_path + 1);
+                snprintf (dir_name, strlen (WEECHAT_LIBDIR) + 16,
+                          "%s/plugins", WEECHAT_LIBDIR);
                 plugin_exec_on_files (NULL, dir_name, &plugin_auto_load_file);
                 free (dir_name);
             }
         }
         else
-            plugin_exec_on_files (NULL, cfg_plugins_path, &plugin_auto_load_file);
-    }
-    
-    /* auto-load plugins in WeeChat global lib dir */
-    dir_name = (char *)malloc (strlen (WEECHAT_LIBDIR) + 16);
-    if (dir_name)
-    {
-        snprintf (dir_name, strlen (WEECHAT_LIBDIR) + 16,
-                  "%s/plugins", WEECHAT_LIBDIR);
-        plugin_exec_on_files (NULL, dir_name, &plugin_auto_load_file);
-        free (dir_name);
+        {
+            list_plugins = strdup (cfg_plugins_autoload);
+            if (list_plugins)
+            {
+                pos = list_plugins;
+                while (pos && pos[0])
+                {
+                    pos2 = strchr (pos, ',');
+                    if (pos2)
+                        pos2[0] = '\0';
+                    plugin_load (pos);
+                    if (pos2)
+                        pos = pos2 + 1;
+                    else
+                        pos = NULL;
+                }
+                free (list_plugins);
+            }
+        }
     }
 }
 
@@ -835,37 +864,12 @@ plugin_unload_all ()
 void
 plugin_init (int auto_load)
 {
-    char *list_plugins, *pos, *pos2;
-    
     /* read plugins options on disk */
     plugin_config_read ();
     
     /* auto-load plugins if asked */
-    if (auto_load && cfg_plugins_autoload && cfg_plugins_autoload[0])
-    {
-        if (ascii_strcasecmp (cfg_plugins_autoload, "*") == 0)
-            plugin_auto_load ();
-        else
-        {
-            list_plugins = strdup (cfg_plugins_autoload);
-            if (list_plugins)
-            {
-                pos = list_plugins;
-                while (pos && pos[0])
-                {
-                    pos2 = strchr (pos, ',');
-                    if (pos2)
-                        pos2[0] = '\0';
-                    plugin_load (pos);
-                    if (pos2)
-                        pos = pos2 + 1;
-                    else
-                        pos = NULL;
-                }
-                free (list_plugins);
-            }
-        }
-    }
+    if (auto_load)
+        plugin_auto_load ();
 }
 
 /*

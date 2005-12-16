@@ -46,7 +46,7 @@ t_weechat_command weechat_commands[] =
     N_("[alias_name [command [arguments]]"),
     N_("alias_name: name of alias\ncommand: command name (WeeChat "
     "or IRC command, without first '/')\n" "arguments: arguments for command"),
-    0, MAX_ARGS, NULL, weechat_cmd_alias },
+    "%- %A", 0, MAX_ARGS, NULL, weechat_cmd_alias },
   { "buffer", N_("manage buffers"),
     N_("[action | number | [[server] [channel]]]"),
     N_("action: action to do:\n"
@@ -56,39 +56,40 @@ t_weechat_command weechat_commands[] =
        "  notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)\n"
        "server,channel: jump to buffer by server and/or channel name\n"
        "number: jump to buffer by number"),
-    0, MAX_ARGS, weechat_cmd_buffer, NULL },
+    "move|close|list|notify", 0, MAX_ARGS, weechat_cmd_buffer, NULL },
   { "charset", N_("change charset for server or channel"),
     N_("[(decode_iso | decode_utf | encode) charset]"),
     N_("decode_iso: charset used for decoding ISO\n"
        "decode_utf: charset used for decoding UTF\n"
        "    encode: charset used for encoding messages\n"
        "   charset: charset to use (for example: ISO-8859-15, UTF-8,..)"),
-    0, 2, weechat_cmd_charset, NULL },
+    "decode_iso|decode_utf|encode", 0, 2, weechat_cmd_charset, NULL },
   { "clear", N_("clear window(s)"),
     N_("[-all]"),
     N_("-all: clear all windows"),
-    0, 1, weechat_cmd_clear, NULL },
+    "-all", 0, 1, weechat_cmd_clear, NULL },
   { "connect", N_("connect to a server"),
     N_("[servername]"),
     N_("servername: server name to connect"),
-    0, 1, weechat_cmd_connect, NULL },
+    "%S", 0, 1, weechat_cmd_connect, NULL },
   { "disconnect", N_("disconnect from a server"),
     N_("[servername]"),
     N_("servername: server name to disconnect"),
-    0, 1, weechat_cmd_disconnect, NULL },
+    "%S", 0, 1, weechat_cmd_disconnect, NULL },
   { "debug", N_("print debug messages"),
     N_("dump | windows"),
     N_("dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)\n"
        "windows: display windows tree"),
-    1, 1, weechat_cmd_debug, NULL },
+    "dump|windows", 1, 1, weechat_cmd_debug, NULL },
   { "help", N_("display help about commands"),
-    N_("[command]"), N_("command: name of a WeeChat or IRC command"),
-    0, 1, weechat_cmd_help, NULL },
+    N_("[command]"),
+    N_("command: name of a WeeChat or IRC command"),
+    "%w|%i|%h", 0, 1, weechat_cmd_help, NULL },
   { "history", N_("show buffer command history"),
     N_("[clear | value]"),
     N_("clear: clear history\n"
        "value: number of history entries to show"),
-    0, 1, weechat_cmd_history, NULL },
+    "clear", 0, 1, weechat_cmd_history, NULL },
   { "ignore", N_("ignore IRC messages and/or hosts"),
     N_("[mask [[type | command] [channel [server]]]]"),
     N_("   mask: nick or host mask to ignore\n"
@@ -98,19 +99,20 @@ t_weechat_command weechat_commands[] =
        " server: name of server for ignore\n\n"
        "For each argument, '*' means all.\n"
        "Without argument, /ignore command lists all defined ignore."),
+    "*|%n *|action|ctcp|dcc|pv|%I *|%c *|%s",
     0, 4, weechat_cmd_ignore, NULL },
   { "key", N_("bind/unbind keys"),
     N_("[key function/command] [unbind key] [functions] [reset -yes]"),
     N_("key: bind this key to an internal function or a command (beginning by \"/\")\n"
-       "unbind: unbind a key (if \"all\", default bindings are restored)\n"
+       "unbind: unbind a key\n"
        "functions: list internal functions for key bindings\n"
        "reset: restore bindings to the default values and delete ALL personal binding (use carefully!)"),
-    0, MAX_ARGS, NULL, weechat_cmd_key },
+    "unbind|functions|reset %k", 0, MAX_ARGS, NULL, weechat_cmd_key },
   { "plugin", N_("list/load/unload plugins"),
     N_("[load filename] | [autoload] | [reload] | [unload]"),
     N_("filename: WeeChat plugin (file) to load\n\n"
        "Without argument, /plugin command lists all loaded plugins."),
-    0, 2, weechat_cmd_plugin, NULL },
+    "load|autoload|reload|unload", 0, 2, weechat_cmd_plugin, NULL },
   { "server", N_("list, add or remove servers"),
     N_("[servername] | "
        "[servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 "
@@ -128,19 +130,19 @@ t_weechat_command weechat_commands[] =
        "nick3: second alternate nick for server\n"
        "username: user name\n"
        "realname: real name of user"),
-    0, MAX_ARGS, weechat_cmd_server, NULL },
+    NULL, 0, MAX_ARGS, weechat_cmd_server, NULL },
   { "save", N_("save config to disk"),
     N_("[file]"), N_("file: filename for writing config"),
-    0, 1, weechat_cmd_save, NULL },
+    NULL, 0, 1, weechat_cmd_save, NULL },
   { "set", N_("set config parameters"),
     N_("[option [ = value]]"),
     N_("option: name of an option (if name is full "
        "and no value is given, then help is displayed on option)\n"
        "value: value for option"),
-    0, MAX_ARGS, NULL, weechat_cmd_set },
+    "%o = %v", 0, MAX_ARGS, NULL, weechat_cmd_set },
   { "unalias", N_("remove an alias"),
     N_("alias_name"), N_("alias_name: name of alias to remove"),
-    1, 1, NULL, weechat_cmd_unalias },
+    "%a", 1, 1, NULL, weechat_cmd_unalias },
   { "unignore", N_("unignore IRC messages and/or hosts"),
     N_("[number | [mask [[type | command] [channel [server]]]]]"),
     N_(" number: # of ignore to unignore (number is displayed by list of ignore)\n"
@@ -151,15 +153,14 @@ t_weechat_command weechat_commands[] =
        " server: name of server for unignore\n\n"
        "For each argument, '*' means all.\n"
        "Without argument, /unignore command lists all defined ignore."),
+    "*|%n *|action|ctcp|dcc|pv|%I *|%c *|%s",
     0, 4, weechat_cmd_unignore, NULL },
-  { "upgrade", N_("upgrade WeeChat without disconnecting from servers"),
-    "",
-    "",
-    0, 0, weechat_cmd_upgrade, NULL },
+  { "upgrade", N_("upgrade WeeChat without disconnecting from servers"), "", "",
+    NULL, 0, 0, weechat_cmd_upgrade, NULL },
   { "uptime", N_("show WeeChat uptime"),
     N_("[-o]"),
     N_("-o: send uptime on current channel as an IRC message"),
-    0, 1, weechat_cmd_uptime, NULL },
+    "-o", 0, 1, weechat_cmd_uptime, NULL },
   { "window", N_("manage windows"),
     N_("[list | -1 | +1 | b# | up | down | left | right | splith [pct] "
        "| splitv [pct] | resize pct | merge [all]]"),
@@ -178,8 +179,9 @@ t_weechat_command weechat_commands[] =
        "For splith and splitv, pct is a pourcentage which represents "
        "size of new window, computed with current window as size reference. "
        "For example 25 means create a new window with size = current_size / 4"),
+    "list|-1|+1|up|down|left|right|splith|splitv|resize|merge all",
     0, 2, weechat_cmd_window, NULL },
-  { NULL, NULL, NULL, NULL, 0, 0, NULL, NULL }
+  { NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, NULL }
 };
 
 t_weechat_alias *weechat_alias = NULL;

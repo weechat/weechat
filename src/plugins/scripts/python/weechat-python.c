@@ -333,6 +333,7 @@ static PyObject *
 weechat_python_add_command_handler (PyObject *self, PyObject *args)
 {
     char *command, *function, *description, *arguments, *arguments_description;
+    char *completion_template;
     
     /* make gcc happy */
     (void) self;
@@ -350,9 +351,11 @@ weechat_python_add_command_handler (PyObject *self, PyObject *args)
     description = NULL;
     arguments = NULL;
     arguments_description = NULL;
+    completion_template = NULL;
     
-    if (!PyArg_ParseTuple (args, "ss|sss", &command, &function,
-                           &description, &arguments, &arguments_description))
+    if (!PyArg_ParseTuple (args, "ss|ssss", &command, &function,
+                           &description, &arguments, &arguments_description,
+                           completion_template))
     {
         python_plugin->printf_server (python_plugin,
                                       "Python error: wrong parameters for "
@@ -365,6 +368,7 @@ weechat_python_add_command_handler (PyObject *self, PyObject *args)
                                         description,
                                         arguments,
                                         arguments_description,
+                                        completion_template,
                                         weechat_python_handler,
                                         function,
                                         (void *)python_current_script))
@@ -1151,6 +1155,7 @@ weechat_plugin_init (t_weechat_plugin *plugin)
                              "[load filename] | [autoload] | [reload] | [unload]",
                              "filename: Python script (file) to load\n\n"
                              "Without argument, /python command lists all loaded Python scripts.",
+                             "load|autoload|reload|unload",
                              weechat_python_cmd, NULL, NULL);
 
     plugin->mkdir_home (plugin, "python");

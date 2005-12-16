@@ -33,27 +33,29 @@ typedef struct t_completion t_completion;
 struct t_completion
 {
     /* completion context */
-    int context;            /* context: null, nick, command, cmd arg        */
-    char *base_command;     /* command with arg to complete (can be NULL)   */
-    int base_command_arg;   /* # arg to complete (if context is cmd arg)    */
-    char *base_word;        /* word to complete (when Tab was pressed)      */
-    int base_word_pos;      /* beggining of base word                       */
-    int position;           /* position where Tab was pressed               */
-    char *args;             /* command line args (including base word)      */
+    void *server;               /* server pointer                             */
+    void *channel;              /* channel pointer                            */
+    int context;                /* context: null, nick, command, cmd arg      */
+    char *base_command;         /* command with arg to complete (can be NULL) */
+    int base_command_arg;       /* # arg to complete (if context is cmd arg)  */
+    char *base_word;            /* word to complete (when Tab was pressed)    */
+    int base_word_pos;          /* beggining of base word                     */
+    int position;               /* position where Tab was pressed             */
+    char *args;                 /* command line args (including base word)    */
     
     /* for command argument completion */
-    t_weelist *completion_list; /* data list for completion                 */
-    t_weelist *last_completion; /* last data element for completion         */
+    t_weelist *completion_list; /* data list for completion                   */
+    t_weelist *last_completion; /* last data element for completion           */
     
     /* completion found */
-    char *word_found;       /* word found (to replace base word)            */
-    int position_replace;   /* position where word has to be replaced       */
-    int diff_size;          /* size difference (< 0 = char(s) deleted)      */
-    int diff_length;        /* length difference (<= diff_size)             */
+    char *word_found;           /* word found (to replace base word)          */
+    int position_replace;       /* position where word has to be replaced     */
+    int diff_size;              /* size difference (< 0 = char(s) deleted)    */
+    int diff_length;            /* length difference (<= diff_size)           */
 };
 
-extern void completion_init (t_completion *);
+extern void completion_init (t_completion *, void *, void *);
 extern void completion_free (t_completion *);
-extern void completion_search (t_completion *, void *, void *, char *, int, int);
+extern void completion_search (t_completion *, char *, int, int);
 
 #endif /* completion.h */

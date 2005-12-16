@@ -31,13 +31,17 @@ typedef struct t_weechat_command t_weechat_command;
 
 struct t_weechat_command
 {
-    char *command_name;
-    char *command_description;
-    char *arguments;
-    char *arguments_description;
-    int min_arg, max_arg;
+    char *command_name;             /* WeeChat (internal) command name        */
+    char *command_description;      /* command description (for /help)        */
+    char *arguments;                /* command arguments (for /help)          */
+    char *arguments_description;    /* arguments description (for /help)      */
+    char *completion_template;      /* template for completion                */
+                                    /* NULL=no completion, ""=default (nick)  */
+    int min_arg, max_arg;           /* min & max number of arguments          */
     int (*cmd_function_args)(t_gui_window *, int, char **);
+                                    /* function called when user enters cmd   */
     int (*cmd_function_1arg)(t_gui_window *, char *);
+                                    /* function called when user enters cmd   */
 };
 
 typedef struct t_weechat_alias t_weechat_alias;

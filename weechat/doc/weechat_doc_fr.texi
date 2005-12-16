@@ -36,7 +36,7 @@
 
 @title WeeChat - Guide utilisateur
 @subtitle Client IRC rapide, l@'eger et extensible
-@subtitle Documentation pour WeeChat v0.1.7-cvs - 15 decembre 2005
+@subtitle Documentation pour WeeChat v0.1.7-cvs - 16 decembre 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -1526,18 +1526,14 @@ appeler la commande suivante dans l'historique global@*
 faire d@'efiler d'une page vers le haut@*
 @item page_down
 faire d@'efiler d'une page vers le bas@*
-@item infobar_clear
-effacer la barre d'infos@*
-@item nick_page_up
-faire d@'efiler la liste des pseudos d'une page vers le haut@*
-@item nick_page_down
-faire d@'efiler la liste des pseudos d'une page vers le bas@*
 @item nick_beginning
 afficher le d@'ebut de la liste des pseudos@*
 @item nick_end
 afficher la fin de la liste des pseudos@*
-@item refresh
-rafraichir l'@'ecran@*
+@item nick_page_up
+faire d@'efiler la liste des pseudos d'une page vers le haut@*
+@item nick_page_down
+faire d@'efiler la liste des pseudos d'une page vers le bas@*
 @item jump_smart
 sauter au tampon avec de l'activit@'e@*
 @item jump_dcc
@@ -1548,8 +1544,20 @@ sauter au dernier tampon@*
 sauter au tampon du serveur@*
 @item jump_next_server
 sauter au prochain serveur@*
+@item switch_server
+bascule de serveur actif sur le tampon des serveurs@*
+@item scroll_previous_highlight
+scroller jusqu'au highlight pr@'ec@'edent du tampon@*
+@item scroll_next_highlight
+scroller jusqu'au highlight suivant du tampon@*
+@item scroll_unread
+scroller jusqu'@`a la premi@`ere ligne non lue du tampon@*
 @item hotlist_clear
 effacer la liste d'activit@'e@*
+@item infobar_clear
+effacer la barre d'infos@*
+@item refresh
+rafraichir l'@'ecran@*
 @item grab_key
 capturer une touche@*
 @end table
@@ -1938,8 +1946,9 @@ WeeChat ni @`a d'autres extensions
 @item
 @command{t_plugin_handler *cmd_handler_add (t_weechat_plugin
 *plugin, char *command, char *description, char *arguments,
-char *arguments_description, t_plugin_handler_func *handler_func,
-char *handler_args, void *handler_pointer)}@*
+char *arguments_description, char *completion_template,
+t_plugin_handler_func *handler_func, char *handler_args,
+void *handler_pointer)}@*
 @*
 Ajoute un gestionnaire de commande WeeChat, appel@'e d@`es que
 l'utilisateur utilise la commande (par exemple /commande).@*
@@ -1954,6 +1963,33 @@ l'utilisateur utilise la commande (par exemple /commande).@*
 commande (affich@'ee par /help commande)
 @item @option{arguments_description}: longue description des
 param@`etres de la commande (affich@'ee par /help commande)
+@item @option{completion_template}: mod@`ele pour la compl@'etion, sous
+la forme @code{abc|%w def|%i} qui signifie ``abc'' ou une comande
+WeeChat pour le premier param@`etre, et ``def'' ou une commande IRC
+pour le deuxi@`eme.@*
+Les codes suivants peuvent @^etre utilis@'es :
+@itemize @minus
+@item @code{%-}: aucune compl@'etion pour le param@`etre
+@item @code{%a}: alias
+@item @code{%A}: alias et commandes (WeeChat, IRC et extensions)
+@item @code{%c}: canal courant
+@item @code{%C}: canaux du serveur courant
+@item @code{%f}: nom de fichier
+@item @code{%h}: commandes d@'efinies par des extensions
+@item @code{%i}: commandes IRC (envoy@'ees)
+@item @code{%I}: commandes IRC (re@,cues)
+@item @code{%k}: touches
+@item @code{%n}: pseudos du canal courant
+@item @code{%o}: option de configuration
+@item @code{%p}: message de ``part'' par d@'efaut
+@item @code{%q}: message de ``quit'' par d@'efaut
+@item @code{%s}: nom du serveur courant
+@item @code{%S}: noms de tous les serveurs
+@item @code{%t}: titre du canal courant
+@item @code{%v}: valeur d'une option de configuration
+@item @code{%w}: commandes WeeChat
+@item @code{%y}: message d'absence (``away'') par d@'efaut
+@end itemize
 @item @option{handler_func}: fonction appel@'ee lorsque la commande est
 ex@'ecut@'ee
 @item @option{handler_args}: param@`etres pass@'es @`a la fonction
@@ -2303,6 +2339,7 @@ int weechat_plugin_init (t_weechat_plugin *plugin)
                              "Affiche deux fois un message",
                              "msg",
                              "msg: message a afficher deux fois",
+                             NULL,
                              &toto_cmd_double,
                              NULL, NULL);
     return PLUGIN_RC_OK;
@@ -2498,9 +2535,11 @@ transmis @`a d'autres extensions
 
 @item
 Perl: @command{weechat::add_command_handler ( nom, fonction,
-[description, arguments, arguments_description] );}@*
+[description, arguments, arguments_description,
+completion_template] );}@*
 Python: @command{weechat.add_command_handler ( nom, fonction,
-[description, arguments, arguments_description] )}@*
+[description, arguments, arguments_description,
+completion_template] )}@*
 @*
 Cr@'e@'e une nouvelle commande WeeChat, associ@'ee @`a une fonction.@*
 La fonction sera appel@'ee lorsque l'utilisateur lancera la commande
@@ -2520,6 +2559,33 @@ script sera charg@'e.
 commande (affich@'ee par /help commande)
 @item @option{arguments_description}: longue description des
 param@`etres de la commande (affich@'ee par /help commande)
+@item @option{completion_template}: mod@`ele pour la compl@'etion, sous
+la forme @code{abc|%w def|%i} qui signifie ``abc'' ou une comande
+WeeChat pour le premier param@`etre, et ``def'' ou une commande IRC
+pour le deuxi@`eme.@*
+Les codes suivants peuvent @^etre utilis@'es :
+@itemize @minus
+@item @code{%-}: aucune compl@'etion pour le param@`etre
+@item @code{%a}: alias
+@item @code{%A}: alias et commandes (WeeChat, IRC et extensions)
+@item @code{%c}: canal courant
+@item @code{%C}: canaux du serveur courant
+@item @code{%f}: nom de fichier
+@item @code{%h}: commandes d@'efinies par des extensions
+@item @code{%i}: commandes IRC (envoy@'ees)
+@item @code{%I}: commandes IRC (re@,cues)
+@item @code{%k}: touches
+@item @code{%n}: pseudos du canal courant
+@item @code{%o}: option de configuration
+@item @code{%p}: message de ``part'' par d@'efaut
+@item @code{%q}: message de ``quit'' par d@'efaut
+@item @code{%s}: nom du serveur courant
+@item @code{%S}: noms de tous les serveurs
+@item @code{%t}: titre du canal courant
+@item @code{%v}: valeur d'une option de configuration
+@item @code{%w}: commandes WeeChat
+@item @code{%y}: message d'absence (``away'') par d@'efaut
+@end itemize
 @end itemize
 @*
 @emph{Valeur renvoy@'ee :}@*

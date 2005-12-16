@@ -126,8 +126,6 @@ gui_action_tab (t_gui_window *window)
     if (window->buffer->has_input)
     {
         completion_search (&(window->buffer->completion),
-                           SERVER(window->buffer),
-                           CHANNEL(window->buffer),
                            window->buffer->input_buffer,
                            window->buffer->input_buffer_size,
                            utf8_real_pos (window->buffer->input_buffer,

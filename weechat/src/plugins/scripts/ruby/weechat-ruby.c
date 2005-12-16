@@ -448,7 +448,9 @@ static VALUE
 weechat_ruby_add_command_handler (int argc, VALUE *argv, VALUE class)
 {
     VALUE command, function, description, arguments, arguments_description;
+    VALUE completion_template;
     char *c_command, *c_function, *c_description, *c_arguments, *c_arguments_description;
+    char *c_completion_template;
     
     /* make gcc happy */
     (void) class;
@@ -466,14 +468,16 @@ weechat_ruby_add_command_handler (int argc, VALUE *argv, VALUE class)
     description = Qnil;
     arguments = Qnil;
     arguments_description = Qnil;
+    completion_template = Qnil;
     c_command = NULL;
     c_function = NULL;
     c_description = NULL;
     c_arguments = NULL;
     c_arguments_description = NULL;
+    c_completion_template = NULL;
     
-    rb_scan_args (argc, argv, "23", &command, &function, &description,
-		 &arguments, &arguments_description);
+    rb_scan_args (argc, argv, "24", &command, &function, &description,
+                  &arguments, &arguments_description, &completion_template);
     
     if (NIL_P (command) || NIL_P (function))
     {
@@ -500,9 +504,16 @@ weechat_ruby_add_command_handler (int argc, VALUE *argv, VALUE class)
 	c_arguments = STR2CSTR (arguments);
     }
     
-    if (!NIL_P (arguments_description)) {
+    if (!NIL_P (arguments_description))
+    {
         Check_Type (arguments_description, T_STRING);
 	c_arguments_description = STR2CSTR (arguments_description);
+    }
+    
+    if (!NIL_P (completion_template))
+    {
+        Check_Type (completion_template, T_STRING);
+	c_completion_template = STR2CSTR (completion_template);
     }
     
     if (ruby_plugin->cmd_handler_add (ruby_plugin,
@@ -510,6 +521,7 @@ weechat_ruby_add_command_handler (int argc, VALUE *argv, VALUE class)
                                       c_description,
                                       c_arguments,
                                       c_arguments_description,
+                                      c_completion_template,
                                       weechat_ruby_handler,
                                       c_function,
                                       (void *)ruby_current_script))
@@ -1322,6 +1334,7 @@ weechat_plugin_init (t_weechat_plugin *plugin)
                              "[load filename] | [autoload] | [reload] | [unload]",
                              "filename: Ruby script (file) to load\n\n"
                              "Without argument, /ruby command lists all loaded Ruby scripts.",
+                             "load|autoload|reload|unload",
                              weechat_ruby_cmd, NULL, NULL);
     
     plugin->mkdir_home (plugin, "ruby");

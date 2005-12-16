@@ -36,7 +36,7 @@
 
 @title WeeChat - Gui@'on de usuario.
 @subtitle Cliente IRC r@'apido, peque@~no y extensible
-@subtitle Documentaci@'on para WeeChat v0.1.7-cvs - 15 de diciembre de 2005
+@subtitle Documentaci@'on para WeeChat v0.1.7-cvs - 16 de diciembre de 2005
 
 @author FlashCode <@email{flashcode@@flashtux.org, flashcode AT flashtux.org}>
 
@@ -1480,75 +1480,83 @@ Internal functions for keys:@*
 
 @table @kbd
 @item return
-terminar l@'inea@*
+terminate line@*
 @item tab
-completar palabra@*
+complete word@*
 @item backspace
-borrar el car@'acter anterior@*
+delete previous char@*
 @item delete
-borrar el car@'acter siguiente@*
+delete next char@*
 @item delete_end_line
-borrar hasta fin de l@'inea@*
+delete until end of line@*
 @item delete_beginning_line
-borrar hasta principio de l@'inea@*
+delete until beginning of line@*
 @item delete_line
-borrar l@'inea entera@*
+delete entire line@*
 @item delete_previous_word
-borrar la palabra anterior@*
+delete previous word@*
 @item delete_next_word
-borrar la palabra siguiente@*
+delete next word@*
 @item clipboard_paste
 paste current clipboard content@*
 @item transpose_chars
 transpose chars@*
 @item home
-ir al principio de l@'inea@*
+go to beginning of line@*
 @item end
-ir al final de l@'inea@*
+go to end of line@*
 @item left
-mover un car@'acter a la izquierda@*
+move one char left@*
 @item previous_word
-mover a la palabra anterior@*
+move to previous word@*
 @item right
-mover un car@'acter a la derecha@*
+move one char right@*
 @item next_word
-mover a la palabra siguiente@*
+move to next word@*
 @item up
-llamar al comando anterior en el historial@*
+call previous command in history@*
 @item up_global
 call previous command in global history@*
 @item down
-llamar al comando siguiente en el historial@*
+call next command in history@*
 @item down_global
 call next command in global history@*
 @item page_up
-desplazarse una p@'agina hacia arriba@*
+scroll one page up@*
 @item page_down
-desplazarse una p@'agina hacia abajo@*
-@item infobar_clear
-limpiar barra de informaci@'on@*
-@item nick_page_up
-desplazar la lista de nicks una p@'agina hacia arriba@*
-@item nick_page_down
-desplazar la lista de nicks una p@'agina hacia abajo@*
+scroll one page down@*
 @item nick_beginning
-mostrar el principio de la lista de nicks@*
+display beginning of nicklist@*
 @item nick_end
-mostrar el final de la lista de nicks@*
-@item refresh
-recargar la pantalla@*
+display end of nicklist@*
+@item nick_page_up
+scroll nicklist one page up@*
+@item nick_page_down
+scroll nicklist one page down@*
 @item jump_smart
-saltar al búfer con actividad@*
+jump to buffer with activity@*
 @item jump_dcc
-saltar al búfer DCC@*
+jump to DCC buffer@*
 @item jump_last_buffer
 jump to last buffer@*
 @item jump_server
-saltar al búfer servidor@*
+jump to server buffer@*
 @item jump_next_server
-saltar al servidor siguiente@*
+jump to next server@*
+@item switch_server
+switch active server on servers buffer@*
+@item scroll_previous_highlight
+scroll to previous highlight in buffer@*
+@item scroll_next_highlight
+scroll to next highlight in buffer@*
+@item scroll_unread
+scroll to first unread line in buffer@*
 @item hotlist_clear
-limpiar hotlist@*
+clear hotlist@*
+@item infobar_clear
+clear infobar@*
+@item refresh
+refresh screen@*
 @item grab_key
 grab a key@*
 @end table
@@ -1923,8 +1931,9 @@ WeeChat neither other plugins
 @item
 @command{t_plugin_handler *cmd_handler_add (t_weechat_plugin
 *plugin, char *command, char *description, char *arguments,
-char *arguments_description, t_plugin_handler_func *handler_func,
-char *handler_args, void *handler_pointer)}@*
+char *arguments_description, char *completion_template,
+t_plugin_handler_func *handler_func, char *handler_args,
+void *handler_pointer)}@*
 @*
 Add a WeeChat command handler, called when user uses command
 (for example /command).@*
@@ -1939,6 +1948,32 @@ command)
 (displayed by /help command)
 @item @option{arguments_description}: long description of command
 arguments (displayed by /help command)
+@item @option{completion_template}: template for completion, like
+@code{abc|%w def|%i} which means ``abc'' or a WeeChat command
+for first argument, and ``def'' or IRC command for second.@*
+Following codes can be used:
+@itemize @minus
+@item @code{%-}: no completion for argument
+@item @code{%a}: alias
+@item @code{%A}: alias and commands (WeeChat, IRC and plugins)
+@item @code{%c}: current channel
+@item @code{%C}: channels of current server
+@item @code{%f}: filename
+@item @code{%h}: plugins commands
+@item @code{%i}: IRC commands (sent)
+@item @code{%I}: IRC commands (received)
+@item @code{%k}: keys
+@item @code{%n}: nicks of current channel
+@item @code{%o}: setup option
+@item @code{%p}: default ``part'' message
+@item @code{%q}: default ``quit'' message
+@item @code{%s}: current server name
+@item @code{%S}: all servers names
+@item @code{%t}: topic of current channel
+@item @code{%v}: setup option value
+@item @code{%w}: WeeChat commands
+@item @code{%y}: default ``away'' message
+@end itemize
 @item @option{handler_func}: function called when comand is executed
 @item @option{handler_args}: arguments given to function when called
 @item @option{handler_pointer}: pointer given to function when called
@@ -2271,6 +2306,7 @@ int weechat_plugin_init (t_weechat_plugin *plugin)
                              "Display two times a message",
                              "msg",
                              "msg: message",
+                             NULL,
                              &toto_cmd_double,
                              NULL, NULL);
     return PLUGIN_RC_OK;
@@ -2465,9 +2501,11 @@ WeeChat neither other plugins
 
 @item
 Perl: @command{weechat::add_command_handler ( name, function,
-[description, arguments, arguments_description] );}@*
+[description, arguments, arguments_description,
+completion_template] );}@*
 Python: @command{weechat.add_command_handler ( name, function,
-[description, arguments, arguments_description] )}@*
+[description, arguments, arguments_description,
+completion_template] )}@*
 @*
 Create new WeeChat command, linked with script function.@*
 Function will be called when user will launch command with @kbd{/name}.@*
@@ -2485,6 +2523,32 @@ command)
 (displayed by /help command)
 @item @option{arguments_description}: long description of command
 arguments (displayed by /help command)
+@item @option{completion_template}: template for completion, like
+@code{abc|%w def|%i} which means ``abc'' or a WeeChat command
+for first argument, and ``def'' or IRC command for second.@*
+Following codes can be used:
+@itemize @minus
+@item @code{%-}: no completion for argument
+@item @code{%a}: alias
+@item @code{%A}: alias and commands (WeeChat, IRC and plugins)
+@item @code{%c}: current channel
+@item @code{%C}: channels of current server
+@item @code{%f}: filename
+@item @code{%h}: plugins commands
+@item @code{%i}: IRC commands (sent)
+@item @code{%I}: IRC commands (received)
+@item @code{%k}: keys
+@item @code{%n}: nicks of current channel
+@item @code{%o}: setup option
+@item @code{%p}: default ``part'' message
+@item @code{%q}: default ``quit'' message
+@item @code{%s}: current server name
+@item @code{%S}: all servers names
+@item @code{%t}: topic of current channel
+@item @code{%v}: setup option value
+@item @code{%w}: WeeChat commands
+@item @code{%y}: default ``away'' message
+@end itemize
 @end itemize
 @*
 @emph{Return value:}@*

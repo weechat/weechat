@@ -45,8 +45,10 @@
  */
 
 void
-completion_init (t_completion *completion)
+completion_init (t_completion *completion, void *server, void *channel)
 {
+    completion->server = server;
+    completion->channel = channel;
     completion->context = COMPLETION_NULL;
     completion->base_command = NULL;
     completion->base_command_arg = 0;
@@ -97,684 +99,637 @@ completion_stop (t_completion *completion)
 }
 
 /*
- * completion_build_list: build data list according to command and argument #
+ * completion_get_command_infos: return completion template and max arg for command
  */
 
 void
-completion_build_list (t_completion *completion, void *server, void *channel)
+completion_get_command_infos (t_completion *completion,
+                              char **template, int *max_arg)
 {
-    t_weelist *ptr_list;
-    int i, j, length;
-    t_irc_server *ptr_server;
-    t_irc_channel *ptr_channel;
-    t_irc_nick *ptr_nick;
-    char *pos, option_name[256], *string, *string2;
-    t_weechat_alias *ptr_alias;
-    t_config_option *option;
-    void *option_value;
-    char option_string[2048];
+    int i;
 #ifdef PLUGINS
     t_weechat_plugin *ptr_plugin;
     t_plugin_handler *ptr_handler;
 #endif
     
-    /* WeeChat internal commands */
+    *template = NULL;
+    *max_arg = MAX_ARGS;
     
-    /* no completion for some commands */
-    if ((ascii_strcasecmp (completion->base_command, "server") == 0)
-        || (ascii_strcasecmp (completion->base_command, "save") == 0))
+#ifdef PLUGINS
+    /* look for plugin command handler */
+    for (ptr_plugin = weechat_plugins; ptr_plugin;
+         ptr_plugin = ptr_plugin->next_plugin)
     {
-        completion_stop (completion);
-        return;
-    }
-    if ((ascii_strcasecmp (completion->base_command, "alias") == 0)
-        && (completion->base_command_arg == 1))
-    {
-        for (ptr_list = index_commands; ptr_list; ptr_list = ptr_list->next_weelist)
+        for (ptr_handler = ptr_plugin->handlers;
+             ptr_handler; ptr_handler = ptr_handler->next_handler)
         {
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         ptr_list->data);
-        }
-        return;
-    }
-    if ((ascii_strcasecmp (completion->base_command, "buffer") == 0)
-        && (completion->base_command_arg == 1))
-    {
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     "close");
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     "list");
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     "move");
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     "notify");
-        return;
-    }
-    if (ascii_strcasecmp (completion->base_command, "charset") == 0)
-    {
-        if (completion->base_command_arg == 1)
-        {
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         "decode_iso");
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         "decode_utf");
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         "encode");
-        }
-        else if (completion->base_command_arg == 2)
-        {
-            if (!server)
+            if ((ptr_handler->type == HANDLER_COMMAND)
+                && (ascii_strcasecmp (ptr_handler->command,
+                                      completion->base_command) == 0))
             {
-                completion_stop (completion);
+                *template = ptr_handler->completion_template;
+                *max_arg = MAX_ARGS;
                 return;
             }
-            pos = strchr (completion->args, ' ');
-            if (pos)
-                pos[0] = '\0';
-            string2 = NULL;
-            if (ascii_strcasecmp (completion->args, "decode_iso") == 0)
-            {
-                config_option_list_get_value (&(((t_irc_server *)server)->charset_decode_iso),
-                                              (channel) ? ((t_irc_channel *)channel)->name : "server",
-                                              &string, &length);
-                if (string && (length > 0))
-                {
-                    string2 = strdup (string);
-                    string2[length] = '\0';
-                }
-            }
-            else if (ascii_strcasecmp (completion->args, "decode_utf") == 0)
-            {
-                config_option_list_get_value (&(((t_irc_server *)server)->charset_decode_utf),
-                                              (channel) ? ((t_irc_channel *)channel)->name : "server",
-                                              &string, &length);
-                if (string && (length > 0))
-                {
-                    string2 = strdup (string);
-                    string2[length] = '\0';
-                }
-            }
-            else if (ascii_strcasecmp (completion->args, "encode") == 0)
-            {
-                config_option_list_get_value (&(((t_irc_server *)server)->charset_encode),
-                                              (channel) ? ((t_irc_channel *)channel)->name : "server",
-                                              &string, &length);
-                if (string && (length > 0))
-                {
-                    string2 = strdup (string);
-                    string2[length] = '\0';
-                }
-            }
-            
-            if (string2)
-            {
-                weelist_add (&completion->completion_list,
-                             &completion->last_completion,
-                             string2);
-                free (string2);
-            }
-            else
-                completion_stop (completion);
-            
-            if (pos)
-                pos[0] = ' ';
-        }
-        else
-            completion_stop (completion);
-        return;
-    }
-    if ((ascii_strcasecmp (completion->base_command, "clear") == 0)
-        && (completion->base_command_arg == 1))
-    {
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     "-all");
-        return;
-    }
-    if ((ascii_strcasecmp (completion->base_command, "connect") == 0)
-        || (ascii_strcasecmp (completion->base_command, "disconnect") == 0))
-    {
-        if (completion->base_command_arg == 1)
-        {
-            for (ptr_server = irc_servers; ptr_server;
-                 ptr_server = ptr_server->next_server)
-            {
-                weelist_add (&completion->completion_list,
-                             &completion->last_completion,
-                             ptr_server->name);
-            }
-            return;
-        }
-        else
-        {
-            completion_stop (completion);
-            return;
         }
     }
-    if (ascii_strcasecmp (completion->base_command, "debug") == 0)
-    {
-        if (completion->base_command_arg == 1)
-        {
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         "dump");
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         "windows");
-        }
-        else
-            completion_stop (completion);
-        return;
-    }
-    if ((ascii_strcasecmp (completion->base_command, "help") == 0)
-        && (completion->base_command_arg == 1))
-    {
-        for (i = 0; weechat_commands[i].command_name; i++)
-        {
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         weechat_commands[i].command_name);
-        }
-        for (i = 0; irc_commands[i].command_name; i++)
-        {
-            if (irc_commands[i].cmd_function_args || irc_commands[i].cmd_function_1arg)
-                weelist_add (&completion->completion_list,
-                             &completion->last_completion,
-                             irc_commands[i].command_name);
-        }
-#ifdef PLUGINS
-        for (ptr_plugin = weechat_plugins; ptr_plugin;
-             ptr_plugin = ptr_plugin->next_plugin)
-        {
-            for (ptr_handler = ptr_plugin->handlers;
-                 ptr_handler; ptr_handler = ptr_handler->next_handler)
-            {
-                if (ptr_handler->type == HANDLER_COMMAND)
-                    weelist_add (&completion->completion_list,
-                                 &completion->last_completion,
-                                 ptr_handler->command);
-            }
-        }
 #endif
-        return;
-    }
-    if (ascii_strcasecmp (completion->base_command, "history") == 0)
+    
+    /* look for WeeChat internal command */
+    for (i = 0; weechat_commands[i].command_name; i++)
     {
-        if (completion->base_command_arg == 1)
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         "clear");
-        else
-            completion_stop (completion);
-        return;
-    }
-    if (ascii_strcasecmp (completion->base_command, "ignore") == 0)
-    {
-        /* arg 1: nicks of current channel and "*" */
-        if (completion->base_command_arg == 1)
+        if (ascii_strcasecmp (weechat_commands[i].command_name,
+                              completion->base_command) == 0)
         {
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         "*");
-            if (channel)
-            {
-                if (((t_irc_channel *)channel)->type == CHANNEL_TYPE_CHANNEL)
-                {
-                    for (ptr_nick = ((t_irc_channel *)channel)->nicks; ptr_nick;
-                         ptr_nick = ptr_nick->next_nick)
-                    {
-                        weelist_add (&completion->completion_list,
-                                     &completion->last_completion,
-                                     ptr_nick->nick);
-                    }
-                }
-                if (((t_irc_channel *)channel)->type == CHANNEL_TYPE_PRIVATE)
-                {
-                    weelist_add (&completion->completion_list,
-                                 &completion->last_completion,
-                                 ((t_irc_channel *)channel)->name);
-                }
-            }
+            *template = weechat_commands[i].completion_template;
+            *max_arg = weechat_commands[i].max_arg;
             return;
         }
-        
-        /* arg 2: type / command and "*" */
-        if (completion->base_command_arg == 2)
+    }
+    
+    /* look for IRC command */
+    for (i = 0; irc_commands[i].command_name; i++)
+    {
+        if ((irc_commands[i].cmd_function_args || irc_commands[i].cmd_function_1arg)
+            && (ascii_strcasecmp (irc_commands[i].command_name,
+                                  completion->base_command) == 0))
         {
+            *template = irc_commands[i].completion_template;
+            *max_arg = irc_commands[i].max_arg;
+            return;
+        }
+    }
+    
+    return;
+}
+
+/*
+ * completion_list_add_alias: add alias to completion list
+ */
+
+void
+completion_list_add_alias (t_completion *completion)
+{
+    t_weechat_alias *ptr_alias;
+    
+    for (ptr_alias = weechat_alias; ptr_alias; ptr_alias = ptr_alias->next_alias)
+    {
+        weelist_add (&completion->completion_list,
+                     &completion->last_completion,
+                     ptr_alias->alias_name);
+    }
+}
+
+/*
+ * completion_list_add_alias_cmd: add alias and comands to completion list
+ */
+
+void
+completion_list_add_alias_cmd (t_completion *completion)
+{
+    t_weelist *ptr_list;
+    
+    for (ptr_list = index_commands; ptr_list; ptr_list = ptr_list->next_weelist)
+    {
+        weelist_add (&completion->completion_list,
+                     &completion->last_completion,
+                     ptr_list->data);
+    }
+}
+
+/*
+ * completion_list_add_channel: add current channel to completion list
+ */
+
+void
+completion_list_add_channel (t_completion *completion)
+{
+    if (completion->channel)
+        weelist_add (&completion->completion_list,
+                     &completion->last_completion,
+                     ((t_irc_channel *)(completion->channel))->name);
+}
+
+/*
+ * completion_list_add_server_channels: add server channels to completion list
+ */
+
+void
+completion_list_add_server_channels (t_completion *completion)
+{
+    t_irc_channel *ptr_channel;
+    
+    if (completion->server)
+    {
+        for (ptr_channel = ((t_irc_server *)(completion->server))->channels;
+             ptr_channel; ptr_channel = ptr_channel->next_channel)
+        {
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         ptr_channel->name);
+        }
+    }
+}
+
+/*
+ * completion_list_add_filename: add filename to completion list
+ */
+
+void
+completion_list_add_filename (t_completion *completion)
+{
+    /* TODO: add filename completion */
+    completion_stop (completion);
+}
+
+/*
+ * completion_list_add_plugin_cmd: add plugin command handlers to completion list
+ */
+
+void
+completion_list_add_plugin_cmd (t_completion *completion)
+{
+#ifdef PLUGINS
+    t_weechat_plugin *ptr_plugin;
+    t_plugin_handler *ptr_handler;
+    
+    for (ptr_plugin = weechat_plugins; ptr_plugin;
+         ptr_plugin = ptr_plugin->next_plugin)
+    {
+        for (ptr_handler = ptr_plugin->handlers;
+             ptr_handler; ptr_handler = ptr_handler->next_handler)
+        {
+            if (ptr_handler->type == HANDLER_COMMAND)
+                weelist_add (&completion->completion_list,
+                             &completion->last_completion,
+                             ptr_handler->command);
+        }
+    }
+#else
+    /* make gcc happy */
+    (void) completion;
+#endif
+}
+
+/*
+ * completion_list_add_irc_cmd_sent: add IRC command (sent) to completion list
+ */
+
+void
+completion_list_add_irc_cmd_sent (t_completion *completion)
+{
+    int i;
+    
+    for (i = 0; irc_commands[i].command_name; i++)
+    {
+        if (irc_commands[i].cmd_function_args || irc_commands[i].cmd_function_1arg)
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         irc_commands[i].command_name);
+    }
+}
+
+/*
+ * completion_list_add_irc_cmd_recv: add IRC command (received) to completion list
+ */
+
+void
+completion_list_add_irc_cmd_recv (t_completion *completion)
+{
+    int i;
+    
+    for (i = 0; irc_commands[i].command_name; i++)
+    {
+        if (irc_commands[i].recv_function)
             weelist_add(&completion->completion_list,
                         &completion->last_completion,
-                        "*");
-            i = 0;
-            while (ignore_types[i])
+                        irc_commands[i].command_name);
+    }
+}
+
+/*
+ * completion_list_add_key_cmd: add key commands/functions to completion list
+ */
+
+void
+completion_list_add_key_cmd (t_completion *completion)
+{
+    int i;
+    
+    for (i = 0; gui_key_functions[i].function_name; i++)
+    {
+        weelist_add (&completion->completion_list,
+                     &completion->last_completion,
+                     gui_key_functions[i].function_name);
+    }
+}
+
+/*
+ * completion_list_add_channel_nicks: add channel nicks to completion list
+ */
+
+void
+completion_list_add_channel_nicks (t_completion *completion)
+{
+    t_irc_nick *ptr_nick;
+    
+    if (completion->channel)
+    {
+        if (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_CHANNEL)
+        {
+            for (ptr_nick = ((t_irc_channel *)(completion->channel))->nicks;
+                 ptr_nick; ptr_nick = ptr_nick->next_nick)
             {
                 weelist_add (&completion->completion_list,
                              &completion->last_completion,
-                             ignore_types[i]);
-                i++;
+                             ptr_nick->nick);
             }
-            i = 0;
-            while (irc_commands[i].command_name)
-            {
-                if (irc_commands[i].recv_function)
-                    weelist_add(&completion->completion_list,
-                                &completion->last_completion,
-                                irc_commands[i].command_name);
-                i++;
-            }
-            return;
         }
-        
-        /* arg 3: channel and "*" */
-        if (completion->base_command_arg == 3)
+        if (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_PRIVATE)
         {
-            weelist_add(&completion->completion_list,
-                        &completion->last_completion,
-                        "*");
-            if (((t_irc_channel *)channel)->type == CHANNEL_TYPE_CHANNEL)
-                weelist_add(&completion->completion_list,
-                            &completion->last_completion,
-                            ((t_irc_channel *)channel)->name);
-            return;
-        }
-        
-        /* arg 4: server */
-        if (completion->base_command_arg == 4)
-        {
-            weelist_add(&completion->completion_list,
-                        &completion->last_completion,
-                        "*");
-            if (SERVER(gui_current_window->buffer))
-                weelist_add(&completion->completion_list,
-                            &completion->last_completion,
-                            SERVER(gui_current_window->buffer)->name);
-            return;
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         ((t_irc_channel *)(completion->channel))->name);
         }
     }
-    if (ascii_strcasecmp (completion->base_command, "key") == 0)
+}
+
+/*
+ * completion_list_add_option: add config option to completion list
+ */
+
+void
+completion_list_add_option (t_completion *completion)
+{
+    int i, j;
+    t_irc_server *ptr_server;
+    char option_name[256];
+    
+    for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
     {
-        if (completion->base_command_arg == 1)
+        if ((i != CONFIG_SECTION_KEYS) && (i != CONFIG_SECTION_ALIAS)
+            && (i != CONFIG_SECTION_IGNORE) && (i != CONFIG_SECTION_SERVER))
         {
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         "unbind");
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         "functions");
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         "reset");
-            return;
-        }
-        if (completion->base_command_arg == 2)
-        {
-            i = 0;
-            while (gui_key_functions[i].function_name)
+            for (j = 0; weechat_options[i][j].option_name; j++)
             {
                 weelist_add (&completion->completion_list,
                              &completion->last_completion,
-                             gui_key_functions[i].function_name);
-                i++;
+                             weechat_options[i][j].option_name);
             }
-            return;
         }
     }
-    if ((ascii_strcasecmp (completion->base_command, "plugin") == 0)
-        && (completion->base_command_arg == 1))
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
     {
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     "load");
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     "autoload");
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     "reload");
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     "unload");
-        return;
-    }
-    if (ascii_strcasecmp (completion->base_command, "set") == 0)
-    {
-        if (completion->base_command_arg == 1)
+        for (i = 0; weechat_options[CONFIG_SECTION_SERVER][i].option_name; i++)
         {
-            for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
+            snprintf (option_name, sizeof (option_name), "%s.%s",
+                      ptr_server->name, 
+                      weechat_options[CONFIG_SECTION_SERVER][i].option_name);
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         option_name);
+        }
+    }
+}
+
+/*
+ * completion_list_add_part: add part message to completion list
+ */
+
+void
+completion_list_add_part (t_completion *completion)
+{
+    if (cfg_irc_default_msg_part && cfg_irc_default_msg_part[0])
+        weelist_add (&completion->completion_list,
+                     &completion->last_completion,
+                     cfg_irc_default_msg_part);
+}
+
+/*
+ * completion_list_add_quit: add quit message to completion list
+ */
+
+void
+completion_list_add_quit (t_completion *completion)
+{
+    if (cfg_irc_default_msg_quit && cfg_irc_default_msg_quit[0])
+        weelist_add (&completion->completion_list,
+                     &completion->last_completion,
+                     cfg_irc_default_msg_quit);
+}
+
+/*
+ * completion_list_add_server: add current server to completion list
+ */
+
+void
+completion_list_add_server (t_completion *completion)
+{
+    if (completion->server)
+        weelist_add (&completion->completion_list,
+                     &completion->last_completion,
+                     ((t_irc_server *)(completion->server))->name);
+}
+
+/*
+ * completion_list_add_servers: add all servers to completion list
+ */
+
+void
+completion_list_add_servers (t_completion *completion)
+{
+    t_irc_server *ptr_server;
+    
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        weelist_add (&completion->completion_list,
+                     &completion->last_completion,
+                     ptr_server->name);
+    }
+}
+
+/*
+ * completion_list_add_topic: add topic to completion list
+ */
+
+void
+completion_list_add_topic (t_completion *completion)
+{
+    char *string, *string2;
+    
+    if (!completion->server || !completion->channel
+        || !((t_irc_channel *)(completion->channel))->topic
+        || !((t_irc_channel *)(completion->channel))->topic[0])
+        completion_stop (completion);
+    else
+    {
+        if (cfg_irc_colors_send)
+            string = (char *)gui_color_decode_for_user_entry ((unsigned char *)((t_irc_channel *)(completion->channel))->topic);
+        else
+            string = (char *)gui_color_decode ((unsigned char *)((t_irc_channel *)(completion->channel))->topic, 0);
+        string2 = channel_iconv_decode ((t_irc_server *)(completion->server),
+                                        (t_irc_channel *)(completion->channel),
+                                        (string) ? string : ((t_irc_channel *)(completion->channel))->topic);
+        weelist_add (&completion->completion_list,
+                     &completion->last_completion,
+                     (string2) ? string2 : ((string) ? string : ((t_irc_channel *)(completion->channel))->topic));
+        if (string)
+            free (string);
+        if (string2)
+            free (string2);
+    }
+}
+
+/*
+ * completion_list_add_option_value: add option value to completion list
+ */
+
+void
+completion_list_add_option_value (t_completion *completion)
+{
+    char *pos;
+    t_config_option *option;
+    void *option_value;
+    char option_string[2048];
+    
+    if (completion->args)
+    {
+        pos = strchr (completion->args, ' ');
+        if (pos)
+            pos[0] = '\0';
+        option = NULL;
+        option_value = NULL;
+        config_option_search_option_value (completion->args, &option, &option_value);
+        if (option && option_value)
+        {
+            switch (option->option_type)
             {
-                if ((i != CONFIG_SECTION_KEYS) && (i != CONFIG_SECTION_ALIAS)
-                    && (i != CONFIG_SECTION_IGNORE) && (i != CONFIG_SECTION_SERVER))
-                {
-                    for (j = 0; weechat_options[i][j].option_name; j++)
-                    {
+                case OPTION_TYPE_BOOLEAN:
+                    if (option_value && (*((int *)(option_value))))
                         weelist_add (&completion->completion_list,
                                      &completion->last_completion,
-                                     weechat_options[i][j].option_name);
-                    }
-                }
-            }
-            for (ptr_server = irc_servers; ptr_server;
-                 ptr_server = ptr_server->next_server)
-            {
-                for (i = 0; weechat_options[CONFIG_SECTION_SERVER][i].option_name; i++)
-                {
-                    snprintf (option_name, sizeof (option_name), "%s.%s",
-                              ptr_server->name, 
-                              weechat_options[CONFIG_SECTION_SERVER][i].option_name);
+                                     "on");
+                    else
+                        weelist_add (&completion->completion_list,
+                                     &completion->last_completion,
+                                     "off");
+                    break;
+                case OPTION_TYPE_INT:
+                    snprintf (option_string, sizeof (option_string) - 1,
+                              "%d", (option_value) ? *((int *)(option_value)) : option->default_int);
                     weelist_add (&completion->completion_list,
                                  &completion->last_completion,
-                                 option_name);
-                }
+                                 option_string);
+                    break;
+                case OPTION_TYPE_INT_WITH_STRING:
+                    weelist_add (&completion->completion_list,
+                                 &completion->last_completion,
+                                 (option_value) ?
+                                 option->array_values[*((int *)(option_value))] :
+                                 option->array_values[option->default_int]);
+                    break;
+                case OPTION_TYPE_COLOR:
+                    weelist_add (&completion->completion_list,
+                                 &completion->last_completion,
+                                 (option_value) ?
+                                 gui_get_color_name (*((int *)(option_value))) :
+                                 option->default_string);
+                    break;
+                case OPTION_TYPE_STRING:
+                    snprintf (option_string, sizeof (option_string) - 1,
+                              "\"%s\"",
+                              (option_value) ?
+                              *((char **)(option_value)) :
+                              option->default_string);
+                    weelist_add (&completion->completion_list,
+                                 &completion->last_completion,
+                                 option_string);
+                    break;
             }
         }
-        else if (completion->base_command_arg == 3)
+        if (pos)
+            pos[0] = ' ';
+    }
+}
+
+/*
+ * completion_list_add_weechat_cmd: add WeeChat commands to completion list
+ */
+
+void
+completion_list_add_weechat_cmd (t_completion *completion)
+{
+    int i;
+    
+    for (i = 0; weechat_commands[i].command_name; i++)
+    {
+        weelist_add (&completion->completion_list,
+                     &completion->last_completion,
+                     weechat_commands[i].command_name);
+    }
+}
+
+/*
+ * completion_list_add_away: add away message to completion list
+ */
+
+void
+completion_list_add_away (t_completion *completion)
+{
+    if (cfg_irc_default_msg_away && cfg_irc_default_msg_away[0])
+        weelist_add (&completion->completion_list,
+                     &completion->last_completion,
+                     cfg_irc_default_msg_away);
+}
+
+/*
+ * completion_build_list_template: build data list according to a template
+ */
+
+void
+completion_build_list_template (t_completion *completion, char *template)
+{
+    char *word, *pos;
+    int word_offset;
+    
+    word = strdup (template);
+    word_offset = 0;
+    pos = template;
+    while (pos)
+    {
+        switch (pos[0])
         {
-            if (completion->args)
-            {
-                pos = strchr (completion->args, ' ');
-                if (pos)
-                    pos[0] = '\0';
-                option = NULL;
-                option_value = NULL;
-                config_option_search_option_value (completion->args, &option, &option_value);
-                if (option && option_value)
+            case '\0':
+            case ' ':
+            case '|':
+                if (word_offset > 0)
                 {
-                    switch (option->option_type)
+                    word[word_offset] = '\0';
+                    weelist_add (&completion->completion_list,
+                                 &completion->last_completion,
+                                 word);
+                }
+                word_offset = 0;
+                break;
+            case '%':
+                pos++;
+                if (pos && pos[0])
+                {
+                    switch (pos[0])
                     {
-                        case OPTION_TYPE_BOOLEAN:
-                            if (option_value && (*((int *)(option_value))))
-                                weelist_add (&completion->completion_list,
-                                             &completion->last_completion,
-                                             "on");
-                            else
-                                weelist_add (&completion->completion_list,
-                                             &completion->last_completion,
-                                             "off");
+                        case '-': /* stop completion */
+                            completion_stop (completion);
+                            free (word);
+                            return;
                             break;
-                        case OPTION_TYPE_INT:
-                            snprintf (option_string, sizeof (option_string) - 1,
-                                      "%d", (option_value) ? *((int *)(option_value)) : option->default_int);
-                            weelist_add (&completion->completion_list,
-                                         &completion->last_completion,
-                                         option_string);
+                        case 'a': /* alias */
+                            completion_list_add_alias (completion);
                             break;
-                        case OPTION_TYPE_INT_WITH_STRING:
-                            weelist_add (&completion->completion_list,
-                                         &completion->last_completion,
-                                         (option_value) ?
-                                             option->array_values[*((int *)(option_value))] :
-                                             option->array_values[option->default_int]);
+                        case 'A': /* alias or any command */
+                            completion_list_add_alias_cmd (completion);
                             break;
-                        case OPTION_TYPE_COLOR:
-                            weelist_add (&completion->completion_list,
-                                         &completion->last_completion,
-                                         (option_value) ?
-                                             gui_get_color_name (*((int *)(option_value))) :
-                                             option->default_string);
+                        case 'c': /* current channel */
+                            completion_list_add_channel (completion);
                             break;
-                        case OPTION_TYPE_STRING:
-                            snprintf (option_string, sizeof (option_string) - 1,
-                                      "\"%s\"",
-                                      (option_value) ?
-                                      *((char **)(option_value)) :
-                                      option->default_string);
-                            weelist_add (&completion->completion_list,
-                                         &completion->last_completion,
-                                         option_string);
+                        case 'C': /* all channels */
+                            completion_list_add_server_channels (completion);
+                            break;
+                        case 'f': /* filename */
+                            completion_list_add_filename (completion);
+                            break;
+                        case 'h': /* plugin command handlers */
+                            completion_list_add_plugin_cmd (completion);
+                            break;
+                        case 'i': /* IRC command (sent) */
+                            completion_list_add_irc_cmd_sent (completion);
+                            break;
+                        case 'I': /* IRC command (received) */
+                            completion_list_add_irc_cmd_recv (completion);
+                            break;
+                        case 'k': /* key cmd/funtcions*/
+                            completion_list_add_key_cmd (completion);
+                            break;
+                        case 'n': /* channel nicks */
+                            completion_list_add_channel_nicks (completion);
+                            break;
+                        case 'o': /* config option */
+                            completion_list_add_option (completion);
+                            break;
+                        case 'p': /* part message */
+                            completion_list_add_part (completion);
+                            break;
+                        case 'q': /* quit message */
+                            completion_list_add_quit (completion);
+                            break;
+                        case 's': /* current server */
+                            completion_list_add_server (completion);
+                            break;
+                        case 'S': /* all servers */
+                            completion_list_add_servers (completion);
+                            break;
+                        case 't': /* topic */
+                            completion_list_add_topic (completion);
+                            break;
+                        case 'v': /* value of config option */
+                            completion_list_add_option_value (completion);
+                            break;
+                        case 'w': /* WeeChat commands */
+                            completion_list_add_weechat_cmd (completion);
+                            break;
+                        case 'y': /* away message */
+                            completion_list_add_away (completion);
                             break;
                     }
                 }
-                if (pos)
-                    pos[0] = ' ';
-            }
+                break;
+            default:
+                word[word_offset++] = pos[0];
         }
+        /* end of argument in template? */
+        if (!pos[0] || (pos[0] == ' '))
+            pos = NULL;
         else
-            completion_stop (completion);
-        return;
+            pos++;
     }
-    if ((ascii_strcasecmp (completion->base_command, "unalias") == 0)
-        && (completion->base_command_arg == 1))
+    free (word);
+}
+
+/*
+ * completion_build_list: build data list according to command and argument #
+ */
+
+void
+completion_build_list (t_completion *completion)
+{
+    char *template, *pos_space;
+    int max_arg, i;
+    
+    completion_get_command_infos (completion, &template, &max_arg);
+    if (!template || (completion->base_command_arg > max_arg))
     {
-        for (ptr_alias = weechat_alias; ptr_alias; ptr_alias = ptr_alias->next_alias)
-        {
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         ptr_alias->alias_name);
-        }
-        return;
-    }
-    if (ascii_strcasecmp (completion->base_command, "window") == 0)
-    {
-        if (completion->base_command_arg == 1)
-        {
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         "list");
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         "splith");
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         "splitv");
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         "resize");
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         "merge");
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         "up");
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         "down");
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         "left");
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         "right");
-            return;
-        }
-        
-        if (completion->base_command_arg == 2)
-        {
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         "down");
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         "up");
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         "left");
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         "right");
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         "all");
-            return;
-        }
-        
         completion_stop (completion);
         return;
     }
-    
-    /* IRC commands */
-    
-    /* no completion for some commands */
-    if ((ascii_strcasecmp (completion->base_command, "admin") == 0)
-        || (ascii_strcasecmp (completion->base_command, "die") == 0)
-        || (ascii_strcasecmp (completion->base_command, "info") == 0)
-        || (ascii_strcasecmp (completion->base_command, "join") == 0)
-        || (ascii_strcasecmp (completion->base_command, "links") == 0)
-        || (ascii_strcasecmp (completion->base_command, "list") == 0)
-        || (ascii_strcasecmp (completion->base_command, "lusers") == 0)
-        || (ascii_strcasecmp (completion->base_command, "motd") == 0)
-        || (ascii_strcasecmp (completion->base_command, "oper") == 0)
-        || (ascii_strcasecmp (completion->base_command, "rehash") == 0)
-        || (ascii_strcasecmp (completion->base_command, "restart") == 0)
-        || (ascii_strcasecmp (completion->base_command, "service") == 0)
-        || (ascii_strcasecmp (completion->base_command, "servlist") == 0)
-        || (ascii_strcasecmp (completion->base_command, "squery") == 0)
-        || (ascii_strcasecmp (completion->base_command, "squit") == 0)
-        || (ascii_strcasecmp (completion->base_command, "stats") == 0)
-        || (ascii_strcasecmp (completion->base_command, "summon") == 0)
-        || (ascii_strcasecmp (completion->base_command, "time") == 0)
-        || (ascii_strcasecmp (completion->base_command, "trace") == 0)
-        || (ascii_strcasecmp (completion->base_command, "users") == 0)
-        || (ascii_strcasecmp (completion->base_command, "wallops") == 0)
-        || (ascii_strcasecmp (completion->base_command, "who") == 0))
+    i = 1;
+    while (template && template[0])
     {
-        completion_stop (completion);
-        return;
-    }
-    if ((ascii_strcasecmp (completion->base_command, "away") == 0)
-        && (completion->base_command_arg == 1))
-    {
-        if (cfg_irc_default_msg_away && cfg_irc_default_msg_away[0])
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         cfg_irc_default_msg_away);
-        return;
-    }
-    if ((ascii_strcasecmp (completion->base_command, "ctcp") == 0)
-        && (completion->base_command_arg == 2))
-    {
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     "action");
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     "ping");
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     "version");
-        return;
-    }
-    if ((ascii_strcasecmp (completion->base_command, "dcc") == 0)
-        && (completion->base_command_arg == 1))
-    {
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     "chat");
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     "send");
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     "close");
-        return;
-    }
-    if (ascii_strcasecmp (completion->base_command, "invite") == 0)
-    {
-        /* arg1: nickname */
-        if (completion->base_command_arg == 1)
-            return;
-        
-        /* arg > 2: not allowed */
-        if (completion->base_command_arg > 2)
+        pos_space = strchr (template, ' ');
+        if (i == completion->base_command_arg)
         {
-            completion_stop (completion);
+            completion_build_list_template (completion, template);
             return;
         }
-        
-        /* arg2: channel */
-        if (SERVER(gui_current_window->buffer))
+        if (pos_space)
         {
-            for (ptr_channel = SERVER(gui_current_window->buffer)->channels;
-                 ptr_channel; ptr_channel = ptr_channel->next_channel)
-            {
-                weelist_add (&completion->completion_list,
-                             &completion->last_completion,
-                             ptr_channel->name);
-            }
-        }
-        return;
-    }
-    if (ascii_strcasecmp (completion->base_command, "kick") == 0)
-    {
-        if (completion->base_command_arg != 1)
-            completion_stop (completion);
-        return;
-    }
-    if (ascii_strcasecmp (completion->base_command, "kill") == 0)
-    {
-        if (completion->base_command_arg != 1)
-            completion_stop (completion);
-        return;
-    }
-    if (ascii_strcasecmp (completion->base_command, "me") == 0)
-    {
-        completion->context = COMPLETION_NICK;
-        return;
-    }
-    if (ascii_strcasecmp (completion->base_command, "notice") == 0)
-    {
-        if (completion->base_command_arg != 1)
-            completion_stop (completion);
-        return;
-    }
-    if ((ascii_strcasecmp (completion->base_command, "part") == 0)
-        && (completion->base_command_arg == 1))
-    {
-        if (cfg_irc_default_msg_part && cfg_irc_default_msg_part[0])
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         cfg_irc_default_msg_part);
-        return;
-    }
-    if (ascii_strcasecmp (completion->base_command, "query") == 0)
-    {
-        if (completion->base_command_arg != 1)
-            completion_stop (completion);
-        return;
-    }
-    if ((ascii_strcasecmp (completion->base_command, "quit") == 0)
-        && (completion->base_command_arg == 1))
-    {
-        if (cfg_irc_default_msg_quit && cfg_irc_default_msg_quit[0])
-            weelist_add (&completion->completion_list,
-                         &completion->last_completion,
-                         cfg_irc_default_msg_quit);
-        return;
-    }
-    if (ascii_strcasecmp (completion->base_command, "topic") == 0)
-    {
-        if (completion->base_command_arg == 1)
-        {
-            if (!channel || !((t_irc_channel *)channel)->topic
-                || !((t_irc_channel *)channel)->topic[0])
-                completion_stop (completion);
-            else
-            {
-                if (cfg_irc_colors_send)
-                    string = (char *)gui_color_decode_for_user_entry ((unsigned char *)((t_irc_channel *)channel)->topic);
-                else
-                    string = (char *)gui_color_decode ((unsigned char *)((t_irc_channel *)channel)->topic, 0);
-                string2 = channel_iconv_decode ((t_irc_server *)server,
-                                                (t_irc_channel *)channel,
-                                                (string) ? string : ((t_irc_channel *)channel)->topic);
-                weelist_add (&completion->completion_list,
-                             &completion->last_completion,
-                             (string2) ? string2 : ((t_irc_channel *)channel)->topic);
-                if (string)
-                    free (string);
-                if (string2)
-                    free (string2);
-            }
+            template = pos_space;
+            while (template[0] == ' ')
+                template++;
         }
         else
-            completion_stop (completion);
-        return;
+            template = NULL;
+        i++;
     }
 }
 
@@ -783,8 +738,7 @@ completion_build_list (t_completion *completion, void *server, void *channel)
  */
 
 void
-completion_find_context (t_completion *completion, void *server, void *channel,
-                         char *buffer, int size, int pos)
+completion_find_context (t_completion *completion, char *buffer, int size, int pos)
 {
     int i, command, command_arg, pos_start, pos_end;
     
@@ -821,7 +775,7 @@ completion_find_context (t_completion *completion, void *server, void *channel,
     }
     else
     {
-        if (channel)
+        if (completion->channel)
             completion->context = COMPLETION_NICK;
         else
             completion->context = COMPLETION_NULL;
@@ -894,7 +848,7 @@ completion_find_context (t_completion *completion, void *server, void *channel,
             for (i = pos_start; i <= pos_end; i++)
                 completion->base_command[i - pos_start] = buffer[i];
             completion->base_command[pos_end - pos_start + 1] = '\0';
-            completion_build_list (completion, server, channel);
+            completion_build_list (completion);
         }
     }
     
@@ -907,18 +861,18 @@ completion_find_context (t_completion *completion, void *server, void *channel,
         return;
     }
     
-    if (!completion->completion_list && channel &&
-        (((t_irc_channel *)channel)->type == CHANNEL_TYPE_PRIVATE)
+    if (!completion->completion_list && completion->channel &&
+        (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_PRIVATE)
         && (completion->context == COMPLETION_NICK))
     {
         /* nick completion in private (only other nick and self) */
         completion->context = COMPLETION_NICK;
         weelist_add (&completion->completion_list,
                      &completion->last_completion,
-                     ((t_irc_channel *)channel)->name);
+                     ((t_irc_channel *)(completion->channel))->name);
         weelist_add (&completion->completion_list,
                      &completion->last_completion,
-                     SERVER(gui_current_window->buffer)->nick);
+                     ((t_irc_server *)(completion->server))->nick);
     }
 }
 
@@ -1043,8 +997,7 @@ completion_nickncmp (char *base_word, char *nick, int max)
  */
 
 void
-completion_command_arg (t_completion *completion, t_irc_channel *channel,
-                        int nick_completion)
+completion_command_arg (t_completion *completion, int nick_completion)
 {
     int length, word_found_seen, other_completion;
     t_weelist *ptr_weelist, *ptr_weelist2;
@@ -1086,7 +1039,7 @@ completion_command_arg (t_completion *completion, t_irc_channel *channel,
     if (completion->word_found)
     {
         completion->word_found = NULL;
-        completion_command_arg (completion, channel, nick_completion);
+        completion_command_arg (completion, nick_completion);
     }
 }
 
@@ -1095,24 +1048,25 @@ completion_command_arg (t_completion *completion, t_irc_channel *channel,
  */
 
 void
-completion_nick (t_completion *completion, t_irc_channel *channel)
+completion_nick (t_completion *completion)
 {
     int length, word_found_seen, other_completion;
     t_irc_nick *ptr_nick, *ptr_nick2;
 
-    if (!channel)
+    if (!completion->channel)
         return;
     
-    if (((t_irc_channel *)channel)->type == CHANNEL_TYPE_PRIVATE)
+    if (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_PRIVATE)
     {
-        completion_command_arg (completion, channel, 1);
+        completion_command_arg (completion, 1);
         return;
     }
     
     length = strlen (completion->base_word);
     word_found_seen = 0;
     other_completion = 0;
-    for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
+    for (ptr_nick = ((t_irc_channel *)(completion->channel))->nicks;
+         ptr_nick; ptr_nick = ptr_nick->next_nick)
     {
         if (completion_nickncmp (completion->base_word, ptr_nick->nick, length) == 0)
         {
@@ -1143,7 +1097,7 @@ completion_nick (t_completion *completion, t_irc_channel *channel)
     if (completion->word_found)
     {
         completion->word_found = NULL;
-        completion_nick (completion, channel);
+        completion_nick (completion);
     }
 }
 
@@ -1152,8 +1106,7 @@ completion_nick (t_completion *completion, t_irc_channel *channel)
  */
 
 void
-completion_search (t_completion *completion, void *server, void *channel,
-                   char *buffer, int size, int pos)
+completion_search (t_completion *completion, char *buffer, int size, int pos)
 {
     char *old_word_found;
     
@@ -1161,7 +1114,7 @@ completion_search (t_completion *completion, void *server, void *channel,
     if (pos != completion->position)
     {
         completion->word_found = NULL;
-        completion_find_context (completion, server, channel, buffer, size, pos);
+        completion_find_context (completion, buffer, size, pos);
     }
     
     /* completion */
@@ -1172,8 +1125,8 @@ completion_search (t_completion *completion, void *server, void *channel,
             /* should never be executed */
             return;
         case COMPLETION_NICK:
-            if (channel)
-                completion_nick (completion, (t_irc_channel *)channel);
+            if (completion->channel)
+                completion_nick (completion);
             else
                 return;
             break;
@@ -1182,9 +1135,9 @@ completion_search (t_completion *completion, void *server, void *channel,
             break;
         case COMPLETION_COMMAND_ARG:
             if (completion->completion_list)
-                completion_command_arg (completion, (t_irc_channel *)channel, 0);
+                completion_command_arg (completion, 0);
             else
-                completion_nick (completion, (t_irc_channel *)channel);
+                completion_nick (completion);
             break;
     }
     if (completion->word_found)

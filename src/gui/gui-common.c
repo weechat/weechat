@@ -474,7 +474,7 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int dcc,
         new_buffer->input_buffer_1st_display = 0;
         
         /* init completion */
-        completion_init (&(new_buffer->completion));
+        completion_init (&(new_buffer->completion), server, channel);
         
         /* init history */
         new_buffer->history = NULL;

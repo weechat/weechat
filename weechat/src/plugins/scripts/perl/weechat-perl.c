@@ -426,6 +426,7 @@ static XS (XS_weechat_add_message_handler)
 static XS (XS_weechat_add_command_handler)
 {
     char *command, *function, *description, *arguments, *arguments_description;
+    char *completion_template;
     unsigned int integer;
     dXSARGS;
     
@@ -453,12 +454,14 @@ static XS (XS_weechat_add_command_handler)
     description = (items >= 3) ? SvPV (ST (2), integer) : NULL;
     arguments = (items >= 4) ? SvPV (ST (3), integer) : NULL;
     arguments_description = (items >= 5) ? SvPV (ST (4), integer) : NULL;
+    completion_template = (items >= 6) ? SvPV (ST (5), integer) : NULL;
     
     if (perl_plugin->cmd_handler_add (perl_plugin,
                                       command,
                                       description,
                                       arguments,
                                       arguments_description,
+                                      completion_template,
                                       weechat_perl_handler,
                                       function,
                                       (void *)perl_current_script))
@@ -1197,6 +1200,7 @@ weechat_plugin_init (t_weechat_plugin *plugin)
                              "[load filename] | [autoload] | [reload] | [unload]",
                              "filename: Perl script (file) to load\n\n"
                              "Without argument, /perl command lists all loaded Perl scripts.",
+                             "load|autoload|reload|unload",
                              weechat_perl_cmd, NULL, NULL);
     
     plugin->mkdir_home (plugin, "perl");
