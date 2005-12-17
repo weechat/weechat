@@ -108,7 +108,7 @@ gui_action_return (t_gui_window *window)
             window->buffer->completion.position = -1;
             window->buffer->ptr_history = NULL;
             gui_draw_buffer_input (window->buffer, 0);
-            user_command (window, SERVER(window->buffer), command);
+            user_command (window->buffer, SERVER(window->buffer), command);
             free (command);
         }
     }

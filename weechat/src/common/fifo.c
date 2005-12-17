@@ -148,19 +148,16 @@ fifo_exec (char *text)
                             WEECHAT_WARNING, text);
                 return;
             }
-            if (ptr_server)
+            if (ptr_server && pos)
             {
-                if (pos)
+                ptr_channel = channel_search (ptr_server, pos + 1);
+                if (!ptr_channel)
                 {
-                    ptr_channel = channel_search (ptr_server, pos + 1);
-                    if (!ptr_channel)
-                    {
-                        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-                        gui_printf (NULL,
-                                    _("%s channel \"%s\" not found (FIFO pipe data)\n"),
-                                    WEECHAT_WARNING, pos + 1);
-                        return;
-                    }
+                    irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                    gui_printf (NULL,
+                                _("%s channel \"%s\" not found (FIFO pipe data)\n"),
+                                WEECHAT_WARNING, pos + 1);
+                    return;
                 }
             }
         }
@@ -174,8 +171,7 @@ fifo_exec (char *text)
             ptr_buffer = gui_buffers;
     }
     
-    user_command (gui_buffer_find_window (ptr_buffer),
-                  ptr_server, pos_msg);
+    user_command (ptr_buffer, ptr_server, pos_msg);
 }
 
 /*

@@ -741,8 +741,9 @@ exec_weechat_command (t_gui_window *window, t_irc_server *server, char *string)
  */
 
 void
-user_command (t_gui_window *window, t_irc_server *server, char *command)
+user_command (t_gui_buffer *buffer, t_irc_server *server, char *command)
 {
+    t_gui_window *ptr_window;
     t_irc_nick *ptr_nick;
     int plugin_args_length;
     char *command_with_colors, *command_with_colors2, *plugin_args;
@@ -750,47 +751,56 @@ user_command (t_gui_window *window, t_irc_server *server, char *command)
     if ((!command) || (!command[0]) || (command[0] == '\r') || (command[0] == '\n'))
         return;
     
-    if ((command[0] == '/') && (command[1] != '/'))
+    if (!buffer)
     {
-        /* WeeChat internal command (or IRC command) */
-        (void) exec_weechat_command (window, server, command);
+        buffer = gui_current_window->buffer;
+        ptr_window = gui_current_window;
     }
     else
     {
-        if (!window)
-            window = gui_current_window;
-        
+        ptr_window = gui_buffer_find_window (buffer);
+        if (!ptr_window)
+            ptr_window = gui_current_window;
+    }
+    
+    if ((command[0] == '/') && (command[1] != '/'))
+    {
+        /* WeeChat internal command (or IRC command) */
+        (void) exec_weechat_command (ptr_window, server, command);
+    }
+    else
+    {
         if ((command[0] == '/') && (command[1] == '/'))
             command++;
         
-        if (server && (!BUFFER_IS_SERVER(window->buffer)))
+        if (server && (!BUFFER_IS_SERVER(buffer)))
         {
             command_with_colors = (cfg_irc_colors_send) ?
                 (char *)gui_color_encode ((unsigned char *)command) : NULL;
             
-            if (CHANNEL(window->buffer)->dcc_chat)
-                dcc_chat_sendf ((t_irc_dcc *)(CHANNEL(window->buffer)->dcc_chat),
+            if (CHANNEL(buffer)->dcc_chat)
+                dcc_chat_sendf ((t_irc_dcc *)(CHANNEL(buffer)->dcc_chat),
                                 "%s\r\n",
                                 (command_with_colors) ? command_with_colors : command);
             else
                 server_sendf (server, "PRIVMSG %s :%s\r\n",
-                              CHANNEL(window->buffer)->name,
+                              CHANNEL(buffer)->name,
                               (command_with_colors) ?
                               command_with_colors : command);
             
             command_with_colors2 = (command_with_colors) ?
                 (char *)gui_color_decode ((unsigned char *)command_with_colors, 1) : NULL;
             
-            if (CHANNEL(window->buffer)->type == CHANNEL_TYPE_PRIVATE)
+            if (CHANNEL(buffer)->type == CHANNEL_TYPE_PRIVATE)
             {
-                gui_printf_type (window->buffer,
+                gui_printf_type (buffer,
                                  MSG_TYPE_NICK,
                                  "%s<%s%s%s> ",
                                  GUI_COLOR(COLOR_WIN_CHAT_DARK),
                                  GUI_COLOR(COLOR_WIN_NICK_SELF),
                                  server->nick,
                                  GUI_COLOR(COLOR_WIN_CHAT_DARK));
-                gui_printf_type (window->buffer,
+                gui_printf_type (buffer,
                                  MSG_TYPE_MSG,
                                  "%s%s\n",
                                  GUI_COLOR(COLOR_WIN_CHAT),
@@ -799,12 +809,12 @@ user_command (t_gui_window *window, t_irc_server *server, char *command)
             }
             else
             {
-                ptr_nick = nick_search (CHANNEL(window->buffer), server->nick);
+                ptr_nick = nick_search (CHANNEL(buffer), server->nick);
                 if (ptr_nick)
                 {
-                    irc_display_nick (CHANNEL(window->buffer)->buffer, ptr_nick, NULL,
+                    irc_display_nick (CHANNEL(buffer)->buffer, ptr_nick, NULL,
                                       MSG_TYPE_NICK, 1, 1, 0);
-                    gui_printf (CHANNEL(window->buffer)->buffer,
+                    gui_printf (CHANNEL(buffer)->buffer,
                                 "%s\n",
                                 (command_with_colors2) ?
                                 command_with_colors2 : command);
@@ -3176,7 +3186,7 @@ weechat_cmd_uptime (t_gui_window *window, int argc, char **argv)
                   sec,
                   ctime (&weechat_start_time));
         string[strlen (string) - 1] = '\0';
-        user_command (window, SERVER(window->buffer), string);
+        user_command (window->buffer, SERVER(window->buffer), string);
     }
     else
     {

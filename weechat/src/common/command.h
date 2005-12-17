@@ -67,7 +67,7 @@ extern void alias_free_all ();
 extern char **explode_string (char *, char *, int, int *);
 extern void free_exploded_string (char **);
 extern int exec_weechat_command (t_gui_window *, t_irc_server *, char *);
-extern void user_command (t_gui_window *, t_irc_server *, char *);
+extern void user_command (t_gui_buffer *, t_irc_server *, char *);
 extern int weechat_cmd_alias (t_gui_window *, char *);
 extern int weechat_cmd_buffer (t_gui_window *, int, char **);
 extern int weechat_cmd_charset (t_gui_window *, int, char **);

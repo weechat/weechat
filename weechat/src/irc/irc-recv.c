@@ -2537,6 +2537,8 @@ int
 irc_cmd_recv_301 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_nick, *pos_message;
+    t_irc_channel *ptr_channel;
+    t_gui_buffer *ptr_buffer;
     
     /* make gcc happy */
     (void) server;
@@ -2560,8 +2562,11 @@ irc_cmd_recv_301 (t_irc_server *server, char *host, char *nick, char *arguments)
             
             if (!command_ignored)
             {
-                irc_display_prefix (server, gui_current_window->buffer, PREFIX_INFO);
-                gui_printf (gui_current_window->buffer,
+                /* look for private buffer to display message */
+                ptr_channel = channel_search (server, pos_nick);
+                ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
+                irc_display_prefix (server, ptr_buffer, PREFIX_INFO);
+                gui_printf (ptr_buffer,
                             _("%s%s%s is away: %s\n"),
                             GUI_COLOR(COLOR_WIN_CHAT_NICK),
                             pos_nick,
