@@ -22,6 +22,8 @@
 #ifndef __WEECHAT_WEECHAT_PLUGIN_H
 #define __WEECHAT_WEECHAT_PLUGIN_H 1
 
+#include <sys/types.h>
+
 /* return codes for init function and handlers */
 #define PLUGIN_RC_KO                 -1 /* function/handler failed             */
 #define PLUGIN_RC_OK                 0  /* function/handler ok                 */
