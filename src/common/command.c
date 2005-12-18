@@ -746,7 +746,8 @@ user_command (t_gui_buffer *buffer, t_irc_server *server, char *command)
     t_gui_window *ptr_window;
     t_irc_nick *ptr_nick;
     int plugin_args_length;
-    char *command_with_colors, *command_with_colors2, *plugin_args;
+    char *command_with_colors, *command_encoded, *command_with_colors2;
+    char *plugin_args;
     
     if ((!command) || (!command[0]) || (command[0] == '\r') || (command[0] == '\n'))
         return;
@@ -778,15 +779,19 @@ user_command (t_gui_buffer *buffer, t_irc_server *server, char *command)
             command_with_colors = (cfg_irc_colors_send) ?
                 (char *)gui_color_encode ((unsigned char *)command) : NULL;
             
+            command_encoded = channel_iconv_encode (SERVER(buffer),
+                                                    CHANNEL(buffer),
+                                                    (command_with_colors) ? command_with_colors: command);
             if (CHANNEL(buffer)->dcc_chat)
                 dcc_chat_sendf ((t_irc_dcc *)(CHANNEL(buffer)->dcc_chat),
                                 "%s\r\n",
-                                (command_with_colors) ? command_with_colors : command);
+                                (command_encoded) ? command_encoded :
+                                ((command_with_colors) ? command_with_colors : command));
             else
                 server_sendf (server, "PRIVMSG %s :%s\r\n",
                               CHANNEL(buffer)->name,
-                              (command_with_colors) ?
-                              command_with_colors : command);
+                              (command_encoded) ? command_encoded :
+                                ((command_with_colors) ? command_with_colors : command));
             
             command_with_colors2 = (command_with_colors) ?
                 (char *)gui_color_decode ((unsigned char *)command_with_colors, 1) : NULL;
@@ -832,6 +837,8 @@ user_command (t_gui_buffer *buffer, t_irc_server *server, char *command)
                 free (command_with_colors);
             if (command_with_colors2)
                 free (command_with_colors2);
+            if (command_encoded)
+                free (command_encoded);
             
             /* sending a copy of the message as PRIVMSG to plugins because irc server doesn't */
             
