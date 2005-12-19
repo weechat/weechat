@@ -1543,6 +1543,10 @@ gui_buffer_move_to_number (t_gui_window *window, int number)
     t_gui_buffer *ptr_buffer;
     int i;
     
+    /* if only one buffer then return */
+    if (gui_buffers == last_gui_buffer)
+        return;
+    
     /* buffer number is already ok ? */
     if (number == window->buffer->number)
         return;
