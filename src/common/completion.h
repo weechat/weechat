@@ -38,6 +38,7 @@ struct t_completion
     int context;                /* context: null, nick, command, cmd arg      */
     char *base_command;         /* command with arg to complete (can be NULL) */
     int base_command_arg;       /* # arg to complete (if context is cmd arg)  */
+    int arg_is_nick;            /* argument is nick                           */
     char *base_word;            /* word to complete (when Tab was pressed)    */
     int base_word_pos;          /* beggining of base word                     */
     int position;               /* position where Tab was pressed             */

@@ -52,6 +52,7 @@ completion_init (t_completion *completion, void *server, void *channel)
     completion->context = COMPLETION_NULL;
     completion->base_command = NULL;
     completion->base_command_arg = 0;
+    completion->arg_is_nick = 0;
     completion->position = -1;
     completion->base_word = NULL;
     completion->args = NULL;
@@ -351,6 +352,7 @@ completion_list_add_channel_nicks (t_completion *completion)
                          &completion->last_completion,
                          ((t_irc_channel *)(completion->channel))->name);
         }
+        completion->arg_is_nick = 1;
     }
 }
 
@@ -1135,7 +1137,7 @@ completion_search (t_completion *completion, char *buffer, int size, int pos)
             break;
         case COMPLETION_COMMAND_ARG:
             if (completion->completion_list)
-                completion_command_arg (completion, 0);
+                completion_command_arg (completion, completion->arg_is_nick);
             else
                 completion_nick (completion);
             break;
