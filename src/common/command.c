@@ -44,18 +44,21 @@
 t_weechat_command weechat_commands[] =
 { { "alias", N_("create an alias for a command"),
     N_("[alias_name [command [arguments]]"),
-    N_("alias_name: name of alias\ncommand: command name (WeeChat "
-    "or IRC command, without first '/')\n" "arguments: arguments for command"),
+    N_("alias_name: name of alias\n"
+       "   command: command name (WeeChat or IRC command, without "
+       "first '/')\n"
+        "arguments: arguments for command"),
     "%- %A", 0, MAX_ARGS, NULL, weechat_cmd_alias },
   { "buffer", N_("manage buffers"),
     N_("[action | number | [[server] [channel]]]"),
-    N_("action: action to do:\n"
-       "  move: move buffer in the list (may be relative, for example -1)\n"
+    N_(" action: action to do:\n"
+       "   move: move buffer in the list (may be relative, for example -1)\n"
        "  close: close buffer (for channel: same as /part without part message)\n"
-       "  list: list opened buffers (no parameter implies this list)\n"
-       "  notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)\n"
-       "server,channel: jump to buffer by server and/or channel name\n"
-       "number: jump to buffer by number"),
+       "   list: list opened buffers (no parameter implies this list)\n"
+       " notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)\n"
+       "server\n"
+       "channel: jump to buffer by server and/or channel name\n"
+       " number: jump to buffer by number"),
     "move|close|list|notify", 0, MAX_ARGS, weechat_cmd_buffer, NULL },
   { "charset", N_("change charset for server or channel"),
     N_("[(decode_iso | decode_utf | encode) charset]"),
@@ -78,7 +81,7 @@ t_weechat_command weechat_commands[] =
     "%S", 0, 1, weechat_cmd_disconnect, NULL },
   { "debug", N_("print debug messages"),
     N_("dump | windows"),
-    N_("dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)\n"
+    N_("   dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)\n"
        "windows: display windows tree"),
     "dump|windows", 1, 1, weechat_cmd_debug, NULL },
   { "help", N_("display help about commands"),
@@ -103,10 +106,12 @@ t_weechat_command weechat_commands[] =
     0, 4, weechat_cmd_ignore, NULL },
   { "key", N_("bind/unbind keys"),
     N_("[key function/command] [unbind key] [functions] [reset -yes]"),
-    N_("key: bind this key to an internal function or a command (beginning by \"/\")\n"
-       "unbind: unbind a key\n"
+    N_("      key: bind this key to an internal function or a command "
+       "(beginning by \"/\")\n"
+       "   unbind: unbind a key\n"
        "functions: list internal functions for key bindings\n"
-       "reset: restore bindings to the default values and delete ALL personal binding (use carefully!)"),
+       "    reset: restore bindings to the default values and delete ALL "
+       "personal bindings (use carefully!)"),
     "unbind|functions|reset %k", 0, MAX_ARGS, NULL, weechat_cmd_key },
   { "plugin", N_("list/load/unload plugins"),
     N_("[load filename] | [autoload] | [reload] | [unload]"),
@@ -120,16 +125,16 @@ t_weechat_command weechat_commands[] =
        "[-command command] [-autojoin channel[,channel]] ] | "
        "[del servername]"),
     N_("servername: server name, for internal & display use\n"
-       "hostname: name or IP address of server\n"
-       "port: port for server (integer)\n"
-       "ipv6: use IPv6 protocol\n"
-       "ssl: use SSL protocol\n"
-       "password: password for server\n"
-       "nick1: first nick for server\n"
-       "nick2: alternate nick for server\n"
-       "nick3: second alternate nick for server\n"
-       "username: user name\n"
-       "realname: real name of user"),
+       "  hostname: name or IP address of server\n"
+       "      port: port for server (integer)\n"
+       "      ipv6: use IPv6 protocol\n"
+       "       ssl: use SSL protocol\n"
+       "  password: password for server\n"
+       "     nick1: first nick for server\n"
+       "     nick2: alternate nick for server\n"
+       "     nick3: second alternate nick for server\n"
+       "  username: user name\n"
+       "  realname: real name of user"),
     NULL, 0, MAX_ARGS, weechat_cmd_server, NULL },
   { "save", N_("save config to disk"),
     N_("[file]"), N_("file: filename for writing config"),
@@ -164,18 +169,18 @@ t_weechat_command weechat_commands[] =
   { "window", N_("manage windows"),
     N_("[list | -1 | +1 | b# | up | down | left | right | splith [pct] "
        "| splitv [pct] | resize pct | merge [all]]"),
-    N_("list: list opened windows (no parameter implies this list)\n"
-       "-1: jump to previous window\n"
-       "+1: jump to next window\n"
-       "b#: jump to next window displaying buffer number #\n"
-       "up: switch to window above current one\n"
-       "down: switch to window below current one\n"
-       "left: switch to window on the left\n"
-       "right: switch to window on the right\n"
+    N_("  list: list opened windows (no parameter implies this list)\n"
+       "    -1: jump to previous window\n"
+       "    +1: jump to next window\n"
+       "    b#: jump to next window displaying buffer number #\n"
+       "    up: switch to window above current one\n"
+       "  down: switch to window below current one\n"
+       "  left: switch to window on the left\n"
+       " right: switch to window on the right\n"
        "splith: split current window horizontally\n"
        "splitv: split current window vertically\n"
-       "resize: resize window size, new size is <pct>%% of parent window\n"
-       "merge: merge window with another (all = keep only one window)\n\n"
+       "resize: resize window size, new size is pct%% of parent window\n"
+       " merge: merge window with another (all = keep only one window)\n\n"
        "For splith and splitv, pct is a pourcentage which represents "
        "size of new window, computed with current window as size reference. "
        "For example 25 means create a new window with size = current_size / 4"),

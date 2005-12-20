@@ -333,57 +333,59 @@ weechat_display_config_options ()
                 switch (weechat_options[i][j].option_type)
                 {
                     case OPTION_TYPE_BOOLEAN:
-                        printf (_("  . type boolean (values: 'on' or 'off')\n"));
+                        printf (_("  . type: boolean\n"));
+                        printf (_("  . values: 'on' or 'off'\n"));
                         printf (_("  . default value: '%s'\n"),
-                            (weechat_options[i][j].default_int == BOOL_TRUE) ?
-                            "on" : "off");
+                                (weechat_options[i][j].default_int == BOOL_TRUE) ?
+                                "on" : "off");
                         break;
                     case OPTION_TYPE_INT:
-                        printf (_("  . type integer (values: between %d and %d)\n"),
-                            weechat_options[i][j].min,
-                            weechat_options[i][j].max);
+                        printf (_("  . type: integer\n"));
+                        printf (_("  . values: between %d and %d\n"),
+                                weechat_options[i][j].min,
+                                weechat_options[i][j].max);
                         printf (_("  . default value: %d\n"),
-                            weechat_options[i][j].default_int);
+                                weechat_options[i][j].default_int);
                         break;
                     case OPTION_TYPE_INT_WITH_STRING:
-                        printf (_("  . type string (values: "));
+                        printf (_("  . type: string\n"));
+                        printf (_("  . values: "));
                         k = 0;
                         while (weechat_options[i][j].array_values[k])
                         {
                             printf ("'%s'",
-                                weechat_options[i][j].array_values[k]);
+                                    weechat_options[i][j].array_values[k]);
                             if (weechat_options[i][j].array_values[k + 1])
                                 printf (", ");
                             k++;
                         }
-                        printf (")\n");
+                        printf ("\n");
                         printf (_("  . default value: '%s'\n"),
-                            (weechat_options[i][j].default_string) ?
-                            weechat_options[i][j].default_string : _("empty"));
+                                (weechat_options[i][j].default_string) ?
+                                weechat_options[i][j].default_string : _("empty"));
                         break;
                     case OPTION_TYPE_COLOR:
-                        printf (_("  . type color (Curses or Gtk color, look at WeeChat doc)\n"));
+                        printf (_("  . type: color\n"));
+                        printf (_("  . values: Curses or Gtk color\n"));
                         printf (_("  . default value: '%s'\n"),
-                            (weechat_options[i][j].default_string) ?
-                            weechat_options[i][j].default_string : _("empty"));
+                                (weechat_options[i][j].default_string) ?
+                                weechat_options[i][j].default_string : _("empty"));
                         break;
                     case OPTION_TYPE_STRING:
-                        printf (_("  . type string (any string)\n"));
+                        printf (_("  . type: string\n"));
+                        printf (_("  . values: any string\n"));
                         printf (_("  . default value: '%s'\n"),
-                            (weechat_options[i][j].default_string) ?
-                            weechat_options[i][j].default_string : _("empty"));
+                                (weechat_options[i][j].default_string) ?
+                                weechat_options[i][j].default_string : _("empty"));
                         break;
                 }
                 printf (_("  . description: %s\n"),
-                    _(weechat_options[i][j].long_description));
+                        _(weechat_options[i][j].long_description));
                 printf ("\n");
                 j++;
             }
         }
     }
-    printf (_("Moreover, you can define aliases in [alias] section, by adding lines like:\n"));
-    printf ("j=join\n");
-    printf (_("where 'j' is alias name, and 'join' associated command.\n\n"));
 }
 
 /*

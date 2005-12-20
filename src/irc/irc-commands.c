@@ -45,25 +45,25 @@ t_irc_command irc_commands[] =
     "", 1, MAX_ARGS, 1, NULL, irc_cmd_send_amsg, NULL },
   { "away", N_("toggle away status"),
     N_("[-all] [message]"),
-    N_("-all: toggle away status on all connected servers\n"
+    N_("   -all: toggle away status on all connected servers\n"
        "message: message for away (if no message is given, away status is removed)"),
     "%y", 0, MAX_ARGS, 1, NULL, irc_cmd_send_away, NULL },
   { "ban", N_("bans nicks or hosts"),
     N_("[channel] [nickname [nickname ...]]"),
-    N_("channel: channel for ban\n"
+    N_(" channel: channel for ban\n"
        "nickname: user or host to ban"),
     "", 0, MAX_ARGS, 1, NULL, irc_cmd_send_ban, NULL },
   { "ctcp", N_("send a CTCP message (Client-To-Client Protocol)"),
     N_("nickname type [arguments]"),
-    N_("nickname: user to send CTCP to\n"
-       "type: CTCP type (examples: \"version\", \"ping\", ..)\n"
+    N_(" nickname: user to send CTCP to\n"
+       "     type: CTCP type (examples: \"version\", \"ping\", ..)\n"
        "arguments: arguments for CTCP"),
     "%n action|ping|version", 2, MAX_ARGS, 1, NULL, irc_cmd_send_ctcp, NULL },
   { "dcc", N_("starts DCC (file or chat) or close chat"),
     N_("action [nickname [file]]"),
-    N_("action: 'send' (file) or 'chat' or 'close' (chat)\n"
+    N_(  "action: 'send' (file) or 'chat' or 'close' (chat)\n"
        "nickname: nickname to send file or chat\n"
-       "file: filename (on local host)"),
+       "    file: filename (on local host)"),
     "chat|send|close %n %f", 1, MAX_ARGS, 1, NULL, irc_cmd_send_dcc, NULL },
   { "dehalfop", N_("removes half channel operator status from nickname(s)"),
     N_("[nickname [nickname]]"), "",
@@ -88,7 +88,7 @@ t_irc_command irc_commands[] =
   { "invite", N_("invite a nick on a channel"),
     N_("nickname channel"),
     N_("nickname: nick to invite\n"
-       "channel: channel to invite"),
+       " channel: channel to invite"),
     "%n %c", 1, 2, 1, irc_cmd_send_invite, NULL, irc_cmd_recv_invite },
   { "ison", N_("check if a nickname is currently on IRC"),
     N_("nickname [nickname ...]"),
@@ -97,28 +97,28 @@ t_irc_command irc_commands[] =
   { "join", N_("join a channel"),
     N_("channel[,channel] [key[,key]]"),
     N_("channel: channel name to join\n"
-       "key: key to join the channel"),
+       "    key: key to join the channel"),
     NULL, 1, MAX_ARGS, 1, NULL, irc_cmd_send_join, irc_cmd_recv_join },
   { "kick", N_("forcibly remove a user from a channel"),
     N_("[channel] nickname [comment]"),
-    N_("channel: channel where user is\n"
+    N_(" channel: channel where user is\n"
        "nickname: nickname to kick\n"
-       "comment: comment for kick"),
+       " comment: comment for kick"),
     "%n %-", 1, MAX_ARGS, 1, NULL, irc_cmd_send_kick, irc_cmd_recv_kick },
   { "kickban", N_("kicks and bans a nick from a channel"),
     N_("[channel] nickname [comment]"),
-    N_("channel: channel where user is\n"
+    N_(" channel: channel where user is\n"
        "nickname: nickname to kick and ban\n"
-       "comment: comment for kick"),
+       " comment: comment for kick"),
     "%n %-", 1, MAX_ARGS, 1, NULL, irc_cmd_send_kickban, NULL },
   { "kill", N_("close client-server connection"),
     N_("nickname comment"),
     N_("nickname: nickname\n"
-       "comment: comment for kill"),
+       " comment: comment for kill"),
     "%n %-", 2, MAX_ARGS, 1, NULL, irc_cmd_send_kill, irc_cmd_recv_kill },
   { "links", N_("list all servernames which are known by the server answering the query"),
     N_("[[server] server_mask]"),
-    N_("server: this server should answer the query\n"
+    N_("     server: this server should answer the query\n"
        "server_mask: list of servers must match this mask"),
     NULL, 0, 2, 1, NULL, irc_cmd_send_links, NULL },
   { "list", N_("list channels and their topic"),
@@ -127,7 +127,7 @@ t_irc_command irc_commands[] =
     NULL, 0, MAX_ARGS, 1, NULL, irc_cmd_send_list, NULL },
   { "lusers", N_("get statistics about the size of the IRC network"),
     N_("[mask [target]]"),
-    N_("mask: servers matching the mask only\n"
+    N_("  mask: servers matching the mask only\n"
        "target: server for forwarding request"),
     NULL, 0, 2, 1, NULL, irc_cmd_send_lusers, NULL },
   { "me", N_("send a CTCP action to the current channel"),
@@ -173,12 +173,13 @@ t_irc_command irc_commands[] =
     NULL, 0, 1, 1, NULL, irc_cmd_send_names, NULL },
   { "nick", N_("change current nickname"),
     N_("[-all] nickname"),
-    N_("-all: set new nickname for all connected servers\n"
+    N_("    -all: set new nickname for all connected servers\n"
        "nickname: new nickname"),
     NULL, 1, 2, 0, irc_cmd_send_nick, NULL, irc_cmd_recv_nick },
   { "notice", N_("send notice message to user"),
     N_("nickname text"),
-    N_("nickname: user to send notice to\ntext: text to send"),
+    N_("nickname: user to send notice to\n"
+       "    text: text to send"),
     "%n %-", 2, MAX_ARGS, 1, NULL, irc_cmd_send_notice, irc_cmd_recv_notice },
   { "op", N_("gives channel operator status to nickname(s)"),
     N_("nickname [nickname]"), "",
@@ -189,7 +190,7 @@ t_irc_command irc_commands[] =
     NULL, 2, 2, 1, NULL, irc_cmd_send_oper, NULL },
   { "part", N_("leave a channel"),
     N_("[channel[,channel]] [part_message]"),
-    N_("channel: channel name to leave\n"
+    N_("     channel: channel name to leave\n"
        "part_message: part message (displayed to other users)"),
     "%p", 0, MAX_ARGS, 1, NULL, irc_cmd_send_part, irc_cmd_recv_part },
   { "ping", N_("ping server"),
@@ -198,7 +199,7 @@ t_irc_command irc_commands[] =
     NULL, 1, 2, 1, NULL, irc_cmd_send_ping, irc_cmd_recv_ping },
   { "pong", N_("answer to a ping message"),
     N_("daemon [daemon2]"),
-    N_("daemon: daemon who has responded to Ping message\n"
+    N_(" daemon: daemon who has responded to Ping message\n"
        "daemon2: forward message to this daemon"),
     NULL, 1, 2, 1, NULL, irc_cmd_send_pong, irc_cmd_recv_pong },
   { "privmsg", N_("message received"), "", "",
@@ -206,7 +207,7 @@ t_irc_command irc_commands[] =
   { "query", N_("send a private message to a nick"),
     N_("nickname [text]"),
     N_("nickname: nickname for private conversation\n"
-       "text: text to send"),
+       "    text: text to send"),
     "%n %-", 1, MAX_ARGS, 1, NULL, irc_cmd_send_query, NULL },
   { "quit", N_("close all connections & quit"),
     N_("[quit_message]"),
@@ -223,7 +224,7 @@ t_irc_command irc_commands[] =
   { "service", N_("register a new service"),
     N_("nickname reserved distribution type reserved info"),
     N_("distribution: visibility of service\n"
-       "type: reserved for future usage"),
+       "        type: reserved for future usage"),
     NULL, 6, 6, 1, NULL, irc_cmd_send_service, NULL },
   { "servlist", N_("list services currently connected to the network"),
     N_("[mask [type]]"),
@@ -236,17 +237,18 @@ t_irc_command irc_commands[] =
     NULL, 2, 2, 1, NULL, irc_cmd_send_squery, NULL },
   { "squit", N_("disconnect server links"),
     N_("server comment"),
-    N_("server: server name\ncomment: comment for quit"),
+    N_( "server: server name\n"
+       "comment: comment for quit"),
     NULL, 2, 2, 1, NULL, irc_cmd_send_squit, NULL },
   { "stats", N_("query statistics about server"),
     N_("[query [server]]"),
-    N_("query: c/h/i/k/l/m/o/y/u (see RFC1459)\n"
+    N_(" query: c/h/i/k/l/m/o/y/u (see RFC1459)\n"
        "server: server name"),
     NULL, 0, 2, 1, NULL, irc_cmd_send_stats, NULL },
   { "summon", N_("give users who are on a host running an IRC server a message "
     "asking them to please join IRC"),
     N_("user [target [channel]]"),
-    N_("user: username\ntarget: server name\n"
+    N_("   user: username\ntarget: server name\n"
        "channel: channel name"),
     NULL, 1, 3, 1, NULL, irc_cmd_send_summon, NULL },
   { "time", N_("query local time from server"),
@@ -264,9 +266,9 @@ t_irc_command irc_commands[] =
     NULL, 0, 1, 1, NULL, irc_cmd_send_trace, NULL },
   { "unban", N_("unbans nicks or hosts"),
     N_("[channel] nickname [nickname ...]"),
-    N_("channel: channel for unban\n"
+    N_(" channel: channel for unban\n"
        "nickname: user or host to unban"),
-    "%n", 1, MAX_ARGS, 1, NULL, irc_cmd_send_unban, NULL },
+    "", 1, MAX_ARGS, 1, NULL, irc_cmd_send_unban, NULL },
   { "userhost", N_("return a list of information about nicknames"),
     N_("nickname [nickname ...]"),
     N_("nickname: nickname"),
@@ -277,7 +279,7 @@ t_irc_command irc_commands[] =
     NULL, 0, 1, 1, NULL, irc_cmd_send_users, NULL },
   { "version", N_("gives the version info of nick or server (current or specified)"),
     N_("[server | nickname]"),
-    N_("server: server name\n"
+    N_("  server: server name\n"
        "nickname: nickname"),
     NULL, 0, 1, 1, NULL, irc_cmd_send_version, NULL },
   { "voice", N_("gives voice to nickname(s)"),
@@ -291,18 +293,18 @@ t_irc_command irc_commands[] =
   { "who", N_("generate a query which returns a list of information"),
     N_("[mask [\"o\"]]"),
     N_("mask: only information which match this mask\n"
-       "o: only operators are returned according to the mask supplied"),
+       "   o: only operators are returned according to the mask supplied"),
     "%C", 0, 2, 1, NULL, irc_cmd_send_who, NULL },
   { "whois", N_("query information about user(s)"),
     N_("[server] nickname[,nickname]"),
-    N_("server: server name\n"
+    N_("  server: server name\n"
        "nickname: nickname (may be a mask)"),
     "", 1, MAX_ARGS, 1, NULL, irc_cmd_send_whois, NULL },
   { "whowas", N_("ask for information about a nickname which no longer exists"),
     N_("nickname [,nickname [,nickname ...]] [count [target]]"),
     N_("nickname: nickname to search\n"
-       "count: number of replies to return (full search if negative number)\n"
-       "target: reply should match this mask"),
+       "   count: number of replies to return (full search if negative number)\n"
+       "  target: reply should match this mask"),
     "", 1, MAX_ARGS, 1, NULL, irc_cmd_send_whowas, NULL },
   { "001", N_("a server message"), "", "",
     NULL, 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
@@ -411,7 +413,7 @@ t_irc_command irc_commands[] =
   { "332", N_("topic of channel"),
     N_("channel :topic"),
     N_("channel: name of channel\n"
-       "topic: topic of the channel"),
+       "  topic: topic of the channel"),
     NULL, 2, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_332 },
   { "333", N_("infos about topic (nick & date changed)"), "", "",
     NULL, 0, 0, 1, NULL, NULL, irc_cmd_recv_333 },
@@ -432,7 +434,7 @@ t_irc_command irc_commands[] =
   { "353", N_("list of nicks on channel"),
     N_("channel :[[@|+]nick ...]"),
     N_("channel: name of channel\n"
-       "nick: nick on the channel"),
+       "   nick: nick on the channel"),
     NULL, 2, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_353 },
   { "364", N_("links"), "", "",
     NULL, 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
