@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.7-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-12-20 14:30+0100\n"
-"PO-Revision-Date: 2005-12-20 14:37+0100\n"
+"POT-Creation-Date: 2005-12-21 00:50+0100\n"
+"PO-Revision-Date: 2005-12-21 00:51+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -271,7 +271,7 @@ msgstr "akce [přezdívka [soubor]]"
 
 #: src/irc/irc-commands.c:64
 msgid ""
-"action: 'send' (file) or 'chat' or 'close' (chat)\n"
+"  action: 'send' (file) or 'chat' or 'close' (chat)\n"
 "nickname: nickname to send file or chat\n"
 "    file: filename (on local host)"
 msgstr ""
@@ -733,7 +733,7 @@ msgid ""
 "type: list only services of this type"
 msgstr ""
 "maska: vypsat pouze služby odpovídající této masce\n"
-"  typ: vypsat pouze služby tohoto typu"
+"typ: vypsat pouze služby tohoto typu"
 
 #: src/irc/irc-commands.c:234
 msgid "deliver a message to a service"
@@ -2271,7 +2271,7 @@ msgstr "Gb"
 
 #: src/gui/curses/gui-display.c:1594
 msgid "ETA"
-msgstr ""
+msgstr "ETA"
 
 #: src/gui/curses/gui-display.c:1941
 msgid "<servers>"
@@ -2464,15 +2464,15 @@ msgstr "přepnout aktivní server na buffer serverů"
 
 #: src/gui/gui-keyboard.c:111
 msgid "scroll to previous highlight in buffer"
-msgstr ""
+msgstr "přesunout na předchozí zvýraznění v bufferu"
 
 #: src/gui/gui-keyboard.c:113
 msgid "scroll to next highlight in buffer"
-msgstr ""
+msgstr "přesunout na další zvýraznění v bufferu"
 
 #: src/gui/gui-keyboard.c:115
 msgid "scroll to first unread line in buffer"
-msgstr ""
+msgstr "přesunout na první nepřečtenout řádku v bufferu"
 
 #: src/gui/gui-keyboard.c:117
 msgid "clear hotlist"
@@ -2528,12 +2528,10 @@ msgid "manage buffers"
 msgstr "řídit buffery"
 
 #: src/common/command.c:53
-#, fuzzy
 msgid "[action | number | [[server] [channel]]]"
-msgstr "[akce | číslo]"
+msgstr "[akce | číslo | [[server] [kanál]]]"
 
 #: src/common/command.c:54
-#, fuzzy
 msgid ""
 " action: action to do:\n"
 "   move: move buffer in the list (may be relative, for example -1)\n"
@@ -2545,23 +2543,24 @@ msgid ""
 "channel: jump to buffer by server and/or channel name\n"
 " number: jump to buffer by number"
 msgstr ""
-"    akce: akce pro vykonání:\n"
-"    move: přesune buffer v seznamu (může být relativní, například -1)\n"
-"   close: zavře buffer (pro kanál: stejné jako /part bez zprávy)\n"
-"    list: vypíše seznam otevřených bufferů (žádný parametr, implikuje tento "
+"  akce: akce pro vykonání:\n"
+"  move: přesune buffer v seznamu (může být relativní, například -1)\n"
+" close: zavře buffer (pro kanál: stejné jako /part bez zprávy)\n"
+"  list: vypíše seznam otevřených bufferů (žádný parametr, implikuje tento "
 "seznam)\n"
-"  notify: nastaví level upozornění pro buffer (0=nikdy, 1=zvýraznění, 2=1"
-"+msg, \n"
+"notify: nastaví level upozornění pro buffer (0=nikdy, 1=zvýraznění, 2=1+msg, "
 "3=2+join/part)\n"
-"   číslo: skočí na buffer, podle čísla"
+"server\n"
+" kanál: skočit na bufer podle jména serveru a/nebo kanálu\n"
+" číslo: skočí na buffer, podle čísla"
 
 #: src/common/command.c:63
 msgid "change charset for server or channel"
-msgstr ""
+msgstr "změní znakovou sadu pro server"
 
 #: src/common/command.c:64
 msgid "[(decode_iso | decode_utf | encode) charset]"
-msgstr ""
+msgstr "[(decode_iso | decode_utf | encode) charset]"
 
 #: src/common/command.c:65
 msgid ""
@@ -2570,6 +2569,10 @@ msgid ""
 "    encode: charset used for encoding messages\n"
 "   charset: charset to use (for example: ISO-8859-15, UTF-8,..)"
 msgstr ""
+"decode_iso: znaková sada pro dekodování ISO\n"
+"decode_utf: znaková sada pro dekodování UTF\n"
+"    encode: znaková sada pro kódování zpráv\n"
+"   charset: znaková sada pro použití (např.: ISO-8859-15, UTF-8,..)"
 
 #: src/common/command.c:70
 msgid "clear window(s)"
@@ -2612,14 +2615,14 @@ msgid "dump | windows"
 msgstr "dump | windows"
 
 #: src/common/command.c:84
-#, fuzzy
 msgid ""
 "   dump: save memory dump in WeeChat log file (same dump is written when "
 "WeeChat crashes)\n"
 "windows: display windows tree"
 msgstr ""
-"dump: uloží dump paměti ve WeeChat log souboru (stejný dump jako když "
-"Weechat havaruje)"
+"   dump: uloží dump paměti ve WeeChat log souboru (stejný dump jako když "
+"Weechat havaruje)\n"
+"windows: zobrazit strom oken"
 
 #: src/common/command.c:87
 msgid "display help about commands"
@@ -2635,17 +2638,19 @@ msgstr "příkaz: jméno WeeChat nebo IRC příkazu"
 
 #: src/common/command.c:91
 msgid "show buffer command history"
-msgstr ""
+msgstr "zobrazit historii příkazů bufferu"
 
 #: src/common/command.c:92
 msgid "[clear | value]"
-msgstr ""
+msgstr "[clear | value]"
 
 #: src/common/command.c:93
 msgid ""
 "clear: clear history\n"
 "value: number of history entries to show"
 msgstr ""
+"clear: vyčistit historii\n"
+"value: číslo z položek historie kterou ukazat"
 
 #: src/common/command.c:96
 msgid "ignore IRC messages and/or hosts"
@@ -2826,18 +2831,18 @@ msgstr ""
 "   typ: typ zprávy pro zrušení ignorování (action, ctcp, dcc, pv)\n"
 "příkaz: IRC příkaz\n"
 " kanál: jméno kanálu pro zrušení ignorování\n"
-"server: jméno serveru pro zrušení ignorování\n"
+" server: jméno serveru pro zrušení ignorování\n"
 "\n"
 "Pro každý argument znamená '*' všechno.\n"
 "Bez argunetů, vypíše příkaz /unignore seznam definovaných ignorací."
 
 #: src/common/command.c:163
 msgid "upgrade WeeChat without disconnecting from servers"
-msgstr ""
+msgstr "aktualizovat WeeChat bez odpojení od serveru"
 
 #: src/common/command.c:165
 msgid "show WeeChat uptime"
-msgstr ""
+msgstr "zobrazit jak dlouho WeeChat běží"
 
 #: src/common/command.c:166
 msgid "[-o]"
@@ -2845,20 +2850,19 @@ msgstr "[-o]"
 
 #: src/common/command.c:167
 msgid "-o: send uptime on current channel as an IRC message"
-msgstr ""
+msgstr "-o: poslat čas běhu na aktuální kanál jako IRC zprávu"
 
 #: src/common/command.c:169
 msgid "manage windows"
 msgstr "spravuje okna"
 
 #: src/common/command.c:170
-#, fuzzy
 msgid ""
 "[list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv "
 "[pct] | resize pct | merge [all]]"
 msgstr ""
-"[list | -1 | +1 | b# | splith [pct] | splitv [pct] | resize pct | merge "
-"[all]]"
+"[list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv "
+"[pct] | resize pct | merge [all]]"
 
 #: src/common/command.c:172
 #, c-format
@@ -2884,9 +2888,18 @@ msgstr ""
 "    -1: přepne na přechozí okno\n"
 "    +1: přepne na další okno\n"
 "    b#: přepne na okno, které zobrazuje buffer číslo #\n"
+"    up: přepne na okno nad aktuálním oknem\n"
+"  down: přepne na okno pod aktuálním oknem\n"
+"  left: přepne na okno nalevo\n"
+" right: přepne na okno napravo\n"
 "splith: rozdělí aktuální okno horizontálně\n"
 "splitv: rozdělí aktuální okno vertikálně\n"
-" merge: spojí okno s jiným"
+"resize: změní velikost okna, nová velikost je <pct>%% nadřazeného okna\n"
+" merge: spojí okno s jiným (all = nechej akorát jedno okno)\n"
+"\n"
+"Pro splith a splitv je pct procento reprezentující velikost nového okna, "
+"spočítána s aktuálním oknem jako velikost reference. Např. 25 znamená "
+"vytvořít nové okno s velikostí = aktuální_velikost / 4"
 
 #: src/common/command.c:330
 #, c-format
@@ -2988,7 +3001,7 @@ msgstr "%sServer: %s%s\n"
 #: src/common/command.c:994
 #, c-format
 msgid "%snot connected\n"
-msgstr ""
+msgstr "%snepřipojen\n"
 
 #: src/common/command.c:998
 #, c-format
@@ -3003,7 +3016,7 @@ msgstr "%sSoukromý s: %s%s %s(server: %s%s%s)\n"
 #: src/common/command.c:1016
 #, c-format
 msgid "%sunknown\n"
-msgstr ""
+msgstr "%sneznámý\n"
 
 #: src/common/command.c:1039
 msgid "Opened buffers:\n"
@@ -3062,23 +3075,23 @@ msgstr "(hotlist: zvýrazění + zprávy + připojení/odpojení (vše))\n"
 #: src/common/command.c:1323
 #, c-format
 msgid "Charsets for server %s%s%s: "
-msgstr ""
+msgstr "Znaková sada pro server %s%s%s: "
 
 #: src/common/command.c:1331
 #, c-format
 msgid "Charsets for channel %s%s%s: "
-msgstr ""
+msgstr "Znaková sada pro kanál %s%s%s: "
 
 #: src/common/command.c:1339
 #, c-format
 msgid "Charsets for private %s%s%s: "
-msgstr ""
+msgstr "Znaková sada pro soukromé %s%s%s: "
 
 #: src/common/command.c:1367 src/common/command.c:1397
 #: src/common/command.c:1427
 #, c-format
 msgid " (inherited: \"%s%s%s\")"
-msgstr ""
+msgstr " (zděděno: \"%s%s%s\")"
 
 #: src/common/command.c:1491 src/common/command.c:1514
 #: src/common/command.c:1648 src/common/command.c:2259
@@ -3414,7 +3427,7 @@ msgstr "%s žádné ignorování nenaleyeno\n"
 #: src/common/command.c:3099
 #, c-format
 msgid "%s can't upgrade: connection to at least one server is pending\n"
-msgstr ""
+msgstr "%s nemůžu aktualizovat: existují nevyřešená spojení na server\n"
 
 #: src/common/command.c:3109
 #, c-format
@@ -3422,30 +3435,32 @@ msgid ""
 "%s can't upgrade: connection to at least one SSL server is active (should be "
 "fixed in a future version)\n"
 msgstr ""
+"%s nemohu aktualiyovat: je aktuvní jedno nebo více připojení na SSL server "
+"(mělo by být opraveno v budoucnosti)\n"
 
 #: src/common/command.c:3125
 msgid "Upgrading WeeChat...\n"
-msgstr ""
+msgstr "Aktualizuji WeeChat...\n"
 
 #: src/common/command.c:3132
 #, c-format
 msgid "%s unable to save session in file\n"
-msgstr ""
+msgstr "%s nemohu uložit sezení do souboru\n"
 
 #: src/common/command.c:3157
 #, c-format
 msgid "%s exec failed (program: \"%s\"), exiting WeeChat\n"
-msgstr ""
+msgstr "%s exec selhal (program: \"%s\"), ukončuji WeeChat\n"
 
 #: src/common/command.c:3193
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
-msgstr ""
+msgstr "Čas běhu WeeChat: %d %s %02d:%02d:%02d, spuštěn %s"
 
 #: src/common/command.c:3207
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
-msgstr ""
+msgstr "Čas běhu WeeChat: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, spuštěn %s%s"
 
 #: src/common/command.c:3247
 msgid "Opened windows:\n"
@@ -3457,6 +3472,8 @@ msgid ""
 "%s can not merge windows, there's no other window with same size near "
 "current one.\n"
 msgstr ""
+"%s nemohu spojit okna, není zde další okno se stejnou velikostí poblíž "
+"aktuálního okna.\n"
 
 #: src/common/fifo.c:71 src/common/fifo.c:73
 #, c-format
@@ -3521,7 +3538,7 @@ msgstr "****  End of log  "
 #, c-format
 msgid ""
 "Last operation with session file was at position %ld, read of %d bytes\n"
-msgstr ""
+msgstr "Poslední operace se souborem sezení bzla na pozici %ld, čtu %d bytů\n"
 
 #: src/common/session.c:458
 #, c-format
@@ -3530,287 +3547,290 @@ msgid ""
 "developers for support.\n"
 "Be careful, private info may be in these files.\n"
 msgstr ""
+"Prosím pošlete ~/.weechat/%s, ~/.weechat/%s a zprávu nahoře vývojářům "
+"WeeChat pro podporu.\n"
+"Opatrně v souborech můžou být soukromé informace.\n"
 
 #: src/common/session.c:482 src/common/session.c:516 src/common/session.c:573
 #: src/common/session.c:614
 #, c-format
 msgid "wrong type in file (expected: %d, read: %d)"
-msgstr ""
+msgstr "špatný typ v souboru (očekáván: %d, přečten: %d)"
 
 #: src/common/session.c:585 src/common/session.c:626
 msgid "invalid length for a buffer"
-msgstr ""
+msgstr "nevalidní délka pro buffer"
 
 #: src/common/session.c:650
 msgid "object read error"
-msgstr ""
+msgstr "chyba při čtení objektu"
 
 #: src/common/session.c:655
 #, c-format
 msgid "wrong object (expected: %d, read: %d)"
-msgstr ""
+msgstr "špatný objekt (očekáván: %d, přečten: %d)"
 
 #: src/common/session.c:665
 msgid "type read error"
-msgstr ""
+msgstr "chyba při čtení typu"
 
 #: src/common/session.c:670
 #, c-format
 msgid "wrong type (expected: %d, read: %d)"
-msgstr ""
+msgstr "špatný typ (očekáván: %d, přečten: %d)"
 
 #: src/common/session.c:755
 msgid "server name not found"
-msgstr ""
+msgstr "jméno serveru nenalezeno"
 
 #: src/common/session.c:760
 #, c-format
 msgid "session: loading server \"%s\"\n"
-msgstr ""
+msgstr "sezeni: načítám server \"%s\"\n"
 
 #: src/common/session.c:764
 msgid "server found, updating values\n"
-msgstr ""
+msgstr "server nalezen, aktualizuji hodnoty\n"
 
 #: src/common/session.c:767
 msgid "server not found, creating new one\n"
-msgstr ""
+msgstr "server nenalezen, vytvářím nový\n"
 
 #: src/common/session.c:772
 msgid "can't create new server"
-msgstr ""
+msgstr "nemohu vytvořit nový server"
 
 #: src/common/session.c:786
 msgid "unexpected end of file (reading server)"
-msgstr ""
+msgstr "neočekávaný konec souboru (čtu server)"
 
 #: src/common/session.c:874
 msgid "gnutls init error"
-msgstr ""
+msgstr "chyba při inicializaci gnutls"
 
 #: src/common/session.c:891
 msgid "gnutls handshake failed"
-msgstr ""
+msgstr "selhalo spojení selhalo"
 
 #: src/common/session.c:934
 #, c-format
 msgid "session: warning: ignoring value from server (object id: %d)\n"
-msgstr ""
+msgstr "sezení: upozornění: ignoruji hodnotu ze serveru (objekt id: %d)\n"
 
 #: src/common/session.c:956
 msgid "channel found without server"
-msgstr ""
+msgstr "nalezen kanál bez serveru"
 
 #: src/common/session.c:963
 msgid "channel type not found"
-msgstr ""
+msgstr "nenalezen typ kanálu"
 
 #: src/common/session.c:971
 msgid "channel name not found"
-msgstr ""
+msgstr "jméno kanálu nenalezeno"
 
 #: src/common/session.c:976
 #, c-format
 msgid "session: loading channel \"%s\"\n"
-msgstr ""
+msgstr "sezení: načítám kanál \"%s\"\n"
 
 #: src/common/session.c:984
 msgid "can't create new channel"
-msgstr ""
+msgstr "nemohu vytvořit nový kanál"
 
 #: src/common/session.c:994
 msgid "unexpected end of file (reading channel)"
-msgstr ""
+msgstr "neočekávaný konec souboru (čtení kanálu)"
 
 #: src/common/session.c:1024
 #, c-format
 msgid "session: warning: ignoring value from channel (object id: %d)\n"
-msgstr ""
+msgstr "sezení: upozornění: ignoruji hodnotu z kanálu (objekt id: %d)\n"
 
 #: src/common/session.c:1047
 msgid "nick found without channel"
-msgstr ""
+msgstr "nalezena přezdívka bez kanálu"
 
 #: src/common/session.c:1055
 msgid "nick name not found"
-msgstr ""
+msgstr "jméno přezdívky nenalezeno"
 
 #: src/common/session.c:1065
 msgid "can't create new nick"
-msgstr ""
+msgstr "nemohu vytvořit novou přezdívku"
 
 #: src/common/session.c:1075
 msgid "unexpected end of file (reading nick)"
-msgstr ""
+msgstr "neočekávaný konec souboru (čtení přezdívky)"
 
 #: src/common/session.c:1091
 #, c-format
 msgid "session: warning: ignoring value from nick (object id: %d)\n"
-msgstr ""
+msgstr "sezení: upozornění: ignoruji hodnotu z přezdívky (objekt id: %d)\n"
 
 #: src/common/session.c:1117
 msgid "can't create new DCC"
-msgstr ""
+msgstr "nemohu vytvořit nové DCC"
 
 #: src/common/session.c:1121
 msgid "session: loading DCC\n"
-msgstr ""
+msgstr "sezení: načítám DCC\n"
 
 #: src/common/session.c:1131
 msgid "unexpected end of file (reading DCC)"
-msgstr ""
+msgstr "neočekávaný konec souboru (čtení DCC)"
 
 #: src/common/session.c:1150
 msgid "server not found for DCC"
-msgstr ""
+msgstr "nenalezen server pro DCC"
 
 #: src/common/session.c:1159
 msgid "DCC with channel but without server"
-msgstr ""
+msgstr "DCC s kanálem ale bez serveru"
 
 #: src/common/session.c:1171
 msgid "channel not found for DCC"
-msgstr ""
+msgstr "nenalezen kanál pro DCC"
 
 #: src/common/session.c:1245
 #, c-format
 msgid "session: warning: ignoring value from DCC (object id: %d)\n"
-msgstr ""
+msgstr "sezení: upozornění: ignoruji hodnotu z DCC (objekt id: %d)\n"
 
 #: src/common/session.c:1265
 msgid "session: loading buffer history\n"
-msgstr ""
+msgstr "sezení: načítám historii bufferu\n"
 
 #: src/common/session.c:1267
 msgid "session: loading global history\n"
-msgstr ""
+msgstr "sezení: načátám globální historii\n"
 
 #: src/common/session.c:1275
 msgid "unexpected end of file (reading history)"
-msgstr ""
+msgstr "neočekávaný konec souboru (čtení historie)"
 
 #: src/common/session.c:1295
 #, c-format
 msgid "session: warning: ignoring value from history (object id: %d)\n"
-msgstr ""
+msgstr "sezení: upozornění: ignoruji hodnotu z historie (objekt id: %d)\n"
 
 #: src/common/session.c:1321
 msgid "server name not found for buffer"
-msgstr ""
+msgstr "nenalezeno jméno serveru pro buffer"
 
 #: src/common/session.c:1329
 msgid "channel name not found for buffer"
-msgstr ""
+msgstr "nenalezeno jméno kanálu pro buffer"
 
 #: src/common/session.c:1336
 msgid "dcc flag not found for buffer"
-msgstr ""
+msgstr "nenalezena dcc značka pro buffer"
 
 #: src/common/session.c:1341
 #, c-format
 msgid "session: loading buffer (server: %s, channel: %s, dcc: %d)\n"
-msgstr ""
+msgstr "sezení: načítám buffer (server: %s, kanál %s, dcc: %d)\n"
 
 #: src/common/session.c:1352
 msgid "server not found for buffer"
-msgstr ""
+msgstr "nenalezen server pro buffer"
 
 #: src/common/session.c:1362
 msgid "channel not found for buffer"
-msgstr ""
+msgstr "nenalezen kanál pro buffer"
 
 #: src/common/session.c:1370
 msgid "can't create new buffer"
-msgstr ""
+msgstr "nemohu vytvořit nový buffer"
 
 #: src/common/session.c:1383
 msgid "unexpected end of file (reading buffer)"
-msgstr ""
+msgstr "neočekávaný konec souboru (čtení bufferu)"
 
 #: src/common/session.c:1393
 #, c-format
 msgid "session: warning: ignoring value from buffer (object id: %d)\n"
-msgstr ""
+msgstr "sezení: upzornění: ignoruji hodnotu z bufferu (objekt id: %d)\n"
 
 #: src/common/session.c:1415
 msgid "line found without buffer"
-msgstr ""
+msgstr "nalezen řádek bez bufferu"
 
 #: src/common/session.c:1423
 msgid "can't create new line"
-msgstr ""
+msgstr "nemohu vytvořit nový řádek"
 
 #: src/common/session.c:1433
 msgid "unexpected end of file (reading line)"
-msgstr ""
+msgstr "neočekávaný konec souboru (čtení řádku)"
 
 #: src/common/session.c:1464
 #, c-format
 msgid "session: warning: ignoring value from line (object id: %d)\n"
-msgstr ""
+msgstr "sezení: upozornění: ignoruji hodnotu z řádku (objekt id: %d)\n"
 
 #: src/common/session.c:1494
 msgid "session file not found"
-msgstr ""
+msgstr "soubor se sezením nenalezen"
 
 #: src/common/session.c:1501
 msgid "signature not found"
-msgstr ""
+msgstr "podpis nenalezen"
 
 #: src/common/session.c:1506
 msgid "bad session signature"
-msgstr ""
+msgstr "špatný podpis sezení"
 
 #: src/common/session.c:1517
 msgid "object id not found"
-msgstr ""
+msgstr "id objektu nenalezeno"
 
 #: src/common/session.c:1525
 msgid "failed to load server"
-msgstr ""
+msgstr "selhalo načtení serveru"
 
 #: src/common/session.c:1532
 msgid "failed to load channel"
-msgstr ""
+msgstr "selhalo načtení kanálu"
 
 #: src/common/session.c:1539
 msgid "failed to load nick"
-msgstr ""
+msgstr "selhalo načtení přezdívky"
 
 #: src/common/session.c:1546
 msgid "failed to load DCC"
-msgstr ""
+msgstr "selhalo načtení DCC"
 
 #: src/common/session.c:1553
 msgid "failed to load history"
-msgstr ""
+msgstr "selhalo načtení historie"
 
 #: src/common/session.c:1560
 msgid "failed to load buffer"
-msgstr ""
+msgstr "selhalo načtení bufferu"
 
 #: src/common/session.c:1567
 msgid "failed to load line"
-msgstr ""
+msgstr "selhalo načtení řádku"
 
 #: src/common/session.c:1572
 #, c-format
 msgid "ignoring object (id: %d)\n"
-msgstr ""
+msgstr "ignoruji objekt (id: %d)\n"
 
 #: src/common/session.c:1576
 #, c-format
 msgid "failed to ignore object (id: %d)"
-msgstr ""
+msgstr "selhalo ignorování objektu (id: %d)"
 
 #: src/common/session.c:1600
 #, c-format
 msgid "%s can't delete session file (%s)\n"
-msgstr ""
+msgstr "%s nemohu smazat soubor se sezením (%s)\n"
 
 #: src/common/session.c:1606
 msgid "Upgrade completed successfully\n"
-msgstr ""
+msgstr "Aktualizace dokončena úspěšně\n"
 
 #: src/common/weechat.c:293
 #, c-format
@@ -3818,6 +3838,8 @@ msgid ""
 "%s (c) Copyright 2003-2005, compiled on %s %s\n"
 "Developed by FlashCode <flashcode@flashtux.org> - %s"
 msgstr ""
+"%s (c) Copzright 2003-2005, zkompilováno %s %s\n"
+"Vyvíjí FlashCode <flashcode@flashtux.org> - %s"
 
 #: src/common/weechat.c:297
 #, c-format
@@ -3826,6 +3848,9 @@ msgid ""
 "   or: %s [irc[6][s]://[nickname[:password]@]irc.example.org[:port][/channel]"
 "[,channel[...]]"
 msgstr ""
+"Použití: %s [nastavení ...]\n"
+"   nebo: %s [irc[6][s]://[nickname[:password]@]irc.example.org[:port][/"
+"channel][,channel[...]]"
 
 #: src/common/weechat.c:301
 #, c-format
@@ -3841,6 +3866,16 @@ msgid ""
 "  -v, --version           display WeeChat version\n"
 "  -w, --weechat-commands  display WeeChat commands\n"
 msgstr ""
+"  -a, --no-connect        vypne automatické připojení k serverům při startu\n"
+"  -c, --config            zobrazí nastavení konfiguračního souboru\n"
+"  -f, --key-functions     zobrazí interní funkce WeeChat pro klávesy\n"
+"  -h, --help              tato nápověda\n"
+"  -i, --irc-commands      zobrazí IRC příkazy\n"
+"  -k, --keys              zobrazí výchozí klávesy WeeChat\n"
+"  -l, --license           zobrazí licenci WeeChat\n"
+"  -p, --no-plugin         nenačítat plug-iny při startu\n"
+"  -v, --version           zobrazí verzi WeeChat\n"
+"  -w, --weechat-commands  zobrazí příkazy WeeChat\n"
 
 #: src/common/weechat.c:323
 #, c-format
@@ -3854,47 +3889,47 @@ msgstr ""
 #: src/common/weechat.c:336
 #, c-format
 msgid "  . type: boolean\n"
-msgstr ""
+msgstr "  . typ: boolean\n"
 
 #: src/common/weechat.c:337
 #, c-format
 msgid "  . values: 'on' or 'off'\n"
-msgstr ""
+msgstr "  . hodnoty: 'on' or 'off'\n"
 
 #: src/common/weechat.c:343
 #, c-format
 msgid "  . type: integer\n"
-msgstr ""
+msgstr "  . typ: celočíselný\n"
 
 #: src/common/weechat.c:344
 #, c-format
 msgid "  . values: between %d and %d\n"
-msgstr ""
+msgstr "  . hodnoty: mezi %d a %d\n"
 
 #: src/common/weechat.c:351 src/common/weechat.c:375
 #, c-format
 msgid "  . type: string\n"
-msgstr ""
+msgstr "  . typ: řetězec\n"
 
 #: src/common/weechat.c:352
 #, c-format
 msgid "  . values: "
-msgstr ""
+msgstr "  . hodnoty: "
 
 #: src/common/weechat.c:368
 #, c-format
 msgid "  . type: color\n"
-msgstr ""
+msgstr "  . typ: barva\n"
 
 #: src/common/weechat.c:369
 #, c-format
 msgid "  . values: Curses or Gtk color\n"
-msgstr ""
+msgstr "  . hodnoty: Curses nebo Gtk barva\n"
 
 #: src/common/weechat.c:376
 #, c-format
 msgid "  . values: any string\n"
-msgstr ""
+msgstr "  . hodnoty: typ řetězec (jakýkoliv řetězec)\n"
 
 #: src/common/weechat.c:476
 #, c-format
@@ -3904,7 +3939,7 @@ msgstr "%s výchozí klávesy:\n"
 #: src/common/weechat.c:556
 #, c-format
 msgid "%s missing argument for --session option\n"
-msgstr ""
+msgstr "%s chybí argument pro --session volbu\n"
 
 #: src/common/weechat.c:577
 #, c-format
@@ -4189,11 +4224,11 @@ msgstr "časová známka pro zobrazení dne při změně dne"
 
 #: src/common/weeconfig.c:228 src/common/weeconfig.c:229
 msgid "use a marker on servers/channels to show first unread line"
-msgstr ""
+msgstr "použít značku na serveru/kanále pro zobrazení první nepřečtené řádky"
 
 #: src/common/weeconfig.c:297
 msgid "if set, uses real white color"
-msgstr ""
+msgstr "pokud je nastaveno, použije se skutečná bílá barva"
 
 #: src/common/weeconfig.c:298
 msgid ""
@@ -4201,6 +4236,10 @@ msgid ""
 "background (if you never use white background, you should turn on this "
 "option to see real white instead of default term foreground color)"
 msgstr ""
+"pokud je nastaveno, použije se skutečná bílá barva, ve výchozím nastavení je "
+"vypnuto pro slova s bílým pozadím (pokud nikdy neoupžíváte bílou barvu, mělí "
+"byste toto nastavení zapnout, pro zobrazení skutečně bílé barvy místo "
+"výchozí barvy popředí terminálu)"
 
 #: src/common/weeconfig.c:304 src/common/weeconfig.c:305
 msgid "color for title bar"
@@ -4300,11 +4339,11 @@ msgstr "pozadí okna rozhovoru"
 
 #: src/common/weeconfig.c:370 src/common/weeconfig.c:371
 msgid "color for unread data marker"
-msgstr ""
+msgstr "barva pro značku nepřečtených dat"
 
 #: src/common/weeconfig.c:374 src/common/weeconfig.c:375
 msgid "background for unread data marker"
-msgstr ""
+msgstr "pozadí pro značku nepřečtených dat"
 
 #: src/common/weeconfig.c:380 src/common/weeconfig.c:381
 msgid "color for status bar"
@@ -4521,13 +4560,15 @@ msgstr "maximální počet uživatelských příkazů v historii (0 = nekonečn�
 
 #: src/common/weeconfig.c:596
 msgid "max commands to display"
-msgstr ""
+msgstr "maximální počtet příkazů, který zobarzit"
 
 #: src/common/weeconfig.c:597
 msgid ""
 "maximum number of commands to display by default in history listing (0 = "
 "unlimited)"
 msgstr ""
+"maximální počet příkazů, který zobrazit jako výchozí v seznamu historie (0 = "
+"nekonečno)"
 
 #: src/common/weeconfig.c:614 src/common/weeconfig.c:615
 msgid "automatically log server messages"
@@ -5002,33 +5043,39 @@ msgstr ""
 
 #: src/common/weeconfig.c:940
 msgid "charset for decoding ISO on server and channels"
-msgstr ""
+msgstr "znaková sada pro dekódování ISO na serveru a kanálech"
 
 #: src/common/weeconfig.c:941
 msgid ""
 "comma separated list of charsets for server and channels, to decode ISO "
 "(format: server:charset,#channel:charset,..)"
 msgstr ""
+"čárkou oddělený seznam znakových sad pro server a kanály, pro dekódování ISO "
+"(format: server:znaková_sada,#kanál:znaková_sada,...)"
 
 #: src/common/weeconfig.c:945
 msgid "charset for decoding UTF on server and channels"
-msgstr ""
+msgstr "znaková sada pro dekódování UTF na serveru a kanálech"
 
 #: src/common/weeconfig.c:946
 msgid ""
 "comma separated list of charsets for server and channels, to decode UTF "
 "(format: server:charset,#channel:charset,..)"
 msgstr ""
+"čárkou oddělený seznam znakových sad pro server a kanály, pro dekódování UTF "
+"(format: server:znaková_sada,#kanál:znaková_sada,...)"
 
 #: src/common/weeconfig.c:950
 msgid "charset for encoding messages on server and channels"
-msgstr ""
+msgstr "znaková sada pro kódování zpráv na serveru a kanálech"
 
 #: src/common/weeconfig.c:951
 msgid ""
 "comma separated list of charsets for server and channels, to encode messages "
 "(format: server:charset,#channel:charset,..)"
 msgstr ""
+"čárkou oddělený seznam znakových sad pro server a kanály, pro kódování zpráv "
+"(format: server:znaková_sada,#kanál:znaková_sada,...)"
 
 #: src/common/weeconfig.c:1643
 #, c-format
@@ -5149,3 +5196,17 @@ msgstr ""
 #: src/common/weeconfig.c:2255
 msgid "Saving config to disk\n"
 msgstr "Ukládám konfiguraci na disk\n"
+
+#~ msgid ""
+#~ "Moreover, you can define aliases in [alias] section, by adding lines "
+#~ "like:\n"
+#~ msgstr ""
+#~ "Mimoto můžete definovat aliasy v sekci [alias], přidáním řádku jako je "
+#~ "tento:\n"
+
+#~ msgid ""
+#~ "where 'j' is alias name, and 'join' associated command.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "kde 'j' je jméno aliasu, a 'join' přidružený příkaz.\n"
+#~ "\n"

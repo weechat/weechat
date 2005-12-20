@@ -61,7 +61,7 @@ t_irc_command irc_commands[] =
     "%n action|ping|version", 2, MAX_ARGS, 1, NULL, irc_cmd_send_ctcp, NULL },
   { "dcc", N_("starts DCC (file or chat) or close chat"),
     N_("action [nickname [file]]"),
-    N_(  "action: 'send' (file) or 'chat' or 'close' (chat)\n"
+    N_("  action: 'send' (file) or 'chat' or 'close' (chat)\n"
        "nickname: nickname to send file or chat\n"
        "    file: filename (on local host)"),
     "chat|send|close %n %f", 1, MAX_ARGS, 1, NULL, irc_cmd_send_dcc, NULL },
