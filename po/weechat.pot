@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-12-21 12:36+0100\n"
+"POT-Creation-Date: 2005-12-21 12:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3745,7 +3745,7 @@ msgid "WeeChat Warning:"
 msgstr ""
 
 #: src/common/weeconfig.c:102 src/common/weeconfig.c:103
-msgid "set title for window (terminal for Curses GUI) with name & version"
+msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr ""
 
 #: src/common/weeconfig.c:106 src/common/weeconfig.c:107

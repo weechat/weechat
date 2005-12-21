@@ -99,8 +99,8 @@ char *cfg_look_day_change_timestamp;
 char *cfg_look_read_marker;
 
 t_config_option weechat_options_look[] =
-{ { "look_set_title", N_("set title for window (terminal for Curses GUI) with name & version"),
-    N_("set title for window (terminal for Curses GUI) with name & version"),
+{ { "look_set_title", N_("set title for window (terminal for Curses GUI) with name and version"),
+    N_("set title for window (terminal for Curses GUI) with name and version"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
     NULL, NULL, &cfg_look_set_title, NULL, config_change_title },
   { "look_startup_logo", N_("display WeeChat logo at startup"),
