@@ -209,7 +209,7 @@ t_irc_command irc_commands[] =
     N_("nickname: nickname for private conversation\n"
        "    text: text to send"),
     "%n %-", 1, MAX_ARGS, 1, NULL, irc_cmd_send_query, NULL },
-  { "quit", N_("close all connections & quit"),
+  { "quit", N_("close all connections and quit"),
     N_("[quit_message]"),
     N_("quit_message: quit message (displayed to other users)"),
     "%q", 0, MAX_ARGS, 0, NULL, irc_cmd_send_quit, irc_cmd_recv_quit },
@@ -415,7 +415,7 @@ t_irc_command irc_commands[] =
     N_("channel: name of channel\n"
        "  topic: topic of the channel"),
     NULL, 2, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_332 },
-  { "333", N_("infos about topic (nick & date changed)"), "", "",
+  { "333", N_("infos about topic (nick and date changed)"), "", "",
     NULL, 0, 0, 1, NULL, NULL, irc_cmd_recv_333 },
   { "341", N_("inviting"), "", "",
     NULL, 0, 0, 1, NULL, NULL, irc_cmd_recv_341 },

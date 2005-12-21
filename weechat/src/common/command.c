@@ -124,7 +124,7 @@ t_weechat_command weechat_commands[] =
        "nick2 nick3] [-username username] [-realname realname] "
        "[-command command] [-autojoin channel[,channel]] ] | "
        "[del servername]"),
-    N_("servername: server name, for internal & display use\n"
+    N_("servername: server name, for internal and display use\n"
        "  hostname: name or IP address of server\n"
        "      port: port for server (integer)\n"
        "      ipv6: use IPv6 protocol\n"

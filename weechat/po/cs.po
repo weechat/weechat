@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.7-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-12-21 00:50+0100\n"
-"PO-Revision-Date: 2005-12-21 00:51+0100\n"
+"POT-Creation-Date: 2005-12-21 12:36+0100\n"
+"PO-Revision-Date: 2005-12-21 12:37+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -671,7 +671,7 @@ msgstr ""
 "     text: text, který poslat"
 
 #: src/irc/irc-commands.c:212
-msgid "close all connections & quit"
+msgid "close all connections and quit"
 msgstr "zavřít všechny spojení a ukončit"
 
 #: src/irc/irc-commands.c:213
@@ -1063,7 +1063,7 @@ msgstr ""
 " téma: téma kanálu"
 
 #: src/irc/irc-commands.c:418
-msgid "infos about topic (nick & date changed)"
+msgid "infos about topic (nick and date changed)"
 msgstr "informace o tématu (uživatel a datum změnění)"
 
 #: src/irc/irc-commands.c:420
@@ -2739,7 +2739,7 @@ msgstr ""
 
 #: src/common/command.c:127
 msgid ""
-"servername: server name, for internal & display use\n"
+"servername: server name, for internal and display use\n"
 "  hostname: name or IP address of server\n"
 "      port: port for server (integer)\n"
 "      ipv6: use IPv6 protocol\n"
