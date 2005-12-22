@@ -235,6 +235,7 @@ t_config_option weechat_options_look[] =
 /* config, colors section */
 
 int cfg_col_real_white;
+int cfg_col_separator;
 int cfg_col_title;
 int cfg_col_title_bg;
 int cfg_col_chat;
@@ -300,6 +301,10 @@ t_config_option weechat_options_colors[] =
        "this option to see real white instead of default term foreground color)"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
     NULL, NULL, &cfg_col_real_white, NULL, config_change_color },
+  { "col_separator", N_("color for window separators (when splited)"),
+    N_("color for window separators (when splited)"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "blue", NULL, &cfg_col_separator, NULL, &config_change_color },
   /* title window */
   { "col_title", N_("color for title bar"),
     N_("color for title bar"),
@@ -1102,12 +1107,9 @@ config_change_one_server_buffer ()
 void
 config_change_color ()
 {
-    t_gui_window *ptr_win;
-    
     gui_init_color_pairs ();
     gui_rebuild_weechat_colors ();
-    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-        gui_redraw_buffer (ptr_win->buffer);
+    gui_refresh_windows ();
 }
 
 /*

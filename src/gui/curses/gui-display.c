@@ -772,7 +772,7 @@ gui_draw_window_separator (t_gui_window *window)
                                         1,
                                         window->win_y,
                                         window->win_x - 1);
-        gui_window_set_weechat_color (window->win_separator, COLOR_WIN_TITLE);
+        gui_window_set_weechat_color (window->win_separator, COLOR_WIN_SEPARATOR);
         wborder (window->win_separator, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
         wnoutrefresh (window->win_separator);
         refresh ();
@@ -3293,6 +3293,7 @@ gui_init_weechat_colors ()
     int i;
     
     /* init WeeChat colors */
+    gui_color[COLOR_WIN_SEPARATOR] = gui_color_build (COLOR_WIN_SEPARATOR, cfg_col_separator, cfg_col_separator);
     gui_color[COLOR_WIN_TITLE] = gui_color_build (COLOR_WIN_TITLE, cfg_col_title, cfg_col_title_bg);
     gui_color[COLOR_WIN_CHAT] = gui_color_build (COLOR_WIN_CHAT, cfg_col_chat, cfg_col_chat_bg);
     gui_color[COLOR_WIN_CHAT_TIME] = gui_color_build (COLOR_WIN_CHAT_TIME, cfg_col_chat_time, cfg_col_chat_bg);

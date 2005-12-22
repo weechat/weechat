@@ -44,7 +44,8 @@ typedef enum t_weechat_color t_weechat_color;
 
 enum t_weechat_color
 {
-    COLOR_WIN_TITLE = 0,
+    COLOR_WIN_SEPARATOR = 0,
+    COLOR_WIN_TITLE,
     COLOR_WIN_CHAT,
     COLOR_WIN_CHAT_TIME,
     COLOR_WIN_CHAT_TIME_SEP,
@@ -516,6 +517,7 @@ extern void gui_window_nick_end (t_gui_window *);
 extern void gui_window_nick_page_up (t_gui_window *);
 extern void gui_window_nick_page_down (t_gui_window *);
 extern void gui_window_init_subwindows (t_gui_window *);
+extern void gui_refresh_windows ();
 extern void gui_window_split_horiz (t_gui_window *, int);
 extern void gui_window_split_vertic (t_gui_window *, int);
 extern void gui_window_resize (t_gui_window *, int);
