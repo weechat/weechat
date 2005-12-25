@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.1.7-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2005-12-22 17:28+0100\n"
-"PO-Revision-Date: 2005-12-22 17:28+0100\n"
+"PO-Revision-Date: 2005-12-25 10:28+0100\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2294,7 +2294,7 @@ msgstr "GB"
 
 #: src/gui/curses/gui-display.c:1594
 msgid "ETA"
-msgstr ""
+msgstr "Tiempo estimado de llegada"
 
 #: src/gui/curses/gui-display.c:1941
 msgid "<servers>"
@@ -2487,15 +2487,15 @@ msgstr "seleccionar servidor activo en el búfer de servidores"
 
 #: src/gui/gui-keyboard.c:111
 msgid "scroll to previous highlight in buffer"
-msgstr ""
+msgstr "desplazarse al resaltado anterior en el búfer"
 
 #: src/gui/gui-keyboard.c:113
 msgid "scroll to next highlight in buffer"
-msgstr ""
+msgstr "desplazarse al resaltado siguiente en el búfer"
 
 #: src/gui/gui-keyboard.c:115
 msgid "scroll to first unread line in buffer"
-msgstr ""
+msgstr "desplazarse a la primera línea sin leer en el búfer"
 
 #: src/gui/gui-keyboard.c:117
 msgid "clear hotlist"
@@ -2557,7 +2557,6 @@ msgid "[action | number | [[server] [channel]]]"
 msgstr "[acción | número | [[servidor] [canal]]]"
 
 #: src/common/command.c:54
-#, fuzzy
 msgid ""
 " action: action to do:\n"
 "   move: move buffer in the list (may be relative, for example -1)\n"
@@ -2576,17 +2575,19 @@ msgstr ""
 "fin)\n"
 "    list: lista los búfers abiertos (si no hay parámetros se supone esta "
 "lista)\n"
-"  notify: fija el nivel de notificación (0=nunca, 1=highlight, 2=1+msg, 3=2"
-"+join/part)\n"
+"  notify: establece el nivel de notificación (0=nunca, 1=highlight, 2=1+msg, "
+"3=2+join/part)\n"
+"servidor\n"
+"   canal: saltar al búfer por el nombre del servidor o canal\n"
 "  número: saltar al búfer por número"
 
 #: src/common/command.c:63
 msgid "change charset for server or channel"
-msgstr ""
+msgstr "cambiar juego de caracteres para el servidor o canal"
 
 #: src/common/command.c:64
 msgid "[(decode_iso | decode_utf | encode) charset]"
-msgstr ""
+msgstr "[(decode_iso | decode_utf | encode) juego_de_caracteres]"
 
 #: src/common/command.c:65
 msgid ""
@@ -2595,6 +2596,11 @@ msgid ""
 "    encode: charset used for encoding messages\n"
 "   charset: charset to use (for example: ISO-8859-15, UTF-8,..)"
 msgstr ""
+"decode_iso: juego de caracteres utilizado para decodificar ISO\n"
+"decode_utf: juego de caracteres utilizado para decodificar UTF\n"
+"    encode: juego de caracteres utilizado para codificar los mensajes\n"
+"juego_de_caracteres: juego de caracteres a utilizar (por ejemplo: ISO-8859-"
+"15, UTF-8...)"
 
 #: src/common/command.c:70
 msgid "clear window(s)"
@@ -2642,6 +2648,9 @@ msgid ""
 "WeeChat crashes)\n"
 "windows: display windows tree"
 msgstr ""
+" volcar: guardar el volcado de memoria en el archivo de registro de Weechat "
+"(el mismo volcado se escribe cuando Weechat se cuelga)\n"
+"ventanas: mostrar árbol de ventanas"
 
 #: src/common/command.c:87
 msgid "display help about commands"
@@ -2858,7 +2867,7 @@ msgstr ""
 
 #: src/common/command.c:163
 msgid "upgrade WeeChat without disconnecting from servers"
-msgstr ""
+msgstr "actualizar Weechat sin desconectarse de los servidores"
 
 #: src/common/command.c:165
 msgid "show WeeChat uptime"
@@ -2885,7 +2894,7 @@ msgstr ""
 "[pct] | resize pct | merge [all]]"
 
 #: src/common/command.c:172
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "  list: list opened windows (no parameter implies this list)\n"
 "    -1: jump to previous window\n"
@@ -2908,6 +2917,10 @@ msgstr ""
 "     -1: salta a la ventana previa\n"
 "     +1: salta a la ventana siguiente\n"
 "     b#: salta a la ventana siguiente mostrando el número de búfer\n"
+"     up: cambiar a la ventana por encima de la actual\n"
+"   down: cambiar a la ventana por debajo de la actual\n"
+"   left: cambiar a la ventana de la izquierda\n"
+"  right: cambiar a la ventana de la derecha\n"
 " splith: divide la ventana actual horizontalmente\n"
 " splitv: divide la ventana actual verticalmente\n"
 " resize: redimensiona el tamaño de la ventana, el nuevo tamaño es pct%% de "
@@ -3037,7 +3050,7 @@ msgstr "%sPrivado con: %s%s %s(servidor: %s%s%s)\n"
 #: src/common/command.c:1016
 #, c-format
 msgid "%sunknown\n"
-msgstr ""
+msgstr "%sdesconocido\n"
 
 #: src/common/command.c:1039
 msgid "Opened buffers:\n"
@@ -3097,23 +3110,23 @@ msgstr "(hotlist: resaltados + mensajes + join/part (todos))\n"
 #: src/common/command.c:1323
 #, c-format
 msgid "Charsets for server %s%s%s: "
-msgstr ""
+msgstr "Juegos de caracteres para el servidor %s%s%s: "
 
 #: src/common/command.c:1331
 #, c-format
 msgid "Charsets for channel %s%s%s: "
-msgstr ""
+msgstr "Juegos de caracteres para el canal %s%s%s: "
 
 #: src/common/command.c:1339
 #, c-format
 msgid "Charsets for private %s%s%s: "
-msgstr ""
+msgstr "Juegos de caracteres para el privado %s%s%s: "
 
 #: src/common/command.c:1367 src/common/command.c:1397
 #: src/common/command.c:1427
 #, c-format
 msgid " (inherited: \"%s%s%s\")"
-msgstr ""
+msgstr " (heredado: \"%s%s%s\")"
 
 #: src/common/command.c:1491 src/common/command.c:1514
 #: src/common/command.c:1648 src/common/command.c:2259
@@ -3454,7 +3467,7 @@ msgstr "%s no se encontraron ignores\n"
 #: src/common/command.c:3099
 #, c-format
 msgid "%s can't upgrade: connection to at least one server is pending\n"
-msgstr ""
+msgstr "%s no se puede actualizar: conexión pendiente a un servidor al menos\n"
 
 #: src/common/command.c:3109
 #, c-format
@@ -3462,20 +3475,22 @@ msgid ""
 "%s can't upgrade: connection to at least one SSL server is active (should be "
 "fixed in a future version)\n"
 msgstr ""
+"%s no se puede actualizar: conexión activa a un servidor SSL por lo menos "
+"(debería ser corregido en una futura versión)\n"
 
 #: src/common/command.c:3125
 msgid "Upgrading WeeChat...\n"
-msgstr ""
+msgstr "Actualizando Weechat...\n"
 
 #: src/common/command.c:3132
 #, c-format
 msgid "%s unable to save session in file\n"
-msgstr ""
+msgstr "%s no ha sido posible guardar la sesión en el archivo\n"
 
 #: src/common/command.c:3157
 #, c-format
 msgid "%s exec failed (program: \"%s\"), exiting WeeChat\n"
-msgstr ""
+msgstr "%s exec ha fallado (programa: \"%s\"), saliendo de Weechat\n"
 
 #: src/common/command.c:3193
 #, c-format
@@ -3568,6 +3583,8 @@ msgstr "****  Fin del log  "
 msgid ""
 "Last operation with session file was at position %ld, read of %d bytes\n"
 msgstr ""
+"La última operación con el archivo de sesión fue en la posición %ld, lectura "
+"de %d bytes\n"
 
 #: src/common/session.c:458
 #, c-format
@@ -3576,287 +3593,291 @@ msgid ""
 "developers for support.\n"
 "Be careful, private info may be in these files.\n"
 msgstr ""
+"Por favor, envía ~/.weechat/%s, ~/.weechat/%s y los mensajes de arriba a los "
+"desarrolladores de Weechat para el soporte.\n"
+"Sé cuidadoso, puede que haya información privada en estos ficheros.\n"
 
 #: src/common/session.c:482 src/common/session.c:516 src/common/session.c:573
 #: src/common/session.c:614
 #, c-format
 msgid "wrong type in file (expected: %d, read: %d)"
-msgstr ""
+msgstr "tipo erróneo en el fichero (esperado: %d, leído: %d)"
 
 #: src/common/session.c:585 src/common/session.c:626
 msgid "invalid length for a buffer"
-msgstr ""
+msgstr "longitud inválida para un búfer"
 
 #: src/common/session.c:650
 msgid "object read error"
-msgstr ""
+msgstr "error de lectura de objeto"
 
 #: src/common/session.c:655
 #, c-format
 msgid "wrong object (expected: %d, read: %d)"
-msgstr ""
+msgstr "objeto erróneo (esperado: %d, leído: %d)"
 
 #: src/common/session.c:665
 msgid "type read error"
-msgstr ""
+msgstr "error de lectura de tipo"
 
 #: src/common/session.c:670
 #, c-format
 msgid "wrong type (expected: %d, read: %d)"
-msgstr ""
+msgstr "tipo erróneo (esperado: %d, leído: %d)"
 
 #: src/common/session.c:755
 msgid "server name not found"
-msgstr ""
+msgstr "nombre de servidor no encontrado"
 
 #: src/common/session.c:760
 #, c-format
 msgid "session: loading server \"%s\"\n"
-msgstr ""
+msgstr "sesión: cargando servidor \"%s\"\n"
 
 #: src/common/session.c:764
 msgid "server found, updating values\n"
-msgstr ""
+msgstr "servidor encontrado, actualizando valores\n"
 
 #: src/common/session.c:767
 msgid "server not found, creating new one\n"
-msgstr ""
+msgstr "servidor no encontrado, creando uno nuevo\n"
 
 #: src/common/session.c:772
 msgid "can't create new server"
-msgstr ""
+msgstr "no se puede crear un nuevo servidor"
 
 #: src/common/session.c:786
 msgid "unexpected end of file (reading server)"
-msgstr ""
+msgstr "fin de fichero inesperado (leyendo servidor)"
 
 #: src/common/session.c:874
 msgid "gnutls init error"
-msgstr ""
+msgstr "error de inicio de gnutls"
 
 #: src/common/session.c:891
 msgid "gnutls handshake failed"
-msgstr ""
+msgstr "el handshake gnutls ha fallado"
 
 #: src/common/session.c:934
 #, c-format
 msgid "session: warning: ignoring value from server (object id: %d)\n"
-msgstr ""
+msgstr "sesión: advertencia: ignorando valor de servidor (id de objeto: %d)\n"
 
 #: src/common/session.c:956
 msgid "channel found without server"
-msgstr ""
+msgstr "canal encontrado sin servidor"
 
 #: src/common/session.c:963
 msgid "channel type not found"
-msgstr ""
+msgstr "tipo de canal no encontrado"
 
 #: src/common/session.c:971
 msgid "channel name not found"
-msgstr ""
+msgstr "nombre de canal no encontrado"
 
 #: src/common/session.c:976
 #, c-format
 msgid "session: loading channel \"%s\"\n"
-msgstr ""
+msgstr "sesión: cargando canal \"%s\"\n"
 
 #: src/common/session.c:984
 msgid "can't create new channel"
-msgstr ""
+msgstr "no se puede crear un nuevo canal"
 
 #: src/common/session.c:994
 msgid "unexpected end of file (reading channel)"
-msgstr ""
+msgstr "fin de fichero inesperado (leyendo canal)"
 
 #: src/common/session.c:1024
 #, c-format
 msgid "session: warning: ignoring value from channel (object id: %d)\n"
-msgstr ""
+msgstr "sesión: advertencia: ignorando valor de canal (id de objeto: %d)\n"
 
 #: src/common/session.c:1047
 msgid "nick found without channel"
-msgstr ""
+msgstr "nombre de usuario encontrado sin canal"
 
 #: src/common/session.c:1055
 msgid "nick name not found"
-msgstr ""
+msgstr "nombre de usuario no encontrado"
 
 #: src/common/session.c:1065
 msgid "can't create new nick"
-msgstr ""
+msgstr "no se puede crear un nuevo nombre de usuario"
 
 #: src/common/session.c:1075
 msgid "unexpected end of file (reading nick)"
-msgstr ""
+msgstr "fin de fichero inesperado (leyendo nombre de usuario)"
 
 #: src/common/session.c:1091
 #, c-format
 msgid "session: warning: ignoring value from nick (object id: %d)\n"
-msgstr ""
+msgstr "sesión: advertencia: ignorando valor de nick (id de objeto: %d)\n"
 
 #: src/common/session.c:1117
 msgid "can't create new DCC"
-msgstr ""
+msgstr "no se puede crear un nuevo DCC"
 
 #: src/common/session.c:1121
 msgid "session: loading DCC\n"
-msgstr ""
+msgstr "sesión: cargando DCC\n"
 
 #: src/common/session.c:1131
 msgid "unexpected end of file (reading DCC)"
-msgstr ""
+msgstr "fin de fichero inesperado (leyendo DCC)"
 
 #: src/common/session.c:1150
 msgid "server not found for DCC"
-msgstr ""
+msgstr "servidor no encontrado para DCC"
 
 #: src/common/session.c:1159
 msgid "DCC with channel but without server"
-msgstr ""
+msgstr "DCC con canal pero sin servidor"
 
 #: src/common/session.c:1171
 msgid "channel not found for DCC"
-msgstr ""
+msgstr "canal no encontrado para DCC"
 
 #: src/common/session.c:1245
 #, c-format
 msgid "session: warning: ignoring value from DCC (object id: %d)\n"
-msgstr ""
+msgstr "sesión: advertencia: ignorando valor de DCC (id de objeto: %d)\n"
 
 #: src/common/session.c:1265
 msgid "session: loading buffer history\n"
-msgstr ""
+msgstr "sesión: cargando historial del búfer\n"
 
 #: src/common/session.c:1267
 msgid "session: loading global history\n"
-msgstr ""
+msgstr "sesión: cargando historial global\n"
 
 #: src/common/session.c:1275
 msgid "unexpected end of file (reading history)"
-msgstr ""
+msgstr "fin de fichero inesperado (leyendo historial)"
 
 #: src/common/session.c:1295
 #, c-format
 msgid "session: warning: ignoring value from history (object id: %d)\n"
 msgstr ""
+"sesión: advertencia: ignorando valor del historial (id de objeto: %d)\n"
 
 #: src/common/session.c:1321
 msgid "server name not found for buffer"
-msgstr ""
+msgstr "nombre de servidor no encontrado para el búfer"
 
 #: src/common/session.c:1329
 msgid "channel name not found for buffer"
-msgstr ""
+msgstr "nombre de canal no encontrado para el búfer"
 
 #: src/common/session.c:1336
 msgid "dcc flag not found for buffer"
-msgstr ""
+msgstr "bandera (flag) de dcc no encontrada para el búfer"
 
 #: src/common/session.c:1341
 #, c-format
 msgid "session: loading buffer (server: %s, channel: %s, dcc: %d)\n"
-msgstr ""
+msgstr "sesión: cargando búfer (servidor: %s, canal: %s, dcc: %d)\n"
 
 #: src/common/session.c:1352
 msgid "server not found for buffer"
-msgstr ""
+msgstr "servidor no encontrado para el búfer"
 
 #: src/common/session.c:1362
 msgid "channel not found for buffer"
-msgstr ""
+msgstr "canal no encontrado para el búfer"
 
 #: src/common/session.c:1370
 msgid "can't create new buffer"
-msgstr ""
+msgstr "no se puede crear un nuevo búfer"
 
 #: src/common/session.c:1383
 msgid "unexpected end of file (reading buffer)"
-msgstr ""
+msgstr "fin de fichero inesperado (leyendo búfer)"
 
 #: src/common/session.c:1393
 #, c-format
 msgid "session: warning: ignoring value from buffer (object id: %d)\n"
-msgstr ""
+msgstr "sesión: advertencia: ignorando valor del búfer (id de objeto: %d)\n"
 
 #: src/common/session.c:1415
 msgid "line found without buffer"
-msgstr ""
+msgstr "línea encontrada sin un búfer"
 
 #: src/common/session.c:1423
 msgid "can't create new line"
-msgstr ""
+msgstr "no se puede crear una nueva línea"
 
 #: src/common/session.c:1433
 msgid "unexpected end of file (reading line)"
-msgstr ""
+msgstr "fin de fichero inesperado (leyendo línea)"
 
 #: src/common/session.c:1464
 #, c-format
 msgid "session: warning: ignoring value from line (object id: %d)\n"
-msgstr ""
+msgstr "sesión: advertencia: ignorando valor de la línea (id de objeto: %d)\n"
 
 #: src/common/session.c:1494
 msgid "session file not found"
-msgstr ""
+msgstr "archivo de sesión no encontrado"
 
 #: src/common/session.c:1501
 msgid "signature not found"
-msgstr ""
+msgstr "firma no encontrada"
 
 #: src/common/session.c:1506
 msgid "bad session signature"
-msgstr ""
+msgstr "firma de sesión corrupta"
 
 #: src/common/session.c:1517
 msgid "object id not found"
-msgstr ""
+msgstr "identificador (id) de objeto no encontrado"
 
 #: src/common/session.c:1525
 msgid "failed to load server"
-msgstr ""
+msgstr "falló al cargar el servidor"
 
 #: src/common/session.c:1532
 msgid "failed to load channel"
-msgstr ""
+msgstr "falló al cargar el canal"
 
 #: src/common/session.c:1539
 msgid "failed to load nick"
-msgstr ""
+msgstr "falló al cargar el nick"
 
 #: src/common/session.c:1546
 msgid "failed to load DCC"
-msgstr ""
+msgstr "falló al cargar el DCC"
 
 #: src/common/session.c:1553
 msgid "failed to load history"
-msgstr ""
+msgstr "falló al cargar el historial"
 
 #: src/common/session.c:1560
 msgid "failed to load buffer"
-msgstr ""
+msgstr "falló al cargar el búfer"
 
 #: src/common/session.c:1567
 msgid "failed to load line"
-msgstr ""
+msgstr "falló al cargar la línea"
 
 #: src/common/session.c:1572
 #, c-format
 msgid "ignoring object (id: %d)\n"
-msgstr ""
+msgstr "ignorando objeto (id: %d)\n"
 
 #: src/common/session.c:1576
 #, c-format
 msgid "failed to ignore object (id: %d)"
-msgstr ""
+msgstr "falló al ignorar el objeto (id: %d)"
 
 #: src/common/session.c:1600
 #, c-format
 msgid "%s can't delete session file (%s)\n"
-msgstr ""
+msgstr "%s no se puede eliminar el archivo de sesión (%s)\n"
 
 #: src/common/session.c:1606
 msgid "Upgrade completed successfully\n"
-msgstr ""
+msgstr "Actualización completada con éxito\n"
 
 #: src/common/weechat.c:293
 #, c-format
@@ -3864,6 +3885,8 @@ msgid ""
 "%s (c) Copyright 2003-2005, compiled on %s %s\n"
 "Developed by FlashCode <flashcode@flashtux.org> - %s"
 msgstr ""
+"%s (c) Copyright 2003-2005, compilado a %s %s\n"
+"Desarrollado por FlashCode <flashcode@flashtux.org> - %s"
 
 #: src/common/weechat.c:297
 #, c-format
@@ -3872,6 +3895,9 @@ msgid ""
 "   or: %s [irc[6][s]://[nickname[:password]@]irc.example.org[:port][/channel]"
 "[,channel[...]]"
 msgstr ""
+"Uso: %s [opciones ...]\n"
+"  ó: %s [irc[6][s]://[usuario[:contraseña]@]irc.ejemplo.org[:puerto][/"
+"channel]"
 
 #: src/common/weechat.c:301
 #, c-format
@@ -3887,6 +3913,18 @@ msgid ""
 "  -v, --version           display WeeChat version\n"
 "  -w, --weechat-commands  display WeeChat commands\n"
 msgstr ""
+"  -a, --no-connect        desactivar autoconexión a los servidores al "
+"inicio\n"
+"  -c, --config            mostrar opciones del archivo de configuración\n"
+"  -f, --key-functions     mostrar funciones internas de Weechat para las "
+"teclas\n"
+"  -h, --help              esta ayuda\n"
+"  -i, --irc-commands      mostrar comandos IRC\n"
+"  -k, --keys              mostrar teclas por defecto de Weechat\n"
+"  -l, --license           mostrar la licencia de Weechat\n"
+"  -p, --no-plugin         no cargar ninguna extensión (plugin) al inicio\n"
+"  -v, --version           mostrar versión de Weechat\n"
+"  -w, --weechat-commands  mostrar comandos de Weechat\n"
 
 #: src/common/weechat.c:323
 #, c-format
@@ -3950,7 +3988,7 @@ msgstr "%s claves por defecto:\n"
 #: src/common/weechat.c:556
 #, c-format
 msgid "%s missing argument for --session option\n"
-msgstr ""
+msgstr "%s falta un argumento para la opción --session\n"
 
 #: src/common/weechat.c:577
 #, c-format
@@ -4243,6 +4281,8 @@ msgstr "marca de tiempo para la fecha mostrada cuando el día cambió"
 #: src/common/weeconfig.c:228 src/common/weeconfig.c:229
 msgid "use a marker on servers/channels to show first unread line"
 msgstr ""
+"usar un marcador en los servidores/canales para mostrar la primera línea sin "
+"leer"
 
 #: src/common/weeconfig.c:298
 msgid "if set, uses real white color"
@@ -4261,7 +4301,7 @@ msgstr ""
 
 #: src/common/weeconfig.c:304 src/common/weeconfig.c:305
 msgid "color for window separators (when splited)"
-msgstr ""
+msgstr "color para los separadores de ventana (cuando se dividen)"
 
 #: src/common/weeconfig.c:309 src/common/weeconfig.c:310
 msgid "color for title bar"
@@ -4347,11 +4387,11 @@ msgstr "color para los separadores oscuros (ventana de conversación)"
 
 #: src/common/weeconfig.c:367
 msgid "color for highlighted nick"
-msgstr "color para el alias subrayado"
+msgstr "color para el alias resaltado"
 
 #: src/common/weeconfig.c:368
 msgid "color for highlighted nick (chat window)"
-msgstr "color para el alias subrayado (ventana de conversación)"
+msgstr "color para el alias resaltado (ventana de conversación)"
 
 #: src/common/weeconfig.c:371
 msgid "background for chat"
@@ -4363,11 +4403,11 @@ msgstr "color de fondo para la ventana de conversación"
 
 #: src/common/weeconfig.c:375 src/common/weeconfig.c:376
 msgid "color for unread data marker"
-msgstr ""
+msgstr "color para el marcador de datos sin leer"
 
 #: src/common/weeconfig.c:379 src/common/weeconfig.c:380
 msgid "background for unread data marker"
-msgstr ""
+msgstr "color de fondo para el marcador de datos sin leer"
 
 #: src/common/weeconfig.c:385 src/common/weeconfig.c:386
 msgid "color for status bar"
@@ -5085,33 +5125,43 @@ msgstr ""
 
 #: src/common/weeconfig.c:945
 msgid "charset for decoding ISO on server and channels"
-msgstr ""
+msgstr "juego de caracteres para decodificar ISO en el servidor y los canales"
 
 #: src/common/weeconfig.c:946
 msgid ""
 "comma separated list of charsets for server and channels, to decode ISO "
 "(format: server:charset,#channel:charset,..)"
 msgstr ""
+"lista separada por comas de juegos de caracteres para el servidor y los "
+"canales, para decodificar ISO (formato: server:juego_de_caracteres, #channel:"
+"juego_de_caracteres...)"
 
 #: src/common/weeconfig.c:950
 msgid "charset for decoding UTF on server and channels"
-msgstr ""
+msgstr "juego de caracteres para decodificar UTF en el servidor y los canales"
 
 #: src/common/weeconfig.c:951
 msgid ""
 "comma separated list of charsets for server and channels, to decode UTF "
 "(format: server:charset,#channel:charset,..)"
 msgstr ""
+"lista separada por comas de juegos de caracteres para el servidor y los "
+"canales, para decodificar UTF (formato: server:juego_de_caracteres, #channel:"
+"juego_de_caracteres...)"
 
 #: src/common/weeconfig.c:955
 msgid "charset for encoding messages on server and channels"
 msgstr ""
+"juego de caracteres para codificar los mensajes en el servidor y los canales"
 
 #: src/common/weeconfig.c:956
 msgid ""
 "comma separated list of charsets for server and channels, to encode messages "
 "(format: server:charset,#channel:charset,..)"
 msgstr ""
+"lista separada por comas de juegos de caracteres para el servidor y los "
+"canales, para codificar los mensajes (formato: server:juego_de_caracteres, "
+"#channel:juego_de_caracteres...)"
 
 #: src/common/weeconfig.c:1645
 #, c-format
