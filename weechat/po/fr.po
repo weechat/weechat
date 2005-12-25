@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.7-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-12-22 17:28+0100\n"
-"PO-Revision-Date: 2005-12-22 17:28+0100\n"
+"POT-Creation-Date: 2005-12-25 12:17+0100\n"
+"PO-Revision-Date: 2005-12-25 12:18+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -3569,7 +3569,7 @@ msgstr "****  Début du log  "
 msgid "****  End of log  "
 msgstr "****  Fin du log  "
 
-#: src/common/session.c:453
+#: src/common/session.c:471
 #, c-format
 msgid ""
 "Last operation with session file was at position %ld, read of %d bytes\n"
@@ -3577,7 +3577,7 @@ msgstr ""
 "Dernière opération avec le fichier de session en position %ld, lecture de %d "
 "octets\n"
 
-#: src/common/session.c:458
+#: src/common/session.c:476
 #, c-format
 msgid ""
 "Please send ~/.weechat/%s, ~/.weechat/%s and above messages to WeeChat "
@@ -3588,284 +3588,297 @@ msgstr ""
 "développeurs WeeChat pour du support.\n"
 "Faites attention, des infos privées peuvent se trouver dans ces fichiers.\n"
 
-#: src/common/session.c:482 src/common/session.c:516 src/common/session.c:573
-#: src/common/session.c:614
+#: src/common/session.c:500 src/common/session.c:534 src/common/session.c:591
+#: src/common/session.c:632
 #, c-format
 msgid "wrong type in file (expected: %d, read: %d)"
 msgstr "type erroné dans le fichier (attendu: %d, lu: %d)"
 
-#: src/common/session.c:585 src/common/session.c:626
+#: src/common/session.c:603 src/common/session.c:644
 msgid "invalid length for a buffer"
 msgstr "longueur invalide pour une zone"
 
-#: src/common/session.c:650
+#: src/common/session.c:668
 msgid "object read error"
 msgstr "erreur de lecture de l'objet"
 
-#: src/common/session.c:655
+#: src/common/session.c:673
 #, c-format
 msgid "wrong object (expected: %d, read: %d)"
 msgstr "objet erroné (attendu: %d, lu: %d)"
 
-#: src/common/session.c:665
+#: src/common/session.c:683
 msgid "type read error"
 msgstr "erreur de lecture du type"
 
-#: src/common/session.c:670
+#: src/common/session.c:688
 #, c-format
 msgid "wrong type (expected: %d, read: %d)"
 msgstr "type erroné (attendu: %d, lu: %d)"
 
-#: src/common/session.c:755
+#: src/common/session.c:773
 msgid "server name not found"
 msgstr "nom de serveur non trouvé"
 
-#: src/common/session.c:760
+#: src/common/session.c:778
 #, c-format
 msgid "session: loading server \"%s\"\n"
 msgstr "session: chargement du serveur \"%s\"\n"
 
-#: src/common/session.c:764
+#: src/common/session.c:782
 msgid "server found, updating values\n"
 msgstr "serveur trouvé, mise à jour des valeurs\n"
 
-#: src/common/session.c:767
+#: src/common/session.c:785
 msgid "server not found, creating new one\n"
 msgstr "serveur non trouvé, création d'un nouveau\n"
 
-#: src/common/session.c:772
+#: src/common/session.c:790
 msgid "can't create new server"
 msgstr "impossible de créer un nouveau serveur"
 
-#: src/common/session.c:786
+#: src/common/session.c:804
 msgid "unexpected end of file (reading server)"
 msgstr "fin de fichier inattendue (en lecture d'un serveur)"
 
-#: src/common/session.c:874
+#: src/common/session.c:892
 msgid "gnutls init error"
 msgstr "erreur d'initialisation gnutls"
 
-#: src/common/session.c:891
+#: src/common/session.c:909
 msgid "gnutls handshake failed"
 msgstr "le handshake gnutls a échoué"
 
-#: src/common/session.c:934
+#: src/common/session.c:952
 #, c-format
 msgid "session: warning: ignoring value from server (object id: %d)\n"
 msgstr "session: attention: valeur ignorée pour un serveur (id objet: %d)\n"
 
-#: src/common/session.c:956
+#: src/common/session.c:974
 msgid "channel found without server"
 msgstr "canal trouvé sans serveur"
 
-#: src/common/session.c:963
+#: src/common/session.c:981
 msgid "channel type not found"
 msgstr "type de canal non trouvé"
 
-#: src/common/session.c:971
+#: src/common/session.c:989
 msgid "channel name not found"
 msgstr "nom de canal non trouvé"
 
-#: src/common/session.c:976
+#: src/common/session.c:994
 #, c-format
 msgid "session: loading channel \"%s\"\n"
 msgstr "session: chargement du canal \"%s\"\n"
 
-#: src/common/session.c:984
+#: src/common/session.c:1002
 msgid "can't create new channel"
 msgstr "impossible de créer un nouveau canal"
 
-#: src/common/session.c:994
+#: src/common/session.c:1012
 msgid "unexpected end of file (reading channel)"
 msgstr "fin de fichier inattendue (en lecture d'un canal)"
 
-#: src/common/session.c:1024
+#: src/common/session.c:1042
 #, c-format
 msgid "session: warning: ignoring value from channel (object id: %d)\n"
 msgstr "session: attention: valeur ignorée pour un canal (id objet: %d)\n"
 
-#: src/common/session.c:1047
+#: src/common/session.c:1065
 msgid "nick found without channel"
 msgstr "pseudo non trouvé pour le canal"
 
-#: src/common/session.c:1055
+#: src/common/session.c:1073
 msgid "nick name not found"
 msgstr "pseudo non trouvé"
 
-#: src/common/session.c:1065
+#: src/common/session.c:1083
 msgid "can't create new nick"
 msgstr "impossible de créer un nouveau pseudo"
 
-#: src/common/session.c:1075
+#: src/common/session.c:1093
 msgid "unexpected end of file (reading nick)"
 msgstr "fin de fichier inattendue (en lecture d'un pseudo)"
 
-#: src/common/session.c:1091
+#: src/common/session.c:1109
 #, c-format
 msgid "session: warning: ignoring value from nick (object id: %d)\n"
 msgstr "session: attention: valeur ignorée pour un pseudo (id objet: %d)\n"
 
-#: src/common/session.c:1117
+#: src/common/session.c:1135
 msgid "can't create new DCC"
 msgstr "impossible de créer un nouveau DCC"
 
-#: src/common/session.c:1121
+#: src/common/session.c:1139
 msgid "session: loading DCC\n"
 msgstr "session: chargement du DCC\n"
 
-#: src/common/session.c:1131
+#: src/common/session.c:1149
 msgid "unexpected end of file (reading DCC)"
 msgstr "fin de fichier inattendue (en lecture d'un DCC)"
 
-#: src/common/session.c:1150
+#: src/common/session.c:1168
 msgid "server not found for DCC"
 msgstr "serveur non trouvé pour le DCC"
 
-#: src/common/session.c:1159
+#: src/common/session.c:1177
 msgid "DCC with channel but without server"
 msgstr "DCC avec un canal mais sans serveur"
 
-#: src/common/session.c:1171
+#: src/common/session.c:1189
 msgid "channel not found for DCC"
 msgstr "canal non trouvé pour le DCC"
 
-#: src/common/session.c:1245
+#: src/common/session.c:1263
 #, c-format
 msgid "session: warning: ignoring value from DCC (object id: %d)\n"
 msgstr "session: attention: valeur ignorée pour un DCC (id objet: %d)\n"
 
-#: src/common/session.c:1265
+#: src/common/session.c:1283
 msgid "session: loading buffer history\n"
 msgstr "session: chargement de l'historique du tampon\n"
 
-#: src/common/session.c:1267
+#: src/common/session.c:1285
 msgid "session: loading global history\n"
 msgstr "session: chargement de l'historique global\n"
 
-#: src/common/session.c:1275
+#: src/common/session.c:1293
 msgid "unexpected end of file (reading history)"
 msgstr "fin de fichier inattendue (en lecture de l'historique)"
 
-#: src/common/session.c:1295
+#: src/common/session.c:1313
 #, c-format
 msgid "session: warning: ignoring value from history (object id: %d)\n"
 msgstr "session: attention: valeur ignorée pour un historique (id objet: %d)\n"
 
-#: src/common/session.c:1321
+#: src/common/session.c:1339
 msgid "server name not found for buffer"
 msgstr "nom de serveur non trouve pour le tampon"
 
-#: src/common/session.c:1329
+#: src/common/session.c:1347
 msgid "channel name not found for buffer"
 msgstr "nom de canal non trouvé pour un tampon"
 
-#: src/common/session.c:1336
+#: src/common/session.c:1354
 msgid "dcc flag not found for buffer"
 msgstr "drapeau dcc non trouvé pour un tampon"
 
-#: src/common/session.c:1341
+#: src/common/session.c:1359
 #, c-format
 msgid "session: loading buffer (server: %s, channel: %s, dcc: %d)\n"
 msgstr "session: chargement du tampon (serveur: %s, canal: %s, dcc: %d)\n"
 
-#: src/common/session.c:1352
+#: src/common/session.c:1370
 msgid "server not found for buffer"
 msgstr "serveur non trouvé pour le tampon"
 
-#: src/common/session.c:1362
+#: src/common/session.c:1380
 msgid "channel not found for buffer"
 msgstr "canal non trouvé pour le tampon"
 
-#: src/common/session.c:1370
+#: src/common/session.c:1388
 msgid "can't create new buffer"
 msgstr "impossible de créer un nouveau tampon"
 
-#: src/common/session.c:1383
+#: src/common/session.c:1401
 msgid "unexpected end of file (reading buffer)"
 msgstr "fin de fichier inattendue (en lecture d'un tampon)"
 
-#: src/common/session.c:1393
+#: src/common/session.c:1411
 #, c-format
 msgid "session: warning: ignoring value from buffer (object id: %d)\n"
 msgstr "session: attention: valeur ignorée pour un pseudo (id objet: %d)\n"
 
-#: src/common/session.c:1415
+#: src/common/session.c:1433
 msgid "line found without buffer"
 msgstr "ligne trouvée sans tampon"
 
-#: src/common/session.c:1423
+#: src/common/session.c:1441
 msgid "can't create new line"
 msgstr "impossible de créer une nouvelle ligne"
 
-#: src/common/session.c:1433
+#: src/common/session.c:1451
 msgid "unexpected end of file (reading line)"
 msgstr "fin de fichier inattendue (en lecture d'une ligne)"
 
-#: src/common/session.c:1464
+#: src/common/session.c:1482
 #, c-format
 msgid "session: warning: ignoring value from line (object id: %d)\n"
 msgstr "session: attention: valeur ignorée pour une ligne (id objet: %d)\n"
 
-#: src/common/session.c:1494
+#: src/common/session.c:1506
+msgid "unexpected end of file (reading uptime)"
+msgstr "fin de fichier inattendue (en lecture de l'uptime)"
+
+#: src/common/session.c:1519
+#, c-format
+msgid "session: warning: ignoring value from uptime (object id: %d)\n"
+msgstr "session: attention: valeur ignorée pour l'uptime (id objet: %d)\n"
+
+#: src/common/session.c:1549
 msgid "session file not found"
 msgstr "fichier de session non trouvé"
 
-#: src/common/session.c:1501
+#: src/common/session.c:1556
 msgid "signature not found"
 msgstr "signature non trouvée"
 
-#: src/common/session.c:1506
+#: src/common/session.c:1561
 msgid "bad session signature"
 msgstr "signature de session erronée"
 
-#: src/common/session.c:1517
+#: src/common/session.c:1572
 msgid "object id not found"
 msgstr "id objet non trouvé"
 
-#: src/common/session.c:1525
+#: src/common/session.c:1580
 msgid "failed to load server"
 msgstr "échec de chargement du serveur"
 
-#: src/common/session.c:1532
+#: src/common/session.c:1587
 msgid "failed to load channel"
 msgstr "échec de chargement du canal"
 
-#: src/common/session.c:1539
+#: src/common/session.c:1594
 msgid "failed to load nick"
 msgstr "échec de chargement du pseudo"
 
-#: src/common/session.c:1546
+#: src/common/session.c:1601
 msgid "failed to load DCC"
 msgstr "échec de chargement du DCC"
 
-#: src/common/session.c:1553
+#: src/common/session.c:1608
 msgid "failed to load history"
 msgstr "échec de chargement de l'historique"
 
-#: src/common/session.c:1560
+#: src/common/session.c:1615
 msgid "failed to load buffer"
 msgstr "échec de chargement du tampon"
 
-#: src/common/session.c:1567
+#: src/common/session.c:1622
 msgid "failed to load line"
 msgstr "échec de chargement de la ligne"
 
-#: src/common/session.c:1572
+#: src/common/session.c:1629
+msgid "failed to load uptime"
+msgstr "échec de chargement de l'uptime"
+
+#: src/common/session.c:1634
 #, c-format
 msgid "ignoring object (id: %d)\n"
 msgstr "objet ignoré (id: %d)\n"
 
-#: src/common/session.c:1576
+#: src/common/session.c:1638
 #, c-format
 msgid "failed to ignore object (id: %d)"
 msgstr "impossible d'ignorer l'objet (id: %d)"
 
-#: src/common/session.c:1600
+#: src/common/session.c:1662
 #, c-format
 msgid "%s can't delete session file (%s)\n"
 msgstr "%s impossible de supprimer le fichier de session (%s)\n"
 
-#: src/common/session.c:1606
+#: src/common/session.c:1668
 msgid "Upgrade completed successfully\n"
 msgstr "Mise à jour effectuée avec succès\n"
 

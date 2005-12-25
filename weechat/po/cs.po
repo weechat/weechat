@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.7-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-12-22 17:28+0100\n"
-"PO-Revision-Date: 2005-12-22 17:28+0100\n"
+"POT-Creation-Date: 2005-12-25 12:17+0100\n"
+"PO-Revision-Date: 2005-12-25 12:19+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -3534,13 +3534,13 @@ msgstr "****  Beginning of log  "
 msgid "****  End of log  "
 msgstr "****  End of log  "
 
-#: src/common/session.c:453
+#: src/common/session.c:471
 #, c-format
 msgid ""
 "Last operation with session file was at position %ld, read of %d bytes\n"
 msgstr "Poslední operace se souborem sezení bzla na pozici %ld, čtu %d bytů\n"
 
-#: src/common/session.c:458
+#: src/common/session.c:476
 #, c-format
 msgid ""
 "Please send ~/.weechat/%s, ~/.weechat/%s and above messages to WeeChat "
@@ -3551,284 +3551,297 @@ msgstr ""
 "WeeChat pro podporu.\n"
 "Opatrně v souborech můžou být soukromé informace.\n"
 
-#: src/common/session.c:482 src/common/session.c:516 src/common/session.c:573
-#: src/common/session.c:614
+#: src/common/session.c:500 src/common/session.c:534 src/common/session.c:591
+#: src/common/session.c:632
 #, c-format
 msgid "wrong type in file (expected: %d, read: %d)"
 msgstr "špatný typ v souboru (očekáván: %d, přečten: %d)"
 
-#: src/common/session.c:585 src/common/session.c:626
+#: src/common/session.c:603 src/common/session.c:644
 msgid "invalid length for a buffer"
 msgstr "nevalidní délka pro buffer"
 
-#: src/common/session.c:650
+#: src/common/session.c:668
 msgid "object read error"
 msgstr "chyba při čtení objektu"
 
-#: src/common/session.c:655
+#: src/common/session.c:673
 #, c-format
 msgid "wrong object (expected: %d, read: %d)"
 msgstr "špatný objekt (očekáván: %d, přečten: %d)"
 
-#: src/common/session.c:665
+#: src/common/session.c:683
 msgid "type read error"
 msgstr "chyba při čtení typu"
 
-#: src/common/session.c:670
+#: src/common/session.c:688
 #, c-format
 msgid "wrong type (expected: %d, read: %d)"
 msgstr "špatný typ (očekáván: %d, přečten: %d)"
 
-#: src/common/session.c:755
+#: src/common/session.c:773
 msgid "server name not found"
 msgstr "jméno serveru nenalezeno"
 
-#: src/common/session.c:760
+#: src/common/session.c:778
 #, c-format
 msgid "session: loading server \"%s\"\n"
 msgstr "sezeni: načítám server \"%s\"\n"
 
-#: src/common/session.c:764
+#: src/common/session.c:782
 msgid "server found, updating values\n"
 msgstr "server nalezen, aktualizuji hodnoty\n"
 
-#: src/common/session.c:767
+#: src/common/session.c:785
 msgid "server not found, creating new one\n"
 msgstr "server nenalezen, vytvářím nový\n"
 
-#: src/common/session.c:772
+#: src/common/session.c:790
 msgid "can't create new server"
 msgstr "nemohu vytvořit nový server"
 
-#: src/common/session.c:786
+#: src/common/session.c:804
 msgid "unexpected end of file (reading server)"
 msgstr "neočekávaný konec souboru (čtu server)"
 
-#: src/common/session.c:874
+#: src/common/session.c:892
 msgid "gnutls init error"
 msgstr "chyba při inicializaci gnutls"
 
-#: src/common/session.c:891
+#: src/common/session.c:909
 msgid "gnutls handshake failed"
 msgstr "selhalo spojení selhalo"
 
-#: src/common/session.c:934
+#: src/common/session.c:952
 #, c-format
 msgid "session: warning: ignoring value from server (object id: %d)\n"
 msgstr "sezení: upozornění: ignoruji hodnotu ze serveru (objekt id: %d)\n"
 
-#: src/common/session.c:956
+#: src/common/session.c:974
 msgid "channel found without server"
 msgstr "nalezen kanál bez serveru"
 
-#: src/common/session.c:963
+#: src/common/session.c:981
 msgid "channel type not found"
 msgstr "nenalezen typ kanálu"
 
-#: src/common/session.c:971
+#: src/common/session.c:989
 msgid "channel name not found"
 msgstr "jméno kanálu nenalezeno"
 
-#: src/common/session.c:976
+#: src/common/session.c:994
 #, c-format
 msgid "session: loading channel \"%s\"\n"
 msgstr "sezení: načítám kanál \"%s\"\n"
 
-#: src/common/session.c:984
+#: src/common/session.c:1002
 msgid "can't create new channel"
 msgstr "nemohu vytvořit nový kanál"
 
-#: src/common/session.c:994
+#: src/common/session.c:1012
 msgid "unexpected end of file (reading channel)"
 msgstr "neočekávaný konec souboru (čtení kanálu)"
 
-#: src/common/session.c:1024
+#: src/common/session.c:1042
 #, c-format
 msgid "session: warning: ignoring value from channel (object id: %d)\n"
 msgstr "sezení: upozornění: ignoruji hodnotu z kanálu (objekt id: %d)\n"
 
-#: src/common/session.c:1047
+#: src/common/session.c:1065
 msgid "nick found without channel"
 msgstr "nalezena přezdívka bez kanálu"
 
-#: src/common/session.c:1055
+#: src/common/session.c:1073
 msgid "nick name not found"
 msgstr "jméno přezdívky nenalezeno"
 
-#: src/common/session.c:1065
+#: src/common/session.c:1083
 msgid "can't create new nick"
 msgstr "nemohu vytvořit novou přezdívku"
 
-#: src/common/session.c:1075
+#: src/common/session.c:1093
 msgid "unexpected end of file (reading nick)"
 msgstr "neočekávaný konec souboru (čtení přezdívky)"
 
-#: src/common/session.c:1091
+#: src/common/session.c:1109
 #, c-format
 msgid "session: warning: ignoring value from nick (object id: %d)\n"
 msgstr "sezení: upozornění: ignoruji hodnotu z přezdívky (objekt id: %d)\n"
 
-#: src/common/session.c:1117
+#: src/common/session.c:1135
 msgid "can't create new DCC"
 msgstr "nemohu vytvořit nové DCC"
 
-#: src/common/session.c:1121
+#: src/common/session.c:1139
 msgid "session: loading DCC\n"
 msgstr "sezení: načítám DCC\n"
 
-#: src/common/session.c:1131
+#: src/common/session.c:1149
 msgid "unexpected end of file (reading DCC)"
 msgstr "neočekávaný konec souboru (čtení DCC)"
 
-#: src/common/session.c:1150
+#: src/common/session.c:1168
 msgid "server not found for DCC"
 msgstr "nenalezen server pro DCC"
 
-#: src/common/session.c:1159
+#: src/common/session.c:1177
 msgid "DCC with channel but without server"
 msgstr "DCC s kanálem ale bez serveru"
 
-#: src/common/session.c:1171
+#: src/common/session.c:1189
 msgid "channel not found for DCC"
 msgstr "nenalezen kanál pro DCC"
 
-#: src/common/session.c:1245
+#: src/common/session.c:1263
 #, c-format
 msgid "session: warning: ignoring value from DCC (object id: %d)\n"
 msgstr "sezení: upozornění: ignoruji hodnotu z DCC (objekt id: %d)\n"
 
-#: src/common/session.c:1265
+#: src/common/session.c:1283
 msgid "session: loading buffer history\n"
 msgstr "sezení: načítám historii bufferu\n"
 
-#: src/common/session.c:1267
+#: src/common/session.c:1285
 msgid "session: loading global history\n"
 msgstr "sezení: načátám globální historii\n"
 
-#: src/common/session.c:1275
+#: src/common/session.c:1293
 msgid "unexpected end of file (reading history)"
 msgstr "neočekávaný konec souboru (čtení historie)"
 
-#: src/common/session.c:1295
+#: src/common/session.c:1313
 #, c-format
 msgid "session: warning: ignoring value from history (object id: %d)\n"
 msgstr "sezení: upozornění: ignoruji hodnotu z historie (objekt id: %d)\n"
 
-#: src/common/session.c:1321
+#: src/common/session.c:1339
 msgid "server name not found for buffer"
 msgstr "nenalezeno jméno serveru pro buffer"
 
-#: src/common/session.c:1329
+#: src/common/session.c:1347
 msgid "channel name not found for buffer"
 msgstr "nenalezeno jméno kanálu pro buffer"
 
-#: src/common/session.c:1336
+#: src/common/session.c:1354
 msgid "dcc flag not found for buffer"
 msgstr "nenalezena dcc značka pro buffer"
 
-#: src/common/session.c:1341
+#: src/common/session.c:1359
 #, c-format
 msgid "session: loading buffer (server: %s, channel: %s, dcc: %d)\n"
 msgstr "sezení: načítám buffer (server: %s, kanál %s, dcc: %d)\n"
 
-#: src/common/session.c:1352
+#: src/common/session.c:1370
 msgid "server not found for buffer"
 msgstr "nenalezen server pro buffer"
 
-#: src/common/session.c:1362
+#: src/common/session.c:1380
 msgid "channel not found for buffer"
 msgstr "nenalezen kanál pro buffer"
 
-#: src/common/session.c:1370
+#: src/common/session.c:1388
 msgid "can't create new buffer"
 msgstr "nemohu vytvořit nový buffer"
 
-#: src/common/session.c:1383
+#: src/common/session.c:1401
 msgid "unexpected end of file (reading buffer)"
 msgstr "neočekávaný konec souboru (čtení bufferu)"
 
-#: src/common/session.c:1393
+#: src/common/session.c:1411
 #, c-format
 msgid "session: warning: ignoring value from buffer (object id: %d)\n"
 msgstr "sezení: upzornění: ignoruji hodnotu z bufferu (objekt id: %d)\n"
 
-#: src/common/session.c:1415
+#: src/common/session.c:1433
 msgid "line found without buffer"
 msgstr "nalezen řádek bez bufferu"
 
-#: src/common/session.c:1423
+#: src/common/session.c:1441
 msgid "can't create new line"
 msgstr "nemohu vytvořit nový řádek"
 
-#: src/common/session.c:1433
+#: src/common/session.c:1451
 msgid "unexpected end of file (reading line)"
 msgstr "neočekávaný konec souboru (čtení řádku)"
 
-#: src/common/session.c:1464
+#: src/common/session.c:1482
 #, c-format
 msgid "session: warning: ignoring value from line (object id: %d)\n"
 msgstr "sezení: upozornění: ignoruji hodnotu z řádku (objekt id: %d)\n"
 
-#: src/common/session.c:1494
+#: src/common/session.c:1506
+msgid "unexpected end of file (reading uptime)"
+msgstr ""
+
+#: src/common/session.c:1519
+#, c-format
+msgid "session: warning: ignoring value from uptime (object id: %d)\n"
+msgstr ""
+
+#: src/common/session.c:1549
 msgid "session file not found"
 msgstr "soubor se sezením nenalezen"
 
-#: src/common/session.c:1501
+#: src/common/session.c:1556
 msgid "signature not found"
 msgstr "podpis nenalezen"
 
-#: src/common/session.c:1506
+#: src/common/session.c:1561
 msgid "bad session signature"
 msgstr "špatný podpis sezení"
 
-#: src/common/session.c:1517
+#: src/common/session.c:1572
 msgid "object id not found"
 msgstr "id objektu nenalezeno"
 
-#: src/common/session.c:1525
+#: src/common/session.c:1580
 msgid "failed to load server"
 msgstr "selhalo načtení serveru"
 
-#: src/common/session.c:1532
+#: src/common/session.c:1587
 msgid "failed to load channel"
 msgstr "selhalo načtení kanálu"
 
-#: src/common/session.c:1539
+#: src/common/session.c:1594
 msgid "failed to load nick"
 msgstr "selhalo načtení přezdívky"
 
-#: src/common/session.c:1546
+#: src/common/session.c:1601
 msgid "failed to load DCC"
 msgstr "selhalo načtení DCC"
 
-#: src/common/session.c:1553
+#: src/common/session.c:1608
 msgid "failed to load history"
 msgstr "selhalo načtení historie"
 
-#: src/common/session.c:1560
+#: src/common/session.c:1615
 msgid "failed to load buffer"
 msgstr "selhalo načtení bufferu"
 
-#: src/common/session.c:1567
+#: src/common/session.c:1622
 msgid "failed to load line"
 msgstr "selhalo načtení řádku"
 
-#: src/common/session.c:1572
+#: src/common/session.c:1629
+msgid "failed to load uptime"
+msgstr ""
+
+#: src/common/session.c:1634
 #, c-format
 msgid "ignoring object (id: %d)\n"
 msgstr "ignoruji objekt (id: %d)\n"
 
-#: src/common/session.c:1576
+#: src/common/session.c:1638
 #, c-format
 msgid "failed to ignore object (id: %d)"
 msgstr "selhalo ignorování objektu (id: %d)"
 
-#: src/common/session.c:1600
+#: src/common/session.c:1662
 #, c-format
 msgid "%s can't delete session file (%s)\n"
 msgstr "%s nemohu smazat soubor se sezením (%s)\n"
 
-#: src/common/session.c:1606
+#: src/common/session.c:1668
 msgid "Upgrade completed successfully\n"
 msgstr "Aktualizace dokončena úspěšně\n"
 
