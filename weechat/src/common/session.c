@@ -405,6 +405,23 @@ session_save_buffers (FILE *file)
 }
 
 /*
+ * session_save_uptime: save uptime into session file
+ */
+
+int
+session_save_uptime (FILE *file)
+{
+    int rc;
+    
+    rc = 1;
+    
+    rc = rc && (session_write_id  (file, SESSION_OBJ_UPTIME));
+    rc = rc && (session_write_buf (file, SESSION_UPT_START_TIME, &weechat_start_time, sizeof (time_t)));
+    rc = rc && (session_write_id  (file, SESSION_UPT_END));
+    return rc;
+}
+
+/*
  * session_save: save current session
  */
 
@@ -423,6 +440,7 @@ session_save (char *filename)
     rc = rc && (session_save_dcc (file));
     rc = rc && (session_save_history (file, history_global_last));
     rc = rc && (session_save_buffers (file));
+    rc = rc && (session_save_uptime (file));
     
     fclose (file);
     
@@ -1471,6 +1489,43 @@ session_load_line (FILE *file)
 }
 
 /*
+ * session_load_uptime: load uptime from file
+ */
+
+int
+session_load_uptime (FILE *file)
+{
+    int object_id, rc;
+    
+    /* read uptime values */
+    rc = 1;
+    while (rc)
+    {
+        if (feof (file))
+        {
+            session_crash (file, _("unexpected end of file (reading uptime)"));
+            return 0;
+        }
+        if (fread ((void *)(&object_id), sizeof (int), 1, file) == 0)
+            return 0;
+        switch (object_id)
+        {
+            case SESSION_UPT_END:
+                return 1;
+            case SESSION_UPT_START_TIME:
+                rc = rc && (session_read_buf (file, &weechat_start_time, sizeof (time_t)));
+                break;
+            default:
+                weechat_log_printf (_("session: warning: ignoring value from "
+                                      "uptime (object id: %d)\n"));
+                rc = rc && (session_read_ignore_value (file));
+                break;
+        }
+    }
+    return 0;
+}
+
+/*
  * session_load: load session from file
  */
 
@@ -1565,6 +1620,13 @@ session_load (char *filename)
                 if (!session_load_line (file))
                 {
                     session_crash (file, _("failed to load line"));
+                    return 0;
+                }
+                break;
+            case SESSION_OBJ_UPTIME:
+                if (!session_load_uptime (file))
+                {
+                    session_crash (file, _("failed to load uptime"));
                     return 0;
                 }
                 break;

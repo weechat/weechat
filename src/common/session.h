@@ -44,6 +44,7 @@ enum t_session_object
     SESSION_OBJ_HISTORY,
     SESSION_OBJ_BUFFER,
     SESSION_OBJ_LINE,
+    SESSION_OBJ_UPTIME
 };
 
 enum t_session_server
@@ -87,7 +88,7 @@ enum t_session_server
     SESSION_SERV_LAG_NEXT_CHECK,
     SESSION_SERV_CHARSET_DECODE_ISO,
     SESSION_SERV_CHARSET_DECODE_UTF,
-    SESSION_SERV_CHARSET_ENCODE,
+    SESSION_SERV_CHARSET_ENCODE
 };
 
 enum t_session_channel
@@ -164,6 +165,12 @@ enum t_session_line
     SESSION_LINE_WITH_HIGHLIGHT,
     SESSION_LINE_DATA,
     SESSION_LINE_OFS_AFTER_DATE
+};
+
+enum t_session_uptime
+{
+    SESSION_UPT_END = 0,
+    SESSION_UPT_START_TIME
 };
 
 int session_save (char *filename);
