@@ -3053,7 +3053,7 @@ msgstr "Tampons ouverts:\n"
 #: src/common/command.c:1083
 #, c-format
 msgid "%s incorrect buffer number\n"
-msgstr "%s numéro de buffer incorrect\n"
+msgstr "%s numéro de tampon incorrect\n"
 
 #: src/common/command.c:1099
 #, c-format
@@ -4091,7 +4091,7 @@ msgid ""
 msgstr ""
 "jeu de caractères ISO pour décoder les messages du serveur (utilisé "
 "seulement si la locale est UTF-8) (si non renseigné, les messages ne sont "
-"pas concertis si la locale est UTF-8)"
+"pas convertis si la locale est UTF-8)"
 
 #: src/common/weeconfig.c:123
 msgid ""
@@ -4224,7 +4224,7 @@ msgstr "active la barre d'infos"
 
 #: src/common/weeconfig.c:194 src/common/weeconfig.c:195
 msgid "timestamp for time in infobar"
-msgstr "format de date/heure dans la barre d'info"
+msgstr "format de date/heure dans la barre d'infos"
 
 #: src/common/weeconfig.c:198 src/common/weeconfig.c:199
 msgid "display seconds in infobar time"
@@ -4302,7 +4302,7 @@ msgstr ""
 "si activé, utilise la vraie couleur blanche, désactivé par défaut pour les "
 "terminaux avec un fond blanc (si vous n'utilisez jamais de fond blanc, vous "
 "devriez activer cette option pour voir du vrai blanc au lieu de la couleur "
-"d'avant plant par défaut du terminal)"
+"d'avant plan par défaut du terminal)"
 
 #: src/common/weeconfig.c:304 src/common/weeconfig.c:305
 msgid "color for window separators (when splited)"
@@ -4358,7 +4358,7 @@ msgstr "couleur pour la flèche du part/quit (préfixe)"
 
 #: src/common/weeconfig.c:351
 msgid "color for nicks in actions"
-msgstr "couleur pour les noms d'utilisateur dans les actions"
+msgstr "couleur pour les noms d'utilisateurs dans les actions"
 
 #: src/common/weeconfig.c:352
 msgid "color for nicks in actions (chat window)"
@@ -4522,7 +4522,7 @@ msgstr "couleur pour le symbole du propriétaire du canal"
 #: src/common/weeconfig.c:472
 msgid "color for chan owner symbol (specific to unrealircd)"
 msgstr ""
-"couleur pour le symbole du propriétaire du canal (spécifique à unrealircd)"
+"couleur pour le symbole propriétaire du canal (spécifique à unrealircd)"
 
 #: src/common/weeconfig.c:475
 msgid "color for chan admin symbol"
@@ -4551,7 +4551,7 @@ msgstr "couleur pour les '+' lors du scroll sur les pseudos"
 
 #: src/common/weeconfig.c:495 src/common/weeconfig.c:496
 msgid "color for nick separator"
-msgstr "couleur pour le séparateur de pseudo"
+msgstr "couleur pour le séparateur de pseudos"
 
 #: src/common/weeconfig.c:499 src/common/weeconfig.c:500
 msgid "color for local nick"
@@ -4612,7 +4612,7 @@ msgstr "couleur pour le statut dcc \"interrompu\""
 
 #: src/common/weeconfig.c:592
 msgid "max lines in history (per window)"
-msgstr "nombre maxi de lignes dans l'historique (par fenêtre)"
+msgstr "nombre maximum de lignes dans l'historique (par fenêtre)"
 
 #: src/common/weeconfig.c:593
 msgid ""
@@ -4624,7 +4624,7 @@ msgstr ""
 
 #: src/common/weeconfig.c:597
 msgid "max user commands in history"
-msgstr "nombre maxi de commandes utilisateur dans l'historique"
+msgstr "nombre maximum de commandes utilisateur dans l'historique"
 
 #: src/common/weeconfig.c:598
 msgid "maximum number of user commands in history (0 = unlimited)"
@@ -4633,7 +4633,7 @@ msgstr ""
 
 #: src/common/weeconfig.c:601
 msgid "max commands to display"
-msgstr "nombre maxi de commandes à afficher"
+msgstr "nombre maximum de commandes à afficher"
 
 #: src/common/weeconfig.c:602
 msgid ""
@@ -4674,7 +4674,7 @@ msgstr "format de date/heure pour les conversations sauvegardées"
 #: src/common/weeconfig.c:640
 msgid "timestamp for log (see man strftime for date/time specifiers)"
 msgstr ""
-"format de date/heure pour les conversations sauvegardées (voir man strftime "
+"format de date/heure pour les conversations sauvegardées (voir strftime(3) "
 "pour le format de date/heure)"
 
 #: src/common/weeconfig.c:643 src/common/weeconfig.c:644
@@ -4760,7 +4760,7 @@ msgid ""
 "comma separated list of words to highlight (case insensitive comparison, "
 "words may begin or end with \"*\" for partial match)"
 msgstr ""
-"liste des mots pour la notification (séparés par des virgules, le "
+"liste des mots pour la notification (séparés par des virgules, la "
 "comparaison ne tient pas compte de la casse, les mots peuvent commencer ou "
 "se terminer par \"*\" pour une comparaison partielle)"
 
@@ -4842,7 +4842,7 @@ msgstr ""
 
 #: src/common/weeconfig.c:767
 msgid "path for incoming files with dcc"
-msgstr "chemin les fichiers reçus par dcc"
+msgstr "chemin des fichiers reçus par dcc"
 
 #: src/common/weeconfig.c:768
 msgid "path for writing incoming files with dcc (default: user home)"
@@ -5061,7 +5061,7 @@ msgid ""
 "2nd alternate nickname to use on IRC server (if alternate nickname is "
 "already used)"
 msgstr ""
-"2nd pseudo alternatif pour le serveur IRC (si le pseudo alternatif est déjà "
+"2ème pseudo alternatif pour le serveur IRC (si le pseudo alternatif est déjà "
 "utilisé)"
 
 #: src/common/weeconfig.c:917
