@@ -971,7 +971,7 @@ msgstr "un message du serveur"
 
 #: src/irc/irc-commands.c:329
 msgid "user mode string"
-msgstr "chaine de mode utilisateur"
+msgstr "chaîne de mode utilisateur"
 
 #: src/irc/irc-commands.c:371
 msgid "away message"
@@ -1071,7 +1071,7 @@ msgstr ""
 
 #: src/irc/irc-commands.c:418
 msgid "infos about topic (nick and date changed)"
-msgstr "infos sur le titre (utilisateur et date de changement)"
+msgstr "informations sur le titre (utilisateur et date de changement)"
 
 #: src/irc/irc-commands.c:420
 msgid "inviting"
@@ -1900,7 +1900,7 @@ msgstr "%s[%s%s%s] %s%s%s banni\n"
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\"\n"
 msgstr ""
-"%s: l'utilisateur \"%s\" est déjà en cours d'utilisation, essai avec le 2nd "
+"%s: l'utilisateur \"%s\" est déjà en cours d'utilisation, essai avec le 2ème "
 "nom d'utilisateur \"%s\"\n"
 
 #: src/irc/irc-recv.c:4672
@@ -2503,7 +2503,7 @@ msgstr "effacer la barre d'infos"
 
 #: src/gui/gui-keyboard.c:121
 msgid "refresh screen"
-msgstr "rafraichir l'écran"
+msgstr "rafraîchir l'écran"
 
 #: src/gui/gui-keyboard.c:123
 msgid "grab a key"
@@ -2630,7 +2630,7 @@ msgstr "nom_serveur: nom du serveur pour se déconnecter"
 
 #: src/common/command.c:82
 msgid "print debug messages"
-msgstr "affiche des messages de debuggage"
+msgstr "affiche des messages de debogage"
 
 #: src/common/command.c:83
 msgid "dump | windows"
@@ -2700,7 +2700,7 @@ msgstr ""
 " serveur: nom du serveur pour le ignore\n"
 "\n"
 "Pour chaque paramètre, '*' signifie tou(te)s.\n"
-"Sans paramètre, la commande /ignore liste les ignore définis."
+"Sans paramètres, la commande /ignore liste les ignore définis."
 
 #: src/common/command.c:107
 msgid "bind/unbind keys"
