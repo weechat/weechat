@@ -1,4 +1,4 @@
-# Copyright (c) 2003-2005 FlashCode <flashcode@flashtux.org>
+# Copyright (c) 2003-2006 FlashCode <flashcode@flashtux.org>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,17 +12,11 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
+
+SUBDIRS = fr en
 
 man_MANS = weechat-curses.1
 
-info_TEXINFOS = weechat_doc_fr.texi weechat_doc_en.texi \
-                weechat_doc_es.texi weechat_doc_pt.texi
-
-#weechat_TEXINFOS = weechat_doc_fr.texi weechat_doc_en.texi \
-#                   weechat_doc_es.texi weechat_doc_pt.texi
-
-AM_MAKEINFOHTMLFLAGS = --no-split --number-sections
-
-EXTRA_DIST = $(man_MANS)
+EXTRA_DIST = $(man_MANS) weechat-doc.css weechat-html-one.xsl weechat-html.xsl

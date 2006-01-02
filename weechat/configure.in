@@ -402,6 +402,8 @@ esac
 
 AC_OUTPUT([Makefile
            doc/Makefile
+           doc/fr/Makefile
+           doc/en/Makefile
            src/Makefile
            src/common/Makefile
            src/irc/Makefile

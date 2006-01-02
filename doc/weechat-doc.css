@@ -1,0 +1,49 @@
+/*
+ * WeeChat doc CSS
+ * (c) 2006 by FlashCode <flashcode@flashtux.org>
+ */
+
+body {
+  font-size: 12px;
+}
+
+table {
+  font-size: 12px;
+}
+
+.informaltable table {
+  font-size: 11px;
+  font-family: Verdana;
+  border-collapse: collapse;
+}
+
+.informaltable table th {
+  padding: 2px 5px 2px 5px;
+  border: solid 1px #AAAAAA;
+  background-color: #DDDDFF;
+}
+
+.informaltable table td {
+  padding: 2px 5px 2px 5px;
+  border: solid 1px #AAAAAA;
+}
+
+.oddrow {
+  background-color: #F0F0F0;
+}
+
+.synopsis { 
+  font-size: 11px;
+}
+
+.programlisting {
+  font-size: 11px;
+}
+
+pre.screen {
+  font-size: 11px;
+  background-color: #F5F5F5;
+  border: solid 1px #CCCCCC;
+  padding: 4px;
+  margin: 0 40px 0 40px;
+}

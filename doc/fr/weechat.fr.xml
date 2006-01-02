@@ -1,0 +1,3542 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+
+WeeChat documentation (french version)
+
+Copyright (c) 2003-2006 by FlashCode <flashcode@flashtux.org>
+
+This manual is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This manual is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+-->
+
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"file:///usr/share/xml/docbook/schema/dtd/4.2/docbookx.dtd"
+[
+  <!ENTITY config.xml SYSTEM "config.xml">
+  <!ENTITY weechat_commands.xml SYSTEM "weechat_commands.xml">
+  <!ENTITY irc_commands.xml SYSTEM "irc_commands.xml">
+  <!ENTITY key_functions.xml SYSTEM "key_functions.xml">
+]>
+
+<book lang="fr">
+  
+  <bookinfo>
+    
+    <title>WeeChat 0.1.7-cvs - Guide utilisateur</title>
+    <subtitle>Client IRC rapide, léger et extensible</subtitle>
+    
+    <author>
+      <firstname>Sébastien</firstname>
+      <surname>Helleu</surname>
+      <email>flashcode AT flashtux.org</email>
+    </author>
+    
+    <copyright>
+      <year>2006</year>
+      <holder>Sébastien Helleu</holder>
+    </copyright>
+    
+    <legalnotice>
+      <para>
+        This manual is free software; you can redistribute it and/or modify
+        it under the terms of the GNU General Public License as published by
+        the Free Software Foundation; either version 2 of the License, or
+        (at your option) any later version.
+      </para>
+      <para>
+        This program is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        GNU General Public License for more details.
+      </para>
+      <para>
+        You should have received a copy of the GNU General Public License
+        along with this program; if not, write to the Free Software
+        Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+        02111-1307 USA
+      </para>
+    </legalnotice>
+    
+    <abstract>
+      <para>
+        Ce manuel documente le client IRC WeeChat, il fait partie de WeeChat.
+      </para>
+      <para>
+        La dernière version de ce document peut être téléchargée
+        sur cette page :
+        <ulink url="http://weechat.flashtux.org/doc.php">
+          http://weechat.flashtux.org/doc.php
+        </ulink>
+      </para>
+    </abstract>
+    
+  </bookinfo>
+  
+  <!-- =========================== Introduction =========================== -->
+  
+  <chapter id="chapIntroduction">
+    <title>Introduction</title>
+    
+    <para>
+      Ce chapître décrit WeeChat et les pré-requis pour son installation.
+    </para>
+    
+    <section id="secDescription">
+      <title>Description</title>
+      
+      <para>
+        WeeChat (Wee Enhanced Environment for Chat) est un client
+        <acronym>IRC</acronym> libre, rapide et léger, conçu pour
+        différents systèmes d'exploitation.
+      </para>
+      
+      <para>
+        Ses principales caractéristiques sont les suivantes :
+        <itemizedlist>
+          <listitem>
+            <para>
+              connexion multi-serveurs (avec SSL, IPv6, proxy)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              plusieurs interfaces : Curses, wxWidgets, Gtk et Qt
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              petit, rapide et léger
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              paramétrable et extensible avec des extensions et des scripts
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              conforme aux <acronym>RFC</acronym>s
+              <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>,
+              <ulink url="http://www.ietf.org/rfc/rfc2810.txt">2810</ulink>,
+              <ulink url="http://www.ietf.org/rfc/rfc2811.txt">2811</ulink>,
+              <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink> et
+              <ulink url="http://www.ietf.org/rfc/rfc2813.txt">2813</ulink>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              multi-plateformes (GNU/Linux, *BSD, MacOS X, Windows et
+              d'autres systèmes)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              100% GPL, logiciel libre
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      
+      <para>
+        La page d'accueil de WeeChat est ici :
+        <ulink url="http://weechat.flashtux.org">
+          http://weechat.flashtux.org
+        </ulink>
+      </para>
+      
+    </section>
+    
+    <section id="secPreRequis">
+      <title>Pré-requis</title>
+      
+      <para>
+        Pour installer WeeChat, vous <emphasis>devez</emphasis> avoir :
+        <itemizedlist>
+          <listitem>
+            <para>
+              un système GNU/Linux (avec le compilateur et les outils
+              associés pour le paquet des sources)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              droits "root" (pour installer WeeChat)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              selon l'interface, une des bibliothèques
+              suivantes :
+              <itemizedlist>
+                <listitem>
+                  <para>
+                    Curses : la bibliothèque ncurses
+                  </para>
+                </listitem>
+                <listitem>
+                  <para>
+                    Gtk : <emphasis>*** interface non développée ***</emphasis>
+                  </para>
+                </listitem>
+                <listitem>
+                  <para>
+                    WxWidgets : <emphasis>*** interface non développée ***</emphasis>
+                  </para>
+                </listitem>
+                <listitem>
+                  <para>
+                    Qt : <emphasis>*** interface non développée ***</emphasis>
+                  </para>
+                </listitem>
+              </itemizedlist>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      
+    </section>
+  </chapter>
+  
+  <!-- =========================== Installation =========================== -->
+  
+  <chapter id="chapInstallation">
+    <title>Installation</title>
+    
+    <para>
+      Ce chapître explique comment installer WeeChat.
+    </para>
+    
+    <section id="secPaquetsBinaires">
+      <title>Paquets binaires</title>
+      
+      <para>
+        Les paquets binaires sont disponibles pour les distributions
+        suivantes :
+        <itemizedlist>
+          <listitem>
+            <para>
+              Debian (ou toute distribution compatible Debian) :
+              <userinput>apt-get install weechat</userinput>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Mandriva/RedHat (ou toute distribution compatible avec les RPM) :
+              <userinput>
+                rpm -i /chemin/weechat-x.y.z-1.i386.rpm
+              </userinput>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Gentoo :
+              <userinput>emerge weechat</userinput>
+            </para>
+          </listitem>
+        </itemizedlist>
+        
+        Pour les autres distributions supportées, merci de vous
+        référer au manuel de la distribution pour la méthode d'installation.
+      </para>
+      
+    </section>
+    
+    <section id="secPaquetSource">
+      <title>Paquet source</title>
+      
+      <para>
+        Tapez simplement dans une console ou un terminal :
+<screen><prompt>$ </prompt><userinput>./configure</userinput>
+<prompt>$ </prompt><userinput>make</userinput></screen>
+      </para>
+      <para>
+        Obtenez les droits root et installez WeeChat :
+<screen><prompt>$ </prompt><userinput>su</userinput>
+(entrez le mot de passe root)
+<prompt># </prompt><userinput>make install</userinput></screen>
+      </para>
+      
+    </section>
+    
+    <section id="secSourcesCVS">
+      <title>Sources CVS</title>
+      
+      <para>
+        Attention : les sources CVS sont réservées aux utilisateurs
+        avancés : il se peut que WeeChat ne compile pas et qu'il soit
+        très instable. Vous êtes prévenus !
+      </para>
+      
+      <para>
+        Pour récupérer les sources CVS, tapez cette commande :
+<screen><prompt>$ </prompt><userinput>cvs -z3 -d:pserver:anonymous@cvs.savannah.nongnu.org:/sources/weechat co weechat</userinput></screen>
+      </para>
+      
+      <para>
+        Exécutez ce script :
+        <userinput>./autogen.sh</userinput>
+      </para>
+      
+      <para>
+        Suivez alors les instructions du paquet source
+        (voir <xref linkend="secPaquetSource" />)
+      </para>
+      
+    </section>
+    
+  </chapter>
+  
+  <!-- =========================== Utilisation ============================ -->
+  
+  <chapter id="chapUtilisation">
+    <title>Utilisation</title>
+    
+    <para>
+      Ce chapître explique comment lancer WeeChat, les touches utilisées par
+      défaut, les commandes internes et IRC, le fichier de configuration et
+      l'utilisation du tube FIFO.
+    </para>
+    
+    <section id="secLancerWeeChat">
+      <title>Lancer WeeChat</title>
+      
+      <para>
+        Paramètres de ligne de commande :
+        <informaltable colsep="0" frame="none">
+          <tgroup cols="2">
+            <thead>
+              <row>
+                <entry>Paramètre</entry>
+                <entry>Description</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><literal>-a, --no-connect</literal></entry>
+                <entry>
+                  Supprimer la connexion automatique aux serveurs lors du démarrage
+                </entry>
+              </row>
+              <row>
+                <entry><literal>-c, --config</literal></entry>
+                <entry>
+                  Afficher l'aide sur le fichier de config (liste des options)
+                </entry>
+              </row>
+              <row>
+                <entry><literal>-f, --key-functions</literal></entry>
+                <entry>
+                  Afficher la liste des fonctions internes WeeChat pour les touches
+                </entry>
+              </row>
+              <row>
+                <entry><literal>-h, --help</literal></entry>
+                <entry>
+                  Afficher l'aide
+                </entry>
+              </row>
+              <row>
+                <entry><literal>-i, --irc-commands</literal></entry>
+                <entry>
+                  Afficher la liste des commandes IRC
+                </entry>
+              </row>
+              <row>
+                <entry><literal>-k, --keys</literal></entry>
+                <entry>
+                  Afficher les touches par défaut de WeeChat
+                </entry>
+              </row>
+              <row>
+                <entry><literal>-l, --license</literal></entry>
+                <entry>
+                  Afficher la licence de WeeChat
+                </entry>
+              </row>
+              <row>
+                <entry><literal>-p, --no-plugin</literal></entry>
+                <entry>
+                  Supprimer le chargement automatique des extensions au
+                  démarrage
+                </entry>
+              </row>
+              <row>
+                <entry><literal>-v, --version</literal></entry>
+                <entry>
+                  Afficher la version de WeeChat
+                </entry>
+              </row>
+              <row>
+                <entry><literal>-w, --weechat-commands</literal></entry>
+                <entry>
+                  Afficher la liste des commandes WeeChat
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </para>
+      
+      <para>
+        Il est également possible de passer une URL pour un ou plusieurs
+        serveurs IRC, de la forme :
+        <screen>irc[6][s]://[pseudo[:mot_passe]@]irc.exemple.org[:port][/canal][,canal[...]</screen>
+        Exemple pour rejoindre #weechat et #toto sur le serveur
+        "<literal>irc.freenode.net</literal>", port par défaut (6667), sous
+        le pseudo "nono" :
+        <screen><prompt>$ </prompt><userinput>weechat-curses irc://nono@irc.freenode.net/#weechat,#toto</userinput></screen>
+      </para>
+      
+      <para>
+        Pour lancer WeeChat, tapez cette commande :
+        <itemizedlist>
+          <listitem>
+            <para>
+              pour l'interface Curses : <userinput>weechat-curses</userinput>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              pour l'interface Gtk : <userinput>weechat-gtk</userinput>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              pour l'interface wxWidgets : <userinput>weechat-wxwidgets</userinput>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              pour l'interface Qt : <userinput>weechat-qt</userinput>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      
+      <para>
+        Lorsque vous lancez WeeChat pour la première fois, un fichier de
+        configuration par défaut est créé, avec les options par défaut.
+        Le fichier de configuration par défaut est :
+        "<literal>~/.weechat/weechat.rc</literal>"
+      </para>
+      
+      <para>
+        Vous pouvez éditer ce fichier pour configurer WeeChat à votre
+        convenance (SEULEMENT si WeeChat ne tourne pas), ou vous pouvez
+        modifier les paramètres dans WeeChat avec la commande
+        "<literal>/set</literal>"
+        (voir <xref linkend="secCommandesWeeChat" />)
+      </para>
+        
+    </section>
+    
+    <section id="secRaccourcisClavier">
+      <title>Raccourcis clavier</title>
+      
+      <para>
+        <informaltable colsep="0" frame="none">
+          <tgroup cols="2">
+            <thead>
+              <row>
+                <entry>Touche</entry>
+                <entry>Action</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry>Flèche gauche</entry>
+                <entry>
+                  Aller au caractère précédent sur la ligne de commande
+                </entry>
+              </row>
+              <row>
+                <entry>Flèche droite</entry>
+                <entry>
+                  Aller au caractère suivant sur la ligne de commande
+                </entry>
+              </row>
+              <row>
+                <entry>Ctrl + flèche gauche</entry>
+                <entry>
+                  Aller au mot précédent sur la ligne de commande
+                </entry>
+              </row>
+              <row>
+                <entry>Ctrl + flèche droite</entry>
+                <entry>
+                  Aller au mot suivant sur la ligne de commande
+                </entry>
+              </row>
+              <row>
+                <entry>Home / Ctrl + A</entry>
+                <entry>
+                  Aller au début de la ligne de commande
+                </entry>
+              </row>
+              <row>
+                <entry>End / Ctrl + E</entry>
+                <entry>
+                  Aller à la fin de la ligne de commande
+                </entry>
+              </row>
+              <row>
+                <entry>Ctrl + K</entry>
+                <entry>
+                  Effacer du curseur jusqu'à la fin de la ligne de commande
+                </entry>
+              </row>
+              <row>
+                <entry>Ctrl + L</entry>
+                <entry>
+                  Réafficher toute la fenêtre
+                </entry>
+              </row>
+              <row>
+                <entry>Ctrl + U</entry>
+                <entry>
+                  Effacer du curseur jusqu'au début de la ligne de commande
+                </entry>
+              </row>
+              <row>
+                <entry>Ctrl + W</entry>
+                <entry>
+                  Effacer le mot précédent sur la ligne de commande
+                </entry>
+              </row>
+              <row>
+                <entry>Backspace</entry>
+                <entry>
+                  Effacer le caractère précédent sur la ligne de commande
+                </entry>
+              </row>
+              <row>
+                <entry>Delete</entry>
+                <entry>
+                  Effacer le caractère suivant sur la ligne de commande
+                </entry>
+              </row>
+              <row>
+                <entry>Tab</entry>
+                <entry>
+                  Compléter la commande ou le pseudo
+                  (Tab de nouveau: trouver la complétion suivante)
+                </entry>
+              </row>
+              <row>
+                <entry>Tout caractère</entry>
+                <entry>
+                  Insérer le caractère à la position du curseur
+                  sur la ligne de commande
+                </entry>
+              </row>
+              <row>
+                <entry>Entrée</entry>
+                <entry>
+                  Exécuter la commande ou envoyer le message
+                </entry>
+              </row>
+              <row>
+                <entry>Flèche haut / flèche bas</entry>
+                <entry>
+                  Rappeler les dernières commandes ou messages
+                </entry>
+              </row>
+              <row>
+                <entry>Ctrl + flèche haut / Ctrl + flèche bas</entry>
+                <entry>
+                  Rappeler les dernières commandes ou messages dans
+                  l'historique global (commun à tous les tampons)
+                </entry>
+              </row>
+              <row>
+                <entry>PageUp / PageDown</entry>
+                <entry>
+                  Afficher l'historique du tampon
+                </entry>
+              </row>
+              <row>
+                <entry>F5 / Alt + flèche gauche</entry>
+                <entry>
+                  Aller au tampon précédent
+                </entry>
+              </row>
+              <row>
+                <entry>F6 / Alt + flèche droite</entry>
+                <entry>
+                  Aller au tampon suivant
+                </entry>
+              </row>
+              <row>
+                <entry>F7</entry>
+                <entry>
+                  Aller à la fenêtre précédente
+                </entry>
+              </row>
+              <row>
+                <entry>F8</entry>
+                <entry>
+                  Aller à la fenêtre suivante
+                </entry>
+              </row>
+              <row>
+                <entry>F10</entry>
+                <entry>
+                  Effacer le dernier message de la barre d'infos
+                </entry>
+              </row>
+              <row>
+                <entry>F11 / F12</entry>
+                <entry>
+                  Faire défiler la liste des pseudos
+                </entry>
+              </row>
+              <row>
+                <entry>Alt + Home / Alt + End</entry>
+                <entry>
+                  Aller au début / à la fin de la liste des pseudos
+                </entry>
+              </row>
+              <row>
+                <entry>Alt + A</entry>
+                <entry>
+                  Sauter au prochain tampon avec activité
+                  (avec priorité : highlight, message, autre)
+                </entry>
+              </row>
+              <row>
+                <entry>Alt + B</entry>
+                <entry>
+                  Aller au mot précédent
+                </entry>
+              </row>
+              <row>
+                <entry>Alt + D</entry>
+                <entry>
+                  Effacer le mot suivant
+                </entry>
+              </row>
+              <row>
+                <entry>Alt + F</entry>
+                <entry>
+                  Aller au mot suivant
+                </entry>
+              </row>
+              <row>
+                <entry>Alt + H</entry>
+                <entry>
+                  Vider la hotlist
+                  (notification d'actitivé sur les autres tampons)
+                </entry>
+              </row>
+              <row>
+                <entry>Alt + J puis Alt + D</entry>
+                <entry>
+                  Afficher le tampon des DCC
+                </entry>
+              </row>
+              <row>
+                <entry>Alt + J puis Alt + L</entry>
+                <entry>
+                  Sauter au dernier tampon
+                </entry>
+              </row>
+              <row>
+                <entry>Alt + J puis Alt + S</entry>
+                <entry>
+                  Sauter au tampon du serveur
+                </entry>
+              </row>
+              <row>
+                <entry>Alt + J puis Alt + X</entry>
+                <entry>
+                  Sauter au premier canal du serveur suivant
+                  (ou tampon du serveur si aucun canal n'est ouvert)
+                </entry>
+              </row>
+              <row>
+                <entry>Alt + chiffre (0-9)</entry>
+                <entry>
+                  Sauter au tampon qui porte ce numéro (0 = 10)
+                </entry>
+              </row>
+              <row>
+                <entry>Alt + J puis nombre (01-99)</entry>
+                <entry>
+                  Sauter au tampon qui porte ce numéro
+                </entry>
+              </row>
+              <row>
+                <entry>Alt + K</entry>
+                <entry>
+                  Capturer une touche et insérer son code sur la ligne
+                  de commande
+                </entry>
+              </row>
+              <row>
+                <entry>Alt + N</entry>
+                <entry>
+                  Se positionner sur le highlight suivant
+                </entry>
+              </row>
+              <row>
+                <entry>Alt + P</entry>
+                <entry>
+                  Se positionner sur le highlight précédent
+                </entry>
+              </row>
+              <row>
+                <entry>Alt + R</entry>
+                <entry>
+                  Effacer entièrement la ligne de commande
+                </entry>
+              </row>
+              <row>
+                <entry>Alt + S</entry>
+                <entry>
+                  Changer de serveur sur le tampon des serveurs
+                  (si l'option "look_one_server_buffer" est activée)
+                </entry>
+              </row>
+              <row>
+                <entry>Alt + U</entry>
+                <entry>
+                  Se positionner sur la première ligne non lue du tampon
+                </entry>
+              </row>
+              <row>
+                <entry>Alt + W puis Alt + flèche</entry>
+                <entry>
+                  Sauter à une fenêtre avec une direction
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </para>
+      
+    </section>
+    
+    <section id="secCommandesWeeChatIRC">
+      <title>Commandes WeeChat / IRC</title>
+      
+      <para>
+        Ce chapître liste toutes les commandes WeeChat et IRC.
+      </para>
+      
+      <section id="secCommandesWeeChat">
+        <title>Commandes WeeChat</title>
+        
+        <para>
+          &weechat_commands.xml;
+        </para>
+        
+      </section>
+      
+      <section id="secFonctionsTouches">
+        <title>Fonctions pour les touches</title>
+        
+        <para>
+          <informaltable colsep="0" frame="none">
+            <tgroup cols="2">
+              <thead>
+                <row>
+                  <entry>Fonction</entry>
+                  <entry>Description</entry>
+                </row>
+              </thead>
+              <tbody>
+                
+                &key_functions.xml;
+                
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </para>
+        
+      </section>
+      
+      <section id="secCommandesIRC">
+        <title>Commandes IRC</title>
+        
+        <para>
+          &irc_commands.xml;
+        </para>
+        
+      </section>
+        
+    </section>
+    
+    <section id="secFichierConfiguration">
+      <title>Fichier de configuration</title>
+      
+      <para>
+        Liste des options du fichier de configuration :
+        <informaltable colsep="0" frame="none">
+          <tgroup cols="2">
+            <thead>
+              <row>
+                <entry>Option</entry>
+                <entry>Type</entry>
+                <entry>Valeurs</entry>
+                <entry>Défaut</entry>
+                <entry>Description</entry>
+              </row>
+            </thead>
+            <tbody>
+              
+              &config.xml;
+              
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </para>
+      
+      <para>
+        Les couleurs pour l'interface Curses sont :
+        <informaltable colsep="0" frame="none">
+          <tgroup cols="2">
+            <thead>
+              <row>
+                <entry>Mot clé</entry>
+                <entry>Couleur</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><literal>default</literal></entry>
+                <entry>couleur par défaut (transparent pour le fond)</entry>
+              </row>
+              <row>
+                <entry><literal>black</literal></entry>
+                <entry>noir</entry>
+              </row>
+              <row>
+                <entry><literal>red</literal></entry>
+                <entry>rouge foncé</entry>
+              </row>
+              <row>
+                <entry><literal>lightred</literal></entry>
+                <entry>rouge clair</entry>
+              </row>
+              <row>
+                <entry><literal>green</literal></entry>
+                <entry>vert foncé</entry>
+              </row>
+              <row>
+                <entry><literal>lightgreen</literal></entry>
+                <entry>vert clair</entry>
+              </row>
+              <row>
+                <entry><literal>brown</literal></entry>
+                <entry>marron</entry>
+              </row>
+              <row>
+                <entry><literal>yellow</literal></entry>
+                <entry>jaune</entry>
+              </row>
+              <row>
+                <entry><literal>blue</literal></entry>
+                <entry>bleu foncé</entry>
+              </row>
+              <row>
+                <entry><literal>lightblue</literal></entry>
+                <entry>bleu clair</entry>
+              </row>
+              <row>
+                <entry><literal>magenta</literal></entry>
+                <entry>violet foncé</entry>
+              </row>
+              <row>
+                <entry><literal>lightmagenta</literal></entry>
+                <entry>violet clair</entry>
+              </row>
+              <row>
+                <entry><literal>cyan</literal></entry>
+                <entry>cyan foncé</entry>
+              </row>
+              <row>
+                <entry><literal>lightcyan</literal></entry>
+                <entry>cyan clair</entry>
+              </row>
+              <row>
+                <entry><literal>white</literal></entry>
+                <entry>blanc</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </para>
+      
+    </section>
+    
+    <section id="secTubeFIFO">
+      <title>Tube FIFO</title>
+      
+      <para>
+        Vous pouvez contrôler WeeChat à distance, en envoyant des commandes
+        ou du texte dans un tube FIFO (l'option "irc_fifo_pipe" doit être
+        activée, elle est désactivée par défaut).
+      </para>
+      
+      <para>
+        Le tube FIFO est dans le répertoire "<literal>~/.weechat/</literal>"
+        et s'appelle "weechat_fifo_xxxxx" (où xxxxx est l'ID du processus
+        (PID) du WeeChat qui tourne). Donc si plusieurs WeeChat tournent, il
+        y a plusieurs tubes FIFO, un pour chaque session.
+      </para>
+      
+      <para>
+        La syntaxe pour envoyer des commandes ou du texte dans le tube FIFO
+        est la suivante :
+        <screen>serveur,canal *texte ou commande ici</screen>
+        où le serveur et le canal sont facultatifs, mais si le canal est là,
+        le serveur doit l'être aussi.
+      </para>
+      
+      <para>
+        Quelques exemples :
+        <itemizedlist>
+          <listitem>
+            <para>
+              changement du pseudo sur freenode en "pseudo|absent" :
+              <screen><prompt>$ </prompt><userinput>echo "freenode */nick pseudo|absent" &gt;~/.weechat/weechat_fifo_12345</userinput></screen>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              affichage de texte sur le canal #weechat :
+              <screen><prompt>$ </prompt><userinput>echo "freenode,#weechat *bonjour tout le monde !" >~/.weechat/weechat_fifo_12345</userinput></screen>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              affichage de texte sur le canal courant (le tampon affiché
+              par WeeChat) :
+              <screen><prompt>$ </prompt><userinput>echo "*bonjour !" >~/.weechat/weechat_fifo_12345</userinput></screen>
+              <emphasis>Attention :</emphasis> ceci est dangereux et vous ne
+              devriez pas le faire sauf si vous savez ce que vous faites !
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              envoyer deux commandes pour décharger/recharger les scripts Perl
+              (vous devez les séparer par "\n") :
+              <screen><prompt>$ </prompt><userinput>echo -e "freenode */perl unload\nfreenode */perl autoload" >~/.weechat/weechat_fifo_12345</userinput></screen>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      
+      <para>
+        Vous pouvez écrire un script qui envoie les commandes à tous les
+        WeeChat qui tournent en même temps, par exemple :
+<screen>
+#!/bin/sh
+if [ $# -eq 1 ]; then
+    for fifo in $(/bin/ls ~/.weechat/weechat_fifo_* 2>/dev/null); do
+        echo -e "$1" >$fifo
+    done
+fi
+</screen>
+        Si le script s'appelle "auto_weechat_command", vous pouvez le lancer
+        ainsi :
+        <screen><prompt>$ </prompt><userinput>./auto_weechat_command "freenode,#weechat *bonjour"</userinput></screen>
+      </para>
+      
+    </section>
+    
+  </chapter>
+  
+  <!-- ============================ Extensions ============================ -->
+  
+  <chapter id="chapExtensions">
+    <title>Extensions</title>
+    
+    <para>
+      Ce chapître décrit l'interface des extensions (API) et les extensions
+      pour scripts (Perl, Python, Ruby), fournies avec WeeChat.
+    </para>
+    
+    <section id="secLesExtensionsDansWeeChat">
+      <title>Les extensions dans WeeChat</title>
+      
+      <para>
+        Une extension ("plugin" en anglais) est un programme écrit en C
+        qui peut appeler des fonctions de WeeChat définies dans une interface.
+      </para>
+      
+      <para>
+        Ce programme C n'a pas besoin des sources WeeChat pour être
+        compilé et peut être chargé/déchargé dynamiquement dans
+        WeeChat via la commande <command>/plugin</command>.
+      </para>
+      
+      <para>
+        L'extension doit être au format bibliothèque, chargeable
+        dynamiquement par le systême d'exploitation.
+        Sous GNU/Linux, il s'agit d'un fichier ayant pour extension ".so",
+        sous Windows ".dll".
+      </para>
+      
+    </section>
+    
+    <section id="secEcrireUneExtension">
+      <title>Ecrire une extension</title>
+      
+      <para>
+        L'extension doit inclure le fichier "weechat-plugin.h"
+        (disponible dans les sources de WeeChat).
+        Ce fichier définit les structures et types dont l'extension aura
+        besoin pour communiquer avec WeeChat.
+      </para>
+      
+      <para>
+        L'extension doit comporter certaines variables et fonctions
+        obligatoires (sans quoi l'extension ne peut être chargée) :        
+        <informaltable colsep="0" frame="none">
+          <tgroup cols="2">
+            <thead>
+              <row>
+                <entry>Variable</entry>
+                <entry>Description</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><literal>char plugin_name[]</literal></entry>
+                <entry>le nom de l'extension</entry>
+              </row>
+              <row>
+                <entry><literal>char plugin_version[]</literal></entry>
+                <entry>la version de l'extension</entry>
+              </row>
+              <row>
+                <entry><literal>char plugin_description[]</literal></entry>
+                <entry>une courte description de l'extension</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        
+        <informaltable colsep="0" frame="none">
+          <tgroup cols="2">
+            <thead>
+              <row>
+                <entry>Fonction</entry>
+                <entry>Description</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><literal>int weechat_plugin_init (t_weechat_plugin *plugin)</literal></entry>
+                <entry>
+                  fonction appelée au chargement de l'extension
+                  qui doit renvoyer PLUGIN_RC_OK en cas de succès,
+                  PLUGIN_RC_KO en cas d'erreur (si erreur, l'extension
+                  ne sera PAS chargée)
+                </entry>
+              </row>
+              <row>
+                <entry><literal>void weechat_plugin_end (t_weechat_plugin *plugin)</literal></entry>
+                <entry>fonction appelée au déchargement de l'extension</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </para>
+      
+      <section id="secFonctionsInterface">
+        <title>Fonctions de l'interface (API)</title>
+        
+        <section id="secAPI_ascii_strcasecmp">
+          <title>ascii_strcasecmp</title>
+          
+          <para>
+            Prototype :
+            <command>
+              int ascii_strcasecmp (t_weechat_plugin *plugin,
+              char *chaine1, char *chaine2)
+            </command>
+          </para>
+          <para>
+            Effectue une comparaison entre deux chaînes, sans tenir compte des
+            majuscules/minuscules ni de la locale.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>chaine1</option> : la première chaîne à comparer
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>chaine2</option> : la deuxième chaîne à comparer
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : la différence entre les deux chaînes : négatif
+            si chaine1 &lt; chaine2, zéro si chaine1 == chaine2, positif si
+            chaine1 &gt; chaine2
+          </para>
+          <para>
+            Exemple :
+            <screen>if (plugin->ascii_strcasecmp (plugin, "abc", "def") != 0) ...</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_ascii_strncasecmp">
+          <title>ascii_strncasecmp</title>
+          
+          <para>
+            Prototype :
+            <command>
+              int ascii_strncasecmp (t_weechat_plugin *plugin,
+              char *chaine1, char *chaine2, int max)
+            </command>
+          </para>
+          <para>
+            Effectue une comparaison entre deux chaînes, sans tenir compte des
+            majuscules/minuscules ni de la locale, en comparant au plus "max"
+            caractères.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>chaine1</option> : la première chaîne à comparer
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>chaine2</option> : la deuxième chaîne à comparer
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>max</option> : nombre de caractères max à comparer
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : la différence entre les deux chaînes : négatif
+            si chaine1 &lt; chaine2, zéro si chaine1 == chaine 2, positif si
+            chaine1 &gt; chaine2
+          </para>
+          <para>
+            Exemple :
+            <screen>if (plugin->ascii_strncasecmp (plugin, "abc", "def", 2) != 0) ...</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_explode_string">
+          <title>explode_string</title>
+          
+          <para>
+            Prototype :
+            <command>
+              char **explode_string (t_weechat_plugin *plugin, char *chaine,
+              char *separateurs, int num_items_max, int *num_items)
+            </command>
+          </para>
+          <para>
+            Explose une chaîne en plusieurs selon un/des délimiteur(s).
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>chaine</option> : la chaîne à exploser
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>separateurs</option> : les délimiteurs utilisés
+                  pour exploser la chaîne
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>num_items_max</option> : nombre maximum de
+                  sous-chaînes créées (0 = pas de limite)
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>num_items</option> : pointeur vers un entier qui
+                  contiendra le nombre de sous-chaînes créées en retour
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : un tableau de chaînes, ou NULL si un problème
+            a été rencontré.
+          </para>
+          <para>
+            Note : le résultat doit être libéré par un appel à la fonction
+            "free_exploded_string" après utilisation.
+          </para>
+          <para>
+            Exemple :
+<screen>
+char **argv;
+int argc;
+argv = plugin->explode_string (plugin, chaine, " ", 0, &amp;argc);
+...
+if (argv != NULL)
+    plugin->free_exploded_string (plugin, argv);
+</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_free_exploded_string">
+          <title>free_exploded_string</title>
+          
+          <para>
+            Prototype :
+            <command>
+              char **free_exploded_string (t_weechat_plugin *plugin,
+              char **chaine)
+            </command>
+          </para>
+          <para>
+            Libère la mémoire utilisée pour une explosion de chaîne.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>chaine</option> : la chaîne explosée par la fonction
+                  "explode_string"
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : aucune.
+          </para>
+          <para>
+            Exemple :
+<screen>
+char *argv;
+int argc;
+argv = plugin->explode_string (plugin, chaine, " ", 0, &amp;argc);
+...
+if (argv != NULL)
+    plugin->free_exploded_string (plugin, argv);
+</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_exec_on_files">
+          <title>exec_on_files</title>
+          
+          <para>
+            Prototype :
+            <command>
+              void exec_on_files (t_weechat_plugin *plugin, char *repertoire,
+              int (*callback)(t_weechat_plugin *, char *))
+            </command>
+          </para>
+          <para>
+            Exécute une fonction sur tous les fichiers d'un répertoire.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>repertoire</option> : le répertoire où les fichiers
+                  sont recherchés
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>callback</option> : une fonction appelée pour chaque
+                  fichier trouvé
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : aucune.
+          </para>
+          <para>
+            Exemple :
+<screen>
+int callback (t_weechat_plugin *plugin, char *fichier)
+{
+    plugin->printf_server (plugin, "fichier: %s", fichier);
+    return 1;
+}
+...
+plugin->exec_on_files (plugin, "/tmp", &amp;callback);
+</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_printf">
+          <title>printf</title>
+          
+          <para>
+            Prototype :
+            <command>
+              void printf (t_weechat_plugin *plugin,
+              char *serveur, char *canal, char *message, ...)
+            </command>
+          </para>
+          <para>
+            Affiche un message sur un tampon WeeChat, identifié par le serveur
+            et le canal (tous deux pouvant être NULL pour le tampon courant).
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>serveur</option> : nom interne du serveur pour
+                  trouver le tampon dans lequel afficher (peut être NULL)
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>canal</option> : nom du canal pour trouver le
+                  tampon dans lequel afficher (peut être NULL)
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>message</option> : message à afficher
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : aucune.
+          </para>
+          <para>
+            Exemples :
+<screen>
+plugin->printf (plugin, NULL, NULL, "hello");
+plugin->printf (plugin, NULL, "#weechat", "hello");
+plugin->printf (plugin, "freenode", "#weechat", "hello");
+</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_printf_server">
+          <title>printf_server</title>
+          
+          <para>
+            Prototype :
+            <command>
+              void printf_server (t_weechat_plugin *plugin,
+              char *message, ...)
+            </command>
+          </para>
+          <para>
+            Affiche un message sur le tampon du serveur courant.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>message</option> : message à afficher
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : aucune.
+          </para>
+          <para>
+            Exemple : <screen>plugin->printf_server (plugin, "hello");</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_printf_infobar">
+          <title>printf_infobar</title>
+          
+          <para>
+            Prototype :
+            <command>
+              void printf_infobar (t_weechat_plugin *plugin,
+              int temps, char *message, ...)
+            </command>
+          </para>
+          <para>
+            Affiche un message sur la barre d'infos pour un temps déterminé.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>temps</option> : temps (en secondes) pendant lequel
+                  le message est affiché (0 = jamais effacé)
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : aucune.
+          </para>
+          <para>
+            Exemple : <screen>plugin->printf_infobar (plugin, 5, "hello");</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_msg_handler_add">
+          <title>msg_handler_add</title>
+          
+          <para>
+            Prototype :
+            <command>
+              t_plugin_handler *msg_handler_add (t_weechat_plugin
+              *plugin, char *message, t_plugin_handler_func *fonction,
+              char *handler_args, void *handler_pointer)
+            </command>
+          </para>
+          <para>
+            Ajoute un gestionnaire de messages IRC, appelé dès qu'un message
+            IRC est reçu.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>message</option> : nom du message IRC pour lequel la
+                  fonction est appelée.
+                  Pour connaître la liste des messages IRC disponibles, merci
+                  de consulter les <acronym>RFC</acronym>s
+                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink> et
+                  <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>fonction</option> : fonction appelée lorsque le
+                  message est reçu
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>handler_args</option> : paramètres passés à la
+                  fonction appelée
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>handler_pointer</option> : pointeur passé à la
+                  fonction appelée
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : le pointeur vers le nouveau gestionnaire de
+            messages.
+          </para>
+          <para>
+            Note : la fonction appelée lorsque le message est reçu doit
+            renvoyer une des valeurs suivantes :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_KO</literal> : la fonction a échoué
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_OK</literal> : la fonction a réussi
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_OK_IGNORE_WEECHAT</literal> : le message
+                  ne sera pas transmis à WeeChat
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_OK_IGNORE_PLUGINS</literal> : le message
+                  ne sera pas transmis à d'autres extensions
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_OK_IGNORE_ALL</literal> : le message
+                  ne sera ni transmis à WeeChat ni à d'autres extensions
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Exemple :
+<screen>
+int msg_kick (t_weechat_plugin *plugin, char *serveur, char *commande,
+              char *arguments, char *handler_args, void *handler_pointer)
+{
+    plugin->printf (plugin, serveur, NULL, "KICK reçu");
+    return PLUGIN_RC_OK;
+}
+...
+plugin->msg_handler_add (plugin, "KICK", &amp;msg_kick, NULL, NULL);
+</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_cmd_handler_add">
+          <title>cmd_handler_add</title>
+          
+          <para>
+            Prototype :
+            <command>
+              t_plugin_handler *cmd_handler_add (t_weechat_plugin
+              *plugin, char *commande, char *description, char *arguments,
+              char *arguments_description, char *modele_completion,
+              t_plugin_handler_func *fonction, char *handler_args,
+              void *handler_pointer)
+            </command>
+          </para>
+          <para>
+            Ajoute un gestionnaire de commande WeeChat, appelé dès que
+            l'utilisateur utilise la commande (par exemple /commande).
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>commande</option> : nom de la nouvelle commande,
+                  qui peut être une commande déjà existante (attention la
+                  commande remplacée ne sera plus disponible jusqu'à ce que
+                  l'extension soit déchargée)
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>description</option> : brève description de la
+                  commande (affichée par /help commande)
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>arguments</option> : brève description des
+                  paramètres de la commande (affichée par /help commande)
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>arguments_description</option> : longue description
+                  des paramètres de la commande (affichée par /help commande)
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>modele_completion</option> : modèle pour la
+                  complétion sous la forme "<literal>abc|%w def|%i</literal>"
+                  qui signigie "abc" ou une commande WeeChat pour le premier
+                  paramètre, et "def" ou une commande IRC pour le deuxième.
+                  Une chaîne vide indique à WeeChat de compléter tout
+                  paramètre avec un pseudo du canal courant, une valeur NULL
+                  désactive toute complétion pour tous les paramètres de la
+                  commande.
+                </para>
+                <para>
+                  Les codes suivants peuvent être utilisés :
+                  <informaltable colsep="0" frame="none">
+                    <tgroup cols="2">
+                      <thead>
+                        <row>
+                          <entry>Code</entry>
+                          <entry>Description</entry>
+                        </row>
+                      </thead>
+                      <tbody>
+                        <row>
+                          <entry><literal>%-</literal></entry>
+                          <entry>aucune complétion pour le paramètre</entry>
+                        </row>
+                        <row>
+                          <entry><literal>%a</literal></entry>
+                          <entry>alias</entry>
+                        </row>
+                        <row>
+                          <entry><literal>%A</literal></entry>
+                          <entry>
+                            alias et commandes (WeeChat, IRC et extensions)
+                          </entry>
+                        </row>
+                        <row>
+                          <entry><literal>%c</literal></entry>
+                          <entry>canal courant</entry>
+                        </row>
+                        <row>
+                          <entry><literal>%C</literal></entry>
+                          <entry>canaux du serveur courant</entry>
+                        </row>
+                        <row>
+                          <entry><literal>%f</literal></entry>
+                          <entry>nom de fichier</entry>
+                        </row>
+                        <row>
+                          <entry><literal>%h</literal></entry>
+                          <entry>commandes définies par des extensions</entry>
+                        </row>
+                        <row>
+                          <entry><literal>%i</literal></entry>
+                          <entry>commandes IRC (envoyées)</entry>
+                        </row>
+                        <row>
+                          <entry><literal>%I</literal></entry>
+                          <entry>commandes IRC (reçues)</entry>
+                        </row>
+                        <row>
+                          <entry><literal>%k</literal></entry>
+                          <entry>fonctions associées aux touches</entry>
+                        </row>
+                        <row>
+                          <entry><literal>%n</literal></entry>
+                          <entry>pseudos du canal courant</entry>
+                        </row>
+                        <row>
+                          <entry><literal>%o</literal></entry>
+                          <entry>options de configuration</entry>
+                        </row>
+                        <row>
+                          <entry><literal>%p</literal></entry>
+                          <entry>message de "part" par défaut</entry>
+                        </row>
+                        <row>
+                          <entry><literal>%q</literal></entry>
+                          <entry>message de "quit" par défaut</entry>
+                        </row>
+                        <row>
+                          <entry><literal>%s</literal></entry>
+                          <entry>nom du serveur courant</entry>
+                        </row>
+                        <row>
+                          <entry><literal>%S</literal></entry>
+                          <entry>tous les serveurs</entry>
+                        </row>
+                        <row>
+                          <entry><literal>%t</literal></entry>
+                          <entry>titre du canal courant</entry>
+                        </row>
+                        <row>
+                          <entry><literal>%v</literal></entry>
+                          <entry>valeur d'une option de configuration</entry>
+                        </row>
+                        <row>
+                          <entry><literal>%w</literal></entry>
+                          <entry>commandes WeeChat</entry>
+                        </row>
+                        <row>
+                          <entry><literal>%y</literal></entry>
+                          <entry>message d'absence ("away") par défaut</entry>
+                        </row>
+                      </tbody>
+                    </tgroup>
+                  </informaltable>
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>fonction</option> : fonction appelée lorsque la
+                  commande est exécutée
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>handler_args</option> : paramètres passés à la
+                  fonction appelée
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>handler_pointer</option> : pointeur passé à la
+                  fonction appelée
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : le pointeur vers le nouveau gestionnaire de
+            commande.
+          </para>
+          <para>
+            Note : la fonction appelée lorsque la commande est exécutée doit
+            renvoyer une des valeurs suivantes :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_KO</literal> : la fonction a échoué
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_OK</literal> : la fonction a réussi
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Exemple :
+<screen>
+int cmd_test (t_weechat_plugin *plugin, char *serveur,
+              char *commande, char *arguments, char *handler_args,
+              void *handler_pointer)
+{
+    plugin->printf (plugin, serveur, NULL,
+                    "commande test, pseudo: %s",
+                    (arguments) ? arguments : "aucun");
+    return PLUGIN_RC_OK;
+}
+...
+plugin->cmd_handler_add (plugin, "test", "Commande test",
+                         "[pesudo]", "pseudo: un pseudo du canal",
+                         "%n", &amp;cmd_test, NULL, NULL);
+</screen>
+          </para>
+
+        </section>
+        
+        <section id="secAPI_handler_remove">
+          <title>handler_remove</title>
+          
+          <para>
+            Prototype :
+            <command>
+              void handler_remove (t_weechat_plugin *plugin,
+              t_plugin_handler *handler)
+            </command>
+          </para>
+          <para>
+            Supprime un gestionnaire.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>handler</option> : le gestionnaire à supprimer
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : aucune.
+          </para>
+          <para>
+            Exemple :
+            <screen>plugin->handler_remove (plugin, mon_handler);</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_handler_remove_all">
+          <title>handler_remove_all</title>
+          
+          <para>
+            Prototype :
+            <command>
+              void handler_remove_all (t_weechat_plugin *plugin)
+            </command>
+          </para>
+          <para>
+            Supprime tous les gestionnaires d'une extension.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : aucune.
+          </para>
+          <para>
+            Exemple :
+            <screen>plugin->handler_remove_all (plugin);</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_exec_command">
+          <title>exec_command</title>
+          
+          <para>
+            Prototype :
+            <command>
+              void exec_command (t_weechat_plugin
+              *plugin, char *serveur, char *canal, char *commande)
+            </command>
+          </para>
+          <para>
+            Execute une commande WeeChat ou envoie un message à un canal.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>serveur</option> : nom interne du serveur où
+                  exécuter la commande (peut être NULL)
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>canal</option> : nom du canal où exécuter la
+                  commande (peut être NULL)
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>commande</option> : la commande à exécuter
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : aucune.
+          </para>
+          <para>
+            Exemples :
+<screen>
+plugin->exec_command (plugin, NULL, NULL, "/help nick");
+plugin->exec_command (plugin, "freenode", "#weechat", "bonjour");
+</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_get_info">
+          <title>get_info</title>
+          
+          <para>
+            Prototype :
+            <command>
+              char *get_info (t_weechat_plugin *plugin,
+              char *info, char *serveur)
+            </command>
+          </para>
+          <para>
+            Renvoie une information sur WeeChat ou un canal.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>info</option> : nom de l'info à obtenir :
+                  <informaltable colsep="0" frame="none">
+                    <tgroup cols="2">
+                      <thead>
+                        <row>
+                          <entry>Info</entry>
+                          <entry>Description</entry>
+                        </row>
+                      </thead>
+                      <tbody>
+                        <row>
+                          <entry><literal>version</literal></entry>
+                          <entry>version de WeeChat</entry>
+                        </row>
+                        <row>
+                          <entry><literal>nick</literal></entry>
+                          <entry>pesudo</entry>
+                        </row>
+                        <row>
+                          <entry><literal>channel</literal></entry>
+                          <entry>
+                            nom du canal (NULL pour un serveur ou un privé)
+                          </entry>
+                        </row>
+                        <row>
+                          <entry><literal>server</literal></entry>
+                          <entry>nom du serveur</entry>
+                        </row>
+                        <row>
+                          <entry><literal>away</literal></entry>
+                          <entry>drapeau "away"</entry>
+                        </row>
+                        <row>
+                          <entry><literal>weechat_dir</literal></entry>
+                          <entry>
+                            répertoire maison de WeeChat
+                            (par défaut: ~/.weechat/)
+                          </entry>
+                        </row>
+                        <row>
+                          <entry><literal>weechat_libdir</literal></entry>
+                          <entry>répertoire "lib" système de WeeChat</entry>
+                        </row>
+                        <row>
+                          <entry><literal>weechat_sharedir</literal></entry>
+                          <entry>répertoire "share" système de WeeChat</entry>
+                        </row>
+                      </tbody>
+                    </tgroup>
+                  </informaltable>
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>serveur</option> : nom interne du serveur où
+                  récupérer l'information (si nécessaire)
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : l'information recherchée, NULL si non trouvée.
+          </para>
+          <para>
+            Note : le résultat doit être libéré par un appel à la fonction
+            "free" après utilisation.
+          </para>
+          <para>
+            Exemples :
+<screen>
+char *version = plugin->get_info (plugin, "version", NULL);
+char *nick = plugin->get_info (plugin, "nick", "freenode");
+</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_get_dcc_info">
+          <title>get_dcc_info</title>
+          
+          <para>
+            Prototype :
+            <command>
+              t_plugin_info_dcc *get_dcc_info (t_weechat_plugin *plugin)
+            </command>
+          </para>
+          <para>
+            Renvoie la liste des DCC en cours ou terminés.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : la liste chaînée des DCC.
+            <informaltable colsep="0" frame="none">
+              <tgroup cols="2">
+                <thead>
+                  <row>
+                    <entry>Champ</entry>
+                    <entry>Description</entry>
+                  </row>
+                </thead>
+                <tbody>
+                  <row>
+                    <entry><literal>server</literal></entry>
+                    <entry>le serveur IRC</entry>
+                  </row>
+                  <row>
+                    <entry><literal>channel</literal></entry>
+                    <entry>le canal IRC</entry>
+                  </row>
+                  <row>
+                    <entry><literal>type</literal></entry>
+                    <entry>
+                      le type de DCC :
+                      0 = discussion reçue,
+                      1 = discussion envoyée,
+                      2 = fichier reçu,
+                      3 = fichier envoyé
+                    </entry>
+                  </row>
+                  <row>
+                    <entry><literal>status</literal></entry>
+                    <entry>
+                      le statut du DCC :
+                      0 = en attente,
+                      1 = en cours de connexion,
+                      2 = actif,
+                      3 = terminé,
+                      4 = échoué,
+                      5 = interrompu par l'utilisateur
+                    </entry>
+                  </row>
+                  <row>
+                    <entry><literal>start_time</literal></entry>
+                    <entry>la date et heure de création du DCC</entry>
+                  </row>
+                  <row>
+                    <entry><literal>start_transfer</literal></entry>
+                    <entry>la date et heure de démarrage du transfert</entry>
+                  </row>
+                  <row>
+                    <entry><literal>addr</literal></entry>
+                    <entry>adresse IP de l'utilisateur distant</entry>
+                  </row>
+                  <row>
+                    <entry><literal>port</literal></entry>
+                    <entry>port utilisé pour le DCC</entry>
+                  </row>
+                  <row>
+                    <entry><literal>nick</literal></entry>
+                    <entry>pseudo de l'utilisateur distant</entry>
+                  </row>
+                  <row>
+                    <entry><literal>filename</literal></entry>
+                    <entry>nom de fichier</entry>
+                  </row>
+                  <row>
+                    <entry><literal>local_filename</literal></entry>
+                    <entry>nom de fichier local</entry>
+                  </row>
+                  <row>
+                    <entry><literal>size</literal></entry>
+                    <entry>taille du fichier</entry>
+                  </row>
+                  <row>
+                    <entry><literal>pos</literal></entry>
+                    <entry>position actuelle dans le fichier</entry>
+                  </row>
+                  <row>
+                    <entry><literal>start_resume</literal></entry>
+                    <entry>position de démarrage après une interruption</entry>
+                  </row>
+                  <row>
+                    <entry><literal>bytes_per_sec</literal></entry>
+                    <entry>
+                      nombre d'octets transmis par seconde depuis le début
+                      du transfert
+                    </entry>
+                  </row>
+                </tbody>
+              </tgroup>
+            </informaltable>
+          </para>
+          <para>
+            Note : le résultat doit être libéré par un appel à la fonction
+            "free_dcc_info" après utilisation.
+          </para>
+          <para>
+            Exemples :
+<screen>
+t_plugin_dcc_info *dcc_info = plugin->get_dcc_info (plugin);
+for (ptr_dcc = dcc_info; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
+{
+    plugin->printf_server (plugin, "DCC type=%d, avec: %s",
+                           ptr_dcc->type, ptr_dcc->nick);
+}
+if (dcc_info)
+    plugin->free_dcc_info (plugin, dcc_info);
+</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_free_dcc_info">
+          <title>free_dcc_info</title>
+          
+          <para>
+            Prototype :
+            <command>
+              void free_dcc_info (t_weechat_plugin *plugin,
+              t_plugin_dcc_info *dcc_info)
+            </command>
+          </para>
+          <para>
+            Libère la mémoire utilisée par une liste de DCC.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>dcc_info</option> : pointeur vers la liste DCC
+                  renvoyée par la fonction "get_dcc_info"
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : aucune.
+          </para>
+          <para>
+            Exemple :
+            <screen>plugin->free_dcc_info (plugin, dcc_info);</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_get_config">
+          <title>get_config</title>
+          
+          <para>
+            Prototype :
+            <command>
+              char *get_config (t_weechat_plugin *plugin, char *option)
+            </command>
+          </para>
+          <para>
+            Renvoie la valeur d'une option de configuration WeeChat.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>option</option> : nom de l'option à lire
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : la valeur de l'option, NULL si non trouvée.
+          </para>
+          <para>
+            Note : le résultat doit être libéré par un appel à la fonction
+            "free" après utilisation.
+          </para>
+          <para>
+            Exemples :
+<screen>
+char *value1 = plugin->get_config (plugin, "look_set_title");
+char *value2 = plugin->get_config (plugin, "freenode.server_autojoin");
+</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_set_config">
+          <title>set_config</title>
+          
+          <para>
+            Prototype :
+            <command>
+              int set_config (t_weechat_plugin *plugin,
+              char *option, char *valeur)
+            </command>
+          </para>
+          <para>
+            Modifie la valeur d'une option de configuration WeeChat.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>option</option> : nom de l'option à mettre à jour
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>valeur</option> : nouvelle valeur pour l'option
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : 1 si l'option a été modifiée avec succès, 0 si
+            une erreur s'est produite.
+          </para>
+          <para>
+            Exemple :
+<screen>
+plugin->set_config (plugin, "look_nicklist", "off");
+</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_get_plugin_config">
+          <title>get_plugin_config</title>
+          
+          <para>
+            Prototype :
+            <command>
+              char *get_plugin_config (t_weechat_plugin *plugin, char *option)
+            </command>
+          </para>
+          <para>
+            Renvoie la valeur d'une option de l'extension.
+            L'option est lue depuis le fichier
+            "<literal>~/.weechat/plugins.rc</literal>" et est
+            sous cette forme : "<literal>extension.option=valeur</literal>"
+            (NB : le nom de l'extension est ajouté automatiquement).
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>option</option> : nom de l'option à lire
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : la valeur de l'option, NULL si non trouvée.
+          </para>
+          <para>
+            Note : le résultat doit être libéré par un appel à la fonction
+            "free" après utilisation.
+          </para>
+          <para>
+            Exemple :
+<screen>
+char *value = plugin->get_plugin_config (plugin, "ma_variable");
+</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_set_plugin_config">
+          <title>set_plugin_config</title>
+          
+          <para>
+            Prototype :
+            <command>
+              int set_plugin_config (t_weechat_plugin *plugin,
+              char *option, char *valeur)
+            </command>
+          </para>
+          <para>
+            Modifie la valeur d'une option de l'extension.
+            L'option est écrite dans le fichier
+            "<literal>~/.weechat/plugins.rc</literal>" et est
+            sous cette forme : "<literal>extension.option=valeur</literal>"
+            (NB : le nom de l'extension est ajouté automatiquement).
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>option</option> : nom de l'option à mettre à jour
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>valeur</option> : nouvelle valeur pour l'option
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : 1 si l'option a été modifiée avec succès, 0 si
+            une erreur s'est produite.
+          </para>
+          <para>
+            Exemple :
+<screen>
+plugin->set_plugin_config (plugin, "ma_variable", "valeur");
+</screen>
+          </para>
+        </section>
+        
+      </section>
+      
+      <section id="secCompilerExtension">
+        <title>Compiler l'extension</title>
+        
+        <para>
+          La compilation ne nécessite pas les sources WeeChat, mais seulement
+          le fichier "<literal>weechat-plugin.h</literal>".
+        </para>
+        
+        <para>
+          Pour compiler une extension composée d'un fichier "toto.c" (sous
+          GNU/Linux) :
+<screen>
+<prompt>$ </prompt><userinput>gcc -fPIC -Wall -c toto.c</userinput>
+<prompt>$ </prompt><userinput>gcc -shared -fPIC -o libtoto.so toto.o</userinput>
+</screen>
+        </para>
+        
+      </section>
+      
+      <section id="secChargerExtension">
+        <title>Charger l'extension dans WeeChat</title>
+        
+        <para>
+          Copier le fichier "libtoto.so" dans le répertoire système des
+          extensions (par exemple
+          "<literal>/usr/local/lib/weechat/plugins)</literal>" ou bien dans
+          celui de l'utilisateur (par exemple
+          "<literal>/home/xxxxx/.weechat/plugins</literal>").
+        </para>
+        
+        <para>
+          Sous WeeChat :
+          <screen><userinput>/plugin load toto</userinput></screen>
+        </para>
+        
+      </section>
+      
+      <section id="secExempleExtension">
+        <title>Exemple d'extension</title>
+        
+        <para>
+          Un exemple complet d'extension, qui ajoute une commande /double
+          affichant deux fois les paramètres passés sur le canal courant
+          (d'accord ce n'est pas très utile mais ceci est un exemple !) :
+<screen>
+#include &lt;stdlib.h&gt;
+
+#include "weechat-plugin.h"
+
+char plugin_name[]        = "Double";
+char plugin_version[]     = "0.1";
+char plugin_description[] = "Plugin de test pour WeeChat";
+
+/* gestionnaire de commande "/double" */
+
+int double_cmd (t_weechat_plugin *plugin, char *serveur,
+                char *commande, char *arguments,
+                char *handler_args, void *handler_pointer)
+{
+    if (arguments &amp;&amp; arguments[0] &amp;&amp; (arguments[0] != '/'))
+    {
+        plugin->exec_command (plugin, NULL, NULL, arguments);
+        plugin->exec_command (plugin, NULL, NULL, arguments);
+    }
+    return PLUGIN_RC_OK;
+}
+
+int weechat_plugin_init (t_weechat_plugin *plugin)
+{
+    plugin->cmd_handler_add (plugin, "double",
+                             "Affiche deux fois un message",
+                             "msg",
+                             "msg: message a afficher deux fois",
+                             NULL,
+                             &amp;double_cmd,
+                             NULL, NULL);
+    return PLUGIN_RC_OK;
+}
+
+void weechat_plugin_end (t_weechat_plugin *plugin)
+{
+    /* on ne fait rien ici */
+}
+</screen>
+        </para>
+        
+      </section>
+      
+    </section>
+    
+    <section id="secExtensionsScripts">
+      <title>Extensions pour scripts</title>
+      
+      <para>
+        Trois extensions sont fournies en standard avec WeeChat pour utiliser
+        des langages de script : Perl, Python et Ruby.
+      </para>
+      
+      <section id="secChargerDechargerScripts">
+        <title>Charger / décharger des scripts</title>
+        
+        <para>
+          Les scripts sont chargés et déchargés avec les commandes
+          <command>/perl</command>, <command>/python</command> et
+          <command>/ruby</command> (tapez <command>/help</command> dans
+          WeeChat pour obtenir de l'aide sur les commandes).
+        </para>
+        
+        <para>
+          Exemples :
+          <itemizedlist>
+            <listitem>
+              <para>
+                Charger un script Perl :
+                <command><userinput>/perl load /tmp/essai.pl</userinput></command>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Lister les scripts Perl chargés :
+                <command><userinput>/perl</userinput></command>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Charger un script Python :
+                <command><userinput>/python load /tmp/essai.py</userinput></command>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Lister les scripts Python chargés :
+                <command><userinput>/python</userinput></command>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Charger un script Ruby :
+                <command><userinput>/ruby load /tmp/essai.rb</userinput></command>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Lister les scripts Ruby chargés :
+                <command><userinput>/ruby</userinput></command>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+        
+      </section>
+      
+      <section id="secInterfaceWeeChatScripts">
+        <title>Interface WeeChat / scripts</title>
+        
+        <section>
+          <title>register</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::register ( nom, version, fonction_de_fin, description );
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.register ( nom, version, fonction_de_fin, description )
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.register ( nom, version, fonction_de_fin, description )
+            </command>
+          </para>
+          <para>
+            C'est la première fonction à appeler dans le script.
+            Tout script pour WeeChat doit appeler cette fonction.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>nom</option> : nom unique pour identifier le script
+                  (chaque script doit avoir un nom différent)
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>version</option> : version du script
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>fonction_de_fin</option> : fonction appelée quand
+                  le script est déchargé (paramètre facultatif, une chaîne
+                  vide signifiant qu'il n'y a pas de fonction à appeler)
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>description</option> : brève description du script
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : 1 si le script a été enregistré, 0 si une erreur
+            s'est produite.
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+weechat::register ("essai", "1.0", "fin_essai", "Script d'essai !");
+
+# python
+weechat.register ("essai", "1.0", "fin_essai", "Script d'essai !")
+
+# ruby
+Weechat.register ("essai", "1.0", "fin_essai", "Script d'essai !")
+</screen>
+          </para>
+        </section>
+        
+        <section>
+          <title>print</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::print ( message, [canal, [serveur]] )
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.prnt ( message, [canal, [serveur]] )
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.print ( message, [canal, [serveur]] )
+            </command>
+          </para>
+          <para>
+            Affiche un message sur un tampon WeeChat, identifié par le
+            serveur et le canal.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>message</option> : message à afficher
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>canal</option> : nom du canal pour trouver le
+                  tampon dans lequel afficher
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>serveur</option> : nom interne du serveur pour
+                  trouver le tampon dans lequel afficher
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : 1 si succès, 0 si une erreur s'est produite.
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+weechat::print ("message");
+weechat::print ("message", "#weechat");
+weechat::print ("message", "#weechat", "freenode");
+
+# python
+weechat.prnt ("message")
+weechat.prnt ("message", "#weechat")
+weechat.prnt ("message", "#weechat", "freenode")
+
+# ruby
+Weechat.print ("message")
+Weechat.print ("message", "#weechat")
+Weechat.print ("message", "#weechat", "freenode")
+</screen>
+          </para>
+        </section>
+        
+        <section>
+          <title>print_infobar</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::print_infobar ( temps, message );
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.print_infobar ( temps, message )
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.print_infobar ( temps, message )
+            </command>
+          </para>
+          <para>
+            Affiche un message sur la barre d'infos pour un temps déterminé.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>temps</option> : temps (en secondes) pendant
+                  lequel le message est affiché (0 = jamais effacé)
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>message</option> : message à afficher
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : 1 si succès, 0 si une erreur s'est produite.
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+weechat::print_infobar (5, "message");
+
+# python
+weechat.print_infobar (5, "message")
+
+# ruby
+Weechat.print_infobar (5, "message")
+</screen>
+          </para>
+        </section>
+        
+        <section>
+          <title>add_message_handler</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::add_message_handler ( message, fonction );
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.add_message_handler ( message, fonction )
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.add_message_handler ( message, fonction )
+            </command>
+          </para>
+          <para>
+            Ajoute un gestionnaire de messages IRC, appelé dès qu'un message
+            IRC est reçu.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>message</option> : nom du message IRC pour lequel la
+                  fonction est appelée.
+                  Pour connaître la liste des messages IRC disponibles, merci
+                  de consulter les <acronym>RFC</acronym>s
+                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink> et
+                  <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>fonction</option> : fonction appelée lorsque le message
+                  est reçu
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : 1 si succès, 0 si une erreur s'est produite.
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+weechat::add_message_handler ("privmsg", ma_fonction);
+sub ma_fonction
+{
+    weechat::print ("serveur=$_[0]\n");
+    ($null, $canal, $message) = split ":",$_[1],3;
+    ($masque, $null, $canal) = split " ", $canal;
+    weechat::print ("masque=$masque, canal=$canal, msg=$message\n");
+    return weechat::PLUGIN_RC_OK;
+}
+
+# python
+weechat.add_message_handler ("privmsg", ma_fonction)
+def ma_fonction(serveur, args):
+    weechat.prnt("serveur="+serveur)
+    null, canal, message = string.split(args, ":", 2)
+    masque, null, canal = string.split(string.strip(canal), " ", 2)
+    weechat.prnt("masque="+masque+", canal="+canal+", message="+message)
+    return weechat.PLUGIN_RC_OK
+</screen>
+          </para>
+          <para>
+            Note : la fonction appelée lorsque le message est reçu doit
+            renvoyer une des valeurs suivantes (préfixée par "weechat::" pour
+            Perl, "weechat." pour Python ou "Weechat." pour Ruby) :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_KO</literal> : la fonction a échoué
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_OK</literal> : la fonction a réussi
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_OK_IGNORE_WEECHAT</literal> : le message
+                  ne sera pas transmis à WeeChat
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_OK_IGNORE_PLUGINS</literal> : le message
+                  ne sera pas transmis à d'autres extensions
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_OK_IGNORE_ALL</literal> : le message
+                  ne sera ni transmis à WeeChat ni à d'autres extensions
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </section>
+        
+        <section>
+          <title>add_command_handler</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::add_command_handler ( commande, fonction,
+              [description, arguments, arguments_description,
+              modele_completion] );
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.add_command_handler ( commande, fonction,
+              [description, arguments, arguments_description,
+              modele_completion] )
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.add_command_handler ( commande, fonction,
+              [description, arguments, arguments_description,
+              modele_completion] )
+            </command>
+          </para>
+          <para>
+            Ajoute un gestionnaire de commande WeeChat, appelé dès que
+            l'utilisateur utilise la commande (par exemple /commande).
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>commande</option> : nom de la nouvelle commande,
+                  qui peut être une commande déjà existante (attention la
+                  commande remplacée ne sera plus disponible jusqu'à ce que
+                  le script soit déchargé)
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>fonction</option> : fonction appelée lorsque la
+                  commande est exécutée
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>arguments</option> : brève description des
+                  paramètres de la commande (affichée par /help commande)
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>arguments_description</option> : longue description
+                  des paramètres de la commande (affichée par /help commande)
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>modele_completion</option> : modèle pour la
+                  complétion sous la forme "<literal>abc|%w def|%i</literal>"
+                  qui signigie "abc" ou une commande WeeChat pour le premier
+                  paramètre, et "def" ou une commande IRC pour le deuxième.
+                  (voir <xref linkend="secAPI_cmd_handler_add" />)
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : 1 si succès, 0 si une erreur s'est produite.
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+weechat::add_command_handler ("commande", ma_commande);
+sub ma_commande
+{
+    weechat::print("Serveur: $_[0], paramètres: $_[1]\n");
+    return weechat::PLUGIN_RC_OK;
+}
+
+# python
+weechat.add_command_handler ("commande", ma_commande)
+def ma_commande(serveur, args):
+    weechat.prnt("serveur:"+serveur+" paramètres:"+args)
+    return weechat.PLUGIN_RC_OK
+</screen>
+          </para>
+          <para>
+            Notes : la fonction appelée lorsque le message est exécutée doit
+            renvoyer une des valeurs suivantes (préfixée par "weechat::" pour
+            Perl, "weechat." pour Python ou "Weechat." pour Ruby) :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_KO</literal> : la fonction a échoué
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_OK</literal> : la fonction a réussi
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </section>
+        
+        <section>
+          <title>remove_handler</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::remove_handler ( nom, fonction );
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.remove_handler ( nom, fonction )
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.remove_handler ( nom, fonction )
+            </command>
+          </para>
+          <para>
+            Supprime un gestionnaire.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>nom</option> : nom du message IRC ou de la commande
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>fonction</option> : fonction associée
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : 1 si succès, 0 si une erreur s'est produite.
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+weechat::remove_handler ("commande", ma_commande);
+
+# python
+weechat.remove_handler ("commande", ma_commande)
+
+# ruby
+Weechat.remove_handler ("commande", ma_commande)
+</screen>
+          </para>
+        </section>
+        
+        <section>
+          <title>command</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::command ( commande, [canal, [serveur]] );
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.command ( commande, [canal, [serveur]] )
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.command ( commande, [canal, [serveur]] )
+            </command>
+          </para>
+          <para>
+            Exécute une commande ou envoie un message à un canal.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>commande</option> : la commande à exécuter
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>canal</option> : nom du canal où exécuter la
+                  commande
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>serveur</option> : nom interne du serveur où
+                  exécuter la commande
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : 1 si succès, 0 si une erreur s'est produite.
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+weechat::command ("bonjour tout le monde !");
+weechat::command ("/kick toto merci de quitter ce canal", "#weechat");
+weechat::command ("/nick newnick", "", "freenode");
+
+# python
+weechat.command ("bonjour tout le monde !")
+weechat.command ("/kick toto merci de quitter ce canal", "#weechat")
+weechat.command ("/nick newnick", "", "freenode")
+
+# ruby
+Weechat.command ("bonjour tout le monde !")
+Weechat.command ("/kick toto merci de quitter ce canal", "#weechat")
+Weechat.command ("/nick newnick", "", "freenode")
+</screen>
+          </para>
+        </section>
+        
+        <section>
+          <title>get_info</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::get_info ( nom, [serveur] );
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.get_info ( nom, [serveur] )
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.get_info ( nom, [serveur] )
+            </command>
+          </para>
+          <para>
+            Renvoie une information sur WeeChat ou un canal.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>nom</option> : nom de l'info à obtenir
+                  (voir <xref linkend="secAPI_get_info" />)
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>serveur</option> : nom interne du serveur où
+                  récupérer l'information (si nécessaire)
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : l'information demandée, chaîne vide si une
+            erreur s'est produite ou que l'information n'a pas été trouvée.
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+$version = get_info("version");
+$nick = get_info("nick", "freenode");
+
+# python
+version = weechat.get_info ("version")
+nick = weechat.get_info ("nick", "freenode")
+</screen>
+          </para>
+        </section>
+        
+        <section>
+          <title>get_dcc_info</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::get_dcc_info ( );
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.get_dcc_info ( )
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.get_dcc_info ( )
+            </command>
+          </para>
+          <para>
+            Renvoie la liste des DCC en cours ou terminés.
+          </para>
+          <para>
+            Valeur renvoyée : la liste des DCC
+            (voir <xref linkend="secAPI_get_dcc_info" />).
+          </para>
+        </section>
+        
+        <section>
+          <title>get_config</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::get_config ( option );
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.get_config ( option )
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.get_config ( option )
+            </command>
+          </para>
+          <para>
+            Renvoie la valeur d'une option de configuration WeeChat.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>option</option> : nom de l'option
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : la valeur de l'option, chaîne vide si l'option
+            n'a pas été trouvée.
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+$value1 = weechat::get_config ("look_nicklist");
+$value2 = weechat::get_config ("freenode.server_autojoin");
+
+# python
+value1 = weechat.get_config ("look_nicklist")
+value2 = weechat.get_config ("freenode.server_autojoin")
+</screen>
+          </para>
+        </section>
+        
+        <section>
+          <title>set_config</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::set_config ( option, valeur );
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.set_config ( option, valeur )
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.set_config ( option, valeur )
+            </command>
+          </para>
+          <para>
+            Modifie la valeur d'une option de configuration WeeChat.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>option</option> : nom de l'option
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>valeur</option> : la nouvelle valeur pour
+                  l'option
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : 1 si succès, 0 si une erreur s'est
+            produite.
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+weechat::set_config ("look_nicklist", "off");
+weechat::set_config ("freenode.server_autojoin, "#weechat");
+
+# python
+weechat.set_config ("look_nicklist", "off")
+weechat.set_config ("freenode.server_autojoin, "#weechat")
+
+# ruby
+Weechat.set_config ("look_nicklist", "off")
+Weechat.set_config ("freenode.server_autojoin, "#weechat")
+</screen>
+          </para>
+        </section>
+        
+        <section>
+          <title>get_plugin_config</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::get_plugin_config ( option );
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.get_plugin_config ( option )
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.get_plugin_config ( option )
+            </command>
+          </para>
+          <para>
+            Renvoie la valeur d'une option de l'extension.
+            L'option est lue depuis le fichier
+            "<literal>~/.weechat/plugins.rc</literal>" et est
+            sous cette forme :
+            "<literal>extension.script.option=valeur</literal>"
+            (NB : le nom de l'extension et du script sont ajoutés
+            automatiquement).
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>option</option> : nom de l'option
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : la valeur de l'option, chaîne vide si l'option
+            n'a pas été trouvée.
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+$value = weechat::get_plugin_config ("ma_variable");
+
+# python
+value = weechat.get_plugin_config ("ma_variable")
+</screen>
+          </para>
+        </section>
+        
+        <section>
+          <title>set_plugin_config</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::set_plugin_config ( option, valeur );
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.set_plugin_config ( option, valeur )
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.set_plugin_config ( option, valeur )
+            </command>
+          </para>
+          <para>
+            Modifie la valeur d'une option de l'extension.
+            L'option est écrite dans le fichier
+            "<literal>~/.weechat/plugins.rc</literal>" et est
+            sous cette forme :
+            "<literal>extension.script.option=valeur</literal>"
+            (NB : le nom de l'extension et du script sont rajoutés
+            automatiquement).
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>option</option> : nom de l'option
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>valeur</option> : la nouvelle valeur pour
+                  l'option
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : 1 si succès, 0 si une erreur s'est
+            produite.
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+weechat::set_plugin_config ("ma_variable", "valeur");
+
+# python
+weechat.set_plugin_config ("ma_variable", "valeur")
+
+# ruby
+Weechat.set_plugin_config ("ma_variable", "valeur")
+</screen>
+          </para>
+        </section>
+        
+      </section>
+        
+    </section>
+    
+  </chapter>
+  
+  <!-- ======================== Auteurs / Support ========================= -->
+  
+  <chapter id="chapAuteursSupport">
+    <title>Auteurs / Support</title>
+    
+    <para>
+      Ce chapître liste les auteurs et contributeurs pour WeeChat, et
+      indique les moyens d'obtenir du support.
+    </para>
+    
+    <section id="secAuteurs">
+      <title>Auteurs</title>
+      
+      <para>
+        WeeChat est développé par :
+        <itemizedlist>
+          <listitem>
+            <para>
+              <emphasis>FlashCode (Sébastien Helleu)</emphasis>
+              <email>flashcode AT flashtux.org</email> -
+              développeur principal
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis>Kolter</emphasis>
+              <email>kolter AT free.fr</email> -
+              développeur
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis>Ptitlouis</emphasis>
+              <email>ptitlouis AT sysif.net</email> -
+              empaqueteur Debian
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      
+    </section>
+    
+    <section id="secContributeurs">
+      <title>Contributeurs</title>
+      
+      <para>
+        Les personnes suivantes ont contribué à WeeChat :
+        <itemizedlist>
+          <listitem>
+            <para>
+              <emphasis>Jiri Golembiovsky</emphasis> -
+              traduction tchèque
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis>Rudolf Polzer</emphasis> -
+              patchs
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis>Jim Ramsay</emphasis> -
+              patchs
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis>Pistos</emphasis> -
+              patchs
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      
+    </section>
+    
+    <section id="secSupport">
+      <title>Obtenir du support</title>
+      
+      <para>
+        Avant de faire appel au support, merci de lire la documentation et
+        la FAQ de WeeChat (la documentation est le document que vous êtes
+        en train de lire, si vous n'avez pas tout lu jusqu'ici, il est encore
+        temps de recommencer !)
+      </para>
+      
+      <para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              IRC : serveur "<literal>irc.freenode.net</literal>",
+              canal "<literal>#weechat</literal>"
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Forum WeeChat :
+              <ulink url="http://forums.flashtux.org">
+                http://forums.flashtux.org
+              </ulink>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Liste de diffusion :
+              <itemizedlist>
+                <listitem>
+                  <para>
+                    Pour souscrire :
+                    <ulink url="http://mail.nongnu.org/mailman/listinfo/weechat-support">
+                      http://mail.nongnu.org/mailman/listinfo/weechat-support
+                    </ulink>
+                  </para>
+                </listitem>
+                <listitem>
+                  <para>
+                    Pour envoyer un mail à la liste de diffusion :
+                    <email>weechat-support@nongnu.org</email>
+                  </para>
+                </listitem>
+              </itemizedlist>
+              Les archives de la liste de diffusion sont ici :
+              <ulink url="http://mail.nongnu.org/archive/html/weechat-support">
+                http://mail.nongnu.org/archive/html/weechat-support
+              </ulink>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      
+    </section>
+      
+  </chapter>
+  
+</book>
