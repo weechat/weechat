@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<command>alias  [alias_name [command [arguments]]</command>
+<programlisting>
+create an alias for a command
+
+alias_name: name of alias
+   command: command name (WeeChat or IRC command, without first '/')
+arguments: arguments for command
+
+</programlisting>
+<command>buffer  [action | number | [[server] [channel]]]</command>
+<programlisting>
+manage buffers
+
+ action: action to do:
+   move: move buffer in the list (may be relative, for example -1)
+  close: close buffer (for channel: same as /part without part message)
+   list: list opened buffers (no parameter implies this list)
+ notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)
+server
+channel: jump to buffer by server and/or channel name
+ number: jump to buffer by number
+
+</programlisting>
+<command>charset  [(decode_iso | decode_utf | encode) charset]</command>
+<programlisting>
+change charset for server or channel
+
+decode_iso: charset used for decoding ISO
+decode_utf: charset used for decoding UTF
+    encode: charset used for encoding messages
+   charset: charset to use (for example: ISO-8859-15, UTF-8,..)
+
+</programlisting>
+<command>clear  [-all]</command>
+<programlisting>
+clear window(s)
+
+-all: clear all windows
+
+</programlisting>
+<command>connect  [servername]</command>
+<programlisting>
+connect to a server
+
+servername: server name to connect
+
+</programlisting>
+<command>disconnect  [servername]</command>
+<programlisting>
+disconnect from a server
+
+servername: server name to disconnect
+
+</programlisting>
+<command>debug  dump | windows</command>
+<programlisting>
+print debug messages
+
+   dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
+windows: display windows tree
+
+</programlisting>
+<command>help  [command]</command>
+<programlisting>
+display help about commands
+
+command: name of a WeeChat or IRC command
+
+</programlisting>
+<command>history  [clear | value]</command>
+<programlisting>
+show buffer command history
+
+clear: clear history
+value: number of history entries to show
+
+</programlisting>
+<command>ignore  [mask [[type | command] [channel [server]]]]</command>
+<programlisting>
+ignore IRC messages and/or hosts
+
+   mask: nick or host mask to ignore
+   type: type of message to ignore (action, ctcp, dcc, pv)
+command: IRC command
+channel: name of channel for ignore
+ server: name of server for ignore
+
+For each argument, '*' means all.
+Without argument, /ignore command lists all defined ignore.
+
+</programlisting>
+<command>key  [key function/command] [unbind key] [functions] [reset -yes]</command>
+<programlisting>
+bind/unbind keys
+
+      key: bind this key to an internal function or a command (beginning by "/")
+   unbind: unbind a key
+functions: list internal functions for key bindings
+    reset: restore bindings to the default values and delete ALL personal bindings (use carefully!)
+
+</programlisting>
+<command>plugin  [load filename] | [autoload] | [reload] | [unload]</command>
+<programlisting>
+list/load/unload plugins
+
+filename: WeeChat plugin (file) to load
+
+Without argument, /plugin command lists all loaded plugins.
+
+</programlisting>
+<command>server  [servername] | [servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 nick2 nick3] [-username username] [-realname realname] [-command command] [-autojoin channel[,channel]] ] | [del servername]</command>
+<programlisting>
+list, add or remove servers
+
+servername: server name, for internal and display use
+  hostname: name or IP address of server
+      port: port for server (integer)
+      ipv6: use IPv6 protocol
+       ssl: use SSL protocol
+  password: password for server
+     nick1: first nick for server
+     nick2: alternate nick for server
+     nick3: second alternate nick for server
+  username: user name
+  realname: real name of user
+
+</programlisting>
+<command>save  [file]</command>
+<programlisting>
+save config to disk
+
+file: filename for writing config
+
+</programlisting>
+<command>set  [option [ = value]]</command>
+<programlisting>
+set config parameters
+
+option: name of an option (if name is full and no value is given, then help is displayed on option)
+value: value for option
+
+</programlisting>
+<command>unalias  alias_name</command>
+<programlisting>
+remove an alias
+
+alias_name: name of alias to remove
+
+</programlisting>
+<command>unignore  [number | [mask [[type | command] [channel [server]]]]]</command>
+<programlisting>
+unignore IRC messages and/or hosts
+
+ number: # of ignore to unignore (number is displayed by list of ignore)
+   mask: nick or host mask to unignore
+   type: type of message to unignore (action, ctcp, dcc, pv)
+command: IRC command
+channel: name of channel for unignore
+ server: name of server for unignore
+
+For each argument, '*' means all.
+Without argument, /unignore command lists all defined ignore.
+
+</programlisting>
+<command>upgrade</command>
+<programlisting>
+upgrade WeeChat without disconnecting from servers
+
+</programlisting>
+<command>uptime  [-o]</command>
+<programlisting>
+show WeeChat uptime
+
+-o: send uptime on current channel as an IRC message
+
+</programlisting>
+<command>window  [list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [pct] | resize pct | merge [all]]</command>
+<programlisting>
+manage windows
+
+  list: list opened windows (no parameter implies this list)
+    -1: jump to previous window
+    +1: jump to next window
+    b#: jump to next window displaying buffer number #
+    up: switch to window above current one
+  down: switch to window below current one
+  left: switch to window on the left
+ right: switch to window on the right
+splith: split current window horizontally
+splitv: split current window vertically
+resize: resize window size, new size is pct%% of parent window
+ merge: merge window with another (all = keep only one window)
+
+For splith and splitv, pct is a pourcentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
+
+</programlisting>

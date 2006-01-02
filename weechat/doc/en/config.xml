@@ -1,0 +1,1149 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<row>
+  <entry><option>look_set_title</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Set title for window (terminal for Curses GUI) with name and version</entry>
+</row>
+<row>
+  <entry><option>look_startup_logo</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Display WeeChat logo at startup</entry>
+</row>
+<row>
+  <entry><option>look_startup_version</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Display WeeChat version at startup</entry>
+</row>
+<row>
+  <entry><option>look_weechat_slogan</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>WeeChat slogan (if empty, slogan is not used)</entry>
+</row>
+<row>
+  <entry><option>look_charset_decode_iso</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>ISO charset for decoding messages from server (used only if locale is UTF-8) (if empty, messages are not converted if locale is UTF-8</entry>
+</row>
+<row>
+  <entry><option>look_charset_decode_utf</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>UTF charset for decoding messages from server (used only if locale is not UTF-8) (if empty, messages are not converted if locale is not UTF-8</entry>
+</row>
+<row>
+  <entry><option>look_charset_encode</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Charset for encoding messages sent to server, examples: UFT-8, ISO-8859-1 (if empty, messages are not converted)</entry>
+</row>
+<row>
+  <entry><option>look_charset_internal</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Forces internal WeeChat charset (should be empty in most cases, that means detected charset is used)</entry>
+</row>
+<row>
+  <entry><option>look_one_server_buffer</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Use same buffer for all servers</entry>
+</row>
+<row>
+  <entry><option>look_buffer_timestamp</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Timestamp for buffers</entry>
+</row>
+<row>
+  <entry><option>look_color_nicks_number</option></entry>
+  <entry>integer</entry>
+  <entry>between 1 and 10</entry>
+  <entry></entry>
+  <entry>Number of colors to use for nicks colors</entry>
+</row>
+<row>
+  <entry><option>look_color_actions</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Display actions with different colors</entry>
+</row>
+<row>
+  <entry><option>look_nicklist</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Display nicklist window (for channel windows)</entry>
+</row>
+<row>
+  <entry><option>look_nicklist_position</option></entry>
+  <entry>string</entry>
+  <entry>'left', 'right', 'top', 'bottom'</entry>
+  <entry></entry>
+  <entry>Nicklist position (top, left, right (default), bottom)</entry>
+</row>
+<row>
+  <entry><option>look_nicklist_min_size</option></entry>
+  <entry>integer</entry>
+  <entry>between 0 and 100</entry>
+  <entry></entry>
+  <entry>Min size for nicklist (width or height, depending on look_nicklist_position (0 = no min size))</entry>
+</row>
+<row>
+  <entry><option>look_nicklist_max_size</option></entry>
+  <entry>integer</entry>
+  <entry>between 0 and 100</entry>
+  <entry></entry>
+  <entry>Max size for nicklist (width or height, depending on look_nicklist_position (0 = no max size; if min == max and > 0, then size is fixed))</entry>
+</row>
+<row>
+  <entry><option>look_no_nickname</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Text to display instead of nick when not connected</entry>
+</row>
+<row>
+  <entry><option>look_nickmode</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Display nick mode ((half)op/voice) before each nick</entry>
+</row>
+<row>
+  <entry><option>look_nickmode_empty</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Display space if nick mode is not (half)op/voice</entry>
+</row>
+<row>
+  <entry><option>look_nick_completor</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>The string inserted after nick completion</entry>
+</row>
+<row>
+  <entry><option>look_nick_completion_ignore</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Chars ignored for nick completion</entry>
+</row>
+<row>
+  <entry><option>look_infobar</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Enable info bar</entry>
+</row>
+<row>
+  <entry><option>look_infobar_timestamp</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Timestamp for time in infobar</entry>
+</row>
+<row>
+  <entry><option>look_infobar_seconds</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Display seconds in infobar time</entry>
+</row>
+<row>
+  <entry><option>look_infobar_delay_highlight</option></entry>
+  <entry>integer</entry>
+  <entry>between 0 and 2147483647</entry>
+  <entry></entry>
+  <entry>Delay (in seconds) for highlight messages in infobar (0 = disable highlight notifications in infobar)</entry>
+</row>
+<row>
+  <entry><option>look_hotlist_names_count</option></entry>
+  <entry>integer</entry>
+  <entry>between 0 and 32</entry>
+  <entry></entry>
+  <entry>Max number of names in hotlist (0 = no name displayed, only buffer numbers)</entry>
+</row>
+<row>
+  <entry><option>look_hotlist_names_level</option></entry>
+  <entry>integer</entry>
+  <entry>between 1 and 15</entry>
+  <entry></entry>
+  <entry>Level for displaying names in hotlist (combination of: 1=join/part, 2=message, 4=private, 8=highlight, for example: 12=private+highlight)</entry>
+</row>
+<row>
+  <entry><option>look_hotlist_names_length</option></entry>
+  <entry>integer</entry>
+  <entry>between 0 and 32</entry>
+  <entry></entry>
+  <entry>Max length of names in hotlist (0 = no limit)</entry>
+</row>
+<row>
+  <entry><option>look_day_change</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Display special message when day changes</entry>
+</row>
+<row>
+  <entry><option>look_day_change_timestamp</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Timestamp for date displayed when day changed</entry>
+</row>
+<row>
+  <entry><option>look_read_marker</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Use a marker on servers/channels to show first unread line</entry>
+</row>
+<row>
+  <entry><option>col_real_white</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>If set, uses real white color, disabled by default for terms with white background (if you never use white background, you should turn on this option to see real white instead of default term foreground color)</entry>
+</row>
+<row>
+  <entry><option>col_separator</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for window separators (when splited)</entry>
+</row>
+<row>
+  <entry><option>col_title</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for title bar</entry>
+</row>
+<row>
+  <entry><option>col_title_bg</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Background for title bar</entry>
+</row>
+<row>
+  <entry><option>col_chat</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for chat text</entry>
+</row>
+<row>
+  <entry><option>col_chat_time</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for time in chat window</entry>
+</row>
+<row>
+  <entry><option>col_chat_time_sep</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for time separator (chat window)</entry>
+</row>
+<row>
+  <entry><option>col_chat_prefix1</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for 1st and 3rd char of prefix</entry>
+</row>
+<row>
+  <entry><option>col_chat_prefix2</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for middle char of prefix</entry>
+</row>
+<row>
+  <entry><option>col_chat_server</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for server name</entry>
+</row>
+<row>
+  <entry><option>col_chat_join</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for join arrow (prefix)</entry>
+</row>
+<row>
+  <entry><option>col_chat_part</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for part/quit arrow (prefix)</entry>
+</row>
+<row>
+  <entry><option>col_chat_nick</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for nicks in actions (chat window)</entry>
+</row>
+<row>
+  <entry><option>col_chat_host</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for hostnames (chat window)</entry>
+</row>
+<row>
+  <entry><option>col_chat_channel</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for channel names in actions (chat window)</entry>
+</row>
+<row>
+  <entry><option>col_chat_dark</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for dark separators (chat window)</entry>
+</row>
+<row>
+  <entry><option>col_chat_highlight</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for highlighted nick (chat window)</entry>
+</row>
+<row>
+  <entry><option>col_chat_bg</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Background for chat window</entry>
+</row>
+<row>
+  <entry><option>col_chat_read_marker</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for unread data marker</entry>
+</row>
+<row>
+  <entry><option>col_chat_read_marker_bg</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Background for unread data marker</entry>
+</row>
+<row>
+  <entry><option>col_status</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for status bar</entry>
+</row>
+<row>
+  <entry><option>col_status_delimiters</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for status bar delimiters</entry>
+</row>
+<row>
+  <entry><option>col_status_channel</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for current channel in status bar</entry>
+</row>
+<row>
+  <entry><option>col_status_data_msg</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for window with new messages (status bar)</entry>
+</row>
+<row>
+  <entry><option>col_status_private</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for window with private message (status bar)</entry>
+</row>
+<row>
+  <entry><option>col_status_highlight</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for window with highlight (status bar)</entry>
+</row>
+<row>
+  <entry><option>col_status_data_other</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for window with new data (not messages) (status bar)</entry>
+</row>
+<row>
+  <entry><option>col_status_more</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for window with new data (status bar)</entry>
+</row>
+<row>
+  <entry><option>col_status_bg</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Background for status window</entry>
+</row>
+<row>
+  <entry><option>col_infobar</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for info bar text</entry>
+</row>
+<row>
+  <entry><option>col_infobar_delimiters</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for infobar delimiters</entry>
+</row>
+<row>
+  <entry><option>col_infobar_highlight</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for info bar highlight notification</entry>
+</row>
+<row>
+  <entry><option>col_infobar_bg</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Background for info bar window</entry>
+</row>
+<row>
+  <entry><option>col_input</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for input text</entry>
+</row>
+<row>
+  <entry><option>col_input_channel</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for input text (channel name)</entry>
+</row>
+<row>
+  <entry><option>col_input_nick</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for input text (nick name)</entry>
+</row>
+<row>
+  <entry><option>col_input_delimiters</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for input text (delimiters)</entry>
+</row>
+<row>
+  <entry><option>col_input_bg</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Background for input window</entry>
+</row>
+<row>
+  <entry><option>col_nick</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for nicknames</entry>
+</row>
+<row>
+  <entry><option>col_nick_away</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for away nicknames</entry>
+</row>
+<row>
+  <entry><option>col_nick_chanowner</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for chan owner symbol (specific to unrealircd)</entry>
+</row>
+<row>
+  <entry><option>col_nick_chanadmin</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for chan admin symbol (specific to unrealircd)</entry>
+</row>
+<row>
+  <entry><option>col_nick_op</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for operator symbol</entry>
+</row>
+<row>
+  <entry><option>col_nick_halfop</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for half-operator symbol</entry>
+</row>
+<row>
+  <entry><option>col_nick_voice</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for voice symbol</entry>
+</row>
+<row>
+  <entry><option>col_nick_more</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for '+' when scrolling nicks</entry>
+</row>
+<row>
+  <entry><option>col_nick_sep</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for nick separator</entry>
+</row>
+<row>
+  <entry><option>col_nick_self</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for local nick</entry>
+</row>
+<row>
+  <entry><option>col_nick_color1</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for nick</entry>
+</row>
+<row>
+  <entry><option>col_nick_color2</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for nick</entry>
+</row>
+<row>
+  <entry><option>col_nick_color3</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for nick</entry>
+</row>
+<row>
+  <entry><option>col_nick_color4</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for nick</entry>
+</row>
+<row>
+  <entry><option>col_nick_color5</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for nick</entry>
+</row>
+<row>
+  <entry><option>col_nick_color6</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for nick</entry>
+</row>
+<row>
+  <entry><option>col_nick_color7</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for nick</entry>
+</row>
+<row>
+  <entry><option>col_nick_color8</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for nick</entry>
+</row>
+<row>
+  <entry><option>col_nick_color9</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for nick</entry>
+</row>
+<row>
+  <entry><option>col_nick_color10</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for nick</entry>
+</row>
+<row>
+  <entry><option>col_nick_private</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for other nick in private window</entry>
+</row>
+<row>
+  <entry><option>col_nick_bg</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Background for nicknames</entry>
+</row>
+<row>
+  <entry><option>col_chat_dcc_selected</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for selected DCC (chat window)</entry>
+</row>
+<row>
+  <entry><option>col_dcc_waiting</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for "waiting" dcc status</entry>
+</row>
+<row>
+  <entry><option>col_dcc_connecting</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for "connecting" dcc status</entry>
+</row>
+<row>
+  <entry><option>col_dcc_active</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for "active" dcc status</entry>
+</row>
+<row>
+  <entry><option>col_dcc_done</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for "done" dcc status</entry>
+</row>
+<row>
+  <entry><option>col_dcc_failed</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for "failed" dcc status</entry>
+</row>
+<row>
+  <entry><option>col_dcc_aborted</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry></entry>
+  <entry>Color for "aborted" dcc status</entry>
+</row>
+<row>
+  <entry><option>history_max_lines</option></entry>
+  <entry>integer</entry>
+  <entry>between 0 and 2147483647</entry>
+  <entry></entry>
+  <entry>Maximum number of lines in history for one server/channel/private window (0 = unlimited)</entry>
+</row>
+<row>
+  <entry><option>history_max_commands</option></entry>
+  <entry>integer</entry>
+  <entry>between 0 and 2147483647</entry>
+  <entry></entry>
+  <entry>Maximum number of user commands in history (0 = unlimited)</entry>
+</row>
+<row>
+  <entry><option>history_display_default</option></entry>
+  <entry>integer</entry>
+  <entry>between 0 and 2147483647</entry>
+  <entry></entry>
+  <entry>Maximum number of commands to display by default in history listing (0 = unlimited)</entry>
+</row>
+<row>
+  <entry><option>log_auto_server</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Automatically log server messages</entry>
+</row>
+<row>
+  <entry><option>log_auto_channel</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Automatically log channel chats</entry>
+</row>
+<row>
+  <entry><option>log_auto_private</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Automatically log private chats</entry>
+</row>
+<row>
+  <entry><option>log_plugin_msg</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Log messages from plugins (scripts)</entry>
+</row>
+<row>
+  <entry><option>log_path</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Path for WeeChat log files</entry>
+</row>
+<row>
+  <entry><option>log_timestamp</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Timestamp for log (see man strftime for date/time specifiers)</entry>
+</row>
+<row>
+  <entry><option>log_hide_nickserv_pwd</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Hide password displayed by nickserv</entry>
+</row>
+<row>
+  <entry><option>irc_display_away</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Display message to all channels when (un)marking as away</entry>
+</row>
+<row>
+  <entry><option>irc_default_msg_away</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Default message when away</entry>
+</row>
+<row>
+  <entry><option>irc_default_msg_part</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Default part message (leaving channel)</entry>
+</row>
+<row>
+  <entry><option>irc_default_msg_quit</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Default quit message ('%v' will be replaced by WeeChat version in string)</entry>
+</row>
+<row>
+  <entry><option>irc_notice_as_pv</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Display notices as private messages</entry>
+</row>
+<row>
+  <entry><option>irc_away_check</option></entry>
+  <entry>integer</entry>
+  <entry>between 0 and 2147483647</entry>
+  <entry></entry>
+  <entry>Interval between two checks for away (in minutes, 0 = never check)</entry>
+</row>
+<row>
+  <entry><option>irc_lag_check</option></entry>
+  <entry>integer</entry>
+  <entry>between 30 and 2147483647</entry>
+  <entry></entry>
+  <entry>Interval between two checks for lag (in seconds)</entry>
+</row>
+<row>
+  <entry><option>irc_lag_min_show</option></entry>
+  <entry>integer</entry>
+  <entry>between 0 and 2147483647</entry>
+  <entry></entry>
+  <entry>Minimum lag to show (in seconds)</entry>
+</row>
+<row>
+  <entry><option>irc_lag_disconnect</option></entry>
+  <entry>integer</entry>
+  <entry>between 0 and 2147483647</entry>
+  <entry></entry>
+  <entry>Disconnect after important lag (in minutes, 0 = never disconnect)</entry>
+</row>
+<row>
+  <entry><option>irc_fifo_pipe</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Create a FIFO pipe for remote control</entry>
+</row>
+<row>
+  <entry><option>irc_highlight</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Comma separated list of words to highlight (case insensitive comparison, words may begin or end with "*" for partial match)</entry>
+</row>
+<row>
+  <entry><option>irc_colors_receive</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>When off, colors codes are ignored in incoming messages</entry>
+</row>
+<row>
+  <entry><option>irc_colors_send</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Allow user to send colors with special codes (%B=bold, %Cxx,yy=color, %U=underline, %R=reverse)</entry>
+</row>
+<row>
+  <entry><option>dcc_auto_accept_files</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Automatically accept incoming dcc files</entry>
+</row>
+<row>
+  <entry><option>dcc_auto_accept_chats</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Automatically accept dcc chats (use carefully!)</entry>
+</row>
+<row>
+  <entry><option>dcc_timeout</option></entry>
+  <entry>integer</entry>
+  <entry>between 1 and 2147483647</entry>
+  <entry></entry>
+  <entry>Timeout for dcc request (in seconds)</entry>
+</row>
+<row>
+  <entry><option>dcc_blocksize</option></entry>
+  <entry>integer</entry>
+  <entry>between 1024 and 102400</entry>
+  <entry></entry>
+  <entry>Block size for dcc packets in bytes (default: 65536)</entry>
+</row>
+<row>
+  <entry><option>dcc_port_range</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Restricts outgoing dcc to use only ports in the given range (useful for NAT) (syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, empty value means any port)</entry>
+</row>
+<row>
+  <entry><option>dcc_own_ip</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>IP or DNS address used for outgoing dcc (if empty, local interface IP is used)</entry>
+</row>
+<row>
+  <entry><option>dcc_download_path</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Path for writing incoming files with dcc (default: user home)</entry>
+</row>
+<row>
+  <entry><option>dcc_upload_path</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Path for reading files when sending thru dcc (when no path is specified)</entry>
+</row>
+<row>
+  <entry><option>dcc_convert_spaces</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Convert spaces to underscores when sending files</entry>
+</row>
+<row>
+  <entry><option>dcc_auto_rename</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Rename incoming files if already exists (add '.1', '.2', ...)</entry>
+</row>
+<row>
+  <entry><option>dcc_auto_resume</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Automatically resume dcc transfer if connection with remote host is loosed</entry>
+</row>
+<row>
+  <entry><option>proxy_use</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Use a proxy server to connect to irc server</entry>
+</row>
+<row>
+  <entry><option>proxy_type</option></entry>
+  <entry>string</entry>
+  <entry>'http', 'socks4', 'socks5'</entry>
+  <entry></entry>
+  <entry>Proxy type (http (default), socks4, socks5)</entry>
+</row>
+<row>
+  <entry><option>proxy_ipv6</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Connect to proxy in ipv6</entry>
+</row>
+<row>
+  <entry><option>proxy_address</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Proxy server address (IP or hostname)</entry>
+</row>
+<row>
+  <entry><option>proxy_port</option></entry>
+  <entry>integer</entry>
+  <entry>between 0 and 65535</entry>
+  <entry></entry>
+  <entry>Port for connecting to proxy server</entry>
+</row>
+<row>
+  <entry><option>proxy_username</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Username for proxy server</entry>
+</row>
+<row>
+  <entry><option>proxy_password</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Password for proxy server</entry>
+</row>
+<row>
+  <entry><option>plugins_path</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Path for searching plugins</entry>
+</row>
+<row>
+  <entry><option>plugins_autoload</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Comma separated list of plugins to load automatically at startup, "*" means all plugins found (names may be partial, for example "perl" is ok for "libperl.so")</entry>
+</row>
+<row>
+  <entry><option>plugins_extension</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Standard plugins extension in filename, used for autoload (if empty, then all files are loaded when autoload is "*")</entry>
+</row>
+<row>
+  <entry><option>server_name</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Name associated to IRC server (for display only)</entry>
+</row>
+<row>
+  <entry><option>server_autoconnect</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Automatically connect to server when WeeChat is starting</entry>
+</row>
+<row>
+  <entry><option>server_autoreconnect</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Automatically reconnect to server when disconnected</entry>
+</row>
+<row>
+  <entry><option>server_autoreconnect_delay</option></entry>
+  <entry>integer</entry>
+  <entry>between 0 and 65535</entry>
+  <entry></entry>
+  <entry>Delay (in seconds) before trying again to reconnect to server</entry>
+</row>
+<row>
+  <entry><option>server_address</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>IP address or hostname of IRC server</entry>
+</row>
+<row>
+  <entry><option>server_port</option></entry>
+  <entry>integer</entry>
+  <entry>between 0 and 65535</entry>
+  <entry></entry>
+  <entry>Port for connecting to server</entry>
+</row>
+<row>
+  <entry><option>server_ipv6</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Use IPv6 protocol for server communication</entry>
+</row>
+<row>
+  <entry><option>server_ssl</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Use SSL for server communication</entry>
+</row>
+<row>
+  <entry><option>server_password</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Password for IRC server</entry>
+</row>
+<row>
+  <entry><option>server_nick1</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Nickname to use on IRC server</entry>
+</row>
+<row>
+  <entry><option>server_nick2</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Alternate nickname to use on IRC server (if nickname is already used)</entry>
+</row>
+<row>
+  <entry><option>server_nick3</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>2nd alternate nickname to use on IRC server (if alternate nickname is already used)</entry>
+</row>
+<row>
+  <entry><option>server_username</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>User name to use on IRC server</entry>
+</row>
+<row>
+  <entry><option>server_realname</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Real name to use on IRC server</entry>
+</row>
+<row>
+  <entry><option>server_command</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>First command to run when connected to server</entry>
+</row>
+<row>
+  <entry><option>server_command_delay</option></entry>
+  <entry>integer</entry>
+  <entry>between 0 and 5</entry>
+  <entry></entry>
+  <entry>Delay (in seconds) after command was executed (example: give some time for authentication)</entry>
+</row>
+<row>
+  <entry><option>server_autojoin</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Comma separated list of channels to join when connected to server (example: "#chan1,#chan2,#chan3 key1,key2")</entry>
+</row>
+<row>
+  <entry><option>server_autorejoin</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Automatically rejoin channels when kicked</entry>
+</row>
+<row>
+  <entry><option>server_notify_levels</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Comma separated list of notify levels for channels of this server (format: #channel:1,..)</entry>
+</row>
+<row>
+  <entry><option>server_charset_decode_iso</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Comma separated list of charsets for server and channels, to decode ISO (format: server:charset,#channel:charset,..)</entry>
+</row>
+<row>
+  <entry><option>server_charset_decode_utf</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Comma separated list of charsets for server and channels, to decode UTF (format: server:charset,#channel:charset,..)</entry>
+</row>
+<row>
+  <entry><option>server_charset_encode</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry></entry>
+  <entry>Comma separated list of charsets for server and channels, to encode messages (format: server:charset,#channel:charset,..)</entry>
+</row>

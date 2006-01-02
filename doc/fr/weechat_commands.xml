@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<command>alias  [nom_alias [commande [paramètres]]</command>
+<programlisting>
+créer un alias pour une commande
+
+ nom_alias: nom de l'alias
+  commande: nom de la commande (commande WeeChat ou IRC, sans le premier '/')
+paramètres: paramètres pour la commande
+
+</programlisting>
+<command>buffer  [action | nombre | [[serveur] [canal]]]</command>
+<programlisting>
+gestion des tampons
+
+ action: action à effectuer:
+   move: déplacer le tampon dans la liste (peut être relatif, par exemple -1)
+  close: fermer le tampon (pour un canal: équivalent à /part sans message de fin)
+   list: liste les tampons ouverts (pas de paramètre affiche cette liste)
+ notify: fixer le niveau de notification (0=jamais, 1=highlight, 2=1+msg, 3=2+join/part)
+serveur
+  canal: sauter au tampon par serveur et/ou nom de canal
+ nombre: sauter au tampon qui a ce numéro
+
+</programlisting>
+<command>charset  [(decode_iso | decode_utf | encode) charset]</command>
+<programlisting>
+changer le jeu de caractères pour le serveur ou le canal
+
+decode_iso: jeu de caractères utilisé pour décoder l'ISO
+decode_utf: jeu de caractères utilisé pour décoder l'UTF
+    encode: jeu de caractères utilisé pour encoder les messages
+   charset: jeu de caractères à utiliser (par exemple: ISO-8859-15, UTF-8,..)
+
+</programlisting>
+<command>clear  [-all]</command>
+<programlisting>
+effacer la/les fenêtre(s)
+
+-all: effacer toutes les fenêtres
+
+</programlisting>
+<command>connect  [nom_serveur]</command>
+<programlisting>
+se connecter à un serveur
+
+nom_serveur: nom du serveur pour se connecter
+
+</programlisting>
+<command>disconnect  [nom_serveur]</command>
+<programlisting>
+se déconnecter d'un serveur
+
+nom_serveur: nom du serveur pour se déconnecter
+
+</programlisting>
+<command>debug  dump | windows</command>
+<programlisting>
+affiche des messages de debuggage
+
+   dump: affiche les variables mémoire WeeChat dans le fichier log (les mêmes messages sont affichés lorsque WeeChat plante)
+windows: affiche l'arbre des fenêtres
+
+</programlisting>
+<command>help  [commande]</command>
+<programlisting>
+afficher l'aide sur les commandes
+
+commande: nom d'une commande WeeChat ou IRC
+
+</programlisting>
+<command>history  [clear | valeur]</command>
+<programlisting>
+affiche l'historique des commandes du tampon
+
+clear: effacer l'historique
+valeur: nombre d'entrées dans l'historique à afficher
+
+</programlisting>
+<command>ignore  [masque [[type | commande] [canal [serveur]]]]</command>
+<programlisting>
+ignorer des messages IRC et/ou des masques
+
+  masque: pseudo ou masque à ignorer
+    type: type de message à ignorer (action, ctcp, dcc, pv)
+commande: commande IRC
+   canal: nom du canal pour le ignore
+ serveur: nom du serveur pour le ignore
+
+Pour chaque paramètre, '*' signifie tou(te)s.
+Sans paramètre, la commande /ignore liste les ignore définis.
+
+</programlisting>
+<command>key  [touche fonction/commande] [unbind touche] [functions] [reset -yes]</command>
+<programlisting>
+associer/libérer des touches
+
+   touche: associer cette touche à une fonction interne ou une commande (commençant par "/")
+   unbind: supprimer l'association à une touche
+functions: lister la liste des fonctions internes pour les associations de touches
+    reset: restaure les touches aux valeurs par défaut et supprime TOUTES les touches personnelles (utiliser avec précaution !)
+
+</programlisting>
+<command>plugin  [load fichier] | [autoload] | [reload] | [unload]</command>
+<programlisting>
+liste/charge/décharge des extensions
+
+fichier: extension WeeChat (fichier) à charger
+
+Sans paramètre, la commande /plugin liste toutes les extensions chargées.
+
+</programlisting>
+<command>server  [nom_serveur] | [nom_serveur nom/IP port [-auto | -noauto] [-ipv6] [-ssl] [-pwd mot_de_passe] [-nicks pseudo1 pseudo2 pseudo3] [-username nom_utilisateur] [-realname nom_réel] [-command commande] [-autojoin canal[,canal]] ] | [del nom_serveur]</command>
+<programlisting>
+liste, ajoute ou retire des serveurs
+
+    nom_serveur: nom du serveur, pour usage interne et affichage
+         nom/IP: nom ou adresse IP du serveur
+           port: port pour le serveur (nombre entier)
+           ipv6: utiliser le protocole IPv6
+            ssl: utiliser le protocole SSL
+   mot_de_passe: mot de passe pour le serveur
+        pseudo1: premier pseudo pour le serveur
+        pseudo2: pseudo alternatif pour le serveur
+        pseudo3: second pseudo alternatif pour le serveur
+nom_utilisateur: nom d'utilisateur
+       nom_réel: nom réel de l'utilisateur
+
+</programlisting>
+<command>save  [fichier]</command>
+<programlisting>
+sauvegarder la configuration sur disque
+
+fichier: fichier pour sauvegarder la configuration
+
+</programlisting>
+<command>set  [option [ = valeur]]</command>
+<programlisting>
+modifier des paramètres de configuration
+
+option: nom de l'option (si le nom est complet et qu'aucune valeur n'est donnée, alors l'aide sur l'option est affichée)
+valeur: valeur pour l'option
+
+</programlisting>
+<command>unalias  nom_alias</command>
+<programlisting>
+supprimer un alias
+
+nom_alias: nom de l'alias à supprimer
+
+</programlisting>
+<command>unignore  [nombre | [masque [[type | commande] [canal [serveur]]]]]</command>
+<programlisting>
+supprimer le ignore des messages IRC et/ou des masques
+
+  nombre: numéro de ignore à supprimer (le nombre est affiché sur la liste des ignore)
+  masque: pseudo ou masque à ignorer
+    type: type de message à ignorer (action, ctcp, dcc, pv)
+commande: commande IRC
+   canal: nom du canal pour le ignore
+ serveur: nom du serveur pour le ignore
+
+Pour chaque paramètre, '*' signifie tou(te)s.
+Sans paramètre, /ignore liste les ignore définis.
+
+</programlisting>
+<command>upgrade</command>
+<programlisting>
+mettre à jour WeeChat sans se déconnecter des serveurs
+
+</programlisting>
+<command>uptime  [-o]</command>
+<programlisting>
+montrer l'uptime de WeeChat
+
+-o: envoyer l'uptime sur le canal courant en tant que message IRC
+
+</programlisting>
+<command>window  [list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [ptc] | resize pct | merge [all]]</command>
+<programlisting>
+gestion des fenêtres
+
+  list: liste les fenêtres ouvertes (pas de paramètre affiche cette liste)
+    -1: saute à la fenêtre précédente
+    +1: saute à la fenêtre suivante
+    b#: saute à la fenêtre affichant le tampon n°#
+    up: saute à la fenêtre au dessus
+  down: saute à la fenêtre au dessous
+  left: saute à la fenêtre à gauche
+ right: saute à la fenêtre à droite
+splith: éclate la fenêtre en deux horizontalement
+splitv: éclate la fenêtre en deux verticalement
+resize: redimensionne une fenêtre, la nouvelle taille est pct%% de la fenêtre parent
+ merge: fusionne la fenêtre avec une autre
+
+Pour splith et splitv, pct est un pourcentage qui représente la taille de la nouvelle fenêtre, calculée par rapport à la taille de la fenêtre courante. Par exemple 25 signifie créer une fenêtre qui a pour taille: taille_courante / 4
+
+</programlisting>
