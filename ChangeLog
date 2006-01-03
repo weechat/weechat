@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2005-12-22
+ChangeLog - 2006-01-03
 
 
 Version 0.1.7 (under dev!):
+   * replaced Texinfo doc by XML Docbook
    * added color for window separators (when splited)
    * added completion system for plugins/scripts commands
    * fixed plugins autoload
