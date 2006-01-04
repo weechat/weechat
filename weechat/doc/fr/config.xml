@@ -32,7 +32,7 @@
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>
   <entry>'ISO-8859-1'</entry>
-  <entry>Jeu de caractères ISO pour décoder les messages du serveur (utilisé seulement si la locale est UTF-8) (si non renseigné, les messages ne sont pas concertis si la locale est UTF-8)</entry>
+  <entry>Jeu de caractères ISO pour décoder les messages du serveur (utilisé seulement si la locale est UTF-8) (si non renseigné, les messages ne sont pas convertis si la locale est UTF-8)</entry>
 </row>
 <row>
   <entry><option>look_charset_decode_utf</option></entry>
@@ -158,7 +158,7 @@
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>
   <entry>'%B, %A %d %Y'</entry>
-  <entry>Format de date/heure dans la barre d'info</entry>
+  <entry>Format de date/heure dans la barre d'infos</entry>
 </row>
 <row>
   <entry><option>look_infobar_seconds</option></entry>
@@ -221,7 +221,7 @@
   <entry>booléen</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'off'</entry>
-  <entry>Si activé, utilise la vraie couleur blanche, désactivé par défaut pour les terminaux avec un fond blanc (si vous n'utilisez jamais de fond blanc, vous devriez activer cette option pour voir du vrai blanc au lieu de la couleur d'avant plant par défaut du terminal)</entry>
+  <entry>Si activé, utilise la vraie couleur blanche, désactivé par défaut pour les terminaux avec un fond blanc (si vous n'utilisez jamais de fond blanc, vous devriez activer cette option pour voir du vrai blanc au lieu de la couleur d'avant plan par défaut du terminal)</entry>
 </row>
 <row>
   <entry><option>col_separator</option></entry>
@@ -501,7 +501,7 @@
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'lightgreen'</entry>
-  <entry>Couleur pour le symbole du propriétaire du canal (spécifique à unrealircd)</entry>
+  <entry>Couleur pour le symbole propriétaire du canal (spécifique à unrealircd)</entry>
 </row>
 <row>
   <entry><option>col_nick_chanadmin</option></entry>
@@ -543,7 +543,7 @@
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'blue'</entry>
-  <entry>Couleur pour le séparateur de pseudo</entry>
+  <entry>Couleur pour le séparateur de pseudos</entry>
 </row>
 <row>
   <entry><option>col_nick_self</option></entry>
@@ -746,7 +746,7 @@
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>
   <entry>'%Y %b %d %H:%M:%S'</entry>
-  <entry>Format de date/heure pour les conversations sauvegardées (voir man strftime pour le format de date/heure)</entry>
+  <entry>Format de date/heure pour les conversations sauvegardées (voir strftime(3) pour le format de date/heure)</entry>
 </row>
 <row>
   <entry><option>log_hide_nickserv_pwd</option></entry>
@@ -830,7 +830,7 @@
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>
   <entry>''</entry>
-  <entry>Liste des mots pour la notification (séparés par des virgules, le comparaison ne tient pas compte de la casse, les mots peuvent commencer ou se terminer par "*" pour une comparaison partielle)</entry>
+  <entry>Liste des mots pour la notification (séparés par des virgules, la comparaison ne tient pas compte de la casse, les mots peuvent commencer ou se terminer par "*" pour une comparaison partielle)</entry>
 </row>
 <row>
   <entry><option>irc_colors_receive</option></entry>
@@ -1075,7 +1075,7 @@
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>
   <entry>''</entry>
-  <entry>2nd pseudo alternatif pour le serveur IRC (si le pseudo alternatif est déjà utilisé)</entry>
+  <entry>2ème pseudo alternatif pour le serveur IRC (si le pseudo alternatif est déjà utilisé)</entry>
 </row>
 <row>
   <entry><option>server_username</option></entry>

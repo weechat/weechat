@@ -304,8 +304,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
       used, internal and IRC commands, setup file, and FIFO pipe use.
     </para>
     
-    <section id="secRunWeeChat">
-      <title>Run WeeChat</title>
+    <section id="secRunningWeeChat">
+      <title>Running WeeChat</title>
     
       <para>
         Command line arguments:
