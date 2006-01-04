@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2003-2005 by FlashCode <flashcode@flashtux.org>
+ * Copyright (c) 2003-2006 by FlashCode <flashcode@flashtux.org>
  * See README for License detail, AUTHORS for developers list.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 
@@ -52,7 +52,7 @@
 #endif
 
 
-#define WEECHAT_COPYRIGHT_DATE "(c) 2003-2005"
+#define WEECHAT_COPYRIGHT_DATE "(c) 2003-2006"
 #define WEECHAT_WEBSITE "http://weechat.flashtux.org"
 
 #define WEECHAT_ERROR   _("WeeChat Error:")
@@ -65,7 +65,7 @@
 /* license */
 
 #define WEE_LICENSE \
-    PACKAGE_STRING " (c) Copyright 2003-2005, compiled on " __DATE__ " " __TIME__ \
+    PACKAGE_STRING " (c) Copyright 2003-2006, compiled on " __DATE__ " " __TIME__ \
     "\nDeveloped by FlashCode <flashcode@flashtux.org> - " WEECHAT_WEBSITE "\n\n" \
     "This program is free software; you can redistribute it and/or modify\n" \
     "it under the terms of the GNU General Public License as published by\n" \
@@ -80,7 +80,7 @@
     "\n" \
     "You should have received a copy of the GNU General Public License\n" \
     "along with this program; if not, write to the Free Software\n" \
-    "Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n\n"
+    "Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA\n\n"
     
 /* directory separator, depending on OS */
 

@@ -14,7 +14,7 @@
  * ###                                                                      ###
  * ############################################################################
  *
- * Copyright (c) 2003-2005 by FlashCode <flashcode@flashtux.org>
+ * Copyright (c) 2003-2006 by FlashCode <flashcode@flashtux.org>
  * See README for License detail, AUTHORS for developers list.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -29,7 +29,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 /* weechat.c: core functions for WeeChat */
@@ -290,7 +290,7 @@ void
 weechat_display_usage (char *exec_name)
 {
     printf ("\n");
-    printf (_("%s (c) Copyright 2003-2005, compiled on %s %s\n"
+    printf (_("%s (c) Copyright 2003-2006, compiled on %s %s\n"
               "Developed by FlashCode <flashcode@flashtux.org> - %s"),
             PACKAGE_STRING, __DATE__, __TIME__, WEECHAT_WEBSITE);
     printf ("\n\n");

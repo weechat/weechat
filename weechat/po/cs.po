@@ -1,13 +1,12 @@
 # WeeChat: fast & light, IRC client for many operating systems. 
-# Copyright (c) 2003-2005 FlashCode <flashcode@flashtux.org>
+# Copyright (c) 2003-2006 FlashCode <flashcode@flashtux.org>
 # This file is distributed under the same license as the WeeChat package.
-# FlashCode <flashcode@flashtux.org>, 2005.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.7-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2005-12-25 12:17+0100\n"
+"POT-Creation-Date: 2006-01-04 05:30+0100\n"
 "PO-Revision-Date: 2005-12-25 12:19+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3846,9 +3845,9 @@ msgid "Upgrade completed successfully\n"
 msgstr "Aktualizace dokončena úspěšně\n"
 
 #: src/common/weechat.c:293
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s (c) Copyright 2003-2005, compiled on %s %s\n"
+"%s (c) Copyright 2003-2006, compiled on %s %s\n"
 "Developed by FlashCode <flashcode@flashtux.org> - %s"
 msgstr ""
 "%s (c) Copzright 2003-2005, zkompilováno %s %s\n"
