@@ -666,7 +666,7 @@ int cfg_irc_colors_send;
 t_config_option weechat_options_irc[] =
 { { "irc_display_away", N_("display message to all channels when away"),
     N_("display message to all channels when (un)marking as away"),
-    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
     NULL, NULL, &cfg_irc_display_away, NULL, &config_change_noop },
   { "irc_default_msg_away", N_("default message when away"),
     N_("default message when away"),
