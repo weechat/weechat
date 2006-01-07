@@ -3254,6 +3254,17 @@ gui_refresh_screen ()
 }
 
 /*
+ * gui_refresh_screen_sigwinch: called when signal SIGWINCH is received
+ */
+
+void
+gui_refresh_screen_sigwinch ()
+{
+    gui_refresh_screen ();
+    signal (SIGWINCH, gui_refresh_screen_sigwinch);
+}
+
+/*
  * gui_pre_init: pre-initialize GUI (called before gui_init)
  */
 
@@ -3508,7 +3519,7 @@ gui_init ()
         gui_current_window = gui_windows;
         gui_buffer_new (gui_windows, NULL, NULL, 0, 1);
     
-        signal (SIGWINCH, gui_refresh_screen);
+        signal (SIGWINCH, gui_refresh_screen_sigwinch);
 	
         if (cfg_look_set_title)
             gui_set_window_title ();
