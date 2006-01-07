@@ -210,7 +210,7 @@ weechat_plugin_infobar_printf (t_weechat_plugin *plugin, int time_displayed, cha
     va_start (argptr, message);
     vsnprintf (buf, sizeof (buf) - 1, message, argptr);
     va_end (argptr);
-    gui_infobar_printf (time_displayed, COLOR_WIN_INFOBAR, buf);
+    gui_infobar_printf (time_displayed, COLOR_WIN_INFOBAR, "%s", buf);
 }
 
 /*
