@@ -465,6 +465,9 @@ gui_color_get_pair (int num_color)
 {
     int fg, bg;
     
+    if ((num_color < 0) || (num_color > NUM_COLORS - 1))
+        return WEECHAT_COLOR_WHITE;
+    
     fg = gui_color[num_color]->foreground;
     bg = gui_color[num_color]->background;
     
@@ -486,9 +489,12 @@ gui_color_get_pair (int num_color)
 void
 gui_window_set_weechat_color (WINDOW *window, int num_color)
 {
-    wattroff (window, A_BOLD | A_UNDERLINE | A_REVERSE);
-    wattron (window, COLOR_PAIR(gui_color_get_pair (num_color)) |
-             gui_color[num_color]->attributes);
+    if ((num_color >= 0) && (num_color <= NUM_COLORS - 1))
+    {
+        wattroff (window, A_BOLD | A_UNDERLINE | A_REVERSE);
+        wattron (window, COLOR_PAIR(gui_color_get_pair (num_color)) |
+                 gui_color[num_color]->attributes);
+    }
 }
 
 /*
