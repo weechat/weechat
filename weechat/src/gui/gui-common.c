@@ -844,13 +844,13 @@ gui_add_to_line (t_gui_buffer *buffer, int type, char *message)
                 buffer->notify_level)
             {
                 if (buffer->last_line->line_with_highlight)
-                    hotlist_add (HOTLIST_HIGHLIGHT, buffer);
+                    hotlist_add (HOTLIST_HIGHLIGHT, SERVER(buffer), buffer);
                 else if (BUFFER_IS_PRIVATE(buffer) && (buffer->last_line->line_with_message))
-                    hotlist_add (HOTLIST_PRIVATE, buffer);
+                    hotlist_add (HOTLIST_PRIVATE, SERVER(buffer), buffer);
                 else if (buffer->last_line->line_with_message)
-                    hotlist_add (HOTLIST_MSG, buffer);
+                    hotlist_add (HOTLIST_MSG, SERVER(buffer), buffer);
                 else
-                    hotlist_add (HOTLIST_LOW, buffer);
+                    hotlist_add (HOTLIST_LOW, SERVER(buffer), buffer);
                 gui_draw_buffer_status (gui_current_window->buffer, 1);
             }
         }

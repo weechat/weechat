@@ -34,6 +34,7 @@ struct t_weechat_hotlist
 {
     int priority;                       /* 0=crappy msg (join/part), 1=msg, */
                                         /* 2=pv, 3=nick highlight           */
+    t_irc_server *server;               /* associated server                */
     t_gui_buffer *buffer;               /* associated buffer                */
     t_weechat_hotlist *prev_hotlist;    /* link to previous hotlist         */
     t_weechat_hotlist *next_hotlist;    /* link to next hotlist             */
@@ -42,7 +43,7 @@ struct t_weechat_hotlist
 extern t_weechat_hotlist *hotlist;
 extern t_gui_buffer *hotlist_initial_buffer;
 
-extern void hotlist_add (int, t_gui_buffer *);
+extern void hotlist_add (int, t_irc_server *, t_gui_buffer *);
 extern void hotlist_free (t_weechat_hotlist *);
 extern void hotlist_free_all ();
 extern void hotlist_remove_buffer (t_gui_buffer *);

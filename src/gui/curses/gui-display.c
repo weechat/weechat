@@ -2164,7 +2164,10 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                         else
                             snprintf (format, sizeof (format) - 1, "%%.%ds", cfg_look_hotlist_names_length);
                         if (BUFFER_IS_SERVER(ptr_hotlist->buffer))
-                            wprintw (ptr_win->win_status, format, SERVER(ptr_hotlist->buffer)->name);
+                            wprintw (ptr_win->win_status, format,
+                                     (ptr_hotlist->server) ?
+                                     ptr_hotlist->server->name :
+                                     SERVER(ptr_hotlist->buffer)->name);
                         else if (BUFFER_IS_CHANNEL(ptr_hotlist->buffer)
                                  || BUFFER_IS_PRIVATE(ptr_hotlist->buffer))
                             wprintw (ptr_win->win_status, format, CHANNEL(ptr_hotlist->buffer)->name);
