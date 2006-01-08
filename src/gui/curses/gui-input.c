@@ -158,7 +158,7 @@ gui_input_grab_end ()
         if (gui_current_window->buffer->has_input)
         {
             gui_insert_string_input (gui_current_window, expanded_key, -1);
-            gui_current_window->buffer->input_buffer_pos += strlen (expanded_key);
+            gui_current_window->buffer->input_buffer_pos += utf8_strlen (expanded_key);
             gui_draw_buffer_input (gui_current_window->buffer, 1);
         }
         free (expanded_key);
