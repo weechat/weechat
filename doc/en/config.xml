@@ -763,13 +763,6 @@
   <entry>Display message to all channels when (un)marking as away</entry>
 </row>
 <row>
-  <entry><option>irc_default_msg_away</option></entry>
-  <entry>string</entry>
-  <entry>any string</entry>
-  <entry></entry>
-  <entry>Default message when away</entry>
-</row>
-<row>
   <entry><option>irc_default_msg_part</option></entry>
   <entry>string</entry>
   <entry>any string</entry>

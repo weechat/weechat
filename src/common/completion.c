@@ -574,19 +574,6 @@ completion_list_add_weechat_cmd (t_completion *completion)
 }
 
 /*
- * completion_list_add_away: add away message to completion list
- */
-
-void
-completion_list_add_away (t_completion *completion)
-{
-    if (cfg_irc_default_msg_away && cfg_irc_default_msg_away[0])
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     cfg_irc_default_msg_away);
-}
-
-/*
  * completion_build_list_template: build data list according to a template
  */
 
@@ -679,9 +666,6 @@ completion_build_list_template (t_completion *completion, char *template)
                             break;
                         case 'w': /* WeeChat commands */
                             completion_list_add_weechat_cmd (completion);
-                            break;
-                        case 'y': /* away message */
-                            completion_list_add_away (completion);
                             break;
                     }
                 }

@@ -759,15 +759,8 @@
   <entry><option>irc_display_away</option></entry>
   <entry>booléen</entry>
   <entry>'on' ou 'off'</entry>
-  <entry>'on'</entry>
+  <entry>'off'</entry>
   <entry>Affiche un message sur tous les canaux pour l'absence/le retour</entry>
-</row>
-<row>
-  <entry><option>irc_default_msg_away</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
-  <entry>'away'</entry>
-  <entry>Message par défaut pour l'absence</entry>
 </row>
 <row>
   <entry><option>irc_default_msg_part</option></entry>

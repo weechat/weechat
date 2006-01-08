@@ -5,6 +5,8 @@ ChangeLog - 2006-01-08
 
 
 Version 0.1.7 (under dev!):
+   * removed "irc_default_msg_away" setting, for RFC 2812 conformity
+     (/away command wihtout argument only removes away status)
    * fixed refresh bug with Solaris when term size is changed
    * replaced Texinfo doc by XML Docbook
    * added color for window separators (when splited)

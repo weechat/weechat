@@ -1686,10 +1686,6 @@ plugin->msg_handler_add (plugin, "KICK", &amp;msg_kick, NULL, NULL);
                           <entry><literal>%w</literal></entry>
                           <entry>WeeChat commands</entry>
                         </row>
-                        <row>
-                          <entry><literal>%y</literal></entry>
-                          <entry>default "away" message</entry>
-                        </row>
                       </tbody>
                     </tgroup>
                   </informaltable>
