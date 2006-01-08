@@ -772,7 +772,13 @@ user_command (t_gui_buffer *buffer, t_irc_server *server, char *command)
     if ((command[0] == '/') && (command[1] != '/'))
     {
         /* WeeChat internal command (or IRC command) */
-        (void) exec_weechat_command (ptr_window, server, command);
+        command_encoded = channel_iconv_encode (SERVER(buffer),
+                                                CHANNEL(buffer),
+                                                command);
+        (void) exec_weechat_command (ptr_window, server,
+                                     (command_encoded) ? command_encoded : command);
+        if (command_encoded)
+            free (command_encoded);
     }
     else
     {
@@ -786,7 +792,7 @@ user_command (t_gui_buffer *buffer, t_irc_server *server, char *command)
             
             command_encoded = channel_iconv_encode (SERVER(buffer),
                                                     CHANNEL(buffer),
-                                                    (command_with_colors) ? command_with_colors: command);
+                                                    (command_with_colors) ? command_with_colors : command);
             if (CHANNEL(buffer)->dcc_chat)
                 dcc_chat_sendf ((t_irc_dcc *)(CHANNEL(buffer)->dcc_chat),
                                 "%s\r\n",
