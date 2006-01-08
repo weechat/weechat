@@ -328,6 +328,7 @@ static XS (XS_weechat_print_infobar)
     
     perl_plugin->infobar_printf (perl_plugin,
                                  SvIV (ST (0)),
+                                 "%s",
                                  SvPV (ST (1), integer));
     
     XSRETURN_YES;

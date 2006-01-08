@@ -330,7 +330,7 @@ weechat_ruby_print_infobar (VALUE class, VALUE delay, VALUE message)
     c_delay = FIX2INT (delay);
     c_message = STR2CSTR (message);
     
-    ruby_plugin->infobar_printf (ruby_plugin, c_delay, c_message);
+    ruby_plugin->infobar_printf (ruby_plugin, c_delay, "%s", c_message);
     
     return INT2FIX (1);
 }

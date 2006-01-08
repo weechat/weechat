@@ -242,7 +242,7 @@ weechat_python_print_infobar (PyObject *self, PyObject *args)
         return Py_BuildValue ("i", 0);
     }
     
-    python_plugin->infobar_printf (python_plugin, delay, message);
+    python_plugin->infobar_printf (python_plugin, delay, "%s", message);
     
     return Py_BuildValue ("i", 1);
 }
