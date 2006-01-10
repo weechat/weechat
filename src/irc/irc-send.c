@@ -348,7 +348,7 @@ irc_cmd_send_ban (t_irc_server *server, char *arguments)
             {
                 irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
                 gui_printf_nolog (server->buffer,
-                                  _("%s \"%s\" command can only be executed in a channel window\n"),
+                                  _("%s \"%s\" command can only be executed in a channel buffer\n"),
                                   WEECHAT_ERROR, "ban");
                 return -1;
             }
@@ -376,7 +376,7 @@ irc_cmd_send_ban (t_irc_server *server, char *arguments)
         {
             irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
             gui_printf_nolog (server->buffer,
-                              _("%s \"%s\" command can only be executed in a channel window\n"),
+                              _("%s \"%s\" command can only be executed in a channel buffer\n"),
                               WEECHAT_ERROR, "ban");
             return -1;
         }
@@ -567,7 +567,7 @@ irc_cmd_send_dehalfop (t_irc_server *server, int argc, char **argv)
     {
         irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
         gui_printf_nolog (server->buffer,
-                          _("%s \"%s\" command can only be executed in a channel window\n"),
+                          _("%s \"%s\" command can only be executed in a channel buffer\n"),
                           WEECHAT_ERROR, "dehalfop");
     }
     return 0;
@@ -600,7 +600,7 @@ irc_cmd_send_deop (t_irc_server *server, int argc, char **argv)
     {
         irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
         gui_printf_nolog (server->buffer,
-                          _("%s \"%s\" command can only be executed in a channel window\n"),
+                          _("%s \"%s\" command can only be executed in a channel buffer\n"),
                           WEECHAT_ERROR, "deop");
     }
     return 0;
@@ -633,7 +633,7 @@ irc_cmd_send_devoice (t_irc_server *server, int argc, char **argv)
     {
         irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
         gui_printf_nolog (server->buffer,
-                          _("%s \"%s\" command can only be executed in a channel window\n"),
+                          _("%s \"%s\" command can only be executed in a channel buffer\n"),
                           WEECHAT_ERROR, "devoice");
         return -1;
     }
@@ -681,7 +681,7 @@ irc_cmd_send_halfop (t_irc_server *server, int argc, char **argv)
     {
         irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
         gui_printf_nolog (server->buffer,
-                          _("%s \"%s\" command can only be executed in a channel window\n"),
+                          _("%s \"%s\" command can only be executed in a channel buffer\n"),
                           WEECHAT_ERROR, "halfop");
         return -1;
     }
@@ -717,7 +717,7 @@ irc_cmd_send_invite (t_irc_server *server, int argc, char **argv)
         {
             irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
             gui_printf_nolog (server->buffer,
-                              _("%s \"%s\" command can only be executed in a channel window\n"),
+                              _("%s \"%s\" command can only be executed in a channel buffer\n"),
                               WEECHAT_ERROR, "invite");
             return -1;
         }
@@ -784,7 +784,7 @@ irc_cmd_send_kick (t_irc_server *server, char *arguments)
         {
             irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
             gui_printf_nolog (server->buffer,
-                              _("%s \"%s\" command can only be executed in a channel window\n"),
+                              _("%s \"%s\" command can only be executed in a channel buffer\n"),
                               WEECHAT_ERROR, "kick");
             return -1;
         }
@@ -841,7 +841,7 @@ irc_cmd_send_kickban (t_irc_server *server, char *arguments)
         {
             irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
             gui_printf_nolog (server->buffer,
-                              _("%s \"%s\" command can only be executed in a channel window\n"),
+                              _("%s \"%s\" command can only be executed in a channel buffer\n"),
                               WEECHAT_ERROR, "kickban");
             return -1;
         }
@@ -975,7 +975,7 @@ irc_cmd_send_me (t_irc_server *server, char *arguments)
     {
         irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
         gui_printf_nolog (server->buffer,
-                          _("%s \"%s\" command can not be executed on a server window\n"),
+                          _("%s \"%s\" command can not be executed on a server buffer\n"),
                           WEECHAT_ERROR, "me");
         return -1;
     }
@@ -1039,33 +1039,29 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
             }
             if (strcmp (arguments, "*") == 0)
             {
-                if (BUFFER_IS_SERVER(gui_current_window->buffer))
+                if (!BUFFER_IS_CHANNEL(gui_current_window->buffer) &&
+                    !BUFFER_IS_PRIVATE(gui_current_window->buffer))
                 {
                     irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
                     gui_printf_nolog (server->buffer,
-                                      _("%s \"%s\" command can not be executed on a server window\n"),
+                                      _("%s \"%s\" command can only be executed in a channel or private buffer\n"),
                                       WEECHAT_ERROR, "msg *");
                     return -1;
                 }
                 ptr_channel = CHANNEL(gui_current_window->buffer);
-                ptr_nick = nick_search (ptr_channel, server->nick);
-                if (ptr_nick)
-                {
-                    irc_display_nick (ptr_channel->buffer, ptr_nick, NULL,
-                                      MSG_TYPE_NICK, 1, 1, 0);
-                    string = (char *)gui_color_decode ((unsigned char *)pos, 1);
-                    gui_printf_type (ptr_channel->buffer, MSG_TYPE_MSG, "%s\n",
-                                     (string) ? string : "");
-                    if (string)
-                        free (string);
-                }
+                if (BUFFER_IS_CHANNEL(gui_current_window->buffer))
+                    ptr_nick = nick_search (ptr_channel, server->nick);
                 else
-                {
-                    irc_display_prefix (server, server->buffer, PREFIX_ERROR);
-                    gui_printf_nolog (server->buffer,
-                                      _("%s nick \"%s\" not found for \"%s\" command\n"),
-                                      WEECHAT_ERROR, server->nick, "msg");
-                }
+                    ptr_nick = NULL;
+                irc_display_nick (gui_current_window->buffer, ptr_nick,
+                                  (ptr_nick) ? NULL : server->nick,
+                                  MSG_TYPE_NICK, 1, 1, 0);
+                string = (char *)gui_color_decode ((unsigned char *)pos, 1);
+                gui_printf_type (gui_current_window->buffer, MSG_TYPE_MSG, "%s\n",
+                                 (string) ? string : "");
+                if (string)
+                    free (string);
+                
                 server_sendf (server, "PRIVMSG %s :%s\r\n", ptr_channel->name, pos);
             }
             else
@@ -1143,7 +1139,7 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
                         {
                             irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
                             gui_printf_nolog (server->buffer,
-                                              _("%s cannot create new private window \"%s\"\n"),
+                                              _("%s cannot create new private buffer \"%s\"\n"),
                                               WEECHAT_ERROR, arguments);
                             return -1;
                         }
@@ -1196,7 +1192,7 @@ irc_cmd_send_names (t_irc_server *server, char *arguments)
         {
             irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
             gui_printf_nolog (server->buffer,
-                              _("%s \"%s\" command can only be executed in a channel window\n"),
+                              _("%s \"%s\" command can only be executed in a channel buffer\n"),
                               WEECHAT_ERROR, "names");
             return -1;
         }
@@ -1326,7 +1322,7 @@ irc_cmd_send_op (t_irc_server *server, int argc, char **argv)
     {
         irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
         gui_printf_nolog (server->buffer,
-                          _("%s \"%s\" command can only be executed in a channel window\n"),
+                          _("%s \"%s\" command can only be executed in a channel buffer\n"),
                           WEECHAT_ERROR, "op");
         return -1;
     }
@@ -1374,7 +1370,7 @@ irc_cmd_send_part (t_irc_server *server, char *arguments)
             {
                 irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
                 gui_printf_nolog (server->buffer,
-                                  _("%s \"%s\" command can not be executed on a server window\n"),
+                                  _("%s \"%s\" command can not be executed on a server buffer\n"),
                                   WEECHAT_ERROR, "part");
                 return -1;
             }
@@ -1388,7 +1384,7 @@ irc_cmd_send_part (t_irc_server *server, char *arguments)
         {
             irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
             gui_printf_nolog (server->buffer,
-                              _("%s \"%s\" command can not be executed on a server window\n"),
+                              _("%s \"%s\" command can not be executed on a server buffer\n"),
                               WEECHAT_ERROR, "part");
             return -1;
         }
@@ -1484,7 +1480,7 @@ irc_cmd_send_query (t_irc_server *server, char *arguments)
         {
             irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
             gui_printf_nolog (server->buffer,
-                              _("%s cannot create new private window \"%s\"\n"),
+                              _("%s cannot create new private buffer \"%s\"\n"),
                               WEECHAT_ERROR, arguments);
             return -1;
         }
@@ -1733,7 +1729,7 @@ irc_cmd_send_topic (t_irc_server *server, char *arguments)
         {
             irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
             gui_printf_nolog (server->buffer,
-                              _("%s \"%s\" command can not be executed on a server window\n"),
+                              _("%s \"%s\" command can not be executed on a server buffer\n"),
                               WEECHAT_ERROR, "topic");
             return -1;
         }
@@ -1806,7 +1802,7 @@ irc_cmd_send_unban (t_irc_server *server, char *arguments)
             {
                 irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
                 gui_printf_nolog (server->buffer,
-                                  _("%s \"%s\" command can only be executed in a channel window\n"),
+                                  _("%s \"%s\" command can only be executed in a channel buffer\n"),
                                   WEECHAT_ERROR, "unban");
                 return -1;
             }
@@ -1920,7 +1916,7 @@ irc_cmd_send_voice (t_irc_server *server, int argc, char **argv)
     {
         irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
         gui_printf_nolog (server->buffer,
-                          _("%s \"%s\" command can only be executed in a channel window\n"),
+                          _("%s \"%s\" command can only be executed in a channel buffer\n"),
                           WEECHAT_ERROR, "voice");
         return -1;
     }

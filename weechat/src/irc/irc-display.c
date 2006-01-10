@@ -94,7 +94,7 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
     if (display_around)
         gui_printf_type (buffer, type, "%s%s",
                          GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                         (nick) ? "<" : ">");
+                         (nick || BUFFER_IS_PRIVATE(buffer)) ? "<" : ">");
     if (nick && cfg_look_nickmode)
     {
         if (nick->flags & NICK_CHANOWNER)
@@ -130,7 +130,7 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
     if (display_around)
         gui_printf_type (buffer, type, "%s%s",
                          GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                         (nick) ? "> " : "< ");
+                         (nick || BUFFER_IS_PRIVATE(buffer)) ? "> " : "< ");
     gui_printf_type (buffer, type, GUI_NO_COLOR);
 }
 
