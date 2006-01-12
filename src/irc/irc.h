@@ -45,6 +45,7 @@
 #define PREFIX_QUIT      "<--"
 #define PREFIX_ERROR     "=!="
 #define PREFIX_PLUGIN    "-P-"
+#define PREFIX_AWAY      "-A-"
 
 #define DEFAULT_IRC_PORT 6667
 
@@ -396,6 +397,7 @@ extern void dcc_print_log (t_irc_dcc *);
 extern void irc_display_prefix (t_irc_server *, t_gui_buffer *, char *);
 extern void irc_display_nick (t_gui_buffer *, t_irc_nick *, char *, int,
                               int, int, int);
+extern void irc_display_away (t_irc_server *, char *, char *);
 extern void irc_display_mode (t_irc_server *, t_gui_buffer *, char *, char,
                               char *, char *, char *, char *);
 extern void irc_display_server (t_irc_server *ptr_server);

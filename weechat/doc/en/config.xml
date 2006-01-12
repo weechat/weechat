@@ -757,10 +757,10 @@
 </row>
 <row>
   <entry><option>irc_display_away</option></entry>
-  <entry>boolean</entry>
-  <entry>'on' or 'off'</entry>
+  <entry>string</entry>
+  <entry>'off', 'local', 'channel'</entry>
   <entry></entry>
-  <entry>Display message to all channels when (un)marking as away</entry>
+  <entry>Display message when (un)marking as away</entry>
 </row>
 <row>
   <entry><option>irc_default_msg_part</option></entry>

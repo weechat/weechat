@@ -54,6 +54,10 @@
 #define CFG_LOOK_NICKLIST_TOP    2
 #define CFG_LOOK_NICKLIST_BOTTOM 3
 
+#define CFG_IRC_DISPLAY_AWAY_OFF     0
+#define CFG_IRC_DISPLAY_AWAY_LOCAL   1
+#define CFG_IRC_DISPLAY_AWAY_CHANNEL 2
+
 typedef struct t_config_section t_config_section;
 
 struct t_config_section

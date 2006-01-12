@@ -757,10 +757,10 @@
 </row>
 <row>
   <entry><option>irc_display_away</option></entry>
-  <entry>booléen</entry>
-  <entry>'on' ou 'off'</entry>
+  <entry>chaîne</entry>
+  <entry>'off', 'local', 'channel'</entry>
   <entry>'off'</entry>
-  <entry>Affiche un message sur tous les canaux pour l'absence/le retour</entry>
+  <entry>Affiche un message pour l'absence/le retour</entry>
 </row>
 <row>
   <entry><option>irc_default_msg_part</option></entry>

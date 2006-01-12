@@ -85,6 +85,31 @@ irc_cmd_send_admin (t_irc_server *server, char *arguments)
 }
 
 /*
+ * irc_send_me: send a ctcp action to a channel
+ */
+
+int
+irc_send_me (t_irc_server *server, t_irc_channel *channel, char *arguments)
+{
+    char *string;
+    
+    server_sendf (server, "PRIVMSG %s :\01ACTION %s\01\r\n",
+                  channel->name,
+                  (arguments && arguments[0]) ? arguments : "");
+    irc_display_prefix (NULL, channel->buffer, PREFIX_ACTION_ME);
+    string = (arguments && arguments[0]) ?
+        (char *)gui_color_decode ((unsigned char *)arguments, 1) : NULL;
+    gui_printf (channel->buffer, "%s%s %s%s\n",
+                GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                server->nick,
+                GUI_COLOR(COLOR_WIN_CHAT),
+                (string) ? string : "");
+    if (string)
+        free (string);
+    return 0;
+}
+
+/*
  * irc_cmd_send_ame: send a ctcp action to all channels of all connected servers
  */
 
@@ -93,7 +118,6 @@ irc_cmd_send_ame (t_irc_server *server, char *arguments)
 {
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
-    char *string;
     
     /* make gcc happy */
     (void) server;
@@ -108,21 +132,7 @@ irc_cmd_send_ame (t_irc_server *server, char *arguments)
                  ptr_channel = ptr_channel->next_channel)
             {
                 if (ptr_channel->type == CHANNEL_TYPE_CHANNEL)
-                {
-                    server_sendf (ptr_server, "PRIVMSG %s :\01ACTION %s\01\r\n",
-                                  ptr_channel->name,
-                                  (arguments && arguments[0]) ? arguments : "");
-                    irc_display_prefix (NULL, ptr_channel->buffer, PREFIX_ACTION_ME);
-                    string = (arguments && arguments[0]) ?
-                        (char *)gui_color_decode ((unsigned char *)arguments, 1) : NULL;
-                    gui_printf (ptr_channel->buffer, "%s%s %s%s\n",
-                                GUI_COLOR(COLOR_WIN_CHAT_NICK),
-                                ptr_server->nick,
-                                GUI_COLOR(COLOR_WIN_CHAT),
-                                (string) ? string : "");
-                    if (string)
-                        free (string);
-                }
+                    irc_send_me (ptr_server, ptr_channel, arguments);
             }
         }
     }
@@ -189,6 +199,78 @@ irc_cmd_send_amsg (t_irc_server *server, char *arguments)
 }
 
 /*
+ * irc_send_away: toggle away status for one server
+ */
+
+void
+irc_send_away (t_irc_server *server, char *arguments)
+{
+    char *string, buffer[4096];
+    t_gui_window *ptr_window;
+    time_t elapsed;
+    
+    if (arguments)
+    {
+        server->is_away = 1;
+        server->away_time = time (NULL);
+        server_sendf (server, "AWAY :%s\r\n", arguments);
+        if (cfg_irc_display_away != CFG_IRC_DISPLAY_AWAY_OFF)
+        {
+            string = (char *)gui_color_decode ((unsigned char *)arguments, 1);
+            if (cfg_irc_display_away == CFG_IRC_DISPLAY_AWAY_LOCAL)
+                irc_display_away (server, "away", (string) ? string : arguments);
+            else
+            {
+                snprintf (buffer, sizeof (buffer), "is away: %s", (string) ? string : arguments);
+                irc_send_me_all_channels (server, buffer);
+            }
+            if (string)
+                free (string);
+        }
+        server_set_away (server, server->nick, 1);
+        for (ptr_window = gui_windows; ptr_window;
+             ptr_window = ptr_window->next_window)
+        {
+            if (SERVER(ptr_window->buffer) == server)
+                ptr_window->buffer->last_read_line =
+                    ptr_window->buffer->last_line;
+        }
+    }
+    else
+    {
+        server_sendf (server, "AWAY\r\n");
+        server->is_away = 0;
+        if (server->away_time != 0)
+        {
+            elapsed = time (NULL) - server->away_time;
+            server->away_time = 0;
+            if (cfg_irc_display_away != CFG_IRC_DISPLAY_AWAY_OFF)
+            {
+                if (cfg_irc_display_away == CFG_IRC_DISPLAY_AWAY_LOCAL)
+                {
+                    snprintf (buffer, sizeof (buffer),
+                              "gone %.2ld:%.2ld:%.2ld",
+                              (long int)(elapsed / 3600),
+                              (long int)((elapsed / 60) % 60),
+                              (long int)(elapsed % 60));
+                    irc_display_away (server, "back", buffer);
+                }
+                else
+                {
+                    snprintf (buffer, sizeof (buffer),
+                              "is back (gone %.2ld:%.2ld:%.2ld)",
+                              (long int)(elapsed / 3600),
+                              (long int)((elapsed / 60) % 60),
+                              (long int)(elapsed % 60));
+                    irc_send_me_all_channels (server, buffer);
+                }
+            }
+        }
+        server_set_away (server, server->nick, 0);
+    }
+}
+
+/*
  * irc_cmd_send_away: toggle away status
  */
 
@@ -197,10 +279,6 @@ irc_cmd_send_away (t_irc_server *server, char *arguments)
 {
     char *pos;
     t_irc_server *ptr_server;
-    t_gui_window *ptr_window;
-    time_t elapsed;
-    char buffer[4096];
-    char *string;
     
     gui_add_hotlist = 0;
     if (arguments && (strncmp (arguments, "-all", 4) == 0))
@@ -215,94 +293,12 @@ irc_cmd_send_away (t_irc_server *server, char *arguments)
              ptr_server = ptr_server->next_server)
         {
             if (ptr_server->is_connected)
-            {
-                if (pos)
-                {
-                    ptr_server->is_away = 1;
-                    ptr_server->away_time = time (NULL);
-                    server_sendf (ptr_server, "AWAY :%s\r\n", pos);
-                    if (cfg_irc_display_away)
-                    {
-                        string = (char *)gui_color_decode ((unsigned char *)pos, 1);
-                        snprintf (buffer, sizeof (buffer), "is away: %s", (string) ? string : "");
-                        irc_send_me_all_channels (ptr_server, buffer);
-                        if (string)
-                            free (string);
-                    }
-                    server_set_away (ptr_server, ptr_server->nick, 1);
-                    for (ptr_window = gui_windows; ptr_window;
-                         ptr_window = ptr_window->next_window)
-                    {
-                        if (SERVER(ptr_window->buffer) == ptr_server)
-                            ptr_window->buffer->last_read_line =
-                                ptr_window->buffer->last_line;
-                    }
-                }
-                else
-                {
-                    server_sendf (ptr_server, "AWAY\r\n");
-                    ptr_server->is_away = 0;
-                    if (server->away_time != 0)
-                    {
-                        elapsed = time (NULL) - ptr_server->away_time;
-                        ptr_server->away_time = 0;
-                        if (cfg_irc_display_away)
-                        {
-                            snprintf (buffer, sizeof (buffer),
-                                      "is back (gone %.2ld:%.2ld:%.2ld)",
-                                      (long int)(elapsed / 3600),
-                                      (long int)((elapsed / 60) % 60),
-                                      (long int)(elapsed % 60));
-                            irc_send_me_all_channels (ptr_server, buffer);
-                        }
-                    }
-                    server_set_away (ptr_server, ptr_server->nick, 0);
-                }
-            }
+                irc_send_away (ptr_server, pos);
         }
     }
     else
-    {
-        if (arguments)
-        {
-            server->is_away = 1;
-            server->away_time = time (NULL);
-            server_sendf (server, "AWAY :%s\r\n", arguments);
-            if (cfg_irc_display_away)
-            {
-                snprintf (buffer, sizeof (buffer), "is away: %s", arguments);
-                irc_send_me_all_channels (server, buffer);
-            }
-            server_set_away (server, server->nick, 1);
-            for (ptr_window = gui_windows; ptr_window;
-                 ptr_window = ptr_window->next_window)
-            {
-                if (SERVER(ptr_window->buffer) == server)
-                    ptr_window->buffer->last_read_line =
-                        ptr_window->buffer->last_line;
-            }
-        }
-        else
-        {
-            server_sendf (server, "AWAY\r\n");
-            server->is_away = 0;
-            if (server->away_time != 0)
-            {
-                elapsed = time (NULL) - server->away_time;
-                server->away_time = 0;
-                if (cfg_irc_display_away)
-                {
-                    snprintf (buffer, sizeof (buffer),
-                              "is back (gone %.2ld:%.2ld:%.2ld)",
-                              (long int)(elapsed / 3600),
-                              (long int)((elapsed / 60) % 60),
-                              (long int)(elapsed % 60));
-                    irc_send_me_all_channels (server, buffer);
-                }
-            }
-            server_set_away (server, server->nick, 0);
-        }
-    }
+        irc_send_away (server, arguments);
+    
     gui_draw_buffer_status (gui_current_window->buffer, 1);
     gui_add_hotlist = 1;
     return 0;
@@ -918,31 +914,6 @@ irc_cmd_send_lusers (t_irc_server *server, char *arguments)
         server_sendf (server, "LUSERS %s\r\n", arguments);
     else
         server_sendf (server, "LUSERS\r\n");
-    return 0;
-}
-
-/*
- * irc_send_me: send a ctcp action to a channel
- */
-
-int
-irc_send_me (t_irc_server *server, t_irc_channel *channel, char *arguments)
-{
-    char *string;
-    
-    server_sendf (server, "PRIVMSG %s :\01ACTION %s\01\r\n",
-                  channel->name,
-                  (arguments && arguments[0]) ? arguments : "");
-    irc_display_prefix (NULL, channel->buffer, PREFIX_ACTION_ME);
-    string = (arguments && arguments[0]) ?
-        (char *)gui_color_decode ((unsigned char *)arguments, 1) : NULL;
-    gui_printf (channel->buffer, "%s%s %s%s\n",
-                GUI_COLOR(COLOR_WIN_CHAT_NICK),
-                server->nick,
-                GUI_COLOR(COLOR_WIN_CHAT),
-                (string) ? string : "");
-    if (string)
-        free (string);
     return 0;
 }
 

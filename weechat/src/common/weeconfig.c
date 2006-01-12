@@ -650,6 +650,8 @@ t_config_option weechat_options_log[] =
 /* config, irc section */
 
 int cfg_irc_display_away;
+char *cfg_irc_display_away_values[] =
+{ "off", "local", "channel", NULL };
 char *cfg_irc_default_msg_part;
 char *cfg_irc_default_msg_quit;
 int cfg_irc_notice_as_pv;
@@ -663,10 +665,10 @@ int cfg_irc_colors_receive;
 int cfg_irc_colors_send;
 
 t_config_option weechat_options_irc[] =
-{ { "irc_display_away", N_("display message to all channels when away"),
-    N_("display message to all channels when (un)marking as away"),
-    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
-    NULL, NULL, &cfg_irc_display_away, NULL, &config_change_noop },
+{ { "irc_display_away", N_("display message for away"),
+    N_("display message when (un)marking as away"),
+    OPTION_TYPE_INT_WITH_STRING, 0, 0, 0,
+    "off", cfg_irc_display_away_values, &cfg_irc_display_away, NULL, &config_change_noop },
   { "irc_default_msg_part", N_("default part message (leaving channel)"),
     N_("default part message (leaving channel)"),
     OPTION_TYPE_STRING, 0, 0, 0,

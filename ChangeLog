@@ -1,13 +1,14 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-01-10
+ChangeLog - 2006-01-12
 
 
 Version 0.1.7 (under dev!):
    * fixed msg command (now allowed in private buffer with "*" as target)
    * removed "irc_default_msg_away" setting, for RFC 2812 conformity
-     (/away command wihtout argument only removes away status)
+     (/away command wihtout argument only removes away status),
+     new values for "irc_display_away" (off, local, channel)
    * fixed refresh bug with Solaris when term size is changed
    * replaced Texinfo doc by XML Docbook
    * added color for window separators (when splited)

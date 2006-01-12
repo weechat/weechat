@@ -135,6 +135,33 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
 }
 
 /*
+ * irc_display_away: display away on all channels of all servers
+ */
+
+void
+irc_display_away (t_irc_server *server, char *string1, char *string2)
+{
+    t_irc_channel *ptr_channel;
+    
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        if (ptr_channel->type == CHANNEL_TYPE_CHANNEL)
+        {
+            gui_printf_nolog (ptr_channel->buffer,
+                              "%s[%s%s%s %s: %s%s]\n",
+                              GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                              GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                              server->nick,
+                              GUI_COLOR(COLOR_WIN_CHAT),
+                              string1,
+                              string2,
+                              GUI_COLOR(COLOR_WIN_CHAT_DARK));
+        }
+    }
+}
+
+/*
  * irc_display_mode: display IRC message for mode change
  */
 
