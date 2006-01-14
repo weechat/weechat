@@ -854,7 +854,7 @@ void
 plugin_unload_all ()
 {
     while (weechat_plugins)
-        plugin_unload (weechat_plugins);
+        plugin_unload (last_weechat_plugin);
 }
 
 /*
