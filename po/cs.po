@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.1.7-cvs\n"
+"Project-Id-Version: WeeChat 0.1.7\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2006-01-14 09:21+0100\n"
-"PO-Revision-Date: 2006-01-14 09:22+0100\n"
+"PO-Revision-Date: 2006-01-14 12:32+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1403,9 +1403,9 @@ msgstr "%s nemohu najít přezdívku pro poslání zprávy\n"
 #: src/irc/irc-send.c:716 src/irc/irc-send.c:783 src/irc/irc-send.c:840
 #: src/irc/irc-send.c:1166 src/irc/irc-send.c:1296 src/irc/irc-send.c:1776
 #: src/irc/irc-send.c:1890
-#, fuzzy, c-format
+#, c-format
 msgid "%s \"%s\" command can only be executed in a channel buffer\n"
-msgstr "%s \"%s\" příkaz může být spuštěn pouze v okně kanálu\n"
+msgstr "%s \"%s\" příkaz může být spuštěn pouze v bufferu kanálu\n"
 
 #: src/irc/irc-send.c:478 src/irc/irc-send.c:490 src/irc/irc-send.c:508
 #: src/irc/irc-send.c:1144 src/irc/irc-send.c:1269 src/irc/irc-send.c:1802
@@ -1422,14 +1422,16 @@ msgstr "%s špatné parametry pro příkaz \"%s\"\n"
 
 #: src/irc/irc-send.c:949 src/irc/irc-send.c:1344 src/irc/irc-send.c:1358
 #: src/irc/irc-send.c:1703
-#, fuzzy, c-format
+#, c-format
 msgid "%s \"%s\" command can not be executed on a server buffer\n"
-msgstr "%s \"%s\" příkaz nemůže být spuštěn v okně serveru\n"
+msgstr "%s \"%s\" příkaz nemůže být spuštěn v bufferu serveru\n"
 
 #: src/irc/irc-send.c:1018
-#, fuzzy, c-format
+#, c-format
 msgid "%s \"%s\" command can only be executed in a channel or private buffer\n"
-msgstr "%s \"%s\" příkaz může být spuštěn pouze v okně kanálu\n"
+msgstr ""
+"%s \"%s\" příkaz může být spuštěn pouze v bufferu kanálu nebo soukromého "
+"rozhovoru\n"
 
 #: src/irc/irc-send.c:1060 src/irc/irc-recv.c:501
 #, c-format
@@ -1437,9 +1439,9 @@ msgid "%s nick \"%s\" not found for \"%s\" command\n"
 msgstr "%s přezdívka \"%s\" nebyla nalezena pro příkaz \"%s\"\n"
 
 #: src/irc/irc-send.c:1113 src/irc/irc-send.c:1454
-#, fuzzy, c-format
+#, c-format
 msgid "%s cannot create new private buffer \"%s\"\n"
-msgstr "%s nemohu vytvořít nové soukromé okno\"%s\"\n"
+msgstr "%s nemohu vytvořít nové soukromý buffer\"%s\"\n"
 
 #: src/irc/irc-send.c:1855
 #, c-format
@@ -3779,12 +3781,12 @@ msgstr "sezení: upozornění: ignoruji hodnotu z řádku (objekt id: %d)\n"
 
 #: src/common/session.c:1506
 msgid "unexpected end of file (reading uptime)"
-msgstr ""
+msgstr "neočekávaný konec souboru (čtu dobu běhu)"
 
 #: src/common/session.c:1519
 #, c-format
 msgid "session: warning: ignoring value from uptime (object id: %d)\n"
-msgstr ""
+msgstr "sezení: upozornění: ignoruji hodnotu z doby běhu (objekt id: %d)\n"
 
 #: src/common/session.c:1549
 msgid "session file not found"
@@ -3832,7 +3834,7 @@ msgstr "selhalo načtení řádku"
 
 #: src/common/session.c:1629
 msgid "failed to load uptime"
-msgstr ""
+msgstr "selhalo načtení doby běhu"
 
 #: src/common/session.c:1634
 #, c-format
@@ -4264,7 +4266,7 @@ msgstr ""
 
 #: src/common/weeconfig.c:304 src/common/weeconfig.c:305
 msgid "color for window separators (when splited)"
-msgstr ""
+msgstr "barva děliče oken (při rozdělení)"
 
 #: src/common/weeconfig.c:309 src/common/weeconfig.c:310
 msgid "color for title bar"
@@ -4632,14 +4634,12 @@ msgid "hide password displayed by nickserv"
 msgstr "schovat heslo zobrazené nickservem"
 
 #: src/common/weeconfig.c:668
-#, fuzzy
 msgid "display message for away"
-msgstr "zobrazit zprávu na všechny kanály, jestliže jsem pryč"
+msgstr "zobrazit zprávu pro nepřítomnost"
 
 #: src/common/weeconfig.c:669
-#, fuzzy
 msgid "display message when (un)marking as away"
-msgstr "zobrazit zprávu na všechny kanály, když měním stav z/na pryč"
+msgstr "zobrazit zprávu, když označen/odznačen jako nepřítomen"
 
 #: src/common/weeconfig.c:672 src/common/weeconfig.c:673
 msgid "default part message (leaving channel)"

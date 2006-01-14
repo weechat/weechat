@@ -1,6 +1,19 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
+* FlashCode, 2006-01-14
+
+    WeeChat 0.1.7 released.
+
+    Important release notes:
+
+    - Ruby script plugin has been added but is experimental in this release.
+      You're warned!
+
+    - "/away" command was changed to be RFC 2812 compliant.
+      Now argument is required to set away, and no argument means
+      remove away ("back"). Setting "irc_default_msg_away" has been removed.
+
 * FlashCode, 2005-11-11
 
     WeeChat 0.1.6 released.

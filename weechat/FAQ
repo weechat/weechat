@@ -1,4 +1,4 @@
-WeeChat FAQ, 2005-11-12
+WeeChat FAQ, 2006-01-14
 =======================
 
 Intended audience:
@@ -51,6 +51,7 @@ Q:	Why using WeeChat ? X-Chat and Irssi are so good...
 A:	Because WeeChat is very light and has new features.
 	Some new features:
 	  * many GUI (Curses, Gtk, wxWidgets, Qt)
+	  * available in many languages
 	  * nicklist available in all GUI
 	  * extensible with scripts (Perl, Python, Ruby)
 	  * horizontal and vertical window split
@@ -100,7 +101,6 @@ A:	You can use /perl command to load scripts (default path is
 	~/.weechat/perl).
 	Note that scripts in ~/.weechat/perl/autoload are automatically loaded
 	when WeeChat is starting up.
-	WeeChat Perl scripts are 80% compatible with X-Chat, but not with Irssi.
 
 
 2.6
@@ -112,14 +112,16 @@ A:	You can use /python command to load scripts (default path is
 	~/.weechat/python).
 	Note that scripts in ~/.weechat/python/autoload are automatically loaded
 	when WeeChat is starting up.
-	WeeChat Python scripts are 80% compatible with X-Chat, but not with Irssi.
 
 
 2.7
 ================================================================================
 Q:	How can I load Ruby scripts?
 
-A:	Today Ruby interface is not developed, so you can't load any Ruby script.
+A:	You can use /ruby command to load scripts (default path is
+	~/.weechat/ruby).
+	Note that scripts in ~/.weechat/ruby/autoload are automatically loaded
+	when WeeChat is starting up.
 
 
 3.1

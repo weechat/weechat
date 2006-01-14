@@ -1,4 +1,4 @@
-WeeChat FAQ, 2005-11-12
+WeeChat FAQ, 2006-01-14
 =======================
 
 Public concerné :
@@ -54,6 +54,7 @@ Q:	Pourquoi utiliser WeeChat ? X-Chat et Irssi sont si bien...
 R:	Parce que WeeChat est très léger et a de nouvelles fonctionnalités.
 	Quelques nouvelles fonctionnalités :
 	  * plusieurs interfaces (Curses, Gtk, wxWidgets, Qt)
+	  * disponible en plusieurs langues
 	  * liste des pseudos disponible dans toutes les interfaces
 	  * extensible par des scripts (Perl, Python, Ruby)
 	  * découpage de la fenêtre horizontalement et verticalement
@@ -105,7 +106,6 @@ R:	La commande /perl permet de charger les scripts Perl (le chemin par défaut
 	est ~/.weechat/perl).
 	Notez que les scripts dans ~/.weechat/perl/autoload sont automatiquement
 	chargés par WeeChat lorsqu'il démarre.
-	Les scripts Perl WeeChat sont 80% compatibles avec X-Chat, mais pas Irssi.
 
 
 2.6
@@ -117,15 +117,16 @@ R:	La commande /python permet de charger les scripts Python (le chemin par
 	défaut est ~/.weechat/python).
 	Notez que les scripts dans ~/.weechat/python/autoload sont automatiquement
 	chargés par WeeChat lorsqu'il démarre.
-	Les scripts Python WeeChat sont 80% compatibles avec X-Chat, mais pas Irssi.
 
 
 2.7
 ================================================================================
 Q:	Comment puis-je charger des scripts Ruby ?
 
-R:	Aujourd'hui l'interface Ruby n'est pas développée.
-	Vous ne pouvez donc charger aucun script Ruby.
+R:	La commande /ruby permet de charger les scripts Ruby (le chemin par
+	défaut est ~/.weechat/ruby).
+	Notez que les scripts dans ~/.weechat/ruby/autoload sont automatiquement
+	chargés par WeeChat lorsqu'il démarre.
 
 
 3.1

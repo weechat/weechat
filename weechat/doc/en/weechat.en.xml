@@ -35,7 +35,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   
   <bookinfo>
     
-    <title>WeeChat 0.1.7-cvs - User guide</title>
+    <title>WeeChat 0.1.7 - User guide</title>
     <subtitle>Fast, light and extensible IRC client</subtitle>
     
     <author>
@@ -1630,10 +1630,10 @@ plugin->msg_handler_add (plugin, "KICK", &amp;msg_kick, NULL, NULL);
                           <entry><literal>%C</literal></entry>
                           <entry>channels of current server</entry>
                         </row>
-                        <row>
+                        <!-- <row>
                           <entry><literal>%f</literal></entry>
                           <entry>filename</entry>
-                        </row>
+                        </row> -->
                         <row>
                           <entry><literal>%h</literal></entry>
                           <entry>plugins commands</entry>
@@ -3406,6 +3406,12 @@ Weechat.set_plugin_config ("my_var", "value")
             <para>
               <emphasis>Jim Ramsay</emphasis> -
               patches
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis>Odin</emphasis> -
+              SuSE RPM
             </para>
           </listitem>
           <listitem>

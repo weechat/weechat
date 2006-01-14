@@ -18,7 +18,7 @@
 #
 
 %define name weechat
-%define version 0.1.6
+%define version 0.1.7
 %define release 1
 
 Name:      %{name}
@@ -29,7 +29,7 @@ Source:    http://weechat.flashtux.org/download/%{name}-%{version}.tar.gz
 URL:       http://weechat.flashtux.org
 Group:     Productivity/Networking/IRC
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
-Requires:  perl, python, gnutls, ncurses
+Requires:  perl, python, ruby, gnutls, ncurses
 License:   GPL
 Vendor:    FlashCode <flashcode@flashtux.org>
 Packager:  [Odin] <odin@dtdm.org>
@@ -40,16 +40,17 @@ extensible IRC client. Everything can be done with a keyboard.
 It is customizable and extensible with scripts.
 
 %prep
-rm -rf $RPM_BUILD_ROOT 
+rm -rf $RPM_BUILD_ROOT
 %setup
 
 %build
-./configure --prefix=/usr --infodir=/usr/share/info --mandir=/usr/share/man --enable-perl --enable-python --with-debug=0
+./configure --prefix=/usr --mandir=/usr/share/man --enable-perl --enable-python --enable-ruby --with-debug=0
 make
 
 %install
 %makeinstall
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/
+mv $RPM_BUILD_ROOT%{_libdir}/lib* $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/
 
 %find_lang %name
 
@@ -62,12 +63,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/%{name}-curses.1*
 %{_bindir}/%{name}-curses
 %{_libdir}/%{name}/plugins/*
-%{_infodir}/%{name}_doc_en.info*
-%{_infodir}/%{name}_doc_es.info*
-%{_infodir}/%{name}_doc_fr.info*
-%{_infodir}/%{name}_doc_pt.info*
+%{_docdir}/%{name}/html/*
 
 %changelog
+* Sat Jan 14 2006 FlashCode <flashcode@flashtux.org> 0.1.7-1
+- Released version 0.1.7
 * Fri Nov 11 2005 FlashCode <flashcode@flashtux.org> 0.1.6-1
 - Released version 0.1.6
 * Sat Sep 24 2005 FlashCode <flashcode@flashtux.org> 0.1.5-1
