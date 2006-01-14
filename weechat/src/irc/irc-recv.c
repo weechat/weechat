@@ -3617,10 +3617,11 @@ irc_cmd_recv_332 (t_irc_server *server, char *host, char *nick, char *arguments)
                 if (!command_ignored)
                 {
                     irc_display_prefix (server, ptr_channel->buffer, PREFIX_INFO);
-                    gui_printf (ptr_channel->buffer, _("Topic for %s%s%s is: \"%s\"\n"),
+                    gui_printf (ptr_channel->buffer, _("Topic for %s%s%s is: "),
                                 GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
                                 pos,
-                                GUI_COLOR(COLOR_WIN_CHAT),
+                                GUI_COLOR(COLOR_WIN_CHAT));
+                    gui_printf (ptr_channel->buffer, "\"%s\"\n",
                                 pos2);
                 }
                 
