@@ -774,7 +774,7 @@
   <entry>string</entry>
   <entry>any string</entry>
   <entry></entry>
-  <entry>Default part message (leaving channel)</entry>
+  <entry>Default part message (leaving channel) ('%v' will be replaced by WeeChat version in string)</entry>
 </row>
 <row>
   <entry><option>irc_default_msg_quit</option></entry>

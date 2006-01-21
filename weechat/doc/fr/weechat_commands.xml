@@ -167,6 +167,8 @@ Sans paramètre, /ignore liste les ignore définis.
 <programlisting>
 mettre à jour WeeChat sans se déconnecter des serveurs
 
+Cette commande lance à nouveau le binaire WeeChat, il doit donc avoir été compilé ou installé via un gestionnaire de paquet avant de lancer cette commande.
+
 </programlisting>
 <command>uptime  [-o]</command>
 <programlisting>

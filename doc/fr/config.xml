@@ -774,7 +774,7 @@
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>
   <entry>'WeeChat %v'</entry>
-  <entry>Message par défaut pour le part (quitte un canal)</entry>
+  <entry>Message par défaut pour le part (quitte un canal) ('%v' sera remplacé par la version de WeeChat dans la chaîne)</entry>
 </row>
 <row>
   <entry><option>irc_default_msg_quit</option></entry>

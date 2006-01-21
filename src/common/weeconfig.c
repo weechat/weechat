@@ -675,7 +675,8 @@ t_config_option weechat_options_irc[] =
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
     NULL, NULL, &cfg_irc_show_away_once, NULL, &config_change_noop },
   { "irc_default_msg_part", N_("default part message (leaving channel)"),
-    N_("default part message (leaving channel)"),
+    N_("default part message (leaving channel) ('%v' will be replaced by "
+       "WeeChat version in string)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "WeeChat %v", NULL, NULL, &cfg_irc_default_msg_part, &config_change_noop },
   { "irc_default_msg_quit", N_("default quit message"),
