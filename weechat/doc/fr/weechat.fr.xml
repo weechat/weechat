@@ -729,6 +729,182 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
       
     </section>
     
+    <section id="secLigneDeCommande">
+      <title>La ligne de commande</title>
+      
+      <para>
+        La ligne de commande WeeChat (située en bas de la fenetre) permet
+        d'envoyer du texte sur les canaux et d'exécuter des commandes
+        WeeChat ou IRC (voir <xref linkend="secCommandesWeeChatIRC" />).
+      </para>
+      
+      <para>
+        Les commandes débutent par un caractère "/", suivi du nom de la
+        commande. Par exemple pour initier une conversation privée avec
+        "<literal>toto</literal>" :
+        <screen><userinput>/query toto</userinput></screen>
+      </para>
+      
+      <para>
+        Le texte envoyé à un canal est tout texte ne commençant pas par le
+        caractère "/", par exemple pour envoyer "<literal>bonjour</literal>"
+        sur le canal courant :
+        <screen><userinput>bonjour</userinput></screen>
+      </para>
+      
+      <para>
+        Il est cependant possible de faire débuter un texte par "/" en le
+        doublant. Par exemple pour envoyer le texte
+        "<literal>/query toto</literal>" sur le canal courant :
+        <screen><userinput>//query toto</userinput></screen>
+      </para>
+      
+      <para>
+        Si l'option d'envoi des couleurs IRC
+        ("<literal>irc_colors_send</literal>") est activée, il est possible
+        d'utiliser des codes couleur et attributs comme suit :
+        <informaltable colsep="0" frame="none">
+          <tgroup cols="2">
+            <thead>
+              <row>
+                <entry>Code</entry>
+                <entry>Description</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry>%B</entry>
+                <entry>
+                  texte gras
+                </entry>
+              </row>
+              <row>
+                <entry>%Cnn</entry>
+                <entry>
+                  couleur du texte "<literal>nn</literal>"
+                  (voir le tableau des couleurs ci-dessous)
+                </entry>
+              </row>
+              <row>
+                <entry>%O</entry>
+                <entry>
+                  désactiver la couleur et tous les attributs
+                </entry>
+              </row>
+              <row>
+                <entry>%R</entry>
+                <entry>
+                  vidéo inverse (inversion de la couleur d'écriture et du fond)
+                </entry>
+              </row>
+              <row>
+                <entry>%U</entry>
+                <entry>
+                  texte souligné
+                </entry>
+              </row>
+              <row>
+                <entry>%%</entry>
+                <entry>
+                  afficher un seul "<literal>%</literal>"
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        NB: le même code (sans le numéro pour %C) peut être utilisé pour stopper
+        l'attribut défini.
+      </para>
+      
+      <para>
+        Les codes couleur pour %C sont :
+        <informaltable colsep="0" frame="none">
+          <tgroup cols="2">
+            <thead>
+              <row>
+                <entry>Code</entry>
+                <entry>Couleur</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry>00</entry>
+                <entry>blanc</entry>
+              </row>
+              <row>
+                <entry>01</entry>
+                <entry>noir</entry>
+              </row>
+              <row>
+                <entry>02</entry>
+                <entry>bleu foncé</entry>
+              </row>
+              <row>
+                <entry>03</entry>
+                <entry>vert foncé</entry>
+              </row>
+              <row>
+                <entry>04</entry>
+                <entry>rouge clair</entry>
+              </row>
+              <row>
+                <entry>05</entry>
+                <entry>rouge foncé</entry>
+              </row>
+              <row>
+                <entry>06</entry>
+                <entry>magenta</entry>
+              </row>
+              <row>
+                <entry>07</entry>
+                <entry>orange</entry>
+              </row>
+              <row>
+                <entry>08</entry>
+                <entry>jaune</entry>
+              </row>
+              <row>
+                <entry>09</entry>
+                <entry>vert clair</entry>
+              </row>
+              <row>
+                <entry>10</entry>
+                <entry>cyan</entry>
+              </row>
+              <row>
+                <entry>11</entry>
+                <entry>cyan clair</entry>
+              </row>
+              <row>
+                <entry>12</entry>
+                <entry>bleu clair</entry>
+              </row>
+              <row>
+                <entry>13</entry>
+                <entry>magenta clair</entry>
+              </row>
+              <row>
+                <entry>14</entry>
+                <entry>gris</entry>
+              </row>
+              <row>
+                <entry>15</entry>
+                <entry>gris clair (blanc)</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </para>
+      
+      <para>
+        Exemple : affichage de "<literal>bonjour tout le monde !</literal>"
+        avec "<literal>bonjour</literal>" en bleu clair gras, et 
+        "<literal>tout le monde</literal>" en rouge clair souligné :
+<screen><userinput>%C12%Bbonjour%B%C04%U tout le monde%U%C !</userinput></screen>
+      </para>
+      
+    </section>
+    
     <section id="secCommandesWeeChatIRC">
       <title>Commandes WeeChat / IRC</title>
       

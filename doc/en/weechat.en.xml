@@ -719,6 +719,179 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
       
     </section>
     
+    <section id="secCommandLine">
+      <title>Command line</title>
+      
+      <para>
+        WeeChat command line (at the bottom of window) lets you send text on
+        channels and execute WeeChat or IRC commands (see
+        <xref linkend="secWeeChatIRCCommands" />).
+      </para>
+      
+      <para>
+        Commands begin with "/" char, followed by name of command.
+        For example, to initiate a private chat with "<literal>toto</literal>":
+        <screen><userinput>/query toto</userinput></screen>
+      </para>
+      
+      <para>
+        Text sent to a channel is any text that does not begin with "/" char.
+        For example, to send text "<literal>hello</literal>" on current
+        channel:
+        <screen><userinput>hello</userinput></screen>
+      </para>
+      
+      <para>
+        However, it is possible to start with "/" char, by adding another.
+        For example, to send text "<literal>/query toto</literal>" on current
+        channel:
+        <screen><userinput>//query toto</userinput></screen>
+      </para>
+      
+      <para>
+        If option for sending IRC colors ("<literal>irc_colors_send</literal>")
+        is enabled, you can use color codes and attributes, as follow:
+        <informaltable colsep="0" frame="none">
+          <tgroup cols="2">
+            <thead>
+              <row>
+                <entry>Code</entry>
+                <entry>Description</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry>%B</entry>
+                <entry>
+                  bold text
+                </entry>
+              </row>
+              <row>
+                <entry>%Cnn</entry>
+                <entry>
+                  text color "<literal>nn</literal>" (see colors table below)
+                </entry>
+              </row>
+              <row>
+                <entry>%O</entry>
+                <entry>
+                  disable color and attributes
+                </entry>
+              </row>
+              <row>
+                <entry>%R</entry>
+                <entry>
+                  reverse video (revert text color with background)
+                </entry>
+              </row>
+              <row>
+                <entry>%U</entry>
+                <entry>
+                  underlined text
+                </entry>
+              </row>
+              <row>
+                <entry>%%</entry>
+                <entry>
+                  display one "<literal>%</literal>"
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        Note: the same code (without number for %C) may be used to stop the
+        attribute.
+      </para>
+      
+      <para>
+        Color codes for %C are:
+        <informaltable colsep="0" frame="none">
+          <tgroup cols="2">
+            <thead>
+              <row>
+                <entry>Code</entry>
+                <entry>Color</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry>00</entry>
+                <entry>white</entry>
+              </row>
+              <row>
+                <entry>01</entry>
+                <entry>black</entry>
+              </row>
+              <row>
+                <entry>02</entry>
+                <entry>dark blue</entry>
+              </row>
+              <row>
+                <entry>03</entry>
+                <entry>dark green</entry>
+              </row>
+              <row>
+                <entry>04</entry>
+                <entry>light red</entry>
+              </row>
+              <row>
+                <entry>05</entry>
+                <entry>dark red</entry>
+              </row>
+              <row>
+                <entry>06</entry>
+                <entry>magenta</entry>
+              </row>
+              <row>
+                <entry>07</entry>
+                <entry>orange</entry>
+              </row>
+              <row>
+                <entry>08</entry>
+                <entry>yellow</entry>
+              </row>
+              <row>
+                <entry>09</entry>
+                <entry>light green</entry>
+              </row>
+              <row>
+                <entry>10</entry>
+                <entry>cyan</entry>
+              </row>
+              <row>
+                <entry>11</entry>
+                <entry>light cyan</entry>
+              </row>
+              <row>
+                <entry>12</entry>
+                <entry>light blue</entry>
+              </row>
+              <row>
+                <entry>13</entry>
+                <entry>light magenta</entry>
+              </row>
+              <row>
+                <entry>14</entry>
+                <entry>gray</entry>
+              </row>
+              <row>
+                <entry>15</entry>
+                <entry>light gray (white)</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </para>
+      
+      <para>
+        Example: display of "<literal>hello everybory!</literal>" with
+        "<literal>hello</literal>" in light blue bold, and 
+        "<literal>everybody</literal>" in light red underlined:
+<screen><userinput>%C12%Bhello%B%C04%U everybody%U%C!</userinput></screen>
+      </para>
+      
+    </section>
+    
     <section id="secWeeChatIRCCommands">
       <title>WeeChat / IRC commands</title>
       
