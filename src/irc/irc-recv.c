@@ -2564,14 +2564,25 @@ irc_cmd_recv_301 (t_irc_server *server, char *host, char *nick, char *arguments)
             {
                 /* look for private buffer to display message */
                 ptr_channel = channel_search (server, pos_nick);
-                ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
-                irc_display_prefix (server, ptr_buffer, PREFIX_INFO);
-                gui_printf (ptr_buffer,
-                            _("%s%s%s is away: %s\n"),
-                            GUI_COLOR(COLOR_WIN_CHAT_NICK),
-                            pos_nick,
-                            GUI_COLOR(COLOR_WIN_CHAT),
-                            pos_message);
+                if (!cfg_irc_show_away_once || !ptr_channel ||
+                    !(ptr_channel->away_message) ||
+                    (strcmp (ptr_channel->away_message, pos_message) != 0))
+                {
+                    ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
+                    irc_display_prefix (server, ptr_buffer, PREFIX_INFO);
+                    gui_printf (ptr_buffer,
+                                _("%s%s%s is away: %s\n"),
+                                GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                                pos_nick,
+                                GUI_COLOR(COLOR_WIN_CHAT),
+                                pos_message);
+                    if (ptr_channel)
+                    {
+                        if (ptr_channel->away_message)
+                            free (ptr_channel->away_message);
+                        ptr_channel->away_message = strdup (pos_message);
+                    }
+                }
             }
         }
     }

@@ -763,6 +763,13 @@
   <entry>Display message when (un)marking as away</entry>
 </row>
 <row>
+  <entry><option>irc_show_away_once</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Show remote away message only once in private</entry>
+</row>
+<row>
   <entry><option>irc_default_msg_part</option></entry>
   <entry>string</entry>
   <entry>any string</entry>

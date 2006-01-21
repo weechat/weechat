@@ -650,6 +650,7 @@ t_config_option weechat_options_log[] =
 /* config, irc section */
 
 int cfg_irc_display_away;
+int cfg_irc_show_away_once;
 char *cfg_irc_display_away_values[] =
 { "off", "local", "channel", NULL };
 char *cfg_irc_default_msg_part;
@@ -669,6 +670,10 @@ t_config_option weechat_options_irc[] =
     N_("display message when (un)marking as away"),
     OPTION_TYPE_INT_WITH_STRING, 0, 0, 0,
     "off", cfg_irc_display_away_values, &cfg_irc_display_away, NULL, &config_change_noop },
+  { "irc_show_away_once", N_("show remote away message only once in private"),
+    N_("show remote away message only once in private"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
+    NULL, NULL, &cfg_irc_show_away_once, NULL, &config_change_noop },
   { "irc_default_msg_part", N_("default part message (leaving channel)"),
     N_("default part message (leaving channel)"),
     OPTION_TYPE_STRING, 0, 0, 0,

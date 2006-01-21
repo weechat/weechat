@@ -1,8 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-01-14
+ChangeLog - 2006-01-21
 
+
+Version 0.1.8 (under dev!):
+   * added option "irc_show_away_once", to show away message only once in pv
 
 Version 0.1.7 (2006-01-14):
    * fixed msg command (now allowed in private buffer with "*" as target)

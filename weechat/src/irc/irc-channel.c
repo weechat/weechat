@@ -66,6 +66,7 @@ channel_new (t_irc_server *server, int channel_type, char *channel_name)
     new_channel->key = NULL;
     new_channel->nicks_count = 0;
     new_channel->checking_away = 0;
+    new_channel->away_message = NULL;
     new_channel->nicks = NULL;
     new_channel->last_nick = NULL;
 
@@ -119,6 +120,8 @@ channel_free (t_irc_server *server, t_irc_channel *channel)
     if (channel->topic)
         free (channel->topic);
     nick_free_all (channel);
+    if (channel->away_message)
+        free (channel->away_message);
     free (channel);
     server->channels = new_channels;
 }
@@ -481,6 +484,7 @@ channel_print_log (t_irc_channel *channel)
     weechat_log_printf ("     limit. . . . : %d\n",     channel->limit);
     weechat_log_printf ("     key. . . . . : '%s'\n",   channel->key);
     weechat_log_printf ("     checking_away: %d\n",     channel->checking_away);
+    weechat_log_printf ("     away_message : '%s'\n",   channel->away_message);
     weechat_log_printf ("     nicks. . . . : 0x%X\n",   channel->nicks);
     weechat_log_printf ("     last_nick. . : 0x%X\n",   channel->last_nick);
     weechat_log_printf ("     buffer . . . : 0x%X\n",   channel->buffer);

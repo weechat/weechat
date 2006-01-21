@@ -763,6 +763,13 @@
   <entry>Affiche un message pour l'absence/le retour</entry>
 </row>
 <row>
+  <entry><option>irc_show_away_once</option></entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Voir le message d'absence distant une seule fois en privé</entry>
+</row>
+<row>
   <entry><option>irc_default_msg_part</option></entry>
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>

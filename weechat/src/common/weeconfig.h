@@ -187,6 +187,7 @@ extern char *cfg_log_timestamp;
 extern int cfg_log_hide_nickserv_pwd;
 
 extern int cfg_irc_display_away;
+extern int cfg_irc_show_away_once;
 extern char *cfg_irc_default_msg_part;
 extern char *cfg_irc_default_msg_quit;
 extern int cfg_irc_notice_as_pv;
