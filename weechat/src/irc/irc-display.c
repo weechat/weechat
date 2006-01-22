@@ -36,6 +36,54 @@
 
 
 /*
+ * irc_find_context: find window/buffer for a server/channel
+ */
+
+void
+irc_find_context (t_irc_server *server, t_irc_channel *channel,
+                  t_gui_window **window, t_gui_buffer **buffer)
+{
+    t_gui_window *ptr_win;
+    
+    if (!buffer)
+        return;
+    
+    /* first find buffer */
+    *buffer = NULL;
+    if (channel && channel->buffer)
+        *buffer = channel->buffer;
+    else
+    {
+        if (server && server->buffer)
+            *buffer = server->buffer;
+        else
+            *buffer = gui_current_window->buffer;
+    }
+    
+    /* then find first window displaying this buffer */
+    if (window)
+    {
+        *window = NULL;
+        if (gui_current_window->buffer == *buffer)
+            *window = gui_current_window;
+        else
+        {
+            for (ptr_win = gui_windows; ptr_win;
+                 ptr_win = ptr_win->next_window)
+            {
+                if (ptr_win->buffer == *buffer)
+                {
+                    *window = ptr_win;
+                    break;
+                }
+            }
+            if (!*window)
+                *window = gui_current_window;
+        }
+    }
+}
+
+/*
  * irc_display_prefix: display a prefix for action/info/error msg
  *                     prefix must be 3 chars length
  */

@@ -1538,7 +1538,7 @@ gui_buffer_switch_by_number (t_gui_window *window, int number)
  */
 
 void
-gui_buffer_move_to_number (t_gui_window *window, int number)
+gui_buffer_move_to_number (t_gui_buffer *buffer, int number)
 {
     t_gui_buffer *ptr_buffer;
     int i;
@@ -1548,34 +1548,34 @@ gui_buffer_move_to_number (t_gui_window *window, int number)
         return;
     
     /* buffer number is already ok ? */
-    if (number == window->buffer->number)
+    if (number == buffer->number)
         return;
     
     if (number < 1)
         number = 1;
     
     /* remove buffer from list */
-    if (window->buffer == gui_buffers)
+    if (buffer == gui_buffers)
     {
-        gui_buffers = window->buffer->next_buffer;
+        gui_buffers = buffer->next_buffer;
         gui_buffers->prev_buffer = NULL;
     }
-    if (window->buffer == last_gui_buffer)
+    if (buffer == last_gui_buffer)
     {
-        last_gui_buffer = window->buffer->prev_buffer;
+        last_gui_buffer = buffer->prev_buffer;
         last_gui_buffer->next_buffer = NULL;
     }
-    if (window->buffer->prev_buffer)
-        (window->buffer->prev_buffer)->next_buffer = window->buffer->next_buffer;
-    if (window->buffer->next_buffer)
-        (window->buffer->next_buffer)->prev_buffer = window->buffer->prev_buffer;
+    if (buffer->prev_buffer)
+        (buffer->prev_buffer)->next_buffer = buffer->next_buffer;
+    if (buffer->next_buffer)
+        (buffer->next_buffer)->prev_buffer = buffer->prev_buffer;
     
     if (number == 1)
     {
-        gui_buffers->prev_buffer = window->buffer;
-        window->buffer->prev_buffer = NULL;
-        window->buffer->next_buffer = gui_buffers;
-        gui_buffers = window->buffer;
+        gui_buffers->prev_buffer = buffer;
+        buffer->prev_buffer = NULL;
+        buffer->next_buffer = gui_buffers;
+        gui_buffers = buffer;
     }
     else
     {
@@ -1595,19 +1595,19 @@ gui_buffer_move_to_number (t_gui_window *window, int number)
         if (ptr_buffer)
         {
             /* insert before buffer found */
-            window->buffer->prev_buffer = ptr_buffer->prev_buffer;
-            window->buffer->next_buffer = ptr_buffer;
+            buffer->prev_buffer = ptr_buffer->prev_buffer;
+            buffer->next_buffer = ptr_buffer;
             if (ptr_buffer->prev_buffer)
-                (ptr_buffer->prev_buffer)->next_buffer = window->buffer;
-            ptr_buffer->prev_buffer = window->buffer;
+                (ptr_buffer->prev_buffer)->next_buffer = buffer;
+            ptr_buffer->prev_buffer = buffer;
         }
         else
         {
             /* number not found (too big)? => add to end */
-            window->buffer->prev_buffer = last_gui_buffer;
-            window->buffer->next_buffer = NULL;
-            last_gui_buffer->next_buffer = window->buffer;
-            last_gui_buffer = window->buffer;
+            buffer->prev_buffer = last_gui_buffer;
+            buffer->next_buffer = NULL;
+            last_gui_buffer->next_buffer = buffer;
+            last_gui_buffer = buffer;
         }
         
     }
@@ -1619,7 +1619,7 @@ gui_buffer_move_to_number (t_gui_window *window, int number)
         ptr_buffer->number = i++;
     }
     
-    gui_redraw_buffer (window->buffer);
+    gui_redraw_buffer (buffer);
 }
 
 /*

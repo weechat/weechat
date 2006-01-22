@@ -509,7 +509,7 @@ irc_cmd_recv_kick (t_irc_server *server, char *host, char *nick, char *arguments
         gui_draw_buffer_nick (ptr_channel->buffer, 1);
         gui_draw_buffer_status (ptr_channel->buffer, 1);
         if (server->autorejoin)
-            irc_cmd_send_join (server, ptr_channel->name);
+            irc_cmd_send_join (server, NULL, ptr_channel->name);
     }
     {
         /* someone was kicked from channel (but not me) => remove only this nick */
@@ -2449,7 +2449,7 @@ irc_cmd_recv_004 (t_irc_server *server, char *host, char *nick, char *arguments)
     /* execute command once connected */
     if (server->command && server->command[0])
     {
-        user_command(NULL, server, server->command);
+        user_command (server, NULL, server->command);
         if (server->command_delay > 0)
             sleep (server->command_delay);
     }
@@ -2476,7 +2476,7 @@ irc_cmd_recv_004 (t_irc_server *server, char *host, char *nick, char *arguments)
     {
         /* auto-join when connecting to server for first time */
         if (server->autojoin && server->autojoin[0])
-            return irc_cmd_send_join (server, server->autojoin);
+            return irc_cmd_send_join (server, NULL, server->autojoin);
     }
     
     return 0;
@@ -4444,7 +4444,7 @@ irc_cmd_recv_366 (t_irc_server *server, char *host, char *nick, char *arguments)
                                 _("normal"),
                                 GUI_COLOR(COLOR_WIN_CHAT_DARK));
                 }
-                irc_cmd_send_mode (server, ptr_channel->name);
+                irc_cmd_send_mode (server, NULL, ptr_channel->name);
                 if (cfg_irc_away_check > 0)
                     channel_check_away (server, ptr_channel);
             }

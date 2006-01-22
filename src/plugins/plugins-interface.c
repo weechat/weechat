@@ -288,13 +288,28 @@ weechat_plugin_exec_command (t_weechat_plugin *plugin,
     if (!plugin || !command)
         return;
     
-    plugin_find_server_channel (server, channel, &ptr_server, &ptr_channel);
-    if (ptr_server && ptr_channel)
-        user_command (ptr_channel->buffer, ptr_server, command);
-    else if (ptr_server && (ptr_server->buffer))
-        user_command (ptr_server->buffer, ptr_server, command);
+    if (plugin_find_server_channel (server, channel, &ptr_server, &ptr_channel) < 0)
+    {
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        gui_printf (NULL,
+                    _("%s server/channel (%s/%s) not found for plugin "
+                      "exec command\n"),
+                    WEECHAT_ERROR,
+                    (server) ? server : "", (channel) ? channel : "");
+    }
     else
-        user_command (gui_buffers, NULL, command);
+    {
+        if (ptr_server && ptr_channel)
+            user_command (ptr_server, ptr_channel, command);
+        else if (ptr_server && (ptr_server->buffer))
+            user_command (ptr_server, NULL, command);
+        else
+        {
+            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+            gui_printf (NULL, _("%s server not found for plugin exec command\n"),
+                        WEECHAT_ERROR);
+        }
+    }
 }
 
 /*

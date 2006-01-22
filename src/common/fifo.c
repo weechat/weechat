@@ -101,20 +101,26 @@ fifo_exec (char *text)
     char *pos_msg, *pos;
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
-    t_gui_buffer *ptr_buffer;
     
     pos = NULL;
     ptr_server = NULL;
     ptr_channel = NULL;
-    ptr_buffer = NULL;
     
     /* look for server/channel at beginning of text */
     /* text may be: "server,channel *text" or "server *text" or "*text" */
     if (text[0] == '*')
     {
         pos_msg = text + 1;
-        ptr_buffer = (gui_current_window->buffer->has_input) ? gui_current_window->buffer : gui_buffers;
-        ptr_server = SERVER(ptr_buffer);
+        if (gui_current_window->buffer->has_input)
+        {
+            ptr_server = SERVER(gui_current_window->buffer);
+            ptr_channel = CHANNEL(gui_current_window->buffer);
+        }
+        else
+        {
+            ptr_server = SERVER(gui_buffers);
+            ptr_channel = NULL;
+        }
     }
     else
     {
@@ -163,15 +169,7 @@ fifo_exec (char *text)
         }
     }
     
-    if (!ptr_buffer)
-    {
-        if (ptr_channel)
-            ptr_buffer = ptr_channel->buffer;
-        else
-            ptr_buffer = gui_buffers;
-    }
-    
-    user_command (ptr_buffer, ptr_server, pos_msg);
+    user_command (ptr_server, ptr_channel, pos_msg);
 }
 
 /*

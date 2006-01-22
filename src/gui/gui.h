@@ -428,7 +428,7 @@ extern void gui_window_switch_next (t_gui_window *);
 extern void gui_window_switch_by_buffer (t_gui_window *, int);
 extern void gui_buffer_switch_dcc (t_gui_window *);
 extern t_gui_buffer *gui_buffer_switch_by_number (t_gui_window *, int);
-extern void gui_buffer_move_to_number (t_gui_window *, int);
+extern void gui_buffer_move_to_number (t_gui_buffer *, int);
 extern void gui_window_print_log (t_gui_window *);
 extern void gui_buffer_print_log (t_gui_buffer *);
 

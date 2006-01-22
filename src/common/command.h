@@ -38,9 +38,9 @@ struct t_weechat_command
     char *completion_template;      /* template for completion                */
                                     /* NULL=no completion, ""=default (nick)  */
     int min_arg, max_arg;           /* min & max number of arguments          */
-    int (*cmd_function_args)(t_gui_window *, int, char **);
+    int (*cmd_function_args)(t_irc_server *, t_irc_channel *, int, char **);
                                     /* function called when user enters cmd   */
-    int (*cmd_function_1arg)(t_gui_window *, char *);
+    int (*cmd_function_1arg)(t_irc_server *, t_irc_channel *, char *);
                                     /* function called when user enters cmd   */
 };
 
@@ -66,28 +66,28 @@ extern t_weechat_alias *alias_new (char *, char *);
 extern void alias_free_all ();
 extern char **explode_string (char *, char *, int, int *);
 extern void free_exploded_string (char **);
-extern int exec_weechat_command (t_gui_window *, t_irc_server *, char *);
-extern void user_command (t_gui_buffer *, t_irc_server *, char *);
-extern int weechat_cmd_alias (t_gui_window *, char *);
-extern int weechat_cmd_buffer (t_gui_window *, int, char **);
-extern int weechat_cmd_charset (t_gui_window *, int, char **);
-extern int weechat_cmd_clear (t_gui_window *, int, char **);
-extern int weechat_cmd_connect (t_gui_window *, int, char **);
-extern int weechat_cmd_debug (t_gui_window *, int, char **);
-extern int weechat_cmd_disconnect (t_gui_window *, int, char **);
-extern int weechat_cmd_help (t_gui_window *, int, char **);
-extern int weechat_cmd_history (t_gui_window *, int, char **);
+extern int exec_weechat_command (t_irc_server *, t_irc_channel *, char *);
+extern void user_command (t_irc_server *, t_irc_channel *, char *);
+extern int weechat_cmd_alias (t_irc_server *, t_irc_channel *, char *);
+extern int weechat_cmd_buffer (t_irc_server *, t_irc_channel *, int, char **);
+extern int weechat_cmd_charset (t_irc_server *, t_irc_channel *, int, char **);
+extern int weechat_cmd_clear (t_irc_server *, t_irc_channel *, int, char **);
+extern int weechat_cmd_connect (t_irc_server *, t_irc_channel *, int, char **);
+extern int weechat_cmd_debug (t_irc_server *, t_irc_channel *, int, char **);
+extern int weechat_cmd_disconnect (t_irc_server *, t_irc_channel *, int, char **);
+extern int weechat_cmd_help (t_irc_server *, t_irc_channel *, int, char **);
+extern int weechat_cmd_history (t_irc_server *, t_irc_channel *, int, char **);
 extern void weechat_cmd_ignore_display (char *, t_irc_ignore *);
-extern int weechat_cmd_ignore (t_gui_window *, int, char **);
-extern int weechat_cmd_key (t_gui_window *, char *);
-extern int weechat_cmd_plugin (t_gui_window *, int, char **);
-extern int weechat_cmd_save (t_gui_window *, int, char **);
-extern int weechat_cmd_server (t_gui_window *, int, char **);
-extern int weechat_cmd_set (t_gui_window *, char *);
-extern int weechat_cmd_unalias (t_gui_window *, char *);
-extern int weechat_cmd_unignore (t_gui_window *, int, char **);
-extern int weechat_cmd_upgrade (t_gui_window *, int, char **);
-extern int weechat_cmd_uptime (t_gui_window *, int, char **);
-extern int weechat_cmd_window (t_gui_window *, int, char **);
+extern int weechat_cmd_ignore (t_irc_server *, t_irc_channel *, int, char **);
+extern int weechat_cmd_key (t_irc_server *, t_irc_channel *, char *);
+extern int weechat_cmd_plugin (t_irc_server *, t_irc_channel *, int, char **);
+extern int weechat_cmd_save (t_irc_server *, t_irc_channel *, int, char **);
+extern int weechat_cmd_server (t_irc_server *, t_irc_channel *, int, char **);
+extern int weechat_cmd_set (t_irc_server *, t_irc_channel *, char *);
+extern int weechat_cmd_unalias (t_irc_server *, t_irc_channel *, char *);
+extern int weechat_cmd_unignore (t_irc_server *, t_irc_channel *, int, char **);
+extern int weechat_cmd_upgrade (t_irc_server *, t_irc_channel *, int, char **);
+extern int weechat_cmd_uptime (t_irc_server *, t_irc_channel *, int, char **);
+extern int weechat_cmd_window (t_irc_server *, t_irc_channel *, int, char **);
 
 #endif /* command.h */

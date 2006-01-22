@@ -51,7 +51,7 @@ t_weechat_plugin *last_weechat_plugin = NULL;
  * plugin_find_server_channel: find server/channel for command execution
  */
 
-void
+int
 plugin_find_server_channel (char *server, char *channel,
                             t_irc_server **ptr_server,
                             t_irc_channel **ptr_channel)
@@ -70,7 +70,11 @@ plugin_find_server_channel (char *server, char *channel,
     else
     {
         if (server && server[0])
+        {
             (*ptr_server) = server_search (server);
+            if (!(*ptr_server))
+                return -1;
+        }
         else
         {
             (*ptr_server) = SERVER(gui_current_window->buffer);
@@ -82,8 +86,11 @@ plugin_find_server_channel (char *server, char *channel,
         {
             if ((*ptr_server))
                 (*ptr_channel) = channel_search ((*ptr_server), channel);
+            if (!(*ptr_channel))
+                return -1;
         }
     }
+    return 0;
 }
 
 /*

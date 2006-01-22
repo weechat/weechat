@@ -190,9 +190,9 @@ struct t_irc_command
                                     /* NULL=no completion, ""=default (nick)  */
     int min_arg, max_arg;           /* min & max number of arguments          */
     int need_connection;            /* = 1 if cmd needs server connection     */
-    int (*cmd_function_args)(t_irc_server *, int, char **);
+    int (*cmd_function_args)(t_irc_server *, t_irc_channel *, int, char **);
                                     /* function called when user enters cmd   */
-    int (*cmd_function_1arg)(t_irc_server *, char *);
+    int (*cmd_function_1arg)(t_irc_server *, t_irc_channel *, char *);
                                     /* function called when user enters cmd   */
     int (*recv_function)(t_irc_server *, char *, char *, char *);
                                     /* function called when cmd is received   */
@@ -395,6 +395,8 @@ extern void dcc_print_log (t_irc_dcc *);
 
 /* IRC display (irc-diplay.c) */
 
+extern void irc_find_context (t_irc_server *, t_irc_channel *,
+                              t_gui_window **, t_gui_buffer **);
 extern void irc_display_prefix (t_irc_server *, t_gui_buffer *, char *);
 extern void irc_display_nick (t_gui_buffer *, t_irc_nick *, char *, int,
                               int, int, int);
@@ -406,65 +408,63 @@ extern void irc_display_server (t_irc_server *ptr_server);
 /* IRC commands issued by user (irc-send.c) */
 
 extern void irc_login (t_irc_server *);
-extern int irc_cmd_send_admin (t_irc_server *, char *);
-extern int irc_cmd_send_ame (t_irc_server *, char *);
-extern int irc_cmd_send_amsg (t_irc_server *, char *);
-extern int irc_cmd_send_away (t_irc_server *, char *);
-extern int irc_cmd_send_ban (t_irc_server *, char *);
-extern int irc_cmd_send_ctcp (t_irc_server *, char *);
-extern int irc_cmd_send_dcc (t_irc_server *, char *);
-extern int irc_cmd_send_dehalfop (t_irc_server *, int, char **);
-extern int irc_cmd_send_deop (t_irc_server *, int, char **);
-extern int irc_cmd_send_devoice (t_irc_server *, int, char **);
-extern int irc_cmd_send_die (t_irc_server *, char *);
-extern int irc_cmd_send_halfop (t_irc_server *, int, char **);
-extern int irc_cmd_send_info (t_irc_server *, char *);
-extern int irc_cmd_send_invite (t_irc_server *, int, char **);
-extern int irc_cmd_send_ison (t_irc_server *, char *);
-extern int irc_cmd_send_join (t_irc_server *, char *);
-extern int irc_cmd_send_kick (t_irc_server *, char *);
-extern int irc_cmd_send_kickban (t_irc_server *, char *);
-extern int irc_cmd_send_kill (t_irc_server *, char *);
-extern int irc_cmd_send_links (t_irc_server *, char *);
-extern int irc_cmd_send_list (t_irc_server *, char *);
-extern int irc_cmd_send_lusers (t_irc_server *, char *);
-extern int irc_send_me (t_irc_server *, t_irc_channel *, char *);
-extern int irc_send_me_all_channels (t_irc_server *, char *);
-extern int irc_cmd_send_me (t_irc_server *, char *);
-extern int irc_cmd_send_mode (t_irc_server *, char *);
-extern int irc_cmd_send_motd (t_irc_server *, char *);
-extern int irc_cmd_send_msg (t_irc_server *, char *);
-extern int irc_cmd_send_names (t_irc_server *, char *);
-extern int irc_cmd_send_nick (t_irc_server *, int, char **);
-extern int irc_cmd_send_notice (t_irc_server *, char *);
-extern int irc_cmd_send_op (t_irc_server *, int, char **);
-extern int irc_cmd_send_oper (t_irc_server *, char *);
-extern int irc_cmd_send_part (t_irc_server *, char *);
-extern int irc_cmd_send_ping (t_irc_server *, char *);
-extern int irc_cmd_send_pong (t_irc_server *, char *);
-extern int irc_cmd_send_query (t_irc_server *, char *);
-extern int irc_cmd_send_quit (t_irc_server *, char *);
-extern int irc_cmd_send_quote (t_irc_server *, char *);
-extern int irc_cmd_send_rehash (t_irc_server *, char *);
-extern int irc_cmd_send_restart (t_irc_server *, char *);
-extern int irc_cmd_send_service (t_irc_server *, char *);
-extern int irc_cmd_send_servlist (t_irc_server *, char *);
-extern int irc_cmd_send_squery (t_irc_server *, char *);
-extern int irc_cmd_send_squit (t_irc_server *, char *);
-extern int irc_cmd_send_stats (t_irc_server *, char *);
-extern int irc_cmd_send_summon (t_irc_server *, char *);
-extern int irc_cmd_send_time (t_irc_server *, char *);
-extern int irc_cmd_send_topic (t_irc_server *, char *);
-extern int irc_cmd_send_trace (t_irc_server *, char *);
-extern int irc_cmd_send_unban (t_irc_server *, char *);
-extern int irc_cmd_send_userhost (t_irc_server *, char *);
-extern int irc_cmd_send_users (t_irc_server *, char *);
-extern int irc_cmd_send_version (t_irc_server *, char *);
-extern int irc_cmd_send_voice (t_irc_server *, int, char **);
-extern int irc_cmd_send_wallops (t_irc_server *, char *);
-extern int irc_cmd_send_who (t_irc_server *, char *);
-extern int irc_cmd_send_whois (t_irc_server *, char *);
-extern int irc_cmd_send_whowas (t_irc_server *, char *);
+extern int irc_cmd_send_admin (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_ame (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_amsg (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_away (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_ban (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_ctcp (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_dcc (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_dehalfop (t_irc_server *, t_irc_channel *, int, char **);
+extern int irc_cmd_send_deop (t_irc_server *, t_irc_channel *, int, char **);
+extern int irc_cmd_send_devoice (t_irc_server *, t_irc_channel *, int, char **);
+extern int irc_cmd_send_die (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_halfop (t_irc_server *, t_irc_channel *, int, char **);
+extern int irc_cmd_send_info (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_invite (t_irc_server *, t_irc_channel *, int, char **);
+extern int irc_cmd_send_ison (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_join (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_kick (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_kickban (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_kill (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_links (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_list (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_lusers (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_me (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_mode (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_motd (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_msg (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_names (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_nick (t_irc_server *, t_irc_channel *, int, char **);
+extern int irc_cmd_send_notice (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_op (t_irc_server *, t_irc_channel *, int, char **);
+extern int irc_cmd_send_oper (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_part (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_ping (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_pong (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_query (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_quit (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_quote (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_rehash (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_restart (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_service (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_servlist (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_squery (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_squit (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_stats (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_summon (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_time (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_topic (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_trace (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_unban (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_userhost (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_users (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_version (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_voice (t_irc_server *, t_irc_channel *, int, char **);
+extern int irc_cmd_send_wallops (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_who (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_whois (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_whowas (t_irc_server *, t_irc_channel *, char *);
 
 /* IRC commands executed when received from server (irc-recv.c) */
 

@@ -75,8 +75,12 @@ irc_login (t_irc_server *server)
  */
 
 int
-irc_cmd_send_admin (t_irc_server *server, char *arguments)
+irc_cmd_send_admin (t_irc_server *server, t_irc_channel *channel,
+                    char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     if (arguments)
         server_sendf (server, "ADMIN %s\r\n", arguments);
     else
@@ -89,7 +93,8 @@ irc_cmd_send_admin (t_irc_server *server, char *arguments)
  */
 
 int
-irc_send_me (t_irc_server *server, t_irc_channel *channel, char *arguments)
+irc_send_me (t_irc_server *server, t_irc_channel *channel,
+             char *arguments)
 {
     char *string;
     
@@ -110,17 +115,37 @@ irc_send_me (t_irc_server *server, t_irc_channel *channel, char *arguments)
 }
 
 /*
+ * irc_send_me_all_channels: send a ctcp action to all channels of a server
+ */
+
+int
+irc_send_me_all_channels (t_irc_server *server, char *arguments)
+{
+    t_irc_channel *ptr_channel;
+    
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        if (ptr_channel->type == CHANNEL_TYPE_CHANNEL)
+            irc_send_me (server, ptr_channel, arguments);
+    }
+    return 0;
+}
+
+/*
  * irc_cmd_send_ame: send a ctcp action to all channels of all connected servers
  */
 
 int
-irc_cmd_send_ame (t_irc_server *server, char *arguments)
+irc_cmd_send_ame (t_irc_server *server, t_irc_channel *channel,
+                  char *arguments)
 {
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
     
     /* make gcc happy */
     (void) server;
+    (void) channel;
     
     gui_add_hotlist = 0;
     for (ptr_server = irc_servers; ptr_server;
@@ -145,7 +170,8 @@ irc_cmd_send_ame (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_amsg (t_irc_server *server, char *arguments)
+irc_cmd_send_amsg (t_irc_server *server, t_irc_channel *channel,
+                   char *arguments)
 {
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
@@ -154,6 +180,7 @@ irc_cmd_send_amsg (t_irc_server *server, char *arguments)
     
     /* make gcc happy */
     (void) server;
+    (void) channel;
     
     if (arguments)
     {
@@ -275,10 +302,17 @@ irc_send_away (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_away (t_irc_server *server, char *arguments)
+irc_cmd_send_away (t_irc_server *server, t_irc_channel *channel,
+                   char *arguments)
 {
+    t_gui_buffer *buffer;
     char *pos;
     t_irc_server *ptr_server;
+    
+    irc_find_context (server, channel, NULL, &buffer);
+    
+    /* make gcc happy */
+    (void) channel;
     
     gui_add_hotlist = 0;
     if (arguments && (strncmp (arguments, "-all", 4) == 0))
@@ -299,7 +333,7 @@ irc_cmd_send_away (t_irc_server *server, char *arguments)
     else
         irc_send_away (server, arguments);
     
-    gui_draw_buffer_status (gui_current_window->buffer, 1);
+    gui_draw_buffer_status (buffer, 1);
     gui_add_hotlist = 1;
     return 0;
 }
@@ -309,9 +343,13 @@ irc_cmd_send_away (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_ban (t_irc_server *server, char *arguments)
+irc_cmd_send_ban (t_irc_server *server, t_irc_channel *channel,
+                  char *arguments)
 {
+    t_gui_buffer *buffer;
     char *pos_channel, *pos, *pos2;
+    
+    irc_find_context (server, channel, NULL, &buffer);
     
     if (arguments)
     {
@@ -340,7 +378,7 @@ irc_cmd_send_ban (t_irc_server *server, char *arguments)
         /* channel not given, use default buffer */
         if (!pos_channel)
         {
-            if (!BUFFER_IS_CHANNEL(gui_current_window->buffer))
+            if (!BUFFER_IS_CHANNEL(buffer))
             {
                 irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
                 gui_printf_nolog (server->buffer,
@@ -348,7 +386,7 @@ irc_cmd_send_ban (t_irc_server *server, char *arguments)
                                   WEECHAT_ERROR, "ban");
                 return -1;
             }
-            pos_channel = CHANNEL(gui_current_window->buffer)->name;
+            pos_channel = CHANNEL(buffer)->name;
         }
         
         /* loop on users */
@@ -368,7 +406,7 @@ irc_cmd_send_ban (t_irc_server *server, char *arguments)
     }
     else
     {
-        if (!BUFFER_IS_CHANNEL(gui_current_window->buffer))
+        if (!BUFFER_IS_CHANNEL(buffer))
         {
             irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
             gui_printf_nolog (server->buffer,
@@ -376,7 +414,7 @@ irc_cmd_send_ban (t_irc_server *server, char *arguments)
                               WEECHAT_ERROR, "ban");
             return -1;
         }
-        server_sendf (server, "MODE %s +b\r\n", CHANNEL(gui_current_window->buffer)->name);
+        server_sendf (server, "MODE %s +b\r\n", CHANNEL(buffer)->name);
     }
     
     return 0;
@@ -387,11 +425,15 @@ irc_cmd_send_ban (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_ctcp (t_irc_server *server, char *arguments)
+irc_cmd_send_ctcp (t_irc_server *server, t_irc_channel *channel,
+                   char *arguments)
 {
     char *pos_type, *pos_args, *pos;
     struct timeval tv;
     struct timezone tz;
+    
+    /* make gcc happy */
+    (void) channel;
     
     pos_type = strchr (arguments, ' ');
     if (pos_type)
@@ -463,9 +505,13 @@ irc_cmd_send_ctcp (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_dcc (t_irc_server *server, char *arguments)
+irc_cmd_send_dcc (t_irc_server *server, t_irc_channel *channel,
+                  char *arguments)
 {
+    t_gui_buffer *buffer;
     char *pos_nick, *pos_file;
+    
+    irc_find_context (server, channel, NULL, &buffer);
     
     /* DCC SEND file */
     if (strncasecmp (arguments, "send", 4) == 0)
@@ -516,11 +562,10 @@ irc_cmd_send_dcc (t_irc_server *server, char *arguments)
     }
     else if (ascii_strcasecmp (arguments, "close") == 0)
     {
-        if (BUFFER_IS_PRIVATE(gui_current_window->buffer) &&
-            CHANNEL(gui_current_window->buffer)->dcc_chat)
+        if (BUFFER_IS_PRIVATE(buffer) &&
+            CHANNEL(buffer)->dcc_chat)
         {
-            dcc_close ((t_irc_dcc *)(CHANNEL(gui_current_window->buffer)->dcc_chat),
-                       DCC_ABORTED);
+            dcc_close ((t_irc_dcc *)(CHANNEL(buffer)->dcc_chat), DCC_ABORTED);
             dcc_redraw (1);
         }
     }
@@ -541,21 +586,25 @@ irc_cmd_send_dcc (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_dehalfop (t_irc_server *server, int argc, char **argv)
+irc_cmd_send_dehalfop (t_irc_server *server, t_irc_channel *channel,
+                       int argc, char **argv)
 {
+    t_gui_buffer *buffer;
     int i;
     
-    if (BUFFER_IS_CHANNEL(gui_current_window->buffer))
+    irc_find_context (server, channel, NULL, &buffer);
+    
+    if (BUFFER_IS_CHANNEL(buffer))
     {
         if (argc == 0)
             server_sendf (server, "MODE %s -h %s\r\n",
-                          CHANNEL(gui_current_window->buffer)->name,
+                          CHANNEL(buffer)->name,
                           server->nick);
         else
         {
             for (i = 0; i < argc; i++)
                 server_sendf (server, "MODE %s -h %s\r\n",
-                              CHANNEL(gui_current_window->buffer)->name,
+                              CHANNEL(buffer)->name,
                               argv[i]);
         }
     }
@@ -574,21 +623,25 @@ irc_cmd_send_dehalfop (t_irc_server *server, int argc, char **argv)
  */
 
 int
-irc_cmd_send_deop (t_irc_server *server, int argc, char **argv)
+irc_cmd_send_deop (t_irc_server *server, t_irc_channel *channel,
+                   int argc, char **argv)
 {
+    t_gui_buffer *buffer;
     int i;
     
-    if (BUFFER_IS_CHANNEL(gui_current_window->buffer))
+    irc_find_context (server, channel, NULL, &buffer);
+    
+    if (BUFFER_IS_CHANNEL(buffer))
     {
         if (argc == 0)
             server_sendf (server, "MODE %s -o %s\r\n",
-                          CHANNEL(gui_current_window->buffer)->name,
+                          CHANNEL(buffer)->name,
                           server->nick);
         else
         {
             for (i = 0; i < argc; i++)
                 server_sendf (server, "MODE %s -o %s\r\n",
-                              CHANNEL(gui_current_window->buffer)->name,
+                              CHANNEL(buffer)->name,
                               argv[i]);
         }
     }
@@ -607,21 +660,25 @@ irc_cmd_send_deop (t_irc_server *server, int argc, char **argv)
  */
 
 int
-irc_cmd_send_devoice (t_irc_server *server, int argc, char **argv)
+irc_cmd_send_devoice (t_irc_server *server, t_irc_channel *channel,
+                      int argc, char **argv)
 {
+    t_gui_buffer *buffer;
     int i;
     
-    if (BUFFER_IS_CHANNEL(gui_current_window->buffer))
+    irc_find_context (server, channel, NULL, &buffer);
+    
+    if (BUFFER_IS_CHANNEL(buffer))
     {
         if (argc == 0)
             server_sendf (server, "MODE %s -v %s\r\n",
-                          CHANNEL(gui_current_window->buffer)->name,
+                          CHANNEL(buffer)->name,
                           server->nick);
         else
         {
             for (i = 0; i < argc; i++)
                 server_sendf (server, "MODE %s -v %s\r\n",
-                              CHANNEL(gui_current_window->buffer)->name,
+                              CHANNEL(buffer)->name,
                               argv[i]);
         }
     }
@@ -641,9 +698,11 @@ irc_cmd_send_devoice (t_irc_server *server, int argc, char **argv)
  */
 
 int
-irc_cmd_send_die (t_irc_server *server, char *arguments)
+irc_cmd_send_die (t_irc_server *server, t_irc_channel *channel,
+                  char *arguments)
 {
     /* make gcc happy */
+    (void) channel;
     (void) arguments;
     
     server_sendf (server, "DIE\r\n");
@@ -655,21 +714,25 @@ irc_cmd_send_die (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_halfop (t_irc_server *server, int argc, char **argv)
+irc_cmd_send_halfop (t_irc_server *server, t_irc_channel *channel,
+                     int argc, char **argv)
 {
+    t_gui_buffer *buffer;
     int i;
     
-    if (BUFFER_IS_CHANNEL(gui_current_window->buffer))
+    irc_find_context (server, channel, NULL, &buffer);
+    
+    if (BUFFER_IS_CHANNEL(buffer))
     {
         if (argc == 0)
             server_sendf (server, "MODE %s +h %s\r\n",
-                          CHANNEL(gui_current_window->buffer)->name,
+                          CHANNEL(buffer)->name,
                           server->nick);
         else
         {
             for (i = 0; i < argc; i++)
                 server_sendf (server, "MODE %s +h %s\r\n",
-                              CHANNEL(gui_current_window->buffer)->name,
+                              CHANNEL(buffer)->name,
                               argv[i]);
         }
     }
@@ -689,8 +752,12 @@ irc_cmd_send_halfop (t_irc_server *server, int argc, char **argv)
  */
 
 int
-irc_cmd_send_info (t_irc_server *server, char *arguments)
+irc_cmd_send_info (t_irc_server *server, t_irc_channel *channel,
+                   char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     if (arguments)
         server_sendf (server, "INFO %s\r\n", arguments);
     else
@@ -703,13 +770,18 @@ irc_cmd_send_info (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_invite (t_irc_server *server, int argc, char **argv)
+irc_cmd_send_invite (t_irc_server *server, t_irc_channel *channel,
+                     int argc, char **argv)
 {
+    t_gui_buffer *buffer;
+    
+    irc_find_context (server, channel, NULL, &buffer);
+    
     if (argc == 2)
         server_sendf (server, "INVITE %s %s\r\n", argv[0], argv[1]);
     else
     {
-        if (!BUFFER_IS_CHANNEL(gui_current_window->buffer))
+        if (!BUFFER_IS_CHANNEL(buffer))
         {
             irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
             gui_printf_nolog (server->buffer,
@@ -718,7 +790,7 @@ irc_cmd_send_invite (t_irc_server *server, int argc, char **argv)
             return -1;
         }
         server_sendf (server, "INVITE %s %s\r\n",
-                      argv[0], CHANNEL(gui_current_window->buffer)->name);
+                      argv[0], CHANNEL(buffer)->name);
     }
     return 0;
 }
@@ -728,8 +800,12 @@ irc_cmd_send_invite (t_irc_server *server, int argc, char **argv)
  */
 
 int
-irc_cmd_send_ison (t_irc_server *server, char *arguments)
+irc_cmd_send_ison (t_irc_server *server, t_irc_channel *channel,
+                   char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     server_sendf (server, "ISON %s\r\n", arguments);
     return 0;
 }
@@ -739,8 +815,12 @@ irc_cmd_send_ison (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_join (t_irc_server *server, char *arguments)
+irc_cmd_send_join (t_irc_server *server, t_irc_channel *channel,
+                   char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     if (string_is_channel (arguments))
         server_sendf (server, "JOIN %s\r\n", arguments);
     else
@@ -753,9 +833,13 @@ irc_cmd_send_join (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_kick (t_irc_server *server, char *arguments)
+irc_cmd_send_kick (t_irc_server *server, t_irc_channel *channel,
+                   char *arguments)
 {
+    t_gui_buffer *buffer;
     char *pos_channel, *pos_nick, *pos_comment;
+    
+    irc_find_context (server, channel, NULL, &buffer);
     
     if (string_is_channel (arguments))
     {
@@ -776,7 +860,7 @@ irc_cmd_send_kick (t_irc_server *server, char *arguments)
     }
     else
     {
-        if (!BUFFER_IS_CHANNEL(gui_current_window->buffer))
+        if (!BUFFER_IS_CHANNEL(buffer))
         {
             irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
             gui_printf_nolog (server->buffer,
@@ -784,7 +868,7 @@ irc_cmd_send_kick (t_irc_server *server, char *arguments)
                               WEECHAT_ERROR, "kick");
             return -1;
         }
-        pos_channel = CHANNEL(gui_current_window->buffer)->name;
+        pos_channel = CHANNEL(buffer)->name;
         pos_nick = arguments;
     }
     
@@ -810,9 +894,13 @@ irc_cmd_send_kick (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_kickban (t_irc_server *server, char *arguments)
+irc_cmd_send_kickban (t_irc_server *server, t_irc_channel *channel,
+                      char *arguments)
 {
+    t_gui_buffer *buffer;
     char *pos_channel, *pos_nick, *pos_comment;
+    
+    irc_find_context (server, channel, NULL, &buffer);
     
     if (string_is_channel (arguments))
     {
@@ -833,7 +921,7 @@ irc_cmd_send_kickban (t_irc_server *server, char *arguments)
     }
     else
     {
-        if (!BUFFER_IS_CHANNEL(gui_current_window->buffer))
+        if (!BUFFER_IS_CHANNEL(buffer))
         {
             irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
             gui_printf_nolog (server->buffer,
@@ -841,7 +929,7 @@ irc_cmd_send_kickban (t_irc_server *server, char *arguments)
                               WEECHAT_ERROR, "kickban");
             return -1;
         }
-        pos_channel = CHANNEL(gui_current_window->buffer)->name;
+        pos_channel = CHANNEL(buffer)->name;
         pos_nick = arguments;
     }
     
@@ -868,8 +956,12 @@ irc_cmd_send_kickban (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_kill (t_irc_server *server, char *arguments)
+irc_cmd_send_kill (t_irc_server *server, t_irc_channel *channel,
+                   char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     server_sendf (server, "KILL %s\r\n", arguments);
     return 0;
 }
@@ -880,8 +972,12 @@ irc_cmd_send_kill (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_links (t_irc_server *server, char *arguments)
+irc_cmd_send_links (t_irc_server *server, t_irc_channel *channel,
+                    char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     if (arguments)
         server_sendf (server, "LINKS %s\r\n", arguments);
     else
@@ -894,8 +990,12 @@ irc_cmd_send_links (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_list (t_irc_server *server, char *arguments)
+irc_cmd_send_list (t_irc_server *server, t_irc_channel *channel,
+                   char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     if (arguments)
         server_sendf (server, "LIST %s\r\n", arguments);
     else
@@ -908,8 +1008,12 @@ irc_cmd_send_list (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_lusers (t_irc_server *server, char *arguments)
+irc_cmd_send_lusers (t_irc_server *server, t_irc_channel *channel,
+                     char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     if (arguments)
         server_sendf (server, "LUSERS %s\r\n", arguments);
     else
@@ -918,31 +1022,18 @@ irc_cmd_send_lusers (t_irc_server *server, char *arguments)
 }
 
 /*
- * irc_send_me_all_channels: send a ctcp action to all channels of a server
- */
-
-int
-irc_send_me_all_channels (t_irc_server *server, char *arguments)
-{
-    t_irc_channel *ptr_channel;
-    
-    for (ptr_channel = server->channels; ptr_channel;
-         ptr_channel = ptr_channel->next_channel)
-    {
-        if (ptr_channel->type == CHANNEL_TYPE_CHANNEL)
-            irc_send_me (server, ptr_channel, arguments);
-    }
-    return 0;
-}
-
-/*
  * irc_cmd_send_me: send a ctcp action to the current channel
  */
 
 int
-irc_cmd_send_me (t_irc_server *server, char *arguments)
+irc_cmd_send_me (t_irc_server *server, t_irc_channel *channel,
+                 char *arguments)
 {
-    if (BUFFER_IS_SERVER(gui_current_window->buffer))
+    t_gui_buffer *buffer;
+    
+    irc_find_context (server, channel, NULL, &buffer);
+    
+    if (BUFFER_IS_SERVER(buffer))
     {
         irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
         gui_printf_nolog (server->buffer,
@@ -950,7 +1041,7 @@ irc_cmd_send_me (t_irc_server *server, char *arguments)
                           WEECHAT_ERROR, "me");
         return -1;
     }
-    irc_send_me (server, CHANNEL(gui_current_window->buffer), arguments);
+    irc_send_me (server, CHANNEL(buffer), arguments);
     return 0;
 }
 
@@ -959,8 +1050,12 @@ irc_cmd_send_me (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_mode (t_irc_server *server, char *arguments)
+irc_cmd_send_mode (t_irc_server *server, t_irc_channel *channel,
+                   char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     server_sendf (server, "MODE %s\r\n", arguments);
     return 0;
 }
@@ -970,8 +1065,12 @@ irc_cmd_send_mode (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_motd (t_irc_server *server, char *arguments)
+irc_cmd_send_motd (t_irc_server *server, t_irc_channel *channel,
+                   char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     if (arguments)
         server_sendf (server, "MOTD %s\r\n", arguments);
     else
@@ -984,13 +1083,18 @@ irc_cmd_send_motd (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_msg (t_irc_server *server, char *arguments)
+irc_cmd_send_msg (t_irc_server *server, t_irc_channel *channel,
+                  char *arguments)
 {
+    t_gui_window *window;
+    t_gui_buffer *buffer;
     char *pos, *pos_comma;
     char *msg_pwd_hidden, *pos_pwd;
     t_irc_channel *ptr_channel;
     t_irc_nick *ptr_nick;
     char *string;
+    
+    irc_find_context (server, channel, &window, &buffer);
     
     pos = strchr (arguments, ' ');
     if (pos)
@@ -1010,8 +1114,8 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
             }
             if (strcmp (arguments, "*") == 0)
             {
-                if (!BUFFER_IS_CHANNEL(gui_current_window->buffer) &&
-                    !BUFFER_IS_PRIVATE(gui_current_window->buffer))
+                if (!BUFFER_IS_CHANNEL(buffer) &&
+                    !BUFFER_IS_PRIVATE(buffer))
                 {
                     irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
                     gui_printf_nolog (server->buffer,
@@ -1019,16 +1123,16 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
                                       WEECHAT_ERROR, "msg *");
                     return -1;
                 }
-                ptr_channel = CHANNEL(gui_current_window->buffer);
-                if (BUFFER_IS_CHANNEL(gui_current_window->buffer))
+                ptr_channel = CHANNEL(buffer);
+                if (BUFFER_IS_CHANNEL(buffer))
                     ptr_nick = nick_search (ptr_channel, server->nick);
                 else
                     ptr_nick = NULL;
-                irc_display_nick (gui_current_window->buffer, ptr_nick,
+                irc_display_nick (buffer, ptr_nick,
                                   (ptr_nick) ? NULL : server->nick,
                                   MSG_TYPE_NICK, 1, 1, 0);
                 string = (char *)gui_color_decode ((unsigned char *)pos, 1);
-                gui_printf_type (gui_current_window->buffer, MSG_TYPE_MSG, "%s\n",
+                gui_printf_type (buffer, MSG_TYPE_MSG, "%s\n",
                                  (string) ? string : "");
                 if (string)
                     free (string);
@@ -1114,7 +1218,7 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
                                               WEECHAT_ERROR, arguments);
                             return -1;
                         }
-                        gui_buffer_new (gui_current_window, server, ptr_channel, 0, 1);
+                        gui_buffer_new (window, server, ptr_channel, 0, 1);
                         gui_draw_buffer_title (ptr_channel->buffer, 1);
                     }
                         
@@ -1153,13 +1257,18 @@ irc_cmd_send_msg (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_names (t_irc_server *server, char *arguments)
+irc_cmd_send_names (t_irc_server *server, t_irc_channel *channel,
+                    char *arguments)
 {
+    t_gui_buffer *buffer;
+    
+    irc_find_context (server, channel, NULL, &buffer);
+    
     if (arguments)
         server_sendf (server, "NAMES %s\r\n", arguments);
     else
     {
-        if (!BUFFER_IS_CHANNEL(gui_current_window->buffer))
+        if (!BUFFER_IS_CHANNEL(buffer))
         {
             irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
             gui_printf_nolog (server->buffer,
@@ -1169,7 +1278,7 @@ irc_cmd_send_names (t_irc_server *server, char *arguments)
         }
         else
             server_sendf (server, "NAMES %s\r\n",
-                          CHANNEL(gui_current_window->buffer)->name);
+                          CHANNEL(buffer)->name);
     }
     return 0;
 }
@@ -1204,9 +1313,13 @@ irc_cmd_send_nick_server (t_irc_server *server, char *nickname)
  */
 
 int
-irc_cmd_send_nick (t_irc_server *server, int argc, char **argv)
+irc_cmd_send_nick (t_irc_server *server, t_irc_channel *channel,
+                   int argc, char **argv)
 {
     t_irc_server *ptr_server;
+    
+    /* make gcc happy */
+    (void) channel;
     
     if (!server)
         return 0;
@@ -1238,9 +1351,13 @@ irc_cmd_send_nick (t_irc_server *server, int argc, char **argv)
  */
 
 int
-irc_cmd_send_notice (t_irc_server *server, char *arguments)
+irc_cmd_send_notice (t_irc_server *server, t_irc_channel *channel,
+                     char *arguments)
 {
     char *pos, *string;
+    
+    /* make gcc happy */
+    (void) channel;
     
     pos = strchr (arguments, ' ');
     if (pos)
@@ -1278,15 +1395,19 @@ irc_cmd_send_notice (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_op (t_irc_server *server, int argc, char **argv)
+irc_cmd_send_op (t_irc_server *server, t_irc_channel *channel,
+                 int argc, char **argv)
 {
+    t_gui_buffer *buffer;
     int i;
     
-    if (BUFFER_IS_CHANNEL(gui_current_window->buffer))
+    irc_find_context (server, channel, NULL, &buffer);
+    
+    if (BUFFER_IS_CHANNEL(buffer))
     {
         for (i = 0; i < argc; i++)
             server_sendf (server, "MODE %s +o %s\r\n",
-                          CHANNEL(gui_current_window->buffer)->name,
+                          CHANNEL(buffer)->name,
                           argv[i]);
     }
     else
@@ -1305,8 +1426,12 @@ irc_cmd_send_op (t_irc_server *server, int argc, char **argv)
  */
 
 int
-irc_cmd_send_oper (t_irc_server *server, char *arguments)
+irc_cmd_send_oper (t_irc_server *server, t_irc_channel *channel,
+                   char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     server_sendf (server, "OPER %s\r\n", arguments);
     return 0;
 }
@@ -1316,10 +1441,14 @@ irc_cmd_send_oper (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_part (t_irc_server *server, char *arguments)
+irc_cmd_send_part (t_irc_server *server, t_irc_channel *channel,
+                   char *arguments)
 {
-    char *channel_name, *pos_args, *ptr_arg, *pos, buffer[4096];
+    t_gui_buffer *buffer;
+    char *channel_name, *pos_args, *ptr_arg, *pos, buf[4096];
     t_irc_channel *ptr_channel;
+    
+    irc_find_context (server, channel, NULL, &buffer);
     
     if (arguments)
     {
@@ -1337,7 +1466,7 @@ irc_cmd_send_part (t_irc_server *server, char *arguments)
         }
         else
         {
-            if (BUFFER_IS_SERVER(gui_current_window->buffer))
+            if (BUFFER_IS_SERVER(buffer))
             {
                 irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
                 gui_printf_nolog (server->buffer,
@@ -1345,13 +1474,13 @@ irc_cmd_send_part (t_irc_server *server, char *arguments)
                                   WEECHAT_ERROR, "part");
                 return -1;
             }
-            channel_name = CHANNEL(gui_current_window->buffer)->name;
+            channel_name = CHANNEL(buffer)->name;
             pos_args = arguments;
         }
     }
     else
     {
-        if (BUFFER_IS_SERVER(gui_current_window->buffer))
+        if (BUFFER_IS_SERVER(buffer))
         {
             irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
             gui_printf_nolog (server->buffer,
@@ -1359,16 +1488,16 @@ irc_cmd_send_part (t_irc_server *server, char *arguments)
                               WEECHAT_ERROR, "part");
             return -1;
         }
-        if (BUFFER_IS_PRIVATE(gui_current_window->buffer))
+        if (BUFFER_IS_PRIVATE(buffer))
         {
-            ptr_channel = CHANNEL(gui_current_window->buffer);
+            ptr_channel = CHANNEL(buffer);
             gui_buffer_free (ptr_channel->buffer, 1);
             channel_free (server, ptr_channel);
-            gui_draw_buffer_status (gui_current_window->buffer, 1);
-            gui_draw_buffer_input (gui_current_window->buffer, 1);
+            gui_draw_buffer_status (buffer, 1);
+            gui_draw_buffer_input (buffer, 1);
             return 0;
         }
-        channel_name = CHANNEL(gui_current_window->buffer)->name;
+        channel_name = CHANNEL(buffer)->name;
         pos_args = NULL;
     }
     
@@ -1382,15 +1511,15 @@ irc_cmd_send_part (t_irc_server *server, char *arguments)
         if (pos)
         {
             pos[0] = '\0';
-            snprintf (buffer, sizeof (buffer), "%s%s%s",
+            snprintf (buf, sizeof (buf), "%s%s%s",
                       ptr_arg, PACKAGE_VERSION, pos + 2);
             pos[0] = '%';
         }
         else
-            snprintf (buffer, sizeof (buffer), "%s",
+            snprintf (buf, sizeof (buf), "%s",
                       ptr_arg);
         server_sendf (server, "PART %s :%s\r\n",
-                      channel_name, buffer);
+                      channel_name, buf);
     }
     else
         server_sendf (server, "PART %s\r\n", channel_name);
@@ -1403,8 +1532,12 @@ irc_cmd_send_part (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_ping (t_irc_server *server, char *arguments)
+irc_cmd_send_ping (t_irc_server *server, t_irc_channel *channel,
+                   char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     server_sendf (server, "PING %s\r\n", arguments);
     return 0;
 }
@@ -1414,8 +1547,12 @@ irc_cmd_send_ping (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_pong (t_irc_server *server, char *arguments)
+irc_cmd_send_pong (t_irc_server *server, t_irc_channel *channel,
+                   char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     server_sendf (server, "PONG %s\r\n", arguments);
     return 0;
 }
@@ -1425,11 +1562,16 @@ irc_cmd_send_pong (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_query (t_irc_server *server, char *arguments)
+irc_cmd_send_query (t_irc_server *server, t_irc_channel *channel,
+                    char *arguments)
 {
+    t_gui_window *window;
+    t_gui_buffer *buffer;
     char *pos, *string;
     t_irc_channel *ptr_channel;
     t_gui_buffer *ptr_buffer;
+    
+    irc_find_context (server, channel, &window, &buffer);
     
     pos = strchr (arguments, ' ');
     if (pos)
@@ -1455,7 +1597,7 @@ irc_cmd_send_query (t_irc_server *server, char *arguments)
                               WEECHAT_ERROR, arguments);
             return -1;
         }
-        gui_buffer_new (gui_current_window, server, ptr_channel, 0, 1);
+        gui_buffer_new (window, server, ptr_channel, 0, 1);
         gui_draw_buffer_title (ptr_channel->buffer, 1);
     }
     else
@@ -1464,7 +1606,7 @@ irc_cmd_send_query (t_irc_server *server, char *arguments)
         {
             if (ptr_buffer->channel == ptr_channel)
             {
-                gui_switch_to_buffer (gui_current_window, ptr_buffer);
+                gui_switch_to_buffer (window, ptr_buffer);
                 gui_redraw_buffer (ptr_buffer);
                 break;
             }
@@ -1497,13 +1639,15 @@ irc_cmd_send_query (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_quit (t_irc_server *server, char *arguments)
+irc_cmd_send_quit (t_irc_server *server, t_irc_channel *channel,
+                   char *arguments)
 {
     t_irc_server *ptr_server;
     char *ptr_arg, *pos, buffer[4096];
     
     /* make gcc happy */
     (void) server;
+    (void) channel;
     
     ptr_arg = (arguments) ? arguments :
               (cfg_irc_default_msg_quit && cfg_irc_default_msg_quit[0]) ?
@@ -1541,8 +1685,12 @@ irc_cmd_send_quit (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_quote (t_irc_server *server, char *arguments)
+irc_cmd_send_quote (t_irc_server *server, t_irc_channel *channel,
+                    char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     server_sendf (server, "%s\r\n", arguments);
     return 0;
 }
@@ -1552,9 +1700,11 @@ irc_cmd_send_quote (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_rehash (t_irc_server *server, char *arguments)
+irc_cmd_send_rehash (t_irc_server *server, t_irc_channel *channel,
+                     char *arguments)
 {
     /* make gcc happy */
+    (void) channel;
     (void) arguments;
     
     server_sendf (server, "REHASH\r\n");
@@ -1566,9 +1716,11 @@ irc_cmd_send_rehash (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_restart (t_irc_server *server, char *arguments)
+irc_cmd_send_restart (t_irc_server *server, t_irc_channel *channel,
+                      char *arguments)
 {
     /* make gcc happy */
+    (void) channel;
     (void) arguments;
     
     server_sendf (server, "RESTART\r\n");
@@ -1580,8 +1732,12 @@ irc_cmd_send_restart (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_service (t_irc_server *server, char *arguments)
+irc_cmd_send_service (t_irc_server *server, t_irc_channel *channel,
+                      char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     server_sendf (server, "SERVICE %s\r\n", arguments);
     return 0;
 }
@@ -1591,8 +1747,12 @@ irc_cmd_send_service (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_servlist (t_irc_server *server, char *arguments)
+irc_cmd_send_servlist (t_irc_server *server, t_irc_channel *channel,
+                       char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     if (arguments)
         server_sendf (server, "SERVLIST %s\r\n", arguments);
     else
@@ -1605,8 +1765,12 @@ irc_cmd_send_servlist (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_squery (t_irc_server *server, char *arguments)
+irc_cmd_send_squery (t_irc_server *server, t_irc_channel *channel,
+                     char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     server_sendf (server, "SQUERY %s\r\n", arguments);
     return 0;
 }
@@ -1616,8 +1780,12 @@ irc_cmd_send_squery (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_squit (t_irc_server *server, char *arguments)
+irc_cmd_send_squit (t_irc_server *server, t_irc_channel *channel,
+                    char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     server_sendf (server, "SQUIT %s\r\n", arguments);
     return 0;
 }
@@ -1627,8 +1795,12 @@ irc_cmd_send_squit (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_stats (t_irc_server *server, char *arguments)
+irc_cmd_send_stats (t_irc_server *server, t_irc_channel *channel,
+                    char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     if (arguments)
         server_sendf (server, "STATS %s\r\n", arguments);
     else
@@ -1642,8 +1814,12 @@ irc_cmd_send_stats (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_summon (t_irc_server *server, char *arguments)
+irc_cmd_send_summon (t_irc_server *server, t_irc_channel *channel,
+                     char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     server_sendf (server, "SUMMON %s\r\n", arguments);
     return 0;
 }
@@ -1653,8 +1829,12 @@ irc_cmd_send_summon (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_time (t_irc_server *server, char *arguments)
+irc_cmd_send_time (t_irc_server *server, t_irc_channel *channel,
+                   char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     if (arguments)
         server_sendf (server, "TIME %s\r\n", arguments);
     else
@@ -1667,9 +1847,13 @@ irc_cmd_send_time (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_topic (t_irc_server *server, char *arguments)
+irc_cmd_send_topic (t_irc_server *server, t_irc_channel *channel,
+                    char *arguments)
 {
+    t_gui_buffer *buffer;
     char *channel_name, *new_topic, *pos;
+    
+    irc_find_context (server, channel, NULL, &buffer);
     
     channel_name = NULL;
     new_topic = NULL;
@@ -1696,7 +1880,7 @@ irc_cmd_send_topic (t_irc_server *server, char *arguments)
     /* look for current channel if not specified */
     if (!channel_name)
     {
-        if (BUFFER_IS_SERVER(gui_current_window->buffer))
+        if (BUFFER_IS_SERVER(buffer))
         {
             irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
             gui_printf_nolog (server->buffer,
@@ -1704,7 +1888,7 @@ irc_cmd_send_topic (t_irc_server *server, char *arguments)
                               WEECHAT_ERROR, "topic");
             return -1;
         }
-        channel_name = CHANNEL(gui_current_window->buffer)->name;
+        channel_name = CHANNEL(buffer)->name;
     }
     
     if (new_topic)
@@ -1716,6 +1900,7 @@ irc_cmd_send_topic (t_irc_server *server, char *arguments)
     }
     else
         server_sendf (server, "TOPIC %s\r\n", channel_name);
+    
     return 0;
 }
 
@@ -1724,8 +1909,12 @@ irc_cmd_send_topic (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_trace (t_irc_server *server, char *arguments)
+irc_cmd_send_trace (t_irc_server *server, t_irc_channel *channel,
+                    char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     if (arguments)
         server_sendf (server, "TRACE %s\r\n", arguments);
     else
@@ -1738,9 +1927,13 @@ irc_cmd_send_trace (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_unban (t_irc_server *server, char *arguments)
+irc_cmd_send_unban (t_irc_server *server, t_irc_channel *channel,
+                    char *arguments)
 {
+    t_gui_buffer *buffer;
     char *pos_channel, *pos, *pos2;
+    
+    irc_find_context (server, channel, NULL, &buffer);
     
     if (arguments)
     {
@@ -1769,7 +1962,7 @@ irc_cmd_send_unban (t_irc_server *server, char *arguments)
         /* channel not given, use default buffer */
         if (!pos_channel)
         {
-            if (!BUFFER_IS_CHANNEL(gui_current_window->buffer))
+            if (!BUFFER_IS_CHANNEL(buffer))
             {
                 irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
                 gui_printf_nolog (server->buffer,
@@ -1777,7 +1970,7 @@ irc_cmd_send_unban (t_irc_server *server, char *arguments)
                                   WEECHAT_ERROR, "unban");
                 return -1;
             }
-            pos_channel = CHANNEL(gui_current_window->buffer)->name;
+            pos_channel = CHANNEL(buffer)->name;
         }
         
         /* loop on users */
@@ -1803,7 +1996,6 @@ irc_cmd_send_unban (t_irc_server *server, char *arguments)
                           WEECHAT_ERROR, "unban");
         return -1;
     }
-    
     return 0;
 }
 
@@ -1812,8 +2004,12 @@ irc_cmd_send_unban (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_userhost (t_irc_server *server, char *arguments)
+irc_cmd_send_userhost (t_irc_server *server, t_irc_channel *channel,
+                       char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     server_sendf (server, "USERHOST %s\r\n", arguments);
     return 0;
 }
@@ -1823,8 +2019,12 @@ irc_cmd_send_userhost (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_users (t_irc_server *server, char *arguments)
+irc_cmd_send_users (t_irc_server *server, t_irc_channel *channel,
+                    char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     if (arguments)
         server_sendf (server, "USERS %s\r\n", arguments);
     else
@@ -1837,12 +2037,17 @@ irc_cmd_send_users (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_version (t_irc_server *server, char *arguments)
+irc_cmd_send_version (t_irc_server *server, t_irc_channel *channel,
+                      char *arguments)
 {
+    t_gui_buffer *buffer;
+    
+    irc_find_context (server, channel, NULL, &buffer);
+    
     if (arguments)
     {
-        if (BUFFER_IS_CHANNEL(gui_current_window->buffer) &&
-            nick_search (CHANNEL(gui_current_window->buffer), arguments))
+        if (BUFFER_IS_CHANNEL(buffer) &&
+            nick_search (CHANNEL(buffer), arguments))
             server_sendf (server, "PRIVMSG %s :\01VERSION\01\r\n",
                           arguments);
         else
@@ -1865,21 +2070,25 @@ irc_cmd_send_version (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_voice (t_irc_server *server, int argc, char **argv)
+irc_cmd_send_voice (t_irc_server *server, t_irc_channel *channel,
+                    int argc, char **argv)
 {
+    t_gui_buffer *buffer;
     int i;
     
-    if (BUFFER_IS_CHANNEL(gui_current_window->buffer))
+    irc_find_context (server, channel, NULL, &buffer);
+    
+    if (BUFFER_IS_CHANNEL(buffer))
     {
         if (argc == 0)
             server_sendf (server, "MODE %s +v %s\r\n",
-                          CHANNEL(gui_current_window->buffer)->name,
+                          CHANNEL(buffer)->name,
                           server->nick);
         else
         {
             for (i = 0; i < argc; i++)
                 server_sendf (server, "MODE %s +v %s\r\n",
-                              CHANNEL(gui_current_window->buffer)->name,
+                              CHANNEL(buffer)->name,
                               argv[i]);
         }
     }
@@ -1900,8 +2109,12 @@ irc_cmd_send_voice (t_irc_server *server, int argc, char **argv)
  */
 
 int
-irc_cmd_send_wallops (t_irc_server *server, char *arguments)
+irc_cmd_send_wallops (t_irc_server *server, t_irc_channel *channel,
+                      char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     server_sendf (server, "WALLOPS %s\r\n", arguments);
     return 0;
 }
@@ -1911,8 +2124,12 @@ irc_cmd_send_wallops (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_who (t_irc_server *server, char *arguments)
+irc_cmd_send_who (t_irc_server *server, t_irc_channel *channel,
+                  char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     if (arguments)
         server_sendf (server, "WHO %s\r\n", arguments);
     else
@@ -1925,8 +2142,12 @@ irc_cmd_send_who (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_whois (t_irc_server *server, char *arguments)
+irc_cmd_send_whois (t_irc_server *server, t_irc_channel *channel,
+                    char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     server_sendf (server, "WHOIS %s\r\n", arguments);
     return 0;
 }
@@ -1936,8 +2157,12 @@ irc_cmd_send_whois (t_irc_server *server, char *arguments)
  */
 
 int
-irc_cmd_send_whowas (t_irc_server *server, char *arguments)
+irc_cmd_send_whowas (t_irc_server *server, t_irc_channel *channel,
+                     char *arguments)
 {
+    /* make gcc happy */
+    (void) channel;
+    
     server_sendf (server, "WHOWAS %s\r\n", arguments);
     return 0;
 }
