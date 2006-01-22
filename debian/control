@@ -3,7 +3,7 @@ Section: net
 Priority: optional
 Maintainer: Sebastien Helleu <flashcode@flashtux.org>
 Uploaders: Julien Louis <ptitlouis@sysif.net>
-Build-Depends: debhelper (>> 4.0.0), libncursesw5-dev (>= 5.2.20020112a-7), ruby1.8-dev, libperl-dev, python-dev, libgnutls-dev, libtool, texinfo
+Build-Depends: debhelper (>> 4.0.0), libncursesw5-dev, ruby, ruby1.8-dev, libperl-dev, python-dev, libgnutls-dev, libtool, xsltproc, docbook-xsl
 Standards-Version: 3.6.2
 
 Package: weechat

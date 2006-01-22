@@ -1,3 +1,9 @@
+weechat (0.1.7-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Julien Louis <ptitlouis@sysif.net>  Sat, 14 Jan 2006 14:14:29 +0100
+
 weechat (0.1.6-2) unstable; urgency=low
 
   * Apply path to fix segfault when removing server.
