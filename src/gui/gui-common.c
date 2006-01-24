@@ -1022,40 +1022,61 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, char *mes
 void
 gui_infobar_printf (int time_displayed, int color, char *message, ...)
 {
-    static char buffer[1024];
+    static char buf[1024];
     va_list argptr;
     t_gui_infobar *ptr_infobar;
-    char *pos, *buf2, *buf3;
+    char *pos;
     
     va_start (argptr, message);
-    vsnprintf (buffer, sizeof (buffer) - 1, message, argptr);
+    vsnprintf (buf, sizeof (buf) - 1, message, argptr);
     va_end (argptr);
     
-    buf2 = (char *)gui_color_decode ((unsigned char *)buffer, 0);
+    ptr_infobar = (t_gui_infobar *)malloc (sizeof (t_gui_infobar));
+    if (ptr_infobar)
+    {
+        ptr_infobar->color = color;
+        ptr_infobar->text = strdup (buf);
+        pos = strchr (ptr_infobar->text, '\n');
+        if (pos)
+            pos[0] = '\0';
+        ptr_infobar->remaining_time = (time_displayed <= 0) ? -1 : time_displayed;
+        ptr_infobar->next_infobar = gui_infobar;
+        gui_infobar = ptr_infobar;
+        gui_draw_buffer_infobar (gui_current_window->buffer, 1);
+    }
+    else
+        weechat_log_printf (_("Not enough memory for infobar message\n"));
+}
+
+/*
+ * gui_infobar_printf_from_buffer: remove color, convert charset, then
+ *                                 display message in infobar
+ */
+
+void
+gui_infobar_printf_from_buffer (t_gui_buffer *buffer, int time_displayed,
+                                int color, char *message1, char *message, ...)
+{
+    static char buf[1024];
+    va_list argptr;
+    char *buf2, *buf3;
     
+    va_start (argptr, message);
+    vsnprintf (buf, sizeof (buf) - 1, message, argptr);
+    va_end (argptr);
+    
+    buf2 = (char *)gui_color_decode ((unsigned char *)buf, 0);
+    
+    weechat_log_printf ("avant decodage: %s\n", buf);
     if (buf2)
-        buf3 = channel_iconv_decode (NULL, NULL, buf2);
+        buf3 = channel_iconv_decode (SERVER(buffer), CHANNEL(buffer), buf2);
     else
         buf3 = NULL;
+    weechat_log_printf ("apres decodage: %s\n", buf3);
     
-    if (buf3)
-    {
-        ptr_infobar = (t_gui_infobar *)malloc (sizeof (t_gui_infobar));
-        if (ptr_infobar)
-        {
-            ptr_infobar->color = color;
-            ptr_infobar->text = strdup (buf3);
-            pos = strchr (ptr_infobar->text, '\n');
-            if (pos)
-                pos[0] = '\0';
-            ptr_infobar->remaining_time = (time_displayed <= 0) ? -1 : time_displayed;
-            ptr_infobar->next_infobar = gui_infobar;
-            gui_infobar = ptr_infobar;
-            gui_draw_buffer_infobar (gui_current_window->buffer, 1);
-        }
-        else
-            weechat_log_printf (_("Not enough memory for infobar message\n"));
-    }
+    gui_infobar_printf (time_displayed, color,
+                        "%s%s", message1,
+                        (buf3) ? buf3 : ((buf2) ? buf2 : buf));
     
     if (buf2)
         free (buf2);

@@ -1249,10 +1249,11 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *nick, char *argumen
                                          nick);
                         if ( (cfg_look_infobar_delay_highlight > 0)
                              && (ptr_channel->buffer != gui_current_window->buffer) )
-                            gui_infobar_printf (cfg_look_infobar_delay_highlight,
-                                                COLOR_WIN_INFOBAR_HIGHLIGHT,
-                                                _("Private %s> %s"),
-                                                nick, pos);
+                            gui_infobar_printf_from_buffer (ptr_channel->buffer,
+                                                            cfg_look_infobar_delay_highlight,
+                                                            COLOR_WIN_INFOBAR_HIGHLIGHT,
+                                                            _("Private"), " %s> %s",
+                                                            nick, pos);
                     }
                     else
                         gui_printf_type (ptr_channel->buffer, MSG_TYPE_NICK,
@@ -1510,11 +1511,12 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                             if ( (cfg_look_infobar)
                                  && (cfg_look_infobar_delay_highlight > 0)
                                  && (ptr_channel->buffer != gui_current_window->buffer) )
-                                gui_infobar_printf (cfg_look_infobar_delay_highlight,
-                                                    COLOR_WIN_INFOBAR_HIGHLIGHT,
-                                                    _("On %s: * %s %s"),
-                                                    ptr_channel->name,
-                                                    nick, pos);
+                                gui_infobar_printf_from_buffer (ptr_channel->buffer,
+                                                                cfg_look_infobar_delay_highlight,
+                                                                COLOR_WIN_INFOBAR_HIGHLIGHT,
+                                                                _("Channel"), " %s: * %s %s",
+                                                                ptr_channel->name,
+                                                                nick, pos);
                         }
                         else
                             gui_printf_type (ptr_channel->buffer, MSG_TYPE_MSG,
@@ -1626,11 +1628,12 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                         if ( (cfg_look_infobar)
                              && (cfg_look_infobar_delay_highlight > 0)
                              && (ptr_channel->buffer != gui_current_window->buffer) )
-                            gui_infobar_printf (cfg_look_infobar_delay_highlight,
-                                                COLOR_WIN_INFOBAR_HIGHLIGHT,
-                                                _("On %s: %s> %s"),
-                                                ptr_channel->name,
-                                                nick, pos);
+                            gui_infobar_printf_from_buffer (ptr_channel->buffer,
+                                                            cfg_look_infobar_delay_highlight,
+                                                            COLOR_WIN_INFOBAR_HIGHLIGHT,
+                                                            _("Channel"), " %s: %s> %s",
+                                                            ptr_channel->name,
+                                                            nick, pos);
                     }
                     else
                         irc_display_nick (ptr_channel->buffer, ptr_nick,
@@ -2065,11 +2068,12 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                         if ( (cfg_look_infobar)
                              && (cfg_look_infobar_delay_highlight > 0)
                              && (ptr_channel->buffer != gui_current_window->buffer) )
-                            gui_infobar_printf (cfg_look_infobar_delay_highlight,
-                                                COLOR_WIN_INFOBAR_HIGHLIGHT,
-                                                _("On %s: * %s %s"),
-                                                ptr_channel->name,
-                                                nick, pos);
+                            gui_infobar_printf_from_buffer (ptr_channel->buffer,
+                                                            cfg_look_infobar_delay_highlight,
+                                                            COLOR_WIN_INFOBAR_HIGHLIGHT,
+                                                            _("Channel"), " %s: * %s %s",
+                                                            ptr_channel->name,
+                                                            nick, pos);
                     }
                     else
                         gui_printf_type (ptr_channel->buffer, MSG_TYPE_MSG,
@@ -2153,10 +2157,11 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                                              nick);
                             if ( (cfg_look_infobar_delay_highlight > 0)
                                  && (ptr_channel->buffer != gui_current_window->buffer) )
-                                gui_infobar_printf (cfg_look_infobar_delay_highlight,
-                                                    COLOR_WIN_INFOBAR_HIGHLIGHT,
-                                                    _("Private %s> %s"),
-                                                    nick, pos);
+                                gui_infobar_printf_from_buffer (ptr_channel->buffer,
+                                                                cfg_look_infobar_delay_highlight,
+                                                                COLOR_WIN_INFOBAR_HIGHLIGHT,
+                                                                _("Private"), " %s> %s",
+                                                                nick, pos);
                         }
                         else
                             gui_printf_type (ptr_channel->buffer, MSG_TYPE_NICK,
