@@ -658,6 +658,7 @@ char *cfg_irc_default_msg_part;
 char *cfg_irc_default_msg_quit;
 int cfg_irc_notice_as_pv;
 int cfg_irc_away_check;
+int cfg_irc_away_check_max_nicks;
 int cfg_irc_lag_check;
 int cfg_irc_lag_min_show;
 int cfg_irc_lag_disconnect;
@@ -692,6 +693,10 @@ t_config_option weechat_options_irc[] =
     N_("interval between two checks for away (in minutes, 0 = never check)"),
     OPTION_TYPE_INT, 0, INT_MAX, 0,
     NULL, NULL, &cfg_irc_away_check, NULL, &config_change_away_check },
+  { "irc_away_check_max_nicks", N_("max number of nicks for away check"),
+    N_("do not check away nicks on channels with high number of nicks (0 = unlimited)"),
+    OPTION_TYPE_INT, 0, INT_MAX, 0,
+    NULL, NULL, &cfg_irc_away_check_max_nicks, NULL, &config_change_away_check_max_nicks },
   { "irc_lag_check", N_("interval between two checks for lag"),
     N_("interval between two checks for lag (in seconds)"),
     OPTION_TYPE_INT, 30, INT_MAX, 60,
@@ -1154,12 +1159,24 @@ config_change_nicks_colors ()
 void
 config_change_away_check ()
 {
-    check_away = 0;
     if (cfg_irc_away_check == 0)
     {
         /* reset away flag for all nicks/chans/servers */
         server_remove_away ();
     }
+    check_away = cfg_irc_away_check * 60;
+}
+
+/*
+ * config_change_away_check_max_nicks: called when max nicks for away check
+ *                                     is changed
+ */
+
+void
+config_change_away_check_max_nicks ()
+{
+    server_remove_away ();
+    check_away = cfg_irc_away_check * 60;
 }
 
 /*

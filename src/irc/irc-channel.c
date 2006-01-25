@@ -341,8 +341,12 @@ channel_check_away (t_irc_server *server, t_irc_channel *channel)
 {
     if (channel->type == CHANNEL_TYPE_CHANNEL)
     {
-        channel->checking_away++;
-        server_sendf (server, "WHO %s\r\n", channel->name);
+        if ((cfg_irc_away_check_max_nicks == 0) ||
+            (channel->nicks_count <= cfg_irc_away_check_max_nicks))
+        {
+            channel->checking_away++;
+            server_sendf (server, "WHO %s\r\n", channel->name);
+        }
     }
 }
 

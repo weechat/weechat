@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- ********* WARNING! *********
+
+     This file is automatically built with a Perl script. DO NOT EDIT!
+-->
+
 <command>alias  [nom_alias [commande [paramètres]]</command>
 <programlisting>
 créer un alias pour une commande

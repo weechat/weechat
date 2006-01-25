@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- ********* WARNING! *********
+
+     This file is automatically built with a Perl script. DO NOT EDIT!
+-->
+
 <row>
   <entry><option>look_set_title</option></entry>
   <entry>boolean</entry>
@@ -796,6 +802,13 @@
   <entry>between 0 and 2147483647</entry>
   <entry></entry>
   <entry>Interval between two checks for away (in minutes, 0 = never check)</entry>
+</row>
+<row>
+  <entry><option>irc_away_check_max_nicks</option></entry>
+  <entry>integer</entry>
+  <entry>between 0 and 2147483647</entry>
+  <entry></entry>
+  <entry>Do not check away nicks on channels with high number of nicks (0 = unlimited)</entry>
 </row>
 <row>
   <entry><option>irc_lag_check</option></entry>

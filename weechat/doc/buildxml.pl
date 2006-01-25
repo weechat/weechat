@@ -37,6 +37,9 @@
 %all_desc      = ("fr_FR" => "description",
                   "en_US" => "description",
                   "es_ES" => "descripción");
+$warning_do_not_edit = "\n<!-- ********* WARNING! *********\n\n"
+    ."     This file is automatically built with a Perl script. DO NOT EDIT!\n"
+    ."-->\n\n";
 
 foreach $lng (@all_lang)
 {
@@ -61,6 +64,7 @@ sub create_commands
     print "Creating $lang2/$file.xml ($lang)...\n";
     open XML, ">$lang2/$file.xml" or die "Error: can't write file!";
     print XML "<?xml version=\"1.0\" encoding=\"$encoding\"?>\n";
+    print XML $warning_do_not_edit;
     
     $started = 0;
     $ENV{"LANG"} = $lang;
@@ -94,6 +98,7 @@ sub create_key_func
     print "Creating $lang2/$file.xml ($lang)...\n";
     open XML, ">$lang2/$file.xml" or die "Error: can't write file!";
     print XML "<?xml version=\"1.0\" encoding=\"$encoding\"?>\n";
+    print XML $warning_do_not_edit;
     
     $ENV{"LANG"} = $lang;
     foreach (`$command`)
@@ -120,6 +125,7 @@ sub create_config
     print "Creating $lang2/$file.xml ($lang)...\n";
     open XML, ">$lang2/$file.xml" or die "Error: can't write file!";
     print XML "<?xml version=\"1.0\" encoding=\"$encoding\"?>\n";
+    print XML $warning_do_not_edit;
     $type = "";
     $values = "";
     $default = "";

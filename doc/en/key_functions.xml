@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- ********* WARNING! *********
+
+     This file is automatically built with a Perl script. DO NOT EDIT!
+-->
+
 <row>
   <entry><literal>return</literal></entry>
   <entry>terminate line</entry>

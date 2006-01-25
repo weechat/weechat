@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- ********* WARNING! *********
+
+     This file is automatically built with a Perl script. DO NOT EDIT!
+-->
+
 <row>
   <entry><option>look_set_title</option></entry>
   <entry>booléen</entry>
@@ -796,6 +802,13 @@
   <entry>entre 0 et 2147483647</entry>
   <entry>0</entry>
   <entry>Intervalle entre deux vérifications des absences (en minutes, 0 = ne jemais vérifier)</entry>
+</row>
+<row>
+  <entry><option>irc_away_check_max_nicks</option></entry>
+  <entry>entier</entry>
+  <entry>entre 0 et 2147483647</entry>
+  <entry>0</entry>
+  <entry>Ne pas vérifier les pseudos absents lorsqu'il y a un nombre important de pseudos (0 = pas de limite)</entry>
 </row>
 <row>
   <entry><option>irc_lag_check</option></entry>
