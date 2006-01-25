@@ -199,8 +199,9 @@ ignore_add (char *mask, char *type, char *channel_name, char *server_name)
     }
     
 #ifdef DEBUG
-    wee_log_printf ("Adding ignore: mask:'%s', type:'%s', channel:'%s', server:'%s'\n",
-                    mask, type, channel_name, server_name);
+    weechat_log_printf ("Adding ignore: mask:'%s', type:'%s', channel:'%s', "
+                        "server:'%s'\n",
+                        mask, type, channel_name, server_name);
 #endif
     
     type_index = -1;
