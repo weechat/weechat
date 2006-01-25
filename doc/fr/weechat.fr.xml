@@ -337,6 +337,16 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 </entry>
               </row>
               <row>
+                <entry><literal>-d, --dir &lt;répertoire&gt;</literal></entry>
+                <entry>
+                  Définir le répertoire comme étant la base de WeeChat
+                  (utilisé pour les fichiers de configuration, logs, extensions
+                  et scripts de l'utilisateur). La valeur par défaut est
+                  "<literal>~/.weechat</literal>". NB: le répertoire est créé
+                  s'il n'est pas trouvé par WeeChat.
+                </entry>
+              </row>
+              <row>
                 <entry><literal>-f, --key-functions</literal></entry>
                 <entry>
                   Afficher la liste des fonctions internes WeeChat pour les touches
@@ -3651,6 +3661,12 @@ Weechat.set_plugin_config ("ma_variable", "valeur")
           <listitem>
             <para>
               <emphasis>Pistos</emphasis> -
+              patchs
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis>Gwenn</emphasis> -
               patchs
             </para>
           </listitem>

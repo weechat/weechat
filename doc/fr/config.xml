@@ -738,8 +738,8 @@
   <entry><option>log_path</option></entry>
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>
-  <entry>'~/.weechat/logs/'</entry>
-  <entry>Chemin pour les conversations sauvegardées par WeeChat</entry>
+  <entry>'%h/logs/'</entry>
+  <entry>Chemin pour les conversations sauvegardées par WeeChat ('%h' sera remplacé par le répertoire de base WeeChat, par défaut: ~/.weechat)</entry>
 </row>
 <row>
   <entry><option>log_timestamp</option></entry>
@@ -976,8 +976,8 @@
   <entry><option>plugins_path</option></entry>
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>
-  <entry>'~/.weechat/plugins'</entry>
-  <entry>Chemin de recherche des extensions</entry>
+  <entry>'%h/plugins'</entry>
+  <entry>Chemin de recherche des extensions ('%h' sera remplacé par le répertoire de base WeeChat, par défaut: ~/.weechat)</entry>
 </row>
 <row>
   <entry><option>plugins_autoload</option></entry>

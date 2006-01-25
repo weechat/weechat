@@ -1,6 +1,17 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
+* FlashCode, 2006-01-24 (draft)
+
+    Important release notes for 0.1.8 (draft):
+
+    - it is recommended for users of version 0.1.7 (or any older), to
+      replace values in setup file (~/.weechat/weechat.rc) :
+        - option: log_path: replace "~/.weechat/logs" by "%h/logs"
+        - option: plugins_path: replace "~/.weechat/plugins" by "%h/plugins"
+      "%h" is replaced by WeeChat home (default: ~/.weechat, may be overriden
+      by new command line arg --dir)
+
 * FlashCode, 2006-01-14
 
     WeeChat 0.1.7 released.

@@ -107,29 +107,36 @@ void
 log_start (t_gui_buffer *buffer)
 {
     int length;
-    char *ptr_home;
+    char *ptr_home, *log_path, *log_path2, *ptr_path;
     
     ptr_home = getenv ("HOME");
-    length = strlen (cfg_log_path) +
-        ((cfg_log_path[0] == '~') ? strlen (ptr_home) : 0) +
-        64;
+    log_path = weechat_strreplace (cfg_log_path, "~", ptr_home);
+    log_path2 = weechat_strreplace ((log_path) ?
+                                    log_path : cfg_log_path,
+                                    "%h", weechat_home);
+    ptr_path = (log_path2) ? log_path2 : ((log_path) ? log_path : cfg_log_path);
+    length = strlen (ptr_path) + 64;
     if (SERVER(buffer))
         length += strlen (SERVER(buffer)->name);
     if (CHANNEL(buffer))
         length += strlen (CHANNEL(buffer)->name);
+    
     buffer->log_filename = (char *) malloc (length);
     if (!buffer->log_filename)
     {
         weechat_log_printf (_("Not enough memory to write log file for a buffer\n"));
+        if (log_path)
+            free (log_path);
+        if (log_path2)
+            free (log_path2);
         return;
     }
-    if (cfg_log_path[0] == '~')
-    {
-        strcpy (buffer->log_filename, ptr_home);
-        strcat (buffer->log_filename, cfg_log_path + 1);
-    }
-    else
-        strcpy (buffer->log_filename, cfg_log_path);
+    
+    strcpy (buffer->log_filename, ptr_path);
+    if (log_path)
+        free (log_path);
+    if (log_path2)
+        free (log_path2);
     if (buffer->log_filename[strlen (buffer->log_filename) - 1] != DIR_SEPARATOR_CHAR)
         strcat (buffer->log_filename, DIR_SEPARATOR);
     

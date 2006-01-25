@@ -331,6 +331,15 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 </entry>
               </row>
               <row>
+                <entry><literal>-d, --dir &lt;path&gt;</literal></entry>
+                <entry>
+                  Set path as home for WeeChat (used for configuration files,
+                  logs, user plugins and scripts). Default value is
+                  "<literal>~/.weechat</literal>". Please note that directory
+                  is created if not found by WeeChat.
+                </entry>
+              </row>
+              <row>
                 <entry><literal>-f, --key-functions</literal></entry>
                 <entry>
                   Display WeeChat internal functions for keys
@@ -3590,6 +3599,12 @@ Weechat.set_plugin_config ("my_var", "value")
           <listitem>
             <para>
               <emphasis>Pistos</emphasis> -
+              patches
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis>Gwenn</emphasis> -
               patches
             </para>
           </listitem>

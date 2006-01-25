@@ -54,7 +54,7 @@ fifo_create ()
     
     if (cfg_irc_fifo_pipe)
     {
-        /* build FIFO filename: "~/.weechat/weechat_fifo_" + process PID */
+        /* build FIFO filename: "<weechat_home>/weechat_fifo_" + process PID */
         if (!weechat_fifo_filename)
         {
             filename_length = strlen (weechat_home) + 64;

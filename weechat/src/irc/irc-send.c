@@ -1445,7 +1445,7 @@ irc_cmd_send_part (t_irc_server *server, t_irc_channel *channel,
                    char *arguments)
 {
     t_gui_buffer *buffer;
-    char *channel_name, *pos_args, *ptr_arg, *pos, buf[4096];
+    char *channel_name, *pos_args, *ptr_arg, *buf;
     t_irc_channel *ptr_channel;
     
     irc_find_context (server, channel, NULL, &buffer);
@@ -1507,19 +1507,11 @@ irc_cmd_send_part (t_irc_server *server, t_irc_channel *channel,
     
     if (ptr_arg)
     {
-        pos = strstr (ptr_arg, "%v");
-        if (pos)
-        {
-            pos[0] = '\0';
-            snprintf (buf, sizeof (buf), "%s%s%s",
-                      ptr_arg, PACKAGE_VERSION, pos + 2);
-            pos[0] = '%';
-        }
-        else
-            snprintf (buf, sizeof (buf), "%s",
-                      ptr_arg);
-        server_sendf (server, "PART %s :%s\r\n",
-                      channel_name, buf);
+        buf = weechat_strreplace (ptr_arg, "%v", PACKAGE_VERSION);
+        server_sendf (server, "PART %s :%s\r\n", channel_name,
+                      (buf) ? buf : ptr_arg);
+        if (buf)
+            free (buf);
     }
     else
         server_sendf (server, "PART %s\r\n", channel_name);
@@ -1643,7 +1635,7 @@ irc_cmd_send_quit (t_irc_server *server, t_irc_channel *channel,
                    char *arguments)
 {
     t_irc_server *ptr_server;
-    char *ptr_arg, *pos, buffer[4096];
+    char *ptr_arg, *buf;
     
     /* make gcc happy */
     (void) server;
@@ -1659,18 +1651,11 @@ irc_cmd_send_quit (t_irc_server *server, t_irc_channel *channel,
         {
             if (ptr_arg)
             {
-                pos = strstr (ptr_arg, "%v");
-                if (pos)
-                {
-                    pos[0] = '\0';
-                    snprintf (buffer, sizeof (buffer), "%s%s%s",
-                              ptr_arg, PACKAGE_VERSION, pos + 2);
-                    pos[0] = '%';
-                }
-                else
-                    snprintf (buffer, sizeof (buffer), "%s",
-                              ptr_arg);
-                server_sendf (ptr_server, "QUIT :%s\r\n", buffer);
+                buf = weechat_strreplace (ptr_arg, "%v", PACKAGE_VERSION);
+                server_sendf (ptr_server, "QUIT :%s\r\n",
+                              (buf) ? buf : ptr_arg);
+                if (buf)
+                    free (buf);
             }
             else
                 server_sendf (ptr_server, "QUIT\r\n");

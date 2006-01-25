@@ -474,10 +474,12 @@ session_crash (FILE *file, char *message, ...)
              session_last_read_pos,
              session_last_read_length);
     fprintf (stderr,
-             _("Please send ~/.weechat/%s, ~/.weechat/%s and "
+             _("Please send %s/%s, %s/%s and "
                "above messages to WeeChat developers for support.\n"
                "Be careful, private info may be in these files.\n"),
+             weechat_home,
              WEECHAT_LOG_NAME,
+             weechat_home,
              WEECHAT_SESSION_NAME);
     exit (EXIT_FAILURE);
 }

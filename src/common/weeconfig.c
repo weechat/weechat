@@ -633,9 +633,10 @@ t_config_option weechat_options_log[] =
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
     NULL, NULL, &cfg_log_plugin_msg, NULL, &config_change_noop },
   { "log_path", N_("path for log files"),
-    N_("path for WeeChat log files"),
+    N_("path for WeeChat log files ('%h' will be replaced by WeeChat home, "
+       "~/.weechat by default)"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "~/.weechat/logs/", NULL, NULL, &cfg_log_path, &config_change_noop },
+    "%h/logs/", NULL, NULL, &cfg_log_path, &config_change_noop },
   { "log_timestamp", N_("timestamp for log"),
     N_("timestamp for log (see man strftime for date/time specifiers)"),
     OPTION_TYPE_STRING, 0, 0, 0,
@@ -842,9 +843,10 @@ char *cfg_plugins_extension;
 
 t_config_option weechat_options_plugins[] =
 { { "plugins_path", N_("path for searching plugins"),
-    N_("path for searching plugins"),
+    N_("path for searching plugins ('%h' will be replaced by WeeChat home, "
+       "~/.weechat by default)"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "~/.weechat/plugins", NULL, NULL, &cfg_plugins_path, &config_change_noop },
+    "%h/plugins", NULL, NULL, &cfg_plugins_path, &config_change_noop },
   { "plugins_autoload", N_("list of plugins to load automatically"),
     N_("comma separated list of plugins to load automatically at startup, "
        "\"*\" means all plugins found "

@@ -3142,7 +3142,7 @@ weechat_cmd_upgrade (t_irc_server *server, t_irc_channel *channel,
     t_irc_server *ptr_server;
     int filename_length;
     char *filename;
-    char *exec_args[5] = { NULL, "-a", "--session", NULL, NULL };
+    char *exec_args[7] = { NULL, "-a", "--dir", NULL, "--session", NULL, NULL };
     
     /* make gcc happy */
     (void) server;
@@ -3196,7 +3196,8 @@ weechat_cmd_upgrade (t_irc_server *server, t_irc_channel *channel,
     }
     
     exec_args[0] = strdup (weechat_argv0);
-    exec_args[3] = strdup (filename);
+    exec_args[3] = strdup (weechat_home);
+    exec_args[5] = strdup (filename);
     
     /* unload plugins, save config, then upgrade */
 #ifdef PLUGINS    

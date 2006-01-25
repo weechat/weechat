@@ -5,6 +5,8 @@ ChangeLog - 2006-01-24
 
 
 Version 0.1.8 (under dev!):
+   * added new command line argument for setting WeeChat homedir (-d or --dir)
+     (patch from Gwenn)
    * fixed bug with charset in infobar highlights
    * fixed bug with buffer detection in plugins/scripts commands
    * fixed bug with /history command

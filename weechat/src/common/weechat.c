@@ -166,7 +166,7 @@ ascii_strncasecmp (char *string1, char *string2, int max)
 }
 
 /*
- * weechat_log_printf: displays a message in WeeChat log (~/.weechat/weechat.log)
+ * weechat_log_printf: displays a message in WeeChat log (<weechat_home>/weechat.log)
  */
 
 void
@@ -263,6 +263,59 @@ weechat_iconv (char *from_code, char *to_code, char *string)
 }
 
 /*
+ * weechat_strreplace: replace a string by new one in a string
+ *                     note: returned value has to be free() after use
+ */
+
+char *
+weechat_strreplace (char *string, char *search, char *replace)
+{
+    char *pos, *new_string;
+    int length1, length2, length_new, count;
+    
+    length1 = strlen (search);
+    length2 = strlen (replace);
+    
+    /* count number of strings to replace */
+    count = 0;
+    pos = string;
+    while (pos && pos[0] && (pos = strstr (pos, search)))
+    {
+        count++;
+        pos += length1;
+    }
+    
+    /* easy: no string to replace! */
+    if (count == 0)
+        return strdup (string);
+    
+    /* compute needed memory for new string */
+    length_new = strlen (string) - (count * length1) + (count * length2) + 1;
+    
+    /* allocate new string */
+    new_string = (char *)malloc (length_new * sizeof (char));
+    if (!new_string)
+        return strdup (string);
+    
+    /* replace all occurences */
+    new_string[0] = '\0';
+    while (string && string[0])
+    {
+        pos = strstr (string, search);
+        if (pos)
+        {
+            strncat (new_string, string, pos - string);
+            strcat (new_string, replace);
+            pos += length1;
+        }
+        else
+            strcat (new_string, string);
+        string = pos;
+    }
+    return new_string;
+}
+
+/*
  * get_timeval_diff: calculates difference between two times (return in milliseconds)
  */
 
@@ -300,6 +353,7 @@ weechat_display_usage (char *exec_name)
     printf ("\n\n");
     printf (_("  -a, --no-connect        disable auto-connect to servers at startup\n"
               "  -c, --config            display config file options\n"
+              "  -d, --dir <path>        set WeeChat home directory (default: ~/.weechat)\n"
               "  -f, --key-functions     display WeeChat internal functions for keys\n"
               "  -h, --help              this help\n"
               "  -i, --irc-commands      display IRC commands\n"
@@ -320,7 +374,7 @@ weechat_display_config_options ()
 {
     int i, j, k;
     
-    printf (_("WeeChat configuration options (~/.weechat/weechat.rc):\n\n"));
+    printf (_("WeeChat configuration options (<weechat_home>/weechat.rc):\n\n"));
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
     {
         if (weechat_options[i])
@@ -498,6 +552,7 @@ weechat_parse_args (int argc, char *argv[])
 
     weechat_argv0 = strdup (argv[0]);
     weechat_session = NULL;
+    weechat_home = NULL;
     server_cmd_line = 0;
     auto_connect = 1;
     auto_load_plugins = 1;
@@ -512,6 +567,19 @@ weechat_parse_args (int argc, char *argv[])
         {
             weechat_display_config_options ();
             weechat_shutdown (EXIT_SUCCESS, 0);
+        }
+        else if ((strcmp (argv[i], "-d") == 0)
+            || (strcmp (argv[i], "--dir") == 0))
+        {
+            if (i + 1 < argc)
+                weechat_home = strdup (argv[++i]);
+            else
+            {
+                fprintf (stderr,
+                         _("%s missing argument for --dir option\n"),
+                         WEECHAT_ERROR);
+                weechat_shutdown (EXIT_FAILURE, 0);
+            }
         }
         else if ((strcmp (argv[i], "-f") == 0)
             || (strcmp (argv[i], "--key-functions") == 0))
@@ -634,44 +702,47 @@ weechat_create_home_dirs ()
 {
     char *ptr_home, *dir_name;
     int dir_length;
-    
-    ptr_home = getenv ("HOME");
-    if (!ptr_home)
-    {
-        fprintf (stderr, _("%s unable to get HOME directory\n"),
-                 WEECHAT_ERROR);
-        weechat_shutdown (EXIT_FAILURE, 0);
-    }
-    dir_length = strlen (ptr_home) + 10;
-    weechat_home =
-        (char *) malloc (dir_length * sizeof (char));
+
     if (!weechat_home)
     {
-        fprintf (stderr, _("%s not enough memory for home directory\n"),
-                 WEECHAT_ERROR);
-        weechat_shutdown (EXIT_FAILURE, 0);
+        ptr_home = getenv ("HOME");
+        if (!ptr_home)
+        {
+            fprintf (stderr, _("%s unable to get HOME directory\n"),
+                     WEECHAT_ERROR);
+            weechat_shutdown (EXIT_FAILURE, 0);
+        }
+        dir_length = strlen (ptr_home) + 10;
+        weechat_home =
+            (char *) malloc (dir_length * sizeof (char));
+        if (!weechat_home)
+        {
+            fprintf (stderr, _("%s not enough memory for home directory\n"),
+                     WEECHAT_ERROR);
+            weechat_shutdown (EXIT_FAILURE, 0);
+        }
+        snprintf (weechat_home, dir_length, "%s%s.weechat", ptr_home,
+                  DIR_SEPARATOR);
     }
-    snprintf (weechat_home, dir_length, "%s%s.weechat", ptr_home,
-              DIR_SEPARATOR);
     
-    /* create home directory "~/.weechat" ; error is fatal */
+    /* create home directory; error is fatal */
     if (!weechat_create_dir (weechat_home))
     {
-        fprintf (stderr, _("%s unable to create ~/.weechat directory\n"),
-                 WEECHAT_ERROR);
+        fprintf (stderr, _("%s unable to create \"%s\" directory\n"),
+                 WEECHAT_ERROR, weechat_home);
         weechat_shutdown (EXIT_FAILURE, 0);
     }
     
     dir_length = strlen (weechat_home) + 64;
     dir_name = (char *) malloc (dir_length * sizeof (char));
     
-    /* create "~/.weechat/logs" */
+    /* create "<weechat_home>/logs" */
     snprintf (dir_name, dir_length, "%s%s%s", weechat_home, DIR_SEPARATOR,
               "logs");
     if (!weechat_create_dir (dir_name))
     {
-        fprintf (stderr, _("%s unable to create ~/.weechat/logs directory\n"),
-                 WEECHAT_WARNING);
+        fprintf (stderr, _("%s unable to create \"%s\" directory\n"),
+                 WEECHAT_WARNING, dir_name);
     }
     chmod (dir_name, 0700);
     
@@ -716,8 +787,8 @@ weechat_init_log ()
     snprintf (filename, filename_length, "%s/" WEECHAT_LOG_NAME, weechat_home);
     if ((weechat_log_file = fopen (filename, "wt")) == NULL)
         fprintf (stderr,
-                 _("%s unable to create/append to log file (~/.weechat/%s)"),
-                 WEECHAT_WARNING, WEECHAT_LOG_NAME);
+                 _("%s unable to create/append to log file (%s/%s)"),
+                 WEECHAT_WARNING, weechat_home, WEECHAT_LOG_NAME);
     free (filename);
 }
 
@@ -921,7 +992,7 @@ weechat_dump (int crash)
 }
 
 /*
- * weechat_sigsegv: SIGSEGV handler: save crash log to ~/.weechat/weechat.log and exit
+ * weechat_sigsegv: SIGSEGV handler: save crash log to <weechat_home>/weechat.log and exit
  */
 
 void
@@ -933,7 +1004,7 @@ weechat_sigsegv ()
     gui_end ();
     fprintf (stderr, "\n");
     fprintf (stderr, "*** Very bad! WeeChat has crashed (SIGSEGV received)\n");
-    fprintf (stderr, "*** Full crash dump was saved to ~/.weechat/weechat.log file\n");
+    fprintf (stderr, "*** Full crash dump was saved to %s/weechat.log file\n", weechat_home);
     fprintf (stderr, "*** Please send this file to WeeChat developers.\n");
     fprintf (stderr, "*** (be careful, private info may be in this file since\n");
     fprintf (stderr, "*** part of chats are displayed, so remove lines if needed)\n\n");

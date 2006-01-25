@@ -716,7 +716,8 @@ int plugin_auto_load_file (t_weechat_plugin *plugin, char *filename)
 
 void plugin_auto_load ()
 {
-    char *ptr_home, *dir_name, *list_plugins, *pos, *pos2;
+    char *ptr_home, *dir_name, *plugins_path, *plugins_path2;
+    char *list_plugins, *pos, *pos2;
     
     if (cfg_plugins_autoload && cfg_plugins_autoload[0])
     {
@@ -725,20 +726,20 @@ void plugin_auto_load ()
             /* auto-load plugins in WeeChat home dir */
             if (cfg_plugins_path && cfg_plugins_path[0])
             {
-                if (cfg_plugins_path[0] == '~')
-                {
-                    ptr_home = getenv ("HOME");
-                    dir_name = (char *)malloc (strlen (cfg_plugins_path) + strlen (ptr_home) + 2);
-                    if (dir_name)
-                    {
-                        strcpy (dir_name, ptr_home);
-                        strcat (dir_name, cfg_plugins_path + 1);
-                        plugin_exec_on_files (NULL, dir_name, &plugin_auto_load_file);
-                        free (dir_name);
-                    }
-                }
-                else
-                    plugin_exec_on_files (NULL, cfg_plugins_path, &plugin_auto_load_file);
+                ptr_home = getenv ("HOME");
+                plugins_path = weechat_strreplace (cfg_plugins_path, "~", ptr_home);
+                plugins_path2 = weechat_strreplace ((plugins_path) ?
+                                                    plugins_path : cfg_plugins_path,
+                                                    "%h", weechat_home);
+                plugin_exec_on_files (NULL,
+                                      (plugins_path2) ?
+                                      plugins_path2 : ((plugins_path) ?
+                                                       plugins_path : cfg_plugins_path),
+                                      &plugin_auto_load_file);
+                if (plugins_path)
+                    free (plugins_path);
+                if (plugins_path2)
+                    free (plugins_path2);
             }
     
             /* auto-load plugins in WeeChat global lib dir */

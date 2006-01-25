@@ -739,7 +739,7 @@
   <entry>string</entry>
   <entry>any string</entry>
   <entry></entry>
-  <entry>Path for WeeChat log files</entry>
+  <entry>Path for WeeChat log files ('%h' will be replaced by WeeChat home, ~/.weechat by default)</entry>
 </row>
 <row>
   <entry><option>log_timestamp</option></entry>
@@ -977,7 +977,7 @@
   <entry>string</entry>
   <entry>any string</entry>
   <entry></entry>
-  <entry>Path for searching plugins</entry>
+  <entry>Path for searching plugins ('%h' will be replaced by WeeChat home, ~/.weechat by default)</entry>
 </row>
 <row>
   <entry><option>plugins_autoload</option></entry>
