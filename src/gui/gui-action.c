@@ -879,6 +879,26 @@ gui_action_page_down (t_gui_window *window)
 }
 
 /*
+ * gui_action_scroll_up: display previous few lines in buffer
+ */
+
+void
+gui_action_scroll_up (t_gui_window *window)
+{
+    gui_window_scroll_up (window);
+}
+
+/*
+ * gui_action_scroll_down: display next few lines in buffer
+ */
+
+void
+gui_action_scroll_down (t_gui_window *window)
+{
+    gui_window_scroll_down (window);
+}
+
+/*
  * gui_action_nick_beginning: go to beginning of nicklist
  */
 

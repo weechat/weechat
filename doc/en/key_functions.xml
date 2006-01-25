@@ -98,6 +98,14 @@
   <entry>scroll one page down</entry>
 </row>
 <row>
+  <entry><literal>scroll_up</literal></entry>
+  <entry>scroll a few lines up</entry>
+</row>
+<row>
+  <entry><literal>scroll_down</literal></entry>
+  <entry>scroll a few lines down</entry>
+</row>
+<row>
   <entry><literal>nick_beginning</literal></entry>
   <entry>display beginning of nicklist</entry>
 </row>

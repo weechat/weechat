@@ -5,6 +5,8 @@ ChangeLog - 2006-01-25
 
 
 Version 0.1.8 (under dev!):
+   * added new scroll keys for a few lines up/down (default: meta-pgup/pgdn)
+     (patch from Pistos)
    * added new option "irc_away_check_max_nicks" to disable away check on
      channels with high number of nicks (patch from Gwenn)
    * added new command line argument for setting WeeChat homedir (-d or --dir)

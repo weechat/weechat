@@ -98,6 +98,14 @@
   <entry>faire défiler d'une page vers le bas</entry>
 </row>
 <row>
+  <entry><literal>scroll_up</literal></entry>
+  <entry>faire défiler de quelques lignes vers le haut</entry>
+</row>
+<row>
+  <entry><literal>scroll_down</literal></entry>
+  <entry>faire défiler de quelques lignes vers le bas</entry>
+</row>
+<row>
   <entry><literal>nick_beginning</literal></entry>
   <entry>afficher le début de la liste des pseudos</entry>
 </row>

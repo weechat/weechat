@@ -574,7 +574,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
               <row>
                 <entry>PageUp / PageDown</entry>
                 <entry>
-                  Afficher l'historique du tampon
+                  Monter / descendre d'une page dans l'historique du tampon
+                </entry>
+              </row>
+              <row>
+                <entry>Alt + PageUp / Alt + PageDown</entry>
+                <entry>
+                  Monter / descendre de quelques lignes dans l'historique
+                  du tampon
                 </entry>
               </row>
               <row>

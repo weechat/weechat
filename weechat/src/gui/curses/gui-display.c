@@ -2712,6 +2712,65 @@ gui_window_page_down (t_gui_window *window)
 }
 
 /*
+ * gui_window_scroll_up: display previous few lines in buffer
+ */
+
+void
+gui_window_scroll_up (t_gui_window *window)
+{
+    if (!gui_ok)
+        return;
+    
+    if (!window->first_line_displayed)
+    {
+        gui_calculate_line_diff (window, &window->start_line,
+                                 &window->start_line_pos,
+                                 (window->start_line) ?
+                                 (-1) * cfg_look_scroll_amount :
+                                 (-1) * ( (window->win_chat_height - 1) + cfg_look_scroll_amount));
+        gui_draw_buffer_chat (window->buffer, 0);
+        gui_draw_buffer_status (window->buffer, 0);
+    }
+}
+
+/*
+ * gui_window_scroll_down: display next few lines in buffer
+ */
+
+void
+gui_window_scroll_down (t_gui_window *window)
+{
+    t_gui_line *ptr_line;
+    int line_pos;
+    
+    if (!gui_ok)
+        return;
+    
+    if (window->start_line)
+    {
+        gui_calculate_line_diff (window, &window->start_line,
+                                 &window->start_line_pos,
+                                 cfg_look_scroll_amount);
+        
+        /* check if we can display all */
+        ptr_line = window->start_line;
+        line_pos = window->start_line_pos;
+        gui_calculate_line_diff (window, &ptr_line,
+                                 &line_pos,
+                                 window->win_chat_height - 1);
+        
+        if (!ptr_line)
+        {
+            window->start_line = NULL;
+            window->start_line_pos = 0;
+        }
+        
+        gui_draw_buffer_chat (window->buffer, 0);
+        gui_draw_buffer_status (window->buffer, 0);
+    }
+}
+
+/*
  * gui_window_nick_beginning: go to beginning of nicklist
  */
 

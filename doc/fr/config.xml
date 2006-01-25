@@ -69,6 +69,13 @@
   <entry>Utiliser le même tampon pour tous les serveurs</entry>
 </row>
 <row>
+  <entry><option>look_scroll_amount</option></entry>
+  <entry>entier</entry>
+  <entry>entre 1 et 2147483647</entry>
+  <entry>3</entry>
+  <entry>Nombre de lignes pour le défilement avec scroll_up et scroll_down</entry>
+</row>
+<row>
   <entry><option>look_buffer_timestamp</option></entry>
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>

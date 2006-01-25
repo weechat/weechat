@@ -73,6 +73,7 @@ char *cfg_look_charset_decode_utf;
 char *cfg_look_charset_encode;
 char *cfg_look_charset_internal;
 int cfg_look_one_server_buffer;
+int cfg_look_scroll_amount;
 char *cfg_look_buffer_timestamp;
 int cfg_look_color_nicks_number;
 int cfg_look_color_actions;
@@ -137,6 +138,10 @@ t_config_option weechat_options_look[] =
     N_("use same buffer for all servers"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
     NULL, NULL, &cfg_look_one_server_buffer, NULL, config_change_one_server_buffer },
+  { "look_scroll_amount", N_("how many lines to scroll by with scroll_up and scroll_down"),
+    N_("how many lines to scroll by with scroll_up and scroll_down"),
+    OPTION_TYPE_INT, 1, INT_MAX, 3,
+    NULL, NULL, &cfg_look_scroll_amount, NULL, config_change_buffer_content },
   { "look_buffer_timestamp", N_("timestamp for buffers"),
     N_("timestamp for buffers"),
     OPTION_TYPE_STRING, 0, 0, 0,

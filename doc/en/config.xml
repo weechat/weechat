@@ -69,6 +69,13 @@
   <entry>Use same buffer for all servers</entry>
 </row>
 <row>
+  <entry><option>look_scroll_amount</option></entry>
+  <entry>integer</entry>
+  <entry>between 1 and 2147483647</entry>
+  <entry></entry>
+  <entry>How many lines to scroll by with scroll_up and scroll_down</entry>
+</row>
+<row>
   <entry><option>look_buffer_timestamp</option></entry>
   <entry>string</entry>
   <entry>any string</entry>
