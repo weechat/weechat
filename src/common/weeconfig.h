@@ -241,7 +241,6 @@ extern void config_change_one_server_buffer ();
 extern void config_change_color ();
 extern void config_change_nicks_colors ();
 extern void config_change_away_check ();
-extern void config_change_away_check_max_nicks ();
 extern void config_change_fifo_pipe ();
 extern void config_change_notify_levels ();
 extern void config_change_log ();

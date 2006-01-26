@@ -347,6 +347,8 @@ channel_check_away (t_irc_server *server, t_irc_channel *channel)
             channel->checking_away++;
             server_sendf (server, "WHO %s\r\n", channel->name);
         }
+        else
+            channel_remove_away (channel);
     }
 }
 
