@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-01-25
+ChangeLog - 2006-01-26
 
 
 Version 0.1.8 (under dev!):
+   * fixed bug with "get_dcc_info" plugin interface function
    * added new scroll keys for a few lines up/down (default: meta-pgup/pgdn)
      (patch from Pistos)
    * added new option "irc_away_check_max_nicks" to disable away check on

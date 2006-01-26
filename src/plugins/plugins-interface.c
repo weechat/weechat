@@ -427,12 +427,10 @@ weechat_plugin_get_dcc_info (t_weechat_plugin *plugin)
                 new_dcc_info->prev_dcc = last_dcc_info;
                 new_dcc_info->next_dcc = NULL;
                 if (!dcc_info)
-                {
                     dcc_info = new_dcc_info;
-                    last_dcc_info = new_dcc_info;
-                }
                 else
                     last_dcc_info->next_dcc = new_dcc_info;
+                last_dcc_info = new_dcc_info;
             }
         }
         
