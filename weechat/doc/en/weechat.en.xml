@@ -436,7 +436,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
       </para>
       
       <para>
-        You can edit thie file at your convenience to configure WeeChat
+        You can edit this file at your convenience to configure WeeChat
         (ONLY if WeeChat is not running), or you can set parameters with
         "<literal>/set</literal>" command in WeeChat
         (see <xref linkend="secWeeChatCommands" />)
@@ -666,7 +666,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 </entry>
               </row>
               <row>
-                <entry>Alt + J puis Alt + X</entry>
+                <entry>Alt + J then Alt + X</entry>
                 <entry>
                   Switch to first channel of next buffer
                   (or server buffer if no channel is opened)
@@ -722,7 +722,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 </entry>
               </row>
               <row>
-                <entry>Alt + W then Alt + flèche</entry>
+                <entry>Alt + W then Alt + arrow</entry>
                 <entry>
                   Switch to window with direction
                 </entry>
@@ -899,7 +899,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
       </para>
       
       <para>
-        Example: display of "<literal>hello everybory!</literal>" with
+        Example: display of "<literal>hello everybody!</literal>" with
         "<literal>hello</literal>" in light blue bold, and 
         "<literal>everybody</literal>" in light red underlined:
 <screen><userinput>%C12%Bhello%B%C04%U everybody%U%C!</userinput></screen>
@@ -1457,7 +1457,7 @@ if (argv != NULL)
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>plugin</option>: pointer tu plugin structure
+                  <option>plugin</option>: pointer to plugin structure
                 </para>
               </listitem>
               <listitem>
@@ -1716,7 +1716,7 @@ plugin->printf_infobar (plugin, 5, "hello");
 int msg_kick (t_weechat_plugin *plugin, char *server, char *command,
               char *arguments, char *handler_args, void *handler_pointer)
 {
-    plugin->printf (plugin, serveur, NULL, "KICK received");
+    plugin->printf (plugin, server, NULL, "KICK received");
     return PLUGIN_RC_OK;
 }
 ...
@@ -1807,7 +1807,7 @@ plugin->msg_handler_add (plugin, "KICK", &amp;msg_kick, NULL, NULL);
                         <row>
                           <entry><literal>%A</literal></entry>
                           <entry>
-                            alias and commandes (WeeChat, IRC and plugins)
+                            alias and commands (WeeChat, IRC and plugins)
                           </entry>
                         </row>
                         <row>
@@ -1820,7 +1820,7 @@ plugin->msg_handler_add (plugin, "KICK", &amp;msg_kick, NULL, NULL);
                         </row>
                         <!-- <row>
                           <entry><literal>%f</literal></entry>
-                          <entry>filename</entry>
+                          <entry>file name</entry>
                         </row> -->
                         <row>
                           <entry><literal>%h</literal></entry>
@@ -1913,7 +1913,7 @@ plugin->msg_handler_add (plugin, "KICK", &amp;msg_kick, NULL, NULL);
               </listitem>
               <listitem>
                 <para>
-                  <literal>PLUGIN_RC_OK</literal>: function successfulle
+                  <literal>PLUGIN_RC_OK</literal>: function successfully
                   completed
                 </para>
               </listitem>
@@ -1926,7 +1926,7 @@ int cmd_test (t_weechat_plugin *plugin, char *server,
               char *command, char *arguments, char *handler_args,
               void *handler_pointer)
 {
-    plugin->printf (plugin, serveur, NULL,
+    plugin->printf (plugin, server, NULL,
                     "test command, nick: %s",
                     (arguments) ? arguments : "none");
     return PLUGIN_RC_OK;
@@ -2117,7 +2117,7 @@ plugin->exec_command (plugin, "freenode", "#weechat", "hello");
                         <row>
                           <entry><literal>weechat_dir</literal></entry>
                           <entry>
-                            WeeChat home dir
+                            WeeChat home directory
                             (by default: ~/.weechat/)
                           </entry>
                         </row>
@@ -2227,7 +2227,7 @@ char *nick = plugin->get_info (plugin, "nick", "freenode");
                   </row>
                   <row>
                     <entry><literal>start_transfer</literal></entry>
-                    <entry>date/time of DCC transfert start</entry>
+                    <entry>date/time of DCC transfer start</entry>
                   </row>
                   <row>
                     <entry><literal>addr</literal></entry>
@@ -2264,7 +2264,7 @@ char *nick = plugin->get_info (plugin, "nick", "freenode");
                   <row>
                     <entry><literal>bytes_per_sec</literal></entry>
                     <entry>
-                      number of bytes per second since transfert start
+                      number of bytes per second since transfer start
                     </entry>
                   </row>
                 </tbody>
@@ -2406,7 +2406,7 @@ char *value2 = plugin->get_config (plugin, "freenode.server_autojoin");
           </para>
           <para>
             Return value: 1 if option was successfully updated, 0 if an
-            error occured.
+            error occurred.
           </para>
           <para>
             Example:
@@ -2520,7 +2520,7 @@ plugin->set_plugin_config (plugin, "my_var", "value");
         </para>
         
         <para>
-          To compile a plugin which has one file "toto.c" (sous GNU/Linux):
+          To compile a plugin which has one file "toto.c" (under GNU/Linux):
 <screen>
 <prompt>$ </prompt><userinput>gcc -fPIC -Wall -c toto.c</userinput>
 <prompt>$ </prompt><userinput>gcc -shared -fPIC -o libtoto.so toto.o</userinput>
@@ -2533,9 +2533,9 @@ plugin->set_plugin_config (plugin, "my_var", "value");
         <title>Load plugin into WeeChat</title>
         
         <para>
-          Copy "libtoto.so" file into system plugins dir (for example
+          Copy "libtoto.so" file into system plugins directory (for example
           "<literal>/usr/local/lib/weechat/plugins</literal>") or into
-          user's plugins dir (for example
+          user's plugins directory (for example
           "<literal>/home/xxxxx/.weechat/plugins</literal>").
         </para>
         
@@ -2562,7 +2562,7 @@ char plugin_name[]        = "Double";
 char plugin_version[]     = "0.1";
 char plugin_description[] = "Test plugin for WeeChat";
 
-/* gestionnaire de commande "/double" */
+/* "/double" command manager */
 
 int double_cmd (t_weechat_plugin *plugin, char *server,
                        char *command, char *arguments,
@@ -2782,7 +2782,7 @@ Weechat.register ("test", "1.0", "end_test", "Test script!")
             </itemizedlist>
           </para>
           <para>
-            Return value: 1 if success, 0 if an error occured.
+            Return value: 1 if success, 0 if an error occurred.
           </para>
           <para>
             Examples:
@@ -2846,7 +2846,7 @@ Weechat.print ("message", "#weechat", "freenode")
             </itemizedlist>
           </para>
           <para>
-            Return value: 1 if success, 0 if an error occured.
+            Return value: 1 if success, 0 if an error occurred.
           </para>
           <para>
             Examples:
@@ -2908,7 +2908,7 @@ Weechat.print_infobar (5, "message")
             </itemizedlist>
           </para>
           <para>
-            Return value: 1 if success, 0 if an error occured.
+            Return value: 1 if success, 0 if an error occurred.
           </para>
           <para>
             Examples:
@@ -2927,7 +2927,7 @@ sub my_function
 # python
 weechat.add_message_handler ("privmsg", my_function)
 def ma_fonction(server, args):
-    weechat.prnt("server="+serveur)
+    weechat.prnt("server="+server)
     null, channel, message = string.split(args, ":", 2)
     masque, null, channel = string.split(string.strip(channel), " ", 2)
     weechat.prnt("mask="+mask+", canal="+channel+", message="+message)
@@ -3004,7 +3004,7 @@ def ma_fonction(server, args):
             (for example /command).
           </para>
           <para>
-            Paramètres :
+            Arguments:
             <itemizedlist>
               <listitem>
                 <para>
@@ -3015,8 +3015,8 @@ def ma_fonction(server, args):
               </listitem>
               <listitem>
                 <para>
-                  <option>function</option>: fonction appelée lorsque la
-                  commande est exécutée
+                  <option>function</option>: function called when command
+                  is executed
                 </para>
               </listitem>
               <listitem>
@@ -3043,7 +3043,7 @@ def ma_fonction(server, args):
             </itemizedlist>
           </para>
           <para>
-            Return value: 1 if success, 0 if an error occured.
+            Return value: 1 if success, 0 if an error occurred.
           </para>
           <para>
             Examples:
@@ -3058,8 +3058,8 @@ sub my_command
 
 # python
 weechat.add_command_handler ("command", my_command)
-def ma_commande(server, args):
-    weechat.prnt("server:"+serveur+" arguments:"+args)
+def my_command(server, args):
+    weechat.prnt("server:"+server+" arguments:"+args)
     return weechat.PLUGIN_RC_OK
 </screen>
           </para>
@@ -3123,7 +3123,7 @@ def ma_commande(server, args):
             </itemizedlist>
           </para>
           <para>
-            Return value: 1 if success, 0 if an error occured.
+            Return value: 1 if success, 0 if an error occurred.
           </para>
           <para>
             Examples:
@@ -3187,7 +3187,7 @@ Weechat.remove_handler ("command", my_command)
             </itemizedlist>
           </para>
           <para>
-            Return value: 1 if success, 0 if an error occured.
+            Return value: 1 if success, 0 if an error occurred.
           </para>
           <para>
             Examples:
@@ -3253,7 +3253,7 @@ Weechat.command ("/nick newnick", "", "freenode")
           </para>
           <para>
             Return value: information asked, empty string if an error
-            occured
+            occurred.
           </para>
           <para>
             Examples:
@@ -3391,7 +3391,7 @@ value2 = weechat.get_config ("freenode.server_autojoin")
           </para>
           <para>
             Return value: 1 if option was successfully updated, 0 if an error
-            occured.
+            occurred.
           </para>
           <para>
             Examples:
@@ -3469,19 +3469,19 @@ value = weechat.get_plugin_config ("my_var")
           <para>
             Perl prototype:
             <command>
-              weechat::set_plugin_config ( option, valeur );
+              weechat::set_plugin_config ( option, value );
             </command>
           </para>
           <para>
             Python prototype:
             <command>
-              weechat.set_plugin_config ( option, valeur )
+              weechat.set_plugin_config ( option, value )
             </command>
           </para>
           <para>
             Ruby prototype:
             <command>
-              Weechat.set_plugin_config ( option, valeur )
+              Weechat.set_plugin_config ( option, value )
             </command>
           </para>
           <para>
@@ -3507,7 +3507,7 @@ value = weechat.get_plugin_config ("my_var")
           </para>
           <para>
             Return value: 1 if option was successfully updated, 0 if an error
-            occured.
+            occurred.
           </para>
           <para>
             Examples:

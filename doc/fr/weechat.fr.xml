@@ -91,7 +91,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
     <title>Introduction</title>
     
     <para>
-      Ce chapître décrit WeeChat et les pré-requis pour son installation.
+      Ce chapitre décrit WeeChat et les pré-requis pour son installation.
     </para>
     
     <section id="secDescription">
@@ -138,7 +138,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
           </listitem>
           <listitem>
             <para>
-              multi-plateformes (GNU/Linux, *BSD, MacOS X, Windows et
+              multi plates-formes (GNU/L'index, *BSD, MacOS X, Windows et
               d'autres systèmes)
             </para>
           </listitem>
@@ -216,7 +216,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
     <title>Installation</title>
     
     <para>
-      Ce chapître explique comment installer WeeChat.
+      Ce chapitre explique comment installer WeeChat.
     </para>
     
     <section id="secPaquetsBinaires">
@@ -275,7 +275,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
       <title>Sources CVS</title>
       
       <para>
-        Attention : les sources CVS sont réservées aux utilisateurs
+        Attention : les sources CVS sont réservés aux utilisateurs
         avancés : il se peut que WeeChat ne compile pas et qu'il soit
         très instable. Vous êtes prévenus !
       </para>
@@ -305,7 +305,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
     <title>Utilisation</title>
     
     <para>
-      Ce chapître explique comment lancer WeeChat, les touches utilisées par
+      Ce chapitre explique comment lancer WeeChat, les touches utilisées par
       défaut, les commandes internes et IRC, le fichier de configuration et
       l'utilisation du tube FIFO.
     </para>
@@ -611,7 +611,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
               <row>
                 <entry>F10</entry>
                 <entry>
-                  Effacer le dernier message de la barre d'infos
+                  Effacer le dernier message de la barre d'informations
                 </entry>
               </row>
               <row>
@@ -655,7 +655,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 <entry>Alt + H</entry>
                 <entry>
                   Vider la hotlist
-                  (notification d'actitivé sur les autres tampons)
+                  (notification d'activité sur les autres tampons)
                 </entry>
               </row>
               <row>
@@ -750,7 +750,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
       <title>La ligne de commande</title>
       
       <para>
-        La ligne de commande WeeChat (située en bas de la fenetre) permet
+        La ligne de commande WeeChat (située en bas de la fenêtre) permet
         d'envoyer du texte sur les canaux et d'exécuter des commandes
         WeeChat ou IRC (voir <xref linkend="secCommandesWeeChatIRC" />).
       </para>
@@ -926,7 +926,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
       <title>Commandes WeeChat / IRC</title>
       
       <para>
-        Ce chapître liste toutes les commandes WeeChat et IRC.
+        Ce chapitre liste toutes les commandes WeeChat et IRC.
       </para>
       
       <section id="secCommandesWeeChat">
@@ -1159,7 +1159,7 @@ fi
     <title>Extensions</title>
     
     <para>
-      Ce chapître décrit l'interface des extensions (API) et les extensions
+      Ce chapitre décrit l'interface des extensions (API) et les extensions
       pour scripts (Perl, Python, Ruby), fournies avec WeeChat.
     </para>
     
@@ -1179,7 +1179,7 @@ fi
       
       <para>
         L'extension doit être au format bibliothèque, chargeable
-        dynamiquement par le systême d'exploitation.
+        dynamiquement par le système d'exploitation.
         Sous GNU/Linux, il s'agit d'un fichier ayant pour extension ".so",
         sous Windows ".dll".
       </para>
@@ -1812,7 +1812,7 @@ plugin->msg_handler_add (plugin, "KICK", &amp;msg_kick, NULL, NULL);
                 <para>
                   <option>modele_completion</option> : modèle pour la
                   complétion sous la forme "<literal>abc|%w def|%i</literal>"
-                  qui signigie "abc" ou une commande WeeChat pour le premier
+                  qui signifie "abc" ou une commande WeeChat pour le premier
                   paramètre, et "def" ou une commande IRC pour le deuxième.
                   Une chaîne vide indique à WeeChat de compléter tout
                   paramètre avec un pseudo du canal courant, une valeur NULL
@@ -3089,7 +3089,7 @@ def ma_fonction(serveur, args):
                 <para>
                   <option>modele_completion</option> : modèle pour la
                   complétion sous la forme "<literal>abc|%w def|%i</literal>"
-                  qui signigie "abc" ou une commande WeeChat pour le premier
+                  qui signifie "abc" ou une commande WeeChat pour le premier
                   paramètre, et "def" ou une commande IRC pour le deuxième.
                   (voir <xref linkend="secAPI_cmd_handler_add" />)
                 </para>
@@ -3599,7 +3599,7 @@ Weechat.set_plugin_config ("ma_variable", "valeur")
     <title>Auteurs / Support</title>
     
     <para>
-      Ce chapître liste les auteurs et contributeurs pour WeeChat, et
+      Ce chapitre liste les auteurs et contributeurs pour WeeChat, et
       indique les moyens d'obtenir du support.
     </para>
     
