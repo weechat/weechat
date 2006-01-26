@@ -387,6 +387,7 @@ session_save_buffers (FILE *file)
         rc = rc && (session_write_str (file, SESSION_BUFF_SERVER, SERVER(ptr_buffer) ? SERVER(ptr_buffer)->name : NULL));
         rc = rc && (session_write_str (file, SESSION_BUFF_CHANNEL, CHANNEL(ptr_buffer) ? CHANNEL(ptr_buffer)->name : NULL));
         rc = rc && (session_write_int (file, SESSION_BUFF_DCC, ptr_buffer->dcc));
+        rc = rc && (session_write_int (file, SESSION_BUFF_ALL_SERVERS, ptr_buffer->all_servers));
         rc = rc && (session_write_id  (file, SESSION_BUFF_END));
         
         if (!rc)
@@ -1413,6 +1414,9 @@ session_load_buffer (FILE *file)
         {
             case SESSION_BUFF_END:
                 return 1;
+            case SESSION_BUFF_ALL_SERVERS:
+                rc = rc && (session_read_int (file, &(session_current_buffer->all_servers)));
+                break;
             default:
                 weechat_log_printf (_("session: warning: ignoring value from "
                                       "buffer (object id: %d)\n"));

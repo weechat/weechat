@@ -1042,10 +1042,10 @@ main (int argc, char *argv[])
     weechat_config_read ();             /* read configuration               */
     utf8_init ();                       /* init UTF-8 in WeeChat            */
     gui_init ();                        /* init WeeChat interface           */
-    weechat_welcome_message ();         /* display WeeChat welcome message  */
     fifo_create ();                     /* FIFO pipe for remote control     */
     if (weechat_session)
         session_load (weechat_session); /* load previous session if asked   */
+    weechat_welcome_message ();         /* display WeeChat welcome message  */
 #ifdef PLUGINS
     plugin_init (auto_load_plugins);    /* init plugin interface(s)         */
 #endif

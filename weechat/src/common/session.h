@@ -153,7 +153,8 @@ enum t_session_buffer
     SESSION_BUFF_END = 0,
     SESSION_BUFF_SERVER,
     SESSION_BUFF_CHANNEL,
-    SESSION_BUFF_DCC
+    SESSION_BUFF_DCC,
+    SESSION_BUFF_ALL_SERVERS
 };
 
 enum t_session_line
