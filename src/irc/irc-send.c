@@ -234,7 +234,7 @@ irc_send_away (t_irc_server *server, char *arguments)
 {
     char *string, buffer[4096];
     t_gui_window *ptr_window;
-    time_t elapsed;
+    time_t time_now, elapsed;
     
     if (arguments)
     {
@@ -269,7 +269,9 @@ irc_send_away (t_irc_server *server, char *arguments)
         server->is_away = 0;
         if (server->away_time != 0)
         {
-            elapsed = time (NULL) - server->away_time;
+            time_now = time (NULL);
+            elapsed = (time_now >= server->away_time) ?
+                time_now - server->away_time : 0;
             server->away_time = 0;
             if (cfg_irc_display_away != CFG_IRC_DISPLAY_AWAY_OFF)
             {
