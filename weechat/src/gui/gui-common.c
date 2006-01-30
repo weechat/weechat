@@ -491,6 +491,18 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int dcc,
         last_gui_buffer = new_buffer;
         new_buffer->next_buffer = NULL;
         
+        /* move buffer next to server */
+        if (server && cfg_look_open_near_server && (!cfg_look_one_server_buffer))
+        {
+            ptr_buffer = SERVER(new_buffer)->buffer;
+            while (ptr_buffer && (ptr_buffer->server == server))
+            {
+                ptr_buffer = ptr_buffer->next_buffer;
+            }
+            if (ptr_buffer)
+                gui_buffer_move_to_number (new_buffer, ptr_buffer->number);
+        }
+        
         /* switch to new buffer */
         if (switch_to_buffer)
             gui_switch_to_buffer (window, new_buffer);

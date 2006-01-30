@@ -1059,6 +1059,11 @@ completion_nick (t_completion *completion)
             if ((!completion->word_found) || word_found_seen)
             {
                 completion->word_found = ptr_nick->nick;
+                if (cfg_look_nick_complete_first)
+                {
+                    completion->position = -1;
+                    return;
+                }
                 for (ptr_nick2 = ptr_nick->next_nick; ptr_nick2;
                      ptr_nick2 = ptr_nick2->next_nick)
                 {
@@ -1070,8 +1075,10 @@ completion_nick (t_completion *completion)
                 if (other_completion == 0)
                     completion->position = -1;
                 else
+                {
                     if (completion->position < 0)
                         completion->position = 0;
+                }
                 return;
             }
             other_completion++;

@@ -69,6 +69,13 @@
   <entry>Use same buffer for all servers</entry>
 </row>
 <row>
+  <entry><option>look_open_near_server</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Open new channels/privates near server</entry>
+</row>
+<row>
   <entry><option>look_scroll_amount</option></entry>
   <entry>integer</entry>
   <entry>between 1 and 2147483647</entry>
@@ -158,6 +165,13 @@
   <entry>any string</entry>
   <entry></entry>
   <entry>Chars ignored for nick completion</entry>
+</row>
+<row>
+  <entry><option>look_nick_complete_first</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry></entry>
+  <entry>Complete only with first nick found</entry>
 </row>
 <row>
   <entry><option>look_infobar</option></entry>

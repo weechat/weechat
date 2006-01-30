@@ -74,6 +74,7 @@ char *cfg_look_charset_encode;
 char *cfg_look_charset_internal;
 int cfg_look_one_server_buffer;
 int cfg_look_scroll_amount;
+int cfg_look_open_near_server;
 char *cfg_look_buffer_timestamp;
 int cfg_look_color_nicks_number;
 int cfg_look_color_actions;
@@ -88,6 +89,7 @@ int cfg_look_nickmode_empty;
 char *cfg_look_no_nickname;
 char *cfg_look_completor;
 char *cfg_look_nick_completion_ignore;
+int cfg_look_nick_complete_first;
 int cfg_look_infobar;
 char *cfg_look_infobar_timestamp;
 int cfg_look_infobar_seconds;
@@ -138,6 +140,10 @@ t_config_option weechat_options_look[] =
     N_("use same buffer for all servers"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
     NULL, NULL, &cfg_look_one_server_buffer, NULL, config_change_one_server_buffer },
+  { "look_open_near_server", N_("open new channels/privates near server"),
+    N_("open new channels/privates near server"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
+    NULL, NULL, &cfg_look_open_near_server, NULL, config_change_noop },
   { "look_scroll_amount", N_("how many lines to scroll by with scroll_up and scroll_down"),
     N_("how many lines to scroll by with scroll_up and scroll_down"),
     OPTION_TYPE_INT, 1, INT_MAX, 3,
@@ -192,6 +198,10 @@ t_config_option weechat_options_look[] =
     N_("chars ignored for nick completion"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "[]-^", NULL, NULL, &cfg_look_nick_completion_ignore, config_change_noop },
+  { "look_nick_complete_first", N_("complete only with first nick found"),
+    N_("complete only with first nick found"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
+    NULL, NULL, &cfg_look_nick_complete_first, NULL, config_change_noop },
   { "look_infobar", N_("enable info bar"),
     N_("enable info bar"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
