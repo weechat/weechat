@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-01-26
+ChangeLog - 2006-01-30
 
 
 Version 0.1.8 (under dev!):
+   * added option "look_nick_complete_first" (patch from Gwenn)
+   * added option "look_open_near_server" (patch from Gwenn)
    * fixed bug with /upgrade and servers buffer
    * fixed bug with "get_dcc_info" plugin interface function
    * added new scroll keys for a few lines up/down (default: meta-pgup/pgdn)
