@@ -60,6 +60,69 @@ struct t_plugin_dcc_info
     t_plugin_dcc_info *next_dcc;        /* link to next dcc file/chat          */
 };
 
+typedef struct t_plugin_server_info t_plugin_server_info;
+
+struct t_plugin_server_info
+{
+    char *name;                         /* name of server (only for display)   */
+    int autoconnect;                    /* = 1 if auto connect at startup      */
+    int autoreconnect;                  /* = 1 if auto reco when disconnected  */
+    int autoreconnect_delay;            /* delay before trying again reconnect */
+    int command_line;                   /* server was given on command line    */
+    char *address;                      /* address of server (IP or name)      */
+    int port;                           /* port for server (6667 by default)   */
+    int ipv6;                           /* use IPv6 protocol                   */
+    int ssl;                            /* SSL protocol                        */
+    char *password;                     /* password for server                 */
+    char *nick1;                        /* first nickname for the server       */
+    char *nick2;                        /* alternate nickname                  */
+    char *nick3;                        /* 2nd alternate nickname              */
+    char *username;                     /* user name                           */
+    char *realname;                     /* real name                           */
+    char *command;                      /* command to run once connected       */
+    int command_delay;                  /* delay after execution of command    */
+    char *autojoin;                     /* channels to automatically join      */
+    int autorejoin;                     /* auto rejoin channels when kicked    */
+    char *notify_levels;                /* channels notify levels              */
+    char *charset_decode_iso;           /* channels charsets for decoding ISO  */
+    char *charset_decode_utf;           /* channels charsets for decoding UTF  */
+    char *charset_encode;               /* channels charsets for encoding msgs */
+    int is_connected;                   /* 1 if WeeChat is connected to server */
+    int ssl_connected;                  /* = 1 if connected with SSL           */
+    char *nick;                         /* current nickname                    */
+    int is_away;                        /* 1 is user is marker as away         */
+    time_t away_time;                   /* time() when user marking as away    */
+    int lag;                            /* lag (in milliseconds)               */
+    t_plugin_server_info *prev_info;    /* link to previous server info        */
+    t_plugin_server_info *next_info;    /* link to next server info            */
+};
+
+typedef struct t_plugin_channel_info t_plugin_channel_info;
+
+struct t_plugin_channel_info
+{
+    int type;                           /* channel type                        */
+    char *name;                         /* name of channel (exemple: "#abc")   */
+    char *topic;                        /* topic of channel (host for private) */
+    char *modes;                        /* channel modes                       */
+    int limit;                          /* user limit (0 is limit not set)     */
+    char *key;                          /* channel key (NULL if no key is set) */
+    int nicks_count;                    /* # nicks on channel (0 if dcc/pv)    */
+    t_plugin_channel_info *prev_info;   /* link to previous channel infp       */
+    t_plugin_channel_info *next_info;   /* link to next channel info           */
+};
+
+typedef struct t_plugin_nick_info t_plugin_nick_info;
+
+struct t_plugin_nick_info
+{
+    char *nick;                         /* nickname                            */
+    int flags;                          /* chanowner/chanadmin (unrealircd),   */
+                                        /* op, halfop, voice, away             */
+    t_plugin_nick_info *prev_nick;      /* link to previous nick               */
+    t_plugin_nick_info *next_nick;      /* link to next nick                   */
+};
+
 typedef struct t_weechat_plugin t_weechat_plugin;
 
 typedef int (t_plugin_handler_func) (t_weechat_plugin *, char *, char *, char *, char *, void *);
@@ -158,6 +221,12 @@ struct t_weechat_plugin
     int (*set_config) (t_weechat_plugin *, char *, char *);
     char *(*get_plugin_config) (t_weechat_plugin *, char *);
     int (*set_plugin_config) (t_weechat_plugin *, char *, char *);
+    t_plugin_server_info *(*get_server_info) (t_weechat_plugin *);
+    void (*free_server_info) (t_weechat_plugin *, t_plugin_server_info *);
+    t_plugin_channel_info *(*get_channel_info) (t_weechat_plugin *, char *);
+    void (*free_channel_info) (t_weechat_plugin *, t_plugin_channel_info *);
+    t_plugin_nick_info *(*get_nick_info) (t_weechat_plugin *, char*, char*);
+    void (*free_nick_info) (t_weechat_plugin *, t_plugin_nick_info *);
     
     /* WeeChat developers: ALWAYS add new functions at the end */
 };
@@ -197,5 +266,11 @@ extern char *weechat_plugin_get_config (t_weechat_plugin *, char *);
 extern int weechat_plugin_set_config (t_weechat_plugin *, char *, char *);
 extern char *weechat_plugin_get_plugin_config (t_weechat_plugin *, char *);
 extern int weechat_plugin_set_plugin_config (t_weechat_plugin *, char *, char *);
+extern t_plugin_server_info *weechat_plugin_get_server_info (t_weechat_plugin *);
+extern void weechat_plugin_free_server_info (t_weechat_plugin *, t_plugin_server_info *);
+extern t_plugin_channel_info *weechat_plugin_get_channel_info (t_weechat_plugin *, char *);
+extern void weechat_plugin_free_channel_info (t_weechat_plugin *, t_plugin_channel_info *);
+extern t_plugin_nick_info *weechat_plugin_get_nick_info (t_weechat_plugin *, char *, char *);
+extern void weechat_plugin_free_nick_info (t_weechat_plugin *, t_plugin_nick_info *);
 
 #endif /* weechat-plugin.h */

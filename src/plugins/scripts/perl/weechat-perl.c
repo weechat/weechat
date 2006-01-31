@@ -563,8 +563,8 @@ static XS (XS_weechat_get_info)
 
 static XS (XS_weechat_get_dcc_info)
 {
-    t_plugin_dcc_info *dcc_info, *ptr_dcc;
-    int dcc_count;
+    t_plugin_dcc_info *dcc_info, *ptr_dcc;    
+    int count;
     char timebuffer1[64];
     char timebuffer2[64];
     struct in_addr in;
@@ -579,14 +579,13 @@ static XS (XS_weechat_get_dcc_info)
         perl_plugin->printf_server (perl_plugin,
                                     "Perl error: unable to get DCC info, "
                                     "script not initialized");
-	XSRETURN_NO;
+	XSRETURN_EMPTY;
     }
-    
+
     dcc_info = perl_plugin->get_dcc_info (perl_plugin);
-    dcc_count = 0;
-    
+    count = 0;
     if (!dcc_info)
-        XSRETURN_NO;
+	XSRETURN_EMPTY;
     
     for (ptr_dcc = dcc_info; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
     {
@@ -596,32 +595,31 @@ static XS (XS_weechat_get_dcc_info)
 		 localtime(&ptr_dcc->start_transfer));
 	in.s_addr = htonl(ptr_dcc->addr);
 
-        HV *infohash = (HV *) sv_2mortal((SV *) newHV());
+        HV *dcc_hash_member = (HV *) sv_2mortal ((SV *) newHV());
         
-        hv_store (infohash, "server",           6, newSVpv (ptr_dcc->server, 0), 0);
-        hv_store (infohash, "channel",          7, newSVpv (ptr_dcc->channel, 0), 0);
-        hv_store (infohash, "type",             4, newSViv (ptr_dcc->type), 0);
-        hv_store (infohash, "status",           6, newSViv (ptr_dcc->status), 0);
-        hv_store (infohash, "start_time",      10, newSVpv (timebuffer1, 0), 0);
-        hv_store (infohash, "start_transfer",  14, newSVpv (timebuffer2, 0), 0);
-        hv_store (infohash, "address",          7, newSVpv (inet_ntoa(in), 0), 0);
-        hv_store (infohash, "port",             4, newSViv (ptr_dcc->port), 0);
-        hv_store (infohash, "nick",             4, newSVpv (ptr_dcc->nick, 0), 0);
-        hv_store (infohash, "remote_file",     11, newSVpv (ptr_dcc->filename, 0), 0);
-        hv_store (infohash, "local_file",      10, newSVpv (ptr_dcc->local_filename, 0), 0);
-        hv_store (infohash, "filename_suffix", 15, newSViv (ptr_dcc->filename_suffix), 0);
-        hv_store (infohash, "size",             4, newSVnv (ptr_dcc->size), 0);
-        hv_store (infohash, "pos",              3, newSVnv (ptr_dcc->pos), 0);
-        hv_store (infohash, "start_resume",    12, newSVnv (ptr_dcc->start_resume), 0);
-        hv_store (infohash, "cps",              3, newSViv (ptr_dcc->bytes_per_sec), 0);
+        hv_store (dcc_hash_member, "server",           6, newSVpv (ptr_dcc->server, 0), 0);
+        hv_store (dcc_hash_member, "channel",          7, newSVpv (ptr_dcc->channel, 0), 0);
+        hv_store (dcc_hash_member, "type",             4, newSViv (ptr_dcc->type), 0);
+        hv_store (dcc_hash_member, "status",           6, newSViv (ptr_dcc->status), 0);
+        hv_store (dcc_hash_member, "start_time",      10, newSVpv (timebuffer1, 0), 0);
+        hv_store (dcc_hash_member, "start_transfer",  14, newSVpv (timebuffer2, 0), 0);
+        hv_store (dcc_hash_member, "address",          7, newSVpv (inet_ntoa(in), 0), 0);
+        hv_store (dcc_hash_member, "port",             4, newSViv (ptr_dcc->port), 0);
+        hv_store (dcc_hash_member, "nick",             4, newSVpv (ptr_dcc->nick, 0), 0);
+        hv_store (dcc_hash_member, "remote_file",     11, newSVpv (ptr_dcc->filename, 0), 0);
+        hv_store (dcc_hash_member, "local_file",      10, newSVpv (ptr_dcc->local_filename, 0), 0);
+        hv_store (dcc_hash_member, "filename_suffix", 15, newSViv (ptr_dcc->filename_suffix), 0);
+        hv_store (dcc_hash_member, "size",             4, newSVnv (ptr_dcc->size), 0);
+        hv_store (dcc_hash_member, "pos",              3, newSVnv (ptr_dcc->pos), 0);
+        hv_store (dcc_hash_member, "start_resume",    12, newSVnv (ptr_dcc->start_resume), 0);
+        hv_store (dcc_hash_member, "cps",              3, newSViv (ptr_dcc->bytes_per_sec), 0);
         
-        XPUSHs(newRV((SV *) infohash));
-        dcc_count++;
+	XPUSHs(newRV_inc((SV *) dcc_hash_member));
+	count++;
     }
+    perl_plugin->free_dcc_info (perl_plugin, dcc_info);    
     
-    perl_plugin->free_dcc_info (perl_plugin, dcc_info);
-    
-    XSRETURN (dcc_count);
+    XSRETURN (count);
 }
 
 /*
@@ -805,6 +803,204 @@ static XS (XS_weechat_set_plugin_config)
 }
 
 /*
+ * weechat::get_server_info: get infos about servers
+ */
+
+static XS (XS_weechat_get_server_info)
+{
+    t_plugin_server_info *server_info, *ptr_server;
+    char timebuffer[64];
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    (void) items;
+    
+    if (!perl_current_script)
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                    "Perl error: unable to get server info, "
+                                    "script not initialized");
+	XSRETURN_EMPTY;
+    }
+    
+    server_info = perl_plugin->get_server_info (perl_plugin);
+    if (!server_info) {
+	XSRETURN_EMPTY;
+    }
+    
+    
+    HV *server_hash = (HV *) sv_2mortal((SV *) newHV());
+    if (!server_hash)
+	XSRETURN_EMPTY;
+    
+    for (ptr_server = server_info; ptr_server; ptr_server = ptr_server->next_info)
+    {
+	strftime(timebuffer, sizeof(timebuffer), "%F %T",
+		 localtime(&ptr_server->away_time));
+	
+	HV *server_hash_member = (HV *) sv_2mortal((SV *) newHV());	        
+       
+	hv_store (server_hash_member, "autoconnect",          11, newSViv (ptr_server->autoconnect), 0);
+        hv_store (server_hash_member, "autoreconnect",        13, newSViv (ptr_server->autoreconnect), 0);
+        hv_store (server_hash_member, "autoreconnect_delay",  19, newSViv (ptr_server->autoreconnect_delay), 0);
+        hv_store (server_hash_member, "command_line",         12, newSViv (ptr_server->command_line), 0);
+	hv_store (server_hash_member, "address",               7, newSVpv (ptr_server->address, 0), 0);
+        hv_store (server_hash_member, "port",                  4, newSViv (ptr_server->port), 0);
+	hv_store (server_hash_member, "ipv6",                  4, newSViv (ptr_server->ipv6), 0);
+        hv_store (server_hash_member, "ssl",                   3, newSViv (ptr_server->ssl), 0);
+        hv_store (server_hash_member, "password",              8, newSVpv (ptr_server->password, 0), 0);
+        hv_store (server_hash_member, "nick1",                 5, newSVpv (ptr_server->nick1, 0), 0);
+        hv_store (server_hash_member, "nick2",                 5, newSVpv (ptr_server->nick2, 0), 0);
+        hv_store (server_hash_member, "nick3",                 5, newSVpv (ptr_server->nick3, 0), 0);
+        hv_store (server_hash_member, "username",              8, newSVpv (ptr_server->username, 0), 0);
+        hv_store (server_hash_member, "realname",              8, newSVpv (ptr_server->realname, 0), 0);
+        hv_store (server_hash_member, "command",               7, newSVpv (ptr_server->command, 0), 0);
+        hv_store (server_hash_member, "command_delay",        13, newSViv (ptr_server->command_delay), 0);
+        hv_store (server_hash_member, "autojoin",              8, newSVpv (ptr_server->autojoin, 0), 0);
+        hv_store (server_hash_member, "autorejoin",           10, newSViv (ptr_server->autorejoin), 0);
+        hv_store (server_hash_member, "notify_levels",        13, newSVpv (ptr_server->notify_levels, 0), 0);
+        hv_store (server_hash_member, "charset_decode_iso",   18, newSVpv (ptr_server->charset_decode_iso, 0), 0);
+        hv_store (server_hash_member, "charset_decode_utf",   18, newSVpv (ptr_server->charset_decode_utf, 0), 0);
+        hv_store (server_hash_member, "charset_encode",       14, newSVpv (ptr_server->charset_encode, 0), 0);
+        hv_store (server_hash_member, "is_connected",         12, newSViv (ptr_server->is_connected), 0);
+        hv_store (server_hash_member, "ssl_connected",        13, newSViv (ptr_server->ssl_connected), 0);
+        hv_store (server_hash_member, "nick",                  4, newSVpv (ptr_server->nick, 0), 0);
+	hv_store (server_hash_member, "away_time",             9, newSVpv (timebuffer, 0), 0);
+	hv_store (server_hash_member, "lag",                   3, newSViv (ptr_server->lag), 0);
+	
+	hv_store (server_hash, ptr_server->name, strlen(ptr_server->name), newRV_inc((SV *) server_hash_member), 0);	
+    }    
+    perl_plugin->free_server_info (perl_plugin, server_info);
+    
+    //XPUSHs(newRV_inc((SV *) server_hash));    
+    ST (0) = newRV_inc((SV *) server_hash);
+    XSRETURN (1);
+}
+
+/*
+ * weechat::get_channel_info: get infos about channels
+ */
+
+static XS (XS_weechat_get_channel_info)
+{
+    t_plugin_channel_info *channel_info, *ptr_channel;
+    char *server;
+    unsigned int integer;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                    "Perl error: unable to get channel info, "
+                                    "script not initialized");
+	XSRETURN_EMPTY;
+    }
+
+    if (items != 1)
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                    "Perl error: wrong parameters for "
+                                    "\"get_channel_info\" function");
+        XSRETURN_EMPTY;
+    }
+    
+    server = SvPV (ST (0), integer);
+    if (!server)
+	XSRETURN_EMPTY;
+
+    channel_info = perl_plugin->get_channel_info (perl_plugin, server);
+    if (!channel_info) {
+	XSRETURN_EMPTY;
+    }
+    
+    HV *channel_hash = (HV *) sv_2mortal((SV *) newHV());
+    if (!channel_hash)
+	XSRETURN_EMPTY;
+    
+    for (ptr_channel = channel_info; ptr_channel; ptr_channel = ptr_channel->next_info)
+    {
+	HV *channel_hash_member = (HV *) sv_2mortal((SV *) newHV());	        
+       
+	hv_store (channel_hash_member, "type",          4, newSViv (ptr_channel->type), 0);
+	hv_store (channel_hash_member, "topic",         5, newSVpv (ptr_channel->topic, 0), 0);
+	hv_store (channel_hash_member, "modes",         5, newSVpv (ptr_channel->modes, 0), 0);
+	hv_store (channel_hash_member, "limit",         5, newSViv (ptr_channel->limit), 0);
+	hv_store (channel_hash_member, "key",           3, newSVpv (ptr_channel->key, 0), 0);
+	hv_store (channel_hash_member, "nicks_count",  11, newSViv (ptr_channel->nicks_count), 0);
+	
+	hv_store (channel_hash, ptr_channel->name, strlen(ptr_channel->name), newRV_inc((SV *) channel_hash_member), 0);
+    }
+    perl_plugin->free_channel_info (perl_plugin, channel_info);
+    
+    //XPUSHs(newRV_inc((SV *) channel_hash));
+    ST (0) = newRV_inc((SV *) channel_hash);
+    XSRETURN (1);
+}
+
+/*
+ * weechat::get_nick_info: get infos about nicks
+ */
+
+static XS (XS_weechat_get_nick_info)
+{
+    t_plugin_nick_info *nick_info, *ptr_nick;
+    char *server, *channel;
+    unsigned int integer;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                    "Perl error: unable to get nick info, "
+                                    "script not initialized");
+	XSRETURN_EMPTY;
+    }
+
+    if (items != 2)
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                    "Perl error: wrong parameters for "
+                                    "\"get_nick_info\" function");
+        XSRETURN_EMPTY;
+    }
+    
+    server = SvPV (ST (0), integer);
+    channel = SvPV (ST (1), integer);
+    if (!server || !channel)
+	XSRETURN_EMPTY;
+    
+    nick_info = perl_plugin->get_nick_info (perl_plugin, server, channel);
+    if (!nick_info) {
+	XSRETURN_EMPTY;
+    }
+    
+    HV *nick_hash = (HV *) sv_2mortal((SV *) newHV());
+    if (!nick_hash)
+	XSRETURN_EMPTY;
+    
+    for (ptr_nick = nick_info; ptr_nick; ptr_nick = ptr_nick->next_nick)
+    {
+	HV *nick_hash_member = (HV *) sv_2mortal((SV *) newHV());	        
+       
+	hv_store (nick_hash_member, "flags", 5, newSViv (ptr_nick->flags), 0);
+	
+	hv_store (nick_hash, ptr_nick->nick, strlen(ptr_nick->nick), newRV_inc((SV *) nick_hash_member), 0);
+    }
+    perl_plugin->free_nick_info (perl_plugin, nick_info);
+    
+    //XPUSHs(newRV_inc((SV *) nick_hash));
+    ST (0) = newRV_inc((SV *) nick_hash);
+    XSRETURN (1);
+}
+
+/*
  * weechat_perl_xs_init: initialize subroutines
  */
 
@@ -829,6 +1025,9 @@ weechat_perl_xs_init (pTHX)
     newXS ("weechat::set_config", XS_weechat_set_config, "weechat");
     newXS ("weechat::get_plugin_config", XS_weechat_get_plugin_config, "weechat");
     newXS ("weechat::set_plugin_config", XS_weechat_set_plugin_config, "weechat");
+    newXS ("weechat::get_server_info", XS_weechat_get_server_info, "weechat");
+    newXS ("weechat::get_channel_info", XS_weechat_get_channel_info, "weechat");
+    newXS ("weechat::get_nick_info", XS_weechat_get_nick_info, "weechat");
     
     /* interface constants */
     stash = gv_stashpv ("weechat", TRUE);

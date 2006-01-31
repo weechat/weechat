@@ -633,6 +633,12 @@ plugin_load (char *filename)
         new_plugin->set_config = &weechat_plugin_set_config;
         new_plugin->get_plugin_config = &weechat_plugin_get_plugin_config;
         new_plugin->set_plugin_config = &weechat_plugin_set_plugin_config;
+	new_plugin->get_server_info = &weechat_plugin_get_server_info;
+	new_plugin->free_server_info = &weechat_plugin_free_server_info;
+	new_plugin->get_channel_info = &weechat_plugin_get_channel_info;
+	new_plugin->free_channel_info = &weechat_plugin_free_channel_info;
+	new_plugin->get_nick_info = &weechat_plugin_get_nick_info;
+	new_plugin->free_nick_info = &weechat_plugin_free_nick_info;
         
         /* handlers */
         new_plugin->handlers = NULL;

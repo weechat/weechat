@@ -110,7 +110,7 @@ weechat_python_handler (t_weechat_plugin *plugin,
 }
 
 /*
- * weechat.register: startup function for all WeeChat Python scripts
+ * weechat_python_register: startup function for all WeeChat Python scripts
  */
 
 static PyObject *
@@ -172,7 +172,7 @@ weechat_python_register (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat.print: print message into a buffer (current or specified one)
+ * weechat_python_print: print message into a buffer (current or specified one)
  */
 
 static PyObject *
@@ -211,7 +211,7 @@ weechat_python_print (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat.print_infobar: print message to infobar
+ * weechat_python_print_infobar: print message to infobar
  */
 
 static PyObject *
@@ -248,7 +248,7 @@ weechat_python_print_infobar (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat.command: send command to server
+ * weechat_python_command: send command to server
  */
 
 static PyObject *
@@ -287,7 +287,7 @@ weechat_python_command (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat.add_message_handler: add handler for messages
+ * weechat_python_add_message_handler: add handler for messages
  */
 
 static PyObject *
@@ -326,7 +326,7 @@ weechat_python_add_message_handler (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat.add_command_handler: define/redefines commands
+ * weechat_python_add_command_handler: define/redefines commands
  */
 
 static PyObject *
@@ -378,7 +378,7 @@ weechat_python_add_command_handler (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat.remove_handler: remove a handler
+ * weechat_python_remove_handler: remove a handler
  */
 
 static PyObject *
@@ -415,7 +415,7 @@ weechat_python_remove_handler (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat.get_info: get various infos
+ * weechat_python_get_info: get various infos
  */
 
 static PyObject *
@@ -462,15 +462,14 @@ weechat_python_get_info (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat.get_dcc_info: get infos about DCC
+ * weechat_python_get_dcc_info: get infos about DCC
  */
 
 static PyObject *
 weechat_python_get_dcc_info (PyObject *self, PyObject *args)
 {
     t_plugin_dcc_info *dcc_info, *ptr_dcc;
-    PyObject *dcc_list;
-    PyObject *dcc_list_member;
+    PyObject *dcc_list, *dcc_list_member;
     char timebuffer1[64];
     char timebuffer2[64];
     struct in_addr in;
@@ -487,8 +486,7 @@ weechat_python_get_dcc_info (PyObject *self, PyObject *args)
         return Py_None;
     }
 
-    dcc_list = PyList_New (0);
-    
+    dcc_list = PyList_New (0);    
     if (!dcc_list)
 	return Py_None;
     
@@ -565,7 +563,7 @@ weechat_python_get_dcc_info (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat.get_config: get value of a WeeChat config option
+ * weechat_python_get_config: get value of a WeeChat config option
  */
 
 static PyObject *
@@ -611,7 +609,7 @@ weechat_python_get_config (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat.set_config: set value of a WeeChat config option
+ * weechat_python_set_config: set value of a WeeChat config option
  */
 
 static PyObject *
@@ -651,7 +649,7 @@ weechat_python_set_config (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat.get_plugin_config: get value of a plugin config option
+ * weechat_python_get_plugin_config: get value of a plugin config option
  */
 
 static PyObject *
@@ -699,7 +697,7 @@ weechat_python_get_plugin_config (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat.set_plugin_config: set value of a plugin config option
+ * weechat_python_set_plugin_config: set value of a plugin config option
  */
 
 static PyObject *
@@ -741,6 +739,235 @@ weechat_python_set_plugin_config (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_get_server_info: get infos about servers
+ */
+
+static PyObject *
+weechat_python_get_server_info (PyObject *self, PyObject *args)
+{
+    t_plugin_server_info *server_info, *ptr_server;
+    PyObject *server_hash, *server_hash_member;
+    char timebuffer[64];
+    
+    /* make gcc happy */
+    (void) self;
+    (void) args;
+    
+    if (!python_current_script)
+    {
+        python_plugin->printf_server (python_plugin,
+                                      "Python error: unable to get server infos, "
+                                      "script not initialized");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    server_hash = PyDict_New ();
+    if (!server_hash)
+	return Py_None;
+
+    server_info = python_plugin->get_server_info (python_plugin);
+    if  (!server_info)
+	return server_hash;
+
+    for(ptr_server = server_info; ptr_server; ptr_server = ptr_server->next_info)
+    {
+	strftime(timebuffer, sizeof(timebuffer), "%F %T",
+		 localtime(&ptr_server->away_time));
+	
+	server_hash_member = PyDict_New();
+	
+	if (server_hash_member)
+	{
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "autoconnect"),
+			   Py_BuildValue("i", ptr_server->autoconnect));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "autoreconnect"),
+			   Py_BuildValue("i", ptr_server->autoreconnect));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "autoreconnect_delay"),
+			   Py_BuildValue("i", ptr_server->autoreconnect_delay));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "command_line"),
+			   Py_BuildValue("i", ptr_server->command_line));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "address"),
+			   Py_BuildValue("s", ptr_server->address));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "port"),
+			   Py_BuildValue("i", ptr_server->port));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "ipv6"),
+			   Py_BuildValue("i", ptr_server->ipv6));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "ssl"),
+			   Py_BuildValue("i", ptr_server->ssl));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "password"),
+			   Py_BuildValue("s", ptr_server->password));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "nick1"),
+			   Py_BuildValue("s", ptr_server->nick1));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "nick2"),
+			   Py_BuildValue("s", ptr_server->nick2));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "nick3"),
+			   Py_BuildValue("s", ptr_server->nick3));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "username"),
+			   Py_BuildValue("s", ptr_server->username));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "realname"),
+			   Py_BuildValue("s", ptr_server->realname));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "command"),
+			   Py_BuildValue("s", ptr_server->command));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "command_delay"),
+			   Py_BuildValue("i", ptr_server->command_delay));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "autojoin"),
+			   Py_BuildValue("s", ptr_server->autojoin));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "autorejoin"),
+			   Py_BuildValue("i", ptr_server->autorejoin));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "notify_levels"),
+			   Py_BuildValue("s", ptr_server->notify_levels));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "charset_decode_iso"),
+			   Py_BuildValue("s", ptr_server->charset_decode_iso));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "charset_decode_utf"),
+			   Py_BuildValue("s", ptr_server->charset_decode_utf));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "charset_encode"),
+			   Py_BuildValue("s", ptr_server->charset_encode));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "is_connected"),
+			   Py_BuildValue("i", ptr_server->is_connected));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "ssl_connected"),
+			   Py_BuildValue("i", ptr_server->ssl_connected));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "nick"),
+			   Py_BuildValue("s", ptr_server->nick));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "away_time"),
+			   Py_BuildValue("s", timebuffer));
+	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "lag"),
+			   Py_BuildValue("i", ptr_server->lag));
+	    
+	    PyDict_SetItem(server_hash, Py_BuildValue("s", ptr_server->name), server_hash_member);
+	}
+    }    
+
+    python_plugin->free_server_info(python_plugin, server_info);
+    
+    return server_hash;
+}
+
+/*
+ * weechat_python_get_channel_info: get infos about channels
+ */
+
+static PyObject *
+weechat_python_get_channel_info (PyObject *self, PyObject *args)
+{
+    t_plugin_channel_info *channel_info, *ptr_channel;
+    PyObject *channel_hash, *channel_hash_member;
+    char *server;
+    
+    /* make gcc happy */
+    (void) self;
+        
+    if (!python_current_script)
+    {
+        python_plugin->printf_server (python_plugin,
+                                      "Python error: unable to get channel infos, "
+                                      "script not initialized");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    server = NULL;
+    if (!PyArg_ParseTuple (args, "s", &server))
+    {
+        python_plugin->printf_server (python_plugin,
+                                      "Python error: wrong parameters for "
+                                      "\"get_channel_info\" function");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    channel_hash = PyDict_New ();
+    if (!channel_hash)
+	return Py_None;
+
+    channel_info = python_plugin->get_channel_info (python_plugin, server);
+    if  (!channel_info)
+	return channel_hash;
+
+    for(ptr_channel = channel_info; ptr_channel; ptr_channel = ptr_channel->next_info)
+    {
+	channel_hash_member = PyDict_New();
+	
+	if (channel_hash_member)
+	{
+	    PyDict_SetItem(channel_hash_member, Py_BuildValue("s", "type"),
+			   Py_BuildValue("i", ptr_channel->type));
+	    PyDict_SetItem(channel_hash_member, Py_BuildValue("s", "topic"),
+			   Py_BuildValue("s", ptr_channel->topic));
+	    PyDict_SetItem(channel_hash_member, Py_BuildValue("s", "modes"),
+			   Py_BuildValue("s", ptr_channel->modes));
+	    PyDict_SetItem(channel_hash_member, Py_BuildValue("s", "limit"),
+			   Py_BuildValue("i", ptr_channel->limit));
+	    PyDict_SetItem(channel_hash_member, Py_BuildValue("s", "key"),
+			   Py_BuildValue("s", ptr_channel->key));
+	    PyDict_SetItem(channel_hash_member, Py_BuildValue("s", "nicks_count"),
+			   Py_BuildValue("i", ptr_channel->nicks_count));
+	    
+	    PyDict_SetItem(channel_hash, Py_BuildValue("s", ptr_channel->name), channel_hash_member);
+	}
+    }    
+
+    python_plugin->free_channel_info(python_plugin, channel_info);
+    
+    return channel_hash;
+}
+
+/*
+ * weechat_python_get_nick_info: get infos about nicks
+ */
+
+static PyObject *
+weechat_python_get_nick_info (PyObject *self, PyObject *args)
+{
+    t_plugin_nick_info *nick_info, *ptr_nick;
+    PyObject *nick_hash, *nick_hash_member;
+    char *server, *channel;
+    
+    /* make gcc happy */
+    (void) self;
+        
+    if (!python_current_script)
+    {
+        python_plugin->printf_server (python_plugin,
+                                      "Python error: unable to get nick infos, "
+                                      "script not initialized");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    server = NULL;
+    channel = NULL;
+    if (!PyArg_ParseTuple (args, "ss", &server, &channel))
+    {
+        python_plugin->printf_server (python_plugin,
+                                      "Python error: wrong parameters for "
+                                      "\"get_nick_info\" function");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    nick_hash = PyDict_New ();
+    if (!nick_hash)
+	return Py_None;
+
+    nick_info = python_plugin->get_nick_info (python_plugin, server, channel);
+    if  (!nick_info)
+	return nick_hash;
+
+    for(ptr_nick = nick_info; ptr_nick; ptr_nick = ptr_nick->next_nick)
+    {
+	nick_hash_member = PyDict_New();
+	
+	if (nick_hash_member)
+	{
+	    PyDict_SetItem(nick_hash_member, Py_BuildValue("s", "flags"),
+			   Py_BuildValue("i", ptr_nick->flags));
+	    
+	    PyDict_SetItem(nick_hash, Py_BuildValue("s", ptr_nick->nick), nick_hash_member);
+	}
+    }    
+
+    python_plugin->free_nick_info(python_plugin, nick_info);
+    
+    return nick_hash;
+}
+
+/*
  * Python subroutines
  */
 
@@ -759,6 +986,9 @@ PyMethodDef weechat_python_funcs[] = {
     { "set_config", weechat_python_set_config, METH_VARARGS, "" },
     { "get_plugin_config", weechat_python_get_plugin_config, METH_VARARGS, "" },
     { "set_plugin_config", weechat_python_set_plugin_config, METH_VARARGS, "" },
+    { "get_server_info", weechat_python_get_server_info, METH_VARARGS, "" },
+    { "get_channel_info", weechat_python_get_channel_info, METH_VARARGS, "" },
+    { "get_nick_info", weechat_python_get_nick_info, METH_VARARGS, "" },
     { NULL, NULL, 0, NULL }
 };
 

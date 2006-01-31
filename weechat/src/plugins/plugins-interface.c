@@ -662,3 +662,277 @@ weechat_plugin_set_plugin_config (t_weechat_plugin *plugin, char *option, char *
     }
     return 0;
 }
+
+/*
+ * weechat_plugin_get_server_info: get list of server info
+ */
+
+t_plugin_server_info *
+weechat_plugin_get_server_info (t_weechat_plugin *plugin)
+{
+    t_plugin_server_info *server_info, *last_server_info, *new_server_info;
+    t_irc_server *ptr_server;
+
+    if (!plugin)
+	return NULL;
+
+    if (irc_servers)
+    {
+	server_info = NULL;
+	last_server_info = NULL;
+	for (ptr_server = irc_servers; ptr_server; ptr_server = ptr_server->next_server)
+	{
+	    new_server_info = (t_plugin_server_info *) malloc (sizeof (t_plugin_server_info));
+	    if (new_server_info)
+	    {
+		new_server_info->name = (ptr_server->name) ? strdup (ptr_server->name) : strdup ("");
+		new_server_info->autoconnect = ptr_server->autoconnect;
+		new_server_info->autoreconnect = ptr_server->autoreconnect;
+		new_server_info->autoreconnect_delay = ptr_server->autoreconnect_delay;
+		new_server_info->command_line = ptr_server->command_line;
+		new_server_info->address = (ptr_server->address) ? strdup (ptr_server->address) : strdup ("");
+		new_server_info->port = ptr_server->port;
+		new_server_info->ipv6 = ptr_server->ipv6;
+		new_server_info->ssl = ptr_server->ssl;		
+		new_server_info->password = (ptr_server->password) ? strdup (ptr_server->password) : strdup ("");
+		new_server_info->nick1 = (ptr_server->nick1) ? strdup (ptr_server->nick1) : strdup ("");
+		new_server_info->nick2 = (ptr_server->nick2) ? strdup (ptr_server->nick2) : strdup ("");
+		new_server_info->nick3 = (ptr_server->nick3) ? strdup (ptr_server->nick3) : strdup ("");
+		new_server_info->username = (ptr_server->username) ? strdup (ptr_server->username) : strdup ("");
+		new_server_info->realname = (ptr_server->realname) ? strdup (ptr_server->realname) : strdup ("");
+		new_server_info->command = (ptr_server->command) ? strdup (ptr_server->command) : strdup ("");
+		new_server_info->command_delay = ptr_server->command_delay;
+		new_server_info->autojoin = (ptr_server->autojoin) ? strdup (ptr_server->autojoin) : strdup ("");
+		new_server_info->autorejoin = ptr_server->autorejoin;
+		new_server_info->notify_levels = (ptr_server->notify_levels) ? strdup (ptr_server->notify_levels) : strdup ("");
+		new_server_info->charset_decode_iso = (ptr_server->charset_decode_iso) ? strdup (ptr_server->charset_decode_iso) : strdup ("");
+		new_server_info->charset_decode_utf = (ptr_server->charset_decode_utf) ? strdup (ptr_server->charset_decode_utf) : strdup ("");
+		new_server_info->charset_encode = (ptr_server->charset_encode) ? strdup (ptr_server->charset_encode) : strdup ("");
+		new_server_info->is_connected = ptr_server->is_connected;
+		new_server_info->ssl_connected = ptr_server->ssl_connected;
+		new_server_info->nick = (ptr_server->nick) ? strdup (ptr_server->nick) : strdup ("");
+		new_server_info->is_away = ptr_server->is_away;
+		new_server_info->away_time = ptr_server->away_time;
+		new_server_info->lag = ptr_server->lag;
+
+		new_server_info->prev_info = last_server_info;
+                new_server_info->next_info = NULL;
+                if (!server_info)
+                    server_info = new_server_info;
+		else
+                    last_server_info->next_info = new_server_info;
+		last_server_info = new_server_info;
+	    }	    
+	}
+       	
+	return server_info;
+    }
+
+    return NULL;
+}
+
+/*
+ * weechat_plugin_free_server_info: free server info struct list
+ */
+
+void
+weechat_plugin_free_server_info (t_weechat_plugin *plugin, t_plugin_server_info *server_info)
+{
+    t_plugin_server_info *new_server_info;
+    
+    if (!plugin || !server_info)
+        return;
+    
+    while (server_info)
+    {
+        if (server_info->name)
+            free (server_info->name);
+	if (server_info->address)
+            free (server_info->address);
+	if (server_info->password)
+            free (server_info->password);
+	if (server_info->nick1)
+            free (server_info->nick1);
+	if (server_info->nick2)
+            free (server_info->nick2);
+	if (server_info->nick3)
+            free (server_info->nick3);
+	if (server_info->username)
+            free (server_info->username);
+	if (server_info->realname)
+            free (server_info->realname);
+	if (server_info->command)
+            free (server_info->command);
+	if (server_info->autojoin)
+            free (server_info->autojoin);
+	if (server_info->notify_levels)
+            free (server_info->notify_levels);
+	if (server_info->charset_decode_iso)
+            free (server_info->charset_decode_iso);
+	if (server_info->charset_decode_utf)
+            free (server_info->charset_decode_utf);
+	if (server_info->charset_encode)
+            free (server_info->charset_encode);
+	if (server_info->nick)
+            free (server_info->nick);
+        new_server_info = server_info->next_info;
+        free (server_info);
+        server_info = new_server_info;
+    }
+}
+
+/*
+ * weechat_plugin_get_channel_info: get list of channel info from a server
+ */
+
+t_plugin_channel_info *
+weechat_plugin_get_channel_info (t_weechat_plugin *plugin, char *server)
+{
+    t_plugin_channel_info *channel_info, *last_channel_info, *new_channel_info;
+    t_irc_channel *ptr_channel, *ptr_channels;
+    t_irc_server *ptr_server;
+
+    if (!plugin || !server || !server[0])
+	return NULL;
+    
+    ptr_server = server_search (server);
+    if (!ptr_server)
+	return NULL;
+
+    ptr_channels = ptr_server->channels;
+
+    if (ptr_channels)
+    {
+	channel_info = NULL;
+	last_channel_info = NULL;
+	for (ptr_channel = ptr_channels; ptr_channel; ptr_channel = ptr_channel->next_channel)
+	{
+	    new_channel_info = (t_plugin_channel_info *) malloc (sizeof (t_plugin_channel_info));
+	    if (new_channel_info)
+	    {
+		new_channel_info->type = ptr_channel->type;
+		new_channel_info->name = (ptr_channel->name) ? strdup (ptr_channel->name) : strdup ("");
+		new_channel_info->topic = (ptr_channel->topic) ? strdup (ptr_channel->topic) : strdup ("");
+		new_channel_info->modes = (ptr_channel->modes) ? strdup (ptr_channel->modes) : strdup ("");
+		new_channel_info->limit = ptr_channel->limit;
+		new_channel_info->key = (ptr_channel->key) ? strdup (ptr_channel->key) : strdup ("");
+		new_channel_info->nicks_count = ptr_channel->nicks_count;
+		
+		new_channel_info->prev_info = last_channel_info;
+                new_channel_info->next_info = NULL;
+                if (!channel_info)
+                    channel_info = new_channel_info;		
+                else
+                    last_channel_info->next_info = new_channel_info;
+		last_channel_info = new_channel_info;
+	    }	    
+	}
+       	
+	return channel_info;
+    }
+
+    return NULL;
+}
+
+/*
+ * weechat_plugin_free_channel_info: free channel info struct list
+ */
+
+void
+weechat_plugin_free_channel_info (t_weechat_plugin *plugin, t_plugin_channel_info *channel_info)
+{
+    t_plugin_channel_info *new_channel_info;
+    
+    if (!plugin || !channel_info)
+        return;
+    
+    while (channel_info)
+    {
+        if (channel_info->name)
+            free (channel_info->name);
+	if (channel_info->topic)
+            free (channel_info->topic);
+	if (channel_info->modes)
+            free (channel_info->modes);
+	if (channel_info->key)
+            free (channel_info->key);
+        new_channel_info = channel_info->next_info;
+        free (channel_info);
+	channel_info = new_channel_info;
+    }
+}
+
+/*
+ * weechat_plugin_get_nick_info: get list of nick info from a server/channel
+ */
+
+t_plugin_nick_info *
+weechat_plugin_get_nick_info (t_weechat_plugin *plugin, char *server, char *channel)
+{
+    t_plugin_nick_info *nick_info, *last_nick_info, *new_nick_info;
+    t_irc_nick *ptr_nick, *ptr_nicks;
+    t_irc_channel *ptr_channel;
+    t_irc_server *ptr_server;
+
+    if (!plugin || !server || !server[0] || !channel || !channel[0])
+	return NULL;
+    
+    ptr_server = server_search (server);
+    if (!ptr_server)
+	return NULL;
+
+    ptr_channel = channel_search (ptr_server, channel);
+    if (!ptr_channel)
+	return NULL;
+    
+    ptr_nicks = ptr_channel->nicks;
+
+    if (ptr_nicks)
+    {
+	nick_info = NULL;
+	last_nick_info = NULL;
+	for (ptr_nick = ptr_nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
+	{
+	    new_nick_info = (t_plugin_nick_info *) malloc (sizeof (t_plugin_nick_info));
+	    if (new_nick_info)
+	    {
+		new_nick_info->nick = (ptr_nick->nick) ? strdup (ptr_nick->nick) : strdup ("");
+		new_nick_info->flags = ptr_nick->flags;
+		
+		new_nick_info->prev_nick = last_nick_info;
+                new_nick_info->next_nick = NULL;
+                if (!nick_info)
+                    nick_info = new_nick_info;		
+                else
+                    last_nick_info->next_nick = new_nick_info;
+		last_nick_info = new_nick_info;
+	    }	    
+	}
+       	
+	return nick_info;
+    }
+
+    return NULL;
+}
+
+/*
+ * weechat_plugin_free_nick_info: free nick info struct list
+ */
+
+void
+weechat_plugin_free_nick_info (t_weechat_plugin *plugin, t_plugin_nick_info *nick_info)
+{
+    t_plugin_nick_info *new_nick_info;
+    
+    if (!plugin || !nick_info)
+        return;
+    
+    while (nick_info)
+    {
+        if (nick_info->nick)
+            free (nick_info->nick);
+        new_nick_info = nick_info->next_nick;
+        free (nick_info);
+	nick_info = new_nick_info;
+    }
+}

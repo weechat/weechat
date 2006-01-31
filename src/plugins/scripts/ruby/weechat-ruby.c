@@ -441,7 +441,7 @@ weechat_ruby_add_message_handler (VALUE class, VALUE message, VALUE function)
 }
 
 /*
- * weechat_add_command_handler: define/redefines commands
+ * weechat_ruby_add_command_handler: define/redefines commands
  */
 
 static VALUE
@@ -531,7 +531,7 @@ weechat_ruby_add_command_handler (int argc, VALUE *argv, VALUE class)
 }
 
 /*
- * weechat_remove_handler: remove a handler
+ * weechat_ruby_remove_handler: remove a handler
  */
 
 static VALUE
@@ -924,6 +924,249 @@ weechat_ruby_set_plugin_config (VALUE class, VALUE option, VALUE value)
     }
     
     return INT2FIX (0);
+}
+
+/*
+ * weechat_ruby_get_server_info: get infos about servers
+ */
+
+static VALUE
+weechat_ruby_get_server_info (VALUE class)
+{
+    t_plugin_server_info *server_info, *ptr_server;
+    VALUE server_hash, server_hash_member;
+    char timebuffer[64];
+    
+    /* make gcc happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+                                      "Ruby error: unable to get server infos, "
+                                      "script not initialized");
+        return INT2FIX (0);
+    }
+    
+    server_hash = rb_hash_new ();
+    if (!server_hash)
+	return Qnil;
+
+    server_info = ruby_plugin->get_server_info (ruby_plugin);
+    if  (!server_info)
+	return server_hash;
+
+    for(ptr_server = server_info; ptr_server; ptr_server = ptr_server->next_info)
+    {
+	strftime(timebuffer, sizeof(timebuffer), "%F %T",
+		 localtime(&ptr_server->away_time));
+	
+	server_hash_member = rb_hash_new ();
+	
+	if (server_hash_member)
+	{
+	    rb_hash_aset (server_hash_member, rb_str_new2("autoconnect"),
+			  INT2FIX(ptr_server->autoconnect));
+	    rb_hash_aset (server_hash_member, rb_str_new2("autoreconnect"),
+			  INT2FIX(ptr_server->autoreconnect));
+	    rb_hash_aset (server_hash_member, rb_str_new2("autoreconnect_delay"),
+			  INT2FIX(ptr_server->autoreconnect_delay));
+	    rb_hash_aset (server_hash_member, rb_str_new2("command_line"),
+			  INT2FIX(ptr_server->command_line));
+	    rb_hash_aset (server_hash_member, rb_str_new2("address"),
+			  rb_str_new2(ptr_server->address));
+	    rb_hash_aset (server_hash_member, rb_str_new2("port"),
+			  INT2FIX(ptr_server->port));
+	    rb_hash_aset (server_hash_member, rb_str_new2("ipv6"),
+			  INT2FIX(ptr_server->ipv6));
+	    rb_hash_aset (server_hash_member, rb_str_new2("ssl"),
+			  INT2FIX(ptr_server->ssl));
+	    rb_hash_aset (server_hash_member, rb_str_new2("password"),
+			  rb_str_new2(ptr_server->password));
+	    rb_hash_aset (server_hash_member, rb_str_new2("nick1"),
+			  rb_str_new2(ptr_server->nick1));
+	    rb_hash_aset (server_hash_member, rb_str_new2("nick2"),
+			  rb_str_new2(ptr_server->nick2));
+	    rb_hash_aset (server_hash_member, rb_str_new2("nick3"),
+			  rb_str_new2(ptr_server->nick3));
+	    rb_hash_aset (server_hash_member, rb_str_new2("username"),
+			  rb_str_new2(ptr_server->username));
+	    rb_hash_aset (server_hash_member, rb_str_new2("realname"),
+			  rb_str_new2(ptr_server->realname));
+	    rb_hash_aset (server_hash_member, rb_str_new2("command"),
+			  rb_str_new2(ptr_server->command));
+	    rb_hash_aset (server_hash_member, rb_str_new2("command_delay"),
+			  INT2FIX(ptr_server->command_delay));
+	    rb_hash_aset (server_hash_member, rb_str_new2("autojoin"),
+			  rb_str_new2(ptr_server->autojoin));
+	    rb_hash_aset (server_hash_member, rb_str_new2("autorejoin"),
+			  INT2FIX(ptr_server->autorejoin));
+	    rb_hash_aset (server_hash_member, rb_str_new2("notify_levels"),
+			  rb_str_new2(ptr_server->notify_levels));
+	    rb_hash_aset (server_hash_member, rb_str_new2("charset_decode_iso"),
+			  rb_str_new2(ptr_server->charset_decode_iso));
+	    rb_hash_aset (server_hash_member, rb_str_new2("charset_decode_utf"),
+			  rb_str_new2(ptr_server->charset_decode_utf));
+	    rb_hash_aset (server_hash_member, rb_str_new2("charset_encode"),
+			  rb_str_new2(ptr_server->charset_encode));
+	    rb_hash_aset (server_hash_member, rb_str_new2("is_connected"),
+			  INT2FIX(ptr_server->is_connected));
+	    rb_hash_aset (server_hash_member, rb_str_new2("ssl_connected"),
+			  INT2FIX(ptr_server->ssl_connected));
+	    rb_hash_aset (server_hash_member, rb_str_new2("nick"),
+			  rb_str_new2(ptr_server->nick));
+	    rb_hash_aset (server_hash_member, rb_str_new2("away_time"),
+			  rb_str_new2(timebuffer));
+	    rb_hash_aset (server_hash_member, rb_str_new2("lag"),
+			  INT2FIX(ptr_server->lag));
+	    
+	    rb_hash_aset (server_hash, rb_str_new2(ptr_server->name), server_hash_member);
+	}
+    }    
+
+    ruby_plugin->free_server_info(ruby_plugin, server_info);
+    
+    return server_hash;
+}
+
+/*
+ * weechat_ruby_get_channel_info: get infos about channels
+ */
+
+static VALUE
+weechat_ruby_get_channel_info (VALUE class, VALUE server)
+{
+    t_plugin_channel_info *channel_info, *ptr_channel;
+    VALUE channel_hash, channel_hash_member;
+    char *c_server;
+    
+    /* make gcc happy */
+    (void) class;
+        
+    if (!ruby_current_script)
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+				    "Ruby error: unable to get channel infos, "
+				    "script not initialized");
+        return INT2FIX (0);
+    }
+    
+    c_server = NULL;
+    if (NIL_P (server))
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: wrong parameters for "
+                                    "\"get_channel_info\" function");
+        return INT2FIX (0);
+    }
+    
+    Check_Type (server, T_STRING);
+    c_server = STR2CSTR (server);
+
+    if (!c_server)
+	return INT2FIX (0);
+    
+    channel_hash = rb_hash_new ();
+    if (!channel_hash)
+	return Qnil;
+
+    channel_info = ruby_plugin->get_channel_info (ruby_plugin, c_server);
+    if  (!channel_info)
+	return channel_hash;
+
+    for(ptr_channel = channel_info; ptr_channel; ptr_channel = ptr_channel->next_info)
+    {
+	channel_hash_member = rb_hash_new ();
+	
+	if (channel_hash_member)
+	{
+	    rb_hash_aset (channel_hash_member, rb_str_new2("type"),
+			  INT2FIX(ptr_channel->type));
+	    rb_hash_aset (channel_hash_member, rb_str_new2("topic"),
+			  rb_str_new2(ptr_channel->topic));
+	    rb_hash_aset (channel_hash_member, rb_str_new2("modes"),
+			  rb_str_new2(ptr_channel->modes));
+	    rb_hash_aset (channel_hash_member, rb_str_new2("limit"),
+			  INT2FIX(ptr_channel->limit));
+	    rb_hash_aset (channel_hash_member, rb_str_new2("key"),
+			  rb_str_new2(ptr_channel->key));
+	    rb_hash_aset (channel_hash_member, rb_str_new2("nicks_count"),
+			  INT2FIX(ptr_channel->nicks_count));
+	    
+	    rb_hash_aset (channel_hash, rb_str_new2(ptr_channel->name), channel_hash_member);
+	}
+    }    
+
+    ruby_plugin->free_channel_info(ruby_plugin, channel_info);
+    
+    return channel_hash;
+}
+
+/*
+ * weechat_ruby_get_nick_info: get infos about nicks
+ */
+
+static VALUE
+weechat_ruby_get_nick_info (VALUE class, VALUE server, VALUE channel)
+{
+    t_plugin_nick_info *nick_info, *ptr_nick;
+    VALUE nick_hash, nick_hash_member;
+    char *c_server, *c_channel;
+    
+    /* make gcc happy */
+    (void) class;
+
+    if (!ruby_current_script)
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+				    "Ruby error: unable to get channel infos, "
+				    "script not initialized");
+        return INT2FIX (0);
+    }
+    
+    c_server = NULL;
+    c_channel = NULL;
+    if (NIL_P (server) || NIL_P (channel))
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: wrong parameters for "
+                                    "\"get_nick_info\" function");
+        return INT2FIX (0);
+    }
+    
+    Check_Type (server, T_STRING);
+    Check_Type (channel, T_STRING);
+    
+    c_server = STR2CSTR (server);
+    c_channel = STR2CSTR (channel);
+
+    if (!c_server || !c_channel)
+	return INT2FIX (0);
+    
+    nick_hash = rb_hash_new ();
+    if (!nick_hash)
+	return Qnil;
+
+    nick_info = ruby_plugin->get_nick_info (ruby_plugin, c_server, c_channel);
+    if  (!nick_info)
+	return nick_hash;
+
+    for(ptr_nick = nick_info; ptr_nick; ptr_nick = ptr_nick->next_nick)
+    {
+	nick_hash_member = rb_hash_new ();
+	
+	if (nick_hash_member)
+	{
+	    rb_hash_aset (nick_hash_member, rb_str_new2("flags"),
+			  INT2FIX(ptr_nick->flags));
+	    
+	    rb_hash_aset (nick_hash, rb_str_new2(ptr_nick->nick), nick_hash_member);
+	}
+    }    
+
+    ruby_plugin->free_nick_info(ruby_plugin, nick_info);
+    
+    return nick_hash;
 }
 
 /*
@@ -1324,6 +1567,9 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     rb_define_module_function (mWeechat, "set_config", weechat_ruby_set_config, 2);
     rb_define_module_function (mWeechat, "get_plugin_config", weechat_ruby_get_plugin_config, 1);
     rb_define_module_function (mWeechat, "set_plugin_config", weechat_ruby_set_plugin_config, 2);
+    rb_define_module_function (mWeechat, "get_server_info", weechat_ruby_get_server_info, 0);
+    rb_define_module_function (mWeechat, "get_channel_info", weechat_ruby_get_channel_info, 1);
+    rb_define_module_function (mWeechat, "get_nick_info", weechat_ruby_get_nick_info, 2);
     
     /* redirect stdin and stdout */
     mWeechatOutputs = rb_define_module("WeechatOutputs");
