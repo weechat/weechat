@@ -843,12 +843,12 @@ gui_draw_buffer_title (t_gui_buffer *buffer, int erase)
 }
 
 /*
- * gui_display_new_line: display a new line
+ * gui_curses_display_new_line: display a new line
  */
 
 void
-gui_display_new_line (t_gui_window *window, int num_lines, int count,
-                      int *lines_displayed, int simulate)
+gui_curses_display_new_line (t_gui_window *window, int num_lines, int count,
+                             int *lines_displayed, int simulate)
 {
     if ((count == 0) || (*lines_displayed >= num_lines - count))
     {
@@ -1147,8 +1147,8 @@ gui_display_word (t_gui_window *window,
             (((simulate) ||
              (window->win_chat_cursor_y <= window->win_chat_height - 1)) &&
             (window->win_chat_cursor_x > (window->win_chat_width - 1))))
-            gui_display_new_line (window, num_lines, count,
-                                  lines_displayed, simulate);
+            gui_curses_display_new_line (window, num_lines, count,
+                                         lines_displayed, simulate);
         
         if ((data >= end_line) ||
             ((!simulate) && (window->win_chat_cursor_y >= window->win_chat_height)))
@@ -1220,16 +1220,19 @@ gui_get_word_info (t_gui_window *window,
 }
 
 /*
- * gui_display_line: display a line in the chat window
- *                   if count == 0, display whole line
- *                   if count > 0, display 'count' lines (beginning from the end)
- *                   if simulate == 1, nothing is displayed (for counting how
- *                                     many lines would have been lines displayed)
- *                   returns: number of lines displayed (or simulated)
+ * gui_curses_display_line: display a line in the chat window
+ *                          if count == 0, display whole line
+ *                          if count > 0, display 'count' lines
+ *                            (beginning from the end)
+ *                          if simulate == 1, nothing is displayed
+ *                            (for counting how many lines would have been
+ *                            lines displayed)
+ *                          returns: number of lines displayed (or simulated)
  */
 
 int
-gui_display_line (t_gui_window *window, t_gui_line *line, int count, int simulate)
+gui_curses_display_line (t_gui_window *window, t_gui_line *line, int count,
+                         int simulate)
 {
     int num_lines, x, y, lines_displayed;
     int read_marker_x, read_marker_y;
@@ -1252,7 +1255,7 @@ gui_display_line (t_gui_window *window, t_gui_line *line, int count, int simulat
             return 0;
         x = window->win_chat_cursor_x;
         y = window->win_chat_cursor_y;
-        num_lines = gui_display_line (window, line, 0, 1);
+        num_lines = gui_curses_display_line (window, line, 0, 1);
         window->win_chat_cursor_x = x;
         window->win_chat_cursor_y = y;
     }
@@ -1290,8 +1293,8 @@ gui_display_line (t_gui_window *window, t_gui_line *line, int count, int simulat
             if ((window->win_chat_cursor_x + word_length_with_spaces > window->win_chat_width)
                 && (word_length <= window->win_chat_width - line->length_align))
             {
-                gui_display_new_line (window, num_lines, count,
-                                      &lines_displayed, simulate);
+                gui_curses_display_new_line (window, num_lines, count,
+                                             &lines_displayed, simulate);
                 /* apply styles before jumping to start of word */
                 if (!simulate && (word_start_offset > 0))
                 {
@@ -1341,8 +1344,8 @@ gui_display_line (t_gui_window *window, t_gui_line *line, int count, int simulat
         }
         else
         {
-            gui_display_new_line (window, num_lines, count,
-                                  &lines_displayed, simulate);
+            gui_curses_display_new_line (window, num_lines, count,
+                                         &lines_displayed, simulate);
             ptr_data = NULL;
         }
     }
@@ -1392,7 +1395,7 @@ gui_calculate_line_diff (t_gui_window *window, t_gui_line **line, int *line_pos,
             *line = window->buffer->last_line;
             if (!(*line))
                 return;
-            current_size = gui_display_line (window, *line, 0, 1);
+            current_size = gui_curses_display_line (window, *line, 0, 1);
             if (current_size == 0)
                 current_size = 1;
             *line_pos = current_size - 1;
@@ -1404,11 +1407,11 @@ gui_calculate_line_diff (t_gui_window *window, t_gui_line **line, int *line_pos,
             if (!(*line))
                 return;
             *line_pos = 0;
-            current_size = gui_display_line (window, *line, 0, 1);
+            current_size = gui_curses_display_line (window, *line, 0, 1);
         }
     }
     else
-        current_size = gui_display_line (window, *line, 0, 1);
+        current_size = gui_curses_display_line (window, *line, 0, 1);
     
     while ((*line) && (difference != 0))
     {
@@ -1422,7 +1425,7 @@ gui_calculate_line_diff (t_gui_window *window, t_gui_line **line, int *line_pos,
                 *line = (*line)->prev_line;
                 if (*line)
                 {
-                    current_size = gui_display_line (window, *line, 0, 1);
+                    current_size = gui_curses_display_line (window, *line, 0, 1);
                     if (current_size == 0)
                         current_size = 1;
                     *line_pos = current_size - 1;
@@ -1440,7 +1443,7 @@ gui_calculate_line_diff (t_gui_window *window, t_gui_line **line, int *line_pos,
                 *line = (*line)->next_line;
                 if (*line)
                 {
-                    current_size = gui_display_line (window, *line, 0, 1);
+                    current_size = gui_curses_display_line (window, *line, 0, 1);
                     if (current_size == 0)
                         current_size = 1;
                     *line_pos = 0;
@@ -1648,9 +1651,11 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                 if (line_pos > 0)
                 {
                     /* display end of first line at top of screen */
-                    gui_display_line (ptr_win, ptr_line,
-                                      gui_display_line (ptr_win, ptr_line, 0, 1) -
-                                      line_pos, 0);
+                    gui_curses_display_line (ptr_win, ptr_line,
+                                             gui_curses_display_line (ptr_win,
+                                                                      ptr_line,
+                                                                      0, 1) -
+                                             line_pos, 0);
                     ptr_line = ptr_line->next_line;
                     ptr_win->first_line_displayed = 0;
                 }
@@ -1662,7 +1667,7 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                 count = 0;
                 while (ptr_line && (ptr_win->win_chat_cursor_y <= ptr_win->win_chat_height - 1))
                 {
-                    count = gui_display_line (ptr_win, ptr_line, 0, 0);
+                    count = gui_curses_display_line (ptr_win, ptr_line, 0, 0);
                     ptr_line = ptr_line->next_line;
                 }
                 
@@ -1672,7 +1677,7 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
                 /* if so, disable scroll indicator */
                 if (!ptr_line && ptr_win->scroll)
                 {
-                    if (count == gui_display_line (ptr_win, ptr_win->buffer->last_line, 0, 1))
+                    if (count == gui_curses_display_line (ptr_win, ptr_win->buffer->last_line, 0, 1))
                     {
                         ptr_win->scroll = 0;
                         ptr_win->start_line = NULL;
@@ -1697,6 +1702,19 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
             refresh ();
         }
     }
+}
+
+/*
+ * gui_draw_buffer_chat_line: add a line to chat window for a buffer
+ */
+
+void
+gui_draw_buffer_chat_line (t_gui_buffer *buffer, t_gui_line *line)
+{
+    /* This function does nothing in Curses GUI,
+       line will be displayed by gui_buffer_draw_chat()  */
+    (void) buffer;
+    (void) line;
 }
 
 /*
@@ -2630,27 +2648,6 @@ gui_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
     buffer->num_displayed++;
     
     hotlist_remove_buffer (buffer);
-}
-
-/*
- * gui_get_dcc_buffer: get pointer to DCC buffer (DCC buffer created if not existing)
- */
-
-t_gui_buffer *
-gui_get_dcc_buffer (t_gui_window *window)
-{
-    t_gui_buffer *ptr_buffer;
-    
-    /* check if dcc buffer exists */
-    for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
-    {
-        if (ptr_buffer->dcc)
-            break;
-    }
-    if (ptr_buffer)
-        return ptr_buffer;
-    else
-        return gui_buffer_new (window, NULL, NULL, 1, 0);
 }
 
 /*

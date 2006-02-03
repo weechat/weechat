@@ -366,6 +366,27 @@ gui_buffer_servers_search ()
 }
 
 /*
+ * gui_get_dcc_buffer: get pointer to DCC buffer (DCC buffer created if not existing)
+ */
+
+t_gui_buffer *
+gui_get_dcc_buffer (t_gui_window *window)
+{
+    t_gui_buffer *ptr_buffer;
+    
+    /* check if dcc buffer exists */
+    for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->dcc)
+            break;
+    }
+    if (ptr_buffer)
+        return ptr_buffer;
+    else
+        return gui_buffer_new (window, NULL, NULL, 1, 0);
+}
+
+/*
  * gui_buffer_new: create a new buffer in current window
  */
 
@@ -848,7 +869,10 @@ gui_add_to_line (t_gui_buffer *buffer, int type, char *message)
     {
         pos[0] = '\n';
         if (buffer->num_displayed > 0)
+        {
+            gui_draw_buffer_chat_line (buffer, buffer->last_line);
             gui_draw_buffer_chat (buffer, 0);
+        }
         if (gui_add_hotlist && (buffer->num_displayed == 0))
         {
             if (3 - buffer->last_line->line_with_message -

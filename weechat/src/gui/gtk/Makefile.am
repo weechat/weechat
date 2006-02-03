@@ -19,11 +19,24 @@ INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(GTK_CFLAGS)
 
 bin_PROGRAMS = weechat-gtk
 
-weechat_gtk_LDADD = ../lib_weechat_gui_common.a \
+if PLUGINS
+weechat_gtk_LDADD = ../gui-common.o ../gui-keyboard.o \
+                    ../gui-action.o \
                     ../../common/lib_weechat_main.a \
                     ../../irc/lib_weechat_irc.a \
+                    ../../plugins/lib_weechat_plugins.a \
+                    $(PLUGINS_LIBS) \
                     $(GTK_LIBS) \
-                    ../../plugins/lib_weechat_plugins.a $(PLUGINS_LIBS)
+                    $(GNUTLS_LFLAGS)
+else
+weechat_gtk_LDADD = ../gui-common.o ../gui-keyboard.o \
+                    ../gui-action.o \
+                    ../../common/lib_weechat_main.a \
+                    ../../irc/lib_weechat_irc.a \
+                    $(PLUGINS_LIBS) \
+                    $(GTK_LIBS) \
+                    $(GNUTLS_LFLAGS)
+endif
 
 weechat_gtk_SOURCES = gui-display.c \
-			          gui-input.c
+                      gui-input.c
