@@ -343,6 +343,9 @@ if test "x$enable_lua" = "xyes" ; then
 		 break
               fi
           done
+	  if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then
+	     AC_MSG_RESULT(found)
+	  fi
       fi
    fi    
 
@@ -354,9 +357,13 @@ if test "x$enable_lua" = "xyes" ; then
 	 LUA_CFLAGS=`$LUACONFIG --include`
 	 LUA_LFLAGS=`$LUACONFIG --libs`
       fi
+      if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then
+	 AC_MSG_RESULT(found)
+      fi
    fi
 
    if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then       
+      AC_MSG_CHECKING(for Lua headers and librairies)
       AC_CHECK_HEADER(lua.h,ac_found_lua_header="yes",ac_found_lua_header="no")
       AC_CHECK_HEADER(lualib.h,ac_found_liblua_header="yes",ac_found_liblua_header="no")
       if test "x$ac_found_lua_header" = "xyes" -a "x$ac_found_liblua_header" = "xyes"; then
@@ -375,8 +382,7 @@ if test "x$enable_lua" = "xyes" ; then
         fi
       done            
    fi
-
-   AC_MSG_CHECKING(for Lua headers and librairies)
+   
    if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then     
       AC_MSG_ERROR([
 *** Lua (>=5.0) headers and librairies couldn't be found in your system.
