@@ -41,9 +41,6 @@ netbsd*)
 solaris*)
 	LDFLAGS="$LDFLAGS -lsocket -lxnet"
 	;;
-gnu*)
-	LDFLAGS="$LDFLAGS -lpthread"
-	;;
 *)
         ;;
 esac
@@ -92,6 +89,7 @@ AH_VERBATIM([PLUGINS], [#undef PLUGINS])
 AH_VERBATIM([PLUGIN_PERL], [#undef PLUGIN_PERL])
 AH_VERBATIM([PLUGIN_PYTHON], [#undef PLUGIN_PYTHON])
 AH_VERBATIM([PLUGIN_RUBY], [#undef PLUGIN_RUBY])
+AH_VERBATIM([PLUGIN_LUA], [#undef PLUGIN_LUA])
 AH_VERBATIM([HAVE_GNUTLS], [#undef HAVE_GNUTLS])
 AH_VERBATIM([DEBUG], [#undef DEBUG])
 
@@ -105,6 +103,10 @@ AC_ARG_ENABLE(plugins,       [  --disable-plugins       Turn off plugins support
 AC_ARG_ENABLE(perl,          [  --enable-perl           Turn on Perl script plugin (default=no Perl plugin)],enable_perl=$enableval,enable_perl=no)
 AC_ARG_ENABLE(python,        [  --enable-python         Turn on Python script plugin (default=no Python plugin)],enable_python=$enableval,enable_python=no)
 AC_ARG_ENABLE(ruby,          [  --enable-ruby           Turn on Ruby script plugin (default=no Ruby script)],enable_ruby=$enableval,enable_ruby=no)
+AC_ARG_ENABLE(lua,           [  --enable-lua            Turn on Lua script plugin (default=no Lua script)],enable_lua=$enableval,enable_lua=no)
+AC_ARG_WITH(lua-inc,         [  --with-lua-inc=DIR,     Lua include files are in DIR (default=autodetect)],lua_inc=$withval,lua_inc='')
+AC_ARG_WITH(lua-lib,         [  --with-lua-lib=DIR,     Lua library files are in DIR (default=autodetect)],lua_lib=$withval,lua_lib='')
+AC_ARG_WITH(lua-suffix,      [  --with-lua-suffix=ARG   Lua is suffixed with ARG (default=autodetect)],lua_suffix=$withval,lua_suffix='')
 AC_ARG_ENABLE(gnutls,        [  --disable-gnutls        Turn off gnutls support (default=compiled if found)],enable_gnutls=$enableval,enable_gnutls=yes)
 AC_ARG_WITH(debug,           [  --with-debug            Debugging: 0=no debug, 1=debug compilation, 2=debug compilation + verbose msgs (default=1)],debug=$withval,debug=1)
 
@@ -116,6 +118,7 @@ AM_CONDITIONAL(PLUGINS,              test "$enable_plugins" = "yes")
 AM_CONDITIONAL(PLUGIN_PERL,          test "$enable_perl" = "yes")
 AM_CONDITIONAL(PLUGIN_PYTHON,        test "$enable_python" = "yes")
 AM_CONDITIONAL(PLUGIN_RUBY,          test "$enable_ruby" = "yes")
+AM_CONDITIONAL(PLUGIN_LUA,           test "$enable_lua" = "yes")
 AM_CONDITIONAL(HAVE_GNUTLS,          test "$enable_gnutls" = "yes")
 
 # ------------------------------------------------------------------------------
@@ -306,6 +309,91 @@ if test "x$enable_ruby" = "xyes" ; then
     AC_DEFINE(PLUGIN_RUBY)
 fi
 
+if test "x$enable_lua" = "xyes" ; then
+    enable_plugins="yes"
+
+    ac_save_CPPFLAGS="$CPPFLAGS"
+    ac_save_CFLAGS="$CFLAGS"
+    ac_save_LFLAGS="$LFLAGS"
+
+    LUA_CFLAGS=""
+    LUA_LFLAGS=""
+
+    if test -n "$lua_inc"; then
+       CFLAGS="$CFLAGS -I$lua_inc"
+       CPPFLAGS="$CPPFLAGS -I$lua_inc"
+    fi
+    if test -n "$lua_lib"; then
+       LFLAGS="$LFLAGS -L$lua_lib"
+    fi
+    
+    if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then
+       PKGCONFIG=""
+       AC_CHECK_PROGS(PKGCONFIG, pkg-config)
+       if test "x$PKGCONFIG" != "x"; then
+	  AC_MSG_CHECKING(for Lua headers and librairies with pkg-config)
+	  for l in "$lua_suffix" "" "50" "5.0" ; do
+	      pkgconfig_lua_found=`$PKGCONFIG --exists lua$l && $PKGCONFIG --exists lualib$l`
+	      if test "x$?" = "x0" ; then
+		 LUA_CFLAGS="$LUA_CFLAGS "`$PKGCONFIG --cflags lua$l`
+		 LUA_CFLAGS="$LUA_CFLAGS "`$PKGCONFIG --cflags lualib$l`
+		 LUA_LFLAGS="$LUA_LFLAGS "`$PKGCONFIG --libs lua$l`
+		 LUA_LFLAGS="$LUA_LFLAGS "`$PKGCONFIG --libs lualib$l`
+		 break
+              fi
+          done
+      fi
+   fi    
+
+   if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then
+      LUACONFIG=""
+      AC_CHECK_PROGS(LUACONFIG, lua-config lua-config50 lua-config5.0)
+      if test "x$LUACONFIG" != "x" ; then
+	 AC_MSG_CHECKING(for Lua headers and librairies with lua-config)
+	 LUA_CFLAGS=`$LUACONFIG --include`
+	 LUA_LFLAGS=`$LUACONFIG --libs`
+      fi
+   fi
+
+   if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then       
+      AC_CHECK_HEADER(lua.h,ac_found_lua_header="yes",ac_found_lua_header="no")
+      AC_CHECK_HEADER(lualib.h,ac_found_liblua_header="yes",ac_found_liblua_header="no")
+      if test "x$ac_found_lua_header" = "xyes" -a "x$ac_found_liblua_header" = "xyes"; then
+	 LUA_CFLAGS="$CFLAGS"
+      fi
+      for l in "$lua_suffix" "" "50" "5.0" ; do
+	AC_CHECK_LIB(lua$l,lua_open,ac_found_lua_lib="yes",ac_found_lua_lib="no")
+	AC_CHECK_LIB(lualib$l,luaopen_base,ac_found_liblua_lib="yes",ac_found_liblua_lib="no")
+	if test "x$ac_found_lua_lib" = "xyes" ; then
+	   LUA_LFLAGS="$LFLAGS -llua$l"
+	   break
+        fi
+	if test "x$ac_found_liblua_lib" = "xyes" ; then
+	   LUA_LFLAGS="$LUA_LFLAGS -llualib$l"
+	   break
+        fi
+      done            
+   fi
+
+   AC_MSG_CHECKING(for Lua headers and librairies)
+   if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then     
+      AC_MSG_ERROR([
+*** Lua (>=5.0) headers and librairies couldn't be found in your system.
+*** Try to install liblua, liblualib and liblua-dev
+*** Try to install them with your software package manager.])
+    else
+      AC_MSG_RESULT(found)
+    fi
+    
+    CFLAGS="$ac_save_CFLAGS"
+    CPPFLAGS="$ac_save_CPPFLAGS"
+    LFLAGS="$ac_save_LFLAGS"
+
+    AC_SUBST(LUA_CFLAGS)
+    AC_SUBST(LUA_LFLAGS)
+    AC_DEFINE(PLUGIN_LUA)
+fi
+
 if test "x$enable_plugins" = "xyes" ; then
     AC_CHECK_FUNCS(dlopen, LIBDL_FOUND=yes, LIBDL_FOUND=no)
     if test "$LIBDL_FOUND" != "yes"; then
@@ -395,6 +483,11 @@ openbsd*)
            CFLAGS="$CFLAGS -pthread"
         fi
         ;;
+gnu*)	
+	if test "x$enable_plugins" = "xyes" ; then
+	   LDFLAGS="$LDFLAGS -lpthread"
+	fi
+	;;
 *)
         ;;
 esac
@@ -463,6 +556,7 @@ echo "Build with Plugin support..................... : $enable_plugins"
 echo "              Perl plugin..................... : $enable_perl"
 echo "              Python plugin................... : $enable_python"
 echo "              Ruby plugin..................... : $enable_ruby"
+echo "              Lua plugin...................... : $enable_lua"
 echo "Compile with debug info....................... : $msg_debug_compiler"
 echo "Print debugging messages...................... : $msg_debug_verbose"
 echo ""
