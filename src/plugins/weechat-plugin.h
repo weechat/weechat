@@ -93,8 +93,8 @@ struct t_plugin_server_info
     int is_away;                        /* 1 is user is marker as away         */
     time_t away_time;                   /* time() when user marking as away    */
     int lag;                            /* lag (in milliseconds)               */
-    t_plugin_server_info *prev_info;    /* link to previous server info        */
-    t_plugin_server_info *next_info;    /* link to next server info            */
+    t_plugin_server_info *prev_server;  /* link to previous server info        */
+    t_plugin_server_info *next_server;  /* link to next server info            */
 };
 
 typedef struct t_plugin_channel_info t_plugin_channel_info;
@@ -108,8 +108,8 @@ struct t_plugin_channel_info
     int limit;                          /* user limit (0 is limit not set)     */
     char *key;                          /* channel key (NULL if no key is set) */
     int nicks_count;                    /* # nicks on channel (0 if dcc/pv)    */
-    t_plugin_channel_info *prev_info;   /* link to previous channel infp       */
-    t_plugin_channel_info *next_info;   /* link to next channel info           */
+    t_plugin_channel_info *prev_channel; /* link to previous channel info      */
+    t_plugin_channel_info *next_channel; /* link to next channel info          */
 };
 
 typedef struct t_plugin_nick_info t_plugin_nick_info;

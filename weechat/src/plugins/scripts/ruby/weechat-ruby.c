@@ -956,7 +956,7 @@ weechat_ruby_get_server_info (VALUE class)
     if  (!server_info)
 	return server_hash;
 
-    for(ptr_server = server_info; ptr_server; ptr_server = ptr_server->next_info)
+    for(ptr_server = server_info; ptr_server; ptr_server = ptr_server->next_server)
     {
 	strftime(timebuffer, sizeof(timebuffer), "%F %T",
 		 localtime(&ptr_server->away_time));
@@ -1074,7 +1074,7 @@ weechat_ruby_get_channel_info (VALUE class, VALUE server)
     if  (!channel_info)
 	return channel_hash;
 
-    for(ptr_channel = channel_info; ptr_channel; ptr_channel = ptr_channel->next_info)
+    for(ptr_channel = channel_info; ptr_channel; ptr_channel = ptr_channel->next_channel)
     {
 	channel_hash_member = rb_hash_new ();
 	

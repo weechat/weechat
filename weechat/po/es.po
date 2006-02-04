@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.8-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-01-30 21:04+0100\n"
+"POT-Creation-Date: 2006-02-03 01:36+0100\n"
 "PO-Revision-Date: 2006-01-24 19:24+0100\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2211,33 +2211,33 @@ msgstr ""
 "%s función \"weechat_plugin_init\" no encontrada en el plugin \"%s\", falló "
 "al cargar\n"
 
-#: src/plugins/plugins.c:652
+#: src/plugins/plugins.c:658
 #, c-format
 msgid "Initializing plugin \"%s\" %s\n"
 msgstr "Inicializando plugin \"%s\" %s\n"
 
-#: src/plugins/plugins.c:660
+#: src/plugins/plugins.c:666
 #, c-format
 msgid "%s unable to initialize plugin \"%s\"\n"
 msgstr "%s no ha sido posible inicializar el plugin \"%s\"\n"
 
-#: src/plugins/plugins.c:671
+#: src/plugins/plugins.c:677
 #, c-format
 msgid "%s unable to load plugin \"%s\" (not enough memory)\n"
 msgstr ""
 "%s no ha sido posible cargar el plugin \"%s\" (no hay suficiente memoria)\n"
 
-#: src/plugins/plugins.c:679
+#: src/plugins/plugins.c:685
 #, c-format
 msgid "Plugin \"%s\" (%s) loaded.\n"
 msgstr "Plugin \"%s\" (%s) cargado.\n"
 
-#: src/plugins/plugins.c:846
+#: src/plugins/plugins.c:852
 #, c-format
 msgid "Plugin \"%s\" unloaded.\n"
 msgstr "Plugin \"%s\" descargado.\n"
 
-#: src/plugins/plugins.c:852
+#: src/plugins/plugins.c:858
 #, c-format
 msgid "%s plugin \"%s\" not found\n"
 msgstr "%s plugin \"%s\" no encontrado\n"
@@ -2293,80 +2293,80 @@ msgstr "Día cambiado a %s\n"
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr "%s el lag (retraso) es alto, desconectando del servidor...\n"
 
-#: src/gui/curses/gui-display.c:1482
+#: src/gui/curses/gui-display.c:1485
 msgid "bytes"
 msgstr "bytes"
 
-#: src/gui/curses/gui-display.c:1482
+#: src/gui/curses/gui-display.c:1485
 msgid "Kb"
 msgstr "KB"
 
-#: src/gui/curses/gui-display.c:1482
+#: src/gui/curses/gui-display.c:1485
 msgid "Mb"
 msgstr "MB"
 
-#: src/gui/curses/gui-display.c:1482
+#: src/gui/curses/gui-display.c:1485
 msgid "Gb"
 msgstr "GB"
 
-#: src/gui/curses/gui-display.c:1600
+#: src/gui/curses/gui-display.c:1603
 msgid "ETA"
 msgstr "Tiempo estimado de llegada"
 
-#: src/gui/curses/gui-display.c:1947
+#: src/gui/curses/gui-display.c:1965
 msgid "<servers>"
 msgstr "<servidores>"
 
-#: src/gui/curses/gui-display.c:1959
+#: src/gui/curses/gui-display.c:1977
 msgid "(away)"
 msgstr "(ausente)"
 
-#: src/gui/curses/gui-display.c:2093
+#: src/gui/curses/gui-display.c:2111
 msgid "[not connected] "
 msgstr "[no conectado] "
 
-#: src/gui/curses/gui-display.c:2103
+#: src/gui/curses/gui-display.c:2121
 msgid "Act: "
 msgstr "Act: "
 
-#: src/gui/curses/gui-display.c:2194
+#: src/gui/curses/gui-display.c:2212
 #, c-format
 msgid "Lag: %.1f"
 msgstr "Lag: %.1f"
 
-#: src/gui/curses/gui-display.c:2210
+#: src/gui/curses/gui-display.c:2228
 msgid "-MORE-"
 msgstr "-MÁS-"
 
-#: src/gui/curses/gui-display.c:2383
+#: src/gui/curses/gui-display.c:2401
 msgid "  [A] Accept"
 msgstr "  [A] Aceptar"
 
-#: src/gui/curses/gui-display.c:2384 src/gui/curses/gui-display.c:2388
+#: src/gui/curses/gui-display.c:2402 src/gui/curses/gui-display.c:2406
 msgid "  [C] Cancel"
 msgstr "  [C] Cancelar"
 
-#: src/gui/curses/gui-display.c:2393
+#: src/gui/curses/gui-display.c:2411
 msgid "  [R] Remove"
 msgstr "  [R] Eliminar"
 
-#: src/gui/curses/gui-display.c:2397
+#: src/gui/curses/gui-display.c:2415
 msgid "  [P] Purge old DCC"
 msgstr "  [P] Purgar los viejos DCC"
 
-#: src/gui/curses/gui-display.c:2398
+#: src/gui/curses/gui-display.c:2416
 msgid "  [Q] Close DCC view"
 msgstr "  [Q] Cerrar la vista DCC"
 
-#: src/gui/gtk/gui-display.c:657
+#: src/gui/gtk/gui-display.c:2226
 msgid "server"
 msgstr "servidor"
 
-#: src/gui/gui-common.c:731
+#: src/gui/gui-common.c:752
 msgid "Not enough memory for new line\n"
 msgstr "No hay suficiente memoria para una nueva línea\n"
 
-#: src/gui/gui-common.c:1060
+#: src/gui/gui-common.c:1084
 msgid "Not enough memory for infobar message\n"
 msgstr "No hay suficiente memoria para el mensaje de la barra de información\n"
 

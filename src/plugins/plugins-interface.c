@@ -715,14 +715,14 @@ weechat_plugin_get_server_info (t_weechat_plugin *plugin)
 		new_server_info->away_time = ptr_server->away_time;
 		new_server_info->lag = ptr_server->lag;
 
-		new_server_info->prev_info = last_server_info;
-                new_server_info->next_info = NULL;
+		new_server_info->prev_server = last_server_info;
+                new_server_info->next_server = NULL;
                 if (!server_info)
                     server_info = new_server_info;
 		else
-                    last_server_info->next_info = new_server_info;
+                    last_server_info->next_server = new_server_info;
 		last_server_info = new_server_info;
-	    }	    
+	    }
 	}
        	
 	return server_info;
@@ -775,7 +775,7 @@ weechat_plugin_free_server_info (t_weechat_plugin *plugin, t_plugin_server_info 
             free (server_info->charset_encode);
 	if (server_info->nick)
             free (server_info->nick);
-        new_server_info = server_info->next_info;
+        new_server_info = server_info->next_server;
         free (server_info);
         server_info = new_server_info;
     }
@@ -818,12 +818,12 @@ weechat_plugin_get_channel_info (t_weechat_plugin *plugin, char *server)
 		new_channel_info->key = (ptr_channel->key) ? strdup (ptr_channel->key) : strdup ("");
 		new_channel_info->nicks_count = ptr_channel->nicks_count;
 		
-		new_channel_info->prev_info = last_channel_info;
-                new_channel_info->next_info = NULL;
+		new_channel_info->prev_channel = last_channel_info;
+                new_channel_info->next_channel = NULL;
                 if (!channel_info)
                     channel_info = new_channel_info;		
                 else
-                    last_channel_info->next_info = new_channel_info;
+                    last_channel_info->next_channel = new_channel_info;
 		last_channel_info = new_channel_info;
 	    }	    
 	}
@@ -856,7 +856,7 @@ weechat_plugin_free_channel_info (t_weechat_plugin *plugin, t_plugin_channel_inf
             free (channel_info->modes);
 	if (channel_info->key)
             free (channel_info->key);
-        new_channel_info = channel_info->next_info;
+        new_channel_info = channel_info->next_channel;
         free (channel_info);
 	channel_info = new_channel_info;
     }

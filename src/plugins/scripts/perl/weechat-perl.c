@@ -825,22 +825,25 @@ static XS (XS_weechat_get_server_info)
     }
     
     server_info = perl_plugin->get_server_info (perl_plugin);
-    if (!server_info) {
+    if (!server_info)
+    {
 	XSRETURN_EMPTY;
-    }
-    
+    }    
     
     HV *server_hash = (HV *) sv_2mortal((SV *) newHV());
     if (!server_hash)
+    {
+        perl_plugin->free_server_info (perl_plugin, server_info);
 	XSRETURN_EMPTY;
+    }
     
-    for (ptr_server = server_info; ptr_server; ptr_server = ptr_server->next_info)
+    for (ptr_server = server_info; ptr_server; ptr_server = ptr_server->next_server)
     {
 	strftime(timebuffer, sizeof(timebuffer), "%F %T",
 		 localtime(&ptr_server->away_time));
 	
 	HV *server_hash_member = (HV *) sv_2mortal((SV *) newHV());	        
-       
+        
 	hv_store (server_hash_member, "autoconnect",          11, newSViv (ptr_server->autoconnect), 0);
         hv_store (server_hash_member, "autoreconnect",        13, newSViv (ptr_server->autoreconnect), 0);
         hv_store (server_hash_member, "autoreconnect_delay",  19, newSViv (ptr_server->autoreconnect_delay), 0);
@@ -913,15 +916,19 @@ static XS (XS_weechat_get_channel_info)
 	XSRETURN_EMPTY;
 
     channel_info = perl_plugin->get_channel_info (perl_plugin, server);
-    if (!channel_info) {
+    if (!channel_info)
+    {
 	XSRETURN_EMPTY;
     }
     
     HV *channel_hash = (HV *) sv_2mortal((SV *) newHV());
     if (!channel_hash)
+    {
+        perl_plugin->free_channel_info (perl_plugin, channel_info);
 	XSRETURN_EMPTY;
+    }
     
-    for (ptr_channel = channel_info; ptr_channel; ptr_channel = ptr_channel->next_info)
+    for (ptr_channel = channel_info; ptr_channel; ptr_channel = ptr_channel->next_channel)
     {
 	HV *channel_hash_member = (HV *) sv_2mortal((SV *) newHV());	        
        
@@ -977,13 +984,17 @@ static XS (XS_weechat_get_nick_info)
 	XSRETURN_EMPTY;
     
     nick_info = perl_plugin->get_nick_info (perl_plugin, server, channel);
-    if (!nick_info) {
+    if (!nick_info)
+    {
 	XSRETURN_EMPTY;
     }
     
     HV *nick_hash = (HV *) sv_2mortal((SV *) newHV());
     if (!nick_hash)
+    {
+        perl_plugin->free_nick_info (perl_plugin, nick_info);
 	XSRETURN_EMPTY;
+    }
     
     for (ptr_nick = nick_info; ptr_nick; ptr_nick = ptr_nick->next_nick)
     {
