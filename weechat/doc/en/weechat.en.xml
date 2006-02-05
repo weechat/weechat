@@ -782,9 +782,18 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 </entry>
               </row>
               <row>
-                <entry>%Cnn</entry>
+                <entry>%Cxx</entry>
                 <entry>
-                  text color "<literal>nn</literal>" (see colors table below)
+                  text color "<literal>xx</literal>"
+                  (see colors table below)
+                </entry>
+              </row>
+              <row>
+                <entry>%Cxx,yy</entry>
+                <entry>
+                  text color "<literal>xx</literal>"
+                  and background "<literal>yy</literal>"
+                  (see colors table below)
                 </entry>
               </row>
               <row>
@@ -2186,20 +2195,24 @@ char *nick = plugin->get_info (plugin, "nick", "freenode");
               <tgroup cols="2">
                 <thead>
                   <row>
+                    <entry>Type</entry>
                     <entry>Field</entry>
                     <entry>Description</entry>
                   </row>
                 </thead>
                 <tbody>
                   <row>
+                    <entry>char *</entry>
                     <entry><literal>server</literal></entry>
                     <entry>IRC server</entry>
                   </row>
                   <row>
+                    <entry>char *</entry>
                     <entry><literal>channel</literal></entry>
                     <entry>IRC channel</entry>
                   </row>
                   <row>
+                    <entry>int</entry>
                     <entry><literal>type</literal></entry>
                     <entry>
                       DCC type:
@@ -2210,6 +2223,7 @@ char *nick = plugin->get_info (plugin, "nick", "freenode");
                     </entry>
                   </row>
                   <row>
+                    <entry>int*</entry>
                     <entry><literal>status</literal></entry>
                     <entry>
                       DCC status:
@@ -2222,51 +2236,82 @@ char *nick = plugin->get_info (plugin, "nick", "freenode");
                     </entry>
                   </row>
                   <row>
+                    <entry>time_t</entry>
                     <entry><literal>start_time</literal></entry>
                     <entry>date/time of DCC creation</entry>
                   </row>
                   <row>
+                    <entry>time_t</entry>
                     <entry><literal>start_transfer</literal></entry>
                     <entry>date/time of DCC transfer start</entry>
                   </row>
                   <row>
+                    <entry>unsigned long</entry>
                     <entry><literal>addr</literal></entry>
                     <entry>IP address of remote user</entry>
                   </row>
                   <row>
+                    <entry>int</entry>
                     <entry><literal>port</literal></entry>
                     <entry>port used for DCC</entry>
                   </row>
                   <row>
+                    <entry>char *</entry>
                     <entry><literal>nick</literal></entry>
                     <entry>remote nick</entry>
                   </row>
                   <row>
+                    <entry>char *</entry>
                     <entry><literal>filename</literal></entry>
                     <entry>file name</entry>
                   </row>
                   <row>
+                    <entry>char *</entry>
                     <entry><literal>local_filename</literal></entry>
                     <entry>local file name</entry>
                   </row>
                   <row>
+                    <entry>int</entry>
+                    <entry><literal>filename_suffix</literal></entry>
+                    <entry>suffix if renaming file</entry>
+                  </row>
+                  <row>
+                    <entry>unsigned long</entry>
                     <entry><literal>size</literal></entry>
                     <entry>file size</entry>
                   </row>
                   <row>
+                    <entry>unsigned long</entry>
                     <entry><literal>pos</literal></entry>
                     <entry>position in file</entry>
                   </row>
                   <row>
+                    <entry>unsigned long</entry>
                     <entry><literal>start_resume</literal></entry>
                     <entry>start position after interruption</entry>
                   </row>
                   <row>
+                    <entry>unsigned long</entry>
                     <entry><literal>bytes_per_sec</literal></entry>
                     <entry>
                       number of bytes per second since transfer start
                     </entry>
                   </row>
+                  <row>
+                    <entry>t_plugin_dcc_info *</entry>
+                    <entry><literal>prev_dcc</literal></entry>
+                    <entry>
+                      pointer to previous DCC info
+                    </entry>
+                  </row>
+                  <row>
+                    <entry>t_plugin_dcc_info *</entry>
+                    <entry><literal>next_dcc</literal></entry>
+                    <entry>
+                      pointer to next DCC info
+                    </entry>
+                  </row>
+
                 </tbody>
               </tgroup>
             </informaltable>
@@ -2294,7 +2339,7 @@ if (dcc_info)
           <title>free_dcc_info</title>
           
           <para>
-            Prototype :
+            Prototype:
             <command>
               void free_dcc_info (t_weechat_plugin *plugin,
               t_plugin_dcc_info *dcc_info)
@@ -2327,12 +2372,561 @@ if (dcc_info)
             <screen>plugin->free_dcc_info (plugin, dcc_info);</screen>
           </para>
         </section>
+
+        <section id="secAPI_get_server_info">
+          <title>get_server_info</title>
+          
+          <para>
+            Prototype:
+            <command>
+              t_plugin_server_info *get_server_info (t_weechat_plugin *plugin)
+            </command>
+          </para>
+          <para>
+            Return list of IRC servers (connected or not).
+          </para>
+          <para>
+            Arguments:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option>: pointer to plugin structure
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Return value: linked list of IRC servers.
+            <informaltable colsep="0" frame="none">
+              <tgroup cols="2">
+                <thead>
+                  <row>
+                    <entry>Type</entry>
+                    <entry>Field</entry>
+                    <entry>Description</entry>
+                  </row>
+                </thead>
+                <tbody>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>name</literal></entry>
+                    <entry>server internal name</entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>autoconnect</literal></entry>
+                    <entry>1 if autoconnect at start-up, 0 otherwise</entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>autoreconnect</literal></entry>
+                    <entry>
+                      1 if autoreconnect when disconnected,
+                      0 otherwise
+                    </entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>autoreconnect_delay</literal></entry>
+                    <entry>delay before trying again connection</entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>command_line</literal></entry>
+                    <entry>
+                      1 if server was on command line (so it is temporary),
+                      0 otherwise
+                    </entry>
+                  </row>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>address</literal></entry>
+                    <entry>server address (host or IP)</entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>port</literal></entry>
+                    <entry>port</entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>ipv6</literal></entry>
+                    <entry>IPv6 connection</entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>ssl</literal></entry>
+                    <entry>SSL connection</entry>
+                  </row>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>password</literal></entry>
+                    <entry>server password</entry>
+                  </row>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>nick1</literal></entry>
+                    <entry>first nickname</entry>
+                  </row>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>nick2</literal></entry>
+                    <entry>alternate nickname</entry>
+                  </row>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>nick3</literal></entry>
+                    <entry>second alternate nickname</entry>
+                  </row>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>username</literal></entry>
+                    <entry>user name</entry>
+                  </row>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>real name</literal></entry>
+                    <entry>real name</entry>
+                  </row>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>command</literal></entry>
+                    <entry>command run once connected</entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>command_delay</literal></entry>
+                    <entry>delay after execution of command</entry>
+                  </row>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>autojoin</literal></entry>
+                    <entry>channels joined automatically</entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>autorejoin</literal></entry>
+                    <entry>
+                      1 if channels are rejoined when kicked,
+                      0 otherwise
+                    </entry>
+                  </row>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>notify_levels</literal></entry>
+                    <entry>channels notify levels</entry>
+                  </row>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>charset_decode_iso</literal></entry>
+                    <entry>channels charsets for decoding ISO</entry>
+                  </row>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>charset_decode_utf</literal></entry>
+                    <entry>channels charsets for decoding UTF</entry>
+                  </row>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>charset_encode</literal></entry>
+                    <entry>channels charsets for encoding messages</entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>is_connected</literal></entry>
+                    <entry>1 if connected to server, 0 otherwise</entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>ssl_connected</literal></entry>
+                    <entry>1 if connected with SSL, 0 otherwise</entry>
+                  </row>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>nick</literal></entry>
+                    <entry>current nickname</entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>is_away</literal></entry>
+                    <entry>1 if away, 0 otherwise</entry>
+                  </row>
+                  <row>
+                    <entry>time_t</entry>
+                    <entry><literal>away_time</literal></entry>
+                    <entry>time when user is marking as away</entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>lag</literal></entry>
+                    <entry>lag (in milliseconds)</entry>
+                  </row>
+                  <row>
+                    <entry>t_plugin_server_info *</entry>
+                    <entry><literal>prev_server</literal></entry>
+                    <entry>pointer to previous server info</entry>
+                  </row>
+                  <row>
+                    <entry>t_plugin_server_info *</entry>
+                    <entry><literal>next_server</literal></entry>
+                    <entry>pointer to next server info</entry>
+                  </row>
+                </tbody>
+              </tgroup>
+            </informaltable>
+          </para>
+          <para>
+            Note: result has to be free by a call to "free_server_info"
+            function after use.
+          </para>
+          <para>
+            Example:
+<screen>
+t_plugin_server_info *server_info, *ptr_server_info;
+server_info = plugin->get_server_info (plugin);
+if (server_info)
+{
+    for (ptr_server_info = server_info; ptr_server_info;
+         ptr_server_info = ptr_server_info->next_server)
+    {
+        plugin->printf (plugin, NULL, NULL,
+                        "server: %s, address: %s, port: %d %s",
+                        ptr_server_info->name,
+                        ptr_server_info->address,
+                        ptr_server_info->port,
+                        (ptr_server_info->is_connected) ? "(connected)" : "");
+    }
+    plugin->free_server_info (plugin, server_info);
+}
+</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_free_server_info">
+          <title>free_server_info</title>
+          
+          <para>
+            Prototype:
+            <command>
+              void free_server_info (t_weechat_plugin *plugin,
+              t_plugin_server_info *server_info)
+            </command>
+          </para>
+          <para>
+            Free memory used by server info list.
+          </para>
+          <para>
+            Arguments:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option>: pointer to plugin structure
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>server_info</option>: pointer to server list
+                  returned by "get_server_info" function
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Return value: none.
+          </para>
+          <para>
+            Example:
+            <screen>plugin->free_server_info (plugin, server_info);</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_get_channel_info">
+          <title>get_channel_info</title>
+          
+          <para>
+            Prototype:
+            <command>
+              t_plugin_channel_info *get_channel_info (t_weechat_plugin *plugin,
+              char *server)
+            </command>
+          </para>
+          <para>
+            Return list of IRC channels for a server.
+          </para>
+          <para>
+            Arguments:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option>: pointer to plugin structure
+                </para>
+                <para>
+                  <option>server</option>: internal server name
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Return value: linked list of IRC channels for server.
+            <informaltable colsep="0" frame="none">
+              <tgroup cols="2">
+                <thead>
+                  <row>
+                    <entry>Type</entry>
+                    <entry>Field</entry>
+                    <entry>Description</entry>
+                  </row>
+                </thead>
+                <tbody>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>type</literal></entry>
+                    <entry>0 for a channel, 1 for a private</entry>
+                  </row>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>name</literal></entry>
+                    <entry>name of channel</entry>
+                  </row>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>topic</literal></entry>
+                    <entry>topic of channel</entry>
+                  </row>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>modes</literal></entry>
+                    <entry>channel modes</entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>limit</literal></entry>
+                    <entry>user limit</entry>
+                  </row>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>key</literal></entry>
+                    <entry>channel key</entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>nicks_count</literal></entry>
+                    <entry>number of nicks on channel</entry>
+                  </row>
+                  <row>
+                    <entry>t_plugin_channel_info *</entry>
+                    <entry><literal>prev_channel</literal></entry>
+                    <entry>pointer to previous channel info</entry>
+                  </row>
+                  <row>
+                    <entry>t_plugin_channel_info *</entry>
+                    <entry><literal>next_channel</literal></entry>
+                    <entry>pointer to next channel info</entry>
+                  </row>
+                </tbody>
+              </tgroup>
+            </informaltable>
+          </para>
+          <para>
+            Note: result has to be free by a call to "free_channel_info"
+            function after use.
+          </para>
+          <para>
+            Example:
+<screen>
+t_plugin_channel_info *channel_info, *ptr_chan_info;
+channel_info = plugin->get_channel_info (plugin, "freenode");
+if (channel_info)
+{
+    for (ptr_chan_info = channel_info; ptr_chan_info;
+         ptr_chan_info = ptr_chan_info->next_channel)
+    {
+        plugin->printf (plugin, NULL, NULL,
+                        "  %s (type %d)",
+                        ptr_chan_info->name,
+                        ptr_chan_info->type);
+    }
+    plugin->free_channel_info (plugin, channel_info);
+}
+</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_free_channel_info">
+          <title>free_channel_info</title>
+          
+          <para>
+            Prototype:
+            <command>
+              void free_channel_info (t_weechat_plugin *plugin,
+              t_plugin_channel_info *channel_info)
+            </command>
+          </para>
+          <para>
+            Free memory used by channel info list.
+          </para>
+          <para>
+            Arguments:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option>: pointer to plugin structure
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>channel_info</option>: pointer to channel info list
+                  returned by "get_channel_info" function
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Return value: none.
+          </para>
+          <para>
+            Example:
+            <screen>plugin->free_channel_info (plugin, channel_info);</screen>
+          </para>
+        </section>
+
+        <section id="secAPI_get_nick_info">
+          <title>get_nick_info</title>
+          
+          <para>
+            Prototype:
+            <command>
+              t_plugin_nick_info *get_nick_info (t_weechat_plugin *plugin,
+              char *server, char *channel)
+            </command>
+          </para>
+          <para>
+            Return list of nicks for a channel.
+          </para>
+          <para>
+            Arguments:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option>: pointer to plugin structure
+                </para>
+                <para>
+                  <option>server</option>: internal server name
+                </para>
+                <para>
+                  <option>channel</option>: channel name
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Return value: linked list of nicks on channel.
+            <informaltable colsep="0" frame="none">
+              <tgroup cols="2">
+                <thead>
+                  <row>
+                    <entry>Type</entry>
+                    <entry>Field</entry>
+                    <entry>Description</entry>
+                  </row>
+                </thead>
+                <tbody>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>nick</literal></entry>
+                    <entry>nick name</entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>flags</literal></entry>
+                    <entry>
+                      nick flags, binary "or" between values (1 = channel
+                      owner, 2 = channel admin, 4 = op, 8 = halfop,
+                      16 = voice, 32 = away)
+                    </entry>
+                  </row>
+                  <row>
+                    <entry>t_plugin_nick_info *</entry>
+                    <entry><literal>prev_nick</literal></entry>
+                    <entry>pointer to previous nick info</entry>
+                  </row>
+                  <row>
+                    <entry>t_plugin_nick_info *</entry>
+                    <entry><literal>next_nick</literal></entry>
+                    <entry>pointer to next nick info</entry>
+                  </row>
+                </tbody>
+              </tgroup>
+            </informaltable>
+          </para>
+          <para>
+            Note: result has to be free by a call to "free_nick_info"
+            function after use.
+          </para>
+          <para>
+            Example:
+<screen>
+t_plugin_nick_info *nick_info, *ptr_nick_info;
+nick_info = plugin->get_nick_info (plugin, "freenode", "#weechat");
+if (nick_info)
+{
+    for (ptr_nick_info = nick_info; ptr_nick_info;
+         ptr_nick_info = ptr_nick_info->next_nick)
+    {
+        plugin->printf (plugin, NULL, NULL,
+                        "  %s (flags: %d)",
+                        ptr_nick_info->nick,
+                        ptr_nick_info->flags);
+    }
+    plugin->free_nick_info (plugin, nick_info);
+}
+</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_free_nick_info">
+          <title>free_nick_info</title>
+          
+          <para>
+            Prototype:
+            <command>
+              void free_nick_info (t_weechat_plugin *plugin,
+              t_plugin_nick_info *nick_info)
+            </command>
+          </para>
+          <para>
+            Free memory used by nick info list.
+          </para>
+          <para>
+            Arguments:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option>: pointer to plugin structure
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>nick_info</option>: pointer to nick info list
+                  returned by "get_nick_info" function
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Return value: none.
+          </para>
+          <para>
+            Example:
+            <screen>plugin->free_nick_info (plugin, nick_info);</screen>
+          </para>
+        </section>
         
         <section id="secAPI_get_config">
           <title>get_config</title>
           
           <para>
-            Prototype :
+            Prototype:
             <command>
               char *get_config (t_weechat_plugin *plugin, char *option)
             </command>
@@ -3285,7 +3879,7 @@ nick = weechat.get_info ("nick", "freenode")
             </command>
           </para>
           <para>
-            Ruby prototype :
+            Ruby prototype:
             <command>
               Weechat.get_dcc_info ( )
             </command>
