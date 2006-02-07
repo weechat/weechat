@@ -2660,6 +2660,8 @@ if (server_info)
                 <para>
                   <option>plugin</option>: pointer to plugin structure
                 </para>
+              </listitem>
+              <listitem>
                 <para>
                   <option>server</option>: internal server name
                 </para>
@@ -2810,9 +2812,13 @@ if (channel_info)
                 <para>
                   <option>plugin</option>: pointer to plugin structure
                 </para>
+              </listitem>
+              <listitem>
                 <para>
                   <option>server</option>: internal server name
                 </para>
+              </listitem>
+              <listitem>
                 <para>
                   <option>channel</option>: channel name
                 </para>

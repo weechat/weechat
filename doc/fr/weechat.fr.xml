@@ -2711,6 +2711,8 @@ if (server_info)
                   <option>plugin</option> : pointeur vers la structure
                   de l'extension
                 </para>
+              </listitem>
+              <listitem>
                 <para>
                   <option>serveur</option> : nom interne du serveur
                 </para>
@@ -2863,9 +2865,13 @@ if (channel_info)
                   <option>plugin</option> : pointeur vers la structure
                   de l'extension
                 </para>
+              </listitem>
+              <listitem>
                 <para>
                   <option>serveur</option> : nom interne du serveur
                 </para>
+              </listitem>
+              <listitem>
                 <para>
                   <option>canal</option> : nom du canal
                 </para>
