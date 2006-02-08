@@ -1,10 +1,13 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-01-30
+ChangeLog - 2006-02-08
 
 
 Version 0.1.8 (under dev!):
+   * added Lua script plugin
+   * added functions in plugins API: get_server_info, free_server_info,
+     get_channel_info, free_channel_info, get_nick_info, free_nick_info
    * added option "look_nick_complete_first" (patch from Gwenn)
    * added option "look_open_near_server" (patch from Gwenn)
    * fixed bug with /upgrade and servers buffer
