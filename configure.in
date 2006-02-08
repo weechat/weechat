@@ -515,6 +515,7 @@ AC_OUTPUT([Makefile
            src/plugins/scripts/perl/Makefile
            src/plugins/scripts/python/Makefile
            src/plugins/scripts/ruby/Makefile
+           src/plugins/scripts/lua/Makefile
            src/gui/Makefile
            src/gui/curses/Makefile
            src/gui/wxwidgets/Makefile
