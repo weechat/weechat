@@ -34,4 +34,8 @@ if PLUGIN_RUBY
 ruby_dir = ruby
 endif
 
-SUBDIRS = . $(perl_dir) $(python_dir) $(ruby_dir)
+if PLUGIN_LUA
+lua_dir = lua
+endif
+
+SUBDIRS = . $(perl_dir) $(python_dir) $(ruby_dir) $(lua_dir)
