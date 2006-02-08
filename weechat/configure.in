@@ -46,7 +46,7 @@ solaris*)
 esac
 
 # Gettext
-ALL_LINGUAS="fr es cs"
+ALL_LINGUAS="fr es cs hu"
 AM_GNU_GETTEXT
 
 # Checks for libraries
