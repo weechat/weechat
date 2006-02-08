@@ -3966,6 +3966,243 @@ nick = weechat.get_info ("nick", "freenode")
         </section>
         
         <section>
+          <title>get_server_info</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::get_server_info ( );
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.get_server_info ( )
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.get_server_info ( )
+            </command>
+          </para>
+          <para>
+            Renvoie la liste des serveurs IRC (connectés ou non).
+          </para>
+          <para>
+            Valeur renvoyée : la liste des serveurs IRC (connectés ou non)
+            (voir <xref linkend="secAPI_get_server_info" />).
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+my $servers = weechat::get_server_info();
+if ($servers)
+{
+    while (my ($srvname, $srvinfos) = each %$servers)
+    {
+        while ( my ($key, $value) = each %$srvinfos)
+        {
+            weechat::print("$srvname[$key] = '$value'");
+        }
+    }
+}
+else
+{
+    weechat::print("pas de serveur");
+}
+
+# python
+servers = weechat.get_server_info()
+if servers != None:
+    if servers == {}:
+        weechat.prnt("pas de serveur")
+    else:
+        for s in servers:
+            for i in servers[s]:
+                weechat.prnt("%s[%s] = '%s'" % (s, i, str(servers[s][i])))
+else:
+    weechat.prnt("erreur de lecture des serveurs")
+
+# ruby
+servers = Weechat.get_server_info()
+if servers != nil
+    if servers == []
+        Weechat.print("pas de serveur")
+    else
+        servers.each do |n, s|
+            s.each do |key, value|
+                Weechat.print("#{n}[#{key}] = '#{value}'")
+            end
+        end
+    end
+else
+    Weechat.print("erreur de lecture des serveurs")
+end
+</screen>
+          </para>
+        </section>
+        
+        <section>
+          <title>get_channel_info</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::get_channel_info ( serveur );
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.get_channel_info ( serveur )
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.get_channel_info ( serveur )
+            </command>
+          </para>
+          <para>
+            Renvoie la liste des canaux IRC pour un serveur.
+          </para>
+          <para>
+            Valeur renvoyée : la liste des canaux IRC du serveur
+            (voir <xref linkend="secAPI_get_channel_info" />).
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+my $channels = weechat::get_channel_info(weechat::get_info('server'));
+if ($channels)
+{
+    while (my ($channame, $chaninfos) = each %$channels)
+    {
+        while (my ($key, $value) = each %$chaninfos)
+        {
+            weechat::print("$channame[$key] = '$value'");
+        }
+    }
+}
+else
+{
+    weechat::print("pas de canal");
+}
+
+# python
+chans = weechat.get_channel_info(weechat.get_info('server'))
+if chans != None:
+    if chans == {}:
+        weechat.prnt("pas de canal")
+    else:
+        for s in chans:
+            for i in chans[s]:
+                weechat.prnt("%s[%s] = '%s'" % (s, i, str(chans[s][i])))
+else:
+    weechat.prnt("erreur de lecture des canaux")
+
+# ruby
+channels = Weechat.get_channel_info(Weechat.get_info('server'))
+if channels != nil
+    if channels == {}
+        Weechat.print("pas de canal")
+    else
+        channels.each do |n, c|
+            c.each do |key, value|
+                Weechat.print("#{n}[#{key}] = '#{value}'")
+            end
+        end
+    end
+else
+    Weechat.print("erreur de lecture des canaux")
+end
+</screen>
+          </para>
+        </section>
+        
+        <section>
+          <title>get_nick_info</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::get_nick_info ( server, canal );
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.get_nick_info ( serveur, canal )
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.get_nick_info ( serveur, canal )
+            </command>
+          </para>
+          <para>
+            Renvoie la liste des pseudos pour un canal.
+          </para>
+          <para>
+            Valeur renvoyée : la liste des pseudos présents sur le canal
+            (voir <xref linkend="secAPI_get_nick_info" />).
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+my $nicks = weechat::get_nick_info("freenode", "#weechat");
+if ($nicks)
+{
+    while (my ($nickname, $nickinfos) = each %$nicks)
+    {
+        while ( my ($key, $value) = each %$nickinfos)
+        {
+            weechat::print("$nickname[$key] = '$value'");
+        }
+    }
+}
+else
+{
+    weechat::print("pas de pseudo");
+}
+
+# python
+nicks = weechat.get_nick_info("freenode", "#weechat")
+if nicks != None:
+    if nicks == {}:
+        weechat.prnt("pas de pseudo")
+    else:
+        for n in nicks:
+            for f in nicks[n]:
+                weechat.prnt("%s[%s] = '%s'" % (n, f, str(nicks[n][f])))
+else:
+    weechat.prnt("erreur de lecture des pseudos")
+
+# ruby
+nicks = Weechat.get_nick_info("freenode", "#weechat")
+if nicks != nil
+    if nicks == {}
+        Weechat.print("pas de pseudo")
+    else
+        nicks.each do |nk, nattr|
+            nattr.each do |key, value|
+                Weechat.print("#{nk}[#{key}] = '#{value}'")
+            end
+        end
+    end
+else
+    Weechat.print("erreur de lecture des pseudos")
+end
+</screen>
+          </para>
+        </section>
+        
+        <section>
           <title>get_config</title>
           
           <para>
@@ -4257,7 +4494,7 @@ Weechat.set_plugin_config ("ma_variable", "valeur")
           <listitem>
             <para>
               <emphasis>Jiri Golembiovsky</emphasis> -
-              traduction tchèque
+              traduction en tchèque, patchs
             </para>
           </listitem>
           <listitem>
@@ -4288,6 +4525,12 @@ Weechat.set_plugin_config ("ma_variable", "valeur")
             <para>
               <emphasis>Gwenn</emphasis> -
               patchs
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis>voroskoi</emphasis> -
+              traduction en hongrois
             </para>
           </listitem>
         </itemizedlist>
