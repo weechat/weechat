@@ -462,7 +462,7 @@ weechat_lua_remove_handler (lua_State *L)
     /* make gcc happy */
     (void) L;
  
-    char *command, *function;
+    const char *command, *function;
     
     if (!lua_current_script)
     {
@@ -486,9 +486,12 @@ weechat_lua_remove_handler (lua_State *L)
         lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
+
+    command = lua_tostring (lua_current_interpreter, -2);
+    function = lua_tostring (lua_current_interpreter, -1);
     
     weechat_script_remove_handler (lua_plugin, lua_current_script,
-                                   command, function);
+                                   (char *) command, (char *) function);
     
     lua_pushnumber (lua_current_interpreter, 1);
     return 1;
