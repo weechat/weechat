@@ -341,7 +341,7 @@ weechat_lua_add_message_handler  (lua_State *L)
     /* make gcc happy */
     (void) L;
  
-    char *irc_command, *function;
+    const char *irc_command, *function;
     
     if (!lua_current_script)
     {
@@ -366,8 +366,11 @@ weechat_lua_add_message_handler  (lua_State *L)
 	return 1;
     }
 
-    if (!lua_plugin->msg_handler_add (lua_plugin, irc_command,
-				     weechat_lua_handler, function,
+    irc_command = lua_tostring (lua_current_interpreter, -2);
+    function = lua_tostring (lua_current_interpreter, -1);
+    
+    if (!lua_plugin->msg_handler_add (lua_plugin, (char *) irc_command,
+				     weechat_lua_handler, (char *) function,
 				     (void *)lua_current_script))
     {
 	lua_pushnumber (lua_current_interpreter, 0);
