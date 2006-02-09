@@ -1168,7 +1168,7 @@ fi
     
     <para>
       Ce chapitre décrit l'interface des extensions (API) et les extensions
-      pour scripts (Perl, Python, Ruby), fournies avec WeeChat.
+      pour scripts (Perl, Python, Ruby, Lua), fournies avec WeeChat.
     </para>
     
     <section id="secLesExtensionsDansWeeChat">
@@ -3267,7 +3267,7 @@ void weechat_plugin_end (t_weechat_plugin *plugin)
       
       <para>
         Trois extensions sont fournies en standard avec WeeChat pour utiliser
-        des langages de script : Perl, Python et Ruby.
+        des langages de script : Perl, Python, Ruby et Lua.
       </para>
       
       <section id="secChargerDechargerScripts">
@@ -3275,9 +3275,10 @@ void weechat_plugin_end (t_weechat_plugin *plugin)
         
         <para>
           Les scripts sont chargés et déchargés avec les commandes
-          <command>/perl</command>, <command>/python</command> et
-          <command>/ruby</command> (tapez <command>/help</command> dans
-          WeeChat pour obtenir de l'aide sur les commandes).
+          <command>/perl</command>, <command>/python</command>,
+          <command>/ruby</command> et <command>/lua</command>
+          (tapez <command>/help</command> dans WeeChat pour obtenir
+          de l'aide sur les commandes).
         </para>
         
         <para>
@@ -3319,6 +3320,18 @@ void weechat_plugin_end (t_weechat_plugin *plugin)
                 <command><userinput>/ruby</userinput></command>
               </para>
             </listitem>
+            <listitem>
+              <para>
+                Charger un script Lua :
+                <command><userinput>/lua load /tmp/essai.lua</userinput></command>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Lister les scripts Lua chargés :
+                <command><userinput>/lua</userinput></command>
+              </para>
+            </listitem>
           </itemizedlist>
         </para>
         
@@ -3346,6 +3359,12 @@ void weechat_plugin_end (t_weechat_plugin *plugin)
             Prototype Ruby :
             <command>
               Weechat.register ( nom, version, fonction_de_fin, description )
+            </command>
+          </para>
+          <para>
+            Prototype Lua :
+            <command>
+              weechat.register ( nom, version, fonction_de_fin, description )
             </command>
           </para>
           <para>
@@ -3395,6 +3414,9 @@ weechat.register ("essai", "1.0", "fin_essai", "Script d'essai !")
 
 # ruby
 Weechat.register ("essai", "1.0", "fin_essai", "Script d'essai !")
+
+-- lua
+weechat.register ("essai", "1.0", "fin_essai", "Script d'essai !")
 </screen>
           </para>
         </section>
@@ -3418,6 +3440,12 @@ Weechat.register ("essai", "1.0", "fin_essai", "Script d'essai !")
             Prototype Ruby :
             <command>
               Weechat.print ( message, [canal, [serveur]] )
+            </command>
+          </para>
+          <para>
+            Prototype Lua :
+            <command>
+              weechat.print ( message, [canal, [serveur]] )
             </command>
           </para>
           <para>
@@ -3466,6 +3494,11 @@ weechat.prnt ("message", "#weechat", "freenode")
 Weechat.print ("message")
 Weechat.print ("message", "#weechat")
 Weechat.print ("message", "#weechat", "freenode")
+
+-- lua
+weechat.print ("message")
+weechat.print ("message", "#weechat")
+weechat.print ("message", "#weechat", "freenode")
 </screen>
           </para>
         </section>
@@ -3489,6 +3522,12 @@ Weechat.print ("message", "#weechat", "freenode")
             Prototype Ruby :
             <command>
               Weechat.print_infobar ( temps, message )
+            </command>
+          </para>
+          <para>
+            Prototype Lua :
+            <command>
+              weechat.print_infobar ( temps, message )
             </command>
           </para>
           <para>
@@ -3524,6 +3563,9 @@ weechat.print_infobar (5, "message")
 
 # ruby
 Weechat.print_infobar (5, "message")
+
+-- lua
+weechat.print_infobar (5, "message")
 </screen>
           </para>
         </section>
@@ -3547,6 +3589,12 @@ Weechat.print_infobar (5, "message")
             Prototype Ruby :
             <command>
               Weechat.add_message_handler ( message, fonction )
+            </command>
+          </para>
+          <para>
+            Prototype Lua :
+            <command>
+              weechat.add_message_handler ( message, fonction )
             </command>
           </para>
           <para>
@@ -3599,6 +3647,20 @@ def ma_fonction(serveur, args):
     masque, null, canal = string.split(string.strip(canal), " ", 2)
     weechat.prnt("masque="+masque+", canal="+canal+", message="+message)
     return weechat.PLUGIN_RC_OK
+
+# ruby
+def ma_fonction(server, args)
+    Weechat.print("serveur=#{server}, args=#{args}")
+    return Weechat::PLUGIN_RC_OK
+end
+Weechat.add_message_handler ("privmsg", "ma_fonction")
+
+-- lua
+weechat.add_message_handler ("privmsg", "ma_fonction")
+function ma_fonction(server, args)
+    weechat.print("serveur=" .. server .. ", args=" .. args)
+    return weechat.PLUGIN_RC_OK()
+end
 </screen>
           </para>
           <para>
@@ -3666,6 +3728,14 @@ def ma_fonction(serveur, args):
             </command>
           </para>
           <para>
+            Prototype Lua :
+            <command>
+              weechat.add_command_handler ( commande, fonction,
+              [description, arguments, arguments_description,
+              modele_completion] )
+            </command>
+          </para>
+          <para>
             Ajoute un gestionnaire de commande WeeChat, appelé dès que
             l'utilisateur utilise la commande (par exemple /commande).
           </para>
@@ -3719,15 +3789,29 @@ def ma_fonction(serveur, args):
 weechat::add_command_handler ("commande", ma_commande);
 sub ma_commande
 {
-    weechat::print("Serveur: $_[0], paramètres: $_[1]\n");
+    weechat::print("serveur=$_[0], args=$_[1]\n");
     return weechat::PLUGIN_RC_OK;
 }
 
 # python
 weechat.add_command_handler ("commande", ma_commande)
 def ma_commande(serveur, args):
-    weechat.prnt("serveur:"+serveur+" paramètres:"+args)
+    weechat.prnt("serveur="+serveur+", args="+args)
     return weechat.PLUGIN_RC_OK
+
+# ruby
+def ma_commande(server, args)
+    Weechat.print("serveur=#{server} args=#{args}")
+    return Weechat::PLUGIN_RC_OK
+end
+Weechat.add_command_handler ("command", "ma_commande")
+
+-- lua
+weechat.add_command_handler ("command", "ma_commande")
+def my_command(server, args)
+    weechat.print("serveur="..server..", args="..args)
+    return weechat.PLUGIN_RC_OK()
+end
 </screen>
           </para>
           <para>
@@ -3771,6 +3855,12 @@ def ma_commande(serveur, args):
             </command>
           </para>
           <para>
+            Prototype Lua :
+            <command>
+              weechat.remove_handler ( nom, fonction )
+            </command>
+          </para>
+          <para>
             Supprime un gestionnaire.
           </para>
           <para>
@@ -3802,6 +3892,9 @@ weechat.remove_handler ("commande", ma_commande)
 
 # ruby
 Weechat.remove_handler ("commande", ma_commande)
+
+-- lua
+weechat.remove_handler ("commande", "ma_commande")
 </screen>
           </para>
         </section>
@@ -3825,6 +3918,12 @@ Weechat.remove_handler ("commande", ma_commande)
             Prototype Ruby :
             <command>
               Weechat.command ( commande, [canal, [serveur]] )
+            </command>
+          </para>
+          <para>
+            Prototype Lua :
+            <command>
+              weechat.command ( commande, [canal, [serveur]] )
             </command>
           </para>
           <para>
@@ -3872,6 +3971,11 @@ weechat.command ("/nick newnick", "", "freenode")
 Weechat.command ("bonjour tout le monde !")
 Weechat.command ("/kick toto merci de quitter ce canal", "#weechat")
 Weechat.command ("/nick newnick", "", "freenode")
+
+-- lua
+weechat.command ("bonjour tout le monde !")
+weechat.command ("/kick toto merci de quitter ce canal", "#weechat")
+weechat.command ("/nick newnick", "", "freenode")
 </screen>
           </para>
         </section>
@@ -3895,6 +3999,12 @@ Weechat.command ("/nick newnick", "", "freenode")
             Prototype Ruby :
             <command>
               Weechat.get_info ( nom, [serveur] )
+            </command>
+          </para>
+          <para>
+            Prototype Lua :
+            <command>
+              weechat.get_info ( nom, [serveur] )
             </command>
           </para>
           <para>
@@ -3931,6 +4041,14 @@ $nick = get_info("nick", "freenode");
 # python
 version = weechat.get_info ("version")
 nick = weechat.get_info ("nick", "freenode")
+
+# ruby
+version = Weechat.get_info ("version")
+nick = Weechat.get_info ("nick", "freenode")
+
+-- lua
+version = weechat.get_info ("version")
+nick = weechat.get_info ("nick", "freenode")
 </screen>
           </para>
         </section>
@@ -3957,11 +4075,86 @@ nick = weechat.get_info ("nick", "freenode")
             </command>
           </para>
           <para>
+            Prototype Lua :
+            <command>
+              weechat.get_dcc_info ( )
+            </command>
+          </para>
+          <para>
             Renvoie la liste des DCC en cours ou terminés.
           </para>
           <para>
             Valeur renvoyée : la liste des DCC
             (voir <xref linkend="secAPI_get_dcc_info" />).
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+my @dccs = weechat::get_dcc_info();
+if (@dccs)
+{
+    foreach my $dcc (@dccs)
+    {
+        while (my ($key, $value) = each %$dcc)
+        {
+            weechat::print("$key = '$value'");
+        }
+    }
+}
+else
+{
+    weechat::print("pas de DCC");
+}
+
+# python
+dccs = weechat.get_dcc_info()
+if dccs != None:
+    if dccs == []:
+        weechat.prnt("pas de DCC")
+    else:
+        for d in dccs:
+            for b in d.keys():
+                weechat.prnt("%s = '%s'" %(b, d[b]))
+else:
+    weechat.prnt("erreur de lecture des DCC")
+
+# ruby
+dccs = Weechat.get_dcc_info()
+if dccs != nil   
+    if dccs == []
+        Weechat.print("pas de DCC")
+    else
+        dccs.each do |m|
+            m.each do |key, value|
+                Weechat.print("#{key} = '#{value}'")
+            end
+        end
+    end
+else
+    Weechat.print("erreur de lecture des DCC")
+end
+
+-- lua
+dccs = weechat.get_dcc_info()
+if dccs ~= nil then
+    if dccs then
+        dcc, dccinfos = next (dccs, nil)
+        while (dcc) do
+            key, value = next (dccinfos, nil)
+            while (key) do
+                weechat.print(key.." = '"..value.."'")
+                key, value = next (dccinfos, key)
+            end
+            dcc, dccinfos = next (dccs, dcc)
+        end 
+    else
+        weechat.print("pas de DCC")
+    end
+else
+    weechat.print("erreur de lecture des DCC")
+end
+</screen>
           </para>
         </section>
         
@@ -3987,6 +4180,12 @@ nick = weechat.get_info ("nick", "freenode")
             </command>
           </para>
           <para>
+            Prototype Lua :
+            <command>
+              weechat.get_server_info ( )
+            </command>
+          </para>
+          <para>
             Renvoie la liste des serveurs IRC (connectés ou non).
           </para>
           <para>
@@ -4002,7 +4201,7 @@ if ($servers)
 {
     while (my ($srvname, $srvinfos) = each %$servers)
     {
-        while ( my ($key, $value) = each %$srvinfos)
+        while (my ($key, $value) = each %$srvinfos)
         {
             weechat::print("$srvname[$key] = '$value'");
         }
@@ -4040,6 +4239,26 @@ if servers != nil
 else
     Weechat.print("erreur de lecture des serveurs")
 end
+
+-- lua
+servers = weechat.get_server_info()
+if servers ~= nil then
+    if servers then
+        srv, srvinfos = next (servers, nil)
+        while (srv) do
+            key, value = next (srvinfos, nil)
+            while (key) do
+                weechat.print(key.." = '"..value.."'")
+                key, value = next (srvinfos, key)
+            end	
+            srv, srvinfos = next (servers, srv)
+        end
+    else
+        weechat.print("pas de serveur")
+    end
+else
+    weechat.print("erreur de lecture des serveurs")
+end
 </screen>
           </para>
         </section>
@@ -4066,6 +4285,12 @@ end
             </command>
           </para>
           <para>
+            Prototype Lua :
+            <command>
+              weechat.get_channel_info ( serveur )
+            </command>
+          </para>
+          <para>
             Renvoie la liste des canaux IRC pour un serveur.
           </para>
           <para>
@@ -4076,7 +4301,7 @@ end
             Exemples :
 <screen>
 # perl
-my $channels = weechat::get_channel_info(weechat::get_info('server'));
+my $channels = weechat::get_channel_info(weechat::get_info("server"));
 if ($channels)
 {
     while (my ($channame, $chaninfos) = each %$channels)
@@ -4093,7 +4318,7 @@ else
 }
 
 # python
-chans = weechat.get_channel_info(weechat.get_info('server'))
+chans = weechat.get_channel_info(weechat.get_info("server"))
 if chans != None:
     if chans == {}:
         weechat.prnt("pas de canal")
@@ -4105,7 +4330,7 @@ else:
     weechat.prnt("erreur de lecture des canaux")
 
 # ruby
-channels = Weechat.get_channel_info(Weechat.get_info('server'))
+channels = Weechat.get_channel_info(Weechat.get_info("server"))
 if channels != nil
     if channels == {}
         Weechat.print("pas de canal")
@@ -4119,6 +4344,26 @@ if channels != nil
 else
     Weechat.print("erreur de lecture des canaux")
 end
+
+-- lua
+chans = weechat.get_channel_info(weechat.get_info("server"))
+if chans ~= nil then
+    if chans then
+        chan, chaninfos = next (chans, nil)
+        while (chan) do
+            key, value = next (chaninfos, nil)
+            while (key) do
+                weechat.print(key.." = '"..value.."'")
+                key, value = next (chaninfos, key)
+            end
+            chan, chaninfos = next (chans, chan)
+        end
+    else
+        weechat.print("pas de canal")
+    end
+else
+    weechat.print("erreur de lecture des canaux")
+end
 </screen>
           </para>
         </section>
@@ -4129,7 +4374,7 @@ end
           <para>
             Prototype Perl :
             <command>
-              weechat::get_nick_info ( server, canal );
+              weechat::get_nick_info ( serveur, canal );
             </command>
           </para>
           <para>
@@ -4142,6 +4387,12 @@ end
             Prototype Ruby :
             <command>
               Weechat.get_nick_info ( serveur, canal )
+            </command>
+          </para>
+          <para>
+            Prototype Lua :
+            <command>
+              weechat.get_nick_info ( serveur, canal )
             </command>
           </para>
           <para>
@@ -4198,6 +4449,26 @@ if nicks != nil
 else
     Weechat.print("erreur de lecture des pseudos")
 end
+
+-- lua
+nicks = weechat.get_nick_info("freenode", "#weechat")
+if nicks ~= nil then
+    if nicks then	
+        nick, nickinfos = next (nicks, nil)
+        while (nick) do
+            key, value = next (nickinfos, nil)
+            while (key) do
+                weechat.print(nick.."["..key.."] = '"..value.."'")
+                key, value = next (nickinfos, key)
+            end
+            nick, nickinfos = next (nicks, nick)
+        end
+    else
+        weechat.print("pas de pseudo")
+    end
+else
+    weechat.print("erreur de lecture des pseudos")
+end
 </screen>
           </para>
         </section>
@@ -4221,6 +4492,12 @@ end
             Prototype Ruby :
             <command>
               Weechat.get_config ( option )
+            </command>
+          </para>
+          <para>
+            Prototype Lua :
+            <command>
+              weechat.get_config ( option )
             </command>
           </para>
           <para>
@@ -4250,6 +4527,14 @@ $value2 = weechat::get_config ("freenode.server_autojoin");
 # python
 value1 = weechat.get_config ("look_nicklist")
 value2 = weechat.get_config ("freenode.server_autojoin")
+
+# ruby
+value1 = Weechat.get_config ("look_nicklist")
+value2 = Weechat.get_config ("freenode.server_autojoin")
+
+-- lua
+value1 = weechat.get_config ("look_nicklist")
+value2 = weechat.get_config ("freenode.server_autojoin")
 </screen>
           </para>
         </section>
@@ -4273,6 +4558,12 @@ value2 = weechat.get_config ("freenode.server_autojoin")
             Prototype Ruby :
             <command>
               Weechat.set_config ( option, valeur )
+            </command>
+          </para>
+          <para>
+            Prototype Lua :
+            <command>
+              weechat.set_config ( option, valeur )
             </command>
           </para>
           <para>
@@ -4312,6 +4603,10 @@ weechat.set_config ("freenode.server_autojoin, "#weechat")
 # ruby
 Weechat.set_config ("look_nicklist", "off")
 Weechat.set_config ("freenode.server_autojoin, "#weechat")
+
+-- lua
+weechat.set_config ("look_nicklist", "off")
+weechat.set_config ("freenode.server_autojoin, "#weechat")
 </screen>
           </para>
         </section>
@@ -4335,6 +4630,12 @@ Weechat.set_config ("freenode.server_autojoin, "#weechat")
             Prototype Ruby :
             <command>
               Weechat.get_plugin_config ( option )
+            </command>
+          </para>
+          <para>
+            Prototype Lua :
+            <command>
+              weechat.get_plugin_config ( option )
             </command>
           </para>
           <para>
@@ -4368,6 +4669,12 @@ $value = weechat::get_plugin_config ("ma_variable");
 
 # python
 value = weechat.get_plugin_config ("ma_variable")
+
+# ruby
+value = Weechat.get_plugin_config ("ma_variable")
+
+-- lua
+value = weechat.get_plugin_config ("ma_variable")
 </screen>
           </para>
         </section>
@@ -4391,6 +4698,12 @@ value = weechat.get_plugin_config ("ma_variable")
             Prototype Ruby :
             <command>
               Weechat.set_plugin_config ( option, valeur )
+            </command>
+          </para>
+          <para>
+            Prototype Lua :
+            <command>
+              weechat.set_plugin_config ( option, valeur )
             </command>
           </para>
           <para>
@@ -4433,6 +4746,9 @@ weechat.set_plugin_config ("ma_variable", "valeur")
 
 # ruby
 Weechat.set_plugin_config ("ma_variable", "valeur")
+
+-- lua
+weechat.set_plugin_config ("ma_variable", "valeur")
 </screen>
           </para>
         </section>
