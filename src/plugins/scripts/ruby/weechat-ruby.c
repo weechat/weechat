@@ -99,7 +99,7 @@ rb_rescue_funcall (VALUE recv, VALUE func, int argc, ...)
 {
 
     va_list ap;
-    VALUE argv;
+    VALUE argv, ret;
 
     argv = rb_ary_new ();
     
@@ -116,7 +116,7 @@ rb_rescue_funcall (VALUE recv, VALUE func, int argc, ...)
         va_end(ap);
     }
     
-    VALUE ret = rb_rescue(rb_funcall0, argv, rb_rescue0, func);
+    ret = rb_rescue(rb_funcall0, argv, rb_rescue0, func);
 
     if (NIL_P(ret))
 	ret = INT2FIX(PLUGIN_RC_KO);
@@ -134,10 +134,10 @@ weechat_ruby_exec (t_weechat_plugin *plugin,
                    t_plugin_script *script,
                    char *function, char *server, char *arguments)
 {
+    VALUE ruby_retcode;
+
     /* make gcc happy */
     (void) plugin;
-
-    VALUE ruby_retcode;
     
     ruby_current_script = script;
 
@@ -1490,6 +1490,7 @@ weechat_ruby_cmd (t_weechat_plugin *plugin,
 int
 weechat_plugin_init (t_weechat_plugin *plugin)
 {
+    int ruby_error;
     char *weechat_ruby_code =
 	{	    
 	    "class IO\n"
@@ -1540,7 +1541,7 @@ weechat_plugin_init (t_weechat_plugin *plugin)
 	    "end\n"
 	};
     ruby_plugin = plugin;
-    int ruby_error = 0;
+    ruby_error = 0;
 
     plugin->printf_server (plugin, "Loading Ruby module \"weechat\"");
     

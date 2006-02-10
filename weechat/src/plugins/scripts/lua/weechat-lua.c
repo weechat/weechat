@@ -102,17 +102,17 @@ weechat_lua_handler (t_weechat_plugin *plugin,
 static int
 weechat_lua_register (lua_State *L)
 {
+    const char *name, *version, *shutdown_func, *description;
+    int n;
     /* make gcc happy */
     (void) L;
-    
-    const char *name, *version, *shutdown_func, *description;
     
     name = NULL;
     version = NULL;
     shutdown_func = NULL;
     description = NULL;
     
-    int n = lua_gettop (lua_current_interpreter);
+    n = lua_gettop (lua_current_interpreter);
 
     if (n != 4)
     {
@@ -177,10 +177,10 @@ weechat_lua_register (lua_State *L)
 static int
 weechat_lua_print  (lua_State *L)
 {
+    const char *message, *channel_name, *server_name;
+    int n;
     /* make gcc happy */
     (void) L;
- 
-    const char *message, *channel_name, *server_name;
     
     if (!lua_current_script)
     {
@@ -195,7 +195,7 @@ weechat_lua_print  (lua_State *L)
     channel_name = NULL;
     server_name = NULL;
     
-    int n = lua_gettop (lua_current_interpreter);
+    n = lua_gettop (lua_current_interpreter);
 
     switch (n)
     {
@@ -235,11 +235,10 @@ weechat_lua_print  (lua_State *L)
 static int
 weechat_lua_print_infobar  (lua_State *L)
 {
+    const char *message;
+    int delay, n;
     /* make gcc happy */
     (void) L;
- 
-    int delay;
-    const char *message;
     
     if (!lua_current_script)
     {
@@ -253,7 +252,7 @@ weechat_lua_print_infobar  (lua_State *L)
     delay = 1;
     message = NULL;
 
-    int n = lua_gettop (lua_current_interpreter);
+    n = lua_gettop (lua_current_interpreter);
 
     if (n != 2)
     {
@@ -280,11 +279,11 @@ weechat_lua_print_infobar  (lua_State *L)
 static int
 weechat_lua_command  (lua_State *L)
 {
+    const char *command, *channel_name, *server_name;
+    int n;
     /* make gcc happy */
     (void) L;
- 
-    const char *command, *channel_name, *server_name;
-    
+     
     if (!lua_current_script)
     {
         lua_plugin->printf_server (lua_plugin,
@@ -298,8 +297,8 @@ weechat_lua_command  (lua_State *L)
     channel_name = NULL;
     server_name = NULL;
     
-    int n = lua_gettop (lua_current_interpreter);
-
+    n = lua_gettop (lua_current_interpreter);
+    
     switch (n)
     {
     case 1:
@@ -338,10 +337,10 @@ weechat_lua_command  (lua_State *L)
 static int
 weechat_lua_add_message_handler  (lua_State *L)
 {
+    const char *irc_command, *function;
+    int n;
     /* make gcc happy */
     (void) L;
- 
-    const char *irc_command, *function;
     
     if (!lua_current_script)
     {
@@ -355,7 +354,7 @@ weechat_lua_add_message_handler  (lua_State *L)
     irc_command = NULL;
     function = NULL;
     
-    int n = lua_gettop (lua_current_interpreter);
+    n = lua_gettop (lua_current_interpreter);
 
     if (n != 2)
     {
@@ -388,12 +387,12 @@ weechat_lua_add_message_handler  (lua_State *L)
 static int
 weechat_lua_add_command_handler  (lua_State *L)
 {
-    /* make gcc happy */
-    (void) L;
-    
     const char *command, *function, *description, *arguments, *arguments_description;
     const char *completion_template;
-    
+    int n;
+    /* make gcc happy */
+    (void) L;
+        
     if (!lua_current_script)
     {
         lua_plugin->printf_server (lua_plugin,
@@ -410,7 +409,7 @@ weechat_lua_add_command_handler  (lua_State *L)
     arguments_description = NULL;
     completion_template = NULL;
 
-    int n = lua_gettop (lua_current_interpreter);
+    n = lua_gettop (lua_current_interpreter);
     
     switch (n)
     {
@@ -459,11 +458,11 @@ weechat_lua_add_command_handler  (lua_State *L)
 static int
 weechat_lua_remove_handler (lua_State *L)
 {
+    const char *command, *function;
+    int n;
     /* make gcc happy */
     (void) L;
- 
-    const char *command, *function;
-    
+     
     if (!lua_current_script)
     {
         lua_plugin->printf_server (lua_plugin,
@@ -476,8 +475,8 @@ weechat_lua_remove_handler (lua_State *L)
     command = NULL;
     function = NULL;
  
-    int n = lua_gettop (lua_current_interpreter);
-
+    n = lua_gettop (lua_current_interpreter);
+    
     if (n != 2)
     {
 	lua_plugin->printf_server (lua_plugin,
@@ -504,11 +503,11 @@ weechat_lua_remove_handler (lua_State *L)
 static int
 weechat_lua_get_info  (lua_State *L)
 {
-    /* make gcc happy */
-    (void) L;
-    
     const char *arg, *server_name;
     char *info;
+    int n;
+    /* make gcc happy */
+    (void) L;
     
     if (!lua_current_script)
     {
@@ -522,7 +521,7 @@ weechat_lua_get_info  (lua_State *L)
     arg = NULL;
     server_name = NULL;
     
-     int n = lua_gettop (lua_current_interpreter);
+    n = lua_gettop (lua_current_interpreter);
 
     switch (n)
     {
@@ -557,14 +556,13 @@ weechat_lua_get_info  (lua_State *L)
 static int
 weechat_lua_get_dcc_info  (lua_State *L)
 {
-    /* make gcc happy */
-    (void) L;
- 
     t_plugin_dcc_info *dcc_info, *ptr_dcc;
     char timebuffer1[64];
     char timebuffer2[64];
     struct in_addr in;
     int i;
+    /* make gcc happy */
+    (void) L;
     
     if (!lua_current_script)
     {
@@ -674,12 +672,12 @@ weechat_lua_get_dcc_info  (lua_State *L)
 static int
 weechat_lua_get_config  (lua_State *L)
 {
-    /* make gcc happy */
-    (void) L;
- 
     const char *option;
     char *return_value;
-    
+    int n;
+    /* make gcc happy */
+    (void) L;
+     
     if (!lua_current_script)
     {
         lua_plugin->printf_server (lua_plugin,
@@ -691,7 +689,7 @@ weechat_lua_get_config  (lua_State *L)
     
     option = NULL;
  
-    int n = lua_gettop (lua_current_interpreter);
+    n = lua_gettop (lua_current_interpreter);
 
     if (n != 1)
     {
@@ -720,10 +718,10 @@ weechat_lua_get_config  (lua_State *L)
 static int
 weechat_lua_set_config  (lua_State *L)
 {
+    const char *option, *value;
+    int n;
     /* make gcc happy */
     (void) L;
- 
-    const char *option, *value;
     
     if (!lua_current_script)
     {
@@ -737,7 +735,7 @@ weechat_lua_set_config  (lua_State *L)
     option = NULL;
     value = NULL;
     
-    int n = lua_gettop (lua_current_interpreter);
+    n = lua_gettop (lua_current_interpreter);
     
     if (n != 2)
     {
@@ -766,12 +764,12 @@ weechat_lua_set_config  (lua_State *L)
 static int
 weechat_lua_get_plugin_config  (lua_State *L)
 {
-    /* make gcc happy */
-    (void) L;
- 
     const char *option;
     char *return_value;
-    
+    int n;
+    /* make gcc happy */
+    (void) L;
+     
     if (!lua_current_script)
     {
         lua_plugin->printf_server (lua_plugin,
@@ -783,7 +781,7 @@ weechat_lua_get_plugin_config  (lua_State *L)
     
     option = NULL;
  
-    int n = lua_gettop (lua_current_interpreter);
+    n = lua_gettop (lua_current_interpreter);
 
     if (n != 1)
     {
@@ -814,11 +812,11 @@ weechat_lua_get_plugin_config  (lua_State *L)
 static int
 weechat_lua_set_plugin_config  (lua_State *L)
 {
+    const char *option, *value;
+    int n;
     /* make gcc happy */
     (void) L;
- 
-    const char *option, *value;
-	
+ 	
     if (!lua_current_script)
     {
         lua_plugin->printf_server (lua_plugin,
@@ -831,7 +829,7 @@ weechat_lua_set_plugin_config  (lua_State *L)
     option = NULL;
     value = NULL;
     
-    int n = lua_gettop (lua_current_interpreter);
+    n = lua_gettop (lua_current_interpreter);
     
     if (n != 2)
     {
@@ -862,11 +860,10 @@ weechat_lua_set_plugin_config  (lua_State *L)
 static int
 weechat_lua_get_server_info  (lua_State *L)
 {
-    /* make gcc happy */
-    (void) L;
- 
     t_plugin_server_info *server_info, *ptr_server;
     char timebuffer[64];
+    /* make gcc happy */
+    (void) L;
     
     if (!lua_current_script)
     {
@@ -1016,12 +1013,12 @@ weechat_lua_get_server_info  (lua_State *L)
 static int
 weechat_lua_get_channel_info  (lua_State *L)
 {
+    t_plugin_channel_info *channel_info, *ptr_channel;
+    const char *server;
+    int n;
     /* make gcc happy */
     (void) L;
  
-    t_plugin_channel_info *channel_info, *ptr_channel;
-    const char *server;
-    
     if (!lua_current_script)
     {
         lua_plugin->printf_server (lua_plugin,
@@ -1033,7 +1030,7 @@ weechat_lua_get_channel_info  (lua_State *L)
     
     server = NULL;
     
-    int n = lua_gettop (lua_current_interpreter);
+    n = lua_gettop (lua_current_interpreter);
     
     if (n != 1)
     {
@@ -1099,12 +1096,12 @@ weechat_lua_get_channel_info  (lua_State *L)
 static int
 weechat_lua_get_nick_info  (lua_State *L)
 {
-    /* make gcc happy */
-    (void) L;
- 
     t_plugin_nick_info *nick_info, *ptr_nick;
     const char *server, *channel;
-    
+    int n;
+    /* make gcc happy */
+    (void) L;
+     
     if (!lua_current_script)
     {
         lua_plugin->printf_server (lua_plugin,
@@ -1117,7 +1114,7 @@ weechat_lua_get_nick_info  (lua_State *L)
     server = NULL;
     channel = NULL;
     
-    int n = lua_gettop (lua_current_interpreter);
+    n = lua_gettop (lua_current_interpreter);
     
     if (n != 2)
     {
@@ -1241,6 +1238,7 @@ const struct luaL_reg weechat_lua_funcs[] = {
 int
 weechat_lua_load (t_weechat_plugin *plugin, char *filename)
 {
+    FILE *fp;
     char *weechat_lua_code = {
 	"weechat_outputs = {\n"
 	"    write = function (self, str)\n"
@@ -1250,7 +1248,6 @@ weechat_lua_load (t_weechat_plugin *plugin, char *filename)
 	"io.stdout = weechat_outputs\n"
 	"io.stderr = weechat_outputs\n"
     };
-    FILE *fp;
     
     plugin->printf_server (plugin, "Loading Lua script \"%s\"", filename);
     
