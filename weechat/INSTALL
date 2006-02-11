@@ -2,11 +2,7 @@ WeeChat - Installation instructions
 ===================================
 
 1) Run './configure'
-   options: --enable-perl    : enable Perl scripts
-            --disable-curses : do not build Curses interface
-            --enable-gtk     : build Gtk+ interface (under development!)
-            --enable-qt      : build Qt interface (not developed!)
-            --with-debug=X   : X=1 for debug compilation, 2 for debug messages
+   (./configure --help so see options)
 
 2) Run 'make'
 
@@ -14,4 +10,4 @@ WeeChat - Installation instructions
 
 4) Enjoy !  :-)
 
-See AUTHORS for support, feel free to contact us for any problem ;)
+See AUTHORS for support, feel free to contact us for any problem.

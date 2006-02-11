@@ -1,4 +1,4 @@
-WeeChat FAQ, 2006-01-14
+WeeChat FAQ, 2006-02-11
 =======================
 
 Public concerné :
@@ -56,7 +56,7 @@ R:	Parce que WeeChat est très léger et a de nouvelles fonctionnalités.
 	  * plusieurs interfaces (Curses, Gtk, wxWidgets, Qt)
 	  * disponible en plusieurs langues
 	  * liste des pseudos disponible dans toutes les interfaces
-	  * extensible par des scripts (Perl, Python, Ruby)
+	  * extensible par des extensions (C, Perl, Python, Ruby, Lua)
 	  * découpage de la fenêtre horizontalement et verticalement
 	  * highlight dans la barre d'infos
 	  * tube FIFO pour contrôle à distance
@@ -106,6 +106,7 @@ R:	La commande /perl permet de charger les scripts Perl (le chemin par défaut
 	est ~/.weechat/perl).
 	Notez que les scripts dans ~/.weechat/perl/autoload sont automatiquement
 	chargés par WeeChat lorsqu'il démarre.
+	Les scripts Perl ne sont pas compatibles avec X-chat ni Irssi.
 
 
 2.6
@@ -117,16 +118,31 @@ R:	La commande /python permet de charger les scripts Python (le chemin par
 	défaut est ~/.weechat/python).
 	Notez que les scripts dans ~/.weechat/python/autoload sont automatiquement
 	chargés par WeeChat lorsqu'il démarre.
+	Les scripts Python ne sont pas compatibles avec X-chat ni Irssi.
 
 
 2.7
 ================================================================================
 Q:	Comment puis-je charger des scripts Ruby ?
+	Les scripts Ruby sont-ils compatibles avec X-chat et/ou Irssi ?
 
 R:	La commande /ruby permet de charger les scripts Ruby (le chemin par
 	défaut est ~/.weechat/ruby).
 	Notez que les scripts dans ~/.weechat/ruby/autoload sont automatiquement
 	chargés par WeeChat lorsqu'il démarre.
+	Les scripts Ruby ne sont pas compatibles avec X-chat ni Irssi.
+
+
+2.8
+================================================================================
+Q:	Comment puis-je charger des scripts Lua ?
+	Les scripts Lua sont-ils compatibles avec X-chat et/ou Irssi ?
+
+R:	La commande /lua permet de charger les scripts Lua (le chemin par
+	défaut est ~/.weechat/lua).
+	Notez que les scripts dans ~/.weechat/lua/autoload sont automatiquement
+	chargés par WeeChat lorsqu'il démarre.
+	Les scripts Lua ne sont pas compatibles avec X-chat ni Irssi.
 
 
 3.1

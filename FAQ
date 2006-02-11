@@ -1,4 +1,4 @@
-WeeChat FAQ, 2006-01-14
+WeeChat FAQ, 2006-02-11
 =======================
 
 Intended audience:
@@ -53,7 +53,7 @@ A:	Because WeeChat is very light and has new features.
 	  * many GUI (Curses, Gtk, wxWidgets, Qt)
 	  * available in many languages
 	  * nicklist available in all GUI
-	  * extensible with scripts (Perl, Python, Ruby)
+	  * extensible with plugins (C, Perl, Python, Ruby, Lua)
 	  * horizontal and vertical window split
 	  * infobar highlight
 	  * FIFO pipe for remote control
@@ -101,6 +101,7 @@ A:	You can use /perl command to load scripts (default path is
 	~/.weechat/perl).
 	Note that scripts in ~/.weechat/perl/autoload are automatically loaded
 	when WeeChat is starting up.
+	Perl scripts are not compatible with X-chat and Irssi.
 
 
 2.6
@@ -112,17 +113,31 @@ A:	You can use /python command to load scripts (default path is
 	~/.weechat/python).
 	Note that scripts in ~/.weechat/python/autoload are automatically loaded
 	when WeeChat is starting up.
+	Python scripts are not compatible with X-chat and Irssi.
 
 
 2.7
 ================================================================================
 Q:	How can I load Ruby scripts?
+	Are Ruby scripts compatible with X-chat or/and Irssi ?
 
 A:	You can use /ruby command to load scripts (default path is
 	~/.weechat/ruby).
 	Note that scripts in ~/.weechat/ruby/autoload are automatically loaded
 	when WeeChat is starting up.
+	Ruby scripts are not compatible with X-chat and Irssi.
 
+
+2.8
+================================================================================
+Q:	How can I load Lua scripts?
+	Are Lua scripts compatible with X-chat or/and Irssi ?
+
+A:	You can use /lua command to load scripts (default path is
+	~/.weechat/lua).
+	Note that scripts in ~/.weechat/lua/autoload are automatically loaded
+	when WeeChat is starting up.
+	Lua scripts are not compatible with X-chat and Irssi.
 
 3.1
 ================================================================================
