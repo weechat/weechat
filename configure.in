@@ -100,26 +100,17 @@ AC_ARG_ENABLE(wxwidgets,     [  --enable-wxwidgets      Turn on WxWidgets interf
 AC_ARG_ENABLE(gtk,           [  --enable-gtk            Turn on Gtk interface (default=no Gtk)],enable_gtk=$enableval,enable_gtk=no)
 AC_ARG_ENABLE(qt,            [  --enable-qt             Turn on Qt interface (default=no Qt)],enable_qt=$enableval,enable_qt=no)
 AC_ARG_ENABLE(plugins,       [  --disable-plugins       Turn off plugins support (default=plugins enabled)],enable_plugins=$enableval,enable_plugins=yes)
-AC_ARG_ENABLE(perl,          [  --enable-perl           Turn on Perl script plugin (default=no Perl plugin)],enable_perl=$enableval,enable_perl=no)
-AC_ARG_ENABLE(python,        [  --enable-python         Turn on Python script plugin (default=no Python plugin)],enable_python=$enableval,enable_python=no)
-AC_ARG_ENABLE(ruby,          [  --enable-ruby           Turn on Ruby script plugin (default=no Ruby script)],enable_ruby=$enableval,enable_ruby=no)
-AC_ARG_ENABLE(lua,           [  --enable-lua            Turn on Lua script plugin (default=no Lua script)],enable_lua=$enableval,enable_lua=no)
+AC_ARG_ENABLE(perl,          [  --disable-perl          Turn off Perl script plugin (default=compiled if found)],enable_perl=$enableval,enable_perl=yes)
+AC_ARG_ENABLE(python,        [  --disable-python        Turn off Python script plugin (default=compiled if found)],enable_python=$enableval,enable_python=yes)
+AC_ARG_ENABLE(ruby,          [  --disable-ruby          Turn off Ruby script plugin (default=compiled if found)],enable_ruby=$enableval,enable_ruby=yes)
+AC_ARG_ENABLE(lua,           [  --disable-lua           Turn off Lua script plugin (default=compiled if found)],enable_lua=$enableval,enable_lua=yes)
 AC_ARG_WITH(lua-inc,         [  --with-lua-inc=DIR,     Lua include files are in DIR (default=autodetect)],lua_inc=$withval,lua_inc='')
 AC_ARG_WITH(lua-lib,         [  --with-lua-lib=DIR,     Lua library files are in DIR (default=autodetect)],lua_lib=$withval,lua_lib='')
 AC_ARG_WITH(lua-suffix,      [  --with-lua-suffix=ARG   Lua is suffixed with ARG (default=autodetect)],lua_suffix=$withval,lua_suffix='')
 AC_ARG_ENABLE(gnutls,        [  --disable-gnutls        Turn off gnutls support (default=compiled if found)],enable_gnutls=$enableval,enable_gnutls=yes)
 AC_ARG_WITH(debug,           [  --with-debug            Debugging: 0=no debug, 1=debug compilation, 2=debug compilation + verbose msgs (default=1)],debug=$withval,debug=1)
 
-AM_CONDITIONAL(GUI_NCURSES,          test "$enable_ncurses" = "yes")
-AM_CONDITIONAL(GUI_WXWIDGETS,        test "$enable_wxwidgets" = "yes")
-AM_CONDITIONAL(GUI_GTK,              test "$enable_gtk" = "yes")
-AM_CONDITIONAL(GUI_QT,               test "$enable_qt" = "yes")
-AM_CONDITIONAL(PLUGINS,              test "$enable_plugins" = "yes")
-AM_CONDITIONAL(PLUGIN_PERL,          test "$enable_perl" = "yes")
-AM_CONDITIONAL(PLUGIN_PYTHON,        test "$enable_python" = "yes")
-AM_CONDITIONAL(PLUGIN_RUBY,          test "$enable_ruby" = "yes")
-AM_CONDITIONAL(PLUGIN_LUA,           test "$enable_lua" = "yes")
-AM_CONDITIONAL(HAVE_GNUTLS,          test "$enable_gnutls" = "yes")
+not_found=""
 
 # ------------------------------------------------------------------------------
 #                                    GUI
@@ -128,14 +119,17 @@ AM_CONDITIONAL(HAVE_GNUTLS,          test "$enable_gnutls" = "yes")
 if test "x$enable_ncurses" = "xyes" ; then
     if test "$LIBNCURSESW_FOUND" = "0" ; then
         if test "$LIBNCURSES_FOUND" = "0" ; then
-            AC_MSG_ERROR([
+            AC_MSG_WARN([
 *** ncurses library not found!
-*** Please install ncurses library or run ./configure with --disable-ncurses parameter.])
-        fi
-        AC_MSG_WARN([
+*** WeeChat will be built without ncurses support.])
+            enable_ncurses="no"
+            not_found="$not_found ncurses"
+        else
+            AC_MSG_WARN([
 *** ncursesw library not found! Falling back to "ncurses"
 *** Be careful, UTF-8 display may not work properly if your locale is UTF-8.])
-        NCURSES_LIBS="-lncurses"
+            NCURSES_LIBS="-lncurses"
+        fi
     else
         NCURSES_LIBS="-lncursesw"
         AC_CHECK_HEADERS(ncursesw/curses.h)
@@ -171,12 +165,17 @@ fi
 if test "x$enable_gtk" = "xyes" ; then
     AM_PATH_GTK_2_0(2.4.0, LIBGTK_FOUND=1, LIBGTK_FOUND=0)
     if test "$LIBGTK_FOUND" = "0" ; then
-        AC_MSG_ERROR([Gtk library not found! Install Gtk library (2.4 or higher) or run ./configure without --enable-gtk parameter.])
+        AC_MSG_WARN([
+*** Gtk library not found!
+*** WeeChat will be built without Gtk support.])
+        enable_gtk="no"
+        not_found="$not_found gtk"
+    else
+        GTK_CFLAGS=`pkg-config --cflags gtk+-2.0`
+        GTK_LIBS=`pkg-config --libs gtk+-2.0`
+        AC_SUBST(GTK_CFLAGS)
+        AC_SUBST(GTK_LIBS)
     fi
-    GTK_CFLAGS=`pkg-config --cflags gtk+-2.0`
-    GTK_LIBS=`pkg-config --libs gtk+-2.0`
-    AC_SUBST(GTK_CFLAGS)
-    AC_SUBST(GTK_LIBS)
 fi
 
 # ------------------------------------------------------------------------------
@@ -190,40 +189,45 @@ if test "x$enable_perl" = "xyes" ; then
     
     AC_PATH_PROGS(PERL, perl perl5)
     if test -z $PERL ; then
-        AC_MSG_ERROR([
-*** Perl must be installed on your system
-*** but perl interpreter couldn't be found in path.
-
-Please check that perl is in path, or install
-it with your software package manager.])
-    fi
-    
-    AC_MSG_CHECKING(for Perl headers files)
-    
-    PERL_HEADER_TEST=`PT=perltest.c ; echo "#include <EXTERN.h>" > $PT;  echo "#include <perl.h>" >> $PT;  echo "#include <XSUB.h>" >> $PT ;  echo "int main() { return 0; }" >> $PT ; $CC -Wall $PT -o $PT.out $($PERL -MExtUtils::Embed -e ccopts) 1>/dev/null 2>&1; echo $?; rm -f $PT $PT.out 1>/dev/null 2>&1`
-
-    if test "x$PERL_HEADER_TEST" = "x0" ; then
-	PERL_CFLAGS=`$PERL -MExtUtils::Embed -e ccopts`
+        AC_MSG_WARN([
+*** Perl must be installed on your system but perl interpreter couldn't be found in path.
+*** Please check that perl is in path, or install it with your software package manager.
+*** WeeChat will be built without Perl support.])
+        enable_perl="no"
+        not_found="$not_found perl"
     else
-        AC_MSG_ERROR([
-*** Perl headers couldn't be found in your system.
-*** Try to install it with your software package manager.])
-    fi
-    AC_MSG_RESULT(found)
-    
-    AC_MSG_CHECKING(for Perl library)
-
-    PERL_LIB_TEST=`PT=perltest.c ; echo "int main() { return 0; }" > $PT ; $CC -Wall $PT -o $PT.out $($PERL -MExtUtils::Embed -e ldopts) 1>/dev/null 2>&1; echo $?; rm -f $PT $PT.out 1>/dev/null 2>&1`
-
-    if test "x$PERL_LIB_TEST" = "x0" ; then
-        PERL_LFLAGS=`$PERL -MExtUtils::Embed -e ldopts`
-    else
-        AC_MSG_ERROR([
+        AC_MSG_CHECKING(for Perl headers files)
+        
+        PERL_HEADER_TEST=`PT=perltest.c ; echo "#include <EXTERN.h>" > $PT;  echo "#include <perl.h>" >> $PT;  echo "#include <XSUB.h>" >> $PT ;  echo "int main() { return 0; }" >> $PT ; $CC -Wall $PT -o $PT.out $($PERL -MExtUtils::Embed -e ccopts) 1>/dev/null 2>&1; echo $?; rm -f $PT $PT.out 1>/dev/null 2>&1`
+        
+        if test "x$PERL_HEADER_TEST" = "x0" ; then
+            PERL_CFLAGS=`$PERL -MExtUtils::Embed -e ccopts`
+            AC_MSG_RESULT(found)
+            AC_MSG_CHECKING(for Perl library)
+            PERL_LIB_TEST=`PT=perltest.c ; echo "int main() { return 0; }" > $PT ; $CC -Wall $PT -o $PT.out $($PERL -MExtUtils::Embed -e ldopts) 1>/dev/null 2>&1; echo $?; rm -f $PT $PT.out 1>/dev/null 2>&1`
+            if test "x$PERL_LIB_TEST" = "x0" ; then
+                PERL_LFLAGS=`$PERL -MExtUtils::Embed -e ldopts`
+                AC_MSG_RESULT(found)
+            else
+                AC_MSG_WARN([
 *** Perl library couldn't be found in your system.
-*** Try to install it with your software package manager.])
+*** Try to install it with your software package manager.
+*** WeeChat will be built without Perl support.])
+                enable_perl="no"
+                not_found="$not_found perl"
+            fi
+        else
+            AC_MSG_WARN([
+*** Perl headers couldn't be found in your system.
+*** Try to install it with your software package manager.
+*** WeeChat will be built without Perl support.])
+            enable_perl="no"
+            not_found="$not_found perl"
+        fi
     fi
-    AC_MSG_RESULT(found)
-	    
+fi
+
+if test "x$enable_perl" = "xyes" ; then
     AC_SUBST(PERL_CFLAGS)
     AC_SUBST(PERL_LFLAGS)
     AC_DEFINE(PLUGIN_PERL)
@@ -234,45 +238,53 @@ if test "x$enable_python" = "xyes" ; then
     
     AC_PATH_PROGS(PYTHON, python python2.4 python2.3 python2.2)
     if test -z $PYTHON ; then
-        AC_MSG_ERROR([
-*** Python must be installed on your system
-*** but python interpreter couldn't be found in path.
-
-*** Please check that python is in path, or install
-*** it with your software package manager.])
-    fi
-    
-    PYTHON_SYSPREFIX=`$PYTHON -c 'import sys; print "%s" % sys.prefix'`
-    PYTHON_VERSION=`$PYTHON -c 'import sys ; print sys.version[[:3]]'`
-    PYTHON_INCLUDE=`$PYTHON -c "import distutils.sysconfig,string; print distutils.sysconfig.get_config_var('CONFINCLUDEPY')"`
-    
-    AC_MSG_CHECKING(for Python header files)
-    if test -r "$PYTHON_INCLUDE/Python.h"; then
-        PYTHON_CFLAGS="-I$PYTHON_INCLUDE"
+        AC_MSG_WARN([
+*** Python must be installed on your system but python interpreter couldn't be found in path.
+*** Please check that python is in path, or install it with your software package manager.
+*** WeeChat will be built without Python support.])
+        enable_python="no"
+        not_found="$not_found python"
     else
-        AC_MSG_ERROR([
-*** Python header files couldn't be found in your system.
-*** Try to install them with your software package manager.])
-    fi
-    AC_MSG_RESULT(found)
-    
-    PYTHON_LIB=`$PYTHON -c "import distutils.sysconfig; print distutils.sysconfig.get_config_var('LIBPL')"`
-    PYTHON_LFLAGS="-lpython$PYTHON_VERSION "`$PYTHON -c "import distutils.sysconfig; print distutils.sysconfig.get_config_var('LIBS')+' '+distutils.sysconfig.get_config_var('SYSLIBS')+' '+distutils.sysconfig.get_config_var('LINKFORSHARED')"`
-    
-    AC_MSG_CHECKING(for Python library)
-    if test -r "$PYTHON_LIB/libpython$PYTHON_VERSION.so"; then
-       PYTHON_LFLAGS="-L$PYTHON_LIB $PYTHON_LFLAGS"
-    elif test -r "$PYTHON_LIB/libpython$PYTHON_VERSION.a"; then
-       PYTHON_LFLAGS="-L$PYTHON_LIB $PYTHON_LFLAGS"
-    elif test -r "$PYTHON_SYSPREFIX/lib/libpython$PYTHON_VERSION.so"; then
-       PYTHON_LFLAGS="-L$PYTHON_SYSPREFIX/lib/ $PYTHON_LFLAGS"
-    else
-        AC_MSG_ERROR([
+        PYTHON_SYSPREFIX=`$PYTHON -c 'import sys; print "%s" % sys.prefix'`
+        PYTHON_VERSION=`$PYTHON -c 'import sys ; print sys.version[[:3]]'`
+        PYTHON_INCLUDE=`$PYTHON -c "import distutils.sysconfig,string; print distutils.sysconfig.get_config_var('CONFINCLUDEPY')"`
+        
+        AC_MSG_CHECKING(for Python header files)
+        if test -r "$PYTHON_INCLUDE/Python.h"; then
+            PYTHON_CFLAGS="-I$PYTHON_INCLUDE"
+            AC_MSG_RESULT(found)
+            PYTHON_LIB=`$PYTHON -c "import distutils.sysconfig; print distutils.sysconfig.get_config_var('LIBPL')"`
+            PYTHON_LFLAGS="-lpython$PYTHON_VERSION "`$PYTHON -c "import distutils.sysconfig; print distutils.sysconfig.get_config_var('LIBS')+' '+distutils.sysconfig.get_config_var('SYSLIBS')+' '+distutils.sysconfig.get_config_var('LINKFORSHARED')"`
+            AC_MSG_CHECKING(for Python library)
+            if test -r "$PYTHON_LIB/libpython$PYTHON_VERSION.so"; then
+               PYTHON_LFLAGS="-L$PYTHON_LIB $PYTHON_LFLAGS"
+               AC_MSG_RESULT(found)
+            elif test -r "$PYTHON_LIB/libpython$PYTHON_VERSION.a"; then
+               PYTHON_LFLAGS="-L$PYTHON_LIB $PYTHON_LFLAGS"
+               AC_MSG_RESULT(found)
+            elif test -r "$PYTHON_SYSPREFIX/lib/libpython$PYTHON_VERSION.so"; then
+               PYTHON_LFLAGS="-L$PYTHON_SYSPREFIX/lib/ $PYTHON_LFLAGS"
+               AC_MSG_RESULT(found)
+            else
+                AC_MSG_WARN([
 *** Python library couldn't be found in your system.            
-*** Try to install it with your software package manager.])
+*** Try to install it with your software package manager.
+*** WeeChat will be built without Python support.])
+                enable_python="no"
+                not_found="$not_found python"
+            fi
+        else
+            AC_MSG_WARN([
+*** Python header files couldn't be found in your system.
+*** Try to install them with your software package manager.
+*** WeeChat will be built without Python support.])
+            enable_python="no"
+            not_found="$not_found python"
+        fi
     fi
-    AC_MSG_RESULT(found)
-    
+fi
+
+if test "x$enable_python" = "xyes" ; then
     AC_SUBST(PYTHON_CFLAGS)
     AC_SUBST(PYTHON_LFLAGS)
     AC_DEFINE(PLUGIN_PYTHON)
@@ -283,28 +295,31 @@ if test "x$enable_ruby" = "xyes" ; then
 
     AC_PATH_PROGS(RUBY, ruby ruby1.8 ruby1.9)
     if test -z $RUBY ; then
-        AC_MSG_ERROR([
-*** Ruby must be installed on your system
-*** but ruby interpreter couldn't be found in path.
-
-*** Please check that ruby is in path, or install
-*** it with your software package manager.])
-    fi
-    
-    RUBY_INCLUDE=`$RUBY -rrbconfig -e "puts Config::CONFIG[['archdir']]"`
-
-    AC_MSG_CHECKING(for Ruby header files)
-    if test -r "$RUBY_INCLUDE/ruby.h"; then
-        RUBY_CFLAGS="-I$RUBY_INCLUDE"
+        AC_MSG_WARN([
+*** Ruby must be installed on your system but ruby interpreter couldn't be found in path.
+*** Please check that ruby is in path, or install it with your software package manager.
+*** WeeChat will be built without Ruby support.])
+        enable_ruby="no"
+        not_found="$not_found ruby"
     else
-        AC_MSG_ERROR([
+        RUBY_INCLUDE=`$RUBY -rrbconfig -e "puts Config::CONFIG[['archdir']]"`
+        AC_MSG_CHECKING(for Ruby header files)
+        if test -r "$RUBY_INCLUDE/ruby.h"; then
+            RUBY_CFLAGS="-I$RUBY_INCLUDE"
+        else
+            AC_MSG_WARN([
 *** Ruby header files couldn't be found in your system.
-*** Try to install them with your software package manager.])
+*** Try to install them with your software package manager.
+*** WeeChat will be built without Ruby support.])
+            enable_ruby="no"
+            not_found="$not_found ruby"
+        fi
+        AC_MSG_RESULT(found)
+        RUBY_LFLAGS=`$RUBY -rrbconfig -e "puts Config::CONFIG[['LIBRUBYARG_SHARED']]"`
     fi
-    AC_MSG_RESULT(found)
-   
-    RUBY_LFLAGS=`$RUBY -rrbconfig -e "puts Config::CONFIG[['LIBRUBYARG_SHARED']]"`
+fi
 
+if test "x$enable_ruby" = "xyes" ; then
     AC_SUBST(RUBY_CFLAGS)
     AC_SUBST(RUBY_LFLAGS)
     AC_DEFINE(PLUGIN_RUBY)
@@ -329,73 +344,77 @@ if test "x$enable_lua" = "xyes" ; then
     fi
     
     if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then
-       PKGCONFIG=""
-       AC_CHECK_PROGS(PKGCONFIG, pkg-config)
-       if test "x$PKGCONFIG" != "x"; then
-	  AC_MSG_CHECKING(for Lua headers and librairies with pkg-config)
-	  for l in "$lua_suffix" "" "50" "5.0" ; do
-	      pkgconfig_lua_found=`$PKGCONFIG --exists lua$l && $PKGCONFIG --exists lualib$l`
-	      if test "x$?" = "x0" ; then
-		 LUA_CFLAGS="$LUA_CFLAGS "`$PKGCONFIG --cflags lua$l`
-		 LUA_CFLAGS="$LUA_CFLAGS "`$PKGCONFIG --cflags lualib$l`
-		 LUA_LFLAGS="$LUA_LFLAGS "`$PKGCONFIG --libs lua$l`
-		 LUA_LFLAGS="$LUA_LFLAGS "`$PKGCONFIG --libs lualib$l`
-		 break
-              fi
-          done
-	  if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then
-	     AC_MSG_RESULT(found)
-	  fi
-      fi
-   fi    
-
-   if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then
-      LUACONFIG=""
-      AC_CHECK_PROGS(LUACONFIG, lua-config lua-config50 lua-config5.0)
-      if test "x$LUACONFIG" != "x" ; then
-	 AC_MSG_CHECKING(for Lua headers and librairies with lua-config)
-	 LUA_CFLAGS=`$LUACONFIG --include`
-	 LUA_LFLAGS=`$LUACONFIG --libs`
-      fi
-      if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then
-	 AC_MSG_RESULT(found)
-      fi
-   fi
-
-   if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then       
-      AC_MSG_CHECKING(for Lua headers and librairies)
-      AC_CHECK_HEADER(lua.h,ac_found_lua_header="yes",ac_found_lua_header="no")
-      AC_CHECK_HEADER(lualib.h,ac_found_liblua_header="yes",ac_found_liblua_header="no")
-      if test "x$ac_found_lua_header" = "xyes" -a "x$ac_found_liblua_header" = "xyes"; then
-	 LUA_CFLAGS="$CFLAGS"
-      fi
-      for l in "$lua_suffix" "" "50" "5.0" ; do
-	AC_CHECK_LIB(lua$l,lua_open,ac_found_lua_lib="yes",ac_found_lua_lib="no")
-	AC_CHECK_LIB(lualib$l,luaopen_base,ac_found_liblua_lib="yes",ac_found_liblua_lib="no")
-	if test "x$ac_found_lua_lib" = "xyes" ; then
-	   LUA_LFLAGS="$LFLAGS -llua$l"
-	   break
+        PKGCONFIG=""
+        AC_CHECK_PROGS(PKGCONFIG, pkg-config)
+        if test "x$PKGCONFIG" != "x"; then
+	    AC_MSG_CHECKING(for Lua headers and librairies with pkg-config)
+	    for l in "$lua_suffix" "" "50" "5.0" ; do
+	        pkgconfig_lua_found=`$PKGCONFIG --exists lua$l && $PKGCONFIG --exists lualib$l`
+	        if test "x$?" = "x0" ; then
+                    LUA_CFLAGS="$LUA_CFLAGS "`$PKGCONFIG --cflags lua$l`
+                    LUA_CFLAGS="$LUA_CFLAGS "`$PKGCONFIG --cflags lualib$l`
+                    LUA_LFLAGS="$LUA_LFLAGS "`$PKGCONFIG --libs lua$l`
+                    LUA_LFLAGS="$LUA_LFLAGS "`$PKGCONFIG --libs lualib$l`
+                    break
+                fi
+            done
+	    if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then
+	        AC_MSG_RESULT(found)
+            fi
         fi
-	if test "x$ac_found_liblua_lib" = "xyes" ; then
-	   LUA_LFLAGS="$LUA_LFLAGS -llualib$l"
-	   break
+    fi    
+
+    if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then
+        LUACONFIG=""
+        AC_CHECK_PROGS(LUACONFIG, lua-config lua-config50 lua-config5.0)
+        if test "x$LUACONFIG" != "x" ; then
+            AC_MSG_CHECKING(for Lua headers and librairies with lua-config)
+            LUA_CFLAGS=`$LUACONFIG --include`
+            LUA_LFLAGS=`$LUACONFIG --libs`
         fi
-      done            
-   fi
-   
-   if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then     
-      AC_MSG_ERROR([
-*** Lua (>=5.0) headers and librairies couldn't be found in your system.
-*** Try to install liblua, liblualib and liblua-dev
-*** Try to install them with your software package manager.])
-    else
-      AC_MSG_RESULT(found)
+        if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then
+            AC_MSG_RESULT(found)
+        fi
+    fi
+
+    if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then       
+        AC_MSG_CHECKING(for Lua headers and librairies)
+        AC_CHECK_HEADER(lua.h,ac_found_lua_header="yes",ac_found_lua_header="no")
+        AC_CHECK_HEADER(lualib.h,ac_found_liblua_header="yes",ac_found_liblua_header="no")
+        if test "x$ac_found_lua_header" = "xyes" -a "x$ac_found_liblua_header" = "xyes"; then
+            LUA_CFLAGS="$CFLAGS"
+        fi
+        for l in "$lua_suffix" "" "50" "5.0" ; do
+            AC_CHECK_LIB(lua$l,lua_open,ac_found_lua_lib="yes",ac_found_lua_lib="no")
+            AC_CHECK_LIB(lualib$l,luaopen_base,ac_found_liblua_lib="yes",ac_found_liblua_lib="no")
+            if test "x$ac_found_lua_lib" = "xyes" ; then
+                LUA_LFLAGS="$LFLAGS -llua$l"
+                break
+            fi
+            if test "x$ac_found_liblua_lib" = "xyes" ; then
+                LUA_LFLAGS="$LUA_LFLAGS -llualib$l"
+                break
+            fi
+        done            
     fi
     
     CFLAGS="$ac_save_CFLAGS"
     CPPFLAGS="$ac_save_CPPFLAGS"
     LFLAGS="$ac_save_LFLAGS"
+    
+    if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then     
+        AC_MSG_WARN([
+*** Lua (>=5.0) headers and librairies couldn't be found in your system.
+*** Try to install liblua, liblualib and liblua-dev with your software package manager.
+*** WeeChat will be built without Lua support.])
+        enable_lua="no"
+        not_found="$not_found lua"
+    else
+        AC_MSG_RESULT(found)
+    fi
+fi
 
+if test "x$enable_lua" = "xyes" ; then
     AC_SUBST(LUA_CFLAGS)
     AC_SUBST(LUA_LFLAGS)
     AC_DEFINE(PLUGIN_LUA)
@@ -407,16 +426,22 @@ if test "x$enable_plugins" = "xyes" ; then
         AC_CHECK_LIB(dl, dlopen, LIBDL_FOUND=yes, LIBDL_FOUND=no)
         if test "$LIBDL_FOUND" = "yes"; then
             PLUGINS_LIBS="-ldl"
+            AC_DEFINE(PLUGINS)
+            AC_SUBST(PLUGINS_LIBS)
         else
-            AC_MSG_ERROR([
+            AC_MSG_WARN([
 *** "dl" library (dynamic library loader) couldn't be found in your system.
-*** Try to install it with your software package manager or disable plugins.])
+*** Try to install it with your software package manager or disable plugins.
+*** WeeChat will be built without any plugin.])
+            enable_plugins="no"
+            enable_perl="no"
+            enable_python="no"
+            enable_ruby="no"
+            enable_lua="no"
+            not_found="$not_found plugins"
         fi
     fi
-    AC_DEFINE(PLUGINS)
 fi
-
-AC_SUBST(PLUGINS_LIBS)
 
 # ------------------------------------------------------------------------------
 #                                   gnutls
@@ -425,8 +450,7 @@ AC_SUBST(PLUGINS_LIBS)
 if test "x$enable_gnutls" = "xyes" ; then
     found_gnutls="no"
     AM_PATH_LIBGNUTLS( 1.0.0, found_gnutls=yes, AC_MSG_WARN([[
-*** libgnutls was not found. You may want to get it from
-*** ftp://ftp.gnutls.org/pub/gnutls/
+*** libgnutls was not found. You may want to get it from ftp://ftp.gnutls.org/pub/gnutls/
 *** WeeChat will be built without GnuTLS support.]]))
     if test "x$found_gnutls" = "xyes" ; then
        GNUTLS_CFLAGS=`libgnutls-config --cflags`
@@ -436,6 +460,7 @@ if test "x$enable_gnutls" = "xyes" ; then
        AC_DEFINE(HAVE_GNUTLS)
     else
         enable_gnutls="no"
+        not_found="$not_found gnutls"
     fi
 fi
 
@@ -503,6 +528,17 @@ esac
 #                                output Makefiles
 # ------------------------------------------------------------------------------
 
+AM_CONDITIONAL(GUI_NCURSES,   test "$enable_ncurses" = "yes")
+AM_CONDITIONAL(GUI_WXWIDGETS, test "$enable_wxwidgets" = "yes")
+AM_CONDITIONAL(GUI_GTK,       test "$enable_gtk" = "yes")
+AM_CONDITIONAL(GUI_QT,        test "$enable_qt" = "yes")
+AM_CONDITIONAL(PLUGINS,       test "$enable_plugins" = "yes")
+AM_CONDITIONAL(PLUGIN_PERL,   test "$enable_perl" = "yes")
+AM_CONDITIONAL(PLUGIN_PYTHON, test "$enable_python" = "yes")
+AM_CONDITIONAL(PLUGIN_RUBY,   test "$enable_ruby" = "yes")
+AM_CONDITIONAL(PLUGIN_LUA,    test "$enable_lua" = "yes")
+AM_CONDITIONAL(HAVE_GNUTLS,   test "$enable_gnutls" = "yes")
+
 AC_OUTPUT([Makefile
            doc/Makefile
            doc/fr/Makefile
@@ -528,7 +564,7 @@ AC_OUTPUT([Makefile
 #                                  end message
 # ------------------------------------------------------------------------------
 
-listgui=
+listgui=""
 if test "x$enable_ncurses" = "xyes" ; then
     listgui="$listgui ncurses"
 fi
@@ -545,7 +581,13 @@ fi
 if test "x$listgui" = "x" ; then
     AC_MSG_ERROR([
 *** No interface specified...
-*** Please specify at least ncurses, WxWidgets, Gtk or Qt.])
+*** Please enable at least ncurses, WxWidgets, Gtk or Qt.])
+fi
+
+if test "x$not_found" != "x" ; then
+    echo ""
+    echo "Following components were asked but not found, they will not be built:"
+    echo "$not_found"
 fi
 
 msg_debug_compiler="no"
@@ -558,15 +600,15 @@ if test "x$debug" = "x2" ; then
 fi
 
 echo ""
-echo "Interfaces.................................... :$listgui"
-echo "Build with GNUtls support..................... : $enable_gnutls"
-echo "Build with Plugin support..................... : $enable_plugins"
-echo "              Perl plugin..................... : $enable_perl"
-echo "              Python plugin................... : $enable_python"
-echo "              Ruby plugin..................... : $enable_ruby"
-echo "              Lua plugin...................... : $enable_lua"
-echo "Compile with debug info....................... : $msg_debug_compiler"
-echo "Print debugging messages...................... : $msg_debug_verbose"
+echo "Interfaces........................ :$listgui"
+echo "Build with GNUtls support......... : $enable_gnutls"
+echo "Build with Plugin support......... : $enable_plugins"
+echo "              Perl plugin......... : $enable_perl"
+echo "              Python plugin....... : $enable_python"
+echo "              Ruby plugin......... : $enable_ruby"
+echo "              Lua plugin.......... : $enable_lua"
+echo "Compile with debug info........... : $msg_debug_compiler"
+echo "Print debugging messages.......... : $msg_debug_verbose"
 echo ""
 eval echo "WeeChat will be installed in $bindir."
 echo ""
