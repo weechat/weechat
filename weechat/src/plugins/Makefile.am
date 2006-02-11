@@ -29,6 +29,10 @@ if PLUGIN_RUBY
 script_dir = scripts
 endif
 
+if PLUGIN_LUA
+script_dir = scripts
+endif
+
 SUBDIRS = $(script_dir)
 
 noinst_LIBRARIES = lib_weechat_plugins.a
