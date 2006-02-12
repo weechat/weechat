@@ -999,7 +999,7 @@ PyMethodDef weechat_python_funcs[] = {
 static PyObject *
 weechat_python_output (PyObject *self, PyObject *args)
 {
-    char *msg;
+    char *msg, *p;
     /* make gcc happy */
     (void) self;
     
@@ -1013,11 +1013,12 @@ weechat_python_output (PyObject *self, PyObject *args)
         return NULL; 
     }
     
-    while (strlen(msg) > 0 && msg[strlen(msg)-1] == '\n')
-	msg[strlen(msg)-1] = '\0';
-
-    python_plugin->printf_server (python_plugin,
-				  "Python stdin/stdout: %s", msg);
+    while ((p = strrchr(msg, '\n')) != NULL)
+	*p = '\0';
+    
+    if (strlen(msg) > 0)
+	python_plugin->printf_server (python_plugin,
+				      "Python stdin/stdout: %s", msg);
     return Py_BuildValue ("i", 1);
 }
 

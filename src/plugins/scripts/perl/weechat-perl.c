@@ -111,6 +111,9 @@ weechat_perl_exec (t_weechat_plugin *plugin,
     unsigned int count;
     int return_code;
     SV *sv;
+
+    /* this code is placed here to conform ISO C90 */
+    dSP;
     
 #ifndef MULTIPLICITY
     int size = strlen(script->interpreter) + strlen(function) + 3;
@@ -123,7 +126,6 @@ weechat_perl_exec (t_weechat_plugin *plugin,
     PERL_SET_CONTEXT (script->interpreter);
 #endif    
     
-    dSP;
     ENTER;
     SAVETMPS;
     PUSHMARK(sp);
@@ -568,6 +570,7 @@ static XS (XS_weechat_get_dcc_info)
     char timebuffer1[64];
     char timebuffer2[64];
     struct in_addr in;
+    HV *dcc_hash_member;
     dXSARGS;
     
     /* make gcc happy */
@@ -595,7 +598,7 @@ static XS (XS_weechat_get_dcc_info)
 		 localtime(&ptr_dcc->start_transfer));
 	in.s_addr = htonl(ptr_dcc->addr);
 
-        HV *dcc_hash_member = (HV *) sv_2mortal ((SV *) newHV());
+        dcc_hash_member = (HV *) sv_2mortal ((SV *) newHV());
         
         hv_store (dcc_hash_member, "server",           6, newSVpv (ptr_dcc->server, 0), 0);
         hv_store (dcc_hash_member, "channel",          7, newSVpv (ptr_dcc->channel, 0), 0);
@@ -810,6 +813,7 @@ static XS (XS_weechat_get_server_info)
 {
     t_plugin_server_info *server_info, *ptr_server;
     char timebuffer[64];
+    HV *server_hash, *server_hash_member;
     dXSARGS;
     
     /* make gcc happy */
@@ -830,7 +834,7 @@ static XS (XS_weechat_get_server_info)
 	XSRETURN_EMPTY;
     }    
     
-    HV *server_hash = (HV *) sv_2mortal((SV *) newHV());
+    server_hash = (HV *) sv_2mortal((SV *) newHV());
     if (!server_hash)
     {
         perl_plugin->free_server_info (perl_plugin, server_info);
@@ -842,7 +846,7 @@ static XS (XS_weechat_get_server_info)
 	strftime(timebuffer, sizeof(timebuffer), "%F %T",
 		 localtime(&ptr_server->away_time));
 	
-	HV *server_hash_member = (HV *) sv_2mortal((SV *) newHV());	        
+	server_hash_member = (HV *) sv_2mortal((SV *) newHV());	        
         
 	hv_store (server_hash_member, "autoconnect",          11, newSViv (ptr_server->autoconnect), 0);
         hv_store (server_hash_member, "autoreconnect",        13, newSViv (ptr_server->autoreconnect), 0);
@@ -890,6 +894,7 @@ static XS (XS_weechat_get_channel_info)
     t_plugin_channel_info *channel_info, *ptr_channel;
     char *server;
     unsigned int integer;
+    HV *channel_hash, *channel_hash_member;
     dXSARGS;
     
     /* make gcc happy */
@@ -921,7 +926,7 @@ static XS (XS_weechat_get_channel_info)
 	XSRETURN_EMPTY;
     }
     
-    HV *channel_hash = (HV *) sv_2mortal((SV *) newHV());
+    channel_hash = (HV *) sv_2mortal((SV *) newHV());
     if (!channel_hash)
     {
         perl_plugin->free_channel_info (perl_plugin, channel_info);
@@ -930,7 +935,7 @@ static XS (XS_weechat_get_channel_info)
     
     for (ptr_channel = channel_info; ptr_channel; ptr_channel = ptr_channel->next_channel)
     {
-	HV *channel_hash_member = (HV *) sv_2mortal((SV *) newHV());	        
+	channel_hash_member = (HV *) sv_2mortal((SV *) newHV());	        
        
 	hv_store (channel_hash_member, "type",          4, newSViv (ptr_channel->type), 0);
 	hv_store (channel_hash_member, "topic",         5, newSVpv (ptr_channel->topic, 0), 0);
@@ -957,6 +962,7 @@ static XS (XS_weechat_get_nick_info)
     t_plugin_nick_info *nick_info, *ptr_nick;
     char *server, *channel;
     unsigned int integer;
+    HV *nick_hash;
     dXSARGS;
     
     /* make gcc happy */
@@ -989,7 +995,7 @@ static XS (XS_weechat_get_nick_info)
 	XSRETURN_EMPTY;
     }
     
-    HV *nick_hash = (HV *) sv_2mortal((SV *) newHV());
+    nick_hash = (HV *) sv_2mortal((SV *) newHV());
     if (!nick_hash)
     {
         perl_plugin->free_nick_info (perl_plugin, nick_info);
@@ -1388,9 +1394,9 @@ weechat_plugin_init (t_weechat_plugin *plugin)
 #ifdef MULTIPLICITY
     plugin->printf_server (plugin, "Loading Perl module \"weechat\"");
 #else
-    plugin->printf_server (plugin, "Loading Perl module \"weechat\" (without multiplicity)");
-
     char *perl_args[] = { "", "-e", "0" };
+   
+    plugin->printf_server (plugin, "Loading Perl module \"weechat\" (without multiplicity)");
     
     main_perl = perl_alloc ();
     
