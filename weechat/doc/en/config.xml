@@ -1130,7 +1130,7 @@
   <entry>string</entry>
   <entry>any string</entry>
   <entry></entry>
-  <entry>First command to run when connected to server</entry>
+  <entry>Command(s) to run when connected to server (many commands should be separated by ';', use '\;' for a semicolon)</entry>
 </row>
 <row>
   <entry><option>server_command_delay</option></entry>

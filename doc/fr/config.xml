@@ -1130,7 +1130,7 @@
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>
   <entry>''</entry>
-  <entry>Commande à exécuter en premier lorsque connecté au serveur</entry>
+  <entry>Commande(s) à exécuter lorsque connecté au serveur (plusieurs commandes doivent être séparées par ';', utilisez '\;' pour un point-virgule)</entry>
 </row>
 <row>
   <entry><option>server_command_delay</option></entry>

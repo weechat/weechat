@@ -947,8 +947,9 @@ t_config_option weechat_options_server[] =
     N_("real name to use on IRC server"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "", NULL, NULL, &(cfg_server.realname), NULL },
-  { "server_command", N_("first command to run when connected to server"),
-    N_("first command to run when connected to server"),
+  { "server_command", N_("command(s) to run when connected to server"),
+    N_("command(s) to run when connected to server (many commands should be "
+       "separated by ';', use '\\;' for a semicolon)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "", NULL, NULL, &(cfg_server.command), NULL },
   { "server_command_delay", N_("delay (in seconds) after command was executed"),
