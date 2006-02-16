@@ -2431,9 +2431,9 @@ irc_cmd_recv_topic (t_irc_server *server, char *host, char *nick, char *argument
 int
 irc_cmd_recv_004 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
-    char *pos, *buffer, *s, *q;
-    int i, f;
-    t_irc_channel *ptr_channel;
+    char *pos;
+    char **commands, **ptr;
+     t_irc_channel *ptr_channel;
     
     pos = strchr (arguments, ' ');
     if (pos)
@@ -2454,50 +2454,16 @@ irc_cmd_recv_004 (t_irc_server *server, char *host, char *nick, char *arguments)
     
     /* execute command once connected */
     if (server->command && server->command[0])
-    {
+    {	
 	/* splitting command on ';' which can be escaped with '\;' */ 
-	buffer = (char *) malloc ( (strlen(server->command) + 1) * sizeof (char));
-	
-	if (buffer) 
+	commands = split_multi_command (server->command, ';');
+	if (commands)
 	{
-	    s = server->command;
-	    i = 0;
-	    while(*s != '\0')
-	    {
-		f = 0;
-		if (*s == ';')
-		{
-		    if (s == server->command)
-			f = 1;
-		    else if ( *(s-1) != '\\')
-			f = 1;
-		    else if ( *(s-1) == '\\')
-			f = 2;
-		}
-		if (f == 1)
-		{
-		    buffer[i] = '\0';
-		    i = -1;
-		    q = buffer;
-		    while (*q == ' ') q++;
-		    if (q  && q[0])
-			user_command (server, NULL, q);
-		}
-		else if (f == 2)
-		    buffer[--i] = *s;
-		else
-		    buffer[i] = *s;
-		i++; s++;
-	    }
-	    buffer[i] = '\0';
-	    q = buffer;
-	    while (*q == ' ') q++;
-	    if (q  && q[0])
-		user_command (server, NULL, q);
-	    
-	    free (buffer);
+	    for (ptr=commands; *ptr; ptr++)
+		user_command (server, NULL, *ptr);		
+	    free_multi_command (commands);
 	}
-		
+	
 	if (server->command_delay > 0)
 	    sleep (server->command_delay);
     }

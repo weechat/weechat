@@ -50,6 +50,7 @@ struct t_weechat_alias
 {
     char *alias_name;
     char *alias_command;
+    int running;
     t_weechat_alias *prev_alias;
     t_weechat_alias *next_alias;
 };
@@ -66,6 +67,8 @@ extern t_weechat_alias *alias_new (char *, char *);
 extern void alias_free_all ();
 extern char **explode_string (char *, char *, int, int *);
 extern void free_exploded_string (char **);
+extern char **split_multi_command (char *, char);
+extern void free_multi_command (char **);
 extern int exec_weechat_command (t_irc_server *, t_irc_channel *, char *);
 extern void user_command (t_irc_server *, t_irc_channel *, char *);
 extern int weechat_cmd_alias (t_irc_server *, t_irc_channel *, char *);

@@ -2367,7 +2367,7 @@ config_write (char *config_name)
          ptr_alias = ptr_alias->next_alias)
     {
         fprintf (file, "%s = \"%s\"\n",
-                 ptr_alias->alias_name, ptr_alias->alias_command + 1);
+                 ptr_alias->alias_name, ptr_alias->alias_command);
     }
     
     /* ignore section */
