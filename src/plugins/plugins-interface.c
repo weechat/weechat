@@ -153,12 +153,12 @@ weechat_plugin_exec_on_files (t_weechat_plugin *plugin, char *directory,
 }
 
 /*
- * weechat_plugin_printf: print a message on a server or channel buffer
+ * weechat_plugin_print: print a message on a server or channel buffer
  */
 
 void
-weechat_plugin_printf (t_weechat_plugin *plugin,
-                       char *server, char *channel, char *message, ...)
+weechat_plugin_print (t_weechat_plugin *plugin,
+                      char *server, char *channel, char *message, ...)
 {
     t_gui_buffer *ptr_buffer;
     va_list argptr;
@@ -176,11 +176,11 @@ weechat_plugin_printf (t_weechat_plugin *plugin,
 }
 
 /*
- * weechat_plugin_printf_server: print a message on server buffer
+ * weechat_plugin_print_server: print a message on server buffer
  */
 
 void
-weechat_plugin_printf_server (t_weechat_plugin *plugin, char *message, ...)
+weechat_plugin_print_server (t_weechat_plugin *plugin, char *message, ...)
 {
     va_list argptr;
     static char buf[8192];
@@ -196,11 +196,11 @@ weechat_plugin_printf_server (t_weechat_plugin *plugin, char *message, ...)
 }
 
 /*
- * weechat_plugin_infobar_printf: print a message in infobar
+ * weechat_plugin_print_infobar: print a message in infobar
  */
 
 void
-weechat_plugin_infobar_printf (t_weechat_plugin *plugin, int time_displayed, char *message, ...)
+weechat_plugin_print_infobar (t_weechat_plugin *plugin, int time_displayed, char *message, ...)
 {
     va_list argptr;
     static char buf[1024];

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.8-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-02-16 10:59+0100\n"
+"POT-Creation-Date: 2006-02-16 21:24+0100\n"
 "PO-Revision-Date: 2006-02-16 11:00+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2208,32 +2208,32 @@ msgstr ""
 "%s la fonction \"weechat_plugin_init\" est introuvable dans l'extension \"%s"
 "\", échec de chargement\n"
 
-#: src/plugins/plugins.c:658
+#: src/plugins/plugins.c:659
 #, c-format
 msgid "Initializing plugin \"%s\" %s\n"
 msgstr "Initialisation de l'extension \"%s\" %s\n"
 
-#: src/plugins/plugins.c:666
+#: src/plugins/plugins.c:667
 #, c-format
 msgid "%s unable to initialize plugin \"%s\"\n"
 msgstr "%s impossible d'initialiser l'extension \"%s\"\n"
 
-#: src/plugins/plugins.c:677
+#: src/plugins/plugins.c:678
 #, c-format
 msgid "%s unable to load plugin \"%s\" (not enough memory)\n"
 msgstr "%s impossible de charger l'extension \"%s\" (mémoire insuffisante)\n"
 
-#: src/plugins/plugins.c:685
+#: src/plugins/plugins.c:686
 #, c-format
 msgid "Plugin \"%s\" (%s) loaded.\n"
 msgstr "Extension \"%s\" (%s) chargée.\n"
 
-#: src/plugins/plugins.c:852
+#: src/plugins/plugins.c:853
 #, c-format
 msgid "Plugin \"%s\" unloaded.\n"
 msgstr "Extension \"%s\" déchargée.\n"
 
-#: src/plugins/plugins.c:858
+#: src/plugins/plugins.c:859
 #, c-format
 msgid "%s plugin \"%s\" not found\n"
 msgstr "%s extension \"%s\" non trouvée\n"
@@ -2269,14 +2269,14 @@ msgstr ""
 "des options sont modifiées.\n"
 "#\n"
 
-#: src/plugins/plugins-interface.c:295
+#: src/plugins/plugins-interface.c:321
 #, c-format
 msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 msgstr ""
 "%s serveur/canal (%s/%s) non trouvé pour l'exécution de commande de "
 "l'extension\n"
 
-#: src/plugins/plugins-interface.c:309
+#: src/plugins/plugins-interface.c:335
 #, c-format
 msgid "%s server not found for plugin exec command\n"
 msgstr "%s serveur non trouvé pour l'exécution de commande de l'extension\n"

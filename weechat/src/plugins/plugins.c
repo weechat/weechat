@@ -622,9 +622,9 @@ plugin_load (char *filename)
         new_plugin->cmd_handler_add = &weechat_plugin_cmd_handler_add;
         new_plugin->handler_remove = &weechat_plugin_handler_remove;
         new_plugin->handler_remove_all = &weechat_plugin_handler_remove_all;
-        new_plugin->printf = &weechat_plugin_printf;
-        new_plugin->printf_server = &weechat_plugin_printf_server;
-        new_plugin->infobar_printf = &weechat_plugin_infobar_printf;
+        new_plugin->print = &weechat_plugin_print;
+        new_plugin->print_server = &weechat_plugin_print_server;
+        new_plugin->print_infobar = &weechat_plugin_print_infobar;
 	new_plugin->log = &weechat_plugin_log;
         new_plugin->exec_command = &weechat_plugin_exec_command;
         new_plugin->get_info = &weechat_plugin_get_info;

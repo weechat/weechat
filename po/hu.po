@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.8-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-02-16 10:59+0100\n"
+"POT-Creation-Date: 2006-02-16 21:24+0100\n"
 "PO-Revision-Date: 2006-02-07 18:34+0100\n"
 "Last-Translator: voroskoi <voroskoi@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2180,32 +2180,32 @@ msgstr ""
 "%s a \"weechat_plugin_init\" függvény nem található a \"%s\" modulban, "
 "betöltés sikertelen\n"
 
-#: src/plugins/plugins.c:658
+#: src/plugins/plugins.c:659
 #, c-format
 msgid "Initializing plugin \"%s\" %s\n"
 msgstr "Modul betöltése: \"%s\" %s\n"
 
-#: src/plugins/plugins.c:666
+#: src/plugins/plugins.c:667
 #, c-format
 msgid "%s unable to initialize plugin \"%s\"\n"
 msgstr "%s nem sikerült a modult betölteni \"%s\"\n"
 
-#: src/plugins/plugins.c:677
+#: src/plugins/plugins.c:678
 #, c-format
 msgid "%s unable to load plugin \"%s\" (not enough memory)\n"
 msgstr "%s nem sikerült a modult betölteni \"%s\" (nincs elég memória)\n"
 
-#: src/plugins/plugins.c:685
+#: src/plugins/plugins.c:686
 #, c-format
 msgid "Plugin \"%s\" (%s) loaded.\n"
 msgstr "A \"%s\" (%s) modul betöltve.\n"
 
-#: src/plugins/plugins.c:852
+#: src/plugins/plugins.c:853
 #, c-format
 msgid "Plugin \"%s\" unloaded.\n"
 msgstr "A \"%s\" modul eltávolítva.\n"
 
-#: src/plugins/plugins.c:858
+#: src/plugins/plugins.c:859
 #, c-format
 msgid "%s plugin \"%s\" not found\n"
 msgstr "%s a \"%s\" modul nem található\n"
@@ -2240,12 +2240,12 @@ msgstr ""
 "# FIGYELEM! A WeeChat felülírja ezt a fájlt, ha a beállítások megváltoznak.\n"
 "#\n"
 
-#: src/plugins/plugins-interface.c:295
+#: src/plugins/plugins-interface.c:321
 #, c-format
 msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 msgstr "%s (%s/%s) szerver/szoba nem található a modul futtatása parancshoz\n"
 
-#: src/plugins/plugins-interface.c:309
+#: src/plugins/plugins-interface.c:335
 #, c-format
 msgid "%s server not found for plugin exec command\n"
 msgstr "%s szerver nem található a modul futtatása parancshoz\n"

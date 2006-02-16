@@ -67,12 +67,12 @@ weechat_lua_exec (t_weechat_plugin *plugin,
     
     if ( lua_pcall(lua_current_interpreter, 2, 1, 0) != 0)
     {
-	plugin->printf_server (plugin,
-                               "Lua error: unable to run function \"%s\"",
-                               function);
-	plugin->printf_server (plugin,
-                               "Lua error: %s",
-                               lua_tostring (lua_current_interpreter, -1));
+	plugin->print_server (plugin,
+                              "Lua error: unable to run function \"%s\"",
+                              function);
+	plugin->print_server (plugin,
+                              "Lua error: %s",
+                              lua_tostring (lua_current_interpreter, -1));
         return PLUGIN_RC_KO;
     }
     
@@ -116,9 +116,9 @@ weechat_lua_register (lua_State *L)
 
     if (n != 4)
     {
-	lua_plugin->printf_server (lua_plugin,
-				   "Lua error: wrong parameters for "
-				   "\"register\" function");
+	lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"register\" function");
         lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -131,11 +131,11 @@ weechat_lua_register (lua_State *L)
     if (weechat_script_search (lua_plugin, &lua_scripts, (char *) name))
     {
         /* error: another scripts already exists with this name! */
-        lua_plugin->printf_server (lua_plugin,
-                                      "Lua error: unable to register "
-                                      "\"%s\" script (another script "
-                                      "already exists with this name)",
-                                      name);
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to register "
+                                  "\"%s\" script (another script "
+                                  "already exists with this name)",
+                                  name);
 	lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -151,17 +151,17 @@ weechat_lua_register (lua_State *L)
 					     (char *) description);
     if (lua_current_script)
     {
-        lua_plugin->printf_server (lua_plugin,
-                                      "Lua: registered script \"%s\", "
-                                      "version %s (%s)",
-                                      name, version, description);
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua: registered script \"%s\", "
+                                  "version %s (%s)",
+                                  name, version, description);
     }
     else
     {
-        lua_plugin->printf_server (lua_plugin,
-                                      "Lua error: unable to load script "
-                                      "\"%s\" (not enough memory)",
-                                      name);
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to load script "
+                                  "\"%s\" (not enough memory)",
+                                  name);
 	lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -184,9 +184,9 @@ weechat_lua_print  (lua_State *L)
     
     if (!lua_current_script)
     {
-        lua_plugin->printf_server (lua_plugin,
-                                      "Lua error: unable to print message, "
-                                      "script not initialized");
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to print message, "
+                                  "script not initialized");
 	lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -212,17 +212,17 @@ weechat_lua_print  (lua_State *L)
 	message = lua_tostring (lua_current_interpreter, -1);
 	break;
     default:
-	lua_plugin->printf_server (lua_plugin,
-				   "Lua error: wrong parameters for "
-				   "\"print\" function");
+	lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"print\" function");
         lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
     
-    lua_plugin->printf (lua_plugin,
-			(char *) server_name,
-			(char *) channel_name,
-			"%s", (char *) message);
+    lua_plugin->print (lua_plugin,
+                       (char *) server_name,
+                       (char *) channel_name,
+                       "%s", (char *) message);
     
     lua_pushnumber (lua_current_interpreter, 1);
     return 1;
@@ -242,9 +242,9 @@ weechat_lua_print_infobar  (lua_State *L)
     
     if (!lua_current_script)
     {
-        lua_plugin->printf_server (lua_plugin,
-                                      "Lua error: unable to print infobar message, "
-                                      "script not initialized");
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to print infobar message, "
+                                  "script not initialized");
 	lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -256,9 +256,9 @@ weechat_lua_print_infobar  (lua_State *L)
 
     if (n != 2)
     {
-	lua_plugin->printf_server (lua_plugin,
-				   "Lua error: wrong parameters for "
-				   "\"print_infobar\" function");
+	lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"print_infobar\" function");
         lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -266,7 +266,7 @@ weechat_lua_print_infobar  (lua_State *L)
     delay = lua_tonumber (lua_current_interpreter, -2);
     message = lua_tostring (lua_current_interpreter, -1);
     
-    lua_plugin->infobar_printf (lua_plugin, delay, "%s", (char *) message);
+    lua_plugin->print_infobar (lua_plugin, delay, "%s", (char *) message);
     
     lua_pushnumber (lua_current_interpreter, 1);
     return 1;
@@ -286,9 +286,9 @@ weechat_lua_log  (lua_State *L)
     
     if (!lua_current_script)
     {
-        lua_plugin->printf_server (lua_plugin,
-                                      "Lua error: unable to print message, "
-                                      "script not initialized");
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to print message, "
+                                  "script not initialized");
 	lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -314,9 +314,9 @@ weechat_lua_log  (lua_State *L)
 	message = lua_tostring (lua_current_interpreter, -1);
 	break;
     default:
-	lua_plugin->printf_server (lua_plugin,
-				   "Lua error: wrong parameters for "
-				   "\"log\" function");
+	lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"log\" function");
         lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -344,9 +344,9 @@ weechat_lua_command  (lua_State *L)
      
     if (!lua_current_script)
     {
-        lua_plugin->printf_server (lua_plugin,
-                                      "Lua error: unable to run command, "
-                                      "script not initialized");
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to run command, "
+                                  "script not initialized");
 	lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -372,9 +372,9 @@ weechat_lua_command  (lua_State *L)
 	command = lua_tostring (lua_current_interpreter, -1);
 	break;
     default:
-	lua_plugin->printf_server (lua_plugin,
-				   "Lua error: wrong parameters for "
-				   "\"command\" function");
+	lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"command\" function");
         lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -402,9 +402,9 @@ weechat_lua_add_message_handler  (lua_State *L)
     
     if (!lua_current_script)
     {
-        lua_plugin->printf_server (lua_plugin,
-                                      "Lua error: unable to add message handler, "
-                                      "script not initialized");
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to add message handler, "
+                                  "script not initialized");
 	lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -416,9 +416,9 @@ weechat_lua_add_message_handler  (lua_State *L)
 
     if (n != 2)
     {
-	lua_plugin->printf_server (lua_plugin,
-				   "Lua error: wrong parameters for "
-				   "\"add_message_handler\" function");
+	lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"add_message_handler\" function");
         lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -453,9 +453,9 @@ weechat_lua_add_command_handler  (lua_State *L)
         
     if (!lua_current_script)
     {
-        lua_plugin->printf_server (lua_plugin,
-                                      "Lua error: unable to add command handler, "
-                                      "script not initialized");
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to add command handler, "
+                                  "script not initialized");
 	lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -484,9 +484,9 @@ weechat_lua_add_command_handler  (lua_State *L)
 	completion_template = lua_tostring (lua_current_interpreter, -1);
 	break;
     default:
-	lua_plugin->printf_server (lua_plugin,
-				   "Lua error: wrong parameters for "
-				   "\"add_command_handler\" function");
+	lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"add_command_handler\" function");
         lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -523,9 +523,9 @@ weechat_lua_remove_handler (lua_State *L)
      
     if (!lua_current_script)
     {
-        lua_plugin->printf_server (lua_plugin,
-                                      "Lua error: unable to remove handler, "
-                                      "script not initialized");
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to remove handler, "
+                                  "script not initialized");
         lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -537,9 +537,9 @@ weechat_lua_remove_handler (lua_State *L)
     
     if (n != 2)
     {
-	lua_plugin->printf_server (lua_plugin,
-				   "Lua error: wrong parameters for "
-				   "\"remove_handler\" function");
+	lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"remove_handler\" function");
         lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -569,9 +569,9 @@ weechat_lua_get_info  (lua_State *L)
     
     if (!lua_current_script)
     {
-        lua_plugin->printf_server (lua_plugin,
-                                      "Lua error: unable to get info, "
-                                      "script not initialized");
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to get info, "
+                                  "script not initialized");
 	lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -591,9 +591,9 @@ weechat_lua_get_info  (lua_State *L)
 	server_name = lua_tostring (lua_current_interpreter, -1);
 	break;
     default:
-	lua_plugin->printf_server (lua_plugin,
-				   "Lua error: wrong parameters for "
-				   "\"get_info\" function");
+	lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"get_info\" function");
         lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -624,9 +624,9 @@ weechat_lua_get_dcc_info  (lua_State *L)
     
     if (!lua_current_script)
     {
-        lua_plugin->printf_server (lua_plugin,
-                                      "Lua error: unable to get DCC info, "
-                                      "script not initialized");
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to get DCC info, "
+                                  "script not initialized");
 	lua_pushnil (lua_current_interpreter);
 	return 1;
     }
@@ -738,9 +738,9 @@ weechat_lua_get_config  (lua_State *L)
      
     if (!lua_current_script)
     {
-        lua_plugin->printf_server (lua_plugin,
-				   "Lua error: unable to get config option, "
-				   "script not initialized");	
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to get config option, "
+                                  "script not initialized");	
 	lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -751,9 +751,9 @@ weechat_lua_get_config  (lua_State *L)
 
     if (n != 1)
     {
-	lua_plugin->printf_server (lua_plugin,
-				   "Lua error: wrong parameters for "
-				   "\"get_config\" function");
+	lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"get_config\" function");
         lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -783,9 +783,9 @@ weechat_lua_set_config  (lua_State *L)
     
     if (!lua_current_script)
     {
-        lua_plugin->printf_server (lua_plugin,
-                                      "Lua error: unable to set config option, "
-                                      "script not initialized");
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to set config option, "
+                                  "script not initialized");
 	lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -797,9 +797,9 @@ weechat_lua_set_config  (lua_State *L)
     
     if (n != 2)
     {
-	lua_plugin->printf_server (lua_plugin,
-				   "Lua error: wrong parameters for "
-				   "\"set_config\" function");
+	lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"set_config\" function");
 	lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -830,9 +830,9 @@ weechat_lua_get_plugin_config  (lua_State *L)
      
     if (!lua_current_script)
     {
-        lua_plugin->printf_server (lua_plugin,
-				   "Lua error: unable to get plugin config option, "
-				   "script not initialized");	
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to get plugin config option, "
+                                  "script not initialized");	
 	lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -843,9 +843,9 @@ weechat_lua_get_plugin_config  (lua_State *L)
 
     if (n != 1)
     {
-	lua_plugin->printf_server (lua_plugin,
-				   "Lua error: wrong parameters for "
-				   "\"get_plugin_config\" function");
+	lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"get_plugin_config\" function");
         lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -877,9 +877,9 @@ weechat_lua_set_plugin_config  (lua_State *L)
  	
     if (!lua_current_script)
     {
-        lua_plugin->printf_server (lua_plugin,
-                                      "Lua error: unable to set plugin config option, "
-                                      "script not initialized");
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to set plugin config option, "
+                                  "script not initialized");
 	lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -891,9 +891,9 @@ weechat_lua_set_plugin_config  (lua_State *L)
     
     if (n != 2)
     {
-	lua_plugin->printf_server (lua_plugin,
-				   "Lua error: wrong parameters for "
-				   "\"set_plugin_config\" function");
+	lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"set_plugin_config\" function");
 	lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -925,9 +925,9 @@ weechat_lua_get_server_info  (lua_State *L)
     
     if (!lua_current_script)
     {
-        lua_plugin->printf_server (lua_plugin,
-				   "Lua error: unable to get server infos, "
-				   "script not initialized");
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to get server infos, "
+                                  "script not initialized");
 	lua_pushnil (lua_current_interpreter);
 	return 1;
     }
@@ -1079,9 +1079,9 @@ weechat_lua_get_channel_info  (lua_State *L)
  
     if (!lua_current_script)
     {
-        lua_plugin->printf_server (lua_plugin,
-                                      "Lua error: unable to get channel infos, "
-                                      "script not initialized");
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to get channel infos, "
+                                  "script not initialized");
 	lua_pushnil (lua_current_interpreter);
 	return 1;
     }
@@ -1092,9 +1092,9 @@ weechat_lua_get_channel_info  (lua_State *L)
     
     if (n != 1)
     {
-        lua_plugin->printf_server (lua_plugin,
-				   "Lua error: wrong parameters for "
-				   "\"get_channel_info\" function");
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"get_channel_info\" function");
         lua_pushnil (lua_current_interpreter);
 	return 1;
     }
@@ -1162,9 +1162,9 @@ weechat_lua_get_nick_info  (lua_State *L)
      
     if (!lua_current_script)
     {
-        lua_plugin->printf_server (lua_plugin,
-                                      "Lua error: unable to get nick infos, "
-                                      "script not initialized");
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to get nick infos, "
+                                  "script not initialized");
 		lua_pushnil (lua_current_interpreter);
 	return 1;
     }
@@ -1176,9 +1176,9 @@ weechat_lua_get_nick_info  (lua_State *L)
     
     if (n != 2)
     {
-        lua_plugin->printf_server (lua_plugin,
-                                      "Lua error: wrong parameters for "
-                                      "\"get_nick_info\" function");
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"get_nick_info\" function");
         lua_pushnil (lua_current_interpreter);
 	return 1;
     }
@@ -1308,13 +1308,13 @@ weechat_lua_load (t_weechat_plugin *plugin, char *filename)
 	"io.stderr = weechat_outputs\n"
     };
     
-    plugin->printf_server (plugin, "Loading Lua script \"%s\"", filename);
+    plugin->print_server (plugin, "Loading Lua script \"%s\"", filename);
     
     if ((fp = fopen (filename, "r")) == NULL)
     {
-        plugin->printf_server (plugin,
-                               "Lua error: unable to open file \"%s\"",
-                               filename);
+        plugin->print_server (plugin,
+                              "Lua error: unable to open file \"%s\"",
+                              filename);
         return 0;
     }
 
@@ -1324,8 +1324,8 @@ weechat_lua_load (t_weechat_plugin *plugin, char *filename)
 
     if (lua_current_interpreter == NULL)
     {
-        plugin->printf_server (plugin,
-                               "Lua error: unable to create new sub-interpreter");
+        plugin->print_server (plugin,
+                              "Lua error: unable to create new sub-interpreter");
         fclose (fp);
         return 0;
     }
@@ -1340,19 +1340,19 @@ weechat_lua_load (t_weechat_plugin *plugin, char *filename)
     luaL_openlib (lua_current_interpreter, "weechat", weechat_lua_funcs, 0);
     
     if (lua_dostring (lua_current_interpreter, weechat_lua_code) != 0)
-        plugin->printf_server (plugin,
-                               "Lua warning: unable to redirect stdout and stderr");
+        plugin->print_server (plugin,
+                              "Lua warning: unable to redirect stdout and stderr");
     
     lua_current_script_filename = strdup (filename);
     
     if (luaL_loadfile (lua_current_interpreter, filename) != 0)
     {
-        plugin->printf_server (plugin,
-                               "Lua error: unable to load file \"%s\"",
-                               filename);
-	plugin->printf_server (plugin,
-                               "Lua error: %s",
-                               lua_tostring (lua_current_interpreter, -1));
+        plugin->print_server (plugin,
+                              "Lua error: unable to load file \"%s\"",
+                              filename);
+	plugin->print_server (plugin,
+                              "Lua error: %s",
+                              lua_tostring (lua_current_interpreter, -1));
         free (lua_current_script_filename);
         lua_close (lua_current_interpreter);
         fclose (fp);
@@ -1361,12 +1361,12 @@ weechat_lua_load (t_weechat_plugin *plugin, char *filename)
 
     if (lua_pcall (lua_current_interpreter, 0, 0, 0) != 0)
     {
-        plugin->printf_server (plugin,
-                               "Lua error: unable to execute file \"%s\"",
-                               filename);
-	plugin->printf_server (plugin,
-                               "Lua error: %s",
-                               lua_tostring (lua_current_interpreter, -1));
+        plugin->print_server (plugin,
+                              "Lua error: unable to execute file \"%s\"",
+                              filename);
+	plugin->print_server (plugin,
+                              "Lua error: %s",
+                              lua_tostring (lua_current_interpreter, -1));
         free (lua_current_script_filename);
         lua_close (lua_current_interpreter);
         fclose (fp);
@@ -1381,10 +1381,10 @@ weechat_lua_load (t_weechat_plugin *plugin, char *filename)
     
     if (lua_current_script == NULL)
     {
-        plugin->printf_server (plugin,
-                               "Lua error: function \"register\" not found "
-                               "in file \"%s\"",
-                               filename);
+        plugin->print_server (plugin,
+                              "Lua error: function \"register\" not found "
+                              "in file \"%s\"",
+                              filename);
 	lua_close (lua_current_interpreter);
         return 0;
     }
@@ -1401,9 +1401,9 @@ weechat_lua_load (t_weechat_plugin *plugin, char *filename)
 void
 weechat_lua_unload (t_weechat_plugin *plugin, t_plugin_script *script)
 {
-    plugin->printf_server (plugin,
-                           "Unloading Lua script \"%s\"",
-                           script->name);
+    plugin->print_server (plugin,
+                          "Unloading Lua script \"%s\"",
+                          script->name);
     
     if (script->shutdown_func[0])
         weechat_lua_exec (plugin, script, script->shutdown_func, "", "");
@@ -1426,15 +1426,15 @@ weechat_lua_unload_name (t_weechat_plugin *plugin, char *name)
     if (ptr_script)
     {
         weechat_lua_unload (plugin, ptr_script);
-        plugin->printf_server (plugin,
-                               "Lua script \"%s\" unloaded",
-                               name);
+        plugin->print_server (plugin,
+                              "Lua script \"%s\" unloaded",
+                              name);
     }
     else
     {
-        plugin->printf_server (plugin,
-                               "Lua error: script \"%s\" not loaded",
-                               name);
+        plugin->print_server (plugin,
+                              "Lua error: script \"%s\" not loaded",
+                              name);
     }
 }
 
@@ -1445,13 +1445,13 @@ weechat_lua_unload_name (t_weechat_plugin *plugin, char *name)
 void
 weechat_lua_unload_all (t_weechat_plugin *plugin)
 {
-    plugin->printf_server (plugin,
-                           "Unloading all Lua scripts");
+    plugin->print_server (plugin,
+                          "Unloading all Lua scripts");
     while (lua_scripts)
         weechat_lua_unload (plugin, lua_scripts);
 
-    plugin->printf_server (plugin,
-                           "Lua scripts unloaded");
+    plugin->print_server (plugin,
+                          "Lua scripts unloaded");
 }
 
 /*
@@ -1486,26 +1486,26 @@ weechat_lua_cmd (t_weechat_plugin *plugin,
     {
         case 0:
             /* list registered Lua scripts */
-            plugin->printf_server (plugin, "");
-            plugin->printf_server (plugin, "Registered Lua scripts:");
+            plugin->print_server (plugin, "");
+            plugin->print_server (plugin, "Registered Lua scripts:");
             if (lua_scripts)
             {
                 for (ptr_script = lua_scripts;
                      ptr_script; ptr_script = ptr_script->next_script)
                 {
-                    plugin->printf_server (plugin, "  %s v%s%s%s",
-                                           ptr_script->name,
-                                           ptr_script->version,
-                                           (ptr_script->description[0]) ? " - " : "",
-                                           ptr_script->description);
+                    plugin->print_server (plugin, "  %s v%s%s%s",
+                                          ptr_script->name,
+                                          ptr_script->version,
+                                          (ptr_script->description[0]) ? " - " : "",
+                                          ptr_script->description);
                 }
             }
             else
-                plugin->printf_server (plugin, "  (none)");
+                plugin->print_server (plugin, "  (none)");
             
             /* list Lua message handlers */
-            plugin->printf_server (plugin, "");
-            plugin->printf_server (plugin, "Lua message handlers:");
+            plugin->print_server (plugin, "");
+            plugin->print_server (plugin, "Lua message handlers:");
             handler_found = 0;
             for (ptr_handler = plugin->handlers;
                  ptr_handler; ptr_handler = ptr_handler->next_handler)
@@ -1514,17 +1514,17 @@ weechat_lua_cmd (t_weechat_plugin *plugin,
                     && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
-                    plugin->printf_server (plugin, "  IRC(%s) => Lua(%s)",
-                                           ptr_handler->irc_command,
-                                           ptr_handler->handler_args);
+                    plugin->print_server (plugin, "  IRC(%s) => Lua(%s)",
+                                          ptr_handler->irc_command,
+                                          ptr_handler->handler_args);
                 }
             }
             if (!handler_found)
-                plugin->printf_server (plugin, "  (none)");
+                plugin->print_server (plugin, "  (none)");
             
             /* list Lua command handlers */
-            plugin->printf_server (plugin, "");
-            plugin->printf_server (plugin, "Lua command handlers:");
+            plugin->print_server (plugin, "");
+            plugin->print_server (plugin, "Lua command handlers:");
             handler_found = 0;
             for (ptr_handler = plugin->handlers;
                  ptr_handler; ptr_handler = ptr_handler->next_handler)
@@ -1533,13 +1533,13 @@ weechat_lua_cmd (t_weechat_plugin *plugin,
                     && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
-                    plugin->printf_server (plugin, "  /%s => Lua(%s)",
-                                           ptr_handler->command,
-                                           ptr_handler->handler_args);
+                    plugin->print_server (plugin, "  /%s => Lua(%s)",
+                                          ptr_handler->command,
+                                          ptr_handler->handler_args);
                 }
             }
             if (!handler_found)
-                plugin->printf_server (plugin, "  (none)");
+                plugin->print_server (plugin, "  (none)");
             break;
         case 1:
             if (plugin->ascii_strcasecmp (plugin, argv[0], "autoload") == 0)
@@ -1586,14 +1586,14 @@ weechat_lua_cmd (t_weechat_plugin *plugin,
             }
             else
             {
-                plugin->printf_server (plugin,
-                                       "Lua error: unknown option for "
-                                       "\"lua\" command");
+                plugin->print_server (plugin,
+                                      "Lua error: unknown option for "
+                                      "\"lua\" command");
             }
             break;
         default:
-            plugin->printf_server (plugin,
-                                   "Lua error: wrong argument count for \"lua\" command");
+            plugin->print_server (plugin,
+                                  "Lua error: wrong argument count for \"lua\" command");
     }
     
     if (argv)
@@ -1612,7 +1612,7 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     
     lua_plugin = plugin;
     
-    plugin->printf_server (plugin, "Loading Lua module \"weechat\"");
+    plugin->print_server (plugin, "Loading Lua module \"weechat\"");
         
     plugin->cmd_handler_add (plugin, "lua",
                              "list/load/unload Lua scripts",
@@ -1641,6 +1641,6 @@ weechat_plugin_end (t_weechat_plugin *plugin)
     /* unload all scripts */
     weechat_lua_unload_all (plugin);
     
-    lua_plugin->printf_server (lua_plugin,
-                                  "Lua plugin ended");
+    lua_plugin->print_server (lua_plugin,
+                              "Lua plugin ended");
 }

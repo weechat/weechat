@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.8-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-02-16 10:59+0100\n"
+"POT-Creation-Date: 2006-02-16 21:24+0100\n"
 "PO-Revision-Date: 2006-01-24 19:25+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2190,32 +2190,32 @@ msgstr ""
 "%s funkce \"weechat_plugin_init\" nebyla v pluginu \"%s\" nalezena, načtení "
 "selhalo\n"
 
-#: src/plugins/plugins.c:658
+#: src/plugins/plugins.c:659
 #, c-format
 msgid "Initializing plugin \"%s\" %s\n"
 msgstr "Inicializuji plugin \"%s\" %s\n"
 
-#: src/plugins/plugins.c:666
+#: src/plugins/plugins.c:667
 #, c-format
 msgid "%s unable to initialize plugin \"%s\"\n"
 msgstr "%s nemohu načíst plugin \"%s\"\n"
 
-#: src/plugins/plugins.c:677
+#: src/plugins/plugins.c:678
 #, c-format
 msgid "%s unable to load plugin \"%s\" (not enough memory)\n"
 msgstr "%s nemohu načíst plugin \"%s\" (nedostatek paměti)\n"
 
-#: src/plugins/plugins.c:685
+#: src/plugins/plugins.c:686
 #, c-format
 msgid "Plugin \"%s\" (%s) loaded.\n"
 msgstr "Plugin \"%s\" (%s) načten.\n"
 
-#: src/plugins/plugins.c:852
+#: src/plugins/plugins.c:853
 #, c-format
 msgid "Plugin \"%s\" unloaded.\n"
 msgstr "Plugin \"%s\" odebrán.\n"
 
-#: src/plugins/plugins.c:858
+#: src/plugins/plugins.c:859
 #, c-format
 msgid "%s plugin \"%s\" not found\n"
 msgstr "%s plugin \"%s\" nenalezen\n"
@@ -2251,12 +2251,12 @@ msgstr ""
 "tento soubor při aktualizaci nastavení.\n"
 "#\n"
 
-#: src/plugins/plugins-interface.c:295
+#: src/plugins/plugins-interface.c:321
 #, c-format
 msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 msgstr "%s server/kanál (%s/%s) nenaleyen pro exec příkaz pluginu\n"
 
-#: src/plugins/plugins-interface.c:309
+#: src/plugins/plugins-interface.c:335
 #, c-format
 msgid "%s server not found for plugin exec command\n"
 msgstr "%s server nenalezen pro exec příkaz pluginu\n"

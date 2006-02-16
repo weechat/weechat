@@ -1518,7 +1518,7 @@ if (argv != NULL)
 <screen>
 int callback (t_weechat_plugin *plugin, char *fichier)
 {
-    plugin->printf_server (plugin, "fichier: %s", fichier);
+    plugin->print_server (plugin, "fichier: %s", fichier);
     return 1;
 }
 ...
@@ -1527,13 +1527,13 @@ plugin->exec_on_files (plugin, "/tmp", &amp;callback);
           </para>
         </section>
         
-        <section id="secAPI_printf">
-          <title>printf</title>
+        <section id="secAPI_print">
+          <title>print</title>
           
           <para>
             Prototype :
             <command>
-              void printf (t_weechat_plugin *plugin,
+              void print (t_weechat_plugin *plugin,
               char *serveur, char *canal, char *message, ...)
             </command>
           </para>
@@ -1575,20 +1575,20 @@ plugin->exec_on_files (plugin, "/tmp", &amp;callback);
           <para>
             Exemples :
 <screen>
-plugin->printf (plugin, NULL, NULL, "hello");
-plugin->printf (plugin, NULL, "#weechat", "hello");
-plugin->printf (plugin, "freenode", "#weechat", "hello");
+plugin->print (plugin, NULL, NULL, "hello");
+plugin->print (plugin, NULL, "#weechat", "hello");
+plugin->print (plugin, "freenode", "#weechat", "hello");
 </screen>
           </para>
         </section>
         
-        <section id="secAPI_printf_server">
-          <title>printf_server</title>
+        <section id="secAPI_print_server">
+          <title>print_server</title>
           
           <para>
             Prototype :
             <command>
-              void printf_server (t_weechat_plugin *plugin,
+              void print_server (t_weechat_plugin *plugin,
               char *message, ...)
             </command>
           </para>
@@ -1615,17 +1615,17 @@ plugin->printf (plugin, "freenode", "#weechat", "hello");
             Valeur renvoyée : aucune.
           </para>
           <para>
-            Exemple : <screen>plugin->printf_server (plugin, "hello");</screen>
+            Exemple : <screen>plugin->print_server (plugin, "hello");</screen>
           </para>
         </section>
         
-        <section id="secAPI_printf_infobar">
-          <title>printf_infobar</title>
+        <section id="secAPI_print_infobar">
+          <title>print_infobar</title>
           
           <para>
             Prototype :
             <command>
-              void printf_infobar (t_weechat_plugin *plugin,
+              void print_infobar (t_weechat_plugin *plugin,
               int temps, char *message, ...)
             </command>
           </para>
@@ -1653,7 +1653,60 @@ plugin->printf (plugin, "freenode", "#weechat", "hello");
             Valeur renvoyée : aucune.
           </para>
           <para>
-            Exemple : <screen>plugin->printf_infobar (plugin, 5, "hello");</screen>
+            Exemple : <screen>plugin->print_infobar (plugin, 5, "hello");</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_log">
+          <title>log</title>
+          
+          <para>
+            Prototype :
+            <command>
+              void log (t_weechat_plugin *plugin,
+              char *serveur, char *canal, char *message, ...)
+            </command>
+          </para>
+          <para>
+            Ecrit un message dans le fichier de log pour un serveur ou un
+            canal.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>serveur</option> : nom interne du serveur pour
+                  trouver le log du tampon (peut être NULL)
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>canal</option> : nom du canal pour trouver le
+                  tampon le log du tampon (peut être NULL)
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>message</option> : message
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : aucune.
+          </para>
+          <para>
+            Exemple :
+<screen>
+plugin->log (plugin, "freenode", "#weechat", "test");
+</screen>
           </para>
         </section>
         
@@ -1755,7 +1808,7 @@ plugin->printf (plugin, "freenode", "#weechat", "hello");
 int msg_kick (t_weechat_plugin *plugin, char *serveur, char *commande,
               char *arguments, char *handler_args, void *handler_pointer)
 {
-    plugin->printf (plugin, serveur, NULL, "KICK reçu");
+    plugin->print (plugin, serveur, NULL, "KICK reçu");
     return PLUGIN_RC_OK;
 }
 ...
@@ -1968,9 +2021,9 @@ int cmd_test (t_weechat_plugin *plugin, char *serveur,
               char *commande, char *arguments, char *handler_args,
               void *handler_pointer)
 {
-    plugin->printf (plugin, serveur, NULL,
-                    "commande test, pseudo: %s",
-                    (arguments) ? arguments : "aucun");
+    plugin->print (plugin, serveur, NULL,
+                   "commande test, pseudo: %s",
+                   (arguments) ? arguments : "aucun");
     return PLUGIN_RC_OK;
 }
 ...
@@ -2365,8 +2418,8 @@ char *nick = plugin->get_info (plugin, "nick", "freenode");
 t_plugin_dcc_info *dcc_info = plugin->get_dcc_info (plugin);
 for (ptr_dcc = dcc_info; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
 {
-    plugin->printf_server (plugin, "DCC type=%d, avec: %s",
-                           ptr_dcc->type, ptr_dcc->nick);
+    plugin->print_server (plugin, "DCC type=%d, avec: %s",
+                          ptr_dcc->type, ptr_dcc->nick);
 }
 if (dcc_info)
     plugin->free_dcc_info (plugin, dcc_info);
@@ -2638,12 +2691,12 @@ if (server_info)
     for (ptr_server_info = server_info; ptr_server_info;
          ptr_server_info = ptr_server_info->next_server)
     {
-        plugin->printf (plugin, NULL, NULL,
-                        "serveur: %s, addresse: %s, port: %d %s",
-                        ptr_server_info->name,
-                        ptr_server_info->address,
-                        ptr_server_info->port,
-                        (ptr_server_info->is_connected) ? "(connecté)" : "");
+        plugin->print (plugin, NULL, NULL,
+                       "serveur: %s, addresse: %s, port: %d %s",
+                       ptr_server_info->name,
+                       ptr_server_info->address,
+                       ptr_server_info->port,
+                       (ptr_server_info->is_connected) ? "(connecté)" : "");
     }
     plugin->free_server_info (plugin, server_info);
 }
@@ -2794,10 +2847,10 @@ if (channel_info)
     for (ptr_chan_info = channel_info; ptr_chan_info;
          ptr_chan_info = ptr_chan_info->next_channel)
     {
-        plugin->printf (plugin, NULL, NULL,
-                        "  %s (type %d)",
-                        ptr_chan_info->name,
-                        ptr_chan_info->type);
+        plugin->print (plugin, NULL, NULL,
+                       "  %s (type %d)",
+                       ptr_chan_info->name,
+                       ptr_chan_info->type);
     }
     plugin->free_channel_info (plugin, channel_info);
 }
@@ -2933,10 +2986,10 @@ if (nick_info)
     for (ptr_nick_info = nick_info; ptr_nick_info;
          ptr_nick_info = ptr_nick_info->next_nick)
     {
-        plugin->printf (plugin, NULL, NULL,
-                        "  %s (flags: %d)",
-                        ptr_nick_info->nick,
-                        ptr_nick_info->flags);
+        plugin->print (plugin, NULL, NULL,
+                       "  %s (flags: %d)",
+                       ptr_nick_info->nick,
+                       ptr_nick_info->flags);
     }
     plugin->free_nick_info (plugin, nick_info);
 }
@@ -3566,6 +3619,80 @@ Weechat.print_infobar (5, "message")
 
 -- lua
 weechat.print_infobar (5, "message")
+</screen>
+          </para>
+        </section>
+        
+        <section>
+          <title>log</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::log ( message, [canal, [serveur]] )
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.log ( message, [canal, [serveur]] )
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.log ( message, [canal, [serveur]] )
+            </command>
+          </para>
+          <para>
+            Prototype Lua :
+            <command>
+              weechat.log ( message, [canal, [serveur]] )
+            </command>
+          </para>
+          <para>
+            Ecrit un message dans le fichier de log pour un serveur ou un
+            canal.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>message</option> : message
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>canal</option> : nom du canal pour trouver le
+                  log du tampon
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>serveur</option> : nom interne du serveur pour
+                  trouver le log du tampon
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : 1 si succès, 0 si une erreur s'est produite.
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+weechat::log ("message", "#weechat", "freenode");
+
+# python
+weechat.log ("message", "#weechat", "freenode")
+
+# ruby
+Weechat.log ("message", "#weechat", "freenode")
+
+-- lua
+weechat.log ("message", "#weechat", "freenode")
 </screen>
           </para>
         </section>

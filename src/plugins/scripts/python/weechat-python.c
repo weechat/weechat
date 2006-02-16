@@ -66,9 +66,9 @@ weechat_python_exec (t_weechat_plugin *plugin,
     
     if ( !(evFunc && PyCallable_Check (evFunc)) )
     {
-        plugin->printf_server (plugin,
-                               "Python error: unable to run function \"%s\"",
-                               function);
+        plugin->print_server (plugin,
+                              "Python error: unable to run function \"%s\"",
+                              function);
         return PLUGIN_RC_KO;
     }
 
@@ -128,20 +128,20 @@ weechat_python_register (PyObject *self, PyObject *args)
     
     if (!PyArg_ParseTuple (args, "ssss", &name, &version, &shutdown_func, &description))
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: wrong parameters for "
-                                      "\"register\" function");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"register\" function");
         return Py_BuildValue ("i", 0);
     }
     
     if (weechat_script_search (python_plugin, &python_scripts, name))
     {
         /* error: another scripts already exists with this name! */
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: unable to register "
-                                      "\"%s\" script (another script "
-                                      "already exists with this name)",
-                                      name);
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to register "
+                                     "\"%s\" script (another script "
+                                     "already exists with this name)",
+                                     name);
         return Py_BuildValue ("i", 0);
     }
     
@@ -154,17 +154,17 @@ weechat_python_register (PyObject *self, PyObject *args)
                                                 description);
     if (python_current_script)
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python: registered script \"%s\", "
-                                      "version %s (%s)",
-                                      name, version, description);
+        python_plugin->print_server (python_plugin,
+                                     "Python: registered script \"%s\", "
+                                     "version %s (%s)",
+                                     name, version, description);
     }
     else
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: unable to load script "
-                                      "\"%s\" (not enough memory)",
-                                      name);
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to load script "
+                                     "\"%s\" (not enough memory)",
+                                     name);
         return Py_BuildValue ("i", 0);
     }
     
@@ -185,9 +185,9 @@ weechat_python_print (PyObject *self, PyObject *args)
     
     if (!python_current_script)
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: unable to print message, "
-                                      "script not initialized");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to print message, "
+                                     "script not initialized");
         return Py_BuildValue ("i", 0);
     }
     
@@ -197,15 +197,15 @@ weechat_python_print (PyObject *self, PyObject *args)
     
     if (!PyArg_ParseTuple (args, "s|ss", &message, &channel_name, &server_name))
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: wrong parameters for "
-                                      "\"print\" function");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"print\" function");
         return Py_BuildValue ("i", 0);
     }
     
-    python_plugin->printf (python_plugin,
-                           server_name, channel_name,
-                           "%s", message);
+    python_plugin->print (python_plugin,
+                          server_name, channel_name,
+                          "%s", message);
     
     return Py_BuildValue ("i", 1);
 }
@@ -225,9 +225,9 @@ weechat_python_print_infobar (PyObject *self, PyObject *args)
     
     if (!python_current_script)
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: unable to print infobar message, "
-                                      "script not initialized");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to print infobar message, "
+                                     "script not initialized");
         return Py_BuildValue ("i", 0);
     }
     
@@ -236,13 +236,13 @@ weechat_python_print_infobar (PyObject *self, PyObject *args)
     
     if (!PyArg_ParseTuple (args, "is", &delay, &message))
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: wrong parameters for "
-                                      "\"print_infobar\" function");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"print_infobar\" function");
         return Py_BuildValue ("i", 0);
     }
     
-    python_plugin->infobar_printf (python_plugin, delay, "%s", message);
+    python_plugin->print_infobar (python_plugin, delay, "%s", message);
     
     return Py_BuildValue ("i", 1);
 }
@@ -261,9 +261,9 @@ weechat_python_log (PyObject *self, PyObject *args)
     
     if (!python_current_script)
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: unable to log message, "
-                                      "script not initialized");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to log message, "
+                                     "script not initialized");
         return Py_BuildValue ("i", 0);
     }
     
@@ -273,9 +273,9 @@ weechat_python_log (PyObject *self, PyObject *args)
     
     if (!PyArg_ParseTuple (args, "s|ss", &message, &channel_name, &server_name))
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: wrong parameters for "
-                                      "\"log\" function");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"log\" function");
         return Py_BuildValue ("i", 0);
     }
     
@@ -300,9 +300,9 @@ weechat_python_command (PyObject *self, PyObject *args)
     
     if (!python_current_script)
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: unable to run command, "
-                                      "script not initialized");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to run command, "
+                                     "script not initialized");
         return Py_BuildValue ("i", 0);
     }
     
@@ -312,9 +312,9 @@ weechat_python_command (PyObject *self, PyObject *args)
     
     if (!PyArg_ParseTuple (args, "s|ss", &command, &channel_name, &server_name))
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: wrong parameters for "
-                                      "\"command\" function");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"command\" function");
         return Py_BuildValue ("i", 0);
     }
 
@@ -339,9 +339,9 @@ weechat_python_add_message_handler (PyObject *self, PyObject *args)
     
     if (!python_current_script)
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: unable to add message handler, "
-                                      "script not initialized");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to add message handler, "
+                                     "script not initialized");
         return Py_BuildValue ("i", 0);
     }
     
@@ -350,9 +350,9 @@ weechat_python_add_message_handler (PyObject *self, PyObject *args)
     
     if (!PyArg_ParseTuple (args, "ss", &irc_command, &function))
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: wrong parameters for "
-                                      "\"add_message_handler\" function");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"add_message_handler\" function");
         return Py_BuildValue ("i", 0);
     }
     
@@ -379,9 +379,9 @@ weechat_python_add_command_handler (PyObject *self, PyObject *args)
     
     if (!python_current_script)
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: unable to add command handler, "
-                                      "script not initialized");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to add command handler, "
+                                     "script not initialized");
         return Py_BuildValue ("i", 0);
     }
     
@@ -396,9 +396,9 @@ weechat_python_add_command_handler (PyObject *self, PyObject *args)
                            &description, &arguments, &arguments_description,
                            completion_template))
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: wrong parameters for "
-                                      "\"add_command_handler\" function");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"add_command_handler\" function");
         return Py_BuildValue ("i", 0);
     }
     
@@ -430,9 +430,9 @@ weechat_python_remove_handler (PyObject *self, PyObject *args)
     
     if (!python_current_script)
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: unable to remove handler, "
-                                      "script not initialized");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to remove handler, "
+                                     "script not initialized");
         return Py_BuildValue ("i", 0);
     }
     
@@ -441,9 +441,9 @@ weechat_python_remove_handler (PyObject *self, PyObject *args)
     
     if (!PyArg_ParseTuple (args, "ss", &command, &function))
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: wrong parameters for "
-                                      "\"remove_handler\" function");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"remove_handler\" function");
         return Py_BuildValue ("i", 0);
     }
     
@@ -468,9 +468,9 @@ weechat_python_get_info (PyObject *self, PyObject *args)
     
     if (!python_current_script)
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: unable to get info, "
-                                      "script not initialized");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to get info, "
+                                     "script not initialized");
         return Py_BuildValue ("i", 0);
     }
     
@@ -479,9 +479,9 @@ weechat_python_get_info (PyObject *self, PyObject *args)
     
     if (!PyArg_ParseTuple (args, "s|s", &arg, &server_name))
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: wrong parameters for "
-                                      "\"get_info\" function");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"get_info\" function");
         return Py_BuildValue ("i", 0);
     }
     
@@ -519,9 +519,9 @@ weechat_python_get_dcc_info (PyObject *self, PyObject *args)
     
     if (!python_current_script)
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: unable to get DCC info, "
-                                      "script not initialized");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to get DCC info, "
+                                     "script not initialized");
         return Py_None;
     }
 
@@ -616,9 +616,9 @@ weechat_python_get_config (PyObject *self, PyObject *args)
     
     if (!python_current_script)
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: unable to get config option, "
-                                      "script not initialized");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to get config option, "
+                                     "script not initialized");
         return Py_BuildValue ("i", 0);
     }
     
@@ -626,9 +626,9 @@ weechat_python_get_config (PyObject *self, PyObject *args)
     
     if (!PyArg_ParseTuple (args, "s", &option))
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: wrong parameters for "
-                                      "\"get_config\" function");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"get_config\" function");
         return Py_BuildValue ("i", 0);
     }
     
@@ -661,9 +661,9 @@ weechat_python_set_config (PyObject *self, PyObject *args)
 
     if (!python_current_script)
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: unable to set config option, "
-                                      "script not initialized");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to set config option, "
+                                     "script not initialized");
         return Py_BuildValue ("i", 0);
     }
     
@@ -672,9 +672,9 @@ weechat_python_set_config (PyObject *self, PyObject *args)
     
     if (!PyArg_ParseTuple (args, "ss", &option, &value))
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: wrong parameters for "
-                                      "\"set_config\" function");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"set_config\" function");
         return Py_BuildValue ("i", 0);
     }
     
@@ -702,9 +702,9 @@ weechat_python_get_plugin_config (PyObject *self, PyObject *args)
     
     if (!python_current_script)
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: unable to get plugin config option, "
-                                      "script not initialized");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to get plugin config option, "
+                                     "script not initialized");
         return Py_BuildValue ("i", 0);
     }
     
@@ -712,9 +712,9 @@ weechat_python_get_plugin_config (PyObject *self, PyObject *args)
     
     if (!PyArg_ParseTuple (args, "s", &option))
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: wrong parameters for "
-                                      "\"get_plugin_config\" function");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"get_plugin_config\" function");
         return Py_BuildValue ("i", 0);
     }
     
@@ -749,9 +749,9 @@ weechat_python_set_plugin_config (PyObject *self, PyObject *args)
     
     if (!python_current_script)
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: unable to set plugin config option, "
-                                      "script not initialized");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to set plugin config option, "
+                                     "script not initialized");
         return Py_BuildValue ("i", 0);
     }
     
@@ -760,9 +760,9 @@ weechat_python_set_plugin_config (PyObject *self, PyObject *args)
     
     if (!PyArg_ParseTuple (args, "ss", &option, &value))
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: wrong parameters for "
-                                      "\"set_plugin_config\" function");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"set_plugin_config\" function");
         return Py_BuildValue ("i", 0);
     }
     
@@ -794,9 +794,9 @@ weechat_python_get_server_info (PyObject *self, PyObject *args)
     
     if (!python_current_script)
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: unable to get server infos, "
-                                      "script not initialized");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to get server infos, "
+                                     "script not initialized");
         return Py_BuildValue ("i", 0);
     }
     
@@ -897,18 +897,18 @@ weechat_python_get_channel_info (PyObject *self, PyObject *args)
         
     if (!python_current_script)
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: unable to get channel infos, "
-                                      "script not initialized");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to get channel infos, "
+                                     "script not initialized");
         return Py_BuildValue ("i", 0);
     }
     
     server = NULL;
     if (!PyArg_ParseTuple (args, "s", &server))
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: wrong parameters for "
-                                      "\"get_channel_info\" function");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"get_channel_info\" function");
         return Py_BuildValue ("i", 0);
     }
     
@@ -964,9 +964,9 @@ weechat_python_get_nick_info (PyObject *self, PyObject *args)
         
     if (!python_current_script)
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: unable to get nick infos, "
-                                      "script not initialized");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to get nick infos, "
+                                     "script not initialized");
         return Py_BuildValue ("i", 0);
     }
     
@@ -974,9 +974,9 @@ weechat_python_get_nick_info (PyObject *self, PyObject *args)
     channel = NULL;
     if (!PyArg_ParseTuple (args, "ss", &server, &channel))
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: wrong parameters for "
-                                      "\"get_nick_info\" function");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"get_nick_info\" function");
         return Py_BuildValue ("i", 0);
     }
     
@@ -1047,9 +1047,9 @@ weechat_python_output (PyObject *self, PyObject *args)
 
     if (!PyArg_ParseTuple (args, "s", &msg))
     {
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: unable to get "
-                                      "stdout/stderr message(s)");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to get "
+                                     "stdout/stderr message(s)");
         return NULL; 
     }
     
@@ -1057,8 +1057,8 @@ weechat_python_output (PyObject *self, PyObject *args)
 	*p = '\0';
     
     if (strlen(msg) > 0)
-	python_plugin->printf_server (python_plugin,
-				      "Python stdin/stdout: %s", msg);
+	python_plugin->print_server (python_plugin,
+                                     "Python stdin/stdout: %s", msg);
     return Py_BuildValue ("i", 1);
 }
 
@@ -1084,13 +1084,13 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
     PyThreadState *python_current_interpreter;
     PyObject *weechat_module, *weechat_outputs, *weechat_dict;
     
-    plugin->printf_server (plugin, "Loading Python script \"%s\"", filename);
+    plugin->print_server (plugin, "Loading Python script \"%s\"", filename);
     
     if ((fp = fopen (filename, "r")) == NULL)
     {
-        plugin->printf_server (plugin,
-                               "Python error: unable to open file \"%s\"",
-                               filename);
+        plugin->print_server (plugin,
+                              "Python error: unable to open file \"%s\"",
+                              filename);
         return 0;
     }
 
@@ -1101,8 +1101,8 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
 
     if (python_current_interpreter == NULL)
     {
-        plugin->printf_server (plugin,
-                               "Python error: unable to create new sub-interpreter");
+        plugin->print_server (plugin,
+                              "Python error: unable to create new sub-interpreter");
         fclose (fp);
         return 0;
     }
@@ -1113,8 +1113,8 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
 
     if ( weechat_module == NULL)
     {
-        plugin->printf_server (plugin,
-                               "Python error: unable to initialize WeeChat module");
+        plugin->print_server (plugin,
+                              "Python error: unable to initialize WeeChat module");
         Py_EndInterpreter (python_current_interpreter);
         fclose (fp);
         return 0;
@@ -1131,26 +1131,26 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
     weechat_outputs = Py_InitModule("weechatOutputs", weechat_python_output_funcs);
     if (weechat_outputs == NULL)
     {
-        plugin->printf_server (plugin,
-                               "Python warning: unable to redirect stdout and stderr");
+        plugin->print_server (plugin,
+                              "Python warning: unable to redirect stdout and stderr");
     }
     else
     {
 	if (PySys_SetObject("stdout", weechat_outputs) == -1)
-	    plugin->printf_server (plugin,
-				   "Python warning: unable to redirect stdout");
+	    plugin->print_server (plugin,
+                                  "Python warning: unable to redirect stdout");
 	if (PySys_SetObject("stderr", weechat_outputs) == -1)
-	    plugin->printf_server (plugin,
-				   "Python warning: unable to redirect stderr");
+	    plugin->print_server (plugin,
+                                  "Python warning: unable to redirect stderr");
     }
 	
     python_current_script_filename = strdup (filename);
     
     if (PyRun_SimpleFile (fp, filename) != 0)
     {
-        plugin->printf_server (plugin,
-                               "Python error: unable to parse file \"%s\"",
-                               filename);
+        plugin->print_server (plugin,
+                              "Python error: unable to parse file \"%s\"",
+                              filename);
         free (python_current_script_filename);
 	Py_EndInterpreter (python_current_interpreter);
         fclose (fp);
@@ -1168,10 +1168,10 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
     
     if (python_current_script == NULL)
     {
-        plugin->printf_server (plugin,
-                               "Python error: function \"register\" not found "
-                               "in file \"%s\"",
-                               filename);
+        plugin->print_server (plugin,
+                              "Python error: function \"register\" not found "
+                              "in file \"%s\"",
+                              filename);
 	Py_EndInterpreter (python_current_interpreter);
         return 0;
     }
@@ -1188,9 +1188,9 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
 void
 weechat_python_unload (t_weechat_plugin *plugin, t_plugin_script *script)
 {
-    plugin->printf_server (plugin,
-                           "Unloading Python script \"%s\"",
-                           script->name);
+    plugin->print_server (plugin,
+                          "Unloading Python script \"%s\"",
+                          script->name);
     
     if (script->shutdown_func[0])
         weechat_python_exec (plugin, script, script->shutdown_func, "", "");
@@ -1214,15 +1214,15 @@ weechat_python_unload_name (t_weechat_plugin *plugin, char *name)
     if (ptr_script)
     {
         weechat_python_unload (plugin, ptr_script);
-        plugin->printf_server (plugin,
-                               "Python script \"%s\" unloaded",
-                               name);
+        plugin->print_server (plugin,
+                              "Python script \"%s\" unloaded",
+                              name);
     }
     else
     {
-        plugin->printf_server (plugin,
-                               "Python error: script \"%s\" not loaded",
-                               name);
+        plugin->print_server (plugin,
+                              "Python error: script \"%s\" not loaded",
+                              name);
     }
 }
 
@@ -1233,13 +1233,13 @@ weechat_python_unload_name (t_weechat_plugin *plugin, char *name)
 void
 weechat_python_unload_all (t_weechat_plugin *plugin)
 {
-    plugin->printf_server (plugin,
-                           "Unloading all Python scripts");
+    plugin->print_server (plugin,
+                          "Unloading all Python scripts");
     while (python_scripts)
         weechat_python_unload (plugin, python_scripts);
 
-    plugin->printf_server (plugin,
-                           "Python scripts unloaded");
+    plugin->print_server (plugin,
+                          "Python scripts unloaded");
 }
 
 /*
@@ -1274,26 +1274,26 @@ weechat_python_cmd (t_weechat_plugin *plugin,
     {
         case 0:
             /* list registered Python scripts */
-            plugin->printf_server (plugin, "");
-            plugin->printf_server (plugin, "Registered Python scripts:");
+            plugin->print_server (plugin, "");
+            plugin->print_server (plugin, "Registered Python scripts:");
             if (python_scripts)
             {
                 for (ptr_script = python_scripts;
                      ptr_script; ptr_script = ptr_script->next_script)
                 {
-                    plugin->printf_server (plugin, "  %s v%s%s%s",
-                                           ptr_script->name,
-                                           ptr_script->version,
-                                           (ptr_script->description[0]) ? " - " : "",
-                                           ptr_script->description);
+                    plugin->print_server (plugin, "  %s v%s%s%s",
+                                          ptr_script->name,
+                                          ptr_script->version,
+                                          (ptr_script->description[0]) ? " - " : "",
+                                          ptr_script->description);
                 }
             }
             else
-                plugin->printf_server (plugin, "  (none)");
+                plugin->print_server (plugin, "  (none)");
             
             /* list Python message handlers */
-            plugin->printf_server (plugin, "");
-            plugin->printf_server (plugin, "Python message handlers:");
+            plugin->print_server (plugin, "");
+            plugin->print_server (plugin, "Python message handlers:");
             handler_found = 0;
             for (ptr_handler = plugin->handlers;
                  ptr_handler; ptr_handler = ptr_handler->next_handler)
@@ -1302,17 +1302,17 @@ weechat_python_cmd (t_weechat_plugin *plugin,
                     && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
-                    plugin->printf_server (plugin, "  IRC(%s) => Python(%s)",
-                                           ptr_handler->irc_command,
-                                           ptr_handler->handler_args);
+                    plugin->print_server (plugin, "  IRC(%s) => Python(%s)",
+                                          ptr_handler->irc_command,
+                                          ptr_handler->handler_args);
                 }
             }
             if (!handler_found)
-                plugin->printf_server (plugin, "  (none)");
+                plugin->print_server (plugin, "  (none)");
             
             /* list Python command handlers */
-            plugin->printf_server (plugin, "");
-            plugin->printf_server (plugin, "Python command handlers:");
+            plugin->print_server (plugin, "");
+            plugin->print_server (plugin, "Python command handlers:");
             handler_found = 0;
             for (ptr_handler = plugin->handlers;
                  ptr_handler; ptr_handler = ptr_handler->next_handler)
@@ -1321,13 +1321,13 @@ weechat_python_cmd (t_weechat_plugin *plugin,
                     && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
-                    plugin->printf_server (plugin, "  /%s => Python(%s)",
-                                           ptr_handler->command,
-                                           ptr_handler->handler_args);
+                    plugin->print_server (plugin, "  /%s => Python(%s)",
+                                          ptr_handler->command,
+                                          ptr_handler->handler_args);
                 }
             }
             if (!handler_found)
-                plugin->printf_server (plugin, "  (none)");
+                plugin->print_server (plugin, "  (none)");
             break;
         case 1:
             if (plugin->ascii_strcasecmp (plugin, argv[0], "autoload") == 0)
@@ -1374,14 +1374,14 @@ weechat_python_cmd (t_weechat_plugin *plugin,
             }
             else
             {
-                plugin->printf_server (plugin,
-                                       "Python error: unknown option for "
-                                       "\"python\" command");
+                plugin->print_server (plugin,
+                                      "Python error: unknown option for "
+                                      "\"python\" command");
             }
             break;
         default:
-            plugin->printf_server (plugin,
-                                   "Python error: wrong argument count for \"python\" command");
+            plugin->print_server (plugin,
+                                  "Python error: wrong argument count for \"python\" command");
     }
     
     if (argv)
@@ -1400,13 +1400,13 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     
     python_plugin = plugin;
     
-    plugin->printf_server (plugin, "Loading Python module \"weechat\"");
+    plugin->print_server (plugin, "Loading Python module \"weechat\"");
     
     Py_Initialize ();
     if (Py_IsInitialized () == 0)
     {
-        plugin->printf_server (plugin,
-                               "Python error: unable to launch global interpreter");
+        plugin->print_server (plugin,
+                              "Python error: unable to launch global interpreter");
         return PLUGIN_RC_KO;
     }
 
@@ -1416,8 +1416,8 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     
     if (python_mainThreadState == NULL)
     {
-        plugin->printf_server (plugin,
-                               "Python error: unable to get current interpreter state");
+        plugin->print_server (plugin,
+                              "Python error: unable to get current interpreter state");
         return PLUGIN_RC_KO;
     }
     
@@ -1457,9 +1457,9 @@ weechat_plugin_end (t_weechat_plugin *plugin)
     
     Py_Finalize ();
     if (Py_IsInitialized () != 0)
-        python_plugin->printf_server (python_plugin,
-                                      "Python error: unable to free interpreter");
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to free interpreter");
     
-    python_plugin->printf_server (python_plugin,
-                                  "Python plugin ended");
+    python_plugin->print_server (python_plugin,
+                                 "Python plugin ended");
 }

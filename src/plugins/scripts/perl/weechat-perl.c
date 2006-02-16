@@ -146,16 +146,16 @@ weechat_perl_exec (t_weechat_plugin *plugin,
     return_code = PLUGIN_RC_KO;
     if (SvTRUE (sv))
     {
-        plugin->printf_server (plugin, "Perl error: %s", SvPV (sv, count));
+        plugin->print_server (plugin, "Perl error: %s", SvPV (sv, count));
         POPs;
     }
     else
     {
         if (count != 1)
         {
-            plugin->printf_server (plugin,
-                                   "Perl error: too much values from \"%s\" (%d). Expected: 1.",
-                                   function, count);
+            plugin->print_server (plugin,
+                                  "Perl error: too much values from \"%s\" (%d). Expected: 1.",
+                                  function, count);
         }
         else
             return_code = POPi;
@@ -204,9 +204,9 @@ static XS (XS_weechat_register)
     
     if (items != 4)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: wrong parameters for "
-                                    "\"register\" function");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"register\" function");
         XSRETURN_NO;
     }
     
@@ -218,11 +218,11 @@ static XS (XS_weechat_register)
     if (weechat_script_search (perl_plugin, &perl_scripts, name))
     {
         /* error: another script already exists with this name! */
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: unable to register "
-                                    "\"%s\" script (another script "
-                                    "already exists with this name)",
-                                    name);
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to register "
+                                   "\"%s\" script (another script "
+                                   "already exists with this name)",
+                                   name);
         XSRETURN_NO;
     }
     
@@ -235,17 +235,17 @@ static XS (XS_weechat_register)
                                               description);
     if (perl_current_script)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl: registered script \"%s\", "
-                                    "version %s (%s)",
-                                    name, version, description);
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl: registered script \"%s\", "
+                                   "version %s (%s)",
+                                   name, version, description);
     }
     else
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: unable to load script "
-                                    "\"%s\" (not enough memory)",
-                                    name);
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to load script "
+                                   "\"%s\" (not enough memory)",
+                                   name);
         XSRETURN_NO;
     }
     
@@ -267,17 +267,17 @@ static XS (XS_weechat_print)
 
     if (!perl_current_script)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: unable to print message, "
-                                    "script not initialized");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to print message, "
+                                   "script not initialized");
 	XSRETURN_NO;
     }
 
     if (items < 1)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: wrong parameters for "
-                                    "\"print\" function");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"print\" function");
         XSRETURN_NO;
     }
     
@@ -293,9 +293,9 @@ static XS (XS_weechat_print)
             server_name = SvPV (ST (2), integer);
     }
     
-    perl_plugin->printf (perl_plugin,
-                         server_name, channel_name,
-                         "%s", message);
+    perl_plugin->print (perl_plugin,
+                        server_name, channel_name,
+                        "%s", message);
     
     XSRETURN_YES;
 }
@@ -314,24 +314,24 @@ static XS (XS_weechat_print_infobar)
     
     if (!perl_current_script)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: unable to print infobar message, "
-                                    "script not initialized");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to print infobar message, "
+                                   "script not initialized");
 	XSRETURN_NO;
     }
     
     if (items < 2)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: wrong parameters for "
-                                    "\"print_infobar\" function");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"print_infobar\" function");
         XSRETURN_NO;
     }
     
-    perl_plugin->infobar_printf (perl_plugin,
-                                 SvIV (ST (0)),
-                                 "%s",
-                                 SvPV (ST (1), integer));
+    perl_plugin->print_infobar (perl_plugin,
+                                SvIV (ST (0)),
+                                "%s",
+                                SvPV (ST (1), integer));
     
     XSRETURN_YES;
 }
@@ -351,17 +351,17 @@ static XS (XS_weechat_log)
 
     if (!perl_current_script)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: unable to print message, "
-                                    "script not initialized");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to print message, "
+                                   "script not initialized");
 	XSRETURN_NO;
     }
 
     if (items < 1)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: wrong parameters for "
-                                    "\"log\" function");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"log\" function");
         XSRETURN_NO;
     }
     
@@ -399,17 +399,17 @@ static XS (XS_weechat_command)
     
     if (!perl_current_script)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: unable to run command, "
-                                    "script not initialized");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to run command, "
+                                   "script not initialized");
 	XSRETURN_NO;
     }
     
     if (items < 1)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: wrong parameters for "
-                                    "\"command\" function");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"command\" function");
         XSRETURN_NO;
     }
     
@@ -445,17 +445,17 @@ static XS (XS_weechat_add_message_handler)
     
     if (!perl_current_script)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: unable to add message handler, "
-                                    "script not initialized");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to add message handler, "
+                                   "script not initialized");
 	XSRETURN_NO;
     }
     
     if (items < 2)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: wrong parameters for "
-                                    "\"add_message_handler\" function");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"add_message_handler\" function");
         XSRETURN_NO;
     }
     
@@ -486,17 +486,17 @@ static XS (XS_weechat_add_command_handler)
     
     if (!perl_current_script)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: unable to add command handler, "
-                                    "script not initialized");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to add command handler, "
+                                   "script not initialized");
 	XSRETURN_NO;
     }
     
     if (items < 2)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: wrong parameters for "
-                                    "\"add_command_handler\" function");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"add_command_handler\" function");
         XSRETURN_NO;
     }
     
@@ -536,17 +536,17 @@ static XS (XS_weechat_remove_handler)
     
     if (!perl_current_script)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: unable to remove handler, "
-                                    "script not initialized");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to remove handler, "
+                                   "script not initialized");
 	XSRETURN_NO;
     }
     
     if (items < 2)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: wrong parameters for "
-                                    "\"remove_handler\" function");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"remove_handler\" function");
         XSRETURN_NO;
     }
     
@@ -574,17 +574,17 @@ static XS (XS_weechat_get_info)
     
     if (!perl_current_script)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: unable to get info, "
-                                    "script not initialized");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to get info, "
+                                   "script not initialized");
 	XSRETURN_NO;
     }
     
     if (items < 1)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: wrong parameters for "
-                                    "\"get_info\" function");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"get_info\" function");
         XSRETURN_NO;
     }
     
@@ -627,9 +627,9 @@ static XS (XS_weechat_get_dcc_info)
     
     if (!perl_current_script)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: unable to get DCC info, "
-                                    "script not initialized");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to get DCC info, "
+                                   "script not initialized");
 	XSRETURN_EMPTY;
     }
 
@@ -688,17 +688,17 @@ static XS (XS_weechat_get_config)
     
     if (!perl_current_script)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: unable to get config option, "
-                                    "script not initialized");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to get config option, "
+                                   "script not initialized");
 	XSRETURN_NO;
     }
     
     if (items < 1)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: wrong parameters for "
-                                    "\"get_config\" function");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"get_config\" function");
         XSRETURN_NO;
     }
     
@@ -735,17 +735,17 @@ static XS (XS_weechat_set_config)
     
     if (!perl_current_script)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: unable to set config option, "
-                                    "script not initialized");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to set config option, "
+                                   "script not initialized");
 	XSRETURN_NO;
     }
     
     if (items < 2)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: wrong parameters for "
-                                    "\"set_config\" function");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"set_config\" function");
         XSRETURN_NO;
     }
     
@@ -776,17 +776,17 @@ static XS (XS_weechat_get_plugin_config)
     
     if (!perl_current_script)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: unable to get plugin config option, "
-                                    "script not initialized");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to get plugin config option, "
+                                   "script not initialized");
 	XSRETURN_NO;
     }
     
     if (items < 1)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: wrong parameters for "
-                                    "\"get_plugin_config\" function");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"get_plugin_config\" function");
         XSRETURN_NO;
     }
     
@@ -825,17 +825,17 @@ static XS (XS_weechat_set_plugin_config)
     
     if (!perl_current_script)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: unable to set plugin config option, "
-                                    "script not initialized");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to set plugin config option, "
+                                   "script not initialized");
 	XSRETURN_NO;
     }
     
     if (items < 2)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: wrong parameters for "
-                                    "\"set_plugin_config\" function");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"set_plugin_config\" function");
         XSRETURN_NO;
     }
     
@@ -870,9 +870,9 @@ static XS (XS_weechat_get_server_info)
     
     if (!perl_current_script)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: unable to get server info, "
-                                    "script not initialized");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to get server info, "
+                                   "script not initialized");
 	XSRETURN_EMPTY;
     }
     
@@ -950,17 +950,17 @@ static XS (XS_weechat_get_channel_info)
     
     if (!perl_current_script)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: unable to get channel info, "
-                                    "script not initialized");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to get channel info, "
+                                   "script not initialized");
 	XSRETURN_EMPTY;
     }
 
     if (items != 1)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: wrong parameters for "
-                                    "\"get_channel_info\" function");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"get_channel_info\" function");
         XSRETURN_EMPTY;
     }
     
@@ -1018,17 +1018,17 @@ static XS (XS_weechat_get_nick_info)
     
     if (!perl_current_script)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: unable to get nick info, "
-                                    "script not initialized");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to get nick info, "
+                                   "script not initialized");
 	XSRETURN_EMPTY;
     }
 
     if (items != 2)
     {
-        perl_plugin->printf_server (perl_plugin,
-                                    "Perl error: wrong parameters for "
-                                    "\"get_nick_info\" function");
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"get_nick_info\" function");
         XSRETURN_EMPTY;
     }
     
@@ -1122,7 +1122,7 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
     char *perl_args[] = { "", "-e", "0" };    
 #endif
     
-    plugin->printf_server (plugin, "Loading Perl script \"%s\"", filename);
+    plugin->print_server (plugin, "Loading Perl script \"%s\"", filename);
     perl_current_script = NULL;
 
 #ifndef MULTIPLICITY
@@ -1135,8 +1135,8 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
 
     if (perl_current_interpreter == NULL)
     {
-        plugin->printf_server (plugin,
-                               "Perl error: unable to create new sub-interpreter");
+        plugin->print_server (plugin,
+                              "Perl error: unable to create new sub-interpreter");
         return 0;
     }
 
@@ -1158,27 +1158,27 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
     {
 	if (eval == 2) 
 	{
-	    plugin->printf_server (plugin,
-				   "Perl error: unable to parse file \"%s\"",
-				   filename);	    
-	    plugin->printf_server (plugin,
-				   "Perl error: %s",
+	    plugin->print_server (plugin,
+                                  "Perl error: unable to parse file \"%s\"",
+                                  filename);
+	    plugin->print_server (plugin,
+                                  "Perl error: %s",
 #ifndef MULTIPLICITY
-				   SvPV(perl_get_sv("WeechatPerlScriptLoader::weechat_perl_load_eval_file_error", FALSE), len));
+                                  SvPV(perl_get_sv("WeechatPerlScriptLoader::weechat_perl_load_eval_file_error", FALSE), len));
 #else
-				   SvPV(perl_get_sv("weechat_perl_load_eval_file_error", FALSE), len));
+                                  SvPV(perl_get_sv("weechat_perl_load_eval_file_error", FALSE), len));
 #endif
 	}
 	else if ( eval == 1)
 	{
-	    plugin->printf_server (plugin,
-				   "Perl error: unable to run file \"%s\"",
-				   filename);
+	    plugin->print_server (plugin,
+                                  "Perl error: unable to run file \"%s\"",
+                                  filename);
 	}
 	else {
-	    plugin->printf_server (plugin,
-				   "Perl error: unknown error while loading file \"%s\"",
-				   filename);
+	    plugin->print_server (plugin,
+                                  "Perl error: unknown error while loading file \"%s\"",
+                                  filename);
 	}
 #ifdef MULTIPLICITY
 	perl_destruct (perl_current_interpreter);
@@ -1190,11 +1190,12 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
 	return 0;
     }
     
-    if (perl_current_script == NULL) {
-	plugin->printf_server (plugin,
-                               "Perl error: function \"register\" not found "
-                               "in file \"%s\"",
-                               filename);
+    if (perl_current_script == NULL)
+    {
+	plugin->print_server (plugin,
+                              "Perl error: function \"register\" not found "
+                              "in file \"%s\"",
+                              filename);
 #ifdef MULTIPLICITY
         perl_destruct (perl_current_interpreter);
         perl_free (perl_current_interpreter);
@@ -1218,9 +1219,9 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
 void
 weechat_perl_unload (t_weechat_plugin *plugin, t_plugin_script *script)
 {
-    plugin->printf_server (plugin,
-                           "Unloading Perl script \"%s\"",
-                           script->name);
+    plugin->print_server (plugin,
+                          "Unloading Perl script \"%s\"",
+                          script->name);
 
 #ifndef MULTIPLICITY
     eval_pv(script->interpreter, TRUE);
@@ -1255,15 +1256,15 @@ weechat_perl_unload_name (t_weechat_plugin *plugin, char *name)
     if (ptr_script)
     {
         weechat_perl_unload (plugin, ptr_script);
-        plugin->printf_server (plugin,
-                               "Perl script \"%s\" unloaded",
-                               name);
+        plugin->print_server (plugin,
+                              "Perl script \"%s\" unloaded",
+                              name);
     }
     else
     {
-        plugin->printf_server (plugin,
-                               "Perl error: script \"%s\" not loaded",
-                               name);
+        plugin->print_server (plugin,
+                              "Perl error: script \"%s\" not loaded",
+                              name);
     }
 }
 
@@ -1274,13 +1275,13 @@ weechat_perl_unload_name (t_weechat_plugin *plugin, char *name)
 void
 weechat_perl_unload_all (t_weechat_plugin *plugin)
 {
-    plugin->printf_server (plugin,
-                           "Unloading all Perl scripts");
+    plugin->print_server (plugin,
+                          "Unloading all Perl scripts");
     while (perl_scripts)
       weechat_perl_unload (plugin, perl_scripts);
 
-    plugin->printf_server (plugin,
-                           "Perl scripts unloaded");
+    plugin->print_server (plugin,
+                          "Perl scripts unloaded");
 }
 
 /*
@@ -1315,26 +1316,26 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
     {
         case 0:
             /* list registered Perl scripts */
-            plugin->printf_server (plugin, "");
-            plugin->printf_server (plugin, "Registered Perl scripts:");
+            plugin->print_server (plugin, "");
+            plugin->print_server (plugin, "Registered Perl scripts:");
             if (perl_scripts)
             {
                 for (ptr_script = perl_scripts;
                      ptr_script; ptr_script = ptr_script->next_script)
                 {
-                    plugin->printf_server (plugin, "  %s v%s%s%s",
-                                           ptr_script->name,
-                                           ptr_script->version,
-                                           (ptr_script->description[0]) ? " - " : "",
-                                           ptr_script->description);
+                    plugin->print_server (plugin, "  %s v%s%s%s",
+                                          ptr_script->name,
+                                          ptr_script->version,
+                                          (ptr_script->description[0]) ? " - " : "",
+                                          ptr_script->description);
                 }
             }
             else
-                plugin->printf_server (plugin, "  (none)");
+                plugin->print_server (plugin, "  (none)");
             
             /* list Perl message handlers */
-            plugin->printf_server (plugin, "");
-            plugin->printf_server (plugin, "Perl message handlers:");
+            plugin->print_server (plugin, "");
+            plugin->print_server (plugin, "Perl message handlers:");
             handler_found = 0;
             for (ptr_handler = plugin->handlers;
                  ptr_handler; ptr_handler = ptr_handler->next_handler)
@@ -1343,17 +1344,17 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
                     && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
-                    plugin->printf_server (plugin, "  IRC(%s) => Perl(%s)",
-                                           ptr_handler->irc_command,
-                                           ptr_handler->handler_args);
+                    plugin->print_server (plugin, "  IRC(%s) => Perl(%s)",
+                                          ptr_handler->irc_command,
+                                          ptr_handler->handler_args);
                 }
             }
             if (!handler_found)
-                plugin->printf_server (plugin, "  (none)");
+                plugin->print_server (plugin, "  (none)");
             
             /* list Perl command handlers */
-            plugin->printf_server (plugin, "");
-            plugin->printf_server (plugin, "Perl command handlers:");
+            plugin->print_server (plugin, "");
+            plugin->print_server (plugin, "Perl command handlers:");
             handler_found = 0;
             for (ptr_handler = plugin->handlers;
                  ptr_handler; ptr_handler = ptr_handler->next_handler)
@@ -1362,13 +1363,13 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
                     && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
-                    plugin->printf_server (plugin, "  /%s => Perl(%s)",
-                                           ptr_handler->command,
-                                           ptr_handler->handler_args);
+                    plugin->print_server (plugin, "  /%s => Perl(%s)",
+                                          ptr_handler->command,
+                                          ptr_handler->handler_args);
                 }
             }
             if (!handler_found)
-                plugin->printf_server (plugin, "  (none)");
+                plugin->print_server (plugin, "  (none)");
             break;
         case 1:
             if (plugin->ascii_strcasecmp (plugin, argv[0], "autoload") == 0)
@@ -1415,14 +1416,14 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
             }
             else
             {
-                plugin->printf_server (plugin,
-                                       "Perl error: unknown option for "
-                                       "\"perl\" command");
+                plugin->print_server (plugin,
+                                      "Perl error: unknown option for "
+                                      "\"perl\" command");
             }
             break;
         default:
-            plugin->printf_server (plugin,
-                                   "Perl error: wrong argument count for \"perl\" command");
+            plugin->print_server (plugin,
+                                  "Perl error: wrong argument count for \"perl\" command");
     }
     
     if (argv)
@@ -1441,18 +1442,18 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     perl_plugin = plugin;
 
 #ifdef MULTIPLICITY
-    plugin->printf_server (plugin, "Loading Perl module \"weechat\"");
+    plugin->print_server (plugin, "Loading Perl module \"weechat\"");
 #else
     char *perl_args[] = { "", "-e", "0" };
    
-    plugin->printf_server (plugin, "Loading Perl module \"weechat\" (without multiplicity)");
+    plugin->print_server (plugin, "Loading Perl module \"weechat\" (without multiplicity)");
     
     main_perl = perl_alloc ();
     
     if (!main_perl)
     {
-        plugin->printf_server (plugin,
-                               "Perl error: unable to initialize Perl");
+        plugin->print_server (plugin,
+                              "Perl error: unable to initialize Perl");
         return PLUGIN_RC_KO;
     }
     
@@ -1498,6 +1499,6 @@ weechat_plugin_end (t_weechat_plugin *plugin)
     }
 #endif
     
-    perl_plugin->printf_server (perl_plugin,
-                                "Perl plugin ended");
+    perl_plugin->print_server (perl_plugin,
+                               "Perl plugin ended");
 }

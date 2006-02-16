@@ -198,11 +198,9 @@ struct t_weechat_plugin
     void (*exec_on_files) (t_weechat_plugin *, char *,
                            int (*)(t_weechat_plugin *, char *));
     
-    void (*printf) (t_weechat_plugin *, char *, char *, char *, ...);
-    void (*printf_server) (t_weechat_plugin *, char *, ...);
-    void (*infobar_printf) (t_weechat_plugin *, int, char *, ...);
-
-    void (*log) (t_weechat_plugin *, char *, char *, char *, ...);
+    void (*print) (t_weechat_plugin *, char *, char *, char *, ...);
+    void (*print_server) (t_weechat_plugin *, char *, ...);
+    void (*print_infobar) (t_weechat_plugin *, int, char *, ...);
     
     t_plugin_handler *(*msg_handler_add) (t_weechat_plugin *, char *,
                                           t_plugin_handler_func *,
@@ -230,6 +228,8 @@ struct t_weechat_plugin
     t_plugin_nick_info *(*get_nick_info) (t_weechat_plugin *, char*, char*);
     void (*free_nick_info) (t_weechat_plugin *, t_plugin_nick_info *);
     
+    void (*log) (t_weechat_plugin *, char *, char *, char *, ...);
+    
     /* WeeChat developers: ALWAYS add new functions at the end */
 };
 
@@ -243,9 +243,9 @@ extern void weechat_plugin_exec_on_files (t_weechat_plugin *, char *,
                                           int (*)(t_weechat_plugin *, char *));
 
 /* display functions */
-extern void weechat_plugin_printf (t_weechat_plugin *, char *, char *, char *, ...);
-extern void weechat_plugin_printf_server (t_weechat_plugin *, char *, ...);
-extern void weechat_plugin_infobar_printf (t_weechat_plugin *, int, char *, ...);
+extern void weechat_plugin_print (t_weechat_plugin *, char *, char *, char *, ...);
+extern void weechat_plugin_print_server (t_weechat_plugin *, char *, ...);
+extern void weechat_plugin_print_infobar (t_weechat_plugin *, int, char *, ...);
 
 /* log functions */
 extern void weechat_plugin_log (t_weechat_plugin *, char *, char *, char *, ...);
