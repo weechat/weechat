@@ -248,6 +248,45 @@ weechat_python_print_infobar (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_log: log message in server/channel (current or specified ones)
+ */
+
+static PyObject *
+weechat_python_log (PyObject *self, PyObject *args)
+{
+    char *message, *channel_name, *server_name;
+    
+    /* make gcc happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        python_plugin->printf_server (python_plugin,
+                                      "Python error: unable to log message, "
+                                      "script not initialized");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    message = NULL;
+    channel_name = NULL;
+    server_name = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s|ss", &message, &channel_name, &server_name))
+    {
+        python_plugin->printf_server (python_plugin,
+                                      "Python error: wrong parameters for "
+                                      "\"log\" function");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    python_plugin->log (python_plugin,
+                           server_name, channel_name,
+                           "%s", message);
+    
+    return Py_BuildValue ("i", 1);
+}
+
+/*
  * weechat_python_command: send command to server
  */
 
@@ -976,6 +1015,7 @@ PyMethodDef weechat_python_funcs[] = {
     { "register", weechat_python_register, METH_VARARGS, "" },
     { "prnt", weechat_python_print, METH_VARARGS, "" },
     { "print_infobar", weechat_python_print_infobar, METH_VARARGS, "" },
+    { "log", weechat_python_log, METH_VARARGS, "" },
     { "command", weechat_python_command, METH_VARARGS, "" },
     { "add_message_handler", weechat_python_add_message_handler, METH_VARARGS, "" },
     { "add_command_handler", weechat_python_add_command_handler, METH_VARARGS, "" },

@@ -320,6 +320,66 @@ weechat_ruby_print_infobar (VALUE class, VALUE delay, VALUE message)
 }
 
 /*
+ * weechat_ruby_log: log message in server/channel (current or specified ones)
+ */
+
+static VALUE
+weechat_ruby_log (int argc, VALUE *argv, VALUE class)
+{
+    VALUE message, channel_name, server_name;
+    char *c_message, *c_channel_name, *c_server_name;
+    
+    /* make gcc happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: unable to log message, "
+                                    "script not initialized");
+        return INT2FIX (0);
+    }
+    
+    message = Qnil;
+    channel_name = Qnil;
+    server_name = Qnil;
+    c_message = NULL;
+    c_channel_name = NULL;
+    c_server_name = NULL;
+ 
+    rb_scan_args (argc, argv, "12", &message, &channel_name, &server_name);
+   
+    if (NIL_P (message))
+    {
+        ruby_plugin->printf_server (ruby_plugin,
+                                    "Ruby error: wrong parameters for "
+                                    "\"log\" function");
+        return INT2FIX (0);
+    }
+    
+    Check_Type (message, T_STRING);
+    c_message = STR2CSTR (message);
+
+    if (!NIL_P (channel_name))
+    {
+        Check_Type (channel_name, T_STRING);
+	c_channel_name = STR2CSTR (channel_name);
+    }
+
+    if (!NIL_P (server_name))
+    {
+        Check_Type (server_name, T_STRING);
+	c_server_name = STR2CSTR (server_name);
+    }
+    
+    ruby_plugin->log (ruby_plugin,
+		      c_server_name, c_channel_name,
+		      "%s", c_message);
+    
+    return INT2FIX (1);
+}
+
+/*
  * weechat_ruby_command: send command to server
  */
 
@@ -1548,6 +1608,7 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     rb_define_module_function (mWeechat, "register", weechat_ruby_register, 4);
     rb_define_module_function (mWeechat, "print", weechat_ruby_print, -1);
     rb_define_module_function (mWeechat, "print_infobar", weechat_ruby_print_infobar, 2);
+    rb_define_module_function (mWeechat, "log", weechat_ruby_log, 2);
     rb_define_module_function (mWeechat, "command", weechat_ruby_command, -1);
     rb_define_module_function (mWeechat, "add_message_handler", weechat_ruby_add_message_handler, 2);
     rb_define_module_function (mWeechat, "add_command_handler", weechat_ruby_add_command_handler, -1);

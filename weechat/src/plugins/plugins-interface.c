@@ -35,6 +35,7 @@
 #include "plugins.h"
 #include "plugins-config.h"
 #include "../common/command.h"
+#include "../common/log.h"
 #include "../common/weeconfig.h"
 #include "../irc/irc.h"
 #include "../gui/gui.h"
@@ -211,6 +212,31 @@ weechat_plugin_infobar_printf (t_weechat_plugin *plugin, int time_displayed, cha
     vsnprintf (buf, sizeof (buf) - 1, message, argptr);
     va_end (argptr);
     gui_infobar_printf (time_displayed, COLOR_WIN_INFOBAR, "%s", buf);
+}
+
+/*
+ * weechat_plugin_log: add a message on logs
+ */
+
+void
+weechat_plugin_log (t_weechat_plugin *plugin,
+		    char *server, char *channel, char *message, ...)
+{
+    t_gui_buffer *ptr_buffer;
+    va_list argptr;
+    static char buf[8192];
+    
+    if (!plugin || !message)
+        return;
+    
+    ptr_buffer = gui_buffer_search (server, channel);
+    if (ptr_buffer)
+    {
+	va_start (argptr, message);
+	vsnprintf (buf, sizeof (buf) - 1, message, argptr);
+	va_end (argptr);    
+	log_write_line (ptr_buffer, buf);
+    }
 }
 
 /*

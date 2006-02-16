@@ -337,6 +337,54 @@ static XS (XS_weechat_print_infobar)
 }
 
 /*
+ * weechat::log: log message in server/channel (current or specified ones)
+ */
+
+static XS (XS_weechat_log)
+{
+    unsigned int integer;
+    char *message, *channel_name, *server_name;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+
+    if (!perl_current_script)
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                    "Perl error: unable to print message, "
+                                    "script not initialized");
+	XSRETURN_NO;
+    }
+
+    if (items < 1)
+    {
+        perl_plugin->printf_server (perl_plugin,
+                                    "Perl error: wrong parameters for "
+                                    "\"log\" function");
+        XSRETURN_NO;
+    }
+    
+    message = SvPV (ST (0), integer);
+    
+    channel_name = NULL;
+    server_name = NULL;
+    
+    if (items > 1)
+    {
+        channel_name = SvPV (ST (1), integer);
+        if (items > 2)
+            server_name = SvPV (ST (2), integer);
+    }
+    
+    perl_plugin->log (perl_plugin,
+		      server_name, channel_name,
+		      "%s", message);
+    
+    XSRETURN_YES;
+}
+
+/*
  * weechat::command: send command to server
  */
 
@@ -1032,6 +1080,7 @@ weechat_perl_xs_init (pTHX)
     newXS ("weechat::register", XS_weechat_register, "weechat");
     newXS ("weechat::print", XS_weechat_print, "weechat");
     newXS ("weechat::print_infobar", XS_weechat_print_infobar, "weechat");
+    newXS ("weechat::log", XS_weechat_log, "weechat");
     newXS ("weechat::command", XS_weechat_command, "weechat");
     newXS ("weechat::add_message_handler", XS_weechat_add_message_handler, "weechat");
     newXS ("weechat::add_command_handler", XS_weechat_add_command_handler, "weechat");

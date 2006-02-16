@@ -273,6 +273,64 @@ weechat_lua_print_infobar  (lua_State *L)
 }
 
 /*
+ * weechat_lua_print: log message in server/channel (current or specified ones)
+ */
+
+static int
+weechat_lua_log  (lua_State *L)
+{
+    const char *message, *channel_name, *server_name;
+    int n;
+    /* make gcc happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        lua_plugin->printf_server (lua_plugin,
+                                      "Lua error: unable to print message, "
+                                      "script not initialized");
+	lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+    
+    message = NULL;
+    channel_name = NULL;
+    server_name = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+
+    switch (n)
+    {
+    case 1:
+	message = lua_tostring (lua_current_interpreter, -1);
+	break;
+    case 2:
+	channel_name = lua_tostring (lua_current_interpreter, -2);
+	message = lua_tostring (lua_current_interpreter, -1);
+	break;
+    case 3:
+	server_name = lua_tostring (lua_current_interpreter, -3);
+	channel_name = lua_tostring (lua_current_interpreter, -2);
+	message = lua_tostring (lua_current_interpreter, -1);
+	break;
+    default:
+	lua_plugin->printf_server (lua_plugin,
+				   "Lua error: wrong parameters for "
+				   "\"log\" function");
+        lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+    
+    lua_plugin->log (lua_plugin,
+		     (char *) server_name,
+		     (char *) channel_name,
+		     "%s", (char *) message);
+    
+    lua_pushnumber (lua_current_interpreter, 1);
+    return 1;
+}
+
+/*
  * weechat_lua_command: send command to server
  */
 
@@ -1213,6 +1271,7 @@ const struct luaL_reg weechat_lua_funcs[] = {
     { "register", weechat_lua_register},
     { "print", weechat_lua_print},
     { "print_infobar", weechat_lua_print_infobar},
+    { "log", weechat_lua_log},
     { "command", weechat_lua_command},
     { "add_message_handler", weechat_lua_add_message_handler},
     { "add_command_handler", weechat_lua_add_command_handler},
