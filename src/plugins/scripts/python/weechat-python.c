@@ -394,7 +394,7 @@ weechat_python_add_command_handler (PyObject *self, PyObject *args)
     
     if (!PyArg_ParseTuple (args, "ss|ssss", &command, &function,
                            &description, &arguments, &arguments_description,
-                           completion_template))
+                           &completion_template))
     {
         python_plugin->print_server (python_plugin,
                                      "Python error: wrong parameters for "
