@@ -4261,7 +4261,7 @@ if ($servers)
     {
         while ( my ($key, $value) = each %$srvinfos)
         {
-            weechat::print("$srvname[$key] = '$value'");
+            weechat::print("$srvname -> $key = '$value'");
         }
     }
 }
@@ -4278,7 +4278,7 @@ if servers != None:
     else:
         for s in servers:
             for i in servers[s]:
-                weechat.prnt("%s[%s] = '%s'" % (s, i, str(servers[s][i])))
+                weechat.prnt("%s -> %s = '%s'" % (s, i, str(servers[s][i])))
 else:
     weechat.prnt("error while getting servers")
 
@@ -4290,7 +4290,7 @@ if servers != nil
     else
         servers.each do |n, s|
             s.each do |key, value|
-                Weechat.print("#{n}[#{key}] = '#{value}'")
+                Weechat.print("#{n} -> #{key} = '#{value}'")
             end
         end
     end
@@ -4306,7 +4306,7 @@ if servers ~= nil then
         while (srv) do
             key, value = next (srvinfos, nil)
             while (key) do
-                weechat.print(key.." = '"..value.."'")
+                weechat.print(srv.." -> "..key.." = '"..value.."'")
                 key, value = next (srvinfos, key)
             end	
             srv, srvinfos = next (servers, srv)
@@ -4366,7 +4366,7 @@ if ($channels)
     {
         while (my ($key, $value) = each %$chaninfos)
         {
-            weechat::print("$channame[$key] = '$value'");
+            weechat::print("$channame -> $key = '$value'");
         }
     }
 }
@@ -4383,7 +4383,7 @@ if chans != None:
     else:
         for s in chans:
             for i in chans[s]:
-                weechat.prnt("%s[%s] = '%s'" % (s, i, str(chans[s][i])))
+                weechat.prnt("%s -> %s = '%s'" % (s, i, str(chans[s][i])))
 else:
     weechat.prnt("error while getting channels")
 
@@ -4395,7 +4395,7 @@ if channels != nil
     else
         channels.each do |n, c|
             c.each do |key, value|
-                Weechat.print("#{n}[#{key}] = '#{value}'")
+                Weechat.print("#{n} -> #{key} = '#{value}'")
             end
         end
     end
@@ -4411,7 +4411,7 @@ if chans ~= nil then
         while (chan) do
             key, value = next (chaninfos, nil)
             while (key) do
-                weechat.print(key.." = '"..value.."'")
+                weechat.print(chan.." -> "..key.." = '"..value.."'")
                 key, value = next (chaninfos, key)
             end
             chan, chaninfos = next (chans, chan)
@@ -4471,7 +4471,7 @@ if ($nicks)
     {
         while ( my ($key, $value) = each %$nickinfos)
         {
-            weechat::print("$nickname[$key] = '$value'");
+            weechat::print("$nickname -> $key = '$value'");
         }
     }
 }
@@ -4488,7 +4488,7 @@ if nicks != None:
     else:
         for n in nicks:
             for f in nicks[n]:
-                weechat.prnt("%s[%s] = '%s'" % (n, f, str(nicks[n][f])))
+                weechat.prnt("%s -> %s = '%s'" % (n, f, str(nicks[n][f])))
 else:
     weechat.prnt("error while getting nicks")
 
@@ -4500,7 +4500,7 @@ if nicks != nil
     else
         nicks.each do |nk, nattr|
             nattr.each do |key, value|
-                Weechat.print("#{nk}[#{key}] = '#{value}'")
+                Weechat.print("#{nk} -> #{key} = '#{value}'")
             end
         end
     end
@@ -4516,7 +4516,7 @@ if nicks ~= nil then
         while (nick) do
             key, value = next (nickinfos, nil)
             while (key) do
-                weechat.print(nick.."["..key.."] = '"..value.."'")
+                weechat.print(nick.." -> "..key.." = '"..value.."'")
                 key, value = next (nickinfos, key)
             end
             nick, nickinfos = next (nicks, nick)
