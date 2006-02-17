@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.1.8-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2006-02-16 21:24+0100\n"
-"PO-Revision-Date: 2006-02-16 11:00+0100\n"
+"PO-Revision-Date: 2006-02-17 11:16+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1438,9 +1438,7 @@ msgstr ""
 #: src/irc/irc-send.c:1124
 #, c-format
 msgid "%s \"%s\" command can only be executed in a channel or private buffer\n"
-msgstr ""
-"%s la commande \"%s\" peut seulement être exécutée dans une tampon canal ou "
-"privé\n"
+msgstr "%s la commande \"%s\" peut seulement être exécutée dans un tampon canal ou privé\n"
 
 #: src/irc/irc-send.c:1166 src/irc/irc-recv.c:501
 #, c-format
@@ -3263,7 +3261,7 @@ msgstr "       IRC(%s)\n"
 
 #: src/common/command.c:2379
 msgid "       (no message handler)\n"
-msgstr "       (aucunne fonction de message)\n"
+msgstr "       (aucune fonction de message)\n"
 
 #: src/common/command.c:2384
 msgid "     command handlers:\n"
