@@ -330,11 +330,7 @@ weechat_plugin_exec_command (t_weechat_plugin *plugin,
         else if (ptr_server && (ptr_server->buffer))
             user_command (ptr_server, NULL, command);
         else
-        {
-            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-            gui_printf (NULL, _("%s server not found for plugin exec command\n"),
-                        WEECHAT_ERROR);
-        }
+            user_command (NULL, NULL, command);
     }
 }
 
@@ -566,7 +562,7 @@ weechat_plugin_get_config (t_weechat_plugin *plugin, char *option)
             {
                 if ((!option) ||
                     ((option) && (option[0])
-                     && (strstr (weechat_options[i][j].option_name, option) != NULL)))
+                     && (ascii_strcasecmp (weechat_options[i][j].option_name, option) == 0)))
                 {
                     return weechat_plugin_get_config_str_value (&weechat_options[i][j], NULL);
                 }
@@ -583,7 +579,7 @@ weechat_plugin_get_config (t_weechat_plugin *plugin, char *option)
                       weechat_options[CONFIG_SECTION_SERVER][i].option_name);
             if ((!option) ||
                 ((option) && (option[0])
-                 && (strstr (option_name, option) != NULL)))
+                 && (ascii_strcasecmp (option_name, option) == 0)))
             {
                 ptr_option_value = config_get_server_option_ptr (ptr_server,
                                                                  weechat_options[CONFIG_SECTION_SERVER][i].option_name);
