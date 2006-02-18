@@ -610,7 +610,7 @@ free_multi_command (char **commands)
 int
 exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string)
 {
-    int i, argc, return_code, length1, length2;
+    int i, rc, argc, return_code, length1, length2;
     char *command, *pos, *ptr_args, *ptr_args_color, **argv, *alias_command;
     char **commands, **ptr_cmd, **ptr_next_cmd;
     t_weechat_alias *ptr_alias;
@@ -653,220 +653,230 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
     }
     
 #ifdef PLUGINS
-    if (!plugin_cmd_handler_exec ((server) ? server->name : "", command + 1, ptr_args))
+    rc = plugin_cmd_handler_exec ((server) ? server->name : "", command + 1, ptr_args);
 #else
-    if (1)
+    rc = -1;
 #endif
+    switch (rc)
     {
-        argv = explode_string (ptr_args, " ", 0, &argc);
-        
-        for (i = 0; weechat_commands[i].command_name; i++)
-        {
-            if (ascii_strcasecmp (weechat_commands[i].command_name, command + 1) == 0)
+        case 0: /* plugin handler KO */
+            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+            gui_printf (NULL,
+                        _("%s command \"%s\" failed\n"),
+                        WEECHAT_ERROR, command + 1);
+            break;
+        case 1: /* plugin handler OK, executed */
+            break;
+        default: /* plugin handler not found */
+            argv = explode_string (ptr_args, " ", 0, &argc);
+            
+            for (i = 0; weechat_commands[i].command_name; i++)
             {
-                if ((argc < weechat_commands[i].min_arg)
-                    || (argc > weechat_commands[i].max_arg))
+                if (ascii_strcasecmp (weechat_commands[i].command_name, command + 1) == 0)
                 {
-                    if (weechat_commands[i].min_arg ==
-                        weechat_commands[i].max_arg)
+                    if ((argc < weechat_commands[i].min_arg)
+                        || (argc > weechat_commands[i].max_arg))
                     {
-                        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-                        gui_printf (NULL,
-                                    _("%s wrong argument count for %s command \"%s\" "
-                                    "(expected: %d arg%s)\n"),
-                                    WEECHAT_ERROR, PACKAGE_NAME,
-                                    command + 1,
-                                    weechat_commands[i].max_arg,
-                                    (weechat_commands[i].max_arg >
-                                     1) ? "s" : "");
+                        if (weechat_commands[i].min_arg ==
+                            weechat_commands[i].max_arg)
+                        {
+                            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                            gui_printf (NULL,
+                                        _("%s wrong argument count for %s command \"%s\" "
+                                          "(expected: %d arg%s)\n"),
+                                        WEECHAT_ERROR, PACKAGE_NAME,
+                                        command + 1,
+                                        weechat_commands[i].max_arg,
+                                        (weechat_commands[i].max_arg >
+                                         1) ? "s" : "");
+                        }
+                        else
+                        {
+                            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                            gui_printf (NULL,
+                                        _("%s wrong argument count for %s command \"%s\" "
+                                          "(expected: between %d and %d arg%s)\n"),
+                                        WEECHAT_ERROR, PACKAGE_NAME,
+                                        command + 1,
+                                        weechat_commands[i].min_arg,
+                                        weechat_commands[i].max_arg,
+                                        (weechat_commands[i].max_arg >
+                                         1) ? "s" : "");
+                        }
                     }
                     else
                     {
-                        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-                        gui_printf (NULL,
-                                    _("%s wrong argument count for %s command \"%s\" "
-                                    "(expected: between %d and %d arg%s)\n"),
-                                    WEECHAT_ERROR, PACKAGE_NAME,
-                                    command + 1,
-                                    weechat_commands[i].min_arg,
-                                    weechat_commands[i].max_arg,
-                                    (weechat_commands[i].max_arg >
-                                     1) ? "s" : "");
+                        if (weechat_commands[i].cmd_function_args)
+                            return_code = (int) (weechat_commands[i].cmd_function_args)
+                                (server, channel, argc, argv);
+                        else
+                            return_code = (int) (weechat_commands[i].cmd_function_1arg)
+                                (server, channel, ptr_args);
+                        if (return_code < 0)
+                        {
+                            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                            gui_printf (NULL,
+                                        _("%s command \"%s\" failed\n"),
+                                        WEECHAT_ERROR, command + 1);
+                        }
                     }
+                    free_exploded_string (argv);
+                    free (command);
+                    if (ptr_args_color)
+                        free (ptr_args_color);
+                    return 1;
                 }
-                else
-                {
-                    if (weechat_commands[i].cmd_function_args)
-                        return_code = (int) (weechat_commands[i].cmd_function_args)
-                                            (server, channel, argc, argv);
-                    else
-                        return_code = (int) (weechat_commands[i].cmd_function_1arg)
-                                            (server, channel, ptr_args);
-                    if (return_code < 0)
-                    {
-                        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-                        gui_printf (NULL,
-                                    _("%s command \"%s\" failed\n"),
-                                    WEECHAT_ERROR, command + 1);
-                    }
-                }
-                free_exploded_string (argv);
-                free (command);
-                if (ptr_args_color)
-                    free (ptr_args_color);
-                return 1;
             }
-        }
-        for (i = 0; irc_commands[i].command_name; i++)
-        {
-            if ((ascii_strcasecmp (irc_commands[i].command_name, command + 1) == 0) &&
-                ((irc_commands[i].cmd_function_args) ||
-                (irc_commands[i].cmd_function_1arg)))
+            for (i = 0; irc_commands[i].command_name; i++)
             {
-                if ((argc < irc_commands[i].min_arg)
-                    || (argc > irc_commands[i].max_arg))
+                if ((ascii_strcasecmp (irc_commands[i].command_name, command + 1) == 0) &&
+                    ((irc_commands[i].cmd_function_args) ||
+                     (irc_commands[i].cmd_function_1arg)))
                 {
-                    if (irc_commands[i].min_arg == irc_commands[i].max_arg)
+                    if ((argc < irc_commands[i].min_arg)
+                        || (argc > irc_commands[i].max_arg))
                     {
-                        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-                        gui_printf
-                            (NULL,
-                             _("%s wrong argument count for IRC command \"%s\" "
-                             "(expected: %d arg%s)\n"),
-                             WEECHAT_ERROR,
-                             command + 1,
-                             irc_commands[i].max_arg,
-                             (irc_commands[i].max_arg > 1) ? "s" : "");
+                        if (irc_commands[i].min_arg == irc_commands[i].max_arg)
+                        {
+                            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                            gui_printf
+                                (NULL,
+                                 _("%s wrong argument count for IRC command \"%s\" "
+                                   "(expected: %d arg%s)\n"),
+                                 WEECHAT_ERROR,
+                                 command + 1,
+                                 irc_commands[i].max_arg,
+                                 (irc_commands[i].max_arg > 1) ? "s" : "");
+                        }
+                        else
+                        {
+                            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                            gui_printf
+                                (NULL,
+                                 _("%s wrong argument count for IRC command \"%s\" "
+                                   "(expected: between %d and %d arg%s)\n"),
+                                 WEECHAT_ERROR,
+                                 command + 1,
+                                 irc_commands[i].min_arg, irc_commands[i].max_arg,
+                                 (irc_commands[i].max_arg > 1) ? "s" : "");
+                        }
                     }
                     else
                     {
-                        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-                        gui_printf
-                            (NULL,
-                             _("%s wrong argument count for IRC command \"%s\" "
-                             "(expected: between %d and %d arg%s)\n"),
-                             WEECHAT_ERROR,
-                             command + 1,
-                             irc_commands[i].min_arg, irc_commands[i].max_arg,
-                             (irc_commands[i].max_arg > 1) ? "s" : "");
+                        if ((irc_commands[i].need_connection) &&
+                            ((!server) || (!server->is_connected)))
+                        {
+                            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                            gui_printf (NULL,
+                                        _("%s command \"%s\" needs a server connection!\n"),
+                                        WEECHAT_ERROR, irc_commands[i].command_name);
+                            free (command);
+                            if (ptr_args_color)
+                                free (ptr_args_color);
+                            return 0;
+                        }
+                        if (irc_commands[i].cmd_function_args)
+                            return_code = (int) (irc_commands[i].cmd_function_args)
+                                (server, channel, argc, argv);
+                        else
+                            return_code = (int) (irc_commands[i].cmd_function_1arg)
+                                (server, channel, ptr_args);
+                        if (return_code < 0)
+                        {
+                            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                            gui_printf (NULL,
+                                        _("%s command \"%s\" failed\n"),
+                                        WEECHAT_ERROR, command + 1);
+                        }
                     }
+                    free_exploded_string (argv);
+                    free (command);
+                    if (ptr_args_color)
+                        free (ptr_args_color);
+                    return 1;
                 }
-                else
-                {
-                    if ((irc_commands[i].need_connection) &&
-                        ((!server) || (!server->is_connected)))
-                    {
-                        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-                        gui_printf (NULL,
-                                    _("%s command \"%s\" needs a server connection!\n"),
-                                    WEECHAT_ERROR, irc_commands[i].command_name);
-                        free (command);
-                        if (ptr_args_color)
-                            free (ptr_args_color);
-                        return 0;
-                    }
-                    if (irc_commands[i].cmd_function_args)
-                        return_code = (int) (irc_commands[i].cmd_function_args)
-                                      (server, channel, argc, argv);
-                    else
-                        return_code = (int) (irc_commands[i].cmd_function_1arg)
-                                      (server, channel, ptr_args);
-                    if (return_code < 0)
-                    {
-                        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-                        gui_printf (NULL,
-                                    _("%s command \"%s\" failed\n"),
-                                    WEECHAT_ERROR, command + 1);
-                    }
-                }
-                free_exploded_string (argv);
-                free (command);
-                if (ptr_args_color)
-                    free (ptr_args_color);
-                return 1;
             }
-        }
-        for (ptr_alias = weechat_alias; ptr_alias;
-             ptr_alias = ptr_alias->next_alias)
-        {
-            if (ascii_strcasecmp (ptr_alias->alias_name, command + 1) == 0)
+            for (ptr_alias = weechat_alias; ptr_alias;
+                 ptr_alias = ptr_alias->next_alias)
             {
-		if (ptr_alias->running == 1)
-		{		    
-		    gui_printf (NULL,
-				_("%s circular reference when calling alias \"/%s\"\n"),
-				WEECHAT_ERROR, ptr_alias->alias_name);
-		}
-		else
-		{		
-		    /* an alias can contain many commandes separated by ';' */
-		    commands = split_multi_command (ptr_alias->alias_command, ';');
-		    if (commands)
-		    {
-			ptr_alias->running = 1;			
-			for (ptr_cmd=commands; *ptr_cmd; ptr_cmd++)
-			{
-			    ptr_next_cmd = ptr_cmd;
-			    ptr_next_cmd++;
-			    
-			    if (*ptr_next_cmd == NULL && ptr_args)
-			    {
-				/* if alias has arguments, they are now 
-				   arguments of the last command in the list */
-				length1 = strlen (*ptr_cmd);
-				length2 = strlen (ptr_args);
-				
-				alias_command = (char *) malloc ( 1 + length1 + 1 + length2 + 1);			    
-				if (alias_command)
-				{
-				    if (*ptr_cmd[0] != '/')
-					strcpy (alias_command, "/");
-				    else
-					strcpy (alias_command, "");
-				    
-				    strcat (alias_command, *ptr_cmd);
-				    strcat (alias_command, " ");
-				    strcat (alias_command, ptr_args);
-				    
-				    (void) exec_weechat_command (server, channel, alias_command);
-				    free (alias_command);
-				}
-			    }
-			    else
-			    {
-				if (*ptr_cmd[0] == '/')
-				    (void) exec_weechat_command (server, channel, *ptr_cmd);
-				else
-				{
-				    alias_command = (char *) malloc (1 + strlen(*ptr_cmd) + 1);
-				    if (alias_command)
-				    {
-					strcpy (alias_command, "/");
-					strcat (alias_command, *ptr_cmd);
-					(void) exec_weechat_command (server, channel, alias_command);
-					free (alias_command);
-				    }
-				}
-			    }
-			}
-			ptr_alias->running = 0;
-			free_multi_command (commands);
-		    }
-		}
-		
-                free_exploded_string (argv);
-                free (command);
-                if (ptr_args_color)
-                    free (ptr_args_color);
-                return 1;
+                if (ascii_strcasecmp (ptr_alias->alias_name, command + 1) == 0)
+                {
+                    if (ptr_alias->running == 1)
+                    {		    
+                        gui_printf (NULL,
+                                    _("%s circular reference when calling alias \"/%s\"\n"),
+                                    WEECHAT_ERROR, ptr_alias->alias_name);
+                    }
+                    else
+                    {		
+                        /* an alias can contain many commandes separated by ';' */
+                        commands = split_multi_command (ptr_alias->alias_command, ';');
+                        if (commands)
+                        {
+                            ptr_alias->running = 1;			
+                            for (ptr_cmd=commands; *ptr_cmd; ptr_cmd++)
+                            {
+                                ptr_next_cmd = ptr_cmd;
+                                ptr_next_cmd++;
+                                
+                                if (*ptr_next_cmd == NULL && ptr_args)
+                                {
+                                    /* if alias has arguments, they are now 
+                                       arguments of the last command in the list */
+                                    length1 = strlen (*ptr_cmd);
+                                    length2 = strlen (ptr_args);
+                                    
+                                    alias_command = (char *) malloc ( 1 + length1 + 1 + length2 + 1);			    
+                                    if (alias_command)
+                                    {
+                                        if (*ptr_cmd[0] != '/')
+                                            strcpy (alias_command, "/");
+                                        else
+                                            strcpy (alias_command, "");
+                                        
+                                        strcat (alias_command, *ptr_cmd);
+                                        strcat (alias_command, " ");
+                                        strcat (alias_command, ptr_args);
+                                        
+                                        (void) exec_weechat_command (server, channel, alias_command);
+                                        free (alias_command);
+                                    }
+                                }
+                                else
+                                {
+                                    if (*ptr_cmd[0] == '/')
+                                        (void) exec_weechat_command (server, channel, *ptr_cmd);
+                                    else
+                                    {
+                                        alias_command = (char *) malloc (1 + strlen(*ptr_cmd) + 1);
+                                        if (alias_command)
+                                        {
+                                            strcpy (alias_command, "/");
+                                            strcat (alias_command, *ptr_cmd);
+                                            (void) exec_weechat_command (server, channel, alias_command);
+                                            free (alias_command);
+                                        }
+                                    }
+                                }
+                            }
+                            ptr_alias->running = 0;
+                            free_multi_command (commands);
+                        }
+                    }
+                    
+                    free_exploded_string (argv);
+                    free (command);
+                    if (ptr_args_color)
+                        free (ptr_args_color);
+                    return 1;
+                }
             }
-        }
-        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-        gui_printf (NULL,
-                    _("%s unknown command \"%s\" (type /help for help)\n"),
-                    WEECHAT_ERROR,
-                    command + 1);
-        free_exploded_string (argv);
+            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+            gui_printf (NULL,
+                        _("%s unknown command \"%s\" (type /help for help)\n"),
+                        WEECHAT_ERROR,
+                        command + 1);
+            free_exploded_string (argv);
     }
     free (command);
     if (ptr_args_color)

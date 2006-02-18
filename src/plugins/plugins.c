@@ -351,7 +351,8 @@ plugin_msg_handler_exec (char *server, char *irc_command, char *irc_message)
 
 /*
  * plugin_cmd_handler_exec: execute a command handler
- *                          return: 1 if handler executed, 0 if no handler found
+ *                          return: 1 if handler executed, 0 if failed,
+ *                                  -1 if no handler found
  */
 
 int
@@ -386,7 +387,7 @@ plugin_cmd_handler_exec (char *server, char *command, char *arguments)
         }
     }
     
-    return 0;
+    return -1;
 }
 
 /*
