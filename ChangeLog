@@ -1,10 +1,13 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-02-16
+ChangeLog - 2006-02-18
 
 
 Version 0.1.8 (under dev!):
+   * plugin messages handlers now called when message is ignored (by /ignore)
+   * new behaviour for messages ignored by a message handler: now WeeChat
+     executes standard handler, treating message as "ignored"
    * many commands allowed for aliases
    * many commands allowed when connecting to server
    * added Lua script plugin

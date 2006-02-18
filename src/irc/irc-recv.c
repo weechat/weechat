@@ -227,16 +227,13 @@ irc_recv_command (t_irc_server *server, char *entire_line,
     {
         command_ignored = ignore_check (host, irc_commands[i].command_name, NULL, server->name);
 #ifdef PLUGINS
-        if (!command_ignored)
-        {
-            return_code = plugin_msg_handler_exec (server->name,
-                                                   irc_commands[i].command_name,
-                                                   entire_line);
-            /* plugin handler choosed to discard message for WeeChat,
-               so we don't execute WeeChat standard handler for IRC message! */
-            if (return_code & PLUGIN_RC_OK_IGNORE_WEECHAT)
-                return 0;
-        }
+        return_code = plugin_msg_handler_exec (server->name,
+                                               irc_commands[i].command_name,
+                                               entire_line);
+        /* plugin handler choosed to discard message for WeeChat,
+           so we ignore this message in standard handler */
+        if (return_code & PLUGIN_RC_OK_IGNORE_WEECHAT)
+            command_ignored = 1;
 #else
         /* make gcc happy */
         (void) entire_line;
