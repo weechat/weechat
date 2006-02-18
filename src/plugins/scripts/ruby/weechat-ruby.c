@@ -1608,7 +1608,7 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     rb_define_module_function (mWeechat, "register", weechat_ruby_register, 4);
     rb_define_module_function (mWeechat, "print", weechat_ruby_print, -1);
     rb_define_module_function (mWeechat, "print_infobar", weechat_ruby_print_infobar, 2);
-    rb_define_module_function (mWeechat, "log", weechat_ruby_log, 2);
+    rb_define_module_function (mWeechat, "log", weechat_ruby_log, -1);
     rb_define_module_function (mWeechat, "command", weechat_ruby_command, -1);
     rb_define_module_function (mWeechat, "add_message_handler", weechat_ruby_add_message_handler, 2);
     rb_define_module_function (mWeechat, "add_command_handler", weechat_ruby_add_command_handler, -1);
