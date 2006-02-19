@@ -51,6 +51,9 @@ extern void weechat_script_remove (t_weechat_plugin *,
 extern void weechat_script_remove_handler (t_weechat_plugin *,
                                            t_plugin_script *,
                                            char *, char *);
+extern void weechat_script_remove_timer_handler (t_weechat_plugin *,
+                                                 t_plugin_script *,
+                                                 char *);
 extern char *weechat_script_get_plugin_config (t_weechat_plugin *,
                                                t_plugin_script *,
                                                char *);

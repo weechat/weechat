@@ -46,6 +46,7 @@
 #include "../../common/fifo.h"
 #include "../../common/utf8.h"
 #include "../../irc/irc.h"
+#include "../../plugins/plugins.h"
 
 
 /*
@@ -379,6 +380,9 @@ gui_main_loop ()
                     server_check_away ();
                 }
             }
+            
+            /* call timer handlers */
+            plugin_timer_handler_exec ();
         }
         
         FD_ZERO (&read_fd);

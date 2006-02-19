@@ -133,8 +133,9 @@ typedef enum t_handler_type t_handler_type;
 
 enum t_handler_type
 {
-    HANDLER_MESSAGE,
-    HANDLER_COMMAND
+    HANDLER_MESSAGE = 0,                /* IRC message handler                 */
+    HANDLER_COMMAND,                    /* command handler                     */
+    HANDLER_TIMER                       /* timer handler                       */
 };
 
 typedef struct t_plugin_handler t_plugin_handler;
@@ -152,6 +153,10 @@ struct t_plugin_handler
     char *arguments;                    /* (for /help) command arguments       */
     char *arguments_description;        /* (for /help) args long description   */
     char *completion_template;          /* template for completion             */
+    
+    /* data for timer handler */
+    int interval;                       /* interval between two calls to fct   */
+    int remaining;                      /* seconds remaining before next call  */
     
     /* data common to all handlers */
     t_plugin_handler_func *handler;     /* pointer to handler                  */
@@ -210,6 +215,9 @@ struct t_weechat_plugin
                                           char *,
                                           t_plugin_handler_func *,
                                           char *, void *);
+    t_plugin_handler *(*timer_handler_add) (t_weechat_plugin *, int,
+                                            t_plugin_handler_func *,
+                                            char *, void *);
     void (*handler_remove) (t_weechat_plugin *, t_plugin_handler *);
     void (*handler_remove_all) (t_weechat_plugin *);
     
@@ -259,6 +267,9 @@ extern t_plugin_handler *weechat_plugin_cmd_handler_add (t_weechat_plugin *, cha
                                                          char *,
                                                          t_plugin_handler_func *,
                                                          char *, void *);
+extern t_plugin_handler *weechat_plugin_timer_handler_add (t_weechat_plugin *, int,
+                                                           t_plugin_handler_func *,
+                                                           char *, void *);
 extern void weechat_plugin_handler_remove (t_weechat_plugin *, t_plugin_handler *);
 extern void weechat_plugin_handler_remove_all (t_weechat_plugin *);
 

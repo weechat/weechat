@@ -278,6 +278,22 @@ weechat_plugin_cmd_handler_add (t_weechat_plugin *plugin, char *command,
 }
 
 /*
+ * weechat_plugin_timer_handler_add: add a timer handler
+ */
+
+t_plugin_handler *
+weechat_plugin_timer_handler_add (t_weechat_plugin *plugin, int interval,
+                                  t_plugin_handler_func *handler_func,
+                                  char *handler_args, void *handler_pointer)
+{
+    if (plugin && (interval >= 1) && handler_func)
+        return plugin_timer_handler_add (plugin, interval, handler_func,
+                                         handler_args, handler_pointer);
+    
+    return NULL;
+}
+
+/*
  * weechat_plugin_handler_remove: remove a WeeChat handler
  */
 

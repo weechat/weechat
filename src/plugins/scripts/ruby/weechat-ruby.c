@@ -575,6 +575,52 @@ weechat_ruby_add_command_handler (int argc, VALUE *argv, VALUE class)
 }
 
 /*
+ * weechat_ruby_add_timer_handler: add a timer handler
+ */
+
+static VALUE
+weechat_ruby_add_timer_handler (VALUE class, VALUE interval, VALUE function)
+{
+    int c_interval;
+    char *c_function;
+    
+    /* make gcc happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: unable to add timer handler, "
+                                   "script not initialized");
+        return INT2FIX (0);
+    }
+    
+    c_interval = 10;
+    c_function = NULL;
+    
+    if (NIL_P (interval) || NIL_P (function))
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: wrong parameters for "
+                                   "\"add_timer_handler\" function");
+        return INT2FIX (0);
+    }
+    
+    Check_Type (interval, T_FIXNUM);
+    Check_Type (function, T_STRING);
+    
+    c_interval = FIX2INT (interval);
+    c_function = STR2CSTR (function);
+    
+    if (ruby_plugin->timer_handler_add (ruby_plugin, c_interval,
+                                        weechat_ruby_handler, c_function,
+                                        (void *)ruby_current_script))
+        return INT2FIX (1);
+    
+    return INT2FIX (0);
+}
+
+/*
  * weechat_ruby_remove_handler: remove a handler
  */
 
@@ -613,6 +659,46 @@ weechat_ruby_remove_handler (VALUE class, VALUE command, VALUE function)
     
     weechat_script_remove_handler (ruby_plugin, ruby_current_script,
                                    c_command, c_function);
+    
+    return INT2FIX (1);
+}
+
+/*
+ * weechat_ruby_remove_timer_handler: remove a timer handler
+ */
+
+static VALUE
+weechat_ruby_remove_timer_handler (VALUE class, VALUE function)
+{
+    char *c_function;
+    
+    /* make gcc happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: unable to remove timer handler, "
+                                   "script not initialized");
+        return INT2FIX (0);
+    }
+    
+    c_function = NULL;
+    
+    if (NIL_P (function))
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: wrong parameters for "
+                                   "\"remove_timer_handler\" function");
+        return INT2FIX (0);
+    }
+    
+    Check_Type (function, T_STRING);
+    
+    c_function = STR2CSTR (function);
+    
+    weechat_script_remove_timer_handler (ruby_plugin, ruby_current_script,
+                                         c_function);
     
     return INT2FIX (1);
 }
@@ -1478,6 +1564,25 @@ weechat_ruby_cmd (t_weechat_plugin *plugin,
             }
             if (!handler_found)
                 plugin->print_server (plugin, "  (none)");
+            
+            /* list Ruby timer handlers */
+            plugin->print_server (plugin, "");
+            plugin->print_server (plugin, "Ruby timer handlers:");
+            handler_found = 0;
+            for (ptr_handler = plugin->handlers;
+                 ptr_handler; ptr_handler = ptr_handler->next_handler)
+            {
+                if ((ptr_handler->type == HANDLER_TIMER)
+                    && (ptr_handler->handler_args))
+                {
+                    handler_found = 1;
+                    plugin->print_server (plugin, "  %d seconds => Ruby(%s)",
+                                          ptr_handler->interval,
+                                          ptr_handler->handler_args);
+                }
+            }
+            if (!handler_found)
+                plugin->print_server (plugin, "  (none)");
             break;
         case 1:
             if (plugin->ascii_strcasecmp (plugin, argv[0], "autoload") == 0)
@@ -1612,7 +1717,9 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     rb_define_module_function (mWeechat, "command", weechat_ruby_command, -1);
     rb_define_module_function (mWeechat, "add_message_handler", weechat_ruby_add_message_handler, 2);
     rb_define_module_function (mWeechat, "add_command_handler", weechat_ruby_add_command_handler, -1);
+    rb_define_module_function (mWeechat, "add_timer_handler", weechat_ruby_add_timer_handler, 2);
     rb_define_module_function (mWeechat, "remove_handler", weechat_ruby_remove_handler, 2);
+    rb_define_module_function (mWeechat, "remove_timer_handler", weechat_ruby_remove_timer_handler, 1);
     rb_define_module_function (mWeechat, "get_info", weechat_ruby_get_info, -1);
     rb_define_module_function (mWeechat, "get_dcc_info", weechat_ruby_get_dcc_info, 0);
     rb_define_module_function (mWeechat, "get_config", weechat_ruby_get_config, 1);

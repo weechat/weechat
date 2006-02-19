@@ -510,6 +510,57 @@ weechat_lua_add_command_handler  (lua_State *L)
 }
 
 /*
+ * weechat_lua_add_timer_handler: add a timer handler
+ */
+
+static int
+weechat_lua_add_timer_handler  (lua_State *L)
+{
+    int interval;
+    const char *function;
+    int n;
+    /* make gcc happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to add timer handler, "
+                                  "script not initialized");
+	lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+    
+    interval = 10;
+    function = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+
+    if (n != 2)
+    {
+	lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"add_timer_handler\" function");
+        lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+    
+    interval = lua_tonumber (lua_current_interpreter, -2);
+    function = lua_tostring (lua_current_interpreter, -1);
+    
+    if (!lua_plugin->timer_handler_add (lua_plugin, interval,
+                                        weechat_lua_handler, (char *) function,
+                                        (void *)lua_current_script))
+    {
+	lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+
+    lua_pushnumber (lua_current_interpreter, 1);
+    return 1;
+}
+
+/*
  * weechat_lua_remove_handler: remove a handler
  */
 
@@ -549,6 +600,49 @@ weechat_lua_remove_handler (lua_State *L)
     
     weechat_script_remove_handler (lua_plugin, lua_current_script,
                                    (char *) command, (char *) function);
+    
+    lua_pushnumber (lua_current_interpreter, 1);
+    return 1;
+}
+
+/*
+ * weechat_lua_remove_timer_handler: remove a timer handler
+ */
+
+static int
+weechat_lua_remove_timer_handler (lua_State *L)
+{
+    const char *function;
+    int n;
+    /* make gcc happy */
+    (void) L;
+     
+    if (!lua_current_script)
+    {
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to remove timer handler, "
+                                  "script not initialized");
+        lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+    
+    function = NULL;
+ 
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n != 1)
+    {
+	lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"remove_timer_handler\" function");
+        lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+
+    function = lua_tostring (lua_current_interpreter, -1);
+    
+    weechat_script_remove_timer_handler (lua_plugin, lua_current_script,
+                                         (char *) function);
     
     lua_pushnumber (lua_current_interpreter, 1);
     return 1;
@@ -1275,7 +1369,9 @@ const struct luaL_reg weechat_lua_funcs[] = {
     { "command", weechat_lua_command},
     { "add_message_handler", weechat_lua_add_message_handler},
     { "add_command_handler", weechat_lua_add_command_handler},
+    { "add_timer_handler", weechat_lua_add_timer_handler},
     { "remove_handler", weechat_lua_remove_handler},
+    { "remove_timer_handler", weechat_lua_remove_timer_handler},
     { "get_info", weechat_lua_get_info},
     { "get_dcc_info", weechat_lua_get_dcc_info},
     { "get_config", weechat_lua_get_config},
@@ -1535,6 +1631,25 @@ weechat_lua_cmd (t_weechat_plugin *plugin,
                     handler_found = 1;
                     plugin->print_server (plugin, "  /%s => Lua(%s)",
                                           ptr_handler->command,
+                                          ptr_handler->handler_args);
+                }
+            }
+            if (!handler_found)
+                plugin->print_server (plugin, "  (none)");
+            
+            /* list Lua timer handlers */
+            plugin->print_server (plugin, "");
+            plugin->print_server (plugin, "Lua timer handlers:");
+            handler_found = 0;
+            for (ptr_handler = plugin->handlers;
+                 ptr_handler; ptr_handler = ptr_handler->next_handler)
+            {
+                if ((ptr_handler->type == HANDLER_MESSAGE)
+                    && (ptr_handler->handler_args))
+                {
+                    handler_found = 1;
+                    plugin->print_server (plugin, "  %d seconds => Lua(%s)",
+                                          ptr_handler->interval,
                                           ptr_handler->handler_args);
                 }
             }

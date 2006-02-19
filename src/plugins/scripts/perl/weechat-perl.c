@@ -522,7 +522,50 @@ static XS (XS_weechat_add_command_handler)
 }
 
 /*
- * weechat::remove_handler: remove a handler
+ * weechat::add_timer_handler: add timer handler
+ */
+
+static XS (XS_weechat_add_timer_handler)
+{
+    int interval;
+    char *function;
+    unsigned int integer;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to add timer handler, "
+                                   "script not initialized");
+	XSRETURN_NO;
+    }
+    
+    if (items < 2)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"add_timer_handler\" function");
+        XSRETURN_NO;
+    }
+    
+    interval = SvIV (ST (0));
+    function = SvPV (ST (1), integer);
+    
+    perl_plugin->print_server (perl_plugin,
+                               "Perl add timer: interval = %d", interval);
+    if (perl_plugin->timer_handler_add (perl_plugin, interval,
+                                        weechat_perl_handler, function,
+                                        (void *)perl_current_script))
+        XSRETURN_YES;
+    
+    XSRETURN_NO;
+}
+
+/*
+ * weechat::remove_handler: remove a message/command handler
  */
 
 static XS (XS_weechat_remove_handler)
@@ -555,6 +598,43 @@ static XS (XS_weechat_remove_handler)
     
     weechat_script_remove_handler (perl_plugin, perl_current_script,
                                    command, function);
+    
+    XSRETURN_YES;
+}
+
+/*
+ * weechat::remove_timer_handler: remove a timer handler
+ */
+
+static XS (XS_weechat_remove_timer_handler)
+{
+    char *function;
+    unsigned int integer;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to remove timer handler, "
+                                   "script not initialized");
+	XSRETURN_NO;
+    }
+    
+    if (items < 1)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"remove_timer_handler\" function");
+        XSRETURN_NO;
+    }
+    
+    function = SvPV (ST (0), integer);
+    
+    weechat_script_remove_timer_handler (perl_plugin, perl_current_script,
+                                         function);
     
     XSRETURN_YES;
 }
@@ -1084,7 +1164,9 @@ weechat_perl_xs_init (pTHX)
     newXS ("weechat::command", XS_weechat_command, "weechat");
     newXS ("weechat::add_message_handler", XS_weechat_add_message_handler, "weechat");
     newXS ("weechat::add_command_handler", XS_weechat_add_command_handler, "weechat");
+    newXS ("weechat::add_timer_handler", XS_weechat_add_timer_handler, "weechat");
     newXS ("weechat::remove_handler", XS_weechat_remove_handler, "weechat");
+    newXS ("weechat::remove_timer_handler", XS_weechat_remove_timer_handler, "weechat");
     newXS ("weechat::get_info", XS_weechat_get_info, "weechat");
     newXS ("weechat::get_dcc_info", XS_weechat_get_dcc_info, "weechat");
     newXS ("weechat::get_config", XS_weechat_get_config, "weechat");
@@ -1365,6 +1447,25 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
                     handler_found = 1;
                     plugin->print_server (plugin, "  /%s => Perl(%s)",
                                           ptr_handler->command,
+                                          ptr_handler->handler_args);
+                }
+            }
+            if (!handler_found)
+                plugin->print_server (plugin, "  (none)");
+            
+            /* list Perl timer handlers */
+            plugin->print_server (plugin, "");
+            plugin->print_server (plugin, "Perl timer handlers:");
+            handler_found = 0;
+            for (ptr_handler = plugin->handlers;
+                 ptr_handler; ptr_handler = ptr_handler->next_handler)
+            {
+                if ((ptr_handler->type == HANDLER_TIMER)
+                    && (ptr_handler->handler_args))
+                {
+                    handler_found = 1;
+                    plugin->print_server (plugin, "  %d seconds => Perl(%s)",
+                                          ptr_handler->interval,
                                           ptr_handler->handler_args);
                 }
             }

@@ -199,6 +199,9 @@ plugin_msg_handler_add (t_weechat_plugin *plugin, char *irc_command,
         new_handler->description = NULL;
         new_handler->arguments = NULL;
         new_handler->arguments_description = NULL;
+        new_handler->completion_template = NULL;
+        new_handler->interval = 0;
+        new_handler->remaining = 0;
         new_handler->handler = handler_func;
         new_handler->handler_args = (handler_args) ? strdup (handler_args) : NULL;
         new_handler->handler_pointer = handler_pointer;
@@ -270,6 +273,8 @@ plugin_cmd_handler_add (t_weechat_plugin *plugin, char *command,
         new_handler->arguments = (arguments) ? strdup (arguments) : NULL;
         new_handler->arguments_description = (arguments_description) ? strdup (arguments_description) : NULL;
         new_handler->completion_template = (completion_template) ? strdup (completion_template) : NULL;
+        new_handler->interval = 0;
+        new_handler->remaining = 0;
         new_handler->handler = handler_func;
         new_handler->handler_args = (handler_args) ? strdup (handler_args) : NULL;
         new_handler->handler_pointer = handler_pointer;
@@ -294,6 +299,62 @@ plugin_cmd_handler_add (t_weechat_plugin *plugin, char *command,
         gui_printf (NULL,
                     _("%s plugin %s: unable to add handler for \"%s\" command (not enough memory)\n"),
                     WEECHAT_ERROR, plugin->name, command);
+        return NULL;
+    }
+    return new_handler;
+}
+
+/*
+ * plugin_timer_handler_add: add a timer handler
+ *                           arguments:
+ *                             1. the plugin pointer
+ *                             2. the interval between two calls
+ *                             3. the handler function
+ *                             4. handler args: a string given to
+ *                                handler when called (used by scripts)
+ *                             5. handler pointer: a pointer given to
+ *                                handler when called (used by scripts)
+ */
+
+t_plugin_handler *
+plugin_timer_handler_add (t_weechat_plugin *plugin, int interval,
+                          t_plugin_handler_func *handler_func,
+                          char *handler_args, void *handler_pointer)
+{
+    t_plugin_handler *new_handler;
+    
+    new_handler = (t_plugin_handler *)malloc (sizeof (t_plugin_handler));
+    if (new_handler)
+    {
+        new_handler->type = HANDLER_TIMER;
+        new_handler->irc_command = NULL;
+        new_handler->command = NULL;
+        new_handler->description = NULL;
+        new_handler->arguments = NULL;
+        new_handler->arguments_description = NULL;
+        new_handler->completion_template = NULL;
+        new_handler->interval = interval;
+        new_handler->remaining = interval;
+        new_handler->handler = handler_func;
+        new_handler->handler_args = (handler_args) ? strdup (handler_args) : NULL;
+        new_handler->handler_pointer = handler_pointer;
+        new_handler->running = 0;
+        
+        /* add new handler to list */
+        new_handler->prev_handler = plugin->last_handler;
+        new_handler->next_handler = NULL;
+        if (plugin->handlers)
+            (plugin->last_handler)->next_handler = new_handler;
+        else
+            plugin->handlers = new_handler;
+        plugin->last_handler = new_handler;
+    }
+    else
+    {
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        gui_printf (NULL,
+                    _("%s plugin %s: unable to add timer handler (not enough memory)\n"),
+                    WEECHAT_ERROR, plugin->name);
         return NULL;
     }
     return new_handler;
@@ -388,6 +449,49 @@ plugin_cmd_handler_exec (char *server, char *command, char *arguments)
     }
     
     return -1;
+}
+
+/*
+ * plugin_timer_handler_exec: check timer handlers and execute functions if needed
+ *                            return: PLUGIN_RC_OK if all ok
+ *                                    PLUGIN_RC_KO if at least one handler failed
+ */
+
+int
+plugin_timer_handler_exec ()
+{
+    t_weechat_plugin *ptr_plugin;
+    t_plugin_handler *ptr_handler;
+    int return_code, final_return_code;
+    
+    final_return_code = PLUGIN_RC_OK;
+    
+    for (ptr_plugin = weechat_plugins; ptr_plugin;
+         ptr_plugin = ptr_plugin->next_plugin)
+    {
+        for (ptr_handler = ptr_plugin->handlers;
+             ptr_handler; ptr_handler = ptr_handler->next_handler)
+        {
+            if (ptr_handler->type == HANDLER_TIMER)
+            {
+                ptr_handler->remaining--;
+                if (ptr_handler->remaining <= 0)
+                {
+                    return_code = ((int) (ptr_handler->handler) (ptr_plugin,
+                                                                 "",
+                                                                 "",
+                                                                 "",
+                                                                 ptr_handler->handler_args,
+                                                                 ptr_handler->handler_pointer));
+                    ptr_handler->remaining = ptr_handler->interval;
+                    if (return_code == PLUGIN_RC_KO)
+                        final_return_code = PLUGIN_RC_KO;
+                }
+            }
+        }
+    }
+    
+    return final_return_code;
 }
 
 /*
@@ -621,6 +725,7 @@ plugin_load (char *filename)
         new_plugin->exec_on_files = &weechat_plugin_exec_on_files;
         new_plugin->msg_handler_add = &weechat_plugin_msg_handler_add;
         new_plugin->cmd_handler_add = &weechat_plugin_cmd_handler_add;
+        new_plugin->timer_handler_add = &weechat_plugin_timer_handler_add;
         new_plugin->handler_remove = &weechat_plugin_handler_remove;
         new_plugin->handler_remove_all = &weechat_plugin_handler_remove_all;
         new_plugin->print = &weechat_plugin_print;

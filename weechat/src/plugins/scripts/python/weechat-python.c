@@ -417,6 +417,46 @@ weechat_python_add_command_handler (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_add_timer_handler: add a timer handler
+ */
+
+static PyObject *
+weechat_python_add_timer_handler (PyObject *self, PyObject *args)
+{
+    int interval;
+    char *function;
+    
+    /* make gcc happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to add timer handler, "
+                                     "script not initialized");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    interval = 10;
+    function = NULL;
+    
+    if (!PyArg_ParseTuple (args, "is", &interval, &function))
+    {
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"add_timer_handler\" function");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    if (python_plugin->timer_handler_add (python_plugin, interval,
+                                          weechat_python_handler, function,
+                                          (void *)python_current_script))
+        return Py_BuildValue ("i", 1);
+    
+    return Py_BuildValue ("i", 0);
+}
+
+/*
  * weechat_python_remove_handler: remove a handler
  */
 
@@ -449,6 +489,42 @@ weechat_python_remove_handler (PyObject *self, PyObject *args)
     
     weechat_script_remove_handler (python_plugin, python_current_script,
                                    command, function);
+    
+    return Py_BuildValue ("i", 1);
+}
+
+/*
+ * weechat_python_remove_timer_handler: remove a timer handler
+ */
+
+static PyObject *
+weechat_python_remove_timer_handler (PyObject *self, PyObject *args)
+{
+    char *function;
+    
+    /* make gcc happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to remove timer handler, "
+                                     "script not initialized");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    function = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &function))
+    {
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"remove_timer_handler\" function");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    weechat_script_remove_timer_handler (python_plugin, python_current_script,
+                                         function);
     
     return Py_BuildValue ("i", 1);
 }
@@ -1019,7 +1095,9 @@ PyMethodDef weechat_python_funcs[] = {
     { "command", weechat_python_command, METH_VARARGS, "" },
     { "add_message_handler", weechat_python_add_message_handler, METH_VARARGS, "" },
     { "add_command_handler", weechat_python_add_command_handler, METH_VARARGS, "" },
+    { "add_timer_handler", weechat_python_add_timer_handler, METH_VARARGS, "" },
     { "remove_handler", weechat_python_remove_handler, METH_VARARGS, "" },
+    { "remove_timer_handler", weechat_python_remove_timer_handler, METH_VARARGS, "" },
     { "get_info", weechat_python_get_info, METH_VARARGS, "" },
     { "get_dcc_info", weechat_python_get_dcc_info, METH_VARARGS, "" },
     { "get_config", weechat_python_get_config, METH_VARARGS, "" },
@@ -1323,6 +1401,25 @@ weechat_python_cmd (t_weechat_plugin *plugin,
                     handler_found = 1;
                     plugin->print_server (plugin, "  /%s => Python(%s)",
                                           ptr_handler->command,
+                                          ptr_handler->handler_args);
+                }
+            }
+            if (!handler_found)
+                plugin->print_server (plugin, "  (none)");
+            
+            /* list Python timer handlers */
+            plugin->print_server (plugin, "");
+            plugin->print_server (plugin, "Python timer handlers:");
+            handler_found = 0;
+            for (ptr_handler = plugin->handlers;
+                 ptr_handler; ptr_handler = ptr_handler->next_handler)
+            {
+                if ((ptr_handler->type == HANDLER_TIMER)
+                    && (ptr_handler->handler_args))
+                {
+                    handler_found = 1;
+                    plugin->print_server (plugin, "  %d seconds => Python(%s)",
+                                          ptr_handler->interval,
                                           ptr_handler->handler_args);
                 }
             }

@@ -184,7 +184,7 @@ weechat_script_remove_handler (t_weechat_plugin *plugin,
     t_plugin_handler *ptr_handler, *next_handler;
     char *ptr_arg1;
     
-    /* search and remove message handlers */
+    /* search and remove handlers */
     ptr_handler = plugin->handlers;
     while (ptr_handler)
     {
@@ -198,6 +198,33 @@ weechat_script_remove_handler (t_weechat_plugin *plugin,
             && ((t_plugin_script *)ptr_handler->handler_pointer == script)
             && (plugin->ascii_strcasecmp (plugin, ptr_arg1, arg1) == 0)
             && (plugin->ascii_strcasecmp (plugin, ptr_handler->handler_args, arg2) == 0))
+        {
+            next_handler = ptr_handler->next_handler;
+            plugin->handler_remove (plugin, ptr_handler);
+            ptr_handler = next_handler;
+        }
+        else
+            ptr_handler = ptr_handler->next_handler;
+    }
+}
+
+/*
+ * weechat_script_remove_timer_handler: remove a timer handler for a script
+ */
+
+void
+weechat_script_remove_timer_handler (t_weechat_plugin *plugin,
+                                     t_plugin_script *script,
+                                     char *function)
+{
+    t_plugin_handler *ptr_handler, *next_handler;
+    
+    /* search and remove timer handlers */
+    ptr_handler = plugin->handlers;
+    while (ptr_handler)
+    {
+        if (((t_plugin_script *)ptr_handler->handler_pointer == script)
+            && (plugin->ascii_strcasecmp (plugin, ptr_handler->handler_args, function) == 0))
         {
             next_handler = ptr_handler->next_handler;
             plugin->handler_remove (plugin, ptr_handler);

@@ -2032,7 +2032,90 @@ plugin->cmd_handler_add (plugin, "test", "Commande test",
                          "%n", &amp;cmd_test, NULL, NULL);
 </screen>
           </para>
-
+        </section>
+        
+        <section id="secAPI_timer_handler_add">
+          <title>timer_handler_add</title>
+          
+          <para>
+            Prototype :
+            <command>
+              t_plugin_handler *timer_handler_add (t_weechat_plugin
+              *plugin, int intervalle, t_plugin_handler_func *fonction,
+              char *handler_args, void *handler_pointer)
+            </command>
+          </para>
+          <para>
+            Ajoute un gestionnaire de temps, qui appelle périodiquement une
+            fonction.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>intervalle</option> : intervalle (en secondes)
+                  entre deux appels de la fonction.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>fonction</option> : fonction appelée
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>handler_args</option> : paramètres passés à la
+                  fonction appelée
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>handler_pointer</option> : pointeur passé à la
+                  fonction appelée
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : le pointeur vers le nouveau gestionnaire de
+            messages.
+          </para>
+          <para>
+            Note : la fonction appelée doit renvoyer une des valeurs
+            suivantes :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_KO</literal> : la fonction a échoué
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_OK</literal> : la fonction a réussi
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Exemple :
+<screen>
+int mon_timer (t_weechat_plugin *plugin, char *serveur, char *commande,
+               char *arguments, char *handler_args, void *handler_pointer)
+{
+    plugin->print (plugin, NULL, NULL, "mon timer");
+    return PLUGIN_RC_OK;
+}
+...
+plugin->timer_handler_add (plugin, 60, &amp;mon_timer);
+</screen>
+          </para>
         </section>
         
         <section id="secAPI_handler_remove">
@@ -3390,6 +3473,90 @@ void weechat_plugin_end (t_weechat_plugin *plugin)
         
       </section>
       
+      <section id="secSyntaxeParLangage">
+        <title>Syntaxe par langage</title>
+        
+        <section>
+          <title>Perl</title>
+          
+          <para>
+            Dans un script Perl WeeChat, toutes les fonctions et variables
+            de l'interface sont préfixées par "<literal>weechat::</literal>".
+            Exemple :
+<screen>weechat::register("test", "1.0", "end_test", "Script perl WeeChat");</screen>
+          </para>
+          
+        </section>
+        
+        <section>
+          <title>Python</title>
+          
+          <para>
+            Un script Python WeeChat doit commencer par importer weechat :
+            <screen>import weechat</screen>
+          </para>
+          
+          <para>
+            Toutes les fonctions et variables de l'interface sont préfixées
+            par "<literal>weechat.</literal>".
+            Exemple :
+<screen>weechat.register("test", "1.0", "end_test", "Script python WeeChat")</screen>
+          </para>
+          
+        </section>
+        
+        <section>
+          <title>Ruby</title>
+          
+          <para>
+            Dans un script Ruby WeeChat, tout le code doit être dans des
+            fonctions. Pour le code principal, vous devez définir une
+            fonction "<literal>weechat_init</literal>", qui est appelée
+            automatiquement quand le script est chargé par WeeChat.
+            Exemple :
+<screen>
+def weechat_init
+    Weechat.register("test", "1.0", "end_test", "Script ruby WeeChat")
+    Weechat.add_command_handler("commande", "ma_commande")
+    return Weechat::PLUGIN_RC_OK
+end
+
+def ma_commande(server, args)
+    Weechat.print("ma commande")
+    return Weechat::PLUGIN_RC_OK
+end
+</screen>
+          </para>
+          
+          <para>
+            Toutes les fonctions de l'interface sont préfixées par
+            "<literal>Weechat.</literal>" et les variables par
+            "<literal>Weechat::</literal>".
+          </para>
+          
+        </section>
+        
+        <section>
+          <title>Lua</title>
+          
+          <para>
+            Dans un script Lua WeeChat, toutes les fonctions de l'interface
+            sont préfixées par "<literal>weechat.</literal>".
+            Les variables sont préfixées par "<literal>weechat.</literal>" et
+            suffixées par "<literal>()</literal>".
+            Exemple :
+<screen>
+function message_handler(server, args)
+   weechat.print("Je suis un message handler")
+   return weechat.PLUGIN_RC_OK()
+end
+</screen>
+          </para>
+          
+        </section>
+        
+      </section>
+      
       <section id="secInterfaceWeeChatScripts">
         <title>Interface WeeChat / scripts</title>
         
@@ -3399,25 +3566,25 @@ void weechat_plugin_end (t_weechat_plugin *plugin)
           <para>
             Prototype Perl :
             <command>
-              weechat::register ( nom, version, fonction_de_fin, description );
+              weechat::register(nom, version, fonction_de_fin, description);
             </command>
           </para>
           <para>
             Prototype Python :
             <command>
-              weechat.register ( nom, version, fonction_de_fin, description )
+              weechat.register(nom, version, fonction_de_fin, description)
             </command>
           </para>
           <para>
             Prototype Ruby :
             <command>
-              Weechat.register ( nom, version, fonction_de_fin, description )
+              Weechat.register(nom, version, fonction_de_fin, description)
             </command>
           </para>
           <para>
             Prototype Lua :
             <command>
-              weechat.register ( nom, version, fonction_de_fin, description )
+              weechat.register(nom, version, fonction_de_fin, description)
             </command>
           </para>
           <para>
@@ -3460,16 +3627,16 @@ void weechat_plugin_end (t_weechat_plugin *plugin)
             Exemples :
 <screen>
 # perl
-weechat::register ("essai", "1.0", "fin_essai", "Script d'essai !");
+weechat::register("essai", "1.0", "fin_essai", "Script d'essai !");
 
 # python
-weechat.register ("essai", "1.0", "fin_essai", "Script d'essai !")
+weechat.register("essai", "1.0", "fin_essai", "Script d'essai !")
 
 # ruby
-Weechat.register ("essai", "1.0", "fin_essai", "Script d'essai !")
+Weechat.register("essai", "1.0", "fin_essai", "Script d'essai !")
 
 -- lua
-weechat.register ("essai", "1.0", "fin_essai", "Script d'essai !")
+weechat.register("essai", "1.0", "fin_essai", "Script d'essai !")
 </screen>
           </para>
         </section>
@@ -3480,25 +3647,25 @@ weechat.register ("essai", "1.0", "fin_essai", "Script d'essai !")
           <para>
             Prototype Perl :
             <command>
-              weechat::print ( message, [canal, [serveur]] )
+              weechat::print(message, [canal, [serveur]])
             </command>
           </para>
           <para>
             Prototype Python :
             <command>
-              weechat.prnt ( message, [canal, [serveur]] )
+              weechat.prnt(message, [canal, [serveur]])
             </command>
           </para>
           <para>
             Prototype Ruby :
             <command>
-              Weechat.print ( message, [canal, [serveur]] )
+              Weechat.print(message, [canal, [serveur]])
             </command>
           </para>
           <para>
             Prototype Lua :
             <command>
-              weechat.print ( message, [canal, [serveur]] )
+              weechat.print(message, [canal, [serveur]])
             </command>
           </para>
           <para>
@@ -3534,24 +3701,24 @@ weechat.register ("essai", "1.0", "fin_essai", "Script d'essai !")
             Exemples :
 <screen>
 # perl
-weechat::print ("message");
-weechat::print ("message", "#weechat");
-weechat::print ("message", "#weechat", "freenode");
+weechat::print("message");
+weechat::print("message", "#weechat");
+weechat::print("message", "#weechat", "freenode");
 
 # python
-weechat.prnt ("message")
-weechat.prnt ("message", "#weechat")
-weechat.prnt ("message", "#weechat", "freenode")
+weechat.prnt("message")
+weechat.prnt("message", "#weechat")
+weechat.prnt("message", "#weechat", "freenode")
 
 # ruby
-Weechat.print ("message")
-Weechat.print ("message", "#weechat")
-Weechat.print ("message", "#weechat", "freenode")
+Weechat.print("message")
+Weechat.print("message", "#weechat")
+Weechat.print("message", "#weechat", "freenode")
 
 -- lua
-weechat.print ("message")
-weechat.print ("message", "#weechat")
-weechat.print ("message", "#weechat", "freenode")
+weechat.print("message")
+weechat.print("message", "#weechat")
+weechat.print("message", "#weechat", "freenode")
 </screen>
           </para>
         </section>
@@ -3562,25 +3729,25 @@ weechat.print ("message", "#weechat", "freenode")
           <para>
             Prototype Perl :
             <command>
-              weechat::print_infobar ( temps, message );
+              weechat::print_infobar(temps, message);
             </command>
           </para>
           <para>
             Prototype Python :
             <command>
-              weechat.print_infobar ( temps, message )
+              weechat.print_infobar(temps, message)
             </command>
           </para>
           <para>
             Prototype Ruby :
             <command>
-              Weechat.print_infobar ( temps, message )
+              Weechat.print_infobar(temps, message)
             </command>
           </para>
           <para>
             Prototype Lua :
             <command>
-              weechat.print_infobar ( temps, message )
+              weechat.print_infobar(temps, message)
             </command>
           </para>
           <para>
@@ -3609,16 +3776,16 @@ weechat.print ("message", "#weechat", "freenode")
             Exemples :
 <screen>
 # perl
-weechat::print_infobar (5, "message");
+weechat::print_infobar(5, "message");
 
 # python
-weechat.print_infobar (5, "message")
+weechat.print_infobar(5, "message")
 
 # ruby
-Weechat.print_infobar (5, "message")
+Weechat.print_infobar(5, "message")
 
 -- lua
-weechat.print_infobar (5, "message")
+weechat.print_infobar(5, "message")
 </screen>
           </para>
         </section>
@@ -3629,25 +3796,25 @@ weechat.print_infobar (5, "message")
           <para>
             Prototype Perl :
             <command>
-              weechat::log ( message, [canal, [serveur]] )
+              weechat::log(message, [canal, [serveur]]);
             </command>
           </para>
           <para>
             Prototype Python :
             <command>
-              weechat.log ( message, [canal, [serveur]] )
+              weechat.log(message, [canal, [serveur]])
             </command>
           </para>
           <para>
             Prototype Ruby :
             <command>
-              Weechat.log ( message, [canal, [serveur]] )
+              Weechat.log(message, [canal, [serveur]])
             </command>
           </para>
           <para>
             Prototype Lua :
             <command>
-              weechat.log ( message, [canal, [serveur]] )
+              weechat.log(message, [canal, [serveur]])
             </command>
           </para>
           <para>
@@ -3683,16 +3850,16 @@ weechat.print_infobar (5, "message")
             Exemples :
 <screen>
 # perl
-weechat::log ("message", "#weechat", "freenode");
+weechat::log("message", "#weechat", "freenode");
 
 # python
-weechat.log ("message", "#weechat", "freenode")
+weechat.log("message", "#weechat", "freenode")
 
 # ruby
-Weechat.log ("message", "#weechat", "freenode")
+Weechat.log("message", "#weechat", "freenode")
 
 -- lua
-weechat.log ("message", "#weechat", "freenode")
+weechat.log("message", "#weechat", "freenode")
 </screen>
           </para>
         </section>
@@ -3703,25 +3870,25 @@ weechat.log ("message", "#weechat", "freenode")
           <para>
             Prototype Perl :
             <command>
-              weechat::add_message_handler ( message, fonction );
+              weechat::add_message_handler(message, fonction);
             </command>
           </para>
           <para>
             Prototype Python :
             <command>
-              weechat.add_message_handler ( message, fonction )
+              weechat.add_message_handler(message, fonction)
             </command>
           </para>
           <para>
             Prototype Ruby :
             <command>
-              Weechat.add_message_handler ( message, fonction )
+              Weechat.add_message_handler(message, fonction)
             </command>
           </para>
           <para>
             Prototype Lua :
             <command>
-              weechat.add_message_handler ( message, fonction )
+              weechat.add_message_handler(message, fonction)
             </command>
           </para>
           <para>
@@ -3756,18 +3923,18 @@ weechat.log ("message", "#weechat", "freenode")
             Exemples :
 <screen>
 # perl
-weechat::add_message_handler ("privmsg", ma_fonction);
+weechat::add_message_handler("privmsg", "ma_fonction");
 sub ma_fonction
 {
-    weechat::print ("serveur=$_[0]\n");
+    weechat::print("serveur=$_[0]");
     ($null, $canal, $message) = split ":",$_[1],3;
     ($masque, $null, $canal) = split " ", $canal;
-    weechat::print ("masque=$masque, canal=$canal, msg=$message\n");
+    weechat::print("masque=$masque, canal=$canal, msg=$message");
     return weechat::PLUGIN_RC_OK;
 }
 
 # python
-weechat.add_message_handler ("privmsg", ma_fonction)
+weechat.add_message_handler("privmsg", "ma_fonction")
 def ma_fonction(serveur, args):
     weechat.prnt("serveur="+serveur)
     null, canal, message = string.split(args, ":", 2)
@@ -3776,11 +3943,11 @@ def ma_fonction(serveur, args):
     return weechat.PLUGIN_RC_OK
 
 # ruby
+Weechat.add_message_handler("privmsg", "ma_fonction")
 def ma_fonction(server, args)
     Weechat.print("serveur=#{server}, args=#{args}")
     return Weechat::PLUGIN_RC_OK
 end
-Weechat.add_message_handler ("privmsg", "ma_fonction")
 
 -- lua
 weechat.add_message_handler ("privmsg", "ma_fonction")
@@ -3792,8 +3959,7 @@ end
           </para>
           <para>
             Note : la fonction appelée lorsque le message est reçu doit
-            renvoyer une des valeurs suivantes (préfixée par "weechat::" pour
-            Perl, "weechat." pour Python ou "Weechat." pour Ruby) :
+            renvoyer une des valeurs suivantes :
             <itemizedlist>
               <listitem>
                 <para>
@@ -3833,33 +3999,33 @@ end
           <para>
             Prototype Perl :
             <command>
-              weechat::add_command_handler ( commande, fonction,
+              weechat::add_command_handler(commande, fonction,
               [description, arguments, arguments_description,
-              modele_completion] );
+              modele_completion]);
             </command>
           </para>
           <para>
             Prototype Python :
             <command>
-              weechat.add_command_handler ( commande, fonction,
+              weechat.add_command_handler(commande, fonction,
               [description, arguments, arguments_description,
-              modele_completion] )
+              modele_completion])
             </command>
           </para>
           <para>
             Prototype Ruby :
             <command>
-              Weechat.add_command_handler ( commande, fonction,
+              Weechat.add_command_handler(commande, fonction,
               [description, arguments, arguments_description,
-              modele_completion] )
+              modele_completion])
             </command>
           </para>
           <para>
             Prototype Lua :
             <command>
-              weechat.add_command_handler ( commande, fonction,
+              weechat.add_command_handler(commande, fonction,
               [description, arguments, arguments_description,
-              modele_completion] )
+              modele_completion])
             </command>
           </para>
           <para>
@@ -3913,28 +4079,28 @@ end
             Exemples :
 <screen>
 # perl
-weechat::add_command_handler ("commande", ma_commande);
+weechat::add_command_handler("commande", "ma_commande");
 sub ma_commande
 {
-    weechat::print("serveur=$_[0], args=$_[1]\n");
+    weechat::print("serveur=$_[0], args=$_[1]");
     return weechat::PLUGIN_RC_OK;
 }
 
 # python
-weechat.add_command_handler ("commande", ma_commande)
+weechat.add_command_handler("commande", "ma_commande")
 def ma_commande(serveur, args):
     weechat.prnt("serveur="+serveur+", args="+args)
     return weechat.PLUGIN_RC_OK
 
 # ruby
+Weechat.add_command_handler("commande", "ma_commande")
 def ma_commande(server, args)
     Weechat.print("serveur=#{server} args=#{args}")
     return Weechat::PLUGIN_RC_OK
 end
-Weechat.add_command_handler ("command", "ma_commande")
 
 -- lua
-weechat.add_command_handler ("command", "ma_commande")
+weechat.add_command_handler ("commande", "ma_commande")
 def my_command(server, args)
     weechat.print("serveur="..server..", args="..args)
     return weechat.PLUGIN_RC_OK()
@@ -3942,9 +4108,108 @@ end
 </screen>
           </para>
           <para>
-            Notes : la fonction appelée lorsque le message est exécutée doit
-            renvoyer une des valeurs suivantes (préfixée par "weechat::" pour
-            Perl, "weechat." pour Python ou "Weechat." pour Ruby) :
+            Notes : la fonction appelée lorsque la commande est exécutée
+            doit renvoyer une des valeurs suivantes :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_KO</literal> : la fonction a échoué
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_OK</literal> : la fonction a réussi
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </section>
+        
+        <section>
+          <title>add_timer_handler</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::add_timer_handler(intervalle, fonction);
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.add_timer_handler(intervalle, fonction)
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.add_timer_handler(intervalle, fonction)
+            </command>
+          </para>
+          <para>
+            Prototype Lua :
+            <command>
+              weechat.add_timer_handler(intervalle, fonction)
+            </command>
+          </para>
+          <para>
+            Ajoute un gestionnaire de temps, qui appelle périodiquement une
+            fonction.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>intervalle</option> : intervalle (en secondes)
+                  entre deux appels de la fonction.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>fonction</option> : fonction appelée
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : 1 si succès, 0 si une erreur s'est produite.
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+weechat::add_timer_handler(60, "mon_timer");
+sub mon_timer
+{
+    weechat::print("ceci est le timer handler");
+    return weechat::PLUGIN_RC_OK;
+}
+
+# python
+weechat.add_timer_handler(60, "mon_timer")
+def mon_timer(serveur, args):
+    weechat.prnt("ceci est le timer handler")
+    return weechat.PLUGIN_RC_OK
+
+# ruby
+Weechat.add_timer_handler(60, "mon_timer")
+def mon_timer(server, args)
+    Weechat.print("ceci est le timer handler")
+    return Weechat::PLUGIN_RC_OK
+end
+
+-- lua
+weechat.add_timer_handler(60, "mon_timer")
+function mon_timer(server, args)
+    weechat.print("ceci est le timer handler")
+    return weechat.PLUGIN_RC_OK()
+end
+</screen>
+          </para>
+          <para>
+            Note : la fonction appelée doit renvoyer une des valeurs
+            suivantes :
             <itemizedlist>
               <listitem>
                 <para>
@@ -3966,29 +4231,29 @@ end
           <para>
             Prototype Perl :
             <command>
-              weechat::remove_handler ( nom, fonction );
+              weechat::remove_handler(nom, fonction);
             </command>
           </para>
           <para>
             Prototype Python :
             <command>
-              weechat.remove_handler ( nom, fonction )
+              weechat.remove_handler(nom, fonction)
             </command>
           </para>
           <para>
             Prototype Ruby :
             <command>
-              Weechat.remove_handler ( nom, fonction )
+              Weechat.remove_handler(nom, fonction)
             </command>
           </para>
           <para>
             Prototype Lua :
             <command>
-              weechat.remove_handler ( nom, fonction )
+              weechat.remove_handler(nom, fonction)
             </command>
           </para>
           <para>
-            Supprime un gestionnaire.
+            Supprime un gestionnaire de message ou de commande.
           </para>
           <para>
             Paramètres :
@@ -4012,16 +4277,77 @@ end
             Exemples :
 <screen>
 # perl
-weechat::remove_handler ("commande", ma_commande);
+weechat::remove_handler("commande", "ma_commande");
 
 # python
-weechat.remove_handler ("commande", ma_commande)
+weechat.remove_handler("commande", "ma_commande")
 
 # ruby
-Weechat.remove_handler ("commande", ma_commande)
+Weechat.remove_handler("commande", "ma_commande")
 
 -- lua
-weechat.remove_handler ("commande", "ma_commande")
+weechat.remove_handler("commande", "ma_commande")
+</screen>
+          </para>
+        </section>
+        
+        <section>
+          <title>remove_timer_handler</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::remove_timer_handler(fonction);
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.remove_timer_handler(fonction)
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.remove_timer_handler(fonction)
+            </command>
+          </para>
+          <para>
+            Prototype Lua :
+            <command>
+              weechat.remove_timer_handler(fonction)
+            </command>
+          </para>
+          <para>
+            Supprime un gestionnaire de temps.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>fonction</option> : fonction
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : 1 si succès, 0 si une erreur s'est produite.
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+weechat::remove_timer_handler("mon_timer");
+
+# python
+weechat.remove_timer_handler("mon_timer")
+
+# ruby
+Weechat.remove_timer_handler("mon_timer")
+
+-- lua
+weechat.remove_timer_handler("mon_timer")
 </screen>
           </para>
         </section>
@@ -4032,25 +4358,25 @@ weechat.remove_handler ("commande", "ma_commande")
           <para>
             Prototype Perl :
             <command>
-              weechat::command ( commande, [canal, [serveur]] );
+              weechat::command(commande, [canal, [serveur]]);
             </command>
           </para>
           <para>
             Prototype Python :
             <command>
-              weechat.command ( commande, [canal, [serveur]] )
+              weechat.command(commande, [canal, [serveur]])
             </command>
           </para>
           <para>
             Prototype Ruby :
             <command>
-              Weechat.command ( commande, [canal, [serveur]] )
+              Weechat.command(commande, [canal, [serveur]])
             </command>
           </para>
           <para>
             Prototype Lua :
             <command>
-              weechat.command ( commande, [canal, [serveur]] )
+              weechat.command(commande, [canal, [serveur]])
             </command>
           </para>
           <para>
@@ -4085,24 +4411,24 @@ weechat.remove_handler ("commande", "ma_commande")
             Exemples :
 <screen>
 # perl
-weechat::command ("bonjour tout le monde !");
-weechat::command ("/kick toto merci de quitter ce canal", "#weechat");
-weechat::command ("/nick newnick", "", "freenode");
+weechat::command("bonjour tout le monde !");
+weechat::command("/kick toto merci de quitter ce canal", "#weechat");
+weechat::command("/nick newnick", "", "freenode");
 
 # python
-weechat.command ("bonjour tout le monde !")
-weechat.command ("/kick toto merci de quitter ce canal", "#weechat")
-weechat.command ("/nick newnick", "", "freenode")
+weechat.command("bonjour tout le monde !")
+weechat.command("/kick toto merci de quitter ce canal", "#weechat")
+weechat.command("/nick newnick", "", "freenode")
 
 # ruby
-Weechat.command ("bonjour tout le monde !")
-Weechat.command ("/kick toto merci de quitter ce canal", "#weechat")
-Weechat.command ("/nick newnick", "", "freenode")
+Weechat.command("bonjour tout le monde !")
+Weechat.command("/kick toto merci de quitter ce canal", "#weechat")
+Weechat.command("/nick newnick", "", "freenode")
 
 -- lua
-weechat.command ("bonjour tout le monde !")
-weechat.command ("/kick toto merci de quitter ce canal", "#weechat")
-weechat.command ("/nick newnick", "", "freenode")
+weechat.command("bonjour tout le monde !")
+weechat.command("/kick toto merci de quitter ce canal", "#weechat")
+weechat.command("/nick newnick", "", "freenode")
 </screen>
           </para>
         </section>
@@ -4113,25 +4439,25 @@ weechat.command ("/nick newnick", "", "freenode")
           <para>
             Prototype Perl :
             <command>
-              weechat::get_info ( nom, [serveur] );
+              weechat::get_info(nom, [serveur]);
             </command>
           </para>
           <para>
             Prototype Python :
             <command>
-              weechat.get_info ( nom, [serveur] )
+              weechat.get_info(nom, [serveur])
             </command>
           </para>
           <para>
             Prototype Ruby :
             <command>
-              Weechat.get_info ( nom, [serveur] )
+              Weechat.get_info(nom, [serveur])
             </command>
           </para>
           <para>
             Prototype Lua :
             <command>
-              weechat.get_info ( nom, [serveur] )
+              weechat.get_info(nom, [serveur])
             </command>
           </para>
           <para>
@@ -4166,16 +4492,16 @@ $version = get_info("version");
 $nick = get_info("nick", "freenode");
 
 # python
-version = weechat.get_info ("version")
-nick = weechat.get_info ("nick", "freenode")
+version = weechat.get_info("version")
+nick = weechat.get_info("nick", "freenode")
 
 # ruby
-version = Weechat.get_info ("version")
-nick = Weechat.get_info ("nick", "freenode")
+version = Weechat.get_info("version")
+nick = Weechat.get_info("nick", "freenode")
 
 -- lua
-version = weechat.get_info ("version")
-nick = weechat.get_info ("nick", "freenode")
+version = weechat.get_info("version")
+nick = weechat.get_info("nick", "freenode")
 </screen>
           </para>
         </section>
@@ -4186,25 +4512,25 @@ nick = weechat.get_info ("nick", "freenode")
           <para>
             Prototype Perl :
             <command>
-              weechat::get_dcc_info ( );
+              weechat::get_dcc_info();
             </command>
           </para>
           <para>
             Prototype Python :
             <command>
-              weechat.get_dcc_info ( )
+              weechat.get_dcc_info()
             </command>
           </para>
           <para>
             Prototype Ruby :
             <command>
-              Weechat.get_dcc_info ( )
+              Weechat.get_dcc_info()
             </command>
           </para>
           <para>
             Prototype Lua :
             <command>
-              weechat.get_dcc_info ( )
+              weechat.get_dcc_info()
             </command>
           </para>
           <para>
@@ -4291,25 +4617,25 @@ end
           <para>
             Prototype Perl :
             <command>
-              weechat::get_server_info ( );
+              weechat::get_server_info();
             </command>
           </para>
           <para>
             Prototype Python :
             <command>
-              weechat.get_server_info ( )
+              weechat.get_server_info()
             </command>
           </para>
           <para>
             Prototype Ruby :
             <command>
-              Weechat.get_server_info ( )
+              Weechat.get_server_info()
             </command>
           </para>
           <para>
             Prototype Lua :
             <command>
-              weechat.get_server_info ( )
+              weechat.get_server_info()
             </command>
           </para>
           <para>
@@ -4396,25 +4722,25 @@ end
           <para>
             Prototype Perl :
             <command>
-              weechat::get_channel_info ( serveur );
+              weechat::get_channel_info(serveur);
             </command>
           </para>
           <para>
             Prototype Python :
             <command>
-              weechat.get_channel_info ( serveur )
+              weechat.get_channel_info(serveur)
             </command>
           </para>
           <para>
             Prototype Ruby :
             <command>
-              Weechat.get_channel_info ( serveur )
+              Weechat.get_channel_info(serveur)
             </command>
           </para>
           <para>
             Prototype Lua :
             <command>
-              weechat.get_channel_info ( serveur )
+              weechat.get_channel_info(serveur)
             </command>
           </para>
           <para>
@@ -4501,25 +4827,25 @@ end
           <para>
             Prototype Perl :
             <command>
-              weechat::get_nick_info ( serveur, canal );
+              weechat::get_nick_info(serveur, canal);
             </command>
           </para>
           <para>
             Prototype Python :
             <command>
-              weechat.get_nick_info ( serveur, canal )
+              weechat.get_nick_info(serveur, canal)
             </command>
           </para>
           <para>
             Prototype Ruby :
             <command>
-              Weechat.get_nick_info ( serveur, canal )
+              Weechat.get_nick_info(serveur, canal)
             </command>
           </para>
           <para>
             Prototype Lua :
             <command>
-              weechat.get_nick_info ( serveur, canal )
+              weechat.get_nick_info(serveur, canal)
             </command>
           </para>
           <para>
@@ -4606,25 +4932,25 @@ end
           <para>
             Prototype Perl :
             <command>
-              weechat::get_config ( option );
+              weechat::get_config(option);
             </command>
           </para>
           <para>
             Prototype Python :
             <command>
-              weechat.get_config ( option )
+              weechat.get_config(option)
             </command>
           </para>
           <para>
             Prototype Ruby :
             <command>
-              Weechat.get_config ( option )
+              Weechat.get_config(option)
             </command>
           </para>
           <para>
             Prototype Lua :
             <command>
-              weechat.get_config ( option )
+              weechat.get_config(option)
             </command>
           </para>
           <para>
@@ -4648,20 +4974,20 @@ end
             Exemples :
 <screen>
 # perl
-$value1 = weechat::get_config ("look_nicklist");
-$value2 = weechat::get_config ("freenode.server_autojoin");
+$valeur1 = weechat::get_config("look_nicklist");
+$valeur2 = weechat::get_config("freenode.server_autojoin");
 
 # python
-value1 = weechat.get_config ("look_nicklist")
-value2 = weechat.get_config ("freenode.server_autojoin")
+valeur1 = weechat.get_config("look_nicklist")
+valeur2 = weechat.get_config("freenode.server_autojoin")
 
 # ruby
-value1 = Weechat.get_config ("look_nicklist")
-value2 = Weechat.get_config ("freenode.server_autojoin")
+valeur1 = Weechat.get_config("look_nicklist")
+valeur2 = Weechat.get_config("freenode.server_autojoin")
 
 -- lua
-value1 = weechat.get_config ("look_nicklist")
-value2 = weechat.get_config ("freenode.server_autojoin")
+valeur1 = weechat.get_config("look_nicklist")
+valeur2 = weechat.get_config("freenode.server_autojoin")
 </screen>
           </para>
         </section>
@@ -4672,25 +4998,25 @@ value2 = weechat.get_config ("freenode.server_autojoin")
           <para>
             Prototype Perl :
             <command>
-              weechat::set_config ( option, valeur );
+              weechat::set_config(option, valeur);
             </command>
           </para>
           <para>
             Prototype Python :
             <command>
-              weechat.set_config ( option, valeur )
+              weechat.set_config(option, valeur)
             </command>
           </para>
           <para>
             Prototype Ruby :
             <command>
-              Weechat.set_config ( option, valeur )
+              Weechat.set_config(option, valeur)
             </command>
           </para>
           <para>
             Prototype Lua :
             <command>
-              weechat.set_config ( option, valeur )
+              weechat.set_config(option, valeur)
             </command>
           </para>
           <para>
@@ -4720,20 +5046,20 @@ value2 = weechat.get_config ("freenode.server_autojoin")
             Exemples :
 <screen>
 # perl
-weechat::set_config ("look_nicklist", "off");
-weechat::set_config ("freenode.server_autojoin, "#weechat");
+weechat::set_config("look_nicklist", "off");
+weechat::set_config("freenode.server_autojoin, "#weechat");
 
 # python
-weechat.set_config ("look_nicklist", "off")
-weechat.set_config ("freenode.server_autojoin, "#weechat")
+weechat.set_config("look_nicklist", "off")
+weechat.set_config("freenode.server_autojoin, "#weechat")
 
 # ruby
-Weechat.set_config ("look_nicklist", "off")
-Weechat.set_config ("freenode.server_autojoin, "#weechat")
+Weechat.set_config("look_nicklist", "off")
+Weechat.set_config("freenode.server_autojoin, "#weechat")
 
 -- lua
-weechat.set_config ("look_nicklist", "off")
-weechat.set_config ("freenode.server_autojoin, "#weechat")
+weechat.set_config("look_nicklist", "off")
+weechat.set_config("freenode.server_autojoin, "#weechat")
 </screen>
           </para>
         </section>
@@ -4744,25 +5070,25 @@ weechat.set_config ("freenode.server_autojoin, "#weechat")
           <para>
             Prototype Perl :
             <command>
-              weechat::get_plugin_config ( option );
+              weechat::get_plugin_config(option);
             </command>
           </para>
           <para>
             Prototype Python :
             <command>
-              weechat.get_plugin_config ( option )
+              weechat.get_plugin_config(option)
             </command>
           </para>
           <para>
             Prototype Ruby :
             <command>
-              Weechat.get_plugin_config ( option )
+              Weechat.get_plugin_config(option)
             </command>
           </para>
           <para>
             Prototype Lua :
             <command>
-              weechat.get_plugin_config ( option )
+              weechat.get_plugin_config(option)
             </command>
           </para>
           <para>
@@ -4792,16 +5118,16 @@ weechat.set_config ("freenode.server_autojoin, "#weechat")
             Exemples :
 <screen>
 # perl
-$value = weechat::get_plugin_config ("ma_variable");
+$valeur = weechat::get_plugin_config("ma_variable");
 
 # python
-value = weechat.get_plugin_config ("ma_variable")
+valeur = weechat.get_plugin_config("ma_variable")
 
 # ruby
-value = Weechat.get_plugin_config ("ma_variable")
+valeur = Weechat.get_plugin_config("ma_variable")
 
 -- lua
-value = weechat.get_plugin_config ("ma_variable")
+valeur = weechat.get_plugin_config("ma_variable")
 </screen>
           </para>
         </section>
@@ -4812,25 +5138,25 @@ value = weechat.get_plugin_config ("ma_variable")
           <para>
             Prototype Perl :
             <command>
-              weechat::set_plugin_config ( option, valeur );
+              weechat::set_plugin_config(option, valeur);
             </command>
           </para>
           <para>
             Prototype Python :
             <command>
-              weechat.set_plugin_config ( option, valeur )
+              weechat.set_plugin_config(option, valeur)
             </command>
           </para>
           <para>
             Prototype Ruby :
             <command>
-              Weechat.set_plugin_config ( option, valeur )
+              Weechat.set_plugin_config(option, valeur)
             </command>
           </para>
           <para>
             Prototype Lua :
             <command>
-              weechat.set_plugin_config ( option, valeur )
+              weechat.set_plugin_config(option, valeur)
             </command>
           </para>
           <para>
@@ -4866,16 +5192,16 @@ value = weechat.get_plugin_config ("ma_variable")
             Exemples :
 <screen>
 # perl
-weechat::set_plugin_config ("ma_variable", "valeur");
+weechat::set_plugin_config("ma_variable", "valeur");
 
 # python
-weechat.set_plugin_config ("ma_variable", "valeur")
+weechat.set_plugin_config("ma_variable", "valeur")
 
 # ruby
-Weechat.set_plugin_config ("ma_variable", "valeur")
+Weechat.set_plugin_config("ma_variable", "valeur")
 
 -- lua
-weechat.set_plugin_config ("ma_variable", "valeur")
+weechat.set_plugin_config("ma_variable", "valeur")
 </screen>
           </para>
         </section>
