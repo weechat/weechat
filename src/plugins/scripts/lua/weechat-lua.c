@@ -1644,7 +1644,7 @@ weechat_lua_cmd (t_weechat_plugin *plugin,
             for (ptr_handler = plugin->handlers;
                  ptr_handler; ptr_handler = ptr_handler->next_handler)
             {
-                if ((ptr_handler->type == HANDLER_MESSAGE)
+                if ((ptr_handler->type == HANDLER_TIMER)
                     && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
