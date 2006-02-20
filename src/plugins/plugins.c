@@ -731,6 +731,7 @@ plugin_load (char *filename)
         new_plugin->print = &weechat_plugin_print;
         new_plugin->print_server = &weechat_plugin_print_server;
         new_plugin->print_infobar = &weechat_plugin_print_infobar;
+        new_plugin->infobar_remove = &weechat_plugin_infobar_remove;
 	new_plugin->log = &weechat_plugin_log;
         new_plugin->exec_command = &weechat_plugin_exec_command;
         new_plugin->get_info = &weechat_plugin_get_info;

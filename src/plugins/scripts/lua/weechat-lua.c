@@ -273,6 +273,39 @@ weechat_lua_print_infobar  (lua_State *L)
 }
 
 /*
+ * weechat_lua_remove_infobar: remove message(s) in infobar
+ */
+
+static int
+weechat_lua_remove_infobar  (lua_State *L)
+{
+    int n, how_many;
+    /* make gcc happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to remove infobar message(s), "
+                                  "script not initialized");
+	lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+    
+    how_many = 0;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n == 1)
+        how_many = lua_tonumber (lua_current_interpreter, -1);
+    
+    lua_plugin->infobar_remove (lua_plugin, how_many);
+    
+    lua_pushnumber (lua_current_interpreter, 1);
+    return 1;
+}
+
+/*
  * weechat_lua_print: log message in server/channel (current or specified ones)
  */
 
@@ -1365,6 +1398,7 @@ const struct luaL_reg weechat_lua_funcs[] = {
     { "register", weechat_lua_register},
     { "print", weechat_lua_print},
     { "print_infobar", weechat_lua_print_infobar},
+    { "remove_infobar", weechat_lua_remove_infobar},
     { "log", weechat_lua_log},
     { "command", weechat_lua_command},
     { "add_message_handler", weechat_lua_add_message_handler},

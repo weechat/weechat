@@ -215,6 +215,29 @@ weechat_plugin_print_infobar (t_weechat_plugin *plugin, int time_displayed, char
 }
 
 /*
+ * weechat_plugin_infobar_remove: remove message(s) in infobar
+ */
+
+void
+weechat_plugin_infobar_remove (t_weechat_plugin *plugin, int how_many)
+{
+    if (!plugin)
+        return;
+    
+    if (how_many <= 0)
+        gui_infobar_remove_all ();
+    else
+    {
+        while ((gui_infobar) && (how_many > 0))
+        {
+            gui_infobar_remove ();
+            how_many--;
+        }
+    }
+    gui_draw_buffer_infobar (gui_current_window->buffer, 1);
+}
+
+/*
  * weechat_plugin_log: add a message on logs
  */
 

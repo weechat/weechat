@@ -1,11 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-02-19
+ChangeLog - 2006-02-20
 
 
 Version 0.1.8 (under dev!):
-   * added timer handler for plugins
+   * added new plugins functions: add_timer_handler, remove_timer_handler,
+     remove_infobar
    * plugin messages handlers now called when message is ignored (by /ignore)
    * new behaviour for messages ignored by a message handler: now WeeChat
      executes standard handler, treating message as "ignored"

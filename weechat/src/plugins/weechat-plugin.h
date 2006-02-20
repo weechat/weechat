@@ -206,6 +206,7 @@ struct t_weechat_plugin
     void (*print) (t_weechat_plugin *, char *, char *, char *, ...);
     void (*print_server) (t_weechat_plugin *, char *, ...);
     void (*print_infobar) (t_weechat_plugin *, int, char *, ...);
+    void (*infobar_remove) (t_weechat_plugin *, int);
     
     t_plugin_handler *(*msg_handler_add) (t_weechat_plugin *, char *,
                                           t_plugin_handler_func *,
@@ -254,6 +255,7 @@ extern void weechat_plugin_exec_on_files (t_weechat_plugin *, char *,
 extern void weechat_plugin_print (t_weechat_plugin *, char *, char *, char *, ...);
 extern void weechat_plugin_print_server (t_weechat_plugin *, char *, ...);
 extern void weechat_plugin_print_infobar (t_weechat_plugin *, int, char *, ...);
+extern void weechat_plugin_infobar_remove (t_weechat_plugin *, int);
 
 /* log functions */
 extern void weechat_plugin_log (t_weechat_plugin *, char *, char *, char *, ...);

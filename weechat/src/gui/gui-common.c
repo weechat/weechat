@@ -1103,12 +1103,10 @@ gui_infobar_printf_from_buffer (t_gui_buffer *buffer, int time_displayed,
     
     buf2 = (char *)gui_color_decode ((unsigned char *)buf, 0);
     
-    weechat_log_printf ("avant decodage: %s\n", buf);
     if (buf2)
         buf3 = channel_iconv_decode (SERVER(buffer), CHANNEL(buffer), buf2);
     else
         buf3 = NULL;
-    weechat_log_printf ("apres decodage: %s\n", buf3);
     
     gui_infobar_printf (time_displayed, color,
                         "%s%s", message1,
@@ -1136,6 +1134,19 @@ gui_infobar_remove ()
             free (gui_infobar->text);
         free (gui_infobar);
         gui_infobar = new_infobar;
+    }
+}
+
+/*
+ * gui_infobar_remove_all: remove last displayed message in infobar
+ */
+
+void
+gui_infobar_remove_all ()
+{
+    while (gui_infobar)
+    {
+        gui_infobar_remove ();
     }
 }
 

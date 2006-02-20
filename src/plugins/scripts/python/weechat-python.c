@@ -248,6 +248,41 @@ weechat_python_print_infobar (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_remove_infobar: remove message(s) from infobar
+ */
+
+static PyObject *
+weechat_python_remove_infobar (PyObject *self, PyObject *args)
+{
+    int how_many;
+    
+    /* make gcc happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to remove infobar message(s), "
+                                     "script not initialized");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    how_many = 0;
+    
+    if (!PyArg_ParseTuple (args, "|is", &how_many))
+    {
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"infobar_remove\" function");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    python_plugin->infobar_remove (python_plugin, how_many);
+    
+    return Py_BuildValue ("i", 1);
+}
+
+/*
  * weechat_python_log: log message in server/channel (current or specified ones)
  */
 
@@ -1091,6 +1126,7 @@ PyMethodDef weechat_python_funcs[] = {
     { "register", weechat_python_register, METH_VARARGS, "" },
     { "prnt", weechat_python_print, METH_VARARGS, "" },
     { "print_infobar", weechat_python_print_infobar, METH_VARARGS, "" },
+    { "remove_infobar", weechat_python_remove_infobar, METH_VARARGS, "" },
     { "log", weechat_python_log, METH_VARARGS, "" },
     { "command", weechat_python_command, METH_VARARGS, "" },
     { "add_message_handler", weechat_python_add_message_handler, METH_VARARGS, "" },

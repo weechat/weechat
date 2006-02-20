@@ -320,6 +320,44 @@ weechat_ruby_print_infobar (VALUE class, VALUE delay, VALUE message)
 }
 
 /*
+ * weechat_ruby_remove_infobar: remove message(s) from infobar
+ */
+
+static VALUE
+weechat_ruby_remove_infobar (int argc, VALUE *argv, VALUE class)
+{
+    VALUE how_many;
+    int c_how_many;
+    
+    /* make gcc happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: unable to remove infobar message(s), "
+                                   "script not initialized");
+        return INT2FIX (0);
+    }
+    
+    how_many = Qnil;
+    
+    rb_scan_args (argc, argv, "01", &how_many);
+    
+    if (!NIL_P (how_many))
+    {
+        Check_Type (how_many, T_FIXNUM);
+        c_how_many = FIX2INT (how_many);
+    }
+    else
+        c_how_many = 0;
+    
+    ruby_plugin->infobar_remove (ruby_plugin, c_how_many);
+    
+    return INT2FIX (1);
+}
+
+/*
  * weechat_ruby_log: log message in server/channel (current or specified ones)
  */
 
@@ -1713,6 +1751,7 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     rb_define_module_function (mWeechat, "register", weechat_ruby_register, 4);
     rb_define_module_function (mWeechat, "print", weechat_ruby_print, -1);
     rb_define_module_function (mWeechat, "print_infobar", weechat_ruby_print_infobar, 2);
+    rb_define_module_function (mWeechat, "remove_infobar", weechat_ruby_remove_infobar, -1);
     rb_define_module_function (mWeechat, "log", weechat_ruby_log, -1);
     rb_define_module_function (mWeechat, "command", weechat_ruby_command, -1);
     rb_define_module_function (mWeechat, "add_message_handler", weechat_ruby_add_message_handler, 2);

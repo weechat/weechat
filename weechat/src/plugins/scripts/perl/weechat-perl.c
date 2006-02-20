@@ -337,6 +337,31 @@ static XS (XS_weechat_print_infobar)
 }
 
 /*
+ * weechat::remove_infobar: remove message(s) from infobar
+ */
+
+static XS (XS_weechat_remove_infobar)
+{
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to remove infobar message(s), "
+                                   "script not initialized");
+	XSRETURN_NO;
+    }
+    
+    perl_plugin->infobar_remove (perl_plugin,
+                                 (items >= 1) ? SvIV (ST (0)) : 0);
+    
+    XSRETURN_YES;
+}
+
+/*
  * weechat::log: log message in server/channel (current or specified ones)
  */
 
@@ -1160,6 +1185,7 @@ weechat_perl_xs_init (pTHX)
     newXS ("weechat::register", XS_weechat_register, "weechat");
     newXS ("weechat::print", XS_weechat_print, "weechat");
     newXS ("weechat::print_infobar", XS_weechat_print_infobar, "weechat");
+    newXS ("weechat::remove_infobar", XS_weechat_remove_infobar, "weechat");
     newXS ("weechat::log", XS_weechat_log, "weechat");
     newXS ("weechat::command", XS_weechat_command, "weechat");
     newXS ("weechat::add_message_handler", XS_weechat_add_message_handler, "weechat");

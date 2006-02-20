@@ -3721,6 +3721,73 @@ weechat.print_infobar(5, "message")
         </section>
         
         <section>
+          <title>remove_infobar</title>
+          
+          <para>
+            Perl prototype:
+            <command>
+              weechat::remove_infobar([count]);
+            </command>
+          </para>
+          <para>
+            Python prototype:
+            <command>
+              weechat.remove_infobar([count])
+            </command>
+          </para>
+          <para>
+            Ruby prototype:
+            <command>
+              Weechat.remove_infobar([count])
+            </command>
+          </para>
+          <para>
+            Lua prototype:
+            <command>
+              weechat.remove_infobar([count])
+            </command>
+          </para>
+          <para>
+            Remove one or more messages in infobar stack.
+          </para>
+          <para>
+            Arguments:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>count</option>: number of messages to remove
+                  (if argument not given or &lt;= 0, then all messages are
+                  removed)
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Return value: 1 if success, 0 if an error occurred.
+          </para>
+          <para>
+            Examples:
+<screen>
+# perl
+weechat::remove_infobar(1);
+weechat::remove_infobar();
+
+# python
+weechat.remove_infobar(1)
+weechat.remove_infobar()
+
+# ruby
+Weechat.remove_infobar(1)
+Weechat.remove_infobar()
+
+-- lua
+weechat.remove_infobar(1)
+weechat.remove_infobar()
+</screen>
+          </para>
+        </section>
+        
+        <section>
           <title>log</title>
           
           <para>
