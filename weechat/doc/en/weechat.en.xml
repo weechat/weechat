@@ -1629,6 +1629,42 @@ plugin->print_infobar (plugin, 5, "hello");
           </para>
         </section>
         
+        <section id="secAPI_infobar_remove">
+          <title>infobar_remove</title>
+          
+          <para>
+            Prototype:
+            <command>
+              void infobar_remove (t_weechat_plugin *plugin, int count)
+            </command>
+          </para>
+          <para>
+            Remove one or more messages in infobar stack.
+          </para>
+          <para>
+            Arguments:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option>: pointer to plugin structure
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>count</option>: number of messages to remove
+                  (if argument is &lt;= 0, then all messages are removed)
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Return value: none.
+          </para>
+          <para>
+            Example: <screen>plugin->infobar_remove (1);</screen>
+          </para>
+        </section>
+        
         <section id="secAPI_log">
           <title>log</title>
           
@@ -3770,19 +3806,15 @@ weechat.print_infobar(5, "message")
 <screen>
 # perl
 weechat::remove_infobar(1);
-weechat::remove_infobar();
 
 # python
 weechat.remove_infobar(1)
-weechat.remove_infobar()
 
 # ruby
 Weechat.remove_infobar(1)
-Weechat.remove_infobar()
 
 -- lua
 weechat.remove_infobar(1)
-weechat.remove_infobar()
 </screen>
           </para>
         </section>

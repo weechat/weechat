@@ -1653,7 +1653,48 @@ plugin->print (plugin, "freenode", "#weechat", "hello");
             Valeur renvoyée : aucune.
           </para>
           <para>
-            Exemple : <screen>plugin->print_infobar (plugin, 5, "hello");</screen>
+            Exemple :
+<screen>
+plugin->print_infobar (plugin, 5, "hello");
+</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_infobar_remove">
+          <title>infobar_remove</title>
+          
+          <para>
+            Prototype :
+            <command>
+              void infobar_remove (t_weechat_plugin *plugin, int nombre)
+            </command>
+          </para>
+          <para>
+            Efface un ou plusieurs messages dans la pile de la barre d'infos.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>nombre</option> : nombre de messages à supprimer
+                  (si paramètre non présent ou &lt;= 0, alors tous les messages
+                  sont effacés)
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : aucune.
+          </para>
+          <para>
+            Exemple : <screen>plugin->infobar_remove (1);</screen>
           </para>
         </section>
         
@@ -3840,19 +3881,15 @@ weechat.print_infobar(5, "message")
 <screen>
 # perl
 weechat::remove_infobar(1);
-weechat::remove_infobar();
 
 # python
 weechat.remove_infobar(1)
-weechat.remove_infobar()
 
 # ruby
 Weechat.remove_infobar(1)
-Weechat.remove_infobar()
 
 -- lua
 weechat.remove_infobar(1)
-weechat.remove_infobar()
 </screen>
           </para>
         </section>
