@@ -961,10 +961,22 @@ int
 irc_cmd_send_kill (t_irc_server *server, t_irc_channel *channel,
                    char *arguments)
 {
+    char *pos;
+    
     /* make gcc happy */
     (void) channel;
     
-    server_sendf (server, "KILL %s\r\n", arguments);
+    pos = strchr (arguments, ' ');
+    if (pos)
+    {
+        pos[0] = '\0';
+        pos++;
+        while (pos[0] == ' ')
+            pos++;
+        server_sendf (server, "KILL %s :%s\r\n", arguments, pos);
+    }
+    else
+        server_sendf (server, "KILL %s\r\n", arguments);
     return 0;
 }
 

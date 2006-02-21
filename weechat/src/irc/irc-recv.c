@@ -539,15 +539,20 @@ irc_cmd_recv_kill (t_irc_server *server, char *host, char *nick, char *arguments
         while (pos_host2[0] == ' ')
             pos_host2++;
         
-        pos_comment = strchr (pos_host2, ' ');
-        if (pos_comment)
+        if (pos_host2[0] == ':')
+            pos_comment = pos_host2 + 1;
+        else
         {
-            pos_comment[0] = '\0';
-            pos_comment++;
-            while (pos_comment[0] == ' ')
+            pos_comment = strchr (pos_host2, ' ');
+            if (pos_comment)
+            {
+                pos_comment[0] = '\0';
                 pos_comment++;
-            if (pos_comment[0] == ':')
-                pos_comment++;
+                while (pos_comment[0] == ' ')
+                    pos_comment++;
+                if (pos_comment[0] == ':')
+                    pos_comment++;
+            }
         }
         
         for (ptr_channel = server->channels; ptr_channel;
