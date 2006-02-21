@@ -106,7 +106,7 @@ weechat_ruby_exec (t_weechat_plugin *plugin,
                    t_plugin_script *script,
                    char *function, char *server, char *arguments)
 {
-    VALUE ruby_retcode;
+    VALUE ruby_retcode, err;
     int ruby_error;
     /* make gcc happy */
     (void) plugin;
@@ -123,8 +123,12 @@ weechat_ruby_exec (t_weechat_plugin *plugin,
                                    "Ruby error: unable to run function \"%s\"",
                                    function);
 	
-	rb_eval_string_protect("Weechat.print(\"Ruby error: \" + $@.to_s)", NULL);
-	rb_eval_string_protect("Weechat.print(\"Ruby error: \" + $!.to_s)", NULL);
+	err = rb_inspect(rb_gv_get("$!"));
+	ruby_plugin->print_server (ruby_plugin, "Ruby error: \"%s\"", STR2CSTR(err));
+	/*
+	err = rb_inspect(rb_gv_get("$@"));
+	ruby_plugin->print_server (ruby_plugin, "Ruby error: \"%s\"", STR2CSTR(err));
+	*/
 	
         return PLUGIN_RC_KO;
     }
@@ -1371,7 +1375,7 @@ int
 weechat_ruby_load (t_weechat_plugin *plugin, char *filename)
 {
     char modname[64];
-    VALUE curModule, ruby_retcode;
+    VALUE curModule, ruby_retcode, err;
     int ruby_error;
     
     plugin->print_server (plugin, "Loading Ruby script \"%s\"", filename);
@@ -1389,6 +1393,16 @@ weechat_ruby_load (t_weechat_plugin *plugin, char *filename)
     
     free (ruby_current_script_filename);
     
+    if (ruby_retcode == Qnil) {
+	err = rb_inspect(rb_gv_get("$!"));
+	ruby_plugin->print_server (ruby_plugin, "Ruby error: \"%s\"", STR2CSTR(err));
+	/*
+	err = rb_inspect(rb_gv_get("$@"));
+	ruby_plugin->print_server (ruby_plugin, "Ruby error: \"%s\"", STR2CSTR(err));
+	*/
+	return 0;
+    }
+    
     if (NUM2INT(ruby_retcode) != 0)
     {
 	VALUE ruby_eval_error;
@@ -1398,7 +1412,7 @@ weechat_ruby_load (t_weechat_plugin *plugin, char *filename)
 	case 1:
 	    ruby_plugin->print_server (ruby_plugin,
                                        "Ruby error: unable to read file \"%s\"",
-                                       filename);
+				       filename);
 	    break;
 	case 2:
 	    
@@ -1431,10 +1445,15 @@ weechat_ruby_load (t_weechat_plugin *plugin, char *filename)
     {
 	ruby_plugin->print_server (ruby_plugin,
                                    "Ruby error: unable to eval weechat_init in file \"%s\"",
-                                   filename);	
-	rb_eval_string_protect("Weechat.print(\"Ruby error: \" + $@.to_s)", NULL);
-	rb_eval_string_protect("Weechat.print(\"Ruby error: \" + $!.to_s)", NULL);
+                                   filename);
 	
+	err = rb_inspect(rb_gv_get("$!"));
+	ruby_plugin->print_server (ruby_plugin, "Ruby error: \"%s\"", STR2CSTR(err));
+	/*
+	err = rb_inspect(rb_gv_get("$!"));
+	ruby_plugin->print_server (ruby_plugin, "Ruby error: \"%s\"", STR2CSTR(err));
+	*/
+
 	if (ruby_current_script != NULL)
 	    weechat_script_remove (plugin, &ruby_scripts, ruby_current_script);
 	return 0;
