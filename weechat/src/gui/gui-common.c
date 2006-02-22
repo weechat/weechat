@@ -58,7 +58,9 @@ t_gui_window_tree *gui_windows_tree = NULL; /* pointer to windows tree      */
 
 t_gui_buffer *gui_buffers = NULL;           /* pointer to first buffer      */
 t_gui_buffer *last_gui_buffer = NULL;       /* pointer to last buffer       */
-t_gui_buffer *buffer_before_dcc = NULL;     /* buffer before dcc switch     */
+t_gui_buffer *gui_buffer_before_dcc = NULL; /* buffer before dcc switch     */
+t_gui_buffer *gui_buffer_raw_data = NULL;   /* buffer with raw IRC data     */
+t_gui_buffer *gui_buffer_before_raw_data = NULL; /* buffer before raw switch*/
 t_gui_infobar *gui_infobar;                 /* pointer to infobar content   */
 
 char *gui_input_clipboard = NULL;           /* clipboard content            */
@@ -136,10 +138,10 @@ gui_window_new (t_gui_window *parent, int x, int y, int width, int height,
     t_gui_window *new_window;
     t_gui_window_tree *ptr_tree, *child1, *child2, *ptr_leaf;
     
-    #ifdef DEBUG
+#ifdef DEBUG
     weechat_log_printf ("Creating new window (x:%d, y:%d, width:%d, height:%d)\n",
                         x, y, width, height);
-    #endif
+#endif
     
     if (parent)
     {
@@ -265,86 +267,6 @@ gui_window_new (t_gui_window *parent, int x, int y, int width, int height,
 }
 
 /*
- * gui_buffer_search: search a buffer by server and channel name
- */
-
-t_gui_buffer *
-gui_buffer_search (char *server, char *channel)
-{
-    t_irc_server *ptr_server;
-    t_irc_channel *ptr_channel;
-    t_gui_buffer *ptr_buffer;
-    
-    ptr_server = NULL;
-    ptr_channel = NULL;
-    ptr_buffer = NULL;
-    
-    /* nothing given => print on current buffer */
-    if ((!server || !server[0]) && (!channel || !channel[0]))
-        ptr_buffer = gui_current_window->buffer;
-    else
-    {
-        if (server && server[0])
-        {
-            ptr_server = server_search (server);
-            if (!ptr_server)
-                return NULL;
-        }
-        else
-        {
-            ptr_server = SERVER(gui_current_window->buffer);
-            if (!ptr_server)
-                ptr_server = SERVER(gui_buffers);
-        }
-        
-        if (channel && channel[0])
-        {
-            if (ptr_server)
-            {
-                ptr_channel = channel_search (ptr_server, channel);
-                if (ptr_channel)
-                    ptr_buffer = ptr_channel->buffer;
-            }
-        }
-        else
-        {
-            if (ptr_server)
-                ptr_buffer = ptr_server->buffer;
-            else
-                ptr_buffer = gui_current_window->buffer;
-        }
-    }
-    
-    if (!ptr_buffer)
-        return NULL;
-    
-    return (ptr_buffer->dcc) ? gui_buffers : ptr_buffer;
-}
-
-/*
- * gui_buffer_find_window: find a window displaying buffer
- */
-
-t_gui_window *
-gui_buffer_find_window (t_gui_buffer *buffer)
-{
-    t_gui_window *ptr_win;
-    
-    if (gui_current_window->buffer == buffer)
-        return gui_current_window;
-    
-    for (ptr_win = gui_windows; ptr_win;
-         ptr_win = ptr_win->next_window)
-    {
-        if (ptr_win->buffer == buffer)
-            return ptr_win;
-    }
-    
-    /* no window found */
-    return NULL;
-}
-
-/*
  * gui_buffer_servers_search: search servers buffer
  *                            (when same buffer is used for all servers)
  */
@@ -366,42 +288,21 @@ gui_buffer_servers_search ()
 }
 
 /*
- * gui_get_dcc_buffer: get pointer to DCC buffer (DCC buffer created if not existing)
- */
-
-t_gui_buffer *
-gui_get_dcc_buffer (t_gui_window *window)
-{
-    t_gui_buffer *ptr_buffer;
-    
-    /* check if dcc buffer exists */
-    for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
-    {
-        if (ptr_buffer->dcc)
-            break;
-    }
-    if (ptr_buffer)
-        return ptr_buffer;
-    else
-        return gui_buffer_new (window, NULL, NULL, 1, 0);
-}
-
-/*
  * gui_buffer_new: create a new buffer in current window
  */
 
 t_gui_buffer *
-gui_buffer_new (t_gui_window *window, void *server, void *channel, int dcc,
+gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
                 int switch_to_buffer)
 {
     t_gui_buffer *new_buffer, *ptr_buffer;
     
-    #ifdef DEBUG
+#ifdef DEBUG
     weechat_log_printf ("Creating new buffer\n");
-    #endif
+#endif
     
     /* use first buffer if no server was assigned to this buffer */
-    if (!dcc && gui_buffers && (!SERVER(gui_buffers)))
+    if ((type == BUFFER_TYPE_STANDARD) && gui_buffers && (!SERVER(gui_buffers)))
     {
         if (server)
             ((t_irc_server *)(server))->buffer = gui_buffers;
@@ -416,7 +317,8 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int dcc,
         return gui_buffers;
     }
     
-    if (cfg_look_one_server_buffer && !dcc && gui_buffers && server && !channel)
+    if (cfg_look_one_server_buffer && (type == BUFFER_TYPE_STANDARD) &&
+        gui_buffers && server && !channel)
     {
         ptr_buffer = gui_buffer_servers_search ();
         if (ptr_buffer)
@@ -439,7 +341,9 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int dcc,
         new_buffer->server = server;
         new_buffer->all_servers = 0;
         new_buffer->channel = channel;
-        new_buffer->dcc = dcc;
+        new_buffer->type = type;
+        if (new_buffer->type == BUFFER_TYPE_RAW_DATA)
+            gui_buffer_raw_data = new_buffer;
         /* assign buffer to server and channel */
         if (server && !channel)
         {
@@ -480,7 +384,7 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int dcc,
             log_start (new_buffer);
         
         /* init input buffer */
-        new_buffer->has_input = (new_buffer->dcc) ? 0 : 1;
+        new_buffer->has_input = (new_buffer->type == BUFFER_TYPE_STANDARD) ? 1 : 0;
         if (new_buffer->has_input)
         {
             new_buffer->input_buffer_alloc = INPUT_BUFFER_BLOCK_SIZE;
@@ -535,6 +439,108 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int dcc,
         return NULL;
     
     return new_buffer;
+}
+
+/*
+ * gui_buffer_search: search a buffer by server and channel name
+ */
+
+t_gui_buffer *
+gui_buffer_search (char *server, char *channel)
+{
+    t_irc_server *ptr_server;
+    t_irc_channel *ptr_channel;
+    t_gui_buffer *ptr_buffer;
+    
+    ptr_server = NULL;
+    ptr_channel = NULL;
+    ptr_buffer = NULL;
+    
+    /* nothing given => print on current buffer */
+    if ((!server || !server[0]) && (!channel || !channel[0]))
+        ptr_buffer = gui_current_window->buffer;
+    else
+    {
+        if (server && server[0])
+        {
+            ptr_server = server_search (server);
+            if (!ptr_server)
+                return NULL;
+        }
+        else
+        {
+            ptr_server = SERVER(gui_current_window->buffer);
+            if (!ptr_server)
+                ptr_server = SERVER(gui_buffers);
+        }
+        
+        if (channel && channel[0])
+        {
+            if (ptr_server)
+            {
+                ptr_channel = channel_search (ptr_server, channel);
+                if (ptr_channel)
+                    ptr_buffer = ptr_channel->buffer;
+            }
+        }
+        else
+        {
+            if (ptr_server)
+                ptr_buffer = ptr_server->buffer;
+            else
+                ptr_buffer = gui_current_window->buffer;
+        }
+    }
+    
+    if (!ptr_buffer)
+        return NULL;
+    
+    return (ptr_buffer->type != BUFFER_TYPE_STANDARD) ?
+        gui_buffers : ptr_buffer;
+}
+
+/*
+ * gui_buffer_find_window: find a window displaying buffer
+ */
+
+t_gui_window *
+gui_buffer_find_window (t_gui_buffer *buffer)
+{
+    t_gui_window *ptr_win;
+    
+    if (gui_current_window->buffer == buffer)
+        return gui_current_window;
+    
+    for (ptr_win = gui_windows; ptr_win;
+         ptr_win = ptr_win->next_window)
+    {
+        if (ptr_win->buffer == buffer)
+            return ptr_win;
+    }
+    
+    /* no window found */
+    return NULL;
+}
+
+/*
+ * gui_get_dcc_buffer: get pointer to DCC buffer (DCC buffer created if not existing)
+ */
+
+t_gui_buffer *
+gui_get_dcc_buffer (t_gui_window *window)
+{
+    t_gui_buffer *ptr_buffer;
+    
+    /* check if dcc buffer exists */
+    for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->type == BUFFER_TYPE_DCC)
+            break;
+    }
+    if (ptr_buffer)
+        return ptr_buffer;
+    else
+        return gui_buffer_new (window, NULL, NULL, BUFFER_TYPE_DCC, 0);
 }
 
 /*
@@ -652,8 +658,14 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
     if (hotlist_initial_buffer == buffer)
         hotlist_initial_buffer = NULL;
     
-    if (buffer_before_dcc == buffer)
-        buffer_before_dcc = NULL;
+    if (gui_buffer_before_dcc == buffer)
+        gui_buffer_before_dcc = NULL;
+    
+    if (gui_buffer_before_raw_data == buffer)
+        gui_buffer_before_raw_data = NULL;
+    
+    if (buffer->type == BUFFER_TYPE_RAW_DATA)
+        gui_buffer_raw_data = NULL;
     
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
@@ -717,7 +729,8 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
     
     /* always at least one buffer */
     if (!gui_buffers && create_new && switch_to_another)
-        (void) gui_buffer_new (gui_windows, NULL, NULL, 0, 1);
+        (void) gui_buffer_new (gui_windows, NULL, NULL,
+                               BUFFER_TYPE_STANDARD, 1);
 }
 
 /*
@@ -932,7 +945,7 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, char *mes
             else
                 buffer = gui_current_window->buffer;
             
-            if (!buffer || buffer->dcc)
+            if (!buffer || (buffer->type != BUFFER_TYPE_STANDARD))
                 buffer = gui_buffers;
         }
     
@@ -943,10 +956,10 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, char *mes
             return;
         }
         
-        if (buffer->dcc)
+        if (buffer->type == BUFFER_TYPE_DCC)
             buffer = gui_buffers;
         
-        if (buffer->dcc)
+        if (buffer->type == BUFFER_TYPE_DCC)
             return;
     }
     
@@ -1049,6 +1062,43 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, char *mes
         printf ("%s", buf2);
     
     free (buf2);
+}
+
+/*
+ * gui_printf_raw_data: display raw IRC data (only if raw IRC data buffer exists)
+ */
+
+void
+gui_printf_raw_data (void *server, int send, char *message)
+{
+    char *pos;
+    
+    if (gui_buffer_raw_data)
+    {
+        while (message && message[0])
+        {
+            pos = strstr (message, "\r\n");
+            if (pos)
+                pos[0] = '\0';
+            gui_printf_nolog (gui_buffer_raw_data,
+                              "%s[%s%s%s] %s%s%s %s\n",
+                              GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                              GUI_COLOR(COLOR_WIN_CHAT_SERVER),
+                              ((t_irc_server *)server)->name,
+                              GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                              GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                              (send) ? "<<--" : "-->>",
+                              GUI_COLOR(COLOR_WIN_CHAT),
+                              message);
+            if (pos)
+            {
+                pos[0] = '\r';
+                message = pos + 2;
+            }
+            else
+                message = NULL;
+        }
+    }
 }
 
 /* 
@@ -1174,7 +1224,8 @@ gui_optimize_input_buffer_size (t_gui_buffer *buffer)
 
 /*
  * gui_exec_action_dcc: execute an action on a DCC after a user input
- *                      return -1 if DCC buffer was closed due to action, 0 otherwise
+ *                      return -1 if DCC buffer was closed due to action,
+ *                      0 otherwise
  */
 
 void
@@ -1212,7 +1263,7 @@ gui_exec_action_dcc (t_gui_window *window, char *actions)
                         gui_redraw_buffer (window->buffer);
                     }
                     break;
-                    /* purge old DCC */
+                /* purge old DCC */
                 case 'p':
                 case 'P':
                     window->dcc_selected = NULL;
@@ -1226,13 +1277,13 @@ gui_exec_action_dcc (t_gui_window *window, char *actions)
                     }
                     gui_redraw_buffer (window->buffer);
                     break;
-                    /* close DCC window */
+                /* close DCC window */
                 case 'q':
                 case 'Q':
-                    if (buffer_before_dcc)
+                    if (gui_buffer_before_dcc)
                     {
                         ptr_buffer = window->buffer;
-                        gui_switch_to_buffer (window, buffer_before_dcc);
+                        gui_switch_to_buffer (window, gui_buffer_before_dcc);
                         gui_buffer_free (ptr_buffer, 0);
                     }
                     else
@@ -1240,7 +1291,7 @@ gui_exec_action_dcc (t_gui_window *window, char *actions)
                     gui_redraw_buffer (window->buffer);
                     return;
                     break;
-                    /* remove from DCC list */
+                /* remove from DCC list */
                 case 'r':
                 case 'R':
                     if (dcc_selected
@@ -1253,6 +1304,44 @@ gui_exec_action_dcc (t_gui_window *window, char *actions)
                         dcc_free (dcc_selected);
                         gui_redraw_buffer (window->buffer);
                     }
+                    break;
+            }
+        }
+        actions = utf8_next_char (actions);
+    }
+}
+
+/*
+ * gui_exec_action_raw_data: execute an action on raw IRC data
+ *                           return -1 if raw IRC data was closed due to action,
+ *                           0 otherwise
+ */
+
+void
+gui_exec_action_raw_data (t_gui_window *window, char *actions)
+{
+    t_gui_buffer *ptr_buffer;
+    
+    while (actions[0])
+    {
+        if (actions[0] >= 32)
+        {
+            switch (actions[0])
+            {
+                /* close raw IRC data */
+                case 'q':
+                case 'Q':
+                    if (gui_buffer_before_raw_data)
+                    {
+                        ptr_buffer = window->buffer;
+                        gui_switch_to_buffer (window,
+                                              gui_buffer_before_raw_data);
+                        gui_buffer_free (ptr_buffer, 0);
+                    }
+                    else
+                        gui_buffer_free (window->buffer, 1);
+                    gui_redraw_buffer (window->buffer);
+                    return;
                     break;
             }
         }
@@ -1385,7 +1474,8 @@ gui_split_server (t_gui_window *window)
                     && (ptr_server->buffer == ptr_buffer))
                 {
                     ptr_server->buffer = NULL;
-                    gui_buffer_new (window, ptr_server, NULL, 0, 0);
+                    gui_buffer_new (window, ptr_server, NULL,
+                                    BUFFER_TYPE_STANDARD, 0);
                 }
             }
         }
@@ -1557,7 +1647,7 @@ gui_buffer_switch_dcc (t_gui_window *window)
     /* check if dcc buffer exists */
     for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
     {
-        if (ptr_buffer->dcc)
+        if (ptr_buffer->type == BUFFER_TYPE_DCC)
             break;
     }
     if (ptr_buffer)
@@ -1566,7 +1656,31 @@ gui_buffer_switch_dcc (t_gui_window *window)
         gui_redraw_buffer (ptr_buffer);
     }
     else
-        gui_buffer_new (window, NULL, NULL, 1, 1);
+        gui_buffer_new (window, NULL, NULL, BUFFER_TYPE_DCC, 1);
+}
+
+/*
+ * gui_buffer_switch_raw_data: switch to rax IRC data buffer (create it if it does not exist)
+ */
+
+void
+gui_buffer_switch_raw_data (t_gui_window *window)
+{
+    t_gui_buffer *ptr_buffer;
+    
+    /* check if raw IRC data buffer exists */
+    for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->type == BUFFER_TYPE_RAW_DATA)
+            break;
+    }
+    if (ptr_buffer)
+    {
+        gui_switch_to_buffer (window, ptr_buffer);
+        gui_redraw_buffer (ptr_buffer);
+    }
+    else
+        gui_buffer_new (window, NULL, NULL, BUFFER_TYPE_RAW_DATA, 1);
 }
 
 /*
@@ -1755,7 +1869,7 @@ gui_buffer_print_log (t_gui_buffer *buffer)
     weechat_log_printf ("  server . . . . . . . : 0x%X\n", buffer->server);
     weechat_log_printf ("  all_servers. . . . . : %d\n",   buffer->all_servers);
     weechat_log_printf ("  channel. . . . . . . : 0x%X\n", buffer->channel);
-    weechat_log_printf ("  dcc. . . . . . . . . : %d\n",   buffer->dcc);
+    weechat_log_printf ("  type . . . . . . . . : %d\n",   buffer->type);
     weechat_log_printf ("  lines. . . . . . . . : 0x%X\n", buffer->lines);
     weechat_log_printf ("  last_line. . . . . . : 0x%X\n", buffer->last_line);
     weechat_log_printf ("  last_read_line . . . : 0x%X\n", buffer->last_read_line);

@@ -1232,7 +1232,8 @@ irc_cmd_send_msg (t_irc_server *server, t_irc_channel *channel,
                                               WEECHAT_ERROR, arguments);
                             return -1;
                         }
-                        gui_buffer_new (window, server, ptr_channel, 0, 1);
+                        gui_buffer_new (window, server, ptr_channel,
+                                        BUFFER_TYPE_STANDARD, 1);
                         gui_draw_buffer_title (ptr_channel->buffer, 1);
                     }
                         
@@ -1603,7 +1604,8 @@ irc_cmd_send_query (t_irc_server *server, t_irc_channel *channel,
                               WEECHAT_ERROR, arguments);
             return -1;
         }
-        gui_buffer_new (window, server, ptr_channel, 0, 1);
+        gui_buffer_new (window, server, ptr_channel,
+                        BUFFER_TYPE_STANDARD, 1);
         gui_draw_buffer_title (ptr_channel->buffer, 1);
     }
     else

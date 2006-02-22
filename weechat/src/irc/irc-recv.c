@@ -402,7 +402,8 @@ irc_cmd_recv_join (t_irc_server *server, char *host, char *nick, char *arguments
                               WEECHAT_ERROR, arguments);
             return -1;
         }
-        gui_buffer_new (gui_current_window, server, ptr_channel, 0, 1);
+        gui_buffer_new (gui_current_window, server, ptr_channel,
+                        BUFFER_TYPE_STANDARD, 1);
     }
     
     if (!command_ignored)
@@ -1234,7 +1235,8 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *nick, char *argumen
                                               WEECHAT_ERROR, nick);
                             return -1;
                         }
-                        gui_buffer_new (gui_current_window, server, ptr_channel, 0, 0);
+                        gui_buffer_new (gui_current_window, server, ptr_channel,
+                                        BUFFER_TYPE_STANDARD, 0);
                     }
                     if (!ptr_channel->topic)
                         ptr_channel->topic = strdup ((host2) ? host2 : "");
@@ -2050,7 +2052,8 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                                               WEECHAT_ERROR, nick);
                             return -1;
                         }
-                        gui_buffer_new (gui_current_window, server, ptr_channel, 0, 0);
+                        gui_buffer_new (gui_current_window, server, ptr_channel,
+                                        BUFFER_TYPE_STANDARD, 0);
                     }
                     if (!ptr_channel->topic)
                         ptr_channel->topic = strdup (host2);
@@ -2142,7 +2145,8 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                                                   WEECHAT_ERROR, nick);
                                 return -1;
                             }
-                            gui_buffer_new (gui_current_window, server, ptr_channel, 0, 0);
+                            gui_buffer_new (gui_current_window, server, ptr_channel,
+                                            BUFFER_TYPE_STANDARD, 0);
                         }
                         if (!ptr_channel->topic)
                             ptr_channel->topic = strdup (host2);

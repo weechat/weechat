@@ -169,6 +169,10 @@ enum t_weechat_color
 #define WINDOW_MIN_WIDTH        10
 #define WINDOW_MIN_HEIGHT       5
 
+#define BUFFER_TYPE_STANDARD    0
+#define BUFFER_TYPE_DCC         1
+#define BUFFER_TYPE_RAW_DATA    2
+
 #define NOTIFY_LEVEL_MIN        0
 #define NOTIFY_LEVEL_MAX        3
 #define NOTIFY_LEVEL_DEFAULT    NOTIFY_LEVEL_MAX
@@ -225,7 +229,8 @@ struct t_gui_buffer
     void *server;                   /* buffer's server                      */
     int all_servers;                /* =1 if all servers are displayed here */
     void *channel;                  /* buffer's channel                     */
-    int dcc;                        /* buffer is dcc status                 */
+    int type;                       /* type: standard (server/channel/pv),  */
+                                    /* dcc or raw data                      */
     
     /* chat content (lines, line is composed by many messages) */
     t_gui_line *lines;              /* lines of chat window                 */
@@ -384,7 +389,9 @@ extern t_gui_window *gui_current_window;
 extern t_gui_window_tree *gui_windows_tree;
 extern t_gui_buffer *gui_buffers;
 extern t_gui_buffer *last_gui_buffer;
-extern t_gui_buffer *buffer_before_dcc;
+extern t_gui_buffer *gui_buffer_before_dcc;
+extern t_gui_buffer *gui_buffer_raw_data;
+extern t_gui_buffer *gui_buffer_before_raw_data;
 extern t_gui_infobar *gui_infobar;
 extern t_gui_key *gui_keys;
 extern t_gui_key *last_gui_key;
@@ -402,10 +409,10 @@ extern int gui_window_tree_init (t_gui_window *);
 extern void gui_window_tree_node_to_leaf (t_gui_window_tree *, t_gui_window *);
 extern void gui_window_tree_free (t_gui_window_tree **);
 extern t_gui_window *gui_window_new (t_gui_window *, int, int, int, int, int, int);
+extern t_gui_buffer *gui_buffer_new (t_gui_window *, void *, void *, int, int);
 extern t_gui_buffer *gui_buffer_search (char *, char *);
 extern t_gui_window *gui_buffer_find_window (t_gui_buffer *);
 extern t_gui_buffer *gui_get_dcc_buffer (t_gui_window *);
-extern t_gui_buffer *gui_buffer_new (t_gui_window *, void *, void *, int, int);
 extern void gui_buffer_clear (t_gui_buffer *);
 extern void gui_buffer_clear_all ();
 extern void gui_window_free (t_gui_window *);
@@ -418,8 +425,10 @@ extern t_gui_line *gui_line_new (t_gui_buffer *);
 extern int gui_word_strlen (t_gui_window *, char *);
 extern int gui_word_real_pos (t_gui_window *, char *, int);
 extern void gui_printf_internal (t_gui_buffer *, int, int, char *, ...);
+extern void gui_printf_raw_data (void *, int, char *);
 extern void gui_optimize_input_buffer_size (t_gui_buffer *);
 extern void gui_exec_action_dcc (t_gui_window *, char *);
+extern void gui_exec_action_raw_data (t_gui_window *, char *);
 extern int gui_insert_string_input (t_gui_window *, char *, int);
 extern void gui_merge_servers (t_gui_window *);
 extern void gui_split_server (t_gui_window *);
@@ -430,6 +439,7 @@ extern void gui_window_switch_previous (t_gui_window *);
 extern void gui_window_switch_next (t_gui_window *);
 extern void gui_window_switch_by_buffer (t_gui_window *, int);
 extern void gui_buffer_switch_dcc (t_gui_window *);
+extern void gui_buffer_switch_raw_data (t_gui_window *);
 extern t_gui_buffer *gui_buffer_switch_by_number (t_gui_window *, int);
 extern void gui_buffer_move_to_number (t_gui_buffer *, int);
 extern void gui_window_print_log (t_gui_window *);
@@ -469,6 +479,7 @@ extern void gui_action_nick_page_up (t_gui_window *);
 extern void gui_action_nick_page_down (t_gui_window *);
 extern void gui_action_jump_smart (t_gui_window *);
 extern void gui_action_jump_dcc (t_gui_window *);
+extern void gui_action_jump_raw_data (t_gui_window *);
 extern void gui_action_jump_last_buffer (t_gui_window *);
 extern void gui_action_jump_server (t_gui_window *);
 extern void gui_action_jump_next_server (t_gui_window *);

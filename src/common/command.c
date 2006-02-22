@@ -1125,41 +1125,55 @@ weechat_cmd_alias (t_irc_server *server, t_irc_channel *channel,
 void
 weechat_cmd_buffer_display_info (t_gui_buffer *buffer)
 {
-    if (buffer->dcc)
-        gui_printf (NULL, "%sDCC\n",
-                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL));
-    else if (BUFFER_IS_SERVER(buffer))
+    switch (buffer->type)
     {
-        if (SERVER(buffer))
-            gui_printf (NULL, _("%sServer: %s%s\n"),
-                        GUI_COLOR(COLOR_WIN_CHAT),
-                        GUI_COLOR(COLOR_WIN_CHAT_SERVER),
-                        SERVER(buffer)->name);
-        else
-            gui_printf (NULL, _("%snot connected\n"),
+        case BUFFER_TYPE_STANDARD:
+            if (BUFFER_IS_SERVER(buffer))
+            {
+                if (SERVER(buffer))
+                    gui_printf (NULL, _("%sServer: %s%s\n"),
+                                GUI_COLOR(COLOR_WIN_CHAT),
+                                GUI_COLOR(COLOR_WIN_CHAT_SERVER),
+                                SERVER(buffer)->name);
+                else
+                    gui_printf (NULL, _("%snot connected\n"),
+                                GUI_COLOR(COLOR_WIN_CHAT));
+            }
+            else if (BUFFER_IS_CHANNEL (buffer))
+                gui_printf (NULL, _("%sChannel: %s%s %s(server: %s%s%s)\n"),
+                            GUI_COLOR(COLOR_WIN_CHAT),
+                            GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                            CHANNEL(buffer)->name,
+                            GUI_COLOR(COLOR_WIN_CHAT),
+                            GUI_COLOR(COLOR_WIN_CHAT_SERVER),
+                            SERVER(buffer)->name,
+                            GUI_COLOR(COLOR_WIN_CHAT));
+            else if (BUFFER_IS_PRIVATE (buffer))
+                gui_printf (NULL, _("%sPrivate with: %s%s %s(server: %s%s%s)\n"),
+                            GUI_COLOR(COLOR_WIN_CHAT),
+                            GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                            CHANNEL(buffer)->name,
+                            GUI_COLOR(COLOR_WIN_CHAT),
+                            GUI_COLOR(COLOR_WIN_CHAT_SERVER),
+                            SERVER(buffer)->name,
+                            GUI_COLOR(COLOR_WIN_CHAT));
+            else
+                gui_printf (NULL, _("%sunknown\n"),
+                            GUI_COLOR(COLOR_WIN_CHAT));
+            break;
+        case BUFFER_TYPE_DCC:
+            gui_printf (NULL, "%sDCC\n",
+                        GUI_COLOR(COLOR_WIN_CHAT_CHANNEL));
+            break;
+        case BUFFER_TYPE_RAW_DATA:
+            gui_printf (NULL, _("%sraw IRC data\n"),
+                        GUI_COLOR(COLOR_WIN_CHAT_CHANNEL));
+            break;
+        default:
+            gui_printf (NULL, _("%sunknown\n"),
                         GUI_COLOR(COLOR_WIN_CHAT));
+            break;
     }
-    else if (BUFFER_IS_CHANNEL (buffer))
-        gui_printf (NULL, _("%sChannel: %s%s %s(server: %s%s%s)\n"),
-                    GUI_COLOR(COLOR_WIN_CHAT),
-                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
-                    CHANNEL(buffer)->name,
-                    GUI_COLOR(COLOR_WIN_CHAT),
-                    GUI_COLOR(COLOR_WIN_CHAT_SERVER),
-                    SERVER(buffer)->name,
-                    GUI_COLOR(COLOR_WIN_CHAT));
-    else if (BUFFER_IS_PRIVATE (buffer))
-        gui_printf (NULL, _("%sPrivate with: %s%s %s(server: %s%s%s)\n"),
-                    GUI_COLOR(COLOR_WIN_CHAT),
-                    GUI_COLOR(COLOR_WIN_CHAT_NICK),
-                    CHANNEL(buffer)->name,
-                    GUI_COLOR(COLOR_WIN_CHAT),
-                    GUI_COLOR(COLOR_WIN_CHAT_SERVER),
-                    SERVER(buffer)->name,
-                    GUI_COLOR(COLOR_WIN_CHAT));
-    else
-        gui_printf (NULL, _("%sunknown\n"),
-                    GUI_COLOR(COLOR_WIN_CHAT));
 }
 
 /*
@@ -1311,9 +1325,10 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                 {
                     gui_printf (NULL, "%d.%s:",
                                 ptr_buffer->number,
-                                (ptr_buffer->dcc) ? "DCC" :
-                                    ((BUFFER_IS_SERVER(ptr_buffer)) ? SERVER(ptr_buffer)->name :
-                                    CHANNEL(ptr_buffer)->name));
+                                (ptr_buffer->type == BUFFER_TYPE_DCC) ? "DCC" :
+                                ((ptr_buffer->type == BUFFER_TYPE_RAW_DATA) ? _("Raw IRC data") :
+                                 ((BUFFER_IS_SERVER(ptr_buffer)) ? SERVER(ptr_buffer)->name :
+                                  CHANNEL(ptr_buffer)->name)));
                     if ((!BUFFER_IS_CHANNEL(ptr_buffer))
                         && (!BUFFER_IS_PRIVATE(ptr_buffer)))
                         gui_printf (NULL, "-");
@@ -1721,7 +1736,8 @@ weechat_cmd_connect (t_irc_server *server, t_irc_channel *channel,
         }
         if (!ptr_server->buffer)
         {
-            if (!gui_buffer_new (window, ptr_server, NULL, 0, 1))
+            if (!gui_buffer_new (window, ptr_server, NULL,
+                                 BUFFER_TYPE_STANDARD, 1))
                 return -1;
         }
         if (server_connect (ptr_server))
@@ -2761,7 +2777,8 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
         
         if (new_server->autoconnect)
         {
-            (void) gui_buffer_new (window, new_server, NULL, 0, 1);
+            (void) gui_buffer_new (window, new_server, NULL,
+                                   BUFFER_TYPE_STANDARD, 1);
             server_connect (new_server);
         }
         

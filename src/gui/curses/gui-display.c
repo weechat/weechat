@@ -826,7 +826,7 @@ gui_draw_buffer_title (t_gui_buffer *buffer, int erase)
             }
             else
             {
-                if (!buffer->dcc)
+                if (buffer->type == BUFFER_TYPE_STANDARD)
                 {
                     mvwprintw (ptr_win->win_title, 0, 0,
                                format,
@@ -1509,7 +1509,7 @@ gui_draw_buffer_chat (t_gui_buffer *buffer, int erase)
             
             gui_window_set_weechat_color (ptr_win->win_chat, COLOR_WIN_CHAT);
             
-            if (buffer->dcc)
+            if (buffer->type == BUFFER_TYPE_DCC)
             {
                 i = 0;
                 dcc_first = (ptr_win->dcc_first) ? (t_irc_dcc *) ptr_win->dcc_first : dcc_list;
@@ -2105,10 +2105,18 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
             gui_window_set_weechat_color (ptr_win->win_status, COLOR_WIN_STATUS_DELIMITERS);
             wprintw (ptr_win->win_status, ":");
             gui_window_set_weechat_color (ptr_win->win_status, COLOR_WIN_STATUS_CHANNEL);
-            if (ptr_win->buffer->dcc)
-                wprintw (ptr_win->win_status, "<DCC> ");
-            else
-                wprintw (ptr_win->win_status, _("[not connected] "));
+            switch (ptr_win->buffer->type)
+            {
+                case BUFFER_TYPE_STANDARD:
+                    wprintw (ptr_win->win_status, _("[not connected] "));
+                    break;
+                case BUFFER_TYPE_DCC:
+                    wprintw (ptr_win->win_status, "<DCC> ");
+                    break;
+                case BUFFER_TYPE_RAW_DATA:
+                    wprintw (ptr_win->win_status, _("<RAW_IRC> "));
+                    break;
+            }
         }
         
         /* display list of other active windows (if any) with numbers */
@@ -2150,46 +2158,57 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                         display_name = 0;
                         break;
                 }
-                if (ptr_hotlist->buffer->dcc)
+                switch (ptr_hotlist->buffer->type)
                 {
-                    wprintw (ptr_win->win_status, "%d",
-                             ptr_hotlist->buffer->number);
-                    gui_window_set_weechat_color (ptr_win->win_status,
-                                                  COLOR_WIN_STATUS_DELIMITERS);
-                    wprintw (ptr_win->win_status, ":");
-                    gui_window_set_weechat_color (ptr_win->win_status,
-                                                  COLOR_WIN_STATUS);
-                    wprintw (ptr_win->win_status, "DCC");
-                }
-                else
-                {
-                    wprintw (ptr_win->win_status, "%d",
-                             ptr_hotlist->buffer->number);
-                
-                    if (display_name && (cfg_look_hotlist_names_count != 0)
-                        && (names_count < cfg_look_hotlist_names_count))
-                    {
-                        names_count++;
+                    case BUFFER_TYPE_STANDARD:
+                        wprintw (ptr_win->win_status, "%d",
+                                 ptr_hotlist->buffer->number);
                         
+                        if (display_name && (cfg_look_hotlist_names_count != 0)
+                            && (names_count < cfg_look_hotlist_names_count))
+                        {
+                            names_count++;
+                            
+                            gui_window_set_weechat_color (ptr_win->win_status,
+                                                          COLOR_WIN_STATUS_DELIMITERS);
+                            wprintw (ptr_win->win_status, ":");
+                            
+                            gui_window_set_weechat_color (ptr_win->win_status,
+                                                          COLOR_WIN_STATUS);
+                            if (cfg_look_hotlist_names_length == 0)
+                                snprintf (format, sizeof (format) - 1, "%%s");
+                            else
+                                snprintf (format, sizeof (format) - 1, "%%.%ds", cfg_look_hotlist_names_length);
+                            if (BUFFER_IS_SERVER(ptr_hotlist->buffer))
+                                wprintw (ptr_win->win_status, format,
+                                         (ptr_hotlist->server) ?
+                                         ptr_hotlist->server->name :
+                                         SERVER(ptr_hotlist->buffer)->name);
+                            else if (BUFFER_IS_CHANNEL(ptr_hotlist->buffer)
+                                     || BUFFER_IS_PRIVATE(ptr_hotlist->buffer))
+                                wprintw (ptr_win->win_status, format, CHANNEL(ptr_hotlist->buffer)->name);
+                        }
+                        break;
+                    case BUFFER_TYPE_DCC:
+                        wprintw (ptr_win->win_status, "%d",
+                                 ptr_hotlist->buffer->number);
                         gui_window_set_weechat_color (ptr_win->win_status,
                                                       COLOR_WIN_STATUS_DELIMITERS);
                         wprintw (ptr_win->win_status, ":");
-                        
                         gui_window_set_weechat_color (ptr_win->win_status,
                                                       COLOR_WIN_STATUS);
-                        if (cfg_look_hotlist_names_length == 0)
-                            snprintf (format, sizeof (format) - 1, "%%s");
-                        else
-                            snprintf (format, sizeof (format) - 1, "%%.%ds", cfg_look_hotlist_names_length);
-                        if (BUFFER_IS_SERVER(ptr_hotlist->buffer))
-                            wprintw (ptr_win->win_status, format,
-                                     (ptr_hotlist->server) ?
-                                     ptr_hotlist->server->name :
-                                     SERVER(ptr_hotlist->buffer)->name);
-                        else if (BUFFER_IS_CHANNEL(ptr_hotlist->buffer)
-                                 || BUFFER_IS_PRIVATE(ptr_hotlist->buffer))
-                            wprintw (ptr_win->win_status, format, CHANNEL(ptr_hotlist->buffer)->name);
-                    }
+                        wprintw (ptr_win->win_status, "DCC");
+                        break;
+                    case BUFFER_TYPE_RAW_DATA:
+                        wprintw (ptr_win->win_status, "%d",
+                                 ptr_hotlist->buffer->number);
+                        gui_window_set_weechat_color (ptr_win->win_status,
+                                                      COLOR_WIN_STATUS_DELIMITERS);
+                        wprintw (ptr_win->win_status, ":");
+                        gui_window_set_weechat_color (ptr_win->win_status,
+                                                      COLOR_WIN_STATUS);
+                        wprintw (ptr_win->win_status, _("RAW_IRC"));
+                        break;
                 }
                 
                 if (ptr_hotlist->next_hotlist)
@@ -2388,124 +2407,133 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
             if (erase)
                 gui_curses_window_clear (ptr_win->win_input, COLOR_WIN_INPUT);
             
-            if (buffer->dcc)
+            switch (buffer->type)
             {
-                dcc_selected = (ptr_win->dcc_selected) ? (t_irc_dcc *) ptr_win->dcc_selected : dcc_list;
-                wmove (ptr_win->win_input, 0, 0);
-                if (dcc_selected)
-                {
-                    switch (dcc_selected->status)
+                case BUFFER_TYPE_STANDARD:
+                    if (buffer->has_input)
                     {
-                        case DCC_WAITING:
-                            if (DCC_IS_RECV(dcc_selected->type))
-                                wprintw (ptr_win->win_input, _("  [A] Accept"));
-                            wprintw (ptr_win->win_input, _("  [C] Cancel"));
-                            break;
-                        case DCC_CONNECTING:
-                        case DCC_ACTIVE:
-                            wprintw (ptr_win->win_input, _("  [C] Cancel"));
-                            break;
-                        case DCC_DONE:
-                        case DCC_FAILED:
-                        case DCC_ABORTED:
-                            wprintw (ptr_win->win_input, _("  [R] Remove"));
-                            break;
-                    }
-                }
-                wprintw (ptr_win->win_input, _("  [P] Purge old DCC"));
-                wprintw (ptr_win->win_input, _("  [Q] Close DCC view"));
-                wclrtoeol (ptr_win->win_input);
-                ptr_win->win_input_x = 0;
-                if (ptr_win == gui_current_window)
-                    move (ptr_win->win_y + ptr_win->win_height - 1,
-                          ptr_win->win_x);
-            }
-            else if (buffer->has_input)
-            {
-                if (buffer->input_buffer_length == 0)
-                    buffer->input_buffer[0] = '\0';
-                
-                if (SERVER(buffer))
-                    ptr_nickname = (SERVER(buffer)->nick) ?
-                        SERVER(buffer)->nick : SERVER(buffer)->nick1;
-                else
-                    ptr_nickname = cfg_look_no_nickname;
-                input_width = gui_get_input_width (ptr_win, ptr_nickname);
-                
-                if (buffer->input_buffer_pos - buffer->input_buffer_1st_display + 1 >
-                    input_width)
-                    buffer->input_buffer_1st_display = buffer->input_buffer_pos -
-                        input_width + 1;
-                else
-                {
-                    if (buffer->input_buffer_pos < buffer->input_buffer_1st_display)
-                        buffer->input_buffer_1st_display = buffer->input_buffer_pos;
-                    else
-                    {
-                        if ((buffer->input_buffer_1st_display > 0) &&
-                            (buffer->input_buffer_pos -
-                             buffer->input_buffer_1st_display + 1) < input_width)
+                        if (buffer->input_buffer_length == 0)
+                            buffer->input_buffer[0] = '\0';
+                        
+                        if (SERVER(buffer))
+                            ptr_nickname = (SERVER(buffer)->nick) ?
+                                SERVER(buffer)->nick : SERVER(buffer)->nick1;
+                        else
+                            ptr_nickname = cfg_look_no_nickname;
+                        input_width = gui_get_input_width (ptr_win, ptr_nickname);
+                        
+                        if (buffer->input_buffer_pos - buffer->input_buffer_1st_display + 1 >
+                            input_width)
+                            buffer->input_buffer_1st_display = buffer->input_buffer_pos -
+                                input_width + 1;
+                        else
                         {
-                            buffer->input_buffer_1st_display =
-                                buffer->input_buffer_pos - input_width + 1;
-                            if (buffer->input_buffer_1st_display < 0)
-                                buffer->input_buffer_1st_display = 0;
+                            if (buffer->input_buffer_pos < buffer->input_buffer_1st_display)
+                                buffer->input_buffer_1st_display = buffer->input_buffer_pos;
+                            else
+                            {
+                                if ((buffer->input_buffer_1st_display > 0) &&
+                                    (buffer->input_buffer_pos -
+                                     buffer->input_buffer_1st_display + 1) < input_width)
+                                {
+                                    buffer->input_buffer_1st_display =
+                                        buffer->input_buffer_pos - input_width + 1;
+                                    if (buffer->input_buffer_1st_display < 0)
+                                        buffer->input_buffer_1st_display = 0;
+                                }
+                            }
+                        }
+                        if (CHANNEL(buffer))
+                        {
+                            gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_DELIMITERS);
+                            mvwprintw (ptr_win->win_input, 0, 0, "[");
+                            gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_CHANNEL);
+                            wprintw (ptr_win->win_input, "%s ", CHANNEL(buffer)->name);
+                            gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_NICK);
+                            wprintw (ptr_win->win_input, "%s", ptr_nickname);
+                            gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_DELIMITERS);
+                            wprintw (ptr_win->win_input, "] ");
+                            gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT);
+                            snprintf (format, 32, "%%-%ds", input_width);
+                            if (ptr_win == gui_current_window)
+                                wprintw (ptr_win->win_input, format,
+                                         utf8_add_offset (buffer->input_buffer,
+                                                          buffer->input_buffer_1st_display));
+                            else
+                                wprintw (ptr_win->win_input, format, "");
+                            wclrtoeol (ptr_win->win_input);
+                            ptr_win->win_input_x = utf8_strlen (CHANNEL(buffer)->name) +
+                                utf8_strlen (SERVER(buffer)->nick) + 4 +
+                                (buffer->input_buffer_pos - buffer->input_buffer_1st_display);
+                            if (ptr_win == gui_current_window)
+                                move (ptr_win->win_y + ptr_win->win_height - 1,
+                                      ptr_win->win_x + ptr_win->win_input_x);
+                        }
+                        else
+                        {
+                            gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_DELIMITERS);
+                            mvwprintw (ptr_win->win_input, 0, 0, "[");
+                            gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_NICK);
+                            wprintw (ptr_win->win_input, "%s", ptr_nickname);
+                            gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_DELIMITERS);
+                            wprintw (ptr_win->win_input, "] ");
+                            gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT);
+                            snprintf (format, 32, "%%-%ds", input_width);
+                            if (ptr_win == gui_current_window)
+                                wprintw (ptr_win->win_input, format,
+                                         utf8_add_offset (buffer->input_buffer,
+                                                          buffer->input_buffer_1st_display));
+                            else
+                                wprintw (ptr_win->win_input, format, "");
+                            wclrtoeol (ptr_win->win_input);
+                            ptr_win->win_input_x = utf8_strlen (ptr_nickname) + 3 +
+                                (buffer->input_buffer_pos - buffer->input_buffer_1st_display);
+                            if (ptr_win == gui_current_window)
+                                move (ptr_win->win_y + ptr_win->win_height - 1,
+                                      ptr_win->win_x + ptr_win->win_input_x);
                         }
                     }
-                }
-                if (CHANNEL(buffer))
-                {
-                    gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_DELIMITERS);
-                    mvwprintw (ptr_win->win_input, 0, 0, "[");
-                    gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_CHANNEL);
-                    wprintw (ptr_win->win_input, "%s ", CHANNEL(buffer)->name);
-                    gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_NICK);
-                    wprintw (ptr_win->win_input, "%s", ptr_nickname);
-                    gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_DELIMITERS);
-                    wprintw (ptr_win->win_input, "] ");
-                    gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT);
-                    snprintf (format, 32, "%%-%ds", input_width);
-                    if (ptr_win == gui_current_window)
-                        wprintw (ptr_win->win_input, format,
-                                 utf8_add_offset (buffer->input_buffer,
-                                                  buffer->input_buffer_1st_display));
-                    else
-                        wprintw (ptr_win->win_input, format,
-                                 "");
+                    break;
+                case BUFFER_TYPE_DCC:
+                    dcc_selected = (ptr_win->dcc_selected) ? (t_irc_dcc *) ptr_win->dcc_selected : dcc_list;
+                    wmove (ptr_win->win_input, 0, 0);
+                    if (dcc_selected)
+                    {
+                        switch (dcc_selected->status)
+                        {
+                            case DCC_WAITING:
+                                if (DCC_IS_RECV(dcc_selected->type))
+                                    wprintw (ptr_win->win_input, _("  [A] Accept"));
+                                wprintw (ptr_win->win_input, _("  [C] Cancel"));
+                                break;
+                            case DCC_CONNECTING:
+                            case DCC_ACTIVE:
+                                wprintw (ptr_win->win_input, _("  [C] Cancel"));
+                                break;
+                            case DCC_DONE:
+                            case DCC_FAILED:
+                            case DCC_ABORTED:
+                                wprintw (ptr_win->win_input, _("  [R] Remove"));
+                                break;
+                        }
+                    }
+                    wprintw (ptr_win->win_input, _("  [P] Purge old DCC"));
+                    wprintw (ptr_win->win_input, _("  [Q] Close DCC view"));
                     wclrtoeol (ptr_win->win_input);
-                    ptr_win->win_input_x = utf8_strlen (CHANNEL(buffer)->name) +
-                        utf8_strlen (SERVER(buffer)->nick) + 4 +
-                        (buffer->input_buffer_pos - buffer->input_buffer_1st_display);
+                    ptr_win->win_input_x = 0;
                     if (ptr_win == gui_current_window)
                         move (ptr_win->win_y + ptr_win->win_height - 1,
-                              ptr_win->win_x + ptr_win->win_input_x);
-                }
-                else
-                {
-                    gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_DELIMITERS);
-                    mvwprintw (ptr_win->win_input, 0, 0, "[");
-                    gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_NICK);
-                    wprintw (ptr_win->win_input, "%s", ptr_nickname);
-                    gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_DELIMITERS);
-                    wprintw (ptr_win->win_input, "] ");
-                    gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT);
-                    snprintf (format, 32, "%%-%ds", input_width);
-                    if (ptr_win == gui_current_window)
-                        wprintw (ptr_win->win_input, format,
-                                 utf8_add_offset (buffer->input_buffer,
-                                                  buffer->input_buffer_1st_display));
-                    else
-                        wprintw (ptr_win->win_input, format,
-                                 "");
+                              ptr_win->win_x);
+                    break;
+                case BUFFER_TYPE_RAW_DATA:
+                    mvwprintw (ptr_win->win_input, 0, 0, _("  [Q] Close raw data view"));
                     wclrtoeol (ptr_win->win_input);
-                    ptr_win->win_input_x = utf8_strlen (ptr_nickname) + 3 +
-                        (buffer->input_buffer_pos - buffer->input_buffer_1st_display);
+                    ptr_win->win_input_x = 0;
                     if (ptr_win == gui_current_window)
                         move (ptr_win->win_y + ptr_win->win_height - 1,
-                              ptr_win->win_x + ptr_win->win_input_x);
-                }
+                              ptr_win->win_x);
+                    break;
             }
-            
             doupdate ();
             wrefresh (ptr_win->win_input);
             refresh ();
@@ -3576,7 +3604,7 @@ gui_init ()
     if (gui_window_new (NULL, 0, 0, COLS, LINES, 100, 100))
     {
         gui_current_window = gui_windows;
-        gui_buffer_new (gui_windows, NULL, NULL, 0, 1);
+        gui_buffer_new (gui_windows, NULL, NULL, BUFFER_TYPE_STANDARD, 1);
     
         signal (SIGWINCH, gui_refresh_screen_sigwinch);
 	

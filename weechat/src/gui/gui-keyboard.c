@@ -103,6 +103,8 @@ t_gui_key_function gui_key_functions[] =
     N_("jump to buffer with activity") },
   { "jump_dcc",                  gui_action_jump_dcc,
     N_("jump to DCC buffer") },
+  { "jump_raw_data",             gui_action_jump_raw_data,
+    N_("jump to raw IRC data buffer") },
   { "jump_last_buffer",          gui_action_jump_last_buffer,
     N_("jump to last buffer") },
   { "jump_server",               gui_action_jump_server,

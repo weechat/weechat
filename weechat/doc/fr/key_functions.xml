@@ -130,6 +130,10 @@
   <entry>sauter au tampon DCC</entry>
 </row>
 <row>
+  <entry><literal>jump_raw_data</literal></entry>
+  <entry>sauter au tampon IRC brut</entry>
+</row>
+<row>
   <entry><literal>jump_last_buffer</literal></entry>
   <entry>sauter au dernier tampon</entry>
 </row>

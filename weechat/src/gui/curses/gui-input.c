@@ -106,6 +106,7 @@ gui_input_default_key_bindings ()
     gui_key_bind ( /* m-j,m-l     */ "meta-jmeta-l",       "jump_last_buffer");
     gui_key_bind ( /* m-j,m-s     */ "meta-jmeta-s",       "jump_server");
     gui_key_bind ( /* m-j,m-x     */ "meta-jmeta-x",       "jump_next_server");
+    gui_key_bind ( /* m-j,m-r     */ "meta-jmeta-r",       "jump_raw_data");
     gui_key_bind ( /* m-k         */ "meta-k",             "grab_key");
     gui_key_bind ( /* m-n         */ "meta-n",             "scroll_next_highlight");
     gui_key_bind ( /* m-p         */ "meta-p",             "scroll_previous_highlight");
@@ -275,14 +276,20 @@ gui_input_read ()
             if (strcmp (key_str, "^^") == 0)
                 key_str[1] = '\0';
             
-            if (gui_current_window->buffer->dcc)
-                gui_exec_action_dcc (gui_current_window, key_str);
-            else
+            switch (gui_current_window->buffer->type)
             {
-                gui_insert_string_input (gui_current_window, key_str, -1);
-                gui_current_window->buffer->input_buffer_pos += utf8_strlen (key_str);
-                gui_draw_buffer_input (gui_current_window->buffer, 0);
-                gui_current_window->buffer->completion.position = -1;
+                case BUFFER_TYPE_STANDARD:
+                    gui_insert_string_input (gui_current_window, key_str, -1);
+                    gui_current_window->buffer->input_buffer_pos += utf8_strlen (key_str);
+                    gui_draw_buffer_input (gui_current_window->buffer, 0);
+                    gui_current_window->buffer->completion.position = -1;
+                    break;
+                case BUFFER_TYPE_DCC:
+                    gui_exec_action_dcc (gui_current_window, key_str);
+                    break;
+                case BUFFER_TYPE_RAW_DATA:
+                    gui_exec_action_raw_data (gui_current_window, key_str);
+                    break;
             }
         }
         
@@ -336,7 +343,7 @@ gui_main_loop ()
                 for (ptr_buffer = gui_buffers; ptr_buffer;
                      ptr_buffer = ptr_buffer->next_buffer)
                 {
-                    if (!ptr_buffer->dcc)
+                    if (ptr_buffer->type == BUFFER_TYPE_STANDARD)
                         gui_printf_nolog_notime (ptr_buffer,
                                                  _("Day changed to %s\n"),
                                                  text_time);

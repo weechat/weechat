@@ -130,6 +130,10 @@
   <entry>jump to DCC buffer</entry>
 </row>
 <row>
+  <entry><literal>jump_raw_data</literal></entry>
+  <entry>jump to raw IRC data buffer</entry>
+</row>
+<row>
   <entry><literal>jump_last_buffer</literal></entry>
   <entry>jump to last buffer</entry>
 </row>

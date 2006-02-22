@@ -654,7 +654,7 @@ gui_action_next_word (t_gui_window *window)
 void
 gui_action_up (t_gui_window *window)
 {
-    if (window->buffer->dcc)
+    if (window->buffer->type == BUFFER_TYPE_DCC)
     {
         if (dcc_list)
         {
@@ -763,7 +763,7 @@ gui_action_up_global (t_gui_window *window)
 void
 gui_action_down (t_gui_window *window)
 {
-    if (window->buffer->dcc)
+    if (window->buffer->type == BUFFER_TYPE_DCC)
     {
         if (dcc_list)
         {
@@ -970,19 +970,42 @@ gui_action_jump_smart (t_gui_window *window)
 void
 gui_action_jump_dcc (t_gui_window *window)
 {
-    if (window->buffer->dcc)
+    if (window->buffer->type == BUFFER_TYPE_DCC)
     {
-        if (buffer_before_dcc)
+        if (gui_buffer_before_dcc)
         {
             gui_switch_to_buffer (window,
-                                  buffer_before_dcc);
+                                  gui_buffer_before_dcc);
             gui_redraw_buffer (window->buffer);
         }
     }
     else
     {
-        buffer_before_dcc = window->buffer;
+        gui_buffer_before_dcc = window->buffer;
         gui_buffer_switch_dcc (window);
+    }
+}
+
+/*
+ * gui_action_jump_raw_data: jump to raw IRC data buffer
+ */
+
+void
+gui_action_jump_raw_data (t_gui_window *window)
+{
+    if (window->buffer->type == BUFFER_TYPE_RAW_DATA)
+    {
+        if (gui_buffer_before_raw_data)
+        {
+            gui_switch_to_buffer (window,
+                                  gui_buffer_before_raw_data);
+            gui_redraw_buffer (window->buffer);
+        }
+    }
+    else
+    {
+        gui_buffer_before_raw_data = window->buffer;
+        gui_buffer_switch_raw_data (window);
     }
 }
 
@@ -1078,7 +1101,7 @@ gui_action_scroll_previous_highlight (t_gui_window *window)
 {
     t_gui_line *ptr_line;
     
-    if (!window->buffer->dcc)
+    if (window->buffer->type == BUFFER_TYPE_STANDARD)
     {
         if (window->buffer->lines)
         {
@@ -1111,7 +1134,7 @@ gui_action_scroll_next_highlight (t_gui_window *window)
 {
     t_gui_line *ptr_line;
     
-    if (!window->buffer->dcc)
+    if (window->buffer->type == BUFFER_TYPE_STANDARD)
     {
         if (window->buffer->lines)
         {
@@ -1144,7 +1167,7 @@ gui_action_scroll_unread (t_gui_window *window)
 {
     if (cfg_look_read_marker &&
         cfg_look_read_marker[0] &&
-        !window->buffer->dcc &&
+        (window->buffer->type == BUFFER_TYPE_STANDARD) &&
         window->buffer->last_read_line &&
         window->buffer->last_read_line != window->buffer->last_line)
     {

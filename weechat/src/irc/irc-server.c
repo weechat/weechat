@@ -552,11 +552,14 @@ server_sendf (t_irc_server *server, char *fmt, ...)
     buffer[sizeof (buffer) - 1] = '\0';
     if ((size_buf < 0) || (size_buf > (int) (sizeof (buffer) - 1)))
         size_buf = strlen (buffer);
-#ifdef DEBUG
+    
     buffer[size_buf - 2] = '\0';
+    gui_printf_raw_data (server, 1, buffer);
+#ifdef DEBUG
     gui_printf (server->buffer, "[DEBUG] Sending to server >>> %s\n", buffer);
-    buffer[size_buf - 2] = '\r';
 #endif
+    buffer[size_buf - 2] = '\r';
+    
     if (server_send (server, buffer, strlen (buffer)) <= 0)
     {
         irc_display_prefix (server, server->buffer, PREFIX_ERROR);
@@ -726,6 +729,7 @@ server_msgq_flush ()
             
             if (ptr_data && ptr_data[0])
             {
+                gui_printf_raw_data (recv_msgq->server, 0, ptr_data);
 #ifdef DEBUG
                 gui_printf (NULL, "[DEBUG] data received from server: %s\n", ptr_data);
 #endif
@@ -1633,7 +1637,8 @@ server_auto_connect (int auto_connect, int command_line)
         if ( ((command_line) && (ptr_server->command_line))
             || ((!command_line) && (auto_connect) && (ptr_server->autoconnect)) )
         {
-            (void) gui_buffer_new (gui_current_window, ptr_server, NULL, 0, 1);
+            (void) gui_buffer_new (gui_current_window, ptr_server, NULL,
+                                   BUFFER_TYPE_STANDARD, 1);
             gui_redraw_buffer (gui_current_window->buffer);
             if (!server_connect (ptr_server))
                 server_reconnect_schedule (ptr_server);

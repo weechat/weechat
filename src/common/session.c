@@ -386,7 +386,7 @@ session_save_buffers (FILE *file)
         rc = rc && (session_write_id  (file, SESSION_OBJ_BUFFER));
         rc = rc && (session_write_str (file, SESSION_BUFF_SERVER, SERVER(ptr_buffer) ? SERVER(ptr_buffer)->name : NULL));
         rc = rc && (session_write_str (file, SESSION_BUFF_CHANNEL, CHANNEL(ptr_buffer) ? CHANNEL(ptr_buffer)->name : NULL));
-        rc = rc && (session_write_int (file, SESSION_BUFF_DCC, ptr_buffer->dcc));
+        rc = rc && (session_write_int (file, SESSION_BUFF_TYPE, ptr_buffer->type));
         rc = rc && (session_write_int (file, SESSION_BUFF_ALL_SERVERS, ptr_buffer->all_servers));
         rc = rc && (session_write_id  (file, SESSION_BUFF_END));
         
@@ -1335,7 +1335,7 @@ session_load_buffer (FILE *file)
 {
     int object_id, rc;
     char *server_name, *channel_name;
-    int dcc;
+    int buffer_type;
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
     
@@ -1355,18 +1355,18 @@ session_load_buffer (FILE *file)
         return 0;
     }
     
-    /* read dcc */
-    if (!session_read_object (file, SESSION_BUFF_DCC, SESSION_TYPE_INT, &dcc, 0))
+    /* read buffer type */
+    if (!session_read_object (file, SESSION_BUFF_TYPE, SESSION_TYPE_INT, &buffer_type, 0))
     {
-        session_crash (file, _("dcc flag not found for buffer"));
+        session_crash (file, _("buffer type not found"));
         return 0;
     }
     
     /* allocate buffer */
-    weechat_log_printf (_("session: loading buffer (server: %s, channel: %s, dcc: %d)\n"),
+    weechat_log_printf (_("session: loading buffer (server: %s, channel: %s, type: %d)\n"),
                         (server_name) ? server_name : "-",
                         (channel_name) ? channel_name : "-",
-                        dcc);
+                        buffer_type);
     ptr_server = NULL;
     ptr_channel = NULL;
     if (server_name)
@@ -1389,7 +1389,8 @@ session_load_buffer (FILE *file)
         }
     }
     
-    session_current_buffer = gui_buffer_new (gui_windows, ptr_server, ptr_channel, dcc, 1);
+    session_current_buffer = gui_buffer_new (gui_windows, ptr_server,
+                                             ptr_channel, buffer_type, 1);
     if (!session_current_buffer)
     {
         session_crash (file, _("can't create new buffer"));

@@ -384,7 +384,8 @@ channel_create_dcc (t_irc_dcc *ptr_dcc)
                                    ptr_dcc->nick);
     if (!ptr_channel)
         return 0;
-    gui_buffer_new (gui_current_window, ptr_dcc->server, ptr_channel, 0, 0);
+    gui_buffer_new (gui_current_window, ptr_dcc->server, ptr_channel,
+                    BUFFER_TYPE_STANDARD, 0);
     
     if (ptr_channel->dcc_chat &&
         (!DCC_ENDED(((t_irc_dcc *)(ptr_channel->dcc_chat))->status)))
