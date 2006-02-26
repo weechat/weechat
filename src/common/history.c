@@ -99,6 +99,8 @@ history_buffer_add (void *buffer, char *string)
 		&& (((t_gui_buffer *)(buffer))->num_history > cfg_history_max_commands))
 	    {
 		ptr_history = ((t_gui_buffer *)buffer)->last_history->prev_history;
+                if (((t_gui_buffer *)buffer)->ptr_history == ((t_gui_buffer *)buffer)->last_history)
+                    ((t_gui_buffer *)buffer)->ptr_history = ptr_history;
 		((t_gui_buffer *)buffer)->last_history->prev_history->next_history = NULL;
 		if (((t_gui_buffer *)buffer)->last_history->text)
 		    free (((t_gui_buffer *)buffer)->last_history->text);
@@ -144,6 +146,8 @@ history_global_add (char *string)
 		&& (num_history_global > cfg_history_max_commands))
 	    {
 		ptr_history = history_global_last->prev_history;
+                if (history_global_ptr == history_global_last)
+                    history_global_ptr = ptr_history;
 		history_global_last->prev_history->next_history = NULL;
 		if (history_global_last->text)
 		    free (history_global_last->text);

@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-02-22
+ChangeLog - 2006-02-26
 
 
 Version 0.1.8 (under dev!):
+   * fixed crash when using global history (when older entry is removed)
    * added IRC raw data buffer (new key: alt-J + alt-R)
    * fixed display bug with /kill command
    * added new plugins functions: add_timer_handler, remove_timer_handler,
