@@ -5,6 +5,7 @@ ChangeLog - 2006-02-28
 
 
 Version 0.1.8 (under dev!):
+   * script plugins now load scripts in WeeChat system share directory
    * /msg command does not open any buffer any more
    * fixed crash when using global history (when older entry is removed)
    * added IRC raw data buffer (new key: alt-J + alt-R)

@@ -85,6 +85,62 @@ weechat_script_search (t_weechat_plugin *plugin,
 }
 
 /*
+ * weechat_script_search_full_name: search the full path name of a script
+ */
+
+char *
+weechat_script_search_full_name (t_weechat_plugin *plugin,
+                                 char *language, char *filename)
+{
+    char *final_name, *dir_home, *dir_system;
+    int length;
+    struct stat st;
+    
+    if ((strstr(filename, "/")) || (strstr(filename, "\\")))
+        return strdup(filename);
+    
+    /* try WeeChat user's dir */
+    dir_home = plugin->get_info (plugin, "weechat_dir", NULL);
+    if (dir_home)
+    {
+        length = strlen (dir_home) + strlen (language) + strlen (filename) + 16;
+        final_name = (char *) malloc (length);
+        if (final_name)
+        {
+            snprintf (final_name, length, "%s/%s/%s", dir_home, language, filename);
+            if ((stat (final_name, &st) == 0) && (st.st_size > 0))
+            {
+                free (dir_home);
+                return final_name;
+            }
+            free (final_name);
+        }
+        free (dir_home);
+    }
+    
+    /* try WeeChat system dir */
+    dir_system = plugin->get_info (plugin, "weechat_sharedir", NULL);
+    if (dir_system)
+    {
+        length = strlen (dir_system) + strlen (dir_system) + strlen (filename) + 16;
+        final_name = (char *) malloc (length);
+        if (final_name)
+        {
+            snprintf (final_name,length, "%s/%s/%s", dir_system, language, filename);
+            if ((stat (final_name, &st) == 0) && (st.st_size > 0))
+            {
+                free (dir_system);
+                return final_name;
+            }
+            free (final_name);
+        }
+        free (dir_system);
+    }
+    
+    return NULL;
+}
+
+/*
  * weechat_script_add: add a script to list of scripts
  */
 

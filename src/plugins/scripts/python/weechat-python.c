@@ -1365,8 +1365,8 @@ weechat_python_cmd (t_weechat_plugin *plugin,
                     char *server, char *command, char *arguments,
                     char *handler_args, void *handler_pointer)
 {
-    int argc, path_length, handler_found;
-    char **argv, *path_script, *dir_home;
+    int argc, handler_found;
+    char **argv, *path_script;
     t_plugin_script *ptr_script;
     t_plugin_handler *ptr_handler;
     
@@ -1477,25 +1477,7 @@ weechat_python_cmd (t_weechat_plugin *plugin,
             if (plugin->ascii_strcasecmp (plugin, argv[0], "load") == 0)
             {
                 /* load Python script */
-                if ((strstr (argv[1], "/")) || (strstr (argv[1], "\\")))
-                    path_script = NULL;
-                else
-                {
-                    dir_home = plugin->get_info (plugin, "weechat_dir", NULL);
-                    if (dir_home)
-                    {
-                        path_length = strlen (dir_home) + strlen (argv[1]) + 16;
-                        path_script = (char *) malloc (path_length * sizeof (char));
-                        if (path_script)
-                            snprintf (path_script, path_length, "%s/python/%s",
-                                      dir_home, argv[1]);
-                        else
-                            path_script = NULL;
-                        free (dir_home);
-                    }
-                    else
-                        path_script = NULL;
-                }
+                path_script = weechat_script_search_full_name (plugin, "python", argv[1]);
                 weechat_python_load (plugin, (path_script) ? path_script : argv[1]);
                 if (path_script)
                     free (path_script);

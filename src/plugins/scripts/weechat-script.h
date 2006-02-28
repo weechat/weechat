@@ -43,6 +43,8 @@ extern void weechat_script_auto_load (t_weechat_plugin *, char *,
                                       int (*)(t_weechat_plugin *, char *));
 extern t_plugin_script *weechat_script_search (t_weechat_plugin *,
                                                t_plugin_script **, char *);
+extern char *weechat_script_search_full_name (t_weechat_plugin *,
+                                              char *, char *);
 extern t_plugin_script *weechat_script_add (t_weechat_plugin *,
                                             t_plugin_script **, char *, char *,
                                             char *, char *, char *);
