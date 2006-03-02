@@ -423,23 +423,22 @@ fi
 if test "x$enable_plugins" = "xyes" ; then
     AC_CHECK_FUNCS(dlopen, LIBDL_FOUND=yes, LIBDL_FOUND=no)
     if test "$LIBDL_FOUND" != "yes"; then
-        AC_CHECK_LIB(dl, dlopen, LIBDL_FOUND=yes, LIBDL_FOUND=no)
-        if test "$LIBDL_FOUND" = "yes"; then
-            PLUGINS_LIBS="-ldl"
-            AC_DEFINE(PLUGINS)
-            AC_SUBST(PLUGINS_LIBS)
-        else
-            AC_MSG_WARN([
+        AC_CHECK_LIB(dl, dlopen, [LIBDL_FOUND=yes; PLUGINS_LIBS=-ldl], LIBDL_FOUND=no)
+    fi
+    if test "$LIBDL_FOUND" = "yes"; then
+        AC_DEFINE(PLUGINS)
+        AC_SUBST(PLUGINS_LIBS)
+    else
+        AC_MSG_WARN([
 *** "dl" library (dynamic library loader) couldn't be found in your system.
 *** Try to install it with your software package manager or disable plugins.
 *** WeeChat will be built without any plugin.])
-            enable_plugins="no"
-            enable_perl="no"
-            enable_python="no"
-            enable_ruby="no"
-            enable_lua="no"
-            not_found="$not_found plugins"
-        fi
+        enable_plugins="no"
+        enable_perl="no"
+        enable_python="no"
+        enable_ruby="no"
+        enable_lua="no"
+        not_found="$not_found plugins"
     fi
 fi
 
