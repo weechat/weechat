@@ -1788,7 +1788,44 @@ plugin->log (plugin, "freenode", "#weechat", "test");
                   Pour connaître la liste des messages IRC disponibles, merci
                   de consulter les <acronym>RFC</acronym>s
                   <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink> et
-                  <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>
+                  <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
+                  De plus, vous pouvez utiliser un nom spécial, préfixé par
+                  "weechat_" pour capturer des évènements spéciaux, comme décrit
+                  dans le tableau ci-dessous :
+                  <informaltable colsep="0" frame="none">
+                    <tgroup cols="2">
+                      <thead>
+                        <row>
+                          <entry>Nom</entry>
+                          <entry>Description</entry>
+                        </row>
+                      </thead>
+                      <tbody>
+                        <row>
+                          <entry><literal>weechat_pv</literal></entry>
+                          <entry>message privé reçu</entry>
+                        </row>
+                        <row>
+                          <entry><literal>weechat_highlight</literal></entry>
+                          <entry>
+                            message avec highlight (sur un canal ou en privé)
+                          </entry>
+                        </row>
+                        <row>
+                          <entry><literal>weechat_ctcp</literal></entry>
+                          <entry>
+                            message CTCP reçu (VERSION, PING, etc...)
+                          </entry>
+                        </row>
+                        <row>
+                          <entry><literal>weechat_dcc</literal></entry>
+                          <entry>
+                            message DCC reçu (discussion ou fichier)
+                          </entry>
+                        </row>
+                      </tbody>
+                    </tgroup>
+                  </informaltable>
                 </para>
               </listitem>
               <listitem>
@@ -4015,7 +4052,10 @@ weechat.log("message", "#weechat", "freenode")
                   Pour connaître la liste des messages IRC disponibles, merci
                   de consulter les <acronym>RFC</acronym>s
                   <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink> et
-                  <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>
+                  <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
+                  De plus, vous pouvez utiliser un nom spécial, préfixé par
+                  "weechat_" pour capturer des évènements spéciaux
+                  (voir <xref linkend="secAPI_msg_handler_add" />).
                 </para>
               </listitem>
               <listitem>

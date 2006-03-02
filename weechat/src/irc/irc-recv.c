@@ -43,6 +43,7 @@
 #include "../plugins/plugins.h"
 
 
+char *irc_last_command_received = NULL;
 int command_ignored;
 
 
@@ -246,9 +247,12 @@ irc_recv_command (t_irc_server *server, char *entire_line,
             pos[0] = '!';
         args_after_color = (char *)gui_color_decode ((unsigned char *)arguments,
                                                      cfg_irc_colors_receive);
+        irc_last_command_received = strdup (entire_line);
         return_code = (int) (irc_commands[i].recv_function) (server, host, nick,
                                                              (args_after_color) ?
                                                              args_after_color : arguments);
+        if (irc_last_command_received)
+            free (irc_last_command_received);
         if (args_after_color)
             free (args_after_color);
         if (nick)
@@ -1137,6 +1141,7 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *nick, char *argumen
     struct timezone tz;
     long sec1, usec1, sec2, usec2, difftime;
     t_irc_channel *ptr_channel;
+    int highlight;
     
     host2 = NULL;
     if (host)
@@ -1258,12 +1263,16 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *nick, char *argumen
                                                             COLOR_WIN_INFOBAR_HIGHLIGHT,
                                                             _("Private"), " %s> %s",
                                                             nick, pos);
+                        highlight = 1;
                     }
                     else
+                    {
                         gui_printf_type (ptr_channel->buffer, MSG_TYPE_NICK,
                                          "%s%s",
                                          GUI_COLOR(COLOR_WIN_NICK_PRIVATE),
                                          nick);
+                        highlight = 0;
+                    }
                     gui_printf_type (ptr_channel->buffer, MSG_TYPE_NICK,
                                      "%s> ",
                                      GUI_COLOR(COLOR_WIN_CHAT_DARK));
@@ -1271,6 +1280,12 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *nick, char *argumen
                                      "%s%s\n",
                                      GUI_COLOR(COLOR_WIN_CHAT),
                                      pos);
+#ifdef PLUGINS
+                    if (highlight)
+                        (void) plugin_msg_handler_exec (server->name,
+                                                        "weechat_highlight",
+                                                        irc_last_command_received);
+#endif
                 }
                 else
                 {
@@ -1462,6 +1477,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
     t_irc_channel *ptr_channel;
     t_irc_nick *ptr_nick;
     struct utsname *buf;
+    int highlight;
     
     /* no host => we can't identify sender of message! */
     if (host == NULL)
@@ -1521,14 +1537,23 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                                                                 _("Channel"), " %s: * %s %s",
                                                                 ptr_channel->name,
                                                                 nick, pos);
+                            gui_printf (ptr_channel->buffer, " %s%s\n",
+                                        GUI_COLOR(COLOR_WIN_CHAT), pos);
+#ifdef PLUGINS
+                            (void) plugin_msg_handler_exec (server->name,
+                                                            "weechat_highlight",
+                                                            irc_last_command_received);
+#endif
                         }
                         else
+                        {
                             gui_printf_type (ptr_channel->buffer, MSG_TYPE_MSG,
                                              "%s%s",
                                              GUI_COLOR(COLOR_WIN_CHAT_NICK),
                                              nick);
-                        gui_printf (ptr_channel->buffer, " %s%s\n",
-                                    GUI_COLOR(COLOR_WIN_CHAT), pos);
+                            gui_printf (ptr_channel->buffer, " %s%s\n",
+                                        GUI_COLOR(COLOR_WIN_CHAT), pos);
+                        }
                     }
                     return 0;
                 }
@@ -1638,13 +1663,22 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                                                             _("Channel"), " %s: %s> %s",
                                                             ptr_channel->name,
                                                             nick, pos);
+                        gui_printf_type (ptr_channel->buffer, MSG_TYPE_MSG,
+                                         "%s\n", pos);
+#ifdef PLUGINS
+                        (void) plugin_msg_handler_exec (server->name,
+                                                        "weechat_highlight",
+                                                        irc_last_command_received);
+#endif
                     }
                     else
+                    {
                         irc_display_nick (ptr_channel->buffer, ptr_nick,
                                           (ptr_nick) ? NULL : nick,
                                           MSG_TYPE_NICK, 1, 1, 0);
-                    gui_printf_type (ptr_channel->buffer, MSG_TYPE_MSG,
-                                     "%s\n", pos);
+                        gui_printf_type (ptr_channel->buffer, MSG_TYPE_MSG,
+                                         "%s\n", pos);
+                    }
                 }
             }
             else
@@ -1717,6 +1751,11 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                                     pos2);
                     else
                         gui_printf (server->buffer, "\n");
+#ifdef PLUGINS
+                    (void) plugin_msg_handler_exec (server->name,
+                                                    "weechat_ctcp",
+                                                    irc_last_command_received);
+#endif
                 }
                 return 0;
             }
@@ -1750,6 +1789,11 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                                 GUI_COLOR(COLOR_WIN_CHAT),
                                 GUI_COLOR(COLOR_WIN_CHAT_NICK),
                                 nick);
+#ifdef PLUGINS
+                    (void) plugin_msg_handler_exec (server->name,
+                                                    "weechat_ctcp",
+                                                    irc_last_command_received);
+#endif
                 }
                 return 0;
             }
@@ -1829,6 +1873,11 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                     dcc_add (server, DCC_FILE_RECV, strtoul (pos_addr, NULL, 10),
                              atoi (pos_port), nick, -1, pos_file, NULL,
                              strtoul (pos_size, NULL, 10));
+#ifdef PLUGINS
+                    (void) plugin_msg_handler_exec (server->name,
+                                                    "weechat_dcc",
+                                                    irc_last_command_received);
+#endif
                 }
                 return 0;
             }
@@ -1891,6 +1940,11 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                     
                     dcc_accept_resume (server, pos_file, atoi (pos_port),
                                        strtoul (pos_start_resume, NULL, 10));
+#ifdef PLUGINS
+                    (void) plugin_msg_handler_exec (server->name,
+                                                    "weechat_dcc",
+                                                    irc_last_command_received);
+#endif
                 }
                 return 0;
             }
@@ -1953,6 +2007,11 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                     
                     dcc_start_resume (server, pos_file, atoi (pos_port),
                                       strtoul (pos_start_resume, NULL, 10));
+#ifdef PLUGINS
+                    (void) plugin_msg_handler_exec (server->name,
+                                                    "weechat_dcc",
+                                                    irc_last_command_received);
+#endif
                 }
                 return 0;
             }
@@ -2027,6 +2086,11 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                     
                     dcc_add (server, DCC_CHAT_RECV, strtoul (pos_addr, NULL, 10),
                              atoi (pos_port), nick, -1, NULL, NULL, 0);
+#ifdef PLUGINS
+                    (void) plugin_msg_handler_exec (server->name,
+                                                    "weechat_dcc",
+                                                    irc_last_command_received);
+#endif
                 }
                 return 0;
             }
@@ -2079,14 +2143,28 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                                                             _("Channel"), " %s: * %s %s",
                                                             ptr_channel->name,
                                                             nick, pos);
+                        gui_printf (ptr_channel->buffer, " %s%s\n",
+                                    GUI_COLOR(COLOR_WIN_CHAT), pos);
+#ifdef PLUGINS
+                        (void) plugin_msg_handler_exec (server->name,
+                                                        "weechat_highlight",
+                                                        irc_last_command_received);
+#endif
                     }
                     else
+                    {
                         gui_printf_type (ptr_channel->buffer, MSG_TYPE_MSG,
                                          "%s%s",
                                          GUI_COLOR(COLOR_WIN_CHAT_NICK),
                                          nick);
-                    gui_printf (ptr_channel->buffer, " %s%s\n",
-                                GUI_COLOR(COLOR_WIN_CHAT), pos);
+                        gui_printf (ptr_channel->buffer, " %s%s\n",
+                                    GUI_COLOR(COLOR_WIN_CHAT), pos);
+#ifdef PLUGINS
+                        (void) plugin_msg_handler_exec (server->name,
+                                                        "weechat_pv",
+                                                        irc_last_command_received);
+#endif
+                    }
                 }
             }
             else
@@ -2125,6 +2203,11 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                                         pos2);
                         else
                             gui_printf (server->buffer, "\n");
+#ifdef PLUGINS
+                        (void) plugin_msg_handler_exec (server->name,
+                                                        "weechat_ctcp",
+                                                        irc_last_command_received);
+#endif
                     }
                     return 0;
                 }
@@ -2168,12 +2251,16 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                                                                 COLOR_WIN_INFOBAR_HIGHLIGHT,
                                                                 _("Private"), " %s> %s",
                                                                 nick, pos);
+                            highlight = 1;
                         }
                         else
+                        {
                             gui_printf_type (ptr_channel->buffer, MSG_TYPE_NICK,
                                              "%s%s",
                                              GUI_COLOR(COLOR_WIN_NICK_PRIVATE),
                                              nick);
+                            highlight = 0;
+                        }
                         gui_printf_type (ptr_channel->buffer, MSG_TYPE_NICK,
                                          "%s> ",
                                          GUI_COLOR(COLOR_WIN_CHAT_DARK));
@@ -2181,6 +2268,15 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                                          "%s%s\n",
                                          GUI_COLOR(COLOR_WIN_CHAT),
                                          pos);
+#ifdef PLUGINS
+                        (void) plugin_msg_handler_exec (server->name,
+                                                        "weechat_pv",
+                                                        irc_last_command_received);
+                        if (highlight)
+                            (void) plugin_msg_handler_exec (server->name,
+                                                            "weechat_highlight",
+                                                            irc_last_command_received);
+#endif
                     }
                 }
             }
