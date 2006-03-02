@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2006-01-14
+TODO - 2006-03-02
 
 Legend:
   #  done
@@ -19,8 +19,6 @@ Legend:
     ? Qt GUI
     + internationalization (traduce WeeChat in many languages)
     - add dark colors (demi intensity)
-    # color for nicks (except own nick) when nick colors are disabled
-    # allow decode/encode charsets for servers or chan (not globally)
     - understand incomplete commands if unambigous (for example: /he for /help is ok)
     - interpret 'old-school' special chars in messages: *bold* _underline_ /italic/
     - minimal width of nick in text area
@@ -28,28 +26,29 @@ Legend:
     - add "*" on the side of message buffer when alt-j or other meta modifier is on
     - completion with tab key for all words starting with "#" by opened chans names
     - completion when input line is empty should add last nick that wrote to me
-    - open new channels near server (not at the end of buffers)
+    # open new channels near server (not at the end of buffers)
     - add filename completion (for example with /dcc send) 
+    - have only one info_bar common to all windows
+    - be able to search in history and global history (as with <Ctrl+r> in bash)
 
  * WeeChat commands
     - be able to bind a key on more than one command
-    - be able to make an alias running more than one command
+    # be able to make an alias running more than one command
     - host with "*" possible with /ignore command
     - "/completion" command: do shortcuts (for example when we type "u"
       in the text bar it send it to the server as "you")
     - "/last": command to look for text in previous messages
-    # completion system for scripts arguments
-    # "/upgrade" command: reload WeeChat himself without disconnecting from server
     - get help on config settings with /help option instead of /set option (since
       many options can be displayed and help is not displayed in this case)
     - "/cycle": do a /part then /join on current channel
     - be able to save the current buffer with a single command
       (/buffer dump /path/to/file), or to make it possible to write a script
       that does so (see plugins)
-    - "/reconnect": reconnect to all servers, without waiting for auto-reconnect delay after disconnection 
+    - "/reconnect": reconnect to all servers, without waiting for
+      auto-reconnect delay after disconnection 
+    - save hotlist when doing /upgrade
 
  * IRC protocol:
-    # customizable CTCP version reply (possible by plugin script)
     - complete "/list" command: add regexp search, display only channels that
       match regexp
     - when we're away, WeeChat should log all the lines begenning by our nick.
@@ -57,16 +56,17 @@ Legend:
     - "/notify" and "/unnotify" command to be warn by WeeChat when a given
       nick/host connect to the given irc network
     - display one time away message of remote user in private (optional)
-    - add max number of nicks for away check (do not check away nicks on channels with high number of nicks)
+    # add max number of nicks for away check (do not check away nicks on
+      channels with high number of nicks)
     - add anti-flood mechanism, when pasting more than N lines
     - add mask for /ban command, and ban types (host, nick)
 
  * Configuration:
-    - be able to launch more than one command when connecting to server
+    # be able to launch more than one command when connecting to server
     - use ~/.weechat/dcc by default for DCC incoming files (and create
       directory at startup if not found)
     - add global username/realname, used if server values are not filled
-    - add command line arg (--dir ?) to choose weechat home dir
+    # add command line arg (--dir) to choose weechat home dir
       (~/.weechat by default)
     - be able to set more than one server address for network
     - save buffer numbers (order) to config file and restore them when
@@ -74,20 +74,18 @@ Legend:
 
  * Plugins:
     - allow print function to write on all buffers or all channels of a server
-    - Ruby plugin
-    - "/ruby load" and "/ruby unload" commands to (un)load Ruby scripts
     - add "outgoing" message event so scripts can edit user-input text before
       it is sent to the channel
-    - add a timer function so scripts can do things like timeouts, delayed
+    # add a timer function so scripts can do things like timeouts, delayed
       processing, etc.
     - allow print function to write on all buffers or all channels of a server
-    - allow plugins to perform actions on "highlight" messages
-    - get_servers(), get_channels(server), get_nicks(server,channel)
-    - Lua plugin
-    - Tcl plugin
-    - Php plugin (maybe if possible)
+    # allow plugins to perform actions on "highlight" messages
+    # get_servers(), get_channels(server), get_nicks(server,channel)
+    # Lua plugin
+    ? Tcl plugin
+    ? Php plugin (maybe if possible)
     ? "fish" plugin (cf http://fish.sekure.us/)
-    - script plugins (perl, python, ruby, ..) should load scripts in system dir,
+    # script plugins (perl, python, ruby, ..) should load scripts in system dir,
       not only ~/.weechat/xxxx/autoload/
     - allow plugins to get the contents of a specified (or at least the
       "current") buffer.
