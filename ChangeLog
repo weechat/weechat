@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-03-02
+ChangeLog - 2006-03-03
 
 
 Version 0.1.8 (under dev!):
+   * keys alt-{home|end} to scroll top/bottom, alt-{f11-f12} to scroll
+     nicklist top/bottom
    * added special names for plugin message handlers: weechat_pv,
      weechat_highlight, weechat_ctcp, weechat_dcc
    * script plugins now load scripts in WeeChat system share directory

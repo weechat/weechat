@@ -899,6 +899,26 @@ gui_action_scroll_down (t_gui_window *window)
 }
 
 /*
+ * gui_action_scroll_top: scroll to top of buffer
+ */
+
+void
+gui_action_scroll_top (t_gui_window *window)
+{
+    gui_window_scroll_top (window);
+}
+
+/*
+ * gui_action_scroll_bottom: scroll to bottom of buffer
+ */
+
+void
+gui_action_scroll_bottom (t_gui_window *window)
+{
+    gui_window_scroll_bottom (window);
+}
+
+/*
  * gui_action_nick_beginning: go to beginning of nicklist
  */
 

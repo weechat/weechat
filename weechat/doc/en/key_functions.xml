@@ -106,6 +106,14 @@
   <entry>scroll a few lines down</entry>
 </row>
 <row>
+  <entry><literal>scroll_top</literal></entry>
+  <entry>scroll to top of buffer</entry>
+</row>
+<row>
+  <entry><literal>scroll_bottom</literal></entry>
+  <entry>scroll to bottom of buffer</entry>
+</row>
+<row>
   <entry><literal>nick_beginning</literal></entry>
   <entry>display beginning of nicklist</entry>
 </row>

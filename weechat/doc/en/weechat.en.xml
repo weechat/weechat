@@ -574,6 +574,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 </entry>
               </row>
               <row>
+                <entry>Alt + Home / Alt + End</entry>
+                <entry>
+                  Scroll to top / bottom of buffer
+                </entry>
+              </row>
+              <row>
                 <entry>F5 / Alt + left arrow</entry>
                 <entry>
                   Switch to previous buffer
@@ -610,7 +616,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 </entry>
               </row>
               <row>
-                <entry>Alt + Home / Alt + End</entry>
+                <entry>Alt + F11 / Alt + F12</entry>
                 <entry>
                   Go to the beginning / the end of nicklist
                 </entry>

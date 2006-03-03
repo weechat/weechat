@@ -106,6 +106,14 @@
   <entry>faire défiler de quelques lignes vers le bas</entry>
 </row>
 <row>
+  <entry><literal>scroll_top</literal></entry>
+  <entry>faire défiler jusqu'au début du tampon</entry>
+</row>
+<row>
+  <entry><literal>scroll_bottom</literal></entry>
+  <entry>faire défiler jusqu'à la fin du tampon</entry>
+</row>
+<row>
   <entry><literal>nick_beginning</literal></entry>
   <entry>afficher le début de la liste des pseudos</entry>
 </row>

@@ -2796,6 +2796,44 @@ gui_window_scroll_down (t_gui_window *window)
 }
 
 /*
+ * gui_window_scroll_top: scroll to top of buffer
+ */
+
+void
+gui_window_scroll_top (t_gui_window *window)
+{
+    if (!gui_ok)
+        return;
+    
+    if (!window->first_line_displayed)
+    {
+        window->start_line = window->buffer->lines;
+        window->start_line_pos = 0;
+        gui_draw_buffer_chat (window->buffer, 0);
+        gui_draw_buffer_status (window->buffer, 0);
+    }
+}
+
+/*
+ * gui_window_scroll_bottom: scroll to bottom of buffer
+ */
+
+void
+gui_window_scroll_bottom (t_gui_window *window)
+{
+    if (!gui_ok)
+        return;
+    
+    if (window->start_line)
+    {
+        window->start_line = NULL;
+        window->start_line_pos = 0;
+        gui_draw_buffer_chat (window->buffer, 0);
+        gui_draw_buffer_status (window->buffer, 0);
+    }
+}
+
+/*
  * gui_window_nick_beginning: go to beginning of nicklist
  */
 

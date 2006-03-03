@@ -585,6 +585,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 </entry>
               </row>
               <row>
+                <entry>Alt + Home / Alt + End</entry>
+                <entry>
+                  Aller au début / à la fin du tampon
+                </entry>
+              </row>
+              <row>
                 <entry>F5 / Alt + flèche gauche</entry>
                 <entry>
                   Aller au tampon précédent
@@ -621,7 +627,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 </entry>
               </row>
               <row>
-                <entry>Alt + Home / Alt + End</entry>
+                <entry>Alt + F11 / Alt + F12</entry>
                 <entry>
                   Aller au début / à la fin de la liste des pseudos
                 </entry>

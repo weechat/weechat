@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-* FlashCode, 2006-01-24 (draft)
+* FlashCode, 2006-03-03 (draft)
 
     Important release notes for 0.1.8 (draft):
 
@@ -11,6 +11,13 @@ WeeChat - Wee Enhanced Environment for Chat
         - option: plugins_path: replace "~/.weechat/plugins" by "%h/plugins"
       "%h" is replaced by WeeChat home (default: ~/.weechat, may be overriden
       by new command line arg --dir)
+    - after installing 0.1.8 (or with /upgrade), issue both commands (if you
+      didn't redefined these keys (alt-home/end):
+      /key unbind meta-meta2-1~
+      /key unbind meta-meta2-4~
+      then launch again WeeChat (or issue /upgrade).
+      Alt-home/end were used for nicklist scroll, they're now replaced by
+      Alt-F11/F12.
 
 * FlashCode, 2006-01-14
 
