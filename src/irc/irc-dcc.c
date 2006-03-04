@@ -146,33 +146,38 @@ dcc_file_is_resumable (t_irc_dcc *ptr_dcc, char *filename)
 void
 dcc_find_filename (t_irc_dcc *ptr_dcc)
 {
-    char *ptr_home, *filename2;
+    char *dir1, *dir2, *filename2;
     
     if (!DCC_IS_FILE(ptr_dcc->type))
         return;
     
-    ptr_home = getenv ("HOME");
-    ptr_dcc->local_filename = (char *) malloc (strlen (cfg_dcc_download_path) +
+    dir1 = weechat_strreplace (cfg_dcc_download_path, "~", getenv ("HOME"));
+    if (!dir1)
+        return;
+    dir2 = weechat_strreplace (dir1, "%h", weechat_home);
+    if (!dir2)
+    {
+        free (dir1);
+        return;
+    }
+    
+    ptr_dcc->local_filename = (char *) malloc (strlen (dir2) +
                                                strlen (ptr_dcc->nick) +
-                                               strlen (ptr_dcc->filename) +
-                                               ((cfg_dcc_download_path[0] == '~') ?
-                                                strlen (ptr_home) : 0) +
-                                               4);
+                                               strlen (ptr_dcc->filename) + 4);
     if (!ptr_dcc->local_filename)
         return;
     
-    if (cfg_dcc_download_path[0] == '~')
-    {
-        strcpy (ptr_dcc->local_filename, ptr_home);
-        strcat (ptr_dcc->local_filename, cfg_dcc_download_path + 1);
-    }
-    else
-        strcpy (ptr_dcc->local_filename, cfg_dcc_download_path);
+    strcpy (ptr_dcc->local_filename, dir2);
     if (ptr_dcc->local_filename[strlen (ptr_dcc->local_filename) - 1] != DIR_SEPARATOR_CHAR)
         strcat (ptr_dcc->local_filename, DIR_SEPARATOR);
     strcat (ptr_dcc->local_filename, ptr_dcc->nick);
     strcat (ptr_dcc->local_filename, ".");
     strcat (ptr_dcc->local_filename, ptr_dcc->filename);
+    
+    if (dir1)
+        free (dir1);
+    if (dir2 )
+        free (dir2);
     
     /* file already exists? */
     if (access (ptr_dcc->local_filename, F_OK) == 0)
@@ -847,7 +852,7 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
 void
 dcc_send_request (t_irc_server *server, int type, char *nick, char *filename)
 {
-    char *ptr_home, *filename2, *short_filename, *pos;
+    char *dir1, *dir2, *filename2, *short_filename, *pos;
     int spaces, args, port_start, port_end;
     struct stat st;
     int sock, port;
@@ -872,12 +877,17 @@ dcc_send_request (t_irc_server *server, int type, char *nick, char *filename)
             filename2 = strdup (filename);
         else
         {
-            ptr_home = getenv ("HOME");
-            filename2 = (char *) malloc (strlen (cfg_dcc_upload_path) +
-                                         strlen (filename) +
-                                         ((cfg_dcc_upload_path[0] == '~') ?
-                                             strlen (ptr_home) : 0) +
-                                         4);
+            dir1 = weechat_strreplace (cfg_dcc_upload_path, "~", getenv ("HOME"));
+            if (!dir1)
+                return;
+            dir2 = weechat_strreplace (dir1, "%h", weechat_home);
+            if (!dir2)
+            {
+                free (dir1);
+                return;
+            }
+            filename2 = (char *) malloc (strlen (dir2) +
+                                         strlen (filename) + 4);
             if (!filename2)
             {
                 irc_display_prefix (server, server->buffer, PREFIX_ERROR);
@@ -886,16 +896,14 @@ dcc_send_request (t_irc_server *server, int type, char *nick, char *filename)
                             WEECHAT_ERROR);
                 return;
             }
-            if (cfg_dcc_upload_path[0] == '~')
-            {
-                strcpy (filename2, ptr_home);
-                strcat (filename2, cfg_dcc_upload_path + 1);
-            }
-            else
-                strcpy (filename2, cfg_dcc_upload_path);
+            strcpy (filename2, dir2);
             if (filename2[strlen (filename2) - 1] != DIR_SEPARATOR_CHAR)
                 strcat (filename2, DIR_SEPARATOR);
             strcat (filename2, filename);
+            if (dir1)
+                free (dir1);
+            if (dir2)
+                free (dir2);
         }
 #endif
         

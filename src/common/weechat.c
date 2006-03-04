@@ -273,6 +273,9 @@ weechat_strreplace (char *string, char *search, char *replace)
     char *pos, *new_string;
     int length1, length2, length_new, count;
     
+    if (!string || !search || !replace)
+        return NULL;
+    
     length1 = strlen (search);
     length2 = strlen (replace);
     
@@ -694,13 +697,13 @@ weechat_create_dir (char *directory)
 }
 
 /*
- * weechat_create_home_dirs: create WeeChat directories (if not found)
+ * weechat_create_home_dirs: create WeeChat directories
  */
 
 void
 weechat_create_home_dirs ()
 {
-    char *ptr_home, *dir_name;
+    char *ptr_home;
     int dir_length;
 
     if (!weechat_home)
@@ -732,21 +735,42 @@ weechat_create_home_dirs ()
                  WEECHAT_ERROR, weechat_home);
         weechat_shutdown (EXIT_FAILURE, 0);
     }
+}
+
+/*
+ * weechat_create_config_dirs: create config directories (read from config file)
+ */
+
+void
+weechat_create_config_dirs ()
+{
+    char *dir1, *dir2;
     
-    dir_length = strlen (weechat_home) + 64;
-    dir_name = (char *) malloc (dir_length * sizeof (char));
-    
-    /* create "<weechat_home>/logs" */
-    snprintf (dir_name, dir_length, "%s%s%s", weechat_home, DIR_SEPARATOR,
-              "logs");
-    if (!weechat_create_dir (dir_name))
-    {
+    /* create logs directory" */
+    dir1 = weechat_strreplace (cfg_log_path, "~", getenv ("HOME"));
+    dir2 = weechat_strreplace (dir1, "%h", weechat_home);
+    if (weechat_create_dir (dir2))
+        chmod (dir2, 0700);
+    else
         fprintf (stderr, _("%s unable to create \"%s\" directory\n"),
-                 WEECHAT_WARNING, dir_name);
-    }
-    chmod (dir_name, 0700);
+                 WEECHAT_WARNING, dir2);
+    if (dir1)
+        free (dir1);
+    if (dir2)
+        free (dir2);
     
-    free (dir_name);
+    /* create DCC download directory */
+    dir1 = weechat_strreplace (cfg_dcc_download_path, "~", getenv ("HOME"));
+    dir2 = weechat_strreplace (dir1, "%h", weechat_home);
+    if (weechat_create_dir (dir2))
+        chmod (dir2, 0700);
+    else
+        fprintf (stderr, _("%s unable to create \"%s\" directory\n"),
+                 WEECHAT_WARNING, dir2);
+    if (dir1)
+        free (dir1);
+    if (dir2)
+        free (dir2);
 }
 
 /*
@@ -1040,6 +1064,7 @@ main (int argc, char *argv[])
     weechat_init_log ();                /* init log file                    */
     command_index_build ();             /* build cmd index for completion   */
     weechat_config_read ();             /* read configuration               */
+    weechat_create_config_dirs ();      /* create config directories        */
     utf8_init ();                       /* init UTF-8 in WeeChat            */
     gui_init ();                        /* init WeeChat interface           */
     fifo_create ();                     /* FIFO pipe for remote control     */

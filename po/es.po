@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.8-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-03-03 11:15+0100\n"
+"POT-Creation-Date: 2006-03-04 16:18+0100\n"
 "PO-Revision-Date: 2006-02-22 10:25+0100\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1955,38 +1955,38 @@ msgstr "Falló"
 msgid "Aborted"
 msgstr "Abortado"
 
-#: src/irc/irc-dcc.c:383
+#: src/irc/irc-dcc.c:388
 #, c-format
 msgid "DCC: file %s%s%s"
 msgstr "DCC: fichero %s%s%s"
 
-#: src/irc/irc-dcc.c:389
+#: src/irc/irc-dcc.c:394
 #, c-format
 msgid " (local filename: %s%s%s)"
 msgstr " (nombre de fichero local: %s%s%s)"
 
-#: src/irc/irc-dcc.c:394
+#: src/irc/irc-dcc.c:399
 msgid " sent to "
 msgstr " enviado a "
 
-#: src/irc/irc-dcc.c:396
+#: src/irc/irc-dcc.c:401
 msgid " received from "
 msgstr " recibido de "
 
-#: src/irc/irc-dcc.c:401
+#: src/irc/irc-dcc.c:406
 msgid "OK"
 msgstr "OK"
 
-#: src/irc/irc-dcc.c:401
+#: src/irc/irc-dcc.c:406
 msgid "FAILED"
 msgstr "FALLÓ"
 
-#: src/irc/irc-dcc.c:414
+#: src/irc/irc-dcc.c:419
 #, c-format
 msgid "DCC chat closed with %s%s %s(%s%d.%d.%d.%d%s)\n"
 msgstr "Charla DCC cerrada con %s%s %s(%s%d.%d.%d.%d%s)\n"
 
-#: src/irc/irc-dcc.c:474
+#: src/irc/irc-dcc.c:479
 #, c-format
 msgid ""
 "%s can't associate DCC chat with private buffer (maybe private buffer has "
@@ -1995,17 +1995,17 @@ msgstr ""
 "%s no se puede asociar la conversación DCC con el búfer privado (quizá el "
 "búfer privado ya tiene DCC CHAT)\n"
 
-#: src/irc/irc-dcc.c:485
+#: src/irc/irc-dcc.c:490
 #, c-format
 msgid "Connected to %s%s %s(%s%d.%d.%d.%d%s)%s via DCC chat\n"
 msgstr "Conectado a %s%s %s(%s%d.%d.%d.%d%s)%s a través de una charla DCC\n"
 
-#: src/irc/irc-dcc.c:585
+#: src/irc/irc-dcc.c:590
 #, c-format
 msgid "DCC: file %s%s%s resumed at position %u\n"
 msgstr "DCC: archivo %s%s%s reanudado en la posición %u\n"
 
-#: src/irc/irc-dcc.c:594 src/irc/irc-dcc.c:619
+#: src/irc/irc-dcc.c:599 src/irc/irc-dcc.c:624
 #, c-format
 msgid ""
 "%s can't resume file \"%s\" (port: %d, start position: %u): DCC not found or "
@@ -2014,16 +2014,16 @@ msgstr ""
 "%s no puede reanudar el archivo \"%s\" (puerto: %d, posición de inicio: %u): "
 "DCC no encontrado o terminado\n"
 
-#: src/irc/irc-dcc.c:686
+#: src/irc/irc-dcc.c:691
 #, c-format
 msgid "%s not enough memory for new DCC\n"
 msgstr "%s no hay memoria suficiente para un nuevo DCC\n"
 
-#: src/irc/irc-dcc.c:705
+#: src/irc/irc-dcc.c:710
 msgid "DCC chat"
 msgstr "Charla DCC"
 
-#: src/irc/irc-dcc.c:732
+#: src/irc/irc-dcc.c:737
 #, c-format
 msgid ""
 "Incoming DCC file from %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s bytes\n"
@@ -2031,7 +2031,7 @@ msgstr ""
 "Archivo DCC entrante desde %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s "
 "bytes\n"
 
-#: src/irc/irc-dcc.c:755
+#: src/irc/irc-dcc.c:760
 #, c-format
 msgid ""
 "Sending DCC file to %s%s%s: %s%s%s (local filename: %s%s%s), %s%lu%s bytes\n"
@@ -2039,17 +2039,17 @@ msgstr ""
 "Enviando archivo DCC a %s%s%s: %s%s%s (nombre de archivo local: %s%s%s), %s%"
 "lu%s bytes\n"
 
-#: src/irc/irc-dcc.c:775
+#: src/irc/irc-dcc.c:780
 #, c-format
 msgid "Incoming DCC chat request from %s%s%s (%s%d.%d.%d.%d%s)\n"
 msgstr "Petición de charla DCC entrante desde %s%s%s (%s%d.%d.%d.%d%s)\n"
 
-#: src/irc/irc-dcc.c:792
+#: src/irc/irc-dcc.c:797
 #, c-format
 msgid "Sending DCC chat request to %s%s\n"
 msgstr "Envío de petición de charla DCC a %s%s\n"
 
-#: src/irc/irc-dcc.c:810
+#: src/irc/irc-dcc.c:815
 #, c-format
 msgid ""
 "DCC: file %s%s%s (local filename: %s%s%s) will be resumed at position %u\n"
@@ -2057,47 +2057,47 @@ msgstr ""
 "DCC: el archivo %s%s%s (nombre de archivo local: %s%s%s) será reanudado en "
 "la posición %u\n"
 
-#: src/irc/irc-dcc.c:885
+#: src/irc/irc-dcc.c:895
 #, c-format
 msgid "%s not enough memory for DCC SEND\n"
 msgstr "%s no hay memoria suficiente para el DCC SEND\n"
 
-#: src/irc/irc-dcc.c:907
+#: src/irc/irc-dcc.c:915
 #, c-format
 msgid "%s cannot access file \"%s\"\n"
 msgstr "%s no es posible acceder al fichero \"%s\"\n"
 
-#: src/irc/irc-dcc.c:929
+#: src/irc/irc-dcc.c:937
 #, c-format
 msgid "%s could not find address for '%s'. Falling back to local IP.\n"
 msgstr "%s no pudo encontrar la dirección para '%s'. Utilizando la IP local.\n"
 
-#: src/irc/irc-dcc.c:949
+#: src/irc/irc-dcc.c:957
 #, c-format
 msgid "%s cannot create socket for DCC\n"
 msgstr "%s no es posible crear socket para el DCC\n"
 
-#: src/irc/irc-dcc.c:1007
+#: src/irc/irc-dcc.c:1015
 #, c-format
 msgid "%s cannot find available port for DCC\n"
 msgstr "%s no puede encontrar un puerto disponible para el DCC\n"
 
-#: src/irc/irc-dcc.c:1051
+#: src/irc/irc-dcc.c:1059
 #, c-format
 msgid "%s cannot send DCC\n"
 msgstr "%s no es posible enviar el DCC\n"
 
-#: src/irc/irc-dcc.c:1131
+#: src/irc/irc-dcc.c:1139
 #, c-format
 msgid "%s error sending data to \"%s\" via DCC CHAT\n"
 msgstr "%s error enviando datos al \"%s\" con DCC CHAT\n"
 
-#: src/irc/irc-dcc.c:1217
+#: src/irc/irc-dcc.c:1225
 #, c-format
 msgid "Private %s> %s"
 msgstr "Privado %s> %s"
 
-#: src/irc/irc-dcc.c:1416
+#: src/irc/irc-dcc.c:1424
 #, c-format
 msgid ""
 "%s DCC failed because blocksize is too big. Check value of \"dcc_blocksize\" "
@@ -2106,7 +2106,7 @@ msgstr ""
 "%s El DCC ha fallado porque el tamaño de bloque es demasiado grande. "
 "Compruebe el valor de la opción \"dcc_blocksize\", el máximo es %d.\n"
 
-#: src/irc/irc-dcc.c:1491
+#: src/irc/irc-dcc.c:1499
 #, c-format
 msgid "Aborting active DCC: \"%s\" from %s\n"
 msgstr "Abandonar el DCC activo: \"%s\" de %s\n"
@@ -2285,12 +2285,12 @@ msgstr ""
 msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 msgstr ""
 
-#: src/gui/curses/gui-input.c:350
+#: src/gui/curses/gui-input.c:353
 #, c-format
 msgid "Day changed to %s\n"
 msgstr "Día cambiado a %s\n"
 
-#: src/gui/curses/gui-input.c:436
+#: src/gui/curses/gui-input.c:439
 #, c-format
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr "%s el lag (retraso) es alto, desconectando del servidor...\n"
@@ -2376,11 +2376,11 @@ msgstr ""
 msgid "server"
 msgstr "servidor"
 
-#: src/gui/gui-common.c:765
+#: src/gui/gui-common.c:768
 msgid "Not enough memory for new line\n"
 msgstr "No hay suficiente memoria para una nueva línea\n"
 
-#: src/gui/gui-common.c:1134
+#: src/gui/gui-common.c:1137
 msgid "Not enough memory for infobar message\n"
 msgstr "No hay suficiente memoria para el mensaje de la barra de información\n"
 
@@ -3215,12 +3215,12 @@ msgstr "%s ¡no conectado al servidor \"%s\"!\n"
 msgid "Auto-reconnection is cancelled\n"
 msgstr "La reconexión automática está anulada\n"
 
-#: src/common/command.c:1909 src/common/weechat.c:456
+#: src/common/command.c:1909 src/common/weechat.c:459
 #, c-format
 msgid "%s internal commands:\n"
 msgstr "Comandos internos %s :\n"
 
-#: src/common/command.c:1919 src/common/weechat.c:476
+#: src/common/command.c:1919 src/common/weechat.c:479
 #, c-format
 msgid "IRC commands:\n"
 msgstr "Comandos IRC :\n"
@@ -3270,7 +3270,7 @@ msgstr "Clave \"%s\" desatada\n"
 msgid "%s unable to unbind key \"%s\"\n"
 msgstr "%s No ha sido posible desatar la clave \"%s\"\n"
 
-#: src/common/command.c:2286 src/common/weechat.c:508
+#: src/common/command.c:2286 src/common/weechat.c:511
 #, c-format
 msgid "Internal key functions:\n"
 msgstr "Funciones de clave internas:\n"
@@ -3458,8 +3458,8 @@ msgstr "  . tipo booleano (valores: 'on' u 'off')\n"
 
 #: src/common/command.c:3133 src/common/command.c:3156
 #: src/common/command.c:3162 src/common/command.c:3168
-#: src/common/weechat.c:392 src/common/weechat.c:417 src/common/weechat.c:424
-#: src/common/weechat.c:431
+#: src/common/weechat.c:395 src/common/weechat.c:420 src/common/weechat.c:427
+#: src/common/weechat.c:434
 #, c-format
 msgid "  . default value: '%s'\n"
 msgstr "  . valor por defecto: '%s'\n"
@@ -3469,7 +3469,7 @@ msgstr "  . valor por defecto: '%s'\n"
 msgid "  . type integer (values: between %d and %d)\n"
 msgstr "  . tipo entero (valores: entre %d y %d)\n"
 
-#: src/common/command.c:3141 src/common/weechat.c:401
+#: src/common/command.c:3141 src/common/weechat.c:404
 #, c-format
 msgid "  . default value: %d\n"
 msgstr "  . valor por defecto: %d\n"
@@ -3479,8 +3479,8 @@ msgid "  . type string (values: "
 msgstr "  . tipo cadena (valores: "
 
 #: src/common/command.c:3158 src/common/command.c:3164
-#: src/common/command.c:3170 src/common/weechat.c:419 src/common/weechat.c:426
-#: src/common/weechat.c:433
+#: src/common/command.c:3170 src/common/weechat.c:422 src/common/weechat.c:429
+#: src/common/weechat.c:436
 msgid "empty"
 msgstr "vacío"
 
@@ -3492,7 +3492,7 @@ msgstr "  . tipo color (color Curses o Gtk, ver la documentación de WeeChat)\n"
 msgid "  . type string (any string)\n"
 msgstr "  . tipo cadena (cualquier cadena)\n"
 
-#: src/common/command.c:3173 src/common/weechat.c:436
+#: src/common/command.c:3173 src/common/weechat.c:439
 #, c-format
 msgid "  . description: %s\n"
 msgstr "  . descripción: %s\n"
@@ -3626,20 +3626,20 @@ msgstr "La tubería FIFO está cerrada\n"
 msgid "%s cannot add a buffer to hotlist\n"
 msgstr "%s no es posible añadir un búfer a la lista caliente (hotlist)\n"
 
-#: src/common/log.c:127
+#: src/common/log.c:116 src/common/log.c:132
 msgid "Not enough memory to write log file for a buffer\n"
 msgstr ""
 "No hay suficiente memoria para escribir un fichero de log para un búfer\n"
 
-#: src/common/log.c:158
+#: src/common/log.c:163
 msgid "Unable to write log file for a buffer\n"
 msgstr "No es posible escribir un fichero de log para un búfer\n"
 
-#: src/common/log.c:162
+#: src/common/log.c:167
 msgid "****  Beginning of log  "
 msgstr "****  Comienzo del log (registro)  "
 
-#: src/common/log.c:176
+#: src/common/log.c:181
 msgid "****  End of log  "
 msgstr "****  Fin del log  "
 
@@ -3957,7 +3957,7 @@ msgstr "%s no se puede eliminar el archivo de sesión (%s)\n"
 msgid "Upgrade completed successfully\n"
 msgstr "Actualización completada con éxito\n"
 
-#: src/common/weechat.c:346
+#: src/common/weechat.c:349
 #, c-format
 msgid ""
 "%s (c) Copyright 2003-2006, compiled on %s %s\n"
@@ -3966,7 +3966,7 @@ msgstr ""
 "%s (c) Copyright 2003-2006, compilado a %s %s\n"
 "Desarrollado por FlashCode <flashcode@flashtux.org> - %s"
 
-#: src/common/weechat.c:350
+#: src/common/weechat.c:353
 #, c-format
 msgid ""
 "Usage: %s [options ...]\n"
@@ -3977,7 +3977,7 @@ msgstr ""
 "  ó: %s [irc[6][s]://[usuario[:contraseña]@]irc.ejemplo.org[:puerto][/"
 "channel]"
 
-#: src/common/weechat.c:354
+#: src/common/weechat.c:357
 #, fuzzy, c-format
 msgid ""
 "  -a, --no-connect        disable auto-connect to servers at startup\n"
@@ -4005,7 +4005,7 @@ msgstr ""
 "  -v, --version           mostrar versión de Weechat\n"
 "  -w, --weechat-commands  mostrar comandos de Weechat\n"
 
-#: src/common/weechat.c:377
+#: src/common/weechat.c:380
 #, c-format
 msgid ""
 "WeeChat configuration options (<weechat_home>/weechat.rc):\n"
@@ -4014,112 +4014,112 @@ msgstr ""
 "Opciones de configuración de WeeChat (<weechat_home>/weechat.rc):\n"
 "\n"
 
-#: src/common/weechat.c:390
+#: src/common/weechat.c:393
 #, c-format
 msgid "  . type: boolean\n"
 msgstr "  . tipo: booleano\n"
 
-#: src/common/weechat.c:391
+#: src/common/weechat.c:394
 #, c-format
 msgid "  . values: 'on' or 'off'\n"
 msgstr "  . valores: 'on' u 'off'\n"
 
-#: src/common/weechat.c:397
+#: src/common/weechat.c:400
 #, c-format
 msgid "  . type: integer\n"
 msgstr "  . tipo: entero\n"
 
-#: src/common/weechat.c:398
+#: src/common/weechat.c:401
 #, c-format
 msgid "  . values: between %d and %d\n"
 msgstr "  . valores: entre %d y %d\n"
 
-#: src/common/weechat.c:405 src/common/weechat.c:429
+#: src/common/weechat.c:408 src/common/weechat.c:432
 #, c-format
 msgid "  . type: string\n"
 msgstr "  . tipo: cadena\n"
 
-#: src/common/weechat.c:406
+#: src/common/weechat.c:409
 #, c-format
 msgid "  . values: "
 msgstr "  . valores: "
 
-#: src/common/weechat.c:422
+#: src/common/weechat.c:425
 #, c-format
 msgid "  . type: color\n"
 msgstr "  . tipo: color\n"
 
-#: src/common/weechat.c:423
+#: src/common/weechat.c:426
 #, c-format
 msgid "  . values: Curses or Gtk color\n"
 msgstr "  . valores: color Curses o Gtk\n"
 
-#: src/common/weechat.c:430
+#: src/common/weechat.c:433
 #, c-format
 msgid "  . values: any string\n"
 msgstr "  . valores: cualquier cadena\n"
 
-#: src/common/weechat.c:530
+#: src/common/weechat.c:533
 #, c-format
 msgid "%s default keys:\n"
 msgstr "%s claves por defecto:\n"
 
-#: src/common/weechat.c:579
+#: src/common/weechat.c:582
 #, c-format
 msgid "%s missing argument for --dir option\n"
 msgstr "%s falta un argumento para la opción --dir\n"
 
-#: src/common/weechat.c:624
+#: src/common/weechat.c:627
 #, c-format
 msgid "%s missing argument for --session option\n"
 msgstr "%s falta un argumento para la opción --session\n"
 
-#: src/common/weechat.c:645
+#: src/common/weechat.c:648
 #, c-format
 msgid "%s invalid syntax for IRC server ('%s'), ignored\n"
 msgstr "%s sintaxis inválida para el servidor IRC ('%s'), ignorado\n"
 
-#: src/common/weechat.c:659
+#: src/common/weechat.c:662
 #, c-format
 msgid "%s unable to create server ('%s'), ignored\n"
 msgstr "%s no es posible crear el servidor ('%s'), ignorado\n"
 
-#: src/common/weechat.c:668
+#: src/common/weechat.c:671
 #, c-format
 msgid "%s unknown parameter '%s', ignored\n"
 msgstr "%s parámetro desconocido '%s', ignorado\n"
 
-#: src/common/weechat.c:688
+#: src/common/weechat.c:691
 #, c-format
 msgid "%s cannot create directory \"%s\"\n"
 msgstr "%s no es posible crear el directorio \"%s\"\n"
 
-#: src/common/weechat.c:711
+#: src/common/weechat.c:714
 #, c-format
 msgid "%s unable to get HOME directory\n"
 msgstr "%s no ha sido posible leer el directorio HOME\n"
 
-#: src/common/weechat.c:720
+#: src/common/weechat.c:723
 #, c-format
 msgid "%s not enough memory for home directory\n"
 msgstr "%s no hay suficiente memoria para el directorio home\n"
 
-#: src/common/weechat.c:731 src/common/weechat.c:744
+#: src/common/weechat.c:734 src/common/weechat.c:755 src/common/weechat.c:768
 #, c-format
 msgid "%s unable to create \"%s\" directory\n"
 msgstr "%s no es posible crear el directorio \"%s\"\n"
 
-#: src/common/weechat.c:790
+#: src/common/weechat.c:814
 #, c-format
 msgid "%s unable to create/append to log file (%s/%s)"
 msgstr "%s no es posible crear/añadir en el fichero de log (%s/%s)"
 
-#: src/common/weechat.c:841
+#: src/common/weechat.c:865
 #, c-format
 msgid "%sWelcome to %s%s%s, %s\n"
 msgstr "%sBienvenido a %s%s%s, %s\n"
 
-#: src/common/weechat.c:855 src/common/weechat.c:865
+#: src/common/weechat.c:879 src/common/weechat.c:889
 msgid "compiled on"
 msgstr "compilado en"
 

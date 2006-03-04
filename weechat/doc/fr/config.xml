@@ -926,7 +926,7 @@
   <entry><option>dcc_download_path</option></entry>
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>
-  <entry>'~'</entry>
+  <entry>'%h/dcc'</entry>
   <entry>Chemin pour écrire les fichiers reçus par dcc (par défaut: répertoire de l'utilisateur)</entry>
 </row>
 <row>

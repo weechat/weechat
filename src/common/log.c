@@ -107,15 +107,20 @@ void
 log_start (t_gui_buffer *buffer)
 {
     int length;
-    char *ptr_home, *log_path, *log_path2, *ptr_path;
+    char *log_path, *log_path2;
     
-    ptr_home = getenv ("HOME");
-    log_path = weechat_strreplace (cfg_log_path, "~", ptr_home);
-    log_path2 = weechat_strreplace ((log_path) ?
-                                    log_path : cfg_log_path,
-                                    "%h", weechat_home);
-    ptr_path = (log_path2) ? log_path2 : ((log_path) ? log_path : cfg_log_path);
-    length = strlen (ptr_path) + 64;
+    log_path = weechat_strreplace (cfg_log_path, "~", getenv ("HOME"));
+    log_path2 = weechat_strreplace (log_path, "%h", weechat_home);
+    if (!log_path || !log_path2)
+    {
+        weechat_log_printf (_("Not enough memory to write log file for a buffer\n"));
+        if (log_path)
+            free (log_path);
+        if (log_path2)
+            free (log_path2);
+        return;
+    }
+    length = strlen (log_path2) + 64;
     if (SERVER(buffer))
         length += strlen (SERVER(buffer)->name);
     if (CHANNEL(buffer))
@@ -132,7 +137,7 @@ log_start (t_gui_buffer *buffer)
         return;
     }
     
-    strcpy (buffer->log_filename, ptr_path);
+    strcpy (buffer->log_filename, log_path2);
     if (log_path)
         free (log_path);
     if (log_path2)

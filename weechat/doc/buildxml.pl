@@ -32,7 +32,7 @@
                   "en_US" => "values",
                   "es_ES" => "valores");
 %all_default   = ("fr_FR" => "valeur par défaut",
-                  "en_US" => "default values",
+                  "en_US" => "default value",
                   "es_ES" => "valor por defecto");
 %all_desc      = ("fr_FR" => "description",
                   "en_US" => "description",

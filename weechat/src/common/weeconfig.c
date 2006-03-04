@@ -791,7 +791,7 @@ t_config_option weechat_options_dcc[] =
   { "dcc_download_path", N_("path for incoming files with dcc"),
     N_("path for writing incoming files with dcc (default: user home)"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    "~", NULL, NULL, &cfg_dcc_download_path, &config_change_noop },
+    "%h/dcc", NULL, NULL, &cfg_dcc_download_path, &config_change_noop },
   { "dcc_upload_path", N_("default path for sending files with dcc"),
     N_("path for reading files when sending thru dcc (when no path is specified)"),
     OPTION_TYPE_STRING, 0, 0, 0, "~",
