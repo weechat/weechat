@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-03-04
+ChangeLog - 2006-03-05
 
 
 Version 0.1.8 (under dev!):
+   * added missing IRC command (487)
    * added inactivity time, available for plugins via get_info("inactivity")
    * keys alt-{home|end} to scroll top/bottom, alt-{f11-f12} to scroll
      nicklist top/bottom
