@@ -2340,6 +2340,12 @@ plugin->exec_command (plugin, "freenode", "#weechat", "hello");
                           <entry>"away" flag</entry>
                         </row>
                         <row>
+                          <entry><literal>inactivity</literal></entry>
+                          <entry>
+                            number of seconds since last key was pressed
+                          </entry>
+                        </row>
+                        <row>
                           <entry><literal>weechat_dir</literal></entry>
                           <entry>
                             WeeChat home directory
@@ -2379,6 +2385,16 @@ plugin->exec_command (plugin, "freenode", "#weechat", "hello");
 <screen>
 char *version = plugin->get_info (plugin, "version", NULL);
 char *nick = plugin->get_info (plugin, "nick", "freenode");
+char *inactivity = plugin->get_info (plugin, "inactivity", NULL);
+
+plugin->print (plugin, NULL, NULL,
+               "WeeChat version %s, you are %s on freenode "
+               "(inactive for %s seconds)",
+               version, nick, inactivity);
+
+free (version);
+free (nick);
+free (inactivity);
 </screen>
           </para>
         </section>

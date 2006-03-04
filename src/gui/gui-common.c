@@ -65,6 +65,9 @@ t_gui_infobar *gui_infobar;                 /* pointer to infobar content   */
 
 char *gui_input_clipboard = NULL;           /* clipboard content            */
 
+time_t gui_last_activity_time = 0;          /* last activity time           */
+                                            /* (key pressed)                */
+
 
 /*
  * gui_window_tree_init: create first entry in windows tree

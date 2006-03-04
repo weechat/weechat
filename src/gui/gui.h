@@ -400,6 +400,7 @@ extern char gui_key_buffer[128];
 extern int gui_key_grab;
 extern int gui_key_grab_count;
 extern char *gui_input_clipboard;
+extern time_t gui_last_activity_time;
 
 extern t_gui_color *gui_color[NUM_COLORS];
 

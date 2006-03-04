@@ -384,6 +384,8 @@ weechat_plugin_get_info (t_weechat_plugin *plugin, char *info, char *server)
 {
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
+    time_t inactivity;
+    char *inactivity_str;
     
     if (!plugin || !info)
         return NULL;
@@ -411,6 +413,18 @@ weechat_plugin_get_info (t_weechat_plugin *plugin, char *info, char *server)
     else if (ascii_strcasecmp (info, "weechat_sharedir") == 0)
     {
         return strdup (WEECHAT_SHAREDIR);
+    }
+    else if (ascii_strcasecmp (info, "inactivity") == 0)
+    {
+        if (gui_last_activity_time == 0)
+            inactivity = 0;
+        else
+            inactivity = time (NULL) - gui_last_activity_time;
+        inactivity_str = (char *) malloc (128);
+        if (!inactivity_str)
+            return NULL;
+        snprintf (inactivity_str, 128, "%ld", inactivity);
+        return inactivity_str;
     }
     
     /* below are infos that need server to return value */

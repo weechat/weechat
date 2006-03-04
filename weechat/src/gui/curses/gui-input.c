@@ -209,6 +209,8 @@ gui_input_read ()
             gui_refresh_screen ();
             continue;
         }
+        
+        gui_last_activity_time = time (NULL);
                 
         if (key < 32)
         {
@@ -319,6 +321,7 @@ gui_main_loop ()
     quit_weechat = 0;
 
     new_time = time (NULL);
+    gui_last_activity_time = new_time;
     local_time = localtime (&new_time);
     old_day = local_time->tm_mday;
     
