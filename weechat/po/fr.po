@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.8-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-03-04 16:18+0100\n"
-"PO-Revision-Date: 2006-03-03 11:16+0100\n"
+"POT-Creation-Date: 2006-03-06 21:58+0100\n"
+"PO-Revision-Date: 2006-03-06 22:08+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -964,7 +964,7 @@ msgstr ""
 #: src/irc/irc-commands.c:451 src/irc/irc-commands.c:453
 #: src/irc/irc-commands.c:455 src/irc/irc-commands.c:457
 #: src/irc/irc-commands.c:459 src/irc/irc-commands.c:461
-#: src/irc/irc-commands.c:571
+#: src/irc/irc-commands.c:573
 msgid "a server message"
 msgstr "un message du serveur"
 
@@ -1341,18 +1341,22 @@ msgid "user is immune from kick/deop"
 msgstr "l'utilisateur est protégé des kick/deop"
 
 #: src/irc/irc-commands.c:565
+msgid "network split"
+msgstr "network split"
+
+#: src/irc/irc-commands.c:567
 msgid "no O-lines for your host"
 msgstr "pas de O-lines pour votre nom de machine"
 
-#: src/irc/irc-commands.c:567
+#: src/irc/irc-commands.c:569
 msgid "unknown mode flag"
 msgstr "drapeau de mode inconnu"
 
-#: src/irc/irc-commands.c:569
+#: src/irc/irc-commands.c:571
 msgid "can't change mode for other users"
 msgstr "impossible de changer le mode pour les autres utilisateurs"
 
-#: src/irc/irc-commands.c:573
+#: src/irc/irc-commands.c:575
 msgid "whois (secure connection)"
 msgstr "qui est (connexion sécurisée)"
 
@@ -4097,22 +4101,22 @@ msgstr "%s impossible de lire le répertoire personnel\n"
 msgid "%s not enough memory for home directory\n"
 msgstr "%s pas assez de mémoire pour le répertoire personnel\n"
 
-#: src/common/weechat.c:734 src/common/weechat.c:755 src/common/weechat.c:768
+#: src/common/weechat.c:734 src/common/weechat.c:758 src/common/weechat.c:774
 #, c-format
 msgid "%s unable to create \"%s\" directory\n"
 msgstr "%s impossible de créer le répertoire \"%s\"\n"
 
-#: src/common/weechat.c:814
+#: src/common/weechat.c:820
 #, c-format
 msgid "%s unable to create/append to log file (%s/%s)"
 msgstr "%s impossible de créer/ajouter dans le fichier de log (%s/%s)"
 
-#: src/common/weechat.c:865
+#: src/common/weechat.c:871
 #, c-format
 msgid "%sWelcome to %s%s%s, %s\n"
 msgstr "%sBienvenue dans %s%s%s, %s\n"
 
-#: src/common/weechat.c:879 src/common/weechat.c:889
+#: src/common/weechat.c:885 src/common/weechat.c:895
 msgid "compiled on"
 msgstr "compilé le"
 

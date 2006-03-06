@@ -1044,6 +1044,15 @@ completion_nick (t_completion *completion)
     
     if (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_PRIVATE)
     {
+        if (!(completion->completion_list))
+        {
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         ((t_irc_channel *)(completion->channel))->name);
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         ((t_irc_server *)(completion->server))->nick);
+        }
         completion_command_arg (completion, 1);
         return;
     }
@@ -1051,6 +1060,7 @@ completion_nick (t_completion *completion)
     length = strlen (completion->base_word);
     word_found_seen = 0;
     other_completion = 0;
+    
     for (ptr_nick = ((t_irc_channel *)(completion->channel))->nicks;
          ptr_nick; ptr_nick = ptr_nick->next_nick)
     {

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-03-04 16:18+0100\n"
+"POT-Creation-Date: 2006-03-06 21:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -856,7 +856,7 @@ msgstr ""
 #: src/irc/irc-commands.c:451 src/irc/irc-commands.c:453
 #: src/irc/irc-commands.c:455 src/irc/irc-commands.c:457
 #: src/irc/irc-commands.c:459 src/irc/irc-commands.c:461
-#: src/irc/irc-commands.c:571
+#: src/irc/irc-commands.c:573
 msgid "a server message"
 msgstr ""
 
@@ -1229,18 +1229,22 @@ msgid "user is immune from kick/deop"
 msgstr ""
 
 #: src/irc/irc-commands.c:565
-msgid "no O-lines for your host"
+msgid "network split"
 msgstr ""
 
 #: src/irc/irc-commands.c:567
-msgid "unknown mode flag"
+msgid "no O-lines for your host"
 msgstr ""
 
 #: src/irc/irc-commands.c:569
+msgid "unknown mode flag"
+msgstr ""
+
+#: src/irc/irc-commands.c:571
 msgid "can't change mode for other users"
 msgstr ""
 
-#: src/irc/irc-commands.c:573
+#: src/irc/irc-commands.c:575
 msgid "whois (secure connection)"
 msgstr ""
 
@@ -3790,22 +3794,22 @@ msgstr ""
 msgid "%s not enough memory for home directory\n"
 msgstr ""
 
-#: src/common/weechat.c:734 src/common/weechat.c:755 src/common/weechat.c:768
+#: src/common/weechat.c:734 src/common/weechat.c:758 src/common/weechat.c:774
 #, c-format
 msgid "%s unable to create \"%s\" directory\n"
 msgstr ""
 
-#: src/common/weechat.c:814
+#: src/common/weechat.c:820
 #, c-format
 msgid "%s unable to create/append to log file (%s/%s)"
 msgstr ""
 
-#: src/common/weechat.c:865
+#: src/common/weechat.c:871
 #, c-format
 msgid "%sWelcome to %s%s%s, %s\n"
 msgstr ""
 
-#: src/common/weechat.c:879 src/common/weechat.c:889
+#: src/common/weechat.c:885 src/common/weechat.c:895
 msgid "compiled on"
 msgstr ""
 
