@@ -750,7 +750,10 @@ weechat_create_config_dirs ()
     dir1 = weechat_strreplace (cfg_log_path, "~", getenv ("HOME"));
     dir2 = weechat_strreplace (dir1, "%h", weechat_home);
     if (weechat_create_dir (dir2))
-        chmod (dir2, 0700);
+    {
+        if (strcmp (dir2, getenv ("HOME")) != 0)
+            chmod (dir2, 0700);
+    }
     else
         fprintf (stderr, _("%s unable to create \"%s\" directory\n"),
                  WEECHAT_WARNING, dir2);
@@ -763,7 +766,10 @@ weechat_create_config_dirs ()
     dir1 = weechat_strreplace (cfg_dcc_download_path, "~", getenv ("HOME"));
     dir2 = weechat_strreplace (dir1, "%h", weechat_home);
     if (weechat_create_dir (dir2))
-        chmod (dir2, 0700);
+    {
+        if (strcmp (dir2, getenv ("HOME")) != 0)
+            chmod (dir2, 0700);
+    }
     else
         fprintf (stderr, _("%s unable to create \"%s\" directory\n"),
                  WEECHAT_WARNING, dir2);
