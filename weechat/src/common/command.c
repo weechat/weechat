@@ -353,6 +353,38 @@ alias_new (char *alias_name, char *alias_command)
 }
 
 /*
+ * alias_get_final_command: get final command pointer by an alias
+ */
+
+char *
+alias_get_final_command (t_weechat_alias *alias)
+{
+    t_weechat_alias *ptr_alias;
+    char *result;
+    
+    if (alias->running)
+    {
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        gui_printf (NULL,
+                    _("%s circular reference when calling alias \"/%s\"\n"),
+                    WEECHAT_ERROR, alias->alias_name);
+        return NULL;
+    }
+    
+    ptr_alias = alias_search ((alias->alias_command[0] == '/') ?
+                             alias->alias_command + 1 : alias->alias_command);
+    if (ptr_alias)
+    {
+        alias->running = 1;
+        result = alias_get_final_command (ptr_alias);
+        alias->running = 0;
+        return result;
+    }
+    return (alias->alias_command[0] == '/') ?
+        alias->alias_command + 1 : alias->alias_command;
+}
+
+/*
  * alias_free: free an alias and reomve it from list
  */
 
@@ -802,7 +834,8 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                 if (ascii_strcasecmp (ptr_alias->alias_name, command + 1) == 0)
                 {
                     if (ptr_alias->running == 1)
-                    {		    
+                    {
+                        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
                         gui_printf (NULL,
                                     _("%s circular reference when calling alias \"/%s\"\n"),
                                     WEECHAT_ERROR, ptr_alias->alias_name);

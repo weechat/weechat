@@ -63,7 +63,9 @@ extern t_weelist *last_index_command;
 
 extern void command_index_build ();
 extern void command_index_free ();
+extern t_weechat_alias *alias_search (char *);
 extern t_weechat_alias *alias_new (char *, char *);
+extern char *alias_get_final_command (t_weechat_alias *);
 extern void alias_free_all ();
 extern char **explode_string (char *, char *, int, int *);
 extern void free_exploded_string (char **);

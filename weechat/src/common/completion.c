@@ -107,6 +107,8 @@ void
 completion_get_command_infos (t_completion *completion,
                               char **template, int *max_arg)
 {
+    t_weechat_alias *ptr_alias;
+    char *ptr_command;
     int i;
 #ifdef PLUGINS
     t_weechat_plugin *ptr_plugin;
@@ -115,6 +117,16 @@ completion_get_command_infos (t_completion *completion,
     
     *template = NULL;
     *max_arg = MAX_ARGS;
+    
+    ptr_alias = alias_search (completion->base_command);
+    if (ptr_alias)
+    {
+        ptr_command = alias_get_final_command (ptr_alias);
+        if (!ptr_command)
+            return;
+    }
+    else
+        ptr_command = completion->base_command;
     
 #ifdef PLUGINS
     /* look for plugin command handler */
@@ -126,7 +138,7 @@ completion_get_command_infos (t_completion *completion,
         {
             if ((ptr_handler->type == HANDLER_COMMAND)
                 && (ascii_strcasecmp (ptr_handler->command,
-                                      completion->base_command) == 0))
+                                      ptr_command) == 0))
             {
                 *template = ptr_handler->completion_template;
                 *max_arg = MAX_ARGS;
@@ -140,7 +152,7 @@ completion_get_command_infos (t_completion *completion,
     for (i = 0; weechat_commands[i].command_name; i++)
     {
         if (ascii_strcasecmp (weechat_commands[i].command_name,
-                              completion->base_command) == 0)
+                              ptr_command) == 0)
         {
             *template = weechat_commands[i].completion_template;
             *max_arg = weechat_commands[i].max_arg;
@@ -153,7 +165,7 @@ completion_get_command_infos (t_completion *completion,
     {
         if ((irc_commands[i].cmd_function_args || irc_commands[i].cmd_function_1arg)
             && (ascii_strcasecmp (irc_commands[i].command_name,
-                                  completion->base_command) == 0))
+                                  ptr_command) == 0))
         {
             *template = irc_commands[i].completion_template;
             *max_arg = irc_commands[i].max_arg;

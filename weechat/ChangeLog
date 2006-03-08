@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-03-05
+ChangeLog - 2006-03-08
 
 
 Version 0.1.8 (under dev!):
+   * improved alias completion (now uses target command for completion)
+   * fixed completion problem in private with nicks
    * added missing IRC command (487)
    * added inactivity time, available for plugins via get_info("inactivity")
    * keys alt-{home|end} to scroll top/bottom, alt-{f11-f12} to scroll
