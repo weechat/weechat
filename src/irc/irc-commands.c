@@ -47,7 +47,7 @@ t_irc_command irc_commands[] =
     N_("[-all] [message]"),
     N_("   -all: toggle away status on all connected servers\n"
        "message: message for away (if no message is given, away status is removed)"),
-    "%y", 0, MAX_ARGS, 1, NULL, irc_cmd_send_away, NULL },
+    "-all", 0, MAX_ARGS, 1, NULL, irc_cmd_send_away, NULL },
   { "ban", N_("bans nicks or hosts"),
     N_("[channel] [nickname [nickname ...]]"),
     N_(" channel: channel for ban\n"
@@ -175,7 +175,7 @@ t_irc_command irc_commands[] =
     N_("[-all] nickname"),
     N_("    -all: set new nickname for all connected servers\n"
        "nickname: new nickname"),
-    NULL, 1, 2, 0, irc_cmd_send_nick, NULL, irc_cmd_recv_nick },
+    "-all", 1, 2, 0, irc_cmd_send_nick, NULL, irc_cmd_recv_nick },
   { "notice", N_("send notice message to user"),
     N_("nickname text"),
     N_("nickname: user to send notice to\n"
