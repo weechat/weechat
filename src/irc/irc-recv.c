@@ -604,7 +604,7 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *ptr_channel,
                             char *channel_name,
                             char *nick_host, char *modes, char *parm)
 {
-    char *pos, set_flag;
+    char *pos, set_flag, unknown_mode[3];
     t_irc_nick *ptr_nick;
     
     set_flag = '+';
@@ -632,6 +632,31 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *ptr_channel,
                                       (set_flag == '+') ?
                                           _("sets ban on") :
                                           _("removes ban on"),
+                                      (parm) ? parm : NULL);
+                
+                /* look for next parameter */
+                if (parm && pos)
+                {
+                    pos++;
+                    while (pos[0] == ' ')
+                        pos++;
+                    parm = pos;
+                }
+                break;
+            case 'd':
+                pos = NULL;
+                if (parm)
+                {
+                    pos = strchr (parm, ' ');
+                    if (pos)
+                        pos[0] = '\0';
+                }
+                if (nick_host)
+                    irc_display_mode (server, ptr_channel->buffer,
+                                      channel_name, set_flag, "d", nick_host,
+                                      (set_flag == '+') ?
+                                          _("sets realname ban on") :
+                                          _("removes realname ban on"),
                                       (parm) ? parm : NULL);
                 
                 /* look for next parameter */
@@ -738,6 +763,31 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *ptr_channel,
                                       NULL);
                 CHANNEL_SET_MODE(ptr_channel, (set_flag == '+'),
                                  CHANNEL_MODE_INVITE);
+                break;
+            case 'I':
+                pos = NULL;
+                if (parm)
+                {
+                    pos = strchr (parm, ' ');
+                    if (pos)
+                        pos[0] = '\0';
+                }
+                if (nick_host)
+                    irc_display_mode (server, ptr_channel->buffer,
+                                      channel_name, set_flag, "I", nick_host,
+                                      (set_flag == '+') ?
+                                          _("blocks invite on") :
+                                          _("removes invite block on"),
+                                      (parm) ? parm : NULL);
+                
+                /* look for next parameter */
+                if (parm && pos)
+                {
+                    pos++;
+                    while (pos[0] == ' ')
+                        pos++;
+                    parm = pos;
+                }
                 break;
             case 'k':
                 pos = NULL;
@@ -941,6 +991,35 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *ptr_channel,
                         nick_resort (ptr_channel, ptr_nick);
                         gui_draw_buffer_nick (ptr_channel->buffer, 1);
                     }
+                }
+                
+                /* look for next parameter */
+                if (parm && pos)
+                {
+                    pos++;
+                    while (pos[0] == ' ')
+                        pos++;
+                    parm = pos;
+                }
+                break;
+            default: /* unknown mode received */
+                pos = NULL;
+                if (parm)
+                {
+                    pos = strchr (parm, ' ');
+                    if (pos)
+                        pos[0] = '\0';
+                }
+                if (nick_host)
+                {
+                    unknown_mode[0] = set_flag;
+                    unknown_mode[1] = modes[0];
+                    unknown_mode[2] = '\0';
+                    irc_display_mode (server, ptr_channel->buffer,
+                                      channel_name, set_flag, unknown_mode + 1,
+                                      nick_host,
+                                      unknown_mode,
+                                      (parm) ? parm : NULL);
                 }
                 
                 /* look for next parameter */

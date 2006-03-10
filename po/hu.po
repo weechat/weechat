@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.8-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-03-08 16:26+0100\n"
-"PO-Revision-Date: 2006-02-22 10:26+0100\n"
+"POT-Creation-Date: 2006-03-10 23:39+0100\n"
+"PO-Revision-Date: 2006-03-10 23:40+0100\n"
 "Last-Translator: voroskoi <voroskoi@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1393,7 +1393,7 @@ msgstr "ki"
 msgid " (temporary server, will not be saved)"
 msgstr " (átmeneti szerver, nem lesz mentve)"
 
-#: src/irc/irc-display.c:271 src/irc/irc-display.c:300 src/irc/irc-recv.c:3307
+#: src/irc/irc-display.c:271 src/irc/irc-display.c:300 src/irc/irc-recv.c:3386
 msgid "seconds"
 msgstr "másodperc"
 
@@ -1401,7 +1401,7 @@ msgstr "másodperc"
 msgid "(hidden)"
 msgstr "(rejtett)"
 
-#: src/irc/irc-send.c:59 src/irc/irc-recv.c:4834
+#: src/irc/irc-send.c:59 src/irc/irc-recv.c:4913
 msgid "unknown"
 msgstr "ismeretlen"
 
@@ -1468,9 +1468,9 @@ msgstr ""
 msgid "You have been invited to %s%s%s by %s%s\n"
 msgstr "Meghívást kapott a %s%s%s szobába %s%s felhasználótól\n"
 
-#: src/irc/irc-recv.c:377 src/irc/irc-recv.c:472 src/irc/irc-recv.c:1016
-#: src/irc/irc-recv.c:1408 src/irc/irc-recv.c:1688 src/irc/irc-recv.c:3679
-#: src/irc/irc-recv.c:3700 src/irc/irc-recv.c:3761 src/irc/irc-recv.c:3832
+#: src/irc/irc-recv.c:377 src/irc/irc-recv.c:472 src/irc/irc-recv.c:1095
+#: src/irc/irc-recv.c:1487 src/irc/irc-recv.c:1767 src/irc/irc-recv.c:3758
+#: src/irc/irc-recv.c:3779 src/irc/irc-recv.c:3840 src/irc/irc-recv.c:3911
 #, c-format
 msgid "%s channel \"%s\" not found for \"%s\" command\n"
 msgstr "%s a \"%s\" szoba nem található a \"%s\" parancshoz\n"
@@ -1509,418 +1509,437 @@ msgid "removes ban on"
 msgstr ""
 
 #: src/irc/irc-recv.c:658
+#, fuzzy
+msgid "sets realname ban on"
+msgstr "a szerver neve nem található"
+
+#: src/irc/irc-recv.c:659
+#, fuzzy
+msgid "removes realname ban on"
+msgstr "kikapcsolja a titkor szoba kapcsolót"
+
+#: src/irc/irc-recv.c:683
 msgid "sets exception on"
 msgstr ""
 
-#: src/irc/irc-recv.c:659
+#: src/irc/irc-recv.c:684
 msgid "removes exception on"
 msgstr ""
 
-#: src/irc/irc-recv.c:683
+#: src/irc/irc-recv.c:708
 msgid "sets mode +f"
 msgstr ""
 
-#: src/irc/irc-recv.c:684
+#: src/irc/irc-recv.c:709
 msgid "removes mode +f"
 msgstr ""
 
-#: src/irc/irc-recv.c:708
+#: src/irc/irc-recv.c:733
 msgid "gives half channel operator status to"
 msgstr "féloperátori jogot ad a következő felhasználónak:"
 
-#: src/irc/irc-recv.c:709
+#: src/irc/irc-recv.c:734
 msgid "removes half channel operator status from"
 msgstr "elveszi a féloperátori jogot a következő felhasználótól:"
 
-#: src/irc/irc-recv.c:736
+#: src/irc/irc-recv.c:761
 msgid "sets invite-only channel flag"
 msgstr "bekapcsolja a meghívásos szoba kapcsolót"
 
-#: src/irc/irc-recv.c:737
+#: src/irc/irc-recv.c:762
 msgid "removes invite-only channel flag"
 msgstr "kikapcsolja a meghívásos szoba kapcsolót"
 
-#: src/irc/irc-recv.c:754
+#: src/irc/irc-recv.c:779
+msgid "blocks invite on"
+msgstr ""
+
+#: src/irc/irc-recv.c:780
+#, fuzzy
+msgid "removes invite block on"
+msgstr "elveszi a voice jogot a következőtől:"
+
+#: src/irc/irc-recv.c:804
 msgid "sets channel key to"
 msgstr "a szoba kulcsát a következőre változtatta:"
 
-#: src/irc/irc-recv.c:755
+#: src/irc/irc-recv.c:805
 msgid "removes channel key"
 msgstr "megszűnteti a szoba kulcsát"
 
-#: src/irc/irc-recv.c:786
+#: src/irc/irc-recv.c:836
 msgid "sets the user limit to"
 msgstr "kérésére a felhasználói limit:"
 
-#: src/irc/irc-recv.c:787
+#: src/irc/irc-recv.c:837
 msgid "removes user limit"
 msgstr "megszűneteti a felhasználói limitet"
 
-#: src/irc/irc-recv.c:809
+#: src/irc/irc-recv.c:859
 msgid "sets moderated channel flag"
 msgstr "bekapcsolja a moderált szoba kapcsolót"
 
-#: src/irc/irc-recv.c:810
+#: src/irc/irc-recv.c:860
 msgid "removes moderated channel flag"
 msgstr "kikapcsolja a moderált szoba kapcsolót"
 
-#: src/irc/irc-recv.c:820
+#: src/irc/irc-recv.c:870
 msgid "sets messages from channel only flag"
 msgstr "bekapcsolja az üzenet csak ebből a szobából kapcsolót"
 
-#: src/irc/irc-recv.c:821
+#: src/irc/irc-recv.c:871
 msgid "removes messages from channel only flag"
 msgstr "kikapcsolja az üzenet csak ebből a szobából kapcsolót"
 
-#: src/irc/irc-recv.c:838
+#: src/irc/irc-recv.c:888
 msgid "gives channel operator status to"
 msgstr "operátori jogot ad a következőnek:"
 
-#: src/irc/irc-recv.c:839
+#: src/irc/irc-recv.c:889
 msgid "removes channel operator status from"
 msgstr "elveszi az operátori jogot a következőktől:"
 
-#: src/irc/irc-recv.c:866
+#: src/irc/irc-recv.c:916
 msgid "sets private channel flag"
 msgstr "bekapcsolja a privát szoba kapcsolót"
 
-#: src/irc/irc-recv.c:867
+#: src/irc/irc-recv.c:917
 msgid "removes private channel flag"
 msgstr "kikapcsolja a privát szoba kapcsolót"
 
-#: src/irc/irc-recv.c:884
+#: src/irc/irc-recv.c:934
 msgid "sets quiet on"
 msgstr ""
 
-#: src/irc/irc-recv.c:885
+#: src/irc/irc-recv.c:935
 msgid "removes quiet on"
 msgstr ""
 
-#: src/irc/irc-recv.c:902
+#: src/irc/irc-recv.c:952
 msgid "sets secret channel flag"
 msgstr "bekapcsolja a titkos szoba kapcsolót"
 
-#: src/irc/irc-recv.c:903
+#: src/irc/irc-recv.c:953
 msgid "removes secret channel flag"
 msgstr "kikapcsolja a titkor szoba kapcsolót"
 
-#: src/irc/irc-recv.c:913
+#: src/irc/irc-recv.c:963
 msgid "sets topic protection"
 msgstr "bekapcsolja a témavédelmet"
 
-#: src/irc/irc-recv.c:914
+#: src/irc/irc-recv.c:964
 msgid "removes topic protection"
 msgstr "kikapcsolja a témavédelmet"
 
-#: src/irc/irc-recv.c:931
+#: src/irc/irc-recv.c:981
 msgid "gives voice to"
 msgstr "voice jogot biztosít a következőnek:"
 
-#: src/irc/irc-recv.c:932
+#: src/irc/irc-recv.c:982
 msgid "removes voice from"
 msgstr "elveszi a voice jogot a következőtől:"
 
-#: src/irc/irc-recv.c:975 src/irc/irc-recv.c:1061 src/irc/irc-recv.c:1487
-#: src/irc/irc-recv.c:2312
+#: src/irc/irc-recv.c:1054 src/irc/irc-recv.c:1140 src/irc/irc-recv.c:1566
+#: src/irc/irc-recv.c:2391
 #, c-format
 msgid "%s \"%s\" command received without host\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:985
+#: src/irc/irc-recv.c:1064
 #, c-format
 msgid "%s \"%s\" command received without channel or nickname\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:1027
+#: src/irc/irc-recv.c:1106
 #, c-format
 msgid "%s[%s%s%s/%s%s%s]%s mode changed by %s%s\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:1096
+#: src/irc/irc-recv.c:1175
 #, c-format
 msgid "You are now known as %s%s\n"
 msgstr "Az új neved: %s%s\n"
 
-#: src/irc/irc-recv.c:1100
+#: src/irc/irc-recv.c:1179
 #, c-format
 msgid "%s%s%s is now known as %s%s\n"
 msgstr "%s%s%s új neve: %s%s\n"
 
-#: src/irc/irc-recv.c:1168
+#: src/irc/irc-recv.c:1247
 #, c-format
 msgid "%s nickname not found for \"%s\" command\n"
 msgstr "%s nem található név a \"%s\" parancshoz\n"
 
-#: src/irc/irc-recv.c:1182
+#: src/irc/irc-recv.c:1261
 #, c-format
 msgid "CTCP %sVERSION%s reply from %s%s%s: %s\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:1216
+#: src/irc/irc-recv.c:1295
 #, c-format
 msgid "CTCP %sPING%s reply from %s%s%s: %ld.%ld seconds\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:1239 src/irc/irc-recv.c:2115 src/irc/irc-recv.c:2227
+#: src/irc/irc-recv.c:1318 src/irc/irc-recv.c:2194 src/irc/irc-recv.c:2306
 #, c-format
 msgid "%s cannot create new private window \"%s\"\n"
 msgstr "%s nem sikerült új privát ablakot nyitni \"%s\"\n"
 
-#: src/irc/irc-recv.c:1264 src/irc/irc-recv.c:2252
+#: src/irc/irc-recv.c:1343 src/irc/irc-recv.c:2331
 msgid "Private"
 msgstr "Privát"
 
-#: src/irc/irc-recv.c:1339
+#: src/irc/irc-recv.c:1418
 #, c-format
 msgid "%s \"%s\" command received without host or channel\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:1379
+#: src/irc/irc-recv.c:1458
 #, c-format
 msgid "%s%s %s(%s%s%s)%s has left %s%s"
 msgstr ""
 
-#: src/irc/irc-recv.c:1537 src/irc/irc-recv.c:1663 src/irc/irc-recv.c:2143
+#: src/irc/irc-recv.c:1616 src/irc/irc-recv.c:1742 src/irc/irc-recv.c:2222
 msgid "Channel"
 msgstr "Szoba"
 
-#: src/irc/irc-recv.c:1571
+#: src/irc/irc-recv.c:1650
 #, c-format
 msgid "Received a CTCP %sSOUND%s \"%s\" from %s%s\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:1601 src/irc/irc-recv.c:1787
+#: src/irc/irc-recv.c:1680 src/irc/irc-recv.c:1866
 #, c-format
 msgid "CTCP %sPING%s received from %s%s\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:1630 src/irc/irc-recv.c:2194
+#: src/irc/irc-recv.c:1709 src/irc/irc-recv.c:2273
 #, c-format
 msgid "Unknown CTCP %s%s%s received from %s%s"
 msgstr ""
 
-#: src/irc/irc-recv.c:1743
+#: src/irc/irc-recv.c:1822
 #, c-format
 msgid "CTCP %sVERSION%s received from %s%s"
 msgstr ""
 
-#: src/irc/irc-recv.c:1810 src/irc/irc-recv.c:1831 src/irc/irc-recv.c:1847
-#: src/irc/irc-recv.c:1863 src/irc/irc-recv.c:1894 src/irc/irc-recv.c:1915
-#: src/irc/irc-recv.c:1931 src/irc/irc-recv.c:1961 src/irc/irc-recv.c:1982
-#: src/irc/irc-recv.c:1998 src/irc/irc-recv.c:2028 src/irc/irc-recv.c:2049
-#: src/irc/irc-recv.c:2064 src/irc/irc-recv.c:2288 src/irc/irc-recv.c:2640
-#: src/irc/irc-recv.c:4039 src/irc/irc-recv.c:4054 src/irc/irc-recv.c:4069
-#: src/irc/irc-recv.c:4084 src/irc/irc-recv.c:4097 src/irc/irc-recv.c:4162
-#: src/irc/irc-recv.c:4176 src/irc/irc-recv.c:4410 src/irc/irc-recv.c:4468
-#: src/irc/irc-recv.c:4606 src/irc/irc-recv.c:4621 src/irc/irc-recv.c:4727
-#: src/irc/irc-recv.c:4741
+#: src/irc/irc-recv.c:1889 src/irc/irc-recv.c:1910 src/irc/irc-recv.c:1926
+#: src/irc/irc-recv.c:1942 src/irc/irc-recv.c:1973 src/irc/irc-recv.c:1994
+#: src/irc/irc-recv.c:2010 src/irc/irc-recv.c:2040 src/irc/irc-recv.c:2061
+#: src/irc/irc-recv.c:2077 src/irc/irc-recv.c:2107 src/irc/irc-recv.c:2128
+#: src/irc/irc-recv.c:2143 src/irc/irc-recv.c:2367 src/irc/irc-recv.c:2719
+#: src/irc/irc-recv.c:4118 src/irc/irc-recv.c:4133 src/irc/irc-recv.c:4148
+#: src/irc/irc-recv.c:4163 src/irc/irc-recv.c:4176 src/irc/irc-recv.c:4241
+#: src/irc/irc-recv.c:4255 src/irc/irc-recv.c:4489 src/irc/irc-recv.c:4547
+#: src/irc/irc-recv.c:4685 src/irc/irc-recv.c:4700 src/irc/irc-recv.c:4806
+#: src/irc/irc-recv.c:4820
 #, c-format
 msgid "%s cannot parse \"%s\" command\n"
 msgstr "%s nem sikerült végrehajtani a \"%s\" parancsot\n"
 
-#: src/irc/irc-recv.c:2077
+#: src/irc/irc-recv.c:2156
 #, c-format
 msgid "%s unknown DCC CHAT type received from "
 msgstr ""
 
-#: src/irc/irc-recv.c:2335
+#: src/irc/irc-recv.c:2414
 #, c-format
 msgid "%s%s %s(%s%s%s)%s has quit"
 msgstr "%s%s %s(%s%s%s)%s kilépett"
 
-#: src/irc/irc-recv.c:2467
+#: src/irc/irc-recv.c:2546
 #, c-format
 msgid "%s \"%s\" command received without channel\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:2496
+#: src/irc/irc-recv.c:2575
 #, c-format
 msgid "%s%s%s has changed topic for %s%s%s to:"
 msgstr "%s%s%s megváltoztatta a %s%s%s szoba témáját:"
 
-#: src/irc/irc-recv.c:2507
+#: src/irc/irc-recv.c:2586
 #, c-format
 msgid "%s%s%s has unset topic for %s%s\n"
 msgstr "%s%s%s törölte a %s%s szoba témáját\n"
 
-#: src/irc/irc-recv.c:2626
+#: src/irc/irc-recv.c:2705
 #, c-format
 msgid "User mode %s[%s%s%s/%s%s%s]\n"
 msgstr "Felhasználói mód %s[%s%s%s/%s%s%s]\n"
 
-#: src/irc/irc-recv.c:2690
+#: src/irc/irc-recv.c:2769
 #, c-format
 msgid "%s%s%s is away: %s\n"
 msgstr "%s%s%s távol: %s\n"
 
-#: src/irc/irc-recv.c:2782
+#: src/irc/irc-recv.c:2861
 msgid "Users online: "
 msgstr "Online felhasználók: "
 
-#: src/irc/irc-recv.c:3158
+#: src/irc/irc-recv.c:3237
 #, c-format
 msgid "%s%s %s(%s%s@%s%s)%s was %s\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:3279
+#: src/irc/irc-recv.c:3358
 #, c-format
 msgid "%s[%s%s%s]%s idle: "
 msgstr "%s[%s%s%s]%s tétlen: "
 
-#: src/irc/irc-recv.c:3291 src/common/command.c:3458 src/common/command.c:3476
+#: src/irc/irc-recv.c:3370 src/common/command.c:3458 src/common/command.c:3476
 msgid "days"
 msgstr "nap"
 
-#: src/irc/irc-recv.c:3291 src/common/command.c:3458 src/common/command.c:3476
+#: src/irc/irc-recv.c:3370 src/common/command.c:3458 src/common/command.c:3476
 msgid "day"
 msgstr "nap"
 
-#: src/irc/irc-recv.c:3295
+#: src/irc/irc-recv.c:3374
 #, c-format
 msgid "%s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
 msgstr "%s%02d %s%s %s%02d %s%s %s%02d %s%s, bejelentkezett: %s%s"
 
-#: src/irc/irc-recv.c:3299
+#: src/irc/irc-recv.c:3378
 msgid "hours"
 msgstr "óra"
 
-#: src/irc/irc-recv.c:3299
+#: src/irc/irc-recv.c:3378
 msgid "hour"
 msgstr "óra"
 
-#: src/irc/irc-recv.c:3303
+#: src/irc/irc-recv.c:3382
 msgid "minutes"
 msgstr "perc"
 
-#: src/irc/irc-recv.c:3303
+#: src/irc/irc-recv.c:3382
 msgid "minute"
 msgstr "perc"
 
-#: src/irc/irc-recv.c:3307
+#: src/irc/irc-recv.c:3386
 msgid "second"
 msgstr "másodperc"
 
-#: src/irc/irc-recv.c:3691
+#: src/irc/irc-recv.c:3770
 #, c-format
 msgid "No topic set for %s%s\n"
 msgstr "Nincs téma beállítva a %s%s szobában\n"
 
-#: src/irc/irc-recv.c:3747
+#: src/irc/irc-recv.c:3826
 #, c-format
 msgid "Topic for %s%s%s is: "
 msgstr "A %s%s%s szoba témája: "
 
-#: src/irc/irc-recv.c:3771 src/irc/irc-recv.c:3859 src/irc/irc-recv.c:3914
+#: src/irc/irc-recv.c:3850 src/irc/irc-recv.c:3938 src/irc/irc-recv.c:3993
 #, c-format
 msgid "%s cannot identify channel for \"%s\" command\n"
 msgstr "%s nem sikerült azonosítani a szobát a \"%s\" parancshoz\n"
 
-#: src/irc/irc-recv.c:3821
+#: src/irc/irc-recv.c:3900
 #, c-format
 msgid "Topic set by %s%s%s, %s"
 msgstr "A témát beállította: %s%s%s, %s"
 
-#: src/irc/irc-recv.c:3841
+#: src/irc/irc-recv.c:3920
 #, c-format
 msgid "%s cannot identify date/time for \"%s\" command\n"
 msgstr "%s nem sikerült a dátumot/időt meghatározni a \"%s\" parancshoz\n"
 
-#: src/irc/irc-recv.c:3850 src/irc/irc-recv.c:3923
+#: src/irc/irc-recv.c:3929 src/irc/irc-recv.c:4002
 #, c-format
 msgid "%s cannot identify nickname for \"%s\" command\n"
 msgstr "%s nem sikerült a felhasználót meghatározni a \"%s\" parancshoz\n"
 
-#: src/irc/irc-recv.c:3899
+#: src/irc/irc-recv.c:3978
 #, c-format
 msgid "%s%s%s has invited %s%s%s on %s%s\n"
 msgstr "%s%s%s meghívta %s%s%s-t %s%s-kor\n"
 
-#: src/irc/irc-recv.c:3959
+#: src/irc/irc-recv.c:4038
 #, c-format
 msgid "Channel reop %s%s%s: %s%s\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:4456
+#: src/irc/irc-recv.c:4535
 #, c-format
 msgid "%s cannot create nick \"%s\" for channel \"%s\"\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:4514
+#: src/irc/irc-recv.c:4593
 #, c-format
 msgid "Nicks %s%s%s: %s["
 msgstr "Felhasználók a %s%s%s szobában: %s["
 
-#: src/irc/irc-recv.c:4535
+#: src/irc/irc-recv.c:4614
 #, c-format
 msgid ""
 "Channel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 msgstr ""
 "%s%s%s szoba: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 
-#: src/irc/irc-recv.c:4543
+#: src/irc/irc-recv.c:4622
 msgid "nicks"
 msgstr "név"
 
-#: src/irc/irc-recv.c:4543
+#: src/irc/irc-recv.c:4622
 msgid "nick"
 msgstr "név"
 
-#: src/irc/irc-recv.c:4548
+#: src/irc/irc-recv.c:4627
 msgid "ops"
 msgstr "operátor"
 
-#: src/irc/irc-recv.c:4548
+#: src/irc/irc-recv.c:4627
 msgid "op"
 msgstr "operátor"
 
-#: src/irc/irc-recv.c:4552
+#: src/irc/irc-recv.c:4631
 msgid "halfops"
 msgstr "féloperátor"
 
-#: src/irc/irc-recv.c:4552
+#: src/irc/irc-recv.c:4631
 msgid "halfop"
 msgstr "féloperátor"
 
-#: src/irc/irc-recv.c:4556
+#: src/irc/irc-recv.c:4635
 msgid "voices"
 msgstr ""
 
-#: src/irc/irc-recv.c:4556
+#: src/irc/irc-recv.c:4635
 msgid "voice"
 msgstr ""
 
-#: src/irc/irc-recv.c:4560
+#: src/irc/irc-recv.c:4639
 msgid "normal"
 msgstr "normál"
 
-#: src/irc/irc-recv.c:4661
+#: src/irc/irc-recv.c:4740
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned by "
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
-#: src/irc/irc-recv.c:4696
+#: src/irc/irc-recv.c:4775
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned\n"
 msgstr "%s[%s%s%s] %s%s%s kitiltva\n"
 
-#: src/irc/irc-recv.c:4788
+#: src/irc/irc-recv.c:4867
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\"\n"
 msgstr "%s: a \"%s\" név már foglalt, próbálom a második nevet: \"%s\"\n"
 
-#: src/irc/irc-recv.c:4800
+#: src/irc/irc-recv.c:4879
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\"\n"
 msgstr "%s: a \"%s\" név már foglalt, próbálom a harmadik nevet: \"%s\"\n"
 
-#: src/irc/irc-recv.c:4812
+#: src/irc/irc-recv.c:4891
 #, c-format
 msgid ""
 "%s: all declared nicknames are already in use, closing connection with "
 "server!\n"
 msgstr "%s: minden megadott név foglalt, kapcsolat bontása a szerverrel!\n"
 
-#: src/irc/irc-recv.c:4822
+#: src/irc/irc-recv.c:4901
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\"\n"
 msgstr "%s: a \"%s\" név már foglalt, próbálom az első nevet: \"%s\"\n"
@@ -5291,21 +5310,3 @@ msgstr ""
 #: src/common/weeconfig.c:2283
 msgid "Saving config to disk\n"
 msgstr "Beállítások mentése a lemezre\n"
-
-#~ msgid "dcc flag not found for buffer"
-#~ msgstr "dcc kapcsoló nem található a pufferhez"
-
-#~ msgid "%s server not found for plugin exec command\n"
-#~ msgstr "%s szerver nem található a modul futtatása parancshoz\n"
-
-#~ msgid "%s alias or command \"%s\" already exists!\n"
-#~ msgstr "%s a \"%s\" aliasz vagy parancs már létezik!\n"
-
-#~ msgid "%s alias cannot run another alias!\n"
-#~ msgstr "%s egy aliaszból nem hívható egy másik aliasz!\n"
-
-#~ msgid "%s target command \"/%s\" does not exist!\n"
-#~ msgstr "%s a célparancs (\"/%s\") nem létezik!\n"
-
-#~ msgid "%s alias can not start with \"/\"\n"
-#~ msgstr "%s az aliasz nem kezdődhet \"/\" jellel\n"
