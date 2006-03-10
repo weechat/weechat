@@ -4816,7 +4816,7 @@ msgstr "intervalle entre deux vérifications des absences"
 #: src/common/weeconfig.c:708
 msgid "interval between two checks for away (in minutes, 0 = never check)"
 msgstr ""
-"intervalle entre deux vérifications des absences (en minutes, 0 = ne jemais "
+"intervalle entre deux vérifications des absences (en minutes, 0 = ne jamais "
 "vérifier)"
 
 #: src/common/weeconfig.c:711
