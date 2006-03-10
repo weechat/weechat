@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-03-10 23:39+0100\n"
+"POT-Creation-Date: 2006-03-11 00:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1399,11 +1399,11 @@ msgid "removes realname ban on"
 msgstr ""
 
 #: src/irc/irc-recv.c:683
-msgid "sets exception on"
+msgid "sets ban exemtion on"
 msgstr ""
 
 #: src/irc/irc-recv.c:684
-msgid "removes exception on"
+msgid "removes ban exemption on"
 msgstr ""
 
 #: src/irc/irc-recv.c:708
@@ -1431,11 +1431,11 @@ msgid "removes invite-only channel flag"
 msgstr ""
 
 #: src/irc/irc-recv.c:779
-msgid "blocks invite on"
+msgid "sets invite-only exemption on"
 msgstr ""
 
 #: src/irc/irc-recv.c:780
-msgid "removes invite block on"
+msgid "removes invite-only exemption on"
 msgstr ""
 
 #: src/irc/irc-recv.c:804

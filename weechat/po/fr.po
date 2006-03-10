@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.8-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-03-10 23:39+0100\n"
-"PO-Revision-Date: 2006-03-10 23:40+0100\n"
+"POT-Creation-Date: 2006-03-11 00:16+0100\n"
+"PO-Revision-Date: 2006-03-11 00:17+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1515,12 +1515,12 @@ msgid "removes realname ban on"
 msgstr "supprime le banissement sur le nom réel"
 
 #: src/irc/irc-recv.c:683
-msgid "sets exception on"
-msgstr "définit une exception sur"
+msgid "sets ban exemtion on"
+msgstr "définit une exception de banissement sur"
 
 #: src/irc/irc-recv.c:684
-msgid "removes exception on"
-msgstr "supprime l'exception sur"
+msgid "removes ban exemption on"
+msgstr "supprime l'exception de banissement sur"
 
 #: src/irc/irc-recv.c:708
 msgid "sets mode +f"
@@ -1547,12 +1547,12 @@ msgid "removes invite-only channel flag"
 msgstr "supprime le mode invité seulement pour le canal"
 
 #: src/irc/irc-recv.c:779
-msgid "blocks invite on"
-msgstr "bloque les invitations pour"
+msgid "sets invite-only exemption on"
+msgstr "définit une exception d'invitation sur"
 
 #: src/irc/irc-recv.c:780
-msgid "removes invite block on"
-msgstr "supprime le blocage d'invitation pour"
+msgid "removes invite-only exemption on"
+msgstr "supprime l'exception d'invitation sur"
 
 #: src/irc/irc-recv.c:804
 msgid "sets channel key to"

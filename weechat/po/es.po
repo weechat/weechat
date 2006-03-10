@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.8-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-03-10 23:39+0100\n"
-"PO-Revision-Date: 2006-03-10 23:40+0100\n"
+"POT-Creation-Date: 2006-03-11 00:16+0100\n"
+"PO-Revision-Date: 2006-03-11 00:17+0100\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1520,11 +1520,13 @@ msgid "removes realname ban on"
 msgstr "quita el baneo en"
 
 #: src/irc/irc-recv.c:683
-msgid "sets exception on"
+#, fuzzy
+msgid "sets ban exemtion on"
 msgstr "pone una excepción en"
 
 #: src/irc/irc-recv.c:684
-msgid "removes exception on"
+#, fuzzy
+msgid "removes ban exemption on"
 msgstr "quita una excepción en"
 
 #: src/irc/irc-recv.c:708
@@ -1552,13 +1554,14 @@ msgid "removes invite-only channel flag"
 msgstr "quita el indicador de canal sólo-por-invitación"
 
 #: src/irc/irc-recv.c:779
-msgid "blocks invite on"
-msgstr ""
+#, fuzzy
+msgid "sets invite-only exemption on"
+msgstr "pone una excepción en"
 
 #: src/irc/irc-recv.c:780
 #, fuzzy
-msgid "removes invite block on"
-msgstr "quita el modo silencio"
+msgid "removes invite-only exemption on"
+msgstr "quita una excepción en"
 
 #: src/irc/irc-recv.c:804
 msgid "sets channel key to"

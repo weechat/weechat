@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.8-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-03-10 23:39+0100\n"
+"POT-Creation-Date: 2006-03-11 00:16+0100\n"
 "PO-Revision-Date: 2006-03-10 23:40+0100\n"
 "Last-Translator: voroskoi <voroskoi@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1519,12 +1519,14 @@ msgid "removes realname ban on"
 msgstr "kikapcsolja a titkor szoba kapcsolót"
 
 #: src/irc/irc-recv.c:683
-msgid "sets exception on"
-msgstr ""
+#, fuzzy
+msgid "sets ban exemtion on"
+msgstr "a szerver neve nem található"
 
 #: src/irc/irc-recv.c:684
-msgid "removes exception on"
-msgstr ""
+#, fuzzy
+msgid "removes ban exemption on"
+msgstr "kikapcsolja a titkor szoba kapcsolót"
 
 #: src/irc/irc-recv.c:708
 msgid "sets mode +f"
@@ -1551,12 +1553,13 @@ msgid "removes invite-only channel flag"
 msgstr "kikapcsolja a meghívásos szoba kapcsolót"
 
 #: src/irc/irc-recv.c:779
-msgid "blocks invite on"
-msgstr ""
+#, fuzzy
+msgid "sets invite-only exemption on"
+msgstr "bekapcsolja a meghívásos szoba kapcsolót"
 
 #: src/irc/irc-recv.c:780
 #, fuzzy
-msgid "removes invite block on"
+msgid "removes invite-only exemption on"
 msgstr "elveszi a voice jogot a következőtől:"
 
 #: src/irc/irc-recv.c:804

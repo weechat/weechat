@@ -680,8 +680,8 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *ptr_channel,
                     irc_display_mode (server, ptr_channel->buffer,
                                       channel_name, set_flag, "e", nick_host,
                                       (set_flag == '+') ?
-                                          _("sets exception on") :
-                                          _("removes exception on"),
+                                          _("sets ban exemtion on") :
+                                          _("removes ban exemption on"),
                                       (parm) ? parm : NULL);
                 
                 /* look for next parameter */
@@ -776,8 +776,8 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *ptr_channel,
                     irc_display_mode (server, ptr_channel->buffer,
                                       channel_name, set_flag, "I", nick_host,
                                       (set_flag == '+') ?
-                                          _("blocks invite on") :
-                                          _("removes invite block on"),
+                                          _("sets invite-only exemption on") :
+                                          _("removes invite-only exemption on"),
                                       (parm) ? parm : NULL);
                 
                 /* look for next parameter */
