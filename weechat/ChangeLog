@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-03-10
+ChangeLog - 2006-03-11
 
 
 Version 0.1.8 (under dev!):
+   * fixed display bug when top of buffer is displayed and first line is
+     removed (according to "history_max_lines" setting)
    * fixed /mode command output
    * improved alias completion (now uses target command for completion)
    * fixed completion problem in private with nicks

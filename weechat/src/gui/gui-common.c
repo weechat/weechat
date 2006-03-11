@@ -633,8 +633,10 @@ gui_line_free (t_gui_line *line)
     {
         if (ptr_win->start_line == line)
         {
-            ptr_win->start_line = NULL;
+            ptr_win->start_line = ptr_win->start_line->next_line;
             ptr_win->start_line_pos = 0;
+            gui_draw_buffer_chat (ptr_win->buffer, 0);
+            gui_draw_buffer_status (ptr_win->buffer, 0);
         }
     }
     if (line->data)
