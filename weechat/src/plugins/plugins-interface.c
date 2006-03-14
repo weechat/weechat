@@ -430,12 +430,10 @@ weechat_plugin_get_info (t_weechat_plugin *plugin, char *info, char *server)
     /* below are infos that need server to return value */
     
     plugin_find_server_channel (server, NULL, &ptr_server, &ptr_channel);
-    if (!ptr_server)
-        return NULL;
     
     if (ascii_strcasecmp (info, "nick") == 0)
     {
-        if (ptr_server->is_connected && ptr_server->nick)
+        if (ptr_server && ptr_server->is_connected && ptr_server->nick)
             return strdup (ptr_server->nick);
     }
     else if (ascii_strcasecmp (info, "channel") == 0)
@@ -445,12 +443,12 @@ weechat_plugin_get_info (t_weechat_plugin *plugin, char *info, char *server)
     }
     else if (ascii_strcasecmp (info, "server") == 0)
     {
-        if (ptr_server->is_connected && ptr_server->name)
+        if (ptr_server && ptr_server->is_connected && ptr_server->name)
             return strdup (ptr_server->name);
     }
     else if (ascii_strcasecmp (info, "away") == 0)
     {
-        if (ptr_server->is_connected && ptr_server->is_away)
+        if (ptr_server && ptr_server->is_connected && ptr_server->is_away)
             return strdup ("1");
         else
             return strdup ("0");
