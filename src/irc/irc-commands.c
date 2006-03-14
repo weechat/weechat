@@ -460,6 +460,8 @@ t_irc_command irc_commands[] =
     NULL, 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
   { "376", N_("a server message"), "", "",
     NULL, 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
+  { "378", N_("connecting from"), "", "",
+    NULL, 0, 0, 1, NULL, NULL, irc_cmd_recv_378 },
   { "381", N_("you are now an IRC operator"), "", "",
     NULL, 0, 0, 1, NULL, NULL, irc_cmd_recv_server_msg },
   { "382", N_("rehashing"), "", "",

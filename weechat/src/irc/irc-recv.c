@@ -205,8 +205,9 @@ irc_recv_command (t_irc_server *server, char *entire_line,
 {
     int i, cmd_found, return_code;
     char *pos, *nick, *args_after_color;
+    char *dup_entire_line, *dup_host, *dup_arguments;
     
-    if (command == NULL)
+    if (!command)
         return -2;
 
     /* look for IRC command */
@@ -226,37 +227,44 @@ irc_recv_command (t_irc_server *server, char *entire_line,
     
     if (irc_commands[i].recv_function != NULL)
     {
-        command_ignored = ignore_check (host, irc_commands[i].command_name, NULL, server->name);
+        dup_entire_line = (entire_line) ? strdup (entire_line) : NULL;
+        dup_host = (host) ? strdup (host) : NULL;
+        dup_arguments = (arguments) ? strdup (arguments) : NULL;
+        
+        command_ignored = ignore_check (dup_host, irc_commands[i].command_name, NULL, server->name);
 #ifdef PLUGINS
         return_code = plugin_msg_handler_exec (server->name,
                                                irc_commands[i].command_name,
-                                               entire_line);
+                                               dup_entire_line);
         /* plugin handler choosed to discard message for WeeChat,
            so we ignore this message in standard handler */
         if (return_code & PLUGIN_RC_OK_IGNORE_WEECHAT)
             command_ignored = 1;
-#else
-        /* make gcc happy */
-        (void) entire_line;
 #endif
-        pos = (host) ? strchr (host, '!') : NULL;
+        pos = (dup_host) ? strchr (dup_host, '!') : NULL;
         if (pos)
             pos[0] = '\0';
-        nick = (host) ? strdup (host) : NULL;
+        nick = (dup_host) ? strdup (dup_host) : NULL;
         if (pos)
             pos[0] = '!';
-        args_after_color = (char *)gui_color_decode ((unsigned char *)arguments,
+        args_after_color = (char *)gui_color_decode ((unsigned char *)dup_arguments,
                                                      cfg_irc_colors_receive);
-        irc_last_command_received = strdup (entire_line);
-        return_code = (int) (irc_commands[i].recv_function) (server, host, nick,
+        irc_last_command_received = strdup (dup_entire_line);
+        return_code = (int) (irc_commands[i].recv_function) (server, dup_host, nick,
                                                              (args_after_color) ?
-                                                             args_after_color : arguments);
+                                                             args_after_color : dup_arguments);
         if (irc_last_command_received)
             free (irc_last_command_received);
         if (args_after_color)
             free (args_after_color);
         if (nick)
             free (nick);
+        if (dup_entire_line)
+            free (dup_entire_line);
+        if (dup_host)
+            free (dup_host);
+        if (dup_arguments)
+            free (dup_arguments);
         return return_code;
     }
     
@@ -2445,20 +2453,19 @@ irc_cmd_recv_server_msg (t_irc_server *server, char *host, char *nick, char *arg
     (void) host;
     (void) nick;
     
-    /* skip nickname if at beginning of server message */
-    if (strncmp (server->nick, arguments, strlen (server->nick)) == 0)
-    {
-        arguments += strlen (server->nick) + 1;
-        while (arguments[0] == ' ')
-            arguments++;
-    }
-    
-    if (arguments[0] == ':')
-        arguments++;
-    
-    /* display server message */
     if (!command_ignored)
     {
+        /* skip nickname if at beginning of server message */
+        if (strncmp (server->nick, arguments, strlen (server->nick)) == 0)
+        {
+            arguments += strlen (server->nick) + 1;
+            while (arguments[0] == ' ')
+                arguments++;
+        }
+        
+        if (arguments[0] == ':')
+            arguments++;
+        
         irc_display_prefix (server, server->buffer, PREFIX_SERVER);
         gui_printf (server->buffer, "%s%s\n",
                     GUI_COLOR(COLOR_WIN_CHAT), arguments);
@@ -4844,6 +4851,49 @@ irc_cmd_recv_368 (t_irc_server *server, char *host, char *nick, char *arguments)
                           GUI_COLOR(COLOR_WIN_CHAT),
                           pos_msg);
     }    
+    return 0;
+}
+
+/*
+ * irc_cmd_recv_378: '378' command received (connecting from)
+ */
+
+int
+irc_cmd_recv_378 (t_irc_server *server, char *host, char *nick, char *arguments)
+{
+    char *pos, *pos2;
+    
+    /* make gcc happy */
+    (void) host;
+    (void) nick;
+    
+    if (!command_ignored)
+    {
+        /* skip nickname if at beginning of server message */
+        if (strncmp (server->nick, arguments, strlen (server->nick)) == 0)
+        {
+            arguments += strlen (server->nick) + 1;
+            while (arguments[0] == ' ')
+                arguments++;
+        }
+        
+        irc_display_prefix (server, server->buffer, PREFIX_SERVER);
+        pos = strchr (arguments, ':');
+        if (pos)
+        {
+            pos[0] = '\0';
+            pos2 = pos - 1;
+            while (pos2[0] == ' ')
+                pos2--;
+            pos2[1] = '\0';
+            gui_printf (server->buffer, "%s%s%s\n",
+                        GUI_COLOR(COLOR_WIN_CHAT), arguments, pos + 1);
+        }
+        else
+            gui_printf (server->buffer, "%s%s\n",
+                        GUI_COLOR(COLOR_WIN_CHAT), arguments);
+    }
+    
     return 0;
 }
 
