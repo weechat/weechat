@@ -2973,7 +2973,7 @@ weechat_cmd_set (t_irc_server *server, t_irc_channel *channel,
     
     if (value)
     {
-        pos = strchr (option, '.');
+        pos = strrchr (option, '.');
         if (pos)
         {
             /* server config option modification */

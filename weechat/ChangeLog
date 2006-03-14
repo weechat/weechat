@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-03-11
+ChangeLog - 2006-03-14
 
 
 Version 0.1.8 (under dev!):
+   * fixed /set command when internal server name contains one or many dots
+   * fixed get_info plugin API function when no server at all is opened
    * fixed display bug when top of buffer is displayed and first line is
      removed (according to "history_max_lines" setting)
    * fixed /mode command output
