@@ -1,9 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-* FlashCode, 2006-03-03 (draft)
+* FlashCode, 2006-03-18
 
-    Important release notes for 0.1.8 (draft):
+    WeeChat 0.1.8 released.
+
+    Important release notes:
 
     - it is recommended for users of version 0.1.7 (or any older), to
       replace values in setup file (~/.weechat/weechat.rc) :
