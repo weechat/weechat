@@ -424,7 +424,8 @@ channel_remove_dcc (t_irc_dcc *ptr_dcc)
 int
 channel_get_notify_level (t_irc_server *server, t_irc_channel *channel)
 {
-    char *name, *pos, *pos2, notify;
+    char *name, *pos, *pos2;
+    int notify;
     
     if ((!server) || (!channel))
         return NOTIFY_LEVEL_DEFAULT;
