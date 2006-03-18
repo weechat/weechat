@@ -1,4 +1,4 @@
-WeeChat FAQ, 2006-02-11
+WeeChat FAQ, 2006-03-18
 =======================
 
 Public concerné :
@@ -100,49 +100,49 @@ R:	Les raccourcis clavier sont modifiables avec la commande /key.
 2.5
 ================================================================================
 Q:	Comment puis-je charger des scripts Perl ?
-	Les scripts Perl sont-ils compatibles avec X-chat et/ou Irssi ?
+	Les scripts Perl sont-ils compatibles avec d'autres clients IRC ?
 
 R:	La commande /perl permet de charger les scripts Perl (le chemin par défaut
 	est ~/.weechat/perl).
 	Notez que les scripts dans ~/.weechat/perl/autoload sont automatiquement
 	chargés par WeeChat lorsqu'il démarre.
-	Les scripts Perl ne sont pas compatibles avec X-chat ni Irssi.
+	Les scripts Perl ne sont pas compatibles avec d'autres clients IRC.
 
 
 2.6
 ================================================================================
 Q:	Comment puis-je charger les scripts Python ?
-	Les scripts Python sont-ils compatibles avec X-chat et/ou Irssi ?
+	Les scripts Python sont-ils compatibles avec d'autres clients IRC ?
 
 R:	La commande /python permet de charger les scripts Python (le chemin par
 	défaut est ~/.weechat/python).
 	Notez que les scripts dans ~/.weechat/python/autoload sont automatiquement
 	chargés par WeeChat lorsqu'il démarre.
-	Les scripts Python ne sont pas compatibles avec X-chat ni Irssi.
+	Les scripts Python ne sont pas compatibles avec d'autres clients IRC.
 
 
 2.7
 ================================================================================
 Q:	Comment puis-je charger des scripts Ruby ?
-	Les scripts Ruby sont-ils compatibles avec X-chat et/ou Irssi ?
+	Les scripts Ruby sont-ils compatibles avec d'autres clients IRC ?
 
 R:	La commande /ruby permet de charger les scripts Ruby (le chemin par
 	défaut est ~/.weechat/ruby).
 	Notez que les scripts dans ~/.weechat/ruby/autoload sont automatiquement
 	chargés par WeeChat lorsqu'il démarre.
-	Les scripts Ruby ne sont pas compatibles avec X-chat ni Irssi.
+	Les scripts Ruby ne sont pas compatibles avec d'autres clients IRC.
 
 
 2.8
 ================================================================================
 Q:	Comment puis-je charger des scripts Lua ?
-	Les scripts Lua sont-ils compatibles avec X-chat et/ou Irssi ?
+	Les scripts Lua sont-ils compatibles avec d'autres clients IRC ?
 
 R:	La commande /lua permet de charger les scripts Lua (le chemin par
 	défaut est ~/.weechat/lua).
 	Notez que les scripts dans ~/.weechat/lua/autoload sont automatiquement
 	chargés par WeeChat lorsqu'il démarre.
-	Les scripts Lua ne sont pas compatibles avec X-chat ni Irssi.
+	Les scripts Lua ne sont pas compatibles avec d'autres clients IRC.
 
 
 3.1
@@ -153,7 +153,7 @@ R:	Il y a 3 manières de reporter les bugs :
 	  1. vous pouvez nous joindre sur IRC: irc.freenode.net, canal #weechat
 	  2. vous pouvez soumettre votre bug à cette adresse :
 	     http://savannah.nongnu.org/bugs/?func=addbug&group=weechat
-	  3. vous pouvez envoyer votre problem par mail, consultez la page
+	  3. vous pouvez envoyer votre problème par mail, consultez la page
 	     support pour les mails des développeurs :
 	     http://weechat.flashtux.org/support.php
 	     (vous pouvez souscrire et envoyer à la liste de diffusion

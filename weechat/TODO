@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-TODO - 2006-03-02
+TODO - 2006-03-18
 
 Legend:
   #  done
@@ -63,7 +63,7 @@ Legend:
 
  * Configuration:
     # be able to launch more than one command when connecting to server
-    - use ~/.weechat/dcc by default for DCC incoming files (and create
+    # use ~/.weechat/dcc by default for DCC incoming files (and create
       directory at startup if not found)
     - add global username/realname, used if server values are not filled
     # add command line arg (--dir) to choose weechat home dir

@@ -18,7 +18,7 @@
 #
 
 %define name weechat
-%define version 0.1.7
+%define version 0.1.8
 %define release 1
 
 Name:      %{name}
@@ -44,7 +44,7 @@ rm -rf $RPM_BUILD_ROOT
 %setup
 
 %build
-./configure --prefix=/usr --mandir=/usr/share/man --enable-perl --enable-python --enable-ruby --with-debug=0
+./configure --prefix=/usr --mandir=/usr/share/man --with-debug=0
 make
 
 %install
@@ -66,6 +66,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_docdir}/%{name}/html/*
 
 %changelog
+* Sat Mar 18 2006 FlashCode <flashcode@flashtux.org> 0.1.8-1
+- Released version 0.1.8
 * Sat Jan 14 2006 FlashCode <flashcode@flashtux.org> 0.1.7-1
 - Released version 0.1.7
 * Fri Nov 11 2005 FlashCode <flashcode@flashtux.org> 0.1.6-1

@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-WeeChat known bugs, 2006-01-14
+WeeChat known bugs, 2006-03-18
 
 - display bugs with UTF-8 chars coded on more than 2 bytes
 - divide long messages (> 512 bytes) into more messages so IRC server can
@@ -12,4 +12,3 @@ WeeChat known bugs, 2006-01-14
   (cleared by each WeeChat at startup)
 - WeeChat may crash if too much nicks in nicklist when position is top
   or bottom
-- ./configure does not check that Gtk 2.0 libraries are installed

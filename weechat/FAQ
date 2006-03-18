@@ -1,4 +1,4 @@
-WeeChat FAQ, 2006-02-11
+WeeChat FAQ, 2006-03-18
 =======================
 
 Intended audience:
@@ -95,49 +95,49 @@ A:	Key bindings are customizable with /key command.
 2.5
 ================================================================================
 Q:	How can I load Perl scripts?
-	Are Perl scripts compatible with X-chat or/and Irssi ?
+	Are Perl scripts compatible with other IRC clients ?
 
 A:	You can use /perl command to load scripts (default path is
 	~/.weechat/perl).
 	Note that scripts in ~/.weechat/perl/autoload are automatically loaded
 	when WeeChat is starting up.
-	Perl scripts are not compatible with X-chat and Irssi.
+	Perl scripts are not compatible with other IRC clients.
 
 
 2.6
 ================================================================================
 Q:	How can I load Python scripts?
-	Are Python scripts compatible with X-chat or/and Irssi ?
+	Are Python scripts compatible with other IRC clients ?
 
 A:	You can use /python command to load scripts (default path is
 	~/.weechat/python).
 	Note that scripts in ~/.weechat/python/autoload are automatically loaded
 	when WeeChat is starting up.
-	Python scripts are not compatible with X-chat and Irssi.
+	Python scripts are not compatible with other IRC clients.
 
 
 2.7
 ================================================================================
 Q:	How can I load Ruby scripts?
-	Are Ruby scripts compatible with X-chat or/and Irssi ?
+	Are Ruby scripts compatible with other IRC clients ?
 
 A:	You can use /ruby command to load scripts (default path is
 	~/.weechat/ruby).
 	Note that scripts in ~/.weechat/ruby/autoload are automatically loaded
 	when WeeChat is starting up.
-	Ruby scripts are not compatible with X-chat and Irssi.
+	Ruby scripts are not compatible with other IRC clients.
 
 
 2.8
 ================================================================================
 Q:	How can I load Lua scripts?
-	Are Lua scripts compatible with X-chat or/and Irssi ?
+	Are Lua scripts compatible with other IRC clients ?
 
 A:	You can use /lua command to load scripts (default path is
 	~/.weechat/lua).
 	Note that scripts in ~/.weechat/lua/autoload are automatically loaded
 	when WeeChat is starting up.
-	Lua scripts are not compatible with X-chat and Irssi.
+	Lua scripts are not compatible with other IRC clients.
 
 3.1
 ================================================================================
@@ -145,7 +145,7 @@ Q:	How should I report bugs?
 
 A:	There is 3 ways to report bugs:
 	  1. you can join us on IRC: irc.freenode.net, channel #weechat
-	  2. you can submit your bug at this url:
+	  2. you can submit your bug at this URL:
 	     http://savannah.nongnu.org/bugs/?func=addbug&group=weechat
 	  3. you can mail your problem, look at support page for developer's mails:
 	     http://weechat.flashtux.org/support.php
@@ -158,7 +158,7 @@ Q:	How should I submit patches?
 
 A:	There is 3 ways to submit patches:
 	  1. you can join us on IRC: irc.freenode.net, channel #weechat
-	  2. you can submit your patch at this url:
+	  2. you can submit your patch at this URL:
 	     http://savannah.nongnu.org/patch/?func=addpatch&group=weechat
 	  3. you can mail your patch, look at support page for developer's mails:
 	     http://weechat.flashtux.org/support.php
