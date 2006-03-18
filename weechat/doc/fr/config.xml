@@ -822,7 +822,7 @@
   <entry>entier</entry>
   <entry>entre 0 et 2147483647</entry>
   <entry>0</entry>
-  <entry>Intervalle entre deux vérifications des absences (en minutes, 0 = ne jemais vérifier)</entry>
+  <entry>Intervalle entre deux vérifications des absences (en minutes, 0 = ne jamais vérifier)</entry>
 </row>
 <row>
   <entry><option>irc_away_check_max_nicks</option></entry>

@@ -149,7 +149,7 @@ lister tous les noms de serveurs connus du serveur qui répondent à la requête
 masque_serveur: liste des serveurs correspondant au masque
 
 </programlisting>
-<command>list  [canal[,canall] [serveur]]</command>
+<command>list  [canal[,canal] [serveur]]</command>
 <programlisting>
 lister les canaux et leur sujet
 
@@ -248,7 +248,7 @@ obtenir le statut d'opérateur
 utilisateur/mot_de_passe: utilisé pour obtenir les privilèges sur le serveur IRC courant
 
 </programlisting>
-<command>part  [canal[,canall] [message_de_fin]</command>
+<command>part  [canal[,canal]] [message_de_fin]</command>
 <programlisting>
 quitter un canal
 
