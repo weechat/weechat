@@ -2,6 +2,8 @@
 
 #export DH_VERBOSE=1
 
+DEB_HOST_ARCH_OS := $(shell dpkg-architecture -qDEB_HOST_ARCH_OS)
+
 ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
 	CFLAGS += -O0
 else
@@ -11,12 +13,15 @@ ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
 	INSTALL_PROGRAM += -s
 endif
 
+ifeq ($(DEB_HOST_ARCH_OS),hurd)
+LDFLAGS +=-lpthread
+endif
+
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
-	./configure --prefix=/usr --sysconfdir=/etc --mandir=\$${prefix}/share/man \
-	--infodir=\$${prefix}/share/info --enable-perl --enable-python --enable-ruby \
-	--with-debug=0
+	LDFLAGS=$(LDFLAGS) ./configure --prefix=/usr --sysconfdir=/etc --mandir=\$${prefix}/share/man \
+	--infodir=\$${prefix}/share/info --with-debug=0
 	touch configure-stamp
 
 
