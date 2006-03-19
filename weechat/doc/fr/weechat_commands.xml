@@ -14,13 +14,13 @@ créer un alias pour une commande
 paramètres: paramètres pour la commande
 
 </programlisting>
-<command>buffer  [action | nombre | [[serveur] [canal]]]</command>
+<command>buffer  [action [args] | nombre | [[serveur] [canal]]]</command>
 <programlisting>
 gestion des tampons
 
  action: action à effectuer:
    move: déplacer le tampon dans la liste (peut être relatif, par exemple -1)
-  close: fermer le tampon (pour un canal: équivalent à /part sans message de fin)
+  close: fermer le tampon (le paramètre optionnel est le message de fin, pour un canal)
    list: liste les tampons ouverts (pas de paramètre affiche cette liste)
  notify: fixer le niveau de notification (0=jamais, 1=highlight, 2=1+msg, 3=2+join/part)
 serveur

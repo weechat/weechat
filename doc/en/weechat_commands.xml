@@ -14,13 +14,13 @@ alias_name: name of alias
 arguments: arguments for command
 
 </programlisting>
-<command>buffer  [action | number | [[server] [channel]]]</command>
+<command>buffer  [action [args] | number | [[server] [channel]]]</command>
 <programlisting>
 manage buffers
 
  action: action to do:
    move: move buffer in the list (may be relative, for example -1)
-  close: close buffer (for channel: same as /part without part message)
+  close: close buffer (optional arg is part message, for a channel)
    list: list opened buffers (no parameter implies this list)
  notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)
 server

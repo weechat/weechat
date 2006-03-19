@@ -51,6 +51,14 @@ envoyer un message CTCP (Client-To-Client Protocol)
 arguments: arguments pour le CTCP
 
 </programlisting>
+<command>cycle  [canal[,canal]] [message_de_fin]</command>
+<programlisting>
+quitter et rejoindre un canal
+
+         canal: canal pour le cycle
+message_de_fin: message de fin (affiché aux autres utilisateurs)
+
+</programlisting>
 <command>dcc  action [pseudo [fichier]]</command>
 <programlisting>
 démarre le DCC (fichier ou discussion) ou ferme une discussion
