@@ -1,8 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-03-18
+ChangeLog - 2006-03-19
 
+
+Version 0.1.9 (under dev!):
+   * added /cycle command, /part command does close buffer any more (use
+     /buffer close (or alias /close) to part and close buffer
 
 Version 0.1.8 (2006-03-18):
    * improved Ruby plugin

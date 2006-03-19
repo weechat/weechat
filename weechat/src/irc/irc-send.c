@@ -503,6 +503,107 @@ irc_cmd_send_ctcp (t_irc_server *server, t_irc_channel *channel,
 }
 
 /*
+ * irc_cmd_send_cycle: leave and rejoin a channel
+ */
+
+int
+irc_cmd_send_cycle (t_irc_server *server, t_irc_channel *channel,
+                    char *arguments)
+{
+    t_gui_buffer *buffer;
+    char *channel_name, *pos_args, *ptr_arg, *buf;
+    t_irc_channel *ptr_channel;
+    char **channels;
+    int i, argc;
+    
+    irc_find_context (server, channel, NULL, &buffer);
+    
+    if (arguments)
+    {
+        if (string_is_channel (arguments))
+        {
+            channel_name = arguments;
+            pos_args = strchr (arguments, ' ');
+            if (pos_args)
+            {
+                pos_args[0] = '\0';
+                pos_args++;
+                while (pos_args[0] == ' ')
+                    pos_args++;
+            }
+            channels = explode_string (channel_name, ",", 0, &argc);
+            if (channels)
+            {
+                for (i = 0; i < argc; i++)
+                {
+                    ptr_channel = channel_search (server, channels[i]);
+                    /* mark channal as cycling */
+                    if (ptr_channel &&
+                        (ptr_channel->type == CHANNEL_TYPE_CHANNEL))
+                        ptr_channel->cycle = 1;
+                }
+                free_exploded_string (channels);
+            }
+        }
+        else
+        {
+            if (BUFFER_IS_SERVER(buffer))
+            {
+                irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
+                gui_printf_nolog (server->buffer,
+                                  _("%s \"%s\" command can not be executed on a server buffer\n"),
+                                  WEECHAT_ERROR, "cycle");
+                return -1;
+            }
+            
+            /* does nothing on private buffer (cycle has no sense!) */
+            if (BUFFER_IS_PRIVATE(buffer))
+                return 0;
+            
+            channel_name = CHANNEL(buffer)->name;
+            pos_args = arguments;
+            CHANNEL(buffer)->cycle = 1;
+        }
+    }
+    else
+    {
+        if (BUFFER_IS_SERVER(buffer))
+        {
+            irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
+            gui_printf_nolog (server->buffer,
+                              _("%s \"%s\" command can not be executed on a server buffer\n"),
+                              WEECHAT_ERROR, "part");
+            return -1;
+        }
+        
+        /* does nothing on private buffer (cycle has no sense!) */
+        if (BUFFER_IS_PRIVATE(buffer))
+            return 0;
+        
+        channel_name = CHANNEL(buffer)->name;
+        pos_args = NULL;
+        CHANNEL(buffer)->cycle = 1;
+    }
+    
+    ptr_arg = (pos_args) ? pos_args :
+              (cfg_irc_default_msg_part && cfg_irc_default_msg_part[0]) ?
+              cfg_irc_default_msg_part : NULL;
+    
+    if (ptr_arg)
+    {
+        buf = weechat_strreplace (ptr_arg, "%v", PACKAGE_VERSION);
+        server_sendf (server, "PART %s :%s\r\n", channel_name,
+                      (buf) ? buf : ptr_arg);
+        if (buf)
+            free (buf);
+    }
+    else
+        server_sendf (server, "PART %s\r\n", channel_name);
+        
+    return 0;
+}
+
+/*
  * irc_cmd_send_dcc: start DCC (file or chat)
  */
 

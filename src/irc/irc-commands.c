@@ -59,6 +59,11 @@ t_irc_command irc_commands[] =
        "     type: CTCP type (examples: \"version\", \"ping\", ..)\n"
        "arguments: arguments for CTCP"),
     "%n action|ping|version", 2, MAX_ARGS, 1, NULL, irc_cmd_send_ctcp, NULL },
+  { "cycle", N_("leave and rejoin a channel"),
+    N_("[channel[,channel]] [part_message]"),
+    N_("     channel: channel name for cycle\n"
+       "part_message: part message (displayed to other users)"),
+    "%p", 0, MAX_ARGS, 1, NULL, irc_cmd_send_cycle, NULL },
   { "dcc", N_("starts DCC (file or chat) or close chat"),
     N_("action [nickname [file]]"),
     N_("  action: 'send' (file) or 'chat' or 'close' (chat)\n"

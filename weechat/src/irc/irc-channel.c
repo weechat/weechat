@@ -67,6 +67,8 @@ channel_new (t_irc_server *server, int channel_type, char *channel_name)
     new_channel->nicks_count = 0;
     new_channel->checking_away = 0;
     new_channel->away_message = NULL;
+    new_channel->cycle = 0;
+    new_channel->close = 0;
     new_channel->nicks = NULL;
     new_channel->last_nick = NULL;
 
@@ -493,6 +495,8 @@ channel_print_log (t_irc_channel *channel)
     weechat_log_printf ("     key. . . . . : '%s'\n",   channel->key);
     weechat_log_printf ("     checking_away: %d\n",     channel->checking_away);
     weechat_log_printf ("     away_message : '%s'\n",   channel->away_message);
+    weechat_log_printf ("     cycle. . . . : %d\n",     channel->cycle);
+    weechat_log_printf ("     close. . . . : %d\n",     channel->close);
     weechat_log_printf ("     nicks. . . . : 0x%X\n",   channel->nicks);
     weechat_log_printf ("     last_nick. . : 0x%X\n",   channel->last_nick);
     weechat_log_printf ("     buffer . . . : 0x%X\n",   channel->buffer);

@@ -111,6 +111,8 @@ struct t_irc_channel
     int nicks_count;                /* # nicks on channel (0 if dcc/pv)       */
     int checking_away;              /* = 1 if checking away with WHO cmd      */
     char *away_message;             /* to display away only once in private   */
+    int cycle;                      /* currently cycling (/part then /join)   */
+    int close;                      /* close request (/buffer close)          */
     t_irc_nick *nicks;              /* nicks on the channel                   */
     t_irc_nick *last_nick;          /* last nick on the channel               */
     t_gui_buffer *buffer;           /* GUI buffer allocated for channel       */
@@ -189,7 +191,7 @@ struct t_irc_command
     char *completion_template;      /* template for completion                */
                                     /* NULL=no completion, ""=default (nick)  */
     int min_arg, max_arg;           /* min & max number of arguments          */
-    int need_connection;            /* = 1 if cmd needs server connection     */
+    int needs_connection;           /* = 1 if cmd needs server connection     */
     int (*cmd_function_args)(t_irc_server *, t_irc_channel *, int, char **);
                                     /* function called when user enters cmd   */
     int (*cmd_function_1arg)(t_irc_server *, t_irc_channel *, char *);
@@ -414,6 +416,7 @@ extern int irc_cmd_send_amsg (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_away (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_ban (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_ctcp (t_irc_server *, t_irc_channel *, char *);
+extern int irc_cmd_send_cycle (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_dcc (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_dehalfop (t_irc_server *, t_irc_channel *, int, char **);
 extern int irc_cmd_send_deop (t_irc_server *, t_irc_channel *, int, char **);

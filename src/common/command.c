@@ -50,16 +50,16 @@ t_weechat_command weechat_commands[] =
         "arguments: arguments for command"),
     "%- %A", 0, MAX_ARGS, NULL, weechat_cmd_alias },
   { "buffer", N_("manage buffers"),
-    N_("[action | number | [[server] [channel]]]"),
+    N_("[action [args] | number | [[server] [channel]]]"),
     N_(" action: action to do:\n"
        "   move: move buffer in the list (may be relative, for example -1)\n"
-       "  close: close buffer (for channel: same as /part without part message)\n"
+       "  close: close buffer (optional arg is part message, for a channel)\n"
        "   list: list opened buffers (no parameter implies this list)\n"
        " notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)\n"
        "server\n"
        "channel: jump to buffer by server and/or channel name\n"
        " number: jump to buffer by number"),
-    "move|close|list|notify", 0, MAX_ARGS, weechat_cmd_buffer, NULL },
+    "move|close|list|notify", 0, MAX_ARGS, NULL, weechat_cmd_buffer },
   { "charset", N_("change charset for server or channel"),
     N_("[(decode_iso | decode_utf | encode) charset]"),
     N_("decode_iso: charset used for decoding ISO\n"
@@ -795,7 +795,7 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                     }
                     else
                     {
-                        if ((irc_commands[i].need_connection) &&
+                        if ((irc_commands[i].needs_connection) &&
                             ((!server) || (!server->is_connected)))
                         {
                             irc_display_prefix (NULL, NULL, PREFIX_ERROR);
@@ -1215,17 +1215,19 @@ weechat_cmd_buffer_display_info (t_gui_buffer *buffer)
 
 int
 weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
-                    int argc, char **argv)
+                    char *arguments)
 {
     t_gui_window *window;
     t_gui_buffer *buffer, *ptr_buffer;
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
     long number;
-    char *error;
-    int target_buffer;
+    char *error, *pos, **argv;
+    int argc, target_buffer;
     
     irc_find_context (server, channel, &window, &buffer);
+    
+    argv = explode_string (arguments, " ", 0, &argc);
     
     if ((argc == 0) || ((argc == 1) && (ascii_strcasecmp (argv[0], "list") == 0)))
     {
@@ -1255,6 +1257,7 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                 irc_display_prefix (NULL, NULL, PREFIX_ERROR);
                 gui_printf (NULL, _("%s missing arguments for \"%s\" command\n"),
                             WEECHAT_ERROR, "buffer");
+                free_exploded_string (argv);
                 return -1;
             }
             
@@ -1278,6 +1281,7 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                 irc_display_prefix (NULL, NULL, PREFIX_ERROR);
                 gui_printf (NULL, _("%s incorrect buffer number\n"),
                             WEECHAT_ERROR);
+                free_exploded_string (argv);
                 return -1;
             }
         }
@@ -1294,6 +1298,7 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                 gui_printf (NULL,
                             _("%s can not close the single buffer\n"),
                             WEECHAT_ERROR);
+                free_exploded_string (argv);
                 return -1;
             }
             if (BUFFER_IS_SERVER(buffer))
@@ -1305,6 +1310,7 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                                 _("%s can not close server buffer while channels "
                                 "are opened\n"),
                                 WEECHAT_ERROR);
+                    free_exploded_string (argv);
                     return -1;
                 }
                 server_disconnect (SERVER(buffer), 0);
@@ -1329,9 +1335,15 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                     if (SERVER(buffer)->is_connected
                         && CHANNEL(buffer)
                         && CHANNEL(buffer)->nicks)
+                    {
+                        pos = strstr (arguments, "close");
+                        if (pos)
+                            pos += 6;
+                        CHANNEL(buffer)->close = 1;
                         irc_cmd_send_part (SERVER(buffer),
                                            CHANNEL(buffer),
-                                           NULL);
+                                           pos);
+                    }
                     else
                     {
                         ptr_channel = channel_search (SERVER(buffer),
@@ -1385,6 +1397,7 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                         irc_display_prefix (NULL, NULL, PREFIX_ERROR);
                         gui_printf (NULL, _("%s incorrect notify level (must be between %d and %d)\n"),
                                     WEECHAT_ERROR, NOTIFY_LEVEL_MIN, NOTIFY_LEVEL_MAX);
+                        free_exploded_string (argv);
                         return -1;
                     }
                     if ((!BUFFER_IS_CHANNEL(buffer))
@@ -1394,6 +1407,7 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                         irc_display_prefix (NULL, NULL, PREFIX_ERROR);
                         gui_printf (NULL, _("%s incorrect buffer for notify (must be channel or private)\n"),
                                     WEECHAT_ERROR);
+                        free_exploded_string (argv);
                         return -1;
                     }
                     buffer->notify_level = number;
@@ -1433,6 +1447,7 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                     irc_display_prefix (NULL, NULL, PREFIX_ERROR);
                     gui_printf (NULL, _("%s incorrect notify level (must be between %d and %d)\n"),
                                 WEECHAT_ERROR, NOTIFY_LEVEL_MIN, NOTIFY_LEVEL_MAX);
+                    free_exploded_string (argv);
                     return -1;
                 }
             }
@@ -1499,6 +1514,7 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
             
         }
     }
+    free_exploded_string (argv);
     return 0;
 }
 

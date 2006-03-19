@@ -172,6 +172,8 @@ session_save_channel (FILE *file, t_irc_channel *channel)
     rc = rc && (session_write_int (file, SESSION_CHAN_NICKS_COUNT, channel->nicks_count));
     rc = rc && (session_write_int (file, SESSION_CHAN_CHECKING_AWAY, channel->checking_away));
     rc = rc && (session_write_str (file, SESSION_CHAN_AWAY_MESSAGE, channel->away_message));
+    rc = rc && (session_write_int (file, SESSION_CHAN_CYCLE, channel->cycle));
+    rc = rc && (session_write_int (file, SESSION_CHAN_CLOSE, channel->close));
     rc = rc && (session_write_id  (file, SESSION_CHAN_END));
     
     if (!rc)
@@ -1044,6 +1046,12 @@ session_load_channel (FILE *file)
                 break;
             case SESSION_CHAN_AWAY_MESSAGE:
                 rc = rc && (session_read_str (file, &(session_current_channel->away_message)));
+                break;
+            case SESSION_CHAN_CYCLE:
+                rc = rc && (session_read_int (file, &(session_current_channel->cycle)));
+                break;
+            case SESSION_CHAN_CLOSE:
+                rc = rc && (session_read_int (file, &(session_current_channel->close)));
                 break;
             default:
                 weechat_log_printf (_("session: warning: ignoring value from "

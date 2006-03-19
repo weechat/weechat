@@ -1414,7 +1414,8 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *nick, char *argumen
 int
 irc_cmd_recv_part (t_irc_server *server, char *host, char *nick, char *arguments)
 {
-    char *pos, *pos_args;
+    char *pos, *pos_args, *join_string;
+    int join_length;
     t_irc_channel *ptr_channel;
     t_irc_nick *ptr_nick;
     
@@ -1446,46 +1447,75 @@ irc_cmd_recv_part (t_irc_server *server, char *host, char *nick, char *arguments
         ptr_nick = nick_search (ptr_channel, nick);
         if (ptr_nick)
         {
-            if (strcmp (ptr_nick->nick, server->nick) == 0)
+            /* display part message */
+            if (!command_ignored)
             {
-                /* part request was issued by local client */
-                gui_buffer_free (ptr_channel->buffer, 1);
-                channel_free (server, ptr_channel);
-                gui_draw_buffer_status (gui_current_window->buffer, 1);
-                gui_draw_buffer_input (gui_current_window->buffer, 1);
-            }
-            else
-            {
-            
-                /* remove nick from nick list and display message */
-                nick_free (ptr_channel, ptr_nick);
-                if (!command_ignored)
-                {
-                    pos = strchr (host, '!');
-                    irc_display_prefix (server, ptr_channel->buffer, PREFIX_PART);
-                    gui_printf (ptr_channel->buffer, _("%s%s %s(%s%s%s)%s has left %s%s"),
-                                GUI_COLOR(COLOR_WIN_CHAT_NICK),
-                                nick,
-                                GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                                GUI_COLOR(COLOR_WIN_CHAT_HOST),
-                                (pos) ? pos + 1 : "",
+                pos = strchr (host, '!');
+                irc_display_prefix (server, ptr_channel->buffer, PREFIX_PART);
+                gui_printf (ptr_channel->buffer, _("%s%s %s(%s%s%s)%s has left %s%s"),
+                            GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                            nick,
+                            GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                            GUI_COLOR(COLOR_WIN_CHAT_HOST),
+                            (pos) ? pos + 1 : "",
+                            GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                            GUI_COLOR(COLOR_WIN_CHAT),
+                            GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                            ptr_channel->name);
+                if (pos_args && pos_args[0])
+                    gui_printf (ptr_channel->buffer, " %s(%s%s%s)\n",
                                 GUI_COLOR(COLOR_WIN_CHAT_DARK),
                                 GUI_COLOR(COLOR_WIN_CHAT),
-                                GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
-                                ptr_channel->name);
-                    if (pos_args && pos_args[0])
-                        gui_printf (ptr_channel->buffer, " %s(%s%s%s)\n",
-                                    GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                                    GUI_COLOR(COLOR_WIN_CHAT),
-                                    pos_args,
-                                    GUI_COLOR(COLOR_WIN_CHAT_DARK));
-                    else
-                        gui_printf (ptr_channel->buffer, "\n");
-                }
+                                pos_args,
+                                GUI_COLOR(COLOR_WIN_CHAT_DARK));
+                else
+                    gui_printf (ptr_channel->buffer, "\n");
+            }
+            
+            /* part request was issued by local client ? */
+            if (strcmp (ptr_nick->nick, server->nick) == 0)
+            {
+                nick_free_all (ptr_channel);
                 
+                /* cycling ? => rejoin channel immediately */
+                if (ptr_channel->cycle)
+                {
+                    ptr_channel->cycle = 0;
+                    if (ptr_channel->key)
+                    {
+                        join_length = strlen (ptr_channel->name) + 1 +
+                            strlen (ptr_channel->key) + 1;
+                        join_string = (char *)malloc (join_length);
+                        if (join_string)
+                        {
+                            snprintf (join_string, join_length, "%s %s",
+                                      ptr_channel->name,
+                                      ptr_channel->key);
+                            irc_cmd_send_join(server, ptr_channel, join_string);
+                            free (join_string);
+                        }
+                        else
+                            irc_cmd_send_join(server, ptr_channel, ptr_channel->name);
+                    }
+                    else
+                        irc_cmd_send_join(server, ptr_channel, ptr_channel->name);
+                }
+                if (ptr_channel->close)
+                {
+                    gui_buffer_free (ptr_channel->buffer, 1);
+                    channel_free (server, ptr_channel);
+                    ptr_channel = NULL;
+                }
+            }
+            else
+                nick_free (ptr_channel, ptr_nick);
+            
+            if (ptr_channel)
+            {
                 gui_draw_buffer_nick (ptr_channel->buffer, 1);
                 gui_draw_buffer_status (ptr_channel->buffer, 1);
             }
+            gui_draw_buffer_input (gui_current_window->buffer, 1);
         }
     }
     else
