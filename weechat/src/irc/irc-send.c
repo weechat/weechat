@@ -68,6 +68,7 @@ irc_login (t_irc_server *server)
                   "USER %s %s %s :%s\r\n",
                   server->nick, server->username, hostname, "servername",
                   server->realname);
+    gui_draw_buffer_input (gui_current_window->buffer, 1);
 }
 
 /*
