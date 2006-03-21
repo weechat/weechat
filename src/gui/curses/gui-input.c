@@ -317,7 +317,7 @@ gui_main_loop ()
     char text_time[1024];
     time_t new_time;
     struct tm *local_time;
-
+    
     quit_weechat = 0;
 
     new_time = time (NULL);
@@ -397,14 +397,31 @@ gui_main_loop ()
             plugin_timer_handler_exec ();
         }
         
+        /* read keyboard */
+        
         FD_ZERO (&read_fd);
+        timeout.tv_sec = 0;
+        timeout.tv_usec = 8000;
         
         FD_SET (STDIN_FILENO, &read_fd);
-        if (weechat_fifo != -1)
-            FD_SET (weechat_fifo, &read_fd);
+        
+        if (select (FD_SETSIZE, &read_fd, NULL, NULL, &timeout) > 0)
+        {
+            if (FD_ISSET (STDIN_FILENO, &read_fd))
+            {
+                gui_input_read ();
+            }
+        }
+        
+        /* read sockets (servers, child process when connecting, FIFO pipe) */
+        
+        FD_ZERO (&read_fd);
         
         timeout.tv_sec = 0;
-        timeout.tv_usec = 10000;
+        timeout.tv_usec = 2000;
+        
+        if (weechat_fifo != -1)
+            FD_SET (weechat_fifo, &read_fd);
         
         for (ptr_server = irc_servers; ptr_server;
              ptr_server = ptr_server->next_server)
@@ -456,10 +473,6 @@ gui_main_loop ()
         
         if (select (FD_SETSIZE, &read_fd, NULL, NULL, &timeout) > 0)
         {
-            if (FD_ISSET (STDIN_FILENO, &read_fd))
-            {
-                gui_input_read ();
-            }
             if ((weechat_fifo != -1) && (FD_ISSET (weechat_fifo, &read_fd)))
             {
                 fifo_read ();
