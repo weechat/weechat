@@ -2677,8 +2677,8 @@ irc_cmd_recv_004 (t_irc_server *server, char *host, char *nick, char *arguments)
 	commands = split_multi_command (server->command, ';');
 	if (commands)
 	{
-	    for (ptr=commands; *ptr; ptr++)
-		user_command (server, NULL, *ptr);		
+	    for (ptr = commands; *ptr; ptr++)
+		user_command (server, NULL, *ptr, 0);
 	    free_multi_command (commands);
 	}
 	

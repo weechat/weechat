@@ -28,6 +28,14 @@ serveur
  nombre: sauter au tampon qui a ce numéro
 
 </programlisting>
+<command>builtin  commande</command>
+<programlisting>
+lance une commande WeeChat/IRC interne (sans regarder les gestionnaires de commandes et les alias)
+
+commande: commande à exécuter (un '/' est automatiquement ajouté s'il n'est pas trouvé au début de la commande)
+
+
+</programlisting>
 <command>charset  [(decode_iso | decode_utf | encode) charset]</command>
 <programlisting>
 changer le jeu de caractères pour le serveur ou le canal

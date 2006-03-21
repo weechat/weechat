@@ -529,7 +529,7 @@ gui_key_pressed (char *key_str)
             if (ptr_key->command)
                 user_command (SERVER(gui_current_window->buffer),
                               CHANNEL(gui_current_window->buffer),
-                              ptr_key->command);
+                              ptr_key->command, 0);
             else
                 (void)(ptr_key->function)(gui_current_window);
         }

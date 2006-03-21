@@ -28,6 +28,14 @@ channel: jump to buffer by server and/or channel name
  number: jump to buffer by number
 
 </programlisting>
+<command>builtin  command</command>
+<programlisting>
+launch WeeChat/IRC builtin command (do not look at plugins handlers or aliases)
+
+command: command to execute (a '/' is automatically added if not found at beginning of command)
+
+
+</programlisting>
 <command>charset  [(decode_iso | decode_utf | encode) charset]</command>
 <programlisting>
 change charset for server or channel

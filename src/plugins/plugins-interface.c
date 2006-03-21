@@ -365,11 +365,11 @@ weechat_plugin_exec_command (t_weechat_plugin *plugin,
     else
     {
         if (ptr_server && ptr_channel)
-            user_command (ptr_server, ptr_channel, command);
+            user_command (ptr_server, ptr_channel, command, 0);
         else if (ptr_server && (ptr_server->buffer))
-            user_command (ptr_server, NULL, command);
+            user_command (ptr_server, NULL, command, 0);
         else
-            user_command (NULL, NULL, command);
+            user_command (NULL, NULL, command, 0);
     }
 }
 

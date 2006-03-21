@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-03-19
+ChangeLog - 2006-03-21
 
 
 Version 0.1.9 (under dev!):
+   * aliases are executed before WeeChat/IRC commands, /builtin command added
    * added /cycle command, /part command does close buffer any more (use
      /buffer close (or alias /close) to part and close buffer
 

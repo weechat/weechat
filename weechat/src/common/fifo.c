@@ -169,7 +169,7 @@ fifo_exec (char *text)
         }
     }
     
-    user_command (ptr_server, ptr_channel, pos_msg);
+    user_command (ptr_server, ptr_channel, pos_msg, 0);
 }
 
 /*

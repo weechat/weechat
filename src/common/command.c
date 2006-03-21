@@ -60,6 +60,10 @@ t_weechat_command weechat_commands[] =
        "channel: jump to buffer by server and/or channel name\n"
        " number: jump to buffer by number"),
     "move|close|list|notify", 0, MAX_ARGS, NULL, weechat_cmd_buffer },
+  { "builtin", N_("launch WeeChat/IRC builtin command (do not look at plugins handlers or aliases)"),
+    N_("command"),
+    N_("command: command to execute (a '/' is automatically added if not found at beginning of command)\n"),
+    "%w|%i", 0, MAX_ARGS, NULL, weechat_cmd_builtin },
   { "charset", N_("change charset for server or channel"),
     N_("[(decode_iso | decode_utf | encode) charset]"),
     N_("decode_iso: charset used for decoding ISO\n"
@@ -328,6 +332,9 @@ alias_new (char *alias_name, char *alias_command)
 
     if (alias_name[0] == '/')
 	alias_name++;
+    
+    if (ascii_strcasecmp (alias_name, "builtin") == 0)
+        return NULL;
     
     ptr_alias = alias_search (alias_name);
     if (ptr_alias)
@@ -635,12 +642,15 @@ free_multi_command (char **commands)
 
 /*
  * exec_weechat_command: executes a command (WeeChat internal or IRC)
+ *                       if only_builtin == 1, then try only WeeChat/IRC commands
+ *                       (not plugins neither aliases)
  *                       returns: 1 if command was executed succesfully
  *                                0 if error (command not executed)
  */
 
 int
-exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string)
+exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string,
+                      int only_builtin)
 {
     int i, rc, argc, return_code, length1, length2;
     char *command, *pos, *ptr_args, *ptr_args_color, **argv, *alias_command;
@@ -685,7 +695,10 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
     }
     
 #ifdef PLUGINS
-    rc = plugin_cmd_handler_exec ((server) ? server->name : "", command + 1, ptr_args);
+    if (only_builtin)
+        rc = -1;
+    else
+        rc = plugin_cmd_handler_exec ((server) ? server->name : "", command + 1, ptr_args);
 #else
     rc = -1;
 #endif
@@ -702,6 +715,88 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
         default: /* plugin handler not found */
             argv = explode_string (ptr_args, " ", 0, &argc);
             
+            /* look for alias */
+            if (!only_builtin)
+            {
+                for (ptr_alias = weechat_alias; ptr_alias;
+                     ptr_alias = ptr_alias->next_alias)
+                {
+                    if (ascii_strcasecmp (ptr_alias->alias_name, command + 1) == 0)
+                    {
+                        if (ptr_alias->running == 1)
+                        {
+                            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                            gui_printf (NULL,
+                                        _("%s circular reference when calling alias \"/%s\"\n"),
+                                        WEECHAT_ERROR, ptr_alias->alias_name);
+                        }
+                        else
+                        {		
+                            /* an alias can contain many commandes separated by ';' */
+                            commands = split_multi_command (ptr_alias->alias_command, ';');
+                            if (commands)
+                            {
+                                ptr_alias->running = 1;			
+                                for (ptr_cmd=commands; *ptr_cmd; ptr_cmd++)
+                                {
+                                    ptr_next_cmd = ptr_cmd;
+                                    ptr_next_cmd++;
+                                
+                                    if (*ptr_next_cmd == NULL && ptr_args)
+                                    {
+                                        /* if alias has arguments, they are now 
+                                           arguments of the last command in the list */
+                                        length1 = strlen (*ptr_cmd);
+                                        length2 = strlen (ptr_args);
+                                    
+                                        alias_command = (char *) malloc ( 1 + length1 + 1 + length2 + 1);			    
+                                        if (alias_command)
+                                        {
+                                            if (*ptr_cmd[0] != '/')
+                                                strcpy (alias_command, "/");
+                                            else
+                                                strcpy (alias_command, "");
+                                        
+                                            strcat (alias_command, *ptr_cmd);
+                                            strcat (alias_command, " ");
+                                            strcat (alias_command, ptr_args);
+                                        
+                                            (void) exec_weechat_command (server, channel, alias_command, only_builtin);
+                                            free (alias_command);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (*ptr_cmd[0] == '/')
+                                            (void) exec_weechat_command (server, channel, *ptr_cmd, only_builtin);
+                                        else
+                                        {
+                                            alias_command = (char *) malloc (1 + strlen(*ptr_cmd) + 1);
+                                            if (alias_command)
+                                            {
+                                                strcpy (alias_command, "/");
+                                                strcat (alias_command, *ptr_cmd);
+                                                (void) exec_weechat_command (server, channel, alias_command, only_builtin);
+                                                free (alias_command);
+                                            }
+                                        }
+                                    }
+                                }
+                                ptr_alias->running = 0;
+                                free_multi_command (commands);
+                            }
+                        }
+                    
+                        free_exploded_string (argv);
+                        free (command);
+                        if (ptr_args_color)
+                            free (ptr_args_color);
+                        return 1;
+                    }
+                }
+            }
+            
+            /* look for WeeChat command */
             for (i = 0; weechat_commands[i].command_name; i++)
             {
                 if (ascii_strcasecmp (weechat_commands[i].command_name, command + 1) == 0)
@@ -759,6 +854,8 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                     return 1;
                 }
             }
+            
+            /* look for IRC command */
             for (i = 0; irc_commands[i].command_name; i++)
             {
                 if ((ascii_strcasecmp (irc_commands[i].command_name, command + 1) == 0) &&
@@ -828,82 +925,6 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                     return 1;
                 }
             }
-            for (ptr_alias = weechat_alias; ptr_alias;
-                 ptr_alias = ptr_alias->next_alias)
-            {
-                if (ascii_strcasecmp (ptr_alias->alias_name, command + 1) == 0)
-                {
-                    if (ptr_alias->running == 1)
-                    {
-                        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-                        gui_printf (NULL,
-                                    _("%s circular reference when calling alias \"/%s\"\n"),
-                                    WEECHAT_ERROR, ptr_alias->alias_name);
-                    }
-                    else
-                    {		
-                        /* an alias can contain many commandes separated by ';' */
-                        commands = split_multi_command (ptr_alias->alias_command, ';');
-                        if (commands)
-                        {
-                            ptr_alias->running = 1;			
-                            for (ptr_cmd=commands; *ptr_cmd; ptr_cmd++)
-                            {
-                                ptr_next_cmd = ptr_cmd;
-                                ptr_next_cmd++;
-                                
-                                if (*ptr_next_cmd == NULL && ptr_args)
-                                {
-                                    /* if alias has arguments, they are now 
-                                       arguments of the last command in the list */
-                                    length1 = strlen (*ptr_cmd);
-                                    length2 = strlen (ptr_args);
-                                    
-                                    alias_command = (char *) malloc ( 1 + length1 + 1 + length2 + 1);			    
-                                    if (alias_command)
-                                    {
-                                        if (*ptr_cmd[0] != '/')
-                                            strcpy (alias_command, "/");
-                                        else
-                                            strcpy (alias_command, "");
-                                        
-                                        strcat (alias_command, *ptr_cmd);
-                                        strcat (alias_command, " ");
-                                        strcat (alias_command, ptr_args);
-                                        
-                                        (void) exec_weechat_command (server, channel, alias_command);
-                                        free (alias_command);
-                                    }
-                                }
-                                else
-                                {
-                                    if (*ptr_cmd[0] == '/')
-                                        (void) exec_weechat_command (server, channel, *ptr_cmd);
-                                    else
-                                    {
-                                        alias_command = (char *) malloc (1 + strlen(*ptr_cmd) + 1);
-                                        if (alias_command)
-                                        {
-                                            strcpy (alias_command, "/");
-                                            strcat (alias_command, *ptr_cmd);
-                                            (void) exec_weechat_command (server, channel, alias_command);
-                                            free (alias_command);
-                                        }
-                                    }
-                                }
-                            }
-                            ptr_alias->running = 0;
-                            free_multi_command (commands);
-                        }
-                    }
-                    
-                    free_exploded_string (argv);
-                    free (command);
-                    if (ptr_args_color)
-                        free (ptr_args_color);
-                    return 1;
-                }
-            }
             irc_display_prefix (NULL, NULL, PREFIX_ERROR);
             gui_printf (NULL,
                         _("%s unknown command \"%s\" (type /help for help)\n"),
@@ -923,7 +944,7 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
  */
 
 void
-user_command (t_irc_server *server, t_irc_channel *channel, char *command)
+user_command (t_irc_server *server, t_irc_channel *channel, char *command, int only_builtin)
 {
     t_gui_buffer *buffer;
     t_irc_nick *ptr_nick;
@@ -941,7 +962,8 @@ user_command (t_irc_server *server, t_irc_channel *channel, char *command)
         /* WeeChat internal command (or IRC command) */
         command_encoded = channel_iconv_encode (server, channel, command);
         (void) exec_weechat_command (server, channel,
-                                     (command_encoded) ? command_encoded : command);
+                                     (command_encoded) ? command_encoded : command,
+                                     only_builtin);
         if (command_encoded)
             free (command_encoded);
     }
@@ -1515,6 +1537,36 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
         }
     }
     free_exploded_string (argv);
+    return 0;
+}
+
+/*
+ * weechat_cmd_builtin: launch WeeChat/IRC builtin command
+ */
+
+int
+weechat_cmd_builtin (t_irc_server *server, t_irc_channel *channel,
+                     char *arguments)
+{
+    char *command;
+    int length;
+    
+    if (arguments && arguments[0])
+    {
+        if (arguments[0] == '/')
+            user_command (server, channel, arguments, 1);
+        else
+        {
+            length = strlen (arguments) + 2;
+            command = (char *)malloc (length);
+            if (command)
+            {
+                snprintf (command, length, "/%s", arguments);
+                user_command (server, channel, command, 1);
+                free (command);
+            }
+        }
+    }
     return 0;
 }
 
@@ -3477,7 +3529,7 @@ weechat_cmd_uptime (t_irc_server *server, t_irc_channel *channel,
                   sec,
                   ctime (&weechat_start_time));
         string[strlen (string) - 1] = '\0';
-        user_command (server, channel, string);
+        user_command (server, channel, string, 0);
     }
     else
     {

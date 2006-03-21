@@ -262,6 +262,16 @@ plugin_cmd_handler_add (t_weechat_plugin *plugin, char *command,
                     WEECHAT_ERROR, plugin->name, command);
         return NULL;
     }
+    
+    if (ascii_strcasecmp (command, "builtin") == 0)
+    {
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        gui_printf (NULL,
+                    _("%s plugin %s: unable to add handler for \"%s\" command "
+                      "(forbidden)\n"),
+                    WEECHAT_ERROR, plugin->name, command);
+        return NULL;
+    }
         
     new_handler = (t_plugin_handler *)malloc (sizeof (t_plugin_handler));
     if (new_handler)
