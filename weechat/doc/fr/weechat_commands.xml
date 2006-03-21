@@ -154,6 +154,8 @@ modifier des paramètres de configuration
 option: nom de l'option (si le nom est complet et qu'aucune valeur n'est donnée, alors l'aide sur l'option est affichée)
 valeur: valeur pour l'option
 
+L'option peut être: nomserveur.server_xxx où "nomserveur" est le nom interne d'un serveur et "xxx" une option pour ce serveur.
+
 </programlisting>
 <command>unalias  nom_alias</command>
 <programlisting>

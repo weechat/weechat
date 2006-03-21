@@ -154,6 +154,8 @@ set config parameters
 option: name of an option (if name is full and no value is given, then help is displayed on option)
 value: value for option
 
+Option may be: servername.server_xxx where "servername" is an internal server name and "xxx" an option for this server.
+
 </programlisting>
 <command>unalias  alias_name</command>
 <programlisting>

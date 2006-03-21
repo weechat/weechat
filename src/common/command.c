@@ -147,7 +147,9 @@ t_weechat_command weechat_commands[] =
     N_("[option [ = value]]"),
     N_("option: name of an option (if name is full "
        "and no value is given, then help is displayed on option)\n"
-       "value: value for option"),
+       "value: value for option\n\n"
+       "Option may be: servername.server_xxx where \"servername\" is an "
+       "internal server name and \"xxx\" an option for this server."),
     "%o = %v", 0, MAX_ARGS, NULL, weechat_cmd_set },
   { "unalias", N_("remove an alias"),
     N_("alias_name"), N_("alias_name: name of alias to remove"),
