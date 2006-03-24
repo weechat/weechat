@@ -149,12 +149,22 @@ fichier: fichier pour sauvegarder la configuration
 </programlisting>
 <command>set  [option [ = valeur]]</command>
 <programlisting>
-modifier des paramètres de configuration
+modifier des options de configuration
 
 option: nom de l'option (si le nom est complet et qu'aucune valeur n'est donnée, alors l'aide sur l'option est affichée)
 valeur: valeur pour l'option
 
 L'option peut être: nomserveur.server_xxx où "nomserveur" est le nom interne d'un serveur et "xxx" une option pour ce serveur.
+
+</programlisting>
+<command>setp  [option [ = valeur]]</command>
+<programlisting>
+modifier des options de configuration des extensions
+
+option: nom d'une option d'extension
+valeur: valeur pour l'option
+
+L'option est au format: extension.option, par exemple: perl.monscript.variable1
 
 </programlisting>
 <command>unalias  nom_alias</command>

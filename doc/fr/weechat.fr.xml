@@ -2032,6 +2032,10 @@ plugin->msg_handler_add (plugin, "KICK", &amp;msg_kick, NULL, NULL);
                           <entry>options de configuration</entry>
                         </row>
                         <row>
+                          <entry><literal>%O</literal></entry>
+                          <entry>options des extensions</entry>
+                        </row>
+                        <row>
                           <entry><literal>%p</literal></entry>
                           <entry>message de "part" par défaut</entry>
                         </row>
@@ -2054,6 +2058,10 @@ plugin->msg_handler_add (plugin, "KICK", &amp;msg_kick, NULL, NULL);
                         <row>
                           <entry><literal>%v</literal></entry>
                           <entry>valeur d'une option de configuration</entry>
+                        </row>
+                        <row>
+                          <entry><literal>%V</literal></entry>
+                          <entry>valeur d'une option d'extension</entry>
                         </row>
                         <row>
                           <entry><literal>%w</literal></entry>

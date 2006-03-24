@@ -149,12 +149,22 @@ file: filename for writing config
 </programlisting>
 <command>set  [option [ = value]]</command>
 <programlisting>
-set config parameters
+set config options
 
 option: name of an option (if name is full and no value is given, then help is displayed on option)
-value: value for option
+ value: value for option
 
 Option may be: servername.server_xxx where "servername" is an internal server name and "xxx" an option for this server.
+
+</programlisting>
+<command>setp  [option [ = value]]</command>
+<programlisting>
+set plugin config options
+
+option: name of a plugin option
+ value: value for option
+
+Option is format: plugin.option, example: perl.myscript.item1
 
 </programlisting>
 <command>unalias  alias_name</command>

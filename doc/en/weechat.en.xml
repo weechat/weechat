@@ -1991,6 +1991,10 @@ plugin->msg_handler_add (plugin, "KICK", &amp;msg_kick, NULL, NULL);
                           <entry>setup options</entry>
                         </row>
                         <row>
+                          <entry><literal>%O</literal></entry>
+                          <entry>plugin options</entry>
+                        </row>
+                        <row>
                           <entry><literal>%p</literal></entry>
                           <entry>default "part" message</entry>
                         </row>
@@ -2013,6 +2017,10 @@ plugin->msg_handler_add (plugin, "KICK", &amp;msg_kick, NULL, NULL);
                         <row>
                           <entry><literal>%v</literal></entry>
                           <entry>setup option value</entry>
+                        </row>
+                        <row>
+                          <entry><literal>%V</literal></entry>
+                          <entry>plugin option value</entry>
                         </row>
                         <row>
                           <entry><literal>%w</literal></entry>
