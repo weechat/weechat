@@ -105,6 +105,8 @@ extern char *local_charset;
 extern gnutls_certificate_credentials gnutls_xcred;
 #endif
 
+extern void ascii_tolower (char *);
+extern void ascii_toupper (char *);
 extern int ascii_strcasecmp (char *, char *);
 extern int ascii_strncasecmp (char *, char *, int);
 extern void weechat_log_printf (char *, ...);

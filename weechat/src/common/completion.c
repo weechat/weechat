@@ -408,6 +408,26 @@ completion_list_add_option (t_completion *completion)
 }
 
 /*
+ * completion_list_add_plugin_option: add plugin option to completion list
+ */
+
+void
+completion_list_add_plugin_option (t_completion *completion)
+{
+#ifdef PLUGINS
+    t_plugin_option *ptr_option;
+    
+    for (ptr_option = plugin_options; ptr_option;
+         ptr_option = ptr_option->next_option)
+    {
+        weelist_add (&completion->completion_list,
+                     &completion->last_completion,
+                     ptr_option->name);
+    }
+#endif
+}
+
+/*
  * completion_list_add_part: add part message to completion list
  */
 
@@ -418,6 +438,26 @@ completion_list_add_part (t_completion *completion)
         weelist_add (&completion->completion_list,
                      &completion->last_completion,
                      cfg_irc_default_msg_part);
+}
+
+/*
+ * completion_list_add_plugin: add plugin name to completion list
+ */
+
+void
+completion_list_add_plugin (t_completion *completion)
+{
+#ifdef PLUGINS
+    t_weechat_plugin *ptr_plugin;
+    
+    for (ptr_plugin = weechat_plugins; ptr_plugin;
+         ptr_plugin = ptr_plugin->next_plugin)
+    {
+        weelist_add (&completion->completion_list,
+                     &completion->last_completion,
+                     ptr_plugin->name);
+    }
+#endif
 }
 
 /*
@@ -569,6 +609,35 @@ completion_list_add_option_value (t_completion *completion)
 }
 
 /*
+ * completion_list_add_plugin_option_value: add plugin option value to completion list
+ */
+
+void
+completion_list_add_plugin_option_value (t_completion *completion)
+{
+#ifdef PLUGINS
+    char *pos;
+    t_plugin_option *ptr_option;
+    
+    if (completion->args)
+    {
+        pos = strchr (completion->args, ' ');
+        if (pos)
+            pos[0] = '\0';
+        
+        ptr_option = plugin_config_search_internal (completion->args);
+        if (ptr_option)
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         ptr_option->value);
+        
+        if (pos)
+            pos[0] = ' ';
+    }
+#endif
+}
+
+/*
  * completion_list_add_weechat_cmd: add WeeChat commands to completion list
  */
 
@@ -658,8 +727,14 @@ completion_build_list_template (t_completion *completion, char *template)
                         case 'o': /* config option */
                             completion_list_add_option (completion);
                             break;
+                        case 'O': /* plugin option */
+                            completion_list_add_plugin_option (completion);
+                            break;
                         case 'p': /* part message */
                             completion_list_add_part (completion);
+                            break;
+                        case 'P': /* plugin name */
+                            completion_list_add_plugin (completion);
                             break;
                         case 'q': /* quit message */
                             completion_list_add_quit (completion);
@@ -675,6 +750,9 @@ completion_build_list_template (t_completion *completion, char *template)
                             break;
                         case 'v': /* value of config option */
                             completion_list_add_option_value (completion);
+                            break;
+                        case 'V': /* value of plugin option */
+                            completion_list_add_plugin_option_value (completion);
                             break;
                         case 'w': /* WeeChat commands */
                             completion_list_add_weechat_cmd (completion);

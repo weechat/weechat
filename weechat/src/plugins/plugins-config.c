@@ -26,6 +26,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 
@@ -36,6 +37,7 @@
 
 
 t_plugin_option *plugin_options = NULL;
+t_plugin_option *last_plugin_option = NULL;
 
 
 /*
@@ -51,8 +53,7 @@ plugin_config_search_internal (char *option)
     for (ptr_plugin_option = plugin_options; ptr_plugin_option;
          ptr_plugin_option = ptr_plugin_option->next_option)
     {
-        if (ascii_strcasecmp (ptr_plugin_option->option_name,
-                              option) == 0)
+        if (ascii_strcasecmp (ptr_plugin_option->name, option) == 0)
         {
             return ptr_plugin_option;
         }
@@ -89,6 +90,24 @@ plugin_config_search (t_weechat_plugin *plugin, char *option)
 }
 
 /*
+ * plugin_config_find_pos: find position for a plugin option (for sorting options)
+ */
+
+t_plugin_option *
+plugin_config_find_pos (char *name)
+{
+    t_plugin_option *ptr_option;
+    
+    for (ptr_option = plugin_options; ptr_option;
+         ptr_option = ptr_option->next_option)
+    {
+        if (ascii_strcasecmp (name, ptr_option->name) < 0)
+            return ptr_option;
+    }
+    return NULL;
+}
+
+/*
  * plugin_config_set_internal: set value for a plugin option (internal function)
  *                             This function should not be called directly.
  */
@@ -96,7 +115,7 @@ plugin_config_search (t_weechat_plugin *plugin, char *option)
 int
 plugin_config_set_internal (char *option, char *value)
 {
-    t_plugin_option *ptr_plugin_option;
+    t_plugin_option *ptr_plugin_option, *pos_option;
     
     ptr_plugin_option = plugin_config_search_internal (option);
     if (ptr_plugin_option)
@@ -125,18 +144,48 @@ plugin_config_set_internal (char *option, char *value)
     }
     else
     {
-        ptr_plugin_option = (t_plugin_option *)malloc (sizeof (t_plugin_option));
-        if (ptr_plugin_option)
+        if (value && value[0])
         {
-            /* create new option */
-            ptr_plugin_option->option_name = strdup (option);
-            ptr_plugin_option->value = strdup (value);
-            if (plugin_options)
-                plugin_options->prev_option = ptr_plugin_option;
-            ptr_plugin_option->prev_option = NULL;
-            ptr_plugin_option->next_option = plugin_options;
-            plugin_options = ptr_plugin_option;
-            return 1;
+            ptr_plugin_option = (t_plugin_option *)malloc (sizeof (t_plugin_option));
+            if (ptr_plugin_option)
+            {
+                /* create new option */
+                ptr_plugin_option->name = strdup (option);
+                ascii_tolower (ptr_plugin_option->name);
+                ptr_plugin_option->value = strdup (value);
+                
+                if (plugin_options)
+                {
+                    pos_option = plugin_config_find_pos (ptr_plugin_option->name);
+                    if (pos_option)
+                    {
+                        /* insert option into the list (before option found) */
+                        ptr_plugin_option->prev_option = pos_option->prev_option;
+                        ptr_plugin_option->next_option = pos_option;
+                        if (pos_option->prev_option)
+                            pos_option->prev_option->next_option = ptr_plugin_option;
+                        else
+                            plugin_options = ptr_plugin_option;
+                        pos_option->prev_option = ptr_plugin_option;
+                    }
+                    else
+                    {
+                        /* add option to the end */
+                        ptr_plugin_option->prev_option = last_plugin_option;
+                        ptr_plugin_option->next_option = NULL;
+                        last_plugin_option->next_option = ptr_plugin_option;
+                        last_plugin_option = ptr_plugin_option;
+                    }
+                }
+                else
+                {
+                    ptr_plugin_option->prev_option = NULL;
+                    ptr_plugin_option->next_option = NULL;
+                    plugin_options = ptr_plugin_option;
+                    last_plugin_option = ptr_plugin_option;
+                }
+                return 1;
+            }
         }
     }
     
@@ -318,7 +367,7 @@ plugin_config_write ()
          ptr_plugin_option = ptr_plugin_option->next_option)
     {
         fprintf (file, "%s = \"%s\"\n",
-                 ptr_plugin_option->option_name,
+                 ptr_plugin_option->name,
                  ptr_plugin_option->value);
     }
     

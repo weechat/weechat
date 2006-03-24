@@ -90,6 +90,7 @@ extern int weechat_cmd_plugin (t_irc_server *, t_irc_channel *, int, char **);
 extern int weechat_cmd_save (t_irc_server *, t_irc_channel *, int, char **);
 extern int weechat_cmd_server (t_irc_server *, t_irc_channel *, int, char **);
 extern int weechat_cmd_set (t_irc_server *, t_irc_channel *, char *);
+extern int weechat_cmd_setp (t_irc_server *, t_irc_channel *, char *);
 extern int weechat_cmd_unalias (t_irc_server *, t_irc_channel *, char *);
 extern int weechat_cmd_unignore (t_irc_server *, t_irc_channel *, int, char **);
 extern int weechat_cmd_upgrade (t_irc_server *, t_irc_channel *, int, char **);

@@ -94,6 +94,36 @@ gnutls_certificate_credentials gnutls_xcred;   /* gnutls client credentials */
 
 
 /*
+ * ascii_tolower: locale independant string conversion to lower case
+ */
+
+void
+ascii_tolower (char *string)
+{
+    while (string && string[0])
+    {
+        if ((string[0] >= 'A') && (string[0] <= 'Z'))
+            string[0] += ('a' - 'A');
+        string++;
+    }
+}
+
+/*
+ * ascii_toupper: locale independant string conversion to upper case
+ */
+
+void
+ascii_toupper (char *string)
+{
+    while (string && string[0])
+    {
+        if ((string[0] >= 'a') && (string[0] <= 'z'))
+            string[0] -= ('a' - 'A');
+        string++;
+    }
+}
+
+/*
  * ascii_strcasecmp: locale and case independent string comparison
  */
 

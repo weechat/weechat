@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-03-21
+ChangeLog - 2006-03-24
 
 
 Version 0.1.9 (under dev!):
+   * added /setp command (set plugin options)
    * fixed high CPU usage when running under a screen that has been killed
    * aliases are executed before WeeChat/IRC commands, /builtin command added
    * added /cycle command, /part command does close buffer any more (use

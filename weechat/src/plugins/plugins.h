@@ -22,6 +22,7 @@
 #define __WEECHAT_PLUGINS_H 1
 
 #include "weechat-plugin.h"
+#include "plugins-config.h"
 #include "../irc/irc.h"
 #include "../gui/gui.h"
 

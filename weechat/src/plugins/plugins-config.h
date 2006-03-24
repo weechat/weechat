@@ -27,13 +27,17 @@ typedef struct t_plugin_option t_plugin_option;
 
 struct t_plugin_option
 {
-    char *option_name;                  /* option name in config file          */
+    char *name;                         /* option name in config file          */
     char *value;                        /* value of option                     */
     t_plugin_option *prev_option;       /* link to previous option             */
     t_plugin_option *next_option;       /* link to next option                 */
 };
 
+extern t_plugin_option *plugin_options;
+
+extern t_plugin_option *plugin_config_search_internal (char *);
 extern t_plugin_option *plugin_config_search (t_weechat_plugin *, char *);
+extern int plugin_config_set_internal (char *, char *);
 extern int plugin_config_set (t_weechat_plugin *, char *, char *);
 extern void plugin_config_read ();
 extern int plugin_config_write ();

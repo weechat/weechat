@@ -143,14 +143,20 @@ t_weechat_command weechat_commands[] =
   { "save", N_("save config to disk"),
     N_("[file]"), N_("file: filename for writing config"),
     NULL, 0, 1, weechat_cmd_save, NULL },
-  { "set", N_("set config parameters"),
+  { "set", N_("set config options"),
     N_("[option [ = value]]"),
     N_("option: name of an option (if name is full "
        "and no value is given, then help is displayed on option)\n"
-       "value: value for option\n\n"
+       " value: value for option\n\n"
        "Option may be: servername.server_xxx where \"servername\" is an "
        "internal server name and \"xxx\" an option for this server."),
     "%o = %v", 0, MAX_ARGS, NULL, weechat_cmd_set },
+  { "setp", N_("set plugin config options"),
+    N_("[option [ = value]]"),
+    N_("option: name of a plugin option\n"
+       " value: value for option\n\n"
+       "Option is format: plugin.option, example: perl.myscript.item1"),
+    "%O = %V", 0, MAX_ARGS, NULL, weechat_cmd_setp },
   { "unalias", N_("remove an alias"),
     N_("alias_name"), N_("alias_name: name of alias to remove"),
     "%a", 1, 1, NULL, weechat_cmd_unalias },
@@ -2573,8 +2579,9 @@ weechat_cmd_plugin (t_irc_server *server, t_irc_channel *channel,
 #else
     irc_display_prefix (NULL, NULL, PREFIX_ERROR);
     gui_printf (NULL,
-                _("Command \"plugin\" is not available, WeeChat was built "
-                  "without plugins support.\n"));
+                _("Command \"%s\" is not available, WeeChat was built "
+                  "without plugins support.\n"),
+                "plugin");
     /* make gcc happy */
     (void) argc;
     (void) argv;
@@ -2974,7 +2981,7 @@ weechat_cmd_set_display_option (t_config_option *option, char *prefix, void *val
 }
 
 /*
- * weechat_cmd_set: set options
+ * weechat_cmd_set: set config options
  */
 
 int
@@ -3291,6 +3298,171 @@ weechat_cmd_set (t_irc_server *server, t_irc_channel *channel,
             }
         }
     }
+    return 0;
+}
+
+/*
+ * weechat_cmd_setp: set plugin options
+ */
+
+int
+weechat_cmd_setp (t_irc_server *server, t_irc_channel *channel,
+                  char *arguments)
+{
+#ifdef PLUGINS
+    char *option, *value, *pos, *ptr_name;
+    t_plugin_option *ptr_option;
+    int number_found;
+    
+    /* make gcc happy */
+    (void) server;
+    (void) channel;
+    
+    option = NULL;
+    value = NULL;
+    if (arguments && arguments[0])
+    {
+        option = arguments;
+        value = strchr (option, '=');
+        if (value)
+        {
+            value[0] = '\0';
+            
+            /* remove spaces before '=' */
+            pos = value - 1;
+            while ((pos > option) && (pos[0] == ' '))
+            {
+                pos[0] = '\0';
+                pos--;
+            }
+            
+            /* skip spaces after '=' */
+            value++;
+            while (value[0] && (value[0] == ' '))
+            {
+                value++;
+            }
+            
+            /* remove simple or double quotes 
+               and spaces at the end */
+            if (strlen(value) > 1)
+            {
+                pos = value + strlen (value) - 1;
+                while ((pos > value) && (pos[0] == ' '))
+                {
+                    pos[0] = '\0';
+                    pos--;
+                }
+                pos = value + strlen (value) - 1;
+                if (((value[0] == '\'') &&
+                     (pos[0] == '\'')) ||
+                    ((value[0] == '"') &&
+                     (pos[0] == '"')))
+                {
+                    pos[0] = '\0';
+                    value++;
+                }
+            }
+        }
+    }
+    
+    if (value)
+    {
+        ptr_name = NULL;
+        ptr_option = plugin_config_search_internal (option);
+        if (ptr_option)
+            ptr_name = ptr_option->name;
+        else
+        {
+            pos = strchr (option, '.');
+            if (pos)
+                pos[0] = '\0';
+            if (!pos || !pos[1] || (!plugin_search (option)))
+            {
+                irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                gui_printf (NULL, _("%s plugin \"%s\" not found\n"),
+                            WEECHAT_ERROR, option);
+            }
+            else
+                ptr_name = option;
+            if (pos)
+                pos[0] = '.';
+        }
+        if (ptr_name)
+        {
+            if (plugin_config_set_internal (ptr_name, value))
+            {
+                gui_printf (NULL, "\n  %s%s = \"%s%s%s\"\n",
+                            ptr_name,
+                            GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                            GUI_COLOR(COLOR_WIN_CHAT_HOST),
+                            value,
+                            GUI_COLOR(COLOR_WIN_CHAT_DARK));
+            }
+            else
+            {
+                irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                gui_printf (NULL, _("%s incorrect value for plugin option \"%s\"\n"),
+                            WEECHAT_ERROR, ptr_name);
+            }
+        }
+    }
+    else
+    {
+        number_found = 0;
+        for (ptr_option = plugin_options; ptr_option;
+             ptr_option = ptr_option->next_option)
+        {
+            if ((!option) ||
+                ((option) && (option[0])
+                 && (strstr (ptr_option->name, option) != NULL)))
+            {
+                if (number_found == 0)
+                    gui_printf (NULL, "\n");
+                gui_printf (NULL, "  %s%s = \"%s%s%s\"\n",
+                            ptr_option->name,
+                            GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                            GUI_COLOR(COLOR_WIN_CHAT_HOST),
+                            ptr_option->value,
+                            GUI_COLOR(COLOR_WIN_CHAT_DARK));
+                number_found++;
+            }
+        }
+        if (number_found == 0)
+        {
+            if (option)
+                gui_printf (NULL, _("No plugin option found with \"%s\"\n"),
+                            option);
+            else
+                gui_printf (NULL, _("No plugin option found\n"));
+        }
+        else
+        {
+            gui_printf (NULL, "\n");
+            gui_printf (NULL, "%s%d %s",
+                        GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                        number_found,
+                        GUI_COLOR(COLOR_WIN_CHAT));
+            if (option)
+                gui_printf (NULL, _("plugin option(s) found with \"%s\"\n"),
+                            option);
+            else
+                gui_printf (NULL, _("plugin option(s) found\n"));
+        }
+    }
+#else
+    /* make gcc happy */
+    (void) server;
+    (void) channel;
+    (void) arguments;
+    
+    irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+    gui_printf (NULL,
+                _("Command \"%s\" is not available, WeeChat was built "
+                  "without plugins support.\n"),
+                "setp");
+#endif
+    
     return 0;
 }
 
