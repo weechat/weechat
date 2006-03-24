@@ -184,6 +184,14 @@ fi
 
 PLUGINS_LIBS=
 
+if test "x$enable_plugins" != "xyes" ; then
+    enable_plugins="no"
+    enable_perl="no"
+    enable_python="no"
+    enable_ruby="no"
+    enable_lua="no"
+fi
+
 if test "x$enable_perl" = "xyes" ; then
     enable_plugins="yes"
     

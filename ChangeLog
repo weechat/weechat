@@ -5,6 +5,7 @@ ChangeLog - 2006-03-24
 
 
 Version 0.1.9 (under dev!):
+   * fixed --disable-plugins option in configure script
    * added /setp command (set plugin options)
    * fixed high CPU usage when running under a screen that has been killed
    * aliases are executed before WeeChat/IRC commands, /builtin command added

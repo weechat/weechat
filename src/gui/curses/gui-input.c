@@ -392,9 +392,11 @@ gui_main_loop ()
                     server_check_away ();
                 }
             }
-            
+
+#ifdef PLUGINS            
             /* call timer handlers */
             plugin_timer_handler_exec ();
+#endif
         }
         
         /* read keyboard */
