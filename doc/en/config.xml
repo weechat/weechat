@@ -1126,6 +1126,13 @@
   <entry>Real name to use on IRC server</entry>
 </row>
 <row>
+  <entry><option>server_hostname</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry>''</entry>
+  <entry>Custom hostname/IP for server (optional, if empty local hostname is used)</entry>
+</row>
+<row>
   <entry><option>server_command</option></entry>
   <entry>string</entry>
   <entry>any string</entry>

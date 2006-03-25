@@ -687,8 +687,9 @@ weechat_parse_args (int argc, char *argv[])
                                  server_tmp.ipv6, server_tmp.ssl,
                                  server_tmp.password, server_tmp.nick1,
                                  server_tmp.nick2, server_tmp.nick3,
-                                 NULL, NULL, NULL, 0, server_tmp.autojoin, 1, NULL,
-                                 NULL, NULL, NULL))
+                                 NULL, NULL, NULL, NULL, 0,
+                                 server_tmp.autojoin, 1, NULL, NULL,
+                                 NULL, NULL))
                     fprintf (stderr, _("%s unable to create server ('%s'), ignored\n"),
                              WEECHAT_WARNING, argv[i]);
                 server_destroy (&server_tmp);

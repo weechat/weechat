@@ -48,25 +48,31 @@
 void
 irc_login (t_irc_server *server)
 {
-    char hostname[128];
+    char hostname[128], *ptr_hostname;
 
     if ((server->password) && (server->password[0]))
         server_sendf (server, "PASS %s\r\n", server->password);
     
-    gethostname (hostname, sizeof (hostname) - 1);
-    hostname[sizeof (hostname) - 1] = '\0';
-    if (!hostname[0])
-        strcpy (hostname, _("unknown"));
+    if (server->hostname && server->hostname[0])
+        ptr_hostname = server->hostname;
+    else
+    {
+        gethostname (hostname, sizeof (hostname) - 1);
+        hostname[sizeof (hostname) - 1] = '\0';
+        if (!hostname[0])
+            strcpy (hostname, _("unknown"));
+        ptr_hostname = hostname;
+    }
     irc_display_prefix (server, server->buffer, PREFIX_INFO);
     gui_printf (server->buffer,
-                _("%s: using local hostname \"%s\"\n"),
-                PACKAGE_NAME, hostname);
+                _("%s: using hostname \"%s\"\n"),
+                PACKAGE_NAME, ptr_hostname);
     if (!server->nick)
         server->nick = strdup (server->nick1);
     server_sendf (server,
                   "NICK %s\r\n"
                   "USER %s %s %s :%s\r\n",
-                  server->nick, server->username, hostname, "servername",
+                  server->nick, server->username, ptr_hostname, "servername",
                   server->realname);
     gui_draw_buffer_input (gui_current_window->buffer, 1);
 }

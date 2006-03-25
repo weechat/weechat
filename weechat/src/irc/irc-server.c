@@ -79,6 +79,7 @@ server_init (t_irc_server *server)
     server->nick3 = NULL;
     server->username = NULL;
     server->realname = NULL;
+    server->hostname = NULL;
     server->command = NULL;
     server->command_delay = 1;
     server->autojoin = NULL;
@@ -291,6 +292,8 @@ server_destroy (t_irc_server *server)
         free (server->username);
     if (server->realname)
         free (server->realname);
+    if (server->hostname)
+        free (server->hostname);
     if (server->command)
         free (server->command);
     if (server->autojoin)
@@ -360,12 +363,14 @@ server_free_all ()
  */
 
 t_irc_server *
-server_new (char *name, int autoconnect, int autoreconnect, int autoreconnect_delay,
-            int command_line, char *address, int port, int ipv6, int ssl, char *password,
+server_new (char *name, int autoconnect, int autoreconnect,
+            int autoreconnect_delay, int command_line, char *address,
+            int port, int ipv6, int ssl, char *password,
             char *nick1, char *nick2, char *nick3, char *username,
-            char *realname, char *command, int command_delay, char *autojoin,
-            int autorejoin, char *notify_levels, char *charset_decode_iso,
-            char *charset_decode_utf, char *charset_encode)
+            char *realname, char *hostname, char *command, int command_delay,
+            char *autojoin, int autorejoin, char *notify_levels,
+            char *charset_decode_iso, char *charset_decode_utf,
+            char *charset_encode)
 {
     t_irc_server *new_server;
     
@@ -375,13 +380,14 @@ server_new (char *name, int autoconnect, int autoreconnect, int autoreconnect_de
 #ifdef DEBUG
     weechat_log_printf ("Creating new server (name:%s, address:%s, port:%d, pwd:%s, "
                         "nick1:%s, nick2:%s, nick3:%s, username:%s, realname:%s, "
-                        "command:%s, autojoin:%s, autorejoin:%s, notify_levels:%s, "
-                        "decode_iso:%s, decode_utf:%s, encode:%s)\n",
+                        "hostname: %s, command:%s, autojoin:%s, autorejoin:%s, "
+                        "notify_levels:%s, decode_iso:%s, decode_utf:%s, encode:%s)\n",
                         name, address, port, (password) ? password : "",
                         (nick1) ? nick1 : "", (nick2) ? nick2 : "", (nick3) ? nick3 : "",
                         (username) ? username : "", (realname) ? realname : "",
-                        (command) ? command : "", (autojoin) ? autojoin : "",
-                        (autorejoin) ? "on" : "off", (notify_levels) ? notify_levels : "",
+                        (hostname) ? hostname : "", (command) ? command : "",
+                        (autojoin) ? autojoin : "", (autorejoin) ? "on" : "off",
+                        (notify_levels) ? notify_levels : "",
                         (charset_decode_iso) ? charset_decode_iso : "",
                         (charset_decode_utf) ? charset_decode_utf : "",
                         (charset_encode) ? charset_encode : "");
@@ -406,6 +412,8 @@ server_new (char *name, int autoconnect, int autoreconnect, int autoreconnect_de
             (username) ? strdup (username) : strdup ("weechat");
         new_server->realname =
             (realname) ? strdup (realname) : strdup ("realname");
+        new_server->hostname =
+            (hostname) ? strdup (hostname) : NULL;
         new_server->command =
             (command) ? strdup (command) : NULL;
         new_server->command_delay = command_delay;
@@ -1086,20 +1094,20 @@ pass_httpproxy(int sock, char *address, int port)
 {
 
     char buffer[256];
-    char authbuf[128]; // seems to be enougth to store username + password
-    char authbuf_base64[196]; // enougth to store base64 encoded authbuf
+    char authbuf[128];
+    char authbuf_base64[196];
     int n, m;
 
     if (strlen(cfg_proxy_username) > 0) 
     {
-        // authentification
+        /* authentification */
         snprintf(authbuf, sizeof(authbuf), "%s:%s", cfg_proxy_username, cfg_proxy_password);
         base64encode(authbuf, authbuf_base64);
         n = snprintf(buffer, sizeof(buffer), "CONNECT %s:%d HTTP/1.0\r\nProxy-Authorization: Basic %s\r\n\r\n", address, port, authbuf_base64);
     }
     else 
     {
-        // no authentification 
+        /* no authentification */
         n = snprintf(buffer, sizeof(buffer), "CONNECT %s:%d HTTP/1.0\r\n\r\n", address, port);
     }
   
@@ -1109,7 +1117,7 @@ pass_httpproxy(int sock, char *address, int port)
 
     n = recv(sock, buffer, sizeof(buffer), 0);
 
-    /* success result must be like : "HTTP/1.0 200 OK"  */
+    /* success result must be like: "HTTP/1.0 200 OK" */
     if (n < 12)
         return 1;
 
@@ -1252,28 +1260,27 @@ pass_socks5proxy(int sock, char *address, int port)
          *       - socks version (buffer[0]) = 5 => socks5
          *       - socks method  (buffer[1]) = 2 => authentication
          */
-
-        //if (!(buffer[0] == 5 && buffer[1] == 2))
+        
         if (buffer[0] != 5 || buffer[1] != 2)
             return 1;
-
+        
         /* authentication as in RFC 1929 */
         username_len = strlen(cfg_proxy_username);
         password_len = strlen(cfg_proxy_password);
-      
+        
         /* make username/password buffer */
         buffer[0] = 1;
         buffer[1] = (unsigned char) username_len;
         memcpy(buffer + 2, cfg_proxy_username, username_len);
         buffer[2 + username_len] = (unsigned char) password_len;
         memcpy(buffer + 3 + username_len, cfg_proxy_password, password_len);
-     
+        
         send (sock, buffer, 3 + username_len + password_len, 0);
-
+        
         /* server socks5 must respond with 2 bytes */
         if (recv (sock, buffer, 2, 0) != 2)
             return 1;
-
+        
         /* buffer[1] = auth state, must be 0 for success */
         if (buffer[1] != 0)
             return 1;

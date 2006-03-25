@@ -947,6 +947,10 @@ t_config_option weechat_options_server[] =
     N_("real name to use on IRC server"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "", NULL, NULL, &(cfg_server.realname), NULL },
+  { "server_hostname", N_("custom hostname/IP for server"),
+    N_("custom hostname/IP for server (optional, if empty local hostname is used)"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    "", NULL, NULL, &(cfg_server.hostname), NULL },
   { "server_command", N_("command(s) to run when connected to server"),
     N_("command(s) to run when connected to server (many commands should be "
        "separated by ';', use '\\;' for a semicolon)"),
@@ -1447,6 +1451,8 @@ config_get_server_option_ptr (t_irc_server *server, char *option_name)
         return (void *)(&server->username);
     if (ascii_strcasecmp (option_name, "server_realname") == 0)
         return (void *)(&server->realname);
+    if (ascii_strcasecmp (option_name, "server_hostname") == 0)
+        return (void *)(&server->hostname);
     if (ascii_strcasecmp (option_name, "server_command") == 0)
         return (void *)(&server->command);
     if (ascii_strcasecmp (option_name, "server_command_delay") == 0)
@@ -1687,7 +1693,8 @@ config_allocate_server (char *filename, int line_number)
                      cfg_server.port, cfg_server.ipv6, cfg_server.ssl,
                      cfg_server.password, cfg_server.nick1, cfg_server.nick2,
                      cfg_server.nick3, cfg_server.username, cfg_server.realname,
-                     cfg_server.command, cfg_server.command_delay, cfg_server.autojoin,
+                     cfg_server.hostname, cfg_server.command,
+                     cfg_server.command_delay, cfg_server.autojoin,
                      cfg_server.autorejoin, cfg_server.notify_levels,
                      cfg_server.charset_decode_iso, cfg_server.charset_decode_utf,
                      cfg_server.charset_encode))
@@ -2223,6 +2230,7 @@ config_create_default ()
         fprintf (file, "server_realname = \"WeeChat default realname\"\n");
     }
     
+    fprintf (file, "server_hostname = \"\"\n");
     fprintf (file, "server_command = \"\"\n");
     fprintf (file, "server_command_delay = 0\n");
     fprintf (file, "server_autojoin = \"\"\n");
@@ -2409,6 +2417,8 @@ config_write (char *config_name)
             fprintf (file, "server_nick3 = \"%s\"\n", ptr_server->nick3);
             fprintf (file, "server_username = \"%s\"\n", ptr_server->username);
             fprintf (file, "server_realname = \"%s\"\n", ptr_server->realname);
+            fprintf (file, "server_hostname = \"%s\"\n",
+                     (ptr_server->hostname) ? ptr_server->hostname : "");
             fprintf (file, "server_command = \"%s\"\n",
                      (ptr_server->command) ? ptr_server->command : "");
             fprintf (file, "server_command_delay = %d\n", ptr_server->command_delay);

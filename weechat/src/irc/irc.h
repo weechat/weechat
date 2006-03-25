@@ -142,6 +142,7 @@ struct t_irc_server
     char *nick3;                    /* 2nd alternate nickname                 */
     char *username;                 /* user name                              */
     char *realname;                 /* real name                              */
+    char *hostname;                 /* custom hostname                        */
     char *command;                  /* command to run once connected          */
     int command_delay;              /* delay after execution of command       */
     char *autojoin;                 /* channels to automatically join         */
@@ -310,8 +311,8 @@ extern void server_free (t_irc_server *);
 extern void server_free_all ();
 extern t_irc_server *server_new (char *, int, int, int, int, char *, int, int, int,
                                  char *, char *, char *, char *, char *, char *,
-                                 char *, int, char *, int, char *, char *, char *,
-                                 char *);
+                                 char *, char *, int, char *, int, char *, char *,
+                                 char *, char *);
 extern char *server_get_charset_decode_iso (t_irc_server *);
 extern char *server_get_charset_decode_utf (t_irc_server *);
 extern char *server_get_charset_encode (t_irc_server *);

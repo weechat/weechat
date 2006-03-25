@@ -225,6 +225,7 @@ session_save_servers (FILE *file)
         rc = rc && (session_write_str (file, SESSION_SERV_NICK3, ptr_server->nick3));
         rc = rc && (session_write_str (file, SESSION_SERV_USERNAME, ptr_server->username));
         rc = rc && (session_write_str (file, SESSION_SERV_REALNAME, ptr_server->realname));
+        rc = rc && (session_write_str (file, SESSION_SERV_HOSTNAME, ptr_server->hostname));
         rc = rc && (session_write_str (file, SESSION_SERV_COMMAND, ptr_server->command));
         rc = rc && (session_write_int (file, SESSION_SERV_COMMAND_DELAY, ptr_server->command_delay));
         rc = rc && (session_write_str (file, SESSION_SERV_AUTOJOIN, ptr_server->autojoin));
@@ -857,6 +858,9 @@ session_load_server (FILE *file)
                 break;
             case SESSION_SERV_REALNAME:
                 rc = rc && (session_read_str (file, &(session_current_server->realname)));
+                break;
+            case SESSION_SERV_HOSTNAME:
+                rc = rc && (session_read_str (file, &(session_current_server->hostname)));
                 break;
             case SESSION_SERV_COMMAND:
                 rc = rc && (session_read_str (file, &(session_current_server->command)));

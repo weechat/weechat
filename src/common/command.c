@@ -2865,6 +2865,7 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
                                  server_tmp.password, server_tmp.nick1,
                                  server_tmp.nick2, server_tmp.nick3,
                                  server_tmp.username, server_tmp.realname,
+                                 server_tmp.hostname,
                                  server_tmp.command, 1, server_tmp.autojoin, 1, NULL,
                                  NULL, NULL, NULL);
         if (new_server)

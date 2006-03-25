@@ -291,7 +291,9 @@ irc_display_server (t_irc_server *server)
     gui_printf (NULL, "  server_username  . . . . . : %s\n",
                 server->username);
     gui_printf (NULL, "  server_realname  . . . . . : %s\n",
-               server->realname);
+                server->realname);
+    gui_printf (NULL, "  server_hostname  . . . . . : %s\n",
+                (server->hostname) ? server->hostname : "");
     gui_printf (NULL, "  server_command . . . . . . : %s\n",
                 (server->command && server->command[0]) ?
                 server->command : "");
