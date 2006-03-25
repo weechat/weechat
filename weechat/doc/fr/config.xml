@@ -1130,7 +1130,7 @@
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>
   <entry>''</entry>
-  <entry><nom de machine/IP personnalisé pour le serveur (optionnel, si non renseigné, le nom de machine local est utilisé)</entry>
+  <entry>Nom de machine/IP personnalisé pour le serveur (optionnel, si non renseigné, le nom de machine local est utilisé)</entry>
 </row>
 <row>
   <entry><option>server_command</option></entry>
