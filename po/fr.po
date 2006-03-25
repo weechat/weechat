@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.9-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-03-25 11:52+0100\n"
-"PO-Revision-Date: 2006-03-25 11:52+0100\n"
+"POT-Creation-Date: 2006-03-25 12:24+0100\n"
+"PO-Revision-Date: 2006-03-25 12:32+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2294,7 +2294,7 @@ msgid "%s %s, line %d: invalid syntax, missing \"=\"\n"
 msgstr "%s %s, ligne %d: syntaxe invalide, il manque \"=\"\n"
 
 #: src/plugins/plugins-config.c:352 src/common/weeconfig.c:2078
-#: src/common/weeconfig.c:2284
+#: src/common/weeconfig.c:2285
 #, c-format
 msgid "%s cannot create file \"%s\"\n"
 msgstr "%s impossible de créer le fichier \"%s\"\n"
@@ -5308,9 +5308,7 @@ msgstr "nom de machine/IP personnalisé pour le serveur"
 #: src/common/weeconfig.c:951
 msgid ""
 "custom hostname/IP for server (optional, if empty local hostname is used)"
-msgstr ""
-"<nom de machine/IP personnalisé pour le serveur (optionnel, si non "
-"renseigné, le nom de machine local est utilisé)"
+msgstr "nom de machine/IP personnalisé pour le serveur (optionnel, si non renseigné, le nom de machine local est utilisé)"
 
 #: src/common/weeconfig.c:954
 msgid "command(s) to run when connected to server"
@@ -5500,7 +5498,7 @@ msgstr "%s: création du fichier de configuration par défaut...\n"
 msgid "Creating default config file\n"
 msgstr "Création du fichier de configuration par défaut\n"
 
-#: src/common/weeconfig.c:2088 src/common/weeconfig.c:2293
+#: src/common/weeconfig.c:2088 src/common/weeconfig.c:2294
 #, c-format
 msgid ""
 "#\n"
@@ -5509,7 +5507,7 @@ msgstr ""
 "#\n"
 "# %s: fichier de configuration, créé par %s v%s le %s"
 
-#: src/common/weeconfig.c:2092 src/common/weeconfig.c:2297
+#: src/common/weeconfig.c:2092 src/common/weeconfig.c:2298
 #, c-format
 msgid ""
 "# WARNING! Be careful when editing this file, WeeChat writes this file when "
@@ -5520,7 +5518,7 @@ msgstr ""
 "quittant.\n"
 "#\n"
 
-#: src/common/weeconfig.c:2290
+#: src/common/weeconfig.c:2291
 msgid "Saving config to disk\n"
 msgstr "Sauvegarde de la configuration sur disque\n"
 
