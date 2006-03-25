@@ -594,7 +594,7 @@ completion_list_add_option_value (t_completion *completion)
                 case OPTION_TYPE_STRING:
                     snprintf (option_string, sizeof (option_string) - 1,
                               "\"%s\"",
-                              (option_value) ?
+                              ((option_value) && (*((char **)(option_value)))) ?
                               *((char **)(option_value)) :
                               option->default_string);
                     weelist_add (&completion->completion_list,
