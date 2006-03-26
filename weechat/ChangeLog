@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-03-25
+ChangeLog - 2006-03-26
 
 
 Version 0.1.9 (under dev!):
+   * improved script plugin loader
    * added hostname/IP option for connection to server
    * fixed --disable-plugins option in configure script
    * added /setp command (set plugin options)
