@@ -277,7 +277,7 @@ t_irc_command irc_commands[] =
   { "userhost", N_("return a list of information about nicknames"),
     N_("nickname [nickname ...]"),
     N_("nickname: nickname"),
-    NULL, 1, MAX_ARGS, 1, NULL, irc_cmd_send_userhost, NULL },
+    "%n", 1, MAX_ARGS, 1, NULL, irc_cmd_send_userhost, NULL },
   { "users", N_("list of users logged into the server"),
     N_("[target]"),
     N_("target: server"),
