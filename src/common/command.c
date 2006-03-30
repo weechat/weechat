@@ -341,8 +341,10 @@ alias_new (char *alias_name, char *alias_command)
 {
     t_weechat_alias *new_alias, *ptr_alias;
 
-    if (alias_name[0] == '/')
+    while (alias_name[0] == '/')
+    {
 	alias_name++;
+    }
     
     if (ascii_strcasecmp (alias_name, "builtin") == 0)
         return NULL;
@@ -1105,6 +1107,11 @@ weechat_cmd_alias (t_irc_server *server, t_irc_channel *channel,
     
     if (arguments && arguments[0])
     {
+        while (arguments[0] == '/')
+        {
+            arguments++;
+        }
+        
         /* Define new alias */
         pos = strchr (arguments, ' ');
         if (pos)
@@ -3524,6 +3531,9 @@ weechat_cmd_unalias (t_irc_server *server, t_irc_channel *channel,
     /* make gcc happy */
     (void) server;
     (void) channel;
+    
+    if (arguments[0] == '/')
+        arguments++;
     
     ptr_weelist = weelist_search (index_commands, arguments);
     if (!ptr_weelist)
