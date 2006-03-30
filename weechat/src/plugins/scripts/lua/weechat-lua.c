@@ -54,7 +54,7 @@ lua_State *lua_current_interpreter = NULL;
 int
 weechat_lua_exec (t_weechat_plugin *plugin,
 		  t_plugin_script *script,
-		  char *function, char *server, char *arguments)
+		  char *function, char *arg1, char *arg2, char *arg3)
 {
 
     lua_current_interpreter = script->interpreter;
@@ -62,10 +62,19 @@ weechat_lua_exec (t_weechat_plugin *plugin,
     lua_getglobal (lua_current_interpreter, function);
     lua_current_script = script;
     
-    lua_pushstring (lua_current_interpreter, server == NULL ? "" : server);
-    lua_pushstring (lua_current_interpreter, arguments == NULL ? "" : arguments);
+    if (arg1)
+    {
+        lua_pushstring (lua_current_interpreter, (arg1) ? arg1 : "");
+        if (arg2)
+        {
+            lua_pushstring (lua_current_interpreter, (arg2) ? arg2 : "");
+            if (arg3)
+                lua_pushstring (lua_current_interpreter, (arg3) ? arg3 : "");
+        }
+    }
     
-    if ( lua_pcall(lua_current_interpreter, 2, 1, 0) != 0)
+    if (lua_pcall (lua_current_interpreter,
+                   (arg1) ? ((arg2) ? ((arg3) ? 3 : 2) : 1) : 0, 1, 0) != 0)
     {
 	plugin->print_server (plugin,
                               "Lua error: unable to run function \"%s\"",
@@ -80,19 +89,52 @@ weechat_lua_exec (t_weechat_plugin *plugin,
 }
 
 /*
- * weechat_lua_handler: general message and command handler for Lua
+ * weechat_lua_cmd_msg_handler: general command/message handler for Lua
  */
 
 int
-weechat_lua_handler (t_weechat_plugin *plugin,
-                        char *server, char *command, char *arguments,
-                        char *handler_args, void *handler_pointer)
+weechat_lua_cmd_msg_handler (t_weechat_plugin *plugin,
+                             int argc, char **argv,
+                             char *handler_args, void *handler_pointer)
+{
+    if (argc >= 3)
+        return weechat_lua_exec (plugin, (t_plugin_script *)handler_pointer,
+                                 handler_args, argv[0], argv[2], NULL);
+    else
+        return PLUGIN_RC_KO;
+}
+
+/*
+ * weechat_lua_timer_handler: general timer handler for Lua
+ */
+
+int
+weechat_lua_timer_handler (t_weechat_plugin *plugin,
+                           int argc, char **argv,
+                           char *handler_args, void *handler_pointer)
 {
     /* make gcc happy */
-    (void) command;
+    (void) argc;
+    (void) argv;
     
     return weechat_lua_exec (plugin, (t_plugin_script *)handler_pointer,
-                                handler_args, server, arguments);
+                             handler_args, NULL, NULL, NULL);
+}
+
+/*
+ * weechat_lua_keyboard_handler: general keyboard handler for Lua
+ */
+
+int
+weechat_lua_keyboard_handler (t_weechat_plugin *plugin,
+                              int argc, char **argv,
+                              char *handler_args, void *handler_pointer)
+{
+    if (argc >= 2)
+        return weechat_lua_exec (plugin, (t_plugin_script *)handler_pointer,
+                                 handler_args, argv[0], argv[1], argv[2]);
+    else
+        return PLUGIN_RC_KO;
 }
 
 /*
@@ -104,6 +146,7 @@ weechat_lua_register (lua_State *L)
 {
     const char *name, *version, *shutdown_func, *description;
     int n;
+    
     /* make gcc happy */
     (void) L;
     
@@ -179,6 +222,7 @@ weechat_lua_print  (lua_State *L)
 {
     const char *message, *channel_name, *server_name;
     int n;
+    
     /* make gcc happy */
     (void) L;
     
@@ -199,24 +243,24 @@ weechat_lua_print  (lua_State *L)
 
     switch (n)
     {
-    case 1:
-	message = lua_tostring (lua_current_interpreter, -1);
-	break;
-    case 2:
-	channel_name = lua_tostring (lua_current_interpreter, -2);
-	message = lua_tostring (lua_current_interpreter, -1);
-	break;
-    case 3:
-	server_name = lua_tostring (lua_current_interpreter, -3);
-	channel_name = lua_tostring (lua_current_interpreter, -2);
-	message = lua_tostring (lua_current_interpreter, -1);
-	break;
-    default:
-	lua_plugin->print_server (lua_plugin,
-                                  "Lua error: wrong parameters for "
-                                  "\"print\" function");
-        lua_pushnumber (lua_current_interpreter, 0);
-	return 1;
+        case 1:
+            message = lua_tostring (lua_current_interpreter, -1);
+            break;
+        case 2:
+            channel_name = lua_tostring (lua_current_interpreter, -2);
+            message = lua_tostring (lua_current_interpreter, -1);
+            break;
+        case 3:
+            server_name = lua_tostring (lua_current_interpreter, -3);
+            channel_name = lua_tostring (lua_current_interpreter, -2);
+            message = lua_tostring (lua_current_interpreter, -1);
+            break;
+        default:
+            lua_plugin->print_server (lua_plugin,
+                                      "Lua error: wrong parameters for "
+                                      "\"print\" function");
+            lua_pushnumber (lua_current_interpreter, 0);
+            return 1;
     }
     
     lua_plugin->print (lua_plugin,
@@ -237,6 +281,7 @@ weechat_lua_print_infobar  (lua_State *L)
 {
     const char *message;
     int delay, n;
+    
     /* make gcc happy */
     (void) L;
     
@@ -280,6 +325,7 @@ static int
 weechat_lua_remove_infobar  (lua_State *L)
 {
     int n, how_many;
+    
     /* make gcc happy */
     (void) L;
     
@@ -314,6 +360,7 @@ weechat_lua_log  (lua_State *L)
 {
     const char *message, *channel_name, *server_name;
     int n;
+    
     /* make gcc happy */
     (void) L;
     
@@ -334,24 +381,24 @@ weechat_lua_log  (lua_State *L)
 
     switch (n)
     {
-    case 1:
-	message = lua_tostring (lua_current_interpreter, -1);
-	break;
-    case 2:
-	channel_name = lua_tostring (lua_current_interpreter, -2);
-	message = lua_tostring (lua_current_interpreter, -1);
-	break;
-    case 3:
-	server_name = lua_tostring (lua_current_interpreter, -3);
-	channel_name = lua_tostring (lua_current_interpreter, -2);
-	message = lua_tostring (lua_current_interpreter, -1);
-	break;
-    default:
-	lua_plugin->print_server (lua_plugin,
-                                  "Lua error: wrong parameters for "
-                                  "\"log\" function");
-        lua_pushnumber (lua_current_interpreter, 0);
-	return 1;
+        case 1:
+            message = lua_tostring (lua_current_interpreter, -1);
+            break;
+        case 2:
+            channel_name = lua_tostring (lua_current_interpreter, -2);
+            message = lua_tostring (lua_current_interpreter, -1);
+            break;
+        case 3:
+            server_name = lua_tostring (lua_current_interpreter, -3);
+            channel_name = lua_tostring (lua_current_interpreter, -2);
+            message = lua_tostring (lua_current_interpreter, -1);
+            break;
+        default:
+            lua_plugin->print_server (lua_plugin,
+                                      "Lua error: wrong parameters for "
+                                      "\"log\" function");
+            lua_pushnumber (lua_current_interpreter, 0);
+            return 1;
     }
     
     lua_plugin->log (lua_plugin,
@@ -372,6 +419,7 @@ weechat_lua_command  (lua_State *L)
 {
     const char *command, *channel_name, *server_name;
     int n;
+    
     /* make gcc happy */
     (void) L;
      
@@ -392,24 +440,24 @@ weechat_lua_command  (lua_State *L)
     
     switch (n)
     {
-    case 1:
-	command = lua_tostring (lua_current_interpreter, -1);
-	break;
-    case 2:
-	channel_name = lua_tostring (lua_current_interpreter, -2);
-	command = lua_tostring (lua_current_interpreter, -1);
-	break;
-    case 3:
-	server_name = lua_tostring (lua_current_interpreter, -3);
-	channel_name = lua_tostring (lua_current_interpreter, -2);
-	command = lua_tostring (lua_current_interpreter, -1);
-	break;
-    default:
-	lua_plugin->print_server (lua_plugin,
-                                  "Lua error: wrong parameters for "
-                                  "\"command\" function");
-        lua_pushnumber (lua_current_interpreter, 0);
-	return 1;
+        case 1:
+            command = lua_tostring (lua_current_interpreter, -1);
+            break;
+        case 2:
+            channel_name = lua_tostring (lua_current_interpreter, -2);
+            command = lua_tostring (lua_current_interpreter, -1);
+            break;
+        case 3:
+            server_name = lua_tostring (lua_current_interpreter, -3);
+            channel_name = lua_tostring (lua_current_interpreter, -2);
+            command = lua_tostring (lua_current_interpreter, -1);
+            break;
+        default:
+            lua_plugin->print_server (lua_plugin,
+                                      "Lua error: wrong parameters for "
+                                      "\"command\" function");
+            lua_pushnumber (lua_current_interpreter, 0);
+            return 1;
     }
 
     lua_plugin->exec_command (lua_plugin,
@@ -430,6 +478,7 @@ weechat_lua_add_message_handler  (lua_State *L)
 {
     const char *irc_command, *function;
     int n;
+    
     /* make gcc happy */
     (void) L;
     
@@ -460,7 +509,8 @@ weechat_lua_add_message_handler  (lua_State *L)
     function = lua_tostring (lua_current_interpreter, -1);
     
     if (!lua_plugin->msg_handler_add (lua_plugin, (char *) irc_command,
-				     weechat_lua_handler, (char *) function,
+				     weechat_lua_cmd_msg_handler,
+                                      (char *) function,
 				     (void *)lua_current_script))
     {
 	lua_pushnumber (lua_current_interpreter, 0);
@@ -481,6 +531,7 @@ weechat_lua_add_command_handler  (lua_State *L)
     const char *command, *function, *description, *arguments, *arguments_description;
     const char *completion_template;
     int n;
+    
     /* make gcc happy */
     (void) L;
         
@@ -504,24 +555,24 @@ weechat_lua_add_command_handler  (lua_State *L)
     
     switch (n)
     {
-    case 2:
-	command = lua_tostring (lua_current_interpreter, -2);
-	function = lua_tostring (lua_current_interpreter, -1);
-	break;
-    case 6:
-	command = lua_tostring (lua_current_interpreter, -6);
-        function = lua_tostring (lua_current_interpreter, -5);
-	description = lua_tostring (lua_current_interpreter, -4);
-	arguments = lua_tostring (lua_current_interpreter, -3);
-	arguments_description = lua_tostring (lua_current_interpreter, -2);
-	completion_template = lua_tostring (lua_current_interpreter, -1);
-	break;
-    default:
-	lua_plugin->print_server (lua_plugin,
-                                  "Lua error: wrong parameters for "
-                                  "\"add_command_handler\" function");
-        lua_pushnumber (lua_current_interpreter, 0);
-	return 1;
+        case 2:
+            command = lua_tostring (lua_current_interpreter, -2);
+            function = lua_tostring (lua_current_interpreter, -1);
+            break;
+        case 6:
+            command = lua_tostring (lua_current_interpreter, -6);
+            function = lua_tostring (lua_current_interpreter, -5);
+            description = lua_tostring (lua_current_interpreter, -4);
+            arguments = lua_tostring (lua_current_interpreter, -3);
+            arguments_description = lua_tostring (lua_current_interpreter, -2);
+            completion_template = lua_tostring (lua_current_interpreter, -1);
+            break;
+        default:
+            lua_plugin->print_server (lua_plugin,
+                                      "Lua error: wrong parameters for "
+                                      "\"add_command_handler\" function");
+            lua_pushnumber (lua_current_interpreter, 0);
+            return 1;
     }
     
     if (!lua_plugin->cmd_handler_add (lua_plugin,
@@ -530,7 +581,7 @@ weechat_lua_add_command_handler  (lua_State *L)
 				      (char *) arguments,
 				      (char *) arguments_description,
 				      (char *) completion_template,
-				      weechat_lua_handler,
+				      weechat_lua_cmd_msg_handler,
 				      (char *) function,
 				      (void *)lua_current_script))
     {
@@ -552,6 +603,7 @@ weechat_lua_add_timer_handler  (lua_State *L)
     int interval;
     const char *function;
     int n;
+    
     /* make gcc happy */
     (void) L;
     
@@ -582,7 +634,8 @@ weechat_lua_add_timer_handler  (lua_State *L)
     function = lua_tostring (lua_current_interpreter, -1);
     
     if (!lua_plugin->timer_handler_add (lua_plugin, interval,
-                                        weechat_lua_handler, (char *) function,
+                                        weechat_lua_timer_handler,
+                                        (char *) function,
                                         (void *)lua_current_script))
     {
 	lua_pushnumber (lua_current_interpreter, 0);
@@ -594,7 +647,57 @@ weechat_lua_add_timer_handler  (lua_State *L)
 }
 
 /*
- * weechat_lua_remove_handler: remove a handler
+ * weechat_lua_add_keyboard_handler: add a keyboard handler
+ */
+
+static int
+weechat_lua_add_keyboard_handler  (lua_State *L)
+{
+    const char *function;
+    int n;
+    
+    /* make gcc happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to add keyboard handler, "
+                                  "script not initialized");
+	lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+    
+    function = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+
+    if (n != 1)
+    {
+	lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"add_keyboard_handler\" function");
+        lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+    
+    function = lua_tostring (lua_current_interpreter, -1);
+    
+    if (!lua_plugin->keyboard_handler_add (lua_plugin,
+                                           weechat_lua_keyboard_handler,
+                                           (char *) function,
+                                           (void *)lua_current_script))
+    {
+	lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+
+    lua_pushnumber (lua_current_interpreter, 1);
+    return 1;
+}
+
+/*
+ * weechat_lua_remove_handler: remove a command/message handler
  */
 
 static int
@@ -602,6 +705,7 @@ weechat_lua_remove_handler (lua_State *L)
 {
     const char *command, *function;
     int n;
+    
     /* make gcc happy */
     (void) L;
      
@@ -647,6 +751,7 @@ weechat_lua_remove_timer_handler (lua_State *L)
 {
     const char *function;
     int n;
+    
     /* make gcc happy */
     (void) L;
      
@@ -682,6 +787,50 @@ weechat_lua_remove_timer_handler (lua_State *L)
 }
 
 /*
+ * weechat_lua_remove_keyboard_handler: remove a keyboard handler
+ */
+
+static int
+weechat_lua_remove_keyboard_handler (lua_State *L)
+{
+    const char *function;
+    int n;
+    
+    /* make gcc happy */
+    (void) L;
+     
+    if (!lua_current_script)
+    {
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to remove keyboard handler, "
+                                  "script not initialized");
+        lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+    
+    function = NULL;
+ 
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n != 1)
+    {
+	lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"remove_keyboard_handler\" function");
+        lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+
+    function = lua_tostring (lua_current_interpreter, -1);
+    
+    weechat_script_remove_keyboard_handler (lua_plugin, lua_current_script,
+                                            (char *) function);
+    
+    lua_pushnumber (lua_current_interpreter, 1);
+    return 1;
+}
+
+/*
  * weechat_lua_get_info: get various infos
  */
 
@@ -691,6 +840,7 @@ weechat_lua_get_info  (lua_State *L)
     const char *arg, *server_name;
     char *info;
     int n;
+    
     /* make gcc happy */
     (void) L;
     
@@ -710,19 +860,19 @@ weechat_lua_get_info  (lua_State *L)
 
     switch (n)
     {
-    case 1:
-	arg = lua_tostring (lua_current_interpreter, -1);
-	break;
-    case 2:
-	arg = lua_tostring (lua_current_interpreter, -2);
-	server_name = lua_tostring (lua_current_interpreter, -1);
-	break;
-    default:
-	lua_plugin->print_server (lua_plugin,
-                                  "Lua error: wrong parameters for "
-                                  "\"get_info\" function");
-        lua_pushnumber (lua_current_interpreter, 0);
-	return 1;
+        case 1:
+            arg = lua_tostring (lua_current_interpreter, -1);
+            break;
+        case 2:
+            arg = lua_tostring (lua_current_interpreter, -2);
+            server_name = lua_tostring (lua_current_interpreter, -1);
+            break;
+        default:
+            lua_plugin->print_server (lua_plugin,
+                                      "Lua error: wrong parameters for "
+                                      "\"get_info\" function");
+            lua_pushnumber (lua_current_interpreter, 0);
+            return 1;
     }
 
     info = lua_plugin->get_info (lua_plugin, (char *) arg, (char *) server_name);
@@ -746,6 +896,7 @@ weechat_lua_get_dcc_info  (lua_State *L)
     char timebuffer2[64];
     struct in_addr in;
     int i;
+    
     /* make gcc happy */
     (void) L;
     
@@ -767,7 +918,7 @@ weechat_lua_get_dcc_info  (lua_State *L)
     
     lua_newtable (lua_current_interpreter);
 
-    for(i=0, ptr_dcc = dcc_info; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc, i++)
+    for (i = 0, ptr_dcc = dcc_info; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc, i++)
     {
 	strftime(timebuffer1, sizeof(timebuffer1), "%F %T",
 		 localtime(&ptr_dcc->start_time));
@@ -860,6 +1011,7 @@ weechat_lua_get_config  (lua_State *L)
     const char *option;
     char *return_value;
     int n;
+    
     /* make gcc happy */
     (void) L;
      
@@ -905,6 +1057,7 @@ weechat_lua_set_config  (lua_State *L)
 {
     const char *option, *value;
     int n;
+    
     /* make gcc happy */
     (void) L;
     
@@ -952,6 +1105,7 @@ weechat_lua_get_plugin_config  (lua_State *L)
     const char *option;
     char *return_value;
     int n;
+    
     /* make gcc happy */
     (void) L;
      
@@ -999,6 +1153,7 @@ weechat_lua_set_plugin_config  (lua_State *L)
 {
     const char *option, *value;
     int n;
+    
     /* make gcc happy */
     (void) L;
  	
@@ -1047,6 +1202,7 @@ weechat_lua_get_server_info  (lua_State *L)
 {
     t_plugin_server_info *server_info, *ptr_server;
     char timebuffer[64];
+    
     /* make gcc happy */
     (void) L;
     
@@ -1067,7 +1223,7 @@ weechat_lua_get_server_info  (lua_State *L)
 
     lua_newtable (lua_current_interpreter);
 
-    for(ptr_server = server_info; ptr_server; ptr_server = ptr_server->next_server)
+    for (ptr_server = server_info; ptr_server; ptr_server = ptr_server->next_server)
     {
 	strftime(timebuffer, sizeof(timebuffer), "%F %T",
 		 localtime(&ptr_server->away_time));
@@ -1201,6 +1357,7 @@ weechat_lua_get_channel_info  (lua_State *L)
     t_plugin_channel_info *channel_info, *ptr_channel;
     const char *server;
     int n;
+    
     /* make gcc happy */
     (void) L;
  
@@ -1237,7 +1394,7 @@ weechat_lua_get_channel_info  (lua_State *L)
 
     lua_newtable (lua_current_interpreter);
 
-    for(ptr_channel = channel_info; ptr_channel; ptr_channel = ptr_channel->next_channel)
+    for (ptr_channel = channel_info; ptr_channel; ptr_channel = ptr_channel->next_channel)
     {
 	lua_pushstring (lua_current_interpreter, ptr_channel->name);
 	lua_newtable (lua_current_interpreter);
@@ -1284,6 +1441,7 @@ weechat_lua_get_nick_info  (lua_State *L)
     t_plugin_nick_info *nick_info, *ptr_nick;
     const char *server, *channel;
     int n;
+    
     /* make gcc happy */
     (void) L;
      
@@ -1349,6 +1507,7 @@ weechat_lua_constant_plugin_rc_ok  (lua_State *L)
 {
     /* make gcc happy */
     (void) L;
+    
     lua_pushnumber (lua_current_interpreter, PLUGIN_RC_OK);
     return 1;
 }
@@ -1358,6 +1517,7 @@ weechat_lua_constant_plugin_rc_ko  (lua_State *L)
 {
     /* make gcc happy */
     (void) L;
+    
     lua_pushnumber (lua_current_interpreter, PLUGIN_RC_KO);
     return 1;
 }
@@ -1367,6 +1527,7 @@ weechat_lua_constant_plugin_rc_ok_ignore_weechat  (lua_State *L)
 {
     /* make gcc happy */
     (void) L;
+    
     lua_pushnumber (lua_current_interpreter, PLUGIN_RC_OK_IGNORE_WEECHAT);
     return 1;
 }
@@ -1376,6 +1537,7 @@ weechat_lua_constant_plugin_rc_ok_ignore_plugins  (lua_State *L)
 {
     /* make gcc happy */
     (void) L;
+    
     lua_pushnumber (lua_current_interpreter, PLUGIN_RC_OK_IGNORE_PLUGINS);
     return 1;
 }
@@ -1385,6 +1547,7 @@ weechat_lua_constant_plugin_rc_ok_ignore_all  (lua_State *L)
 {
     /* make gcc happy */
     (void) L;
+    
     lua_pushnumber (lua_current_interpreter, PLUGIN_RC_OK_IGNORE_ALL);
     return 1;
 }
@@ -1404,8 +1567,10 @@ const struct luaL_reg weechat_lua_funcs[] = {
     { "add_message_handler", weechat_lua_add_message_handler},
     { "add_command_handler", weechat_lua_add_command_handler},
     { "add_timer_handler", weechat_lua_add_timer_handler},
+    { "add_keyboard_handler", weechat_lua_add_keyboard_handler},
     { "remove_handler", weechat_lua_remove_handler},
     { "remove_timer_handler", weechat_lua_remove_timer_handler},
+    { "remove_keyboard_handler", weechat_lua_remove_keyboard_handler},
     { "get_info", weechat_lua_get_info},
     { "get_dcc_info", weechat_lua_get_dcc_info},
     { "get_config", weechat_lua_get_config},
@@ -1536,7 +1701,7 @@ weechat_lua_unload (t_weechat_plugin *plugin, t_plugin_script *script)
                           script->name);
     
     if (script->shutdown_func[0])
-        weechat_lua_exec (plugin, script, script->shutdown_func, "", "");
+        weechat_lua_exec (plugin, script, script->shutdown_func, "", "", "");
     
     lua_close (script->interpreter);
     
@@ -1590,8 +1755,8 @@ weechat_lua_unload_all (t_weechat_plugin *plugin)
 
 int
 weechat_lua_cmd (t_weechat_plugin *plugin,
-                    char *server, char *command, char *arguments,
-                    char *handler_args, void *handler_pointer)
+                 int cmd_argc, char **cmd_argv,
+                 char *handler_args, void *handler_pointer)
 {
     int argc, handler_found;
     char **argv, *path_script;
@@ -1599,13 +1764,14 @@ weechat_lua_cmd (t_weechat_plugin *plugin,
     t_plugin_handler *ptr_handler;
     
     /* make gcc happy */
-    (void) server;
-    (void) command;
     (void) handler_args;
     (void) handler_pointer;
     
-    if (arguments)
-        argv = plugin->explode_string (plugin, arguments, " ", 0, &argc);
+    if (cmd_argc < 3)
+        return PLUGIN_RC_KO;
+    
+    if (cmd_argv[2])
+        argv = plugin->explode_string (plugin, cmd_argv[2], " ", 0, &argc);
     else
     {
         argv = NULL;
@@ -1689,6 +1855,24 @@ weechat_lua_cmd (t_weechat_plugin *plugin,
             }
             if (!handler_found)
                 plugin->print_server (plugin, "  (none)");
+            
+            /* list Lua keyboard handlers */
+            plugin->print_server (plugin, "");
+            plugin->print_server (plugin, "Lua keyboard handlers:");
+            handler_found = 0;
+            for (ptr_handler = plugin->handlers;
+                 ptr_handler; ptr_handler = ptr_handler->next_handler)
+            {
+                if ((ptr_handler->type == HANDLER_KEYBOARD)
+                    && (ptr_handler->handler_args))
+                {
+                    handler_found = 1;
+                    plugin->print_server (plugin, "  Lua(%s)",
+                                          ptr_handler->handler_args);
+                }
+            }
+            if (!handler_found)
+                plugin->print_server (plugin, "  (none)");
             break;
         case 1:
             if (plugin->ascii_strcasecmp (plugin, argv[0], "autoload") == 0)
@@ -1730,7 +1914,7 @@ weechat_lua_cmd (t_weechat_plugin *plugin,
     if (argv)
         plugin->free_exploded_string (plugin, argv);
     
-    return 1;
+    return PLUGIN_RC_OK;
 }
 
 /*

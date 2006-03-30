@@ -36,7 +36,10 @@
 #include "fifo.h"
 #include "../irc/irc.h"
 #include "../gui/gui.h"
+
+#ifdef PLUGINS
 #include "../plugins/plugins.h"
+#endif
 
 
 /* WeeChat internal commands */
@@ -2539,6 +2542,44 @@ weechat_cmd_plugin (t_irc_server *server, t_irc_channel *channel,
                     irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
                     gui_printf (NULL, _("       (no command handler)\n"));
                 }
+                
+                /* timer handlers */
+                irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
+                gui_printf (NULL, _("     timer handlers:\n"));
+                handler_found = 0;
+                for (ptr_handler = ptr_plugin->handlers;
+                     ptr_handler; ptr_handler = ptr_handler->next_handler)
+                {
+                    if (ptr_handler->type == HANDLER_TIMER)
+                    {
+                        handler_found = 1;
+                        irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
+                        gui_printf (NULL, _("       %d seconds\n"),
+                                    ptr_handler->interval);
+                    }
+                }
+                if (!handler_found)
+                {
+                    irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
+                    gui_printf (NULL, _("       (no timer handler)\n"));
+                }
+                
+                /* keyboard handlers */
+                irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
+                gui_printf (NULL, _("     keyboard handlers:\n"));
+                handler_found = 0;
+                for (ptr_handler = ptr_plugin->handlers;
+                     ptr_handler; ptr_handler = ptr_handler->next_handler)
+                {
+                    if (ptr_handler->type == HANDLER_KEYBOARD)
+                        handler_found++;
+                }
+                irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
+                if (!handler_found)
+                    gui_printf (NULL, _("       (no keyboard handler)\n"));
+                else
+                    gui_printf (NULL, _("       %d defined\n"),
+                                handler_found);
             }
             if (!weechat_plugins)
             {
@@ -2583,6 +2624,8 @@ weechat_cmd_plugin (t_irc_server *server, t_irc_channel *channel,
                   "without plugins support.\n"),
                 "plugin");
     /* make gcc happy */
+    (void) server;
+    (void) channel;
     (void) argc;
     (void) argv;
 #endif /* PLUGINS */

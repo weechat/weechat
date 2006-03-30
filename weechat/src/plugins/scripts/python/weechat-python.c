@@ -50,7 +50,7 @@ PyThreadState *python_mainThreadState = NULL;
 int
 weechat_python_exec (t_weechat_plugin *plugin,
                      t_plugin_script *script,
-                     char *function, char *server, char *arguments)
+                     char *function, char *arg1, char *arg2, char *arg3)
 {
     PyObject *evMain;
     PyObject *evDict;
@@ -75,8 +75,21 @@ weechat_python_exec (t_weechat_plugin *plugin,
     ret = -1;
     
     python_current_script = script;
-
-    rc = PyObject_CallFunction(evFunc, "ss", server == NULL ? "" : server, arguments == NULL ? "" : arguments);
+    
+    if (arg1)
+    {
+        if (arg2)
+        {
+            if (arg3)
+                rc = PyObject_CallFunction (evFunc, "sss", arg1, arg2, arg3);
+            else
+                rc = PyObject_CallFunction (evFunc, "ss", arg1, arg2);
+        }
+        else
+            rc = PyObject_CallFunction (evFunc, "s", arg1);
+    }
+    else
+        rc = PyObject_CallFunction (evFunc, "");
 
     if (rc)
     {
@@ -94,19 +107,52 @@ weechat_python_exec (t_weechat_plugin *plugin,
 }
 
 /*
- * weechat_python_handler: general message and command handler for Python
+ * weechat_python_cmd_msg_handler: general command/message handler for Python
  */
 
 int
-weechat_python_handler (t_weechat_plugin *plugin,
-                        char *server, char *command, char *arguments,
-                        char *handler_args, void *handler_pointer)
+weechat_python_cmd_msg_handler (t_weechat_plugin *plugin,
+                                int argc, char **argv,
+                                char *handler_args, void *handler_pointer)
+{
+    if (argc >= 3)
+        return weechat_python_exec (plugin, (t_plugin_script *)handler_pointer,
+                                    handler_args, argv[0], argv[2], NULL);
+    else
+        return PLUGIN_RC_KO;
+}
+
+/*
+ * weechat_python_timer_handler: general timer handler for Python
+ */
+
+int
+weechat_python_timer_handler (t_weechat_plugin *plugin,
+                              int argc, char **argv,
+                              char *handler_args, void *handler_pointer)
 {
     /* make gcc happy */
-    (void) command;
+    (void) argc;
+    (void) argv;
     
     return weechat_python_exec (plugin, (t_plugin_script *)handler_pointer,
-                                handler_args, server, arguments);
+                                handler_args, NULL, NULL, NULL);
+}
+
+/*
+ * weechat_python_keyboard_handler: general keyboard handler for Python
+ */
+
+int
+weechat_python_keyboard_handler (t_weechat_plugin *plugin,
+                                 int argc, char **argv,
+                                 char *handler_args, void *handler_pointer)
+{
+    if (argc >= 3)
+        return weechat_python_exec (plugin, (t_plugin_script *)handler_pointer,
+                                    handler_args, argv[0], argv[1], argv[2]);
+    else
+        return PLUGIN_RC_KO;
 }
 
 /*
@@ -392,7 +438,8 @@ weechat_python_add_message_handler (PyObject *self, PyObject *args)
     }
     
     if (python_plugin->msg_handler_add (python_plugin, irc_command,
-                                        weechat_python_handler, function,
+                                        weechat_python_cmd_msg_handler,
+                                        function,
                                         (void *)python_current_script))
         return Py_BuildValue ("i", 1);
     
@@ -443,7 +490,7 @@ weechat_python_add_command_handler (PyObject *self, PyObject *args)
                                         arguments,
                                         arguments_description,
                                         completion_template,
-                                        weechat_python_handler,
+                                        weechat_python_cmd_msg_handler,
                                         function,
                                         (void *)python_current_script))
         return Py_BuildValue ("i", 1);
@@ -484,8 +531,48 @@ weechat_python_add_timer_handler (PyObject *self, PyObject *args)
     }
     
     if (python_plugin->timer_handler_add (python_plugin, interval,
-                                          weechat_python_handler, function,
+                                          weechat_python_timer_handler,
+                                          function,
                                           (void *)python_current_script))
+        return Py_BuildValue ("i", 1);
+    
+    return Py_BuildValue ("i", 0);
+}
+
+/*
+ * weechat_python_add_keyboard_handler: add a keyboard handler
+ */
+
+static PyObject *
+weechat_python_add_keyboard_handler (PyObject *self, PyObject *args)
+{
+    char *function;
+    
+    /* make gcc happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to add keyboard handler, "
+                                     "script not initialized");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    function = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &function))
+    {
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"add_keyboard_handler\" function");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    if (python_plugin->keyboard_handler_add (python_plugin,
+                                             weechat_python_keyboard_handler,
+                                             function,
+                                             (void *)python_current_script))
         return Py_BuildValue ("i", 1);
     
     return Py_BuildValue ("i", 0);
@@ -560,6 +647,42 @@ weechat_python_remove_timer_handler (PyObject *self, PyObject *args)
     
     weechat_script_remove_timer_handler (python_plugin, python_current_script,
                                          function);
+    
+    return Py_BuildValue ("i", 1);
+}
+
+/*
+ * weechat_python_remove_keyboard_handler: remove a keyboard handler
+ */
+
+static PyObject *
+weechat_python_remove_keyboard_handler (PyObject *self, PyObject *args)
+{
+    char *function;
+    
+    /* make gcc happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to remove keyboard handler, "
+                                     "script not initialized");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    function = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &function))
+    {
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"remove_keyboard_handler\" function");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    weechat_script_remove_keyboard_handler (python_plugin, python_current_script,
+                                            function);
     
     return Py_BuildValue ("i", 1);
 }
@@ -1132,8 +1255,10 @@ PyMethodDef weechat_python_funcs[] = {
     { "add_message_handler", weechat_python_add_message_handler, METH_VARARGS, "" },
     { "add_command_handler", weechat_python_add_command_handler, METH_VARARGS, "" },
     { "add_timer_handler", weechat_python_add_timer_handler, METH_VARARGS, "" },
+    { "add_keyboard_handler", weechat_python_add_keyboard_handler, METH_VARARGS, "" },
     { "remove_handler", weechat_python_remove_handler, METH_VARARGS, "" },
     { "remove_timer_handler", weechat_python_remove_timer_handler, METH_VARARGS, "" },
+    { "remove_keyboard_handler", weechat_python_remove_keyboard_handler, METH_VARARGS, "" },
     { "get_info", weechat_python_get_info, METH_VARARGS, "" },
     { "get_dcc_info", weechat_python_get_dcc_info, METH_VARARGS, "" },
     { "get_config", weechat_python_get_config, METH_VARARGS, "" },
@@ -1307,7 +1432,7 @@ weechat_python_unload (t_weechat_plugin *plugin, t_plugin_script *script)
                           script->name);
     
     if (script->shutdown_func[0])
-        weechat_python_exec (plugin, script, script->shutdown_func, "", "");
+        weechat_python_exec (plugin, script, script->shutdown_func, "", "", "");
 
     PyThreadState_Swap (script->interpreter);
     Py_EndInterpreter (script->interpreter);
@@ -1362,7 +1487,7 @@ weechat_python_unload_all (t_weechat_plugin *plugin)
 
 int
 weechat_python_cmd (t_weechat_plugin *plugin,
-                    char *server, char *command, char *arguments,
+                    int cmd_argc, char **cmd_argv,
                     char *handler_args, void *handler_pointer)
 {
     int argc, handler_found;
@@ -1371,13 +1496,14 @@ weechat_python_cmd (t_weechat_plugin *plugin,
     t_plugin_handler *ptr_handler;
     
     /* make gcc happy */
-    (void) server;
-    (void) command;
     (void) handler_args;
     (void) handler_pointer;
     
-    if (arguments)
-        argv = plugin->explode_string (plugin, arguments, " ", 0, &argc);
+    if (cmd_argc < 3)
+        return PLUGIN_RC_KO;
+    
+    if (cmd_argv[2])
+        argv = plugin->explode_string (plugin, cmd_argv[2], " ", 0, &argc);
     else
     {
         argv = NULL;
@@ -1461,6 +1587,24 @@ weechat_python_cmd (t_weechat_plugin *plugin,
             }
             if (!handler_found)
                 plugin->print_server (plugin, "  (none)");
+            
+            /* list Python keyboard handlers */
+            plugin->print_server (plugin, "");
+            plugin->print_server (plugin, "Python keyboard handlers:");
+            handler_found = 0;
+            for (ptr_handler = plugin->handlers;
+                 ptr_handler; ptr_handler = ptr_handler->next_handler)
+            {
+                if ((ptr_handler->type == HANDLER_KEYBOARD)
+                    && (ptr_handler->handler_args))
+                {
+                    handler_found = 1;
+                    plugin->print_server (plugin, "  Python(%s)",
+                                          ptr_handler->handler_args);
+                }
+            }
+            if (!handler_found)
+                plugin->print_server (plugin, "  (none)");
             break;
         case 1:
             if (plugin->ascii_strcasecmp (plugin, argv[0], "autoload") == 0)
@@ -1502,7 +1646,7 @@ weechat_python_cmd (t_weechat_plugin *plugin,
     if (argv)
         plugin->free_exploded_string (plugin, argv);
     
-    return 1;
+    return PLUGIN_RC_OK;
 }
 
 /*

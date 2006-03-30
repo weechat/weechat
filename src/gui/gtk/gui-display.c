@@ -57,6 +57,19 @@
 #define COLOR_YELLOW  6
 #define COLOR_WHITE   7
 
+
+/* shift ncurses colors for compatibility with colors
+   in IRC messages (same as other IRC clients) */
+
+#define WEECHAT_COLOR_BLACK   COLOR_BLACK
+#define WEECHAT_COLOR_RED     COLOR_BLUE
+#define WEECHAT_COLOR_GREEN   COLOR_GREEN
+#define WEECHAT_COLOR_YELLOW  COLOR_CYAN
+#define WEECHAT_COLOR_BLUE    COLOR_RED
+#define WEECHAT_COLOR_MAGENTA COLOR_MAGENTA
+#define WEECHAT_COLOR_CYAN    COLOR_YELLOW
+#define WEECHAT_COLOR_WHITE   COLOR_WHITE
+
 t_gui_color gui_weechat_colors[] =
 { { -1,                    0, 0,        "default"      },
   { WEECHAT_COLOR_BLACK,   0, 0,        "black"        },
@@ -76,7 +89,7 @@ t_gui_color gui_weechat_colors[] =
   { 0,                     0, 0,        NULL           }
 };
 
-int gui_irc_colors[16][2] =
+int gui_irc_colors[GUI_NUM_IRC_COLORS][2] =
 { { /*  0 */ WEECHAT_COLOR_WHITE,   A_BOLD },
   { /*  1 */ WEECHAT_COLOR_BLACK,   0      },
   { /*  2 */ WEECHAT_COLOR_BLUE,    0      },
@@ -95,7 +108,7 @@ int gui_irc_colors[16][2] =
   { /* 15 */ WEECHAT_COLOR_WHITE,   A_BOLD }
 };
 
-t_gui_color *gui_color[NUM_COLORS];
+t_gui_color *gui_color[GUI_NUM_COLORS];
 
 GtkWidget *gtk_main_window;
 GtkWidget *vbox1;
@@ -486,7 +499,7 @@ gui_color_get_pair (int num_color)
 {
     int fg, bg;
     
-    if ((num_color < 0) || (num_color > NUM_COLORS - 1))
+    if ((num_color < 0) || (num_color > GUI_NUM_COLORS - 1))
         return WEECHAT_COLOR_WHITE;
     
     fg = gui_color[num_color]->foreground;
@@ -511,7 +524,7 @@ gui_color_get_pair (int num_color)
 /*void
 gui_window_set_weechat_color (WINDOW *window, int num_color)
 {
-    if ((num_color >= 0) && (num_color <= NUM_COLORS - 1))
+    if ((num_color >= 0) && (num_color <= GUI_NUM_COLORS - 1))
     {
         wattroff (window, A_BOLD | A_UNDERLINE | A_REVERSE);
         wattron (window, COLOR_PAIR(gui_color_get_pair (num_color)) |
@@ -2114,7 +2127,7 @@ gui_rebuild_weechat_colors ()
 {
     int i;
     
-    for (i = 0; i < NUM_COLORS; i++)
+    for (i = 0; i < GUI_NUM_COLORS; i++)
     {
         if (gui_color[i])
         {

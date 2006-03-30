@@ -26,18 +26,6 @@
 
 #define INPUT_BUFFER_BLOCK_SIZE 256
 
-/* shift ncurses colors for compatibility with colors
-   in IRC messages (same as other IRC clients) */
-
-#define WEECHAT_COLOR_BLACK   COLOR_BLACK
-#define WEECHAT_COLOR_RED     COLOR_BLUE
-#define WEECHAT_COLOR_GREEN   COLOR_GREEN
-#define WEECHAT_COLOR_YELLOW  COLOR_CYAN
-#define WEECHAT_COLOR_BLUE    COLOR_RED
-#define WEECHAT_COLOR_MAGENTA COLOR_MAGENTA
-#define WEECHAT_COLOR_CYAN    COLOR_YELLOW
-#define WEECHAT_COLOR_WHITE   COLOR_WHITE
-
 #define COLOR_WIN_NICK_NUMBER 10
 
 typedef enum t_weechat_color t_weechat_color;
@@ -103,8 +91,10 @@ enum t_weechat_color
     COLOR_DCC_DONE,
     COLOR_DCC_FAILED,
     COLOR_DCC_ABORTED,
-    NUM_COLORS
+    GUI_NUM_COLORS
 };
+
+#define GUI_NUM_IRC_COLORS 16
 
 /* attributes in IRC messages for color & style (bold, ..) */
 
@@ -252,6 +242,7 @@ struct t_gui_buffer
     /* inupt buffer */
     int has_input;                  /* = 1 if buffer has input (DCC has not)*/
     char *input_buffer;             /* input buffer                         */
+    char *input_buffer_color_mask;  /* color mask for input buffer          */
     int input_buffer_alloc;         /* input buffer: allocated size in mem  */
     int input_buffer_size;          /* buffer size in bytes                 */
     int input_buffer_length;        /* number of chars in buffer            */
@@ -402,7 +393,7 @@ extern int gui_key_grab_count;
 extern char *gui_input_clipboard;
 extern time_t gui_last_activity_time;
 
-extern t_gui_color *gui_color[NUM_COLORS];
+extern t_gui_color *gui_color[GUI_NUM_COLORS];
 
 /* GUI independent functions: windows & buffers */
 
@@ -427,7 +418,9 @@ extern int gui_word_strlen (t_gui_window *, char *);
 extern int gui_word_real_pos (t_gui_window *, char *, int);
 extern void gui_printf_internal (t_gui_buffer *, int, int, char *, ...);
 extern void gui_printf_raw_data (void *, int, char *);
-extern void gui_optimize_input_buffer_size (t_gui_buffer *);
+extern void gui_input_optimize_size (t_gui_buffer *);
+extern void gui_input_init_color_mask (t_gui_buffer *);
+extern void gui_input_move (t_gui_buffer *, char *, char *, int );
 extern void gui_exec_action_dcc (t_gui_window *, char *);
 extern void gui_exec_action_raw_data (t_gui_window *, char *);
 extern int gui_insert_string_input (t_gui_window *, char *, int);

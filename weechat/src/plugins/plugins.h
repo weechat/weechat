@@ -48,9 +48,13 @@ extern t_plugin_handler *plugin_cmd_handler_add (t_weechat_plugin *, char *,
 extern t_plugin_handler *plugin_timer_handler_add (t_weechat_plugin *, int,
                                                    t_plugin_handler_func *,
                                                    char *, void *);
+extern t_plugin_handler *plugin_keyboard_handler_add (t_weechat_plugin *,
+                                                      t_plugin_handler_func *,
+                                                      char *, void *);
 extern int plugin_msg_handler_exec (char *, char *, char *);
 extern int plugin_cmd_handler_exec (char *, char *, char *);
 extern int plugin_timer_handler_exec ();
+extern int plugin_keyboard_handler_exec (char *, char *, char *);
 extern void plugin_handler_remove (t_weechat_plugin *,
                                    t_plugin_handler *);
 extern void plugin_handler_remove_all (t_weechat_plugin *);

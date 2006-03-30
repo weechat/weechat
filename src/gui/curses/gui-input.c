@@ -46,7 +46,10 @@
 #include "../../common/fifo.h"
 #include "../../common/utf8.h"
 #include "../../irc/irc.h"
+
+#ifdef PLUGINS
 #include "../../plugins/plugins.h"
+#endif
 
 
 /*
@@ -154,7 +157,9 @@ gui_input_default_key_bindings ()
 void
 gui_input_grab_end ()
 {
-    char *expanded_key;
+    char *expanded_key, *expanded_key2;
+    int length;
+    char *buffer_before_key;
 
     /* get expanded name (for example: ^U => ctrl-u) */
     expanded_key = gui_key_get_expanded_name (gui_key_buffer);
@@ -163,9 +168,27 @@ gui_input_grab_end ()
     {
         if (gui_current_window->buffer->has_input)
         {
+            buffer_before_key =
+                (gui_current_window->buffer->input_buffer) ?
+                strdup (gui_current_window->buffer->input_buffer) : strdup ("");
             gui_insert_string_input (gui_current_window, expanded_key, -1);
             gui_current_window->buffer->input_buffer_pos += utf8_strlen (expanded_key);
             gui_draw_buffer_input (gui_current_window->buffer, 1);
+            gui_current_window->buffer->completion.position = -1;
+#ifdef PLUGINS
+            length = strlen (expanded_key) + 1 + 1;
+            expanded_key2 = (char *) malloc (length);
+            if (expanded_key2)
+            {
+                snprintf (expanded_key2, length, "*%s", expanded_key);
+                (void) plugin_keyboard_handler_exec (expanded_key2,
+                                                     buffer_before_key,
+                                                     gui_current_window->buffer->input_buffer);
+                free (expanded_key2);
+            }
+#endif
+            if (buffer_before_key)
+                free (buffer_before_key);
         }
         free (expanded_key);
     }
@@ -184,7 +207,8 @@ void
 gui_input_read ()
 {
     int key, i, insert_ok;
-    char key_str[32];
+    char key_str[32], key_str2[33];
+    char *buffer_before_key;
     
     i = 0;
     /* do not loop too much here (for example when big paste was made),
@@ -283,10 +307,19 @@ gui_input_read ()
             switch (gui_current_window->buffer->type)
             {
                 case BUFFER_TYPE_STANDARD:
+                    buffer_before_key =
+                        (gui_current_window->buffer->input_buffer) ?
+                        strdup (gui_current_window->buffer->input_buffer) : strdup ("");
                     gui_insert_string_input (gui_current_window, key_str, -1);
                     gui_current_window->buffer->input_buffer_pos += utf8_strlen (key_str);
                     gui_draw_buffer_input (gui_current_window->buffer, 0);
                     gui_current_window->buffer->completion.position = -1;
+#ifdef PLUGINS
+                    snprintf (key_str2, sizeof (key_str2), "*%s", key_str);
+                    (void) plugin_keyboard_handler_exec (key_str2,
+                                                         buffer_before_key,
+                                                         gui_current_window->buffer->input_buffer);
+#endif
                     break;
                 case BUFFER_TYPE_DCC:
                     gui_exec_action_dcc (gui_current_window, key_str);

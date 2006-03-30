@@ -32,6 +32,10 @@
 #include "gui.h"
 #include "../common/command.h"
 
+#ifdef PLUGINS
+#include "../plugins/plugins.h"
+#endif
+
 
 t_gui_key *gui_keys = NULL;
 t_gui_key *last_gui_key = NULL;
@@ -506,7 +510,8 @@ gui_key_pressed (char *key_str)
 {
     int first_key;
     t_gui_key *ptr_key;
-
+    char *buffer_before_key;
+    
     /* add key to buffer */
     first_key = (gui_key_buffer[0] == '\0');
     strcat (gui_key_buffer, key_str);
@@ -525,6 +530,9 @@ gui_key_pressed (char *key_str)
         if (ascii_strcasecmp (ptr_key->key, gui_key_buffer) == 0)
         {
             /* exact combo found => execute function or command */
+            buffer_before_key =
+                (gui_current_window->buffer->input_buffer) ?
+                strdup (gui_current_window->buffer->input_buffer) : strdup ("");
             gui_key_buffer[0] = '\0';
             if (ptr_key->command)
                 user_command (SERVER(gui_current_window->buffer),
@@ -532,6 +540,15 @@ gui_key_pressed (char *key_str)
                               ptr_key->command, 0);
             else
                 (void)(ptr_key->function)(gui_current_window);
+#ifdef PLUGINS
+            (void) plugin_keyboard_handler_exec (
+                (ptr_key->command) ?
+                ptr_key->command : gui_key_function_search_by_ptr (ptr_key->function),
+                buffer_before_key,
+                gui_current_window->buffer->input_buffer);
+#endif
+            if (buffer_before_key)
+                free (buffer_before_key);
         }
         return 0;
     }

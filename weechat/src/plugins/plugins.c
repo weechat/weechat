@@ -371,6 +371,62 @@ plugin_timer_handler_add (t_weechat_plugin *plugin, int interval,
 }
 
 /*
+ * plugin_keyboard_handler_add: add a timer handler
+ *                              arguments:
+ *                                1. the plugin pointer
+ *                                2. the interval between two calls
+ *                                3. the handler function
+ *                                4. handler args: a string given to
+ *                                   handler when called (used by scripts)
+ *                                5. handler pointer: a pointer given to
+ *                                   handler when called (used by scripts)
+ */
+
+t_plugin_handler *
+plugin_keyboard_handler_add (t_weechat_plugin *plugin,
+                             t_plugin_handler_func *handler_func,
+                             char *handler_args, void *handler_pointer)
+{
+    t_plugin_handler *new_handler;
+    
+    new_handler = (t_plugin_handler *)malloc (sizeof (t_plugin_handler));
+    if (new_handler)
+    {
+        new_handler->type = HANDLER_KEYBOARD;
+        new_handler->irc_command = NULL;
+        new_handler->command = NULL;
+        new_handler->description = NULL;
+        new_handler->arguments = NULL;
+        new_handler->arguments_description = NULL;
+        new_handler->completion_template = NULL;
+        new_handler->interval = 0;
+        new_handler->remaining = 0;
+        new_handler->handler = handler_func;
+        new_handler->handler_args = (handler_args) ? strdup (handler_args) : NULL;
+        new_handler->handler_pointer = handler_pointer;
+        new_handler->running = 0;
+        
+        /* add new handler to list */
+        new_handler->prev_handler = plugin->last_handler;
+        new_handler->next_handler = NULL;
+        if (plugin->handlers)
+            (plugin->last_handler)->next_handler = new_handler;
+        else
+            plugin->handlers = new_handler;
+        plugin->last_handler = new_handler;
+    }
+    else
+    {
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        gui_printf (NULL,
+                    _("%s plugin %s: unable to add keyboard handler (not enough memory)\n"),
+                    WEECHAT_ERROR, plugin->name);
+        return NULL;
+    }
+    return new_handler;
+}
+
+/*
  * plugin_msg_handler_exec: execute a message handler
  *                          return: code for informing WeeChat whether message
  *                          should be ignored or not
@@ -382,6 +438,11 @@ plugin_msg_handler_exec (char *server, char *irc_command, char *irc_message)
     t_weechat_plugin *ptr_plugin;
     t_plugin_handler *ptr_handler;
     int return_code, final_return_code;
+    char *argv[3] = { NULL, NULL, NULL };
+    
+    argv[0] = server;
+    argv[1] = irc_command;
+    argv[2] = irc_message;
     
     final_return_code = PLUGIN_RC_OK;
     
@@ -398,9 +459,7 @@ plugin_msg_handler_exec (char *server, char *irc_command, char *irc_message)
                 {
                     ptr_handler->running = 1;
                     return_code = ((int) (ptr_handler->handler) (ptr_plugin,
-                                                                 server,
-                                                                 irc_command,
-                                                                 irc_message,
+                                                                 3, argv,
                                                                  ptr_handler->handler_args,
                                                                  ptr_handler->handler_pointer));
                     ptr_handler->running = 0;
@@ -432,6 +491,11 @@ plugin_cmd_handler_exec (char *server, char *command, char *arguments)
     t_weechat_plugin *ptr_plugin;
     t_plugin_handler *ptr_handler;
     int return_code;
+    char *argv[3] = { NULL, NULL, NULL };
+    
+    argv[0] = server;
+    argv[1] = command;
+    argv[2] = arguments;
     
     for (ptr_plugin = weechat_plugins; ptr_plugin;
          ptr_plugin = ptr_plugin->next_plugin)
@@ -446,9 +510,7 @@ plugin_cmd_handler_exec (char *server, char *command, char *arguments)
                 {
                     ptr_handler->running = 1;
                     return_code = (int) (ptr_handler->handler) (ptr_plugin,
-                                                                server,
-                                                                command,
-                                                                arguments,
+                                                                3, argv,
                                                                 ptr_handler->handler_args,
                                                                 ptr_handler->handler_pointer);
                     ptr_handler->running = 0;
@@ -488,15 +550,54 @@ plugin_timer_handler_exec ()
                 if (ptr_handler->remaining <= 0)
                 {
                     return_code = ((int) (ptr_handler->handler) (ptr_plugin,
-                                                                 "",
-                                                                 "",
-                                                                 "",
+                                                                 0, NULL,
                                                                  ptr_handler->handler_args,
                                                                  ptr_handler->handler_pointer));
                     ptr_handler->remaining = ptr_handler->interval;
                     if (return_code == PLUGIN_RC_KO)
                         final_return_code = PLUGIN_RC_KO;
                 }
+            }
+        }
+    }
+    
+    return final_return_code;
+}
+
+/*
+ * plugin_keyboard_handler_exec: execute all keyboard handlers
+ *                               return: PLUGIN_RC_OK if all ok
+ *                                       PLUGIN_RC_KO if at least one handler failed
+ */
+
+int
+plugin_keyboard_handler_exec (char *key, char *input_before, char *input_after)
+{
+    t_weechat_plugin *ptr_plugin;
+    t_plugin_handler *ptr_handler;
+    int return_code, final_return_code;
+    char *argv[3] = { NULL, NULL, NULL };
+    
+    argv[0] = key;
+    argv[1] = input_before;
+    argv[2] = input_after;
+    
+    final_return_code = PLUGIN_RC_OK;
+    
+    for (ptr_plugin = weechat_plugins; ptr_plugin;
+         ptr_plugin = ptr_plugin->next_plugin)
+    {
+        for (ptr_handler = ptr_plugin->handlers;
+             ptr_handler; ptr_handler = ptr_handler->next_handler)
+        {
+            if (ptr_handler->type == HANDLER_KEYBOARD)
+            {
+                return_code = ((int) (ptr_handler->handler) (ptr_plugin,
+                                                             3, argv,
+                                                             ptr_handler->handler_args,
+                                                             ptr_handler->handler_pointer));
+                if (return_code == PLUGIN_RC_KO)
+                    final_return_code = PLUGIN_RC_KO;
             }
         }
     }
@@ -736,6 +837,7 @@ plugin_load (char *filename)
         new_plugin->msg_handler_add = &weechat_plugin_msg_handler_add;
         new_plugin->cmd_handler_add = &weechat_plugin_cmd_handler_add;
         new_plugin->timer_handler_add = &weechat_plugin_timer_handler_add;
+        new_plugin->keyboard_handler_add = &weechat_plugin_keyboard_handler_add;
         new_plugin->handler_remove = &weechat_plugin_handler_remove;
         new_plugin->handler_remove_all = &weechat_plugin_handler_remove_all;
         new_plugin->print = &weechat_plugin_print;
@@ -757,6 +859,7 @@ plugin_load (char *filename)
 	new_plugin->free_channel_info = &weechat_plugin_free_channel_info;
 	new_plugin->get_nick_info = &weechat_plugin_get_nick_info;
 	new_plugin->free_nick_info = &weechat_plugin_free_nick_info;
+        new_plugin->input_color = &weechat_plugin_input_color;
         
         /* handlers */
         new_plugin->handlers = NULL;

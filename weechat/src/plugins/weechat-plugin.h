@@ -125,7 +125,7 @@ struct t_plugin_nick_info
 
 typedef struct t_weechat_plugin t_weechat_plugin;
 
-typedef int (t_plugin_handler_func) (t_weechat_plugin *, char *, char *, char *, char *, void *);
+typedef int (t_plugin_handler_func) (t_weechat_plugin *, int, char **, char *, void *);
 
 /* handlers */
 
@@ -135,7 +135,8 @@ enum t_handler_type
 {
     HANDLER_MESSAGE = 0,                /* IRC message handler                 */
     HANDLER_COMMAND,                    /* command handler                     */
-    HANDLER_TIMER                       /* timer handler                       */
+    HANDLER_TIMER,                      /* timer handler                       */
+    HANDLER_KEYBOARD                    /* keyboard handler                    */
 };
 
 typedef struct t_plugin_handler t_plugin_handler;
@@ -219,6 +220,9 @@ struct t_weechat_plugin
     t_plugin_handler *(*timer_handler_add) (t_weechat_plugin *, int,
                                             t_plugin_handler_func *,
                                             char *, void *);
+    t_plugin_handler *(*keyboard_handler_add) (t_weechat_plugin *,
+                                               t_plugin_handler_func *,
+                                               char *, void *);
     void (*handler_remove) (t_weechat_plugin *, t_plugin_handler *);
     void (*handler_remove_all) (t_weechat_plugin *);
     
@@ -238,6 +242,8 @@ struct t_weechat_plugin
     void (*free_nick_info) (t_weechat_plugin *, t_plugin_nick_info *);
     
     void (*log) (t_weechat_plugin *, char *, char *, char *, ...);
+    
+    void (*input_color) (t_weechat_plugin *, int, int, int);
     
     /* WeeChat developers: ALWAYS add new functions at the end */
 };
@@ -272,6 +278,9 @@ extern t_plugin_handler *weechat_plugin_cmd_handler_add (t_weechat_plugin *, cha
 extern t_plugin_handler *weechat_plugin_timer_handler_add (t_weechat_plugin *, int,
                                                            t_plugin_handler_func *,
                                                            char *, void *);
+extern t_plugin_handler *weechat_plugin_keyboard_handler_add (t_weechat_plugin *,
+                                                              t_plugin_handler_func *,
+                                                              char *, void *);
 extern void weechat_plugin_handler_remove (t_weechat_plugin *, t_plugin_handler *);
 extern void weechat_plugin_handler_remove_all (t_weechat_plugin *);
 
@@ -290,5 +299,6 @@ extern t_plugin_channel_info *weechat_plugin_get_channel_info (t_weechat_plugin 
 extern void weechat_plugin_free_channel_info (t_weechat_plugin *, t_plugin_channel_info *);
 extern t_plugin_nick_info *weechat_plugin_get_nick_info (t_weechat_plugin *, char *, char *);
 extern void weechat_plugin_free_nick_info (t_weechat_plugin *, t_plugin_nick_info *);
+extern void weechat_plugin_input_color (t_weechat_plugin *, int, int, int);
 
 #endif /* weechat-plugin.h */

@@ -424,6 +424,9 @@ completion_list_add_plugin_option (t_completion *completion)
                      &completion->last_completion,
                      ptr_option->name);
     }
+#else
+    /* make gcc happy */
+    (void) completion;
 #endif
 }
 
@@ -457,6 +460,9 @@ completion_list_add_plugin (t_completion *completion)
                      &completion->last_completion,
                      ptr_plugin->name);
     }
+#else
+    /* make gcc happy */
+    (void) completion;
 #endif
 }
 
@@ -634,6 +640,9 @@ completion_list_add_plugin_option_value (t_completion *completion)
         if (pos)
             pos[0] = ' ';
     }
+#else
+    /* make gcc happy */
+    (void) completion;
 #endif
 }
 

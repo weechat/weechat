@@ -35,7 +35,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   
   <bookinfo>
     
-    <title>WeeChat 0.1.8 - Guide utilisateur</title>
+    <title>WeeChat 0.1.9-cvs - Guide utilisateur</title>
     <subtitle>Client IRC rapide, léger et extensible</subtitle>
     
     <author>
@@ -1839,6 +1839,29 @@ plugin->log (plugin, "freenode", "#weechat", "test");
                   <option>fonction</option> : fonction appelée lorsque le
                   message est reçu
                 </para>
+                <para>
+                  Elle a le prototype suivant :
+                  <command>
+                    int ma_fonction (t_weechat_plugin *plugin,
+                    int argc, char **argv,
+                    char *handler_args, void *handler_pointer)
+                  </command>
+                </para>
+                <para>
+                  Le paramètre argc vaut 3 et les arguments suivants sont
+                  passés dans le tableau argv :
+                  <itemizedlist>
+                    <listitem>
+                      <para>argv[0] = nom du serveur</para>
+                    </listitem>
+                    <listitem>
+                      <para>argv[1] = message IRC</para>
+                    </listitem>
+                    <listitem>
+                      <para>argv[2] = arguments de la commande</para>
+                    </listitem>
+                  </itemizedlist>
+                </para>
               </listitem>
               <listitem>
                 <para>
@@ -2075,7 +2098,30 @@ plugin->msg_handler_add (plugin, "KICK", &amp;msg_kick, NULL, NULL);
               <listitem>
                 <para>
                   <option>fonction</option> : fonction appelée lorsque la
-                  commande est exécutée
+                  commande est exécutée.
+                </para>
+                <para>
+                  Elle a le prototype suivant :
+                  <command>
+                    int ma_fonction (t_weechat_plugin *plugin,
+                    int argc, char **argv,
+                    char *handler_args, void *handler_pointer)
+                  </command>
+                </para>
+                <para>
+                  Le paramètre argc vaut 3 et les arguments suivants sont
+                  passés dans le tableau argv :
+                  <itemizedlist>
+                    <listitem>
+                      <para>argv[0] = nom du serveur</para>
+                    </listitem>
+                    <listitem>
+                      <para>argv[1] = commande</para>
+                    </listitem>
+                    <listitem>
+                      <para>argv[2] = arguments de la commande</para>
+                    </listitem>
+                  </itemizedlist>
                 </para>
               </listitem>
               <listitem>
@@ -2166,6 +2212,17 @@ plugin->cmd_handler_add (plugin, "test", "Commande test",
                 <para>
                   <option>fonction</option> : fonction appelée
                 </para>
+                <para>
+                  Elle a le prototype suivant :
+                  <command>
+                    int ma_fonction (t_weechat_plugin *plugin,
+                    int argc, char **argv,
+                    char *handler_args, void *handler_pointer)
+                  </command>
+                </para>
+                <para>
+                  Le paramètre argc vaut 0 et argv vaut NULL.
+                </para>
               </listitem>
               <listitem>
                 <para>
@@ -2183,7 +2240,7 @@ plugin->cmd_handler_add (plugin, "test", "Commande test",
           </para>
           <para>
             Valeur renvoyée : le pointeur vers le nouveau gestionnaire de
-            messages.
+            temps.
           </para>
           <para>
             Note : la fonction appelée doit renvoyer une des valeurs
@@ -2216,6 +2273,118 @@ plugin->timer_handler_add (plugin, 60, &amp;mon_timer);
           </para>
         </section>
         
+        <section id="secAPI_keyboard_handler_add">
+          <title>keyboard_handler_add</title>
+          
+          <para>
+            Prototype :
+            <command>
+              t_plugin_handler *keyboard_handler_add (t_weechat_plugin
+              *plugin, t_plugin_handler_func *fonction,
+              char *handler_args, void *handler_pointer)
+            </command>
+          </para>
+          <para>
+            Ajoute un gestionnaire de clavier, appelé dès qu'une touche est
+            pressée.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>fonction</option> : fonction appelée
+                </para>
+                <para>
+                  Elle a le prototype suivant :
+                  <command>
+                    int ma_fonction (t_weechat_plugin *plugin,
+                    int argc, char **argv,
+                    char *handler_args, void *handler_pointer)
+                  </command>
+                </para>
+                <para>
+                  Le paramètre argc vaut 2 et les arguments suivants sont
+                  passés dans le tableau argv :
+                  <itemizedlist>
+                    <listitem>
+                      <para>
+                        argv[0] = touche appuyée (nom d'une fonction interne
+                        ou bien '*' suivi du code d'une touche si la touche
+                        n'est pas associée à une fonction)
+                      </para>
+                    </listitem>
+                    <listitem>
+                      <para>
+                        argv[1] = "1" si la ligne de commande a changé suite
+                        à l'action de cette touche, "0" sinon
+                      </para>
+                    </listitem>
+                  </itemizedlist>
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>handler_args</option> : paramètres passés à la
+                  fonction appelée
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>handler_pointer</option> : pointeur passé à la
+                  fonction appelée
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : le pointeur vers le nouveau gestionnaire de
+            clavier.
+          </para>
+          <para>
+            Note : la fonction appelée doit renvoyer une des valeurs
+            suivantes :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_KO</literal> : la fonction a échoué
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_OK</literal> : la fonction a réussi
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Exemple :
+<screen>
+int keyb_handler (t_weechat_plugin *plugin, int argc, char **argv,
+                  char *handler_args, void *handler_pointer)
+{
+    if (argc == 2)
+    {
+        plugin->print (plugin, NULL, NULL, "touche appuyée: %s", argv[0]);
+        if (argv[1] &amp;&amp; (argv[1][0] == '1'))
+            plugin->print (plugin, NULL, NULL, "le texte d'entrée a changé");
+        else
+            plugin->print (plugin, NULL, NULL, "le texte d'entrée n'a pas changé");
+    }
+    return PLUGIN_RC_OK;
+}
+...
+plugin->keyboard_handler_add (plugin, &amp;keyb_handler);
+</screen>
+          </para>
+        </section>
+                
         <section id="secAPI_handler_remove">
           <title>handler_remove</title>
           
@@ -2227,7 +2396,7 @@ plugin->timer_handler_add (plugin, 60, &amp;mon_timer);
             </command>
           </para>
           <para>
-            Supprime un gestionnaire.
+            Supprime un gestionnaire de commande ou message.
           </para>
           <para>
             Paramètres :
@@ -2403,6 +2572,26 @@ plugin->exec_command (plugin, "freenode", "#weechat", "bonjour");
                           </entry>
                         </row>
                         <row>
+                          <entry><literal>input</literal></entry>
+                          <entry>
+                            contenu de la ligne de commande de la fenêtre
+                            courante
+                          </entry>
+                        </row>
+                        <row>
+                          <entry><literal>input_mask</literal></entry>
+                          <entry>
+                            contenu du masque de couleur de la ligne de
+                            commande
+                          </entry>
+                        </row>
+                        <row>
+                          <entry><literal>input_pos</literal></entry>
+                          <entry>
+                            position du curseur dans la ligne de commande
+                          </entry>
+                        </row>
+                        <row>
                           <entry><literal>weechat_dir</literal></entry>
                           <entry>
                             répertoire maison de WeeChat
@@ -2449,9 +2638,12 @@ plugin->print (plugin, NULL, NULL,
                "(inactif depuis %s secondes)",
                version, nick, inactivity);
 
-free (version);
-free (nick);
-free (inactivity);
+if (version)
+    free (version);
+if (nick)
+    free (nick);
+if (inactivity)
+    free (inactivity);
 </screen>
           </para>
         </section>
@@ -4369,21 +4561,126 @@ sub mon_timer
 
 # python
 weechat.add_timer_handler(60, "mon_timer")
-def mon_timer(serveur, args):
+def mon_timer():
     weechat.prnt("ceci est le timer handler")
     return weechat.PLUGIN_RC_OK
 
 # ruby
 Weechat.add_timer_handler(60, "mon_timer")
-def mon_timer(server, args)
+def mon_timer()
     Weechat.print("ceci est le timer handler")
     return Weechat::PLUGIN_RC_OK
 end
 
 -- lua
 weechat.add_timer_handler(60, "mon_timer")
-function mon_timer(server, args)
+function mon_timer()
     weechat.print("ceci est le timer handler")
+    return weechat.PLUGIN_RC_OK()
+end
+</screen>
+          </para>
+          <para>
+            Note : la fonction appelée doit renvoyer une des valeurs
+            suivantes :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_KO</literal> : la fonction a échoué
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_OK</literal> : la fonction a réussi
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </section>
+        
+        <section>
+          <title>add_keyboard_handler</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::add_keyboard_handler(fonction);
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.add_keyboard_handler(fonction)
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.add_keyboard_handler(fonction)
+            </command>
+          </para>
+          <para>
+            Prototype Lua :
+            <command>
+              weechat.add_keyboard_handler(fonction)
+            </command>
+          </para>
+          <para>
+            Ajoute un gestionnaire de clavier, appelé dès qu'une touche est
+            pressée.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>fonction</option> : fonction appelée
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : 1 si succès, 0 si une erreur s'est produite.
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+weechat::add_keyboard_handler("mon_clavier");
+sub mon_clavier
+{
+    my $key = shift;
+    my $input_before = shift;
+    my $input_after = shift;
+    weechat::print("gestionnaire clavier: key = '$key', "
+                   ."entrée avant = '$input_before' "
+                   ."après = '$input_after'");
+    return weechat::PLUGIN_RC_OK;
+}
+
+# python
+weechat.add_keyboard_handler("mon_clavier")
+def mon_clavier(key, input_before, input_after):
+    weechat.prnt("gestionnaire clavier: touche = '%s', " \
+                 "entrée avant = '%s' après = '%s'"
+                 %(key, input_before, input_after))
+    return weechat.PLUGIN_RC_OK
+
+# ruby
+Weechat.add_clavier_handler("mon_clavier")
+def mon_clavier(server, input_before, input_after)
+    Weechat.print("gestionnaire clavier: touche = '#{key}', " \
+                  "entrée avant = '#{input_before}' " \
+                  "après = '#{input_after}'")
+    return Weechat::PLUGIN_RC_OK
+end
+
+-- lua
+weechat.add_clavier_handler("mon_clavier")
+function mon_clavier(server, input_before, input_after)
+    weechat.print("gestionnaire clavier: touche = '"..key..
+                  "', entrée avant = '"..input_before..
+                  "' après = '"..input_after.."'")
     return weechat.PLUGIN_RC_OK()
 end
 </screen>
@@ -4529,6 +4826,67 @@ Weechat.remove_timer_handler("mon_timer")
 
 -- lua
 weechat.remove_timer_handler("mon_timer")
+</screen>
+          </para>
+        </section>
+        
+        <section>
+          <title>remove_keyboard_handler</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::remove_keyboard_handler(fonction);
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.remove_keyboard_handler(fonction)
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.remove_keyboard_handler(fonction)
+            </command>
+          </para>
+          <para>
+            Prototype Lua :
+            <command>
+              weechat.remove_keyboard_handler(fonction)
+            </command>
+          </para>
+          <para>
+            Supprime un gestionnaire de clavier.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>fonction</option> : fonction
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : 1 si succès, 0 si une erreur s'est produite.
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+weechat::remove_keyboard_handler("mon_clavier");
+
+# python
+weechat.remove_keyboard_handler("mon_clavier")
+
+# ruby
+Weechat.remove_keyboard_handler("mon_clavier")
+
+-- lua
+weechat.remove_keyboard_handler("mon_clavier")
 </screen>
           </para>
         </section>

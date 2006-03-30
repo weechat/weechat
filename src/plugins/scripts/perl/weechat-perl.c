@@ -103,11 +103,11 @@ char *weechat_perl_code =
 int
 weechat_perl_exec (t_weechat_plugin *plugin,
                    t_plugin_script *script,
-                   char *function, char *server, char *arguments)
+                   char *function, char *arg1, char *arg2, char *arg3)
 {
-    char empty_server[1] = { '\0' };
+    char empty_arg[1] = { '\0' };
     char *func;
-    char *argv[3];
+    char *argv[4];
     unsigned int count;
     int return_code;
     SV *sv;
@@ -116,11 +116,11 @@ weechat_perl_exec (t_weechat_plugin *plugin,
     dSP;
     
 #ifndef MULTIPLICITY
-    int size = strlen(script->interpreter) + strlen(function) + 3;
+    int size = strlen (script->interpreter) + strlen(function) + 3;
     func = (char *) malloc ( size * sizeof(char));
-    if (func == NULL)
+    if (!func)
 	return PLUGIN_RC_KO;
-    snprintf(func, size, "%s::%s", (char *) script->interpreter, function);
+    snprintf (func, size, "%s::%s", (char *) script->interpreter, function);
 #else
     func = function;
     PERL_SET_CONTEXT (script->interpreter);
@@ -129,12 +129,25 @@ weechat_perl_exec (t_weechat_plugin *plugin,
     ENTER;
     SAVETMPS;
     PUSHMARK(sp);
-    if (!server)
-        argv[0] = empty_server;
+    if (arg1)
+    {
+        argv[0] = (arg1) ? arg1 : empty_arg;
+        if (arg2)
+        {
+            argv[1] = (arg2) ? arg2 : empty_arg;
+            if (arg3)
+            {
+                argv[2] = (arg3) ? arg3 : empty_arg;
+                argv[3] = NULL;
+            }
+            else
+                argv[2] = NULL;
+        }
+        else
+            argv[1] = NULL;
+    }
     else
-        argv[0] = server;
-    argv[1] = arguments;
-    argv[2] = NULL;
+        argv[0] = NULL;
     
     perl_current_script = script;
     
@@ -166,26 +179,59 @@ weechat_perl_exec (t_weechat_plugin *plugin,
     LEAVE;
 
 #ifndef MULTIPLICITY
-    free(func);
+    free (func);
 #endif
     
     return return_code;
 }
 
 /*
- * weechat_perl_handler: general message and command handler for Perl
+ * weechat_perl_cmd_msg_handler: general command/message handler for Perl
  */
 
 int
-weechat_perl_handler (t_weechat_plugin *plugin,
-                      char *server, char *command, char *arguments,
-                      char *handler_args, void *handler_pointer)
+weechat_perl_cmd_msg_handler (t_weechat_plugin *plugin,
+                              int argc, char **argv,
+                              char *handler_args, void *handler_pointer)
+{
+    if (argc >= 3)
+        return weechat_perl_exec (plugin, (t_plugin_script *)handler_pointer,
+                                  handler_args, argv[0], argv[2], NULL);
+    else
+        return PLUGIN_RC_KO;
+}
+
+/*
+ * weechat_perl_timer_handler: general timer handler for Perl
+ */
+
+int
+weechat_perl_timer_handler (t_weechat_plugin *plugin,
+                            int argc, char **argv,
+                            char *handler_args, void *handler_pointer)
 {
     /* make gcc happy */
-    (void) command;
+    (void) argc;
+    (void) argv;
     
     return weechat_perl_exec (plugin, (t_plugin_script *)handler_pointer,
-                              handler_args, server, arguments);
+                              handler_args, NULL, NULL, NULL);
+}
+
+/*
+ * weechat_perl_keyboard_handler: general keyboard handler for Perl
+ */
+
+int
+weechat_perl_keyboard_handler (t_weechat_plugin *plugin,
+                               int argc, char **argv,
+                               char *handler_args, void *handler_pointer)
+{
+    if (argc >= 3)
+        return weechat_perl_exec (plugin, (t_plugin_script *)handler_pointer,
+                                  handler_args, argv[0], argv[1], argv[2]);
+    else
+        return PLUGIN_RC_KO;
 }
 
 /*
@@ -456,7 +502,7 @@ static XS (XS_weechat_command)
 }
 
 /*
- * weechat::add_message_handler: add handler for messages (privmsg, ...)
+ * weechat::add_message_handler: add a handler for messages (privmsg, ...)
  */
 
 static XS (XS_weechat_add_message_handler)
@@ -488,7 +534,7 @@ static XS (XS_weechat_add_message_handler)
     function = SvPV (ST (1), integer);
     
     if (perl_plugin->msg_handler_add (perl_plugin, irc_command,
-                                      weechat_perl_handler, function,
+                                      weechat_perl_cmd_msg_handler, function,
                                       (void *)perl_current_script))
         XSRETURN_YES;
     
@@ -496,7 +542,7 @@ static XS (XS_weechat_add_message_handler)
 }
 
 /*
- * weechat::add_command_handler: add command handler (define/redefine commands)
+ * weechat::add_command_handler: add a command handler (define/redefine commands)
  */
 
 static XS (XS_weechat_add_command_handler)
@@ -538,7 +584,7 @@ static XS (XS_weechat_add_command_handler)
                                       arguments,
                                       arguments_description,
                                       completion_template,
-                                      weechat_perl_handler,
+                                      weechat_perl_cmd_msg_handler,
                                       function,
                                       (void *)perl_current_script))
         XSRETURN_YES;
@@ -547,7 +593,7 @@ static XS (XS_weechat_add_command_handler)
 }
 
 /*
- * weechat::add_timer_handler: add timer handler
+ * weechat::add_timer_handler: add a timer handler
  */
 
 static XS (XS_weechat_add_timer_handler)
@@ -579,11 +625,49 @@ static XS (XS_weechat_add_timer_handler)
     interval = SvIV (ST (0));
     function = SvPV (ST (1), integer);
     
-    perl_plugin->print_server (perl_plugin,
-                               "Perl add timer: interval = %d", interval);
     if (perl_plugin->timer_handler_add (perl_plugin, interval,
-                                        weechat_perl_handler, function,
+                                        weechat_perl_timer_handler, function,
                                         (void *)perl_current_script))
+        XSRETURN_YES;
+    
+    XSRETURN_NO;
+}
+
+/*
+ * weechat::add_keyboard_handler: add a keyboard handler
+ */
+
+static XS (XS_weechat_add_keyboard_handler)
+{
+    char *function;
+    unsigned int integer;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to add keyboard handler, "
+                                   "script not initialized");
+	XSRETURN_NO;
+    }
+    
+    if (items < 1)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"add_keyboard_handler\" function");
+        XSRETURN_NO;
+    }
+    
+    function = SvPV (ST (0), integer);
+    
+    if (perl_plugin->keyboard_handler_add (perl_plugin,
+                                           weechat_perl_keyboard_handler,
+                                           function,
+                                           (void *)perl_current_script))
         XSRETURN_YES;
     
     XSRETURN_NO;
@@ -660,6 +744,43 @@ static XS (XS_weechat_remove_timer_handler)
     
     weechat_script_remove_timer_handler (perl_plugin, perl_current_script,
                                          function);
+    
+    XSRETURN_YES;
+}
+
+/*
+ * weechat::remove_keyboard_handler: remove a keyboard handler
+ */
+
+static XS (XS_weechat_remove_keyboard_handler)
+{
+    char *function;
+    unsigned int integer;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to remove keyboard handler, "
+                                   "script not initialized");
+	XSRETURN_NO;
+    }
+    
+    if (items < 1)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"remove_keyboard_handler\" function");
+        XSRETURN_NO;
+    }
+    
+    function = SvPV (ST (0), integer);
+    
+    weechat_script_remove_keyboard_handler (perl_plugin, perl_current_script,
+                                            function);
     
     XSRETURN_YES;
 }
@@ -1171,6 +1292,43 @@ static XS (XS_weechat_get_nick_info)
 }
 
 /*
+ * weechat::color_input: add color in input buffer
+ */
+
+static XS (XS_weechat_input_color)
+{
+    int color, start, length;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to colorize input, "
+                                   "script not initialized");
+	XSRETURN_NO;
+    }
+
+    if (items < 3)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"color_input\" function");
+        XSRETURN_NO;
+    }
+    
+    color = SvIV (ST (0));
+    start = SvIV (ST (1));
+    length = SvIV (ST (2));
+    
+    perl_plugin->input_color (perl_plugin, color, start, length);
+
+    XSRETURN_YES;
+}
+
+/*
  * weechat_perl_xs_init: initialize subroutines
  */
 
@@ -1191,8 +1349,10 @@ weechat_perl_xs_init (pTHX)
     newXS ("weechat::add_message_handler", XS_weechat_add_message_handler, "weechat");
     newXS ("weechat::add_command_handler", XS_weechat_add_command_handler, "weechat");
     newXS ("weechat::add_timer_handler", XS_weechat_add_timer_handler, "weechat");
+    newXS ("weechat::add_keyboard_handler", XS_weechat_add_keyboard_handler, "weechat");
     newXS ("weechat::remove_handler", XS_weechat_remove_handler, "weechat");
     newXS ("weechat::remove_timer_handler", XS_weechat_remove_timer_handler, "weechat");
+    newXS ("weechat::remove_keyboard_handler", XS_weechat_remove_keyboard_handler, "weechat");
     newXS ("weechat::get_info", XS_weechat_get_info, "weechat");
     newXS ("weechat::get_dcc_info", XS_weechat_get_dcc_info, "weechat");
     newXS ("weechat::get_config", XS_weechat_get_config, "weechat");
@@ -1202,6 +1362,7 @@ weechat_perl_xs_init (pTHX)
     newXS ("weechat::get_server_info", XS_weechat_get_server_info, "weechat");
     newXS ("weechat::get_channel_info", XS_weechat_get_channel_info, "weechat");
     newXS ("weechat::get_nick_info", XS_weechat_get_nick_info, "weechat");
+    newXS ("weechat::input_color", XS_weechat_input_color, "weechat");
     
     /* interface constants */
     stash = gv_stashpv ("weechat", TRUE);
@@ -1237,7 +1398,7 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
     snprintf(pkgname, sizeof(pkgname), "%s%d", PKG_NAME_PREFIX, packnum);
     packnum++;
     tempscript.interpreter = "WeechatPerlScriptLoader";
-    eval = weechat_perl_exec (plugin, &tempscript, "weechat_perl_load_eval_file", filename, pkgname);
+    eval = weechat_perl_exec (plugin, &tempscript, "weechat_perl_load_eval_file", filename, pkgname, "");
 #else
     perl_current_interpreter = perl_alloc();
 
@@ -1256,7 +1417,7 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
     perl_parse (perl_current_interpreter, weechat_perl_xs_init, 3, perl_args, NULL);
     
     eval_pv (weechat_perl_code, TRUE);
-    eval = weechat_perl_exec (plugin, &tempscript, "weechat_perl_load_eval_file", filename, "");
+    eval = weechat_perl_exec (plugin, &tempscript, "weechat_perl_load_eval_file", filename, "", "");
 
     free (perl_current_script_filename);
 
@@ -1338,7 +1499,7 @@ weechat_perl_unload (t_weechat_plugin *plugin, t_plugin_script *script)
 #endif        
 
     if (script->shutdown_func[0])
-        weechat_perl_exec (plugin, script, script->shutdown_func, "", "");
+        weechat_perl_exec (plugin, script, script->shutdown_func, "", "", "");
 
 #ifndef MULTIPLICITY
     if (script->interpreter)
@@ -1398,7 +1559,7 @@ weechat_perl_unload_all (t_weechat_plugin *plugin)
 
 int
 weechat_perl_cmd (t_weechat_plugin *plugin,
-                  char *server, char *command, char *arguments,
+                  int cmd_argc, char **cmd_argv,
                   char *handler_args, void *handler_pointer)
 {
     int argc, handler_found;
@@ -1406,14 +1567,15 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
     t_plugin_script *ptr_script;
     t_plugin_handler *ptr_handler;
     
+    if (cmd_argc < 3)
+        return PLUGIN_RC_KO;
+    
     /* make gcc happy */
-    (void) server;
-    (void) command;
     (void) handler_args;
     (void) handler_pointer;
     
-    if (arguments)
-        argv = plugin->explode_string (plugin, arguments, " ", 0, &argc);
+    if (cmd_argv[2])
+        argv = plugin->explode_string (plugin, cmd_argv[2], " ", 0, &argc);
     else
     {
         argv = NULL;
@@ -1497,6 +1659,22 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
             }
             if (!handler_found)
                 plugin->print_server (plugin, "  (none)");
+            
+            /* list Perl keyboard handlers */
+            plugin->print_server (plugin, "");
+            plugin->print_server (plugin, "Perl keyboard handlers:");
+            handler_found = 0;
+            for (ptr_handler = plugin->handlers;
+                 ptr_handler; ptr_handler = ptr_handler->next_handler)
+            {
+                if ((ptr_handler->type == HANDLER_KEYBOARD)
+                    && (ptr_handler->handler_args))
+                {
+                    handler_found = 1;
+                    plugin->print_server (plugin, "  Perl(%s)",
+                                          ptr_handler->handler_args);
+                }
+            }
             break;
         case 1:
             if (plugin->ascii_strcasecmp (plugin, argv[0], "autoload") == 0)
@@ -1538,7 +1716,7 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
     if (argv)
         plugin->free_exploded_string (plugin, argv);
     
-    return 1;
+    return PLUGIN_RC_OK;
 }
 
 /*

@@ -317,7 +317,36 @@ weechat_script_remove_timer_handler (t_weechat_plugin *plugin,
     ptr_handler = plugin->handlers;
     while (ptr_handler)
     {
-        if (((t_plugin_script *)ptr_handler->handler_pointer == script)
+        if ((ptr_handler->type == HANDLER_TIMER)
+            && ((t_plugin_script *)ptr_handler->handler_pointer == script)
+            && (plugin->ascii_strcasecmp (plugin, ptr_handler->handler_args, function) == 0))
+        {
+            next_handler = ptr_handler->next_handler;
+            plugin->handler_remove (plugin, ptr_handler);
+            ptr_handler = next_handler;
+        }
+        else
+            ptr_handler = ptr_handler->next_handler;
+    }
+}
+
+/*
+ * weechat_script_remove_keyboard_handler: remove a keyboard handler for a script
+ */
+
+void
+weechat_script_remove_keyboard_handler (t_weechat_plugin *plugin,
+                                        t_plugin_script *script,
+                                        char *function)
+{
+    t_plugin_handler *ptr_handler, *next_handler;
+    
+    /* search and remove keyboard handlers */
+    ptr_handler = plugin->handlers;
+    while (ptr_handler)
+    {
+        if ((ptr_handler->type == HANDLER_KEYBOARD)
+            && ((t_plugin_script *)ptr_handler->handler_pointer == script)
             && (plugin->ascii_strcasecmp (plugin, ptr_handler->handler_args, function) == 0))
         {
             next_handler = ptr_handler->next_handler;

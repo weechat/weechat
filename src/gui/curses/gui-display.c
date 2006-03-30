@@ -48,6 +48,18 @@
 #include "../../irc/irc.h"
 
 
+/* shift ncurses colors for compatibility with colors
+   in IRC messages (same as other IRC clients) */
+
+#define WEECHAT_COLOR_BLACK   COLOR_BLACK
+#define WEECHAT_COLOR_RED     COLOR_BLUE
+#define WEECHAT_COLOR_GREEN   COLOR_GREEN
+#define WEECHAT_COLOR_YELLOW  COLOR_CYAN
+#define WEECHAT_COLOR_BLUE    COLOR_RED
+#define WEECHAT_COLOR_MAGENTA COLOR_MAGENTA
+#define WEECHAT_COLOR_CYAN    COLOR_YELLOW
+#define WEECHAT_COLOR_WHITE   COLOR_WHITE
+
 t_gui_color gui_weechat_colors[] =
 { { -1,                    0, 0,        "default"      },
   { WEECHAT_COLOR_BLACK,   0, 0,        "black"        },
@@ -67,7 +79,7 @@ t_gui_color gui_weechat_colors[] =
   { 0,                     0, 0,        NULL           }
 };
 
-int gui_irc_colors[16][2] =
+int gui_irc_colors[GUI_NUM_IRC_COLORS][2] =
 { { /*  0 */ WEECHAT_COLOR_WHITE,   A_BOLD },
   { /*  1 */ WEECHAT_COLOR_BLACK,   0      },
   { /*  2 */ WEECHAT_COLOR_BLUE,    0      },
@@ -86,7 +98,7 @@ int gui_irc_colors[16][2] =
   { /* 15 */ WEECHAT_COLOR_WHITE,   A_BOLD }
 };
 
-t_gui_color *gui_color[NUM_COLORS];
+t_gui_color *gui_color[GUI_NUM_COLORS];
 
 
 /*
@@ -205,13 +217,13 @@ gui_color_decode (unsigned char *string, int keep_colors)
                         if (str_fg[0])
                         {
                             sscanf (str_fg, "%d", &fg);
-                            fg %= 16;
+                            fg %= GUI_NUM_IRC_COLORS;
                             attr |= gui_irc_colors[fg][1];
                         }
                         if (str_bg[0])
                         {
                             sscanf (str_bg, "%d", &bg);
-                            bg %= 16;
+                            bg %= GUI_NUM_IRC_COLORS;
                             attr |= gui_irc_colors[bg][1];
                         }
                         if (attr & A_BOLD)
@@ -465,7 +477,7 @@ gui_color_get_pair (int num_color)
 {
     int fg, bg;
     
-    if ((num_color < 0) || (num_color > NUM_COLORS - 1))
+    if ((num_color < 0) || (num_color > GUI_NUM_COLORS - 1))
         return WEECHAT_COLOR_WHITE;
     
     fg = gui_color[num_color]->foreground;
@@ -489,7 +501,7 @@ gui_color_get_pair (int num_color)
 void
 gui_window_set_weechat_color (WINDOW *window, int num_color)
 {
-    if ((num_color >= 0) && (num_color <= NUM_COLORS - 1))
+    if ((num_color >= 0) && (num_color <= GUI_NUM_COLORS - 1))
     {
         wattroff (window, A_BOLD | A_UNDERLINE | A_REVERSE);
         wattron (window, COLOR_PAIR(gui_color_get_pair (num_color)) |
@@ -618,6 +630,35 @@ gui_window_chat_set_weechat_color (t_gui_window *window, int weechat_color)
     gui_window_chat_set_color (window,
                                gui_color[weechat_color]->foreground,
                                gui_color[weechat_color]->background);
+}
+
+/*
+ * gui_window_input_set_color: set color for an input window
+ */
+
+void
+gui_window_input_set_color (t_gui_window *window, int irc_color)
+{
+    int fg, bg;
+    
+    fg = gui_irc_colors[irc_color][0];
+    bg = gui_color[COLOR_WIN_INPUT]->background;
+    
+    irc_color %= GUI_NUM_IRC_COLORS;
+    if (gui_irc_colors[irc_color][1] & A_BOLD)
+        wattron (window->win_input, A_BOLD);
+    
+    if (((fg == -1) || (fg == 99))
+        && ((bg == -1) || (bg == 99)))
+        wattron (window->win_input, COLOR_PAIR(63));
+    else
+    {
+        if ((fg == -1) || (fg == 99))
+            fg = WEECHAT_COLOR_WHITE;
+        if ((bg == -1) || (bg == 99))
+            bg = 0;
+        wattron (window->win_input, COLOR_PAIR((bg * 8) + fg));
+    }
 }
 
 /*
@@ -2385,6 +2426,50 @@ gui_get_input_width (t_gui_window *window, char *nick)
 }
 
 /*
+ * gui_draw_buffer_input_text: display text in input buffer, according to color mask
+ */
+
+void
+gui_draw_buffer_input_text (t_gui_window *window, int input_width)
+{
+    char *ptr_start, *ptr_next, saved_char;
+    int pos_mask, size, last_color, color;
+    
+    ptr_start = utf8_add_offset (window->buffer->input_buffer,
+                                 window->buffer->input_buffer_1st_display);
+    pos_mask = ptr_start - window->buffer->input_buffer;
+    last_color = -1;
+    while ((input_width > 0) && ptr_start && ptr_start[0])
+    {
+        ptr_next = utf8_next_char (ptr_start);
+        if (ptr_next)
+        {
+            saved_char = ptr_next[0];
+            ptr_next[0] = '\0';
+            size = ptr_next - ptr_start;
+            if (window->buffer->input_buffer_color_mask[pos_mask] != ' ')
+                color = window->buffer->input_buffer_color_mask[pos_mask] - '0';
+            else
+                color = -1;
+            if (color != last_color)
+            {
+                if (color == -1)
+                    gui_window_set_weechat_color (window->win_input, COLOR_WIN_INPUT);
+                else
+                    gui_window_input_set_color (window, color);
+            }
+            last_color = color;
+            wprintw (window->win_input, "%s", ptr_start);
+            ptr_next[0] = saved_char;
+            ptr_start = ptr_next;
+            pos_mask += size;
+        }
+        else
+            ptr_start = NULL;
+    }
+}
+
+/*
  * gui_draw_buffer_input: draw input window for a buffer
  */
 
@@ -2456,9 +2541,7 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
                             gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT);
                             snprintf (format, 32, "%%-%ds", input_width);
                             if (ptr_win == gui_current_window)
-                                wprintw (ptr_win->win_input, format,
-                                         utf8_add_offset (buffer->input_buffer,
-                                                          buffer->input_buffer_1st_display));
+                                gui_draw_buffer_input_text (ptr_win, input_width);
                             else
                                 wprintw (ptr_win->win_input, format, "");
                             wclrtoeol (ptr_win->win_input);
@@ -2480,9 +2563,7 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
                             gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT);
                             snprintf (format, 32, "%%-%ds", input_width);
                             if (ptr_win == gui_current_window)
-                                wprintw (ptr_win->win_input, format,
-                                         utf8_add_offset (buffer->input_buffer,
-                                                          buffer->input_buffer_1st_display));
+                                gui_draw_buffer_input_text (ptr_win, input_width);
                             else
                                 wprintw (ptr_win->win_input, format, "");
                             wclrtoeol (ptr_win->win_input);
@@ -3503,7 +3584,7 @@ gui_rebuild_weechat_colors ()
     
     if (has_colors ())
     {
-        for (i = 0; i < NUM_COLORS; i++)
+        for (i = 0; i < GUI_NUM_COLORS; i++)
         {
             if (gui_color[i])
             {

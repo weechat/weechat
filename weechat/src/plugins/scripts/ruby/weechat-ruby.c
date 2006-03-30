@@ -104,7 +104,7 @@ rb_protect_funcall(VALUE recv, ID mid, int *state, int argc, ...)
 int
 weechat_ruby_exec (t_weechat_plugin *plugin,
                    t_plugin_script *script,
-                   char *function, char *server, char *arguments)
+                   char *function, char *arg1, char *arg2, char *arg3)
 {
     VALUE ruby_retcode, err;
     int ruby_error;
@@ -112,11 +112,32 @@ weechat_ruby_exec (t_weechat_plugin *plugin,
     (void) plugin;
     
     ruby_current_script = script;
-
-    ruby_retcode = rb_protect_funcall ((VALUE) script->interpreter, rb_intern(function),
-                                       &ruby_error, 2,
-                                       rb_str_new2((server == NULL) ? "" : server),
-                                       rb_str_new2((arguments == NULL) ? "" : arguments));
+    
+    if (arg1)
+    {
+        if (arg2)
+        {
+            if (arg3)
+                ruby_retcode = rb_protect_funcall ((VALUE) script->interpreter, rb_intern(function),
+                                                   &ruby_error, 3,
+                                                   rb_str_new2(arg1),
+                                                   rb_str_new2(arg2),
+                                                   rb_str_new2(arg3));
+            else
+                ruby_retcode = rb_protect_funcall ((VALUE) script->interpreter, rb_intern(function),
+                                                   &ruby_error, 2,
+                                                   rb_str_new2(arg1),
+                                                   rb_str_new2(arg2));
+        }
+        else
+            ruby_retcode = rb_protect_funcall ((VALUE) script->interpreter, rb_intern(function),
+                                               &ruby_error, 1,
+                                               rb_str_new2(arg1));
+    }
+    else
+        ruby_retcode = rb_protect_funcall ((VALUE) script->interpreter, rb_intern(function),
+                                           &ruby_error, 0);
+    
     if (ruby_error)
     {
 	ruby_plugin->print_server (ruby_plugin,
@@ -137,19 +158,52 @@ weechat_ruby_exec (t_weechat_plugin *plugin,
 }
 
 /*
- * weechat_ruby_handler: general message and command handler for Ruby
+ * weechat_ruby_cmd_msg_handler: general command/message handler for Ruby
  */
 
 int
-weechat_ruby_handler (t_weechat_plugin *plugin,
-                      char *server, char *command, char *arguments,
-                      char *handler_args, void *handler_pointer)
+weechat_ruby_cmd_msg_handler (t_weechat_plugin *plugin,
+                              int argc, char **argv,
+                              char *handler_args, void *handler_pointer)
+{
+    if (argc >= 3)
+        return weechat_ruby_exec (plugin, (t_plugin_script *)handler_pointer,
+                                  handler_args, argv[0], argv[2], NULL);
+    else
+        return PLUGIN_RC_KO;
+}
+
+/*
+ * weechat_ruby_timer_handler: general timer handler for Ruby
+ */
+
+int
+weechat_ruby_timer_handler (t_weechat_plugin *plugin,
+                            int argc, char **argv,
+                            char *handler_args, void *handler_pointer)
 {
     /* make gcc happy */
-    (void) command;
+    (void) argc;
+    (void) argv;
     
     return weechat_ruby_exec (plugin, (t_plugin_script *)handler_pointer,
-                              handler_args, server, arguments);
+                              handler_args, NULL, NULL, NULL);
+}
+
+/*
+ * weechat_ruby_keyboard_handler: general keyboard handler for Ruby
+ */
+
+int
+weechat_ruby_keyboard_handler (t_weechat_plugin *plugin,
+                              int argc, char **argv,
+                              char *handler_args, void *handler_pointer)
+{
+    if (argc >= 2)
+        return weechat_ruby_exec (plugin, (t_plugin_script *)handler_pointer,
+                                  handler_args, argv[0], argv[1], argv[2]);
+    else
+        return PLUGIN_RC_KO;
 }
 
 /*
@@ -482,7 +536,7 @@ weechat_ruby_command (int argc, VALUE *argv, VALUE class)
 }
 
 /*
- * weechat_ruby_add_message_handler: add handler for messages
+ * weechat_ruby_add_message_handler: add a handler for messages (privmsg, ...)
  */
 
 static VALUE
@@ -519,7 +573,8 @@ weechat_ruby_add_message_handler (VALUE class, VALUE message, VALUE function)
     c_function = STR2CSTR (function);
     
     if (ruby_plugin->msg_handler_add (ruby_plugin, c_message,
-                                      weechat_ruby_handler, c_function,
+                                      weechat_ruby_cmd_msg_handler,
+                                      c_function,
                                       (void *)ruby_current_script))
         return INT2FIX (1);
     
@@ -527,7 +582,7 @@ weechat_ruby_add_message_handler (VALUE class, VALUE message, VALUE function)
 }
 
 /*
- * weechat_ruby_add_command_handler: define/redefines commands
+ * weechat_ruby_add_command_handler: add a command handler (define/redefine commands)
  */
 
 static VALUE
@@ -608,7 +663,7 @@ weechat_ruby_add_command_handler (int argc, VALUE *argv, VALUE class)
                                       c_arguments,
                                       c_arguments_description,
                                       c_completion_template,
-                                      weechat_ruby_handler,
+                                      weechat_ruby_cmd_msg_handler,
                                       c_function,
                                       (void *)ruby_current_script))
         return INT2FIX (1);
@@ -655,8 +710,52 @@ weechat_ruby_add_timer_handler (VALUE class, VALUE interval, VALUE function)
     c_function = STR2CSTR (function);
     
     if (ruby_plugin->timer_handler_add (ruby_plugin, c_interval,
-                                        weechat_ruby_handler, c_function,
+                                        weechat_ruby_timer_handler,
+                                        c_function,
                                         (void *)ruby_current_script))
+        return INT2FIX (1);
+    
+    return INT2FIX (0);
+}
+
+/*
+ * weechat_ruby_add_keyboard_handler: add a keyboard handler
+ */
+
+static VALUE
+weechat_ruby_add_keyboard_handler (VALUE class, VALUE function)
+{
+    char *c_function;
+    
+    /* make gcc happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: unable to add keyboard handler, "
+                                   "script not initialized");
+        return INT2FIX (0);
+    }
+    
+    c_function = NULL;
+    
+    if (NIL_P (function))
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: wrong parameters for "
+                                   "\"add_keyboard_handler\" function");
+        return INT2FIX (0);
+    }
+    
+    Check_Type (function, T_STRING);
+    
+    c_function = STR2CSTR (function);
+    
+    if (ruby_plugin->keyboard_handler_add (ruby_plugin,
+                                           weechat_ruby_keyboard_handler,
+                                           c_function,
+                                           (void *)ruby_current_script))
         return INT2FIX (1);
     
     return INT2FIX (0);
@@ -741,6 +840,46 @@ weechat_ruby_remove_timer_handler (VALUE class, VALUE function)
     
     weechat_script_remove_timer_handler (ruby_plugin, ruby_current_script,
                                          c_function);
+    
+    return INT2FIX (1);
+}
+
+/*
+ * weechat_ruby_remove_keyboard_handler: remove a keyboard handler
+ */
+
+static VALUE
+weechat_ruby_remove_keyboard_handler (VALUE class, VALUE function)
+{
+    char *c_function;
+    
+    /* make gcc happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: unable to remove keyboard handler, "
+                                   "script not initialized");
+        return INT2FIX (0);
+    }
+    
+    c_function = NULL;
+    
+    if (NIL_P (function))
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: wrong parameters for "
+                                   "\"remove_keyboard_handler\" function");
+        return INT2FIX (0);
+    }
+    
+    Check_Type (function, T_STRING);
+    
+    c_function = STR2CSTR (function);
+    
+    weechat_script_remove_keyboard_handler (ruby_plugin, ruby_current_script,
+                                            c_function);
     
     return INT2FIX (1);
 }
@@ -1485,7 +1624,7 @@ weechat_ruby_unload (t_weechat_plugin *plugin, t_plugin_script *script)
                           script->name);
     
     if (script->shutdown_func[0])
-        weechat_ruby_exec (plugin, script, script->shutdown_func, "", "");
+        weechat_ruby_exec (plugin, script, script->shutdown_func, "", "", "");
     
     if (script->interpreter)
 	rb_gc_unregister_address (script->interpreter);
@@ -1541,7 +1680,7 @@ weechat_ruby_unload_all (t_weechat_plugin *plugin)
 
 int
 weechat_ruby_cmd (t_weechat_plugin *plugin,
-                  char *server, char *command, char *arguments,
+                  int cmd_argc, char **cmd_argv,
                   char *handler_args, void *handler_pointer)
 {
     int argc, handler_found;
@@ -1550,13 +1689,14 @@ weechat_ruby_cmd (t_weechat_plugin *plugin,
     t_plugin_handler *ptr_handler;
     
     /* make gcc happy */
-    (void) server;
-    (void) command;
     (void) handler_args;
     (void) handler_pointer;
     
-    if (arguments)
-        argv = plugin->explode_string (plugin, arguments, " ", 0, &argc);
+    if (cmd_argc < 3)
+        return PLUGIN_RC_KO;
+    
+    if (cmd_argv[2])
+        argv = plugin->explode_string (plugin, cmd_argv[2], " ", 0, &argc);
     else
     {
         argv = NULL;
@@ -1640,6 +1780,24 @@ weechat_ruby_cmd (t_weechat_plugin *plugin,
             }
             if (!handler_found)
                 plugin->print_server (plugin, "  (none)");
+            
+            /* list Ruby keyboard handlers */
+            plugin->print_server (plugin, "");
+            plugin->print_server (plugin, "Ruby keyboard handlers:");
+            handler_found = 0;
+            for (ptr_handler = plugin->handlers;
+                 ptr_handler; ptr_handler = ptr_handler->next_handler)
+            {
+                if ((ptr_handler->type == HANDLER_KEYBOARD)
+                    && (ptr_handler->handler_args))
+                {
+                    handler_found = 1;
+                    plugin->print_server (plugin, "  Ruby(%s)",
+                                          ptr_handler->handler_args);
+                }
+            }
+            if (!handler_found)
+                plugin->print_server (plugin, "  (none)");
             break;
         case 1:
             if (plugin->ascii_strcasecmp (plugin, argv[0], "autoload") == 0)
@@ -1681,7 +1839,7 @@ weechat_ruby_cmd (t_weechat_plugin *plugin,
     if (argv)
         plugin->free_exploded_string (plugin, argv);
     
-    return 1;
+    return PLUGIN_RC_OK;
 }
 
 /*
@@ -1758,8 +1916,10 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     rb_define_module_function (mWeechat, "add_message_handler", weechat_ruby_add_message_handler, 2);
     rb_define_module_function (mWeechat, "add_command_handler", weechat_ruby_add_command_handler, -1);
     rb_define_module_function (mWeechat, "add_timer_handler", weechat_ruby_add_timer_handler, 2);
+    rb_define_module_function (mWeechat, "add_keyboard_handler", weechat_ruby_add_keyboard_handler, 1);
     rb_define_module_function (mWeechat, "remove_handler", weechat_ruby_remove_handler, 2);
     rb_define_module_function (mWeechat, "remove_timer_handler", weechat_ruby_remove_timer_handler, 1);
+    rb_define_module_function (mWeechat, "remove_keyboard_handler", weechat_ruby_remove_keyboard_handler, 1);
     rb_define_module_function (mWeechat, "get_info", weechat_ruby_get_info, -1);
     rb_define_module_function (mWeechat, "get_dcc_info", weechat_ruby_get_dcc_info, 0);
     rb_define_module_function (mWeechat, "get_config", weechat_ruby_get_config, 1);

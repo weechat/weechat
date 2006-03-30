@@ -40,7 +40,10 @@
 #include "../common/hotlist.h"
 #include "../common/weeconfig.h"
 #include "../gui/gui.h"
+
+#ifdef PLUGINS
 #include "../plugins/plugins.h"
+#endif
 
 
 char *irc_last_command_received = NULL;

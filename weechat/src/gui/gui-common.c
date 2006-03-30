@@ -392,10 +392,15 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
         {
             new_buffer->input_buffer_alloc = INPUT_BUFFER_BLOCK_SIZE;
             new_buffer->input_buffer = (char *) malloc (INPUT_BUFFER_BLOCK_SIZE);
+            new_buffer->input_buffer_color_mask = (char *) malloc (INPUT_BUFFER_BLOCK_SIZE);
             new_buffer->input_buffer[0] = '\0';
+            new_buffer->input_buffer_color_mask[0] = '\0';
         }
         else
+        {
             new_buffer->input_buffer = NULL;
+            new_buffer->input_buffer_color_mask = NULL;
+        }
         new_buffer->input_buffer_size = 0;
         new_buffer->input_buffer_length = 0;
         new_buffer->input_buffer_pos = 0;
@@ -709,6 +714,8 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
     
     if (buffer->input_buffer)
         free (buffer->input_buffer);
+    if (buffer->input_buffer_color_mask)
+        free (buffer->input_buffer_color_mask);
     
     completion_free (&(buffer->completion));
     
@@ -1206,12 +1213,12 @@ gui_infobar_remove_all ()
 }
 
 /*
- * gui_optimize_input_buffer_size: optimize input buffer size by adding
- *                                 or deleting data block (predefined size)
+ * gui_input_optimize_size: optimize input buffer size by adding
+ *                          or deleting data block (predefined size)
  */
 
 void
-gui_optimize_input_buffer_size (t_gui_buffer *buffer)
+gui_input_optimize_size (t_gui_buffer *buffer)
 {
     int optimal_size;
     
@@ -1223,8 +1230,44 @@ gui_optimize_input_buffer_size (t_gui_buffer *buffer)
         {
             buffer->input_buffer_alloc = optimal_size;
             buffer->input_buffer = realloc (buffer->input_buffer, optimal_size);
+            buffer->input_buffer_color_mask = realloc (buffer->input_buffer_color_mask,
+                                                       optimal_size);
         }
     }
+}
+
+/*
+ * gui_input_init_color_mask: initialize color mask for input buffer
+ */
+
+void
+gui_input_init_color_mask (t_gui_buffer *buffer)
+{
+    int i;
+    
+    if (buffer->has_input)
+    {
+        for (i = 0; i < buffer->input_buffer_size; i++)
+            buffer->input_buffer_color_mask[i] = ' ';
+        buffer->input_buffer_color_mask[buffer->input_buffer_size] = '\0';
+    }
+}
+
+/*
+ * gui_input_move: move data in input buffer
+ */
+
+void
+gui_input_move (t_gui_buffer *buffer, char *target, char *source, int size)
+{
+    int pos_source, pos_target;
+    
+    pos_target = target - buffer->input_buffer;
+    pos_source = source - buffer->input_buffer;
+    
+    memmove (target, source, size);
+    memmove (buffer->input_buffer_color_mask + pos_target,
+             buffer->input_buffer_color_mask + pos_source, size);
 }
 
 /*
@@ -1364,7 +1407,7 @@ gui_exec_action_raw_data (t_gui_window *window, char *actions)
 int
 gui_insert_string_input (t_gui_window *window, char *string, int pos)
 {
-    int size, length;
+    int i, pos_start, size, length;
     char *ptr_start;
     
     if (window->buffer->has_input)
@@ -1378,15 +1421,26 @@ gui_insert_string_input (t_gui_window *window, char *string, int pos)
         /* increase buffer size */
         window->buffer->input_buffer_size += size;
         window->buffer->input_buffer_length += length;
-        gui_optimize_input_buffer_size (window->buffer);
+        gui_input_optimize_size (window->buffer);
         window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
+        window->buffer->input_buffer_color_mask[window->buffer->input_buffer_size] = '\0';
         
         /* move end of string to the right */
         ptr_start = utf8_add_offset (window->buffer->input_buffer, pos);
+        pos_start = ptr_start - window->buffer->input_buffer;
         memmove (ptr_start + size, ptr_start, strlen (ptr_start));
+        memmove (window->buffer->input_buffer_color_mask + pos_start + size,
+                 window->buffer->input_buffer_color_mask + pos_start,
+                 strlen (window->buffer->input_buffer_color_mask + pos_start));
         
         /* insert new string */
-        strncpy (utf8_add_offset (window->buffer->input_buffer, pos), string, size);
+        ptr_start = utf8_add_offset (window->buffer->input_buffer, pos);
+        pos_start = ptr_start - window->buffer->input_buffer;
+        strncpy (ptr_start, string, size);
+        for (i = 0; i < size; i++)
+        {
+            window->buffer->input_buffer_color_mask[pos_start + i] = ' ';
+        }
         return length;
     }
     return 0;
@@ -1869,32 +1923,33 @@ gui_buffer_print_log (t_gui_buffer *buffer)
     int num;
     
     weechat_log_printf ("[buffer (addr:0x%X)]\n", buffer);
-    weechat_log_printf ("  num_displayed. . . . : %d\n",   buffer->num_displayed);
-    weechat_log_printf ("  number . . . . . . . : %d\n",   buffer->number);
-    weechat_log_printf ("  server . . . . . . . : 0x%X\n", buffer->server);
-    weechat_log_printf ("  all_servers. . . . . : %d\n",   buffer->all_servers);
-    weechat_log_printf ("  channel. . . . . . . : 0x%X\n", buffer->channel);
-    weechat_log_printf ("  type . . . . . . . . : %d\n",   buffer->type);
-    weechat_log_printf ("  lines. . . . . . . . : 0x%X\n", buffer->lines);
-    weechat_log_printf ("  last_line. . . . . . : 0x%X\n", buffer->last_line);
-    weechat_log_printf ("  last_read_line . . . : 0x%X\n", buffer->last_read_line);
-    weechat_log_printf ("  num_lines. . . . . . : %d\n",   buffer->num_lines);
-    weechat_log_printf ("  line_complete. . . . : %d\n",   buffer->line_complete);
-    weechat_log_printf ("  notify_level . . . . : %d\n",   buffer->notify_level);
-    weechat_log_printf ("  log_filename . . . . : '%s'\n", buffer->log_filename);
-    weechat_log_printf ("  log_file . . . . . . : 0x%X\n", buffer->log_file);
-    weechat_log_printf ("  has_input. . . . . . : %d\n",   buffer->has_input);
-    weechat_log_printf ("  input_buffer . . . . : '%s'\n", buffer->input_buffer);
-    weechat_log_printf ("  input_buffer_alloc . : %d\n",   buffer->input_buffer_alloc);
-    weechat_log_printf ("  input_buffer_size. . : %d\n",   buffer->input_buffer_size);
-    weechat_log_printf ("  input_buffer_length. : %d\n",   buffer->input_buffer_length);
-    weechat_log_printf ("  input_buffer_pos . . : %d\n",   buffer->input_buffer_pos);
-    weechat_log_printf ("  input_buffer_1st_disp: %d\n",   buffer->input_buffer_1st_display);
-    weechat_log_printf ("  history. . . . . . . : 0x%X\n", buffer->history);
-    weechat_log_printf ("  last_history . . . . : 0x%X\n", buffer->last_history);
-    weechat_log_printf ("  ptr_history. . . . . : 0x%X\n", buffer->ptr_history);
-    weechat_log_printf ("  prev_buffer. . . . . : 0x%X\n", buffer->prev_buffer);
-    weechat_log_printf ("  next_buffer. . . . . : 0x%X\n", buffer->next_buffer);
+    weechat_log_printf ("  num_displayed. . . . . : %d\n",   buffer->num_displayed);
+    weechat_log_printf ("  number . . . . . . . . : %d\n",   buffer->number);
+    weechat_log_printf ("  server . . . . . . . . : 0x%X\n", buffer->server);
+    weechat_log_printf ("  all_servers. . . . . . : %d\n",   buffer->all_servers);
+    weechat_log_printf ("  channel. . . . . . . . : 0x%X\n", buffer->channel);
+    weechat_log_printf ("  type . . . . . . . . . : %d\n",   buffer->type);
+    weechat_log_printf ("  lines. . . . . . . . . : 0x%X\n", buffer->lines);
+    weechat_log_printf ("  last_line. . . . . . . : 0x%X\n", buffer->last_line);
+    weechat_log_printf ("  last_read_line . . . . : 0x%X\n", buffer->last_read_line);
+    weechat_log_printf ("  num_lines. . . . . . . : %d\n",   buffer->num_lines);
+    weechat_log_printf ("  line_complete. . . . . : %d\n",   buffer->line_complete);
+    weechat_log_printf ("  notify_level . . . . . : %d\n",   buffer->notify_level);
+    weechat_log_printf ("  log_filename . . . . . : '%s'\n", buffer->log_filename);
+    weechat_log_printf ("  log_file . . . . . . . : 0x%X\n", buffer->log_file);
+    weechat_log_printf ("  has_input. . . . . . . : %d\n",   buffer->has_input);
+    weechat_log_printf ("  input_buffer . . . . . : '%s'\n", buffer->input_buffer);
+    weechat_log_printf ("  input_buffer_color_mask: '%s'\n", buffer->input_buffer_color_mask);
+    weechat_log_printf ("  input_buffer_alloc . . : %d\n",   buffer->input_buffer_alloc);
+    weechat_log_printf ("  input_buffer_size. . . : %d\n",   buffer->input_buffer_size);
+    weechat_log_printf ("  input_buffer_length. . : %d\n",   buffer->input_buffer_length);
+    weechat_log_printf ("  input_buffer_pos . . . : %d\n",   buffer->input_buffer_pos);
+    weechat_log_printf ("  input_buffer_1st_disp. : %d\n",   buffer->input_buffer_1st_display);
+    weechat_log_printf ("  history. . . . . . . . : 0x%X\n", buffer->history);
+    weechat_log_printf ("  last_history . . . . . : 0x%X\n", buffer->last_history);
+    weechat_log_printf ("  ptr_history. . . . . . : 0x%X\n", buffer->ptr_history);
+    weechat_log_printf ("  prev_buffer. . . . . . : 0x%X\n", buffer->prev_buffer);
+    weechat_log_printf ("  next_buffer. . . . . . : 0x%X\n", buffer->next_buffer);
     weechat_log_printf ("\n");
     weechat_log_printf ("  => last 100 lines:\n");
     

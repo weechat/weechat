@@ -317,6 +317,22 @@ weechat_plugin_timer_handler_add (t_weechat_plugin *plugin, int interval,
 }
 
 /*
+ * weechat_plugin_keyboard_handler_add: add a keyboard handler
+ */
+
+t_plugin_handler *
+weechat_plugin_keyboard_handler_add (t_weechat_plugin *plugin,
+                                     t_plugin_handler_func *handler_func,
+                                     char *handler_args, void *handler_pointer)
+{
+    if (plugin && handler_func)
+        return plugin_keyboard_handler_add (plugin, handler_func,
+                                            handler_args, handler_pointer);
+    
+    return NULL;
+}
+
+/*
  * weechat_plugin_handler_remove: remove a WeeChat handler
  */
 
@@ -385,7 +401,7 @@ weechat_plugin_get_info (t_weechat_plugin *plugin, char *info, char *server)
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
     time_t inactivity;
-    char *inactivity_str;
+    char *return_str;
     
     if (!plugin || !info)
         return NULL;
@@ -420,11 +436,39 @@ weechat_plugin_get_info (t_weechat_plugin *plugin, char *info, char *server)
             inactivity = 0;
         else
             inactivity = time (NULL) - gui_last_activity_time;
-        inactivity_str = (char *) malloc (128);
-        if (!inactivity_str)
+        return_str = (char *) malloc (32);
+        if (!return_str)
             return NULL;
-        snprintf (inactivity_str, 128, "%ld", inactivity);
-        return inactivity_str;
+        snprintf (return_str, 32, "%ld", inactivity);
+        return return_str;
+    }
+    else if (ascii_strcasecmp (info, "input") == 0)
+    {
+        if (gui_current_window->buffer->has_input)
+            return strdup (gui_current_window->buffer->input_buffer);
+        else
+            return strdup ("");
+    }
+    else if (ascii_strcasecmp (info, "input_mask") == 0)
+    {
+        if (gui_current_window->buffer->has_input)
+            return strdup (gui_current_window->buffer->input_buffer_color_mask);
+        else
+            return strdup ("");
+    }
+    else if (ascii_strcasecmp (info, "input_pos") == 0)
+    {
+        if (gui_current_window->buffer->has_input)
+        {
+            return_str = (char *) malloc (32);
+            if (!return_str)
+                return NULL;
+            snprintf (return_str, 32, "%d",
+                      gui_current_window->buffer->input_buffer_pos);
+            return return_str;
+        }
+        else
+            return strdup ("");
     }
     
     /* below are infos that need server to return value */
@@ -1007,5 +1051,40 @@ weechat_plugin_free_nick_info (t_weechat_plugin *plugin, t_plugin_nick_info *nic
         new_nick_info = nick_info->next_nick;
         free (nick_info);
 	nick_info = new_nick_info;
+    }
+}
+
+/*
+ * weechat_plugin_input_color: add color in input buffer
+ *                             if color < 0, input buffer is refresh
+ *                             if start < 0 or length <= 0, color mask is reinit
+ *                             otherwise, color is applied from start to start + length
+ */
+
+void
+weechat_plugin_input_color (t_weechat_plugin *plugin, int color, int start, int length)
+{
+    int i;
+    
+    if (!plugin
+        || (!gui_current_window->buffer->has_input)
+        || (gui_current_window->buffer->input_buffer_size == 0))
+        return;
+    
+    if (color < 0)
+        gui_draw_buffer_input (gui_current_window->buffer, 0);
+    else
+    {
+        if ((start < 0) || (length <= 0))
+            gui_input_init_color_mask (gui_current_window->buffer);
+        else
+        {
+            color %= GUI_NUM_IRC_COLORS;
+            for (i = start; i < start + length; i++)
+            {
+                gui_current_window->buffer->input_buffer_color_mask[i] =
+                    '0' + color;
+            }
+        }
     }
 }
