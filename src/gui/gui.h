@@ -288,6 +288,7 @@ struct t_gui_window
     int win_nick_x, win_nick_y;     /* nick window position                 */
     int win_nick_width;             /* width of nick window                 */
     int win_nick_height;            /* height of nick window                */
+    int win_nick_num_max;           /* maximum number of nicks displayed    */
     int win_nick_start;             /* # of 1st nick for display (scroll)   */
     
     /* input window settings */
@@ -510,7 +511,7 @@ extern unsigned char *gui_color_decode (unsigned char *, int);
 extern unsigned char *gui_color_decode_for_user_entry (unsigned char *);
 extern unsigned char *gui_color_encode (unsigned char *);
 extern int gui_buffer_has_nicklist (t_gui_buffer *);
-extern void gui_calculate_pos_size (t_gui_window *);
+extern int gui_calculate_pos_size (t_gui_window *, int);
 extern void gui_draw_buffer_title (t_gui_buffer *, int);
 extern char *gui_word_get_next_char (t_gui_window *, unsigned char *, int);
 extern void gui_draw_buffer_chat (t_gui_buffer *, int);

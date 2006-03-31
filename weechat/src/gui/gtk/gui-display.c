@@ -673,11 +673,14 @@ gui_window_chat_set_weechat_color (t_gui_window *window, int weechat_color)
  * gui_calculate_pos_size: calculate position and size for a window & sub-win
  */
 
-void
-gui_calculate_pos_size (t_gui_window *window)
+int
+gui_calculate_pos_size (t_gui_window *window, int force_calculate)
 {
     /* TODO: write this function for Gtk */
     (void) window;
+    (void) force_calculate;
+    
+    return 0;
 }
 
 /*
@@ -1333,7 +1336,7 @@ gui_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
     
     window->buffer = buffer;
     window->win_nick_start = 0;
-    gui_calculate_pos_size (window);
+    gui_calculate_pos_size (window, 1);
     
     if (!window->textview_chat)
     {

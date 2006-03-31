@@ -222,6 +222,7 @@ gui_window_new (t_gui_window *parent, int x, int y, int width, int height,
         new_window->win_nick_y = 0;
         new_window->win_nick_width = 0;
         new_window->win_nick_height = 0;
+        new_window->win_nick_num_max = 0;
         new_window->win_nick_start = 0;
         
         new_window->win_input_x = 0;
@@ -364,7 +365,7 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
             window->first_line_displayed = 1;
             window->start_line = NULL;
             window->start_line_pos = 0;
-            gui_calculate_pos_size (window);
+            gui_calculate_pos_size (window, 1);
             gui_window_init_subwindows (window);
         }
         

@@ -663,28 +663,56 @@ gui_window_input_set_color (t_gui_window *window, int irc_color)
 
 /*
  * gui_calculate_pos_size: calculate position and size for a buffer & subwindows
+ *                         return 1 if pos/size changed, 0 if no change
  */
 
-void
-gui_calculate_pos_size (t_gui_window *window)
+int
+gui_calculate_pos_size (t_gui_window *window, int force_calculate)
 {
-    int max_length, lines;
+    int max_length, max_height, lines;
     int num_nicks, num_op, num_halfop, num_voice, num_normal;
     
     if (!gui_ok)
-        return;
+        return 0;
     
     /* init chat & nicklist settings */
     if (cfg_look_nicklist && BUFFER_IS_CHANNEL(window->buffer))
     {
         max_length = nick_get_max_length (CHANNEL(window->buffer));
         
-        if ((cfg_look_nicklist_min_size > 0)
-            && (max_length < cfg_look_nicklist_min_size))
-            max_length = cfg_look_nicklist_min_size;
-        else if ((cfg_look_nicklist_max_size > 0)
-                 && (max_length > cfg_look_nicklist_max_size))
-            max_length = cfg_look_nicklist_max_size;
+        lines = 0;
+        
+        if ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_LEFT) ||
+            (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_RIGHT))
+        {
+            if ((cfg_look_nicklist_min_size > 0)
+                && (max_length < cfg_look_nicklist_min_size))
+                max_length = cfg_look_nicklist_min_size;
+            else if ((cfg_look_nicklist_max_size > 0)
+                     && (max_length > cfg_look_nicklist_max_size))
+                max_length = cfg_look_nicklist_max_size;
+            if (!force_calculate && (window->win_nick_width == max_length + 2))
+                return 0;
+        }
+        else
+        {
+            nick_count (CHANNEL(window->buffer), &num_nicks, &num_op,
+                        &num_halfop, &num_voice, &num_normal);
+            if (((max_length + 2) * num_nicks) % window->win_width == 0)
+                lines = ((max_length + 2) * num_nicks) / window->win_width;
+            else
+                lines = (((max_length + 2) * num_nicks) / window->win_width) + 1;
+            if ((cfg_look_nicklist_max_size > 0) && (lines > cfg_look_nicklist_max_size))
+                lines = cfg_look_nicklist_max_size;
+            if ((cfg_look_nicklist_min_size > 0) && (lines < cfg_look_nicklist_min_size))
+                lines = cfg_look_nicklist_min_size;
+            max_height = (cfg_look_infobar) ?
+                window->win_height - 3 - 4 : window->win_height - 2 - 4;
+            if (lines > max_height)
+                lines = max_height;
+            if (!force_calculate && (window->win_nick_height == lines + 1))
+                return 0;
+        }
         
         switch (cfg_look_nicklist_position)
         {
@@ -705,6 +733,7 @@ gui_calculate_pos_size (t_gui_window *window)
                     window->win_chat_height = window->win_height - 3;
                     window->win_nick_height = window->win_height - 3;
                 }
+                window->win_nick_num_max = window->win_nick_height;
                 break;
             case CFG_LOOK_NICKLIST_RIGHT:
                 window->win_chat_x = window->win_x;
@@ -723,14 +752,9 @@ gui_calculate_pos_size (t_gui_window *window)
                     window->win_chat_height = window->win_height - 3;
                     window->win_nick_height = window->win_height - 3;
                 }
+                window->win_nick_num_max = window->win_nick_height;
                 break;
             case CFG_LOOK_NICKLIST_TOP:
-                nick_count (CHANNEL(window->buffer), &num_nicks, &num_op,
-                            &num_halfop, &num_voice, &num_normal);
-                if (((max_length + 2) * num_nicks) % window->win_width == 0)
-                    lines = ((max_length + 2) * num_nicks) / window->win_width;
-                else
-                    lines = (((max_length + 2) * num_nicks) / window->win_width) + 1;
                 window->win_chat_x = window->win_x;
                 window->win_chat_y = window->win_y + 1 + (lines + 1);
                 window->win_chat_width = window->win_width;
@@ -742,14 +766,9 @@ gui_calculate_pos_size (t_gui_window *window)
                 window->win_nick_y = window->win_y + 1;
                 window->win_nick_width = window->win_width;
                 window->win_nick_height = lines + 1;
+                window->win_nick_num_max = lines * (window->win_nick_width / (max_length + 2));
                 break;
             case CFG_LOOK_NICKLIST_BOTTOM:
-                nick_count (CHANNEL(window->buffer), &num_nicks, &num_op,
-                            &num_halfop, &num_voice, &num_normal);
-                if (((max_length + 2) * num_nicks) % window->win_width == 0)
-                    lines = ((max_length + 2) * num_nicks) / window->win_width;
-                else
-                    lines = (((max_length + 2) * num_nicks) / window->win_width) + 1;
                 window->win_chat_x = window->win_x;
                 window->win_chat_y = window->win_y + 1;
                 window->win_chat_width = window->win_width;
@@ -764,6 +783,7 @@ gui_calculate_pos_size (t_gui_window *window)
                     window->win_nick_y = window->win_y + window->win_height - 2 - (lines + 1);
                 window->win_nick_width = window->win_width;
                 window->win_nick_height = lines + 1;
+                window->win_nick_num_max = lines * (window->win_nick_width / (max_length + 2));
                 break;
         }
         
@@ -785,7 +805,10 @@ gui_calculate_pos_size (t_gui_window *window)
         window->win_nick_y = -1;
         window->win_nick_width = -1;
         window->win_nick_height = -1;
+        window->win_nick_num_max = -1;
     }
+    
+    return 1;
 }
 
 /*
@@ -1766,7 +1789,7 @@ void
 gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
 {
     t_gui_window *ptr_win;
-    int i, j, x, y, column, max_length, nicks_displayed;
+    int i, j, x, y, x2, column, max_length, nicks_displayed;
     char format[32], format_empty[32];
     t_irc_nick *ptr_nick;
     
@@ -1775,24 +1798,12 @@ gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        if (ptr_win->buffer == buffer)
+        if ((ptr_win->buffer == buffer) && (buffer->num_displayed > 0))
         {
-            if (erase)
-            {
-                gui_window_set_weechat_color (ptr_win->win_nick, COLOR_WIN_NICK);
-                
-                snprintf (format_empty, 32, "%%-%ds", ptr_win->win_nick_width);
-                for (i = 0; i < ptr_win->win_nick_height; i++)
-                {
-                    mvwprintw (ptr_win->win_nick, i, 0, format_empty, " ");
-                }
-            }
-            
             max_length = nick_get_max_length (CHANNEL(buffer));
-            if ((buffer->num_displayed > 0) &&
-                ((max_length + 2) != ptr_win->win_nick_width))
+            
+            if (gui_calculate_pos_size (ptr_win, 0))
             {
-                gui_calculate_pos_size (ptr_win);
                 delwin (ptr_win->win_chat);
                 delwin (ptr_win->win_nick);
                 ptr_win->win_chat = newwin (ptr_win->win_chat_height,
@@ -1804,7 +1815,11 @@ gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
                                             ptr_win->win_nick_y,
                                             ptr_win->win_nick_x);
                 gui_draw_buffer_chat (buffer, 1);
-                
+                erase = 1;
+            }
+            
+            if (erase)
+            {
                 gui_window_set_weechat_color (ptr_win->win_nick, COLOR_WIN_NICK);
                 
                 snprintf (format_empty, 32, "%%-%ds", ptr_win->win_nick_width);
@@ -1813,13 +1828,18 @@ gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
                     mvwprintw (ptr_win->win_nick, i, 0, format_empty, " ");
                 }
             }
-            snprintf (format, 32, "%%.%ds",
-                      ((cfg_look_nicklist_min_size > 0)
-                       && (max_length < cfg_look_nicklist_min_size)) ?
-                      cfg_look_nicklist_min_size :
-                      (((cfg_look_nicklist_max_size > 0)
-                        && (max_length > cfg_look_nicklist_max_size)) ?
-                       cfg_look_nicklist_max_size : max_length));
+            
+            if ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_TOP) ||
+                (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM))
+                snprintf (format, 32, "%%.%ds", max_length);
+            else
+                snprintf (format, 32, "%%.%ds",
+                          ((cfg_look_nicklist_min_size > 0)
+                           && (max_length < cfg_look_nicklist_min_size)) ?
+                          cfg_look_nicklist_min_size :
+                          (((cfg_look_nicklist_max_size > 0)
+                            && (max_length > cfg_look_nicklist_max_size)) ?
+                           cfg_look_nicklist_max_size : max_length));
             
             if (has_colors ())
             {
@@ -1856,7 +1876,7 @@ gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
             
             if ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_TOP) ||
                 (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM))
-                nicks_displayed = (ptr_win->win_width / (max_length + 2)) * (ptr_win->win_height - 1);
+                nicks_displayed = (ptr_win->win_width / (max_length + 2)) * (ptr_win->win_nick_height - 1);
             else
                 nicks_displayed = ptr_win->win_nick_height;
             
@@ -1889,8 +1909,8 @@ gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
                     {
                         gui_window_set_weechat_color (ptr_win->win_nick, COLOR_WIN_NICK_MORE);
                         j = (max_length + 1) >= 4 ? 4 : max_length + 1;
-                        for (x = 1; x <= j; x++)
-                            mvwprintw (ptr_win->win_nick, y, x, "+");
+                        for (x2 = 1; x2 <= j; x2++)
+                            mvwprintw (ptr_win->win_nick, y, x + x2, "+");
                     }
                     else
                     {
@@ -1953,9 +1973,9 @@ gui_draw_buffer_nick (t_gui_buffer *buffer, int erase)
                     }
                 }
             }
+            wnoutrefresh (ptr_win->win_nick);
+            refresh ();
         }
-        wnoutrefresh (ptr_win->win_nick);
-        refresh ();
     }
 }
 
@@ -2672,7 +2692,7 @@ gui_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
     
     window->buffer = buffer;
     window->win_nick_start = 0;
-    gui_calculate_pos_size (window);
+    gui_calculate_pos_size (window, 1);
     
     /* destroy Curses windows */
     if (window->win_title)
@@ -2949,7 +2969,7 @@ gui_window_nick_end (t_gui_window *window)
     if (BUFFER_HAS_NICKLIST(window->buffer))
     {
         new_start =
-            CHANNEL(window->buffer)->nicks_count - window->win_nick_height;
+            CHANNEL(window->buffer)->nicks_count - window->win_nick_num_max;
         if (new_start < 0)
             new_start = 0;
         else if (new_start >= 1)
@@ -2977,7 +2997,7 @@ gui_window_nick_page_up (t_gui_window *window)
     {
         if (window->win_nick_start > 0)
         {
-            window->win_nick_start -= (window->win_nick_height - 1);
+            window->win_nick_start -= (window->win_nick_num_max - 1);
             if (window->win_nick_start <= 1)
                 window->win_nick_start = 0;
             gui_draw_buffer_nick (window->buffer, 1);
@@ -2997,14 +3017,14 @@ gui_window_nick_page_down (t_gui_window *window)
     
     if (BUFFER_HAS_NICKLIST(window->buffer))
     {
-        if ((CHANNEL(window->buffer)->nicks_count > window->win_nick_height)
-            && (window->win_nick_start + window->win_nick_height - 1
+        if ((CHANNEL(window->buffer)->nicks_count > window->win_nick_num_max)
+            && (window->win_nick_start + window->win_nick_num_max - 1
                 < CHANNEL(window->buffer)->nicks_count))
         {
             if (window->win_nick_start == 0)
-                window->win_nick_start += (window->win_nick_height - 1);
+                window->win_nick_start += (window->win_nick_num_max - 1);
             else
-                window->win_nick_start += (window->win_nick_height - 2);
+                window->win_nick_start += (window->win_nick_num_max - 2);
             gui_draw_buffer_nick (window->buffer, 1);
         }
     }
