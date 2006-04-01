@@ -491,11 +491,12 @@ plugin_cmd_handler_exec (char *server, char *command, char *arguments)
     t_weechat_plugin *ptr_plugin;
     t_plugin_handler *ptr_handler;
     int return_code;
+    char empty_arg[1] = { '\0' };
     char *argv[3] = { NULL, NULL, NULL };
     
     argv[0] = server;
     argv[1] = command;
-    argv[2] = arguments;
+    argv[2] = (arguments) ? arguments : empty_arg;
     
     for (ptr_plugin = weechat_plugins; ptr_plugin;
          ptr_plugin = ptr_plugin->next_plugin)
