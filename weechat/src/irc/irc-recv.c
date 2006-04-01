@@ -33,6 +33,7 @@
 #include <sys/time.h>
 #include <time.h>
 #include <sys/utsname.h>
+#include <regex.h>
 
 #include "../common/weechat.h"
 #include "irc.h"
@@ -3661,8 +3662,18 @@ irc_cmd_recv_322 (t_irc_server *server, char *host, char *nick, char *arguments)
         else
             pos = arguments;
         
-        irc_display_prefix (server, server->buffer, PREFIX_SERVER);
-        gui_printf (server->buffer, "%s\n", pos);
+	if (server->cmd_list_re)
+	{
+	    if (regexec (server->cmd_list_re, pos, 0, NULL, 0) == 0) {
+		irc_display_prefix (server, server->buffer, PREFIX_SERVER);
+		gui_printf (server->buffer, "%s\n", pos);
+	    }
+	}
+	else
+	{
+	    irc_display_prefix (server, server->buffer, PREFIX_SERVER);	    
+	    gui_printf (server->buffer, "%s\n", pos);
+	}
     }
     return 0;
 }

@@ -110,6 +110,9 @@ server_init (t_irc_server *server)
     server->saved_buffer = NULL;
     server->channels = NULL;
     server->last_channel = NULL;
+
+    /* regexp vars */
+    server->cmd_list_re = NULL;
 }
 
 /*

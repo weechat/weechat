@@ -28,6 +28,7 @@
 #include <time.h>
 #include <sys/time.h>
 #include <sys/types.h>
+#include <regex.h>
 
 #ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
@@ -177,6 +178,9 @@ struct t_irc_server
     t_irc_channel *last_channel;    /* last opened channal on server          */
     t_irc_server *prev_server;      /* link to previous server                */
     t_irc_server *next_server;      /* link to next server                    */
+
+    /* regexp vars */
+    regex_t *cmd_list_re;           /* compiled Regular Expression for /list  */ 
 };
 
 /* irc commands */

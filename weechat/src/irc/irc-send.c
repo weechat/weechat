@@ -33,6 +33,7 @@
 #include <sys/time.h>
 #include <time.h>
 #include <sys/utsname.h>
+#include <regex.h>
 
 #include "../common/weechat.h"
 #include "irc.h"
@@ -1117,11 +1118,41 @@ irc_cmd_send_list (t_irc_server *server, t_irc_channel *channel,
 {
     /* make gcc happy */
     (void) channel;
+    char buffer[512];
+    int ret;
+    
+    if (server->cmd_list_re)
+    {
+	regfree (server->cmd_list_re);
+	free (server->cmd_list_re);
+	server->cmd_list_re = NULL;
+    }
     
     if (arguments)
-        server_sendf (server, "LIST %s\r\n", arguments);
+    {
+	server->cmd_list_re = (regex_t *) malloc (sizeof (regex_t));
+	if (server->cmd_list_re)
+	{
+	    if ((ret = regcomp (server->cmd_list_re, arguments, REG_NOSUB | REG_ICASE)) != 0)
+	    {
+		regerror (ret, server->cmd_list_re, buffer, sizeof(buffer));
+		gui_printf (server->buffer,
+				  _("%s \"%s\" is not a valid regular expression (%s)\n"),
+				  WEECHAT_ERROR, arguments, buffer);
+	    }
+	    else
+		server_sendf (server, "LIST\r\n");
+	}
+	else
+	{
+	    gui_printf (server->buffer,
+			_("%s unable to alloc memory for regular expression\n"),
+			WEECHAT_ERROR);
+	}
+    }
     else
-        server_sendf (server, "LIST\r\n");
+	server_sendf (server, "LIST\r\n");
+    
     return 0;
 }
 
