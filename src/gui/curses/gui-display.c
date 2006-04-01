@@ -2486,6 +2486,7 @@ gui_draw_buffer_input_text (t_gui_window *window, int input_width)
         }
         else
             ptr_start = NULL;
+        input_width--;
     }
 }
 
