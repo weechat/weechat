@@ -128,7 +128,7 @@ t_irc_command irc_commands[] =
     NULL, 0, 2, 1, NULL, irc_cmd_send_links, NULL },
   { "list", N_("list channels and their topic"),
     N_("[channel[,channel] [server]]"),
-    N_("channel: channel to list\nserver: server name"),
+    N_("channel: channel to list (a regexp is allowed)\nserver: server name"),
     NULL, 0, MAX_ARGS, 1, NULL, irc_cmd_send_list, NULL },
   { "lusers", N_("get statistics about the size of the IRC network"),
     N_("[mask [target]]"),

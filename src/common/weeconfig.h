@@ -54,6 +54,10 @@
 #define CFG_LOOK_NICKLIST_TOP    2
 #define CFG_LOOK_NICKLIST_BOTTOM 3
 
+#define CFG_LOOK_ALIGN_NICK_NONE  0
+#define CFG_LOOK_ALIGN_NICK_LEFT  1
+#define CFG_LOOK_ALIGN_NICK_RIGHT 2
+
 #define CFG_IRC_DISPLAY_AWAY_OFF     0
 #define CFG_IRC_DISPLAY_AWAY_LOCAL   1
 #define CFG_IRC_DISPLAY_AWAY_CHANNEL 2
@@ -104,7 +108,12 @@ extern int cfg_look_nicklist_max_size;
 extern int cfg_look_nickmode;
 extern int cfg_look_nickmode_empty;
 extern char *cfg_look_no_nickname;
-extern char *cfg_look_completor;
+extern char *cfg_look_nick_prefix;
+extern char *cfg_look_nick_suffix;
+extern int cfg_look_align_nick;
+extern int cfg_look_align_other;
+extern int cfg_look_align_size;
+extern char *cfg_look_nick_completor;
 extern char *cfg_look_nick_completion_ignore;
 extern int cfg_look_nick_complete_first;
 extern int cfg_look_infobar;

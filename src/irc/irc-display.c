@@ -92,11 +92,22 @@ void
 irc_display_prefix (t_irc_server *server, t_gui_buffer *buffer, char *prefix)
 {
     int type;
+    char format[32];
     
     type = MSG_TYPE_INFO | MSG_TYPE_PREFIX;
     
     if (!cfg_log_plugin_msg && (prefix == PREFIX_PLUGIN))
         type |= MSG_TYPE_NOLOG;
+    
+    if (buffer)
+    {
+        if (cfg_look_align_other
+            && (BUFFER_IS_CHANNEL(buffer) || BUFFER_IS_PRIVATE(buffer)))
+        {
+            snprintf (format, 32, "%%-%ds", cfg_look_align_size - 2);
+            gui_printf_type (buffer, MSG_TYPE_NICK, format, " ");
+        }
+    }
     
     if (prefix[0] == prefix[2])
     {
@@ -139,10 +150,57 @@ void
 irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
                   int type, int display_around, int color_nick, int no_nickmode)
 {
-    if (display_around)
+    char format[32], *ptr_nickname;
+    int i, nickname_length, external_nick, length, spaces, disable_prefix_suffix;
+    
+    ptr_nickname = strdup ((nick) ? nick->nick : nickname);
+    if (!ptr_nickname)
+        return;
+    nickname_length = strlen (ptr_nickname); 
+    external_nick = (!nick && !BUFFER_IS_PRIVATE(buffer));
+    disable_prefix_suffix = ((cfg_look_align_nick != CFG_LOOK_ALIGN_NICK_NONE)
+                             && ((int)strlen (cfg_look_nick_prefix) +
+                                 (int)strlen (cfg_look_nick_suffix) > cfg_look_align_size - 4));
+    
+    /* calculate length to display, to truncate it if too long */
+    length = nickname_length;
+    if (!disable_prefix_suffix && cfg_look_nick_prefix)
+        length += strlen (cfg_look_nick_prefix);
+    if (external_nick)
+        length += 2;
+    if (nick)
+    {
+        if (nick->flags & (NICK_CHANOWNER | NICK_CHANADMIN |
+                           NICK_OP | NICK_HALFOP | NICK_VOICE))
+            length += 1;
+        else if (cfg_look_nickmode_empty && !no_nickmode)
+            length += 1;
+    }
+    if (!disable_prefix_suffix && cfg_look_nick_suffix)
+        length += strlen (cfg_look_nick_suffix);
+    
+    /* calculate number of spaces to insert before or after nick */
+    spaces = 0;
+    if (cfg_look_align_nick != CFG_LOOK_ALIGN_NICK_NONE)
+        spaces = cfg_look_align_size - length;
+    
+    /* display prefix */
+    if (display_around && !disable_prefix_suffix
+        && cfg_look_nick_prefix && cfg_look_nick_prefix[0])
         gui_printf_type (buffer, type, "%s%s",
                          GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                         (nick || BUFFER_IS_PRIVATE(buffer)) ? "<" : ">");
+                         cfg_look_nick_prefix);
+    
+    /* display spaces before nick, if needed */
+    if (display_around
+        && (cfg_look_align_nick == CFG_LOOK_ALIGN_NICK_RIGHT)
+        && (spaces > 0))
+    {
+        snprintf (format, 32, "%%-%ds", spaces);
+        gui_printf_type (buffer, type, format, " ");
+    }
+    
+    /* display nick mode */
     if (nick && cfg_look_nickmode)
     {
         if (nick->flags & NICK_CHANOWNER)
@@ -160,26 +218,64 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
         else if (nick->flags & NICK_VOICE)
             gui_printf_type (buffer, type, "%s+",
                              GUI_COLOR(COLOR_WIN_NICK_VOICE));
-        else
-            if (cfg_look_nickmode_empty && !no_nickmode)
-                gui_printf_type (buffer, type, "%s ",
-                                 GUI_COLOR(COLOR_WIN_CHAT));
+        else if (cfg_look_nickmode_empty && !no_nickmode)
+            gui_printf_type (buffer, type, "%s ",
+                             GUI_COLOR(COLOR_WIN_CHAT));
     }
-    if (color_nick < 0)
-        gui_printf_type (buffer, type, "%s%s",
-                         GUI_COLOR(COLOR_WIN_CHAT_HIGHLIGHT),
-                         (nick) ? nick->nick : nickname);
-    else
-        gui_printf_type (buffer, type, "%s%s",
-                         GUI_COLOR((nick && color_nick) ?
-                                   nick->color : COLOR_WIN_CHAT),
-                         (nick) ? nick->nick : nickname);
     
-    if (display_around)
+    /* display nick */
+    if (external_nick)
         gui_printf_type (buffer, type, "%s%s",
                          GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                         (nick || BUFFER_IS_PRIVATE(buffer)) ? "> " : "< ");
-    gui_printf_type (buffer, type, GUI_NO_COLOR);
+                         "(");
+    if (display_around && (spaces < 0))
+    {
+        i = nickname_length + spaces - 1;
+        if (i < 3)
+        {
+            if (nickname_length < 3)
+                i = nickname_length;
+            else
+                i = 3;
+        }
+        ptr_nickname[i] = '\0';
+    }
+    gui_printf_type_nick (buffer, type,
+                          (nick) ? nick->nick : nickname,
+                          "%s%s",
+                          (color_nick < 0) ?
+                          GUI_COLOR(COLOR_WIN_CHAT_HIGHLIGHT) :
+                          GUI_COLOR((nick && color_nick) ?
+                                    nick->color : COLOR_WIN_CHAT),
+                          ptr_nickname);
+    if (display_around && (spaces < 0))
+        gui_printf_type (buffer, type, "%s+",
+                         GUI_COLOR(COLOR_WIN_NICK_MORE));
+    if (external_nick)
+        gui_printf_type (buffer, type, "%s%s",
+                         GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                         ")");
+    
+    /* display spaces after nick, if needed */
+    if (display_around
+        && (cfg_look_align_nick == CFG_LOOK_ALIGN_NICK_LEFT)
+        && (spaces > 0))
+    {
+        snprintf (format, 32, "%%-%ds", spaces);
+        gui_printf_type (buffer, type, format, " ");
+    }
+    
+    /* display suffix */
+    if (display_around && !disable_prefix_suffix
+        && cfg_look_nick_suffix && cfg_look_nick_suffix[0])
+        gui_printf_type (buffer, type, "%s%s",
+                         GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                         cfg_look_nick_suffix);
+    
+    gui_printf_type (buffer, type, "%s%s",
+                     GUI_NO_COLOR,
+                     (display_around) ? " " : "");
+    free (ptr_nickname);
 }
 
 /*

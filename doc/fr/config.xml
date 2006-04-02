@@ -153,6 +153,41 @@
   <entry>Afficher un espace si le mode utilisateur n'est pas (half)op/voice</entry>
 </row>
 <row>
+  <entry><option>look_nick_prefix</option></entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>'<'</entry>
+  <entry>Texte à afficher avant le pseudo dans la fenêtre de discussion</entry>
+</row>
+<row>
+  <entry><option>look_nick_suffix</option></entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>'>'</entry>
+  <entry>Texte à afficher après le pseudo dans la fenêtre de discussion</entry>
+</row>
+<row>
+  <entry><option>look_align_nick</option></entry>
+  <entry>chaîne</entry>
+  <entry>'none', 'left', 'right'</entry>
+  <entry>'none'</entry>
+  <entry>Alignement des pseudos (taille fixe pour les pseudos dans la fenêtre de discussion (none, left, right))</entry>
+</row>
+<row>
+  <entry><option>look_align_other</option></entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'off'</entry>
+  <entry>Alignement pour les autres messages (ne commençant pas par un pseudo)</entry>
+</row>
+<row>
+  <entry><option>look_align_size</option></entry>
+  <entry>entier</entry>
+  <entry>entre 8 et 64</entry>
+  <entry>8</entry>
+  <entry>Taille pour l'alignement des pseudos et autres messages</entry>
+</row>
+<row>
   <entry><option>look_nick_completor</option></entry>
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>

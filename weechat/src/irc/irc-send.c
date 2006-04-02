@@ -1121,21 +1121,21 @@ irc_cmd_send_list (t_irc_server *server, t_irc_channel *channel,
     char buffer[512];
     int ret;
     
-    if (server->cmd_list_re)
+    if (server->cmd_list_regexp)
     {
-	regfree (server->cmd_list_re);
-	free (server->cmd_list_re);
-	server->cmd_list_re = NULL;
+	regfree (server->cmd_list_regexp);
+	free (server->cmd_list_regexp);
+	server->cmd_list_regexp = NULL;
     }
     
     if (arguments)
     {
-	server->cmd_list_re = (regex_t *) malloc (sizeof (regex_t));
-	if (server->cmd_list_re)
+	server->cmd_list_regexp = (regex_t *) malloc (sizeof (regex_t));
+	if (server->cmd_list_regexp)
 	{
-	    if ((ret = regcomp (server->cmd_list_re, arguments, REG_NOSUB | REG_ICASE)) != 0)
+	    if ((ret = regcomp (server->cmd_list_regexp, arguments, REG_NOSUB | REG_ICASE)) != 0)
 	    {
-		regerror (ret, server->cmd_list_re, buffer, sizeof(buffer));
+		regerror (ret, server->cmd_list_regexp, buffer, sizeof(buffer));
 		gui_printf (server->buffer,
 				  _("%s \"%s\" is not a valid regular expression (%s)\n"),
 				  WEECHAT_ERROR, arguments, buffer);
@@ -1146,7 +1146,7 @@ irc_cmd_send_list (t_irc_server *server, t_irc_channel *channel,
 	else
 	{
 	    gui_printf (server->buffer,
-			_("%s unable to alloc memory for regular expression\n"),
+			_("%s not enough memory for regular expression\n"),
 			WEECHAT_ERROR);
 	}
     }

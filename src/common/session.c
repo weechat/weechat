@@ -365,7 +365,9 @@ session_save_line (FILE *file, t_gui_line *line)
     rc = rc && (session_write_int (file, SESSION_LINE_WITH_MESSAGE, line->line_with_message));
     rc = rc && (session_write_int (file, SESSION_LINE_WITH_HIGHLIGHT, line->line_with_highlight));
     rc = rc && (session_write_str (file, SESSION_LINE_DATA, line->data));
-    rc = rc && (session_write_int (file, SESSION_LINE_OFS_AFTER_DATE, line->ofs_after_date));
+    rc = rc && (session_write_int (file, SESSION_LINE_OFS_AFTER_DATE, line->ofs_start_message));
+    rc = rc && (session_write_int (file, SESSION_LINE_OFS_START_MESSAGE, line->ofs_start_message));
+    rc = rc && (session_write_str (file, SESSION_LINE_NICK, line->nick));
     rc = rc && (session_write_id  (file, SESSION_LINE_END));
     return rc;
 }
@@ -1500,6 +1502,12 @@ session_load_line (FILE *file)
                 break;
             case SESSION_LINE_OFS_AFTER_DATE:
                 rc = rc && (session_read_int (file, &(line->ofs_after_date)));
+                break;
+            case SESSION_LINE_OFS_START_MESSAGE:
+                rc = rc && (session_read_int (file, &(line->ofs_start_message)));
+                break;
+            case SESSION_LINE_NICK:
+                rc = rc && (session_read_str (file, &(line->nick)));
                 break;
             default:
                 weechat_log_printf (_("session: warning: ignoring value from "

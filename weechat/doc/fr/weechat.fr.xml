@@ -2310,20 +2310,25 @@ plugin->timer_handler_add (plugin, 60, &amp;mon_timer);
                   </command>
                 </para>
                 <para>
-                  Le paramètre argc vaut 2 et les arguments suivants sont
+                  Le paramètre argc vaut 3 et les arguments suivants sont
                   passés dans le tableau argv :
                   <itemizedlist>
                     <listitem>
                       <para>
                         argv[0] = touche appuyée (nom d'une fonction interne
-                        ou bien '*' suivi du code d'une touche si la touche
-                        n'est pas associée à une fonction)
+                        ou bien '*' suivi du code d'une touche)
                       </para>
                     </listitem>
                     <listitem>
                       <para>
-                        argv[1] = "1" si la ligne de commande a changé suite
-                        à l'action de cette touche, "0" sinon
+                        argv[1] = la ligne de commande avant l'action de la
+                        touche
+                      </para>
+                    </listitem>
+                    <listitem>
+                      <para>
+                        argv[2] = la ligne de commande après l'action de la
+                        touche
                       </para>
                     </listitem>
                   </itemizedlist>

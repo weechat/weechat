@@ -172,15 +172,13 @@ struct t_irc_server
     int lag;                        /* lag (in milliseconds)                  */
     struct timeval lag_check_time;  /* last time lag was checked (ping sent)  */
     time_t lag_next_check;          /* time for next check                    */
+    regex_t *cmd_list_regexp;       /* compiled Regular Expression for /list  */ 
     t_gui_buffer *buffer;           /* GUI buffer allocated for server        */
     t_gui_buffer *saved_buffer;     /* channel before jumping to next server  */
     t_irc_channel *channels;        /* opened channels on server              */
     t_irc_channel *last_channel;    /* last opened channal on server          */
     t_irc_server *prev_server;      /* link to previous server                */
     t_irc_server *next_server;      /* link to next server                    */
-
-    /* regexp vars */
-    regex_t *cmd_list_re;           /* compiled Regular Expression for /list  */ 
 };
 
 /* irc commands */

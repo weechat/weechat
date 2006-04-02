@@ -161,7 +161,7 @@ server_mask: list of servers must match this mask
 <programlisting>
 list channels and their topic
 
-channel: channel to list
+channel: channel to list (a regexp is allowed)
 server: server name
 
 </programlisting>

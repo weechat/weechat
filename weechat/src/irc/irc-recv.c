@@ -3662,9 +3662,9 @@ irc_cmd_recv_322 (t_irc_server *server, char *host, char *nick, char *arguments)
         else
             pos = arguments;
         
-	if (server->cmd_list_re)
+	if (server->cmd_list_regexp)
 	{
-	    if (regexec (server->cmd_list_re, pos, 0, NULL, 0) == 0) {
+	    if (regexec (server->cmd_list_regexp, pos, 0, NULL, 0) == 0) {
 		irc_display_prefix (server, server->buffer, PREFIX_SERVER);
 		gui_printf (server->buffer, "%s\n", pos);
 	    }

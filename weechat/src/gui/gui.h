@@ -145,16 +145,19 @@ enum t_weechat_color
 #define MSG_TYPE_NOLOG     64
 
 #define gui_printf(buffer, fmt, argz...) \
-    gui_printf_internal(buffer, 1, MSG_TYPE_INFO, fmt, ##argz)
+    gui_printf_internal(buffer, 1, MSG_TYPE_INFO, NULL, fmt, ##argz)
 
 #define gui_printf_type(buffer, type, fmt, argz...) \
-    gui_printf_internal(buffer, 1, type, fmt, ##argz)
+    gui_printf_internal(buffer, 1, type, NULL, fmt, ##argz)
+
+#define gui_printf_type_nick(buffer, type, nick, fmt, argz...) \
+    gui_printf_internal(buffer, 1, type, nick, fmt, ##argz)
 
 #define gui_printf_nolog(buffer, fmt, argz...) \
-    gui_printf_internal(buffer, 1, MSG_TYPE_INFO | MSG_TYPE_NOLOG, fmt, ##argz)
+    gui_printf_internal(buffer, 1, MSG_TYPE_INFO | MSG_TYPE_NOLOG, NULL, fmt, ##argz)
 
 #define gui_printf_nolog_notime(buffer, fmt, argz...) \
-    gui_printf_internal(buffer, 0, MSG_TYPE_NOLOG, fmt, ##argz)
+    gui_printf_internal(buffer, 0, MSG_TYPE_NOLOG, NULL, fmt, ##argz)
 
 #define WINDOW_MIN_WIDTH        10
 #define WINDOW_MIN_HEIGHT       5
@@ -201,8 +204,10 @@ struct t_gui_line
     int log_write;                  /* = 1 if line will be written to log   */
     int line_with_message;          /* line contains a message from a user? */
     int line_with_highlight;        /* line contains highlight              */
+    char *nick;                     /* nickname for line (may be NULL)      */
     char *data;                     /* line content                         */
     int ofs_after_date;             /* offset to first char after date      */
+    int ofs_start_message;          /* offset to first char after date/nick */
     t_gui_line *prev_line;          /* link to previous line                */
     t_gui_line *next_line;          /* link to next line                    */
 };
@@ -417,7 +422,7 @@ extern void gui_buffer_free (t_gui_buffer *, int);
 extern t_gui_line *gui_line_new (t_gui_buffer *);
 extern int gui_word_strlen (t_gui_window *, char *);
 extern int gui_word_real_pos (t_gui_window *, char *, int);
-extern void gui_printf_internal (t_gui_buffer *, int, int, char *, ...);
+extern void gui_printf_internal (t_gui_buffer *, int, int, char *, char *, ...);
 extern void gui_printf_raw_data (void *, int, char *);
 extern void gui_input_optimize_size (t_gui_buffer *);
 extern void gui_input_init_color_mask (t_gui_buffer *);

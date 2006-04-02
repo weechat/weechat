@@ -161,7 +161,7 @@ masque_serveur: liste des serveurs correspondant au masque
 <programlisting>
 lister les canaux et leur sujet
 
-canal: canal à lister
+canal: canal à lister (une expression régulière est acceptée)
 serveur: nom du serveur
 
 </programlisting>

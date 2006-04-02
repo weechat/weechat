@@ -216,12 +216,12 @@ gui_action_tab (t_gui_window *window)
                 {
                     if (strncmp (utf8_add_offset (window->buffer->input_buffer,
                                                   window->buffer->input_buffer_pos),
-                                 cfg_look_completor, strlen (cfg_look_completor)) != 0)
-                        gui_insert_string_input (window, cfg_look_completor,
+                                 cfg_look_nick_completor, strlen (cfg_look_nick_completor)) != 0)
+                        gui_insert_string_input (window, cfg_look_nick_completor,
                                                  window->buffer->input_buffer_pos);
                     if (window->buffer->completion.position >= 0)
-                        window->buffer->completion.position += strlen (cfg_look_completor);
-                    window->buffer->input_buffer_pos += utf8_strlen (cfg_look_completor);
+                        window->buffer->completion.position += strlen (cfg_look_nick_completor);
+                    window->buffer->input_buffer_pos += utf8_strlen (cfg_look_nick_completor);
                     if (window->buffer->input_buffer[utf8_real_pos (window->buffer->input_buffer,
                                                                     window->buffer->input_buffer_pos)] != ' ')
                         gui_insert_string_input (window, " ",

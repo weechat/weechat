@@ -70,7 +70,6 @@ log_write_line (t_gui_buffer *buffer, char *message)
     if (buffer->log_file)
     {
         msg_no_color = (char *)gui_color_decode ((unsigned char *)message, 0);
-        log_write_date (buffer);
         fprintf (buffer->log_file, "%s\n",
                  (msg_no_color) ? msg_no_color : message);
         fflush (buffer->log_file);

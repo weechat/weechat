@@ -87,7 +87,14 @@ int cfg_look_nicklist_max_size;
 int cfg_look_nickmode;
 int cfg_look_nickmode_empty;
 char *cfg_look_no_nickname;
-char *cfg_look_completor;
+char *cfg_look_nick_prefix;
+char *cfg_look_nick_suffix;
+int cfg_look_align_nick;
+char *cfg_look_align_nick_values[] =
+{ "none", "left", "right", NULL };
+int cfg_look_align_other;
+int cfg_look_align_size;
+char *cfg_look_nick_completor;
 char *cfg_look_nick_completion_ignore;
 int cfg_look_nick_complete_first;
 int cfg_look_infobar;
@@ -190,10 +197,30 @@ t_config_option weechat_options_look[] =
     N_("display space if nick mode is not (half)op/voice"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
     NULL, NULL, &cfg_look_nickmode_empty, NULL, config_change_buffers },
+  { "look_nick_prefix", N_("text to display before nick in chat window"),
+    N_("text to display before nick in chat window"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    "<", NULL, NULL, &cfg_look_nick_prefix, config_change_noop },
+  { "look_nick_suffix", N_("text to display after nick in chat window"),
+    N_("text to display after nick in chat window"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    ">", NULL, NULL, &cfg_look_nick_suffix, config_change_noop },
+  { "look_align_nick", N_("nick alignment (fixed size for nicks in chat window)"),
+    N_("nick alignment (fixed size for nicks in chat window (none, left, right))"),
+    OPTION_TYPE_INT_WITH_STRING, 0, 0, 0,
+    "none", cfg_look_align_nick_values, &cfg_look_align_nick, NULL, config_change_noop },
+  { "look_align_other", N_("alignment for other messages (not beginning with a nick)"),
+    N_("alignment for other messages (not beginning with a nick)"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
+    NULL, NULL, &cfg_look_align_other, NULL, config_change_noop },
+  { "look_align_size", N_("size for aligning nick and other messages"),
+    N_("size for aligning nick and other messages"),
+    OPTION_TYPE_INT, 8, 64, 8,
+    NULL, NULL, &cfg_look_align_size, NULL, config_change_noop },
   { "look_nick_completor", N_("the string inserted after nick completion"),
     N_("the string inserted after nick completion"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    ":", NULL, NULL, &cfg_look_completor, config_change_noop },
+    ":", NULL, NULL, &cfg_look_nick_completor, config_change_noop },
   { "look_nick_completion_ignore", N_("chars ignored for nick completion"),
     N_("chars ignored for nick completion"),
     OPTION_TYPE_STRING, 0, 0, 0,
