@@ -1376,7 +1376,7 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                         && CHANNEL(buffer)
                         && CHANNEL(buffer)->nicks)
                     {
-                        pos = strstr (arguments, "close");
+                        pos = strstr (arguments, "close ");
                         if (pos)
                             pos += 6;
                         CHANNEL(buffer)->close = 1;
