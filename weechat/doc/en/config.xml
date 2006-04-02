@@ -129,7 +129,7 @@
   <entry>integer</entry>
   <entry>between 0 and 100</entry>
   <entry>0</entry>
-  <entry>Max size for nicklist (width or height, depending on look_nicklist_position (0 = no max size; if min == max and > 0, then size is fixed))</entry>
+  <entry>Max size for nicklist (width or height, depending on look_nicklist_position (0 = no max size; if min == max and &gt; 0, then size is fixed))</entry>
 </row>
 <row>
   <entry><option>look_no_nickname</option></entry>
@@ -156,14 +156,14 @@
   <entry><option>look_nick_prefix</option></entry>
   <entry>string</entry>
   <entry>any string</entry>
-  <entry>'<'</entry>
+  <entry>'&lt;'</entry>
   <entry>Text to display before nick in chat window</entry>
 </row>
 <row>
   <entry><option>look_nick_suffix</option></entry>
   <entry>string</entry>
   <entry>any string</entry>
-  <entry>'>'</entry>
+  <entry>'&gt;'</entry>
   <entry>Text to display after nick in chat window</entry>
 </row>
 <row>

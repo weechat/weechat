@@ -54,6 +54,15 @@ foreach $lng (@all_lang)
     print "\n";
 }
 
+sub toxml
+{
+    $_ = $_[0];
+    $_ =~ s/&/&amp;/g;
+    $_ =~ s/</&lt;/g;
+    $_ =~ s/>/&gt;/g;
+    return $_;
+}
+
 sub create_commands
 {
     $lang = $_[0];
@@ -156,10 +165,10 @@ sub create_config
             $_ = $1;
             s/(.*)/\u$1/;
             $desc = $_;
-            print XML "  <entry>".$type."</entry>\n";
-            print XML "  <entry>".$values."</entry>\n";
-            print XML "  <entry>".$default."</entry>\n";
-            print XML "  <entry>".$desc."</entry>\n";
+            print XML "  <entry>".toxml($type)."</entry>\n";
+            print XML "  <entry>".toxml($values)."</entry>\n";
+            print XML "  <entry>".toxml($default)."</entry>\n";
+            print XML "  <entry>".toxml($desc)."</entry>\n";
             print XML "</row>\n";
         }
     }

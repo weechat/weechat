@@ -129,7 +129,7 @@
   <entry>entier</entry>
   <entry>entre 0 et 100</entry>
   <entry>0</entry>
-  <entry>Taille maximum pour la fenêtre d'utilisateurs (largeur ou hauteur, selon look_nicklist_position (0 = pas de taille maximum; si min == max et > 0, alors la taille est fixe))</entry>
+  <entry>Taille maximum pour la fenêtre d'utilisateurs (largeur ou hauteur, selon look_nicklist_position (0 = pas de taille maximum; si min == max et &gt; 0, alors la taille est fixe))</entry>
 </row>
 <row>
   <entry><option>look_no_nickname</option></entry>
@@ -156,14 +156,14 @@
   <entry><option>look_nick_prefix</option></entry>
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>
-  <entry>'<'</entry>
+  <entry>'&lt;'</entry>
   <entry>Texte à afficher avant le pseudo dans la fenêtre de discussion</entry>
 </row>
 <row>
   <entry><option>look_nick_suffix</option></entry>
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>
-  <entry>'>'</entry>
+  <entry>'&gt;'</entry>
   <entry>Texte à afficher après le pseudo dans la fenêtre de discussion</entry>
 </row>
 <row>
