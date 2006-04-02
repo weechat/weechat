@@ -464,7 +464,7 @@ explode_string (char *string, char *separators, int num_items_max,
 
     n_items = num_items_max;
 
-    if (string == NULL)
+    if (!string || !string[0])
         return NULL;
 
     if (num_items_max == 0)
