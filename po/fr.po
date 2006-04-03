@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.9-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-04-03 11:33+0200\n"
+"POT-Creation-Date: 2006-04-03 17:58+0200\n"
 "PO-Revision-Date: 2006-04-02 23:42+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1376,38 +1376,38 @@ msgstr "impossible de changer le mode pour les autres utilisateurs"
 msgid "whois (secure connection)"
 msgstr "qui est (connexion sécurisée)"
 
-#: src/irc/irc-display.c:349
+#: src/irc/irc-display.c:347
 #, c-format
 msgid "%sServer: %s%s %s[%s%s%s]\n"
 msgstr "%sServeur: %s%s %s[%s%s%s]\n"
 
-#: src/irc/irc-display.c:356
+#: src/irc/irc-display.c:354
 msgid "connected"
 msgstr "connecté"
 
-#: src/irc/irc-display.c:356
+#: src/irc/irc-display.c:354
 msgid "not connected"
 msgstr "non connecté"
 
-#: src/irc/irc-display.c:360 src/irc/irc-display.c:364
-#: src/irc/irc-display.c:373 src/irc/irc-display.c:375
+#: src/irc/irc-display.c:358 src/irc/irc-display.c:362
+#: src/irc/irc-display.c:371 src/irc/irc-display.c:373
 msgid "on"
 msgstr "activé"
 
-#: src/irc/irc-display.c:360 src/irc/irc-display.c:364
-#: src/irc/irc-display.c:373 src/irc/irc-display.c:375
+#: src/irc/irc-display.c:358 src/irc/irc-display.c:362
+#: src/irc/irc-display.c:371 src/irc/irc-display.c:373
 msgid "off"
 msgstr "désactivé"
 
-#: src/irc/irc-display.c:362
+#: src/irc/irc-display.c:360
 msgid " (temporary server, will not be saved)"
 msgstr " (serveur temporaire, ne sera pas sauvé)"
 
-#: src/irc/irc-display.c:367 src/irc/irc-display.c:398 src/irc/irc-recv.c:3417
+#: src/irc/irc-display.c:365 src/irc/irc-display.c:396 src/irc/irc-recv.c:3417
 msgid "seconds"
 msgstr "secondes"
 
-#: src/irc/irc-display.c:378
+#: src/irc/irc-display.c:376
 msgid "(hidden)"
 msgstr "(caché)"
 
@@ -1428,22 +1428,22 @@ msgstr "%s impossible de trouver le pseudo pour envoyer le message\n"
 #: src/irc/irc-send.c:395 src/irc/irc-send.c:423 src/irc/irc-send.c:726
 #: src/irc/irc-send.c:763 src/irc/irc-send.c:800 src/irc/irc-send.c:854
 #: src/irc/irc-send.c:899 src/irc/irc-send.c:978 src/irc/irc-send.c:1039
-#: src/irc/irc-send.c:1429 src/irc/irc-send.c:1571 src/irc/irc-send.c:2109
-#: src/irc/irc-send.c:2239
+#: src/irc/irc-send.c:1425 src/irc/irc-send.c:1567 src/irc/irc-send.c:2101
+#: src/irc/irc-send.c:2231
 #, c-format
 msgid "%s \"%s\" command can only be executed in a channel buffer\n"
 msgstr ""
 "%s la commande \"%s\" peut seulement être exécutée dans un tampon canal\n"
 
 #: src/irc/irc-send.c:562 src/irc/irc-send.c:582 src/irc/irc-send.c:1193
-#: src/irc/irc-send.c:1627 src/irc/irc-send.c:1641 src/irc/irc-send.c:2027
+#: src/irc/irc-send.c:1623 src/irc/irc-send.c:1637 src/irc/irc-send.c:2019
 #, c-format
 msgid "%s \"%s\" command can not be executed on a server buffer\n"
 msgstr ""
 "%s la commande \"%s\" ne peut pas être exécutée dans un tampon serveur\n"
 
 #: src/irc/irc-send.c:635 src/irc/irc-send.c:647 src/irc/irc-send.c:665
-#: src/irc/irc-send.c:1402 src/irc/irc-send.c:1540 src/irc/irc-send.c:2135
+#: src/irc/irc-send.c:1398 src/irc/irc-send.c:1536 src/irc/irc-send.c:2127
 #: src/common/command.c:1929 src/common/command.c:2442
 #: src/common/command.c:2621
 #, c-format
@@ -1477,12 +1477,12 @@ msgstr ""
 msgid "%s nick \"%s\" not found for \"%s\" command\n"
 msgstr "%s pseudo \"%s\" non trouvé pour la commande \"%s\"\n"
 
-#: src/irc/irc-send.c:1742
+#: src/irc/irc-send.c:1738
 #, c-format
 msgid "%s cannot create new private buffer \"%s\"\n"
 msgstr "%s impossible de créer le tampon privé \"%s\"\n"
 
-#: src/irc/irc-send.c:2200
+#: src/irc/irc-send.c:2192
 #, c-format
 msgid "%s, compiled on %s %s\n"
 msgstr "%s, compilé le %s %s\n"
@@ -1706,7 +1706,7 @@ msgstr "CTCP %sPING%s réponse de %s%s%s: %ld.%ld secondes\n"
 msgid "%s cannot create new private window \"%s\"\n"
 msgstr "%s impossible de créer la fenêtre privée \"%s\"\n"
 
-#: src/irc/irc-recv.c:1355 src/irc/irc-recv.c:2372
+#: src/irc/irc-recv.c:1355 src/irc/irc-recv.c:2368
 msgid "Private"
 msgstr "Privé"
 
@@ -2134,12 +2134,12 @@ msgstr "%s impossible d'envoyer le DCC\n"
 msgid "%s error sending data to \"%s\" via DCC CHAT\n"
 msgstr "%s erreur d'envoi de données à \"%s\" via DCC CHAT\n"
 
-#: src/irc/irc-dcc.c:1225
+#: src/irc/irc-dcc.c:1223
 #, c-format
 msgid "Private %s> %s"
 msgstr "Privé %s> %s"
 
-#: src/irc/irc-dcc.c:1424
+#: src/irc/irc-dcc.c:1419
 #, c-format
 msgid ""
 "%s DCC failed because blocksize is too big. Check value of \"dcc_blocksize\" "
@@ -2148,7 +2148,7 @@ msgstr ""
 "%s le DCC a échoué car la taille de bloc est trop grande. Vérifiez la valeur "
 "de l'option \"dcc_blocksize\", le maximum est %d.\n"
 
-#: src/irc/irc-dcc.c:1499
+#: src/irc/irc-dcc.c:1494
 #, c-format
 msgid "Aborting active DCC: \"%s\" from %s\n"
 msgstr "Abandon du DCC actif: \"%s\" de %s\n"

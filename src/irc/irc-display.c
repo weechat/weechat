@@ -244,9 +244,7 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
                           "%s%s",
                           (force_color >= 0) ?
                           GUI_COLOR(force_color) :
-                          GUI_COLOR((nick) ? nick->color :
-                                    (buffer && BUFFER_IS_PRIVATE(buffer)) ?
-                                    COLOR_WIN_NICK_PRIVATE : COLOR_WIN_CHAT),
+                          GUI_COLOR((nick) ? nick->color : COLOR_WIN_CHAT),
                           ptr_nickname);
     if (display_around && (spaces < 0))
         gui_printf_type (buffer, type, "%s+",

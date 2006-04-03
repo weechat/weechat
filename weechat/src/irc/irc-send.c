@@ -1363,12 +1363,8 @@ irc_cmd_send_msg (t_irc_server *server, t_irc_channel *channel,
                     ptr_channel = channel_search (server, arguments);
                     if (ptr_channel)
                     {
-                        gui_printf_type (ptr_channel->buffer, MSG_TYPE_NICK,
-                                         "%s<%s%s%s> ",
-                                         GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                                         GUI_COLOR(COLOR_WIN_NICK_SELF),
-                                         server->nick,
-                                         GUI_COLOR(COLOR_WIN_CHAT_DARK));
+                        irc_display_nick (ptr_channel->buffer, NULL, server->nick,
+                                          MSG_TYPE_NICK, 1, COLOR_WIN_NICK_SELF, 0);
                         gui_printf_type (ptr_channel->buffer, MSG_TYPE_MSG,
                                          "%s%s\n",
                                          GUI_COLOR(COLOR_WIN_CHAT),
@@ -1762,13 +1758,9 @@ irc_cmd_send_query (t_irc_server *server, t_irc_channel *channel,
     
     /* display text if given */
     if (pos)
-    {        
-        gui_printf_type (ptr_channel->buffer, MSG_TYPE_NICK,
-                         "%s<%s%s%s> ",
-                         GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                         GUI_COLOR(COLOR_WIN_NICK_SELF),
-                         server->nick,
-                         GUI_COLOR(COLOR_WIN_CHAT_DARK));
+    {
+        irc_display_nick (ptr_channel->buffer, NULL, server->nick,
+                          MSG_TYPE_NICK, 1, COLOR_WIN_NICK_SELF, 0);
         string = (char *)gui_color_decode ((unsigned char *)pos, 1);
         gui_printf_type (ptr_channel->buffer, MSG_TYPE_MSG,
                          "%s%s\n",

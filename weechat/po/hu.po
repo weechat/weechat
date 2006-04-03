@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.9-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-04-03 11:33+0200\n"
+"POT-Creation-Date: 2006-04-03 17:58+0200\n"
 "PO-Revision-Date: 2006-03-18 11:46+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1386,38 +1386,38 @@ msgstr "más felhasználók üzemmódját nem módosíthatja"
 msgid "whois (secure connection)"
 msgstr ""
 
-#: src/irc/irc-display.c:349
+#: src/irc/irc-display.c:347
 #, c-format
 msgid "%sServer: %s%s %s[%s%s%s]\n"
 msgstr "%s Szerver: %s%s %s[%s%s%s]\n"
 
-#: src/irc/irc-display.c:356
+#: src/irc/irc-display.c:354
 msgid "connected"
 msgstr "csatlakozva"
 
-#: src/irc/irc-display.c:356
+#: src/irc/irc-display.c:354
 msgid "not connected"
 msgstr "nincs csatlakozva"
 
-#: src/irc/irc-display.c:360 src/irc/irc-display.c:364
-#: src/irc/irc-display.c:373 src/irc/irc-display.c:375
+#: src/irc/irc-display.c:358 src/irc/irc-display.c:362
+#: src/irc/irc-display.c:371 src/irc/irc-display.c:373
 msgid "on"
 msgstr "be"
 
-#: src/irc/irc-display.c:360 src/irc/irc-display.c:364
-#: src/irc/irc-display.c:373 src/irc/irc-display.c:375
+#: src/irc/irc-display.c:358 src/irc/irc-display.c:362
+#: src/irc/irc-display.c:371 src/irc/irc-display.c:373
 msgid "off"
 msgstr "ki"
 
-#: src/irc/irc-display.c:362
+#: src/irc/irc-display.c:360
 msgid " (temporary server, will not be saved)"
 msgstr " (átmeneti szerver, nem lesz mentve)"
 
-#: src/irc/irc-display.c:367 src/irc/irc-display.c:398 src/irc/irc-recv.c:3417
+#: src/irc/irc-display.c:365 src/irc/irc-display.c:396 src/irc/irc-recv.c:3417
 msgid "seconds"
 msgstr "másodperc"
 
-#: src/irc/irc-display.c:378
+#: src/irc/irc-display.c:376
 msgid "(hidden)"
 msgstr "(rejtett)"
 
@@ -1438,20 +1438,20 @@ msgstr "%s nem található név az üzenet küldéséhez\n"
 #: src/irc/irc-send.c:395 src/irc/irc-send.c:423 src/irc/irc-send.c:726
 #: src/irc/irc-send.c:763 src/irc/irc-send.c:800 src/irc/irc-send.c:854
 #: src/irc/irc-send.c:899 src/irc/irc-send.c:978 src/irc/irc-send.c:1039
-#: src/irc/irc-send.c:1429 src/irc/irc-send.c:1571 src/irc/irc-send.c:2109
-#: src/irc/irc-send.c:2239
+#: src/irc/irc-send.c:1425 src/irc/irc-send.c:1567 src/irc/irc-send.c:2101
+#: src/irc/irc-send.c:2231
 #, c-format
 msgid "%s \"%s\" command can only be executed in a channel buffer\n"
 msgstr "%s \"%s\" parancs csak a szobaablakban futtatható\n"
 
 #: src/irc/irc-send.c:562 src/irc/irc-send.c:582 src/irc/irc-send.c:1193
-#: src/irc/irc-send.c:1627 src/irc/irc-send.c:1641 src/irc/irc-send.c:2027
+#: src/irc/irc-send.c:1623 src/irc/irc-send.c:1637 src/irc/irc-send.c:2019
 #, c-format
 msgid "%s \"%s\" command can not be executed on a server buffer\n"
 msgstr "%s \"%s\" parancs nem futtatható a szerverablakban\n"
 
 #: src/irc/irc-send.c:635 src/irc/irc-send.c:647 src/irc/irc-send.c:665
-#: src/irc/irc-send.c:1402 src/irc/irc-send.c:1540 src/irc/irc-send.c:2135
+#: src/irc/irc-send.c:1398 src/irc/irc-send.c:1536 src/irc/irc-send.c:2127
 #: src/common/command.c:1929 src/common/command.c:2442
 #: src/common/command.c:2621
 #, c-format
@@ -1483,12 +1483,12 @@ msgstr "%s \"%s\" parancs csak a szobaablakban futtatható\n"
 msgid "%s nick \"%s\" not found for \"%s\" command\n"
 msgstr "%s név \"%s\" nem található a \"%s\" parancshoz\n"
 
-#: src/irc/irc-send.c:1742
+#: src/irc/irc-send.c:1738
 #, c-format
 msgid "%s cannot create new private buffer \"%s\"\n"
 msgstr "%s nem sikerült új privát ablakot nyitni \"%s\"\n"
 
-#: src/irc/irc-send.c:2200
+#: src/irc/irc-send.c:2192
 #, c-format
 msgid "%s, compiled on %s %s\n"
 msgstr "%s, lefordítva: %s %s\n"
@@ -1712,7 +1712,7 @@ msgstr ""
 msgid "%s cannot create new private window \"%s\"\n"
 msgstr "%s nem sikerült új privát ablakot nyitni \"%s\"\n"
 
-#: src/irc/irc-recv.c:1355 src/irc/irc-recv.c:2372
+#: src/irc/irc-recv.c:1355 src/irc/irc-recv.c:2368
 msgid "Private"
 msgstr "Privát"
 
@@ -2123,19 +2123,19 @@ msgstr "%s DCC küldése sikertelen\n"
 msgid "%s error sending data to \"%s\" via DCC CHAT\n"
 msgstr "%s hiba a(z) \"%s\" felé DCC CHAT-tel történő adatküldés közben\n"
 
-#: src/irc/irc-dcc.c:1225
+#: src/irc/irc-dcc.c:1223
 #, c-format
 msgid "Private %s> %s"
 msgstr "Privát %s> %s"
 
-#: src/irc/irc-dcc.c:1424
+#: src/irc/irc-dcc.c:1419
 #, c-format
 msgid ""
 "%s DCC failed because blocksize is too big. Check value of \"dcc_blocksize\" "
 "option, max is %d.\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1499
+#: src/irc/irc-dcc.c:1494
 #, c-format
 msgid "Aborting active DCC: \"%s\" from %s\n"
 msgstr ""

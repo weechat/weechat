@@ -2356,14 +2356,10 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                             ptr_channel->topic = strdup (host2);
                         
                         if (irc_is_highlight (pos, server->nick))
+                        {
                             irc_display_nick (ptr_channel->buffer, NULL, nick,
                                               MSG_TYPE_NICK | MSG_TYPE_HIGHLIGHT, 1,
                                               COLOR_WIN_CHAT_HIGHLIGHT, 0);
-                        else
-                            irc_display_nick (ptr_channel->buffer, NULL, nick,
-                                              MSG_TYPE_NICK, 1, -1, 0);
-                        if (irc_is_highlight (pos, server->nick))
-                        {
                             if ((cfg_look_infobar_delay_highlight > 0)
                                 && (ptr_channel->buffer != gui_current_window->buffer))
                                 gui_infobar_printf_from_buffer (ptr_channel->buffer,
@@ -2374,7 +2370,11 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                             highlight = 1;
                         }
                         else
+                        {
+                            irc_display_nick (ptr_channel->buffer, NULL, nick,
+                                              MSG_TYPE_NICK, 1, COLOR_WIN_NICK_PRIVATE, 0);
                             highlight = 0;
+                        }
                         gui_printf_type (ptr_channel->buffer, MSG_TYPE_MSG,
                                          "%s%s\n",
                                          GUI_COLOR(COLOR_WIN_CHAT),

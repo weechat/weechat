@@ -1209,30 +1209,25 @@ dcc_chat_recv (t_irc_dcc *ptr_dcc)
                 ptr_buf_color = (char *)gui_color_decode ((ptr_buf2) ?
                                                           (unsigned char *)ptr_buf2 : (unsigned char *)ptr_buf,
                                                           cfg_irc_colors_receive);
-                gui_printf_type (ptr_dcc->channel->buffer, MSG_TYPE_NICK,
-                                 "%s<", GUI_COLOR(COLOR_WIN_CHAT_DARK));
+                
                 if (irc_is_highlight (ptr_buf, ptr_dcc->server->nick))
                 {
-                    gui_printf_type (ptr_dcc->channel->buffer,
-                                     MSG_TYPE_NICK | MSG_TYPE_HIGHLIGHT,
-                                     "%s%s",
-                                     GUI_COLOR(COLOR_WIN_CHAT_HIGHLIGHT),
-                                     ptr_dcc->nick);
-                    if ( (cfg_look_infobar_delay_highlight > 0)
-                        && (ptr_dcc->channel->buffer != gui_current_window->buffer) )
+                    irc_display_nick (ptr_dcc->channel->buffer, NULL, ptr_dcc->nick,
+                                      MSG_TYPE_NICK | MSG_TYPE_HIGHLIGHT, 1,
+                                      COLOR_WIN_CHAT_HIGHLIGHT, 0);
+                    if ((cfg_look_infobar_delay_highlight > 0)
+                        && (ptr_dcc->channel->buffer != gui_current_window->buffer))
+                    {
                         gui_infobar_printf (cfg_look_infobar_delay_highlight,
                                             COLOR_WIN_INFOBAR_HIGHLIGHT,
                                             _("Private %s> %s"),
                                             ptr_dcc->nick,
                                             (ptr_buf_color) ? ptr_buf_color : ((ptr_buf2) ? ptr_buf2 : ptr_buf));
+                    }
                 }
                 else
-                    gui_printf_type (ptr_dcc->channel->buffer, MSG_TYPE_NICK,
-                                     "%s%s",
-                                     GUI_COLOR(COLOR_WIN_NICK_PRIVATE),
-                                     ptr_dcc->nick);
-                gui_printf_type (ptr_dcc->channel->buffer, MSG_TYPE_NICK,
-                                 "%s> ", GUI_COLOR(COLOR_WIN_CHAT_DARK));
+                    irc_display_nick (ptr_dcc->channel->buffer, NULL, ptr_dcc->nick,
+                                      MSG_TYPE_NICK, 1, COLOR_WIN_NICK_PRIVATE, 0);
                 gui_printf_type (ptr_dcc->channel->buffer, MSG_TYPE_MSG,
                                  "%s%s\n",
                                  GUI_COLOR(COLOR_WIN_CHAT),

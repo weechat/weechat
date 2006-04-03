@@ -98,6 +98,7 @@ channel_free (t_irc_server *server, t_irc_channel *channel)
     if ((t_irc_dcc *)(channel->dcc_chat) &&
         (!DCC_ENDED(((t_irc_dcc *)(channel->dcc_chat))->status)))
     {
+        ((t_irc_dcc *)(channel->dcc_chat))->channel = NULL;
         dcc_close ((t_irc_dcc *)(channel->dcc_chat), DCC_ABORTED);
         dcc_redraw (1);
     }
