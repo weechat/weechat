@@ -1008,13 +1008,8 @@ user_command (t_irc_server *server, t_irc_channel *channel, char *command, int o
             
             if (CHANNEL(buffer)->type == CHANNEL_TYPE_PRIVATE)
             {
-                gui_printf_type (buffer,
-                                 MSG_TYPE_NICK,
-                                 "%s<%s%s%s> ",
-                                 GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                                 GUI_COLOR(COLOR_WIN_NICK_SELF),
-                                 server->nick,
-                                 GUI_COLOR(COLOR_WIN_CHAT_DARK));
+                irc_display_nick (buffer, NULL, server->nick,
+                                  MSG_TYPE_NICK, 1, COLOR_WIN_NICK_SELF, 0);
                 gui_printf_type (buffer,
                                  MSG_TYPE_MSG,
                                  "%s%s\n",
@@ -1028,11 +1023,13 @@ user_command (t_irc_server *server, t_irc_channel *channel, char *command, int o
                 if (ptr_nick)
                 {
                     irc_display_nick (buffer, ptr_nick, NULL,
-                                      MSG_TYPE_NICK, 1, 1, 0);
-                    gui_printf (buffer,
-                                "%s\n",
-                                (command_with_colors2) ?
-                                command_with_colors2 : command);
+                                      MSG_TYPE_NICK, 1, -1, 0);
+                    gui_printf_type (buffer,
+                                     MSG_TYPE_MSG,
+                                     "%s%s\n",
+                                     GUI_COLOR(COLOR_WIN_CHAT),
+                                     (command_with_colors2) ?
+                                     command_with_colors2 : command);
                 }
                 else
                 {

@@ -209,7 +209,7 @@ irc_cmd_send_amsg (t_irc_server *server, t_irc_channel *channel,
                         if (ptr_nick)
                         {
                             irc_display_nick (ptr_channel->buffer, ptr_nick, NULL,
-                                              MSG_TYPE_NICK, 1, 1, 0);
+                                              MSG_TYPE_NICK, 1, -1, 0);
                             string = (char *)gui_color_decode ((unsigned char *)arguments, 1);
                             gui_printf (ptr_channel->buffer, "%s\n", (string) ? string : arguments);
                             if (string)
@@ -1283,7 +1283,7 @@ irc_cmd_send_msg (t_irc_server *server, t_irc_channel *channel,
                     ptr_nick = NULL;
                 irc_display_nick (buffer, ptr_nick,
                                   (ptr_nick) ? NULL : server->nick,
-                                  MSG_TYPE_NICK, 1, 1, 0);
+                                  MSG_TYPE_NICK, 1, -1, 0);
                 string = (char *)gui_color_decode ((unsigned char *)pos, 1);
                 gui_printf_type (buffer, MSG_TYPE_MSG, "%s\n",
                                  (string) ? string : "");
@@ -1303,7 +1303,7 @@ irc_cmd_send_msg (t_irc_server *server, t_irc_channel *channel,
                         if (ptr_nick)
                         {
                             irc_display_nick (ptr_channel->buffer, ptr_nick, NULL,
-                                              MSG_TYPE_NICK, 1, 1, 0);
+                                              MSG_TYPE_NICK, 1, -1, 0);
                             string = (char *)gui_color_decode ((unsigned char *)pos, 1);
                             gui_printf_type (ptr_channel->buffer, MSG_TYPE_MSG, "%s\n",
                                              (string) ? string : "");

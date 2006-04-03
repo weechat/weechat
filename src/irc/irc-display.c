@@ -143,12 +143,11 @@ irc_display_prefix (t_irc_server *server, t_gui_buffer *buffer, char *prefix)
 
 /*
  * irc_display_nick: display nick in chat window
- *                   if color_nick < 0 then nick is highlighted
  */
 
 void
 irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
-                  int type, int display_around, int color_nick, int no_nickmode)
+                  int type, int display_around, int force_color, int no_nickmode)
 {
     char format[32], *ptr_nickname;
     int i, nickname_length, external_nick, length, spaces, disable_prefix_suffix;
@@ -243,10 +242,11 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
     gui_printf_type_nick (buffer, type,
                           (nick) ? nick->nick : nickname,
                           "%s%s",
-                          (color_nick < 0) ?
-                          GUI_COLOR(COLOR_WIN_CHAT_HIGHLIGHT) :
-                          GUI_COLOR((nick && color_nick) ?
-                                    nick->color : COLOR_WIN_CHAT),
+                          (force_color >= 0) ?
+                          GUI_COLOR(force_color) :
+                          GUI_COLOR((nick) ? nick->color :
+                                    (buffer && BUFFER_IS_PRIVATE(buffer)) ?
+                                    COLOR_WIN_NICK_PRIVATE : COLOR_WIN_CHAT),
                           ptr_nickname);
     if (display_around && (spaces < 0))
         gui_printf_type (buffer, type, "%s+",
