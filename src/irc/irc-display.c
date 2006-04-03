@@ -284,12 +284,19 @@ void
 irc_display_away (t_irc_server *server, char *string1, char *string2)
 {
     t_irc_channel *ptr_channel;
+    char format[32];
     
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
         if (ptr_channel->type == CHANNEL_TYPE_CHANNEL)
         {
+            if (cfg_look_align_other)
+            {
+                snprintf (format, 32, "%%-%ds", cfg_look_align_size + 1);
+                gui_printf_type (ptr_channel->buffer, MSG_TYPE_NICK,
+                                 format, " ");
+            }
             gui_printf_nolog (ptr_channel->buffer,
                               "%s[%s%s%s %s: %s%s]\n",
                               GUI_COLOR(COLOR_WIN_CHAT_DARK),
