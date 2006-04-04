@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.9-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-04-03 17:58+0200\n"
+"POT-Creation-Date: 2006-04-04 09:29+0200\n"
 "PO-Revision-Date: 2006-03-18 11:45+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -261,21 +261,19 @@ msgstr ""
 "argumenty: argumenty pro CTCP"
 
 #: src/irc/irc-commands.c:62
-#, fuzzy
 msgid "leave and rejoin a channel"
-msgstr "připojit se ke kanálu"
+msgstr "opustit a znovu se připojit ke kanálu"
 
 #: src/irc/irc-commands.c:63 src/irc/irc-commands.c:197
 msgid "[channel[,channel]] [part_message]"
 msgstr "[kanál[,kanál]] [zpráva_části]"
 
 #: src/irc/irc-commands.c:64
-#, fuzzy
 msgid ""
 "     channel: channel name for cycle\n"
 "part_message: part message (displayed to other users)"
 msgstr ""
-"       kanál: kanál, který opustit\n"
+"       kanál: jméno kanálu pro cyklus\n"
 "zpráva_části: zpráva při opuštění (zobrazí se ostatním uživatelům)"
 
 #: src/irc/irc-commands.c:67
@@ -452,12 +450,11 @@ msgid "[channel[,channel] [server]]"
 msgstr "[kanál,[,kanál] [server]]"
 
 #: src/irc/irc-commands.c:131
-#, fuzzy
 msgid ""
 "channel: channel to list (a regexp is allowed)\n"
 "server: server name"
 msgstr ""
-"kanál: kanál, který se má vypsat\n"
+"kanál: kanál, který se má vypsat (regulární výraz je povolen)\n"
 "server: jméno serveru"
 
 #: src/irc/irc-commands.c:133
@@ -1149,9 +1146,8 @@ msgid "end of /whowas list"
 msgstr "konec /whowas seznamu"
 
 #: src/irc/irc-commands.c:468
-#, fuzzy
 msgid "connecting from"
-msgstr "Připojuji"
+msgstr "Připojuji z"
 
 #: src/irc/irc-commands.c:470
 msgid "you are now an IRC operator"
@@ -1355,7 +1351,7 @@ msgstr "uživatel je imunní na kick/deop"
 
 #: src/irc/irc-commands.c:572
 msgid "network split"
-msgstr ""
+msgstr "rozdělení sítě"
 
 #: src/irc/irc-commands.c:574
 msgid "no O-lines for your host"
@@ -1373,38 +1369,38 @@ msgstr "nemůžu změnit mód přo ostatní uživatele"
 msgid "whois (secure connection)"
 msgstr "whois (zabezpečená část)"
 
-#: src/irc/irc-display.c:347
+#: src/irc/irc-display.c:354
 #, c-format
 msgid "%sServer: %s%s %s[%s%s%s]\n"
 msgstr "%sServer: %s%s %s[%s%s%s]\n"
 
-#: src/irc/irc-display.c:354
+#: src/irc/irc-display.c:361
 msgid "connected"
 msgstr "připojen"
 
-#: src/irc/irc-display.c:354
+#: src/irc/irc-display.c:361
 msgid "not connected"
 msgstr "nepřipojen"
 
-#: src/irc/irc-display.c:358 src/irc/irc-display.c:362
-#: src/irc/irc-display.c:371 src/irc/irc-display.c:373
+#: src/irc/irc-display.c:365 src/irc/irc-display.c:369
+#: src/irc/irc-display.c:378 src/irc/irc-display.c:380
 msgid "on"
 msgstr "na"
 
-#: src/irc/irc-display.c:358 src/irc/irc-display.c:362
-#: src/irc/irc-display.c:371 src/irc/irc-display.c:373
+#: src/irc/irc-display.c:365 src/irc/irc-display.c:369
+#: src/irc/irc-display.c:378 src/irc/irc-display.c:380
 msgid "off"
 msgstr "off"
 
-#: src/irc/irc-display.c:360
+#: src/irc/irc-display.c:367
 msgid " (temporary server, will not be saved)"
 msgstr " (dočasný server, nebude uložen)"
 
-#: src/irc/irc-display.c:365 src/irc/irc-display.c:396 src/irc/irc-recv.c:3417
+#: src/irc/irc-display.c:372 src/irc/irc-display.c:403 src/irc/irc-recv.c:3417
 msgid "seconds"
 msgstr "sekund"
 
-#: src/irc/irc-display.c:376
+#: src/irc/irc-display.c:383
 msgid "(hidden)"
 msgstr "(skrytý)"
 
@@ -1413,9 +1409,9 @@ msgid "unknown"
 msgstr "neznámý"
 
 #: src/irc/irc-send.c:69
-#, fuzzy, c-format
+#, c-format
 msgid "%s: using hostname \"%s\"\n"
-msgstr "%s: používám lokální jméno hosta \"%s\"\n"
+msgstr "%s: používám jméno hosta \"%s\"\n"
 
 #: src/irc/irc-send.c:222 src/common/command.c:1038
 #, c-format
@@ -1453,12 +1449,12 @@ msgstr "%s špatné parametry pro příkaz \"%s\"\n"
 #: src/irc/irc-send.c:1140
 #, c-format
 msgid "%s \"%s\" is not a valid regular expression (%s)\n"
-msgstr ""
+msgstr "%s \"%s\" není validní regulární výraz (%s)\n"
 
 #: src/irc/irc-send.c:1149
-#, fuzzy, c-format
+#, c-format
 msgid "%s not enough memory for regular expression\n"
-msgstr "%s nedostatek paměti pro klávesovou zkratku\n"
+msgstr "%s nedostatek paměti pro regulární výraz\n"
 
 #: src/irc/irc-send.c:1275
 #, c-format
@@ -1528,24 +1524,20 @@ msgid "removes ban on"
 msgstr "odebral zakázaní"
 
 #: src/irc/irc-recv.c:670
-#, fuzzy
 msgid "sets realname ban on"
-msgstr "tě zakázal"
+msgstr "nastavil povolení zakázání skutečného jména"
 
 #: src/irc/irc-recv.c:671
-#, fuzzy
 msgid "removes realname ban on"
-msgstr "odebral zakázaní"
+msgstr "odebral povolení zakázaní skutečného jména"
 
 #: src/irc/irc-recv.c:695
-#, fuzzy
 msgid "sets ban exemtion on"
-msgstr "nastavena vyjímka na"
+msgstr "nastavena vyjímka zakázání na"
 
 #: src/irc/irc-recv.c:696
-#, fuzzy
 msgid "removes ban exemption on"
-msgstr "odstraněna vyjímka z"
+msgstr "odstraněna vyjímka zakázání z"
 
 #: src/irc/irc-recv.c:720
 msgid "sets mode +f"
@@ -1572,14 +1564,12 @@ msgid "removes invite-only channel flag"
 msgstr "odebral značku kanálu: pouze na pozvání"
 
 #: src/irc/irc-recv.c:791
-#, fuzzy
 msgid "sets invite-only exemption on"
-msgstr "nastavena vyjímka na"
+msgstr "nastavena vyjímka pouze na pozvání na"
 
 #: src/irc/irc-recv.c:792
-#, fuzzy
 msgid "removes invite-only exemption on"
-msgstr "odstraněna vyjímka z"
+msgstr "odstraněna vyjímka pouze na pozvání z"
 
 #: src/irc/irc-recv.c:816
 msgid "sets channel key to"
@@ -2196,10 +2186,9 @@ msgstr ""
 "%s plugin %s: nemůžu přidat obsluhovač pro \"%s\" příkaz (již existuje)\n"
 
 #: src/plugins/plugins.c:270
-#, fuzzy, c-format
+#, c-format
 msgid "%s plugin %s: unable to add handler for \"%s\" command (forbidden)\n"
-msgstr ""
-"%s plugin %s: nemůžu přidat obsluhovač pro \"%s\" příkaz (již existuje)\n"
+msgstr "%s plugin %s: nemůžu přidat obsluhovač pro \"%s\" příkaz (zakázáno)\n"
 
 #: src/plugins/plugins.c:310
 #, c-format
@@ -2210,18 +2199,15 @@ msgstr ""
 "paměti)\n"
 
 #: src/plugins/plugins.c:366
-#, fuzzy, c-format
+#, c-format
 msgid "%s plugin %s: unable to add timer handler (not enough memory)\n"
-msgstr ""
-"%s plugin %s: nemůžu přidat obsluhovač pro \"%s\" příkaz (nedostatek "
-"paměti)\n"
+msgstr "%s plugin %s: nemůžu přidat časový obsluhovač (nedostatek paměti)\n"
 
 #: src/plugins/plugins.c:422
-#, fuzzy, c-format
+#, c-format
 msgid "%s plugin %s: unable to add keyboard handler (not enough memory)\n"
 msgstr ""
-"%s plugin %s: nemůžu přidat obsluhovač pro \"%s\" příkaz (nedostatek "
-"paměti)\n"
+"%s plugin %s: nemůžu přidat obsluhovač klávesnice (nedostatek paměti)\n"
 
 #: src/plugins/plugins.c:759
 #, c-format
@@ -2376,7 +2362,7 @@ msgstr "[nepřipojen] "
 
 #: src/gui/curses/gui-display.c:2178
 msgid "<RAW_IRC> "
-msgstr ""
+msgstr "<ČISTÉ_IRC> "
 
 #: src/gui/curses/gui-display.c:2190
 msgid "Act: "
@@ -2384,7 +2370,7 @@ msgstr "Aktivní: "
 
 #: src/gui/curses/gui-display.c:2271
 msgid "RAW_IRC"
-msgstr ""
+msgstr "ČISTÉ_IRC"
 
 #: src/gui/curses/gui-display.c:2292
 #, c-format
@@ -2417,7 +2403,7 @@ msgstr "  [Q] Zavřít DCC pohled"
 
 #: src/gui/curses/gui-display.c:2631
 msgid "  [Q] Close raw data view"
-msgstr ""
+msgstr "  [Q] Zavřít čistý pohled na data"
 
 #: src/gui/gtk/gui-display.c:2279
 msgid "server"
@@ -2532,14 +2518,12 @@ msgid "scroll a few lines down"
 msgstr "posuň o několik řádek dolů"
 
 #: src/gui/gui-keyboard.c:99
-#, fuzzy
 msgid "scroll to top of buffer"
-msgstr "přesunout na další zvýraznění v bufferu"
+msgstr "přesunout na vrch bufferu"
 
 #: src/gui/gui-keyboard.c:101
-#, fuzzy
 msgid "scroll to bottom of buffer"
-msgstr "přesunout na další zvýraznění v bufferu"
+msgstr "přesunout na spodek bufferu"
 
 #: src/gui/gui-keyboard.c:103
 msgid "display beginning of nicklist"
@@ -2567,7 +2551,7 @@ msgstr "skoč na DCC buffer"
 
 #: src/gui/gui-keyboard.c:115
 msgid "jump to raw IRC data buffer"
-msgstr ""
+msgstr "skočit na čistý IRC data buffer"
 
 #: src/gui/gui-keyboard.c:117
 msgid "jump to last buffer"
@@ -2651,12 +2635,10 @@ msgid "manage buffers"
 msgstr "řídit buffery"
 
 #: src/common/command.c:56
-#, fuzzy
 msgid "[action [args] | number | [[server] [channel]]]"
-msgstr "[akce | číslo | [[server] [kanál]]]"
+msgstr "[akce [args] | číslo | [[server] [kanál]]]"
 
 #: src/common/command.c:57
-#, fuzzy
 msgid ""
 " action: action to do:\n"
 "   move: move buffer in the list (may be relative, for example -1)\n"
@@ -2670,7 +2652,7 @@ msgid ""
 msgstr ""
 "  akce: akce pro vykonání:\n"
 "  move: přesune buffer v seznamu (může být relativní, například -1)\n"
-" close: zavře buffer (pro kanál: stejné jako /part bez zprávy)\n"
+" close: zavře buffer (nepovinný parametr, je opouštěcí zpráva pro kanál)\n"
 "  list: vypíše seznam otevřených bufferů (žádný parametr, implikuje tento "
 "seznam)\n"
 "notify: nastaví level upozornění pro buffer (0=nikdy, 1=zvýraznění, 2=1+msg, "
@@ -2684,17 +2666,20 @@ msgid ""
 "launch WeeChat/IRC builtin command (do not look at plugins handlers or "
 "aliases)"
 msgstr ""
+"spustit vestavěný WeeChat/IRC příkaz (nedívat se na obsluhovače pluginů nebo "
+"aliasy)"
 
 #: src/common/command.c:67
-#, fuzzy
 msgid "command"
-msgstr "[příkaz]"
+msgstr "příkaz"
 
 #: src/common/command.c:68
 msgid ""
 "command: command to execute (a '/' is automatically added if not found at "
 "beginning of command)\n"
 msgstr ""
+"příkaz: příkaz, který spustit ('/' je automaticky dodáno, pokud není "
+"nalezeno na začátku příkazu)\n"
 
 #: src/common/command.c:70
 msgid "change charset for server or channel"
@@ -2918,16 +2903,14 @@ msgid "file: filename for writing config"
 msgstr "soubor: jméno souboru pro zapsání"
 
 #: src/common/command.c:149
-#, fuzzy
 msgid "set config options"
-msgstr "nastaví konfigurační parametry"
+msgstr "nastaví konfigurační možnosti"
 
 #: src/common/command.c:150 src/common/command.c:158
 msgid "[option [ = value]]"
-msgstr "[volba [ = hodnota]]"
+msgstr "[možnost [ = hodnota]]"
 
 #: src/common/command.c:151
-#, fuzzy
 msgid ""
 "option: name of an option (if name is full and no value is given, then help "
 "is displayed on option)\n"
@@ -2936,14 +2919,16 @@ msgid ""
 "Option may be: servername.server_xxx where \"servername\" is an internal "
 "server name and \"xxx\" an option for this server."
 msgstr ""
-"volba: jméno volby (pokud je jméno celé a není zadána hodnota pak je "
-"zobrazena nápověda pro volby)\n"
-"hodnota: hodnota volby"
+"možnost: jméno možnosti (pokud je jméno celé a není předána žádná hodnota, "
+"pak je zobrazena nápověda pro tuto možnost)\n"
+"hodnota: hodnota volby\n"
+"\n"
+"Možnost může být: jmenoserveru.server_xxx kde \"jmenoserveru\" je vnitřní "
+"jméno serveru a \"xxx\" je možnost tohoto serveru."
 
 #: src/common/command.c:157
-#, fuzzy
 msgid "set plugin config options"
-msgstr "nastaví konfigurační parametry"
+msgstr "nastaví konfigurační možností pluginu"
 
 #: src/common/command.c:159
 msgid ""
@@ -2952,6 +2937,10 @@ msgid ""
 "\n"
 "Option is format: plugin.option, example: perl.myscript.item1"
 msgstr ""
+"možnost: jméno možnosti pluginu\n"
+"hodnota: hodnota možnosti\n"
+"\n"
+"Formát možnosti je: plugin.možnost, příklad: perl.mujskript.polozka1"
 
 #: src/common/command.c:163
 msgid "remove an alias"
@@ -3072,7 +3061,7 @@ msgstr ""
 #: src/common/command.c:389 src/common/command.c:743
 #, c-format
 msgid "%s circular reference when calling alias \"/%s\"\n"
-msgstr ""
+msgstr "%s cyklický odkaz při volání aliasu \"/%s\"\n"
 
 #: src/common/command.c:723 src/common/command.c:859 src/common/command.c:930
 #, c-format
@@ -3175,7 +3164,7 @@ msgstr "%sneznámý\n"
 #: src/common/command.c:1239
 #, c-format
 msgid "%sraw IRC data\n"
-msgstr ""
+msgstr "%sčisté IRC data\n"
 
 #: src/common/command.c:1274
 msgid "Opened buffers:\n"
@@ -3202,7 +3191,7 @@ msgstr "Level upozornění:  "
 
 #: src/common/command.c:1411
 msgid "Raw IRC data"
-msgstr ""
+msgstr "Čisté IRC data"
 
 #: src/common/command.c:1435 src/common/command.c:1485
 #, c-format
@@ -3383,45 +3372,41 @@ msgid "       (no command handler)\n"
 msgstr "       (není obsluhovač příkazu)\n"
 
 #: src/common/command.c:2552
-#, fuzzy
 msgid "     timer handlers:\n"
-msgstr "     obsluhovače zpráv:\n"
+msgstr "     obsluhovače časovače:\n"
 
 #: src/common/command.c:2561
-#, fuzzy, c-format
+#, c-format
 msgid "       %d seconds\n"
-msgstr "       IRC(%s)\n"
+msgstr "       %d sekund\n"
 
 #: src/common/command.c:2568
-#, fuzzy
 msgid "       (no timer handler)\n"
-msgstr "       (není obsluhovač zprávy)\n"
+msgstr "       (není obsluhovač časovače)\n"
 
 #: src/common/command.c:2573
-#, fuzzy
 msgid "     keyboard handlers:\n"
-msgstr "     obsluhovače příkazu:\n"
+msgstr "     obsluhovače klávesnice:\n"
 
 #: src/common/command.c:2583
-#, fuzzy
 msgid "       (no keyboard handler)\n"
-msgstr "       (není obsluhovač příkazu)\n"
+msgstr "       (není obsluhovač klávesnice)\n"
 
 #: src/common/command.c:2585
 #, c-format
 msgid "       %d defined\n"
-msgstr ""
+msgstr "       %d definováno\n"
 
 #: src/common/command.c:2591
 msgid "  (no plugin)\n"
 msgstr "  (není plugin)\n"
 
 #: src/common/command.c:2627 src/common/command.c:3509
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Command \"%s\" is not available, WeeChat was built without plugins support.\n"
 msgstr ""
-"Příkaz \"plugin\" není dostupný, WeeChat byl přeložen bez podpory pluginů.\n"
+"Příkaz \"%s\" není dostupný, WeeChat byl přeložen bez podpory pluginů.\n"
 
 #: src/common/command.c:2658
 msgid "Configuration file saved\n"
@@ -3604,29 +3589,27 @@ msgid "config option(s) found\n"
 msgstr "volba/volby nastavení nalezeny\n"
 
 #: src/common/command.c:3453
-#, fuzzy, c-format
+#, c-format
 msgid "%s incorrect value for plugin option \"%s\"\n"
-msgstr "%s nekorektní hodnota pro volbu \"%s\"\n"
+msgstr "%s nekorektní hodnota pro možnost pluginu \"%s\"\n"
 
 #: src/common/command.c:3482
-#, fuzzy, c-format
+#, c-format
 msgid "No plugin option found with \"%s\"\n"
-msgstr "Nebyla nalezena žádná volba nastavení s \"%s\"\n"
+msgstr "Nebyla nalezena žádná možnost pluginu s \"%s\"\n"
 
 #: src/common/command.c:3485
-#, fuzzy
 msgid "No plugin option found\n"
-msgstr "Nebyla nalezena žádná volba nastavení\n"
+msgstr "Nebyla nalezena žádná možnost pluginu\n"
 
 #: src/common/command.c:3495
-#, fuzzy, c-format
+#, c-format
 msgid "plugin option(s) found with \"%s\"\n"
-msgstr "volba/volby nastavení nalezeny s \"%s\"\n"
+msgstr "možnost(i) pluginu nalezeny s \"%s\"\n"
 
 #: src/common/command.c:3498
-#, fuzzy
 msgid "plugin option(s) found\n"
-msgstr "volba/volby nastavení nalezeny\n"
+msgstr "možnost(i) pluginu nalezeny\n"
 
 #: src/common/command.c:3539
 #, c-format
@@ -3950,7 +3933,7 @@ msgstr "nenalezeno jméno kanálu pro buffer"
 
 #: src/common/session.c:1375
 msgid "buffer type not found"
-msgstr ""
+msgstr "typ bufferu nenalezen"
 
 #: src/common/session.c:1380
 #, c-format
@@ -4402,34 +4385,31 @@ msgid "display space if nick mode is not (half)op/voice"
 msgstr "zobrazit mezeru pokud mód přezdívkz není (částečný)op/voice"
 
 #: src/common/weeconfig.c:200 src/common/weeconfig.c:201
-#, fuzzy
 msgid "text to display before nick in chat window"
-msgstr "text pro zobrazení místo přezdívky pokud není připojeno"
+msgstr "text pro zobrazení před přezdívkou v okně rozhovoru"
 
 #: src/common/weeconfig.c:204 src/common/weeconfig.c:205
-#, fuzzy
 msgid "text to display after nick in chat window"
-msgstr "text pro zobrazení místo přezdívky pokud není připojeno"
+msgstr "text pro zobrazení za přezdívkou v okně rozhovoru"
 
 #: src/common/weeconfig.c:208
-#, fuzzy
 msgid "nick alignment (fixed size for nicks in chat window)"
-msgstr "barva přezdívek v akcích (okno rozhovoru)"
+msgstr "zarovnání přezdívky (pevná velikost pro přezdívky v okně rozhovoru)"
 
 #: src/common/weeconfig.c:209
-#, fuzzy
 msgid ""
 "nick alignment (fixed size for nicks in chat window (none, left, right))"
-msgstr "barva přezdívek v akcích (okno rozhovoru)"
+msgstr ""
+"zarovnání přezdívky (pevná velikost pro přezdívkz v okně rozhovoru (none, "
+"left, right))"
 
 #: src/common/weeconfig.c:212 src/common/weeconfig.c:213
 msgid "alignment for other messages (not beginning with a nick)"
-msgstr ""
+msgstr "zarovnání přo ostatní zprávy (nezačínající přezdívkou)"
 
 #: src/common/weeconfig.c:216 src/common/weeconfig.c:217
-#, fuzzy
 msgid "size for aligning nick and other messages"
-msgstr "maximální velikost pro seznam přezdívek"
+msgstr "velikost pro zarovnání přezdívek a ostatních zpráv"
 
 #: src/common/weeconfig.c:220 src/common/weeconfig.c:221
 msgid "the string inserted after nick completion"
@@ -5317,14 +5297,15 @@ msgid "real name to use on IRC server"
 msgstr "skutečné jméno použité na IRC serveru"
 
 #: src/common/weeconfig.c:977
-#, fuzzy
 msgid "custom hostname/IP for server"
-msgstr "uživatelské jméno pro server"
+msgstr "vlastní jméno hosta/IP pro server"
 
 #: src/common/weeconfig.c:978
 msgid ""
 "custom hostname/IP for server (optional, if empty local hostname is used)"
 msgstr ""
+"vlastní jméno hosta/IP pro server (nepovinné, pokud je volné použije se "
+"lokální jméno hosta)"
 
 #: src/common/weeconfig.c:981
 msgid "command(s) to run when connected to server"
@@ -5533,7 +5514,3 @@ msgstr ""
 #: src/common/weeconfig.c:2318
 msgid "Saving config to disk\n"
 msgstr "Ukládám konfiguraci na disk\n"
-
-#, fuzzy
-#~ msgid "%s plugin option \"%s\" not found\n"
-#~ msgstr "%s plugin \"%s\" nenalezen\n"
