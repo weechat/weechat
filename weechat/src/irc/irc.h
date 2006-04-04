@@ -84,7 +84,7 @@ struct t_irc_nick
 #define CHANNEL_TYPE_CHANNEL 0
 #define CHANNEL_TYPE_PRIVATE 1
 
-#define NUM_CHANNEL_MODES       7
+#define NUM_CHANNEL_MODES       8
 #define CHANNEL_MODE_INVITE     0
 #define CHANNEL_MODE_KEY        1
 #define CHANNEL_MODE_LIMIT      2
@@ -92,6 +92,7 @@ struct t_irc_nick
 #define CHANNEL_MODE_NO_MSG_OUT 4
 #define CHANNEL_MODE_SECRET     5
 #define CHANNEL_MODE_TOPIC      6
+#define CHANNEL_MODE_PRIVATE    7
 #define CHANNEL_SET_MODE(channel, set, mode) \
     if (set) \
         channel->modes[mode] = channel_modes[mode]; \

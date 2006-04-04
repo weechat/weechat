@@ -929,7 +929,7 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *ptr_channel,
                                           _("removes private channel flag"),
                                       NULL);
                 CHANNEL_SET_MODE(ptr_channel, (set_flag == '+'),
-                                 CHANNEL_MODE_SECRET);
+                                 CHANNEL_MODE_PRIVATE);
                 break;
             case 'q':
                 pos = NULL;

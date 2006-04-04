@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.9-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-04-03 17:58+0200\n"
+"POT-Creation-Date: 2006-04-04 09:29+0200\n"
 "PO-Revision-Date: 2006-03-18 11:45+0100\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1385,38 +1385,38 @@ msgstr "no es posible cambiar el modo para el resto de usuarios"
 msgid "whois (secure connection)"
 msgstr "quién es (conexión segura)"
 
-#: src/irc/irc-display.c:347
+#: src/irc/irc-display.c:354
 #, c-format
 msgid "%sServer: %s%s %s[%s%s%s]\n"
 msgstr "%sServidor:%s%s %s[%s%s%s]\n"
 
-#: src/irc/irc-display.c:354
+#: src/irc/irc-display.c:361
 msgid "connected"
 msgstr "conectado"
 
-#: src/irc/irc-display.c:354
+#: src/irc/irc-display.c:361
 msgid "not connected"
 msgstr "no conectado"
 
-#: src/irc/irc-display.c:358 src/irc/irc-display.c:362
-#: src/irc/irc-display.c:371 src/irc/irc-display.c:373
+#: src/irc/irc-display.c:365 src/irc/irc-display.c:369
+#: src/irc/irc-display.c:378 src/irc/irc-display.c:380
 msgid "on"
 msgstr "activo"
 
-#: src/irc/irc-display.c:358 src/irc/irc-display.c:362
-#: src/irc/irc-display.c:371 src/irc/irc-display.c:373
+#: src/irc/irc-display.c:365 src/irc/irc-display.c:369
+#: src/irc/irc-display.c:378 src/irc/irc-display.c:380
 msgid "off"
 msgstr "inactivo"
 
-#: src/irc/irc-display.c:360
+#: src/irc/irc-display.c:367
 msgid " (temporary server, will not be saved)"
 msgstr " (servidor temporal, no será guardado)"
 
-#: src/irc/irc-display.c:365 src/irc/irc-display.c:396 src/irc/irc-recv.c:3417
+#: src/irc/irc-display.c:372 src/irc/irc-display.c:403 src/irc/irc-recv.c:3417
 msgid "seconds"
 msgstr "segundos"
 
-#: src/irc/irc-display.c:376
+#: src/irc/irc-display.c:383
 msgid "(hidden)"
 msgstr "(oculto)"
 

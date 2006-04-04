@@ -35,7 +35,7 @@
 #include "../gui/gui.h"
 
 
-char *channel_modes = "iklmnst";
+char *channel_modes = "iklmnstp";
 
 
 /*
