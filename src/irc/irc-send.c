@@ -1116,10 +1116,10 @@ int
 irc_cmd_send_list (t_irc_server *server, t_irc_channel *channel,
                    char *arguments)
 {
-    /* make gcc happy */
-    (void) channel;
     char buffer[512];
     int ret;
+    /* make gcc happy */
+    (void) channel;
     
     if (server->cmd_list_regexp)
     {
