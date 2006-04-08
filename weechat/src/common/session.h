@@ -113,7 +113,8 @@ enum t_session_nick
     SESSION_NICK_END = 0,
     SESSION_NICK_NICK,
     SESSION_NICK_FLAGS,
-    SESSION_NICK_COLOR
+    SESSION_NICK_COLOR,
+    SESSION_NICK_HOST
 };
 
 enum t_session_dcc

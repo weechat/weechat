@@ -69,6 +69,7 @@ typedef struct t_irc_nick t_irc_nick;
 struct t_irc_nick
 {
     char *nick;                     /* nickname                               */
+    char *host;                     /* full hostname                          */
     int flags;                      /* chanowner/chanadmin (unrealircd),      */
                                     /* op, halfop, voice, away                */
     int color;                      /* color for nickname in chat window      */
@@ -359,7 +360,7 @@ extern char *channel_get_charset_encode (t_irc_server *, t_irc_channel *);
 extern char *channel_iconv_decode (t_irc_server *, t_irc_channel *, char *);
 extern char *channel_iconv_encode (t_irc_server *, t_irc_channel *, char *);
 extern void channel_remove_away (t_irc_channel *);
-extern void channel_check_away (t_irc_server *, t_irc_channel *);
+extern void channel_check_away (t_irc_server *, t_irc_channel *, int);
 extern void channel_set_away (t_irc_channel *, char *, int);
 extern int channel_create_dcc (t_irc_dcc *);
 extern void channel_remove_dcc (t_irc_dcc *);

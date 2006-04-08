@@ -402,6 +402,7 @@ int
 irc_cmd_recv_join (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     t_irc_channel *ptr_channel;
+    t_irc_nick *ptr_nick;
     char *pos;
     
     command_ignored |= ignore_check (host, "join", arguments, server->name);
@@ -422,9 +423,9 @@ irc_cmd_recv_join (t_irc_server *server, char *host, char *nick, char *arguments
                         BUFFER_TYPE_STANDARD, 1);
     }
     
+    pos = strchr (host, '!');
     if (!command_ignored)
     {
-        pos = strchr (host, '!');
         irc_display_prefix (server, ptr_channel->buffer, PREFIX_JOIN);
         gui_printf (ptr_channel->buffer,
                     _("%s%s %s(%s%s%s)%s has joined %s%s\n"),
@@ -432,13 +433,15 @@ irc_cmd_recv_join (t_irc_server *server, char *host, char *nick, char *arguments
                     nick,
                     GUI_COLOR(COLOR_WIN_CHAT_DARK),
                     GUI_COLOR(COLOR_WIN_CHAT_HOST),
-                    (pos) ? pos + 1 : "",
+                    (pos) ? pos + 1 : host,
                     GUI_COLOR(COLOR_WIN_CHAT_DARK),
                     GUI_COLOR(COLOR_WIN_CHAT),
                     GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
                     arguments);
     }
-    (void) nick_new (server, ptr_channel, nick, 0, 0, 0, 0, 0);
+    ptr_nick = nick_new (server, ptr_channel, nick, 0, 0, 0, 0, 0);
+    if (ptr_nick)
+        ptr_nick->host = strdup ((pos) ? pos + 1 : host);
     gui_draw_buffer_nick (ptr_channel->buffer, 1);
     gui_draw_buffer_status (ptr_channel->buffer, 1);
     return 0;
@@ -4373,6 +4376,7 @@ irc_cmd_recv_352 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_channel, *pos_user, *pos_host, *pos_server, *pos_nick;
     char *pos_attr, *pos_hopcount, *pos_realname;
+    int length;
     t_irc_channel *ptr_channel;
     t_irc_nick *ptr_nick;
     
@@ -4443,8 +4447,16 @@ irc_cmd_recv_352 (t_irc_server *server, char *host, char *nick, char *arguments)
                                     {
                                         ptr_nick = nick_search (ptr_channel, pos_nick);
                                         if (ptr_nick)
+                                        {
+                                            if (ptr_nick->host)
+                                                free (ptr_nick->host);
+                                            length = strlen (pos_user) + 1 + strlen (pos_host) + 1;
+                                            ptr_nick->host = (char *) malloc (length);
+                                            if (ptr_nick->host)
+                                                snprintf (ptr_nick->host, length, "%s@%s", pos_user, pos_host);
                                             nick_set_away (ptr_channel, ptr_nick,
                                                            (pos_attr[0] == 'G') ? 1 : 0);
+                                        }
                                         return 0;
                                     }
                                     
@@ -4744,8 +4756,7 @@ irc_cmd_recv_366 (t_irc_server *server, char *host, char *nick, char *arguments)
                                 GUI_COLOR(COLOR_WIN_CHAT_DARK));
                 }
                 irc_cmd_send_mode (server, NULL, ptr_channel->name);
-                if (cfg_irc_away_check > 0)
-                    channel_check_away (server, ptr_channel);
+                channel_check_away (server, ptr_channel, 1);
             }
             else
             {

@@ -340,11 +340,11 @@ channel_remove_away (t_irc_channel *channel)
  */
 
 void
-channel_check_away (t_irc_server *server, t_irc_channel *channel)
+channel_check_away (t_irc_server *server, t_irc_channel *channel, int force)
 {
     if (channel->type == CHANNEL_TYPE_CHANNEL)
     {
-        if ((cfg_irc_away_check_max_nicks == 0) ||
+        if (force || (cfg_irc_away_check_max_nicks == 0) ||
             (channel->nicks_count <= cfg_irc_away_check_max_nicks))
         {
             channel->checking_away++;

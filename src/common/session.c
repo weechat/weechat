@@ -147,6 +147,7 @@ session_save_nick (FILE *file, t_irc_nick *nick)
     rc = rc && (session_write_str (file, SESSION_NICK_NICK, nick->nick));
     rc = rc && (session_write_int (file, SESSION_NICK_FLAGS, nick->flags));
     rc = rc && (session_write_int (file, SESSION_NICK_COLOR, nick->color));
+    rc = rc && (session_write_str (file, SESSION_NICK_HOST, nick->host));
     rc = rc && (session_write_id  (file, SESSION_NICK_END));
     return rc;
 }
@@ -1125,6 +1126,9 @@ session_load_nick (FILE *file)
                 break;
             case SESSION_NICK_COLOR:
                 rc = rc && (session_read_int (file, &(nick->color)));
+                break;
+            case SESSION_NICK_HOST:
+                rc = rc && (session_read_str (file, &(nick->host)));
                 break;
             default:
                 weechat_log_printf (_("session: warning: ignoring value from "

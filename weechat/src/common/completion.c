@@ -369,6 +369,54 @@ completion_list_add_channel_nicks (t_completion *completion)
 }
 
 /*
+ * completion_list_add_channel_nicks_hosts: add channel nicks and hosts to completion list
+ */
+
+void
+completion_list_add_channel_nicks_hosts (t_completion *completion)
+{
+    t_irc_nick *ptr_nick;
+    char *buf;
+    int length;
+    
+    if (completion->channel)
+    {
+        if (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_CHANNEL)
+        {
+            for (ptr_nick = ((t_irc_channel *)(completion->channel))->nicks;
+                 ptr_nick; ptr_nick = ptr_nick->next_nick)
+            {
+                weelist_add (&completion->completion_list,
+                             &completion->last_completion,
+                             ptr_nick->nick);
+                if (ptr_nick->host)
+                {
+                    length = strlen (ptr_nick->nick) + 1 +
+                        strlen (ptr_nick->host) + 1;
+                    buf = (char *) malloc (length);
+                    if (buf)
+                    {
+                        snprintf (buf, length, "%s!%s",
+                                  ptr_nick->nick, ptr_nick->host);
+                        weelist_add (&completion->completion_list,
+                                     &completion->last_completion,
+                                     buf);
+                        free (buf);
+                    }
+                }
+            }
+        }
+        if (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_PRIVATE)
+        {
+            weelist_add (&completion->completion_list,
+                         &completion->last_completion,
+                         ((t_irc_channel *)(completion->channel))->name);
+        }
+        completion->arg_is_nick = 1;
+    }
+}
+
+/*
  * completion_list_add_option: add config option to completion list
  */
 
@@ -732,6 +780,9 @@ completion_build_list_template (t_completion *completion, char *template)
                             break;
                         case 'n': /* channel nicks */
                             completion_list_add_channel_nicks (completion);
+                            break;
+                        case 'N': /* channel nicks and hosts */
+                            completion_list_add_channel_nicks_hosts (completion);
                             break;
                         case 'o': /* config option */
                             completion_list_add_option (completion);

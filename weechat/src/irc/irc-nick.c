@@ -192,6 +192,7 @@ nick_new (t_irc_server *server, t_irc_channel *channel, char *nick_name,
     
     /* initialize new nick */
     new_nick->nick = strdup (nick_name);
+    new_nick->host = NULL;
     new_nick->flags = 0;
     NICK_SET_FLAG(new_nick, is_chanowner, NICK_CHANOWNER);
     NICK_SET_FLAG(new_nick, is_chanadmin, NICK_CHANADMIN);
@@ -278,12 +279,14 @@ nick_free (t_irc_channel *channel, t_irc_nick *nick)
     
     if (nick->next_nick)
         (nick->next_nick)->prev_nick = nick->prev_nick;
-
+    
     channel->nicks_count--;
     
     /* free data */
     if (nick->nick)
         free (nick->nick);
+    if (nick->host)
+        free (nick->host);
     free (nick);
     channel->nicks = new_nicks;
 }
@@ -389,11 +392,16 @@ nick_get_max_length (t_irc_channel *channel)
 void
 nick_set_away (t_irc_channel *channel, t_irc_nick *nick, int is_away)
 {
-    if (((is_away) && (!(nick->flags & NICK_AWAY))) ||
-        ((!is_away) && (nick->flags & NICK_AWAY)))
+    if ((cfg_irc_away_check > 0)
+        && ((cfg_irc_away_check_max_nicks == 0) ||
+            (channel->nicks_count <= cfg_irc_away_check_max_nicks)))
     {
-        NICK_SET_FLAG(nick, is_away, NICK_AWAY);
-        gui_draw_buffer_nick (channel->buffer, 0);
+        if (((is_away) && (!(nick->flags & NICK_AWAY))) ||
+            ((!is_away) && (nick->flags & NICK_AWAY)))
+        {
+            NICK_SET_FLAG(nick, is_away, NICK_AWAY);
+            gui_draw_buffer_nick (channel->buffer, 0);
+        }
     }
 }
 
@@ -405,6 +413,7 @@ void
 nick_print_log (t_irc_nick *nick)
 {
     weechat_log_printf ("=> nick %s (addr:0x%X)]\n",    nick->nick, nick);
+    weechat_log_printf ("     host . . . . . : %s\n",   nick->host);
     weechat_log_printf ("     flags. . . . . : %d\n",   nick->flags);
     weechat_log_printf ("     color. . . . . : %d\n",   nick->color);
     weechat_log_printf ("     prev_nick. . . : 0x%X\n", nick->prev_nick);

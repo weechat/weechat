@@ -1,12 +1,13 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-04-04
-
+ChangeLog - 2006-04-08
 
 Version 0.1.9 (under dev!):
+   * added hostnames associeted to nicks (available for /ban completion)
    * added "+p" mode for channels, fixed mode display in status bar
    * added nick alignment options
+   * fixed crash when closing DCC chat buffer
    * fixed /names command: now displays result when not on a channel
    * fixed refresh bug (too many refresh) when terminal is resized
    * fixed nicklist display bugs when on top or bottom of chat window

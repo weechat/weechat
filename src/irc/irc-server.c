@@ -1837,7 +1837,7 @@ server_check_away ()
             for (ptr_channel = ptr_server->channels; ptr_channel; ptr_channel = ptr_channel->next_channel)
             {
                 if (ptr_channel->type == CHANNEL_TYPE_CHANNEL)
-                    channel_check_away (ptr_server, ptr_channel);
+                    channel_check_away (ptr_server, ptr_channel, 0);
             }
         }
     }

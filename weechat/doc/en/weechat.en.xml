@@ -2010,6 +2010,10 @@ plugin->msg_handler_add (plugin, "KICK", &amp;msg_kick, NULL, NULL);
                           <entry>nicks of current channel</entry>
                         </row>
                         <row>
+                          <entry><literal>%N</literal></entry>
+                          <entry>nicks and hostnames of current channel</entry>
+                        </row>
+                        <row>
                           <entry><literal>%o</literal></entry>
                           <entry>setup options</entry>
                         </row>

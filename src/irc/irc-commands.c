@@ -52,7 +52,7 @@ t_irc_command irc_commands[] =
     N_("[channel] [nickname [nickname ...]]"),
     N_(" channel: channel for ban\n"
        "nickname: user or host to ban"),
-    "", 0, MAX_ARGS, 1, NULL, irc_cmd_send_ban, NULL },
+    "%N", 0, MAX_ARGS, 1, NULL, irc_cmd_send_ban, NULL },
   { "ctcp", N_("send a CTCP message (Client-To-Client Protocol)"),
     N_("nickname type [arguments]"),
     N_(" nickname: user to send CTCP to\n"

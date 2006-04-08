@@ -2051,6 +2051,13 @@ plugin->msg_handler_add (plugin, "KICK", &amp;msg_kick, NULL, NULL);
                           <entry>pseudos du canal courant</entry>
                         </row>
                         <row>
+                          <entry><literal>%N</literal></entry>
+                          <entry>
+                            pseudos et noms de machines du canal
+                            courant
+                          </entry>
+                        </row>
+                        <row>
                           <entry><literal>%o</literal></entry>
                           <entry>options de configuration</entry>
                         </row>
