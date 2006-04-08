@@ -118,6 +118,7 @@ struct t_plugin_nick_info
 {
     char *nick;                         /* nickname                            */
     int flags;                          /* chanowner/chanadmin (unrealircd),   */
+    char *host;                         /* hostname                            */
                                         /* op, halfop, voice, away             */
     t_plugin_nick_info *prev_nick;      /* link to previous nick               */
     t_plugin_nick_info *next_nick;      /* link to next nick                   */

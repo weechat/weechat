@@ -1015,6 +1015,7 @@ weechat_plugin_get_nick_info (t_weechat_plugin *plugin, char *server, char *chan
 	    {
 		new_nick_info->nick = (ptr_nick->nick) ? strdup (ptr_nick->nick) : strdup ("");
 		new_nick_info->flags = ptr_nick->flags;
+		new_nick_info->host = ptr_nick->host;
 		
 		new_nick_info->prev_nick = last_nick_info;
                 new_nick_info->next_nick = NULL;

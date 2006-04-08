@@ -1488,6 +1488,10 @@ weechat_lua_get_nick_info  (lua_State *L)
 	lua_pushstring (lua_current_interpreter, "flags");
 	lua_pushnumber (lua_current_interpreter, ptr_nick->flags);
 	lua_rawset (lua_current_interpreter, -3);
+
+	lua_pushstring (lua_current_interpreter, "host");
+	lua_pushstring (lua_current_interpreter, ptr_nick->host);
+	lua_rawset (lua_current_interpreter, -3);
 	
 	lua_rawset (lua_current_interpreter, -3);
     }

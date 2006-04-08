@@ -1470,7 +1470,9 @@ weechat_ruby_get_nick_info (VALUE class, VALUE server, VALUE channel)
 	{
 	    rb_hash_aset (nick_hash_member, rb_str_new2("flags"),
 			  INT2FIX(ptr_nick->flags));
-	    
+	    rb_hash_aset (nick_hash_member, rb_str_new2("host"),
+			  rb_str_new2(ptr_nick->host));
+
 	    rb_hash_aset (nick_hash, rb_str_new2(ptr_nick->nick), nick_hash_member);
 	}
     }    
