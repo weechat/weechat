@@ -1231,7 +1231,7 @@ weechat_python_get_nick_info (PyObject *self, PyObject *args)
 	    PyDict_SetItem(nick_hash_member, Py_BuildValue("s", "flags"),
 			   Py_BuildValue("i", ptr_nick->flags));
 	    PyDict_SetItem(nick_hash_member, Py_BuildValue("s", "host"),
-			   Py_BuildValue("s", ptr_nick->host));
+			   Py_BuildValue("s", ptr_nick->host ? ptr_nick->host : ""));
 	    
 	    PyDict_SetItem(nick_hash, Py_BuildValue("s", ptr_nick->nick), nick_hash_member);
 	}

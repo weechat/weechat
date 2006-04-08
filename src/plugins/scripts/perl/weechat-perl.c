@@ -1281,7 +1281,8 @@ static XS (XS_weechat_get_nick_info)
 	HV *nick_hash_member = (HV *) sv_2mortal((SV *) newHV());	        
        
 	hv_store (nick_hash_member, "flags",  5, newSViv (ptr_nick->flags), 0);
-	hv_store (nick_hash_member, "host",   4, newSVpv (ptr_nick->host, 0), 0);
+	hv_store (nick_hash_member, "host",   4, newSVpv (
+		      ptr_nick->host ? ptr_nick->host : "", 0), 0);
 	
 	hv_store (nick_hash, ptr_nick->nick, strlen(ptr_nick->nick), newRV_inc((SV *) nick_hash_member), 0);
     }
