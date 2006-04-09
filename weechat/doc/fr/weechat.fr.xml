@@ -3352,6 +3352,11 @@ if (channel_info)
                     <entry>pseudo</entry>
                   </row>
                   <row>
+                    <entry>char *</entry>
+                    <entry><literal>host</literal></entry>
+                    <entry>nom de machine</entry>
+                  </row>
+                  <row>
                     <entry>int</entry>
                     <entry><literal>flags</literal></entry>
                     <entry>

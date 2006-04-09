@@ -3277,6 +3277,11 @@ if (channel_info)
                     <entry>nick name</entry>
                   </row>
                   <row>
+                    <entry>char *</entry>
+                    <entry><literal>host</literal></entry>
+                    <entry>hostname</entry>
+                  </row>
+                  <row>
                     <entry>int</entry>
                     <entry><literal>flags</literal></entry>
                     <entry>
