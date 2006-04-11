@@ -954,12 +954,7 @@ user_command (t_irc_server *server, t_irc_channel *channel, char *command, int o
     if ((command[0] == '/') && (command[1] != '/'))
     {
         /* WeeChat internal command (or IRC command) */
-        command_encoded = channel_iconv_encode (server, channel, command);
-        (void) exec_weechat_command (server, channel,
-                                     (command_encoded) ? command_encoded : command,
-                                     only_builtin);
-        if (command_encoded)
-            free (command_encoded);
+        (void) exec_weechat_command (server, channel, command, only_builtin);
     }
     else
     {

@@ -1,11 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-04-10
+ChangeLog - 2006-04-11
 
 Version 0.1.9 (under dev!):
-   * removed color encoding in commands (only allowed in text sent to
-     channel/private)
+   * removed color encoding and charset conversion for commands (only
+     allowed in text sent to channel/private)
    * added hostnames associeted to nicks (available for /ban completion)
    * added "+p" mode for channels, fixed mode display in status bar
    * added nick alignment options
