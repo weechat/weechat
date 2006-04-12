@@ -279,6 +279,13 @@
   <entry>Utiliser un marqueur sur les serveurs/canaux pour montrer la première ligne non lue</entry>
 </row>
 <row>
+  <entry><option>look_input_format</option></entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>'[%n(%m)] '</entry>
+  <entry>Format pour l'invite de la zone de saisie</entry>
+</row>
+<row>
   <entry><option>col_real_white</option></entry>
   <entry>booléen</entry>
   <entry>'on' ou 'off'</entry>
@@ -515,6 +522,13 @@
   <entry>couleur Curses ou Gtk</entry>
   <entry>'default'</entry>
   <entry>Couleur pour le texte saisi</entry>
+</row>
+<row>
+  <entry><option>col_input_server</option></entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'brown'</entry>
+  <entry>Couleur pour le texte saisi (nom du serveur)</entry>
 </row>
 <row>
   <entry><option>col_input_channel</option></entry>

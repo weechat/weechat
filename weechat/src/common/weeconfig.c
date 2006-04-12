@@ -107,6 +107,7 @@ int cfg_look_hotlist_names_length;
 int cfg_look_day_change;
 char *cfg_look_day_change_timestamp;
 char *cfg_look_read_marker;
+char *cfg_look_input_format;
 
 t_config_option weechat_options_look[] =
 { { "look_set_title", N_("set title for window (terminal for Curses GUI) with name and version"),
@@ -270,7 +271,11 @@ t_config_option weechat_options_look[] =
   { "look_read_marker", N_("use a marker on servers/channels to show first unread line"),
     N_("use a marker on servers/channels to show first unread line"),
     OPTION_TYPE_STRING, 0, 0, 0,
-    " ", NULL, NULL, &cfg_look_read_marker, config_change_read_marker},
+    " ", NULL, NULL, &cfg_look_read_marker, config_change_read_marker },
+  { "look_input_format", N_("format for input prompt"),
+    N_("format for input prompt"),
+    OPTION_TYPE_STRING, 0, 0, 0,
+    "[%n(%m)] ", NULL, NULL, &cfg_look_input_format, config_change_buffer_content },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
@@ -310,6 +315,7 @@ int cfg_col_infobar_delimiters;
 int cfg_col_infobar_highlight;
 int cfg_col_infobar_bg;
 int cfg_col_input;
+int cfg_col_input_server;
 int cfg_col_input_channel;
 int cfg_col_input_nick;
 int cfg_col_input_delimiters;
@@ -484,6 +490,10 @@ t_config_option weechat_options_colors[] =
     N_("color for input text"),
     OPTION_TYPE_COLOR, 0, 0, 0,
     "default", NULL, &cfg_col_input, NULL, &config_change_color },
+  { "col_input_server", N_("color for input text (server name)"),
+    N_("color for input text (server name)"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "brown", NULL, &cfg_col_input_server, NULL, &config_change_color },
   { "col_input_channel", N_("color for input text (channel name)"),
     N_("color for input text (channel name)"),
     OPTION_TYPE_COLOR, 0, 0, 0,

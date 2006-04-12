@@ -279,6 +279,13 @@
   <entry>Use a marker on servers/channels to show first unread line</entry>
 </row>
 <row>
+  <entry><option>look_input_format</option></entry>
+  <entry>string</entry>
+  <entry>any string</entry>
+  <entry>'[%n(%m)] '</entry>
+  <entry>Format for input prompt</entry>
+</row>
+<row>
   <entry><option>col_real_white</option></entry>
   <entry>boolean</entry>
   <entry>'on' or 'off'</entry>
@@ -515,6 +522,13 @@
   <entry>Curses or Gtk color</entry>
   <entry>'default'</entry>
   <entry>Color for input text</entry>
+</row>
+<row>
+  <entry><option>col_input_server</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry>'brown'</entry>
+  <entry>Color for input text (server name)</entry>
 </row>
 <row>
   <entry><option>col_input_channel</option></entry>

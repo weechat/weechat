@@ -1,9 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-04-11
+ChangeLog - 2006-04-12
 
 Version 0.1.9 (under dev!):
+   * added new option to customize input prompt
+   * added nick modes
+   * fixed commands 332, 333 (/topic now ok when channel is not opened)
    * removed color encoding and charset conversion for commands (only
      allowed in text sent to channel/private)
    * added hostnames associeted to nicks (available for /ban completion)

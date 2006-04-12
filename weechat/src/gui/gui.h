@@ -91,6 +91,7 @@ enum t_weechat_color
     COLOR_DCC_DONE,
     COLOR_DCC_FAILED,
     COLOR_DCC_ABORTED,
+    COLOR_WIN_INPUT_SERVER,
     GUI_NUM_COLORS
 };
 

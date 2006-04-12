@@ -56,6 +56,9 @@ t_irc_message *recv_msgq, *msgq_last_msg;
 
 int check_away = 0;
 
+char *nick_modes = "aiwroOs";
+
+
 /*
  * server_init: init server struct with default values
  */
@@ -98,6 +101,9 @@ server_init (t_irc_server *server)
     server->ssl_connected = 0;
     server->unterminated_message = NULL;
     server->nick = NULL;
+    server->nick_modes = (char *) malloc (NUM_NICK_MODES + 1);
+    memset (server->nick_modes, ' ', NUM_NICK_MODES);
+    server->nick_modes[NUM_NICK_MODES] = '\0';
     server->reconnect_start = 0;
     server->reconnect_join = 0;
     server->is_away = 0;
@@ -311,6 +317,8 @@ server_destroy (t_irc_server *server)
         free (server->unterminated_message);
     if (server->nick)
         free (server->nick);
+    if (server->nick_modes)
+        free (server->nick_modes);
     if (server->channels)
         channel_free_all (server);
 }
@@ -1179,7 +1187,7 @@ resolve (char *hostname, char *ip, int *version)
  */
 
 int
-pass_socks4proxy(int sock, char *address, int port, char *username)
+pass_socks4proxy (int sock, char *address, int port, char *username)
 {
     /* 
      * socks4 protocol is explain here: 
@@ -1366,13 +1374,13 @@ pass_socks5proxy(int sock, char *address, int port)
  */
 
 int
-pass_proxy(int sock, char *address, int port, char *username)
+pass_proxy (int sock, char *address, int port, char *username)
 {  
-    if (strcmp(cfg_proxy_type_values[cfg_proxy_type], "http") == 0)
+    if (strcmp (cfg_proxy_type_values[cfg_proxy_type], "http") == 0)
         return pass_httpproxy(sock, address, port);
-    if (strcmp(cfg_proxy_type_values[cfg_proxy_type], "socks4") == 0)
+    if (strcmp (cfg_proxy_type_values[cfg_proxy_type], "socks4") == 0)
         return pass_socks4proxy(sock, address, port, username);
-    if (strcmp(cfg_proxy_type_values[cfg_proxy_type], "socks5") == 0)
+    if (strcmp (cfg_proxy_type_values[cfg_proxy_type], "socks5") == 0)
         return pass_socks5proxy(sock, address, port);
 
     return 1;
@@ -1683,6 +1691,11 @@ server_disconnect (t_irc_server *server, int reconnect)
         gui_printf (server->buffer, _("Disconnected from server!\n"));
     }
     
+    if (server->nick_modes)
+    {
+        memset (server->nick_modes, ' ', NUM_NICK_MODES);
+        server->nick_modes[NUM_NICK_MODES] = '\0';
+    }
     server->is_away = 0;
     server->away_time = 0;
     server->lag = 0;

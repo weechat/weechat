@@ -178,7 +178,7 @@ t_weechat_command weechat_commands[] =
   { "upgrade", N_("upgrade WeeChat without disconnecting from servers"),
     "",
     N_("This command run again WeeChat binary, so it should have been compiled "
-       "installed with a package manager before running this command."),
+       "or installed with a package manager before running this command."),
     NULL, 0, 0, weechat_cmd_upgrade, NULL },
   { "uptime", N_("show WeeChat uptime"),
     N_("[-o]"),

@@ -125,6 +125,20 @@ struct t_irc_channel
 
 /* server types */
 
+#define NUM_NICK_MODES           7
+#define NICK_MODE_AWAY           0
+#define NICK_MODE_INVISIBLE      1
+#define NICK_MODE_WALLOPS        2
+#define NICK_MODE_RESTRICTED     3
+#define NICK_MODE_OPERATOR       4
+#define NICK_MODE_LOCAL_OPERATOR 5
+#define NICK_MODE_SERVER_NOTICES 6
+#define NICK_SET_MODE(server, set, mode) \
+    if (set) \
+        server->nick_modes[mode] = nick_modes[mode]; \
+    else \
+        server->nick_modes[mode] = ' ';
+
 typedef struct t_irc_server t_irc_server;
 
 struct t_irc_server
@@ -167,6 +181,7 @@ struct t_irc_server
 #endif
     char *unterminated_message;     /* beginning of a message in input buf    */
     char *nick;                     /* current nickname                       */
+    char *nick_modes;               /* nick modes                             */
     time_t reconnect_start;         /* this time + delay = reconnect time     */
     int reconnect_join;             /* 1 if channels opened to rejoin         */
     int is_away;                    /* 1 is user is marker as away            */
@@ -301,6 +316,7 @@ extern int check_away;
 extern t_irc_dcc *dcc_list;
 extern char *dcc_status_string[6];
 extern char *channel_modes;
+extern char *nick_modes;
 extern char *ignore_types[];
 extern t_irc_ignore *irc_ignore;
 extern t_irc_ignore *irc_last_ignore;
@@ -408,8 +424,8 @@ extern void irc_display_prefix (t_irc_server *, t_gui_buffer *, char *);
 extern void irc_display_nick (t_gui_buffer *, t_irc_nick *, char *, int,
                               int, int, int);
 extern void irc_display_away (t_irc_server *, char *, char *);
-extern void irc_display_mode (t_irc_server *, t_gui_buffer *, char *, char,
-                              char *, char *, char *, char *);
+extern void irc_display_mode (t_irc_server *, t_gui_buffer *, char *, char *,
+                              char, char *, char *, char *, char *);
 extern void irc_display_server (t_irc_server *ptr_server);
 
 /* IRC commands issued by user (irc-send.c) */

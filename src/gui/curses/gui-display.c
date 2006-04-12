@@ -2432,17 +2432,185 @@ gui_draw_buffer_infobar (t_gui_buffer *buffer, int erase)
 }
 
 /*
- * gui_get_input_width: return input width (max # chars displayed)
+ * gui_get_input_prompt_length: return input prompt length
  */
 
 int
-gui_get_input_width (t_gui_window *window, char *nick)
+gui_get_input_prompt_length (t_gui_window *window, char *nick)
 {
-    if (CHANNEL(window->buffer))
-        return (window->win_width - strlen (CHANNEL(window->buffer)->name) -
-                strlen (nick) - 4);
-    else
-        return (window->win_width - strlen (nick) - 3);
+    char *pos, *modes;
+    int length, mode_found;
+    
+    length = 0;
+    pos = cfg_look_input_format;
+    while (pos && pos[0])
+    {
+        switch (pos[0])
+        {
+            case '%':
+                pos++;
+                switch (pos[0])
+                {
+                    case 'c':
+                        if (CHANNEL(window->buffer))
+                            length += utf8_strlen (CHANNEL(window->buffer)->name);
+                        else
+                        {
+                            if (SERVER(window->buffer))
+                                length += utf8_strlen (SERVER(window->buffer)->name);
+                        }
+                        pos++;
+                        break;
+                    case 'm':
+                        if (SERVER(window->buffer))
+                        {
+                            mode_found = 0;
+                            for (modes = SERVER(window->buffer)->nick_modes;
+                                 modes && modes[0]; modes++)
+                            {
+                                if (modes[0] != ' ')
+                                {
+                                    length++;
+                                    mode_found = 1;
+                                }
+                            }
+                            if (mode_found)
+                                length++;
+                        }
+                        pos++;
+                        break;
+                    case 'n':
+                        length += utf8_strlen (nick);
+                        pos++;
+                        break;
+                    default:
+                        length++;
+                        if (pos[0])
+                        {
+                            if (pos[0] == '%')
+                                pos++;
+                            else
+                            {
+                                length++;
+                                pos += utf8_char_size (pos);
+                            }
+                        }
+                        break;
+                }
+                break;
+            default:
+                length++;
+                pos += utf8_char_size (pos);
+                break;
+        }
+    }
+    return length;
+}
+
+/*
+ * gui_draw_buffer_input_prompt: display input prompt
+ */
+
+void
+gui_draw_buffer_input_prompt (t_gui_window *window, char *nick)
+{
+    char *pos, saved_char, *modes;
+    int char_size, mode_found;
+    
+    wmove (window->win_input, 0, 0);
+    pos = cfg_look_input_format;
+    while (pos && pos[0])
+    {
+        switch (pos[0])
+        {
+            case '%':
+                pos++;
+                switch (pos[0])
+                {
+                    case 'c':
+                        if (CHANNEL(window->buffer))
+                        {
+                            gui_window_set_weechat_color (window->win_input,
+                                                          COLOR_WIN_INPUT_CHANNEL);
+                            wprintw (window->win_input, "%s",
+                                     CHANNEL(window->buffer)->name);
+                        }
+                        else
+                        {
+                            if (SERVER(window->buffer))
+                            {
+                                gui_window_set_weechat_color (window->win_input,
+                                                              COLOR_WIN_INPUT_SERVER);
+                                wprintw (window->win_input, "%s",
+                                         SERVER(window->buffer)->name);
+                            }
+                        }
+                        pos++;
+                        break;
+                    case 'm':
+                        if (SERVER(window->buffer))
+                        {
+                            mode_found = 0;
+                            for (modes = SERVER(window->buffer)->nick_modes;
+                                 modes && modes[0]; modes++)
+                            {
+                                if (modes[0] != ' ')
+                                    mode_found = 1;
+                            }
+                            if (mode_found)
+                            {
+                                gui_window_set_weechat_color (window->win_input,
+                                                              COLOR_WIN_INPUT);
+                                wprintw (window->win_input, "+");
+                                for (modes = SERVER(window->buffer)->nick_modes;
+                                     modes && modes[0]; modes++)
+                                {
+                                    if (modes[0] != ' ')
+                                        wprintw (window->win_input, "%c",
+                                                 modes[0]);
+                                }
+                            }
+                        }
+                        pos++;
+                        break;
+                    case 'n':
+                        gui_window_set_weechat_color (window->win_input,
+                                                      COLOR_WIN_INPUT_NICK);
+                        wprintw (window->win_input, "%s", nick);
+                        pos++;
+                        break;
+                    default:
+                        if (pos[0])
+                        {
+                            char_size = utf8_char_size (pos);
+                            saved_char = pos[char_size];
+                            pos[char_size] = '\0';
+                            gui_window_set_weechat_color (window->win_input,
+                                                          COLOR_WIN_INPUT_DELIMITERS);
+                            wprintw (window->win_input, "%%%s", pos);
+                            pos[char_size] = saved_char;
+                            pos += char_size;
+                        }
+                        else
+                        {
+                            wprintw (window->win_input, "%%");
+                            pos++;
+                        }
+                        break;
+                }
+                break;
+            default:
+                char_size = utf8_char_size (pos);
+                saved_char = pos[char_size];
+                pos[char_size] = '\0';
+                gui_window_set_weechat_color (window->win_input,
+                                              COLOR_WIN_INPUT_DELIMITERS);
+                wprintw (window->win_input, "%s", pos);
+                pos[char_size] = saved_char;
+                pos += char_size;
+                break;
+        }
+    }
 }
 
 /*
@@ -2500,7 +2668,7 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
     t_gui_window *ptr_win;
     char format[32];
     char *ptr_nickname;
-    int input_width;
+    int prompt_length, display_prompt;
     t_irc_dcc *dcc_selected;
     
     if (!gui_ok)
@@ -2526,12 +2694,21 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
                                 SERVER(buffer)->nick : SERVER(buffer)->nick1;
                         else
                             ptr_nickname = cfg_look_no_nickname;
-                        input_width = gui_get_input_width (ptr_win, ptr_nickname);
+                        
+                        prompt_length = gui_get_input_prompt_length (ptr_win, ptr_nickname);
+                        
+                        if (ptr_win->win_width - prompt_length < 3)
+                        {
+                            prompt_length = 0;
+                            display_prompt = 0;
+                        }
+                        else
+                            display_prompt = 1;
                         
                         if (buffer->input_buffer_pos - buffer->input_buffer_1st_display + 1 >
-                            input_width)
+                            ptr_win->win_width - prompt_length)
                             buffer->input_buffer_1st_display = buffer->input_buffer_pos -
-                                input_width + 1;
+                                (ptr_win->win_width - prompt_length) + 1;
                         else
                         {
                             if (buffer->input_buffer_pos < buffer->input_buffer_1st_display)
@@ -2540,60 +2717,32 @@ gui_draw_buffer_input (t_gui_buffer *buffer, int erase)
                             {
                                 if ((buffer->input_buffer_1st_display > 0) &&
                                     (buffer->input_buffer_pos -
-                                     buffer->input_buffer_1st_display + 1) < input_width)
+                                     buffer->input_buffer_1st_display + 1)
+                                    < ptr_win->win_width - prompt_length)
                                 {
                                     buffer->input_buffer_1st_display =
-                                        buffer->input_buffer_pos - input_width + 1;
+                                        buffer->input_buffer_pos -
+                                        (ptr_win->win_width - prompt_length) + 1;
                                     if (buffer->input_buffer_1st_display < 0)
                                         buffer->input_buffer_1st_display = 0;
                                 }
                             }
                         }
-                        if (CHANNEL(buffer))
-                        {
-                            gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_DELIMITERS);
-                            mvwprintw (ptr_win->win_input, 0, 0, "[");
-                            gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_CHANNEL);
-                            wprintw (ptr_win->win_input, "%s ", CHANNEL(buffer)->name);
-                            gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_NICK);
-                            wprintw (ptr_win->win_input, "%s", ptr_nickname);
-                            gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_DELIMITERS);
-                            wprintw (ptr_win->win_input, "] ");
-                            gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT);
-                            snprintf (format, 32, "%%-%ds", input_width);
-                            if (ptr_win == gui_current_window)
-                                gui_draw_buffer_input_text (ptr_win, input_width);
-                            else
-                                wprintw (ptr_win->win_input, format, "");
-                            wclrtoeol (ptr_win->win_input);
-                            ptr_win->win_input_x = utf8_strlen (CHANNEL(buffer)->name) +
-                                utf8_strlen (SERVER(buffer)->nick) + 4 +
-                                (buffer->input_buffer_pos - buffer->input_buffer_1st_display);
-                            if (ptr_win == gui_current_window)
-                                move (ptr_win->win_y + ptr_win->win_height - 1,
-                                      ptr_win->win_x + ptr_win->win_input_x);
-                        }
+                        if (display_prompt)
+                            gui_draw_buffer_input_prompt (ptr_win, ptr_nickname);
+                        
+                        gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT);
+                        snprintf (format, 32, "%%-%ds", ptr_win->win_width - prompt_length);
+                        if (ptr_win == gui_current_window)
+                            gui_draw_buffer_input_text (ptr_win, ptr_win->win_width - prompt_length);
                         else
-                        {
-                            gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_DELIMITERS);
-                            mvwprintw (ptr_win->win_input, 0, 0, "[");
-                            gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_NICK);
-                            wprintw (ptr_win->win_input, "%s", ptr_nickname);
-                            gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT_DELIMITERS);
-                            wprintw (ptr_win->win_input, "] ");
-                            gui_window_set_weechat_color (ptr_win->win_input, COLOR_WIN_INPUT);
-                            snprintf (format, 32, "%%-%ds", input_width);
-                            if (ptr_win == gui_current_window)
-                                gui_draw_buffer_input_text (ptr_win, input_width);
-                            else
-                                wprintw (ptr_win->win_input, format, "");
-                            wclrtoeol (ptr_win->win_input);
-                            ptr_win->win_input_x = utf8_strlen (ptr_nickname) + 3 +
-                                (buffer->input_buffer_pos - buffer->input_buffer_1st_display);
-                            if (ptr_win == gui_current_window)
-                                move (ptr_win->win_y + ptr_win->win_height - 1,
-                                      ptr_win->win_x + ptr_win->win_input_x);
-                        }
+                            wprintw (ptr_win->win_input, format, "");
+                        wclrtoeol (ptr_win->win_input);
+                        ptr_win->win_input_x = prompt_length +
+                            (buffer->input_buffer_pos - buffer->input_buffer_1st_display);
+                        if (ptr_win == gui_current_window)
+                            move (ptr_win->win_y + ptr_win->win_height - 1,
+                                  ptr_win->win_x + ptr_win->win_input_x);
                     }
                     break;
                 case BUFFER_TYPE_DCC:
@@ -3565,6 +3714,7 @@ gui_init_weechat_colors ()
     gui_color[COLOR_WIN_INFOBAR_DELIMITERS] = gui_color_build (COLOR_WIN_INFOBAR_DELIMITERS, cfg_col_infobar_delimiters, cfg_col_infobar_bg);
     gui_color[COLOR_WIN_INFOBAR_HIGHLIGHT] = gui_color_build (COLOR_WIN_INFOBAR_HIGHLIGHT, cfg_col_infobar_highlight, cfg_col_infobar_bg);
     gui_color[COLOR_WIN_INPUT] = gui_color_build (COLOR_WIN_INPUT, cfg_col_input, cfg_col_input_bg);
+    gui_color[COLOR_WIN_INPUT_SERVER] = gui_color_build (COLOR_WIN_INPUT_SERVER, cfg_col_input_server, cfg_col_input_bg);
     gui_color[COLOR_WIN_INPUT_CHANNEL] = gui_color_build (COLOR_WIN_INPUT_CHANNEL, cfg_col_input_channel, cfg_col_input_bg);
     gui_color[COLOR_WIN_INPUT_NICK] = gui_color_build (COLOR_WIN_INPUT_NICK, cfg_col_input_nick, cfg_col_input_bg);
     gui_color[COLOR_WIN_INPUT_DELIMITERS] = gui_color_build (COLOR_WIN_INPUT_DELIMITERS, cfg_col_input_delimiters, cfg_col_input_bg);

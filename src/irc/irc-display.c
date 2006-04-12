@@ -316,14 +316,16 @@ irc_display_away (t_irc_server *server, char *string1, char *string2)
 
 void
 irc_display_mode (t_irc_server *server, t_gui_buffer *buffer,
-                  char *channel_name, char set_flag,
+                  char *channel_name, char *nick_name, char set_flag,
                   char *symbol, char *nick_host, char *message, char *param)
 {
     irc_display_prefix (server, buffer, PREFIX_INFO);
     gui_printf (buffer, "%s[%s%s%s/%s%c%s%s] %s%s",
                 GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
-                channel_name,
+                (channel_name) ?
+                 GUI_COLOR(COLOR_WIN_CHAT_CHANNEL) :
+                 GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                (channel_name) ? channel_name : nick_name,
                 GUI_COLOR(COLOR_WIN_CHAT),
                 GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
                 set_flag,

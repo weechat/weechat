@@ -193,7 +193,7 @@ Without argument, /unignore command lists all defined ignore.
 <programlisting>
 upgrade WeeChat without disconnecting from servers
 
-This command run again WeeChat binary, so it should have been compiled installed with a package manager before running this command.
+This command run again WeeChat binary, so it should have been compiled or installed with a package manager before running this command.
 
 </programlisting>
 <command>uptime  [-o]</command>

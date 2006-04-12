@@ -126,6 +126,7 @@ extern int cfg_look_hotlist_names_length;
 extern int cfg_look_day_change;
 extern char *cfg_look_day_change_timestamp;
 extern char *cfg_look_read_marker;
+extern char *cfg_look_input_format;
 
 extern int cfg_col_real_white;
 extern int cfg_col_separator;
@@ -161,6 +162,7 @@ extern int cfg_col_infobar_delimiters;
 extern int cfg_col_infobar_highlight;
 extern int cfg_col_infobar_bg;
 extern int cfg_col_input;
+extern int cfg_col_input_server;
 extern int cfg_col_input_channel;
 extern int cfg_col_input_nick;
 extern int cfg_col_input_delimiters;
