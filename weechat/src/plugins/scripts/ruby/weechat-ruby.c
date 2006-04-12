@@ -1507,6 +1507,19 @@ weechat_ruby_output(VALUE self, VALUE str)
     return Qnil;
 }
 
+/*
+ * weechat_ruby_output_flush : just for compatibility
+ */
+
+static VALUE 
+weechat_ruby_output_flush(VALUE self)
+{
+    /* make gcc happy */
+    (void) self;
+    
+    return Qnil;
+}
+
 
 /*
  * weechat_ruby_load: load a Ruby script
@@ -1937,6 +1950,8 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     rb_define_singleton_method(mWeechatOutputs, "write", weechat_ruby_output, 1);
     rb_define_singleton_method(mWeechatOutputs, "puts", weechat_ruby_output, 1);
     rb_define_singleton_method(mWeechatOutputs, "p", weechat_ruby_output, 1);
+    rb_define_singleton_method(mWeechatOutputs, "flush", weechat_ruby_output_flush, 0);
+    
 
     plugin->cmd_handler_add (plugin, "ruby",
                              "list/load/unload Ruby scripts",
