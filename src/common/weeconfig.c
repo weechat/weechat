@@ -128,12 +128,12 @@ t_config_option weechat_options_look[] =
     "the geekest IRC client!", NULL, NULL, &cfg_look_weechat_slogan, config_change_noop },
   { "look_charset_decode_iso", N_("ISO charset for decoding messages from server (used only if locale is UTF-8)"),
     N_("ISO charset for decoding messages from server (used only if locale is UTF-8) "
-       "(if empty, messages are not converted if locale is UTF-8"),
+       "(if empty, messages are not converted if locale is UTF-8)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "ISO-8859-1", NULL, NULL, &cfg_look_charset_decode_iso, config_change_charset },
   { "look_charset_decode_utf", N_("UTF charset for decoding messages from server (used only if locale is not UTF-8)"),
     N_("UTF charset for decoding messages from server (used only if locale is not UTF-8) "
-       "(if empty, messages are not converted if locale is not UTF-8"),
+       "(if empty, messages are not converted if locale is not UTF-8)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "UTF-8", NULL, NULL, &cfg_look_charset_decode_utf, config_change_charset },
   { "look_charset_encode", N_("charset for encoding messages sent to server"),

@@ -38,14 +38,14 @@
   <entry>string</entry>
   <entry>any string</entry>
   <entry>'ISO-8859-1'</entry>
-  <entry>ISO charset for decoding messages from server (used only if locale is UTF-8) (if empty, messages are not converted if locale is UTF-8</entry>
+  <entry>ISO charset for decoding messages from server (used only if locale is UTF-8) (if empty, messages are not converted if locale is UTF-8)</entry>
 </row>
 <row>
   <entry><option>look_charset_decode_utf</option></entry>
   <entry>string</entry>
   <entry>any string</entry>
   <entry>'UTF-8'</entry>
-  <entry>UTF charset for decoding messages from server (used only if locale is not UTF-8) (if empty, messages are not converted if locale is not UTF-8</entry>
+  <entry>UTF charset for decoding messages from server (used only if locale is not UTF-8) (if empty, messages are not converted if locale is not UTF-8)</entry>
 </row>
 <row>
   <entry><option>look_charset_encode</option></entry>
