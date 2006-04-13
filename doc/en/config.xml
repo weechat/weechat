@@ -283,7 +283,7 @@
   <entry>string</entry>
   <entry>any string</entry>
   <entry>'[%n(%m)] '</entry>
-  <entry>Format for input prompt</entry>
+  <entry>Format for input prompt ('%c' is replaced by channel or server, '%n' by nick and '%m' by nick modes)</entry>
 </row>
 <row>
   <entry><option>col_real_white</option></entry>

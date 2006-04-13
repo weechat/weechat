@@ -283,7 +283,7 @@
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>
   <entry>'[%n(%m)] '</entry>
-  <entry>Format pour l'invite de la zone de saisie</entry>
+  <entry>Format pour l'invite de la zone de saisie ('%c' est remplacé par le canal ou serveur, '%n' par le pseudo et '%m' par les modes du pseudo)</entry>
 </row>
 <row>
   <entry><option>col_real_white</option></entry>

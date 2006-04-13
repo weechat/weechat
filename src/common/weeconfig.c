@@ -273,7 +273,8 @@ t_config_option weechat_options_look[] =
     OPTION_TYPE_STRING, 0, 0, 0,
     " ", NULL, NULL, &cfg_look_read_marker, config_change_read_marker },
   { "look_input_format", N_("format for input prompt"),
-    N_("format for input prompt"),
+    N_("format for input prompt ('%c' is replaced by channel or server, "
+       "'%n' by nick and '%m' by nick modes)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "[%n(%m)] ", NULL, NULL, &cfg_look_input_format, config_change_buffer_content },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
