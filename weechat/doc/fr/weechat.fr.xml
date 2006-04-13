@@ -3726,7 +3726,7 @@ void weechat_plugin_end (t_weechat_plugin *plugin)
       <title>Extensions pour scripts</title>
       
       <para>
-        Trois extensions sont fournies en standard avec WeeChat pour utiliser
+        Quatre extensions sont fournies en standard avec WeeChat pour utiliser
         des langages de script : Perl, Python, Ruby et Lua.
       </para>
       
