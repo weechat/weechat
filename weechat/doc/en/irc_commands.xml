@@ -59,15 +59,6 @@ leave and rejoin a channel
 part_message: part message (displayed to other users)
 
 </programlisting>
-<command>dcc  action [nickname [file]]</command>
-<programlisting>
-starts DCC (file or chat) or close chat
-
-  action: 'send' (file) or 'chat' or 'close' (chat)
-nickname: nickname to send file or chat
-    file: filename (on local host)
-
-</programlisting>
 <command>dehalfop  [nickname [nickname]]</command>
 <programlisting>
 removes half channel operator status from nickname(s)

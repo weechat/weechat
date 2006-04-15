@@ -81,9 +81,10 @@ struct t_irc_nick
 
 #define CHANNEL_PREFIX "#&+!"
 
-#define CHANNEL_TYPE_UNKNOWN -1
-#define CHANNEL_TYPE_CHANNEL 0
-#define CHANNEL_TYPE_PRIVATE 1
+#define CHANNEL_TYPE_UNKNOWN  -1
+#define CHANNEL_TYPE_CHANNEL  0
+#define CHANNEL_TYPE_PRIVATE  1
+#define CHANNEL_TYPE_DCC_CHAT 2
 
 #define NUM_CHANNEL_MODES       8
 #define CHANNEL_MODE_INVITE     0
@@ -369,6 +370,8 @@ extern t_irc_channel *channel_new (t_irc_server *, int, char *);
 extern void channel_free (t_irc_server *, t_irc_channel *);
 extern void channel_free_all (t_irc_server *);
 extern t_irc_channel *channel_search (t_irc_server *, char *);
+extern t_irc_channel *channel_search_any (t_irc_server *, char *);
+extern t_irc_channel *channel_search_dcc (t_irc_server *, char *);
 extern int string_is_channel (char *);
 extern char *channel_get_charset_decode_iso (t_irc_server *, t_irc_channel *);
 extern char *channel_get_charset_decode_utf (t_irc_server *, t_irc_channel *);
@@ -379,7 +382,6 @@ extern void channel_remove_away (t_irc_channel *);
 extern void channel_check_away (t_irc_server *, t_irc_channel *, int);
 extern void channel_set_away (t_irc_channel *, char *, int);
 extern int channel_create_dcc (t_irc_dcc *);
-extern void channel_remove_dcc (t_irc_dcc *);
 extern int channel_get_notify_level (t_irc_server *, t_irc_channel *);
 extern void channel_set_notify_level (t_irc_server *, t_irc_channel *, int);
 extern void channel_print_log (t_irc_channel *);
@@ -438,7 +440,6 @@ extern int irc_cmd_send_away (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_ban (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_ctcp (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_cycle (t_irc_server *, t_irc_channel *, char *);
-extern int irc_cmd_send_dcc (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_dehalfop (t_irc_server *, t_irc_channel *, int, char **);
 extern int irc_cmd_send_deop (t_irc_server *, t_irc_channel *, int, char **);
 extern int irc_cmd_send_devoice (t_irc_server *, t_irc_channel *, int, char **);

@@ -79,6 +79,7 @@ extern int weechat_cmd_builtin (t_irc_server *, t_irc_channel *, char *);
 extern int weechat_cmd_charset (t_irc_server *, t_irc_channel *, int, char **);
 extern int weechat_cmd_clear (t_irc_server *, t_irc_channel *, int, char **);
 extern int weechat_cmd_connect (t_irc_server *, t_irc_channel *, int, char **);
+extern int weechat_cmd_dcc (t_irc_server *, t_irc_channel *, char *);
 extern int weechat_cmd_debug (t_irc_server *, t_irc_channel *, int, char **);
 extern int weechat_cmd_disconnect (t_irc_server *, t_irc_channel *, int, char **);
 extern int weechat_cmd_help (t_irc_server *, t_irc_channel *, int, char **);

@@ -2553,7 +2553,8 @@ irc_cmd_recv_quit (t_irc_server *server, char *host, char *nick, char *arguments
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
-        if (ptr_channel->type == CHANNEL_TYPE_PRIVATE)
+        if ((ptr_channel->type == CHANNEL_TYPE_PRIVATE)
+            || (ptr_channel->type == CHANNEL_TYPE_DCC_CHAT))
             ptr_nick = NULL;
         else
             ptr_nick = nick_search (ptr_channel, nick);

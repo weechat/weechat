@@ -67,6 +67,15 @@ disconnect from a server
 servername: server name to disconnect
 
 </programlisting>
+<command>dcc  action [nickname [file]]</command>
+<programlisting>
+starts DCC (file or chat) or close chat
+
+  action: 'send' (file) or 'chat' or 'close' (chat)
+nickname: nickname to send file or chat
+    file: filename (on local host)
+
+</programlisting>
 <command>debug  dump | windows</command>
 <programlisting>
 print debug messages

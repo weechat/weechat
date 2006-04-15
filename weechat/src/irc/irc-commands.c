@@ -64,12 +64,6 @@ t_irc_command irc_commands[] =
     N_("     channel: channel name for cycle\n"
        "part_message: part message (displayed to other users)"),
     "%p", 0, MAX_ARGS, 1, NULL, irc_cmd_send_cycle, NULL },
-  { "dcc", N_("starts DCC (file or chat) or close chat"),
-    N_("action [nickname [file]]"),
-    N_("  action: 'send' (file) or 'chat' or 'close' (chat)\n"
-       "nickname: nickname to send file or chat\n"
-       "    file: filename (on local host)"),
-    "chat|send|close %n %f", 1, MAX_ARGS, 1, NULL, irc_cmd_send_dcc, NULL },
   { "dehalfop", N_("removes half channel operator status from nickname(s)"),
     N_("[nickname [nickname]]"), "",
     "", 0, MAX_ARGS, 1, irc_cmd_send_dehalfop, NULL, NULL },

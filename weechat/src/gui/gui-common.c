@@ -487,7 +487,7 @@ gui_buffer_search (char *server, char *channel)
         {
             if (ptr_server)
             {
-                ptr_channel = channel_search (ptr_server, channel);
+                ptr_channel = channel_search_any (ptr_server, channel);
                 if (ptr_channel)
                     ptr_buffer = ptr_channel->buffer;
             }

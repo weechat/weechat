@@ -133,7 +133,9 @@ enum t_weechat_color
 
 #define BUFFER_IS_SERVER(buffer)  ((SERVER(buffer) || (buffer->all_servers)) && !CHANNEL(buffer))
 #define BUFFER_IS_CHANNEL(buffer) (CHANNEL(buffer) && (CHANNEL(buffer)->type == CHANNEL_TYPE_CHANNEL))
-#define BUFFER_IS_PRIVATE(buffer) (CHANNEL(buffer) && (CHANNEL(buffer)->type == CHANNEL_TYPE_PRIVATE))
+#define BUFFER_IS_PRIVATE(buffer) (CHANNEL(buffer) && \
+                                  ((CHANNEL(buffer)->type == CHANNEL_TYPE_PRIVATE) \
+                                  || (CHANNEL(buffer)->type == CHANNEL_TYPE_DCC_CHAT)))
 
 #define BUFFER_HAS_NICKLIST(buffer) (BUFFER_IS_CHANNEL(buffer))
 

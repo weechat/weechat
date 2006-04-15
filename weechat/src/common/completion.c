@@ -358,7 +358,8 @@ completion_list_add_channel_nicks (t_completion *completion)
                              ptr_nick->nick);
             }
         }
-        if (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_PRIVATE)
+        if ((((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_PRIVATE)
+            || (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_DCC_CHAT))
         {
             weelist_add (&completion->completion_list,
                          &completion->last_completion,
@@ -406,7 +407,8 @@ completion_list_add_channel_nicks_hosts (t_completion *completion)
                 }
             }
         }
-        if (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_PRIVATE)
+        if ((((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_PRIVATE)
+             || (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_PRIVATE))
         {
             weelist_add (&completion->completion_list,
                          &completion->last_completion,
@@ -998,7 +1000,8 @@ completion_find_context (t_completion *completion, char *buffer, int size, int p
     }
     
     if (!completion->completion_list && completion->channel &&
-        (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_PRIVATE)
+        ((((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_PRIVATE)
+         || (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_DCC_CHAT))
         && (completion->context == COMPLETION_NICK))
     {
         /* nick completion in private (only other nick and self) */
@@ -1192,7 +1195,8 @@ completion_nick (t_completion *completion)
     if (!completion->channel)
         return;
     
-    if (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_PRIVATE)
+    if ((((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_PRIVATE)
+        || (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_DCC_CHAT))
     {
         if (!(completion->completion_list))
         {

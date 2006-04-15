@@ -156,7 +156,7 @@ fifo_exec (char *text)
             }
             if (ptr_server && pos)
             {
-                ptr_channel = channel_search (ptr_server, pos + 1);
+                ptr_channel = channel_search_any (ptr_server, pos + 1);
                 if (!ptr_channel)
                 {
                     irc_display_prefix (NULL, NULL, PREFIX_ERROR);

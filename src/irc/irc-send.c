@@ -612,87 +612,6 @@ irc_cmd_send_cycle (t_irc_server *server, t_irc_channel *channel,
 }
 
 /*
- * irc_cmd_send_dcc: start DCC (file or chat)
- */
-
-int
-irc_cmd_send_dcc (t_irc_server *server, t_irc_channel *channel,
-                  char *arguments)
-{
-    t_gui_buffer *buffer;
-    char *pos_nick, *pos_file;
-    
-    irc_find_context (server, channel, NULL, &buffer);
-    
-    /* DCC SEND file */
-    if (strncasecmp (arguments, "send", 4) == 0)
-    {
-        pos_nick = strchr (arguments, ' ');
-        if (!pos_nick)
-        {
-            irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
-            gui_printf_nolog (server->buffer,
-                              _("%s wrong argument count for \"%s\" command\n"),
-                              WEECHAT_ERROR, "dcc send");
-            return -1;
-        }
-        while (pos_nick[0] == ' ')
-            pos_nick++;
-        
-        pos_file = strchr (pos_nick, ' ');
-        if (!pos_file)
-        {
-            irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
-            gui_printf_nolog (server->buffer,
-                              _("%s wrong argument count for \"%s\" command\n"),
-                              WEECHAT_ERROR, "dcc send");
-            return -1;
-        }
-        pos_file[0] = '\0';
-        pos_file++;
-        while (pos_file[0] == ' ')
-            pos_file++;
-        
-        dcc_send_request (server, DCC_FILE_SEND, pos_nick, pos_file);
-    }
-    else if (strncasecmp (arguments, "chat", 4) == 0)
-    {
-        pos_nick = strchr (arguments, ' ');
-        if (!pos_nick)
-        {
-            irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
-            gui_printf_nolog (server->buffer,
-                              _("%s wrong argument count for \"%s\" command\n"),
-                              WEECHAT_ERROR, "dcc chat");
-            return -1;
-        }
-        while (pos_nick[0] == ' ')
-            pos_nick++;
-        
-        dcc_send_request (server, DCC_CHAT_SEND, pos_nick, NULL);
-    }
-    else if (ascii_strcasecmp (arguments, "close") == 0)
-    {
-        if (BUFFER_IS_PRIVATE(buffer) &&
-            CHANNEL(buffer)->dcc_chat)
-        {
-            dcc_close ((t_irc_dcc *)(CHANNEL(buffer)->dcc_chat), DCC_ABORTED);
-            dcc_redraw (1);
-        }
-    }
-    else
-    {
-        irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
-        gui_printf_nolog (server->buffer,
-                          _("%s wrong arguments for \"%s\" command\n"),
-                          WEECHAT_ERROR, "dcc");
-        return -1;
-    }
-    
-    return 0;
-}
-
-/*
  * irc_cmd_send_dehalfop: remove half operator privileges from nickname(s)
  */
 
@@ -1616,14 +1535,6 @@ irc_cmd_send_part (t_irc_server *server, t_irc_channel *channel,
         }
         else
         {
-            if (BUFFER_IS_SERVER(buffer))
-            {
-                irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
-                gui_printf_nolog (server->buffer,
-                                  _("%s \"%s\" command can not be executed on a server buffer\n"),
-                                  WEECHAT_ERROR, "part");
-                return -1;
-            }
             channel_name = CHANNEL(buffer)->name;
             pos_args = arguments;
         }

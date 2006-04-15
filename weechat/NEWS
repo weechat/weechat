@@ -1,6 +1,13 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
+* FlashCode, 2006-04-15
+
+    Important release notes for 0.1.9:
+
+    - please close all DCC chat buffers before using /upgrade command,
+      otherwise you may experience problems with DCC chats.
+
 * FlashCode, 2006-03-18
 
     WeeChat 0.1.8 released.

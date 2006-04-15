@@ -1208,7 +1208,7 @@ session_load_dcc (FILE *file)
                     return 0;
                 if (string && string[0])
                 {
-                    ptr_channel = channel_search (ptr_server, string);
+                    ptr_channel = channel_search_any (ptr_server, string);
                     if (!ptr_channel)
                     {
                         session_crash (file, _("channel not found for DCC"));
@@ -1399,7 +1399,7 @@ session_load_buffer (FILE *file)
     
     if (channel_name)
     {
-        ptr_channel = channel_search (ptr_server, channel_name);
+        ptr_channel = channel_search_any (ptr_server, channel_name);
         if (!ptr_channel)
         {
             session_crash (file, _("channel not found for buffer"));

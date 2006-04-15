@@ -67,6 +67,15 @@ se déconnecter d'un serveur
 nom_serveur: nom du serveur pour se déconnecter
 
 </programlisting>
+<command>dcc  action [pseudo [fichier]]</command>
+<programlisting>
+démarre le DCC (fichier ou discussion) ou ferme une discussion
+
+ action: 'send' (envoi de fichier) ou 'chat' (discussion) ou 'close' (fermeture discussion)
+ pseudo: pseudo pour envoyer le fichier ou discuter
+fichier: nom du fichier (sur la machine locale)
+
+</programlisting>
 <command>debug  dump | windows</command>
 <programlisting>
 affiche des messages de debogage

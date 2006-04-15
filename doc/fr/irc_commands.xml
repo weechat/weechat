@@ -59,15 +59,6 @@ quitter et rejoindre un canal
 message_de_fin: message de fin (affiché aux autres utilisateurs)
 
 </programlisting>
-<command>dcc  action [pseudo [fichier]]</command>
-<programlisting>
-démarre le DCC (fichier ou discussion) ou ferme une discussion
-
- action: 'send' (envoi de fichier) ou 'chat' (discussion) ou 'close' (fermeture discussion)
- pseudo: pseudo pour envoyer le fichier ou discuter
-fichier: nom du fichier (sur la machine locale)
-
-</programlisting>
 <command>dehalfop  [pseudo [pseudo]]</command>
 <programlisting>
 retire le statut de demi-opérateur du canal à/aux nick(s)

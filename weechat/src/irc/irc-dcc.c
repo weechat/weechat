@@ -283,10 +283,10 @@ dcc_connect (t_irc_dcc *ptr_dcc)
     else
         ptr_dcc->status = DCC_CONNECTING;
     
-    if (ptr_dcc->sock == -1)
+    if (ptr_dcc->sock < 0)
     {
         ptr_dcc->sock = socket (AF_INET, SOCK_STREAM, 0);
-        if (ptr_dcc->sock == -1)
+        if (ptr_dcc->sock < 0)
             return 0;
     }
 
@@ -344,6 +344,20 @@ dcc_free (t_irc_dcc *ptr_dcc)
 {
     t_irc_dcc *new_dcc_list;
     
+    /* DCC CHAT with channel => remove channel
+       (to prevent channel from becoming standard pv) */
+    if (ptr_dcc->channel)
+    {
+        /* check if channel is used for another active DCC CHAT */
+        if (!ptr_dcc->channel->dcc_chat
+            || (DCC_ENDED(((t_irc_dcc *)(ptr_dcc->channel->dcc_chat))->status)))
+        {
+            gui_buffer_free (ptr_dcc->channel->buffer, 1);
+            channel_free (ptr_dcc->server, ptr_dcc->channel);
+        }
+    }
+
+    /* remove DCC from list */
     if (ptr_dcc->prev_dcc)
     {
         (ptr_dcc->prev_dcc)->next_dcc = ptr_dcc->next_dcc;
@@ -351,10 +365,10 @@ dcc_free (t_irc_dcc *ptr_dcc)
     }
     else
         new_dcc_list = ptr_dcc->next_dcc;
-    
     if (ptr_dcc->next_dcc)
         (ptr_dcc->next_dcc)->prev_dcc = ptr_dcc->prev_dcc;
-    
+
+    /* free data */
     if (ptr_dcc->nick)
         free (ptr_dcc->nick);
     if (ptr_dcc->unterminated_message)
@@ -444,20 +458,15 @@ dcc_close (t_irc_dcc *ptr_dcc, int status)
         }
     }
     
-    ptr_dcc->channel = NULL;
-    
-    if (DCC_IS_CHAT(ptr_dcc->type))
-        channel_remove_dcc (ptr_dcc);
-    
     if (DCC_IS_FILE(ptr_dcc->type))
         dcc_calculate_speed (ptr_dcc, 1);
     
-    if (ptr_dcc->sock != -1)
+    if (ptr_dcc->sock >= 0)
     {
         close (ptr_dcc->sock);
         ptr_dcc->sock = -1;
     }
-    if (ptr_dcc->file != -1)
+    if (ptr_dcc->file >= 0)
     {
         close (ptr_dcc->file);
         ptr_dcc->file = -1;
@@ -950,7 +959,7 @@ dcc_send_request (t_irc_server *server, int type, char *nick, char *filename)
     
     /* open socket for DCC */
     sock = socket (AF_INET, SOCK_STREAM, 0);
-    if (sock == -1)
+    if (sock < 0)
     {
         irc_display_prefix (server, server->buffer, PREFIX_ERROR);
         gui_printf (server->buffer,
@@ -1110,7 +1119,7 @@ dcc_chat_sendf (t_irc_dcc *ptr_dcc, char *fmt, ...)
     char *buf2;
     int size_buf;
 
-    if (!ptr_dcc || (ptr_dcc->sock == -1))
+    if (!ptr_dcc || (ptr_dcc->sock < 0))
         return;
     
     va_start (args, fmt);
@@ -1488,7 +1497,7 @@ dcc_end ()
     
     for (ptr_dcc = dcc_list; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
     {
-        if (ptr_dcc->sock != -1)
+        if (ptr_dcc->sock >= 0)
         {
             if (ptr_dcc->status == DCC_ACTIVE)
                 weechat_log_printf (_("Aborting active DCC: \"%s\" from %s\n"),

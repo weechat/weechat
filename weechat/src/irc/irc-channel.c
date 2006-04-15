@@ -53,7 +53,7 @@ channel_new (t_irc_server *server, int channel_type, char *channel_name)
         fprintf (stderr, _("%s cannot allocate new channel"), WEECHAT_ERROR);
         return NULL;
     }
-
+    
     /* initialize new channel */
     new_channel->type = channel_type;
     new_channel->dcc_chat = NULL;
@@ -143,6 +143,7 @@ channel_free_all (t_irc_server *server)
 
 /*
  * channel_search: returns pointer on a channel with name
+ *                 WARNING: DCC chat channels are not returned by this function
  */
 
 t_irc_channel *
@@ -156,7 +157,51 @@ channel_search (t_irc_server *server, char *channel_name)
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
+        if ((ptr_channel->type != CHANNEL_TYPE_DCC_CHAT)
+            && (ascii_strcasecmp (ptr_channel->name, channel_name) == 0))
+            return ptr_channel;
+    }
+    return NULL;
+}
+
+/*
+ * channel_search_any: returns pointer on a channel with name
+ */
+
+t_irc_channel *
+channel_search_any (t_irc_server *server, char *channel_name)
+{
+    t_irc_channel *ptr_channel;
+    
+    if (!server || !channel_name)
+        return NULL;
+    
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
         if (ascii_strcasecmp (ptr_channel->name, channel_name) == 0)
+            return ptr_channel;
+    }
+    return NULL;
+}
+
+/*
+ * channel_search_dcc: returns pointer on a DCC chat channel with name
+ */
+
+t_irc_channel *
+channel_search_dcc (t_irc_server *server, char *channel_name)
+{
+    t_irc_channel *ptr_channel;
+    
+    if (!server || !channel_name)
+        return NULL;
+    
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        if ((ptr_channel->type == CHANNEL_TYPE_DCC_CHAT)
+            && (ascii_strcasecmp (ptr_channel->name, channel_name) == 0))
             return ptr_channel;
     }
     return NULL;
@@ -381,14 +426,16 @@ channel_create_dcc (t_irc_dcc *ptr_dcc)
 {
     t_irc_channel *ptr_channel;
     
-    ptr_channel = channel_search (ptr_dcc->server, ptr_dcc->nick);
+    ptr_channel = channel_search_dcc (ptr_dcc->server, ptr_dcc->nick);
     if (!ptr_channel)
-        ptr_channel = channel_new (ptr_dcc->server, CHANNEL_TYPE_PRIVATE,
+    {
+        ptr_channel = channel_new (ptr_dcc->server, CHANNEL_TYPE_DCC_CHAT,
                                    ptr_dcc->nick);
-    if (!ptr_channel)
-        return 0;
-    gui_buffer_new (gui_current_window, ptr_dcc->server, ptr_channel,
+        if (!ptr_channel)
+            return 0;
+        gui_buffer_new (gui_current_window, ptr_dcc->server, ptr_channel,
                     BUFFER_TYPE_STANDARD, 0);
+    }
     
     if (ptr_channel->dcc_chat &&
         (!DCC_ENDED(((t_irc_dcc *)(ptr_channel->dcc_chat))->status)))
@@ -398,26 +445,6 @@ channel_create_dcc (t_irc_dcc *ptr_dcc)
     ptr_dcc->channel = ptr_channel;
     gui_redraw_buffer (ptr_channel->buffer);
     return 1;
-}
-
-/*
- * channel_remove_dcc: remove a DCC CHAT
- */
-
-void
-channel_remove_dcc (t_irc_dcc *ptr_dcc)
-{
-    t_irc_channel *ptr_channel;
-    
-    for (ptr_channel = ptr_dcc->server->channels; ptr_channel;
-        ptr_channel = ptr_channel->next_channel)
-    {
-        if ((t_irc_dcc *)(ptr_channel->dcc_chat) == ptr_dcc)
-        {
-            ptr_channel->dcc_chat = NULL;
-            gui_redraw_buffer (ptr_channel->buffer);
-        }
-    }
 }
 
 /*

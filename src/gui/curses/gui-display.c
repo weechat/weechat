@@ -2041,7 +2041,7 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
             wprintw (ptr_win->win_status, "] ");
         }
         
-        /* infos about current buffer */
+        /* infos about current server buffer */
         if (SERVER(ptr_win->buffer) && !CHANNEL(ptr_win->buffer))
         {
             gui_window_set_weechat_color (ptr_win->win_status,
@@ -2082,6 +2082,8 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
 
             }
         }
+
+        /* infos about current channel/pv buffer */
         if (SERVER(ptr_win->buffer) && CHANNEL(ptr_win->buffer))
         {
             gui_window_set_weechat_color (ptr_win->win_status,
@@ -2093,8 +2095,12 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
             wprintw (ptr_win->win_status, ":");
             gui_window_set_weechat_color (ptr_win->win_status,
                                           COLOR_WIN_STATUS_CHANNEL);
-            if ((!CHANNEL(ptr_win->buffer)->nicks)
-                && (CHANNEL(ptr_win->buffer)->type != CHANNEL_TYPE_PRIVATE))
+            if (((CHANNEL(ptr_win->buffer)->type != CHANNEL_TYPE_PRIVATE)
+                 && (CHANNEL(ptr_win->buffer)->type != CHANNEL_TYPE_DCC_CHAT)
+                 && (!CHANNEL(ptr_win->buffer)->nicks))
+                || ((CHANNEL(ptr_win->buffer)->type == CHANNEL_TYPE_DCC_CHAT)
+                    && (CHANNEL(ptr_win->buffer)->dcc_chat)
+                    && (((t_irc_dcc *)(CHANNEL(ptr_win->buffer)->dcc_chat))->sock < 0)))
                 wprintw (ptr_win->win_status, "(%s)",
                          CHANNEL(ptr_win->buffer)->name);
             else
@@ -2140,8 +2146,7 @@ gui_draw_buffer_status (t_gui_buffer *buffer, int erase)
                 }
                 
                 /* display DCC if private is DCC CHAT */
-                if ((CHANNEL(ptr_win->buffer)->type == CHANNEL_TYPE_PRIVATE)
-                    && (CHANNEL(ptr_win->buffer)->dcc_chat))
+                if (CHANNEL(ptr_win->buffer)->type == CHANNEL_TYPE_DCC_CHAT)
                 {
                     gui_window_set_weechat_color (ptr_win->win_status,
                                                   COLOR_WIN_STATUS_DELIMITERS);

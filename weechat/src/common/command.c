@@ -86,6 +86,12 @@ t_weechat_command weechat_commands[] =
     N_("[servername]"),
     N_("servername: server name to disconnect"),
     "%S", 0, 1, weechat_cmd_disconnect, NULL },
+  { "dcc", N_("starts DCC (file or chat) or close chat"),
+    N_("action [nickname [file]]"),
+    N_("  action: 'send' (file) or 'chat' or 'close' (chat)\n"
+       "nickname: nickname to send file or chat\n"
+       "    file: filename (on local host)"),
+    "chat|send|close %n %f", 1, MAX_ARGS, NULL, weechat_cmd_dcc },
   { "debug", N_("print debug messages"),
     N_("dump | windows"),
     N_("   dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)\n"
@@ -902,6 +908,17 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                             free (command);
                             return 0;
                         }
+                        if (channel && channel->dcc_chat)
+                        {
+                            irc_display_prefix (server, channel->buffer, PREFIX_ERROR);
+                            gui_printf (channel->buffer,
+                                        _("%s command \"%s\" can not be "
+                                          "executed on DCC CHAT buffer\n"),
+                                        WEECHAT_ERROR,
+                                        irc_commands[i].command_name);
+                            free (command);
+                            return 0;
+                        }
                         if (irc_commands[i].cmd_function_args)
                             return_code = (int) (irc_commands[i].cmd_function_args)
                                 (server, channel, argc, argv);
@@ -942,7 +959,7 @@ user_command (t_irc_server *server, t_irc_channel *channel, char *command, int o
 {
     t_gui_buffer *buffer;
     t_irc_nick *ptr_nick;
-    int plugin_args_length;
+    int plugin_args_length, text_sent;
     char *command_with_colors, *command_encoded, *command_with_colors2;
     char *plugin_args;
     
@@ -968,11 +985,22 @@ user_command (t_irc_server *server, t_irc_channel *channel, char *command, int o
             
             command_encoded = channel_iconv_encode (server, channel,
                                                     (command_with_colors) ? command_with_colors : command);
+            text_sent = 1;
             if (CHANNEL(buffer)->dcc_chat)
-                dcc_chat_sendf ((t_irc_dcc *)(CHANNEL(buffer)->dcc_chat),
-                                "%s\r\n",
-                                (command_encoded) ? command_encoded :
-                                ((command_with_colors) ? command_with_colors : command));
+            {
+                if (((t_irc_dcc *)(CHANNEL(buffer)->dcc_chat))->sock < 0)
+                {
+                    irc_display_prefix (server, buffer, PREFIX_ERROR);
+                    gui_printf_nolog (buffer, "%s DCC CHAT is closed\n",
+                                      WEECHAT_ERROR);
+                    text_sent = 0;
+                }
+                else
+                    dcc_chat_sendf ((t_irc_dcc *)(CHANNEL(buffer)->dcc_chat),
+                                    "%s\r\n",
+                                    (command_encoded) ? command_encoded :
+                                    ((command_with_colors) ? command_with_colors : command));
+            }
             else
                 server_sendf (server, "PRIVMSG %s :%s\r\n",
                               CHANNEL(buffer)->name,
@@ -981,25 +1009,14 @@ user_command (t_irc_server *server, t_irc_channel *channel, char *command, int o
             
             command_with_colors2 = (command_with_colors) ?
                 (char *)gui_color_decode ((unsigned char *)command_with_colors, 1) : NULL;
-            
-            if (CHANNEL(buffer)->type == CHANNEL_TYPE_PRIVATE)
+
+            if (text_sent)
             {
-                irc_display_nick (buffer, NULL, server->nick,
-                                  MSG_TYPE_NICK, 1, COLOR_WIN_NICK_SELF, 0);
-                gui_printf_type (buffer,
-                                 MSG_TYPE_MSG,
-                                 "%s%s\n",
-                                 GUI_COLOR(COLOR_WIN_CHAT),
-                                 (command_with_colors2) ?
-                                 command_with_colors2 : command);
-            }
-            else
-            {
-                ptr_nick = nick_search (CHANNEL(buffer), server->nick);
-                if (ptr_nick)
+                if ((CHANNEL(buffer)->type == CHANNEL_TYPE_PRIVATE)
+                    || (CHANNEL(buffer)->type == CHANNEL_TYPE_DCC_CHAT))
                 {
-                    irc_display_nick (buffer, ptr_nick, NULL,
-                                      MSG_TYPE_NICK, 1, -1, 0);
+                    irc_display_nick (buffer, NULL, server->nick,
+                                      MSG_TYPE_NICK, 1, COLOR_WIN_NICK_SELF, 0);
                     gui_printf_type (buffer,
                                      MSG_TYPE_MSG,
                                      "%s%s\n",
@@ -1009,10 +1026,25 @@ user_command (t_irc_server *server, t_irc_channel *channel, char *command, int o
                 }
                 else
                 {
-                    irc_display_prefix (server, server->buffer, PREFIX_ERROR);
-                    gui_printf (server->buffer,
-                                _("%s cannot find nick for sending message\n"),
-                                WEECHAT_ERROR);
+                    ptr_nick = nick_search (CHANNEL(buffer), server->nick);
+                    if (ptr_nick)
+                    {
+                        irc_display_nick (buffer, ptr_nick, NULL,
+                                          MSG_TYPE_NICK, 1, -1, 0);
+                        gui_printf_type (buffer,
+                                         MSG_TYPE_MSG,
+                                         "%s%s\n",
+                                         GUI_COLOR(COLOR_WIN_CHAT),
+                                         (command_with_colors2) ?
+                                         command_with_colors2 : command);
+                    }
+                    else
+                    {
+                        irc_display_prefix (server, server->buffer, PREFIX_ERROR);
+                        gui_printf (server->buffer,
+                                    _("%s cannot find nick for sending message\n"),
+                                    WEECHAT_ERROR);
+                    }
                 }
             }
             
@@ -1343,32 +1375,44 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
             }
             else
             {
-                if (SERVER(buffer))
+                if (CHANNEL(buffer)
+                    && (CHANNEL(buffer)->type == CHANNEL_TYPE_DCC_CHAT))
                 {
-                    if (SERVER(buffer)->is_connected
-                        && CHANNEL(buffer)
-                        && CHANNEL(buffer)->nicks)
-                    {
-                        pos = strstr (arguments, "close ");
-                        if (pos)
-                            pos += 6;
-                        CHANNEL(buffer)->close = 1;
-                        irc_cmd_send_part (SERVER(buffer),
-                                           CHANNEL(buffer),
-                                           pos);
-                    }
-                    else
-                    {
-                        ptr_channel = channel_search (SERVER(buffer),
-                                                      CHANNEL(buffer)->name);
-                        if (ptr_channel)
-                            channel_free (SERVER(buffer),
-                                          ptr_channel);
-                        gui_buffer_free (buffer, 1);
-                    }
+                    ptr_channel = CHANNEL(buffer);
+                    gui_buffer_free (ptr_channel->buffer, 1);
+                    channel_free (SERVER(buffer), ptr_channel);
+                    gui_draw_buffer_status (buffer, 1);
+                    gui_draw_buffer_input (buffer, 1);
                 }
                 else
-                    gui_buffer_free (buffer, 1);
+                {
+                    if (SERVER(buffer))
+                    {
+                        if (SERVER(buffer)->is_connected
+                            && CHANNEL(buffer)
+                            && CHANNEL(buffer)->nicks)
+                        {
+                            pos = strstr (arguments, "close ");
+                            if (pos)
+                                pos += 6;
+                            CHANNEL(buffer)->close = 1;
+                            irc_cmd_send_part (SERVER(buffer),
+                                               CHANNEL(buffer),
+                                               pos);
+                        }
+                        else
+                        {
+                            ptr_channel = channel_search_any (SERVER(buffer),
+                                                              CHANNEL(buffer)->name);
+                            if (ptr_channel)
+                                channel_free (SERVER(buffer),
+                                              ptr_channel);
+                            gui_buffer_free (buffer, 1);
+                        }
+                    }
+                    else
+                        gui_buffer_free (buffer, 1);
+                }
             }
             gui_draw_buffer_status (buffer, 1);
         }
@@ -1844,6 +1888,90 @@ weechat_cmd_connect (t_irc_server *server, t_irc_channel *channel,
         gui_printf (NULL, _("%s server not found\n"), WEECHAT_ERROR);
         return -1;
     }
+    return 0;
+}
+
+/*
+ * weechat_cmd_dcc: DCC control (file or chat)
+ */
+
+int
+weechat_cmd_dcc (t_irc_server *server, t_irc_channel *channel,
+                 char *arguments)
+{
+    t_gui_buffer *buffer;
+    char *pos_nick, *pos_file;
+    
+    irc_find_context (server, channel, NULL, &buffer);
+    
+    /* DCC SEND file */
+    if (strncasecmp (arguments, "send", 4) == 0)
+    {
+        pos_nick = strchr (arguments, ' ');
+        if (!pos_nick)
+        {
+            irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
+            gui_printf_nolog (server->buffer,
+                              _("%s wrong argument count for \"%s\" command\n"),
+                              WEECHAT_ERROR, "dcc send");
+            return -1;
+        }
+        while (pos_nick[0] == ' ')
+            pos_nick++;
+        
+        pos_file = strchr (pos_nick, ' ');
+        if (!pos_file)
+        {
+            irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
+            gui_printf_nolog (server->buffer,
+                              _("%s wrong argument count for \"%s\" command\n"),
+                              WEECHAT_ERROR, "dcc send");
+            return -1;
+        }
+        pos_file[0] = '\0';
+        pos_file++;
+        while (pos_file[0] == ' ')
+            pos_file++;
+        
+        dcc_send_request (server, DCC_FILE_SEND, pos_nick, pos_file);
+    }
+    /* DCC CHAT */
+    else if (strncasecmp (arguments, "chat", 4) == 0)
+    {
+        pos_nick = strchr (arguments, ' ');
+        if (!pos_nick)
+        {
+            irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
+            gui_printf_nolog (server->buffer,
+                              _("%s wrong argument count for \"%s\" command\n"),
+                              WEECHAT_ERROR, "dcc chat");
+            return -1;
+        }
+        while (pos_nick[0] == ' ')
+            pos_nick++;
+        
+        dcc_send_request (server, DCC_CHAT_SEND, pos_nick, NULL);
+    }
+    /* close DCC CHAT */
+    else if (ascii_strcasecmp (arguments, "close") == 0)
+    {
+        if (BUFFER_IS_PRIVATE(buffer) &&
+            CHANNEL(buffer)->dcc_chat)
+        {
+            dcc_close ((t_irc_dcc *)(CHANNEL(buffer)->dcc_chat), DCC_ABORTED);
+            dcc_redraw (1);
+        }
+    }
+    /* unknown DCC action */
+    else
+    {
+        irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s wrong arguments for \"%s\" command\n"),
+                          WEECHAT_ERROR, "dcc");
+        return -1;
+    }
+    
     return 0;
 }
 
