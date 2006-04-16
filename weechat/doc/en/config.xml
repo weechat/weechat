@@ -170,22 +170,29 @@
   <entry><option>look_align_nick</option></entry>
   <entry>string</entry>
   <entry>'none', 'left', 'right'</entry>
-  <entry>'none'</entry>
+  <entry>'right'</entry>
   <entry>Nick alignment (fixed size for nicks in chat window (none, left, right))</entry>
 </row>
 <row>
   <entry><option>look_align_other</option></entry>
   <entry>boolean</entry>
   <entry>'on' or 'off'</entry>
-  <entry>'off'</entry>
+  <entry>'on'</entry>
   <entry>Alignment for other messages (not beginning with a nick)</entry>
 </row>
 <row>
   <entry><option>look_align_size</option></entry>
   <entry>integer</entry>
   <entry>between 8 and 64</entry>
-  <entry>8</entry>
+  <entry>14</entry>
   <entry>Size for aligning nick and other messages</entry>
+</row>
+<row>
+  <entry><option>look_align_size_max</option></entry>
+  <entry>integer</entry>
+  <entry>between 8 and 64</entry>
+  <entry>20</entry>
+  <entry>Max size for aligning nick and other messages (should be &gt;= to look_align_size)</entry>
 </row>
 <row>
   <entry><option>look_nick_completor</option></entry>

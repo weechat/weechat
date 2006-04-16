@@ -94,6 +94,7 @@ char *cfg_look_align_nick_values[] =
 { "none", "left", "right", NULL };
 int cfg_look_align_other;
 int cfg_look_align_size;
+int cfg_look_align_size_max;
 char *cfg_look_nick_completor;
 char *cfg_look_nick_completion_ignore;
 int cfg_look_nick_complete_first;
@@ -209,15 +210,20 @@ t_config_option weechat_options_look[] =
   { "look_align_nick", N_("nick alignment (fixed size for nicks in chat window)"),
     N_("nick alignment (fixed size for nicks in chat window (none, left, right))"),
     OPTION_TYPE_INT_WITH_STRING, 0, 0, 0,
-    "none", cfg_look_align_nick_values, &cfg_look_align_nick, NULL, config_change_noop },
+    "right", cfg_look_align_nick_values, &cfg_look_align_nick, NULL, config_change_noop },
   { "look_align_other", N_("alignment for other messages (not beginning with a nick)"),
     N_("alignment for other messages (not beginning with a nick)"),
-    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
     NULL, NULL, &cfg_look_align_other, NULL, config_change_noop },
   { "look_align_size", N_("size for aligning nick and other messages"),
     N_("size for aligning nick and other messages"),
-    OPTION_TYPE_INT, 8, 64, 8,
+    OPTION_TYPE_INT, 8, 64, 14,
     NULL, NULL, &cfg_look_align_size, NULL, config_change_noop },
+  { "look_align_size_max", N_("max size for aligning nick and other messages"),
+    N_("max size for aligning nick and other messages (should be >= to "
+       "look_align_size)"),
+    OPTION_TYPE_INT, 8, 64, 20,
+    NULL, NULL, &cfg_look_align_size_max, NULL, config_change_noop },
   { "look_nick_completor", N_("the string inserted after nick completion"),
     N_("the string inserted after nick completion"),
     OPTION_TYPE_STRING, 0, 0, 0,

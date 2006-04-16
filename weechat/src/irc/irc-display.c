@@ -150,7 +150,11 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
                   int type, int display_around, int force_color, int no_nickmode)
 {
     char format[32], *ptr_nickname;
-    int i, nickname_length, external_nick, length, spaces, disable_prefix_suffix;
+    int max_align, i, nickname_length, external_nick, length, spaces;
+    int disable_prefix_suffix;
+
+    max_align = (cfg_look_align_size_max >= cfg_look_align_size) ?
+        cfg_look_align_size_max : cfg_look_align_size;
     
     ptr_nickname = strdup ((nick) ? nick->nick : nickname);
     if (!ptr_nickname)
@@ -159,7 +163,7 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
     external_nick = (!nick && !BUFFER_IS_PRIVATE(buffer));
     disable_prefix_suffix = ((cfg_look_align_nick != CFG_LOOK_ALIGN_NICK_NONE)
                              && ((int)strlen (cfg_look_nick_prefix) +
-                                 (int)strlen (cfg_look_nick_suffix) > cfg_look_align_size - 4));
+                                 (int)strlen (cfg_look_nick_suffix) > max_align - 4));
     
     /* calculate length to display, to truncate it if too long */
     length = nickname_length;
@@ -181,7 +185,14 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
     /* calculate number of spaces to insert before or after nick */
     spaces = 0;
     if (cfg_look_align_nick != CFG_LOOK_ALIGN_NICK_NONE)
-        spaces = cfg_look_align_size - length;
+    {
+        if (length > max_align)
+            spaces = max_align - length;
+        else if (length > cfg_look_align_size)
+            spaces = 0;
+        else
+            spaces = cfg_look_align_size - length;
+    }
     
     /* display prefix */
     if (display_around && !disable_prefix_suffix
