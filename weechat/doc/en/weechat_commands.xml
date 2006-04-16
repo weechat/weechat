@@ -226,7 +226,7 @@ manage windows
  right: switch to window on the right
 splith: split current window horizontally
 splitv: split current window vertically
-resize: resize window size, new size is <pct> pourcentage of parent window
+resize: resize window size, new size is &lt;pct&gt; pourcentage of parent window
  merge: merge window with another (all = keep only one window)
 
 For splith and splitv, pct is a pourcentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4

@@ -226,7 +226,7 @@ gestion des fenêtres
  right: saute à la fenêtre à droite
 splith: éclate la fenêtre en deux horizontalement
 splitv: éclate la fenêtre en deux verticalement
-resize: redimensionne une fenêtre, la nouvelle taille est <pct> pourcentage de la fenêtre parent
+resize: redimensionne une fenêtre, la nouvelle taille est &lt;pct&gt; pourcentage de la fenêtre parent
  merge: fusionne la fenêtre avec une autre
 
 Pour splith et splitv, pct est un pourcentage qui représente la taille de la nouvelle fenêtre, calculée par rapport à la taille de la fenêtre courante. Par exemple 25 signifie créer une fenêtre qui a pour taille: taille_courante / 4

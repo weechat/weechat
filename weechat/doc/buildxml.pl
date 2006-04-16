@@ -83,13 +83,13 @@ sub create_commands
         {
             print XML "</programlisting>\n" if ($started == 1);
             $started = 1;
-            print XML "<command>$1</command>\n";
+            print XML "<command>".toxml($1)."</command>\n";
             print XML "<programlisting>";
         }
         else
         {
             chomp ($_);
-            print XML "$_\n";
+            print XML toxml($_)."\n";
         }
     }
     print XML "</programlisting>\n";
