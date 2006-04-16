@@ -203,7 +203,7 @@ t_weechat_command weechat_commands[] =
        " right: switch to window on the right\n"
        "splith: split current window horizontally\n"
        "splitv: split current window vertically\n"
-       "resize: resize window size, new size is pct%% of parent window\n"
+       "resize: resize window size, new size is <pct> pourcentage of parent window\n"
        " merge: merge window with another (all = keep only one window)\n\n"
        "For splith and splitv, pct is a pourcentage which represents "
        "size of new window, computed with current window as size reference. "

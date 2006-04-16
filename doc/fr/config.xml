@@ -156,14 +156,14 @@
   <entry><option>look_nick_prefix</option></entry>
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>
-  <entry>'&lt;'</entry>
+  <entry>''</entry>
   <entry>Texte à afficher avant le pseudo dans la fenêtre de discussion</entry>
 </row>
 <row>
   <entry><option>look_nick_suffix</option></entry>
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>
-  <entry>'&gt;'</entry>
+  <entry>' |'</entry>
   <entry>Texte à afficher après le pseudo dans la fenêtre de discussion</entry>
 </row>
 <row>

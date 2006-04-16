@@ -156,14 +156,14 @@
   <entry><option>look_nick_prefix</option></entry>
   <entry>string</entry>
   <entry>any string</entry>
-  <entry>'&lt;'</entry>
+  <entry>''</entry>
   <entry>Text to display before nick in chat window</entry>
 </row>
 <row>
   <entry><option>look_nick_suffix</option></entry>
   <entry>string</entry>
   <entry>any string</entry>
-  <entry>'&gt;'</entry>
+  <entry>' |'</entry>
   <entry>Text to display after nick in chat window</entry>
 </row>
 <row>
