@@ -250,13 +250,21 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
         }
         ptr_nickname[i] = '\0';
     }
-    gui_printf_type_nick (buffer, type,
-                          (nick) ? nick->nick : nickname,
-                          "%s%s",
-                          (force_color >= 0) ?
-                          GUI_COLOR(force_color) :
-                          GUI_COLOR((nick) ? nick->color : COLOR_WIN_CHAT),
-                          ptr_nickname);
+    if (display_around)
+        gui_printf_type_nick (buffer, type,
+                              (nick) ? nick->nick : nickname,
+                              "%s%s",
+                              (force_color >= 0) ?
+                              GUI_COLOR(force_color) :
+                              GUI_COLOR((nick) ? nick->color : COLOR_WIN_CHAT),
+                              ptr_nickname);
+    else
+        gui_printf_type (buffer, type,
+                         "%s%s",
+                         (force_color >= 0) ?
+                         GUI_COLOR(force_color) :
+                         GUI_COLOR((nick) ? nick->color : COLOR_WIN_CHAT),
+                         ptr_nickname);
     if (display_around && (spaces < 0))
         gui_printf_type (buffer, type, "%s+",
                          GUI_COLOR(COLOR_WIN_NICK_MORE));
