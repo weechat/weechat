@@ -73,6 +73,9 @@ void
 history_buffer_add (void *buffer, char *string)
 {
     t_history *new_history, *ptr_history;
+
+    if (!string)
+        return;
     
     if ( !((t_gui_buffer *)(buffer))->history
          || ( ((t_gui_buffer *)(buffer))->history
@@ -121,6 +124,9 @@ history_global_add (char *string)
 {
     t_history *new_history, *ptr_history;
 
+    if (!string)
+        return;
+    
     if (!history_global
         || (history_global
             && ascii_strcasecmp (history_global->text, string) != 0))

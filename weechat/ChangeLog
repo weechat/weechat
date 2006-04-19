@@ -1,9 +1,10 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-04-15
+ChangeLog - 2006-04-19
 
 Version 0.1.9 (under dev!):
+   * fixed crash after /upgrade if a line in history is empty
    * fixed many crashes with DCC chat
    * added new option to customize input prompt
    * added nick modes
