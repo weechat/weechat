@@ -1,11 +1,5 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-WeeChat known bugs, 2006-03-31
-
-- display bugs with UTF-8 chars coded on more than 2 bytes
-- divide long messages (> 512 bytes) into more messages so IRC server can
-  parse them correctly 
-- command name for /server can not contain spaces
-- when many WeeChat are launched, log file is not properly written
-  (cleared by each WeeChat at startup)
+WeeChat known bugs:
+please look at https://savannah.nongnu.org/bugs/index.php
