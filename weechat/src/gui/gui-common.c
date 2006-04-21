@@ -562,6 +562,10 @@ gui_buffer_clear (t_gui_buffer *buffer)
     t_gui_window *ptr_win;
     t_gui_line *ptr_line;
     
+    /* remove buffer from hotlist */
+    hotlist_remove_buffer (buffer);
+    
+    /* remove lines from buffer */
     while (buffer->lines)
     {
         ptr_line = buffer->lines->next_line;
@@ -575,7 +579,8 @@ gui_buffer_clear (t_gui_buffer *buffer)
     buffer->last_line = NULL;
     buffer->num_lines = 0;
     buffer->line_complete = 1;
-    
+
+    /* remove any scroll for buffer */
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
         if (ptr_win->buffer == buffer)
@@ -587,7 +592,7 @@ gui_buffer_clear (t_gui_buffer *buffer)
     }
     
     gui_draw_buffer_chat (buffer, 1);
-    gui_draw_buffer_status (buffer, 0);
+    gui_draw_buffer_status (buffer, 1);
 }
 
 /*
