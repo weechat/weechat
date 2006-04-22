@@ -150,7 +150,7 @@ gui_key_init ()
     gui_key_grab = 0;
     gui_key_grab_count = 0;
     
-    gui_input_default_key_bindings ();
+    gui_keyboard_default_bindings ();
 }
 
 /*

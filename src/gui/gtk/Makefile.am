@@ -20,7 +20,8 @@ INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(GTK_CFLAGS)
 bin_PROGRAMS = weechat-gtk
 
 if PLUGINS
-weechat_gtk_LDADD = ../gui-common.o ../gui-keyboard.o \
+weechat_gtk_LDADD = ../gui-common.o ../gui-buffer.o \
+                    ../gui-window.o ../gui-keyboard.o \
                     ../gui-action.o \
                     ../../common/lib_weechat_main.a \
                     ../../irc/lib_weechat_irc.a \
@@ -29,7 +30,8 @@ weechat_gtk_LDADD = ../gui-common.o ../gui-keyboard.o \
                     $(GTK_LIBS) \
                     $(GNUTLS_LFLAGS)
 else
-weechat_gtk_LDADD = ../gui-common.o ../gui-keyboard.o \
+weechat_gtk_LDADD = ../gui-common.o ../gui-buffer.o \
+                    ../gui-window.o ../gui-keyboard.o \
                     ../gui-action.o \
                     ../../common/lib_weechat_main.a \
                     ../../irc/lib_weechat_irc.a \
@@ -38,5 +40,13 @@ weechat_gtk_LDADD = ../gui-common.o ../gui-keyboard.o \
                     $(GNUTLS_LFLAGS)
 endif
 
-weechat_gtk_SOURCES = gui-display.c \
-                      gui-input.c
+weechat_gtk_SOURCES = gui-chat.c \
+                      gui-color.c \
+                      gui-infobar.c \
+                      gui-input.c \
+                      gui-keyboard.c \
+                      gui-main.c \
+                      gui-nicklist.c \
+                      gui-status.c \
+                      gui-window.c \
+                      gui-gtk.h

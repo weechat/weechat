@@ -376,7 +376,7 @@ channel_remove_away (t_irc_channel *channel)
         {
             NICK_SET_FLAG(ptr_nick, 0, NICK_AWAY);
         }
-        gui_draw_buffer_nick (channel->buffer, 0);
+        gui_nicklist_draw (channel->buffer, 0);
     }
 }
 
@@ -443,7 +443,7 @@ channel_create_dcc (t_irc_dcc *ptr_dcc)
     
     ptr_channel->dcc_chat = ptr_dcc;
     ptr_dcc->channel = ptr_channel;
-    gui_redraw_buffer (ptr_channel->buffer);
+    gui_window_redraw_buffer (ptr_channel->buffer);
     return 1;
 }
 

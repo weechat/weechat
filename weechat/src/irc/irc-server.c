@@ -1655,7 +1655,7 @@ server_auto_connect (int auto_connect, int command_line)
         {
             (void) gui_buffer_new (gui_current_window, ptr_server, NULL,
                                    BUFFER_TYPE_STANDARD, 1);
-            gui_redraw_buffer (gui_current_window->buffer);
+            gui_window_redraw_buffer (gui_current_window->buffer);
             if (!server_connect (ptr_server))
                 server_reconnect_schedule (ptr_server);
         }
@@ -1708,7 +1708,7 @@ server_disconnect (t_irc_server *server, int reconnect)
     else
         server->reconnect_start = 0;
     
-    gui_redraw_buffer (gui_current_window->buffer);
+    gui_window_redraw_buffer (gui_current_window->buffer);
 }
 
 /*

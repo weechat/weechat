@@ -1381,8 +1381,8 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                     ptr_channel = CHANNEL(buffer);
                     gui_buffer_free (ptr_channel->buffer, 1);
                     channel_free (SERVER(buffer), ptr_channel);
-                    gui_draw_buffer_status (buffer, 1);
-                    gui_draw_buffer_input (buffer, 1);
+                    gui_status_draw (buffer, 1);
+                    gui_input_draw (buffer, 1);
                 }
                 else
                 {
@@ -1414,7 +1414,7 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                         gui_buffer_free (buffer, 1);
                 }
             }
-            gui_draw_buffer_status (buffer, 1);
+            gui_status_draw (buffer, 1);
         }
         else if (ascii_strcasecmp (argv[0], "notify") == 0)
         {
@@ -1563,8 +1563,8 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                     }
                     if (ptr_buffer)
                     {
-                        gui_switch_to_buffer (window, ptr_buffer);
-                        gui_redraw_buffer (ptr_buffer);
+                        gui_window_switch_to_buffer (window, ptr_buffer);
+                        gui_window_redraw_buffer (ptr_buffer);
                     }
                 }
             }
@@ -2093,7 +2093,7 @@ weechat_cmd_disconnect (t_irc_server *server, t_irc_channel *channel,
                         _("Auto-reconnection is cancelled\n"));
         }
         server_disconnect (ptr_server, 0);
-        gui_draw_buffer_status (buffer, 1);
+        gui_status_draw (buffer, 1);
     }
     else
     {
@@ -2879,7 +2879,7 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
             if (server_name)
                 free (server_name);
             
-            gui_redraw_buffer (buffer);
+            gui_window_redraw_buffer (buffer);
             
             return 0;
         }
@@ -3088,7 +3088,7 @@ weechat_cmd_set_display_option (t_config_option *option, char *prefix, void *val
                         option->array_values[*((int *)value)]);
             break;
         case OPTION_TYPE_COLOR:
-            color_name = gui_get_color_name (*((int *)value));
+            color_name = gui_color_get_name (*((int *)value));
             gui_printf (NULL, "%s%s\n",
                         GUI_COLOR(COLOR_WIN_CHAT_HOST),
                         (color_name) ? color_name : _("(unknown)"));
@@ -3798,7 +3798,7 @@ weechat_cmd_upgrade (t_irc_server *server, t_irc_channel *channel,
     plugin_end ();
 #endif
     (void) config_write (NULL);
-    gui_end ();
+    gui_main_end ();
     fifo_remove ();
     if (weechat_log_file)
         fclose (weechat_log_file);

@@ -19,9 +19,11 @@ INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\"
 
 noinst_LIBRARIES = lib_weechat_gui_common.a
 
-lib_weechat_gui_common_a_SOURCES = gui-common.c \
+lib_weechat_gui_common_a_SOURCES = gui-buffer.c \
+                                   gui-common.c \
                                    gui-action.c \
                                    gui-keyboard.c \
+                                   gui-window.c \
                                    gui.h
 
 if GUI_NCURSES

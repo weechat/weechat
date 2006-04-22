@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-04-16 13:52+0200\n"
+"POT-Creation-Date: 2006-04-22 23:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1247,38 +1247,38 @@ msgstr ""
 msgid "whois (secure connection)"
 msgstr ""
 
-#: src/irc/irc-display.c:367
+#: src/irc/irc-display.c:375
 #, c-format
 msgid "%sServer: %s%s %s[%s%s%s]\n"
 msgstr ""
 
-#: src/irc/irc-display.c:374
+#: src/irc/irc-display.c:382
 msgid "connected"
 msgstr ""
 
-#: src/irc/irc-display.c:374
+#: src/irc/irc-display.c:382
 msgid "not connected"
 msgstr ""
 
-#: src/irc/irc-display.c:378 src/irc/irc-display.c:382
-#: src/irc/irc-display.c:391 src/irc/irc-display.c:393
+#: src/irc/irc-display.c:386 src/irc/irc-display.c:390
+#: src/irc/irc-display.c:399 src/irc/irc-display.c:401
 msgid "on"
 msgstr ""
 
-#: src/irc/irc-display.c:378 src/irc/irc-display.c:382
-#: src/irc/irc-display.c:391 src/irc/irc-display.c:393
+#: src/irc/irc-display.c:386 src/irc/irc-display.c:390
+#: src/irc/irc-display.c:399 src/irc/irc-display.c:401
 msgid "off"
 msgstr ""
 
-#: src/irc/irc-display.c:380
+#: src/irc/irc-display.c:388
 msgid " (temporary server, will not be saved)"
 msgstr ""
 
-#: src/irc/irc-display.c:385 src/irc/irc-display.c:416 src/irc/irc-recv.c:3543
+#: src/irc/irc-display.c:393 src/irc/irc-display.c:424 src/irc/irc-recv.c:3543
 msgid "seconds"
 msgstr ""
 
-#: src/irc/irc-display.c:396
+#: src/irc/irc-display.c:404
 msgid "(hidden)"
 msgstr ""
 
@@ -2209,102 +2209,102 @@ msgstr ""
 msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 msgstr ""
 
-#: src/gui/curses/gui-input.c:386
+#: src/gui/curses/gui-chat.c:865
+msgid "bytes"
+msgstr ""
+
+#: src/gui/curses/gui-chat.c:865
+msgid "Kb"
+msgstr ""
+
+#: src/gui/curses/gui-chat.c:865
+msgid "Mb"
+msgstr ""
+
+#: src/gui/curses/gui-chat.c:865
+msgid "Gb"
+msgstr ""
+
+#: src/gui/curses/gui-chat.c:983
+msgid "ETA"
+msgstr ""
+
+#: src/gui/curses/gui-input.c:398
+msgid "  [A] Accept"
+msgstr ""
+
+#: src/gui/curses/gui-input.c:399 src/gui/curses/gui-input.c:403
+msgid "  [C] Cancel"
+msgstr ""
+
+#: src/gui/curses/gui-input.c:408
+msgid "  [R] Remove"
+msgstr ""
+
+#: src/gui/curses/gui-input.c:412
+msgid "  [P] Purge old DCC"
+msgstr ""
+
+#: src/gui/curses/gui-input.c:413
+msgid "  [Q] Close DCC view"
+msgstr ""
+
+#: src/gui/curses/gui-input.c:421
+msgid "  [Q] Close raw data view"
+msgstr ""
+
+#: src/gui/curses/gui-main.c:100
 #, c-format
 msgid "Day changed to %s\n"
 msgstr ""
 
-#: src/gui/curses/gui-input.c:491
+#: src/gui/curses/gui-main.c:205
 #, c-format
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:1549
-msgid "bytes"
-msgstr ""
-
-#: src/gui/curses/gui-display.c:1549
-msgid "Kb"
-msgstr ""
-
-#: src/gui/curses/gui-display.c:1549
-msgid "Mb"
-msgstr ""
-
-#: src/gui/curses/gui-display.c:1549
-msgid "Gb"
-msgstr ""
-
-#: src/gui/curses/gui-display.c:1667
-msgid "ETA"
-msgstr ""
-
-#: src/gui/curses/gui-display.c:2026
+#: src/gui/curses/gui-status.c:87
 msgid "<servers>"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2038
+#: src/gui/curses/gui-status.c:99
 msgid "(away)"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2177
+#: src/gui/curses/gui-status.c:238
 msgid "[not connected] "
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2183
+#: src/gui/curses/gui-status.c:244
 msgid "<RAW_IRC> "
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2195
+#: src/gui/curses/gui-status.c:256
 msgid "Act: "
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2276
+#: src/gui/curses/gui-status.c:337
 msgid "RAW_IRC"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2297
+#: src/gui/curses/gui-status.c:358
 #, c-format
 msgid "Lag: %.1f"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2313
+#: src/gui/curses/gui-status.c:374
 msgid "-MORE-"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2762
-msgid "  [A] Accept"
-msgstr ""
-
-#: src/gui/curses/gui-display.c:2763 src/gui/curses/gui-display.c:2767
-msgid "  [C] Cancel"
-msgstr ""
-
-#: src/gui/curses/gui-display.c:2772
-msgid "  [R] Remove"
-msgstr ""
-
-#: src/gui/curses/gui-display.c:2776
-msgid "  [P] Purge old DCC"
-msgstr ""
-
-#: src/gui/curses/gui-display.c:2777
-msgid "  [Q] Close DCC view"
-msgstr ""
-
-#: src/gui/curses/gui-display.c:2785
-msgid "  [Q] Close raw data view"
-msgstr ""
-
-#: src/gui/gtk/gui-display.c:2279
+#: src/gui/gtk/gui-main.c:160
 msgid "server"
 msgstr ""
 
-#: src/gui/gui-common.c:782
+#: src/gui/gui-buffer.c:538
 msgid "Not enough memory for new line\n"
 msgstr ""
 
-#: src/gui/gui-common.c:1170
+#: src/gui/gui-common.c:439
 msgid "Not enough memory for infobar message\n"
 msgstr ""
 

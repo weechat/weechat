@@ -1062,7 +1062,7 @@ weechat_sigsegv ()
     weechat_dump (1);
     dcc_end ();
     server_free_all ();
-    gui_end ();
+    gui_main_end ();
     fprintf (stderr, "\n");
     fprintf (stderr, "*** Very bad! WeeChat has crashed (SIGSEGV received)\n");
     fprintf (stderr, "*** Full crash dump was saved to %s/weechat.log file\n", weechat_home);
@@ -1093,7 +1093,7 @@ main (int argc, char *argv[])
     signal (SIGQUIT, SIG_IGN);          /* ignore SIGQUIT signal            */
     signal (SIGPIPE, SIG_IGN);          /* ignore SIGPIPE signal            */
     signal (SIGSEGV, weechat_sigsegv);  /* crash dump when SIGSEGV received */
-    gui_pre_init (&argc, &argv);        /* pre-initiliaze interface         */
+    gui_main_pre_init (&argc, &argv);   /* pre-initiliaze interface         */
     weechat_init_vars ();               /* initialize some variables        */
     gui_key_init ();                    /* init keyb. (default key bindings)*/
     weechat_parse_args (argc, argv);    /* parse command line args          */
@@ -1103,7 +1103,7 @@ main (int argc, char *argv[])
     weechat_config_read ();             /* read configuration               */
     weechat_create_config_dirs ();      /* create config directories        */
     utf8_init ();                       /* init UTF-8 in WeeChat            */
-    gui_init ();                        /* init WeeChat interface           */
+    gui_main_init ();                   /* init WeeChat interface           */
     fifo_create ();                     /* FIFO pipe for remote control     */
     if (weechat_session)
         session_load (weechat_session); /* load previous session if asked   */
@@ -1125,7 +1125,7 @@ main (int argc, char *argv[])
     command_index_free ();              /* free commands index              */
     dcc_end ();                         /* remove all DCC                   */
     server_free_all ();                 /* free all servers                 */
-    gui_end ();                         /* shut down WeeChat GUI            */
+    gui_main_end ();                    /* shut down WeeChat GUI            */
     weechat_shutdown (EXIT_SUCCESS, 0); /* quit WeeChat (oh no, why?)       */
     
     return EXIT_SUCCESS;                /* make gcc happy (never executed)  */

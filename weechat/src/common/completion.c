@@ -644,7 +644,7 @@ completion_list_add_option_value (t_completion *completion)
                     weelist_add (&completion->completion_list,
                                  &completion->last_completion,
                                  (option_value) ?
-                                 gui_get_color_name (*((int *)(option_value))) :
+                                 gui_color_get_name (*((int *)(option_value))) :
                                  option->default_string);
                     break;
                 case OPTION_TYPE_STRING:

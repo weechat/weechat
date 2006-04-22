@@ -25,166 +25,157 @@
 #endif
 
 #include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
-#include <signal.h>
-#include <time.h>
-#include <sys/socket.h>
+
 #include <gtk/gtk.h>
 
 #include "../../common/weechat.h"
 #include "../gui.h"
-#include "../../common/weeconfig.h"
-#include "../../common/command.h"
-#include "../../common/hotlist.h"
-#include "../../common/fifo.h"
 #include "../../common/utf8.h"
-#include "../../irc/irc.h"
+#include "../../common/weeconfig.h"
+#include "gui-gtk.h"
+
+#ifdef PLUGINS
+#include "../../plugins/plugins.h"
+#endif
 
 
 /*
- * gui_input_default_key_bindings: create default key bindings
+ * gui_input_set_color: set color for an input window
  */
 
 void
-gui_input_default_key_bindings ()
+gui_input_set_color (t_gui_window *window, int irc_color)
 {
-    int i;
-    char key_str[32], command[32];
-    
-    /* keys binded with internal functions */
-    gui_key_bind ( /* RC          */ "ctrl-M",             "return");
-    gui_key_bind ( /* RC          */ "ctrl-J",             "return");
-    gui_key_bind ( /* tab         */ "ctrl-I",             "tab");
-    gui_key_bind ( /* basckp      */ "ctrl-H",             "backspace");
-    gui_key_bind ( /* basckp      */ "ctrl-?",             "backspace");
-    gui_key_bind ( /* del         */ "meta2-3~",           "delete");
-    gui_key_bind ( /* ^K          */ "ctrl-K",             "delete_end_line");
-    gui_key_bind ( /* ^U          */ "ctrl-U",             "delete_beginning_line");
-    gui_key_bind ( /* ^W          */ "ctrl-W",             "delete_previous_word");
-    gui_key_bind ( /* ^Y          */ "ctrl-Y",             "clipboard_paste");
-    gui_key_bind ( /* ^T          */ "ctrl-T",             "transpose_chars");
-    gui_key_bind ( /* home        */ "meta2-1~",           "home");
-    gui_key_bind ( /* home        */ "meta2-H",            "home");
-    gui_key_bind ( /* home        */ "meta2-7~",           "home");
-    gui_key_bind ( /* ^A          */ "ctrl-A",             "home");
-    gui_key_bind ( /* end         */ "meta2-4~",           "end");
-    gui_key_bind ( /* end         */ "meta2-F",            "end");
-    gui_key_bind ( /* end         */ "meta2-8~",           "end");
-    gui_key_bind ( /* ^E          */ "ctrl-E",             "end");
-    gui_key_bind ( /* left        */ "meta2-D",            "left");
-    gui_key_bind ( /* right       */ "meta2-C",            "right");
-    gui_key_bind ( /* up          */ "meta2-A",            "up");
-    gui_key_bind ( /* ^up         */ "meta-Oa",            "up_global");
-    gui_key_bind ( /* down        */ "meta2-B",            "down");
-    gui_key_bind ( /* ^down       */ "meta-Ob",            "down_global");
-    gui_key_bind ( /* pgup        */ "meta2-5~",           "page_up");
-    gui_key_bind ( /* pgdn        */ "meta2-6~",           "page_down");
-    gui_key_bind ( /* m-pgup      */ "meta-meta2-5~",      "scroll_up");
-    gui_key_bind ( /* m-pgdn      */ "meta-meta2-6~",      "scroll_down");
-    gui_key_bind ( /* F10         */ "meta2-21~",          "infobar_clear");
-    gui_key_bind ( /* F11         */ "meta2-23~",          "nick_page_up");
-    gui_key_bind ( /* F12         */ "meta2-24~",          "nick_page_down");
-    gui_key_bind ( /* m-F11       */ "meta-meta2-1~",      "nick_beginning");
-    gui_key_bind ( /* m-F12       */ "meta-meta2-4~",      "nick_end");
-    gui_key_bind ( /* ^L          */ "ctrl-L",             "refresh");
-    gui_key_bind ( /* m-a         */ "meta-a",             "jump_smart");
-    gui_key_bind ( /* m-b         */ "meta-b",             "previous_word");
-    gui_key_bind ( /* ^left       */ "meta-Od",            "previous_word");
-    gui_key_bind ( /* m-d         */ "meta-d",             "delete_next_word");
-    gui_key_bind ( /* m-f         */ "meta-f",             "next_word");
-    gui_key_bind ( /* ^right      */ "meta-Oc",            "next_word");
-    gui_key_bind ( /* m-h         */ "meta-h",             "hotlist_clear");
-    gui_key_bind ( /* m-j,m-d     */ "meta-jmeta-d",       "jump_dcc");
-    gui_key_bind ( /* m-j,m-l     */ "meta-jmeta-l",       "jump_last_buffer");
-    gui_key_bind ( /* m-j,m-s     */ "meta-jmeta-s",       "jump_server");
-    gui_key_bind ( /* m-j,m-x     */ "meta-jmeta-x",       "jump_next_server");
-    gui_key_bind ( /* m-k         */ "meta-k",             "grab_key");
-    gui_key_bind ( /* m-n         */ "meta-n",             "scroll_next_highlight");
-    gui_key_bind ( /* m-p         */ "meta-p",             "scroll_previous_highlight");
-    gui_key_bind ( /* m-r         */ "meta-r",             "delete_line");
-    gui_key_bind ( /* m-s         */ "meta-s",             "switch_server");
-    gui_key_bind ( /* m-u         */ "meta-u",             "scroll_unread");
-    
-    /* keys binded with commands */
-    gui_key_bind ( /* m-left      */ "meta-meta2-D",       "/buffer -1");
-    gui_key_bind ( /* F5          */ "meta2-15~",          "/buffer -1");
-    gui_key_bind ( /* m-right     */ "meta-meta2-C",       "/buffer +1");
-    gui_key_bind ( /* F6          */ "meta2-17~",          "/buffer +1");
-    gui_key_bind ( /* F7          */ "meta2-18~",          "/window -1");
-    gui_key_bind ( /* F8          */ "meta2-19~",          "/window +1");
-    gui_key_bind ( /* m-w,m-up    */ "meta-wmeta-meta2-A", "/window up");
-    gui_key_bind ( /* m-w,m-down  */ "meta-wmeta-meta2-B", "/window down");
-    gui_key_bind ( /* m-w,m-left  */ "meta-wmeta-meta2-D", "/window left");
-    gui_key_bind ( /* m-w,m-right */ "meta-wmeta-meta2-C", "/window right");
-    gui_key_bind ( /* m-0         */ "meta-0",             "/buffer 10");
-    gui_key_bind ( /* m-1         */ "meta-1",             "/buffer 1");
-    gui_key_bind ( /* m-2         */ "meta-2",             "/buffer 2");
-    gui_key_bind ( /* m-3         */ "meta-3",             "/buffer 3");
-    gui_key_bind ( /* m-4         */ "meta-4",             "/buffer 4");
-    gui_key_bind ( /* m-5         */ "meta-5",             "/buffer 5");
-    gui_key_bind ( /* m-6         */ "meta-6",             "/buffer 6");
-    gui_key_bind ( /* m-7         */ "meta-7",             "/buffer 7");
-    gui_key_bind ( /* m-8         */ "meta-8",             "/buffer 8");
-    gui_key_bind ( /* m-9         */ "meta-9",             "/buffer 9");
-    
-    /* bind meta-j + {01..99} to switch to buffers # > 10 */
-    for (i = 1; i < 100; i++)
-    {
-        sprintf (key_str, "meta-j%02d", i);
-        sprintf (command, "/buffer %d", i);
-        gui_key_bind (key_str, command);
-    }
+    /*int fg, bg;*/
+
+    /* TODO: write this function for Gtk */
+    (void) window;
+    (void) irc_color;
 }
 
 /*
- * gui_input_grab_end: insert grabbed key in input buffer
+ * gui_input_get_prompt_length: return input prompt length
  */
 
-void
-gui_input_grab_end ()
+int
+gui_input_get_prompt_length (t_gui_window *window, char *nick)
 {
-    char *expanded_key;
-
-    /* get expanded name (for example: ^U => ctrl-u) */
-    expanded_key = gui_key_get_expanded_name (gui_key_buffer);
+    char *pos, *modes;
+    int length, mode_found;
     
-    if (expanded_key)
+    length = 0;
+    pos = cfg_look_input_format;
+    while (pos && pos[0])
     {
-        if (gui_current_window->buffer->has_input)
+        switch (pos[0])
         {
-            gui_insert_string_input (gui_current_window, expanded_key, -1);
-            gui_current_window->buffer->input_buffer_pos += utf8_strlen (expanded_key);
-            gui_draw_buffer_input (gui_current_window->buffer, 1);
+            case '%':
+                pos++;
+                switch (pos[0])
+                {
+                    case 'c':
+                        if (CHANNEL(window->buffer))
+                            length += utf8_strlen (CHANNEL(window->buffer)->name);
+                        else
+                        {
+                            if (SERVER(window->buffer))
+                                length += utf8_strlen (SERVER(window->buffer)->name);
+                        }
+                        pos++;
+                        break;
+                    case 'm':
+                        if (SERVER(window->buffer))
+                        {
+                            mode_found = 0;
+                            for (modes = SERVER(window->buffer)->nick_modes;
+                                 modes && modes[0]; modes++)
+                            {
+                                if (modes[0] != ' ')
+                                {
+                                    length++;
+                                    mode_found = 1;
+                                }
+                            }
+                            if (mode_found)
+                                length++;
+                        }
+                        pos++;
+                        break;
+                    case 'n':
+                        length += utf8_strlen (nick);
+                        pos++;
+                        break;
+                    default:
+                        length++;
+                        if (pos[0])
+                        {
+                            if (pos[0] == '%')
+                                pos++;
+                            else
+                            {
+                                length++;
+                                pos += utf8_char_size (pos);
+                            }
+                        }
+                        break;
+                }
+                break;
+            default:
+                length++;
+                pos += utf8_char_size (pos);
+                break;
         }
-        free (expanded_key);
     }
+    return length;
+}
+
+/*
+ * gui_input_draw_prompt: display input prompt
+ */
+
+void
+gui_input_draw_prompt (t_gui_window *window, char *nick)
+{
+    /*char *pos, saved_char, *modes;
+      int char_size, mode_found;*/
+
+    /* TODO: write this function for Gtk */
+    (void) window;
+    (void) nick;
+}
+
+/*
+ * gui_input_draw_text: display text in input buffer, according to color mask
+ */
+
+void
+gui_input_draw_text (t_gui_window *window, int input_width)
+{
+    /*char *ptr_start, *ptr_next, saved_char;
+      int pos_mask, size, last_color, color;*/
+
+    /* TODO: write this function for Gtk */
+    (void) window;
+    (void) input_width;
+}
+
+/*
+ * gui_input_draw: draw input window for a buffer
+ */
+
+void
+gui_input_draw (t_gui_buffer *buffer, int erase)
+{
+    /*t_gui_window *ptr_win;
+    char format[32];
+    char *ptr_nickname;
+    int input_width;
+    t_irc_dcc *dcc_selected;*/
     
-    /* end grab mode */
-    gui_key_grab = 0;
-    gui_key_grab_count = 0;
-    gui_key_buffer[0] = '\0';
-}
-
-/*
- * gui_input_read: read keyboard chars
- */
-
-void
-gui_input_read ()
-{
+    if (!gui_ok)
+        return;
+    
     /* TODO: write this function for Gtk */
+    (void) buffer;
+    (void) erase;
 }
-
-/*
- * gui_main_loop: main loop for WeeChat with ncurses GUI
- */
-
-void
-gui_main_loop ()
-{
-    /* TODO: write this function for Gtk */
-    gtk_main ();
-}
-

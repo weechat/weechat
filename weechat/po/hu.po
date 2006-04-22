@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.9-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-04-16 13:52+0200\n"
+"POT-Creation-Date: 2006-04-22 23:03+0200\n"
 "PO-Revision-Date: 2006-04-16 13:55+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1367,38 +1367,38 @@ msgstr "más felhasználók üzemmódját nem módosíthatja"
 msgid "whois (secure connection)"
 msgstr ""
 
-#: src/irc/irc-display.c:367
+#: src/irc/irc-display.c:375
 #, c-format
 msgid "%sServer: %s%s %s[%s%s%s]\n"
 msgstr "%s Szerver: %s%s %s[%s%s%s]\n"
 
-#: src/irc/irc-display.c:374
+#: src/irc/irc-display.c:382
 msgid "connected"
 msgstr "csatlakozva"
 
-#: src/irc/irc-display.c:374
+#: src/irc/irc-display.c:382
 msgid "not connected"
 msgstr "nincs csatlakozva"
 
-#: src/irc/irc-display.c:378 src/irc/irc-display.c:382
-#: src/irc/irc-display.c:391 src/irc/irc-display.c:393
+#: src/irc/irc-display.c:386 src/irc/irc-display.c:390
+#: src/irc/irc-display.c:399 src/irc/irc-display.c:401
 msgid "on"
 msgstr "be"
 
-#: src/irc/irc-display.c:378 src/irc/irc-display.c:382
-#: src/irc/irc-display.c:391 src/irc/irc-display.c:393
+#: src/irc/irc-display.c:386 src/irc/irc-display.c:390
+#: src/irc/irc-display.c:399 src/irc/irc-display.c:401
 msgid "off"
 msgstr "ki"
 
-#: src/irc/irc-display.c:380
+#: src/irc/irc-display.c:388
 msgid " (temporary server, will not be saved)"
 msgstr " (átmeneti szerver, nem lesz mentve)"
 
-#: src/irc/irc-display.c:385 src/irc/irc-display.c:416 src/irc/irc-recv.c:3543
+#: src/irc/irc-display.c:393 src/irc/irc-display.c:424 src/irc/irc-recv.c:3543
 msgid "seconds"
 msgstr "másodperc"
 
-#: src/irc/irc-display.c:396
+#: src/irc/irc-display.c:404
 msgid "(hidden)"
 msgstr "(rejtett)"
 
@@ -2354,102 +2354,102 @@ msgstr ""
 msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 msgstr "%s (%s/%s) szerver/szoba nem található a modul futtatása parancshoz\n"
 
-#: src/gui/curses/gui-input.c:386
+#: src/gui/curses/gui-chat.c:865
+msgid "bytes"
+msgstr "byte"
+
+#: src/gui/curses/gui-chat.c:865
+msgid "Kb"
+msgstr "Kb"
+
+#: src/gui/curses/gui-chat.c:865
+msgid "Mb"
+msgstr "Mb"
+
+#: src/gui/curses/gui-chat.c:865
+msgid "Gb"
+msgstr "Gb"
+
+#: src/gui/curses/gui-chat.c:983
+msgid "ETA"
+msgstr ""
+
+#: src/gui/curses/gui-input.c:398
+msgid "  [A] Accept"
+msgstr "  [A] Elfogadás"
+
+#: src/gui/curses/gui-input.c:399 src/gui/curses/gui-input.c:403
+msgid "  [C] Cancel"
+msgstr "  [C] Mégsem"
+
+#: src/gui/curses/gui-input.c:408
+msgid "  [R] Remove"
+msgstr "  [R] Eltávolítás"
+
+#: src/gui/curses/gui-input.c:412
+msgid "  [P] Purge old DCC"
+msgstr "  [P] Régi DCC törlése"
+
+#: src/gui/curses/gui-input.c:413
+msgid "  [Q] Close DCC view"
+msgstr "  [Q] DCC nézet bezárása"
+
+#: src/gui/curses/gui-input.c:421
+msgid "  [Q] Close raw data view"
+msgstr "  [Q] Nyers adat nézet bezárása"
+
+#: src/gui/curses/gui-main.c:100
 #, c-format
 msgid "Day changed to %s\n"
 msgstr "A mai dátum: %s\n"
 
-#: src/gui/curses/gui-input.c:491
+#: src/gui/curses/gui-main.c:205
 #, c-format
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr "%s túl nagy a késés(lag), lecsatlakozás a szerverről...\n"
 
-#: src/gui/curses/gui-display.c:1549
-msgid "bytes"
-msgstr "byte"
-
-#: src/gui/curses/gui-display.c:1549
-msgid "Kb"
-msgstr "Kb"
-
-#: src/gui/curses/gui-display.c:1549
-msgid "Mb"
-msgstr "Mb"
-
-#: src/gui/curses/gui-display.c:1549
-msgid "Gb"
-msgstr "Gb"
-
-#: src/gui/curses/gui-display.c:1667
-msgid "ETA"
-msgstr ""
-
-#: src/gui/curses/gui-display.c:2026
+#: src/gui/curses/gui-status.c:87
 msgid "<servers>"
 msgstr "<szerverek>"
 
-#: src/gui/curses/gui-display.c:2038
+#: src/gui/curses/gui-status.c:99
 msgid "(away)"
 msgstr "(távol)"
 
-#: src/gui/curses/gui-display.c:2177
+#: src/gui/curses/gui-status.c:238
 msgid "[not connected] "
 msgstr "[nincs csatlakozva]"
 
-#: src/gui/curses/gui-display.c:2183
+#: src/gui/curses/gui-status.c:244
 msgid "<RAW_IRC> "
 msgstr "<NYERS_IRC> "
 
-#: src/gui/curses/gui-display.c:2195
+#: src/gui/curses/gui-status.c:256
 msgid "Act: "
 msgstr "Akt: "
 
-#: src/gui/curses/gui-display.c:2276
+#: src/gui/curses/gui-status.c:337
 msgid "RAW_IRC"
 msgstr ""
 
-#: src/gui/curses/gui-display.c:2297
+#: src/gui/curses/gui-status.c:358
 #, c-format
 msgid "Lag: %.1f"
 msgstr "Lag: %.1f"
 
-#: src/gui/curses/gui-display.c:2313
+#: src/gui/curses/gui-status.c:374
 msgid "-MORE-"
 msgstr "-TOVÁBB-"
 
-#: src/gui/curses/gui-display.c:2762
-msgid "  [A] Accept"
-msgstr "  [A] Elfogadás"
-
-#: src/gui/curses/gui-display.c:2763 src/gui/curses/gui-display.c:2767
-msgid "  [C] Cancel"
-msgstr "  [C] Mégsem"
-
-#: src/gui/curses/gui-display.c:2772
-msgid "  [R] Remove"
-msgstr "  [R] Eltávolítás"
-
-#: src/gui/curses/gui-display.c:2776
-msgid "  [P] Purge old DCC"
-msgstr "  [P] Régi DCC törlése"
-
-#: src/gui/curses/gui-display.c:2777
-msgid "  [Q] Close DCC view"
-msgstr "  [Q] DCC nézet bezárása"
-
-#: src/gui/curses/gui-display.c:2785
-msgid "  [Q] Close raw data view"
-msgstr "  [Q] Nyers adat nézet bezárása"
-
-#: src/gui/gtk/gui-display.c:2279
+#: src/gui/gtk/gui-main.c:160
 msgid "server"
 msgstr "szerver"
 
-#: src/gui/gui-common.c:782
+#: src/gui/gui-buffer.c:538
 msgid "Not enough memory for new line\n"
 msgstr "Nincs elég memória az új sorhoz\n"
 
-#: src/gui/gui-common.c:1170
+#: src/gui/gui-common.c:439
 msgid "Not enough memory for infobar message\n"
 msgstr "Nincs elég memória az információs pult üzenethez\n"
 

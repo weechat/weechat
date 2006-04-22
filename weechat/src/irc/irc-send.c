@@ -75,7 +75,7 @@ irc_login (t_irc_server *server)
                   "USER %s %s %s :%s\r\n",
                   server->nick, server->username, ptr_hostname, "servername",
                   server->realname);
-    gui_draw_buffer_input (gui_current_window->buffer, 1);
+    gui_input_draw (gui_current_window->buffer, 1);
 }
 
 /*
@@ -343,7 +343,7 @@ irc_cmd_send_away (t_irc_server *server, t_irc_channel *channel,
     else
         irc_send_away (server, arguments);
     
-    gui_draw_buffer_status (buffer, 1);
+    gui_status_draw (buffer, 1);
     gui_add_hotlist = 1;
     return 0;
 }
@@ -1368,11 +1368,11 @@ irc_cmd_send_nick_server (t_irc_server *server, char *nickname)
         if (server->nick)
             free (server->nick);
         server->nick = strdup (nickname);
-        gui_draw_buffer_input (server->buffer, 1);
+        gui_input_draw (server->buffer, 1);
         for (ptr_channel = server->channels; ptr_channel;
              ptr_channel = ptr_channel->next_channel)
         {
-            gui_draw_buffer_input (ptr_channel->buffer, 1);
+            gui_input_draw (ptr_channel->buffer, 1);
         }
     }
 }
@@ -1554,8 +1554,8 @@ irc_cmd_send_part (t_irc_server *server, t_irc_channel *channel,
             ptr_channel = CHANNEL(buffer);
             gui_buffer_free (ptr_channel->buffer, 1);
             channel_free (server, ptr_channel);
-            gui_draw_buffer_status (buffer, 1);
-            gui_draw_buffer_input (buffer, 1);
+            gui_status_draw (buffer, 1);
+            gui_input_draw (buffer, 1);
             return 0;
         }
         channel_name = CHANNEL(buffer)->name;
@@ -1652,7 +1652,7 @@ irc_cmd_send_query (t_irc_server *server, t_irc_channel *channel,
         }
         gui_buffer_new (window, server, ptr_channel,
                         BUFFER_TYPE_STANDARD, 1);
-        gui_draw_buffer_title (ptr_channel->buffer, 1);
+        gui_chat_draw_title (ptr_channel->buffer, 1);
     }
     else
     {
@@ -1660,8 +1660,8 @@ irc_cmd_send_query (t_irc_server *server, t_irc_channel *channel,
         {
             if (ptr_buffer->channel == ptr_channel)
             {
-                gui_switch_to_buffer (window, ptr_buffer);
-                gui_redraw_buffer (ptr_buffer);
+                gui_window_switch_to_buffer (window, ptr_buffer);
+                gui_window_redraw_buffer (ptr_buffer);
                 break;
             }
         }

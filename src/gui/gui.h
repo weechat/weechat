@@ -404,48 +404,38 @@ extern time_t gui_last_activity_time;
 
 extern t_gui_color *gui_color[GUI_NUM_COLORS];
 
-/* GUI independent functions: windows & buffers */
+/* GUI independent functions: windows */
 
 extern int gui_window_tree_init (t_gui_window *);
 extern void gui_window_tree_node_to_leaf (t_gui_window_tree *, t_gui_window *);
 extern void gui_window_tree_free (t_gui_window_tree **);
 extern t_gui_window *gui_window_new (t_gui_window *, int, int, int, int, int, int);
-extern t_gui_buffer *gui_buffer_new (t_gui_window *, void *, void *, int, int);
-extern t_gui_buffer *gui_buffer_search (char *, char *);
-extern t_gui_window *gui_buffer_find_window (t_gui_buffer *);
-extern t_gui_buffer *gui_get_dcc_buffer (t_gui_window *);
-extern void gui_buffer_clear (t_gui_buffer *);
-extern void gui_buffer_clear_all ();
 extern void gui_window_free (t_gui_window *);
-extern void gui_infobar_printf (int, int, char *, ...);
-extern void gui_infobar_printf_from_buffer (t_gui_buffer *, int, int, char *, char *, ...);
-extern void gui_infobar_remove ();
-extern void gui_infobar_remove_all ();
-extern void gui_buffer_free (t_gui_buffer *, int);
-extern t_gui_line *gui_line_new (t_gui_buffer *);
-extern int gui_word_strlen (t_gui_window *, char *);
-extern int gui_word_real_pos (t_gui_window *, char *, int);
-extern void gui_printf_internal (t_gui_buffer *, int, int, char *, char *, ...);
-extern void gui_printf_raw_data (void *, int, char *);
-extern void gui_input_optimize_size (t_gui_buffer *);
-extern void gui_input_init_color_mask (t_gui_buffer *);
-extern void gui_input_move (t_gui_buffer *, char *, char *, int );
-extern void gui_exec_action_dcc (t_gui_window *, char *);
-extern void gui_exec_action_raw_data (t_gui_window *, char *);
-extern int gui_insert_string_input (t_gui_window *, char *, int);
-extern void gui_merge_servers (t_gui_window *);
-extern void gui_split_server (t_gui_window *);
 extern void gui_window_switch_server (t_gui_window *);
-extern void gui_buffer_switch_previous (t_gui_window *);
-extern void gui_buffer_switch_next (t_gui_window *);
 extern void gui_window_switch_previous (t_gui_window *);
 extern void gui_window_switch_next (t_gui_window *);
 extern void gui_window_switch_by_buffer (t_gui_window *, int);
+extern void gui_window_print_log (t_gui_window *);
+
+/* GUI independent functions: buffers */
+
+extern t_gui_buffer *gui_buffer_servers_search ();
+extern t_gui_buffer *gui_buffer_new (t_gui_window *, void *, void *, int, int);
+extern t_gui_buffer *gui_buffer_search (char *, char *);
+extern t_gui_window *gui_buffer_find_window (t_gui_buffer *);
+extern t_gui_buffer *gui_buffer_get_dcc (t_gui_window *);
+extern void gui_buffer_clear (t_gui_buffer *);
+extern void gui_buffer_clear_all ();
+extern void gui_buffer_free (t_gui_buffer *, int);
+extern t_gui_line *gui_buffer_line_new (t_gui_buffer *);
+extern void gui_buffer_merge_servers (t_gui_window *);
+extern void gui_buffer_split_server (t_gui_window *);
+extern void gui_buffer_switch_previous (t_gui_window *);
+extern void gui_buffer_switch_next (t_gui_window *);
 extern void gui_buffer_switch_dcc (t_gui_window *);
 extern void gui_buffer_switch_raw_data (t_gui_window *);
 extern t_gui_buffer *gui_buffer_switch_by_number (t_gui_window *, int);
 extern void gui_buffer_move_to_number (t_gui_buffer *, int);
-extern void gui_window_print_log (t_gui_window *);
 extern void gui_buffer_print_log (t_gui_buffer *);
 
 /* GUI independent functions: actions */
@@ -511,26 +501,48 @@ extern int gui_key_pressed (char *);
 extern void gui_key_free (t_gui_key *);
 extern void gui_key_free_all ();
 
+/* other GUI independent functions */
+
+extern void gui_infobar_printf (int, int, char *, ...);
+extern void gui_infobar_printf_from_buffer (t_gui_buffer *, int, int, char *, char *, ...);
+extern void gui_infobar_remove ();
+extern void gui_infobar_remove_all ();
+extern int gui_word_strlen (t_gui_window *, char *);
+extern int gui_word_real_pos (t_gui_window *, char *, int);
+extern void gui_printf_internal (t_gui_buffer *, int, int, char *, char *, ...);
+extern void gui_printf_raw_data (void *, int, char *);
+extern void gui_input_optimize_size (t_gui_buffer *);
+extern void gui_input_init_color_mask (t_gui_buffer *);
+extern void gui_input_move (t_gui_buffer *, char *, char *, int );
+extern void gui_exec_action_dcc (t_gui_window *, char *);
+extern void gui_exec_action_raw_data (t_gui_window *, char *);
+extern int gui_insert_string_input (t_gui_window *, char *, int);
+
+/* GUI dependant functions: keyboard */
+
+extern void gui_keyboard_default_bindings ();
+
 /* GUI dependant functions: display */
 
-extern int gui_assign_color (int *, char *);
-extern char *gui_get_color_name (int);
+extern void gui_chat_draw_title (t_gui_buffer *, int);
+extern char *gui_chat_word_get_next_char (t_gui_window *, unsigned char *, int);
+extern void gui_chat_draw (t_gui_buffer *, int);
+extern void gui_chat_draw_line (t_gui_buffer *, t_gui_line *);
+extern int gui_color_assign (int *, char *);
+extern char *gui_color_get_name (int);
 extern unsigned char *gui_color_decode (unsigned char *, int);
 extern unsigned char *gui_color_decode_for_user_entry (unsigned char *);
 extern unsigned char *gui_color_encode (unsigned char *);
-extern int gui_buffer_has_nicklist (t_gui_buffer *);
-extern int gui_calculate_pos_size (t_gui_window *, int);
-extern void gui_draw_buffer_title (t_gui_buffer *, int);
-extern char *gui_word_get_next_char (t_gui_window *, unsigned char *, int);
-extern void gui_draw_buffer_chat (t_gui_buffer *, int);
-extern void gui_draw_buffer_chat_line (t_gui_buffer *, t_gui_line *);
-extern void gui_draw_buffer_nick (t_gui_buffer *, int);
-extern void gui_draw_buffer_status (t_gui_buffer *, int);
-extern void gui_draw_buffer_infobar_time (t_gui_buffer *);
-extern void gui_draw_buffer_infobar (t_gui_buffer *, int);
-extern void gui_draw_buffer_input (t_gui_buffer *, int);
-extern void gui_redraw_buffer (t_gui_buffer *);
-extern void gui_switch_to_buffer (t_gui_window *, t_gui_buffer *);
+extern void gui_color_init_pairs ();
+extern void gui_color_rebuild_weechat();
+extern void gui_infobar_draw_time (t_gui_buffer *);
+extern void gui_infobar_draw (t_gui_buffer *, int);
+extern void gui_input_draw (t_gui_buffer *, int);
+extern void gui_nicklist_draw (t_gui_buffer *, int);
+extern void gui_status_draw (t_gui_buffer *, int);
+extern int gui_window_calculate_pos_size (t_gui_window *, int);
+extern void gui_window_redraw_buffer (t_gui_buffer *);
+extern void gui_window_switch_to_buffer (t_gui_window *, t_gui_buffer *);
 extern void gui_window_page_up (t_gui_window *);
 extern void gui_window_page_down (t_gui_window *);
 extern void gui_window_scroll_up (t_gui_window *);
@@ -542,7 +554,7 @@ extern void gui_window_nick_end (t_gui_window *);
 extern void gui_window_nick_page_up (t_gui_window *);
 extern void gui_window_nick_page_down (t_gui_window *);
 extern void gui_window_init_subwindows (t_gui_window *);
-extern void gui_refresh_windows ();
+extern void gui_window_refresh_windows ();
 extern void gui_window_split_horiz (t_gui_window *, int);
 extern void gui_window_split_vertic (t_gui_window *, int);
 extern void gui_window_resize (t_gui_window *, int);
@@ -552,15 +564,12 @@ extern void gui_window_switch_up (t_gui_window *);
 extern void gui_window_switch_down (t_gui_window *);
 extern void gui_window_switch_left (t_gui_window *);
 extern void gui_window_switch_right (t_gui_window *);
-extern void gui_refresh_screen ();
-extern void gui_pre_init (int *, char **[]);
-extern void gui_init_color_pairs ();
-extern void gui_rebuild_weechat_colors ();
-extern void gui_set_window_title ();
-extern void gui_reset_window_title ();
-extern void gui_init ();
-extern void gui_end ();
-extern void gui_input_default_key_bindings ();
+extern void gui_window_refresh_screen ();
+extern void gui_window_set_title ();
+extern void gui_window_reset_title ();
 extern void gui_main_loop ();
+extern void gui_main_pre_init (int *, char **[]);
+extern void gui_main_init ();
+extern void gui_main_end ();
 
 #endif /* gui.h */

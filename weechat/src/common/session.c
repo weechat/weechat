@@ -472,7 +472,7 @@ session_crash (FILE *file, char *message, ...)
     va_end (argptr);
     
     fclose (file);
-    gui_end ();
+    gui_main_end ();
     fprintf (stderr, "%s %s\n",
              WEECHAT_ERROR, buffer);
     fprintf (stderr,
@@ -1464,7 +1464,7 @@ session_load_line (FILE *file)
     }
     
     /* allocate line */
-    line = gui_line_new (session_current_buffer);
+    line = gui_buffer_line_new (session_current_buffer);
     if (!line)
     {
         session_crash (file, _("can't create new line"));
@@ -1685,8 +1685,8 @@ session_load (char *filename)
             ptr_server->buffer = gui_buffers;
     }
     
-    gui_switch_to_buffer (gui_windows, gui_buffers);
-    gui_redraw_buffer (gui_current_window->buffer);
+    gui_window_switch_to_buffer (gui_windows, gui_buffers);
+    gui_window_redraw_buffer (gui_current_window->buffer);
     
     fclose (file);
     

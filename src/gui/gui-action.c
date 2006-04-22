@@ -76,7 +76,7 @@ gui_action_clipboard_paste (t_gui_window *window)
     {
         gui_insert_string_input (window, gui_input_clipboard, -1);
         window->buffer->input_buffer_pos += utf8_strlen (gui_input_clipboard);
-        gui_draw_buffer_input (window->buffer, 0);
+        gui_input_draw (window->buffer, 0);
         window->buffer->completion.position = -1;
     }
 }
@@ -110,7 +110,7 @@ gui_action_return (t_gui_window *window)
             window->buffer->completion.position = -1;
             window->buffer->ptr_history = NULL;
             gui_input_optimize_size (window->buffer);
-            gui_draw_buffer_input (window->buffer, 0);
+            gui_input_draw (window->buffer, 0);
             user_command (SERVER(window->buffer), CHANNEL(window->buffer),
                           command, 0);
             free (command);
@@ -231,7 +231,7 @@ gui_action_tab (t_gui_window *window)
                     window->buffer->input_buffer_pos++;
                 }
             }
-            gui_draw_buffer_input (window->buffer, 0);
+            gui_input_draw (window->buffer, 0);
         }
     }
 }
@@ -262,7 +262,7 @@ gui_action_backspace (t_gui_window *window)
             window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
             window->buffer->input_buffer_color_mask[window->buffer->input_buffer_size] = '\0';
             gui_input_optimize_size (window->buffer);
-            gui_draw_buffer_input (window->buffer, 0);
+            gui_input_draw (window->buffer, 0);
             window->buffer->completion.position = -1;
         }
     }
@@ -294,7 +294,7 @@ gui_action_delete (t_gui_window *window)
             window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
             window->buffer->input_buffer_color_mask[window->buffer->input_buffer_size] = '\0';
             gui_input_optimize_size (window->buffer);
-            gui_draw_buffer_input (window->buffer, 0);
+            gui_input_draw (window->buffer, 0);
             window->buffer->completion.position = -1;
         }
     }
@@ -354,7 +354,7 @@ gui_action_delete_previous_word (t_gui_window *window)
             window->buffer->input_buffer_color_mask[window->buffer->input_buffer_size] = '\0';
             window->buffer->input_buffer_pos -= length_deleted;
             gui_input_optimize_size (window->buffer);
-            gui_draw_buffer_input (window->buffer, 0);
+            gui_input_draw (window->buffer, 0);
             window->buffer->completion.position = -1;
         }
     }
@@ -394,7 +394,7 @@ gui_action_delete_next_word (t_gui_window *window)
         window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
         window->buffer->input_buffer_color_mask[window->buffer->input_buffer_size] = '\0';
         gui_input_optimize_size (window->buffer);
-        gui_draw_buffer_input (window->buffer, 0);
+        gui_input_draw (window->buffer, 0);
         window->buffer->completion.position = -1;
     }
 }
@@ -429,7 +429,7 @@ gui_action_delete_begin_of_line (t_gui_window *window)
             window->buffer->input_buffer_color_mask[window->buffer->input_buffer_size] = '\0';
             window->buffer->input_buffer_pos = 0;
             gui_input_optimize_size (window->buffer);
-            gui_draw_buffer_input (window->buffer, 0);
+            gui_input_draw (window->buffer, 0);
             window->buffer->completion.position = -1;
         }
     }
@@ -458,7 +458,7 @@ gui_action_delete_end_of_line (t_gui_window *window)
         window->buffer->input_buffer_size = strlen (window->buffer->input_buffer);
         window->buffer->input_buffer_length = utf8_strlen (window->buffer->input_buffer);
         gui_input_optimize_size (window->buffer);
-        gui_draw_buffer_input (window->buffer, 0);
+        gui_input_draw (window->buffer, 0);
         window->buffer->completion.position = -1;
     }
 }
@@ -478,7 +478,7 @@ gui_action_delete_line (t_gui_window *window)
         window->buffer->input_buffer_length = 0;
         window->buffer->input_buffer_pos = 0;
         gui_input_optimize_size (window->buffer);
-        gui_draw_buffer_input (window->buffer, 0);
+        gui_input_draw (window->buffer, 0);
         window->buffer->completion.position = -1;
     }
 }
@@ -522,7 +522,7 @@ gui_action_transpose_chars (t_gui_window *window)
             
             window->buffer->input_buffer_pos++;
             
-            gui_draw_buffer_input (window->buffer, 0);	
+            gui_input_draw (window->buffer, 0);	
             window->buffer->completion.position = -1;
         }
     }
@@ -540,7 +540,7 @@ gui_action_home (t_gui_window *window)
         if (window->buffer->input_buffer_pos > 0)
         {
             window->buffer->input_buffer_pos = 0;
-            gui_draw_buffer_input (window->buffer, 0);
+            gui_input_draw (window->buffer, 0);
         }
     }
 }
@@ -559,7 +559,7 @@ gui_action_end (t_gui_window *window)
         {
             window->buffer->input_buffer_pos =
                 window->buffer->input_buffer_length;
-            gui_draw_buffer_input (window->buffer, 0);
+            gui_input_draw (window->buffer, 0);
         }
     }
 }
@@ -576,7 +576,7 @@ gui_action_left (t_gui_window *window)
         if (window->buffer->input_buffer_pos > 0)
         {
             window->buffer->input_buffer_pos--;
-            gui_draw_buffer_input (window->buffer, 0);
+            gui_input_draw (window->buffer, 0);
         }
     }
 }
@@ -616,7 +616,7 @@ gui_action_previous_word (t_gui_window *window)
             else
                 window->buffer->input_buffer_pos = 0;
             
-            gui_draw_buffer_input (window->buffer, 0);
+            gui_input_draw (window->buffer, 0);
         }
     }
 }
@@ -634,7 +634,7 @@ gui_action_right (t_gui_window *window)
             window->buffer->input_buffer_length)
         {
             window->buffer->input_buffer_pos++;
-            gui_draw_buffer_input (window->buffer, 0);
+            gui_input_draw (window->buffer, 0);
         }
     }
 }
@@ -678,7 +678,7 @@ gui_action_next_word (t_gui_window *window)
                     utf8_pos (window->buffer->input_buffer,
                               utf8_prev_char (window->buffer->input_buffer, pos) - window->buffer->input_buffer);
             
-            gui_draw_buffer_input (window->buffer, 0);
+            gui_input_draw (window->buffer, 0);
         }
     }
 }
@@ -703,8 +703,8 @@ gui_action_up (t_gui_window *window)
                         ((t_irc_dcc *)(window->dcc_first))->prev_dcc;
                 window->dcc_selected =
                     ((t_irc_dcc *)(window->dcc_selected))->prev_dcc;
-                gui_draw_buffer_chat (window->buffer, 1);
-                gui_draw_buffer_input (window->buffer, 1);
+                gui_chat_draw (window->buffer, 1);
+                gui_input_draw (window->buffer, 1);
             }
         }
     }
@@ -756,7 +756,7 @@ gui_action_up (t_gui_window *window)
             strcpy (window->buffer->input_buffer,
                     window->buffer->ptr_history->text);
             gui_input_init_color_mask (window->buffer);
-            gui_draw_buffer_input (window->buffer, 0);
+            gui_input_draw (window->buffer, 0);
         }
     }
 }
@@ -791,7 +791,7 @@ gui_action_up_global (t_gui_window *window)
             strcpy (window->buffer->input_buffer,
                     history_global_ptr->text);
             gui_input_init_color_mask (window->buffer);
-            gui_draw_buffer_input (window->buffer, 0);
+            gui_input_draw (window->buffer, 0);
         }
     }
 }
@@ -827,8 +827,8 @@ gui_action_down (t_gui_window *window)
                 else
                     window->dcc_selected =
                         dcc_list->next_dcc;
-                gui_draw_buffer_chat (window->buffer, 1);
-                gui_draw_buffer_input (window->buffer, 1);
+                gui_chat_draw (window->buffer, 1);
+                gui_input_draw (window->buffer, 1);
             }
         }
     }
@@ -860,7 +860,7 @@ gui_action_down (t_gui_window *window)
                         window->buffer->ptr_history->text);
                 gui_input_init_color_mask (window->buffer);
             }
-            gui_draw_buffer_input (window->buffer, 0);
+            gui_input_draw (window->buffer, 0);
         }
     }
 }
@@ -899,7 +899,7 @@ gui_action_down_global (t_gui_window *window)
                         history_global_ptr->text);
                 gui_input_init_color_mask (window->buffer);
             }
-            gui_draw_buffer_input (window->buffer, 0);
+            gui_input_draw (window->buffer, 0);
         }
     }
 }
@@ -1015,15 +1015,15 @@ gui_action_jump_smart (t_gui_window *window)
     {
         if (!hotlist_initial_buffer)
             hotlist_initial_buffer = window->buffer;
-        gui_switch_to_buffer (window, hotlist->buffer);
-        gui_redraw_buffer (window->buffer);
+        gui_window_switch_to_buffer (window, hotlist->buffer);
+        gui_window_redraw_buffer (window->buffer);
     }
     else
     {
         if (hotlist_initial_buffer)
         {
-            gui_switch_to_buffer (window, hotlist_initial_buffer);
-            gui_redraw_buffer (window->buffer);
+            gui_window_switch_to_buffer (window, hotlist_initial_buffer);
+            gui_window_redraw_buffer (window->buffer);
             hotlist_initial_buffer = NULL;
         }
     }
@@ -1040,9 +1040,9 @@ gui_action_jump_dcc (t_gui_window *window)
     {
         if (gui_buffer_before_dcc)
         {
-            gui_switch_to_buffer (window,
-                                  gui_buffer_before_dcc);
-            gui_redraw_buffer (window->buffer);
+            gui_window_switch_to_buffer (window,
+                                         gui_buffer_before_dcc);
+            gui_window_redraw_buffer (window->buffer);
         }
     }
     else
@@ -1063,9 +1063,9 @@ gui_action_jump_raw_data (t_gui_window *window)
     {
         if (gui_buffer_before_raw_data)
         {
-            gui_switch_to_buffer (window,
-                                  gui_buffer_before_raw_data);
-            gui_redraw_buffer (window->buffer);
+            gui_window_switch_to_buffer (window,
+                                         gui_buffer_before_raw_data);
+            gui_window_redraw_buffer (window->buffer);
         }
     }
     else
@@ -1098,9 +1098,9 @@ gui_action_jump_server (t_gui_window *window)
         if (SERVER(window->buffer)->buffer !=
             window->buffer)
         {
-            gui_switch_to_buffer (window,
-                                  SERVER(window->buffer)->buffer);
-            gui_redraw_buffer (window->buffer);
+            gui_window_switch_to_buffer (window,
+                                         SERVER(window->buffer)->buffer);
+            gui_window_redraw_buffer (window->buffer);
         }
     }
 }
@@ -1141,8 +1141,8 @@ gui_action_jump_next_server (t_gui_window *window)
             if ((ptr_server->buffer == ptr_buffer)
                 && (ptr_buffer->all_servers))
                 ptr_buffer->server = ptr_server;
-            gui_switch_to_buffer (window, ptr_buffer);
-            gui_redraw_buffer (window->buffer);
+            gui_window_switch_to_buffer (window, ptr_buffer);
+            gui_window_redraw_buffer (window->buffer);
         }
     }
 }
@@ -1181,8 +1181,8 @@ gui_action_scroll_previous_highlight (t_gui_window *window)
                     window->start_line_pos = 0;
                     window->first_line_displayed =
                         (window->start_line == window->buffer->lines);
-                    gui_draw_buffer_chat (window->buffer, 1);
-                    gui_draw_buffer_status (window->buffer, 0);
+                    gui_chat_draw (window->buffer, 1);
+                    gui_status_draw (window->buffer, 0);
                     return;
                 }
                 ptr_line = ptr_line->prev_line;
@@ -1214,8 +1214,8 @@ gui_action_scroll_next_highlight (t_gui_window *window)
                     window->start_line_pos = 0;
                     window->first_line_displayed =
                         (window->start_line == window->buffer->lines);
-                    gui_draw_buffer_chat (window->buffer, 1);
-                    gui_draw_buffer_status (window->buffer, 0);
+                    gui_chat_draw (window->buffer, 1);
+                    gui_status_draw (window->buffer, 0);
                     return;
                 }
                 ptr_line = ptr_line->next_line;
@@ -1241,8 +1241,8 @@ gui_action_scroll_unread (t_gui_window *window)
         window->start_line_pos = 0;
         window->first_line_displayed =
             (window->start_line == window->buffer->lines);
-        gui_draw_buffer_chat (window->buffer, 1);
-        gui_draw_buffer_status (window->buffer, 0);
+        gui_chat_draw (window->buffer, 1);
+        gui_status_draw (window->buffer, 0);
     }
 }
 
@@ -1256,7 +1256,7 @@ gui_action_hotlist_clear (t_gui_window *window)
     if (hotlist)
     {
         hotlist_free_all ();
-        gui_redraw_buffer (window->buffer);
+        gui_window_redraw_buffer (window->buffer);
     }
     hotlist_initial_buffer = window->buffer;
 }
@@ -1269,7 +1269,7 @@ void
 gui_action_infobar_clear (t_gui_window *window)
 {
     gui_infobar_remove ();
-    gui_draw_buffer_infobar (window->buffer, 1);
+    gui_infobar_draw (window->buffer, 1);
 }
 
 /*
@@ -1282,7 +1282,7 @@ gui_action_refresh_screen (t_gui_window *window)
     /* make gcc happy */
     (void) window;
     
-    gui_refresh_screen ();
+    gui_window_refresh_screen ();
 }
 
 /*

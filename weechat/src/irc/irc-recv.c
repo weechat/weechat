@@ -379,7 +379,7 @@ irc_cmd_recv_invite (t_irc_server *server, char *host, char *nick, char *argumen
                         GUI_COLOR(COLOR_WIN_CHAT_NICK),
                         nick);
             hotlist_add (HOTLIST_HIGHLIGHT, server, server->buffer);
-            gui_draw_buffer_status (gui_current_window->buffer, 1);
+            gui_status_draw (gui_current_window->buffer, 1);
         }
     }
     else
@@ -442,8 +442,8 @@ irc_cmd_recv_join (t_irc_server *server, char *host, char *nick, char *arguments
     ptr_nick = nick_new (server, ptr_channel, nick, 0, 0, 0, 0, 0);
     if (ptr_nick)
         ptr_nick->host = strdup ((pos) ? pos + 1 : host);
-    gui_draw_buffer_nick (ptr_channel->buffer, 1);
-    gui_draw_buffer_status (ptr_channel->buffer, 1);
+    gui_nicklist_draw (ptr_channel->buffer, 1);
+    gui_status_draw (ptr_channel->buffer, 1);
     return 0;
 }
 
@@ -523,8 +523,8 @@ irc_cmd_recv_kick (t_irc_server *server, char *host, char *nick, char *arguments
     {
         /* my nick was kicked => free all nicks, channel is not active any more */
         nick_free_all (ptr_channel);
-        gui_draw_buffer_nick (ptr_channel->buffer, 1);
-        gui_draw_buffer_status (ptr_channel->buffer, 1);
+        gui_nicklist_draw (ptr_channel->buffer, 1);
+        gui_status_draw (ptr_channel->buffer, 1);
         if (server->autorejoin)
             irc_cmd_send_join (server, NULL, ptr_channel->name);
     }
@@ -534,8 +534,8 @@ irc_cmd_recv_kick (t_irc_server *server, char *host, char *nick, char *arguments
         if (ptr_nick)
         {
             nick_free (ptr_channel, ptr_nick);
-            gui_draw_buffer_nick (ptr_channel->buffer, 1);
-            gui_draw_buffer_status (ptr_channel->buffer, 1);
+            gui_nicklist_draw (ptr_channel->buffer, 1);
+            gui_status_draw (ptr_channel->buffer, 1);
         }
     }
     return 0;
@@ -761,7 +761,7 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *channel,
                     {
                         NICK_SET_FLAG(ptr_nick, (set_flag == '+'), NICK_HALFOP);
                         nick_resort (channel, ptr_nick);
-                        gui_draw_buffer_nick (channel->buffer, 1);
+                        gui_nicklist_draw (channel->buffer, 1);
                     }
                 }
                 
@@ -923,7 +923,7 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *channel,
                     {
                         NICK_SET_FLAG(ptr_nick, (set_flag == '+'), NICK_OP);
                         nick_resort (channel, ptr_nick);
-                        gui_draw_buffer_nick (channel->buffer, 1);
+                        gui_nicklist_draw (channel->buffer, 1);
                     }
                 }
                 
@@ -1022,7 +1022,7 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *channel,
                     {
                         NICK_SET_FLAG(ptr_nick, (set_flag == '+'), NICK_VOICE);
                         nick_resort (channel, ptr_nick);
-                        gui_draw_buffer_nick (channel->buffer, 1);
+                        gui_nicklist_draw (channel->buffer, 1);
                     }
                 }
                 
@@ -1235,8 +1235,8 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *nick, char *arguments
         {
             irc_get_channel_modes (server, ptr_channel, arguments, nick,
                                    pos, pos_parm, command_ignored);
-            gui_draw_buffer_status (ptr_channel->buffer, 1);
-            gui_draw_buffer_input (ptr_channel->buffer, 1);
+            gui_status_draw (ptr_channel->buffer, 1);
+            gui_input_draw (ptr_channel->buffer, 1);
         }
         else
         {
@@ -1250,8 +1250,8 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *nick, char *arguments
     else
     {
         irc_get_nick_modes (server, nick, pos, command_ignored);
-        gui_draw_buffer_status (gui_current_window->buffer, 1);
-        gui_draw_buffer_input (gui_current_window->buffer, 1);
+        gui_status_draw (gui_current_window->buffer, 1);
+        gui_input_draw (gui_current_window->buffer, 1);
     }
     return 0;
 }
@@ -1320,7 +1320,7 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *nick, char *arguments
                                 GUI_COLOR(COLOR_WIN_CHAT_NICK),
                                 arguments);
             }
-            gui_draw_buffer_nick (ptr_channel->buffer, 1);
+            gui_nicklist_draw (ptr_channel->buffer, 1);
             gui_add_hotlist = 1;
         }
     }
@@ -1329,17 +1329,17 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *nick, char *arguments
     {
         free (server->nick);
         server->nick = strdup (arguments);
-        gui_draw_buffer_status (gui_current_window->buffer, 1);
+        gui_status_draw (gui_current_window->buffer, 1);
         for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
         {
             if (ptr_win->buffer->server == server)
-                gui_draw_buffer_input (ptr_win->buffer, 1);
+                gui_input_draw (ptr_win->buffer, 1);
         }
     }
     else
     {
-        gui_draw_buffer_status (gui_current_window->buffer, 1);
-        gui_draw_buffer_input (gui_current_window->buffer, 1);
+        gui_status_draw (gui_current_window->buffer, 1);
+        gui_input_draw (gui_current_window->buffer, 1);
     }
     
     return 0;
@@ -1527,7 +1527,7 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *nick, char *argumen
                         (ascii_strcasecmp (nick, "memoserv") != 0))
                     {
                         hotlist_add (HOTLIST_PRIVATE, server, server->buffer);
-                        gui_draw_buffer_status (gui_current_window->buffer, 1);
+                        gui_status_draw (gui_current_window->buffer, 1);
                     }
                 }
             }
@@ -1641,10 +1641,10 @@ irc_cmd_recv_part (t_irc_server *server, char *host, char *nick, char *arguments
             
             if (ptr_channel)
             {
-                gui_draw_buffer_nick (ptr_channel->buffer, 1);
-                gui_draw_buffer_status (ptr_channel->buffer, 1);
+                gui_nicklist_draw (ptr_channel->buffer, 1);
+                gui_status_draw (ptr_channel->buffer, 1);
             }
-            gui_draw_buffer_input (gui_current_window->buffer, 1);
+            gui_input_draw (gui_current_window->buffer, 1);
         }
     }
     else
@@ -1701,7 +1701,7 @@ irc_cmd_recv_pong (t_irc_server *server, char *host, char *nick, char *arguments
         gettimeofday (&tv, &tz);
         server->lag = (int) get_timeval_diff (&(server->lag_check_time), &tv);
         if (old_lag != server->lag)
-            gui_draw_buffer_status (gui_current_window->buffer, 1);
+            gui_status_draw (gui_current_window->buffer, 1);
         
         /* schedule next lag check */
         server->lag_check_time.tv_sec = 0;
@@ -2584,8 +2584,8 @@ irc_cmd_recv_quit (t_irc_server *server, char *host, char *nick, char *arguments
                             arguments,
                             GUI_COLOR(COLOR_WIN_CHAT_DARK));
             }
-            gui_draw_buffer_nick (ptr_channel->buffer, 1);
-            gui_draw_buffer_status (ptr_channel->buffer, 1);
+            gui_nicklist_draw (ptr_channel->buffer, 1);
+            gui_status_draw (ptr_channel->buffer, 1);
         }
     }
     
@@ -2756,7 +2756,7 @@ irc_cmd_recv_topic (t_irc_server *server, char *host, char *nick, char *argument
             ptr_channel->topic = strdup (pos);
         else
             ptr_channel->topic = strdup ("");
-        gui_draw_buffer_title (ptr_channel->buffer, 1);
+        gui_chat_draw_title (ptr_channel->buffer, 1);
     }
     
     return 0;
@@ -2787,8 +2787,8 @@ irc_cmd_recv_004 (t_irc_server *server, char *host, char *nick, char *arguments)
     /* connection to IRC server is ok! */
     server->is_connected = 1;
     server->lag_next_check = time (NULL) + cfg_irc_lag_check;
-    gui_draw_buffer_status (server->buffer, 1);
-    gui_draw_buffer_input (server->buffer, 1);
+    gui_status_draw (server->buffer, 1);
+    gui_input_draw (server->buffer, 1);
     
     /* execute command once connected */
     if (server->command && server->command[0])
@@ -3079,7 +3079,7 @@ irc_cmd_recv_305 (t_irc_server *server, char *host, char *nick, char *arguments)
          ptr_window = ptr_window->next_window)
     {
         if (SERVER(ptr_window->buffer) == server)
-            gui_draw_buffer_status (ptr_window->buffer, 1);
+            gui_status_draw (ptr_window->buffer, 1);
     }
     return 0;
 }
@@ -3116,7 +3116,7 @@ irc_cmd_recv_306 (t_irc_server *server, char *host, char *nick, char *arguments)
          ptr_window = ptr_window->next_window)
     {
         if (SERVER(ptr_window->buffer) == server)
-            gui_draw_buffer_status (ptr_window->buffer, 1);
+            gui_status_draw (ptr_window->buffer, 1);
         if (SERVER(ptr_window->buffer) == server)
             ptr_window->buffer->last_read_line =
                 ptr_window->buffer->last_line;
@@ -3869,7 +3869,7 @@ irc_cmd_recv_324 (t_irc_server *server, char *host, char *nick, char *arguments)
             {
                 irc_get_channel_modes (server, ptr_channel, NULL, NULL,
                                        pos, pos_parm, command_ignored);
-                gui_draw_buffer_status (ptr_channel->buffer, 0);
+                gui_status_draw (ptr_channel->buffer, 0);
             }
         }
     }
@@ -4002,7 +4002,7 @@ irc_cmd_recv_332 (t_irc_server *server, char *host, char *nick, char *arguments)
             }
             
             if (ptr_channel)
-                gui_draw_buffer_title (ptr_buffer, 1);
+                gui_chat_draw_title (ptr_buffer, 1);
         }
     }
     else
@@ -4140,7 +4140,7 @@ irc_cmd_recv_341 (t_irc_server *server, char *host, char *nick, char *arguments)
                         GUI_COLOR(COLOR_WIN_CHAT),
                         GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
                         pos_channel);
-            gui_draw_buffer_status (gui_current_window->buffer, 1);
+            gui_status_draw (gui_current_window->buffer, 1);
         }
         else
         {
@@ -4758,8 +4758,8 @@ irc_cmd_recv_353 (t_irc_server *server, char *host, char *nick, char *arguments)
         }
         if (ptr_channel)
         {
-            gui_draw_buffer_nick (ptr_channel->buffer, 1);
-            gui_draw_buffer_status (ptr_channel->buffer, 1);
+            gui_nicklist_draw (ptr_channel->buffer, 1);
+            gui_status_draw (ptr_channel->buffer, 1);
         }
         else
         {

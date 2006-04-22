@@ -57,11 +57,11 @@ char *dcc_status_string[] =     /* strings for DCC status                   */
 void
 dcc_redraw (int highlight)
 {
-    gui_redraw_buffer (gui_get_dcc_buffer (gui_current_window));
+    gui_window_redraw_buffer (gui_buffer_get_dcc (gui_current_window));
     if (highlight)
     {
-        hotlist_add (highlight, NULL, gui_get_dcc_buffer (gui_current_window));
-        gui_draw_buffer_status (gui_current_window->buffer, 0);
+        hotlist_add (highlight, NULL, gui_buffer_get_dcc (gui_current_window));
+        gui_status_draw (gui_current_window->buffer, 0);
     }
 }
 
@@ -849,7 +849,7 @@ dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nic
         dcc_accept (new_dcc);
     else
         dcc_redraw (HOTLIST_PRIVATE);
-    gui_draw_buffer_status (gui_current_window->buffer, 0);
+    gui_status_draw (gui_current_window->buffer, 0);
     
     return new_dcc;
 }

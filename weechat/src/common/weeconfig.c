@@ -1110,9 +1110,9 @@ void
 config_change_title ()
 {
     if (cfg_look_set_title)
-	gui_set_window_title ();
+	gui_window_set_title ();
     else
-	gui_reset_window_title ();
+	gui_window_reset_title ();
 }
 
 /*
@@ -1122,8 +1122,8 @@ config_change_title ()
 void
 config_change_buffers ()
 {
-    gui_switch_to_buffer (gui_current_window, gui_current_window->buffer);
-    gui_redraw_buffer (gui_current_window->buffer);
+    gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer);
+    gui_window_redraw_buffer (gui_current_window->buffer);
 }
 
 /*
@@ -1133,7 +1133,7 @@ config_change_buffers ()
 void
 config_change_buffer_content ()
 {
-    gui_redraw_buffer (gui_current_window->buffer);
+    gui_window_redraw_buffer (gui_current_window->buffer);
 }
 
 /*
@@ -1146,7 +1146,7 @@ config_change_read_marker ()
     t_gui_window *ptr_win;
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-        gui_redraw_buffer (ptr_win->buffer);
+        gui_window_redraw_buffer (ptr_win->buffer);
 }
 
 /*
@@ -1157,7 +1157,7 @@ void
 config_change_charset ()
 {
     utf8_init ();
-    gui_redraw_buffer (gui_current_window->buffer);
+    gui_window_redraw_buffer (gui_current_window->buffer);
 }
 
 /*
@@ -1169,9 +1169,9 @@ void
 config_change_one_server_buffer ()
 {
     if (cfg_look_one_server_buffer)
-        gui_merge_servers (gui_current_window);
+        gui_buffer_merge_servers (gui_current_window);
     else
-        gui_split_server (gui_current_window);
+        gui_buffer_split_server (gui_current_window);
 }
 
 /*
@@ -1181,9 +1181,9 @@ config_change_one_server_buffer ()
 void
 config_change_color ()
 {
-    gui_init_color_pairs ();
-    gui_rebuild_weechat_colors ();
-    gui_refresh_windows ();
+    gui_color_init_pairs ();
+    gui_color_rebuild_weechat ();
+    gui_window_refresh_windows ();
 }
 
 /*
@@ -1338,7 +1338,7 @@ config_option_set_value (t_config_option *option, char *value)
             *(option->ptr_int) = int_value;
             break;
         case OPTION_TYPE_COLOR:
-            if (!gui_assign_color (option->ptr_int, value))
+            if (!gui_color_assign (option->ptr_int, value))
                 return -1;
             break;
         case OPTION_TYPE_STRING:
@@ -1574,7 +1574,7 @@ config_set_server_value (t_irc_server *server, char *option_name,
             *((int *)(ptr_data)) = int_value;
             break;
         case OPTION_TYPE_COLOR:
-            if (!gui_assign_color ((int *)ptr_data, value))
+            if (!gui_color_assign ((int *)ptr_data, value))
                 return -2;
             break;
         case OPTION_TYPE_STRING:
@@ -1792,7 +1792,7 @@ config_default_values ()
                                 int_value;
                         break;
                     case OPTION_TYPE_COLOR:
-                        if (!gui_assign_color (
+                        if (!gui_color_assign (
                             weechat_options[i][j].ptr_int,
                             weechat_options[i][j].default_string))
                             gui_printf (NULL,
@@ -2377,7 +2377,7 @@ config_write (char *config_name)
                         fprintf (file, "%s = %s\n",
                                  weechat_options[i][j].option_name,
                                  (weechat_options[i][j].ptr_int) ?
-                                 gui_get_color_name (*weechat_options[i][j].ptr_int) :
+                                 gui_color_get_name (*weechat_options[i][j].ptr_int) :
                                  weechat_options[i][j].default_string);
                         break;
                     case OPTION_TYPE_STRING:

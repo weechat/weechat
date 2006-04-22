@@ -234,7 +234,7 @@ weechat_plugin_infobar_remove (t_weechat_plugin *plugin, int how_many)
             how_many--;
         }
     }
-    gui_draw_buffer_infobar (gui_current_window->buffer, 1);
+    gui_infobar_draw (gui_current_window->buffer, 1);
 }
 
 /*
@@ -621,7 +621,7 @@ weechat_plugin_get_config_str_value (t_config_option *option, void *value)
             return option->array_values[*((int *)value)];
             break;
         case OPTION_TYPE_COLOR:
-            color_name = gui_get_color_name (*((int *)value));
+            color_name = gui_color_get_name (*((int *)value));
             return (color_name) ? strdup (color_name) : strdup ("");
             break;
         case OPTION_TYPE_STRING:
@@ -1073,7 +1073,7 @@ weechat_plugin_input_color (t_weechat_plugin *plugin, int color, int start, int 
         return;
     
     if (color < 0)
-        gui_draw_buffer_input (gui_current_window->buffer, 0);
+        gui_input_draw (gui_current_window->buffer, 0);
     else
     {
         if ((start < 0) || (length <= 0))
