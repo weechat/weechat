@@ -1917,6 +1917,7 @@ server_print_log (t_irc_server *server)
     weechat_log_printf ("  ssl_connected . . . : %d\n",   server->ssl_connected);
     weechat_log_printf ("  unterminated_message: '%s'\n", server->unterminated_message);
     weechat_log_printf ("  nick. . . . . . . . : '%s'\n", server->nick);
+    weechat_log_printf ("  nick_modes. . . . . : '%s'\n", server->nick_modes);
     weechat_log_printf ("  reconnect_start . . : %ld\n",  server->reconnect_start);
     weechat_log_printf ("  reconnect_join. . . : %d\n",   server->reconnect_join);
     weechat_log_printf ("  is_away . . . . . . : %d\n",   server->is_away);
