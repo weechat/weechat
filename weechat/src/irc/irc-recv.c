@@ -2597,6 +2597,50 @@ irc_cmd_recv_quit (t_irc_server *server, char *host, char *nick, char *arguments
 }
 
 /*
+ * irc_cmd_recv_server_mode_reason: command received from server (numeric),
+ *                                  format: "mode :reason"
+ */
+
+int
+irc_cmd_recv_server_mode_reason (t_irc_server *server, char *host,
+                                 char *nick, char *arguments)
+{
+    char *ptr_msg;
+    
+    /* make gcc happy */
+    (void) host;
+    (void) nick;
+    
+    if (!command_ignored)
+    {
+        /* skip nickname if at beginning of server message */
+        if (strncmp (server->nick, arguments, strlen (server->nick)) == 0)
+        {
+            arguments += strlen (server->nick) + 1;
+            while (arguments[0] == ' ')
+                arguments++;
+        }
+
+        ptr_msg = strchr (arguments, ' ');
+        if (ptr_msg)
+        {
+            ptr_msg[0] = '\0';
+            ptr_msg++;
+            while (ptr_msg[0] == ' ')
+                ptr_msg++;
+            if (ptr_msg[0] == ':')
+                ptr_msg++;
+        }
+        
+        irc_display_prefix (server, server->buffer, PREFIX_SERVER);
+        gui_printf (server->buffer, "%s%s: %s\n",
+                    GUI_COLOR(COLOR_WIN_CHAT), arguments,
+                    (ptr_msg) ? ptr_msg : "");
+    }
+    return 0;
+}
+
+/*
  * irc_cmd_recv_server_msg: command received from server (numeric)
  */
 

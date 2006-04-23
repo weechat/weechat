@@ -4,6 +4,7 @@ WeeChat - Wee Enhanced Environment for Chat
 ChangeLog - 2006-04-23
 
 Version 0.1.9 (under dev!):
+   * added missing IRC commands (290, 292, 437, 974)
    * fixed crash when multiple pv have same name: now it's forbidden
      and pv buffer is not renamed (when a nick changes) if another
      exists with same name

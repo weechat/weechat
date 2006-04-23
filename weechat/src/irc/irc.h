@@ -510,6 +510,7 @@ extern int irc_cmd_recv_ping (t_irc_server *, char *, char *, char *);
 extern int irc_cmd_recv_pong (t_irc_server *, char *, char *, char *);
 extern int irc_cmd_recv_privmsg (t_irc_server *, char *, char *, char *);
 extern int irc_cmd_recv_quit (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_server_mode_reason (t_irc_server *, char *, char *, char *);
 extern int irc_cmd_recv_server_msg (t_irc_server *, char *, char *, char *);
 extern int irc_cmd_recv_server_reply (t_irc_server *, char *, char *, char *);
 extern int irc_cmd_recv_topic (t_irc_server *, char *, char *, char *);
