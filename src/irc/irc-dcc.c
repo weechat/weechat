@@ -510,6 +510,25 @@ dcc_channel_for_chat (t_irc_dcc *ptr_dcc)
 }
 
 /*
+ * dcc_chat_remove_channel: remove a buffer for DCC chat
+ */
+
+void
+dcc_chat_remove_channel (t_irc_channel *channel)
+{
+    t_irc_dcc *ptr_dcc;
+    
+    if (!channel)
+        return;
+
+    for (ptr_dcc = dcc_list; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
+    {
+        if (ptr_dcc->channel == channel)
+            ptr_dcc->channel = NULL;
+    }
+}
+
+/*
  * dcc_recv_connect_init: connect to sender and init file or chat
  */
 

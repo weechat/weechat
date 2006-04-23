@@ -406,6 +406,7 @@ extern void nick_print_log (t_irc_nick *);
 extern void dcc_redraw (int);
 extern void dcc_free (t_irc_dcc *);
 extern void dcc_close (t_irc_dcc *, int);
+extern void dcc_chat_remove_channel (t_irc_channel *);
 extern void dcc_accept (t_irc_dcc *);
 extern void dcc_accept_resume (t_irc_server *, char *, int, unsigned long);
 extern void dcc_start_resume (t_irc_server *, char *, int, unsigned long);
