@@ -1,9 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-04-21
+ChangeLog - 2006-04-23
 
 Version 0.1.9 (under dev!):
+   * fixed crash when multiple pv have same name: now it's forbidden
+     and pv buffer is not renamed (when a nick changes) if another
+     exists with same name
    * command /clear [-all] now clears hotlist
    * fixed crash after /upgrade if a line in history is empty
    * fixed many crashes with DCC chat

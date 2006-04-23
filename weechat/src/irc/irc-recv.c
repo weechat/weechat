@@ -1288,8 +1288,12 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *nick, char *arguments
             if ((CHANNEL(ptr_buffer)->name)
                 && (ascii_strcasecmp (nick, CHANNEL(ptr_buffer)->name) == 0))
             {
-                free (CHANNEL(ptr_buffer)->name);
-                CHANNEL(ptr_buffer)->name = strdup (arguments);
+                ptr_channel = channel_search_any (server, arguments);
+                if (!ptr_channel)
+                {
+                    free (CHANNEL(ptr_buffer)->name);
+                    CHANNEL(ptr_buffer)->name = strdup (arguments);
+                }
             }
         }
     }

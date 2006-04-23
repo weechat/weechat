@@ -1403,7 +1403,7 @@ session_load_buffer (FILE *file)
     
     if (channel_name)
     {
-        ptr_channel = channel_search_any (ptr_server, channel_name);
+        ptr_channel = channel_search_any_without_buffer (ptr_server, channel_name);
         if (!ptr_channel)
         {
             session_crash (file, _("channel not found for buffer"));

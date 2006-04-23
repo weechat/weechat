@@ -1371,7 +1371,8 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                     buffer->server = NULL;
                     gui_window_switch_server (window);
                 }
-
+                gui_status_draw (gui_current_window->buffer, 1);
+                gui_input_draw (gui_current_window->buffer, 1);
             }
             else
             {
@@ -1381,8 +1382,8 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                     ptr_channel = CHANNEL(buffer);
                     gui_buffer_free (ptr_channel->buffer, 1);
                     channel_free (SERVER(buffer), ptr_channel);
-                    gui_status_draw (buffer, 1);
-                    gui_input_draw (buffer, 1);
+                    gui_status_draw (gui_current_window->buffer, 1);
+                    gui_input_draw (gui_current_window->buffer, 1);
                 }
                 else
                 {
@@ -1412,9 +1413,9 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                     }
                     else
                         gui_buffer_free (buffer, 1);
+                    gui_status_draw (gui_current_window->buffer, 1);
                 }
             }
-            gui_status_draw (buffer, 1);
         }
         else if (ascii_strcasecmp (argv[0], "notify") == 0)
         {

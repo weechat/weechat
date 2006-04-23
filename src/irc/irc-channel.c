@@ -186,6 +186,29 @@ channel_search_any (t_irc_server *server, char *channel_name)
 }
 
 /*
+ * channel_search_any_without_buffer: returns pointer on a channel with name
+ *                                    looks only for channels without buffer
+ */
+
+t_irc_channel *
+channel_search_any_without_buffer (t_irc_server *server, char *channel_name)
+{
+    t_irc_channel *ptr_channel;
+    
+    if (!server || !channel_name)
+        return NULL;
+    
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        if (!ptr_channel->buffer
+            && (ascii_strcasecmp (ptr_channel->name, channel_name) == 0))
+            return ptr_channel;
+    }
+    return NULL;
+}
+
+/*
  * channel_search_dcc: returns pointer on a DCC chat channel with name
  */
 

@@ -371,6 +371,7 @@ extern void channel_free (t_irc_server *, t_irc_channel *);
 extern void channel_free_all (t_irc_server *);
 extern t_irc_channel *channel_search (t_irc_server *, char *);
 extern t_irc_channel *channel_search_any (t_irc_server *, char *);
+extern t_irc_channel *channel_search_any_without_buffer (t_irc_server *, char *);
 extern t_irc_channel *channel_search_dcc (t_irc_server *, char *);
 extern int string_is_channel (char *);
 extern char *channel_get_charset_decode_iso (t_irc_server *, t_irc_channel *);
