@@ -12,6 +12,42 @@ table {
   font-size: 12px;
 }
 
+a {
+    color: #000099;
+}
+
+a:visited {
+    color: #770077;
+}
+
+a:hover {
+    background-color: #FFCCCC;
+}
+
+.navheader {
+    background-color: #E8E8FF;
+    border: solid 1px #B5B5CC;
+}
+
+.navheader hr {
+    display: none;
+}
+
+.navfooter {
+    background-color: #E8E8FF;
+    border: solid 1px #B5B5CC;
+}
+
+.navfooter hr {
+    display: none;
+}
+
+.title {
+    background-color: #E5FFE5;
+    border: solid 1px #CCDDCC;
+    padding: 3px;
+}
+
 .informaltable table {
   font-size: 11px;
   font-family: Verdana;
