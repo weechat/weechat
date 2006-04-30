@@ -22,20 +22,25 @@
 # with weechat-curses command
 #
 
-@all_lang      = ("fr_FR", "en_US");
+@all_lang      = ("fr_FR", "en_US", "de_DE");
 %all_encodings = ("fr_FR" => "iso-8859-1",
-                  "en_US" => "iso-8859-1");
+                  "en_US" => "iso-8859-1",
+                  "de_DE" => "iso-8859-1");
 %all_types     = ("fr_FR" => "type",
                   "en_US" => "type",
+                  "de_DE" => "Typ",
                   "es_ES" => "tipo");
 %all_values    = ("fr_FR" => "valeurs",
                   "en_US" => "values",
+                  "de_DE" => "Werte",
                   "es_ES" => "valores");
 %all_default   = ("fr_FR" => "valeur par défaut",
                   "en_US" => "default value",
+                  "de_DE" => "Standardwert",
                   "es_ES" => "valor por defecto");
 %all_desc      = ("fr_FR" => "description",
                   "en_US" => "description",
+                  "de_DE" => "Beschreibung",
                   "es_ES" => "descripción");
 $warning_do_not_edit = "\n<!-- ********* WARNING! *********\n\n"
     ."     This file is automatically built with a Perl script. DO NOT EDIT!\n"

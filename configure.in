@@ -548,8 +548,9 @@ AM_CONDITIONAL(HAVE_GNUTLS,   test "$enable_gnutls" = "yes")
 
 AC_OUTPUT([Makefile
            doc/Makefile
-           doc/fr/Makefile
            doc/en/Makefile
+           doc/fr/Makefile
+           doc/de/Makefile
            src/Makefile
            src/common/Makefile
            src/irc/Makefile

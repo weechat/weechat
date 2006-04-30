@@ -5858,6 +5858,12 @@ weechat.set_plugin_config("ma_variable", "valeur")
               traduction en hongrois
             </para>
           </listitem>
+          <listitem>
+            <para>
+              <emphasis>Frank Zacharias</emphasis> -
+              traduction en allemand
+            </para>
+          </listitem>
         </itemizedlist>
       </para>
       

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- ********* WARNING! *********
+
+     This file is automatically built with a Perl script. DO NOT EDIT!
+-->
+
+<command>alias  [Aliasname [Befehl [Argumente]]</command>
+<programlisting>
+einen Alias für einen Befehl anlegen
+
+Aliasname: Name des Alias
+   Befehl: Befehlsname (WeeChat- oder IRC-Befehl ohne führenden '/')
+Argumente: Argumente für den Befehl
+
+</programlisting>
+<command>buffer  [Aktion [Argumente] | Nummer | [[Server] [Channel]]]</command>
+<programlisting>
+Puffer verwalten
+
+ Aktion: Pufferaktion:
+   move: Puffer in der Liste bewegen (kann auch relativ sein, wie -1)
+  close: Puffer schließen (und Channel ohne Meldung verlassen)
+   list: alle offenen Puffer auflisten (Standardaktion)
+ notify: Notify-Level für Puffer festlegen (0=nie, 1=highlighten, 2=1+Nachricht, 3=2+join/part)
+Server
+Channel: gehe zum Puffer mit Servernamen oder Channelnamen
+ Nummer: gehe zu Puffer mit dieser Nummer
+
+</programlisting>
+<command>builtin  Befehl</command>
+<programlisting>
+starte eingebauten WeeChat/IRC-Befehl (ohne Plugin-Handler oder Aliase)
+
+Befehl: auszuführender Befehl (falls nicht vorhanden wird automatisch ein '/' vorangestellt)
+
+
+</programlisting>
+<command>charset  [(decode_iso | decode_utf | encode) Zeichensatz]</command>
+<programlisting>
+ändere Zeichensatz für den Server oder Channel
+
+decode_iso: Zeichensatz um ISO zu decoden
+decode_utf: Zeichensatz um UTF zu decoden
+    encode: der zum encoden benutzte Zeichensatz
+   Zeichensatz: Zeichensatz, der benutzt werden soll (zum Beispiel: ISO-8859-15, UTF-8,..)
+
+</programlisting>
+<command>clear  [-all]</command>
+<programlisting>
+Fenster leeren
+
+-all: alle Fenster leeren
+
+</programlisting>
+<command>connect  [Servername]</command>
+<programlisting>
+mit einem Server verbinden
+
+Servername: Zielserver
+
+</programlisting>
+<command>disconnect  [Servername]</command>
+<programlisting>
+Serververbindung trennen
+
+Servername: Name des zu trennenden Servers
+
+</programlisting>
+<command>dcc  Aktion [Nickname [Datei]]</command>
+<programlisting>
+DCC (Filetransfer oder Chat) starten oder Chat beenden
+
+  Aktion: 'send' (Datei) oder 'chat' oder 'close' (Chat)
+Nickname: Empfänger der Datei bzw. Chatpartner
+    Datei: zu versendende (lokal vorliegende) Datei
+
+</programlisting>
+<command>debug  dump | windows</command>
+<programlisting>
+Debugging-Nachricht ausgeben
+
+dump: Speicherabbild im WeeChat-Logfile ablegen (wie nach einem Programmabsturz)
+windows: zeigt Fensterdaten an
+
+</programlisting>
+<command>help  [Befehl]</command>
+<programlisting>
+Hilfe zu Befehlen abfragen
+
+Befehl: Name eines WeeChat- oder IRC-Befehls
+
+</programlisting>
+<command>history  [clear | Anzahl]</command>
+<programlisting>
+zeigt Befehlsverlauf des Puffers
+
+clear: Löscht Verlauf
+Anzahl: zeigt die gewünschte Anzahl an Verlaufseinträgen
+
+</programlisting>
+<command>ignore  [Maske [[Typ | Befehl] [Channel [Server]]]]</command>
+<programlisting>
+IRC-Nachrichten und/oder Hosts ignorieren
+
+  Nummer: Nummer des zu entfernenden Eintrags (siehe Liste)
+   Maske: Nickname oder Hostmaske, die ignoriert werden soll
+     Typ: Typ der Nachrichten, die ignoriert werden sollen (action, ctcp, dcc, pv)
+Befehl: IRC-Befehl
+ Channel: Channel, in dem ignoriert werden soll
+  Server: Server, auf dem ignoriert werden soll
+
+Bei jedem Argument steht '*' für 'alle'.
+Ohne Argumente listet /ignore alle definierten /ignore-Regeln auf.
+
+</programlisting>
+<command>key  [Taste Funktion/Befehl] [unbind Taste] [functions] [reset -yes]</command>
+<programlisting>
+belegen/freigeben von Tasten
+
+      Taste: diese Taste mit einer internen Funktion oder einem Befehl, beginnend mit "/", belegen
+   unbind: Tastenbelegung aufheben
+functions: interne Funktionen für Tastenbelegungen auflisten
+    reset: Standardbelegung wiederherstellen und entferne alle eigenen Belegungen (Vorsicht!)
+
+</programlisting>
+<command>plugin  [load Dateiname] | [autoload] | [reload] | [unload]</command>
+<programlisting>
+auflisten/laden/entladen von Plugins
+
+Dateiname: zu ladendes Plugin
+
+Ohne Argumente werden alle geladenen Plugins aufgelistet.
+
+</programlisting>
+<command>server  [Servername] | [Servername Hostname Port [-auto | -noauto] [-ipv6] [-ssl] [-pwd Passwort] [-nicks Nick1 Nick2 Nick3] [-username Benutzername] [-realname Name] [-command Befehl] [-autojoin Channel[,Channel]] ] | [del Servername]</command>
+<programlisting>
+Auflisten, Hinzufügen oder Entfernen von Servern
+
+Servername: anzuzeigender Servername
+  Hostname: Name oder IP-Adresse des Servers
+      Port: Port des Servers
+      ipv6: IPv6 benutzen
+       ssl: SSL benutzen
+  Passwort: Serverpasswort
+     Nick1: erster Nickname
+     Nick2: zweiter Nickname
+     Nick3: dritter Nicname
+  Benutzername: Benutzername
+  Realname: voller Name des Benutzers
+
+</programlisting>
+<command>save  [Datei]</command>
+<programlisting>
+Konfiguration abspeichern
+
+Datei: Name der zu speichernden Konfigurationsdatei
+
+</programlisting>
+<command>set  [Option [ = Wert]]</command>
+<programlisting>
+Konfigurationsparameter setzen
+
+Option: Name einer Option (wenn der Name vorhanden ist, aber kein Wert, dann wird eine Hilfe zur Option ausgegeben
+ Wert: Wert der Option
+
+Option kann Servername.server_xxx lauten, wobei "Servername" der interne Servername ist und "xxx" eine Option für diesen Server.
+
+</programlisting>
+<command>setp  [Option [ = Wert]]</command>
+<programlisting>
+Konfigurationsparameter für Plugin setzen
+
+Option: Name einer Plugin-Option
+ Wert: Wert für Option
+
+Option wird wie folgt formatiert: Plugin.Option, z.B. perl.myscript.item1
+
+</programlisting>
+<command>unalias  Aliasname</command>
+<programlisting>
+einen Alias entfernen
+
+Aliasname: Name des zu löschenden Aliases
+
+</programlisting>
+<command>unignore  [Nummer | [Maske [[Typ | Befehl] [Channel [Server]]]]</command>
+<programlisting>
+/ignore-Regel entfernen
+
+  Nummer: Nummer des zu entfernenden Eintrags (siehe Liste)
+   Maske: Nickname oder Hostmaske, die ignoriert werden soll
+     Typ: Typ der Nachrichten, die ignoriert werden sollen (action, ctcp, dcc, pv)
+Befehl: IRC-Befehl
+ Channel: Channel, in dem ignoriert werden soll
+  Server: Server, auf dem ignoriert werden soll
+
+Bei jedem Argument steht '*' für 'alle'.
+Ohne Argumente listet /unignore alle definierten /ignore-Regeln auf.
+
+</programlisting>
+<command>upgrade</command>
+<programlisting>
+aktualisiert WeeChat ohne die Verbindung zum Server zu trennen
+
+Dieser Befehl wird auf dem Weechat-Binary ausgeführt, daher sollte dieses kompiliert oder mit einem Paketmanager installiert sein, bevor der Befehl ausgeführt wird.
+
+</programlisting>
+<command>uptime  [-o]</command>
+<programlisting>
+zeigt die Uptime von Weechat an
+
+-o: sendet die Weechat-Uptime als IRC-Nachricht in den aktuellen Channel
+
+</programlisting>
+<command>window  [list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [pct] | resize pct | merge [all]]</command>
+<programlisting>
+Fenster verwalten
+
+  list: listet die geöffneten Fenster (Default, kann auch weggelassen werden)
+    -1: springt zum vorherigen Fenster
+    +1: springt zum nächsten Fenster
+    b#: springt zum nächsten Fenster, dass Puffer Nummer # anzeigt
+    up: wechselt zum Fenster über dem aktuellen
+  down: wechselt zum Fenster unter dem aktuellen
+  left: wechselt zum linken Fenster
+ right: wechselt zum rechten Fenster
+splith: teilt das aktuelle Fenster horizontal
+splitv: teilt das aktuelle Fenster vertikal
+resize: verändert die Größe des aktuellen Fensters, die neue Größe wird in Prozent des Elternfensters angegeben
+ merge: vereinigt Fenster miteinander (all = alle Fenster vereinigen)
+
+Bei splith und splitv gibt pct die neue Größe des Fensters im verhältnis zur aktuellen Größe an. Zum Beispiel würde 25 bedeuten, dass das neue Fenster nur noch ein Viertel der Größe des alten Fensters hätte.
+
+</programlisting>
