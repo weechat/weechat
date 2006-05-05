@@ -164,6 +164,27 @@ nick_insert_sorted (t_irc_channel *channel, t_irc_nick *nick)
 }
 
 /*
+ * nick_resort: resort nick in the list
+ */
+
+void
+nick_resort (t_irc_channel *channel, t_irc_nick *nick)
+{
+    /* temporarly remove nick from list */
+    if (nick == channel->nicks)
+        channel->nicks = nick->next_nick;
+    else
+        nick->prev_nick->next_nick = nick->next_nick;
+    if (nick->next_nick)
+        nick->next_nick->prev_nick = nick->prev_nick;
+    if (nick == channel->last_nick)
+        channel->last_nick = nick->prev_nick;
+    
+    /* insert again nick into sorted list */
+    nick_insert_sorted (channel, nick);
+}
+
+/*
  * nick_new: allocate a new nick for a channel and add it to the nick list
  */
 
@@ -183,6 +204,7 @@ nick_new (t_irc_server *server, t_irc_channel *channel, char *nick_name,
         NICK_SET_FLAG(new_nick, is_op, NICK_OP);
         NICK_SET_FLAG(new_nick, is_halfop, NICK_HALFOP);
         NICK_SET_FLAG(new_nick, has_voice, NICK_VOICE);
+        nick_resort (channel, new_nick);
         return new_nick;
     }
     
@@ -210,27 +232,6 @@ nick_new (t_irc_server *server, t_irc_channel *channel, char *nick_name,
     
     /* all is ok, return address of new nick */
     return new_nick;
-}
-
-/*
- * nick_resort: resort nick in the list
- */
-
-void
-nick_resort (t_irc_channel *channel, t_irc_nick *nick)
-{
-    /* temporarly remove nick from list */
-    if (nick == channel->nicks)
-        channel->nicks = nick->next_nick;
-    else
-        nick->prev_nick->next_nick = nick->next_nick;
-    if (nick->next_nick)
-        nick->next_nick->prev_nick = nick->prev_nick;
-    if (nick == channel->last_nick)
-        channel->last_nick = nick->prev_nick;
-    
-    /* insert again nick into sorted list */
-    nick_insert_sorted (channel, nick);
 }
 
 /*
