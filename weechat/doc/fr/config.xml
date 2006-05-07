@@ -52,7 +52,7 @@
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>
   <entry>''</entry>
-  <entry>Jeu de caractères pour encoder les messages envoyés au serveur, exemples: UFT-8, ISO-8859-1 (si non renseigné, les messages ne sont pas convertis)</entry>
+  <entry>Jeu de caractères pour encoder les messages envoyés au serveur, exemples: UTF-8, ISO-8859-1 (si non renseigné, les messages ne sont pas convertis)</entry>
 </row>
 <row>
   <entry><option>look_charset_internal</option></entry>

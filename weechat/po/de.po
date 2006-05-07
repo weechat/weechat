@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.9-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-04-23 17:51+0200\n"
-"PO-Revision-Date: 2006-04-16 13:53+0200\n"
+"POT-Creation-Date: 2006-05-07 12:21+0200\n"
+"PO-Revision-Date: 2006-05-07 13:09+0200\n"
 "Last-Translator: Thomas Schütz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2362,102 +2362,102 @@ msgstr ""
 msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 msgstr "%s Server/Channel (%s/%s) für den Plugin-Exec-Befehl nicht gefunden\n"
 
-#: src/gui/curses/gui-chat.c:865
+#: src/gui/curses/gui-curses-chat.c:860
 msgid "bytes"
 msgstr "Bytes"
 
-#: src/gui/curses/gui-chat.c:865
+#: src/gui/curses/gui-curses-chat.c:860
 msgid "Kb"
 msgstr "KB"
 
-#: src/gui/curses/gui-chat.c:865
+#: src/gui/curses/gui-curses-chat.c:860
 msgid "Mb"
 msgstr "MB"
 
-#: src/gui/curses/gui-chat.c:865
+#: src/gui/curses/gui-curses-chat.c:860
 msgid "Gb"
 msgstr "GB"
 
-#: src/gui/curses/gui-chat.c:983
+#: src/gui/curses/gui-curses-chat.c:978
 msgid "ETA"
 msgstr "ETA"
 
-#: src/gui/curses/gui-input.c:398
+#: src/gui/curses/gui-curses-input.c:392
 msgid "  [A] Accept"
 msgstr "  [A] annehmen"
 
-#: src/gui/curses/gui-input.c:399 src/gui/curses/gui-input.c:403
+#: src/gui/curses/gui-curses-input.c:393 src/gui/curses/gui-curses-input.c:397
 msgid "  [C] Cancel"
 msgstr "  [C] abbrechen"
 
-#: src/gui/curses/gui-input.c:408
+#: src/gui/curses/gui-curses-input.c:402
 msgid "  [R] Remove"
 msgstr "  [R] entfernen"
 
-#: src/gui/curses/gui-input.c:412
+#: src/gui/curses/gui-curses-input.c:406
 msgid "  [P] Purge old DCC"
 msgstr "  [P] alte DCCs entfernen"
 
-#: src/gui/curses/gui-input.c:413
+#: src/gui/curses/gui-curses-input.c:407
 msgid "  [Q] Close DCC view"
 msgstr "  [Q] DCC-Ansicht schließen"
 
-#: src/gui/curses/gui-input.c:421
+#: src/gui/curses/gui-curses-input.c:415
 msgid "  [Q] Close raw data view"
 msgstr "  [Q] Rohdatenansicht schließen"
 
-#: src/gui/curses/gui-main.c:100
+#: src/gui/curses/gui-curses-main.c:98
 #, c-format
 msgid "Day changed to %s\n"
 msgstr "Ein neuer Tag bricht hat, heute ist der %s\n"
 
-#: src/gui/curses/gui-main.c:205
+#: src/gui/curses/gui-curses-main.c:203
 #, c-format
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr "%s der Lag ist hoch, die Verbindung wird getrennt...\n"
 
-#: src/gui/curses/gui-status.c:87
+#: src/gui/curses/gui-curses-status.c:81
 msgid "<servers>"
 msgstr "<Server>"
 
-#: src/gui/curses/gui-status.c:99
+#: src/gui/curses/gui-curses-status.c:93
 msgid "(away)"
 msgstr "(abwesend)"
 
-#: src/gui/curses/gui-status.c:238
+#: src/gui/curses/gui-curses-status.c:232
 msgid "[not connected] "
 msgstr "[nicht verbunden]"
 
-#: src/gui/curses/gui-status.c:244
+#: src/gui/curses/gui-curses-status.c:238
 msgid "<RAW_IRC> "
 msgstr "<RAW_IRC> "
 
-#: src/gui/curses/gui-status.c:256
+#: src/gui/curses/gui-curses-status.c:250
 msgid "Act: "
 msgstr "Aktiv: "
 
-#: src/gui/curses/gui-status.c:337
+#: src/gui/curses/gui-curses-status.c:331
 msgid "RAW_IRC"
 msgstr "RAW_IRC"
 
-#: src/gui/curses/gui-status.c:358
+#: src/gui/curses/gui-curses-status.c:352
 #, c-format
 msgid "Lag: %.1f"
 msgstr "Lag: %.1f"
 
-#: src/gui/curses/gui-status.c:374
+#: src/gui/curses/gui-curses-status.c:368
 msgid "-MORE-"
 msgstr "-MEHR-"
 
-#: src/gui/gtk/gui-main.c:160
+#: src/gui/gtk/gui-gtk-main.c:158
 msgid "server"
 msgstr "Server"
 
-#: src/gui/gui-buffer.c:542
+#: src/gui/gui-buffer.c:548
 msgid "Not enough memory for new line\n"
 msgstr "Nicht genügend Speicher für neue Zeile\n"
 
-#: src/gui/gui-common.c:439
+#: src/gui/gui-common.c:428
 msgid "Not enough memory for infobar message\n"
 msgstr "Nicht genügend Speicher für Infobar-Nachricht\n"
 
@@ -4377,7 +4377,7 @@ msgstr "Zeichensatz zum Enkodieren von Nachrichten an den Server"
 
 #: src/common/weeconfig.c:141
 msgid ""
-"charset for encoding messages sent to server, examples: UFT-8, ISO-8859-1 "
+"charset for encoding messages sent to server, examples: UTF-8, ISO-8859-1 "
 "(if empty, messages are not converted)"
 msgstr ""
 "Zeichensatz zum Enkodieren von Nachrichten zum Server, wie zum Beispiel: UTF-"
@@ -5593,7 +5593,7 @@ msgstr "%s %s, Zeile %d: ungültige /ignore-Optionen \"%s\"\n"
 #: src/common/weeconfig.c:2023
 #, c-format
 msgid ""
-"%s %s, line %d: invalid value foroption '%s'\n"
+"%s %s, line %d: invalid value for option '%s'\n"
 "Expected: boolean value: 'off' or 'on'\n"
 msgstr ""
 "%s %s, Zeile %d: ungültiger Wert für Option '%s'\n"

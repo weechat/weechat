@@ -138,7 +138,7 @@ t_config_option weechat_options_look[] =
     OPTION_TYPE_STRING, 0, 0, 0,
     "UTF-8", NULL, NULL, &cfg_look_charset_decode_utf, config_change_charset },
   { "look_charset_encode", N_("charset for encoding messages sent to server"),
-    N_("charset for encoding messages sent to server, examples: UFT-8, ISO-8859-1 (if empty, messages are not converted)"),
+    N_("charset for encoding messages sent to server, examples: UTF-8, ISO-8859-1 (if empty, messages are not converted)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "", NULL, NULL, &cfg_look_charset_encode, config_change_charset },
   { "look_charset_internal", N_("forces internal WeeChat charset (should be empty in most cases)"),
@@ -1964,12 +1964,12 @@ config_read ()
                                 if (pos[0])
                                 {
                                     /* bind key (overwrite any binding with same key) */
-                                    gui_key_bind (line, pos);
+                                    gui_keyboard_bind (line, pos);
                                 }
                                 else
                                 {
                                     /* unbin key if no value given */
-                                    gui_key_unbind (line);
+                                    gui_keyboard_unbind (line);
                                 }
                             }
                             else if (section == CONFIG_SECTION_ALIAS)
@@ -2020,7 +2020,7 @@ config_read ()
                                         {
                                             case OPTION_TYPE_BOOLEAN:
                                                 gui_printf (NULL,
-                                                    _("%s %s, line %d: invalid value for"
+                                                    _("%s %s, line %d: invalid value for "
                                                     "option '%s'\n"
                                                     "Expected: boolean value: "
                                                     "'off' or 'on'\n"),
@@ -2177,10 +2177,10 @@ config_create_default ()
     fprintf (file, "\n[keys]\n");
     for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
     {
-        expanded_name = gui_key_get_expanded_name (ptr_key->key);
+        expanded_name = gui_keyboard_get_expanded_name (ptr_key->key);
         if (ptr_key->function)
         {
-            function_name = gui_key_function_search_by_ptr (ptr_key->function);
+            function_name = gui_keyboard_function_search_by_ptr (ptr_key->function);
             if (function_name)
                 fprintf (file, "%s = \"%s\"\n",
                          (expanded_name) ? expanded_name : ptr_key->key,
@@ -2396,10 +2396,10 @@ config_write (char *config_name)
     fprintf (file, "\n[keys]\n");
     for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
     {
-        expanded_name = gui_key_get_expanded_name (ptr_key->key);
+        expanded_name = gui_keyboard_get_expanded_name (ptr_key->key);
         if (ptr_key->function)
         {
-            function_name = gui_key_function_search_by_ptr (ptr_key->function);
+            function_name = gui_keyboard_function_search_by_ptr (ptr_key->function);
             if (function_name)
                 fprintf (file, "%s = \"%s\"\n",
                          (expanded_name) ? expanded_name : ptr_key->key,

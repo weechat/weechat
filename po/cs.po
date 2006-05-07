@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.9-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-04-23 17:51+0200\n"
-"PO-Revision-Date: 2006-04-16 13:53+0200\n"
+"POT-Creation-Date: 2006-05-07 12:21+0200\n"
+"PO-Revision-Date: 2006-05-07 13:12+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1226,7 +1226,7 @@ msgstr "kolize přezdívek"
 
 #: src/irc/irc-commands.c:516
 msgid "resource unavailable"
-msgstr ""
+msgstr "zdroj nedostupny"
 
 #: src/irc/irc-commands.c:518
 msgid "not authorized to change nickname"
@@ -1520,7 +1520,6 @@ msgid "removes realname ban on"
 msgstr "odebral povolení zakázaní skutečného jména"
 
 #: src/irc/irc-recv.c:702
-#, fuzzy
 msgid "sets ban exemption on"
 msgstr "nastavena vyjímka zakázání na"
 
@@ -1641,73 +1640,60 @@ msgid "removes voice from"
 msgstr "odebral voice z"
 
 #: src/irc/irc-recv.c:1100
-#, fuzzy
 msgid "sets away"
-msgstr "tě zakázal"
+msgstr "nastavil nepřítomnost"
 
 #: src/irc/irc-recv.c:1101
-#, fuzzy
 msgid "removes away"
-msgstr "odebral zakázaní"
+msgstr "odebral nepřítomnost"
 
 #: src/irc/irc-recv.c:1111
 msgid "sets invisible"
-msgstr ""
+msgstr "nastavil neviditelnost"
 
 #: src/irc/irc-recv.c:1112
-#, fuzzy
 msgid "removes invisible"
-msgstr "odebral voice z"
+msgstr "odebral neviditelnost"
 
 #: src/irc/irc-recv.c:1122
-#, fuzzy
 msgid "sets wallops"
-msgstr "tě zakázal"
+msgstr "nastavil wallops"
 
 #: src/irc/irc-recv.c:1123
-#, fuzzy
 msgid "removes wallops"
-msgstr "odebral zakázaní"
+msgstr "odebral wallops"
 
 #: src/irc/irc-recv.c:1133
-#, fuzzy
 msgid "sets restricted"
-msgstr "tvé připojení je omezené"
+msgstr "nastavil soukromý"
 
 #: src/irc/irc-recv.c:1134
-#, fuzzy
 msgid "removes restricted"
-msgstr "odebral limit uživatelů"
+msgstr "odebral soukromý"
 
 #: src/irc/irc-recv.c:1144
-#, fuzzy
 msgid "sets operator"
-msgstr "kdo je (operator)"
+msgstr "nastavil operátora"
 
 #: src/irc/irc-recv.c:1145
-#, fuzzy
 msgid "removes operator"
-msgstr "odebral voice z"
+msgstr "odebral operátora"
 
 #: src/irc/irc-recv.c:1155
-#, fuzzy
 msgid "sets local operator"
-msgstr "nejsi operátor kanálu"
+msgstr "nastavil lokálního operátora"
 
 #: src/irc/irc-recv.c:1156
-#, fuzzy
 msgid "removes local operator"
-msgstr "odebral status operátora z"
+msgstr "odebral lokálního operátora"
 
 #: src/irc/irc-recv.c:1166
-#, fuzzy
 msgid "sets server notices"
-msgstr "cíl: server jméno"
+msgstr "nastavil upozornění serveru"
 
 #: src/irc/irc-recv.c:1167
-#, fuzzy
 msgid "removes server notices"
-msgstr "odebrat hlas z přezdívky (přezdívek)"
+msgstr "odebrat upozornění serveru"
 
 #: src/irc/irc-recv.c:1203 src/irc/irc-recv.c:1277 src/irc/irc-recv.c:1737
 #: src/irc/irc-recv.c:2552
@@ -2371,102 +2357,102 @@ msgstr ""
 msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 msgstr "%s server/kanál (%s/%s) nenaleyen pro exec příkaz pluginu\n"
 
-#: src/gui/curses/gui-chat.c:865
+#: src/gui/curses/gui-curses-chat.c:860
 msgid "bytes"
 msgstr "bajtů"
 
-#: src/gui/curses/gui-chat.c:865
+#: src/gui/curses/gui-curses-chat.c:860
 msgid "Kb"
 msgstr "Kb"
 
-#: src/gui/curses/gui-chat.c:865
+#: src/gui/curses/gui-curses-chat.c:860
 msgid "Mb"
 msgstr "Mb"
 
-#: src/gui/curses/gui-chat.c:865
+#: src/gui/curses/gui-curses-chat.c:860
 msgid "Gb"
 msgstr "Gb"
 
-#: src/gui/curses/gui-chat.c:983
+#: src/gui/curses/gui-curses-chat.c:978
 msgid "ETA"
 msgstr "ETA"
 
-#: src/gui/curses/gui-input.c:398
+#: src/gui/curses/gui-curses-input.c:392
 msgid "  [A] Accept"
 msgstr "  [A] Akceptovat"
 
-#: src/gui/curses/gui-input.c:399 src/gui/curses/gui-input.c:403
+#: src/gui/curses/gui-curses-input.c:393 src/gui/curses/gui-curses-input.c:397
 msgid "  [C] Cancel"
 msgstr "  [C] Storno"
 
-#: src/gui/curses/gui-input.c:408
+#: src/gui/curses/gui-curses-input.c:402
 msgid "  [R] Remove"
 msgstr "  [R] Odebrat"
 
-#: src/gui/curses/gui-input.c:412
+#: src/gui/curses/gui-curses-input.c:406
 msgid "  [P] Purge old DCC"
 msgstr "  [P] Pročistit staré DCC"
 
-#: src/gui/curses/gui-input.c:413
+#: src/gui/curses/gui-curses-input.c:407
 msgid "  [Q] Close DCC view"
 msgstr "  [Q] Zavřít DCC pohled"
 
-#: src/gui/curses/gui-input.c:421
+#: src/gui/curses/gui-curses-input.c:415
 msgid "  [Q] Close raw data view"
 msgstr "  [Q] Zavřít čistý pohled na data"
 
-#: src/gui/curses/gui-main.c:100
+#: src/gui/curses/gui-curses-main.c:98
 #, c-format
 msgid "Day changed to %s\n"
 msgstr "Změnil se den na %s\n"
 
-#: src/gui/curses/gui-main.c:205
+#: src/gui/curses/gui-curses-main.c:203
 #, c-format
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr "%s zpoždění je veliké, odpojuji se od serveru...\n"
 
-#: src/gui/curses/gui-status.c:87
+#: src/gui/curses/gui-curses-status.c:81
 msgid "<servers>"
 msgstr "<serverů>"
 
-#: src/gui/curses/gui-status.c:99
+#: src/gui/curses/gui-curses-status.c:93
 msgid "(away)"
 msgstr "(pryč)"
 
-#: src/gui/curses/gui-status.c:238
+#: src/gui/curses/gui-curses-status.c:232
 msgid "[not connected] "
 msgstr "[nepřipojen] "
 
-#: src/gui/curses/gui-status.c:244
+#: src/gui/curses/gui-curses-status.c:238
 msgid "<RAW_IRC> "
 msgstr "<ČISTÉ_IRC> "
 
-#: src/gui/curses/gui-status.c:256
+#: src/gui/curses/gui-curses-status.c:250
 msgid "Act: "
 msgstr "Aktivní: "
 
-#: src/gui/curses/gui-status.c:337
+#: src/gui/curses/gui-curses-status.c:331
 msgid "RAW_IRC"
 msgstr "ČISTÉ_IRC"
 
-#: src/gui/curses/gui-status.c:358
+#: src/gui/curses/gui-curses-status.c:352
 #, c-format
 msgid "Lag: %.1f"
 msgstr "Zpoždění: %.1f"
 
-#: src/gui/curses/gui-status.c:374
+#: src/gui/curses/gui-curses-status.c:368
 msgid "-MORE-"
 msgstr "-VÍCE-"
 
-#: src/gui/gtk/gui-main.c:160
+#: src/gui/gtk/gui-gtk-main.c:158
 msgid "server"
 msgstr "server"
 
-#: src/gui/gui-buffer.c:542
+#: src/gui/gui-buffer.c:548
 msgid "Not enough memory for new line\n"
 msgstr "Nedostatek paměti pro nový řádek\n"
 
-#: src/gui/gui-common.c:439
+#: src/gui/gui-common.c:428
 msgid "Not enough memory for infobar message\n"
 msgstr "Nedostatek paměti pro infobar zprávu\n"
 
@@ -3061,13 +3047,12 @@ msgid "upgrade WeeChat without disconnecting from servers"
 msgstr "aktualizovat WeeChat bez odpojení od serveru"
 
 #: src/common/command.c:186
-#, fuzzy
 msgid ""
 "This command run again WeeChat binary, so it should have been compiled or "
 "installed with a package manager before running this command."
 msgstr ""
 "Tento příkaz znovu spustí binární soubor WeeChat, je třeba mít WeeChat "
-"předem zkompilovaný a nainstalovaný pomocí balíčkovacího systému."
+"předem zkompilovaný nebo nainstalovaný pomocí balíčkovacího systému."
 
 #: src/common/command.c:189
 msgid "show WeeChat uptime"
@@ -3175,9 +3160,9 @@ msgid "%s command \"%s\" needs a server connection!\n"
 msgstr "%s příkaz \"%s\" potřebuje připojení na server!\n"
 
 #: src/common/command.c:915
-#, fuzzy, c-format
+#, c-format
 msgid "%s command \"%s\" can not be executed on DCC CHAT buffer\n"
-msgstr "%s \"%s\" příkaz nemůže být spuštěn v bufferu serveru\n"
+msgstr "%s \"%s\" příkaz nemůže být spuštěn v DCC CHAT bufferu\n"
 
 #: src/common/command.c:943
 #, c-format
@@ -4363,7 +4348,7 @@ msgstr "znaková sada pro kódování zpráv posílaných na server"
 
 #: src/common/weeconfig.c:141
 msgid ""
-"charset for encoding messages sent to server, examples: UFT-8, ISO-8859-1 "
+"charset for encoding messages sent to server, examples: UTF-8, ISO-8859-1 "
 "(if empty, messages are not converted)"
 msgstr ""
 "znaková sada pro kódování zpráv posílaných na server, příklady: UTF-8, ISO-"
@@ -4488,16 +4473,16 @@ msgid "size for aligning nick and other messages"
 msgstr "velikost pro zarovnání přezdívek a ostatních zpráv"
 
 #: src/common/weeconfig.c:222
-#, fuzzy
 msgid "max size for aligning nick and other messages"
-msgstr "velikost pro zarovnání přezdívek a ostatních zpráv"
+msgstr "maximální velikost pro zarovnání přezdívek a ostatních zpráv"
 
 #: src/common/weeconfig.c:223
-#, fuzzy
 msgid ""
 "max size for aligning nick and other messages (should be >= to "
 "look_align_size)"
-msgstr "velikost pro zarovnání přezdívek a ostatních zpráv"
+msgstr ""
+"maximální velikost pro zarovnání přezdívek a ostatních zpráv (měla by být >= "
+"než look_align_size)"
 
 #: src/common/weeconfig.c:227 src/common/weeconfig.c:228
 msgid "the string inserted after nick completion"
@@ -4579,9 +4564,8 @@ msgid "use a marker on servers/channels to show first unread line"
 msgstr "použít značku na serveru/kanále pro zobrazení první nepřečtené řádky"
 
 #: src/common/weeconfig.c:281
-#, fuzzy
 msgid "format for input prompt"
-msgstr "barva pro vstupní text"
+msgstr "formát pro vstupní řádek"
 
 #: src/common/weeconfig.c:282
 #, c-format
@@ -4589,6 +4573,8 @@ msgid ""
 "format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
 "and '%m' by nick modes)"
 msgstr ""
+"formát vstupního řádku ('%c' se přepíše na jeméno kanálu nebo serveru, '%n' "
+"se přepíše na přezdívku a '%m' na módy přezdívky"
 
 #: src/common/weeconfig.c:353
 msgid "if set, uses real white color"
@@ -4790,9 +4776,8 @@ msgid "color for input text"
 msgstr "barva pro vstupní text"
 
 #: src/common/weeconfig.c:500 src/common/weeconfig.c:501
-#, fuzzy
 msgid "color for input text (server name)"
-msgstr "barva vstupního textu (přezdívky)"
+msgstr "barva vstupního text (jméno serveru)"
 
 #: src/common/weeconfig.c:504 src/common/weeconfig.c:505
 msgid "color for input text (channel name)"
@@ -5558,7 +5543,7 @@ msgstr "%s %s, řádek %d: nevalidní volba \"%s\" pro ignorování\n"
 #: src/common/weeconfig.c:2023
 #, c-format
 msgid ""
-"%s %s, line %d: invalid value foroption '%s'\n"
+"%s %s, line %d: invalid value for option '%s'\n"
 "Expected: boolean value: 'off' or 'on'\n"
 msgstr ""
 "%s %s, řádek %d: nevalidní hodnota pro volbu '%s'\n"

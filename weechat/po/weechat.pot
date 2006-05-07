@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-04-23 17:51+0200\n"
+"POT-Creation-Date: 2006-05-07 12:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2215,102 +2215,102 @@ msgstr ""
 msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 msgstr ""
 
-#: src/gui/curses/gui-chat.c:865
+#: src/gui/curses/gui-curses-chat.c:860
 msgid "bytes"
 msgstr ""
 
-#: src/gui/curses/gui-chat.c:865
+#: src/gui/curses/gui-curses-chat.c:860
 msgid "Kb"
 msgstr ""
 
-#: src/gui/curses/gui-chat.c:865
+#: src/gui/curses/gui-curses-chat.c:860
 msgid "Mb"
 msgstr ""
 
-#: src/gui/curses/gui-chat.c:865
+#: src/gui/curses/gui-curses-chat.c:860
 msgid "Gb"
 msgstr ""
 
-#: src/gui/curses/gui-chat.c:983
+#: src/gui/curses/gui-curses-chat.c:978
 msgid "ETA"
 msgstr ""
 
-#: src/gui/curses/gui-input.c:398
+#: src/gui/curses/gui-curses-input.c:392
 msgid "  [A] Accept"
 msgstr ""
 
-#: src/gui/curses/gui-input.c:399 src/gui/curses/gui-input.c:403
+#: src/gui/curses/gui-curses-input.c:393 src/gui/curses/gui-curses-input.c:397
 msgid "  [C] Cancel"
 msgstr ""
 
-#: src/gui/curses/gui-input.c:408
+#: src/gui/curses/gui-curses-input.c:402
 msgid "  [R] Remove"
 msgstr ""
 
-#: src/gui/curses/gui-input.c:412
+#: src/gui/curses/gui-curses-input.c:406
 msgid "  [P] Purge old DCC"
 msgstr ""
 
-#: src/gui/curses/gui-input.c:413
+#: src/gui/curses/gui-curses-input.c:407
 msgid "  [Q] Close DCC view"
 msgstr ""
 
-#: src/gui/curses/gui-input.c:421
+#: src/gui/curses/gui-curses-input.c:415
 msgid "  [Q] Close raw data view"
 msgstr ""
 
-#: src/gui/curses/gui-main.c:100
+#: src/gui/curses/gui-curses-main.c:98
 #, c-format
 msgid "Day changed to %s\n"
 msgstr ""
 
-#: src/gui/curses/gui-main.c:205
+#: src/gui/curses/gui-curses-main.c:203
 #, c-format
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr ""
 
-#: src/gui/curses/gui-status.c:87
+#: src/gui/curses/gui-curses-status.c:81
 msgid "<servers>"
 msgstr ""
 
-#: src/gui/curses/gui-status.c:99
+#: src/gui/curses/gui-curses-status.c:93
 msgid "(away)"
 msgstr ""
 
-#: src/gui/curses/gui-status.c:238
+#: src/gui/curses/gui-curses-status.c:232
 msgid "[not connected] "
 msgstr ""
 
-#: src/gui/curses/gui-status.c:244
+#: src/gui/curses/gui-curses-status.c:238
 msgid "<RAW_IRC> "
 msgstr ""
 
-#: src/gui/curses/gui-status.c:256
+#: src/gui/curses/gui-curses-status.c:250
 msgid "Act: "
 msgstr ""
 
-#: src/gui/curses/gui-status.c:337
+#: src/gui/curses/gui-curses-status.c:331
 msgid "RAW_IRC"
 msgstr ""
 
-#: src/gui/curses/gui-status.c:358
+#: src/gui/curses/gui-curses-status.c:352
 #, c-format
 msgid "Lag: %.1f"
 msgstr ""
 
-#: src/gui/curses/gui-status.c:374
+#: src/gui/curses/gui-curses-status.c:368
 msgid "-MORE-"
 msgstr ""
 
-#: src/gui/gtk/gui-main.c:160
+#: src/gui/gtk/gui-gtk-main.c:158
 msgid "server"
 msgstr ""
 
-#: src/gui/gui-buffer.c:542
+#: src/gui/gui-buffer.c:548
 msgid "Not enough memory for new line\n"
 msgstr ""
 
-#: src/gui/gui-common.c:439
+#: src/gui/gui-common.c:428
 msgid "Not enough memory for infobar message\n"
 msgstr ""
 
@@ -4061,7 +4061,7 @@ msgstr ""
 
 #: src/common/weeconfig.c:141
 msgid ""
-"charset for encoding messages sent to server, examples: UFT-8, ISO-8859-1 "
+"charset for encoding messages sent to server, examples: UTF-8, ISO-8859-1 "
 "(if empty, messages are not converted)"
 msgstr ""
 
@@ -5177,7 +5177,7 @@ msgstr ""
 #: src/common/weeconfig.c:2023
 #, c-format
 msgid ""
-"%s %s, line %d: invalid value foroption '%s'\n"
+"%s %s, line %d: invalid value for option '%s'\n"
 "Expected: boolean value: 'off' or 'on'\n"
 msgstr ""
 

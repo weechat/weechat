@@ -52,7 +52,7 @@
   <entry>string</entry>
   <entry>any string</entry>
   <entry>''</entry>
-  <entry>Charset for encoding messages sent to server, examples: UFT-8, ISO-8859-1 (if empty, messages are not converted)</entry>
+  <entry>Charset for encoding messages sent to server, examples: UTF-8, ISO-8859-1 (if empty, messages are not converted)</entry>
 </row>
 <row>
   <entry><option>look_charset_internal</option></entry>

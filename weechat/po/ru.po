@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.7-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-04-30 15:24+0200\n"
+"POT-Creation-Date: 2006-05-07 12:21+0200\n"
 "PO-Revision-Date: 2006-04-30 16:23+0200\n"
 "Last-Translator: Stalwart <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2348,94 +2348,94 @@ msgstr ""
 msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 msgstr "%s сервер/канал (%s/%s) не найден для команды plug-inа\n"
 
-#: src/gui/curses/gui-chat.c:860
+#: src/gui/curses/gui-curses-chat.c:860
 msgid "bytes"
 msgstr "байтов"
 
-#: src/gui/curses/gui-chat.c:860
+#: src/gui/curses/gui-curses-chat.c:860
 msgid "Kb"
 msgstr "Kb"
 
-#: src/gui/curses/gui-chat.c:860
+#: src/gui/curses/gui-curses-chat.c:860
 msgid "Mb"
 msgstr "Mb"
 
-#: src/gui/curses/gui-chat.c:860
+#: src/gui/curses/gui-curses-chat.c:860
 msgid "Gb"
 msgstr "Gb"
 
-#: src/gui/curses/gui-chat.c:978
+#: src/gui/curses/gui-curses-chat.c:978
 msgid "ETA"
 msgstr "осталось"
 
-#: src/gui/curses/gui-input.c:392
+#: src/gui/curses/gui-curses-input.c:392
 msgid "  [A] Accept"
 msgstr "  [A] Принять"
 
-#: src/gui/curses/gui-input.c:393 src/gui/curses/gui-input.c:397
+#: src/gui/curses/gui-curses-input.c:393 src/gui/curses/gui-curses-input.c:397
 msgid "  [C] Cancel"
 msgstr "  [C] Отменить"
 
-#: src/gui/curses/gui-input.c:402
+#: src/gui/curses/gui-curses-input.c:402
 msgid "  [R] Remove"
 msgstr "  [R] Удалить"
 
-#: src/gui/curses/gui-input.c:406
+#: src/gui/curses/gui-curses-input.c:406
 msgid "  [P] Purge old DCC"
 msgstr "  [P] Очистить список"
 
-#: src/gui/curses/gui-input.c:407
+#: src/gui/curses/gui-curses-input.c:407
 msgid "  [Q] Close DCC view"
 msgstr "  [Q] Закрыть окно"
 
-#: src/gui/curses/gui-input.c:415
+#: src/gui/curses/gui-curses-input.c:415
 msgid "  [Q] Close raw data view"
 msgstr "  [Q] Закрыть окно сырых данных"
 
-#: src/gui/curses/gui-main.c:94
+#: src/gui/curses/gui-curses-main.c:98
 #, c-format
 msgid "Day changed to %s\n"
 msgstr "Дата сменилась на %s\n"
 
-#: src/gui/curses/gui-main.c:199
+#: src/gui/curses/gui-curses-main.c:203
 #, c-format
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr "%s задержка слишком высокая, отключаюсь от сервера...\n"
 
-#: src/gui/curses/gui-status.c:81
+#: src/gui/curses/gui-curses-status.c:81
 msgid "<servers>"
 msgstr "<серверы>"
 
-#: src/gui/curses/gui-status.c:93
+#: src/gui/curses/gui-curses-status.c:93
 msgid "(away)"
 msgstr "(отсутствует)"
 
-#: src/gui/curses/gui-status.c:232
+#: src/gui/curses/gui-curses-status.c:232
 msgid "[not connected] "
 msgstr "[не соединён] "
 
-#: src/gui/curses/gui-status.c:238
+#: src/gui/curses/gui-curses-status.c:238
 msgid "<RAW_IRC> "
 msgstr "<RAW_IRC>"
 
-#: src/gui/curses/gui-status.c:250
+#: src/gui/curses/gui-curses-status.c:250
 msgid "Act: "
 msgstr "Активны: "
 
-#: src/gui/curses/gui-status.c:331
+#: src/gui/curses/gui-curses-status.c:331
 msgid "RAW_IRC"
 msgstr "RAW_IRC"
 
-#: src/gui/curses/gui-status.c:352
+#: src/gui/curses/gui-curses-status.c:352
 #, c-format
 msgid "Lag: %.1f"
 msgstr "Задержка: %.1f"
 
-#: src/gui/curses/gui-status.c:368
+#: src/gui/curses/gui-curses-status.c:368
 msgid "-MORE-"
 msgstr "-ДАЛЬШЕ-"
 
-#: src/gui/gtk/gui-main.c:158
+#: src/gui/gtk/gui-gtk-main.c:158
 msgid "server"
 msgstr "сервер"
 
