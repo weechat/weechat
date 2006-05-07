@@ -44,6 +44,13 @@
 #include "../irc/irc.h"
 
 
+t_gui_buffer *gui_buffers = NULL;           /* pointer to first buffer      */
+t_gui_buffer *last_gui_buffer = NULL;       /* pointer to last buffer       */
+t_gui_buffer *gui_buffer_before_dcc = NULL; /* buffer before dcc switch     */
+t_gui_buffer *gui_buffer_raw_data = NULL;   /* buffer with raw IRC data     */
+t_gui_buffer *gui_buffer_before_raw_data = NULL; /* buffer before raw switch*/
+
+
 /*
  * gui_buffer_servers_search: search servers buffer
  *                            (when same buffer is used for all servers)
@@ -140,7 +147,6 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
             window->start_line = NULL;
             window->start_line_pos = 0;
             gui_window_calculate_pos_size (window, 1);
-            gui_window_init_subwindows (window);
         }
         
         /* init lines */

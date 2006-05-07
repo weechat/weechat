@@ -24,7 +24,13 @@ lib_weechat_gui_common_a_SOURCES = gui-buffer.c \
                                    gui-action.c \
                                    gui-keyboard.c \
                                    gui-window.c \
-                                   gui.h
+                                   gui-panel.c \
+                                   gui.h \
+                                   gui-buffer.h \
+                                   gui-color.h \
+                                   gui-keyboard.h \
+                                   gui-panel.h \
+                                   gui-window.h
 
 if GUI_NCURSES
 curses_dir=curses

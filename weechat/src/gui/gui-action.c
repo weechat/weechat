@@ -622,7 +622,7 @@ gui_action_previous_word (t_gui_window *window)
 }
 
 /*
- * gui_action_right: move to previous char
+ * gui_action_right: move to next char
  */
 
 void
@@ -1293,5 +1293,5 @@ void
 gui_action_grab_key (t_gui_window *window)
 {
     if (window->buffer->has_input)
-        gui_key_init_grab ();
+        gui_keyboard_init_grab ();
 }

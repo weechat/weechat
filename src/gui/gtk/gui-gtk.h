@@ -21,6 +21,8 @@
 #ifndef __WEECHAT_GUI_GTK_H
 #define __WEECHAT_GUI_GTK_H 1
 
+#include <gtk/gtk.h>
+
 /* TODO: remove these temporary defines */
 
 #define A_BOLD      1
@@ -47,6 +49,29 @@
 #define WEECHAT_COLOR_MAGENTA COLOR_MAGENTA
 #define WEECHAT_COLOR_CYAN    COLOR_YELLOW
 #define WEECHAT_COLOR_WHITE   COLOR_WHITE
+
+#define GUI_GTK(window) ((t_gui_gtk_objects *)(window->gui_objects))
+
+typedef struct t_gui_panel_window t_gui_panel_window;
+
+struct t_gui_panel_window
+{
+    t_gui_panel *panel;             /* pointer to panel                     */
+    int x, y;                       /* position of window                   */
+    int width, height;              /* window size                          */
+};
+
+typedef struct t_gui_gtk_objects t_gui_gtk_objects;
+
+struct t_gui_gtk_objects
+{
+    GtkWidget *textview_chat;       /* textview widget for chat             */
+    GtkTextBuffer *textbuffer_chat; /* textbuffer widget for chat           */
+    GtkTextTag *texttag_chat;       /* texttag widget for chat              */
+    GtkWidget *textview_nicklist;   /* textview widget for nicklist         */
+    GtkTextBuffer *textbuffer_nicklist; /* textbuffer widget for nicklist   */
+    t_gui_panel_window *panel_windows;  /* panel windows                    */
+};
 
 extern t_gui_color gui_weechat_colors[];
 extern int gui_irc_colors[GUI_NUM_IRC_COLORS][2];

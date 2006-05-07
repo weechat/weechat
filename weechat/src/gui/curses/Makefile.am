@@ -21,8 +21,8 @@ bin_PROGRAMS = weechat-curses
 
 if PLUGINS
 weechat_curses_LDADD = ../gui-common.o ../gui-buffer.o \
-                       ../gui-window.o ../gui-keyboard.o \
-                       ../gui-action.o \
+                       ../gui-window.o ../gui-panel.o \
+                       ../gui-keyboard.o ../gui-action.o \
                        ../../common/lib_weechat_main.a \
                        ../../irc/lib_weechat_irc.a \
                        ../../plugins/lib_weechat_plugins.a \
@@ -31,8 +31,8 @@ weechat_curses_LDADD = ../gui-common.o ../gui-buffer.o \
                        $(GNUTLS_LFLAGS)
 else
 weechat_curses_LDADD = ../gui-common.o ../gui-buffer.o \
-                       ../gui-window.o ../gui-keyboard.o \
-                       ../gui-action.o \
+                       ../gui-window.o ../gui-panel.o \
+                       ../gui-keyboard.o ../gui-action.o \
                        ../../common/lib_weechat_main.a \
                        ../../irc/lib_weechat_irc.a \
                        $(PLUGINS_LIBS) \
@@ -40,13 +40,14 @@ weechat_curses_LDADD = ../gui-common.o ../gui-buffer.o \
                        $(GNUTLS_LFLAGS)
 endif
 
-weechat_curses_SOURCES = gui-chat.c \
-                         gui-color.c \
-                         gui-infobar.c \
-                         gui-input.c \
-                         gui-keyboard.c \
-                         gui-main.c \
-                         gui-nicklist.c \
-                         gui-status.c \
-                         gui-window.c \
+weechat_curses_SOURCES = gui-curses-chat.c \
+                         gui-curses-color.c \
+                         gui-curses-infobar.c \
+                         gui-curses-input.c \
+                         gui-curses-keyboard.c \
+                         gui-curses-main.c \
+                         gui-curses-nicklist.c \
+                         gui-curses-status.c \
+                         gui-curses-window.c \
+                         gui-curses-panel.c \
                          gui-curses.h

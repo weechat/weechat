@@ -44,6 +44,13 @@
 #include "../irc/irc.h"
 
 
+t_gui_window *gui_windows = NULL;           /* pointer to first window      */
+t_gui_window *last_gui_window = NULL;       /* pointer to last window       */
+t_gui_window *gui_current_window = NULL;    /* pointer to current window    */
+
+t_gui_window_tree *gui_windows_tree = NULL; /* pointer to windows tree      */
+
+
 /*
  * gui_window_tree_init: create first entry in windows tree
  */
@@ -115,6 +122,7 @@ gui_window_new (t_gui_window *parent, int x, int y, int width, int height,
 {
     t_gui_window *new_window;
     t_gui_window_tree *ptr_tree, *child1, *child2, *ptr_leaf;
+    t_gui_panel *ptr_panel;
     
 #ifdef DEBUG
     weechat_log_printf ("Creating new window (x:%d, y:%d, width:%d, height:%d)\n",
@@ -174,6 +182,11 @@ gui_window_new (t_gui_window *parent, int x, int y, int width, int height,
     
     if ((new_window = (t_gui_window *)(malloc (sizeof (t_gui_window)))))
     {
+        if (!gui_window_objects_init (new_window))
+        {
+            free (new_window);
+            return NULL;
+        }
         new_window->win_x = x;
         new_window->win_y = y;
         new_window->win_width = width;
@@ -199,23 +212,9 @@ gui_window_new (t_gui_window *parent, int x, int y, int width, int height,
         new_window->win_nick_height = 0;
         new_window->win_nick_num_max = 0;
         new_window->win_nick_start = 0;
-        
+            
         new_window->win_input_x = 0;
-        
-        new_window->win_title = NULL;
-        new_window->win_chat = NULL;
-        new_window->win_nick = NULL;
-        new_window->win_status = NULL;
-        new_window->win_infobar = NULL;
-        new_window->win_input = NULL;
-        new_window->win_separator = NULL;
-        
-        new_window->textview_chat = NULL;
-        new_window->textbuffer_chat = NULL;
-        new_window->texttag_chat = NULL;
-        new_window->textview_nicklist = NULL;
-        new_window->textbuffer_nicklist = NULL;
-        
+            
         new_window->dcc_first = NULL;
         new_window->dcc_selected = NULL;
         new_window->dcc_last_displayed = NULL;
@@ -229,6 +228,14 @@ gui_window_new (t_gui_window *parent, int x, int y, int width, int height,
         
         new_window->ptr_tree = ptr_leaf;
         ptr_leaf->window = new_window;
+
+        /* add panels to window */
+        for (ptr_panel = gui_panels; ptr_panel;
+             ptr_panel = ptr_panel->next_panel)
+        {
+            if (!ptr_panel->panel_window)
+                gui_panel_window_new (ptr_panel, new_window);
+        }
         
         /* add window to windows queue */
         new_window->prev_window = last_gui_window;
@@ -254,6 +261,9 @@ gui_window_free (t_gui_window *window)
 {
     if (window->buffer && (window->buffer->num_displayed > 0))
         window->buffer->num_displayed--;
+    
+    /* free data */
+    gui_window_objects_free (window, 1);
     
     /* remove window from windows list */
     if (window->prev_window)
@@ -399,18 +409,7 @@ gui_window_print_log (t_gui_window *window)
     weechat_log_printf ("  win_nick_width. . . : %d\n",   window->win_nick_width);
     weechat_log_printf ("  win_nick_height . . : %d\n",   window->win_nick_height);
     weechat_log_printf ("  win_nick_start. . . : %d\n",   window->win_nick_start);
-    weechat_log_printf ("  win_title . . . . . : 0x%X\n", window->win_title);
-    weechat_log_printf ("  win_chat. . . . . . : 0x%X\n", window->win_chat);
-    weechat_log_printf ("  win_nick. . . . . . : 0x%X\n", window->win_nick);
-    weechat_log_printf ("  win_status. . . . . : 0x%X\n", window->win_status);
-    weechat_log_printf ("  win_infobar . . . . : 0x%X\n", window->win_infobar);
-    weechat_log_printf ("  win_input . . . . . : 0x%X\n", window->win_input);
-    weechat_log_printf ("  win_separator . . . : 0x%X\n", window->win_separator);
-    weechat_log_printf ("  textview_chat . . . : 0x%X\n", window->textview_chat);
-    weechat_log_printf ("  textbuffer_chat . . : 0x%X\n", window->textbuffer_chat);
-    weechat_log_printf ("  texttag_chat. . . . : 0x%X\n", window->texttag_chat);
-    weechat_log_printf ("  textview_nicklist . : 0x%X\n", window->textview_nicklist);
-    weechat_log_printf ("  textbuffer_nicklist : 0x%X\n", window->textbuffer_nicklist);
+    gui_window_objects_print_log (window);
     weechat_log_printf ("  dcc_first . . . . . : 0x%X\n", window->dcc_first);
     weechat_log_printf ("  dcc_selected. . . . : 0x%X\n", window->dcc_selected);
     weechat_log_printf ("  dcc_last_displayed. : 0x%X\n", window->dcc_last_displayed);

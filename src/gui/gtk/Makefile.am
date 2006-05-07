@@ -21,8 +21,8 @@ bin_PROGRAMS = weechat-gtk
 
 if PLUGINS
 weechat_gtk_LDADD = ../gui-common.o ../gui-buffer.o \
-                    ../gui-window.o ../gui-keyboard.o \
-                    ../gui-action.o \
+                    ../gui-window.o ../gui-panel.o \
+                    ../gui-keyboard.o ../gui-action.o \
                     ../../common/lib_weechat_main.a \
                     ../../irc/lib_weechat_irc.a \
                     ../../plugins/lib_weechat_plugins.a \
@@ -31,8 +31,8 @@ weechat_gtk_LDADD = ../gui-common.o ../gui-buffer.o \
                     $(GNUTLS_LFLAGS)
 else
 weechat_gtk_LDADD = ../gui-common.o ../gui-buffer.o \
-                    ../gui-window.o ../gui-keyboard.o \
-                    ../gui-action.o \
+                    ../gui-window.o ../gui-panel.o \
+                    ../gui-keyboard.o ../gui-action.o \
                     ../../common/lib_weechat_main.a \
                     ../../irc/lib_weechat_irc.a \
                     $(PLUGINS_LIBS) \
@@ -40,13 +40,14 @@ weechat_gtk_LDADD = ../gui-common.o ../gui-buffer.o \
                     $(GNUTLS_LFLAGS)
 endif
 
-weechat_gtk_SOURCES = gui-chat.c \
-                      gui-color.c \
-                      gui-infobar.c \
-                      gui-input.c \
-                      gui-keyboard.c \
-                      gui-main.c \
-                      gui-nicklist.c \
-                      gui-status.c \
-                      gui-window.c \
+weechat_gtk_SOURCES = gui-gtk-chat.c \
+                      gui-gtk-color.c \
+                      gui-gtk-infobar.c \
+                      gui-gtk-input.c \
+                      gui-gtk-keyboard.c \
+                      gui-gtk-main.c \
+                      gui-gtk-nicklist.c \
+                      gui-gtk-status.c \
+                      gui-gtk-window.c \
+                      gui-gtk-panel.c \
                       gui-gtk.h

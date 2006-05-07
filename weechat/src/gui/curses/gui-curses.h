@@ -21,6 +21,12 @@
 #ifndef __WEECHAT_GUI_CURSES_H
 #define __WEECHAT_GUI_CURSES_H 1
 
+#ifdef HAVE_NCURSESW_CURSES_H
+#include <ncursesw/ncurses.h>
+#else
+#include <ncurses.h>
+#endif
+
 /* shift ncurses colors for compatibility with colors
    in IRC messages (same as other IRC clients) */
 
@@ -33,8 +39,39 @@
 #define WEECHAT_COLOR_CYAN    COLOR_YELLOW
 #define WEECHAT_COLOR_WHITE   COLOR_WHITE
 
+#define GUI_CURSES(window) ((t_gui_curses_objects *)(window->gui_objects))
+
+typedef struct t_gui_panel_window t_gui_panel_window;
+
+struct t_gui_panel_window
+{
+    t_gui_panel *panel;             /* pointer to panel                     */
+    int x, y;                       /* position of window                   */
+    int width, height;              /* window size                          */
+    WINDOW *win_panel;              /* panel Curses window                  */
+    WINDOW *win_separator;          /* separator (optional)                 */
+    t_gui_panel_window *next_panel_window;
+                                    /* link to next panel window            */
+                                    /* (only used if panel is in windows)   */
+};
+
+typedef struct t_gui_curses_objects t_gui_curses_objects;
+
+struct t_gui_curses_objects
+{
+    WINDOW *win_title;              /* title window                         */
+    WINDOW *win_chat;               /* chat window (example: channel)       */
+    WINDOW *win_nick;               /* nick window                          */
+    WINDOW *win_status;             /* status window                        */
+    WINDOW *win_infobar;            /* info bar window                      */
+    WINDOW *win_input;              /* input window                         */
+    WINDOW *win_separator;          /* separation between 2 splited (V) win */
+    t_gui_panel_window *panel_windows; /* panel windows                     */
+};
+
 extern t_gui_color gui_weechat_colors[];
 extern int gui_irc_colors[GUI_NUM_IRC_COLORS][2];
+extern int gui_refresh_screen_needed;
 
 /* color functions */
 extern int gui_color_get_pair (int);
@@ -53,5 +90,9 @@ extern void gui_window_set_weechat_color (WINDOW *, int);
 extern void gui_window_refresh_screen_sigwinch ();
 extern void gui_window_set_title ();
 extern void gui_window_reset_title ();
+
+/* panel functions */
+extern int gui_panel_get_size (t_gui_window *, int);
+extern void gui_panel_redraw_buffer (t_gui_buffer *);
 
 #endif /* gui-curses.h */

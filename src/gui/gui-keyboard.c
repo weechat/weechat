@@ -140,11 +140,11 @@ t_gui_key_function gui_key_functions[] =
 
 
 /*
- * gui_key_init: init keyboard (create default key bindings)
+ * gui_keyboard_init: init keyboard (create default key bindings)
  */
 
 void
-gui_key_init ()
+gui_keyboard_init ()
 {
     gui_key_buffer[0] = '\0';
     gui_key_grab = 0;
@@ -154,23 +154,23 @@ gui_key_init ()
 }
 
 /*
- * gui_key_init_show: init "show mode"
+ * gui_keyboard_init_show: init "show mode"
  */
 
 void
-gui_key_init_grab ()
+gui_keyboard_init_grab ()
 {
     gui_key_grab = 1;
     gui_key_grab_count = 0;
 }
 
 /*
- * gui_key_get_internal_code: get internal code from user key name
- *                            for example: return "^R" for "ctrl-R"
+ * gui_keyboard_get_internal_code: get internal code from user key name
+ *                                 for example: return "^R" for "ctrl-R"
  */
 
 char *
-gui_key_get_internal_code (char *key)
+gui_keyboard_get_internal_code (char *key)
 {
     char *result;
     
@@ -208,12 +208,12 @@ gui_key_get_internal_code (char *key)
 }
 
 /*
- * gui_key_get_expanded_name: get expanded name from internal key code
- *                            for example: return "ctrl-R" for "^R"
+ * gui_keyboard_get_expanded_name: get expanded name from internal key code
+ *                                 for example: return "ctrl-R" for "^R"
  */
 
 char *
-gui_key_get_expanded_name (char *key)
+gui_keyboard_get_expanded_name (char *key)
 {
     char *result;
     
@@ -251,11 +251,11 @@ gui_key_get_expanded_name (char *key)
 }
 
 /*
- * gui_key_find_pos: find position for a key (for sorting keys list)
+ * gui_keyboard_find_pos: find position for a key (for sorting keys list)
  */
 
 t_gui_key *
-gui_key_find_pos (t_gui_key *key)
+gui_keyboard_find_pos (t_gui_key *key)
 {
     t_gui_key *ptr_key;
     
@@ -268,17 +268,17 @@ gui_key_find_pos (t_gui_key *key)
 }
 
 /*
- * gui_key_insert_sorted: insert key into sorted list
+ * gui_keyboard_insert_sorted: insert key into sorted list
  */
 
 void
-gui_key_insert_sorted (t_gui_key *key)
+gui_keyboard_insert_sorted (t_gui_key *key)
 {
     t_gui_key *pos_key;
     
     if (gui_keys)
     {
-        pos_key = gui_key_find_pos (key);
+        pos_key = gui_keyboard_find_pos (key);
         
         if (pos_key)
         {
@@ -310,24 +310,24 @@ gui_key_insert_sorted (t_gui_key *key)
 }
 
 /*
- * gui_key_new: add a new key in keys list
+ * gui_keyboard_new: add a new key in keys list
  */
 
 t_gui_key *
-gui_key_new (char *key, char *command, void *function)
+gui_keyboard_new (char *key, char *command, void *function)
 {
     t_gui_key *new_key;
     char *internal_code;
     
     if ((new_key = (t_gui_key *) malloc (sizeof (t_gui_key))))
     {
-        internal_code = gui_key_get_internal_code (key);
+        internal_code = gui_keyboard_get_internal_code (key);
         new_key->key = (internal_code) ? strdup (internal_code) : strdup (key);
         if (internal_code)
             free (internal_code);
         new_key->command = (command) ? strdup (command) : NULL;
         new_key->function = function;
-        gui_key_insert_sorted (new_key);
+        gui_keyboard_insert_sorted (new_key);
     }
     else
         return NULL;
@@ -336,11 +336,11 @@ gui_key_new (char *key, char *command, void *function)
 }
 
 /*
- * gui_key_search: search a key
+ * gui_keyboard_search: search a key
  */
 
 t_gui_key *
-gui_key_search (char *key)
+gui_keyboard_search (char *key)
 {
     t_gui_key *ptr_key;
 
@@ -355,11 +355,11 @@ gui_key_search (char *key)
 }
 
 /*
- * gui_key_cmp: compares 2 keys
+ * gui_keyboard_cmp: compares 2 keys
  */
 
 int
-gui_key_cmp (char *key, char *search)
+gui_keyboard_cmp (char *key, char *search)
 {
     while (search[0])
     {
@@ -373,17 +373,17 @@ gui_key_cmp (char *key, char *search)
 }
 
 /*
- * gui_key_search_part: search a key (maybe part of string)
+ * gui_keyboard_search_part: search a key (maybe part of string)
  */
 
 t_gui_key *
-gui_key_search_part (char *key)
+gui_keyboard_search_part (char *key)
 {
     t_gui_key *ptr_key;
     
     for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
     {
-        if (gui_key_cmp (ptr_key->key, key) == 0)
+        if (gui_keyboard_cmp (ptr_key->key, key) == 0)
             return ptr_key;
     }
     
@@ -392,11 +392,11 @@ gui_key_search_part (char *key)
 }
 
 /*
- * gui_key_function_search_by_name: search a function by name
+ * gui_keyboard_function_search_by_name: search a function by name
  */
 
 void *
-gui_key_function_search_by_name (char *name)
+gui_keyboard_function_search_by_name (char *name)
 {
     int i;
     
@@ -413,11 +413,11 @@ gui_key_function_search_by_name (char *name)
 }
 
 /*
- * gui_key_function_search_by_ptr: search a function by pointer
+ * gui_keyboard_function_search_by_ptr: search a function by pointer
  */
 
 char *
-gui_key_function_search_by_ptr (void *function)
+gui_keyboard_function_search_by_ptr (void *function)
 {
     int i;
     
@@ -434,11 +434,11 @@ gui_key_function_search_by_ptr (void *function)
 }
 
 /*
- * gui_key_bind: bind a key to a function (command or special function)
+ * gui_keyboard_bind: bind a key to a function (command or special function)
  */
 
 t_gui_key *
-gui_key_bind (char *key, char *command)
+gui_keyboard_bind (char *key, char *command)
 {
     t_gui_key_function *ptr_function;
     t_gui_key *new_key;
@@ -453,7 +453,7 @@ gui_key_bind (char *key, char *command)
     ptr_function = NULL;
     if (command[0] != '/')
     {
-        ptr_function = gui_key_function_search_by_name (command);
+        ptr_function = gui_keyboard_function_search_by_name (command);
         if (!ptr_function)
         {
             weechat_log_printf (_("%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"),
@@ -462,11 +462,11 @@ gui_key_bind (char *key, char *command)
         }
     }
     
-    gui_key_unbind (key);
+    gui_keyboard_unbind (key);
     
-    new_key = gui_key_new (key,
-                           (ptr_function) ? NULL : command,
-                           ptr_function);
+    new_key = gui_keyboard_new (key,
+                                (ptr_function) ? NULL : command,
+                                ptr_function);
     if (!new_key)
     {
         weechat_log_printf (_("%s not enough memory for key binding\n"),
@@ -478,20 +478,20 @@ gui_key_bind (char *key, char *command)
 }
 
 /*
- * gui_key_unbind: remove a key binding
+ * gui_keyboard_unbind: remove a key binding
  */
 
 int
-gui_key_unbind (char *key)
+gui_keyboard_unbind (char *key)
 {
     t_gui_key *ptr_key;
     char *internal_code;
     
-    internal_code = gui_key_get_internal_code (key);
+    internal_code = gui_keyboard_get_internal_code (key);
     
-    ptr_key = gui_key_search ((internal_code) ? internal_code : key);
+    ptr_key = gui_keyboard_search ((internal_code) ? internal_code : key);
     if (ptr_key)
-        gui_key_free (ptr_key);
+        gui_keyboard_free (ptr_key);
     
     if (internal_code)
         free (internal_code);
@@ -500,13 +500,13 @@ gui_key_unbind (char *key)
 }
 
 /*
- * gui_key_pressed: treat new key pressed
- *                  return: 1 if key should be added to input buffer
- *                          0 otherwise
+ * gui_keyboard_pressed: treat new key pressed
+ *                       return: 1 if key should be added to input buffer
+ *                               0 otherwise
  */
 
 int
-gui_key_pressed (char *key_str)
+gui_keyboard_pressed (char *key_str)
 {
     int first_key;
     t_gui_key *ptr_key;
@@ -524,7 +524,7 @@ gui_key_pressed (char *key_str)
     }
     
     /* look for key combo in key table */
-    ptr_key = gui_key_search_part (gui_key_buffer);
+    ptr_key = gui_keyboard_search_part (gui_key_buffer);
     if (ptr_key)
     {
         if (ascii_strcasecmp (ptr_key->key, gui_key_buffer) == 0)
@@ -543,7 +543,7 @@ gui_key_pressed (char *key_str)
 #ifdef PLUGINS
             (void) plugin_keyboard_handler_exec (
                 (ptr_key->command) ?
-                ptr_key->command : gui_key_function_search_by_ptr (ptr_key->function),
+                ptr_key->command : gui_keyboard_function_search_by_ptr (ptr_key->function),
                 buffer_before_key,
                 gui_current_window->buffer->input_buffer);
 #endif
@@ -561,11 +561,11 @@ gui_key_pressed (char *key_str)
 }
 
 /*
- * key_free: delete a key binding
+ * gui_keyboard_free: delete a key binding
  */
 
 void
-gui_key_free (t_gui_key *key)
+gui_keyboard_free (t_gui_key *key)
 {
     /* free memory */
     if (key->key)
@@ -587,12 +587,12 @@ gui_key_free (t_gui_key *key)
 }
 
 /*
- * gui_key_free_all: delete all key bindings
+ * gui_keyboard_free_all: delete all key bindings
  */
 
 void
-gui_key_free_all ()
+gui_keyboard_free_all ()
 {
     while (gui_keys)
-        gui_key_free (gui_keys);
+        gui_keyboard_free (gui_keys);
 }

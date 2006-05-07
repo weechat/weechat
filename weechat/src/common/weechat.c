@@ -564,10 +564,10 @@ weechat_display_keys ()
     printf ("\n");
     for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
     {
-        expanded_name = gui_key_get_expanded_name (ptr_key->key);
+        expanded_name = gui_keyboard_get_expanded_name (ptr_key->key);
         printf ("* %s => %s\n",
                 (expanded_name) ? expanded_name : ptr_key->key,
-                (ptr_key->function) ? gui_key_function_search_by_ptr (ptr_key->function) : ptr_key->command);
+                (ptr_key->function) ? gui_keyboard_function_search_by_ptr (ptr_key->function) : ptr_key->command);
         if (expanded_name)
             free (expanded_name);
     }
@@ -1095,7 +1095,7 @@ main (int argc, char *argv[])
     signal (SIGSEGV, weechat_sigsegv);  /* crash dump when SIGSEGV received */
     gui_main_pre_init (&argc, &argv);   /* pre-initiliaze interface         */
     weechat_init_vars ();               /* initialize some variables        */
-    gui_key_init ();                    /* init keyb. (default key bindings)*/
+    gui_keyboard_init ();               /* init keyb. (default key bindings)*/
     weechat_parse_args (argc, argv);    /* parse command line args          */
     weechat_create_home_dirs ();        /* create WeeChat directories       */
     weechat_init_log ();                /* init log file                    */

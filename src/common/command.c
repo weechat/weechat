@@ -2433,7 +2433,7 @@ weechat_cmd_key_display (t_gui_key *key, int new_key)
 {
     char *expanded_name;
 
-    expanded_name = gui_key_get_expanded_name (key->key);
+    expanded_name = gui_keyboard_get_expanded_name (key->key);
     if (new_key)
     {
         irc_display_prefix (NULL, NULL, PREFIX_INFO);
@@ -2446,7 +2446,7 @@ weechat_cmd_key_display (t_gui_key *key, int new_key)
                 GUI_COLOR(COLOR_WIN_CHAT_DARK),
                 GUI_COLOR(COLOR_WIN_CHAT),
                 (key->function) ?
-                gui_key_function_search_by_ptr (key->function) : key->command);
+                gui_keyboard_function_search_by_ptr (key->function) : key->command);
     if (expanded_name)
         free (expanded_name);
 }
@@ -2487,7 +2487,7 @@ weechat_cmd_key (t_irc_server *server, t_irc_channel *channel,
         arguments += 7;
         while (arguments[0] == ' ')
             arguments++;
-        if (gui_key_unbind (arguments))
+        if (gui_keyboard_unbind (arguments))
         {
             irc_display_prefix (NULL, NULL, PREFIX_INFO);
             gui_printf (NULL, _("Key \"%s\" unbinded\n"), arguments);
@@ -2521,8 +2521,8 @@ weechat_cmd_key (t_irc_server *server, t_irc_channel *channel,
             arguments++;
         if (ascii_strcasecmp (arguments, "-yes") == 0)
         {
-            gui_key_free_all ();
-            gui_key_init ();
+            gui_keyboard_free_all ();
+            gui_keyboard_init ();
             irc_display_prefix (NULL, NULL, PREFIX_INFO);
             gui_printf (NULL, _("Default key bindings restored\n"));
         }
@@ -2552,7 +2552,7 @@ weechat_cmd_key (t_irc_server *server, t_irc_channel *channel,
         pos++;
         while (pos[0] == ' ')
             pos++;
-        ptr_key = gui_key_bind (arguments, pos);
+        ptr_key = gui_keyboard_bind (arguments, pos);
         if (ptr_key)
             weechat_cmd_key_display (ptr_key, 1);
         else

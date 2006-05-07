@@ -50,17 +50,6 @@ int gui_ok = 0;                             /* = 1 if GUI is ok             */
 int gui_add_hotlist = 1;                    /* 0 is for temporarly disable  */
                                             /* hotlist add for all buffers  */
 
-t_gui_window *gui_windows = NULL;           /* pointer to first window      */
-t_gui_window *last_gui_window = NULL;       /* pointer to last window       */
-t_gui_window *gui_current_window = NULL;    /* pointer to current window    */
-
-t_gui_window_tree *gui_windows_tree = NULL; /* pointer to windows tree      */
-
-t_gui_buffer *gui_buffers = NULL;           /* pointer to first buffer      */
-t_gui_buffer *last_gui_buffer = NULL;       /* pointer to last buffer       */
-t_gui_buffer *gui_buffer_before_dcc = NULL; /* buffer before dcc switch     */
-t_gui_buffer *gui_buffer_raw_data = NULL;   /* buffer with raw IRC data     */
-t_gui_buffer *gui_buffer_before_raw_data = NULL; /* buffer before raw switch*/
 t_gui_infobar *gui_infobar;                 /* pointer to infobar content   */
 
 char *gui_input_clipboard = NULL;           /* clipboard content            */
