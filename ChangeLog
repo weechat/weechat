@@ -4,6 +4,7 @@ WeeChat - Wee Enhanced Environment for Chat
 ChangeLog - 2006-05-07
 
 Version 0.1.9 (under dev!):
+   * fixed display bug with DCC file size when > 1 Gb
    * fixed refresh bug (deadlock in curses) when terminal is resized
      (bug #16542)
    * fixed nicklist sort bug

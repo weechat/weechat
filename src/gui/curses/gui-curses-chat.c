@@ -859,7 +859,7 @@ gui_chat_draw (t_gui_buffer *buffer, int erase)
     int i, j, line_pos, count, num_bars;
     char *unit_name[] = { N_("bytes"), N_("Kb"), N_("Mb"), N_("Gb") };
     char *unit_format[] = { "%.0Lf", "%.1Lf", "%.02Lf", "%.02Lf" };
-    long unit_divide[] = { 1, 1024, 1024*1024, 1024*1024,1024 };
+    long unit_divide[] = { 1, 1024, 1024*1024, 1024*1024*1024 };
     int num_unit;
     char format[32], date[128], *buf;
     struct tm *date_tmp;
