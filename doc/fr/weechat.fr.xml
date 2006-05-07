@@ -5864,6 +5864,12 @@ weechat.set_plugin_config("ma_variable", "valeur")
               traduction en allemand
             </para>
           </listitem>
+          <listitem>
+            <para>
+              <emphasis>Pavel Shevchuk</emphasis> -
+              traduction en russe
+            </para>
+          </listitem>
         </itemizedlist>
       </para>
       
