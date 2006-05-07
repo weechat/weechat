@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-/* gui-main.c: main loop and keyboard management for Curses GUI */
+/* gui-curses-main.c: main loop for Curses GUI */
 
 
 #ifdef HAVE_CONFIG_H
@@ -29,12 +29,6 @@
 #include <unistd.h>
 #include <string.h>
 #include <signal.h>
-
-#ifdef HAVE_NCURSESW_CURSES_H
-#include <ncursesw/ncurses.h>
-#else
-#include <ncurses.h>
-#endif
 
 #include "../../common/weechat.h"
 #include "../gui.h"
@@ -77,6 +71,10 @@ gui_main_loop ()
     check_away = 0;
     while (!quit_weechat)
     {
+        /* refresh needed ? */
+        if (gui_refresh_screen_needed)
+            gui_window_refresh_screen ();
+        
         new_time = time (NULL);
         local_time = localtime (&new_time);
         
@@ -113,9 +111,9 @@ gui_main_loop ()
             if (cfg_look_infobar_seconds)
             {
                 gui_infobar_draw_time (gui_current_window->buffer);
-                wmove (gui_current_window->win_input,
+                wmove (GUI_CURSES(gui_current_window)->win_input,
                        0, gui_current_window->win_input_x);
-                wrefresh (gui_current_window->win_input);
+                wrefresh (GUI_CURSES(gui_current_window)->win_input);
             }
             
             /* infobar count down */
@@ -289,13 +287,13 @@ gui_main_init ()
     {
         gui_current_window = gui_windows;
         gui_buffer_new (gui_windows, NULL, NULL, BUFFER_TYPE_STANDARD, 1);
-    
-        signal (SIGWINCH, gui_window_refresh_screen_sigwinch);
-	
+        
         if (cfg_look_set_title)
             gui_window_set_title ();
-    
+        
         gui_init_ok = 1;
+        
+        signal (SIGWINCH, gui_window_refresh_screen_sigwinch);
     }
 }
 
@@ -306,32 +304,18 @@ gui_main_init ()
 void
 gui_main_end ()
 {
-    t_gui_window *ptr_win;
-    
     /* free clipboard buffer */
     if (gui_input_clipboard)
-      free(gui_input_clipboard);
+        free (gui_input_clipboard);
 
-    /* delete all windows */
-    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-    {
-        if (ptr_win->win_title)
-            delwin (ptr_win->win_title);
-        if (ptr_win->win_chat)
-            delwin (ptr_win->win_chat);
-        if (ptr_win->win_nick)
-            delwin (ptr_win->win_nick);
-        if (ptr_win->win_status)
-            delwin (ptr_win->win_status);
-        if (ptr_win->win_infobar)
-            delwin (ptr_win->win_infobar);
-        if (ptr_win->win_input)
-            delwin (ptr_win->win_input);
-    }
-    
+    /* delete all panels */
+    while (gui_panels)
+        gui_panel_free (gui_panels);
+
     /* delete all buffers */
+    gui_window_merge_all (gui_current_window);
     while (gui_buffers)
-        gui_buffer_free (gui_buffers, 0);
+      gui_buffer_free (gui_buffers, 0);
     
     /* delete all windows */
     while (gui_windows)
@@ -349,7 +333,7 @@ gui_main_end ()
     if (cfg_look_set_title)
 	gui_window_reset_title ();
     
-    /* end of curses output */
+    /* end of Curses output */
     refresh ();
     endwin ();
 }

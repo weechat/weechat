@@ -1,19 +1,21 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-05-05
+ChangeLog - 2006-05-07
 
 Version 0.1.9 (under dev!):
+   * fixed refresh bug (deadlock in curses) when terminal is resized
+     (bug #16542)
    * fixed nicklist sort bug
    * added russian translations (thanks to Pavel Shevchuk)
    * added german doc (thanks to Frank Zacharias)
    * added missing IRC commands (290, 292, 437, 974)
    * fixed crash when multiple pv have same name: now it's forbidden
      and pv buffer is not renamed (when a nick changes) if another
-     exists with same name
+     exists with same name (bug #16369)
    * command /clear [-all] now clears hotlist
-   * fixed crash after /upgrade if a line in history is empty
-   * fixed many crashes with DCC chat
+   * fixed crash after /upgrade if a line in history is empty (bug #16379)
+   * fixed many crashes with DCC chat (bug #16416)
    * added new option to customize input prompt
    * added nick modes
    * fixed commands 332, 333 (/topic now ok when channel is not opened)
