@@ -25,6 +25,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
 "file:///usr/share/xml/docbook/schema/dtd/4.2/docbookx.dtd"
 [
+  <!ENTITY date.xml SYSTEM "date.xml">
   <!ENTITY config.xml SYSTEM "config.xml">
   <!ENTITY weechat_commands.xml SYSTEM "weechat_commands.xml">
   <!ENTITY irc_commands.xml SYSTEM "irc_commands.xml">
@@ -43,6 +44,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
       <surname>Helleu</surname>
       <email>flashcode AT flashtux.org</email>
     </author>
+    
+    &date.xml;
     
     <copyright>
       <year>2006</year>
