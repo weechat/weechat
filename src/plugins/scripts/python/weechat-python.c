@@ -91,14 +91,20 @@ weechat_python_exec (t_weechat_plugin *plugin,
     else
         rc = PyObject_CallFunction (evFunc, "");
 
+    
+    if (rc == Py_None)
+    {
+	python_plugin->print_server (python_plugin, "Python error: function \"%s\" must return a valid value", function);
+	return PLUGIN_RC_OK;
+    }
+
     if (rc)
     {
         ret = (int) PyInt_AsLong(rc);
         Py_XDECREF(rc);
     }
     
-    if (PyErr_Occurred ())
-	PyErr_Print ();
+    if (PyErr_Occurred ()) PyErr_Print ();
     
     if (ret < 0)
         return PLUGIN_RC_OK;

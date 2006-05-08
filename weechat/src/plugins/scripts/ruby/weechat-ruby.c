@@ -153,6 +153,12 @@ weechat_ruby_exec (t_weechat_plugin *plugin,
 	
         return PLUGIN_RC_KO;
     }
+
+    if (ruby_retcode == Qnil)
+    {
+	ruby_plugin->print_server (ruby_plugin, "Ruby error: function \"%s\" must return a valid value", function);
+	return PLUGIN_RC_OK;
+    }
     
     return NUM2INT(ruby_retcode);
 }
