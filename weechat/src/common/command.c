@@ -34,6 +34,7 @@
 #include "weeconfig.h"
 #include "session.h"
 #include "fifo.h"
+#include "utf8.h"
 #include "../irc/irc.h"
 #include "../gui/gui.h"
 
@@ -950,6 +951,99 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
 }
 
 /*
+ * user_message_display: display user message
+ */
+
+void
+user_message_display (t_irc_server *server, t_gui_buffer *buffer, char *text)
+{
+    char *decoded_text;
+    t_irc_nick *ptr_nick;
+    
+    decoded_text = (char *)gui_color_decode ((unsigned char *)text, 1);
+    
+    if ((CHANNEL(buffer)->type == CHANNEL_TYPE_PRIVATE)
+        || (CHANNEL(buffer)->type == CHANNEL_TYPE_DCC_CHAT))
+    {
+        irc_display_nick (buffer, NULL, server->nick,
+                          MSG_TYPE_NICK, 1, COLOR_WIN_NICK_SELF, 0);
+        gui_printf_type (buffer,
+                         MSG_TYPE_MSG,
+                         "%s%s\n",
+                         GUI_COLOR(COLOR_WIN_CHAT),
+                         (decoded_text) ? decoded_text : text);
+    }
+    else
+    {
+        ptr_nick = nick_search (CHANNEL(buffer), server->nick);
+        if (ptr_nick)
+        {
+            irc_display_nick (buffer, ptr_nick, NULL,
+                              MSG_TYPE_NICK, 1, -1, 0);
+            gui_printf_type (buffer,
+                             MSG_TYPE_MSG,
+                             "%s%s\n",
+                             GUI_COLOR(COLOR_WIN_CHAT),
+                             (decoded_text) ? decoded_text : text);
+        }
+        else
+        {
+            irc_display_prefix (server, server->buffer, PREFIX_ERROR);
+            gui_printf (server->buffer,
+                        _("%s cannot find nick for sending message\n"),
+                        WEECHAT_ERROR);
+        }
+    }
+
+    if (decoded_text)
+        free (decoded_text);
+}
+
+/*
+ * user_message: send a PRIVMSG message, and split it if > 512 bytes
+ */
+
+void
+user_message (t_irc_server *server, t_gui_buffer *buffer, char *text)
+{
+    int max_length;
+    char *pos, *pos_next, *pos_max, *next, saved_char;
+
+    if (!text || !text[0])
+        return;
+    
+    max_length = 512 - 16 - 65 - 10 - strlen (server->nick) -
+        strlen (CHANNEL(buffer)->name);
+    
+    next = NULL;
+    saved_char = '\0';
+    if ((int)strlen (text) > max_length)
+    {
+        pos = text;
+        pos_max = text + max_length;
+        while (pos && pos[0])
+        {
+            pos_next = utf8_next_char (pos);
+            if (pos_next > pos_max)
+                break;
+            pos = pos_next;
+        }
+        saved_char = pos[0];
+        pos[0] = '\0';
+        next = pos;
+    }
+    
+    server_sendf (server, "PRIVMSG %s :%s\r\n", CHANNEL(buffer)->name, text);
+    user_message_display (server, buffer, text);
+    
+    if (next)
+    {
+        next[0] = saved_char;
+        user_message (server, buffer, next);
+    }
+}
+
+/*
  * user_command: interprets user command (if beginning with '/')
  *               any other text is sent to the server, if connected
  */
@@ -958,9 +1052,8 @@ void
 user_command (t_irc_server *server, t_irc_channel *channel, char *command, int only_builtin)
 {
     t_gui_buffer *buffer;
-    t_irc_nick *ptr_nick;
-    int plugin_args_length, text_sent;
-    char *command_with_colors, *command_encoded, *command_with_colors2;
+    int plugin_args_length;
+    char *command_with_colors, *command_encoded;
     char *plugin_args;
     
     if ((!command) || (!command[0]) || (command[0] == '\r') || (command[0] == '\n'))
@@ -985,7 +1078,7 @@ user_command (t_irc_server *server, t_irc_channel *channel, char *command, int o
             
             command_encoded = channel_iconv_encode (server, channel,
                                                     (command_with_colors) ? command_with_colors : command);
-            text_sent = 1;
+            
             if (CHANNEL(buffer)->dcc_chat)
             {
                 if (((t_irc_dcc *)(CHANNEL(buffer)->dcc_chat))->sock < 0)
@@ -993,65 +1086,25 @@ user_command (t_irc_server *server, t_irc_channel *channel, char *command, int o
                     irc_display_prefix (server, buffer, PREFIX_ERROR);
                     gui_printf_nolog (buffer, "%s DCC CHAT is closed\n",
                                       WEECHAT_ERROR);
-                    text_sent = 0;
                 }
                 else
+                {
                     dcc_chat_sendf ((t_irc_dcc *)(CHANNEL(buffer)->dcc_chat),
                                     "%s\r\n",
                                     (command_encoded) ? command_encoded :
                                     ((command_with_colors) ? command_with_colors : command));
+                    user_message_display (server, buffer,
+                                          (command_with_colors) ?
+                                          command_with_colors : command);
+                }
             }
             else
-                server_sendf (server, "PRIVMSG %s :%s\r\n",
-                              CHANNEL(buffer)->name,
+                user_message (server, buffer,
                               (command_encoded) ? command_encoded :
-                                ((command_with_colors) ? command_with_colors : command));
-            
-            command_with_colors2 = (command_with_colors) ?
-                (char *)gui_color_decode ((unsigned char *)command_with_colors, 1) : NULL;
-
-            if (text_sent)
-            {
-                if ((CHANNEL(buffer)->type == CHANNEL_TYPE_PRIVATE)
-                    || (CHANNEL(buffer)->type == CHANNEL_TYPE_DCC_CHAT))
-                {
-                    irc_display_nick (buffer, NULL, server->nick,
-                                      MSG_TYPE_NICK, 1, COLOR_WIN_NICK_SELF, 0);
-                    gui_printf_type (buffer,
-                                     MSG_TYPE_MSG,
-                                     "%s%s\n",
-                                     GUI_COLOR(COLOR_WIN_CHAT),
-                                     (command_with_colors2) ?
-                                     command_with_colors2 : command);
-                }
-                else
-                {
-                    ptr_nick = nick_search (CHANNEL(buffer), server->nick);
-                    if (ptr_nick)
-                    {
-                        irc_display_nick (buffer, ptr_nick, NULL,
-                                          MSG_TYPE_NICK, 1, -1, 0);
-                        gui_printf_type (buffer,
-                                         MSG_TYPE_MSG,
-                                         "%s%s\n",
-                                         GUI_COLOR(COLOR_WIN_CHAT),
-                                         (command_with_colors2) ?
-                                         command_with_colors2 : command);
-                    }
-                    else
-                    {
-                        irc_display_prefix (server, server->buffer, PREFIX_ERROR);
-                        gui_printf (server->buffer,
-                                    _("%s cannot find nick for sending message\n"),
-                                    WEECHAT_ERROR);
-                    }
-                }
-            }
+                              ((command_with_colors) ? command_with_colors : command));
             
             if (command_with_colors)
                 free (command_with_colors);
-            if (command_with_colors2)
-                free (command_with_colors2);
             if (command_encoded)
                 free (command_encoded);
             
