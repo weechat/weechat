@@ -24,7 +24,10 @@
 #include "config.h"
 #endif
 
+#include <stdlib.h>
 #include <string.h>
+#define __USE_XOPEN
+#include <wchar.h>
 
 #include "weechat.h"
 #include "utf8.h"
@@ -225,7 +228,7 @@ utf8_strlen (char *string)
 }
 
 /*
- * utf8_strlen: return length of an UTF-8 string, for N bytes
+ * utf8_strnlen: return length of an UTF-8 string, for N bytes
  */
 
 int
@@ -252,6 +255,38 @@ utf8_strnlen (char *string, int bytes)
         string = utf8_next_char (string);
         length++;
     }
+    return length;
+}
+
+/*
+ * utf8_width_screen: return number of chars needed on screen to display UTF-8 string
+ */
+
+int
+utf8_width_screen (char *string)
+{
+    int length, num_char;
+    wchar_t *wstring;
+    
+    if (!string)
+        return 0;
+    
+    if (!local_utf8)
+        return strlen (string);
+    
+    num_char = mbstowcs (NULL, string, 0) + 1;
+    wstring = (wchar_t *) malloc ((num_char + 1) * sizeof (wchar_t));
+    if (!wstring)
+        return utf8_strlen (string);
+    
+    if (mbstowcs (wstring, string, num_char) == (size_t)(-1))
+    {
+        free (wstring);
+        return utf8_strlen (string);
+    }
+    
+    length = wcswidth (wstring, num_char);
+    free (wstring);
     return length;
 }
 

@@ -191,10 +191,14 @@ gui_chat_draw_title (t_gui_buffer *buffer, int erase)
  */
 
 char *
-gui_chat_word_get_next_char (t_gui_window *window, unsigned char *string, int apply_style)
+gui_chat_word_get_next_char (t_gui_window *window, unsigned char *string,
+                             int apply_style, int *width_screen)
 {
-    char str_fg[3], str_bg[3];
-    int fg, bg, weechat_color;
+    char str_fg[3], str_bg[3], utf_char[16];
+    int fg, bg, weechat_color, char_size;
+
+    if (width_screen)
+        *width_screen = 0;
     
     while (string[0])
     {
@@ -344,7 +348,16 @@ gui_chat_word_get_next_char (t_gui_window *window, unsigned char *string, int ap
                 if (string[0] < 32)
                     string++;
                 else
-                    return utf8_next_char ((char *)string);
+                {
+                    char_size = utf8_char_size ((char *) string);
+                    if (width_screen)
+                    {
+                        memcpy (utf_char, string, char_size);
+                        utf_char[char_size] = '\0';
+                        *width_screen = utf8_width_screen (utf_char);
+                    }
+                    return (char *)string + char_size;
+                }
         }
             
     }
@@ -416,7 +429,9 @@ gui_chat_get_word_info (t_gui_window *window,
     leading_spaces = 1;
     while (data && data[0])
     {
-        next_char = gui_chat_word_get_next_char (window, (unsigned char *)data, 0);
+        next_char = gui_chat_word_get_next_char (window,
+                                                 (unsigned char *)data,
+                                                 0, NULL);
         if (next_char)
         {
             prev_char = utf8_prev_char (data, next_char);

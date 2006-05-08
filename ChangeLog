@@ -1,9 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-05-07
+ChangeLog - 2006-05-08
 
 Version 0.1.9 (under dev!):
+   * fixed UTF-8 display bug with chars using more than one cell on screen
+     (bug #16356)
    * fixed display bug with DCC file size when > 1 Gb
    * fixed refresh bug (deadlock in curses) when terminal is resized
      (bug #16542)

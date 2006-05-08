@@ -194,7 +194,7 @@ extern void gui_keyboard_default_bindings ();
 
 /* chat */
 extern void gui_chat_draw_title (t_gui_buffer *, int);
-extern char *gui_chat_word_get_next_char (t_gui_window *, unsigned char *, int);
+extern char *gui_chat_word_get_next_char (t_gui_window *, unsigned char *, int, int *);
 extern void gui_chat_draw (t_gui_buffer *, int);
 extern void gui_chat_draw_line (t_gui_buffer *, t_gui_line *);
 

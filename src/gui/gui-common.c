@@ -59,21 +59,21 @@ time_t gui_last_activity_time = 0;          /* last activity time           */
 
 
 /*
- * gui_word_strlen: returns length of a word
+ * gui_word_strlen: returns number of char needed on sreen to display a word
  *                  special chars like color, bold, .. are ignored
  */
 
 int
 gui_word_strlen (t_gui_window *window, char *string)
 {
-    int length;
+    int length, width_screen;
     
     length = 0;
     while (string && string[0])
     {
-        string = gui_chat_word_get_next_char (window, (unsigned char *)string, 0);
+        string = gui_chat_word_get_next_char (window, (unsigned char *)string, 0, &width_screen);
         if (string)
-            length++;
+            length += width_screen;
     }
     return length;
 }
@@ -86,7 +86,7 @@ int
 gui_word_real_pos (t_gui_window *window, char *string, int pos)
 {
     char *saved_pos;
-    int real_pos;
+    int real_pos, width_screen;
     
     if (pos <= 0)
         return 0;
@@ -95,8 +95,8 @@ gui_word_real_pos (t_gui_window *window, char *string, int pos)
     while (string && string[0] && (pos > 0))
     {
         saved_pos = string;
-        string = gui_chat_word_get_next_char (window, (unsigned char *)string, 0);
-        pos--;
+        string = gui_chat_word_get_next_char (window, (unsigned char *)string, 0, &width_screen);
+        pos -= width_screen;
         if (string)
             real_pos += (string - saved_pos);
     }

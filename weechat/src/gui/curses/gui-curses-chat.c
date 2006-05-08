@@ -246,10 +246,14 @@ gui_chat_display_new_line (t_gui_window *window, int num_lines, int count,
  */
 
 char *
-gui_chat_word_get_next_char (t_gui_window *window, unsigned char *string, int apply_style)
+gui_chat_word_get_next_char (t_gui_window *window, unsigned char *string,
+                             int apply_style, int *width_screen)
 {
-    char str_fg[3], str_bg[3];
-    int fg, bg, weechat_color;
+    char str_fg[3], str_bg[3], utf_char[16];
+    int fg, bg, weechat_color, char_size;
+
+    if (width_screen)
+        *width_screen = 0;
     
     while (string[0])
     {
@@ -399,7 +403,16 @@ gui_chat_word_get_next_char (t_gui_window *window, unsigned char *string, int ap
                 if (string[0] < 32)
                     string++;
                 else
-                    return utf8_next_char ((char *)string);
+                {
+                    char_size = utf8_char_size ((char *) string);
+                    if (width_screen)
+                    {
+                        memcpy (utf_char, string, char_size);
+                        utf_char[char_size] = '\0';
+                        *width_screen = utf8_width_screen (utf_char);
+                    }
+                    return (char *)string + char_size;
+                }
         }
             
     }
@@ -424,7 +437,7 @@ gui_chat_display_word_raw (t_gui_window *window, char *string)
     
     while (string && string[0])
     {
-        next_char = gui_chat_word_get_next_char (window, (unsigned char *)string, 1);
+        next_char = gui_chat_word_get_next_char (window, (unsigned char *)string, 1, NULL);
         if (!next_char)
             return;
         
@@ -447,10 +460,10 @@ gui_chat_display_word_raw (t_gui_window *window, char *string)
 
 void
 gui_chat_display_word (t_gui_window *window,
-                  t_gui_line *line,
-                  char *data,
-                  char *end_offset,
-                  int num_lines, int count, int *lines_displayed, int simulate)
+                       t_gui_line *line,
+                       char *data,
+                       char *end_offset,
+                       int num_lines, int count, int *lines_displayed, int simulate)
 {
     char *end_line, saved_char_end, saved_char;
     int pos_saved_char, chars_to_display, num_displayed;
@@ -557,7 +570,7 @@ gui_chat_get_word_info (t_gui_window *window,
     leading_spaces = 1;
     while (data && data[0])
     {
-        next_char = gui_chat_word_get_next_char (window, (unsigned char *)data, 0);
+        next_char = gui_chat_word_get_next_char (window, (unsigned char *)data, 0, NULL);
         if (next_char)
         {
             prev_char = utf8_prev_char (data, next_char);
@@ -676,7 +689,9 @@ gui_chat_display_line (t_gui_window *window, t_gui_line *line, int count,
                     saved_char = ptr_data[word_start_offset];
                     ptr_data[word_start_offset] = '\0';
                     ptr_style = ptr_data;
-                    while ((ptr_style = gui_chat_word_get_next_char (window, (unsigned char *)ptr_style, 1)) != NULL)
+                    while ((ptr_style = gui_chat_word_get_next_char (window,
+                                                                     (unsigned char *)ptr_style,
+                                                                     1, NULL)) != NULL)
                     {
                         /* loop until no style/char available */
                     }
@@ -705,7 +720,8 @@ gui_chat_display_line (t_gui_window *window, t_gui_line *line, int count,
                     while (ptr_data && (ptr_data[0] == ' '))
                     {
                         next_char = gui_chat_word_get_next_char (window,
-                                                                 (unsigned char *)ptr_data, 0);
+                                                                 (unsigned char *)ptr_data,
+                                                                 0, NULL);
                         if (!next_char)
                             break;
                         prev_char = utf8_prev_char (ptr_data, next_char);

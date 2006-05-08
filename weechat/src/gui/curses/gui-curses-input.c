@@ -67,14 +67,14 @@ gui_input_set_color (t_gui_window *window, int irc_color)
 }
 
 /*
- * gui_input_get_prompt_length: return input prompt length
+ * gui_input_get_prompt_length: return input prompt length (displayed on screen)
  */
 
 int
 gui_input_get_prompt_length (t_gui_window *window, char *nick)
 {
-    char *pos, *modes;
-    int length, mode_found;
+    char *pos, saved_char, *modes;
+    int char_size, length, mode_found;
     
     length = 0;
     pos = cfg_look_input_format;
@@ -134,8 +134,12 @@ gui_input_get_prompt_length (t_gui_window *window, char *nick)
                 }
                 break;
             default:
-                length++;
-                pos += utf8_char_size (pos);
+                char_size = utf8_char_size (pos);
+                saved_char = pos[char_size];
+                pos[char_size] = '\0';
+                length += utf8_width_screen (pos);
+                pos[char_size] = saved_char;
+                pos += char_size;
                 break;
         }
     }
@@ -144,6 +148,8 @@ gui_input_get_prompt_length (t_gui_window *window, char *nick)
 
 /*
  * gui_input_draw_prompt: display input prompt
+ *                        return: # chars displayed on screen (one UTF-8 char
+ *                        may be displayed on more than 1 char on screen)
  */
 
 void
@@ -250,18 +256,23 @@ gui_input_draw_prompt (t_gui_window *window, char *nick)
 
 /*
  * gui_input_draw_text: display text in input buffer, according to color mask
+ *                      return: offset for cursor position on screen (one UTF-8
+ *                      char may be displayed on more than 1 char on screen)
  */
 
-void
+int
 gui_input_draw_text (t_gui_window *window, int input_width)
 {
     char *ptr_start, *ptr_next, saved_char;
-    int pos_mask, size, last_color, color;
+    int pos_mask, size, last_color, color, count_cursor, offset_cursor;
     
     ptr_start = utf8_add_offset (window->buffer->input_buffer,
                                  window->buffer->input_buffer_1st_display);
     pos_mask = ptr_start - window->buffer->input_buffer;
     last_color = -1;
+    count_cursor = window->buffer->input_buffer_pos -
+        window->buffer->input_buffer_1st_display;
+    offset_cursor = 0;
     while ((input_width > 0) && ptr_start && ptr_start[0])
     {
         ptr_next = utf8_next_char (ptr_start);
@@ -283,6 +294,11 @@ gui_input_draw_text (t_gui_window *window, int input_width)
             }
             last_color = color;
             wprintw (GUI_CURSES(window)->win_input, "%s", ptr_start);
+            if (count_cursor > 0)
+            {
+                offset_cursor += utf8_width_screen (ptr_start);
+                count_cursor--;
+            }
             ptr_next[0] = saved_char;
             ptr_start = ptr_next;
             pos_mask += size;
@@ -291,6 +307,7 @@ gui_input_draw_text (t_gui_window *window, int input_width)
             ptr_start = NULL;
         input_width--;
     }
+    return offset_cursor;
 }
 
 /*
@@ -303,7 +320,7 @@ gui_input_draw (t_gui_buffer *buffer, int erase)
     t_gui_window *ptr_win;
     char format[32];
     char *ptr_nickname;
-    int prompt_length, display_prompt;
+    int prompt_length, display_prompt, offset_cursor;
     t_irc_dcc *dcc_selected;
     
     if (!gui_ok)
@@ -368,13 +385,14 @@ gui_input_draw (t_gui_buffer *buffer, int erase)
                         
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_input, COLOR_WIN_INPUT);
                         snprintf (format, 32, "%%-%ds", ptr_win->win_width - prompt_length);
+                        offset_cursor = 0;
                         if (ptr_win == gui_current_window)
-                            gui_input_draw_text (ptr_win, ptr_win->win_width - prompt_length);
+                            offset_cursor = gui_input_draw_text (ptr_win,
+                                                                 ptr_win->win_width - prompt_length);
                         else
                             wprintw (GUI_CURSES(ptr_win)->win_input, format, "");
                         wclrtoeol (GUI_CURSES(ptr_win)->win_input);
-                        ptr_win->win_input_x = prompt_length +
-                            (buffer->input_buffer_pos - buffer->input_buffer_1st_display);
+                        ptr_win->win_input_x = prompt_length + offset_cursor;
                         if (ptr_win == gui_current_window)
                             move (ptr_win->win_y + ptr_win->win_height - 1,
                                   ptr_win->win_x + ptr_win->win_input_x);
