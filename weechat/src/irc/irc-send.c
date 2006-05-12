@@ -31,6 +31,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <sys/time.h>
+#include <netdb.h>
 #include <time.h>
 #include <sys/utsname.h>
 #include <regex.h>
@@ -49,31 +50,26 @@
 void
 irc_login (t_irc_server *server)
 {
-    char hostname[128], *ptr_hostname;
-
+    char hostname[NI_MAXHOST];
+    
     if ((server->password) && (server->password[0]))
         server_sendf (server, "PASS %s\r\n", server->password);
     
-    if (server->hostname && server->hostname[0])
-        ptr_hostname = server->hostname;
-    else
-    {
-        gethostname (hostname, sizeof (hostname) - 1);
-        hostname[sizeof (hostname) - 1] = '\0';
-        if (!hostname[0])
-            strcpy (hostname, _("unknown"));
-        ptr_hostname = hostname;
-    }
+    gethostname (hostname, sizeof (hostname) - 1);
+    hostname[sizeof (hostname) - 1] = '\0';
+    if (!hostname[0])
+        snprintf (hostname, NI_MAXHOST, "unknown");
+    
     irc_display_prefix (server, server->buffer, PREFIX_INFO);
     gui_printf (server->buffer,
                 _("%s: using hostname \"%s\"\n"),
-                PACKAGE_NAME, ptr_hostname);
+                PACKAGE_NAME, hostname);
     if (!server->nick)
         server->nick = strdup (server->nick1);
     server_sendf (server,
                   "NICK %s\r\n"
                   "USER %s %s %s :%s\r\n",
-                  server->nick, server->username, ptr_hostname, "servername",
+                  server->nick, server->username, hostname, "servername",
                   server->realname);
     gui_input_draw (gui_current_window->buffer, 1);
 }

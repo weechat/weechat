@@ -981,47 +981,56 @@ server_child_read (t_irc_server *server)
             /* adress not found */
             case '1':
                 irc_display_prefix (server, server->buffer, PREFIX_ERROR);
-		if (cfg_proxy_use)
-		  gui_printf (server->buffer,
-			      _("%s proxy address \"%s\" not found\n"),
-			      WEECHAT_ERROR, server->address);
-		else
-		  gui_printf (server->buffer,
-			      _("%s address \"%s\" not found\n"),
-			      WEECHAT_ERROR, server->address);
+                if (cfg_proxy_use)
+                    gui_printf (server->buffer,
+                                _("%s proxy address \"%s\" not found\n"),
+                                WEECHAT_ERROR, server->address);
+                else
+                    gui_printf (server->buffer,
+                                _("%s address \"%s\" not found\n"),
+                                WEECHAT_ERROR, server->address);
                 server_close_connection (server);
                 server_reconnect_schedule (server);
                 break;
             /* IP address not found */
             case '2':
                 irc_display_prefix (server, server->buffer, PREFIX_ERROR);
-		if (cfg_proxy_use)
-		  gui_printf (server->buffer,
-			      _("%s proxy IP address not found\n"), WEECHAT_ERROR);
-		else
-		  gui_printf (server->buffer,
-			      _("%s IP address not found\n"), WEECHAT_ERROR);
+                if (cfg_proxy_use)
+                    gui_printf (server->buffer,
+                                _("%s proxy IP address not found\n"), WEECHAT_ERROR);
+                else
+                    gui_printf (server->buffer,
+                                _("%s IP address not found\n"), WEECHAT_ERROR);
                 server_close_connection (server);
                 server_reconnect_schedule (server);
                 break;
-	     /* connection refused */
+            /* connection refused */
             case '3':
                 irc_display_prefix (server, server->buffer, PREFIX_ERROR);
-		if (cfg_proxy_use)
-		  gui_printf (server->buffer,
-			      _("%s proxy connection refused\n"), WEECHAT_ERROR);
-		else
-		  gui_printf (server->buffer,
-			      _("%s connection refused\n"), WEECHAT_ERROR);
+                if (cfg_proxy_use)
+                    gui_printf (server->buffer,
+                                _("%s proxy connection refused\n"), WEECHAT_ERROR);
+                else
+                    gui_printf (server->buffer,
+                                _("%s connection refused\n"), WEECHAT_ERROR);
                 server_close_connection (server);
                 server_reconnect_schedule (server);
                 break;
-	    /* proxy fails to connect to server */
+            /* proxy fails to connect to server */
             case '4':
                 irc_display_prefix (server, server->buffer, PREFIX_ERROR);
-		gui_printf (server->buffer,
-			    _("%s proxy fails to establish connection to "
+                gui_printf (server->buffer,
+                            _("%s proxy fails to establish connection to "
                               "server (check username/password if used)\n"),
+                            WEECHAT_ERROR);
+                server_close_connection (server);
+                server_reconnect_schedule (server);
+                break;
+            /* fails to set local hostname/IP */
+            case '5':
+                irc_display_prefix (server, server->buffer, PREFIX_ERROR);
+                gui_printf (server->buffer,
+                            _("%s unable to set local hostname/IP\n"),
                             WEECHAT_ERROR);
                 server_close_connection (server);
                 server_reconnect_schedule (server);
@@ -1393,90 +1402,128 @@ pass_proxy (int sock, char *address, int port, char *username)
 int
 server_child (t_irc_server *server)
 {
-    struct addrinfo hints, *res;
+    struct addrinfo hints, *res, *res_local;
+    int rc;
     
     res = NULL;
+    res_local = NULL;
     
     if (cfg_proxy_use)
     {
-	memset (&hints, 0, sizeof (hints));
-	hints.ai_family = (cfg_proxy_ipv6) ? AF_INET6 : AF_INET;
-	hints.ai_socktype = SOCK_STREAM;
-	if (getaddrinfo (cfg_proxy_address, NULL, &hints, &res) !=0)
+        /* get info about server */
+        memset (&hints, 0, sizeof (hints));
+        hints.ai_family = (cfg_proxy_ipv6) ? AF_INET6 : AF_INET;
+        hints.ai_socktype = SOCK_STREAM;
+        if (getaddrinfo (cfg_proxy_address, NULL, &hints, &res) !=0)
         {
-	    write(server->child_write, "1", 1);
-	    return 0;
+            write(server->child_write, "1", 1);
+            return 0;
         }
         if (!res)
         {
             write(server->child_write, "1", 1);
-	    return 0;
+            return 0;
         }
-	if ((cfg_proxy_ipv6 && (res->ai_family != AF_INET6))
-	    || ((!cfg_proxy_ipv6 && (res->ai_family != AF_INET))))
+        if ((cfg_proxy_ipv6 && (res->ai_family != AF_INET6))
+            || ((!cfg_proxy_ipv6 && (res->ai_family != AF_INET))))
         {
-	    write (server->child_write, "2", 1);
+            write (server->child_write, "2", 1);
             freeaddrinfo (res);
-	    return 0;
+            return 0;
         }
         
-	if (cfg_proxy_ipv6)
+        if (cfg_proxy_ipv6)
             ((struct sockaddr_in6 *)(res->ai_addr))->sin6_port = htons (cfg_proxy_port);
-	else
+        else
             ((struct sockaddr_in *)(res->ai_addr))->sin_port = htons (cfg_proxy_port);
-	
-	if (connect (server->sock, res->ai_addr, res->ai_addrlen) != 0)
+
+        /* connect to server */
+        if (connect (server->sock, res->ai_addr, res->ai_addrlen) != 0)
         {
-	    write(server->child_write, "3", 1);
+            write(server->child_write, "3", 1);
             freeaddrinfo (res);
-	    return 0;
+            return 0;
         }
-	
-	if (pass_proxy(server->sock, server->address, server->port, server->username))
+        
+        if (pass_proxy(server->sock, server->address, server->port, server->username))
         {
-	    write(server->child_write, "4", 1);
+            write(server->child_write, "4", 1);
             freeaddrinfo (res);
-	    return 0;
+            return 0;
         }
     }
     else
     {
-	memset (&hints, 0, sizeof(hints));
-	hints.ai_family = (server->ipv6) ? AF_INET6 : AF_INET;
-	hints.ai_socktype = SOCK_STREAM;
-	if (getaddrinfo (server->address, NULL, &hints, &res) !=0)
+        /* set local hostname/IP if asked by user */
+        if (server->hostname && server->hostname[0])
         {
-	    write(server->child_write, "1", 1);
-	    return 0;
-        }
-        if (!res)
-        {
-            write(server->child_write, "1", 1);
-	    return 0;
-        }
-	if ((server->ipv6 && (res->ai_family != AF_INET6))
-	    || ((!server->ipv6 && (res->ai_family != AF_INET))))
-        {
-	    write(server->child_write, "2", 1);
-            freeaddrinfo (res);
-	    return 0;
+            memset (&hints, 0, sizeof(hints));
+            hints.ai_family = (server->ipv6) ? AF_INET6 : AF_INET;
+            hints.ai_socktype = SOCK_STREAM;
+            rc = getaddrinfo (server->hostname, NULL, &hints, &res_local);
+            if ((rc != 0) || !res_local
+                || (server->ipv6 && (res_local->ai_family != AF_INET6))
+                || ((!server->ipv6 && (res_local->ai_family != AF_INET))))
+            {
+                write (server->child_write, "5", 1);
+                if (res_local)
+                    freeaddrinfo (res_local);
+                return 0;
+            }
+            if (bind (server->sock, res_local->ai_addr, res_local->ai_addrlen) < 0)
+            {
+                write (server->child_write, "5", 1);
+                if (res_local)
+                    freeaddrinfo (res_local);
+                return 0;
+            }
         }
         
-	if (server->ipv6)
-            ((struct sockaddr_in6 *)(res->ai_addr))->sin6_port = htons (server->port);
-	else
-            ((struct sockaddr_in *)(res->ai_addr))->sin_port = htons (server->port);
-	
-	if (connect (server->sock, res->ai_addr, res->ai_addrlen) != 0)
+        /* get info about server */
+        memset (&hints, 0, sizeof(hints));
+        hints.ai_family = (server->ipv6) ? AF_INET6 : AF_INET;
+        hints.ai_socktype = SOCK_STREAM;
+        rc = getaddrinfo (server->address, NULL, &hints, &res);
+        if ((rc != 0) || !res)
         {
-	    write(server->child_write, "3", 1);
-            freeaddrinfo (res);
-	    return 0;
+            write (server->child_write, "1", 1);
+            if (res)
+                freeaddrinfo (res);
+            return 0;
+        }
+        if ((server->ipv6 && (res->ai_family != AF_INET6))
+            || ((!server->ipv6 && (res->ai_family != AF_INET))))
+        {
+            write (server->child_write, "2", 1);
+            if (res)
+                freeaddrinfo (res);
+            if (res_local)
+                freeaddrinfo (res_local);
+            return 0;
+        }
+        
+        /* connect to server */
+        if (server->ipv6)
+            ((struct sockaddr_in6 *)(res->ai_addr))->sin6_port = htons (server->port);
+        else
+            ((struct sockaddr_in *)(res->ai_addr))->sin_port = htons (server->port);
+        
+        if (connect (server->sock, res->ai_addr, res->ai_addrlen) != 0)
+        {
+            write (server->child_write, "3", 1);
+            if (res)
+                freeaddrinfo (res);
+            if (res_local)
+                freeaddrinfo (res_local);
+            return 0;
         }
     }
     
     write (server->child_write, "0", 1);
-    freeaddrinfo (res);
+    if (res)
+        freeaddrinfo (res);
+    if (res_local)
+        freeaddrinfo (res_local);
     return 0;
 }
 
@@ -1506,14 +1553,14 @@ server_connect (t_irc_server *server)
     irc_display_prefix (server, server->buffer, PREFIX_INFO);
     if (cfg_proxy_use)
       {
-	gui_printf (server->buffer,
-		    _("%s: connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"),
-		    PACKAGE_NAME, server->address, server->port,
-		    (server->ipv6) ? " (IPv6)" : "",
-		    (server->ssl) ? " (SSL)" : "",
-		    cfg_proxy_type_values[cfg_proxy_type], cfg_proxy_address, cfg_proxy_port,
-		    (cfg_proxy_ipv6) ? " (IPv6)" : "");
-	weechat_log_printf (_("Connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"),
+          gui_printf (server->buffer,
+                      _("%s: connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"),
+                      PACKAGE_NAME, server->address, server->port,
+                      (server->ipv6) ? " (IPv6)" : "",
+                      (server->ssl) ? " (SSL)" : "",
+                      cfg_proxy_type_values[cfg_proxy_type], cfg_proxy_address, cfg_proxy_port,
+                      (cfg_proxy_ipv6) ? " (IPv6)" : "");
+          weechat_log_printf (_("Connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"),
                             server->address, server->port,
                             (server->ipv6) ? " (IPv6)" : "",
                             (server->ssl) ? " (SSL)" : "",
@@ -1522,12 +1569,12 @@ server_connect (t_irc_server *server)
       }
     else
       {
-	gui_printf (server->buffer,
-		    _("%s: connecting to server %s:%d%s%s...\n"),
-		    PACKAGE_NAME, server->address, server->port,
-		    (server->ipv6) ? " (IPv6)" : "",
-		    (server->ssl) ? " (SSL)" : "");
-	weechat_log_printf (_("Connecting to server %s:%d%s%s...\n"),
+          gui_printf (server->buffer,
+                      _("%s: connecting to server %s:%d%s%s...\n"),
+                      PACKAGE_NAME, server->address, server->port,
+                      (server->ipv6) ? " (IPv6)" : "",
+                      (server->ssl) ? " (SSL)" : "");
+          weechat_log_printf (_("Connecting to server %s:%d%s%s...\n"),
                             server->address, server->port,
                             (server->ipv6) ? " (IPv6)" : "",
                             (server->ssl) ? " (SSL)" : "");

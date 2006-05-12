@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.9-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-05-10 15:27+0200\n"
-"PO-Revision-Date: 2006-05-07 13:12+0200\n"
+"POT-Creation-Date: 2006-05-12 15:09+0200\n"
+"PO-Revision-Date: 2006-05-12 16:22+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -103,7 +103,12 @@ msgstr ""
 "%s selhalo zjednání spojení s proxy serverem (zkontrolujte uživatelské jméno "
 "a heslo pokud jsou vyžadovány)\n"
 
-#: src/irc/irc-server.c:1501
+#: src/irc/irc-server.c:1033
+#, c-format
+msgid "%s unable to set local hostname/IP\n"
+msgstr ""
+
+#: src/irc/irc-server.c:1548
 #, c-format
 msgid ""
 "%s cannot connect with SSL since WeeChat was not built with GNUtls support\n"
@@ -111,57 +116,57 @@ msgstr ""
 "%s nemohu se připojit pomocí SSL, protže WeeChat nebyl sestaven s podporou "
 "GNUtls\n"
 
-#: src/irc/irc-server.c:1510
+#: src/irc/irc-server.c:1557
 #, c-format
 msgid "%s: connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"
 msgstr "%s: připojuji se k serveru %s:%d%s%s přes %s proxy %s:%d%s...\n"
 
-#: src/irc/irc-server.c:1516
+#: src/irc/irc-server.c:1563
 #, c-format
 msgid "Connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"
 msgstr "Připojuji se k serveru %s:%d%s%s přes %s proxy %s:%d%s...\n"
 
-#: src/irc/irc-server.c:1526
+#: src/irc/irc-server.c:1573
 #, c-format
 msgid "%s: connecting to server %s:%d%s%s...\n"
 msgstr "%s: připojuji se k serveru %s:%d%s%s...\n"
 
-#: src/irc/irc-server.c:1530
+#: src/irc/irc-server.c:1577
 #, c-format
 msgid "Connecting to server %s:%d%s%s...\n"
 msgstr "Připojuji se k serveru %s:%d%s%s...\n"
 
-#: src/irc/irc-server.c:1548
+#: src/irc/irc-server.c:1595
 #, c-format
 msgid "%s gnutls init error\n"
 msgstr "%s chyba inicializace gnutls\n"
 
-#: src/irc/irc-server.c:1563
+#: src/irc/irc-server.c:1610
 #, c-format
 msgid "%s cannot create pipe\n"
 msgstr "%s nemohu vytvořit rouru\n"
 
-#: src/irc/irc-server.c:1578
+#: src/irc/irc-server.c:1625
 #, c-format
 msgid "%s cannot create socket\n"
 msgstr "%s nemohu vytvořit soket\n"
 
-#: src/irc/irc-server.c:1589
+#: src/irc/irc-server.c:1636
 #, c-format
 msgid "%s cannot set socket option \"SO_REUSEADDR\"\n"
 msgstr "%s nemohu nastavit nastavení sketu \"SO_REUSEADDR\"\n"
 
-#: src/irc/irc-server.c:1600
+#: src/irc/irc-server.c:1647
 #, c-format
 msgid "%s cannot set socket option \"SO_KEEPALIVE\"\n"
 msgstr "%s nemohu nastavit nastavení soketu \"SO_KEEPALIVE\"\n"
 
-#: src/irc/irc-server.c:1631
+#: src/irc/irc-server.c:1678
 #, c-format
 msgid "%s: Reconnecting to server...\n"
 msgstr "%s: Připojuji se znovu k serveru...\n"
 
-#: src/irc/irc-server.c:1682 src/irc/irc-server.c:1691
+#: src/irc/irc-server.c:1729 src/irc/irc-server.c:1738
 msgid "Disconnected from server!\n"
 msgstr "Odpojen od serveru!\n"
 
@@ -1392,63 +1397,59 @@ msgstr "sekund"
 msgid "(hidden)"
 msgstr "(skrytý)"
 
-#: src/irc/irc-send.c:64 src/irc/irc-recv.c:5231
-msgid "unknown"
-msgstr "neznámý"
-
-#: src/irc/irc-send.c:69
+#: src/irc/irc-send.c:65
 #, c-format
 msgid "%s: using hostname \"%s\"\n"
 msgstr "%s: používám jméno hosta \"%s\"\n"
 
-#: src/irc/irc-send.c:222 src/common/command.c:993
+#: src/irc/irc-send.c:218 src/common/command.c:993
 #, c-format
 msgid "%s cannot find nick for sending message\n"
 msgstr "%s nemohu najít přezdívku pro poslání zprávy\n"
 
-#: src/irc/irc-send.c:395 src/irc/irc-send.c:423 src/irc/irc-send.c:645
-#: src/irc/irc-send.c:682 src/irc/irc-send.c:719 src/irc/irc-send.c:773
-#: src/irc/irc-send.c:818 src/irc/irc-send.c:897 src/irc/irc-send.c:958
-#: src/irc/irc-send.c:1344 src/irc/irc-send.c:1486 src/irc/irc-send.c:2012
-#: src/irc/irc-send.c:2142
+#: src/irc/irc-send.c:391 src/irc/irc-send.c:419 src/irc/irc-send.c:641
+#: src/irc/irc-send.c:678 src/irc/irc-send.c:715 src/irc/irc-send.c:769
+#: src/irc/irc-send.c:814 src/irc/irc-send.c:893 src/irc/irc-send.c:954
+#: src/irc/irc-send.c:1340 src/irc/irc-send.c:1482 src/irc/irc-send.c:2008
+#: src/irc/irc-send.c:2138
 #, c-format
 msgid "%s \"%s\" command can only be executed in a channel buffer\n"
 msgstr "%s \"%s\" příkaz může být spuštěn pouze v bufferu kanálu\n"
 
-#: src/irc/irc-send.c:562 src/irc/irc-send.c:582 src/irc/irc-send.c:1112
-#: src/irc/irc-send.c:1548 src/irc/irc-send.c:1930
+#: src/irc/irc-send.c:558 src/irc/irc-send.c:578 src/irc/irc-send.c:1108
+#: src/irc/irc-send.c:1544 src/irc/irc-send.c:1926
 #, c-format
 msgid "%s \"%s\" command can not be executed on a server buffer\n"
 msgstr "%s \"%s\" příkaz nemůže být spuštěn v bufferu serveru\n"
 
-#: src/irc/irc-send.c:882 src/irc/irc-send.c:943 src/common/command.c:2024
+#: src/irc/irc-send.c:878 src/irc/irc-send.c:939 src/common/command.c:2024
 #, c-format
 msgid "%s wrong arguments for \"%s\" command\n"
 msgstr "%s špatné parametry pro příkaz \"%s\"\n"
 
-#: src/irc/irc-send.c:1059
+#: src/irc/irc-send.c:1055
 #, c-format
 msgid "%s \"%s\" is not a valid regular expression (%s)\n"
 msgstr "%s \"%s\" není validní regulární výraz (%s)\n"
 
-#: src/irc/irc-send.c:1068
+#: src/irc/irc-send.c:1064
 #, c-format
 msgid "%s not enough memory for regular expression\n"
 msgstr "%s nedostatek paměti pro regulární výraz\n"
 
-#: src/irc/irc-send.c:1194
+#: src/irc/irc-send.c:1190
 #, c-format
 msgid "%s \"%s\" command can only be executed in a channel or private buffer\n"
 msgstr ""
 "%s \"%s\" příkaz může být spuštěn pouze v bufferu kanálu nebo soukromého "
 "rozhovoru\n"
 
-#: src/irc/irc-send.c:1236 src/irc/irc-recv.c:518
+#: src/irc/irc-send.c:1232 src/irc/irc-recv.c:518
 #, c-format
 msgid "%s nick \"%s\" not found for \"%s\" command\n"
 msgstr "%s přezdívka \"%s\" nebyla nalezena pro příkaz \"%s\"\n"
 
-#: src/irc/irc-send.c:1317 src/irc/irc-send.c:1455 src/irc/irc-send.c:2038
+#: src/irc/irc-send.c:1313 src/irc/irc-send.c:1451 src/irc/irc-send.c:2034
 #: src/common/command.c:1969 src/common/command.c:1981
 #: src/common/command.c:2000 src/common/command.c:2087
 #: src/common/command.c:2600 src/common/command.c:2779
@@ -1456,12 +1457,12 @@ msgstr "%s přezdívka \"%s\" nebyla nalezena pro příkaz \"%s\"\n"
 msgid "%s wrong argument count for \"%s\" command\n"
 msgstr "%s špatný počet parametrů pro příkaz \"%s\"\n"
 
-#: src/irc/irc-send.c:1649
+#: src/irc/irc-send.c:1645
 #, c-format
 msgid "%s cannot create new private buffer \"%s\"\n"
 msgstr "%s nemohu vytvořít nové soukromý buffer\"%s\"\n"
 
-#: src/irc/irc-send.c:2103
+#: src/irc/irc-send.c:2099
 #, c-format
 msgid "%s, compiled on %s %s\n"
 msgstr "%s, kompilováno na %s %s\n"
@@ -1999,6 +2000,10 @@ msgstr ""
 msgid "%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\"\n"
 msgstr ""
 "%s: přezdívka \"%s\" je již použivaná, zkouším první přezdívku \"%s\"\n"
+
+#: src/irc/irc-recv.c:5231
+msgid "unknown"
+msgstr "neznámý"
 
 #: src/irc/irc-dcc.c:49
 msgid "Waiting"
