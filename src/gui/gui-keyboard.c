@@ -49,6 +49,8 @@ t_gui_key_function gui_key_functions[] =
     N_("terminate line") },
   { "tab",                       gui_action_tab,
     N_("complete word") },
+  { "tab_previous",              gui_action_tab_previous,
+    N_("find previous completion for word") },
   { "backspace",                 gui_action_backspace,
     N_("delete previous char") },
   { "delete",                    gui_action_delete,

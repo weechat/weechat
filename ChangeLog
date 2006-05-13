@@ -1,9 +1,10 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-05-09
+ChangeLog - 2006-05-13
 
 Version 0.1.9 (under dev!):
+   * added new key to find previous completion (shift-tab by default)
    * fixed bug with long outgoing IRC messages (> 512 bytes) (bug #16358)
    * fixed Ruby crash when handler does not return OK or KO (bug #16552)
    * fixed UTF-8 display bug with chars using more than one cell on screen

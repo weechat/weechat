@@ -43,6 +43,7 @@ struct t_completion
     int base_word_pos;          /* beggining of base word                     */
     int position;               /* position where Tab was pressed             */
     char *args;                 /* command line args (including base word)    */
+    int direction;              /* +1 = search next word, -1 = previous word  */
     
     /* for command argument completion */
     t_weelist *completion_list; /* data list for completion                   */
@@ -57,6 +58,6 @@ struct t_completion
 
 extern void completion_init (t_completion *, void *, void *);
 extern void completion_free (t_completion *);
-extern void completion_search (t_completion *, char *, int, int);
+extern void completion_search (t_completion *, int, char *, int, int);
 
 #endif /* completion.h */

@@ -51,6 +51,7 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind ( /* RC          */ "ctrl-M",             "return");
     gui_keyboard_bind ( /* RC          */ "ctrl-J",             "return");
     gui_keyboard_bind ( /* tab         */ "ctrl-I",             "tab");
+    gui_keyboard_bind ( /* s-tab       */ "meta2-Z",            "tab_previous");
     gui_keyboard_bind ( /* basckp      */ "ctrl-H",             "backspace");
     gui_keyboard_bind ( /* basckp      */ "ctrl-?",             "backspace");
     gui_keyboard_bind ( /* del         */ "meta2-3~",           "delete");

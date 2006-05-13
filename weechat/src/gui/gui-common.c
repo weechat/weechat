@@ -553,6 +553,115 @@ gui_input_move (t_gui_buffer *buffer, char *target, char *source, int size)
 }
 
 /*
+ * gui_input_complete: complete a word in input buffer
+ */
+
+void
+gui_input_complete (t_gui_window *window)
+{
+    int i;
+    
+    if (window->buffer->completion.word_found)
+    {
+        /* replace word with new completed word into input buffer */
+        if (window->buffer->completion.diff_size > 0)
+        {
+            window->buffer->input_buffer_size +=
+                window->buffer->completion.diff_size;
+            window->buffer->input_buffer_length +=
+                window->buffer->completion.diff_length;
+            gui_input_optimize_size (window->buffer);
+            window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
+            window->buffer->input_buffer_color_mask[window->buffer->input_buffer_size] = '\0';
+            for (i = window->buffer->input_buffer_size - 1;
+                 i >=  window->buffer->completion.position_replace +
+                     (int)strlen (window->buffer->completion.word_found); i--)
+            {
+                window->buffer->input_buffer[i] =
+                    window->buffer->input_buffer[i - window->buffer->completion.diff_size];
+                window->buffer->input_buffer_color_mask[i] =
+                    window->buffer->input_buffer_color_mask[i - window->buffer->completion.diff_size];
+            }
+        }
+        else
+        {
+            for (i = window->buffer->completion.position_replace +
+                     strlen (window->buffer->completion.word_found);
+                 i < window->buffer->input_buffer_size; i++)
+            {
+                window->buffer->input_buffer[i] =
+                    window->buffer->input_buffer[i - window->buffer->completion.diff_size];
+                window->buffer->input_buffer_color_mask[i] =
+                    window->buffer->input_buffer_color_mask[i - window->buffer->completion.diff_size];
+            }
+            window->buffer->input_buffer_size +=
+                window->buffer->completion.diff_size;
+            window->buffer->input_buffer_length +=
+                window->buffer->completion.diff_length;
+            gui_input_optimize_size (window->buffer);
+            window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
+            window->buffer->input_buffer_color_mask[window->buffer->input_buffer_size] = '\0';
+        }
+            
+        strncpy (window->buffer->input_buffer + window->buffer->completion.position_replace,
+                 window->buffer->completion.word_found,
+                 strlen (window->buffer->completion.word_found));
+        for (i = 0; i < (int)strlen (window->buffer->completion.word_found); i++)
+        {
+            window->buffer->input_buffer_color_mask[window->buffer->completion.position_replace + i] = ' ';
+        }
+        window->buffer->input_buffer_pos =
+            utf8_pos (window->buffer->input_buffer,
+                      window->buffer->completion.position_replace) +
+            utf8_strlen (window->buffer->completion.word_found);
+                        
+        /* position is < 0 this means only one word was found to complete,
+           so reinit to stop completion */
+        if (window->buffer->completion.position >= 0)
+            window->buffer->completion.position =
+                utf8_real_pos (window->buffer->input_buffer,
+                               window->buffer->input_buffer_pos);
+                        
+        /* add space or completor to the end of completion, if needed */
+        if ((window->buffer->completion.context == COMPLETION_COMMAND)
+            || (window->buffer->completion.context == COMPLETION_COMMAND_ARG))
+        {
+            if (window->buffer->input_buffer[utf8_real_pos (window->buffer->input_buffer,
+                                                            window->buffer->input_buffer_pos)] != ' ')
+                gui_insert_string_input (window, " ",
+                                         window->buffer->input_buffer_pos);
+            if (window->buffer->completion.position >= 0)
+                window->buffer->completion.position++;
+            window->buffer->input_buffer_pos++;
+        }
+        else
+        {
+            /* add nick completor if position 0 and completing nick */
+            if ((window->buffer->completion.base_word_pos == 0)
+                && (window->buffer->completion.context == COMPLETION_NICK))
+            {
+                if (strncmp (utf8_add_offset (window->buffer->input_buffer,
+                                              window->buffer->input_buffer_pos),
+                             cfg_look_nick_completor, strlen (cfg_look_nick_completor)) != 0)
+                    gui_insert_string_input (window, cfg_look_nick_completor,
+                                             window->buffer->input_buffer_pos);
+                if (window->buffer->completion.position >= 0)
+                    window->buffer->completion.position += strlen (cfg_look_nick_completor);
+                window->buffer->input_buffer_pos += utf8_strlen (cfg_look_nick_completor);
+                if (window->buffer->input_buffer[utf8_real_pos (window->buffer->input_buffer,
+                                                                window->buffer->input_buffer_pos)] != ' ')
+                    gui_insert_string_input (window, " ",
+                                             window->buffer->input_buffer_pos);
+                if (window->buffer->completion.position >= 0)
+                    window->buffer->completion.position++;
+                window->buffer->input_buffer_pos++;
+            }
+        }
+        gui_input_draw (window->buffer, 0);
+    }
+}
+
+/*
  * gui_exec_action_dcc: execute an action on a DCC after a user input
  *                      return -1 if DCC buffer was closed due to action,
  *                      0 otherwise

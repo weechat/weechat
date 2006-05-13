@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.1.9-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-05-12 15:09+0200\n"
-"PO-Revision-Date: 2006-05-12 16:21+0200\n"
+"POT-Creation-Date: 2006-05-13 01:52+0200\n"
+"PO-Revision-Date: 2006-05-13 01:53+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2494,189 +2494,193 @@ msgid "complete word"
 msgstr "compléter le mot"
 
 #: src/gui/gui-keyboard.c:53
+msgid "find previous completion for word"
+msgstr "trouver le mot complété précédent"
+
+#: src/gui/gui-keyboard.c:55
 msgid "delete previous char"
 msgstr "effacer le caractère précédent"
 
-#: src/gui/gui-keyboard.c:55
+#: src/gui/gui-keyboard.c:57
 msgid "delete next char"
 msgstr "effacer le caractère suivant"
 
-#: src/gui/gui-keyboard.c:57
+#: src/gui/gui-keyboard.c:59
 msgid "delete until end of line"
 msgstr "effacer jusqu'à la fin de la ligne"
 
-#: src/gui/gui-keyboard.c:59
+#: src/gui/gui-keyboard.c:61
 msgid "delete until beginning of line"
 msgstr "effacer jusqu'au début de la ligne"
 
-#: src/gui/gui-keyboard.c:61
+#: src/gui/gui-keyboard.c:63
 msgid "delete entire line"
 msgstr "effacer la ligne entière"
 
-#: src/gui/gui-keyboard.c:63
+#: src/gui/gui-keyboard.c:65
 msgid "delete previous word"
 msgstr "effacer le mot précédent"
 
-#: src/gui/gui-keyboard.c:65
+#: src/gui/gui-keyboard.c:67
 msgid "delete next word"
 msgstr "effacer le mot suivant"
 
-#: src/gui/gui-keyboard.c:67
+#: src/gui/gui-keyboard.c:69
 msgid "paste current clipboard content"
 msgstr "coller le contenu du presse-papier"
 
-#: src/gui/gui-keyboard.c:69
+#: src/gui/gui-keyboard.c:71
 msgid "transpose chars"
 msgstr "inverser les caractères"
 
-#: src/gui/gui-keyboard.c:71
+#: src/gui/gui-keyboard.c:73
 msgid "go to beginning of line"
 msgstr "aller au début de la ligne"
 
-#: src/gui/gui-keyboard.c:73
+#: src/gui/gui-keyboard.c:75
 msgid "go to end of line"
 msgstr "aller à la fin de la ligne"
 
-#: src/gui/gui-keyboard.c:75
+#: src/gui/gui-keyboard.c:77
 msgid "move one char left"
 msgstr "se déplacer d'un caractère à gauche"
 
-#: src/gui/gui-keyboard.c:77
+#: src/gui/gui-keyboard.c:79
 msgid "move to previous word"
 msgstr "se déplacer au mot précédent"
 
-#: src/gui/gui-keyboard.c:79
+#: src/gui/gui-keyboard.c:81
 msgid "move one char right"
 msgstr "se déplacer d'un caractère à droite"
 
-#: src/gui/gui-keyboard.c:81
+#: src/gui/gui-keyboard.c:83
 msgid "move to next word"
 msgstr "se déplacer au mot suivant"
 
-#: src/gui/gui-keyboard.c:83
+#: src/gui/gui-keyboard.c:85
 msgid "call previous command in history"
 msgstr "appeler la commande précédente dans l'historique"
 
-#: src/gui/gui-keyboard.c:85
+#: src/gui/gui-keyboard.c:87
 msgid "call previous command in global history"
 msgstr "appeler la commande précédente dans l'historique global"
 
-#: src/gui/gui-keyboard.c:87
+#: src/gui/gui-keyboard.c:89
 msgid "call next command in history"
 msgstr "appeler la commande suivante dans l'historique"
 
-#: src/gui/gui-keyboard.c:89
+#: src/gui/gui-keyboard.c:91
 msgid "call next command in global history"
 msgstr "appeler la commande suivante dans l'historique global"
 
-#: src/gui/gui-keyboard.c:91
+#: src/gui/gui-keyboard.c:93
 msgid "scroll one page up"
 msgstr "faire défiler d'une page vers le haut"
 
-#: src/gui/gui-keyboard.c:93
+#: src/gui/gui-keyboard.c:95
 msgid "scroll one page down"
 msgstr "faire défiler d'une page vers le bas"
 
-#: src/gui/gui-keyboard.c:95
+#: src/gui/gui-keyboard.c:97
 msgid "scroll a few lines up"
 msgstr "faire défiler de quelques lignes vers le haut"
 
-#: src/gui/gui-keyboard.c:97
+#: src/gui/gui-keyboard.c:99
 msgid "scroll a few lines down"
 msgstr "faire défiler de quelques lignes vers le bas"
 
-#: src/gui/gui-keyboard.c:99
+#: src/gui/gui-keyboard.c:101
 msgid "scroll to top of buffer"
 msgstr "faire défiler jusqu'au début du tampon"
 
-#: src/gui/gui-keyboard.c:101
+#: src/gui/gui-keyboard.c:103
 msgid "scroll to bottom of buffer"
 msgstr "faire défiler jusqu'à la fin du tampon"
 
-#: src/gui/gui-keyboard.c:103
+#: src/gui/gui-keyboard.c:105
 msgid "display beginning of nicklist"
 msgstr "afficher le début de la liste des pseudos"
 
-#: src/gui/gui-keyboard.c:105
+#: src/gui/gui-keyboard.c:107
 msgid "display end of nicklist"
 msgstr "afficher la fin de la liste des pseudos"
 
-#: src/gui/gui-keyboard.c:107
+#: src/gui/gui-keyboard.c:109
 msgid "scroll nicklist one page up"
 msgstr "faire défiler la liste des pseudos d'une page vers le haut"
 
-#: src/gui/gui-keyboard.c:109
+#: src/gui/gui-keyboard.c:111
 msgid "scroll nicklist one page down"
 msgstr "faire défiler la liste des pseudos d'une page vers le bas"
 
-#: src/gui/gui-keyboard.c:111
+#: src/gui/gui-keyboard.c:113
 msgid "jump to buffer with activity"
 msgstr "sauter au tampon avec de l'activité"
 
-#: src/gui/gui-keyboard.c:113
+#: src/gui/gui-keyboard.c:115
 msgid "jump to DCC buffer"
 msgstr "sauter au tampon DCC"
 
-#: src/gui/gui-keyboard.c:115
+#: src/gui/gui-keyboard.c:117
 msgid "jump to raw IRC data buffer"
 msgstr "sauter au tampon IRC brut"
 
-#: src/gui/gui-keyboard.c:117
+#: src/gui/gui-keyboard.c:119
 msgid "jump to last buffer"
 msgstr "sauter au dernier tampon"
 
-#: src/gui/gui-keyboard.c:119
+#: src/gui/gui-keyboard.c:121
 msgid "jump to server buffer"
 msgstr "sauter au tampon du serveur"
 
-#: src/gui/gui-keyboard.c:121
+#: src/gui/gui-keyboard.c:123
 msgid "jump to next server"
 msgstr "sauter au prochain serveur"
 
-#: src/gui/gui-keyboard.c:123
+#: src/gui/gui-keyboard.c:125
 msgid "switch active server on servers buffer"
 msgstr "bascule de serveur actif sur le tampon des serveurs"
 
-#: src/gui/gui-keyboard.c:125
+#: src/gui/gui-keyboard.c:127
 msgid "scroll to previous highlight in buffer"
 msgstr "scroller jusqu'au highlight précédent du tampon"
 
-#: src/gui/gui-keyboard.c:127
+#: src/gui/gui-keyboard.c:129
 msgid "scroll to next highlight in buffer"
 msgstr "scroller jusqu'au highlight suivant du tampon"
 
-#: src/gui/gui-keyboard.c:129
+#: src/gui/gui-keyboard.c:131
 msgid "scroll to first unread line in buffer"
 msgstr "scroller jusqu'à la première ligne non lue du tampon"
 
-#: src/gui/gui-keyboard.c:131
+#: src/gui/gui-keyboard.c:133
 msgid "clear hotlist"
 msgstr "effacer la liste d'activité"
 
-#: src/gui/gui-keyboard.c:133
+#: src/gui/gui-keyboard.c:135
 msgid "clear infobar"
 msgstr "effacer la barre d'infos"
 
-#: src/gui/gui-keyboard.c:135
+#: src/gui/gui-keyboard.c:137
 msgid "refresh screen"
 msgstr "rafraîchir l'écran"
 
-#: src/gui/gui-keyboard.c:137
+#: src/gui/gui-keyboard.c:139
 msgid "grab a key"
 msgstr "capturer une touche"
 
-#: src/gui/gui-keyboard.c:448 src/common/command.c:2615
+#: src/gui/gui-keyboard.c:450 src/common/command.c:2615
 #, c-format
 msgid "%s unable to bind key \"%s\"\n"
 msgstr "%s impossible de créer la touche \"%s\"\n"
 
-#: src/gui/gui-keyboard.c:459
+#: src/gui/gui-keyboard.c:461
 #, c-format
 msgid "%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"
 msgstr ""
 "%s impossible de créer la touche \"%s\" (nom fonction incorrect: \"%s\")\n"
 
-#: src/gui/gui-keyboard.c:472
+#: src/gui/gui-keyboard.c:474
 #, c-format
 msgid "%s not enough memory for key binding\n"
 msgstr "%s pas assez de mémoire pour la touche\n"

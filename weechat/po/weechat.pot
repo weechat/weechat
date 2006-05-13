@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-05-12 15:09+0200\n"
+"POT-Creation-Date: 2006-05-13 01:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2328,188 +2328,192 @@ msgid "complete word"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:53
-msgid "delete previous char"
+msgid "find previous completion for word"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:55
-msgid "delete next char"
+msgid "delete previous char"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:57
-msgid "delete until end of line"
+msgid "delete next char"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:59
-msgid "delete until beginning of line"
+msgid "delete until end of line"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:61
-msgid "delete entire line"
+msgid "delete until beginning of line"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:63
-msgid "delete previous word"
+msgid "delete entire line"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:65
-msgid "delete next word"
+msgid "delete previous word"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:67
-msgid "paste current clipboard content"
+msgid "delete next word"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:69
-msgid "transpose chars"
+msgid "paste current clipboard content"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:71
-msgid "go to beginning of line"
+msgid "transpose chars"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:73
-msgid "go to end of line"
+msgid "go to beginning of line"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:75
-msgid "move one char left"
+msgid "go to end of line"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:77
-msgid "move to previous word"
+msgid "move one char left"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:79
-msgid "move one char right"
+msgid "move to previous word"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:81
-msgid "move to next word"
+msgid "move one char right"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:83
-msgid "call previous command in history"
+msgid "move to next word"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:85
-msgid "call previous command in global history"
+msgid "call previous command in history"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:87
-msgid "call next command in history"
+msgid "call previous command in global history"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:89
-msgid "call next command in global history"
+msgid "call next command in history"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:91
-msgid "scroll one page up"
+msgid "call next command in global history"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:93
-msgid "scroll one page down"
+msgid "scroll one page up"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:95
-msgid "scroll a few lines up"
+msgid "scroll one page down"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:97
-msgid "scroll a few lines down"
+msgid "scroll a few lines up"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:99
-msgid "scroll to top of buffer"
+msgid "scroll a few lines down"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:101
-msgid "scroll to bottom of buffer"
+msgid "scroll to top of buffer"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:103
-msgid "display beginning of nicklist"
+msgid "scroll to bottom of buffer"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:105
-msgid "display end of nicklist"
+msgid "display beginning of nicklist"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:107
-msgid "scroll nicklist one page up"
+msgid "display end of nicklist"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:109
-msgid "scroll nicklist one page down"
+msgid "scroll nicklist one page up"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:111
-msgid "jump to buffer with activity"
+msgid "scroll nicklist one page down"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:113
-msgid "jump to DCC buffer"
+msgid "jump to buffer with activity"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:115
-msgid "jump to raw IRC data buffer"
+msgid "jump to DCC buffer"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:117
-msgid "jump to last buffer"
+msgid "jump to raw IRC data buffer"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:119
-msgid "jump to server buffer"
+msgid "jump to last buffer"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:121
-msgid "jump to next server"
+msgid "jump to server buffer"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:123
-msgid "switch active server on servers buffer"
+msgid "jump to next server"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:125
-msgid "scroll to previous highlight in buffer"
+msgid "switch active server on servers buffer"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:127
-msgid "scroll to next highlight in buffer"
+msgid "scroll to previous highlight in buffer"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:129
-msgid "scroll to first unread line in buffer"
+msgid "scroll to next highlight in buffer"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:131
-msgid "clear hotlist"
+msgid "scroll to first unread line in buffer"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:133
-msgid "clear infobar"
+msgid "clear hotlist"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:135
-msgid "refresh screen"
+msgid "clear infobar"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:137
+msgid "refresh screen"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:139
 msgid "grab a key"
 msgstr ""
 
-#: src/gui/gui-keyboard.c:448 src/common/command.c:2615
+#: src/gui/gui-keyboard.c:450 src/common/command.c:2615
 #, c-format
 msgid "%s unable to bind key \"%s\"\n"
 msgstr ""
 
-#: src/gui/gui-keyboard.c:459
+#: src/gui/gui-keyboard.c:461
 #, c-format
 msgid "%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"
 msgstr ""
 
-#: src/gui/gui-keyboard.c:472
+#: src/gui/gui-keyboard.c:474
 #, c-format
 msgid "%s not enough memory for key binding\n"
 msgstr ""

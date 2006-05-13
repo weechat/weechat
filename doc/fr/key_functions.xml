@@ -14,6 +14,10 @@
   <entry>compléter le mot</entry>
 </row>
 <row>
+  <entry><literal>tab_previous</literal></entry>
+  <entry>find previous completion for word</entry>
+</row>
+<row>
   <entry><literal>backspace</literal></entry>
   <entry>effacer le caractère précédent</entry>
 </row>
