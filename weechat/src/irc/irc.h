@@ -46,7 +46,6 @@
 #define PREFIX_QUIT      "<--"
 #define PREFIX_ERROR     "=!="
 #define PREFIX_PLUGIN    "-P-"
-#define PREFIX_AWAY      "-A-"
 
 #define DEFAULT_IRC_PORT 6667
 
