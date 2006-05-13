@@ -15,7 +15,7 @@
 </row>
 <row>
   <entry><literal>tab_previous</literal></entry>
-  <entry>find previous completion for word</entry>
+  <entry>trouver le mot complété précédent</entry>
 </row>
 <row>
   <entry><literal>backspace</literal></entry>

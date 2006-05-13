@@ -5,12 +5,12 @@
      This file is automatically built with a Perl script. DO NOT EDIT!
 -->
 
-<command>alias  [alias_name [command [arguments]]</command>
+<command>alias  [alias_name [command [arguments]]]</command>
 <programlisting>
 create an alias for a command
 
 alias_name: name of alias
-   command: command name (WeeChat or IRC command, without first '/')
+   command: command name (WeeChat or IRC command, many commands can be separated by semicolons)
 arguments: arguments for command
 
 </programlisting>
