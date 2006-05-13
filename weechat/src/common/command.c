@@ -47,10 +47,10 @@
 
 t_weechat_command weechat_commands[] =
 { { "alias", N_("create an alias for a command"),
-    N_("[alias_name [command [arguments]]"),
+    N_("[alias_name [command [arguments]]]"),
     N_("alias_name: name of alias\n"
-       "   command: command name (WeeChat or IRC command, without "
-       "first '/')\n"
+       "   command: command name (WeeChat or IRC command, many commands "
+       "can be separated by semicolons)\n"
         "arguments: arguments for command"),
     "%- %A", 0, MAX_ARGS, NULL, weechat_cmd_alias },
   { "buffer", N_("manage buffers"),
