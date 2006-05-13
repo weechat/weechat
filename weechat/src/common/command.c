@@ -52,7 +52,7 @@ t_weechat_command weechat_commands[] =
        "   command: command name (WeeChat or IRC command, many commands "
        "can be separated by semicolons)\n"
         "arguments: arguments for command"),
-    "%- %A", 0, MAX_ARGS, NULL, weechat_cmd_alias },
+    "%- %A", 0, MAX_ARGS, 1, NULL, weechat_cmd_alias },
   { "buffer", N_("manage buffers"),
     N_("[action [args] | number | [[server] [channel]]]"),
     N_(" action: action to do:\n"
@@ -63,50 +63,50 @@ t_weechat_command weechat_commands[] =
        "server\n"
        "channel: jump to buffer by server and/or channel name\n"
        " number: jump to buffer by number"),
-    "move|close|list|notify", 0, MAX_ARGS, NULL, weechat_cmd_buffer },
+    "move|close|list|notify", 0, MAX_ARGS, 0, NULL, weechat_cmd_buffer },
   { "builtin", N_("launch WeeChat/IRC builtin command (do not look at plugins handlers or aliases)"),
     N_("command"),
     N_("command: command to execute (a '/' is automatically added if not found at beginning of command)\n"),
-    "%w|%i", 0, MAX_ARGS, NULL, weechat_cmd_builtin },
+    "%w|%i", 0, MAX_ARGS, 1, NULL, weechat_cmd_builtin },
   { "charset", N_("change charset for server or channel"),
     N_("[(decode_iso | decode_utf | encode) charset]"),
     N_("decode_iso: charset used for decoding ISO\n"
        "decode_utf: charset used for decoding UTF\n"
        "    encode: charset used for encoding messages\n"
        "   charset: charset to use (for example: ISO-8859-15, UTF-8,..)"),
-    "decode_iso|decode_utf|encode", 0, 2, weechat_cmd_charset, NULL },
+    "decode_iso|decode_utf|encode", 0, 2, 0, weechat_cmd_charset, NULL },
   { "clear", N_("clear window(s)"),
     N_("[-all]"),
     N_("-all: clear all windows"),
-    "-all", 0, 1, weechat_cmd_clear, NULL },
+    "-all", 0, 1, 0, weechat_cmd_clear, NULL },
   { "connect", N_("connect to a server"),
     N_("[servername]"),
     N_("servername: server name to connect"),
-    "%S", 0, 1, weechat_cmd_connect, NULL },
+    "%S", 0, 1, 0, weechat_cmd_connect, NULL },
   { "disconnect", N_("disconnect from a server"),
     N_("[servername]"),
     N_("servername: server name to disconnect"),
-    "%S", 0, 1, weechat_cmd_disconnect, NULL },
+    "%S", 0, 1, 0, weechat_cmd_disconnect, NULL },
   { "dcc", N_("starts DCC (file or chat) or close chat"),
     N_("action [nickname [file]]"),
     N_("  action: 'send' (file) or 'chat' or 'close' (chat)\n"
        "nickname: nickname to send file or chat\n"
        "    file: filename (on local host)"),
-    "chat|send|close %n %f", 1, MAX_ARGS, NULL, weechat_cmd_dcc },
+    "chat|send|close %n %f", 1, MAX_ARGS, 0, NULL, weechat_cmd_dcc },
   { "debug", N_("print debug messages"),
     N_("dump | windows"),
     N_("   dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)\n"
        "windows: display windows tree"),
-    "dump|windows", 1, 1, weechat_cmd_debug, NULL },
+    "dump|windows", 1, 1, 0, weechat_cmd_debug, NULL },
   { "help", N_("display help about commands"),
     N_("[command]"),
     N_("command: name of a WeeChat or IRC command"),
-    "%w|%i|%h", 0, 1, weechat_cmd_help, NULL },
+    "%w|%i|%h", 0, 1, 0, weechat_cmd_help, NULL },
   { "history", N_("show buffer command history"),
     N_("[clear | value]"),
     N_("clear: clear history\n"
        "value: number of history entries to show"),
-    "clear", 0, 1, weechat_cmd_history, NULL },
+    "clear", 0, 1, 0, weechat_cmd_history, NULL },
   { "ignore", N_("ignore IRC messages and/or hosts"),
     N_("[mask [[type | command] [channel [server]]]]"),
     N_("   mask: nick or host mask to ignore\n"
@@ -117,7 +117,7 @@ t_weechat_command weechat_commands[] =
        "For each argument, '*' means all.\n"
        "Without argument, /ignore command lists all defined ignore."),
     "*|%n *|action|ctcp|dcc|pv|%I *|%c *|%s",
-    0, 4, weechat_cmd_ignore, NULL },
+    0, 4, 0, weechat_cmd_ignore, NULL },
   { "key", N_("bind/unbind keys"),
     N_("[key function/command] [unbind key] [functions] [reset -yes]"),
     N_("      key: bind this key to an internal function or a command "
@@ -126,12 +126,12 @@ t_weechat_command weechat_commands[] =
        "functions: list internal functions for key bindings\n"
        "    reset: restore bindings to the default values and delete ALL "
        "personal bindings (use carefully!)"),
-    "unbind|functions|reset %k", 0, MAX_ARGS, NULL, weechat_cmd_key },
+    "unbind|functions|reset %k", 0, MAX_ARGS, 0, NULL, weechat_cmd_key },
   { "plugin", N_("list/load/unload plugins"),
     N_("[load filename] | [autoload] | [reload] | [unload]"),
     N_("filename: WeeChat plugin (file) to load\n\n"
        "Without argument, /plugin command lists all loaded plugins."),
-    "load|autoload|reload|unload", 0, 2, weechat_cmd_plugin, NULL },
+    "load|autoload|reload|unload", 0, 2, 0, weechat_cmd_plugin, NULL },
   { "server", N_("list, add or remove servers"),
     N_("[servername] | "
        "[servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 "
@@ -149,10 +149,10 @@ t_weechat_command weechat_commands[] =
        "     nick3: second alternate nick for server\n"
        "  username: user name\n"
        "  realname: real name of user"),
-    NULL, 0, MAX_ARGS, weechat_cmd_server, NULL },
+    NULL, 0, MAX_ARGS, 0, weechat_cmd_server, NULL },
   { "save", N_("save config to disk"),
     N_("[file]"), N_("file: filename for writing config"),
-    NULL, 0, 1, weechat_cmd_save, NULL },
+    NULL, 0, 1, 0, weechat_cmd_save, NULL },
   { "set", N_("set config options"),
     N_("[option [ = value]]"),
     N_("option: name of an option (if name is full "
@@ -160,16 +160,16 @@ t_weechat_command weechat_commands[] =
        " value: value for option\n\n"
        "Option may be: servername.server_xxx where \"servername\" is an "
        "internal server name and \"xxx\" an option for this server."),
-    "%o = %v", 0, MAX_ARGS, NULL, weechat_cmd_set },
+    "%o = %v", 0, MAX_ARGS, 0, NULL, weechat_cmd_set },
   { "setp", N_("set plugin config options"),
     N_("[option [ = value]]"),
     N_("option: name of a plugin option\n"
        " value: value for option\n\n"
        "Option is format: plugin.option, example: perl.myscript.item1"),
-    "%O = %V", 0, MAX_ARGS, NULL, weechat_cmd_setp },
+    "%O = %V", 0, MAX_ARGS, 0, NULL, weechat_cmd_setp },
   { "unalias", N_("remove an alias"),
     N_("alias_name"), N_("alias_name: name of alias to remove"),
-    "%a", 1, 1, NULL, weechat_cmd_unalias },
+    "%a", 1, 1, 0, NULL, weechat_cmd_unalias },
   { "unignore", N_("unignore IRC messages and/or hosts"),
     N_("[number | [mask [[type | command] [channel [server]]]]]"),
     N_(" number: # of ignore to unignore (number is displayed by list of ignore)\n"
@@ -181,16 +181,16 @@ t_weechat_command weechat_commands[] =
        "For each argument, '*' means all.\n"
        "Without argument, /unignore command lists all defined ignore."),
     "*|%n *|action|ctcp|dcc|pv|%I *|%c *|%s",
-    0, 4, weechat_cmd_unignore, NULL },
+    0, 4, 0, weechat_cmd_unignore, NULL },
   { "upgrade", N_("upgrade WeeChat without disconnecting from servers"),
     "",
     N_("This command run again WeeChat binary, so it should have been compiled "
        "or installed with a package manager before running this command."),
-    NULL, 0, 0, weechat_cmd_upgrade, NULL },
+    NULL, 0, 0, 0, weechat_cmd_upgrade, NULL },
   { "uptime", N_("show WeeChat uptime"),
     N_("[-o]"),
     N_("-o: send uptime on current channel as an IRC message"),
-    "-o", 0, 1, weechat_cmd_uptime, NULL },
+    "-o", 0, 1, 0, weechat_cmd_uptime, NULL },
   { "window", N_("manage windows"),
     N_("[list | -1 | +1 | b# | up | down | left | right | splith [pct] "
        "| splitv [pct] | resize pct | merge [all]]"),
@@ -210,8 +210,8 @@ t_weechat_command weechat_commands[] =
        "size of new window, computed with current window as size reference. "
        "For example 25 means create a new window with size = current_size / 4"),
     "list|-1|+1|up|down|left|right|splith|splitv|resize|merge all",
-    0, 2, weechat_cmd_window, NULL },
-  { NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, NULL }
+    0, 2, 0, weechat_cmd_window, NULL },
+  { NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, NULL }
 };
 
 t_weechat_alias *weechat_alias = NULL;
@@ -672,8 +672,8 @@ int
 exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string,
                       int only_builtin)
 {
-    int i, rc, argc, return_code, length1, length2;
-    char *command, *pos, *ptr_args, **argv, *alias_command;
+    int i, rc, argc, argc2, return_code, length1, length2;
+    char *command, *pos, *ptr_args, *ptr_args2, **argv, **argv2, *alias_command;
     char **commands, **ptr_cmd, **ptr_next_cmd;
     t_weechat_alias *ptr_alias;
     
@@ -797,7 +797,6 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                                 free_multi_command (commands);
                             }
                         }
-                    
                         free_exploded_string (argv);
                         free (command);
                         return 1;
@@ -842,12 +841,19 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                     }
                     else
                     {
+                        ptr_args2 = (weechat_commands[i].charset_conversion && ptr_args) ?
+                            channel_iconv_encode (server, channel, ptr_args) : NULL;
                         if (weechat_commands[i].cmd_function_args)
+                        {
+                            argv2 = explode_string ((ptr_args2) ? ptr_args2 : ptr_args,
+                                                    " ", 0, &argc2);
                             return_code = (int) (weechat_commands[i].cmd_function_args)
-                                (server, channel, argc, argv);
+                                (server, channel, argc2, argv2);
+                            free_exploded_string (argv2);
+                        }
                         else
                             return_code = (int) (weechat_commands[i].cmd_function_1arg)
-                                (server, channel, ptr_args);
+                                (server, channel, (ptr_args2) ? ptr_args2 : ptr_args);
                         if (return_code < 0)
                         {
                             irc_display_prefix (NULL, NULL, PREFIX_ERROR);
@@ -855,6 +861,8 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                                         _("%s command \"%s\" failed\n"),
                                         WEECHAT_ERROR, command + 1);
                         }
+                        if (ptr_args2)
+                            free (ptr_args2);
                     }
                     free_exploded_string (argv);
                     free (command);
@@ -920,12 +928,19 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                             free (command);
                             return 0;
                         }
+                        ptr_args2 = (irc_commands[i].charset_conversion && ptr_args) ?
+                            channel_iconv_encode (server, channel, ptr_args) : NULL;
                         if (irc_commands[i].cmd_function_args)
+                        {
+                            argv2 = explode_string ((ptr_args2) ? ptr_args2 : ptr_args,
+                                                    " ", 0, &argc2);
                             return_code = (int) (irc_commands[i].cmd_function_args)
-                                (server, channel, argc, argv);
+                                (server, channel, argc2, argv2);
+                            free_exploded_string (argv2);
+                        }
                         else
                             return_code = (int) (irc_commands[i].cmd_function_1arg)
-                                (server, channel, ptr_args);
+                                (server, channel, (ptr_args2) ? ptr_args2 : ptr_args);
                         if (return_code < 0)
                         {
                             irc_display_prefix (NULL, NULL, PREFIX_ERROR);
@@ -933,6 +948,8 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                                         _("%s command \"%s\" failed\n"),
                                         WEECHAT_ERROR, command + 1);
                         }
+                        if (ptr_args2)
+                            free (ptr_args2);
                     }
                     free_exploded_string (argv);
                     free (command);

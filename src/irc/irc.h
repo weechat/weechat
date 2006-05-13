@@ -211,6 +211,8 @@ struct t_irc_command
     char *completion_template;      /* template for completion                */
                                     /* NULL=no completion, ""=default (nick)  */
     int min_arg, max_arg;           /* min & max number of arguments          */
+    int charset_conversion;         /* = 1 if cmd args are converted before   */
+                                    /* they're sent to server                 */
     int needs_connection;           /* = 1 if cmd needs server connection     */
     int (*cmd_function_args)(t_irc_server *, t_irc_channel *, int, char **);
                                     /* function called when user enters cmd   */
