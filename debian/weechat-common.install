@@ -1,2 +1,2 @@
-debian/tmp/usr/share/locale/
-debian/tmp/usr/share/doc/weechat/html usr/share/doc/weechat-common
+usr/share/locale/
+usr/share/doc/weechat/html usr/share/doc/weechat-common

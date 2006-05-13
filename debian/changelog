@@ -1,3 +1,13 @@
+weechat (0.1.8-2) unstable; urgency=low
+
+  * Switch to cdbs
+  * update debhelper compatibility to 5
+  * update Build-Depends
+  * update debian/copyright
+  * Bump Standards-Version, no changes needed
+
+ -- Julien Louis <ptitlouis@sysif.net>  Fri, 21 Apr 2006 22:39:00 +0200
+
 weechat (0.1.8-1) unstable; urgency=low
 
   * New upstream release

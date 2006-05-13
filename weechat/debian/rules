@@ -1,90 +1,34 @@
 #!/usr/bin/make -f
+# Sample debian/rules that uses cdbs.  Originaly written by Robert Millan.
+# This file is public domain.
 
-#export DH_VERBOSE=1
+DEB_AUTO_CLEANUP_RCS            := yes
+
+# Add here any variable or target overrides you need
+
+DEB_CONFIGURE_USER_FLAGS := --with-debug=0
+DEB_STRIP_EXCLUDE := libperl.a
+DEB_DH_INSTALL_SOURCEDIR := $(CURDIR)/debian/tmp
+DEB_INSTALL_DOCS_weechat-common :=  FAQ FAQ.fr
+DEB_DH_MAKESHLIBS_ARGS_weechat-plugins := -n
 
 DEB_HOST_ARCH_OS := $(shell dpkg-architecture -qDEB_HOST_ARCH_OS)
 
 ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
-	CFLAGS += -O0
+        CFLAGS += -O0
 else
-	CFLAGS += -O2
+        CFLAGS += -O2
 endif
 ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
-	INSTALL_PROGRAM += -s
+        INSTALL_PROGRAM += -s
 endif
 
 ifeq ($(DEB_HOST_ARCH_OS),hurd)
-LDFLAGS +=-lpthread
+ DEB_CONFIGURE_SCRIPT_ENV += LDFLAGS="-lpthread"
 endif
 
-configure: configure-stamp
-configure-stamp:
-	dh_testdir
-	LDFLAGS=$(LDFLAGS) ./configure --prefix=/usr --sysconfdir=/etc --mandir=\$${prefix}/share/man \
-	--infodir=\$${prefix}/share/info --with-debug=0
-	touch configure-stamp
+include /usr/share/cdbs/1/class/autotools.mk
+include /usr/share/cdbs/1/rules/debhelper.mk
 
-
-build: build-stamp
-
-build-stamp: configure-stamp 
-	dh_testdir
-	$(MAKE)
-	touch build-stamp
-
-clean:
-	dh_testdir
-	dh_testroot
-	rm -f build-stamp configure-stamp
-	-$(MAKE) distclean
-	dh_clean
-
-install: build
-	dh_testdir
-	dh_testroot
-	dh_clean -k
-	dh_installdirs
-	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
-	dh_install
-#	install -o root -g root -m 755 src/gui/curses/weechat-curses $(CURDIR)/debian/weechat-curses/usr/bin
-	# install -o root -g root -m 755 src/gui/gtk/weechat-gtk $(CURDIR)/debian/weechat-gtk/usr/bin
+install/weechat-common::
 	install -D -o root -g root -m 644 weechat_icon_32.png $(CURDIR)/debian/weechat-common/usr/share/pixmaps/weechat_icon_32.png
-
-
-# Build architecture-independent files here.
-binary-indep: build install
-	dh_testdir -pweechat-common -pweechat
-	dh_testroot -pweechat-common -pweechat
-	dh_installchangelogs ChangeLog -pweechat-common
-	dh_installdocs -pweechat-common
-	dh_installinfo -pweechat-common
-	dh_installexamples -pweechat-common
-	dh_compress -pweechat-common -pweechat
-	dh_link -pweechat usr/share/doc/weechat-common usr/share/doc/weechat
-	dh_fixperms -pweechat-common -pweechat
-	dh_installdeb -pweechat-common -pweechat
-	dh_shlibdeps -pweechat-common -pweechat
-	dh_gencontrol -pweechat-common -pweechat
-	dh_md5sums -pweechat-common -pweechat
-	dh_builddeb -pweechat-common -pweechat
-
-# Build architecture-dependent files here.
-binary-arch: build install
-	dh_testdir -a -pweechat-curses -pweechat-plugins
-	dh_testroot -a -pweechat-curses -pweechat-plugins
-	dh_installchangelogs ChangeLog -pweechat-plugins
-	dh_installdocs -pweechat-plugins
-	dh_installman doc/weechat-curses.1 -pweechat-curses
-	dh_link -pweechat-curses usr/share/doc/weechat-common usr/share/doc/weechat-curses
-	dh_installmenu -pweechat-curses
-	dh_strip -a -pweechat-curses -pweechat-plugins --exclude=libperl.a
-	dh_compress -a -pweechat-curses -p weechat-plugins
-	dh_fixperms -a -pweechat-curses -pweechat-plugins
-	dh_installdeb -a -pweechat-curses -pweechat-plugins
-	dh_shlibdeps -a -pweechat-curses -pweechat-plugins
-	dh_gencontrol -a -pweechat-curses -pweechat-plugins
-	dh_md5sums -a -pweechat-curses -pweechat-plugins
-	dh_builddeb -a -pweechat-curses -pweechat-plugins
-
-binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install configure
