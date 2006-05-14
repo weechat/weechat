@@ -183,7 +183,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
           </listitem>
           <listitem>
             <para>
-              je nach zu verwendeten User-Interface, eine der folgenden Bibliotheken:
+              dem User-Interface entsprechend, eine der folgenden Bibliotheken:
               <itemizedlist>
                 <listitem>
                   <para>
@@ -436,7 +436,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
       </para>
       
       <para>
-        Wenn sie Weechat zum ersten Mal starten, wird eine Standard-Konfigurationsdatei
+        Wenn Sie Weechat zum ersten Mal starten, wird eine Konfigurationsdatei
         erzeugt, deren Optionen besitzen Standardwerte. Diese Datei ist:
         "<literal>~/.weechat/weechat.rc</literal>"
       </para>
@@ -465,25 +465,25 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
             </thead>
             <tbody>
               <row>
-                <entry>Linkspfeil</entry>
+                <entry>Links</entry>
                 <entry>
                   Gehe zum vorherigen Zeichen in der Kommandozeile
                 </entry>
               </row>
               <row>
-                <entry>Rechtspfeil</entry>
+                <entry>Rechts</entry>
                 <entry>
                   Gehe zum nächsten Zeichen in der Kommandozeile
                 </entry>
               </row>
               <row>
-                <entry>Strg + Linkspfeil</entry>
+                <entry>Strg + Links</entry>
                 <entry>
                   Gehe zum vorherigen Wort in der Kommandozeile
                 </entry>
               </row>
               <row>
-                <entry>Strg + Rechtspfeil</entry>
+                <entry>Strg + Rechts</entry>
                 <entry>
                   Gehe zum nächsten Wort in der Kommandozeile
                 </entry>
@@ -556,7 +556,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 </entry>
               </row>
               <row>
-                <entry>Hochpfeil / Abwärtspfeil</entry>
+                <entry>Hoch / Runter</entry>
                 <entry>
                   Rufe das letzte Kommando/die letzte Nachricht wieder auf
                 </entry>
