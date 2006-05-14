@@ -5154,7 +5154,7 @@ irc_cmd_recv_378 (t_irc_server *server, char *host, char *nick, char *arguments)
             while (pos2[0] == ' ')
                 pos2--;
             pos2[1] = '\0';
-            gui_printf (server->buffer, "%s%s%s\n",
+            gui_printf (server->buffer, "%s%s %s\n",
                         GUI_COLOR(COLOR_WIN_CHAT), arguments, pos + 1);
         }
         else
