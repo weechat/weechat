@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-05-13
+ChangeLog - 2006-05-14
 
 Version 0.1.9 (under dev!):
    * added new key to find previous completion (shift-tab by default)
@@ -15,7 +15,7 @@ Version 0.1.9 (under dev!):
    * fixed nicklist sort bug
    * added russian translations (thanks to Pavel Shevchuk)
    * added german doc (thanks to Frank Zacharias)
-   * added missing IRC commands (290, 292, 437, 974)
+   * added missing IRC commands (006, 007, 290, 292, 310, 379, 437, 974)
    * fixed crash when multiple pv have same name: now it's forbidden
      and pv buffer is not renamed (when a nick changes) if another
      exists with same name (bug #16369)
