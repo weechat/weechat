@@ -6,6 +6,7 @@ ChangeLog - 2006-05-14
 Version 0.1.9 (under dev!):
    * fixed crash with malformed UTF-8 strings
    * fixed crash with ncurses color when too many colors defined in ncurses
+     (bug #16556)
    * added new key to find previous completion (shift-tab by default)
    * fixed bug with long outgoing IRC messages (> 512 bytes) (bug #16358)
    * fixed Ruby crash when handler does not return OK or KO (bug #16552)
