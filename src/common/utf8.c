@@ -65,7 +65,7 @@ utf8_init ()
 int
 utf8_is_valid (char *string)
 {
-    while (string[0])
+    while (string && string[0])
     {
         /* UTF-8, 2 bytes, should be: 110vvvvv 10vvvvvv */
         if (((unsigned char)(string[0]) & 0xE0) == 0xC0)
@@ -219,7 +219,7 @@ utf8_strlen (char *string)
         return strlen (string);
     
     length = 0;
-    while (string[0])
+    while (string && string[0])
     {
         string = utf8_next_char (string);
         length++;
@@ -250,7 +250,7 @@ utf8_strnlen (char *string, int bytes)
     
     start = string;
     length = 0;
-    while (string[0] && (string - start < bytes))
+    while (string && string[0] && (string - start < bytes))
     {
         string = utf8_next_char (string);
         length++;
@@ -306,7 +306,7 @@ utf8_add_offset (char *string, int offset)
         return string + offset;
     
     count = 0;
-    while (string[0] && (count < offset))
+    while (string && string[0] && (count < offset))
     {
         string = utf8_next_char (string);
         count++;
@@ -330,7 +330,7 @@ utf8_real_pos (char *string, int pos)
     
     count = 0;
     real_pos = 0;
-    while (string[0] && (count < pos))
+    while (string && string[0] && (count < pos))
     {
         next_char = utf8_next_char (string);
         real_pos += (next_char - string);
@@ -356,7 +356,7 @@ utf8_pos (char *string, int real_pos)
     
     count = 0;
     limit = string + real_pos;
-    while (string[0] && (string < limit))
+    while (string && string[0] && (string < limit))
     {
         string = utf8_next_char (string);
         count++;

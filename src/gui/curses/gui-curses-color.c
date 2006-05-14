@@ -480,7 +480,7 @@ gui_color_init_pairs ()
     
     if (has_colors ())
     {
-        for (i = 1; i < COLOR_PAIRS; i++)
+        for (i = 1; i < 64; i++)
             init_pair (i, shift_colors[i % 8], (i < 8) ? -1 : shift_colors[i / 8]);
         
         /* disable white on white, replaced by black on white */
