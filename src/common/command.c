@@ -1951,6 +1951,7 @@ weechat_cmd_connect (t_irc_server *server, t_irc_channel *channel,
         {
             ptr_server->reconnect_start = 0;
             ptr_server->reconnect_join = (ptr_server->channels) ? 1 : 0;
+            gui_status_draw (ptr_server->buffer, 1);
         }
     }
     else
