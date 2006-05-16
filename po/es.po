@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Weechat 0.1.9-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-05-15 22:23+0200\n"
+"POT-Creation-Date: 2006-05-16 15:53+0200\n"
 "PO-Revision-Date: 2006-05-16 00:14+0200\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3400,12 +3400,12 @@ msgstr "%s ¡no conectado al servidor \"%s\"!\n"
 msgid "Auto-reconnection is cancelled\n"
 msgstr "La reconexión automática está anulada\n"
 
-#: src/common/command.c:2201 src/common/weechat.c:489
+#: src/common/command.c:2201 src/common/weechat.c:490
 #, c-format
 msgid "%s internal commands:\n"
 msgstr "Comandos internos %s :\n"
 
-#: src/common/command.c:2211 src/common/weechat.c:509
+#: src/common/command.c:2211 src/common/weechat.c:510
 #, c-format
 msgid "IRC commands:\n"
 msgstr "Comandos IRC :\n"
@@ -3455,7 +3455,7 @@ msgstr "Clave \"%s\" desatada\n"
 msgid "%s unable to unbind key \"%s\"\n"
 msgstr "%s No ha sido posible desatar la clave \"%s\"\n"
 
-#: src/common/command.c:2578 src/common/weechat.c:541
+#: src/common/command.c:2578 src/common/weechat.c:542
 #, c-format
 msgid "Internal key functions:\n"
 msgstr "Funciones de clave internas:\n"
@@ -3669,8 +3669,8 @@ msgstr "  . tipo booleano (valores: 'on' u 'off')\n"
 
 #: src/common/command.c:3467 src/common/command.c:3490
 #: src/common/command.c:3496 src/common/command.c:3502
-#: src/common/weechat.c:425 src/common/weechat.c:450 src/common/weechat.c:457
-#: src/common/weechat.c:464
+#: src/common/weechat.c:426 src/common/weechat.c:451 src/common/weechat.c:458
+#: src/common/weechat.c:465
 #, c-format
 msgid "  . default value: '%s'\n"
 msgstr "  . valor por defecto: '%s'\n"
@@ -3680,7 +3680,7 @@ msgstr "  . valor por defecto: '%s'\n"
 msgid "  . type integer (values: between %d and %d)\n"
 msgstr "  . tipo entero (valores: entre %d y %d)\n"
 
-#: src/common/command.c:3475 src/common/weechat.c:434
+#: src/common/command.c:3475 src/common/weechat.c:435
 #, c-format
 msgid "  . default value: %d\n"
 msgstr "  . valor por defecto: %d\n"
@@ -3690,8 +3690,8 @@ msgid "  . type string (values: "
 msgstr "  . tipo cadena (valores: "
 
 #: src/common/command.c:3492 src/common/command.c:3498
-#: src/common/command.c:3504 src/common/weechat.c:452 src/common/weechat.c:459
-#: src/common/weechat.c:466
+#: src/common/command.c:3504 src/common/weechat.c:453 src/common/weechat.c:460
+#: src/common/weechat.c:467
 msgid "empty"
 msgstr "vacío"
 
@@ -3703,7 +3703,7 @@ msgstr "  . tipo color (color Curses o Gtk, ver la documentación de WeeChat)\n"
 msgid "  . type string (any string)\n"
 msgstr "  . tipo cadena (cualquier cadena)\n"
 
-#: src/common/command.c:3507 src/common/weechat.c:469
+#: src/common/command.c:3507 src/common/weechat.c:470
 #, c-format
 msgid "  . description: %s\n"
 msgstr "  . descripción: %s\n"
@@ -4193,7 +4193,7 @@ msgstr "%s no se puede eliminar el archivo de sesión (%s)\n"
 msgid "Upgrade completed successfully\n"
 msgstr "Actualización completada con éxito\n"
 
-#: src/common/weechat.c:379
+#: src/common/weechat.c:380
 #, c-format
 msgid ""
 "%s (c) Copyright 2003-2006, compiled on %s %s\n"
@@ -4202,7 +4202,7 @@ msgstr ""
 "%s (c) Copyright 2003-2006, compilado a %s %s\n"
 "Desarrollado por FlashCode <flashcode@flashtux.org> - %s"
 
-#: src/common/weechat.c:383
+#: src/common/weechat.c:384
 #, c-format
 msgid ""
 "Usage: %s [options ...]\n"
@@ -4213,7 +4213,7 @@ msgstr ""
 "  ó: %s [irc[6][s]://[usuario[:contraseña]@]irc.ejemplo.org[:puerto][/"
 "channel]"
 
-#: src/common/weechat.c:387
+#: src/common/weechat.c:388
 #, c-format
 msgid ""
 "  -a, --no-connect        disable auto-connect to servers at startup\n"
@@ -4243,7 +4243,7 @@ msgstr ""
 "  -v, --version           mostrar versión de Weechat\n"
 "  -w, --weechat-commands  mostrar comandos de Weechat\n"
 
-#: src/common/weechat.c:410
+#: src/common/weechat.c:411
 #, c-format
 msgid ""
 "WeeChat configuration options (<weechat_home>/weechat.rc):\n"
@@ -4252,112 +4252,115 @@ msgstr ""
 "Opciones de configuración de WeeChat (<weechat_home>/weechat.rc):\n"
 "\n"
 
-#: src/common/weechat.c:423
+#: src/common/weechat.c:424
 #, c-format
 msgid "  . type: boolean\n"
 msgstr "  . tipo: booleano\n"
 
-#: src/common/weechat.c:424
+#: src/common/weechat.c:425
 #, c-format
 msgid "  . values: 'on' or 'off'\n"
 msgstr "  . valores: 'on' u 'off'\n"
 
-#: src/common/weechat.c:430
+#: src/common/weechat.c:431
 #, c-format
 msgid "  . type: integer\n"
 msgstr "  . tipo: entero\n"
 
-#: src/common/weechat.c:431
+#: src/common/weechat.c:432
 #, c-format
 msgid "  . values: between %d and %d\n"
 msgstr "  . valores: entre %d y %d\n"
 
-#: src/common/weechat.c:438 src/common/weechat.c:462
+#: src/common/weechat.c:439 src/common/weechat.c:463
 #, c-format
 msgid "  . type: string\n"
 msgstr "  . tipo: cadena\n"
 
-#: src/common/weechat.c:439
+#: src/common/weechat.c:440
 #, c-format
 msgid "  . values: "
 msgstr "  . valores: "
 
-#: src/common/weechat.c:455
+#: src/common/weechat.c:456
 #, c-format
 msgid "  . type: color\n"
 msgstr "  . tipo: color\n"
 
-#: src/common/weechat.c:456
+#: src/common/weechat.c:457
 #, c-format
 msgid "  . values: Curses or Gtk color\n"
 msgstr "  . valores: color Curses o Gtk\n"
 
-#: src/common/weechat.c:463
+#: src/common/weechat.c:464
 #, c-format
 msgid "  . values: any string\n"
 msgstr "  . valores: cualquier cadena\n"
 
-#: src/common/weechat.c:563
+#: src/common/weechat.c:564
 #, c-format
 msgid "%s default keys:\n"
 msgstr "%s claves por defecto:\n"
 
-#: src/common/weechat.c:612
+#: src/common/weechat.c:613
 #, c-format
 msgid "%s missing argument for --dir option\n"
 msgstr "%s falta un argumento para la opción --dir\n"
 
-#: src/common/weechat.c:657
+#: src/common/weechat.c:658
 #, c-format
 msgid "%s missing argument for --session option\n"
 msgstr "%s falta un argumento para la opción --session\n"
 
-#: src/common/weechat.c:678
+#: src/common/weechat.c:679
 #, c-format
 msgid "%s invalid syntax for IRC server ('%s'), ignored\n"
 msgstr "%s sintaxis inválida para el servidor IRC ('%s'), ignorado\n"
 
-#: src/common/weechat.c:693
+#: src/common/weechat.c:694
 #, c-format
 msgid "%s unable to create server ('%s'), ignored\n"
 msgstr "%s no es posible crear el servidor ('%s'), ignorado\n"
 
-#: src/common/weechat.c:702
+#: src/common/weechat.c:703
 #, c-format
 msgid "%s unknown parameter '%s', ignored\n"
 msgstr "%s parámetro desconocido '%s', ignorado\n"
 
-#: src/common/weechat.c:722
+#: src/common/weechat.c:723
 #, c-format
 msgid "%s cannot create directory \"%s\"\n"
 msgstr "%s no es posible crear el directorio \"%s\"\n"
 
-#: src/common/weechat.c:745
+#: src/common/weechat.c:746
 #, c-format
 msgid "%s unable to get HOME directory\n"
 msgstr "%s no ha sido posible leer el directorio HOME\n"
 
-#: src/common/weechat.c:754
+#: src/common/weechat.c:755
 #, c-format
 msgid "%s not enough memory for home directory\n"
 msgstr "%s no hay suficiente memoria para el directorio home\n"
 
-#: src/common/weechat.c:765 src/common/weechat.c:789 src/common/weechat.c:805
+#: src/common/weechat.c:766 src/common/weechat.c:790 src/common/weechat.c:806
 #, c-format
 msgid "%s unable to create \"%s\" directory\n"
 msgstr "%s no es posible crear el directorio \"%s\"\n"
 
-#: src/common/weechat.c:851
+#: src/common/weechat.c:856
 #, c-format
-msgid "%s unable to create/append to log file (%s/%s)"
-msgstr "%s no es posible crear/añadir en el fichero de log (%s/%s)"
+msgid ""
+"%s unable to create/append to log file (%s/%s)\n"
+"If another WeeChat process is using this file, try to run WeeChat\n"
+"with another home using \"--dir\" command line option.\n"
+msgstr ""
 
-#: src/common/weechat.c:902
+#: src/common/weechat.c:911
 #, c-format
 msgid "%sWelcome to %s%s%s, %s\n"
 msgstr "%sBienvenido a %s%s%s, %s\n"
 
-#: src/common/weechat.c:916 src/common/weechat.c:926
+#: src/common/weechat.c:925 src/common/weechat.c:935
 msgid "compiled on"
 msgstr "compilado en"
 
@@ -5718,3 +5721,6 @@ msgstr ""
 #: src/common/weeconfig.c:2335
 msgid "Saving config to disk\n"
 msgstr "Guardar configuración a disco\n"
+
+#~ msgid "%s unable to create/append to log file (%s/%s)"
+#~ msgstr "%s no es posible crear/añadir en el fichero de log (%s/%s)"
