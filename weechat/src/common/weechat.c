@@ -44,6 +44,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
+#include <sys/file.h>
 #include <sys/stat.h>
 #include <time.h>
 #include <signal.h>
@@ -846,10 +847,18 @@ weechat_init_log ()
     filename =
         (char *) malloc (filename_length * sizeof (char));
     snprintf (filename, filename_length, "%s/" WEECHAT_LOG_NAME, weechat_home);
-    if ((weechat_log_file = fopen (filename, "wt")) == NULL)
+    
+    weechat_log_file = fopen (filename, "wt");
+    if (!weechat_log_file
+        || (flock (fileno (weechat_log_file), LOCK_EX | LOCK_NB) != 0))
+    {
         fprintf (stderr,
-                 _("%s unable to create/append to log file (%s/%s)"),
-                 WEECHAT_WARNING, weechat_home, WEECHAT_LOG_NAME);
+                 _("%s unable to create/append to log file (%s/%s)\n"
+                   "If another WeeChat process is using this file, try to run WeeChat\n"
+                   "with another home using \"--dir\" command line option.\n"),
+                 WEECHAT_ERROR, weechat_home, WEECHAT_LOG_NAME);
+        exit (1);
+    }
     free (filename);
 }
 
@@ -939,7 +948,10 @@ weechat_shutdown (int return_code, int crash)
     if (weechat_home)
         free (weechat_home);
     if (weechat_log_file)
+    {
+        flock (fileno (weechat_log_file), LOCK_UN);
         fclose (weechat_log_file);
+    }
     if (local_charset)
         free (local_charset);
     alias_free_all ();
@@ -956,7 +968,7 @@ weechat_shutdown (int return_code, int crash)
 }
 
 /*
- * weechat_dump writes dump to WeeChat log file
+ * weechat_dump: write dump to WeeChat log file
  */
 
 void

@@ -1,9 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-05-14
+ChangeLog - 2006-05-16
 
 Version 0.1.9 (under dev!):
+   * added lock for log file (~/.weechat/weechat.log), only one WeeChat
+     process can use this file (bug #16382)
    * fixed crash with malformed UTF-8 strings
    * fixed crash with ncurses color when too many colors defined in ncurses
      (bug #16556)
