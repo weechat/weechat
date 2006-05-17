@@ -1645,7 +1645,7 @@ weechat_ruby_unload (t_weechat_plugin *plugin, t_plugin_script *script)
                           script->name);
     
     if (script->shutdown_func[0])
-        weechat_ruby_exec (plugin, script, script->shutdown_func, "", "", "");
+        weechat_ruby_exec (plugin, script, script->shutdown_func, NULL, NULL, NULL);
     
     if (script->interpreter)
 	rb_gc_unregister_address (script->interpreter);
