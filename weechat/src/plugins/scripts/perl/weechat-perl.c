@@ -1501,7 +1501,7 @@ weechat_perl_unload (t_weechat_plugin *plugin, t_plugin_script *script)
 #endif        
 
     if (script->shutdown_func[0])
-        weechat_perl_exec (plugin, script, script->shutdown_func, "", "", "");
+        weechat_perl_exec (plugin, script, script->shutdown_func, NULL, NULL, NULL);
 
 #ifndef MULTIPLICITY
     if (script->interpreter)

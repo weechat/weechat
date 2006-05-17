@@ -1706,7 +1706,7 @@ weechat_lua_unload (t_weechat_plugin *plugin, t_plugin_script *script)
                           script->name);
     
     if (script->shutdown_func[0])
-        weechat_lua_exec (plugin, script, script->shutdown_func, "", "", "");
+        weechat_lua_exec (plugin, script, script->shutdown_func, NULL, NULL, NULL);
     
     lua_close (script->interpreter);
     
