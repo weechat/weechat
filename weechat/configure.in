@@ -32,6 +32,7 @@ AM_PROG_LIBTOOL
 # Add some flags for some OS
 case "$host_os" in
 freebsd* | openbsd*)
+	CFLAGS="$CFLAGS -I/usr/local/include"
 	LDFLAGS="$LDFLAGS -L/usr/local/lib"
         ;;
 netbsd*)
@@ -192,6 +193,8 @@ if test "x$enable_plugins" != "xyes" ; then
     enable_lua="no"
 fi
 
+# ---------------------------------- perl --------------------------------------
+
 if test "x$enable_perl" = "xyes" ; then
     enable_plugins="yes"
     
@@ -240,6 +243,8 @@ if test "x$enable_perl" = "xyes" ; then
     AC_SUBST(PERL_LFLAGS)
     AC_DEFINE(PLUGIN_PERL)
 fi
+
+# --------------------------------- python -------------------------------------
 
 if test "x$enable_python" = "xyes" ; then
     enable_plugins="yes"
@@ -298,6 +303,8 @@ if test "x$enable_python" = "xyes" ; then
     AC_DEFINE(PLUGIN_PYTHON)
 fi
 
+# ---------------------------------- ruby --------------------------------------
+
 if test "x$enable_ruby" = "xyes" ; then
     enable_plugins="yes"
 
@@ -333,12 +340,14 @@ if test "x$enable_ruby" = "xyes" ; then
     AC_DEFINE(PLUGIN_RUBY)
 fi
 
+# ---------------------------------- lua --------------------------------------
+
 if test "x$enable_lua" = "xyes" ; then
     enable_plugins="yes"
 
     ac_save_CPPFLAGS="$CPPFLAGS"
     ac_save_CFLAGS="$CFLAGS"
-    ac_save_LFLAGS="$LFLAGS"
+    ac_save_LDFLAGS="$LDFLAGS"
 
     LUA_CFLAGS=""
     LUA_LFLAGS=""
@@ -348,7 +357,7 @@ if test "x$enable_lua" = "xyes" ; then
        CPPFLAGS="$CPPFLAGS -I$lua_inc"
     fi
     if test -n "$lua_lib"; then
-       LFLAGS="$LFLAGS -L$lua_lib"
+       LDFLAGS="$LDFLAGS -L$lua_lib"
     fi
     
     if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then
@@ -356,8 +365,9 @@ if test "x$enable_lua" = "xyes" ; then
         AC_CHECK_PROGS(PKGCONFIG, pkg-config)
         if test "x$PKGCONFIG" != "x"; then
 	    AC_MSG_CHECKING(for Lua headers and librairies with pkg-config)
-	    for l in "$lua_suffix" "" "50" "5.0" ; do
-	        pkgconfig_lua_found=`$PKGCONFIG --exists lua$l && $PKGCONFIG --exists lualib$l`
+	    echo
+	    for l in "$lua_suffix" "" "50" "5.0" "51" "5.1" ; do
+	        pkgconfig_lua_found=`$PKGCONFIG --exists lua$l 2>/dev/null && $PKGCONFIG --exists lualib$l 2>/dev/null`
 	        if test "x$?" = "x0" ; then
                     LUA_CFLAGS="$LUA_CFLAGS "`$PKGCONFIG --cflags lua$l`
                     LUA_CFLAGS="$LUA_CFLAGS "`$PKGCONFIG --cflags lualib$l`
@@ -366,60 +376,72 @@ if test "x$enable_lua" = "xyes" ; then
                     break
                 fi
             done
-	    if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then
-	        AC_MSG_RESULT(found)
-            fi
         fi
     fi    
 
     if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then
         LUACONFIG=""
-        AC_CHECK_PROGS(LUACONFIG, lua-config lua-config50 lua-config5.0)
+        AC_CHECK_PROGS(LUACONFIG, lua-config lua-config50 lua-config5.0 lua-config51 lua-config5.1)
         if test "x$LUACONFIG" != "x" ; then
             AC_MSG_CHECKING(for Lua headers and librairies with lua-config)
+	    echo
             LUA_CFLAGS=`$LUACONFIG --include`
             LUA_LFLAGS=`$LUACONFIG --libs`
-        fi
-        if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then
-            AC_MSG_RESULT(found)
         fi
     fi
 
     if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then       
         AC_MSG_CHECKING(for Lua headers and librairies)
+	echo
         AC_CHECK_HEADER(lua.h,ac_found_lua_header="yes",ac_found_lua_header="no")
         AC_CHECK_HEADER(lualib.h,ac_found_liblua_header="yes",ac_found_liblua_header="no")
         if test "x$ac_found_lua_header" = "xyes" -a "x$ac_found_liblua_header" = "xyes"; then
             LUA_CFLAGS="$CFLAGS"
         fi
-        for l in "$lua_suffix" "" "50" "5.0" ; do
-            AC_CHECK_LIB(lua$l,lua_open,ac_found_lua_lib="yes",ac_found_lua_lib="no")
-            AC_CHECK_LIB(lualib$l,luaopen_base,ac_found_liblua_lib="yes",ac_found_liblua_lib="no")
+        for l in "$lua_suffix" "" "50" "5.0" "51" "5.1" ; do
+            AC_CHECK_LIB(lua$l,lua_call,ac_found_lua_lib="yes",ac_found_lua_lib="no")
             if test "x$ac_found_lua_lib" = "xyes" ; then
-                LUA_LFLAGS="$LFLAGS -llua$l"
-                break
-            fi
-            if test "x$ac_found_liblua_lib" = "xyes" ; then
-                LUA_LFLAGS="$LUA_LFLAGS -llualib$l"
-                break
-            fi
-        done            
+	        LUA_LFLAGS="$LDFLAGS -llua$l -lm"
+		
+		ac2_save_LDFLAGS="$LDFLAGS"
+		LDFLAGS="$LDFLAGS -llua$l -lm"		
+
+		if echo "$host_os" | grep "^linux" 1>/dev/null 2>&1 ; then
+		   LDFLAGS="$LDFLAGS -ldl"
+		fi
+
+		AC_CHECK_LIB(lualib$l,luaL_openlib,ac_found_liblua_lib="yes",ac_found_liblua_lib="no")
+		if test "x$ac_found_liblua_lib" = "xyes" ; then
+		   LUA_LFLAGS="$LUA_LFLAGS -llualib$l"
+
+		   if echo "$host_os" | grep "^linux" 1>/dev/null 2>&1 ; then
+		      LUA_LFLAGS="$LUA_LFLAGS -ldl"
+		   fi		   
+		fi
+
+		LDFLAGS="$ac2_save_LDFLAGS"
+		break
+	    fi
+        done
     fi
     
-    CFLAGS="$ac_save_CFLAGS"
-    CPPFLAGS="$ac_save_CPPFLAGS"
-    LFLAGS="$ac_save_LFLAGS"
-    
-    if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then     
+    AC_MSG_CHECKING(for Lua compiling and linking)
+    LUA_TEST=`LT=luatest.c ; echo "#include <lua.h>" > $LT;  echo "#include <lualib.h>" >> $LT; echo "int main() { luaopen_base((lua_State *)lua_open()); return 0; }" >> $LT ; $CC -Wall $LT -o $LT.out $LUA_CFLAGS $LUA_LFLAGS $CFLAGS $LDFLAGS 1>/dev/null 2>&1 ; echo $?; rm -f $LT $LT.out 1>/dev/null 2>&1`
+    if test "x$LUA_TEST" != "x0" ; then
+        AC_MSG_RESULT(no)
         AC_MSG_WARN([
-*** Lua (>=5.0) headers and librairies couldn't be found in your system.
+*** Lua (>=5.0) headers and/or librairies couldn't be found in your system.
 *** Try to install liblua, liblualib and liblua-dev with your software package manager.
 *** WeeChat will be built without Lua support.])
         enable_lua="no"
         not_found="$not_found lua"
     else
-        AC_MSG_RESULT(found)
+        AC_MSG_RESULT(yes)
     fi
+
+    CFLAGS="$ac_save_CFLAGS"
+    CPPFLAGS="$ac_save_CPPFLAGS"
+    LDFLAGS="$ac_save_LDFLAGS"
 fi
 
 if test "x$enable_lua" = "xyes" ; then
