@@ -48,6 +48,8 @@
 ./src/gui/gui-keyboard.h
 ./src/gui/gui-panel.h
 ./src/gui/gui-window.h
+./src/common/backtrace.c
+./src/common/backtrace.h
 ./src/common/command.c
 ./src/common/command.h
 ./src/common/completion.c

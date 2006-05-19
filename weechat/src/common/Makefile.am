@@ -21,6 +21,8 @@ noinst_LIBRARIES = lib_weechat_main.a
 
 lib_weechat_main_a_SOURCES = weechat.c \
                              weechat.h \
+                             backtrace.c \
+                             backtrace.h \
                              command.c \
                              command.h \
                              completion.c \

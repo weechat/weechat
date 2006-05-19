@@ -460,14 +460,33 @@ if test "x$enable_gnutls" = "xyes" ; then
 *** libgnutls was not found. You may want to get it from ftp://ftp.gnutls.org/pub/gnutls/
 *** WeeChat will be built without GnuTLS support.]]))
     if test "x$found_gnutls" = "xyes" ; then
-       GNUTLS_CFLAGS=`libgnutls-config --cflags`
-       GNUTLS_LFLAGS=`libgnutls-config --libs`
-       AC_SUBST(GNUTLS_CFLAGS)
-       AC_SUBST(GNUTLS_LFLAGS)
-       AC_DEFINE(HAVE_GNUTLS)
+        GNUTLS_CFLAGS=`libgnutls-config --cflags`
+        GNUTLS_LFLAGS=`libgnutls-config --libs`
+        AC_SUBST(GNUTLS_CFLAGS)
+        AC_SUBST(GNUTLS_LFLAGS)
+        AC_DEFINE(HAVE_GNUTLS)
     else
         enable_gnutls="no"
         not_found="$not_found gnutls"
+    fi
+fi
+
+# ------------------------------------------------------------------------------
+#                                  backtrace
+# ------------------------------------------------------------------------------
+
+enable_backtrace="no"
+if test "x$debug" != "x0" ; then
+    AC_CACHE_CHECK([for execinfo.h and backtrace], ac_have_backtrace, [
+        AC_TRY_COMPILE(
+            [ #include <execinfo.h>       
+            ],
+            [ void *trace[128]; int n = backtrace(trace, 128); ],
+            [ ac_have_backtrace="yes" ],
+            [ ac_have_backtrace="no"  ])])
+    if test "x$ac_have_backtrace" = "xyes"; then
+        enable_backtrace="yes"
+        AC_DEFINE(HAVE_BACKTRACE,1,[glibc backtrace function])
     fi
 fi
 
@@ -616,6 +635,7 @@ echo "              Python plugin....... : $enable_python"
 echo "              Ruby plugin......... : $enable_ruby"
 echo "              Lua plugin.......... : $enable_lua"
 echo "Compile with debug info........... : $msg_debug_compiler"
+echo "              Backtrace........... : $enable_backtrace"
 echo "Print debugging messages.......... : $msg_debug_verbose"
 echo ""
 eval echo "WeeChat will be installed in $bindir."
