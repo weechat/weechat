@@ -4,6 +4,7 @@ WeeChat - Wee Enhanced Environment for Chat
 ChangeLog - 2006-05-20
 
 Version 0.1.9 (under dev!):
+   * improved lua plugin detection (bug #16574)
    * added backtrace when WeeChat crashes, log file automatically renamed
    * added lock for log file (~/.weechat/weechat.log), only one WeeChat
      process can use this file (bug #16382)
