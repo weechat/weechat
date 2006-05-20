@@ -30,11 +30,12 @@
 
 #include "weechat.h"
 #include "command.h"
+#include "fifo.h"
+#include "log.h"
+#include "session.h"
+#include "utf8.h"
 #include "weelist.h"
 #include "weeconfig.h"
-#include "session.h"
-#include "fifo.h"
-#include "utf8.h"
 #include "../irc/irc.h"
 #include "../gui/gui.h"
 
@@ -3872,8 +3873,7 @@ weechat_cmd_upgrade (t_irc_server *server, t_irc_channel *channel,
     (void) config_write (NULL);
     gui_main_end ();
     fifo_remove ();
-    if (weechat_log_file)
-        fclose (weechat_log_file);
+    weechat_log_close ();
     
     execvp (exec_args[0], exec_args);
     

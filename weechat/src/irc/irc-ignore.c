@@ -30,6 +30,7 @@
 #include "../common/weechat.h"
 #include "irc.h"
 #include "../common/command.h"
+#include "../common/log.h"
 
 
 char *ignore_types[] =

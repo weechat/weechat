@@ -34,6 +34,7 @@
 #include "weechat.h"
 #include "fifo.h"
 #include "command.h"
+#include "log.h"
 #include "weeconfig.h"
 #include "../gui/gui.h"
 

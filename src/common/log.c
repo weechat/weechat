@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-/* log.c: log buffers to files */
+/* log.c: WeeChat log file */
 
 
 #ifdef HAVE_CONFIG_H
@@ -25,164 +25,115 @@
 #endif
 
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
+#include <stdarg.h>
+#include <sys/file.h>
 
 #include "weechat.h"
 #include "log.h"
-#include "weeconfig.h"
-#include "../gui/gui.h"
+
+
+FILE *weechat_log_file = NULL; /* WeeChat log file (~/.weechat/weechat.log) */
 
 
 /*
- * log_write_date: writes date to log file
+ * weechat_log_init: initialize log file
  */
 
 void
-log_write_date (t_gui_buffer *buffer)
+weechat_log_init ()
 {
-    static char buf_time[256];
+    int filename_length;
+    char *filename;
+    
+    filename_length = strlen (weechat_home) + 64;
+    filename =
+        (char *) malloc (filename_length * sizeof (char));
+    snprintf (filename, filename_length, "%s/%s", weechat_home, WEECHAT_LOG_NAME);
+    
+    weechat_log_file = fopen (filename, "wt");
+    if (!weechat_log_file
+        || (flock (fileno (weechat_log_file), LOCK_EX | LOCK_NB) != 0))
+    {
+        fprintf (stderr,
+                 _("%s unable to create/append to log file (%s/%s)\n"
+                   "If another WeeChat process is using this file, try to run WeeChat\n"
+                   "with another home using \"--dir\" command line option.\n"),
+                 WEECHAT_ERROR, weechat_home, WEECHAT_LOG_NAME);
+        exit (1);
+    }
+    free (filename);
+}
+
+/*
+ * weechat_log_printf: write a message in WeeChat log (<weechat_home>/weechat.log)
+ */
+
+void
+weechat_log_printf (char *message, ...)
+{
+    static char buffer[4096];
+    char *ptr_buffer;
+    va_list argptr;
     static time_t seconds;
     struct tm *date_tmp;
     
-    if (buffer->log_file)
-    {    
-        seconds = time (NULL);
-        date_tmp = localtime (&seconds);
-        if (date_tmp)
-        {
-            strftime (buf_time, sizeof (buf_time) - 1, cfg_log_timestamp, date_tmp);
-            fprintf (buffer->log_file, "%s  ", buf_time);
-            fflush (buffer->log_file);
-        }
-    }
-}
-
-/*
- * log_write_line: writes a line to log file
- */
-
-void
-log_write_line (t_gui_buffer *buffer, char *message)
-{
-    char *msg_no_color;
-    
-    if (buffer->log_file)
-    {
-        msg_no_color = (char *)gui_color_decode ((unsigned char *)message, 0);
-        fprintf (buffer->log_file, "%s\n",
-                 (msg_no_color) ? msg_no_color : message);
-        fflush (buffer->log_file);
-        if (msg_no_color)
-            free (msg_no_color);
-    }
-}
-
-/*
- * log_write: writes a message to log file
- */
-
-void
-log_write (t_gui_buffer *buffer, char *message)
-{
-    char *msg_no_color;
-    
-    if (buffer->log_file)
-    {
-        msg_no_color = (char *)gui_color_decode ((unsigned char *)message, 0);
-        fprintf (buffer->log_file, "%s",
-                 (msg_no_color) ? msg_no_color : message);
-        fflush (buffer->log_file);
-        if (msg_no_color)
-            free (msg_no_color);
-    }
-}
-
-/*
- * log_start: starts a log
- */
-
-void
-log_start (t_gui_buffer *buffer)
-{
-    int length;
-    char *log_path, *log_path2;
-    
-    log_path = weechat_strreplace (cfg_log_path, "~", getenv ("HOME"));
-    log_path2 = weechat_strreplace (log_path, "%h", weechat_home);
-    if (!log_path || !log_path2)
-    {
-        weechat_log_printf (_("Not enough memory to write log file for a buffer\n"));
-        if (log_path)
-            free (log_path);
-        if (log_path2)
-            free (log_path2);
+    if (!weechat_log_file)
         return;
-    }
-    length = strlen (log_path2) + 64;
-    if (SERVER(buffer))
-        length += strlen (SERVER(buffer)->name);
-    if (CHANNEL(buffer))
-        length += strlen (CHANNEL(buffer)->name);
     
-    buffer->log_filename = (char *) malloc (length);
-    if (!buffer->log_filename)
+    va_start (argptr, message);
+    vsnprintf (buffer, sizeof (buffer) - 1, message, argptr);
+    va_end (argptr);
+    
+    /* keep only valid chars */
+    ptr_buffer = buffer;
+    while (ptr_buffer[0])
     {
-        weechat_log_printf (_("Not enough memory to write log file for a buffer\n"));
-        if (log_path)
-            free (log_path);
-        if (log_path2)
-            free (log_path2);
-        return;
+        if ((ptr_buffer[0] != '\n')
+            && (ptr_buffer[0] != '\r')
+            && ((unsigned char)(ptr_buffer[0]) < 32))
+            ptr_buffer[0] = '.';
+        ptr_buffer++;
     }
     
-    strcpy (buffer->log_filename, log_path2);
-    if (log_path)
-        free (log_path);
-    if (log_path2)
-        free (log_path2);
-    if (buffer->log_filename[strlen (buffer->log_filename) - 1] != DIR_SEPARATOR_CHAR)
-        strcat (buffer->log_filename, DIR_SEPARATOR);
-    
-    if (SERVER(buffer))
-    {
-        strcat (buffer->log_filename, SERVER(buffer)->name);
-        strcat (buffer->log_filename, ".");
-    }
-    if (CHANNEL(buffer))
-    {
-        strcat (buffer->log_filename, CHANNEL(buffer)->name);
-        strcat (buffer->log_filename, ".");
-    }
-    strcat (buffer->log_filename, "weechatlog");
-    
-    buffer->log_file = fopen (buffer->log_filename, "a");
-    if (!buffer->log_file)
-    {
-        weechat_log_printf (_("Unable to write log file for a buffer\n"));
-        free (buffer->log_filename);
-        return;
-    }
-    log_write (buffer, _("****  Beginning of log  "));
-    log_write_date (buffer);
-    log_write (buffer, "****\n");
+    seconds = time (NULL);
+    date_tmp = localtime (&seconds);
+    if (date_tmp)
+        fprintf (weechat_log_file, "[%04d-%02d-%02d %02d:%02d:%02d] %s",
+                 date_tmp->tm_year + 1900, date_tmp->tm_mon + 1, date_tmp->tm_mday,
+                 date_tmp->tm_hour, date_tmp->tm_min, date_tmp->tm_sec,
+                 buffer);
+    else
+        fprintf (weechat_log_file, "%s", buffer);
+    fflush (weechat_log_file);
 }
 
 /*
- * log_end: ends a log
+ * weechat_log_close: close log file
  */
 
 void
-log_end (t_gui_buffer *buffer)
+weechat_log_close ()
 {
-    if (buffer->log_file)
+    if (weechat_log_file)
     {
-        log_write (buffer, _("****  End of log  "));
-        log_write_date (buffer);
-        log_write (buffer, "****\n");
-        fclose (buffer->log_file);
-        buffer->log_file = NULL;
+        flock (fileno (weechat_log_file), LOCK_UN);
+        fclose (weechat_log_file);
     }
-    if (buffer->log_filename)
-        free (buffer->log_filename);
+}
+
+/*
+ * weechat_log_crash_rename: rename log file when crashing
+ */
+
+void
+weechat_log_crash_rename ()
+{
+    char *oldname, *newname;
+
+    oldname = (char *) malloc (strlen (weechat_home) + 64);
+    newname = (char *) malloc (strlen (weechat_home) + 64);
+    if (oldname && newname)
+    {
+    }
 }

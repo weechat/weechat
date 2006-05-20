@@ -40,6 +40,7 @@
 ./src/gui/gui-buffer.c
 ./src/gui/gui-common.c
 ./src/gui/gui-keyboard.c
+./src/gui/gui-log.c
 ./src/gui/gui-panel.c
 ./src/gui/gui-window.c
 ./src/gui/gui.h

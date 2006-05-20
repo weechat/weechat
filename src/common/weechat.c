@@ -42,9 +42,7 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdarg.h>
 #include <string.h>
-#include <sys/file.h>
 #include <sys/stat.h>
 #include <time.h>
 #include <signal.h>
@@ -63,11 +61,12 @@
 
 #include "weechat.h"
 #include "backtrace.h"
-#include "weeconfig.h"
 #include "command.h"
 #include "fifo.h"
-#include "utf8.h"
+#include "log.h"
 #include "session.h"
+#include "utf8.h"
+#include "weeconfig.h"
 #include "../irc/irc.h"
 #include "../gui/gui.h"
 
@@ -76,19 +75,18 @@
 #endif
 
 
-char *weechat_argv0 = NULL;     /* WeeChat binary file name (argv[0])               */
-char *weechat_session = NULL;   /* WeeChat session file (for /upgrade command)      */
-time_t weechat_start_time;      /* WeeChat start time (used by /uptime command)     */
-int quit_weechat;               /* = 1 if quit request from user... why ? :'(       */
-int sigsegv = 0;                /* SIGSEGV received?                                */
-char *weechat_home = NULL;      /* WeeChat home dir. (example: /home/toto/.weechat) */
-FILE *weechat_log_file = NULL;  /* WeeChat log file (~/.weechat/weechat.log)        */
+char *weechat_argv0 = NULL;   /* WeeChat binary file name (argv[0])         */
+char *weechat_session = NULL; /* WeeChat session file (for /upgrade cmd)    */
+time_t weechat_start_time;    /* WeeChat start time (used by /uptime cmd)   */
+int quit_weechat;             /* = 1 if quit request from user... why ? :'( */
+int sigsegv = 0;              /* SIGSEGV received?                          */
+char *weechat_home = NULL;    /* WeeChat home dir. (default: ~/.weechat)    */
 
-char *local_charset = NULL;     /* local charset, for example: ISO-8859-1, UTF-8    */
+char *local_charset = NULL;   /* local charset, for ex.: ISO-8859-1, UTF-8  */
 
-int server_cmd_line;            /* at least one server on WeeChat command line      */
-int auto_connect;               /* enabled by default, can by disabled on cmd line  */
-int auto_load_plugins;          /* enabled by default, can by disabled on cmd line  */
+int server_cmd_line;          /* at least 1 server on WeeChat command line  */
+int auto_connect;             /* enabled by default (cmd option to disable) */
+int auto_load_plugins;        /* enabled by default (cmd option to disable) */
 
 #ifdef HAVE_GNUTLS
 gnutls_certificate_credentials gnutls_xcred;   /* gnutls client credentials */
@@ -195,49 +193,6 @@ ascii_strncasecmp (char *string1, char *string2, int max)
         return 0;
     else
         return (string1[0]) ? 1 : ((string2[0]) ? -1 : 0);
-}
-
-/*
- * weechat_log_printf: displays a message in WeeChat log (<weechat_home>/weechat.log)
- */
-
-void
-weechat_log_printf (char *message, ...)
-{
-    static char buffer[4096];
-    char *ptr_buffer;
-    va_list argptr;
-    static time_t seconds;
-    struct tm *date_tmp;
-    
-    if (!weechat_log_file)
-        return;
-    
-    va_start (argptr, message);
-    vsnprintf (buffer, sizeof (buffer) - 1, message, argptr);
-    va_end (argptr);
-    
-    /* keep only valid chars */
-    ptr_buffer = buffer;
-    while (ptr_buffer[0])
-    {
-        if ((ptr_buffer[0] != '\n')
-            && (ptr_buffer[0] != '\r')
-            && ((unsigned char)(ptr_buffer[0]) < 32))
-            ptr_buffer[0] = '.';
-        ptr_buffer++;
-    }
-    
-    seconds = time (NULL);
-    date_tmp = localtime (&seconds);
-    if (date_tmp)
-        fprintf (weechat_log_file, "[%04d-%02d-%02d %02d:%02d:%02d] %s",
-                 date_tmp->tm_year + 1900, date_tmp->tm_mon + 1, date_tmp->tm_mday,
-                 date_tmp->tm_hour, date_tmp->tm_min, date_tmp->tm_sec,
-                 buffer);
-    else
-        fprintf (weechat_log_file, "%s", buffer);
-    fflush (weechat_log_file);
 }
 
 /*
@@ -835,35 +790,6 @@ weechat_init_vars ()
 }
 
 /*
- * weechat_init_log: initialize log file
- */
-
-void
-weechat_init_log ()
-{
-    int filename_length;
-    char *filename;
-    
-    filename_length = strlen (weechat_home) + 64;
-    filename =
-        (char *) malloc (filename_length * sizeof (char));
-    snprintf (filename, filename_length, "%s/" WEECHAT_LOG_NAME, weechat_home);
-    
-    weechat_log_file = fopen (filename, "wt");
-    if (!weechat_log_file
-        || (flock (fileno (weechat_log_file), LOCK_EX | LOCK_NB) != 0))
-    {
-        fprintf (stderr,
-                 _("%s unable to create/append to log file (%s/%s)\n"
-                   "If another WeeChat process is using this file, try to run WeeChat\n"
-                   "with another home using \"--dir\" command line option.\n"),
-                 WEECHAT_ERROR, weechat_home, WEECHAT_LOG_NAME);
-        exit (1);
-    }
-    free (filename);
-}
-
-/*
  * weechat_config_read: read WeeChat config file
  */
 
@@ -948,11 +874,7 @@ weechat_shutdown (int return_code, int crash)
     fifo_remove ();
     if (weechat_home)
         free (weechat_home);
-    if (weechat_log_file)
-    {
-        flock (fileno (weechat_log_file), LOCK_UN);
-        fclose (weechat_log_file);
-    }
+    weechat_log_close ();
     if (local_charset)
         free (local_charset);
     alias_free_all ();
@@ -1085,9 +1007,10 @@ weechat_sigsegv ()
              weechat_home);
     fprintf (stderr, "***\n");
     fprintf (stderr, "*** Please help WeeChat developers to fix this bug:\n");
-    fprintf (stderr, "***   1. if you have a core file, please run:  gdb weechat-curses core\n");
+    fprintf (stderr, "***   1. If you have a core file, please run:  gdb weechat-curses core\n");
     fprintf (stderr, "***      then issue \"bt\" command and send result to developers\n");
-    fprintf (stderr, "***   2. otherwise send backtrace displayed below and weechat.log\n");
+    fprintf (stderr, "***      To enable core files with bash shell: ulimit -c 10000\n");
+    fprintf (stderr, "***   2. Otherwise send backtrace displayed below and weechat.log\n");
     fprintf (stderr, "***      (be careful, private info may be in this file since\n");
     fprintf (stderr, "***      part of chats are displayed, so remove lines if needed)\n\n");
     
@@ -1125,7 +1048,7 @@ main (int argc, char *argv[])
     gui_keyboard_init ();               /* init keyb. (default key bindings)*/
     weechat_parse_args (argc, argv);    /* parse command line args          */
     weechat_create_home_dirs ();        /* create WeeChat directories       */
-    weechat_init_log ();                /* init log file                    */
+    weechat_log_init ();                /* init log file                    */
     command_index_build ();             /* build cmd index for completion   */
     weechat_config_read ();             /* read configuration               */
     weechat_create_config_dirs ();      /* create config directories        */

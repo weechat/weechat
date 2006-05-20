@@ -21,13 +21,11 @@
 #ifndef __WEECHAT_LOG_H
 #define __WEECHAT_LOG_H 1
 
-#include "../irc/irc.h"
-#include "../gui/gui.h"
+extern FILE *weechat_log_file;
 
-extern void log_write_date (t_gui_buffer *);
-extern void log_write_line (t_gui_buffer *, char *);
-extern void log_write (t_gui_buffer *, char *);
-extern void log_start (t_gui_buffer *);
-extern void log_end (t_gui_buffer *);
+extern void weechat_log_init ();
+extern void weechat_log_close ();
+extern void weechat_log_printf (char *, ...);
+extern void weechat_log_crash_rename ();
 
 #endif /* log.h */

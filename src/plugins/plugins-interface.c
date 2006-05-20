@@ -258,7 +258,7 @@ weechat_plugin_log (t_weechat_plugin *plugin,
 	va_start (argptr, message);
 	vsnprintf (buf, sizeof (buf) - 1, message, argptr);
 	va_end (argptr);    
-	log_write_line (ptr_buffer, buf);
+	gui_log_write_line (ptr_buffer, buf);
     }
 }
 

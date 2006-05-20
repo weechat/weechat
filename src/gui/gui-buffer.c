@@ -98,7 +98,7 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
         if (cfg_look_one_server_buffer && server && !channel)
             gui_buffers->all_servers = 1;
         if (cfg_log_auto_server)
-            log_start (gui_buffers);
+            gui_log_start (gui_buffers);
         return gui_buffers;
     }
     
@@ -165,7 +165,7 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
         if ((cfg_log_auto_server && BUFFER_IS_SERVER(new_buffer))
             || (cfg_log_auto_channel && BUFFER_IS_CHANNEL(new_buffer))
             || (cfg_log_auto_private && BUFFER_IS_PRIVATE(new_buffer)))
-            log_start (new_buffer);
+            gui_log_start (new_buffer);
         
         /* init input buffer */
         new_buffer->has_input = (new_buffer->type == BUFFER_TYPE_STANDARD) ? 1 : 0;
@@ -479,7 +479,7 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
     
     /* close log if opened */
     if (buffer->log_file)
-        log_end (buffer);
+        gui_log_end (buffer);
     
     if (buffer->input_buffer)
         free (buffer->input_buffer);

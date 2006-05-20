@@ -23,6 +23,7 @@ lib_weechat_gui_common_a_SOURCES = gui-buffer.c \
                                    gui-common.c \
                                    gui-action.c \
                                    gui-keyboard.c \
+                                   gui-log.c \
                                    gui-window.c \
                                    gui-panel.c \
                                    gui.h \

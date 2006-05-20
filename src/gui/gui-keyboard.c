@@ -31,6 +31,7 @@
 #include "../common/weechat.h"
 #include "gui.h"
 #include "../common/command.h"
+#include "../common/log.h"
 
 #ifdef PLUGINS
 #include "../plugins/plugins.h"

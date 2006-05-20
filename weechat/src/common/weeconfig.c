@@ -1282,23 +1282,23 @@ config_change_log ()
         if (BUFFER_IS_SERVER(ptr_buffer))
         {
             if (cfg_log_auto_server && !ptr_buffer->log_file)
-                log_start (ptr_buffer);
+                gui_log_start (ptr_buffer);
             else if (!cfg_log_auto_server && ptr_buffer->log_file)
-                log_end (ptr_buffer);
+                gui_log_end (ptr_buffer);
         }
         if (BUFFER_IS_CHANNEL(ptr_buffer))
         {
             if (cfg_log_auto_channel && !ptr_buffer->log_file)
-                log_start (ptr_buffer);
+                gui_log_start (ptr_buffer);
             else if (!cfg_log_auto_channel && ptr_buffer->log_file)
-                log_end (ptr_buffer);
+                gui_log_end (ptr_buffer);
         }
         if (BUFFER_IS_PRIVATE(ptr_buffer))
         {
             if (cfg_log_auto_private && !ptr_buffer->log_file)
-                log_start (ptr_buffer);
+                gui_log_start (ptr_buffer);
             else if (!cfg_log_auto_private && ptr_buffer->log_file)
-                log_end (ptr_buffer);
+                gui_log_end (ptr_buffer);
         }
     }
 }

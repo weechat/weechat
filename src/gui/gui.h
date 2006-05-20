@@ -27,6 +27,7 @@
 #include "gui-window.h"
 #include "gui-keyboard.h"
 
+
 #define gui_printf(buffer, fmt, argz...) \
     gui_printf_internal(buffer, 1, MSG_TYPE_INFO, NULL, fmt, ##argz)
 
@@ -41,6 +42,7 @@
 
 #define gui_printf_nolog_notime(buffer, fmt, argz...) \
     gui_printf_internal(buffer, 0, MSG_TYPE_NOLOG, NULL, fmt, ##argz)
+
 
 typedef struct t_gui_infobar t_gui_infobar;
 
@@ -162,6 +164,13 @@ extern int gui_keyboard_unbind (char *);
 extern int gui_keyboard_pressed (char *);
 extern void gui_keyboard_free (t_gui_key *);
 extern void gui_keyboard_free_all ();
+
+/* log */
+extern void gui_log_write_date (t_gui_buffer *);
+extern void gui_log_write_line (t_gui_buffer *, char *);
+extern void gui_log_write (t_gui_buffer *, char *);
+extern void gui_log_start (t_gui_buffer *);
+extern void gui_log_end (t_gui_buffer *);
 
 /* other */
 extern void gui_infobar_printf (int, int, char *, ...);

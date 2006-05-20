@@ -30,6 +30,7 @@
 
 #include "../common/weechat.h"
 #include "irc.h"
+#include "../common/log.h"
 #include "../common/weeconfig.h"
 
 

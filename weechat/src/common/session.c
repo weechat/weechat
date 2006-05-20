@@ -36,6 +36,7 @@
 
 #include "weechat.h"
 #include "session.h"
+#include "log.h"
 #include "../irc/irc.h"
 #include "../gui/gui.h"
 

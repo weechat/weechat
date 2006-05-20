@@ -32,6 +32,7 @@
 #include "../../common/weechat.h"
 #include "../gui.h"
 #include "../../common/hotlist.h"
+#include "../../common/log.h"
 #include "../../common/weeconfig.h"
 #include "gui-curses.h"
 

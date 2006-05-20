@@ -193,18 +193,18 @@ gui_add_to_line (t_gui_buffer *buffer, int type, char *nick, char *message)
     }
     if (buffer->line_complete && buffer->log_file && buffer->last_line->log_write)
     {
-        log_write_date (buffer);
+        gui_log_write_date (buffer);
         if (buffer->last_line->nick)
         {
-            log_write (buffer, "<");
-            log_write (buffer, buffer->last_line->nick);
-            log_write (buffer, "> ");
+            gui_log_write (buffer, "<");
+            gui_log_write (buffer, buffer->last_line->nick);
+            gui_log_write (buffer, "> ");
         }
         if (buffer->last_line->ofs_start_message >= 0)
-            log_write_line (buffer,
-                            buffer->last_line->data + buffer->last_line->ofs_start_message);
+            gui_log_write_line (buffer,
+                                buffer->last_line->data + buffer->last_line->ofs_start_message);
         else
-            log_write_line (buffer, buffer->last_line->data);
+            gui_log_write_line (buffer, buffer->last_line->data);
     }
 }
 

@@ -98,7 +98,6 @@ extern char *weechat_argv0;
 extern time_t weechat_start_time;
 extern int quit_weechat;
 extern char *weechat_home;
-extern FILE *weechat_log_file;
 extern char *local_charset;
 
 #ifdef HAVE_GNUTLS
@@ -109,7 +108,6 @@ extern void ascii_tolower (char *);
 extern void ascii_toupper (char *);
 extern int ascii_strcasecmp (char *, char *);
 extern int ascii_strncasecmp (char *, char *, int);
-extern void weechat_log_printf (char *, ...);
 extern char *weechat_iconv (char *, char *, char *);
 extern char *weechat_strreplace (char *, char *, char *);
 extern void weechat_dump (int);
