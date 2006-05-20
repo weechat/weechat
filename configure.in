@@ -56,7 +56,12 @@ AC_CHECK_LIB(ncursesw, initscr, LIBNCURSESW_FOUND=1, LIBNCURSESW_FOUND=0)
 
 # Checks for header files
 AC_HEADER_STDC
-AC_CHECK_HEADERS([arpa/inet.h libintl.h limits.h locale.h netdb.h netinet/in.h stdlib.h string.h sys/socket.h sys/time.h sys/types.h unistd.h pwd.h errno.h regex.h])
+AC_CHECK_HEADERS([arpa/inet.h libintl.h limits.h locale.h netdb.h netinet/in.h stdlib.h string.h sys/socket.h sys/time.h sys/types.h unistd.h pwd.h errno.h regex.h wchar.h sys/file.h])
+
+if echo "$host_os" | grep "^openbsd" 1>/dev/null 2>&1 ; then
+   AC_CHECK_HEADER(utf8/wchar.h, LDFLAGS="$LDFLAGS -lutf8", [AC_MSG_ERROR([
+*** on OpenBSD systems, package libutf8 must be installed to compile WeeChat])])
+fi
 
 # Checks for typedefs, structures, and compiler characteristics
 AC_HEADER_TIME
@@ -552,7 +557,7 @@ fi
 LIBS="$LIBS $INTLLIBS"
 
 case "$host_os" in
-freebsd* | netbsd*)
+freebsd*)
         if test "x$enable_perl" = "xyes" -o "x$enable_python" = "xyes" ; then
 	   CFLAGS="$CFLAGS -pthread"
         fi
@@ -563,6 +568,14 @@ openbsd*)
            CFLAGS="$CFLAGS -pthread"
         fi
         ;;
+netbsd*)
+        if test "x$enable_perl" = "xyes" -o "x$enable_python" = "xyes" ; then
+	   CFLAGS="$CFLAGS -pthread"
+        fi
+        CFLAGS="$CFLAGS $CPPFLAGS"
+	# bad hack
+	LDFLAGS="$LDFLAGS -liconv"
+	;;
 gnu*)	
 	if test "x$enable_plugins" = "xyes" ; then
 	   LDFLAGS="$LDFLAGS -lpthread"

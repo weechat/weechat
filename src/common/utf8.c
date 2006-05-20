@@ -27,7 +27,12 @@
 #include <stdlib.h>
 #include <string.h>
 #define __USE_XOPEN
+
+#if defined(__OpenBSD__)
+#include <utf8/wchar.h>
+#else
 #include <wchar.h>
+#endif
 
 #include "weechat.h"
 #include "utf8.h"
