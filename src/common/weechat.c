@@ -1003,20 +1003,19 @@ weechat_sigsegv ()
     fprintf (stderr, "*** Very bad! WeeChat is crashing (SIGSEGV received)\n");
     fprintf (stderr, "*** (%s, compiled on %s %s)\n",
              PACKAGE_STRING, __DATE__, __TIME__);
-    fprintf (stderr, "*** Full crash dump was saved to %s/weechat.log file.\n",
-             weechat_home);
+    if (!weechat_log_crash_rename ())
+        fprintf (stderr, "*** Full crash dump was saved to %s/weechat.log file.\n",
+                 weechat_home);
     fprintf (stderr, "***\n");
     fprintf (stderr, "*** Please help WeeChat developers to fix this bug:\n");
     fprintf (stderr, "***   1. If you have a core file, please run:  gdb weechat-curses core\n");
     fprintf (stderr, "***      then issue \"bt\" command and send result to developers\n");
     fprintf (stderr, "***      To enable core files with bash shell: ulimit -c 10000\n");
-    fprintf (stderr, "***   2. Otherwise send backtrace displayed below and weechat.log\n");
+    fprintf (stderr, "***   2. Otherwise send backtrace (below) and weechat.log\n");
     fprintf (stderr, "***      (be careful, private info may be in this file since\n");
     fprintf (stderr, "***      part of chats are displayed, so remove lines if needed)\n\n");
     
-    fprintf (stderr, "======= WeeChat backtrace =======\n");
     weechat_backtrace ();
-    fprintf (stderr, "======= End of  backtrace =======\n");
     
     /* shutdown with error code */
     weechat_shutdown (EXIT_FAILURE, 1);

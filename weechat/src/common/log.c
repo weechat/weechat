@@ -25,16 +25,62 @@
 #endif
 
 #include <stdlib.h>
+#include <unistd.h>
 #include <string.h>
 #include <stdarg.h>
 #include <sys/file.h>
+#include <sys/types.h>
 
 #include "weechat.h"
 #include "log.h"
 
 
-FILE *weechat_log_file = NULL; /* WeeChat log file (~/.weechat/weechat.log) */
+char *weechat_log_filename = NULL; /* log name (~/.weechat/weechat.log)     */
+FILE *weechat_log_file = NULL;     /* WeeChat log file                      */
 
+
+/*
+ * weechat_log_open: initialize log file
+ */
+
+int
+weechat_log_open (char *filename, char *mode)
+{
+    int filename_length;
+
+    /* exit if log already opened */
+    if (weechat_log_file)
+        return 0;
+
+    if (filename)
+        weechat_log_filename = strdup (filename);
+    else
+    {
+        filename_length = strlen (weechat_home) + 64;
+        weechat_log_filename =
+            (char *) malloc (filename_length * sizeof (char));
+        snprintf (weechat_log_filename, filename_length,
+                  "%s/%s", weechat_home, WEECHAT_LOG_NAME);
+    }
+    
+    weechat_log_file = fopen (weechat_log_filename, mode);
+    if (!weechat_log_file)
+    {
+        free (weechat_log_filename);
+        weechat_log_filename = NULL;
+        return 0;
+    }
+    if ((flock (fileno (weechat_log_file), LOCK_EX | LOCK_NB) != 0))
+    {
+        fclose (weechat_log_file);
+        weechat_log_file = NULL;
+        free (weechat_log_filename);
+        weechat_log_filename = NULL;
+        return 0;
+    }
+    
+    return 1;
+}
 
 /*
  * weechat_log_init: initialize log file
@@ -43,26 +89,15 @@ FILE *weechat_log_file = NULL; /* WeeChat log file (~/.weechat/weechat.log) */
 void
 weechat_log_init ()
 {
-    int filename_length;
-    char *filename;
-    
-    filename_length = strlen (weechat_home) + 64;
-    filename =
-        (char *) malloc (filename_length * sizeof (char));
-    snprintf (filename, filename_length, "%s/%s", weechat_home, WEECHAT_LOG_NAME);
-    
-    weechat_log_file = fopen (filename, "wt");
-    if (!weechat_log_file
-        || (flock (fileno (weechat_log_file), LOCK_EX | LOCK_NB) != 0))
+    if (!weechat_log_open (NULL, "w"))
     {
         fprintf (stderr,
-                 _("%s unable to create/append to log file (%s/%s)\n"
+                 _("%s unable to create/append to log file (%s)\n"
                    "If another WeeChat process is using this file, try to run WeeChat\n"
                    "with another home using \"--dir\" command line option.\n"),
-                 WEECHAT_ERROR, weechat_home, WEECHAT_LOG_NAME);
+                 WEECHAT_ERROR, weechat_log_filename);
         exit (1);
     }
-    free (filename);
 }
 
 /*
@@ -115,10 +150,19 @@ weechat_log_printf (char *message, ...)
 void
 weechat_log_close ()
 {
+    /* close log file */
     if (weechat_log_file)
     {
         flock (fileno (weechat_log_file), LOCK_UN);
         fclose (weechat_log_file);
+        weechat_log_file = NULL;
+    }
+
+    /* free filename */
+    if (weechat_log_filename)
+    {
+        free (weechat_log_filename);
+        weechat_log_filename = NULL;
     }
 }
 
@@ -126,14 +170,49 @@ weechat_log_close ()
  * weechat_log_crash_rename: rename log file when crashing
  */
 
-void
+int
 weechat_log_crash_rename ()
 {
-    char *oldname, *newname;
+    char *old_name, *new_name;
+    int length;
+    time_t time_now;
+    struct tm *local_time;
 
-    oldname = (char *) malloc (strlen (weechat_home) + 64);
-    newname = (char *) malloc (strlen (weechat_home) + 64);
-    if (oldname && newname)
+    if (!weechat_log_filename)
+        return 0;
+    
+    old_name = strdup (weechat_log_filename);
+    if (!old_name)
+        return 0;
+
+    weechat_log_close ();
+    
+    length = strlen (weechat_home) + 128;
+    new_name = (char *) malloc (length);
+    if (new_name)
     {
+        time_now = time (NULL);
+        local_time = localtime (&time_now);
+        snprintf (new_name, length,
+                  "%s/weechat_crash_%04d%02d%02d_%d.log",
+                  weechat_home,
+                  local_time->tm_year + 1900,
+                  local_time->tm_mon + 1,
+                  local_time->tm_mday,
+                  getpid());
+        if (rename (old_name, new_name) == 0)
+        {
+            fprintf (stderr, "*** Full crash dump was saved to %s file.\n",
+                     new_name);
+            weechat_log_open (new_name, "a");
+            free (old_name);
+            free (new_name);
+            return 1;
+        }
+        free (new_name);
     }
+
+    free (old_name);
+    weechat_log_open (NULL, "a");
+    return 0;
 }

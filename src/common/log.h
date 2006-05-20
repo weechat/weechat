@@ -21,11 +21,12 @@
 #ifndef __WEECHAT_LOG_H
 #define __WEECHAT_LOG_H 1
 
+extern char *weechat_log_filename;
 extern FILE *weechat_log_file;
 
 extern void weechat_log_init ();
 extern void weechat_log_close ();
 extern void weechat_log_printf (char *, ...);
-extern void weechat_log_crash_rename ();
+extern int weechat_log_crash_rename ();
 
 #endif /* log.h */

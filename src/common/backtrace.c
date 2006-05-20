@@ -27,6 +27,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdarg.h>
 #define __USE_GNU
 #include <dlfcn.h>
 
@@ -36,7 +37,26 @@
 
 #include "weechat.h"
 #include "backtrace.h"
+#include "log.h"
 
+
+/*
+ * weechat_backtrace_printf: display a backtrage line (on stderr and in WeeChat log)
+ */
+
+void
+weechat_backtrace_printf (char *message, ...)
+{
+    static char buffer[4096];
+    va_list argptr;
+    
+    va_start (argptr, message);
+    vsnprintf (buffer, sizeof (buffer) - 1, message, argptr);
+    va_end (argptr);
+
+    fprintf (stderr, "%s", buffer);
+    weechat_log_printf ("%s", buffer);
+}
 
 /*
  * weechat_backtrace_addr2line: display function name and line with a backtrace address
@@ -57,7 +77,7 @@ weechat_backtrace_addr2line (int number, void *address, char *symbol)
     rc = dladdr (address, &info);
     if ((rc == 0) || !info.dli_fname || !info.dli_fname[0])
     {
-        fprintf (stderr, "%03d  %s\n", number, symbol);
+        weechat_backtrace_printf ("%03d  %s\n", number, symbol);
         return;
     }
     
@@ -71,7 +91,7 @@ weechat_backtrace_addr2line (int number, void *address, char *symbol)
     output = popen (cmd_line, "r");
     if (!output)
     {
-        fprintf (stderr, "%03d  %s\n", number, symbol);
+        weechat_backtrace_printf ("%03d  %s\n", number, symbol);
         return;
     }
     function_name[0] = '\0';
@@ -87,25 +107,27 @@ weechat_backtrace_addr2line (int number, void *address, char *symbol)
             if (strchr (ptr_line, ':'))
             {
                 file_line = 1;
-                fprintf (stderr, "%03d  %s%s%s%s\n",
-                         number,
-                         ptr_line,
-                         (function_name[0]) ? " [function " : "",
-                         function_name,
-                         (function_name[0]) ? "]" : "");
+                weechat_backtrace_printf ("%03d  %s%s%s%s\n",
+                                          number,
+                                          ptr_line,
+                                          (function_name[0]) ? " [function " : "",
+                                          function_name,
+                                          (function_name[0]) ? "]" : "");
                 function_name[0] = '\0';
             }
             else
             {
                 if (function_name[0])
-                    fprintf (stderr, "%03d  %s", number, function_name);
+                    weechat_backtrace_printf ("%03d  %s",
+                                              number, function_name);
                 snprintf (function_name, sizeof (function_name),
                           "%s", ptr_line);
             }
         }
     }
     if (function_name[0])
-        fprintf (stderr, "%03d  %s\n", number, function_name);
+        weechat_backtrace_printf ("%03d  %s\n",
+                                  number, function_name);
     pclose (output);
 }
 
@@ -120,7 +142,11 @@ weechat_backtrace ()
     void *trace[BACKTRACE_MAX];
     int trace_size, i;
     char **symbols;
-    
+#endif
+
+    weechat_backtrace_printf ("======= WeeChat backtrace =======\n");
+
+#ifdef HAVE_BACKTRACE
     trace_size = backtrace (trace, BACKTRACE_MAX);
     symbols = backtrace_symbols (trace, trace_size);
     
@@ -129,8 +155,9 @@ weechat_backtrace ()
         weechat_backtrace_addr2line (i + 1, trace[i], symbols[i]);
     }
 #else
-    fprintf (stderr,
-             "  No backtrace info (no debug info available or no backtrace possible "
-             "on your system).\n");
+    weechat_backtrace_printf ("  No backtrace info (no debug info available "
+                              "or no backtrace possible on your system).\n");
 #endif
+    
+    weechat_backtrace_printf ("======= End of  backtrace =======\n");
 }
