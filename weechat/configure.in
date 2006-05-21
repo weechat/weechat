@@ -97,6 +97,7 @@ AH_VERBATIM([PLUGIN_PYTHON], [#undef PLUGIN_PYTHON])
 AH_VERBATIM([PLUGIN_RUBY], [#undef PLUGIN_RUBY])
 AH_VERBATIM([PLUGIN_LUA], [#undef PLUGIN_LUA])
 AH_VERBATIM([HAVE_GNUTLS], [#undef HAVE_GNUTLS])
+AH_VERBATIM([HAVE_FLOCK], [#undef HAVE_FLOCK])
 AH_VERBATIM([DEBUG], [#undef DEBUG])
 
 # Arguments for ./configure
@@ -499,6 +500,24 @@ if test "x$enable_gnutls" = "xyes" ; then
 fi
 
 # ------------------------------------------------------------------------------
+#                                   flock
+# ------------------------------------------------------------------------------
+
+enable_flock="no"
+AC_CACHE_CHECK([for flock() support], ac_have_flock, [
+AC_TRY_COMPILE(
+[ #include <sys/file.h>       
+],
+[ flock(0, LOCK_SH); ],
+[ ac_have_flock="yes" ],
+[ ac_have_flock="no" ])])
+
+if test "x$ac_have_flock" = "xyes"; then
+   enable_flock="yes"
+   AC_DEFINE(HAVE_FLOCK)
+fi
+
+# ------------------------------------------------------------------------------
 #                                  backtrace
 # ------------------------------------------------------------------------------
 
@@ -599,6 +618,7 @@ AM_CONDITIONAL(PLUGIN_PYTHON, test "$enable_python" = "yes")
 AM_CONDITIONAL(PLUGIN_RUBY,   test "$enable_ruby" = "yes")
 AM_CONDITIONAL(PLUGIN_LUA,    test "$enable_lua" = "yes")
 AM_CONDITIONAL(HAVE_GNUTLS,   test "$enable_gnutls" = "yes")
+AM_CONDITIONAL(HAVE_FLOCK,    test "$enable_flock" = "yes")
 
 AC_OUTPUT([Makefile
            doc/Makefile
@@ -664,6 +684,7 @@ fi
 echo ""
 echo "Interfaces........................ :$listgui"
 echo "Build with GNUtls support......... : $enable_gnutls"
+echo "Build with flock support.......... : $enable_flock"
 echo "Build with Plugin support......... : $enable_plugins"
 echo "              Perl plugin......... : $enable_perl"
 echo "              Python plugin....... : $enable_python"

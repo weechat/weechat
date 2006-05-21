@@ -71,6 +71,8 @@ weechat_log_open (char *filename, char *mode)
         weechat_log_filename = NULL;
         return 0;
     }
+
+#ifdef HAVE_FLOCK
     if ((flock (fileno (weechat_log_file), LOCK_EX | LOCK_NB) != 0))
     {
         fclose (weechat_log_file);
@@ -79,7 +81,8 @@ weechat_log_open (char *filename, char *mode)
         weechat_log_filename = NULL;
         return 0;
     }
-    
+#endif
+
     return 1;
 }
 
@@ -154,7 +157,9 @@ weechat_log_close ()
     /* close log file */
     if (weechat_log_file)
     {
+#ifdef HAVE_FLOCK
         flock (fileno (weechat_log_file), LOCK_UN);
+#endif
         fclose (weechat_log_file);
         weechat_log_file = NULL;
     }
