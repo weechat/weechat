@@ -30,6 +30,7 @@
 #include <stdarg.h>
 #include <sys/file.h>
 #include <sys/types.h>
+#include <time.h>
 
 #include "weechat.h"
 #include "log.h"
