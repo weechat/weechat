@@ -1226,19 +1226,18 @@ weechat_cmd_alias (t_irc_server *server, t_irc_channel *channel,
 	    if (ptr_alias)
 	    {
 		gui_printf (NULL, "\n");
-		gui_printf (NULL, _("List of aliases:\n"));
+		gui_printf (NULL, _("Alias:\n"));
 		gui_printf (NULL, "  %s %s=>%s %s\n",
 			    ptr_alias->alias_name,
 			    GUI_COLOR(COLOR_WIN_CHAT_DARK),
 			    GUI_COLOR(COLOR_WIN_CHAT),
 			    ptr_alias->alias_command);
-		return 0;
 	    }
-	    
-            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-            gui_printf (NULL, _("%s missing arguments for \"%s\" command\n"),
-                        WEECHAT_ERROR, "alias");
-            return -1;
+            else
+            {
+                irc_display_prefix (NULL, NULL, PREFIX_INFO);
+                gui_printf (NULL, _("No alias found.\n"));
+            }
         }
     }
     else
