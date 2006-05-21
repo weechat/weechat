@@ -2217,7 +2217,7 @@ config_create_default ()
     fprintf (file, "UB = \"unban\"\n");
     fprintf (file, "UNIG = \"unignore\"\n");
     fprintf (file, "W = \"who\"\n");
-    fprintf (file, "WC = \"part\"\n");
+    fprintf (file, "WC = \"window close\"\n");
     fprintf (file, "WI = \"whois\"\n");
     fprintf (file, "WW = \"whowas\"\n");
     
