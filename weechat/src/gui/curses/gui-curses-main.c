@@ -145,7 +145,10 @@ gui_main_loop ()
         }
         
         /* read keyboard */
-        
+
+        /* on GNU/Hurd 2 select() are causing troubles with keyboard */
+        /* waiting for a fix, we use only one select() */
+#ifndef __GNU__        
         FD_ZERO (&read_fd);
         timeout.tv_sec = 0;
         timeout.tv_usec = 8000;
@@ -159,13 +162,20 @@ gui_main_loop ()
                 gui_keyboard_read ();
             }
         }
+#endif
         
         /* read sockets (servers, child process when connecting, FIFO pipe) */
         
         FD_ZERO (&read_fd);
         
+#ifdef __GNU__
+        timeout.tv_sec = 0;
+        timeout.tv_usec = 10000;
+        FD_SET (STDIN_FILENO, &read_fd);
+#else
         timeout.tv_sec = 0;
         timeout.tv_usec = 2000;
+#endif
         
         if (weechat_fifo != -1)
             FD_SET (weechat_fifo, &read_fd);
@@ -220,6 +230,12 @@ gui_main_loop ()
         
         if (select (FD_SETSIZE, &read_fd, NULL, NULL, &timeout) > 0)
         {
+#ifdef __GNU__
+            if (FD_ISSET (STDIN_FILENO, &read_fd))
+            {
+                gui_keyboard_read ();
+            }
+#endif
             if ((weechat_fifo != -1) && (FD_ISSET (weechat_fifo, &read_fd)))
             {
                 fifo_read ();
