@@ -3748,7 +3748,6 @@ end
           <title>Lua</title>
           
           <para>
-            In a WeeChat Lua script, all API functions are prefixed by
             In einem WeeChat-Luaskript ist allen Funktionen ein "<literal>weechat.</literal>"
             vorangestellt. Variablen beginnen mit "<literal>weechat.</literal>" und
             enden mit "<literal>()</literal>".
@@ -5583,7 +5582,6 @@ value = weechat.get_plugin_config("my_var")
             </command>
           </para>
           <para>
-            Update value of a plugin option. Option is written in file
             Setzt den Wert einer Option eines Plugins. Die Option bzw. ihr Wert
             wird in "<literal>~/.weechat/plugins.rc</literal>" geschrieben und 
             sieht so aus: "<literal>plugin.option=value</literal>" 
