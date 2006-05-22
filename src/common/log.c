@@ -96,10 +96,10 @@ weechat_log_init ()
     if (!weechat_log_open (NULL, "w"))
     {
         fprintf (stderr,
-                 _("%s unable to create/append to log file (%s)\n"
+                 _("%s unable to create/append to log file\n"
                    "If another WeeChat process is using this file, try to run WeeChat\n"
                    "with another home using \"--dir\" command line option.\n"),
-                 WEECHAT_ERROR, weechat_log_filename);
+                 WEECHAT_ERROR);
         exit (1);
     }
 }
