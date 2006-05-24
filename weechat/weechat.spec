@@ -18,7 +18,7 @@
 #
 
 %define name weechat
-%define version 0.1.8
+%define version 0.1.9
 %define release 1
 
 Name:      %{name}
@@ -66,6 +66,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_docdir}/%{name}/html/*
 
 %changelog
+* Thu May 25 2006 FlashCode <flashcode@flashtux.org> 0.1.9-1
+- Released version 0.1.9
 * Sat Mar 18 2006 FlashCode <flashcode@flashtux.org> 0.1.8-1
 - Released version 0.1.8
 * Sat Jan 14 2006 FlashCode <flashcode@flashtux.org> 0.1.7-1

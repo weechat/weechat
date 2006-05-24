@@ -192,7 +192,7 @@
   <entry>Ganzzahl</entry>
   <entry>zwischen 8 und 64</entry>
   <entry>20</entry>
-  <entry>Max size for aligning nick and other messages (should be &gt;= to look_align_size)</entry>
+  <entry>Maximale Größe zum Ausrichten von Nicknamen und anderen Nachrichten (sollte &gt;= look_align_size sein)</entry>
 </row>
 <row>
   <entry><option>look_nick_completor</option></entry>

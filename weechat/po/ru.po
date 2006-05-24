@@ -1,14 +1,13 @@
 # WeeChat: fast & light, IRC client for many operating systems. 
-# Copyright (c) 2003-2005 FlashCode <flashcode@flashtux.org>
+# Copyright (c) 2003-2006 FlashCode <flashcode@flashtux.org>
 # This file is distributed under the same license as the WeeChat package.
-# FlashCode <flashcode@flashtux.org>, 2005.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.1.9-cvs\n"
+"Project-Id-Version: WeeChat 0.1.9\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-05-22 16:31+0200\n"
-"PO-Revision-Date: 2006-05-20 01:31+0300\n"
+"POT-Creation-Date: 2006-05-24 23:54+0200\n"
+"PO-Revision-Date: 2006-05-25 00:20+0200\n"
 "Last-Translator: Stalwart <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1419,14 +1418,14 @@ msgstr "%s не могу найти адресата сообщения\n"
 #: src/irc/irc-send.c:391 src/irc/irc-send.c:419 src/irc/irc-send.c:641
 #: src/irc/irc-send.c:678 src/irc/irc-send.c:715 src/irc/irc-send.c:769
 #: src/irc/irc-send.c:814 src/irc/irc-send.c:893 src/irc/irc-send.c:954
-#: src/irc/irc-send.c:1340 src/irc/irc-send.c:1482 src/irc/irc-send.c:2008
-#: src/irc/irc-send.c:2138
+#: src/irc/irc-send.c:1340 src/irc/irc-send.c:1482 src/irc/irc-send.c:2023
+#: src/irc/irc-send.c:2153
 #, c-format
 msgid "%s \"%s\" command can only be executed in a channel buffer\n"
 msgstr "%s \"%s\" команда может быть выполнена только в буфере канала\n"
 
 #: src/irc/irc-send.c:558 src/irc/irc-send.c:578 src/irc/irc-send.c:1108
-#: src/irc/irc-send.c:1544 src/irc/irc-send.c:1926
+#: src/irc/irc-send.c:1544 src/irc/irc-send.c:1941
 #, c-format
 msgid "%s \"%s\" command can not be executed on a server buffer\n"
 msgstr "%s \"%s\" команда может быть выполнена только в буфере сервера\n"
@@ -1457,7 +1456,7 @@ msgstr ""
 msgid "%s nick \"%s\" not found for \"%s\" command\n"
 msgstr "%s ник \"%s\" не найден для команды \"%s\"\n"
 
-#: src/irc/irc-send.c:1313 src/irc/irc-send.c:1451 src/irc/irc-send.c:2034
+#: src/irc/irc-send.c:1313 src/irc/irc-send.c:1451 src/irc/irc-send.c:2049
 #: src/common/command.c:1987 src/common/command.c:1999
 #: src/common/command.c:2018 src/common/command.c:2105
 #: src/common/command.c:2618 src/common/command.c:2797
@@ -1470,7 +1469,7 @@ msgstr "%s некорректное количество аргументов к
 msgid "%s cannot create new private buffer \"%s\"\n"
 msgstr "%s невозможно создать новый буфер привата \"%s\"\n"
 
-#: src/irc/irc-send.c:2099
+#: src/irc/irc-send.c:2114
 #, c-format
 msgid "%s, compiled on %s %s\n"
 msgstr "%s, собран %s %s\n"
@@ -3221,12 +3220,11 @@ msgstr "Невозможно создать сокращение \"%s\" => \"%s\
 
 #: src/common/command.c:1229
 msgid "Alias:\n"
-msgstr ""
+msgstr "Сокращение:\n"
 
 #: src/common/command.c:1239
-#, fuzzy
 msgid "No alias found.\n"
-msgstr "Сокращения не заданы.\n"
+msgstr "Сокращения не найдены.\n"
 
 #: src/common/command.c:1249
 msgid "List of aliases:\n"
@@ -3828,13 +3826,13 @@ msgid "%s cannot add a buffer to hotlist\n"
 msgstr "%s не могу добавить буфер в хотлист\n"
 
 #: src/common/log.c:99
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s unable to create/append to log file\n"
 "If another WeeChat process is using this file, try to run WeeChat\n"
 "with another home using \"--dir\" command line option.\n"
 msgstr ""
-"%s не может начать/продолжить журнал (%s/%s)\n"
+"%s не может начать/продолжить журнал\n"
 "Если другой процесс WeeChat использует этот файл, попробуйте запускать "
 "WeeChat\n"
 "с другой домашней директорией используя параметр \"--dir\".\n"

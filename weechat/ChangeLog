@@ -1,9 +1,9 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-05-24
+ChangeLog - 2006-05-25
 
-Version 0.1.9 (under dev!):
+Version 0.1.9 (2006-05-25):
    * fixed /squery command (message sent to server, now ok with # args > 2)
    * fixed /alias command (with an alias name, display content)
    * improved lua plugin detection (bug #16574)

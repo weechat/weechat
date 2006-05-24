@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.1.9-cvs\n"
+"Project-Id-Version: WeeChat 0.1.9\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-05-22 16:31+0200\n"
-"PO-Revision-Date: 2006-05-22 16:33+0200\n"
+"POT-Creation-Date: 2006-05-24 23:54+0200\n"
+"PO-Revision-Date: 2006-05-25 00:20+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1425,15 +1425,15 @@ msgstr "%s impossible de trouver le pseudo pour envoyer le message\n"
 #: src/irc/irc-send.c:391 src/irc/irc-send.c:419 src/irc/irc-send.c:641
 #: src/irc/irc-send.c:678 src/irc/irc-send.c:715 src/irc/irc-send.c:769
 #: src/irc/irc-send.c:814 src/irc/irc-send.c:893 src/irc/irc-send.c:954
-#: src/irc/irc-send.c:1340 src/irc/irc-send.c:1482 src/irc/irc-send.c:2008
-#: src/irc/irc-send.c:2138
+#: src/irc/irc-send.c:1340 src/irc/irc-send.c:1482 src/irc/irc-send.c:2023
+#: src/irc/irc-send.c:2153
 #, c-format
 msgid "%s \"%s\" command can only be executed in a channel buffer\n"
 msgstr ""
 "%s la commande \"%s\" peut seulement être exécutée dans un tampon canal\n"
 
 #: src/irc/irc-send.c:558 src/irc/irc-send.c:578 src/irc/irc-send.c:1108
-#: src/irc/irc-send.c:1544 src/irc/irc-send.c:1926
+#: src/irc/irc-send.c:1544 src/irc/irc-send.c:1941
 #, c-format
 msgid "%s \"%s\" command can not be executed on a server buffer\n"
 msgstr ""
@@ -1466,7 +1466,7 @@ msgstr ""
 msgid "%s nick \"%s\" not found for \"%s\" command\n"
 msgstr "%s pseudo \"%s\" non trouvé pour la commande \"%s\"\n"
 
-#: src/irc/irc-send.c:1313 src/irc/irc-send.c:1451 src/irc/irc-send.c:2034
+#: src/irc/irc-send.c:1313 src/irc/irc-send.c:1451 src/irc/irc-send.c:2049
 #: src/common/command.c:1987 src/common/command.c:1999
 #: src/common/command.c:2018 src/common/command.c:2105
 #: src/common/command.c:2618 src/common/command.c:2797
@@ -1479,7 +1479,7 @@ msgstr "%s nombre de paramètres erroné pour la commande \"%s\"\n"
 msgid "%s cannot create new private buffer \"%s\"\n"
 msgstr "%s impossible de créer le tampon privé \"%s\"\n"
 
-#: src/irc/irc-send.c:2099
+#: src/irc/irc-send.c:2114
 #, c-format
 msgid "%s, compiled on %s %s\n"
 msgstr "%s, compilé le %s %s\n"

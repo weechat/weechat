@@ -1,14 +1,13 @@
-# translation of es.po to
 # WeeChat: fast & light, IRC client for many operating systems.
 # Copyright (c) 2003-2006 FlashCode <flashcode@flashtux.org>
 # This file is distributed under the same license as the WeeChat package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Weechat 0.1.9-cvs\n"
+"Project-Id-Version: Weechat 0.1.9\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-05-22 16:31+0200\n"
-"PO-Revision-Date: 2006-05-21 17:06+0200\n"
+"POT-Creation-Date: 2006-05-24 23:54+0200\n"
+"PO-Revision-Date: 2006-05-25 00:21+0200\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1431,15 +1430,15 @@ msgstr "%s no ha sido posible encontrar el usuario al que enviar el mensaje\n"
 #: src/irc/irc-send.c:391 src/irc/irc-send.c:419 src/irc/irc-send.c:641
 #: src/irc/irc-send.c:678 src/irc/irc-send.c:715 src/irc/irc-send.c:769
 #: src/irc/irc-send.c:814 src/irc/irc-send.c:893 src/irc/irc-send.c:954
-#: src/irc/irc-send.c:1340 src/irc/irc-send.c:1482 src/irc/irc-send.c:2008
-#: src/irc/irc-send.c:2138
+#: src/irc/irc-send.c:1340 src/irc/irc-send.c:1482 src/irc/irc-send.c:2023
+#: src/irc/irc-send.c:2153
 #, c-format
 msgid "%s \"%s\" command can only be executed in a channel buffer\n"
 msgstr ""
 "%s el comando \"%s\" sólo puede ser ejecutado en una ventana de canal\n"
 
 #: src/irc/irc-send.c:558 src/irc/irc-send.c:578 src/irc/irc-send.c:1108
-#: src/irc/irc-send.c:1544 src/irc/irc-send.c:1926
+#: src/irc/irc-send.c:1544 src/irc/irc-send.c:1941
 #, c-format
 msgid "%s \"%s\" command can not be executed on a server buffer\n"
 msgstr "%s el comando \"%s\" no puede ejecutarse en una ventana de servidor\n"
@@ -1470,7 +1469,7 @@ msgstr ""
 msgid "%s nick \"%s\" not found for \"%s\" command\n"
 msgstr "%s usuario \"%s\" no encontrado para el comando \"%s\"\n"
 
-#: src/irc/irc-send.c:1313 src/irc/irc-send.c:1451 src/irc/irc-send.c:2034
+#: src/irc/irc-send.c:1313 src/irc/irc-send.c:1451 src/irc/irc-send.c:2049
 #: src/common/command.c:1987 src/common/command.c:1999
 #: src/common/command.c:2018 src/common/command.c:2105
 #: src/common/command.c:2618 src/common/command.c:2797
@@ -1483,7 +1482,7 @@ msgstr "%s número de argumentos incorrecto para el comando \"%s\"\n"
 msgid "%s cannot create new private buffer \"%s\"\n"
 msgstr "%s no es posible crear una nueva ventana privada \"%s\"\n"
 
-#: src/irc/irc-send.c:2099
+#: src/irc/irc-send.c:2114
 #, c-format
 msgid "%s, compiled on %s %s\n"
 msgstr "%s, compilado en %s %s\n"

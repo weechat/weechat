@@ -1,19 +1,21 @@
 # WeeChat: fast & light, IRC client for many operating systems.
-# Copyright (c) 2003-2005 FlashCode <flashcode@flashtux.org>
+# Copyright (c) 2003-2006 FlashCode <flashcode@flashtux.org>
 # This file is distributed under the same license as the WeeChat package.
 # Rudolf Polzer <weechat-te@durchnull.de>, 2005.
+# Thomas Schuetz <i18n@internet-villa.de>, 2006.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.1.9-cvs\n"
+"Project-Id-Version: WeeChat 0.1.9\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-05-22 16:31+0200\n"
-"PO-Revision-Date: 2006-05-13 19:54+0200\n"
-"Last-Translator: Thomas Schütz <i18n@internet-villa.de>\n"
-"Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
+"POT-Creation-Date: 2006-05-24 23:54+0200\n"
+"PO-Revision-Date: 2006-05-25 00:00+0200\n"
+"Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
+"Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.10.2\n"
 
 #: src/irc/irc-server.c:191 src/common/weeconfig.c:2268
 msgid "Unable to get user's name"
@@ -107,7 +109,7 @@ msgstr ""
 #: src/irc/irc-server.c:1034
 #, c-format
 msgid "%s unable to set local hostname/IP\n"
-msgstr ""
+msgstr "%s kann lokalen Hostname/lokale IP nicht festlegen\n"
 
 #: src/irc/irc-server.c:1549
 #, c-format
@@ -989,7 +991,7 @@ msgstr "whois (Nick registriert)"
 
 #: src/irc/irc-commands.c:390
 msgid "available for help"
-msgstr ""
+msgstr "zur Hilfe verfügbar"
 
 #: src/irc/irc-commands.c:392
 msgid "whois (user)"
@@ -1141,7 +1143,7 @@ msgstr "verbinden von"
 
 #: src/irc/irc-commands.c:474
 msgid "using modes"
-msgstr ""
+msgstr "benutze Modi"
 
 #: src/irc/irc-commands.c:476
 msgid "you are now an IRC operator"
@@ -1237,7 +1239,7 @@ msgstr "Nickname-Kollision"
 
 #: src/irc/irc-commands.c:524
 msgid "resource unavailable"
-msgstr ""
+msgstr "Resource nicht verfügbar"
 
 #: src/irc/irc-commands.c:526
 msgid "not authorized to change nickname"
@@ -1417,14 +1419,14 @@ msgstr ""
 #: src/irc/irc-send.c:391 src/irc/irc-send.c:419 src/irc/irc-send.c:641
 #: src/irc/irc-send.c:678 src/irc/irc-send.c:715 src/irc/irc-send.c:769
 #: src/irc/irc-send.c:814 src/irc/irc-send.c:893 src/irc/irc-send.c:954
-#: src/irc/irc-send.c:1340 src/irc/irc-send.c:1482 src/irc/irc-send.c:2008
-#: src/irc/irc-send.c:2138
+#: src/irc/irc-send.c:1340 src/irc/irc-send.c:1482 src/irc/irc-send.c:2023
+#: src/irc/irc-send.c:2153
 #, c-format
 msgid "%s \"%s\" command can only be executed in a channel buffer\n"
 msgstr "%s der \"%s\"-Befehl kann nur in Channelfenstern ausgeführt werden\n"
 
 #: src/irc/irc-send.c:558 src/irc/irc-send.c:578 src/irc/irc-send.c:1108
-#: src/irc/irc-send.c:1544 src/irc/irc-send.c:1926
+#: src/irc/irc-send.c:1544 src/irc/irc-send.c:1941
 #, c-format
 msgid "%s \"%s\" command can not be executed on a server buffer\n"
 msgstr "%s der \"%s\"-Befehl kann nicht in Serverfenstern ausgeführt werden\n"
@@ -1456,7 +1458,7 @@ msgstr ""
 msgid "%s nick \"%s\" not found for \"%s\" command\n"
 msgstr "%s Nickname \"%s\" für den \"%s\"-Befehl nicht gefunden\n"
 
-#: src/irc/irc-send.c:1313 src/irc/irc-send.c:1451 src/irc/irc-send.c:2034
+#: src/irc/irc-send.c:1313 src/irc/irc-send.c:1451 src/irc/irc-send.c:2049
 #: src/common/command.c:1987 src/common/command.c:1999
 #: src/common/command.c:2018 src/common/command.c:2105
 #: src/common/command.c:2618 src/common/command.c:2797
@@ -1469,7 +1471,7 @@ msgstr "%s fehlerhafte Anzahl von Argumenten für der \"%s\"-Befehl\n"
 msgid "%s cannot create new private buffer \"%s\"\n"
 msgstr "%s kann kein neues privates Fenster \"%s\" erzeugen\n"
 
-#: src/irc/irc-send.c:2099
+#: src/irc/irc-send.c:2114
 #, c-format
 msgid "%s, compiled on %s %s\n"
 msgstr "%s, kompiliert auf %s %s\n"
@@ -2485,7 +2487,7 @@ msgstr "Wort vervollständigen"
 
 #: src/gui/gui-keyboard.c:54
 msgid "find previous completion for word"
-msgstr ""
+msgstr "finde letzte Wortvervollständigung"
 
 #: src/gui/gui-keyboard.c:56
 msgid "delete previous char"
@@ -2701,7 +2703,6 @@ msgid "[alias_name [command [arguments]]]"
 msgstr "[Aliasname [Befehl [Argumente]]]"
 
 #: src/common/command.c:52
-#, fuzzy
 msgid ""
 "alias_name: name of alias\n"
 "   command: command name (WeeChat or IRC command, many commands can be "
@@ -2709,7 +2710,8 @@ msgid ""
 "arguments: arguments for command"
 msgstr ""
 "Aliasname: Name des Alias\n"
-"   Befehl: Befehlsname (WeeChat- oder IRC-Befehl ohne führenden '/')\n"
+"   Befehl: Befehlsname (WeeChat- oder IRC-Befehl ohne führenden '/', mehrere "
+"Befehle können durch Semikola getrennt werden)\n"
 "Argumente: Argumente für den Befehl"
 
 #: src/common/command.c:57
@@ -3208,9 +3210,9 @@ msgid "%s command \"%s\" needs a server connection!\n"
 msgstr "%s der Befehl \"%s\" benötigt eine Serververbindung!\n"
 
 #: src/common/command.c:925
-#, fuzzy, c-format
+#, c-format
 msgid "%s command \"%s\" can not be executed on DCC CHAT buffer\n"
-msgstr "%s der \"%s\"-Befehl kann nicht in Serverfenstern ausgeführt werden\n"
+msgstr "%s der \"%s\"-Befehl kann nicht inDCC-Fenstern ausgeführt werden\n"
 
 #: src/common/command.c:962
 #, c-format
@@ -3238,12 +3240,11 @@ msgstr "Kann den Alias \"%s\" => \"%s\" nicht anlegen (Speichermangel)\n"
 
 #: src/common/command.c:1229
 msgid "Alias:\n"
-msgstr ""
+msgstr "Alias:\n"
 
 #: src/common/command.c:1239
-#, fuzzy
 msgid "No alias found.\n"
-msgstr "Keine Aliases definiert.\n"
+msgstr "Keine Aliases gefunden.\n"
 
 #: src/common/command.c:1249
 msgid "List of aliases:\n"
@@ -3860,6 +3861,11 @@ msgid ""
 "If another WeeChat process is using this file, try to run WeeChat\n"
 "with another home using \"--dir\" command line option.\n"
 msgstr ""
+"%s kann Log-Datei nicht erzeugen oder keine Daten anhängen\n"
+"Wenn ein anderer WeeChat-Prozess die Datei benutzt, können Sie versuchen, "
+"WeeChat\n"
+"durch das Benutzen der \"--dir\" Kommandozeilenoption mit einem anderen Home-"
+"Verzeichnis zu starten.\n"
 
 #: src/common/session.c:481
 #, c-format
@@ -4531,16 +4537,16 @@ msgid "size for aligning nick and other messages"
 msgstr "Größe zum Ausrichten von Nicknamen und anderen Nachrichten"
 
 #: src/common/weeconfig.c:222
-#, fuzzy
 msgid "max size for aligning nick and other messages"
-msgstr "Größe zum Ausrichten von Nicknamen und anderen Nachrichten"
+msgstr "maximale Größe zum Ausrichten von Nicknamen und anderen Nachrichten"
 
 #: src/common/weeconfig.c:223
-#, fuzzy
 msgid ""
 "max size for aligning nick and other messages (should be >= to "
 "look_align_size)"
-msgstr "Größe zum Ausrichten von Nicknamen und anderen Nachrichten"
+msgstr ""
+"maximale Größe zum Ausrichten von Nicknamen und anderen Nachrichten (sollte "
+">= look_align_size sein)"
 
 #: src/common/weeconfig.c:227 src/common/weeconfig.c:228
 msgid "the string inserted after nick completion"
@@ -5683,8 +5689,3 @@ msgstr ""
 #: src/common/weeconfig.c:2335
 msgid "Saving config to disk\n"
 msgstr "Konfiguration wird gespeichert\n"
-
-#~ msgid "%s unable to create/append to log file (%s/%s)"
-#~ msgstr ""
-#~ "%s Kann die Log-Datei nicht erzeugen oder nicht in die Log-Datei "
-#~ "hineinschreiben (%s/%s)"

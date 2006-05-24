@@ -36,7 +36,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   
   <bookinfo>
     
-    <title>WeeChat 0.1.9-cvs - User guide</title>
+    <title>WeeChat 0.1.9 - User guide</title>
     <subtitle>Schneller, leichter und erweiterbarer IRC Client</subtitle>
     
     <author>
@@ -4201,7 +4201,7 @@ weechat.add_message_handler ("privmsg", "my_function")
 def my_function(server, args):
     weechat.prnt("server="+server)
     null, channel, message = string.split(args, ":", 2)
-    masque, null, channel = string.split(string.strip(channel), " ", 2)
+    mask, null, channel = string.split(string.strip(channel), " ", 2)
     weechat.prnt("mask="+mask+", canal="+channel+", message="+message)
     return weechat.PLUGIN_RC_OK
 
