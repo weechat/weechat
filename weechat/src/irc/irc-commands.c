@@ -233,7 +233,7 @@ t_irc_command irc_commands[] =
   { "squery", N_("deliver a message to a service"),
     N_("service text"),
     N_("service: name of service\ntext: text to send"),
-    NULL, 2, 2, 1, 1, NULL, irc_cmd_send_squery, NULL },
+    NULL, 2, MAX_ARGS, 1, 1, NULL, irc_cmd_send_squery, NULL },
   { "squit", N_("disconnect server links"),
     N_("server comment"),
     N_( "server: server name\n"

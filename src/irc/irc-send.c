@@ -1807,10 +1807,25 @@ int
 irc_cmd_send_squery (t_irc_server *server, t_irc_channel *channel,
                      char *arguments)
 {
+    char *pos;
+    
     /* make gcc happy */
     (void) channel;
+
+    pos = strchr (arguments, ' ');
+    if (pos)
+    {
+        pos[0] = '\0';
+        pos++;
+        while (pos[0] == ' ')
+        {
+            pos++;
+        }
+        server_sendf (server, "SQUERY %s :%s\r\n", arguments, pos);
+    }
+    else
+        server_sendf (server, "SQUERY %s\r\n", arguments);
     
-    server_sendf (server, "SQUERY %s\r\n", arguments);
     return 0;
 }
 
