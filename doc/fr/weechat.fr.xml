@@ -1921,10 +1921,10 @@ plugin->log (plugin, "freenode", "#weechat", "test");
           <para>
             Exemple :
 <screen>
-int msg_kick (t_weechat_plugin *plugin, char *serveur, char *commande,
-              char *arguments, char *handler_args, void *handler_pointer)
+int msg_kick (t_weechat_plugin *plugin, int argc, char **argv,
+              char *handler_args, void *handler_pointer)
 {
-    plugin->print (plugin, serveur, NULL, "KICK reçu");
+    plugin->print (plugin, argv[0], NULL, "KICK reçu");
     return PLUGIN_RC_OK;
 }
 ...
@@ -2171,13 +2171,12 @@ plugin->msg_handler_add (plugin, "KICK", &amp;msg_kick, NULL, NULL);
           <para>
             Exemple :
 <screen>
-int cmd_test (t_weechat_plugin *plugin, char *serveur,
-              char *commande, char *arguments, char *handler_args,
-              void *handler_pointer)
+int cmd_test (t_weechat_plugin *plugin, int argc, char **argv,
+              char *handler_args, void *handler_pointer)
 {
-    plugin->print (plugin, serveur, NULL,
+    plugin->print (plugin, argv[0], NULL,
                    "commande test, pseudo: %s",
-                   (arguments) ? arguments : "aucun");
+                   (argv[2]) ? argv[2] : "aucun");
     return PLUGIN_RC_OK;
 }
 ...
@@ -2271,8 +2270,8 @@ plugin->cmd_handler_add (plugin, "test", "Commande test",
           <para>
             Exemple :
 <screen>
-int mon_timer (t_weechat_plugin *plugin, char *serveur, char *commande,
-               char *arguments, char *handler_args, void *handler_pointer)
+int mon_timer (t_weechat_plugin *plugin, int argc, char **argv,
+               char *handler_args, void *handler_pointer)
 {
     plugin->print (plugin, NULL, NULL, "mon timer");
     return PLUGIN_RC_OK;
@@ -3690,14 +3689,13 @@ char plugin_description[] = "Plugin de test pour WeeChat";
 
 /* gestionnaire de commande "/double" */
 
-int double_cmd (t_weechat_plugin *plugin, char *serveur,
-                char *commande, char *arguments,
+int double_cmd (t_weechat_plugin *plugin, int argc, char **argv,
                 char *handler_args, void *handler_pointer)
 {
-    if (arguments &amp;&amp; arguments[0] &amp;&amp; (arguments[0] != '/'))
+    if (argv[2] &amp;&amp; (argv[2][0] != '/'))
     {
-        plugin->exec_command (plugin, NULL, NULL, arguments);
-        plugin->exec_command (plugin, NULL, NULL, arguments);
+        plugin->exec_command (plugin, NULL, NULL, argv[2]);
+        plugin->exec_command (plugin, NULL, NULL, argv[2]);
     }
     return PLUGIN_RC_OK;
 }
