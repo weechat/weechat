@@ -328,15 +328,14 @@ gui_main_end ()
     while (gui_panels)
         gui_panel_free (gui_panels);
 
-    /* delete all buffers */
-    gui_window_merge_all (gui_current_window);
-    while (gui_buffers)
-      gui_buffer_free (gui_buffers, 0);
-    
     /* delete all windows */
     while (gui_windows)
         gui_window_free (gui_windows);
     gui_window_tree_free (&gui_windows_tree);
+
+    /* delete all buffers */
+    while (gui_buffers)
+        gui_buffer_free (gui_buffers, 0);
     
     /* delete global history */
     history_global_free ();

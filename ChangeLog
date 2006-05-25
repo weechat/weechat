@@ -3,6 +3,9 @@ WeeChat - Wee Enhanced Environment for Chat
 
 ChangeLog - 2006-05-25
 
+Version 0.2.0 (under dev!):
+   * fixed random crash at exit (/quit or /upgrade) with splited windows
+
 Version 0.1.9 (2006-05-25):
    * fixed /squery command (message sent to server, now ok with # args > 2)
    * fixed /alias command (with an alias name, display content)
