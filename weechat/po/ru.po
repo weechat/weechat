@@ -2047,7 +2047,7 @@ msgstr " послан"
 
 #: src/irc/irc-dcc.c:416
 msgid " received from "
-msgstr " получен от"
+msgstr " получен от "
 
 #: src/irc/irc-dcc.c:421
 msgid "OK"
