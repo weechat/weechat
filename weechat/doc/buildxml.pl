@@ -49,13 +49,13 @@ $warning_do_not_edit = "\n<!-- ********* WARNING! *********\n\n"
 foreach $lng (@all_lang)
 {
     create_commands ($lng, $all_encodings{$lng},
-                     "weechat-curses -w | tail +3", "weechat_commands");
+                     "weechat-curses -w | sed 1,2d", "weechat_commands");
     create_commands ($lng, $all_encodings{$lng},
-                     "weechat-curses -i | tail +3", "irc_commands");
+                     "weechat-curses -i | sed 1,2d", "irc_commands");
     create_key_func ($lng, $all_encodings{$lng},
-                     "weechat-curses -f | tail +3", "key_functions");
+                     "weechat-curses -f | sed 1,2d", "key_functions");
     create_config ($lng, $all_encodings{$lng},
-                   "weechat-curses -c | tail +3", "config");
+                   "weechat-curses -c | sed 1,2d", "config");
     print "\n";
 }
 
