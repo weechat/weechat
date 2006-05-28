@@ -179,7 +179,7 @@ msgstr "%s не могу расположить новый канал"
 
 #: src/irc/irc-commands.c:34
 msgid "find information about the administrator of the server"
-msgstr "найти информацио об администрации сервера"
+msgstr "найти информацию об администрации сервера"
 
 #: src/irc/irc-commands.c:35 src/irc/irc-commands.c:84
 #: src/irc/irc-commands.c:161 src/irc/irc-commands.c:254
