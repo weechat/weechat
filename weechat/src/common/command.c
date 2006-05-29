@@ -2814,21 +2814,18 @@ weechat_cmd_plugin (t_irc_server *server, t_irc_channel *channel,
 }
 
 /*
- * weechat_cmd_save: save options to disk
+ * weechat_cmd_save: save WeeChat and plugins options to disk
  */
 
 int
 weechat_cmd_save (t_irc_server *server, t_irc_channel *channel,
                   int argc, char **argv)
 {
-    int rc;
-    
     /* make gcc happy */
     (void) server;
     (void) channel;
     
-    rc = config_write ((argc == 1) ? argv[0] : NULL);
-    if (rc == 0)
+    if (config_write ((argc == 1) ? argv[0] : NULL) == 0)
     {
         irc_display_prefix (NULL, NULL, PREFIX_INFO);
         gui_printf_nolog (NULL, _("Configuration file saved\n"));
@@ -2839,7 +2836,22 @@ weechat_cmd_save (t_irc_server *server, t_irc_channel *channel,
         gui_printf_nolog (NULL, _("%s failed to save configuration file\n"),
                           WEECHAT_ERROR);
     }
-    return rc;
+
+#ifdef PLUGINS
+    if (plugin_config_write () == 0)
+    {
+        irc_display_prefix (NULL, NULL, PREFIX_INFO);
+        gui_printf_nolog (NULL, _("Plugins options saved\n"));
+    }
+    else
+    {
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        gui_printf_nolog (NULL, _("%s failed to save plugins options\n"),
+                          WEECHAT_ERROR);
+    }
+#endif
+    
+    return 0;
 }
 
 /*
