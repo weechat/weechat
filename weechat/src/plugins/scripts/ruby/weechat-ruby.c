@@ -224,6 +224,8 @@ weechat_ruby_register (VALUE class, VALUE name, VALUE version,
     
     /* make gcc happy */
     (void) class;
+
+    ruby_current_script = NULL;
     
     if (NIL_P (name) || NIL_P (version) || NIL_P (shutdown_func) || NIL_P (description))
     {

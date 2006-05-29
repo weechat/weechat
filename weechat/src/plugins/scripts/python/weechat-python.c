@@ -172,6 +172,8 @@ weechat_python_register (PyObject *self, PyObject *args)
     
     /* make gcc happy */
     (void) self;
+
+    python_current_script = NULL;
     
     name = NULL;
     version = NULL;

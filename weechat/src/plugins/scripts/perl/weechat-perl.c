@@ -247,6 +247,8 @@ static XS (XS_weechat_register)
     /* make gcc happy */
     (void) items;
     (void) cv;
+
+    perl_current_script = NULL;
     
     if (items != 4)
     {

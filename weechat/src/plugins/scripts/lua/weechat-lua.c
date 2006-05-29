@@ -149,6 +149,8 @@ weechat_lua_register (lua_State *L)
     
     /* make gcc happy */
     (void) L;
+
+    lua_current_script = NULL;
     
     name = NULL;
     version = NULL;
