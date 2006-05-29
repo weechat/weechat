@@ -1679,6 +1679,8 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
                                           ptr_handler->handler_args);
                 }
             }
+            if (!handler_found)
+                plugin->print_server (plugin, "  (none)");
             break;
         case 1:
             if (plugin->ascii_strcasecmp (plugin, argv[0], "autoload") == 0)
