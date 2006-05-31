@@ -58,6 +58,6 @@ install-data-hook:
 # clean
 
 clean-local:
-	-rm -f *.html *.pdf *.txt date.xml
+	-rm -f $(BOOK).html $(BOOK).pdf $(BOOK).txt date.xml
 	-rm -rf html/ html1/
 	-rm -f html-stamp html1-stamp
