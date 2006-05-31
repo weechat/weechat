@@ -18,8 +18,9 @@
 LANGCODE = fr
 BOOK = weechat.$(LANGCODE)
 BOOK_INCLUDE = weechat_commands.xml irc_commands.xml key_functions.xml config.xml
+QUICKSTART = weechat_quickstart.fr.txt
 
-EXTRA_DIST = $(BOOK).xml $(BOOK_INCLUDE)
+EXTRA_DIST = $(BOOK).xml $(BOOK_INCLUDE) $(QUICKSTART)
 
 docdir = $(datadir)/doc/$(PACKAGE)
 
@@ -52,6 +53,7 @@ html1-stamp: $(BOOK).xml $(BOOK_INCLUDE) ../weechat-html-one.xsl ../weechat-doc.
 install-data-hook:
 	$(mkinstalldirs) $(DESTDIR)$(docdir)/html/$(LANGCODE)/
 	$(INSTALL_DATA) html/* $(DESTDIR)$(docdir)/html/$(LANGCODE)/
+	$(INSTALL_DATA) $(QUICKSTART) $(DESTDIR)$(docdir)/
 
 # clean
 

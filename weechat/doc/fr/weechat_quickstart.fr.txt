@@ -1,0 +1,110 @@
+Guide de démarrage rapide WeeChat (version française)
+=================================
+
+1. Démarrer weechat
+
+     Selon l'interface choisie, vous devez lancer :
+     - weechat-curses pour l'interface Curses
+     - weechat-gtk pour l'interface Gtk (en développement)
+     - weechat-qt pour l'interface Qt (non développée)
+     - weechat-wxwidgets pour l'interface WxWidgets (non développée)
+
+2. Aide en ligne / options
+
+     WeeChat dispose d'aide pour toutes les commandes, tapez simplement /help
+     Pour avoir de l'aide sur une commande, tapez /help commande
+
+     Pour modifier des options, utilisez /set option = valeur
+     Vous pouvez utiliser /set avec un nom partiel d'option (affiche alors
+     les options contenant ces lettres), ou avec un nom complet d'option
+     sans valeur (pour voir l'aide complète de l'option).
+
+     Note importante: les options sont sauvées lorsque WeeChat quitte (ou avec
+     la commande "/save"). N'éditez PAS le fichier de configuration pendant que
+     WeeChat tourne, car WeeChat peut écrire ce fichier à tout moment, et il
+     n'est pas possible de le recharger.
+     Pour changer toute option, utilisez la commande "/set", WeeChat prend en
+     compte immédiatement les nouvelles valeurs.
+
+3. Créer un serveur
+
+     Par exemple irc.quakenet.org, port 6667:
+       /server quakenet irc.quakenet.org 6667
+     (/help server pour l'aide complète sur la commande)
+
+4. Définir les options du serveur
+   
+     Pseudos :
+       /set quakenet.server_nick1 = "mynick"
+       /set quakenet.server_nick2 = "mynick2"
+       /set quakenet.server_nick3 = "mynick3"
+
+     Nom d'utilisateur/réel :
+       /set quakenet.server_username = "Mon nom d'utilisateur"
+       /set quakenet.server_realname = "Mon nom réel"
+
+     Connexion auto au serveur :
+       /set quakenet.server_autoconnect = on
+
+     Rejoindre automatiquement des canaux :
+       /set quakenet.server_autojoin = "#canal1,#canal2"
+
+     Autres options :
+       Vous pouvez voir les options du serveur et les valeurs avec /set quakenet
+       Pour modifier une option, utilisez /set quakenet.server_option = valeur
+
+5. Se connecter au serveur et rejoindre les canaux :
+
+     /connect quakenet
+
+6. Rejoindre/quittre les canaux
+
+     Joindre un canal :
+       /join #channel
+     Quitter un canal :
+       /part [message de fin]
+     Quitter un canal et fermer le tampon :
+       /close [message de fin]
+     (/close est un alias sur /buffer close)
+
+7. Gérer les tampons/fenêtres
+
+     Vous pouvez gérer les tampons avec la commande "/buffer" et les fenêtres
+     avec la commande "/window".
+     Par exemple, pour découper verticalement l'écran en une petite fenêtre
+     (1/3 de la largeur) et une large (2/3 de la largeur), utilisez la commande
+       /window splitv 33
+
+8. Gérer les raccourcis clavier
+
+     Selon votre clavier et vos besoins, vous pouvez associer n'importe quelle
+     touche à une commande avec la commande "/key".
+     Une touche utile est meta-k (alt-k) pour trouver le code des touches.
+
+     Par exemple, pour associer meta-y (alt-y) à la commande "/buffer close" :
+       /key (pressez meta-k) (pressez meta-y) /buffer close
+     Vous aurez une ligne de commande qui ressemble à ceci :
+       /key meta-y /buffer close
+
+9. Extensions/scripts
+
+     Sur certaines distributions comme Debian, les extensions sont disponibles
+     via un paquet séparé (par exemple weechat-plugins).
+     Les extensions sont automatiquement chargées lorsqu'elles sont trouvées.
+     Plusieurs extensions/scripts sont disponibles pour WeeChat, voir ici :
+       http://weechat.flashtux.org/plugins.php
+     Merci de regarder la documentation WeeChat pour charger/décharget des
+     extensions ou des scripts.
+
+10. Plus de documentation
+
+     Vous pouvez maintenant utiliser WeeChat et lire la FAQ/documentation pour
+     toute autre question :
+       http://weechat.flashtux.org/faq.php
+       http://weechat.flashtux.org/doc.php
+
+     Bon WeeChat !
+
+--
+(c) 2006-05-31, écrit par FlashCode <flashcode@flashtux.org>
+Ce document fait partie de WeeChat et est distribué sous license GPL.
