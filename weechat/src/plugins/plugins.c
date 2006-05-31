@@ -752,7 +752,7 @@ plugin_load (char *filename)
     if (!full_name)
         return NULL;
     
-    handle = dlopen (full_name, RTLD_GLOBAL | RTLD_NOW);
+    handle = dlopen (full_name, RTLD_LOCAL | RTLD_NOW);
     if (!handle)
     {
         irc_display_prefix (NULL, NULL, PREFIX_ERROR);
