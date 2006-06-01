@@ -64,6 +64,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/%{name}-curses
 %{_libdir}/%{name}/plugins/*
 %{_docdir}/%{name}/html/*
+%{_docdir}/%{name}/weechat_quickstart*
 
 %changelog
 * Thu May 25 2006 FlashCode <flashcode@flashtux.org> 0.1.9-1
