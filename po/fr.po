@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.2.0-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2006-05-30 00:56+0200\n"
-"PO-Revision-Date: 2006-05-30 00:57+0200\n"
+"PO-Revision-Date: 2006-06-01 19:48+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1707,7 +1707,7 @@ msgstr "supprime l'opérateur local"
 
 #: src/irc/irc-recv.c:1166
 msgid "sets server notices"
-msgstr "acvite les notices du serveur"
+msgstr "active les notices du serveur"
 
 #: src/irc/irc-recv.c:1167
 msgid "removes server notices"
