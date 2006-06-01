@@ -1,10 +1,9 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-05-31
+ChangeLog - 2006-05-01
 
 Version 0.2.0 (under dev!):
-   * fixed plugins symbol problem (removed global flag when loading library)
    * command /save now writes plugins options (~/.weechat/plugins.rc)
    * fixed crash with "register" function in plugin scripts (bug #16701)
    * fixed random crash at exit (/quit or /upgrade) with splited windows
