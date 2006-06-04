@@ -618,7 +618,7 @@ weechat_plugin_get_config_str_value (t_config_option *option, void *value)
             return strdup (buf_temp);
             break;
         case OPTION_TYPE_INT_WITH_STRING:
-            return option->array_values[*((int *)value)];
+            return strdup (option->array_values[*((int *)value)]);
             break;
         case OPTION_TYPE_COLOR:
             color_name = gui_color_get_name (*((int *)value));
