@@ -625,6 +625,7 @@ AC_OUTPUT([Makefile
            doc/en/Makefile
            doc/fr/Makefile
            doc/de/Makefile
+           doc/ru/Makefile
            src/Makefile
            src/common/Makefile
            src/irc/Makefile

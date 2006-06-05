@@ -15,8 +15,14 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-SUBDIRS = en fr de ru
+LANGCODE = ru
+QUICKSTART = weechat_quickstart.$(LANGCODE).txt
 
-man_MANS = weechat-curses.1
+EXTRA_DIST = $(QUICKSTART)
 
-EXTRA_DIST = $(man_MANS) weechat-doc.css weechat-html-one.xsl weechat-html.xsl
+docdir = $(datadir)/doc/$(PACKAGE)
+
+# install docs
+
+install-data-hook:
+	$(INSTALL_DATA) $(QUICKSTART) $(DESTDIR)$(docdir)/
