@@ -2811,11 +2811,11 @@ irc_cmd_recv_topic (t_irc_server *server, char *host, char *nick, char *argument
 }
 
 /*
- * irc_cmd_recv_004: '004' command (connected to irc server)
+ * irc_cmd_recv_001: '001' command (connected to irc server)
  */
 
 int
-irc_cmd_recv_004 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_cmd_recv_001 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos;
     char **commands, **ptr;
