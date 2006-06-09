@@ -16,48 +16,13 @@
 #
 
 LANGCODE = pl
-BOOK = weechat.$(LANGCODE)
-BOOK_INCLUDE = weechat_commands.xml irc_commands.xml key_functions.xml config.xml
 QUICKSTART = weechat_quickstart.$(LANGCODE).txt
 
-EXTRA_DIST = $(BOOK).xml $(BOOK_INCLUDE) $(QUICKSTART)
+EXTRA_DIST = $(QUICKSTART)
 
 docdir = $(datadir)/doc/$(PACKAGE)
-
-all-local: html-stamp
-
-# HTML output with chunks (many pages)
-
-html: html-stamp
-
-html-stamp: $(BOOK).xml $(BOOK_INCLUDE) ../weechat-html.xsl ../weechat-doc.css
-	echo "<pubdate>`date -R`</pubdate>" >date.xml
-	mkdir -p html/
-	xsltproc -o html/ ../weechat-html.xsl $(BOOK).xml || true
-	cp ../weechat-doc.css html/
-	touch html-stamp
-
-# HTML output, all in one page
-
-html1: html1-stamp
-
-html1-stamp: $(BOOK).xml $(BOOK_INCLUDE) ../weechat-html-one.xsl ../weechat-doc.css
-	echo "<pubdate>`date -R`</pubdate>" >date.xml
-	mkdir -p html1/
-	xsltproc -o html1/$(BOOK).html ../weechat-html-one.xsl $(BOOK).xml || true
-	cp ../weechat-doc.css html1/
-	touch html1-stamp
 
 # install docs
 
 install-data-hook:
-	$(mkinstalldirs) $(DESTDIR)$(docdir)/html/$(LANGCODE)/
-	$(INSTALL_DATA) html/* $(DESTDIR)$(docdir)/html/$(LANGCODE)/
 	$(INSTALL_DATA) $(QUICKSTART) $(DESTDIR)$(docdir)/
-
-# clean
-
-clean-local:
-	-rm -f $(BOOK).html $(BOOK).pdf $(BOOK).txt date.xml
-	-rm -rf html/ html1/
-	-rm -f html-stamp html1-stamp
