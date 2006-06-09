@@ -11,17 +11,17 @@ Weechat szybki start (wersja polska)
 
 2. Pomoc online / opcje
 
-	Weechat posiada polecenie pomocy którego mo¿na u¿yæ dla ka¿dej dostêpnej opcji, wystarczy wpisaæ /help
+	Weechat posiada polecenie pomocy, którego mo¿na u¿yæ dla ka¿dej dostêpnej opcji, wystarczy wpisaæ /help
 	Aby otrzymaæ pomoc odno¶nie komendy, wpisz /help <komenda>
 
 	Aby konfigurowaæ  opcje nale¿y wpisaæ /set <opcja> = <warto¶æ>
-	Mo¿esz wpisaæ /set <opcja> z nie pe³na nazw± opcji (poka¿e to opcje zawieraj±ce wpisany ci±g znaków),
-	lub z ca³a nazwa opcji bez warto¶ci (poka¿e sie wtedy ca³a pomoc odno¶nie opcji).
+	Mo¿esz wpisaæ /set <opcja> z nie pe³n± nazw± opcji (poka¿e to opcje zawieraj±ce wpisany ci±g znaków),
+	lub z ca³± nazw± opcji bez warto¶ci (poka¿e sie wtedy ca³a pomoc odno¶nie opcji).
 
 	Uwaga: ustawienia s± zapamiêtywane podczas wy³±czania WeeChata (albo po wpisaniu /save )
 	NIE EDYTUJ pliku konfiguracyjnego WeeChata podczas pracy programu, poniewa¿ WeeChat mo¿e nadpisaæ
-	ten plik w ka¿dej chwili, i nie bêdzie mo¿liwo¶ci odzyskania ustawieñ.
-	Aby zmieniæ ka¿de z ustawieñ u¿ywaj komendy "/set", WeeChat po jej u¿yciu od razu zacznie korzystaæ z nowych
+	ten plik w ka¿dej chwili i nie bêdzie mo¿liwo¶ci odzyskania ustawieñ.
+	Aby zmieniæ ka¿de z ustawieñ, u¿ywaj komendy "/set", WeeChat po jej u¿yciu od razu zacznie korzystaæ z nowych
 	parametrów.
 
 3. Dodawanie serwerów
@@ -93,10 +93,10 @@ Weechat szybki start (wersja polska)
 	Wtyczki s± automatycznie ³adowane przy starcie.
 	Dodatkowe skrypty i wtyczki do WeeChata dostêpne s± na:
 		http://weechat.flashtux.org/plugins.php
-	Zajrzyj do dokumentacji WeeChata aby dowiedzieæ sie jak l±dowaæ i wy³adowaæ pluginy i skrypty:
+	Zajrzyj do dokumentacji WeeChata, aby dowiedzieæ sie jak ladowaæ i wy³adowaæ wtyczki i skrypty:
 		http://weechat.flashtux.org/doc.php
 
-10. More documentation
+10. Dokumentacja szczegó³owa
 
 	Wiesz juz jak w podstawowy sposób u¿ywaæ WeeChata, aby dowiedzieæ sie wiêcej poczytaj dokumentacjê.
 		http://weechat.flashtux.org/faq.php
