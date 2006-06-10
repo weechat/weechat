@@ -1449,9 +1449,10 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                 if (CHANNEL(buffer)
                     && (CHANNEL(buffer)->type == CHANNEL_TYPE_DCC_CHAT))
                 {
+                    ptr_server = SERVER(buffer);
                     ptr_channel = CHANNEL(buffer);
                     gui_buffer_free (ptr_channel->buffer, 1);
-                    channel_free (SERVER(buffer), ptr_channel);
+                    channel_free (ptr_server, ptr_channel);
                     gui_status_draw (gui_current_window->buffer, 1);
                     gui_input_draw (gui_current_window->buffer, 1);
                 }

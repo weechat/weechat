@@ -345,6 +345,9 @@ dcc_free (t_irc_dcc *ptr_dcc)
 {
     t_irc_dcc *new_dcc_list;
     
+    if (!ptr_dcc)
+        return;
+    
     /* DCC CHAT with channel => remove channel
        (to prevent channel from becoming standard pv) */
     if (ptr_dcc->channel)
@@ -354,7 +357,8 @@ dcc_free (t_irc_dcc *ptr_dcc)
             || (DCC_ENDED(((t_irc_dcc *)(ptr_dcc->channel->dcc_chat))->status)))
         {
             gui_buffer_free (ptr_dcc->channel->buffer, 1);
-            channel_free (ptr_dcc->server, ptr_dcc->channel);
+            if (ptr_dcc->channel)
+                channel_free (ptr_dcc->server, ptr_dcc->channel);
         }
     }
 

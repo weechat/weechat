@@ -95,6 +95,9 @@ channel_free (t_irc_server *server, t_irc_channel *channel)
 {
     t_irc_channel *new_channels;
     
+    if (!server || !channel)
+        return;
+    
     /* close DCC CHAT */
     if ((t_irc_dcc *)(channel->dcc_chat) &&
         (!DCC_ENDED(((t_irc_dcc *)(channel->dcc_chat))->status)))

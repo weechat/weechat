@@ -443,8 +443,8 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
         gui_buffer_raw_data = NULL;
 
     /* purge DCC chat using this buffer */
-    if (CHANNEL(buffer))
-        dcc_chat_remove_channel (CHANNEL(buffer));
+    //if (CHANNEL(buffer))
+    //    dcc_chat_remove_channel (CHANNEL(buffer));
     
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)

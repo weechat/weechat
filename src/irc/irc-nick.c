@@ -267,7 +267,10 @@ void
 nick_free (t_irc_channel *channel, t_irc_nick *nick)
 {
     t_irc_nick *new_nicks;
-
+    
+    if (!channel || !nick)
+        return;
+    
     /* remove nick from queue */
     if (channel->last_nick == nick)
         channel->last_nick = nick->prev_nick;
@@ -300,6 +303,9 @@ nick_free (t_irc_channel *channel, t_irc_nick *nick)
 void
 nick_free_all (t_irc_channel *channel)
 {
+    if (!channel)
+        return;
+    
     /* remove all nicks for the channel */
     while (channel->nicks)
         nick_free (channel, channel->nicks);

@@ -283,6 +283,9 @@ server_alloc ()
 void
 server_destroy (t_irc_server *server)
 {
+    if (!server)
+        return;
+    
     /* free data */
     if (server->name)
         free (server->name);
@@ -333,6 +336,9 @@ server_free (t_irc_server *server)
 {
     t_irc_server *new_irc_servers;
 
+    if (!server)
+        return;
+    
     /* close any opened channel/private */
     while (server->channels)
         channel_free (server, server->channels);
