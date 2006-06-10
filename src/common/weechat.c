@@ -693,6 +693,7 @@ weechat_create_home_dirs ()
 {
     char *ptr_home;
     int dir_length;
+    struct stat statinfo;
 
     if (!weechat_home)
     {
@@ -714,6 +715,17 @@ weechat_create_home_dirs ()
         }
         snprintf (weechat_home, dir_length, "%s%s.weechat", ptr_home,
                   DIR_SEPARATOR);
+    }
+
+    /* if home already exists, it has to be a directory */
+    if (stat (weechat_home, &statinfo) == 0)
+    {
+        if (!S_ISDIR (statinfo.st_mode))
+        {
+            fprintf (stderr, _("%s home (%s) is not a directory\n"),
+                     WEECHAT_ERROR, weechat_home);
+            weechat_shutdown (EXIT_FAILURE, 0);
+        }
     }
     
     /* create home directory; error is fatal */
