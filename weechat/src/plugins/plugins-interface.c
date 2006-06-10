@@ -482,7 +482,8 @@ weechat_plugin_get_info (t_weechat_plugin *plugin, char *info, char *server)
     }
     else if (ascii_strcasecmp (info, "channel") == 0)
     {
-        if (BUFFER_IS_CHANNEL(gui_current_window->buffer))
+        if (BUFFER_IS_CHANNEL(gui_current_window->buffer)
+            || BUFFER_IS_PRIVATE(gui_current_window->buffer))
             return strdup (CHANNEL(gui_current_window->buffer)->name);
     }
     else if (ascii_strcasecmp (info, "server") == 0)

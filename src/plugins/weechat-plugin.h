@@ -36,6 +36,23 @@
                                      | PLUGIN_RC_OK_IGNORE_PLUGINS)
                                         /* ignore WeeChat and other plugins    */
 
+#define WEECHAT_IRC_COLOR_WHITE        0
+#define WEECHAT_IRC_COLOR_BLACK        1
+#define WEECHAT_IRC_COLOR_BLUE         2
+#define WEECHAT_IRC_COLOR_GREEN        3
+#define WEECHAT_IRC_COLOR_LIGHTRED     4
+#define WEECHAT_IRC_COLOR_RED          5
+#define WEECHAT_IRC_COLOR_MAGENTA      6
+#define WEECHAT_IRC_COLOR_BROWN        7
+#define WEECHAT_IRC_COLOR_YELLOW       8
+#define WEECHAT_IRC_COLOR_LIGHTGREEN   9
+#define WEECHAT_IRC_COLOR_CYAN         10
+#define WEECHAT_IRC_COLOR_LIGHTCYAN    11
+#define WEECHAT_IRC_COLOR_LIGHTBLUE    12
+#define WEECHAT_IRC_COLOR_LIGHTMAGENTA 13
+#define WEECHAT_IRC_COLOR_GRAY         14
+#define WEECHAT_IRC_COLOR_LIGHTGRAY    15
+
 typedef struct t_plugin_dcc_info t_plugin_dcc_info;
 
 struct t_plugin_dcc_info
