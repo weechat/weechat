@@ -671,6 +671,7 @@ void
 gui_exec_action_dcc (t_gui_window *window, char *actions)
 {
     t_irc_dcc *dcc_selected, *ptr_dcc, *ptr_dcc_next;
+    t_gui_window *ptr_win;
     t_gui_buffer *ptr_buffer;
     
     while (actions[0])
@@ -722,7 +723,13 @@ gui_exec_action_dcc (t_gui_window *window, char *actions)
                     if (gui_buffer_before_dcc)
                     {
                         ptr_buffer = window->buffer;
-                        gui_window_switch_to_buffer (window, gui_buffer_before_dcc);
+                        for (ptr_win = gui_windows; ptr_win;
+                             ptr_win = ptr_win->next_window)
+                        {
+                            if (ptr_win->buffer == ptr_buffer)
+                                gui_window_switch_to_buffer (ptr_win,
+                                                             gui_buffer_before_dcc);
+                        }
                         gui_buffer_free (ptr_buffer, 0);
                     }
                     else
@@ -759,6 +766,7 @@ gui_exec_action_dcc (t_gui_window *window, char *actions)
 void
 gui_exec_action_raw_data (t_gui_window *window, char *actions)
 {
+    t_gui_window *ptr_win;
     t_gui_buffer *ptr_buffer;
     
     while (actions[0])
@@ -773,8 +781,13 @@ gui_exec_action_raw_data (t_gui_window *window, char *actions)
                     if (gui_buffer_before_raw_data)
                     {
                         ptr_buffer = window->buffer;
-                        gui_window_switch_to_buffer (window,
-                                                     gui_buffer_before_raw_data);
+                        for (ptr_win = gui_windows; ptr_win;
+                             ptr_win = ptr_win->next_window)
+                        {
+                            if (ptr_win->buffer == ptr_buffer)
+                                gui_window_switch_to_buffer (ptr_win,
+                                                             gui_buffer_before_raw_data);
+                        }
                         gui_buffer_free (ptr_buffer, 0);
                     }
                     else
