@@ -1504,6 +1504,48 @@ weechat_lua_get_nick_info  (lua_State *L)
     return 1;
 }
 
+/*
+ * weechat_lua_get_irc_color:
+ *          get the numeric value which identify an irc color by its name
+ */
+
+static int
+weechat_lua_get_irc_color (lua_State *L)
+{
+    const char *color;
+    int n;
+    
+    /* make gcc happy */
+    (void) L;
+     
+    if (!lua_current_script)
+    {
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to get irc color, "
+                                  "script not initialized");
+        lua_pushnumber (lua_current_interpreter, -1);
+	return 1;
+    }
+    
+    color = NULL;
+ 
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n != 1)
+    {
+	lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"get_irc_color\" function");
+        lua_pushnumber (lua_current_interpreter, -1);
+	return 1;
+    }
+
+    color = lua_tostring (lua_current_interpreter, -1);
+    
+    lua_pushnumber (lua_current_interpreter,
+		    lua_plugin->get_irc_color (lua_plugin, (char *) color));
+    return 1;
+}
 
 /*
  * Lua constant as functions
@@ -1587,6 +1629,7 @@ const struct luaL_reg weechat_lua_funcs[] = {
     { "get_server_info", weechat_lua_get_server_info},
     { "get_channel_info", weechat_lua_get_channel_info},
     { "get_nick_info", weechat_lua_get_nick_info},
+    { "get_irc_color", weechat_lua_get_irc_color},
     /* define constants as function which returns values */
     { "PLUGIN_RC_OK", weechat_lua_constant_plugin_rc_ok},
     { "PLUGIN_RC_KO", weechat_lua_constant_plugin_rc_ko},

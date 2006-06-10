@@ -1251,6 +1251,43 @@ weechat_python_get_nick_info (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_get_irc_color: 
+ *          get the numeric value which identify an irc color by its name
+ */
+
+static PyObject *
+weechat_python_get_irc_color (PyObject *self, PyObject *args)
+{
+    char *color;
+    
+    /* make gcc happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to get irc color, "
+                                     "script not initialized");
+        return Py_BuildValue ("i", -1);
+    }
+    
+    color = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &color))
+    {
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"get_irc_color\" function");
+        return Py_BuildValue ("i", -1);
+    }
+    
+    if (color)
+	return Py_BuildValue ("i", python_plugin->get_irc_color (python_plugin, color));
+    
+    return Py_BuildValue ("i", -1);
+}
+
+/*
  * Python subroutines
  */
 
@@ -1278,6 +1315,7 @@ PyMethodDef weechat_python_funcs[] = {
     { "get_server_info", weechat_python_get_server_info, METH_VARARGS, "" },
     { "get_channel_info", weechat_python_get_channel_info, METH_VARARGS, "" },
     { "get_nick_info", weechat_python_get_nick_info, METH_VARARGS, "" },
+    { "get_irc_color", weechat_python_get_irc_color, METH_VARARGS, "" },
     { NULL, NULL, 0, NULL }
 };
 

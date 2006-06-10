@@ -1491,6 +1491,44 @@ weechat_ruby_get_nick_info (VALUE class, VALUE server, VALUE channel)
 }
 
 /*
+ * weechat_ruby_get_irc_color: 
+ *          get the numeric value which identify an irc color by its name
+ */
+
+static VALUE
+weechat_ruby_get_irc_color (VALUE class, VALUE color)
+{
+    char *c_color;
+    
+    /* make gcc happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: unable to get irc color, "
+                                   "script not initialized");
+        return INT2FIX (-1);
+    }
+    
+    c_color = NULL;
+    
+    if (NIL_P (color))
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: wrong parameters for "
+                                   "\"get_irc_color\" function");
+        return INT2FIX (-1);
+    }
+    
+    Check_Type (color, T_STRING);
+    
+    c_color = STR2CSTR (color);
+    
+    return INT2FIX (ruby_plugin->get_irc_color (ruby_plugin, c_color));
+}
+
+/*
  * weechat_ruby_output : redirection for stdout and stderr
  */
 
@@ -1952,6 +1990,7 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     rb_define_module_function (mWeechat, "get_server_info", weechat_ruby_get_server_info, 0);
     rb_define_module_function (mWeechat, "get_channel_info", weechat_ruby_get_channel_info, 1);
     rb_define_module_function (mWeechat, "get_nick_info", weechat_ruby_get_nick_info, 2);
+    rb_define_module_function (mWeechat, "get_irc_color", weechat_ruby_get_irc_color, 1);
     
     /* redirect stdin and stdout */
     mWeechatOutputs = rb_define_module("WeechatOutputs");

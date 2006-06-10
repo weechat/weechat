@@ -1333,6 +1333,49 @@ static XS (XS_weechat_input_color)
 }
 
 /*
+ * weechat::get_irc_color:
+ *          get the numeric value which identify an irc color by its name
+ */
+
+static XS (XS_weechat_get_irc_color)
+{
+    char *color;
+    unsigned int integer;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to get irc color, "
+                                   "script not initialized");
+	XST_mIV (0, -1);
+	XSRETURN (1);
+    }
+    
+    if (items != 1)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"get_irc_info\" function");
+	XST_mIV (0, -1);
+	XSRETURN (1);
+    }
+    
+    color = SvPV (ST (0), integer);
+    if (color)
+    {
+	XST_mIV (0, perl_plugin->get_irc_color (perl_plugin, color));
+	XSRETURN (1);
+    }
+
+    XST_mIV (0, -1);
+    XSRETURN (-1);
+}
+
+/*
  * weechat_perl_xs_init: initialize subroutines
  */
 
@@ -1367,7 +1410,8 @@ weechat_perl_xs_init (pTHX)
     newXS ("weechat::get_channel_info", XS_weechat_get_channel_info, "weechat");
     newXS ("weechat::get_nick_info", XS_weechat_get_nick_info, "weechat");
     newXS ("weechat::input_color", XS_weechat_input_color, "weechat");
-    
+    newXS ("weechat::get_irc_color", XS_weechat_get_irc_color, "weechat");
+
     /* interface constants */
     stash = gv_stashpv ("weechat", TRUE);
     newCONSTSUB (stash, "weechat::PLUGIN_RC_KO", newSViv (PLUGIN_RC_KO));
