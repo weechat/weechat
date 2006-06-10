@@ -1090,3 +1090,25 @@ weechat_plugin_input_color (t_weechat_plugin *plugin, int color, int start, int 
         }
     }
 }
+
+/*
+ * weechat_plugin_get_irc_color: get number of IRC color name
+ */
+
+int
+weechat_plugin_get_irc_color (t_weechat_plugin *plugin, char *color_name)
+{
+    int i;
+
+    if (!plugin)
+        return -1;
+    
+    for (i = 0; i < GUI_NUM_IRC_COLORS; i++)
+    {
+        if (strcasecmp (plugins_irc_colors[i].name, color_name) == 0)
+            return i;
+    }
+    
+    /* color not found */
+    return -1;
+}

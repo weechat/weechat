@@ -26,11 +26,21 @@
 #include "../irc/irc.h"
 #include "../gui/gui.h"
 
+typedef struct t_plugin_irc_color t_plugin_irc_color;
+
+struct t_plugin_irc_color
+{
+    int number;
+    char *name;
+};
+
 typedef int (t_weechat_init_func) (t_weechat_plugin *);
 typedef void (t_weechat_end_func) (t_weechat_plugin *);
 
 extern t_weechat_plugin *weechat_plugins;
 extern t_weechat_plugin *last_weechat_plugin;
+
+extern t_plugin_irc_color plugins_irc_colors[GUI_NUM_IRC_COLORS];
 
 extern int plugin_find_server_channel (char *, char *,
                                        t_irc_server **, t_irc_channel **);

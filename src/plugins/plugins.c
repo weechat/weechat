@@ -46,6 +46,24 @@
 t_weechat_plugin *weechat_plugins = NULL;
 t_weechat_plugin *last_weechat_plugin = NULL;
 
+t_plugin_irc_color plugins_irc_colors[GUI_NUM_IRC_COLORS] =
+{ { /*  0 */ WEECHAT_IRC_COLOR_WHITE,        "white"        },
+  { /*  1 */ WEECHAT_IRC_COLOR_BLACK,        "black"        },
+  { /*  2 */ WEECHAT_IRC_COLOR_BLUE,         "blue"         },
+  { /*  3 */ WEECHAT_IRC_COLOR_GREEN,        "green"        },
+  { /*  4 */ WEECHAT_IRC_COLOR_LIGHTRED,     "lightred"     },
+  { /*  5 */ WEECHAT_IRC_COLOR_RED,          "red"          },
+  { /*  6 */ WEECHAT_IRC_COLOR_MAGENTA,      "magenta"      },
+  { /*  7 */ WEECHAT_IRC_COLOR_BROWN,        "brown"        },
+  { /*  8 */ WEECHAT_IRC_COLOR_YELLOW,       "yellow"       },
+  { /*  9 */ WEECHAT_IRC_COLOR_LIGHTGREEN,   "lightgreen"   },
+  { /* 10 */ WEECHAT_IRC_COLOR_CYAN,         "cyan"         },
+  { /* 11 */ WEECHAT_IRC_COLOR_LIGHTCYAN,    "lightcyan"    },
+  { /* 12 */ WEECHAT_IRC_COLOR_LIGHTBLUE,    "lightblue"    },
+  { /* 13 */ WEECHAT_IRC_COLOR_LIGHTMAGENTA, "lightmagenta" },
+  { /* 14 */ WEECHAT_IRC_COLOR_GRAY,         "gray"         },
+  { /* 15 */ WEECHAT_IRC_COLOR_LIGHTGRAY,    "lightgray"    }};
+
 
 /*
  * plugin_find_server_channel: find server/channel for command execution
@@ -861,6 +879,7 @@ plugin_load (char *filename)
 	new_plugin->get_nick_info = &weechat_plugin_get_nick_info;
 	new_plugin->free_nick_info = &weechat_plugin_free_nick_info;
         new_plugin->input_color = &weechat_plugin_input_color;
+        new_plugin->get_irc_color = &weechat_plugin_get_irc_color;
         
         /* handlers */
         new_plugin->handlers = NULL;

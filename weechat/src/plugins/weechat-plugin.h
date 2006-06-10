@@ -262,6 +262,8 @@ struct t_weechat_plugin
     void (*log) (t_weechat_plugin *, char *, char *, char *, ...);
     
     void (*input_color) (t_weechat_plugin *, int, int, int);
+
+    int (*get_irc_color) (t_weechat_plugin *, char *);
     
     /* WeeChat developers: ALWAYS add new functions at the end */
 };
@@ -318,5 +320,6 @@ extern void weechat_plugin_free_channel_info (t_weechat_plugin *, t_plugin_chann
 extern t_plugin_nick_info *weechat_plugin_get_nick_info (t_weechat_plugin *, char *, char *);
 extern void weechat_plugin_free_nick_info (t_weechat_plugin *, t_plugin_nick_info *);
 extern void weechat_plugin_input_color (t_weechat_plugin *, int, int, int);
+extern int weechat_plugin_get_irc_color (t_weechat_plugin *, char *);
 
 #endif /* weechat-plugin.h */
