@@ -45,7 +45,7 @@ speller_t *new_speller (void)
     if (!s)
     {
 	plugin->print (plugin, NULL, NULL, 
-		       "[%s] [ERROR] : unable to alloc memory.", plugin_name);
+		       "[%s] [ERROR] : unable to alloc memory.", _PLUGIN_NAME);
 	return NULL;
     }
     
@@ -114,7 +114,7 @@ int speller_list_add (char *lang)
     {
 	plugin->print (plugin, NULL, NULL,
 		       "[%s] [ERROR] : %s", 
-		       plugin_name, aspell_error_message (ret));
+		       _PLUGIN_NAME, aspell_error_message (ret));
 	delete_aspell_config (config);
 	delete_aspell_can_have_error (ret);
 	return 0;
@@ -190,7 +190,7 @@ config_t *new_config (void)
     if (!c)
     {
 	plugin->print (plugin, NULL, NULL, 
-		       "[%s] [ERROR] : unable to alloc memory.", plugin_name);
+		       "[%s] [ERROR] : unable to alloc memory.", _PLUGIN_NAME);
 	return NULL;
     }
 
@@ -408,7 +408,7 @@ void speller_list_dicts (void)
     el = aspell_dict_info_list_elements (l);    
     di = NULL;
     
-    plugin->print (plugin, NULL, NULL, "[%s] *** dictionnaries list :", plugin_name);
+    plugin->print (plugin, NULL, NULL, "[%s] *** dictionnaries list :", _PLUGIN_NAME);
 
     while (( di = aspell_dict_info_enumeration_next (el)))
     {
@@ -440,7 +440,7 @@ void speller_list_dicts (void)
 		snprintf (buffer, sizeof(buffer), "%-22s %s (%s)", di->name, lang, di->jargon);
 	}
 	
-	plugin->print (plugin, NULL, NULL, "[%s]  - %s", plugin_name, buffer);
+	plugin->print (plugin, NULL, NULL, "[%s]  - %s", _PLUGIN_NAME, buffer);
 	
 	if (lang)
 	    free (lang);
@@ -462,31 +462,31 @@ void config_show (void)
     if (!plugin_config)
 	plugin->print (plugin, NULL, NULL, 
 		       "[%s] [SHOW] *** No buffers with spellchecking enable",
-		       plugin_name);
+		       _PLUGIN_NAME);
     else
 	plugin->print (plugin, NULL, NULL, 
 		       "[%s] [SHOW] *** Spellchecking is active on the following buffers :",
-		       plugin_name);
+		       _PLUGIN_NAME);
 	
     for(p = plugin_config; p; p = p->next_config)
 	plugin->print (plugin, NULL, NULL,
 		       "[%s] [SHOW]    -> %s@%s with lang '%s'",
-		       plugin_name, p->channel, p->server, p->speller->lang);
+		       _PLUGIN_NAME, p->channel, p->server, p->speller->lang);
 
     plugin->print (plugin, NULL, NULL,
-		   "[%s] [SHOW] *** plugin options :", plugin_name);
+		   "[%s] [SHOW] *** plugin options :", _PLUGIN_NAME);
     plugin->print (plugin, NULL, NULL,
 		   "[%s] [SHOW]     -> word-size = %d", 
-		   plugin_name, plugin_options.word_size);
+		   _PLUGIN_NAME, plugin_options.word_size);
     plugin->print (plugin, NULL, NULL,
 		   "[%s] [SHOW]     ->     color = %s",
-		   plugin_name, plugin_options.color_name);
+		   _PLUGIN_NAME, plugin_options.color_name);
     plugin->print (plugin, NULL, NULL,
 		   plugin_options.check_sync == 1
 		   ? "[%s] [SHOW]     -> realtime spellchecking is enable"
 		   : "[%s] [SHOW]     -> asynchronous spellchecking is enable"
 		   , 
-		   plugin_name);
+		   _PLUGIN_NAME);
 }
 
 /*
@@ -515,11 +515,11 @@ int config_addword(char *word)
     if (ret)
 	plugin->print (plugin, NULL, NULL,
 		       "[%s] [ADD-WORD] word '%s' successfully added in your personnal dictionnary",
-		       plugin_name, word);
+		       _PLUGIN_NAME, word);
     else
 	plugin->print (plugin, NULL, NULL,
 		       "[%s] [ADD-WORD] an error occured while adding word '%s' in your personnal dict",
-		       plugin_name, word);
+		       _PLUGIN_NAME, word);
     
     if (server)
 	free (server);
@@ -540,22 +540,22 @@ void config_dump (void)
     if (!plugin_config)
 	plugin->print (plugin, NULL, NULL, 
 		       "[%s] [DEBUG] [CONFIG] no config",
-		       plugin_name);
+		       _PLUGIN_NAME);
 
     for(p = plugin_config; p; p = p->next_config)
 	plugin->print (plugin, NULL, NULL,
 		       "[%s] [DEBUG] [CONFIG] @%p server='%s' channel='%s' @speller=%p lang='%s' @p=%p @n=%p",
-		       plugin_name, p, p->server, p->channel, p->speller, p->speller->lang, p->prev_config, p->next_config);
+		       _PLUGIN_NAME, p, p->server, p->channel, p->speller, p->speller->lang, p->prev_config, p->next_config);
 
     if (!plugin_speller)
 	plugin->print (plugin, NULL, NULL, 
 		       "[%s] [DEBUG] [SPELLER] no speller",
-		       plugin_name);
+		       _PLUGIN_NAME);
     
     for(s = plugin_speller; s; s = s->next_speller)
 	plugin->print (plugin, NULL, NULL,
 		       "[%s] [DEBUG] [SPELLER] @%p lang='%s' refs=%d @engine=%p @p=%p @n=%p",
-		       plugin_name, s, s->lang, s->refs, s->speller, s->prev_speller, s->next_speller);
+		       _PLUGIN_NAME, s, s->lang, s->refs, s->speller, s->prev_speller, s->next_speller);
 }
 
 /*
@@ -570,7 +570,7 @@ void config_enable_for (char *server, char *channel, char *lang)
     {
 	plugin->print (plugin, NULL, NULL, 
 		       "[%s] [WARN] '%s' dictionary doesn't seems to be available on your system", 
-		       plugin_name, lang);
+		       _PLUGIN_NAME, lang);
        	return;
     }
     
@@ -587,7 +587,7 @@ void config_enable_for (char *server, char *channel, char *lang)
     {
 	plugin->print (plugin, NULL, NULL, 
 		       "[%s] [ERROR] enabling spell checking on %s@%s failed", 
-		       plugin_name, channel, server);
+		       _PLUGIN_NAME, channel, server);
 	return;
     }
 
@@ -618,7 +618,7 @@ void config_enable (char *lang)
     {
 	plugin->print (plugin, NULL, NULL, 
 		       "[%s] [WARN] you are not in a channel", 
-		       plugin_name);
+		       _PLUGIN_NAME);
 	return;
     }
     
@@ -626,7 +626,7 @@ void config_enable (char *lang)
 
     plugin->print (plugin, NULL, NULL, 
 		   "[%s] spell checking '%s' is now active on %s@%s",
-		   plugin_name, lang, channel, server);
+		   _PLUGIN_NAME, lang, channel, server);
     
     if (channel)
 	free (channel);
@@ -649,7 +649,7 @@ void config_disable (void)
     {
 	plugin->print (plugin, NULL, NULL, 
 		       "[%s] [WARN] you are not in a channel", 
-		       plugin_name, NULL, NULL);
+		       _PLUGIN_NAME, NULL, NULL);
 	return;
     }
     
@@ -658,7 +658,7 @@ void config_disable (void)
     {
 	plugin->print (plugin, NULL, NULL, 
 		       "[%s] [WARN] spell checking is not active on %s@%s", 
-		       plugin_name, channel, server);
+		       _PLUGIN_NAME, channel, server);
 	if (channel)
 	    free (channel);
 	if (server)
@@ -674,7 +674,7 @@ void config_disable (void)
     
     plugin->print (plugin, NULL, NULL, 
 		   "[%s] spell checking is now inactive on %s@%s",
-		   plugin_name, channel, server);
+		   _PLUGIN_NAME, channel, server);
     
     if (channel)
 	free (channel);
@@ -694,7 +694,7 @@ int config_set(char *option, char *value)
 	plugin_options.word_size = atoi ((value == NULL) ? "" : value);
 	plugin->print (plugin, NULL, NULL, 
 		       "[%s] [SET] setting %s = %d", 
-		       plugin_name, option, plugin_options.word_size);
+		       _PLUGIN_NAME, option, plugin_options.word_size);
     }
     else if (strcmp (option, "toggle-check-mode") == 0)
     {
@@ -703,7 +703,7 @@ int config_set(char *option, char *value)
 		       plugin_options.check_sync == 1
 		       ? "[%s] [SET] spellchecking is now set in realtime mode"
 		       : "[%s] [SET] spellchecking is now set in asynchronous mode",
-                       plugin_name, option);
+                       _PLUGIN_NAME, option);
     }
     else if (strcmp (option, "color") == 0)
     {
@@ -711,7 +711,7 @@ int config_set(char *option, char *value)
 	if (c == -1)
 	    plugin->print (plugin, NULL, NULL, 
 			   "[%s] [SET] setting %s = %s failed : color '%s' is unknown", 
-			   plugin_name, option, 
+			   _PLUGIN_NAME, option, 
 			   (value == NULL) ? "" : value,
 			   (value == NULL) ? "" : value);
 	else
@@ -722,7 +722,7 @@ int config_set(char *option, char *value)
 	    plugin_options.color_name = strdup (value);
 	    plugin->print (plugin, NULL, NULL, 
 			   "[%s] [SET] setting %s = %s",
-			   plugin_name, option, plugin_options.color_name);
+			   _PLUGIN_NAME, option, plugin_options.color_name);
 	}
     }
     else
@@ -805,7 +805,7 @@ int config_save (void)
 	}
     }
     
-    plugin->print (plugin, NULL, NULL, "[%s] [SAVE] configuration saved", plugin_name);
+    plugin->print (plugin, NULL, NULL, "[%s] [SAVE] configuration saved", _PLUGIN_NAME);
     return 1;
 }
 
@@ -863,7 +863,7 @@ int config_load(void)
 	plugin->free_exploded_string (plugin, servers_list);
     }
 
-    plugin->print (plugin, NULL, NULL, "[%s] [LOAD] configuration loaded", plugin_name);
+    plugin->print (plugin, NULL, NULL, "[%s] [LOAD] configuration loaded", _PLUGIN_NAME);
     return 1;
 }
 
@@ -882,7 +882,7 @@ int options_save(void)
     
     plugin->set_plugin_config (plugin, "color", plugin_options.color_name);
 
-    plugin->print (plugin, NULL, NULL, "[%s] [SAVE] options saved", plugin_name);
+    plugin->print (plugin, NULL, NULL, "[%s] [SAVE] options saved", _PLUGIN_NAME);
     return 1;
 }
 
@@ -901,18 +901,18 @@ int options_load(void)
 	free (buffer);
     }
     else
-	plugin_options.word_size = _OPTION_WORD_SIZE;
+	plugin_options.word_size = _PLUGIN_OPTION_WORD_SIZE;
     
     buffer = plugin->get_plugin_config (plugin, "check-sync");
     if (buffer)
     {	
 	plugin_options.check_sync = atoi (buffer);
 	if (plugin_options.check_sync != 0 && plugin_options.check_sync != 1)
-	    plugin_options.check_sync = _OPTION_CHECK_SYNC;
+	    plugin_options.check_sync = _PLUGIN_OPTION_CHECK_SYNC;
 	free (buffer);
     }
     else
-	plugin_options.check_sync = _OPTION_CHECK_SYNC;
+	plugin_options.check_sync = _PLUGIN_OPTION_CHECK_SYNC;
     
     
     buffer = plugin->get_plugin_config (plugin, "color");    
@@ -921,8 +921,8 @@ int options_load(void)
 	n = plugin->get_irc_color (plugin, buffer);
 	if (n == -1)
 	{
-	    plugin_options.color = plugin->get_irc_color (plugin, _OPTION_COLOR);
-	    plugin_options.color_name = strdup (_OPTION_COLOR);
+	    plugin_options.color = plugin->get_irc_color (plugin, _PLUGIN_OPTION_COLOR);
+	    plugin_options.color_name = strdup (_PLUGIN_OPTION_COLOR);
 	}
 	else 
 	{
@@ -932,11 +932,11 @@ int options_load(void)
 	free (buffer);
     }
     else {
-	plugin_options.color = plugin->get_irc_color (plugin, _OPTION_COLOR);
-	plugin_options.color_name = strdup (_OPTION_COLOR);
+	plugin_options.color = plugin->get_irc_color (plugin, _PLUGIN_OPTION_COLOR);
+	plugin_options.color_name = strdup (_PLUGIN_OPTION_COLOR);
     }
     
-    plugin->print (plugin, NULL, NULL, "[%s] [LOAD] options loaded", plugin_name);
+    plugin->print (plugin, NULL, NULL, "[%s] [LOAD] options loaded", _PLUGIN_NAME);
     return 1;
 }
 
@@ -1118,8 +1118,10 @@ int weechat_plugin_init (t_weechat_plugin *p)
 	      "           OPTION := { word-size SIZE | toogle-check-mode  | color COLOR }\n"
 	      "           word-size : minimum size for a word to be checked (default : %d)\n" 	      
 	      "   toggle-check-mode : switch between a realtime or an asynchronous checking\n"
-	      "               color : color of the mispelled words\n",
-	      _OPTION_WORD_SIZE);
+	      "               color : color of the mispelled words\n"
+	      "\n"
+	      " *NB : input line beginning with a '/' is not checked\n",
+	      _PLUGIN_OPTION_WORD_SIZE);
     
     plugin->cmd_handler_add (plugin, "aspell",
                              "Aspell Plugin configuration",
