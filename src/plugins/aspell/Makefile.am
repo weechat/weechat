@@ -21,6 +21,6 @@ libdir = ${weechat_libdir}/plugins
 
 lib_LTLIBRARIES = libaspell.la
 
-libaspell_la_SOURCES = weechat-aspell.c
+libaspell_la_SOURCES = weechat-aspell.h weechat-aspell.c
 libaspell_la_LDFLAGS = -module
 libaspell_la_LIBADD  = $(ASPELL_LFLAGS)
