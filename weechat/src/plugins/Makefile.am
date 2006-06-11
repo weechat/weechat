@@ -33,7 +33,11 @@ if PLUGIN_LUA
 script_dir = scripts
 endif
 
-SUBDIRS = $(script_dir)
+if PLUGIN_ASPELL
+aspell_dir = aspell
+endif
+
+SUBDIRS = $(script_dir) $(aspell_dir)
 
 noinst_LIBRARIES = lib_weechat_plugins.a
 

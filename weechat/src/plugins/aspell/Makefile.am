@@ -15,35 +15,12 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\"
+INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(ASPELL_CFLAGS) 
 
-if PLUGIN_PERL
-script_dir = scripts
-endif
+libdir = ${weechat_libdir}/plugins
 
-if PLUGIN_PYTHON
-script_dir = scripts
-endif
+lib_LTLIBRARIES = libaspell.la
 
-if PLUGIN_RUBY
-script_dir = scripts
-endif
-
-if PLUGIN_LUA
-script_dir = scripts
-endif
-
-if PLUGIN_ASPELL
-aspell_dir = aspell
-endif
-
-SUBDIRS = $(script_dir) $(aspell_dir)
-
-noinst_LIBRARIES = lib_weechat_plugins.a
-
-lib_weechat_plugins_a_SOURCES = weechat-plugin.h \
-				plugins.h \
-                                plugins.c \
-                                plugins-interface.c \
-                                plugins-config.h \
-                                plugins-config.c
+libaspell_la_SOURCES = weechat-aspell.c
+libaspell_la_LDFLAGS = -module
+libaspell_la_LIBADD  = $(ASPELL_LFLAGS)
