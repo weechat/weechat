@@ -948,15 +948,15 @@ int speller_command (t_weechat_plugin *p,
 		      char *handler_args, 
 		      void *handler_pointer)
 {
+    char helpcmd[32];
+    char **args;
+    int c, r;
+    
     /* make gcc happy */
     (void) p;
     (void) handler_args;
     (void) handler_pointer;
 
-    char helpcmd[32];
-    char **args;
-    int c, r;
-    
     snprintf(helpcmd, sizeof(helpcmd), "/help %s", plugin_command);
     r = 0;
 
@@ -1015,16 +1015,16 @@ int speller_command (t_weechat_plugin *p,
 int keyb_check (t_weechat_plugin *p, int argc, char **argv,
 		char *handler_args, void *handler_pointer)
 {
-    /* make gcc happy */
-    (void) p;
-    (void) handler_args;
-    (void) handler_pointer;
-
     char *server, *channel;
     config_t *c;
     char *input, *ptr_input, *pos_space;
     int count;
     
+    /* make gcc happy */
+    (void) p;
+    (void) handler_args;
+    (void) handler_pointer;
+
     channel = plugin->get_info (plugin, "channel", NULL);
     server = plugin->get_info (plugin, "server", NULL);
 
@@ -1141,11 +1141,11 @@ int weechat_plugin_init (t_weechat_plugin *p)
  */
 void weechat_plugin_end (t_weechat_plugin *p)
 {
-    /* make gcc happy */
-    (void) p;
-    
     speller_t *s, *t;
     config_t *c, *d;
+    
+    /* make gcc happy */
+    (void) p;
     
     options_save ();
     config_save ();
