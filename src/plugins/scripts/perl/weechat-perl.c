@@ -46,11 +46,11 @@ extern void boot_DynaLoader (pTHX_ CV* cv);
 
 #ifndef MULTIPLICITY
 #define PKG_NAME_PREFIX "WeechatPerlPackage"
-static PerlInterpreter *main_perl = NULL;
-int packnum = 0;
+static PerlInterpreter *perl_main = NULL;
+int perl_num = 0;
 #endif
 
-char *weechat_perl_code =
+char *perl_weechat_code =
 {
 #ifndef MULTIPLICITY
     "package WeechatPerlScriptLoader;"
@@ -1443,8 +1443,8 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
     perl_current_script = NULL;
 
 #ifndef MULTIPLICITY
-    snprintf(pkgname, sizeof(pkgname), "%s%d", PKG_NAME_PREFIX, packnum);
-    packnum++;
+    snprintf(pkgname, sizeof(pkgname), "%s%d", PKG_NAME_PREFIX, perl_num);
+    perl_num++;
     tempscript.interpreter = "WeechatPerlScriptLoader";
     eval = weechat_perl_exec (plugin, &tempscript, "weechat_perl_load_eval_file", filename, pkgname, "");
 #else
@@ -1464,7 +1464,7 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
     tempscript.interpreter = (PerlInterpreter *) perl_current_interpreter;
     perl_parse (perl_current_interpreter, weechat_perl_xs_init, 3, perl_args, NULL);
     
-    eval_pv (weechat_perl_code, TRUE);
+    eval_pv (perl_weechat_code, TRUE);
     eval = weechat_perl_exec (plugin, &tempscript, "weechat_perl_load_eval_file", filename, "", "");
 
     free (perl_current_script_filename);
@@ -1785,18 +1785,18 @@ weechat_plugin_init (t_weechat_plugin *plugin)
    
     plugin->print_server (plugin, "Loading Perl module \"weechat\" (without multiplicity)");
     
-    main_perl = perl_alloc ();
+    perl_main = perl_alloc ();
     
-    if (!main_perl)
+    if (!perl_main)
     {
         plugin->print_server (plugin,
                               "Perl error: unable to initialize Perl");
         return PLUGIN_RC_KO;
     }
     
-    perl_construct (main_perl);
-    perl_parse (main_perl, weechat_perl_xs_init, 3, perl_args, NULL);
-    eval_pv (weechat_perl_code, TRUE);
+    perl_construct (perl_main);
+    perl_parse (perl_main, weechat_perl_xs_init, 3, perl_args, NULL);
+    eval_pv (perl_weechat_code, TRUE);
 #endif
     
     plugin->cmd_handler_add (plugin, "perl",
@@ -1828,11 +1828,11 @@ weechat_plugin_end (t_weechat_plugin *plugin)
 
 #ifndef MULTIPLICITY
     /* free perl intepreter */
-    if (main_perl)
+    if (perl_main)
     {
-	perl_destruct (main_perl);
-	perl_free (main_perl);
-	main_perl = NULL;
+	perl_destruct (perl_main);
+	perl_free (perl_main);
+	perl_main = NULL;
     }
 #endif
     

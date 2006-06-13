@@ -43,10 +43,10 @@ t_plugin_script *ruby_scripts = NULL;
 t_plugin_script *ruby_current_script = NULL;
 char *ruby_current_script_filename = NULL;
 
-VALUE mWeechat, mWeechatOutputs;
+VALUE ruby_mWeechat, ruby_mWeechatOutputs;
 
 #define MOD_NAME_PREFIX "WeechatRubyModule"
-int modnum = 0;
+int ruby_num = 0;
 
 typedef struct protect_call_arg {
     VALUE recv;
@@ -1581,8 +1581,8 @@ weechat_ruby_load (t_weechat_plugin *plugin, char *filename)
     plugin->print_server (plugin, "Loading Ruby script \"%s\"", filename);
     ruby_current_script = NULL;
 
-    snprintf(modname, sizeof(modname), "%s%d", MOD_NAME_PREFIX, modnum);
-    modnum++;
+    snprintf(modname, sizeof(modname), "%s%d", MOD_NAME_PREFIX, ruby_num);
+    ruby_num++;
 
     curModule = rb_define_module(modname);
 
@@ -1962,42 +1962,42 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     ruby_init_loadpath ();
     ruby_script ("__weechat_plugin__");
     
-    mWeechat = rb_define_module("Weechat");
-    rb_define_const(mWeechat, "PLUGIN_RC_OK", INT2NUM(PLUGIN_RC_OK));
-    rb_define_const(mWeechat, "PLUGIN_RC_KO", INT2NUM(PLUGIN_RC_KO));
-    rb_define_const(mWeechat, "PLUGIN_RC_OK_IGNORE_WEECHAT", INT2NUM(PLUGIN_RC_OK_IGNORE_WEECHAT));
-    rb_define_const(mWeechat, "PLUGIN_RC_OK_IGNORE_PLUGINS", INT2NUM(PLUGIN_RC_OK_IGNORE_PLUGINS));
-    rb_define_const(mWeechat, "PLUGIN_RC_OK_IGNORE_ALL", INT2NUM(PLUGIN_RC_OK_IGNORE_ALL));    
-    rb_define_module_function (mWeechat, "register", weechat_ruby_register, 4);
-    rb_define_module_function (mWeechat, "print", weechat_ruby_print, -1);
-    rb_define_module_function (mWeechat, "print_infobar", weechat_ruby_print_infobar, 2);
-    rb_define_module_function (mWeechat, "remove_infobar", weechat_ruby_remove_infobar, -1);
-    rb_define_module_function (mWeechat, "log", weechat_ruby_log, -1);
-    rb_define_module_function (mWeechat, "command", weechat_ruby_command, -1);
-    rb_define_module_function (mWeechat, "add_message_handler", weechat_ruby_add_message_handler, 2);
-    rb_define_module_function (mWeechat, "add_command_handler", weechat_ruby_add_command_handler, -1);
-    rb_define_module_function (mWeechat, "add_timer_handler", weechat_ruby_add_timer_handler, 2);
-    rb_define_module_function (mWeechat, "add_keyboard_handler", weechat_ruby_add_keyboard_handler, 1);
-    rb_define_module_function (mWeechat, "remove_handler", weechat_ruby_remove_handler, 2);
-    rb_define_module_function (mWeechat, "remove_timer_handler", weechat_ruby_remove_timer_handler, 1);
-    rb_define_module_function (mWeechat, "remove_keyboard_handler", weechat_ruby_remove_keyboard_handler, 1);
-    rb_define_module_function (mWeechat, "get_info", weechat_ruby_get_info, -1);
-    rb_define_module_function (mWeechat, "get_dcc_info", weechat_ruby_get_dcc_info, 0);
-    rb_define_module_function (mWeechat, "get_config", weechat_ruby_get_config, 1);
-    rb_define_module_function (mWeechat, "set_config", weechat_ruby_set_config, 2);
-    rb_define_module_function (mWeechat, "get_plugin_config", weechat_ruby_get_plugin_config, 1);
-    rb_define_module_function (mWeechat, "set_plugin_config", weechat_ruby_set_plugin_config, 2);
-    rb_define_module_function (mWeechat, "get_server_info", weechat_ruby_get_server_info, 0);
-    rb_define_module_function (mWeechat, "get_channel_info", weechat_ruby_get_channel_info, 1);
-    rb_define_module_function (mWeechat, "get_nick_info", weechat_ruby_get_nick_info, 2);
-    rb_define_module_function (mWeechat, "get_irc_color", weechat_ruby_get_irc_color, 1);
+    ruby_mWeechat = rb_define_module("Weechat");
+    rb_define_const(ruby_mWeechat, "PLUGIN_RC_OK", INT2NUM(PLUGIN_RC_OK));
+    rb_define_const(ruby_mWeechat, "PLUGIN_RC_KO", INT2NUM(PLUGIN_RC_KO));
+    rb_define_const(ruby_mWeechat, "PLUGIN_RC_OK_IGNORE_WEECHAT", INT2NUM(PLUGIN_RC_OK_IGNORE_WEECHAT));
+    rb_define_const(ruby_mWeechat, "PLUGIN_RC_OK_IGNORE_PLUGINS", INT2NUM(PLUGIN_RC_OK_IGNORE_PLUGINS));
+    rb_define_const(ruby_mWeechat, "PLUGIN_RC_OK_IGNORE_ALL", INT2NUM(PLUGIN_RC_OK_IGNORE_ALL));    
+    rb_define_module_function (ruby_mWeechat, "register", weechat_ruby_register, 4);
+    rb_define_module_function (ruby_mWeechat, "print", weechat_ruby_print, -1);
+    rb_define_module_function (ruby_mWeechat, "print_infobar", weechat_ruby_print_infobar, 2);
+    rb_define_module_function (ruby_mWeechat, "remove_infobar", weechat_ruby_remove_infobar, -1);
+    rb_define_module_function (ruby_mWeechat, "log", weechat_ruby_log, -1);
+    rb_define_module_function (ruby_mWeechat, "command", weechat_ruby_command, -1);
+    rb_define_module_function (ruby_mWeechat, "add_message_handler", weechat_ruby_add_message_handler, 2);
+    rb_define_module_function (ruby_mWeechat, "add_command_handler", weechat_ruby_add_command_handler, -1);
+    rb_define_module_function (ruby_mWeechat, "add_timer_handler", weechat_ruby_add_timer_handler, 2);
+    rb_define_module_function (ruby_mWeechat, "add_keyboard_handler", weechat_ruby_add_keyboard_handler, 1);
+    rb_define_module_function (ruby_mWeechat, "remove_handler", weechat_ruby_remove_handler, 2);
+    rb_define_module_function (ruby_mWeechat, "remove_timer_handler", weechat_ruby_remove_timer_handler, 1);
+    rb_define_module_function (ruby_mWeechat, "remove_keyboard_handler", weechat_ruby_remove_keyboard_handler, 1);
+    rb_define_module_function (ruby_mWeechat, "get_info", weechat_ruby_get_info, -1);
+    rb_define_module_function (ruby_mWeechat, "get_dcc_info", weechat_ruby_get_dcc_info, 0);
+    rb_define_module_function (ruby_mWeechat, "get_config", weechat_ruby_get_config, 1);
+    rb_define_module_function (ruby_mWeechat, "set_config", weechat_ruby_set_config, 2);
+    rb_define_module_function (ruby_mWeechat, "get_plugin_config", weechat_ruby_get_plugin_config, 1);
+    rb_define_module_function (ruby_mWeechat, "set_plugin_config", weechat_ruby_set_plugin_config, 2);
+    rb_define_module_function (ruby_mWeechat, "get_server_info", weechat_ruby_get_server_info, 0);
+    rb_define_module_function (ruby_mWeechat, "get_channel_info", weechat_ruby_get_channel_info, 1);
+    rb_define_module_function (ruby_mWeechat, "get_nick_info", weechat_ruby_get_nick_info, 2);
+    rb_define_module_function (ruby_mWeechat, "get_irc_color", weechat_ruby_get_irc_color, 1);
     
     /* redirect stdin and stdout */
-    mWeechatOutputs = rb_define_module("WeechatOutputs");
-    rb_define_singleton_method(mWeechatOutputs, "write", weechat_ruby_output, 1);
-    rb_define_singleton_method(mWeechatOutputs, "puts", weechat_ruby_output, 1);
-    rb_define_singleton_method(mWeechatOutputs, "p", weechat_ruby_output, 1);
-    rb_define_singleton_method(mWeechatOutputs, "flush", weechat_ruby_output_flush, 0);
+    ruby_mWeechatOutputs = rb_define_module("WeechatOutputs");
+    rb_define_singleton_method(ruby_mWeechatOutputs, "write", weechat_ruby_output, 1);
+    rb_define_singleton_method(ruby_mWeechatOutputs, "puts", weechat_ruby_output, 1);
+    rb_define_singleton_method(ruby_mWeechatOutputs, "p", weechat_ruby_output, 1);
+    rb_define_singleton_method(ruby_mWeechatOutputs, "flush", weechat_ruby_output_flush, 0);
     
 
     plugin->cmd_handler_add (plugin, "ruby",
