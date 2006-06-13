@@ -38,33 +38,33 @@ char plugin_command[]     = _PLUGIN_COMMAND;
 #define _PLUGIN_OPTION_CHECK_SYNC 0
 #define _PLUGIN_OPTION_COLOR "red"
 
-typedef struct speller_t
+typedef struct aspell_speller_t
 {
     AspellSpeller *speller;
     char *lang;
     int refs;
 
-    struct speller_t *prev_speller;
-    struct speller_t *next_speller;
-} speller_t;
+    struct aspell_speller_t *prev_speller;
+    struct aspell_speller_t *next_speller;
+} aspell_speller_t;
 
-typedef struct config_t
+typedef struct aspell_config_t
 {
     char *server;
     char *channel;
-    speller_t *speller;
+    aspell_speller_t *speller;
     
-    struct config_t *prev_config;
-    struct config_t *next_config;
-} config_t;
+    struct aspell_config_t *prev_config;
+    struct aspell_config_t *next_config;
+} aspell_config_t;
 
-typedef struct options_t
+typedef struct aspell_options_t
 {
     int word_size;
     int check_sync;
     int color;
     char *color_name;
-} options_t;
+} aspell_options_t;
 
 typedef struct iso_langs_t
 {
