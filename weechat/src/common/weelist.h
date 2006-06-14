@@ -30,8 +30,9 @@ struct t_weelist
     t_weelist *next_weelist;
 };
 
-t_weelist *weelist_search (t_weelist *, char *);
-t_weelist *weelist_add (t_weelist **, t_weelist **, char *);
-void weelist_remove (t_weelist **, t_weelist **, t_weelist *);
+extern t_weelist *weelist_search (t_weelist *, char *);
+extern t_weelist *weelist_add (t_weelist **, t_weelist **, char *);
+extern void weelist_remove (t_weelist **, t_weelist **, t_weelist *);
+extern void weelist_print_log (t_weelist *, char *);
 
 #endif /* weelist.h */

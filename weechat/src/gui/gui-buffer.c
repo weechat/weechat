@@ -906,6 +906,7 @@ gui_buffer_print_log (t_gui_buffer *buffer)
     weechat_log_printf ("  input_buffer_length. . : %d\n",   buffer->input_buffer_length);
     weechat_log_printf ("  input_buffer_pos . . . : %d\n",   buffer->input_buffer_pos);
     weechat_log_printf ("  input_buffer_1st_disp. : %d\n",   buffer->input_buffer_1st_display);
+    weechat_log_printf ("  completion . . . . . . : 0x%X\n", &(buffer->completion));
     weechat_log_printf ("  history. . . . . . . . : 0x%X\n", buffer->history);
     weechat_log_printf ("  last_history . . . . . : 0x%X\n", buffer->last_history);
     weechat_log_printf ("  ptr_history. . . . . . : 0x%X\n", buffer->ptr_history);
@@ -935,4 +936,7 @@ gui_buffer_print_log (t_gui_buffer *buffer)
         
         ptr_line = ptr_line->next_line;
     }
+    
+    weechat_log_printf ("\n");
+    completion_print_log (&(buffer->completion));
 }

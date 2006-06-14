@@ -29,6 +29,7 @@
 
 #include "weechat.h"
 #include "weelist.h"
+#include "log.h"
 
 
 /*
@@ -162,4 +163,23 @@ weelist_remove (t_weelist **weelist, t_weelist **last_weelist, t_weelist *elemen
         free (element->data);
     free (element);
     *weelist = new_weelist;
+}
+
+/*
+ * weelist_print_log: print weelist in log (usually for crash dump)
+ */
+
+void
+weelist_print_log (t_weelist *weelist, char *name)
+{
+    t_weelist *ptr_weelist;
+    
+    for (ptr_weelist = weelist; ptr_weelist;
+         ptr_weelist = ptr_weelist->next_weelist)
+    {
+        weechat_log_printf ("[%s (addr:0x%X)]\n", name, ptr_weelist);
+        weechat_log_printf ("  data . . . . . . . . . : '%s'\n", ptr_weelist->data);
+        weechat_log_printf ("  prev_weelist . . . . . : 0x%X\n", ptr_weelist->prev_weelist);
+        weechat_log_printf ("  next_weelist . . . . . : 0x%X\n", ptr_weelist->next_weelist);
+    }
 }

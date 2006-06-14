@@ -30,6 +30,7 @@
 #include "weechat.h"
 #include "completion.h"
 #include "command.h"
+#include "log.h"
 #include "utf8.h"
 #include "weelist.h"
 #include "weeconfig.h"
@@ -1348,5 +1349,38 @@ completion_search (t_completion *completion, int direction,
                 completion->diff_length++;
             }
         }
+    }
+}
+
+/*
+ * completion_print_log: print completion list in log (usually for crash dump)
+ */
+
+void
+completion_print_log (t_completion *completion)
+{
+    weechat_log_printf ("[completion (addr:0x%X)]\n", completion);
+    weechat_log_printf ("  server . . . . . . . . : 0x%X\n", completion->server);
+    weechat_log_printf ("  channel. . . . . . . . : 0x%X\n", completion->channel);
+    weechat_log_printf ("  context. . . . . . . . : %d\n",   completion->context);
+    weechat_log_printf ("  base_command . . . . . : '%s'\n", completion->base_command);
+    weechat_log_printf ("  base_command_arg . . . : %d\n",   completion->base_command_arg);
+    weechat_log_printf ("  arg_is_nick. . . . . . : %d\n",   completion->arg_is_nick);
+    weechat_log_printf ("  base_word. . . . . . . : '%s'\n", completion->base_word);
+    weechat_log_printf ("  base_word_pos. . . . . : %d\n",   completion->base_word_pos);
+    weechat_log_printf ("  position . . . . . . . : %d\n",   completion->position);
+    weechat_log_printf ("  args . . . . . . . . . : '%s'\n", completion->args);
+    weechat_log_printf ("  direction. . . . . . . : %d\n",   completion->direction);
+    weechat_log_printf ("  completion_list. . . . : 0x%X\n", completion->completion_list);
+    weechat_log_printf ("  last_completion. . . . : 0x%X\n", completion->last_completion);
+    weechat_log_printf ("  word_found . . . . . . : '%s'\n", completion->word_found);
+    weechat_log_printf ("  position_replace . . . : %d\n",   completion->position_replace);
+    weechat_log_printf ("  diff_size. . . . . . . : %d\n",   completion->diff_size);
+    weechat_log_printf ("  diff_length. . . . . . : %d\n",   completion->diff_length);
+    if (completion->completion_list)
+    {
+        weechat_log_printf ("\n");
+        weelist_print_log (completion->completion_list,
+                           "completion list element");
     }
 }
