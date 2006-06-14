@@ -1,9 +1,10 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-06-10
+ChangeLog - 2006-06-14
 
 Version 0.2.0 (under dev!):
+   * renamed plugins names (removed "lib" prefix in name)
    * fixed crash when closing DCC/raw buffer if 2 are open (bug #16808)
    * fixed crashes with DCC chat remove/purge on DCC view (bug #16775)
    * fixed bug with connection to bnc (bug #16760)

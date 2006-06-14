@@ -703,10 +703,7 @@ plugin_search_full_name (char *filename)
     name_with_ext = (char *)malloc (length);
     if (!name_with_ext)
         return strdup (filename);
-    name_with_ext[0] = '\0';
-    if (ascii_strncasecmp (filename, "lib", 3) != 0)
-        strcat (name_with_ext, "lib");
-    strcat (name_with_ext, filename);
+    strcpy (name_with_ext, filename);
     if (!strchr (filename, '.')
         && cfg_plugins_extension && cfg_plugins_extension[0])
         strcat (name_with_ext, cfg_plugins_extension);

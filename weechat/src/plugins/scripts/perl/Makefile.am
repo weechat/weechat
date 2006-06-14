@@ -19,8 +19,8 @@ INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(PERL_CFLAGS)
 
 libdir = ${weechat_libdir}/plugins
 
-lib_LTLIBRARIES = libperl.la
+lib_LTLIBRARIES = perl.la
 
-libperl_la_SOURCES = weechat-perl.c
-libperl_la_LDFLAGS = -module
-libperl_la_LIBADD = ../lib_weechat_plugins_scripts.la $(PERL_LFLAGS)
+perl_la_SOURCES = weechat-perl.c
+perl_la_LDFLAGS = -module
+perl_la_LIBADD = ../lib_weechat_plugins_scripts.la $(PERL_LFLAGS)

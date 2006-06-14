@@ -19,8 +19,8 @@ INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(PYTHON_CFLAGS)
 
 libdir = ${weechat_libdir}/plugins
 
-lib_LTLIBRARIES = libpython.la
+lib_LTLIBRARIES = python.la
 
-libpython_la_SOURCES = weechat-python.c
-libpython_la_LDFLAGS = -module
-libpython_la_LIBADD  = ../lib_weechat_plugins_scripts.la $(PYTHON_LFLAGS)
+python_la_SOURCES = weechat-python.c
+python_la_LDFLAGS = -module
+python_la_LIBADD  = ../lib_weechat_plugins_scripts.la $(PYTHON_LFLAGS)

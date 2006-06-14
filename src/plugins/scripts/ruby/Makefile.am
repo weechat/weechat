@@ -19,8 +19,8 @@ INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(RUBY_CFLAGS)
 
 libdir = ${weechat_libdir}/plugins
 
-lib_LTLIBRARIES = libruby.la
+lib_LTLIBRARIES = ruby.la
 
-libruby_la_SOURCES = weechat-ruby.c
-libruby_la_LDFLAGS = -module
-libruby_la_LIBADD  = ../lib_weechat_plugins_scripts.la $(RUBY_LFLAGS)
+ruby_la_SOURCES = weechat-ruby.c
+ruby_la_LDFLAGS = -module
+ruby_la_LIBADD  = ../lib_weechat_plugins_scripts.la $(RUBY_LFLAGS)

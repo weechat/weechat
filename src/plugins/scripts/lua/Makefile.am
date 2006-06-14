@@ -19,8 +19,8 @@ INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(LUA_CFLAGS)
 
 libdir = ${weechat_libdir}/plugins
 
-lib_LTLIBRARIES = liblua.la
+lib_LTLIBRARIES = lua.la
 
-liblua_la_SOURCES = weechat-lua.c
-liblua_la_LDFLAGS = -module
-liblua_la_LIBADD  = ../lib_weechat_plugins_scripts.la $(LUA_LFLAGS)
+lua_la_SOURCES = weechat-lua.c
+lua_la_LDFLAGS = -module
+lua_la_LIBADD  = ../lib_weechat_plugins_scripts.la $(LUA_LFLAGS)

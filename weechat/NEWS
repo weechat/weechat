@@ -1,6 +1,15 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
+* FlashCode, 2006-06-14
+
+    Important release notes:
+
+    - if you're using plugins, you should remove some old plugins libraries
+      in WeeChat system library directory (commonly
+      /usr/local/lib/weechat/plugins): remove lib* files (like libperl.*,
+      libpython.*, ..) and keep only new libraries (perl.*, python.*, ..)
+
 * FlashCode, 2006-05-25
 
     WeeChat 0.1.9 released.

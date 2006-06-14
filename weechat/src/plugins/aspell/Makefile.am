@@ -19,8 +19,8 @@ INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(ASPELL_CFLAGS)
 
 libdir = ${weechat_libdir}/plugins
 
-lib_LTLIBRARIES = libaspell.la
+lib_LTLIBRARIES = aspell.la
 
-libaspell_la_SOURCES = weechat-aspell.h weechat-aspell.c
-libaspell_la_LDFLAGS = -module
-libaspell_la_LIBADD  = $(ASPELL_LFLAGS)
+aspell_la_SOURCES = weechat-aspell.h weechat-aspell.c
+aspell_la_LDFLAGS = -module
+aspell_la_LIBADD  = $(ASPELL_LFLAGS)
