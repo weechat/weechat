@@ -52,13 +52,15 @@ weechat_python_exec (t_weechat_plugin *plugin,
                      t_plugin_script *script,
                      char *function, char *arg1, char *arg2, char *arg3)
 {
+    PyThreadState *old_state;
     PyObject *evMain;
     PyObject *evDict;
     PyObject *evFunc;
     PyObject *rc;
     int ret;
-
-    PyThreadState_Swap (script->interpreter);
+    
+    PyEval_AcquireLock ();
+    old_state = PyThreadState_Swap (script->interpreter);
     
     evMain = PyImport_AddModule ((char *) "__main__");
     evDict = PyModule_GetDict (evMain);
@@ -69,7 +71,11 @@ weechat_python_exec (t_weechat_plugin *plugin,
         plugin->print_server (plugin,
                               "Python error: unable to run function \"%s\"",
                               function);
-        return PLUGIN_RC_KO;
+        
+	PyThreadState_Swap (old_state);
+	PyEval_ReleaseLock ();
+
+	return PLUGIN_RC_KO;
     }
 
     ret = -1;
@@ -95,6 +101,10 @@ weechat_python_exec (t_weechat_plugin *plugin,
     if (rc == Py_None)
     {
 	python_plugin->print_server (python_plugin, "Python error: function \"%s\" must return a valid value", function);
+	
+	PyThreadState_Swap (old_state);
+	PyEval_ReleaseLock ();
+    
 	return PLUGIN_RC_OK;
     }
 
@@ -107,9 +117,12 @@ weechat_python_exec (t_weechat_plugin *plugin,
     if (PyErr_Occurred ()) PyErr_Print ();
     
     if (ret < 0)
-        return PLUGIN_RC_OK;
-    else
-        return ret;
+	ret = PLUGIN_RC_OK;
+    
+    PyThreadState_Swap (old_state);
+    PyEval_ReleaseLock ();
+    
+    return ret;
 }
 
 /*
@@ -1368,7 +1381,7 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
 {
     char *argv[] = { "__weechat_plugin__" , NULL };
     FILE *fp;
-    PyThreadState *python_current_interpreter;
+    PyThreadState *python_current_interpreter, *old_state;
     PyObject *weechat_module, *weechat_outputs, *weechat_dict;
     
     plugin->print_server (plugin, "Loading Python script \"%s\"", filename);
@@ -1382,7 +1395,8 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
     }
 
     python_current_script = NULL;
-    
+
+    PyEval_AcquireLock ();
     python_current_interpreter = Py_NewInterpreter ();
     PySys_SetArgv(1, argv);
 
@@ -1391,10 +1405,13 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
         plugin->print_server (plugin,
                               "Python error: unable to create new sub-interpreter");
         fclose (fp);
-        return 0;
+	
+	PyEval_ReleaseLock ();
+        
+	return 0;
     }
 
-    PyThreadState_Swap (python_current_interpreter);
+    old_state = PyThreadState_Swap (python_current_interpreter);
     
     weechat_module = Py_InitModule ("weechat", weechat_python_funcs);
 
@@ -1402,9 +1419,13 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
     {
         plugin->print_server (plugin,
                               "Python error: unable to initialize WeeChat module");
-        Py_EndInterpreter (python_current_interpreter);
         fclose (fp);
-        return 0;
+	
+	Py_EndInterpreter (python_current_interpreter);
+	PyThreadState_Swap (old_state);
+        PyEval_ReleaseLock ();
+        
+	return 0;
     }
 
     /* define some constants */
@@ -1438,9 +1459,13 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
         plugin->print_server (plugin,
                               "Python error: unable to parse file \"%s\"",
                               filename);
-        free (python_current_script_filename);
+	free (python_current_script_filename);
+	fclose (fp);
+
 	Py_EndInterpreter (python_current_interpreter);
-        fclose (fp);
+	PyThreadState_Swap (old_state);
+	PyEval_ReleaseLock ();
+        
 	/* if script was registered, removing from list */
 	if (python_current_script != NULL)
 	    weechat_script_remove (plugin, &python_scripts, python_current_script);
@@ -1459,12 +1484,19 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
                               "Python error: function \"register\" not found "
                               "in file \"%s\"",
                               filename);
+	
 	Py_EndInterpreter (python_current_interpreter);
-        return 0;
+	PyThreadState_Swap (old_state);
+	PyEval_ReleaseLock ();
+        
+	return 0;
     }
     
     python_current_script->interpreter = (PyThreadState *) python_current_interpreter;
-        
+    
+    PyThreadState_Swap (old_state);
+    PyEval_ReleaseLock ();
+    
     return 1;
 }
 
@@ -1717,10 +1749,10 @@ weechat_plugin_init (t_weechat_plugin *plugin)
         return PLUGIN_RC_KO;
     }
 
-    PyEval_InitThreads();
-    
-    python_mainThreadState = PyThreadState_Get();
-    
+    PyEval_InitThreads();    
+    python_mainThreadState = PyThreadState_Swap(NULL);
+    PyEval_ReleaseLock ();
+
     if (python_mainThreadState == NULL)
     {
         plugin->print_server (plugin,
@@ -1758,7 +1790,9 @@ weechat_plugin_end (t_weechat_plugin *plugin)
     /* free Python interpreter */
     if (python_mainThreadState != NULL)
     {
+	PyEval_AcquireLock ();
         PyThreadState_Swap (python_mainThreadState);
+	PyEval_ReleaseLock ();
         python_mainThreadState = NULL;
     }
     
