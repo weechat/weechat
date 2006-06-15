@@ -188,6 +188,42 @@ if test "x$enable_gtk" = "xyes" ; then
 fi
 
 # ------------------------------------------------------------------------------
+#                                  iconv
+# ------------------------------------------------------------------------------
+
+iconv_found="no"
+
+AC_CHECK_HEADER(iconv.h,ac_found_iconv_header="yes",ac_found_iconv_header="no")
+if test "x$ac_found_iconv_header" = "xyes" ; then
+   AC_CHECK_LIB(iconv,iconv_open,ac_found_iconv_lib="yes",ac_found_iconv_lib="no")
+   if test "x$ac_found_iconv_lib" = "xyes" ; then
+      LIBS="$LIBS -liconv"
+   fi
+   AC_MSG_CHECKING(for iconv usability in programs)   
+   AC_TRY_RUN([
+	#include <iconv.h>
+	int main(int argc, char **argv) {
+	    iconv_t conv = iconv_open("ISO8859-1", "UTF-8");
+            if (conv != (iconv_t) -1) {
+	      return 0;
+            }
+	    return 1;
+      }],iconv_found="yes")
+  if test "x$iconv_found" = "xno" ; then
+     AC_MSG_RESULT(no)
+  else
+     AC_MSG_RESULT(yes)
+  fi
+fi
+
+if test "x$iconv_found" = "xno" ; then
+   AC_MSG_ERROR([
+*** Iconv headers and/or libraries couldn't be found in your system.
+*** Try to install them with your software package manager.
+*** WeeChat can't be built without Iconv support.])
+fi
+
+# ------------------------------------------------------------------------------
 #                                   plugins
 # ------------------------------------------------------------------------------
 
@@ -632,8 +668,6 @@ netbsd*)
 	   CFLAGS="$CFLAGS -pthread"
         fi
         CFLAGS="$CFLAGS $CPPFLAGS"
-	# bad hack
-	LDFLAGS="$LDFLAGS -liconv"
 	;;
 gnu*)	
 	if test "x$enable_plugins" = "xyes" ; then
