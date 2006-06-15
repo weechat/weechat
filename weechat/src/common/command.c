@@ -674,7 +674,8 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                       int only_builtin)
 {
     int i, rc, argc, argc2, return_code, length1, length2;
-    char *command, *pos, *ptr_args, *ptr_args2, **argv, **argv2, *alias_command;
+    char *command, *pos, *ptr_args, *ptr_args2, *ptr_args3;
+    char **argv, **argv2, *alias_command;
     char **commands, **ptr_cmd, **ptr_next_cmd;
     t_weechat_alias *ptr_alias;
     
@@ -842,11 +843,16 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                     }
                     else
                     {
-                        ptr_args2 = (weechat_commands[i].charset_conversion && ptr_args) ?
+                        ptr_args2 = (weechat_commands[i].conversion && ptr_args) ?
                             channel_iconv_encode (server, channel, ptr_args) : NULL;
+                        ptr_args3 = (weechat_commands[i].conversion
+                                     && cfg_irc_colors_send && ptr_args) ?
+                            (char *)gui_color_encode ((ptr_args2) ? (unsigned char *)ptr_args2 :
+                                                      (unsigned char *)ptr_args) : NULL;
                         if (weechat_commands[i].cmd_function_args)
                         {
-                            argv2 = explode_string ((ptr_args2) ? ptr_args2 : ptr_args,
+                            argv2 = explode_string ((ptr_args3) ? ptr_args3 :
+                                                    ((ptr_args2) ? ptr_args2 : ptr_args),
                                                     " ", 0, &argc2);
                             return_code = (int) (weechat_commands[i].cmd_function_args)
                                 (server, channel, argc2, argv2);
@@ -854,7 +860,8 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                         }
                         else
                             return_code = (int) (weechat_commands[i].cmd_function_1arg)
-                                (server, channel, (ptr_args2) ? ptr_args2 : ptr_args);
+                                (server, channel, (ptr_args3) ? ptr_args3 :
+                                 ((ptr_args2) ? ptr_args2 : ptr_args));
                         if (return_code < 0)
                         {
                             irc_display_prefix (NULL, NULL, PREFIX_ERROR);
@@ -864,6 +871,8 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                         }
                         if (ptr_args2)
                             free (ptr_args2);
+                        if (ptr_args3)
+                            free (ptr_args3);
                     }
                     free_exploded_string (argv);
                     free (command);
@@ -929,11 +938,16 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                             free (command);
                             return 0;
                         }
-                        ptr_args2 = (irc_commands[i].charset_conversion && ptr_args) ?
+                        ptr_args2 = (irc_commands[i].conversion && ptr_args) ?
                             channel_iconv_encode (server, channel, ptr_args) : NULL;
+                        ptr_args3 = (irc_commands[i].conversion
+                                     && cfg_irc_colors_send && ptr_args) ?
+                            (char *)gui_color_encode ((ptr_args2) ? (unsigned char *)ptr_args2 :
+                                                      (unsigned char *)ptr_args) : NULL;
                         if (irc_commands[i].cmd_function_args)
                         {
-                            argv2 = explode_string ((ptr_args2) ? ptr_args2 : ptr_args,
+                            argv2 = explode_string ((ptr_args3) ? ptr_args3 :
+                                                    ((ptr_args2) ? ptr_args2 : ptr_args),
                                                     " ", 0, &argc2);
                             return_code = (int) (irc_commands[i].cmd_function_args)
                                 (server, channel, argc2, argv2);
@@ -941,7 +955,8 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                         }
                         else
                             return_code = (int) (irc_commands[i].cmd_function_1arg)
-                                (server, channel, (ptr_args2) ? ptr_args2 : ptr_args);
+                                (server, channel, (ptr_args3) ? ptr_args3 :
+                                 ((ptr_args2) ? ptr_args2 : ptr_args));
                         if (return_code < 0)
                         {
                             irc_display_prefix (NULL, NULL, PREFIX_ERROR);
@@ -951,6 +966,8 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                         }
                         if (ptr_args2)
                             free (ptr_args2);
+                        if (ptr_args3)
+                            free (ptr_args3);
                     }
                     free_exploded_string (argv);
                     free (command);
