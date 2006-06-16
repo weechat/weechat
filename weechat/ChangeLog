@@ -1,9 +1,10 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-06-15
+ChangeLog - 2006-06-16
 
 Version 0.2.0 (under dev!):
+   * fixed display bug with special char (bug #16732)
    * added color encoding for some commands like /me
    * renamed plugins names (removed "lib" prefix in name)
    * fixed crash when closing DCC/raw buffer if 2 are open (bug #16808)
