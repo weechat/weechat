@@ -52,7 +52,6 @@ weechat_python_exec (t_weechat_plugin *plugin,
                      t_plugin_script *script,
                      char *function, char *arg1, char *arg2, char *arg3)
 {
-    PyThreadState *old_state;
     PyObject *evMain;
     PyObject *evDict;
     PyObject *evFunc;
@@ -60,7 +59,7 @@ weechat_python_exec (t_weechat_plugin *plugin,
     int ret;
     
     PyEval_AcquireLock ();
-    old_state = PyThreadState_Swap (script->interpreter);
+    PyThreadState_Swap (script->interpreter);
     
     evMain = PyImport_AddModule ((char *) "__main__");
     evDict = PyModule_GetDict (evMain);
@@ -72,8 +71,7 @@ weechat_python_exec (t_weechat_plugin *plugin,
                               "Python error: unable to run function \"%s\"",
                               function);
         
-	PyThreadState_Swap (old_state);
-	PyEval_ReleaseLock ();
+	PyEval_ReleaseThread (python_current_script->interpreter);
 
 	return PLUGIN_RC_KO;
     }
@@ -102,8 +100,7 @@ weechat_python_exec (t_weechat_plugin *plugin,
     {
 	python_plugin->print_server (python_plugin, "Python error: function \"%s\" must return a valid value", function);
 	
-	PyThreadState_Swap (old_state);
-	PyEval_ReleaseLock ();
+	PyEval_ReleaseThread (python_current_script->interpreter);
     
 	return PLUGIN_RC_OK;
     }
@@ -119,8 +116,7 @@ weechat_python_exec (t_weechat_plugin *plugin,
     if (ret < 0)
 	ret = PLUGIN_RC_OK;
     
-    PyThreadState_Swap (old_state);
-    PyEval_ReleaseLock ();
+    PyEval_ReleaseThread (python_current_script->interpreter);
     
     return ret;
 }
@@ -1381,7 +1377,7 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
 {
     char *argv[] = { "__weechat_plugin__" , NULL };
     FILE *fp;
-    PyThreadState *python_current_interpreter, *old_state;
+    PyThreadState *python_current_interpreter;
     PyObject *weechat_module, *weechat_outputs, *weechat_dict;
     
     plugin->print_server (plugin, "Loading Python script \"%s\"", filename);
@@ -1411,7 +1407,7 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
 	return 0;
     }
 
-    old_state = PyThreadState_Swap (python_current_interpreter);
+    //PyThreadState_Swap (python_current_interpreter);
     
     weechat_module = Py_InitModule ("weechat", weechat_python_funcs);
 
@@ -1422,7 +1418,6 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
         fclose (fp);
 	
 	Py_EndInterpreter (python_current_interpreter);
-	PyThreadState_Swap (old_state);
         PyEval_ReleaseLock ();
         
 	return 0;
@@ -1461,9 +1456,9 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
                               filename);
 	free (python_current_script_filename);
 	fclose (fp);
-
+	
+	if (PyErr_Occurred ()) PyErr_Print ();
 	Py_EndInterpreter (python_current_interpreter);
-	PyThreadState_Swap (old_state);
 	PyEval_ReleaseLock ();
         
 	/* if script was registered, removing from list */
@@ -1472,8 +1467,7 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
         return 0;
     }
 
-    if (PyErr_Occurred ())
-	PyErr_Print ();
+    if (PyErr_Occurred ()) PyErr_Print ();
 
     fclose (fp);
     free (python_current_script_filename);
@@ -1485,8 +1479,8 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
                               "in file \"%s\"",
                               filename);
 	
+	if (PyErr_Occurred ()) PyErr_Print ();
 	Py_EndInterpreter (python_current_interpreter);
-	PyThreadState_Swap (old_state);
 	PyEval_ReleaseLock ();
         
 	return 0;
@@ -1494,8 +1488,7 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
     
     python_current_script->interpreter = (PyThreadState *) python_current_interpreter;
     
-    PyThreadState_Swap (old_state);
-    PyEval_ReleaseLock ();
+    PyEval_ReleaseThread (python_current_script->interpreter);
     
     return 1;
 }
@@ -1750,7 +1743,8 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     }
 
     PyEval_InitThreads();    
-    python_mainThreadState = PyThreadState_Swap(NULL);
+    //python_mainThreadState = PyThreadState_Swap(NULL);
+    python_mainThreadState = PyEval_SaveThread();
     PyEval_ReleaseLock ();
 
     if (python_mainThreadState == NULL)
