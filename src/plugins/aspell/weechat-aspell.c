@@ -1057,15 +1057,100 @@ weechat_aspell_speller_command (t_weechat_plugin *p,
 }
 
 /*
+ * weechat_aspell_nick_in_server_channel : 
+ *    check presence of a nick in a server/channel
+ */
+int
+weechat_aspell_nick_in_channel (char *nick, char *server, char *channel)
+{
+    t_plugin_nick_info *nick_info, *ptr_nick;
+    int ret;
+    
+    ret = 0;
+    if (!nick || !server || ! channel)
+	return ret;
+    
+    nick_info = weechat_aspell_plugin->get_nick_info (
+	weechat_aspell_plugin, server, channel);
+    if  (!nick_info)
+	return ret;
+
+    for(ptr_nick = nick_info; ptr_nick; ptr_nick = ptr_nick->next_nick)
+    {
+	if (strcmp (nick, ptr_nick->nick) == 0) {
+	    ret = 1;
+	    break;
+	}
+    }
+    
+    weechat_aspell_plugin->free_nick_info (weechat_aspell_plugin, nick_info);
+
+    return ret;
+}    
+
+/*
+ * weechat_aspell_clean_word : 
+ *    strip punct chars at the begining and at the end of a word
+ */
+char *
+weechat_aspell_clean_word (char *word, int *offset)
+{
+    int len;
+    char *buffer, *w, *p;
+
+    if (!word)
+	return NULL;
+    
+    buffer = strdup (word);
+
+    *offset = 0;    
+    p = buffer;    
+    while (p)
+    {
+	if (!ispunct(*p))
+	    break;
+	p++;
+	(*offset)++;
+    }
+
+    p = buffer + strlen(buffer) - 1;
+    while (p >= buffer)
+    {
+	if (!ispunct(*p))
+	    break;
+	p--;
+    }
+
+    len = p - buffer - *offset + 1;
+    if (len <= 0)
+    {
+	free (buffer);
+	return NULL;
+    }
+    
+    w = (char *) malloc ((len+1) * sizeof(char));
+
+    if (w) {
+	memcpy (w, buffer + *offset, len);
+	w[len] = '\0';
+    }    
+    
+    free (buffer);
+
+    return w;
+}
+
+/*
  * weechat_aspell_keyb_check : handler to check spelling on input line
  */
-int weechat_aspell_keyb_check (t_weechat_plugin *p, int argc, char **argv,
+int
+weechat_aspell_keyb_check (t_weechat_plugin *p, int argc, char **argv,
 			       char *handler_args, void *handler_pointer)
 {
     char *server, *channel;
     aspell_config_t *c;
-    char *input, *ptr_input, *pos_space;
-    int count;
+    char *input, *ptr_input, *pos_space, *clword;
+    int count, offset;
     
     /* make gcc happy */
     (void) p;
@@ -1084,8 +1169,7 @@ int weechat_aspell_keyb_check (t_weechat_plugin *p, int argc, char **argv,
 
     if (aspell_plugin_options.check_sync == 0 && argv[0] && argv[0][0])
     {
-	/* FIXME : using isalpha(), can make problem with UTF-8 encodings */
-	if (argv[0][0] == '*' && isalpha (argv[0][1]))
+	if (argv[0][0] == '*' && !ispunct (argv[0][1]) && !isspace (argv[0][1]))
 	    return PLUGIN_RC_OK;
     }
 
@@ -1114,16 +1198,24 @@ int weechat_aspell_keyb_check (t_weechat_plugin *p, int argc, char **argv,
 	if (pos_space)
 	    pos_space[0] = '\0';
 	
-	if ( (int) strlen (ptr_input) >= aspell_plugin_options.word_size)
+	clword = weechat_aspell_clean_word (ptr_input, &offset);
+	if (clword)
 	{
-	    if (aspell_speller_check (c->speller->speller, ptr_input, -1) != 1)
+	    if ( (int) strlen (clword) >= aspell_plugin_options.word_size)
 	    {
-		if (count == 0)
-		    weechat_aspell_plugin->input_color (weechat_aspell_plugin, 0, 0, 0);
-		weechat_aspell_plugin->input_color (weechat_aspell_plugin, aspell_plugin_options.color,
-				     ptr_input - input, strlen (ptr_input));
-		count++;
-	    }	
+		if (!weechat_aspell_nick_in_channel (clword, server, channel))
+		{
+		    if (aspell_speller_check (c->speller->speller, clword, -1) != 1)
+		    {
+			if (count == 0)
+			    weechat_aspell_plugin->input_color (weechat_aspell_plugin, 0, 0, 0);
+			weechat_aspell_plugin->input_color (weechat_aspell_plugin, aspell_plugin_options.color,
+							    ptr_input - input + offset, strlen (clword));
+			count++;
+		    }
+		}
+	    }
+	    free (clword);
 	}
 	
 	if (pos_space)
