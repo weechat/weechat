@@ -1113,19 +1113,19 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
           <listitem>
             <para>
               nick change on freenode to "mynick|out" :
-              <screen><prompt>$ </prompt><userinput>echo "freenode */nick mynick|out" &gt;~/.weechat/weechat_fifo_12345</userinput></screen>
+              <screen><prompt>$ </prompt><userinput>echo 'freenode */nick mynick|out' &gt;~/.weechat/weechat_fifo_12345</userinput></screen>
             </para>
           </listitem>
           <listitem>
             <para>
               display text on #weechat channel:
-              <screen><prompt>$ </prompt><userinput>echo "freenode,#weechat *hello everybody!" >~/.weechat/weechat_fifo_12345</userinput></screen>
+              <screen><prompt>$ </prompt><userinput>echo 'freenode,#weechat *hello everybody!' >~/.weechat/weechat_fifo_12345</userinput></screen>
             </para>
           </listitem>
           <listitem>
             <para>
               display text on current channel (buffer displayed by WeeChat):
-              <screen><prompt>$ </prompt><userinput>echo "*hello!" >~/.weechat/weechat_fifo_12345</userinput></screen>
+              <screen><prompt>$ </prompt><userinput>echo '*hello!' >~/.weechat/weechat_fifo_12345</userinput></screen>
               <emphasis>Warning:</emphasis> this is dangerous and you should
               not do that except if you know what you do!
             </para>

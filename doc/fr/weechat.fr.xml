@@ -1128,20 +1128,20 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
           <listitem>
             <para>
               changement du pseudo sur freenode en "pseudo|absent" :
-              <screen><prompt>$ </prompt><userinput>echo "freenode */nick pseudo|absent" &gt;~/.weechat/weechat_fifo_12345</userinput></screen>
+              <screen><prompt>$ </prompt><userinput>echo 'freenode */nick pseudo|absent' &gt;~/.weechat/weechat_fifo_12345</userinput></screen>
             </para>
           </listitem>
           <listitem>
             <para>
               affichage de texte sur le canal #weechat :
-              <screen><prompt>$ </prompt><userinput>echo "freenode,#weechat *bonjour tout le monde !" >~/.weechat/weechat_fifo_12345</userinput></screen>
+              <screen><prompt>$ </prompt><userinput>echo 'freenode,#weechat *bonjour tout le monde !' >~/.weechat/weechat_fifo_12345</userinput></screen>
             </para>
           </listitem>
           <listitem>
             <para>
               affichage de texte sur le canal courant (le tampon affiché
               par WeeChat) :
-              <screen><prompt>$ </prompt><userinput>echo "*bonjour !" >~/.weechat/weechat_fifo_12345</userinput></screen>
+              <screen><prompt>$ </prompt><userinput>echo '*bonjour !' >~/.weechat/weechat_fifo_12345</userinput></screen>
               <emphasis>Attention :</emphasis> ceci est dangereux et vous ne
               devriez pas le faire sauf si vous savez ce que vous faites !
             </para>

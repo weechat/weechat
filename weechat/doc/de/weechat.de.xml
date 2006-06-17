@@ -1118,19 +1118,19 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
           <listitem>
             <para>
               Ändern des Nicks auf freenode in "mynick|out" :
-              <screen><prompt>$ </prompt><userinput>echo "freenode */nick mynick|out" &gt;~/.weechat/weechat_fifo_12345</userinput></screen>
+              <screen><prompt>$ </prompt><userinput>echo 'freenode */nick mynick|out' &gt;~/.weechat/weechat_fifo_12345</userinput></screen>
             </para>
           </listitem>
           <listitem>
             <para>
               Senden einer Nachricht an #weechat:
-              <screen><prompt>$ </prompt><userinput>echo "freenode,#weechat *hello everybody!" >~/.weechat/weechat_fifo_12345</userinput></screen>
+              <screen><prompt>$ </prompt><userinput>echo 'freenode,#weechat *hello everybody!' >~/.weechat/weechat_fifo_12345</userinput></screen>
             </para>
           </listitem>
           <listitem>
             <para>
               Senden einer Nachricht an den gegenwärtigen Channel (Puffer, der in WeeChat angezeigt wird):
-              <screen><prompt>$ </prompt><userinput>echo "*hello!" >~/.weechat/weechat_fifo_12345</userinput></screen>
+              <screen><prompt>$ </prompt><userinput>echo '*hello!' >~/.weechat/weechat_fifo_12345</userinput></screen>
               <emphasis>Warnung:</emphasis> Das ist gefährlich und sie sollten das nicht tun, ausgenommen sie wissen was sie tun!
             </para>
           </listitem>
