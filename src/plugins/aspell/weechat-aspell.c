@@ -766,7 +766,8 @@ weechat_aspell_config_save (void)
 {
     aspell_config_t *p, *q;
     char *servers, *channels, *option;
-    int n;
+    char **servers_list;
+    int n, i, s, found;
     
     servers = NULL;
 
@@ -785,13 +786,27 @@ weechat_aspell_config_save (void)
 	}
 	else 
 	{
-	    if (!strstr (servers, p->server))
+	    servers_list = weechat_aspell_plugin->explode_string (weechat_aspell_plugin, servers, " ", 0, &s);
+	    if (servers_list)
 	    {
-		n = strlen (servers) + strlen (p->server) + 2;
-		servers = (char *) realloc (servers, n * sizeof (char));
-		strcat (servers, " ");
-		strcat (servers, p->server);
-		weechat_aspell_plugin->set_plugin_config (weechat_aspell_plugin, "servers", servers);
+		found = 0;
+		for (i=0; i<s; i++)
+		{
+		    if (strcmp (servers_list[i], p->server) == 0)
+		    {
+			found = 1;
+			break;
+		    }
+		}
+		if (found == 0)
+		{
+		    n = strlen (servers) + strlen (p->server) + 2;
+		    servers = (char *) realloc (servers, n * sizeof (char));
+		    strcat (servers, " ");
+		    strcat (servers, p->server);
+		    weechat_aspell_plugin->set_plugin_config (weechat_aspell_plugin, "servers", servers);
+		}
+		free (servers_list);
 	    }
 	    free (servers);
 	}
@@ -805,13 +820,10 @@ weechat_aspell_config_save (void)
 		    channels = strdup (q->channel);
 		else
 		{
-		    if (!strstr (channels, q->channel))
-		    {
-			n = strlen (channels) + strlen (q->channel) + 2;
-			channels = (char *) realloc (channels, n * sizeof (char));
-			strcat (channels, " ");
-			strcat (channels, q->channel);
-		    }
+		    n = strlen (channels) + strlen (q->channel) + 2;
+		    channels = (char *) realloc (channels, n * sizeof (char));
+		    strcat (channels, " ");
+		    strcat (channels, q->channel);
 		}
 		
 		n = 7 + strlen (p->server) + strlen (q->channel);
@@ -1041,7 +1053,8 @@ weechat_aspell_speller_command (t_weechat_plugin *p,
 		{
 		    if (c >= 2) 
 		    { 
-			weechat_aspell_config_addword (args[1]); r = 1; 
+			weechat_aspell_config_addword (args[1]);
+			r = 1; 
 		    }
 		}
 
@@ -1141,6 +1154,33 @@ weechat_aspell_clean_word (char *word, int *offset)
 }
 
 /*
+ * weechat_aspell_is_simili_number : 
+ *    detect if a word is made of chars and punctation
+ */
+int
+weechat_aspell_is_simili_number (char *word)
+{
+    int len, ret, i;
+    
+    ret = 1;
+    len = strlen (word);
+    
+    if (!word)
+	return 0;
+    
+    for (i=0; i<len; i++)
+    {
+	if (!ispunct(word[i]) && !isdigit(word[i]))
+	{
+	    ret = 0;
+	    break;
+	}
+    }
+
+    return ret;
+}
+
+/*
  * weechat_aspell_keyb_check : handler to check spelling on input line
  */
 int
@@ -1203,15 +1243,18 @@ weechat_aspell_keyb_check (t_weechat_plugin *p, int argc, char **argv,
 	{
 	    if ( (int) strlen (clword) >= aspell_plugin_options.word_size)
 	    {
-		if (!weechat_aspell_nick_in_channel (clword, server, channel))
+		if (!weechat_aspell_is_simili_number (clword))
 		{
-		    if (aspell_speller_check (c->speller->speller, clword, -1) != 1)
+		    if (!weechat_aspell_nick_in_channel (clword, server, channel))
 		    {
-			if (count == 0)
-			    weechat_aspell_plugin->input_color (weechat_aspell_plugin, 0, 0, 0);
-			weechat_aspell_plugin->input_color (weechat_aspell_plugin, aspell_plugin_options.color,
-							    ptr_input - input + offset, strlen (clword));
-			count++;
+			if (aspell_speller_check (c->speller->speller, clword, -1) != 1)
+			{
+			    if (count == 0)
+				weechat_aspell_plugin->input_color (weechat_aspell_plugin, 0, 0, 0);
+			    weechat_aspell_plugin->input_color (weechat_aspell_plugin, aspell_plugin_options.color,
+								ptr_input - input + offset, strlen (clword));
+			    count++;
+			}
 		    }
 		}
 	    }
