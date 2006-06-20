@@ -15,7 +15,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-SUBDIRS = en fr de ru pl
+SUBDIRS = en fr de ru pl cs
 
 man_MANS = weechat-curses.1
 
