@@ -391,7 +391,7 @@ weechat_plugin_exec_command (t_weechat_plugin *plugin,
 
 /*
  * weechat_plugin_get_info: get info about WeeChat
- *                          WARNING: caller should free string returned
+ *                          WARNING: caller has to free string returned
  *                          by this function after use
  */
 
@@ -505,6 +505,8 @@ weechat_plugin_get_info (t_weechat_plugin *plugin, char *info, char *server)
 
 /*
  * weechat_plugin_get_dcc_info: get list of DCC files/chats info
+ *                              WARNING: caller has to free structure returned
+ *                              by this function after use
  */
 
 t_plugin_dcc_info *
@@ -783,6 +785,8 @@ weechat_plugin_set_plugin_config (t_weechat_plugin *plugin, char *option, char *
 
 /*
  * weechat_plugin_get_server_info: get list of server info
+ *                          WARNING: caller has to free structure returned
+ *                          by this function after use
  */
 
 t_plugin_server_info *
@@ -901,6 +905,8 @@ weechat_plugin_free_server_info (t_weechat_plugin *plugin, t_plugin_server_info 
 
 /*
  * weechat_plugin_get_channel_info: get list of channel info from a server
+ *                                  WARNING: caller has to free structure
+ *                                  returned by this function after use
  */
 
 t_plugin_channel_info *
@@ -982,6 +988,8 @@ weechat_plugin_free_channel_info (t_weechat_plugin *plugin, t_plugin_channel_inf
 
 /*
  * weechat_plugin_get_nick_info: get list of nick info from a server/channel
+ *  *                            WARNING: caller has to free structure
+ *                               returned by this function after use
  */
 
 t_plugin_nick_info *
@@ -1111,4 +1119,217 @@ weechat_plugin_get_irc_color (t_weechat_plugin *plugin, char *color_name)
     
     /* color not found */
     return -1;
+}
+
+/*
+ * weechat_plugin_get_window_info: get list of window info
+ *                                 WARNING: caller has to free structure
+ *                                 returned by this function after use
+ */
+
+t_plugin_window_info *
+weechat_plugin_get_window_info (t_weechat_plugin *plugin)
+{
+    t_plugin_window_info *window_info, *last_window_info, *new_window_info;
+    t_gui_window *ptr_window;
+
+    if (!plugin)
+	return NULL;
+
+    if (gui_windows)
+    {
+	window_info = NULL;
+	last_window_info = NULL;
+	for (ptr_window = gui_windows; ptr_window; ptr_window = ptr_window->next_window)
+	{
+	    new_window_info = (t_plugin_window_info *) malloc (sizeof (t_plugin_window_info));
+	    if (new_window_info)
+	    {
+                new_window_info->win_x = ptr_window->win_x;
+                new_window_info->win_y = ptr_window->win_y;
+                new_window_info->win_width = ptr_window->win_width;
+                new_window_info->win_height = ptr_window->win_height;
+                new_window_info->win_width_pct = ptr_window->win_width_pct;
+                new_window_info->win_height_pct = ptr_window->win_height_pct;
+                new_window_info->num_buffer = (ptr_window->buffer) ? ptr_window->buffer->number : 0;
+                
+		new_window_info->prev_window = last_window_info;
+                new_window_info->next_window = NULL;
+                if (!window_info)
+                    window_info = new_window_info;
+		else
+                    last_window_info->next_window = new_window_info;
+		last_window_info = new_window_info;
+	    }
+	}
+       	
+	return window_info;
+    }
+    
+    return NULL;
+}
+
+/*
+ * weechat_plugin_free_window_info: free window info struct list
+ */
+
+void
+weechat_plugin_free_window_info (t_weechat_plugin *plugin, t_plugin_window_info *window_info)
+{
+    t_plugin_window_info *new_window_info;
+    
+    if (!plugin || !window_info)
+        return;
+    
+    while (window_info)
+    {
+        new_window_info = window_info->next_window;
+        free (window_info);
+        window_info = new_window_info;
+    }
+}
+
+/*
+ * weechat_plugin_get_buffer_info: get list of buffer info
+ *                                 WARNING: caller has to free structure
+ *                                 returned by this function after use
+ */
+
+t_plugin_buffer_info *
+weechat_plugin_get_buffer_info (t_weechat_plugin *plugin)
+{
+    t_plugin_buffer_info *buffer_info, *last_buffer_info, *new_buffer_info;
+    t_gui_buffer *ptr_buffer;
+
+    if (!plugin)
+	return NULL;
+
+    if (gui_buffers)
+    {
+	buffer_info = NULL;
+	last_buffer_info = NULL;
+	for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+	{
+	    new_buffer_info = (t_plugin_buffer_info *) malloc (sizeof (t_plugin_buffer_info));
+	    if (new_buffer_info)
+	    {
+                new_buffer_info->type = ptr_buffer->type;
+                new_buffer_info->number = ptr_buffer->number;
+                new_buffer_info->num_displayed = ptr_buffer->num_displayed;
+                new_buffer_info->server_name = (SERVER(ptr_buffer)) ? strdup (SERVER(ptr_buffer)->name) : NULL;
+                new_buffer_info->channel_name = (CHANNEL(ptr_buffer)) ? strdup (CHANNEL(ptr_buffer)->name) : NULL;
+                new_buffer_info->notify_level = ptr_buffer->notify_level;
+                new_buffer_info->log_filename = (ptr_buffer->log_filename) ? strdup (ptr_buffer->log_filename) : NULL;
+                
+		new_buffer_info->prev_buffer = last_buffer_info;
+                new_buffer_info->next_buffer = NULL;
+                if (!buffer_info)
+                    buffer_info = new_buffer_info;
+		else
+                    last_buffer_info->next_buffer = new_buffer_info;
+		last_buffer_info = new_buffer_info;
+	    }
+	}
+       	
+	return buffer_info;
+    }
+    
+    return NULL;
+}
+
+/*
+ * weechat_plugin_free_buffer_info: free buffer info struct list
+ */
+
+void
+weechat_plugin_free_buffer_info (t_weechat_plugin *plugin, t_plugin_buffer_info *buffer_info)
+{
+    t_plugin_buffer_info *new_buffer_info;
+    
+    if (!plugin || !buffer_info)
+        return;
+    
+    while (buffer_info)
+    {
+        if (buffer_info->server_name)
+            free (buffer_info->server_name);
+	if (buffer_info->channel_name)
+            free (buffer_info->channel_name);
+	if (buffer_info->log_filename)
+            free (buffer_info->log_filename);
+        new_buffer_info = buffer_info->next_buffer;
+        free (buffer_info);
+        buffer_info = new_buffer_info;
+    }
+}
+
+/*
+ * weechat_plugin_get_buffer_data: get buffer content
+ *                                 WARNING: caller has to free structure
+ *                                 returned by this function after use
+ */
+
+t_plugin_buffer_line *
+weechat_plugin_get_buffer_data (t_weechat_plugin *plugin, char *server, char *channel)
+{
+    t_irc_server *ptr_server;
+    t_irc_channel *ptr_channel;
+    t_plugin_buffer_line *buffer_line, *last_buffer_line, *new_buffer_line;
+    t_gui_line *ptr_line;
+    
+    if (!plugin)
+	return NULL;
+    
+    plugin_find_server_channel (server, channel, &ptr_server, &ptr_channel);
+    
+    if (!ptr_channel || !ptr_channel->buffer)
+        return NULL;
+    
+    buffer_line = NULL;
+    last_buffer_line = NULL;
+    for (ptr_line = ptr_channel->buffer->last_line; ptr_line;
+         ptr_line = ptr_line->prev_line)
+    {
+        new_buffer_line = (t_plugin_buffer_line *) malloc (sizeof (t_plugin_buffer_line));
+        if (new_buffer_line)
+        {
+            new_buffer_line->nick = (ptr_line->nick) ? strdup (ptr_line->nick) : NULL;
+            new_buffer_line->data = (ptr_line->data) ?
+                (char *) gui_color_decode ((unsigned char *)(ptr_line->data + ptr_line->ofs_start_message), 0) : NULL;
+            
+            new_buffer_line->prev_line = last_buffer_line;
+            new_buffer_line->next_line = NULL;
+            if (!buffer_line)
+                buffer_line = new_buffer_line;
+            else
+                last_buffer_line->next_line = new_buffer_line;
+            last_buffer_line = new_buffer_line;
+        }
+    }
+    
+    return buffer_line;
+}
+
+/*
+ * weechat_plugin_free_buffer_data: free buffer data (lines) struct list
+ */
+
+void
+weechat_plugin_free_buffer_data (t_weechat_plugin *plugin, t_plugin_buffer_line *buffer_line)
+{
+    t_plugin_buffer_line *new_buffer_line;
+    
+    if (!plugin || !buffer_line)
+        return;
+    
+    while (buffer_line)
+    {
+        if (buffer_line->nick)
+            free (buffer_line->nick);
+	if (buffer_line->data)
+            free (buffer_line->data);
+        new_buffer_line = buffer_line->next_line;
+        free (buffer_line);
+        buffer_line = new_buffer_line;
+    }
 }

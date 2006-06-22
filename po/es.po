@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Weechat 0.2.0-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-06-15 15:03+0200\n"
+"POT-Creation-Date: 2006-06-22 05:30+0200\n"
 "PO-Revision-Date: 2006-05-25 02:04+0200\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2330,33 +2330,33 @@ msgstr ""
 "%s función \"weechat_plugin_init\" no encontrada en el plugin \"%s\", falló "
 "al cargar\n"
 
-#: src/plugins/plugins.c:896
+#: src/plugins/plugins.c:902
 #, c-format
 msgid "Initializing plugin \"%s\" %s\n"
 msgstr "Inicializando plugin \"%s\" %s\n"
 
-#: src/plugins/plugins.c:904
+#: src/plugins/plugins.c:910
 #, c-format
 msgid "%s unable to initialize plugin \"%s\"\n"
 msgstr "%s no ha sido posible inicializar el plugin \"%s\"\n"
 
-#: src/plugins/plugins.c:915
+#: src/plugins/plugins.c:921
 #, c-format
 msgid "%s unable to load plugin \"%s\" (not enough memory)\n"
 msgstr ""
 "%s no ha sido posible cargar el plugin \"%s\" (no hay suficiente memoria)\n"
 
-#: src/plugins/plugins.c:923
+#: src/plugins/plugins.c:929
 #, c-format
 msgid "Plugin \"%s\" (%s) loaded.\n"
 msgstr "Plugin \"%s\" (%s) cargado.\n"
 
-#: src/plugins/plugins.c:1090
+#: src/plugins/plugins.c:1096
 #, c-format
 msgid "Plugin \"%s\" unloaded.\n"
 msgstr "Plugin \"%s\" descargado.\n"
 
-#: src/plugins/plugins.c:1096 src/common/command.c:3637
+#: src/plugins/plugins.c:1102 src/common/command.c:3637
 #, c-format
 msgid "%s plugin \"%s\" not found\n"
 msgstr "%s plugin \"%s\" no encontrado\n"
@@ -2398,23 +2398,23 @@ msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 msgstr ""
 "%s servidor/canal (%s/%s) no encontrado para el plugin de comando exec\n"
 
-#: src/gui/curses/gui-curses-chat.c:876
+#: src/gui/curses/gui-curses-chat.c:879
 msgid "bytes"
 msgstr "bytes"
 
-#: src/gui/curses/gui-curses-chat.c:876
+#: src/gui/curses/gui-curses-chat.c:879
 msgid "Kb"
 msgstr "KB"
 
-#: src/gui/curses/gui-curses-chat.c:876
+#: src/gui/curses/gui-curses-chat.c:879
 msgid "Mb"
 msgstr "MB"
 
-#: src/gui/curses/gui-curses-chat.c:876
+#: src/gui/curses/gui-curses-chat.c:879
 msgid "Gb"
 msgstr "GB"
 
-#: src/gui/curses/gui-curses-chat.c:994
+#: src/gui/curses/gui-curses-chat.c:997
 msgid "ETA"
 msgstr "Tiempo estimado de llegada"
 

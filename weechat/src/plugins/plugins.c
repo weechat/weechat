@@ -877,6 +877,12 @@ plugin_load (char *filename)
 	new_plugin->free_nick_info = &weechat_plugin_free_nick_info;
         new_plugin->input_color = &weechat_plugin_input_color;
         new_plugin->get_irc_color = &weechat_plugin_get_irc_color;
+        new_plugin->get_window_info = &weechat_plugin_get_window_info;
+        new_plugin->free_window_info = &weechat_plugin_free_window_info;
+        new_plugin->get_buffer_info = &weechat_plugin_get_buffer_info;
+        new_plugin->free_buffer_info = &weechat_plugin_free_buffer_info;
+        new_plugin->get_buffer_data = &weechat_plugin_get_buffer_data;
+        new_plugin->free_buffer_data = &weechat_plugin_free_buffer_data;
         
         /* handlers */
         new_plugin->handlers = NULL;
