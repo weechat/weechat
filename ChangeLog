@@ -1,9 +1,10 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-06-22
+ChangeLog - 2006-06-24
 
 Version 0.2.0 (under dev!):
+   * fixed crash when setting look_one_server_buffer to ON (bug #16932)
    * added new functions in plugin/script API: get window info,
      get buffer info, get buffer content
    * added polish, russian and czech quickstart guide

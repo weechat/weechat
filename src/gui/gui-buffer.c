@@ -569,7 +569,7 @@ gui_buffer_line_new (t_gui_buffer *buffer)
 void
 gui_buffer_merge_servers (t_gui_window *window)
 {
-    t_gui_buffer *ptr_buffer_server, *ptr_buffer;
+    t_gui_buffer *ptr_buffer_server, *ptr_buffer, *new_ptr_buffer;
     t_irc_server *ptr_server;
     
     /* new server buffer is the first server buffer found */
@@ -583,9 +583,9 @@ gui_buffer_merge_servers (t_gui_window *window)
     /* no server buffer found */
     if (!ptr_buffer_server)
         return;
-    
-    for (ptr_buffer = gui_buffers; ptr_buffer;
-         ptr_buffer = ptr_buffer->next_buffer)
+
+    ptr_buffer = gui_buffers;
+    while (ptr_buffer)
     {
         if ((ptr_buffer != ptr_buffer_server)
             && (BUFFER_IS_SERVER(ptr_buffer)))
@@ -613,12 +613,16 @@ gui_buffer_merge_servers (t_gui_window *window)
             
             /* free buffer but not lines, because they're now used by 
                our unique server buffer */
+            new_ptr_buffer = ptr_buffer->next_buffer;
             ptr_buffer->lines = NULL;
             gui_buffer_free (ptr_buffer, 1);
+            ptr_buffer = new_ptr_buffer;
             
             /* asociate server with new server buffer */
             ptr_server->buffer = ptr_buffer_server;
         }
+        else
+            ptr_buffer = ptr_buffer->next_buffer;
     }
     
     ptr_buffer_server->all_servers = 1;
