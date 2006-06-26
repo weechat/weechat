@@ -888,7 +888,7 @@ gui_chat_draw (t_gui_buffer *buffer, int erase)
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        if (ptr_win->buffer == buffer)
+        if ((ptr_win->buffer == buffer) && (buffer->num_displayed > 0))
         {
             if (erase)
             {
