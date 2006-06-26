@@ -54,13 +54,19 @@ completion_init (t_completion *completion, void *server, void *channel)
     completion->base_command = NULL;
     completion->base_command_arg = 0;
     completion->arg_is_nick = 0;
-    completion->position = -1;
     completion->base_word = NULL;
+    completion->base_word_pos = 0;
+    completion->position = -1; 
     completion->args = NULL;
     completion->direction = 0;
     
     completion->completion_list = NULL;
     completion->last_completion = NULL;
+
+    completion->word_found = NULL;
+    completion->position_replace = 0;
+    completion->diff_size = 0;
+    completion->diff_length = 0;
 }
 
 /*
