@@ -1366,7 +1366,7 @@ config_option_list_remove (char **string, char *item)
     name = (char *) malloc (strlen (item) + 2);
     strcpy (name, item);
     strcat (name, ":");
-    pos = strstr (*string, name);
+    pos = ascii_strcasestr (*string, name);
     free (name);
     if (pos)
     {
@@ -1442,7 +1442,7 @@ config_option_list_get_value (char **string, char *item,
     name = (char *) malloc (strlen (item) + 2);
     strcpy (name, item);
     strcat (name, ":");
-    pos = strstr (*string, name);
+    pos = ascii_strcasestr (*string, name);
     free (name);
     if (pos)
     {

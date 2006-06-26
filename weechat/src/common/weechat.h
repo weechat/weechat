@@ -108,6 +108,7 @@ extern void ascii_tolower (char *);
 extern void ascii_toupper (char *);
 extern int ascii_strcasecmp (char *, char *);
 extern int ascii_strncasecmp (char *, char *, int);
+extern char *ascii_strcasestr (char *, char *);
 extern char *weechat_iconv (char *, char *, char *);
 extern char *weechat_strreplace (char *, char *, char *);
 extern void weechat_dump (int);
