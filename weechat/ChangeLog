@@ -4,6 +4,7 @@ WeeChat - Wee Enhanced Environment for Chat
 ChangeLog - 2006-06-28
 
 Version 0.2.0 (under dev!):
+   * fixed random crash when "MODE #chan -l" is received
    * fixed bug in IRC parser (random crash with malformed IRC messages)
    * fixed refresh bug (too many refresh) when terminal is resized
    * case ignored for channel names in charset options (bug #16858)

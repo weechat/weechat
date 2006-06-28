@@ -865,7 +865,10 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *channel,
                                       NULL);
                 CHANNEL_SET_MODE(channel, (set_flag == '+'),
                                  CHANNEL_MODE_LIMIT);
-                channel->limit = atoi (parm);
+                if (set_flag == '-')
+                    channel->limit = 0;
+                if ((set_flag == '+') && parm)
+                    channel->limit = atoi (parm);
                 
                 /* look for next parameter */
                 if (parm && pos)
