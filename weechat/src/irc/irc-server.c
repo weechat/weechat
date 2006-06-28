@@ -765,9 +765,14 @@ server_msgq_flush ()
                 if (ptr_data[0] == ':')
                 {
                     pos = strchr (ptr_data, ' ');
-                    pos[0] = '\0';
-                    host = ptr_data + 1;
-                    pos++;
+                    if (pos)
+                    {
+                        pos[0] = '\0';
+                        host = ptr_data + 1;
+                        pos++;
+                    }
+                    else
+                        pos = ptr_data;
                 }
                 else
                     pos = ptr_data;

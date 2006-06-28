@@ -1,9 +1,10 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-06-26
+ChangeLog - 2006-06-28
 
 Version 0.2.0 (under dev!):
+   * fixed bug in IRC parser (random crash with malformed IRC messages)
    * fixed refresh bug (too many refresh) when terminal is resized
    * case ignored for channel names in charset options (bug #16858)
    * fixed crash when setting look_one_server_buffer to ON (bug #16932)
