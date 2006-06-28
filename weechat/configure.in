@@ -626,10 +626,10 @@ fi
 
 AC_DEFINE_UNQUOTED(PREFIX, "${prefix}")
 
-WEECHAT_LIBDIR=`eval echo ${libdir}/weechat`
+WEECHAT_LIBDIR=`eval eval echo ${libdir}/weechat`
 AC_DEFINE_UNQUOTED(WEECHAT_LIBDIR, "$WEECHAT_LIBDIR")
 
-WEECHAT_SHAREDIR=`eval echo ${datadir}/weechat`
+WEECHAT_SHAREDIR=`eval eval echo ${datadir}/weechat`
 AC_DEFINE_UNQUOTED(WEECHAT_SHAREDIR, "$WEECHAT_SHAREDIR")
 
 weechat_libdir=${libdir}/weechat
