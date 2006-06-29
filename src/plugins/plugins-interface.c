@@ -1272,22 +1272,21 @@ weechat_plugin_free_buffer_info (t_weechat_plugin *plugin, t_plugin_buffer_info 
 t_plugin_buffer_line *
 weechat_plugin_get_buffer_data (t_weechat_plugin *plugin, char *server, char *channel)
 {
-    t_irc_server *ptr_server;
-    t_irc_channel *ptr_channel;
+    t_gui_buffer *ptr_buffer;
     t_plugin_buffer_line *buffer_line, *last_buffer_line, *new_buffer_line;
     t_gui_line *ptr_line;
     
     if (!plugin)
 	return NULL;
     
-    plugin_find_server_channel (server, channel, &ptr_server, &ptr_channel);
+    ptr_buffer = gui_buffer_search (server, channel);
     
-    if (!ptr_channel || !ptr_channel->buffer)
+    if (!ptr_buffer)
         return NULL;
     
     buffer_line = NULL;
     last_buffer_line = NULL;
-    for (ptr_line = ptr_channel->buffer->last_line; ptr_line;
+    for (ptr_line = ptr_buffer->last_line; ptr_line;
          ptr_line = ptr_line->prev_line)
     {
         new_buffer_line = (t_plugin_buffer_line *) malloc (sizeof (t_plugin_buffer_line));
