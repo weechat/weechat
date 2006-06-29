@@ -1,3 +1,9 @@
+weechat (0.1.9-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Julien Louis <ptitlouis@sysif.net>  Thu, 25 May 2006 07:40:53 +0200
+
 weechat (0.1.8-2) unstable; urgency=low
 
   * Switch to cdbs
