@@ -203,10 +203,6 @@ weechat_lua_register (lua_State *L)
     }
     else
     {
-        lua_plugin->print_server (lua_plugin,
-                                  "Lua error: unable to load script "
-                                  "\"%s\" (not enough memory)",
-                                  name);
 	lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
@@ -1728,7 +1724,7 @@ weechat_lua_load (t_weechat_plugin *plugin, char *filename)
     {
         plugin->print_server (plugin,
                               "Lua error: function \"register\" not found "
-                              "in file \"%s\"",
+                              "(or failed) in file \"%s\"",
                               filename);
 	lua_close (lua_current_interpreter);
         return 0;

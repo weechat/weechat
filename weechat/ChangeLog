@@ -1,9 +1,10 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-06-28
+ChangeLog - 2006-06-30
 
 Version 0.2.0 (under dev!):
+   * fixed bug with spaces in script names (bug #16957)
    * fixed random crash when "MODE #chan -l" is received
    * fixed bug in IRC parser (random crash with malformed IRC messages)
    * fixed refresh bug (too many refresh) when terminal is resized

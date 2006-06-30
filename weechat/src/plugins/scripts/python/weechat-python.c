@@ -223,13 +223,7 @@ weechat_python_register (PyObject *self, PyObject *args)
                                      name, version, description);
     }
     else
-    {
-        python_plugin->print_server (python_plugin,
-                                     "Python error: unable to load script "
-                                     "\"%s\" (not enough memory)",
-                                     name);
         return Py_BuildValue ("i", 0);
-    }
     
     return Py_BuildValue ("i", 1);
 }
@@ -1476,7 +1470,7 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
     {
         plugin->print_server (plugin,
                               "Python error: function \"register\" not found "
-                              "in file \"%s\"",
+                              "(or failed) in file \"%s\"",
                               filename);
 	
 	if (PyErr_Occurred ()) PyErr_Print ();

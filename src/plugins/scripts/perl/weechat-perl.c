@@ -290,10 +290,6 @@ static XS (XS_weechat_register)
     }
     else
     {
-        perl_plugin->print_server (perl_plugin,
-                                   "Perl error: unable to load script "
-                                   "\"%s\" (not enough memory)",
-                                   name);
         XSRETURN_NO;
     }
     
@@ -1511,7 +1507,7 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
     {
 	plugin->print_server (plugin,
                               "Perl error: function \"register\" not found "
-                              "in file \"%s\"",
+                              "(or failed) in file \"%s\"",
                               filename);
 #ifdef MULTIPLICITY
         perl_destruct (perl_current_interpreter);

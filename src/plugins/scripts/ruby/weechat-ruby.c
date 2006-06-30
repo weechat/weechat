@@ -271,13 +271,7 @@ weechat_ruby_register (VALUE class, VALUE name, VALUE version,
                                    c_name, c_version, c_description);
     }
     else
-    {
-        ruby_plugin->print_server (ruby_plugin,
-                                   "Ruby error: unable to load script "
-                                   "\"%s\" (not enough memory)",
-                                   c_name);
         return INT2FIX (0);
-    }
     
     return INT2FIX (1);
 }
@@ -1662,7 +1656,7 @@ weechat_ruby_load (t_weechat_plugin *plugin, char *filename)
     if (ruby_current_script == NULL) {
 	plugin->print_server (plugin,
                               "Ruby error: function \"register\" not found "
-                              "in file \"%s\"",
+                              "(or failed) in file \"%s\"",
                               filename);
         return 0;
     }

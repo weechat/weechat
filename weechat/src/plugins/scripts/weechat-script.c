@@ -191,8 +191,14 @@ weechat_script_add (t_weechat_plugin *plugin,
 {
     t_plugin_script *new_script;
     
-    /* make gcc happy */
-    (void) plugin;
+    if (strchr (name, ' '))
+    {
+        plugin->print_server (plugin,
+                              "Error: unable to load script "
+                              "\"%s\" (bad name, spaces are forbidden)",
+                              name);
+        return NULL;
+    }
     
     new_script = (t_plugin_script *)malloc (sizeof (t_plugin_script));
     if (new_script)
@@ -212,7 +218,11 @@ weechat_script_add (t_weechat_plugin *plugin,
         (*script_list) = new_script;
         return new_script;
     }
-    
+
+    plugin->print_server (plugin,
+                          "Error: unable to load script "
+                          "\"%s\" (not enough memory)",
+                          name);
     return NULL;
 }
 
