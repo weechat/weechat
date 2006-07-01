@@ -2579,7 +2579,7 @@ weechat_cmd_key (t_irc_server *server, t_irc_channel *channel,
         if (gui_keyboard_unbind (arguments))
         {
             irc_display_prefix (NULL, NULL, PREFIX_INFO);
-            gui_printf (NULL, _("Key \"%s\" unbinded\n"), arguments);
+            gui_printf (NULL, _("Key \"%s\" unbound\n"), arguments);
         }
         else
         {

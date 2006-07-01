@@ -47,7 +47,7 @@ gui_keyboard_default_bindings ()
     int i;
     char key_str[32], command[32];
     
-    /* keys binded with internal functions */
+    /* keys bound with internal functions */
     gui_keyboard_bind ( /* RC          */ "ctrl-M",             "return");
     gui_keyboard_bind ( /* RC          */ "ctrl-J",             "return");
     gui_keyboard_bind ( /* tab         */ "ctrl-I",             "tab");
@@ -105,7 +105,7 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind ( /* m-s         */ "meta-s",             "switch_server");
     gui_keyboard_bind ( /* m-u         */ "meta-u",             "scroll_unread");
     
-    /* keys binded with commands */
+    /* keys bound with commands */
     gui_keyboard_bind ( /* m-left      */ "meta-meta2-D",       "/buffer -1");
     gui_keyboard_bind ( /* F5          */ "meta2-15~",          "/buffer -1");
     gui_keyboard_bind ( /* m-right     */ "meta-meta2-C",       "/buffer +1");

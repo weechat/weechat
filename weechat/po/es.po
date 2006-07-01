@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Weechat 0.2.0-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-06-28 23:50+0200\n"
-"PO-Revision-Date: 2006-05-25 02:04+0200\n"
+"POT-Creation-Date: 2006-07-01 13:52+0200\n"
+"PO-Revision-Date: 2006-07-01 13:53+0200\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -3470,7 +3470,7 @@ msgstr "Anclajes de clave:\n"
 
 #: src/common/command.c:2582
 #, c-format
-msgid "Key \"%s\" unbinded\n"
+msgid "Key \"%s\" unbound\n"
 msgstr "Clave \"%s\" desatada\n"
 
 #: src/common/command.c:2588

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-06-28 23:50+0200\n"
+"POT-Creation-Date: 2006-07-01 13:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3178,7 +3178,7 @@ msgstr ""
 
 #: src/common/command.c:2582
 #, c-format
-msgid "Key \"%s\" unbinded\n"
+msgid "Key \"%s\" unbound\n"
 msgstr ""
 
 #: src/common/command.c:2588
