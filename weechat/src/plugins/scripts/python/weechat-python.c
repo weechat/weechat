@@ -1750,8 +1750,9 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     
     plugin->cmd_handler_add (plugin, "python",
                              "list/load/unload Python scripts",
-                             "[load filename] | [autoload] | [reload] | [unload]",
-                             "filename: Python script (file) to load\n\n"
+                             "[load filename] | [autoload] | [reload] | [unload [script]]",
+                             "filename: Python script (file) to load\n"
+                             "script: script name to unload\n\n"
                              "Without argument, /python command lists all loaded Python scripts.",
                              "load|autoload|reload|unload",
                              weechat_python_cmd, NULL, NULL);

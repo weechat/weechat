@@ -1977,8 +1977,9 @@ weechat_plugin_init (t_weechat_plugin *plugin)
         
     plugin->cmd_handler_add (plugin, "lua",
                              "list/load/unload Lua scripts",
-                             "[load filename] | [autoload] | [reload] | [unload]",
-                             "filename: Lua script (file) to load\n\n"
+                             "[load filename] | [autoload] | [reload] | [unload [script]]",
+                             "filename: Lua script (file) to load\n"
+                             "script: script name to unload\n\n"
                              "Without argument, /lua command lists all loaded Lua scripts.",
                              "load|autoload|reload|unload",
                              weechat_lua_cmd, NULL, NULL);

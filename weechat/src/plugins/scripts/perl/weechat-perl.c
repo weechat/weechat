@@ -1797,8 +1797,9 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     
     plugin->cmd_handler_add (plugin, "perl",
                              "list/load/unload Perl scripts",
-                             "[load filename] | [autoload] | [reload] | [unload]",
-                             "filename: Perl script (file) to load\n\n"
+                             "[load filename] | [autoload] | [reload] | [unload [script]]",
+                             "filename: Perl script (file) to load\n"
+                             "script: script name to unload\n\n"
                              "Without argument, /perl command lists all loaded Perl scripts.",
                              "load|autoload|reload|unload",
                              weechat_perl_cmd, NULL, NULL);

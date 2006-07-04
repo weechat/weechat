@@ -1996,8 +1996,9 @@ weechat_plugin_init (t_weechat_plugin *plugin)
 
     plugin->cmd_handler_add (plugin, "ruby",
                              "list/load/unload Ruby scripts",
-                             "[load filename] | [autoload] | [reload] | [unload]",
-                             "filename: Ruby script (file) to load\n\n"
+                             "[load filename] | [autoload] | [reload] | [unload [script]]",
+                             "filename: Ruby script (file) to load\n"
+                             "script: script name to unload\n\n"
                              "Without argument, /ruby command lists all loaded Ruby scripts.",
                              "load|autoload|reload|unload",
                              weechat_ruby_cmd, NULL, NULL);
