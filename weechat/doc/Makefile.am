@@ -19,7 +19,7 @@ SUBDIRS = . en fr de ru pl cs
 
 man_MANS = weechat-curses.1
 
-EXTRA_DIST = $(man_MANS) weechat-doc.css weechat-html-one.xsl weechat-html.xsl
+EXTRA_DIST = $(man_MANS) weechat-doc.css weechat-html-one.xsl.in weechat-html.xsl.in
 
 all-local: weechat-html.xsl weechat-html-one.xsl
 
