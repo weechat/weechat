@@ -876,9 +876,10 @@ gui_chat_draw (t_gui_buffer *buffer, int erase)
     t_irc_dcc *dcc_first, *dcc_selected, *ptr_dcc;
     char format_empty[32];
     int i, j, line_pos, count, num_bars;
+    unsigned long pct_complete;
     char *unit_name[] = { N_("bytes"), N_("Kb"), N_("Mb"), N_("Gb") };
-    char *unit_format[] = { "%.0Lf", "%.1Lf", "%.02Lf", "%.02Lf" };
-    long unit_divide[] = { 1, 1024, 1024*1024, 1024*1024*1024 };
+    char *unit_format[] = { "%.0f", "%.1f", "%.02f", "%.02f" };
+    float unit_divide[] = { 1, 1024, 1024*1024, 1024*1024*1024 };
     int num_unit;
     char format[32], date[128], *buf;
     struct tm *date_tmp;
@@ -956,9 +957,14 @@ gui_chat_draw (t_gui_buffer *buffer, int erase)
                     {
                         wprintw (GUI_CURSES(ptr_win)->win_chat, "  [");
                         if (ptr_dcc->size == 0)
-                            num_bars = 10;
+                        {
+                            if (ptr_dcc->status == DCC_DONE)
+                                num_bars = 10;
+                            else
+                                num_bars = 0;
+                        }
                         else
-                            num_bars = (int)((((long double)(ptr_dcc->pos)/(long double)(ptr_dcc->size))*100) / 10);
+                            num_bars = (int)((((float)(ptr_dcc->pos)/(float)(ptr_dcc->size))*100) / 10);
                         for (j = 0; j < num_bars - 1; j++)
                             wprintw (GUI_CURSES(ptr_win)->win_chat, "=");
                         if (num_bars > 0)
@@ -974,15 +980,24 @@ gui_chat_draw (t_gui_buffer *buffer, int erase)
                             num_unit = 2;
                         else
                             num_unit = 3;
+                        if (ptr_dcc->size == 0)
+                        {
+                            if (ptr_dcc->status == DCC_DONE)
+                                pct_complete = 100;
+                            else
+                                pct_complete = 0;
+                        }
+                        else
+                            pct_complete = (unsigned long)(((float)(ptr_dcc->pos)/(float)(ptr_dcc->size))*100);
                         wprintw (GUI_CURSES(ptr_win)->win_chat, "] %3lu%%   ",
-                                 (unsigned long)(((long double)(ptr_dcc->pos)/(long double)(ptr_dcc->size))*100));
+                                 pct_complete);
                         sprintf (format, "%s %%s / %s %%s",
                                  unit_format[num_unit],
                                  unit_format[num_unit]);
                         wprintw (GUI_CURSES(ptr_win)->win_chat, format,
-                                 ((long double)(ptr_dcc->pos)) / ((long double)(unit_divide[num_unit])),
+                                 ((float)(ptr_dcc->pos)) / ((float)(unit_divide[num_unit])),
                                  unit_name[num_unit],
-                                 ((long double)(ptr_dcc->size)) / ((long double)(unit_divide[num_unit])),
+                                 ((float)(ptr_dcc->size)) / ((float)(unit_divide[num_unit])),
                                  unit_name[num_unit]);
                         
                         if (ptr_dcc->bytes_per_sec < 1024*1024)
@@ -1005,7 +1020,7 @@ gui_chat_draw (t_gui_buffer *buffer, int erase)
                                                     CHANNEL(buffer),
                                                     unit_name[num_unit]);
                         wprintw (GUI_CURSES(ptr_win)->win_chat, format,
-                                 ((long double) ptr_dcc->bytes_per_sec) / ((long double)(unit_divide[num_unit])),
+                                 ((float)ptr_dcc->bytes_per_sec) / ((float)(unit_divide[num_unit])),
                                  buf);
                         free (buf);
                     }

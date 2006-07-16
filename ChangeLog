@@ -4,6 +4,7 @@ WeeChat - Wee Enhanced Environment for Chat
 ChangeLog - 2006-07-16
 
 Version 0.2.0 (under dev!):
+   * fixed crash on DCC buffer under Darwin 8 (bug #17115)
    * added configure option for doc XSL prefix (bug #16991)
    * fixed bug with spaces in script names (bug #16957)
    * fixed random crash when "MODE #chan -l" is received
