@@ -408,7 +408,7 @@ nick_set_away (t_irc_channel *channel, t_irc_nick *nick, int is_away)
             ((!is_away) && (nick->flags & NICK_AWAY)))
         {
             NICK_SET_FLAG(nick, is_away, NICK_AWAY);
-            gui_nicklist_draw (channel->buffer, 0);
+            gui_nicklist_draw (channel->buffer, 0, 0);
         }
     }
 }

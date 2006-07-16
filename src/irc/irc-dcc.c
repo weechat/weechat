@@ -1536,33 +1536,39 @@ dcc_end ()
  */
 
 void
-dcc_print_log (t_irc_dcc *dcc)
+dcc_print_log ()
 {
-    weechat_log_printf ("[DCC (addr:0x%X)]\n", dcc);
-    weechat_log_printf ("  server. . . . . . . : 0x%X\n", dcc->server);
-    weechat_log_printf ("  channel . . . . . . : 0x%X\n", dcc->channel);
-    weechat_log_printf ("  type. . . . . . . . : %d\n",   dcc->type);
-    weechat_log_printf ("  status. . . . . . . : %d\n",   dcc->status);
-    weechat_log_printf ("  start_time. . . . . : %ld\n",  dcc->start_time);
-    weechat_log_printf ("  start_transfer. . . : %ld\n",  dcc->start_transfer);
-    weechat_log_printf ("  addr. . . . . . . . : %lu\n",  dcc->addr);
-    weechat_log_printf ("  port. . . . . . . . : %d\n",   dcc->port);
-    weechat_log_printf ("  nick. . . . . . . . : '%s'\n", dcc->nick);
-    weechat_log_printf ("  sock. . . . . . . . : %d\n",   dcc->sock);
-    weechat_log_printf ("  unterminated_message: '%s'\n", dcc->unterminated_message);
-    weechat_log_printf ("  file. . . . . . . . : %d\n",   dcc->file);
-    weechat_log_printf ("  filename. . . . . . : '%s'\n", dcc->filename);
-    weechat_log_printf ("  local_filename. . . : '%s'\n", dcc->local_filename);
-    weechat_log_printf ("  filename_suffix . . : %d\n",   dcc->filename_suffix);
-    weechat_log_printf ("  size. . . . . . . . : %lu\n",  dcc->size);
-    weechat_log_printf ("  pos . . . . . . . . : %lu\n",  dcc->pos);
-    weechat_log_printf ("  ack . . . . . . . . : %lu\n",  dcc->ack);
-    weechat_log_printf ("  start_resume. . . . : %lu\n",  dcc->start_resume);
-    weechat_log_printf ("  last_check_time . . : %ld\n",  dcc->last_check_time);
-    weechat_log_printf ("  last_check_pos. . . : %lu\n",  dcc->last_check_pos);
-    weechat_log_printf ("  last_activity . . . : %ld\n",  dcc->last_activity);
-    weechat_log_printf ("  bytes_per_sec . . . : %lu\n",  dcc->bytes_per_sec);
-    weechat_log_printf ("  eta . . . . . . . . : %lu\n",  dcc->eta);
-    weechat_log_printf ("  prev_dcc. . . . . . : 0x%X\n", dcc->prev_dcc);
-    weechat_log_printf ("  next_dcc. . . . . . : 0x%X\n", dcc->next_dcc);
+    t_irc_dcc *ptr_dcc;
+    
+    for (ptr_dcc = dcc_list; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
+    {
+        weechat_log_printf ("\n");
+        weechat_log_printf ("[DCC (addr:0x%X)]\n", ptr_dcc);
+        weechat_log_printf ("  server. . . . . . . : 0x%X\n", ptr_dcc->server);
+        weechat_log_printf ("  channel . . . . . . : 0x%X\n", ptr_dcc->channel);
+        weechat_log_printf ("  type. . . . . . . . : %d\n",   ptr_dcc->type);
+        weechat_log_printf ("  status. . . . . . . : %d\n",   ptr_dcc->status);
+        weechat_log_printf ("  start_time. . . . . : %ld\n",  ptr_dcc->start_time);
+        weechat_log_printf ("  start_transfer. . . : %ld\n",  ptr_dcc->start_transfer);
+        weechat_log_printf ("  addr. . . . . . . . : %lu\n",  ptr_dcc->addr);
+        weechat_log_printf ("  port. . . . . . . . : %d\n",   ptr_dcc->port);
+        weechat_log_printf ("  nick. . . . . . . . : '%s'\n", ptr_dcc->nick);
+        weechat_log_printf ("  sock. . . . . . . . : %d\n",   ptr_dcc->sock);
+        weechat_log_printf ("  unterminated_message: '%s'\n", ptr_dcc->unterminated_message);
+        weechat_log_printf ("  file. . . . . . . . : %d\n",   ptr_dcc->file);
+        weechat_log_printf ("  filename. . . . . . : '%s'\n", ptr_dcc->filename);
+        weechat_log_printf ("  local_filename. . . : '%s'\n", ptr_dcc->local_filename);
+        weechat_log_printf ("  filename_suffix . . : %d\n",   ptr_dcc->filename_suffix);
+        weechat_log_printf ("  size. . . . . . . . : %lu\n",  ptr_dcc->size);
+        weechat_log_printf ("  pos . . . . . . . . : %lu\n",  ptr_dcc->pos);
+        weechat_log_printf ("  ack . . . . . . . . : %lu\n",  ptr_dcc->ack);
+        weechat_log_printf ("  start_resume. . . . : %lu\n",  ptr_dcc->start_resume);
+        weechat_log_printf ("  last_check_time . . : %ld\n",  ptr_dcc->last_check_time);
+        weechat_log_printf ("  last_check_pos. . . : %lu\n",  ptr_dcc->last_check_pos);
+        weechat_log_printf ("  last_activity . . . : %ld\n",  ptr_dcc->last_activity);
+        weechat_log_printf ("  bytes_per_sec . . . : %lu\n",  ptr_dcc->bytes_per_sec);
+        weechat_log_printf ("  eta . . . . . . . . : %lu\n",  ptr_dcc->eta);
+        weechat_log_printf ("  prev_dcc. . . . . . : 0x%X\n", ptr_dcc->prev_dcc);
+        weechat_log_printf ("  next_dcc. . . . . . : 0x%X\n", ptr_dcc->next_dcc);
+    }
 }

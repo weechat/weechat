@@ -36,7 +36,7 @@
  */
 
 void
-gui_nicklist_draw (t_gui_buffer *buffer, int erase)
+gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
 {
     t_gui_window *ptr_win;
     int i, j, x, y, x2, column, max_length, nicks_displayed;
@@ -52,7 +52,7 @@ gui_nicklist_draw (t_gui_buffer *buffer, int erase)
         {
             max_length = nick_get_max_length (CHANNEL(buffer));
             
-            if (gui_window_calculate_pos_size (ptr_win, 0))
+            if (calculate_size && (gui_window_calculate_pos_size (ptr_win, 0)))
             {
                 delwin (GUI_CURSES(ptr_win)->win_chat);
                 delwin (GUI_CURSES(ptr_win)->win_nick);

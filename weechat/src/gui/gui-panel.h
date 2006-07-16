@@ -23,11 +23,11 @@
 
 #define GUI_PANEL_TOP     1
 #define GUI_PANEL_BOTTOM  2
-#define GUI_PANEL_LEFT    3
-#define GUI_PANEL_RIGHT   4
+#define GUI_PANEL_LEFT    4
+#define GUI_PANEL_RIGHT   8
 
-#define GUI_PANEL_GLOBAL  0
-#define GUI_PANEL_WINDOWS 1
+#define GUI_PANEL_GLOBAL  1
+#define GUI_PANEL_WINDOWS 2
 
 
 /* panel structure */
@@ -36,8 +36,9 @@ typedef struct t_gui_panel t_gui_panel;
 
 struct t_gui_panel
 {
-    int position;                   /* position (top, bottom, left, right)  */
+    int number;                     /* panel number                         */
     char *name;                     /* panel name                           */
+    int position;                   /* position (top, bottom, left, right)  */
     void *panel_window;             /* pointer to panel window, NULL if     */
                                     /* displayed on each window (in this    */
                                     /* case, pointers are in windows)       */

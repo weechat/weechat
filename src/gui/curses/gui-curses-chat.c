@@ -174,13 +174,13 @@ gui_chat_draw_title (t_gui_buffer *buffer, int erase)
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        if (ptr_win->buffer == buffer)
+        if ((ptr_win->buffer == buffer) && (buffer->num_displayed > 0))
         {
             if (erase)
                 gui_window_curses_clear (GUI_CURSES(ptr_win)->win_title, COLOR_WIN_TITLE);
             
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title, COLOR_WIN_TITLE);
-            snprintf (format, 32, "%%-%ds", ptr_win->win_width);
+            snprintf (format, 32, "%%-%ds", ptr_win->win_title_width);
             if (CHANNEL(buffer))
             {
                 if (CHANNEL(buffer)->topic)

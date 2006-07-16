@@ -35,6 +35,7 @@
 
 #include "../common/weechat.h"
 #include "gui.h"
+#include "../common/log.h"
 
 
 t_gui_panel *gui_panels = NULL;             /* pointer to first panel       */
@@ -42,11 +43,47 @@ t_gui_panel *last_gui_panel = NULL;         /* pointer to last panel        */
 
 
 /*
+ * gui_panel_global_get_size: get total panel size (global panels) for a position
+ */
+
+int
+gui_panel_global_get_size (t_gui_panel *panel, int position)
+{
+    t_gui_panel *ptr_panel;
+    int total_size;
+
+    total_size = 0;
+    for (ptr_panel = gui_panels; ptr_panel; ptr_panel = ptr_panel->next_panel)
+    {
+        if ((panel) && (ptr_panel == panel))
+            return total_size;
+        
+        if (ptr_panel->position == position)
+        {
+            switch (position)
+            {
+                case GUI_PANEL_TOP:
+                case GUI_PANEL_BOTTOM:
+                    total_size += ptr_panel->size;
+                    break;
+                case GUI_PANEL_LEFT:
+                case GUI_PANEL_RIGHT:
+                    total_size += ptr_panel->size;
+                    break;
+            }
+            if (ptr_panel->separator)
+                total_size++;
+        }
+    }
+    return total_size;
+}
+
+/*
  * gui_panel_new: create a new panel
  */
 
 t_gui_panel *
-gui_panel_new (char *name, int position, int type, int size, int separator)
+gui_panel_new (char *name, int type, int position, int size, int separator)
 {
     t_gui_panel *new_panel;
     t_gui_window *ptr_win;
@@ -56,8 +93,9 @@ gui_panel_new (char *name, int position, int type, int size, int separator)
     
     if ((new_panel = (t_gui_panel *) malloc (sizeof (t_gui_panel))))
     {
-        new_panel->position = position;
+        new_panel->number = (last_gui_panel) ? last_gui_panel->number + 1 : 1;
         new_panel->name = strdup (name);
+        new_panel->position = position;
         new_panel->separator = separator;
         new_panel->size = size;
         if (type == GUI_PANEL_WINDOWS)
@@ -110,4 +148,27 @@ gui_panel_free (t_gui_panel *panel)
         gui_panel_window_free (panel->panel_window);
     
     free (panel);
+}
+
+/*
+ * gui_panel_print_log: print panel infos in log (usually for crash dump)
+ */
+
+void
+gui_panel_print_log ()
+{
+    t_gui_panel *ptr_panel;
+
+    for (ptr_panel = gui_panels; ptr_panel; ptr_panel = ptr_panel->next_panel)
+    {
+        weechat_log_printf ("\n");
+        weechat_log_printf ("[panel (addr:0x%X)]\n", ptr_panel);
+        weechat_log_printf ("  position. . . . . . : %d\n",   ptr_panel->position);
+        weechat_log_printf ("  name. . . . . . . . : '%s'\n", ptr_panel->name);
+        weechat_log_printf ("  panel_window. . . . : 0x%X\n", ptr_panel->panel_window);
+        weechat_log_printf ("  separator . . . . . : %d\n",   ptr_panel->separator);
+        weechat_log_printf ("  size. . . . . . . . : %d\n",   ptr_panel->size);
+        weechat_log_printf ("  prev_panel . .. . . : 0x%X\n", ptr_panel->prev_panel);
+        weechat_log_printf ("  next_panel . .. . . : 0x%X\n", ptr_panel->next_panel);
+    }
 }

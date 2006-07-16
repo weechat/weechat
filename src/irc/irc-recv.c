@@ -442,7 +442,7 @@ irc_cmd_recv_join (t_irc_server *server, char *host, char *nick, char *arguments
     ptr_nick = nick_new (server, ptr_channel, nick, 0, 0, 0, 0, 0);
     if (ptr_nick)
         ptr_nick->host = strdup ((pos) ? pos + 1 : host);
-    gui_nicklist_draw (ptr_channel->buffer, 1);
+    gui_nicklist_draw (ptr_channel->buffer, 1, 1);
     gui_status_draw (ptr_channel->buffer, 1);
     return 0;
 }
@@ -523,7 +523,7 @@ irc_cmd_recv_kick (t_irc_server *server, char *host, char *nick, char *arguments
     {
         /* my nick was kicked => free all nicks, channel is not active any more */
         nick_free_all (ptr_channel);
-        gui_nicklist_draw (ptr_channel->buffer, 1);
+        gui_nicklist_draw (ptr_channel->buffer, 1, 1);
         gui_status_draw (ptr_channel->buffer, 1);
         if (server->autorejoin)
             irc_cmd_send_join (server, NULL, ptr_channel->name);
@@ -534,7 +534,7 @@ irc_cmd_recv_kick (t_irc_server *server, char *host, char *nick, char *arguments
         if (ptr_nick)
         {
             nick_free (ptr_channel, ptr_nick);
-            gui_nicklist_draw (ptr_channel->buffer, 1);
+            gui_nicklist_draw (ptr_channel->buffer, 1, 1);
             gui_status_draw (ptr_channel->buffer, 1);
         }
     }
@@ -761,7 +761,7 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *channel,
                     {
                         NICK_SET_FLAG(ptr_nick, (set_flag == '+'), NICK_HALFOP);
                         nick_resort (channel, ptr_nick);
-                        gui_nicklist_draw (channel->buffer, 1);
+                        gui_nicklist_draw (channel->buffer, 1, 1);
                     }
                 }
                 
@@ -926,7 +926,7 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *channel,
                     {
                         NICK_SET_FLAG(ptr_nick, (set_flag == '+'), NICK_OP);
                         nick_resort (channel, ptr_nick);
-                        gui_nicklist_draw (channel->buffer, 1);
+                        gui_nicklist_draw (channel->buffer, 1, 1);
                     }
                 }
                 
@@ -1025,7 +1025,7 @@ void irc_get_channel_modes (t_irc_server *server, t_irc_channel *channel,
                     {
                         NICK_SET_FLAG(ptr_nick, (set_flag == '+'), NICK_VOICE);
                         nick_resort (channel, ptr_nick);
-                        gui_nicklist_draw (channel->buffer, 1);
+                        gui_nicklist_draw (channel->buffer, 1, 1);
                     }
                 }
                 
@@ -1327,7 +1327,7 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *nick, char *arguments
                                 GUI_COLOR(COLOR_WIN_CHAT_NICK),
                                 arguments);
             }
-            gui_nicklist_draw (ptr_channel->buffer, 1);
+            gui_nicklist_draw (ptr_channel->buffer, 1, 1);
             gui_add_hotlist = 1;
         }
     }
@@ -1648,7 +1648,7 @@ irc_cmd_recv_part (t_irc_server *server, char *host, char *nick, char *arguments
             
             if (ptr_channel)
             {
-                gui_nicklist_draw (ptr_channel->buffer, 1);
+                gui_nicklist_draw (ptr_channel->buffer, 1, 1);
                 gui_status_draw (ptr_channel->buffer, 1);
             }
             gui_input_draw (gui_current_window->buffer, 1);
@@ -2591,7 +2591,7 @@ irc_cmd_recv_quit (t_irc_server *server, char *host, char *nick, char *arguments
                             arguments,
                             GUI_COLOR(COLOR_WIN_CHAT_DARK));
             }
-            gui_nicklist_draw (ptr_channel->buffer, 1);
+            gui_nicklist_draw (ptr_channel->buffer, 1, 1);
             gui_status_draw (ptr_channel->buffer, 1);
         }
     }
@@ -4809,7 +4809,7 @@ irc_cmd_recv_353 (t_irc_server *server, char *host, char *nick, char *arguments)
         }
         if (ptr_channel)
         {
-            gui_nicklist_draw (ptr_channel->buffer, 1);
+            gui_nicklist_draw (ptr_channel->buffer, 1, 1);
             gui_status_draw (ptr_channel->buffer, 1);
         }
         else

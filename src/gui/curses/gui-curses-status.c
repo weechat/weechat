@@ -361,10 +361,10 @@ gui_status_draw (t_gui_buffer *buffer, int erase)
         if (BUFFER_HAS_NICKLIST(ptr_win->buffer))
         {
             snprintf (str_nicks, sizeof (str_nicks) - 1, "%d", CHANNEL(ptr_win->buffer)->nicks_count);
-            x = ptr_win->win_width - strlen (str_nicks) - 4;
+            x = ptr_win->win_status_width - strlen (str_nicks) - 4;
         }
         else
-            x = ptr_win->win_width - 2;
+            x = ptr_win->win_status_width - 2;
         more = strdup (_("-MORE-"));
         x -= strlen (more) - 1;
         if (x < 0)

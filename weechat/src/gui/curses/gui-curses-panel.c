@@ -33,11 +33,13 @@
 
 
 /*
- * gui_panel_get_size: get total panel size for a position
+ * gui_panel_windows_get_size: get total panel size (window panels) for a position
+ *                             panel is optional, if not NULL, size is computed
+ *                             from panel 1 to panel # - 1
  */
 
 int
-gui_panel_get_size (t_gui_window *window, int position)
+gui_panel_window_get_size (t_gui_panel *panel, t_gui_window *window, int position)
 {
     t_gui_panel_window *ptr_panel_win;
     int total_size;
@@ -46,6 +48,10 @@ gui_panel_get_size (t_gui_window *window, int position)
     for (ptr_panel_win = GUI_CURSES(window)->panel_windows; ptr_panel_win;
          ptr_panel_win = ptr_panel_win->next_panel_window)
     {
+        /* stop before panel */
+        if ((panel) && (ptr_panel_win->panel == panel))
+            return total_size;
+        
         if (ptr_panel_win->panel->position == position)
         {
             switch (position)
@@ -76,6 +82,7 @@ gui_panel_window_new (t_gui_panel *panel, t_gui_window *window)
 {
     t_gui_panel_window *new_panel_win;
     int x1, y1, x2, y2;
+    int add_top, add_bottom, add_left, add_right;
 
     if (window)
     {
@@ -83,6 +90,10 @@ gui_panel_window_new (t_gui_panel *panel, t_gui_window *window)
         y1 = window->win_y + 1;
         x2 = x1 + window->win_width - 1;
         y2 = y1 + window->win_height - 1 - 4;
+        add_left = gui_panel_window_get_size (panel, window, GUI_PANEL_LEFT);
+        add_right = gui_panel_window_get_size (panel, window, GUI_PANEL_RIGHT);
+        add_top = gui_panel_window_get_size (panel, window, GUI_PANEL_TOP);
+        add_bottom = gui_panel_window_get_size (panel, window, GUI_PANEL_BOTTOM);
     }
     else
     {
@@ -90,6 +101,10 @@ gui_panel_window_new (t_gui_panel *panel, t_gui_window *window)
         y1 = 0;
         x2 = gui_window_get_width () - 1;
         y2 = gui_window_get_height () - 1;
+        add_left = gui_panel_global_get_size (panel, GUI_PANEL_LEFT);
+        add_right = gui_panel_global_get_size (panel, GUI_PANEL_RIGHT);
+        add_top = gui_panel_global_get_size (panel, GUI_PANEL_TOP);
+        add_bottom = gui_panel_global_get_size (panel, GUI_PANEL_BOTTOM);
     }
     
     if ((new_panel_win = (t_gui_panel_window *) malloc (sizeof (t_gui_panel_window))))
@@ -109,8 +124,8 @@ gui_panel_window_new (t_gui_panel *panel, t_gui_window *window)
         switch (panel->position)
         {
             case GUI_PANEL_TOP:
-                new_panel_win->x = x1;
-                new_panel_win->y = y1;
+                new_panel_win->x = x1 + add_left;
+                new_panel_win->y = y1 + add_top;
                 new_panel_win->width = x2 - x1 + 1;
                 new_panel_win->height = panel->size;
                 break;

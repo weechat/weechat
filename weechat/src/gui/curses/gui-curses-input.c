@@ -349,7 +349,7 @@ gui_input_draw (t_gui_buffer *buffer, int erase)
                         
                         prompt_length = gui_input_get_prompt_length (ptr_win, ptr_nickname);
                         
-                        if (ptr_win->win_width - prompt_length < 3)
+                        if (ptr_win->win_input_width - prompt_length < 3)
                         {
                             prompt_length = 0;
                             display_prompt = 0;
@@ -358,9 +358,9 @@ gui_input_draw (t_gui_buffer *buffer, int erase)
                             display_prompt = 1;
                         
                         if (buffer->input_buffer_pos - buffer->input_buffer_1st_display + 1 >
-                            ptr_win->win_width - prompt_length)
+                            ptr_win->win_input_width - prompt_length)
                             buffer->input_buffer_1st_display = buffer->input_buffer_pos -
-                                (ptr_win->win_width - prompt_length) + 1;
+                                (ptr_win->win_input_width - prompt_length) + 1;
                         else
                         {
                             if (buffer->input_buffer_pos < buffer->input_buffer_1st_display)
@@ -370,11 +370,11 @@ gui_input_draw (t_gui_buffer *buffer, int erase)
                                 if ((buffer->input_buffer_1st_display > 0) &&
                                     (buffer->input_buffer_pos -
                                      buffer->input_buffer_1st_display + 1)
-                                    < ptr_win->win_width - prompt_length)
+                                    < ptr_win->win_input_width - prompt_length)
                                 {
                                     buffer->input_buffer_1st_display =
                                         buffer->input_buffer_pos -
-                                        (ptr_win->win_width - prompt_length) + 1;
+                                        (ptr_win->win_input_width - prompt_length) + 1;
                                     if (buffer->input_buffer_1st_display < 0)
                                         buffer->input_buffer_1st_display = 0;
                                 }
@@ -384,18 +384,18 @@ gui_input_draw (t_gui_buffer *buffer, int erase)
                             gui_input_draw_prompt (ptr_win, ptr_nickname);
                         
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_input, COLOR_WIN_INPUT);
-                        snprintf (format, 32, "%%-%ds", ptr_win->win_width - prompt_length);
+                        snprintf (format, 32, "%%-%ds", ptr_win->win_input_width - prompt_length);
                         offset_cursor = 0;
                         if (ptr_win == gui_current_window)
                             offset_cursor = gui_input_draw_text (ptr_win,
-                                                                 ptr_win->win_width - prompt_length);
+                                                                 ptr_win->win_input_width - prompt_length);
                         else
                             wprintw (GUI_CURSES(ptr_win)->win_input, format, "");
                         wclrtoeol (GUI_CURSES(ptr_win)->win_input);
-                        ptr_win->win_input_x = prompt_length + offset_cursor;
+                        ptr_win->win_input_cursor_x = prompt_length + offset_cursor;
                         if (ptr_win == gui_current_window)
-                            move (ptr_win->win_y + ptr_win->win_height - 1,
-                                  ptr_win->win_x + ptr_win->win_input_x);
+                            move (ptr_win->win_input_y,
+                                  ptr_win->win_input_x + ptr_win->win_input_cursor_x);
                     }
                     break;
                 case BUFFER_TYPE_DCC:
@@ -424,18 +424,16 @@ gui_input_draw (t_gui_buffer *buffer, int erase)
                     wprintw (GUI_CURSES(ptr_win)->win_input, _("  [P] Purge old DCC"));
                     wprintw (GUI_CURSES(ptr_win)->win_input, _("  [Q] Close DCC view"));
                     wclrtoeol (GUI_CURSES(ptr_win)->win_input);
-                    ptr_win->win_input_x = 0;
+                    ptr_win->win_input_cursor_x = 0;
                     if (ptr_win == gui_current_window)
-                        move (ptr_win->win_y + ptr_win->win_height - 1,
-                              ptr_win->win_x);
+                        move (ptr_win->win_input_y, ptr_win->win_input_x);
                     break;
                 case BUFFER_TYPE_RAW_DATA:
                     mvwprintw (GUI_CURSES(ptr_win)->win_input, 0, 0, _("  [Q] Close raw data view"));
                     wclrtoeol (GUI_CURSES(ptr_win)->win_input);
-                    ptr_win->win_input_x = 0;
+                    ptr_win->win_input_cursor_x = 0;
                     if (ptr_win == gui_current_window)
-                        move (ptr_win->win_y + ptr_win->win_height - 1,
-                              ptr_win->win_x);
+                        move (ptr_win->win_input_y, ptr_win->win_input_x);
                     break;
             }
             doupdate ();

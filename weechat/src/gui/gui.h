@@ -100,8 +100,10 @@ extern void gui_buffer_move_to_number (t_gui_buffer *, int);
 extern void gui_buffer_print_log (t_gui_buffer *);
 
 /* panel */
+extern int gui_panel_global_get_size (t_gui_panel *, int);
 extern t_gui_panel *gui_panel_new (char *, int, int, int, int);
 extern void gui_panel_free (t_gui_panel *);
+extern void gui_panel_print_log ();
 
 /* action */
 extern void gui_action_clipboard_copy (char *, int);
@@ -220,7 +222,7 @@ extern void gui_status_draw (t_gui_buffer *, int);
 extern void gui_input_draw (t_gui_buffer *, int);
 
 /* nicklist */
-extern void gui_nicklist_draw (t_gui_buffer *, int);
+extern void gui_nicklist_draw (t_gui_buffer *, int, int);
 
 /* window */
 extern int gui_window_get_width ();

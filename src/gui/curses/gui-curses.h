@@ -39,6 +39,9 @@
 #define WEECHAT_COLOR_CYAN    COLOR_YELLOW
 #define WEECHAT_COLOR_WHITE   COLOR_WHITE
 
+#define WINDOW_MIN_WIDTH      10
+#define WINDOW_MIN_HEIGHT     5
+
 #define GUI_CURSES(window) ((t_gui_curses_objects *)(window->gui_objects))
 
 typedef struct t_gui_panel_window t_gui_panel_window;
@@ -92,7 +95,7 @@ extern void gui_window_set_title ();
 extern void gui_window_reset_title ();
 
 /* panel functions */
-extern int gui_panel_get_size (t_gui_window *, int);
+extern int gui_panel_window_get_size (t_gui_panel *, t_gui_window *, int);
 extern void gui_panel_redraw_buffer (t_gui_buffer *);
 
 #endif /* gui-curses.h */

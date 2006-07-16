@@ -419,7 +419,7 @@ extern void dcc_send_request (t_irc_server *, int, char *, char *);
 extern void dcc_chat_sendf (t_irc_dcc *, char *, ...);
 extern void dcc_handle ();
 extern void dcc_end ();
-extern void dcc_print_log (t_irc_dcc *);
+extern void dcc_print_log ();
 
 /* IRC display (irc-diplay.c) */
 

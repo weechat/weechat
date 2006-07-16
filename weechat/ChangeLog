@@ -1,14 +1,15 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-07-07
+ChangeLog - 2006-07-16
 
 Version 0.2.0 (under dev!):
    * added configure option for doc XSL prefix (bug #16991)
    * fixed bug with spaces in script names (bug #16957)
    * fixed random crash when "MODE #chan -l" is received
    * fixed bug in IRC parser (random crash with malformed IRC messages)
-   * fixed refresh bug (too many refresh) when terminal is resized
+   * fixed refresh bugs when terminal is resized: too many refreshs,
+     display bug with splited windows
    * case ignored for channel names in charset options (bug #16858)
    * fixed crash when setting look_one_server_buffer to ON (bug #16932)
    * added new functions in plugin/script API: get window info,

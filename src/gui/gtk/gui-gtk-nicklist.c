@@ -36,7 +36,7 @@
  */
 
 void
-gui_nicklist_draw (t_gui_buffer *buffer, int erase)
+gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
 {
     /*t_gui_window *ptr_win;
     int i, j, x, y, column, max_length, nicks_displayed;
@@ -49,4 +49,5 @@ gui_nicklist_draw (t_gui_buffer *buffer, int erase)
     /* TODO: write this function for Gtk */
     (void) buffer;
     (void) erase;
+    (void) calculate_size;
 }

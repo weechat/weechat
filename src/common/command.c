@@ -59,7 +59,7 @@ t_weechat_command weechat_commands[] =
     N_(" action: action to do:\n"
        "   move: move buffer in the list (may be relative, for example -1)\n"
        "  close: close buffer (optional arg is part message, for a channel)\n"
-       "   list: list opened buffers (no parameter implies this list)\n"
+       "   list: list open buffers (no parameter implies this list)\n"
        " notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)\n"
        "server\n"
        "channel: jump to buffer by server and/or channel name\n"
@@ -128,6 +128,15 @@ t_weechat_command weechat_commands[] =
        "    reset: restore bindings to the default values and delete ALL "
        "personal bindings (use carefully!)"),
     "unbind|functions|reset %k", 0, MAX_ARGS, 0, NULL, weechat_cmd_key },
+  { "panel", N_("manage panels"),
+    N_("[list | add type position size | resize # size | close # | move #1 #2]"),
+    N_("   list: list open panels (no parameter implies this list)\n"
+       "    add: add a panel, type is global|local, position is top|bottom|left|right\n"
+       " resize: resize a panel with a new size (may be relative, for example -1)\n"
+       "  close: close a panel by number\n"
+       "   move: move a panel to another number (may be relative, for example -1)"),
+    "list|add|close|move global|local top|bottom|left|right",
+    0, MAX_ARGS, 0, weechat_cmd_panel, NULL },
   { "plugin", N_("list/load/unload plugins"),
     N_("[load filename] | [autoload] | [reload] | [unload]"),
     N_("filename: WeeChat plugin (file) to load\n\n"
@@ -195,7 +204,7 @@ t_weechat_command weechat_commands[] =
   { "window", N_("manage windows"),
     N_("[list | -1 | +1 | b# | up | down | left | right | splith [pct] "
        "| splitv [pct] | resize pct | merge [all]]"),
-    N_("  list: list opened windows (no parameter implies this list)\n"
+    N_("  list: list open windows (no parameter implies this list)\n"
        "    -1: jump to previous window\n"
        "    +1: jump to next window\n"
        "    b#: jump to next window displaying buffer number #\n"
@@ -1363,10 +1372,10 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
     
     if ((argc == 0) || ((argc == 1) && (ascii_strcasecmp (argv[0], "list") == 0)))
     {
-        /* list opened buffers */
+        /* list open buffers */
         
         gui_printf (NULL, "\n");
-        gui_printf (NULL, _("Opened buffers:\n"));
+        gui_printf (NULL, _("Open buffers:\n"));
         
         for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
         {
@@ -1440,7 +1449,7 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                     irc_display_prefix (NULL, NULL, PREFIX_ERROR);
                     gui_printf (NULL,
                                 _("%s can not close server buffer while channels "
-                                "are opened\n"),
+                                "are open\n"),
                                 WEECHAT_ERROR);
                     free_exploded_string (argv);
                     return -1;
@@ -2654,6 +2663,80 @@ weechat_cmd_key (t_irc_server *server, t_irc_channel *channel,
         }
     }
     
+    return 0;
+}
+
+/*
+ * weechat_cmd_panel_display_info: display infos about a panel
+ */
+
+void
+weechat_cmd_panel_display_info (t_gui_panel *panel)
+{
+    gui_printf (NULL, "  %s%2d%s. ",
+                GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                panel->number,
+                GUI_COLOR(COLOR_WIN_CHAT));
+    gui_printf (NULL, "%s%s%s ",
+                GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                panel->name,
+                GUI_COLOR(COLOR_WIN_CHAT));
+    gui_printf (NULL, "(%s%s/%s",
+                (panel->panel_window) ? _("global") : _("local"),
+                GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                GUI_COLOR(COLOR_WIN_CHAT));
+    switch (panel->position)
+    {
+        case GUI_PANEL_TOP:
+            gui_printf (NULL, "%s", _("top"));
+            break;
+        case GUI_PANEL_BOTTOM:
+            gui_printf (NULL, "%s", _("bottom"));
+            break;
+        case GUI_PANEL_LEFT:
+            gui_printf (NULL, "%s", _("left"));
+            break;
+        case GUI_PANEL_RIGHT:
+            gui_printf (NULL, "%s", _("right"));
+            break;
+    }
+    gui_printf (NULL, "%s/%s%d)\n",
+                GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                GUI_COLOR(COLOR_WIN_CHAT),
+                panel->size);
+}
+
+/*
+ * weechat_cmd_panel: manage panels
+ */
+
+int
+weechat_cmd_panel (t_irc_server *server, t_irc_channel *channel,
+                   int argc, char **argv)
+{
+    t_gui_panel *ptr_panel;
+    
+    /* make gcc happy */
+    (void) server;
+    (void) channel;
+
+    gui_printf (NULL, "\n/panel command is under development!\n");
+    
+    if ((argc == 0) || ((argc == 1) && (ascii_strcasecmp (argv[0], "list") == 0)))
+    {
+        /* list open panels */
+        
+        gui_printf (NULL, "\n");
+        gui_printf (NULL, _("Open panels:\n"));
+        
+        for (ptr_panel = gui_panels; ptr_panel; ptr_panel = ptr_panel->next_panel)
+        {
+            weechat_cmd_panel_display_info (ptr_panel);
+        }
+    }
+    else
+    {
+    }
     return 0;
 }
 
@@ -4006,10 +4089,10 @@ weechat_cmd_window (t_irc_server *server, t_irc_channel *channel,
     
     if ((argc == 0) || ((argc == 1) && (ascii_strcasecmp (argv[0], "list") == 0)))
     {
-        /* list opened windows */
+        /* list open windows */
         
         gui_printf (NULL, "\n");
-        gui_printf (NULL, _("Opened windows:\n"));
+        gui_printf (NULL, _("Open windows:\n"));
         
         i = 1;
         for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)

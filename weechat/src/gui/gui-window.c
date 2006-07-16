@@ -213,7 +213,7 @@ gui_window_new (t_gui_window *parent, int x, int y, int width, int height,
         new_window->win_nick_num_max = 0;
         new_window->win_nick_start = 0;
             
-        new_window->win_input_x = 0;
+        new_window->win_input_cursor_x = 0;
             
         new_window->dcc_first = NULL;
         new_window->dcc_selected = NULL;
@@ -409,6 +409,23 @@ gui_window_print_log (t_gui_window *window)
     weechat_log_printf ("  win_nick_width. . . : %d\n",   window->win_nick_width);
     weechat_log_printf ("  win_nick_height . . : %d\n",   window->win_nick_height);
     weechat_log_printf ("  win_nick_start. . . : %d\n",   window->win_nick_start);
+    weechat_log_printf ("  win_title_x . . . . : %d\n",   window->win_title_x);
+    weechat_log_printf ("  win_title_y . . . . : %d\n",   window->win_title_y);
+    weechat_log_printf ("  win_title_width . . : %d\n",   window->win_title_width);
+    weechat_log_printf ("  win_title_height. . : %d\n",   window->win_title_height);
+    weechat_log_printf ("  win_status_x. . . . : %d\n",   window->win_status_x);
+    weechat_log_printf ("  win_status_y. . . . : %d\n",   window->win_status_y);
+    weechat_log_printf ("  win_status_width. . : %d\n",   window->win_status_width);
+    weechat_log_printf ("  win_status_height . : %d\n",   window->win_status_height);
+    weechat_log_printf ("  win_infobar_x . . . : %d\n",   window->win_infobar_x);
+    weechat_log_printf ("  win_infobar_y . . . : %d\n",   window->win_infobar_y);
+    weechat_log_printf ("  win_infobar_width . : %d\n",   window->win_infobar_width);
+    weechat_log_printf ("  win_infobar_height. : %d\n",   window->win_infobar_height);
+    weechat_log_printf ("  win_input_x . . . . : %d\n",   window->win_input_x);
+    weechat_log_printf ("  win_input_y . . . . : %d\n",   window->win_input_y);
+    weechat_log_printf ("  win_input_width . . : %d\n",   window->win_input_width);
+    weechat_log_printf ("  win_input_height. . : %d\n",   window->win_input_height);
+    weechat_log_printf ("  win_input_cursor_x. : %d\n",   window->win_input_cursor_x);
     gui_window_objects_print_log (window);
     weechat_log_printf ("  dcc_first . . . . . : 0x%X\n", window->dcc_first);
     weechat_log_printf ("  dcc_selected. . . . : 0x%X\n", window->dcc_selected);
@@ -419,5 +436,4 @@ gui_window_print_log (t_gui_window *window)
     weechat_log_printf ("  start_line_pos. . . : %d\n",   window->start_line_pos);
     weechat_log_printf ("  prev_window . . . . : 0x%X\n", window->prev_window);
     weechat_log_printf ("  next_window . . . . : 0x%X\n", window->next_window);
-    
 }

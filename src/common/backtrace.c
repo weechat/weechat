@@ -145,6 +145,8 @@ weechat_backtrace ()
 #endif
 
     weechat_backtrace_printf ("======= WeeChat backtrace =======\n");
+    weechat_backtrace_printf ("(written by %s, compiled on %s %s)\n",
+                              PACKAGE_STRING, __DATE__, __TIME__);
 
 #ifdef HAVE_BACKTRACE
     trace_size = backtrace (trace, BACKTRACE_MAX);

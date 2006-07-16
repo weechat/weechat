@@ -937,7 +937,6 @@ weechat_dump (int crash)
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
     t_irc_nick *ptr_nick;
-    t_irc_dcc *ptr_dcc;
     t_gui_window *ptr_window;
     t_gui_buffer *ptr_buffer;
     
@@ -984,11 +983,9 @@ weechat_dump (int crash)
         }
     }
     
-    weechat_log_printf ("\n");
-    for (ptr_dcc = dcc_list; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
-    {
-        dcc_print_log (ptr_dcc);
-    }
+    dcc_print_log ();
+    
+    gui_panel_print_log ();
     
     weechat_log_printf ("\n");
     weechat_log_printf ("[windows/buffers]\n");
@@ -1015,7 +1012,7 @@ weechat_dump (int crash)
         weechat_log_printf ("\n");
         gui_buffer_print_log (ptr_buffer);
     }
-
+    
     weechat_log_printf ("\n");
     ignore_print_log ();
     
@@ -1038,8 +1035,6 @@ weechat_sigsegv ()
 
     fprintf (stderr, "\n");
     fprintf (stderr, "*** Very bad! WeeChat is crashing (SIGSEGV received)\n");
-    fprintf (stderr, "*** (%s, compiled on %s %s)\n",
-             PACKAGE_STRING, __DATE__, __TIME__);
     if (!weechat_log_crash_rename ())
         fprintf (stderr, "*** Full crash dump was saved to %s/weechat.log file.\n",
                  weechat_home);

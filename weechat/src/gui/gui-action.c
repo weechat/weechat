@@ -1200,7 +1200,7 @@ gui_action_refresh_screen (t_gui_window *window)
     /* make gcc happy */
     (void) window;
     
-    gui_window_refresh_screen ();
+    gui_window_refresh_screen (1);
 }
 
 /*

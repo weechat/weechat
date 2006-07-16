@@ -21,9 +21,6 @@
 #ifndef __WEECHAT_GUI_WINDOW_H
 #define __WEECHAT_GUI_WINDOW_H 1
 
-#define WINDOW_MIN_WIDTH        10
-#define WINDOW_MIN_HEIGHT       5
-
 /* window structures */
 
 typedef struct t_gui_window_tree t_gui_window_tree;
@@ -54,9 +51,31 @@ struct t_gui_window
     int win_nick_num_max;           /* maximum number of nicks displayed    */
     int win_nick_start;             /* # of 1st nick for display (scroll)   */
     
+    /* title window settings */
+    int win_title_x;                /* title window position                */
+    int win_title_y;                /* title window position                */
+    int win_title_width;            /* width of title window                */
+    int win_title_height;           /* height of title window               */
+    
+    /* status bar settings */
+    int win_status_x;               /* status window position               */
+    int win_status_y;               /* status window position               */
+    int win_status_width;           /* width of status window               */
+    int win_status_height;          /* height of status window              */
+    
+    /* infobar bar settings */
+    int win_infobar_x;              /* infobar window position              */
+    int win_infobar_y;              /* infobar window position              */
+    int win_infobar_width;          /* width of infobar window              */
+    int win_infobar_height;         /* height of infobar window             */
+    
     /* input window settings */
-    int win_input_x;                /* position of cursor in input window   */
-
+    int win_input_x;                /* input window position                */
+    int win_input_y;                /* input window position                */
+    int win_input_width;            /* width of input window                */
+    int win_input_height;           /* height of input window               */
+    int win_input_cursor_x;         /* position of cursor in input window   */
+    
     /* GUI specific objects */
     void *gui_objects;              /* pointer to a GUI specific struct     */
     

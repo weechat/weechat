@@ -403,7 +403,7 @@ channel_remove_away (t_irc_channel *channel)
         {
             NICK_SET_FLAG(ptr_nick, 0, NICK_AWAY);
         }
-        gui_nicklist_draw (channel->buffer, 0);
+        gui_nicklist_draw (channel->buffer, 0, 0);
     }
 }
 

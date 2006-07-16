@@ -73,7 +73,7 @@ gui_main_loop ()
     {
         /* refresh needed ? */
         if (gui_refresh_screen_needed)
-            gui_window_refresh_screen ();
+            gui_window_refresh_screen (0);
         
         new_time = time (NULL);
         local_time = localtime (&new_time);
@@ -112,7 +112,7 @@ gui_main_loop ()
             {
                 gui_infobar_draw_time (gui_current_window->buffer);
                 wmove (GUI_CURSES(gui_current_window)->win_input,
-                       0, gui_current_window->win_input_x);
+                       0, gui_current_window->win_input_cursor_x);
                 wrefresh (GUI_CURSES(gui_current_window)->win_input);
             }
             
@@ -291,7 +291,7 @@ gui_main_init ()
     
     gui_infobar = NULL;
     
-    gui_ok = ((COLS > 5) && (LINES > 5));
+    gui_ok = ((COLS > WINDOW_MIN_WIDTH) && (LINES > WINDOW_MIN_HEIGHT));
 
     refresh ();
     

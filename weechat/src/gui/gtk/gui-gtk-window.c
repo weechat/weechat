@@ -386,7 +386,7 @@ gui_window_nick_beginning (t_gui_window *window)
         if (window->win_nick_start > 0)
         {
             window->win_nick_start = 0;
-            gui_nicklist_draw (window->buffer, 1);
+            gui_nicklist_draw (window->buffer, 1, 0);
         }
     }
 }
@@ -415,7 +415,7 @@ gui_window_nick_end (t_gui_window *window)
         if (new_start != window->win_nick_start)
         {
             window->win_nick_start = new_start;
-            gui_nicklist_draw (window->buffer, 1);
+            gui_nicklist_draw (window->buffer, 1, 0);
         }
     }
 }
@@ -437,7 +437,7 @@ gui_window_nick_page_up (t_gui_window *window)
             window->win_nick_start -= (window->win_nick_height - 1);
             if (window->win_nick_start <= 1)
                 window->win_nick_start = 0;
-            gui_nicklist_draw (window->buffer, 1);
+            gui_nicklist_draw (window->buffer, 1, 0);
         }
     }
 }
@@ -462,7 +462,7 @@ gui_window_nick_page_down (t_gui_window *window)
                 window->win_nick_start += (window->win_nick_height - 1);
             else
                 window->win_nick_start += (window->win_nick_height - 2);
-            gui_nicklist_draw (window->buffer, 1);
+            gui_nicklist_draw (window->buffer, 1, 0);
         }
     }
 }
@@ -485,8 +485,6 @@ gui_window_auto_resize (t_gui_window_tree *tree,
     {
         if (tree->window)
         {
-            if ((width < WINDOW_MIN_WIDTH) || (height < WINDOW_MIN_HEIGHT))
-                return -1;
             if (!simulate)
             {
                 tree->window->win_x = x;
@@ -555,8 +553,7 @@ gui_window_split_horiz (t_gui_window *window, int pourcentage)
     height1 = (window->win_height * pourcentage) / 100;
     height2 = window->win_height - height1;
     
-    if ((height1 >= WINDOW_MIN_HEIGHT) && (height2 >= WINDOW_MIN_HEIGHT)
-        && (pourcentage > 0) && (pourcentage <= 100))
+    if ((pourcentage > 0) && (pourcentage <= 100))
     {
         if ((new_window = gui_window_new (window,
                                           window->win_x, window->win_y,
@@ -597,8 +594,7 @@ gui_window_split_vertic (t_gui_window *window, int pourcentage)
     width1 = (window->win_width * pourcentage) / 100;
     width2 = window->win_width - width1 - 1;
     
-    if ((width1 >= WINDOW_MIN_WIDTH) && (width2 >= WINDOW_MIN_WIDTH)
-        && (pourcentage > 0) && (pourcentage <= 100))
+    if ((pourcentage > 0) && (pourcentage <= 100))
     {
         if ((new_window = gui_window_new (window,
                                           window->win_x + width1 + 1, window->win_y,

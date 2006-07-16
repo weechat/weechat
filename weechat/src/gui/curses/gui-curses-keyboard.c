@@ -143,9 +143,12 @@ gui_keyboard_default_bindings ()
 void
 gui_keyboard_grab_end ()
 {
-    char *expanded_key, *expanded_key2;
-    int length;
+    char *expanded_key;
     char *buffer_before_key;
+#ifdef PLUGINS
+    char *expanded_key2;
+    int length;
+#endif
 
     /* get expanded name (for example: ^U => ctrl-u) */
     expanded_key = gui_keyboard_get_expanded_name (gui_key_buffer);
@@ -193,8 +196,11 @@ void
 gui_keyboard_read ()
 {
     int key, i, insert_ok;
-    char key_str[32], key_str2[33];
+    char key_str[32];
     char *buffer_before_key;
+#ifdef PLUGINS
+    char key_str2[33];
+#endif
     
     i = 0;
     /* do not loop too much here (for example when big paste was made),
@@ -215,10 +221,7 @@ gui_keyboard_read ()
         }
         
         if (key == KEY_RESIZE)
-        {
-            gui_window_refresh_screen ();
             continue;
-        }
         
         gui_last_activity_time = time (NULL);
                 
