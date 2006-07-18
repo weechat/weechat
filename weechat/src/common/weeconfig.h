@@ -87,6 +87,7 @@ struct t_config_option
     void (*handler_change)();
 };
 
+extern int cfg_look_save_on_exit;
 extern int cfg_look_set_title;
 extern int cfg_look_startup_logo;
 extern int cfg_look_startup_version;
@@ -246,6 +247,7 @@ extern t_config_option * weechat_options [CONFIG_NUMBER_SECTIONS];
 
 extern char *config_get_section ();
 extern void config_change_noop ();
+extern void config_change_save_on_exit ();
 extern void config_change_title ();
 extern void config_change_buffers ();
 extern void config_change_buffer_content ();

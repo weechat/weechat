@@ -1102,7 +1102,8 @@ main (int argc, char *argv[])
     plugin_end ();                      /* end plugin interface(s)          */
 #endif
     server_disconnect_all ();           /* disconnect from all servers      */
-    (void) config_write (NULL);         /* save config file                 */
+    if (cfg_look_save_on_exit)
+        (void) config_write (NULL);     /* save config file                 */
     command_index_free ();              /* free commands index              */
     dcc_end ();                         /* remove all DCC                   */
     server_free_all ();                 /* free all servers                 */

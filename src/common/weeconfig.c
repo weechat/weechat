@@ -64,6 +64,7 @@ t_config_section config_sections[CONFIG_NUMBER_SECTIONS] =
 
 /* config, look & feel section */
 
+int cfg_look_save_on_exit;
 int cfg_look_set_title;
 int cfg_look_startup_logo;
 int cfg_look_startup_version;
@@ -111,7 +112,11 @@ char *cfg_look_read_marker;
 char *cfg_look_input_format;
 
 t_config_option weechat_options_look[] =
-{ { "look_set_title", N_("set title for window (terminal for Curses GUI) with name and version"),
+{ { "look_save_on_exit", N_("save config file on exit"),
+    N_("save config file on exit"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
+    NULL, NULL, &cfg_look_save_on_exit, NULL, config_change_save_on_exit },
+  { "look_set_title", N_("set title for window (terminal for Curses GUI) with name and version"),
     N_("set title for window (terminal for Curses GUI) with name and version"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
     NULL, NULL, &cfg_look_set_title, NULL, config_change_title },
@@ -1100,6 +1105,22 @@ void
 config_change_noop ()
 {
     /* do nothing */
+}
+
+/*
+ * config_change_save_on_exit: called when "save_on_exit" flag is changed
+ */
+
+void
+config_change_save_on_exit ()
+{
+    if (!cfg_look_save_on_exit)
+    {
+        gui_printf (NULL, "\n");
+        gui_printf (NULL, _("%s you should now issue /save to write "
+                            "\"save_on_exit\" option in config file.\n"),
+                    WEECHAT_WARNING);
+    }
 }
 
 /*

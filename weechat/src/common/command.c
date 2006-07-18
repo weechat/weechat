@@ -3458,7 +3458,6 @@ weechat_cmd_set (t_irc_server *server, t_irc_channel *channel,
                 {
                     if (config_option_set_value (ptr_option, value) == 0)
                     {
-                        (void) (ptr_option->handler_change());
                         gui_printf (NULL, "\n");
                         gui_printf (NULL, "%s[%s%s%s]\n",
                                     GUI_COLOR(COLOR_WIN_CHAT_DARK),
@@ -3466,6 +3465,7 @@ weechat_cmd_set (t_irc_server *server, t_irc_channel *channel,
                                     config_get_section (ptr_option),
                                     GUI_COLOR(COLOR_WIN_CHAT_DARK));
                         weechat_cmd_set_display_option (ptr_option, NULL, NULL);
+                        (void) (ptr_option->handler_change());
                     }
                     else
                     {
@@ -3982,7 +3982,8 @@ weechat_cmd_upgrade (t_irc_server *server, t_irc_channel *channel,
 #ifdef PLUGINS    
     plugin_end ();
 #endif
-    (void) config_write (NULL);
+    if (cfg_look_save_on_exit)
+        (void) config_write (NULL);
     gui_main_end ();
     fifo_remove ();
     weechat_log_close ();
