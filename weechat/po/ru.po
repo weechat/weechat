@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.2.0-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2006-07-18 09:21+0200\n"
-"PO-Revision-Date: 2006-07-01 13:53+0200\n"
+"PO-Revision-Date: 2006-07-19 23:42+0300\n"
 "Last-Translator: Stalwart <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2705,7 +2705,6 @@ msgid "[action [args] | number | [[server] [channel]]]"
 msgstr "[действие [аргументы] | номер | [[сервер] [канал]]]"
 
 #: src/common/command.c:59
-#, fuzzy
 msgid ""
 " action: action to do:\n"
 "   move: move buffer in the list (may be relative, for example -1)\n"
@@ -2722,7 +2721,7 @@ msgstr ""
 "1)\n"
 "   close: закрыть буфер (необязательный аргумент - сообщение покидания "
 "канала)\n"
-"    list: список открытых буферов (отсутствие параметров подразумевает "
+"    list: список открытых буферов (отсутствие параметров подразумевает этот "
 "список)\n"
 "  notify: установить уровень уведомления для канала (0=никогда, 1=подсветка, "
 "2=1+сообщение, 3=2+вход/выход)\n"
@@ -2919,13 +2918,13 @@ msgstr ""
 "внимательно!)"
 
 #: src/common/command.c:131
-#, fuzzy
 msgid "manage panels"
-msgstr "управление окнами"
+msgstr "управление панелями"
 
 #: src/common/command.c:132
 msgid "[list | add type position size | resize # size | close # | move #1 #2]"
 msgstr ""
+"[list | add тип расположение размер | resize # размер | close # | move #1 #2]"
 
 #: src/common/command.c:133
 msgid ""
@@ -2936,6 +2935,14 @@ msgid ""
 "  close: close a panel by number\n"
 "   move: move a panel to another number (may be relative, for example -1)"
 msgstr ""
+"   list: перечислить открытые панели (отсутствие параметра подразумевает "
+"этот список)\n"
+"    add: добавить панель, тип - global|local, расположение - top|bottom|left|"
+"right\n"
+" resize: изменить размер панели (может быть относительным, например -1)\n"
+"  close: закрыть панель с определённым номером\n"
+"   move: переместить панель на другой номер (может быть относительным, "
+"например -1)"
 
 #: src/common/command.c:140
 msgid "list/load/unload plugins"
@@ -3127,7 +3134,6 @@ msgstr ""
 "[pct] | resize pct | merge [all]]"
 
 #: src/common/command.c:207
-#, fuzzy
 msgid ""
 "  list: list open windows (no parameter implies this list)\n"
 "    -1: jump to previous window\n"
@@ -3150,7 +3156,7 @@ msgstr ""
 "список)\n"
 "    -1: перейти к предыдущему окну\n"
 "    +1: перейти к следующему окну\n"
-"    b#: перейти к следующему окну с буфером #\n"
+"    b#: перейти к следующему окну с буфером номер #\n"
 "    up: переключиться на окно выше текущего\n"
 "  down: переключиться на окно ниже текущего\n"
 "  left: переключиться на окно слева\n"
@@ -3286,7 +3292,6 @@ msgid "%sraw IRC data\n"
 msgstr "%sсырые IRC данные\n"
 
 #: src/common/command.c:1378
-#, fuzzy
 msgid "Open buffers:\n"
 msgstr "Открытые буферы:\n"
 
@@ -3301,9 +3306,9 @@ msgid "%s can not close the single buffer\n"
 msgstr "%s невозможно закрыть единственный буфер\n"
 
 #: src/common/command.c:1451
-#, fuzzy, c-format
+#, c-format
 msgid "%s can not close server buffer while channels are open\n"
-msgstr "%s невозможно закрыть буфер сервера пока открыты буферы каналов\n"
+msgstr "%s невозможно закрыть буфер сервера пока открыты каналы\n"
 
 #: src/common/command.c:1523
 msgid "Notify levels:  "
@@ -3468,33 +3473,31 @@ msgstr ""
 
 #: src/common/command.c:2685
 msgid "global"
-msgstr ""
+msgstr "глобальная"
 
 #: src/common/command.c:2685
 msgid "local"
-msgstr ""
+msgstr "локальная"
 
 #: src/common/command.c:2691
-#, fuzzy
 msgid "top"
-msgstr "оп"
+msgstr "сверху"
 
 #: src/common/command.c:2694
 msgid "bottom"
-msgstr ""
+msgstr "внизу"
 
 #: src/common/command.c:2697
 msgid "left"
-msgstr ""
+msgstr "слева"
 
 #: src/common/command.c:2700
 msgid "right"
-msgstr ""
+msgstr "справа"
 
 #: src/common/command.c:2730
-#, fuzzy
 msgid "Open panels:\n"
-msgstr "Открытые буферы:\n"
+msgstr "Открытые панели:\n"
 
 #: src/common/command.c:2766
 msgid "Plugins loaded:\n"
@@ -3831,7 +3834,6 @@ msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr "WeeChat работает: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, запущен %s%s"
 
 #: src/common/command.c:4096
-#, fuzzy
 msgid "Open windows:\n"
 msgstr "Открытые окна:\n"
 
@@ -4394,9 +4396,8 @@ msgid "WeeChat Warning:"
 msgstr "Предупреждение WeeChat:"
 
 #: src/common/weeconfig.c:115 src/common/weeconfig.c:116
-#, fuzzy
 msgid "save config file on exit"
-msgstr "сохранить конфигурацию"
+msgstr "сохранять конфигурационный файл при выходе"
 
 #: src/common/weeconfig.c:119 src/common/weeconfig.c:120
 msgid "set title for window (terminal for Curses GUI) with name and version"
@@ -5596,6 +5597,8 @@ msgid ""
 "%s you should now issue /save to write \"save_on_exit\" option in config "
 "file.\n"
 msgstr ""
+"%s вам следует набрать /save чтобы записать параметр \"save_on_exit\" в "
+"конфигурационный файл.\n"
 
 #: src/common/weeconfig.c:1742
 #, c-format
