@@ -75,7 +75,7 @@ A:	For help you can type /help. For help about a command, type /help command.
 
 2.3
 ================================================================================
-Q:	I don't see come chars with accents, what can I do?
+Q:	I don't see some chars with accents, what can I do?
 
 A:	You have to setup charset used for decoding (ISO and UTF), encoding, and
 	internal WeeChat charset.
