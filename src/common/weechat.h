@@ -110,6 +110,7 @@ extern int ascii_strcasecmp (char *, char *);
 extern int ascii_strncasecmp (char *, char *, int);
 extern char *ascii_strcasestr (char *, char *);
 extern char *weechat_iconv (char *, char *, char *);
+extern int weechat_iconv_check (char *, char *);
 extern char *weechat_strreplace (char *, char *, char *);
 extern void weechat_dump (int);
 extern long get_timeval_diff (struct timeval *, struct timeval *);

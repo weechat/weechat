@@ -1837,11 +1837,32 @@ weechat_cmd_charset_display (t_gui_buffer *buffer)
 
 /*
  * weechat_cmd_charset_set: set a charset for server or channel
+ *                          from_internal == 1 if charset is used to encode data,
+ *                          0 if charset is used to decode data
  */
 
-void
-weechat_cmd_charset_set (t_gui_buffer *buffer, char **string, char *charset)
+int
+weechat_cmd_charset_set (t_gui_buffer *buffer, char **string, char *charset,
+                         int from_internal)
 {
+    int iconv_ok;
+    
+    if (charset)
+    {
+        if (from_internal)
+            iconv_ok = weechat_iconv_check (NULL, charset);
+        else
+            iconv_ok = weechat_iconv_check (charset, NULL);
+        
+        if (!iconv_ok)
+        {
+            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+            gui_printf (NULL,
+                        _("%s charset \"%s\" is not available\n"),
+                        WEECHAT_ERROR, charset);
+            return -1;
+        }
+    }
     if (BUFFER_IS_SERVER(buffer))
     {
         if (charset)
@@ -1859,6 +1880,7 @@ weechat_cmd_charset_set (t_gui_buffer *buffer, char **string, char *charset)
             config_option_list_remove (string, CHANNEL(buffer)->name);
         weechat_cmd_charset_display (buffer);
     }
+    return 0;
 }
 
 /*
@@ -1870,6 +1892,7 @@ weechat_cmd_charset (t_irc_server *server, t_irc_channel *channel,
                      int argc, char **argv)
 {
     t_gui_buffer *buffer;
+    int rc;
     
     irc_find_context (server, channel, NULL, &buffer);
     
@@ -1878,17 +1901,17 @@ weechat_cmd_charset (t_irc_server *server, t_irc_channel *channel,
     else
     {
         if (ascii_strcasecmp (argv[0], "decode_iso") == 0)
-            weechat_cmd_charset_set (buffer,
-                                     &(SERVER(buffer)->charset_decode_iso),
-                                     (argc > 1) ? argv[1] : NULL);
+            rc = weechat_cmd_charset_set (buffer,
+                                          &(SERVER(buffer)->charset_decode_iso),
+                                          (argc > 1) ? argv[1] : NULL, 0);
         else if (ascii_strcasecmp (argv[0], "decode_utf") == 0)
-            weechat_cmd_charset_set (buffer,
-                                     &(SERVER(buffer)->charset_decode_utf),
-                                     (argc > 1) ? argv[1] : NULL);
+            rc = weechat_cmd_charset_set (buffer,
+                                          &(SERVER(buffer)->charset_decode_utf),
+                                          (argc > 1) ? argv[1] : NULL, 0);
         else if (ascii_strcasecmp (argv[0], "encode") == 0)
-            weechat_cmd_charset_set (buffer,
-                                     &(SERVER(buffer)->charset_encode),
-                                     (argc > 1) ? argv[1] : NULL);
+            rc = weechat_cmd_charset_set (buffer,
+                                          &(SERVER(buffer)->charset_encode),
+                                          (argc > 1) ? argv[1] : NULL, 1);
         else
         {
             irc_display_prefix (NULL, NULL, PREFIX_ERROR);
@@ -1897,6 +1920,8 @@ weechat_cmd_charset (t_irc_server *server, t_irc_channel *channel,
                         WEECHAT_ERROR, "charset");
             return -1;
         }
+        if (rc < 0)
+            return -1;
     }
     return 0;
 }

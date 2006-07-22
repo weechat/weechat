@@ -1,9 +1,10 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-07-18
+ChangeLog - 2006-07-22
 
 Version 0.2.0 (under dev!):
+   * charsets are now checked when set by /charset command
    * added "look_save_on_exit" option (patch from Emanuele Giaquinta)
    * fixed crash on DCC buffer under Darwin 8 (bug #17115)
    * added configure option for doc XSL prefix (bug #16991)

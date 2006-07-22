@@ -275,6 +275,35 @@ weechat_iconv (char *from_code, char *to_code, char *string)
 }
 
 /*
+ * weechat_iconv_check: check a charset
+ *                      if a charset is NULL, internal charset is used
+ */
+
+int
+weechat_iconv_check (char *from_code, char *to_code)
+{
+#ifdef HAVE_ICONV
+    iconv_t cd;
+    
+    if (!from_code || !from_code[0])
+        from_code = (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
+            cfg_look_charset_internal : local_charset;
+
+    if (!to_code || !to_code[0])
+        to_code = (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
+            cfg_look_charset_internal : local_charset;
+
+    cd = iconv_open (to_code, from_code);
+    if (cd == (iconv_t)(-1))
+        return 0;
+    iconv_close (cd);
+    return 1;
+#else
+    return 1;
+#endif
+}
+
+/*
  * weechat_strreplace: replace a string by new one in a string
  *                     note: returned value has to be free() after use
  */
