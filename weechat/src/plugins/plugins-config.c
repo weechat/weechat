@@ -33,6 +33,7 @@
 #include "../common/weechat.h"
 #include "weechat-plugin.h"
 #include "plugins-config.h"
+#include "../common/util.h"
 #include "../irc/irc.h"
 
 

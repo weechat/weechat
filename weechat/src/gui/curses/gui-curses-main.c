@@ -34,6 +34,7 @@
 #include "../gui.h"
 #include "../../common/fifo.h"
 #include "../../common/utf8.h"
+#include "../../common/util.h"
 #include "../../common/weeconfig.h"
 #include "gui-curses.h"
 

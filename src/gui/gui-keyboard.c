@@ -32,6 +32,7 @@
 #include "gui.h"
 #include "../common/command.h"
 #include "../common/log.h"
+#include "../common/util.h"
 
 #ifdef PLUGINS
 #include "../plugins/plugins.h"

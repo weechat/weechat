@@ -38,6 +38,7 @@
 #include "plugins.h"
 #include "plugins-config.h"
 #include "../common/command.h"
+#include "../common/util.h"
 #include "../common/weeconfig.h"
 #include "../irc/irc.h"
 #include "../gui/gui.h"

@@ -30,6 +30,7 @@
 #include "weechat.h"
 #include "weelist.h"
 #include "log.h"
+#include "util.h"
 
 
 /*

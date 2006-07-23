@@ -29,6 +29,7 @@
 
 #include "weechat.h"
 #include "history.h"
+#include "util.h"
 #include "weeconfig.h"
 #include "../gui/gui.h"
 

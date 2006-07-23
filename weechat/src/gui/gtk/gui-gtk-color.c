@@ -30,6 +30,7 @@
 
 #include "../../common/weechat.h"
 #include "../gui.h"
+#include "../../common/util.h"
 #include "../../common/weeconfig.h"
 #include "gui-gtk.h"
 

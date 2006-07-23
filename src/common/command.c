@@ -34,6 +34,7 @@
 #include "log.h"
 #include "session.h"
 #include "utf8.h"
+#include "util.h"
 #include "weelist.h"
 #include "weeconfig.h"
 #include "../irc/irc.h"

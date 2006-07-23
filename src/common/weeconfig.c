@@ -41,6 +41,7 @@
 #include "fifo.h"
 #include "log.h"
 #include "utf8.h"
+#include "util.h"
 #include "../irc/irc.h"
 #include "../gui/gui.h"
 

@@ -42,4 +42,6 @@ lib_weechat_main_a_SOURCES = weechat.c \
                              session.c \
                              session.h \
                              utf8.c \
-                             utf8.h
+                             utf8.h \
+                             util.c \
+                             util.h

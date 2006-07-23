@@ -31,6 +31,7 @@
 #include "irc.h"
 #include "../common/command.h"
 #include "../common/log.h"
+#include "../common/util.h"
 
 
 char *ignore_types[] =
