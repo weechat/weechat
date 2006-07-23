@@ -436,7 +436,6 @@ gui_input_draw (t_gui_buffer *buffer, int erase)
                         move (ptr_win->win_input_y, ptr_win->win_input_x);
                     break;
             }
-            doupdate ();
             wrefresh (GUI_CURSES(ptr_win)->win_input);
             refresh ();
         }
