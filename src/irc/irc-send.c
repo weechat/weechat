@@ -1532,17 +1532,25 @@ irc_cmd_send_part (t_irc_server *server, t_irc_channel *channel,
         }
         else
         {
+            if (!CHANNEL(buffer))
+            {
+                irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
+                gui_printf_nolog (server->buffer,
+                                  _("%s \"%s\" command can only be executed in a channel or private buffer\n"),
+                                  WEECHAT_ERROR, "part");
+                return -1;
+            }
             channel_name = CHANNEL(buffer)->name;
             pos_args = arguments;
         }
     }
     else
     {
-        if (BUFFER_IS_SERVER(buffer))
+        if (!CHANNEL(buffer))
         {
             irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
             gui_printf_nolog (server->buffer,
-                              _("%s \"%s\" command can not be executed on a server buffer\n"),
+                              _("%s \"%s\" command can only be executed in a channel or private buffer\n"),
                               WEECHAT_ERROR, "part");
             return -1;
         }

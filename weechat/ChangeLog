@@ -1,9 +1,10 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-07-22
+ChangeLog - 2006-07-25
 
 Version 0.2.0 (under dev!):
+   * fixed crash when doing "/part something" on a server buffer (bug #17201)
    * charsets are now checked when set by /charset command
    * added "look_save_on_exit" option (patch from Emanuele Giaquinta)
    * fixed crash on DCC buffer under Darwin 8 (bug #17115)
