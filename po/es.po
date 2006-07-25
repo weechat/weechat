@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Weechat 0.2.0-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-07-22 21:37+0200\n"
-"PO-Revision-Date: 2006-07-01 13:53+0200\n"
+"POT-Creation-Date: 2006-07-25 19:59+0200\n"
+"PO-Revision-Date: 2006-07-25 20:00+0200\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/irc/irc-server.c:191 src/common/weeconfig.c:2289
+#: src/irc/irc-server.c:191 src/common/weeconfig.c:2290
 msgid "Unable to get user's name"
 msgstr "No ha sido posible obtener el nombre de usuario"
 
@@ -171,7 +171,7 @@ msgstr "%s: Reconectando al servidor...\n"
 msgid "Disconnected from server!\n"
 msgstr "¡Desconectado del servidor!\n"
 
-#: src/irc/irc-channel.c:54
+#: src/irc/irc-channel.c:55
 #, c-format
 msgid "%s cannot allocate new channel"
 msgstr "%s no ha sido posible crear un nuevo canal"
@@ -949,127 +949,103 @@ msgstr ""
 "número es negativo)\n"
 "destinatario: la respuesta debería concordar con esta máscara"
 
-#: src/irc/irc-commands.c:308 src/irc/irc-commands.c:310
-#: src/irc/irc-commands.c:312 src/irc/irc-commands.c:314
-#: src/irc/irc-commands.c:316 src/irc/irc-commands.c:318
-#: src/irc/irc-commands.c:320 src/irc/irc-commands.c:322
-#: src/irc/irc-commands.c:324 src/irc/irc-commands.c:326
-#: src/irc/irc-commands.c:328 src/irc/irc-commands.c:330
-#: src/irc/irc-commands.c:334 src/irc/irc-commands.c:336
-#: src/irc/irc-commands.c:338 src/irc/irc-commands.c:340
-#: src/irc/irc-commands.c:342 src/irc/irc-commands.c:344
-#: src/irc/irc-commands.c:346 src/irc/irc-commands.c:348
-#: src/irc/irc-commands.c:350 src/irc/irc-commands.c:352
-#: src/irc/irc-commands.c:354 src/irc/irc-commands.c:356
-#: src/irc/irc-commands.c:358 src/irc/irc-commands.c:360
-#: src/irc/irc-commands.c:362 src/irc/irc-commands.c:364
-#: src/irc/irc-commands.c:366 src/irc/irc-commands.c:368
-#: src/irc/irc-commands.c:370 src/irc/irc-commands.c:372
-#: src/irc/irc-commands.c:374 src/irc/irc-commands.c:376
-#: src/irc/irc-commands.c:460 src/irc/irc-commands.c:462
-#: src/irc/irc-commands.c:464 src/irc/irc-commands.c:466
-#: src/irc/irc-commands.c:468 src/irc/irc-commands.c:470
-#: src/irc/irc-commands.c:588
+#: src/irc/irc-commands.c:308
 msgid "a server message"
 msgstr "un mensaje de servidor"
 
-#: src/irc/irc-commands.c:332
+#: src/irc/irc-commands.c:310
 msgid "user mode string"
 msgstr "cadena de modo usuario"
 
-#: src/irc/irc-commands.c:378
+#: src/irc/irc-commands.c:312
 msgid "away message"
 msgstr "mensaje de ausencia"
 
-#: src/irc/irc-commands.c:380
+#: src/irc/irc-commands.c:314
 msgid "userhost"
 msgstr "nombre de la máquina de usuario"
 
-#: src/irc/irc-commands.c:382
+#: src/irc/irc-commands.c:316
 msgid "ison"
 msgstr "está presente"
 
-#: src/irc/irc-commands.c:384
+#: src/irc/irc-commands.c:318
 msgid "unaway"
 msgstr "no ausente"
 
-#: src/irc/irc-commands.c:386
+#: src/irc/irc-commands.c:320
 msgid "now away"
 msgstr "ahora ausente"
 
-#: src/irc/irc-commands.c:388
+#: src/irc/irc-commands.c:322
 msgid "whois (registered nick)"
 msgstr "quién es (usuario registrado)"
 
-#: src/irc/irc-commands.c:390
-msgid "available for help"
-msgstr ""
-
-#: src/irc/irc-commands.c:392
+#: src/irc/irc-commands.c:324
 msgid "whois (user)"
 msgstr "quién es (usuario)"
 
-#: src/irc/irc-commands.c:394
+#: src/irc/irc-commands.c:326
 msgid "whois (server)"
 msgstr "quién es (servidor)"
 
-#: src/irc/irc-commands.c:396
+#: src/irc/irc-commands.c:328
 msgid "whois (operator)"
 msgstr "quién es (operador)"
 
-#: src/irc/irc-commands.c:398
+#: src/irc/irc-commands.c:330
 msgid "whowas"
 msgstr "quién era"
 
-#: src/irc/irc-commands.c:400
+#: src/irc/irc-commands.c:332
 msgid "end of /who list"
 msgstr "fin de la lista /who"
 
-#: src/irc/irc-commands.c:402
+#: src/irc/irc-commands.c:334
 msgid "whois (idle)"
 msgstr "quién es (idle)"
 
-#: src/irc/irc-commands.c:404
+#: src/irc/irc-commands.c:336
 msgid "whois (end)"
 msgstr "quién es (fin)"
 
-#: src/irc/irc-commands.c:406
+#: src/irc/irc-commands.c:338
 msgid "whois (channels)"
 msgstr "quién es (canales)"
 
-#: src/irc/irc-commands.c:408
+#: src/irc/irc-commands.c:340
 msgid "whois (identified user)"
 msgstr "quién es (usuario identificado)"
 
-#: src/irc/irc-commands.c:410
+#: src/irc/irc-commands.c:342
 msgid "/list start"
 msgstr "/list inicio"
 
-#: src/irc/irc-commands.c:412
+#: src/irc/irc-commands.c:344
 msgid "channel (for /list)"
 msgstr "canal (para /list)"
 
-#: src/irc/irc-commands.c:414
+#: src/irc/irc-commands.c:346
 msgid "/list end"
 msgstr "/list fin"
 
-#: src/irc/irc-commands.c:416
+#: src/irc/irc-commands.c:348
 msgid "channel mode"
 msgstr "modo de canal"
 
-#: src/irc/irc-commands.c:420
+#: src/irc/irc-commands.c:352
 msgid "no topic for channel"
 msgstr "sin tema para el canal"
 
-#: src/irc/irc-commands.c:422
+#: src/irc/irc-commands.c:354
 msgid "topic of channel"
 msgstr "tema de canal"
 
-#: src/irc/irc-commands.c:423
+#: src/irc/irc-commands.c:355
 msgid "channel :topic"
 msgstr "canal :tema"
 
-#: src/irc/irc-commands.c:424
+#: src/irc/irc-commands.c:356
 msgid ""
 "channel: name of channel\n"
 "  topic: topic of the channel"
@@ -1077,47 +1053,47 @@ msgstr ""
 "canal: nombre del canal\n"
 " tema: tema del canal"
 
-#: src/irc/irc-commands.c:427
+#: src/irc/irc-commands.c:359
 msgid "infos about topic (nick and date changed)"
 msgstr "información sobre el tema (usuario y fecha de modificación)"
 
-#: src/irc/irc-commands.c:429
+#: src/irc/irc-commands.c:361
 msgid "inviting"
 msgstr "invitando"
 
-#: src/irc/irc-commands.c:431
+#: src/irc/irc-commands.c:363
 msgid "channel reop"
 msgstr "canal reop"
 
-#: src/irc/irc-commands.c:433
+#: src/irc/irc-commands.c:365
 msgid "end of channel reop list"
 msgstr "fin de la lista de canal reop"
 
-#: src/irc/irc-commands.c:435
+#: src/irc/irc-commands.c:367
 msgid "channel exception list"
 msgstr "lista de excepción de canal"
 
-#: src/irc/irc-commands.c:437
+#: src/irc/irc-commands.c:369
 msgid "end of channel exception list"
 msgstr "fin de lista de excepción de canal"
 
-#: src/irc/irc-commands.c:439
+#: src/irc/irc-commands.c:371
 msgid "server version"
 msgstr "versión del servidor"
 
-#: src/irc/irc-commands.c:441
+#: src/irc/irc-commands.c:373
 msgid "who"
 msgstr "quién"
 
-#: src/irc/irc-commands.c:443
+#: src/irc/irc-commands.c:375
 msgid "list of nicks on channel"
 msgstr "lista de usuarios en el canal"
 
-#: src/irc/irc-commands.c:444
+#: src/irc/irc-commands.c:376
 msgid "channel :[[@|+]nick ...]"
 msgstr "canal :[[@|+]usuario ...]"
 
-#: src/irc/irc-commands.c:445
+#: src/irc/irc-commands.c:377
 msgid ""
 "channel: name of channel\n"
 "   nick: nick on the channel"
@@ -1125,260 +1101,232 @@ msgstr ""
 "  canal: nombre del canal\n"
 "usuario: usuario en el canal"
 
-#: src/irc/irc-commands.c:448
-msgid "links"
-msgstr "enlaces"
-
-#: src/irc/irc-commands.c:450
-msgid "end of /links list"
-msgstr "fin de la lista /links"
-
-#: src/irc/irc-commands.c:452
+#: src/irc/irc-commands.c:380
 msgid "end of /names list"
 msgstr "fin de la lista /names"
 
-#: src/irc/irc-commands.c:454
+#: src/irc/irc-commands.c:382
 msgid "banlist"
 msgstr "lista de baneos"
 
-#: src/irc/irc-commands.c:456
+#: src/irc/irc-commands.c:384
 msgid "end of banlist"
 msgstr "fin de la lista de baneos"
 
-#: src/irc/irc-commands.c:458
-msgid "end of /whowas list"
-msgstr "fin de la lista /whowas"
-
-#: src/irc/irc-commands.c:472
+#: src/irc/irc-commands.c:386
 msgid "connecting from"
 msgstr "Conectando desde"
 
-#: src/irc/irc-commands.c:474
-msgid "using modes"
-msgstr ""
-
-#: src/irc/irc-commands.c:476
-msgid "you are now an IRC operator"
-msgstr "ahora es usted un operador IRC"
-
-#: src/irc/irc-commands.c:478
-msgid "rehashing"
-msgstr "redispersión"
-
-#: src/irc/irc-commands.c:480
-msgid "server local time"
-msgstr "hora local del servidor"
-
-#: src/irc/irc-commands.c:482
+#: src/irc/irc-commands.c:388
 msgid "no such nick/channel"
 msgstr "no existe ese usuario/canal"
 
-#: src/irc/irc-commands.c:484
+#: src/irc/irc-commands.c:390
 msgid "no such server"
 msgstr "no existe ese servidor"
 
-#: src/irc/irc-commands.c:486
+#: src/irc/irc-commands.c:392
 msgid "no such channel"
 msgstr "no existe ese canal"
 
-#: src/irc/irc-commands.c:488
+#: src/irc/irc-commands.c:394
 msgid "cannot send to channel"
 msgstr "no ha sido posible enviar al canal"
 
-#: src/irc/irc-commands.c:490
+#: src/irc/irc-commands.c:396
 msgid "too many channels"
 msgstr "demasiados canales"
 
-#: src/irc/irc-commands.c:492 src/irc/irc-commands.c:494
+#: src/irc/irc-commands.c:398 src/irc/irc-commands.c:400
 msgid "was no such nick"
 msgstr "no estaba ese usuario"
 
-#: src/irc/irc-commands.c:496
+#: src/irc/irc-commands.c:402
 msgid "no origin"
 msgstr "sin origen"
 
-#: src/irc/irc-commands.c:498
+#: src/irc/irc-commands.c:404
 msgid "no services"
 msgstr "sin servicios"
 
-#: src/irc/irc-commands.c:500
+#: src/irc/irc-commands.c:406
 msgid "no recipient"
 msgstr "sin destinatario"
 
-#: src/irc/irc-commands.c:502
+#: src/irc/irc-commands.c:408
 msgid "no text to send"
 msgstr "sin texto a enviar"
 
-#: src/irc/irc-commands.c:504
+#: src/irc/irc-commands.c:410
 msgid "no toplevel"
 msgstr "sin nivel superior"
 
-#: src/irc/irc-commands.c:506
+#: src/irc/irc-commands.c:412
 msgid "wilcard in toplevel domain"
 msgstr "carácter comodín en el dominio del nivel superior"
 
-#: src/irc/irc-commands.c:508
+#: src/irc/irc-commands.c:414
 msgid "unknown command"
 msgstr "comando desconocido"
 
-#: src/irc/irc-commands.c:510
+#: src/irc/irc-commands.c:416
 msgid "MOTD is missing"
 msgstr "MOTD falta"
 
-#: src/irc/irc-commands.c:512
+#: src/irc/irc-commands.c:418
 msgid "no administrative info"
 msgstr "sin información administrativa"
 
-#: src/irc/irc-commands.c:514
+#: src/irc/irc-commands.c:420
 msgid "file error"
 msgstr "error de fichero"
 
-#: src/irc/irc-commands.c:516
+#: src/irc/irc-commands.c:422
 msgid "no nickname given"
 msgstr "no se ha dado un nombre de usuario"
 
-#: src/irc/irc-commands.c:518
+#: src/irc/irc-commands.c:424
 msgid "erroneous nickname"
 msgstr "nombre de usuario erróneo"
 
-#: src/irc/irc-commands.c:520
+#: src/irc/irc-commands.c:426
 msgid "nickname already in use"
 msgstr "nombre de usuario ya en uso"
 
-#: src/irc/irc-commands.c:522
+#: src/irc/irc-commands.c:428
 msgid "nickname collision"
 msgstr "colisión en el nombre de usuario"
 
-#: src/irc/irc-commands.c:524
+#: src/irc/irc-commands.c:430
 msgid "resource unavailable"
 msgstr "recurso no disponible"
 
-#: src/irc/irc-commands.c:526
+#: src/irc/irc-commands.c:432
 msgid "not authorized to change nickname"
 msgstr "no autorizado a cambiar el nombre de usuario"
 
-#: src/irc/irc-commands.c:528
+#: src/irc/irc-commands.c:434
 msgid "user not in channel"
 msgstr "usuario no presente en el canal"
 
-#: src/irc/irc-commands.c:530
+#: src/irc/irc-commands.c:436
 msgid "not on channel"
 msgstr "no presente en el canal"
 
-#: src/irc/irc-commands.c:532
+#: src/irc/irc-commands.c:438
 msgid "user already on channel"
 msgstr "usuario ya en el canal"
 
-#: src/irc/irc-commands.c:534
+#: src/irc/irc-commands.c:440
 msgid "user not logged in"
 msgstr "usuario no registrado"
 
-#: src/irc/irc-commands.c:536
+#: src/irc/irc-commands.c:442
 msgid "summon has been disabled"
 msgstr "la petición de ayuda ha sido desactivada"
 
-#: src/irc/irc-commands.c:538
+#: src/irc/irc-commands.c:444
 msgid "users has been disabled"
 msgstr "los usuarios han sido desactivados"
 
-#: src/irc/irc-commands.c:540
+#: src/irc/irc-commands.c:446
 msgid "you are not registered"
 msgstr "usted no está registrado"
 
-#: src/irc/irc-commands.c:542
+#: src/irc/irc-commands.c:448
 msgid "not enough parameters"
 msgstr "no hay parámetros suficientes"
 
-#: src/irc/irc-commands.c:544
+#: src/irc/irc-commands.c:450
 msgid "you may not register"
 msgstr "usted no puede registrarse"
 
-#: src/irc/irc-commands.c:546
+#: src/irc/irc-commands.c:452
 msgid "your host isn't among the privileged"
 msgstr "su nombre de máquina no está entre los privilegiados"
 
-#: src/irc/irc-commands.c:548
+#: src/irc/irc-commands.c:454
 msgid "password incorrect"
 msgstr "contraseña incorrecta"
 
-#: src/irc/irc-commands.c:550
+#: src/irc/irc-commands.c:456
 msgid "you are banned from this server"
 msgstr "usted está baneado de este servidor"
 
-#: src/irc/irc-commands.c:552
+#: src/irc/irc-commands.c:458
 msgid "channel key already set"
 msgstr "clave de canal ya definida"
 
-#: src/irc/irc-commands.c:554
+#: src/irc/irc-commands.c:460
 msgid "forwarding to another channel"
 msgstr "reenvío a otro canal"
 
-#: src/irc/irc-commands.c:556
+#: src/irc/irc-commands.c:462
 msgid "channel is already full"
 msgstr "el canal ya está lleno"
 
-#: src/irc/irc-commands.c:558
+#: src/irc/irc-commands.c:464
 msgid "unknown mode char to me"
 msgstr "carácter de modo desconocido para mí"
 
-#: src/irc/irc-commands.c:560
+#: src/irc/irc-commands.c:466
 msgid "cannot join channel (invite only)"
 msgstr "no es posible unirse al canal (sólo invitados)"
 
-#: src/irc/irc-commands.c:562
+#: src/irc/irc-commands.c:468
 msgid "cannot join channel (banned from channel)"
 msgstr "no es posible unirse al canal (baneado del canal)"
 
-#: src/irc/irc-commands.c:564
+#: src/irc/irc-commands.c:470
 msgid "cannot join channel (bad channel key)"
 msgstr "no es posible unirse al canal (clave de canal incorrecta)"
 
-#: src/irc/irc-commands.c:566
+#: src/irc/irc-commands.c:472
 msgid "bad channel mask"
 msgstr "máscara de canal incorrecta"
 
-#: src/irc/irc-commands.c:568
+#: src/irc/irc-commands.c:474
 msgid "channel doesn't support modes"
 msgstr "el canal no soporta los modos"
 
-#: src/irc/irc-commands.c:570
+#: src/irc/irc-commands.c:476
 msgid "you're not an IRC operator"
 msgstr "usted no es un operador IRC"
 
-#: src/irc/irc-commands.c:572
+#: src/irc/irc-commands.c:478
 msgid "you're not channel operator"
 msgstr "usted no es operador del canal"
 
-#: src/irc/irc-commands.c:574
+#: src/irc/irc-commands.c:480
 msgid "you can't kill a server!"
 msgstr "¡usted no puede matar a un servidor!"
 
-#: src/irc/irc-commands.c:576
+#: src/irc/irc-commands.c:482
 msgid "your connection is restricted!"
 msgstr "¡su conexión está restringida!"
 
-#: src/irc/irc-commands.c:578
+#: src/irc/irc-commands.c:484
 msgid "user is immune from kick/deop"
 msgstr "el usuario es inmune a kick/deop"
 
-#: src/irc/irc-commands.c:580
+#: src/irc/irc-commands.c:486
 msgid "network split"
 msgstr "división de red"
 
-#: src/irc/irc-commands.c:582
+#: src/irc/irc-commands.c:488
 msgid "no O-lines for your host"
 msgstr "no hay O-lines para su máququina"
 
-#: src/irc/irc-commands.c:584
+#: src/irc/irc-commands.c:490
 msgid "unknown mode flag"
 msgstr "indicador de modo desconocido"
 
-#: src/irc/irc-commands.c:586
+#: src/irc/irc-commands.c:492
 msgid "can't change mode for other users"
 msgstr "no es posible cambiar el modo para el resto de usuarios"
 
-#: src/irc/irc-commands.c:590 src/irc/irc-commands.c:592
-#: src/irc/irc-commands.c:594 src/irc/irc-commands.c:596
+#: src/irc/irc-commands.c:494 src/irc/irc-commands.c:496
+#: src/irc/irc-commands.c:498 src/irc/irc-commands.c:500
 msgid "whois (secure connection)"
 msgstr "quién es (conexión segura)"
 
@@ -1409,7 +1357,7 @@ msgstr "inactivo"
 msgid " (temporary server, will not be saved)"
 msgstr " (servidor temporal, no será guardado)"
 
-#: src/irc/irc-display.c:393 src/irc/irc-display.c:424 src/irc/irc-recv.c:3594
+#: src/irc/irc-display.c:393 src/irc/irc-display.c:424 src/irc/irc-recv.c:3629
 msgid "seconds"
 msgstr "segundos"
 
@@ -1417,599 +1365,599 @@ msgstr "segundos"
 msgid "(hidden)"
 msgstr "(oculto)"
 
-#: src/irc/irc-send.c:65
+#: src/irc/irc-send.c:66
 #, c-format
 msgid "%s: using hostname \"%s\"\n"
 msgstr "%s: utilizando nombre de máquina local \"%s\"\n"
 
-#: src/irc/irc-send.c:218 src/common/command.c:1037
+#: src/irc/irc-send.c:219 src/common/command.c:1038
 #, c-format
 msgid "%s cannot find nick for sending message\n"
 msgstr "%s no ha sido posible encontrar el usuario al que enviar el mensaje\n"
 
-#: src/irc/irc-send.c:391 src/irc/irc-send.c:419 src/irc/irc-send.c:641
-#: src/irc/irc-send.c:678 src/irc/irc-send.c:715 src/irc/irc-send.c:769
-#: src/irc/irc-send.c:814 src/irc/irc-send.c:893 src/irc/irc-send.c:954
-#: src/irc/irc-send.c:1340 src/irc/irc-send.c:1482 src/irc/irc-send.c:2023
-#: src/irc/irc-send.c:2153
+#: src/irc/irc-send.c:392 src/irc/irc-send.c:420 src/irc/irc-send.c:642
+#: src/irc/irc-send.c:679 src/irc/irc-send.c:716 src/irc/irc-send.c:770
+#: src/irc/irc-send.c:815 src/irc/irc-send.c:894 src/irc/irc-send.c:955
+#: src/irc/irc-send.c:1341 src/irc/irc-send.c:1483 src/irc/irc-send.c:2032
+#: src/irc/irc-send.c:2162
 #, c-format
 msgid "%s \"%s\" command can only be executed in a channel buffer\n"
 msgstr ""
 "%s el comando \"%s\" sólo puede ser ejecutado en una ventana de canal\n"
 
-#: src/irc/irc-send.c:558 src/irc/irc-send.c:578 src/irc/irc-send.c:1108
-#: src/irc/irc-send.c:1544 src/irc/irc-send.c:1941
+#: src/irc/irc-send.c:559 src/irc/irc-send.c:579 src/irc/irc-send.c:1109
+#: src/irc/irc-send.c:1950
 #, c-format
 msgid "%s \"%s\" command can not be executed on a server buffer\n"
 msgstr "%s el comando \"%s\" no puede ejecutarse en una ventana de servidor\n"
 
-#: src/irc/irc-send.c:878 src/irc/irc-send.c:939 src/common/command.c:2094
+#: src/irc/irc-send.c:879 src/irc/irc-send.c:940 src/common/command.c:2095
 #, c-format
 msgid "%s wrong arguments for \"%s\" command\n"
 msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
 
-#: src/irc/irc-send.c:1055
+#: src/irc/irc-send.c:1056
 #, c-format
 msgid "%s \"%s\" is not a valid regular expression (%s)\n"
 msgstr "%s \"%s\" no es una expresión regular válida (%s)\n"
 
-#: src/irc/irc-send.c:1064
+#: src/irc/irc-send.c:1065
 #, c-format
 msgid "%s not enough memory for regular expression\n"
 msgstr "%s no hay suficiente memoria para la expresión regular\n"
 
-#: src/irc/irc-send.c:1190
+#: src/irc/irc-send.c:1191 src/irc/irc-send.c:1539 src/irc/irc-send.c:1553
 #, c-format
 msgid "%s \"%s\" command can only be executed in a channel or private buffer\n"
 msgstr ""
 "%s el comando \"%s\" sólo puede ser ejecutado en una ventana de canal\n"
 
-#: src/irc/irc-send.c:1232 src/irc/irc-recv.c:518
+#: src/irc/irc-send.c:1233 src/irc/irc-recv.c:553
 #, c-format
 msgid "%s nick \"%s\" not found for \"%s\" command\n"
 msgstr "%s usuario \"%s\" no encontrado para el comando \"%s\"\n"
 
-#: src/irc/irc-send.c:1313 src/irc/irc-send.c:1451 src/irc/irc-send.c:2049
-#: src/common/command.c:2039 src/common/command.c:2051
-#: src/common/command.c:2070 src/common/command.c:2157
-#: src/common/command.c:2670 src/common/command.c:2923
+#: src/irc/irc-send.c:1314 src/irc/irc-send.c:1452 src/irc/irc-send.c:2058
+#: src/common/command.c:2040 src/common/command.c:2052
+#: src/common/command.c:2071 src/common/command.c:2158
+#: src/common/command.c:2671 src/common/command.c:2924
 #, c-format
 msgid "%s wrong argument count for \"%s\" command\n"
 msgstr "%s número de argumentos incorrecto para el comando \"%s\"\n"
 
-#: src/irc/irc-send.c:1645
+#: src/irc/irc-send.c:1654
 #, c-format
 msgid "%s cannot create new private buffer \"%s\"\n"
 msgstr "%s no es posible crear una nueva ventana privada \"%s\"\n"
 
-#: src/irc/irc-send.c:2114
+#: src/irc/irc-send.c:2123
 #, c-format
 msgid "%s, compiled on %s %s\n"
 msgstr "%s, compilado en %s %s\n"
 
-#: src/irc/irc-recv.c:375
+#: src/irc/irc-recv.c:410
 #, c-format
 msgid "You have been invited to %s%s%s by %s%s\n"
 msgstr "Usted ha sido invitado a %s%s%s por %s%s\n"
 
-#: src/irc/irc-recv.c:389 src/irc/irc-recv.c:487 src/irc/irc-recv.c:1248
-#: src/irc/irc-recv.c:1661 src/irc/irc-recv.c:1941 src/irc/irc-recv.c:3976
-#: src/irc/irc-recv.c:3997
+#: src/irc/irc-recv.c:424 src/irc/irc-recv.c:522 src/irc/irc-recv.c:1283
+#: src/irc/irc-recv.c:1696 src/irc/irc-recv.c:1976 src/irc/irc-recv.c:4011
+#: src/irc/irc-recv.c:4032
 #, c-format
 msgid "%s channel \"%s\" not found for \"%s\" command\n"
 msgstr "%s canal \"%s\" no encontrado para el comando \"%s\"\n"
 
-#: src/irc/irc-recv.c:418
+#: src/irc/irc-recv.c:453
 #, c-format
 msgid "%s cannot create new channel \"%s\"\n"
 msgstr "%s no es posible crear un nuevo canal \"%s\"\n"
 
-#: src/irc/irc-recv.c:431
+#: src/irc/irc-recv.c:466
 #, c-format
 msgid "%s%s %s(%s%s%s)%s has joined %s%s\n"
 msgstr "%s%s %s(%s%s%s)%s se ha unido %s%s\n"
 
-#: src/irc/irc-recv.c:495
+#: src/irc/irc-recv.c:530
 #, c-format
 msgid "%s%s%s has kicked %s%s%s from %s%s"
 msgstr "%s%s%s ha pateado a %s%s%s de %s%s"
 
-#: src/irc/irc-recv.c:585
+#: src/irc/irc-recv.c:620
 #, c-format
 msgid "%s%s%s has killed %s%s%s from server"
 msgstr "%s%s%s ha expulsado a %s%s%s del servidor"
 
-#: src/irc/irc-recv.c:607
+#: src/irc/irc-recv.c:642
 #, c-format
 msgid "%s host \"%s\" not found for \"%s\" command\n"
 msgstr "%s anfitrión \"%s\" no encontrado para el comando \"%s\"\n"
 
-#: src/irc/irc-recv.c:650
+#: src/irc/irc-recv.c:685
 msgid "sets ban on"
 msgstr "poner baneo en"
 
-#: src/irc/irc-recv.c:651
+#: src/irc/irc-recv.c:686
 msgid "removes ban on"
 msgstr "quita el baneo en"
 
-#: src/irc/irc-recv.c:676
+#: src/irc/irc-recv.c:711
 msgid "sets realname ban on"
 msgstr "pone baneo de nombre real en"
 
-#: src/irc/irc-recv.c:677
+#: src/irc/irc-recv.c:712
 msgid "removes realname ban on"
 msgstr "quita baneo de nombre real en"
 
-#: src/irc/irc-recv.c:702
+#: src/irc/irc-recv.c:737
 msgid "sets ban exemption on"
 msgstr "pone una exención de baneo en"
 
-#: src/irc/irc-recv.c:703
+#: src/irc/irc-recv.c:738
 msgid "removes ban exemption on"
 msgstr "quita una exención de baneo en"
 
-#: src/irc/irc-recv.c:728
+#: src/irc/irc-recv.c:763
 msgid "sets mode +f"
 msgstr "pone modo +f"
 
-#: src/irc/irc-recv.c:729
+#: src/irc/irc-recv.c:764
 msgid "removes mode +f"
 msgstr "quita modo +f"
 
-#: src/irc/irc-recv.c:754
+#: src/irc/irc-recv.c:789
 msgid "gives half channel operator status to"
 msgstr "da estado de operador de medio canal a"
 
-#: src/irc/irc-recv.c:755
+#: src/irc/irc-recv.c:790
 msgid "removes half channel operator status from"
 msgstr "quita el estado de operador de medio canal a"
 
-#: src/irc/irc-recv.c:783
+#: src/irc/irc-recv.c:818
 msgid "sets invite-only channel flag"
 msgstr "pone el canal en modo sólo-por-invitación"
 
-#: src/irc/irc-recv.c:784
+#: src/irc/irc-recv.c:819
 msgid "removes invite-only channel flag"
 msgstr "quita el indicador de canal sólo-por-invitación"
 
-#: src/irc/irc-recv.c:802
+#: src/irc/irc-recv.c:837
 msgid "sets invite-only exemption on"
 msgstr "pone una exención de sólo-por-invitación en"
 
-#: src/irc/irc-recv.c:803
+#: src/irc/irc-recv.c:838
 msgid "removes invite-only exemption on"
 msgstr "quita una exención de sólo-por-invitación en"
 
-#: src/irc/irc-recv.c:828
+#: src/irc/irc-recv.c:863
 msgid "sets channel key to"
 msgstr "pone clave de canal en"
 
-#: src/irc/irc-recv.c:829
+#: src/irc/irc-recv.c:864
 msgid "removes channel key"
 msgstr "elimina la clave de canal"
 
-#: src/irc/irc-recv.c:861
+#: src/irc/irc-recv.c:896
 msgid "sets the user limit to"
 msgstr "define el límite de usuarios en"
 
-#: src/irc/irc-recv.c:862
+#: src/irc/irc-recv.c:897
 msgid "removes user limit"
 msgstr "elimina el límite de usuarios"
 
-#: src/irc/irc-recv.c:888
+#: src/irc/irc-recv.c:923
 msgid "sets moderated channel flag"
 msgstr "establece la moderación en el canal"
 
-#: src/irc/irc-recv.c:889
+#: src/irc/irc-recv.c:924
 msgid "removes moderated channel flag"
 msgstr "elimina la moderación en el canal"
 
-#: src/irc/irc-recv.c:900
+#: src/irc/irc-recv.c:935
 msgid "sets messages from channel only flag"
 msgstr "establece el modo sólo mensajes de usuarios del canal"
 
-#: src/irc/irc-recv.c:901
+#: src/irc/irc-recv.c:936
 msgid "removes messages from channel only flag"
 msgstr "autoriza a todos los usuarios a escribir en el canal"
 
-#: src/irc/irc-recv.c:919
+#: src/irc/irc-recv.c:954
 msgid "gives channel operator status to"
 msgstr "dar estado de operador de canal a"
 
-#: src/irc/irc-recv.c:920
+#: src/irc/irc-recv.c:955
 msgid "removes channel operator status from"
 msgstr "eliminar el estado de operador de canal a"
 
-#: src/irc/irc-recv.c:948
+#: src/irc/irc-recv.c:983
 msgid "sets private channel flag"
 msgstr "establece el canal como privado"
 
-#: src/irc/irc-recv.c:949
+#: src/irc/irc-recv.c:984
 msgid "removes private channel flag"
 msgstr "elimina el modo privado para el canal"
 
-#: src/irc/irc-recv.c:967
+#: src/irc/irc-recv.c:1002
 msgid "sets quiet on"
 msgstr "pone el modo silencio"
 
-#: src/irc/irc-recv.c:968
+#: src/irc/irc-recv.c:1003
 msgid "removes quiet on"
 msgstr "quita el modo silencio"
 
-#: src/irc/irc-recv.c:986
+#: src/irc/irc-recv.c:1021
 msgid "sets secret channel flag"
 msgstr "establece el canal como secreto"
 
-#: src/irc/irc-recv.c:987
+#: src/irc/irc-recv.c:1022
 msgid "removes secret channel flag"
 msgstr "elimina el modo secreto para el canal"
 
-#: src/irc/irc-recv.c:998
+#: src/irc/irc-recv.c:1033
 msgid "sets topic protection"
 msgstr "activa la protección de tema"
 
-#: src/irc/irc-recv.c:999
+#: src/irc/irc-recv.c:1034
 msgid "removes topic protection"
 msgstr "elimina la protección de tema"
 
-#: src/irc/irc-recv.c:1017
+#: src/irc/irc-recv.c:1052
 msgid "gives voice to"
 msgstr "da voz a"
 
-#: src/irc/irc-recv.c:1018
+#: src/irc/irc-recv.c:1053
 msgid "removes voice from"
 msgstr "quita la voz a"
 
-#: src/irc/irc-recv.c:1103
+#: src/irc/irc-recv.c:1138
 msgid "sets away"
 msgstr "pone ausente"
 
-#: src/irc/irc-recv.c:1104
+#: src/irc/irc-recv.c:1139
 msgid "removes away"
 msgstr "quita ausente"
 
-#: src/irc/irc-recv.c:1114
+#: src/irc/irc-recv.c:1149
 msgid "sets invisible"
 msgstr "pone invisible"
 
-#: src/irc/irc-recv.c:1115
+#: src/irc/irc-recv.c:1150
 msgid "removes invisible"
 msgstr "quita invisible"
 
-#: src/irc/irc-recv.c:1125
+#: src/irc/irc-recv.c:1160
 msgid "sets wallops"
 msgstr "pone wallops"
 
-#: src/irc/irc-recv.c:1126
+#: src/irc/irc-recv.c:1161
 msgid "removes wallops"
 msgstr "quita wallops"
 
-#: src/irc/irc-recv.c:1136
+#: src/irc/irc-recv.c:1171
 msgid "sets restricted"
 msgstr "pone restringido"
 
-#: src/irc/irc-recv.c:1137
+#: src/irc/irc-recv.c:1172
 msgid "removes restricted"
 msgstr "quita restringido"
 
-#: src/irc/irc-recv.c:1147
+#: src/irc/irc-recv.c:1182
 msgid "sets operator"
 msgstr "pone operador"
 
-#: src/irc/irc-recv.c:1148
+#: src/irc/irc-recv.c:1183
 msgid "removes operator"
 msgstr "quita operador"
 
-#: src/irc/irc-recv.c:1158
+#: src/irc/irc-recv.c:1193
 msgid "sets local operator"
 msgstr "pone operador local"
 
-#: src/irc/irc-recv.c:1159
+#: src/irc/irc-recv.c:1194
 msgid "removes local operator"
 msgstr "quita operador local"
 
-#: src/irc/irc-recv.c:1169
+#: src/irc/irc-recv.c:1204
 msgid "sets server notices"
 msgstr "pone  notificaciones del servidor"
 
-#: src/irc/irc-recv.c:1170
+#: src/irc/irc-recv.c:1205
 msgid "removes server notices"
 msgstr "quita notificaciones del servidor"
 
-#: src/irc/irc-recv.c:1206 src/irc/irc-recv.c:1280 src/irc/irc-recv.c:1740
-#: src/irc/irc-recv.c:2555
+#: src/irc/irc-recv.c:1241 src/irc/irc-recv.c:1315 src/irc/irc-recv.c:1775
+#: src/irc/irc-recv.c:2590
 #, c-format
 msgid "%s \"%s\" command received without host\n"
 msgstr "%s comando \"%s\" recibido sin host \n"
 
-#: src/irc/irc-recv.c:1216
+#: src/irc/irc-recv.c:1251
 #, c-format
 msgid "%s \"%s\" command received without channel or nickname\n"
 msgstr "%s comando \"%s\" recibido sin canal o usuario\n"
 
-#: src/irc/irc-recv.c:1319
+#: src/irc/irc-recv.c:1354
 #, c-format
 msgid "You are now known as %s%s\n"
 msgstr "Usted es conocido ahora como %s%s\n"
 
-#: src/irc/irc-recv.c:1323
+#: src/irc/irc-recv.c:1358
 #, c-format
 msgid "%s%s%s is now known as %s%s\n"
 msgstr "%s%s%s es conocido ahora como %s%s\n"
 
-#: src/irc/irc-recv.c:1391
+#: src/irc/irc-recv.c:1426
 #, c-format
 msgid "%s nickname not found for \"%s\" command\n"
 msgstr "%s nombre de usuario no encontrado para el comando \"%s\"\n"
 
-#: src/irc/irc-recv.c:1405
+#: src/irc/irc-recv.c:1440
 #, c-format
 msgid "CTCP %sVERSION%s reply from %s%s%s: %s\n"
 msgstr "CTCP %sVERSION%s respuesta de %s%s%s: %s\n"
 
-#: src/irc/irc-recv.c:1439
+#: src/irc/irc-recv.c:1474
 #, c-format
 msgid "CTCP %sPING%s reply from %s%s%s: %ld.%ld seconds\n"
 msgstr "CTCP %sPING%s respuesta de %s%s%s: %ld.%ld segundos\n"
 
-#: src/irc/irc-recv.c:1462 src/irc/irc-recv.c:2368 src/irc/irc-recv.c:2480
+#: src/irc/irc-recv.c:1497 src/irc/irc-recv.c:2403 src/irc/irc-recv.c:2515
 #, c-format
 msgid "%s cannot create new private window \"%s\"\n"
 msgstr "%s no es posible crear una nueva ventana privada \"%s\"\n"
 
-#: src/irc/irc-recv.c:1487 src/irc/irc-recv.c:2500
+#: src/irc/irc-recv.c:1522 src/irc/irc-recv.c:2535
 msgid "Private"
 msgstr "Privado"
 
-#: src/irc/irc-recv.c:1563
+#: src/irc/irc-recv.c:1598
 #, c-format
 msgid "%s \"%s\" command received without host or channel\n"
 msgstr "%s comando \"%s\" recibido sin host o canal\n"
 
-#: src/irc/irc-recv.c:1591
+#: src/irc/irc-recv.c:1626
 #, c-format
 msgid "%s%s %s(%s%s%s)%s has left %s%s"
 msgstr "%s%s %s(%s%s%s)%s ha abandonado %s%s"
 
-#: src/irc/irc-recv.c:1790 src/irc/irc-recv.c:1916 src/irc/irc-recv.c:2396
+#: src/irc/irc-recv.c:1825 src/irc/irc-recv.c:1951 src/irc/irc-recv.c:2431
 msgid "Channel"
 msgstr "Canal"
 
-#: src/irc/irc-recv.c:1824
+#: src/irc/irc-recv.c:1859
 #, c-format
 msgid "Received a CTCP %sSOUND%s \"%s\" from %s%s\n"
 msgstr "Recibido un CTCP %sSOUND%s \"%s\" de %s%s\n"
 
-#: src/irc/irc-recv.c:1854 src/irc/irc-recv.c:2040
+#: src/irc/irc-recv.c:1889 src/irc/irc-recv.c:2075
 #, c-format
 msgid "CTCP %sPING%s received from %s%s\n"
 msgstr "CTCP %sPING%s recibido de %s%s\n"
 
-#: src/irc/irc-recv.c:1883 src/irc/irc-recv.c:2447
+#: src/irc/irc-recv.c:1918 src/irc/irc-recv.c:2482
 #, c-format
 msgid "Unknown CTCP %s%s%s received from %s%s"
 msgstr "CTCP desconocido %s%s%s recibido de %s%s"
 
-#: src/irc/irc-recv.c:1996
+#: src/irc/irc-recv.c:2031
 #, c-format
 msgid "CTCP %sVERSION%s received from %s%s"
 msgstr "CTCP %sVERSION%s recibido de %s%s"
 
-#: src/irc/irc-recv.c:2063 src/irc/irc-recv.c:2084 src/irc/irc-recv.c:2100
-#: src/irc/irc-recv.c:2116 src/irc/irc-recv.c:2147 src/irc/irc-recv.c:2168
-#: src/irc/irc-recv.c:2184 src/irc/irc-recv.c:2214 src/irc/irc-recv.c:2235
-#: src/irc/irc-recv.c:2251 src/irc/irc-recv.c:2281 src/irc/irc-recv.c:2302
-#: src/irc/irc-recv.c:2317 src/irc/irc-recv.c:2531 src/irc/irc-recv.c:2927
-#: src/irc/irc-recv.c:4325 src/irc/irc-recv.c:4340 src/irc/irc-recv.c:4355
-#: src/irc/irc-recv.c:4370 src/irc/irc-recv.c:4383 src/irc/irc-recv.c:4448
-#: src/irc/irc-recv.c:4462 src/irc/irc-recv.c:4708 src/irc/irc-recv.c:4826
-#: src/irc/irc-recv.c:4963 src/irc/irc-recv.c:4978 src/irc/irc-recv.c:5084
-#: src/irc/irc-recv.c:5098
+#: src/irc/irc-recv.c:2098 src/irc/irc-recv.c:2119 src/irc/irc-recv.c:2135
+#: src/irc/irc-recv.c:2151 src/irc/irc-recv.c:2182 src/irc/irc-recv.c:2203
+#: src/irc/irc-recv.c:2219 src/irc/irc-recv.c:2249 src/irc/irc-recv.c:2270
+#: src/irc/irc-recv.c:2286 src/irc/irc-recv.c:2316 src/irc/irc-recv.c:2337
+#: src/irc/irc-recv.c:2352 src/irc/irc-recv.c:2566 src/irc/irc-recv.c:2962
+#: src/irc/irc-recv.c:4360 src/irc/irc-recv.c:4375 src/irc/irc-recv.c:4390
+#: src/irc/irc-recv.c:4405 src/irc/irc-recv.c:4418 src/irc/irc-recv.c:4483
+#: src/irc/irc-recv.c:4497 src/irc/irc-recv.c:4743 src/irc/irc-recv.c:4861
+#: src/irc/irc-recv.c:4998 src/irc/irc-recv.c:5013 src/irc/irc-recv.c:5119
+#: src/irc/irc-recv.c:5133
 #, c-format
 msgid "%s cannot parse \"%s\" command\n"
 msgstr "%s no es posible analizar el comando \"%s\"\n"
 
-#: src/irc/irc-recv.c:2330
+#: src/irc/irc-recv.c:2365
 #, c-format
 msgid "%s unknown DCC CHAT type received from "
 msgstr "%s tipo DCC CHAT desconocido recibido de "
 
-#: src/irc/irc-recv.c:2579
+#: src/irc/irc-recv.c:2614
 #, c-format
 msgid "%s%s %s(%s%s%s)%s has quit"
 msgstr "%s%s %s(%s%s%s)%s ha salido"
 
-#: src/irc/irc-recv.c:2754
+#: src/irc/irc-recv.c:2789
 #, c-format
 msgid "%s \"%s\" command received without channel\n"
 msgstr "%s comando \"%s\" recibido sin canal\n"
 
-#: src/irc/irc-recv.c:2783
+#: src/irc/irc-recv.c:2818
 #, c-format
 msgid "%s%s%s has changed topic for %s%s%s to:"
 msgstr "%s%s%s ha cambiado el tema para %s%s%s a:"
 
-#: src/irc/irc-recv.c:2794
+#: src/irc/irc-recv.c:2829
 #, c-format
 msgid "%s%s%s has unset topic for %s%s\n"
 msgstr "%s%s%s ha quitado el tema para %s%s\n"
 
-#: src/irc/irc-recv.c:2913
+#: src/irc/irc-recv.c:2948
 #, c-format
 msgid "User mode %s[%s%s%s/%s%s%s]\n"
 msgstr "Modo de usuario %s[%s%s%s/%s%s%s]\n"
 
-#: src/irc/irc-recv.c:2977
+#: src/irc/irc-recv.c:3012
 #, c-format
 msgid "%s%s%s is away: %s\n"
 msgstr "%s%s%s está ausente: %s\n"
 
-#: src/irc/irc-recv.c:3069
+#: src/irc/irc-recv.c:3104
 msgid "Users online: "
 msgstr "Usuarios conectados: "
 
-#: src/irc/irc-recv.c:3445
+#: src/irc/irc-recv.c:3480
 #, c-format
 msgid "%s%s %s(%s%s@%s%s)%s was %s\n"
 msgstr "%s%s %s(%s%s@%s%s)%s estaba %s\n"
 
-#: src/irc/irc-recv.c:3566
+#: src/irc/irc-recv.c:3601
 #, c-format
 msgid "%s[%s%s%s]%s idle: "
 msgstr "%s[%s%s%s]%s inactividad: "
 
-#: src/irc/irc-recv.c:3578 src/common/command.c:4065 src/common/command.c:4083
+#: src/irc/irc-recv.c:3613 src/common/command.c:4066 src/common/command.c:4084
 msgid "days"
 msgstr "días"
 
-#: src/irc/irc-recv.c:3578 src/common/command.c:4065 src/common/command.c:4083
+#: src/irc/irc-recv.c:3613 src/common/command.c:4066 src/common/command.c:4084
 msgid "day"
 msgstr "día"
 
-#: src/irc/irc-recv.c:3582
+#: src/irc/irc-recv.c:3617
 #, c-format
 msgid "%s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
 msgstr "%s%02d %s%s %s%02d %s%s %s%02d %s%s, firmó en: %s%s"
 
-#: src/irc/irc-recv.c:3586
+#: src/irc/irc-recv.c:3621
 msgid "hours"
 msgstr "horas"
 
-#: src/irc/irc-recv.c:3586
+#: src/irc/irc-recv.c:3621
 msgid "hour"
 msgstr "hora"
 
-#: src/irc/irc-recv.c:3590
+#: src/irc/irc-recv.c:3625
 msgid "minutes"
 msgstr "minutos"
 
-#: src/irc/irc-recv.c:3590
+#: src/irc/irc-recv.c:3625
 msgid "minute"
 msgstr "minuto"
 
-#: src/irc/irc-recv.c:3594
+#: src/irc/irc-recv.c:3629
 msgid "second"
 msgstr "segundo"
 
-#: src/irc/irc-recv.c:3988
+#: src/irc/irc-recv.c:4023
 #, c-format
 msgid "No topic set for %s%s\n"
 msgstr "Sin tema establecido para %s%s\n"
 
-#: src/irc/irc-recv.c:4048
+#: src/irc/irc-recv.c:4083
 #, c-format
 msgid "Topic for %s%s%s is: "
 msgstr "El tema para %s%s%s es: "
 
-#: src/irc/irc-recv.c:4063 src/irc/irc-recv.c:4145 src/irc/irc-recv.c:4200
+#: src/irc/irc-recv.c:4098 src/irc/irc-recv.c:4180 src/irc/irc-recv.c:4235
 #, c-format
 msgid "%s cannot identify channel for \"%s\" command\n"
 msgstr "%s no es posible identificar el canal para el comando \"%s\"\n"
 
-#: src/irc/irc-recv.c:4116
+#: src/irc/irc-recv.c:4151
 #, c-format
 msgid "Topic set by %s%s%s, %s"
 msgstr "Tema establecido por %s%s%s, %s"
 
-#: src/irc/irc-recv.c:4127
+#: src/irc/irc-recv.c:4162
 #, c-format
 msgid "%s cannot identify date/time for \"%s\" command\n"
 msgstr "%s no es posible identificar la fecha/hora para el comando \"%s\"\n"
 
-#: src/irc/irc-recv.c:4136 src/irc/irc-recv.c:4209
+#: src/irc/irc-recv.c:4171 src/irc/irc-recv.c:4244
 #, c-format
 msgid "%s cannot identify nickname for \"%s\" command\n"
 msgstr ""
 "%s no es posible determinar el nombre de usuario para el comando \"%s\"\n"
 
-#: src/irc/irc-recv.c:4185
+#: src/irc/irc-recv.c:4220
 #, c-format
 msgid "%s%s%s has invited %s%s%s on %s%s\n"
 msgstr "%s%s%s ha invitado a %s%s%s en %s%s\n"
 
-#: src/irc/irc-recv.c:4245
+#: src/irc/irc-recv.c:4280
 #, c-format
 msgid "Channel reop %s%s%s: %s%s\n"
 msgstr "reop canal %s%s%s: %s%s\n"
 
-#: src/irc/irc-recv.c:4722 src/irc/irc-recv.c:4872
+#: src/irc/irc-recv.c:4757 src/irc/irc-recv.c:4907
 #, c-format
 msgid "Nicks %s%s%s: %s["
 msgstr "Usuarios %s%s%s: %s["
 
-#: src/irc/irc-recv.c:4794
+#: src/irc/irc-recv.c:4829
 #, c-format
 msgid "%s cannot create nick \"%s\" for channel \"%s\"\n"
 msgstr "%s no es posible crear el usuario \"%s\" para el canal \"%s\"\n"
 
-#: src/irc/irc-recv.c:4893
+#: src/irc/irc-recv.c:4928
 #, c-format
 msgid ""
 "Channel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 msgstr ""
 "Canal %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 
-#: src/irc/irc-recv.c:4901
+#: src/irc/irc-recv.c:4936
 msgid "nicks"
 msgstr "usuarios"
 
-#: src/irc/irc-recv.c:4901
+#: src/irc/irc-recv.c:4936
 msgid "nick"
 msgstr "usuario"
 
-#: src/irc/irc-recv.c:4906
+#: src/irc/irc-recv.c:4941
 msgid "ops"
 msgstr "operadores"
 
-#: src/irc/irc-recv.c:4906
+#: src/irc/irc-recv.c:4941
 msgid "op"
 msgstr "operador"
 
-#: src/irc/irc-recv.c:4910
+#: src/irc/irc-recv.c:4945
 msgid "halfops"
 msgstr "semi-operadores"
 
-#: src/irc/irc-recv.c:4910
+#: src/irc/irc-recv.c:4945
 msgid "halfop"
 msgstr "semi-operador"
 
-#: src/irc/irc-recv.c:4914
+#: src/irc/irc-recv.c:4949
 msgid "voices"
 msgstr "voces"
 
-#: src/irc/irc-recv.c:4914
+#: src/irc/irc-recv.c:4949
 msgid "voice"
 msgstr "voz"
 
-#: src/irc/irc-recv.c:4918
+#: src/irc/irc-recv.c:4953
 msgid "normal"
 msgstr "normal"
 
-#: src/irc/irc-recv.c:5018
+#: src/irc/irc-recv.c:5053
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned by "
 msgstr "%s[%s%s%s] %s%s%s baneado por "
 
-#: src/irc/irc-recv.c:5053
+#: src/irc/irc-recv.c:5088
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned\n"
 msgstr "%s[%s%s%s] %s%s%s baneado\n"
 
-#: src/irc/irc-recv.c:5188
+#: src/irc/irc-recv.c:5223
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\"\n"
 msgstr ""
 "%s: el nombre de usuario \"%s\" ya está en uso, probando con el 2 nombre de "
 "usuario \"%s\"\n"
 
-#: src/irc/irc-recv.c:5200
+#: src/irc/irc-recv.c:5235
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\"\n"
 msgstr ""
 "%s: el nombre de usuario \"%s\" ya está en uso, probando con el 3 nombre de "
 "usuario \"%s\"\n"
 
-#: src/irc/irc-recv.c:5212
+#: src/irc/irc-recv.c:5247
 #, c-format
 msgid ""
 "%s: all declared nicknames are already in use, closing connection with "
@@ -2018,73 +1966,73 @@ msgstr ""
 "%s: todos los nombres de usuario declarados ya están en uso, ¡cerrando la "
 "conexión con el servidor!\n"
 
-#: src/irc/irc-recv.c:5222
+#: src/irc/irc-recv.c:5257
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\"\n"
 msgstr ""
 "%s: el nombre de usuario \"%s\" ya está en uso, probando con el 1 nombre de "
 "usuario \"%s\"\n"
 
-#: src/irc/irc-recv.c:5234
+#: src/irc/irc-recv.c:5269
 msgid "unknown"
 msgstr "desconocido"
 
-#: src/irc/irc-dcc.c:50
+#: src/irc/irc-dcc.c:51
 msgid "Waiting"
 msgstr "Esperando"
 
-#: src/irc/irc-dcc.c:50
+#: src/irc/irc-dcc.c:51
 msgid "Connecting"
 msgstr "Conectando"
 
-#: src/irc/irc-dcc.c:50
+#: src/irc/irc-dcc.c:51
 msgid "Active"
 msgstr "Activo"
 
-#: src/irc/irc-dcc.c:50
+#: src/irc/irc-dcc.c:51
 msgid "Done"
 msgstr "Terminado"
 
-#: src/irc/irc-dcc.c:50
+#: src/irc/irc-dcc.c:51
 msgid "Failed"
 msgstr "Falló"
 
-#: src/irc/irc-dcc.c:51
+#: src/irc/irc-dcc.c:52
 msgid "Aborted"
 msgstr "Abortado"
 
-#: src/irc/irc-dcc.c:407
+#: src/irc/irc-dcc.c:408
 #, c-format
 msgid "DCC: file %s%s%s"
 msgstr "DCC: fichero %s%s%s"
 
-#: src/irc/irc-dcc.c:413
+#: src/irc/irc-dcc.c:414
 #, c-format
 msgid " (local filename: %s%s%s)"
 msgstr " (nombre de fichero local: %s%s%s)"
 
-#: src/irc/irc-dcc.c:418
+#: src/irc/irc-dcc.c:419
 msgid " sent to "
 msgstr " enviado a "
 
-#: src/irc/irc-dcc.c:420
+#: src/irc/irc-dcc.c:421
 msgid " received from "
 msgstr " recibido de "
 
-#: src/irc/irc-dcc.c:425
+#: src/irc/irc-dcc.c:426
 msgid "OK"
 msgstr "OK"
 
-#: src/irc/irc-dcc.c:425
+#: src/irc/irc-dcc.c:426
 msgid "FAILED"
 msgstr "FALLÓ"
 
-#: src/irc/irc-dcc.c:438
+#: src/irc/irc-dcc.c:439
 #, c-format
 msgid "DCC chat closed with %s%s %s(%s%d.%d.%d.%d%s)\n"
 msgstr "Charla DCC cerrada con %s%s %s(%s%d.%d.%d.%d%s)\n"
 
-#: src/irc/irc-dcc.c:493
+#: src/irc/irc-dcc.c:494
 #, c-format
 msgid ""
 "%s can't associate DCC chat with private buffer (maybe private buffer has "
@@ -2093,17 +2041,17 @@ msgstr ""
 "%s no se puede asociar la conversación DCC con el búfer privado (quizá el "
 "búfer privado ya tiene DCC CHAT)\n"
 
-#: src/irc/irc-dcc.c:504
+#: src/irc/irc-dcc.c:505
 #, c-format
 msgid "Connected to %s%s %s(%s%d.%d.%d.%d%s)%s via DCC chat\n"
 msgstr "Conectado a %s%s %s(%s%d.%d.%d.%d%s)%s a través de una charla DCC\n"
 
-#: src/irc/irc-dcc.c:623
+#: src/irc/irc-dcc.c:624
 #, c-format
 msgid "DCC: file %s%s%s resumed at position %u\n"
 msgstr "DCC: archivo %s%s%s reanudado en la posición %u\n"
 
-#: src/irc/irc-dcc.c:632 src/irc/irc-dcc.c:657
+#: src/irc/irc-dcc.c:633 src/irc/irc-dcc.c:658
 #, c-format
 msgid ""
 "%s can't resume file \"%s\" (port: %d, start position: %u): DCC not found or "
@@ -2112,16 +2060,16 @@ msgstr ""
 "%s no puede reanudar el archivo \"%s\" (puerto: %d, posición de inicio: %u): "
 "DCC no encontrado o terminado\n"
 
-#: src/irc/irc-dcc.c:724
+#: src/irc/irc-dcc.c:725
 #, c-format
 msgid "%s not enough memory for new DCC\n"
 msgstr "%s no hay memoria suficiente para un nuevo DCC\n"
 
-#: src/irc/irc-dcc.c:743
+#: src/irc/irc-dcc.c:744
 msgid "DCC chat"
 msgstr "Charla DCC"
 
-#: src/irc/irc-dcc.c:770
+#: src/irc/irc-dcc.c:771
 #, c-format
 msgid ""
 "Incoming DCC file from %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s bytes\n"
@@ -2129,7 +2077,7 @@ msgstr ""
 "Archivo DCC entrante desde %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s "
 "bytes\n"
 
-#: src/irc/irc-dcc.c:793
+#: src/irc/irc-dcc.c:794
 #, c-format
 msgid ""
 "Sending DCC file to %s%s%s: %s%s%s (local filename: %s%s%s), %s%lu%s bytes\n"
@@ -2137,17 +2085,17 @@ msgstr ""
 "Enviando archivo DCC a %s%s%s: %s%s%s (nombre de archivo local: %s%s%s), %s%"
 "lu%s bytes\n"
 
-#: src/irc/irc-dcc.c:813
+#: src/irc/irc-dcc.c:814
 #, c-format
 msgid "Incoming DCC chat request from %s%s%s (%s%d.%d.%d.%d%s)\n"
 msgstr "Petición de charla DCC entrante desde %s%s%s (%s%d.%d.%d.%d%s)\n"
 
-#: src/irc/irc-dcc.c:830
+#: src/irc/irc-dcc.c:831
 #, c-format
 msgid "Sending DCC chat request to %s%s\n"
 msgstr "Envío de petición de charla DCC a %s%s\n"
 
-#: src/irc/irc-dcc.c:848
+#: src/irc/irc-dcc.c:849
 #, c-format
 msgid ""
 "DCC: file %s%s%s (local filename: %s%s%s) will be resumed at position %u\n"
@@ -2155,47 +2103,47 @@ msgstr ""
 "DCC: el archivo %s%s%s (nombre de archivo local: %s%s%s) será reanudado en "
 "la posición %u\n"
 
-#: src/irc/irc-dcc.c:928
+#: src/irc/irc-dcc.c:929
 #, c-format
 msgid "%s not enough memory for DCC SEND\n"
 msgstr "%s no hay memoria suficiente para el DCC SEND\n"
 
-#: src/irc/irc-dcc.c:948
+#: src/irc/irc-dcc.c:949
 #, c-format
 msgid "%s cannot access file \"%s\"\n"
 msgstr "%s no es posible acceder al fichero \"%s\"\n"
 
-#: src/irc/irc-dcc.c:970
+#: src/irc/irc-dcc.c:971
 #, c-format
 msgid "%s could not find address for '%s'. Falling back to local IP.\n"
 msgstr "%s no pudo encontrar la dirección para '%s'. Utilizando la IP local.\n"
 
-#: src/irc/irc-dcc.c:990
+#: src/irc/irc-dcc.c:991
 #, c-format
 msgid "%s cannot create socket for DCC\n"
 msgstr "%s no es posible crear socket para el DCC\n"
 
-#: src/irc/irc-dcc.c:1048
+#: src/irc/irc-dcc.c:1049
 #, c-format
 msgid "%s cannot find available port for DCC\n"
 msgstr "%s no puede encontrar un puerto disponible para el DCC\n"
 
-#: src/irc/irc-dcc.c:1092
+#: src/irc/irc-dcc.c:1093
 #, c-format
 msgid "%s cannot send DCC\n"
 msgstr "%s no es posible enviar el DCC\n"
 
-#: src/irc/irc-dcc.c:1172
+#: src/irc/irc-dcc.c:1173
 #, c-format
 msgid "%s error sending data to \"%s\" via DCC CHAT\n"
 msgstr "%s error enviando datos al \"%s\" con DCC CHAT\n"
 
-#: src/irc/irc-dcc.c:1256
+#: src/irc/irc-dcc.c:1257
 #, c-format
 msgid "Private %s> %s"
 msgstr "Privado %s> %s"
 
-#: src/irc/irc-dcc.c:1452
+#: src/irc/irc-dcc.c:1453
 #, c-format
 msgid ""
 "%s DCC failed because blocksize is too big. Check value of \"dcc_blocksize\" "
@@ -2204,42 +2152,42 @@ msgstr ""
 "%s El DCC ha fallado porque el tamaño de bloque es demasiado grande. "
 "Compruebe el valor de la opción \"dcc_blocksize\", el máximo es %d.\n"
 
-#: src/irc/irc-dcc.c:1527
+#: src/irc/irc-dcc.c:1528
 #, c-format
 msgid "Aborting active DCC: \"%s\" from %s\n"
 msgstr "Abandonar el DCC activo: \"%s\" de %s\n"
 
-#: src/irc/irc-ignore.c:197
+#: src/irc/irc-ignore.c:198
 #, c-format
 msgid "%s too few arguments for ignore\n"
 msgstr "%s pocos argumentos para el ignore\n"
 
-#: src/irc/irc-ignore.c:215
+#: src/irc/irc-ignore.c:216
 #, c-format
 msgid "%s mask or type/command should be non generic value for ignore\n"
 msgstr ""
 "%s máscara o tipo/comando debería ser un valor no genérico para el ignore\n"
 
-#: src/irc/irc-ignore.c:224
+#: src/irc/irc-ignore.c:225
 #, c-format
 msgid "%s ignore already exists\n"
 msgstr "el ignore %s ya existe\n"
 
-#: src/irc/irc-ignore.c:260
+#: src/irc/irc-ignore.c:261
 #, c-format
 msgid "%s unknown type or IRC command \"%s\" for ignore\n"
 msgstr "%s tipo desconocido o comando IRC \"%s\" para el ignore\n"
 
-#: src/irc/irc-ignore.c:288
+#: src/irc/irc-ignore.c:289
 #, c-format
 msgid "%s not enough memory to create ignore\n"
 msgstr "%s no hay suficiente memoria para crear el ignore\n"
 
-#: src/irc/irc-ignore.c:409 src/irc/irc-ignore.c:445
+#: src/irc/irc-ignore.c:410 src/irc/irc-ignore.c:446
 msgid "Removing ignore:"
 msgstr "Eliminando el ignore:"
 
-#: src/plugins/plugins.c:241
+#: src/plugins/plugins.c:242
 #, c-format
 msgid ""
 "%s plugin %s: unable to add handler for IRC command \"%s\" (not enough "
@@ -2248,7 +2196,7 @@ msgstr ""
 "%s plugin %s: no ha sido posible añadir un manejador para el comando IRC \"%s"
 "\" (no hay suficiente memoria)\n"
 
-#: src/plugins/plugins.c:278
+#: src/plugins/plugins.c:279
 #, c-format
 msgid ""
 "%s plugin %s: unable to add handler for \"%s\" command (already exists)\n"
@@ -2256,14 +2204,14 @@ msgstr ""
 "%s plugin %s: no ha sido posible añadir un manejador para el comando \"%s"
 "\" (ya existe)\n"
 
-#: src/plugins/plugins.c:288
+#: src/plugins/plugins.c:289
 #, c-format
 msgid "%s plugin %s: unable to add handler for \"%s\" command (forbidden)\n"
 msgstr ""
 "%s plugin %s: no ha sido posible añadir un manejador para el comando \"%s"
 "\" (prohibido)\n"
 
-#: src/plugins/plugins.c:328
+#: src/plugins/plugins.c:329
 #, c-format
 msgid ""
 "%s plugin %s: unable to add handler for \"%s\" command (not enough memory)\n"
@@ -2271,33 +2219,33 @@ msgstr ""
 "%s plugin %s: no ha sido posible añadir un manejador para el comando \"%s"
 "\" (no hay suficiente memoria)\n"
 
-#: src/plugins/plugins.c:384
+#: src/plugins/plugins.c:385
 #, c-format
 msgid "%s plugin %s: unable to add timer handler (not enough memory)\n"
 msgstr ""
 "%s plugin %s: no ha sido posible añadir un manejador temporizador (no hay "
 "suficiente memoria)\n"
 
-#: src/plugins/plugins.c:440
+#: src/plugins/plugins.c:441
 #, c-format
 msgid "%s plugin %s: unable to add keyboard handler (not enough memory)\n"
 msgstr ""
 "%s plugin %s: no ha sido posible añadir un manejador de teclado (no hay "
 "suficiente memoria)\n"
 
-#: src/plugins/plugins.c:774
+#: src/plugins/plugins.c:775
 #, c-format
 msgid "%s unable to load plugin \"%s\": %s\n"
 msgstr "%s no ha sido posible cargar el plugin \"%s\": %s\n"
 
-#: src/plugins/plugins.c:785
+#: src/plugins/plugins.c:786
 #, c-format
 msgid "%s symbol \"plugin_name\" not found in plugin \"%s\", failed to load\n"
 msgstr ""
 "%s símbolo \"plugin_name\" no encontrado en el plugin \"%s\", falló al "
 "cargar\n"
 
-#: src/plugins/plugins.c:796
+#: src/plugins/plugins.c:797
 #, c-format
 msgid ""
 "%s unable to load plugin \"%s\": a plugin with same name already exists\n"
@@ -2305,7 +2253,7 @@ msgstr ""
 "%s no ha sido posible cargar el plugin \"%s\": un plugin con el mismo nombre "
 "ya existe\n"
 
-#: src/plugins/plugins.c:808
+#: src/plugins/plugins.c:809
 #, c-format
 msgid ""
 "%s symbol \"plugin_description\" not found in plugin \"%s\", failed to load\n"
@@ -2313,7 +2261,7 @@ msgstr ""
 "%s símbolo \"plugin_description\" no encontrado en el plugin \"%s\", falló "
 "al cargar\n"
 
-#: src/plugins/plugins.c:819
+#: src/plugins/plugins.c:820
 #, c-format
 msgid ""
 "%s symbol \"plugin_version\" not found in plugin \"%s\", failed to load\n"
@@ -2321,7 +2269,7 @@ msgstr ""
 "%s símbolo \"plugin_version\" no encontrado en el plugin \"%s\", falló al "
 "cargar\n"
 
-#: src/plugins/plugins.c:830
+#: src/plugins/plugins.c:831
 #, c-format
 msgid ""
 "%s function \"weechat_plugin_init\" not found in plugin \"%s\", failed to "
@@ -2330,49 +2278,49 @@ msgstr ""
 "%s función \"weechat_plugin_init\" no encontrada en el plugin \"%s\", falló "
 "al cargar\n"
 
-#: src/plugins/plugins.c:902
+#: src/plugins/plugins.c:903
 #, c-format
 msgid "Initializing plugin \"%s\" %s\n"
 msgstr "Inicializando plugin \"%s\" %s\n"
 
-#: src/plugins/plugins.c:910
+#: src/plugins/plugins.c:911
 #, c-format
 msgid "%s unable to initialize plugin \"%s\"\n"
 msgstr "%s no ha sido posible inicializar el plugin \"%s\"\n"
 
-#: src/plugins/plugins.c:921
+#: src/plugins/plugins.c:922
 #, c-format
 msgid "%s unable to load plugin \"%s\" (not enough memory)\n"
 msgstr ""
 "%s no ha sido posible cargar el plugin \"%s\" (no hay suficiente memoria)\n"
 
-#: src/plugins/plugins.c:929
+#: src/plugins/plugins.c:930
 #, c-format
 msgid "Plugin \"%s\" (%s) loaded.\n"
 msgstr "Plugin \"%s\" (%s) cargado.\n"
 
-#: src/plugins/plugins.c:1096
+#: src/plugins/plugins.c:1097
 #, c-format
 msgid "Plugin \"%s\" unloaded.\n"
 msgstr "Plugin \"%s\" descargado.\n"
 
-#: src/plugins/plugins.c:1102 src/common/command.c:3745
+#: src/plugins/plugins.c:1103 src/common/command.c:3746
 #, c-format
 msgid "%s plugin \"%s\" not found\n"
 msgstr "%s plugin \"%s\" no encontrado\n"
 
-#: src/plugins/plugins-config.c:264 src/common/weeconfig.c:1933
+#: src/plugins/plugins-config.c:265 src/common/weeconfig.c:1934
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"=\"\n"
 msgstr "%s %s, línea %d: sintaxis inválida, falta \"=\"\n"
 
-#: src/plugins/plugins-config.c:352 src/common/weeconfig.c:2143
-#: src/common/weeconfig.c:2350
+#: src/plugins/plugins-config.c:353 src/common/weeconfig.c:2144
+#: src/common/weeconfig.c:2351
 #, c-format
 msgid "%s cannot create file \"%s\"\n"
 msgstr "%s no es posible crear el fichero \"%s\"\n"
 
-#: src/plugins/plugins-config.c:359
+#: src/plugins/plugins-config.c:360
 #, c-format
 msgid ""
 "#\n"
@@ -2381,7 +2329,7 @@ msgstr ""
 "#\n"
 "# %s archivo de configuración de plugins, creado por %s v%s en %s"
 
-#: src/plugins/plugins-config.c:363
+#: src/plugins/plugins-config.c:364
 #, c-format
 msgid ""
 "# WARNING! Be careful when editing this file, WeeChat writes this file when "
@@ -2392,7 +2340,7 @@ msgstr ""
 "archivo cuando se actualizan las opciones.\n"
 "#\n"
 
-#: src/plugins/plugins-interface.c:376
+#: src/plugins/plugins-interface.c:377
 #, c-format
 msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 msgstr ""
@@ -2442,12 +2390,12 @@ msgstr "  [Q] Cerrar la vista DCC"
 msgid "  [Q] Close raw data view"
 msgstr "  [Q] Cerrar vista de datos basura"
 
-#: src/gui/curses/gui-curses-main.c:98
+#: src/gui/curses/gui-curses-main.c:99
 #, c-format
 msgid "Day changed to %s\n"
 msgstr "Día cambiado a %s\n"
 
-#: src/gui/curses/gui-curses-main.c:213
+#: src/gui/curses/gui-curses-main.c:214
 #, c-format
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr "%s el lag (retraso) es alto, desconectando del servidor...\n"
@@ -2497,233 +2445,233 @@ msgstr "No hay suficiente memoria para una nueva línea\n"
 msgid "Not enough memory for infobar message\n"
 msgstr "No hay suficiente memoria para el mensaje de la barra de información\n"
 
-#: src/gui/gui-keyboard.c:50
+#: src/gui/gui-keyboard.c:51
 msgid "terminate line"
 msgstr "terminar línea"
 
-#: src/gui/gui-keyboard.c:52
+#: src/gui/gui-keyboard.c:53
 msgid "complete word"
 msgstr "completar palabra"
 
-#: src/gui/gui-keyboard.c:54
+#: src/gui/gui-keyboard.c:55
 msgid "find previous completion for word"
 msgstr ""
 
-#: src/gui/gui-keyboard.c:56
+#: src/gui/gui-keyboard.c:57
 msgid "delete previous char"
 msgstr "borrar el carácter anterior"
 
-#: src/gui/gui-keyboard.c:58
+#: src/gui/gui-keyboard.c:59
 msgid "delete next char"
 msgstr "borrar el carácter siguiente"
 
-#: src/gui/gui-keyboard.c:60
+#: src/gui/gui-keyboard.c:61
 msgid "delete until end of line"
 msgstr "borrar hasta fin de línea"
 
-#: src/gui/gui-keyboard.c:62
+#: src/gui/gui-keyboard.c:63
 msgid "delete until beginning of line"
 msgstr "borrar hasta principio de línea"
 
-#: src/gui/gui-keyboard.c:64
+#: src/gui/gui-keyboard.c:65
 msgid "delete entire line"
 msgstr "borrar línea entera"
 
-#: src/gui/gui-keyboard.c:66
+#: src/gui/gui-keyboard.c:67
 msgid "delete previous word"
 msgstr "borrar la palabra anterior"
 
-#: src/gui/gui-keyboard.c:68
+#: src/gui/gui-keyboard.c:69
 msgid "delete next word"
 msgstr "borrar la palabra siguiente"
 
-#: src/gui/gui-keyboard.c:70
+#: src/gui/gui-keyboard.c:71
 msgid "paste current clipboard content"
 msgstr "pegar el contenido actual del portapapeles"
 
-#: src/gui/gui-keyboard.c:72
+#: src/gui/gui-keyboard.c:73
 msgid "transpose chars"
 msgstr "transponer caracteres"
 
-#: src/gui/gui-keyboard.c:74
+#: src/gui/gui-keyboard.c:75
 msgid "go to beginning of line"
 msgstr "ir al principio de línea"
 
-#: src/gui/gui-keyboard.c:76
+#: src/gui/gui-keyboard.c:77
 msgid "go to end of line"
 msgstr "ir al final de línea"
 
-#: src/gui/gui-keyboard.c:78
+#: src/gui/gui-keyboard.c:79
 msgid "move one char left"
 msgstr "mover un carácter a la izquierda"
 
-#: src/gui/gui-keyboard.c:80
+#: src/gui/gui-keyboard.c:81
 msgid "move to previous word"
 msgstr "mover a la palabra anterior"
 
-#: src/gui/gui-keyboard.c:82
+#: src/gui/gui-keyboard.c:83
 msgid "move one char right"
 msgstr "mover un carácter a la derecha"
 
-#: src/gui/gui-keyboard.c:84
+#: src/gui/gui-keyboard.c:85
 msgid "move to next word"
 msgstr "mover a la palabra siguiente"
 
-#: src/gui/gui-keyboard.c:86
+#: src/gui/gui-keyboard.c:87
 msgid "call previous command in history"
 msgstr "llamar al comando anterior en el historial"
 
-#: src/gui/gui-keyboard.c:88
+#: src/gui/gui-keyboard.c:89
 msgid "call previous command in global history"
 msgstr "llamar al comando anterior en el historial global"
 
-#: src/gui/gui-keyboard.c:90
+#: src/gui/gui-keyboard.c:91
 msgid "call next command in history"
 msgstr "llamar al comando siguiente en el historial"
 
-#: src/gui/gui-keyboard.c:92
+#: src/gui/gui-keyboard.c:93
 msgid "call next command in global history"
 msgstr "llamar al comando siguiente en el historial global"
 
-#: src/gui/gui-keyboard.c:94
+#: src/gui/gui-keyboard.c:95
 msgid "scroll one page up"
 msgstr "desplazarse una página hacia arriba"
 
-#: src/gui/gui-keyboard.c:96
+#: src/gui/gui-keyboard.c:97
 msgid "scroll one page down"
 msgstr "desplazarse una página hacia abajo"
 
-#: src/gui/gui-keyboard.c:98
+#: src/gui/gui-keyboard.c:99
 msgid "scroll a few lines up"
 msgstr "desplazarse unas páginas hacia arriba"
 
-#: src/gui/gui-keyboard.c:100
+#: src/gui/gui-keyboard.c:101
 msgid "scroll a few lines down"
 msgstr "desplazarse unas páginas hacia abajo"
 
-#: src/gui/gui-keyboard.c:102
+#: src/gui/gui-keyboard.c:103
 msgid "scroll to top of buffer"
 msgstr "desplazarse al principio del búfer"
 
-#: src/gui/gui-keyboard.c:104
+#: src/gui/gui-keyboard.c:105
 msgid "scroll to bottom of buffer"
 msgstr "desplazarse al final del búfer"
 
-#: src/gui/gui-keyboard.c:106
+#: src/gui/gui-keyboard.c:107
 msgid "display beginning of nicklist"
 msgstr "mostrar el principio de la lista de nicks"
 
-#: src/gui/gui-keyboard.c:108
+#: src/gui/gui-keyboard.c:109
 msgid "display end of nicklist"
 msgstr "mostrar el final de la lista de nicks"
 
-#: src/gui/gui-keyboard.c:110
+#: src/gui/gui-keyboard.c:111
 msgid "scroll nicklist one page up"
 msgstr "desplazar la lista de nicks una página hacia arriba"
 
-#: src/gui/gui-keyboard.c:112
+#: src/gui/gui-keyboard.c:113
 msgid "scroll nicklist one page down"
 msgstr "desplazar la lista de nicks una página hacia abajo"
 
-#: src/gui/gui-keyboard.c:114
+#: src/gui/gui-keyboard.c:115
 msgid "jump to buffer with activity"
 msgstr "saltar al búfer con actividad"
 
-#: src/gui/gui-keyboard.c:116
+#: src/gui/gui-keyboard.c:117
 msgid "jump to DCC buffer"
 msgstr "saltar al búfer DCC"
 
-#: src/gui/gui-keyboard.c:118
+#: src/gui/gui-keyboard.c:119
 msgid "jump to raw IRC data buffer"
 msgstr "saltar al búfer de datos basura de IRC"
 
-#: src/gui/gui-keyboard.c:120
+#: src/gui/gui-keyboard.c:121
 msgid "jump to last buffer"
 msgstr "saltar al último búfer"
 
-#: src/gui/gui-keyboard.c:122
+#: src/gui/gui-keyboard.c:123
 msgid "jump to server buffer"
 msgstr "saltar al búfer del servidor"
 
-#: src/gui/gui-keyboard.c:124
+#: src/gui/gui-keyboard.c:125
 msgid "jump to next server"
 msgstr "saltar al servidor siguiente"
 
-#: src/gui/gui-keyboard.c:126
+#: src/gui/gui-keyboard.c:127
 msgid "switch active server on servers buffer"
 msgstr "seleccionar servidor activo en el búfer de servidores"
 
-#: src/gui/gui-keyboard.c:128
+#: src/gui/gui-keyboard.c:129
 msgid "scroll to previous highlight in buffer"
 msgstr "desplazarse al resaltado anterior en el búfer"
 
-#: src/gui/gui-keyboard.c:130
+#: src/gui/gui-keyboard.c:131
 msgid "scroll to next highlight in buffer"
 msgstr "desplazarse al resaltado siguiente en el búfer"
 
-#: src/gui/gui-keyboard.c:132
+#: src/gui/gui-keyboard.c:133
 msgid "scroll to first unread line in buffer"
 msgstr "desplazarse a la primera línea sin leer en el búfer"
 
-#: src/gui/gui-keyboard.c:134
+#: src/gui/gui-keyboard.c:135
 msgid "clear hotlist"
 msgstr "limpiar hotlist"
 
-#: src/gui/gui-keyboard.c:136
+#: src/gui/gui-keyboard.c:137
 msgid "clear infobar"
 msgstr "limpiar barra de información"
 
-#: src/gui/gui-keyboard.c:138
+#: src/gui/gui-keyboard.c:139
 msgid "refresh screen"
 msgstr "recargar la pantalla"
 
-#: src/gui/gui-keyboard.c:140
+#: src/gui/gui-keyboard.c:141
 msgid "grab a key"
 msgstr "capturar una clave"
 
-#: src/gui/gui-keyboard.c:451 src/common/command.c:2685
+#: src/gui/gui-keyboard.c:452 src/common/command.c:2686
 #, c-format
 msgid "%s unable to bind key \"%s\"\n"
 msgstr "%s No ha sido posible atar la clave \"%s\"\n"
 
-#: src/gui/gui-keyboard.c:462
+#: src/gui/gui-keyboard.c:463
 #, c-format
 msgid "%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"
 msgstr ""
 "%s No ha sido posible atar la clave \"%s\" (nombre de función inválido: \"%s"
 "\")\n"
 
-#: src/gui/gui-keyboard.c:475
+#: src/gui/gui-keyboard.c:476
 #, c-format
 msgid "%s not enough memory for key binding\n"
 msgstr "%s no hay suficiente memoria para atar la clave\n"
 
-#: src/gui/gui-log.c:115 src/gui/gui-log.c:131
+#: src/gui/gui-log.c:116 src/gui/gui-log.c:132
 msgid "Not enough memory to write log file for a buffer\n"
 msgstr ""
 "No hay suficiente memoria para escribir un fichero de log para un búfer\n"
 
-#: src/gui/gui-log.c:162
+#: src/gui/gui-log.c:163
 msgid "Unable to write log file for a buffer\n"
 msgstr "No es posible escribir un fichero de log para un búfer\n"
 
-#: src/gui/gui-log.c:166
+#: src/gui/gui-log.c:167
 msgid "****  Beginning of log  "
 msgstr "****  Comienzo del log (registro)  "
 
-#: src/gui/gui-log.c:180
+#: src/gui/gui-log.c:181
 msgid "****  End of log  "
 msgstr "****  Fin del log  "
 
-#: src/common/command.c:50
+#: src/common/command.c:51
 msgid "create an alias for a command"
 msgstr "crear un alias para un comando"
 
-#: src/common/command.c:51
+#: src/common/command.c:52
 msgid "[alias_name [command [arguments]]]"
 msgstr "[nombre_alias [comando [argumentos]]]"
 
-#: src/common/command.c:52
+#: src/common/command.c:53
 #, fuzzy
 msgid ""
 "alias_name: name of alias\n"
@@ -2735,15 +2683,15 @@ msgstr ""
 "     comando: nombre del comando (comando WeeChat o IRC, sin el primer '/')\n"
 "  argumentos: parámetros para el comando"
 
-#: src/common/command.c:57
+#: src/common/command.c:58
 msgid "manage buffers"
 msgstr "gestionar los búfers"
 
-#: src/common/command.c:58
+#: src/common/command.c:59
 msgid "[action [args] | number | [[server] [channel]]]"
 msgstr "[acción [argumentos] | número | [[servidor] [canal]]]"
 
-#: src/common/command.c:59
+#: src/common/command.c:60
 #, fuzzy
 msgid ""
 " action: action to do:\n"
@@ -2769,7 +2717,7 @@ msgstr ""
 "   canal: saltar al búfer por el nombre del servidor o canal\n"
 "  número: saltar al búfer por número"
 
-#: src/common/command.c:68
+#: src/common/command.c:69
 msgid ""
 "launch WeeChat/IRC builtin command (do not look at plugins handlers or "
 "aliases)"
@@ -2777,11 +2725,11 @@ msgstr ""
 "lanzar el comando de construcción de Weechat/IRC (no mira los manejadores de "
 "plugins ni los alias)"
 
-#: src/common/command.c:69
+#: src/common/command.c:70
 msgid "command"
 msgstr "comando"
 
-#: src/common/command.c:70
+#: src/common/command.c:71
 msgid ""
 "command: command to execute (a '/' is automatically added if not found at "
 "beginning of command)\n"
@@ -2789,15 +2737,15 @@ msgstr ""
 "comando: comando a ejecutar (se añade un '/' automáticamente si no se "
 "encuentra al principio del comando)\n"
 
-#: src/common/command.c:72
+#: src/common/command.c:73
 msgid "change charset for server or channel"
 msgstr "cambiar juego de caracteres para el servidor o canal"
 
-#: src/common/command.c:73
+#: src/common/command.c:74
 msgid "[(decode_iso | decode_utf | encode) charset]"
 msgstr "[(decode_iso | decode_utf | encode) juego_de_caracteres]"
 
-#: src/common/command.c:74
+#: src/common/command.c:75
 msgid ""
 "decode_iso: charset used for decoding ISO\n"
 "decode_utf: charset used for decoding UTF\n"
@@ -2810,47 +2758,47 @@ msgstr ""
 "juego_de_caracteres: juego de caracteres a utilizar (por ejemplo: ISO-8859-"
 "15, UTF-8...)"
 
-#: src/common/command.c:79
+#: src/common/command.c:80
 msgid "clear window(s)"
 msgstr "limpiar la(s) ventana(s)"
 
-#: src/common/command.c:80
+#: src/common/command.c:81
 msgid "[-all]"
 msgstr "[-all]"
 
-#: src/common/command.c:81
+#: src/common/command.c:82
 msgid "-all: clear all windows"
 msgstr "-all: limpiar todas las ventanas"
 
-#: src/common/command.c:83
+#: src/common/command.c:84
 msgid "connect to a server"
 msgstr "conectarse a un servidor"
 
-#: src/common/command.c:84 src/common/command.c:88
+#: src/common/command.c:85 src/common/command.c:89
 msgid "[servername]"
 msgstr "[nombre_del_servidor]"
 
-#: src/common/command.c:85
+#: src/common/command.c:86
 msgid "servername: server name to connect"
 msgstr "nombre_del_servidor: nombre del servidor al que conectarse"
 
-#: src/common/command.c:87
+#: src/common/command.c:88
 msgid "disconnect from a server"
 msgstr "desconectarse de un servidor"
 
-#: src/common/command.c:89
+#: src/common/command.c:90
 msgid "servername: server name to disconnect"
 msgstr "nombre_del_servidor: nombre del servidor del que desconectarse"
 
-#: src/common/command.c:91
+#: src/common/command.c:92
 msgid "starts DCC (file or chat) or close chat"
 msgstr "empieza DCC (archivo o charla) o cierra charla"
 
-#: src/common/command.c:92
+#: src/common/command.c:93
 msgid "action [nickname [file]]"
 msgstr "acción [usuario [fichero]]"
 
-#: src/common/command.c:93
+#: src/common/command.c:94
 msgid ""
 "  action: 'send' (file) or 'chat' or 'close' (chat)\n"
 "nickname: nickname to send file or chat\n"
@@ -2861,15 +2809,15 @@ msgstr ""
 "usuario: nombre de usuario a quien enviar el archivo o la charla\n"
 "fichero: nombre del fichero (en la máquina local)"
 
-#: src/common/command.c:97
+#: src/common/command.c:98
 msgid "print debug messages"
 msgstr "imprime mensajes de depuración"
 
-#: src/common/command.c:98
+#: src/common/command.c:99
 msgid "dump | windows"
 msgstr "volcar | ventanas"
 
-#: src/common/command.c:99
+#: src/common/command.c:100
 msgid ""
 "   dump: save memory dump in WeeChat log file (same dump is written when "
 "WeeChat crashes)\n"
@@ -2879,27 +2827,27 @@ msgstr ""
 "(el mismo volcado se escribe cuando Weechat se cuelga)\n"
 "ventanas: mostrar árbol de ventanas"
 
-#: src/common/command.c:102
+#: src/common/command.c:103
 msgid "display help about commands"
 msgstr "mostrar ayuda sobre los comandos"
 
-#: src/common/command.c:103
+#: src/common/command.c:104
 msgid "[command]"
 msgstr "[comando]"
 
-#: src/common/command.c:104
+#: src/common/command.c:105
 msgid "command: name of a WeeChat or IRC command"
 msgstr "comando: nombre de un comando de Weechat o de IRC"
 
-#: src/common/command.c:106
+#: src/common/command.c:107
 msgid "show buffer command history"
 msgstr "mostrar historial de comandos de búfer"
 
-#: src/common/command.c:107
+#: src/common/command.c:108
 msgid "[clear | value]"
 msgstr "[limpiar | valor]"
 
-#: src/common/command.c:108
+#: src/common/command.c:109
 msgid ""
 "clear: clear history\n"
 "value: number of history entries to show"
@@ -2907,15 +2855,15 @@ msgstr ""
 "limpiar: limpiar historial\n"
 "valor: número de entradas del historial para mostrar"
 
-#: src/common/command.c:111
+#: src/common/command.c:112
 msgid "ignore IRC messages and/or hosts"
 msgstr "ignorar los mensajes IRC y/o los hosts"
 
-#: src/common/command.c:112
+#: src/common/command.c:113
 msgid "[mask [[type | command] [channel [server]]]]"
 msgstr "[máscara [[tipo | comando] [canal [servidor]]]]"
 
-#: src/common/command.c:113
+#: src/common/command.c:114
 msgid ""
 "   mask: nick or host mask to ignore\n"
 "   type: type of message to ignore (action, ctcp, dcc, pv)\n"
@@ -2935,15 +2883,15 @@ msgstr ""
 "Para cada argumento, '*' significa todo.\n"
 "Sin argumentos, el comando /ignore lista todos los ignores definidos."
 
-#: src/common/command.c:122
+#: src/common/command.c:123
 msgid "bind/unbind keys"
 msgstr "atar/desatar claves"
 
-#: src/common/command.c:123
+#: src/common/command.c:124
 msgid "[key function/command] [unbind key] [functions] [reset -yes]"
 msgstr "[clave función/comando] [desatar clave] [funciones] [reset -yes]"
 
-#: src/common/command.c:124
+#: src/common/command.c:125
 msgid ""
 "      key: bind this key to an internal function or a command (beginning by "
 "\"/\")\n"
@@ -2959,16 +2907,16 @@ msgstr ""
 "    reset: restaura anclajes a los valores por defecto y elimina todos los "
 "anclajes personales (usar cuidadosamente)"
 
-#: src/common/command.c:131
+#: src/common/command.c:132
 #, fuzzy
 msgid "manage panels"
 msgstr "gestión de ventanas"
 
-#: src/common/command.c:132
+#: src/common/command.c:133
 msgid "[list | add type position size | resize # size | close # | move #1 #2]"
 msgstr ""
 
-#: src/common/command.c:133
+#: src/common/command.c:134
 msgid ""
 "   list: list open panels (no parameter implies this list)\n"
 "    add: add a panel, type is global|local, position is top|bottom|left|"
@@ -2978,15 +2926,15 @@ msgid ""
 "   move: move a panel to another number (may be relative, for example -1)"
 msgstr ""
 
-#: src/common/command.c:140
+#: src/common/command.c:141
 msgid "list/load/unload plugins"
 msgstr "listar/cargar/descargar plugins"
 
-#: src/common/command.c:141
+#: src/common/command.c:142
 msgid "[load filename] | [autoload] | [reload] | [unload]"
 msgstr "[cargar fichero] | [autocargar] | [recargar] | [descargar]"
 
-#: src/common/command.c:142
+#: src/common/command.c:143
 msgid ""
 "filename: WeeChat plugin (file) to load\n"
 "\n"
@@ -2996,11 +2944,11 @@ msgstr ""
 "\n"
 "Sin argumentos, el comando /plugin lista todos los plugins cargados."
 
-#: src/common/command.c:145
+#: src/common/command.c:146
 msgid "list, add or remove servers"
 msgstr "lista, añde o elimina servidores"
 
-#: src/common/command.c:146
+#: src/common/command.c:147
 msgid ""
 "[servername] | [servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-"
 "pwd password] [-nicks nick1 nick2 nick3] [-username username] [-realname "
@@ -3012,7 +2960,7 @@ msgstr ""
 "username nombre de usuario] [-realname nombre_real] [-command comando] [-"
 "autojoin canal[,canal]] ] | [del nombre_de_servidor]"
 
-#: src/common/command.c:151
+#: src/common/command.c:152
 msgid ""
 "servername: server name, for internal and display use\n"
 "  hostname: name or IP address of server\n"
@@ -3038,27 +2986,27 @@ msgstr ""
 "  nombre_de_usuario: nombre de usuario\n"
 "        nombre_real: nombre real del usuario"
 
-#: src/common/command.c:163
+#: src/common/command.c:164
 msgid "save config to disk"
 msgstr "guardar configuración a disco"
 
-#: src/common/command.c:164
+#: src/common/command.c:165
 msgid "[file]"
 msgstr "[archivo]"
 
-#: src/common/command.c:164
+#: src/common/command.c:165
 msgid "file: filename for writing config"
 msgstr "archivo: fichero en el que guardar la configuración"
 
-#: src/common/command.c:166
+#: src/common/command.c:167
 msgid "set config options"
 msgstr "poner opciones de configuración"
 
-#: src/common/command.c:167 src/common/command.c:175
+#: src/common/command.c:168 src/common/command.c:176
 msgid "[option [ = value]]"
 msgstr "[opción [ = valor]]"
 
-#: src/common/command.c:168
+#: src/common/command.c:169
 msgid ""
 "option: name of an option (if name is full and no value is given, then help "
 "is displayed on option)\n"
@@ -3074,11 +3022,11 @@ msgstr ""
 "Una opción podría ser: nombredeservidor.servidor_xxx donde \"nombredeservidor"
 "\" es un nombre de servidor interno y \"xxx\" una opción para dicho servidor."
 
-#: src/common/command.c:174
+#: src/common/command.c:175
 msgid "set plugin config options"
 msgstr "poner opciones de configuración de plugins"
 
-#: src/common/command.c:176
+#: src/common/command.c:177
 msgid ""
 "option: name of a plugin option\n"
 " value: value for option\n"
@@ -3090,27 +3038,27 @@ msgstr ""
 "\n"
 "Una opción tiene formato: plugin.opción, ejemplo: perl.miscript.objeto1"
 
-#: src/common/command.c:180
+#: src/common/command.c:181
 msgid "remove an alias"
 msgstr "eliminar un alias"
 
-#: src/common/command.c:181
+#: src/common/command.c:182
 msgid "alias_name"
 msgstr "alias"
 
-#: src/common/command.c:181
+#: src/common/command.c:182
 msgid "alias_name: name of alias to remove"
 msgstr "alias: nombre del alias a suprimir"
 
-#: src/common/command.c:183
+#: src/common/command.c:184
 msgid "unignore IRC messages and/or hosts"
 msgstr "no ignorar mensajes IRC y/o hosts"
 
-#: src/common/command.c:184
+#: src/common/command.c:185
 msgid "[number | [mask [[type | command] [channel [server]]]]]"
 msgstr "[número | [máscara [[tipo | comando] [canal [servidor]]]]]"
 
-#: src/common/command.c:185
+#: src/common/command.c:186
 msgid ""
 " number: # of ignore to unignore (number is displayed by list of ignore)\n"
 "   mask: nick or host mask to unignore\n"
@@ -3133,11 +3081,11 @@ msgstr ""
 "Para cada argumento, '*' significa todo.\n"
 "Sin argumentos, el comando /unignore lista todos los ignores definidos."
 
-#: src/common/command.c:195
+#: src/common/command.c:196
 msgid "upgrade WeeChat without disconnecting from servers"
 msgstr "actualizar Weechat sin desconectarse de los servidores"
 
-#: src/common/command.c:197
+#: src/common/command.c:198
 msgid ""
 "This command run again WeeChat binary, so it should have been compiled or "
 "installed with a package manager before running this command."
@@ -3146,23 +3094,23 @@ msgstr ""
 "haber sido compilado o instalado con un gestor de paquetes antes de ejecutar "
 "este comando."
 
-#: src/common/command.c:200
+#: src/common/command.c:201
 msgid "show WeeChat uptime"
 msgstr "muestra el tiempo de uso de WeeChat"
 
-#: src/common/command.c:201
+#: src/common/command.c:202
 msgid "[-o]"
 msgstr "[-o]"
 
-#: src/common/command.c:202
+#: src/common/command.c:203
 msgid "-o: send uptime on current channel as an IRC message"
 msgstr "-o: envía el tiempo de uso en el canal actual como un mensaje IRC"
 
-#: src/common/command.c:204
+#: src/common/command.c:205
 msgid "manage windows"
 msgstr "gestión de ventanas"
 
-#: src/common/command.c:205
+#: src/common/command.c:206
 msgid ""
 "[list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv "
 "[pct] | resize pct | merge [all]]"
@@ -3170,7 +3118,7 @@ msgstr ""
 "[list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv "
 "[pct] | resize pct | merge [all]]"
 
-#: src/common/command.c:207
+#: src/common/command.c:208
 #, fuzzy
 msgid ""
 "  list: list open windows (no parameter implies this list)\n"
@@ -3208,24 +3156,24 @@ msgstr ""
 "nueva ventana, tomando como referencia el tamaño de la ventana actual. Por "
 "ejemplo 25 significa crear una nueva ventana de tamaño = tamaño_actual / 4"
 
-#: src/common/command.c:406 src/common/command.c:752
+#: src/common/command.c:407 src/common/command.c:753
 #, c-format
 msgid "%s circular reference when calling alias \"/%s\"\n"
 msgstr "%s referencia circular al llamar alias \"/%s\"\n"
 
-#: src/common/command.c:732 src/common/command.c:878 src/common/command.c:973
+#: src/common/command.c:733 src/common/command.c:879 src/common/command.c:974
 #, c-format
 msgid "%s command \"%s\" failed\n"
 msgstr "%s el comando \"%s\" ha fallado\n"
 
-#: src/common/command.c:831
+#: src/common/command.c:832
 #, c-format
 msgid "%s wrong argument count for %s command \"%s\" (expected: %d arg%s)\n"
 msgstr ""
 "%s número de argumentos incorrecto para el comando %s \"%s\" (esperado: %d "
 "parámetro%s)\n"
 
-#: src/common/command.c:843
+#: src/common/command.c:844
 #, c-format
 msgid ""
 "%s wrong argument count for %s command \"%s\" (expected: between %d and %d "
@@ -3234,14 +3182,14 @@ msgstr ""
 "%s número de argumentos incorrecto para el comando %s \"%s\" (esperado: "
 "entre %d y %d parámetro%s)\n"
 
-#: src/common/command.c:907
+#: src/common/command.c:908
 #, c-format
 msgid "%s wrong argument count for IRC command \"%s\" (expected: %d arg%s)\n"
 msgstr ""
 "%s número de argumentos incorrecto para el comando IRC \"%s\" (esperado: %d "
 "parámetro%s)\n"
 
-#: src/common/command.c:919
+#: src/common/command.c:920
 #, c-format
 msgid ""
 "%s wrong argument count for IRC command \"%s\" (expected: between %d and %d "
@@ -3250,363 +3198,363 @@ msgstr ""
 "%s número de argumentos incorrecto para el comando IRC \"%s\" (esperado: "
 "entre %d y %d parámetro%s)\n"
 
-#: src/common/command.c:934
+#: src/common/command.c:935
 #, c-format
 msgid "%s command \"%s\" needs a server connection!\n"
 msgstr "%s ¡el comando \"%s\" requiere una conexión a servidor!\n"
 
-#: src/common/command.c:943
+#: src/common/command.c:944
 #, c-format
 msgid "%s command \"%s\" can not be executed on DCC CHAT buffer\n"
 msgstr "%s el comando \"%s\" no puede ejecutarse en el búfer de charla DCC\n"
 
-#: src/common/command.c:988
+#: src/common/command.c:989
 #, c-format
 msgid "%s unknown command \"%s\" (type /help for help)\n"
 msgstr "%s comando \"%s\" desconocido (escriba /help para la ayuda)\n"
 
-#: src/common/command.c:1190
+#: src/common/command.c:1191
 msgid "This window is not a channel!\n"
 msgstr "¡Esta ventana no es un canal!\n"
 
-#: src/common/command.c:1228 src/common/command.c:1399
+#: src/common/command.c:1229 src/common/command.c:1400
 #, c-format
 msgid "%s missing arguments for \"%s\" command\n"
 msgstr "%s faltan argumentos para el comando \"%s\"\n"
 
-#: src/common/command.c:1237
+#: src/common/command.c:1238
 #, c-format
 msgid "Alias \"%s\" => \"%s\" created\n"
 msgstr "Alias \"%s\" => \"%s\" creado\n"
 
-#: src/common/command.c:1243
+#: src/common/command.c:1244
 #, c-format
 msgid "Failed to create alias \"%s\" => \"%s\" (not enough memory)\n"
 msgstr ""
 "No ha sido posible crear el alias \"%s\" => \"%s\" (no hay suficiente "
 "memoria)\n"
 
-#: src/common/command.c:1255
+#: src/common/command.c:1256
 msgid "Alias:\n"
 msgstr ""
 
-#: src/common/command.c:1265
+#: src/common/command.c:1266
 #, fuzzy
 msgid "No alias found.\n"
 msgstr "Ningún alias definido.\n"
 
-#: src/common/command.c:1275
+#: src/common/command.c:1276
 msgid "List of aliases:\n"
 msgstr "Lista de alias:\n"
 
-#: src/common/command.c:1289
+#: src/common/command.c:1290
 msgid "No alias defined.\n"
 msgstr "Ningún alias definido.\n"
 
-#: src/common/command.c:1308
+#: src/common/command.c:1309
 #, c-format
 msgid "%sServer: %s%s\n"
 msgstr "%sServidor: %s%s\n"
 
-#: src/common/command.c:1313
+#: src/common/command.c:1314
 #, c-format
 msgid "%snot connected\n"
 msgstr "%sno conectado\n"
 
-#: src/common/command.c:1317
+#: src/common/command.c:1318
 #, c-format
 msgid "%sChannel: %s%s %s(server: %s%s%s)\n"
 msgstr "%s Canal: %s%s %s(servidor: %s%s%s)\n"
 
-#: src/common/command.c:1326
+#: src/common/command.c:1327
 #, c-format
 msgid "%sPrivate with: %s%s %s(server: %s%s%s)\n"
 msgstr "%sPrivado con: %s%s %s(servidor: %s%s%s)\n"
 
-#: src/common/command.c:1335 src/common/command.c:1347
+#: src/common/command.c:1336 src/common/command.c:1348
 #, c-format
 msgid "%sunknown\n"
 msgstr "%sdesconocido\n"
 
-#: src/common/command.c:1343
+#: src/common/command.c:1344
 #, c-format
 msgid "%sraw IRC data\n"
 msgstr "%s datos basura de IRC\n"
 
-#: src/common/command.c:1378
+#: src/common/command.c:1379
 #, fuzzy
 msgid "Open buffers:\n"
 msgstr "Búfers abiertos:\n"
 
-#: src/common/command.c:1423
+#: src/common/command.c:1424
 #, c-format
 msgid "%s incorrect buffer number\n"
 msgstr "%s número de búfer incorrecto\n"
 
-#: src/common/command.c:1440
+#: src/common/command.c:1441
 #, c-format
 msgid "%s can not close the single buffer\n"
 msgstr "%s no es posible cerrar el único búfer\n"
 
-#: src/common/command.c:1451
+#: src/common/command.c:1452
 #, fuzzy, c-format
 msgid "%s can not close server buffer while channels are open\n"
 msgstr ""
 "%s no se puede cerrar el búfer de servidor mientras haya canales abiertos\n"
 
-#: src/common/command.c:1523
+#: src/common/command.c:1524
 msgid "Notify levels:  "
 msgstr "Niveles de notificación:  "
 
-#: src/common/command.c:1529
+#: src/common/command.c:1530
 msgid "Raw IRC data"
 msgstr "Datos basura de IRC"
 
-#: src/common/command.c:1553 src/common/command.c:1603
+#: src/common/command.c:1554 src/common/command.c:1604
 #, c-format
 msgid "%s incorrect notify level (must be between %d and %d)\n"
 msgstr "%s nivel de notificación incorrecto (debe estar entre %d y %d)\n"
 
-#: src/common/command.c:1563
+#: src/common/command.c:1564
 #, c-format
 msgid "%s incorrect buffer for notify (must be channel or private)\n"
 msgstr "%s búfer incorrecto para notificar (debe ser canal o privado)\n"
 
-#: src/common/command.c:1573
+#: src/common/command.c:1574
 #, c-format
 msgid "New notify level for %s%s%s: %s%d %s"
 msgstr "Nuevo nivel de notificación para %s%s%s: %s%d %s"
 
-#: src/common/command.c:1583
+#: src/common/command.c:1584
 msgid "(hotlist: never)\n"
 msgstr "(hotlist: nunca)\n"
 
-#: src/common/command.c:1586
+#: src/common/command.c:1587
 msgid "(hotlist: highlights)\n"
 msgstr "(hotlist: resaltados)\n"
 
-#: src/common/command.c:1589
+#: src/common/command.c:1590
 msgid "(hotlist: highlights + messages)\n"
 msgstr "(hotlist: resaltados + mensajes)\n"
 
-#: src/common/command.c:1592
+#: src/common/command.c:1593
 msgid "(hotlist: highlights + messages + join/part (all))\n"
 msgstr "(hotlist: resaltados + mensajes + join/part (todos))\n"
 
-#: src/common/command.c:1723
+#: src/common/command.c:1724
 #, c-format
 msgid "Charsets for server %s%s%s: "
 msgstr "Juegos de caracteres para el servidor %s%s%s: "
 
-#: src/common/command.c:1731
+#: src/common/command.c:1732
 #, c-format
 msgid "Charsets for channel %s%s%s: "
 msgstr "Juegos de caracteres para el canal %s%s%s: "
 
-#: src/common/command.c:1739
+#: src/common/command.c:1740
 #, c-format
 msgid "Charsets for private %s%s%s: "
 msgstr "Juegos de caracteres para el privado %s%s%s: "
 
-#: src/common/command.c:1767 src/common/command.c:1797
-#: src/common/command.c:1827
+#: src/common/command.c:1768 src/common/command.c:1798
+#: src/common/command.c:1828
 #, c-format
 msgid " (inherited: \"%s%s%s\")"
 msgstr " (heredado: \"%s%s%s\")"
 
-#: src/common/command.c:1861
+#: src/common/command.c:1862
 #, c-format
 msgid "%s charset \"%s\" is not available\n"
 msgstr ""
 
-#: src/common/command.c:1919 src/common/command.c:1949
-#: src/common/command.c:2176 src/common/command.c:2916
-#: src/common/command.c:4197 src/common/command.c:4240
+#: src/common/command.c:1920 src/common/command.c:1950
+#: src/common/command.c:2177 src/common/command.c:2917
+#: src/common/command.c:4198 src/common/command.c:4241
 #, c-format
 msgid "%s unknown option for \"%s\" command\n"
 msgstr "%s opción desconocida para el comando \"%s\"\n"
 
-#: src/common/command.c:1984
+#: src/common/command.c:1985
 #, c-format
 msgid "%s already connected to server \"%s\"!\n"
 msgstr "%s ¡ya conectado al servidor \"%s\"!\n"
 
-#: src/common/command.c:1992
+#: src/common/command.c:1993
 #, c-format
 msgid "%s currently connecting to server \"%s\"!\n"
 msgstr "%s ¡actualmente conectando al servidor \"%s\"!\n"
 
-#: src/common/command.c:2012 src/common/command.c:2225
+#: src/common/command.c:2013 src/common/command.c:2226
 #, c-format
 msgid "%s server not found\n"
 msgstr "%s servidor no encontrado\n"
 
-#: src/common/command.c:2209
+#: src/common/command.c:2210
 #, c-format
 msgid "%s not connected to server \"%s\"!\n"
 msgstr "%s ¡no conectado al servidor \"%s\"!\n"
 
-#: src/common/command.c:2217
+#: src/common/command.c:2218
 msgid "Auto-reconnection is cancelled\n"
 msgstr "La reconexión automática está anulada\n"
 
-#: src/common/command.c:2253 src/common/weechat.c:500
+#: src/common/command.c:2254 src/common/weechat.c:211
 #, c-format
 msgid "%s internal commands:\n"
 msgstr "Comandos internos %s :\n"
 
-#: src/common/command.c:2263 src/common/weechat.c:520
+#: src/common/command.c:2264 src/common/weechat.c:231
 #, c-format
 msgid "IRC commands:\n"
 msgstr "Comandos IRC :\n"
 
-#: src/common/command.c:2277
+#: src/common/command.c:2278
 msgid "Plugin commands:\n"
 msgstr "Comandos de plugin:\n"
 
-#: src/common/command.c:2393
+#: src/common/command.c:2394
 #, c-format
 msgid "No help available, \"%s\" is an unknown command\n"
 msgstr "No hay ayuda disponible, el comando \"%s\" es desconocido\n"
 
-#: src/common/command.c:2462
+#: src/common/command.c:2463
 #, c-format
 msgid "%son %s%s%s/%s%s%s:%s ignoring %s%s%s from %s%s\n"
 msgstr "%sen %s%s%s/%s%s%s:%s ignorando %s%s%s de %s%s\n"
 
-#: src/common/command.c:2500
+#: src/common/command.c:2501
 msgid "List of ignore:\n"
 msgstr "Lista de ignores:\n"
 
-#: src/common/command.c:2517
+#: src/common/command.c:2518
 msgid "No ignore defined.\n"
 msgstr "Sin ignores definidos.\n"
 
-#: src/common/command.c:2543
+#: src/common/command.c:2544
 msgid "New ignore:"
 msgstr "Nuevo ignore:"
 
-#: src/common/command.c:2563
+#: src/common/command.c:2564
 #, c-format
 msgid "New key binding:  %s"
 msgstr "Nueva anclaje de clave:  %s"
 
-#: src/common/command.c:2602
+#: src/common/command.c:2603
 msgid "Key bindings:\n"
 msgstr "Anclajes de clave:\n"
 
-#: src/common/command.c:2616
+#: src/common/command.c:2617
 #, c-format
 msgid "Key \"%s\" unbound\n"
 msgstr "Clave \"%s\" desatada\n"
 
-#: src/common/command.c:2622
+#: src/common/command.c:2623
 #, c-format
 msgid "%s unable to unbind key \"%s\"\n"
 msgstr "%s No ha sido posible desatar la clave \"%s\"\n"
 
-#: src/common/command.c:2630 src/common/weechat.c:552
+#: src/common/command.c:2631 src/common/weechat.c:263
 #, c-format
 msgid "Internal key functions:\n"
 msgstr "Funciones de clave internas:\n"
 
-#: src/common/command.c:2650
+#: src/common/command.c:2651
 msgid "Default key bindings restored\n"
 msgstr "Anclajes de clave por defecto restaurados\n"
 
-#: src/common/command.c:2656
+#: src/common/command.c:2657
 #, c-format
 msgid "%s \"-yes\" argument is required for keys reset (securuty reason)\n"
 msgstr ""
 "%s \"-yes\" se requiere argumento para resetear las claves (por razones de "
 "seguridad)\n"
 
-#: src/common/command.c:2710
+#: src/common/command.c:2711
 msgid "global"
 msgstr ""
 
-#: src/common/command.c:2710
+#: src/common/command.c:2711
 msgid "local"
 msgstr ""
 
-#: src/common/command.c:2716
+#: src/common/command.c:2717
 #, fuzzy
 msgid "top"
 msgstr "operador"
 
-#: src/common/command.c:2719
+#: src/common/command.c:2720
 msgid "bottom"
 msgstr ""
 
-#: src/common/command.c:2722
+#: src/common/command.c:2723
 msgid "left"
 msgstr ""
 
-#: src/common/command.c:2725
+#: src/common/command.c:2726
 msgid "right"
 msgstr ""
 
-#: src/common/command.c:2755
+#: src/common/command.c:2756
 #, fuzzy
 msgid "Open panels:\n"
 msgstr "Búfers abiertos:\n"
 
-#: src/common/command.c:2791
+#: src/common/command.c:2792
 msgid "Plugins loaded:\n"
 msgstr "Plugins cargados:\n"
 
-#: src/common/command.c:2807
+#: src/common/command.c:2808
 msgid "     message handlers:\n"
 msgstr "     manejadores de mensaje:\n"
 
-#: src/common/command.c:2816
+#: src/common/command.c:2817
 #, c-format
 msgid "       IRC(%s)\n"
 msgstr "        IRC(%s)\n"
 
-#: src/common/command.c:2823
+#: src/common/command.c:2824
 msgid "       (no message handler)\n"
 msgstr "       (sin manejador de mensaje)\n"
 
-#: src/common/command.c:2828
+#: src/common/command.c:2829
 msgid "     command handlers:\n"
 msgstr "     manejadores de comando:\n"
 
-#: src/common/command.c:2849
+#: src/common/command.c:2850
 msgid "       (no command handler)\n"
 msgstr "       (sin manejador de comando)\n"
 
-#: src/common/command.c:2854
+#: src/common/command.c:2855
 msgid "     timer handlers:\n"
 msgstr "     manejadores de temporización:\n"
 
-#: src/common/command.c:2863
+#: src/common/command.c:2864
 #, c-format
 msgid "       %d seconds\n"
 msgstr "        %d segundos\n"
 
-#: src/common/command.c:2870
+#: src/common/command.c:2871
 msgid "       (no timer handler)\n"
 msgstr "       (sin manejador temporizador)\n"
 
-#: src/common/command.c:2875
+#: src/common/command.c:2876
 msgid "     keyboard handlers:\n"
 msgstr "     manejadores de teclado:\n"
 
-#: src/common/command.c:2885
+#: src/common/command.c:2886
 msgid "       (no keyboard handler)\n"
 msgstr "       (sin manejador de teclado)\n"
 
-#: src/common/command.c:2887
+#: src/common/command.c:2888
 #, c-format
 msgid "       %d defined\n"
 msgstr "       %d definido\n"
 
-#: src/common/command.c:2893
+#: src/common/command.c:2894
 msgid "  (no plugin)\n"
 msgstr "  (sin plugins)\n"
 
-#: src/common/command.c:2929 src/common/command.c:3823
+#: src/common/command.c:2930 src/common/command.c:3824
 #, c-format
 msgid ""
 "Command \"%s\" is not available, WeeChat was built without plugins support.\n"
@@ -3614,51 +3562,51 @@ msgstr ""
 "El comando \"%s\" no está disponible, Weechat fue compilado sin soporte para "
 "plugins.\n"
 
-#: src/common/command.c:2957
+#: src/common/command.c:2958
 msgid "Configuration file saved\n"
 msgstr "Archivo de configuración guardado\n"
 
-#: src/common/command.c:2962
+#: src/common/command.c:2963
 #, c-format
 msgid "%s failed to save configuration file\n"
 msgstr "%s falló al salvar el archivo de configuración\n"
 
-#: src/common/command.c:2970
+#: src/common/command.c:2971
 #, fuzzy
 msgid "Plugins options saved\n"
 msgstr "opción/opciones de plugin encontrada(s)\n"
 
-#: src/common/command.c:2975
+#: src/common/command.c:2976
 #, fuzzy, c-format
 msgid "%s failed to save plugins options\n"
 msgstr "%s falló al salvar el archivo de configuración\n"
 
-#: src/common/command.c:3016
+#: src/common/command.c:3017
 msgid "No server.\n"
 msgstr "Ningún servidor.\n"
 
-#: src/common/command.c:3027
+#: src/common/command.c:3028
 #, c-format
 msgid "Server '%s' not found.\n"
 msgstr "Servidor '%s' no encontrado.\n"
 
-#: src/common/command.c:3039
+#: src/common/command.c:3040
 #, c-format
 msgid "%s missing servername for \"%s\" command\n"
 msgstr "%s falta el nombre de servidor para el comando \"%s\"\n"
 
-#: src/common/command.c:3047
+#: src/common/command.c:3048
 #, c-format
 msgid "%s too much arguments for \"%s\" command, ignoring arguments\n"
 msgstr ""
 "%s demasiados argumentos para el comando \"%s\", ignorando parámetros\n"
 
-#: src/common/command.c:3057
+#: src/common/command.c:3058
 #, c-format
 msgid "%s server \"%s\" not found for \"%s\" command\n"
 msgstr "%s servidor \"%s\" no encontrado para el comando \"%s\"\n"
 
-#: src/common/command.c:3065
+#: src/common/command.c:3066
 #, c-format
 msgid ""
 "%s you can not delete server \"%s\" because you are connected to. Try /"
@@ -3667,198 +3615,198 @@ msgstr ""
 "%s usted no puede eliminar el servidor \"%s\" ya que está usted conectado a "
 "él. Pruebe /disconnect %s antes.\n"
 
-#: src/common/command.c:3085
+#: src/common/command.c:3086
 #, c-format
 msgid "Server %s%s%s has been deleted\n"
 msgstr "El servidor %s%s%s ha sido borrado\n"
 
-#: src/common/command.c:3104
+#: src/common/command.c:3105
 #, c-format
 msgid "%s missing parameters for \"%s\" command\n"
 msgstr "%s faltan parámetros para el comando \"%s\"\n"
 
-#: src/common/command.c:3114
+#: src/common/command.c:3115
 #, c-format
 msgid "%s server \"%s\" already exists, can't create it!\n"
 msgstr "%s el servidor \"%s\" ya existe, ¡no se puede crear!\n"
 
-#: src/common/command.c:3143 src/common/command.c:3171
-#: src/common/command.c:3184 src/common/command.c:3210
+#: src/common/command.c:3144 src/common/command.c:3172
+#: src/common/command.c:3185 src/common/command.c:3211
 #, c-format
 msgid "%s missing password for \"%s\" parameter\n"
 msgstr "%s falta contraseña para el comando \"%s\"\n"
 
-#: src/common/command.c:3156
+#: src/common/command.c:3157
 #, c-format
 msgid "%s missing nick(s) for \"%s\" parameter\n"
 msgstr "%s falta(n) usuario(s) para el parámetro \"%s\"\n"
 
-#: src/common/command.c:3197
+#: src/common/command.c:3198
 #, c-format
 msgid "%s missing command for \"%s\" parameter\n"
 msgstr "%s falta comando para el parámetro \"%s\"\n"
 
-#: src/common/command.c:3235
+#: src/common/command.c:3236
 #, c-format
 msgid "Server %s%s%s created\n"
 msgstr "Servidor %s%s%s creado\n"
 
-#: src/common/command.c:3244
+#: src/common/command.c:3245
 #, c-format
 msgid "%s unable to create server\n"
 msgstr "%s no es posible crear el servidor\n"
 
-#: src/common/command.c:3304
+#: src/common/command.c:3305
 msgid "(unknown)"
 msgstr "(desconocido)"
 
-#: src/common/command.c:3327
+#: src/common/command.c:3328
 #, c-format
 msgid "%s(password hidden) "
 msgstr "%s(contraseña oculta) "
 
-#: src/common/command.c:3425
+#: src/common/command.c:3426
 #, c-format
 msgid "%s server \"%s\" not found\n"
 msgstr "%s servidor \"%s\" no encontrado\n"
 
-#: src/common/command.c:3458 src/common/command.c:3506
+#: src/common/command.c:3459 src/common/command.c:3507
 #, c-format
 msgid "%s config option \"%s\" not found\n"
 msgstr "%s opción de configuración \"%s\" no encontrada\n"
 
-#: src/common/command.c:3463 src/common/command.c:3498
+#: src/common/command.c:3464 src/common/command.c:3499
 #, c-format
 msgid "%s incorrect value for option \"%s\"\n"
 msgstr "%s valor incorrecto para la opción \"%s\"\n"
 
-#: src/common/command.c:3479
+#: src/common/command.c:3480
 #, c-format
 msgid "%s option \"%s\" can not be changed while WeeChat is running\n"
 msgstr ""
 "%s la opción \"%s\" no puede ser modificada mientras WeeChat está en "
 "ejecución\n"
 
-#: src/common/command.c:3589
+#: src/common/command.c:3590
 #, c-format
 msgid "No config option found with \"%s\"\n"
 msgstr "Ninguna opción de configuración encontrada con \"%s\"\n"
 
-#: src/common/command.c:3592
+#: src/common/command.c:3593
 msgid "No config option found\n"
 msgstr "Ninguna opción de configuración encontrada\n"
 
-#: src/common/command.c:3599
+#: src/common/command.c:3600
 #, c-format
 msgid "%sDetail:\n"
 msgstr "%sDetalle:\n"
 
-#: src/common/command.c:3604
+#: src/common/command.c:3605
 msgid "  . type boolean (values: 'on' or 'off')\n"
 msgstr "  . tipo booleano (valores: 'on' u 'off')\n"
 
-#: src/common/command.c:3605 src/common/command.c:3628
-#: src/common/command.c:3634 src/common/command.c:3640
-#: src/common/weechat.c:436 src/common/weechat.c:461 src/common/weechat.c:468
-#: src/common/weechat.c:475
+#: src/common/command.c:3606 src/common/command.c:3629
+#: src/common/command.c:3635 src/common/command.c:3641
+#: src/common/weechat.c:147 src/common/weechat.c:172 src/common/weechat.c:179
+#: src/common/weechat.c:186
 #, c-format
 msgid "  . default value: '%s'\n"
 msgstr "  . valor por defecto: '%s'\n"
 
-#: src/common/command.c:3610
+#: src/common/command.c:3611
 #, c-format
 msgid "  . type integer (values: between %d and %d)\n"
 msgstr "  . tipo entero (valores: entre %d y %d)\n"
 
-#: src/common/command.c:3613 src/common/weechat.c:445
+#: src/common/command.c:3614 src/common/weechat.c:156
 #, c-format
 msgid "  . default value: %d\n"
 msgstr "  . valor por defecto: %d\n"
 
-#: src/common/command.c:3617
+#: src/common/command.c:3618
 msgid "  . type string (values: "
 msgstr "  . tipo cadena (valores: "
 
-#: src/common/command.c:3630 src/common/command.c:3636
-#: src/common/command.c:3642 src/common/weechat.c:463 src/common/weechat.c:470
-#: src/common/weechat.c:477
+#: src/common/command.c:3631 src/common/command.c:3637
+#: src/common/command.c:3643 src/common/weechat.c:174 src/common/weechat.c:181
+#: src/common/weechat.c:188
 msgid "empty"
 msgstr "vacío"
 
-#: src/common/command.c:3633
+#: src/common/command.c:3634
 msgid "  . type color (Curses or Gtk color, look at WeeChat doc)\n"
 msgstr "  . tipo color (color Curses o Gtk, ver la documentación de WeeChat)\n"
 
-#: src/common/command.c:3639
+#: src/common/command.c:3640
 msgid "  . type string (any string)\n"
 msgstr "  . tipo cadena (cualquier cadena)\n"
 
-#: src/common/command.c:3645 src/common/weechat.c:480
+#: src/common/command.c:3646 src/common/weechat.c:191
 #, c-format
 msgid "  . description: %s\n"
 msgstr "  . descripción: %s\n"
 
-#: src/common/command.c:3656
+#: src/common/command.c:3657
 #, c-format
 msgid "config option(s) found with \"%s\"\n"
 msgstr "opción/opciones de configuración encontrada(s) con \"%s\"\n"
 
-#: src/common/command.c:3659
+#: src/common/command.c:3660
 msgid "config option(s) found\n"
 msgstr "opción/opciones de configuración encontrada(s)\n"
 
-#: src/common/command.c:3767
+#: src/common/command.c:3768
 #, c-format
 msgid "%s incorrect value for plugin option \"%s\"\n"
 msgstr "%s valor incorrecto para la opción de plugin \"%s\"\n"
 
-#: src/common/command.c:3796
+#: src/common/command.c:3797
 #, c-format
 msgid "No plugin option found with \"%s\"\n"
 msgstr "Ninguna opción de plugin encontrada con \"%s\"\n"
 
-#: src/common/command.c:3799
+#: src/common/command.c:3800
 msgid "No plugin option found\n"
 msgstr "Ninguna opción de plugin encontrada\n"
 
-#: src/common/command.c:3809
+#: src/common/command.c:3810
 #, c-format
 msgid "plugin option(s) found with \"%s\"\n"
 msgstr "opción/opciones de plugin encontrada(s) con \"%s\"\n"
 
-#: src/common/command.c:3812
+#: src/common/command.c:3813
 msgid "plugin option(s) found\n"
 msgstr "opción/opciones de plugin encontrada(s)\n"
 
-#: src/common/command.c:3853
+#: src/common/command.c:3854
 #, c-format
 msgid "%s alias or command \"%s\" not found\n"
 msgstr "%s alias o comando \"%s\" no encontrado\n"
 
-#: src/common/command.c:3863
+#: src/common/command.c:3864
 #, c-format
 msgid "Alias \"%s\" removed\n"
 msgstr "Alias \"%s\" eliminado\n"
 
-#: src/common/command.c:3923
+#: src/common/command.c:3924
 msgid "ignore were removed.\n"
 msgstr "los ignores fueron eliminados.\n"
 
-#: src/common/command.c:3925
+#: src/common/command.c:3926
 msgid "ignore was removed.\n"
 msgstr "el ignore fue eliminado.\n"
 
-#: src/common/command.c:3930
+#: src/common/command.c:3931
 #, c-format
 msgid "%s no ignore found\n"
 msgstr "%s no se encontraron ignores\n"
 
-#: src/common/command.c:3964
+#: src/common/command.c:3965
 #, c-format
 msgid "%s can't upgrade: connection to at least one server is pending\n"
 msgstr "%s no se puede actualizar: conexión pendiente a un servidor al menos\n"
 
-#: src/common/command.c:3974
+#: src/common/command.c:3975
 #, c-format
 msgid ""
 "%s can't upgrade: connection to at least one SSL server is active (should be "
@@ -3867,38 +3815,38 @@ msgstr ""
 "%s no se puede actualizar: conexión activa a un servidor SSL por lo menos "
 "(debería ser corregido en una futura versión)\n"
 
-#: src/common/command.c:3990
+#: src/common/command.c:3991
 msgid "Upgrading WeeChat...\n"
 msgstr "Actualizando Weechat...\n"
 
-#: src/common/command.c:3997
+#: src/common/command.c:3998
 #, c-format
 msgid "%s unable to save session in file\n"
 msgstr "%s no ha sido posible guardar la sesión en el archivo\n"
 
-#: src/common/command.c:4023
+#: src/common/command.c:4024
 #, c-format
 msgid "%s exec failed (program: \"%s\"), exiting WeeChat\n"
 msgstr "%s exec ha fallado (programa: \"%s\"), saliendo de Weechat\n"
 
-#: src/common/command.c:4063
+#: src/common/command.c:4064
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
 msgstr "Tiempo de uso de WeeChat: %d %s %02d:%02d:%02d, empezó en %s"
 
-#: src/common/command.c:4077
+#: src/common/command.c:4078
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr ""
 "Tiempo de uso de WeeChat: %s%d %s%s %s%02d%s: %s%02d%s:%s%02d%s, empezó en %s"
 "%s"
 
-#: src/common/command.c:4121
+#: src/common/command.c:4122
 #, fuzzy
 msgid "Open windows:\n"
 msgstr "Ventanas abiertas:\n"
 
-#: src/common/command.c:4208
+#: src/common/command.c:4209
 #, c-format
 msgid ""
 "%s can not merge windows, there's no other window with same size near "
@@ -4275,7 +4223,7 @@ msgstr "%s no se puede eliminar el archivo de sesión (%s)\n"
 msgid "Upgrade completed successfully\n"
 msgstr "Actualización completada con éxito\n"
 
-#: src/common/weechat.c:390
+#: src/common/weechat.c:101
 #, c-format
 msgid ""
 "%s (c) Copyright 2003-2006, compiled on %s %s\n"
@@ -4284,7 +4232,7 @@ msgstr ""
 "%s (c) Copyright 2003-2006, compilado a %s %s\n"
 "Desarrollado por FlashCode <flashcode@flashtux.org> - %s"
 
-#: src/common/weechat.c:394
+#: src/common/weechat.c:105
 #, c-format
 msgid ""
 "Usage: %s [options ...]\n"
@@ -4295,7 +4243,7 @@ msgstr ""
 "  ó: %s [irc[6][s]://[usuario[:contraseña]@]irc.ejemplo.org[:puerto][/"
 "channel]"
 
-#: src/common/weechat.c:398
+#: src/common/weechat.c:109
 #, c-format
 msgid ""
 "  -a, --no-connect        disable auto-connect to servers at startup\n"
@@ -4325,7 +4273,7 @@ msgstr ""
 "  -v, --version           mostrar versión de Weechat\n"
 "  -w, --weechat-commands  mostrar comandos de Weechat\n"
 
-#: src/common/weechat.c:421
+#: src/common/weechat.c:132
 #, c-format
 msgid ""
 "WeeChat configuration options (<weechat_home>/weechat.rc):\n"
@@ -4334,112 +4282,112 @@ msgstr ""
 "Opciones de configuración de WeeChat (<weechat_home>/weechat.rc):\n"
 "\n"
 
-#: src/common/weechat.c:434
+#: src/common/weechat.c:145
 #, c-format
 msgid "  . type: boolean\n"
 msgstr "  . tipo: booleano\n"
 
-#: src/common/weechat.c:435
+#: src/common/weechat.c:146
 #, c-format
 msgid "  . values: 'on' or 'off'\n"
 msgstr "  . valores: 'on' u 'off'\n"
 
-#: src/common/weechat.c:441
+#: src/common/weechat.c:152
 #, c-format
 msgid "  . type: integer\n"
 msgstr "  . tipo: entero\n"
 
-#: src/common/weechat.c:442
+#: src/common/weechat.c:153
 #, c-format
 msgid "  . values: between %d and %d\n"
 msgstr "  . valores: entre %d y %d\n"
 
-#: src/common/weechat.c:449 src/common/weechat.c:473
+#: src/common/weechat.c:160 src/common/weechat.c:184
 #, c-format
 msgid "  . type: string\n"
 msgstr "  . tipo: cadena\n"
 
-#: src/common/weechat.c:450
+#: src/common/weechat.c:161
 #, c-format
 msgid "  . values: "
 msgstr "  . valores: "
 
-#: src/common/weechat.c:466
+#: src/common/weechat.c:177
 #, c-format
 msgid "  . type: color\n"
 msgstr "  . tipo: color\n"
 
-#: src/common/weechat.c:467
+#: src/common/weechat.c:178
 #, c-format
 msgid "  . values: Curses or Gtk color\n"
 msgstr "  . valores: color Curses o Gtk\n"
 
-#: src/common/weechat.c:474
+#: src/common/weechat.c:185
 #, c-format
 msgid "  . values: any string\n"
 msgstr "  . valores: cualquier cadena\n"
 
-#: src/common/weechat.c:574
+#: src/common/weechat.c:285
 #, c-format
 msgid "%s default keys:\n"
 msgstr "%s claves por defecto:\n"
 
-#: src/common/weechat.c:623
+#: src/common/weechat.c:334
 #, c-format
 msgid "%s missing argument for --dir option\n"
 msgstr "%s falta un argumento para la opción --dir\n"
 
-#: src/common/weechat.c:668
+#: src/common/weechat.c:379
 #, c-format
 msgid "%s missing argument for --session option\n"
 msgstr "%s falta un argumento para la opción --session\n"
 
-#: src/common/weechat.c:689
+#: src/common/weechat.c:400
 #, c-format
 msgid "%s invalid syntax for IRC server ('%s'), ignored\n"
 msgstr "%s sintaxis inválida para el servidor IRC ('%s'), ignorado\n"
 
-#: src/common/weechat.c:704
+#: src/common/weechat.c:415
 #, c-format
 msgid "%s unable to create server ('%s'), ignored\n"
 msgstr "%s no es posible crear el servidor ('%s'), ignorado\n"
 
-#: src/common/weechat.c:713
+#: src/common/weechat.c:424
 #, c-format
 msgid "%s unknown parameter '%s', ignored\n"
 msgstr "%s parámetro desconocido '%s', ignorado\n"
 
-#: src/common/weechat.c:733
+#: src/common/weechat.c:444
 #, c-format
 msgid "%s cannot create directory \"%s\"\n"
 msgstr "%s no es posible crear el directorio \"%s\"\n"
 
-#: src/common/weechat.c:757
+#: src/common/weechat.c:468
 #, c-format
 msgid "%s unable to get HOME directory\n"
 msgstr "%s no ha sido posible leer el directorio HOME\n"
 
-#: src/common/weechat.c:766
+#: src/common/weechat.c:477
 #, c-format
 msgid "%s not enough memory for home directory\n"
 msgstr "%s no hay suficiente memoria para el directorio home\n"
 
-#: src/common/weechat.c:779
+#: src/common/weechat.c:490
 #, c-format
 msgid "%s home (%s) is not a directory\n"
 msgstr ""
 
-#: src/common/weechat.c:788 src/common/weechat.c:812 src/common/weechat.c:828
+#: src/common/weechat.c:499 src/common/weechat.c:523 src/common/weechat.c:539
 #, c-format
 msgid "%s unable to create \"%s\" directory\n"
 msgstr "%s no es posible crear el directorio \"%s\"\n"
 
-#: src/common/weechat.c:904
+#: src/common/weechat.c:615
 #, c-format
 msgid "%sWelcome to %s%s%s, %s\n"
 msgstr "%sBienvenido a %s%s%s, %s\n"
 
-#: src/common/weechat.c:918 src/common/weechat.c:928
+#: src/common/weechat.c:629 src/common/weechat.c:639
 msgid "compiled on"
 msgstr "compilado en"
 
@@ -4451,41 +4399,41 @@ msgstr "Error WeeChat:"
 msgid "WeeChat Warning:"
 msgstr "Advertencia WeeChat:"
 
-#: src/common/weeconfig.c:115 src/common/weeconfig.c:116
+#: src/common/weeconfig.c:116 src/common/weeconfig.c:117
 #, fuzzy
 msgid "save config file on exit"
 msgstr "guardar configuración a disco"
 
-#: src/common/weeconfig.c:119 src/common/weeconfig.c:120
+#: src/common/weeconfig.c:120 src/common/weeconfig.c:121
 msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr ""
 "define el título de la ventana (el terminal para la interfaz Curses) con el "
 "nombre y la versión"
 
-#: src/common/weeconfig.c:123 src/common/weeconfig.c:124
+#: src/common/weeconfig.c:124 src/common/weeconfig.c:125
 msgid "display WeeChat logo at startup"
 msgstr "mostrar el logotipo de WeeChat en el arranque"
 
-#: src/common/weeconfig.c:127 src/common/weeconfig.c:128
+#: src/common/weeconfig.c:128 src/common/weeconfig.c:129
 msgid "display WeeChat version at startup"
 msgstr "mostrar la versión de Weechat en el arranque"
 
-#: src/common/weeconfig.c:131
+#: src/common/weeconfig.c:132
 msgid "WeeChat slogan"
 msgstr "eslógan de WeeChat"
 
-#: src/common/weeconfig.c:132
+#: src/common/weeconfig.c:133
 msgid "WeeChat slogan (if empty, slogan is not used)"
 msgstr "eslógan de WeeChat (si está vacío, el eslógan no será utilizado)"
 
-#: src/common/weeconfig.c:135
+#: src/common/weeconfig.c:136
 msgid ""
 "ISO charset for decoding messages from server (used only if locale is UTF-8)"
 msgstr ""
 "Juego de caracteres ISO para decodificar mensajes del servidor (usado sólo "
 "si locale es UTF-8)"
 
-#: src/common/weeconfig.c:136
+#: src/common/weeconfig.c:137
 msgid ""
 "ISO charset for decoding messages from server (used only if locale is UTF-8) "
 "(if empty, messages are not converted if locale is UTF-8)"
@@ -4494,7 +4442,7 @@ msgstr ""
 "si locale es UTF-8) (si está vacío, los mensajes no se convierten si locale "
 "es UTF-8)"
 
-#: src/common/weeconfig.c:140
+#: src/common/weeconfig.c:141
 msgid ""
 "UTF charset for decoding messages from server (used only if locale is not "
 "UTF-8)"
@@ -4502,7 +4450,7 @@ msgstr ""
 "Juego de caracteres UTF para decodificar mensajes del servidor (usado sólo "
 "si locale no es UTF-8)"
 
-#: src/common/weeconfig.c:141
+#: src/common/weeconfig.c:142
 msgid ""
 "UTF charset for decoding messages from server (used only if locale is not "
 "UTF-8) (if empty, messages are not converted if locale is not UTF-8)"
@@ -4511,11 +4459,11 @@ msgstr ""
 "si locale no es UTF-8) (si está vacío, los mensajes no se convierten si "
 "locale no es UTF-8)"
 
-#: src/common/weeconfig.c:145
+#: src/common/weeconfig.c:146
 msgid "charset for encoding messages sent to server"
 msgstr "juego de caracteres para codificar los mensajes enviados al servidor"
 
-#: src/common/weeconfig.c:146
+#: src/common/weeconfig.c:147
 msgid ""
 "charset for encoding messages sent to server, examples: UTF-8, ISO-8859-1 "
 "(if empty, messages are not converted)"
@@ -4523,13 +4471,13 @@ msgstr ""
 "Juego de caracteres para codificar los mensajes enviados al servidor, "
 "ejemplos: UTF-8, ISO-8859-1 (si está vacío, los mensajes no se convierten)"
 
-#: src/common/weeconfig.c:149
+#: src/common/weeconfig.c:150
 msgid "forces internal WeeChat charset (should be empty in most cases)"
 msgstr ""
 "fuerza el juego de caracteres interno de Weechat (debería estar vacío en la "
 "mayoría de los casos)"
 
-#: src/common/weeconfig.c:150
+#: src/common/weeconfig.c:151
 msgid ""
 "forces internal WeeChat charset (should be empty in most cases, that means "
 "detected charset is used)"
@@ -4538,53 +4486,53 @@ msgstr ""
 "mayoría de los casos, eso significa que se utiliza el juego de caracteres "
 "detectado)"
 
-#: src/common/weeconfig.c:153 src/common/weeconfig.c:154
+#: src/common/weeconfig.c:154 src/common/weeconfig.c:155
 msgid "use same buffer for all servers"
 msgstr "usar el mismo búfer para todos los servidores"
 
-#: src/common/weeconfig.c:157 src/common/weeconfig.c:158
+#: src/common/weeconfig.c:158 src/common/weeconfig.c:159
 msgid "open new channels/privates near server"
 msgstr "abrir nuevos canales/privados cerca del servidor"
 
-#: src/common/weeconfig.c:161 src/common/weeconfig.c:162
+#: src/common/weeconfig.c:162 src/common/weeconfig.c:163
 msgid "how many lines to scroll by with scroll_up and scroll_down"
 msgstr "cuántas líneas a desplazar con scroll_up and scroll_down"
 
-#: src/common/weeconfig.c:165 src/common/weeconfig.c:166
+#: src/common/weeconfig.c:166 src/common/weeconfig.c:167
 msgid "timestamp for buffers"
 msgstr "fecha y hora para las búfers"
 
-#: src/common/weeconfig.c:169 src/common/weeconfig.c:170
+#: src/common/weeconfig.c:170 src/common/weeconfig.c:171
 msgid "number of colors to use for nicks colors"
 msgstr "número de colores para usar en los colores de nombres de usuario"
 
-#: src/common/weeconfig.c:173 src/common/weeconfig.c:174
+#: src/common/weeconfig.c:174 src/common/weeconfig.c:175
 msgid "display actions with different colors"
 msgstr "mostrar acciones con colores diferentes"
 
-#: src/common/weeconfig.c:177
+#: src/common/weeconfig.c:178
 msgid "display nicklist window"
 msgstr "mostrar ventana de usuarios"
 
-#: src/common/weeconfig.c:178
+#: src/common/weeconfig.c:179
 msgid "display nicklist window (for channel windows)"
 msgstr "mostrar ventana de usuarios (para las ventanas de canal)"
 
-#: src/common/weeconfig.c:181
+#: src/common/weeconfig.c:182
 msgid "nicklist position"
 msgstr "posición de la ventana de usuarios"
 
-#: src/common/weeconfig.c:182
+#: src/common/weeconfig.c:183
 msgid "nicklist position (top, left, right (default), bottom)"
 msgstr ""
 "posición de la ventana de usuarios (arriba (top), izquierda (left), derecha "
 "(right, por defecto), abajo (bottom))"
 
-#: src/common/weeconfig.c:185
+#: src/common/weeconfig.c:186
 msgid "min size for nicklist"
 msgstr "tamaño mínimo para la ventana de usuarios"
 
-#: src/common/weeconfig.c:186
+#: src/common/weeconfig.c:187
 msgid ""
 "min size for nicklist (width or height, depending on look_nicklist_position "
 "(0 = no min size))"
@@ -4592,11 +4540,11 @@ msgstr ""
 "tamaño mínimo para la ventana de usuarios (ancho o alto, dependiendo de "
 "look_nicklist_position (0 = sin tamaño mínimo))"
 
-#: src/common/weeconfig.c:190
+#: src/common/weeconfig.c:191
 msgid "max size for nicklist"
 msgstr "tamaño máximo para la ventana de usuarios"
 
-#: src/common/weeconfig.c:191
+#: src/common/weeconfig.c:192
 msgid ""
 "max size for nicklist (width or height, depending on look_nicklist_position "
 "(0 = no max size; if min == max and > 0, then size is fixed))"
@@ -4605,51 +4553,51 @@ msgstr ""
 "look_nicklist_position (0 = sin tamaño máximo, si min == max y > 0, entonces "
 "se fija el tamaño))"
 
-#: src/common/weeconfig.c:195 src/common/weeconfig.c:196
+#: src/common/weeconfig.c:196 src/common/weeconfig.c:197
 msgid "text to display instead of nick when not connected"
 msgstr "texto a mostrar en lugar del nick cuando no se está conectado"
 
-#: src/common/weeconfig.c:199 src/common/weeconfig.c:200
+#: src/common/weeconfig.c:200 src/common/weeconfig.c:201
 msgid "display nick mode ((half)op/voice) before each nick"
 msgstr "mostrar modo del usuario ((half)op/voice) antes de cada usuario"
 
-#: src/common/weeconfig.c:203 src/common/weeconfig.c:204
+#: src/common/weeconfig.c:204 src/common/weeconfig.c:205
 msgid "display space if nick mode is not (half)op/voice"
 msgstr "mostrar un espacio si el modo de usuario no es (half)op/voice"
 
-#: src/common/weeconfig.c:207 src/common/weeconfig.c:208
+#: src/common/weeconfig.c:208 src/common/weeconfig.c:209
 msgid "text to display before nick in chat window"
 msgstr "texto a mostrar antes del nick en la ventana de charla"
 
-#: src/common/weeconfig.c:211 src/common/weeconfig.c:212
+#: src/common/weeconfig.c:212 src/common/weeconfig.c:213
 msgid "text to display after nick in chat window"
 msgstr "texto a mostrar tras el nick en la ventana de charla"
 
-#: src/common/weeconfig.c:215
+#: src/common/weeconfig.c:216
 msgid "nick alignment (fixed size for nicks in chat window)"
 msgstr ""
 "alineación de nick (tamaño fijo para los nicks en la ventana de charla)"
 
-#: src/common/weeconfig.c:216
+#: src/common/weeconfig.c:217
 msgid ""
 "nick alignment (fixed size for nicks in chat window (none, left, right))"
 msgstr ""
 "alineación de nick (tamaño fijo para los nicks en la ventana de charla "
 "(ninguno, izquierda, derecha))"
 
-#: src/common/weeconfig.c:219 src/common/weeconfig.c:220
+#: src/common/weeconfig.c:220 src/common/weeconfig.c:221
 msgid "alignment for other messages (not beginning with a nick)"
 msgstr "alineación para otros mensajes (sin empezar con un nick)"
 
-#: src/common/weeconfig.c:223 src/common/weeconfig.c:224
+#: src/common/weeconfig.c:224 src/common/weeconfig.c:225
 msgid "size for aligning nick and other messages"
 msgstr "tamaño para la alineación de nick y otros mensajes"
 
-#: src/common/weeconfig.c:227
+#: src/common/weeconfig.c:228
 msgid "max size for aligning nick and other messages"
 msgstr "tamaño máximo para la alineación de nick y otros mensajes"
 
-#: src/common/weeconfig.c:228
+#: src/common/weeconfig.c:229
 msgid ""
 "max size for aligning nick and other messages (should be >= to "
 "look_align_size)"
@@ -4657,37 +4605,37 @@ msgstr ""
 "tamaño máximo para la alineación de nick y otros mensajes (debería ser >= a "
 "look_align_size)"
 
-#: src/common/weeconfig.c:232 src/common/weeconfig.c:233
+#: src/common/weeconfig.c:233 src/common/weeconfig.c:234
 msgid "the string inserted after nick completion"
 msgstr "la cadena mostrada tras la finalización de los nombres de usuario"
 
-#: src/common/weeconfig.c:236 src/common/weeconfig.c:237
+#: src/common/weeconfig.c:237 src/common/weeconfig.c:238
 msgid "chars ignored for nick completion"
 msgstr "caracteres ignorados para el completado del nombre de usuario"
 
-#: src/common/weeconfig.c:240 src/common/weeconfig.c:241
+#: src/common/weeconfig.c:241 src/common/weeconfig.c:242
 msgid "complete only with first nick found"
 msgstr "completar únicamente con el primer nick encontrado"
 
-#: src/common/weeconfig.c:244 src/common/weeconfig.c:245
+#: src/common/weeconfig.c:245 src/common/weeconfig.c:246
 msgid "enable info bar"
 msgstr "activa la barra de información"
 
-#: src/common/weeconfig.c:248 src/common/weeconfig.c:249
+#: src/common/weeconfig.c:249 src/common/weeconfig.c:250
 msgid "timestamp for time in infobar"
 msgstr "fecha y hora para las conversaciones guardadas"
 
-#: src/common/weeconfig.c:252 src/common/weeconfig.c:253
+#: src/common/weeconfig.c:253 src/common/weeconfig.c:254
 msgid "display seconds in infobar time"
 msgstr "mostrar segundos en la hora de la barra de herramientas"
 
-#: src/common/weeconfig.c:256
+#: src/common/weeconfig.c:257
 msgid "delay (in seconds) for highlight messages in infobar"
 msgstr ""
 "retraso (en segundos) para la notificación de mensajes en la barra de "
 "información"
 
-#: src/common/weeconfig.c:257
+#: src/common/weeconfig.c:258
 msgid ""
 "delay (in seconds) for highlight messages in infobar (0 = disable highlight "
 "notifications in infobar)"
@@ -4695,22 +4643,22 @@ msgstr ""
 "retraso (en segundos) para la notificación de mensajes en la barra de "
 "información (0 = desactivar las notificaciones en la barra de información)"
 
-#: src/common/weeconfig.c:261
+#: src/common/weeconfig.c:262
 msgid "max number of names in hotlist"
 msgstr "número máximo de nombres en la hotlist"
 
-#: src/common/weeconfig.c:262
+#: src/common/weeconfig.c:263
 msgid ""
 "max number of names in hotlist (0 = no name displayed, only buffer numbers)"
 msgstr ""
 "número máximo de nombres en la hotlist (0 = no se muestra ninguno, sólo los "
 "números de búfer)"
 
-#: src/common/weeconfig.c:265
+#: src/common/weeconfig.c:266
 msgid "level for displaying names in hotlist"
 msgstr "nivel para mostrar nombres en la hotlist"
 
-#: src/common/weeconfig.c:266
+#: src/common/weeconfig.c:267
 msgid ""
 "level for displaying names in hotlist (combination of: 1=join/part, "
 "2=message, 4=private, 8=highlight, for example: 12=private+highlight)"
@@ -4718,33 +4666,33 @@ msgstr ""
 "nivel para mostrar mensajes en la hotlist (combinación de: 1=join/part, "
 "2=mensaje, 4=privado, 8=resaltado, por ejemplo: 12=privado + resaltado)"
 
-#: src/common/weeconfig.c:270
+#: src/common/weeconfig.c:271
 msgid "max length of names in hotlist"
 msgstr "longitud máxima de nombres en la hotlist"
 
-#: src/common/weeconfig.c:271
+#: src/common/weeconfig.c:272
 msgid "max length of names in hotlist (0 = no limit)"
 msgstr "longitud máxima de nombres en la hotlist (0 = sin límite)"
 
-#: src/common/weeconfig.c:274 src/common/weeconfig.c:275
+#: src/common/weeconfig.c:275 src/common/weeconfig.c:276
 msgid "display special message when day changes"
 msgstr "mostrar un mensaje especial cuando el día cambia"
 
-#: src/common/weeconfig.c:278 src/common/weeconfig.c:279
+#: src/common/weeconfig.c:279 src/common/weeconfig.c:280
 msgid "timestamp for date displayed when day changed"
 msgstr "marca de tiempo para la fecha mostrada cuando el día cambió"
 
-#: src/common/weeconfig.c:282 src/common/weeconfig.c:283
+#: src/common/weeconfig.c:283 src/common/weeconfig.c:284
 msgid "use a marker on servers/channels to show first unread line"
 msgstr ""
 "usar un marcador en los servidores/canales para mostrar la primera línea sin "
 "leer"
 
-#: src/common/weeconfig.c:286
+#: src/common/weeconfig.c:287
 msgid "format for input prompt"
 msgstr "formato para color para el prompt de entrada"
 
-#: src/common/weeconfig.c:287
+#: src/common/weeconfig.c:288
 #, c-format
 msgid ""
 "format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
@@ -4753,11 +4701,11 @@ msgstr ""
 "formato para el prompt de entrada ('%c' es reemplazado por un canal o "
 "servidor, '%n' por un nick y '%m' por modos de nick)"
 
-#: src/common/weeconfig.c:358
+#: src/common/weeconfig.c:359
 msgid "if set, uses real white color"
 msgstr "si se establece, usa el color blanco verdadero"
 
-#: src/common/weeconfig.c:359
+#: src/common/weeconfig.c:360
 msgid ""
 "if set, uses real white color, disabled by default for terms with white "
 "background (if you never use white background, you should turn on this "
@@ -4768,321 +4716,321 @@ msgstr ""
 "activar esta opción para ver el blanco verdadero en vez del color de primer "
 "plano del terminal por defecto)"
 
-#: src/common/weeconfig.c:364 src/common/weeconfig.c:365
+#: src/common/weeconfig.c:365 src/common/weeconfig.c:366
 msgid "color for window separators (when splited)"
 msgstr "color para los separadores de ventana (cuando se dividen)"
 
-#: src/common/weeconfig.c:369 src/common/weeconfig.c:370
+#: src/common/weeconfig.c:370 src/common/weeconfig.c:371
 msgid "color for title bar"
 msgstr "color para la barra de título"
 
-#: src/common/weeconfig.c:373 src/common/weeconfig.c:374
+#: src/common/weeconfig.c:374 src/common/weeconfig.c:375
 msgid "background for title bar"
 msgstr "color de fondo para la barra de título"
 
-#: src/common/weeconfig.c:379 src/common/weeconfig.c:380
+#: src/common/weeconfig.c:380 src/common/weeconfig.c:381
 msgid "color for chat text"
 msgstr "color para el texto de conversación"
 
-#: src/common/weeconfig.c:383
+#: src/common/weeconfig.c:384
 msgid "color for time"
 msgstr "color para la hora"
 
-#: src/common/weeconfig.c:384
+#: src/common/weeconfig.c:385
 msgid "color for time in chat window"
 msgstr "color para la hora en la ventana de conversación"
 
-#: src/common/weeconfig.c:387
+#: src/common/weeconfig.c:388
 msgid "color for time separator"
 msgstr "color para el separador de la hora"
 
-#: src/common/weeconfig.c:388
+#: src/common/weeconfig.c:389
 msgid "color for time separator (chat window)"
 msgstr "color para el separador de la hora (ventana de conversación)"
 
-#: src/common/weeconfig.c:391 src/common/weeconfig.c:392
+#: src/common/weeconfig.c:392 src/common/weeconfig.c:393
 msgid "color for 1st and 3rd char of prefix"
 msgstr "color para el primer o tercer carácter de prefijo"
 
-#: src/common/weeconfig.c:395 src/common/weeconfig.c:396
+#: src/common/weeconfig.c:396 src/common/weeconfig.c:397
 msgid "color for middle char of prefix"
 msgstr "color para el car ácter de en medio del prefijo"
 
-#: src/common/weeconfig.c:399 src/common/weeconfig.c:400
+#: src/common/weeconfig.c:400 src/common/weeconfig.c:401
 msgid "color for server name"
 msgstr "color para el nombre del servidor"
 
-#: src/common/weeconfig.c:403 src/common/weeconfig.c:404
+#: src/common/weeconfig.c:404 src/common/weeconfig.c:405
 msgid "color for join arrow (prefix)"
 msgstr "color para la flecha de join (prefijo)"
 
-#: src/common/weeconfig.c:407 src/common/weeconfig.c:408
+#: src/common/weeconfig.c:408 src/common/weeconfig.c:409
 msgid "color for part/quit arrow (prefix)"
 msgstr "color para la flecha de part/quit (prefijo)"
 
-#: src/common/weeconfig.c:411
+#: src/common/weeconfig.c:412
 msgid "color for nicks in actions"
 msgstr "color para los nombres de usuario en las acciones"
 
-#: src/common/weeconfig.c:412
+#: src/common/weeconfig.c:413
 msgid "color for nicks in actions (chat window)"
 msgstr ""
 "color para los nombres de usuario en las acciones (ventana de conversación)"
 
-#: src/common/weeconfig.c:415
+#: src/common/weeconfig.c:416
 msgid "color for hostnames"
 msgstr "color para los nombres de máquina"
 
-#: src/common/weeconfig.c:416
+#: src/common/weeconfig.c:417
 msgid "color for hostnames (chat window)"
 msgstr "color para los nombres de máquina (ventana de conversación)"
 
-#: src/common/weeconfig.c:419
+#: src/common/weeconfig.c:420
 msgid "color for channel names in actions"
 msgstr "color para los nombres de canal en las acciones"
 
-#: src/common/weeconfig.c:420
+#: src/common/weeconfig.c:421
 msgid "color for channel names in actions (chat window)"
 msgstr ""
 "color para los nombres de canal en las acciones (ventana de conversación)"
 
-#: src/common/weeconfig.c:423
+#: src/common/weeconfig.c:424
 msgid "color for dark separators"
 msgstr "color para los separadores oscuros"
 
-#: src/common/weeconfig.c:424
+#: src/common/weeconfig.c:425
 msgid "color for dark separators (chat window)"
 msgstr "color para los separadores oscuros (ventana de conversación)"
 
-#: src/common/weeconfig.c:427
+#: src/common/weeconfig.c:428
 msgid "color for highlighted nick"
 msgstr "color para el alias resaltado"
 
-#: src/common/weeconfig.c:428
+#: src/common/weeconfig.c:429
 msgid "color for highlighted nick (chat window)"
 msgstr "color para el alias resaltado (ventana de conversación)"
 
-#: src/common/weeconfig.c:431
+#: src/common/weeconfig.c:432
 msgid "background for chat"
 msgstr "color de fondo para la conversación"
 
-#: src/common/weeconfig.c:432
+#: src/common/weeconfig.c:433
 msgid "background for chat window"
 msgstr "color de fondo para la ventana de conversación"
 
-#: src/common/weeconfig.c:435 src/common/weeconfig.c:436
+#: src/common/weeconfig.c:436 src/common/weeconfig.c:437
 msgid "color for unread data marker"
 msgstr "color para el marcador de datos sin leer"
 
-#: src/common/weeconfig.c:439 src/common/weeconfig.c:440
+#: src/common/weeconfig.c:440 src/common/weeconfig.c:441
 msgid "background for unread data marker"
 msgstr "color de fondo para el marcador de datos sin leer"
 
-#: src/common/weeconfig.c:445 src/common/weeconfig.c:446
+#: src/common/weeconfig.c:446 src/common/weeconfig.c:447
 msgid "color for status bar"
 msgstr "color para la barra de estado"
 
-#: src/common/weeconfig.c:449 src/common/weeconfig.c:450
+#: src/common/weeconfig.c:450 src/common/weeconfig.c:451
 msgid "color for status bar delimiters"
 msgstr "color para los delimitadores de la barra de estado"
 
-#: src/common/weeconfig.c:453 src/common/weeconfig.c:454
+#: src/common/weeconfig.c:454 src/common/weeconfig.c:455
 msgid "color for current channel in status bar"
 msgstr "color para el canal actual en la barra de estado"
 
-#: src/common/weeconfig.c:457
+#: src/common/weeconfig.c:458
 msgid "color for window with new messages"
 msgstr "color para una ventana con mensajes nuevos"
 
-#: src/common/weeconfig.c:458
+#: src/common/weeconfig.c:459
 msgid "color for window with new messages (status bar)"
 msgstr "color para una ventana con mensajes nuevos (barra de estado)"
 
-#: src/common/weeconfig.c:461
+#: src/common/weeconfig.c:462
 msgid "color for window with private message"
 msgstr "color para una ventana con un mensaje privado"
 
-#: src/common/weeconfig.c:462
+#: src/common/weeconfig.c:463
 msgid "color for window with private message (status bar)"
 msgstr "color para una ventana con un mensaje privado (barra de estado)"
 
-#: src/common/weeconfig.c:465
+#: src/common/weeconfig.c:466
 msgid "color for window with highlight"
 msgstr "color para una ventana con resaltado"
 
-#: src/common/weeconfig.c:466
+#: src/common/weeconfig.c:467
 msgid "color for window with highlight (status bar)"
 msgstr "color para una ventana con resaltado (barra de estado)"
 
-#: src/common/weeconfig.c:469
+#: src/common/weeconfig.c:470
 msgid "color for window with new data (not messages)"
 msgstr "color para una ventana con nuevos datos (no mensajes)"
 
-#: src/common/weeconfig.c:470
+#: src/common/weeconfig.c:471
 msgid "color for window with new data (not messages) (status bar)"
 msgstr ""
 "color para una ventana con nuevos datos (no mensajes) (barra de estado)"
 
-#: src/common/weeconfig.c:473
+#: src/common/weeconfig.c:474
 msgid "color for \"-MORE-\" text"
 msgstr "color para el texto \"-MÁS-\""
 
-#: src/common/weeconfig.c:474
+#: src/common/weeconfig.c:475
 msgid "color for window with new data (status bar)"
 msgstr "color para una ventana con nuevos datos (barra de estado)"
 
-#: src/common/weeconfig.c:477 src/common/weeconfig.c:478
+#: src/common/weeconfig.c:478 src/common/weeconfig.c:479
 msgid "background for status window"
 msgstr "color de fondo para la ventana de estado"
 
-#: src/common/weeconfig.c:483 src/common/weeconfig.c:484
+#: src/common/weeconfig.c:484 src/common/weeconfig.c:485
 msgid "color for info bar text"
 msgstr "color para el texto de la barra de información"
 
-#: src/common/weeconfig.c:487 src/common/weeconfig.c:488
+#: src/common/weeconfig.c:488 src/common/weeconfig.c:489
 msgid "color for infobar delimiters"
 msgstr "color para los delimitadores de la barra de información"
 
-#: src/common/weeconfig.c:491 src/common/weeconfig.c:492
+#: src/common/weeconfig.c:492 src/common/weeconfig.c:493
 msgid "color for info bar highlight notification"
 msgstr "color para la notificación en la barra de información"
 
-#: src/common/weeconfig.c:495 src/common/weeconfig.c:496
+#: src/common/weeconfig.c:496 src/common/weeconfig.c:497
 msgid "background for info bar window"
 msgstr "color de fondo para la ventana de la barra de información"
 
-#: src/common/weeconfig.c:501 src/common/weeconfig.c:502
+#: src/common/weeconfig.c:502 src/common/weeconfig.c:503
 msgid "color for input text"
 msgstr "color para el texto de entrada"
 
-#: src/common/weeconfig.c:505 src/common/weeconfig.c:506
+#: src/common/weeconfig.c:506 src/common/weeconfig.c:507
 msgid "color for input text (server name)"
 msgstr "color para el texto de entrada (nombre de servidor)"
 
-#: src/common/weeconfig.c:509 src/common/weeconfig.c:510
+#: src/common/weeconfig.c:510 src/common/weeconfig.c:511
 msgid "color for input text (channel name)"
 msgstr "color para el texto de entrada (nombre de canal)"
 
-#: src/common/weeconfig.c:513 src/common/weeconfig.c:514
+#: src/common/weeconfig.c:514 src/common/weeconfig.c:515
 msgid "color for input text (nick name)"
 msgstr "color para el texto de entrada (alias)"
 
-#: src/common/weeconfig.c:517 src/common/weeconfig.c:518
+#: src/common/weeconfig.c:518 src/common/weeconfig.c:519
 msgid "color for input text (delimiters)"
 msgstr "color para el texto de entrada (delimitadores)"
 
-#: src/common/weeconfig.c:521 src/common/weeconfig.c:522
+#: src/common/weeconfig.c:522 src/common/weeconfig.c:523
 msgid "background for input window"
 msgstr "color de fondo para la ventana de entrada"
 
-#: src/common/weeconfig.c:527 src/common/weeconfig.c:528
+#: src/common/weeconfig.c:528 src/common/weeconfig.c:529
 msgid "color for nicknames"
 msgstr "color para los nombres de usuario"
 
-#: src/common/weeconfig.c:531 src/common/weeconfig.c:532
+#: src/common/weeconfig.c:532 src/common/weeconfig.c:533
 msgid "color for away nicknames"
 msgstr "color para los usuarios ausentes"
 
-#: src/common/weeconfig.c:535
+#: src/common/weeconfig.c:536
 msgid "color for chan owner symbol"
 msgstr "color para el símbolo de propietario de canal"
 
-#: src/common/weeconfig.c:536
+#: src/common/weeconfig.c:537
 msgid "color for chan owner symbol (specific to unrealircd)"
 msgstr ""
 "color para el símbolo de propietario de canal (especificado en unrealircd)"
 
-#: src/common/weeconfig.c:539
+#: src/common/weeconfig.c:540
 msgid "color for chan admin symbol"
 msgstr "color para el símbolo de administrador de canal"
 
-#: src/common/weeconfig.c:540
+#: src/common/weeconfig.c:541
 msgid "color for chan admin symbol (specific to unrealircd)"
 msgstr ""
 "color para el símbolo de administrador de canal (especificado en unrealircd)"
 
-#: src/common/weeconfig.c:543 src/common/weeconfig.c:544
+#: src/common/weeconfig.c:544 src/common/weeconfig.c:545
 msgid "color for operator symbol"
 msgstr "color para el símbolo de operador"
 
-#: src/common/weeconfig.c:547 src/common/weeconfig.c:548
+#: src/common/weeconfig.c:548 src/common/weeconfig.c:549
 msgid "color for half-operator symbol"
 msgstr "color para el símbolo de semi-operador"
 
-#: src/common/weeconfig.c:551 src/common/weeconfig.c:552
+#: src/common/weeconfig.c:552 src/common/weeconfig.c:553
 msgid "color for voice symbol"
 msgstr "color para el símbolo de voz"
 
-#: src/common/weeconfig.c:555 src/common/weeconfig.c:556
+#: src/common/weeconfig.c:556 src/common/weeconfig.c:557
 msgid "color for '+' when scrolling nicks"
 msgstr "color para '+' al desplazar nicks"
 
-#: src/common/weeconfig.c:559 src/common/weeconfig.c:560
+#: src/common/weeconfig.c:560 src/common/weeconfig.c:561
 msgid "color for nick separator"
 msgstr "color para el separador de alias"
 
-#: src/common/weeconfig.c:563 src/common/weeconfig.c:564
+#: src/common/weeconfig.c:564 src/common/weeconfig.c:565
 msgid "color for local nick"
 msgstr "color para el alias local"
 
-#: src/common/weeconfig.c:567 src/common/weeconfig.c:568
-#: src/common/weeconfig.c:571 src/common/weeconfig.c:572
-#: src/common/weeconfig.c:575 src/common/weeconfig.c:576
-#: src/common/weeconfig.c:579 src/common/weeconfig.c:580
-#: src/common/weeconfig.c:583 src/common/weeconfig.c:584
-#: src/common/weeconfig.c:587 src/common/weeconfig.c:588
-#: src/common/weeconfig.c:591 src/common/weeconfig.c:592
-#: src/common/weeconfig.c:595 src/common/weeconfig.c:596
-#: src/common/weeconfig.c:599 src/common/weeconfig.c:600
-#: src/common/weeconfig.c:603 src/common/weeconfig.c:604
+#: src/common/weeconfig.c:568 src/common/weeconfig.c:569
+#: src/common/weeconfig.c:572 src/common/weeconfig.c:573
+#: src/common/weeconfig.c:576 src/common/weeconfig.c:577
+#: src/common/weeconfig.c:580 src/common/weeconfig.c:581
+#: src/common/weeconfig.c:584 src/common/weeconfig.c:585
+#: src/common/weeconfig.c:588 src/common/weeconfig.c:589
+#: src/common/weeconfig.c:592 src/common/weeconfig.c:593
+#: src/common/weeconfig.c:596 src/common/weeconfig.c:597
+#: src/common/weeconfig.c:600 src/common/weeconfig.c:601
+#: src/common/weeconfig.c:604 src/common/weeconfig.c:605
 msgid "color for nick"
 msgstr "color para el nombre de usuario"
 
-#: src/common/weeconfig.c:607 src/common/weeconfig.c:608
+#: src/common/weeconfig.c:608 src/common/weeconfig.c:609
 msgid "color for other nick in private window"
 msgstr "color para el otro alias en la ventana privada"
 
-#: src/common/weeconfig.c:611 src/common/weeconfig.c:612
+#: src/common/weeconfig.c:612 src/common/weeconfig.c:613
 msgid "background for nicknames"
 msgstr "color de fondo para los nombres de usuario"
 
-#: src/common/weeconfig.c:617
+#: src/common/weeconfig.c:618
 msgid "color for selected DCC"
 msgstr "color para el DCC seleccionado"
 
-#: src/common/weeconfig.c:618
+#: src/common/weeconfig.c:619
 msgid "color for selected DCC (chat window)"
 msgstr "color para el DCC seleccionado (ventana de conversaciín)"
 
-#: src/common/weeconfig.c:621 src/common/weeconfig.c:622
+#: src/common/weeconfig.c:622 src/common/weeconfig.c:623
 msgid "color for \"waiting\" dcc status"
 msgstr "color para el estado dcc \"esperando\""
 
-#: src/common/weeconfig.c:625 src/common/weeconfig.c:626
+#: src/common/weeconfig.c:626 src/common/weeconfig.c:627
 msgid "color for \"connecting\" dcc status"
 msgstr "color para el estado dcc \"conectando\""
 
-#: src/common/weeconfig.c:629 src/common/weeconfig.c:630
+#: src/common/weeconfig.c:630 src/common/weeconfig.c:631
 msgid "color for \"active\" dcc status"
 msgstr "color para el estado dcc \"activo\""
 
-#: src/common/weeconfig.c:633 src/common/weeconfig.c:634
+#: src/common/weeconfig.c:634 src/common/weeconfig.c:635
 msgid "color for \"done\" dcc status"
 msgstr "color para el estado dcc \"terminado\""
 
-#: src/common/weeconfig.c:637 src/common/weeconfig.c:638
+#: src/common/weeconfig.c:638 src/common/weeconfig.c:639
 msgid "color for \"failed\" dcc status"
 msgstr "color para el estado dcc \"fallo\""
 
-#: src/common/weeconfig.c:641 src/common/weeconfig.c:642
+#: src/common/weeconfig.c:642 src/common/weeconfig.c:643
 msgid "color for \"aborted\" dcc status"
 msgstr "color para el estado dcc \"abortado\""
 
-#: src/common/weeconfig.c:656
+#: src/common/weeconfig.c:657
 msgid "max lines in history (per window)"
 msgstr "número máximo de líneas en el histórico (por ventana)"
 
-#: src/common/weeconfig.c:657
+#: src/common/weeconfig.c:658
 msgid ""
 "maximum number of lines in history for one server/channel/private window (0 "
 "= unlimited)"
@@ -5090,19 +5038,19 @@ msgstr ""
 "número máximo de líneas en el histórico para un servidor/canal/privado (0 = "
 "ilimitado)"
 
-#: src/common/weeconfig.c:661
+#: src/common/weeconfig.c:662
 msgid "max user commands in history"
 msgstr "número máximo de comandos de usuario en el histórico"
 
-#: src/common/weeconfig.c:662
+#: src/common/weeconfig.c:663
 msgid "maximum number of user commands in history (0 = unlimited)"
 msgstr "número múximo de comandos de usuario en el histórico (0 = ilimitado)"
 
-#: src/common/weeconfig.c:665
+#: src/common/weeconfig.c:666
 msgid "max commands to display"
 msgstr "número máximo de comandos para mostrar"
 
-#: src/common/weeconfig.c:666
+#: src/common/weeconfig.c:667
 msgid ""
 "maximum number of commands to display by default in history listing (0 = "
 "unlimited)"
@@ -5110,27 +5058,27 @@ msgstr ""
 "número máximo de comandos para mostrar por defecto en el listado del "
 "historial (0 = ilimitado)"
 
-#: src/common/weeconfig.c:683 src/common/weeconfig.c:684
+#: src/common/weeconfig.c:684 src/common/weeconfig.c:685
 msgid "automatically log server messages"
 msgstr "registrar automáticamente los mensajes de servidor"
 
-#: src/common/weeconfig.c:687 src/common/weeconfig.c:688
+#: src/common/weeconfig.c:688 src/common/weeconfig.c:689
 msgid "automatically log channel chats"
 msgstr "registrar automáticamente las conversaciones de canal"
 
-#: src/common/weeconfig.c:691 src/common/weeconfig.c:692
+#: src/common/weeconfig.c:692 src/common/weeconfig.c:693
 msgid "automatically log private chats"
 msgstr "registrar automáticamente las conversaciones privadas"
 
-#: src/common/weeconfig.c:695 src/common/weeconfig.c:696
+#: src/common/weeconfig.c:696 src/common/weeconfig.c:697
 msgid "log messages from plugins (scripts)"
 msgstr "registrar mensajes de plugins (scripts)"
 
-#: src/common/weeconfig.c:699
+#: src/common/weeconfig.c:700
 msgid "path for log files"
 msgstr "ruta para los archivos de registro (logs)"
 
-#: src/common/weeconfig.c:700
+#: src/common/weeconfig.c:701
 msgid ""
 "path for WeeChat log files ('%h' will be replaced by WeeChat home, ~/."
 "weechat by default)"
@@ -5138,38 +5086,38 @@ msgstr ""
 "ruta para los archivos de registro de Weechat ('%h' será reemplazado por el "
 "directorio raíz de Weechat, ~/.weechat por defecto)"
 
-#: src/common/weeconfig.c:704
+#: src/common/weeconfig.c:705
 msgid "timestamp for log"
 msgstr "fecha y hora para las conversaciones registradas"
 
-#: src/common/weeconfig.c:705
+#: src/common/weeconfig.c:706
 msgid "timestamp for log (see man strftime for date/time specifiers)"
 msgstr ""
 "fecha y hora para los registros (ver man strftime para el formato de fecha/"
 "hora)"
 
-#: src/common/weeconfig.c:708 src/common/weeconfig.c:709
+#: src/common/weeconfig.c:709 src/common/weeconfig.c:710
 msgid "hide password displayed by nickserv"
 msgstr "ocultar contraseña mostrada por nickserv"
 
-#: src/common/weeconfig.c:735
+#: src/common/weeconfig.c:736
 msgid "display message for away"
 msgstr "mostrar mensaje de ausencia"
 
-#: src/common/weeconfig.c:736
+#: src/common/weeconfig.c:737
 msgid "display message when (un)marking as away"
 msgstr "mostrar mensaje cuando se marque/desmarque como ausente"
 
-#: src/common/weeconfig.c:739 src/common/weeconfig.c:740
+#: src/common/weeconfig.c:740 src/common/weeconfig.c:741
 msgid "show remote away message only once in private"
 msgstr ""
 "mostrar mensaje de ausencia remota únicamente una vez se está en privado"
 
-#: src/common/weeconfig.c:743
+#: src/common/weeconfig.c:744
 msgid "default part message (leaving channel)"
 msgstr "mensaje por defecto de salida (saliendo de un canal)"
 
-#: src/common/weeconfig.c:744
+#: src/common/weeconfig.c:745
 msgid ""
 "default part message (leaving channel) ('%v' will be replaced by WeeChat "
 "version in string)"
@@ -5177,75 +5125,75 @@ msgstr ""
 "mensaje de partida por defecto (abandonando el canal) ('%v' será reemplazado "
 "por la versión de WeeChat en la cadena)"
 
-#: src/common/weeconfig.c:748
+#: src/common/weeconfig.c:749
 msgid "default quit message"
 msgstr "mensaje de fin por defecto"
 
-#: src/common/weeconfig.c:749
+#: src/common/weeconfig.c:750
 msgid ""
 "default quit message ('%v' will be replaced by WeeChat version in string)"
 msgstr ""
 "mensaje de fin por defecto ('%v' será reemplazado por la versión de WeeChat "
 "en la cadena)"
 
-#: src/common/weeconfig.c:752 src/common/weeconfig.c:753
+#: src/common/weeconfig.c:753 src/common/weeconfig.c:754
 msgid "display notices as private messages"
 msgstr "mostrar noticias como mensajes privados"
 
-#: src/common/weeconfig.c:756
+#: src/common/weeconfig.c:757
 msgid "interval between two checks for away"
 msgstr "intervalo entre dos comprobaciones de ausencia"
 
-#: src/common/weeconfig.c:757
+#: src/common/weeconfig.c:758
 msgid "interval between two checks for away (in minutes, 0 = never check)"
 msgstr ""
 "intervalo entre dos comprobaciones de ausencia (en minutos, 0 = no comprobar)"
 
-#: src/common/weeconfig.c:760
+#: src/common/weeconfig.c:761
 msgid "max number of nicks for away check"
 msgstr "número máximo de nicks para la comprobación de ausencia"
 
-#: src/common/weeconfig.c:761
+#: src/common/weeconfig.c:762
 msgid ""
 "do not check away nicks on channels with high number of nicks (0 = unlimited)"
 msgstr ""
 "no comprobar nicks de ausencia en canales con un número de nicks alto (0 = "
 "ilimitado)"
 
-#: src/common/weeconfig.c:764
+#: src/common/weeconfig.c:765
 msgid "interval between two checks for lag"
 msgstr "intervalo entre dos medidas de lag (retraso)"
 
-#: src/common/weeconfig.c:765
+#: src/common/weeconfig.c:766
 msgid "interval between two checks for lag (in seconds)"
 msgstr "intervalo entre dos medidas de lag (en segundos)"
 
-#: src/common/weeconfig.c:768
+#: src/common/weeconfig.c:769
 msgid "minimum lag to show"
 msgstr "lag (retraso) mínimo a mostrar"
 
-#: src/common/weeconfig.c:769
+#: src/common/weeconfig.c:770
 msgid "minimum lag to show (in seconds)"
 msgstr "lag mínimo a mostrar (en segundos)"
 
-#: src/common/weeconfig.c:772
+#: src/common/weeconfig.c:773
 msgid "disconnect after important lag"
 msgstr "desconexión tras un lag importante"
 
-#: src/common/weeconfig.c:773
+#: src/common/weeconfig.c:774
 msgid "disconnect after important lag (in minutes, 0 = never disconnect)"
 msgstr ""
 "desconexión tras un lag importante (en minutos, 0 = no desconectar nunca)"
 
-#: src/common/weeconfig.c:776 src/common/weeconfig.c:777
+#: src/common/weeconfig.c:777 src/common/weeconfig.c:778
 msgid "create a FIFO pipe for remote control"
 msgstr "crea una tubería FIFO para control remoto"
 
-#: src/common/weeconfig.c:780
+#: src/common/weeconfig.c:781
 msgid "list of words to highlight"
 msgstr "lista de palabras a resaltar"
 
-#: src/common/weeconfig.c:781
+#: src/common/weeconfig.c:782
 msgid ""
 "comma separated list of words to highlight (case insensitive comparison, "
 "words may begin or end with \"*\" for partial match)"
@@ -5254,17 +5202,17 @@ msgstr ""
 "mayúsculas, las palabras pueden empezar o terminar con \"*\" para una "
 "concordancia parcial)"
 
-#: src/common/weeconfig.c:785 src/common/weeconfig.c:787
+#: src/common/weeconfig.c:786 src/common/weeconfig.c:788
 msgid "when off, colors codes are ignored in incoming messages"
 msgstr ""
 "cuando se desactiva, los códigos de color se ignoran en los mensajes "
 "entrantes"
 
-#: src/common/weeconfig.c:790
+#: src/common/weeconfig.c:791
 msgid "allow user to send colors"
 msgstr "permitir al usuario enviar colores"
 
-#: src/common/weeconfig.c:791
+#: src/common/weeconfig.c:792
 msgid ""
 "allow user to send colors with special codes (%B=bold, %Cxx,yy=color, %"
 "U=underline, %R=reverse)"
@@ -5272,45 +5220,45 @@ msgstr ""
 "permitir al usuario enviar colores con códigos especiales (%B=negrita, %Cxx,"
 "yy=color, %U=subrayado, %R=invertido) "
 
-#: src/common/weeconfig.c:813
+#: src/common/weeconfig.c:814
 msgid "automatically accept dcc files"
 msgstr "aceptar automáticamente los ficheros dcc"
 
-#: src/common/weeconfig.c:814
+#: src/common/weeconfig.c:815
 msgid "automatically accept incoming dcc files"
 msgstr "aceptar automáticamente los ficheros dcc entrantes"
 
-#: src/common/weeconfig.c:817
+#: src/common/weeconfig.c:818
 msgid "automatically accept dcc chats"
 msgstr "aceptar automáticamente las peticiones de conversación dcc"
 
-#: src/common/weeconfig.c:818
+#: src/common/weeconfig.c:819
 msgid "automatically accept dcc chats (use carefully!)"
 msgstr ""
 "aceptar automáticamente las peticiones de conversación dcc (¡utilizar con "
 "precaución!)"
 
-#: src/common/weeconfig.c:821
+#: src/common/weeconfig.c:822
 msgid "timeout for dcc request"
 msgstr "tiempo de espera (timeout) para la petición dcc"
 
-#: src/common/weeconfig.c:822
+#: src/common/weeconfig.c:823
 msgid "timeout for dcc request (in seconds)"
 msgstr "tiempo de espera para la petición dcc (en segundos)"
 
-#: src/common/weeconfig.c:825
+#: src/common/weeconfig.c:826
 msgid "block size for dcc packets"
 msgstr "tamaño de bloque para los paquetes dcc"
 
-#: src/common/weeconfig.c:826
+#: src/common/weeconfig.c:827
 msgid "block size for dcc packets in bytes (default: 65536)"
 msgstr "tamaño de bloque para los paquetes dcc en bytes (por defecto: 65536)"
 
-#: src/common/weeconfig.c:829
+#: src/common/weeconfig.c:830
 msgid "allowed ports for outgoing dcc"
 msgstr "puertos permitidos para dcc de salida"
 
-#: src/common/weeconfig.c:830
+#: src/common/weeconfig.c:831
 msgid ""
 "restricts outgoing dcc to use only ports in the given range (useful for NAT) "
 "(syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, empty value "
@@ -5320,11 +5268,11 @@ msgstr ""
 "especificado (útil para NAT) (sintaxis: un puerto simple, e.g. 5000, o un "
 "rango de puertos, e.g. 5000-5015, un valor vacío significa cualquier puerto)"
 
-#: src/common/weeconfig.c:835
+#: src/common/weeconfig.c:836
 msgid "IP address for outgoing dcc"
 msgstr "dirección IP para dcc de salida"
 
-#: src/common/weeconfig.c:836
+#: src/common/weeconfig.c:837
 msgid ""
 "IP or DNS address used for outgoing dcc (if empty, local interface IP is "
 "used)"
@@ -5332,112 +5280,112 @@ msgstr ""
 "dirección IP o DNS usado para dcc de salida (si está vacío, se utiliza la IP "
 "de interfaz local)"
 
-#: src/common/weeconfig.c:840
+#: src/common/weeconfig.c:841
 msgid "path for incoming files with dcc"
 msgstr "ruta para los ficheros recibidos con dcc"
 
-#: src/common/weeconfig.c:841
+#: src/common/weeconfig.c:842
 msgid "path for writing incoming files with dcc (default: user home)"
 msgstr ""
 "ruta para los ficheros recibidos con dcc (por defecto: directorio home del "
 "usuario)"
 
-#: src/common/weeconfig.c:844
+#: src/common/weeconfig.c:845
 msgid "default path for sending files with dcc"
 msgstr "ruta por defecto para enviar ficheros con dcc"
 
-#: src/common/weeconfig.c:845
+#: src/common/weeconfig.c:846
 msgid ""
 "path for reading files when sending thru dcc (when no path is specified)"
 msgstr ""
 "ruta para la lectura de ficheros cuando se envían a través de dcc (cuando no "
 "se especifica una ruta)"
 
-#: src/common/weeconfig.c:848 src/common/weeconfig.c:849
+#: src/common/weeconfig.c:849 src/common/weeconfig.c:850
 msgid "convert spaces to underscores when sending files"
 msgstr "convertir los espacios a subrayados cuando se envían los ficheros"
 
-#: src/common/weeconfig.c:852
+#: src/common/weeconfig.c:853
 msgid "automatically rename dcc files if already exists"
 msgstr "renombrar automáticamente los ficheros dcc si ya existen"
 
-#: src/common/weeconfig.c:853
+#: src/common/weeconfig.c:854
 msgid "rename incoming files if already exists (add '.1', '.2', ...)"
 msgstr ""
 "renombrar los ficheros recibidos si ya existen (añadir '.1', '.2', ...)"
 
-#: src/common/weeconfig.c:856
+#: src/common/weeconfig.c:857
 msgid "automatically resume aborted transfers"
 msgstr "continuar automáticamente las transferencias canceladas"
 
-#: src/common/weeconfig.c:857
+#: src/common/weeconfig.c:858
 msgid ""
 "automatically resume dcc transfer if connection with remote host is loosed"
 msgstr ""
 "continuar automáticamente la transferencia dcc si se ha perdido la conexión "
 "con la máquina remota"
 
-#: src/common/weeconfig.c:876
+#: src/common/weeconfig.c:877
 msgid "use proxy"
 msgstr "utilizar un proxy"
 
-#: src/common/weeconfig.c:877
+#: src/common/weeconfig.c:878
 msgid "use a proxy server to connect to irc server"
 msgstr "utilizar un proxy para conectarse al servidor irc"
 
-#: src/common/weeconfig.c:880
+#: src/common/weeconfig.c:881
 msgid "proxy type"
 msgstr "tipo de proxy"
 
-#: src/common/weeconfig.c:881
+#: src/common/weeconfig.c:882
 msgid "proxy type (http (default), socks4, socks5)"
 msgstr "tipo de proxy(http (por defecto), socks4, socks5)"
 
-#: src/common/weeconfig.c:884
+#: src/common/weeconfig.c:885
 msgid "use ipv6 proxy"
 msgstr "usar proxy ipv6"
 
-#: src/common/weeconfig.c:885
+#: src/common/weeconfig.c:886
 msgid "connect to proxy in ipv6"
 msgstr "conectar al proxy en ipv6"
 
-#: src/common/weeconfig.c:888
+#: src/common/weeconfig.c:889
 msgid "proxy address"
 msgstr "dirección del proxy"
 
-#: src/common/weeconfig.c:889
+#: src/common/weeconfig.c:890
 msgid "proxy server address (IP or hostname)"
 msgstr "dirección del servidor proxy (IP o nombre de máquina)"
 
-#: src/common/weeconfig.c:892
+#: src/common/weeconfig.c:893
 msgid "port for proxy"
 msgstr "puerto para el proxy"
 
-#: src/common/weeconfig.c:893
+#: src/common/weeconfig.c:894
 msgid "port for connecting to proxy server"
 msgstr "puerto para conectarse al servidor proxy"
 
-#: src/common/weeconfig.c:896
+#: src/common/weeconfig.c:897
 msgid "proxy username"
 msgstr "nombre de usuario del proxy"
 
-#: src/common/weeconfig.c:897
+#: src/common/weeconfig.c:898
 msgid "username for proxy server"
 msgstr "nombre de usuario para el servidor proxy"
 
-#: src/common/weeconfig.c:900
+#: src/common/weeconfig.c:901
 msgid "proxy password"
 msgstr "contraseña para el proxy"
 
-#: src/common/weeconfig.c:901
+#: src/common/weeconfig.c:902
 msgid "password for proxy server"
 msgstr "contraseña para el servidor proxy"
 
-#: src/common/weeconfig.c:914
+#: src/common/weeconfig.c:915
 msgid "path for searching plugins"
 msgstr "ruta para la búsqueda de plugins"
 
-#: src/common/weeconfig.c:915
+#: src/common/weeconfig.c:916
 msgid ""
 "path for searching plugins ('%h' will be replaced by WeeChat home, ~/."
 "weechat by default)"
@@ -5445,11 +5393,11 @@ msgstr ""
 "ruta para encontrar plugins ('%h' será reemplazado por el directorio raíz de "
 "Weechat, ~/.weechat por defecto)"
 
-#: src/common/weeconfig.c:919
+#: src/common/weeconfig.c:920
 msgid "list of plugins to load automatically"
 msgstr "lista de plugins para cargar automáticamente"
 
-#: src/common/weeconfig.c:920
+#: src/common/weeconfig.c:921
 msgid ""
 "comma separated list of plugins to load automatically at startup, \"*\" "
 "means all plugins found (names may be partial, for example \"perl\" is ok "
@@ -5459,11 +5407,11 @@ msgstr ""
 "\"*\" significa todos los plugins encontrados (los nombres pueden ser "
 "parciales, por ejemplo \"perl\" está bien para \"libperl.so\")"
 
-#: src/common/weeconfig.c:925
+#: src/common/weeconfig.c:926
 msgid "standard plugins extension in filename"
 msgstr "extensión de plugins estándar en nombre de archivo"
 
-#: src/common/weeconfig.c:926
+#: src/common/weeconfig.c:927
 msgid ""
 "standard plugins extension in filename, used for autoload (if empty, then "
 "all files are loaded when autoload is \"*\")"
@@ -5472,94 +5420,94 @@ msgstr ""
 "(si está vacío, entonces se cargan todos los archivos cuando la autocarga es "
 "\"*\")"
 
-#: src/common/weeconfig.c:943
+#: src/common/weeconfig.c:944
 msgid "server name"
 msgstr "nombre de servidor"
 
-#: src/common/weeconfig.c:944
+#: src/common/weeconfig.c:945
 msgid "name associated to IRC server (for display only)"
 msgstr "nombre asociado al servidor IRC (para mostrar solamente)"
 
-#: src/common/weeconfig.c:947
+#: src/common/weeconfig.c:948
 msgid "automatically connect to server"
 msgstr "conexión automática al servidor"
 
-#: src/common/weeconfig.c:948
+#: src/common/weeconfig.c:949
 msgid "automatically connect to server when WeeChat is starting"
 msgstr "conexión automática al servidor cuando WeeChat está arrancando"
 
-#: src/common/weeconfig.c:951
+#: src/common/weeconfig.c:952
 msgid "automatically reconnect to server"
 msgstr "reconexión automática al servidor"
 
-#: src/common/weeconfig.c:952
+#: src/common/weeconfig.c:953
 msgid "automatically reconnect to server when disconnected"
 msgstr "reconexión automática al servidor tras una desconexión"
 
-#: src/common/weeconfig.c:955
+#: src/common/weeconfig.c:956
 msgid "delay before trying again to reconnect"
 msgstr "esperar antes de intentar de nuevo una reconexión"
 
-#: src/common/weeconfig.c:956
+#: src/common/weeconfig.c:957
 msgid "delay (in seconds) before trying again to reconnect to server"
 msgstr ""
 "espera (en segundos) antes de intentar de nuevo una reconexión al servidor"
 
-#: src/common/weeconfig.c:959
+#: src/common/weeconfig.c:960
 msgid "server address or hostname"
 msgstr "dirección o nombre de máquina del servidor"
 
-#: src/common/weeconfig.c:960
+#: src/common/weeconfig.c:961
 msgid "IP address or hostname of IRC server"
 msgstr "dirección IP o nombre de máquina del servidor IRC"
 
-#: src/common/weeconfig.c:963
+#: src/common/weeconfig.c:964
 msgid "port for IRC server"
 msgstr "puerto para el servidor IRC"
 
-#: src/common/weeconfig.c:964
+#: src/common/weeconfig.c:965
 msgid "port for connecting to server"
 msgstr "puerto para conectarse al servidor"
 
-#: src/common/weeconfig.c:967 src/common/weeconfig.c:968
+#: src/common/weeconfig.c:968 src/common/weeconfig.c:969
 msgid "use IPv6 protocol for server communication"
 msgstr "usar el protocolo IPv6 para la comunicación del servidor"
 
-#: src/common/weeconfig.c:971 src/common/weeconfig.c:972
+#: src/common/weeconfig.c:972 src/common/weeconfig.c:973
 msgid "use SSL for server communication"
 msgstr "usar SSL para la comunicación del servidor"
 
-#: src/common/weeconfig.c:975
+#: src/common/weeconfig.c:976
 msgid "server password"
 msgstr "contraseña para el servidor"
 
-#: src/common/weeconfig.c:976
+#: src/common/weeconfig.c:977
 msgid "password for IRC server"
 msgstr "contraseña para el servidor IRC"
 
-#: src/common/weeconfig.c:979
+#: src/common/weeconfig.c:980
 msgid "nickname for server"
 msgstr "nombre de usuario para el servidor"
 
-#: src/common/weeconfig.c:980
+#: src/common/weeconfig.c:981
 msgid "nickname to use on IRC server"
 msgstr "nombre de usuario a utilizar en el servidor IRC"
 
-#: src/common/weeconfig.c:983
+#: src/common/weeconfig.c:984
 msgid "alternate nickname for server"
 msgstr "nombre de usuario alternativo para el servidor"
 
-#: src/common/weeconfig.c:984
+#: src/common/weeconfig.c:985
 msgid "alternate nickname to use on IRC server (if nickname is already used)"
 msgstr ""
 "nombre de usuario alternativo para el servidor IRC (si el nombre de usuario "
 "ya está en uso)"
 
-#: src/common/weeconfig.c:987
+#: src/common/weeconfig.c:988
 msgid "2nd alternate nickname for server"
 msgstr "segundo nombre de usuario alternativo para el servidor"
 
-#: src/common/weeconfig.c:988
+#: src/common/weeconfig.c:989
 msgid ""
 "2nd alternate nickname to use on IRC server (if alternate nickname is "
 "already used)"
@@ -5567,38 +5515,38 @@ msgstr ""
 "segundo nombre de usuario alternativo a utilizar en el servidor IRC (si el "
 "nombre de usuario alternativo ya está en uso)"
 
-#: src/common/weeconfig.c:991
+#: src/common/weeconfig.c:992
 msgid "user name for server"
 msgstr "nombre de usuario para el servidor"
 
-#: src/common/weeconfig.c:992
+#: src/common/weeconfig.c:993
 msgid "user name to use on IRC server"
 msgstr "nombre de usuario para el servidor IRC"
 
-#: src/common/weeconfig.c:995
+#: src/common/weeconfig.c:996
 msgid "real name for server"
 msgstr "nombre real para el servidor"
 
-#: src/common/weeconfig.c:996
+#: src/common/weeconfig.c:997
 msgid "real name to use on IRC server"
 msgstr "nombre real para el servidor IRC"
 
-#: src/common/weeconfig.c:999
+#: src/common/weeconfig.c:1000
 msgid "custom hostname/IP for server"
 msgstr "nombre de máquina local/IP personalizada para el servidor"
 
-#: src/common/weeconfig.c:1000
+#: src/common/weeconfig.c:1001
 msgid ""
 "custom hostname/IP for server (optional, if empty local hostname is used)"
 msgstr ""
 "nombre de máquina local/IP personalizado para el servidor (opcional, si está "
 "vacío se utiliza el nombre de máquina local)"
 
-#: src/common/weeconfig.c:1003
+#: src/common/weeconfig.c:1004
 msgid "command(s) to run when connected to server"
 msgstr "comando(s) a ejecutar cuando se conecte a un servidor"
 
-#: src/common/weeconfig.c:1004
+#: src/common/weeconfig.c:1005
 msgid ""
 "command(s) to run when connected to server (many commands should be "
 "separated by ';', use '\\;' for a semicolon)"
@@ -5606,11 +5554,11 @@ msgstr ""
 "comando(s) a ejecutar cuando se conecte al servidor (muchos comandos "
 "deberían ser separados por ';', utilizar '\\;' para un punto y coma)"
 
-#: src/common/weeconfig.c:1008
+#: src/common/weeconfig.c:1009
 msgid "delay (in seconds) after command was executed"
 msgstr "espera (en segundos) después de que el comando sea ejecutado"
 
-#: src/common/weeconfig.c:1009
+#: src/common/weeconfig.c:1010
 msgid ""
 "delay (in seconds) after command was executed (example: give some time for "
 "authentication)"
@@ -5618,11 +5566,11 @@ msgstr ""
 "espera (en segundos) después de que el comando sea ejecutado (ejemplo: dar "
 "algo de tiempo para la autenticación)"
 
-#: src/common/weeconfig.c:1012
+#: src/common/weeconfig.c:1013
 msgid "list of channels to join when connected to server"
 msgstr "lista de canales a unirse cuando se conecte a un servidor"
 
-#: src/common/weeconfig.c:1013
+#: src/common/weeconfig.c:1014
 msgid ""
 "comma separated list of channels to join when connected to server (example: "
 "\"#chan1,#chan2,#chan3 key1,key2\")"
@@ -5630,15 +5578,15 @@ msgstr ""
 "lista de canales (separados por comas) a unirse cuando se conecte a un "
 "servidor (ejemplo: \"#chan1,#chan2,#chan3 key1,key2\")"
 
-#: src/common/weeconfig.c:1016 src/common/weeconfig.c:1017
+#: src/common/weeconfig.c:1017 src/common/weeconfig.c:1018
 msgid "automatically rejoin channels when kicked"
 msgstr "unirse de nuevo automáticamente a los canales cuando sea expulsado"
 
-#: src/common/weeconfig.c:1020
+#: src/common/weeconfig.c:1021
 msgid "notify levels for channels of this server"
 msgstr "niveles de notificación para canales de este servidor"
 
-#: src/common/weeconfig.c:1021
+#: src/common/weeconfig.c:1022
 msgid ""
 "comma separated list of notify levels for channels of this server (format: "
 "#channel:1,..)"
@@ -5646,11 +5594,11 @@ msgstr ""
 "lista separada por comas de niveles de notificación para canales de este "
 "servidor (formato: #canal:1,...)"
 
-#: src/common/weeconfig.c:1024
+#: src/common/weeconfig.c:1025
 msgid "charset for decoding ISO on server and channels"
 msgstr "juego de caracteres para decodificar ISO en el servidor y los canales"
 
-#: src/common/weeconfig.c:1025
+#: src/common/weeconfig.c:1026
 msgid ""
 "comma separated list of charsets for server and channels, to decode ISO "
 "(format: server:charset,#channel:charset,..)"
@@ -5659,11 +5607,11 @@ msgstr ""
 "canales, para decodificar ISO (formato: server:juego_de_caracteres, #channel:"
 "juego_de_caracteres...)"
 
-#: src/common/weeconfig.c:1029
+#: src/common/weeconfig.c:1030
 msgid "charset for decoding UTF on server and channels"
 msgstr "juego de caracteres para decodificar UTF en el servidor y los canales"
 
-#: src/common/weeconfig.c:1030
+#: src/common/weeconfig.c:1031
 msgid ""
 "comma separated list of charsets for server and channels, to decode UTF "
 "(format: server:charset,#channel:charset,..)"
@@ -5672,12 +5620,12 @@ msgstr ""
 "canales, para decodificar UTF (formato: server:juego_de_caracteres, #channel:"
 "juego_de_caracteres...)"
 
-#: src/common/weeconfig.c:1034
+#: src/common/weeconfig.c:1035
 msgid "charset for encoding messages on server and channels"
 msgstr ""
 "juego de caracteres para codificar los mensajes en el servidor y los canales"
 
-#: src/common/weeconfig.c:1035
+#: src/common/weeconfig.c:1036
 msgid ""
 "comma separated list of charsets for server and channels, to encode messages "
 "(format: server:charset,#channel:charset,..)"
@@ -5686,69 +5634,69 @@ msgstr ""
 "canales, para codificar los mensajes (formato: server:juego_de_caracteres, "
 "#channel:juego_de_caracteres...)"
 
-#: src/common/weeconfig.c:1120
+#: src/common/weeconfig.c:1121
 #, c-format
 msgid ""
 "%s you should now issue /save to write \"save_on_exit\" option in config "
 "file.\n"
 msgstr ""
 
-#: src/common/weeconfig.c:1742
+#: src/common/weeconfig.c:1743
 #, c-format
 msgid "%s %s, line %d: new server, but previous was incomplete\n"
 msgstr "%s %s, línea %d: nuevo servidor, pero el anterior estaba incompleto\n"
 
-#: src/common/weeconfig.c:1751
+#: src/common/weeconfig.c:1752
 #, c-format
 msgid "%s %s, line %d: server '%s' already exists\n"
 msgstr "%s %s, línea %d: el servidor '%s' ya existe\n"
 
-#: src/common/weeconfig.c:1769
+#: src/common/weeconfig.c:1770
 #, c-format
 msgid "%s %s, line %d: unable to create server\n"
 msgstr "%s %s, línea %d: no es posible crear el servidor\n"
 
-#: src/common/weeconfig.c:1809
+#: src/common/weeconfig.c:1810
 #, c-format
 msgid "%s unable to assign default int with string (\"%s\")\n"
 msgstr "%s no es posible asignar el valor entero con la cadena (\"%s\")\n"
 
-#: src/common/weeconfig.c:1820
+#: src/common/weeconfig.c:1821
 #, c-format
 msgid "%s unable to assign default color (\"%s\")\n"
 msgstr "%s no es posible asignar el color por defecto (\"%s\")\n"
 
-#: src/common/weeconfig.c:1858
+#: src/common/weeconfig.c:1859
 #, c-format
 msgid "%s config file \"%s\" not found.\n"
 msgstr "%s fichero de configuración \"%s\" no encontrado.\n"
 
-#: src/common/weeconfig.c:1890
+#: src/common/weeconfig.c:1891
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"]\"\n"
 msgstr "%s %s, línea %d: sintaxis inválida, falta \"]\"\n"
 
-#: src/common/weeconfig.c:1907
+#: src/common/weeconfig.c:1908
 #, c-format
 msgid "%s %s, line %d: unknown section identifier (\"%s\")\n"
 msgstr "%s %s, línea %d: identificador de sección desconocido (\"%s\")\n"
 
-#: src/common/weeconfig.c:1925
+#: src/common/weeconfig.c:1926
 #, c-format
 msgid "%s %s, line %d: invalid section for option, line is ignored\n"
 msgstr "%s %s, línea %d: sección inválida para la opción, línea ignorada\n"
 
-#: src/common/weeconfig.c:2007 src/common/weeconfig.c:2033
+#: src/common/weeconfig.c:2008 src/common/weeconfig.c:2034
 #, c-format
 msgid "%s %s, line %d: invalid option \"%s\"\n"
 msgstr "%s %s, línea %d: opción \"%s\" inválida\n"
 
-#: src/common/weeconfig.c:2013
+#: src/common/weeconfig.c:2014
 #, c-format
 msgid "%s %s, line %d: invalid ignore options \"%s\"\n"
 msgstr "%s %s, línea %d: opciones de ignore inválidas \"%s\"\n"
 
-#: src/common/weeconfig.c:2044
+#: src/common/weeconfig.c:2045
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
@@ -5757,7 +5705,7 @@ msgstr ""
 "%s %s, línea %d: valor inválido para la opción '%s'\n"
 "Esperado: valor booleano: 'off' u 'on'\n"
 
-#: src/common/weeconfig.c:2053
+#: src/common/weeconfig.c:2054
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
@@ -5766,7 +5714,7 @@ msgstr ""
 "%s %s, línea %d: valor inválido para la opción %s'\n"
 "Esperado: entero comprendido entre %d y %d\n"
 
-#: src/common/weeconfig.c:2064
+#: src/common/weeconfig.c:2065
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
@@ -5775,21 +5723,21 @@ msgstr ""
 "%s %s, línea %d: valor inválido para la opción '%s'\n"
 "Esperado: una de estas cadenas: "
 
-#: src/common/weeconfig.c:2080
+#: src/common/weeconfig.c:2081
 #, c-format
 msgid "%s %s, line %d: invalid color name for option '%s'\n"
 msgstr "%s %s, línea %d: nombre de color inválido para la opción '%s'\n"
 
-#: src/common/weeconfig.c:2149
+#: src/common/weeconfig.c:2150
 #, c-format
 msgid "%s: creating default config file...\n"
 msgstr "%s: creando fichero de configuración por defecto...\n"
 
-#: src/common/weeconfig.c:2150
+#: src/common/weeconfig.c:2151
 msgid "Creating default config file\n"
 msgstr "Creando fichero de configuración por defecto\n"
 
-#: src/common/weeconfig.c:2153 src/common/weeconfig.c:2359
+#: src/common/weeconfig.c:2154 src/common/weeconfig.c:2360
 #, c-format
 msgid ""
 "#\n"
@@ -5798,7 +5746,7 @@ msgstr ""
 "#\n"
 "# %s: fichero de configuración, creado por %s v%s el %s"
 
-#: src/common/weeconfig.c:2157 src/common/weeconfig.c:2363
+#: src/common/weeconfig.c:2158 src/common/weeconfig.c:2364
 #, c-format
 msgid ""
 "# WARNING! Be careful when editing this file, WeeChat writes this file when "
@@ -5809,9 +5757,6 @@ msgstr ""
 "fichero al salir.\n"
 "#\n"
 
-#: src/common/weeconfig.c:2356
+#: src/common/weeconfig.c:2357
 msgid "Saving config to disk\n"
 msgstr "Guardar configuración a disco\n"
-
-#~ msgid "%s unable to create/append to log file (%s/%s)"
-#~ msgstr "%s no es posible crear/añadir en el fichero de log (%s/%s)"

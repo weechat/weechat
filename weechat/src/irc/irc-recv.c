@@ -74,6 +74,21 @@ irc_is_word_char (char c)
     return 0;
 }
 
+/*
+ * irc_is_numeric: return 1 if given string is 100% numeric
+ */
+
+int
+irc_is_numeric (char *str)
+{
+    while (str && str[0])
+    {
+        if (!isdigit (str[0]))
+            return 0;
+        str++;
+    }
+    return 1;
+}
 
 /*
  * irc_is_highlight: returns 1 if given message contains highlight (with given nick
@@ -211,6 +226,8 @@ irc_recv_command (t_irc_server *server, char *entire_line,
     int i, cmd_found, return_code;
     char *pos, *nick, *args_after_color;
     char *dup_entire_line, *dup_host, *dup_arguments;
+    t_irc_recv_func *cmd_recv_func;
+    char *cmd_name;
     
     if (!command)
         return -2;
@@ -225,21 +242,38 @@ irc_recv_command (t_irc_server *server, char *entire_line,
             break;
         }
     }
-
+    
     /* command not found */
     if (cmd_found < 0)
-        return -3;
+    {
+        /* for numeric commands, we use default recv function (irc_recv_server_msg) */
+        if (irc_is_numeric (command))
+        {
+            cmd_name = command;
+            cmd_recv_func = irc_cmd_recv_server_msg;
+        }
+        else
+            return -3;
+    }
+    else
+    {
+        cmd_name = irc_commands[cmd_found].command_name;
+        cmd_recv_func = irc_commands[cmd_found].recv_function;
+    }
     
-    if (irc_commands[i].recv_function != NULL)
+    if (cmd_recv_func != NULL)
     {
         dup_entire_line = (entire_line) ? strdup (entire_line) : NULL;
         dup_host = (host) ? strdup (host) : NULL;
         dup_arguments = (arguments) ? strdup (arguments) : NULL;
         
-        command_ignored = ignore_check (dup_host, irc_commands[i].command_name, NULL, server->name);
+        command_ignored = ignore_check (dup_host,
+                                        cmd_name,
+                                        NULL,
+                                        server->name);
 #ifdef PLUGINS
         return_code = plugin_msg_handler_exec (server->name,
-                                               irc_commands[i].command_name,
+                                               cmd_name,
                                                dup_entire_line);
         /* plugin handler choosed to discard message for WeeChat,
            so we ignore this message in standard handler */
@@ -255,9 +289,9 @@ irc_recv_command (t_irc_server *server, char *entire_line,
         args_after_color = (char *)gui_color_decode ((unsigned char *)dup_arguments,
                                                      cfg_irc_colors_receive);
         irc_last_command_received = strdup (dup_entire_line);
-        return_code = (int) (irc_commands[i].recv_function) (server, dup_host, nick,
-                                                             (args_after_color) ?
-                                                             args_after_color : dup_arguments);
+        return_code = (int) (cmd_recv_func) (server, dup_host, nick,
+                                             (args_after_color) ?
+                                             args_after_color : dup_arguments);
         if (irc_last_command_received)
             free (irc_last_command_received);
         if (args_after_color)

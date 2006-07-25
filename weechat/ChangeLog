@@ -4,6 +4,7 @@ WeeChat - Wee Enhanced Environment for Chat
 ChangeLog - 2006-07-25
 
 Version 0.2.0 (under dev!):
+   * added generic function for incoming numeric IRC commands (bug #16611)
    * fixed crash when doing "/part something" on a server buffer (bug #17201)
    * charsets are now checked when set by /charset command
    * added "look_save_on_exit" option (patch from Emanuele Giaquinta)

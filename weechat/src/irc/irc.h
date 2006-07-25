@@ -200,6 +200,8 @@ struct t_irc_server
 
 /* irc commands */
 
+typedef int (t_irc_recv_func)(t_irc_server *, char *, char *, char *);
+
 typedef struct t_irc_command t_irc_command;
 
 struct t_irc_command
@@ -218,8 +220,7 @@ struct t_irc_command
                                     /* function called when user enters cmd   */
     int (*cmd_function_1arg)(t_irc_server *, t_irc_channel *, char *);
                                     /* function called when user enters cmd   */
-    int (*recv_function)(t_irc_server *, char *, char *, char *);
-                                    /* function called when cmd is received   */
+    t_irc_recv_func *recv_function; /* function called when cmd is received   */
 };
 
 /* irc messages */
