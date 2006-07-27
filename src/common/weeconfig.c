@@ -825,7 +825,7 @@ t_config_option weechat_options_dcc[] =
     NULL, NULL, &cfg_dcc_timeout, NULL, &config_change_noop },
   { "dcc_blocksize", N_("block size for dcc packets"),
     N_("block size for dcc packets in bytes (default: 65536)"),
-    OPTION_TYPE_INT, 1024, 102400, 65536,
+    OPTION_TYPE_INT, DCC_MIN_BLOCKSIZE, DCC_MAX_BLOCKSIZE, 65536,
     NULL, NULL, &cfg_dcc_blocksize, NULL, &config_change_noop },
   { "dcc_port_range", N_("allowed ports for outgoing dcc"),
     N_("restricts outgoing dcc to use only ports in the given range "

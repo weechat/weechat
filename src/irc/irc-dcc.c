@@ -1294,7 +1294,7 @@ dcc_handle ()
 {
     t_irc_dcc *ptr_dcc;
     int num_read, num_sent;
-    static char buffer[102400];
+    static char buffer[DCC_MAX_BLOCKSIZE];
     uint32_t pos;
     fd_set read_fd;
     static struct timeval timeout;
@@ -1453,7 +1453,7 @@ dcc_handle ()
                     gui_printf (NULL, _("%s DCC failed because blocksize is too "
                                 "big. Check value of \"dcc_blocksize\" option, "
                                 "max is %d.\n"),
-                                sizeof (buffer));
+                                WEECHAT_ERROR, DCC_MAX_BLOCKSIZE);
                     dcc_close (ptr_dcc, DCC_FAILED);
                     dcc_redraw (HOTLIST_MSG);
                     continue;

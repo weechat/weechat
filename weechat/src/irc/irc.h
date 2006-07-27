@@ -248,6 +248,9 @@ struct t_irc_message
 #define DCC_FAILED              4   /* DCC failed                             */
 #define DCC_ABORTED             5   /* DCC aborted by user                    */
 
+#define DCC_MIN_BLOCKSIZE    1024   /* min DCC block size when sending file   */
+#define DCC_MAX_BLOCKSIZE  102400   /* max DCC block size when sending file   */
+
 #define DCC_IS_CHAT(type) ((type == DCC_CHAT_RECV) || (type == DCC_CHAT_SEND))
 #define DCC_IS_FILE(type) ((type == DCC_FILE_RECV) || (type == DCC_FILE_SEND))
 #define DCC_IS_RECV(type) ((type == DCC_CHAT_RECV) || (type == DCC_FILE_RECV))
