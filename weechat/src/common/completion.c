@@ -820,7 +820,8 @@ completion_build_list (t_completion *completion)
     int max_arg, i;
     
     completion_get_command_infos (completion, &template, &max_arg);
-    if (!template || (completion->base_command_arg > max_arg))
+    if (!template || (strcmp (template, "-") == 0) ||
+        (completion->base_command_arg > max_arg))
     {
         completion_stop (completion);
         return;

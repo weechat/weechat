@@ -301,7 +301,7 @@ plugin_cmd_handler_add (t_weechat_plugin *plugin, char *command,
         new_handler->description = (description) ? strdup (description) : NULL;
         new_handler->arguments = (arguments) ? strdup (arguments) : NULL;
         new_handler->arguments_description = (arguments_description) ? strdup (arguments_description) : NULL;
-        new_handler->completion_template = (completion_template) ? strdup (completion_template) : NULL;
+        new_handler->completion_template = (completion_template) ? strdup (completion_template) : strdup ("");
         new_handler->interval = 0;
         new_handler->remaining = 0;
         new_handler->handler = handler_func;

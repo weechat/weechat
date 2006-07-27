@@ -1952,8 +1952,8 @@ plugin->msg_handler_add (plugin, "KICK", &amp;msg_kick, NULL, NULL);
                   which means "abc" or a WeeChat command for first argument,
                   "def" or IRC command for second.
                   An empty string lets WeeChat complete any argument with
-                  a nick from current channel, NULL disable completion for
-                  all command arguments.
+                  a nick from current channel, NULL or "-" disable completion
+                  for all command arguments.
                 </para>
                 <para>
                   Following codes can be used:

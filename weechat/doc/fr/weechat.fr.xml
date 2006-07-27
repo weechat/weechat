@@ -1993,8 +1993,8 @@ plugin->msg_handler_add (plugin, "KICK", &amp;msg_kick, NULL, NULL);
                   paramètre, et "def" ou une commande IRC pour le deuxième.
                   Une chaîne vide indique à WeeChat de compléter tout
                   paramètre avec un pseudo du canal courant, une valeur NULL
-                  désactive toute complétion pour tous les paramètres de la
-                  commande.
+                  ou égale à "-" désactive toute complétion pour tous les
+                  paramètres de la commande.
                 </para>
                 <para>
                   Les codes suivants peuvent être utilisés :

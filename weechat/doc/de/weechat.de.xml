@@ -1935,8 +1935,8 @@ plugin->msg_handler_add (plugin, "KICK", &amp;msg_kick, NULL, NULL);
                   bedeutet "<literal>abc|%w def|%i</literal>", dass das erste Argument "abc" oder ein 
                   WeeChat-Kommando sein kann und das zweite Argument "def" oder ein IRC-Kommando.
                   Eine leere Zeichenkette bedeutet, dass WeeChat für jedes Argument einen Nicknamen
-                  des gegenwärtigen Channels einsetzt, ein NULL schaltet die Vervollständigung für alle
-                  Argumente ab.
+                  des gegenwärtigen Channels einsetzt, ein NULL oder "-" schaltet die Vervollständigung
+                  für alle Argumente ab.
                 </para>
                 <para>
                   Die folgenden Ersetzungen können verwendet werden:

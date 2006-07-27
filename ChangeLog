@@ -4,6 +4,8 @@ WeeChat - Wee Enhanced Environment for Chat
 ChangeLog - 2006-07-27
 
 Version 0.2.0 (under dev!):
+   * fixed completion for command handlers (now empty completion_template
+     means nick completion, "-" string means no completion at all)
    * fixed nick alignment problem when look_nickmode is off
    * added generic function for incoming numeric IRC commands (bug #16611)
    * fixed crash when doing "/part something" on a server buffer (bug #17201)
