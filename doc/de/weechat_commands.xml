@@ -18,14 +18,14 @@ Argumente: Argumente für den Befehl
 <programlisting>
 Puffer verwalten
 
- Aktion: Pufferaktion:
-   move: Puffer in der Liste bewegen (kann auch relativ sein, wie -1)
-  close: Puffer schließen (und Channel ohne Meldung verlassen)
-   list: alle offenen Puffer auflisten (Standardaktion)
- notify: Notify-Level für Puffer festlegen (0=nie, 1=highlighten, 2=1+Nachricht, 3=2+join/part)
-Server
-Channel: gehe zum Puffer mit Servernamen oder Channelnamen
- Nummer: gehe zu Puffer mit dieser Nummer
+ action: action to do:
+   move: move buffer in the list (may be relative, for example -1)
+  close: close buffer (optional arg is part message, for a channel)
+   list: list open buffers (no parameter implies this list)
+ notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)
+server
+channel: jump to buffer by server and/or channel name
+ number: jump to buffer by number
 
 </programlisting>
 <command>builtin  Befehl</command>
@@ -124,6 +124,17 @@ functions: interne Funktionen für Tastenbelegungen auflisten
     reset: Standardbelegung wiederherstellen und entferne alle eigenen Belegungen (Vorsicht!)
 
 </programlisting>
+<command>panel  [list | add type position size | resize # size | close # | move #1 #2]</command>
+<programlisting>
+manage panels
+
+   list: list open panels (no parameter implies this list)
+    add: add a panel, type is global|local, position is top|bottom|left|right
+ resize: resize a panel with a new size (may be relative, for example -1)
+  close: close a panel by number
+   move: move a panel to another number (may be relative, for example -1)
+
+</programlisting>
 <command>plugin  [load Dateiname] | [autoload] | [reload] | [unload]</command>
 <programlisting>
 auflisten/laden/entladen von Plugins
@@ -217,19 +228,19 @@ zeigt die Uptime von Weechat an
 <programlisting>
 Fenster verwalten
 
-  list: listet die geöffneten Fenster (Default, kann auch weggelassen werden)
-    -1: springt zum vorherigen Fenster
-    +1: springt zum nächsten Fenster
-    b#: springt zum nächsten Fenster, dass Puffer Nummer # anzeigt
-    up: wechselt zum Fenster über dem aktuellen
-  down: wechselt zum Fenster unter dem aktuellen
-  left: wechselt zum linken Fenster
- right: wechselt zum rechten Fenster
-splith: teilt das aktuelle Fenster horizontal
-splitv: teilt das aktuelle Fenster vertikal
-resize: verändert die Größe des aktuellen Fensters, die neue Größe wird in Prozent des Elternfensters angegeben
- merge: vereinigt Fenster miteinander (all = alle Fenster vereinigen)
+  list: list open windows (no parameter implies this list)
+    -1: jump to previous window
+    +1: jump to next window
+    b#: jump to next window displaying buffer number #
+    up: switch to window above current one
+  down: switch to window below current one
+  left: switch to window on the left
+ right: switch to window on the right
+splith: split current window horizontally
+splitv: split current window vertically
+resize: resize window size, new size is &lt;pct&gt; pourcentage of parent window
+ merge: merge window with another (all = keep only one window)
 
-Bei splith und splitv gibt pct die neue Größe des Fensters im verhältnis zur aktuellen Größe an. Zum Beispiel würde 25 bedeuten, dass das neue Fenster nur noch ein Viertel der Größe des alten Fensters hätte.
+For splith and splitv, pct is a pourcentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
 
 </programlisting>

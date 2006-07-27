@@ -21,7 +21,7 @@ manage buffers
  action: action to do:
    move: move buffer in the list (may be relative, for example -1)
   close: close buffer (optional arg is part message, for a channel)
-   list: list opened buffers (no parameter implies this list)
+   list: list open buffers (no parameter implies this list)
  notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)
 server
 channel: jump to buffer by server and/or channel name
@@ -123,6 +123,17 @@ functions: list internal functions for key bindings
     reset: restore bindings to the default values and delete ALL personal bindings (use carefully!)
 
 </programlisting>
+<command>panel  [list | add type position size | resize # size | close # | move #1 #2]</command>
+<programlisting>
+manage panels
+
+   list: list open panels (no parameter implies this list)
+    add: add a panel, type is global|local, position is top|bottom|left|right
+ resize: resize a panel with a new size (may be relative, for example -1)
+  close: close a panel by number
+   move: move a panel to another number (may be relative, for example -1)
+
+</programlisting>
 <command>plugin  [load filename] | [autoload] | [reload] | [unload]</command>
 <programlisting>
 list/load/unload plugins
@@ -216,7 +227,7 @@ show WeeChat uptime
 <programlisting>
 manage windows
 
-  list: list opened windows (no parameter implies this list)
+  list: list open windows (no parameter implies this list)
     -1: jump to previous window
     +1: jump to next window
     b#: jump to next window displaying buffer number #

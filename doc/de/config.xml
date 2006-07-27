@@ -6,6 +6,13 @@
 -->
 
 <row>
+  <entry><option>look_save_on_exit</option></entry>
+  <entry>Boolean</entry>
+  <entry></entry>
+  <entry>'on'</entry>
+  <entry>Save config file on exit</entry>
+</row>
+<row>
   <entry><option>look_set_title</option></entry>
   <entry>Boolean</entry>
   <entry></entry>

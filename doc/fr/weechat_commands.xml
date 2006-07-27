@@ -19,13 +19,13 @@ paramètres: paramètres pour la commande
 gestion des tampons
 
  action: action à effectuer:
-   move: déplacer le tampon dans la liste (peut être relatif, par exemple -1)
-  close: fermer le tampon (le paramètre optionnel est le message de fin, pour un canal)
+   move: déplace le tampon dans la liste (peut être relatif, par exemple -1)
+  close: ferme le tampon (le paramètre optionnel est le message de fin, pour un canal)
    list: liste les tampons ouverts (pas de paramètre affiche cette liste)
- notify: fixer le niveau de notification (0=jamais, 1=highlight, 2=1+msg, 3=2+join/part)
+ notify: fixe le niveau de notification (0=jamais, 1=highlight, 2=1+msg, 3=2+join/part)
 serveur
-  canal: sauter au tampon par serveur et/ou nom de canal
- nombre: sauter au tampon qui a ce numéro
+  canal: saute au tampon par serveur et/ou nom de canal
+ nombre: saute au tampon qui a ce numéro
 
 </programlisting>
 <command>builtin  commande</command>
@@ -121,6 +121,17 @@ associer/libérer des touches
    unbind: supprimer l'association à une touche
 functions: lister la liste des fonctions internes pour les associations de touches
     reset: restaure les touches aux valeurs par défaut et supprime TOUTES les touches personnelles (utiliser avec précaution !)
+
+</programlisting>
+<command>panel  [list | add type position taille | resize # taille | close # | move #1 #2]</command>
+<programlisting>
+gestion des panneaux
+
+   list: liste les panneaux ouverts (pas de paramètre affiche cette liste)
+    add: ajoute un panneau, le type est global|local, la position est top|bottom|left|right
+ resize: redimensionne le panneau avec une nouvelle taille (peut être relatif, par exemple -1)
+  close: ferme un panneau par son numéro
+   move: déplace un panneau à un autre numéro (peut être relatif, par exemple -1)
 
 </programlisting>
 <command>plugin  [load fichier] | [autoload] | [reload] | [unload]</command>
