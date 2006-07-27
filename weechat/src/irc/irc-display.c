@@ -171,7 +171,7 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
         length += strlen (cfg_look_nick_prefix);
     if (external_nick)
         length += 2;
-    if (nick)
+    if (nick && cfg_look_nickmode)
     {
         if (nick->flags & (NICK_CHANOWNER | NICK_CHANADMIN |
                            NICK_OP | NICK_HALFOP | NICK_VOICE))
