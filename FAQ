@@ -1,4 +1,4 @@
-WeeChat FAQ, 2006-05-25
+WeeChat FAQ, 2006-07-29
 =======================
 
 Intended audience:
@@ -138,6 +138,17 @@ A:	You can use /lua command to load scripts (default path is
 	Note that scripts in ~/.weechat/lua/autoload are automatically loaded
 	when WeeChat is starting up.
 	Lua scripts are not compatible with other IRC clients.
+
+
+2.9
+================================================================================
+Q:	When I'm using weechat under screen, I have weird chars, when I switch
+	window for example, how to fix that?
+
+A:	This may be caused by bad value of TERM variable (look at echo $TERM).
+	For example, "xterm-color" displays such weird chars, use "xterm" which
+	is ok (like many other values).
+
 
 3.1
 ================================================================================

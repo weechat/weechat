@@ -1,4 +1,4 @@
-WeeChat FAQ, 2006-05-25
+WeeChat FAQ, 2006-07-29
 =======================
 
 Public concerné :
@@ -143,6 +143,16 @@ R:	La commande /lua permet de charger les scripts Lua (le chemin par
 	Notez que les scripts dans ~/.weechat/lua/autoload sont automatiquement
 	chargés par WeeChat lorsqu'il démarre.
 	Les scripts Lua ne sont pas compatibles avec d'autres clients IRC.
+
+
+2.9
+================================================================================
+Q:	Quand j'utilise weechat sous screen, j'ai des caractères bizarres
+	notamment en changeant de fenêtre, comment corriger ça ?
+
+R:	Cela peut être du à la variable TERM qui n'a pas la bonne valeur
+	(regardez echo $TERM). Par exemple "xterm-color" provoque ce genre de
+	problèmes, utilisez "xterm" qui est ok (comme plein d'autres valeurs).
 
 
 3.1
