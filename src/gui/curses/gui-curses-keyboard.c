@@ -220,8 +220,10 @@ gui_keyboard_read ()
             break;
         }
         
+#ifdef KEY_RESIZE
         if (key == KEY_RESIZE)
             continue;
+#endif
         
         gui_last_activity_time = time (NULL);
                 

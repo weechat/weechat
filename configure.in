@@ -142,8 +142,8 @@ if test "x$enable_ncurses" = "xyes" ; then
         fi
     else
         NCURSES_LIBS="-lncursesw"
-        AC_CHECK_HEADERS(ncursesw/curses.h)
     fi
+    AC_CHECK_HEADERS([ncurses.h ncursesw/curses.h])
     AC_SUBST(NCURSES_LIBS)
 fi
 
@@ -668,15 +668,25 @@ AC_DEFINE_UNQUOTED(WEECHAT_SHAREDIR, "$WEECHAT_SHAREDIR")
 
 weechat_libdir=${libdir}/weechat
 AC_SUBST(weechat_libdir)
+
+COMMON_CFLAGS="-Wall -W"
+AC_MSG_CHECKING([whether we have GNU assembler])
+GAS=`as --version < /dev/null 2>/dev/null | grep GNU`
+if test "$GAS"; then
+    COMMON_CFLAGS="${COMMON_CFLAGS} -pipe"
+    AC_MSG_RESULT(yes)
+else
+    AC_MSG_RESULT(no)
+fi
  
 CFLAGS=`echo $CFLAGS | sed s/-g//g`
 if test "x$CFLAGS" = "x" ; then
     CFLAGS="-O2"
 fi
 if test "x$debug" = "x1" || test "x$debug" = "x2" ; then
-    CFLAGS="-Wall -W $CFLAGS -pipe -g"
+    CFLAGS="$COMMON_CFLAGS $CFLAGS -g"
 else
-    CFLAGS="-Wall -W $CFLAGS -pipe"
+    CFLAGS="$COMMON_CFLAGS $CFLAGS"
 fi
 
 if test "x$debug" = "x2" ; then
@@ -716,18 +726,18 @@ esac
 #                                output Makefiles
 # ------------------------------------------------------------------------------
 
-AM_CONDITIONAL(GUI_NCURSES,   test "$enable_ncurses" = "yes")
-AM_CONDITIONAL(GUI_WXWIDGETS, test "$enable_wxwidgets" = "yes")
-AM_CONDITIONAL(GUI_GTK,       test "$enable_gtk" = "yes")
-AM_CONDITIONAL(GUI_QT,        test "$enable_qt" = "yes")
-AM_CONDITIONAL(PLUGINS,       test "$enable_plugins" = "yes")
-AM_CONDITIONAL(PLUGIN_PERL,   test "$enable_perl" = "yes")
-AM_CONDITIONAL(PLUGIN_PYTHON, test "$enable_python" = "yes")
-AM_CONDITIONAL(PLUGIN_RUBY,   test "$enable_ruby" = "yes")
-AM_CONDITIONAL(PLUGIN_LUA,    test "$enable_lua" = "yes")
-AM_CONDITIONAL(PLUGIN_ASPELL, test "$enable_aspell" = "yes")
-AM_CONDITIONAL(HAVE_GNUTLS,   test "$enable_gnutls" = "yes")
-AM_CONDITIONAL(HAVE_FLOCK,    test "$enable_flock" = "yes")
+AM_CONDITIONAL(GUI_NCURSES,    test "$enable_ncurses" = "yes")
+AM_CONDITIONAL(GUI_WXWIDGETS,  test "$enable_wxwidgets" = "yes")
+AM_CONDITIONAL(GUI_GTK,        test "$enable_gtk" = "yes")
+AM_CONDITIONAL(GUI_QT,         test "$enable_qt" = "yes")
+AM_CONDITIONAL(PLUGINS,        test "$enable_plugins" = "yes")
+AM_CONDITIONAL(PLUGIN_PERL,    test "$enable_perl" = "yes")
+AM_CONDITIONAL(PLUGIN_PYTHON,  test "$enable_python" = "yes")
+AM_CONDITIONAL(PLUGIN_RUBY,    test "$enable_ruby" = "yes")
+AM_CONDITIONAL(PLUGIN_LUA,     test "$enable_lua" = "yes")
+AM_CONDITIONAL(PLUGIN_ASPELL,  test "$enable_aspell" = "yes")
+AM_CONDITIONAL(HAVE_GNUTLS,    test "$enable_gnutls" = "yes")
+AM_CONDITIONAL(HAVE_FLOCK,     test "$enable_flock" = "yes")
 
 AC_OUTPUT([Makefile
            doc/Makefile

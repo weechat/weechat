@@ -23,8 +23,10 @@
 
 #ifdef HAVE_NCURSESW_CURSES_H
 #include <ncursesw/ncurses.h>
-#else
+#elif HAVE_NCURSES_H
 #include <ncurses.h>
+#else
+#include <curses.h>
 #endif
 
 /* shift ncurses colors for compatibility with colors

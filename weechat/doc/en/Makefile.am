@@ -31,7 +31,7 @@ all-local: html-stamp
 html: html-stamp
 
 html-stamp: $(BOOK).xml $(BOOK_INCLUDE) ../weechat-html.xsl ../weechat-doc.css
-	echo "<pubdate>`date -R`</pubdate>" >date.xml
+	echo "<pubdate>`date '+%F %T'`</pubdate>" >date.xml
 	mkdir -p html/
 	xsltproc -o html/ ../weechat-html.xsl $(BOOK).xml || true
 	cp ../weechat-doc.css html/
@@ -42,7 +42,7 @@ html-stamp: $(BOOK).xml $(BOOK_INCLUDE) ../weechat-html.xsl ../weechat-doc.css
 html1: html1-stamp
 
 html1-stamp: $(BOOK).xml $(BOOK_INCLUDE) ../weechat-html-one.xsl ../weechat-doc.css
-	echo "<pubdate>`date -R`</pubdate>" >date.xml
+	echo "<pubdate>`date '+%F %T'`</pubdate>" >date.xml
 	mkdir -p html1/
 	xsltproc -o html1/$(BOOK).html ../weechat-html-one.xsl $(BOOK).xml || true
 	cp ../weechat-doc.css html1/

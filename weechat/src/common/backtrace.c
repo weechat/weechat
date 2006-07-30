@@ -65,6 +65,7 @@ weechat_backtrace_printf (char *message, ...)
 void
 weechat_backtrace_addr2line (int number, void *address, char *symbol)
 {
+#ifdef HAVE_BACKTRACE
     int rc;
     Dl_info info;
     const void *addr;
@@ -129,6 +130,12 @@ weechat_backtrace_addr2line (int number, void *address, char *symbol)
         weechat_backtrace_printf ("%03d  %s\n",
                                   number, function_name);
     pclose (output);
+#else
+    /* make gcc happy */
+    (void) number;
+    (void) address;
+    (void) symbol;
+#endif
 }
 
 /*
