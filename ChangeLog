@@ -1,9 +1,10 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-07-27
+ChangeLog - 2006-07-30
 
 Version 0.2.0 (under dev!):
+   * fixed crash when purging DCC with high number of DCC (> window size)
    * fixed completion for command handlers (now empty completion_template
      means nick completion, "-" string means no completion at all)
    * fixed nick alignment problem when look_nickmode is off

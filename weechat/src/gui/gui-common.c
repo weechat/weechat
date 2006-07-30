@@ -706,7 +706,9 @@ gui_exec_action_dcc (t_gui_window *window, char *actions)
                 /* purge old DCC */
                 case 'p':
                 case 'P':
+                    window->dcc_first = NULL;
                     window->dcc_selected = NULL;
+                    window->dcc_last_displayed = NULL;
                     ptr_dcc = dcc_list;
                     while (ptr_dcc)
                     {
