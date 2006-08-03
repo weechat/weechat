@@ -241,6 +241,8 @@ struct t_irc_message
 #define DCC_FILE_RECV           2   /* incoming DCC file                      */
 #define DCC_FILE_SEND           3   /* sending DCC file                       */
 
+/* DCC status */
+
 #define DCC_WAITING             0   /* waiting for host answer                */
 #define DCC_CONNECTING          1   /* connecting to host                     */
 #define DCC_ACTIVE              2   /* sending/receiving data                 */
@@ -248,13 +250,28 @@ struct t_irc_message
 #define DCC_FAILED              4   /* DCC failed                             */
 #define DCC_ABORTED             5   /* DCC aborted by user                    */
 
+/* DCC blocksize (for file) */
+
 #define DCC_MIN_BLOCKSIZE    1024   /* min DCC block size when sending file   */
 #define DCC_MAX_BLOCKSIZE  102400   /* max DCC block size when sending file   */
+
+/* DCC errors (for file) */
+
+#define DCC_NO_ERROR            0   /* used when no error to report, all ok!  */
+#define DCC_ERROR_READ_LOCAL    1   /* unable to read local file              */
+#define DCC_ERROR_SEND_BLOCK    2   /* unable to send block to receiver       */
+#define DCC_ERROR_READ_ACK      3   /* unable to read ACK from receiver       */
+#define DCC_ERROR_RECV_BLOCK    4   /* unable to receive block from sender    */
+#define DCC_ERROR_WRITE_LOCAL   5   /* unable to write to local file          */
+
+/* DCC macros for type */
 
 #define DCC_IS_CHAT(type) ((type == DCC_CHAT_RECV) || (type == DCC_CHAT_SEND))
 #define DCC_IS_FILE(type) ((type == DCC_FILE_RECV) || (type == DCC_FILE_SEND))
 #define DCC_IS_RECV(type) ((type == DCC_CHAT_RECV) || (type == DCC_FILE_RECV))
 #define DCC_IS_SEND(type) ((type == DCC_CHAT_SEND) || (type == DCC_FILE_SEND))
+
+/* DCC macro for status */
 
 #define DCC_ENDED(status) ((status == DCC_DONE) || (status == DCC_FAILED) || \
                           (status == DCC_ABORTED))
@@ -265,7 +282,7 @@ struct t_irc_dcc
 {
     t_irc_server *server;           /* irc server                             */
     t_irc_channel *channel;         /* irc channel (for DCC chat only)        */
-    int type;                       /* DCC type (send or receive)             */
+    int type;                       /* DCC type (file/chat, send/receive)     */
     int status;                     /* DCC status (waiting, sending, ..)      */
     time_t start_time;              /* the time when DCC started              */
     time_t start_transfer;          /* the time when DCC transfer started     */
@@ -273,11 +290,16 @@ struct t_irc_dcc
     int port;                       /* port                                   */
     char *nick;                     /* remote nick                            */
     int sock;                       /* socket for connection                  */
+    pid_t child_pid;                /* pid of child process (sending/recving) */
+    int child_read;                 /* to read into child pipe                */
+    int child_write;                /* to write into child pipe               */
     char *unterminated_message;     /* beginning of a message in input buf    */
+    int fast_send;                  /* fase send for files: does not wait ACK */
     int file;                       /* local file (for reading or writing)    */
     char *filename;                 /* filename (given by sender)             */
     char *local_filename;           /* local filename (with path)             */
     int filename_suffix;            /* suffix (.1 for ex) if renaming file    */
+    int blocksize;                  /* block size for sending file            */
     unsigned long size;             /* file size                              */
     unsigned long pos;              /* number of bytes received/sent          */
     unsigned long ack;              /* number of bytes received OK            */
@@ -421,6 +443,8 @@ extern t_irc_dcc *dcc_add (t_irc_server *, int, unsigned long, int, char *, int,
                            char *, char *, unsigned long);
 extern void dcc_send_request (t_irc_server *, int, char *, char *);
 extern void dcc_chat_sendf (t_irc_dcc *, char *, ...);
+extern void dcc_file_send_fork (t_irc_dcc *);
+extern void dcc_file_recv_fork (t_irc_dcc *);
 extern void dcc_handle ();
 extern void dcc_end ();
 extern void dcc_print_log ();

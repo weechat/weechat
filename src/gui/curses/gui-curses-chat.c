@@ -877,7 +877,7 @@ gui_chat_draw (t_gui_buffer *buffer, int erase)
     char format_empty[32];
     int i, j, line_pos, count, num_bars;
     unsigned long pct_complete;
-    char *unit_name[] = { N_("bytes"), N_("Kb"), N_("Mb"), N_("Gb") };
+    char *unit_name[] = { N_("bytes"), N_("KB"), N_("MB"), N_("GB") };
     char *unit_format[] = { "%.0f", "%.1f", "%.02f", "%.02f" };
     float unit_divide[] = { 1, 1024, 1024*1024, 1024*1024*1024 };
     int num_unit;

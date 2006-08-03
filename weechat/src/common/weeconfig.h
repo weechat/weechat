@@ -221,6 +221,7 @@ extern int cfg_dcc_auto_accept_files;
 extern int cfg_dcc_auto_accept_chats;
 extern int cfg_dcc_timeout;
 extern int cfg_dcc_blocksize;
+extern int cfg_dcc_fast_send;
 extern char *cfg_dcc_port_range;
 extern char *cfg_dcc_own_ip;
 extern char *cfg_dcc_download_path;

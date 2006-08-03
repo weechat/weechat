@@ -802,6 +802,7 @@ int cfg_dcc_auto_accept_files;
 int cfg_dcc_auto_accept_chats;
 int cfg_dcc_timeout;
 int cfg_dcc_blocksize;
+int cfg_dcc_fast_send;
 char *cfg_dcc_port_range;
 char *cfg_dcc_own_ip;
 char *cfg_dcc_download_path;
@@ -821,12 +822,16 @@ t_config_option weechat_options_dcc[] =
     NULL, NULL, &cfg_dcc_auto_accept_chats, NULL, &config_change_noop },
   { "dcc_timeout", N_("timeout for dcc request"),
     N_("timeout for dcc request (in seconds)"),
-    OPTION_TYPE_INT, 1, INT_MAX, 300,
+    OPTION_TYPE_INT, 5, INT_MAX, 300,
     NULL, NULL, &cfg_dcc_timeout, NULL, &config_change_noop },
   { "dcc_blocksize", N_("block size for dcc packets"),
     N_("block size for dcc packets in bytes (default: 65536)"),
     OPTION_TYPE_INT, DCC_MIN_BLOCKSIZE, DCC_MAX_BLOCKSIZE, 65536,
     NULL, NULL, &cfg_dcc_blocksize, NULL, &config_change_noop },
+  { "dcc_fast_send", N_("does not wait for ACK when sending file"),
+    N_("does not wait for ACK when sending file"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
+    NULL, NULL, &cfg_dcc_fast_send, NULL, &config_change_noop },
   { "dcc_port_range", N_("allowed ports for outgoing dcc"),
     N_("restricts outgoing dcc to use only ports in the given range "
        "(useful for NAT) (syntax: a single port, ie. 5000 or a port "

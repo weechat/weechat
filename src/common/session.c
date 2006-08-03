@@ -320,6 +320,9 @@ session_save_dcc (FILE *file)
         rc = rc && (session_write_buf (file, SESSION_DCC_LAST_ACTIVITY, &(ptr_dcc->last_activity), sizeof (time_t)));
         rc = rc && (session_write_buf (file, SESSION_DCC_BYTES_PER_SEC, &(ptr_dcc->bytes_per_sec), sizeof (unsigned long)));
         rc = rc && (session_write_buf (file, SESSION_DCC_ETA, &(ptr_dcc->eta), sizeof (unsigned long)));
+        rc = rc && (session_write_int (file, SESSION_DCC_CHILD_PID, ptr_dcc->child_pid));
+        rc = rc && (session_write_int (file, SESSION_DCC_CHILD_READ, ptr_dcc->child_read));
+        rc = rc && (session_write_int (file, SESSION_DCC_CHILD_WRITE, ptr_dcc->child_write));
         rc = rc && (session_write_id  (file, SESSION_DCC_END));
         
         if (!rc)
@@ -1288,6 +1291,15 @@ session_load_dcc (FILE *file)
                 break;
             case SESSION_DCC_ETA:
                 rc = rc && (session_read_buf (file, &(dcc->eta), sizeof (unsigned long)));
+                break;
+            case SESSION_DCC_CHILD_PID:
+                rc = rc && (session_read_int (file, &(dcc->child_pid)));
+                break;
+            case SESSION_DCC_CHILD_READ:
+                rc = rc && (session_read_int (file, &(dcc->child_read)));
+                break;
+            case SESSION_DCC_CHILD_WRITE:
+                rc = rc && (session_read_int (file, &(dcc->child_write)));
                 break;
             default:
                 weechat_log_printf (_("session: warning: ignoring value from "

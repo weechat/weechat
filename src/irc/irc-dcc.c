@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-/* irc-dcc.c: DCC communications (files & chat) */
+/* irc-dcc.c: Direct Client-to-Client (DCC) communication (files & chat) */
 
 
 #ifdef HAVE_CONFIG_H
@@ -26,12 +26,15 @@
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <signal.h>
 #include <string.h>
 #include <stdarg.h>
 #include <fcntl.h>
 #include <time.h>
+#include <errno.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -387,6 +390,34 @@ dcc_free (t_irc_dcc *ptr_dcc)
 }
 
 /*
+ * dcc_file_child_kill: kill child process and close pipe
+ */
+
+void
+dcc_file_child_kill (t_irc_dcc *ptr_dcc)
+{
+    /* kill process */
+    if (ptr_dcc->child_pid > 0)
+    {
+        kill (ptr_dcc->child_pid, SIGKILL);
+        waitpid (ptr_dcc->child_pid, NULL, 0);
+        ptr_dcc->child_pid = 0;
+    }
+    
+    /* close pipe used with child */
+    if (ptr_dcc->child_read != -1)
+    {
+        close (ptr_dcc->child_read);
+        ptr_dcc->child_read = -1;
+    }
+    if (ptr_dcc->child_write != -1)
+    {
+        close (ptr_dcc->child_write);
+        ptr_dcc->child_write = -1;
+    }
+}
+
+/*
  * dcc_close: close a DCC connection
  */
 
@@ -424,6 +455,7 @@ dcc_close (t_irc_dcc *ptr_dcc, int status)
                         ptr_dcc->nick,
                         GUI_COLOR(COLOR_WIN_CHAT),
                         (status == DCC_DONE) ? _("OK") : _("FAILED"));
+            dcc_file_child_kill (ptr_dcc);
         }
     }
     if (status == DCC_ABORTED)
@@ -553,15 +585,9 @@ dcc_recv_connect_init (t_irc_dcc *ptr_dcc)
         /* DCC file => look for local filename and open it in writing mode */
         if (DCC_IS_FILE(ptr_dcc->type))
         {
-            if (ptr_dcc->start_resume > 0)
-                ptr_dcc->file = open (ptr_dcc->local_filename,
-                                      O_APPEND | O_WRONLY | O_NONBLOCK);
-            else
-                ptr_dcc->file = open (ptr_dcc->local_filename,
-                                      O_CREAT | O_TRUNC | O_WRONLY | O_NONBLOCK,
-                                      0644);
             ptr_dcc->start_transfer = time (NULL);
             ptr_dcc->last_check_time = time (NULL);
+            dcc_file_recv_fork (ptr_dcc);
         }
         else
         {
@@ -683,11 +709,16 @@ dcc_alloc ()
     new_dcc->port = 0;
     new_dcc->nick = NULL;
     new_dcc->sock = -1;
+    new_dcc->child_pid = 0;
+    new_dcc->child_read = -1;
+    new_dcc->child_write = -1;
     new_dcc->unterminated_message = NULL;
+    new_dcc->fast_send = cfg_dcc_fast_send;
     new_dcc->file = -1;
     new_dcc->filename = NULL;
     new_dcc->local_filename = NULL;
     new_dcc->filename_suffix = -1;
+    new_dcc->blocksize = cfg_dcc_blocksize;
     new_dcc->size = 0;
     new_dcc->pos = 0;
     new_dcc->ack = 0;
@@ -1286,6 +1317,354 @@ dcc_chat_recv (t_irc_dcc *ptr_dcc)
 }
 
 /*
+ * dcc_file_create_pipe: create pipe for communication with child process
+ *                       return 1 if ok, 0 if error
+ */
+
+int
+dcc_file_create_pipe (t_irc_dcc *ptr_dcc)
+{
+    int child_pipe[2];
+    
+    if (pipe (child_pipe) < 0)
+    {
+        irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
+                            PREFIX_ERROR);
+        gui_printf (ptr_dcc->server->buffer,
+                    _("%s DCC: unable to create pipe\n"),
+                    WEECHAT_ERROR);
+        dcc_close (ptr_dcc, DCC_FAILED);
+        dcc_redraw (HOTLIST_MSG);
+        return 0;
+    }
+    
+    ptr_dcc->child_read = child_pipe[0];
+    ptr_dcc->child_write = child_pipe[1];
+    return 1;
+}
+
+/*
+ * dcc_file_write_pipe: write data into pipe
+ */
+
+void
+dcc_file_write_pipe (t_irc_dcc *ptr_dcc, int status, int error)
+{
+    char buffer[1 + 1 + 12 + 1];   /* status + error + pos + \0 */
+
+    snprintf (buffer, sizeof (buffer), "%c%c%012lu",
+              status + '0', error + '0', ptr_dcc->pos);
+    write (ptr_dcc->child_write, buffer, sizeof (buffer));
+}
+
+/*
+ * dcc_file_send_child: child process for sending file
+ */
+
+void
+dcc_file_send_child (t_irc_dcc *ptr_dcc)
+{
+    int num_read, num_sent;
+    static char buffer[DCC_MAX_BLOCKSIZE];
+    uint32_t ack;
+    time_t last_sent, new_time;
+    
+    last_sent = time (NULL);
+    while (1)
+    {
+        /* read DCC ACK (sent by receiver) */
+        if (ptr_dcc->pos > ptr_dcc->ack)
+        {
+            /* we should receive ACK for packets sent previously */
+            while (1)
+            {
+                num_read = recv (ptr_dcc->sock, (char *) &ack, 4, MSG_PEEK);
+                if ((num_read < 1) &&
+                    ((num_read != -1) || (errno != EAGAIN)))
+                {
+                    dcc_file_write_pipe (ptr_dcc, DCC_FAILED, DCC_ERROR_READ_LOCAL);
+                    return;
+                }
+                if (num_read == 4)
+                {
+                    recv (ptr_dcc->sock, (char *) &ack, 4, 0);
+                    ptr_dcc->ack = ntohl (ack);
+                    
+                    /* DCC send ok? */
+                    if ((ptr_dcc->pos >= ptr_dcc->size)
+                        && (ptr_dcc->ack >= ptr_dcc->size))
+                    {
+                        dcc_file_write_pipe (ptr_dcc, DCC_DONE, DCC_NO_ERROR);
+                        return;
+                    }
+                }
+                else
+                    break;
+            }
+        }
+        
+        /* send a block to receiver */
+        if ((ptr_dcc->pos < ptr_dcc->size) &&
+             (ptr_dcc->fast_send || (ptr_dcc->pos <= ptr_dcc->ack)))
+        {
+            lseek (ptr_dcc->file, ptr_dcc->pos, SEEK_SET);
+            num_read = read (ptr_dcc->file, buffer, ptr_dcc->blocksize);
+            if (num_read < 1)
+            {
+                dcc_file_write_pipe (ptr_dcc, DCC_FAILED, DCC_ERROR_READ_LOCAL);
+                return;
+            }
+            num_sent = send (ptr_dcc->sock, buffer, num_read, 0);
+            if (num_sent < 0)
+            {
+                /* socket is temporarily not available (receiver can't receive
+                   amount of data we sent ?!) */
+                if (errno == EAGAIN)
+                    usleep (1000);
+                else
+                {
+                    dcc_file_write_pipe (ptr_dcc, DCC_FAILED, DCC_ERROR_READ_LOCAL);
+                    return;
+                }
+            }
+            if (num_sent > 0)
+            {
+                ptr_dcc->pos += (unsigned long) num_sent;
+                new_time = time (NULL);
+                if (last_sent != new_time)
+                {
+                    last_sent = new_time;
+                    dcc_file_write_pipe (ptr_dcc, DCC_ACTIVE, DCC_NO_ERROR);
+                }
+            }
+        }
+        else
+            usleep (1000);
+    }
+}
+
+/*
+ * dcc_file_recv_child: child process for receiving file
+ */
+
+void
+dcc_file_recv_child (t_irc_dcc *ptr_dcc)
+{
+    int num_read;
+    static char buffer[DCC_MAX_BLOCKSIZE];
+    uint32_t pos;
+    time_t last_sent, new_time;
+
+    last_sent = time (NULL);
+    while (1)
+    {    
+        num_read = recv (ptr_dcc->sock, buffer, sizeof (buffer), 0);
+        if (num_read == -1)
+        {
+            /* socket is temporarily not available (sender is not fast ?!) */
+            if (errno == EAGAIN)
+                usleep (1000);
+            else
+            {
+                dcc_file_write_pipe (ptr_dcc, DCC_FAILED, DCC_ERROR_RECV_BLOCK);
+                return;
+            }
+        }
+        else
+        {
+            if (num_read == 0)
+            {
+                dcc_file_write_pipe (ptr_dcc, DCC_FAILED, DCC_ERROR_RECV_BLOCK);
+                return;
+            }
+            
+            if (write (ptr_dcc->file, buffer, num_read) == -1)
+            {
+                dcc_file_write_pipe (ptr_dcc, DCC_FAILED, DCC_ERROR_WRITE_LOCAL);
+                return;
+            }
+            
+            ptr_dcc->pos += (unsigned long) num_read;
+            pos = htonl (ptr_dcc->pos);
+            
+            /* we don't check return code, not a problem if an ACK send failed */
+            send (ptr_dcc->sock, (char *) &pos, 4, 0);
+
+            /* file received ok? */
+            if (ptr_dcc->pos >= ptr_dcc->size)
+            {
+                dcc_file_write_pipe (ptr_dcc, DCC_DONE, DCC_NO_ERROR);
+                return;
+            }
+            
+            new_time = time (NULL);
+            if (last_sent != new_time)
+            {
+                last_sent = new_time;
+                dcc_file_write_pipe (ptr_dcc, DCC_ACTIVE, DCC_NO_ERROR);
+            }
+        }
+    }
+}
+
+/*
+ * dcc_file_child_read: read data from child via pipe
+ */
+
+void
+dcc_file_child_read (t_irc_dcc *ptr_dcc)
+{
+    char bufpipe[1 + 1 + 12 + 1];
+    int num_read;
+    char *error;
+    
+    num_read = read (ptr_dcc->child_read, bufpipe, sizeof (bufpipe));
+    if (num_read > 0)
+    {
+        error = NULL;
+        ptr_dcc->pos = strtol (bufpipe + 2, &error, 10);
+        ptr_dcc->last_activity = time (NULL);
+        dcc_calculate_speed (ptr_dcc, 0);
+        
+        /* read error code */
+        switch (bufpipe[1] - '0')
+        {
+            case DCC_ERROR_READ_LOCAL:
+                irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
+                                    PREFIX_ERROR);
+                gui_printf (ptr_dcc->server->buffer,
+                            _("%s DCC: unable to read local file\n"),
+                            WEECHAT_ERROR);
+                break;
+            case DCC_ERROR_SEND_BLOCK:
+                irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
+                                    PREFIX_ERROR);
+                gui_printf (ptr_dcc->server->buffer,
+                            _("%s DCC: unable to send block to receiver\n"),
+                            WEECHAT_ERROR);
+                break;
+            case DCC_ERROR_READ_ACK:
+                irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
+                                    PREFIX_ERROR);
+                gui_printf (ptr_dcc->server->buffer,
+                            _("%s DCC: unable to read ACK from receiver\n"),
+                            WEECHAT_ERROR);
+                break;
+            case DCC_ERROR_RECV_BLOCK:
+                irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
+                                    PREFIX_ERROR);
+                gui_printf (ptr_dcc->server->buffer,
+                            _("%s DCC: unable to receive block from sender\n"),
+                            WEECHAT_ERROR);
+                break;
+            case DCC_ERROR_WRITE_LOCAL:
+                irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
+                                    PREFIX_ERROR);
+                gui_printf (ptr_dcc->server->buffer,
+                            _("%s DCC: unable to write local file\n"),
+                            WEECHAT_ERROR);
+                break;
+        }
+        
+        /* read new DCC status */
+        switch (bufpipe[0] - '0')
+        {
+            case DCC_ACTIVE:
+                dcc_redraw (HOTLIST_LOW);
+                break;
+            case DCC_DONE:
+                dcc_close (ptr_dcc, DCC_DONE);
+                dcc_redraw (HOTLIST_MSG);
+                break;
+            case DCC_FAILED:
+                dcc_close (ptr_dcc, DCC_FAILED);
+                dcc_redraw (HOTLIST_MSG);
+                break;
+        }
+    }
+}
+
+/*
+ * dcc_file_send_fork: fork process for sending file
+ */
+
+void
+dcc_file_send_fork (t_irc_dcc *ptr_dcc)
+{
+    pid_t pid;
+    
+    if (!dcc_file_create_pipe (ptr_dcc))
+        return;
+
+    ptr_dcc->file = open (ptr_dcc->local_filename, O_RDONLY | O_NONBLOCK, 0644);
+    
+    switch (pid = fork ())
+    {
+        /* fork failed */
+        case -1:
+            irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
+                                PREFIX_ERROR);
+            gui_printf (ptr_dcc->server->buffer,
+                        _("%s DCC: unable to fork\n"),
+                        WEECHAT_ERROR);
+            dcc_close (ptr_dcc, DCC_FAILED);
+            dcc_redraw (HOTLIST_MSG);
+            return;
+            /* child process */
+        case 0:
+            setuid (getuid ());
+            dcc_file_send_child (ptr_dcc);
+            _exit (EXIT_SUCCESS);
+    }
+    
+    /* parent process */
+    ptr_dcc->child_pid = pid;
+}
+
+/*
+ * dcc_file_recv_fork: fork process for receiving file
+ */
+
+void
+dcc_file_recv_fork (t_irc_dcc *ptr_dcc)
+{
+    pid_t pid;
+    
+    if (!dcc_file_create_pipe (ptr_dcc))
+        return;
+    
+    if (ptr_dcc->start_resume > 0)
+        ptr_dcc->file = open (ptr_dcc->local_filename,
+                              O_APPEND | O_WRONLY | O_NONBLOCK);
+    else
+        ptr_dcc->file = open (ptr_dcc->local_filename,
+                              O_CREAT | O_TRUNC | O_WRONLY | O_NONBLOCK,
+                              0644);
+    
+    switch (pid = fork ())
+    {
+        /* fork failed */
+        case -1:
+            irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
+                                PREFIX_ERROR);
+            gui_printf (ptr_dcc->server->buffer,
+                        _("%s DCC: unable to fork\n"),
+                        WEECHAT_ERROR);
+            dcc_close (ptr_dcc, DCC_FAILED);
+            dcc_redraw (HOTLIST_MSG);
+            return;
+            /* child process */
+        case 0:
+            setuid (getuid ());
+            dcc_file_recv_child (ptr_dcc);
+            _exit (EXIT_SUCCESS);
+    }
+    
+    /* parent process */
+    ptr_dcc->child_pid = pid;
+}
+
+/*
  * dcc_handle: receive/send data for all active DCC
  */
 
@@ -1293,9 +1672,6 @@ void
 dcc_handle ()
 {
     t_irc_dcc *ptr_dcc;
-    int num_read, num_sent;
-    static char buffer[DCC_MAX_BLOCKSIZE];
-    uint32_t pos;
     fd_set read_fd;
     static struct timeval timeout;
     int sock;
@@ -1309,6 +1685,11 @@ dcc_handle ()
         {
             if ((cfg_dcc_timeout != 0) && (time (NULL) > ptr_dcc->last_activity + cfg_dcc_timeout))
             {
+                irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
+                                    PREFIX_ERROR);
+                gui_printf (ptr_dcc->server->buffer,
+                            _("%s DCC: timeout\n"),
+                            WEECHAT_ERROR);
                 dcc_close (ptr_dcc, DCC_FAILED);
                 dcc_redraw (HOTLIST_MSG);
                 continue;
@@ -1336,6 +1717,11 @@ dcc_handle ()
                         ptr_dcc->sock = -1;
                         if (sock < 0)
                         {
+                            irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
+                                                PREFIX_ERROR);
+                            gui_printf (ptr_dcc->server->buffer,
+                                        _("%s DCC: unable to create socket for sending file\n"),
+                                        WEECHAT_ERROR);
                             dcc_close (ptr_dcc, DCC_FAILED);
                             dcc_redraw (HOTLIST_MSG);
                             continue;
@@ -1343,15 +1729,20 @@ dcc_handle ()
                         ptr_dcc->sock = sock;
                         if (fcntl (ptr_dcc->sock, F_SETFL, O_NONBLOCK) == -1)
                         {
+                            irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
+                                                PREFIX_ERROR);
+                            gui_printf (ptr_dcc->server->buffer,
+                                        _("%s DCC: unable to set 'nonblock' option for socket\n"),
+                                        WEECHAT_ERROR);
                             dcc_close (ptr_dcc, DCC_FAILED);
                             dcc_redraw (HOTLIST_MSG);
                             continue;
                         }
                         ptr_dcc->addr = ntohl (addr.sin_addr.s_addr);
                         ptr_dcc->status = DCC_ACTIVE;
-                        ptr_dcc->file = open (ptr_dcc->local_filename, O_RDONLY | O_NONBLOCK, 0644);
                         ptr_dcc->start_transfer = time (NULL);
                         dcc_redraw (HOTLIST_MSG);
+                        dcc_file_send_fork (ptr_dcc);
                     }
                 }
             }
@@ -1413,98 +1804,18 @@ dcc_handle ()
                         dcc_chat_recv (ptr_dcc);
                 }
             }
-            if (ptr_dcc->type == DCC_FILE_RECV)
+            else
             {
-                num_read = recv (ptr_dcc->sock, buffer, sizeof (buffer), 0);
-                if (num_read != -1)
+                FD_ZERO (&read_fd);
+                FD_SET (ptr_dcc->child_read, &read_fd);
+                timeout.tv_sec = 0;
+                timeout.tv_usec = 0;
+                
+                /* something to read on child pipe? */
+                if (select (FD_SETSIZE, &read_fd, NULL, NULL, &timeout) > 0)
                 {
-                    if (num_read == 0)
-                    {
-                        dcc_close (ptr_dcc, DCC_FAILED);
-                        dcc_redraw (HOTLIST_MSG);
-                        continue;
-                    }
-                    
-                    if (write (ptr_dcc->file, buffer, num_read) == -1)
-                    {
-                        dcc_close (ptr_dcc, DCC_FAILED);
-                        dcc_redraw (HOTLIST_MSG);
-                        continue;
-                    }
-                    ptr_dcc->last_activity = time (NULL);
-                    ptr_dcc->pos += (unsigned long) num_read;
-                    pos = htonl (ptr_dcc->pos);
-                    send (ptr_dcc->sock, (char *) &pos, 4, 0);
-                    dcc_calculate_speed (ptr_dcc, 0);
-                    if (ptr_dcc->pos >= ptr_dcc->size)
-                    {
-                        dcc_close (ptr_dcc, DCC_DONE);
-                        dcc_redraw (HOTLIST_MSG);
-                    }
-                    else
-                        dcc_redraw (HOTLIST_LOW);
-                }
-            }
-            if (ptr_dcc->type == DCC_FILE_SEND)
-            {
-                if (cfg_dcc_blocksize > (int) sizeof (buffer))
-                {
-                    irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-                    gui_printf (NULL, _("%s DCC failed because blocksize is too "
-                                "big. Check value of \"dcc_blocksize\" option, "
-                                "max is %d.\n"),
-                                WEECHAT_ERROR, DCC_MAX_BLOCKSIZE);
-                    dcc_close (ptr_dcc, DCC_FAILED);
-                    dcc_redraw (HOTLIST_MSG);
-                    continue;
-                }
-                if (ptr_dcc->pos > ptr_dcc->ack)
-                {
-                    /* we should receive ACK for packets sent previously */
-                    num_read = recv (ptr_dcc->sock, (char *) &pos, 4, MSG_PEEK);
-                    if (num_read != -1)
-                    {
-                        if (num_read == 0)
-                        {
-                            dcc_close (ptr_dcc, DCC_FAILED);
-                            dcc_redraw (HOTLIST_MSG);
-                            continue;
-                        }
-                        if (num_read < 4)
-                            continue;
-                        recv (ptr_dcc->sock, (char *) &pos, 4, 0);
-                        ptr_dcc->ack = ntohl (pos);
-                        
-                        if ((ptr_dcc->pos >= ptr_dcc->size)
-                            && (ptr_dcc->ack >= ptr_dcc->size))
-                        {
-                            dcc_close (ptr_dcc, DCC_DONE);
-                            dcc_redraw (HOTLIST_MSG);
-                            continue;
-                        }
-                    }
-                }
-                if (ptr_dcc->pos <= ptr_dcc->ack)
-                {
-                    lseek (ptr_dcc->file, ptr_dcc->pos, SEEK_SET);
-                    num_read = read (ptr_dcc->file, buffer, cfg_dcc_blocksize);
-                    if (num_read < 1)
-                    {
-                        dcc_close (ptr_dcc, DCC_FAILED);
-                        dcc_redraw (HOTLIST_MSG);
-                        continue;
-                    }
-                    num_sent = send (ptr_dcc->sock, buffer, num_read, 0);
-                    if (num_sent < 0)
-                    {
-                        dcc_close (ptr_dcc, DCC_FAILED);
-                        dcc_redraw (HOTLIST_MSG);
-                        continue;
-                    }
-                    ptr_dcc->last_activity = time (NULL);
-                    ptr_dcc->pos += (unsigned long) num_sent;
-                    dcc_calculate_speed (ptr_dcc, 0);
-                    dcc_redraw (HOTLIST_LOW);
+                    if (FD_ISSET (ptr_dcc->child_read, &read_fd))
+                        dcc_file_child_read (ptr_dcc);
                 }
             }
         }
@@ -1555,11 +1866,16 @@ dcc_print_log ()
         weechat_log_printf ("  port. . . . . . . . : %d\n",   ptr_dcc->port);
         weechat_log_printf ("  nick. . . . . . . . : '%s'\n", ptr_dcc->nick);
         weechat_log_printf ("  sock. . . . . . . . : %d\n",   ptr_dcc->sock);
+        weechat_log_printf ("  child_pid . . . . . : %d\n",   ptr_dcc->child_pid);
+        weechat_log_printf ("  child_read. . . . . : %d\n",   ptr_dcc->child_read);
+        weechat_log_printf ("  child_write . . . . : %d\n",   ptr_dcc->child_write);
         weechat_log_printf ("  unterminated_message: '%s'\n", ptr_dcc->unterminated_message);
+        weechat_log_printf ("  fast_send . . . . . : %d\n",   ptr_dcc->fast_send);
         weechat_log_printf ("  file. . . . . . . . : %d\n",   ptr_dcc->file);
         weechat_log_printf ("  filename. . . . . . : '%s'\n", ptr_dcc->filename);
         weechat_log_printf ("  local_filename. . . : '%s'\n", ptr_dcc->local_filename);
         weechat_log_printf ("  filename_suffix . . : %d\n",   ptr_dcc->filename_suffix);
+        weechat_log_printf ("  blocksize . . . . . : %d\n",   ptr_dcc->blocksize);
         weechat_log_printf ("  size. . . . . . . . : %lu\n",  ptr_dcc->size);
         weechat_log_printf ("  pos . . . . . . . . : %lu\n",  ptr_dcc->pos);
         weechat_log_printf ("  ack . . . . . . . . : %lu\n",  ptr_dcc->ack);

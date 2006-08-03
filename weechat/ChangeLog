@@ -1,9 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-07-30
+ChangeLog - 2006-08-03
 
 Version 0.2.0 (under dev!):
+   * improved DCC speed (up to x5 on LAN) by forking for DCC files and a
+     new option "dcc_fast_send" (does not wait for ACK) (task #5758)
    * fixed crash when purging DCC with high number of DCC (> window size)
    * fixed completion for command handlers (now empty completion_template
      means nick completion, "-" string means no completion at all)

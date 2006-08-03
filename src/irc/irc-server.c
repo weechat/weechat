@@ -870,11 +870,11 @@ server_recv (t_irc_server *server)
 }
 
 /*
- * server_kill_child: kill child process and close pipe
+ * server_child_kill: kill child process and close pipe
  */
 
 void
-server_kill_child (t_irc_server *server)
+server_child_kill (t_irc_server *server)
 {
     /* kill process */
     if (server->child_pid > 0)
@@ -904,7 +904,7 @@ server_kill_child (t_irc_server *server)
 void
 server_close_connection (t_irc_server *server)
 {
-    server_kill_child (server);
+    server_child_kill (server);
     
     /* close network socket */
     if (server->sock != -1)
@@ -962,7 +962,7 @@ server_child_read (t_irc_server *server)
     int num_read;
     
     num_read = read (server->child_read, buffer, sizeof (buffer));
-    if (num_read != -1)
+    if (num_read > 0)
     {
         switch (buffer[0])
         {
@@ -987,7 +987,7 @@ server_child_read (t_irc_server *server)
                 }
 #endif
                 /* kill child and login to server */
-                server_kill_child (server);
+                server_child_kill (server);
                 irc_login (server);
                 break;
             /* adress not found */
@@ -1673,7 +1673,7 @@ server_connect (t_irc_server *server)
             _exit (EXIT_SUCCESS);
     }
     
-    /* parent process go on here */
+    /* parent process */
     server->child_pid = pid;
     
     return 1;
