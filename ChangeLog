@@ -4,7 +4,8 @@ WeeChat - Wee Enhanced Environment for Chat
 ChangeLog - 2006-08-05
 
 Version 0.2.0 (under dev!):
-   * fixed DCC restore after /upgrade (now order is saved)
+   * added missing IRC command 338
+   * fixed DCC restore after /upgrade (order is now correctly saved)
    * fixed away after server disconnection (now away is set again when
      reconnecting) (bug #16359)
    * fixed DCC file connection problem (connection from receiver to sender)

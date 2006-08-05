@@ -4197,6 +4197,62 @@ irc_cmd_recv_333 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
+ * irc_cmd_recv_338: '338' command (whois, host)
+ */
+
+int
+irc_cmd_recv_338 (t_irc_server *server, char *host, char *nick, char *arguments)
+{
+    char *pos_nick, *pos_host, *pos_message;
+    
+    /* make gcc happy */
+    (void) host;
+    (void) nick;
+    
+    if (!command_ignored)
+    {
+        pos_nick = strchr (arguments, ' ');
+        if (pos_nick)
+        {
+            while (pos_nick[0] == ' ')
+                pos_nick++;
+            pos_host = strchr (pos_nick, ' ');
+            if (pos_host)
+            {
+                pos_host[0] = '\0';
+                pos_host++;
+                while (pos_host[0] == ' ')
+                    pos_host++;
+                pos_message = strchr (pos_host, ' ');
+                if (pos_message)
+                {
+                    pos_message[0] = '\0';
+                    pos_message++;
+                    while (pos_message[0] == ' ')
+                        pos_message++;
+                    if (pos_message[0] == ':')
+                        pos_message++;
+                    
+                    irc_display_prefix (server, server->buffer, PREFIX_SERVER);
+                    gui_printf (server->buffer, "%s[%s%s%s] %s%s %s%s %s%s\n",
+                                GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                                GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                                pos_nick,
+                                GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                                GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                                pos_nick,
+                                GUI_COLOR(COLOR_WIN_CHAT),
+                                pos_message,
+                                GUI_COLOR(COLOR_WIN_CHAT_HOST),
+                                pos_host);
+                }
+            }
+        }
+    }
+    return 0;
+}
+
+/*
  * irc_cmd_recv_341: '341' command received (inviting)
  */
 
