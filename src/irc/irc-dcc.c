@@ -273,16 +273,55 @@ dcc_calculate_speed (t_irc_dcc *ptr_dcc, int ended)
 }
 
 /*
+ * dcc_connect_to_sender: connect to sender
+ */
+
+int
+dcc_connect_to_sender (t_irc_dcc *ptr_dcc)
+{
+    struct sockaddr_in addr;
+    struct hostent *hostent;
+    char *ip4;
+    int ret;
+    
+    if (cfg_proxy_use)
+    {
+        memset (&addr, 0, sizeof (addr));
+        addr.sin_addr.s_addr = htonl (ptr_dcc->addr);
+        ip4 = inet_ntoa(addr.sin_addr);
+        
+        memset (&addr, 0, sizeof (addr));
+        addr.sin_port = htons (cfg_proxy_port);
+        addr.sin_family = AF_INET;
+        if ((hostent = gethostbyname (cfg_proxy_address)) == NULL)
+            return 0;
+        memcpy(&(addr.sin_addr),*(hostent->h_addr_list), sizeof(struct in_addr));
+        ret = connect (ptr_dcc->sock, (struct sockaddr *) &addr, sizeof (addr));
+        if ((ret == -1) && (errno != EINPROGRESS))
+            return 0;
+        if (pass_proxy (ptr_dcc->sock, ip4, ptr_dcc->port, ptr_dcc->server->username) == -1)
+            return 0;
+    }
+    else
+    {
+        memset (&addr, 0, sizeof (addr));
+        addr.sin_port = htons (ptr_dcc->port);
+        addr.sin_family = AF_INET;
+        addr.sin_addr.s_addr = htonl (ptr_dcc->addr);
+        ret = connect (ptr_dcc->sock, (struct sockaddr *) &addr, sizeof (addr));
+        if ((ret == -1) && (errno != EINPROGRESS))
+            return 0;
+    }
+    return 1;
+}
+
+/*
  * dcc_connect: connect to another host
  */
 
 int
 dcc_connect (t_irc_dcc *ptr_dcc)
 {
-    struct sockaddr_in addr;
-    struct hostent *hostent;
-    char *ip4;
-    
     if (ptr_dcc->type == DCC_CHAT_SEND)
         ptr_dcc->status = DCC_WAITING;
     else
@@ -295,47 +334,26 @@ dcc_connect (t_irc_dcc *ptr_dcc)
             return 0;
     }
 
-    /* for sending (chat or file), listen to socket for a connection */
+    /* for chat or file sending, listen to socket for a connection */
     if (DCC_IS_SEND(ptr_dcc->type))
-      {
+    {
         if (fcntl (ptr_dcc->sock, F_SETFL, O_NONBLOCK) == -1)
-	  return 0;	
+            return 0;	
         if (listen (ptr_dcc->sock, 1) == -1)
             return 0;
         if (fcntl (ptr_dcc->sock, F_SETFL, 0) == -1)
             return 0;
     }
     
-    /* for receiving (chat or file), connect to listening host */
-    if (DCC_IS_RECV(ptr_dcc->type))
+    /* for chat receiving, connect to listening host */
+    if (ptr_dcc->type == DCC_CHAT_RECV)
     {
         if (fcntl (ptr_dcc->sock, F_SETFL, O_NONBLOCK) == -1)
-            return 0;      
-        if (cfg_proxy_use)
-	{
-            memset (&addr, 0, sizeof (addr));
-            addr.sin_addr.s_addr = htonl (ptr_dcc->addr);
-            ip4 = inet_ntoa(addr.sin_addr);
-
-            memset (&addr, 0, sizeof (addr));
-            addr.sin_port = htons (cfg_proxy_port);
-            addr.sin_family = AF_INET;
-            if ((hostent = gethostbyname (cfg_proxy_address)) == NULL)
-                return 0;
-            memcpy(&(addr.sin_addr),*(hostent->h_addr_list), sizeof(struct in_addr));
-            connect (ptr_dcc->sock, (struct sockaddr *) &addr, sizeof (addr));
-            if (pass_proxy(ptr_dcc->sock, ip4, ptr_dcc->port, ptr_dcc->server->username) == -1)
-                return 0;
-	}
-        else
-	{
-            memset (&addr, 0, sizeof (addr));
-            addr.sin_port = htons (ptr_dcc->port);
-            addr.sin_family = AF_INET;
-            addr.sin_addr.s_addr = htonl (ptr_dcc->addr);
-            connect (ptr_dcc->sock, (struct sockaddr *) &addr, sizeof (addr));
-	}
+            return 0;
+        dcc_connect_to_sender (ptr_dcc);
     }
+
+    /* for file receiving, connection is made in child process (blocking) socket */
     
     return 1;
 }
@@ -580,18 +598,16 @@ dcc_recv_connect_init (t_irc_dcc *ptr_dcc)
     }
     else
     {
-        ptr_dcc->status = DCC_ACTIVE;
-        
-        /* DCC file => look for local filename and open it in writing mode */
+        /* DCC file => launch child process */
         if (DCC_IS_FILE(ptr_dcc->type))
         {
-            ptr_dcc->start_transfer = time (NULL);
-            ptr_dcc->last_check_time = time (NULL);
+            ptr_dcc->status = DCC_CONNECTING;
             dcc_file_recv_fork (ptr_dcc);
         }
         else
         {
             /* DCC CHAT => associate DCC with channel */
+            ptr_dcc->status = DCC_ACTIVE;
             dcc_channel_for_chat (ptr_dcc);
         }
     }
@@ -1215,11 +1231,26 @@ dcc_chat_sendf (t_irc_dcc *ptr_dcc, char *fmt, ...)
 void
 dcc_chat_recv (t_irc_dcc *ptr_dcc)
 {
+    fd_set read_fd;
+    static struct timeval timeout;
     static char buffer[4096 + 2];
     char *buf2, *pos, *ptr_buf, *ptr_buf2, *next_ptr_buf;
     char *ptr_buf_color;
     int num_read;
+    
+    FD_ZERO (&read_fd);
+    FD_SET (ptr_dcc->sock, &read_fd);
+    timeout.tv_sec = 0;
+    timeout.tv_usec = 0;
+    
+    /* something to read on socket? */
+    if (select (FD_SETSIZE, &read_fd, NULL, NULL, &timeout) <= 0)
+        return;
 
+    if (!FD_ISSET (ptr_dcc->sock, &read_fd))
+        return;
+
+    /* there's something to read on socket! */
     num_read = recv (ptr_dcc->sock, buffer, sizeof (buffer) - 2, 0);
     if (num_read > 0)
     {
@@ -1454,7 +1485,17 @@ dcc_file_recv_child (t_irc_dcc *ptr_dcc)
     static char buffer[DCC_MAX_BLOCKSIZE];
     uint32_t pos;
     time_t last_sent, new_time;
+    
+    /* first connect to sender (blocking) */
+    if (!dcc_connect_to_sender (ptr_dcc))
+    {
+        dcc_file_write_pipe (ptr_dcc, DCC_FAILED, DCC_ERROR_CONNECT_SENDER);
+        return;
+    }
 
+    /* connection is ok, change DCC status (inform parent process) */
+    dcc_file_write_pipe (ptr_dcc, DCC_ACTIVE, DCC_NO_ERROR);
+    
     last_sent = time (NULL);
     while (1)
     {    
@@ -1514,10 +1555,25 @@ dcc_file_recv_child (t_irc_dcc *ptr_dcc)
 void
 dcc_file_child_read (t_irc_dcc *ptr_dcc)
 {
+    fd_set read_fd;
+    static struct timeval timeout;
     char bufpipe[1 + 1 + 12 + 1];
     int num_read;
     char *error;
     
+    FD_ZERO (&read_fd);
+    FD_SET (ptr_dcc->child_read, &read_fd);
+    timeout.tv_sec = 0;
+    timeout.tv_usec = 0;
+    
+    /* something to read on child pipe? */
+    if (select (FD_SETSIZE, &read_fd, NULL, NULL, &timeout) <= 0)
+        return;
+
+    if (!FD_ISSET (ptr_dcc->child_read, &read_fd))
+        return;
+
+    /* there's something to read in pipe! */
     num_read = read (ptr_dcc->child_read, bufpipe, sizeof (bufpipe));
     if (num_read > 0)
     {
@@ -1529,6 +1585,7 @@ dcc_file_child_read (t_irc_dcc *ptr_dcc)
         /* read error code */
         switch (bufpipe[1] - '0')
         {
+            /* errors for sender */
             case DCC_ERROR_READ_LOCAL:
                 irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
                                     PREFIX_ERROR);
@@ -1548,6 +1605,14 @@ dcc_file_child_read (t_irc_dcc *ptr_dcc)
                                     PREFIX_ERROR);
                 gui_printf (ptr_dcc->server->buffer,
                             _("%s DCC: unable to read ACK from receiver\n"),
+                            WEECHAT_ERROR);
+                break;
+            /* errors for receiver */
+            case DCC_ERROR_CONNECT_SENDER:
+                irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
+                                    PREFIX_ERROR);
+                gui_printf (ptr_dcc->server->buffer,
+                            _("%s DCC: unable to connect to sender\n"),
                             WEECHAT_ERROR);
                 break;
             case DCC_ERROR_RECV_BLOCK:
@@ -1570,7 +1635,16 @@ dcc_file_child_read (t_irc_dcc *ptr_dcc)
         switch (bufpipe[0] - '0')
         {
             case DCC_ACTIVE:
-                dcc_redraw (HOTLIST_LOW);
+                if (ptr_dcc->status == DCC_CONNECTING)
+                {
+                    /* connection was successful by child, init transfert times */
+                    ptr_dcc->status = DCC_ACTIVE;
+                    ptr_dcc->start_transfer = time (NULL);
+                    ptr_dcc->last_check_time = time (NULL);
+                    dcc_redraw (HOTLIST_MSG);
+                }
+                else
+                    dcc_redraw (HOTLIST_LOW);
                 break;
             case DCC_DONE:
                 dcc_close (ptr_dcc, DCC_DONE);
@@ -1746,6 +1820,10 @@ dcc_handle ()
                     }
                 }
             }
+            if (ptr_dcc->type == DCC_FILE_RECV)
+            {
+                dcc_file_child_read (ptr_dcc);
+            }
         }
         
         if (ptr_dcc->status == DCC_WAITING)
@@ -1791,33 +1869,9 @@ dcc_handle ()
         if (ptr_dcc->status == DCC_ACTIVE)
         {
             if (DCC_IS_CHAT(ptr_dcc->type))
-            {
-                FD_ZERO (&read_fd);
-                FD_SET (ptr_dcc->sock, &read_fd);
-                timeout.tv_sec = 0;
-                timeout.tv_usec = 0;
-                
-                /* something to read on socket? */
-                if (select (FD_SETSIZE, &read_fd, NULL, NULL, &timeout) > 0)
-                {
-                    if (FD_ISSET (ptr_dcc->sock, &read_fd))
-                        dcc_chat_recv (ptr_dcc);
-                }
-            }
+                dcc_chat_recv (ptr_dcc);
             else
-            {
-                FD_ZERO (&read_fd);
-                FD_SET (ptr_dcc->child_read, &read_fd);
-                timeout.tv_sec = 0;
-                timeout.tv_usec = 0;
-                
-                /* something to read on child pipe? */
-                if (select (FD_SETSIZE, &read_fd, NULL, NULL, &timeout) > 0)
-                {
-                    if (FD_ISSET (ptr_dcc->child_read, &read_fd))
-                        dcc_file_child_read (ptr_dcc);
-                }
-            }
+                dcc_file_child_read (ptr_dcc);
         }
     }
 }

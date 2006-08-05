@@ -236,33 +236,34 @@ struct t_irc_message
 
 /* DCC types */
 
-#define DCC_CHAT_RECV           0   /* receiving DCC chat                     */
-#define DCC_CHAT_SEND           1   /* sending DCC chat                       */
-#define DCC_FILE_RECV           2   /* incoming DCC file                      */
-#define DCC_FILE_SEND           3   /* sending DCC file                       */
+#define DCC_CHAT_RECV            0  /* receiving DCC chat                     */
+#define DCC_CHAT_SEND            1  /* sending DCC chat                       */
+#define DCC_FILE_RECV            2  /* incoming DCC file                      */
+#define DCC_FILE_SEND            3  /* sending DCC file                       */
 
 /* DCC status */
 
-#define DCC_WAITING             0   /* waiting for host answer                */
-#define DCC_CONNECTING          1   /* connecting to host                     */
-#define DCC_ACTIVE              2   /* sending/receiving data                 */
-#define DCC_DONE                3   /* transfer done                          */
-#define DCC_FAILED              4   /* DCC failed                             */
-#define DCC_ABORTED             5   /* DCC aborted by user                    */
+#define DCC_WAITING              0  /* waiting for host answer                */
+#define DCC_CONNECTING           1  /* connecting to host                     */
+#define DCC_ACTIVE               2  /* sending/receiving data                 */
+#define DCC_DONE                 3  /* transfer done                          */
+#define DCC_FAILED               4  /* DCC failed                             */
+#define DCC_ABORTED              5  /* DCC aborted by user                    */
 
 /* DCC blocksize (for file) */
 
-#define DCC_MIN_BLOCKSIZE    1024   /* min DCC block size when sending file   */
-#define DCC_MAX_BLOCKSIZE  102400   /* max DCC block size when sending file   */
+#define DCC_MIN_BLOCKSIZE     1024  /* min DCC block size when sending file   */
+#define DCC_MAX_BLOCKSIZE   102400  /* max DCC block size when sending file   */
 
 /* DCC errors (for file) */
 
-#define DCC_NO_ERROR            0   /* used when no error to report, all ok!  */
-#define DCC_ERROR_READ_LOCAL    1   /* unable to read local file              */
-#define DCC_ERROR_SEND_BLOCK    2   /* unable to send block to receiver       */
-#define DCC_ERROR_READ_ACK      3   /* unable to read ACK from receiver       */
-#define DCC_ERROR_RECV_BLOCK    4   /* unable to receive block from sender    */
-#define DCC_ERROR_WRITE_LOCAL   5   /* unable to write to local file          */
+#define DCC_NO_ERROR             0  /* used when no error to report, all ok!  */
+#define DCC_ERROR_READ_LOCAL     1  /* unable to read local file              */
+#define DCC_ERROR_SEND_BLOCK     2  /* unable to send block to receiver       */
+#define DCC_ERROR_READ_ACK       3  /* unable to read ACK from receiver       */
+#define DCC_ERROR_CONNECT_SENDER 4  /* unable to connect to sender            */
+#define DCC_ERROR_RECV_BLOCK     5  /* unable to receive block from sender    */
+#define DCC_ERROR_WRITE_LOCAL    6  /* unable to write to local file          */
 
 /* DCC macros for type */
 

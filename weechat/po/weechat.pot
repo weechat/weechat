@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-08-03 21:38+0200\n"
+"POT-Creation-Date: 2006-08-05 13:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1874,189 +1874,194 @@ msgstr ""
 msgid "Aborted"
 msgstr ""
 
-#: src/irc/irc-dcc.c:439
+#: src/irc/irc-dcc.c:457
 #, c-format
 msgid "DCC: file %s%s%s"
 msgstr ""
 
-#: src/irc/irc-dcc.c:445
+#: src/irc/irc-dcc.c:463
 #, c-format
 msgid " (local filename: %s%s%s)"
 msgstr ""
 
-#: src/irc/irc-dcc.c:450
+#: src/irc/irc-dcc.c:468
 msgid " sent to "
 msgstr ""
 
-#: src/irc/irc-dcc.c:452
+#: src/irc/irc-dcc.c:470
 msgid " received from "
 msgstr ""
 
-#: src/irc/irc-dcc.c:457
+#: src/irc/irc-dcc.c:475
 msgid "OK"
 msgstr ""
 
-#: src/irc/irc-dcc.c:457
+#: src/irc/irc-dcc.c:475
 msgid "FAILED"
 msgstr ""
 
-#: src/irc/irc-dcc.c:471
+#: src/irc/irc-dcc.c:489
 #, c-format
 msgid "DCC chat closed with %s%s %s(%s%d.%d.%d.%d%s)\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:526
+#: src/irc/irc-dcc.c:544
 #, c-format
 msgid ""
 "%s can't associate DCC chat with private buffer (maybe private buffer has "
 "already DCC CHAT?)\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:537
+#: src/irc/irc-dcc.c:555
 #, c-format
 msgid "Connected to %s%s %s(%s%d.%d.%d.%d%s)%s via DCC chat\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:650
+#: src/irc/irc-dcc.c:666
 #, c-format
 msgid "DCC: file %s%s%s resumed at position %u\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:659 src/irc/irc-dcc.c:684
+#: src/irc/irc-dcc.c:675 src/irc/irc-dcc.c:700
 #, c-format
 msgid ""
 "%s can't resume file \"%s\" (port: %d, start position: %u): DCC not found or "
 "ended\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:756
+#: src/irc/irc-dcc.c:772
 #, c-format
 msgid "%s not enough memory for new DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:775
+#: src/irc/irc-dcc.c:791
 msgid "DCC chat"
 msgstr ""
 
-#: src/irc/irc-dcc.c:802
+#: src/irc/irc-dcc.c:818
 #, c-format
 msgid ""
 "Incoming DCC file from %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s bytes\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:825
+#: src/irc/irc-dcc.c:841
 #, c-format
 msgid ""
 "Sending DCC file to %s%s%s: %s%s%s (local filename: %s%s%s), %s%lu%s bytes\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:845
+#: src/irc/irc-dcc.c:861
 #, c-format
 msgid "Incoming DCC chat request from %s%s%s (%s%d.%d.%d.%d%s)\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:862
+#: src/irc/irc-dcc.c:878
 #, c-format
 msgid "Sending DCC chat request to %s%s\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:880
+#: src/irc/irc-dcc.c:896
 #, c-format
 msgid ""
 "DCC: file %s%s%s (local filename: %s%s%s) will be resumed at position %u\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:960
+#: src/irc/irc-dcc.c:976
 #, c-format
 msgid "%s not enough memory for DCC SEND\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:980
+#: src/irc/irc-dcc.c:996
 #, c-format
 msgid "%s cannot access file \"%s\"\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1002
+#: src/irc/irc-dcc.c:1018
 #, c-format
 msgid "%s could not find address for '%s'. Falling back to local IP.\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1022
+#: src/irc/irc-dcc.c:1038
 #, c-format
 msgid "%s cannot create socket for DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1080
+#: src/irc/irc-dcc.c:1096
 #, c-format
 msgid "%s cannot find available port for DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1124
+#: src/irc/irc-dcc.c:1140
 #, c-format
 msgid "%s cannot send DCC\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1204
+#: src/irc/irc-dcc.c:1220
 #, c-format
 msgid "%s error sending data to \"%s\" via DCC CHAT\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1288
+#: src/irc/irc-dcc.c:1319
 #, c-format
 msgid "Private %s> %s"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1334
+#: src/irc/irc-dcc.c:1365
 #, c-format
 msgid "%s DCC: unable to create pipe\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1536
+#: src/irc/irc-dcc.c:1593
 #, c-format
 msgid "%s DCC: unable to read local file\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1543
+#: src/irc/irc-dcc.c:1600
 #, c-format
 msgid "%s DCC: unable to send block to receiver\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1550
+#: src/irc/irc-dcc.c:1607
 #, c-format
 msgid "%s DCC: unable to read ACK from receiver\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1557
+#: src/irc/irc-dcc.c:1615
+#, c-format
+msgid "%s DCC: unable to connect to sender\n"
+msgstr ""
+
+#: src/irc/irc-dcc.c:1622
 #, c-format
 msgid "%s DCC: unable to receive block from sender\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1564
+#: src/irc/irc-dcc.c:1629
 #, c-format
 msgid "%s DCC: unable to write local file\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1608 src/irc/irc-dcc.c:1651
+#: src/irc/irc-dcc.c:1682 src/irc/irc-dcc.c:1725
 #, c-format
 msgid "%s DCC: unable to fork\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1691
+#: src/irc/irc-dcc.c:1765
 #, c-format
 msgid "%s DCC: timeout\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1723
+#: src/irc/irc-dcc.c:1797
 #, c-format
 msgid "%s DCC: unable to create socket for sending file\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1735
+#: src/irc/irc-dcc.c:1809
 #, c-format
 msgid "%s DCC: unable to set 'nonblock' option for socket\n"
 msgstr ""
 
-#: src/irc/irc-dcc.c:1839
+#: src/irc/irc-dcc.c:1893
 #, c-format
 msgid "Aborting active DCC: \"%s\" from %s\n"
 msgstr ""
