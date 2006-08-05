@@ -50,6 +50,7 @@
 
 
 t_irc_dcc *dcc_list = NULL;     /* DCC files & chat list                    */
+t_irc_dcc *last_dcc = NULL;     /* last DCC in list                         */
 char *dcc_status_string[] =     /* strings for DCC status                   */
 { N_("Waiting"), N_("Connecting"), N_("Active"), N_("Done"), N_("Failed"),
   N_("Aborted") };
@@ -385,6 +386,8 @@ dcc_free (t_irc_dcc *ptr_dcc)
     }
 
     /* remove DCC from list */
+    if (last_dcc == ptr_dcc)
+        last_dcc = ptr_dcc->prev_dcc;
     if (ptr_dcc->prev_dcc)
     {
         (ptr_dcc->prev_dcc)->next_dcc = ptr_dcc->next_dcc;
@@ -749,6 +752,8 @@ dcc_alloc ()
     new_dcc->next_dcc = dcc_list;
     if (dcc_list)
         dcc_list->prev_dcc = new_dcc;
+    else
+        last_dcc = new_dcc;
     dcc_list = new_dcc;
     
     return new_dcc;

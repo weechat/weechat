@@ -344,6 +344,7 @@ extern t_irc_server *irc_servers;
 extern t_irc_message *recv_msgq, *msgq_last_msg;
 extern int check_away;
 extern t_irc_dcc *dcc_list;
+extern t_irc_dcc *last_dcc;
 extern char *dcc_status_string[6];
 extern char *channel_modes;
 extern char *nick_modes;

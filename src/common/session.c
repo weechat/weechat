@@ -293,8 +293,8 @@ session_save_dcc (FILE *file)
     
     rc = 1;
     
-    for (ptr_dcc = dcc_list; ptr_dcc;
-         ptr_dcc = ptr_dcc->next_dcc)
+    for (ptr_dcc = last_dcc; ptr_dcc;
+         ptr_dcc = ptr_dcc->prev_dcc)
     {
         rc = rc && (session_write_id  (file, SESSION_OBJ_DCC));
         rc = rc && (session_write_str (file, SESSION_DCC_SERVER, (ptr_dcc->server) ? ptr_dcc->server->name : NULL));
