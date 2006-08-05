@@ -241,30 +241,73 @@ weechat_lua_print  (lua_State *L)
 
     switch (n)
     {
-        case 1:
-            message = lua_tostring (lua_current_interpreter, -1);
-            break;
-        case 2:
-            channel_name = lua_tostring (lua_current_interpreter, -2);
-            message = lua_tostring (lua_current_interpreter, -1);
-            break;
-        case 3:
-            server_name = lua_tostring (lua_current_interpreter, -3);
-            channel_name = lua_tostring (lua_current_interpreter, -2);
-            message = lua_tostring (lua_current_interpreter, -1);
-            break;
-        default:
-            lua_plugin->print_server (lua_plugin,
-                                      "Lua error: wrong parameters for "
-                                      "\"print\" function");
-            lua_pushnumber (lua_current_interpreter, 0);
-            return 1;
+    case 1:
+	message = lua_tostring (lua_current_interpreter, -1);
+	break;
+    case 2:
+	channel_name = lua_tostring (lua_current_interpreter, -2);
+	message = lua_tostring (lua_current_interpreter, -1);
+	break;
+    case 3:
+	server_name = lua_tostring (lua_current_interpreter, -3);
+	channel_name = lua_tostring (lua_current_interpreter, -2);
+	message = lua_tostring (lua_current_interpreter, -1);
+	break;
+    default:
+	lua_plugin->print_server (lua_plugin,
+				  "Lua error: wrong parameters for "
+				  "\"print\" function");
+	lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
     }
     
     lua_plugin->print (lua_plugin,
                        (char *) server_name,
                        (char *) channel_name,
                        "%s", (char *) message);
+    
+    lua_pushnumber (lua_current_interpreter, 1);
+    return 1;
+}
+
+/*
+ * weechat_lua_print_server: print message into a buffer server
+ */
+
+static int
+weechat_lua_print_server  (lua_State *L)
+{
+    const char *message;
+    int n;
+    
+    /* make gcc happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to print message, "
+                                  "script not initialized");
+	lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+    
+    message = NULL;
+
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n == 1)
+	message = lua_tostring (lua_current_interpreter, -1);
+    else
+    {
+	lua_plugin->print_server (lua_plugin,
+				  "Lua error: wrong parameters for "
+				  "\"print_server\" function");
+	lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+    
+    lua_plugin->print_server (lua_plugin, "%s", (char *) message);
     
     lua_pushnumber (lua_current_interpreter, 1);
     return 1;
@@ -350,7 +393,7 @@ weechat_lua_remove_infobar  (lua_State *L)
 }
 
 /*
- * weechat_lua_print: log message in server/channel (current or specified ones)
+ * weechat_lua_log: log message in server/channel (current or specified ones)
  */
 
 static int
@@ -1544,6 +1587,226 @@ weechat_lua_get_irc_color (lua_State *L)
 }
 
 /*
+ * weechat_lua_get_window_info: get infos about windows
+ */
+
+static int
+weechat_lua_get_window_info  (lua_State *L)
+{
+    t_plugin_window_info *window_info, *ptr_window;
+    int i;
+    
+    /* make gcc happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to get window info, "
+                                  "script not initialized");
+	lua_pushnil (lua_current_interpreter);
+	return 1;
+    }
+    
+    window_info = lua_plugin->get_window_info (lua_plugin);
+    if (!window_info)
+    {
+	lua_pushboolean (lua_current_interpreter, 0);
+	return 1;
+    }
+    
+    lua_newtable (lua_current_interpreter);
+
+    for (i = 0, ptr_window = window_info; ptr_window; ptr_window = ptr_window->next_window, i++)
+    {
+	lua_pushnumber (lua_current_interpreter, i);
+	lua_newtable (lua_current_interpreter);
+
+	lua_pushstring (lua_current_interpreter, "num_buffer");
+	lua_pushnumber (lua_current_interpreter, ptr_window->num_buffer);
+	lua_rawset (lua_current_interpreter, -3);
+		    
+	lua_pushstring (lua_current_interpreter, "win_x");
+	lua_pushnumber (lua_current_interpreter, ptr_window->win_x);
+	lua_rawset (lua_current_interpreter, -3);
+		    
+	lua_pushstring (lua_current_interpreter, "win_y");
+	lua_pushnumber (lua_current_interpreter, ptr_window->win_y);
+	lua_rawset (lua_current_interpreter, -3);
+	
+	lua_pushstring (lua_current_interpreter, "win_width");
+	lua_pushnumber (lua_current_interpreter, ptr_window->win_width);
+	lua_rawset (lua_current_interpreter, -3);
+	
+	lua_pushstring (lua_current_interpreter, "win_height");
+	lua_pushnumber (lua_current_interpreter, ptr_window->win_height);
+	lua_rawset (lua_current_interpreter, -3);
+
+	lua_pushstring (lua_current_interpreter, "win_width_pct");
+	lua_pushnumber (lua_current_interpreter, ptr_window->win_width_pct);
+	lua_rawset (lua_current_interpreter, -3);
+	
+	lua_pushstring (lua_current_interpreter, "win_height_pct");
+	lua_pushnumber (lua_current_interpreter, ptr_window->win_height_pct);
+	lua_rawset (lua_current_interpreter, -3);
+	
+	lua_rawset (lua_current_interpreter, -3);
+    }
+    
+    lua_plugin->free_window_info (lua_plugin, window_info);
+    
+    return 1;
+}
+
+/*
+ * weechat_lua_get_buffer_info: get infos about buffers
+ */
+
+static int
+weechat_lua_get_buffer_info  (lua_State *L)
+{
+    t_plugin_buffer_info *buffer_info, *ptr_buffer;
+    
+    /* make gcc happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to get buffer info, "
+                                  "script not initialized");
+	lua_pushnil (lua_current_interpreter);
+	return 1;
+    }
+    
+    buffer_info = lua_plugin->get_buffer_info (lua_plugin);
+    if  (!buffer_info) {
+	lua_pushboolean (lua_current_interpreter, 0);
+	return 1;
+    }
+
+    lua_newtable (lua_current_interpreter);
+
+    for (ptr_buffer = buffer_info; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    {
+	lua_pushnumber (lua_current_interpreter, ptr_buffer->number);
+	lua_newtable (lua_current_interpreter);
+	
+	lua_pushstring (lua_current_interpreter, "type");
+	lua_pushnumber (lua_current_interpreter, ptr_buffer->type);
+	lua_rawset (lua_current_interpreter, -3);
+	
+	lua_pushstring (lua_current_interpreter, "num_displayed");
+	lua_pushnumber (lua_current_interpreter, ptr_buffer->num_displayed);
+	lua_rawset (lua_current_interpreter, -3);
+	
+	lua_pushstring (lua_current_interpreter, "server");
+	lua_pushstring (lua_current_interpreter, 
+			ptr_buffer->server_name == NULL ? "" : ptr_buffer->server_name);
+	lua_rawset (lua_current_interpreter, -3);
+	
+	lua_pushstring (lua_current_interpreter, "channel");
+	lua_pushstring (lua_current_interpreter, 
+			ptr_buffer->channel_name == NULL ? "" : ptr_buffer->channel_name);
+	lua_rawset (lua_current_interpreter, -3);
+	
+	lua_pushstring (lua_current_interpreter, "notify_level");
+	lua_pushnumber (lua_current_interpreter, ptr_buffer->notify_level);
+	lua_rawset (lua_current_interpreter, -3);
+	
+	lua_pushstring (lua_current_interpreter, "log_filename");
+	lua_pushstring (lua_current_interpreter, 
+			ptr_buffer->log_filename == NULL ? "" : ptr_buffer->log_filename);
+	lua_rawset (lua_current_interpreter, -3);
+	
+	lua_rawset (lua_current_interpreter, -3);
+    }
+    
+    lua_plugin->free_buffer_info(lua_plugin, buffer_info);
+    
+    return 1;
+}
+
+/*
+ * weechat_lua_get_buffer_data: get buffer content
+ */
+
+static int
+weechat_lua_get_buffer_data  (lua_State *L)
+{
+    t_plugin_buffer_line *buffer_data, *ptr_data;
+    const char *server, *channel;
+    int i, n;
+    
+    /* make gcc happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to get buffer data, "
+                                  "script not initialized");
+	lua_pushnil (lua_current_interpreter);
+	return 1;
+    }
+
+    server = NULL;
+    channel = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+
+    switch (n)
+    {
+    case 0:
+	break;
+    case 1:
+	server = lua_tostring (lua_current_interpreter, -1);
+	break;
+    case 2:
+	channel  = lua_tostring (lua_current_interpreter, -2);
+	server = lua_tostring (lua_current_interpreter, -1);
+	break;
+    default:
+	lua_plugin->print_server (lua_plugin,
+				  "Lua error: wrong parameters for "
+				  "\"get_buffer_data\" function");
+	lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+    
+    buffer_data = lua_plugin->get_buffer_data (lua_plugin, (char *) server, (char *) channel);
+    if (!buffer_data)
+    {
+	lua_pushboolean (lua_current_interpreter, 0);
+	return 1;
+    }
+    
+    lua_newtable (lua_current_interpreter);
+
+    for (i = 0, ptr_data = buffer_data; ptr_data; ptr_data = ptr_data->next_line, i++)
+    {
+	lua_pushnumber (lua_current_interpreter, i);
+	lua_newtable (lua_current_interpreter);
+
+	lua_pushstring (lua_current_interpreter, "nick");
+	lua_pushstring (lua_current_interpreter,
+			ptr_data->nick == NULL ? "" : ptr_data->nick);
+	lua_rawset (lua_current_interpreter, -3);
+		    
+	lua_pushstring (lua_current_interpreter, "data");
+	lua_pushstring (lua_current_interpreter,
+			ptr_data->data == NULL ? "" : ptr_data->data);
+	lua_rawset (lua_current_interpreter, -3);
+	
+	lua_rawset (lua_current_interpreter, -3);
+    }
+    
+    lua_plugin->free_buffer_data (lua_plugin, buffer_data);
+    
+    return 1;
+}
+
+/*
  * Lua constant as functions
  */
 
@@ -1605,6 +1868,7 @@ static
 const struct luaL_reg weechat_lua_funcs[] = {
     { "register", weechat_lua_register},
     { "print", weechat_lua_print},
+    { "print_server", weechat_lua_print_server},
     { "print_infobar", weechat_lua_print_infobar},
     { "remove_infobar", weechat_lua_remove_infobar},
     { "log", weechat_lua_log},
@@ -1626,6 +1890,9 @@ const struct luaL_reg weechat_lua_funcs[] = {
     { "get_channel_info", weechat_lua_get_channel_info},
     { "get_nick_info", weechat_lua_get_nick_info},
     { "get_irc_color", weechat_lua_get_irc_color},
+    { "get_window_info", weechat_lua_get_window_info},
+    { "get_buffer_info", weechat_lua_get_buffer_info},
+    { "get_buffer_data", weechat_lua_get_buffer_data},
     /* define constants as function which returns values */
     { "PLUGIN_RC_OK", weechat_lua_constant_plugin_rc_ok},
     { "PLUGIN_RC_KO", weechat_lua_constant_plugin_rc_ko},

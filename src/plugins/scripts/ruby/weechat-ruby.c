@@ -337,6 +337,44 @@ weechat_ruby_print (int argc, VALUE *argv, VALUE class)
 }
 
 /*
+ * weechat_ruby_print_server: print message into a buffer server
+ */
+
+static VALUE
+weechat_ruby_print_server (VALUE class, VALUE message)
+{
+    char *c_message;
+    
+    /* make gcc happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: unable to print message, "
+                                   "script not initialized");
+        return INT2FIX (0);
+    }
+    
+    c_message = NULL;
+    
+    if (NIL_P (message))
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: wrong parameters for "
+                                   "\"print_server\" function");
+        return INT2FIX (0);
+    }
+    
+    Check_Type (message, T_STRING);
+    c_message = STR2CSTR (message);
+
+    ruby_plugin->print_server (ruby_plugin, "%s", c_message);
+    
+    return INT2FIX (1);
+}
+
+/*
  * weechat_ruby_print_infobar: print message to infobar
  */
 
@@ -1024,20 +1062,8 @@ weechat_ruby_get_dcc_info (VALUE class)
 	    rb_hash_aset (dcc_list_member, rb_str_new2("cps"),
 			  INT2FIX(ptr_dcc->bytes_per_sec));
 	    
-	    if (NIL_P (rb_ary_push (dcc_list, dcc_list_member)))
-	    {
-		rb_gc_unregister_address (&dcc_list_member);
-		rb_gc_unregister_address (&dcc_list);
-		ruby_plugin->free_dcc_info (ruby_plugin, dcc_info);
-		return Qnil;
-	    }
+	    rb_ary_push (dcc_list, dcc_list_member);
 	}
-	else
-	{
-	    rb_gc_unregister_address (&dcc_list);
-	    ruby_plugin->free_dcc_info (ruby_plugin, dcc_info);
-	    return Qnil;
-	}	    
     }
     
     ruby_plugin->free_dcc_info (ruby_plugin, dcc_info);
@@ -1523,6 +1549,193 @@ weechat_ruby_get_irc_color (VALUE class, VALUE color)
 }
 
 /*
+ * weechat_ruby_get_window_info: get infos about windows
+ */
+
+static VALUE
+weechat_ruby_get_window_info (VALUE class)
+{
+    t_plugin_window_info *window_info, *ptr_window;
+    VALUE window_list, window_list_member;
+    
+    /* make gcc happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: unable to get window info, "
+                                   "script not initialized");
+        return INT2FIX (0);
+    }
+
+    window_list = rb_ary_new();
+    
+    if (NIL_P (window_list))
+        return Qnil;
+    
+    window_info = ruby_plugin->get_window_info (ruby_plugin);    
+    if (!window_info)
+        return window_list;
+    
+    for(ptr_window = window_info; ptr_window; ptr_window = ptr_window->next_window)
+    {
+	window_list_member = rb_hash_new ();
+
+	if (!NIL_P (window_list_member))
+	{
+	    rb_hash_aset (window_list_member, rb_str_new2("num_buffer"), 
+			  INT2FIX(ptr_window->num_buffer));
+	    rb_hash_aset (window_list_member, rb_str_new2("win_x"),
+			  INT2FIX(ptr_window->win_x));
+	    rb_hash_aset (window_list_member, rb_str_new2("win_y"),
+			  INT2FIX(ptr_window->win_y));
+	    rb_hash_aset (window_list_member, rb_str_new2("win_width"),
+			  INT2FIX(ptr_window->win_width));
+	    rb_hash_aset (window_list_member, rb_str_new2("win_height"),
+			  INT2FIX(ptr_window->win_height));
+	    rb_hash_aset (window_list_member, rb_str_new2("win_width_pct"),
+			  INT2FIX(ptr_window->win_width_pct));
+	    rb_hash_aset (window_list_member, rb_str_new2("win_height_pct"),
+			  INT2FIX(ptr_window->win_height_pct));
+	    
+	    rb_ary_push (window_list, window_list_member);
+	}
+    }
+    
+    ruby_plugin->free_window_info (ruby_plugin, window_info);
+    
+    return window_list;
+}
+
+/*
+ * weechat_ruby_get_buffer_info: get infos about buffers
+ */
+
+static VALUE
+weechat_ruby_get_buffer_info (VALUE class)
+{
+    t_plugin_buffer_info *buffer_info, *ptr_buffer;
+    VALUE buffer_hash, buffer_hash_member;
+    
+    /* make gcc happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: unable to get buffer info, "
+                                   "script not initialized");
+        return INT2FIX (0);
+    }
+    
+    buffer_hash = rb_hash_new ();
+    if (!buffer_hash)
+	return Qnil;
+
+    buffer_info = ruby_plugin->get_buffer_info (ruby_plugin);
+    if  (!buffer_info)
+	return buffer_hash;
+
+    for(ptr_buffer = buffer_info; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    {
+	buffer_hash_member = rb_hash_new ();
+	
+	if (buffer_hash_member)
+	{
+	    rb_hash_aset (buffer_hash_member, rb_str_new2("type"),
+			  INT2FIX(ptr_buffer->type));
+	    rb_hash_aset (buffer_hash_member, rb_str_new2("num_displayed"),
+			  INT2FIX(ptr_buffer->num_displayed));
+	    rb_hash_aset (buffer_hash_member, rb_str_new2("server"),
+			  rb_str_new2(ptr_buffer->server_name == NULL ? "" : ptr_buffer->server_name));
+	    rb_hash_aset (buffer_hash_member, rb_str_new2("channel"),
+			  rb_str_new2(ptr_buffer->channel_name == NULL ? "" : ptr_buffer->channel_name));
+	    rb_hash_aset (buffer_hash_member, rb_str_new2("notify_level"),
+			  INT2FIX(ptr_buffer->notify_level));
+	    rb_hash_aset (buffer_hash_member, rb_str_new2("log_filename"),
+			  rb_str_new2(ptr_buffer->log_filename == NULL ? "" : ptr_buffer->log_filename));
+	    
+	    rb_hash_aset (buffer_hash, INT2FIX(ptr_buffer->number), buffer_hash_member);
+	}
+    }
+    
+    ruby_plugin->free_buffer_info(ruby_plugin, buffer_info);
+    
+    return buffer_hash;
+}
+
+/*
+ * weechat_ruby_get_buffer_data: get buffer content
+ */
+
+static VALUE
+weechat_ruby_get_buffer_data (int argc, VALUE *argv, VALUE class)
+{
+    t_plugin_buffer_line *buffer_data, *ptr_data;
+    VALUE data_list, data_list_member;
+    VALUE server, channel;
+    char *c_server, *c_channel;
+
+    /* make gcc happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: unable to get buffer data, "
+                                   "script not initialized");
+        return INT2FIX (0);
+    }
+
+    server = Qnil;
+    channel = Qnil;
+    c_server = NULL;
+    c_channel = NULL;
+
+    rb_scan_args (argc, argv, "02", &server, &channel);
+    
+    if (!NIL_P (server))
+    {
+	Check_Type (server, T_STRING);
+	c_server = STR2CSTR (server);
+    }
+    
+    if (!NIL_P (channel))
+    {
+	Check_Type (channel, T_STRING);
+	c_channel = STR2CSTR (channel);
+    }
+    
+    data_list = rb_ary_new();    
+    if (NIL_P (data_list))
+        return Qnil;
+    
+    buffer_data = ruby_plugin->get_buffer_data (ruby_plugin, c_server, c_channel);
+    if (!buffer_data)
+        return data_list;
+    
+    for(ptr_data = buffer_data; ptr_data; ptr_data = ptr_data->next_line)
+    {
+	data_list_member = rb_hash_new ();
+
+	if (!NIL_P (data_list_member))
+	{
+	    rb_hash_aset (data_list_member, rb_str_new2("nick"), 
+			  rb_str_new2(ptr_data->nick == NULL ? "" : ptr_data->nick));
+	    rb_hash_aset (data_list_member, rb_str_new2("data"), 
+			  rb_str_new2(ptr_data->data == NULL ? "" : ptr_data->data));
+
+	    rb_ary_push (data_list, data_list_member);
+	}
+    }
+    
+    ruby_plugin->free_buffer_data (ruby_plugin, buffer_data);
+    
+    return data_list;
+}
+
+/*
  * weechat_ruby_output : redirection for stdout and stderr
  */
 
@@ -1964,6 +2177,7 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     rb_define_const(ruby_mWeechat, "PLUGIN_RC_OK_IGNORE_ALL", INT2NUM(PLUGIN_RC_OK_IGNORE_ALL));    
     rb_define_module_function (ruby_mWeechat, "register", weechat_ruby_register, 4);
     rb_define_module_function (ruby_mWeechat, "print", weechat_ruby_print, -1);
+    rb_define_module_function (ruby_mWeechat, "print_server", weechat_ruby_print_server, 1);
     rb_define_module_function (ruby_mWeechat, "print_infobar", weechat_ruby_print_infobar, 2);
     rb_define_module_function (ruby_mWeechat, "remove_infobar", weechat_ruby_remove_infobar, -1);
     rb_define_module_function (ruby_mWeechat, "log", weechat_ruby_log, -1);
@@ -1985,7 +2199,10 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     rb_define_module_function (ruby_mWeechat, "get_channel_info", weechat_ruby_get_channel_info, 1);
     rb_define_module_function (ruby_mWeechat, "get_nick_info", weechat_ruby_get_nick_info, 2);
     rb_define_module_function (ruby_mWeechat, "get_irc_color", weechat_ruby_get_irc_color, 1);
-    
+    rb_define_module_function (ruby_mWeechat, "get_window_info", weechat_ruby_get_window_info, 0);
+    rb_define_module_function (ruby_mWeechat, "get_buffer_info", weechat_ruby_get_buffer_info, 0);
+    rb_define_module_function (ruby_mWeechat, "get_buffer_data", weechat_ruby_get_buffer_data, -1);
+
     /* redirect stdin and stdout */
     ruby_mWeechatOutputs = rb_define_module("WeechatOutputs");
     rb_define_singleton_method(ruby_mWeechatOutputs, "write", weechat_ruby_output, 1);

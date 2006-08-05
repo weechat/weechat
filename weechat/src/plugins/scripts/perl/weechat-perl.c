@@ -241,7 +241,6 @@ weechat_perl_keyboard_handler (t_weechat_plugin *plugin,
 static XS (XS_weechat_register)
 {
     char *name, *version, *shutdown_func, *description;
-    unsigned int integer;
     dXSARGS;
     
     /* make gcc happy */
@@ -258,10 +257,10 @@ static XS (XS_weechat_register)
         XSRETURN_NO;
     }
     
-    name = SvPV (ST (0), integer);
-    version = SvPV (ST (1), integer);
-    shutdown_func = SvPV (ST (2), integer);
-    description = SvPV (ST (3), integer);
+    name = SvPV (ST (0), PL_na);
+    version = SvPV (ST (1), PL_na);
+    shutdown_func = SvPV (ST (2), PL_na);
+    description = SvPV (ST (3), PL_na);
     
     if (weechat_script_search (perl_plugin, &perl_scripts, name))
     {
@@ -302,7 +301,6 @@ static XS (XS_weechat_register)
 
 static XS (XS_weechat_print)
 {
-    unsigned int integer;
     char *message, *channel_name, *server_name;
     dXSARGS;
     
@@ -325,16 +323,16 @@ static XS (XS_weechat_print)
         XSRETURN_NO;
     }
     
-    message = SvPV (ST (0), integer);
+    message = SvPV (ST (0), PL_na);
     
     channel_name = NULL;
     server_name = NULL;
     
     if (items > 1)
     {
-        channel_name = SvPV (ST (1), integer);
+        channel_name = SvPV (ST (1), PL_na);
         if (items > 2)
-            server_name = SvPV (ST (2), integer);
+            server_name = SvPV (ST (2), PL_na);
     }
     
     perl_plugin->print (perl_plugin,
@@ -345,12 +343,46 @@ static XS (XS_weechat_print)
 }
 
 /*
+ * weechat::print_server: print message into a server buffer
+ */
+
+static XS (XS_weechat_print_server)
+{
+    char *message;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+
+    if (!perl_current_script)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to print message, "
+                                   "script not initialized");
+	XSRETURN_NO;
+    }
+
+    if (items < 1)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"print_server\" function");
+        XSRETURN_NO;
+    }
+    
+    message = SvPV (ST (0), PL_na);
+    
+    perl_plugin->print_server (perl_plugin, "%s", message);
+    
+    XSRETURN_YES;
+}
+
+/*
  * weechat::print_infobar: print message to infobar
  */
 
 static XS (XS_weechat_print_infobar)
 {
-    unsigned int integer;
     dXSARGS;
     
     /* make gcc happy */
@@ -375,7 +407,7 @@ static XS (XS_weechat_print_infobar)
     perl_plugin->print_infobar (perl_plugin,
                                 SvIV (ST (0)),
                                 "%s",
-                                SvPV (ST (1), integer));
+                                SvPV (ST (1), PL_na));
     
     XSRETURN_YES;
 }
@@ -411,7 +443,6 @@ static XS (XS_weechat_remove_infobar)
 
 static XS (XS_weechat_log)
 {
-    unsigned int integer;
     char *message, *channel_name, *server_name;
     dXSARGS;
     
@@ -434,16 +465,16 @@ static XS (XS_weechat_log)
         XSRETURN_NO;
     }
     
-    message = SvPV (ST (0), integer);
+    message = SvPV (ST (0), PL_na);
     
     channel_name = NULL;
     server_name = NULL;
     
     if (items > 1)
     {
-        channel_name = SvPV (ST (1), integer);
+        channel_name = SvPV (ST (1), PL_na);
         if (items > 2)
-            server_name = SvPV (ST (2), integer);
+            server_name = SvPV (ST (2), PL_na);
     }
     
     perl_plugin->log (perl_plugin,
@@ -459,7 +490,6 @@ static XS (XS_weechat_log)
 
 static XS (XS_weechat_command)
 {
-    unsigned int integer;
     char *channel_name, *server_name;
     dXSARGS;
     
@@ -487,14 +517,14 @@ static XS (XS_weechat_command)
     
     if (items > 1)
     {
-        channel_name = SvPV (ST (1), integer);
+        channel_name = SvPV (ST (1), PL_na);
         if (items > 2)
-            server_name = SvPV (ST (2), integer);
+            server_name = SvPV (ST (2), PL_na);
     }
     
     perl_plugin->exec_command (perl_plugin,
                                server_name, channel_name,
-                               SvPV (ST (0), integer));
+                               SvPV (ST (0), PL_na));
     
     XSRETURN_YES;
 }
@@ -506,7 +536,6 @@ static XS (XS_weechat_command)
 static XS (XS_weechat_add_message_handler)
 {
     char *irc_command, *function;
-    unsigned int integer;
     dXSARGS;
     
     /* make gcc happy */
@@ -528,8 +557,8 @@ static XS (XS_weechat_add_message_handler)
         XSRETURN_NO;
     }
     
-    irc_command = SvPV (ST (0), integer);
-    function = SvPV (ST (1), integer);
+    irc_command = SvPV (ST (0), PL_na);
+    function = SvPV (ST (1), PL_na);
     
     if (perl_plugin->msg_handler_add (perl_plugin, irc_command,
                                       weechat_perl_cmd_msg_handler, function,
@@ -547,7 +576,6 @@ static XS (XS_weechat_add_command_handler)
 {
     char *command, *function, *description, *arguments, *arguments_description;
     char *completion_template;
-    unsigned int integer;
     dXSARGS;
     
     /* make gcc happy */
@@ -569,12 +597,12 @@ static XS (XS_weechat_add_command_handler)
         XSRETURN_NO;
     }
     
-    command = SvPV (ST (0), integer);
-    function = SvPV (ST (1), integer);
-    description = (items >= 3) ? SvPV (ST (2), integer) : NULL;
-    arguments = (items >= 4) ? SvPV (ST (3), integer) : NULL;
-    arguments_description = (items >= 5) ? SvPV (ST (4), integer) : NULL;
-    completion_template = (items >= 6) ? SvPV (ST (5), integer) : NULL;
+    command = SvPV (ST (0), PL_na);
+    function = SvPV (ST (1), PL_na);
+    description = (items >= 3) ? SvPV (ST (2), PL_na) : NULL;
+    arguments = (items >= 4) ? SvPV (ST (3), PL_na) : NULL;
+    arguments_description = (items >= 5) ? SvPV (ST (4), PL_na) : NULL;
+    completion_template = (items >= 6) ? SvPV (ST (5), PL_na) : NULL;
     
     if (perl_plugin->cmd_handler_add (perl_plugin,
                                       command,
@@ -598,7 +626,6 @@ static XS (XS_weechat_add_timer_handler)
 {
     int interval;
     char *function;
-    unsigned int integer;
     dXSARGS;
     
     /* make gcc happy */
@@ -621,7 +648,7 @@ static XS (XS_weechat_add_timer_handler)
     }
     
     interval = SvIV (ST (0));
-    function = SvPV (ST (1), integer);
+    function = SvPV (ST (1), PL_na);
     
     if (perl_plugin->timer_handler_add (perl_plugin, interval,
                                         weechat_perl_timer_handler, function,
@@ -638,7 +665,6 @@ static XS (XS_weechat_add_timer_handler)
 static XS (XS_weechat_add_keyboard_handler)
 {
     char *function;
-    unsigned int integer;
     dXSARGS;
     
     /* make gcc happy */
@@ -660,7 +686,7 @@ static XS (XS_weechat_add_keyboard_handler)
         XSRETURN_NO;
     }
     
-    function = SvPV (ST (0), integer);
+    function = SvPV (ST (0), PL_na);
     
     if (perl_plugin->keyboard_handler_add (perl_plugin,
                                            weechat_perl_keyboard_handler,
@@ -678,7 +704,6 @@ static XS (XS_weechat_add_keyboard_handler)
 static XS (XS_weechat_remove_handler)
 {
     char *command, *function;
-    unsigned int integer;
     dXSARGS;
     
     /* make gcc happy */
@@ -700,8 +725,8 @@ static XS (XS_weechat_remove_handler)
         XSRETURN_NO;
     }
     
-    command = SvPV (ST (0), integer);
-    function = SvPV (ST (1), integer);
+    command = SvPV (ST (0), PL_na);
+    function = SvPV (ST (1), PL_na);
     
     weechat_script_remove_handler (perl_plugin, perl_current_script,
                                    command, function);
@@ -716,7 +741,6 @@ static XS (XS_weechat_remove_handler)
 static XS (XS_weechat_remove_timer_handler)
 {
     char *function;
-    unsigned int integer;
     dXSARGS;
     
     /* make gcc happy */
@@ -738,7 +762,7 @@ static XS (XS_weechat_remove_timer_handler)
         XSRETURN_NO;
     }
     
-    function = SvPV (ST (0), integer);
+    function = SvPV (ST (0), PL_na);
     
     weechat_script_remove_timer_handler (perl_plugin, perl_current_script,
                                          function);
@@ -753,7 +777,6 @@ static XS (XS_weechat_remove_timer_handler)
 static XS (XS_weechat_remove_keyboard_handler)
 {
     char *function;
-    unsigned int integer;
     dXSARGS;
     
     /* make gcc happy */
@@ -775,7 +798,7 @@ static XS (XS_weechat_remove_keyboard_handler)
         XSRETURN_NO;
     }
     
-    function = SvPV (ST (0), integer);
+    function = SvPV (ST (0), PL_na);
     
     weechat_script_remove_keyboard_handler (perl_plugin, perl_current_script,
                                             function);
@@ -790,7 +813,6 @@ static XS (XS_weechat_remove_keyboard_handler)
 static XS (XS_weechat_get_info)
 {
     char *arg, *info, *server_name;
-    unsigned int integer;
     dXSARGS;
     
     /* make gcc happy */
@@ -812,9 +834,9 @@ static XS (XS_weechat_get_info)
         XSRETURN_NO;
     }
     
-    server_name = (items == 2) ? SvPV (ST (1), integer) : NULL;
+    server_name = (items == 2) ? SvPV (ST (1), PL_na) : NULL;
     
-    arg = SvPV (ST (0), integer);
+    arg = SvPV (ST (0), PL_na);
     if (arg)
     {
         info = perl_plugin->get_info (perl_plugin, arg, server_name);
@@ -904,7 +926,6 @@ static XS (XS_weechat_get_dcc_info)
 static XS (XS_weechat_get_config)
 {
     char *option, *return_value;
-    unsigned int integer;
     dXSARGS;
     
     /* make gcc happy */
@@ -915,7 +936,7 @@ static XS (XS_weechat_get_config)
         perl_plugin->print_server (perl_plugin,
                                    "Perl error: unable to get config option, "
                                    "script not initialized");
-	XSRETURN_NO;
+	XSRETURN_EMPTY;
     }
     
     if (items < 1)
@@ -923,10 +944,10 @@ static XS (XS_weechat_get_config)
         perl_plugin->print_server (perl_plugin,
                                    "Perl error: wrong parameters for "
                                    "\"get_config\" function");
-        XSRETURN_NO;
+        XSRETURN_EMPTY;
     }
     
-    option = SvPV (ST (0), integer);
+    option = SvPV (ST (0), PL_na);
     
     if (option)
     {
@@ -951,7 +972,6 @@ static XS (XS_weechat_get_config)
 static XS (XS_weechat_set_config)
 {
     char *option, *value;
-    unsigned int integer;
     dXSARGS;
     
     /* make gcc happy */
@@ -973,8 +993,8 @@ static XS (XS_weechat_set_config)
         XSRETURN_NO;
     }
     
-    option = SvPV (ST (0), integer);
-    value = SvPV (ST (1), integer);
+    option = SvPV (ST (0), PL_na);
+    value = SvPV (ST (1), PL_na);
     
     if (option && value)
     {
@@ -992,7 +1012,6 @@ static XS (XS_weechat_set_config)
 static XS (XS_weechat_get_plugin_config)
 {
     char *option, *return_value;
-    unsigned int integer;
     dXSARGS;
     
     /* make gcc happy */
@@ -1003,7 +1022,7 @@ static XS (XS_weechat_get_plugin_config)
         perl_plugin->print_server (perl_plugin,
                                    "Perl error: unable to get plugin config option, "
                                    "script not initialized");
-	XSRETURN_NO;
+	XSRETURN_EMPTY;
     }
     
     if (items < 1)
@@ -1011,10 +1030,10 @@ static XS (XS_weechat_get_plugin_config)
         perl_plugin->print_server (perl_plugin,
                                    "Perl error: wrong parameters for "
                                    "\"get_plugin_config\" function");
-        XSRETURN_NO;
+        XSRETURN_EMPTY;
     }
     
-    option = SvPV (ST (0), integer);
+    option = SvPV (ST (0), PL_na);
     
     if (option)
     {
@@ -1041,7 +1060,6 @@ static XS (XS_weechat_get_plugin_config)
 static XS (XS_weechat_set_plugin_config)
 {
     char *option, *value;
-    unsigned int integer;
     dXSARGS;
     
     /* make gcc happy */
@@ -1063,8 +1081,8 @@ static XS (XS_weechat_set_plugin_config)
         XSRETURN_NO;
     }
     
-    option = SvPV (ST (0), integer);
-    value = SvPV (ST (1), integer);
+    option = SvPV (ST (0), PL_na);
+    value = SvPV (ST (1), PL_na);
     
     if (option && value)
     {
@@ -1152,7 +1170,6 @@ static XS (XS_weechat_get_server_info)
     }    
     perl_plugin->free_server_info (perl_plugin, server_info);
     
-    //XPUSHs(newRV_inc((SV *) server_hash));    
     ST (0) = newRV_inc((SV *) server_hash);
     XSRETURN (1);
 }
@@ -1165,7 +1182,6 @@ static XS (XS_weechat_get_channel_info)
 {
     t_plugin_channel_info *channel_info, *ptr_channel;
     char *server;
-    unsigned int integer;
     HV *channel_hash, *channel_hash_member;
     dXSARGS;
     
@@ -1188,7 +1204,7 @@ static XS (XS_weechat_get_channel_info)
         XSRETURN_EMPTY;
     }
     
-    server = SvPV (ST (0), integer);
+    server = SvPV (ST (0), PL_na);
     if (!server)
 	XSRETURN_EMPTY;
 
@@ -1220,7 +1236,6 @@ static XS (XS_weechat_get_channel_info)
     }
     perl_plugin->free_channel_info (perl_plugin, channel_info);
     
-    //XPUSHs(newRV_inc((SV *) channel_hash));
     ST (0) = newRV_inc((SV *) channel_hash);
     XSRETURN (1);
 }
@@ -1233,7 +1248,6 @@ static XS (XS_weechat_get_nick_info)
 {
     t_plugin_nick_info *nick_info, *ptr_nick;
     char *server, *channel;
-    unsigned int integer;
     HV *nick_hash;
     dXSARGS;
     
@@ -1256,8 +1270,8 @@ static XS (XS_weechat_get_nick_info)
         XSRETURN_EMPTY;
     }
     
-    server = SvPV (ST (0), integer);
-    channel = SvPV (ST (1), integer);
+    server = SvPV (ST (0), PL_na);
+    channel = SvPV (ST (1), PL_na);
     if (!server || !channel)
 	XSRETURN_EMPTY;
     
@@ -1286,7 +1300,6 @@ static XS (XS_weechat_get_nick_info)
     }
     perl_plugin->free_nick_info (perl_plugin, nick_info);
     
-    //XPUSHs(newRV_inc((SV *) nick_hash));
     ST (0) = newRV_inc((SV *) nick_hash);
     XSRETURN (1);
 }
@@ -1336,7 +1349,6 @@ static XS (XS_weechat_input_color)
 static XS (XS_weechat_get_irc_color)
 {
     char *color;
-    unsigned int integer;
     dXSARGS;
     
     /* make gcc happy */
@@ -1360,7 +1372,7 @@ static XS (XS_weechat_get_irc_color)
 	XSRETURN (1);
     }
     
-    color = SvPV (ST (0), integer);
+    color = SvPV (ST (0), PL_na);
     if (color)
     {
 	XST_mIV (0, perl_plugin->get_irc_color (perl_plugin, color));
@@ -1369,6 +1381,176 @@ static XS (XS_weechat_get_irc_color)
 
     XST_mIV (0, -1);
     XSRETURN (-1);
+}
+
+/*
+ * weechat::get_window_info: get infos about windows
+ */
+
+static XS (XS_weechat_get_window_info)
+{
+    t_plugin_window_info *window_info, *ptr_window;
+    int count;
+    HV *window_hash_member;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    (void) items;
+    
+    if (!perl_current_script)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to get window info, "
+                                   "script not initialized");
+	XSRETURN_EMPTY;
+    }
+    
+    window_info = perl_plugin->get_window_info (perl_plugin);
+    count = 0;
+    if (!window_info)
+	XSRETURN_EMPTY;
+    
+    for (ptr_window = window_info; ptr_window; ptr_window = ptr_window->next_window)
+    {
+	window_hash_member = (HV *) sv_2mortal((SV *) newHV());	        
+        
+	hv_store (window_hash_member, "num_buffer",     10, newSViv (ptr_window->num_buffer), 0);
+        hv_store (window_hash_member, "win_x",           5, newSViv (ptr_window->win_x), 0);
+        hv_store (window_hash_member, "win_y",           5, newSViv (ptr_window->win_y), 0);
+        hv_store (window_hash_member, "win_width",       9, newSViv (ptr_window->win_width), 0);
+	hv_store (window_hash_member, "win_height",     10, newSViv (ptr_window->win_height), 0);
+	hv_store (window_hash_member, "win_width_pct",  13, newSViv (ptr_window->win_width_pct), 0);
+	hv_store (window_hash_member, "win_height_pct", 14, newSViv (ptr_window->win_height_pct), 0);
+	
+	XPUSHs(newRV_inc((SV *) window_hash_member));
+	count++;
+    }    
+    perl_plugin->free_window_info (perl_plugin, window_info);
+    
+    XSRETURN (count);
+}
+
+/*
+ * weechat::get_buffer_info: get infos about buffers
+ */
+
+static XS (XS_weechat_get_buffer_info)
+{
+    t_plugin_buffer_info *buffer_info, *ptr_buffer;
+    HV *buffer_hash, *buffer_hash_member;
+    char conv[8];
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    (void) items;
+    
+    if (!perl_current_script)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to get buffer info, "
+                                   "script not initialized");
+	XSRETURN_EMPTY;
+    }
+    
+    buffer_info = perl_plugin->get_buffer_info (perl_plugin);
+    if (!buffer_info)
+    {
+	XSRETURN_EMPTY;
+    }    
+    
+    buffer_hash = (HV *) sv_2mortal((SV *) newHV());
+    if (!buffer_hash)
+    {
+        perl_plugin->free_buffer_info (perl_plugin, buffer_info);
+	XSRETURN_EMPTY;
+    }
+    
+    for (ptr_buffer = buffer_info; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    {
+	buffer_hash_member = (HV *) sv_2mortal((SV *) newHV());	        
+        
+	hv_store (buffer_hash_member, "type",           4, newSViv (ptr_buffer->type), 0);
+        hv_store (buffer_hash_member, "num_displayed", 13, newSViv (ptr_buffer->num_displayed), 0);
+	hv_store (buffer_hash_member, "server",         6, 
+		  newSVpv (ptr_buffer->server_name == NULL ? "" : ptr_buffer->server_name, 0), 0);
+        hv_store (buffer_hash_member, "channel",        7, 
+		  newSVpv (ptr_buffer->channel_name == NULL ? "" : ptr_buffer->channel_name, 0), 0);
+        hv_store (buffer_hash_member, "notify_level",  12, newSViv (ptr_buffer->notify_level), 0);
+	hv_store (buffer_hash_member, "log_filename",  12, 
+		  newSVpv (ptr_buffer->log_filename == NULL ? "" : ptr_buffer->log_filename, 0), 0);
+	
+	snprintf(conv, sizeof(conv), "%d", ptr_buffer->number);
+	hv_store (buffer_hash, conv, strlen(conv), newRV_inc((SV *) buffer_hash_member), 0);	
+    }    
+    perl_plugin->free_buffer_info (perl_plugin, buffer_info);
+    
+    ST (0) = newRV_inc((SV *) buffer_hash);
+    XSRETURN (1);
+}
+
+/*
+ * weechat::get_buffer_data: get buffer content
+ */
+
+static XS (XS_weechat_get_buffer_data)
+{
+    t_plugin_buffer_line *buffer_data, *ptr_data;
+    HV *data_list_member;
+    char *server, *channel;
+    int count;
+    
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    (void) items;
+    
+    if (!perl_current_script)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to get buffer data, "
+                                   "script not initialized");
+	XSRETURN_EMPTY;
+    }
+    
+    if (items > 2)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"get_buffer_data\" function");
+        XSRETURN_EMPTY;
+    }
+    
+    channel = NULL;
+    server = NULL;
+
+    if (items >= 1)
+	server = SvPV (ST (0), PL_na);
+    if (items >= 2)
+	channel = SvPV (ST (1), PL_na);
+    
+    buffer_data = perl_plugin->get_buffer_data (perl_plugin, server, channel);
+    count = 0;
+    if (!buffer_data)
+	XSRETURN_EMPTY;
+    
+    for (ptr_data = buffer_data; ptr_data; ptr_data = ptr_data->next_line)
+    {
+	data_list_member = (HV *) sv_2mortal((SV *) newHV());
+        
+	hv_store (data_list_member, "nick", 4, 
+		  newSVpv (ptr_data->nick == NULL ? "" : ptr_data->nick, 0), 0);
+	hv_store (data_list_member, "data", 4, 
+		  newSVpv (ptr_data->data == NULL ? "" : ptr_data->data, 0), 0);
+	
+	XPUSHs(newRV_inc((SV *) data_list_member));
+	count++;
+    }    
+    perl_plugin->free_buffer_data (perl_plugin, buffer_data);
+    
+    XSRETURN (count);
 }
 
 /*
@@ -1385,6 +1567,7 @@ weechat_perl_xs_init (pTHX)
     /* interface functions */
     newXS ("weechat::register", XS_weechat_register, "weechat");
     newXS ("weechat::print", XS_weechat_print, "weechat");
+    newXS ("weechat::print_server", XS_weechat_print_server, "weechat");
     newXS ("weechat::print_infobar", XS_weechat_print_infobar, "weechat");
     newXS ("weechat::remove_infobar", XS_weechat_remove_infobar, "weechat");
     newXS ("weechat::log", XS_weechat_log, "weechat");
@@ -1407,6 +1590,9 @@ weechat_perl_xs_init (pTHX)
     newXS ("weechat::get_nick_info", XS_weechat_get_nick_info, "weechat");
     newXS ("weechat::input_color", XS_weechat_input_color, "weechat");
     newXS ("weechat::get_irc_color", XS_weechat_get_irc_color, "weechat");
+    newXS ("weechat::get_window_info", XS_weechat_get_window_info, "weechat");
+    newXS ("weechat::get_buffer_info", XS_weechat_get_buffer_info, "weechat");
+    newXS ("weechat::get_buffer_data", XS_weechat_get_buffer_data, "weechat");
 
     /* interface constants */
     stash = gv_stashpv ("weechat", TRUE);
