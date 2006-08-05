@@ -2857,7 +2857,8 @@ irc_cmd_recv_001 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos;
     char **commands, **ptr;
-     t_irc_channel *ptr_channel;
+    t_irc_channel *ptr_channel;
+    char *away_msg;
     
     pos = strchr (arguments, ' ');
     if (pos)
@@ -2876,7 +2877,7 @@ irc_cmd_recv_001 (t_irc_server *server, char *host, char *nick, char *arguments)
     gui_status_draw (server->buffer, 1);
     gui_input_draw (server->buffer, 1);
     
-    /* execute command once connected */
+    /* execute command when connected */
     if (server->command && server->command[0])
     {	
 	/* splitting command on ';' which can be escaped with '\;' */ 
@@ -2915,6 +2916,17 @@ irc_cmd_recv_001 (t_irc_server *server, char *host, char *nick, char *arguments)
         /* auto-join when connecting to server for first time */
         if (server->autojoin && server->autojoin[0])
             return irc_cmd_send_join (server, NULL, server->autojoin);
+    }
+
+    /* set away message if user was away (before disconnection for example) */
+    if (server->away_message && server->away_message[0])
+    {
+        away_msg = strdup (server->away_message);
+        if (away_msg)
+        {
+            irc_send_away (server, away_msg);
+            free (away_msg);
+        }
     }
     
     return 0;

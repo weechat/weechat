@@ -244,6 +244,11 @@ irc_send_away (t_irc_server *server, char *arguments)
     if (arguments)
     {
         server->is_away = 1;
+        if (server->away_message)
+            free (server->away_message);
+        server->away_message = (char *) malloc (strlen (arguments) + 1);
+        if (server->away_message)
+            strcpy (server->away_message, arguments);
         server->away_time = time (NULL);
         server_sendf (server, "AWAY :%s\r\n", arguments);
         if (cfg_irc_display_away != CFG_IRC_DISPLAY_AWAY_OFF)
@@ -272,6 +277,11 @@ irc_send_away (t_irc_server *server, char *arguments)
     {
         server_sendf (server, "AWAY\r\n");
         server->is_away = 0;
+        if (server->away_message)
+        {
+            free (server->away_message);
+            server->away_message = NULL;
+        }
         if (server->away_time != 0)
         {
             time_now = time (NULL);

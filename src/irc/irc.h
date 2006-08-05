@@ -184,7 +184,8 @@ struct t_irc_server
     char *nick_modes;               /* nick modes                             */
     time_t reconnect_start;         /* this time + delay = reconnect time     */
     int reconnect_join;             /* 1 if channels opened to rejoin         */
-    int is_away;                    /* 1 is user is marker as away            */
+    int is_away;                    /* 1 is user is marked as away            */
+    char *away_message;             /* away message, NULL if not away         */
     time_t away_time;               /* time() when user marking as away       */
     int lag;                        /* lag (in milliseconds)                  */
     struct timeval lag_check_time;  /* last time lag was checked (ping sent)  */
@@ -468,6 +469,7 @@ extern void irc_login (t_irc_server *);
 extern int irc_cmd_send_admin (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_ame (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_amsg (t_irc_server *, t_irc_channel *, char *);
+extern void irc_send_away (t_irc_server *, char *);
 extern int irc_cmd_send_away (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_ban (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_ctcp (t_irc_server *, t_irc_channel *, char *);

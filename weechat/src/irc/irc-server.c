@@ -108,6 +108,7 @@ server_init (t_irc_server *server)
     server->reconnect_start = 0;
     server->reconnect_join = 0;
     server->is_away = 0;
+    server->away_message = NULL;
     server->away_time = 0;
     server->lag = 0;
     server->lag_check_time.tv_sec = 0;
@@ -323,6 +324,8 @@ server_destroy (t_irc_server *server)
         free (server->nick);
     if (server->nick_modes)
         free (server->nick_modes);
+    if (server->away_message)
+        free (server->away_message);
     if (server->channels)
         channel_free_all (server);
 }
@@ -1980,6 +1983,7 @@ server_print_log (t_irc_server *server)
     weechat_log_printf ("  reconnect_start . . : %ld\n",  server->reconnect_start);
     weechat_log_printf ("  reconnect_join. . . : %d\n",   server->reconnect_join);
     weechat_log_printf ("  is_away . . . . . . : %d\n",   server->is_away);
+    weechat_log_printf ("  away_message. . . . : '%s'\n", server->away_message);
     weechat_log_printf ("  away_time . . . . . : %ld\n",  server->away_time);
     weechat_log_printf ("  lag . . . . . . . . : %d\n",   server->lag);
     weechat_log_printf ("  lag_check_time. . . : tv_sec:%d, tv_usec:%d\n",
