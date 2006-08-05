@@ -106,7 +106,7 @@ msgstr ""
 #: src/irc/irc-server.c:1048
 #, c-format
 msgid "%s unable to set local hostname/IP\n"
-msgstr ""
+msgstr "%s nemohu nastavit lokální hostname/IP\n"
 
 #: src/irc/irc-server.c:1563
 #, c-format
@@ -2133,59 +2133,59 @@ msgid "Private %s> %s"
 msgstr "Soukromý %s> %s"
 
 #: src/irc/irc-dcc.c:1370
-#, fuzzy, c-format
+#, c-format
 msgid "%s DCC: unable to create pipe\n"
-msgstr "%s nemohu uložit sezení do souboru\n"
+msgstr "%s DCC: nemohu vytvořit rouru\n"
 
 #: src/irc/irc-dcc.c:1598
-#, fuzzy, c-format
+#, c-format
 msgid "%s DCC: unable to read local file\n"
-msgstr "%s nemohu uložit sezení do souboru\n"
+msgstr "%s DCC: nemohu číst lokální soubor\n"
 
 #: src/irc/irc-dcc.c:1605
-#, fuzzy, c-format
+#, c-format
 msgid "%s DCC: unable to send block to receiver\n"
-msgstr "%s nemohu vytvořit server\n"
+msgstr "%s DCC: nemohu odeslat blok příjemci\n"
 
 #: src/irc/irc-dcc.c:1612
-#, fuzzy, c-format
+#, c-format
 msgid "%s DCC: unable to read ACK from receiver\n"
-msgstr "%s nemohu vytvořit server\n"
+msgstr "%s DCC: nemohu číst ACK od příjemce\n"
 
 #: src/irc/irc-dcc.c:1620
-#, fuzzy, c-format
+#, c-format
 msgid "%s DCC: unable to connect to sender\n"
-msgstr "%s nemohu vytvořit server\n"
+msgstr "%s DCC: nemohu se připojit k odesílateli\n"
 
 #: src/irc/irc-dcc.c:1627
-#, fuzzy, c-format
+#, c-format
 msgid "%s DCC: unable to receive block from sender\n"
-msgstr "%s nemohu vytvořit server\n"
+msgstr "%s DCC: nemohu přijmout blok od odesílatele\n"
 
 #: src/irc/irc-dcc.c:1634
-#, fuzzy, c-format
+#, c-format
 msgid "%s DCC: unable to write local file\n"
-msgstr "%s nemohu uložit sezení do souboru\n"
+msgstr "%s DCC: nemohu zapisovat do lokálního souboru\n"
 
 #: src/irc/irc-dcc.c:1687 src/irc/irc-dcc.c:1730
-#, fuzzy, c-format
+#, c-format
 msgid "%s DCC: unable to fork\n"
-msgstr "%s nemohu uložit sezení do souboru\n"
+msgstr "%s DCC: nemohu provést fork\n"
 
 #: src/irc/irc-dcc.c:1770
 #, c-format
 msgid "%s DCC: timeout\n"
-msgstr ""
+msgstr "%s DCC: překročení časového limitu\n"
 
 #: src/irc/irc-dcc.c:1802
-#, fuzzy, c-format
+#, c-format
 msgid "%s DCC: unable to create socket for sending file\n"
-msgstr "%s nemohu uložit sezení do souboru\n"
+msgstr "%s DCC: nemohu vytvořit socket pro odesílání souboru\n"
 
 #: src/irc/irc-dcc.c:1814
-#, fuzzy, c-format
+#, c-format
 msgid "%s DCC: unable to set 'nonblock' option for socket\n"
-msgstr "%s nemohu vytvořit server\n"
+msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 
 #: src/irc/irc-dcc.c:1898
 #, c-format
@@ -2376,15 +2376,15 @@ msgstr "bajtů"
 
 #: src/gui/curses/gui-curses-chat.c:880
 msgid "KB"
-msgstr ""
+msgstr "KB"
 
 #: src/gui/curses/gui-curses-chat.c:880
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: src/gui/curses/gui-curses-chat.c:880
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: src/gui/curses/gui-curses-chat.c:1012
 msgid "ETA"
@@ -2479,7 +2479,7 @@ msgstr "dokončit slovo"
 
 #: src/gui/gui-keyboard.c:55
 msgid "find previous completion for word"
-msgstr ""
+msgstr "najít předchozí doplnění pro slovo"
 
 #: src/gui/gui-keyboard.c:57
 msgid "delete previous char"
@@ -2693,7 +2693,6 @@ msgid "[alias_name [command [arguments]]]"
 msgstr "[jméno_aliasu [příkaz [argumenty]]]"
 
 #: src/common/command.c:53
-#, fuzzy
 msgid ""
 "alias_name: name of alias\n"
 "   command: command name (WeeChat or IRC command, many commands can be "
@@ -2701,7 +2700,8 @@ msgid ""
 "arguments: arguments for command"
 msgstr ""
 "jméno_aliasu: jméno aliasu\n"
-"      příkaz: jméno příkazu (WeeChat nebo IRC příkaz, bez prvního '/')\n"
+"      příkaz: jméno příkazu (WeeChat nebo IRC příkaz, více příkazů se "
+"rozděluje středníky)\n"
 "   argumenty: argumenty příkazu"
 
 #: src/common/command.c:58
@@ -2713,7 +2713,6 @@ msgid "[action [args] | number | [[server] [channel]]]"
 msgstr "[akce [args] | číslo | [[server] [kanál]]]"
 
 #: src/common/command.c:60
-#, fuzzy
 msgid ""
 " action: action to do:\n"
 "   move: move buffer in the list (may be relative, for example -1)\n"
@@ -2924,13 +2923,13 @@ msgstr ""
 "(používejte opatrně)"
 
 #: src/common/command.c:132
-#, fuzzy
 msgid "manage panels"
-msgstr "spravuje okna"
+msgstr "spravuje panely"
 
 #: src/common/command.c:133
 msgid "[list | add type position size | resize # size | close # | move #1 #2]"
 msgstr ""
+"[list | add typ pozice velikost | resize # velikost | close # | move #1 #2]"
 
 #: src/common/command.c:134
 msgid ""
@@ -2941,6 +2940,13 @@ msgid ""
 "  close: close a panel by number\n"
 "   move: move a panel to another number (may be relative, for example -1)"
 msgstr ""
+"   list: vypíše otevřené panely (žádný parametr implikuje tento seznam)\n"
+"    add: přídá panel, typ je global|local (globální|lokální), pozice je top|"
+"bottom|left|right (nahoře|dole|vlevo|vpravo)\n"
+" resize: změní velikost panelu na novou velikost (může být relativní, např. -"
+"1)\n"
+"  close: zavře panel podle čísla\n"
+"   move: přesune panel na nové číslo (může být relativní, např. -1)"
 
 #: src/common/command.c:141
 msgid "list/load/unload plugins"
@@ -3134,7 +3140,6 @@ msgstr ""
 "[pct] | resize pct | merge [all]]"
 
 #: src/common/command.c:208
-#, fuzzy
 msgid ""
 "  list: list open windows (no parameter implies this list)\n"
 "    -1: jump to previous window\n"
@@ -3246,12 +3251,11 @@ msgstr "Selhalo vytvoření aliasu \"%s\" => \"%s\" (nedostatek paměti)\n"
 
 #: src/common/command.c:1256
 msgid "Alias:\n"
-msgstr ""
+msgstr "Alias:\n"
 
 #: src/common/command.c:1266
-#, fuzzy
 msgid "No alias found.\n"
-msgstr "Žádné aliasy nejsou definovány.\n"
+msgstr "Žádné aliasy nenalezeny.\n"
 
 #: src/common/command.c:1276
 msgid "List of aliases:\n"
@@ -3292,7 +3296,6 @@ msgid "%sraw IRC data\n"
 msgstr "%sčisté IRC data\n"
 
 #: src/common/command.c:1379
-#, fuzzy
 msgid "Open buffers:\n"
 msgstr "Otevřené buffery:\n"
 
@@ -3307,7 +3310,7 @@ msgid "%s can not close the single buffer\n"
 msgstr "%s nemohu zavřít jediný buffer\n"
 
 #: src/common/command.c:1452
-#, fuzzy, c-format
+#, c-format
 msgid "%s can not close server buffer while channels are open\n"
 msgstr "%s nemohu zavřít buffer serveru dokud jsou otevřeny kanály\n"
 
@@ -3374,7 +3377,7 @@ msgstr " (zděděno: \"%s%s%s\")"
 #: src/common/command.c:1862
 #, c-format
 msgid "%s charset \"%s\" is not available\n"
-msgstr ""
+msgstr "%s znaková sada \"%s\" není dostupná\n"
 
 #: src/common/command.c:1920 src/common/command.c:1950
 #: src/common/command.c:2177 src/common/command.c:2917
@@ -3479,33 +3482,31 @@ msgstr ""
 
 #: src/common/command.c:2711
 msgid "global"
-msgstr ""
+msgstr "globální"
 
 #: src/common/command.c:2711
 msgid "local"
-msgstr ""
+msgstr "lokální"
 
 #: src/common/command.c:2717
-#, fuzzy
 msgid "top"
-msgstr "op"
+msgstr "nahoře"
 
 #: src/common/command.c:2720
 msgid "bottom"
-msgstr ""
+msgstr "dole"
 
 #: src/common/command.c:2723
 msgid "left"
-msgstr ""
+msgstr "vlevo"
 
 #: src/common/command.c:2726
 msgid "right"
-msgstr ""
+msgstr "vpravo"
 
 #: src/common/command.c:2756
-#, fuzzy
 msgid "Open panels:\n"
-msgstr "Otevřené buffery:\n"
+msgstr "Otevřené panely:\n"
 
 #: src/common/command.c:2792
 msgid "Plugins loaded:\n"
@@ -3579,14 +3580,13 @@ msgid "%s failed to save configuration file\n"
 msgstr "%s selhalo uložení konfiguračního souboru\n"
 
 #: src/common/command.c:2971
-#, fuzzy
 msgid "Plugins options saved\n"
-msgstr "možnost(i) pluginu nalezeny\n"
+msgstr "Možnosti pluginů uloženy\n"
 
 #: src/common/command.c:2976
-#, fuzzy, c-format
+#, c-format
 msgid "%s failed to save plugins options\n"
-msgstr "%s selhalo uložení konfiguračního souboru\n"
+msgstr "%s selhalo uložení nastavení pluginů\n"
 
 #: src/common/command.c:3017
 msgid "No server.\n"
@@ -3844,7 +3844,6 @@ msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr "Čas běhu WeeChat: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, spuštěn %s%s"
 
 #: src/common/command.c:4122
-#, fuzzy
 msgid "Open windows:\n"
 msgstr "Otevřené okna:\n"
 
@@ -3907,6 +3906,9 @@ msgid ""
 "If another WeeChat process is using this file, try to run WeeChat\n"
 "with another home using \"--dir\" command line option.\n"
 msgstr ""
+"%s nemohu vytvořit/přidávat do logovacího souboru\n"
+"Pokud používá tento soubor jiný proces WeeChat, skuste WeeChat pustit\n"
+"s jiným domovským adresářem pomocí \"--dir\" volby příkazové řádky.\n"
 
 #: src/common/session.c:485
 #, c-format
@@ -4368,7 +4370,7 @@ msgstr "%s nedostatek paměti pro domácí adresář\n"
 #: src/common/weechat.c:490
 #, c-format
 msgid "%s home (%s) is not a directory\n"
-msgstr ""
+msgstr "%s domovský adresár (%s) není adresářem\n"
 
 #: src/common/weechat.c:499 src/common/weechat.c:523 src/common/weechat.c:539
 #, c-format
@@ -4393,9 +4395,8 @@ msgid "WeeChat Warning:"
 msgstr "WeeChat Upozornění:"
 
 #: src/common/weeconfig.c:116 src/common/weeconfig.c:117
-#, fuzzy
 msgid "save config file on exit"
-msgstr "uloží nastavení na disk"
+msgstr "uložit soubor s nastavením při ukončení"
 
 #: src/common/weeconfig.c:120 src/common/weeconfig.c:121
 msgid "set title for window (terminal for Curses GUI) with name and version"
@@ -5224,9 +5225,8 @@ msgid "block size for dcc packets in bytes (default: 65536)"
 msgstr "velikost bloku pro dcc pakety v bajtech (výchozí: 65536)"
 
 #: src/common/weeconfig.c:831 src/common/weeconfig.c:832
-#, fuzzy
 msgid "does not wait for ACK when sending file"
-msgstr "konvertovat mezery na podtržítka při odesílání souborů"
+msgstr "nečekat na ACK při odesílání souboru"
 
 #: src/common/weeconfig.c:835
 msgid "allowed ports for outgoing dcc"
@@ -5604,6 +5604,8 @@ msgid ""
 "%s you should now issue /save to write \"save_on_exit\" option in config "
 "file.\n"
 msgstr ""
+"%s mel by ste nyní provést /save pro zapsání volby \"save_on_exit\" "
+"dokonfiguračního souboru.\n"
 
 #: src/common/weeconfig.c:1748
 #, c-format
