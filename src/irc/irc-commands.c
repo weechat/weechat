@@ -358,7 +358,7 @@ t_irc_command irc_commands[] =
     NULL, 2, 0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_332 },
   { "333", N_("infos about topic (nick and date changed)"), "", "",
     NULL, 0, 0, 0, 1, NULL, NULL, irc_cmd_recv_333 },
-  { "338", N_("whois (host))"), "", "",
+  { "338", N_("whois (host)"), "", "",
     NULL, 0, 0, 0, 1, NULL, NULL, irc_cmd_recv_338 },
   { "341", N_("inviting"), "", "",
     NULL, 0, 0, 0, 1, NULL, NULL, irc_cmd_recv_341 },

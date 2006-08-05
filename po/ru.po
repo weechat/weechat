@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.0-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-08-05 21:32+0200\n"
+"POT-Creation-Date: 2006-08-05 22:09+0200\n"
 "PO-Revision-Date: 2006-07-25 20:00+0200\n"
 "Last-Translator: Stalwart <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1046,42 +1046,47 @@ msgid "infos about topic (nick and date changed)"
 msgstr "информация о теме канала (ник и дата смены)"
 
 #: src/irc/irc-commands.c:361
+#, fuzzy
+msgid "whois (host)"
+msgstr "whois (пользователь)"
+
+#: src/irc/irc-commands.c:363
 msgid "inviting"
 msgstr "приглашает"
 
-#: src/irc/irc-commands.c:363
+#: src/irc/irc-commands.c:365
 msgid "channel reop"
 msgstr "реоп канала"
 
-#: src/irc/irc-commands.c:365
+#: src/irc/irc-commands.c:367
 msgid "end of channel reop list"
 msgstr "конец реоп-списка"
 
-#: src/irc/irc-commands.c:367
+#: src/irc/irc-commands.c:369
 msgid "channel exception list"
 msgstr "список исключений каналов"
 
-#: src/irc/irc-commands.c:369
+#: src/irc/irc-commands.c:371
 msgid "end of channel exception list"
 msgstr "конец списка исключений канала"
 
-#: src/irc/irc-commands.c:371
+#: src/irc/irc-commands.c:373
 msgid "server version"
 msgstr "версия сервера"
 
-#: src/irc/irc-commands.c:373
+#: src/irc/irc-commands.c:375
 msgid "who"
 msgstr "кто"
 
-#: src/irc/irc-commands.c:375
+#: src/irc/irc-commands.c:377
 msgid "list of nicks on channel"
 msgstr "список ников на канале"
 
-#: src/irc/irc-commands.c:376
+#: src/irc/irc-commands.c:378
 msgid "channel :[[@|+]nick ...]"
 msgstr "канал :[[@|+]ник ...]"
 
-#: src/irc/irc-commands.c:377
+#: src/irc/irc-commands.c:379
 msgid ""
 "channel: name of channel\n"
 "   nick: nick on the channel"
@@ -1089,232 +1094,232 @@ msgstr ""
 "канал: название канала\n"
 "  ник: ник на канале"
 
-#: src/irc/irc-commands.c:380
+#: src/irc/irc-commands.c:382
 msgid "end of /names list"
 msgstr "конец списка /names"
 
-#: src/irc/irc-commands.c:382
+#: src/irc/irc-commands.c:384
 msgid "banlist"
 msgstr "баны"
 
-#: src/irc/irc-commands.c:384
+#: src/irc/irc-commands.c:386
 msgid "end of banlist"
 msgstr "конец бан-листа"
 
-#: src/irc/irc-commands.c:386
+#: src/irc/irc-commands.c:388
 msgid "connecting from"
 msgstr "подключается с"
 
-#: src/irc/irc-commands.c:388
+#: src/irc/irc-commands.c:390
 msgid "no such nick/channel"
 msgstr "нет такого ника/канала"
 
-#: src/irc/irc-commands.c:390
+#: src/irc/irc-commands.c:392
 msgid "no such server"
 msgstr "нет такого сервера"
 
-#: src/irc/irc-commands.c:392
+#: src/irc/irc-commands.c:394
 msgid "no such channel"
 msgstr "нет такого канала"
 
-#: src/irc/irc-commands.c:394
+#: src/irc/irc-commands.c:396
 msgid "cannot send to channel"
 msgstr "невозможно послать на канал"
 
-#: src/irc/irc-commands.c:396
+#: src/irc/irc-commands.c:398
 msgid "too many channels"
 msgstr "слишком много каналов"
 
-#: src/irc/irc-commands.c:398 src/irc/irc-commands.c:400
+#: src/irc/irc-commands.c:400 src/irc/irc-commands.c:402
 msgid "was no such nick"
 msgstr "небыло такого ника"
 
-#: src/irc/irc-commands.c:402
+#: src/irc/irc-commands.c:404
 msgid "no origin"
 msgstr "нет источника"
 
-#: src/irc/irc-commands.c:404
+#: src/irc/irc-commands.c:406
 msgid "no services"
 msgstr "нет сервисов"
 
-#: src/irc/irc-commands.c:406
+#: src/irc/irc-commands.c:408
 msgid "no recipient"
 msgstr "нет получателя"
 
-#: src/irc/irc-commands.c:408
+#: src/irc/irc-commands.c:410
 msgid "no text to send"
 msgstr "нет текста для отсылки"
 
-#: src/irc/irc-commands.c:410
+#: src/irc/irc-commands.c:412
 msgid "no toplevel"
 msgstr "нет верхнего уровня"
 
-#: src/irc/irc-commands.c:412
+#: src/irc/irc-commands.c:414
 msgid "wilcard in toplevel domain"
 msgstr "маска в домене верхнего уровня"
 
-#: src/irc/irc-commands.c:414
+#: src/irc/irc-commands.c:416
 msgid "unknown command"
 msgstr "неизвестная команда"
 
-#: src/irc/irc-commands.c:416
+#: src/irc/irc-commands.c:418
 msgid "MOTD is missing"
 msgstr "нет MOTD"
 
-#: src/irc/irc-commands.c:418
+#: src/irc/irc-commands.c:420
 msgid "no administrative info"
 msgstr "нет административной информации"
 
-#: src/irc/irc-commands.c:420
+#: src/irc/irc-commands.c:422
 msgid "file error"
 msgstr "ошибка файла"
 
-#: src/irc/irc-commands.c:422
+#: src/irc/irc-commands.c:424
 msgid "no nickname given"
 msgstr "не задан ник"
 
-#: src/irc/irc-commands.c:424
+#: src/irc/irc-commands.c:426
 msgid "erroneous nickname"
 msgstr "ошибочный ник"
 
-#: src/irc/irc-commands.c:426
+#: src/irc/irc-commands.c:428
 msgid "nickname already in use"
 msgstr "ник занят"
 
-#: src/irc/irc-commands.c:428
+#: src/irc/irc-commands.c:430
 msgid "nickname collision"
 msgstr "коллизия ника"
 
-#: src/irc/irc-commands.c:430
+#: src/irc/irc-commands.c:432
 msgid "resource unavailable"
 msgstr "ресурс недоступен"
 
-#: src/irc/irc-commands.c:432
+#: src/irc/irc-commands.c:434
 msgid "not authorized to change nickname"
 msgstr "у вас нет прав сменить ник"
 
-#: src/irc/irc-commands.c:434
+#: src/irc/irc-commands.c:436
 msgid "user not in channel"
 msgstr "пользователь не на канале"
 
-#: src/irc/irc-commands.c:436
+#: src/irc/irc-commands.c:438
 msgid "not on channel"
 msgstr "не на канале"
 
-#: src/irc/irc-commands.c:438
+#: src/irc/irc-commands.c:440
 msgid "user already on channel"
 msgstr "пользователь уже на канале"
 
-#: src/irc/irc-commands.c:440
+#: src/irc/irc-commands.c:442
 msgid "user not logged in"
 msgstr "пользователь не вошёл"
 
-#: src/irc/irc-commands.c:442
+#: src/irc/irc-commands.c:444
 msgid "summon has been disabled"
 msgstr "призыв отключен"
 
-#: src/irc/irc-commands.c:444
+#: src/irc/irc-commands.c:446
 msgid "users has been disabled"
 msgstr "команда users отключена"
 
-#: src/irc/irc-commands.c:446
+#: src/irc/irc-commands.c:448
 msgid "you are not registered"
 msgstr "вы не зарегистрированы"
 
-#: src/irc/irc-commands.c:448
+#: src/irc/irc-commands.c:450
 msgid "not enough parameters"
 msgstr "недостаточно параметров"
 
-#: src/irc/irc-commands.c:450
+#: src/irc/irc-commands.c:452
 msgid "you may not register"
 msgstr "вы не можете зарегистрироваться"
 
-#: src/irc/irc-commands.c:452
+#: src/irc/irc-commands.c:454
 msgid "your host isn't among the privileged"
 msgstr "ваш хост не находится в числе привилегированных"
 
-#: src/irc/irc-commands.c:454
+#: src/irc/irc-commands.c:456
 msgid "password incorrect"
 msgstr "неверный пароль"
 
-#: src/irc/irc-commands.c:456
+#: src/irc/irc-commands.c:458
 msgid "you are banned from this server"
 msgstr "вы забанены на этом сервере"
 
-#: src/irc/irc-commands.c:458
+#: src/irc/irc-commands.c:460
 msgid "channel key already set"
 msgstr "ключ канала уже установлен"
 
-#: src/irc/irc-commands.c:460
+#: src/irc/irc-commands.c:462
 msgid "forwarding to another channel"
 msgstr "пересылаю на другой канал"
 
-#: src/irc/irc-commands.c:462
+#: src/irc/irc-commands.c:464
 msgid "channel is already full"
 msgstr "канал переполнен"
 
-#: src/irc/irc-commands.c:464
+#: src/irc/irc-commands.c:466
 msgid "unknown mode char to me"
 msgstr "неизвестный режим"
 
-#: src/irc/irc-commands.c:466
+#: src/irc/irc-commands.c:468
 msgid "cannot join channel (invite only)"
 msgstr "невозможно зайти на канал (только по приглашению)"
 
-#: src/irc/irc-commands.c:468
+#: src/irc/irc-commands.c:470
 msgid "cannot join channel (banned from channel)"
 msgstr "невозможно зайти на канал (вы забанены)"
 
-#: src/irc/irc-commands.c:470
+#: src/irc/irc-commands.c:472
 msgid "cannot join channel (bad channel key)"
 msgstr "не могу зайти на канал (неправильный ключ)"
 
-#: src/irc/irc-commands.c:472
+#: src/irc/irc-commands.c:474
 msgid "bad channel mask"
 msgstr "неправильная маска"
 
-#: src/irc/irc-commands.c:474
+#: src/irc/irc-commands.c:476
 msgid "channel doesn't support modes"
 msgstr "канал не поддерживает режимы"
 
-#: src/irc/irc-commands.c:476
+#: src/irc/irc-commands.c:478
 msgid "you're not an IRC operator"
 msgstr "вы не являетесь IRC оператором"
 
-#: src/irc/irc-commands.c:478
+#: src/irc/irc-commands.c:480
 msgid "you're not channel operator"
 msgstr "вы не являетесь оператором канала"
 
-#: src/irc/irc-commands.c:480
+#: src/irc/irc-commands.c:482
 msgid "you can't kill a server!"
 msgstr "вы не можете убить сервер"
 
-#: src/irc/irc-commands.c:482
+#: src/irc/irc-commands.c:484
 msgid "your connection is restricted!"
 msgstr "ваше подлючение ограничено"
 
-#: src/irc/irc-commands.c:484
+#: src/irc/irc-commands.c:486
 msgid "user is immune from kick/deop"
 msgstr "у пользователя иммунитет к кику/деопу"
 
-#: src/irc/irc-commands.c:486
+#: src/irc/irc-commands.c:488
 msgid "network split"
 msgstr "расслоение сети"
 
-#: src/irc/irc-commands.c:488
+#: src/irc/irc-commands.c:490
 msgid "no O-lines for your host"
 msgstr "нет O-line'ов для вашего хоста"
 
-#: src/irc/irc-commands.c:490
+#: src/irc/irc-commands.c:492
 msgid "unknown mode flag"
 msgstr "неизвестный флаг режима"
 
-#: src/irc/irc-commands.c:492
+#: src/irc/irc-commands.c:494
 msgid "can't change mode for other users"
 msgstr "вы не можете менять режимы других пользователей"
 
-#: src/irc/irc-commands.c:494 src/irc/irc-commands.c:496
-#: src/irc/irc-commands.c:498 src/irc/irc-commands.c:500
+#: src/irc/irc-commands.c:496 src/irc/irc-commands.c:498
+#: src/irc/irc-commands.c:500 src/irc/irc-commands.c:502
 msgid "whois (secure connection)"
 msgstr "whois (защищённое соединение)"
 
@@ -1735,11 +1740,11 @@ msgstr "Получен CTCP %sVERSION%s от %s%s"
 #: src/irc/irc-recv.c:2219 src/irc/irc-recv.c:2249 src/irc/irc-recv.c:2270
 #: src/irc/irc-recv.c:2286 src/irc/irc-recv.c:2316 src/irc/irc-recv.c:2337
 #: src/irc/irc-recv.c:2352 src/irc/irc-recv.c:2566 src/irc/irc-recv.c:2974
-#: src/irc/irc-recv.c:4372 src/irc/irc-recv.c:4387 src/irc/irc-recv.c:4402
-#: src/irc/irc-recv.c:4417 src/irc/irc-recv.c:4430 src/irc/irc-recv.c:4495
-#: src/irc/irc-recv.c:4509 src/irc/irc-recv.c:4755 src/irc/irc-recv.c:4873
-#: src/irc/irc-recv.c:5010 src/irc/irc-recv.c:5025 src/irc/irc-recv.c:5131
-#: src/irc/irc-recv.c:5145
+#: src/irc/irc-recv.c:4428 src/irc/irc-recv.c:4443 src/irc/irc-recv.c:4458
+#: src/irc/irc-recv.c:4473 src/irc/irc-recv.c:4486 src/irc/irc-recv.c:4551
+#: src/irc/irc-recv.c:4565 src/irc/irc-recv.c:4811 src/irc/irc-recv.c:4929
+#: src/irc/irc-recv.c:5066 src/irc/irc-recv.c:5081 src/irc/irc-recv.c:5187
+#: src/irc/irc-recv.c:5201
 #, c-format
 msgid "%s cannot parse \"%s\" command\n"
 msgstr "%s не могу проанализировать команду \"%s\"\n"
@@ -1836,7 +1841,7 @@ msgstr "Не установлена тема канала для %s%s\n"
 msgid "Topic for %s%s%s is: "
 msgstr "Тема канала %s%s%s: "
 
-#: src/irc/irc-recv.c:4110 src/irc/irc-recv.c:4192 src/irc/irc-recv.c:4247
+#: src/irc/irc-recv.c:4110 src/irc/irc-recv.c:4192 src/irc/irc-recv.c:4303
 #, c-format
 msgid "%s cannot identify channel for \"%s\" command\n"
 msgstr "%s не могу опознать канал для команды \"%s\"\n"
@@ -1851,107 +1856,107 @@ msgstr "Тема установлена пользователем %s%s%s, %s"
 msgid "%s cannot identify date/time for \"%s\" command\n"
 msgstr "%s не могу опознать дату/время для команды \"%s\"\n"
 
-#: src/irc/irc-recv.c:4183 src/irc/irc-recv.c:4256
+#: src/irc/irc-recv.c:4183 src/irc/irc-recv.c:4312
 #, c-format
 msgid "%s cannot identify nickname for \"%s\" command\n"
 msgstr "%s не могу опознать ник для команды \"%s\"\n"
 
-#: src/irc/irc-recv.c:4232
+#: src/irc/irc-recv.c:4288
 #, c-format
 msgid "%s%s%s has invited %s%s%s on %s%s\n"
 msgstr "%s%s%s пригласил %s%s%s на канал %s%s\n"
 
-#: src/irc/irc-recv.c:4292
+#: src/irc/irc-recv.c:4348
 #, c-format
 msgid "Channel reop %s%s%s: %s%s\n"
 msgstr "Реоп канала %s%s%s: %s%s\n"
 
-#: src/irc/irc-recv.c:4769 src/irc/irc-recv.c:4919
+#: src/irc/irc-recv.c:4825 src/irc/irc-recv.c:4975
 #, c-format
 msgid "Nicks %s%s%s: %s["
 msgstr "Ники %s%s%s: %s["
 
-#: src/irc/irc-recv.c:4841
+#: src/irc/irc-recv.c:4897
 #, c-format
 msgid "%s cannot create nick \"%s\" for channel \"%s\"\n"
 msgstr "%s не могу создать ник \"%s\" для канала \"%s\"\n"
 
-#: src/irc/irc-recv.c:4940
+#: src/irc/irc-recv.c:4996
 #, c-format
 msgid ""
 "Channel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 msgstr ""
 "Канал %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 
-#: src/irc/irc-recv.c:4948
+#: src/irc/irc-recv.c:5004
 msgid "nicks"
 msgstr "ники"
 
-#: src/irc/irc-recv.c:4948
+#: src/irc/irc-recv.c:5004
 msgid "nick"
 msgstr "ник"
 
-#: src/irc/irc-recv.c:4953
+#: src/irc/irc-recv.c:5009
 msgid "ops"
 msgstr "опы"
 
-#: src/irc/irc-recv.c:4953
+#: src/irc/irc-recv.c:5009
 msgid "op"
 msgstr "оп"
 
-#: src/irc/irc-recv.c:4957
+#: src/irc/irc-recv.c:5013
 msgid "halfops"
 msgstr "полуопы"
 
-#: src/irc/irc-recv.c:4957
+#: src/irc/irc-recv.c:5013
 msgid "halfop"
 msgstr "полуоп"
 
-#: src/irc/irc-recv.c:4961
+#: src/irc/irc-recv.c:5017
 msgid "voices"
 msgstr "войсы"
 
-#: src/irc/irc-recv.c:4961
+#: src/irc/irc-recv.c:5017
 msgid "voice"
 msgstr "войс"
 
-#: src/irc/irc-recv.c:4965
+#: src/irc/irc-recv.c:5021
 msgid "normal"
 msgstr "обычные"
 
-#: src/irc/irc-recv.c:5065
+#: src/irc/irc-recv.c:5121
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned by "
 msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 
-#: src/irc/irc-recv.c:5100
+#: src/irc/irc-recv.c:5156
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned\n"
 msgstr "%s[%s%s%s] %s%s%s забанен\n"
 
-#: src/irc/irc-recv.c:5235
+#: src/irc/irc-recv.c:5291
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\"\n"
 msgstr "%s: ник \"%s\" уже используется, пробую второй ник \"%s\"\n"
 
-#: src/irc/irc-recv.c:5247
+#: src/irc/irc-recv.c:5303
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\"\n"
 msgstr "%s: ник \"%s\" уже используется, пробую третий ник \"%s\"\n"
 
-#: src/irc/irc-recv.c:5259
+#: src/irc/irc-recv.c:5315
 #, c-format
 msgid ""
 "%s: all declared nicknames are already in use, closing connection with "
 "server!\n"
 msgstr "%s: все предложеные ники заняты, отключаюсь от сервера!\n"
 
-#: src/irc/irc-recv.c:5269
+#: src/irc/irc-recv.c:5325
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\"\n"
 msgstr "%s: ник \"%s\" уже используется, пробую первый ник \"%s\"\n"
 
-#: src/irc/irc-recv.c:5281
+#: src/irc/irc-recv.c:5337
 msgid "unknown"
 msgstr "неизвестный"
 
