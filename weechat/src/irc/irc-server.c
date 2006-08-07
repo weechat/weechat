@@ -102,9 +102,7 @@ server_init (t_irc_server *server)
     server->ssl_connected = 0;
     server->unterminated_message = NULL;
     server->nick = NULL;
-    server->nick_modes = (char *) malloc (NUM_NICK_MODES + 1);
-    memset (server->nick_modes, ' ', NUM_NICK_MODES);
-    server->nick_modes[NUM_NICK_MODES] = '\0';
+    server->nick_modes = NULL;
     server->reconnect_start = 0;
     server->reconnect_join = 0;
     server->is_away = 0;
@@ -1755,8 +1753,8 @@ server_disconnect (t_irc_server *server, int reconnect)
     
     if (server->nick_modes)
     {
-        memset (server->nick_modes, ' ', NUM_NICK_MODES);
-        server->nick_modes[NUM_NICK_MODES] = '\0';
+        free (server->nick_modes);
+        server->nick_modes = NULL;
     }
     server->is_away = 0;
     server->away_time = 0;

@@ -1992,6 +1992,10 @@ plugin->msg_handler_add (plugin, "KICK", &amp;msg_kick, NULL, NULL);
                           <entry>Grundfunktionen</entry>
                         </row>
                         <row>
+                          <entry><literal>%m</literal></entry>
+                          <entry>Nicknamen des gegenwärtigen Servers</entry>
+                        </row>
+                        <row>
                           <entry><literal>%n</literal></entry>
                           <entry>Nicknamen des gegenwärtigen Channels</entry>
                         </row>

@@ -1,3 +1,4 @@
+./src/irc/irc-mode.c
 ./src/irc/irc-nick.c
 ./src/irc/irc-server.c
 ./src/irc/irc-channel.c
@@ -67,6 +68,8 @@
 ./src/common/session.h
 ./src/common/utf8.c
 ./src/common/utf8.h
+./src/common/util.c
+./src/common/util.h
 ./src/common/weechat.c
 ./src/common/weechat.h
 ./src/common/weeconfig.c

@@ -99,6 +99,7 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
             gui_buffers->all_servers = 1;
         if (cfg_log_auto_server)
             gui_log_start (gui_buffers);
+        gui_buffers->completion.server = server;
         return gui_buffers;
     }
     

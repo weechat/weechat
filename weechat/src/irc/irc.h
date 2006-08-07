@@ -85,21 +85,6 @@ struct t_irc_nick
 #define CHANNEL_TYPE_PRIVATE  1
 #define CHANNEL_TYPE_DCC_CHAT 2
 
-#define NUM_CHANNEL_MODES       8
-#define CHANNEL_MODE_INVITE     0
-#define CHANNEL_MODE_KEY        1
-#define CHANNEL_MODE_LIMIT      2
-#define CHANNEL_MODE_MODERATED  3
-#define CHANNEL_MODE_NO_MSG_OUT 4
-#define CHANNEL_MODE_SECRET     5
-#define CHANNEL_MODE_TOPIC      6
-#define CHANNEL_MODE_PRIVATE    7
-#define CHANNEL_SET_MODE(channel, set, mode) \
-    if (set) \
-        channel->modes[mode] = channel_modes[mode]; \
-    else \
-        channel->modes[mode] = ' ';
-
 typedef struct t_irc_channel t_irc_channel;
 
 struct t_irc_channel
@@ -124,20 +109,6 @@ struct t_irc_channel
 };
 
 /* server types */
-
-#define NUM_NICK_MODES           7
-#define NICK_MODE_AWAY           0
-#define NICK_MODE_INVISIBLE      1
-#define NICK_MODE_WALLOPS        2
-#define NICK_MODE_RESTRICTED     3
-#define NICK_MODE_OPERATOR       4
-#define NICK_MODE_LOCAL_OPERATOR 5
-#define NICK_MODE_SERVER_NOTICES 6
-#define NICK_SET_MODE(server, set, mode) \
-    if (set) \
-        server->nick_modes[mode] = nick_modes[mode]; \
-    else \
-        server->nick_modes[mode] = ' ';
 
 typedef struct t_irc_server t_irc_server;
 
@@ -431,6 +402,11 @@ extern void nick_count (t_irc_channel *, int *, int *, int *, int *, int *);
 extern int nick_get_max_length (t_irc_channel *);
 extern void nick_set_away (t_irc_channel *, t_irc_nick *, int);
 extern void nick_print_log (t_irc_nick *);
+
+/* mode functions (irc-mode.c) */
+
+extern void irc_mode_channel_set (t_irc_channel *, char *);
+extern void irc_mode_user_set (t_irc_server *, char *);
 
 /* DCC functions (irc-dcc.c) */
 

@@ -2009,6 +2009,10 @@ plugin->msg_handler_add (plugin, "KICK", &amp;msg_kick, NULL, NULL);
                           <entry>key functions</entry>
                         </row>
                         <row>
+                          <entry><literal>%m</literal></entry>
+                          <entry>nick on current server</entry>
+                        </row>
+                        <row>
                           <entry><literal>%n</literal></entry>
                           <entry>nicks of current channel</entry>
                         </row>

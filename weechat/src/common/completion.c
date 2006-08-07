@@ -349,6 +349,19 @@ completion_list_add_key_cmd (t_completion *completion)
 }
 
 /*
+ * completion_list_add_self_nick: add self nick on server to completion list
+ */
+
+void
+completion_list_add_self_nick (t_completion *completion)
+{
+    if (completion->server)
+    {
+        completion_list_add (completion, ((t_irc_server *)(completion->server))->nick);
+    }
+}
+
+/*
  * completion_list_add_channel_nicks: add channel nicks to completion list
  */
 
@@ -754,6 +767,9 @@ completion_build_list_template (t_completion *completion, char *template)
                             break;
                         case 'k': /* key cmd/funtcions*/
                             completion_list_add_key_cmd (completion);
+                            break;
+                        case 'm': /* self nickname */
+                            completion_list_add_self_nick (completion);
                             break;
                         case 'n': /* channel nicks */
                             completion_list_add_channel_nicks (completion);

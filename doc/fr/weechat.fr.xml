@@ -2050,6 +2050,10 @@ plugin->msg_handler_add (plugin, "KICK", &amp;msg_kick, NULL, NULL);
                           <entry>fonctions associées aux touches</entry>
                         </row>
                         <row>
+                          <entry><literal>%m</literal></entry>
+                          <entry>pseudo sur le serveur courant</entry>
+                        </row>
+                        <row>
                           <entry><literal>%n</literal></entry>
                           <entry>pseudos du canal courant</entry>
                         </row>

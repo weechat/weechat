@@ -834,6 +834,7 @@ weechat_plugin_get_server_info (t_weechat_plugin *plugin)
 		new_server_info->is_connected = ptr_server->is_connected;
 		new_server_info->ssl_connected = ptr_server->ssl_connected;
 		new_server_info->nick = (ptr_server->nick) ? strdup (ptr_server->nick) : strdup ("");
+                new_server_info->nick_modes = (ptr_server->nick_modes) ? strdup (ptr_server->nick_modes) : strdup ("");
 		new_server_info->is_away = ptr_server->is_away;
 		new_server_info->away_time = ptr_server->away_time;
 		new_server_info->lag = ptr_server->lag;

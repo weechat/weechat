@@ -1,9 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-08-05
+ChangeLog - 2006-08-08
 
 Version 0.2.0 (under dev!):
+   * added missing modes (channel & user), now all modes are allowed (bug #16606)
+   * added "%m" for completion with self nick (on current server)
    * added missing IRC command 338
    * fixed DCC restore after /upgrade (order is now correctly saved)
    * fixed away after server disconnection (now away is set again when

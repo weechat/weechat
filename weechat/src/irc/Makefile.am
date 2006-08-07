@@ -26,6 +26,7 @@ lib_weechat_irc_a_SOURCES = irc.h \
                             irc-server.c \
                             irc-channel.c \
                             irc-nick.c \
+                            irc-mode.c \
                             irc-dcc.c \
                             irc-ignore.c \
                             irc-display.c

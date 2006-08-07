@@ -61,9 +61,7 @@ channel_new (t_irc_server *server, int channel_type, char *channel_name)
     new_channel->dcc_chat = NULL;
     new_channel->name = strdup (channel_name);
     new_channel->topic = NULL;
-    new_channel->modes = (char *) malloc (NUM_CHANNEL_MODES + 1);
-    memset (new_channel->modes, ' ', NUM_CHANNEL_MODES);
-    new_channel->modes[NUM_CHANNEL_MODES] = '\0';
+    new_channel->modes = NULL;
     new_channel->limit = 0;
     new_channel->key = NULL;
     new_channel->nicks_count = 0;
@@ -127,6 +125,10 @@ channel_free (t_irc_server *server, t_irc_channel *channel)
         free (channel->name);
     if (channel->topic)
         free (channel->topic);
+    if (channel->modes)
+        free (channel->modes);
+    if (channel->key)
+        free (channel->key);
     nick_free_all (channel);
     if (channel->away_message)
         free (channel->away_message);

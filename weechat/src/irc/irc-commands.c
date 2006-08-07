@@ -156,7 +156,7 @@ t_irc_command irc_commands[] =
        "  s: mark a user for receive server notices\n"
        "  w: user receives wallops\n"
        "  o: operator flag"),
-    "", 1, MAX_ARGS, 0, 1, NULL, irc_cmd_send_mode, irc_cmd_recv_mode },
+    "%c|%m", 1, MAX_ARGS, 0, 1, NULL, irc_cmd_send_mode, irc_cmd_recv_mode },
   { "motd", N_("get the \"Message Of The Day\""),
     N_("[target]"),
     N_("target: server name"),

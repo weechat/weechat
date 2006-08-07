@@ -107,6 +107,7 @@ struct t_plugin_server_info
     int is_connected;               /* 1 if WeeChat is connected to server  */
     int ssl_connected;              /* = 1 if connected with SSL            */
     char *nick;                     /* current nickname                     */
+    char *nick_modes;               /* nick modes                           */
     int is_away;                    /* 1 is user is marker as away          */
     time_t away_time;               /* time() when user marking as away     */
     int lag;                        /* lag (in milliseconds)                */

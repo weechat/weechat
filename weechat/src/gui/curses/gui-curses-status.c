@@ -44,7 +44,7 @@ gui_status_draw (t_gui_buffer *buffer, int erase)
     t_gui_window *ptr_win;
     t_weechat_hotlist *ptr_hotlist;
     char format[32], str_nicks[32], *more;
-    int i, first_mode, x, server_pos, server_total;
+    int x, server_pos, server_total;
     int display_name, names_count;
     
     /* make gcc happy */
@@ -171,28 +171,10 @@ gui_status_draw (t_gui_buffer *buffer, int erase)
                     wprintw (GUI_CURSES(ptr_win)->win_status, "(");
                     gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
                                                   COLOR_WIN_STATUS);
-                    i = 0;
-                    first_mode = 1;
-                    while (CHANNEL(ptr_win->buffer)->modes[i])
-                    {
-                        if (CHANNEL(ptr_win->buffer)->modes[i] != ' ')
-                        {
-                            if (first_mode)
-                            {
-                                wprintw (GUI_CURSES(ptr_win)->win_status, "+");
-                                first_mode = 0;
-                            }
-                            wprintw (GUI_CURSES(ptr_win)->win_status, "%c",
-                                     CHANNEL(ptr_win->buffer)->modes[i]);
-                        }
-                        i++;
-                    }
-                    if (CHANNEL(ptr_win->buffer)->modes[CHANNEL_MODE_KEY] != ' ')
-                        wprintw (GUI_CURSES(ptr_win)->win_status, ",%s",
-                                 CHANNEL(ptr_win->buffer)->key);
-                    if (CHANNEL(ptr_win->buffer)->modes[CHANNEL_MODE_LIMIT] != ' ')
-                        wprintw (GUI_CURSES(ptr_win)->win_status, ",%d",
-                                 CHANNEL(ptr_win->buffer)->limit);
+                    if (CHANNEL(ptr_win->buffer)->modes
+                        && (strcmp (CHANNEL(ptr_win->buffer)->modes, "+") != 0))
+                        wprintw (GUI_CURSES(ptr_win)->win_status, "%s",
+                                 CHANNEL(ptr_win->buffer)->modes);
                     gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
                                                   COLOR_WIN_STATUS_DELIMITERS);
                     wprintw (GUI_CURSES(ptr_win)->win_status, ")");

@@ -25,6 +25,7 @@
 #endif
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "../../common/weechat.h"
 #include "../gui.h"
@@ -73,8 +74,8 @@ gui_input_set_color (t_gui_window *window, int irc_color)
 int
 gui_input_get_prompt_length (t_gui_window *window, char *nick)
 {
-    char *pos, saved_char, *modes;
-    int char_size, length, mode_found;
+    char *pos, saved_char;
+    int char_size, length;
     
     length = 0;
     pos = cfg_look_input_format;
@@ -99,18 +100,9 @@ gui_input_get_prompt_length (t_gui_window *window, char *nick)
                     case 'm':
                         if (SERVER(window->buffer))
                         {
-                            mode_found = 0;
-                            for (modes = SERVER(window->buffer)->nick_modes;
-                                 modes && modes[0]; modes++)
-                            {
-                                if (modes[0] != ' ')
-                                {
-                                    length++;
-                                    mode_found = 1;
-                                }
-                            }
-                            if (mode_found)
-                                length++;
+                            if (SERVER(window->buffer)->nick_modes
+                                && SERVER(window->buffer)->nick_modes[0])
+                                length += strlen (SERVER(window->buffer)->nick_modes);
                         }
                         pos++;
                         break;
@@ -155,8 +147,8 @@ gui_input_get_prompt_length (t_gui_window *window, char *nick)
 void
 gui_input_draw_prompt (t_gui_window *window, char *nick)
 {
-    char *pos, saved_char, *modes;
-    int char_size, mode_found;
+    char *pos, saved_char;
+    int char_size;
     
     wmove (GUI_CURSES(window)->win_input, 0, 0);
     pos = cfg_look_input_format;
@@ -191,25 +183,13 @@ gui_input_draw_prompt (t_gui_window *window, char *nick)
                     case 'm':
                         if (SERVER(window->buffer))
                         {
-                            mode_found = 0;
-                            for (modes = SERVER(window->buffer)->nick_modes;
-                                 modes && modes[0]; modes++)
-                            {
-                                if (modes[0] != ' ')
-                                    mode_found = 1;
-                            }
-                            if (mode_found)
+                            if (SERVER(window->buffer)->nick_modes
+                                && SERVER(window->buffer)->nick_modes[0])
                             {
                                 gui_window_set_weechat_color (GUI_CURSES(window)->win_input,
                                                               COLOR_WIN_INPUT);
-                                wprintw (GUI_CURSES(window)->win_input, "+");
-                                for (modes = SERVER(window->buffer)->nick_modes;
-                                     modes && modes[0]; modes++)
-                                {
-                                    if (modes[0] != ' ')
-                                        wprintw (GUI_CURSES(window)->win_input, "%c",
-                                                 modes[0]);
-                                }
+                                wprintw (GUI_CURSES(window)->win_input, "%s",
+                                         SERVER(window->buffer)->nick_modes);
                             }
                         }
                         pos++;

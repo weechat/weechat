@@ -6,96 +6,96 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.0-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-08-05 22:09+0200\n"
-"PO-Revision-Date: 2006-08-05 22:09+0200\n"
+"POT-Creation-Date: 2006-08-08 00:08+0200\n"
+"PO-Revision-Date: 2006-08-07 00:24+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/irc/irc-server.c:192 src/common/weeconfig.c:2295
+#: src/irc/irc-server.c:190 src/common/weeconfig.c:2295
 msgid "Unable to get user's name"
 msgstr "Impossible de déterminer le nom d'utilisateur"
 
-#: src/irc/irc-server.c:260
+#: src/irc/irc-server.c:258
 #, c-format
 msgid "%s cannot allocate new server\n"
 msgstr "%s impossible d'allouer un nouveau serveur\n"
 
-#: src/irc/irc-server.c:593
+#: src/irc/irc-server.c:591
 #, c-format
 msgid "%s error sending data to IRC server\n"
 msgstr "%s erreur d'envoi de données au serveur IRC\n"
 
-#: src/irc/irc-server.c:615 src/irc/irc-server.c:628 src/irc/irc-server.c:675
-#: src/irc/irc-server.c:688
+#: src/irc/irc-server.c:613 src/irc/irc-server.c:626 src/irc/irc-server.c:673
+#: src/irc/irc-server.c:686
 #, c-format
 msgid "%s not enough memory for received IRC message\n"
 msgstr "%s mémoire insuffisante pour un message IRC reçu\n"
 
-#: src/irc/irc-server.c:806
+#: src/irc/irc-server.c:804
 #, c-format
 msgid "%s Command \"%s\" failed!\n"
 msgstr "%s La commande \"%s\" a échoué !\n"
 
-#: src/irc/irc-server.c:812
+#: src/irc/irc-server.c:810
 #, c-format
 msgid "%s No command to execute!\n"
 msgstr "%s Pas de commande à exécuter !\n"
 
-#: src/irc/irc-server.c:818
+#: src/irc/irc-server.c:816
 #, c-format
 msgid "%s Unknown command: cmd=\"%s\", host=\"%s\", args=\"%s\"\n"
 msgstr "%s Commande inconnue: cmd=\"%s\", hote=\"%s\", params=\"%s\"\n"
 
-#: src/irc/irc-server.c:869
+#: src/irc/irc-server.c:867
 #, c-format
 msgid "%s cannot read data from socket, disconnecting from server...\n"
 msgstr ""
 "%s impossible de lire des données sur la socket, déconnexion du serveur...\n"
 
-#: src/irc/irc-server.c:950
+#: src/irc/irc-server.c:948
 #, c-format
 msgid "%s: Reconnecting to server in %d seconds\n"
 msgstr "%s: Reconnexion au serveur dans %d secondes\n"
 
-#: src/irc/irc-server.c:984
+#: src/irc/irc-server.c:982
 #, c-format
 msgid "%s gnutls handshake failed\n"
 msgstr "%s le handshake gnutls a échoué\n"
 
-#: src/irc/irc-server.c:1001
+#: src/irc/irc-server.c:999
 #, c-format
 msgid "%s proxy address \"%s\" not found\n"
 msgstr "%s adresse du proxy \"%s\" introuvable\n"
 
-#: src/irc/irc-server.c:1005
+#: src/irc/irc-server.c:1003
 #, c-format
 msgid "%s address \"%s\" not found\n"
 msgstr "%s adresse \"%s\" introuvable\n"
 
-#: src/irc/irc-server.c:1015
+#: src/irc/irc-server.c:1013
 #, c-format
 msgid "%s proxy IP address not found\n"
 msgstr "%s adresse IP du proxy introuvable\n"
 
-#: src/irc/irc-server.c:1018
+#: src/irc/irc-server.c:1016
 #, c-format
 msgid "%s IP address not found\n"
 msgstr "%s adresse IP introuvable\n"
 
-#: src/irc/irc-server.c:1027
+#: src/irc/irc-server.c:1025
 #, c-format
 msgid "%s proxy connection refused\n"
 msgstr "%s connexion au proxy refusée\n"
 
-#: src/irc/irc-server.c:1030
+#: src/irc/irc-server.c:1028
 #, c-format
 msgid "%s connection refused\n"
 msgstr "%s connexion refusée\n"
 
-#: src/irc/irc-server.c:1038
+#: src/irc/irc-server.c:1036
 #, c-format
 msgid ""
 "%s proxy fails to establish connection to server (check username/password if "
@@ -104,12 +104,12 @@ msgstr ""
 "%s le proxy n'a pas pu se connecter au serveur (vérifiez l'utilisateur/mot "
 "de passe si utilisés)\n"
 
-#: src/irc/irc-server.c:1048
+#: src/irc/irc-server.c:1046
 #, c-format
 msgid "%s unable to set local hostname/IP\n"
 msgstr "%s impossible de paramétrer le nom/IP local\n"
 
-#: src/irc/irc-server.c:1563
+#: src/irc/irc-server.c:1561
 #, c-format
 msgid ""
 "%s cannot connect with SSL since WeeChat was not built with GNUtls support\n"
@@ -117,57 +117,57 @@ msgstr ""
 "%s impossible de se connecter en SSL car WeeChat n'a pas été construit avec "
 "le support GNUtls\n"
 
-#: src/irc/irc-server.c:1572
+#: src/irc/irc-server.c:1570
 #, c-format
 msgid "%s: connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"
 msgstr "%s: connexion au serveur %s:%d%s%s via le proxy %s %s:%d%s...\n"
 
-#: src/irc/irc-server.c:1578
+#: src/irc/irc-server.c:1576
 #, c-format
 msgid "Connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"
 msgstr "Connexion au serveur %s:%d%s%s via le proxy %s %s:%d%s...\n"
 
-#: src/irc/irc-server.c:1588
+#: src/irc/irc-server.c:1586
 #, c-format
 msgid "%s: connecting to server %s:%d%s%s...\n"
 msgstr "%s: connexion au serveur %s:%d%s%s...\n"
 
-#: src/irc/irc-server.c:1592
+#: src/irc/irc-server.c:1590
 #, c-format
 msgid "Connecting to server %s:%d%s%s...\n"
 msgstr "Connexion au serveur %s:%d%s%s...\n"
 
-#: src/irc/irc-server.c:1610
+#: src/irc/irc-server.c:1608
 #, c-format
 msgid "%s gnutls init error\n"
 msgstr "%s erreur d'initialisation gnutls\n"
 
-#: src/irc/irc-server.c:1625
+#: src/irc/irc-server.c:1623
 #, c-format
 msgid "%s cannot create pipe\n"
 msgstr "%s impossible de créer le pipe\n"
 
-#: src/irc/irc-server.c:1640
+#: src/irc/irc-server.c:1638
 #, c-format
 msgid "%s cannot create socket\n"
 msgstr "%s impossible de créer la socket\n"
 
-#: src/irc/irc-server.c:1651
+#: src/irc/irc-server.c:1649
 #, c-format
 msgid "%s cannot set socket option \"SO_REUSEADDR\"\n"
 msgstr "%s impossible de paramétrer l'option socket \"SO_REUSEADDR\"\n"
 
-#: src/irc/irc-server.c:1662
+#: src/irc/irc-server.c:1660
 #, c-format
 msgid "%s cannot set socket option \"SO_KEEPALIVE\"\n"
 msgstr "%s impossible de paramétrer l'option socket \"SO_KEEPALIVE\"\n"
 
-#: src/irc/irc-server.c:1693
+#: src/irc/irc-server.c:1691
 #, c-format
 msgid "%s: Reconnecting to server...\n"
 msgstr "%s: Reconnexion au serveur...\n"
 
-#: src/irc/irc-server.c:1744 src/irc/irc-server.c:1753
+#: src/irc/irc-server.c:1742 src/irc/irc-server.c:1751
 msgid "Disconnected from server!\n"
 msgstr "Déconnecté du serveur !\n"
 
@@ -1356,7 +1356,7 @@ msgstr "désactivé"
 msgid " (temporary server, will not be saved)"
 msgstr " (serveur temporaire, ne sera pas sauvé)"
 
-#: src/irc/irc-display.c:393 src/irc/irc-display.c:424 src/irc/irc-recv.c:3641
+#: src/irc/irc-display.c:393 src/irc/irc-display.c:424 src/irc/irc-recv.c:3089
 msgid "seconds"
 msgstr "secondes"
 
@@ -1441,9 +1441,9 @@ msgstr "%s, compilé le %s %s\n"
 msgid "You have been invited to %s%s%s by %s%s\n"
 msgstr "Vous avez été invité sur %s%s%s par %s%s\n"
 
-#: src/irc/irc-recv.c:424 src/irc/irc-recv.c:522 src/irc/irc-recv.c:1283
-#: src/irc/irc-recv.c:1696 src/irc/irc-recv.c:1976 src/irc/irc-recv.c:4023
-#: src/irc/irc-recv.c:4044
+#: src/irc/irc-recv.c:424 src/irc/irc-recv.c:522 src/irc/irc-recv.c:720
+#: src/irc/irc-recv.c:1143 src/irc/irc-recv.c:1423 src/irc/irc-recv.c:3487
+#: src/irc/irc-recv.c:3508
 #, c-format
 msgid "%s channel \"%s\" not found for \"%s\" command\n"
 msgstr "%s canal \"%s\" non trouvé pour la commande \"%s\"\n"
@@ -1473,492 +1473,310 @@ msgstr "%s%s%s a tué %s%s%s du serveur"
 msgid "%s host \"%s\" not found for \"%s\" command\n"
 msgstr "%s la machine \"%s\" n'existe pas pour la commande \"%s\"\n"
 
-#: src/irc/irc-recv.c:685
-msgid "sets ban on"
-msgstr "instaure un bannissement sur"
-
-#: src/irc/irc-recv.c:686
-msgid "removes ban on"
-msgstr "supprime le banissement sur"
-
-#: src/irc/irc-recv.c:711
-msgid "sets realname ban on"
-msgstr "instaure un bannissement sur le nom réel"
-
-#: src/irc/irc-recv.c:712
-msgid "removes realname ban on"
-msgstr "supprime le banissement sur le nom réel"
-
-#: src/irc/irc-recv.c:737
-msgid "sets ban exemption on"
-msgstr "définit une exception de banissement sur"
-
-#: src/irc/irc-recv.c:738
-msgid "removes ban exemption on"
-msgstr "supprime l'exception de banissement sur"
-
-#: src/irc/irc-recv.c:763
-msgid "sets mode +f"
-msgstr "définit le mode +f"
-
-#: src/irc/irc-recv.c:764
-msgid "removes mode +f"
-msgstr "supprime le mode +f"
-
-#: src/irc/irc-recv.c:789
-msgid "gives half channel operator status to"
-msgstr "donne le droit demi-opérateur à"
-
-#: src/irc/irc-recv.c:790
-msgid "removes half channel operator status from"
-msgstr "supprime le droit demi-opérateur à"
-
-#: src/irc/irc-recv.c:818
-msgid "sets invite-only channel flag"
-msgstr "définit le canal en mode invité seulement"
-
-#: src/irc/irc-recv.c:819
-msgid "removes invite-only channel flag"
-msgstr "supprime le mode invité seulement pour le canal"
-
-#: src/irc/irc-recv.c:837
-msgid "sets invite-only exemption on"
-msgstr "définit une exception d'invitation sur"
-
-#: src/irc/irc-recv.c:838
-msgid "removes invite-only exemption on"
-msgstr "supprime l'exception d'invitation sur"
-
-#: src/irc/irc-recv.c:863
-msgid "sets channel key to"
-msgstr "définit la clé du canal à"
-
-#: src/irc/irc-recv.c:864
-msgid "removes channel key"
-msgstr "supprime la clé du canal"
-
-#: src/irc/irc-recv.c:896
-msgid "sets the user limit to"
-msgstr "définit la limite d'utilisateurs à"
-
-#: src/irc/irc-recv.c:897
-msgid "removes user limit"
-msgstr "supprime la limite d'utilisateurs"
-
-#: src/irc/irc-recv.c:923
-msgid "sets moderated channel flag"
-msgstr "instaure la modération sur le canal"
-
-#: src/irc/irc-recv.c:924
-msgid "removes moderated channel flag"
-msgstr "supprime la modération sur le canal"
-
-#: src/irc/irc-recv.c:935
-msgid "sets messages from channel only flag"
-msgstr "interdit aux utilisateurs en dehors du canal d'y écrire"
-
-#: src/irc/irc-recv.c:936
-msgid "removes messages from channel only flag"
-msgstr "autorise tout utilisateur à écrire sur le canal"
-
-#: src/irc/irc-recv.c:954
-msgid "gives channel operator status to"
-msgstr "donne le droit opérateur à"
-
-#: src/irc/irc-recv.c:955
-msgid "removes channel operator status from"
-msgstr "supprime le droit opérateur à"
-
-#: src/irc/irc-recv.c:983
-msgid "sets private channel flag"
-msgstr "définit le canal comme privé"
-
-#: src/irc/irc-recv.c:984
-msgid "removes private channel flag"
-msgstr "supprime le mode privé pour le canal"
-
-#: src/irc/irc-recv.c:1002
-msgid "sets quiet on"
-msgstr "définit le mode muet sur"
-
-#: src/irc/irc-recv.c:1003
-msgid "removes quiet on"
-msgstr "supprime le mode muet sur"
-
-#: src/irc/irc-recv.c:1021
-msgid "sets secret channel flag"
-msgstr "définit le canal comme secret"
-
-#: src/irc/irc-recv.c:1022
-msgid "removes secret channel flag"
-msgstr "supprime le mode secret pour le canal"
-
-#: src/irc/irc-recv.c:1033
-msgid "sets topic protection"
-msgstr "active la protection du titre"
-
-#: src/irc/irc-recv.c:1034
-msgid "removes topic protection"
-msgstr "supprime la protection du titre"
-
-#: src/irc/irc-recv.c:1052
-msgid "gives voice to"
-msgstr "donne la voix à"
-
-#: src/irc/irc-recv.c:1053
-msgid "removes voice from"
-msgstr "supprime la voix de"
-
-#: src/irc/irc-recv.c:1138
-msgid "sets away"
-msgstr "active l'absence"
-
-#: src/irc/irc-recv.c:1139
-msgid "removes away"
-msgstr "supprime l'absence"
-
-#: src/irc/irc-recv.c:1149
-msgid "sets invisible"
-msgstr "active l'invisibilité"
-
-#: src/irc/irc-recv.c:1150
-msgid "removes invisible"
-msgstr "supprime l'invisibilité"
-
-#: src/irc/irc-recv.c:1160
-msgid "sets wallops"
-msgstr "active wallops"
-
-#: src/irc/irc-recv.c:1161
-msgid "removes wallops"
-msgstr "supprime wallops"
-
-#: src/irc/irc-recv.c:1171
-msgid "sets restricted"
-msgstr "active la restriction"
-
-#: src/irc/irc-recv.c:1172
-msgid "removes restricted"
-msgstr "supprime la restriction"
-
-#: src/irc/irc-recv.c:1182
-msgid "sets operator"
-msgstr "active l'opérateur"
-
-#: src/irc/irc-recv.c:1183
-msgid "removes operator"
-msgstr "supprime l'opérateur"
-
-#: src/irc/irc-recv.c:1193
-msgid "sets local operator"
-msgstr "active l'opérateur local"
-
-#: src/irc/irc-recv.c:1194
-msgid "removes local operator"
-msgstr "supprime l'opérateur local"
-
-#: src/irc/irc-recv.c:1204
-msgid "sets server notices"
-msgstr "active les notices du serveur"
-
-#: src/irc/irc-recv.c:1205
-msgid "removes server notices"
-msgstr "supprime les notices du serveur"
-
-#: src/irc/irc-recv.c:1241 src/irc/irc-recv.c:1315 src/irc/irc-recv.c:1775
-#: src/irc/irc-recv.c:2590
+#: src/irc/irc-recv.c:664 src/irc/irc-recv.c:762 src/irc/irc-recv.c:1222
+#: src/irc/irc-recv.c:2037
 #, c-format
 msgid "%s \"%s\" command received without host\n"
 msgstr "%s commande \"%s\" reçue sans host\n"
 
-#: src/irc/irc-recv.c:1251
+#: src/irc/irc-recv.c:674
 #, c-format
 msgid "%s \"%s\" command received without channel or nickname\n"
 msgstr "%s commande \"%s\" reçue sans canal ou utilisateur\n"
 
-#: src/irc/irc-recv.c:1354
+#: src/irc/irc-recv.c:702
+#, c-format
+msgid "Mode %s%s %s[%s%s%s]%s by %s%s\n"
+msgstr "Mode %s%s %s[%s%s%s]%s par %s%s\n"
+
+#: src/irc/irc-recv.c:731
+#, c-format
+msgid "User mode %s%s %s[%s%s%s]\n"
+msgstr "Mode utilisateur %s%s %s[%s%s%s]\n"
+
+#: src/irc/irc-recv.c:801
 #, c-format
 msgid "You are now known as %s%s\n"
 msgstr "Vous êtes maintenant connu sous le nom %s%s\n"
 
-#: src/irc/irc-recv.c:1358
+#: src/irc/irc-recv.c:805
 #, c-format
 msgid "%s%s%s is now known as %s%s\n"
 msgstr "%s%s%s est maintenant connu sous le nom %s%s\n"
 
-#: src/irc/irc-recv.c:1426
+#: src/irc/irc-recv.c:873
 #, c-format
 msgid "%s nickname not found for \"%s\" command\n"
 msgstr "%s utilisateur non trouvé pour la commande \"%s\"\n"
 
-#: src/irc/irc-recv.c:1440
+#: src/irc/irc-recv.c:887
 #, c-format
 msgid "CTCP %sVERSION%s reply from %s%s%s: %s\n"
 msgstr "CTCP %sVERSION%s réponse de %s%s%s: %s\n"
 
-#: src/irc/irc-recv.c:1474
+#: src/irc/irc-recv.c:921
 #, c-format
 msgid "CTCP %sPING%s reply from %s%s%s: %ld.%ld seconds\n"
 msgstr "CTCP %sPING%s réponse de %s%s%s: %ld.%ld secondes\n"
 
-#: src/irc/irc-recv.c:1497 src/irc/irc-recv.c:2403 src/irc/irc-recv.c:2515
+#: src/irc/irc-recv.c:944 src/irc/irc-recv.c:1850 src/irc/irc-recv.c:1962
 #, c-format
 msgid "%s cannot create new private window \"%s\"\n"
 msgstr "%s impossible de créer la fenêtre privée \"%s\"\n"
 
-#: src/irc/irc-recv.c:1522 src/irc/irc-recv.c:2535
+#: src/irc/irc-recv.c:969 src/irc/irc-recv.c:1982
 msgid "Private"
 msgstr "Privé"
 
-#: src/irc/irc-recv.c:1598
+#: src/irc/irc-recv.c:1045
 #, c-format
 msgid "%s \"%s\" command received without host or channel\n"
 msgstr "%s commande \"%s\" reçue sans host ou canal\n"
 
-#: src/irc/irc-recv.c:1626
+#: src/irc/irc-recv.c:1073
 #, c-format
 msgid "%s%s %s(%s%s%s)%s has left %s%s"
 msgstr "%s%s %s(%s%s%s)%s a quitté %s%s"
 
-#: src/irc/irc-recv.c:1825 src/irc/irc-recv.c:1951 src/irc/irc-recv.c:2431
+#: src/irc/irc-recv.c:1272 src/irc/irc-recv.c:1398 src/irc/irc-recv.c:1878
 msgid "Channel"
 msgstr "Canal"
 
-#: src/irc/irc-recv.c:1859
+#: src/irc/irc-recv.c:1306
 #, c-format
 msgid "Received a CTCP %sSOUND%s \"%s\" from %s%s\n"
 msgstr "CTCP %sSOUND%s \"%s\" reçu de %s%s\n"
 
-#: src/irc/irc-recv.c:1889 src/irc/irc-recv.c:2075
+#: src/irc/irc-recv.c:1336 src/irc/irc-recv.c:1522
 #, c-format
 msgid "CTCP %sPING%s received from %s%s\n"
 msgstr "CTCP %sPING%s reçu de %s%s\n"
 
-#: src/irc/irc-recv.c:1918 src/irc/irc-recv.c:2482
+#: src/irc/irc-recv.c:1365 src/irc/irc-recv.c:1929
 #, c-format
 msgid "Unknown CTCP %s%s%s received from %s%s"
 msgstr "CTCP inconnu %s%s%s reçu de %s%s"
 
-#: src/irc/irc-recv.c:2031
+#: src/irc/irc-recv.c:1478
 #, c-format
 msgid "CTCP %sVERSION%s received from %s%s"
 msgstr "CTCP %sVERSION%s reçu de %s%s"
 
-#: src/irc/irc-recv.c:2098 src/irc/irc-recv.c:2119 src/irc/irc-recv.c:2135
-#: src/irc/irc-recv.c:2151 src/irc/irc-recv.c:2182 src/irc/irc-recv.c:2203
-#: src/irc/irc-recv.c:2219 src/irc/irc-recv.c:2249 src/irc/irc-recv.c:2270
-#: src/irc/irc-recv.c:2286 src/irc/irc-recv.c:2316 src/irc/irc-recv.c:2337
-#: src/irc/irc-recv.c:2352 src/irc/irc-recv.c:2566 src/irc/irc-recv.c:2974
-#: src/irc/irc-recv.c:4428 src/irc/irc-recv.c:4443 src/irc/irc-recv.c:4458
-#: src/irc/irc-recv.c:4473 src/irc/irc-recv.c:4486 src/irc/irc-recv.c:4551
-#: src/irc/irc-recv.c:4565 src/irc/irc-recv.c:4811 src/irc/irc-recv.c:4929
-#: src/irc/irc-recv.c:5066 src/irc/irc-recv.c:5081 src/irc/irc-recv.c:5187
-#: src/irc/irc-recv.c:5201
+#: src/irc/irc-recv.c:1545 src/irc/irc-recv.c:1566 src/irc/irc-recv.c:1582
+#: src/irc/irc-recv.c:1598 src/irc/irc-recv.c:1629 src/irc/irc-recv.c:1650
+#: src/irc/irc-recv.c:1666 src/irc/irc-recv.c:1696 src/irc/irc-recv.c:1717
+#: src/irc/irc-recv.c:1733 src/irc/irc-recv.c:1763 src/irc/irc-recv.c:1784
+#: src/irc/irc-recv.c:1799 src/irc/irc-recv.c:2013 src/irc/irc-recv.c:2422
+#: src/irc/irc-recv.c:3892 src/irc/irc-recv.c:3907 src/irc/irc-recv.c:3922
+#: src/irc/irc-recv.c:3937 src/irc/irc-recv.c:3950 src/irc/irc-recv.c:4015
+#: src/irc/irc-recv.c:4029 src/irc/irc-recv.c:4275 src/irc/irc-recv.c:4393
+#: src/irc/irc-recv.c:4530 src/irc/irc-recv.c:4545 src/irc/irc-recv.c:4651
+#: src/irc/irc-recv.c:4665
 #, c-format
 msgid "%s cannot parse \"%s\" command\n"
 msgstr "%s impossible d'analyser la commande \"%s\"\n"
 
-#: src/irc/irc-recv.c:2365
+#: src/irc/irc-recv.c:1812
 #, c-format
 msgid "%s unknown DCC CHAT type received from "
 msgstr "%s type de DCC CHAT inconnu reçu de "
 
-#: src/irc/irc-recv.c:2614
+#: src/irc/irc-recv.c:2061
 #, c-format
 msgid "%s%s %s(%s%s%s)%s has quit"
 msgstr "%s%s %s(%s%s%s)%s a quitté"
 
-#: src/irc/irc-recv.c:2789
+#: src/irc/irc-recv.c:2236
 #, c-format
 msgid "%s \"%s\" command received without channel\n"
 msgstr "%s commande \"%s\" reçue sans canal\n"
 
-#: src/irc/irc-recv.c:2818
+#: src/irc/irc-recv.c:2265
 #, c-format
 msgid "%s%s%s has changed topic for %s%s%s to:"
 msgstr "%s%s%s a changé le titre pour %s%s%s en:"
 
-#: src/irc/irc-recv.c:2829
+#: src/irc/irc-recv.c:2276
 #, c-format
 msgid "%s%s%s has unset topic for %s%s\n"
 msgstr "%s%s%s a retiré le titre pour %s%s\n"
 
-#: src/irc/irc-recv.c:2960
+#: src/irc/irc-recv.c:2408
 #, c-format
-msgid "User mode %s[%s%s%s/%s%s%s]\n"
-msgstr "Mode utilisateur %s[%s%s%s/%s%s%s]\n"
+msgid "User mode for %s%s%s is %s[%s%s%s]\n"
+msgstr "Mode utilisateur pour %s%s%s est %s[%s%s%s]\n"
 
-#: src/irc/irc-recv.c:3024
+#: src/irc/irc-recv.c:2472
 #, c-format
 msgid "%s%s%s is away: %s\n"
 msgstr "%s%s%s est absent: %s\n"
 
-#: src/irc/irc-recv.c:3116
+#: src/irc/irc-recv.c:2564
 msgid "Users online: "
 msgstr "Utilisateurs en ligne: "
 
-#: src/irc/irc-recv.c:3492
+#: src/irc/irc-recv.c:2940
 #, c-format
 msgid "%s%s %s(%s%s@%s%s)%s was %s\n"
 msgstr "%s%s %s(%s%s@%s%s)%s était %s\n"
 
-#: src/irc/irc-recv.c:3613
+#: src/irc/irc-recv.c:3061
 #, c-format
 msgid "%s[%s%s%s]%s idle: "
 msgstr "%s[%s%s%s]%s inactivité: "
 
-#: src/irc/irc-recv.c:3625 src/common/command.c:4066 src/common/command.c:4084
+#: src/irc/irc-recv.c:3073 src/common/command.c:4066 src/common/command.c:4084
 msgid "days"
 msgstr "jours"
 
-#: src/irc/irc-recv.c:3625 src/common/command.c:4066 src/common/command.c:4084
+#: src/irc/irc-recv.c:3073 src/common/command.c:4066 src/common/command.c:4084
 msgid "day"
 msgstr "jour"
 
-#: src/irc/irc-recv.c:3629
+#: src/irc/irc-recv.c:3077
 #, c-format
 msgid "%s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
 msgstr "%s%02d %s%s %s%02d %s%s %s%02d %s%s, signé le: %s%s"
 
-#: src/irc/irc-recv.c:3633
+#: src/irc/irc-recv.c:3081
 msgid "hours"
 msgstr "heures"
 
-#: src/irc/irc-recv.c:3633
+#: src/irc/irc-recv.c:3081
 msgid "hour"
 msgstr "heure"
 
-#: src/irc/irc-recv.c:3637
+#: src/irc/irc-recv.c:3085
 msgid "minutes"
 msgstr "minutes"
 
-#: src/irc/irc-recv.c:3637
+#: src/irc/irc-recv.c:3085
 msgid "minute"
 msgstr "minute"
 
-#: src/irc/irc-recv.c:3641
+#: src/irc/irc-recv.c:3089
 msgid "second"
 msgstr "seconde"
 
-#: src/irc/irc-recv.c:4035
+#: src/irc/irc-recv.c:3499
 #, c-format
 msgid "No topic set for %s%s\n"
 msgstr "Pas de titre défini pour %s%s\n"
 
-#: src/irc/irc-recv.c:4095
+#: src/irc/irc-recv.c:3559
 #, c-format
 msgid "Topic for %s%s%s is: "
 msgstr "Le titre pour %s%s%s est: "
 
-#: src/irc/irc-recv.c:4110 src/irc/irc-recv.c:4192 src/irc/irc-recv.c:4303
+#: src/irc/irc-recv.c:3574 src/irc/irc-recv.c:3656 src/irc/irc-recv.c:3767
 #, c-format
 msgid "%s cannot identify channel for \"%s\" command\n"
 msgstr "%s impossible de déterminer le canal pour la commande \"%s\"\n"
 
-#: src/irc/irc-recv.c:4163
+#: src/irc/irc-recv.c:3627
 #, c-format
 msgid "Topic set by %s%s%s, %s"
 msgstr "Titre défini par %s%s%s, %s"
 
-#: src/irc/irc-recv.c:4174
+#: src/irc/irc-recv.c:3638
 #, c-format
 msgid "%s cannot identify date/time for \"%s\" command\n"
 msgstr "%s impossible d'identifier la date/heure pour la commande \"%s\"\n"
 
-#: src/irc/irc-recv.c:4183 src/irc/irc-recv.c:4312
+#: src/irc/irc-recv.c:3647 src/irc/irc-recv.c:3776
 #, c-format
 msgid "%s cannot identify nickname for \"%s\" command\n"
 msgstr ""
 "%s impossible de déterminer le nom d'utilisateur pour la commande \"%s\"\n"
 
-#: src/irc/irc-recv.c:4288
+#: src/irc/irc-recv.c:3752
 #, c-format
 msgid "%s%s%s has invited %s%s%s on %s%s\n"
 msgstr "%s%s%s a invité %s%s%s sur %s%s\n"
 
-#: src/irc/irc-recv.c:4348
+#: src/irc/irc-recv.c:3812
 #, c-format
 msgid "Channel reop %s%s%s: %s%s\n"
 msgstr "Reop canal %s%s%s: %s%s\n"
 
-#: src/irc/irc-recv.c:4825 src/irc/irc-recv.c:4975
+#: src/irc/irc-recv.c:4289 src/irc/irc-recv.c:4439
 #, c-format
 msgid "Nicks %s%s%s: %s["
 msgstr "Utilisateurs %s%s%s: %s["
 
-#: src/irc/irc-recv.c:4897
+#: src/irc/irc-recv.c:4361
 #, c-format
 msgid "%s cannot create nick \"%s\" for channel \"%s\"\n"
 msgstr "%s impossible de créer l'utilisateur \"%s\" pour le canal \"%s\"\n"
 
-#: src/irc/irc-recv.c:4996
+#: src/irc/irc-recv.c:4460
 #, c-format
 msgid ""
 "Channel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 msgstr ""
 "Canal %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 
-#: src/irc/irc-recv.c:5004
+#: src/irc/irc-recv.c:4468
 msgid "nicks"
 msgstr "utilisateurs"
 
-#: src/irc/irc-recv.c:5004
+#: src/irc/irc-recv.c:4468
 msgid "nick"
 msgstr "utilisateur"
 
-#: src/irc/irc-recv.c:5009
+#: src/irc/irc-recv.c:4473
 msgid "ops"
 msgstr "ops"
 
-#: src/irc/irc-recv.c:5009
+#: src/irc/irc-recv.c:4473
 msgid "op"
 msgstr "op"
 
-#: src/irc/irc-recv.c:5013
+#: src/irc/irc-recv.c:4477
 msgid "halfops"
 msgstr "halfops"
 
-#: src/irc/irc-recv.c:5013
+#: src/irc/irc-recv.c:4477
 msgid "halfop"
 msgstr "halfop"
 
-#: src/irc/irc-recv.c:5017
+#: src/irc/irc-recv.c:4481
 msgid "voices"
 msgstr "voices"
 
-#: src/irc/irc-recv.c:5017
+#: src/irc/irc-recv.c:4481
 msgid "voice"
 msgstr "voice"
 
-#: src/irc/irc-recv.c:5021
+#: src/irc/irc-recv.c:4485
 msgid "normal"
 msgstr "normal"
 
-#: src/irc/irc-recv.c:5121
+#: src/irc/irc-recv.c:4585
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned by "
 msgstr "%s[%s%s%s] %s%s%s banni par "
 
-#: src/irc/irc-recv.c:5156
+#: src/irc/irc-recv.c:4620
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned\n"
 msgstr "%s[%s%s%s] %s%s%s banni\n"
 
-#: src/irc/irc-recv.c:5291
+#: src/irc/irc-recv.c:4755
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\"\n"
 msgstr ""
 "%s: l'utilisateur \"%s\" est déjà en cours d'utilisation, essai avec le 2ème "
 "nom d'utilisateur \"%s\"\n"
 
-#: src/irc/irc-recv.c:5303
+#: src/irc/irc-recv.c:4767
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\"\n"
 msgstr ""
 "%s: l'utilisateur \"%s\" est déjà en cours d'utilisation, essai avec le 3ème "
 "nom d'utilisateur \"%s\"\n"
 
-#: src/irc/irc-recv.c:5315
+#: src/irc/irc-recv.c:4779
 #, c-format
 msgid ""
 "%s: all declared nicknames are already in use, closing connection with "
@@ -1967,14 +1785,14 @@ msgstr ""
 "%s: tous les noms d'utilisateurs déclarés sont déjà en cours d'utilisation, "
 "fermeture de la connexion avec le serveur !\n"
 
-#: src/irc/irc-recv.c:5325
+#: src/irc/irc-recv.c:4789
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\"\n"
 msgstr ""
 "%s: l'utilisateur \"%s\" est déjà en cours d'utilisation, essai avec le 1er "
 "nom d'utilisateur \"%s\"\n"
 
-#: src/irc/irc-recv.c:5337
+#: src/irc/irc-recv.c:4801
 msgid "unknown"
 msgstr "inconnu"
 
@@ -2413,27 +2231,27 @@ msgstr "Go"
 msgid "ETA"
 msgstr "ETA"
 
-#: src/gui/curses/gui-curses-input.c:410
+#: src/gui/curses/gui-curses-input.c:390
 msgid "  [A] Accept"
 msgstr "  [A] Accepter"
 
-#: src/gui/curses/gui-curses-input.c:411 src/gui/curses/gui-curses-input.c:415
+#: src/gui/curses/gui-curses-input.c:391 src/gui/curses/gui-curses-input.c:395
 msgid "  [C] Cancel"
 msgstr "  [C] Annuler"
 
-#: src/gui/curses/gui-curses-input.c:420
+#: src/gui/curses/gui-curses-input.c:400
 msgid "  [R] Remove"
 msgstr "  [R] Retirer"
 
-#: src/gui/curses/gui-curses-input.c:424
+#: src/gui/curses/gui-curses-input.c:404
 msgid "  [P] Purge old DCC"
 msgstr "  [P] Purger anciens DCC"
 
-#: src/gui/curses/gui-curses-input.c:425
+#: src/gui/curses/gui-curses-input.c:405
 msgid "  [Q] Close DCC view"
 msgstr "  [Q] Fermer la vue DCC"
 
-#: src/gui/curses/gui-curses-input.c:432
+#: src/gui/curses/gui-curses-input.c:412
 msgid "  [Q] Close raw data view"
 msgstr "  [Q] Fermer la vue IRC brut"
 
@@ -2455,28 +2273,28 @@ msgstr "<serveurs>"
 msgid "(away)"
 msgstr "(absent)"
 
-#: src/gui/curses/gui-curses-status.c:232
+#: src/gui/curses/gui-curses-status.c:214
 msgid "[not connected] "
 msgstr "[non connecté] "
 
-#: src/gui/curses/gui-curses-status.c:238
+#: src/gui/curses/gui-curses-status.c:220
 msgid "<RAW_IRC> "
 msgstr "<IRC_BRUT> "
 
-#: src/gui/curses/gui-curses-status.c:250
+#: src/gui/curses/gui-curses-status.c:232
 msgid "Act: "
 msgstr "Act: "
 
-#: src/gui/curses/gui-curses-status.c:331
+#: src/gui/curses/gui-curses-status.c:313
 msgid "RAW_IRC"
 msgstr "IRC_BRUT"
 
-#: src/gui/curses/gui-curses-status.c:352
+#: src/gui/curses/gui-curses-status.c:334
 #, c-format
 msgid "Lag: %.1f"
 msgstr "Lag: %.1f"
 
-#: src/gui/curses/gui-curses-status.c:368
+#: src/gui/curses/gui-curses-status.c:350
 msgid "-MORE-"
 msgstr "-PLUS-"
 
@@ -2484,7 +2302,7 @@ msgstr "-PLUS-"
 msgid "server"
 msgstr "serveur"
 
-#: src/gui/gui-buffer.c:544
+#: src/gui/gui-buffer.c:545
 msgid "Not enough memory for new line\n"
 msgstr "Pas assez de mémoire pour une nouvelle ligne !\n"
 
@@ -5810,6 +5628,153 @@ msgstr ""
 #: src/common/weeconfig.c:2362
 msgid "Saving config to disk\n"
 msgstr "Sauvegarde de la configuration sur disque\n"
+
+#~ msgid "User mode %s[%s%s%s/%s%s%s]\n"
+#~ msgstr "Mode utilisateur %s[%s%s%s/%s%s%s]\n"
+
+#~ msgid "sets away"
+#~ msgstr "active l'absence"
+
+#~ msgid "removes away"
+#~ msgstr "supprime l'absence"
+
+#~ msgid "sets invisible"
+#~ msgstr "active l'invisibilité"
+
+#~ msgid "removes invisible"
+#~ msgstr "supprime l'invisibilité"
+
+#~ msgid "sets wallops"
+#~ msgstr "active wallops"
+
+#~ msgid "removes wallops"
+#~ msgstr "supprime wallops"
+
+#~ msgid "sets restricted"
+#~ msgstr "active la restriction"
+
+#~ msgid "removes restricted"
+#~ msgstr "supprime la restriction"
+
+#~ msgid "sets operator"
+#~ msgstr "active l'opérateur"
+
+#~ msgid "removes operator"
+#~ msgstr "supprime l'opérateur"
+
+#~ msgid "sets local operator"
+#~ msgstr "active l'opérateur local"
+
+#~ msgid "removes local operator"
+#~ msgstr "supprime l'opérateur local"
+
+#~ msgid "sets server notices"
+#~ msgstr "active les notices du serveur"
+
+#~ msgid "removes server notices"
+#~ msgstr "supprime les notices du serveur"
+
+#~ msgid "sets ban on"
+#~ msgstr "instaure un bannissement sur"
+
+#~ msgid "removes ban on"
+#~ msgstr "supprime le banissement sur"
+
+#~ msgid "sets realname ban on"
+#~ msgstr "instaure un bannissement sur le nom réel"
+
+#~ msgid "removes realname ban on"
+#~ msgstr "supprime le banissement sur le nom réel"
+
+#~ msgid "sets ban exemption on"
+#~ msgstr "définit une exception de banissement sur"
+
+#~ msgid "removes ban exemption on"
+#~ msgstr "supprime l'exception de banissement sur"
+
+#~ msgid "sets mode +f"
+#~ msgstr "définit le mode +f"
+
+#~ msgid "removes mode +f"
+#~ msgstr "supprime le mode +f"
+
+#~ msgid "gives half channel operator status to"
+#~ msgstr "donne le droit demi-opérateur à"
+
+#~ msgid "removes half channel operator status from"
+#~ msgstr "supprime le droit demi-opérateur à"
+
+#~ msgid "sets invite-only channel flag"
+#~ msgstr "définit le canal en mode invité seulement"
+
+#~ msgid "removes invite-only channel flag"
+#~ msgstr "supprime le mode invité seulement pour le canal"
+
+#~ msgid "sets invite-only exemption on"
+#~ msgstr "définit une exception d'invitation sur"
+
+#~ msgid "removes invite-only exemption on"
+#~ msgstr "supprime l'exception d'invitation sur"
+
+#~ msgid "sets channel key to"
+#~ msgstr "définit la clé du canal à"
+
+#~ msgid "removes channel key"
+#~ msgstr "supprime la clé du canal"
+
+#~ msgid "sets the user limit to"
+#~ msgstr "définit la limite d'utilisateurs à"
+
+#~ msgid "removes user limit"
+#~ msgstr "supprime la limite d'utilisateurs"
+
+#~ msgid "sets moderated channel flag"
+#~ msgstr "instaure la modération sur le canal"
+
+#~ msgid "removes moderated channel flag"
+#~ msgstr "supprime la modération sur le canal"
+
+#~ msgid "sets messages from channel only flag"
+#~ msgstr "interdit aux utilisateurs en dehors du canal d'y écrire"
+
+#~ msgid "removes messages from channel only flag"
+#~ msgstr "autorise tout utilisateur à écrire sur le canal"
+
+#~ msgid "gives channel operator status to"
+#~ msgstr "donne le droit opérateur à"
+
+#~ msgid "removes channel operator status from"
+#~ msgstr "supprime le droit opérateur à"
+
+#~ msgid "sets private channel flag"
+#~ msgstr "définit le canal comme privé"
+
+#~ msgid "removes private channel flag"
+#~ msgstr "supprime le mode privé pour le canal"
+
+#~ msgid "sets quiet on"
+#~ msgstr "définit le mode muet sur"
+
+#~ msgid "removes quiet on"
+#~ msgstr "supprime le mode muet sur"
+
+#~ msgid "sets secret channel flag"
+#~ msgstr "définit le canal comme secret"
+
+#~ msgid "removes secret channel flag"
+#~ msgstr "supprime le mode secret pour le canal"
+
+#~ msgid "sets topic protection"
+#~ msgstr "active la protection du titre"
+
+#~ msgid "removes topic protection"
+#~ msgstr "supprime la protection du titre"
+
+#~ msgid "gives voice to"
+#~ msgstr "donne la voix à"
+
+#~ msgid "removes voice from"
+#~ msgstr "supprime la voix de"
 
 #~ msgid "Kb"
 #~ msgstr "Ko"

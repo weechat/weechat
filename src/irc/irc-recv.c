@@ -647,590 +647,13 @@ irc_cmd_recv_kill (t_irc_server *server, char *host, char *nick, char *arguments
 }
 
 /*
- * irc_get_channel_modes: get channel modes
- */
-
-void irc_get_channel_modes (t_irc_server *server, t_irc_channel *channel,
-                            char *channel_name,
-                            char *nick_host, char *modes, char *parm,
-                            int no_display)
-{
-    char *pos, set_flag, unknown_mode[3];
-    t_irc_nick *ptr_nick;
-    
-    set_flag = '+';
-    while (modes && modes[0])
-    {
-        switch (modes[0])
-        {
-            case '+':
-                set_flag = '+';
-                break;
-            case '-':
-                set_flag = '-';
-                break;
-            case 'b':
-                pos = NULL;
-                if (parm)
-                {
-                    pos = strchr (parm, ' ');
-                    if (pos)
-                        pos[0] = '\0';
-                }
-                if (nick_host && !no_display)
-                    irc_display_mode (server, channel->buffer,
-                                      channel_name, NULL, set_flag,
-                                      "b", nick_host,
-                                      (set_flag == '+') ?
-                                          _("sets ban on") :
-                                          _("removes ban on"),
-                                      (parm) ? parm : NULL);
-                
-                /* look for next parameter */
-                if (parm && pos)
-                {
-                    pos++;
-                    while (pos[0] == ' ')
-                        pos++;
-                    parm = pos;
-                }
-                break;
-            case 'd':
-                pos = NULL;
-                if (parm)
-                {
-                    pos = strchr (parm, ' ');
-                    if (pos)
-                        pos[0] = '\0';
-                }
-                if (nick_host && !no_display)
-                    irc_display_mode (server, channel->buffer,
-                                      channel_name, NULL, set_flag,
-                                      "d", nick_host,
-                                      (set_flag == '+') ?
-                                          _("sets realname ban on") :
-                                          _("removes realname ban on"),
-                                      (parm) ? parm : NULL);
-                
-                /* look for next parameter */
-                if (parm && pos)
-                {
-                    pos++;
-                    while (pos[0] == ' ')
-                        pos++;
-                    parm = pos;
-                }
-                break;
-            case 'e':
-                pos = NULL;
-                if (parm)
-                {
-                    pos = strchr (parm, ' ');
-                    if (pos)
-                        pos[0] = '\0';
-                }
-                if (nick_host && !no_display)
-                    irc_display_mode (server, channel->buffer,
-                                      channel_name, NULL, set_flag,
-                                      "e", nick_host,
-                                      (set_flag == '+') ?
-                                          _("sets ban exemption on") :
-                                          _("removes ban exemption on"),
-                                      (parm) ? parm : NULL);
-                
-                /* look for next parameter */
-                if (parm && pos)
-                {
-                    pos++;
-                    while (pos[0] == ' ')
-                        pos++;
-                    parm = pos;
-                }
-                break;
-            case 'f':
-                pos = NULL;
-                if (parm)
-                {
-                    pos = strchr (parm, ' ');
-                    if (pos)
-                        pos[0] = '\0';
-                }
-                if (nick_host && !no_display)
-                    irc_display_mode (server, channel->buffer,
-                                      channel_name, NULL, set_flag,
-                                      "f", nick_host,
-                                      (set_flag == '+') ?
-                                          _("sets mode +f") :
-                                          _("removes mode +f"),
-                                      (parm) ? parm : NULL);
-                
-                /* look for next parameter */
-                if (parm && pos)
-                {
-                    pos++;
-                    while (pos[0] == ' ')
-                        pos++;
-                    parm = pos;
-                }
-                break;
-            case 'h':
-                pos = NULL;
-                if (parm)
-                {
-                    pos = strchr (parm, ' ');
-                    if (pos)
-                        pos[0] = '\0';
-                }
-                if (nick_host && !no_display)
-                    irc_display_mode (server, channel->buffer,
-                                      channel_name, NULL, set_flag,
-                                      "h", nick_host,
-                                      (set_flag == '+') ?
-                                          _("gives half channel operator status to") :
-                                          _("removes half channel operator status from"),
-                                      (parm) ? parm : NULL);
-                if (parm)
-                {
-                    ptr_nick = nick_search (channel, parm);
-                    if (ptr_nick)
-                    {
-                        NICK_SET_FLAG(ptr_nick, (set_flag == '+'), NICK_HALFOP);
-                        nick_resort (channel, ptr_nick);
-                        gui_nicklist_draw (channel->buffer, 1, 1);
-                    }
-                }
-                
-                /* look for next parameter */
-                if (parm && pos)
-                {
-                    pos++;
-                    while (pos[0] == ' ')
-                        pos++;
-                    parm = pos;
-                }
-                break;
-            case 'i':
-                if (nick_host && !no_display)
-                    irc_display_mode (server, channel->buffer,
-                                      channel_name, NULL, set_flag,
-                                      "i", nick_host,
-                                      (set_flag == '+') ?
-                                          _("sets invite-only channel flag") :
-                                          _("removes invite-only channel flag"),
-                                      NULL);
-                CHANNEL_SET_MODE(channel, (set_flag == '+'),
-                                 CHANNEL_MODE_INVITE);
-                break;
-            case 'I':
-                pos = NULL;
-                if (parm)
-                {
-                    pos = strchr (parm, ' ');
-                    if (pos)
-                        pos[0] = '\0';
-                }
-                if (nick_host && !no_display)
-                    irc_display_mode (server, channel->buffer,
-                                      channel_name, NULL, set_flag,
-                                      "I", nick_host,
-                                      (set_flag == '+') ?
-                                          _("sets invite-only exemption on") :
-                                          _("removes invite-only exemption on"),
-                                      (parm) ? parm : NULL);
-                
-                /* look for next parameter */
-                if (parm && pos)
-                {
-                    pos++;
-                    while (pos[0] == ' ')
-                        pos++;
-                    parm = pos;
-                }
-                break;
-            case 'k':
-                pos = NULL;
-                if (parm)
-                {
-                    pos = strchr (parm, ' ');
-                    if (pos)
-                        pos[0] = '\0';
-                }
-                if (nick_host && !no_display)
-                    irc_display_mode (server, channel->buffer,
-                                      channel_name, NULL, set_flag,
-                                      "k", nick_host,
-                                      (set_flag == '+') ?
-                                          _("sets channel key to") :
-                                          _("removes channel key"),
-                                      (set_flag == '+') ?
-                                      ((parm) ? parm : NULL) :
-                                      NULL);
-                CHANNEL_SET_MODE(channel, (set_flag == '+'),
-                                 CHANNEL_MODE_KEY);
-                if (channel->key)
-                    free (channel->key);
-                channel->key = strdup (parm);
-                
-                /* look for next parameter */
-                if (parm && pos)
-                {
-                    pos++;
-                    while (pos[0] == ' ')
-                        pos++;
-                    parm = pos;
-                }
-                break;
-            case 'l':
-                pos = NULL;
-                if (parm)
-                {
-                    pos = strchr (parm, ' ');
-                    if (pos)
-                        pos[0] = '\0';
-                }
-                if (nick_host && !no_display)
-                    irc_display_mode (server, channel->buffer,
-                                      channel_name, NULL, set_flag,
-                                      "l", nick_host,
-                                      (set_flag == '+') ?
-                                          _("sets the user limit to") :
-                                          _("removes user limit"),
-                                      (set_flag == '+') ?
-                                      ((parm) ? parm : NULL) :
-                                      NULL);
-                CHANNEL_SET_MODE(channel, (set_flag == '+'),
-                                 CHANNEL_MODE_LIMIT);
-                if (set_flag == '-')
-                    channel->limit = 0;
-                if ((set_flag == '+') && parm)
-                    channel->limit = atoi (parm);
-                
-                /* look for next parameter */
-                if (parm && pos)
-                {
-                    pos++;
-                    while (pos[0] == ' ')
-                        pos++;
-                    parm = pos;
-                }
-                break;
-            case 'm':
-                if (nick_host && !no_display)
-                    irc_display_mode (server, channel->buffer,
-                                      channel_name, NULL, set_flag,
-                                      "m", nick_host,
-                                      (set_flag == '+') ?
-                                          _("sets moderated channel flag") :
-                                          _("removes moderated channel flag"),
-                                      NULL);
-                CHANNEL_SET_MODE(channel, (set_flag == '+'),
-                                 CHANNEL_MODE_MODERATED);
-                break;
-            case 'n':
-                if (nick_host && !no_display)
-                    irc_display_mode (server, channel->buffer,
-                                      channel_name, NULL, set_flag,
-                                      "n", nick_host,
-                                      (set_flag == '+') ?
-                                          _("sets messages from channel only flag") :
-                                          _("removes messages from channel only flag"),
-                                      NULL);
-                CHANNEL_SET_MODE(channel, (set_flag == '+'),
-                                 CHANNEL_MODE_NO_MSG_OUT);
-                break;
-            case 'o':
-                pos = NULL;
-                if (parm)
-                {
-                    pos = strchr (parm, ' ');
-                    if (pos)
-                        pos[0] = '\0';
-                }
-                if (nick_host && !no_display)
-                    irc_display_mode (server, channel->buffer,
-                                      channel_name, NULL, set_flag,
-                                      "o", nick_host,
-                                      (set_flag == '+') ?
-                                          _("gives channel operator status to") :
-                                          _("removes channel operator status from"),
-                                      (parm) ? parm : NULL);
-                if (parm)
-                {
-                    ptr_nick = nick_search (channel, parm);
-                    if (ptr_nick)
-                    {
-                        NICK_SET_FLAG(ptr_nick, (set_flag == '+'), NICK_OP);
-                        nick_resort (channel, ptr_nick);
-                        gui_nicklist_draw (channel->buffer, 1, 1);
-                    }
-                }
-                
-                /* look for next parameter */
-                if (parm && pos)
-                {
-                    pos++;
-                    while (pos[0] == ' ')
-                        pos++;
-                    parm = pos;
-                }
-                break;
-            case 'p':
-                if (nick_host && !no_display)
-                    irc_display_mode (server, channel->buffer,
-                                      channel_name, NULL, set_flag,
-                                      "p", nick_host,
-                                      (set_flag == '+') ?
-                                          _("sets private channel flag") :
-                                          _("removes private channel flag"),
-                                      NULL);
-                CHANNEL_SET_MODE(channel, (set_flag == '+'),
-                                 CHANNEL_MODE_PRIVATE);
-                break;
-            case 'q':
-                pos = NULL;
-                if (parm)
-                {
-                    pos = strchr (parm, ' ');
-                    if (pos)
-                        pos[0] = '\0';
-                }
-                if (nick_host && !no_display)
-                    irc_display_mode (server, channel->buffer,
-                                      channel_name, NULL, set_flag,
-                                      "q", nick_host,
-                                      (set_flag == '+') ?
-                                          _("sets quiet on") :
-                                          _("removes quiet on"),
-                                      (parm) ? parm : NULL);
-                
-                /* look for next parameter */
-                if (parm && pos)
-                {
-                    pos++;
-                    while (pos[0] == ' ')
-                        pos++;
-                    parm = pos;
-                }
-                break;
-            case 's':
-                if (nick_host && !no_display)
-                    irc_display_mode (server, channel->buffer,
-                                      channel_name, NULL, set_flag,
-                                      "s", nick_host,
-                                      (set_flag == '+') ?
-                                          _("sets secret channel flag") :
-                                          _("removes secret channel flag"),
-                                      NULL);
-                CHANNEL_SET_MODE(channel, (set_flag == '+'),
-                                 CHANNEL_MODE_SECRET);
-                break;
-            case 't':
-                if (nick_host && !no_display)
-                    irc_display_mode (server, channel->buffer,
-                                      channel_name, NULL, set_flag,
-                                      "t", nick_host,
-                                      (set_flag == '+') ?
-                                          _("sets topic protection") :
-                                          _("removes topic protection"),
-                                      NULL);
-                CHANNEL_SET_MODE(channel, (set_flag == '+'),
-                                 CHANNEL_MODE_TOPIC);
-                break;
-            case 'v':
-                pos = NULL;
-                if (parm)
-                {
-                    pos = strchr (parm, ' ');
-                    if (pos)
-                        pos[0] = '\0';
-                }
-                if (nick_host && !no_display)
-                    irc_display_mode (server, channel->buffer,
-                                      channel_name, NULL, set_flag,
-                                      "v", nick_host,
-                                      (set_flag == '+') ?
-                                          _("gives voice to") :
-                                          _("removes voice from"),
-                                      (parm) ? parm : NULL);
-                
-                if (parm)
-                {
-                    ptr_nick = nick_search (channel, parm);
-                    if (ptr_nick)
-                    {
-                        NICK_SET_FLAG(ptr_nick, (set_flag == '+'), NICK_VOICE);
-                        nick_resort (channel, ptr_nick);
-                        gui_nicklist_draw (channel->buffer, 1, 1);
-                    }
-                }
-                
-                /* look for next parameter */
-                if (parm && pos)
-                {
-                    pos++;
-                    while (pos[0] == ' ')
-                        pos++;
-                    parm = pos;
-                }
-                break;
-            default: /* unknown mode received */
-                pos = NULL;
-                if (parm)
-                {
-                    pos = strchr (parm, ' ');
-                    if (pos)
-                        pos[0] = '\0';
-                }
-                if (nick_host && !no_display)
-                {
-                    unknown_mode[0] = set_flag;
-                    unknown_mode[1] = modes[0];
-                    unknown_mode[2] = '\0';
-                    irc_display_mode (server, channel->buffer,
-                                      channel_name, NULL, set_flag,
-                                      unknown_mode + 1, nick_host,
-                                      unknown_mode,
-                                      (parm) ? parm : NULL);
-                }
-                
-                /* look for next parameter */
-                if (parm && pos)
-                {
-                    pos++;
-                    while (pos[0] == ' ')
-                        pos++;
-                    parm = pos;
-                }
-                break;
-        }
-        modes++;
-    }
-}
-
-/*
- * irc_get_nick_modes: get nick modes
- */
-
-void irc_get_nick_modes (t_irc_server *server,
-                         char *nick_host, char *modes, int no_display)
-{
-    char set_flag, unknown_mode[3];
-    
-    set_flag = '+';
-    while (modes && modes[0])
-    {
-        switch (modes[0])
-        {
-            case ':':
-                break;
-            case '+':
-                set_flag = '+';
-                break;
-            case '-':
-                set_flag = '-';
-                break;
-            case 'a':
-                if (nick_host && !no_display)
-                    irc_display_mode (server, server->buffer,
-                                      NULL, server->nick, set_flag,
-                                      "a", nick_host,
-                                      (set_flag == '+') ?
-                                          _("sets away") :
-                                          _("removes away"),
-                                      NULL);
-                NICK_SET_MODE(server, (set_flag == '+'), NICK_MODE_AWAY);
-                break;
-            case 'i':
-                if (nick_host && !no_display)
-                    irc_display_mode (server, server->buffer,
-                                      NULL, server->nick, set_flag,
-                                      "i", nick_host,
-                                      (set_flag == '+') ?
-                                          _("sets invisible") :
-                                          _("removes invisible"),
-                                      NULL);
-                NICK_SET_MODE(server, (set_flag == '+'), NICK_MODE_INVISIBLE);
-                break;
-            case 'w':
-                if (nick_host && !no_display)
-                    irc_display_mode (server, server->buffer,
-                                      NULL, server->nick, set_flag,
-                                      "w", nick_host,
-                                      (set_flag == '+') ?
-                                          _("sets wallops") :
-                                          _("removes wallops"),
-                                      NULL);
-                NICK_SET_MODE(server, (set_flag == '+'), NICK_MODE_WALLOPS);
-                break;
-            case 'r':
-                if (nick_host && !no_display)
-                    irc_display_mode (server, server->buffer,
-                                      NULL, server->nick, set_flag,
-                                      "r", nick_host,
-                                      (set_flag == '+') ?
-                                          _("sets restricted") :
-                                          _("removes restricted"),
-                                      NULL);
-                NICK_SET_MODE(server, (set_flag == '+'), NICK_MODE_RESTRICTED);
-                break;
-            case 'o':
-                if (nick_host && !no_display)
-                    irc_display_mode (server, server->buffer,
-                                      NULL, server->nick, set_flag,
-                                      "o", nick_host,
-                                      (set_flag == '+') ?
-                                          _("sets operator") :
-                                          _("removes operator"),
-                                      NULL);
-                NICK_SET_MODE(server, (set_flag == '+'), NICK_MODE_OPERATOR);
-                break;
-            case 'O':
-                if (nick_host && !no_display)
-                    irc_display_mode (server, server->buffer,
-                                      NULL, server->nick, set_flag,
-                                      "O", nick_host,
-                                      (set_flag == '+') ?
-                                          _("sets local operator") :
-                                          _("removes local operator"),
-                                      NULL);
-                NICK_SET_MODE(server, (set_flag == '+'), NICK_MODE_LOCAL_OPERATOR);
-                break;
-            case 's':
-                if (nick_host && !no_display)
-                    irc_display_mode (server, server->buffer,
-                                      NULL, server->nick, set_flag,
-                                      "s", nick_host,
-                                      (set_flag == '+') ?
-                                          _("sets server notices") :
-                                          _("removes server notices"),
-                                      NULL);
-                NICK_SET_MODE(server, (set_flag == '+'), NICK_MODE_LOCAL_OPERATOR);
-                break;
-            default: /* unknown mode received */
-                if (nick_host && !no_display)
-                {
-                    unknown_mode[0] = set_flag;
-                    unknown_mode[1] = modes[0];
-                    unknown_mode[2] = '\0';
-                    irc_display_mode (server, server->buffer,
-                                      NULL, server->nick, set_flag,
-                                      unknown_mode + 1, nick_host,
-                                      unknown_mode, NULL);
-                }
-                break;
-        }
-        modes++;
-    }
-}
-
-/*
  * irc_cmd_recv_mode: 'mode' message received
  */
 
 int
 irc_cmd_recv_mode (t_irc_server *server, char *host, char *nick, char *arguments)
 {
-    char *pos, *pos_parm;
+    char *pos_modes, *pos;
     t_irc_channel *ptr_channel;
     
     /* no host => we can't identify sender of message! */
@@ -1243,8 +666,8 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *nick, char *arguments
         return -1;
     }
     
-    pos = strchr (arguments, ' ');
-    if (!pos)
+    pos_modes = strchr (arguments, ' ');
+    if (!pos_modes)
     {
         irc_display_prefix (server, server->buffer, PREFIX_ERROR);
         gui_printf_nolog (server->buffer,
@@ -1252,18 +675,19 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *nick, char *arguments
                           WEECHAT_ERROR, "mode");
         return -1;
     }
-    pos[0] = '\0';
-    pos++;
-    while (pos[0] == ' ')
-        pos++;
+    pos_modes[0] = '\0';
+    pos_modes++;
+    while (pos_modes[0] == ' ')
+        pos_modes++;
+    if (pos_modes[0] == ':')
+        pos_modes++;
     
-    pos_parm = strchr (pos, ' ');
-    if (pos_parm)
+    /* remove spaces after modes */
+    pos = pos_modes + strlen (pos_modes) - 1;
+    while ((pos >= pos_modes) && (pos[0] == ' '))
     {
-        pos_parm[0] = '\0';
-        pos_parm++;
-        while (pos_parm[0] == ' ')
-            pos_parm++;
+        pos[0] = '\0';
+        pos--;
     }
     
     if (string_is_channel (arguments))
@@ -1271,10 +695,23 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *nick, char *arguments
         ptr_channel = channel_search (server, arguments);
         if (ptr_channel)
         {
-            irc_get_channel_modes (server, ptr_channel, arguments, nick,
-                                   pos, pos_parm, command_ignored);
-            gui_status_draw (ptr_channel->buffer, 1);
-            gui_input_draw (ptr_channel->buffer, 1);
+            if (!command_ignored)
+            {
+                irc_display_prefix (server, ptr_channel->buffer, PREFIX_INFO);
+                gui_printf (ptr_channel->buffer,
+                            _("Mode %s%s %s[%s%s%s]%s by %s%s\n"),
+                            GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                            ptr_channel->name,
+                            GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                            GUI_COLOR(COLOR_WIN_CHAT),
+                            pos_modes,
+                            GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                            GUI_COLOR(COLOR_WIN_CHAT),
+                            GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                            nick);
+            }
+            irc_mode_channel_set (ptr_channel, pos_modes);
+            server_sendf (server, "MODE %s\r\n", ptr_channel->name);
         }
         else
         {
@@ -1287,9 +724,19 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *nick, char *arguments
     }
     else
     {
-        irc_get_nick_modes (server, nick, pos, command_ignored);
-        gui_status_draw (gui_current_window->buffer, 1);
-        gui_input_draw (gui_current_window->buffer, 1);
+        if (!command_ignored)
+        {
+            irc_display_prefix (server, server->buffer, PREFIX_INFO);
+            gui_printf (server->buffer,
+                        _("User mode %s%s %s[%s%s%s]\n"),
+                        GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                        nick,
+                        GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                        GUI_COLOR(COLOR_WIN_CHAT),
+                        pos_modes,
+                        GUI_COLOR(COLOR_WIN_CHAT_DARK));
+        }
+        irc_mode_user_set (server, pos_modes);
     }
     return 0;
 }
@@ -2957,12 +2404,13 @@ irc_cmd_recv_221 (t_irc_server *server, char *host, char *nick, char *arguments)
         if (!command_ignored)
         {
             irc_display_prefix (server, server->buffer, PREFIX_SERVER);
-            gui_printf (server->buffer, _("User mode %s[%s%s%s/%s%s%s]\n"),
-                        GUI_COLOR(COLOR_WIN_CHAT_DARK),
+            gui_printf (server->buffer,
+                        _("User mode for %s%s%s is %s[%s%s%s]\n"),
                         GUI_COLOR(COLOR_WIN_CHAT_NICK),
                         arguments,
                         GUI_COLOR(COLOR_WIN_CHAT),
-                        GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                        GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                        GUI_COLOR(COLOR_WIN_CHAT),
                         pos_mode,
                         GUI_COLOR(COLOR_WIN_CHAT_DARK));
         }
@@ -3931,7 +3379,7 @@ irc_cmd_recv_323 (t_irc_server *server, char *host, char *nick, char *arguments)
 int
 irc_cmd_recv_324 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
-    char *pos_channel, *pos, *pos_parm;
+    char *pos_channel, *pos_modes, *pos;
     t_irc_channel *ptr_channel;
     
     /* make gcc happy */
@@ -3946,28 +3394,44 @@ irc_cmd_recv_324 (t_irc_server *server, char *host, char *nick, char *arguments)
         while (pos_channel[0] == ' ')
             pos_channel++;
         
-        pos = strchr (pos_channel, ' ');
-        if (pos)
+        pos_modes = strchr (pos_channel, ' ');
+        if (pos_modes)
         {
-            pos[0] = '\0';
-            pos++;
-            while (pos[0] == ' ')
-                pos++;
-        
-            pos_parm = strchr (pos, ' ');
-            if (pos_parm)
+            pos_modes[0] = '\0';
+            pos_modes++;
+            while (pos_modes[0] == ' ')
+                pos_modes++;
+
+            /* remove spaces after modes */
+            pos = pos_modes + strlen (pos_modes) - 1;
+            while ((pos >= pos_modes) && (pos[0] == ' '))
             {
-                pos_parm[0] = '\0';
-                pos_parm++;
-                while (pos_parm[0] == ' ')
-                    pos_parm++;
+                pos[0] = '\0';
+                pos--;
             }
+
+            /* search channel */
             ptr_channel = channel_search (server, pos_channel);
             if (ptr_channel)
             {
-                irc_get_channel_modes (server, ptr_channel, NULL, NULL,
-                                       pos, pos_parm, command_ignored);
-                gui_status_draw (ptr_channel->buffer, 0);
+                if (pos_modes[0])
+                {
+                    if (ptr_channel->modes)
+                        ptr_channel->modes = (char *) realloc (ptr_channel->modes,
+                                                               strlen (pos_modes) + 1);
+                    else
+                        ptr_channel->modes = (char *) malloc (strlen (pos_modes) + 1);
+                    strcpy (ptr_channel->modes, pos_modes);
+                }
+                else
+                {
+                    if (ptr_channel->modes)
+                    {
+                        free (ptr_channel->modes);
+                        ptr_channel->modes = NULL;
+                    }
+                }
+                gui_status_draw (ptr_channel->buffer, 1);
             }
         }
     }

@@ -1134,6 +1134,8 @@ weechat_python_get_server_info (PyObject *self, PyObject *args)
 			   Py_BuildValue("i", ptr_server->ssl_connected));
 	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "nick"),
 			   Py_BuildValue("s", ptr_server->nick));
+            PyDict_SetItem(server_hash_member, Py_BuildValue("s", "nick_modes"),
+			   Py_BuildValue("s", ptr_server->nick_modes));
 	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "away_time"),
 			   Py_BuildValue("s", timebuffer));
 	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "lag"),
