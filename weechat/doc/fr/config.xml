@@ -960,7 +960,7 @@
 <row>
   <entry><option>dcc_timeout</option></entry>
   <entry>entier</entry>
-  <entry>entre 1 et 2147483647</entry>
+  <entry>entre 5 et 2147483647</entry>
   <entry>300</entry>
   <entry>Délai d'attente pour les requêtes dcc (en secondes)</entry>
 </row>
@@ -970,6 +970,13 @@
   <entry>entre 1024 et 102400</entry>
   <entry>65536</entry>
   <entry>Taille de bloc pour les paquets dcc en octets (défaut: 65536)</entry>
+</row>
+<row>
+  <entry><option>dcc_fast_send</option></entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>N'attend pas les accusés de réception lors de l'envoi de fichier</entry>
 </row>
 <row>
   <entry><option>dcc_port_range</option></entry>

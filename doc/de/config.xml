@@ -10,7 +10,7 @@
   <entry>Boolean</entry>
   <entry></entry>
   <entry>'on'</entry>
-  <entry>Save config file on exit</entry>
+  <entry>Konfiguration beim Verlassen abspeichern</entry>
 </row>
 <row>
   <entry><option>look_set_title</option></entry>
@@ -960,7 +960,7 @@
 <row>
   <entry><option>dcc_timeout</option></entry>
   <entry>Ganzzahl</entry>
-  <entry>zwischen 1 und 2147483647</entry>
+  <entry>zwischen 5 und 2147483647</entry>
   <entry>300</entry>
   <entry>DCC-Timeout in Sekunden</entry>
 </row>
@@ -970,6 +970,13 @@
   <entry>zwischen 1024 und 102400</entry>
   <entry>65536</entry>
   <entry>Blockgröße für DCCs</entry>
+</row>
+<row>
+  <entry><option>dcc_fast_send</option></entry>
+  <entry>Boolean</entry>
+  <entry>zwischen 1024 und 102400</entry>
+  <entry>'on'</entry>
+  <entry>Warte beim Veschicken von Dateien nicht auf das ACK-Signal</entry>
 </row>
 <row>
   <entry><option>dcc_port_range</option></entry>

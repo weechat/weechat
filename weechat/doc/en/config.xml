@@ -960,7 +960,7 @@
 <row>
   <entry><option>dcc_timeout</option></entry>
   <entry>integer</entry>
-  <entry>between 1 and 2147483647</entry>
+  <entry>between 5 and 2147483647</entry>
   <entry>300</entry>
   <entry>Timeout for dcc request (in seconds)</entry>
 </row>
@@ -970,6 +970,13 @@
   <entry>between 1024 and 102400</entry>
   <entry>65536</entry>
   <entry>Block size for dcc packets in bytes (default: 65536)</entry>
+</row>
+<row>
+  <entry><option>dcc_fast_send</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Does not wait for ACK when sending file</entry>
 </row>
 <row>
   <entry><option>dcc_port_range</option></entry>
