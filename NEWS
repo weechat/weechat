@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-* FlashCode, 2006-06-14
+* FlashCode, 2006-08-09
 
     Important release notes:
 
+    - if you upgraded with /upgrade in WeeChat, you should /disconnect and
+      then /reconnect on each server, to display properly channel/user modes
     - if you're using plugins, you should remove some old plugins libraries
       in WeeChat system library directory (commonly
       /usr/local/lib/weechat/plugins): remove lib* files (like libperl.*,
