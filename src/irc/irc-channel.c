@@ -98,12 +98,14 @@ channel_free (t_irc_server *server, t_irc_channel *channel)
         return;
     
     /* close DCC CHAT */
-    if ((t_irc_dcc *)(channel->dcc_chat) &&
-        (!DCC_ENDED(((t_irc_dcc *)(channel->dcc_chat))->status)))
+    if (channel->dcc_chat)
     {
         ((t_irc_dcc *)(channel->dcc_chat))->channel = NULL;
-        dcc_close ((t_irc_dcc *)(channel->dcc_chat), DCC_ABORTED);
-        dcc_redraw (1);
+        if (!DCC_ENDED(((t_irc_dcc *)(channel->dcc_chat))->status))
+        {
+            dcc_close ((t_irc_dcc *)(channel->dcc_chat), DCC_ABORTED);
+            dcc_redraw (1);
+        }
     }
     
     /* remove channel from queue */
