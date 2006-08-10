@@ -2188,7 +2188,7 @@ irc_cmd_send_wallops (t_irc_server *server, t_irc_channel *channel,
     /* make gcc happy */
     (void) channel;
     
-    server_sendf (server, "WALLOPS %s\r\n", arguments);
+    server_sendf (server, "WALLOPS :%s\r\n", arguments);
     return 0;
 }
 
