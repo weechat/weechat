@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.0-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-08-08 00:08+0200\n"
+"POT-Creation-Date: 2006-08-10 15:48+0200\n"
 "PO-Revision-Date: 2006-07-25 20:00+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1573,11 +1573,10 @@ msgstr ""
 #: src/irc/irc-recv.c:1666 src/irc/irc-recv.c:1696 src/irc/irc-recv.c:1717
 #: src/irc/irc-recv.c:1733 src/irc/irc-recv.c:1763 src/irc/irc-recv.c:1784
 #: src/irc/irc-recv.c:1799 src/irc/irc-recv.c:2013 src/irc/irc-recv.c:2422
-#: src/irc/irc-recv.c:3892 src/irc/irc-recv.c:3907 src/irc/irc-recv.c:3922
-#: src/irc/irc-recv.c:3937 src/irc/irc-recv.c:3950 src/irc/irc-recv.c:4015
-#: src/irc/irc-recv.c:4029 src/irc/irc-recv.c:4275 src/irc/irc-recv.c:4393
-#: src/irc/irc-recv.c:4530 src/irc/irc-recv.c:4545 src/irc/irc-recv.c:4651
-#: src/irc/irc-recv.c:4665
+#: src/irc/irc-recv.c:3892 src/irc/irc-recv.c:3907 src/irc/irc-recv.c:4006
+#: src/irc/irc-recv.c:4020 src/irc/irc-recv.c:4266 src/irc/irc-recv.c:4384
+#: src/irc/irc-recv.c:4521 src/irc/irc-recv.c:4536 src/irc/irc-recv.c:4642
+#: src/irc/irc-recv.c:4656
 #, c-format
 msgid "%s cannot parse \"%s\" command\n"
 msgstr "%s nem sikerült végrehajtani a \"%s\" parancsot\n"
@@ -1704,92 +1703,102 @@ msgstr "%s%s%s meghívta %s%s%s-t %s%s-kor\n"
 msgid "Channel reop %s%s%s: %s%s\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:4289 src/irc/irc-recv.c:4439
+#: src/irc/irc-recv.c:3961
+#, fuzzy, c-format
+msgid " by %s%s %s(%s%s%s)"
+msgstr "%s%s %s(%s%s%s)%s kilépett"
+
+#: src/irc/irc-recv.c:3970
+#, c-format
+msgid " by %s%s"
+msgstr ""
+
+#: src/irc/irc-recv.c:4280 src/irc/irc-recv.c:4430
 #, c-format
 msgid "Nicks %s%s%s: %s["
 msgstr "Felhasználók a %s%s%s szobában: %s["
 
-#: src/irc/irc-recv.c:4361
+#: src/irc/irc-recv.c:4352
 #, c-format
 msgid "%s cannot create nick \"%s\" for channel \"%s\"\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:4460
+#: src/irc/irc-recv.c:4451
 #, c-format
 msgid ""
 "Channel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 msgstr ""
 "%s%s%s szoba: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 
-#: src/irc/irc-recv.c:4468
+#: src/irc/irc-recv.c:4459
 msgid "nicks"
 msgstr "név"
 
-#: src/irc/irc-recv.c:4468
+#: src/irc/irc-recv.c:4459
 msgid "nick"
 msgstr "név"
 
-#: src/irc/irc-recv.c:4473
+#: src/irc/irc-recv.c:4464
 msgid "ops"
 msgstr "operátor"
 
-#: src/irc/irc-recv.c:4473
+#: src/irc/irc-recv.c:4464
 msgid "op"
 msgstr "operátor"
 
-#: src/irc/irc-recv.c:4477
+#: src/irc/irc-recv.c:4468
 msgid "halfops"
 msgstr "féloperátor"
 
-#: src/irc/irc-recv.c:4477
+#: src/irc/irc-recv.c:4468
 msgid "halfop"
 msgstr "féloperátor"
 
-#: src/irc/irc-recv.c:4481
+#: src/irc/irc-recv.c:4472
 msgid "voices"
 msgstr ""
 
-#: src/irc/irc-recv.c:4481
+#: src/irc/irc-recv.c:4472
 msgid "voice"
 msgstr ""
 
-#: src/irc/irc-recv.c:4485
+#: src/irc/irc-recv.c:4476
 msgid "normal"
 msgstr "normál"
 
-#: src/irc/irc-recv.c:4585
+#: src/irc/irc-recv.c:4576
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned by "
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
-#: src/irc/irc-recv.c:4620
+#: src/irc/irc-recv.c:4611
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned\n"
 msgstr "%s[%s%s%s] %s%s%s kitiltva\n"
 
-#: src/irc/irc-recv.c:4755
+#: src/irc/irc-recv.c:4746
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\"\n"
 msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a második nevet: \"%s\"\n"
 
-#: src/irc/irc-recv.c:4767
+#: src/irc/irc-recv.c:4758
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\"\n"
 msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a harmadik nevet: \"%s\"\n"
 
-#: src/irc/irc-recv.c:4779
+#: src/irc/irc-recv.c:4770
 #, c-format
 msgid ""
 "%s: all declared nicknames are already in use, closing connection with "
 "server!\n"
 msgstr "%s: minden megadott név foglalt, kapcsolat bontása a szerverrel!\n"
 
-#: src/irc/irc-recv.c:4789
+#: src/irc/irc-recv.c:4780
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\"\n"
 msgstr "%s: a(z) \"%s\" név már foglalt, próbálom az első nevet: \"%s\"\n"
 
-#: src/irc/irc-recv.c:4801
+#: src/irc/irc-recv.c:4792
 msgid "unknown"
 msgstr "ismeretlen"
 

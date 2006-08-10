@@ -3915,42 +3915,25 @@ irc_cmd_recv_348 (t_irc_server *server, char *host, char *nick, char *arguments)
     
     /* look for user who set exception */
     pos_user = strchr (pos_exception, ' ');
-    if (!pos_user)
+    if (pos_user)
     {
-        irc_display_prefix (server, server->buffer, PREFIX_ERROR);
-        gui_printf_nolog (server->buffer,
-                          _("%s cannot parse \"%s\" command\n"),
-                          WEECHAT_ERROR, "348");
-        return -1;
-    }
-    pos_user[0] = '\0';
-    pos_user++;
-    while (pos_user[0] == ' ')
+        pos_user[0] = '\0';
         pos_user++;
-    
-    /* look for date/time */
-    pos_date = strchr (pos_user, ' ');
-    if (!pos_date)
-    {
-        irc_display_prefix (server, server->buffer, PREFIX_ERROR);
-        gui_printf_nolog (server->buffer,
-                          _("%s cannot parse \"%s\" command\n"),
-                          WEECHAT_ERROR, "348");
-        return -1;
+        while (pos_user[0] == ' ')
+            pos_user++;
+        
+        /* look for date/time */
+        pos_date = strchr (pos_user, ' ');
+        if (pos_date)
+        {
+            pos_date[0] = '\0';
+            pos_date++;
+            while (pos_date[0] == ' ')
+                pos_date++;
+        }
     }
-    pos_date[0] = '\0';
-    pos_date++;
-    while (pos_date[0] == ' ')
-        pos_date++;
-    
-    if (!pos_date || !pos_date[0])
-    {
-        irc_display_prefix (server, server->buffer, PREFIX_ERROR);
-        gui_printf_nolog (server->buffer,
-                          _("%s cannot parse \"%s\" command\n"),
-                          WEECHAT_ERROR, "348");
-        return -1;
-    }
+    else
+        pos_date = NULL;
     
     ptr_channel = channel_search (server, pos_channel);
     buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
@@ -3960,7 +3943,7 @@ irc_cmd_recv_348 (t_irc_server *server, char *host, char *nick, char *arguments)
     if (!command_ignored)
     {
         irc_display_prefix (server, buffer, PREFIX_INFO);
-        gui_printf (buffer, "%s[%s%s%s]%s exception %s%s%s by ",
+        gui_printf (buffer, "%s[%s%s%s]%s exception %s%s%s",
                     GUI_COLOR(COLOR_WIN_CHAT_DARK),
                     GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
                     pos_channel,
@@ -3969,27 +3952,35 @@ irc_cmd_recv_348 (t_irc_server *server, char *host, char *nick, char *arguments)
                     GUI_COLOR(COLOR_WIN_CHAT_HOST),
                     pos_exception,
                     GUI_COLOR(COLOR_WIN_CHAT));
-        pos = strchr (pos_user, '!');
-        if (pos)
+        if (pos_user)
         {
-            pos[0] = '\0';
-            gui_printf (buffer, "%s%s %s(%s%s%s)",
-                        GUI_COLOR(COLOR_WIN_CHAT_NICK),
-                        pos_user,
-                        GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                        GUI_COLOR(COLOR_WIN_CHAT_HOST),
-                        pos + 1,
-                        GUI_COLOR(COLOR_WIN_CHAT_DARK));
+            pos = strchr (pos_user, '!');
+            if (pos)
+            {
+                pos[0] = '\0';
+                gui_printf (buffer, _(" by %s%s %s(%s%s%s)"),
+                            GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                            pos_user,
+                            GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                            GUI_COLOR(COLOR_WIN_CHAT_HOST),
+                            pos + 1,
+                            GUI_COLOR(COLOR_WIN_CHAT_DARK));
+            }
+            else
+                gui_printf (buffer, _(" by %s%s"),
+                            GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                            pos_user);
+        }
+        if (pos_date)
+        {
+            datetime = (time_t)(atol (pos_date));
+            gui_printf_nolog (buffer, "%s, %s",
+                              GUI_COLOR(COLOR_WIN_CHAT),
+                              ctime (&datetime));
         }
         else
-            gui_printf (buffer,"%s%s",
-                        GUI_COLOR(COLOR_WIN_CHAT_NICK),
-                        pos_user);
-        datetime = (time_t)(atol (pos_date));
-        gui_printf_nolog (buffer, "%s, %s",
-                          GUI_COLOR(COLOR_WIN_CHAT),
-                          ctime (&datetime));
-    }    
+            gui_printf_nolog (buffer, "\n");
+    }
     return 0;
 }
 

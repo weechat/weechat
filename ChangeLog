@@ -1,9 +1,10 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-08-08
+ChangeLog - 2006-08-10
 
 Version 0.2.0 (under dev!):
+   * fixed command 348 (channel exception list, received by /mode #chan e)
    * added missing modes (channel & user), now all modes are allowed (bug #16606)
    * added "%m" for completion with self nick (on current server)
    * added missing IRC command 338
