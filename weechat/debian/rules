@@ -31,4 +31,4 @@ include /usr/share/cdbs/1/class/autotools.mk
 include /usr/share/cdbs/1/rules/debhelper.mk
 
 install/weechat-common::
-	install -D -o root -g root -m 644 weechat_icon_32.png $(CURDIR)/debian/weechat-common/usr/share/pixmaps/weechat_icon_32.png
+	install -D -o root -g root -m 644 debian/weechat.xpm $(CURDIR)/debian/weechat-common/usr/share/pixmaps/weechat.xpm

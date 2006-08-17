@@ -3,12 +3,13 @@ Section: net
 Priority: optional
 Maintainer: Sebastien Helleu <flashcode@flashtux.org>
 Uploaders: Julien Louis <ptitlouis@sysif.net>
-Build-Depends: cdbs, debhelper (>= 5), libncursesw5-dev, ruby, ruby1.8-dev, libperl-dev, python-dev, liblualib50-dev, libgnutls-dev, libtool, xsltproc, docbook-xsl, docbook-xml
+Build-Depends-Indep: xsltproc, docbook-xsl, docbook-xml
+Build-Depends: cdbs, debhelper (>= 5), libncursesw5-dev, ruby, ruby1.8-dev, libperl-dev, python-dev, liblualib50-dev, libgnutls-dev, libtool, dpkg-dev (>= 1.13.19)
 Standards-Version: 3.7.2
 
 Package: weechat
 Architecture: all
-Depends: weechat-common (= ${Source-Version}), weechat-curses (= ${Source-Version})
+Depends: weechat-common (= ${source:Version}), weechat-curses (>= ${binary:Version})
 Description: Fast, light and extensible IRC client
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light IRC client
  for many operating systems. Everything can be done with a keyboard.
@@ -25,8 +26,8 @@ Description: Fast, light and extensible IRC client
 
 Package: weechat-curses
 Architecture: any
-Depends: ${shlibs:Depends}, weechat-common (= ${Source-Version})
-Recommends: weechat-plugins (= ${Source-Version})
+Depends: ${shlibs:Depends}, weechat-common (= ${source:Version})
+Recommends: weechat-plugins (= ${binary:Version})
 Description: Fast, light and extensible IRC client
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light IRC client
  for many operating systems. Everything can be done with a keyboard.
@@ -52,6 +53,7 @@ Description: Common files for WeeChat
 Package: weechat-plugins
 Architecture: any
 Depends: ${shlibs:Depends}
+Suggests: weechat-scripts
 Description: Plugins for WeeChat
  This package provides some plugins to enhance weechat with scripting languages
  such as perl python or ruby.

@@ -1,3 +1,23 @@
+weechat (0.1.9-3) unstable; urgency=low
+
+  * Remove gnutls Build-Depends introduced in the previous upload
+  (closes: #379765).
+  * Move xsltproc, docbook-xml, docbook-xsl to Build-Depends-Indep.
+  * Change icon format from png to xpm.
+
+ -- Julien Louis <ptitlouis@sysif.net>  Tue, 25 Jul 2006 11:53:25 +0200
+
+weechat (0.1.9-2) unstable; urgency=low
+
+  * Fix ${datadir} expansion in configure.in which caused some problem when
+    loading scripts from /usr/share/weechat.
+  * Add weechat-scripts to weechat-plugins Suggests.
+  * Apply patch from Andreas Metzler to make weechat binNMUable
+    (Closes: #379419).
+  * Build-Depends against libgnutls13-dev | libgnutls-dev.
+
+ -- Julien Louis <ptitlouis@sysif.net>  Sun, 23 Jul 2006 17:28:34 +0200
+
 weechat (0.1.9-1) unstable; urgency=low
 
   * New upstream release
