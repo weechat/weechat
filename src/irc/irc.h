@@ -480,6 +480,7 @@ extern int irc_cmd_send_part (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_ping (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_pong (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_query (t_irc_server *, t_irc_channel *, char *);
+extern void irc_send_quit_server (t_irc_server *, char *);
 extern int irc_cmd_send_quit (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_quote (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_rehash (t_irc_server *, t_irc_channel *, char *);

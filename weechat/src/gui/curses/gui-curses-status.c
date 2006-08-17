@@ -150,8 +150,7 @@ gui_status_draw (t_gui_buffer *buffer, int erase)
             wprintw (GUI_CURSES(ptr_win)->win_status, ":");
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
                                           COLOR_WIN_STATUS_CHANNEL);
-            if (((CHANNEL(ptr_win->buffer)->type != CHANNEL_TYPE_PRIVATE)
-                 && (CHANNEL(ptr_win->buffer)->type != CHANNEL_TYPE_DCC_CHAT)
+            if (((CHANNEL(ptr_win->buffer)->type == CHANNEL_TYPE_CHANNEL)
                  && (!CHANNEL(ptr_win->buffer)->nicks))
                 || ((CHANNEL(ptr_win->buffer)->type == CHANNEL_TYPE_DCC_CHAT)
                     && (CHANNEL(ptr_win->buffer)->dcc_chat)

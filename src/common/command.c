@@ -2217,6 +2217,7 @@ weechat_cmd_disconnect (t_irc_server *server, t_irc_channel *channel,
             gui_printf (ptr_server->buffer,
                         _("Auto-reconnection is cancelled\n"));
         }
+        irc_send_quit_server (ptr_server, NULL);
         server_disconnect (ptr_server, 0);
         gui_status_draw (buffer, 1);
     }

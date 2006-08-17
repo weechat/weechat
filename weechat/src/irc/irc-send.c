@@ -1700,6 +1700,34 @@ irc_cmd_send_query (t_irc_server *server, t_irc_channel *channel,
 }
 
 /*
+ * irc_send_quit_server: send QUIT to a server
+ */
+
+void
+irc_send_quit_server (t_irc_server *server, char *arguments)
+{
+    char *ptr_arg, *buf;
+    
+    if (server->is_connected)
+    {
+        ptr_arg = (arguments) ? arguments :
+            (cfg_irc_default_msg_quit && cfg_irc_default_msg_quit[0]) ?
+            cfg_irc_default_msg_quit : NULL;
+        
+        if (ptr_arg)
+        {
+            buf = weechat_strreplace (ptr_arg, "%v", PACKAGE_VERSION);
+            server_sendf (server, "QUIT :%s\r\n",
+                          (buf) ? buf : ptr_arg);
+            if (buf)
+                free (buf);
+        }
+        else
+            server_sendf (server, "QUIT\r\n");
+    }
+}
+
+/*
  * irc_cmd_send_quit: disconnect from all servers and quit WeeChat
  */
 
@@ -1708,31 +1736,15 @@ irc_cmd_send_quit (t_irc_server *server, t_irc_channel *channel,
                    char *arguments)
 {
     t_irc_server *ptr_server;
-    char *ptr_arg, *buf;
     
     /* make gcc happy */
     (void) server;
     (void) channel;
     
-    ptr_arg = (arguments) ? arguments :
-              (cfg_irc_default_msg_quit && cfg_irc_default_msg_quit[0]) ?
-              cfg_irc_default_msg_quit : NULL;
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        if (ptr_server->is_connected)
-        {
-            if (ptr_arg)
-            {
-                buf = weechat_strreplace (ptr_arg, "%v", PACKAGE_VERSION);
-                server_sendf (ptr_server, "QUIT :%s\r\n",
-                              (buf) ? buf : ptr_arg);
-                if (buf)
-                    free (buf);
-            }
-            else
-                server_sendf (ptr_server, "QUIT\r\n");
-        }
+        irc_send_quit_server (ptr_server, arguments);
     }
     quit_weechat = 1;
     return 0;
