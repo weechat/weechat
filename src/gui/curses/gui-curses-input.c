@@ -409,7 +409,9 @@ gui_input_draw (t_gui_buffer *buffer, int erase)
                         move (ptr_win->win_input_y, ptr_win->win_input_x);
                     break;
                 case BUFFER_TYPE_RAW_DATA:
-                    mvwprintw (GUI_CURSES(ptr_win)->win_input, 0, 0, _("  [Q] Close raw data view"));
+                    wmove (GUI_CURSES(ptr_win)->win_input, 0, 0);
+                    wprintw (GUI_CURSES(ptr_win)->win_input, _("  [C] Clear buffer"));
+                    wprintw (GUI_CURSES(ptr_win)->win_input, _("  [Q] Close raw data view"));
                     wclrtoeol (GUI_CURSES(ptr_win)->win_input);
                     ptr_win->win_input_cursor_x = 0;
                     if (ptr_win == gui_current_window)

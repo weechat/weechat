@@ -778,6 +778,13 @@ gui_exec_action_raw_data (t_gui_window *window, char *actions)
             switch (actions[0])
             {
                 /* close raw IRC data */
+                case 'c':
+                case 'C':
+                    gui_buffer_clear (window->buffer);
+                    gui_window_redraw_buffer (window->buffer);
+                    return;
+                    break;
+                /* close raw IRC data */
                 case 'q':
                 case 'Q':
                     if (gui_buffer_before_raw_data)
