@@ -380,8 +380,8 @@ gui_printf_raw_data (void *server, int send, char *message)
                               GUI_COLOR(COLOR_WIN_CHAT_SERVER),
                               ((t_irc_server *)server)->name,
                               GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                              GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
-                              (send) ? "<<--" : "-->>",
+                              GUI_COLOR((send) ? COLOR_WIN_CHAT_PART : COLOR_WIN_CHAT_JOIN),
+                              (send) ? PREFIX_PART : PREFIX_JOIN,
                               GUI_COLOR(COLOR_WIN_CHAT),
                               message);
             if (pos)
