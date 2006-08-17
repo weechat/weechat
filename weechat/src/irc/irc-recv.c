@@ -456,6 +456,7 @@ irc_cmd_recv_join (t_irc_server *server, char *host, char *nick, char *arguments
         }
         gui_buffer_new (gui_current_window, server, ptr_channel,
                         BUFFER_TYPE_STANDARD, 1);
+        ptr_channel->display_creation_date = 1;
     }
     
     pos = strchr (host, '!');
@@ -474,7 +475,6 @@ irc_cmd_recv_join (t_irc_server *server, char *host, char *nick, char *arguments
                     GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
                     arguments);
     }
-    ptr_channel->display_creation_date = 1;
     ptr_nick = nick_new (server, ptr_channel, nick, 0, 0, 0, 0, 0);
     if (ptr_nick)
         ptr_nick->host = strdup ((pos) ? pos + 1 : host);
