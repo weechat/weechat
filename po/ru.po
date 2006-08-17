@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.0-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-08-10 15:48+0200\n"
+"POT-Creation-Date: 2006-08-17 11:39+0200\n"
 "PO-Revision-Date: 2006-08-06 00:13+0300\n"
 "Last-Translator: Stalwart <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1349,7 +1349,7 @@ msgstr "выкл."
 msgid " (temporary server, will not be saved)"
 msgstr " (временный сервер, не будет сохранён)"
 
-#: src/irc/irc-display.c:393 src/irc/irc-display.c:424 src/irc/irc-recv.c:3089
+#: src/irc/irc-display.c:393 src/irc/irc-display.c:424 src/irc/irc-recv.c:3111
 msgid "seconds"
 msgstr "секунды"
 
@@ -1432,8 +1432,8 @@ msgid "You have been invited to %s%s%s by %s%s\n"
 msgstr "Вас пригласил на %s%s%s пользователь %s%s\n"
 
 #: src/irc/irc-recv.c:424 src/irc/irc-recv.c:522 src/irc/irc-recv.c:720
-#: src/irc/irc-recv.c:1143 src/irc/irc-recv.c:1423 src/irc/irc-recv.c:3487
-#: src/irc/irc-recv.c:3508
+#: src/irc/irc-recv.c:1143 src/irc/irc-recv.c:1423 src/irc/irc-recv.c:3509
+#: src/irc/irc-recv.c:3530
 #, c-format
 msgid "%s channel \"%s\" not found for \"%s\" command\n"
 msgstr "%s канал \"%s\" не найден для команды \"%s\"\n"
@@ -1556,11 +1556,11 @@ msgstr "Получен CTCP %sVERSION%s от %s%s"
 #: src/irc/irc-recv.c:1598 src/irc/irc-recv.c:1629 src/irc/irc-recv.c:1650
 #: src/irc/irc-recv.c:1666 src/irc/irc-recv.c:1696 src/irc/irc-recv.c:1717
 #: src/irc/irc-recv.c:1733 src/irc/irc-recv.c:1763 src/irc/irc-recv.c:1784
-#: src/irc/irc-recv.c:1799 src/irc/irc-recv.c:2013 src/irc/irc-recv.c:2422
-#: src/irc/irc-recv.c:3892 src/irc/irc-recv.c:3907 src/irc/irc-recv.c:4006
-#: src/irc/irc-recv.c:4020 src/irc/irc-recv.c:4266 src/irc/irc-recv.c:4384
-#: src/irc/irc-recv.c:4521 src/irc/irc-recv.c:4536 src/irc/irc-recv.c:4642
-#: src/irc/irc-recv.c:4656
+#: src/irc/irc-recv.c:1799 src/irc/irc-recv.c:2013 src/irc/irc-recv.c:2444
+#: src/irc/irc-recv.c:3914 src/irc/irc-recv.c:3929 src/irc/irc-recv.c:4028
+#: src/irc/irc-recv.c:4042 src/irc/irc-recv.c:4288 src/irc/irc-recv.c:4406
+#: src/irc/irc-recv.c:4543 src/irc/irc-recv.c:4558 src/irc/irc-recv.c:4664
+#: src/irc/irc-recv.c:4678
 #, c-format
 msgid "%s cannot parse \"%s\" command\n"
 msgstr "%s не могу проанализировать команду \"%s\"\n"
@@ -1575,214 +1575,219 @@ msgstr "%s неизвестный режим DCC CHAT получен от "
 msgid "%s%s %s(%s%s%s)%s has quit"
 msgstr "%s%s %s(%s%s%s)%s вышел"
 
-#: src/irc/irc-recv.c:2236
+#: src/irc/irc-recv.c:2233
 #, c-format
 msgid "%s \"%s\" command received without channel\n"
 msgstr "%s \"%s\" команда получена без канала\n"
 
-#: src/irc/irc-recv.c:2265
+#: src/irc/irc-recv.c:2262
 #, c-format
 msgid "%s%s%s has changed topic for %s%s%s to:"
 msgstr "%s%s%s сменил тему %s%s%s на:"
 
-#: src/irc/irc-recv.c:2276
+#: src/irc/irc-recv.c:2273
 #, c-format
 msgid "%s%s%s has unset topic for %s%s\n"
 msgstr "%s%s%s удалил тему канала для %s%s\n"
 
-#: src/irc/irc-recv.c:2408
+#: src/irc/irc-recv.c:2310
+#, fuzzy, c-format
+msgid "WALLOPS from %s%s%s: %s\n"
+msgstr "Ответ на CTCP %sVERSION%s от %s%s%s: %s\n"
+
+#: src/irc/irc-recv.c:2430
 #, fuzzy, c-format
 msgid "User mode for %s%s%s is %s[%s%s%s]\n"
 msgstr "Режим пользователя %s[%s%s%s/%s%s%s]\n"
 
-#: src/irc/irc-recv.c:2472
+#: src/irc/irc-recv.c:2494
 #, c-format
 msgid "%s%s%s is away: %s\n"
 msgstr "%s%s%s отсутствует: %s\n"
 
-#: src/irc/irc-recv.c:2564
+#: src/irc/irc-recv.c:2586
 msgid "Users online: "
 msgstr "Пользователей в сети:"
 
-#: src/irc/irc-recv.c:2940
+#: src/irc/irc-recv.c:2962
 #, c-format
 msgid "%s%s %s(%s%s@%s%s)%s was %s\n"
 msgstr "%s%s %s(%s%s@%s%s)%s был %s\n"
 
-#: src/irc/irc-recv.c:3061
+#: src/irc/irc-recv.c:3083
 #, c-format
 msgid "%s[%s%s%s]%s idle: "
 msgstr "%s[%s%s%s]%s бездействует: "
 
-#: src/irc/irc-recv.c:3073 src/common/command.c:4066 src/common/command.c:4084
+#: src/irc/irc-recv.c:3095 src/common/command.c:4066 src/common/command.c:4084
 msgid "days"
 msgstr "дней"
 
-#: src/irc/irc-recv.c:3073 src/common/command.c:4066 src/common/command.c:4084
+#: src/irc/irc-recv.c:3095 src/common/command.c:4066 src/common/command.c:4084
 msgid "day"
 msgstr "день"
 
-#: src/irc/irc-recv.c:3077
+#: src/irc/irc-recv.c:3099
 #, c-format
 msgid "%s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
 msgstr "%s%02d %s%s %s%02d %s%s %s%02d %s%s, вошёл в сеть в: %s%s"
 
-#: src/irc/irc-recv.c:3081
+#: src/irc/irc-recv.c:3103
 msgid "hours"
 msgstr "часов"
 
-#: src/irc/irc-recv.c:3081
+#: src/irc/irc-recv.c:3103
 msgid "hour"
 msgstr "час"
 
-#: src/irc/irc-recv.c:3085
+#: src/irc/irc-recv.c:3107
 msgid "minutes"
 msgstr "минут"
 
-#: src/irc/irc-recv.c:3085
+#: src/irc/irc-recv.c:3107
 msgid "minute"
 msgstr "минута"
 
-#: src/irc/irc-recv.c:3089
+#: src/irc/irc-recv.c:3111
 msgid "second"
 msgstr "секунда"
 
-#: src/irc/irc-recv.c:3499
+#: src/irc/irc-recv.c:3521
 #, c-format
 msgid "No topic set for %s%s\n"
 msgstr "Не установлена тема канала для %s%s\n"
 
-#: src/irc/irc-recv.c:3559
+#: src/irc/irc-recv.c:3581
 #, c-format
 msgid "Topic for %s%s%s is: "
 msgstr "Тема канала %s%s%s: "
 
-#: src/irc/irc-recv.c:3574 src/irc/irc-recv.c:3656 src/irc/irc-recv.c:3767
+#: src/irc/irc-recv.c:3596 src/irc/irc-recv.c:3678 src/irc/irc-recv.c:3789
 #, c-format
 msgid "%s cannot identify channel for \"%s\" command\n"
 msgstr "%s не могу опознать канал для команды \"%s\"\n"
 
-#: src/irc/irc-recv.c:3627
+#: src/irc/irc-recv.c:3649
 #, c-format
 msgid "Topic set by %s%s%s, %s"
 msgstr "Тема установлена пользователем %s%s%s, %s"
 
-#: src/irc/irc-recv.c:3638
+#: src/irc/irc-recv.c:3660
 #, c-format
 msgid "%s cannot identify date/time for \"%s\" command\n"
 msgstr "%s не могу опознать дату/время для команды \"%s\"\n"
 
-#: src/irc/irc-recv.c:3647 src/irc/irc-recv.c:3776
+#: src/irc/irc-recv.c:3669 src/irc/irc-recv.c:3798
 #, c-format
 msgid "%s cannot identify nickname for \"%s\" command\n"
 msgstr "%s не могу опознать ник для команды \"%s\"\n"
 
-#: src/irc/irc-recv.c:3752
+#: src/irc/irc-recv.c:3774
 #, c-format
 msgid "%s%s%s has invited %s%s%s on %s%s\n"
 msgstr "%s%s%s пригласил %s%s%s на канал %s%s\n"
 
-#: src/irc/irc-recv.c:3812
+#: src/irc/irc-recv.c:3834
 #, c-format
 msgid "Channel reop %s%s%s: %s%s\n"
 msgstr "Реоп канала %s%s%s: %s%s\n"
 
-#: src/irc/irc-recv.c:3961
+#: src/irc/irc-recv.c:3983
 #, fuzzy, c-format
 msgid " by %s%s %s(%s%s%s)"
 msgstr "%s%s %s(%s%s%s)%s вышел"
 
-#: src/irc/irc-recv.c:3970
+#: src/irc/irc-recv.c:3992
 #, c-format
 msgid " by %s%s"
 msgstr ""
 
-#: src/irc/irc-recv.c:4280 src/irc/irc-recv.c:4430
+#: src/irc/irc-recv.c:4302 src/irc/irc-recv.c:4452
 #, c-format
 msgid "Nicks %s%s%s: %s["
 msgstr "Ники %s%s%s: %s["
 
-#: src/irc/irc-recv.c:4352
+#: src/irc/irc-recv.c:4374
 #, c-format
 msgid "%s cannot create nick \"%s\" for channel \"%s\"\n"
 msgstr "%s не могу создать ник \"%s\" для канала \"%s\"\n"
 
-#: src/irc/irc-recv.c:4451
+#: src/irc/irc-recv.c:4473
 #, c-format
 msgid ""
 "Channel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 msgstr ""
 "Канал %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 
-#: src/irc/irc-recv.c:4459
+#: src/irc/irc-recv.c:4481
 msgid "nicks"
 msgstr "ники"
 
-#: src/irc/irc-recv.c:4459
+#: src/irc/irc-recv.c:4481
 msgid "nick"
 msgstr "ник"
 
-#: src/irc/irc-recv.c:4464
+#: src/irc/irc-recv.c:4486
 msgid "ops"
 msgstr "опы"
 
-#: src/irc/irc-recv.c:4464
+#: src/irc/irc-recv.c:4486
 msgid "op"
 msgstr "оп"
 
-#: src/irc/irc-recv.c:4468
+#: src/irc/irc-recv.c:4490
 msgid "halfops"
 msgstr "полуопы"
 
-#: src/irc/irc-recv.c:4468
+#: src/irc/irc-recv.c:4490
 msgid "halfop"
 msgstr "полуоп"
 
-#: src/irc/irc-recv.c:4472
+#: src/irc/irc-recv.c:4494
 msgid "voices"
 msgstr "войсы"
 
-#: src/irc/irc-recv.c:4472
+#: src/irc/irc-recv.c:4494
 msgid "voice"
 msgstr "войс"
 
-#: src/irc/irc-recv.c:4476
+#: src/irc/irc-recv.c:4498
 msgid "normal"
 msgstr "обычные"
 
-#: src/irc/irc-recv.c:4576
+#: src/irc/irc-recv.c:4598
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned by "
 msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 
-#: src/irc/irc-recv.c:4611
+#: src/irc/irc-recv.c:4633
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned\n"
 msgstr "%s[%s%s%s] %s%s%s забанен\n"
 
-#: src/irc/irc-recv.c:4746
+#: src/irc/irc-recv.c:4768
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\"\n"
 msgstr "%s: ник \"%s\" уже используется, пробую второй ник \"%s\"\n"
 
-#: src/irc/irc-recv.c:4758
+#: src/irc/irc-recv.c:4780
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\"\n"
 msgstr "%s: ник \"%s\" уже используется, пробую третий ник \"%s\"\n"
 
-#: src/irc/irc-recv.c:4770
+#: src/irc/irc-recv.c:4792
 #, c-format
 msgid ""
 "%s: all declared nicknames are already in use, closing connection with "
 "server!\n"
 msgstr "%s: все предложеные ники заняты, отключаюсь от сервера!\n"
 
-#: src/irc/irc-recv.c:4780
+#: src/irc/irc-recv.c:4802
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\"\n"
 msgstr "%s: ник \"%s\" уже используется, пробую первый ник \"%s\"\n"
 
-#: src/irc/irc-recv.c:4792
+#: src/irc/irc-recv.c:4814
 msgid "unknown"
 msgstr "неизвестный"
 

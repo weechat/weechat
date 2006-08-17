@@ -2226,9 +2226,6 @@ irc_cmd_recv_topic (t_irc_server *server, char *host, char *nick, char *argument
     t_irc_channel *ptr_channel;
     t_gui_buffer *buffer;
     
-    /* make gcc happy */
-    (void) nick;
-    
     if (!string_is_channel (arguments))
     {
         irc_display_prefix (server, server->buffer, PREFIX_ERROR);
@@ -2290,6 +2287,31 @@ irc_cmd_recv_topic (t_irc_server *server, char *host, char *nick, char *argument
         else
             ptr_channel->topic = strdup ("");
         gui_chat_draw_title (ptr_channel->buffer, 1);
+    }
+    
+    return 0;
+}
+
+/*
+ * irc_cmd_recv_wallops: 'wallops' command received
+ */
+
+int
+irc_cmd_recv_wallops (t_irc_server *server, char *host, char *nick, char *arguments)
+{
+    command_ignored |= ignore_check (host, "wallops", arguments, server->name);
+    
+    if (!command_ignored)
+    {
+        irc_display_prefix (server, server->buffer, PREFIX_SERVER);
+        if (arguments[0] == ':')
+            arguments++;
+        gui_printf (server->buffer,
+                    _("WALLOPS from %s%s%s: %s\n"),
+                    GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                    nick,
+                    GUI_COLOR(COLOR_WIN_CHAT),
+                    arguments);
     }
     
     return 0;

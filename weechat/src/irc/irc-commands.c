@@ -288,7 +288,7 @@ t_irc_command irc_commands[] =
     "set the 'w' user mode for themselves"),
     N_("text"),
     N_("text to send"),
-    NULL, 1, MAX_ARGS, 1, 1, NULL, irc_cmd_send_wallops, NULL },
+    NULL, 1, MAX_ARGS, 1, 1, NULL, irc_cmd_send_wallops, irc_cmd_recv_wallops },
   { "who", N_("generate a query which returns a list of information"),
     N_("[mask [\"o\"]]"),
     N_("mask: only information which match this mask\n"
