@@ -2693,11 +2693,11 @@ irc_cmd_recv_306 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_307: '307' command (whois, registered nick)
+ * irc_cmd_recv_whois_nick_msg: a whois command with nick and message
  */
 
 int
-irc_cmd_recv_307 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_cmd_recv_whois_nick_msg (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_nick, *pos_msg;
     
@@ -2731,6 +2731,39 @@ irc_cmd_recv_307 (t_irc_server *server, char *host, char *nick, char *arguments)
                             GUI_COLOR(COLOR_WIN_CHAT),
                             pos_msg);
             }
+        }
+    }
+    return 0;
+}
+
+/*
+ * irc_cmd_recv_310: '310' command (whois, help mode)
+ */
+
+int
+irc_cmd_recv_310 (t_irc_server *server, char *host, char *nick, char *arguments)
+{
+    char *pos_nick;
+    
+    /* make gcc happy */
+    (void) host;
+    (void) nick;
+    
+    if (!command_ignored)
+    {
+        pos_nick = strchr (arguments, ' ');
+        if (pos_nick)
+        {
+            while (pos_nick[0] == ' ')
+                pos_nick++;
+            
+            irc_display_prefix (server, server->buffer, PREFIX_SERVER);
+            gui_printf (server->buffer, _("%s[%s%s%s]%s help mode (+h)\n"),
+                        GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                        GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                        pos_nick,
+                        GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                        GUI_COLOR(COLOR_WIN_CHAT));
         }
     }
     return 0;
@@ -2856,50 +2889,6 @@ irc_cmd_recv_312 (t_irc_server *server, char *host, char *nick, char *arguments)
                                 pos_serverinfo,
                                 GUI_COLOR(COLOR_WIN_CHAT_DARK));
                 }
-            }
-        }
-    }
-    return 0;
-}
-
-/*
- * irc_cmd_recv_313: '313' command (whois, operator)
- */
-
-int
-irc_cmd_recv_313 (t_irc_server *server, char *host, char *nick, char *arguments)
-{
-    char *pos_nick, *pos_message;
-    
-    /* make gcc happy */
-    (void) host;
-    (void) nick;
-    
-    if (!command_ignored)
-    {
-        pos_nick = strchr (arguments, ' ');
-        if (pos_nick)
-        {
-            while (pos_nick[0] == ' ')
-                pos_nick++;
-            pos_message = strchr (pos_nick, ' ');
-            if (pos_message)
-            {
-                pos_message[0] = '\0';
-                pos_message++;
-                while (pos_message[0] == ' ')
-                    pos_message++;
-                if (pos_message[0] == ':')
-                    pos_message++;
-                
-                irc_display_prefix (server, server->buffer, PREFIX_SERVER);
-                gui_printf (server->buffer, "%s[%s%s%s] %s%s\n",
-                            GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                            GUI_COLOR(COLOR_WIN_CHAT_NICK),
-                            pos_nick,
-                            GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                            GUI_COLOR(COLOR_WIN_CHAT),
-                            pos_message);
             }
         }
     }
@@ -3120,51 +3109,7 @@ irc_cmd_recv_317 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_318: '318' command (whois, end)
- */
-
-int
-irc_cmd_recv_318 (t_irc_server *server, char *host, char *nick, char *arguments)
-{
-    char *pos_nick, *pos_message;
-    
-    /* make gcc happy */
-    (void) host;
-    (void) nick;
-    
-    if (!command_ignored)
-    {
-        pos_nick = strchr (arguments, ' ');
-        if (pos_nick)
-        {
-            while (pos_nick[0] == ' ')
-                pos_nick++;
-            pos_message = strchr (pos_nick, ' ');
-            if (pos_message)
-            {
-                pos_message[0] = '\0';
-                pos_message++;
-                while (pos_message[0] == ' ')
-                    pos_message++;
-                if (pos_message[0] == ':')
-                    pos_message++;
-            
-                irc_display_prefix (server, server->buffer, PREFIX_SERVER);
-                gui_printf (server->buffer, "%s[%s%s%s] %s%s\n",
-                            GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                            GUI_COLOR(COLOR_WIN_CHAT_NICK),
-                            pos_nick,
-                            GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                            GUI_COLOR(COLOR_WIN_CHAT),
-                            pos_message);
-            }
-        }
-    }
-    return 0;
-}
-
-/*
- * irc_cmd_recv_319: '319' command (whois, end)
+ * irc_cmd_recv_319: '319' command (whois, channels)
  */
 
 int
@@ -3238,50 +3183,6 @@ irc_cmd_recv_319 (t_irc_server *server, char *host, char *nick, char *arguments)
                                 (pos && pos[0]) ? " " : "\n");
                     pos_channel = pos;
                 }
-            }
-        }
-    }
-    return 0;
-}
-
-/*
- * irc_cmd_recv_320: '320' command (whois, identified user)
- */
-
-int
-irc_cmd_recv_320 (t_irc_server *server, char *host, char *nick, char *arguments)
-{
-    char *pos_nick, *pos_message;
-    
-    /* make gcc happy */
-    (void) host;
-    (void) nick;
-    
-    if (!command_ignored)
-    {
-        pos_nick = strchr (arguments, ' ');
-        if (pos_nick)
-        {
-            while (pos_nick[0] == ' ')
-                pos_nick++;
-            pos_message = strchr (pos_nick, ' ');
-            if (pos_message)
-            {
-                pos_message[0] = '\0';
-                pos_message++;
-                while (pos_message[0] == ' ')
-                    pos_message++;
-                if (pos_message[0] == ':')
-                    pos_message++;
-                
-                irc_display_prefix (server, server->buffer, PREFIX_SERVER);
-                gui_printf (server->buffer, "%s[%s%s%s] %s%s\n",
-                            GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                            GUI_COLOR(COLOR_WIN_CHAT_NICK),
-                            pos_nick,
-                            GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                            GUI_COLOR(COLOR_WIN_CHAT),
-                            pos_message);
             }
         }
     }
@@ -3457,22 +3358,6 @@ irc_cmd_recv_324 (t_irc_server *server, char *host, char *nick, char *arguments)
             }
         }
     }
-    return 0;
-}
-
-/*
- * irc_cmd_recv_329: '329' command (???)
- */
-
-int
-irc_cmd_recv_329 (t_irc_server *server, char *host, char *nick, char *arguments)
-{
-    /* make gcc happy */
-    (void) server;
-    (void) host;
-    (void) nick;
-    (void) arguments;
-    
     return 0;
 }
 

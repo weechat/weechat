@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.0-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-08-17 11:39+0200\n"
+"POT-Creation-Date: 2006-08-17 13:57+0200\n"
 "PO-Revision-Date: 2006-07-25 20:00+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -971,70 +971,80 @@ msgid "whois (registered nick)"
 msgstr "kdo je (registrovaná přezdívka)"
 
 #: src/irc/irc-commands.c:324
+#, fuzzy
+msgid "whois (help mode)"
+msgstr "kdo je (konec)"
+
+#: src/irc/irc-commands.c:326
 msgid "whois (user)"
 msgstr "kdo je (uživatel)"
 
-#: src/irc/irc-commands.c:326
+#: src/irc/irc-commands.c:328
 msgid "whois (server)"
 msgstr "kdo je (server)"
 
-#: src/irc/irc-commands.c:328
+#: src/irc/irc-commands.c:330
 msgid "whois (operator)"
 msgstr "kdo je (operator)"
 
-#: src/irc/irc-commands.c:330
+#: src/irc/irc-commands.c:332
 msgid "whowas"
 msgstr "kdo byl"
 
-#: src/irc/irc-commands.c:332
+#: src/irc/irc-commands.c:334
 msgid "end of /who list"
 msgstr "konec /who seznamu"
 
-#: src/irc/irc-commands.c:334
+#: src/irc/irc-commands.c:336
 msgid "whois (idle)"
 msgstr "kdo je (nečinný)"
 
-#: src/irc/irc-commands.c:336
+#: src/irc/irc-commands.c:338
 msgid "whois (end)"
 msgstr "kdo je (konec)"
 
-#: src/irc/irc-commands.c:338
+#: src/irc/irc-commands.c:340
 msgid "whois (channels)"
 msgstr "kdo je (kanály)"
 
-#: src/irc/irc-commands.c:340
+#: src/irc/irc-commands.c:342
 msgid "whois (identified user)"
 msgstr "kdo je (identifikovaný uživatel)"
 
-#: src/irc/irc-commands.c:342
+#: src/irc/irc-commands.c:344
 msgid "/list start"
 msgstr "/list začátek"
 
-#: src/irc/irc-commands.c:344
+#: src/irc/irc-commands.c:346
 msgid "channel (for /list)"
 msgstr "kanál (pro /list)"
 
-#: src/irc/irc-commands.c:346
+#: src/irc/irc-commands.c:348
 msgid "/list end"
 msgstr "/list konec"
 
-#: src/irc/irc-commands.c:348
+#: src/irc/irc-commands.c:350
 msgid "channel mode"
 msgstr "mód kanálu"
 
 #: src/irc/irc-commands.c:352
+#, fuzzy
+msgid "whois (has oper privs)"
+msgstr "kdo je (operator)"
+
+#: src/irc/irc-commands.c:354
 msgid "no topic for channel"
 msgstr "na kanálu není nastaveno téma"
 
-#: src/irc/irc-commands.c:354
+#: src/irc/irc-commands.c:356
 msgid "topic of channel"
 msgstr "téma kanálu"
 
-#: src/irc/irc-commands.c:355
+#: src/irc/irc-commands.c:357
 msgid "channel :topic"
 msgstr "kanál :téma"
 
-#: src/irc/irc-commands.c:356
+#: src/irc/irc-commands.c:358
 msgid ""
 "channel: name of channel\n"
 "  topic: topic of the channel"
@@ -1042,52 +1052,52 @@ msgstr ""
 "kanál: jméno kanálu\n"
 " téma: téma kanálu"
 
-#: src/irc/irc-commands.c:359
+#: src/irc/irc-commands.c:361
 msgid "infos about topic (nick and date changed)"
 msgstr "informace o tématu (uživatel a datum změnění)"
 
-#: src/irc/irc-commands.c:361
+#: src/irc/irc-commands.c:363
 #, fuzzy
 msgid "whois (host)"
 msgstr "kdo je (uživatel)"
 
-#: src/irc/irc-commands.c:363
+#: src/irc/irc-commands.c:365
 msgid "inviting"
 msgstr "pozvání"
 
-#: src/irc/irc-commands.c:365
+#: src/irc/irc-commands.c:367
 msgid "channel reop"
 msgstr "reop kanálu"
 
-#: src/irc/irc-commands.c:367
+#: src/irc/irc-commands.c:369
 msgid "end of channel reop list"
 msgstr "konec seznamu lidí při opnutých při reopu kanálu"
 
-#: src/irc/irc-commands.c:369
+#: src/irc/irc-commands.c:371
 msgid "channel exception list"
 msgstr "seznam vyjímek kanálu"
 
-#: src/irc/irc-commands.c:371
+#: src/irc/irc-commands.c:373
 msgid "end of channel exception list"
 msgstr "konec seznamu vyjímek kanálu"
 
-#: src/irc/irc-commands.c:373
+#: src/irc/irc-commands.c:375
 msgid "server version"
 msgstr "verze serveru"
 
-#: src/irc/irc-commands.c:375
+#: src/irc/irc-commands.c:377
 msgid "who"
 msgstr "kdo"
 
-#: src/irc/irc-commands.c:377
+#: src/irc/irc-commands.c:379
 msgid "list of nicks on channel"
 msgstr "seznam uživatelů na kanálu"
 
-#: src/irc/irc-commands.c:378
+#: src/irc/irc-commands.c:380
 msgid "channel :[[@|+]nick ...]"
 msgstr "kanál :[[@|+]přezdívka ...]"
 
-#: src/irc/irc-commands.c:379
+#: src/irc/irc-commands.c:381
 msgid ""
 "channel: name of channel\n"
 "   nick: nick on the channel"
@@ -1095,232 +1105,232 @@ msgstr ""
 "    kanál: jméno kanálu\n"
 "přezdívka: přezdívka na kanálu"
 
-#: src/irc/irc-commands.c:382
+#: src/irc/irc-commands.c:384
 msgid "end of /names list"
 msgstr "konec /names sezanmu"
 
-#: src/irc/irc-commands.c:384
+#: src/irc/irc-commands.c:386
 msgid "banlist"
 msgstr "seznam zakázaných"
 
-#: src/irc/irc-commands.c:386
+#: src/irc/irc-commands.c:388
 msgid "end of banlist"
 msgstr "konec seznamu zakázaných"
 
-#: src/irc/irc-commands.c:388
+#: src/irc/irc-commands.c:390
 msgid "connecting from"
 msgstr "Připojuji z"
 
-#: src/irc/irc-commands.c:390
+#: src/irc/irc-commands.c:392
 msgid "no such nick/channel"
 msgstr "neexistující přezdívka/kanál"
 
-#: src/irc/irc-commands.c:392
+#: src/irc/irc-commands.c:394
 msgid "no such server"
 msgstr "neexistující server"
 
-#: src/irc/irc-commands.c:394
+#: src/irc/irc-commands.c:396
 msgid "no such channel"
 msgstr "neexistující kanál"
 
-#: src/irc/irc-commands.c:396
+#: src/irc/irc-commands.c:398
 msgid "cannot send to channel"
 msgstr "nemohu poslat na kanál"
 
-#: src/irc/irc-commands.c:398
+#: src/irc/irc-commands.c:400
 msgid "too many channels"
 msgstr "příliš mnoho kanálů"
 
-#: src/irc/irc-commands.c:400 src/irc/irc-commands.c:402
+#: src/irc/irc-commands.c:402 src/irc/irc-commands.c:404
 msgid "was no such nick"
 msgstr "byl neznámá přezdívka"
 
-#: src/irc/irc-commands.c:404
+#: src/irc/irc-commands.c:406
 msgid "no origin"
 msgstr "žádný původ"
 
-#: src/irc/irc-commands.c:406
+#: src/irc/irc-commands.c:408
 msgid "no services"
 msgstr "žádné služby"
 
-#: src/irc/irc-commands.c:408
+#: src/irc/irc-commands.c:410
 msgid "no recipient"
 msgstr "žádný příjemce"
 
-#: src/irc/irc-commands.c:410
+#: src/irc/irc-commands.c:412
 msgid "no text to send"
 msgstr "není text k poslání"
 
-#: src/irc/irc-commands.c:412
+#: src/irc/irc-commands.c:414
 msgid "no toplevel"
 msgstr "žádný nejvyšší level"
 
-#: src/irc/irc-commands.c:414
+#: src/irc/irc-commands.c:416
 msgid "wilcard in toplevel domain"
 msgstr "žnačka pro výběr souboru v nejvyšší doméně"
 
-#: src/irc/irc-commands.c:416
+#: src/irc/irc-commands.c:418
 msgid "unknown command"
 msgstr "neznámý přkaz"
 
-#: src/irc/irc-commands.c:418
+#: src/irc/irc-commands.c:420
 msgid "MOTD is missing"
 msgstr "MOTD chybí"
 
-#: src/irc/irc-commands.c:420
+#: src/irc/irc-commands.c:422
 msgid "no administrative info"
 msgstr "žádné administrativní informace"
 
-#: src/irc/irc-commands.c:422
+#: src/irc/irc-commands.c:424
 msgid "file error"
 msgstr "chyba souboru"
 
-#: src/irc/irc-commands.c:424
+#: src/irc/irc-commands.c:426
 msgid "no nickname given"
 msgstr "žádná přezdívka nebyla dána"
 
-#: src/irc/irc-commands.c:426
+#: src/irc/irc-commands.c:428
 msgid "erroneous nickname"
 msgstr "chybová přezdívka"
 
-#: src/irc/irc-commands.c:428
+#: src/irc/irc-commands.c:430
 msgid "nickname already in use"
 msgstr "přezdívka je zrovna používaná"
 
-#: src/irc/irc-commands.c:430
+#: src/irc/irc-commands.c:432
 msgid "nickname collision"
 msgstr "kolize přezdívek"
 
-#: src/irc/irc-commands.c:432
+#: src/irc/irc-commands.c:434
 msgid "resource unavailable"
 msgstr "zdroj nedostupny"
 
-#: src/irc/irc-commands.c:434
+#: src/irc/irc-commands.c:436
 msgid "not authorized to change nickname"
 msgstr "chybí autorizace pro změnu přezdívky"
 
-#: src/irc/irc-commands.c:436
+#: src/irc/irc-commands.c:438
 msgid "user not in channel"
 msgstr "uživatel není na kanále"
 
-#: src/irc/irc-commands.c:438
+#: src/irc/irc-commands.c:440
 msgid "not on channel"
 msgstr "není na kanále"
 
-#: src/irc/irc-commands.c:440
+#: src/irc/irc-commands.c:442
 msgid "user already on channel"
 msgstr "uživatel již je na kanále"
 
-#: src/irc/irc-commands.c:442
+#: src/irc/irc-commands.c:444
 msgid "user not logged in"
 msgstr "uživatel není přihlášen"
 
-#: src/irc/irc-commands.c:444
+#: src/irc/irc-commands.c:446
 msgid "summon has been disabled"
 msgstr "svolávání bylo zakázáno"
 
-#: src/irc/irc-commands.c:446
+#: src/irc/irc-commands.c:448
 msgid "users has been disabled"
 msgstr "uživatel byl zablokován"
 
-#: src/irc/irc-commands.c:448
+#: src/irc/irc-commands.c:450
 msgid "you are not registered"
 msgstr "nejsi registrován"
 
-#: src/irc/irc-commands.c:450
+#: src/irc/irc-commands.c:452
 msgid "not enough parameters"
 msgstr "nedostatek parametrů"
 
-#: src/irc/irc-commands.c:452
+#: src/irc/irc-commands.c:454
 msgid "you may not register"
 msgstr "nemůžeš se registrovat"
 
-#: src/irc/irc-commands.c:454
+#: src/irc/irc-commands.c:456
 msgid "your host isn't among the privileged"
 msgstr "tvůj host není mezi privilegovanými"
 
-#: src/irc/irc-commands.c:456
+#: src/irc/irc-commands.c:458
 msgid "password incorrect"
 msgstr "nezprávné heslo"
 
-#: src/irc/irc-commands.c:458
+#: src/irc/irc-commands.c:460
 msgid "you are banned from this server"
 msgstr "dle tohoto serveru jsi zakázaný"
 
-#: src/irc/irc-commands.c:460
+#: src/irc/irc-commands.c:462
 msgid "channel key already set"
 msgstr "klíč kanálu je již nastaven"
 
-#: src/irc/irc-commands.c:462
+#: src/irc/irc-commands.c:464
 msgid "forwarding to another channel"
 msgstr "předávám na dalsí kanál"
 
-#: src/irc/irc-commands.c:464
+#: src/irc/irc-commands.c:466
 msgid "channel is already full"
 msgstr "kanál je již plný"
 
-#: src/irc/irc-commands.c:466
+#: src/irc/irc-commands.c:468
 msgid "unknown mode char to me"
 msgstr "neznámý znak módu"
 
-#: src/irc/irc-commands.c:468
+#: src/irc/irc-commands.c:470
 msgid "cannot join channel (invite only)"
 msgstr "nemohu se přidat na kanál (pouze na pozvání)"
 
-#: src/irc/irc-commands.c:470
+#: src/irc/irc-commands.c:472
 msgid "cannot join channel (banned from channel)"
 msgstr "nemohu se přidat na kanál (zakázaný dle kanálu)"
 
-#: src/irc/irc-commands.c:472
+#: src/irc/irc-commands.c:474
 msgid "cannot join channel (bad channel key)"
 msgstr "nemohu se přidat na kanál (špatný klíč kanálu)"
 
-#: src/irc/irc-commands.c:474
+#: src/irc/irc-commands.c:476
 msgid "bad channel mask"
 msgstr "špatná maska kanálu"
 
-#: src/irc/irc-commands.c:476
+#: src/irc/irc-commands.c:478
 msgid "channel doesn't support modes"
 msgstr "kanál nepodporuje módy"
 
-#: src/irc/irc-commands.c:478
+#: src/irc/irc-commands.c:480
 msgid "you're not an IRC operator"
 msgstr "nejsi IRC operátor"
 
-#: src/irc/irc-commands.c:480
+#: src/irc/irc-commands.c:482
 msgid "you're not channel operator"
 msgstr "nejsi operátor kanálu"
 
-#: src/irc/irc-commands.c:482
+#: src/irc/irc-commands.c:484
 msgid "you can't kill a server!"
 msgstr "nemůžeš zabít server!"
 
-#: src/irc/irc-commands.c:484
+#: src/irc/irc-commands.c:486
 msgid "your connection is restricted!"
 msgstr "tvé připojení je omezené"
 
-#: src/irc/irc-commands.c:486
+#: src/irc/irc-commands.c:488
 msgid "user is immune from kick/deop"
 msgstr "uživatel je imunní na kick/deop"
 
-#: src/irc/irc-commands.c:488
+#: src/irc/irc-commands.c:490
 msgid "network split"
 msgstr "rozdělení sítě"
 
-#: src/irc/irc-commands.c:490
+#: src/irc/irc-commands.c:492
 msgid "no O-lines for your host"
 msgstr "žádné O-řádky pro tvůj host"
 
-#: src/irc/irc-commands.c:492
+#: src/irc/irc-commands.c:494
 msgid "unknown mode flag"
 msgstr "neznámá značka módu"
 
-#: src/irc/irc-commands.c:494
+#: src/irc/irc-commands.c:496
 msgid "can't change mode for other users"
 msgstr "nemůžu změnit mód přo ostatní uživatele"
 
-#: src/irc/irc-commands.c:496 src/irc/irc-commands.c:498
-#: src/irc/irc-commands.c:500 src/irc/irc-commands.c:502
+#: src/irc/irc-commands.c:498 src/irc/irc-commands.c:500
+#: src/irc/irc-commands.c:502 src/irc/irc-commands.c:504
 msgid "whois (secure connection)"
 msgstr "whois (zabezpečená část)"
 
@@ -1351,7 +1361,7 @@ msgstr "off"
 msgid " (temporary server, will not be saved)"
 msgstr " (dočasný server, nebude uložen)"
 
-#: src/irc/irc-display.c:393 src/irc/irc-display.c:424 src/irc/irc-recv.c:3111
+#: src/irc/irc-display.c:393 src/irc/irc-display.c:424 src/irc/irc-recv.c:3100
 msgid "seconds"
 msgstr "sekund"
 
@@ -1435,8 +1445,8 @@ msgid "You have been invited to %s%s%s by %s%s\n"
 msgstr "Byl jsi pozván na %s%s%s od %s%s\n"
 
 #: src/irc/irc-recv.c:424 src/irc/irc-recv.c:522 src/irc/irc-recv.c:720
-#: src/irc/irc-recv.c:1143 src/irc/irc-recv.c:1423 src/irc/irc-recv.c:3509
-#: src/irc/irc-recv.c:3530
+#: src/irc/irc-recv.c:1143 src/irc/irc-recv.c:1423 src/irc/irc-recv.c:3394
+#: src/irc/irc-recv.c:3415
 #, c-format
 msgid "%s channel \"%s\" not found for \"%s\" command\n"
 msgstr "%s kanál \"%s\" nebyl nalezen příkazem \"%s\"\n"
@@ -1560,10 +1570,10 @@ msgstr "CTCP %sVERSION%s obdržen od %s%s"
 #: src/irc/irc-recv.c:1666 src/irc/irc-recv.c:1696 src/irc/irc-recv.c:1717
 #: src/irc/irc-recv.c:1733 src/irc/irc-recv.c:1763 src/irc/irc-recv.c:1784
 #: src/irc/irc-recv.c:1799 src/irc/irc-recv.c:2013 src/irc/irc-recv.c:2444
-#: src/irc/irc-recv.c:3914 src/irc/irc-recv.c:3929 src/irc/irc-recv.c:4028
-#: src/irc/irc-recv.c:4042 src/irc/irc-recv.c:4288 src/irc/irc-recv.c:4406
-#: src/irc/irc-recv.c:4543 src/irc/irc-recv.c:4558 src/irc/irc-recv.c:4664
-#: src/irc/irc-recv.c:4678
+#: src/irc/irc-recv.c:3799 src/irc/irc-recv.c:3814 src/irc/irc-recv.c:3913
+#: src/irc/irc-recv.c:3927 src/irc/irc-recv.c:4173 src/irc/irc-recv.c:4291
+#: src/irc/irc-recv.c:4428 src/irc/irc-recv.c:4443 src/irc/irc-recv.c:4549
+#: src/irc/irc-recv.c:4563
 #, c-format
 msgid "%s cannot parse \"%s\" command\n"
 msgstr "%s nemohu rozpársovat příkaz \"%s\"\n"
@@ -1612,175 +1622,180 @@ msgstr "%s%s%s je pryč: %s\n"
 msgid "Users online: "
 msgstr "Uživatelů online: "
 
-#: src/irc/irc-recv.c:2962
+#: src/irc/irc-recv.c:2761
+#, fuzzy, c-format
+msgid "%s[%s%s%s]%s help mode (+h)\n"
+msgstr "%s[%s%s%s]%s nečinný: "
+
+#: src/irc/irc-recv.c:2951
 #, c-format
 msgid "%s%s %s(%s%s@%s%s)%s was %s\n"
 msgstr "%s%s %s(%s%s@%s%s)%s byl %s\n"
 
-#: src/irc/irc-recv.c:3083
+#: src/irc/irc-recv.c:3072
 #, c-format
 msgid "%s[%s%s%s]%s idle: "
 msgstr "%s[%s%s%s]%s nečinný: "
 
-#: src/irc/irc-recv.c:3095 src/common/command.c:4066 src/common/command.c:4084
+#: src/irc/irc-recv.c:3084 src/common/command.c:4066 src/common/command.c:4084
 msgid "days"
 msgstr "dní"
 
-#: src/irc/irc-recv.c:3095 src/common/command.c:4066 src/common/command.c:4084
+#: src/irc/irc-recv.c:3084 src/common/command.c:4066 src/common/command.c:4084
 msgid "day"
 msgstr "den"
 
-#: src/irc/irc-recv.c:3099
+#: src/irc/irc-recv.c:3088
 #, c-format
 msgid "%s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
 msgstr "%s%02d %s%s %s%02d %s%s %s%02d %s%s, přihlášen v: %s%s"
 
-#: src/irc/irc-recv.c:3103
+#: src/irc/irc-recv.c:3092
 msgid "hours"
 msgstr "hodin"
 
-#: src/irc/irc-recv.c:3103
+#: src/irc/irc-recv.c:3092
 msgid "hour"
 msgstr "hodina"
 
-#: src/irc/irc-recv.c:3107
+#: src/irc/irc-recv.c:3096
 msgid "minutes"
 msgstr "minut"
 
-#: src/irc/irc-recv.c:3107
+#: src/irc/irc-recv.c:3096
 msgid "minute"
 msgstr "minuta"
 
-#: src/irc/irc-recv.c:3111
+#: src/irc/irc-recv.c:3100
 msgid "second"
 msgstr "sekunda"
 
-#: src/irc/irc-recv.c:3521
+#: src/irc/irc-recv.c:3406
 #, c-format
 msgid "No topic set for %s%s\n"
 msgstr "Není nastaveno téma pro %s%s\n"
 
-#: src/irc/irc-recv.c:3581
+#: src/irc/irc-recv.c:3466
 #, c-format
 msgid "Topic for %s%s%s is: "
 msgstr "Téma pro %s%s%s je: "
 
-#: src/irc/irc-recv.c:3596 src/irc/irc-recv.c:3678 src/irc/irc-recv.c:3789
+#: src/irc/irc-recv.c:3481 src/irc/irc-recv.c:3563 src/irc/irc-recv.c:3674
 #, c-format
 msgid "%s cannot identify channel for \"%s\" command\n"
 msgstr "%s nemohu identifikovat kanál pro příkaz \"%s\"\n"
 
-#: src/irc/irc-recv.c:3649
+#: src/irc/irc-recv.c:3534
 #, c-format
 msgid "Topic set by %s%s%s, %s"
 msgstr "Téma nastevil %s%s%s, %s"
 
-#: src/irc/irc-recv.c:3660
+#: src/irc/irc-recv.c:3545
 #, c-format
 msgid "%s cannot identify date/time for \"%s\" command\n"
 msgstr "%s nemohu identofikovat datum/čas pro příkaz \"%s\"\n"
 
-#: src/irc/irc-recv.c:3669 src/irc/irc-recv.c:3798
+#: src/irc/irc-recv.c:3554 src/irc/irc-recv.c:3683
 #, c-format
 msgid "%s cannot identify nickname for \"%s\" command\n"
 msgstr "%s nemohu identifikovat přezdívku pro příkaz \"%s\"\n"
 
-#: src/irc/irc-recv.c:3774
+#: src/irc/irc-recv.c:3659
 #, c-format
 msgid "%s%s%s has invited %s%s%s on %s%s\n"
 msgstr "%s%s%s pozval %s%s%s na %s%s\n"
 
-#: src/irc/irc-recv.c:3834
+#: src/irc/irc-recv.c:3719
 #, c-format
 msgid "Channel reop %s%s%s: %s%s\n"
 msgstr "Reop kanálu %s%s%s: %s%s\n"
 
-#: src/irc/irc-recv.c:3983
+#: src/irc/irc-recv.c:3868
 #, fuzzy, c-format
 msgid " by %s%s %s(%s%s%s)"
 msgstr "%s%s %s(%s%s%s)%s skončil"
 
-#: src/irc/irc-recv.c:3992
+#: src/irc/irc-recv.c:3877
 #, c-format
 msgid " by %s%s"
 msgstr ""
 
-#: src/irc/irc-recv.c:4302 src/irc/irc-recv.c:4452
+#: src/irc/irc-recv.c:4187 src/irc/irc-recv.c:4337
 #, c-format
 msgid "Nicks %s%s%s: %s["
 msgstr "Přezdívkz %s%s%s: %s["
 
-#: src/irc/irc-recv.c:4374
+#: src/irc/irc-recv.c:4259
 #, c-format
 msgid "%s cannot create nick \"%s\" for channel \"%s\"\n"
 msgstr "%s nemohu vztvořit přezdívku \"%s\" pro kanál \"%s\"\n"
 
-#: src/irc/irc-recv.c:4473
+#: src/irc/irc-recv.c:4358
 #, c-format
 msgid ""
 "Channel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 msgstr ""
 "Kanál %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 
-#: src/irc/irc-recv.c:4481
+#: src/irc/irc-recv.c:4366
 msgid "nicks"
 msgstr "přezdívky"
 
-#: src/irc/irc-recv.c:4481
+#: src/irc/irc-recv.c:4366
 msgid "nick"
 msgstr "přezdívka"
 
-#: src/irc/irc-recv.c:4486
+#: src/irc/irc-recv.c:4371
 msgid "ops"
 msgstr "ops"
 
-#: src/irc/irc-recv.c:4486
+#: src/irc/irc-recv.c:4371
 msgid "op"
 msgstr "op"
 
-#: src/irc/irc-recv.c:4490
+#: src/irc/irc-recv.c:4375
 msgid "halfops"
 msgstr "částeční-ops"
 
-#: src/irc/irc-recv.c:4490
+#: src/irc/irc-recv.c:4375
 msgid "halfop"
 msgstr "částečný-op"
 
-#: src/irc/irc-recv.c:4494
+#: src/irc/irc-recv.c:4379
 msgid "voices"
 msgstr "voices"
 
-#: src/irc/irc-recv.c:4494
+#: src/irc/irc-recv.c:4379
 msgid "voice"
 msgstr "voice"
 
-#: src/irc/irc-recv.c:4498
+#: src/irc/irc-recv.c:4383
 msgid "normal"
 msgstr "normální"
 
-#: src/irc/irc-recv.c:4598
+#: src/irc/irc-recv.c:4483
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned by "
 msgstr "%s[%s%s%s] %s%s%s zakázal "
 
-#: src/irc/irc-recv.c:4633
+#: src/irc/irc-recv.c:4518
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned\n"
 msgstr "%s[%s%s%s] %s%s%s takázaný\n"
 
-#: src/irc/irc-recv.c:4768
+#: src/irc/irc-recv.c:4653
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\"\n"
 msgstr ""
 "%s: přezdívka \"%s\" je již používaná, zkouším druhou přezdívku \"%s\"\n"
 
-#: src/irc/irc-recv.c:4780
+#: src/irc/irc-recv.c:4665
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\"\n"
 msgstr ""
 "%s: přezdívka \"%s\" je již používaná, zkouším třetí přezdívku \"%s\"\n"
 
-#: src/irc/irc-recv.c:4792
+#: src/irc/irc-recv.c:4677
 #, c-format
 msgid ""
 "%s: all declared nicknames are already in use, closing connection with "
@@ -1789,13 +1804,13 @@ msgstr ""
 "%s: všechny deklarované přezdívky jsou již používány, zavírám spojení se "
 "serverem!\n"
 
-#: src/irc/irc-recv.c:4802
+#: src/irc/irc-recv.c:4687
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\"\n"
 msgstr ""
 "%s: přezdívka \"%s\" je již použivaná, zkouším první přezdívku \"%s\"\n"
 
-#: src/irc/irc-recv.c:4814
+#: src/irc/irc-recv.c:4699
 msgid "unknown"
 msgstr "neznámý"
 
