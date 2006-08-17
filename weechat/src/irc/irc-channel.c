@@ -69,6 +69,7 @@ channel_new (t_irc_server *server, int channel_type, char *channel_name)
     new_channel->away_message = NULL;
     new_channel->cycle = 0;
     new_channel->close = 0;
+    new_channel->display_creation_date = 0;
     new_channel->nicks = NULL;
     new_channel->last_nick = NULL;
 
@@ -547,19 +548,20 @@ void
 channel_print_log (t_irc_channel *channel)
 {
     weechat_log_printf ("=> channel %s (addr:0x%X)]\n", channel->name, channel);
-    weechat_log_printf ("     type . . . . : %d\n",     channel->type);
-    weechat_log_printf ("     dcc_chat . . : 0x%X\n",   channel->dcc_chat);
-    weechat_log_printf ("     topic. . . . : '%s'\n",   channel->topic);
-    weechat_log_printf ("     modes. . . . : '%s'\n",   channel->modes);
-    weechat_log_printf ("     limit. . . . : %d\n",     channel->limit);
-    weechat_log_printf ("     key. . . . . : '%s'\n",   channel->key);
-    weechat_log_printf ("     checking_away: %d\n",     channel->checking_away);
-    weechat_log_printf ("     away_message : '%s'\n",   channel->away_message);
-    weechat_log_printf ("     cycle. . . . : %d\n",     channel->cycle);
-    weechat_log_printf ("     close. . . . : %d\n",     channel->close);
-    weechat_log_printf ("     nicks. . . . : 0x%X\n",   channel->nicks);
-    weechat_log_printf ("     last_nick. . : 0x%X\n",   channel->last_nick);
-    weechat_log_printf ("     buffer . . . : 0x%X\n",   channel->buffer);
-    weechat_log_printf ("     prev_channel : 0x%X\n",   channel->prev_channel);
-    weechat_log_printf ("     next_channel : 0x%X\n",   channel->next_channel);
+    weechat_log_printf ("     type . . . . . . . . : %d\n",     channel->type);
+    weechat_log_printf ("     dcc_chat . . . . . . : 0x%X\n",   channel->dcc_chat);
+    weechat_log_printf ("     topic. . . . . . . . : '%s'\n",   channel->topic);
+    weechat_log_printf ("     modes. . . . . . . . : '%s'\n",   channel->modes);
+    weechat_log_printf ("     limit. . . . . . . . : %d\n",     channel->limit);
+    weechat_log_printf ("     key. . . . . . . . . : '%s'\n",   channel->key);
+    weechat_log_printf ("     checking_away. . . . : %d\n",     channel->checking_away);
+    weechat_log_printf ("     away_message . . . . : '%s'\n",   channel->away_message);
+    weechat_log_printf ("     cycle. . . . . . . . : %d\n",     channel->cycle);
+    weechat_log_printf ("     close. . . . . . . . : %d\n",     channel->close);
+    weechat_log_printf ("     display_creation_date: %d\n",     channel->close);
+    weechat_log_printf ("     nicks. . . . . . . . : 0x%X\n",   channel->nicks);
+    weechat_log_printf ("     last_nick. . . . . . : 0x%X\n",   channel->last_nick);
+    weechat_log_printf ("     buffer . . . . . . . : 0x%X\n",   channel->buffer);
+    weechat_log_printf ("     prev_channel . . . . : 0x%X\n",   channel->prev_channel);
+    weechat_log_printf ("     next_channel . . . . : 0x%X\n",   channel->next_channel);
 }

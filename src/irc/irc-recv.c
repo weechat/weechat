@@ -474,6 +474,7 @@ irc_cmd_recv_join (t_irc_server *server, char *host, char *nick, char *arguments
                     GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
                     arguments);
     }
+    ptr_channel->display_creation_date = 1;
     ptr_nick = nick_new (server, ptr_channel, nick, 0, 0, 0, 0, 0);
     if (ptr_nick)
         ptr_nick->host = strdup ((pos) ? pos + 1 : host);
@@ -3357,6 +3358,75 @@ irc_cmd_recv_324 (t_irc_server *server, char *host, char *nick, char *arguments)
                 gui_status_draw (ptr_channel->buffer, 1);
             }
         }
+    }
+    return 0;
+}
+
+/*
+ * irc_cmd_recv_329: '329' command received (channel creation date)
+ */
+
+int
+irc_cmd_recv_329 (t_irc_server *server, char *host, char *nick, char *arguments)
+{
+    char *pos_channel, *pos_date;
+    t_irc_channel *ptr_channel;
+    time_t datetime;
+    
+    /* make gcc happy */
+    (void) host;
+    (void) nick;
+    
+    pos_channel = strchr (arguments, ' ');
+    if (pos_channel)
+    {
+        while (pos_channel[0] == ' ')
+            pos_channel++;
+        pos_date = strchr (pos_channel, ' ');
+        if (pos_date)
+        {
+            pos_date[0] = '\0';
+            pos_date++;
+            while (pos_date[0] == ' ')
+                pos_date++;
+            
+            ptr_channel = channel_search (server, pos_channel);
+            if (!ptr_channel)
+            {
+                irc_display_prefix (server, server->buffer, PREFIX_ERROR);
+                gui_printf_nolog (server->buffer,
+                                  _("%s channel \"%s\" not found for \"%s\" command\n"),
+                                  WEECHAT_ERROR, pos_channel, "329");
+                return -1;
+            }
+            
+            command_ignored |= ignore_check (host, "329",
+                                             pos_channel, server->name);
+            if (!command_ignored && (ptr_channel->display_creation_date))
+            {
+                datetime = (time_t)(atol (pos_date));
+                irc_display_prefix (server, ptr_channel->buffer, PREFIX_INFO);
+                gui_printf (ptr_channel->buffer, _("Channel created on %s"),
+                            ctime (&datetime));
+            }
+            ptr_channel->display_creation_date = 0;
+        }
+        else
+        {
+            irc_display_prefix (server, server->buffer, PREFIX_ERROR);
+            gui_printf_nolog (server->buffer,
+                              _("%s cannot identify date/time for \"%s\" command\n"),
+                              WEECHAT_ERROR, "329");
+            return -1;
+        }
+    }
+    else
+    {
+        irc_display_prefix (server, server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s cannot identify channel for \"%s\" command\n"),
+                          WEECHAT_ERROR, "329");
+        return -1;
     }
     return 0;
 }

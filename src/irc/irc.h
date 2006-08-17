@@ -101,6 +101,7 @@ struct t_irc_channel
     char *away_message;             /* to display away only once in private   */
     int cycle;                      /* currently cycling (/part then /join)   */
     int close;                      /* close request (/buffer close)          */
+    int display_creation_date;      /* 1 if creation date should be displayed */
     t_irc_nick *nicks;              /* nicks on the channel                   */
     t_irc_nick *last_nick;          /* last nick on the channel               */
     t_gui_buffer *buffer;           /* GUI buffer allocated for channel       */
@@ -543,6 +544,7 @@ extern int irc_cmd_recv_321 (t_irc_server *, char *, char *, char *);
 extern int irc_cmd_recv_322 (t_irc_server *, char *, char *, char *);
 extern int irc_cmd_recv_323 (t_irc_server *, char *, char *, char *);
 extern int irc_cmd_recv_324 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_329 (t_irc_server *, char *, char *, char *);
 extern int irc_cmd_recv_331 (t_irc_server *, char *, char *, char *);
 extern int irc_cmd_recv_332 (t_irc_server *, char *, char *, char *);
 extern int irc_cmd_recv_333 (t_irc_server *, char *, char *, char *);
