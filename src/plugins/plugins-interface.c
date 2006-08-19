@@ -103,11 +103,11 @@ weechat_free_exploded_string (t_weechat_plugin *plugin, char **exploded_string)
 }
 
 /*
- * weechat_plugin_mkdir_home: create a directory for script in WeeChat home
+ * weechat_plugin_mkdir_home: create a directory in WeeChat home
  */
 
 int
-weechat_plugin_mkdir_home (t_weechat_plugin *plugin, char *path)
+weechat_plugin_mkdir_home (t_weechat_plugin *plugin, char *directory)
 {
     char *dir_name;
     int dir_length;
@@ -115,17 +115,17 @@ weechat_plugin_mkdir_home (t_weechat_plugin *plugin, char *path)
     /* make gcc happy */
     (void) plugin;
     
-    if (!path)
+    if (!directory)
         return 0;
     
     /* build directory, adding WeeChat home */
-    dir_length = strlen (weechat_home) + strlen (path) + 2;
+    dir_length = strlen (weechat_home) + strlen (directory) + 2;
     dir_name =
         (char *) malloc (dir_length * sizeof (char));
     if (!dir_name)
         return 0;
     
-    snprintf (dir_name, dir_length, "%s/%s", weechat_home, path);
+    snprintf (dir_name, dir_length, "%s/%s", weechat_home, directory);
     
     if (mkdir (dir_name, 0755) < 0)
     {
@@ -1102,7 +1102,7 @@ weechat_plugin_input_color (t_weechat_plugin *plugin, int color, int start, int 
 }
 
 /*
- * weechat_plugin_get_irc_color: get number of IRC color name
+ * weechat_plugin_get_irc_color: get number of IRC color with name
  */
 
 int

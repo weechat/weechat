@@ -148,8 +148,8 @@ struct t_plugin_window_info
 {
     int win_x, win_y;               /* position of window                   */
     int win_width, win_height;      /* window geometry                      */
-    int win_width_pct;              /* % of width (compared to term size)   */
-    int win_height_pct;             /* % of height (compared to term size)  */
+    int win_width_pct;              /* % of width (compared to parent win)  */
+    int win_height_pct;             /* % of height (compared to parent win) */
     int num_buffer;                 /* # of displayed buffer                */
     t_plugin_window_info *prev_window; /* link to previous window           */
     t_plugin_window_info *next_window; /* link to next window               */
