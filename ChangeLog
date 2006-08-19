@@ -3,6 +3,11 @@ WeeChat - Wee Enhanced Environment for Chat
 
 ChangeLog - 2006-08-19
 
+	
+Version 0.2.1 (under dev!):
+   * fixed nick refresh problem with unrealircd specific modes: chan owner (~)
+     and chan admin (&) (bug #17340)
+	
 Version 0.2.0 (2006-08-19):
    * added 'C'lear option on IRC raw buffer
    * IRC raw buffer now uses join/part prefix with color to display messages

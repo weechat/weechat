@@ -121,6 +121,10 @@ irc_mode_channel_set (t_irc_channel *channel, char *modes)
                         argv[current_arg--] : NULL;
                     switch (pos[0])
                     {
+                        case 'a': /* unrealircd specific flag */
+                            irc_mode_channel_set_nick (channel, ptr_arg,
+                                                       set_flag, NICK_CHANADMIN);
+                            break;
                         case 'h':
                             irc_mode_channel_set_nick (channel, ptr_arg,
                                                        set_flag, NICK_HALFOP);
@@ -143,6 +147,10 @@ irc_mode_channel_set (t_irc_channel *channel, char *modes)
                         case 'o':
                             irc_mode_channel_set_nick (channel, ptr_arg,
                                                        set_flag, NICK_OP);
+                            break;
+                        case 'q': /* unrealircd specific flag */
+                            irc_mode_channel_set_nick (channel, ptr_arg,
+                                                       set_flag, NICK_CHANOWNER);
                             break;
                         case 'v':
                             irc_mode_channel_set_nick (channel, ptr_arg,
