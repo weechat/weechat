@@ -129,7 +129,7 @@ t_weechat_command weechat_commands[] =
        "    reset: restore bindings to the default values and delete ALL "
        "personal bindings (use carefully!)"),
     "unbind|functions|reset %k", 0, MAX_ARGS, 0, NULL, weechat_cmd_key },
-  { "panel", N_("manage panels"),
+/*  { "panel", N_("manage panels"),
     N_("[list | add type position size | resize # size | close # | move #1 #2]"),
     N_("   list: list open panels (no parameter implies this list)\n"
        "    add: add a panel, type is global|local, position is top|bottom|left|right\n"
@@ -137,7 +137,7 @@ t_weechat_command weechat_commands[] =
        "  close: close a panel by number\n"
        "   move: move a panel to another number (may be relative, for example -1)"),
     "list|add|close|move global|local top|bottom|left|right",
-    0, MAX_ARGS, 0, weechat_cmd_panel, NULL },
+    0, MAX_ARGS, 0, weechat_cmd_panel, NULL },*/
   { "plugin", N_("list/load/unload plugins"),
     N_("[load filename] | [autoload] | [reload] | [unload]"),
     N_("filename: WeeChat plugin (file) to load\n\n"
