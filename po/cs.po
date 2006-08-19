@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.2.1-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2006-08-19 13:10+0200\n"
-"PO-Revision-Date: 2006-08-19 13:13+0200\n"
+"PO-Revision-Date: 2006-08-20 01:01+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1720,7 +1720,7 @@ msgstr "Reop kanálu %s%s%s: %s%s\n"
 #: src/irc/irc-recv.c:3945
 #, c-format
 msgid " by %s%s %s(%s%s%s)"
-msgstr " od %s%s %s(%s%s%s)%s"
+msgstr " od %s%s %s(%s%s%s)"
 
 #: src/irc/irc-recv.c:3954
 #, c-format
