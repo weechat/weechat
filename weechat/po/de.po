@@ -6,7 +6,7 @@
 # Thomas Schuetz <i18n@internet-villa.de>, 2006.
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.2.0\n"
+"Project-Id-Version: WeeChat 0.2.1-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2006-08-19 13:10+0200\n"
 "PO-Revision-Date: 2006-08-19 13:16+0200\n"
