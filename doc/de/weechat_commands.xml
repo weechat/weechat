@@ -124,17 +124,6 @@ functions: interne Funktionen für Tastenbelegungen auflisten
     reset: Standardbelegung wiederherstellen und entferne alle eigenen Belegungen (Vorsicht!)
 
 </programlisting>
-<command>panel  [list | add Art Position Größe | resize # Größe | close # | move #1 #2]</command>
-<programlisting>
-Panels verwalten
-
-   list: listet allo offenen Panels (Default, kann als Parameter auch weggelassen werden)
-    add: fügt ein Panel hinzu, Art ist global|local, Position ist top|bottom|left|right
- resize: setzt die Größe eines Panels neu (kann auch relativ sein, z.B. -1)
-  close: schließt das Panel mit der angegebenen Nummer
-   move: verschiebt ein Panel zu einer anderen Position (kann auch relativ sein, z.B. -1)
-
-</programlisting>
 <command>plugin  [load Dateiname] | [autoload] | [reload] | [unload]</command>
 <programlisting>
 auflisten/laden/entladen von Plugins

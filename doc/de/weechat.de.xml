@@ -1462,6 +1462,46 @@ if (argv != NULL)
           </para>
         </section>
         
+        <section id="secAPI_mkdir_home">
+          <title>mkdir_home</title>
+          
+          <para>
+            Prototype:
+            <command>
+              int mkdir_home (t_weechat_plugin *plugin, char *directory)
+            </command>
+          </para>
+          <para>
+            Create a directory in WeeChat home.
+          </para>
+          <para>
+            Arguments:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option>: pointer to plugin structure
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>directory</option>: directory to create
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Return value: 1 if directory was successfully created, 0 if an
+            error occurred.
+          </para>
+          <para>
+            Example:
+<screen>
+if (!plugin->mkdir_home (plugin, "temp"))
+    plugin->print_server(plugin, "Failed to create 'temp' directory in WeeChat home.");
+</screen>
+          </para>
+        </section>
+        
         <section id="secAPI_exec_on_files">
           <title>exec_on_files</title>
           
@@ -3521,6 +3561,606 @@ plugin->set_plugin_config (plugin, "my_var", "value");
           </para>
         </section>
         
+        <section id="secAPI_get_irc_color">
+          <title>get_irc_color</title>
+          
+          <para>
+            Prototype:
+            <command>
+              int get_irc_color (t_weechat_plugin *plugin,
+              char *color_name)
+            </command>
+          </para>
+          <para>
+            Get IRC color index with name.
+          </para>
+          <para>
+            Arguments:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option>: pointer to plugin structure
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>color_name</option>: color name
+                  Allowed colors are:
+                  <informaltable colsep="0" frame="none">
+                    <tgroup cols="2">
+                      <thead>
+                        <row>
+                          <entry>Color name</entry>
+                          <entry>Value</entry>
+                        </row>
+                      </thead>
+                      <tbody>
+                        <row>
+                          <entry>white</entry>
+                          <entry>0</entry>
+                        </row>
+                        <row>
+                          <entry>black</entry>
+                          <entry>1</entry>
+                        </row>
+                        <row>
+                          <entry>blue</entry>
+                          <entry>2</entry>
+                        </row>
+                        <row>
+                          <entry>green</entry>
+                          <entry>3</entry>
+                        </row>
+                        <row>
+                          <entry>lightred</entry>
+                          <entry>4</entry>
+                        </row>
+                        <row>
+                          <entry>red</entry>
+                          <entry>5</entry>
+                        </row>
+                        <row>
+                          <entry>magenta</entry>
+                          <entry>6</entry>
+                        </row>
+                        <row>
+                          <entry>brown</entry>
+                          <entry>7</entry>
+                        </row>
+                        <row>
+                          <entry>yellow</entry>
+                          <entry>8</entry>
+                        </row>
+                        <row>
+                          <entry>lightgreen</entry>
+                          <entry>9</entry>
+                        </row>
+                        <row>
+                          <entry>cyan</entry>
+                          <entry>10</entry>
+                        </row>
+                        <row>
+                          <entry>lightcyan</entry>
+                          <entry>11</entry>
+                        </row>
+                        <row>
+                          <entry>lightblue</entry>
+                          <entry>12</entry>
+                        </row>
+                        <row>
+                          <entry>lightmagenta</entry>
+                          <entry>13</entry>
+                        </row>
+                        <row>
+                          <entry>gray</entry>
+                          <entry>14</entry>
+                        </row>
+                        <row>
+                          <entry>lightgray</entry>
+                          <entry>15</entry>
+                        </row>
+                      </tbody>
+                    </tgroup>
+                  </informaltable>
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Return value: IRC color index, -1 if color is not found.
+          </para>
+          <para>
+            Example:
+<screen>
+int color_blue = plugin->get_irc_color (plugin, "blue"); /* return 2 */
+</screen>
+          </para>
+        </section>
+                
+        <section id="secAPI_input_color">
+          <title>input_color</title>
+          
+          <para>
+            Prototype:
+            <command>
+              void input_color (t_weechat_plugin *plugin,
+              int color, int start, int length)
+            </command>
+          </para>
+          <para>
+            Add color in input buffer.
+          </para>
+          <para>
+            Arguments:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option>: pointer to plugin structure
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>color</option>: color for text (if &lt; 0, then input
+                  buffer is refresh, and there's no change in input buffer
+                  content)
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>start</option>: start position for color (if &lt; 0,
+                  then mask is reinitialized)
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>length</option>: length for color (if &lt;= 0,
+                  then mask is reinitialized)
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Return value: none.
+          </para>
+          <para>
+            Example:
+<screen>
+plugin->input_color (plugin, plugin->get_irc_color (plugin, "blue"), 10, 5);
+</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_get_window_info">
+          <title>get_window_info</title>
+          
+          <para>
+            Prototype:
+            <command>
+              t_plugin_window_info *get_window_info (t_weechat_plugin *plugin)
+            </command>
+          </para>
+          <para>
+            Return list of WeeChat windows.
+          </para>
+          <para>
+            Arguments:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option>: pointer to plugin structure
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Return value: linked list of WeeChat windows.
+            <informaltable colsep="0" frame="none">
+              <tgroup cols="2">
+                <thead>
+                  <row>
+                    <entry>Type</entry>
+                    <entry>Field</entry>
+                    <entry>Description</entry>
+                  </row>
+                </thead>
+                <tbody>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>win_x</literal></entry>
+                    <entry>horizontal position of window</entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>win_y</literal></entry>
+                    <entry>vertical position of window</entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>win_width</literal></entry>
+                    <entry>width of window</entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>win_height</literal></entry>
+                    <entry>height of window</entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>win_width_pct</literal></entry>
+                    <entry>width % (compared to parent window)</entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>win_height_pct</literal></entry>
+                    <entry>height % (compared to parent window)</entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>num_buffer</literal></entry>
+                    <entry>number of displayed buffer</entry>
+                  </row>
+                  <row>
+                    <entry>t_plugin_window_info *</entry>
+                    <entry><literal>prev_window</literal></entry>
+                    <entry>pointer to previous window info</entry>
+                  </row>
+                  <row>
+                    <entry>t_plugin_window_info *</entry>
+                    <entry><literal>next_window</literal></entry>
+                    <entry>pointer to next window info</entry>
+                  </row>
+                </tbody>
+              </tgroup>
+            </informaltable>
+          </para>
+          <para>
+            Note: result has to be free by a call to "free_window_info"
+            function after use.
+          </para>
+          <para>
+            Example:
+<screen>
+t_plugin_window_info *window_info, *ptr_window;
+
+window_info = plugin->get_window_info (plugin);
+if (window_info)
+{
+    for (ptr_window = window_info; ptr_window; ptr_window = ptr_window->next_window)
+    {
+        plugin->print (plugin, NULL, NULL, "--- window info ---");
+        plugin->print (plugin, NULL, NULL, "(%d,%d), size: %dx%d, %%size: %d%%x%d%%",
+                       ptr_window->win_x, ptr_window->win_y,
+                       ptr_window->win_width, ptr_window->win_height,
+                       ptr_window->win_width_pct, ptr_window->win_height_pct);
+        plugin->print (plugin, NULL, NULL, "num_buffer: %d", ptr_window->num_buffer);
+    }
+    plugin->free_window_info (plugin, window_info);
+}
+else
+    plugin->print (plugin, NULL, NULL, "no window info!");
+</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_free_window_info">
+          <title>free_window_info</title>
+          
+          <para>
+            Prototype:
+            <command>
+              void free_window_info (t_weechat_plugin *plugin,
+              t_plugin_window_info *window_info)
+            </command>
+          </para>
+          <para>
+            Free memory used by window info list.
+          </para>
+          <para>
+            Arguments:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option>: pointer to plugin structure
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>window_info</option>: pointer to window info list
+                  returned by "get_window_info" function
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Return value: none.
+          </para>
+          <para>
+            Example:
+            <screen>plugin->free_window_info (plugin, window_info);</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_get_buffer_info">
+          <title>get_buffer_info</title>
+          
+          <para>
+            Prototype:
+            <command>
+              t_plugin_buffer_info *get_buffer_info (t_weechat_plugin *plugin)
+            </command>
+          </para>
+          <para>
+            Return list of WeeChat buffers.
+          </para>
+          <para>
+            Arguments:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option>: pointer to plugin structure
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Return value: linked list of WeeChat buffers.
+            <informaltable colsep="0" frame="none">
+              <tgroup cols="2">
+                <thead>
+                  <row>
+                    <entry>Type</entry>
+                    <entry>Field</entry>
+                    <entry>Description</entry>
+                  </row>
+                </thead>
+                <tbody>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>type</literal></entry>
+                    <entry>buffer type: 0=standard, 1=dcc, 2=raw IRC data</entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>number</literal></entry>
+                    <entry>buffer number</entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>num_displayed</literal></entry>
+                    <entry>number of windows displaying buffer</entry>
+                  </row>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>server_name</literal></entry>
+                    <entry>server name for buffer (may be NULL)</entry>
+                  </row>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>channel_name</literal></entry>
+                    <entry>channel name for buffer (may be NULL)</entry>
+                  </row>
+                  <row>
+                    <entry>int</entry>
+                    <entry><literal>notify_level</literal></entry>
+                    <entry>notify level for buffer</entry>
+                  </row>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>log_filename</literal></entry>
+                    <entry>log filename (NULL means not logging)</entry>
+                  </row>
+                  <row>
+                    <entry>t_plugin_buffer_info *</entry>
+                    <entry><literal>prev_buffer</literal></entry>
+                    <entry>pointer to previous buffer info</entry>
+                  </row>
+                  <row>
+                    <entry>t_plugin_buffer_info *</entry>
+                    <entry><literal>next_buffer</literal></entry>
+                    <entry>pointer to next buffer info</entry>
+                  </row>
+                </tbody>
+              </tgroup>
+            </informaltable>
+          </para>
+          <para>
+            Note: result has to be free by a call to "free_buffer_info"
+            function after use.
+          </para>
+          <para>
+            Example:
+<screen>
+t_plugin_buffer_info *buffer_info, *ptr_buffer;
+
+buffer_info = plugin->get_buffer_info (plugin);
+if (buffer_info)
+{
+    for (ptr_buffer = buffer_info; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    {
+        plugin->print (plugin, NULL, NULL, "--- buffer info ---");
+        plugin->print (plugin, NULL, NULL, "type: %d", ptr_buffer->type);
+        plugin->print (plugin, NULL, NULL, "number: %d", ptr_buffer->number);
+        plugin->print (plugin, NULL, NULL, "num_displayed: %d", ptr_buffer->num_displayed);
+        plugin->print (plugin, NULL, NULL, "server: %s", ptr_buffer->server_name);
+        plugin->print (plugin, NULL, NULL, "channel: %s", ptr_buffer->channel_name);
+        plugin->print (plugin, NULL, NULL, "notify level: %d", ptr_buffer->notify_level);
+        plugin->print (plugin, NULL, NULL, "log filename: %s", ptr_buffer->log_filename);
+    }
+    plugin->free_buffer_info (plugin, buffer_info);
+}
+else
+    plugin->print (plugin, NULL, NULL, "no buffer info!");
+</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_free_buffer_info">
+          <title>free_buffer_info</title>
+          
+          <para>
+            Prototype:
+            <command>
+              void free_buffer_info (t_weechat_plugin *plugin,
+              t_plugin_buffer_info *buffer_info)
+            </command>
+          </para>
+          <para>
+            Free memory used by buffer info list.
+          </para>
+          <para>
+            Arguments:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option>: pointer to plugin structure
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>buffer_info</option>: pointer to buffer info list
+                  returned by "get_buffer_info" function
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Return value: none.
+          </para>
+          <para>
+            Example:
+            <screen>plugin->free_buffer_info (plugin, buffer_info);</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_get_buffer_data">
+          <title>get_buffer_data</title>
+          
+          <para>
+            Prototype:
+            <command>
+              t_plugin_buffer_data *get_buffer_info (t_weechat_plugin *plugin,
+              char *server, char *channel)
+            </command>
+          </para>
+          <para>
+            Return content of buffer.
+          </para>
+          <para>
+            Arguments:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option>: pointer to plugin structure
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>server</option>: internal name of server
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>channel</option>: channel name
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Return value: buffer content (linked list of lines).
+            <informaltable colsep="0" frame="none">
+              <tgroup cols="2">
+                <thead>
+                  <row>
+                    <entry>Type</entry>
+                    <entry>Field</entry>
+                    <entry>Description</entry>
+                  </row>
+                </thead>
+                <tbody>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>nick</literal></entry>
+                    <entry>nick</entry>
+                  </row>
+                  <row>
+                    <entry>char *</entry>
+                    <entry><literal>data</literal></entry>
+                    <entry>line content (color codes are removed)</entry>
+                  </row>
+                  <row>
+                    <entry>t_plugin_buffer_line *</entry>
+                    <entry><literal>prev_line</literal></entry>
+                    <entry>pointer to previous line</entry>
+                  </row>
+                  <row>
+                    <entry>t_plugin_buffer_line *</entry>
+                    <entry><literal>next_line</literal></entry>
+                    <entry>pointer to next line</entry>
+                  </row>
+                </tbody>
+              </tgroup>
+            </informaltable>
+          </para>
+          <para>
+            Note: result has to be free by a call to "free_buffer_data"
+            function after use.
+          </para>
+          <para>
+            Example:
+<screen>
+t_plugin_buffer_line *buffer_line, *ptr_line;
+
+buffer_line = plugin->get_buffer_data (plugin);
+if (buffer_line)
+{
+    for (ptr_line = buffer_line; ptr_line; ptr_line = ptr_line->next_line)
+    {
+        plugin->print (plugin, NULL, NULL, "nick: %s, data: %s", ptr_line->nick, ptr_line->data);
+    }
+    plugin->free_buffer_data (plugin, buffer_line);
+}
+</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_free_buffer_data">
+          <title>free_buffer_data</title>
+          
+          <para>
+            Prototype:
+            <command>
+              void free_buffer_data (t_weechat_plugin *plugin,
+              t_plugin_buffer_line *buffer_line)
+            </command>
+          </para>
+          <para>
+            Free memory used by buffer line list.
+          </para>
+          <para>
+            Arguments:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option>: pointer to plugin structure
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>buffer_line</option>: pointer to buffer line list
+                  returned by "get_buffer_data" function
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Return value: none.
+          </para>
+          <para>
+            Example:
+            <screen>plugin->free_buffer_data (plugin, buffer_line);</screen>
+          </para>
+        </section>
+        
       </section>
       
       <section id="secCompilePlugin">
@@ -3689,7 +4329,7 @@ void weechat_plugin_end (t_weechat_plugin *plugin)
       <section id="secSyntaxByLanguage">
         <title>Syntax in den Skriptsprachen</title>
         
-        <section>
+        <section id="secScriptPerl">
           <title>Perl</title>
           
           <para>
@@ -3701,7 +4341,7 @@ void weechat_plugin_end (t_weechat_plugin *plugin)
           
         </section>
         
-        <section>
+        <section id="secScriptPython">
           <title>Python</title>
           
           <para>
@@ -3717,7 +4357,7 @@ void weechat_plugin_end (t_weechat_plugin *plugin)
           
         </section>
         
-        <section>
+        <section id="secScriptRuby">
           <title>Ruby</title>
           
           <para>
@@ -3746,7 +4386,7 @@ end
           
         </section>
         
-        <section>
+        <section id="secScriptLua">
           <title>Lua</title>
           
           <para>
@@ -3769,7 +4409,7 @@ end
       <section id="secWeeChatScriptsAPI">
         <title>WeeChat / Skript-API</title>
         
-        <section>
+        <section id="secScript_register">
           <title>register</title>
           
           <para>
@@ -3849,7 +4489,7 @@ weechat.register("test", "1.0", "end_test", "Test script!")
           </para>
         </section>
         
-        <section>
+        <section id="secScript_print">
           <title>print</title>
           
           <para>
@@ -3931,7 +4571,7 @@ weechat.print("message", "#weechat", "freenode")
           </para>
         </section>
         
-        <section>
+        <section id="secScript_print_infobar">
           <title>print_infobar</title>
           
           <para>
@@ -3997,7 +4637,7 @@ weechat.print_infobar(5, "message")
           </para>
         </section>
         
-        <section>
+        <section id="secScript_remove_infobar">
           <title>remove_infobar</title>
           
           <para>
@@ -4059,7 +4699,7 @@ weechat.remove_infobar(1)
           </para>
         </section>
         
-        <section>
+        <section id="secScript_log">
           <title>log</title>
           
           <para>
@@ -4130,7 +4770,7 @@ weechat.log("message", "#weechat", "freenode")
           </para>
         </section>
         
-        <section>
+        <section id="secScript_add_message_handler">
           <title>add_message_handler</title>
           
           <para>
@@ -4257,7 +4897,7 @@ end
           </para>
         </section>
         
-        <section>
+        <section id="secScript_add_command_handler">
           <title>add_command_handler</title>
           
           <para>
@@ -4329,7 +4969,7 @@ end
                 <para>
                   <option>completion_template</option>: 
                   Vorlage für die Vervollständigung; zum Beispiel bedeutet 
-                  "<code class="literal">abc|%w def|%i</code>", dass das 
+                  "<literal>abc|%w def|%i</literal>", dass das 
                   erste Argument "abc" oder ein WeeChat-Kommando sein kann 
                   und das zweite Argument "def" oder ein IRC-Kommando.
                   (siehe <xref linkend="secAPI_cmd_handler_add" />)
@@ -4391,7 +5031,7 @@ end
           </para>
         </section>
         
-        <section>
+        <section id="secScript_add_timer_handler">
           <title>add_timer_handler</title>
           
           <para>
@@ -4493,7 +5133,7 @@ end
           </para>
         </section>
         
-        <section>
+        <section id="secScript_add_keyboard_handler">
           <title>add_keyboard_handler</title>
           
           <para>
@@ -4596,7 +5236,7 @@ end
           </para>
         </section>
         
-        <section>
+        <section id="secScript_remove_handler">
           <title>remove_handler</title>
           
           <para>
@@ -4662,7 +5302,7 @@ weechat.remove_handler("command", "my_command")
           </para>
         </section>
         
-        <section>
+        <section id="secScript_remove_timer_handler">
           <title>remove_timer_handler</title>
           
           <para>
@@ -4723,7 +5363,7 @@ weechat.remove_timer_handler("my_timer")
           </para>
         </section>
 
-        <section>
+        <section id="secScript_remove_keyboard_handler">
           <title>remove_keyboard_handler</title>
           
           <para>
@@ -4784,7 +5424,7 @@ weechat.remove_keyboard_handler("my_keyboard")
           </para>
         </section>
         
-        <section>
+        <section id="secScript_command">
           <title>command</title>
           
           <para>
@@ -4865,7 +5505,7 @@ weechat.command("/nick newnick", "", "freenode")
           </para>
         </section>
         
-        <section>
+        <section id="secScript_get_info">
           <title>get_info</title>
           
           <para>
@@ -4936,7 +5576,7 @@ nick = weechat.get_info("nick", "freenode")
           </para>
         </section>
         
-        <section>
+        <section id="secScript_get_dcc_info">
           <title>get_dcc_info</title>
           
           <para>
@@ -5041,7 +5681,7 @@ end
           </para>
         </section>
         
-        <section>
+        <section id="secScript_get_server_info">
           <title>get_server_info</title>
           
           <para>
@@ -5146,7 +5786,7 @@ end
           </para>
         </section>
         
-        <section>
+        <section id="secScript_get_channel_info">
           <title>get_channel_info</title>
           
           <para>
@@ -5251,7 +5891,7 @@ end
           </para>
         </section>
         
-        <section>
+        <section id="secScript_get_nick_info">
           <title>get_nick_info</title>
           
           <para>
@@ -5356,7 +5996,7 @@ end
           </para>
         </section>
         
-        <section>
+        <section id="secScript_get_config">
           <title>get_config</title>
           
           <para>
@@ -5421,7 +6061,7 @@ value2 = weechat.get_config("freenode.server_autojoin")
           </para>
         </section>
         
-        <section>
+        <section id="secScript_set_config">
           <title>set_config</title>
           
           <para>
@@ -5491,7 +6131,7 @@ weechat.set_config("freenode.server_autojoin, "#weechat")
           </para>
         </section>
         
-        <section>
+        <section id="secScript_get_plugin_config">
           <title>get_plugin_config</title>
           
           <para>
@@ -5556,7 +6196,7 @@ value = weechat.get_plugin_config("my_var")
           </para>
         </section>
         
-        <section>
+        <section id="secScript_set_plugin_config">
           <title>set_plugin_config</title>
           
           <para>
@@ -5621,6 +6261,416 @@ Weechat.set_plugin_config("my_var", "value")
 
 -- lua
 weechat.set_plugin_config("my_var", "value")
+</screen>
+          </para>
+        </section>
+        
+        <section id="secScript_get_irc_color">
+          <title>get_irc_color</title>
+          
+          <para>
+            Perl prototype:
+            <command>
+              weechat::get_irc_color(color);
+            </command>
+          </para>
+          <para>
+            Python prototype:
+            <command>
+              weechat.get_irc_color(color)
+            </command>
+          </para>
+          <para>
+            Ruby prototype:
+            <command>
+              Weechat.get_irc_color(color)
+            </command>
+          </para>
+          <para>
+            Lua prototype:
+            <command>
+              weechat.get_irc_color(color)
+            </command>
+          </para>
+          <para>
+            Return IRC color index with name.
+          </para>
+          <para>
+            Return value: IRC color index, -1 if color is not found
+            (see <xref linkend="secAPI_get_irc_color" />).
+          </para>
+          <para>
+            Examples:
+<screen>
+# perl
+my $color_blue = weechat::get_irc_color("blue");
+
+# python
+color_blue = weechat.get_irc_color("blue")
+
+# ruby
+color_blue = Weechat.get_irc_color("blue")
+
+-- lua
+color_blue = weechat.get_irc_color("blue")
+</screen>
+          </para>
+        </section>
+        
+        <section id="secScript_input_color">
+          <title>input_color</title>
+          
+          <para>
+            Perl prototype:
+            <command>
+              weechat::input_color(color);
+            </command>
+          </para>
+          <para>
+            Python prototype:
+            <command>
+              weechat.input_color(color)
+            </command>
+          </para>
+          <para>
+            Ruby prototype:
+            <command>
+              Weechat.input_color(color)
+            </command>
+          </para>
+          <para>
+            Lua prototype:
+            <command>
+              weechat.input_color(color)
+            </command>
+          </para>
+          <para>
+            Add color in input buffer.
+          </para>
+          <para>
+            Return value: none.
+          </para>
+          <para>
+            Examples:
+<screen>
+# perl
+weechat::input_color(weechat::get_irc_color("blue"), 10, 5);
+
+# python
+weechat.input_color(weechat.get_irc_color("blue"), 10, 5)
+
+# ruby
+Weechat.input_color(Weechat.get_irc_color("blue"), 10, 5)
+
+-- lua
+weechat.input_color(weechat.get_irc_color("blue"), 10, 5)
+</screen>
+          </para>
+        </section>
+        
+        <section id="secScript_get_window_info">
+          <title>get_window_info</title>
+          
+          <para>
+            Perl prototype:
+            <command>
+              weechat::get_window_info();
+            </command>
+          </para>
+          <para>
+            Python prototype:
+            <command>
+              weechat.get_window_info()
+            </command>
+          </para>
+          <para>
+            Ruby prototype:
+            <command>
+              Weechat.get_window_info()
+            </command>
+          </para>
+          <para>
+            Lua prototype:
+            <command>
+              weechat.get_window_info()
+            </command>
+          </para>
+          <para>
+            Return list of WeeChat windows.
+          </para>
+          <para>
+            Return value: list of WeeChat windows
+            (see <xref linkend="secAPI_get_window_info" />).
+          </para>
+          <para>
+            Examples:
+<screen>
+# perl
+my @wf = weechat::get_window_info();
+if (@wf)
+{
+    weechat::print("**** windows infos ****");
+    foreach my $w (@wf)
+    {
+        while ( my ($key, $value) = each %$w)
+        {
+            weechat::print(" > $key => $value");
+        }
+        weechat::print("----------------------");
+    }
+}
+else
+{
+    weechat::print("**** no window info ****");
+}
+
+# python
+wf = weechat.get_window_info()
+if wf != None and wf != []:
+    weechat.prnt ("**** windows infos ****")
+    for w in wf:
+        for i in w:
+            weechat.prnt (" > %s => %s" % (i, w[i]))
+        weechat.prnt ("----------------------")
+else:
+    weechat.prnt ("**** no window info ****")
+
+# ruby
+wf = Weechat.get_window_info()
+if wf != nil and wf != []   
+    Weechat.print("**** windows infos ****")
+    wf.each do |w|
+        w.each do |key, value|
+            Weechat.print(" > #{key} => #{value}")
+        end
+        Weechat.print("----------------------")
+    end
+else
+    Weechat.print("**** no window info ****")
+end
+
+-- lua
+wf = weechat.get_window_info()
+if wf then
+    weechat.print ("**** windows infos ****")
+    w, winfos = next (wf, nil)
+    while (w) do
+        key, value = next (winfos, nil)
+        while (key) do
+            weechat.print(" > " .. key .. " => " .. value)
+            key, value = next (winfos, key)
+        end
+        weechat.print ("----------------------")
+        w, winfos = next (wf, w)
+    end
+else
+    weechat.print("**** no window info ****")
+end
+</screen>
+          </para>
+        </section>
+        
+        <section id="secScript_get_buffer_info">
+          <title>get_buffer_info</title>
+          
+          <para>
+            Perl prototype:
+            <command>
+              weechat::get_buffer_info();
+            </command>
+          </para>
+          <para>
+            Python prototype:
+            <command>
+              weechat.get_buffer_info()
+            </command>
+          </para>
+          <para>
+            Ruby prototype:
+            <command>
+              Weechat.get_buffer_info()
+            </command>
+          </para>
+          <para>
+            Lua prototype:
+            <command>
+              weechat.get_buffer_info()
+            </command>
+          </para>
+          <para>
+            Return list of WeeChat buffers.
+          </para>
+          <para>
+            Return value: list of WeeChat buffers
+            (see <xref linkend="secAPI_get_buffer_info" />).
+          </para>
+          <para>
+            Examples:
+<screen>
+# perl
+my $bf = weechat::get_buffer_info();
+if ($bf)
+{
+    while ( my ($nobuf, $binfos) = each %$bf)
+    {
+        while ( my ($key, $value) = each %$binfos)
+        {
+            weechat::print(" > $key => $value");
+        }
+    }
+}
+else
+{
+    weechat::print("**** no buffer info ****");
+}
+
+# python
+bf = weechat.get_buffer_info()
+if bf != None and bf != {}:
+    for b in bf:
+        weechat.prnt ("**** info for buffer no %d ****" % b)
+        for c in bf[b]:
+            weechat.prnt (" > %s => %s" % (c, bf[b][c]))
+else:
+    weechat.prnt ("**** no buffer info ****")
+
+# ruby
+bf = Weechat.get_buffer_info()
+if bf != nil and bf != {}
+    bf.each do |n, c|
+        Weechat.print("**** info for buffer no #{n} ****")
+        c.each do |key, value|
+            Weechat.print(" > #{key} => #{value}")
+        end
+    end
+else
+    Weechat.print("**** no buffer info ****")
+end
+
+-- lua
+bf = weechat.get_buffer_info()
+if bf then
+    b, binfos = next (bf, nil)
+    while (b) do
+        weechat.print("**** info for buffer no " .. b .. " ****")
+        key, value = next (binfos, nil)
+        while (key) do
+            weechat.print(" > " .. key .. " => " .. value)
+            key, value = next (binfos, key)
+        end
+        b, infos = next (bf, b)
+    end
+else
+    weechat.print("**** no buffer info ****")
+end
+</screen>
+          </para>
+        </section>
+        
+        <section id="secScript_get_buffer_data">
+          <title>get_buffer_data</title>
+          
+          <para>
+            Perl prototype:
+            <command>
+              weechat::get_buffer_data(server, channel);
+            </command>
+          </para>
+          <para>
+            Python prototype:
+            <command>
+              weechat.get_buffer_data(server, channel)
+            </command>
+          </para>
+          <para>
+            Ruby prototype:
+            <command>
+              Weechat.get_buffer_data(server, channel)
+            </command>
+          </para>
+          <para>
+            Lua prototype:
+            <command>
+              weechat.get_buffer_data(server, channel)
+            </command>
+          </para>
+          <para>
+            Return content of buffer.
+          </para>
+          <para>
+            Return value: list of lines for buffer
+            (see <xref linkend="secAPI_get_buffer_data" />).
+          </para>
+          <para>
+            Examples:
+<screen>
+# perl
+my $server = "freenode";
+my $channel = "#weechat";
+my @bc = weechat::get_buffer_data($server, $channel);
+if (@bc)
+{
+    weechat::print("**** buffer data for $channel@$server ****");
+    foreach my $l (@bc) {
+        while ( my ($key, $value) = each %$l) {
+            weechat::print(" > $key => $value");
+        }
+        weechat::print("----------------------");
+    }
+}
+else
+{
+    weechat::print("**** no buffer data ****");
+}
+
+# python
+server = "freenode"
+channel = "#weechat"
+bc = weechat.get_buffer_data(server, channel)
+if bc != None and bc != []:
+    weechat.prnt ("**** buffer data for %s@%s ****" % (channel, server))
+    for l in bc:
+        for i in l:
+            weechat.prnt (" > %s => %s" % (i, l[i]))
+        weechat.prnt ("----------------------")
+else:
+    weechat.prnt ("**** no buffer data ****")
+
+# ruby
+server = "freenode"
+channel = "#weechat"
+bc = Weechat.get_buffer_data(server, channel)
+if bc != nil and bc != []   
+    Weechat.print("**** buffer data for #{channel}@#{server} ****")
+    bc.each do |l|
+        l.each do |key, value|
+            Weechat.print(" > #{key} => #{value}")
+        end
+        Weechat.print("----------------------")
+    end
+else
+    Weechat.print("**** no buffer data ****")
+end
+
+-- lua
+server = "freenode"
+channel = "#weechat"
+bc = weechat.get_buffer_data(server, channel)
+if bc then
+    b, bdatas = next (bc, nil)
+    weechat.print("**** buffer data for " .. channel .. "@" .. server .. " ****")
+    while (b) do 
+        key, value = next (chaninfos, nil)
+        while (key) do
+            weechat.print(" > " .. key .. " => " .. value)
+            key, value = next (bdatas, key)
+        end
+        weechat.print ("----------------------")
+        b, bdatas = next (bc, b)
+    end
+else
+    weechat.print("**** no buffer data ****")
+end
 </screen>
           </para>
         </section>
