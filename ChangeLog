@@ -1,9 +1,9 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-08-18
+ChangeLog - 2006-08-19
 
-Version 0.2.0 (under dev!):
+Version 0.2.0 (2006-08-19):
    * added 'C'lear option on IRC raw buffer
    * IRC raw buffer now uses join/part prefix with color to display messages
    * added send of "quit" message to server when using /disconnect

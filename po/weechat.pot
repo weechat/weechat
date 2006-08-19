@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-08-18 01:20+0200\n"
+"POT-Creation-Date: 2006-08-19 13:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2595,24 +2595,6 @@ msgid ""
 "functions: list internal functions for key bindings\n"
 "    reset: restore bindings to the default values and delete ALL personal "
 "bindings (use carefully!)"
-msgstr ""
-
-#: src/common/command.c:132
-msgid "manage panels"
-msgstr ""
-
-#: src/common/command.c:133
-msgid "[list | add type position size | resize # size | close # | move #1 #2]"
-msgstr ""
-
-#: src/common/command.c:134
-msgid ""
-"   list: list open panels (no parameter implies this list)\n"
-"    add: add a panel, type is global|local, position is top|bottom|left|"
-"right\n"
-" resize: resize a panel with a new size (may be relative, for example -1)\n"
-"  close: close a panel by number\n"
-"   move: move a panel to another number (may be relative, for example -1)"
 msgstr ""
 
 #: src/common/command.c:141

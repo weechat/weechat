@@ -18,7 +18,7 @@
 #
 
 %define name weechat
-%define version 0.1.9
+%define version 0.2.0
 %define release 1
 
 Name:      %{name}
@@ -50,7 +50,7 @@ make
 %install
 %makeinstall
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/
-mv $RPM_BUILD_ROOT%{_libdir}/lib* $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/
+mv $RPM_BUILD_ROOT%{_libdir}/*.* $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/
 
 %find_lang %name
 
@@ -67,6 +67,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_docdir}/%{name}/weechat_quickstart*
 
 %changelog
+* Sat Aug 19 2006 FlashCode <flashcode@flashtux.org> 0.2.0-1
+- Released version 0.2.0
 * Thu May 25 2006 FlashCode <flashcode@flashtux.org> 0.1.9-1
 - Released version 0.1.9
 * Sat Mar 18 2006 FlashCode <flashcode@flashtux.org> 0.1.8-1

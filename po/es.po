@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Weechat 0.2.0-cvs\n"
+"Project-Id-Version: Weechat 0.2.0\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-08-18 01:20+0200\n"
-"PO-Revision-Date: 2006-07-25 20:00+0200\n"
+"POT-Creation-Date: 2006-08-19 13:10+0200\n"
+"PO-Revision-Date: 2006-08-19 13:16+0200\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2820,25 +2820,6 @@ msgstr ""
 "funciones: lista funciones internas para el anclaje de claves\n"
 "    reset: restaura anclajes a los valores por defecto y elimina todos los "
 "anclajes personales (usar cuidadosamente)"
-
-#: src/common/command.c:132
-#, fuzzy
-msgid "manage panels"
-msgstr "gestión de ventanas"
-
-#: src/common/command.c:133
-msgid "[list | add type position size | resize # size | close # | move #1 #2]"
-msgstr ""
-
-#: src/common/command.c:134
-msgid ""
-"   list: list open panels (no parameter implies this list)\n"
-"    add: add a panel, type is global|local, position is top|bottom|left|"
-"right\n"
-" resize: resize a panel with a new size (may be relative, for example -1)\n"
-"  close: close a panel by number\n"
-"   move: move a panel to another number (may be relative, for example -1)"
-msgstr ""
 
 #: src/common/command.c:141
 msgid "list/load/unload plugins"
@@ -5679,6 +5660,10 @@ msgstr ""
 #: src/common/weeconfig.c:2362
 msgid "Saving config to disk\n"
 msgstr "Guardar configuración a disco\n"
+
+#, fuzzy
+#~ msgid "manage panels"
+#~ msgstr "gestión de ventanas"
 
 #~ msgid "User mode %s[%s%s%s/%s%s%s]\n"
 #~ msgstr "Modo de usuario %s[%s%s%s/%s%s%s]\n"
