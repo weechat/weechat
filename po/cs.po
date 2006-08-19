@@ -971,9 +971,8 @@ msgid "whois (registered nick)"
 msgstr "kdo je (registrovaná přezdívka)"
 
 #: src/irc/irc-commands.c:324
-#, fuzzy
 msgid "whois (help mode)"
-msgstr "kdo je (konec)"
+msgstr "kdo je (mód nápovědy)"
 
 #: src/irc/irc-commands.c:326
 msgid "whois (user)"
@@ -1028,14 +1027,12 @@ msgid "channel mode"
 msgstr "mód kanálu"
 
 #: src/irc/irc-commands.c:352
-#, fuzzy
 msgid "whois (has oper privs)"
-msgstr "kdo je (operator)"
+msgstr "kdo je (má privilegia operátora)"
 
 #: src/irc/irc-commands.c:354
-#, fuzzy
 msgid "channel creation date"
-msgstr "seznam vyjímek kanálu"
+msgstr "datum vytvoření kanálu"
 
 #: src/irc/irc-commands.c:356
 msgid "no topic for channel"
@@ -1062,9 +1059,8 @@ msgid "infos about topic (nick and date changed)"
 msgstr "informace o tématu (uživatel a datum změnění)"
 
 #: src/irc/irc-commands.c:365
-#, fuzzy
 msgid "whois (host)"
-msgstr "kdo je (uživatel)"
+msgstr "kdo je (host)"
 
 #: src/irc/irc-commands.c:367
 msgid "inviting"
@@ -1493,14 +1489,14 @@ msgid "%s \"%s\" command received without channel or nickname\n"
 msgstr "%s \"%s\" příkaz obdržen bez kanálu nebo přezdívky\n"
 
 #: src/irc/irc-recv.c:710
-#, fuzzy, c-format
+#, c-format
 msgid "Mode %s%s %s[%s%s%s]%s by %s%s\n"
-msgstr "%s%s %s(%s%s@%s%s)%s byl %s\n"
+msgstr "Mód %s%s %s[%s%s%s]%s od %s%s\n"
 
 #: src/irc/irc-recv.c:739
-#, fuzzy, c-format
+#, c-format
 msgid "User mode %s%s %s[%s%s%s]\n"
-msgstr "Uživatelský mód %s[%s%s%s/%s%s%s]\n"
+msgstr "Uživatelský mód %s%s %s[%s%s%s]\n"
 
 #: src/irc/irc-recv.c:809
 #, c-format
@@ -1609,14 +1605,14 @@ msgid "%s%s%s has unset topic for %s%s\n"
 msgstr "%s%s%s zrušil téma pro %s%s\n"
 
 #: src/irc/irc-recv.c:2318
-#, fuzzy, c-format
+#, c-format
 msgid "WALLOPS from %s%s%s: %s\n"
-msgstr "CTCP %sVERSION%s odpověď od %s%s%s: %s\n"
+msgstr "WALLOPS od %s%s%s: %s\n"
 
 #: src/irc/irc-recv.c:2438
-#, fuzzy, c-format
+#, c-format
 msgid "User mode for %s%s%s is %s[%s%s%s]\n"
-msgstr "Uživatelský mód %s[%s%s%s/%s%s%s]\n"
+msgstr "Uživatelský mód pro %s%s%s je %s[%s%s%s]\n"
 
 #: src/irc/irc-recv.c:2502
 #, c-format
@@ -1628,9 +1624,9 @@ msgid "Users online: "
 msgstr "Uživatelů online: "
 
 #: src/irc/irc-recv.c:2769
-#, fuzzy, c-format
+#, c-format
 msgid "%s[%s%s%s]%s help mode (+h)\n"
-msgstr "%s[%s%s%s]%s nečinný: "
+msgstr "%s[%s%s%s]%s mód nápovědy (+h)\n"
 
 #: src/irc/irc-recv.c:2959
 #, c-format
@@ -1676,9 +1672,9 @@ msgid "second"
 msgstr "sekunda"
 
 #: src/irc/irc-recv.c:3416
-#, fuzzy, c-format
+#, c-format
 msgid "Channel created on %s"
-msgstr "seznam vyjímek kanálu"
+msgstr "Kanál vytvořen v %s"
 
 #: src/irc/irc-recv.c:3425 src/irc/irc-recv.c:3622
 #, c-format
@@ -1722,14 +1718,14 @@ msgid "Channel reop %s%s%s: %s%s\n"
 msgstr "Reop kanálu %s%s%s: %s%s\n"
 
 #: src/irc/irc-recv.c:3945
-#, fuzzy, c-format
+#, c-format
 msgid " by %s%s %s(%s%s%s)"
-msgstr "%s%s %s(%s%s%s)%s skončil"
+msgstr " od %s%s %s(%s%s%s)%s"
 
 #: src/irc/irc-recv.c:3954
 #, c-format
 msgid " by %s%s"
-msgstr ""
+msgstr " od %s%s"
 
 #: src/irc/irc-recv.c:4264 src/irc/irc-recv.c:4414
 #, c-format
@@ -2269,9 +2265,8 @@ msgid "  [Q] Close DCC view"
 msgstr "  [Q] Zavřít DCC pohled"
 
 #: src/gui/curses/gui-curses-input.c:413
-#, fuzzy
 msgid "  [C] Clear buffer"
-msgstr "skoč na DCC buffer"
+msgstr "  [C] Vyčistit buffer"
 
 #: src/gui/curses/gui-curses-input.c:414
 msgid "  [Q] Close raw data view"
