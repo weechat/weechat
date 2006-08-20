@@ -43,7 +43,7 @@ struct t_weechat_hotlist
 extern t_weechat_hotlist *hotlist;
 extern t_gui_buffer *hotlist_initial_buffer;
 
-extern void hotlist_add (int, t_irc_server *, t_gui_buffer *);
+extern void hotlist_add (int, t_irc_server *, t_gui_buffer *, int);
 extern void hotlist_free (t_weechat_hotlist *);
 extern void hotlist_free_all ();
 extern void hotlist_remove_buffer (t_gui_buffer *);

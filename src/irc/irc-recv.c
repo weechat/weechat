@@ -413,7 +413,7 @@ irc_cmd_recv_invite (t_irc_server *server, char *host, char *nick, char *argumen
                         GUI_COLOR(COLOR_WIN_CHAT),
                         GUI_COLOR(COLOR_WIN_CHAT_NICK),
                         nick);
-            hotlist_add (HOTLIST_HIGHLIGHT, server, server->buffer);
+            hotlist_add (HOTLIST_HIGHLIGHT, server, server->buffer, 0);
             gui_status_draw (gui_current_window->buffer, 1);
         }
     }
@@ -1023,7 +1023,7 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *nick, char *argumen
                         (ascii_strcasecmp (nick, "chanserv") != 0) &&
                         (ascii_strcasecmp (nick, "memoserv") != 0))
                     {
-                        hotlist_add (HOTLIST_PRIVATE, server, server->buffer);
+                        hotlist_add (HOTLIST_PRIVATE, server, server->buffer, 0);
                         gui_status_draw (gui_current_window->buffer, 1);
                     }
                 }

@@ -66,7 +66,7 @@ dcc_redraw (int highlight)
     gui_window_redraw_buffer (gui_buffer_get_dcc (gui_current_window));
     if (highlight)
     {
-        hotlist_add (highlight, NULL, gui_buffer_get_dcc (gui_current_window));
+        hotlist_add (highlight, NULL, gui_buffer_get_dcc (gui_current_window), 0);
         gui_status_draw (gui_current_window->buffer, 0);
     }
 }

@@ -44,7 +44,8 @@ enum t_session_object
     SESSION_OBJ_HISTORY,
     SESSION_OBJ_BUFFER,
     SESSION_OBJ_LINE,
-    SESSION_OBJ_UPTIME
+    SESSION_OBJ_UPTIME,
+    SESSION_OBJ_HOTLIST
 };
 
 enum t_session_server
@@ -185,6 +186,14 @@ enum t_session_uptime
 {
     SESSION_UPT_END = 0,
     SESSION_UPT_START_TIME
+};
+
+enum t_session_hotlist
+{
+    SESSION_HOTL_END = 0,
+    SESSION_HOTL_PRIORITY,
+    SESSION_HOTL_SERVER,
+    SESSION_HOTL_BUFFER_NUMBER
 };
 
 int session_save (char *filename);

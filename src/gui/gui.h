@@ -83,6 +83,7 @@ extern void gui_window_print_log (t_gui_window *);
 extern t_gui_buffer *gui_buffer_servers_search ();
 extern t_gui_buffer *gui_buffer_new (t_gui_window *, void *, void *, int, int);
 extern t_gui_buffer *gui_buffer_search (char *, char *);
+extern t_gui_buffer *gui_buffer_search_by_number (int);
 extern t_gui_window *gui_buffer_find_window (t_gui_buffer *);
 extern t_gui_buffer *gui_buffer_get_dcc (t_gui_window *);
 extern void gui_buffer_clear (t_gui_buffer *);

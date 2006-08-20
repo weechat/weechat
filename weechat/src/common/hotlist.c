@@ -76,7 +76,8 @@ hotlist_find_pos (t_weechat_hotlist *new_hotlist)
  */
 
 void
-hotlist_add (int priority, t_irc_server *server, t_gui_buffer *buffer)
+hotlist_add (int priority, t_irc_server *server, t_gui_buffer *buffer,
+             int allow_current_buffer)
 {
     t_weechat_hotlist *new_hotlist, *pos_hotlist;
     
@@ -84,7 +85,8 @@ hotlist_add (int priority, t_irc_server *server, t_gui_buffer *buffer)
         return;
     
     /* do not highlight current buffer */
-    if (buffer == gui_current_window->buffer)
+    if ((buffer == gui_current_window->buffer)
+        && (!allow_current_buffer))
         return;
     
     if ((pos_hotlist = hotlist_search (buffer)))

@@ -36,6 +36,7 @@
 
 #include "weechat.h"
 #include "session.h"
+#include "hotlist.h"
 #include "log.h"
 #include "../irc/irc.h"
 #include "../gui/gui.h"
@@ -437,6 +438,33 @@ session_save_uptime (FILE *file)
 }
 
 /*
+ * session_save_hotlist: save hotlist into session file
+ */
+
+int
+session_save_hotlist (FILE *file)
+{
+    int rc;
+    t_weechat_hotlist *ptr_hotlist;
+    
+    rc = 1;
+    
+    for (ptr_hotlist = hotlist; ptr_hotlist;
+         ptr_hotlist = ptr_hotlist->next_hotlist)
+    {
+        rc = rc && (session_write_id  (file, SESSION_OBJ_HOTLIST));
+        rc = rc && (session_write_int (file, SESSION_HOTL_PRIORITY, ptr_hotlist->priority));
+        rc = rc && (session_write_str (file, SESSION_HOTL_SERVER, (ptr_hotlist->server) ? ptr_hotlist->server->name : NULL));
+        rc = rc && (session_write_int (file, SESSION_HOTL_BUFFER_NUMBER, ptr_hotlist->buffer->number));
+        rc = rc && (session_write_id  (file, SESSION_HOTL_END));
+        
+        if (!rc)
+            return 0;
+    }
+    return rc;
+}
+
+/*
  * session_save: save current session
  */
 
@@ -456,6 +484,7 @@ session_save (char *filename)
     rc = rc && (session_save_history (file, history_global_last));
     rc = rc && (session_save_buffers (file));
     rc = rc && (session_save_uptime (file));
+    rc = rc && (session_save_hotlist (file));
     
     fclose (file);
     
@@ -976,7 +1005,8 @@ session_load_server (FILE *file)
                 break;
             default:
                 weechat_log_printf (_("session: warning: ignoring value from "
-                                      "server (object id: %d)\n"));
+                                      "server (object id: %d)\n"),
+                                    object_id);
                 rc = rc && (session_read_ignore_value (file));
                 break;
         }
@@ -1078,7 +1108,8 @@ session_load_channel (FILE *file)
                 break;
             default:
                 weechat_log_printf (_("session: warning: ignoring value from "
-                                      "channel (object id: %d)\n"));
+                                      "channel (object id: %d)\n"),
+                                    object_id);
                 rc = rc && (session_read_ignore_value (file));
                 break;
         }
@@ -1148,7 +1179,8 @@ session_load_nick (FILE *file)
                 break;
             default:
                 weechat_log_printf (_("session: warning: ignoring value from "
-                                      "nick (object id: %d)\n"));
+                                      "nick (object id: %d)\n"),
+                                    object_id);
                 rc = rc && (session_read_ignore_value (file));
                 break;
         }
@@ -1311,7 +1343,8 @@ session_load_dcc (FILE *file)
                 break;
             default:
                 weechat_log_printf (_("session: warning: ignoring value from "
-                                      "DCC (object id: %d)\n"));
+                                      "DCC (object id: %d)\n"),
+                                    object_id);
                 rc = rc && (session_read_ignore_value (file));
                 break;
         }
@@ -1361,7 +1394,8 @@ session_load_history (FILE *file)
                 break;
             default:
                 weechat_log_printf (_("session: warning: ignoring value from "
-                                      "history (object id: %d)\n"));
+                                      "history (object id: %d)\n"),
+                                    object_id);
                 rc = rc && (session_read_ignore_value (file));
                 break;
         }
@@ -1463,7 +1497,8 @@ session_load_buffer (FILE *file)
                 break;
             default:
                 weechat_log_printf (_("session: warning: ignoring value from "
-                                      "buffer (object id: %d)\n"));
+                                      "buffer (object id: %d)\n"),
+                                    object_id);
                 rc = rc && (session_read_ignore_value (file));
                 break;
         }
@@ -1540,7 +1575,8 @@ session_load_line (FILE *file)
                 break;
             default:
                 weechat_log_printf (_("session: warning: ignoring value from "
-                                      "line (object id: %d)\n"));
+                                      "line (object id: %d)\n"),
+                                    object_id);
                 rc = rc && (session_read_ignore_value (file));
                 break;
         }
@@ -1577,7 +1613,67 @@ session_load_uptime (FILE *file)
                 break;
             default:
                 weechat_log_printf (_("session: warning: ignoring value from "
-                                      "uptime (object id: %d)\n"));
+                                      "uptime (object id: %d)\n"),
+                                    object_id);
+                rc = rc && (session_read_ignore_value (file));
+                break;
+        }
+    }
+    return 0;
+}
+
+/*
+ * session_load_hotlist: load hotlist from file
+ */
+
+int
+session_load_hotlist (FILE *file)
+{
+    int object_id, rc;
+    int priority;
+    char *server_name;
+    t_irc_server *ptr_server;
+    int buffer_number;
+    t_gui_buffer *ptr_buffer;
+
+    priority = 0;
+    ptr_server = NULL;
+    ptr_buffer = NULL;
+    
+    /* read hotlist values */
+    rc = 1;
+    while (rc)
+    {
+        if (feof (file))
+        {
+            session_crash (file, _("unexpected end of file (reading hotlist)"));
+            return 0;
+        }
+        if (fread ((void *)(&object_id), sizeof (int), 1, file) == 0)
+            return 0;
+        switch (object_id)
+        {
+            case SESSION_HOTL_END:
+                hotlist_add (priority, ptr_server, ptr_buffer, 1);
+                return 1;
+            case SESSION_HOTL_PRIORITY:
+                rc = rc && (session_read_int (file, &priority));
+                break;
+            case SESSION_HOTL_SERVER:
+                server_name = NULL;
+                if (!session_read_str (file, &server_name))
+                    return 0;
+                ptr_server = server_search (server_name);
+                free (server_name);
+                break;
+            case SESSION_HOTL_BUFFER_NUMBER:
+                rc = rc && (session_read_int (file, &buffer_number));
+                ptr_buffer = gui_buffer_search_by_number (buffer_number);
+                break;
+            default:
+                weechat_log_printf (_("session: warning: ignoring value from "
+                                      "history (object id: %d)\n"),
+                                    object_id);
                 rc = rc && (session_read_ignore_value (file));
                 break;
         }
@@ -1690,6 +1786,13 @@ session_load (char *filename)
                     return 0;
                 }
                 break;
+            case SESSION_OBJ_HOTLIST:
+                if (!session_load_hotlist (file))
+                {
+                    session_crash (file, _("failed to load hotlist"));
+                    return 0;
+                }
+                break;
             default:
                 weechat_log_printf (_("ignoring object (id: %d)\n"),
                                     object_id);
@@ -1720,7 +1823,7 @@ session_load (char *filename)
         irc_display_prefix (NULL, gui_current_window->buffer, PREFIX_ERROR);
         gui_printf_nolog (gui_current_window->buffer,
                           _("%s can't delete session file (%s)\n"),
-                          WEECHAT_ERROR);
+                          WEECHAT_ERROR, filename);
     }
     
     irc_display_prefix (NULL, gui_current_window->buffer, PREFIX_INFO);

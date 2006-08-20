@@ -290,6 +290,26 @@ gui_buffer_search (char *server, char *channel)
 }
 
 /*
+ * gui_buffer_search_by_number: search a buffer by number
+ */
+
+t_gui_buffer *
+gui_buffer_search_by_number (int number)
+{
+    t_gui_buffer *ptr_buffer;
+    
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->number == number)
+            return ptr_buffer;
+    }
+    
+    /* buffer not found */
+    return NULL;
+}
+
+/*
  * gui_buffer_find_window: find a window displaying buffer
  */
 
