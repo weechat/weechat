@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.2.0\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2006-08-19 13:10+0200\n"
-"PO-Revision-Date: 2006-08-20 19:35+0300\n"
+"PO-Revision-Date: 2006-08-20 19:51+0300\n"
 "Last-Translator: Stalwart <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1647,7 +1647,7 @@ msgstr "день"
 #: src/irc/irc-recv.c:3096
 #, c-format
 msgid "%s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
-msgstr "%s%02d %s%s %s%02d %s%s %s%02d %s%s, вошёл в сеть в: %s%s"
+msgstr "%s%02d %s%s %s%02d %s%s %s%02d %s%s, вошёл в сеть: %s%s"
 
 #: src/irc/irc-recv.c:3100
 msgid "hours"
