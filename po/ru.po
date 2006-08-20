@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.2.1-cvs\n"
+"Project-Id-Version: WeeChat 0.2.0\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2006-08-19 13:10+0200\n"
-"PO-Revision-Date: 2006-08-19 15:12+0300\n"
+"PO-Revision-Date: 2006-08-20 19:35+0300\n"
 "Last-Translator: Stalwart <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1647,7 +1647,7 @@ msgstr "день"
 #: src/irc/irc-recv.c:3096
 #, c-format
 msgid "%s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
-msgstr "%s%02d %s%s %s%02d %s%s %s%02d %s%s, вошёл в сеть: %s%s"
+msgstr "%s%02d %s%s %s%02d %s%s %s%02d %s%s, вошёл в сеть в: %s%s"
 
 #: src/irc/irc-recv.c:3100
 msgid "hours"
@@ -1803,7 +1803,7 @@ msgstr "%s: ник \"%s\" уже используется, пробую трет
 msgid ""
 "%s: all declared nicknames are already in use, closing connection with "
 "server!\n"
-msgstr "%s: все предложеные ники заняты, отключаюсь от сервера!\n"
+msgstr "%s: все предложенные ники заняты, отключаюсь от сервера!\n"
 
 #: src/irc/irc-recv.c:4764
 #, c-format
@@ -1850,7 +1850,7 @@ msgstr " (локальное имя файла: %s%s%s)"
 
 #: src/irc/irc-dcc.c:471
 msgid " sent to "
-msgstr " отправлен"
+msgstr " отправлен "
 
 #: src/irc/irc-dcc.c:473
 msgid " received from "
