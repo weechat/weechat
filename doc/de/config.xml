@@ -1207,7 +1207,7 @@
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>''</entry>
-  <entry>Befehle, die nach der Verbindung zum Server ausgeführt werden sollen (mehrere Befehle müssen mit einem Semikolon getrennt werden, um ein Semikolon zu schreiben, muss man '\;' verwenden)</entry>
+  <entry>Command(s) to run when connected to server (many commands should be separated by ';', use '\;' for a semicolon, special variables $nick, $channel and $server are replaced by their value)</entry>
 </row>
 <row>
   <entry><option>server_command_delay</option></entry>

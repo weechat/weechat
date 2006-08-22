@@ -14,6 +14,9 @@ créer un alias pour une commande
 paramètres: paramètres pour la commande
 
 </programlisting>
+<command>est remplacé par tous les paramètres.</command>
+<programlisting>
+</programlisting>
 <command>buffer  [action [args] | nombre | [[serveur] [canal]]]</command>
 <programlisting>
 gestion des tampons

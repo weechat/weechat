@@ -30,6 +30,7 @@
 
 #include "weechat.h"
 #include "command.h"
+#include "alias.h"
 #include "fifo.h"
 #include "log.h"
 #include "session.h"
@@ -53,7 +54,9 @@ t_weechat_command weechat_commands[] =
     N_("alias_name: name of alias\n"
        "   command: command name (WeeChat or IRC command, many commands "
        "can be separated by semicolons)\n"
-        "arguments: arguments for command"),
+       "arguments: arguments for command\n\n"
+        "Note: in command, special variables $1, $2,..,$9 are replaced by "
+       "arguments given by user, and $* is replaced by all arguments."),
     "%- %A", 0, MAX_ARGS, 1, NULL, weechat_cmd_alias },
   { "buffer", N_("manage buffers"),
     N_("[action [args] | number | [[server] [channel]]]"),
@@ -225,9 +228,6 @@ t_weechat_command weechat_commands[] =
   { NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, NULL }
 };
 
-t_weechat_alias *weechat_alias = NULL;
-t_weechat_alias *weechat_last_alias = NULL;
-
 t_weelist *index_commands;
 t_weelist *last_index_command;
 
@@ -275,403 +275,6 @@ command_index_free ()
 }
 
 /*
- * alias_search: search an alias
- */
-
-t_weechat_alias *
-alias_search (char *alias_name)
-{
-    t_weechat_alias *ptr_alias;
-    
-    for (ptr_alias = weechat_alias; ptr_alias; ptr_alias = ptr_alias->next_alias)
-    {
-        if (ascii_strcasecmp (alias_name, ptr_alias->alias_name) == 0)
-            return ptr_alias;
-    }
-    return NULL;
-}
-
-/*
- * alias_find_pos: find position for an alias (for sorting aliases)
- */
-
-t_weechat_alias *
-alias_find_pos (char *alias_name)
-{
-    t_weechat_alias *ptr_alias;
-    
-    for (ptr_alias = weechat_alias; ptr_alias; ptr_alias = ptr_alias->next_alias)
-    {
-        if (ascii_strcasecmp (alias_name, ptr_alias->alias_name) < 0)
-            return ptr_alias;
-    }
-    return NULL;
-}
-
-/*
- * alias_insert_sorted: insert alias into sorted list
- */
-
-void
-alias_insert_sorted (t_weechat_alias *alias)
-{
-    t_weechat_alias *pos_alias;
-    
-    pos_alias = alias_find_pos (alias->alias_name);
-    
-    if (weechat_alias)
-    {
-        if (pos_alias)
-        {
-            /* insert alias into the list (before alias found) */
-            alias->prev_alias = pos_alias->prev_alias;
-            alias->next_alias = pos_alias;
-            if (pos_alias->prev_alias)
-                pos_alias->prev_alias->next_alias = alias;
-            else
-                weechat_alias = alias;
-            pos_alias->prev_alias = alias;
-        }
-        else
-        {
-            /* add alias to the end */
-            alias->prev_alias = weechat_last_alias;
-            alias->next_alias = NULL;
-            weechat_last_alias->next_alias = alias;
-            weechat_last_alias = alias;
-        }
-    }
-    else
-    {
-        alias->prev_alias = NULL;
-        alias->next_alias = NULL;
-        weechat_alias = alias;
-        weechat_last_alias = alias;
-    }
-}
-
-/*
- * alias_new: create new alias and add it to alias list
- */
-
-t_weechat_alias *
-alias_new (char *alias_name, char *alias_command)
-{
-    t_weechat_alias *new_alias, *ptr_alias;
-
-    while (alias_name[0] == '/')
-    {
-	alias_name++;
-    }
-    
-    if (ascii_strcasecmp (alias_name, "builtin") == 0)
-        return NULL;
-    
-    ptr_alias = alias_search (alias_name);
-    if (ptr_alias)
-    {
-	if (ptr_alias->alias_command)
-	    free (ptr_alias->alias_command);
-	ptr_alias->alias_command = strdup (alias_command);
-	return ptr_alias;
-    }
-    
-    if ((new_alias = ((t_weechat_alias *) malloc (sizeof (t_weechat_alias)))))
-    {
-        new_alias->alias_name = strdup (alias_name);
-        new_alias->alias_command = (char *) malloc (strlen (alias_command) + 1);
-	new_alias->running = 0;
-        if (new_alias->alias_command)
-            strcpy (new_alias->alias_command, alias_command);
-        alias_insert_sorted (new_alias);
-        return new_alias;
-    }
-    else
-        return NULL;
-}
-
-/*
- * alias_get_final_command: get final command pointer by an alias
- */
-
-char *
-alias_get_final_command (t_weechat_alias *alias)
-{
-    t_weechat_alias *ptr_alias;
-    char *result;
-    
-    if (alias->running)
-    {
-        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-        gui_printf (NULL,
-                    _("%s circular reference when calling alias \"/%s\"\n"),
-                    WEECHAT_ERROR, alias->alias_name);
-        return NULL;
-    }
-    
-    ptr_alias = alias_search ((alias->alias_command[0] == '/') ?
-                             alias->alias_command + 1 : alias->alias_command);
-    if (ptr_alias)
-    {
-        alias->running = 1;
-        result = alias_get_final_command (ptr_alias);
-        alias->running = 0;
-        return result;
-    }
-    return (alias->alias_command[0] == '/') ?
-        alias->alias_command + 1 : alias->alias_command;
-}
-
-/*
- * alias_free: free an alias and reomve it from list
- */
-
-void
-alias_free (t_weechat_alias *alias)
-{
-    t_weechat_alias *new_weechat_alias;
-
-    /* remove alias from list */
-    if (weechat_last_alias == alias)
-        weechat_last_alias = alias->prev_alias;
-    if (alias->prev_alias)
-    {
-        (alias->prev_alias)->next_alias = alias->next_alias;
-        new_weechat_alias = weechat_alias;
-    }
-    else
-        new_weechat_alias = alias->next_alias;
-    
-    if (alias->next_alias)
-        (alias->next_alias)->prev_alias = alias->prev_alias;
-
-    /* free data */
-    if (alias->alias_name)
-        free (alias->alias_name);
-    if (alias->alias_command)
-        free (alias->alias_command);
-    free (alias);
-    weechat_alias = new_weechat_alias;
-}
-
-/*
- * alias_free_all: free all alias
- */
-
-void
-alias_free_all ()
-{
-    while (weechat_alias)
-        alias_free (weechat_alias);
-}
-
-/*
- * explode_string: explode a string according to separators
- */
-
-char **
-explode_string (char *string, char *separators, int num_items_max,
-                int *num_items)
-{
-    int i, n_items;
-    char **array;
-    char *ptr, *ptr1, *ptr2;
-
-    if (num_items != NULL)
-        *num_items = 0;
-
-    n_items = num_items_max;
-
-    if (!string || !string[0])
-        return NULL;
-
-    if (num_items_max == 0)
-    {
-        /* calculate number of items */
-        ptr = string;
-        i = 1;
-        while ((ptr = strpbrk (ptr, separators)))
-        {
-            while (strchr (separators, ptr[0]) != NULL)
-                ptr++;
-            i++;
-        }
-        n_items = i;
-    }
-
-    array =
-        (char **) malloc ((num_items_max ? n_items : n_items + 1) *
-                          sizeof (char *));
-
-    ptr1 = string;
-    ptr2 = string;
-
-    for (i = 0; i < n_items; i++)
-    {
-        while (strchr (separators, ptr1[0]) != NULL)
-            ptr1++;
-        if (i == (n_items - 1) || (ptr2 = strpbrk (ptr1, separators)) == NULL)
-            if ((ptr2 = strchr (ptr1, '\r')) == NULL)
-                if ((ptr2 = strchr (ptr1, '\n')) == NULL)
-                    ptr2 = strchr (ptr1, '\0');
-
-        if ((ptr1 == NULL) || (ptr2 == NULL))
-        {
-            array[i] = NULL;
-        }
-        else
-        {
-            if (ptr2 - ptr1 > 0)
-            {
-                array[i] =
-                    (char *) malloc ((ptr2 - ptr1 + 1) * sizeof (char));
-                array[i] = strncpy (array[i], ptr1, ptr2 - ptr1);
-                array[i][ptr2 - ptr1] = '\0';
-                ptr1 = ++ptr2;
-            }
-            else
-            {
-                array[i] = NULL;
-            }
-        }
-    }
-    if (num_items_max == 0)
-    {
-        array[i] = NULL;
-        if (num_items != NULL)
-            *num_items = i;
-    }
-    else
-    {
-        if (num_items != NULL)
-            *num_items = num_items_max;
-    }
-
-    return array;
-}
-
-/*
- * free_exploded_string: free an exploded string
- */
-
-void
-free_exploded_string (char **exploded_string)
-{
-    int i;
-    
-    if (exploded_string)
-    {
-        for (i = 0; exploded_string[i]; i++)
-            free (exploded_string[i]);
-        free (exploded_string);
-    }
-}
-
-/*
- * split_multi_command: split a serie of commands separated by 'sep'
- *                      and ecscaped with '\'
- *              - empty commands are removed
- *              - spaces on the left of each commands are stripped
- *
- *  result must be freed with free_multi_command
- */
-
-char **
-split_multi_command (char *command, char sep)
-{
-    int nb_substr, arr_idx, str_idx, type;
-    char **array;
-    char *buffer, *ptr, *p;
-
-    if (command == NULL)
-	return NULL;
-    
-    nb_substr = 1;
-    ptr = command;
-    while ( (p = strchr(ptr, sep)) != NULL)
-    {
-	nb_substr++;
-	ptr = ++p;
-    }
-
-    array = (char **) malloc ((nb_substr + 1) * sizeof(char *));
-    if (!array)
-	return NULL;
-    
-    buffer = (char *) malloc ( (strlen(command) + 1) * sizeof (char));
-    if (!buffer)
-    {
-	free (array);
-	return NULL;
-    }
-    
-    ptr = command;
-    str_idx = 0;
-    arr_idx = 0;
-    while(*ptr != '\0') 
-    {	
-	type = 0;
-	if (*ptr == ';')
-	{
-	    if (ptr == command)
-		type = 1;
-	    else if ( *(ptr-1) != '\\')
-		type = 1;
-	    else if ( *(ptr-1) == '\\')
-		type = 2;
-	}	
-	if (type == 1)
-	{
-	    buffer[str_idx] = '\0';
-	    str_idx = -1;
-	    p = buffer;
-	    /* strip white spaces a the begining of the line */
-	    while (*p == ' ') p++;
-	    if (p  && p[0])
-		array[arr_idx++] = strdup (p);
-	}	
-	else if (type == 2)
-	    buffer[--str_idx] = *ptr;
-	else
-	    buffer[str_idx] = *ptr;
-	str_idx++;
-	ptr++;
-    }
-    
-    buffer[str_idx] = '\0';
-    p = buffer;
-    while (*p == ' ') p++;
-    if (p  && p[0])
-	array[arr_idx++] = strdup (p);
-    
-    array[arr_idx] = NULL;
-
-    free (buffer);
-
-    array = (char **) realloc (array, (arr_idx + 1) * sizeof(char *));
-
-    return array;
-}
-
-/*
- * free_multi_command : free a list of commands splitted
- *                      with split_multi_command
- */
-
-void
-free_multi_command (char **commands)
-{
-    int i;
-
-    if (commands)
-    {
-        for (i = 0; commands[i]; i++)
-            free (commands[i]);
-        free (commands);
-    }
-}
-
-/*
  * exec_weechat_command: executes a command (WeeChat internal or IRC)
  *                       if only_builtin == 1, then try only WeeChat/IRC commands
  *                       (not plugins neither aliases)
@@ -687,6 +290,8 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
     char *command, *pos, *ptr_args, *ptr_args2, *ptr_args3;
     char **argv, **argv2, *alias_command;
     char **commands, **ptr_cmd, **ptr_next_cmd;
+    char *args_replaced, *vars_replaced, *new_ptr_cmd;
+    int some_args_replaced;
     t_weechat_alias *ptr_alias;
     
     if ((!string) || (!string[0]) || (string[0] != '/'))
@@ -721,7 +326,13 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
     if (only_builtin)
         rc = -1;
     else
-        rc = plugin_cmd_handler_exec ((server) ? server->name : "", command + 1, ptr_args);
+    {
+        vars_replaced = alias_replace_vars (ptr_args);
+        rc = plugin_cmd_handler_exec ((server) ? server->name : "", command + 1,
+                                      (vars_replaced) ? vars_replaced : ptr_args);
+        if (vars_replaced)
+            free (vars_replaced);
+    }
 #else
     rc = -1;
 #endif
@@ -755,55 +366,82 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                         }
                         else
                         {		
-                            /* an alias can contain many commandes separated by ';' */
+                            /* an alias can contain many commands separated by ';' */
                             commands = split_multi_command (ptr_alias->alias_command, ';');
                             if (commands)
                             {
-                                ptr_alias->running = 1;			
+                                some_args_replaced = 0;
+                                ptr_alias->running = 1;
                                 for (ptr_cmd=commands; *ptr_cmd; ptr_cmd++)
                                 {
                                     ptr_next_cmd = ptr_cmd;
                                     ptr_next_cmd++;
-                                
-                                    if (*ptr_next_cmd == NULL && ptr_args)
-                                    {
-                                        /* if alias has arguments, they are now 
-                                           arguments of the last command in the list */
-                                        length1 = strlen (*ptr_cmd);
-                                        length2 = strlen (ptr_args);
                                     
-                                        alias_command = (char *) malloc ( 1 + length1 + 1 + length2 + 1);			    
-                                        if (alias_command)
-                                        {
-                                            if (*ptr_cmd[0] != '/')
-                                                strcpy (alias_command, "/");
-                                            else
-                                                strcpy (alias_command, "");
-                                        
-                                            strcat (alias_command, *ptr_cmd);
-                                            strcat (alias_command, " ");
-                                            strcat (alias_command, ptr_args);
-                                        
-                                            (void) exec_weechat_command (server, channel, alias_command, only_builtin);
-                                            free (alias_command);
-                                        }
-                                    }
-                                    else
+                                    vars_replaced = alias_replace_vars (*ptr_cmd);
+                                    new_ptr_cmd = (vars_replaced) ? vars_replaced : *ptr_cmd;
+                                    args_replaced = alias_replace_args (new_ptr_cmd, ptr_args);
+                                    if (args_replaced)
                                     {
+                                        some_args_replaced = 1;
                                         if (*ptr_cmd[0] == '/')
-                                            (void) exec_weechat_command (server, channel, *ptr_cmd, only_builtin);
+                                            (void) exec_weechat_command (server, channel, args_replaced, only_builtin);
                                         else
                                         {
-                                            alias_command = (char *) malloc (1 + strlen(*ptr_cmd) + 1);
+                                            alias_command = (char *) malloc (1 + strlen(args_replaced) + 1);
                                             if (alias_command)
                                             {
                                                 strcpy (alias_command, "/");
-                                                strcat (alias_command, *ptr_cmd);
+                                                strcat (alias_command, args_replaced);
                                                 (void) exec_weechat_command (server, channel, alias_command, only_builtin);
                                                 free (alias_command);
                                             }
                                         }
+                                        free (args_replaced);
                                     }
+                                    else
+                                    {
+                                        /* if alias has arguments, they are now
+                                           arguments of the last command in the list (if no $1,$2,..$*) was found */
+                                        if ((*ptr_next_cmd == NULL) && ptr_args && (!some_args_replaced))
+                                        {
+                                            length1 = strlen (new_ptr_cmd);
+                                            length2 = strlen (ptr_args);
+                                            
+                                            alias_command = (char *) malloc ( 1 + length1 + 1 + length2 + 1);
+                                            if (alias_command)
+                                            {
+                                                if (*ptr_cmd[0] != '/')
+                                                    strcpy (alias_command, "/");
+                                                else
+                                                    strcpy (alias_command, "");
+                                                
+                                                strcat (alias_command, new_ptr_cmd);
+                                                strcat (alias_command, " ");
+                                                strcat (alias_command, ptr_args);
+                                                
+                                                (void) exec_weechat_command (server, channel, alias_command, only_builtin);
+                                                free (alias_command);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (*ptr_cmd[0] == '/')
+                                                (void) exec_weechat_command (server, channel, new_ptr_cmd, only_builtin);
+                                            else
+                                            {
+                                                alias_command = (char *) malloc (1 + strlen (new_ptr_cmd) + 1);
+                                                if (alias_command)
+                                                {
+                                                    strcpy (alias_command, "/");
+                                                    strcat (alias_command, new_ptr_cmd);
+                                                    (void) exec_weechat_command (server, channel, alias_command, only_builtin);
+                                                    free (alias_command);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (vars_replaced)
+                                        free (vars_replaced);
                                 }
                                 ptr_alias->running = 0;
                                 free_multi_command (commands);

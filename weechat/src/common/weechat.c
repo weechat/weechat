@@ -56,6 +56,7 @@
 #endif
 
 #include "weechat.h"
+#include "alias.h"
 #include "backtrace.h"
 #include "command.h"
 #include "fifo.h"

@@ -37,6 +37,7 @@
 
 #include "../common/weechat.h"
 #include "irc.h"
+#include "../common/alias.h"
 #include "../common/command.h"
 #include "../common/hotlist.h"
 #include "../common/util.h"
@@ -736,13 +737,14 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *nick, char *arguments
         {
             irc_display_prefix (server, server->buffer, PREFIX_INFO);
             gui_printf (server->buffer,
-                        _("User mode %s%s %s[%s%s%s]\n"),
-                        GUI_COLOR(COLOR_WIN_CHAT_NICK),
-                        nick,
+                        _("User mode %s[%s%s%s]%s by %s%s\n"),
                         GUI_COLOR(COLOR_WIN_CHAT_DARK),
                         GUI_COLOR(COLOR_WIN_CHAT),
                         pos_modes,
-                        GUI_COLOR(COLOR_WIN_CHAT_DARK));
+                        GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                        GUI_COLOR(COLOR_WIN_CHAT),
+                        GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                        nick);
         }
         irc_mode_user_set (server, pos_modes);
     }
@@ -2333,7 +2335,7 @@ int
 irc_cmd_recv_001 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos;
-    char **commands, **ptr;
+    char **commands, **ptr, *vars_replaced;
     t_irc_channel *ptr_channel;
     char *away_msg;
     
@@ -2362,7 +2364,13 @@ irc_cmd_recv_001 (t_irc_server *server, char *host, char *nick, char *arguments)
 	if (commands)
 	{
 	    for (ptr = commands; *ptr; ptr++)
-		user_command (server, NULL, *ptr, 0);
+            {
+                vars_replaced = alias_replace_vars (*ptr);
+                user_command (server, NULL,
+                              (vars_replaced) ? vars_replaced : *ptr, 0);
+                if (vars_replaced)
+                    free (vars_replaced);
+            }
 	    free_multi_command (commands);
 	}
 	

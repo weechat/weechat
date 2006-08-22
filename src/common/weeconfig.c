@@ -37,6 +37,7 @@
 
 #include "weechat.h"
 #include "weeconfig.h"
+#include "alias.h"
 #include "command.h"
 #include "fifo.h"
 #include "log.h"
@@ -1008,7 +1009,8 @@ t_config_option weechat_options_server[] =
     "", NULL, NULL, &(cfg_server.hostname), NULL },
   { "server_command", N_("command(s) to run when connected to server"),
     N_("command(s) to run when connected to server (many commands should be "
-       "separated by ';', use '\\;' for a semicolon)"),
+       "separated by ';', use '\\;' for a semicolon, special variables $nick, "
+       "$channel and $server are replaced by their value)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "", NULL, NULL, &(cfg_server.command), NULL },
   { "server_command_delay", N_("delay (in seconds) after command was executed"),

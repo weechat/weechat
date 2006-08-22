@@ -320,3 +320,208 @@ get_timeval_diff (struct timeval *tv1, struct timeval *tv2)
     }
     return ((diff_usec / 1000) + (diff_sec * 1000));
 }
+
+/*
+ * explode_string: explode a string according to separators
+ */
+
+char **
+explode_string (char *string, char *separators, int num_items_max,
+                int *num_items)
+{
+    int i, n_items;
+    char **array;
+    char *ptr, *ptr1, *ptr2;
+
+    if (num_items != NULL)
+        *num_items = 0;
+
+    n_items = num_items_max;
+
+    if (!string || !string[0])
+        return NULL;
+
+    if (num_items_max == 0)
+    {
+        /* calculate number of items */
+        ptr = string;
+        i = 1;
+        while ((ptr = strpbrk (ptr, separators)))
+        {
+            while (strchr (separators, ptr[0]) != NULL)
+                ptr++;
+            i++;
+        }
+        n_items = i;
+    }
+
+    array =
+        (char **) malloc ((num_items_max ? n_items : n_items + 1) *
+                          sizeof (char *));
+
+    ptr1 = string;
+    ptr2 = string;
+
+    for (i = 0; i < n_items; i++)
+    {
+        while (strchr (separators, ptr1[0]) != NULL)
+            ptr1++;
+        if (i == (n_items - 1) || (ptr2 = strpbrk (ptr1, separators)) == NULL)
+            if ((ptr2 = strchr (ptr1, '\r')) == NULL)
+                if ((ptr2 = strchr (ptr1, '\n')) == NULL)
+                    ptr2 = strchr (ptr1, '\0');
+
+        if ((ptr1 == NULL) || (ptr2 == NULL))
+        {
+            array[i] = NULL;
+        }
+        else
+        {
+            if (ptr2 - ptr1 > 0)
+            {
+                array[i] =
+                    (char *) malloc ((ptr2 - ptr1 + 1) * sizeof (char));
+                array[i] = strncpy (array[i], ptr1, ptr2 - ptr1);
+                array[i][ptr2 - ptr1] = '\0';
+                ptr1 = ++ptr2;
+            }
+            else
+            {
+                array[i] = NULL;
+            }
+        }
+    }
+    if (num_items_max == 0)
+    {
+        array[i] = NULL;
+        if (num_items != NULL)
+            *num_items = i;
+    }
+    else
+    {
+        if (num_items != NULL)
+            *num_items = num_items_max;
+    }
+
+    return array;
+}
+
+/*
+ * free_exploded_string: free an exploded string
+ */
+
+void
+free_exploded_string (char **exploded_string)
+{
+    int i;
+    
+    if (exploded_string)
+    {
+        for (i = 0; exploded_string[i]; i++)
+            free (exploded_string[i]);
+        free (exploded_string);
+    }
+}
+
+/*
+ * split_multi_command: split a list of commands separated by 'sep'
+ *                      and ecscaped with '\'
+ *                      - empty commands are removed
+ *                      - spaces on the left of each commands are stripped
+ *                      Result must be freed with free_multi_command
+ */
+
+char **
+split_multi_command (char *command, char sep)
+{
+    int nb_substr, arr_idx, str_idx, type;
+    char **array;
+    char *buffer, *ptr, *p;
+
+    if (command == NULL)
+	return NULL;
+    
+    nb_substr = 1;
+    ptr = command;
+    while ( (p = strchr(ptr, sep)) != NULL)
+    {
+	nb_substr++;
+	ptr = ++p;
+    }
+
+    array = (char **) malloc ((nb_substr + 1) * sizeof(char *));
+    if (!array)
+	return NULL;
+    
+    buffer = (char *) malloc ( (strlen(command) + 1) * sizeof (char));
+    if (!buffer)
+    {
+	free (array);
+	return NULL;
+    }
+    
+    ptr = command;
+    str_idx = 0;
+    arr_idx = 0;
+    while(*ptr != '\0') 
+    {	
+	type = 0;
+	if (*ptr == ';')
+	{
+	    if (ptr == command)
+		type = 1;
+	    else if ( *(ptr-1) != '\\')
+		type = 1;
+	    else if ( *(ptr-1) == '\\')
+		type = 2;
+	}	
+	if (type == 1)
+	{
+	    buffer[str_idx] = '\0';
+	    str_idx = -1;
+	    p = buffer;
+	    /* strip white spaces a the begining of the line */
+	    while (*p == ' ') p++;
+	    if (p  && p[0])
+		array[arr_idx++] = strdup (p);
+	}	
+	else if (type == 2)
+	    buffer[--str_idx] = *ptr;
+	else
+	    buffer[str_idx] = *ptr;
+	str_idx++;
+	ptr++;
+    }
+    
+    buffer[str_idx] = '\0';
+    p = buffer;
+    while (*p == ' ') p++;
+    if (p  && p[0])
+	array[arr_idx++] = strdup (p);
+    
+    array[arr_idx] = NULL;
+
+    free (buffer);
+
+    array = (char **) realloc (array, (arr_idx + 1) * sizeof(char *));
+
+    return array;
+}
+
+/*
+ * free_multi_command : free a list of commands splitted
+ *                      with split_multi_command
+ */
+
+void
+free_multi_command (char **commands)
+{
+    int i;
+
+    if (commands)
+    {
+        for (i = 0; commands[i]; i++)
+            free (commands[i]);
+        free (commands);
+    }
+}

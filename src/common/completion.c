@@ -29,6 +29,7 @@
 
 #include "weechat.h"
 #include "completion.h"
+#include "alias.h"
 #include "command.h"
 #include "log.h"
 #include "utf8.h"

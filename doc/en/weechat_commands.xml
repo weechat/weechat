@@ -14,6 +14,9 @@ alias_name: name of alias
 arguments: arguments for command
 
 </programlisting>
+<command>is replaced by all arguments.</command>
+<programlisting>
+</programlisting>
 <command>buffer  [action [args] | number | [[server] [channel]]]</command>
 <programlisting>
 manage buffers

@@ -18,19 +18,29 @@
  */
 
 
-#ifndef __WEECHAT_UTIL_H
-#define __WEECHAT_UTIL_H 1
+#ifndef __WEECHAT_ALIAS_H
+#define __WEECHAT_ALIAS_H 1
 
-extern void ascii_tolower (char *);
-extern void ascii_toupper (char *);
-extern int ascii_strcasecmp (char *, char *);
-extern int ascii_strncasecmp (char *, char *, int);
-extern char *ascii_strcasestr (char *, char *);
-extern char *weechat_iconv (char *, char *, char *);
-extern int weechat_iconv_check (char *, char *);
-extern char *weechat_strreplace (char *, char *, char *);
-extern long get_timeval_diff (struct timeval *, struct timeval *);
-extern char **explode_string (char *, char *, int, int *);
-extern void free_exploded_string (char **);
+typedef struct t_weechat_alias t_weechat_alias;
 
-#endif /* util.h */
+struct t_weechat_alias
+{
+    char *alias_name;
+    char *alias_command;
+    int running;
+    t_weechat_alias *prev_alias;
+    t_weechat_alias *next_alias;
+};
+
+extern t_weechat_alias *weechat_alias;
+extern t_weechat_alias *weechat_last_alias;
+
+extern t_weechat_alias *alias_search (char *);
+extern t_weechat_alias *alias_new (char *, char *);
+extern char *alias_get_final_command (t_weechat_alias *);
+extern char *alias_replace_args (char *, char *);
+extern char *alias_replace_vars (char *);
+extern void alias_free (t_weechat_alias *);
+extern void alias_free_all ();
+
+#endif /* alias.h */

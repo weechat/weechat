@@ -1,10 +1,13 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-08-21
+ChangeLog - 2006-08-22
 
 	
 Version 0.2.1 (under dev!):
+   * added special vars $nick/$channel/$server for server_command, alias and
+     plugin command handlers
+   * added arguments $1,$2,..,$9 and $* for alias (task #5831)
    * added hotlist in session file when using /upgrade command (task #5449)
    * fixed nick refresh problem with unrealircd specific modes: chan owner (~)
      and chan admin (&) (bug #17340)

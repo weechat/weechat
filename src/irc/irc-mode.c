@@ -29,7 +29,7 @@
 
 #include "../common/weechat.h"
 #include "irc.h"
-#include "../common/command.h"
+#include "../common/util.h"
 #include "../gui/gui.h"
 
 

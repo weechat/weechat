@@ -46,31 +46,13 @@ struct t_weechat_command
                                     /* function called when user enters cmd   */
 };
 
-typedef struct t_weechat_alias t_weechat_alias;
-
-struct t_weechat_alias
-{
-    char *alias_name;
-    char *alias_command;
-    int running;
-    t_weechat_alias *prev_alias;
-    t_weechat_alias *next_alias;
-};
-
 extern t_weechat_command weechat_commands[];
 
-extern t_weechat_alias *weechat_alias;
 extern t_weelist *index_commands;
 extern t_weelist *last_index_command;
 
 extern void command_index_build ();
 extern void command_index_free ();
-extern t_weechat_alias *alias_search (char *);
-extern t_weechat_alias *alias_new (char *, char *);
-extern char *alias_get_final_command (t_weechat_alias *);
-extern void alias_free_all ();
-extern char **explode_string (char *, char *, int, int *);
-extern void free_exploded_string (char **);
 extern char **split_multi_command (char *, char);
 extern void free_multi_command (char **);
 extern int exec_weechat_command (t_irc_server *, t_irc_channel *, char *, int);
