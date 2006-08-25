@@ -65,7 +65,8 @@ t_weechat_command weechat_commands[] =
        "  close: close buffer (optional arg is part message, for a channel)\n"
        "   list: list open buffers (no parameter implies this list)\n"
        " notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)\n"
-       "server\n"
+       "         (when executed on server buffer, this sets default notify level for whole server)\n"
+       "server,\n"
        "channel: jump to buffer by server and/or channel name\n"
        " number: jump to buffer by number"),
     "move|close|list|notify", 0, MAX_ARGS, 0, NULL, weechat_cmd_buffer },
@@ -1003,7 +1004,7 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
     t_irc_channel *ptr_channel;
     long number;
     char *error, *pos, **argv;
-    int argc, target_buffer;
+    int argc, target_buffer, count;
     
     irc_find_context (server, channel, &window, &buffer);
     
@@ -1083,31 +1084,34 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
             }
             if (BUFFER_IS_SERVER(buffer))
             {
-                if (SERVER(buffer)->channels)
+                if (SERVER(buffer))
                 {
-                    irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-                    gui_printf (NULL,
-                                _("%s can not close server buffer while channels "
-                                "are open\n"),
-                                WEECHAT_ERROR);
-                    free_exploded_string (argv);
-                    return -1;
+                    if (SERVER(buffer)->channels)
+                    {
+                        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                        gui_printf (NULL,
+                                    _("%s can not close server buffer while channels "
+                                      "are open\n"),
+                                    WEECHAT_ERROR);
+                        free_exploded_string (argv);
+                        return -1;
+                    }
+                    server_disconnect (SERVER(buffer), 0);
+                    ptr_server = SERVER(buffer);
+                    if (!buffer->all_servers)
+                    {
+                        gui_buffer_free (buffer, 1);
+                        ptr_server->buffer = NULL;
+                    }
+                    else
+                    {
+                        ptr_server->buffer = NULL;
+                        buffer->server = NULL;
+                        gui_window_switch_server (window);
+                    }
+                    gui_status_draw (gui_current_window->buffer, 1);
+                    gui_input_draw (gui_current_window->buffer, 1);
                 }
-                server_disconnect (SERVER(buffer), 0);
-                ptr_server = SERVER(buffer);
-                if (!buffer->all_servers)
-                {
-                    gui_buffer_free (buffer, 1);
-                    ptr_server->buffer = NULL;
-                }
-                else
-                {
-                    ptr_server->buffer = NULL;
-                    buffer->server = NULL;
-                    gui_window_switch_server (window);
-                }
-                gui_status_draw (gui_current_window->buffer, 1);
-                gui_input_draw (gui_current_window->buffer, 1);
             }
             else
             {
@@ -1157,24 +1161,42 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
         {
             if (argc < 2)
             {
-                /* display notify level for all buffers */
                 gui_printf (NULL, "\n");
-                gui_printf (NULL, _("Notify levels:  "));
-                for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+
+                /* display default notify level for all connected servers */
+                gui_printf (NULL, _("Default notify levels for servers:"));
+                count = 0;
+                for (ptr_server = irc_servers; ptr_server;
+                     ptr_server = ptr_server->next_server)
                 {
-                    gui_printf (NULL, "%d.%s:",
+                    if (ptr_server->buffer)
+                    {
+                        gui_printf (NULL, "  %s:%d",
+                                    ptr_server->name,
+                                    server_get_default_notify_level (ptr_server));
+                        count++;
+                    }
+                }
+                if (count == 0)
+                    gui_printf (NULL, "  -");
+                gui_printf (NULL, "\n");
+                
+                /* display notify level for all buffers */
+                gui_printf (NULL, _("Notify levels:"));
+                for (ptr_buffer = gui_buffers; ptr_buffer;
+                     ptr_buffer = ptr_buffer->next_buffer)
+                {
+                    gui_printf (NULL, "  %d.%s:",
                                 ptr_buffer->number,
                                 (ptr_buffer->type == BUFFER_TYPE_DCC) ? "DCC" :
                                 ((ptr_buffer->type == BUFFER_TYPE_RAW_DATA) ? _("Raw IRC data") :
-                                 ((BUFFER_IS_SERVER(ptr_buffer)) ? SERVER(ptr_buffer)->name :
-                                  CHANNEL(ptr_buffer)->name)));
+                                 ((BUFFER_IS_SERVER(ptr_buffer) && SERVER(ptr_buffer)) ? SERVER(ptr_buffer)->name :
+                                  ((CHANNEL(ptr_buffer)) ? (CHANNEL(ptr_buffer)->name) : "-"))));
                     if ((!BUFFER_IS_CHANNEL(ptr_buffer))
                         && (!BUFFER_IS_PRIVATE(ptr_buffer)))
                         gui_printf (NULL, "-");
                     else
                         gui_printf (NULL, "%d", ptr_buffer->notify_level);
-                    if (ptr_buffer->next_buffer)
-                        gui_printf (NULL, "  ");
                 }
                 gui_printf (NULL, "\n");
             }
@@ -1194,28 +1216,47 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                         free_exploded_string (argv);
                         return -1;
                     }
-                    if ((!BUFFER_IS_CHANNEL(buffer))
-                        && (!BUFFER_IS_PRIVATE(buffer)))
+                    if (!SERVER(buffer)
+                        || ((!BUFFER_IS_SERVER(buffer))
+                            && (!BUFFER_IS_CHANNEL(buffer))
+                            && (!BUFFER_IS_PRIVATE(buffer))))
                     {
-                        /* invalid buffer type (only ok on channel or private) */
+                        /* invalid buffer type (only ok on server, channel or private) */
                         irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-                        gui_printf (NULL, _("%s incorrect buffer for notify (must be channel or private)\n"),
+                        gui_printf (NULL,
+                                    _("%s incorrect buffer for notify "
+                                      "(must be server, channel or private)\n"),
                                     WEECHAT_ERROR);
                         free_exploded_string (argv);
                         return -1;
                     }
-                    buffer->notify_level = number;
-                    channel_set_notify_level (SERVER(buffer),
-                                              CHANNEL(buffer),
-                                              number);
-                    irc_display_prefix (NULL, NULL, PREFIX_INFO);
-                    gui_printf (NULL, _("New notify level for %s%s%s: %s%d %s"),
-                                GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
-                                CHANNEL(buffer)->name,
-                                GUI_COLOR(COLOR_WIN_CHAT),
-                                GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
-                                number,
-                                GUI_COLOR(COLOR_WIN_CHAT));
+                    if (BUFFER_IS_SERVER(buffer))
+                    {
+                        server_set_default_notify_level (SERVER(buffer),
+                                                         number);
+                        irc_display_prefix (NULL, NULL, PREFIX_INFO);
+                        gui_printf (NULL, _("New default notify level for server %s%s%s: %s%d %s"),
+                                    GUI_COLOR(COLOR_WIN_CHAT_SERVER),
+                                    SERVER(buffer)->name,
+                                    GUI_COLOR(COLOR_WIN_CHAT),
+                                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                                    number,
+                                    GUI_COLOR(COLOR_WIN_CHAT));
+                    }
+                    else
+                    {
+                        channel_set_notify_level (SERVER(buffer),
+                                                  CHANNEL(buffer),
+                                                  number);
+                        irc_display_prefix (NULL, NULL, PREFIX_INFO);
+                        gui_printf (NULL, _("New notify level for %s%s%s: %s%d %s"),
+                                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                                    CHANNEL(buffer)->name,
+                                    GUI_COLOR(COLOR_WIN_CHAT),
+                                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                                    number,
+                                    GUI_COLOR(COLOR_WIN_CHAT));
+                    }
                     switch (number)
                     {
                         case 0:
@@ -1234,6 +1275,7 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                             gui_printf (NULL, "\n");
                             break;
                     }
+                    config_change_notify_levels ();
                 }
                 else
                 {
@@ -1353,9 +1395,9 @@ weechat_cmd_charset_display (t_gui_buffer *buffer)
     char *value, *string, *herited;
     int length;
     
-    if (BUFFER_IS_SERVER(buffer) ||
-        BUFFER_IS_CHANNEL(buffer) ||
-        BUFFER_IS_PRIVATE(buffer))
+    if ((BUFFER_IS_SERVER(buffer) && (SERVER(buffer)))
+         || BUFFER_IS_CHANNEL(buffer)
+         || BUFFER_IS_PRIVATE(buffer))
     {
         if (BUFFER_IS_SERVER(buffer))
         {
@@ -1504,11 +1546,14 @@ weechat_cmd_charset_set (t_gui_buffer *buffer, char **string, char *charset,
     }
     if (BUFFER_IS_SERVER(buffer))
     {
-        if (charset)
-            config_option_list_set (string, "server", charset);
-        else
-            config_option_list_remove (string, "server");
-        weechat_cmd_charset_display (buffer);
+        if (SERVER(buffer))
+        {
+            if (charset)
+                config_option_list_set (string, "server", charset);
+            else
+                config_option_list_remove (string, "server");
+            weechat_cmd_charset_display (buffer);
+        }
     }
     else if (BUFFER_IS_CHANNEL(buffer) ||
              BUFFER_IS_PRIVATE(buffer))

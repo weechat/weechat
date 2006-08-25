@@ -1235,7 +1235,7 @@
   <entry>string</entry>
   <entry>any string</entry>
   <entry>''</entry>
-  <entry>Comma separated list of notify levels for channels of this server (format: #channel:1,..)</entry>
+  <entry>Comma separated list of notify levels for channels of this server (format: #channel:1,..), a channel name '*' is reserved for server default notify level</entry>
 </row>
 <row>
   <entry><option>server_charset_decode_iso</option></entry>

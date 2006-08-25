@@ -21,14 +21,15 @@ arguments: arguments for command
 <programlisting>
 Puffer verwalten
 
- Aktion: Pufferaktion:
-   move: Puffer in der Liste bewegen (kann auch relativ sein, wie -1)
-  close: Puffer schließen (eine Part-Message kann optional angegeben werden)
-   list: alle offenen Puffer auflisten (Standardaktion)
- notify: Notify-Level für Puffer festlegen (0=nie, 1=bei hervorgehobenen Nachrichten, 2=1+persönliche Nachricht, 3=2+join/part)
-Server
-Channel: gehe zum Puffer mit Servernamen oder Channelnamen
- Nummer: gehe zu Puffer mit dieser Nummer
+ action: action to do:
+   move: move buffer in the list (may be relative, for example -1)
+  close: close buffer (optional arg is part message, for a channel)
+   list: list open buffers (no parameter implies this list)
+ notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)
+         (when executed on server buffer, this sets default notify level for whole server)
+server,
+channel: jump to buffer by server and/or channel name
+ number: jump to buffer by number
 
 </programlisting>
 <command>builtin  Befehl</command>

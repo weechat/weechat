@@ -1235,7 +1235,7 @@
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>
   <entry>''</entry>
-  <entry>Liste des niveaux de notifications (séparés par des virgules) pour les canaux de ce serveur (format: #canal:1,..)</entry>
+  <entry>Liste des niveaux de notifications (séparés par des virgules) pour les canaux de ce serveur (format: #canal:1,..), un nom de canal '*' est réservé pour la notification par défaut du serveur</entry>
 </row>
 <row>
   <entry><option>server_charset_decode_iso</option></entry>

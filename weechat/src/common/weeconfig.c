@@ -1026,7 +1026,9 @@ t_config_option weechat_options_server[] =
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
     NULL, NULL, &(cfg_server.autorejoin), NULL, NULL },
   { "server_notify_levels", N_("notify levels for channels of this server"),
-    N_("comma separated list of notify levels for channels of this server (format: #channel:1,..)"),
+    N_("comma separated list of notify levels for channels of this server "
+       "(format: #channel:1,..), a channel name '*' is reserved for server "
+       "default notify level"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "", NULL, NULL, &(cfg_server.notify_levels), config_change_notify_levels },
   { "server_charset_decode_iso", N_("charset for decoding ISO on server and channels"),

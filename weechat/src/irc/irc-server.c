@@ -1936,6 +1936,53 @@ server_set_away (t_irc_server *server, char *nick, int is_away)
 }
 
 /*
+ * server_get_default_notify_level: get default notify level for server
+ */
+
+int
+server_get_default_notify_level (t_irc_server *server)
+{
+    int notify, value;
+    char *pos;
+
+    notify = NOTIFY_LEVEL_DEFAULT;
+    
+    if (!server)
+        return notify;
+    
+    pos = strstr (server->notify_levels, "*:");
+    if (pos)
+    {
+        pos += 2;
+        if (pos[0])
+        {
+            value = (int)(pos[0] - '0');
+            if ((value >= NOTIFY_LEVEL_MIN) && (value <= NOTIFY_LEVEL_MAX))
+                notify = value;
+        }
+    }
+
+    return notify;
+}
+
+/*
+ * server_set_default_notify_level: set default notify level for server
+ */
+
+void
+server_set_default_notify_level (t_irc_server *server, int notify)
+{
+    char level_string[2];
+
+    if (server)
+    {
+        level_string[0] = notify + '0';
+        level_string[1] = '\0';
+        config_option_list_set (&(server->notify_levels), "*", level_string);
+    }
+}
+
+/*
  * server_print_log: print server infos in log (usually for crash dump)
  */
 

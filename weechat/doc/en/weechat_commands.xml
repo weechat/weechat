@@ -26,7 +26,8 @@ manage buffers
   close: close buffer (optional arg is part message, for a channel)
    list: list open buffers (no parameter implies this list)
  notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)
-server
+         (when executed on server buffer, this sets default notify level for whole server)
+server,
 channel: jump to buffer by server and/or channel name
  number: jump to buffer by number
 

@@ -488,7 +488,7 @@ int
 channel_get_notify_level (t_irc_server *server, t_irc_channel *channel)
 {
     char *name, *pos, *pos2;
-    int notify;
+    int server_default_notify, notify;
     
     if ((!server) || (!channel))
         return NOTIFY_LEVEL_DEFAULT;
@@ -496,26 +496,28 @@ channel_get_notify_level (t_irc_server *server, t_irc_channel *channel)
     if ((!server->notify_levels) || (!server->notify_levels[0]))
         return NOTIFY_LEVEL_DEFAULT;
     
+    server_default_notify = server_get_default_notify_level (server);
+    
     name = (char *) malloc (strlen (channel->name) + 2);
     strcpy (name, channel->name);
     strcat (name, ":");
     pos = strstr (server->notify_levels, name);
     free (name);
     if (!pos)
-        return NOTIFY_LEVEL_DEFAULT;
+        return server_default_notify;
     
     pos2 = pos + strlen (channel->name);
     if (pos2[0] != ':')
-        return NOTIFY_LEVEL_DEFAULT;
+        return server_default_notify;
     pos2++;
     if (!pos2[0])
-        return NOTIFY_LEVEL_DEFAULT;
+        return server_default_notify;
     
     notify = (int)(pos2[0] - '0');
-    if ((notify < NOTIFY_LEVEL_MIN) || (notify > NOTIFY_LEVEL_MAX))
-        return NOTIFY_LEVEL_DEFAULT;
-    else
+    if ((notify >= NOTIFY_LEVEL_MIN) && (notify <= NOTIFY_LEVEL_MAX))
         return notify;
+
+    return server_default_notify;
 }
 
 /*
@@ -530,14 +532,9 @@ channel_set_notify_level (t_irc_server *server, t_irc_channel *channel, int noti
     if ((!server) || (!channel))
         return;
     
-    if (notify == NOTIFY_LEVEL_DEFAULT)
-        config_option_list_remove (&(server->notify_levels), channel->name);
-    else
-    {
-        level_string[0] = notify + '0';
-        level_string[1] = '\0';
-        config_option_list_set (&(server->notify_levels), channel->name, level_string);
-    }
+    level_string[0] = notify + '0';
+    level_string[1] = '\0';
+    config_option_list_set (&(server->notify_levels), channel->name, level_string);
 }
 
 /*

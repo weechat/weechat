@@ -1,10 +1,14 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-08-22
+ChangeLog - 2006-08-25
 
 	
 Version 0.2.1 (under dev!):
+   * added server default notify level (set by /buffer notify on server buffer)
+     (task #5634)
+   * fixed crashs with /buffer and /charset commands when not connected to any
+     server (bug #17525)
    * added special vars $nick/$channel/$server for server_command, alias and
      plugin command handlers
    * added arguments $1,$2,..,$9 and $* for alias (task #5831)

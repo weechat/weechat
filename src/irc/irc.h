@@ -355,6 +355,8 @@ extern int server_name_already_exists (char *);
 extern void server_remove_away ();
 extern void server_check_away ();
 extern void server_set_away (t_irc_server *, char *, int);
+extern int server_get_default_notify_level (t_irc_server *);
+extern void server_set_default_notify_level (t_irc_server *, int);
 extern void server_print_log (t_irc_server *);
 
 /* proxy functions (irc-server.c) */
