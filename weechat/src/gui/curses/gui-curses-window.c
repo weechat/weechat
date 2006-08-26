@@ -168,7 +168,7 @@ gui_window_set_weechat_color (WINDOW *window, int num_color)
 int
 gui_window_calculate_pos_size (t_gui_window *window, int force_calculate)
 {
-    int max_length, max_height, lines;
+    int max_length, max_height, lines, width_used;
     int num_nicks, num_op, num_halfop, num_voice, num_normal;
     int add_right, add_left, add_top, add_bottom;
     
@@ -203,10 +203,12 @@ gui_window_calculate_pos_size (t_gui_window *window, int force_calculate)
         {
             nick_count (CHANNEL(window->buffer), &num_nicks, &num_op,
                         &num_halfop, &num_voice, &num_normal);
-            if (((max_length + 2) * num_nicks) % (window->win_width - add_left - add_right) == 0)
-                lines = ((max_length + 2) * num_nicks) / (window->win_width - add_left - add_right);
+            width_used = (window->win_width - add_left - add_right)
+                - ((window->win_width - add_left - add_right) % (max_length + 2));
+            if (((max_length + 2) * num_nicks) % width_used == 0)
+                lines = ((max_length + 2) * num_nicks) / width_used;
             else
-                lines = (((max_length + 2) * num_nicks) / (window->win_width - add_left - add_right)) + 1;
+                lines = (((max_length + 2) * num_nicks) / width_used) + 1;
             if ((cfg_look_nicklist_max_size > 0) && (lines > cfg_look_nicklist_max_size))
                 lines = cfg_look_nicklist_max_size;
             if ((cfg_look_nicklist_min_size > 0) && (lines < cfg_look_nicklist_min_size))

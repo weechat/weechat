@@ -5,6 +5,7 @@ ChangeLog - 2006-08-26
 
 	
 Version 0.2.1 (under dev!):
+   * fixed nicklist display bug when top/bottom (not enough lines) (bug #17537)
    * fixed bug with auto-rejoin of keyed chans (bug #17534)
    * added default nick completion when line starts with '//' (bug #17535)
    * values yes/no accepted (as on/off) for config boolean values (task #5454)
