@@ -1767,8 +1767,8 @@ weechat_lua_get_buffer_data  (lua_State *L)
 	server = lua_tostring (lua_current_interpreter, -1);
 	break;
     case 2:
-	channel  = lua_tostring (lua_current_interpreter, -2);
-	server = lua_tostring (lua_current_interpreter, -1);
+	server  = lua_tostring (lua_current_interpreter, -2);
+	channel = lua_tostring (lua_current_interpreter, -1);
 	break;
     default:
 	lua_plugin->print_server (lua_plugin,
@@ -1777,7 +1777,7 @@ weechat_lua_get_buffer_data  (lua_State *L)
 	lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
-    
+
     buffer_data = lua_plugin->get_buffer_data (lua_plugin, (char *) server, (char *) channel);
     if (!buffer_data)
     {

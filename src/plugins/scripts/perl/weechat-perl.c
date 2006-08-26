@@ -1531,6 +1531,8 @@ static XS (XS_weechat_get_buffer_data)
 	server = SvPV (ST (0), PL_na);
     if (items >= 2)
 	channel = SvPV (ST (1), PL_na);
+
+    SP -= items;
     
     buffer_data = perl_plugin->get_buffer_data (perl_plugin, server, channel);
     count = 0;
