@@ -3361,6 +3361,7 @@ irc_cmd_recv_324 (t_irc_server *server, char *host, char *nick, char *arguments)
                     else
                         ptr_channel->modes = (char *) malloc (strlen (pos_modes) + 1);
                     strcpy (ptr_channel->modes, pos_modes);
+                    irc_mode_channel_set (ptr_channel, pos_modes);
                 }
                 else
                 {
