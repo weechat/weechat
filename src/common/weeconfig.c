@@ -1348,9 +1348,11 @@ config_option_set_value (t_config_option *option, char *value)
     switch (option->option_type)
     {
         case OPTION_TYPE_BOOLEAN:
-            if (ascii_strcasecmp (value, "on") == 0)
+            if ((ascii_strcasecmp (value, "on") == 0)
+                || (ascii_strcasecmp (value, "yes") == 0))
                 *(option->ptr_int) = BOOL_TRUE;
-            else if (ascii_strcasecmp (value, "off") == 0)
+            else if ((ascii_strcasecmp (value, "off") == 0)
+                     || (ascii_strcasecmp (value, "no") == 0))
                 *(option->ptr_int) = BOOL_FALSE;
             else
                 return -1;

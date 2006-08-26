@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-08-25
+ChangeLog - 2006-08-26
 
 	
 Version 0.2.1 (under dev!):
+   * values yes/no accepted (as on/off) for config boolean values (task #5454)
    * added server default notify level (set by /buffer notify on server buffer)
      (task #5634)
    * fixed crashs with /buffer and /charset commands when not connected to any
