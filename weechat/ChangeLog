@@ -5,6 +5,8 @@ ChangeLog - 2006-08-26
 
 	
 Version 0.2.1 (under dev!):
+   * fixed bugs in get_buffer_data() which breaks the retrieval of buffer
+     content (perl, lua)
    * fixed nicklist display bug when top/bottom (not enough lines) (bug #17537)
    * fixed bug with auto-rejoin of keyed chans (bug #17534)
    * added default nick completion when line starts with '//' (bug #17535)

@@ -6664,7 +6664,7 @@ if bc then
     b, bdatas = next (bc, nil)
     weechat.print("**** buffer data for '" .. channel .. "'@'" .. server .. "' ****")
     while (b) do 
-        key, value = next (chaninfos, nil)
+        key, value = next (bdatas, nil)
         while (key) do
             weechat.print(" > " .. key .. " => " .. value)
             key, value = next (bdatas, key)
