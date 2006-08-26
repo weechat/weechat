@@ -875,7 +875,7 @@ completion_find_context (t_completion *completion, char *buffer, int size, int p
     
     /* look for context */
     completion_free (completion);
-    command = (buffer[0] == '/') ? 1 : 0;
+    command = ((buffer[0] == '/') && (buffer[1] != '/')) ? 1 : 0;
     command_arg = 0;
     i = 0;
     while (i < pos)

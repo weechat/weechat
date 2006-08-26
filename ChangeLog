@@ -5,6 +5,7 @@ ChangeLog - 2006-08-26
 
 	
 Version 0.2.1 (under dev!):
+   * added default nick completion when line starts with '//' (bug #17535)
    * values yes/no accepted (as on/off) for config boolean values (task #5454)
    * added server default notify level (set by /buffer notify on server buffer)
      (task #5634)
