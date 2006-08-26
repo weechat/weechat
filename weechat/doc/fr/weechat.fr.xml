@@ -6678,6 +6678,7 @@ if ($bf)
         {
             weechat::print(" > $key => $value");
         }
+        weechat::print("----------------------");
     }
 }
 else
@@ -6692,6 +6693,7 @@ if bf != None and bf != {}:
         weechat.prnt ("**** info pour tampon buffer no %d ****" % b)
         for c in bf[b]:
             weechat.prnt (" > %s => %s" % (c, bf[b][c]))
+        weechat.prnt ("----------------------")
 else:
     weechat.prnt ("**** pas d'info sur les tampons ****")
 
@@ -6703,6 +6705,7 @@ if bf != nil and bf != {}
         c.each do |key, value|
             Weechat.print(" > #{key} => #{value}")
         end
+        Weechat.print("----------------------")
     end
 else
     Weechat.print("**** pas d'info sur les tampons ****")
@@ -6719,6 +6722,7 @@ if bf then
             weechat.print(" > " .. key .. " => " .. value)
             key, value = next (binfos, key)
         end
+        weechat.print ("----------------------")
         b, infos = next (bf, b)
     end
 else
@@ -6766,12 +6770,12 @@ end
             Examples:
 <screen>
 # perl
-my $server = "freenode";
-my $channel = "#weechat";
+my $server = weechat::get_info("server");
+my $channel = weechat::get_info("channel");
 my @bc = weechat::get_buffer_data($server, $channel);
 if (@bc)
 {
-    weechat::print("**** buffer data for $channel@$server ****");
+    weechat::print("**** buffer data for '$channel'\@'$server' ****");
     foreach my $l (@bc) {
         while ( my ($key, $value) = each %$l) {
             weechat::print(" > $key => $value");
@@ -6785,11 +6789,11 @@ else
 }
 
 # python
-server = "freenode"
-channel = "#weechat"
+server = weechat.get_info("server")
+channel = weechat.get_info("channel")
 bc = weechat.get_buffer_data(server, channel)
 if bc != None and bc != []:
-    weechat.prnt ("**** buffer data for %s@%s ****" % (channel, server))
+    weechat.prnt ("**** buffer data for '%s'@'%s' ****" % (channel, server))
     for l in bc:
         for i in l:
             weechat.prnt (" > %s => %s" % (i, l[i]))
@@ -6798,11 +6802,11 @@ else:
     weechat.prnt ("**** no buffer data ****")
 
 # ruby
-server = "freenode"
-channel = "#weechat"
+server = Weechat.get_info("server")
+channel = Weechat.get_info("channel")
 bc = Weechat.get_buffer_data(server, channel)
 if bc != nil and bc != []   
-    Weechat.print("**** buffer data for #{channel}@#{server} ****")
+    Weechat.print("**** buffer data for '#{channel}'@'#{server}' ****")
     bc.each do |l|
         l.each do |key, value|
             Weechat.print(" > #{key} => #{value}")
@@ -6814,12 +6818,12 @@ else
 end
 
 -- lua
-server = "freenode"
-channel = "#weechat"
+server = weechat.get_info("server")
+channel = weechat.get_info("channel")
 bc = weechat.get_buffer_data(server, channel)
 if bc then
     b, bdatas = next (bc, nil)
-    weechat.print("**** buffer data for " .. channel .. "@" .. server .. " ****")
+    weechat.print("**** buffer data for '" .. channel .. "'@'" .. server .. "' ****")
     while (b) do 
         key, value = next (chaninfos, nil)
         while (key) do
