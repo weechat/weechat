@@ -118,8 +118,8 @@ completion_get_command_infos (t_completion *completion,
                               char **template, int *max_arg)
 {
     t_weechat_alias *ptr_alias;
-    char *ptr_command;
-    int i;
+    char *ptr_command, *pos;
+    int i, length;
 #ifdef PLUGINS
     t_weechat_plugin *ptr_plugin;
     t_plugin_handler *ptr_handler;
@@ -137,6 +137,12 @@ completion_get_command_infos (t_completion *completion,
     }
     else
         ptr_command = completion->base_command;
+
+    pos = strchr (ptr_command, ' ');
+    if (pos)
+        length = pos - ptr_command;
+    else
+        length = strlen (ptr_command);
     
 #ifdef PLUGINS
     /* look for plugin command handler */
@@ -147,8 +153,8 @@ completion_get_command_infos (t_completion *completion,
              ptr_handler; ptr_handler = ptr_handler->next_handler)
         {
             if ((ptr_handler->type == HANDLER_COMMAND)
-                && (ascii_strcasecmp (ptr_handler->command,
-                                      ptr_command) == 0))
+                && (ascii_strncasecmp (ptr_handler->command,
+                                       ptr_command, length) == 0))
             {
                 *template = ptr_handler->completion_template;
                 *max_arg = MAX_ARGS;
@@ -161,8 +167,8 @@ completion_get_command_infos (t_completion *completion,
     /* look for WeeChat internal command */
     for (i = 0; weechat_commands[i].command_name; i++)
     {
-        if (ascii_strcasecmp (weechat_commands[i].command_name,
-                              ptr_command) == 0)
+        if (ascii_strncasecmp (weechat_commands[i].command_name,
+                               ptr_command, length) == 0)
         {
             *template = weechat_commands[i].completion_template;
             *max_arg = weechat_commands[i].max_arg;
@@ -174,8 +180,8 @@ completion_get_command_infos (t_completion *completion,
     for (i = 0; irc_commands[i].command_name; i++)
     {
         if ((irc_commands[i].cmd_function_args || irc_commands[i].cmd_function_1arg)
-            && (ascii_strcasecmp (irc_commands[i].command_name,
-                                  ptr_command) == 0))
+            && (ascii_strncasecmp (irc_commands[i].command_name,
+                                   ptr_command, length) == 0))
         {
             *template = irc_commands[i].completion_template;
             *max_arg = irc_commands[i].max_arg;
