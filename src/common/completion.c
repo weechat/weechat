@@ -119,7 +119,7 @@ completion_get_command_infos (t_completion *completion,
 {
     t_weechat_alias *ptr_alias;
     char *ptr_command, *ptr_command2, *pos;
-    int i, length;
+    int i;
 #ifdef PLUGINS
     t_weechat_plugin *ptr_plugin;
     t_plugin_handler *ptr_handler;
