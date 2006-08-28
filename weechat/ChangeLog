@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-08-26
+ChangeLog - 2006-08-28
 
 	
 Version 0.2.1 (under dev!):
+   * fixed bug with CTCP VERSION sent on channels (bug #17547)
+   * added current channel completion for /ctcp command
    * fixed bugs in get_buffer_data() which breaks the retrieval of buffer
      content (perl, lua)
    * fixed nicklist display bug when top/bottom (not enough lines) (bug #17537)

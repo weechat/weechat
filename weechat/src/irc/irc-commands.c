@@ -54,11 +54,11 @@ t_irc_command irc_commands[] =
        "nickname: user or host to ban"),
     "%N", 0, MAX_ARGS, 0, 1, NULL, irc_cmd_send_ban, NULL },
   { "ctcp", N_("send a CTCP message (Client-To-Client Protocol)"),
-    N_("nickname type [arguments]"),
-    N_(" nickname: user to send CTCP to\n"
+    N_("receiver type [arguments]"),
+    N_(" receiver: nick or channel to send CTCP to\n"
        "     type: CTCP type (examples: \"version\", \"ping\", ..)\n"
        "arguments: arguments for CTCP"),
-    "%n action|ping|version", 2, MAX_ARGS, 1, 1, NULL, irc_cmd_send_ctcp, NULL },
+    "%c|%n action|ping|version", 2, MAX_ARGS, 1, 1, NULL, irc_cmd_send_ctcp, NULL },
   { "cycle", N_("leave and rejoin a channel"),
     N_("[channel[,channel]] [part_message]"),
     N_("     channel: channel name for cycle\n"

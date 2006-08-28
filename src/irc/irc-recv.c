@@ -1211,6 +1211,73 @@ irc_cmd_recv_pong (t_irc_server *server, char *host, char *nick, char *arguments
 }
 
 /*
+ * irc_cmd_reply_version: send version in reply to "CTCP VERSION" request
+ */
+
+void
+irc_cmd_reply_version (t_irc_server *server, t_irc_channel *channel,
+                       char *host, char *nick, char *message)
+{
+    char *pos;
+    struct utsname *buf;
+    t_gui_buffer *ptr_buffer;
+
+    ptr_buffer = (channel) ? channel->buffer : server->buffer;
+    
+    command_ignored |= ignore_check (host, "ctcp", NULL, server->name);
+    if (!command_ignored)
+    {
+        pos = strchr (message, ' ');
+        if (pos)
+        {
+            while (pos[0] == ' ')
+                pos++;
+            if (pos[0] == '\01')
+                pos = NULL;
+            else if (!pos[0])
+                pos = NULL;
+        }
+        
+        buf = (struct utsname *) malloc (sizeof (struct utsname));
+        if (buf && (uname (buf) >= 0))
+        {
+            server_sendf (server,
+                          "NOTICE %s :%sVERSION %s v%s"
+                          " compiled on %s, running "
+                          "%s %s / %s%s",
+                          nick, "\01", PACKAGE_NAME, PACKAGE_VERSION, __DATE__,
+                          &buf->sysname,
+                          &buf->release, &buf->machine, "\01\r\n");
+            free (buf);
+        }
+        else
+            server_sendf (server,
+                          "NOTICE %s :%sVERSION %s v%s"
+                          " compiled on %s%s",
+                          nick, "\01", PACKAGE_NAME, PACKAGE_VERSION, __DATE__,
+                          "\01\r\n");
+        irc_display_prefix (server, ptr_buffer, PREFIX_SERVER);
+        gui_printf (ptr_buffer,
+                    _("CTCP %sVERSION%s received from %s%s"),
+                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                    GUI_COLOR(COLOR_WIN_CHAT),
+                    GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                    nick);
+        if (pos)
+            gui_printf (ptr_buffer, "%s: %s\n",
+                        GUI_COLOR(COLOR_WIN_CHAT),
+                        pos);
+        else
+            gui_printf (ptr_buffer, "\n");
+#ifdef PLUGINS
+        (void) plugin_msg_handler_exec (server->name,
+                                        "weechat_ctcp",
+                                        irc_last_command_received);
+#endif
+    }
+}
+
+/*
  * irc_cmd_recv_privmsg: 'privmsg' command received
  */
 
@@ -1221,7 +1288,6 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
     char *pos_file, *pos_addr, *pos_port, *pos_size, *pos_start_resume;  /* for DCC */
     t_irc_channel *ptr_channel;
     t_irc_nick *ptr_nick;
-    struct utsname *buf;
     int highlight;
     
     /* no host => we can't identify sender of message! */
@@ -1350,6 +1416,11 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                                 nick);
                     return 0;
                 }
+                if (strncmp (pos, "\01VERSION", 8) == 0)
+                {
+                    irc_cmd_reply_version (server, ptr_channel, host, nick, pos);
+                    return 0;
+                }
                 
                 /* unknown CTCP ? */
                 pos2 = strchr (pos + 1, '\01');
@@ -1451,57 +1522,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
             /* version asked by another user => answer with WeeChat version */
             if (strncmp (pos, "\01VERSION", 8) == 0)
             {
-                command_ignored |= ignore_check (host, "ctcp", NULL, server->name);
-                if (!command_ignored)
-                {
-                    pos2 = strchr (pos + 8, ' ');
-                    if (pos2)
-                    {
-                        while (pos2[0] == ' ')
-                            pos2++;
-                        if (pos2[0] == '\01')
-                            pos2 = NULL;
-                        else if (!pos2[0])
-                            pos2 = NULL;
-                    }
-                    
-                    buf = (struct utsname *) malloc (sizeof (struct utsname));
-                    if (buf && (uname (buf) >= 0))
-                    {
-                        server_sendf (server,
-                                      "NOTICE %s :%sVERSION %s v%s"
-                                      " compiled on %s, running "
-                                      "%s %s / %s%s",
-                                      nick, "\01", PACKAGE_NAME, PACKAGE_VERSION, __DATE__,
-                                      &buf->sysname,
-                                      &buf->release, &buf->machine, "\01\r\n");
-                        free (buf);
-                    }
-                    else
-                        server_sendf (server,
-                                      "NOTICE %s :%sVERSION %s v%s"
-                                      " compiled on %s%s",
-                                      nick, "\01", PACKAGE_NAME, PACKAGE_VERSION, __DATE__,
-                                      "\01\r\n");
-                    irc_display_prefix (server, server->buffer, PREFIX_SERVER);
-                    gui_printf (server->buffer,
-                                _("CTCP %sVERSION%s received from %s%s"),
-                                GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
-                                GUI_COLOR(COLOR_WIN_CHAT),
-                                GUI_COLOR(COLOR_WIN_CHAT_NICK),
-                                nick);
-                    if (pos2)
-                        gui_printf (server->buffer, "%s: %s\n",
-                                    GUI_COLOR(COLOR_WIN_CHAT),
-                                    pos2);
-                    else
-                        gui_printf (server->buffer, "\n");
-#ifdef PLUGINS
-                    (void) plugin_msg_handler_exec (server->name,
-                                                    "weechat_ctcp",
-                                                    irc_last_command_received);
-#endif
-                }
+                irc_cmd_reply_version (server, NULL, host, nick, pos);
                 return 0;
             }
             
