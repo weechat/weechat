@@ -1466,38 +1466,38 @@ if (argv != NULL)
           <title>mkdir_home</title>
           
           <para>
-            Prototype:
+            Prototyp:
             <command>
               int mkdir_home (t_weechat_plugin *plugin, char *directory)
             </command>
           </para>
           <para>
-            Create a directory in WeeChat home.
+            Erzeugt ein Verzeichnis im WeeChat-Verzeichnis.
           </para>
           <para>
-            Arguments:
+            Argumente:
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>plugin</option>: pointer to plugin structure
+                  <option>plugin</option>: Zeiger auf Pluginstrukur
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>directory</option>: directory to create
+                  <option>directory</option>: Verzeichnis, das erzeugt werden soll
                 </para>
               </listitem>
             </itemizedlist>
           </para>
           <para>
-            Return value: 1 if directory was successfully created, 0 if an
-            error occurred.
+            Rückgabewert: 1 wenn das Verzeichnis erfolgreich erstellt wurde, 0 wenn ein
+            Fehler aufgetreten ist.
           </para>
           <para>
-            Example:
+            Beispiel:
 <screen>
 if (!plugin->mkdir_home (plugin, "temp"))
-    plugin->print_server(plugin, "Failed to create 'temp' directory in WeeChat home.");
+    plugin->print_server(plugin, "Konnte 'temp'-Verzeichnis im WeeChat-Verzeichnis nicht erstellen.");
 </screen>
           </para>
         </section>
@@ -3572,26 +3572,26 @@ plugin->set_plugin_config (plugin, "my_var", "value");
             </command>
           </para>
           <para>
-            Get IRC color index with name.
+            Hole IRC-Farbindex mit dem Farbnamen.
           </para>
           <para>
-            Arguments:
+            Argumente:
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>plugin</option>: pointer to plugin structure
+                  <option>plugin</option>: Zeiger auf die Pluginstruktur
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>color_name</option>: color name
-                  Allowed colors are:
+                  <option>color_name</option>: Farbname
+                  Folgende Farben sind erlaubt:
                   <informaltable colsep="0" frame="none">
                     <tgroup cols="2">
                       <thead>
                         <row>
-                          <entry>Color name</entry>
-                          <entry>Value</entry>
+                          <entry>Farbname</entry>
+                          <entry>Wert</entry>
                         </row>
                       </thead>
                       <tbody>
@@ -3667,10 +3667,10 @@ plugin->set_plugin_config (plugin, "my_var", "value");
             </itemizedlist>
           </para>
           <para>
-            Return value: IRC color index, -1 if color is not found.
+            Rückgabewert: IRC-Farbindex, -1 wenn die Farbe nicht gefunden wurde.
           </para>
           <para>
-            Example:
+            Beispiel:
 <screen>
 int color_blue = plugin->get_irc_color (plugin, "blue"); /* return 2 */
 </screen>
@@ -3681,49 +3681,48 @@ int color_blue = plugin->get_irc_color (plugin, "blue"); /* return 2 */
           <title>input_color</title>
           
           <para>
-            Prototype:
+            Prototyp:
             <command>
               void input_color (t_weechat_plugin *plugin,
               int color, int start, int length)
             </command>
           </para>
           <para>
-            Add color in input buffer.
+            Erzeugt einen Farbcode im Eingabepuffer.
           </para>
           <para>
-            Arguments:
+            Argumente:
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>plugin</option>: pointer to plugin structure
+                  <option>plugin</option>: Zeiger auf die Pluginstruktur
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>color</option>: color for text (if &lt; 0, then input
-                  buffer is refresh, and there's no change in input buffer
-                  content)
+                  <option>color</option>: Textfarbe (wenn der Wert &lt; 0 ist, dann wird der
+                  Eingabepuffer aufgefrischt und nicht verändert)
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>start</option>: start position for color (if &lt; 0,
-                  then mask is reinitialized)
+                  <option>start</option>: Startposition für Einfärbung (wenn der Wert &lt; 0 ist,
+                  wird die Maske neu initialisiert)
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>length</option>: length for color (if &lt;= 0,
-                  then mask is reinitialized)
+                  <option>length</option>: Länge der Einfärbung (wenn der Wert &lt;= 0 ist,
+                  wird die Maske neu initialisiert)
                 </para>
               </listitem>
             </itemizedlist>
           </para>
           <para>
-            Return value: none.
+            Rückgabewert: keiner.
           </para>
           <para>
-            Example:
+            Beispiele:
 <screen>
 plugin->input_color (plugin, plugin->get_irc_color (plugin, "blue"), 10, 5);
 </screen>
@@ -3740,82 +3739,82 @@ plugin->input_color (plugin, plugin->get_irc_color (plugin, "blue"), 10, 5);
             </command>
           </para>
           <para>
-            Return list of WeeChat windows.
+            Gibt die Liste der WeeChat-Fenster zurück.
           </para>
           <para>
-            Arguments:
+            Argumente:
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>plugin</option>: pointer to plugin structure
+                  <option>plugin</option>: Zeiger auf Pluginstruktur
                 </para>
               </listitem>
             </itemizedlist>
           </para>
           <para>
-            Return value: linked list of WeeChat windows.
+            Rückgabewert: verkettete Liste der WeeChat-Fenster.
             <informaltable colsep="0" frame="none">
               <tgroup cols="2">
                 <thead>
                   <row>
-                    <entry>Type</entry>
-                    <entry>Field</entry>
-                    <entry>Description</entry>
+                    <entry>Typ</entry>
+                    <entry>Feld</entry>
+                    <entry>Beschreibung</entry>
                   </row>
                 </thead>
                 <tbody>
                   <row>
                     <entry>int</entry>
                     <entry><literal>win_x</literal></entry>
-                    <entry>horizontal position of window</entry>
+                    <entry>horizontale Fensterposition</entry>
                   </row>
                   <row>
                     <entry>int</entry>
                     <entry><literal>win_y</literal></entry>
-                    <entry>vertical position of window</entry>
+                    <entry>vertikale Fensterposition</entry>
                   </row>
                   <row>
                     <entry>int</entry>
                     <entry><literal>win_width</literal></entry>
-                    <entry>width of window</entry>
+                    <entry>Fensterbreite</entry>
                   </row>
                   <row>
                     <entry>int</entry>
                     <entry><literal>win_height</literal></entry>
-                    <entry>height of window</entry>
+                    <entry>Fensterhöhe</entry>
                   </row>
                   <row>
                     <entry>int</entry>
                     <entry><literal>win_width_pct</literal></entry>
-                    <entry>width % (compared to parent window)</entry>
+                    <entry>Breite in % (im Vergleich zum übergeordneten Fenster)</entry>
                   </row>
                   <row>
                     <entry>int</entry>
                     <entry><literal>win_height_pct</literal></entry>
-                    <entry>height % (compared to parent window)</entry>
+		    <entry>Höhe % (im Vergleich zum übergeordneten Fenster)</entry>
                   </row>
                   <row>
                     <entry>int</entry>
                     <entry><literal>num_buffer</literal></entry>
-                    <entry>number of displayed buffer</entry>
+                    <entry>Anzahl der angezeigten Puffer</entry>
                   </row>
                   <row>
                     <entry>t_plugin_window_info *</entry>
                     <entry><literal>prev_window</literal></entry>
-                    <entry>pointer to previous window info</entry>
+                    <entry>Zeiger auf die Informationen des vorhergehenden Fensters</entry>
                   </row>
                   <row>
                     <entry>t_plugin_window_info *</entry>
                     <entry><literal>next_window</literal></entry>
-                    <entry>pointer to next window info</entry>
+		    <entry>Zeiger auf die Informationen des nächsten Fensters</entry>
                   </row>
                 </tbody>
               </tgroup>
             </informaltable>
           </para>
           <para>
-            Note: result has to be free by a call to "free_window_info"
-            function after use.
+            Anmerkung: Das Ergebnis muss nach Benutzung durch einen Aufruf der
+            "free_window_info"-Funktion gelöscht werden.
           </para>
           <para>
             Example:
@@ -3846,36 +3845,36 @@ else
           <title>free_window_info</title>
           
           <para>
-            Prototype:
+            Prototyp:
             <command>
               void free_window_info (t_weechat_plugin *plugin,
               t_plugin_window_info *window_info)
             </command>
           </para>
           <para>
-            Free memory used by window info list.
+            Gibt den Speicher wieder frei, der von der Fenster-Informationsliste belegt wird.
           </para>
           <para>
-            Arguments:
+            Argumente:
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>plugin</option>: pointer to plugin structure
+                  <option>plugin</option>: Zeiger auf Pluginstruktur
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>window_info</option>: pointer to window info list
-                  returned by "get_window_info" function
+                  <option>window_info</option>: Zeiger auf Fenster-Informationsliste, 
+                  der von der "get_window_info"-Funktion zurückgegeben wurde
                 </para>
               </listitem>
             </itemizedlist>
           </para>
           <para>
-            Return value: none.
+            Rückgabewert: keiner.
           </para>
           <para>
-            Example:
+            Beispiel:
             <screen>plugin->free_window_info (plugin, window_info);</screen>
           </para>
         </section>
@@ -3884,91 +3883,91 @@ else
           <title>get_buffer_info</title>
           
           <para>
-            Prototype:
+            Prototyp:
             <command>
               t_plugin_buffer_info *get_buffer_info (t_weechat_plugin *plugin)
             </command>
           </para>
           <para>
-            Return list of WeeChat buffers.
+            Gibt eine Liste der WeeChat-Puffer zurück.
           </para>
           <para>
-            Arguments:
+            Argumente:
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>plugin</option>: pointer to plugin structure
+                  <option>plugin</option>: Zeiger auf Pluginstruktur
                 </para>
               </listitem>
             </itemizedlist>
           </para>
           <para>
-            Return value: linked list of WeeChat buffers.
+            Rückgabewert: verkettete Liste der WeeChat-Puffer.
             <informaltable colsep="0" frame="none">
               <tgroup cols="2">
                 <thead>
                   <row>
-                    <entry>Type</entry>
-                    <entry>Field</entry>
-                    <entry>Description</entry>
+                    <entry>Typ</entry>
+                    <entry>Feld</entry>
+                    <entry>Beschreibung</entry>
                   </row>
                 </thead>
                 <tbody>
                   <row>
                     <entry>int</entry>
                     <entry><literal>type</literal></entry>
-                    <entry>buffer type: 0=standard, 1=dcc, 2=raw IRC data</entry>
+                    <entry>Puffertyp: 0=standard, 1=dcc, 2=raw IRC data</entry>
                   </row>
                   <row>
                     <entry>int</entry>
                     <entry><literal>number</literal></entry>
-                    <entry>buffer number</entry>
+                    <entry>Puffer-Nummer</entry>
                   </row>
                   <row>
                     <entry>int</entry>
                     <entry><literal>num_displayed</literal></entry>
-                    <entry>number of windows displaying buffer</entry>
+                    <entry>Anzahl der Fenster im Puffer</entry>
                   </row>
                   <row>
                     <entry>char *</entry>
                     <entry><literal>server_name</literal></entry>
-                    <entry>server name for buffer (may be NULL)</entry>
+                    <entry>Servername für den Puffer (kann NULL sein)</entry>
                   </row>
                   <row>
                     <entry>char *</entry>
                     <entry><literal>channel_name</literal></entry>
-                    <entry>channel name for buffer (may be NULL)</entry>
+                    <entry>Channelname für den Puffer (kann NULL sein)</entry>
                   </row>
                   <row>
                     <entry>int</entry>
                     <entry><literal>notify_level</literal></entry>
-                    <entry>notify level for buffer</entry>
+                    <entry>Benachrichtigungslevel für den Puffer</entry>
                   </row>
                   <row>
                     <entry>char *</entry>
                     <entry><literal>log_filename</literal></entry>
-                    <entry>log filename (NULL means not logging)</entry>
+                    <entry>Name der Logdatei (NULL bedeutet, dass nichts geloggt wird)</entry>
                   </row>
                   <row>
                     <entry>t_plugin_buffer_info *</entry>
                     <entry><literal>prev_buffer</literal></entry>
-                    <entry>pointer to previous buffer info</entry>
+                    <entry>Zeiger auf die vorhergehenden Pufferinformationen</entry>
                   </row>
                   <row>
                     <entry>t_plugin_buffer_info *</entry>
                     <entry><literal>next_buffer</literal></entry>
-                    <entry>pointer to next buffer info</entry>
+		    <entry>Zeiger auf die nächsten Pufferinformationen</entry>
                   </row>
                 </tbody>
               </tgroup>
             </informaltable>
           </para>
           <para>
-            Note: result has to be free by a call to "free_buffer_info"
-            function after use.
+            Bemerkung: Das Ergebnis muss nach der Auswertung mit der "free_buffer_info"-Funktion 
+            wieder gelöscht werden.
           </para>
           <para>
-            Example:
+            Beispiel:
 <screen>
 t_plugin_buffer_info *buffer_info, *ptr_buffer;
 
@@ -3998,21 +3997,21 @@ else
           <title>free_buffer_info</title>
           
           <para>
-            Prototype:
+            Prototyp:
             <command>
               void free_buffer_info (t_weechat_plugin *plugin,
               t_plugin_buffer_info *buffer_info)
             </command>
           </para>
           <para>
-            Free memory used by buffer info list.
+            Gibt den Speicher frei, der von der Puffer-Informationsliste belegt wird.
           </para>
           <para>
-            Arguments:
+            Argumente:
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>plugin</option>: pointer to plugin structure
+                  <option>plugin</option>: Zeiger auf Pluginstruktur
                 </para>
               </listitem>
               <listitem>
@@ -4024,10 +4023,10 @@ else
             </itemizedlist>
           </para>
           <para>
-            Return value: none.
+            Rückgabewert: keiner.
           </para>
           <para>
-            Example:
+            Beispiel:
             <screen>plugin->free_buffer_info (plugin, buffer_info);</screen>
           </para>
         </section>
@@ -4043,67 +4042,67 @@ else
             </command>
           </para>
           <para>
-            Return content of buffer.
+            Gibt den Inhalt des Puffers zurück.
           </para>
           <para>
-            Arguments:
+            Argumente:
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>plugin</option>: pointer to plugin structure
+                  <option>plugin</option>: Zeiger auf Pluginstruktur
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>server</option>: internal name of server
+                  <option>server</option>: interner Name des Servers
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>channel</option>: channel name
+                  <option>channel</option>: Channelname
                 </para>
               </listitem>
             </itemizedlist>
           </para>
           <para>
-            Return value: buffer content (linked list of lines).
+            Rückgabewert: Pufferinhalt (verkettete Liste mit den Zeilen).
             <informaltable colsep="0" frame="none">
               <tgroup cols="2">
                 <thead>
                   <row>
-                    <entry>Type</entry>
-                    <entry>Field</entry>
-                    <entry>Description</entry>
+                    <entry>Typ</entry>
+                    <entry>Feld</entry>
+                    <entry>Beschreibung</entry>
                   </row>
                 </thead>
                 <tbody>
                   <row>
                     <entry>char *</entry>
                     <entry><literal>nick</literal></entry>
-                    <entry>nick</entry>
+                    <entry>Nick</entry>
                   </row>
                   <row>
                     <entry>char *</entry>
                     <entry><literal>data</literal></entry>
-                    <entry>line content (color codes are removed)</entry>
+                    <entry>Zeileninhalt (Farbcodes wurden entfernt)</entry>
                   </row>
                   <row>
                     <entry>t_plugin_buffer_line *</entry>
                     <entry><literal>prev_line</literal></entry>
-                    <entry>pointer to previous line</entry>
+                    <entry>Zeiger auf die vorherige Zeile</entry>
                   </row>
                   <row>
                     <entry>t_plugin_buffer_line *</entry>
                     <entry><literal>next_line</literal></entry>
-                    <entry>pointer to next line</entry>
+		    <entry>Zeiger auf die nächste Zeile</entry>
                   </row>
                 </tbody>
               </tgroup>
             </informaltable>
           </para>
           <para>
-            Note: result has to be free by a call to "free_buffer_data"
-            function after use.
+            Bemerkung: Das Ergebnis muss nach der Auswertung mit der "free_buffer_data"-Funktion
+            wieder gelöscht werden.
           </para>
           <para>
             Example:
@@ -4134,29 +4133,29 @@ if (buffer_line)
             </command>
           </para>
           <para>
-            Free memory used by buffer line list.
+            Gibt den Speicher frei, der von den Pufferzeilen belegt wurde.
           </para>
           <para>
             Arguments:
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>plugin</option>: pointer to plugin structure
+                  <option>plugin</option>: Zeiger auf Pluginstruktur
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>buffer_line</option>: pointer to buffer line list
-                  returned by "get_buffer_data" function
+                  <option>buffer_line</option>: Zeiger auf Pufferzeilen, der
+                  von der "get_buffer_data"-Funktion zurückgegeben wurde
                 </para>
               </listitem>
             </itemizedlist>
           </para>
           <para>
-            Return value: none.
+            Rückgabewert: keiner.
           </para>
           <para>
-            Example:
+            Beispiele:
             <screen>plugin->free_buffer_data (plugin, buffer_line);</screen>
           </para>
         </section>
@@ -6269,38 +6268,38 @@ weechat.set_plugin_config("my_var", "value")
           <title>get_irc_color</title>
           
           <para>
-            Perl prototype:
+            Perl-Prototyp:
             <command>
               weechat::get_irc_color(color);
             </command>
           </para>
           <para>
-            Python prototype:
+            Python-Prototyp:
             <command>
               weechat.get_irc_color(color)
             </command>
           </para>
           <para>
-            Ruby prototype:
+            Ruby-Prototyp:
             <command>
               Weechat.get_irc_color(color)
             </command>
           </para>
           <para>
-            Lua prototype:
+            Lua-Prototyp:
             <command>
               weechat.get_irc_color(color)
             </command>
           </para>
           <para>
-            Return IRC color index with name.
+            Hole IRC-Farbindex mit dem Farbnamen.
           </para>
           <para>
-            Return value: IRC color index, -1 if color is not found
-            (see <xref linkend="secAPI_get_irc_color" />).
+            Rückgabewert: IRC-Farbindex, -1 wenn die Farbe nicht gefunden wurde
+            (siehe <xref linkend="secAPI_get_irc_color" />).
           </para>
           <para>
-            Examples:
+            Beispiele:
 <screen>
 # perl
 my $color_blue = weechat::get_irc_color("blue");
@@ -6321,37 +6320,37 @@ color_blue = weechat.get_irc_color("blue")
           <title>input_color</title>
           
           <para>
-            Perl prototype:
+            Perl-Prototyp:
             <command>
               weechat::input_color(color);
             </command>
           </para>
           <para>
-            Python prototype:
+            Python-Prototyp:
             <command>
               weechat.input_color(color)
             </command>
           </para>
           <para>
-            Ruby prototype:
+            Ruby-Prototyp:
             <command>
               Weechat.input_color(color)
             </command>
           </para>
           <para>
-            Lua prototype:
+            Lua-Prototyp:
             <command>
               weechat.input_color(color)
             </command>
           </para>
           <para>
-            Add color in input buffer.
+            Erzeugt einen Farbcode im Eingabepuffer.Add color in input buffer.
           </para>
           <para>
-            Return value: none.
+            Rückgabewert: keiner.
           </para>
           <para>
-            Examples:
+            Bespiele:
 <screen>
 # perl
 weechat::input_color(weechat::get_irc_color("blue"), 10, 5);
@@ -6372,44 +6371,44 @@ weechat.input_color(weechat.get_irc_color("blue"), 10, 5)
           <title>get_window_info</title>
           
           <para>
-            Perl prototype:
+            Perl-Prototyp:
             <command>
               weechat::get_window_info();
             </command>
           </para>
           <para>
-            Python prototype:
+            Python-Prototyp:
             <command>
               weechat.get_window_info()
             </command>
           </para>
           <para>
-            Ruby prototype:
+            Ruby-Prototyp:
             <command>
               Weechat.get_window_info()
             </command>
           </para>
           <para>
-            Lua prototype:
+            Lua-Prototyp:
             <command>
               weechat.get_window_info()
             </command>
           </para>
           <para>
-            Return list of WeeChat windows.
+            Gibt die Liste der WeeChat-Fenster zurück.
           </para>
           <para>
-            Return value: list of WeeChat windows
+            Rückgabewert: List der WeeChat-Fenster
             (see <xref linkend="secAPI_get_window_info" />).
           </para>
           <para>
-            Examples:
+            Besipiele:
 <screen>
 # perl
 my @wf = weechat::get_window_info();
 if (@wf)
 {
-    weechat::print("**** windows infos ****");
+    weechat::print("**** Fenster-Informationen ****");
     foreach my $w (@wf)
     {
         while ( my ($key, $value) = each %$w)
@@ -6421,24 +6420,24 @@ if (@wf)
 }
 else
 {
-    weechat::print("**** no window info ****");
+    weechat::print("**** Keine Fenster-Informationen ****");
 }
 
 # python
 wf = weechat.get_window_info()
 if wf != None and wf != []:
-    weechat.prnt ("**** windows infos ****")
+    weechat.prnt ("**** Fenster-Informationen ****")
     for w in wf:
         for i in w:
             weechat.prnt (" > %s => %s" % (i, w[i]))
         weechat.prnt ("----------------------")
 else:
-    weechat.prnt ("**** no window info ****")
+    weechat.prnt ("**** Keine Fenster-Informationen ****")
 
 # ruby
 wf = Weechat.get_window_info()
 if wf != nil and wf != []   
-    Weechat.print("**** windows infos ****")
+    Weechat.print("**** Fenster-Informationen ****")
     wf.each do |w|
         w.each do |key, value|
             Weechat.print(" > #{key} => #{value}")
@@ -6446,13 +6445,13 @@ if wf != nil and wf != []
         Weechat.print("----------------------")
     end
 else
-    Weechat.print("**** no window info ****")
+    Weechat.print("**** Keine Fenster-Informationen ****")
 end
 
 -- lua
 wf = weechat.get_window_info()
 if wf then
-    weechat.print ("**** windows infos ****")
+    weechat.print ("**** Fenster-Informationen ****")
     w, winfos = next (wf, nil)
     while (w) do
         key, value = next (winfos, nil)
@@ -6464,7 +6463,7 @@ if wf then
         w, winfos = next (wf, w)
     end
 else
-    weechat.print("**** no window info ****")
+    weechat.print("**** Keine Fenster-Informationen ****")
 end
 </screen>
           </para>
@@ -6474,38 +6473,38 @@ end
           <title>get_buffer_info</title>
           
           <para>
-            Perl prototype:
+            Perl-Prototyp:
             <command>
               weechat::get_buffer_info();
             </command>
           </para>
           <para>
-            Python prototype:
+            Python-Prototyp:
             <command>
               weechat.get_buffer_info()
             </command>
           </para>
           <para>
-            Ruby prototype:
+            Ruby-Prototyp:
             <command>
               Weechat.get_buffer_info()
             </command>
           </para>
           <para>
-            Lua prototype:
+            Lua-Prototyp:
             <command>
               weechat.get_buffer_info()
             </command>
           </para>
           <para>
-            Return list of WeeChat buffers.
+            Gibt eine Liste der WeeChat-Puffer.
           </para>
           <para>
-            Return value: list of WeeChat buffers
-            (see <xref linkend="secAPI_get_buffer_info" />).
+            Rückgabewert: Liste der WeeChat-Puffer
+            (siehe <xref linkend="secAPI_get_buffer_info" />).
           </para>
           <para>
-            Examples:
+            Beispiele:
 <screen>
 # perl
 my $bf = weechat::get_buffer_info();
@@ -6522,32 +6521,32 @@ if ($bf)
 }
 else
 {
-    weechat::print("**** no buffer info ****");
+    weechat::print("**** keine Pufferinformationen ****");
 }
 
 # python
 bf = weechat.get_buffer_info()
 if bf != None and bf != {}:
     for b in bf:
-        weechat.prnt ("**** info for buffer no %d ****" % b)
+        weechat.prnt ("**** Informationen für Puffer Nr. %d ****" % b)
         for c in bf[b]:
             weechat.prnt (" > %s => %s" % (c, bf[b][c]))
         weechat.prnt ("----------------------")
 else:
-    weechat.prnt ("**** no buffer info ****")
+    weechat.prnt ("**** keine Pufferinformationen ****")
 
 # ruby
 bf = Weechat.get_buffer_info()
 if bf != nil and bf != {}
     bf.each do |n, c|
-        Weechat.print("**** info for buffer no #{n} ****")
+        Weechat.print("**** Informationen für Puffer Nr. #{n} ****")
         c.each do |key, value|
             Weechat.print(" > #{key} => #{value}")
         end
         Weechat.print("----------------------")
     end
 else
-    Weechat.print("**** no buffer info ****")
+    Weechat.print("**** keine Pufferinformationen ****")
 end
 
 -- lua
@@ -6555,7 +6554,7 @@ bf = weechat.get_buffer_info()
 if bf then
     b, binfos = next (bf, nil)
     while (b) do
-        weechat.print("**** info for buffer no " .. b .. " ****")
+        weechat.print("**** Informationen für Puffer Nr. " .. b .. " ****")
         key, value = next (binfos, nil)
         while (key) do
             weechat.print(" > " .. key .. " => " .. value)
@@ -6565,7 +6564,7 @@ if bf then
         b, infos = next (bf, b)
     end
 else
-    weechat.print("**** no buffer info ****")
+    weechat.print("**** keine Pufferinformationen ****")
 end
 </screen>
           </para>
@@ -6575,38 +6574,38 @@ end
           <title>get_buffer_data</title>
           
           <para>
-            Perl prototype:
+            Perl-Prototyp:
             <command>
               weechat::get_buffer_data(server, channel);
             </command>
           </para>
           <para>
-            Python prototype:
+            Python-Prototyp:
             <command>
               weechat.get_buffer_data(server, channel)
             </command>
           </para>
           <para>
-            Ruby prototype:
+            Ruby-Prototyp:
             <command>
               Weechat.get_buffer_data(server, channel)
             </command>
           </para>
           <para>
-            Lua prototype:
+            Lua-Prototyp:
             <command>
               weechat.get_buffer_data(server, channel)
             </command>
           </para>
           <para>
-            Return content of buffer.
+            Gibt den Inhalt eines Puffers zurück.
           </para>
           <para>
-            Return value: list of lines for buffer
+            Rückgabewert: Liste der Pufferzeilen
             (see <xref linkend="secAPI_get_buffer_data" />).
           </para>
           <para>
-            Examples:
+            Beispiele:
 <screen>
 # perl
 my $server = weechat::get_info("server");
@@ -6614,7 +6613,7 @@ my $channel = weechat::get_info("channel");
 my @bc = weechat::get_buffer_data($server, $channel);
 if (@bc)
 {
-    weechat::print("**** buffer data for '$channel'\@'$server' ****");
+    weechat::print("**** Pufferdaten für '$channel'\@'$server' ****");
     foreach my $l (@bc) {
         while ( my ($key, $value) = each %$l) {
             weechat::print(" > $key => $value");
@@ -6624,7 +6623,7 @@ if (@bc)
 }
 else
 {
-    weechat::print("**** no buffer data ****");
+    weechat::print("**** keine Pufferdaten ****");
 }
 
 # python
@@ -6632,20 +6631,20 @@ server = weechat.get_info("server")
 channel = weechat.get_info("channel")
 bc = weechat.get_buffer_data(server, channel)
 if bc != None and bc != []:
-    weechat.prnt ("**** buffer data for '%s'@'%s' ****" % (channel, server))
+    weechat.prnt ("**** Pufferdaten für '%s'@'%s' ****" % (channel, server))
     for l in bc:
         for i in l:
             weechat.prnt (" > %s => %s" % (i, l[i]))
         weechat.prnt ("----------------------")
 else:
-    weechat.prnt ("**** no buffer data ****")
+    weechat.prnt ("**** keine Pufferdaten ****")
 
 # ruby
 server = Weechat.get_info("server")
 channel = Weechat.get_info("channel")
 bc = Weechat.get_buffer_data(server, channel)
 if bc != nil and bc != []   
-    Weechat.print("**** buffer data for '#{channel}'@'#{server}' ****")
+    Weechat.print("**** Pufferdaten für '#{channel}'@'#{server}' ****")
     bc.each do |l|
         l.each do |key, value|
             Weechat.print(" > #{key} => #{value}")
@@ -6653,7 +6652,7 @@ if bc != nil and bc != []
         Weechat.print("----------------------")
     end
 else
-    Weechat.print("**** no buffer data ****")
+    Weechat.print("**** keine Pufferdaten ****")
 end
 
 -- lua
@@ -6662,7 +6661,7 @@ channel = weechat.get_info("channel")
 bc = weechat.get_buffer_data(server, channel)
 if bc then
     b, bdatas = next (bc, nil)
-    weechat.print("**** buffer data for '" .. channel .. "'@'" .. server .. "' ****")
+    weechat.print("**** Pufferdaten für '" .. channel .. "'@'" .. server .. "' ****")
     while (b) do 
         key, value = next (bdatas, nil)
         while (key) do
@@ -6673,7 +6672,7 @@ if bc then
         b, bdatas = next (bc, b)
     end
 else
-    weechat.print("**** no buffer data ****")
+    weechat.print("**** keine Pufferdaten ****")
 end
 </screen>
           </para>
@@ -6778,7 +6777,7 @@ end
           <listitem>
             <para>
               <emphasis>Frank Zacharias</emphasis> -
-              Deutsch Übersetzung
+              Deutsche Übersetzung
             </para>
           </listitem>
           <listitem>
