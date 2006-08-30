@@ -160,6 +160,7 @@ extern void gui_keyboard_init ();
 extern void gui_keyboard_init_grab ();
 extern char *gui_keyboard_get_internal_code (char *);
 extern char *gui_keyboard_get_expanded_name (char *);
+extern t_gui_key *gui_keyboard_search (char *);
 extern void *gui_keyboard_function_search_by_name (char *);
 extern char *gui_keyboard_function_search_by_ptr (void *);
 extern t_gui_key *gui_keyboard_bind (char *, char *);

@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-08-28
+ChangeLog - 2006-08-30
 
 	
 Version 0.2.1 (under dev!):
+   * command /key now ok with one arg (key name): display key if found
    * fixed bug with CTCP VERSION sent on channels (bug #17547)
    * added current channel completion for /ctcp command
    * fixed bugs in get_buffer_data() which breaks the retrieval of buffer

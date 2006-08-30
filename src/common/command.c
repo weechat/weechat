@@ -125,8 +125,8 @@ t_weechat_command weechat_commands[] =
     "*|%n *|action|ctcp|dcc|pv|%I *|%c *|%s",
     0, 4, 0, weechat_cmd_ignore, NULL },
   { "key", N_("bind/unbind keys"),
-    N_("[key function/command] [unbind key] [functions] [reset -yes]"),
-    N_("      key: bind this key to an internal function or a command "
+    N_("[key [function/command]] [unbind key] [functions] [reset -yes]"),
+    N_("      key: display or bind this key to an internal function or a command "
        "(beginning by \"/\")\n"
        "   unbind: unbind a key\n"
        "functions: list internal functions for key bindings\n"
@@ -2267,7 +2267,7 @@ int
 weechat_cmd_key (t_irc_server *server, t_irc_channel *channel,
                  char *arguments)
 {
-    char *pos;
+    char *pos, *internal_code;
     int i;
     t_gui_key *ptr_key;
     
@@ -2350,11 +2350,24 @@ weechat_cmd_key (t_irc_server *server, t_irc_channel *channel,
         pos = strchr (arguments, ' ');
         if (!pos)
         {
-            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-            gui_printf (NULL,
-                        _("%s wrong argument count for \"%s\" command\n"),
-                        WEECHAT_ERROR, "key");
-            return -1;
+            ptr_key = NULL;
+            internal_code = gui_keyboard_get_internal_code (arguments);
+            if (internal_code)
+                ptr_key = gui_keyboard_search (internal_code);
+            if (ptr_key)
+            {
+                gui_printf (NULL, "\n");
+                gui_printf (NULL, _("Key:\n"));
+                weechat_cmd_key_display (ptr_key, 0);
+            }
+            else
+            {
+                irc_display_prefix (NULL, NULL, PREFIX_INFO);
+                gui_printf (NULL, _("No key found.\n"));
+            }
+            if (internal_code)
+                free (internal_code);
+            return 0;
         }
         pos[0] = '\0';
         pos++;
