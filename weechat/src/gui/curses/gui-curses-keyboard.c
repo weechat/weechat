@@ -75,7 +75,9 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind ( /* down        */ "meta2-B",            "down");
     gui_keyboard_bind ( /* ^down       */ "meta-Ob",            "down_global");
     gui_keyboard_bind ( /* pgup        */ "meta2-5~",           "page_up");
+    gui_keyboard_bind ( /* pgup        */ "meta2-I",            "page_up");
     gui_keyboard_bind ( /* pgdn        */ "meta2-6~",           "page_down");
+    gui_keyboard_bind ( /* pgdn        */ "meta2-G",            "page_down");
     gui_keyboard_bind ( /* m-pgup      */ "meta-meta2-5~",      "scroll_up");
     gui_keyboard_bind ( /* m-pgdn      */ "meta-meta2-6~",      "scroll_down");
     gui_keyboard_bind ( /* m-home      */ "meta-meta2-1~",      "scroll_top");
