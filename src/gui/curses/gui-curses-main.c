@@ -36,12 +36,27 @@
 #include "../../common/utf8.h"
 #include "../../common/util.h"
 #include "../../common/weeconfig.h"
+#include "../../irc/irc.h"
 #include "gui-curses.h"
 
 #ifdef PLUGINS
 #include "../../plugins/plugins.h"
 #endif
 
+
+int send_irc_quit = 0;
+
+
+/*
+ * gui_main_quit: quit weechat (signal received)
+ */
+
+void
+gui_main_quit ()
+{
+    quit_weechat = 1;
+    send_irc_quit = 1;
+}
 
 /*
  * gui_main_loop: main loop for WeeChat with ncurses GUI
@@ -61,6 +76,7 @@ gui_main_loop ()
     struct tm *local_time;
     
     quit_weechat = 0;
+    send_irc_quit = 0;
 
     new_time = time (NULL);
     gui_last_activity_time = new_time;
@@ -70,6 +86,11 @@ gui_main_loop ()
     old_min = -1;
     old_sec = -1;
     check_away = 0;
+    
+    /* if SIGTERM or SIGHUP received => quit */
+    signal (SIGTERM, gui_main_quit);
+    signal (SIGHUP, gui_main_quit);
+    
     while (!quit_weechat)
     {
         /* refresh needed ? */
@@ -261,6 +282,8 @@ gui_main_loop ()
         /* manages active DCC */
         dcc_handle ();
     }
+    if (send_irc_quit)
+        irc_cmd_send_quit (NULL, NULL, NULL);
 }
 
 /*

@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-09-02
+ChangeLog - 2006-09-08
 
 	
 Version 0.2.1 (under dev!):
+   * new signals handled: SIGTERM and SIGHUP (received when terminal is closed):
+     clean WeeChat quit (send quit to irc servers then quit WeeChat)
    * added some new default key bindings for existing keys (for some OS)
    * command /key now ok with one arg (key name): display key if found
    * fixed bug with CTCP VERSION sent on channels (bug #17547)
