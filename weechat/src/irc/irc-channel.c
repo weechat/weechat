@@ -497,6 +497,9 @@ channel_get_notify_level (t_irc_server *server, t_irc_channel *channel)
         return NOTIFY_LEVEL_DEFAULT;
     
     server_default_notify = server_get_default_notify_level (server);
+    if ((channel->type != CHANNEL_TYPE_CHANNEL)
+        && (server_default_notify == 1))
+        server_default_notify = 2;
     
     name = (char *) malloc (strlen (channel->name) + 2);
     strcpy (name, channel->name);
