@@ -348,7 +348,18 @@ irc_cmd_send_away (t_irc_server *server, t_irc_channel *channel,
         }
     }
     else
-        irc_send_away (server, arguments);
+    {
+        if (server->is_connected)
+            irc_send_away (server, arguments);
+        else
+        {
+            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+            gui_printf_nolog (NULL,
+                              _("%s command \"%s\" needs a server connection!\n"),
+                              WEECHAT_ERROR, "away");
+            return -1;
+        }
+    }
     
     gui_status_draw (buffer, 1);
     gui_add_hotlist = 1;

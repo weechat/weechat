@@ -47,7 +47,7 @@ t_irc_command irc_commands[] =
     N_("[-all] [message]"),
     N_("   -all: toggle away status on all connected servers\n"
        "message: message for away (if no message is given, away status is removed)"),
-    "-all", 0, MAX_ARGS, 1, 1, NULL, irc_cmd_send_away, NULL },
+    "-all", 0, MAX_ARGS, 1, 0, NULL, irc_cmd_send_away, NULL },
   { "ban", N_("bans nicks or hosts"),
     N_("[channel] [nickname [nickname ...]]"),
     N_(" channel: channel for ban\n"
