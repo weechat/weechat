@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-09-08
+ChangeLog - 2006-09-12
 
-	
+
 Version 0.2.1 (under dev!):
+   * fixed highlight for DCC, invite and notice: when a window is displaying
+     buffer, there's no highlight
    * command "/away -all" now allowed when not connected to current server
    * new signals handled: SIGTERM and SIGHUP (received when terminal is closed):
      clean WeeChat quit (send quit to irc servers then quit WeeChat)
@@ -28,7 +30,7 @@ Version 0.2.1 (under dev!):
    * added hotlist in session file when using /upgrade command (task #5449)
    * fixed nick refresh problem with unrealircd specific modes: chan owner (~)
      and chan admin (&) (bug #17340)
-	
+
 Version 0.2.0 (2006-08-19):
    * added 'C'lear option on IRC raw buffer
    * IRC raw buffer now uses join/part prefix with color to display messages

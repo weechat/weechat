@@ -63,10 +63,13 @@ char *dcc_status_string[] =     /* strings for DCC status                   */
 void
 dcc_redraw (int highlight)
 {
-    gui_window_redraw_buffer (gui_buffer_get_dcc (gui_current_window));
-    if (highlight)
+    t_gui_buffer *ptr_buffer;
+
+    ptr_buffer = gui_buffer_get_dcc (gui_current_window);
+    gui_window_redraw_buffer (ptr_buffer);
+    if (highlight && gui_add_hotlist && (ptr_buffer->num_displayed == 0))
     {
-        hotlist_add (highlight, NULL, gui_buffer_get_dcc (gui_current_window), 0);
+        hotlist_add (highlight, NULL, ptr_buffer, 0);
         gui_status_draw (gui_current_window->buffer, 0);
     }
 }
