@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-09-12
+ChangeLog - 2006-09-16
 
 
 Version 0.2.1 (under dev!):
+   * fixed buffer search by server/channel: now if only channel is specified,
+     a channel of another server can be found
    * fixed highlight for DCC, invite and notice: when a window is displaying
      buffer, there's no highlight
    * command "/away -all" now allowed when not connected to current server

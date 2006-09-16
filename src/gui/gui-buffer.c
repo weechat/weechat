@@ -238,8 +238,8 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
 t_gui_buffer *
 gui_buffer_search (char *server, char *channel)
 {
-    t_irc_server *ptr_server;
-    t_irc_channel *ptr_channel;
+    t_irc_server *ptr_server, *ptr_srv;
+    t_irc_channel *ptr_channel, *ptr_chan;
     t_gui_buffer *ptr_buffer;
     
     ptr_server = NULL;
@@ -257,18 +257,32 @@ gui_buffer_search (char *server, char *channel)
             if (!ptr_server)
                 return NULL;
         }
-        else
-        {
-            ptr_server = SERVER(gui_current_window->buffer);
-            if (!ptr_server)
-                ptr_server = SERVER(gui_buffers);
-        }
         
         if (channel && channel[0])
         {
             if (ptr_server)
             {
                 ptr_channel = channel_search_any (ptr_server, channel);
+                if (ptr_channel)
+                    ptr_buffer = ptr_channel->buffer;
+            }
+            else
+            {
+                for (ptr_srv = irc_servers; ptr_srv;
+                     ptr_srv = ptr_srv->next_server)
+                {
+                    for (ptr_chan = ptr_srv->channels; ptr_chan;
+                         ptr_chan = ptr_chan->next_channel)
+                    {
+                        if (ascii_strcasecmp (ptr_chan->name, channel) == 0)
+                        {
+                            ptr_channel = ptr_chan;
+                            break;
+                        }
+                    }
+                    if (ptr_channel)
+                        break;
+                }
                 if (ptr_channel)
                     ptr_buffer = ptr_channel->buffer;
             }
