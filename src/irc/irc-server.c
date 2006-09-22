@@ -1947,7 +1947,7 @@ server_get_default_notify_level (t_irc_server *server)
 
     notify = NOTIFY_LEVEL_DEFAULT;
     
-    if (!server)
+    if (!server || !server->notify_levels)
         return notify;
     
     pos = strstr (server->notify_levels, "*:");
