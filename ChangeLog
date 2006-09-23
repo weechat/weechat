@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-09-16
+ChangeLog - 2006-09-23
 
 
 Version 0.2.1 (under dev!):
+   * fixed random crash with /upgrade command (error when loading buffers)
    * fixed buffer search by server/channel: now if only channel is specified,
      a channel of another server can be found
    * fixed highlight for DCC, invite and notice: when a window is displaying

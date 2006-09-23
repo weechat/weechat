@@ -72,7 +72,8 @@ channel_new (t_irc_server *server, int channel_type, char *channel_name)
     new_channel->display_creation_date = 0;
     new_channel->nicks = NULL;
     new_channel->last_nick = NULL;
-
+    new_channel->buffer = NULL;
+    
     /* add new channel to queue */
     new_channel->prev_channel = server->last_channel;
     new_channel->next_channel = NULL;
