@@ -41,6 +41,7 @@
 #include "../common/hotlist.h"
 #include "../common/log.h"
 #include "../common/utf8.h"
+#include "../common/util.h"
 #include "../irc/irc.h"
 
 
