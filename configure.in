@@ -27,6 +27,7 @@ AM_INIT_AUTOMAKE([weechat], [0.2.1-cvs])
 # Checks for programs
 AC_PROG_CC
 AC_PROG_MAKE_SET
+AC_GNU_SOURCE
 AM_PROG_LIBTOOL
 
 # Add some flags for some OS
