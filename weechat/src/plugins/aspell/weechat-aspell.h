@@ -78,6 +78,12 @@ typedef struct iso_countries_t
     char *name;
 } iso_countries_t;
 
+typedef struct cmds_keep_t
+{
+    char *cmd;
+    int len;
+} cmds_keep_t;
+
 /* aspell supported langs 2006-05-27 */
 iso_langs_t langs_avail[] = 
 {
@@ -176,6 +182,25 @@ iso_countries_t countries_avail[] =
     { "SK", "Slovakia" },
     { "US", "United States of America" },
     { NULL, NULL}
+};
+
+/* internal or irc commands to be use with spellchecking */
+cmds_keep_t cmd_tokeep[] = 
+{
+    { "/builtin ",  9 },
+    { "/ame " ,     5 },
+    { "/amsg " ,    6 },
+    { "/away " ,    6 },
+    { "/cycle " ,   7 },
+    { "/kick " ,    6 },
+    { "/kickban " , 9 },
+    { "/me " ,      4 },
+    { "/notice " ,  8 },
+    { "/part " ,    6 },
+    { "/query " ,   7 },
+    { "/quit " ,    6 },
+    { "/topic " ,   7 },
+    { NULL, 0}
 };
 
 #endif /* WEECHAT_ASPELL__H */

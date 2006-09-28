@@ -1181,6 +1181,39 @@ weechat_aspell_is_simili_number (char *word)
 }
 
 /*
+ * weechat_aspell_is_url : 
+ *    detect if a word is an url
+ */
+int
+weechat_aspell_is_url (char *word)
+{
+    int ret;
+
+    ret = 0;
+    if (strncasecmp(word,    "http://",    7) == 0
+	|| strncasecmp(word, "https://",   8) == 0
+	|| strncasecmp(word, "ftp://",     6) == 0
+	|| strncasecmp(word, "tftp://",    7) == 0
+	|| strncasecmp(word, "ftps://",    7) == 0
+	|| strncasecmp(word, "ssh://",     6) == 0
+	|| strncasecmp(word, "fish://",    7) == 0
+	|| strncasecmp(word, "dict://",    7) == 0
+	|| strncasecmp(word, "ldap://",    7) == 0
+	|| strncasecmp(word, "file://",    7) == 0
+	|| strncasecmp(word, "telnet://",  9) == 0
+	|| strncasecmp(word, "gopher://",  9) == 0
+	|| strncasecmp(word, "irc://",     6) == 0
+	|| strncasecmp(word, "ircs://",    7) == 0
+	|| strncasecmp(word, "irc6://",    7) == 0
+	|| strncasecmp(word, "irc6s://",   8) == 0
+	|| strncasecmp(word, "cvs://",     6) == 0
+	|| strncasecmp(word, "svn://",     6) == 0
+	|| strncasecmp(word, "svn+ssh://", 10) == 0)
+	ret = 1;
+    return ret;
+}
+
+/*
  * weechat_aspell_keyb_check : handler to check spelling on input line
  */
 int
@@ -1189,6 +1222,8 @@ weechat_aspell_keyb_check (t_weechat_plugin *p, int argc, char **argv,
 {
     char *server, *channel;
     aspell_config_t *c;
+    cmds_keep_t *cmd;
+    int keep_cmd_found;
     char *input, *ptr_input, *pos_space, *clword;
     int count, offset;
     
@@ -1225,40 +1260,57 @@ weechat_aspell_keyb_check (t_weechat_plugin *p, int argc, char **argv,
 
     if (!input[0])
 	return PLUGIN_RC_OK;
-    
+
     if (input[0] == '/')
-	return PLUGIN_RC_OK;
+    {
+	keep_cmd_found = 0;
+	for(cmd = cmd_tokeep; cmd->cmd; ++cmd)
+	{
+	    if (strncasecmp (input, cmd->cmd, cmd->len) == 0) {
+		keep_cmd_found = 1;
+		break;
+	    }
+	}
+	if (keep_cmd_found == 0)
+	    return PLUGIN_RC_OK;
+    }
     
     count = 0;
     ptr_input = input;
     weechat_aspell_plugin->input_color (weechat_aspell_plugin, 0, 0, 0);
     while (ptr_input && ptr_input[0])
-    {
+    {	
 	pos_space = strchr (ptr_input, ' ');
 	if (pos_space)
 	    pos_space[0] = '\0';
 	
-	clword = weechat_aspell_clean_word (ptr_input, &offset);
-	if (clword)
+	if (ptr_input[0] != '/' && ptr_input[0] != '-' && ptr_input[0] != '#')
 	{
-	    if ( (int) strlen (clword) >= aspell_plugin_options.word_size)
+	    clword = weechat_aspell_clean_word (ptr_input, &offset);
+	    if (clword)
 	    {
-		if (!weechat_aspell_is_simili_number (clword))
+		if ( (int) strlen (clword) >= aspell_plugin_options.word_size)
 		{
-		    if (!weechat_aspell_nick_in_channel (clword, server, channel))
+		    if (!weechat_aspell_is_url (clword))
 		    {
-			if (aspell_speller_check (c->speller->speller, clword, -1) != 1)
+			if (!weechat_aspell_is_simili_number (clword))
 			{
-			    if (count == 0)
-				weechat_aspell_plugin->input_color (weechat_aspell_plugin, 0, 0, 0);
-			    weechat_aspell_plugin->input_color (weechat_aspell_plugin, aspell_plugin_options.color,
-								ptr_input - input + offset, strlen (clword));
-			    count++;
+			    if (!weechat_aspell_nick_in_channel (clword, server, channel))
+			    {
+				if (aspell_speller_check (c->speller->speller, clword, -1) != 1)
+				{
+				    if (count == 0)
+					weechat_aspell_plugin->input_color (weechat_aspell_plugin, 0, 0, 0);
+				    weechat_aspell_plugin->input_color (weechat_aspell_plugin, aspell_plugin_options.color,
+									ptr_input - input + offset, strlen (clword));
+				    count++;
+				}
+			    }
 			}
 		    }
 		}
+		free (clword);
 	    }
-	    free (clword);
 	}
 	
 	if (pos_space)
