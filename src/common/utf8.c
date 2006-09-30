@@ -26,7 +26,10 @@
 
 #include <stdlib.h>
 #include <string.h>
+
+#ifndef __USE_XOPEN
 #define __USE_XOPEN
+#endif
 
 #if defined(__OpenBSD__)
 #include <utf8/wchar.h>

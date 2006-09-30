@@ -28,7 +28,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
+
+#ifndef __USE_GNU
 #define __USE_GNU
+#endif
+
 #include <dlfcn.h>
 
 #ifdef HAVE_BACKTRACE
