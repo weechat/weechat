@@ -1421,7 +1421,7 @@ dcc_file_send_child (t_irc_dcc *ptr_dcc)
                 if ((num_read < 1) &&
                     ((num_read != -1) || (errno != EAGAIN)))
                 {
-                    dcc_file_write_pipe (ptr_dcc, DCC_FAILED, DCC_ERROR_READ_LOCAL);
+                    dcc_file_write_pipe (ptr_dcc, DCC_FAILED, DCC_ERROR_SEND_BLOCK);
                     return;
                 }
                 if (num_read == 4)
@@ -1462,7 +1462,7 @@ dcc_file_send_child (t_irc_dcc *ptr_dcc)
                     usleep (1000);
                 else
                 {
-                    dcc_file_write_pipe (ptr_dcc, DCC_FAILED, DCC_ERROR_READ_LOCAL);
+                    dcc_file_write_pipe (ptr_dcc, DCC_FAILED, DCC_ERROR_SEND_BLOCK);
                     return;
                 }
             }
@@ -1830,7 +1830,8 @@ dcc_handle ()
             }
             if (ptr_dcc->type == DCC_FILE_RECV)
             {
-                dcc_file_child_read (ptr_dcc);
+                if (ptr_dcc->child_read != -1)
+                    dcc_file_child_read (ptr_dcc);
             }
         }
         
