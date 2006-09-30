@@ -6,7 +6,7 @@ ChangeLog - 2006-09-30
 
 Version 0.2.1 (under dev!):
    * fixed crash for DCC receiver when resuming a file (bug #17885)
-   * fixed DCC error for sender when receiver cancels DCC (bug #17852)
+   * fixed DCC error for sender when receiver cancels DCC (bug #17838)
    * fixed random crash with /upgrade command (error when loading buffers)
    * fixed buffer search by server/channel: now if only channel is specified,
      a channel of another server can be found
