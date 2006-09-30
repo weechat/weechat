@@ -118,8 +118,8 @@ country code serves to distinguish the dialects.
 language and `CC' denoting the country, is the one use on systems based
 on GNU libc.  On other systems, some variations of this scheme are
 used, such as `LL' or `LL_CC.ENCODING'.  You can get the list of
-locales supported by your system for your country by running the command
-`locale -a | grep '^LL''.
+locales supported by your system for your language by running the
+command `locale -a | grep '^LL''.
 
    Not all programs have translations for all languages.  By default, an
 English message is shown in place of a nonexistent translation.  If you
@@ -179,7 +179,7 @@ programming skill, here.
 ======================
 
 Languages are not equally supported in all packages.  The following
-matrix shows the current state of internationalization, as of June
+matrix shows the current state of internationalization, as of July
 2006.  The matrix shows, in regard of each package, for which languages
 PO files have been submitted to translation coordination, with a
 translation percentage of at least 50%.
@@ -199,7 +199,7 @@ translation percentage of at least 50%.
      bibshelf           |                                  []                |
      binutils           |                               []                   |
      bison              |                               [] []                |
-     bison-runtime      |                                                    |
+     bison-runtime      |                                  []                |
      bluez-pin          | []                      []       [] []          [] |
      cflow              |                               []                   |
      clisp              |                                  []    []          |
@@ -225,8 +225,8 @@ translation percentage of at least 50%.
      gbiff              |                                  []                |
      gcal               |                      []                            |
      gcc                |                                  []                |
-     gettext-examples   | []                   []          [] []             |
-     gettext-runtime    |             []       []       [] []                |
+     gettext-examples   | []                   []          [] []          [] |
+     gettext-runtime    |             []       []       [] []             [] |
      gettext-tools      |                      []          []                |
      gimp-print         |                         []    [] []        []      |
      gip                |                []                                  |
@@ -303,7 +303,7 @@ translation percentage of at least 50%.
      libgphoto2         |                               [] []                |
      libgphoto2_port    |                               [] []                |
      libgsasl           |                                                    |
-     libiconv           |                                                    |
+     libiconv           |                                  []             [] |
      libidn             |                               []                [] |
      lifelines          |                               [] ()                |
      lilypond           |                                  []                |
@@ -342,7 +342,7 @@ translation percentage of at least 50%.
      sp                 |                                  []                |
      stardict           |                         []                         |
      system-tools-ba... |       []       [] [] [] []    [] [] []     []      |
-     tar                |                                                    |
+     tar                |                []                                  |
      texinfo            |                               [] []             [] |
      textutils          |                      []       [] []                |
      tin                |                                  ()        ()      |
@@ -360,7 +360,7 @@ translation percentage of at least 50%.
      xpad               |                []             []                   |
                         +----------------------------------------------------+
                           af am ar az be bg bs ca cs cy da de el en en_GB eo
-                          11  0  1  2  8 20  1 42 43  2 62 97 18  1  16   13
+                          11  0  1  2  8 21  1 42 43  2 62 99 18  1  16   16
 
                           es et eu fa fi fr  ga gl gu he hi hr hu id is it
                         +--------------------------------------------------+
@@ -478,10 +478,10 @@ translation percentage of at least 50%.
      libextractor       |                    []                            |
      libgpewidget       | []             []  []                [] []       |
      libgpg-error       |                                                  |
-     libgphoto2         | []             []                                |
+     libgphoto2         | []             []                             [] |
      libgphoto2_port    |                []                             [] |
      libgsasl           |                []  []                            |
-     libiconv           |                                                  |
+     libiconv           |                    []                            |
      libidn             |                []                             [] |
      lifelines          |                ()                                |
      lilypond           |                []                                |
@@ -496,7 +496,7 @@ translation percentage of at least 50%.
      nano               |       []    () []  []                []       [] |
      nano_1_0           | []             []     []                []    [] |
      opcodes            | []          [] []  []                            |
-     parted             | []                                      []    [] |
+     parted             | []             []                       []    [] |
      pilot-qof          |                                                  |
      psmisc             |       []                             []       [] |
      pwdutils           |                                                  |
@@ -520,11 +520,11 @@ translation percentage of at least 50%.
      sp                 |                []                                |
      stardict           |                                      []          |
      system-tools-ba... | []    []    [] []                 [] [] []    [] |
-     tar                | [] []          []  []                         [] |
+     tar                | [] []          []  []                []       [] |
      texinfo            |                []           []                   |
      textutils          | []             []  [] []             []          |
      tin                |    []          ()                                |
-     tp-robot           |             [] []                    []          |
+     tp-robot           |             [] []  []                []          |
      tuxpaint           |                    []                []          |
      unicode-han-tra... |                                                  |
      unicode-transla... |                []  []                            |
@@ -538,7 +538,7 @@ translation percentage of at least 50%.
      xpad               | []                 []                []          |
                         +--------------------------------------------------+
                           es et eu fa fi fr  ga gl gu he hi hr hu id is it
-                          89 21 16  2 41 118 59 14  1  8  1  6 60 30  0 52
+                          89 21 16  2 41 119 61 14  1  8  1  6 61 30  0 53
 
                           ja ko ku ky lg lt lv mk mn ms mt nb ne nl  nn no
                         +--------------------------------------------------+
@@ -640,14 +640,14 @@ translation percentage of at least 50%.
      iso_3166_2         |                                        []        |
      iso_3166_3         |                                        []        |
      iso_4217           | []                      []             []        |
-     iso_639            | []                                     []  []    |
+     iso_639            | []                                     []        |
      jpilot             | ()                                     ()     () |
      jtag               |                                                  |
      jwhois             |                                        []        |
      kbd                |                                        []        |
      keytouch           |                                        []        |
      keytouch-editor    |                                                  |
-     keytouch-keyboa... |                                        []        |
+     keytouch-keyboa... |                                                  |
      latrine            |                                        []        |
      ld                 |                                                  |
      leafpad            | []             []                                |
@@ -716,7 +716,7 @@ translation percentage of at least 50%.
      xpad               |    []                      []          []        |
                         +--------------------------------------------------+
                           ja ko ku ky lg lt lv mk mn ms mt nb ne nl  nn no
-                          40 24  2  1  1  3  1  2  3 21  0 15  1 102  6  3
+                          40 24  2  1  1  3  1  2  3 21  0 15  1 101  5  3
 
                           nso or pa pl pt pt_BR rm ro ru rw sk sl sq sr sv  ta
                         +------------------------------------------------------+
@@ -758,7 +758,7 @@ translation percentage of at least 50%.
      gawk               |           []     []      []                   []     |
      gbiff              |                          []                          |
      gcal               |                                               []     |
-     gcc                |                                                      |
+     gcc                |                                               []     |
      gettext-examples   |           [] []          [] []    [] []    [] []     |
      gettext-runtime    |           [] []          [] []    [] []    [] []     |
      gettext-tools      |           []             [] []    [] []    [] []     |
@@ -835,7 +835,7 @@ translation percentage of at least 50%.
      libgpewidget       |              []  []      []       [] []    [] []     |
      libgpg-error       |           []             []                          |
      libgphoto2         |           []                                         |
-     libgphoto2_port    |           []                []                       |
+     libgphoto2_port    |           []                []                []     |
      libgsasl           |           []             []                [] []     |
      libiconv           |                                                      |
      libidn             |           []                               [] ()     |
@@ -894,7 +894,7 @@ translation percentage of at least 50%.
      xpad               |                                   [] []       []     |
                         +------------------------------------------------------+
                           nso or pa pl pt pt_BR rm ro ru rw sk sl sq sr sv  ta
-                           0   2  3 58 31  53    5 76 72  5 42 48 12 51 128  2
+                           0   2  3 58 31  53    5 76 72  5 42 48 12 51 130  2
 
                           tg th tk tr uk ven vi  wa xh zh_CN zh_HK zh_TW zu
                         +---------------------------------------------------+
@@ -911,7 +911,7 @@ translation percentage of at least 50%.
      bibshelf           |                    []                             |  7
      binutils           |          []        []                     []      |  9
      bison              |          []        []                     []      | 19
-     bison-runtime      |                    []         []          []      | 15
+     bison-runtime      |                    []         []          []      | 16
      bluez-pin          |          [] []     []  []     []          []      | 28
      cflow              |             []     []                             |  4
      clisp              |                                                   |  6
@@ -936,9 +936,9 @@ translation percentage of at least 50%.
      gawk               |          []        []                             | 15
      gbiff              |                    []                             |  5
      gcal               |          []                                       |  5
-     gcc                |          []                   []          []      |  5
-     gettext-examples   |          [] []     []         []          []      | 24
-     gettext-runtime    |          [] []     []         []          []      | 26
+     gcc                |          []                   []          []      |  6
+     gettext-examples   |          [] []     []         []    []    []      | 26
+     gettext-runtime    |          [] []     []         []    []    []      | 28
      gettext-tools      |          [] []     []         []          []      | 19
      gimp-print         |             []     []                             | 12
      gip                |                    []                     []      | 12
@@ -996,26 +996,26 @@ translation percentage of at least 50%.
      iso_3166_2         |                                                   |  2
      iso_3166_3         |                        []     []                  |  9
      iso_4217           |          []        []                             | 14
-     iso_639            |                    []  []                         | 16
+     iso_639            |                    []                             | 14
      jpilot             |          [] []     []         []                  |  7
      jtag               |                    []                             |  3
      jwhois             |          []        []                     []      | 13
      kbd                |          []        []                             | 12
      keytouch           |                    []                             |  4
      keytouch-editor    |                                                   |  2
-     keytouch-keyboa... |                    []                             |  4
+     keytouch-keyboa... |                                                   |  2
      latrine            |          []        []                             |  8
-     ld                 |          []        []         []                  |  7
+     ld                 |          []        []         []          []      |  8
      leafpad            |          []        []         []          []      | 23
      libc               |          []                   []          []      | 23
      libexif            |                    []                             |  4
      libextractor       |                    []                             |  5
      libgpewidget       |                    []  []     []                  | 19
      libgpg-error       |                    []                             |  4
-     libgphoto2         |             []                                    |  7
-     libgphoto2_port    |             []     []                     []      | 10
+     libgphoto2         |             []                                    |  8
+     libgphoto2_port    |             []     []                     []      | 11
      libgsasl           |                    []                             |  8
-     libiconv           |                                                   |  0
+     libiconv           |                    []                             |  4
      libidn             |                    []         []                  | 10
      lifelines          |                                                   |  4
      lilypond           |                                                   |  2
@@ -1030,7 +1030,7 @@ translation percentage of at least 50%.
      nano               |                    []                     []      | 15
      nano_1_0           |          [] []     []                             | 18
      opcodes            |          []        []                             | 10
-     parted             |          [] []                            []      |  9
+     parted             |          [] []                            []      | 10
      pilot-qof          |                    []                             |  3
      psmisc             |                    []                             | 10
      pwdutils           |                    []                             |  3
@@ -1038,7 +1038,7 @@ translation percentage of at least 50%.
      qof                |                    []                             |  2
      radius             |             []                                    |  6
      recode             |          []        []         []                  | 25
-     rpm                |          [] []     []                             | 13
+     rpm                |          [] []     []                     []      | 14
      screem             |                    []                             |  2
      scrollkeeper       |          [] []     []                     []      | 26
      sed                |          []        []                     []      | 22
@@ -1054,11 +1054,11 @@ translation percentage of at least 50%.
      sp                 |          []                                       |  3
      stardict           |             []     []         []          []      | 11
      system-tools-ba... |    []    [] []     []     []  []          []      | 37
-     tar                |          [] []     []                     []      | 17
+     tar                |          [] []     []                     []      | 19
      texinfo            |          []        []         []                  | 15
      textutils          |          []                   []          []      | 17
      tin                |                                                   |  1
-     tp-robot           |                    []         []          []      |  9
+     tp-robot           |                    []         []          []      | 10
      tuxpaint           |                    []  []                 []      | 16
      unicode-han-tra... |                                                   |  0
      unicode-transla... |                                                   |  2
@@ -1072,7 +1072,7 @@ translation percentage of at least 50%.
      xpad               |                    []         []          []      | 14
                         +---------------------------------------------------+
        77 teams           tg th tk tr uk ven vi  wa xh zh_CN zh_HK zh_TW zu
-      172 domains          0  1  1 78 39  0  135 14  1  50     1    52    0  2040
+      172 domains          0  1  1 78 39  0  135 13  1  50     3    54    0  2054
 
    Some counters in the preceding matrix are higher than the number of
 visible blocks let us expect.  This is because a few extra PO files are
@@ -1085,7 +1085,7 @@ distributed as such by its maintainer.  There might be an observable
 lag between the mere existence a PO file and its wide availability in a
 distribution.
 
-   If June 2006 seems to be old, you may fetch a more recent copy of
+   If July 2006 seems to be old, you may fetch a more recent copy of
 this `ABOUT-NLS' file on most GNU archive sites.  The most up-to-date
 matrix with full percentage details can be found at
 `http://www.iro.umontreal.ca/contrib/po/HTML/matrix.html'.
