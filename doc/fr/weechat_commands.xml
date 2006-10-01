@@ -117,11 +117,11 @@ Pour chaque paramètre, '*' signifie tou(te)s.
 Sans paramètres, la commande /ignore liste les ignore définis.
 
 </programlisting>
-<command>key  [touche fonction/commande] [unbind touche] [functions] [reset -yes]</command>
+<command>key  [touche [fonction/commande]] [unbind touche] [functions] [reset -yes]</command>
 <programlisting>
 associer/libérer des touches
 
-   touche: associer cette touche à une fonction interne ou une commande (commençant par "/")
+   touche: voir ou associer cette touche à une fonction interne ou une commande (commençant par "/")
    unbind: supprimer l'association à une touche
 functions: lister la liste des fonctions internes pour les associations de touches
     reset: restaure les touches aux valeurs par défaut et supprime TOUTES les touches personnelles (utiliser avec précaution !)

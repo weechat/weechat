@@ -42,13 +42,13 @@ Nicknames oder Hosts sperren/verbannen
 Nickname: zu sperrender User oder Host
 
 </programlisting>
-<command>ctcp  Nickname Typ [Argumente]</command>
+<command>ctcp  receiver type [arguments]</command>
 <programlisting>
 CTCP-Nachricht verschicken
 
- Nickname: User, an den die CTCP-Nachricht geschickt werden soll
-     Typ: Typ der CTCP-Nachricht (z.B. "version", "ping", ...)
-Argumente: Argumente für CTCP
+ receiver: nick or channel to send CTCP to
+     type: CTCP type (examples: "version", "ping", ..)
+arguments: arguments for CTCP
 
 </programlisting>
 <command>cycle  [Channel[,Channel]] [Abschiedsnachricht]</command>

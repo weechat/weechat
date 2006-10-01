@@ -42,11 +42,11 @@ bans nicks or hosts
 nickname: user or host to ban
 
 </programlisting>
-<command>ctcp  nickname type [arguments]</command>
+<command>ctcp  receiver type [arguments]</command>
 <programlisting>
 send a CTCP message (Client-To-Client Protocol)
 
- nickname: user to send CTCP to
+ receiver: nick or channel to send CTCP to
      type: CTCP type (examples: "version", "ping", ..)
 arguments: arguments for CTCP
 

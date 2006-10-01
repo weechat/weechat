@@ -42,11 +42,11 @@ bannit des pseudos ou masques
 pseudo: pseudo ou masque pour le bannissement
 
 </programlisting>
-<command>ctcp  pseudo type [arguments]</command>
+<command>ctcp  cible type [arguments]</command>
 <programlisting>
 envoyer un message CTCP (Client-To-Client Protocol)
 
-   pseudo: utilisateur à qui envoyer le CTCP
+    cible: utilisateur à qui envoyer le CTCP
      type: type de CTCP (exemples: "version", "ping", etc...)
 arguments: arguments pour le CTCP
 
