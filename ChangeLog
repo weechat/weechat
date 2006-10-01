@@ -1,10 +1,10 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-09-30
+ChangeLog - 2006-10-01
 
 
-Version 0.2.1 (under dev!):
+Version 0.2.1 (2006-10-01):
    * fixed crash for DCC receiver when resuming a file (bug #17885)
    * fixed DCC error for sender when receiver cancels DCC (bug #17838)
    * fixed random crash with /upgrade command (error when loading buffers)
