@@ -252,18 +252,16 @@ msgid "send a CTCP message (Client-To-Client Protocol)"
 msgstr "poslat CTCP zprávu (Client-To-Client Protocol)"
 
 #: src/irc/irc-commands.c:57
-#, fuzzy
 msgid "receiver type [arguments]"
-msgstr "přezdívka typ [argumenty]"
+msgstr "příjemce typ [argumenty]"
 
 #: src/irc/irc-commands.c:58
-#, fuzzy
 msgid ""
 " receiver: nick or channel to send CTCP to\n"
 "     type: CTCP type (examples: \"version\", \"ping\", ..)\n"
 "arguments: arguments for CTCP"
 msgstr ""
-"přezdívka: uživatel kterému se pošle CTCP\n"
+" příjemce: uživatel kterému se pošle CTCP\n"
 "      typ: CTCP typ (například: \"version\", \"ping\", ..)\n"
 "argumenty: argumenty pro CTCP"
 
@@ -1496,9 +1494,8 @@ msgid "Mode %s%s %s[%s%s%s]%s by %s%s\n"
 msgstr "Mód %s%s %s[%s%s%s]%s od %s%s\n"
 
 #: src/irc/irc-recv.c:740
-#, fuzzy, c-format
 msgid "User mode %s[%s%s%s]%s by %s%s\n"
-msgstr "Uživatelský mód %s[%s%s%s/%s%s%s]\n"
+msgstr "Uživatelský mód %s[%s%s%s]%s od %s%s\n"
 
 #: src/irc/irc-recv.c:811
 #, c-format
@@ -2558,7 +2555,6 @@ msgid "[alias_name [command [arguments]]]"
 msgstr "[jméno_aliasu [příkaz [argumenty]]]"
 
 #: src/common/command.c:54
-#, fuzzy
 msgid ""
 "alias_name: name of alias\n"
 "   command: command name (WeeChat or IRC command, many commands can be "
@@ -2571,7 +2567,10 @@ msgstr ""
 "jméno_aliasu: jméno aliasu\n"
 "      příkaz: jméno příkazu (WeeChat nebo IRC příkaz, více příkazů se "
 "rozděluje středníky)\n"
-"   argumenty: argumenty příkazu"
+"   argumenty: argumenty příkazu\n"
+"\n"
+"Poznámka: v příkazu, speciální proměnné $1, $2,...,$9 jsou nahrazeny "
+"argumenty, které zadá uživatel a $* je nahrazeno všemi argumenty."
 
 #: src/common/command.c:61
 msgid "manage buffers"
@@ -2582,7 +2581,6 @@ msgid "[action [args] | number | [[server] [channel]]]"
 msgstr "[akce [args] | číslo | [[server] [kanál]]]"
 
 #: src/common/command.c:63
-#, fuzzy
 msgid ""
 " action: action to do:\n"
 "   move: move buffer in the list (may be relative, for example -1)\n"
@@ -2603,7 +2601,9 @@ msgstr ""
 "seznam)\n"
 "notify: nastaví level upozornění pro buffer (0=nikdy, 1=zvýraznění, 2=1+msg, "
 "3=2+join/part)\n"
-"server\n"
+"        (při provedení v bufferu serveru se nastaví výchozí level upozornění "
+"pro celý server)\n"
+"server,\n"
 " kanál: skočit na bufer podle jména serveru a/nebo kanálu\n"
 " číslo: skočí na buffer, podle čísla"
 
@@ -2776,12 +2776,10 @@ msgid "bind/unbind keys"
 msgstr "napojit/odpojit klávesy"
 
 #: src/common/command.c:128
-#, fuzzy
 msgid "[key [function/command]] [unbind key] [functions] [reset -yes]"
-msgstr "[klávesa funkce/příkaz] [unbind klávesa] [functions] [reset -yes]"
+msgstr "[klávesa [funkce/příkaz]] [unbind klávesa] [functions] [reset -yes]"
 
 #: src/common/command.c:129
-#, fuzzy
 msgid ""
 "      key: display or bind this key to an internal function or a command "
 "(beginning by \"/\")\n"
@@ -2790,11 +2788,12 @@ msgid ""
 "    reset: restore bindings to the default values and delete ALL personal "
 "bindings (use carefully!)"
 msgstr ""
-"  klávesa: napojí klávesu na vnitřní funkci nebo příkaz (začínající \"/\")\n"
-"   unbind: odpojí klávesu (pokud \"all\", je obnoveno výchozí nastavení)\n"
-"functions: vzpíše seznam interních funkcí pro napojení kláves\n"
-"    reset: obnoví klávesy na výchozí hodnoty a smaže uživatlské zkratky "
-"(používejte opatrně)"
+"  klávesa: zobrazí nebo napojí klávesu na vnitřní funkci nebo příkaz "
+"(začínající \"/\")\n"
+"   unbind: odpojí klávesu\n"
+"functions: vypíše seznam interních funkcí pro napojení kláves\n"
+"    reset: obnoví klávesy na výchozí hodnoty a smaže VŠECHNY uživatlské "
+"zkratky (používejte opatrně!)"
 
 #: src/common/command.c:145
 msgid "list/load/unload plugins"
@@ -3158,9 +3157,8 @@ msgid "%s can not close server buffer while channels are open\n"
 msgstr "%s nemohu zavřít buffer serveru dokud jsou otevřeny kanály\n"
 
 #: src/common/command.c:1167
-#, fuzzy
 msgid "Default notify levels for servers:"
-msgstr "Nový level upozornění %s%s%s: %s%d %s"
+msgstr "Výchozí level upozornění pro servery:"
 
 #: src/common/command.c:1185
 msgid "Notify levels:"
@@ -3176,14 +3174,15 @@ msgid "%s incorrect notify level (must be between %d and %d)\n"
 msgstr "%s nekorektní level upozornění (musí být mezi %d a %d)\n"
 
 #: src/common/command.c:1227
-#, fuzzy, c-format
+#, c-format
 msgid "%s incorrect buffer for notify (must be server, channel or private)\n"
-msgstr "%s nekorektní buffer pro upozornění (musí být kanál nebo soukromý)\n"
+msgstr "%s nekorektní buffer pro upozornění (musí být server, kanál nebo "
+"soukromý)\n"
 
 #: src/common/command.c:1238
-#, fuzzy, c-format
+#, c-format
 msgid "New default notify level for server %s%s%s: %s%d %s"
-msgstr "Nový level upozornění %s%s%s: %s%d %s"
+msgstr "Nový výchozí level upozornění pro server %s%s%s: %s%d %s"
 
 #: src/common/command.c:1252
 #, c-format
@@ -3335,12 +3334,11 @@ msgstr ""
 
 #: src/common/command.c:2360
 msgid "Key:\n"
-msgstr ""
+msgstr "Klávesa: \n"
 
 #: src/common/command.c:2366
-#, fuzzy
 msgid "No key found.\n"
-msgstr "Žádné aliasy nenalezeny.\n"
+msgstr "Žádná klávesa nenalezena.\n"
 
 #: src/common/command.c:2408
 msgid "global"
@@ -4016,9 +4014,8 @@ msgid "session: warning: ignoring value from uptime (object id: %d)\n"
 msgstr "sezení: upozornění: ignoruji hodnotu z doby běhu (objekt id: %d)\n"
 
 #: src/common/session.c:1649
-#, fuzzy
 msgid "unexpected end of file (reading hotlist)"
-msgstr "neočekávaný konec souboru (čtení historie)"
+msgstr "neočekávaný konec souboru (čtení hotlistu)"
 
 #: src/common/session.c:1705
 msgid "session file not found"
@@ -4069,9 +4066,8 @@ msgid "failed to load uptime"
 msgstr "selhalo načtení doby běhu"
 
 #: src/common/session.c:1792
-#, fuzzy
 msgid "failed to load hotlist"
-msgstr "selhalo načtení historie"
+msgstr "selhalo načtení hotlistu"
 
 #: src/common/session.c:1797
 #, c-format
@@ -5387,14 +5383,14 @@ msgid "command(s) to run when connected to server"
 msgstr "příkaz(y), které zpustit po připojení na server"
 
 #: src/common/weeconfig.c:1011
-#, fuzzy
 msgid ""
 "command(s) to run when connected to server (many commands should be "
 "separated by ';', use '\\;' for a semicolon, special variables $nick, "
 "$channel and $server are replaced by their value)"
 msgstr ""
 "příkaz(y), které provést po přípojení k serveru (více příkazů se odděluje "
-"pomocí ';', použijte '\\;' pro středník)"
+"pomocí ';', použijte '\\;' pro středník, speciální proměnné $nick, "
+"$channel a $server jsou přepsány svou hodnotou)"
 
 #: src/common/weeconfig.c:1016
 msgid "delay (in seconds) after command was executed"
@@ -5429,14 +5425,14 @@ msgid "notify levels for channels of this server"
 msgstr "level upozornění pro kanály na tomto serveru"
 
 #: src/common/weeconfig.c:1029
-#, fuzzy
 msgid ""
 "comma separated list of notify levels for channels of this server (format: "
 "#channel:1,..), a channel name '*' is reserved for server default notify "
 "level"
 msgstr ""
 "čárkou oddělený seznam levelů upozornění pro kanály na tomto serveru "
-"(formát: #kanál:1,..)"
+"(formát: #kanál:1,..), jméno serveru '*' je rezervováno pro defaultní "
+"hodnotu levelu upozornění"
 
 #: src/common/weeconfig.c:1034
 msgid "charset for decoding ISO on server and channels"
@@ -5603,7 +5599,6 @@ msgstr ""
 msgid "Saving config to disk\n"
 msgstr "Ukládám konfiguraci na disk\n"
 
-#, fuzzy
 #~ msgid "Default server notify levels:"
 #~ msgstr "nastavil upozornění serveru"
 
