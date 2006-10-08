@@ -446,7 +446,7 @@ gui_chat_display_word_raw (t_gui_window *window, char *string)
         {
             saved_char = next_char[0];
             next_char[0] = '\0';
-            if ((prev_char[0] == -110) && (!prev_char[1]))
+            if (((signed char)(prev_char[0]) == -110) && (!prev_char[1]))
                 wprintw (GUI_CURSES(window)->win_chat, ".");
             else
                 wprintw (GUI_CURSES(window)->win_chat, "%s", prev_char);
