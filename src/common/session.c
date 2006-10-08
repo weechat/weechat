@@ -952,7 +952,7 @@ session_load_server (FILE *file)
                     gnutls_session_set_data (session_current_server->gnutls_sess, session_data, session_size);
                     free (session_data);
                     gnutls_transport_set_ptr (session_current_server->gnutls_sess,
-                                              (gnutls_transport_ptr) session_current_server->sock);
+                                              (gnutls_transport_ptr) ((unsigned long) session_current_server->sock));
                     if (gnutls_handshake (session_current_server->gnutls_sess) < 0)
                     {
                         session_crash (file, _("gnutls handshake failed"));

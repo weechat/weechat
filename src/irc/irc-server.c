@@ -974,7 +974,7 @@ server_child_read (t_irc_server *server)
                 if (server->ssl_connected)
                 {
                     gnutls_transport_set_ptr (server->gnutls_sess,
-                                              (gnutls_transport_ptr) server->sock);
+                                              (gnutls_transport_ptr) ((unsigned long) server->sock));
                     if (gnutls_handshake (server->gnutls_sess) < 0)
                     {
                         irc_display_prefix (server, server->buffer, PREFIX_ERROR);

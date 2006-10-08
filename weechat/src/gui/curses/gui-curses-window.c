@@ -1227,8 +1227,8 @@ gui_window_set_title ()
 	if (strcmp( envterm, "sun-cmd") == 0)
 	    printf ("\033]l%s %s\033\\", PACKAGE_NAME, PACKAGE_VERSION);
 	else if (strcmp(envterm, "hpterm") == 0)
-	    printf ("\033&f0k%dD%s %s", strlen(PACKAGE_NAME) + 
-		    strlen(PACKAGE_VERSION) + 1,
+	    printf ("\033&f0k%dD%s %s",
+                    (int)(strlen(PACKAGE_NAME) + strlen(PACKAGE_VERSION) + 1),
 		    PACKAGE_NAME, PACKAGE_VERSION);
 	/* the following term supports the xterm excapes */
 	else if (strncmp (envterm, "xterm", 5) == 0

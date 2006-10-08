@@ -88,7 +88,7 @@ weechat_backtrace_addr2line (int number, void *address, char *symbol)
     
     addr = address;
     if (info.dli_fbase >= (const void *) 0x40000000)
-        addr = (const char *) addr - (unsigned int) info.dli_fbase;
+        addr = (void *)((unsigned long)((const char *) addr) - (unsigned long) info.dli_fbase);
     
     snprintf (cmd_line, sizeof (cmd_line),
               "addr2line --functions --demangle -e $(which %s) %p",
