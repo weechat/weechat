@@ -241,6 +241,7 @@ if test "x$enable_plugins" != "xyes" ; then
 fi
 
 # ---------------------------------- perl --------------------------------------
+PERL_VERSION=
 
 if test "x$enable_perl" = "xyes" ; then
     enable_plugins="yes"
@@ -254,6 +255,7 @@ if test "x$enable_perl" = "xyes" ; then
         enable_perl="no"
         not_found="$not_found perl"
     else
+	PERL_VERSION=`perl -V:version | sed "s/version='\(.*\)';/\1/"`
         AC_MSG_CHECKING(for Perl headers files)
         
         PERL_HEADER_TEST=`PT=perltest.c ; echo "#include <EXTERN.h>" > $PT;  echo "#include <perl.h>" >> $PT;  echo "#include <XSUB.h>" >> $PT ;  echo "int main() { return 0; }" >> $PT ; $CC -Wall $PT -o $PT.out $($PERL -MExtUtils::Embed -e ccopts) 1>/dev/null 2>&1; echo $?; rm -f $PT $PT.out 1>/dev/null 2>&1`
@@ -263,7 +265,7 @@ if test "x$enable_perl" = "xyes" ; then
             AC_MSG_RESULT(found)
             AC_MSG_CHECKING(for Perl library)
             PERL_LIB_TEST=`PT=perltest.c ; echo "int main() { return 0; }" > $PT ; $CC -Wall $PT -o $PT.out $($PERL -MExtUtils::Embed -e ldopts) 1>/dev/null 2>&1; echo $?; rm -f $PT $PT.out 1>/dev/null 2>&1`
-            if test "x$PERL_LIB_TEST" = "x0" ; then
+            if test "x$PERL_LIB_TEST" = "x0" ; then	        
                 PERL_LFLAGS=`$PERL -MExtUtils::Embed -e ldopts`
                 AC_MSG_RESULT(found)
             else
@@ -272,7 +274,6 @@ if test "x$enable_perl" = "xyes" ; then
 *** Try to install it with your software package manager.
 *** WeeChat will be built without Perl support.])
                 enable_perl="no"
-					 PERL_VERSION=`perl -V:version | sed "s/version='\(.*\)';/\1/"`
                 not_found="$not_found perl"
             fi
         else
@@ -293,6 +294,7 @@ if test "x$enable_perl" = "xyes" ; then
 fi
 
 # --------------------------------- python -------------------------------------
+PYTHON_VERSION=
 
 if test "x$enable_python" = "xyes" ; then
     enable_plugins="yes"
@@ -352,6 +354,7 @@ if test "x$enable_python" = "xyes" ; then
 fi
 
 # ---------------------------------- ruby --------------------------------------
+RUBY_VERSION=
 
 if test "x$enable_ruby" = "xyes" ; then
     enable_plugins="yes"
@@ -365,6 +368,7 @@ if test "x$enable_ruby" = "xyes" ; then
         enable_ruby="no"
         not_found="$not_found ruby"
     else
+	RUBY_VERSION=`$RUBY -rrbconfig -e "puts Config::CONFIG[['ruby_version']]"`
         RUBY_INCLUDE=`$RUBY -rrbconfig -e "puts Config::CONFIG[['archdir']]"`
         AC_MSG_CHECKING(for Ruby header files)
         if test -r "$RUBY_INCLUDE/ruby.h"; then
@@ -379,7 +383,6 @@ if test "x$enable_ruby" = "xyes" ; then
         fi
         AC_MSG_RESULT(found)
         RUBY_LFLAGS=`$RUBY -rrbconfig -e "puts Config::CONFIG[['LIBRUBYARG_SHARED']]"`
-	 	  RUBY_VERSION=`$RUBY -rrbconfig -e "puts Config::CONFIG[['ruby_version']]"`
     fi
 fi
 
@@ -390,6 +393,7 @@ if test "x$enable_ruby" = "xyes" ; then
 fi
 
 # ---------------------------------- lua --------------------------------------
+LUA_VERSION=
 
 if test "x$enable_lua" = "xyes" ; then
     enable_plugins="yes"
@@ -418,14 +422,15 @@ if test "x$enable_lua" = "xyes" ; then
 	    for l in "$lua_suffix" "" "51" "5.1" "50" "5.0" ; do
 	        pkgconfig_lua_found=`$PKGCONFIG --exists lua$l 2>/dev/null`
 	        if test "x$?" = "x0" ; then
+		    LUA_VERSION=`$PKGCONFIG --modversion lua$l`
                     LUA_CFLAGS="$LUA_CFLAGS "`$PKGCONFIG --cflags lua$l`
                     LUA_LFLAGS="$LUA_LFLAGS "`$PKGCONFIG --libs lua$l`
 
-						  pkgconfig_lualib_found=`$PKGCONFIG --exists lualib$l 2>/dev/null`
-						  if test  "x$?" = "x0"; then
-	                    LUA_CFLAGS="$LUA_CFLAGS "`$PKGCONFIG --cflags lualib$l`
-   	                 LUA_LFLAGS="$LUA_LFLAGS "`$PKGCONFIG --libs lualib$l`
-						  fi
+		    pkgconfig_lualib_found=`$PKGCONFIG --exists lualib$l 2>/dev/null`
+		    if test  "x$?" = "x0"; then
+		       LUA_CFLAGS="$LUA_CFLAGS "`$PKGCONFIG --cflags lualib$l`
+		       LUA_LFLAGS="$LUA_LFLAGS "`$PKGCONFIG --libs lualib$l`
+		    fi
                     break
                 fi
             done
@@ -434,12 +439,13 @@ if test "x$enable_lua" = "xyes" ; then
 
     if test "x$LUA_CFLAGS" = "x" -o "x$LUA_LFLAGS" = "x" ; then
         LUACONFIG=""
-        AC_CHECK_PROGS(LUACONFIG, lua-config lua-config50 lua-config5.0 lua-config51 lua-config5.1)
+        AC_CHECK_PROGS(LUACONFIG, lua-config lua-config51 lua-config5.1 lua-config50 lua-config5.0)
         if test "x$LUACONFIG" != "x" ; then
             AC_MSG_CHECKING(for Lua headers and librairies with lua-config)
 	    echo
             LUA_CFLAGS=`$LUACONFIG --include`
             LUA_LFLAGS=`$LUACONFIG --libs`
+	    LUA_VERSION="5.0.x"
         fi
     fi
 
@@ -454,6 +460,8 @@ if test "x$enable_lua" = "xyes" ; then
         for l in "$lua_suffix" "" "51" "5.1" "50" "5.0" ; do
             AC_CHECK_LIB(lua$l,lua_call,ac_found_lua_lib="yes",ac_found_lua_lib="no")
             if test "x$ac_found_lua_lib" = "xyes" ; then
+	        LUA_VERSION=">=5.1.0"	       
+
 	        LUA_LFLAGS="$LDFLAGS -llua$l -lm"
 		
 		ac2_save_LDFLAGS="$LDFLAGS"
@@ -465,6 +473,8 @@ if test "x$enable_lua" = "xyes" ; then
 
 		AC_CHECK_LIB(lualib$l,luaL_openlib,ac_found_liblua_lib="yes",ac_found_liblua_lib="no")
 		if test "x$ac_found_liblua_lib" = "xyes" ; then
+		   LUA_VERSION="5.0.x"
+		   
 		   LUA_LFLAGS="$LUA_LFLAGS -llualib$l"
 
 		   if echo "$host_os" | grep "^linux" 1>/dev/null 2>&1 ; then
@@ -811,15 +821,37 @@ if test "x$debug" = "x2" ; then
     msg_debug_verbose="yes"
 fi
 
+# plugin status
+PERL_STATUS=
+if test "x$enable_perl" = "xyes"; then
+    PERL_STATUS="($PERL_VERSION)"
+fi
+
+PYTHON_STATUS=
+if test "x$enable_python" = "xyes"; then
+    PYTHON_STATUS="($PYTHON_VERSION)"
+fi
+
+RUBY_STATUS=
+if test "x$enable_ruby" = "xyes"; then
+    RUBY_STATUS="($RUBY_VERSION)"
+fi
+
+LUA_STATUS=
+if test "x$enable_lua" = "xyes"; then
+    LUA_STATUS="($LUA_VERSION)"
+fi
+
+
 echo ""
 echo "Interfaces........................ :$listgui"
 echo "Build with GNUtls support......... : $enable_gnutls"
 echo "Build with flock support.......... : $enable_flock"
 echo "Build with Plugin support......... : $enable_plugins"
-echo "              Perl plugin......... : $enable_perl"
-echo "              Python plugin....... : $enable_python"
-echo "              Ruby plugin......... : $enable_ruby"
-echo "              Lua plugin.......... : $enable_lua"
+echo "              Perl plugin......... : $enable_perl $PERL_STATUS"
+echo "              Python plugin....... : $enable_python $PYTHON_STATUS"
+echo "              Ruby plugin......... : $enable_ruby $RUBY_STATUS"
+echo "              Lua plugin.......... : $enable_lua $LUA_STATUS"
 echo "              Aspell plugin....... : $enable_aspell"
 echo "Compile with debug info........... : $msg_debug_compiler"
 echo "              Backtrace........... : $enable_backtrace"

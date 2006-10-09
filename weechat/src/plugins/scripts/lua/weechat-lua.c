@@ -1942,16 +1942,24 @@ weechat_lua_load (t_weechat_plugin *plugin, char *filename)
         return 0;
     }
 
+#ifdef LUA_VERSION_NUM /* LUA_VERSION_NUM is defined only in lua >= 5.1.0 */
+    luaL_openlibs (lua_current_interpreter);
+#else
     luaopen_base (lua_current_interpreter);
-    luaopen_table (lua_current_interpreter);
-    luaopen_io (lua_current_interpreter);
     luaopen_string (lua_current_interpreter);
+    luaopen_table (lua_current_interpreter);
     luaopen_math (lua_current_interpreter);
+    luaopen_io (lua_current_interpreter);
     luaopen_debug (lua_current_interpreter);
+#endif
     
     luaL_openlib (lua_current_interpreter, "weechat", weechat_lua_funcs, 0);
-    
+
+#ifdef LUA_VERSION_NUM
+    if (luaL_dostring (lua_current_interpreter, weechat_lua_code) != 0)
+#else    
     if (lua_dostring (lua_current_interpreter, weechat_lua_code) != 0)
+#endif
         plugin->print_server (plugin,
                               "Lua warning: unable to redirect stdout and stderr");
     
