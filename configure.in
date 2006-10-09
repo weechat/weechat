@@ -272,6 +272,7 @@ if test "x$enable_perl" = "xyes" ; then
 *** Try to install it with your software package manager.
 *** WeeChat will be built without Perl support.])
                 enable_perl="no"
+					 PERL_VERSION=`perl -V:version | sed "s/version='\(.*\)';/\1/"`
                 not_found="$not_found perl"
             fi
         else
@@ -296,7 +297,7 @@ fi
 if test "x$enable_python" = "xyes" ; then
     enable_plugins="yes"
     
-    AC_PATH_PROGS(PYTHON, python python2.4 python2.3 python2.2)
+    AC_PATH_PROGS(PYTHON, python python2.5 python2.4 python2.3 python2.2)
     if test -z $PYTHON ; then
         AC_MSG_WARN([
 *** Python must be installed on your system but python interpreter couldn't be found in path.
@@ -378,6 +379,7 @@ if test "x$enable_ruby" = "xyes" ; then
         fi
         AC_MSG_RESULT(found)
         RUBY_LFLAGS=`$RUBY -rrbconfig -e "puts Config::CONFIG[['LIBRUBYARG_SHARED']]"`
+	 	  RUBY_VERSION=`$RUBY -rrbconfig -e "puts Config::CONFIG[['ruby_version']]"`
     fi
 fi
 
@@ -413,13 +415,17 @@ if test "x$enable_lua" = "xyes" ; then
         if test "x$PKGCONFIG" != "x"; then
 	    AC_MSG_CHECKING(for Lua headers and librairies with pkg-config)
 	    echo
-	    for l in "$lua_suffix" "" "50" "5.0" "51" "5.1" ; do
-	        pkgconfig_lua_found=`$PKGCONFIG --exists lua$l 2>/dev/null && $PKGCONFIG --exists lualib$l 2>/dev/null`
+	    for l in "$lua_suffix" "" "51" "5.1" "50" "5.0" ; do
+	        pkgconfig_lua_found=`$PKGCONFIG --exists lua$l 2>/dev/null`
 	        if test "x$?" = "x0" ; then
                     LUA_CFLAGS="$LUA_CFLAGS "`$PKGCONFIG --cflags lua$l`
-                    LUA_CFLAGS="$LUA_CFLAGS "`$PKGCONFIG --cflags lualib$l`
                     LUA_LFLAGS="$LUA_LFLAGS "`$PKGCONFIG --libs lua$l`
-                    LUA_LFLAGS="$LUA_LFLAGS "`$PKGCONFIG --libs lualib$l`
+
+						  pkgconfig_lualib_found=`$PKGCONFIG --exists lualib$l 2>/dev/null`
+						  if test  "x$?" = "x0"; then
+	                    LUA_CFLAGS="$LUA_CFLAGS "`$PKGCONFIG --cflags lualib$l`
+   	                 LUA_LFLAGS="$LUA_LFLAGS "`$PKGCONFIG --libs lualib$l`
+						  fi
                     break
                 fi
             done
@@ -445,7 +451,7 @@ if test "x$enable_lua" = "xyes" ; then
         if test "x$ac_found_lua_header" = "xyes" -a "x$ac_found_liblua_header" = "xyes"; then
             LUA_CFLAGS="$CFLAGS"
         fi
-        for l in "$lua_suffix" "" "50" "5.0" "51" "5.1" ; do
+        for l in "$lua_suffix" "" "51" "5.1" "50" "5.0" ; do
             AC_CHECK_LIB(lua$l,lua_call,ac_found_lua_lib="yes",ac_found_lua_lib="no")
             if test "x$ac_found_lua_lib" = "xyes" ; then
 	        LUA_LFLAGS="$LDFLAGS -llua$l -lm"
@@ -471,7 +477,7 @@ if test "x$enable_lua" = "xyes" ; then
 	    fi
         done
     fi
-    
+
     AC_MSG_CHECKING(for Lua compiling and linking)
     LUA_TEST=`LT=luatest.c ; echo "#include <lua.h>" > $LT;  echo "#include <lualib.h>" >> $LT; echo "int main() { luaopen_base((lua_State *)lua_open()); return 0; }" >> $LT ; $CC -Wall $LT -o $LT.out $LUA_CFLAGS $LUA_LFLAGS $CFLAGS $LDFLAGS 1>/dev/null 2>&1 ; echo $?; rm -f $LT $LT.out 1>/dev/null 2>&1`
     if test "x$LUA_TEST" != "x0" ; then
