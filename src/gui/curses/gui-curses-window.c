@@ -1262,7 +1262,7 @@ gui_window_reset_title ()
 	if (strcmp( envterm, "sun-cmd") == 0)
 	    printf ("\033]l%s\033\\", "Terminal");
 	else if (strcmp( envterm, "hpterm") == 0)
-	    printf ("\033&f0k%dD%s", strlen("Terminal"), "Terminal");
+	    printf ("\033&f0k%dD%s", (int)strlen("Terminal"), "Terminal");
 	/* the following term supports the xterm excapes */
 	else if (strncmp (envterm, "xterm", 5) == 0
 		 || strncmp (envterm, "rxvt", 4) == 0
