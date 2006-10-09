@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-10-08
+ChangeLog - 2006-10-09
 
 
 Version 0.2.2 (under dev!):
+   * fixed bug with /alias and arguments (like $1), now text after
+     argument(s) is used (bug #17944)
    * fixed minor display bug with special chars on some arch like PPC
 
 Version 0.2.1 (2006-10-01):

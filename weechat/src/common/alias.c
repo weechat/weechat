@@ -275,6 +275,9 @@ alias_replace_args (char *alias_args, char *user_args)
                 pos++;
         }
     }
+    if (start < pos)
+        alias_add_word (&res, &length_res, start);
+    
     if (argv)
         free_exploded_string (argv);
     return res;
