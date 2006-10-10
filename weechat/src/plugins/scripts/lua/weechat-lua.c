@@ -19,18 +19,22 @@
 
 /* weechat-lua.c: Lua plugin support for WeeChat */
 
+#undef _
 
 #include <lua.h>
 #include <lualib.h>
 #include <lauxlib.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdarg.h>
 #include <time.h>
+
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#undef _
+
 #include "../../weechat-plugin.h"
 #include "../weechat-script.h"
 

@@ -17,18 +17,22 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-/* wee-ruby.c: Ruby plugin support for WeeChat */
+/* weechat-ruby.c: Ruby plugin support for WeeChat */
 
+#undef _
 
 #include <ruby.h>
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
+#include <time.h>
+
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#undef _
+
 #include "../../weechat-plugin.h"
 #include "../weechat-script.h"
 
