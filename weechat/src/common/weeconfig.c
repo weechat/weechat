@@ -1349,10 +1349,18 @@ config_option_set_value (t_config_option *option, char *value)
     {
         case OPTION_TYPE_BOOLEAN:
             if ((ascii_strcasecmp (value, "on") == 0)
-                || (ascii_strcasecmp (value, "yes") == 0))
+                || (ascii_strcasecmp (value, "yes") == 0)
+                || (ascii_strcasecmp (value, "y") == 0)
+                || (ascii_strcasecmp (value, "true") == 0)
+                || (ascii_strcasecmp (value, "t") == 0)
+                || (ascii_strcasecmp (value, "1") == 0))
                 *(option->ptr_int) = BOOL_TRUE;
             else if ((ascii_strcasecmp (value, "off") == 0)
-                     || (ascii_strcasecmp (value, "no") == 0))
+                     || (ascii_strcasecmp (value, "no") == 0)
+                     || (ascii_strcasecmp (value, "n") == 0)
+                     || (ascii_strcasecmp (value, "false") == 0)
+                     || (ascii_strcasecmp (value, "f") == 0)
+                     || (ascii_strcasecmp (value, "0") == 0))
                 *(option->ptr_int) = BOOL_FALSE;
             else
                 return -1;

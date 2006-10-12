@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-10-09
+ChangeLog - 2006-10-12
 
 
 Version 0.2.2 (under dev!):
+   * added more values for config boolean values: y/true/t/1 and n/false/f/0
    * fixed bug with /alias and arguments (like $1), now text after
      argument(s) is used (bug #17944)
    * fixed minor display bug with special chars on some arch like PPC
