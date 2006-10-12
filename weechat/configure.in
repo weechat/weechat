@@ -198,6 +198,9 @@ iconv_found="no"
 AC_CHECK_HEADER(iconv.h,ac_found_iconv_header="yes",ac_found_iconv_header="no")
 if test "x$ac_found_iconv_header" = "xyes" ; then
    AC_CHECK_LIB(iconv,iconv_open,ac_found_iconv_lib="yes",ac_found_iconv_lib="no")
+   if test "x$ac_found_iconv_lib" = "xno" ; then
+      AC_CHECK_LIB(iconv,libiconv_open,ac_found_iconv_lib="yes",ac_found_iconv_lib="no")
+   fi
    if test "x$ac_found_iconv_lib" = "xyes" ; then
       LIBS="$LIBS -liconv"
    fi
