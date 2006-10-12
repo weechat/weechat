@@ -240,7 +240,7 @@ plugin_config_read ()
         return;
     snprintf (filename, filename_length, "%s%s" WEECHAT_PLUGINS_CONFIG_NAME,
               weechat_home, DIR_SEPARATOR);
-    if ((file = fopen (filename, "rt")) == NULL)
+    if ((file = fopen (filename, "r")) == NULL)
         return;
     
     line_number = 0;
@@ -347,7 +347,7 @@ plugin_config_write ()
     snprintf (filename, filename_length, "%s%s" WEECHAT_PLUGINS_CONFIG_NAME,
               weechat_home, DIR_SEPARATOR);
     
-    if ((file = fopen (filename, "wt")) == NULL)
+    if ((file = fopen (filename, "w")) == NULL)
     {
         irc_display_prefix (NULL, NULL, PREFIX_ERROR);
         gui_printf (NULL, _("%s cannot create file \"%s\"\n"),

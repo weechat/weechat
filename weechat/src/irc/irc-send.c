@@ -458,7 +458,6 @@ irc_cmd_send_ctcp (t_irc_server *server, t_irc_channel *channel,
 {
     char *pos_type, *pos_args, *pos;
     struct timeval tv;
-    struct timezone tz;
     
     /* make gcc happy */
     (void) channel;
@@ -500,7 +499,7 @@ irc_cmd_send_ctcp (t_irc_server *server, t_irc_channel *channel,
         
         if ((ascii_strcasecmp (pos_type, "ping") == 0) && (!pos_args))
         {
-            gettimeofday (&tv, &tz);
+            gettimeofday (&tv, NULL);
             server_sendf (server, "PRIVMSG %s :\01PING %d %d\01\r\n",
                           arguments, tv.tv_sec, tv.tv_usec);
             gui_printf (server->buffer, " %s%d %d\n",

@@ -5,6 +5,7 @@ ChangeLog - 2006-10-12
 
 
 Version 0.2.2 (under dev!):
+   * fixed some portability bugs (patch #5271)
    * fixed iconv detection for BSD (patch #5456)
    * fixed typo in configure.in (bash specific test) (patch #5450)
    * mode changes with /op, /deop, /voice, /devoice, /halfop, /dehalfop are

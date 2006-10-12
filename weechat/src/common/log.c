@@ -28,7 +28,11 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdarg.h>
+
+#ifdef HAVE_FLOCK
 #include <sys/file.h>
+#endif
+
 #include <sys/types.h>
 #include <time.h>
 

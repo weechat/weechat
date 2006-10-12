@@ -856,7 +856,6 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *nick, char *argumen
 {
     char *host2, *pos, *pos2, *pos_usec;
     struct timeval tv;
-    struct timezone tz;
     long sec1, usec1, sec2, usec2, difftime;
     t_irc_channel *ptr_channel;
     int highlight;
@@ -922,7 +921,7 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *nick, char *argumen
                     {
                         pos2[0] = '\0';
                         
-                        gettimeofday (&tv, &tz);
+                        gettimeofday (&tv, NULL);
                         sec1 = atol (pos);
                         usec1 = atol (pos_usec);
                         sec2 = tv.tv_sec;
@@ -1191,7 +1190,6 @@ int
 irc_cmd_recv_pong (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     struct timeval tv;
-    struct timezone tz;
     int old_lag;
     
     /* make gcc happy */
@@ -1203,7 +1201,7 @@ irc_cmd_recv_pong (t_irc_server *server, char *host, char *nick, char *arguments
     {
         /* calculate lag (time diff with lag check) */
         old_lag = server->lag;
-        gettimeofday (&tv, &tz);
+        gettimeofday (&tv, NULL);
         server->lag = (int) get_timeval_diff (&(server->lag_check_time), &tv);
         if (old_lag != server->lag)
             gui_status_draw (gui_current_window->buffer, 1);

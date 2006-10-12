@@ -36,6 +36,10 @@
 
 #include "../gui/gui.h"
 
+#ifndef NI_MAXHOST
+#define NI_MAXHOST 256
+#endif
+
 /* prefixes for chat window */
 
 #define PREFIX_SERVER    "-@-"

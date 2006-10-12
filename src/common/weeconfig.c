@@ -1873,7 +1873,7 @@ config_read ()
         return -2;
     snprintf (filename, filename_length, "%s%s" WEECHAT_CONFIG_NAME,
               weechat_home, DIR_SEPARATOR);
-    if ((file = fopen (filename, "rt")) == NULL)
+    if ((file = fopen (filename, "r")) == NULL)
     {
         gui_printf (NULL, _("%s config file \"%s\" not found.\n"),
                     WEECHAT_WARNING, filename);
@@ -2158,7 +2158,7 @@ config_create_default ()
         return -2;
     snprintf (filename, filename_length, "%s%s" WEECHAT_CONFIG_NAME,
               weechat_home, DIR_SEPARATOR);
-    if ((file = fopen (filename, "wt")) == NULL)
+    if ((file = fopen (filename, "w")) == NULL)
     {
         gui_printf (NULL, _("%s cannot create file \"%s\"\n"),
                     WEECHAT_ERROR, filename);
@@ -2365,7 +2365,7 @@ config_write (char *config_name)
                   weechat_home, DIR_SEPARATOR);
     }
     
-    if ((file = fopen (filename, "wt")) == NULL)
+    if ((file = fopen (filename, "w")) == NULL)
     {
         gui_printf (NULL, _("%s cannot create file \"%s\"\n"),
                     WEECHAT_ERROR, filename);

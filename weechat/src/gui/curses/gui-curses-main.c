@@ -67,7 +67,6 @@ gui_main_loop ()
 {
     fd_set read_fd;
     static struct timeval timeout, tv;
-    static struct timezone tz;
     t_irc_server *ptr_server;
     t_gui_buffer *ptr_buffer;
     int old_day, old_min, old_sec, diff;
@@ -219,14 +218,14 @@ gui_main_loop ()
                         && (new_time >= ptr_server->lag_next_check))
                     {
                         server_sendf (ptr_server, "PING %s\r\n", ptr_server->address);
-                        gettimeofday (&(ptr_server->lag_check_time), &tz);
+                        gettimeofday (&(ptr_server->lag_check_time), NULL);
                     }
                     
                     /* lag timeout => disconnect */
                     if ((ptr_server->lag_check_time.tv_sec != 0)
                         && (cfg_irc_lag_disconnect > 0))
                     {
-                        gettimeofday (&tv, &tz);
+                        gettimeofday (&tv, NULL);
                         diff = (int) get_timeval_diff (&(ptr_server->lag_check_time), &tv);
                         if (diff / 1000 > cfg_irc_lag_disconnect * 60)
                         {
