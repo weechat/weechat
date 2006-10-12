@@ -650,7 +650,7 @@ for p in $doc_xsl_prefix_path; do
     fi
 done
 
-if test "x$DOC_XSL_PREFIX" == "x"; then
+if test "x$DOC_XSL_PREFIX" = "x"; then
     AC_MSG_RESULT(no)
     enable_doc="no"
     AC_MSG_WARN([

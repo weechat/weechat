@@ -5,6 +5,7 @@ ChangeLog - 2006-10-12
 
 
 Version 0.2.2 (under dev!):
+   * fixed typo in configure.in (bash specific test) (patch #5450)
    * mode changes with /op, /deop, /voice, /devoice, /halfop, /dehalfop are
      now sent in one mode command to server (task #5968)
    * added more values for config boolean values: y/true/t/1 and n/false/f/0
