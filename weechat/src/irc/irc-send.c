@@ -638,7 +638,6 @@ irc_cmd_send_dehalfop (t_irc_server *server, t_irc_channel *channel,
                        int argc, char **argv)
 {
     t_gui_buffer *buffer;
-    int i;
     
     irc_find_context (server, channel, NULL, &buffer);
     
@@ -649,12 +648,8 @@ irc_cmd_send_dehalfop (t_irc_server *server, t_irc_channel *channel,
                           CHANNEL(buffer)->name,
                           server->nick);
         else
-        {
-            for (i = 0; i < argc; i++)
-                server_sendf (server, "MODE %s -h %s\r\n",
-                              CHANNEL(buffer)->name,
-                              argv[i]);
-        }
+            irc_send_mode_nicks (server, CHANNEL(buffer)->name,
+                                 "-", "h", argc, argv);
     }
     else
     {
@@ -675,7 +670,6 @@ irc_cmd_send_deop (t_irc_server *server, t_irc_channel *channel,
                    int argc, char **argv)
 {
     t_gui_buffer *buffer;
-    int i;
     
     irc_find_context (server, channel, NULL, &buffer);
     
@@ -686,12 +680,8 @@ irc_cmd_send_deop (t_irc_server *server, t_irc_channel *channel,
                           CHANNEL(buffer)->name,
                           server->nick);
         else
-        {
-            for (i = 0; i < argc; i++)
-                server_sendf (server, "MODE %s -o %s\r\n",
-                              CHANNEL(buffer)->name,
-                              argv[i]);
-        }
+            irc_send_mode_nicks (server, CHANNEL(buffer)->name,
+                                 "-", "o", argc, argv);
     }
     else
     {
@@ -712,7 +702,6 @@ irc_cmd_send_devoice (t_irc_server *server, t_irc_channel *channel,
                       int argc, char **argv)
 {
     t_gui_buffer *buffer;
-    int i;
     
     irc_find_context (server, channel, NULL, &buffer);
     
@@ -723,12 +712,8 @@ irc_cmd_send_devoice (t_irc_server *server, t_irc_channel *channel,
                           CHANNEL(buffer)->name,
                           server->nick);
         else
-        {
-            for (i = 0; i < argc; i++)
-                server_sendf (server, "MODE %s -v %s\r\n",
-                              CHANNEL(buffer)->name,
-                              argv[i]);
-        }
+            irc_send_mode_nicks (server, CHANNEL(buffer)->name,
+                                 "-", "v", argc, argv);
     }
     else
     {
@@ -766,7 +751,6 @@ irc_cmd_send_halfop (t_irc_server *server, t_irc_channel *channel,
                      int argc, char **argv)
 {
     t_gui_buffer *buffer;
-    int i;
     
     irc_find_context (server, channel, NULL, &buffer);
     
@@ -777,12 +761,8 @@ irc_cmd_send_halfop (t_irc_server *server, t_irc_channel *channel,
                           CHANNEL(buffer)->name,
                           server->nick);
         else
-        {
-            for (i = 0; i < argc; i++)
-                server_sendf (server, "MODE %s +h %s\r\n",
-                              CHANNEL(buffer)->name,
-                              argv[i]);
-        }
+            irc_send_mode_nicks (server, CHANNEL(buffer)->name,
+                                 "+", "h", argc, argv);
     }
     else
     {
@@ -1151,6 +1131,37 @@ irc_cmd_send_mode (t_irc_server *server, t_irc_channel *channel,
 }
 
 /*
+ * irc_send_mode_nicks: send mode change for many nicks on a channel
+ */
+
+void
+irc_send_mode_nicks (t_irc_server *server, char *channel,
+                     char *set, char *mode, int argc, char **argv)
+{
+    int i, length;
+    char *command;
+    
+    length = 0;
+    for (i = 0; i < argc; i++)
+        length += strlen (argv[i]) + 1;
+    length += strlen (channel) + (argc * strlen (mode)) + 32;
+    command = (char *)malloc (length);
+    if (command)
+    {
+        snprintf (command, length, "MODE %s %s", channel, set);
+        for (i = 0; i < argc; i++)
+            strcat (command, mode);
+        for (i = 0; i < argc; i++)
+        {
+            strcat (command, " ");
+            strcat (command, argv[i]);
+        }
+        server_sendf (server, "%s\r\n", command);
+        free (command);
+    }
+}
+
+/*
  * irc_cmd_send_motd: get the "Message Of The Day"
  */
 
@@ -1486,16 +1497,18 @@ irc_cmd_send_op (t_irc_server *server, t_irc_channel *channel,
                  int argc, char **argv)
 {
     t_gui_buffer *buffer;
-    int i;
     
     irc_find_context (server, channel, NULL, &buffer);
     
     if (BUFFER_IS_CHANNEL(buffer))
     {
-        for (i = 0; i < argc; i++)
+        if (argc == 0)
             server_sendf (server, "MODE %s +o %s\r\n",
                           CHANNEL(buffer)->name,
-                          argv[i]);
+                          server->nick);
+        else
+            irc_send_mode_nicks (server, CHANNEL(buffer)->name,
+                                 "+", "o", argc, argv);
     }
     else
     {
@@ -2170,7 +2183,6 @@ irc_cmd_send_voice (t_irc_server *server, t_irc_channel *channel,
                     int argc, char **argv)
 {
     t_gui_buffer *buffer;
-    int i;
     
     irc_find_context (server, channel, NULL, &buffer);
     
@@ -2181,12 +2193,8 @@ irc_cmd_send_voice (t_irc_server *server, t_irc_channel *channel,
                           CHANNEL(buffer)->name,
                           server->nick);
         else
-        {
-            for (i = 0; i < argc; i++)
-                server_sendf (server, "MODE %s +v %s\r\n",
-                              CHANNEL(buffer)->name,
-                              argv[i]);
-        }
+            irc_send_mode_nicks (server, CHANNEL(buffer)->name,
+                                 "+", "v", argc, argv);
     }
     else
     {

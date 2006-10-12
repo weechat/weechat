@@ -471,6 +471,7 @@ extern int irc_cmd_send_list (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_lusers (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_me (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_mode (t_irc_server *, t_irc_channel *, char *);
+extern void irc_send_mode_nicks (t_irc_server *, char *, char *, char *, int, char **);
 extern int irc_cmd_send_motd (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_msg (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_names (t_irc_server *, t_irc_channel *, char *);

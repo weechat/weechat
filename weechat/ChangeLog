@@ -5,6 +5,8 @@ ChangeLog - 2006-10-12
 
 
 Version 0.2.2 (under dev!):
+   * mode changes with /op, /deop, /voice, /devoice, /halfop, /dehalfop are
+     now sent in one mode command to server (task #5968)
    * added more values for config boolean values: y/true/t/1 and n/false/f/0
    * fixed bug with /alias and arguments (like $1), now text after
      argument(s) is used (bug #17944)
