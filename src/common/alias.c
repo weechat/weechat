@@ -223,12 +223,13 @@ char *
 alias_replace_args (char *alias_args, char *user_args)
 {
     char **argv, *start, *pos, *res;
-    int argc, length_res;
-
+    int argc, length_res, args_count;
+    
     argv = explode_string (user_args, " ", 0, &argc);
     
     res = NULL;
     length_res = 0;
+    args_count = 0;
     start = alias_args;
     pos = start;
     while (pos && pos[0])
@@ -248,6 +249,7 @@ alias_replace_args (char *alias_args, char *user_args)
             {
                 if (pos[1] == '*')
                 {
+                    args_count++;
                     pos[0] = '\0';
                     alias_add_word (&res, &length_res, start);
                     alias_add_word (&res, &length_res, user_args);
@@ -259,6 +261,7 @@ alias_replace_args (char *alias_args, char *user_args)
                 {
                     if ((pos[1] >= '1') && (pos[1] <= '9'))
                     {
+                        args_count++;
                         pos[0] = '\0';
                         alias_add_word (&res, &length_res, start);
                         if (pos[1] - '0' <= argc)
@@ -275,11 +278,19 @@ alias_replace_args (char *alias_args, char *user_args)
                 pos++;
         }
     }
+    
     if (start < pos)
         alias_add_word (&res, &length_res, start);
     
+    if ((args_count == 0) && user_args && user_args[0])
+    {
+        alias_add_word (&res, &length_res, " ");
+        alias_add_word (&res, &length_res, user_args);
+    }
+    
     if (argv)
         free_exploded_string (argv);
+    
     return res;
 }
 
