@@ -1335,6 +1335,34 @@ config_change_log ()
 }
 
 /*
+ * config_option_get_boolean_value: get boolean value with user text
+ *                                  return: BOOL_FALSE or BOOL_TRUE
+ */
+
+int
+config_option_get_boolean_value (char *text)
+{
+    if ((ascii_strcasecmp (text, "on") == 0)
+        || (ascii_strcasecmp (text, "yes") == 0)
+        || (ascii_strcasecmp (text, "y") == 0)
+        || (ascii_strcasecmp (text, "true") == 0)
+        || (ascii_strcasecmp (text, "t") == 0)
+        || (ascii_strcasecmp (text, "1") == 0))
+        return BOOL_TRUE;
+
+    if ((ascii_strcasecmp (text, "off") == 0)
+        || (ascii_strcasecmp (text, "no") == 0)
+        || (ascii_strcasecmp (text, "n") == 0)
+        || (ascii_strcasecmp (text, "false") == 0)
+        || (ascii_strcasecmp (text, "f") == 0)
+        || (ascii_strcasecmp (text, "0") == 0))
+        return BOOL_FALSE;
+    
+    /* invalid text */
+    return -1;
+}
+
+/*
  * config_option_set_value: set new value for an option
  *                          return:  0 if success
  *                                  -1 if error (bad value)
@@ -1348,22 +1376,18 @@ config_option_set_value (t_config_option *option, char *value)
     switch (option->option_type)
     {
         case OPTION_TYPE_BOOLEAN:
-            if ((ascii_strcasecmp (value, "on") == 0)
-                || (ascii_strcasecmp (value, "yes") == 0)
-                || (ascii_strcasecmp (value, "y") == 0)
-                || (ascii_strcasecmp (value, "true") == 0)
-                || (ascii_strcasecmp (value, "t") == 0)
-                || (ascii_strcasecmp (value, "1") == 0))
-                *(option->ptr_int) = BOOL_TRUE;
-            else if ((ascii_strcasecmp (value, "off") == 0)
-                     || (ascii_strcasecmp (value, "no") == 0)
-                     || (ascii_strcasecmp (value, "n") == 0)
-                     || (ascii_strcasecmp (value, "false") == 0)
-                     || (ascii_strcasecmp (value, "f") == 0)
-                     || (ascii_strcasecmp (value, "0") == 0))
-                *(option->ptr_int) = BOOL_FALSE;
-            else
-                return -1;
+            int_value = config_option_get_boolean_value (value);
+            switch (int_value)
+            {
+                case BOOL_TRUE:
+                    *(option->ptr_int) = BOOL_TRUE;
+                    break;
+                case BOOL_FALSE:
+                    *(option->ptr_int) = BOOL_FALSE;
+                    break;
+                default:
+                    return -1;
+            }
             break;
         case OPTION_TYPE_INT:
             int_value = atoi (value);
@@ -1594,12 +1618,18 @@ config_set_server_value (t_irc_server *server, char *option_name,
     switch (ptr_option->option_type)
     {
         case OPTION_TYPE_BOOLEAN:
-            if (ascii_strcasecmp (value, "on") == 0)
-                *((int *)(ptr_data)) = BOOL_TRUE;
-            else if (ascii_strcasecmp (value, "off") == 0)
-                *((int *)(ptr_data)) = BOOL_FALSE;
-            else
-                return -2;
+            int_value = config_option_get_boolean_value (value);
+            switch (int_value)
+            {
+                case BOOL_TRUE:
+                    *((int *)(ptr_data)) = BOOL_TRUE;
+                    break;
+                case BOOL_FALSE:
+                    *((int *)(ptr_data)) = BOOL_FALSE;
+                    break;
+                default:
+                    return -2;
+            }
             break;
         case OPTION_TYPE_INT:
             int_value = atoi (value);
