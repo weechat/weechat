@@ -4208,6 +4208,11 @@ else
                 </thead>
                 <tbody>
                   <row>
+                    <entry>time_t</entry>
+                    <entry><literal>date</literal></entry>
+                    <entry>date et heure</entry>
+                  </row>
+                  <row>
                     <entry>char *</entry>
                     <entry><literal>nick</literal></entry>
                     <entry>pseudo</entry>
@@ -4242,13 +4247,16 @@ else
             Exemple :
 <screen>
 t_plugin_buffer_line *buffer_line, *ptr_line;
+char text_time[256];
 
 buffer_line = plugin->get_buffer_data (plugin);
 if (buffer_line)
 {
     for (ptr_line = buffer_line; ptr_line; ptr_line = ptr_line->next_line)
     {
-        plugin->print (plugin, NULL, NULL, "pseudo: %s, données: %s", ptr_line->nick, ptr_line->data);
+        strftime (text_time, sizeof (text_time), "%x %X", localtime (&amp;(ptr_line->date)));
+        plugin->print (plugin, NULL, NULL, "date: %s, pseudo: %s, données: %s",
+                       text_time, ptr_line->nick, ptr_line->data);
     }
     plugin->free_buffer_data (plugin, buffer_line);
 }

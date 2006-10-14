@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-10-12
+ChangeLog - 2006-10-14
 
 
 Version 0.2.2 (under dev!):
+   * added date in plugin function get_buffer_data()
    * fixed some portability bugs (patch #5271)
    * fixed iconv detection for BSD (patch #5456)
    * fixed typo in configure.in (bash specific test) (patch #5450)

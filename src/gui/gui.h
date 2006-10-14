@@ -89,7 +89,7 @@ extern t_gui_buffer *gui_buffer_get_dcc (t_gui_window *);
 extern void gui_buffer_clear (t_gui_buffer *);
 extern void gui_buffer_clear_all ();
 extern void gui_buffer_free (t_gui_buffer *, int);
-extern t_gui_line *gui_buffer_line_new (t_gui_buffer *);
+extern t_gui_line *gui_buffer_line_new (t_gui_buffer *, time_t);
 extern void gui_buffer_merge_servers (t_gui_window *);
 extern void gui_buffer_split_server (t_gui_window *);
 extern void gui_buffer_switch_previous (t_gui_window *);

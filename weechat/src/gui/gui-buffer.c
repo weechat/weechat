@@ -551,7 +551,7 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
  */
 
 t_gui_line *
-gui_buffer_line_new (t_gui_buffer *buffer)
+gui_buffer_line_new (t_gui_buffer *buffer, time_t date)
 {
     t_gui_line *new_line, *ptr_line;
     
@@ -562,6 +562,7 @@ gui_buffer_line_new (t_gui_buffer *buffer)
         new_line->log_write = 1;
         new_line->line_with_message = 0;
         new_line->line_with_highlight = 0;
+        new_line->date = date;
         new_line->nick = NULL;
         new_line->data = NULL;
         new_line->ofs_after_date = -1;

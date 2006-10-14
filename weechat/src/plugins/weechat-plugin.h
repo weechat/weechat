@@ -174,8 +174,9 @@ typedef struct t_plugin_buffer_line t_plugin_buffer_line;
 
 struct t_plugin_buffer_line
 {
-    char *nick;                     /* nick                                 */
-    char *data;                     /* line data                            */
+    time_t date;                     /* date                                */
+    char *nick;                      /* nick                                */
+    char *data;                      /* line data                           */
     t_plugin_buffer_line *prev_line; /* link to previous line               */
     t_plugin_buffer_line *next_line; /* link to next line                   */
 };

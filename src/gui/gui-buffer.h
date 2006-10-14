@@ -62,6 +62,7 @@ struct t_gui_line
     int log_write;                  /* = 1 if line will be written to log   */
     int line_with_message;          /* line contains a message from a user? */
     int line_with_highlight;        /* line contains highlight              */
+    time_t date;                    /* date/time of line                    */
     char *nick;                     /* nickname for line (may be NULL)      */
     char *data;                     /* line content                         */
     int ofs_after_date;             /* offset to first char after date      */

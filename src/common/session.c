@@ -377,6 +377,7 @@ session_save_line (FILE *file, t_gui_line *line)
     rc = rc && (session_write_int (file, SESSION_LINE_OFS_AFTER_DATE, line->ofs_start_message));
     rc = rc && (session_write_int (file, SESSION_LINE_OFS_START_MESSAGE, line->ofs_start_message));
     rc = rc && (session_write_str (file, SESSION_LINE_NICK, line->nick));
+    rc = rc && (session_write_buf (file, SESSION_LINE_NICK, &(line->date), sizeof (time_t)));
     rc = rc && (session_write_id  (file, SESSION_LINE_END));
     return rc;
 }
@@ -1524,7 +1525,7 @@ session_load_line (FILE *file)
     }
     
     /* allocate line */
-    line = gui_buffer_line_new (session_current_buffer);
+    line = gui_buffer_line_new (session_current_buffer, time (NULL));
     if (!line)
     {
         session_crash (file, _("can't create new line"));
@@ -1572,6 +1573,9 @@ session_load_line (FILE *file)
                 break;
             case SESSION_LINE_NICK:
                 rc = rc && (session_read_str (file, &(line->nick)));
+                break;
+            case SESSION_LINE_DATE:
+                rc = rc && (session_read_buf (file, &(line->date), sizeof (time_t)));
                 break;
             default:
                 weechat_log_printf (_("session: warning: ignoring value from "

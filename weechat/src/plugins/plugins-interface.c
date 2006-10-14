@@ -1294,6 +1294,7 @@ weechat_plugin_get_buffer_data (t_weechat_plugin *plugin, char *server, char *ch
         new_buffer_line = (t_plugin_buffer_line *) malloc (sizeof (t_plugin_buffer_line));
         if (new_buffer_line)
         {
+            new_buffer_line->date = ptr_line->date;
             new_buffer_line->nick = (ptr_line->nick) ? strdup (ptr_line->nick) : NULL;
             new_buffer_line->data = (ptr_line->data) ?
                 (char *) gui_color_decode ((unsigned char *)(ptr_line->data + ptr_line->ofs_start_message), 0) : NULL;

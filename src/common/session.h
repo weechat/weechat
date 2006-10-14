@@ -179,7 +179,8 @@ enum t_session_line
     SESSION_LINE_DATA,
     SESSION_LINE_OFS_AFTER_DATE,
     SESSION_LINE_OFS_START_MESSAGE,
-    SESSION_LINE_NICK
+    SESSION_LINE_NICK,
+    SESSION_LINE_DATE
 };
 
 enum t_session_uptime

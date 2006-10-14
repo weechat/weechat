@@ -108,7 +108,7 @@ gui_word_real_pos (t_gui_window *window, char *string, int pos)
  */
 
 void
-gui_add_to_line (t_gui_buffer *buffer, int type, char *nick, char *message)
+gui_add_to_line (t_gui_buffer *buffer, int type, time_t date, char *nick, char *message)
 {
     char *pos;
     int length;
@@ -117,7 +117,7 @@ gui_add_to_line (t_gui_buffer *buffer, int type, char *nick, char *message)
     if (buffer->line_complete)
     {
         buffer->line_complete = 0;
-        if (!gui_buffer_line_new (buffer))
+        if (!gui_buffer_line_new (buffer, date))
             return;
     }
     
@@ -220,14 +220,12 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, char *nic
     static char buf[8192];
     char text_time[1024];
     char text_time_char[2];
-    time_t time_seconds;
+    time_t date;
     struct tm *local_time;
     int time_first_digit, time_last_digit;
     char *buf2, *pos;
     int i;
     va_list argptr;
-    static time_t seconds;
-    struct tm *date_tmp;
     
     if (gui_init_ok)
     {
@@ -271,19 +269,16 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, char *nic
     
     if (gui_init_ok)
     {
-        seconds = time (NULL);
-        date_tmp = localtime (&seconds);
-        
         pos = buf2;
         while (pos)
         {
+            date = time (NULL);
             if ((!buffer->last_line) || (buffer->line_complete))
             {
                 if (display_time && cfg_look_buffer_timestamp &&
                     cfg_look_buffer_timestamp[0])
                 {
-                    time_seconds = time (NULL);
-                    local_time = localtime (&time_seconds);
+                    local_time = localtime (&date);
                     strftime (text_time, sizeof (text_time), cfg_look_buffer_timestamp, local_time);
                     
                     time_first_digit = -1;
@@ -307,41 +302,46 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, char *nic
                         text_time_char[0] = text_time[i];
                         if (time_first_digit < 0)
                         {
-                            gui_add_to_line (buffer, MSG_TYPE_TIME, NULL,
-                                             GUI_COLOR(COLOR_WIN_CHAT_TIME));
-                            gui_add_to_line (buffer, MSG_TYPE_TIME, NULL, text_time_char);
+                            gui_add_to_line (buffer, MSG_TYPE_TIME, date,
+                                             NULL, GUI_COLOR(COLOR_WIN_CHAT_TIME));
+                            gui_add_to_line (buffer, MSG_TYPE_TIME, date,
+                                             NULL, text_time_char);
                         }
                         else
                         {
                             if ((i < time_first_digit) || (i > time_last_digit))
                             {
-                                gui_add_to_line (buffer, MSG_TYPE_TIME, NULL,
-                                                 GUI_COLOR(COLOR_WIN_CHAT_DARK));
-                                gui_add_to_line (buffer, MSG_TYPE_TIME, NULL, text_time_char);
+                                gui_add_to_line (buffer, MSG_TYPE_TIME, date,
+                                                 NULL, GUI_COLOR(COLOR_WIN_CHAT_DARK));
+                                gui_add_to_line (buffer, MSG_TYPE_TIME, date,
+                                                 NULL, text_time_char);
                             }
                             else
                             {
                                 if (isdigit (text_time[i]))
                                 {
-                                    gui_add_to_line (buffer, MSG_TYPE_TIME, NULL,
-                                                     GUI_COLOR(COLOR_WIN_CHAT_TIME));
-                                    gui_add_to_line (buffer, MSG_TYPE_TIME, NULL, text_time_char);
+                                    gui_add_to_line (buffer, MSG_TYPE_TIME, date,
+                                                     NULL, GUI_COLOR(COLOR_WIN_CHAT_TIME));
+                                    gui_add_to_line (buffer, MSG_TYPE_TIME, date,
+                                                     NULL, text_time_char);
                                 }
                                 else
                                 {
-                                    gui_add_to_line (buffer, MSG_TYPE_TIME, NULL,
-                                                     GUI_COLOR(COLOR_WIN_CHAT_TIME_SEP));
-                                    gui_add_to_line (buffer, MSG_TYPE_TIME, NULL, text_time_char);
+                                    gui_add_to_line (buffer, MSG_TYPE_TIME, date,
+                                                     NULL, GUI_COLOR(COLOR_WIN_CHAT_TIME_SEP));
+                                    gui_add_to_line (buffer, MSG_TYPE_TIME, date,
+                                                     NULL, text_time_char);
                                 }
                             }
                         }
                         i++;
                     }
-                    gui_add_to_line (buffer, MSG_TYPE_TIME, NULL, GUI_COLOR(COLOR_WIN_CHAT));
+                    gui_add_to_line (buffer, MSG_TYPE_TIME, date,
+                                     NULL, GUI_COLOR(COLOR_WIN_CHAT));
                 }
-                gui_add_to_line (buffer, MSG_TYPE_TIME, NULL, " ");
+                gui_add_to_line (buffer, MSG_TYPE_TIME, date, NULL, " ");
             }
-            gui_add_to_line (buffer, type, nick, pos);
+            gui_add_to_line (buffer, type, date, nick, pos);
             pos = strchr (pos, '\n');
             if (pos)
             {
