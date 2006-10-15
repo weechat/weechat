@@ -377,7 +377,7 @@ session_save_line (FILE *file, t_gui_line *line)
     rc = rc && (session_write_int (file, SESSION_LINE_OFS_AFTER_DATE, line->ofs_start_message));
     rc = rc && (session_write_int (file, SESSION_LINE_OFS_START_MESSAGE, line->ofs_start_message));
     rc = rc && (session_write_str (file, SESSION_LINE_NICK, line->nick));
-    rc = rc && (session_write_buf (file, SESSION_LINE_NICK, &(line->date), sizeof (time_t)));
+    rc = rc && (session_write_buf (file, SESSION_LINE_DATE, &(line->date), sizeof (time_t)));
     rc = rc && (session_write_id  (file, SESSION_LINE_END));
     return rc;
 }
