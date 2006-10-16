@@ -169,7 +169,7 @@ weechat_perl_exec (t_weechat_plugin *plugin,
     return_code = PLUGIN_RC_KO;
     if (SvTRUE (sv))
     {
-        plugin->print_server (plugin, "Perl error: %s", SvPV (sv, count));
+        plugin->print_server (plugin, "Perl error: %s", SvPV_nolen (sv));
         POPs;
     }
     else
@@ -1510,6 +1510,7 @@ static XS (XS_weechat_get_buffer_data)
     t_plugin_buffer_line *buffer_data, *ptr_data;
     HV *data_list_member;
     char *server, *channel;
+    char timebuffer[64];
     int count;
     
     dXSARGS;
@@ -1552,7 +1553,11 @@ static XS (XS_weechat_get_buffer_data)
     for (ptr_data = buffer_data; ptr_data; ptr_data = ptr_data->next_line)
     {
 	data_list_member = (HV *) sv_2mortal((SV *) newHV());
+
+	strftime(timebuffer, sizeof(timebuffer), "%F %T",
+		 localtime(&ptr_data->date));
         
+	hv_store (data_list_member, "date", 4, newSVpv (timebuffer, 0), 0);
 	hv_store (data_list_member, "nick", 4, 
 		  newSVpv (ptr_data->nick == NULL ? "" : ptr_data->nick, 0), 0);
 	hv_store (data_list_member, "data", 4, 

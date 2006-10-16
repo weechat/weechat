@@ -1744,6 +1744,7 @@ weechat_lua_get_buffer_data  (lua_State *L)
 {
     t_plugin_buffer_line *buffer_data, *ptr_data;
     const char *server, *channel;
+    char timebuffer[64];
     int i, n;
     
     /* make gcc happy */
@@ -1795,6 +1796,13 @@ weechat_lua_get_buffer_data  (lua_State *L)
     {
 	lua_pushnumber (lua_current_interpreter, i);
 	lua_newtable (lua_current_interpreter);
+
+	strftime(timebuffer, sizeof(timebuffer), "%F %T",
+		 localtime(&ptr_data->date));
+
+	lua_pushstring (lua_current_interpreter, "date");
+	lua_pushstring (lua_current_interpreter, timebuffer);
+	lua_rawset (lua_current_interpreter, -3);
 
 	lua_pushstring (lua_current_interpreter, "nick");
 	lua_pushstring (lua_current_interpreter,

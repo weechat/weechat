@@ -1682,6 +1682,7 @@ weechat_ruby_get_buffer_data (int argc, VALUE *argv, VALUE class)
     VALUE data_list, data_list_member;
     VALUE server, channel;
     char *c_server, *c_channel;
+    char timebuffer[64];
 
     /* make gcc happy */
     (void) class;
@@ -1727,6 +1728,11 @@ weechat_ruby_get_buffer_data (int argc, VALUE *argv, VALUE class)
 
 	if (!NIL_P (data_list_member))
 	{
+	    strftime(timebuffer, sizeof(timebuffer), "%F %T",
+		     localtime(&ptr_data->date));
+	    
+	    rb_hash_aset (data_list_member, rb_str_new2("date"), 
+			  rb_str_new2(timebuffer));
 	    rb_hash_aset (data_list_member, rb_str_new2("nick"), 
 			  rb_str_new2(ptr_data->nick == NULL ? "" : ptr_data->nick));
 	    rb_hash_aset (data_list_member, rb_str_new2("data"), 

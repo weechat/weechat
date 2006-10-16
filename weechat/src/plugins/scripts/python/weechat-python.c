@@ -1445,6 +1445,7 @@ weechat_python_get_buffer_data (PyObject *self, PyObject *args)
     t_plugin_buffer_line *buffer_data, *ptr_data;
     PyObject *data_list, *data_list_member;
     char *server, *channel;
+    char timebuffer[64];
     
     /* make gcc happy */
     (void) self;
@@ -1480,6 +1481,11 @@ weechat_python_get_buffer_data (PyObject *self, PyObject *args)
 	
         if (data_list_member) 
         {
+	    strftime(timebuffer, sizeof(timebuffer), "%F %T",
+		     localtime(&ptr_data->date));
+	    
+	    PyDict_SetItem(data_list_member, Py_BuildValue("s", "date"),
+			   Py_BuildValue("s", timebuffer));
 	    PyDict_SetItem(data_list_member, Py_BuildValue("s", "nick"),
 			   Py_BuildValue("s", ptr_data->nick == NULL ? "" : ptr_data->nick));
 	    PyDict_SetItem(data_list_member, Py_BuildValue("s", "data"),
