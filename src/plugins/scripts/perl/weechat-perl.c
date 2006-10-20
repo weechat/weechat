@@ -34,6 +34,8 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #include "../../weechat-plugin.h"
 #include "../weechat-script.h"
@@ -1631,7 +1633,8 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
     STRLEN len;
     t_plugin_script tempscript;
     int eval;
-
+    struct stat buf;
+    
 #ifndef MULTIPLICITY
     char pkgname[64];
 #else
@@ -1640,8 +1643,16 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
 #endif
     
     plugin->print_server (plugin, "Loading Perl script \"%s\"", filename);
-    perl_current_script = NULL;
+    
+    if (stat (filename, &buf) != 0)
+    {
+        plugin->print_server (plugin, "Perl error: script \"%s\" not found",
+                              filename);
+        return 0;
+    }
 
+    perl_current_script = NULL;
+    
 #ifndef MULTIPLICITY
     snprintf(pkgname, sizeof(pkgname), "%s%d", PKG_NAME_PREFIX, perl_num);
     perl_num++;

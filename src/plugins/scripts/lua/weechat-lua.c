@@ -1936,12 +1936,11 @@ weechat_lua_load (t_weechat_plugin *plugin, char *filename)
     
     if ((fp = fopen (filename, "r")) == NULL)
     {
-        plugin->print_server (plugin,
-                              "Lua error: unable to open file \"%s\"",
+        plugin->print_server (plugin, "Lua error: script \"%s\" not found",
                               filename);
         return 0;
     }
-
+    
     lua_current_script = NULL;
     
     lua_current_interpreter = lua_open ();

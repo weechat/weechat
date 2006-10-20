@@ -32,6 +32,8 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #include "../../weechat-plugin.h"
 #include "../weechat-script.h"
@@ -1796,10 +1798,19 @@ weechat_ruby_load (t_weechat_plugin *plugin, char *filename)
     char modname[64];
     VALUE curModule, ruby_retcode, err;
     int ruby_error;
+    struct stat buf;
     
     plugin->print_server (plugin, "Loading Ruby script \"%s\"", filename);
+    
+    if (stat (filename, &buf) != 0)
+    {
+        plugin->print_server (plugin, "Ruby error: script \"%s\" not found",
+                              filename);
+        return 0;
+    }
+    
     ruby_current_script = NULL;
-
+    
     snprintf(modname, sizeof(modname), "%s%d", MOD_NAME_PREFIX, ruby_num);
     ruby_num++;
 

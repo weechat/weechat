@@ -1592,14 +1592,13 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
     
     if ((fp = fopen (filename, "r")) == NULL)
     {
-        plugin->print_server (plugin,
-                              "Python error: unable to open file \"%s\"",
+        plugin->print_server (plugin, "Python error: script \"%s\" not found",
                               filename);
         return 0;
     }
-
+    
     python_current_script = NULL;
-
+    
     /* PyEval_AcquireLock (); */
     python_current_interpreter = Py_NewInterpreter ();
     PySys_SetArgv(1, argv);
