@@ -707,6 +707,8 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *nick, char *arguments
         ptr_channel = channel_search (server, arguments);
         if (ptr_channel)
         {
+            command_ignored |= ignore_check (host, "mode",
+                                             ptr_channel->name, server->name);
             if (!command_ignored)
             {
                 irc_display_prefix (server, ptr_channel->buffer, PREFIX_INFO);

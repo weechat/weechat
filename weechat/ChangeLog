@@ -5,6 +5,7 @@ ChangeLog - 2006-10-20
 
 
 Version 0.2.2 (under dev!):
+   * fixed bug on ignore with "mode" IRC command (bug #18058)
    * fixed crash when loading ruby script if file does not exist, with
      Ruby >= 1.9 only (bug #18064)
    * added date in plugin function get_buffer_data()
