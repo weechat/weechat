@@ -93,7 +93,7 @@ Guide de démarrage rapide WeeChat (version française)
      Les extensions sont automatiquement chargées lorsqu'elles sont trouvées.
      Plusieurs extensions/scripts sont disponibles pour WeeChat, voir ici :
        http://weechat.flashtux.org/plugins.php
-     Merci de regarder la documentation WeeChat pour charger/décharget des
+     Merci de regarder la documentation WeeChat pour charger/décharger des
      extensions ou des scripts.
 
 10. Plus de documentation
