@@ -427,7 +427,7 @@ channel_check_away (t_irc_server *server, t_irc_channel *channel, int force)
             (channel->nicks_count <= cfg_irc_away_check_max_nicks))
         {
             channel->checking_away++;
-            server_sendf (server, "WHO %s\r\n", channel->name);
+            server_sendf (server, "WHO %s", channel->name);
         }
         else
             channel_remove_away (channel);

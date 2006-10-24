@@ -127,13 +127,19 @@ functions: lister la liste des fonctions internes pour les associations de touch
     reset: restaure les touches aux valeurs par défaut et supprime TOUTES les touches personnelles (utiliser avec précaution !)
 
 </programlisting>
-<command>plugin  [load fichier] | [autoload] | [reload] | [unload]</command>
+<command>plugin  [list [masque]] | [listfull [masque]] | [load fichier] | [autoload] | [reload [nom]] | [unload [nom]]</command>
 <programlisting>
 liste/charge/décharge des extensions
 
-fichier: extension WeeChat (fichier) à charger
+    list: lister les extensions chargées
+listfull: lister les extensions chargées avec de l'info détaillée pour chaque extension
+  masque: morceau de nom d'une extension chargée
+    load: charger une extension
+autoload: charger automatiquement les extensions dans un répertoire système ou utilisateur
+  reload: recharger une extension (si pas de nom donné, décharger toutes les extensions, puis puis recharger automatiquement les extensions)
+  unload: décharger une ou plusieurs exteneions
 
-Sans paramètre, la commande /plugin liste toutes les extensions chargées.
+Sans paramètre, la commande /plugin liste les extensions chargées.
 
 </programlisting>
 <command>server  [nom_serveur] | [nom_serveur nom/IP port [-auto | -noauto] [-ipv6] [-ssl] [-pwd mot_de_passe] [-nicks pseudo1 pseudo2 pseudo3] [-username nom_utilisateur] [-realname nom_réel] [-command commande] [-autojoin canal[,canal]] ] | [del nom_serveur]</command>

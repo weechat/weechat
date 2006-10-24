@@ -143,10 +143,16 @@ t_weechat_command weechat_commands[] =
     "list|add|close|move global|local top|bottom|left|right",
     0, MAX_ARGS, 0, weechat_cmd_panel, NULL },*/
   { "plugin", N_("list/load/unload plugins"),
-    N_("[load filename] | [autoload] | [reload] | [unload]"),
-    N_("filename: WeeChat plugin (file) to load\n\n"
-       "Without argument, /plugin command lists all loaded plugins."),
-    "load|autoload|reload|unload", 0, 2, 0, weechat_cmd_plugin, NULL },
+    N_("[list [mask]] | [listfull [mask]] | [load filename] | [autoload] | [reload [name]] | [unload [name]]"),
+    N_("    list: list loaded plugins\n"
+       "listfull: list loaded plugins with detailed info for each plugin\n"
+       "    mask: part of name of a loaded plugin\n"
+       "    load: load a plugin\n"
+       "autoload: autoload plugins in system or user directory\n"
+       "  reload: reload one plugin (if no name given, unload all plugins, then autoload plugins)\n"
+       "  unload: unload one or all plugins\n\n"
+       "Without argument, /plugin command lists loaded plugins."),
+    "list|listfull|load|autoload|reload|unload %P", 0, 2, 0, weechat_cmd_plugin, NULL },
   { "server", N_("list, add or remove servers"),
     N_("[servername] | "
        "[servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 "
@@ -717,7 +723,7 @@ user_message (t_irc_server *server, t_gui_buffer *buffer, char *text)
         next = pos;
     }
     
-    server_sendf (server, "PRIVMSG %s :%s\r\n", CHANNEL(buffer)->name, text);
+    server_sendf (server, "PRIVMSG %s :%s", CHANNEL(buffer)->name, text);
     user_message_display (server, buffer, text);
     
     if (next)
@@ -736,98 +742,103 @@ void
 user_command (t_irc_server *server, t_irc_channel *channel, char *command, int only_builtin)
 {
     t_gui_buffer *buffer;
-    int plugin_args_length;
+    char *new_cmd, *ptr_cmd, *pos;
     char *command_with_colors, *command_encoded;
-    char *plugin_args;
     
     if ((!command) || (!command[0]) || (command[0] == '\r') || (command[0] == '\n'))
         return;
     
-    irc_find_context (server, channel, NULL, &buffer);
+#ifdef PLUGINS
+    new_cmd = plugin_modifier_exec (PLUGIN_MODIFIER_IRC_USER,
+                                    (server) ? server->name : "",
+                                    command);
+#else
+    new_cmd = NULL;
+#endif
     
-    if ((command[0] == '/') && (command[1] != '/'))
+    /* no changes in new command */
+    if (new_cmd && (strcmp (command, new_cmd) == 0))
     {
-        /* WeeChat internal command (or IRC command) */
-        (void) exec_weechat_command (server, channel, command, only_builtin);
+        free (new_cmd);
+        new_cmd = NULL;
     }
-    else
+    
+    /* message not dropped? */
+    if (!new_cmd || new_cmd[0])
     {
-        if ((command[0] == '/') && (command[1] == '/'))
-            command++;
+        /* use new command (returned by plugin) */
+        ptr_cmd = (new_cmd) ? new_cmd : command;
         
-        if (server && (!BUFFER_IS_SERVER(buffer)))
+        while (ptr_cmd && ptr_cmd[0])
         {
-            command_with_colors = (cfg_irc_colors_send) ?
-                (char *)gui_color_encode ((unsigned char *)command) : NULL;
+            pos = strchr (ptr_cmd, '\n');
+            if (pos)
+                pos[0] = '\0';
             
-            command_encoded = channel_iconv_encode (server, channel,
-                                                    (command_with_colors) ? command_with_colors : command);
+            irc_find_context (server, channel, NULL, &buffer);
             
-            if (CHANNEL(buffer)->dcc_chat)
+            if ((ptr_cmd[0] == '/') && (ptr_cmd[1] != '/'))
             {
-                if (((t_irc_dcc *)(CHANNEL(buffer)->dcc_chat))->sock < 0)
+                /* WeeChat internal command (or IRC command) */
+                (void) exec_weechat_command (server, channel, ptr_cmd, only_builtin);
+            }
+            else
+            {
+                if ((ptr_cmd[0] == '/') && (ptr_cmd[1] == '/'))
+                    ptr_cmd++;
+                
+                if (server && (!BUFFER_IS_SERVER(buffer)))
                 {
-                    irc_display_prefix (server, buffer, PREFIX_ERROR);
-                    gui_printf_nolog (buffer, "%s DCC CHAT is closed\n",
-                                      WEECHAT_ERROR);
+                    command_with_colors = (cfg_irc_colors_send) ?
+                        (char *)gui_color_encode ((unsigned char *)ptr_cmd) : NULL;
+                    
+                    command_encoded = channel_iconv_encode (server, channel,
+                                                            (command_with_colors) ? command_with_colors : ptr_cmd);
+                    
+                    if (CHANNEL(buffer)->dcc_chat)
+                    {
+                        if (((t_irc_dcc *)(CHANNEL(buffer)->dcc_chat))->sock < 0)
+                        {
+                            irc_display_prefix (server, buffer, PREFIX_ERROR);
+                            gui_printf_nolog (buffer, "%s DCC CHAT is closed\n",
+                                              WEECHAT_ERROR);
+                        }
+                        else
+                        {
+                            dcc_chat_sendf ((t_irc_dcc *)(CHANNEL(buffer)->dcc_chat),
+                                            "%s\r\n",
+                                            (command_encoded) ? command_encoded :
+                                            ((command_with_colors) ? command_with_colors : ptr_cmd));
+                            user_message_display (server, buffer,
+                                                  (command_with_colors) ?
+                                                  command_with_colors : ptr_cmd);
+                        }
+                    }
+                    else
+                        user_message (server, buffer,
+                                      (command_encoded) ? command_encoded :
+                                      ((command_with_colors) ? command_with_colors : ptr_cmd));
+                    
+                    if (command_with_colors)
+                        free (command_with_colors);
+                    if (command_encoded)
+                        free (command_encoded);
                 }
                 else
                 {
-                    dcc_chat_sendf ((t_irc_dcc *)(CHANNEL(buffer)->dcc_chat),
-                                    "%s\r\n",
-                                    (command_encoded) ? command_encoded :
-                                    ((command_with_colors) ? command_with_colors : command));
-                    user_message_display (server, buffer,
-                                          (command_with_colors) ?
-                                          command_with_colors : command);
+                    irc_display_prefix (NULL, (server) ? server->buffer : NULL, PREFIX_ERROR);
+                    gui_printf_nolog ((server) ? server->buffer : NULL,
+                                      _("This window is not a channel!\n"));
                 }
             }
-            else
-                user_message (server, buffer,
-                              (command_encoded) ? command_encoded :
-                              ((command_with_colors) ? command_with_colors : command));
-            
-            if (command_with_colors)
-                free (command_with_colors);
-            if (command_encoded)
-                free (command_encoded);
-            
-            /* sending a copy of the message as PRIVMSG to plugins because irc server doesn't */
-            
-            /* code commented by FlashCode, 2005-11-06: problem when a handler
-               is called after a weechat::command("somethin") in perl, reetrance,
-               and crash at perl script unload */
-            
-            /* make gcc happy */
-            (void) plugin_args_length;
-            (void) plugin_args;
-            /*plugin_args_length = strlen ("localhost PRIVMSG  :") +
-                strlen (CHANNEL(buffer)->name) + strlen(command) + 16;
-            plugin_args = (char *) malloc (plugin_args_length * sizeof (*plugin_args));
-            
-            if (plugin_args)
+
+            if (pos)
             {
-                snprintf (plugin_args, plugin_args_length,
-                          "localhost PRIVMSG %s :%s", 
-                          CHANNEL(buffer)->name, command);
-#ifdef PLUGINS
-                plugin_msg_handler_exec (server->name, "privmsg", plugin_args);
-#endif
-                free (plugin_args);
+                pos[0] = '\n';
+                ptr_cmd = pos + 1;
             }
             else
-            {
-                irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-                gui_printf (NULL,
-                            _("%s unable to call handler for message (not enough memory)\n"),
-                            WEECHAT_ERROR);
-            }*/
-        }
-        else
-        {
-            irc_display_prefix (NULL, (server) ? server->buffer : NULL, PREFIX_ERROR);
-            gui_printf_nolog ((server) ? server->buffer : NULL,
-                              _("This window is not a channel!\n"));
+                ptr_cmd = NULL;
         }
     }
 }
@@ -1966,7 +1977,7 @@ weechat_cmd_help (t_irc_server *server, t_irc_channel *channel,
                 for (ptr_handler = ptr_plugin->handlers;
                      ptr_handler; ptr_handler = ptr_handler->next_handler)
                 {
-                    if (ptr_handler->type == HANDLER_COMMAND)
+                    if (ptr_handler->type == PLUGIN_HANDLER_COMMAND)
                     {
                         gui_printf (NULL, "   %s%s",
                                     GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
@@ -2045,7 +2056,7 @@ weechat_cmd_help (t_irc_server *server, t_irc_channel *channel,
                 for (ptr_handler = ptr_plugin->handlers;
                      ptr_handler; ptr_handler = ptr_handler->next_handler)
                 {
-                    if ((ptr_handler->type == HANDLER_COMMAND)
+                    if ((ptr_handler->type == PLUGIN_HANDLER_COMMAND)
                         && (ascii_strcasecmp (ptr_handler->command, argv[0]) == 0))
                     {
                         gui_printf (NULL, "\n");
@@ -2464,42 +2475,48 @@ weechat_cmd_panel (t_irc_server *server, t_irc_channel *channel,
 }
 
 /*
- * weechat_cmd_plugin: list/load/unload WeeChat plugins
+ * weechat_cmd_plugin_list: list loaded plugins
  */
 
-int
-weechat_cmd_plugin (t_irc_server *server, t_irc_channel *channel,
-                    int argc, char **argv)
+void
+weechat_cmd_plugin_list (char *name, int full)
 {
 #ifdef PLUGINS
     t_weechat_plugin *ptr_plugin;
+    int plugins_found;
     t_plugin_handler *ptr_handler;
     int handler_found;
+    t_plugin_modifier *ptr_modifier;
+    int modifier_found;
     
-    /* make gcc happy */
-    (void) server;
-    (void) channel;
-    
-    switch (argc)
+    gui_printf (NULL, "\n");
+    if (!name)
     {
-        case 0:
-            /* list plugins */
-            gui_printf (NULL, "\n");
+        irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
+        gui_printf (NULL, _("Plugins loaded:\n"));
+    }
+    
+    plugins_found = 0;
+    
+    for (ptr_plugin = weechat_plugins; ptr_plugin;
+         ptr_plugin = ptr_plugin->next_plugin)
+    {
+        if (!name || (ascii_strcasestr (ptr_plugin->name, name)))
+        {
+            plugins_found++;
+            
+            /* plugin info */
             irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
-            gui_printf (NULL, _("Plugins loaded:\n"));
-            for (ptr_plugin = weechat_plugins; ptr_plugin;
-                 ptr_plugin = ptr_plugin->next_plugin)
+            gui_printf (NULL, "  %s%s%s v%s - %s (%s)\n",
+                        GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                        ptr_plugin->name,
+                        GUI_COLOR(COLOR_WIN_CHAT),
+                        ptr_plugin->version,
+                        ptr_plugin->description,
+                        ptr_plugin->filename);
+            
+            if (full)
             {
-                /* plugin info */
-                irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
-                gui_printf (NULL, "  %s%s%s v%s - %s (%s)\n",
-                            GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
-                            ptr_plugin->name,
-                            GUI_COLOR(COLOR_WIN_CHAT),
-                            ptr_plugin->version,
-                            ptr_plugin->description,
-                            ptr_plugin->filename);
-                
                 /* message handlers */
                 irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
                 gui_printf (NULL, _("     message handlers:\n"));
@@ -2507,7 +2524,7 @@ weechat_cmd_plugin (t_irc_server *server, t_irc_channel *channel,
                 for (ptr_handler = ptr_plugin->handlers;
                      ptr_handler; ptr_handler = ptr_handler->next_handler)
                 {
-                    if (ptr_handler->type == HANDLER_MESSAGE)
+                    if (ptr_handler->type == PLUGIN_HANDLER_MESSAGE)
                     {
                         handler_found = 1;
                         irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
@@ -2528,7 +2545,7 @@ weechat_cmd_plugin (t_irc_server *server, t_irc_channel *channel,
                 for (ptr_handler = ptr_plugin->handlers;
                      ptr_handler; ptr_handler = ptr_handler->next_handler)
                 {
-                    if (ptr_handler->type == HANDLER_COMMAND)
+                    if (ptr_handler->type == PLUGIN_HANDLER_COMMAND)
                     {
                         handler_found = 1;
                         irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
@@ -2554,7 +2571,7 @@ weechat_cmd_plugin (t_irc_server *server, t_irc_channel *channel,
                 for (ptr_handler = ptr_plugin->handlers;
                      ptr_handler; ptr_handler = ptr_handler->next_handler)
                 {
-                    if (ptr_handler->type == HANDLER_TIMER)
+                    if (ptr_handler->type == PLUGIN_HANDLER_TIMER)
                     {
                         handler_found = 1;
                         irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
@@ -2575,7 +2592,7 @@ weechat_cmd_plugin (t_irc_server *server, t_irc_channel *channel,
                 for (ptr_handler = ptr_plugin->handlers;
                      ptr_handler; ptr_handler = ptr_handler->next_handler)
                 {
-                    if (ptr_handler->type == HANDLER_KEYBOARD)
+                    if (ptr_handler->type == PLUGIN_HANDLER_KEYBOARD)
                         handler_found++;
                 }
                 irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
@@ -2584,15 +2601,65 @@ weechat_cmd_plugin (t_irc_server *server, t_irc_channel *channel,
                 else
                     gui_printf (NULL, _("       %d defined\n"),
                                 handler_found);
-            }
-            if (!weechat_plugins)
-            {
+                
+                /* IRC modifiers */
                 irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
-                gui_printf (NULL, _("  (no plugin)\n"));
+                gui_printf (NULL, _("     IRC modifiers:\n"));
+                modifier_found = 0;
+                for (ptr_modifier = ptr_plugin->modifiers;
+                     ptr_modifier; ptr_modifier = ptr_modifier->next_modifier)
+                {
+                    if (ptr_modifier->type == PLUGIN_HANDLER_KEYBOARD)
+                        modifier_found++;
+                }
+                irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
+                if (!modifier_found)
+                    gui_printf (NULL, _("       (no IRC modifier)\n"));
+                else
+                    gui_printf (NULL, _("       %d defined\n"),
+                                modifier_found);
             }
+        }
+    }
+    if (plugins_found == 0)
+    {
+        irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
+        if (name)
+            gui_printf (NULL, _("No plugin found.\n"));
+        else
+            gui_printf (NULL, _("  (no plugin)\n"));
+    }
+#else
+    /* make gcc happy */
+    (void) name;
+    (void) full;
+#endif
+}
+    
+/*
+ * weechat_cmd_plugin: list/load/unload WeeChat plugins
+ */
+
+int
+weechat_cmd_plugin (t_irc_server *server, t_irc_channel *channel,
+                    int argc, char **argv)
+{
+#ifdef PLUGINS
+    /* make gcc happy */
+    (void) server;
+    (void) channel;
+    
+    switch (argc)
+    {
+        case 0:
+            weechat_cmd_plugin_list (NULL, 0);
             break;
         case 1:
-            if (ascii_strcasecmp (argv[0], "autoload") == 0)
+            if (ascii_strcasecmp (argv[0], "list") == 0)
+                weechat_cmd_plugin_list (NULL, 0);
+            else if (ascii_strcasecmp (argv[0], "listfull") == 0)
+                weechat_cmd_plugin_list (NULL, 1);
+            else if (ascii_strcasecmp (argv[0], "autoload") == 0)
                 plugin_auto_load ();
             else if (ascii_strcasecmp (argv[0], "reload") == 0)
             {
@@ -2603,8 +2670,14 @@ weechat_cmd_plugin (t_irc_server *server, t_irc_channel *channel,
                 plugin_unload_all ();
             break;
         case 2:
-            if (ascii_strcasecmp (argv[0], "load") == 0)
+            if (ascii_strcasecmp (argv[0], "list") == 0)
+                weechat_cmd_plugin_list (argv[1], 0);
+            else if (ascii_strcasecmp (argv[0], "listfull") == 0)
+                weechat_cmd_plugin_list (argv[1], 1);
+            else if (ascii_strcasecmp (argv[0], "load") == 0)
                 plugin_load (argv[1]);
+            else if (ascii_strcasecmp (argv[0], "reload") == 0)
+                plugin_reload_name (argv[1]);
             else if (ascii_strcasecmp (argv[0], "unload") == 0)
                 plugin_unload_name (argv[1]);
             else

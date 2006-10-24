@@ -1969,7 +1969,9 @@ int msg_kick (t_weechat_plugin *plugin, int argc, char **argv,
     return PLUGIN_RC_OK;
 }
 ...
-plugin->msg_handler_add (plugin, "KICK", &amp;msg_kick, NULL, NULL);
+t_plugin_handler *msg_handler;
+msg_handler = plugin->msg_handler_add (plugin, "KICK",
+                                       &amp;msg_kick, NULL, NULL);
 </screen>
           </para>
         </section>
@@ -2225,9 +2227,10 @@ int cmd_test (t_weechat_plugin *plugin, int argc, char **argv,
     return PLUGIN_RC_OK;
 }
 ...
-plugin->cmd_handler_add (plugin, "test", "Commande test",
-                         "[pesudo]", "pseudo: un pseudo du canal",
-                         "%n", &amp;cmd_test, NULL, NULL);
+t_plugin_handler *cmd_handler;
+cmd_handler = plugin->cmd_handler_add (plugin, "test", "Commande test",
+                                       "[pesudo]", "pseudo: un pseudo du canal",
+                                       "%n", &amp;cmd_test, NULL, NULL);
 </screen>
           </para>
         </section>
@@ -2322,7 +2325,8 @@ int mon_timer (t_weechat_plugin *plugin, int argc, char **argv,
     return PLUGIN_RC_OK;
 }
 ...
-plugin->timer_handler_add (plugin, 60, &amp;mon_timer);
+t_plugin_handler *timer_handler;
+timer_handler = plugin->timer_handler_add (plugin, 60, &amp;mon_timer);
 </screen>
           </para>
         </section>
@@ -2425,8 +2429,8 @@ plugin->timer_handler_add (plugin, 60, &amp;mon_timer);
           <para>
             Exemple :
 <screen>
-int keyb_handler (t_weechat_plugin *plugin, int argc, char **argv,
-                  char *handler_args, void *handler_pointer)
+int mon_keyb (t_weechat_plugin *plugin, int argc, char **argv,
+              char *handler_args, void *handler_pointer)
 {
     if (argc == 2)
     {
@@ -2439,7 +2443,8 @@ int keyb_handler (t_weechat_plugin *plugin, int argc, char **argv,
     return PLUGIN_RC_OK;
 }
 ...
-plugin->keyboard_handler_add (plugin, &amp;keyb_handler);
+t_plugin_handler *keyb_handler;
+keyb_handler = plugin->keyboard_handler_add (plugin, &amp;mon_keyb);
 </screen>
           </para>
         </section>
@@ -2511,6 +2516,221 @@ plugin->keyboard_handler_add (plugin, &amp;keyb_handler);
           <para>
             Exemple :
             <screen>plugin->handler_remove_all (plugin);</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_modifier_add">
+          <title>modifier_add</title>
+          
+          <para>
+            Prototype :
+            <command>
+              t_plugin_modifier *modifier_add (t_weechat_plugin *plugin,
+              char *type, char *message, t_plugin_modifier_func *fonction,
+              char *modifier_args, void *modifier_pointer)
+            </command>
+          </para>
+          <para>
+            Ajoute un modifieur de message.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>type</option> : type de modifieur :
+                  <informaltable colsep="0" frame="none">
+                    <tgroup cols="2">
+                      <thead>
+                        <row>
+                          <entry>Type</entry>
+                          <entry>Description</entry>
+                        </row>
+                      </thead>
+                      <tbody>
+                        <row>
+                          <entry><literal>irc_in</literal></entry>
+                          <entry>appelé pour chaque message IRC reçu</entry>
+                        </row>
+                        <row>
+                          <entry><literal>irc_user</literal></entry>
+                          <entry>
+                            appelé pour chaque message (ou commande) envoyé par
+                            l'utilisateur (avant traitement et affichage par
+                            WeeChat)
+                          </entry>
+                        </row>
+                        <row>
+                          <entry><literal>irc_out</literal></entry>
+                          <entry>
+                            appelé pour chaque message sortant juste avant
+                            envoi au serveur IRC (y compris pour les messages
+                            envoyés automatiquement et de manière transparente
+                            par WeeChat)
+                          </entry>
+                        </row>
+                      </tbody>
+                    </tgroup>
+                  </informaltable>
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>message</option> : nom du message IRC pour lequel la
+                  fonction est appelée (utilisé uniquement pour les types
+                  "irc_in" et "irc_out").
+                  Pour connaître la liste des messages IRC disponibles, merci
+                  de consulter les <acronym>RFC</acronym>s
+                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink> et
+                  <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
+                  La valeur spéciale "*" signifie tous les messages (pas de filtre).
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>fonction</option> : fonction appelée
+                </para>
+                <para>
+                  Elle a le prototype suivant :
+                  <command>
+                    char *ma_fonction (t_weechat_plugin *plugin,
+                    int argc, char **argv,
+                    char *modifier_args, void *modifier_pointer)
+                  </command>
+                </para>
+                <para>
+                  Le paramètre argc vaut 2 et les arguments suivants sont
+                  passés dans le tableau argv :
+                  <itemizedlist>
+                    <listitem>
+                      <para>argv[0] = nom du serveur</para>
+                    </listitem>
+                    <listitem>
+                      <para>argv[1] = message</para>
+                    </listitem>
+                  </itemizedlist>
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>modifier_args</option> : paramètres passés à la
+                  fonction appelée
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>modifier_pointer</option> : pointeur passé à la
+                  fonction appelée
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : le pointeur vers le nouveau modifieur de message.
+          </para>
+          <para>
+            Note : la fonction doit retourner une chaîne modifiée, ou NULL si
+            elle ne souhaite pas modifier le message.
+            Si elle retourne une chaine vide, alors le message est supprimé et
+            ne sera pas traité du tout par WeeChat (soyez prudent en supprimant
+            des messages !).
+            La chaîne renvoyée doit avoir été allouée par malloc() et sera
+            libérée (par appel à free()) automatiquement par WeeChat après
+            utilisation.
+          </para>
+          <para>
+            Exemple :
+<screen>
+char *adder (t_weechat_plugin *plugin, int argc, char **argv,
+             char *modifier_args, void *modifier_pointer)
+{
+    char *string;
+    string = (char *)malloc (strlen (argv[1]) + 16);
+    strcpy (string, argv[1]);
+    strcat (string, "test");
+    return string;
+}
+...
+t_plugin_modifier *modifier;
+modifier = plugin->modifier_add (plugin, "irc_in", "privmsg",
+                                 &amp;adder, NULL, NULL);
+</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_modifier_remove">
+          <title>modifier_remove</title>
+          
+          <para>
+            Prototype :
+            <command>
+              void modifier_remove (t_weechat_plugin *plugin,
+              t_plugin_modifier *modifier)
+            </command>
+          </para>
+          <para>
+            Supprime un modifieur de message.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>modifier</option> : le modifieur à supprimer
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : aucune.
+          </para>
+          <para>
+            Exemple :
+            <screen>plugin->modifier_remove (plugin, mon_modifier);</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_modifier_remove_all">
+          <title>modifier_remove_all</title>
+          
+          <para>
+            Prototype :
+            <command>
+              void modifier_remove_all (t_weechat_plugin *plugin)
+            </command>
+          </para>
+          <para>
+            Supprime tous les modifieurs d'une extension.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : aucune.
+          </para>
+          <para>
+            Exemple :
+            <screen>plugin->modifier_remove_all (plugin);</screen>
           </para>
         </section>
         
@@ -5012,7 +5232,7 @@ def ma_fonction(server, args)
 end
 
 -- lua
-weechat.add_message_handler ("privmsg", "ma_fonction")
+weechat.add_message_handler("privmsg", "ma_fonction")
 function ma_fonction(server, args)
     weechat.print("serveur=" .. server .. ", args=" .. args)
     return weechat.PLUGIN_RC_OK()
@@ -5162,7 +5382,7 @@ def ma_commande(server, args)
 end
 
 -- lua
-weechat.add_command_handler ("commande", "ma_commande")
+weechat.add_command_handler("commande", "ma_commande")
 def my_command(server, args)
     weechat.print("serveur="..server..", args="..args)
     return weechat.PLUGIN_RC_OK()
@@ -5356,7 +5576,7 @@ def mon_clavier(key, input_before, input_after):
     return weechat.PLUGIN_RC_OK
 
 # ruby
-Weechat.add_clavier_handler("mon_clavier")
+Weechat.add_keyboard_handler("mon_clavier")
 def mon_clavier(server, input_before, input_after)
     Weechat.print("gestionnaire clavier: touche = '#{key}', " \
                   "entrée avant = '#{input_before}' " \
@@ -5365,7 +5585,7 @@ def mon_clavier(server, input_before, input_after)
 end
 
 -- lua
-weechat.add_clavier_handler("mon_clavier")
+weechat.add_keyboard_handler("mon_clavier")
 function mon_clavier(server, input_before, input_after)
     weechat.print("gestionnaire clavier: touche = '"..key..
                   "', entrée avant = '"..input_before..
@@ -5576,6 +5796,200 @@ Weechat.remove_keyboard_handler("mon_clavier")
 
 -- lua
 weechat.remove_keyboard_handler("mon_clavier")
+</screen>
+          </para>
+        </section>
+        
+        <section id="secScript_add_modifier">
+          <title>add_modifier</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::add_modifier(type, message, fonction);
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.add_modifier(type, message, fonction)
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.add_modifier(type, message, fonction)
+            </command>
+          </para>
+          <para>
+            Prototype Lua :
+            <command>
+              weechat.add_modifier(type, message, fonction)
+            </command>
+          </para>
+          <para>
+            Ajoute un modifieur de messages.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>type</option> : type de modifieur :
+                  <informaltable colsep="0" frame="none">
+                    <tgroup cols="2">
+                      <thead>
+                        <row>
+                          <entry>Type</entry>
+                          <entry>Description</entry>
+                        </row>
+                      </thead>
+                      <tbody>
+                        <row>
+                          <entry><literal>irc_in</literal></entry>
+                          <entry>appelé pour chaque message IRC reçu</entry>
+                        </row>
+                        <row>
+                          <entry><literal>irc_user</literal></entry>
+                          <entry>
+                            appelé pour chaque message (ou commande) envoyé par
+                            l'utilisateur (avant traitement et affichage par
+                            WeeChat)
+                          </entry>
+                        </row>
+                        <row>
+                          <entry><literal>irc_out</literal></entry>
+                          <entry>
+                            appelé pour chaque message sortant juste avant
+                            envoi au serveur IRC (y compris pour les messages
+                            envoyés automatiquement et de manière transparente
+                            par WeeChat)
+                          </entry>
+                        </row>
+                      </tbody>
+                    </tgroup>
+                  </informaltable>
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>message</option> : nom du message IRC pour lequel la
+                  fonction est appelée (utilisé uniquement pour les types
+                  "irc_in" et "irc_out").
+                  Pour connaître la liste des messages IRC disponibles, merci
+                  de consulter les <acronym>RFC</acronym>s
+                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink> et
+                  <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
+                  La valeur spéciale "*" signifie tous les messages (pas de filtre).
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>fonction</option> : fonction appelée
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : 1 si succès, 0 si une erreur s'est produite.
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+weechat::add_modifier("irc_in", "privmsg", "ma_fonction");
+sub ma_fonction
+{
+    # TODO
+}
+
+# python
+weechat.add_modifier("irc_in", "privmsg", "ma_fonction")
+def ma_fonction(serveur, args):
+    # TODO
+
+# ruby
+Weechat.add_modifier("irc_in", "privmsg", "ma_fonction")
+def ma_fonction(server, args)
+    # TODO
+end
+
+-- lua
+weechat.add_modifier("irc_in", "privmsg", "ma_fonction")
+function ma_fonction(server, args)
+    -- TODO
+end
+</screen>
+          </para>
+        </section>
+        
+        <section id="secScript_remove_modifier">
+          <title>remove_modifier</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::remove_modifier(type, message, fonction);
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.remove_handler(type, message, fonction)
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.remove_handler(type, message, fonction)
+            </command>
+          </para>
+          <para>
+            Prototype Lua :
+            <command>
+              weechat.remove_handler(type, message, fonction)
+            </command>
+          </para>
+          <para>
+            Supprime un modifieur de messages.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>type</option> : type de modifieur
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>message</option> : message traité par le modifieur
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>fonction</option> : fonction associée
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : 1 si succès, 0 si une erreur s'est produite.
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+weechat::remove_modifier("irc_in", "privmsg", "ma_fonction");
+
+# python
+weechat.remove_modifier("irc_in", "privmsg", "ma_fonction")
+
+# ruby
+Weechat.remove_modifier("irc_in", "privmsg", "ma_fonction")
+
+-- lua
+weechat.remove_modifier("irc_in", "privmsg", "ma_fonction")
 </screen>
           </para>
         </section>

@@ -142,6 +142,23 @@ weechat_lua_keyboard_handler (t_weechat_plugin *plugin,
 }
 
 /*
+ * weechat_lua_modifier: general modifier for Lua
+ */
+
+char *
+weechat_lua_modifier (t_weechat_plugin *plugin,
+                      int argc, char **argv,
+                      char *modifier_args, void *modifier_pointer)
+{
+    /*if (argc >= 2)
+        return weechat_lua_exec (plugin, (t_plugin_script *)modifier_pointer,
+                                 modifier_args, argv[0], argv[1], NULL);
+    else
+        return NULL;*/
+    return NULL;
+}
+
+/*
  * weechat_lua_register: startup function for all WeeChat Lua scripts
  */
 
@@ -870,6 +887,108 @@ weechat_lua_remove_keyboard_handler (lua_State *L)
     
     weechat_script_remove_keyboard_handler (lua_plugin, lua_current_script,
                                             (char *) function);
+    
+    lua_pushnumber (lua_current_interpreter, 1);
+    return 1;
+}
+
+/*
+ * weechat_lua_add_modifier: add a modifier
+ */
+
+static int
+weechat_lua_add_modifier (lua_State *L)
+{
+    const char *type, *command, *function;
+    int n;
+    
+    /* make gcc happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to add modifier, "
+                                  "script not initialized");
+	lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+
+    type = NULL;
+    command = NULL;
+    function = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+
+    if (n != 3)
+    {
+	lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"add_modifier\" function");
+        lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+    
+    type = lua_tostring (lua_current_interpreter, -3);
+    command = lua_tostring (lua_current_interpreter, -2);
+    function = lua_tostring (lua_current_interpreter, -1);
+    
+    if (!lua_plugin->modifier_add (lua_plugin, (char *)type, (char *)command,
+                                   weechat_lua_modifier,
+                                   (char *)function,
+                                   (void *)lua_current_script))
+    {
+	lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+    
+    lua_pushnumber (lua_current_interpreter, 1);
+    return 1;
+}
+
+/*
+ * weechat_lua_remove_modifier: remove a modifier
+ */
+
+static int
+weechat_lua_remove_modifier (lua_State *L)
+{
+    const char *type, *command, *function;
+    int n;
+    
+    /* make gcc happy */
+    (void) L;
+     
+    if (!lua_current_script)
+    {
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to remove modifier, "
+                                  "script not initialized");
+        lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+    
+    command = NULL;
+    function = NULL;
+ 
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n != 2)
+    {
+	lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"remove_modifier\" function");
+        lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+
+    type = lua_tostring (lua_current_interpreter, -3);
+    command = lua_tostring (lua_current_interpreter, -2);
+    function = lua_tostring (lua_current_interpreter, -1);
+    
+    weechat_script_remove_modifier (lua_plugin, lua_current_script,
+                                    (char *)type, (char *)command,
+                                    (char *)function);
     
     lua_pushnumber (lua_current_interpreter, 1);
     return 1;
@@ -1882,40 +2001,42 @@ weechat_lua_constant_plugin_rc_ok_ignore_all  (lua_State *L)
 
 static
 const struct luaL_reg weechat_lua_funcs[] = {
-    { "register", weechat_lua_register},
-    { "print", weechat_lua_print},
-    { "print_server", weechat_lua_print_server},
-    { "print_infobar", weechat_lua_print_infobar},
-    { "remove_infobar", weechat_lua_remove_infobar},
-    { "log", weechat_lua_log},
-    { "command", weechat_lua_command},
-    { "add_message_handler", weechat_lua_add_message_handler},
-    { "add_command_handler", weechat_lua_add_command_handler},
-    { "add_timer_handler", weechat_lua_add_timer_handler},
-    { "add_keyboard_handler", weechat_lua_add_keyboard_handler},
-    { "remove_handler", weechat_lua_remove_handler},
-    { "remove_timer_handler", weechat_lua_remove_timer_handler},
-    { "remove_keyboard_handler", weechat_lua_remove_keyboard_handler},
-    { "get_info", weechat_lua_get_info},
-    { "get_dcc_info", weechat_lua_get_dcc_info},
-    { "get_config", weechat_lua_get_config},
-    { "set_config", weechat_lua_set_config},
-    { "get_plugin_config", weechat_lua_get_plugin_config},
-    { "set_plugin_config", weechat_lua_set_plugin_config},
-    { "get_server_info", weechat_lua_get_server_info},
-    { "get_channel_info", weechat_lua_get_channel_info},
-    { "get_nick_info", weechat_lua_get_nick_info},
-    { "get_irc_color", weechat_lua_get_irc_color},
-    { "get_window_info", weechat_lua_get_window_info},
-    { "get_buffer_info", weechat_lua_get_buffer_info},
-    { "get_buffer_data", weechat_lua_get_buffer_data},
+    { "register", weechat_lua_register },
+    { "print", weechat_lua_print },
+    { "print_server", weechat_lua_print_server },
+    { "print_infobar", weechat_lua_print_infobar },
+    { "remove_infobar", weechat_lua_remove_infobar },
+    { "log", weechat_lua_log },
+    { "command", weechat_lua_command },
+    { "add_message_handler", weechat_lua_add_message_handler },
+    { "add_command_handler", weechat_lua_add_command_handler },
+    { "add_timer_handler", weechat_lua_add_timer_handler },
+    { "add_keyboard_handler", weechat_lua_add_keyboard_handler },
+    { "remove_handler", weechat_lua_remove_handler },
+    { "remove_timer_handler", weechat_lua_remove_timer_handler },
+    { "remove_keyboard_handler", weechat_lua_remove_keyboard_handler },
+    { "add_modifier", weechat_lua_add_modifier },
+    { "remove_modifier", weechat_lua_remove_modifier },
+    { "get_info", weechat_lua_get_info },
+    { "get_dcc_info", weechat_lua_get_dcc_info },
+    { "get_config", weechat_lua_get_config },
+    { "set_config", weechat_lua_set_config },
+    { "get_plugin_config", weechat_lua_get_plugin_config },
+    { "set_plugin_config", weechat_lua_set_plugin_config },
+    { "get_server_info", weechat_lua_get_server_info },
+    { "get_channel_info", weechat_lua_get_channel_info },
+    { "get_nick_info", weechat_lua_get_nick_info },
+    { "get_irc_color", weechat_lua_get_irc_color },
+    { "get_window_info", weechat_lua_get_window_info },
+    { "get_buffer_info", weechat_lua_get_buffer_info },
+    { "get_buffer_data", weechat_lua_get_buffer_data },
     /* define constants as function which returns values */
-    { "PLUGIN_RC_OK", weechat_lua_constant_plugin_rc_ok},
-    { "PLUGIN_RC_KO", weechat_lua_constant_plugin_rc_ko},
-    { "PLUGIN_RC_OK_IGNORE_WEECHAT", weechat_lua_constant_plugin_rc_ok_ignore_weechat},
-    { "PLUGIN_RC_OK_IGNORE_PLUGINS", weechat_lua_constant_plugin_rc_ok_ignore_plugins},
-    { "PLUGIN_RC_OK_IGNORE_ALL", weechat_lua_constant_plugin_rc_ok_ignore_all},
-    { NULL, NULL}
+    { "PLUGIN_RC_OK", weechat_lua_constant_plugin_rc_ok },
+    { "PLUGIN_RC_KO", weechat_lua_constant_plugin_rc_ko },
+    { "PLUGIN_RC_OK_IGNORE_WEECHAT", weechat_lua_constant_plugin_rc_ok_ignore_weechat },
+    { "PLUGIN_RC_OK_IGNORE_PLUGINS", weechat_lua_constant_plugin_rc_ok_ignore_plugins },
+    { "PLUGIN_RC_OK_IGNORE_ALL", weechat_lua_constant_plugin_rc_ok_ignore_all },
+    { NULL, NULL }
 };
 
 int
@@ -2142,7 +2263,7 @@ weechat_lua_cmd (t_weechat_plugin *plugin,
             for (ptr_handler = plugin->handlers;
                  ptr_handler; ptr_handler = ptr_handler->next_handler)
             {
-                if ((ptr_handler->type == HANDLER_MESSAGE)
+                if ((ptr_handler->type == PLUGIN_HANDLER_MESSAGE)
                     && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
@@ -2161,7 +2282,7 @@ weechat_lua_cmd (t_weechat_plugin *plugin,
             for (ptr_handler = plugin->handlers;
                  ptr_handler; ptr_handler = ptr_handler->next_handler)
             {
-                if ((ptr_handler->type == HANDLER_COMMAND)
+                if ((ptr_handler->type == PLUGIN_HANDLER_COMMAND)
                     && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
@@ -2180,7 +2301,7 @@ weechat_lua_cmd (t_weechat_plugin *plugin,
             for (ptr_handler = plugin->handlers;
                  ptr_handler; ptr_handler = ptr_handler->next_handler)
             {
-                if ((ptr_handler->type == HANDLER_TIMER)
+                if ((ptr_handler->type == PLUGIN_HANDLER_TIMER)
                     && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
@@ -2199,7 +2320,7 @@ weechat_lua_cmd (t_weechat_plugin *plugin,
             for (ptr_handler = plugin->handlers;
                  ptr_handler; ptr_handler = ptr_handler->next_handler)
             {
-                if ((ptr_handler->type == HANDLER_KEYBOARD)
+                if ((ptr_handler->type == PLUGIN_HANDLER_KEYBOARD)
                     && (ptr_handler->handler_args))
                 {
                     handler_found = 1;

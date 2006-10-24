@@ -725,7 +725,7 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *nick, char *arguments
                             nick);
             }
             irc_mode_channel_set (ptr_channel, pos_modes);
-            server_sendf (server, "MODE %s\r\n", ptr_channel->name);
+            server_sendf (server, "MODE %s", ptr_channel->name);
         }
         else
         {
@@ -1180,7 +1180,7 @@ irc_cmd_recv_ping (t_irc_server *server, char *host, char *nick, char *arguments
     pos = strrchr (arguments, ' ');
     if (pos)
         pos[0] = '\0';
-    server_sendf (server, "PONG :%s\r\n", arguments);
+    server_sendf (server, "PONG :%s", arguments);
     return 0;
 }
 
@@ -1253,7 +1253,7 @@ irc_cmd_reply_version (t_irc_server *server, t_irc_channel *channel,
                           "%s %s / %s%s",
                           nick, "\01", PACKAGE_NAME, PACKAGE_VERSION, __DATE__,
                           &buf->sysname,
-                          &buf->release, &buf->machine, "\01\r\n");
+                          &buf->release, &buf->machine, "\01");
             free (buf);
         }
         else
@@ -1261,7 +1261,7 @@ irc_cmd_reply_version (t_irc_server *server, t_irc_channel *channel,
                           "NOTICE %s :%sVERSION %s v%s"
                           " compiled on %s%s",
                           nick, "\01", PACKAGE_NAME, PACKAGE_VERSION, __DATE__,
-                          "\01\r\n");
+                          "\01");
         irc_display_prefix (server, ptr_buffer, PREFIX_SERVER);
         gui_printf (ptr_buffer,
                     _("CTCP %sVERSION%s received from %s%s"),
@@ -1408,10 +1408,10 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                     if (pos && !pos[0])
                         pos = NULL;
                     if (pos)
-                        server_sendf (server, "NOTICE %s :\01PING %s\01\r\n",
+                        server_sendf (server, "NOTICE %s :\01PING %s\01",
                                       nick, pos);
                     else
-                        server_sendf (server, "NOTICE %s :\01PING\01\r\n",
+                        server_sendf (server, "NOTICE %s :\01PING\01",
                                       nick);
                     irc_display_prefix (server, ptr_channel->buffer, PREFIX_SERVER);
                     gui_printf (ptr_channel->buffer,
@@ -1549,10 +1549,10 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                     if (pos && !pos[0])
                         pos = NULL;
                     if (pos)
-                        server_sendf (server, "NOTICE %s :\01PING %s\01\r\n",
+                        server_sendf (server, "NOTICE %s :\01PING %s\01",
                                       nick, pos);
                     else
-                        server_sendf (server, "NOTICE %s :\01PING\01\r\n",
+                        server_sendf (server, "NOTICE %s :\01PING\01",
                                       nick);
                     irc_display_prefix (server, server->buffer, PREFIX_SERVER);
                     gui_printf (server->buffer,
@@ -2414,10 +2414,10 @@ irc_cmd_recv_001 (t_irc_server *server, char *host, char *nick, char *arguments)
             if (ptr_channel->type == CHANNEL_TYPE_CHANNEL)
             {
                 if (ptr_channel->key)
-                    server_sendf (server, "JOIN %s %s\r\n",
+                    server_sendf (server, "JOIN %s %s",
                                   ptr_channel->name, ptr_channel->key);
                 else
-                    server_sendf (server, "JOIN %s\r\n",
+                    server_sendf (server, "JOIN %s",
                                   ptr_channel->name);
             }
         }
@@ -4811,7 +4811,7 @@ irc_cmd_recv_433 (t_irc_server *server, char *host, char *nick, char *arguments)
         if (!hostname[0])
             strcpy (hostname, _("unknown"));
         server_sendf (server,
-                      "NICK %s\r\n",
+                      "NICK %s",
                       server->nick);
     }
     else

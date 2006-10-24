@@ -49,6 +49,10 @@
 #include "../common/weeconfig.h"
 #include "../gui/gui.h"
 
+#ifdef PLUGINS
+#include "../plugins/plugins.h"
+#endif
+
 
 t_irc_server *irc_servers = NULL;
 t_irc_server *last_irc_server = NULL;
@@ -554,7 +558,79 @@ server_send (t_irc_server *server, char *buffer, int size_buf)
 }
 
 /*
+ * server_send_one_msg: send one message to IRC server
+ */
+
+int
+server_send_one_msg (t_irc_server *server, char *message)
+{
+    static char buffer[4096];
+    char *new_msg, *ptr_msg, *pos;
+    int rc;
+    
+    rc = 1;
+    
+    gui_printf_raw_data (server, 1, 0, message);
+#ifdef DEBUG
+    gui_printf (server->buffer, "[DEBUG] Sending to server >>> %s\n", message);
+#endif
+#ifdef PLUGINS
+    new_msg = plugin_modifier_exec (PLUGIN_MODIFIER_IRC_OUT,
+                                    server->name,
+                                    message);
+#else
+    new_msg = NULL;
+#endif
+    
+    /* no changes in new message */
+    if (new_msg && (strcmp (buffer, new_msg) == 0))
+    {
+        free (new_msg);
+        new_msg = NULL;
+    }
+    
+    /* message not dropped? */
+    if (!new_msg || new_msg[0])
+    {
+        ptr_msg = (new_msg) ? new_msg : message;
+
+        while (rc && ptr_msg && ptr_msg[0])
+        {
+            pos = strchr (ptr_msg, '\n');
+            if (pos)
+                pos[0] = '\0';
+            
+            if (new_msg)
+                gui_printf_raw_data (server, 1, 1, ptr_msg);
+            
+            snprintf (buffer, sizeof (buffer) - 1, "%s\r\n", ptr_msg);
+            if (server_send (server, buffer, strlen (buffer)) <= 0)
+            {
+                irc_display_prefix (server, server->buffer, PREFIX_ERROR);
+                gui_printf (server->buffer, _("%s error sending data to IRC server\n"),
+                            WEECHAT_ERROR);
+                rc = 0;
+            }
+            if (pos)
+            {
+                pos[0] = '\n';
+                ptr_msg = pos + 1;
+            }
+            else
+                ptr_msg = NULL;
+        }
+    }
+    else
+        gui_printf_raw_data (server, 1, 1, _("(message dropped)"));
+    if (new_msg)
+        free (new_msg);
+    
+    return rc;
+}
+
+/*
  * server_sendf: send formatted data to IRC server
+ *               many messages may be sent, separated by '\n'
  */
 
 void
@@ -562,34 +638,81 @@ server_sendf (t_irc_server *server, char *fmt, ...)
 {
     va_list args;
     static char buffer[4096];
-    int size_buf;
+    char *ptr_buf, *pos;
+    int rc;
     
     if (!server)
         return;
     
     va_start (args, fmt);
-    size_buf = vsnprintf (buffer, sizeof (buffer) - 1, fmt, args);
-    va_end (args);
-
-    if ((size_buf == 0) || (strcmp (buffer, "\r\n") == 0))
-        return;
+    vsnprintf (buffer, sizeof (buffer) - 1, fmt, args);
+    va_end (args);    
     
-    buffer[sizeof (buffer) - 1] = '\0';
-    if ((size_buf < 0) || (size_buf > (int) (sizeof (buffer) - 1)))
-        size_buf = strlen (buffer);
-    
-    buffer[size_buf - 2] = '\0';
-    gui_printf_raw_data (server, 1, buffer);
-#ifdef DEBUG
-    gui_printf (server->buffer, "[DEBUG] Sending to server >>> %s\n", buffer);
-#endif
-    buffer[size_buf - 2] = '\r';
-    
-    if (server_send (server, buffer, strlen (buffer)) <= 0)
+    ptr_buf = buffer;
+    while (ptr_buf && ptr_buf[0])
     {
-        irc_display_prefix (server, server->buffer, PREFIX_ERROR);
-        gui_printf (server->buffer, _("%s error sending data to IRC server\n"),
-                    WEECHAT_ERROR);
+        pos = strchr (ptr_buf, '\n');
+        if (pos)
+            pos[0] = '\0';
+        
+        rc = server_send_one_msg (server, ptr_buf);
+        
+        if (pos)
+        {
+            pos[0] = '\n';
+            ptr_buf = pos + 1;
+        }
+        else
+            ptr_buf = NULL;
+        
+        if (!rc)
+            ptr_buf = NULL;
+    }
+}
+
+/*
+ * server_parse_message: parse IRC message and return pointer to
+ *                       host, command and arguments (if any)
+ */
+
+void
+server_parse_message (char *message, char **host, char **command, char **args)
+{
+    char *pos, *pos2;
+    
+    *host = NULL;
+    *command = NULL;
+    *args = NULL;
+    
+    if (message[0] == ':')
+    {
+        pos = strchr (message, ' ');
+        if (pos)
+        {
+            *host = strndup (message + 1, pos - (message + 1));
+            pos++;
+        }
+        else
+            pos = message;
+    }
+    else
+        pos = message;
+    
+    if (pos && pos[0])
+    {
+        while (pos[0] == ' ')
+            pos++;
+        pos2 = strchr (pos, ' ');
+        if (pos2)
+        {
+            *command = strndup (pos, pos2 - pos);
+            pos2++;
+            while (pos2[0] == ' ')
+                pos2++;
+            if (pos2[0] == ':')
+                pos2++;
+            *args = strdup (pos2);
+        }
     }
 }
 
@@ -735,7 +858,7 @@ void
 server_msgq_flush ()
 {
     t_irc_message *next;
-    char *entire_line, *ptr_data, *pos, *pos2;
+    char *ptr_data, *new_msg, *ptr_msg, *pos;
     char *host, *command, *args;
     
     while (recv_msgq)
@@ -745,84 +868,90 @@ server_msgq_flush ()
 #ifdef DEBUG
             gui_printf (gui_current_window->buffer, "[DEBUG] %s\n", recv_msgq->data);
 #endif
-            
             ptr_data = recv_msgq->data;
-            entire_line = strdup (ptr_data);
-            
             while (ptr_data[0] == ' ')
                 ptr_data++;
             
-            if (ptr_data && ptr_data[0])
+            if (ptr_data[0])
             {
-                gui_printf_raw_data (recv_msgq->server, 0, ptr_data);
+                gui_printf_raw_data (recv_msgq->server, 0, 0, ptr_data);
 #ifdef DEBUG
                 gui_printf (NULL, "[DEBUG] data received from server: %s\n", ptr_data);
 #endif
-                
-                host = NULL;
-                command = NULL;
-                args = ptr_data;
-                
-                if (ptr_data[0] == ':')
+#ifdef PLUGINS
+                new_msg = plugin_modifier_exec (PLUGIN_MODIFIER_IRC_IN,
+                                                recv_msgq->server->name,
+                                                ptr_data);
+#else
+                new_msg = NULL;
+#endif
+                /* no changes in new message */
+                if (new_msg && (strcmp (ptr_data, new_msg) == 0))
                 {
-                    pos = strchr (ptr_data, ' ');
-                    if (pos)
+                    free (new_msg);
+                    new_msg = NULL;
+                }
+                
+                /* message not dropped? */
+                if (!new_msg || new_msg[0])
+                {
+                    /* use new message (returned by plugin) */
+                    ptr_msg = (new_msg) ? new_msg : ptr_data;
+                    
+                    while (ptr_msg && ptr_msg[0])
                     {
-                        pos[0] = '\0';
-                        host = ptr_data + 1;
-                        pos++;
+                        pos = strchr (ptr_msg, '\n');
+                        if (pos)
+                            pos[0] = '\0';
+
+                        if (new_msg)
+                            gui_printf_raw_data (recv_msgq->server, 0, 1, ptr_msg);
+                        
+                        server_parse_message (ptr_msg, &host, &command, &args);
+                        
+                        switch (irc_recv_command (recv_msgq->server, ptr_msg, host, command, args))
+                        {
+                            case -1:
+                                irc_display_prefix (recv_msgq->server,
+                                                    recv_msgq->server->buffer, PREFIX_ERROR);
+                                gui_printf (recv_msgq->server->buffer,
+                                            _("%s Command \"%s\" failed!\n"), WEECHAT_ERROR, command);
+                                break;
+                            case -2:
+                                irc_display_prefix (recv_msgq->server,
+                                                    recv_msgq->server->buffer, PREFIX_ERROR);
+                                gui_printf (recv_msgq->server->buffer,
+                                            _("%s No command to execute!\n"), WEECHAT_ERROR);
+                                break;
+                            case -3:
+                                irc_display_prefix (recv_msgq->server,
+                                                    recv_msgq->server->buffer, PREFIX_ERROR);
+                                gui_printf (recv_msgq->server->buffer,
+                                            _("%s Unknown command: cmd=\"%s\", host=\"%s\", args=\"%s\"\n"),
+                                            WEECHAT_WARNING, command, host, args);
+                                break;
+                        }
+                        if (host)
+                            free (host);
+                        if (command)
+                            free (command);
+                        if (args)
+                            free (args);
+                        
+                        if (pos)
+                        {
+                            pos[0] = '\n';
+                            ptr_msg = pos + 1;
+                        }
+                        else
+                            ptr_msg = NULL;
                     }
-                    else
-                        pos = ptr_data;
                 }
                 else
-                    pos = ptr_data;
-                
-                if (pos && pos[0])
-                {
-                    while (pos[0] == ' ')
-                        pos++;
-                    pos2 = strchr (pos, ' ');
-                    if (pos2)
-                    {
-                        pos2[0] = '\0';
-                        command = strdup (pos);
-                        pos2++;
-                        while (pos2[0] == ' ')
-                            pos2++;
-                        args = (pos2[0] == ':') ? pos2 + 1 : pos2;
-                    }
-                }
-                
-                switch (irc_recv_command (recv_msgq->server, entire_line, host,
-                                          command, args))
-                {
-                    case -1:
-                        irc_display_prefix (recv_msgq->server,
-                                            recv_msgq->server->buffer, PREFIX_ERROR);
-                        gui_printf (recv_msgq->server->buffer,
-                                    _("%s Command \"%s\" failed!\n"), WEECHAT_ERROR, command);
-                        break;
-                    case -2:
-                        irc_display_prefix (recv_msgq->server,
-                                            recv_msgq->server->buffer, PREFIX_ERROR);
-                        gui_printf (recv_msgq->server->buffer,
-                                    _("%s No command to execute!\n"), WEECHAT_ERROR);
-                        break;
-                    case -3:
-                        irc_display_prefix (recv_msgq->server,
-                                            recv_msgq->server->buffer, PREFIX_ERROR);
-                        gui_printf (recv_msgq->server->buffer,
-                                    _("%s Unknown command: cmd=\"%s\", host=\"%s\", args=\"%s\"\n"),
-                                    WEECHAT_WARNING, command, host, args);
-                        break;
-                }
-                
-                if (command)
-                    free (command);
+                    gui_printf_raw_data (recv_msgq->server, 0, 1, _("(message dropped)"));
+                if (new_msg)
+                    free (new_msg);
             }
-            
-            free (entire_line);
             free (recv_msgq->data);
         }
         

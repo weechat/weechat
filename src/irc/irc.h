@@ -50,6 +50,8 @@
 #define PREFIX_QUIT      "<--"
 #define PREFIX_ERROR     "=!="
 #define PREFIX_PLUGIN    "-P-"
+#define PREFIX_RECV_MOD  "==>"
+#define PREFIX_SEND_MOD  "<=="
 
 #define DEFAULT_IRC_PORT 6667
 
@@ -345,6 +347,7 @@ extern char *server_get_charset_decode_utf (t_irc_server *);
 extern char *server_get_charset_encode (t_irc_server *);
 extern int server_send (t_irc_server *, char *, int);
 extern void server_sendf (t_irc_server *, char *, ...);
+extern void server_parse_message (char *, char **, char **, char **);
 extern void server_recv (t_irc_server *);
 extern void server_child_read (t_irc_server *);
 extern int server_connect (t_irc_server *);

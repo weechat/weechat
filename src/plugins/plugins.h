@@ -68,12 +68,21 @@ extern int plugin_keyboard_handler_exec (char *, char *, char *);
 extern void plugin_handler_remove (t_weechat_plugin *,
                                    t_plugin_handler *);
 extern void plugin_handler_remove_all (t_weechat_plugin *);
+extern t_plugin_modifier *plugin_modifier_add (t_weechat_plugin *,
+                                               char *, char *,
+                                               t_plugin_modifier_func *,
+                                               char *, void *);
+extern char *plugin_modifier_exec (t_plugin_modifier_type, char *, char *);
+extern void plugin_modifier_remove (t_weechat_plugin *,
+                                    t_plugin_modifier *);
+extern void plugin_modifier_remove_all (t_weechat_plugin *);
 extern t_weechat_plugin *plugin_load (char *);
 extern void plugin_auto_load ();
 extern void plugin_remove (t_weechat_plugin *);
 extern void plugin_unload (t_weechat_plugin *);
 extern void plugin_unload_name (char *);
 extern void plugin_unload_all ();
+extern void plugin_reload_name (char *);
 extern void plugin_init (int);
 extern void plugin_end ();
 

@@ -247,6 +247,23 @@ weechat_perl_keyboard_handler (t_weechat_plugin *plugin,
 }
 
 /*
+ * weechat_perl_modifier: general modifier for Perl
+ */
+
+char *
+weechat_perl_modifier (t_weechat_plugin *plugin,
+                       int argc, char **argv,
+                       char *modifier_args, void *modifier_pointer)
+{
+    /*if (argc >= 2)
+        return weechat_perl_exec (plugin, (t_plugin_script *)modifier_pointer,
+                                  modifier_args, argv[0], argv[1], NULL);
+    else
+        return NULL;*/
+    return NULL;
+}
+
+/*
  * weechat::register: startup function for all WeeChat Perl scripts
  */
 
@@ -814,6 +831,84 @@ static XS (XS_weechat_remove_keyboard_handler)
     
     weechat_script_remove_keyboard_handler (perl_plugin, perl_current_script,
                                             function);
+    
+    XSRETURN_YES;
+}
+
+/*
+ * weechat::add_modifier: add a modifier
+ */
+
+static XS (XS_weechat_add_modifier)
+{
+    char *type, *command, *function;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to add modifier, "
+                                   "script not initialized");
+	XSRETURN_NO;
+    }
+    
+    if (items < 3)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"add_modifier\" function");
+        XSRETURN_NO;
+    }
+    
+    type = SvPV (ST (0), PL_na);
+    command = SvPV (ST (1), PL_na);
+    function = SvPV (ST (2), PL_na);
+    
+    if (perl_plugin->modifier_add (perl_plugin, type, command,
+                                   weechat_perl_modifier, function,
+                                   (void *)perl_current_script))
+        XSRETURN_YES;
+    
+    XSRETURN_NO;
+}
+
+/*
+ * weechat::remove_modifier: remove a modifier
+ */
+
+static XS (XS_weechat_remove_modifier)
+{
+    char *type, *command, *function;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to remove modifier, "
+                                   "script not initialized");
+	XSRETURN_NO;
+    }
+    
+    if (items < 2)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"remove_modifier\" function");
+        XSRETURN_NO;
+    }
+
+    type = SvPV (ST (0), PL_na);
+    command = SvPV (ST (1), PL_na);
+    function = SvPV (ST (2), PL_na);
+    
+    weechat_script_remove_modifier (perl_plugin, perl_current_script,
+                                    type, command, function);
     
     XSRETURN_YES;
 }
@@ -1599,6 +1694,8 @@ weechat_perl_xs_init (pTHX)
     newXS ("weechat::remove_handler", XS_weechat_remove_handler, "weechat");
     newXS ("weechat::remove_timer_handler", XS_weechat_remove_timer_handler, "weechat");
     newXS ("weechat::remove_keyboard_handler", XS_weechat_remove_keyboard_handler, "weechat");
+    newXS ("weechat::add_modifier", XS_weechat_add_modifier, "weechat");
+    newXS ("weechat::remove_modifier", XS_weechat_remove_modifier, "weechat");
     newXS ("weechat::get_info", XS_weechat_get_info, "weechat");
     newXS ("weechat::get_dcc_info", XS_weechat_get_dcc_info, "weechat");
     newXS ("weechat::get_config", XS_weechat_get_config, "weechat");
@@ -1869,7 +1966,7 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
             for (ptr_handler = plugin->handlers;
                  ptr_handler; ptr_handler = ptr_handler->next_handler)
             {
-                if ((ptr_handler->type == HANDLER_MESSAGE)
+                if ((ptr_handler->type == PLUGIN_HANDLER_MESSAGE)
                     && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
@@ -1888,7 +1985,7 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
             for (ptr_handler = plugin->handlers;
                  ptr_handler; ptr_handler = ptr_handler->next_handler)
             {
-                if ((ptr_handler->type == HANDLER_COMMAND)
+                if ((ptr_handler->type == PLUGIN_HANDLER_COMMAND)
                     && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
@@ -1907,7 +2004,7 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
             for (ptr_handler = plugin->handlers;
                  ptr_handler; ptr_handler = ptr_handler->next_handler)
             {
-                if ((ptr_handler->type == HANDLER_TIMER)
+                if ((ptr_handler->type == PLUGIN_HANDLER_TIMER)
                     && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
@@ -1926,7 +2023,7 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
             for (ptr_handler = plugin->handlers;
                  ptr_handler; ptr_handler = ptr_handler->next_handler)
             {
-                if ((ptr_handler->type == HANDLER_KEYBOARD)
+                if ((ptr_handler->type == PLUGIN_HANDLER_KEYBOARD)
                     && (ptr_handler->handler_args))
                 {
                     handler_found = 1;

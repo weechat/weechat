@@ -173,6 +173,23 @@ weechat_python_keyboard_handler (t_weechat_plugin *plugin,
 }
 
 /*
+ * weechat_python_modifier: general modifier for Python
+ */
+
+char *
+weechat_python_modifier (t_weechat_plugin *plugin,
+                         int argc, char **argv,
+                         char *modifier_args, void *modifier_pointer)
+{
+    /*if (argc >= 2)
+        return weechat_python_exec (plugin, (t_plugin_script *)modifier_pointer,
+                                    modifier_args, argv[0], argv[1], NULL);
+    else
+        return NULL;*/
+    return NULL;
+}
+
+/*
  * weechat_python_register: startup function for all WeeChat Python scripts
  */
 
@@ -731,6 +748,85 @@ weechat_python_remove_keyboard_handler (PyObject *self, PyObject *args)
     
     weechat_script_remove_keyboard_handler (python_plugin, python_current_script,
                                             function);
+    
+    return Py_BuildValue ("i", 1);
+}
+
+/*
+ * weechat_python_add_modifier: add a modifier
+ */
+
+static PyObject *
+weechat_python_add_modifier (PyObject *self, PyObject *args)
+{
+    char *type, *command, *function;
+    
+    /* make gcc happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to add modifier, "
+                                     "script not initialized");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    type = NULL;
+    command = NULL;
+    function = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sss", &type, &command, &function))
+    {
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"add_modifier\" function");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    if (python_plugin->modifier_add (python_plugin, type, command,
+                                     weechat_python_modifier,
+                                     function,
+                                     (void *)python_current_script))
+        return Py_BuildValue ("i", 1);
+    
+    return Py_BuildValue ("i", 0);
+}
+
+/*
+ * weechat_python_remove_modifier: remove a modifier
+ */
+
+static PyObject *
+weechat_python_remove_modifier (PyObject *self, PyObject *args)
+{
+    char *type, *command, *function;
+    
+    /* make gcc happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to remove modifier, "
+                                     "script not initialized");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    type = NULL;
+    command = NULL;
+    function = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sss", &type, &command, &function))
+    {
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"remove_modifier\" function");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    weechat_script_remove_modifier (python_plugin, python_current_script,
+                                    type, command, function);
     
     return Py_BuildValue ("i", 1);
 }
@@ -1520,6 +1616,8 @@ PyMethodDef weechat_python_funcs[] = {
     { "remove_handler", weechat_python_remove_handler, METH_VARARGS, "" },
     { "remove_timer_handler", weechat_python_remove_timer_handler, METH_VARARGS, "" },
     { "remove_keyboard_handler", weechat_python_remove_keyboard_handler, METH_VARARGS, "" },
+    { "add_modifier", weechat_python_add_modifier, METH_VARARGS, "" },
+    { "remove_modifier", weechat_python_remove_modifier, METH_VARARGS, "" },
     { "get_info", weechat_python_get_info, METH_VARARGS, "" },
     { "get_dcc_info", weechat_python_get_dcc_info, METH_VARARGS, "" },
     { "get_config", weechat_python_get_config, METH_VARARGS, "" },
@@ -1815,7 +1913,7 @@ weechat_python_cmd (t_weechat_plugin *plugin,
             for (ptr_handler = plugin->handlers;
                  ptr_handler; ptr_handler = ptr_handler->next_handler)
             {
-                if ((ptr_handler->type == HANDLER_MESSAGE)
+                if ((ptr_handler->type == PLUGIN_HANDLER_MESSAGE)
                     && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
@@ -1834,7 +1932,7 @@ weechat_python_cmd (t_weechat_plugin *plugin,
             for (ptr_handler = plugin->handlers;
                  ptr_handler; ptr_handler = ptr_handler->next_handler)
             {
-                if ((ptr_handler->type == HANDLER_COMMAND)
+                if ((ptr_handler->type == PLUGIN_HANDLER_COMMAND)
                     && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
@@ -1853,7 +1951,7 @@ weechat_python_cmd (t_weechat_plugin *plugin,
             for (ptr_handler = plugin->handlers;
                  ptr_handler; ptr_handler = ptr_handler->next_handler)
             {
-                if ((ptr_handler->type == HANDLER_TIMER)
+                if ((ptr_handler->type == PLUGIN_HANDLER_TIMER)
                     && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
@@ -1872,7 +1970,7 @@ weechat_python_cmd (t_weechat_plugin *plugin,
             for (ptr_handler = plugin->handlers;
                  ptr_handler; ptr_handler = ptr_handler->next_handler)
             {
-                if ((ptr_handler->type == HANDLER_KEYBOARD)
+                if ((ptr_handler->type == PLUGIN_HANDLER_KEYBOARD)
                     && (ptr_handler->handler_args))
                 {
                     handler_found = 1;

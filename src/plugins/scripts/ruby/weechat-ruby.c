@@ -79,7 +79,7 @@ protect_funcall0(VALUE arg)
  */
 
 VALUE
-rb_protect_funcall(VALUE recv, ID mid, int *state, int argc, ...)
+rb_protect_funcall (VALUE recv, ID mid, int *state, int argc, ...)
 {
     va_list ap;
     VALUE *argv;
@@ -216,6 +216,23 @@ weechat_ruby_keyboard_handler (t_weechat_plugin *plugin,
                                   handler_args, argv[0], argv[1], argv[2]);
     else
         return PLUGIN_RC_KO;
+}
+
+/*
+ * weechat_ruby_modifier: general modifier for Ruby
+ */
+
+char *
+weechat_ruby_modifier (t_weechat_plugin *plugin,
+                       int argc, char **argv,
+                       char *modifier_args, void *modifier_pointer)
+{
+    /*if (argc >= 2)
+        return weechat_ruby_exec (plugin, (t_plugin_script *)modifier_pointer,
+                                  modifier_args, argv[0], argv[1], NULL);
+    else
+        return NULL;*/
+    return NULL;
 }
 
 /*
@@ -926,6 +943,101 @@ weechat_ruby_remove_keyboard_handler (VALUE class, VALUE function)
     
     weechat_script_remove_keyboard_handler (ruby_plugin, ruby_current_script,
                                             c_function);
+    
+    return INT2FIX (1);
+}
+
+/*
+ * weechat_ruby_add_modifier: add a modifier
+ */
+
+static VALUE
+weechat_ruby_add_modifier (VALUE class, VALUE type, VALUE message, VALUE function)
+{
+    char *c_type, *c_message, *c_function;
+    
+    /* make gcc happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: unable to add modifier, "
+                                   "script not initialized");
+        return INT2FIX (0);
+    }
+
+    c_type = NULL;
+    c_message = NULL;
+    c_function = NULL;
+    
+    if (NIL_P (type) || NIL_P (message) || NIL_P (function))
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: wrong parameters for "
+                                   "\"add_modifier\" function");
+        return INT2FIX (0);
+    }
+
+    Check_Type (type, T_STRING);
+    Check_Type (message, T_STRING);
+    Check_Type (function, T_STRING);
+
+    c_type = STR2CSTR (type);
+    c_message = STR2CSTR (message);
+    c_function = STR2CSTR (function);
+    
+    if (ruby_plugin->modifier_add (ruby_plugin, c_type, c_message,
+                                   weechat_ruby_modifier,
+                                   c_function,
+                                   (void *)ruby_current_script))
+        return INT2FIX (1);
+    
+    return INT2FIX (0);
+}
+
+/*
+ * weechat_ruby_remove_modifier: remove a modifier
+ */
+
+static VALUE
+weechat_ruby_remove_modifier (VALUE class, VALUE type, VALUE command, VALUE function)
+{
+    char *c_type, *c_command, *c_function;
+    
+    /* make gcc happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: unable to remove modifier, "
+                                   "script not initialized");
+        return INT2FIX (0);
+    }
+
+    c_type = NULL;
+    c_command = NULL;
+    c_function = NULL;
+    
+    if (NIL_P (type) || NIL_P (command) || NIL_P (function))
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: wrong parameters for "
+                                   "\"remove_modifier\" function");
+        return INT2FIX (0);
+    }
+
+    Check_Type (type, T_STRING);
+    Check_Type (command, T_STRING);
+    Check_Type (function, T_STRING);
+
+    c_type = STR2CSTR (type);
+    c_command = STR2CSTR (command);
+    c_function = STR2CSTR (function);
+    
+    weechat_script_remove_modifier (ruby_plugin, ruby_current_script,
+                                    c_type, c_command, c_function);
     
     return INT2FIX (1);
 }
@@ -2022,7 +2134,7 @@ weechat_ruby_cmd (t_weechat_plugin *plugin,
             for (ptr_handler = plugin->handlers;
                  ptr_handler; ptr_handler = ptr_handler->next_handler)
             {
-                if ((ptr_handler->type == HANDLER_MESSAGE)
+                if ((ptr_handler->type == PLUGIN_HANDLER_MESSAGE)
                     && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
@@ -2041,7 +2153,7 @@ weechat_ruby_cmd (t_weechat_plugin *plugin,
             for (ptr_handler = plugin->handlers;
                  ptr_handler; ptr_handler = ptr_handler->next_handler)
             {
-                if ((ptr_handler->type == HANDLER_COMMAND)
+                if ((ptr_handler->type == PLUGIN_HANDLER_COMMAND)
                     && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
@@ -2060,7 +2172,7 @@ weechat_ruby_cmd (t_weechat_plugin *plugin,
             for (ptr_handler = plugin->handlers;
                  ptr_handler; ptr_handler = ptr_handler->next_handler)
             {
-                if ((ptr_handler->type == HANDLER_TIMER)
+                if ((ptr_handler->type == PLUGIN_HANDLER_TIMER)
                     && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
@@ -2079,7 +2191,7 @@ weechat_ruby_cmd (t_weechat_plugin *plugin,
             for (ptr_handler = plugin->handlers;
                  ptr_handler; ptr_handler = ptr_handler->next_handler)
             {
-                if ((ptr_handler->type == HANDLER_KEYBOARD)
+                if ((ptr_handler->type == PLUGIN_HANDLER_KEYBOARD)
                     && (ptr_handler->handler_args))
                 {
                     handler_found = 1;
@@ -2212,6 +2324,8 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     rb_define_module_function (ruby_mWeechat, "remove_handler", weechat_ruby_remove_handler, 2);
     rb_define_module_function (ruby_mWeechat, "remove_timer_handler", weechat_ruby_remove_timer_handler, 1);
     rb_define_module_function (ruby_mWeechat, "remove_keyboard_handler", weechat_ruby_remove_keyboard_handler, 1);
+    rb_define_module_function (ruby_mWeechat, "add_modifier", weechat_ruby_add_modifier, 3);
+    rb_define_module_function (ruby_mWeechat, "remove_modifier", weechat_ruby_remove_modifier, 3);
     rb_define_module_function (ruby_mWeechat, "get_info", weechat_ruby_get_info, -1);
     rb_define_module_function (ruby_mWeechat, "get_dcc_info", weechat_ruby_get_dcc_info, 0);
     rb_define_module_function (ruby_mWeechat, "get_config", weechat_ruby_get_config, 1);

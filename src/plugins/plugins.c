@@ -180,7 +180,7 @@ plugin_cmd_handler_search (char *command)
         for (ptr_handler = ptr_plugin->handlers;
              ptr_handler; ptr_handler = ptr_handler->next_handler)
         {
-            if ((ptr_handler->type == HANDLER_COMMAND)
+            if ((ptr_handler->type == PLUGIN_HANDLER_COMMAND)
                 && (ascii_strcasecmp (ptr_handler->command, command) == 0))
                 return ptr_handler;
         }
@@ -212,7 +212,7 @@ plugin_msg_handler_add (t_weechat_plugin *plugin, char *irc_command,
     new_handler = (t_plugin_handler *)malloc (sizeof (t_plugin_handler));
     if (new_handler)
     {
-        new_handler->type = HANDLER_MESSAGE;
+        new_handler->type = PLUGIN_HANDLER_MESSAGE;
         new_handler->irc_command = strdup (irc_command);
         new_handler->command = NULL;
         new_handler->description = NULL;
@@ -295,7 +295,7 @@ plugin_cmd_handler_add (t_weechat_plugin *plugin, char *command,
     new_handler = (t_plugin_handler *)malloc (sizeof (t_plugin_handler));
     if (new_handler)
     {
-        new_handler->type = HANDLER_COMMAND;
+        new_handler->type = PLUGIN_HANDLER_COMMAND;
         new_handler->irc_command = NULL;
         new_handler->command = strdup (command);
         new_handler->description = (description) ? strdup (description) : NULL;
@@ -355,7 +355,7 @@ plugin_timer_handler_add (t_weechat_plugin *plugin, int interval,
     new_handler = (t_plugin_handler *)malloc (sizeof (t_plugin_handler));
     if (new_handler)
     {
-        new_handler->type = HANDLER_TIMER;
+        new_handler->type = PLUGIN_HANDLER_TIMER;
         new_handler->irc_command = NULL;
         new_handler->command = NULL;
         new_handler->description = NULL;
@@ -411,7 +411,7 @@ plugin_keyboard_handler_add (t_weechat_plugin *plugin,
     new_handler = (t_plugin_handler *)malloc (sizeof (t_plugin_handler));
     if (new_handler)
     {
-        new_handler->type = HANDLER_KEYBOARD;
+        new_handler->type = PLUGIN_HANDLER_KEYBOARD;
         new_handler->irc_command = NULL;
         new_handler->command = NULL;
         new_handler->description = NULL;
@@ -471,7 +471,7 @@ plugin_msg_handler_exec (char *server, char *irc_command, char *irc_message)
         for (ptr_handler = ptr_plugin->handlers;
              ptr_handler; ptr_handler = ptr_handler->next_handler)
         {
-            if ((ptr_handler->type == HANDLER_MESSAGE)
+            if ((ptr_handler->type == PLUGIN_HANDLER_MESSAGE)
                 && (ascii_strcasecmp (ptr_handler->irc_command, irc_command) == 0))
             {
                 if (ptr_handler->running == 0)
@@ -523,7 +523,7 @@ plugin_cmd_handler_exec (char *server, char *command, char *arguments)
         for (ptr_handler = ptr_plugin->handlers;
              ptr_handler; ptr_handler = ptr_handler->next_handler)
         {
-            if ((ptr_handler->type == HANDLER_COMMAND)
+            if ((ptr_handler->type == PLUGIN_HANDLER_COMMAND)
                 && (ascii_strcasecmp (ptr_handler->command, command) == 0))
             {
                 if (ptr_handler->running == 0)
@@ -564,7 +564,7 @@ plugin_timer_handler_exec ()
         for (ptr_handler = ptr_plugin->handlers;
              ptr_handler; ptr_handler = ptr_handler->next_handler)
         {
-            if (ptr_handler->type == HANDLER_TIMER)
+            if (ptr_handler->type == PLUGIN_HANDLER_TIMER)
             {
                 ptr_handler->remaining--;
                 if (ptr_handler->remaining <= 0)
@@ -610,7 +610,7 @@ plugin_keyboard_handler_exec (char *key, char *input_before, char *input_after)
         for (ptr_handler = ptr_plugin->handlers;
              ptr_handler; ptr_handler = ptr_handler->next_handler)
         {
-            if (ptr_handler->type == HANDLER_KEYBOARD)
+            if (ptr_handler->type == PLUGIN_HANDLER_KEYBOARD)
             {
                 return_code = ((int) (ptr_handler->handler) (ptr_plugin,
                                                              3, argv,
@@ -650,7 +650,7 @@ plugin_handler_remove (t_weechat_plugin *plugin,
         (handler->next_handler)->prev_handler = handler->prev_handler;
     
     /* remove command from WeeChat command list, if command handler */
-    if (handler->type == HANDLER_COMMAND)
+    if (handler->type == PLUGIN_HANDLER_COMMAND)
         weelist_remove (&index_commands, &last_index_command,
                         weelist_search (index_commands, handler->command));
     
@@ -680,6 +680,199 @@ plugin_handler_remove_all (t_weechat_plugin *plugin)
 {
     while (plugin->handlers)
         plugin_handler_remove (plugin, plugin->handlers);
+}
+
+/*
+ * plugin_modifier_add: add a IRC handler
+ *                      arguments:
+ *                        1. the plugin pointer
+ *                        2. type of modifier
+ *                        3. message ("*" means all)
+ *                        4. the modifier function
+ *                        5. modifier args: a string given to
+ *                           modifier when called (used by scripts)
+ *                        6. modifier pointer: a pointer given to
+ *                           modifier when called (used by scripts)
+ */
+
+t_plugin_modifier *
+plugin_modifier_add (t_weechat_plugin *plugin, char *type, char *command,
+                     t_plugin_modifier_func *modifier_func,
+                     char *modifier_args, void *modifier_pointer)
+{
+    t_plugin_modifier *new_modifier;
+    int type_int;
+
+    if (ascii_strcasecmp (type, PLUGIN_MODIFIER_IRC_IN_STR) == 0)
+        type_int = PLUGIN_MODIFIER_IRC_IN;
+    else if (ascii_strcasecmp (type, PLUGIN_MODIFIER_IRC_USER_STR) == 0)
+        type_int = PLUGIN_MODIFIER_IRC_USER;
+    else if (ascii_strcasecmp (type, PLUGIN_MODIFIER_IRC_OUT_STR) == 0)
+        type_int = PLUGIN_MODIFIER_IRC_OUT;
+    else
+        return NULL;
+    
+    new_modifier = (t_plugin_modifier *)malloc (sizeof (t_plugin_modifier));
+    if (new_modifier)
+    {
+        new_modifier->type = type_int;
+        new_modifier->command = (command) ? strdup (command) : strdup ("*");
+        new_modifier->modifier = modifier_func;
+        new_modifier->modifier_args = (modifier_args) ? strdup (modifier_args) : NULL;
+        new_modifier->modifier_pointer = modifier_pointer;
+        new_modifier->running = 0;
+        
+        /* add new modifier to list */
+        new_modifier->prev_modifier = plugin->last_modifier;
+        new_modifier->next_modifier = NULL;
+        if (plugin->modifiers)
+            (plugin->last_modifier)->next_modifier = new_modifier;
+        else
+            plugin->modifiers = new_modifier;
+        plugin->last_modifier = new_modifier;
+    }
+    else
+    {
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        gui_printf (NULL,
+                    _("%s plugin %s: unable to add modifier (not enough memory)\n"),
+                    WEECHAT_ERROR, plugin->name);
+        return NULL;
+    }
+    return new_modifier;
+}
+
+/*
+ * plugin_modifier_exec: execute a modifier
+ *                       return: NULL if no modifier was applied on message
+ *                               "" (empty string) if message has been dropped by a modifier
+ *                               other string if message has been modified
+ */
+
+char *
+plugin_modifier_exec (t_plugin_modifier_type type,
+                      char *server, char *message)
+{
+    t_weechat_plugin *ptr_plugin;
+    t_plugin_modifier *ptr_modifier;
+    char *argv[2] = { NULL, NULL };
+    char *new_msg, *pos, *command;
+    int length_command;
+    
+    argv[0] = server;
+    argv[1] = message;
+    
+    command = NULL;
+    length_command = 0;
+    if ((type == PLUGIN_MODIFIER_IRC_IN) || (type == PLUGIN_MODIFIER_IRC_OUT))
+    {
+        /* look for command in message */
+        if (message[0] == ':')
+        {
+            pos = strchr (message, ' ');
+            if (pos)
+            {
+                while (pos[0] == ' ')
+                    pos++;
+                command = pos;
+            }
+        }
+        else
+            command = message;
+        if (command)
+        {
+            pos = strchr (command, ' ');
+            if (pos)
+                length_command = pos - command;
+            else
+                length_command = strlen (command);
+        }
+    }
+    
+    new_msg = NULL;
+    
+    for (ptr_plugin = weechat_plugins; ptr_plugin;
+         ptr_plugin = ptr_plugin->next_plugin)
+    {
+        for (ptr_modifier = ptr_plugin->modifiers;
+             ptr_modifier; ptr_modifier = ptr_modifier->next_modifier)
+        {
+            if (ptr_modifier->type == type)
+            {
+                if (ptr_modifier->running == 0)
+                {
+                    if (((type != PLUGIN_MODIFIER_IRC_IN) && (type != PLUGIN_MODIFIER_IRC_OUT))
+                        || (ascii_strcasecmp (ptr_modifier->command, "*") == 0)
+                        || (command && (ascii_strncasecmp (ptr_modifier->command, command, length_command) == 0)))
+                    {
+                        ptr_modifier->running = 1;
+                        new_msg = ((char *) (ptr_modifier->modifier) (ptr_plugin,
+                                                                      2, argv,
+                                                                      ptr_modifier->modifier_args,
+                                                                      ptr_modifier->modifier_pointer));
+                        ptr_modifier->running = 0;
+                        
+                        /* message dropped? */
+                        if (new_msg && !new_msg[0])
+                            return new_msg;
+                        
+                        /* new message => keep it as base for next modifier */
+                        if (new_msg)
+                        {
+                            /* free any new message allocated before by another modifier */
+                            if (argv[1] != message)
+                                free (argv[1]);
+                            argv[1] = new_msg;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    return new_msg;
+}
+
+/*
+ * plugin_modifier_remove: remove a modifier for a plugin
+ */
+
+void
+plugin_modifier_remove (t_weechat_plugin *plugin,
+                        t_plugin_modifier *modifier)
+{
+    t_plugin_modifier *new_modifiers;
+    
+    /* remove modifier from list */
+    if (plugin->last_modifier == modifier)
+        plugin->last_modifier = modifier->prev_modifier;
+    if (modifier->prev_modifier)
+    {
+        (modifier->prev_modifier)->next_modifier = modifier->next_modifier;
+        new_modifiers = plugin->modifiers;
+    }
+    else
+        new_modifiers = modifier->next_modifier;
+    
+    if (modifier->next_modifier)
+        (modifier->next_modifier)->prev_modifier = modifier->prev_modifier;
+    
+    /* free data */
+    if (modifier->command)
+        free (modifier->command);
+    
+    plugin->modifiers = new_modifiers;
+}
+
+/*
+ * plugin_modifier_remove_all: remove all modifiers for a plugin
+ */
+
+void
+plugin_modifier_remove_all (t_weechat_plugin *plugin)
+{
+    while (plugin->modifiers)
+        plugin_modifier_remove (plugin, plugin->modifiers);
 }
 
 /*
@@ -857,6 +1050,9 @@ plugin_load (char *filename)
         new_plugin->keyboard_handler_add = &weechat_plugin_keyboard_handler_add;
         new_plugin->handler_remove = &weechat_plugin_handler_remove;
         new_plugin->handler_remove_all = &weechat_plugin_handler_remove_all;
+        new_plugin->modifier_add = &weechat_plugin_modifier_add;
+        new_plugin->modifier_remove = &weechat_plugin_modifier_remove;
+        new_plugin->modifier_remove_all = &weechat_plugin_modifier_remove_all;
         new_plugin->print = &weechat_plugin_print;
         new_plugin->print_server = &weechat_plugin_print_server;
         new_plugin->print_infobar = &weechat_plugin_print_infobar;
@@ -888,6 +1084,10 @@ plugin_load (char *filename)
         /* handlers */
         new_plugin->handlers = NULL;
         new_plugin->last_handler = NULL;
+        
+        /* modifiers */
+        new_plugin->modifiers = NULL;
+        new_plugin->last_modifier = NULL;
         
         /* add new plugin to list */
         new_plugin->prev_plugin = last_weechat_plugin;
@@ -936,11 +1136,12 @@ plugin_load (char *filename)
 }
 
 /*
- * plugin_auto_load_file: load a file found by plugin_aut_load,
+ * plugin_auto_load_file: load a file found by plugin_auto_load,
  *                        but only it this is really a dynamic library
  */
 
-int plugin_auto_load_file (t_weechat_plugin *plugin, char *filename)
+int
+plugin_auto_load_file (t_weechat_plugin *plugin, char *filename)
 {
     char *pos;
     
@@ -965,7 +1166,8 @@ int plugin_auto_load_file (t_weechat_plugin *plugin, char *filename)
  * plugin_auto_load: auto-load WeeChat plugins
  */
 
-void plugin_auto_load ()
+void
+plugin_auto_load ()
 {
     char *ptr_home, *dir_name, *plugins_path, *plugins_path2;
     char *list_plugins, *pos, *pos2;
@@ -1049,8 +1251,11 @@ plugin_remove (t_weechat_plugin *plugin)
     if (plugin->next_plugin)
         (plugin->next_plugin)->prev_plugin = plugin->prev_plugin;
     
-    /* free data */
+    /* remove all handlers and modifiers */
     plugin_handler_remove_all (plugin);
+    plugin_modifier_remove_all (plugin);
+
+    /* free data */
     if (plugin->filename)
         free (plugin->filename);
     dlclose (plugin->handle);
@@ -1114,6 +1319,38 @@ plugin_unload_all ()
 {
     while (weechat_plugins)
         plugin_unload (last_weechat_plugin);
+}
+
+/*
+ * plugin_reload_name: reload a WeeChat plugin by name
+ */
+
+void
+plugin_reload_name (char *name)
+{
+    t_weechat_plugin *ptr_plugin;
+    char *filename;
+    
+    ptr_plugin = plugin_search (name);
+    if (ptr_plugin)
+    {
+        filename = strdup (ptr_plugin->filename);
+        if (filename)
+        {
+            plugin_unload (ptr_plugin);
+            irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
+            gui_printf (NULL, _("Plugin \"%s\" unloaded.\n"), name);
+            plugin_load (filename);
+            free (filename);
+        }
+    }
+    else
+    {
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        gui_printf (NULL,
+                    _("%s plugin \"%s\" not found\n"),
+                    WEECHAT_ERROR, name);
+    }
 }
 
 /*

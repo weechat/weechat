@@ -632,8 +632,8 @@ dcc_accept (t_irc_dcc *ptr_dcc)
         ptr_dcc->status = DCC_CONNECTING;
         server_sendf (ptr_dcc->server,
                       (strchr (ptr_dcc->filename, ' ')) ?
-                          "PRIVMSG %s :\01DCC RESUME \"%s\" %d %u\01\r\n" :
-                          "PRIVMSG %s :\01DCC RESUME %s %d %u\01\r\n",
+                          "PRIVMSG %s :\01DCC RESUME \"%s\" %d %u\01\n" :
+                          "PRIVMSG %s :\01DCC RESUME %s %d %u\01",
                       ptr_dcc->nick, ptr_dcc->filename,
                       ptr_dcc->port, ptr_dcc->start_resume);
         dcc_redraw (HOTLIST_MSG);
@@ -661,8 +661,8 @@ dcc_accept_resume (t_irc_server *server, char *filename, int port,
         ptr_dcc->last_check_pos = pos_start;
         server_sendf (ptr_dcc->server,
                       (strchr (ptr_dcc->filename, ' ')) ?
-                          "PRIVMSG %s :\01DCC ACCEPT \"%s\" %d %u\01\r\n" :
-                          "PRIVMSG %s :\01DCC ACCEPT %s %d %u\01\r\n",
+                          "PRIVMSG %s :\01DCC ACCEPT \"%s\" %d %u\01\n" :
+                          "PRIVMSG %s :\01DCC ACCEPT %s %d %u\01",
                       ptr_dcc->nick, ptr_dcc->filename,
                       ptr_dcc->port, ptr_dcc->start_resume);
         
@@ -1158,13 +1158,13 @@ dcc_send_request (t_irc_server *server, int type, char *nick, char *filename)
     /* send DCC request to nick */
     if (type == DCC_CHAT_SEND)
         server_sendf (server, 
-                      "PRIVMSG %s :\01DCC CHAT chat %lu %d\01\r\n",
+                      "PRIVMSG %s :\01DCC CHAT chat %lu %d\01",
                       nick, local_addr, port);
     else
         server_sendf (server, 
                       (spaces) ?
-                          "PRIVMSG %s :\01DCC SEND \"%s\" %lu %d %u\01\r\n" :
-                          "PRIVMSG %s :\01DCC SEND %s %lu %d %u\01\r\n",
+                          "PRIVMSG %s :\01DCC SEND \"%s\" %lu %d %u\01\n" :
+                          "PRIVMSG %s :\01DCC SEND %s %lu %d %u\01",
                       nick, short_filename, local_addr, port,
                       (unsigned long) st.st_size);
     

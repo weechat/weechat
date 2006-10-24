@@ -217,7 +217,7 @@ gui_main_loop ()
                     if ((ptr_server->lag_check_time.tv_sec == 0)
                         && (new_time >= ptr_server->lag_next_check))
                     {
-                        server_sendf (ptr_server, "PING %s\r\n", ptr_server->address);
+                        server_sendf (ptr_server, "PING %s", ptr_server->address);
                         gettimeofday (&(ptr_server->lag_check_time), NULL);
                     }
                     

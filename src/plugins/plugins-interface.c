@@ -357,6 +357,46 @@ weechat_plugin_handler_remove_all (t_weechat_plugin *plugin)
 }
 
 /*
+ * weechat_plugin_modifier_add: add a IRC message modifier
+ */
+
+t_plugin_modifier *
+weechat_plugin_modifier_add (t_weechat_plugin *plugin,
+                             char *type, char *message,
+                             t_plugin_modifier_func *modifier_func,
+                             char *modifier_args, void *modifier_pointer)
+{
+    if (plugin && type && modifier_func)
+        return plugin_modifier_add (plugin, type, message, modifier_func,
+                                    modifier_args, modifier_pointer);
+    
+    return NULL;
+}
+
+/*
+ * weechat_plugin_modifier_remove: remove a WeeChat modifier
+ */
+
+void
+weechat_plugin_modifier_remove (t_weechat_plugin *plugin,
+                                t_plugin_modifier *modifier)
+{
+    if (plugin && modifier)
+        plugin_modifier_remove (plugin, modifier);
+}
+
+/*
+ * weechat_plugin_modifier_remove_all: remove all WeeChat modifiers
+ */
+
+void
+weechat_plugin_modifier_remove_all (t_weechat_plugin *plugin)
+{
+    if (plugin)
+        plugin_modifier_remove_all (plugin);
+}
+
+/*
  * weechat_plugin_exec_command: execute a command (simulate user entry)
  */
 

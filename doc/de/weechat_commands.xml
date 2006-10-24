@@ -128,13 +128,19 @@ functions: list internal functions for key bindings
     reset: restore bindings to the default values and delete ALL personal bindings (use carefully!)
 
 </programlisting>
-<command>plugin  [load Dateiname] | [autoload] | [reload] | [unload]</command>
+<command>plugin  [list [mask]] | [listfull [mask]] | [load filename] | [autoload] | [reload [name]] | [unload [name]]</command>
 <programlisting>
 auflisten/laden/entladen von Plugins
 
-Dateiname: zu ladendes Plugin
+    list: list loaded plugins
+listfull: list loaded plugins with detailed info for each plugin
+    mask: part of name of a loaded plugin
+    load: load a plugin
+autoload: autoload plugins in system or user directory
+  reload: reload one plugin (if no name given, unload all plugins, then autoload plugins)
+  unload: unload one or all plugins
 
-Ohne Argumente werden alle geladenen Plugins aufgelistet.
+Without argument, /plugin command lists loaded plugins.
 
 </programlisting>
 <command>server  [Servername] | [Servername Hostname Port [-auto | -noauto] [-ipv6] [-ssl] [-pwd Passwort] [-nicks Nick1 Nick2 Nick3] [-username Benutzername] [-realname Name] [-command Befehl] [-autojoin Channel[,Channel]] ] | [del Servername]</command>

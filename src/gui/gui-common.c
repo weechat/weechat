@@ -360,10 +360,11 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, char *nic
 
 /*
  * gui_printf_raw_data: display raw IRC data (only if raw IRC data buffer exists)
+ *                      type: 0 = recv, 1 = send, -1 = recv, modified by a modifier (plugin)
  */
 
 void
-gui_printf_raw_data (void *server, int send, char *message)
+gui_printf_raw_data (void *server, int send, int modified, char *message)
 {
     char *pos;
     
@@ -381,7 +382,8 @@ gui_printf_raw_data (void *server, int send, char *message)
                               ((t_irc_server *)server)->name,
                               GUI_COLOR(COLOR_WIN_CHAT_DARK),
                               GUI_COLOR((send) ? COLOR_WIN_CHAT_PART : COLOR_WIN_CHAT_JOIN),
-                              (send) ? PREFIX_PART : PREFIX_JOIN,
+                              (send) ? ((modified) ? PREFIX_SEND_MOD : PREFIX_PART) :
+                              ((modified) ? PREFIX_RECV_MOD : PREFIX_JOIN),
                               GUI_COLOR(COLOR_WIN_CHAT),
                               message);
             if (pos)

@@ -293,9 +293,9 @@ weechat_script_remove_handler (t_weechat_plugin *plugin,
     while (ptr_handler)
     {
         ptr_arg1 = NULL;
-        if (ptr_handler->type == HANDLER_MESSAGE)
+        if (ptr_handler->type == PLUGIN_HANDLER_MESSAGE)
             ptr_arg1 = ptr_handler->irc_command;
-        else if (ptr_handler->type == HANDLER_COMMAND)
+        else if (ptr_handler->type == PLUGIN_HANDLER_COMMAND)
             ptr_arg1 = ptr_handler->command;
         
         if ((ptr_arg1)
@@ -327,7 +327,7 @@ weechat_script_remove_timer_handler (t_weechat_plugin *plugin,
     ptr_handler = plugin->handlers;
     while (ptr_handler)
     {
-        if ((ptr_handler->type == HANDLER_TIMER)
+        if ((ptr_handler->type == PLUGIN_HANDLER_TIMER)
             && ((t_plugin_script *)ptr_handler->handler_pointer == script)
             && (plugin->ascii_strcasecmp (plugin, ptr_handler->handler_args, function) == 0))
         {
@@ -355,7 +355,7 @@ weechat_script_remove_keyboard_handler (t_weechat_plugin *plugin,
     ptr_handler = plugin->handlers;
     while (ptr_handler)
     {
-        if ((ptr_handler->type == HANDLER_KEYBOARD)
+        if ((ptr_handler->type == PLUGIN_HANDLER_KEYBOARD)
             && ((t_plugin_script *)ptr_handler->handler_pointer == script)
             && (plugin->ascii_strcasecmp (plugin, ptr_handler->handler_args, function) == 0))
         {
@@ -365,6 +365,51 @@ weechat_script_remove_keyboard_handler (t_weechat_plugin *plugin,
         }
         else
             ptr_handler = ptr_handler->next_handler;
+    }
+}
+
+/*
+ * weechat_script_remove_modifier: remove a modifier
+ *                                 arg1=type, arg2=command, arg3=function
+ */
+
+void
+weechat_script_remove_modifier (t_weechat_plugin *plugin,
+                                t_plugin_script *script,
+                                char *arg1, char *arg2, char *arg3)
+{
+    t_plugin_modifier *ptr_modifier, *next_modifier;
+    t_plugin_modifier_type type;
+    char *ptr_arg2;
+
+    if (strcasecmp (arg1, PLUGIN_MODIFIER_IRC_IN_STR) == 0)
+        type = PLUGIN_MODIFIER_IRC_IN;
+    else if (strcasecmp (arg1, PLUGIN_MODIFIER_IRC_USER_STR) == 0)
+        type = PLUGIN_MODIFIER_IRC_USER;
+    else if (strcasecmp (arg1, PLUGIN_MODIFIER_IRC_OUT_STR) == 0)
+        type = PLUGIN_MODIFIER_IRC_OUT;
+    else
+        return;
+    
+    /* search and remove modifiers */
+    ptr_modifier = plugin->modifiers;
+    while (ptr_modifier)
+    {
+        ptr_arg2 = NULL;
+        if (ptr_modifier->type == type)
+            ptr_arg2 = ptr_modifier->command;
+        
+        if ((ptr_arg2)
+            && ((t_plugin_script *)ptr_modifier->modifier_pointer == script)
+            && (plugin->ascii_strcasecmp (plugin, ptr_arg2, arg2) == 0)
+            && (plugin->ascii_strcasecmp (plugin, ptr_modifier->modifier_args, arg3) == 0))
+        {
+            next_modifier = ptr_modifier->next_modifier;
+            plugin->modifier_remove (plugin, ptr_modifier);
+            ptr_modifier = next_modifier;
+        }
+        else
+            ptr_modifier = ptr_modifier->next_modifier;
     }
 }
 

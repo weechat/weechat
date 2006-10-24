@@ -183,25 +183,25 @@ struct t_plugin_buffer_line
 
 typedef struct t_weechat_plugin t_weechat_plugin;
 
-typedef int (t_plugin_handler_func) (t_weechat_plugin *, int, char **, char *, void *);
-
 /* handlers */
 
-typedef enum t_handler_type t_handler_type;
+typedef int (t_plugin_handler_func) (t_weechat_plugin *, int, char **, char *, void *);
 
-enum t_handler_type
+typedef enum t_plugin_handler_type t_plugin_handler_type;
+
+enum t_plugin_handler_type
 {
-    HANDLER_MESSAGE = 0,            /* IRC message handler                  */
-    HANDLER_COMMAND,                /* command handler                      */
-    HANDLER_TIMER,                  /* timer handler                        */
-    HANDLER_KEYBOARD                /* keyboard handler                     */
+    PLUGIN_HANDLER_MESSAGE = 0,     /* IRC message handler                  */
+    PLUGIN_HANDLER_COMMAND,         /* command handler                      */
+    PLUGIN_HANDLER_TIMER,           /* timer handler                        */
+    PLUGIN_HANDLER_KEYBOARD         /* keyboard handler                     */
 };
 
 typedef struct t_plugin_handler t_plugin_handler;
 
 struct t_plugin_handler
 {
-    t_handler_type type;            /* handler type                         */
+    t_plugin_handler_type type;     /* handler type                         */
     
     /* data for message handler */
     char *irc_command;              /* name of IRC command (PRIVMSG, ..)    */
@@ -229,6 +229,46 @@ struct t_plugin_handler
     t_plugin_handler *next_handler; /* link to next handler                 */
 };
 
+/* modifiers */
+
+typedef char * (t_plugin_modifier_func) (t_weechat_plugin *, int, char **, char *, void *);
+
+typedef enum t_plugin_modifier_type t_plugin_modifier_type;
+
+enum t_plugin_modifier_type
+{
+    PLUGIN_MODIFIER_IRC_IN = 0,     /* incoming IRC msg (server > user)     */
+    PLUGIN_MODIFIER_IRC_USER,       /* outgoing IRC msg (user > server)     */
+                                    /* after user input (before 'out' mod.) */
+    PLUGIN_MODIFIER_IRC_OUT         /* outgoing IRC msg (user > server)     */
+                                    /* immediately before sending to server */
+};
+
+#define PLUGIN_MODIFIER_IRC_IN_STR   "irc_in"
+#define PLUGIN_MODIFIER_IRC_USER_STR "irc_user"
+#define PLUGIN_MODIFIER_IRC_OUT_STR  "irc_out"
+
+typedef struct t_plugin_modifier t_plugin_modifier;
+
+struct t_plugin_modifier
+{
+    t_plugin_modifier_type type;    /* modifier type                        */
+
+    /* data for IRC modifier */
+    char *command;                  /* IRC command                          */
+    
+    /* data common to all modifiers */
+    t_plugin_modifier_func *modifier; /* pointer to modifier                */
+    char *modifier_args;            /* arguments sent to modifier           */
+    void *modifier_pointer;         /* pointer sent to modifier             */
+    
+    /* for internal use */
+    int running;                    /* 1 if currently running               */
+                                    /* (used to prevent circular call)      */
+    t_plugin_modifier *prev_modifier; /* link to previous modifier          */
+    t_plugin_modifier *next_modifier; /* link to next modifier              */
+};
+
 /* plugin, a WeeChat plugin, which is a dynamic library */
 
 struct t_weechat_plugin
@@ -243,6 +283,10 @@ struct t_weechat_plugin
     /* plugin handlers */
     t_plugin_handler *handlers;     /* pointer to first handler             */
     t_plugin_handler *last_handler; /* pointer to last handler              */
+
+    /* plugin modifiers */
+    t_plugin_modifier *modifiers;     /* pointer to first modifier          */
+    t_plugin_modifier *last_modifier; /* pointer to last modifier           */
     
     /* links to previous/next plugins */
     t_weechat_plugin *prev_plugin;  /* link to previous plugin              */
@@ -283,6 +327,12 @@ struct t_weechat_plugin
                                                char *, void *);
     void (*handler_remove) (t_weechat_plugin *, t_plugin_handler *);
     void (*handler_remove_all) (t_weechat_plugin *);
+
+    t_plugin_modifier *(*modifier_add) (t_weechat_plugin *, char *, char *,
+                                        t_plugin_modifier_func *,
+                                        char *, void *);
+    void (*modifier_remove) (t_weechat_plugin *, t_plugin_modifier *);
+    void (*modifier_remove_all) (t_weechat_plugin *);
     
     void (*exec_command) (t_weechat_plugin *, char *, char *, char *);
     char *(*get_info) (t_weechat_plugin *, char *, char *);
@@ -350,6 +400,14 @@ extern t_plugin_handler *weechat_plugin_keyboard_handler_add (t_weechat_plugin *
                                                               char *, void *);
 extern void weechat_plugin_handler_remove (t_weechat_plugin *, t_plugin_handler *);
 extern void weechat_plugin_handler_remove_all (t_weechat_plugin *);
+
+/* modifier functions */
+extern t_plugin_modifier *weechat_plugin_modifier_add (t_weechat_plugin *,
+                                                       char *, char *,
+                                                       t_plugin_modifier_func *,
+                                                       char *, void *);
+extern void weechat_plugin_modifier_remove (t_weechat_plugin *, t_plugin_modifier *);
+extern void weechat_plugin_modifier_remove_all (t_weechat_plugin *);
 
 /* other functions */
 extern void weechat_plugin_exec_command (t_weechat_plugin *, char *, char *, char *);

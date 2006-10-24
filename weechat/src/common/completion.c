@@ -154,7 +154,7 @@ completion_get_command_infos (t_completion *completion,
         for (ptr_handler = ptr_plugin->handlers;
              ptr_handler; ptr_handler = ptr_handler->next_handler)
         {
-            if ((ptr_handler->type == HANDLER_COMMAND)
+            if ((ptr_handler->type == PLUGIN_HANDLER_COMMAND)
                 && (ascii_strcasecmp (ptr_handler->command,
                                       ptr_command2) == 0))
             {
@@ -304,7 +304,7 @@ completion_list_add_plugin_cmd (t_completion *completion)
         for (ptr_handler = ptr_plugin->handlers;
              ptr_handler; ptr_handler = ptr_handler->next_handler)
         {
-            if (ptr_handler->type == HANDLER_COMMAND)
+            if (ptr_handler->type == PLUGIN_HANDLER_COMMAND)
                 completion_list_add (completion, ptr_handler->command);
         }
     }
