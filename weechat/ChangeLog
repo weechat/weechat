@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-10-20
+ChangeLog - 2006-10-24
 
 
 Version 0.2.2 (under dev!):
+   * added "modifier" in plugins API
+   * improved /plugin command
    * fixed bug on ignore with "mode" IRC command (bug #18058)
    * fixed crash when loading ruby script if file does not exist, with
      Ruby >= 1.9 only (bug #18064)
