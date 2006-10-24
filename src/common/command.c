@@ -2601,19 +2601,18 @@ weechat_cmd_plugin_list (char *name, int full)
                     gui_printf (NULL, _("       %d defined\n"),
                                 handler_found);
                 
-                /* IRC modifiers */
+                /* modifiers */
                 irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
-                gui_printf (NULL, _("     IRC modifiers:\n"));
+                gui_printf (NULL, _("     modifiers:\n"));
                 modifier_found = 0;
                 for (ptr_modifier = ptr_plugin->modifiers;
                      ptr_modifier; ptr_modifier = ptr_modifier->next_modifier)
                 {
-                    if (ptr_modifier->type == PLUGIN_HANDLER_KEYBOARD)
-                        modifier_found++;
+                    modifier_found++;
                 }
                 irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
                 if (!modifier_found)
-                    gui_printf (NULL, _("       (no IRC modifier)\n"));
+                    gui_printf (NULL, _("       (no modifier)\n"));
                 else
                     gui_printf (NULL, _("       %d defined\n"),
                                 modifier_found);
