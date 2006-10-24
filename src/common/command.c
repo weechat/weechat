@@ -143,10 +143,9 @@ t_weechat_command weechat_commands[] =
     "list|add|close|move global|local top|bottom|left|right",
     0, MAX_ARGS, 0, weechat_cmd_panel, NULL },*/
   { "plugin", N_("list/load/unload plugins"),
-    N_("[list [mask]] | [listfull [mask]] | [load filename] | [autoload] | [reload [name]] | [unload [name]]"),
+    N_("[list [name]] | [listfull [name]] | [load filename] | [autoload] | [reload [name]] | [unload [name]]"),
     N_("    list: list loaded plugins\n"
        "listfull: list loaded plugins with detailed info for each plugin\n"
-       "    mask: part of name of a loaded plugin\n"
        "    load: load a plugin\n"
        "autoload: autoload plugins in system or user directory\n"
        "  reload: reload one plugin (if no name given, unload all plugins, then autoload plugins)\n"

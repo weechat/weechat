@@ -127,13 +127,12 @@ functions: lister la liste des fonctions internes pour les associations de touch
     reset: restaure les touches aux valeurs par défaut et supprime TOUTES les touches personnelles (utiliser avec précaution !)
 
 </programlisting>
-<command>plugin  [list [masque]] | [listfull [masque]] | [load fichier] | [autoload] | [reload [nom]] | [unload [nom]]</command>
+<command>plugin  [list [nom]] | [listfull [nom]] | [load fichier] | [autoload] | [reload [nom]] | [unload [nom]]</command>
 <programlisting>
 liste/charge/décharge des extensions
 
     list: lister les extensions chargées
 listfull: lister les extensions chargées avec de l'info détaillée pour chaque extension
-  masque: morceau de nom d'une extension chargée
     load: charger une extension
 autoload: charger automatiquement les extensions dans un répertoire système ou utilisateur
   reload: recharger une extension (si pas de nom donné, décharger toutes les extensions, puis puis recharger automatiquement les extensions)

@@ -128,13 +128,12 @@ functions: list internal functions for key bindings
     reset: restore bindings to the default values and delete ALL personal bindings (use carefully!)
 
 </programlisting>
-<command>plugin  [list [mask]] | [listfull [mask]] | [load filename] | [autoload] | [reload [name]] | [unload [name]]</command>
+<command>plugin  [list [name]] | [listfull [name]] | [load filename] | [autoload] | [reload [name]] | [unload [name]]</command>
 <programlisting>
 auflisten/laden/entladen von Plugins
 
     list: list loaded plugins
 listfull: list loaded plugins with detailed info for each plugin
-    mask: part of name of a loaded plugin
     load: load a plugin
 autoload: autoload plugins in system or user directory
   reload: reload one plugin (if no name given, unload all plugins, then autoload plugins)
