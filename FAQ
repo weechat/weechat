@@ -1,4 +1,4 @@
-WeeChat FAQ, 2006-10-01
+WeeChat FAQ, 2006-10-23
 =======================
 
 Intended audience:
@@ -75,6 +75,16 @@ A:	For help you can type /help. For help about a command, type /help command.
 
 2.3
 ================================================================================
+Q:	I heard about "buffers" and "windows", what's the difference?
+
+A:	A window is used when you split screen vertically or horizontally.
+	A buffer is a "view" for a window. Each window displays a buffer, and
+	many windows may display same buffer.
+	Examples of buffers: server messages, channel, DCC list, ..
+
+
+2.4
+================================================================================
 Q:	I don't see some chars with accents, what can I do?
 
 A:	You have to setup charset used for decoding (ISO and UTF), encoding, and
@@ -83,7 +93,7 @@ A:	You have to setup charset used for decoding (ISO and UTF), encoding, and
 	detect your locale (WeeChat looks for "UTF-8" in your locale name).
 
 
-2.4
+2.5
 ================================================================================
 Q:	How can I customize key bindings?
 
@@ -92,7 +102,7 @@ A:	Key bindings are customizable with /key command.
 	in input zone.
 
 
-2.5
+2.6
 ================================================================================
 Q:	How can I load Perl scripts?
 	Are Perl scripts compatible with other IRC clients ?
@@ -104,7 +114,7 @@ A:	You can use /perl command to load scripts (default path is
 	Perl scripts are not compatible with other IRC clients.
 
 
-2.6
+2.7
 ================================================================================
 Q:	How can I load Python scripts?
 	Are Python scripts compatible with other IRC clients ?
@@ -116,7 +126,7 @@ A:	You can use /python command to load scripts (default path is
 	Python scripts are not compatible with other IRC clients.
 
 
-2.7
+2.8
 ================================================================================
 Q:	How can I load Ruby scripts?
 	Are Ruby scripts compatible with other IRC clients ?
@@ -128,7 +138,7 @@ A:	You can use /ruby command to load scripts (default path is
 	Ruby scripts are not compatible with other IRC clients.
 
 
-2.8
+2.9
 ================================================================================
 Q:	How can I load Lua scripts?
 	Are Lua scripts compatible with other IRC clients ?
@@ -140,7 +150,7 @@ A:	You can use /lua command to load scripts (default path is
 	Lua scripts are not compatible with other IRC clients.
 
 
-2.9
+2.10
 ================================================================================
 Q:	When I'm using weechat under screen, I have weird chars, when I switch
 	window for example, how to fix that?

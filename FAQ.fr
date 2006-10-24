@@ -1,4 +1,4 @@
-WeeChat FAQ, 2006-10-01
+WeeChat FAQ, 2006-10-23
 =======================
 
 Public concerné :
@@ -79,6 +79,19 @@ R:	Pour obtenir de l'aide tapez /help. Pour de l'aide sur une commande,
 
 2.3
 ================================================================================
+Q:	J'ai entendu parler de "buffers" et "windows", quelle est la
+	différence ?
+
+R:	Une fenêtre ("window") est utilisée quand vous partagez l'écran
+	verticalement ou horizontalement.
+	Un tampon ("buffer") est une "vue" pour une fenêtre. Chaque fenêtre
+	affiche un tampon, et plusieurs fenêtres peuvent afficher le même
+	tampon.
+	Exemples de tampons: messages serveur, canal, liste des DCC, etc...
+
+
+2.4
+================================================================================
 Q:	Je ne vois pas bien certains accents dans WeeChat, que faire ?
 
 R:	Il faut configurer le charset utilisé pour le décodage (ISO et UTF),
@@ -88,7 +101,7 @@ R:	Il faut configurer le charset utilisé pour le décodage (ISO et UTF),
 	le nom de la locale).
 
 
-2.4
+2.5
 ================================================================================
 Q:	Comment puis-je configurer les raccourcis clavier ?
 
@@ -97,7 +110,7 @@ R:	Les raccourcis clavier sont modifiables avec la commande /key.
 	d'une touche et de l'inclure dans la zone de saisie.
 
 
-2.5
+2.6
 ================================================================================
 Q:	Comment puis-je charger des scripts Perl ?
 	Les scripts Perl sont-ils compatibles avec d'autres clients IRC ?
@@ -109,7 +122,7 @@ R:	La commande /perl permet de charger les scripts Perl (le chemin par défaut
 	Les scripts Perl ne sont pas compatibles avec d'autres clients IRC.
 
 
-2.6
+2.7
 ================================================================================
 Q:	Comment puis-je charger les scripts Python ?
 	Les scripts Python sont-ils compatibles avec d'autres clients IRC ?
@@ -121,7 +134,7 @@ R:	La commande /python permet de charger les scripts Python (le chemin par
 	Les scripts Python ne sont pas compatibles avec d'autres clients IRC.
 
 
-2.7
+2.8
 ================================================================================
 Q:	Comment puis-je charger des scripts Ruby ?
 	Les scripts Ruby sont-ils compatibles avec d'autres clients IRC ?
@@ -133,7 +146,7 @@ R:	La commande /ruby permet de charger les scripts Ruby (le chemin par
 	Les scripts Ruby ne sont pas compatibles avec d'autres clients IRC.
 
 
-2.8
+2.9
 ================================================================================
 Q:	Comment puis-je charger des scripts Lua ?
 	Les scripts Lua sont-ils compatibles avec d'autres clients IRC ?
@@ -145,7 +158,7 @@ R:	La commande /lua permet de charger les scripts Lua (le chemin par
 	Les scripts Lua ne sont pas compatibles avec d'autres clients IRC.
 
 
-2.9
+2.10
 ================================================================================
 Q:	Quand j'utilise weechat sous screen, j'ai des caractères bizarres
 	notamment en changeant de fenêtre, comment corriger ça ?
