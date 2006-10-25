@@ -235,6 +235,7 @@ weechat_script_remove (t_weechat_plugin *plugin,
                        t_plugin_script **script_list, t_plugin_script *script)
 {
     t_plugin_handler *ptr_handler, *next_handler;
+    t_plugin_modifier *ptr_modifier, *next_modifier;
     
     /* remove all handlers pointing to script */
     ptr_handler = plugin->handlers;
@@ -248,6 +249,20 @@ weechat_script_remove (t_weechat_plugin *plugin,
         }
         else
             ptr_handler = ptr_handler->next_handler;
+    }
+    
+    /* remove all modifiers pointing to script */
+    ptr_modifier = plugin->modifiers;
+    while (ptr_modifier)
+    {
+        if ((t_plugin_script *)ptr_modifier->modifier_pointer == script)
+        {
+            next_modifier = ptr_modifier->next_modifier;
+            plugin->modifier_remove (plugin, ptr_modifier);
+            ptr_modifier = next_modifier;
+        }
+        else
+            ptr_modifier = ptr_modifier->next_modifier;
     }
     
     /* free data */
