@@ -970,12 +970,16 @@ weechat_python_get_dcc_info (PyObject *self, PyObject *args)
         python_plugin->print_server (python_plugin,
                                      "Python error: unable to get DCC info, "
                                      "script not initialized");
+	Py_INCREF(Py_None);
         return Py_None;
     }
 
     dcc_list = PyList_New (0);    
     if (!dcc_list)
+    {
+	Py_INCREF(Py_None);
 	return Py_None;
+    }
     
     dcc_info = python_plugin->get_dcc_info (python_plugin);
     if (!dcc_info)
@@ -1028,6 +1032,7 @@ weechat_python_get_dcc_info (PyObject *self, PyObject *args)
 			   Py_BuildValue("k", ptr_dcc->bytes_per_sec));	    
 	    
             PyList_Append(dcc_list, dcc_list_member);
+	    Py_DECREF (dcc_list_member);
         }
     }
     
@@ -1054,6 +1059,7 @@ weechat_python_get_config (PyObject *self, PyObject *args)
         python_plugin->print_server (python_plugin,
                                      "Python error: unable to get config option, "
                                      "script not initialized");
+	Py_INCREF(Py_None);
         return Py_None;
     }
     
@@ -1064,6 +1070,7 @@ weechat_python_get_config (PyObject *self, PyObject *args)
         python_plugin->print_server (python_plugin,
                                      "Python error: wrong parameters for "
                                      "\"get_config\" function");
+	Py_INCREF(Py_None);
         return Py_None;
     }
     
@@ -1140,6 +1147,7 @@ weechat_python_get_plugin_config (PyObject *self, PyObject *args)
         python_plugin->print_server (python_plugin,
                                      "Python error: unable to get plugin config option, "
                                      "script not initialized");
+	Py_INCREF(Py_None);
         return Py_None;
     }
     
@@ -1150,6 +1158,7 @@ weechat_python_get_plugin_config (PyObject *self, PyObject *args)
         python_plugin->print_server (python_plugin,
                                      "Python error: wrong parameters for "
                                      "\"get_plugin_config\" function");
+	Py_INCREF(Py_None);
         return Py_None;
     }
     
@@ -1232,12 +1241,16 @@ weechat_python_get_server_info (PyObject *self, PyObject *args)
         python_plugin->print_server (python_plugin,
                                      "Python error: unable to get server infos, "
                                      "script not initialized");
+	Py_INCREF(Py_None);
         return Py_None;
     }
     
     server_hash = PyDict_New ();
     if (!server_hash)
+    {
+	Py_INCREF(Py_None);
 	return Py_None;
+    }
 
     server_info = python_plugin->get_server_info (python_plugin);
     if  (!server_info)
@@ -1310,6 +1323,7 @@ weechat_python_get_server_info (PyObject *self, PyObject *args)
 			   Py_BuildValue("i", ptr_server->lag));
 	    
 	    PyDict_SetItem(server_hash, Py_BuildValue("s", ptr_server->name), server_hash_member);
+	    Py_DECREF (server_hash_member);
 	}
     }    
 
@@ -1337,6 +1351,7 @@ weechat_python_get_channel_info (PyObject *self, PyObject *args)
         python_plugin->print_server (python_plugin,
                                      "Python error: unable to get channel infos, "
                                      "script not initialized");
+	Py_INCREF(Py_None);
         return Py_None;
     }
     
@@ -1346,12 +1361,16 @@ weechat_python_get_channel_info (PyObject *self, PyObject *args)
         python_plugin->print_server (python_plugin,
                                      "Python error: wrong parameters for "
                                      "\"get_channel_info\" function");
+	Py_INCREF(Py_None);
         return Py_None;
     }
     
     channel_hash = PyDict_New ();
     if (!channel_hash)
+    {
+	Py_INCREF(Py_None);
 	return Py_None;
+    }
 
     channel_info = python_plugin->get_channel_info (python_plugin, server);
     if  (!channel_info)
@@ -1377,6 +1396,7 @@ weechat_python_get_channel_info (PyObject *self, PyObject *args)
 			   Py_BuildValue("i", ptr_channel->nicks_count));
 	    
 	    PyDict_SetItem(channel_hash, Py_BuildValue("s", ptr_channel->name), channel_hash_member);
+	    Py_DECREF (channel_hash_member);
 	}
     }    
 
@@ -1404,6 +1424,7 @@ weechat_python_get_nick_info (PyObject *self, PyObject *args)
         python_plugin->print_server (python_plugin,
                                      "Python error: unable to get nick infos, "
                                      "script not initialized");
+	Py_INCREF(Py_None);
         return Py_None;
     }
     
@@ -1414,12 +1435,16 @@ weechat_python_get_nick_info (PyObject *self, PyObject *args)
         python_plugin->print_server (python_plugin,
                                      "Python error: wrong parameters for "
                                      "\"get_nick_info\" function");
+	Py_INCREF(Py_None);
         return Py_None;
     }
     
     nick_hash = PyDict_New ();
     if (!nick_hash)
+    {
+	Py_INCREF(Py_None);
 	return Py_None;
+    }
 
     nick_info = python_plugin->get_nick_info (python_plugin, server, channel);
     if  (!nick_info)
@@ -1437,6 +1462,7 @@ weechat_python_get_nick_info (PyObject *self, PyObject *args)
 			   Py_BuildValue("s", ptr_nick->host ? ptr_nick->host : ""));
 	    
 	    PyDict_SetItem(nick_hash, Py_BuildValue("s", ptr_nick->nick), nick_hash_member);
+	    Py_DECREF (nick_hash_member);
 	}
     }    
 
@@ -1501,12 +1527,15 @@ weechat_python_get_window_info (PyObject *self, PyObject *args)
         python_plugin->print_server (python_plugin,
                                      "Python error: unable to get window info, "
                                      "script not initialized");
+	Py_INCREF(Py_None);
         return Py_None;
     }
         
     window_list = PyList_New (0);
-    if (!window_list)
+    if (!window_list) {
+	Py_INCREF(Py_None);
 	return Py_None;
+    }
 
     window_info = python_plugin->get_window_info (python_plugin);
     if  (!window_info)
@@ -1534,6 +1563,7 @@ weechat_python_get_window_info (PyObject *self, PyObject *args)
 			   Py_BuildValue("i", ptr_window->win_height_pct));
 	    
 	    PyList_Append(window_list, window_list_member);
+	    Py_DECREF (window_list_member);
 	}
     }
     
@@ -1561,12 +1591,16 @@ weechat_python_get_buffer_info (PyObject *self, PyObject *args)
         python_plugin->print_server (python_plugin,
                                      "Python error: unable to get buffer info, "
                                      "script not initialized");
+	Py_INCREF(Py_None);
         return Py_None;
     }
     
     buffer_hash = PyDict_New ();
     if (!buffer_hash)
+    {
+	Py_INCREF(Py_None);
 	return Py_None;
+    }
 
     buffer_info = python_plugin->get_buffer_info (python_plugin);
     if  (!buffer_info)
@@ -1593,6 +1627,7 @@ weechat_python_get_buffer_info (PyObject *self, PyObject *args)
 	    
 	    PyDict_SetItem(buffer_hash, 
 			   Py_BuildValue("i", ptr_buffer->number), buffer_hash_member);
+	    Py_DECREF (buffer_hash_member);
 	}
     }    
     
@@ -1622,6 +1657,7 @@ weechat_python_get_buffer_data (PyObject *self, PyObject *args)
         python_plugin->print_server (python_plugin,
                                      "Python error: unable to get buffer data, "
                                      "script not initialized");
+	Py_INCREF(Py_None);
         return Py_None;
     }
 
@@ -1630,12 +1666,16 @@ weechat_python_get_buffer_data (PyObject *self, PyObject *args)
         python_plugin->print_server (python_plugin,
                                      "Python error: wrong parameters for "
                                      "\"get_buffer_data\" function");
+	Py_INCREF(Py_None);
         return Py_None;
     }
 
     data_list = PyList_New (0);    
     if (!data_list)
+    {
+	Py_INCREF(Py_None);
 	return Py_None;
+    }
     
     buffer_data = python_plugin->get_buffer_data (python_plugin, server, channel);
     if (!buffer_data)
@@ -1658,6 +1698,7 @@ weechat_python_get_buffer_data (PyObject *self, PyObject *args)
 			   Py_BuildValue("s", ptr_data->data == NULL ? "" : ptr_data->data));
 	    	    
             PyList_Append(data_list, data_list_member);
+	    Py_DECREF (data_list_member);
         }
     }
     
@@ -1719,7 +1760,6 @@ weechat_python_output (PyObject *self, PyObject *args)
 
     if (!PyArg_ParseTuple (args, "s", &msg))
     {
-	return Py_None;
         if (strlen(python_buffer_output) > 0)
 	{
 	    python_plugin->print_server (python_plugin,
