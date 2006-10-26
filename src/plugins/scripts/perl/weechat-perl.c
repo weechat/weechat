@@ -112,17 +112,20 @@ char *perl_weechat_code =
  * weechat_perl_exec: execute a Perl script
  */
 
-int
+void *
 weechat_perl_exec (t_weechat_plugin *plugin,
                    t_plugin_script *script,
+		   int ret_type,
                    char *function, char *arg1, char *arg2, char *arg3)
 {
     char empty_arg[1] = { '\0' };
     char *func;
     char *argv[4];
     unsigned int count;
-    int return_code;
-    SV *sv;
+    void *ret_value;
+    int *ret_i;    
+    SV *ret_s;
+    int mem_err;
 
     /* this code is placed here to conform ISO C90 */
     dSP;
@@ -131,7 +134,7 @@ weechat_perl_exec (t_weechat_plugin *plugin,
     int size = strlen (script->interpreter) + strlen(function) + 3;
     func = (char *) malloc ( size * sizeof(char));
     if (!func)
-	return PLUGIN_RC_KO;
+	return NULL;
     snprintf (func, size, "%s::%s", (char *) script->interpreter, function);
 #else
     func = function;
@@ -141,6 +144,9 @@ weechat_perl_exec (t_weechat_plugin *plugin,
     ENTER;
     SAVETMPS;
     PUSHMARK(sp);
+    
+    perl_current_script = script;
+
     if (arg1)
     {
         argv[0] = (arg1) ? arg1 : empty_arg;
@@ -161,29 +167,50 @@ weechat_perl_exec (t_weechat_plugin *plugin,
     else
         argv[0] = NULL;
     
-    perl_current_script = script;
-    
     count = perl_call_argv (func, G_EVAL | G_SCALAR, argv);
-    
+    ret_value = NULL;
+    mem_err = 1;
+
     SPAGAIN;
     
-    sv = GvSV (gv_fetchpv ("@", TRUE, SVt_PV));
-    return_code = PLUGIN_RC_KO;
-    if (SvTRUE (sv))
+    if (SvTRUE (ERRSV))
     {
-        plugin->print_server (plugin, "Perl error: %s", SvPV_nolen (sv));
-        POPs;
+        plugin->print_server (plugin, "Perl error: %s", SvPV_nolen (ERRSV));
+        POPs; /* poping the 'undef' */	
+	mem_err = 0;
     }
     else
     {
         if (count != 1)
-        {
+	{
             plugin->print_server (plugin,
-                                  "Perl error: too much values from \"%s\" (%d). Expected: 1.",
+                                  "Perl error: function \"%s\" must return 1 valid value (%d)",
                                   function, count);
-        }
+	    mem_err = 0;
+	}
         else
-            return_code = POPi;
+	{
+	    if (ret_type == SCRIPT_EXEC_STRING)
+	    {
+		ret_s = newSVsv(POPs);
+		ret_value = strdup (SvPV_nolen (ret_s));
+		SvREFCNT_dec (ret_s);
+	    }
+	    else if (ret_type == SCRIPT_EXEC_INT)
+	    {
+		ret_i = (int *) malloc (sizeof(int));
+		if (ret_i)
+		    *ret_i = POPi;
+		ret_value = ret_i;
+	    }
+	    else
+	    {
+		plugin->print_server (plugin,
+				      "Perl error: function \"%s\" is internally misused.",
+				      function);
+		mem_err = 0;
+	    }
+	}
     }
     
     PUTBACK;
@@ -193,8 +220,16 @@ weechat_perl_exec (t_weechat_plugin *plugin,
 #ifndef MULTIPLICITY
     free (func);
 #endif
+
+    if (ret_value == NULL && mem_err == 1)
+    {
+	plugin->print_server (plugin,
+                              "Python error: unable to alloc memory in function \"%s\"",
+                              function);
+	return NULL;
+    }
     
-    return return_code;
+    return ret_value;
 }
 
 /*
@@ -206,9 +241,23 @@ weechat_perl_cmd_msg_handler (t_weechat_plugin *plugin,
                               int argc, char **argv,
                               char *handler_args, void *handler_pointer)
 {
+    int *r;
+    int ret;
+    
     if (argc >= 3)
-        return weechat_perl_exec (plugin, (t_plugin_script *)handler_pointer,
-                                  handler_args, argv[0], argv[2], NULL);
+    {
+        r = (int *) weechat_perl_exec (plugin, (t_plugin_script *)handler_pointer,
+				       SCRIPT_EXEC_INT,
+				       handler_args, argv[0], argv[2], NULL);
+	if (r == NULL)
+	    ret = PLUGIN_RC_KO;
+	else
+	{
+	    ret = *r;
+	    free (r);
+	}
+	return ret;
+    }
     else
         return PLUGIN_RC_KO;
 }
@@ -225,9 +274,20 @@ weechat_perl_timer_handler (t_weechat_plugin *plugin,
     /* make gcc happy */
     (void) argc;
     (void) argv;
+    int *r;
+    int ret;
     
-    return weechat_perl_exec (plugin, (t_plugin_script *)handler_pointer,
-                              handler_args, NULL, NULL, NULL);
+    r = (int *) weechat_perl_exec (plugin, (t_plugin_script *)handler_pointer,
+				   SCRIPT_EXEC_INT,
+				   handler_args, NULL, NULL, NULL);
+    if (r == NULL)
+	ret = PLUGIN_RC_KO;
+    else
+    {
+	ret = *r;
+	free (r);
+    }
+    return ret;
 }
 
 /*
@@ -239,9 +299,23 @@ weechat_perl_keyboard_handler (t_weechat_plugin *plugin,
                                int argc, char **argv,
                                char *handler_args, void *handler_pointer)
 {
+    int *r;
+    int ret;
+
     if (argc >= 3)
-        return weechat_perl_exec (plugin, (t_plugin_script *)handler_pointer,
-                                  handler_args, argv[0], argv[1], argv[2]);
+    {
+        r = (int *) weechat_perl_exec (plugin, (t_plugin_script *)handler_pointer,
+				       SCRIPT_EXEC_INT,
+				       handler_args, argv[0], argv[1], argv[2]);
+	if (r == NULL)
+	    ret = PLUGIN_RC_KO;
+	else
+	{
+	    ret = *r;
+	    free (r);
+	}
+	return ret;
+    }
     else
         return PLUGIN_RC_KO;
 }
@@ -255,12 +329,12 @@ weechat_perl_modifier (t_weechat_plugin *plugin,
                        int argc, char **argv,
                        char *modifier_args, void *modifier_pointer)
 {
-    /*if (argc >= 2)
-        return weechat_perl_exec (plugin, (t_plugin_script *)modifier_pointer,
-                                  modifier_args, argv[0], argv[1], NULL);
+    if (argc >= 2)
+        return (char *) weechat_perl_exec (plugin, (t_plugin_script *)modifier_pointer,
+					     SCRIPT_EXEC_STRING,
+					     modifier_args, argv[0], argv[1], NULL);
     else
-        return NULL;*/
-    return NULL;
+        return NULL;
 }
 
 /*
@@ -1729,7 +1803,7 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
 {
     STRLEN len;
     t_plugin_script tempscript;
-    int eval;
+    int *eval;
     struct stat buf;
     
 #ifndef MULTIPLICITY
@@ -1754,7 +1828,9 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
     snprintf(pkgname, sizeof(pkgname), "%s%d", PKG_NAME_PREFIX, perl_num);
     perl_num++;
     tempscript.interpreter = "WeechatPerlScriptLoader";
-    eval = weechat_perl_exec (plugin, &tempscript, "weechat_perl_load_eval_file", filename, pkgname, "");
+    eval = weechat_perl_exec (plugin, &tempscript, 
+			      SCRIPT_EXEC_INT,
+			      "weechat_perl_load_eval_file", filename, pkgname, "");
 #else
     perl_current_interpreter = perl_alloc();
 
@@ -1773,15 +1849,24 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
     perl_parse (perl_current_interpreter, weechat_perl_xs_init, 3, perl_args, NULL);
     
     eval_pv (perl_weechat_code, TRUE);
-    eval = weechat_perl_exec (plugin, &tempscript, "weechat_perl_load_eval_file", filename, "", "");
+    eval = weechat_perl_exec (plugin, &tempscript,
+			      SCRIPT_EXEC_INT,
+			      "weechat_perl_load_eval_file", filename, "", "");
 
     free (perl_current_script_filename);
 
 #endif
-    
-    if ( eval != 0) 
+    if (eval == NULL)
     {
-	if (eval == 2) 
+	plugin->print_server (plugin,
+			      "Perl error: memory error while parsing file \"%s\"",
+			      filename);
+	return 0;
+    }
+    
+    if ( *eval != 0) 
+    {
+	if (*eval == 2) 
 	{
 	    plugin->print_server (plugin,
                                   "Perl error: unable to parse file \"%s\"",
@@ -1789,12 +1874,13 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
 	    plugin->print_server (plugin,
                                   "Perl error: %s",
 #ifndef MULTIPLICITY
-                                  SvPV(perl_get_sv("WeechatPerlScriptLoader::weechat_perl_load_eval_file_error", FALSE), len));
+                                  SvPV(perl_get_sv("WeechatPerlScriptLoader::weechat_perl_load_eval_file_error", FALSE), len)
 #else
-                                  SvPV(perl_get_sv("weechat_perl_load_eval_file_error", FALSE), len));
+                                  SvPV(perl_get_sv("weechat_perl_load_eval_file_error", FALSE), len)
 #endif
+		);
 	}
-	else if ( eval == 1)
+	else if (*eval == 1)
 	{
 	    plugin->print_server (plugin,
                                   "Perl error: unable to run file \"%s\"",
@@ -1811,10 +1897,13 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
 #endif
 	if ((perl_current_script != NULL) && (perl_current_script != &tempscript))
             weechat_script_remove (plugin, &perl_scripts, perl_current_script);
-
+	
+	free (eval);
 	return 0;
     }
     
+    free (eval);
+
     if (perl_current_script == NULL)
     {
 	plugin->print_server (plugin,
@@ -1844,6 +1933,8 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
 void
 weechat_perl_unload (t_weechat_plugin *plugin, t_plugin_script *script)
 {
+    int *r;
+
     plugin->print_server (plugin,
                           "Unloading Perl script \"%s\"",
                           script->name);
@@ -1855,8 +1946,13 @@ weechat_perl_unload (t_weechat_plugin *plugin, t_plugin_script *script)
 #endif        
 
     if (script->shutdown_func[0])
-        weechat_perl_exec (plugin, script, script->shutdown_func, NULL, NULL, NULL);
-
+    {
+        r = (int *) weechat_perl_exec (plugin, script, SCRIPT_EXEC_INT,
+				       script->shutdown_func, NULL, NULL, NULL);
+	if (r)
+	    free (r);
+    }
+    
 #ifndef MULTIPLICITY
     if (script->interpreter)
 	free (script->interpreter);
@@ -1918,10 +2014,11 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
                   int cmd_argc, char **cmd_argv,
                   char *handler_args, void *handler_pointer)
 {
-    int argc, handler_found;
+    int argc, handler_found, modifier_found;
     char **argv, *path_script;
     t_plugin_script *ptr_script;
     t_plugin_handler *ptr_handler;
+    t_plugin_modifier *ptr_modifier;
     
     if (cmd_argc < 3)
         return PLUGIN_RC_KO;
@@ -2033,7 +2130,35 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
             }
             if (!handler_found)
                 plugin->print_server (plugin, "  (none)");
-            break;
+            
+	    /* List Perl modifiers */
+	    plugin->print_server (plugin, "");
+            plugin->print_server (plugin, "Python modifiers:");
+            modifier_found = 0;
+            for (ptr_modifier = plugin->modifiers;
+                 ptr_modifier; ptr_modifier = ptr_modifier->next_modifier)
+            {
+		modifier_found = 1;
+		if (ptr_modifier->type == PLUGIN_MODIFIER_IRC_IN)
+		    plugin->print_server (plugin, "  IRC(%s, %s) => Perl(%s)",
+					  ptr_modifier->command,
+					  PLUGIN_MODIFIER_IRC_IN_STR,
+					  ptr_modifier->modifier_args);
+		else if (ptr_modifier->type == PLUGIN_MODIFIER_IRC_USER)
+		    plugin->print_server (plugin, "  IRC(%s, %s) => Perl(%s)",
+					  ptr_modifier->command,
+					  PLUGIN_MODIFIER_IRC_USER_STR,
+					  ptr_modifier->modifier_args);
+		else if (ptr_modifier->type == PLUGIN_MODIFIER_IRC_OUT)
+		    plugin->print_server (plugin, "  IRC(%s, %s) => Perl(%s)",
+					  ptr_modifier->command,
+					  PLUGIN_MODIFIER_IRC_OUT_STR,
+					  ptr_modifier->modifier_args);
+            }
+            if (!modifier_found)
+                plugin->print_server (plugin, "  (none)");
+	    break;
+	    
         case 1:
             if (plugin->ascii_strcasecmp (plugin, argv[0], "autoload") == 0)
                 weechat_script_auto_load (plugin, "perl", weechat_perl_load);

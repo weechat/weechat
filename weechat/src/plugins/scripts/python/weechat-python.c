@@ -48,21 +48,24 @@ t_plugin_script *python_current_script = NULL;
 char *python_current_script_filename = NULL;
 PyThreadState *python_mainThreadState = NULL;
 
+char python_buffer_output[128];
 
 /*
  * weechat_python_exec: execute a Python script
  */
 
-int
+void *
 weechat_python_exec (t_weechat_plugin *plugin,
                      t_plugin_script *script,
+		     int ret_type,
                      char *function, char *arg1, char *arg2, char *arg3)
 {
     PyObject *evMain;
     PyObject *evDict;
     PyObject *evFunc;
     PyObject *rc;
-    int ret;
+    void *ret_value;
+    int *ret_i;
     
     /* PyEval_AcquireLock (); */
     PyThreadState_Swap (script->interpreter);
@@ -77,11 +80,9 @@ weechat_python_exec (t_weechat_plugin *plugin,
                               "Python error: unable to run function \"%s\"",
                               function);
 	/* PyEval_ReleaseThread (python_current_script->interpreter); */
-	return PLUGIN_RC_KO;
+	return NULL;
     }
 
-    ret = -1;
-    
     python_current_script = script;
     
     if (arg1)
@@ -97,30 +98,60 @@ weechat_python_exec (t_weechat_plugin *plugin,
             rc = PyObject_CallFunction (evFunc, "s", arg1);
     }
     else
-        rc = PyObject_CallFunction (evFunc, "");
+        rc = PyObject_CallFunction (evFunc, NULL);
 
+
+    ret_value = NULL;
     
-    if (rc == Py_None)
+    /* 
+       ugly hack : rc = NULL while 'return weechat.PLUGIN_RC_OK .... 
+       because of '#define PLUGIN_RC_OK 0'
+    */
+    if (rc ==  NULL)
+	rc = PyInt_FromLong (0);
+    
+    if (PyString_Check (rc) && (ret_type == SCRIPT_EXEC_STRING))
     {
-	python_plugin->print_server (python_plugin, "Python error: function \"%s\" must return a valid value", function);
-	/* PyEval_ReleaseThread (python_current_script->interpreter); */
-	return PLUGIN_RC_OK;
+	if (PyString_AsString (rc))
+	    ret_value = strdup (PyString_AsString(rc));
+	else
+	    ret_value = NULL;
+	
+	Py_XDECREF(rc);
     }
-
-    if (rc)
+    else if (PyInt_Check (rc) && (ret_type == SCRIPT_EXEC_INT))
     {
-        ret = (int) PyInt_AsLong(rc);
-        Py_XDECREF(rc);
+	
+	ret_i = (int *) malloc (sizeof(int));
+	if (ret_i)
+	    *ret_i = (int) PyInt_AsLong(rc);
+	ret_value = ret_i;
+	
+	Py_XDECREF(rc);
+    }
+    else
+    {
+	python_plugin->print_server (python_plugin, 
+				     "Python error: function \"%s\" must return a valid value",
+				     function);
+	/* PyEval_ReleaseThread (python_current_script->interpreter); */
+	return NULL;
+    }
+    
+    if (ret_value == NULL)
+    {
+	plugin->print_server (plugin,
+                              "Python error: unable to alloc memory in function \"%s\"",
+                              function);
+	/* PyEval_ReleaseThread (python_current_script->interpreter); */
+	return NULL;
     }
     
     if (PyErr_Occurred ()) PyErr_Print ();
     
-    if (ret < 0)
-	ret = PLUGIN_RC_OK;
-    
     /* PyEval_ReleaseThread (python_current_script->interpreter); */
     
-    return ret;
+    return ret_value;
 }
 
 /*
@@ -132,9 +163,23 @@ weechat_python_cmd_msg_handler (t_weechat_plugin *plugin,
                                 int argc, char **argv,
                                 char *handler_args, void *handler_pointer)
 {
+    int *r;
+    int ret;
+    
     if (argc >= 3)
-        return weechat_python_exec (plugin, (t_plugin_script *)handler_pointer,
-                                    handler_args, argv[0], argv[2], NULL);
+    {
+        r = (int *) weechat_python_exec (plugin, (t_plugin_script *)handler_pointer,
+					 SCRIPT_EXEC_INT,
+					 handler_args, argv[0], argv[2], NULL);
+	if (r == NULL)
+	    ret = PLUGIN_RC_KO;
+	else
+	{
+	    ret = *r;
+	    free (r);
+	}
+	return ret;
+    }
     else
         return PLUGIN_RC_KO;
 }
@@ -151,9 +196,20 @@ weechat_python_timer_handler (t_weechat_plugin *plugin,
     /* make gcc happy */
     (void) argc;
     (void) argv;
+    int *r;
+    int ret;
     
-    return weechat_python_exec (plugin, (t_plugin_script *)handler_pointer,
-                                handler_args, NULL, NULL, NULL);
+    r = (int *) weechat_python_exec (plugin, (t_plugin_script *)handler_pointer,
+				     SCRIPT_EXEC_INT,
+				     handler_args, NULL, NULL, NULL);
+    if (r == NULL)
+	ret = PLUGIN_RC_KO;
+    else
+    {
+	ret = *r;
+	free (r);
+    }
+    return ret;
 }
 
 /*
@@ -165,9 +221,23 @@ weechat_python_keyboard_handler (t_weechat_plugin *plugin,
                                  int argc, char **argv,
                                  char *handler_args, void *handler_pointer)
 {
+    int *r;
+    int ret;
+    
     if (argc >= 3)
-        return weechat_python_exec (plugin, (t_plugin_script *)handler_pointer,
-                                    handler_args, argv[0], argv[1], argv[2]);
+    {
+        r = (int *) weechat_python_exec (plugin, (t_plugin_script *)handler_pointer,
+					 SCRIPT_EXEC_INT,
+					 handler_args, argv[0], argv[1], argv[2]);
+	if (r == NULL)
+	    ret = PLUGIN_RC_KO;
+	else
+	{
+	    ret = *r;
+	    free (r);
+	}
+	return ret;
+    }
     else
         return PLUGIN_RC_KO;
 }
@@ -180,13 +250,13 @@ char *
 weechat_python_modifier (t_weechat_plugin *plugin,
                          int argc, char **argv,
                          char *modifier_args, void *modifier_pointer)
-{
-    /*if (argc >= 2)
-        return weechat_python_exec (plugin, (t_plugin_script *)modifier_pointer,
-                                    modifier_args, argv[0], argv[1], NULL);
+{    
+    if (argc >= 2)
+        return (char *) weechat_python_exec (plugin, (t_plugin_script *)modifier_pointer,
+					     SCRIPT_EXEC_STRING,
+					     modifier_args, argv[0], argv[1], NULL);
     else
-        return NULL;*/
-    return NULL;
+        return NULL;
 }
 
 /*
@@ -787,7 +857,7 @@ weechat_python_add_modifier (PyObject *self, PyObject *args)
     if (python_plugin->modifier_add (python_plugin, type, command,
                                      weechat_python_modifier,
                                      function,
-                                     (void *)python_current_script))
+                                     (void *)python_current_script))	    
         return Py_BuildValue ("i", 1);
     
     return Py_BuildValue ("i", 0);
@@ -1641,7 +1711,7 @@ PyMethodDef weechat_python_funcs[] = {
 static PyObject *
 weechat_python_output (PyObject *self, PyObject *args)
 {
-    char *msg, *p;
+    char *msg, *m, *p;
     /* make gcc happy */
     (void) self;
     
@@ -1649,19 +1719,43 @@ weechat_python_output (PyObject *self, PyObject *args)
 
     if (!PyArg_ParseTuple (args, "s", &msg))
     {
-        python_plugin->print_server (python_plugin,
-                                     "Python error: unable to get "
-                                     "stdout/stderr message(s)");
-        return NULL; 
+	return Py_None;
+        if (strlen(python_buffer_output) > 0)
+	{
+	    python_plugin->print_server (python_plugin,
+					 "Python stdout/stderr : %s",
+					 python_buffer_output);
+	    python_buffer_output[0] = '\0';
+	}
+    }
+    else 
+    {
+	m = msg;
+	while ((p = strchr (m, '\n')) != NULL)
+	{
+	    *p = '\0';
+	    if (strlen (m) + strlen (python_buffer_output) > 0)
+		python_plugin->print_server (python_plugin,
+					     "Python stdout/stderr : %s%s", 
+					     python_buffer_output, m);
+	    *p = '\n';
+	    python_buffer_output[0] = '\0';
+	    m = ++p;
+	}
+	
+	if (strlen(m) + strlen(python_buffer_output) > sizeof(python_buffer_output))
+	{
+	    python_plugin->print_server (python_plugin,
+					 "Python stdout/stderr : %s%s",
+					 python_buffer_output, m);
+	    python_buffer_output[0] = '\0';
+	}
+	else
+	    strcat (python_buffer_output, m);
     }
     
-    while ((p = strrchr(msg, '\n')) != NULL)
-	*p = '\0';
-    
-    if (strlen(msg) > 0)
-	python_plugin->print_server (python_plugin,
-                                     "Python stdin/stdout: %s", msg);
-    return Py_BuildValue ("i", 1);
+    Py_INCREF(Py_None);
+    return Py_None;
 }
 
 /*
@@ -1802,12 +1896,19 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
 void
 weechat_python_unload (t_weechat_plugin *plugin, t_plugin_script *script)
 {
+    int *r;
+    
     plugin->print_server (plugin,
                           "Unloading Python script \"%s\"",
                           script->name);
     
     if (script->shutdown_func[0])
-        weechat_python_exec (plugin, script, script->shutdown_func, NULL, NULL, NULL);
+    {
+        r = (int *) weechat_python_exec (plugin, script, SCRIPT_EXEC_INT,
+					 script->shutdown_func, NULL, NULL, NULL);
+	if (r)
+	    free (r);
+    }
 
     PyThreadState_Swap (script->interpreter);
     Py_EndInterpreter (script->interpreter);
@@ -1865,10 +1966,11 @@ weechat_python_cmd (t_weechat_plugin *plugin,
                     int cmd_argc, char **cmd_argv,
                     char *handler_args, void *handler_pointer)
 {
-    int argc, handler_found;
+    int argc, handler_found, modifier_found;
     char **argv, *path_script;
     t_plugin_script *ptr_script;
     t_plugin_handler *ptr_handler;
+    t_plugin_modifier *ptr_modifier;
     
     /* make gcc happy */
     (void) handler_args;
@@ -1980,7 +2082,35 @@ weechat_python_cmd (t_weechat_plugin *plugin,
             }
             if (!handler_found)
                 plugin->print_server (plugin, "  (none)");
+
+	    /* list Python modifiers */
+	    plugin->print_server (plugin, "");
+            plugin->print_server (plugin, "Python modifiers:");
+            modifier_found = 0;
+            for (ptr_modifier = plugin->modifiers;
+                 ptr_modifier; ptr_modifier = ptr_modifier->next_modifier)
+            {
+		modifier_found = 1;
+		if (ptr_modifier->type == PLUGIN_MODIFIER_IRC_IN)
+		    plugin->print_server (plugin, "  IRC(%s, %s) => Python(%s)",
+					  ptr_modifier->command,
+					  PLUGIN_MODIFIER_IRC_IN_STR,
+					  ptr_modifier->modifier_args);
+		else if (ptr_modifier->type == PLUGIN_MODIFIER_IRC_USER)
+		    plugin->print_server (plugin, "  IRC(%s, %s) => Python(%s)",
+					  ptr_modifier->command,
+					  PLUGIN_MODIFIER_IRC_USER_STR,
+					  ptr_modifier->modifier_args);
+		else if (ptr_modifier->type == PLUGIN_MODIFIER_IRC_OUT)
+		    plugin->print_server (plugin, "  IRC(%s, %s) => Python(%s)",
+					  ptr_modifier->command,
+					  PLUGIN_MODIFIER_IRC_OUT_STR,
+					  ptr_modifier->modifier_args);
+            }
+            if (!modifier_found)
+                plugin->print_server (plugin, "  (none)");
             break;
+	    
         case 1:
             if (plugin->ascii_strcasecmp (plugin, argv[0], "autoload") == 0)
                 weechat_script_auto_load (plugin, "python", weechat_python_load);
@@ -2035,6 +2165,9 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     python_plugin = plugin;
     
     plugin->print_server (plugin, "Loading Python module \"weechat\"");
+
+    /* init stdout/stderr buffer */
+    python_buffer_output[0] = '\0';
     
     Py_Initialize ();
     if (Py_IsInitialized () == 0)

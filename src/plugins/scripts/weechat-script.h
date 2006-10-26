@@ -23,6 +23,10 @@
 #ifndef __WEECHAT_WEECHAT_SCRIPT_H
 #define __WEECHAT_WEECHAT_SCRIPT_H 1
 
+/* constants which defines return types for weechat_<lang>_exec functions */
+#define SCRIPT_EXEC_INT    1
+#define SCRIPT_EXEC_STRING 2
+
 typedef struct t_plugin_script t_plugin_script;
 
 struct t_plugin_script
