@@ -2303,7 +2303,7 @@ irc_cmd_recv_topic (t_irc_server *server, char *host, char *nick, char *argument
                         GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
                         arguments,
                         GUI_COLOR(COLOR_WIN_CHAT));
-            gui_printf (buffer, " \"%s\"\n", pos);
+            gui_printf (buffer, " \"%s%s\"\n", pos, GUI_NO_COLOR);
         }
         else
             gui_printf (buffer,
