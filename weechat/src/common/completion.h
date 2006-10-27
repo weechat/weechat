@@ -44,6 +44,7 @@ struct t_completion
     int position;               /* position where Tab was pressed             */
     char *args;                 /* command line args (including base word)    */
     int direction;              /* +1 = search next word, -1 = previous word  */
+    int add_space;              /* add space after completion?                */
     
     /* for command argument completion */
     t_weelist *completion_list; /* data list for completion                   */

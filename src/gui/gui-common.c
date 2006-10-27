@@ -628,13 +628,16 @@ gui_input_complete (t_gui_window *window)
         if ((window->buffer->completion.context == COMPLETION_COMMAND)
             || (window->buffer->completion.context == COMPLETION_COMMAND_ARG))
         {
-            if (window->buffer->input_buffer[utf8_real_pos (window->buffer->input_buffer,
-                                                            window->buffer->input_buffer_pos)] != ' ')
-                gui_insert_string_input (window, " ",
-                                         window->buffer->input_buffer_pos);
-            if (window->buffer->completion.position >= 0)
-                window->buffer->completion.position++;
-            window->buffer->input_buffer_pos++;
+            if (window->buffer->completion.add_space)
+            {
+                if (window->buffer->input_buffer[utf8_real_pos (window->buffer->input_buffer,
+                                                                window->buffer->input_buffer_pos)] != ' ')
+                    gui_insert_string_input (window, " ",
+                                             window->buffer->input_buffer_pos);
+                if (window->buffer->completion.position >= 0)
+                    window->buffer->completion.position++;
+                window->buffer->input_buffer_pos++;
+            }
         }
         else
         {

@@ -66,6 +66,7 @@ completion_init (t_completion *completion, void *server, void *channel)
     completion->position = -1; 
     completion->args = NULL;
     completion->direction = 0;
+    completion->add_space = 1;
     
     completion->completion_list = NULL;
     completion->last_completion = NULL;
@@ -296,6 +297,8 @@ completion_list_add_filename (t_completion *completion)
     int in_weechat_home = 0;
     int in_user_home = 0;
     char home[3] = { '~', DIR_SEPARATOR_CHAR, '\0' };
+    
+    completion->add_space = 0;
     
     if ((strncmp (completion->base_word, home, 2) == 0) && getenv("HOME"))
 	in_user_home = 1;
@@ -1025,6 +1028,7 @@ completion_find_context (t_completion *completion, char *buffer, int size, int p
     
     /* look for context */
     completion_free (completion);
+    completion->add_space = 1;
     command = ((buffer[0] == '/') && (buffer[1] != '/')) ? 1 : 0;
     command_arg = 0;
     i = 0;
@@ -1546,6 +1550,7 @@ completion_print_log (t_completion *completion)
     weechat_log_printf ("  position . . . . . . . : %d\n",   completion->position);
     weechat_log_printf ("  args . . . . . . . . . : '%s'\n", completion->args);
     weechat_log_printf ("  direction. . . . . . . : %d\n",   completion->direction);
+    weechat_log_printf ("  add_space. . . . . . . : %d\n",   completion->add_space);
     weechat_log_printf ("  completion_list. . . . : 0x%X\n", completion->completion_list);
     weechat_log_printf ("  last_completion. . . . : 0x%X\n", completion->last_completion);
     weechat_log_printf ("  word_found . . . . . . : '%s'\n", completion->word_found);
