@@ -92,6 +92,11 @@
     #define DIR_SEPARATOR_CHAR  '/'
 #endif
 
+/* some systems (like GNU/Hurd) doesn't define PATH_MAX */
+#ifndef PATH_MAX
+    #define PATH_MAX 4096
+#endif
+
 /* global variables and functions */
 
 extern char *weechat_argv0;

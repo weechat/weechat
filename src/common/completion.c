@@ -26,6 +26,11 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <libgen.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <dirent.h>
+#include <unistd.h>
 
 #include "weechat.h"
 #include "completion.h"
@@ -283,8 +288,141 @@ completion_list_add_server_channels (t_completion *completion)
 void
 completion_list_add_filename (t_completion *completion)
 {
-    /* TODO: add filename completion */
-    completion_stop (completion);
+    char *path_d, *path_b, *d_name, *b_name, *l_name;
+    char buffer[PATH_MAX];
+    DIR *dp;
+    struct dirent *entry;
+    struct stat statbuf;
+    int in_weechat_home = 0;
+    int in_user_home = 0;
+    char home[3] = { '~', DIR_SEPARATOR_CHAR, '\0' };
+    
+    if ((strncmp (completion->base_word, home, 2) == 0) && getenv("HOME"))
+	in_user_home = 1;
+    else if ((strncmp (completion->base_word, DIR_SEPARATOR, 1) != 0)
+	     || (strcmp (completion->base_word, "") == 0))
+	in_weechat_home = 1;
+    
+    if ((in_weechat_home == 1) || (in_user_home == 1))
+    {
+	if (in_user_home == 1)
+	{
+	    /* '+2' means skipping '~' + DIR_SEPARATOR_CHAR */
+	    path_d = strdup (completion->base_word+2);
+	    path_b = strdup (completion->base_word+2);
+	    d_name = strdup (getenv("HOME"));
+	}
+	else
+	{
+	    path_d = strdup (completion->base_word);
+	    path_b = strdup (completion->base_word);
+	    d_name = strdup (weechat_home);
+	}
+	
+	b_name = strdup (basename (path_b));	
+	l_name = strdup (dirname (path_d));
+	
+	if (l_name && l_name[0] == '.')
+	{
+	    free (l_name);
+	    l_name = strdup ("");
+	}
+	else if (l_name && l_name[0] != '\0')
+	{
+	    snprintf (buffer, sizeof(buffer), "%s%s%s%s", 
+		      d_name, DIR_SEPARATOR, DIR_SEPARATOR, l_name);
+	    free (d_name);	    	    
+	    d_name = strdup (buffer);
+	    
+	    snprintf (buffer, sizeof(buffer), "%s%s", l_name, DIR_SEPARATOR);	    
+	    free (l_name);
+	    l_name = strdup (buffer);
+	}
+	
+	free (path_d);
+	free (path_b);
+    }
+    else
+    {
+	path_d = strdup (completion->base_word);
+	path_b = strdup (completion->base_word);
+	
+	d_name = strdup (dirname (path_d));
+	b_name = strdup (basename (path_b));
+	l_name = strdup ("");
+	
+	free (path_d);
+	free (path_b);
+    }
+    
+    if (strcmp (d_name, b_name) == 0 
+	&& (strcmp (d_name, DIR_SEPARATOR) == 0 
+	    || strcmp (d_name, ".") == 0))
+    {
+	free (b_name);
+	b_name = strdup ("");
+    }
+    
+    dp = opendir(d_name);
+    if (dp != NULL)
+    {
+	while((entry = readdir(dp)) != NULL) 
+	{	
+	    if (strncmp (entry->d_name, b_name, strlen(b_name)) == 0) {
+		
+		if (strcmp (entry->d_name, ".") == 0 || strcmp (entry->d_name, "..") == 0)
+		    continue;
+		
+		snprintf(buffer, sizeof(buffer), "%s%s%s", 
+			 d_name, DIR_SEPARATOR, entry->d_name);
+		if (stat(buffer, &statbuf) == -1)
+		    continue;
+		
+		if (in_user_home == 1)
+		{
+		    if (S_ISDIR(statbuf.st_mode))
+			snprintf(buffer, sizeof(buffer), "%s%s%s%s", 
+				 home, l_name, entry->d_name, DIR_SEPARATOR);
+		    else
+			snprintf(buffer, sizeof(buffer), "%s%s%s", 
+				 home, l_name, entry->d_name);
+		}
+		else if (in_weechat_home == 1)
+		{
+		    if (S_ISDIR(statbuf.st_mode))
+			snprintf(buffer, sizeof(buffer), "%s%s%s", 
+				 l_name, entry->d_name, DIR_SEPARATOR);
+		    else
+			snprintf(buffer, sizeof(buffer), "%s%s", l_name, entry->d_name);
+		}
+		else
+		{
+		    if (S_ISDIR(statbuf.st_mode))
+		    {
+			if (strcmp (d_name, "/") == 0)
+			    snprintf(buffer, sizeof(buffer), "%s%s%s", 
+				     d_name, entry->d_name, DIR_SEPARATOR);
+			else
+			    snprintf(buffer, sizeof(buffer), "%s%s%s%s", 
+				     d_name, DIR_SEPARATOR, entry->d_name, DIR_SEPARATOR);
+		    }
+		    else
+		    {
+			if (strcmp (d_name, DIR_SEPARATOR) == 0)
+			    snprintf(buffer, sizeof(buffer), "%s%s", d_name, entry->d_name);
+			else
+			    snprintf(buffer, sizeof(buffer), "%s%s%s", 
+				     d_name, DIR_SEPARATOR, entry->d_name);
+		    }
+		}
+		completion_list_add (completion, buffer);
+	    }
+	}
+    }
+    
+    free (d_name);
+    free (b_name);
+    free (l_name);
 }
 
 /*
