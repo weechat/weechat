@@ -2238,7 +2238,7 @@ weechat_plugin_init (t_weechat_plugin *plugin)
                              "filename: Perl script (file) to load\n"
                              "script: script name to unload\n\n"
                              "Without argument, /perl command lists all loaded Perl scripts.",
-                             "load|autoload|reload|unload",
+                             "load|autoload|reload|unload %f",
                              weechat_perl_cmd, NULL, NULL);
     
     plugin->mkdir_home (plugin, "perl");

@@ -2464,7 +2464,7 @@ weechat_plugin_init (t_weechat_plugin *plugin)
                              "filename: Ruby script (file) to load\n"
                              "script: script name to unload\n\n"
                              "Without argument, /ruby command lists all loaded Ruby scripts.",
-                             "load|autoload|reload|unload",
+                             "load|autoload|reload|unload %f",
                              weechat_ruby_cmd, NULL, NULL);
     
     plugin->mkdir_home (plugin, "ruby");

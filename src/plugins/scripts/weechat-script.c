@@ -110,14 +110,7 @@ weechat_script_search_full_name (t_weechat_plugin *plugin,
         }
         return NULL;
     }
-    
-#ifdef _WIN32
-    if (strstr(filename, "\\"))
-#else
-    if (strstr(filename, "/"))
-#endif
-        return strdup(filename);
-    
+
     /* try WeeChat user's autoload dir */
     dir_home = plugin->get_info (plugin, "weechat_dir", NULL);
     if (dir_home)
@@ -137,7 +130,7 @@ weechat_script_search_full_name (t_weechat_plugin *plugin,
         free (dir_home);
     }
     
-    /* try WeeChat user's dir */
+    /* try WeeChat language user's dir */
     dir_home = plugin->get_info (plugin, "weechat_dir", NULL);
     if (dir_home)
     {
@@ -156,6 +149,26 @@ weechat_script_search_full_name (t_weechat_plugin *plugin,
         free (dir_home);
     }
     
+    /* try WeeChat user's dir */
+    dir_home = plugin->get_info (plugin, "weechat_dir", NULL);
+    if (dir_home)
+    {
+        length = strlen (dir_home) + strlen (filename) + 16;
+        final_name = (char *) malloc (length);
+	plugin->print_server (plugin, "final=[%s]\n", final_name);
+        if (final_name)
+        {
+            snprintf (final_name, length, "%s/%s", dir_home, filename);
+            if ((stat (final_name, &st) == 0) && (st.st_size > 0))
+            {
+                free (dir_home);
+                return final_name;
+            }
+            free (final_name);
+        }
+        free (dir_home);
+    }
+
     /* try WeeChat system dir */
     dir_system = plugin->get_info (plugin, "weechat_sharedir", NULL);
     if (dir_system)
@@ -174,8 +187,8 @@ weechat_script_search_full_name (t_weechat_plugin *plugin,
         }
         free (dir_system);
     }
-    
-    return NULL;
+
+    return strdup(filename);
 }
 
 /*

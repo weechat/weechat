@@ -2487,7 +2487,7 @@ weechat_plugin_init (t_weechat_plugin *plugin)
                              "filename: Lua script (file) to load\n"
                              "script: script name to unload\n\n"
                              "Without argument, /lua command lists all loaded Lua scripts.",
-                             "load|autoload|reload|unload",
+                             "load|autoload|reload|unload %f",
                              weechat_lua_cmd, NULL, NULL);
 
     plugin->mkdir_home (plugin, "lua");

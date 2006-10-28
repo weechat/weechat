@@ -2235,7 +2235,7 @@ weechat_plugin_init (t_weechat_plugin *plugin)
                              "filename: Python script (file) to load\n"
                              "script: script name to unload\n\n"
                              "Without argument, /python command lists all loaded Python scripts.",
-                             "load|autoload|reload|unload",
+                             "load|autoload|reload|unload %f",
                              weechat_python_cmd, NULL, NULL);
 
     plugin->mkdir_home (plugin, "python");
