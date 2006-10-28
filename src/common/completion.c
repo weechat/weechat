@@ -289,89 +289,55 @@ completion_list_add_server_channels (t_completion *completion)
 void
 completion_list_add_filename (t_completion *completion)
 {
-    char *path_d, *path_b, *d_name, *b_name, *l_name;
+    char *path_d, *path_b, *p, *d_name;
+    char *real_prefix, *prefix;
     char buffer[PATH_MAX];
     DIR *dp;
     struct dirent *entry;
     struct stat statbuf;
-    int in_weechat_home = 0;
-    int in_user_home = 0;
     char home[3] = { '~', DIR_SEPARATOR_CHAR, '\0' };
     
     completion->add_space = 0;
     
     if ((strncmp (completion->base_word, home, 2) == 0) && getenv("HOME"))
-	in_user_home = 1;
+    {
+	real_prefix = strdup (getenv("HOME"));
+	prefix = strdup (home);
+    }
     else if ((strncmp (completion->base_word, DIR_SEPARATOR, 1) != 0)
 	     || (strcmp (completion->base_word, "") == 0))
-	in_weechat_home = 1;
-    
-    if ((in_weechat_home == 1) || (in_user_home == 1))
     {
-	if (in_user_home == 1)
-	{
-	    /* '+2' means skipping '~' + DIR_SEPARATOR_CHAR */
-	    path_d = strdup (completion->base_word+2);
-	    path_b = strdup (completion->base_word+2);
-	    d_name = strdup (getenv("HOME"));
-	}
-	else
-	{
-	    path_d = strdup (completion->base_word);
-	    path_b = strdup (completion->base_word);
-	    d_name = strdup (weechat_home);
-	}
-	
-	b_name = strdup (basename (path_b));	
-	l_name = strdup (dirname (path_d));
-	
-	if (l_name && l_name[0] == '.')
-	{
-	    free (l_name);
-	    l_name = strdup ("");
-	}
-	else if (l_name && l_name[0] != '\0')
-	{
-	    snprintf (buffer, sizeof(buffer), "%s%s%s%s", 
-		      d_name, DIR_SEPARATOR, DIR_SEPARATOR, l_name);
-	    free (d_name);	    	    
-	    d_name = strdup (buffer);
-	    
-	    snprintf (buffer, sizeof(buffer), "%s%s", l_name, DIR_SEPARATOR);	    
-	    free (l_name);
-	    l_name = strdup (buffer);
-	}
-	
-	free (path_d);
-	free (path_b);
+	real_prefix = strdup (weechat_home);
+	prefix = strdup ("");
     }
     else
     {
-	path_d = strdup (completion->base_word);
-	path_b = strdup (completion->base_word);
-	
-	d_name = strdup (dirname (path_d));
-	b_name = strdup (basename (path_b));
-	l_name = strdup ("");
-	
-	free (path_d);
-	free (path_b);
+	real_prefix = strdup (DIR_SEPARATOR);
+	prefix = strdup (DIR_SEPARATOR);
     }
-    
-    if (strcmp (d_name, b_name) == 0 
-	&& (strcmp (d_name, DIR_SEPARATOR) == 0 
-	    || strcmp (d_name, ".") == 0))
+	
+    snprintf (buffer, sizeof(buffer), "%s", completion->base_word + strlen (prefix));
+    p = strrchr (buffer, DIR_SEPARATOR_CHAR);
+    if (p)
     {
-	free (b_name);
-	b_name = strdup ("");
+	*p = '\0';
+	path_d = strdup (buffer);
+	p++;
+	path_b = strdup (p);
+    }
+    else {
+	path_d = strdup ("");
+	path_b = strdup (buffer);
     }
     
+    sprintf (buffer, "%s%s%s", real_prefix, DIR_SEPARATOR, path_d);
+    d_name = strdup (buffer);
     dp = opendir(d_name);
     if (dp != NULL)
     {
 	while((entry = readdir(dp)) != NULL) 
 	{	
-	    if (strncmp (entry->d_name, b_name, strlen(b_name)) == 0) {
+	    if (strncmp (entry->d_name, path_b, strlen(path_b)) == 0) {
 		
 		if (strcmp (entry->d_name, ".") == 0 || strcmp (entry->d_name, "..") == 0)
 		    continue;
@@ -381,51 +347,25 @@ completion_list_add_filename (t_completion *completion)
 		if (stat(buffer, &statbuf) == -1)
 		    continue;
 		
-		if (in_user_home == 1)
-		{
-		    if (S_ISDIR(statbuf.st_mode))
-			snprintf(buffer, sizeof(buffer), "%s%s%s%s", 
-				 home, l_name, entry->d_name, DIR_SEPARATOR);
-		    else
-			snprintf(buffer, sizeof(buffer), "%s%s%s", 
-				 home, l_name, entry->d_name);
-		}
-		else if (in_weechat_home == 1)
-		{
-		    if (S_ISDIR(statbuf.st_mode))
-			snprintf(buffer, sizeof(buffer), "%s%s%s", 
-				 l_name, entry->d_name, DIR_SEPARATOR);
-		    else
-			snprintf(buffer, sizeof(buffer), "%s%s", l_name, entry->d_name);
-		}
-		else
-		{
-		    if (S_ISDIR(statbuf.st_mode))
-		    {
-			if (strcmp (d_name, "/") == 0)
-			    snprintf(buffer, sizeof(buffer), "%s%s%s", 
-				     d_name, entry->d_name, DIR_SEPARATOR);
-			else
-			    snprintf(buffer, sizeof(buffer), "%s%s%s%s", 
-				     d_name, DIR_SEPARATOR, entry->d_name, DIR_SEPARATOR);
-		    }
-		    else
-		    {
-			if (strcmp (d_name, DIR_SEPARATOR) == 0)
-			    snprintf(buffer, sizeof(buffer), "%s%s", d_name, entry->d_name);
-			else
-			    snprintf(buffer, sizeof(buffer), "%s%s%s", 
-				     d_name, DIR_SEPARATOR, entry->d_name);
-		    }
-		}
+		snprintf(buffer, sizeof(buffer), "%s%s%s%s%s%s",
+			 prefix, 
+			 ((strcmp(prefix, "") == 0)
+			  || strchr(prefix, DIR_SEPARATOR_CHAR)) ? "" : DIR_SEPARATOR, 
+			 path_d, 
+			 strcmp(path_d, "") == 0 ? "" : DIR_SEPARATOR, 
+			 entry->d_name, 
+			 S_ISDIR(statbuf.st_mode) ? DIR_SEPARATOR : "");
+		
 		completion_list_add (completion, buffer);
 	    }
 	}
     }
     
     free (d_name);
-    free (b_name);
-    free (l_name);
+    free (prefix);
+    free (real_prefix);
+    free (path_d);
+    free (path_b);
 }
 
 /*
