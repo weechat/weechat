@@ -904,7 +904,7 @@ weechat_aspell_config_load(void)
 	weechat_aspell_plugin->free_exploded_string (weechat_aspell_plugin, servers_list);
     }
 
-    weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL, "[%s] [LOAD] configuration loaded", _PLUGIN_NAME);
+    weechat_aspell_plugin->print_server (weechat_aspell_plugin, NULL, NULL, "[%s] [LOAD] configuration loaded", _PLUGIN_NAME);
     return 1;
 }
 
@@ -979,7 +979,7 @@ weechat_aspell_options_load(void)
 	aspell_plugin_options.color_name = strdup (_PLUGIN_OPTION_COLOR);
     }
     
-    weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL, "[%s] [LOAD] options loaded", _PLUGIN_NAME);
+    weechat_aspell_plugin->print_server (weechat_aspell_plugin, NULL, NULL, "[%s] [LOAD] options loaded", _PLUGIN_NAME);
     return 1;
 }
 
