@@ -49,7 +49,8 @@ esac
 
 # Gettext
 ALL_LINGUAS="fr es cs hu de ru"
-AM_GNU_GETTEXT
+AM_GNU_GETTEXT([use-libtool])
+AM_GNU_GETTEXT_VERSION([0.15])
 
 # Checks for libraries
 AC_CHECK_LIB(ncurses, initscr, LIBNCURSES_FOUND=1, LIBNCURSES_FOUND=0)
