@@ -54,8 +54,10 @@
 void
 completion_init (t_completion *completion, void *server, void *channel)
 {
-    completion->server = server;
-    completion->channel = channel;
+    if (server)
+        completion->server = server;
+    if (channel)
+        completion->channel = channel;
     completion->context = COMPLETION_NULL;
     completion->base_command = NULL;
     completion->base_command_arg = 0;
@@ -967,7 +969,7 @@ completion_find_context (t_completion *completion, char *buffer, int size, int p
     
     /* look for context */
     completion_free (completion);
-    completion->add_space = 1;
+    completion_init (completion, NULL, NULL);
     command = ((buffer[0] == '/') && (buffer[1] != '/')) ? 1 : 0;
     command_arg = 0;
     i = 0;
