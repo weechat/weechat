@@ -155,7 +155,6 @@ weechat_script_search_full_name (t_weechat_plugin *plugin,
     {
         length = strlen (dir_home) + strlen (filename) + 16;
         final_name = (char *) malloc (length);
-	plugin->print_server (plugin, "final=[%s]\n", final_name);
         if (final_name)
         {
             snprintf (final_name, length, "%s/%s", dir_home, filename);

@@ -1819,6 +1819,9 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
     FILE *fp;
     PyThreadState *python_current_interpreter;
     PyObject *weechat_module, *weechat_outputs, *weechat_dict;
+    PyObject *python_path, *path;
+    char *w_home, *p_home;
+    int len;
     
     plugin->print_server (plugin, "Loading Python script \"%s\"", filename);
     
@@ -1860,6 +1863,27 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
 	return 0;
     }
 
+    /* adding $weechat_dir/python in $PYTHONPATH */    
+    python_path = PySys_GetObject ("path");
+    w_home = plugin->get_info (plugin, "weechat_dir", NULL);
+    if (w_home)
+    {
+	len = strlen (w_home) + 1 + strlen("python") + 1;
+	p_home = (char *) malloc (len * sizeof(char));
+	if (p_home)
+	{
+	    snprintf (p_home, len, "%s/python", w_home);
+	    path = PyString_FromString (p_home);
+	    if (path != NULL)
+	    {
+		PyList_Insert (python_path, 0, path);
+		Py_DECREF (path);
+	    }
+	    free (p_home);
+	}
+	free (w_home);
+    }
+    
     /* define some constants */
     weechat_dict = PyModule_GetDict(weechat_module);
     PyDict_SetItemString(weechat_dict, "PLUGIN_RC_OK", PyInt_FromLong((long) PLUGIN_RC_OK));
