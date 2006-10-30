@@ -1,4 +1,4 @@
-WeeChat FAQ, 2006-10-23
+WeeChat FAQ, 2006-10-30
 =======================
 
 Intended audience:
@@ -90,7 +90,7 @@ Q:	I don't see some chars with accents, what can I do?
 A:	You have to setup charset used for decoding (ISO and UTF), encoding, and
 	internal WeeChat charset.
 	Internal charset should be empty value, except if WeeChat failed to
-	detect your locale (WeeChat looks for "UTF-8" in your locale name).
+	detect your locale.
 
 
 2.5
@@ -158,6 +158,19 @@ Q:	When I'm using weechat under screen, I have weird chars, when I switch
 A:	This may be caused by bad value of TERM variable (look at echo $TERM).
 	For example, "xterm-color" displays such weird chars, use "xterm" which
 	is ok (like many other values).
+
+
+2.11
+================================================================================
+Q:	I want to change language used by WeeChat for messages, but without
+	exiting WeeChat, is it possible?
+
+A:	Yes, you have to use python script shell.py (available on WeeChat
+	website) and issue these commands when script is loaded:
+	  /shell setenv LANG=en_US.UTF-8
+	  /upgrade
+	(to have english messages with UTF-8 encoding for terminal, for ISO
+	users, you can issue:  /shell setenv LANG=en_US)
 
 
 3.1
