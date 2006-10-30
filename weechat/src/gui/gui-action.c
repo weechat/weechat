@@ -414,7 +414,8 @@ gui_action_transpose_chars (t_gui_window *window)
     
     if (window->buffer->has_input)
     {
-        if (window->buffer->input_buffer_pos > 0)
+        if ((window->buffer->input_buffer_pos > 0)
+            && (window->buffer->input_buffer_length > 1))
         {
             if (window->buffer->input_buffer_pos == window->buffer->input_buffer_length)
                 window->buffer->input_buffer_pos--;
