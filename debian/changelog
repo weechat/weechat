@@ -1,3 +1,24 @@
+weechat (0.2.1-1) unstable; urgency=low
+
+  * New upstream release
+  * Overrive lintian menu-icon-missing warning
+    since the icon is in the weechat-common package.
+
+ -- Julien Louis <ptitlouis@sysif.net>  Mon,  2 Oct 2006 15:30:06 +0200
+
+weechat (0.2.0-2) unstable; urgency=low
+
+  * Add libaspell-dev to Build-Depends. This enables the aspell plugin built.
+
+ -- Julien Louis <ptitlouis@sysif.net>  Mon, 25 Sep 2006 23:56:16 +0200
+
+weechat (0.2.0-1) unstable; urgency=low
+
+  * New upstream release
+  * Rebuild against new default python version (Closes: #380985).
+
+ -- Julien Louis <ptitlouis@sysif.net>  Sat, 19 Aug 2006 17:10:59 +0200
+
 weechat (0.1.9-3) unstable; urgency=low
 
   * Remove gnutls Build-Depends introduced in the previous upload

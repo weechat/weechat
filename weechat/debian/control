@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Sebastien Helleu <flashcode@flashtux.org>
 Uploaders: Julien Louis <ptitlouis@sysif.net>
 Build-Depends-Indep: xsltproc, docbook-xsl, docbook-xml
-Build-Depends: cdbs, debhelper (>= 5), libncursesw5-dev, ruby, ruby1.8-dev, libperl-dev, python-dev, liblualib50-dev, libgnutls-dev, libtool, dpkg-dev (>= 1.13.19)
+Build-Depends: cdbs, debhelper (>= 5), libncursesw5-dev, ruby, ruby1.8-dev, libperl-dev, python-dev, libaspell-dev, liblualib50-dev, libgnutls-dev, libtool, dpkg-dev (>= 1.13.19)
 Standards-Version: 3.7.2
 
 Package: weechat
