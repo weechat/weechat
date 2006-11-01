@@ -21,6 +21,7 @@ EXTRA_DIST = config.rpath BUGS FAQ FAQ.fr \
              debian/changelog debian/control \
              debian/copyright debian/compat \
              debian/rules debian/weechat-common.docs \
+             debian/lintian-override \
              debian/weechat-common.install debian/weechat-curses.dirs \
              debian/weechat-curses.install debian/weechat-plugins.install \
              debian/weechat-curses.menu debian/NEWS debian/weechat.xpm \
