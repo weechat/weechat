@@ -1869,6 +1869,8 @@ server_disconnect (t_irc_server *server, int reconnect)
             nick_free_all (ptr_channel);
             irc_display_prefix (NULL, ptr_channel->buffer, PREFIX_INFO);
             gui_printf (ptr_channel->buffer, _("Disconnected from server!\n"));
+            gui_nicklist_draw (ptr_channel->buffer, 1, 1);
+            gui_status_draw (ptr_channel->buffer, 1);
         }
     }
     
