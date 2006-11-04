@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-10-30
+ChangeLog - 2006-11-04
 
 
 Version 0.2.2 (under dev!):
+   * fixed bug with ignore: now any IRC command is allowed
    * fixed crash with Ctrl-T (transpose) and one char on line (bug #18153)
    * added "modifier" in plugins API
    * improved /plugin command

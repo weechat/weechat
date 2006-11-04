@@ -186,7 +186,7 @@ ignore_search (char *mask, char *type, char *channel_name, char *server_name)
 t_irc_ignore *
 ignore_add (char *mask, char *type, char *channel_name, char *server_name)
 {
-    int i, type_index;
+    int type_index;
     t_irc_command *command_ptr;
     t_irc_ignore *new_ignore;
 
@@ -225,43 +225,6 @@ ignore_add (char *mask, char *type, char *channel_name, char *server_name)
                     _("%s ignore already exists\n"),
                     WEECHAT_ERROR);
         return NULL;
-    }
-    
-    if (strcmp (type, "*") != 0)
-    {
-        /* look for type in pre-defined ignore types */
-        for (i = 0; ignore_types[i]; i++)
-        {
-            if (ascii_strcasecmp (type, ignore_types[i]) == 0)
-            {
-                type_index = i;
-                break;
-            }
-        }
-        
-        /* not a pre-defined ignore type, so it MUST be an IRC command */
-        if (type_index < 0)
-        {
-            for (i = 0; irc_commands[i].command_name; i++)
-            {
-                if (irc_commands[i].recv_function &&
-                    (ascii_strcasecmp (type, irc_commands[i].command_name) == 0))
-                {
-                    command_ptr = &irc_commands[i];
-                    break;
-                }
-            }
-        }
-        
-        /* not a pre-defined command and not an IRC command => error */
-        if ((type_index < 0) && (!command_ptr))
-        {
-            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-            gui_printf (NULL,
-                        _("%s unknown type or IRC command \"%s\" for ignore\n"),
-                        WEECHAT_ERROR, type);
-            return NULL;
-        }
     }
     
     /* create new ignore */
