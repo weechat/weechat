@@ -25,6 +25,7 @@
 #endif
 
 #include <stdlib.h>
+#include <errno.h>
 #include <stdarg.h>
 #include <string.h>
 
@@ -200,9 +201,10 @@ weechat_iconv (char *from_code, char *to_code, char *string)
 #ifdef HAVE_ICONV
     iconv_t cd;
     char *inbuf;
+    int done;
     ICONV_CONST char *ptr_inbuf;
     char *ptr_outbuf;
-    size_t inbytesleft, outbytesleft;
+    size_t err, inbytesleft, outbytesleft;
     
     if (from_code && from_code[0] && to_code && to_code[0]
         && (ascii_strcasecmp(from_code, to_code) != 0))
@@ -218,14 +220,30 @@ weechat_iconv (char *from_code, char *to_code, char *string)
             outbytesleft = inbytesleft * 4;
             outbuf = (char *) malloc (outbytesleft + 2);
             ptr_outbuf = outbuf;
-            iconv (cd, &ptr_inbuf, &inbytesleft, &ptr_outbuf, &outbytesleft);
-            if (inbytesleft != 0)
+            done = 0;
+            while (!done)
             {
-                free (outbuf);
-                outbuf = strdup (string);
+                err = iconv (cd, &ptr_inbuf, &inbytesleft,
+                             &ptr_outbuf, &outbytesleft);
+                if (err == (size_t)(-1))
+                {
+                    switch (errno)
+                    {
+                        case EINVAL:
+                            done = 1;
+                            break;
+                        case E2BIG:
+                            done = 1;
+                            break;
+                        case EILSEQ:
+                            ptr_inbuf[0] = '?';
+                            break;
+                    }
+                }
+                else
+                    done = 1;
             }
-            else
-                ptr_outbuf[0] = '\0';
+            ptr_outbuf[0] = '\0';
             free (inbuf);
             iconv_close (cd);
         }
@@ -278,7 +296,7 @@ char *
 weechat_iconv_from_internal (char *charset, char *string)
 {
     char *input, *output;
-
+    
     input = strdup (string);
     if (input)
     {
