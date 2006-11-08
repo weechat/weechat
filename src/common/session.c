@@ -38,6 +38,7 @@
 #include "session.h"
 #include "hotlist.h"
 #include "log.h"
+#include "utf8.h"
 #include "util.h"
 #include "../irc/irc.h"
 #include "../gui/gui.h"
@@ -617,6 +618,22 @@ session_read_str (FILE *file, char **string)
 }
 
 /*
+ * session_read_str_utf8: read string from file, then normalize UTF-8
+ */
+
+int
+session_read_str_utf8 (FILE *file, char **string)
+{
+    int rc;
+
+    rc = session_read_str (file, string);
+    if (rc && *string)
+        utf8_normalize (*string, '?');
+    
+    return rc;
+}
+
+/*
  * session_read_buf: read buffer from file
  */
 
@@ -979,7 +996,7 @@ session_load_server (FILE *file)
                 rc = rc && (session_read_int (file, &(session_current_server->is_away)));
                 break;
             case SESSION_SERV_AWAY_MESSAGE:
-                rc = rc && (session_read_str (file, &(session_current_server->away_message)));
+                 rc = rc && (session_read_str (file, &(session_current_server->away_message)));
                 break;
             case SESSION_SERV_AWAY_TIME:
                 rc = rc && (session_read_buf (file, &(session_current_server->away_time), sizeof (time_t)));
@@ -1074,7 +1091,7 @@ session_load_channel (FILE *file)
             case SESSION_CHAN_END:
                 return 1;
             case SESSION_CHAN_TOPIC:
-                rc = rc && (session_read_str (file, &(session_current_channel->topic)));
+                rc = rc && (session_read_str_utf8 (file, &(session_current_channel->topic)));
                 break;
             case SESSION_CHAN_MODES:
                 rc = rc && (session_read_str (file, (char **)(&(session_current_channel->modes))));
@@ -1383,7 +1400,7 @@ session_load_history (FILE *file)
                 return 1;
             case SESSION_HIST_TEXT:
                 text = NULL;
-                if (!session_read_str (file, &text))
+                if (!session_read_str_utf8 (file, &text))
                     return 0;
                 if (session_current_buffer)
                     history_buffer_add (session_current_buffer, text);
@@ -1561,7 +1578,7 @@ session_load_line (FILE *file)
                 rc = rc && (session_read_int (file, &(line->line_with_highlight)));
                 break;
             case SESSION_LINE_DATA:
-                rc = rc && (session_read_str (file, &(line->data)));
+                rc = rc && (session_read_str_utf8 (file, &(line->data)));
                 break;
             case SESSION_LINE_OFS_AFTER_DATE:
                 rc = rc && (session_read_int (file, &(line->ofs_after_date)));
