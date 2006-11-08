@@ -269,8 +269,14 @@ char *
 weechat_iconv_to_internal (char *charset, char *string)
 {
     char *input, *output;
-
+    
     input = strdup (string);
+    
+    /* optimize for UTF-8: if charset is NULL => we use term charset =>
+       if ths charset is already UTF-8, then no iconv needed */
+    if (local_utf8 && (!charset || !charset[0]))
+        return input;
+    
     if (input)
     {
         if (utf8_is_valid (input, NULL))
@@ -298,6 +304,12 @@ weechat_iconv_from_internal (char *charset, char *string)
     char *input, *output;
     
     input = strdup (string);
+    
+    /* optimize for UTF-8: if charset is NULL => we use term charset =>
+       if ths charset is already UTF-8, then no iconv needed */
+    if (local_utf8 && (!charset || !charset[0]))
+        return input;
+    
     if (input)
     {
         utf8_normalize (input, '?');
