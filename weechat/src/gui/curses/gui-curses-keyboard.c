@@ -30,6 +30,7 @@
 #include "../../common/weechat.h"
 #include "../gui.h"
 #include "../../common/utf8.h"
+#include "../../common/util.h"
 #include "gui-curses.h"
 
 #ifdef PLUGINS
@@ -198,7 +199,7 @@ void
 gui_keyboard_read ()
 {
     int key, i, insert_ok;
-    char key_str[32];
+    char key_str[32], *key_utf;
     char *buffer_before_key;
 #ifdef PLUGINS
     char key_str2[33];
@@ -281,6 +282,14 @@ gui_keyboard_read ()
             {
                 key_str[0] = (char) key;
                 key_str[1] = '\0';
+                
+                /* convert input to UTF-8 is user is not using UTF-8 as locale */
+                if (!local_utf8)
+                {
+                    key_utf = weechat_iconv_to_internal (NULL, key_str);
+                    strncpy (key_str, key_utf, sizeof (key_str));
+                    key_str[sizeof (key_str) - 1] = '\0';
+                }
             }
         }
         

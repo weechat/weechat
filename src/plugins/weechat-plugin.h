@@ -101,9 +101,6 @@ struct t_plugin_server_info
     char *autojoin;                 /* channels to automatically join       */
     int autorejoin;                 /* auto rejoin channels when kicked     */
     char *notify_levels;            /* channels notify levels               */
-    char *charset_decode_iso;       /* channels charsets for decoding ISO   */
-    char *charset_decode_utf;       /* channels charsets for decoding UTF   */
-    char *charset_encode;           /* channels charsets for encoding msgs  */
     int is_connected;               /* 1 if WeeChat is connected to server  */
     int ssl_connected;              /* = 1 if connected with SSL            */
     char *nick;                     /* current nickname                     */
@@ -279,6 +276,7 @@ struct t_weechat_plugin
     char *name;                     /* plugin name                          */
     char *description;              /* plugin description                   */
     char *version;                  /* plugin version                       */
+    char *charset;                  /* charset used by plugin               */
     
     /* plugin handlers */
     t_plugin_handler *handlers;     /* pointer to first handler             */
@@ -361,6 +359,10 @@ struct t_weechat_plugin
     void (*free_buffer_info) (t_weechat_plugin *, t_plugin_buffer_info *);
     t_plugin_buffer_line *(*get_buffer_data) (t_weechat_plugin *, char *, char *);
     void (*free_buffer_data) (t_weechat_plugin *, t_plugin_buffer_line *);
+
+    void (*set_charset) (t_weechat_plugin *, char *);
+    char *(*iconv_to_internal) (t_weechat_plugin *, char *, char *);
+    char *(*iconv_from_internal) (t_weechat_plugin *, char *, char *);
     
     /* WeeChat developers: ALWAYS add new functions at the end */
 };
@@ -432,5 +434,10 @@ extern t_plugin_buffer_info *weechat_plugin_get_buffer_info (t_weechat_plugin *)
 extern void weechat_plugin_free_buffer_info (t_weechat_plugin *, t_plugin_buffer_info *);
 extern t_plugin_buffer_line *weechat_plugin_get_buffer_data (t_weechat_plugin *, char *, char *);
 extern void weechat_plugin_free_buffer_data (t_weechat_plugin *, t_plugin_buffer_line *);
+
+/* iconv functions */
+extern void weechat_plugin_set_charset (t_weechat_plugin *, char *);
+extern char *weechat_plugin_iconv_to_internal (t_weechat_plugin *, char *, char *);
+extern char *weechat_plugin_iconv_from_internal (t_weechat_plugin *, char *, char *);
 
 #endif /* weechat-plugin.h */

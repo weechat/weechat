@@ -41,6 +41,7 @@
 #include "../common/hotlist.h"
 #include "../common/log.h"
 #include "../common/utf8.h"
+#include "../common/util.c"
 #include "../irc/irc.h"
 
 
@@ -223,7 +224,7 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, char *nic
     time_t date;
     struct tm *local_time;
     int time_first_digit, time_last_digit;
-    char *buf2, *pos;
+    char *pos;
     int i;
     va_list argptr;
     
@@ -243,8 +244,9 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, char *nic
     
         if (buffer == NULL)
         {
-            weechat_log_printf ("WARNING: gui_printf_internal without buffer! This is a bug, "
-                                "please send to developers - thanks\n");
+            weechat_log_printf ("%s gui_printf_internal without buffer! This is a bug, "
+                                "please send to developers - thanks\n",
+                                WEECHAT_WARNING);
             return;
         }
         
@@ -261,15 +263,12 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, char *nic
     
     if (!buf[0])
         return;
-    
-    if (gui_init_ok)
-        buf2 = channel_iconv_decode (SERVER(buffer), CHANNEL(buffer), buf);
-    else
-        buf2 = strdup (buf);
+
+    utf8_normalize (buf, '?');
     
     if (gui_init_ok)
     {
-        pos = buf2;
+        pos = buf;
         while (pos)
         {
             date = time (NULL);
@@ -353,9 +352,7 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, char *nic
         }
     }
     else
-        printf ("%s", buf2);
-    
-    free (buf2);
+        weechat_iconv_fprintf (stdout, buf);
 }
 
 /*
@@ -407,7 +404,7 @@ gui_infobar_printf (int time_displayed, int color, char *message, ...)
     static char buf[1024];
     va_list argptr;
     t_gui_infobar *ptr_infobar;
-    char *pos;
+    char *buf2, *ptr_buf, *pos;
     
     va_start (argptr, message);
     vsnprintf (buf, sizeof (buf) - 1, message, argptr);
@@ -416,8 +413,11 @@ gui_infobar_printf (int time_displayed, int color, char *message, ...)
     ptr_infobar = (t_gui_infobar *)malloc (sizeof (t_gui_infobar));
     if (ptr_infobar)
     {
+        buf2 = (char *)gui_color_decode ((unsigned char *)buf, 0);
+        ptr_buf = (buf2) ? buf2 : buf;
+        
         ptr_infobar->color = color;
-        ptr_infobar->text = strdup (buf);
+        ptr_infobar->text = strdup (ptr_buf);
         pos = strchr (ptr_infobar->text, '\n');
         if (pos)
             pos[0] = '\0';
@@ -425,43 +425,12 @@ gui_infobar_printf (int time_displayed, int color, char *message, ...)
         ptr_infobar->next_infobar = gui_infobar;
         gui_infobar = ptr_infobar;
         gui_infobar_draw (gui_current_window->buffer, 1);
+        if (buf2)
+            free (buf2);
     }
     else
-        weechat_log_printf (_("Not enough memory for infobar message\n"));
-}
-
-/*
- * gui_infobar_printf_from_buffer: remove color, convert charset, then
- *                                 display message in infobar
- */
-
-void
-gui_infobar_printf_from_buffer (t_gui_buffer *buffer, int time_displayed,
-                                int color, char *message1, char *message, ...)
-{
-    static char buf[1024];
-    va_list argptr;
-    char *buf2, *buf3;
-    
-    va_start (argptr, message);
-    vsnprintf (buf, sizeof (buf) - 1, message, argptr);
-    va_end (argptr);
-    
-    buf2 = (char *)gui_color_decode ((unsigned char *)buf, 0);
-    
-    if (buf2)
-        buf3 = channel_iconv_decode (SERVER(buffer), CHANNEL(buffer), buf2);
-    else
-        buf3 = NULL;
-    
-    gui_infobar_printf (time_displayed, color,
-                        "%s%s", message1,
-                        (buf3) ? buf3 : ((buf2) ? buf2 : buf));
-    
-    if (buf2)
-        free (buf2);
-    if (buf3)
-        free (buf3);
+        weechat_log_printf (_("%s not enough memory for infobar message\n"),
+                            WEECHAT_ERROR);
 }
 
 /*

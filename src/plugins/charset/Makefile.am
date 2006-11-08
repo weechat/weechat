@@ -15,39 +15,12 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\"
+INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(CHARSET_CFLAGS)
 
-if PLUGIN_PERL
-script_dir = scripts
-endif
+libdir = ${weechat_libdir}/plugins
 
-if PLUGIN_PYTHON
-script_dir = scripts
-endif
+lib_LTLIBRARIES = charset.la
 
-if PLUGIN_RUBY
-script_dir = scripts
-endif
-
-if PLUGIN_LUA
-script_dir = scripts
-endif
-
-if PLUGIN_ASPELL
-aspell_dir = aspell
-endif
-
-if PLUGIN_CHARSET
-charset_dir = charset
-endif
-
-SUBDIRS = $(script_dir) $(aspell_dir) $(charset_dir)
-
-noinst_LIBRARIES = lib_weechat_plugins.a
-
-lib_weechat_plugins_a_SOURCES = weechat-plugin.h \
-				plugins.h \
-                                plugins.c \
-                                plugins-interface.c \
-                                plugins-config.h \
-                                plugins-config.c
+charset_la_SOURCES = weechat-charset.h weechat-charset.c
+charset_la_LDFLAGS = -module
+charset_la_LIBADD  = $(CHARSET_LFLAGS)

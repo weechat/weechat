@@ -90,6 +90,7 @@ extern void gui_keyboard_default_bindings ();
 extern void gui_keyboard_read ();
 
 /* window functions */
+extern void gui_window_wprintw (WINDOW *, char *, ...);
 extern void gui_window_curses_clear (WINDOW *, int);
 extern void gui_window_set_weechat_color (WINDOW *, int);
 extern void gui_window_refresh_screen_sigwinch ();

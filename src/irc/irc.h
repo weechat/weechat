@@ -143,9 +143,6 @@ struct t_irc_server
     char *autojoin;                 /* channels to automatically join         */
     int autorejoin;                 /* auto rejoin channels when kicked       */
     char *notify_levels;            /* channels notify levels                 */
-    char *charset_decode_iso;       /* channels charsets for decoding ISO     */
-    char *charset_decode_utf;       /* channels charsets for decoding UTF     */
-    char *charset_encode;           /* channels charsets for encoding msgs    */
     
     /* internal vars */
     pid_t child_pid;                /* pid of child process (connecting)      */
@@ -340,8 +337,7 @@ extern void server_free (t_irc_server *);
 extern void server_free_all ();
 extern t_irc_server *server_new (char *, int, int, int, int, char *, int, int, int,
                                  char *, char *, char *, char *, char *, char *,
-                                 char *, char *, int, char *, int, char *, char *,
-                                 char *, char *);
+                                 char *, char *, int, char *, int, char *);
 extern char *server_get_charset_decode_iso (t_irc_server *);
 extern char *server_get_charset_decode_utf (t_irc_server *);
 extern char *server_get_charset_encode (t_irc_server *);
@@ -388,8 +384,6 @@ extern int string_is_channel (char *);
 extern char *channel_get_charset_decode_iso (t_irc_server *, t_irc_channel *);
 extern char *channel_get_charset_decode_utf (t_irc_server *, t_irc_channel *);
 extern char *channel_get_charset_encode (t_irc_server *, t_irc_channel *);
-extern char *channel_iconv_decode (t_irc_server *, t_irc_channel *, char *);
-extern char *channel_iconv_encode (t_irc_server *, t_irc_channel *, char *);
 extern void channel_remove_away (t_irc_channel *);
 extern void channel_check_away (t_irc_server *, t_irc_channel *, int);
 extern void channel_set_away (t_irc_channel *, char *, int);

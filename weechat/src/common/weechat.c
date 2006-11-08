@@ -98,27 +98,30 @@ gnutls_certificate_credentials gnutls_xcred;   /* gnutls client credentials */
 void
 weechat_display_usage (char *exec_name)
 {
-    printf ("\n");
-    printf (_("%s (c) Copyright 2003-2006, compiled on %s %s\n"
-              "Developed by FlashCode <flashcode@flashtux.org> - %s"),
-            PACKAGE_STRING, __DATE__, __TIME__, WEECHAT_WEBSITE);
-    printf ("\n\n");
-    printf (_("Usage: %s [options ...]\n" \
-              "   or: %s [irc[6][s]://[nickname[:password]@]irc.example.org[:port][/channel][,channel[...]]"),
-            exec_name, exec_name);
-    printf ("\n\n");
-    printf (_("  -a, --no-connect        disable auto-connect to servers at startup\n"
-              "  -c, --config            display config file options\n"
-              "  -d, --dir <path>        set WeeChat home directory (default: ~/.weechat)\n"
-              "  -f, --key-functions     display WeeChat internal functions for keys\n"
-              "  -h, --help              this help\n"
-              "  -i, --irc-commands      display IRC commands\n"
-              "  -k, --keys              display WeeChat default keys\n"
-              "  -l, --license           display WeeChat license\n"
-              "  -p, --no-plugin         don't load any plugin at startup\n"
-              "  -v, --version           display WeeChat version\n"
-              "  -w, --weechat-commands  display WeeChat commands\n"));
-    printf("\n");
+    weechat_iconv_fprintf (stdout, "\n");
+    weechat_iconv_fprintf (stdout,
+                           _("%s (c) Copyright 2003-2006, compiled on %s %s\n"
+                             "Developed by FlashCode <flashcode@flashtux.org> - %s"),
+                           PACKAGE_STRING, __DATE__, __TIME__, WEECHAT_WEBSITE);
+    weechat_iconv_fprintf (stdout, "\n\n");
+    weechat_iconv_fprintf (stdout,
+                           _("Usage: %s [options ...]\n" \
+                             "   or: %s [irc[6][s]://[nickname[:password]@]irc.example.org[:port][/channel][,channel[...]]"),
+                           exec_name, exec_name);
+    weechat_iconv_fprintf (stdout, "\n\n");
+    weechat_iconv_fprintf (stdout,
+                           _("  -a, --no-connect        disable auto-connect to servers at startup\n"
+                             "  -c, --config            display config file options\n"
+                             "  -d, --dir <path>        set WeeChat home directory (default: ~/.weechat)\n"
+                             "  -f, --key-functions     display WeeChat internal functions for keys\n"
+                             "  -h, --help              this help\n"
+                             "  -i, --irc-commands      display IRC commands\n"
+                             "  -k, --keys              display WeeChat default keys\n"
+                             "  -l, --license           display WeeChat license\n"
+                             "  -p, --no-plugin         don't load any plugin at startup\n"
+                             "  -v, --version           display WeeChat version\n"
+                             "  -w, --weechat-commands  display WeeChat commands\n"));
+    weechat_iconv_fprintf(stdout, "\n");
 }
 
 /*
@@ -130,7 +133,8 @@ weechat_display_config_options ()
 {
     int i, j, k;
     
-    printf (_("WeeChat configuration options (<weechat_home>/weechat.rc):\n\n"));
+    weechat_iconv_fprintf (stdout,
+                           _("WeeChat configuration options (<weechat_home>/weechat.rc):\n\n"));
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
     {
         if (weechat_options[i])
@@ -138,60 +142,61 @@ weechat_display_config_options ()
             j = 0;
             while (weechat_options[i][j].option_name)
             {
-                printf ("* %s:\n",
-                    weechat_options[i][j].option_name);
+                weechat_iconv_fprintf (stdout,
+                                       "* %s:\n",
+                                       weechat_options[i][j].option_name);
                 switch (weechat_options[i][j].option_type)
                 {
                     case OPTION_TYPE_BOOLEAN:
-                        printf (_("  . type: boolean\n"));
-                        printf (_("  . values: 'on' or 'off'\n"));
-                        printf (_("  . default value: '%s'\n"),
-                                (weechat_options[i][j].default_int == BOOL_TRUE) ?
-                                "on" : "off");
+                        weechat_iconv_fprintf (stdout, _("  . type: boolean\n"));
+                        weechat_iconv_fprintf (stdout, _("  . values: 'on' or 'off'\n"));
+                        weechat_iconv_fprintf (stdout, _("  . default value: '%s'\n"),
+                                               (weechat_options[i][j].default_int == BOOL_TRUE) ?
+                                               "on" : "off");
                         break;
                     case OPTION_TYPE_INT:
-                        printf (_("  . type: integer\n"));
-                        printf (_("  . values: between %d and %d\n"),
-                                weechat_options[i][j].min,
-                                weechat_options[i][j].max);
-                        printf (_("  . default value: %d\n"),
-                                weechat_options[i][j].default_int);
+                        weechat_iconv_fprintf (stdout, _("  . type: integer\n"));
+                        weechat_iconv_fprintf (stdout, _("  . values: between %d and %d\n"),
+                                               weechat_options[i][j].min,
+                                               weechat_options[i][j].max);
+                        weechat_iconv_fprintf (stdout, _("  . default value: %d\n"),
+                                               weechat_options[i][j].default_int);
                         break;
                     case OPTION_TYPE_INT_WITH_STRING:
-                        printf (_("  . type: string\n"));
-                        printf (_("  . values: "));
+                        weechat_iconv_fprintf (stdout, _("  . type: string\n"));
+                        weechat_iconv_fprintf (stdout, _("  . values: "));
                         k = 0;
                         while (weechat_options[i][j].array_values[k])
                         {
-                            printf ("'%s'",
-                                    weechat_options[i][j].array_values[k]);
+                            weechat_iconv_fprintf (stdout, "'%s'",
+                                                   weechat_options[i][j].array_values[k]);
                             if (weechat_options[i][j].array_values[k + 1])
-                                printf (", ");
+                                weechat_iconv_fprintf (stdout, ", ");
                             k++;
                         }
-                        printf ("\n");
-                        printf (_("  . default value: '%s'\n"),
-                                (weechat_options[i][j].default_string) ?
-                                weechat_options[i][j].default_string : _("empty"));
+                        weechat_iconv_fprintf (stdout, "\n");
+                        weechat_iconv_fprintf (stdout, _("  . default value: '%s'\n"),
+                                               (weechat_options[i][j].default_string) ?
+                                               weechat_options[i][j].default_string : _("empty"));
                         break;
                     case OPTION_TYPE_COLOR:
-                        printf (_("  . type: color\n"));
-                        printf (_("  . values: Curses or Gtk color\n"));
-                        printf (_("  . default value: '%s'\n"),
-                                (weechat_options[i][j].default_string) ?
-                                weechat_options[i][j].default_string : _("empty"));
+                        weechat_iconv_fprintf (stdout, _("  . type: color\n"));
+                        weechat_iconv_fprintf (stdout, _("  . values: Curses or Gtk color\n"));
+                        weechat_iconv_fprintf (stdout, _("  . default value: '%s'\n"),
+                                               (weechat_options[i][j].default_string) ?
+                                               weechat_options[i][j].default_string : _("empty"));
                         break;
                     case OPTION_TYPE_STRING:
-                        printf (_("  . type: string\n"));
-                        printf (_("  . values: any string\n"));
-                        printf (_("  . default value: '%s'\n"),
-                                (weechat_options[i][j].default_string) ?
-                                weechat_options[i][j].default_string : _("empty"));
+                        weechat_iconv_fprintf (stdout, _("  . type: string\n"));
+                        weechat_iconv_fprintf (stdout, _("  . values: any string\n"));
+                        weechat_iconv_fprintf (stdout, _("  . default value: '%s'\n"),
+                                               (weechat_options[i][j].default_string) ?
+                                               weechat_options[i][j].default_string : _("empty"));
                         break;
                 }
-                printf (_("  . description: %s\n"),
-                        _(weechat_options[i][j].long_description));
-                printf ("\n");
+                weechat_iconv_fprintf (stdout, _("  . description: %s\n"),
+                                       _(weechat_options[i][j].long_description));
+                weechat_iconv_fprintf (stdout, "\n");
                 j++;
             }
         }
@@ -209,43 +214,44 @@ weechat_display_commands (int weechat_cmd, int irc_cmd)
     
     if (weechat_cmd)
     {
-        printf (_("%s internal commands:\n"), PACKAGE_NAME);
-        printf ("\n");
+        weechat_iconv_fprintf (stdout,
+                               _("%s internal commands:\n"), PACKAGE_NAME);
+        weechat_iconv_fprintf (stdout, "\n");
         for (i = 0; weechat_commands[i].command_name; i++)
         {
-            printf ("* %s", weechat_commands[i].command_name);
+            weechat_iconv_fprintf (stdout, "* %s", weechat_commands[i].command_name);
             if (weechat_commands[i].arguments &&
                 weechat_commands[i].arguments[0])
-                printf ("  %s\n\n", _(weechat_commands[i].arguments));
+                weechat_iconv_fprintf (stdout, "  %s\n\n", _(weechat_commands[i].arguments));
             else
-                printf ("\n\n");
-            printf ("%s\n\n", _(weechat_commands[i].command_description));
+                weechat_iconv_fprintf (stdout, "\n\n");
+            weechat_iconv_fprintf (stdout, "%s\n\n", _(weechat_commands[i].command_description));
             if (weechat_commands[i].arguments_description &&
                 weechat_commands[i].arguments_description[0])
-                printf ("%s\n\n",
-                    _(weechat_commands[i].arguments_description));
+                weechat_iconv_fprintf (stdout, "%s\n\n",
+                                       _(weechat_commands[i].arguments_description));
         }
     }
     
     if (irc_cmd)
     {
-        printf (_("IRC commands:\n"));
-        printf ("\n");
+        weechat_iconv_fprintf (stdout, _("IRC commands:\n"));
+        weechat_iconv_fprintf (stdout, "\n");
         for (i = 0; irc_commands[i].command_name; i++)
         {
             if (irc_commands[i].cmd_function_args ||
                 irc_commands[i].cmd_function_1arg)
             {
-                printf ("* %s", irc_commands[i].command_name);
+                weechat_iconv_fprintf (stdout, "* %s", irc_commands[i].command_name);
                 if (irc_commands[i].arguments &&
                     irc_commands[i].arguments[0])
-                    printf ("  %s\n\n", _(irc_commands[i].arguments));
+                    weechat_iconv_fprintf (stdout, "  %s\n\n", _(irc_commands[i].arguments));
                 else
-                    printf ("\n\n");
-                printf ("%s\n\n", _(irc_commands[i].command_description));
+                    weechat_iconv_fprintf (stdout, "\n\n");
+                weechat_iconv_fprintf (stdout, "%s\n\n", _(irc_commands[i].command_description));
                 if (irc_commands[i].arguments_description &&
                     irc_commands[i].arguments_description[0])
-                    printf ("%s\n\n",
+                    weechat_iconv_fprintf (stdout, "%s\n\n",
                         _(irc_commands[i].arguments_description));
             }
         }
@@ -261,14 +267,15 @@ weechat_display_key_functions ()
 {
     int i;
     
-    printf (_("Internal key functions:\n"));
-    printf ("\n");
+    weechat_iconv_fprintf (stdout, _("Internal key functions:\n"));
+    weechat_iconv_fprintf (stdout, "\n");
     i = 0;
     while (gui_key_functions[i].function_name)
     {
-        printf ("* %s: %s\n",
-                gui_key_functions[i].function_name,
-                _(gui_key_functions[i].description));
+        weechat_iconv_fprintf (stdout,
+                               "* %s: %s\n",
+                               gui_key_functions[i].function_name,
+                               _(gui_key_functions[i].description));
         i++;
     }
 }
@@ -283,14 +290,16 @@ weechat_display_keys ()
     t_gui_key *ptr_key;
     char *expanded_name;
     
-    printf (_("%s default keys:\n"), PACKAGE_NAME);
-    printf ("\n");
+    weechat_iconv_fprintf (stdout,
+                           _("%s default keys:\n"), PACKAGE_NAME);
+    weechat_iconv_fprintf (stdout, "\n");
     for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
     {
         expanded_name = gui_keyboard_get_expanded_name (ptr_key->key);
-        printf ("* %s => %s\n",
-                (expanded_name) ? expanded_name : ptr_key->key,
-                (ptr_key->function) ? gui_keyboard_function_search_by_ptr (ptr_key->function) : ptr_key->command);
+        weechat_iconv_fprintf (stdout,
+                               "* %s => %s\n",
+                               (expanded_name) ? expanded_name : ptr_key->key,
+                               (ptr_key->function) ? gui_keyboard_function_search_by_ptr (ptr_key->function) : ptr_key->command);
         if (expanded_name)
             free (expanded_name);
     }
@@ -331,9 +340,9 @@ weechat_parse_args (int argc, char *argv[])
                 weechat_home = strdup (argv[++i]);
             else
             {
-                fprintf (stderr,
-                         _("%s missing argument for --dir option\n"),
-                         WEECHAT_ERROR);
+                weechat_iconv_fprintf (stderr,
+                                       _("%s missing argument for --dir option\n"),
+                                       WEECHAT_ERROR);
                 weechat_shutdown (EXIT_FAILURE, 0);
             }
         }
@@ -364,7 +373,7 @@ weechat_parse_args (int argc, char *argv[])
         else if ((strcmp (argv[i], "-l") == 0)
                  || (strcmp (argv[i], "--license") == 0))
         {
-            printf ("\n%s%s", WEE_LICENSE);
+            weechat_iconv_fprintf (stdout, "\n%s%s", WEE_LICENSE);
             weechat_shutdown (EXIT_SUCCESS, 0);
         }
         else if ((strcmp (argv[i], "-p") == 0)
@@ -376,16 +385,16 @@ weechat_parse_args (int argc, char *argv[])
                 weechat_session = strdup (argv[++i]);
             else
             {
-                fprintf (stderr,
-                         _("%s missing argument for --session option\n"),
-                         WEECHAT_ERROR);
+                weechat_iconv_fprintf (stderr,
+                                       _("%s missing argument for --session option\n"),
+                                       WEECHAT_ERROR);
                 weechat_shutdown (EXIT_FAILURE, 0);
             }
         }
         else if ((strcmp (argv[i], "-v") == 0)
                  || (strcmp (argv[i], "--version") == 0))
         {
-            printf (PACKAGE_VERSION "\n");
+            weechat_iconv_fprintf (stdout, PACKAGE_VERSION "\n");
             weechat_shutdown (EXIT_SUCCESS, 0);
         }
         else if ((strcmp (argv[i], "-w") == 0)
@@ -398,8 +407,9 @@ weechat_parse_args (int argc, char *argv[])
         {
             if (server_init_with_url (argv[i], &server_tmp) < 0)
             {
-                fprintf (stderr, _("%s invalid syntax for IRC server ('%s'), ignored\n"),
-                         WEECHAT_WARNING, argv[i]);
+                weechat_iconv_fprintf (stderr,
+                                       _("%s invalid syntax for IRC server ('%s'), ignored\n"),
+                                       WEECHAT_WARNING, argv[i]);
             }
             else
             {
@@ -411,19 +421,19 @@ weechat_parse_args (int argc, char *argv[])
                                  server_tmp.password, server_tmp.nick1,
                                  server_tmp.nick2, server_tmp.nick3,
                                  NULL, NULL, NULL, NULL, 0,
-                                 server_tmp.autojoin, 1, NULL, NULL,
-                                 NULL, NULL))
-                    fprintf (stderr, _("%s unable to create server ('%s'), ignored\n"),
-                             WEECHAT_WARNING, argv[i]);
+                                 server_tmp.autojoin, 1, NULL))
+                    weechat_iconv_fprintf (stderr,
+                                           _("%s unable to create server ('%s'), ignored\n"),
+                                           WEECHAT_WARNING, argv[i]);
                 server_destroy (&server_tmp);
                 server_cmd_line = 1;
             }
         }
         else
         {
-            fprintf (stderr,
-                     _("%s unknown parameter '%s', ignored\n"),
-                     WEECHAT_WARNING, argv[i]);
+            weechat_iconv_fprintf (stderr,
+                                   _("%s unknown parameter '%s', ignored\n"),
+                                   WEECHAT_WARNING, argv[i]);
         }
     }
 }
@@ -442,8 +452,8 @@ weechat_create_dir (char *directory)
         /* exit if error (except if directory already exists) */
         if (errno != EEXIST)
         {
-            fprintf (stderr, _("%s cannot create directory \"%s\"\n"),
-                     WEECHAT_ERROR, directory);
+            weechat_iconv_fprintf (stderr, _("%s cannot create directory \"%s\"\n"),
+                                   WEECHAT_ERROR, directory);
             return 0;
         }
     }
@@ -466,8 +476,8 @@ weechat_create_home_dirs ()
         ptr_home = getenv ("HOME");
         if (!ptr_home)
         {
-            fprintf (stderr, _("%s unable to get HOME directory\n"),
-                     WEECHAT_ERROR);
+            weechat_iconv_fprintf (stderr, _("%s unable to get HOME directory\n"),
+                                   WEECHAT_ERROR);
             weechat_shutdown (EXIT_FAILURE, 0);
         }
         dir_length = strlen (ptr_home) + 10;
@@ -475,8 +485,8 @@ weechat_create_home_dirs ()
             (char *) malloc (dir_length * sizeof (char));
         if (!weechat_home)
         {
-            fprintf (stderr, _("%s not enough memory for home directory\n"),
-                     WEECHAT_ERROR);
+            weechat_iconv_fprintf (stderr, _("%s not enough memory for home directory\n"),
+                                   WEECHAT_ERROR);
             weechat_shutdown (EXIT_FAILURE, 0);
         }
         snprintf (weechat_home, dir_length, "%s%s.weechat", ptr_home,
@@ -488,8 +498,8 @@ weechat_create_home_dirs ()
     {
         if (!S_ISDIR (statinfo.st_mode))
         {
-            fprintf (stderr, _("%s home (%s) is not a directory\n"),
-                     WEECHAT_ERROR, weechat_home);
+            weechat_iconv_fprintf (stderr, _("%s home (%s) is not a directory\n"),
+                                   WEECHAT_ERROR, weechat_home);
             weechat_shutdown (EXIT_FAILURE, 0);
         }
     }
@@ -497,8 +507,8 @@ weechat_create_home_dirs ()
     /* create home directory; error is fatal */
     if (!weechat_create_dir (weechat_home))
     {
-        fprintf (stderr, _("%s unable to create \"%s\" directory\n"),
-                 WEECHAT_ERROR, weechat_home);
+        weechat_iconv_fprintf (stderr, _("%s unable to create \"%s\" directory\n"),
+                               WEECHAT_ERROR, weechat_home);
         weechat_shutdown (EXIT_FAILURE, 0);
     }
 }
@@ -521,8 +531,8 @@ weechat_create_config_dirs ()
             chmod (dir2, 0700);
     }
     else
-        fprintf (stderr, _("%s unable to create \"%s\" directory\n"),
-                 WEECHAT_WARNING, dir2);
+        weechat_iconv_fprintf (stderr, _("%s unable to create \"%s\" directory\n"),
+                               WEECHAT_WARNING, dir2);
     if (dir1)
         free (dir1);
     if (dir2)
@@ -537,8 +547,8 @@ weechat_create_config_dirs ()
             chmod (dir2, 0700);
     }
     else
-        fprintf (stderr, _("%s unable to create \"%s\" directory\n"),
-                 WEECHAT_WARNING, dir2);
+        weechat_iconv_fprintf (stderr, _("%s unable to create \"%s\" directory\n"),
+                               WEECHAT_WARNING, dir2);
     if (dir1)
         free (dir1);
     if (dir2)
@@ -774,19 +784,20 @@ weechat_sigsegv ()
     server_free_all ();
     gui_main_end ();
 
-    fprintf (stderr, "\n");
-    fprintf (stderr, "*** Very bad! WeeChat is crashing (SIGSEGV received)\n");
+    weechat_iconv_fprintf (stderr, "\n");
+    weechat_iconv_fprintf (stderr, "*** Very bad! WeeChat is crashing (SIGSEGV received)\n");
     if (!weechat_log_crash_rename ())
-        fprintf (stderr, "*** Full crash dump was saved to %s/weechat.log file.\n",
-                 weechat_home);
-    fprintf (stderr, "***\n");
-    fprintf (stderr, "*** Please help WeeChat developers to fix this bug:\n");
-    fprintf (stderr, "***   1. If you have a core file, please run:  gdb weechat-curses core\n");
-    fprintf (stderr, "***      then issue \"bt\" command and send result to developers\n");
-    fprintf (stderr, "***      To enable core files with bash shell: ulimit -c 10000\n");
-    fprintf (stderr, "***   2. Otherwise send backtrace (below) and weechat.log\n");
-    fprintf (stderr, "***      (be careful, private info may be in this file since\n");
-    fprintf (stderr, "***      part of chats are displayed, so remove lines if needed)\n\n");
+        weechat_iconv_fprintf (stderr,
+                               "*** Full crash dump was saved to %s/weechat.log file.\n",
+                               weechat_home);
+    weechat_iconv_fprintf (stderr, "***\n");
+    weechat_iconv_fprintf (stderr, "*** Please help WeeChat developers to fix this bug:\n");
+    weechat_iconv_fprintf (stderr, "***   1. If you have a core file, please run:  gdb weechat-curses core\n");
+    weechat_iconv_fprintf (stderr, "***      then issue \"bt\" command and send result to developers\n");
+    weechat_iconv_fprintf (stderr, "***      To enable core files with bash shell: ulimit -c 10000\n");
+    weechat_iconv_fprintf (stderr, "***   2. Otherwise send backtrace (below) and weechat.log\n");
+    weechat_iconv_fprintf (stderr, "***      (be careful, private info may be in this file since\n");
+    weechat_iconv_fprintf (stderr, "***      part of chats are displayed, so remove lines if needed)\n\n");
     
     weechat_backtrace ();
     
@@ -804,12 +815,16 @@ main (int argc, char *argv[])
 #ifdef ENABLE_NLS
     setlocale (LC_ALL, "");             /* initialize gettext               */
     bindtextdomain (PACKAGE, LOCALEDIR);
+    bind_textdomain_codeset (PACKAGE, "UTF-8");
     textdomain (PACKAGE);
 #endif
     
 #ifdef HAVE_LANGINFO_CODESET
     local_charset = strdup (nl_langinfo (CODESET));
+#else
+    local_charset = strdup ("");
 #endif
+    utf8_init ();
     
     signal (SIGINT, SIG_IGN);           /* ignore SIGINT signal             */
     signal (SIGQUIT, SIG_IGN);          /* ignore SIGQUIT signal            */
@@ -824,7 +839,6 @@ main (int argc, char *argv[])
     command_index_build ();             /* build cmd index for completion   */
     weechat_config_read ();             /* read configuration               */
     weechat_create_config_dirs ();      /* create config directories        */
-    utf8_init ();                       /* init UTF-8 in WeeChat            */
     gui_main_init ();                   /* init WeeChat interface           */
     fifo_create ();                     /* FIFO pipe for remote control     */
     if (weechat_session)

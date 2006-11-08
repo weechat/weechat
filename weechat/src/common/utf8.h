@@ -24,7 +24,8 @@
 extern int local_utf8;
 
 extern void utf8_init ();
-extern int utf8_is_valid (char *);
+extern int utf8_is_valid (char *, char **);
+extern void utf8_normalize (char *, char);
 extern char *utf8_prev_char (char *, char *);
 extern char *utf8_next_char (char *);
 extern int utf8_char_size (char *);

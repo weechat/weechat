@@ -40,16 +40,6 @@ command: command to execute (a '/' is automatically added if not found at beginn
 
 
 </programlisting>
-<command>charset  [(decode_iso | decode_utf | encode) charset]</command>
-<programlisting>
-change charset for server or channel
-
-decode_iso: charset used for decoding ISO
-decode_utf: charset used for decoding UTF
-    encode: charset used for encoding messages
-   charset: charset to use (for example: ISO-8859-15, UTF-8,..)
-
-</programlisting>
 <command>clear  [-all]</command>
 <programlisting>
 clear window(s)

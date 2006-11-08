@@ -266,7 +266,7 @@ weechat_python_modifier (t_weechat_plugin *plugin,
 static PyObject *
 weechat_python_register (PyObject *self, PyObject *args)
 {
-    char *name, *version, *shutdown_func, *description;
+    char *name, *version, *shutdown_func, *description, *charset;
     
     /* make gcc happy */
     (void) self;
@@ -277,8 +277,10 @@ weechat_python_register (PyObject *self, PyObject *args)
     version = NULL;
     shutdown_func = NULL;
     description = NULL;
+    charset = NULL;
     
-    if (!PyArg_ParseTuple (args, "ssss", &name, &version, &shutdown_func, &description))
+    if (!PyArg_ParseTuple (args, "ssss|s", &name, &version, &shutdown_func,
+                           &description, &charset))
     {
         python_plugin->print_server (python_plugin,
                                      "Python error: wrong parameters for "
@@ -303,7 +305,7 @@ weechat_python_register (PyObject *self, PyObject *args)
                                                 (python_current_script_filename) ?
                                                 python_current_script_filename : "",
                                                 name, version, shutdown_func,
-                                                description);
+                                                description, charset);
     if (python_current_script)
     {
         python_plugin->print_server (python_plugin,
@@ -313,6 +315,46 @@ weechat_python_register (PyObject *self, PyObject *args)
     }
     else
         return Py_BuildValue ("i", 0);
+    
+    return Py_BuildValue ("i", 1);
+}
+
+/*
+ * weechat_python_set_charset: set script charset
+ */
+
+static PyObject *
+weechat_python_set_charset (PyObject *self, PyObject *args)
+{
+    char *charset;
+    
+    /* make gcc happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to set charset, "
+                                     "script not initialized");
+	Py_INCREF(Py_None);
+        return Py_None;
+    }
+    
+    charset = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &charset))
+    {
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"set_charset\" function");
+	Py_INCREF(Py_None);
+        return Py_None;
+    }
+    
+    if (charset)
+        weechat_script_set_charset (python_plugin,
+                                    python_current_script,
+                                    charset);
     
     return Py_BuildValue ("i", 1);
 }
@@ -1303,12 +1345,6 @@ weechat_python_get_server_info (PyObject *self, PyObject *args)
 			   Py_BuildValue("i", ptr_server->autorejoin));
 	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "notify_levels"),
 			   Py_BuildValue("s", ptr_server->notify_levels));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "charset_decode_iso"),
-			   Py_BuildValue("s", ptr_server->charset_decode_iso));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "charset_decode_utf"),
-			   Py_BuildValue("s", ptr_server->charset_decode_utf));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "charset_encode"),
-			   Py_BuildValue("s", ptr_server->charset_encode));
 	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "is_connected"),
 			   Py_BuildValue("i", ptr_server->is_connected));
 	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "ssl_connected"),
@@ -1714,6 +1750,7 @@ weechat_python_get_buffer_data (PyObject *self, PyObject *args)
 static
 PyMethodDef weechat_python_funcs[] = {
     { "register", weechat_python_register, METH_VARARGS, "" },
+    { "set_charset", weechat_python_set_charset, METH_VARARGS, "" },
     { "prnt", weechat_python_print, METH_VARARGS, "" },
     { "print_server", weechat_python_print_server, METH_VARARGS, "" },
     { "print_infobar", weechat_python_print_infobar, METH_VARARGS, "" },

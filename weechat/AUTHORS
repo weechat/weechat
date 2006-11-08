@@ -9,17 +9,11 @@ Developers:
   FlashCode <flashcode@flashtux.org>
       Web   : http://weechat.flashtux.org
       IRC   : nick is "FlashCode" @ irc.freenode.net
-      Jabber: flashcode@jabber.org
-      ICQ   : 160677660
-      AIM   : FlashCode AIM
-      Yahoo : FlashCode_Y
 
 * Scripts plugins
 
-  Kolter <kolter@openics.org>
-      Web   : http://kolter.free.fr
+  kolter <kolter@openics.org>
       IRC   : nick is "kolter" @ irc.freenode.net
-      Jabber: kolter@im.openics.org
 
 
 Debian packager:
@@ -47,7 +41,7 @@ Pavel Shevchuk, IRC: "Stalwart"
 =====
 
 Whole team is connected to IRC:
-server: irc.freenode.net, channel: #weechat
+server: irc.freenode.net, channels: #weechat and #weechat-fr (french)
 
 
 See README file for licence detail.

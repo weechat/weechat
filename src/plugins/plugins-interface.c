@@ -31,11 +31,13 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+
 #include "../common/weechat.h"
 #include "plugins.h"
 #include "plugins-config.h"
 #include "../common/command.h"
 #include "../common/log.h"
+#include "../common/utf8.h"
 #include "../common/util.h"
 #include "../common/weeconfig.h"
 #include "../irc/irc.h"
@@ -164,6 +166,7 @@ weechat_plugin_print (t_weechat_plugin *plugin,
     t_gui_buffer *ptr_buffer;
     va_list argptr;
     static char buf[8192];
+    char *buf2;
     
     if (!plugin || !message)
         return;
@@ -172,8 +175,12 @@ weechat_plugin_print (t_weechat_plugin *plugin,
     va_start (argptr, message);
     vsnprintf (buf, sizeof (buf) - 1, message, argptr);
     va_end (argptr);
+
+    buf2 = weechat_iconv_to_internal (plugin->charset, buf);
     irc_display_prefix (NULL, ptr_buffer, PREFIX_PLUGIN);
-    gui_printf (ptr_buffer, "%s\n", buf);
+    gui_printf (ptr_buffer, "%s\n", (buf2) ? buf2 : buf);
+    if (buf2)
+        free (buf2);
 }
 
 /*
@@ -185,6 +192,7 @@ weechat_plugin_print_server (t_weechat_plugin *plugin, char *message, ...)
 {
     va_list argptr;
     static char buf[8192];
+    char *buf2;
     
     if (!plugin || !message)
         return;
@@ -192,8 +200,12 @@ weechat_plugin_print_server (t_weechat_plugin *plugin, char *message, ...)
     va_start (argptr, message);
     vsnprintf (buf, sizeof (buf) - 1, message, argptr);
     va_end (argptr);
+
+    buf2 = weechat_iconv_to_internal (plugin->charset, buf);
     irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
-    gui_printf (NULL, "%s\n", buf);
+    gui_printf (NULL, "%s\n", (buf2) ? buf2 : buf);
+    if (buf2)
+        free (buf2);
 }
 
 /*
@@ -205,6 +217,7 @@ weechat_plugin_print_infobar (t_weechat_plugin *plugin, int time_displayed, char
 {
     va_list argptr;
     static char buf[1024];
+    char *buf2;
     
     if (!plugin || (time_displayed < 0) || !message)
         return;
@@ -212,7 +225,12 @@ weechat_plugin_print_infobar (t_weechat_plugin *plugin, int time_displayed, char
     va_start (argptr, message);
     vsnprintf (buf, sizeof (buf) - 1, message, argptr);
     va_end (argptr);
-    gui_infobar_printf (time_displayed, COLOR_WIN_INFOBAR, "%s", buf);
+    
+    buf2 = weechat_iconv_to_internal (plugin->charset, buf);
+    gui_infobar_printf (time_displayed, COLOR_WIN_INFOBAR, "%s",
+                        (buf2) ? buf2 : buf);
+    if (buf2)
+        free (buf2);
 }
 
 /*
@@ -239,7 +257,7 @@ weechat_plugin_infobar_remove (t_weechat_plugin *plugin, int how_many)
 }
 
 /*
- * weechat_plugin_log: add a message on logs
+ * weechat_plugin_log: add a message in buffer log file
  */
 
 void
@@ -249,6 +267,7 @@ weechat_plugin_log (t_weechat_plugin *plugin,
     t_gui_buffer *ptr_buffer;
     va_list argptr;
     static char buf[8192];
+    char *buf2;
     
     if (!plugin || !message)
         return;
@@ -258,8 +277,12 @@ weechat_plugin_log (t_weechat_plugin *plugin,
     {
 	va_start (argptr, message);
 	vsnprintf (buf, sizeof (buf) - 1, message, argptr);
-	va_end (argptr);    
-	gui_log_write_line (ptr_buffer, buf);
+	va_end (argptr);
+
+        buf2 = weechat_iconv_to_internal (plugin->charset, buf);
+	gui_log_write_line (ptr_buffer, (buf2) ? buf2 : buf);
+        if (buf2)
+            free (buf2);
     }
 }
 
@@ -406,6 +429,7 @@ weechat_plugin_exec_command (t_weechat_plugin *plugin,
 {
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
+    char *command2;
     
     if (!plugin || !command)
         return;
@@ -421,12 +445,15 @@ weechat_plugin_exec_command (t_weechat_plugin *plugin,
     }
     else
     {
+        command2 = weechat_iconv_to_internal (plugin->charset, command);
         if (ptr_server && ptr_channel)
-            user_command (ptr_server, ptr_channel, command, 0);
+            user_command (ptr_server, ptr_channel, (command2) ? command2 : command, 0);
         else if (ptr_server && (ptr_server->buffer))
-            user_command (ptr_server, NULL, command, 0);
+            user_command (ptr_server, NULL, (command2) ? command2 : command, 0);
         else
-            user_command (NULL, NULL, command, 0);
+            user_command (NULL, NULL, (command2) ? command2 : command, 0);
+        if (command2)
+            free (command2);
     }
 }
 
@@ -471,6 +498,14 @@ weechat_plugin_get_info (t_weechat_plugin *plugin, char *info, char *server)
     {
         return strdup (WEECHAT_SHAREDIR);
     }
+    else if (ascii_strcasecmp (info, "charset_terminal") == 0)
+    {
+        return strdup (local_charset);
+    }
+    else if (ascii_strcasecmp (info, "charset_internal") == 0)
+    {
+        return strdup (WEECHAT_INTERNAL_CHARSET);
+    }
     else if (ascii_strcasecmp (info, "inactivity") == 0)
     {
         if (gui_last_activity_time == 0)
@@ -480,13 +515,17 @@ weechat_plugin_get_info (t_weechat_plugin *plugin, char *info, char *server)
         return_str = (char *) malloc (32);
         if (!return_str)
             return NULL;
-        snprintf (return_str, 32, "%ld", inactivity);
+        snprintf (return_str, 32, "%ld", (long int)inactivity);
         return return_str;
     }
     else if (ascii_strcasecmp (info, "input") == 0)
     {
         if (gui_current_window->buffer->has_input)
-            return strdup (gui_current_window->buffer->input_buffer);
+        {
+            return_str = weechat_iconv_from_internal (plugin->charset,
+                                                      gui_current_window->buffer->input_buffer);
+            return (return_str) ? return_str : strdup ("");
+        }
         else
             return strdup ("");
     }
@@ -868,9 +907,6 @@ weechat_plugin_get_server_info (t_weechat_plugin *plugin)
 		new_server_info->autojoin = (ptr_server->autojoin) ? strdup (ptr_server->autojoin) : strdup ("");
 		new_server_info->autorejoin = ptr_server->autorejoin;
 		new_server_info->notify_levels = (ptr_server->notify_levels) ? strdup (ptr_server->notify_levels) : strdup ("");
-		new_server_info->charset_decode_iso = (ptr_server->charset_decode_iso) ? strdup (ptr_server->charset_decode_iso) : strdup ("");
-		new_server_info->charset_decode_utf = (ptr_server->charset_decode_utf) ? strdup (ptr_server->charset_decode_utf) : strdup ("");
-		new_server_info->charset_encode = (ptr_server->charset_encode) ? strdup (ptr_server->charset_encode) : strdup ("");
 		new_server_info->is_connected = ptr_server->is_connected;
 		new_server_info->ssl_connected = ptr_server->ssl_connected;
 		new_server_info->nick = (ptr_server->nick) ? strdup (ptr_server->nick) : strdup ("");
@@ -931,12 +967,6 @@ weechat_plugin_free_server_info (t_weechat_plugin *plugin, t_plugin_server_info 
             free (server_info->autojoin);
 	if (server_info->notify_levels)
             free (server_info->notify_levels);
-	if (server_info->charset_decode_iso)
-            free (server_info->charset_decode_iso);
-	if (server_info->charset_decode_utf)
-            free (server_info->charset_decode_utf);
-	if (server_info->charset_encode)
-            free (server_info->charset_encode);
 	if (server_info->nick)
             free (server_info->nick);
         new_server_info = server_info->next_server;
@@ -1116,7 +1146,8 @@ weechat_plugin_free_nick_info (t_weechat_plugin *plugin, t_plugin_nick_info *nic
 void
 weechat_plugin_input_color (t_weechat_plugin *plugin, int color, int start, int length)
 {
-    int i;
+    int i, begin, end;
+    char *pos1, *pos2;
     
     if (!plugin
         || (!gui_current_window->buffer->has_input)
@@ -1131,8 +1162,23 @@ weechat_plugin_input_color (t_weechat_plugin *plugin, int color, int start, int 
             gui_input_init_color_mask (gui_current_window->buffer);
         else
         {
+            if (local_utf8)
+            {
+                begin = start;
+                end = start + length - 1;
+            }
+            else
+            {
+                pos1 = utf8_add_offset (gui_current_window->buffer->input_buffer,
+                                        start);
+                pos2 = pos1;
+                for (i = 0; i < length; i++)
+                    pos2 = utf8_next_char (pos2);
+                begin = pos1 - gui_current_window->buffer->input_buffer;
+                end = begin + (pos2 - pos1) - 1;
+            }
             color %= GUI_NUM_IRC_COLORS;
-            for (i = start; i < start + length; i++)
+            for (i = begin; i <= end; i++)
             {
                 gui_current_window->buffer->input_buffer_color_mask[i] =
                     '0' + color;
@@ -1317,6 +1363,7 @@ weechat_plugin_get_buffer_data (t_weechat_plugin *plugin, char *server, char *ch
     t_gui_buffer *ptr_buffer;
     t_plugin_buffer_line *buffer_line, *last_buffer_line, *new_buffer_line;
     t_gui_line *ptr_line;
+    char *data1, *data2;
     
     if (!plugin)
 	return NULL;
@@ -1336,8 +1383,19 @@ weechat_plugin_get_buffer_data (t_weechat_plugin *plugin, char *server, char *ch
         {
             new_buffer_line->date = ptr_line->date;
             new_buffer_line->nick = (ptr_line->nick) ? strdup (ptr_line->nick) : NULL;
-            new_buffer_line->data = (ptr_line->data) ?
-                (char *) gui_color_decode ((unsigned char *)(ptr_line->data + ptr_line->ofs_start_message), 0) : NULL;
+            if (ptr_line->data)
+            {
+                data1 = (char *) gui_color_decode ((unsigned char *)(ptr_line->data + ptr_line->ofs_start_message), 0);
+                data2 = (data1) ? weechat_iconv_from_internal (plugin->charset, data1) : NULL;
+                if (data2)
+                    new_buffer_line->data = data2;
+                else
+                    new_buffer_line->data = ptr_line->data;
+                if (data1)
+                    free (data1);
+            }
+            else
+                new_buffer_line->data = NULL;
             
             new_buffer_line->prev_line = last_buffer_line;
             new_buffer_line->next_line = NULL;
@@ -1374,4 +1432,50 @@ weechat_plugin_free_buffer_data (t_weechat_plugin *plugin, t_plugin_buffer_line 
         free (buffer_line);
         buffer_line = new_buffer_line;
     }
+}
+
+/*
+ * weechat_plugin_set_charset: set plugin charset
+ */
+
+void
+weechat_plugin_set_charset (t_weechat_plugin *plugin, char *charset)
+{
+    if (!plugin || !charset)
+        return;
+
+    if (plugin->charset)
+        free (plugin->charset);
+    
+    plugin->charset = (charset) ? strdup (charset) : NULL;
+}
+
+/*
+ * weechat_plugin_iconv_to_internal: encode string from a charset to WeeChat
+ *                                   internal charset
+ */
+
+char *
+weechat_plugin_iconv_to_internal (t_weechat_plugin *plugin,
+                                  char *charset, char *string)
+{
+    if (!plugin || !string)
+        return NULL;
+    
+    return weechat_iconv_to_internal (charset, string);
+}
+
+/*
+ * weechat_plugin_iconv_from_internal: encode string from WeeChat internal
+ *                                     charset to another
+ */
+
+char *
+weechat_plugin_iconv_from_internal (t_weechat_plugin *plugin,
+                                    char *charset, char *string)
+{
+    if (!plugin || !string)
+        return NULL;
+    
+    return weechat_iconv_from_internal (charset, string);
 }

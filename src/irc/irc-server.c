@@ -46,6 +46,7 @@
 #include "../common/weechat.h"
 #include "irc.h"
 #include "../common/log.h"
+#include "../common/util.h"
 #include "../common/weeconfig.h"
 #include "../gui/gui.h"
 
@@ -93,9 +94,6 @@ server_init (t_irc_server *server)
     server->autojoin = NULL;
     server->autorejoin = 0;
     server->notify_levels = NULL;
-    server->charset_decode_iso = NULL;
-    server->charset_decode_utf = NULL;
-    server->charset_encode = NULL;
     
     /* internal vars */
     server->child_pid = 0;
@@ -189,10 +187,10 @@ server_init_with_url (char *irc_url, t_irc_server *server)
             server->nick1 = strdup (my_passwd->pw_name);
         else
         {
-            fprintf (stderr, "%s: %s (%s).",
-                     WEECHAT_WARNING,
-                     _("Unable to get user's name"),
-                     strerror (errno));
+            weechat_iconv_fprintf (stderr, "%s: %s (%s).",
+                                   WEECHAT_WARNING,
+                                   _("Unable to get user's name"),
+                                   strerror (errno));
             free (url);
             return -1;
         }
@@ -259,7 +257,9 @@ server_alloc ()
     /* alloc memory for new server */
     if ((new_server = (t_irc_server *) malloc (sizeof (t_irc_server))) == NULL)
     {
-        fprintf (stderr, _("%s cannot allocate new server\n"), WEECHAT_ERROR);
+        weechat_iconv_fprintf (stderr,
+                               _("%s cannot allocate new server\n"),
+                               WEECHAT_ERROR);
         return NULL;
     }
 
@@ -314,12 +314,6 @@ server_destroy (t_irc_server *server)
         free (server->autojoin);
     if (server->notify_levels)
         free (server->notify_levels);
-    if (server->charset_decode_iso)
-        free (server->charset_decode_iso);
-    if (server->charset_decode_utf)
-        free (server->charset_decode_utf);
-    if (server->charset_encode)
-        free (server->charset_encode);
     if (server->unterminated_message)
         free (server->unterminated_message);
     if (server->nick)
@@ -389,9 +383,7 @@ server_new (char *name, int autoconnect, int autoreconnect,
             int port, int ipv6, int ssl, char *password,
             char *nick1, char *nick2, char *nick3, char *username,
             char *realname, char *hostname, char *command, int command_delay,
-            char *autojoin, int autorejoin, char *notify_levels,
-            char *charset_decode_iso, char *charset_decode_utf,
-            char *charset_encode)
+            char *autojoin, int autorejoin, char *notify_levels)
 {
     t_irc_server *new_server;
     
@@ -402,16 +394,13 @@ server_new (char *name, int autoconnect, int autoreconnect,
     weechat_log_printf ("Creating new server (name:%s, address:%s, port:%d, pwd:%s, "
                         "nick1:%s, nick2:%s, nick3:%s, username:%s, realname:%s, "
                         "hostname: %s, command:%s, autojoin:%s, autorejoin:%s, "
-                        "notify_levels:%s, decode_iso:%s, decode_utf:%s, encode:%s)\n",
+                        "notify_levels:%s)\n",
                         name, address, port, (password) ? password : "",
                         (nick1) ? nick1 : "", (nick2) ? nick2 : "", (nick3) ? nick3 : "",
                         (username) ? username : "", (realname) ? realname : "",
                         (hostname) ? hostname : "", (command) ? command : "",
                         (autojoin) ? autojoin : "", (autorejoin) ? "on" : "off",
-                        (notify_levels) ? notify_levels : "",
-                        (charset_decode_iso) ? charset_decode_iso : "",
-                        (charset_decode_utf) ? charset_decode_utf : "",
-                        (charset_encode) ? charset_encode : "");
+                        (notify_levels) ? notify_levels : "");
 #endif
     
     if ((new_server = server_alloc ()))
@@ -443,100 +432,10 @@ server_new (char *name, int autoconnect, int autoreconnect,
         new_server->autorejoin = autorejoin;
         new_server->notify_levels =
             (notify_levels) ? strdup (notify_levels) : NULL;
-        new_server->charset_decode_iso =
-            (charset_decode_iso) ? strdup (charset_decode_iso) : NULL;
-        new_server->charset_decode_utf =
-            (charset_decode_utf) ? strdup (charset_decode_utf) : NULL;
-        new_server->charset_encode =
-            (charset_encode) ? strdup (charset_encode) : NULL;
     }
     else
         return NULL;
     return new_server;
-}
-
-/*
- * server_get_charset_decode_iso: get decode iso value for server
- *                                if not found for server, look for global
- */
-
-char *
-server_get_charset_decode_iso (t_irc_server *server)
-{
-    char *pos, *result;
-    int length;
-    
-    if (!server)
-        return (cfg_look_charset_decode_iso) ?
-            strdup (cfg_look_charset_decode_iso) : strdup ("");
-    
-    config_option_list_get_value (&(server->charset_decode_iso),
-                                  "server", &pos, &length);
-    if (pos && (length > 0))
-    {
-        result = strdup (pos);
-        result[length] = '\0';
-        return result;
-    }
-    
-    return (cfg_look_charset_decode_iso) ?
-        strdup (cfg_look_charset_decode_iso) : strdup ("");
-}
-
-/*
- * server_get_charset_decode_utf: get decode utf value for server
- *                                if not found for server, look for global
- */
-
-char *
-server_get_charset_decode_utf (t_irc_server *server)
-{
-    char *pos, *result;
-    int length;
-    
-    if (!server)
-        return (cfg_look_charset_decode_utf) ?
-            strdup (cfg_look_charset_decode_utf) : strdup ("");
-    
-    config_option_list_get_value (&(server->charset_decode_utf),
-                                  "server", &pos, &length);
-    if (pos && (length > 0))
-    {
-        result = strdup (pos);
-        result[length] = '\0';
-        return result;
-    }
-    
-    return (cfg_look_charset_decode_utf) ?
-        strdup (cfg_look_charset_decode_utf) : strdup ("");
-}
-
-/*
- * server_get_charset_encode: get encode value for server
- *                            if not found for server, look for global
- */
-
-char *
-server_get_charset_encode (t_irc_server *server)
-{
-    char *pos, *result;
-    int length;
-    
-    if (!server)
-        return (cfg_look_charset_encode) ?
-            strdup (cfg_look_charset_encode) : strdup ("");
-    
-    config_option_list_get_value (&(server->charset_encode),
-                                  "server", &pos, &length);
-    if (pos && (length > 0))
-    {
-        result = strdup (pos);
-        result[length] = '\0';
-        return result;
-    }
-    
-    return (cfg_look_charset_encode) ?
-        strdup (cfg_look_charset_encode) : strdup ("");
 }
 
 /*
@@ -2144,9 +2043,6 @@ server_print_log (t_irc_server *server)
     weechat_log_printf ("  autojoin. . . . . . : '%s'\n", server->autojoin);
     weechat_log_printf ("  autorejoin. . . . . : %d\n",   server->autorejoin);
     weechat_log_printf ("  notify_levels . . . : %s\n",   server->notify_levels);
-    weechat_log_printf ("  charset_decode_iso. : %s\n",   server->charset_decode_iso);
-    weechat_log_printf ("  charset_decode_utf. : %s\n",   server->charset_decode_utf);
-    weechat_log_printf ("  charset_encode. . . : %s\n",   server->charset_encode);
     weechat_log_printf ("  child_pid . . . . . : %d\n",   server->child_pid);
     weechat_log_printf ("  child_read  . . . . : %d\n",   server->child_read);
     weechat_log_printf ("  child_write . . . . : %d\n",   server->child_write);

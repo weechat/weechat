@@ -949,7 +949,7 @@ plugin_load (char *filename)
 {
     char *full_name;
     void *handle;
-    char *name, *description, *version;
+    char *name, *description, *version, *charset;
     t_weechat_init_func *init_func;
     t_weechat_plugin *new_plugin;
     
@@ -1015,6 +1015,8 @@ plugin_load (char *filename)
         free (full_name);
         return NULL;
     }
+    /* look for plugin charset (optional) */
+    charset = dlsym (handle, "plugin_charset");
     /* look for plugin init function */
     init_func = dlsym (handle, "weechat_plugin_init");
     if (!init_func)
@@ -1037,6 +1039,7 @@ plugin_load (char *filename)
         new_plugin->name = strdup (name);
         new_plugin->description = strdup (description);
         new_plugin->version = strdup (version);
+        new_plugin->charset = (charset) ? strdup (charset) : NULL;
         
         /* functions */
         new_plugin->ascii_strcasecmp = &weechat_ascii_strcasecmp;
@@ -1080,6 +1083,9 @@ plugin_load (char *filename)
         new_plugin->free_buffer_info = &weechat_plugin_free_buffer_info;
         new_plugin->get_buffer_data = &weechat_plugin_get_buffer_data;
         new_plugin->free_buffer_data = &weechat_plugin_free_buffer_data;
+        new_plugin->set_charset = &weechat_plugin_set_charset;
+        new_plugin->iconv_to_internal = &weechat_plugin_iconv_to_internal;
+        new_plugin->iconv_from_internal = &weechat_plugin_iconv_from_internal;
         
         /* handlers */
         new_plugin->handlers = NULL;
@@ -1265,6 +1271,8 @@ plugin_remove (t_weechat_plugin *plugin)
         free (plugin->description);
     if (plugin->version)
         free (plugin->version);
+    if (plugin->charset)
+        free (plugin->charset);
     free (plugin);
     
     weechat_plugins = new_weechat_plugins;

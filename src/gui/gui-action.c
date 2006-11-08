@@ -408,8 +408,8 @@ gui_action_delete_line (t_gui_window *window)
 void
 gui_action_transpose_chars (t_gui_window *window)
 {
-    char *start, *prev_char, saved_char[4];
-    int size_current_char, size_start_char;
+    char *start, *prev_char, saved_char[5];
+    int size_prev_char, size_start_char;
     int pos_prev_char, pos_start;
     
     if (window->buffer->has_input)
@@ -426,18 +426,18 @@ gui_action_transpose_chars (t_gui_window *window)
             prev_char = utf8_prev_char (window->buffer->input_buffer,
                                         start);
             pos_prev_char = prev_char - window->buffer->input_buffer;
-            size_current_char = start - prev_char;
+            size_prev_char = start - prev_char;
             size_start_char = utf8_char_size (start);
             
-            memcpy (saved_char, prev_char, size_current_char);
+            memcpy (saved_char, prev_char, size_prev_char);
             memcpy (prev_char, start, size_start_char);
-            memcpy (start, saved_char, size_current_char);
+            memcpy (prev_char + size_start_char, saved_char, size_prev_char);
             
-            memcpy (saved_char, window->buffer->input_buffer_color_mask + pos_prev_char, size_current_char);
+            memcpy (saved_char, window->buffer->input_buffer_color_mask + pos_prev_char, size_prev_char);
             memcpy (window->buffer->input_buffer_color_mask + pos_prev_char,
                     window->buffer->input_buffer_color_mask + pos_start, size_start_char);
-            memcpy (window->buffer->input_buffer_color_mask + pos_start,
-                    saved_char, size_current_char);
+            memcpy (window->buffer->input_buffer_color_mask + pos_prev_char + size_start_char,
+                    saved_char, size_prev_char);
             
             window->buffer->input_buffer_pos++;
             

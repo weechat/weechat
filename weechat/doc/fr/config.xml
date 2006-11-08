@@ -41,34 +41,6 @@
   <entry>Slogan WeeChat (si vide, le slogan ne sera pas utilisé)</entry>
 </row>
 <row>
-  <entry><option>look_charset_decode_iso</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
-  <entry>'ISO-8859-1'</entry>
-  <entry>Jeu de caractères ISO pour décoder les messages du serveur (utilisé seulement si la locale est UTF-8) (si non renseigné, les messages ne sont pas convertis si la locale est UTF-8)</entry>
-</row>
-<row>
-  <entry><option>look_charset_decode_utf</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
-  <entry>'UTF-8'</entry>
-  <entry>Jeu de caractères UTF pour décoder les messages du serveur (utilisé seulement si la locale n'est pas UTF-8) (si non renseigné, les messages ne sont pas convertis si la locale n'est pas UTF-8)</entry>
-</row>
-<row>
-  <entry><option>look_charset_encode</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
-  <entry>''</entry>
-  <entry>Jeu de caractères pour encoder les messages envoyés au serveur, exemples: UTF-8, ISO-8859-1 (si non renseigné, les messages ne sont pas convertis)</entry>
-</row>
-<row>
-  <entry><option>look_charset_internal</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
-  <entry>''</entry>
-  <entry>Force le jeu de caractères interne à WeeChat (doit être vide dans la plupart des cas, ce qui signifie que le jeu de caractères détecté est utilisé)</entry>
-</row>
-<row>
   <entry><option>look_one_server_buffer</option></entry>
   <entry>booléen</entry>
   <entry>'on' ou 'off'</entry>
@@ -1236,25 +1208,4 @@
   <entry>toute chaîne</entry>
   <entry>''</entry>
   <entry>Liste des niveaux de notifications (séparés par des virgules) pour les canaux de ce serveur (format: #canal:1,..), un nom de canal '*' est réservé pour la notification par défaut du serveur</entry>
-</row>
-<row>
-  <entry><option>server_charset_decode_iso</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
-  <entry>''</entry>
-  <entry>Liste des jeux de caractères (séparés par des virgules) pour le serveur et les canaux, pour décoder l'ISO (format: server:charset,#canal:charset,..)</entry>
-</row>
-<row>
-  <entry><option>server_charset_decode_utf</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
-  <entry>''</entry>
-  <entry>Liste des jeux de caractères (séparés par des virgules) pour le serveur et les canaux, pour décoder l'UTF (format: server:charset,#canal:charset,..)</entry>
-</row>
-<row>
-  <entry><option>server_charset_encode</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
-  <entry>''</entry>
-  <entry>Liste des jeux de caractères (séparés par des virgules) pour le serveur et les canaux, pour encoder les messages (format: server:charset,#canal:charset,..)</entry>
 </row>

@@ -42,10 +42,11 @@
 #include "weechat.h"
 #include "backtrace.h"
 #include "log.h"
+#include "util.h"
 
 
 /*
- * weechat_backtrace_printf: display a backtrage line (on stderr and in WeeChat log)
+ * weechat_backtrace_printf: display a backtrace line (on stderr and in WeeChat log)
  */
 
 void
@@ -58,7 +59,7 @@ weechat_backtrace_printf (char *message, ...)
     vsnprintf (buffer, sizeof (buffer) - 1, message, argptr);
     va_end (argptr);
 
-    fprintf (stderr, "%s", buffer);
+    weechat_iconv_fprintf (stderr, "%s", buffer);
     weechat_log_printf ("%s", buffer);
 }
 

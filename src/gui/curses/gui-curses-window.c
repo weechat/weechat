@@ -25,6 +25,7 @@
 #endif
 
 #include <stdlib.h>
+#include <stdarg.h>
 #include <string.h>
 #include <signal.h>
 #include <libgen.h>
@@ -33,6 +34,7 @@
 #include "../gui.h"
 #include "../../common/hotlist.h"
 #include "../../common/log.h"
+#include "../../common/util.h"
 #include "../../common/weeconfig.h"
 #include "gui-curses.h"
 
@@ -128,6 +130,27 @@ gui_window_objects_free (t_gui_window *window, int free_separator)
         delwin (GUI_CURSES(window)->win_separator);
         GUI_CURSES(window)->win_separator = NULL;
     }
+}
+
+/*
+ * gui_window_wprintw: decode then display string with wprintw
+ */
+
+void
+gui_window_wprintw (WINDOW *window, char *data, ...)
+{
+    va_list argptr;
+    static char buf[4096];
+    char *buf2;
+    
+    va_start (argptr, data);
+    vsnprintf (buf, sizeof (buf) - 1, data, argptr);
+    va_end (argptr);
+    
+    buf2 = weechat_iconv_from_internal (NULL, buf);
+    wprintw (window, "%s", (buf2) ? buf2 : buf);
+    if (buf2)
+        free (buf2);
 }
 
 /*

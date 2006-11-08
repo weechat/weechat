@@ -30,6 +30,7 @@
 #include "../../common/weechat.h"
 #include "../gui.h"
 #include "../../common/hotlist.h"
+#include "../../common/util.h"
 #include "../../common/weeconfig.h"
 #include "gui-curses.h"
 
@@ -81,7 +82,7 @@ gui_infobar_draw (t_gui_buffer *buffer, int erase)
     t_gui_window *ptr_win;
     time_t time_seconds;
     struct tm *local_time;
-    char text_time[1024 + 1];
+    char text_time[1024 + 1], *buf;
     
     /* make gcc happy */
     (void) buffer;
@@ -122,7 +123,10 @@ gui_infobar_draw (t_gui_buffer *buffer, int erase)
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_infobar, COLOR_WIN_INFOBAR_DELIMITERS);
             wprintw (GUI_CURSES(ptr_win)->win_infobar, " | ");
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_infobar, gui_infobar->color);
-            wprintw (GUI_CURSES(ptr_win)->win_infobar, "%s", gui_infobar->text);
+            buf = weechat_iconv_from_internal (NULL, gui_infobar->text);
+            wprintw (GUI_CURSES(ptr_win)->win_infobar, "%s", (buf) ? buf : gui_infobar->text);
+            if (buf)
+                free (buf);
         }
         
         wnoutrefresh (GUI_CURSES(ptr_win)->win_infobar);

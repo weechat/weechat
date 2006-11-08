@@ -39,11 +39,11 @@
 
 #include "weechat.h"
 #include "utf8.h"
+#include "util.h"
 #include "weeconfig.h"
 
 
 int local_utf8 = 0;
-
 
 /*
  * utf8_init: initializes UTF-8 in WeeChat
@@ -52,26 +52,17 @@ int local_utf8 = 0;
 void
 utf8_init ()
 {
-    local_utf8 = 0;
-    
-    if (cfg_look_charset_internal && cfg_look_charset_internal[0])
-    {
-        if (strstr (cfg_look_charset_internal, "UTF-8")
-            || strstr (cfg_look_charset_internal, "utf-8"))
-            local_utf8 = 1;
-    }
-    else if ((local_charset)
-             && ((strstr (local_charset, "UTF-8")
-                  || strstr (local_charset, "utf-8"))))
-        local_utf8 = 1;
+    local_utf8 = (ascii_strcasecmp (local_charset, "UTF-8") == 0);
 }
 
 /*
  * utf8_is_valid: return 1 if UTF-8 string is valid, 0 otherwise
+ *                if error is not NULL, it's set with first non valid UTF-8
+ *                char in string, if any
  */
 
 int
-utf8_is_valid (char *string)
+utf8_is_valid (char *string, char **error)
 {
     while (string && string[0])
     {
@@ -79,7 +70,11 @@ utf8_is_valid (char *string)
         if (((unsigned char)(string[0]) & 0xE0) == 0xC0)
         {
             if (!string[1] || (((unsigned char)(string[1]) & 0xC0) != 0x80))
+            {
+                if (error)
+                    *error = string;
                 return 0;
+            }
             string += 2;
         }
         /* UTF-8, 3 bytes, should be: 1110vvvv 10vvvvvv 10vvvvvv */
@@ -88,7 +83,11 @@ utf8_is_valid (char *string)
             if (!string[1] || !string[2]
                 || (((unsigned char)(string[1]) & 0xC0) != 0x80)
                 || (((unsigned char)(string[2]) & 0xC0) != 0x80))
+            {
+                if (error)
+                    *error = string;
                 return 0;
+            }
             string += 3;
         }
         /* UTF-8, 4 bytes, should be: 11110vvv 10vvvvvv 10vvvvvv 10vvvvvv */
@@ -98,16 +97,45 @@ utf8_is_valid (char *string)
                 || (((unsigned char)(string[1]) & 0xC0) != 0x80)
                 || (((unsigned char)(string[2]) & 0xC0) != 0x80)
                 || (((unsigned char)(string[3]) & 0xC0) != 0x80))
+            {
+                if (error)
+                    *error = string;
                 return 0;
+            }
             string += 4;
         }
         /* UTF-8, 1 byte, should be: 0vvvvvvv */
         else if ((unsigned char)(string[0]) >= 0x80)
+        {
+            if (error)
+                *error = string;
             return 0;
+        }
         else
             string++;
     }
+    if (error)
+        *error = NULL;
     return 1;
+}
+
+/*
+ * utf8_normalize: normalize UTF-8 string: remove non UTF-8 chars and
+ *                 replace them by a char
+ */
+
+void
+utf8_normalize (char *string, char replacement)
+{
+    char *error;
+    
+    while (string && string[0])
+    {
+        if (utf8_is_valid (string, &error))
+            return;
+        error[0] = replacement;
+        string = error + 1;
+    }
 }
 
 /*
@@ -121,9 +149,6 @@ utf8_prev_char (char *string_start, char *string)
         return NULL;
     
     string--;
-    
-    if (!local_utf8)
-        return string;
     
     if (((unsigned char)(string[0]) & 0xC0) == 0x80)
     {
@@ -163,9 +188,6 @@ utf8_next_char (char *string)
 {
     if (!string)
         return NULL;
-    
-    if (!local_utf8)
-        return string + 1;
     
     /* UTF-8, 2 bytes: 110vvvvv 10vvvvvv */
     if (((unsigned char)(string[0]) & 0xE0) == 0xC0)
@@ -223,9 +245,6 @@ utf8_strlen (char *string)
     if (!string)
         return 0;
     
-    if (!local_utf8)
-        return strlen (string);
-    
     length = 0;
     while (string && string[0])
     {
@@ -247,14 +266,6 @@ utf8_strnlen (char *string, int bytes)
     
     if (!string)
         return 0;
-    
-    if (!local_utf8)
-    {
-        length = strlen (string);
-        if (bytes > length)
-            return length;
-        return bytes;
-    }
     
     start = string;
     length = 0;
@@ -280,7 +291,7 @@ utf8_width_screen (char *string)
         return 0;
     
     if (!local_utf8)
-        return strlen (string);
+        return utf8_strlen (string);
     
     num_char = mbstowcs (NULL, string, 0) + 1;
     wstring = (wchar_t *) malloc ((num_char + 1) * sizeof (wchar_t));
@@ -310,9 +321,6 @@ utf8_add_offset (char *string, int offset)
     if (!string)
         return string;
     
-    if (!local_utf8)
-        return string + offset;
-    
     count = 0;
     while (string && string[0] && (count < offset))
     {
@@ -333,7 +341,7 @@ utf8_real_pos (char *string, int pos)
     int count, real_pos;
     char *next_char;
     
-    if (!string || !local_utf8)
+    if (!string)
         return pos;
     
     count = 0;

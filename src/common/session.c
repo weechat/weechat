@@ -38,6 +38,7 @@
 #include "session.h"
 #include "hotlist.h"
 #include "log.h"
+#include "util.h"
 #include "../irc/irc.h"
 #include "../gui/gui.h"
 
@@ -265,9 +266,6 @@ session_save_servers (FILE *file)
         rc = rc && (session_write_int (file, SESSION_SERV_LAG, ptr_server->lag));
         rc = rc && (session_write_buf (file, SESSION_SERV_LAG_CHECK_TIME, &(ptr_server->lag_check_time), sizeof (struct timeval)));
         rc = rc && (session_write_buf (file, SESSION_SERV_LAG_NEXT_CHECK, &(ptr_server->lag_next_check), sizeof (time_t)));
-        rc = rc && (session_write_str (file, SESSION_SERV_CHARSET_DECODE_ISO, ptr_server->charset_decode_iso));
-        rc = rc && (session_write_str (file, SESSION_SERV_CHARSET_DECODE_UTF, ptr_server->charset_decode_utf));
-        rc = rc && (session_write_str (file, SESSION_SERV_CHARSET_ENCODE, ptr_server->charset_encode));
         rc = rc && (session_write_id  (file, SESSION_SERV_END));
         
         if (!rc)
@@ -510,21 +508,21 @@ session_crash (FILE *file, char *message, ...)
     
     fclose (file);
     gui_main_end ();
-    fprintf (stderr, "%s %s\n",
-             WEECHAT_ERROR, buffer);
-    fprintf (stderr,
-             _("Last operation with session file was at position %ld, "
-               "read of %d bytes\n"),
-             session_last_read_pos,
-             session_last_read_length);
-    fprintf (stderr,
-             _("Please send %s/%s, %s/%s and "
-               "above messages to WeeChat developers for support.\n"
-               "Be careful, private info may be in these files.\n"),
-             weechat_home,
-             WEECHAT_LOG_NAME,
-             weechat_home,
-             WEECHAT_SESSION_NAME);
+    weechat_iconv_fprintf (stderr, "%s %s\n",
+                           WEECHAT_ERROR, buffer);
+    weechat_iconv_fprintf (stderr,
+                           _("Last operation with session file was at position %ld, "
+                             "read of %d bytes\n"),
+                           session_last_read_pos,
+                           session_last_read_length);
+    weechat_iconv_fprintf (stderr,
+                           _("Please send %s/%s, %s/%s and "
+                             "above messages to WeeChat developers for support.\n"
+                             "Be careful, private info may be in these files.\n"),
+                           weechat_home,
+                           WEECHAT_LOG_NAME,
+                           weechat_home,
+                           WEECHAT_SESSION_NAME);
     exit (EXIT_FAILURE);
 }
 
@@ -995,14 +993,14 @@ session_load_server (FILE *file)
             case SESSION_SERV_LAG_NEXT_CHECK:
                 rc = rc && (session_read_buf (file, &(session_current_server->lag_next_check), sizeof (time_t)));
                 break;
-            case SESSION_SERV_CHARSET_DECODE_ISO:
-                rc = rc && (session_read_str (file, &(session_current_server->charset_decode_iso)));
+            case SESSION_SERV_CHARSET_DECODE_ISO__UNUSED:
+                rc = rc && (session_read_ignore_value (file));
                 break;
-            case SESSION_SERV_CHARSET_DECODE_UTF:
-                rc = rc && (session_read_str (file, &(session_current_server->charset_decode_utf)));
+            case SESSION_SERV_CHARSET_DECODE_UTF__UNUSED:
+                rc = rc && (session_read_ignore_value (file));
                 break;
-            case SESSION_SERV_CHARSET_ENCODE:
-                rc = rc && (session_read_str (file, &(session_current_server->charset_encode)));
+            case SESSION_SERV_CHARSET_ENCODE__UNUSED:
+                rc = rc && (session_read_ignore_value (file));
                 break;
             default:
                 weechat_log_printf (_("session: warning: ignoring value from "

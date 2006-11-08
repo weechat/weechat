@@ -30,6 +30,7 @@
 #include "../../common/weechat.h"
 #include "../gui.h"
 #include "../../common/utf8.h"
+#include "../../common/util.h"
 #include "../../common/weeconfig.h"
 #include "gui-curses.h"
 
@@ -243,7 +244,7 @@ gui_input_draw_prompt (t_gui_window *window, char *nick)
 int
 gui_input_draw_text (t_gui_window *window, int input_width)
 {
-    char *ptr_start, *ptr_next, saved_char;
+    char *ptr_start, *ptr_next, saved_char, *output;
     int pos_mask, size, last_color, color, count_cursor, offset_cursor;
     
     ptr_start = utf8_add_offset (window->buffer->input_buffer,
@@ -273,7 +274,10 @@ gui_input_draw_text (t_gui_window *window, int input_width)
                     gui_input_set_color (window, color);
             }
             last_color = color;
-            wprintw (GUI_CURSES(window)->win_input, "%s", ptr_start);
+            output = weechat_iconv_from_internal (NULL, ptr_start);
+            wprintw (GUI_CURSES(window)->win_input, "%s", (output) ? output : ptr_start);
+            if (output)
+                free (output);
             if (count_cursor > 0)
             {
                 offset_cursor += utf8_width_screen (ptr_start);

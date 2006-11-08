@@ -230,7 +230,7 @@ plugin_config_read ()
     char *filename;
     FILE *file;
     int line_number;
-    char line[1024], *ptr_line, *pos, *pos2;
+    char line[1024], *ptr_line, *ptr_line2, *pos, *pos2;
 
     filename_length = strlen (weechat_home) +
         strlen (WEECHAT_PLUGINS_CONFIG_NAME) + 2;
@@ -250,6 +250,14 @@ plugin_config_read ()
         line_number++;
         if (ptr_line)
         {
+            /* encode line to internal charset */
+            ptr_line2 = weechat_iconv_to_internal (NULL, ptr_line);
+            if (ptr_line2)
+            {
+                snprintf (line, sizeof (line) - 1, "%s", ptr_line2);
+                free (ptr_line2);
+            }
+            
             /* skip spaces */
             while (ptr_line[0] == ' ')
                 ptr_line++;
@@ -357,19 +365,19 @@ plugin_config_write ()
     }
     
     current_time = time (NULL);
-    fprintf (file, _("#\n# %s plugins configuration file, created by "
-             "%s v%s on %s"),
-             PACKAGE_NAME, PACKAGE_NAME, PACKAGE_VERSION,
-             ctime (&current_time));
-    fprintf (file, _("# WARNING! Be careful when editing this file, "
-                     "WeeChat writes this file when options are updated.\n#\n"));
+    weechat_iconv_fprintf (file, _("#\n# %s plugins configuration file, created by "
+                                   "%s v%s on %s"),
+                           PACKAGE_NAME, PACKAGE_NAME, PACKAGE_VERSION,
+                           ctime (&current_time));
+    weechat_iconv_fprintf (file, _("# WARNING! Be careful when editing this file, "
+                                   "WeeChat writes this file when options are updated.\n#\n"));
     
     for (ptr_plugin_option = plugin_options; ptr_plugin_option;
          ptr_plugin_option = ptr_plugin_option->next_option)
     {
-        fprintf (file, "%s = \"%s\"\n",
-                 ptr_plugin_option->name,
-                 ptr_plugin_option->value);
+        weechat_iconv_fprintf (file, "%s = \"%s\"\n",
+                               ptr_plugin_option->name,
+                               ptr_plugin_option->value);
     }
     
     fclose (file);

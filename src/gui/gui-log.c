@@ -53,7 +53,7 @@ gui_log_write_date (t_gui_buffer *buffer)
         if (date_tmp)
         {
             strftime (buf_time, sizeof (buf_time) - 1, cfg_log_timestamp, date_tmp);
-            fprintf (buffer->log_file, "%s  ", buf_time);
+            weechat_iconv_fprintf (buffer->log_file, "%s  ", buf_time);
             fflush (buffer->log_file);
         }
     }
@@ -71,8 +71,8 @@ gui_log_write_line (t_gui_buffer *buffer, char *message)
     if (buffer->log_file)
     {
         msg_no_color = (char *)gui_color_decode ((unsigned char *)message, 0);
-        fprintf (buffer->log_file, "%s\n",
-                 (msg_no_color) ? msg_no_color : message);
+        weechat_iconv_fprintf (buffer->log_file,
+                               "%s\n", (msg_no_color) ? msg_no_color : message);
         fflush (buffer->log_file);
         if (msg_no_color)
             free (msg_no_color);
@@ -91,8 +91,8 @@ gui_log_write (t_gui_buffer *buffer, char *message)
     if (buffer->log_file)
     {
         msg_no_color = (char *)gui_color_decode ((unsigned char *)message, 0);
-        fprintf (buffer->log_file, "%s",
-                 (msg_no_color) ? msg_no_color : message);
+        weechat_iconv_fprintf (buffer->log_file,
+                               "%s", (msg_no_color) ? msg_no_color : message);
         fflush (buffer->log_file);
         if (msg_no_color)
             free (msg_no_color);

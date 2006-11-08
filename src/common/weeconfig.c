@@ -71,10 +71,6 @@ int cfg_look_set_title;
 int cfg_look_startup_logo;
 int cfg_look_startup_version;
 char *cfg_look_weechat_slogan;
-char *cfg_look_charset_decode_iso;
-char *cfg_look_charset_decode_utf;
-char *cfg_look_charset_encode;
-char *cfg_look_charset_internal;
 int cfg_look_one_server_buffer;
 int cfg_look_scroll_amount;
 int cfg_look_open_near_server;
@@ -134,24 +130,6 @@ t_config_option weechat_options_look[] =
     N_("WeeChat slogan (if empty, slogan is not used)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "the geekest IRC client!", NULL, NULL, &cfg_look_weechat_slogan, config_change_noop },
-  { "look_charset_decode_iso", N_("ISO charset for decoding messages from server (used only if locale is UTF-8)"),
-    N_("ISO charset for decoding messages from server (used only if locale is UTF-8) "
-       "(if empty, messages are not converted if locale is UTF-8)"),
-    OPTION_TYPE_STRING, 0, 0, 0,
-    "ISO-8859-1", NULL, NULL, &cfg_look_charset_decode_iso, config_change_charset },
-  { "look_charset_decode_utf", N_("UTF charset for decoding messages from server (used only if locale is not UTF-8)"),
-    N_("UTF charset for decoding messages from server (used only if locale is not UTF-8) "
-       "(if empty, messages are not converted if locale is not UTF-8)"),
-    OPTION_TYPE_STRING, 0, 0, 0,
-    "UTF-8", NULL, NULL, &cfg_look_charset_decode_utf, config_change_charset },
-  { "look_charset_encode", N_("charset for encoding messages sent to server"),
-    N_("charset for encoding messages sent to server, examples: UTF-8, ISO-8859-1 (if empty, messages are not converted)"),
-    OPTION_TYPE_STRING, 0, 0, 0,
-    "", NULL, NULL, &cfg_look_charset_encode, config_change_charset },
-  { "look_charset_internal", N_("forces internal WeeChat charset (should be empty in most cases)"),
-    N_("forces internal WeeChat charset (should be empty in most cases, that means detected charset is used)"),
-    OPTION_TYPE_STRING, 0, 0, 0,
-    "", NULL, NULL, &cfg_look_charset_internal, config_change_charset },
   { "look_one_server_buffer", N_("use same buffer for all servers"),
     N_("use same buffer for all servers"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
@@ -1031,21 +1009,6 @@ t_config_option weechat_options_server[] =
        "default notify level"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "", NULL, NULL, &(cfg_server.notify_levels), config_change_notify_levels },
-  { "server_charset_decode_iso", N_("charset for decoding ISO on server and channels"),
-    N_("comma separated list of charsets for server and channels, "
-       "to decode ISO (format: server:charset,#channel:charset,..)"),
-    OPTION_TYPE_STRING, 0, 0, 0,
-    "", NULL, NULL, &(cfg_server.charset_decode_iso), config_change_noop },
-  { "server_charset_decode_utf", N_("charset for decoding UTF on server and channels"),
-    N_("comma separated list of charsets for server and channels, "
-       "to decode UTF (format: server:charset,#channel:charset,..)"),
-    OPTION_TYPE_STRING, 0, 0, 0,
-    "", NULL, NULL, &(cfg_server.charset_decode_utf), config_change_noop },
-  { "server_charset_encode", N_("charset for encoding messages on server and channels"),
-    N_("comma separated list of charsets for server and channels, "
-       "to encode messages (format: server:charset,#channel:charset,..)"),
-    OPTION_TYPE_STRING, 0, 0, 0,
-    "", NULL, NULL, &(cfg_server.charset_encode), config_change_noop },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
@@ -1572,12 +1535,6 @@ config_get_server_option_ptr (t_irc_server *server, char *option_name)
         return (void *)(&server->autorejoin);
     if (ascii_strcasecmp (option_name, "server_notify_levels") == 0)
         return (void *)(&server->notify_levels);
-    if (ascii_strcasecmp (option_name, "server_charset_decode_iso") == 0)
-        return (void *)(&server->charset_decode_iso);
-    if (ascii_strcasecmp (option_name, "server_charset_decode_utf") == 0)
-        return (void *)(&server->charset_decode_utf);
-    if (ascii_strcasecmp (option_name, "server_charset_encode") == 0)
-        return (void *)(&server->charset_encode);
     /* option not found */
     return NULL;
 }
@@ -1810,9 +1767,7 @@ config_allocate_server (char *filename, int line_number)
                      cfg_server.nick3, cfg_server.username, cfg_server.realname,
                      cfg_server.hostname, cfg_server.command,
                      cfg_server.command_delay, cfg_server.autojoin,
-                     cfg_server.autorejoin, cfg_server.notify_levels,
-                     cfg_server.charset_decode_iso, cfg_server.charset_decode_utf,
-                     cfg_server.charset_encode))
+                     cfg_server.autorejoin, cfg_server.notify_levels))
     {
         server_free_all ();
         gui_printf (NULL,
@@ -1895,7 +1850,7 @@ config_read ()
     FILE *file;
     int section, line_number, i, option_number;
     int server_found;
-    char line[1024], *ptr_line, *pos, *pos2;
+    char line[1024], *ptr_line, *ptr_line2, *pos, *pos2;
 
     filename_length = strlen (weechat_home) + strlen (WEECHAT_CONFIG_NAME) + 2;
     filename = (char *) malloc (filename_length * sizeof (char));
@@ -1924,6 +1879,14 @@ config_read ()
         line_number++;
         if (ptr_line)
         {
+            /* encode line to internal charset */
+            ptr_line2 = weechat_iconv_to_internal (NULL, ptr_line);
+            if (ptr_line2)
+            {
+                snprintf (line, sizeof (line) - 1, "%s", ptr_line2);
+                free (ptr_line2);
+            }
+            
             /* skip spaces */
             while (ptr_line[0] == ' ')
                 ptr_line++;
@@ -2091,19 +2054,19 @@ config_read ()
                                         {
                                             case OPTION_TYPE_BOOLEAN:
                                                 gui_printf (NULL,
-                                                    _("%s %s, line %d: invalid value for "
-                                                    "option '%s'\n"
-                                                    "Expected: boolean value: "
-                                                    "'off' or 'on'\n"),
-                                                    WEECHAT_WARNING, filename,
-                                                    line_number, ptr_line);
+                                                            _("%s %s, line %d: invalid value for "
+                                                              "option '%s'\n"
+                                                              "Expected: boolean value: "
+                                                              "'off' or 'on'\n"),
+                                                            WEECHAT_WARNING, filename,
+                                                            line_number, ptr_line);
                                                 break;
                                             case OPTION_TYPE_INT:
                                                 gui_printf (NULL,
                                                             _("%s %s, line %d: invalid value for "
-                                                            "option '%s'\n"
-                                                            "Expected: integer between %d "
-                                                            "and %d\n"),
+                                                              "option '%s'\n"
+                                                              "Expected: integer between %d "
+                                                              "and %d\n"),
                                                             WEECHAT_WARNING, filename,
                                                             line_number, ptr_line,
                                                             weechat_options[section][option_number].min,
@@ -2112,15 +2075,15 @@ config_read ()
                                             case OPTION_TYPE_INT_WITH_STRING:
                                                 gui_printf (NULL,
                                                             _("%s %s, line %d: invalid value for "
-                                                            "option '%s'\n"
-                                                            "Expected: one of these strings: "),
+                                                              "option '%s'\n"
+                                                              "Expected: one of these strings: "),
                                                             WEECHAT_WARNING, filename,
                                                             line_number, ptr_line);
                                                 i = 0;
                                                 while (weechat_options[section][option_number].array_values[i])
                                                 {
                                                     gui_printf (NULL, "\"%s\" ",
-                                                        weechat_options[section][option_number].array_values[i]);
+                                                                weechat_options[section][option_number].array_values[i]);
                                                     i++;
                                                 }
                                                 gui_printf (NULL, "\n");
@@ -2128,7 +2091,7 @@ config_read ()
                                             case OPTION_TYPE_COLOR:
                                                 gui_printf (NULL,
                                                             _("%s %s, line %d: invalid color "
-                                                            "name for option '%s'\n"),
+                                                              "name for option '%s'\n"),
                                                             WEECHAT_WARNING, filename,
                                                             line_number,
                                                             ptr_line);
@@ -2196,48 +2159,48 @@ config_create_default ()
         return -1;
     }
     
-    printf (_("%s: creating default config file...\n"), PACKAGE_NAME);
+    weechat_iconv_fprintf (stdout, _("%s: creating default config file...\n"), PACKAGE_NAME);
     weechat_log_printf (_("Creating default config file\n"));
     
     current_time = time (NULL);
-    fprintf (file, _("#\n# %s configuration file, created by "
-             "%s v%s on %s"),
-             PACKAGE_NAME, PACKAGE_NAME, PACKAGE_VERSION,
-             ctime (&current_time));
-    fprintf (file, _("# WARNING! Be careful when editing this file, "
-                     "WeeChat writes this file when exiting.\n#\n"));
-
+    weechat_iconv_fprintf (file, _("#\n# %s configuration file, created by "
+                                   "%s v%s on %s"),
+                           PACKAGE_NAME, PACKAGE_NAME, PACKAGE_VERSION,
+                           ctime (&current_time));
+    weechat_iconv_fprintf (file, _("# WARNING! Be careful when editing this file, "
+                                   "WeeChat writes this file when exiting.\n#\n"));
+    
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
     {
         if ((i != CONFIG_SECTION_KEYS) && (i != CONFIG_SECTION_ALIAS)
             && (i != CONFIG_SECTION_IGNORE) && (i != CONFIG_SECTION_SERVER))
         {
-            fprintf (file, "\n[%s]\n", config_sections[i].section_name);
+            weechat_iconv_fprintf (file, "\n[%s]\n", config_sections[i].section_name);
             for (j = 0; weechat_options[i][j].option_name; j++)
             {
                 switch (weechat_options[i][j].option_type)
                 {
                     case OPTION_TYPE_BOOLEAN:
-                        fprintf (file, "%s = %s\n",
-                                 weechat_options[i][j].option_name,
-                                 (weechat_options[i][j].default_int) ?
-                                 "on" : "off");
+                        weechat_iconv_fprintf (file, "%s = %s\n",
+                                               weechat_options[i][j].option_name,
+                                               (weechat_options[i][j].default_int) ?
+                                               "on" : "off");
                         break;
                     case OPTION_TYPE_INT:
-                        fprintf (file, "%s = %d\n",
-                                 weechat_options[i][j].option_name,
-                                 weechat_options[i][j].default_int);
+                        weechat_iconv_fprintf (file, "%s = %d\n",
+                                               weechat_options[i][j].option_name,
+                                               weechat_options[i][j].default_int);
                         break;
                     case OPTION_TYPE_INT_WITH_STRING:
                     case OPTION_TYPE_COLOR:
-                        fprintf (file, "%s = %s\n",
-                                 weechat_options[i][j].option_name,
-                                 weechat_options[i][j].default_string);
+                        weechat_iconv_fprintf (file, "%s = %s\n",
+                                               weechat_options[i][j].option_name,
+                                               weechat_options[i][j].default_string);
                         break;
                     case OPTION_TYPE_STRING:
-                        fprintf (file, "%s = \"%s\"\n",
-                                 weechat_options[i][j].option_name,
-                                 weechat_options[i][j].default_string);
+                        weechat_iconv_fprintf (file, "%s = \"%s\"\n",
+                                               weechat_options[i][j].option_name,
+                                               weechat_options[i][j].default_string);
                         break;
                 }
             }
@@ -2245,7 +2208,7 @@ config_create_default ()
     }
     
     /* default key bindings */
-    fprintf (file, "\n[keys]\n");
+    weechat_iconv_fprintf (file, "\n[keys]\n");
     for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
     {
         expanded_name = gui_keyboard_get_expanded_name (ptr_key->key);
@@ -2253,79 +2216,79 @@ config_create_default ()
         {
             function_name = gui_keyboard_function_search_by_ptr (ptr_key->function);
             if (function_name)
-                fprintf (file, "%s = \"%s\"\n",
-                         (expanded_name) ? expanded_name : ptr_key->key,
-                         function_name);
+                weechat_iconv_fprintf (file, "%s = \"%s\"\n",
+                                       (expanded_name) ? expanded_name : ptr_key->key,
+                                       function_name);
         }
         else
-            fprintf (file, "%s = \"%s\"\n",
-                     (expanded_name) ? expanded_name : ptr_key->key,
-                     ptr_key->command);
+            weechat_iconv_fprintf (file, "%s = \"%s\"\n",
+                                   (expanded_name) ? expanded_name : ptr_key->key,
+                                   ptr_key->command);
         if (expanded_name)
             free (expanded_name);
     }
     
     /* default aliases */
-    fprintf (file, "\n[alias]\n");
-    fprintf (file, "SAY = \"msg *\"\n");
-    fprintf (file, "BYE = \"quit\"\n");
-    fprintf (file, "EXIT = \"quit\"\n");
-    fprintf (file, "SIGNOFF = \"quit\"\n");
-    fprintf (file, "C = \"clear\"\n");
-    fprintf (file, "CL = \"clear\"\n");
-    fprintf (file, "CLOSE = \"buffer close\"\n");
-    fprintf (file, "CHAT = \"dcc chat\"\n");
-    fprintf (file, "IG = \"ignore\"\n");
-    fprintf (file, "J = \"join\"\n");
-    fprintf (file, "K = \"kick\"\n");
-    fprintf (file, "KB = \"kickban\"\n");
-    fprintf (file, "LEAVE = \"part\"\n");
-    fprintf (file, "M = \"msg\"\n");
-    fprintf (file, "MUB = \"unban *\"\n");
-    fprintf (file, "N = \"names\"\n");
-    fprintf (file, "Q = \"query\"\n");
-    fprintf (file, "T = \"topic\"\n");
-    fprintf (file, "UB = \"unban\"\n");
-    fprintf (file, "UNIG = \"unignore\"\n");
-    fprintf (file, "W = \"who\"\n");
-    fprintf (file, "WC = \"window merge\"\n");
-    fprintf (file, "WI = \"whois\"\n");
-    fprintf (file, "WW = \"whowas\"\n");
+    weechat_iconv_fprintf (file, "\n[alias]\n");
+    weechat_iconv_fprintf (file, "SAY = \"msg *\"\n");
+    weechat_iconv_fprintf (file, "BYE = \"quit\"\n");
+    weechat_iconv_fprintf (file, "EXIT = \"quit\"\n");
+    weechat_iconv_fprintf (file, "SIGNOFF = \"quit\"\n");
+    weechat_iconv_fprintf (file, "C = \"clear\"\n");
+    weechat_iconv_fprintf (file, "CL = \"clear\"\n");
+    weechat_iconv_fprintf (file, "CLOSE = \"buffer close\"\n");
+    weechat_iconv_fprintf (file, "CHAT = \"dcc chat\"\n");
+    weechat_iconv_fprintf (file, "IG = \"ignore\"\n");
+    weechat_iconv_fprintf (file, "J = \"join\"\n");
+    weechat_iconv_fprintf (file, "K = \"kick\"\n");
+    weechat_iconv_fprintf (file, "KB = \"kickban\"\n");
+    weechat_iconv_fprintf (file, "LEAVE = \"part\"\n");
+    weechat_iconv_fprintf (file, "M = \"msg\"\n");
+    weechat_iconv_fprintf (file, "MUB = \"unban *\"\n");
+    weechat_iconv_fprintf (file, "N = \"names\"\n");
+    weechat_iconv_fprintf (file, "Q = \"query\"\n");
+    weechat_iconv_fprintf (file, "T = \"topic\"\n");
+    weechat_iconv_fprintf (file, "UB = \"unban\"\n");
+    weechat_iconv_fprintf (file, "UNIG = \"unignore\"\n");
+    weechat_iconv_fprintf (file, "W = \"who\"\n");
+    weechat_iconv_fprintf (file, "WC = \"window merge\"\n");
+    weechat_iconv_fprintf (file, "WI = \"whois\"\n");
+    weechat_iconv_fprintf (file, "WW = \"whowas\"\n");
     
     /* no ignore by default */
     
     /* default server is freenode */
-    fprintf (file, "\n[server]\n");
-    fprintf (file, "server_name = \"freenode\"\n");
-    fprintf (file, "server_autoconnect = on\n");
-    fprintf (file, "server_autoreconnect = on\n");
-    fprintf (file, "server_autoreconnect_delay = 30\n");
-    fprintf (file, "server_address = \"irc.freenode.net\"\n");
-    fprintf (file, "server_port = 6667\n");
-    fprintf (file, "server_ipv6 = off\n");
-    fprintf (file, "server_ssl = off\n");
-    fprintf (file, "server_password = \"\"\n");
+    weechat_iconv_fprintf (file, "\n[server]\n");
+    weechat_iconv_fprintf (file, "server_name = \"freenode\"\n");
+    weechat_iconv_fprintf (file, "server_autoconnect = on\n");
+    weechat_iconv_fprintf (file, "server_autoreconnect = on\n");
+    weechat_iconv_fprintf (file, "server_autoreconnect_delay = 30\n");
+    weechat_iconv_fprintf (file, "server_address = \"irc.freenode.net\"\n");
+    weechat_iconv_fprintf (file, "server_port = 6667\n");
+    weechat_iconv_fprintf (file, "server_ipv6 = off\n");
+    weechat_iconv_fprintf (file, "server_ssl = off\n");
+    weechat_iconv_fprintf (file, "server_password = \"\"\n");
     
     /* Get the user's name from /etc/passwd */
     if ((my_passwd = getpwuid (geteuid ())) != NULL)
     {
-        fprintf (file, "server_nick1 = \"%s\"\n", my_passwd->pw_name);
-        fprintf (file, "server_nick2 = \"%s1\"\n", my_passwd->pw_name);
-        fprintf (file, "server_nick3 = \"%s2\"\n", my_passwd->pw_name);
-        fprintf (file, "server_username = \"%s\"\n", my_passwd->pw_name);
+        weechat_iconv_fprintf (file, "server_nick1 = \"%s\"\n", my_passwd->pw_name);
+        weechat_iconv_fprintf (file, "server_nick2 = \"%s1\"\n", my_passwd->pw_name);
+        weechat_iconv_fprintf (file, "server_nick3 = \"%s2\"\n", my_passwd->pw_name);
+        weechat_iconv_fprintf (file, "server_username = \"%s\"\n", my_passwd->pw_name);
         if ((!my_passwd->pw_gecos)
             || (my_passwd->pw_gecos[0] == '\0')
             || (my_passwd->pw_gecos[0] == ',')
             || (my_passwd->pw_gecos[0] == ' '))
-            fprintf (file, "server_realname = \"%s\"\n", my_passwd->pw_name);
+            weechat_iconv_fprintf (file, "server_realname = \"%s\"\n", my_passwd->pw_name);
         else
         {
             realname = strdup (my_passwd->pw_gecos);
             pos = strchr (realname, ',');
             if (pos)
                 pos[0] = '\0';
-            fprintf (file, "server_realname = \"%s\"\n",
-                realname);
+            weechat_iconv_fprintf (file, "server_realname = \"%s\"\n",
+                                   realname);
             if (pos)
                 pos[0] = ',';
             free (realname);
@@ -2334,26 +2297,26 @@ config_create_default ()
     else
     {
         /* default values if /etc/passwd can't be read */
-        fprintf (stderr, "%s: %s (%s).",
-            WEECHAT_WARNING,
-            _("Unable to get user's name"),
-            strerror (errno));
-        fprintf (file, "server_nick1 = \"weechat1\"\n");
-        fprintf (file, "server_nick2 = \"weechat2\"\n");
-        fprintf (file, "server_nick3 = \"weechat3\"\n");
-        fprintf (file, "server_username = \"weechat\"\n");
-        fprintf (file, "server_realname = \"WeeChat default realname\"\n");
+        weechat_iconv_fprintf (stderr, "%s: %s (%s).",
+                               WEECHAT_WARNING,
+                               _("Unable to get user's name"),
+                               strerror (errno));
+        weechat_iconv_fprintf (file, "server_nick1 = \"weechat1\"\n");
+        weechat_iconv_fprintf (file, "server_nick2 = \"weechat2\"\n");
+        weechat_iconv_fprintf (file, "server_nick3 = \"weechat3\"\n");
+        weechat_iconv_fprintf (file, "server_username = \"weechat\"\n");
+        weechat_iconv_fprintf (file, "server_realname = \"WeeChat default realname\"\n");
     }
     
-    fprintf (file, "server_hostname = \"\"\n");
-    fprintf (file, "server_command = \"\"\n");
-    fprintf (file, "server_command_delay = 0\n");
-    fprintf (file, "server_autojoin = \"\"\n");
-    fprintf (file, "server_autorejoin = on\n");
-    fprintf (file, "server_notify_levels = \"\"\n");
-    fprintf (file, "server_charset_decode_iso = \"\"\n");
-    fprintf (file, "server_charset_decode_utf = \"\"\n");
-    fprintf (file, "server_charset_encode = \"\"\n");
+    weechat_iconv_fprintf (file, "server_hostname = \"\"\n");
+    weechat_iconv_fprintf (file, "server_command = \"\"\n");
+    weechat_iconv_fprintf (file, "server_command_delay = 0\n");
+    weechat_iconv_fprintf (file, "server_autojoin = \"\"\n");
+    weechat_iconv_fprintf (file, "server_autorejoin = on\n");
+    weechat_iconv_fprintf (file, "server_notify_levels = \"\"\n");
+    weechat_iconv_fprintf (file, "server_charset_decode_iso = \"\"\n");
+    weechat_iconv_fprintf (file, "server_charset_decode_utf = \"\"\n");
+    weechat_iconv_fprintf (file, "server_charset_encode = \"\"\n");
     
     fclose (file);
     chmod (filename, 0600);
@@ -2406,57 +2369,57 @@ config_write (char *config_name)
     weechat_log_printf (_("Saving config to disk\n"));
     
     current_time = time (NULL);
-    fprintf (file, _("#\n# %s configuration file, created by "
-             "%s v%s on %s"),
-             PACKAGE_NAME, PACKAGE_NAME, PACKAGE_VERSION,
-             ctime (&current_time));
-    fprintf (file, _("# WARNING! Be careful when editing this file, "
-                     "WeeChat writes this file when exiting.\n#\n"));
+    weechat_iconv_fprintf (file, _("#\n# %s configuration file, created by "
+                                   "%s v%s on %s"),
+                           PACKAGE_NAME, PACKAGE_NAME, PACKAGE_VERSION,
+                           ctime (&current_time));
+    weechat_iconv_fprintf (file, _("# WARNING! Be careful when editing this file, "
+                                   "WeeChat writes this file when exiting.\n#\n"));
 
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
     {
         if ((i != CONFIG_SECTION_KEYS) && (i != CONFIG_SECTION_ALIAS)
             && (i != CONFIG_SECTION_IGNORE) && (i != CONFIG_SECTION_SERVER))
         {
-            fprintf (file, "\n[%s]\n", config_sections[i].section_name);
+            weechat_iconv_fprintf (file, "\n[%s]\n", config_sections[i].section_name);
             for (j = 0; weechat_options[i][j].option_name; j++)
             {
                 switch (weechat_options[i][j].option_type)
                 {
                     case OPTION_TYPE_BOOLEAN:
-                        fprintf (file, "%s = %s\n",
-                                 weechat_options[i][j].option_name,
-                                 (weechat_options[i][j].ptr_int &&
-                                 *weechat_options[i][j].ptr_int) ? 
-                                 "on" : "off");
+                        weechat_iconv_fprintf (file, "%s = %s\n",
+                                               weechat_options[i][j].option_name,
+                                               (weechat_options[i][j].ptr_int &&
+                                                *weechat_options[i][j].ptr_int) ? 
+                                               "on" : "off");
                         break;
                     case OPTION_TYPE_INT:
-                        fprintf (file, "%s = %d\n",
-                                 weechat_options[i][j].option_name,
-                                 (weechat_options[i][j].ptr_int) ?
-                                 *weechat_options[i][j].ptr_int :
-                                 weechat_options[i][j].default_int);
+                        weechat_iconv_fprintf (file, "%s = %d\n",
+                                               weechat_options[i][j].option_name,
+                                               (weechat_options[i][j].ptr_int) ?
+                                               *weechat_options[i][j].ptr_int :
+                                               weechat_options[i][j].default_int);
                         break;
                     case OPTION_TYPE_INT_WITH_STRING:
-                        fprintf (file, "%s = %s\n",
-                                 weechat_options[i][j].option_name,
-                                 (weechat_options[i][j].ptr_int) ?
-                                 weechat_options[i][j].array_values[*weechat_options[i][j].ptr_int] :
-                                 weechat_options[i][j].array_values[weechat_options[i][j].default_int]);
+                        weechat_iconv_fprintf (file, "%s = %s\n",
+                                               weechat_options[i][j].option_name,
+                                               (weechat_options[i][j].ptr_int) ?
+                                               weechat_options[i][j].array_values[*weechat_options[i][j].ptr_int] :
+                                               weechat_options[i][j].array_values[weechat_options[i][j].default_int]);
                         break;
                     case OPTION_TYPE_COLOR:
-                        fprintf (file, "%s = %s\n",
-                                 weechat_options[i][j].option_name,
-                                 (weechat_options[i][j].ptr_int) ?
-                                 gui_color_get_name (*weechat_options[i][j].ptr_int) :
-                                 weechat_options[i][j].default_string);
+                        weechat_iconv_fprintf (file, "%s = %s\n",
+                                               weechat_options[i][j].option_name,
+                                               (weechat_options[i][j].ptr_int) ?
+                                               gui_color_get_name (*weechat_options[i][j].ptr_int) :
+                                               weechat_options[i][j].default_string);
                         break;
                     case OPTION_TYPE_STRING:
-                        fprintf (file, "%s = \"%s\"\n",
-                                 weechat_options[i][j].option_name,
-                                 (weechat_options[i][j].ptr_string) ?
-                                 *weechat_options[i][j].ptr_string :
-                                 weechat_options[i][j].default_string);
+                        weechat_iconv_fprintf (file, "%s = \"%s\"\n",
+                                               weechat_options[i][j].option_name,
+                                               (weechat_options[i][j].ptr_string) ?
+                                               *weechat_options[i][j].ptr_string :
+                                               weechat_options[i][j].default_string);
                         break;
                 }
             }
@@ -2464,7 +2427,7 @@ config_write (char *config_name)
     }
     
     /* keys section */
-    fprintf (file, "\n[keys]\n");
+    weechat_iconv_fprintf (file, "\n[keys]\n");
     for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
     {
         expanded_name = gui_keyboard_get_expanded_name (ptr_key->key);
@@ -2472,37 +2435,37 @@ config_write (char *config_name)
         {
             function_name = gui_keyboard_function_search_by_ptr (ptr_key->function);
             if (function_name)
-                fprintf (file, "%s = \"%s\"\n",
-                         (expanded_name) ? expanded_name : ptr_key->key,
-                         function_name);
+                weechat_iconv_fprintf (file, "%s = \"%s\"\n",
+                                       (expanded_name) ? expanded_name : ptr_key->key,
+                                       function_name);
         }
         else
-            fprintf (file, "%s = \"%s\"\n",
-                     (expanded_name) ? expanded_name : ptr_key->key,
-                     ptr_key->command);
+            weechat_iconv_fprintf (file, "%s = \"%s\"\n",
+                                   (expanded_name) ? expanded_name : ptr_key->key,
+                                   ptr_key->command);
         if (expanded_name)
             free (expanded_name);
     }
     
     /* alias section */
-    fprintf (file, "\n[alias]\n");
+    weechat_iconv_fprintf (file, "\n[alias]\n");
     for (ptr_alias = weechat_alias; ptr_alias;
          ptr_alias = ptr_alias->next_alias)
     {
-        fprintf (file, "%s = \"%s\"\n",
-                 ptr_alias->alias_name, ptr_alias->alias_command);
+        weechat_iconv_fprintf (file, "%s = \"%s\"\n",
+                               ptr_alias->alias_name, ptr_alias->alias_command);
     }
     
     /* ignore section */
-    fprintf (file, "\n[ignore]\n");
+    weechat_iconv_fprintf (file, "\n[ignore]\n");
     for (ptr_ignore = irc_ignore; ptr_ignore;
          ptr_ignore = ptr_ignore->next_ignore)
     {
-        fprintf (file, "ignore = \"%s,%s,%s,%s\"\n",
-                 ptr_ignore->mask,
-                 ptr_ignore->type,
-                 ptr_ignore->channel_name,
-                 ptr_ignore->server_name);
+        weechat_iconv_fprintf (file, "ignore = \"%s,%s,%s,%s\"\n",
+                               ptr_ignore->mask,
+                               ptr_ignore->type,
+                               ptr_ignore->channel_name,
+                               ptr_ignore->server_name);
     }
     
     /* server section */
@@ -2511,44 +2474,38 @@ config_write (char *config_name)
     {
         if (!ptr_server->command_line)
         {
-            fprintf (file, "\n[server]\n");
-            fprintf (file, "server_name = \"%s\"\n", ptr_server->name);
-            fprintf (file, "server_autoconnect = %s\n",
-                     (ptr_server->autoconnect) ? "on" : "off");
-            fprintf (file, "server_autoreconnect = %s\n",
-                     (ptr_server->autoreconnect) ? "on" : "off");
-            fprintf (file, "server_autoreconnect_delay = %d\n",
-                     ptr_server->autoreconnect_delay);
-            fprintf (file, "server_address = \"%s\"\n", ptr_server->address);
-            fprintf (file, "server_port = %d\n", ptr_server->port);
-            fprintf (file, "server_ipv6 = %s\n",
-                     (ptr_server->ipv6) ? "on" : "off");
-            fprintf (file, "server_ssl = %s\n",
-                     (ptr_server->ssl) ? "on" : "off");
-            fprintf (file, "server_password = \"%s\"\n",
-                     (ptr_server->password) ? ptr_server->password : "");
-            fprintf (file, "server_nick1 = \"%s\"\n", ptr_server->nick1);
-            fprintf (file, "server_nick2 = \"%s\"\n", ptr_server->nick2);
-            fprintf (file, "server_nick3 = \"%s\"\n", ptr_server->nick3);
-            fprintf (file, "server_username = \"%s\"\n", ptr_server->username);
-            fprintf (file, "server_realname = \"%s\"\n", ptr_server->realname);
-            fprintf (file, "server_hostname = \"%s\"\n",
-                     (ptr_server->hostname) ? ptr_server->hostname : "");
-            fprintf (file, "server_command = \"%s\"\n",
-                     (ptr_server->command) ? ptr_server->command : "");
-            fprintf (file, "server_command_delay = %d\n", ptr_server->command_delay);
-            fprintf (file, "server_autojoin = \"%s\"\n",
-                     (ptr_server->autojoin) ? ptr_server->autojoin : "");
-            fprintf (file, "server_autorejoin = %s\n",
-                     (ptr_server->autorejoin) ? "on" : "off");
-            fprintf (file, "server_notify_levels = \"%s\"\n",
-                     (ptr_server->notify_levels) ? ptr_server->notify_levels : "");
-            fprintf (file, "server_charset_decode_iso = \"%s\"\n",
-                     (ptr_server->charset_decode_iso) ? ptr_server->charset_decode_iso : "");
-            fprintf (file, "server_charset_decode_utf = \"%s\"\n",
-                     (ptr_server->charset_decode_utf) ? ptr_server->charset_decode_utf : "");
-            fprintf (file, "server_charset_encode = \"%s\"\n",
-                     (ptr_server->charset_encode) ? ptr_server->charset_encode : "");
+            weechat_iconv_fprintf (file, "\n[server]\n");
+            weechat_iconv_fprintf (file, "server_name = \"%s\"\n", ptr_server->name);
+            weechat_iconv_fprintf (file, "server_autoconnect = %s\n",
+                                   (ptr_server->autoconnect) ? "on" : "off");
+            weechat_iconv_fprintf (file, "server_autoreconnect = %s\n",
+                                   (ptr_server->autoreconnect) ? "on" : "off");
+            weechat_iconv_fprintf (file, "server_autoreconnect_delay = %d\n",
+                                   ptr_server->autoreconnect_delay);
+            weechat_iconv_fprintf (file, "server_address = \"%s\"\n", ptr_server->address);
+            weechat_iconv_fprintf (file, "server_port = %d\n", ptr_server->port);
+            weechat_iconv_fprintf (file, "server_ipv6 = %s\n",
+                                   (ptr_server->ipv6) ? "on" : "off");
+            weechat_iconv_fprintf (file, "server_ssl = %s\n",
+                                   (ptr_server->ssl) ? "on" : "off");
+            weechat_iconv_fprintf (file, "server_password = \"%s\"\n",
+                                   (ptr_server->password) ? ptr_server->password : "");
+            weechat_iconv_fprintf (file, "server_nick1 = \"%s\"\n", ptr_server->nick1);
+            weechat_iconv_fprintf (file, "server_nick2 = \"%s\"\n", ptr_server->nick2);
+            weechat_iconv_fprintf (file, "server_nick3 = \"%s\"\n", ptr_server->nick3);
+            weechat_iconv_fprintf (file, "server_username = \"%s\"\n", ptr_server->username);
+            weechat_iconv_fprintf (file, "server_realname = \"%s\"\n", ptr_server->realname);
+            weechat_iconv_fprintf (file, "server_hostname = \"%s\"\n",
+                                   (ptr_server->hostname) ? ptr_server->hostname : "");
+            weechat_iconv_fprintf (file, "server_command = \"%s\"\n",
+                                   (ptr_server->command) ? ptr_server->command : "");
+            weechat_iconv_fprintf (file, "server_command_delay = %d\n", ptr_server->command_delay);
+            weechat_iconv_fprintf (file, "server_autojoin = \"%s\"\n",
+                                   (ptr_server->autojoin) ? ptr_server->autojoin : "");
+            weechat_iconv_fprintf (file, "server_autorejoin = %s\n",
+                                   (ptr_server->autorejoin) ? "on" : "off");
+            weechat_iconv_fprintf (file, "server_notify_levels = \"%s\"\n",
+                                   (ptr_server->notify_levels) ? ptr_server->notify_levels : "");
         }
     }
     

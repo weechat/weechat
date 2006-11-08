@@ -25,6 +25,7 @@
 #endif
 
 #include <stdlib.h>
+#include <stdarg.h>
 #include <string.h>
 
 #ifdef HAVE_ICONV
@@ -32,8 +33,33 @@
 #endif
 
 #include "weechat.h"
+#include "utf8.h"
 #include "weeconfig.h"
 
+
+/*
+ * strndup: define strndup function if not existing (FreeBSD and maybe other)
+ */
+
+#ifndef HAVE_STRNDUP
+char *
+strndup (char *string, int length)
+{
+    char *result;
+    
+    if ((int)strlen (string) < length)
+        return strdup (string);
+    
+    result = (char *)malloc (length + 1);
+    if (!result)
+        return NULL;
+    
+    memcpy (result, string, length);
+    result[length] = '\0';
+    
+    return result;
+}
+#endif
 
 /*
  * ascii_tolower: locale independant string conversion to lower case
@@ -217,32 +243,75 @@ weechat_iconv (char *from_code, char *to_code, char *string)
 }
 
 /*
- * weechat_iconv_check: check a charset
- *                      if a charset is NULL, internal charset is used
+ * weechat_iconv_to_internal: convert user string (input, script, ..) to
+ *                            WeeChat internal storage charset
  */
 
-int
-weechat_iconv_check (char *from_code, char *to_code)
+char *
+weechat_iconv_to_internal (char *charset, char *string)
 {
-#ifdef HAVE_ICONV
-    iconv_t cd;
+    char *input, *output;
+
+    input = strdup (string);
+    if (input)
+    {
+        if (utf8_is_valid (input, NULL))
+            return input;
+        
+        output = weechat_iconv ((charset && charset[0]) ?
+                                charset : local_charset,
+                                WEECHAT_INTERNAL_CHARSET,
+                                input);
+        utf8_normalize (output, '?');
+        free (input);
+        return output;
+    }
+    return NULL;
+}
+
+/*
+ * weechat_iconv_from_internal: convert internal string to terminal charset,
+ *                              for display
+ */
+
+char *
+weechat_iconv_from_internal (char *charset, char *string)
+{
+    char *input, *output;
+
+    input = strdup (string);
+    if (input)
+    {
+        utf8_normalize (input, '?');
+        output = weechat_iconv (WEECHAT_INTERNAL_CHARSET,
+                                (charset && charset[0]) ?
+                                charset : local_charset,
+                                input);
+        free (input);
+        return output;
+    }
+    return NULL;
+}
+
+/*
+ * weechat_iconv_fprintf: encode to terminal charset, then call fprintf on a file
+ */
+
+void
+weechat_iconv_fprintf (FILE *file, char *data, ...)
+{
+    va_list argptr;
+    static char buf[4096];
+    char *buf2;
     
-    if (!from_code || !from_code[0])
-        from_code = (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
-            cfg_look_charset_internal : local_charset;
-
-    if (!to_code || !to_code[0])
-        to_code = (cfg_look_charset_internal && cfg_look_charset_internal[0]) ?
-            cfg_look_charset_internal : local_charset;
-
-    cd = iconv_open (to_code, from_code);
-    if (cd == (iconv_t)(-1))
-        return 0;
-    iconv_close (cd);
-    return 1;
-#else
-    return 1;
-#endif
+    va_start (argptr, data);
+    vsnprintf (buf, sizeof (buf) - 1, data, argptr);
+    va_end (argptr);
+    
+    buf2 = weechat_iconv_from_internal (NULL, buf);
+    fprintf (file, "%s", (buf2) ? buf2 : buf);
+    if (buf2)
+        free (buf2);
 }
 
 /*

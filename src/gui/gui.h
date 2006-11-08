@@ -177,14 +177,14 @@ extern void gui_log_start (t_gui_buffer *);
 extern void gui_log_end (t_gui_buffer *);
 
 /* other */
-extern void gui_infobar_printf (int, int, char *, ...);
-extern void gui_infobar_printf_from_buffer (t_gui_buffer *, int, int, char *, char *, ...);
-extern void gui_infobar_remove ();
-extern void gui_infobar_remove_all ();
 extern int gui_word_strlen (t_gui_window *, char *);
 extern int gui_word_real_pos (t_gui_window *, char *, int);
 extern void gui_printf_internal (t_gui_buffer *, int, int, char *, char *, ...);
 extern void gui_printf_raw_data (void *, int, int, char *);
+extern void gui_infobar_printf (int, int, char *, ...);
+extern void gui_infobar_printf_from_buffer (t_gui_buffer *, int, int, char *, char *, ...);
+extern void gui_infobar_remove ();
+extern void gui_infobar_remove_all ();
 extern void gui_input_optimize_size (t_gui_buffer *);
 extern void gui_input_init_color_mask (t_gui_buffer *);
 extern void gui_input_move (t_gui_buffer *, char *, char *, int );

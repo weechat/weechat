@@ -22,6 +22,7 @@
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
@@ -199,7 +200,8 @@ weechat_script_add (t_weechat_plugin *plugin,
                     t_plugin_script **script_list,
                     char *filename,
                     char *name, char *version,
-                    char *shutdown_func, char *description)
+                    char *shutdown_func, char *description,
+                    char *charset)
 {
     t_plugin_script *new_script;
     
@@ -221,6 +223,7 @@ weechat_script_add (t_weechat_plugin *plugin,
         new_script->version = strdup (version);
         new_script->shutdown_func = strdup (shutdown_func);
         new_script->description = strdup (description);
+        new_script->charset = (charset) ? strdup (charset) : NULL;
         
         /* add new script to list */
         if ((*script_list))
@@ -288,6 +291,8 @@ weechat_script_remove (t_weechat_plugin *plugin,
         free (script->version);
     if (script->shutdown_func)
         free (script->shutdown_func);
+    if (script->charset)
+        free (script->charset);
     
     /* remove script from list */
     if (script->prev_script)
@@ -299,6 +304,122 @@ weechat_script_remove (t_weechat_plugin *plugin,
     
     /* free script */
     free (script);
+}
+
+/*
+ * weechat_script_print: print a message on a server or channel buffer
+ */
+
+void
+weechat_script_print (t_weechat_plugin *plugin,
+                      t_plugin_script *script,
+                      char *server, char *channel,
+                      char *message, ...)
+{
+    va_list argptr;
+    static char buf[8192];
+    char *buf2;
+    
+    va_start (argptr, message);
+    vsnprintf (buf, sizeof (buf) - 1, message, argptr);
+    va_end (argptr);
+    
+    buf2 = (script->charset && script->charset[0]) ?
+        plugin->iconv_to_internal (plugin, script->charset, buf) : NULL;
+    plugin->print (plugin, server, channel, (buf2) ? buf2 : buf);
+    if (buf2)
+        free (buf2);
+}
+
+/*
+ * weechat_script_print_server: print a message on server buffer
+ */
+
+void
+weechat_script_print_server (t_weechat_plugin *plugin,
+                             t_plugin_script *script,
+                             char *message, ...)
+{
+    va_list argptr;
+    static char buf[8192];
+    char *buf2;
+    
+    va_start (argptr, message);
+    vsnprintf (buf, sizeof (buf) - 1, message, argptr);
+    va_end (argptr);
+    
+    buf2 = (script->charset && script->charset[0]) ?
+        plugin->iconv_to_internal (plugin, script->charset, buf) : NULL;
+    plugin->print_server (plugin, (buf2) ? buf2 : buf);
+    if (buf2)
+        free (buf2);
+}
+
+/*
+ * weechat_script_print_infobar: print a message in infobar
+ */
+
+void
+weechat_script_print_infobar (t_weechat_plugin *plugin,
+                              t_plugin_script *script,
+                              int time_displayed, char *message, ...)
+{
+    va_list argptr;
+    static char buf[1024];
+    char *buf2;
+    
+    va_start (argptr, message);
+    vsnprintf (buf, sizeof (buf) - 1, message, argptr);
+    va_end (argptr);
+    
+    buf2 = (script->charset && script->charset[0]) ?
+        plugin->iconv_to_internal (plugin, script->charset, buf) : NULL;
+    plugin->print_infobar (plugin, time_displayed, (buf2) ? buf2 : buf);
+    if (buf2)
+        free (buf2);
+}
+
+/*
+ * weechat_script_log: add a message in buffer log file
+ */
+
+void
+weechat_script_log (t_weechat_plugin *plugin,
+                    t_plugin_script *script,
+                    char *server, char *channel, char *message, ...)
+{
+    va_list argptr;
+    static char buf[1024];
+    char *buf2;
+    
+    va_start (argptr, message);
+    vsnprintf (buf, sizeof (buf) - 1, message, argptr);
+    va_end (argptr);
+    
+    buf2 = (script->charset && script->charset[0]) ?
+        plugin->iconv_to_internal (plugin, script->charset, buf) : NULL;
+    plugin->log (plugin, server, channel, (buf2) ? buf2 : buf);
+    if (buf2)
+        free (buf2);
+}
+
+/*
+ * weechat_script_exec_command: execute a command (simulate user entry)
+ */
+
+void
+weechat_script_exec_command (t_weechat_plugin *plugin,
+                             t_plugin_script *script,
+                             char *server, char *channel, char *command)
+{
+    char *command2;
+    
+    command2 = (script->charset && script->charset[0]) ?
+        plugin->iconv_to_internal (plugin, script->charset, command) : NULL;
+    plugin->exec_command (plugin, server, channel,
+                          (command2) ? command2 : command);
+    if (command2)
+        free (command2);
 }
 
 /*
@@ -493,4 +614,22 @@ weechat_script_set_plugin_config (t_weechat_plugin *plugin,
     free (option_fullname);
     
     return return_code;
+}
+
+/*
+ * weechat_script_set_charset: set charset for script
+ */
+
+void
+weechat_script_set_charset (t_weechat_plugin *plugin,
+                            t_plugin_script *script,
+                            char *charset)
+{
+    /* make gcc happy */
+    (void) plugin;
+    
+    if (script->charset)
+        free (script->charset);
+    
+    script->charset = (charset) ? strdup (charset) : NULL;
 }

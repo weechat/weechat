@@ -41,34 +41,6 @@
   <entry>WeeChat-Slogan (wenn leer, wird keiner benutzt)</entry>
 </row>
 <row>
-  <entry><option>look_charset_decode_iso</option></entry>
-  <entry>Zeichenfolge</entry>
-  <entry>eine beliebige Zeichenfolge</entry>
-  <entry>'ISO-8859-1'</entry>
-  <entry>ISO-Zeichensatz zum Dekodieren von Nachrichten vom Server (wird nur benutzt, wenn UTF-8 als Locale eingestellt ist; wenn nichts angegeben wird und die Locale UTF-8 ist, findet keine Konvertierung statt)</entry>
-</row>
-<row>
-  <entry><option>look_charset_decode_utf</option></entry>
-  <entry>Zeichenfolge</entry>
-  <entry>eine beliebige Zeichenfolge</entry>
-  <entry>'UTF-8'</entry>
-  <entry>UTF-Zeichensatz zum Dekodieren von Nachrichten vom Server (wird nur benutzt, wenn die Locale nicht UTF-8 ist; wenn nichts angegeben wird und die Locale nicht UTF-8 ist, findet keine Konvertierung statt)</entry>
-</row>
-<row>
-  <entry><option>look_charset_encode</option></entry>
-  <entry>Zeichenfolge</entry>
-  <entry>eine beliebige Zeichenfolge</entry>
-  <entry>''</entry>
-  <entry>Zeichensatz zum Enkodieren von Nachrichten zum Server, wie zum Beispiel: UTF-8, ISO-8859-1 (wenn nichts angegeben wird, findet keine Konversion statt)</entry>
-</row>
-<row>
-  <entry><option>look_charset_internal</option></entry>
-  <entry>Zeichenfolge</entry>
-  <entry>eine beliebige Zeichenfolge</entry>
-  <entry>''</entry>
-  <entry>Erzwingt internen WeeChat-Zeichensatz (sollte normalerweise leer sein, dadurch wird der erkannte Zeichensatz benutzt)</entry>
-</row>
-<row>
   <entry><option>look_one_server_buffer</option></entry>
   <entry>Boolean</entry>
   <entry>eine beliebige Zeichenfolge</entry>
@@ -1236,25 +1208,4 @@
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>''</entry>
   <entry>Comma separated list of notify levels for channels of this server (format: #channel:1,..), a channel name '*' is reserved for server default notify level</entry>
-</row>
-<row>
-  <entry><option>server_charset_decode_iso</option></entry>
-  <entry>Zeichenfolge</entry>
-  <entry>eine beliebige Zeichenfolge</entry>
-  <entry>''</entry>
-  <entry>Durch Kommata getrennte Liste der Zeichensätze für den Server und die Channels, um ISO-Nachrichten zu dekodieren (Format: Server:Zeichensatz,#Channel:Zeichensatz)</entry>
-</row>
-<row>
-  <entry><option>server_charset_decode_utf</option></entry>
-  <entry>Zeichenfolge</entry>
-  <entry>eine beliebige Zeichenfolge</entry>
-  <entry>''</entry>
-  <entry>Durch Kommata getrennte Liste der Zeichensätze für Server und Channels, um UTF zu dekodieren (Format: Server:Zeichensatz,#Channel:Zeichensatz,..)</entry>
-</row>
-<row>
-  <entry><option>server_charset_encode</option></entry>
-  <entry>Zeichenfolge</entry>
-  <entry>eine beliebige Zeichenfolge</entry>
-  <entry>''</entry>
-  <entry>Durch Kommata getrennte Liste der Zeichensätze, um Nachrichten vom Server und aus Channels zu dekodieren (Format: Server:Zeichensatz,#Channel:Zeichensatz,..)</entry>
 </row>

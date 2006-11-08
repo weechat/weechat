@@ -17,23 +17,17 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+/* weechat-charset.h: Charset plugin support for WeeChat */
 
-#ifndef __WEECHAT_UTF8_H
-#define __WEECHAT_UTF8_H 1
+#ifndef WEECHAT_CHARSET__H
+#define WEECHAT_CHARSET__H 1
 
-extern int local_utf8;
+#define _PLUGIN_NAME    "charset"
+#define _PLUGIN_VERSION "0.1"
+#define _PLUGIN_DESC    "Charset plugin for WeeChat"
 
-extern void utf8_init ();
-extern int utf8_is_valid (char *, char **);
-extern void utf8_normalize (char *, char);
-extern char *utf8_prev_char (char *, char *);
-extern char *utf8_next_char (char *);
-extern int utf8_char_size (char *);
-extern int utf8_strlen (char *);
-extern int utf8_strnlen (char *, int);
-extern int utf8_width_screen (char *);
-extern char *utf8_add_offset (char *, int);
-extern int utf8_real_pos (char *, int);
-extern int utf8_pos (char *, int);
+char plugin_name[]        = _PLUGIN_NAME;
+char plugin_version[]     = _PLUGIN_VERSION;
+char plugin_description[] = _PLUGIN_DESC;
 
-#endif /* utf8.h */
+#endif /* WEECHAT_CHARSET__H */

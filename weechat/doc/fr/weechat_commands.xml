@@ -40,16 +40,6 @@ commande: commande à exécuter (un '/' est automatiquement ajouté s'il n'est pas 
 
 
 </programlisting>
-<command>charset  [(decode_iso | decode_utf | encode) charset]</command>
-<programlisting>
-changer le jeu de caractères pour le serveur ou le canal
-
-decode_iso: jeu de caractères utilisé pour décoder l'ISO
-decode_utf: jeu de caractères utilisé pour décoder l'UTF
-    encode: jeu de caractères utilisé pour encoder les messages
-   charset: jeu de caractères à utiliser (par exemple: ISO-8859-15, UTF-8,..)
-
-</programlisting>
 <command>clear  [-all]</command>
 <programlisting>
 effacer la/les fenêtre(s)

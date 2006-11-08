@@ -38,6 +38,7 @@ struct t_plugin_script
     char *description;                  /* plugin description                  */
     char *version;                      /* plugin version                      */
     char *shutdown_func;                /* function when script is unloaded    */
+    char *charset;                      /* script charset                      */
     
     t_plugin_script *prev_script;       /* link to previous script             */
     t_plugin_script *next_script;       /* link to next script                 */
@@ -51,9 +52,24 @@ extern char *weechat_script_search_full_name (t_weechat_plugin *,
                                               char *, char *);
 extern t_plugin_script *weechat_script_add (t_weechat_plugin *,
                                             t_plugin_script **, char *, char *,
-                                            char *, char *, char *);
+                                            char *, char *, char *, char *);
 extern void weechat_script_remove (t_weechat_plugin *,
                                    t_plugin_script **, t_plugin_script *);
+extern void weechat_script_print (t_weechat_plugin *,
+                                  t_plugin_script *,
+                                  char *, char *, char *, ...);
+extern void weechat_script_print_server (t_weechat_plugin *,
+                                         t_plugin_script *,
+                                         char *, ...);
+extern void weechat_script_print_infobar (t_weechat_plugin *,
+                                          t_plugin_script *,
+                                          int, char *, ...);
+extern void weechat_script_log (t_weechat_plugin *,
+                                t_plugin_script *,
+                                char *, char *, char *, ...);
+extern void weechat_script_exec_command (t_weechat_plugin *,
+                                         t_plugin_script *,
+                                         char *, char *, char *);
 extern void weechat_script_remove_handler (t_weechat_plugin *,
                                            t_plugin_script *,
                                            char *, char *);
@@ -72,5 +88,8 @@ extern char *weechat_script_get_plugin_config (t_weechat_plugin *,
 extern int weechat_script_set_plugin_config (t_weechat_plugin *,
                                              t_plugin_script *,
                                              char *, char *);
+extern void weechat_script_set_charset (t_weechat_plugin *,
+                                        t_plugin_script *,
+                                        char *);
 
 #endif /* weechat-script.h */

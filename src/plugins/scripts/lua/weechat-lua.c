@@ -224,7 +224,7 @@ weechat_lua_modifier (t_weechat_plugin *plugin,
 static int
 weechat_lua_register (lua_State *L)
 {
-    const char *name, *version, *shutdown_func, *description;
+    const char *name, *version, *shutdown_func, *description, *charset;
     int n;
     
     /* make gcc happy */
@@ -236,10 +236,11 @@ weechat_lua_register (lua_State *L)
     version = NULL;
     shutdown_func = NULL;
     description = NULL;
+    charset = NULL;
     
     n = lua_gettop (lua_current_interpreter);
 
-    if (n != 4)
+    if ((n < 4) || (n > 5))
     {
 	lua_plugin->print_server (lua_plugin,
                                   "Lua error: wrong parameters for "
@@ -247,12 +248,24 @@ weechat_lua_register (lua_State *L)
         lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
-    
-    name = lua_tostring (lua_current_interpreter, -4);
-    version = lua_tostring (lua_current_interpreter, -3);
-    shutdown_func = lua_tostring (lua_current_interpreter, -2);
-    description = lua_tostring (lua_current_interpreter, -1);
 
+    switch (n)
+    {
+        case 4:
+            name = lua_tostring (lua_current_interpreter, -4);
+            version = lua_tostring (lua_current_interpreter, -3);
+            shutdown_func = lua_tostring (lua_current_interpreter, -2);
+            description = lua_tostring (lua_current_interpreter, -1);
+            break;
+        case 5:
+            name = lua_tostring (lua_current_interpreter, -5);
+            version = lua_tostring (lua_current_interpreter, -4);
+            shutdown_func = lua_tostring (lua_current_interpreter, -3);
+            description = lua_tostring (lua_current_interpreter, -2);
+            charset = lua_tostring (lua_current_interpreter, -1);
+            break;
+    }
+    
     if (weechat_script_search (lua_plugin, &lua_scripts, (char *) name))
     {
         /* error: another scripts already exists with this name! */
@@ -273,7 +286,8 @@ weechat_lua_register (lua_State *L)
 					     (char *) name, 
 					     (char *) version, 
 					     (char *) shutdown_func,
-					     (char *) description);
+					     (char *) description,
+                                             (char *) charset);
     if (lua_current_script)
     {
         lua_plugin->print_server (lua_plugin,
@@ -286,6 +300,51 @@ weechat_lua_register (lua_State *L)
 	lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
+    
+    lua_pushnumber (lua_current_interpreter, 1);
+    return 1;
+}
+
+/*
+ * weechat_lua_set_charset: set script charset
+ */
+
+static int
+weechat_lua_set_charset  (lua_State *L)
+{
+    const char *charset;
+    int n;
+    
+    /* make gcc happy */
+    (void) L;
+     
+    if (!lua_current_script)
+    {
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to set charset, "
+                                  "script not initialized");	
+	lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+    
+    charset = NULL;
+ 
+    n = lua_gettop (lua_current_interpreter);
+
+    if (n != 1)
+    {
+	lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"set_charset\" function");
+        lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+    
+    charset = lua_tostring (lua_current_interpreter, -1);
+    
+    weechat_script_set_charset (lua_plugin,
+                                lua_current_script,
+                                (char *) charset);
     
     lua_pushnumber (lua_current_interpreter, 1);
     return 1;
@@ -1531,18 +1590,6 @@ weechat_lua_get_server_info  (lua_State *L)
 	lua_pushstring (lua_current_interpreter, ptr_server->notify_levels);
 	lua_rawset (lua_current_interpreter, -3);
 	
-	lua_pushstring (lua_current_interpreter, "charset_decode_iso");
-	lua_pushstring (lua_current_interpreter, ptr_server->charset_decode_iso);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "charset_decode_utf");
-	lua_pushstring (lua_current_interpreter, ptr_server->charset_decode_utf);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "charset_encode");
-	lua_pushstring (lua_current_interpreter, ptr_server->charset_encode);
-	lua_rawset (lua_current_interpreter, -3);
-	
 	lua_pushstring (lua_current_interpreter, "is_connected");
 	lua_pushnumber (lua_current_interpreter, ptr_server->is_connected);
 	lua_rawset (lua_current_interpreter, -3);
@@ -2062,6 +2109,7 @@ weechat_lua_constant_plugin_rc_ok_ignore_all  (lua_State *L)
 static
 const struct luaL_reg weechat_lua_funcs[] = {
     { "register", weechat_lua_register },
+    { "set_charset", weechat_lua_set_charset },
     { "print", weechat_lua_print },
     { "print_server", weechat_lua_print_server },
     { "print_infobar", weechat_lua_print_infobar },

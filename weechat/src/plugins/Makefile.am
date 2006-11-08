@@ -37,7 +37,11 @@ if PLUGIN_ASPELL
 aspell_dir = aspell
 endif
 
-SUBDIRS = $(script_dir) $(aspell_dir)
+if PLUGIN_CHARSET
+charset_dir = charset
+endif
+
+SUBDIRS = $(script_dir) $(aspell_dir) $(charset_dir)
 
 noinst_LIBRARIES = lib_weechat_plugins.a
 

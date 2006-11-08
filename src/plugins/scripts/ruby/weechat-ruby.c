@@ -303,15 +303,28 @@ weechat_ruby_modifier (t_weechat_plugin *plugin,
  */
 
 static VALUE
-weechat_ruby_register (VALUE class, VALUE name, VALUE version,
-                       VALUE shutdown_func, VALUE description)
+weechat_ruby_register (int argc, VALUE *argv, VALUE class)
 {
-    char *c_name, *c_version, *c_shutdown_func, *c_description;
+    VALUE name, version, shutdown_func, description, charset;
+    char *c_name, *c_version, *c_shutdown_func, *c_description, *c_charset;
     
     /* make gcc happy */
     (void) class;
 
     ruby_current_script = NULL;
+
+    name = Qnil;
+    version = Qnil;
+    shutdown_func = Qnil;
+    description = Qnil;
+    charset = Qnil;
+    c_name = NULL;
+    c_version = NULL;
+    c_shutdown_func = NULL;
+    c_description = NULL;
+    c_charset = NULL;
+
+    rb_scan_args (argc, argv, "41", &name, &version, &shutdown_func, &description, &charset);
     
     if (NIL_P (name) || NIL_P (version) || NIL_P (shutdown_func) || NIL_P (description))
     {
@@ -331,6 +344,12 @@ weechat_ruby_register (VALUE class, VALUE name, VALUE version,
     c_shutdown_func = STR2CSTR (shutdown_func);
     c_description = STR2CSTR (description);
     
+    if (!NIL_P (charset))
+    {
+        Check_Type (charset, T_STRING);
+        c_charset = STR2CSTR (charset);
+    }
+    
     if (weechat_script_search (ruby_plugin, &ruby_scripts, c_name))
     {
         /* error: another scripts already exists with this name! */
@@ -348,7 +367,7 @@ weechat_ruby_register (VALUE class, VALUE name, VALUE version,
                                               (ruby_current_script_filename) ?
                                               ruby_current_script_filename : "",
                                               c_name, c_version, c_shutdown_func,
-                                              c_description);
+                                              c_description, c_charset);
     if (ruby_current_script)
     {
         ruby_plugin->print_server (ruby_plugin,
@@ -360,6 +379,47 @@ weechat_ruby_register (VALUE class, VALUE name, VALUE version,
         return INT2FIX (0);
     
     return INT2FIX (1);
+}
+
+/*
+ * weechat_ruby_set_charset: set script charset
+ */
+
+static VALUE
+weechat_ruby_set_charset (VALUE class, VALUE charset)
+{
+    char *c_charset;
+    
+    /* make gcc happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: unable to set charset, "
+                                   "script not initialized");
+        return INT2FIX (0);
+    }
+    
+    c_charset = NULL;
+    
+    if (NIL_P (c_charset))
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: wrong parameters for "
+                                   "\"set_charset\" function");
+        return INT2FIX (0);
+    }
+    
+    Check_Type (charset, T_STRING);
+    c_charset = STR2CSTR (charset);
+    
+    if (c_charset)
+        weechat_script_set_charset (ruby_plugin,
+                                    ruby_current_script,
+                                    c_charset);
+    
+    return INT2FIX (1);    
 }
 
 /*
@@ -1523,12 +1583,6 @@ weechat_ruby_get_server_info (VALUE class)
 			  INT2FIX(ptr_server->autorejoin));
 	    rb_hash_aset (server_hash_member, rb_str_new2("notify_levels"),
 			  rb_str_new2(ptr_server->notify_levels));
-	    rb_hash_aset (server_hash_member, rb_str_new2("charset_decode_iso"),
-			  rb_str_new2(ptr_server->charset_decode_iso));
-	    rb_hash_aset (server_hash_member, rb_str_new2("charset_decode_utf"),
-			  rb_str_new2(ptr_server->charset_decode_utf));
-	    rb_hash_aset (server_hash_member, rb_str_new2("charset_encode"),
-			  rb_str_new2(ptr_server->charset_encode));
 	    rb_hash_aset (server_hash_member, rb_str_new2("is_connected"),
 			  INT2FIX(ptr_server->is_connected));
 	    rb_hash_aset (server_hash_member, rb_str_new2("ssl_connected"),
@@ -2420,7 +2474,8 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     rb_define_const(ruby_mWeechat, "PLUGIN_RC_OK_IGNORE_WEECHAT", INT2NUM(PLUGIN_RC_OK_IGNORE_WEECHAT));
     rb_define_const(ruby_mWeechat, "PLUGIN_RC_OK_IGNORE_PLUGINS", INT2NUM(PLUGIN_RC_OK_IGNORE_PLUGINS));
     rb_define_const(ruby_mWeechat, "PLUGIN_RC_OK_IGNORE_ALL", INT2NUM(PLUGIN_RC_OK_IGNORE_ALL));    
-    rb_define_module_function (ruby_mWeechat, "register", weechat_ruby_register, 4);
+    rb_define_module_function (ruby_mWeechat, "register", weechat_ruby_register, -1);
+    rb_define_module_function (ruby_mWeechat, "set_charset", weechat_ruby_set_charset, 1);
     rb_define_module_function (ruby_mWeechat, "print", weechat_ruby_print, -1);
     rb_define_module_function (ruby_mWeechat, "print_server", weechat_ruby_print_server, 1);
     rb_define_module_function (ruby_mWeechat, "print_infobar", weechat_ruby_print_infobar, 2);

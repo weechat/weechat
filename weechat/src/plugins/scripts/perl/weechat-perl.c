@@ -271,11 +271,11 @@ weechat_perl_timer_handler (t_weechat_plugin *plugin,
                             int argc, char **argv,
                             char *handler_args, void *handler_pointer)
 {
+    int *r, ret;
+    
     /* make gcc happy */
     (void) argc;
     (void) argv;
-    int *r;
-    int ret;
     
     r = (int *) weechat_perl_exec (plugin, (t_plugin_script *)handler_pointer,
 				   SCRIPT_EXEC_INT,
@@ -343,7 +343,7 @@ weechat_perl_modifier (t_weechat_plugin *plugin,
 
 static XS (XS_weechat_register)
 {
-    char *name, *version, *shutdown_func, *description;
+    char *name, *version, *shutdown_func, *description, *charset;
     dXSARGS;
     
     /* make gcc happy */
@@ -352,7 +352,7 @@ static XS (XS_weechat_register)
 
     perl_current_script = NULL;
     
-    if (items != 4)
+    if ((items < 4) || (items > 5))
     {
         perl_plugin->print_server (perl_plugin,
                                    "Perl error: wrong parameters for "
@@ -364,6 +364,7 @@ static XS (XS_weechat_register)
     version = SvPV (ST (1), PL_na);
     shutdown_func = SvPV (ST (2), PL_na);
     description = SvPV (ST (3), PL_na);
+    charset = (items == 5) ? SvPV (ST (4), PL_na) : NULL;
     
     if (weechat_script_search (perl_plugin, &perl_scripts, name))
     {
@@ -382,7 +383,7 @@ static XS (XS_weechat_register)
                                               (perl_current_script_filename) ?
 					      perl_current_script_filename : "",
                                               name, version, shutdown_func,
-                                              description);
+                                              description, charset);
     if (perl_current_script)
     {
         perl_plugin->print_server (perl_plugin,
@@ -394,6 +395,40 @@ static XS (XS_weechat_register)
     {
         XSRETURN_NO;
     }
+    
+    XSRETURN_YES;
+}
+
+/*
+ * weechat::set_charset: set script charset
+ */
+
+static XS (XS_weechat_set_charset)
+{
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to set charset, "
+                                   "script not initialized");
+	XSRETURN_EMPTY;
+    }
+    
+    if (items < 1)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"set_charset\" function");
+        XSRETURN_EMPTY;
+    }
+    
+    weechat_script_set_charset (perl_plugin,
+                                perl_current_script,
+                                SvPV (ST (0), PL_na));
     
     XSRETURN_YES;
 }
@@ -438,9 +473,9 @@ static XS (XS_weechat_print)
             server_name = SvPV (ST (2), PL_na);
     }
     
-    perl_plugin->print (perl_plugin,
-                        server_name, channel_name,
-                        "%s", message);
+    weechat_script_print (perl_plugin, perl_current_script,
+                          server_name, channel_name,
+                          "%s", message);
     
     XSRETURN_YES;
 }
@@ -475,7 +510,8 @@ static XS (XS_weechat_print_server)
     
     message = SvPV (ST (0), PL_na);
     
-    perl_plugin->print_server (perl_plugin, "%s", message);
+    weechat_script_print_server (perl_plugin, perl_current_script,
+                                 "%s", message);
     
     XSRETURN_YES;
 }
@@ -507,10 +543,9 @@ static XS (XS_weechat_print_infobar)
         XSRETURN_NO;
     }
     
-    perl_plugin->print_infobar (perl_plugin,
-                                SvIV (ST (0)),
-                                "%s",
-                                SvPV (ST (1), PL_na));
+    weechat_script_print_infobar (perl_plugin, perl_current_script,
+                                  SvIV (ST (0)),
+                                  "%s", SvPV (ST (1), PL_na));
     
     XSRETURN_YES;
 }
@@ -580,9 +615,9 @@ static XS (XS_weechat_log)
             server_name = SvPV (ST (2), PL_na);
     }
     
-    perl_plugin->log (perl_plugin,
-		      server_name, channel_name,
-		      "%s", message);
+    weechat_script_log (perl_plugin, perl_current_script,
+                        server_name, channel_name,
+                        "%s", message);
     
     XSRETURN_YES;
 }
@@ -625,9 +660,9 @@ static XS (XS_weechat_command)
             server_name = SvPV (ST (2), PL_na);
     }
     
-    perl_plugin->exec_command (perl_plugin,
-                               server_name, channel_name,
-                               SvPV (ST (0), PL_na));
+    weechat_script_exec_command (perl_plugin, perl_current_script,
+                                 server_name, channel_name,
+                                 SvPV (ST (0), PL_na));
     
     XSRETURN_YES;
 }
@@ -1338,9 +1373,6 @@ static XS (XS_weechat_get_server_info)
         hv_store (server_hash_member, "autojoin",              8, newSVpv (ptr_server->autojoin, 0), 0);
         hv_store (server_hash_member, "autorejoin",           10, newSViv (ptr_server->autorejoin), 0);
         hv_store (server_hash_member, "notify_levels",        13, newSVpv (ptr_server->notify_levels, 0), 0);
-        hv_store (server_hash_member, "charset_decode_iso",   18, newSVpv (ptr_server->charset_decode_iso, 0), 0);
-        hv_store (server_hash_member, "charset_decode_utf",   18, newSVpv (ptr_server->charset_decode_utf, 0), 0);
-        hv_store (server_hash_member, "charset_encode",       14, newSVpv (ptr_server->charset_encode, 0), 0);
         hv_store (server_hash_member, "is_connected",         12, newSViv (ptr_server->is_connected), 0);
         hv_store (server_hash_member, "ssl_connected",        13, newSViv (ptr_server->ssl_connected), 0);
         hv_store (server_hash_member, "nick",                  4, newSVpv (ptr_server->nick, 0), 0);
@@ -1755,6 +1787,7 @@ weechat_perl_xs_init (pTHX)
     
     /* interface functions */
     newXS ("weechat::register", XS_weechat_register, "weechat");
+    newXS ("weechat::set_charset", XS_weechat_set_charset, "weechat");
     newXS ("weechat::print", XS_weechat_print, "weechat");
     newXS ("weechat::print_server", XS_weechat_print_server, "weechat");
     newXS ("weechat::print_infobar", XS_weechat_print_infobar, "weechat");

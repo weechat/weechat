@@ -428,13 +428,4 @@ irc_display_server (t_irc_server *server)
     gui_printf (NULL, "  server_notify_levels . . . : %s\n",
                 (server->notify_levels && server->notify_levels[0]) ?
                 server->notify_levels : "");
-    gui_printf (NULL, "  server_charset_decode_iso. : %s\n",
-                (server->charset_decode_iso && server->charset_decode_iso[0]) ?
-                server->charset_decode_iso : "");
-    gui_printf (NULL, "  server_charset_decode_utf. : %s\n",
-                (server->charset_decode_utf && server->charset_decode_utf[0]) ?
-                server->charset_decode_utf : "");
-    gui_printf (NULL, "  server_charset_encode. . . : %s\n",
-                (server->charset_encode && server->charset_encode[0]) ?
-                server->charset_encode : "");
 }

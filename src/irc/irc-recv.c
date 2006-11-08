@@ -977,11 +977,10 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *nick, char *argumen
                                          nick);
                         if ( (cfg_look_infobar_delay_highlight > 0)
                              && (ptr_channel->buffer != gui_current_window->buffer) )
-                            gui_infobar_printf_from_buffer (ptr_channel->buffer,
-                                                            cfg_look_infobar_delay_highlight,
-                                                            COLOR_WIN_INFOBAR_HIGHLIGHT,
-                                                            _("Private"), " %s> %s",
-                                                            nick, pos);
+                            gui_infobar_printf (cfg_look_infobar_delay_highlight,
+                                                COLOR_WIN_INFOBAR_HIGHLIGHT,
+                                                _("Private %s> %s"),
+                                                nick, pos);
                         highlight = 1;
                     }
                     else
@@ -1348,12 +1347,10 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                             if ( (cfg_look_infobar)
                                  && (cfg_look_infobar_delay_highlight > 0)
                                  && (ptr_channel->buffer != gui_current_window->buffer) )
-                                gui_infobar_printf_from_buffer (ptr_channel->buffer,
-                                                                cfg_look_infobar_delay_highlight,
-                                                                COLOR_WIN_INFOBAR_HIGHLIGHT,
-                                                                _("Channel"), " %s: * %s %s",
-                                                                ptr_channel->name,
-                                                                nick, pos);
+                                gui_infobar_printf (cfg_look_infobar_delay_highlight,
+                                                    COLOR_WIN_INFOBAR_HIGHLIGHT,
+                                                    _("Channel %s: * %s %s"),
+                                                    ptr_channel->name, nick, pos);
                             gui_printf (ptr_channel->buffer, " %s%s\n",
                                         GUI_COLOR(COLOR_WIN_CHAT), pos);
 #ifdef PLUGINS
@@ -1479,12 +1476,10 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                         if ( (cfg_look_infobar)
                              && (cfg_look_infobar_delay_highlight > 0)
                              && (ptr_channel->buffer != gui_current_window->buffer) )
-                            gui_infobar_printf_from_buffer (ptr_channel->buffer,
-                                                            cfg_look_infobar_delay_highlight,
-                                                            COLOR_WIN_INFOBAR_HIGHLIGHT,
-                                                            _("Channel"), " %s: %s> %s",
-                                                            ptr_channel->name,
-                                                            nick, pos);
+                            gui_infobar_printf (cfg_look_infobar_delay_highlight,
+                                                COLOR_WIN_INFOBAR_HIGHLIGHT,
+                                                _("Channel %s: %s> %s"),
+                                                ptr_channel->name, nick, pos);
                         gui_printf_type (ptr_channel->buffer, MSG_TYPE_MSG,
                                          "%s\n", pos);
 #ifdef PLUGINS
@@ -1909,12 +1904,10 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                         if ( (cfg_look_infobar)
                              && (cfg_look_infobar_delay_highlight > 0)
                              && (ptr_channel->buffer != gui_current_window->buffer) )
-                            gui_infobar_printf_from_buffer (ptr_channel->buffer,
-                                                            cfg_look_infobar_delay_highlight,
-                                                            COLOR_WIN_INFOBAR_HIGHLIGHT,
-                                                            _("Channel"), " %s: * %s %s",
-                                                            ptr_channel->name,
-                                                            nick, pos);
+                            gui_infobar_printf (cfg_look_infobar_delay_highlight,
+                                                COLOR_WIN_INFOBAR_HIGHLIGHT,
+                                                _("Channel %s: * %s %s"),
+                                                ptr_channel->name, nick, pos);
                         gui_printf (ptr_channel->buffer, " %s%s\n",
                                     GUI_COLOR(COLOR_WIN_CHAT), pos);
 #ifdef PLUGINS
@@ -2013,11 +2006,10 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                                               COLOR_WIN_CHAT_HIGHLIGHT, 0);
                             if ((cfg_look_infobar_delay_highlight > 0)
                                 && (ptr_channel->buffer != gui_current_window->buffer))
-                                gui_infobar_printf_from_buffer (ptr_channel->buffer,
-                                                                cfg_look_infobar_delay_highlight,
-                                                                COLOR_WIN_INFOBAR_HIGHLIGHT,
-                                                                _("Private"), " %s> %s",
-                                                                nick, pos);
+                                gui_infobar_printf (cfg_look_infobar_delay_highlight,
+                                                    COLOR_WIN_INFOBAR_HIGHLIGHT,
+                                                    _("Private %s> %s"),
+                                                    nick, pos);
                             highlight = 1;
                         }
                         else

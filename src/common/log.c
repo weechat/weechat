@@ -38,6 +38,7 @@
 
 #include "weechat.h"
 #include "log.h"
+#include "util.h"
 
 
 char *weechat_log_filename = NULL; /* log name (~/.weechat/weechat.log)     */
@@ -99,11 +100,11 @@ weechat_log_init ()
 {
     if (!weechat_log_open (NULL, "w"))
     {
-        fprintf (stderr,
-                 _("%s unable to create/append to log file\n"
-                   "If another WeeChat process is using this file, try to run WeeChat\n"
-                   "with another home using \"--dir\" command line option.\n"),
-                 WEECHAT_ERROR);
+        weechat_iconv_fprintf (stderr,
+                               _("%s unable to create/append to log file\n"
+                                 "If another WeeChat process is using this file, try to run WeeChat\n"
+                                 "with another home using \"--dir\" command line option.\n"),
+                               WEECHAT_ERROR);
         exit (1);
     }
 }
@@ -142,12 +143,13 @@ weechat_log_printf (char *message, ...)
     seconds = time (NULL);
     date_tmp = localtime (&seconds);
     if (date_tmp)
-        fprintf (weechat_log_file, "[%04d-%02d-%02d %02d:%02d:%02d] %s",
-                 date_tmp->tm_year + 1900, date_tmp->tm_mon + 1, date_tmp->tm_mday,
-                 date_tmp->tm_hour, date_tmp->tm_min, date_tmp->tm_sec,
-                 buffer);
+        weechat_iconv_fprintf (weechat_log_file, "[%04d-%02d-%02d %02d:%02d:%02d] %s",
+                               date_tmp->tm_year + 1900, date_tmp->tm_mon + 1, date_tmp->tm_mday,
+                               date_tmp->tm_hour, date_tmp->tm_min, date_tmp->tm_sec,
+                               buffer);
     else
-        fprintf (weechat_log_file, "%s", buffer);
+        weechat_iconv_fprintf (weechat_log_file, "%s", buffer);
+    
     fflush (weechat_log_file);
 }
 
@@ -212,8 +214,8 @@ weechat_log_crash_rename ()
                   getpid());
         if (rename (old_name, new_name) == 0)
         {
-            fprintf (stderr, "*** Full crash dump was saved to %s file.\n",
-                     new_name);
+            weechat_iconv_fprintf (stderr, "*** Full crash dump was saved to %s file.\n",
+                                   new_name);
             weechat_log_open (new_name, "a");
             free (old_name);
             free (new_name);

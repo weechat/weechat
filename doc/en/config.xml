@@ -41,34 +41,6 @@
   <entry>WeeChat slogan (if empty, slogan is not used)</entry>
 </row>
 <row>
-  <entry><option>look_charset_decode_iso</option></entry>
-  <entry>string</entry>
-  <entry>any string</entry>
-  <entry>'ISO-8859-1'</entry>
-  <entry>ISO charset for decoding messages from server (used only if locale is UTF-8) (if empty, messages are not converted if locale is UTF-8)</entry>
-</row>
-<row>
-  <entry><option>look_charset_decode_utf</option></entry>
-  <entry>string</entry>
-  <entry>any string</entry>
-  <entry>'UTF-8'</entry>
-  <entry>UTF charset for decoding messages from server (used only if locale is not UTF-8) (if empty, messages are not converted if locale is not UTF-8)</entry>
-</row>
-<row>
-  <entry><option>look_charset_encode</option></entry>
-  <entry>string</entry>
-  <entry>any string</entry>
-  <entry>''</entry>
-  <entry>Charset for encoding messages sent to server, examples: UTF-8, ISO-8859-1 (if empty, messages are not converted)</entry>
-</row>
-<row>
-  <entry><option>look_charset_internal</option></entry>
-  <entry>string</entry>
-  <entry>any string</entry>
-  <entry>''</entry>
-  <entry>Forces internal WeeChat charset (should be empty in most cases, that means detected charset is used)</entry>
-</row>
-<row>
   <entry><option>look_one_server_buffer</option></entry>
   <entry>boolean</entry>
   <entry>'on' or 'off'</entry>
@@ -1236,25 +1208,4 @@
   <entry>any string</entry>
   <entry>''</entry>
   <entry>Comma separated list of notify levels for channels of this server (format: #channel:1,..), a channel name '*' is reserved for server default notify level</entry>
-</row>
-<row>
-  <entry><option>server_charset_decode_iso</option></entry>
-  <entry>string</entry>
-  <entry>any string</entry>
-  <entry>''</entry>
-  <entry>Comma separated list of charsets for server and channels, to decode ISO (format: server:charset,#channel:charset,..)</entry>
-</row>
-<row>
-  <entry><option>server_charset_decode_utf</option></entry>
-  <entry>string</entry>
-  <entry>any string</entry>
-  <entry>''</entry>
-  <entry>Comma separated list of charsets for server and channels, to decode UTF (format: server:charset,#channel:charset,..)</entry>
-</row>
-<row>
-  <entry><option>server_charset_encode</option></entry>
-  <entry>string</entry>
-  <entry>any string</entry>
-  <entry>''</entry>
-  <entry>Comma separated list of charsets for server and channels, to encode messages (format: server:charset,#channel:charset,..)</entry>
 </row>

@@ -518,6 +518,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 </entry>
               </row>
               <row>
+                <entry>Ctrl + T</entry>
+                <entry>
+                  Inverser deux caractères
+                </entry>
+              </row>
+              <row>
                 <entry>Ctrl + U</entry>
                 <entry>
                   Effacer du curseur jusqu'au début de la ligne de commande
@@ -530,7 +536,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 </entry>
               </row>
               <row>
-                <entry>Backspace</entry>
+                <entry>Ctrl + Y</entry>
+                <entry>
+                  Coller le contenu du presse-papiers
+                </entry>
+              </row>
+              <row>
+                <entry>Backspace / Ctrl + H</entry>
                 <entry>
                   Effacer le caractère précédent sur la ligne de commande
                 </entry>
@@ -542,7 +554,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 </entry>
               </row>
               <row>
-                <entry>Tab</entry>
+                <entry>Tab / Shift + Tab</entry>
                 <entry>
                   Compléter la commande ou le pseudo
                   (Tab de nouveau: trouver la complétion suivante)
@@ -556,7 +568,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 </entry>
               </row>
               <row>
-                <entry>Entrée</entry>
+                <entry>Entrée / Ctrl + J / Ctrl + M</entry>
                 <entry>
                   Exécuter la commande ou envoyer le message
                 </entry>
@@ -1276,6 +1288,136 @@ fi
       
       <section id="secFonctionsInterface">
         <title>Fonctions de l'interface (API)</title>
+                
+        <section id="secAPI_set_charset">
+          <title>set_charset</title>
+          
+          <para>
+            Prototype :
+            <command>
+              void set_charset (t_weechat_plugin *plugin, char *charset)
+            </command>
+          </para>
+          <para>
+            Change le jeu de caractères de l'extension.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>charset</option> : nouveau jeu de caractères à utiliser
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Exemple :
+            <screen>plugin->set_charset (plugin, "ISO-8859-1");</screen>
+          </para>
+        </section>
+        
+        <section id="secAPI_iconv_to_internal">
+          <title>iconv_to_internal</title>
+          
+          <para>
+            Prototype :
+            <command>
+              void iconv_to_internal (t_weechat_plugin *plugin, char *charset,
+                                      char *string)
+            </command>
+          </para>
+          <para>
+            Convertit une chaîne de caractères vers le jeu de caractères
+            interne WeeChat (UTF-8).
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>charset</option> : le jeu de caractères de départ
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>string</option> : la chaîne à convertir
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : la chaîne convertie.
+          </para>
+          <para>
+            Note : le résultat doit être libéré par un appel à la fonction
+            "free" après utilisation.
+          </para>
+          <para>
+            Exemple :
+            <screen>char *str = plugin->iconv_to_internal (plugin, "ISO-8859-1", "chaine iso: é à");</screen>
+          </para>
+        </section>
+                
+        <section id="secAPI_iconv_from_internal">
+          <title>iconv_from_internal</title>
+          
+          <para>
+            Prototype :
+            <command>
+              void iconv_from_internal (t_weechat_plugin *plugin, char *charset,
+                                        char *string)
+            </command>
+          </para>
+          <para>
+            Convertit une chaîne de caractères depuis le jeu de caractères
+            interne WeeChat (UTF-8) vers un autre.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>charset</option> : le jeu de caractères voulu
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>string</option> : la chaîne à convertir
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : la chaîne convertie.
+          </para>
+          <para>
+            Note : le résultat doit être libéré par un appel à la fonction
+            "free" après utilisation.
+          </para>
+          <para>
+            Exemple :
+            <screen>char *str = plugin->iconv_from_internal (plugin, "ISO-8859-1", "chaine utf-8: é à");</screen>
+          </para>
+        </section>
         
         <section id="secAPI_ascii_strcasecmp">
           <title>ascii_strcasecmp</title>
@@ -4782,25 +4924,25 @@ end
           <para>
             Prototype Perl :
             <command>
-              weechat::register(nom, version, fonction_de_fin, description);
+              weechat::register(nom, version, fonction_de_fin, description, [charset]);
             </command>
           </para>
           <para>
             Prototype Python :
             <command>
-              weechat.register(nom, version, fonction_de_fin, description)
+              weechat.register(nom, version, fonction_de_fin, description, [charset])
             </command>
           </para>
           <para>
             Prototype Ruby :
             <command>
-              Weechat.register(nom, version, fonction_de_fin, description)
+              Weechat.register(nom, version, fonction_de_fin, description, [charset])
             </command>
           </para>
           <para>
             Prototype Lua :
             <command>
-              weechat.register(nom, version, fonction_de_fin, description)
+              weechat.register(nom, version, fonction_de_fin, description, [charset])
             </command>
           </para>
           <para>
@@ -4833,6 +4975,12 @@ end
                   <option>description</option> : brève description du script
                 </para>
               </listitem>
+              <listitem>
+                <para>
+                  <option>charset</option> : jeu de caractères du script, à
+                  préciser si le script n'est pas écrit en UTF-8
+                </para>
+              </listitem>
             </itemizedlist>
           </para>
           <para>
@@ -4843,20 +4991,82 @@ end
             Exemples :
 <screen>
 # perl
-weechat::register("essai", "1.0", "fin_essai", "Script d'essai !");
+weechat::register("essai", "1.0", "fin_essai", "Script d'essai !", "ISO-8859-1");
 
 # python
-weechat.register("essai", "1.0", "fin_essai", "Script d'essai !")
+weechat.register("essai", "1.0", "fin_essai", "Script d'essai !", "ISO-8859-1")
 
 # ruby
-Weechat.register("essai", "1.0", "fin_essai", "Script d'essai !")
+Weechat.register("essai", "1.0", "fin_essai", "Script d'essai !", "ISO-8859-1")
 
 -- lua
-weechat.register("essai", "1.0", "fin_essai", "Script d'essai !")
+weechat.register("essai", "1.0", "fin_essai", "Script d'essai !", "ISO-8859-1")
 </screen>
           </para>
         </section>
         
+        <section id="sec_script_set_charset">
+          <title>set_charset</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::set_charset(charset);
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.set_charset(charset)
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.set_charsetr(charset)
+            </command>
+          </para>
+          <para>
+            Prototype Lua :
+            <command>
+              weechat.set_charset(charset)
+            </command>
+          </para>
+          <para>
+            Change le jeu de caractères du script.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>charset</option> : nouveau jeu de caractères
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : 1 si le nouveau jeu de caractères a été
+            mis en place, 0 si une erreur s'est produite.
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+weechat::set_charset("ISO-8859-1");
+
+# python
+weechat.set_charset("ISO-8859-1")
+
+# ruby
+Weechat.set_charset("ISO-8859-1")
+
+-- lua
+weechat.set_charset("ISO-8859-1")
+</screen>
+          </para>
+        </section>
+                        
         <section id="secScript_print">
           <title>print</title>
           
@@ -5897,27 +6107,43 @@ weechat.remove_keyboard_handler("mon_clavier")
             Exemples :
 <screen>
 # perl
-weechat::add_modifier("irc_in", "privmsg", "ma_fonction");
-sub ma_fonction
+weechat::add_modifier("irc_in", "privmsg", "mod_in");
+weechat::add_modifier("irc_out", "privmsg", "mod_out");
+sub mod_in
 {
-    # TODO
+    return "$_[1] [modifier IN]";
+}
+sub mod_out
+{
+    return "$_[1] [modifier OUT]";
 }
 
 # python
-weechat.add_modifier("irc_in", "privmsg", "ma_fonction")
-def ma_fonction(serveur, args):
-    # TODO
+weechat.add_modifier("irc_in", "privmsg", "mod_in")
+weechat.add_modifier("irc_out", "privmsg", "mod_out")
+def mod_in(serveur, args):
+    return args + " [modifier IN]"
+def mod_out(serveur, args):
+    return args + " [modifier OUT]"
 
 # ruby
-Weechat.add_modifier("irc_in", "privmsg", "ma_fonction")
-def ma_fonction(server, args)
-    # TODO
+Weechat.add_modifier("irc_in", "privmsg", "mod_in")
+Weechat.add_modifier("irc_out", "privmsg", "mod_out")
+def mod_in(server, args)
+    return args + " [modifier IN]"
+end
+def mod_out(server, args)
+    return args + " [modifier OUT]"
 end
 
 -- lua
-weechat.add_modifier("irc_in", "privmsg", "ma_fonction")
-function ma_fonction(server, args)
-    -- TODO
+weechat.add_modifier("irc_in", "privmsg", "mod_in")
+weechat.add_modifier("irc_out", "privmsg", "mod_out")
+function mod_in(server, args)
+    return args .. " [modifier IN]"
+end
+function mod_out(server, args)
+    return args .. " [modifier OUT]"
 end
 </screen>
           </para>
@@ -5980,16 +6206,16 @@ end
             Exemples :
 <screen>
 # perl
-weechat::remove_modifier("irc_in", "privmsg", "ma_fonction");
+weechat::remove_modifier("irc_in", "privmsg", "mod_in");
 
 # python
-weechat.remove_modifier("irc_in", "privmsg", "ma_fonction")
+weechat.remove_modifier("irc_in", "privmsg", "mod_in")
 
 # ruby
-Weechat.remove_modifier("irc_in", "privmsg", "ma_fonction")
+Weechat.remove_modifier("irc_in", "privmsg", "mod_in")
 
 -- lua
-weechat.remove_modifier("irc_in", "privmsg", "ma_fonction")
+weechat.remove_modifier("irc_in", "privmsg", "mod_in")
 </screen>
           </para>
         </section>
@@ -7293,8 +7519,8 @@ end
           </listitem>
           <listitem>
             <para>
-              <emphasis>Kolter</emphasis>
-              <email>kolter AT free.fr</email> -
+              <emphasis>kolter (Emmanuel Bouthenot)</emphasis>
+              <email>kolter AT openics.org</email> -
               développeur
             </para>
           </listitem>

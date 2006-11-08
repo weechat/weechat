@@ -1196,9 +1196,8 @@ dcc_chat_sendf (t_irc_dcc *ptr_dcc, char *fmt, ...)
 {
     va_list args;
     static char buffer[4096];
-    char *buf2;
     int size_buf;
-
+    
     if (!ptr_dcc || (ptr_dcc->sock < 0))
         return;
     
@@ -1217,10 +1216,7 @@ dcc_chat_sendf (t_irc_dcc *ptr_dcc, char *fmt, ...)
     gui_printf (ptr_dcc->server->buffer, "[DEBUG] Sending to remote host (DCC CHAT) >>> %s\n", buffer);
     buffer[size_buf - 2] = '\r';
 #endif
-    buf2 = channel_iconv_encode (ptr_dcc->server,
-                                 ptr_dcc->channel,
-                                 buffer);
-    if (dcc_chat_send (ptr_dcc, buf2, strlen (buf2)) <= 0)
+    if (dcc_chat_send (ptr_dcc, buffer, strlen (buffer)) <= 0)
     {
         irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
                             PREFIX_ERROR);
@@ -1229,7 +1225,6 @@ dcc_chat_sendf (t_irc_dcc *ptr_dcc, char *fmt, ...)
                     WEECHAT_ERROR, ptr_dcc->nick);
         dcc_close (ptr_dcc, DCC_FAILED);
     }
-    free (buf2);
 }
 
 /*
@@ -1242,7 +1237,7 @@ dcc_chat_recv (t_irc_dcc *ptr_dcc)
     fd_set read_fd;
     static struct timeval timeout;
     static char buffer[4096 + 2];
-    char *buf2, *pos, *ptr_buf, *ptr_buf2, *next_ptr_buf;
+    char *buf2, *pos, *ptr_buf, *next_ptr_buf;
     char *ptr_buf_color;
     int num_read;
     
@@ -1307,11 +1302,7 @@ dcc_chat_recv (t_irc_dcc *ptr_dcc)
             
             if (ptr_buf)
             {
-                ptr_buf2 = channel_iconv_decode (ptr_dcc->server,
-                                                 ptr_dcc->channel,
-                                                 ptr_buf);
-                ptr_buf_color = (char *)gui_color_decode ((ptr_buf2) ?
-                                                          (unsigned char *)ptr_buf2 : (unsigned char *)ptr_buf,
+                ptr_buf_color = (char *)gui_color_decode ((unsigned char *)ptr_buf,
                                                           cfg_irc_colors_receive);
                 
                 if (irc_is_highlight (ptr_buf, ptr_dcc->server->nick))
@@ -1326,7 +1317,7 @@ dcc_chat_recv (t_irc_dcc *ptr_dcc)
                                             COLOR_WIN_INFOBAR_HIGHLIGHT,
                                             _("Private %s> %s"),
                                             ptr_dcc->nick,
-                                            (ptr_buf_color) ? ptr_buf_color : ((ptr_buf2) ? ptr_buf2 : ptr_buf));
+                                            (ptr_buf_color) ? ptr_buf_color : ptr_buf);
                     }
                 }
                 else
@@ -1338,8 +1329,6 @@ dcc_chat_recv (t_irc_dcc *ptr_dcc)
                                  (ptr_buf_color) ? ptr_buf_color : ptr_buf);
                 if (ptr_buf_color)
                     free (ptr_buf_color);
-                if (ptr_buf2)
-                    free (ptr_buf2);
             }
             
             ptr_buf = next_ptr_buf;

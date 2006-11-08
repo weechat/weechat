@@ -40,16 +40,6 @@ Befehl: auszuführender Befehl (falls nicht vorhanden wird automatisch ein '/' vo
 
 
 </programlisting>
-<command>charset  [(decode_iso | decode_utf | encode) Zeichensatz]</command>
-<programlisting>
-ändere Zeichensatz für den Server oder Channel
-
-decode_iso: Zeichensatz um ISO zu decoden
-decode_utf: Zeichensatz um UTF zu decoden
-    encode: der zum encoden benutzte Zeichensatz
-   Zeichensatz: Zeichensatz, der benutzt werden soll (zum Beispiel: ISO-8859-15, UTF-8,..)
-
-</programlisting>
 <command>clear  [-all]</command>
 <programlisting>
 Fenster leeren

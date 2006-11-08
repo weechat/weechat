@@ -74,13 +74,6 @@ t_weechat_command weechat_commands[] =
     N_("command"),
     N_("command: command to execute (a '/' is automatically added if not found at beginning of command)\n"),
     "%w|%i", 0, MAX_ARGS, 1, NULL, weechat_cmd_builtin },
-  { "charset", N_("change charset for server or channel"),
-    N_("[(decode_iso | decode_utf | encode) charset]"),
-    N_("decode_iso: charset used for decoding ISO\n"
-       "decode_utf: charset used for decoding UTF\n"
-       "    encode: charset used for encoding messages\n"
-       "   charset: charset to use (for example: ISO-8859-15, UTF-8,..)"),
-    "decode_iso|decode_utf|encode", 0, 2, 0, weechat_cmd_charset, NULL },
   { "clear", N_("clear window(s)"),
     N_("[-all]"),
     N_("-all: clear all windows"),
@@ -293,7 +286,7 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                       int only_builtin)
 {
     int i, rc, argc, argc2, return_code, length1, length2;
-    char *command, *pos, *ptr_args, *ptr_args2, *ptr_args3;
+    char *command, *pos, *ptr_args, *ptr_args2;
     char **argv, **argv2, *alias_command;
     char **commands, **ptr_cmd, **ptr_next_cmd;
     char *args_replaced, *vars_replaced, *new_ptr_cmd;
@@ -497,16 +490,13 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                     }
                     else
                     {
-                        ptr_args2 = (weechat_commands[i].conversion && ptr_args) ?
-                            channel_iconv_encode (server, channel, ptr_args) : NULL;
-                        ptr_args3 = (weechat_commands[i].conversion
-                                     && cfg_irc_colors_send && ptr_args) ?
-                            (char *)gui_color_encode ((ptr_args2) ? (unsigned char *)ptr_args2 :
-                                                      (unsigned char *)ptr_args) : NULL;
+                        ptr_args2 = (weechat_commands[i].conversion
+                                     && cfg_irc_colors_send
+                                     && ptr_args) ?
+                            (char *)gui_color_encode ((unsigned char *)ptr_args) : NULL;
                         if (weechat_commands[i].cmd_function_args)
                         {
-                            argv2 = explode_string ((ptr_args3) ? ptr_args3 :
-                                                    ((ptr_args2) ? ptr_args2 : ptr_args),
+                            argv2 = explode_string ((ptr_args2) ? ptr_args2 : ptr_args,
                                                     " ", 0, &argc2);
                             return_code = (int) (weechat_commands[i].cmd_function_args)
                                 (server, channel, argc2, argv2);
@@ -514,8 +504,7 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                         }
                         else
                             return_code = (int) (weechat_commands[i].cmd_function_1arg)
-                                (server, channel, (ptr_args3) ? ptr_args3 :
-                                 ((ptr_args2) ? ptr_args2 : ptr_args));
+                                (server, channel, (ptr_args2) ? ptr_args2 : ptr_args);
                         if (return_code < 0)
                         {
                             irc_display_prefix (NULL, NULL, PREFIX_ERROR);
@@ -525,8 +514,6 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                         }
                         if (ptr_args2)
                             free (ptr_args2);
-                        if (ptr_args3)
-                            free (ptr_args3);
                     }
                     free_exploded_string (argv);
                     free (command);
@@ -592,16 +579,13 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                             free (command);
                             return 0;
                         }
-                        ptr_args2 = (irc_commands[i].conversion && ptr_args) ?
-                            channel_iconv_encode (server, channel, ptr_args) : NULL;
-                        ptr_args3 = (irc_commands[i].conversion
-                                     && cfg_irc_colors_send && ptr_args) ?
-                            (char *)gui_color_encode ((ptr_args2) ? (unsigned char *)ptr_args2 :
-                                                      (unsigned char *)ptr_args) : NULL;
+                        ptr_args2 = (irc_commands[i].conversion
+                                     && cfg_irc_colors_send
+                                     && ptr_args) ?
+                            (char *)gui_color_encode ((unsigned char *)ptr_args) : NULL;
                         if (irc_commands[i].cmd_function_args)
                         {
-                            argv2 = explode_string ((ptr_args3) ? ptr_args3 :
-                                                    ((ptr_args2) ? ptr_args2 : ptr_args),
+                            argv2 = explode_string ((ptr_args2) ? ptr_args2 : ptr_args,
                                                     " ", 0, &argc2);
                             return_code = (int) (irc_commands[i].cmd_function_args)
                                 (server, channel, argc2, argv2);
@@ -609,8 +593,7 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                         }
                         else
                             return_code = (int) (irc_commands[i].cmd_function_1arg)
-                                (server, channel, (ptr_args3) ? ptr_args3 :
-                                 ((ptr_args2) ? ptr_args2 : ptr_args));
+                                (server, channel, (ptr_args2) ? ptr_args2 : ptr_args);
                         if (return_code < 0)
                         {
                             irc_display_prefix (NULL, NULL, PREFIX_ERROR);
@@ -620,8 +603,6 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                         }
                         if (ptr_args2)
                             free (ptr_args2);
-                        if (ptr_args3)
-                            free (ptr_args3);
                     }
                     free_exploded_string (argv);
                     free (command);
@@ -742,7 +723,7 @@ user_command (t_irc_server *server, t_irc_channel *channel, char *command, int o
 {
     t_gui_buffer *buffer;
     char *new_cmd, *ptr_cmd, *pos;
-    char *command_with_colors, *command_encoded;
+    char *command_with_colors;
     
     if ((!command) || (!command[0]) || (command[0] == '\r') || (command[0] == '\n'))
         return;
@@ -791,9 +772,6 @@ user_command (t_irc_server *server, t_irc_channel *channel, char *command, int o
                     command_with_colors = (cfg_irc_colors_send) ?
                         (char *)gui_color_encode ((unsigned char *)ptr_cmd) : NULL;
                     
-                    command_encoded = channel_iconv_encode (server, channel,
-                                                            (command_with_colors) ? command_with_colors : ptr_cmd);
-                    
                     if (CHANNEL(buffer)->dcc_chat)
                     {
                         if (((t_irc_dcc *)(CHANNEL(buffer)->dcc_chat))->sock < 0)
@@ -806,8 +784,7 @@ user_command (t_irc_server *server, t_irc_channel *channel, char *command, int o
                         {
                             dcc_chat_sendf ((t_irc_dcc *)(CHANNEL(buffer)->dcc_chat),
                                             "%s\r\n",
-                                            (command_encoded) ? command_encoded :
-                                            ((command_with_colors) ? command_with_colors : ptr_cmd));
+                                            (command_with_colors) ? command_with_colors : ptr_cmd);
                             user_message_display (server, buffer,
                                                   (command_with_colors) ?
                                                   command_with_colors : ptr_cmd);
@@ -815,13 +792,10 @@ user_command (t_irc_server *server, t_irc_channel *channel, char *command, int o
                     }
                     else
                         user_message (server, buffer,
-                                      (command_encoded) ? command_encoded :
-                                      ((command_with_colors) ? command_with_colors : ptr_cmd));
+                                      (command_with_colors) ? command_with_colors : ptr_cmd);
                     
                     if (command_with_colors)
                         free (command_with_colors);
-                    if (command_encoded)
-                        free (command_encoded);
                 }
                 else
                 {
@@ -1390,232 +1364,6 @@ weechat_cmd_builtin (t_irc_server *server, t_irc_channel *channel,
                 free (command);
             }
         }
-    }
-    return 0;
-}
-
-/*
- * weechat_cmd_charset_display: display charsets for a server or channel
- */
-
-void
-weechat_cmd_charset_display (t_gui_buffer *buffer)
-{
-    char *server_item = "server", *ptr_item;
-    char *value, *string, *herited;
-    int length;
-    
-    if ((BUFFER_IS_SERVER(buffer) && (SERVER(buffer)))
-         || BUFFER_IS_CHANNEL(buffer)
-         || BUFFER_IS_PRIVATE(buffer))
-    {
-        if (BUFFER_IS_SERVER(buffer))
-        {
-            gui_printf_nolog (NULL, _("Charsets for server %s%s%s: "),
-                              GUI_COLOR(COLOR_WIN_CHAT_SERVER),
-                              SERVER(buffer)->name,
-                              GUI_COLOR(COLOR_WIN_CHAT));
-            ptr_item = server_item;
-        }
-        else if (BUFFER_IS_CHANNEL(buffer))
-        {
-            gui_printf_nolog (NULL, _("Charsets for channel %s%s%s: "),
-                              GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
-                              CHANNEL(buffer)->name,
-                              GUI_COLOR(COLOR_WIN_CHAT));
-            ptr_item = CHANNEL(buffer)->name;
-        }
-        else
-        {
-            gui_printf_nolog (NULL, _("Charsets for private %s%s%s: "),
-                              GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
-                              CHANNEL(buffer)->name,
-                              GUI_COLOR(COLOR_WIN_CHAT));
-            ptr_item = CHANNEL(buffer)->name;
-        }
-        
-        /* decode ISO */
-        herited = NULL;
-        config_option_list_get_value (&(SERVER(buffer)->charset_decode_iso),
-                                      ptr_item, &value, &length);
-        if (value && (length > 0))
-        {
-            string = strdup (value);
-            string[length] = '\0';
-        }
-        else
-        {
-            string = strdup ("");
-            herited = channel_get_charset_decode_iso (SERVER(buffer),
-                                                      CHANNEL(buffer));
-        }
-        gui_printf (NULL, "decode_iso: \"%s%s%s\"",
-                    GUI_COLOR(COLOR_WIN_CHAT_HOST),
-                    string,
-                    GUI_COLOR(COLOR_WIN_CHAT));
-        if (herited)
-        {
-            gui_printf (NULL, _(" (inherited: \"%s%s%s\")"),
-                        GUI_COLOR(COLOR_WIN_CHAT_HOST),
-                        herited,
-                        GUI_COLOR(COLOR_WIN_CHAT));
-            free (herited);
-        }
-        gui_printf (NULL, ", ");
-        free (string);
-        
-        /* decode UTF */
-        herited = NULL;
-        config_option_list_get_value (&(SERVER(buffer)->charset_decode_utf),
-                                      ptr_item, &value, &length);
-        if (value && (length > 0))
-        {
-            string = strdup (value);
-            string[length] = '\0';
-        }
-        else
-        {
-            string = strdup ("");
-            herited = channel_get_charset_decode_utf (SERVER(buffer),
-                                                      CHANNEL(buffer));
-        }
-        gui_printf (NULL, "decode_utf: \"%s%s%s\"",
-                    GUI_COLOR(COLOR_WIN_CHAT_HOST),
-                    string,
-                    GUI_COLOR(COLOR_WIN_CHAT));
-        if (herited)
-        {
-            gui_printf (NULL, _(" (inherited: \"%s%s%s\")"),
-                        GUI_COLOR(COLOR_WIN_CHAT_HOST),
-                        herited,
-                        GUI_COLOR(COLOR_WIN_CHAT));
-            free (herited);
-        }
-        gui_printf (NULL, ", ");
-        free (string);
-        
-        /* encode */
-        herited = NULL;
-        config_option_list_get_value (&(SERVER(buffer)->charset_encode),
-                                      ptr_item, &value, &length);
-        if (value && (length > 0))
-        {
-            string = strdup (value);
-            string[length] = '\0';
-        }
-        else
-        {
-            string = strdup ("");
-            herited = channel_get_charset_encode (SERVER(buffer),
-                                                  CHANNEL(buffer));
-        }
-        gui_printf (NULL, "encode: \"%s%s%s\"",
-                    GUI_COLOR(COLOR_WIN_CHAT_HOST),
-                    string,
-                    GUI_COLOR(COLOR_WIN_CHAT));
-        if (herited)
-        {
-            gui_printf (NULL, _(" (inherited: \"%s%s%s\")"),
-                        GUI_COLOR(COLOR_WIN_CHAT_HOST),
-                        herited,
-                        GUI_COLOR(COLOR_WIN_CHAT));
-            free (herited);
-        }
-        gui_printf (NULL, "\n");
-        free (string);
-    }
-}
-
-/*
- * weechat_cmd_charset_set: set a charset for server or channel
- *                          from_internal == 1 if charset is used to encode data,
- *                          0 if charset is used to decode data
- */
-
-int
-weechat_cmd_charset_set (t_gui_buffer *buffer, char **string, char *charset,
-                         int from_internal)
-{
-    int iconv_ok;
-    
-    if (charset)
-    {
-        if (from_internal)
-            iconv_ok = weechat_iconv_check (NULL, charset);
-        else
-            iconv_ok = weechat_iconv_check (charset, NULL);
-        
-        if (!iconv_ok)
-        {
-            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-            gui_printf (NULL,
-                        _("%s charset \"%s\" is not available\n"),
-                        WEECHAT_ERROR, charset);
-            return -1;
-        }
-    }
-    if (BUFFER_IS_SERVER(buffer))
-    {
-        if (SERVER(buffer))
-        {
-            if (charset)
-                config_option_list_set (string, "server", charset);
-            else
-                config_option_list_remove (string, "server");
-            weechat_cmd_charset_display (buffer);
-        }
-    }
-    else if (BUFFER_IS_CHANNEL(buffer) ||
-             BUFFER_IS_PRIVATE(buffer))
-    {
-        if (charset)
-            config_option_list_set (string, CHANNEL(buffer)->name, charset);
-        else
-            config_option_list_remove (string, CHANNEL(buffer)->name);
-        weechat_cmd_charset_display (buffer);
-    }
-    return 0;
-}
-
-/*
- * weechat_cmd_charset: change charset for server or channel
- */
-
-int
-weechat_cmd_charset (t_irc_server *server, t_irc_channel *channel,
-                     int argc, char **argv)
-{
-    t_gui_buffer *buffer;
-    int rc;
-    
-    irc_find_context (server, channel, NULL, &buffer);
-    
-    if (argc == 0)
-        weechat_cmd_charset_display (buffer);
-    else
-    {
-        if (ascii_strcasecmp (argv[0], "decode_iso") == 0)
-            rc = weechat_cmd_charset_set (buffer,
-                                          &(SERVER(buffer)->charset_decode_iso),
-                                          (argc > 1) ? argv[1] : NULL, 0);
-        else if (ascii_strcasecmp (argv[0], "decode_utf") == 0)
-            rc = weechat_cmd_charset_set (buffer,
-                                          &(SERVER(buffer)->charset_decode_utf),
-                                          (argc > 1) ? argv[1] : NULL, 0);
-        else if (ascii_strcasecmp (argv[0], "encode") == 0)
-            rc = weechat_cmd_charset_set (buffer,
-                                          &(SERVER(buffer)->charset_encode),
-                                          (argc > 1) ? argv[1] : NULL, 1);
-        else
-        {
-            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-            gui_printf (NULL,
-                        _("%s unknown option for \"%s\" command\n"),
-                        WEECHAT_ERROR, "charset");
-            return -1;
-        }
-        if (rc < 0)
-            return -1;
     }
     return 0;
 }
@@ -2996,8 +2744,7 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
                                  server_tmp.nick2, server_tmp.nick3,
                                  server_tmp.username, server_tmp.realname,
                                  server_tmp.hostname,
-                                 server_tmp.command, 1, server_tmp.autojoin, 1, NULL,
-                                 NULL, NULL, NULL);
+                                 server_tmp.command, 1, server_tmp.autojoin, 1, NULL);
         if (new_server)
         {
             irc_display_prefix (NULL, NULL, PREFIX_INFO);
@@ -3789,9 +3536,10 @@ weechat_cmd_upgrade (t_irc_server *server, t_irc_channel *channel,
     plugin_init (1);
 #endif
     
-    fprintf (stderr, _("%s exec failed (program: \"%s\"), exiting WeeChat\n"),
-             WEECHAT_ERROR,
-             exec_args[0]);
+    weechat_iconv_fprintf (stderr,
+                           _("%s exec failed (program: \"%s\"), exiting WeeChat\n"),
+                           WEECHAT_ERROR,
+                           exec_args[0]);
     
     free (exec_args[0]);
     free (exec_args[3]);
