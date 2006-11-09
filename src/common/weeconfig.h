@@ -212,6 +212,7 @@ extern int cfg_irc_fifo_pipe;
 extern char *cfg_irc_highlight;
 extern int cfg_irc_colors_receive;
 extern int cfg_irc_colors_send;
+extern int cfg_irc_send_unknown_commands;
 
 extern int cfg_dcc_auto_accept_files;
 extern int cfg_dcc_auto_accept_chats;

@@ -290,6 +290,7 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
     char **argv, **argv2, *alias_command;
     char **commands, **ptr_cmd, **ptr_next_cmd;
     char *args_replaced, *vars_replaced, *new_ptr_cmd;
+    char *unknown_command;
     int some_args_replaced;
     t_weechat_alias *ptr_alias;
     
@@ -609,11 +610,38 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                     return 1;
                 }
             }
-            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-            gui_printf (NULL,
-                        _("%s unknown command \"%s\" (type /help for help)\n"),
-                        WEECHAT_ERROR,
-                        command + 1);
+
+            /* should we send unknown command to IRC server? */
+            if (cfg_irc_send_unknown_commands)
+            {
+                if (ptr_args)
+                    unknown_command = (char *)malloc (strlen (command + 1) + 2 + strlen (ptr_args) + 1);
+                else
+                    unknown_command = (char *)malloc (strlen (command + 1) + 1);
+                
+                if (unknown_command)
+                {
+                    strcpy (unknown_command, command + 1);
+                    if (ptr_args)
+                    {
+                        strcat (unknown_command, " :");
+                        strcat (unknown_command, ptr_args);
+                    }
+                    irc_cmd_send_quote (server, channel, unknown_command);
+                    free (unknown_command);
+                }
+            }
+            else
+            {
+                irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                gui_printf (NULL,
+                            _("%s unknown command \"%s\" (type /help for help). "
+                              "To send unknown commands to IRC server, enable option "
+                              "irc_send_unknown_commands.\n"),
+                            WEECHAT_ERROR,
+                            command + 1);
+            }
+            
             free_exploded_string (argv);
     }
     free (command);

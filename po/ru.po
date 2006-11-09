@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.2-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-11-05 16:11+0100\n"
+"POT-Creation-Date: 2006-11-09 14:26+0100\n"
 "PO-Revision-Date: 2006-11-01 18:50+0100\n"
 "Last-Translator: Stalwart <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Bookmarks: -1,-1,608,-1,-1,-1,-1,-1,-1,-1\n"
 
-#: src/irc/irc-server.c:192 src/common/weeconfig.c:2302
+#: src/irc/irc-server.c:192 src/common/weeconfig.c:2307
 msgid "Unable to get user's name"
 msgstr "Не могу получить имя пользователя"
 
@@ -1381,12 +1381,12 @@ msgstr "(скрытый)"
 msgid "%s: using hostname \"%s\"\n"
 msgstr "%s: используется хост \"%s\"\n"
 
-#: src/irc/irc-send.c:219 src/common/command.c:663
+#: src/irc/irc-send.c:219 src/common/command.c:691
 #, c-format
 msgid "%s cannot find nick for sending message\n"
 msgstr "%s не могу найти адресата сообщения\n"
 
-#: src/irc/irc-send.c:358 src/common/command.c:566
+#: src/irc/irc-send.c:358 src/common/command.c:567
 #, c-format
 msgid "%s command \"%s\" needs a server connection!\n"
 msgstr "%s команде \"%s\" необходимо соединение с сервером!\n"
@@ -1406,7 +1406,7 @@ msgstr "%s \"%s\" команда может быть выполнена толь
 msgid "%s \"%s\" command can not be executed on a server buffer\n"
 msgstr "%s \"%s\" команда может быть выполнена только в буфере сервера\n"
 
-#: src/irc/irc-send.c:879 src/irc/irc-send.c:940 src/common/command.c:1536
+#: src/irc/irc-send.c:879 src/irc/irc-send.c:940 src/common/command.c:1564
 #, c-format
 msgid "%s wrong arguments for \"%s\" command\n"
 msgstr "%s некорректные аргументы команды \"%s\"\n"
@@ -1433,9 +1433,9 @@ msgid "%s nick \"%s\" not found for \"%s\" command\n"
 msgstr "%s ник \"%s\" не найден для команды \"%s\"\n"
 
 #: src/irc/irc-send.c:1345 src/irc/irc-send.c:1483 src/irc/irc-send.c:2103
-#: src/common/command.c:1481 src/common/command.c:1493
-#: src/common/command.c:1512 src/common/command.c:1599
-#: src/common/command.c:2440
+#: src/common/command.c:1509 src/common/command.c:1521
+#: src/common/command.c:1540 src/common/command.c:1627
+#: src/common/command.c:2468
 #, c-format
 msgid "%s wrong argument count for \"%s\" command\n"
 msgstr "%s некорректное количество аргументов команды \"%s\"\n"
@@ -1655,11 +1655,11 @@ msgstr "%s%s %s(%s%s@%s%s)%s был %s\n"
 msgid "%s[%s%s%s]%s idle: "
 msgstr "%s[%s%s%s]%s бездействует: "
 
-#: src/irc/irc-recv.c:3119 src/common/command.c:3582 src/common/command.c:3600
+#: src/irc/irc-recv.c:3119 src/common/command.c:3610 src/common/command.c:3628
 msgid "days"
 msgstr "дней"
 
-#: src/irc/irc-recv.c:3119 src/common/command.c:3582 src/common/command.c:3600
+#: src/irc/irc-recv.c:3119 src/common/command.c:3610 src/common/command.c:3628
 msgid "day"
 msgstr "день"
 
@@ -2187,18 +2187,18 @@ msgid "Plugin \"%s\" unloaded.\n"
 msgstr "Plugin \"%s\" выгружен.\n"
 
 #: src/plugins/plugins.c:1316 src/plugins/plugins.c:1359
-#: src/common/command.c:3261
+#: src/common/command.c:3289
 #, c-format
 msgid "%s plugin \"%s\" not found\n"
 msgstr "%s plugin \"%s\" не найден\n"
 
-#: src/plugins/plugins-config.c:273 src/common/weeconfig.c:1946
+#: src/plugins/plugins-config.c:273 src/common/weeconfig.c:1951
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"=\"\n"
 msgstr "%s %s, строка %d: некорректный синтаксис, утерян \"=\"\n"
 
-#: src/plugins/plugins-config.c:361 src/common/weeconfig.c:2156
-#: src/common/weeconfig.c:2363
+#: src/plugins/plugins-config.c:361 src/common/weeconfig.c:2161
+#: src/common/weeconfig.c:2368
 #, c-format
 msgid "%s cannot create file \"%s\"\n"
 msgstr "%s не могу создать файл \"%s\"\n"
@@ -2515,7 +2515,7 @@ msgstr "обновить экран"
 msgid "grab a key"
 msgstr "захватить клавишу"
 
-#: src/gui/gui-keyboard.c:452 src/common/command.c:2141
+#: src/gui/gui-keyboard.c:452 src/common/command.c:2169
 #, c-format
 msgid "%s unable to bind key \"%s\"\n"
 msgstr "%s не могу установить клавишу \"%s\"\n"
@@ -2548,7 +2548,7 @@ msgstr "**** Начало log-файла"
 msgid "****  End of log  "
 msgstr "**** Конец log-файла"
 
-#: src/common/alias.c:170 src/common/command.c:363
+#: src/common/alias.c:170 src/common/command.c:364
 #, c-format
 msgid "%s circular reference when calling alias \"/%s\"\n"
 msgstr "%s рекурсия при вызове сокращения \"/%s\"\n"
@@ -3013,19 +3013,19 @@ msgstr ""
 "Для splith и splitv <прцт> - процент размера создаваемого окна относительно "
 "текущего. Например, 25 означает создать окно в 4 раза меньше текущего"
 
-#: src/common/command.c:343 src/common/command.c:512 src/common/command.c:601
+#: src/common/command.c:344 src/common/command.c:513 src/common/command.c:602
 #, c-format
 msgid "%s command \"%s\" failed\n"
 msgstr "%s команда \"%s\" не удалась\n"
 
-#: src/common/command.c:469
+#: src/common/command.c:470
 #, c-format
 msgid "%s wrong argument count for %s command \"%s\" (expected: %d arg%s)\n"
 msgstr ""
 "%s некорректное количество аргументов %s команды \"%s\" (ожидалось: %d arg%"
 "s)\n"
 
-#: src/common/command.c:481
+#: src/common/command.c:482
 #, c-format
 msgid ""
 "%s wrong argument count for %s command \"%s\" (expected: between %d and %d "
@@ -3034,14 +3034,14 @@ msgstr ""
 "%s некорректное количество аргументов %s команды \"%s\" (ожидалось: от %d до "
 "%d arg%s)\n"
 
-#: src/common/command.c:539
+#: src/common/command.c:540
 #, c-format
 msgid "%s wrong argument count for IRC command \"%s\" (expected: %d arg%s)\n"
 msgstr ""
 "%s некорректное количество аргументов IRC команды \"%s\" (ожидалось: %d arg%"
 "s)\n"
 
-#: src/common/command.c:551
+#: src/common/command.c:552
 #, c-format
 msgid ""
 "%s wrong argument count for IRC command \"%s\" (expected: between %d and %d "
@@ -3050,405 +3050,407 @@ msgstr ""
 "%s некорректное количество аргументов IRC команды \"%s\" (ожидалось: от %d "
 "до %d arg%s)\n"
 
-#: src/common/command.c:575
+#: src/common/command.c:576
 #, c-format
 msgid "%s command \"%s\" can not be executed on DCC CHAT buffer\n"
 msgstr "%s команда \"%s\" не может быть выполнена в DCC-чате\n"
 
-#: src/common/command.c:614
+#: src/common/command.c:638
 #, c-format
-msgid "%s unknown command \"%s\" (type /help for help)\n"
-msgstr "%s неизвестная команда \"%s\" (наберите /help для справки)\n"
+msgid ""
+"%s unknown command \"%s\" (type /help for help). To send unknown commands to "
+"IRC server, enable option irc_send_unknown_commands.\n"
+msgstr ""
 
-#: src/common/command.c:804
+#: src/common/command.c:832
 msgid "This window is not a channel!\n"
 msgstr "Это окно не является каналом!\n"
 
-#: src/common/command.c:852 src/common/command.c:1023
+#: src/common/command.c:880 src/common/command.c:1051
 #, c-format
 msgid "%s missing arguments for \"%s\" command\n"
 msgstr "%s нет аргументов для \"%s\" команды\n"
 
-#: src/common/command.c:861
+#: src/common/command.c:889
 #, c-format
 msgid "Alias \"%s\" => \"%s\" created\n"
 msgstr "Сокращение \"%s\" => \"%s\" создано\n"
 
-#: src/common/command.c:867
+#: src/common/command.c:895
 #, c-format
 msgid "Failed to create alias \"%s\" => \"%s\" (not enough memory)\n"
 msgstr "Невозможно создать сокращение \"%s\" => \"%s\" (недостаточно памяти)\n"
 
-#: src/common/command.c:879
+#: src/common/command.c:907
 msgid "Alias:\n"
 msgstr "Сокращение:\n"
 
-#: src/common/command.c:889
+#: src/common/command.c:917
 msgid "No alias found.\n"
 msgstr "Сокращения не найдены.\n"
 
-#: src/common/command.c:899
+#: src/common/command.c:927
 msgid "List of aliases:\n"
 msgstr "Список сокращений:\n"
 
-#: src/common/command.c:913
+#: src/common/command.c:941
 msgid "No alias defined.\n"
 msgstr "Сокращения не заданы.\n"
 
-#: src/common/command.c:932
+#: src/common/command.c:960
 #, c-format
 msgid "%sServer: %s%s\n"
 msgstr "%sСервер: %s%s\n"
 
-#: src/common/command.c:937
+#: src/common/command.c:965
 #, c-format
 msgid "%snot connected\n"
 msgstr "%sне подключен\n"
 
-#: src/common/command.c:941
+#: src/common/command.c:969
 #, c-format
 msgid "%sChannel: %s%s %s(server: %s%s%s)\n"
 msgstr "%sКанал: %s%s %s(сервер: %s%s%s)\n"
 
-#: src/common/command.c:950
+#: src/common/command.c:978
 #, c-format
 msgid "%sPrivate with: %s%s %s(server: %s%s%s)\n"
 msgstr "%sПриват with: %s%s %s(сервер: %s%s%s)\n"
 
-#: src/common/command.c:959 src/common/command.c:971
+#: src/common/command.c:987 src/common/command.c:999
 #, c-format
 msgid "%sunknown\n"
 msgstr "%sнеизвестен\n"
 
-#: src/common/command.c:967
+#: src/common/command.c:995
 #, c-format
 msgid "%sraw IRC data\n"
 msgstr "%sсырые IRC данные\n"
 
-#: src/common/command.c:1002
+#: src/common/command.c:1030
 msgid "Open buffers:\n"
 msgstr "Открытые буферы:\n"
 
-#: src/common/command.c:1047
+#: src/common/command.c:1075
 #, c-format
 msgid "%s incorrect buffer number\n"
 msgstr "%s неправильный номер буфера\n"
 
-#: src/common/command.c:1064
+#: src/common/command.c:1092
 #, c-format
 msgid "%s can not close the single buffer\n"
 msgstr "%s невозможно закрыть единственный буфер\n"
 
-#: src/common/command.c:1077
+#: src/common/command.c:1105
 #, c-format
 msgid "%s can not close server buffer while channels are open\n"
 msgstr "%s невозможно закрыть буфер сервера пока открыты каналы\n"
 
-#: src/common/command.c:1151
+#: src/common/command.c:1179
 #, fuzzy
 msgid "Default notify levels for servers:"
 msgstr "Новый уровень уведомлений для %s%s%s: %s%d %s"
 
-#: src/common/command.c:1169
+#: src/common/command.c:1197
 #, fuzzy
 msgid "Notify levels:"
 msgstr "Уровни уведомления:"
 
-#: src/common/command.c:1176
+#: src/common/command.c:1204
 msgid "Raw IRC data"
 msgstr "Сырые IRC данные"
 
-#: src/common/command.c:1198 src/common/command.c:1268
+#: src/common/command.c:1226 src/common/command.c:1296
 #, c-format
 msgid "%s incorrect notify level (must be between %d and %d)\n"
 msgstr "%s некорректный уровень уведомлений (должен быть от %d до %d)\n"
 
-#: src/common/command.c:1211
+#: src/common/command.c:1239
 #, fuzzy, c-format
 msgid "%s incorrect buffer for notify (must be server, channel or private)\n"
 msgstr "%s некорректный буфер уведомлений (должен быть каналом или приватом)\n"
 
-#: src/common/command.c:1222
+#: src/common/command.c:1250
 #, fuzzy, c-format
 msgid "New default notify level for server %s%s%s: %s%d %s"
 msgstr "Новый уровень уведомлений для %s%s%s: %s%d %s"
 
-#: src/common/command.c:1236
+#: src/common/command.c:1264
 #, c-format
 msgid "New notify level for %s%s%s: %s%d %s"
 msgstr "Новый уровень уведомлений для %s%s%s: %s%d %s"
 
-#: src/common/command.c:1247
+#: src/common/command.c:1275
 msgid "(hotlist: never)\n"
 msgstr "(хотлист: никогда)\n"
 
-#: src/common/command.c:1250
+#: src/common/command.c:1278
 msgid "(hotlist: highlights)\n"
 msgstr "(хотлист: подсвечивание)\n"
 
-#: src/common/command.c:1253
+#: src/common/command.c:1281
 msgid "(hotlist: highlights + messages)\n"
 msgstr "(hotlist: подсвечивание + сообщения)\n"
 
-#: src/common/command.c:1256
+#: src/common/command.c:1284
 msgid "(hotlist: highlights + messages + join/part (all))\n"
 msgstr "(хотлист: подсвечивание + сообщения + входы/выходы (всё))\n"
 
-#: src/common/command.c:1391 src/common/command.c:1618
-#: src/common/command.c:2433 src/common/command.c:3714
-#: src/common/command.c:3757
+#: src/common/command.c:1419 src/common/command.c:1646
+#: src/common/command.c:2461 src/common/command.c:3742
+#: src/common/command.c:3785
 #, c-format
 msgid "%s unknown option for \"%s\" command\n"
 msgstr "%s неизвестный параметр для команды \"%s\"\n"
 
-#: src/common/command.c:1426
+#: src/common/command.c:1454
 #, c-format
 msgid "%s already connected to server \"%s\"!\n"
 msgstr "%s уже подключен к серверу \"%s\"!\n"
 
-#: src/common/command.c:1434
+#: src/common/command.c:1462
 #, c-format
 msgid "%s currently connecting to server \"%s\"!\n"
 msgstr "%s подключается к серверу \"%s\"!\n"
 
-#: src/common/command.c:1454 src/common/command.c:1668
+#: src/common/command.c:1482 src/common/command.c:1696
 #, c-format
 msgid "%s server not found\n"
 msgstr "%s сервер не найден\n"
 
-#: src/common/command.c:1651
+#: src/common/command.c:1679
 #, c-format
 msgid "%s not connected to server \"%s\"!\n"
 msgstr "%s не подключен к серверу \"%s\"!\n"
 
-#: src/common/command.c:1659
+#: src/common/command.c:1687
 msgid "Auto-reconnection is cancelled\n"
 msgstr "Авто-переподключение отменено\n"
 
-#: src/common/command.c:1696 src/common/weechat.c:218
+#: src/common/command.c:1724 src/common/weechat.c:218
 #, c-format
 msgid "%s internal commands:\n"
 msgstr "Внутренние команды %s:\n"
 
-#: src/common/command.c:1706 src/common/weechat.c:238
+#: src/common/command.c:1734 src/common/weechat.c:238
 msgid "IRC commands:\n"
 msgstr "Команды IRC:\n"
 
-#: src/common/command.c:1720
+#: src/common/command.c:1748
 msgid "Plugin commands:\n"
 msgstr "Команды Plugin'ов:\n"
 
-#: src/common/command.c:1836
+#: src/common/command.c:1864
 #, c-format
 msgid "No help available, \"%s\" is an unknown command\n"
 msgstr "Справка недоступна, \"%s\" не является командой\n"
 
-#: src/common/command.c:1905
+#: src/common/command.c:1933
 #, c-format
 msgid "%son %s%s%s/%s%s%s:%s ignoring %s%s%s from %s%s\n"
 msgstr "%sна %s%s%s/%s%s%s:%s игнорирует %s%s%s с %s%s\n"
 
-#: src/common/command.c:1943
+#: src/common/command.c:1971
 msgid "List of ignore:\n"
 msgstr "Список игнорирования:\n"
 
-#: src/common/command.c:1960
+#: src/common/command.c:1988
 msgid "No ignore defined.\n"
 msgstr "Игнорирования не заданы.\n"
 
-#: src/common/command.c:1986
+#: src/common/command.c:2014
 msgid "New ignore:"
 msgstr "Новое игнорирование:"
 
-#: src/common/command.c:2006
+#: src/common/command.c:2034
 #, c-format
 msgid "New key binding:  %s"
 msgstr "Новая комбинация клавиш:  %s"
 
-#: src/common/command.c:2045
+#: src/common/command.c:2073
 msgid "Key bindings:\n"
 msgstr "Комбинации клавиш:\n"
 
-#: src/common/command.c:2059
+#: src/common/command.c:2087
 #, c-format
 msgid "Key \"%s\" unbound\n"
 msgstr "Клавиша \"%s\" не привязана\n"
 
-#: src/common/command.c:2065
+#: src/common/command.c:2093
 #, c-format
 msgid "%s unable to unbind key \"%s\"\n"
 msgstr "%s не могу отвязать клавишу \"%s\"\n"
 
-#: src/common/command.c:2073 src/common/weechat.c:270
+#: src/common/command.c:2101 src/common/weechat.c:270
 msgid "Internal key functions:\n"
 msgstr "Встроенные функции клавиш:\n"
 
-#: src/common/command.c:2093
+#: src/common/command.c:2121
 msgid "Default key bindings restored\n"
 msgstr "Комбинации клавиш по умолчанию восстановлены\n"
 
-#: src/common/command.c:2099
+#: src/common/command.c:2127
 #, c-format
 msgid "%s \"-yes\" argument is required for keys reset (securuty reason)\n"
 msgstr ""
 "%s \"-yes\" аргумент, необходимый для сброса ключей (в целях безопасности)\n"
 
-#: src/common/command.c:2118
+#: src/common/command.c:2146
 msgid "Key:\n"
 msgstr ""
 
-#: src/common/command.c:2124
+#: src/common/command.c:2152
 #, fuzzy
 msgid "No key found.\n"
 msgstr "Сокращения не найдены.\n"
 
-#: src/common/command.c:2166
+#: src/common/command.c:2194
 msgid "global"
 msgstr "глобальная"
 
-#: src/common/command.c:2166
+#: src/common/command.c:2194
 msgid "local"
 msgstr "локальная"
 
-#: src/common/command.c:2172
+#: src/common/command.c:2200
 msgid "top"
 msgstr "сверху"
 
-#: src/common/command.c:2175
+#: src/common/command.c:2203
 msgid "bottom"
 msgstr "внизу"
 
-#: src/common/command.c:2178
+#: src/common/command.c:2206
 msgid "left"
 msgstr "слева"
 
-#: src/common/command.c:2181
+#: src/common/command.c:2209
 msgid "right"
 msgstr "справа"
 
-#: src/common/command.c:2211
+#: src/common/command.c:2239
 msgid "Open panels:\n"
 msgstr "Открытые панели:\n"
 
-#: src/common/command.c:2243
+#: src/common/command.c:2271
 msgid "Plugins loaded:\n"
 msgstr "Загруженные plugin'ы\n"
 
-#: src/common/command.c:2269
+#: src/common/command.c:2297
 msgid "     message handlers:\n"
 msgstr "     обработчики сообщений:\n"
 
-#: src/common/command.c:2278
+#: src/common/command.c:2306
 #, c-format
 msgid "       IRC(%s)\n"
 msgstr "       IRC(%s)\n"
 
-#: src/common/command.c:2285
+#: src/common/command.c:2313
 msgid "       (no message handler)\n"
 msgstr "       (нет обработчика сообщений)\n"
 
-#: src/common/command.c:2290
+#: src/common/command.c:2318
 msgid "     command handlers:\n"
 msgstr "     обработчики команд:\n"
 
-#: src/common/command.c:2311
+#: src/common/command.c:2339
 msgid "       (no command handler)\n"
 msgstr "       (нет обработчиков команд)\n"
 
-#: src/common/command.c:2316
+#: src/common/command.c:2344
 msgid "     timer handlers:\n"
 msgstr "     обработчики таймера:\n"
 
-#: src/common/command.c:2325
+#: src/common/command.c:2353
 #, c-format
 msgid "       %d seconds\n"
 msgstr "       %d секунд\n"
 
-#: src/common/command.c:2332
+#: src/common/command.c:2360
 msgid "       (no timer handler)\n"
 msgstr "       (нет обработчика таймера)\n"
 
-#: src/common/command.c:2337
+#: src/common/command.c:2365
 msgid "     keyboard handlers:\n"
 msgstr "     обработчики клавиатуры:\n"
 
-#: src/common/command.c:2347
+#: src/common/command.c:2375
 msgid "       (no keyboard handler)\n"
 msgstr "       (нет обработчика клавиатуры)\n"
 
-#: src/common/command.c:2349 src/common/command.c:2365
+#: src/common/command.c:2377 src/common/command.c:2393
 #, c-format
 msgid "       %d defined\n"
 msgstr "       %d объявлено\n"
 
-#: src/common/command.c:2354
+#: src/common/command.c:2382
 #, fuzzy
 msgid "     modifiers:\n"
 msgstr "       (нет обработчика таймера)\n"
 
-#: src/common/command.c:2363
+#: src/common/command.c:2391
 #, fuzzy
 msgid "       (no modifier)\n"
 msgstr "       (нет обработчика таймера)\n"
 
-#: src/common/command.c:2374
+#: src/common/command.c:2402
 #, fuzzy
 msgid "No plugin found.\n"
 msgstr "Не найден параметр pluginа\n"
 
-#: src/common/command.c:2376
+#: src/common/command.c:2404
 msgid "  (no plugin)\n"
 msgstr "  (нет pluginа)\n"
 
-#: src/common/command.c:2446 src/common/command.c:3339
+#: src/common/command.c:2474 src/common/command.c:3367
 #, c-format
 msgid ""
 "Command \"%s\" is not available, WeeChat was built without plugins support.\n"
 msgstr "Команда \"%s\" не доступна, WeeChat собран без поддержки plugin'ов.\n"
 
-#: src/common/command.c:2474
+#: src/common/command.c:2502
 msgid "Configuration file saved\n"
 msgstr "Конфигурационный файл сохранён\n"
 
-#: src/common/command.c:2479
+#: src/common/command.c:2507
 #, c-format
 msgid "%s failed to save configuration file\n"
 msgstr "%s не могу сохранить конфигурационный файл\n"
 
-#: src/common/command.c:2487
+#: src/common/command.c:2515
 msgid "Plugins options saved\n"
 msgstr "Настройки pluginов сохранены\n"
 
-#: src/common/command.c:2492
+#: src/common/command.c:2520
 #, c-format
 msgid "%s failed to save plugins options\n"
 msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
 
-#: src/common/command.c:2533
+#: src/common/command.c:2561
 msgid "No server.\n"
 msgstr "Нет сервера.\n"
 
-#: src/common/command.c:2544
+#: src/common/command.c:2572
 #, c-format
 msgid "Server '%s' not found.\n"
 msgstr "Сервер '%s' не найден.\n"
 
-#: src/common/command.c:2556
+#: src/common/command.c:2584
 #, c-format
 msgid "%s missing servername for \"%s\" command\n"
 msgstr "%s не хватает имени сервера для команды \"%s\"\n"
 
-#: src/common/command.c:2564
+#: src/common/command.c:2592
 #, c-format
 msgid "%s too much arguments for \"%s\" command, ignoring arguments\n"
 msgstr "%s слишком много аргументов для команды \"%s\" игнорирую аргументы\n"
 
-#: src/common/command.c:2574
+#: src/common/command.c:2602
 #, c-format
 msgid "%s server \"%s\" not found for \"%s\" command\n"
 msgstr "%s сервер \"%s\" не найден для команды \"%s\"\n"
 
-#: src/common/command.c:2582
+#: src/common/command.c:2610
 #, c-format
 msgid ""
 "%s you can not delete server \"%s\" because you are connected to. Try /"
@@ -3457,196 +3459,196 @@ msgstr ""
 "%s вы не можете удалить сервер \"%s\" потому, что подключены к нему. "
 "Попробуйте отключиться (/disconnect) %s перед удалением.\n"
 
-#: src/common/command.c:2602
+#: src/common/command.c:2630
 #, c-format
 msgid "Server %s%s%s has been deleted\n"
 msgstr "Сервер %s%s%s удалён\n"
 
-#: src/common/command.c:2621
+#: src/common/command.c:2649
 #, c-format
 msgid "%s missing parameters for \"%s\" command\n"
 msgstr "%s не хватает параметров для команды \"%s\"\n"
 
-#: src/common/command.c:2631
+#: src/common/command.c:2659
 #, c-format
 msgid "%s server \"%s\" already exists, can't create it!\n"
 msgstr "%s сервер \"%s\" уже существует, не могу создать его!\n"
 
-#: src/common/command.c:2660 src/common/command.c:2688
-#: src/common/command.c:2701 src/common/command.c:2727
+#: src/common/command.c:2688 src/common/command.c:2716
+#: src/common/command.c:2729 src/common/command.c:2755
 #, c-format
 msgid "%s missing password for \"%s\" parameter\n"
 msgstr "%s не хватает пароля для параметра \"%s\"\n"
 
-#: src/common/command.c:2673
+#: src/common/command.c:2701
 #, c-format
 msgid "%s missing nick(s) for \"%s\" parameter\n"
 msgstr "%s не хватает ника(-ов) для параметра \"%s\"\n"
 
-#: src/common/command.c:2714
+#: src/common/command.c:2742
 #, c-format
 msgid "%s missing command for \"%s\" parameter\n"
 msgstr "%s не хватает команды для параметра \"%s\"\n"
 
-#: src/common/command.c:2751
+#: src/common/command.c:2779
 #, c-format
 msgid "Server %s%s%s created\n"
 msgstr "Сервер %s%s%s создан\n"
 
-#: src/common/command.c:2760
+#: src/common/command.c:2788
 #, c-format
 msgid "%s unable to create server\n"
 msgstr "%s не могу создать сервер\n"
 
-#: src/common/command.c:2820
+#: src/common/command.c:2848
 msgid "(unknown)"
 msgstr "(неизвестен)"
 
-#: src/common/command.c:2843
+#: src/common/command.c:2871
 #, c-format
 msgid "%s(password hidden) "
 msgstr "%s(пароль скрыт) "
 
-#: src/common/command.c:2941
+#: src/common/command.c:2969
 #, c-format
 msgid "%s server \"%s\" not found\n"
 msgstr "%s сервер \"%s\" не найден\n"
 
-#: src/common/command.c:2974 src/common/command.c:3022
+#: src/common/command.c:3002 src/common/command.c:3050
 #, c-format
 msgid "%s config option \"%s\" not found\n"
 msgstr "%s параметр конфигурации \"%s\" не найден\n"
 
-#: src/common/command.c:2979 src/common/command.c:3014
+#: src/common/command.c:3007 src/common/command.c:3042
 #, c-format
 msgid "%s incorrect value for option \"%s\"\n"
 msgstr "%s некорректное значение параметра \"%s\"\n"
 
-#: src/common/command.c:2995
+#: src/common/command.c:3023
 #, c-format
 msgid "%s option \"%s\" can not be changed while WeeChat is running\n"
 msgstr "%s параметр \"%s\" не может быть изменена при запущеном WeeChat\n"
 
-#: src/common/command.c:3105
+#: src/common/command.c:3133
 #, c-format
 msgid "No config option found with \"%s\"\n"
 msgstr "Не найден параметр с \"%s\"\n"
 
-#: src/common/command.c:3108
+#: src/common/command.c:3136
 msgid "No config option found\n"
 msgstr "Не найден параметр\n"
 
-#: src/common/command.c:3115
+#: src/common/command.c:3143
 #, c-format
 msgid "%sDetail:\n"
 msgstr "%sПодробности:\n"
 
-#: src/common/command.c:3120
+#: src/common/command.c:3148
 msgid "  . type boolean (values: 'on' or 'off')\n"
 msgstr "  . булевый тип (значения: 'on' или 'off')\n"
 
-#: src/common/command.c:3121 src/common/command.c:3144
-#: src/common/command.c:3150 src/common/command.c:3156
+#: src/common/command.c:3149 src/common/command.c:3172
+#: src/common/command.c:3178 src/common/command.c:3184
 #: src/common/weechat.c:153 src/common/weechat.c:178 src/common/weechat.c:185
 #: src/common/weechat.c:192
 #, c-format
 msgid "  . default value: '%s'\n"
 msgstr "  . значение по умолчанию: '%s'\n"
 
-#: src/common/command.c:3126
+#: src/common/command.c:3154
 #, c-format
 msgid "  . type integer (values: between %d and %d)\n"
 msgstr "  . целочисленное значение (значения: от %d до %d)\n"
 
-#: src/common/command.c:3129 src/common/weechat.c:162
+#: src/common/command.c:3157 src/common/weechat.c:162
 #, c-format
 msgid "  . default value: %d\n"
 msgstr "  . значение по умолчанию: %d\n"
 
-#: src/common/command.c:3133
+#: src/common/command.c:3161
 msgid "  . type string (values: "
 msgstr "  . строковой тип (значения: "
 
-#: src/common/command.c:3146 src/common/command.c:3152
-#: src/common/command.c:3158 src/common/weechat.c:180 src/common/weechat.c:187
+#: src/common/command.c:3174 src/common/command.c:3180
+#: src/common/command.c:3186 src/common/weechat.c:180 src/common/weechat.c:187
 #: src/common/weechat.c:194
 msgid "empty"
 msgstr "пусто"
 
-#: src/common/command.c:3149
+#: src/common/command.c:3177
 msgid "  . type color (Curses or Gtk color, look at WeeChat doc)\n"
 msgstr "  . цветовой тип (цвет Curses или Gtk, см. документацию WeeChat)\n"
 
-#: src/common/command.c:3155
+#: src/common/command.c:3183
 msgid "  . type string (any string)\n"
 msgstr "  . строковой тип (любая строка)\n"
 
-#: src/common/command.c:3161 src/common/weechat.c:197
+#: src/common/command.c:3189 src/common/weechat.c:197
 #, c-format
 msgid "  . description: %s\n"
 msgstr "  . описание: %s\n"
 
-#: src/common/command.c:3172
+#: src/common/command.c:3200
 #, c-format
 msgid "config option(s) found with \"%s\"\n"
 msgstr "параметров с \"%s\" найдено\n"
 
-#: src/common/command.c:3175
+#: src/common/command.c:3203
 msgid "config option(s) found\n"
 msgstr "параметров найдено\n"
 
-#: src/common/command.c:3283
+#: src/common/command.c:3311
 #, c-format
 msgid "%s incorrect value for plugin option \"%s\"\n"
 msgstr "%s некорректное значение параметра \"%s\" pluginа\n"
 
-#: src/common/command.c:3312
+#: src/common/command.c:3340
 #, c-format
 msgid "No plugin option found with \"%s\"\n"
 msgstr "Не найден параметр pluginа с \"%s\"\n"
 
-#: src/common/command.c:3315
+#: src/common/command.c:3343
 msgid "No plugin option found\n"
 msgstr "Не найден параметр pluginа\n"
 
-#: src/common/command.c:3325
+#: src/common/command.c:3353
 #, c-format
 msgid "plugin option(s) found with \"%s\"\n"
 msgstr "параметров pluginов с \"%s\" найдено\n"
 
-#: src/common/command.c:3328
+#: src/common/command.c:3356
 msgid "plugin option(s) found\n"
 msgstr "параметров pluginов найдено\n"
 
-#: src/common/command.c:3369
+#: src/common/command.c:3397
 #, c-format
 msgid "%s alias or command \"%s\" not found\n"
 msgstr "%s сокращение или команда \"%s\" не найдены\n"
 
-#: src/common/command.c:3379
+#: src/common/command.c:3407
 #, c-format
 msgid "Alias \"%s\" removed\n"
 msgstr "Сокращение \"%s\" удалено\n"
 
-#: src/common/command.c:3439
+#: src/common/command.c:3467
 msgid "ignore were removed.\n"
 msgstr "игнорирование добавлено.\n"
 
-#: src/common/command.c:3441
+#: src/common/command.c:3469
 msgid "ignore was removed.\n"
 msgstr "игнорирование удалено.\n"
 
-#: src/common/command.c:3446
+#: src/common/command.c:3474
 #, c-format
 msgid "%s no ignore found\n"
 msgstr "%s игнорирования не найдены\n"
 
-#: src/common/command.c:3480
+#: src/common/command.c:3508
 #, c-format
 msgid "%s can't upgrade: connection to at least one server is pending\n"
 msgstr "%s не могу обновиться: подключение к серверам в процессе\n"
 
-#: src/common/command.c:3490
+#: src/common/command.c:3518
 #, c-format
 msgid ""
 "%s can't upgrade: connection to at least one SSL server is active (should be "
@@ -3655,35 +3657,35 @@ msgstr ""
 "%s не могу обновиться: подключен к серверам по SSL (будет исправлено в "
 "будущем)\n"
 
-#: src/common/command.c:3506
+#: src/common/command.c:3534
 msgid "Upgrading WeeChat...\n"
 msgstr "Обновляю WeeChat...\n"
 
-#: src/common/command.c:3513
+#: src/common/command.c:3541
 #, c-format
 msgid "%s unable to save session in file\n"
 msgstr "%s не могу сохранить сессию в файл\n"
 
-#: src/common/command.c:3540
+#: src/common/command.c:3568
 #, c-format
 msgid "%s exec failed (program: \"%s\"), exiting WeeChat\n"
 msgstr "%s запуск не удался (программа: \"%s\"), выхожу из WeeChat\n"
 
-#: src/common/command.c:3580
+#: src/common/command.c:3608
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
 msgstr "WeeChat работает: %d %s %02d:%02d:%02d, запущен %s"
 
-#: src/common/command.c:3594
+#: src/common/command.c:3622
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr "WeeChat работает: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, запущен %s%s"
 
-#: src/common/command.c:3638
+#: src/common/command.c:3666
 msgid "Open windows:\n"
 msgstr "Открытые окна:\n"
 
-#: src/common/command.c:3725
+#: src/common/command.c:3753
 #, c-format
 msgid ""
 "%s can not merge windows, there's no other window with same size near "
@@ -3747,13 +3749,13 @@ msgstr ""
 "WeeChat\n"
 "с другой домашней директорией используя параметр \"--dir\".\n"
 
-#: src/common/session.c:514
+#: src/common/session.c:515
 #, c-format
 msgid ""
 "Last operation with session file was at position %ld, read of %d bytes\n"
 msgstr "Последняя операция с файлом сессии в позиции %ld, чтение %d байтов\n"
 
-#: src/common/session.c:519
+#: src/common/session.c:520
 #, c-format
 msgid ""
 "Please send %s/%s, %s/%s and above messages to WeeChat developers for "
@@ -3764,315 +3766,315 @@ msgstr ""
 "поддержки разработки.\n"
 "Будьте осторожны, файлы могут содержать личные данные.\n"
 
-#: src/common/session.c:545 src/common/session.c:579 src/common/session.c:636
-#: src/common/session.c:677
+#: src/common/session.c:546 src/common/session.c:580 src/common/session.c:653
+#: src/common/session.c:694
 #, c-format
 msgid "wrong type in file (expected: %d, read: %d)"
 msgstr "некорректный тип в файле (ожидалось: %d, прочитано: %d)"
 
-#: src/common/session.c:648 src/common/session.c:689
+#: src/common/session.c:665 src/common/session.c:706
 msgid "invalid length for a buffer"
 msgstr "некорректная длина буфера"
 
-#: src/common/session.c:713
+#: src/common/session.c:730
 msgid "object read error"
 msgstr "ошибка чтения объекта"
 
-#: src/common/session.c:718
+#: src/common/session.c:735
 #, c-format
 msgid "wrong object (expected: %d, read: %d)"
 msgstr "некорректный объект (ожидалось: %d, прочитано: %d)"
 
-#: src/common/session.c:728
+#: src/common/session.c:745
 msgid "type read error"
 msgstr "ошибка чтения типа"
 
-#: src/common/session.c:733
+#: src/common/session.c:750
 #, c-format
 msgid "wrong type (expected: %d, read: %d)"
 msgstr "некорректный тип (ожидалось: %d, прочитано: %d)"
 
-#: src/common/session.c:818
+#: src/common/session.c:835
 msgid "server name not found"
 msgstr "имя сервера не найдено"
 
-#: src/common/session.c:823
+#: src/common/session.c:840
 #, c-format
 msgid "session: loading server \"%s\"\n"
 msgstr "сессия: загружаю сервер \"%s\"\n"
 
-#: src/common/session.c:827
+#: src/common/session.c:844
 msgid "server found, updating values\n"
 msgstr "сервер найден, обновляю значения\n"
 
-#: src/common/session.c:830
+#: src/common/session.c:847
 msgid "server not found, creating new one\n"
 msgstr "сервер не найден, создаю новый\n"
 
-#: src/common/session.c:835
+#: src/common/session.c:852
 msgid "can't create new server"
 msgstr "невозможно создать новый сервер"
 
-#: src/common/session.c:849
+#: src/common/session.c:866
 msgid "unexpected end of file (reading server)"
 msgstr "неожиданный конец файла (при чтении сервера)"
 
-#: src/common/session.c:940
+#: src/common/session.c:957
 msgid "gnutls init error"
 msgstr "ошибка инициализации gnutls"
 
-#: src/common/session.c:957
+#: src/common/session.c:974
 msgid "gnutls handshake failed"
 msgstr "рукопожатие gnutls не удалось"
 
-#: src/common/session.c:1006
+#: src/common/session.c:1023
 #, c-format
 msgid "session: warning: ignoring value from server (object id: %d)\n"
 msgstr ""
 "сессия: предупреждение: игнорируется значение от сервера (id объекта: %d)\n"
 
-#: src/common/session.c:1029
+#: src/common/session.c:1046
 msgid "channel found without server"
 msgstr "канал найден без сервера"
 
-#: src/common/session.c:1036
+#: src/common/session.c:1053
 msgid "channel type not found"
 msgstr "типа канала не найден"
 
-#: src/common/session.c:1044
+#: src/common/session.c:1061
 msgid "channel name not found"
 msgstr "название канала не найдено"
 
-#: src/common/session.c:1049
+#: src/common/session.c:1066
 #, c-format
 msgid "session: loading channel \"%s\"\n"
 msgstr "сессия: загружаю канал \"%s\"\n"
 
-#: src/common/session.c:1057
+#: src/common/session.c:1074
 msgid "can't create new channel"
 msgstr "невозможно создать новый канал"
 
-#: src/common/session.c:1067
+#: src/common/session.c:1084
 msgid "unexpected end of file (reading channel)"
 msgstr "неожиданный конец файла (при чтении канала)"
 
-#: src/common/session.c:1109
+#: src/common/session.c:1126
 #, c-format
 msgid "session: warning: ignoring value from channel (object id: %d)\n"
 msgstr ""
 "сессия: предупреждение: игнорируется значение с канала (id объекта: %d)\n"
 
-#: src/common/session.c:1133
+#: src/common/session.c:1150
 msgid "nick found without channel"
 msgstr "ник найден без канала"
 
-#: src/common/session.c:1141
+#: src/common/session.c:1158
 msgid "nick name not found"
 msgstr "ник не найден"
 
-#: src/common/session.c:1151
+#: src/common/session.c:1168
 msgid "can't create new nick"
 msgstr "не могу создать новый ник"
 
-#: src/common/session.c:1161
+#: src/common/session.c:1178
 msgid "unexpected end of file (reading nick)"
 msgstr "неожиданный конец файла (при чтении ника)"
 
-#: src/common/session.c:1180
+#: src/common/session.c:1197
 #, c-format
 msgid "session: warning: ignoring value from nick (object id: %d)\n"
 msgstr ""
 "сессия: предупреждение: игнорируется значение от ника (id объекта: %d)\n"
 
-#: src/common/session.c:1207
+#: src/common/session.c:1224
 msgid "can't create new DCC"
 msgstr "не могу создать новый DCC"
 
-#: src/common/session.c:1211
+#: src/common/session.c:1228
 msgid "session: loading DCC\n"
 msgstr "сессия: загрузка DCC\n"
 
-#: src/common/session.c:1221
+#: src/common/session.c:1238
 msgid "unexpected end of file (reading DCC)"
 msgstr "неожиданный конец файла (при чтении DCC)"
 
-#: src/common/session.c:1240
+#: src/common/session.c:1257
 msgid "server not found for DCC"
 msgstr "сервер не найден для DCC"
 
-#: src/common/session.c:1249
+#: src/common/session.c:1266
 msgid "DCC with channel but without server"
 msgstr "DCC с каналом, но без сервера"
 
-#: src/common/session.c:1261
+#: src/common/session.c:1278
 msgid "channel not found for DCC"
 msgstr "канал не найден для DCC"
 
-#: src/common/session.c:1344
+#: src/common/session.c:1361
 #, c-format
 msgid "session: warning: ignoring value from DCC (object id: %d)\n"
 msgstr ""
 "сессия: предупреждение: игнорируется значение от DCC (id объекта: %d)\n"
 
-#: src/common/session.c:1365
+#: src/common/session.c:1382
 msgid "session: loading buffer history\n"
 msgstr "сессия: загрузка истории буфера\n"
 
-#: src/common/session.c:1367
+#: src/common/session.c:1384
 msgid "session: loading global history\n"
 msgstr "сессия: загрузка глобальной истории\n"
 
-#: src/common/session.c:1375
+#: src/common/session.c:1392
 msgid "unexpected end of file (reading history)"
 msgstr "неожиданный конец файла (при чтении истории)"
 
-#: src/common/session.c:1395 src/common/session.c:1676
+#: src/common/session.c:1412 src/common/session.c:1693
 #, c-format
 msgid "session: warning: ignoring value from history (object id: %d)\n"
 msgstr ""
 "сессия: предупреждение: игнорируется значение из истории (id объекта: %d)\n"
 
-#: src/common/session.c:1422
+#: src/common/session.c:1439
 msgid "server name not found for buffer"
 msgstr "не найдено имя сервера для буфера"
 
-#: src/common/session.c:1430
+#: src/common/session.c:1447
 msgid "channel name not found for buffer"
 msgstr "не найдено имя канала для буфера"
 
-#: src/common/session.c:1437
+#: src/common/session.c:1454
 msgid "buffer type not found"
 msgstr "тип буфера не найден"
 
-#: src/common/session.c:1442
+#: src/common/session.c:1459
 #, c-format
 msgid "session: loading buffer (server: %s, channel: %s, type: %d)\n"
 msgstr "сессия: загрузка буфера (сервер: %s, канал: %s, тип: %d)\n"
 
-#: src/common/session.c:1453
+#: src/common/session.c:1470
 msgid "server not found for buffer"
 msgstr "сервер не найден для буфера"
 
-#: src/common/session.c:1463
+#: src/common/session.c:1480
 msgid "channel not found for buffer"
 msgstr "канал не найден для буфера"
 
-#: src/common/session.c:1472
+#: src/common/session.c:1489
 msgid "can't create new buffer"
 msgstr "невозможно создать новый буфер"
 
-#: src/common/session.c:1485
+#: src/common/session.c:1502
 msgid "unexpected end of file (reading buffer)"
 msgstr "неожиданный конец файла (при чтении буфера)"
 
-#: src/common/session.c:1498
+#: src/common/session.c:1515
 #, c-format
 msgid "session: warning: ignoring value from buffer (object id: %d)\n"
 msgstr ""
 "сессия: предупреждение: игнорирую значение из буфера (id объекта: %d)\n"
 
-#: src/common/session.c:1521
+#: src/common/session.c:1538
 msgid "line found without buffer"
 msgstr "строка найдена без буфера"
 
-#: src/common/session.c:1529
+#: src/common/session.c:1546
 msgid "can't create new line"
 msgstr "не могу создать новую строку"
 
-#: src/common/session.c:1539
+#: src/common/session.c:1556
 msgid "unexpected end of file (reading line)"
 msgstr "неожиданный конец файла (при чтении строчки)"
 
-#: src/common/session.c:1579
+#: src/common/session.c:1596
 #, c-format
 msgid "session: warning: ignoring value from line (object id: %d)\n"
 msgstr ""
 "сессия: предупреждение: игнорирую значение из строки (id объекта: %d)\n"
 
-#: src/common/session.c:1604
+#: src/common/session.c:1621
 msgid "unexpected end of file (reading uptime)"
 msgstr "неожиданный конец файла (при чтении uptime)"
 
-#: src/common/session.c:1617
+#: src/common/session.c:1634
 #, c-format
 msgid "session: warning: ignoring value from uptime (object id: %d)\n"
 msgstr ""
 "сессия: предупреждение: игнорирую значение из uptime (id объекта: %d)\n"
 
-#: src/common/session.c:1651
+#: src/common/session.c:1668
 #, fuzzy
 msgid "unexpected end of file (reading hotlist)"
 msgstr "неожиданный конец файла (при чтении истории)"
 
-#: src/common/session.c:1707
+#: src/common/session.c:1724
 msgid "session file not found"
 msgstr "файл сессии не найден"
 
-#: src/common/session.c:1714
+#: src/common/session.c:1731
 msgid "signature not found"
 msgstr "подпись не найдена"
 
-#: src/common/session.c:1719
+#: src/common/session.c:1736
 msgid "bad session signature"
 msgstr "некорректная подпись сессии"
 
-#: src/common/session.c:1730
+#: src/common/session.c:1747
 msgid "object id not found"
 msgstr "id объекта не найден"
 
-#: src/common/session.c:1738
+#: src/common/session.c:1755
 msgid "failed to load server"
 msgstr "загрузка сервера не удалась"
 
-#: src/common/session.c:1745
+#: src/common/session.c:1762
 msgid "failed to load channel"
 msgstr "загрузка канала не удалась"
 
-#: src/common/session.c:1752
+#: src/common/session.c:1769
 msgid "failed to load nick"
 msgstr "загрузка ника не удалась"
 
-#: src/common/session.c:1759
+#: src/common/session.c:1776
 msgid "failed to load DCC"
 msgstr "загрузка DCC не удалась"
 
-#: src/common/session.c:1766
+#: src/common/session.c:1783
 msgid "failed to load history"
 msgstr "загрузка истории не удалась"
 
-#: src/common/session.c:1773
+#: src/common/session.c:1790
 msgid "failed to load buffer"
 msgstr "загрузка буфера не удалась"
 
-#: src/common/session.c:1780
+#: src/common/session.c:1797
 msgid "failed to load line"
 msgstr "загрузка строки не удалась"
 
-#: src/common/session.c:1787
+#: src/common/session.c:1804
 msgid "failed to load uptime"
 msgstr "загрузка uptime не удалась"
 
-#: src/common/session.c:1794
+#: src/common/session.c:1811
 #, fuzzy
 msgid "failed to load hotlist"
 msgstr "загрузка истории не удалась"
 
-#: src/common/session.c:1799
+#: src/common/session.c:1816
 #, c-format
 msgid "ignoring object (id: %d)\n"
 msgstr "игнорирую объект (id: %d)\n"
 
-#: src/common/session.c:1803
+#: src/common/session.c:1820
 #, c-format
 msgid "failed to ignore object (id: %d)"
 msgstr "неудачное игнорирование объекта (id: %d)"
 
-#: src/common/session.c:1827
+#: src/common/session.c:1844
 #, c-format
 msgid "%s can't delete session file (%s)\n"
 msgstr "%s не могу удалить файл сессии (%s)\n"
 
-#: src/common/session.c:1833
+#: src/common/session.c:1850
 msgid "Upgrade completed successfully\n"
 msgstr "Обновление успешно\n"
 
@@ -4866,95 +4868,95 @@ msgstr "время в журнале (список переменных в man s
 msgid "hide password displayed by nickserv"
 msgstr "скрывать пароль, отображаемый nickserv'ом"
 
-#: src/common/weeconfig.c:715
+#: src/common/weeconfig.c:716
 msgid "display message for away"
 msgstr "показывать сообщение во все каналы при отсутствии"
 
-#: src/common/weeconfig.c:716
+#: src/common/weeconfig.c:717
 msgid "display message when (un)marking as away"
 msgstr "показывать сообщение во все каналы при установке/снятии отсутствия"
 
-#: src/common/weeconfig.c:719 src/common/weeconfig.c:720
+#: src/common/weeconfig.c:720 src/common/weeconfig.c:721
 msgid "show remote away message only once in private"
 msgstr "отображать уведомление об отсутствии единожды в привате"
 
-#: src/common/weeconfig.c:723
+#: src/common/weeconfig.c:724
 msgid "default part message (leaving channel)"
 msgstr "сообщение о покидании канала по-умолчанию"
 
-#: src/common/weeconfig.c:724
+#: src/common/weeconfig.c:725
 msgid ""
 "default part message (leaving channel) ('%v' will be replaced by WeeChat "
 "version in string)"
 msgstr "сообщение покидания канала ('%v' будет заменён на версию WeeChat)"
 
-#: src/common/weeconfig.c:728
+#: src/common/weeconfig.c:729
 msgid "default quit message"
 msgstr "сообщение о выходе по-умолчанию"
 
-#: src/common/weeconfig.c:729
+#: src/common/weeconfig.c:730
 msgid ""
 "default quit message ('%v' will be replaced by WeeChat version in string)"
 msgstr "сообщение о выходе по-умолчанию ('%v' будет заменён на версию WeeChat)"
 
-#: src/common/weeconfig.c:732 src/common/weeconfig.c:733
+#: src/common/weeconfig.c:733 src/common/weeconfig.c:734
 msgid "display notices as private messages"
 msgstr "отображать notice'ы в виде личных сообщений"
 
-#: src/common/weeconfig.c:736
+#: src/common/weeconfig.c:737
 msgid "interval between two checks for away"
 msgstr "интервал между проверками на отсутствие"
 
-#: src/common/weeconfig.c:737
+#: src/common/weeconfig.c:738
 msgid "interval between two checks for away (in minutes, 0 = never check)"
 msgstr ""
 "интервал между проверками на отсутствие (в минутах, 0 = не проверять никогда)"
 
-#: src/common/weeconfig.c:740
+#: src/common/weeconfig.c:741
 msgid "max number of nicks for away check"
 msgstr "максимальное количество ников на канале для проверки на отсутствие"
 
-#: src/common/weeconfig.c:741
+#: src/common/weeconfig.c:742
 msgid ""
 "do not check away nicks on channels with high number of nicks (0 = unlimited)"
 msgstr ""
 "не проверять отсутствие на каналах с большим количеством ников (0=не "
 "ограничено)"
 
-#: src/common/weeconfig.c:744
+#: src/common/weeconfig.c:745
 msgid "interval between two checks for lag"
 msgstr "интервал между проверками задержек"
 
-#: src/common/weeconfig.c:745
+#: src/common/weeconfig.c:746
 msgid "interval between two checks for lag (in seconds)"
 msgstr "интервал между проверками задержек (в секундах)"
 
-#: src/common/weeconfig.c:748
+#: src/common/weeconfig.c:749
 msgid "minimum lag to show"
 msgstr "минимальная отображаемая задержка"
 
-#: src/common/weeconfig.c:749
+#: src/common/weeconfig.c:750
 msgid "minimum lag to show (in seconds)"
 msgstr "минимальная отображаемая задержка (в секундах)"
 
-#: src/common/weeconfig.c:752
+#: src/common/weeconfig.c:753
 msgid "disconnect after important lag"
 msgstr "отключаться при серьёзной задержке"
 
-#: src/common/weeconfig.c:753
+#: src/common/weeconfig.c:754
 msgid "disconnect after important lag (in minutes, 0 = never disconnect)"
 msgstr ""
 "отключаться при серьёзной задержке (в минутах, 0 = не отключаться никогда)"
 
-#: src/common/weeconfig.c:756 src/common/weeconfig.c:757
+#: src/common/weeconfig.c:757 src/common/weeconfig.c:758
 msgid "create a FIFO pipe for remote control"
 msgstr "создавать FIFO pipe для удалённого управления"
 
-#: src/common/weeconfig.c:760
+#: src/common/weeconfig.c:761
 msgid "list of words to highlight"
 msgstr "список подсвечиваемых слов"
 
-#: src/common/weeconfig.c:761
+#: src/common/weeconfig.c:762
 msgid ""
 "comma separated list of words to highlight (case insensitive comparison, "
 "words may begin or end with \"*\" for partial match)"
@@ -4962,15 +4964,15 @@ msgstr ""
 "разделённый запятыми список подсвечиваемых слов (регистр учитывается, слова "
 "могут начинаться или кончаться \"*\" для неполного соответствия)"
 
-#: src/common/weeconfig.c:765 src/common/weeconfig.c:767
+#: src/common/weeconfig.c:766 src/common/weeconfig.c:768
 msgid "when off, colors codes are ignored in incoming messages"
 msgstr "когда выключено, цвета в исходящих сообщениях игнорируются"
 
-#: src/common/weeconfig.c:770
+#: src/common/weeconfig.c:771
 msgid "allow user to send colors"
 msgstr "разрешить отправку цветов"
 
-#: src/common/weeconfig.c:771
+#: src/common/weeconfig.c:772
 msgid ""
 "allow user to send colors with special codes (%B=bold, %Cxx,yy=color, %"
 "U=underline, %R=reverse)"
@@ -4978,47 +4980,52 @@ msgstr ""
 "allow user to send colors специальными кодами (%B=жирный, %Cxx,yy=цветной, %"
 "U=подчёркнутый, %R=инвертированный)"
 
-#: src/common/weeconfig.c:794
+#: src/common/weeconfig.c:776 src/common/weeconfig.c:777
+#, fuzzy
+msgid "send unknown commands to IRC server"
+msgstr "имя пользователя, используемое на IRC сервере"
+
+#: src/common/weeconfig.c:799
 msgid "automatically accept dcc files"
 msgstr "автоматически подтверждать передачу файлов"
 
-#: src/common/weeconfig.c:795
+#: src/common/weeconfig.c:800
 msgid "automatically accept incoming dcc files"
 msgstr "автоматически подтверждать получение файлов"
 
-#: src/common/weeconfig.c:798
+#: src/common/weeconfig.c:803
 msgid "automatically accept dcc chats"
 msgstr "автоматически подтверждать dcc-чат"
 
-#: src/common/weeconfig.c:799
+#: src/common/weeconfig.c:804
 msgid "automatically accept dcc chats (use carefully!)"
 msgstr "автоматически подтверждать dcc-чат (используйте осторожно!)"
 
-#: src/common/weeconfig.c:802
+#: src/common/weeconfig.c:807
 msgid "timeout for dcc request"
 msgstr "таймаут запросов dcc-соединений"
 
-#: src/common/weeconfig.c:803
+#: src/common/weeconfig.c:808
 msgid "timeout for dcc request (in seconds)"
 msgstr "таймаут запросов dcc-соединений (в секундах)"
 
-#: src/common/weeconfig.c:806
+#: src/common/weeconfig.c:811
 msgid "block size for dcc packets"
 msgstr "размер блока dcc пакетов"
 
-#: src/common/weeconfig.c:807
+#: src/common/weeconfig.c:812
 msgid "block size for dcc packets in bytes (default: 65536)"
 msgstr "размер блока dcc пакетов в байтах (по умолчанию: 65536)"
 
-#: src/common/weeconfig.c:810 src/common/weeconfig.c:811
+#: src/common/weeconfig.c:815 src/common/weeconfig.c:816
 msgid "does not wait for ACK when sending file"
 msgstr "не ожидать ACK при отправке файла"
 
-#: src/common/weeconfig.c:814
+#: src/common/weeconfig.c:819
 msgid "allowed ports for outgoing dcc"
 msgstr "разрешённые порты для исходящих dcc-соединений"
 
-#: src/common/weeconfig.c:815
+#: src/common/weeconfig.c:820
 msgid ""
 "restricts outgoing dcc to use only ports in the given range (useful for NAT) "
 "(syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, empty value "
@@ -5028,11 +5035,11 @@ msgstr ""
 "(полезно для NAT) (синтаксис: определённый порт, например 5000, или интервал "
 "портов, например 5000-5015, пустое значение означает любой порт)"
 
-#: src/common/weeconfig.c:820
+#: src/common/weeconfig.c:825
 msgid "IP address for outgoing dcc"
 msgstr "IP адрес для dcc-соединений"
 
-#: src/common/weeconfig.c:821
+#: src/common/weeconfig.c:826
 msgid ""
 "IP or DNS address used for outgoing dcc (if empty, local interface IP is "
 "used)"
@@ -5040,113 +5047,113 @@ msgstr ""
 "IP адрес или домен, используемый для исходящих DCC соединений (пустое "
 "значение означает текущий IP адрес)"
 
-#: src/common/weeconfig.c:825
+#: src/common/weeconfig.c:830
 msgid "path for incoming files with dcc"
 msgstr "путь для получаемых файлов"
 
-#: src/common/weeconfig.c:826
+#: src/common/weeconfig.c:831
 msgid "path for writing incoming files with dcc (default: user home)"
 msgstr ""
 "путь для сохранения получаемых файлов (по умолчанию: в домашней директории "
 "пользователя)"
 
-#: src/common/weeconfig.c:829
+#: src/common/weeconfig.c:834
 msgid "default path for sending files with dcc"
 msgstr "пусть по умолчанию для отправки файлов"
 
-#: src/common/weeconfig.c:830
+#: src/common/weeconfig.c:835
 msgid ""
 "path for reading files when sending thru dcc (when no path is specified)"
 msgstr "путь для поиска отправляемых файлов (если не задан полный путь)"
 
-#: src/common/weeconfig.c:833 src/common/weeconfig.c:834
+#: src/common/weeconfig.c:838 src/common/weeconfig.c:839
 msgid "convert spaces to underscores when sending files"
 msgstr "заменять пробелы знаками подчёркивания при отправке файлов"
 
-#: src/common/weeconfig.c:837
+#: src/common/weeconfig.c:842
 msgid "automatically rename dcc files if already exists"
 msgstr ""
 "автоматически переименовывать получаемые файлы при наличии файла с тем же "
 "названием"
 
-#: src/common/weeconfig.c:838
+#: src/common/weeconfig.c:843
 msgid "rename incoming files if already exists (add '.1', '.2', ...)"
 msgstr ""
 "переименовывать получаемые файлы при наличии файла с тем же названием "
 "(добавлять '.1', '.2' и т.д.)"
 
-#: src/common/weeconfig.c:841
+#: src/common/weeconfig.c:846
 msgid "automatically resume aborted transfers"
 msgstr "автоматически продолжать прерванные закачки"
 
-#: src/common/weeconfig.c:842
+#: src/common/weeconfig.c:847
 msgid ""
 "automatically resume dcc transfer if connection with remote host is loosed"
 msgstr ""
 "автоматически продолжать DCC передачу если соединение с удалённым хостом "
 "было утеряно"
 
-#: src/common/weeconfig.c:861
+#: src/common/weeconfig.c:866
 msgid "use proxy"
 msgstr "использовать proxy сервер"
 
-#: src/common/weeconfig.c:862
+#: src/common/weeconfig.c:867
 msgid "use a proxy server to connect to irc server"
 msgstr "испоьзовать proxy-сервер при подключении к irc-серверу"
 
-#: src/common/weeconfig.c:865
+#: src/common/weeconfig.c:870
 msgid "proxy type"
 msgstr "тип proxy сервера"
 
-#: src/common/weeconfig.c:866
+#: src/common/weeconfig.c:871
 msgid "proxy type (http (default), socks4, socks5)"
 msgstr "тип proxy сервера (http (по-умолчанию), socks4, socks5)"
 
-#: src/common/weeconfig.c:869
+#: src/common/weeconfig.c:874
 msgid "use ipv6 proxy"
 msgstr "использовать ipv6 proxy"
 
-#: src/common/weeconfig.c:870
+#: src/common/weeconfig.c:875
 msgid "connect to proxy in ipv6"
 msgstr "подключаться к прокси используя ipv6"
 
-#: src/common/weeconfig.c:873
+#: src/common/weeconfig.c:878
 msgid "proxy address"
 msgstr "адрес proxy-сервера"
 
-#: src/common/weeconfig.c:874
+#: src/common/weeconfig.c:879
 msgid "proxy server address (IP or hostname)"
 msgstr "адрес proxy-сервера (IP или хост)"
 
-#: src/common/weeconfig.c:877
+#: src/common/weeconfig.c:882
 msgid "port for proxy"
 msgstr "порт proxy"
 
-#: src/common/weeconfig.c:878
+#: src/common/weeconfig.c:883
 msgid "port for connecting to proxy server"
 msgstr "порт, используемый при подключении к proxy-серверу"
 
-#: src/common/weeconfig.c:881
+#: src/common/weeconfig.c:886
 msgid "proxy username"
 msgstr "proxy username"
 
-#: src/common/weeconfig.c:882
+#: src/common/weeconfig.c:887
 msgid "username for proxy server"
 msgstr "имя пользователя, используемое при подключения к proxy-серверу"
 
-#: src/common/weeconfig.c:885
+#: src/common/weeconfig.c:890
 msgid "proxy password"
 msgstr "proxy password"
 
-#: src/common/weeconfig.c:886
+#: src/common/weeconfig.c:891
 msgid "password for proxy server"
 msgstr "пароль к proxy серверу"
 
-#: src/common/weeconfig.c:899
+#: src/common/weeconfig.c:904
 msgid "path for searching plugins"
 msgstr "путь для поиска plug-in'ов"
 
-#: src/common/weeconfig.c:900
+#: src/common/weeconfig.c:905
 msgid ""
 "path for searching plugins ('%h' will be replaced by WeeChat home, ~/."
 "weechat by default)"
@@ -5154,11 +5161,11 @@ msgstr ""
 "путь поиска pluginов ('%h' заменяется на домашний каталог WeeChat, по "
 "умолчанию - ~/.weechat)"
 
-#: src/common/weeconfig.c:904
+#: src/common/weeconfig.c:909
 msgid "list of plugins to load automatically"
 msgstr "список автоматически загружаемых plug-in'ов "
 
-#: src/common/weeconfig.c:905
+#: src/common/weeconfig.c:910
 msgid ""
 "comma separated list of plugins to load automatically at startup, \"*\" "
 "means all plugins found (names may be partial, for example \"perl\" is ok "
@@ -5168,11 +5175,11 @@ msgstr ""
 "in'ов , \"*\" означает все найденные plug-in'ы (имена могут быть не полными, "
 "например \"perl\" успешно загрузит \"libperl.so\")"
 
-#: src/common/weeconfig.c:910
+#: src/common/weeconfig.c:915
 msgid "standard plugins extension in filename"
 msgstr "стандартное расширение файлов pluginов"
 
-#: src/common/weeconfig.c:911
+#: src/common/weeconfig.c:916
 msgid ""
 "standard plugins extension in filename, used for autoload (if empty, then "
 "all files are loaded when autoload is \"*\")"
@@ -5180,128 +5187,128 @@ msgstr ""
 "стандартное расширение файлов pluginов, используется при автозагрузке (если "
 "не установлено, загружает все файлы)"
 
-#: src/common/weeconfig.c:928
+#: src/common/weeconfig.c:933
 msgid "server name"
 msgstr "название сервера"
 
-#: src/common/weeconfig.c:929
+#: src/common/weeconfig.c:934
 msgid "name associated to IRC server (for display only)"
 msgstr "имя IRC сервера (для внутреннего пользования)"
 
-#: src/common/weeconfig.c:932
+#: src/common/weeconfig.c:937
 msgid "automatically connect to server"
 msgstr "подключаться автоматически"
 
-#: src/common/weeconfig.c:933
+#: src/common/weeconfig.c:938
 msgid "automatically connect to server when WeeChat is starting"
 msgstr "подключаться к серверу автоматически при запуске WeeChat"
 
-#: src/common/weeconfig.c:936
+#: src/common/weeconfig.c:941
 msgid "automatically reconnect to server"
 msgstr "автоматически переподключаться "
 
-#: src/common/weeconfig.c:937
+#: src/common/weeconfig.c:942
 msgid "automatically reconnect to server when disconnected"
 msgstr "автоматически переподключаться к серверу при обрыве связи"
 
-#: src/common/weeconfig.c:940
+#: src/common/weeconfig.c:945
 msgid "delay before trying again to reconnect"
 msgstr "задержка перед повторным соединением"
 
-#: src/common/weeconfig.c:941
+#: src/common/weeconfig.c:946
 msgid "delay (in seconds) before trying again to reconnect to server"
 msgstr "задержка (в секундах) перед повторным соединением с сервером"
 
-#: src/common/weeconfig.c:944
+#: src/common/weeconfig.c:949
 msgid "server address or hostname"
 msgstr "адрес или хост сервера"
 
-#: src/common/weeconfig.c:945
+#: src/common/weeconfig.c:950
 msgid "IP address or hostname of IRC server"
 msgstr "IP адрес или хост IRC сервера"
 
-#: src/common/weeconfig.c:948
+#: src/common/weeconfig.c:953
 msgid "port for IRC server"
 msgstr "порт IRC сервера"
 
-#: src/common/weeconfig.c:949
+#: src/common/weeconfig.c:954
 msgid "port for connecting to server"
 msgstr "порт, используемый при соединении с сервером"
 
-#: src/common/weeconfig.c:952 src/common/weeconfig.c:953
+#: src/common/weeconfig.c:957 src/common/weeconfig.c:958
 msgid "use IPv6 protocol for server communication"
 msgstr "использовать IPv6 при связи с сервером"
 
-#: src/common/weeconfig.c:956 src/common/weeconfig.c:957
+#: src/common/weeconfig.c:961 src/common/weeconfig.c:962
 msgid "use SSL for server communication"
 msgstr "использовать SSL при связи с сервером"
 
-#: src/common/weeconfig.c:960
+#: src/common/weeconfig.c:965
 msgid "server password"
 msgstr "пароль сервера"
 
-#: src/common/weeconfig.c:961
+#: src/common/weeconfig.c:966
 msgid "password for IRC server"
 msgstr "пароль, используемый при подключении к IRC серверу"
 
-#: src/common/weeconfig.c:964
+#: src/common/weeconfig.c:969
 msgid "nickname for server"
 msgstr "ник на сервере"
 
-#: src/common/weeconfig.c:965
+#: src/common/weeconfig.c:970
 msgid "nickname to use on IRC server"
 msgstr "ник, используемый на IRC сервере"
 
-#: src/common/weeconfig.c:968
+#: src/common/weeconfig.c:973
 msgid "alternate nickname for server"
 msgstr "альтернативный ник на сервере"
 
-#: src/common/weeconfig.c:969
+#: src/common/weeconfig.c:974
 msgid "alternate nickname to use on IRC server (if nickname is already used)"
 msgstr "альтернативный ник, используемый на IRC сервере"
 
-#: src/common/weeconfig.c:972
+#: src/common/weeconfig.c:977
 msgid "2nd alternate nickname for server"
 msgstr "второй альтернативный ник на сервере"
 
-#: src/common/weeconfig.c:973
+#: src/common/weeconfig.c:978
 msgid ""
 "2nd alternate nickname to use on IRC server (if alternate nickname is "
 "already used)"
 msgstr "второй альтернативный ник, используемый на IRC сервере"
 
-#: src/common/weeconfig.c:976
+#: src/common/weeconfig.c:981
 msgid "user name for server"
 msgstr "имя пользователя на сервере"
 
-#: src/common/weeconfig.c:977
+#: src/common/weeconfig.c:982
 msgid "user name to use on IRC server"
 msgstr "имя пользователя, используемое на IRC сервере"
 
-#: src/common/weeconfig.c:980
+#: src/common/weeconfig.c:985
 msgid "real name for server"
 msgstr "настоящее имя на сервере"
 
-#: src/common/weeconfig.c:981
+#: src/common/weeconfig.c:986
 msgid "real name to use on IRC server"
 msgstr "настоящее имя, используемое на IRC сервере"
 
-#: src/common/weeconfig.c:984
+#: src/common/weeconfig.c:989
 msgid "custom hostname/IP for server"
 msgstr "нестандартный хост/ip-адрес для сервера"
 
-#: src/common/weeconfig.c:985
+#: src/common/weeconfig.c:990
 msgid ""
 "custom hostname/IP for server (optional, if empty local hostname is used)"
 msgstr ""
 "другой ip/хост для сервера (опционально, если не задано - используется "
 "локальный хост)"
 
-#: src/common/weeconfig.c:988
+#: src/common/weeconfig.c:993
 msgid "command(s) to run when connected to server"
 msgstr "команды, выполняемые при подключении к серверу"
 
-#: src/common/weeconfig.c:989
+#: src/common/weeconfig.c:994
 #, fuzzy
 msgid ""
 "command(s) to run when connected to server (many commands should be "
@@ -5311,11 +5318,11 @@ msgstr ""
 "команды, выполняемые при подключении к серверу (несколько команд должны быть "
 "разделены символом ';', используйте '\\;' вместо обычной точки с запятой)"
 
-#: src/common/weeconfig.c:994
+#: src/common/weeconfig.c:999
 msgid "delay (in seconds) after command was executed"
 msgstr "задержка (в секундах) перед выполнением команды"
 
-#: src/common/weeconfig.c:995
+#: src/common/weeconfig.c:1000
 msgid ""
 "delay (in seconds) after command was executed (example: give some time for "
 "authentication)"
@@ -5323,11 +5330,11 @@ msgstr ""
 "задержка (в секундах) перед выполнением команды (например, нужно время для "
 "аутентификации)"
 
-#: src/common/weeconfig.c:998
+#: src/common/weeconfig.c:1003
 msgid "list of channels to join when connected to server"
 msgstr "Список каналов, на которые заходить при соединении с сервером"
 
-#: src/common/weeconfig.c:999
+#: src/common/weeconfig.c:1004
 msgid ""
 "comma separated list of channels to join when connected to server (example: "
 "\"#chan1,#chan2,#chan3 key1,key2\")"
@@ -5335,15 +5342,15 @@ msgstr ""
 "разделённый запятыми список каналов, на которые заходить при подключении к "
 "серверу (например, \"#chan1,#chan2,#chan3 key1,key2\")"
 
-#: src/common/weeconfig.c:1002 src/common/weeconfig.c:1003
+#: src/common/weeconfig.c:1007 src/common/weeconfig.c:1008
 msgid "automatically rejoin channels when kicked"
 msgstr "автоматически перезаходить на каналы после кика"
 
-#: src/common/weeconfig.c:1006
+#: src/common/weeconfig.c:1011
 msgid "notify levels for channels of this server"
 msgstr "уровни уведомления для каналов этого сервера"
 
-#: src/common/weeconfig.c:1007
+#: src/common/weeconfig.c:1012
 #, fuzzy
 msgid ""
 "comma separated list of notify levels for channels of this server (format: "
@@ -5353,7 +5360,7 @@ msgstr ""
 "разделённый запятыми список уровней уведомлений этого сервера (формат: "
 "#канал:1,..)"
 
-#: src/common/weeconfig.c:1093
+#: src/common/weeconfig.c:1098
 #, c-format
 msgid ""
 "%s you should now issue /save to write \"save_on_exit\" option in config "
@@ -5362,63 +5369,63 @@ msgstr ""
 "%s вам следует набрать /save чтобы записать параметр \"save_on_exit\" в "
 "конфигурационный файл.\n"
 
-#: src/common/weeconfig.c:1749
+#: src/common/weeconfig.c:1754
 #, c-format
 msgid "%s %s, line %d: new server, but previous was incomplete\n"
 msgstr "%s %s, строка %d: новый сервер, но старый описан не полностью\n"
 
-#: src/common/weeconfig.c:1758
+#: src/common/weeconfig.c:1763
 #, c-format
 msgid "%s %s, line %d: server '%s' already exists\n"
 msgstr "%s %s, строка %d: сервер '%s' уже существует\n"
 
-#: src/common/weeconfig.c:1774
+#: src/common/weeconfig.c:1779
 #, c-format
 msgid "%s %s, line %d: unable to create server\n"
 msgstr "%s %s, строка %d: не могу создать сервер\n"
 
-#: src/common/weeconfig.c:1814
+#: src/common/weeconfig.c:1819
 #, c-format
 msgid "%s unable to assign default int with string (\"%s\")\n"
 msgstr ""
 "%s не могу установить целочисленное значение по умолчанию строке (\"%s\")\n"
 
-#: src/common/weeconfig.c:1825
+#: src/common/weeconfig.c:1830
 #, c-format
 msgid "%s unable to assign default color (\"%s\")\n"
 msgstr "%s не могу установить цвет по умолчанию (\"%s\")\n"
 
-#: src/common/weeconfig.c:1863
+#: src/common/weeconfig.c:1868
 #, c-format
 msgid "%s config file \"%s\" not found.\n"
 msgstr "%s конфигурационынй файл \"%s\" не найден.\n"
 
-#: src/common/weeconfig.c:1903
+#: src/common/weeconfig.c:1908
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"]\"\n"
 msgstr "%s %s, строка %d: некорректный синтаксис, не хватает \"]\"\n"
 
-#: src/common/weeconfig.c:1920
+#: src/common/weeconfig.c:1925
 #, c-format
 msgid "%s %s, line %d: unknown section identifier (\"%s\")\n"
 msgstr "%s %s, строка %d: неизвестный идентификатор секции (\"%s\")\n"
 
-#: src/common/weeconfig.c:1938
+#: src/common/weeconfig.c:1943
 #, c-format
 msgid "%s %s, line %d: invalid section for option, line is ignored\n"
 msgstr "%s %s, строка %d: некорректная секция параметра, строка игнорируется\n"
 
-#: src/common/weeconfig.c:2020 src/common/weeconfig.c:2046
+#: src/common/weeconfig.c:2025 src/common/weeconfig.c:2051
 #, c-format
 msgid "%s %s, line %d: invalid option \"%s\"\n"
 msgstr "%s %s, строка %d: некорректный параметр \"%s\"\n"
 
-#: src/common/weeconfig.c:2026
+#: src/common/weeconfig.c:2031
 #, c-format
 msgid "%s %s, line %d: invalid ignore options \"%s\"\n"
 msgstr "%s %s, строка %d: некорректные параметры игнорирования \"%s\"\n"
 
-#: src/common/weeconfig.c:2057
+#: src/common/weeconfig.c:2062
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
@@ -5427,7 +5434,7 @@ msgstr ""
 "%s %s, строка %d: некорректное значение параметра '%s'\n"
 "Ожидалось: булевое значение: 'off' или 'on'\n"
 
-#: src/common/weeconfig.c:2066
+#: src/common/weeconfig.c:2071
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
@@ -5436,7 +5443,7 @@ msgstr ""
 "%s %s, строка %d: некорректное значение параметра '%s'\n"
 "Ожидалось: целочисленное значение: от %d до %d\n"
 
-#: src/common/weeconfig.c:2077
+#: src/common/weeconfig.c:2082
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
@@ -5445,21 +5452,21 @@ msgstr ""
 "%s %s, строка %d: некорректное значение параметра '%s'\n"
 "Ожидалось: одно из значений:"
 
-#: src/common/weeconfig.c:2093
+#: src/common/weeconfig.c:2098
 #, c-format
 msgid "%s %s, line %d: invalid color name for option '%s'\n"
 msgstr "%s %s, строка %d: некорректное название цвета параметра '%s'\n"
 
-#: src/common/weeconfig.c:2162
+#: src/common/weeconfig.c:2167
 #, c-format
 msgid "%s: creating default config file...\n"
 msgstr "%s: создаётся конфигурационный файл по умолчанию...\n"
 
-#: src/common/weeconfig.c:2163
+#: src/common/weeconfig.c:2168
 msgid "Creating default config file\n"
 msgstr "Создаю новый конфигурационный файл\n"
 
-#: src/common/weeconfig.c:2166 src/common/weeconfig.c:2372
+#: src/common/weeconfig.c:2171 src/common/weeconfig.c:2377
 #, c-format
 msgid ""
 "#\n"
@@ -5468,7 +5475,7 @@ msgstr ""
 "#\n"
 "# %s конфигурационный файл, созданный пользователем %s v%s, %s"
 
-#: src/common/weeconfig.c:2170 src/common/weeconfig.c:2376
+#: src/common/weeconfig.c:2175 src/common/weeconfig.c:2381
 msgid ""
 "# WARNING! Be careful when editing this file, WeeChat writes this file when "
 "exiting.\n"
@@ -5478,9 +5485,12 @@ msgstr ""
 "его при выходе.\n"
 "#\n"
 
-#: src/common/weeconfig.c:2369
+#: src/common/weeconfig.c:2374
 msgid "Saving config to disk\n"
 msgstr "Сохраняю конфигурацию\n"
+
+#~ msgid "%s unknown command \"%s\" (type /help for help)\n"
+#~ msgstr "%s неизвестная команда \"%s\" (наберите /help для справки)\n"
 
 #~ msgid "%s unknown type or IRC command \"%s\" for ignore\n"
 #~ msgstr "%s неизвестный тип или команда IRC \"%s\" для игнорирования\n"

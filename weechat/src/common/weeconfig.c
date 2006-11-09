@@ -710,6 +710,7 @@ int cfg_irc_fifo_pipe;
 char *cfg_irc_highlight;
 int cfg_irc_colors_receive;
 int cfg_irc_colors_send;
+int cfg_irc_send_unknown_commands;
 
 t_config_option weechat_options_irc[] =
 { { "irc_display_away", N_("display message for away"),
@@ -772,6 +773,10 @@ t_config_option weechat_options_irc[] =
        "%U=underline, %R=reverse)"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
     NULL, NULL, &cfg_irc_colors_send, NULL, config_change_noop },
+  { "irc_send_unknown_commands", N_("send unknown commands to IRC server"),
+    N_("send unknown commands to IRC server"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
+    NULL, NULL, &cfg_irc_send_unknown_commands, NULL, &config_change_noop },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
