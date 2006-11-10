@@ -188,6 +188,8 @@ plugin_config_set_internal (char *option, char *value)
                 return 1;
             }
         }
+        else
+            return 1;
     }
     
     /* failed to set plugin option */
