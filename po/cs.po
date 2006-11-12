@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.2-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-11-09 14:26+0100\n"
+"POT-Creation-Date: 2006-11-12 09:53+0100\n"
 "PO-Revision-Date: 2006-11-01 18:52+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -29,9 +29,8 @@ msgid "%s error sending data to IRC server\n"
 msgstr "%s chyba při zasílání dat na IRC server\n"
 
 #: src/irc/irc-server.c:523 src/irc/irc-server.c:850
-#, fuzzy
 msgid "(message dropped)"
-msgstr "zpráva přijata"
+msgstr "(zpráva zahozena)"
 
 #: src/irc/irc-server.c:635 src/irc/irc-server.c:648 src/irc/irc-server.c:695
 #: src/irc/irc-server.c:708
@@ -1559,9 +1558,9 @@ msgid "CTCP %sVERSION%s received from %s%s"
 msgstr "CTCP %sVERSION%s obdržen od %s%s"
 
 #: src/irc/irc-recv.c:1352 src/irc/irc-recv.c:1909
-#, fuzzy, c-format
+#, c-format
 msgid "Channel %s: * %s %s"
-msgstr "Reop kanálu %s%s%s: %s%s\n"
+msgstr "Kanál %s: %s %s"
 
 #: src/irc/irc-recv.c:1385
 #, c-format
@@ -1579,9 +1578,9 @@ msgid "Unknown CTCP %s%s%s received from %s%s"
 msgstr "Neznámý CTCP %s%s%s obdržen od %s%s"
 
 #: src/irc/irc-recv.c:1481
-#, fuzzy, c-format
+#, c-format
 msgid "Channel %s: %s> %s"
-msgstr "Reop kanálu %s%s%s: %s%s\n"
+msgstr "Kanál %s: %s> %s"
 
 #: src/irc/irc-recv.c:1577 src/irc/irc-recv.c:1598 src/irc/irc-recv.c:1614
 #: src/irc/irc-recv.c:1630 src/irc/irc-recv.c:1661 src/irc/irc-recv.c:1682
@@ -2123,9 +2122,9 @@ msgstr ""
 "%s plugin %s: nemůžu přidat obsluhovač klávesnice (nedostatek paměti)\n"
 
 #: src/plugins/plugins.c:738
-#, fuzzy, c-format
+#, c-format
 msgid "%s plugin %s: unable to add modifier (not enough memory)\n"
-msgstr "%s plugin %s: nemůžu přidat časový obsluhovač (nedostatek paměti)\n"
+msgstr "%s plugin %s: nemůžu přidat modifikátr (nedostatek paměti)\n"
 
 #: src/plugins/plugins.c:968
 #, c-format
@@ -2201,18 +2200,18 @@ msgstr "Plugin \"%s\" odebrán.\n"
 msgid "%s plugin \"%s\" not found\n"
 msgstr "%s plugin \"%s\" nenalezen\n"
 
-#: src/plugins/plugins-config.c:273 src/common/weeconfig.c:1951
+#: src/plugins/plugins-config.c:275 src/common/weeconfig.c:1951
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"=\"\n"
 msgstr "%s %s, řádek %d: nevalidní syntax, chybí \"=\"\n"
 
-#: src/plugins/plugins-config.c:361 src/common/weeconfig.c:2161
+#: src/plugins/plugins-config.c:363 src/common/weeconfig.c:2161
 #: src/common/weeconfig.c:2368
 #, c-format
 msgid "%s cannot create file \"%s\"\n"
 msgstr "%s nemohu vytvořit soubor \"%s\"\n"
 
-#: src/plugins/plugins-config.c:368
+#: src/plugins/plugins-config.c:370
 #, c-format
 msgid ""
 "#\n"
@@ -2221,7 +2220,7 @@ msgstr ""
 "#\n"
 "# %s kofikurační soubor pluginů, vytvořil %s v%s v %s"
 
-#: src/plugins/plugins-config.c:372
+#: src/plugins/plugins-config.c:374
 msgid ""
 "# WARNING! Be careful when editing this file, WeeChat writes this file when "
 "options are updated.\n"
@@ -2336,9 +2335,9 @@ msgid "Not enough memory for new line\n"
 msgstr "Nedostatek paměti pro nový řádek\n"
 
 #: src/gui/gui-common.c:432
-#, fuzzy, c-format
+#, c-format
 msgid "%s not enough memory for infobar message\n"
-msgstr "Nedostatek paměti pro infobar zprávu\n"
+msgstr "%s nedostatek paměti pro infobar zprávu\n"
 
 #: src/gui/gui-keyboard.c:51
 msgid "terminate line"
@@ -2794,11 +2793,12 @@ msgid "list/load/unload plugins"
 msgstr "seznam/načíst/odebrat pluginy"
 
 #: src/common/command.c:139
-#, fuzzy
 msgid ""
 "[list [name]] | [listfull [name]] | [load filename] | [autoload] | [reload "
 "[name]] | [unload [name]]"
-msgstr "[load jméno_souboru] | [autoload] | [reload] | [unload]"
+msgstr ""
+"[list [jméno]] | [listfull [jméno]] | [load jméno_souboru] | [autoload] | "
+"[reload [name]] | [unload [name]]"
 
 #: src/common/command.c:140
 msgid ""
@@ -2812,6 +2812,15 @@ msgid ""
 "\n"
 "Without argument, /plugin command lists loaded plugins."
 msgstr ""
+"    list: vypíše načtené pluginy\n"
+"listfull: vypíše načtené s detailními informacemi\n"
+"    load: načte plugin\n"
+"autolaod: automaticky načte pluginy v systému nebo uživatelském adresáři\n"
+"  reload: znovu načte jeden plugin (pokud není zadané žádné jméno odebere "
+"všechny pluginy pak automaticky načte pluginy)\n"
+"  unload: odebere všechny pluginy\n"
+"\n"
+"Zavolání příkazu /plugin bez parametrů vypíše načtené pluginy."
 
 #: src/common/command.c:148
 msgid "list, add or remove servers"
@@ -3068,6 +3077,8 @@ msgid ""
 "%s unknown command \"%s\" (type /help for help). To send unknown commands to "
 "IRC server, enable option irc_send_unknown_commands.\n"
 msgstr ""
+"%s neznámý příkaz \"%s\" (zadejte /help pro nápovědu). Pro zasílání "
+"neznámých příkazů na IRC server povolte volbu irc_send_unknown_commands.\n"
 
 #: src/common/command.c:832
 msgid "This window is not a channel!\n"
@@ -3389,19 +3400,16 @@ msgid "       %d defined\n"
 msgstr "       %d definováno\n"
 
 #: src/common/command.c:2382
-#, fuzzy
 msgid "     modifiers:\n"
-msgstr "       (není obsluhovač časovače)\n"
+msgstr "     modifikátor\n"
 
 #: src/common/command.c:2391
-#, fuzzy
 msgid "       (no modifier)\n"
-msgstr "       (není obsluhovač časovače)\n"
+msgstr "       (žádný modifikátor)\n"
 
 #: src/common/command.c:2402
-#, fuzzy
 msgid "No plugin found.\n"
-msgstr "Nebyla nalezena žádná možnost pluginu\n"
+msgstr "Nebyl nalezen žádný plugin\n"
 
 #: src/common/command.c:2404
 msgid "  (no plugin)\n"
@@ -4976,9 +4984,8 @@ msgstr ""
 "yy=barva, %U=podtržené, %R=obrácené)"
 
 #: src/common/weeconfig.c:776 src/common/weeconfig.c:777
-#, fuzzy
 msgid "send unknown commands to IRC server"
-msgstr "uživatelské jméno použité na IRC serveru"
+msgstr "poslat neznámý příkaz na IRC server"
 
 #: src/common/weeconfig.c:799
 msgid "automatically accept dcc files"
