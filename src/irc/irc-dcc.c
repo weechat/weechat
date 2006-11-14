@@ -958,12 +958,14 @@ dcc_send_request (t_irc_server *server, int type, char *nick, char *filename)
     
     if (type == DCC_FILE_SEND)
     {
-        /* add home if filename not beginning with '/' (not for Win32) */
+        /* add home if filename not beginning with '/' or '~' (not for Win32) */
 #ifdef _WIN32
         filename2 = strdup (filename);
 #else
         if (filename[0] == '/')
             filename2 = strdup (filename);
+        else if (filename[0] == '~')
+            filename2 = weechat_strreplace (filename, "~", getenv ("HOME"));
         else
         {
             dir1 = weechat_strreplace (cfg_dcc_upload_path, "~", getenv ("HOME"));
