@@ -248,7 +248,7 @@ weechat_charset_parse_irc_msg (char *message, char **nick, char **command,
         pos2 = strchr (pos, ' ');
         if (pos2)
         {
-            *command = strndup (pos, pos2 - pos);
+            *command = weechat_charset_strndup (pos, pos2 - pos);
             pos2++;
             while (pos2[0] == ' ')
                 pos2++;
