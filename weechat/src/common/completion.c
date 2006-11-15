@@ -290,11 +290,17 @@ completion_list_add_filename (t_completion *completion)
 {
     char *path_d, *path_b, *p, *d_name;
     char *real_prefix, *prefix;
-    char buffer[PATH_MAX];
+    char *buffer;
+    int buffer_len;
     DIR *dp;
     struct dirent *entry;
     struct stat statbuf;
     char home[3] = { '~', DIR_SEPARATOR_CHAR, '\0' };
+    
+    buffer_len = PATH_MAX;
+    buffer = (char *) malloc (buffer_len * sizeof (char));
+    if (!buffer)
+	return;
     
     completion->add_space = 0;
     
@@ -315,7 +321,7 @@ completion_list_add_filename (t_completion *completion)
 	prefix = strdup (DIR_SEPARATOR);
     }
 	
-    snprintf (buffer, sizeof(buffer), "%s", completion->base_word + strlen (prefix));
+    snprintf (buffer, buffer_len, "%s", completion->base_word + strlen (prefix));
     p = strrchr (buffer, DIR_SEPARATOR_CHAR);
     if (p)
     {
@@ -341,12 +347,12 @@ completion_list_add_filename (t_completion *completion)
 		if (strcmp (entry->d_name, ".") == 0 || strcmp (entry->d_name, "..") == 0)
 		    continue;
 		
-		snprintf(buffer, sizeof(buffer), "%s%s%s", 
+		snprintf(buffer, buffer_len, "%s%s%s", 
 			 d_name, DIR_SEPARATOR, entry->d_name);
 		if (stat(buffer, &statbuf) == -1)
 		    continue;
 		
-		snprintf(buffer, sizeof(buffer), "%s%s%s%s%s%s",
+		snprintf(buffer, buffer_len, "%s%s%s%s%s%s",
 			 prefix, 
 			 ((strcmp(prefix, "") == 0)
 			  || strchr(prefix, DIR_SEPARATOR_CHAR)) ? "" : DIR_SEPARATOR, 
@@ -365,6 +371,7 @@ completion_list_add_filename (t_completion *completion)
     free (real_prefix);
     free (path_d);
     free (path_b);
+    free (buffer);
 }
 
 /*
