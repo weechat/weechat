@@ -217,6 +217,20 @@ gui_chat_draw_title (t_gui_buffer *buffer, int erase)
 }
 
 /*
+ * gui_chat_get_real_width: return real width: width - 1 if nicklist is at right,
+ *                          for good copy/paste (without nicklist separator)
+ */
+
+int
+gui_chat_get_real_width (t_gui_window *window)
+{
+    if (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_RIGHT)
+        return window->win_chat_width - 1;
+    else
+        return window->win_chat_width;
+}
+
+/*
  * gui_chat_display_new_line: display a new line
  */
 
@@ -226,7 +240,8 @@ gui_chat_display_new_line (t_gui_window *window, int num_lines, int count,
 {
     if ((count == 0) || (*lines_displayed >= num_lines - count))
     {
-        if ((!simulate) && (window->win_chat_cursor_x <= window->win_chat_width - 1))
+        if ((!simulate)
+            && (window->win_chat_cursor_x <= gui_chat_get_real_width (window) - 1))
         {
             wmove (GUI_CURSES(window)->win_chat,
                    window->win_chat_cursor_y,
@@ -514,9 +529,9 @@ gui_chat_display_word (t_gui_window *window,
         chars_to_display = gui_word_strlen (window, data);
 
         /* too long for current line */
-        if (window->win_chat_cursor_x + chars_to_display > window->win_chat_width)
+        if (window->win_chat_cursor_x + chars_to_display > gui_chat_get_real_width (window))
         {
-            num_displayed = window->win_chat_width - window->win_chat_cursor_x;
+            num_displayed = gui_chat_get_real_width (window) - window->win_chat_cursor_x;
             pos_saved_char = gui_word_real_pos (window, data, num_displayed);
             saved_char = data[pos_saved_char];
             data[pos_saved_char] = '\0';
@@ -541,7 +556,7 @@ gui_chat_display_word (t_gui_window *window,
         if ((data >= end_line) ||
             (((simulate) ||
              (window->win_chat_cursor_y <= window->win_chat_height - 1)) &&
-            (window->win_chat_cursor_x > (window->win_chat_width - 1))))
+            (window->win_chat_cursor_x > (gui_chat_get_real_width (window) - 1))))
             gui_chat_display_new_line (window, num_lines, count,
                                        lines_displayed, simulate);
         
@@ -685,8 +700,8 @@ gui_chat_display_line (t_gui_window *window, t_gui_line *line, int count,
         if (word_length > 0)
         {
             /* spaces + word too long for current line but ok for next line */
-            if ((window->win_chat_cursor_x + word_length_with_spaces > window->win_chat_width)
-                && (word_length <= window->win_chat_width - line->length_align))
+            if ((window->win_chat_cursor_x + word_length_with_spaces > gui_chat_get_real_width (window))
+                && (word_length <= gui_chat_get_real_width (window) - line->length_align))
             {
                 gui_chat_display_new_line (window, num_lines, count,
                                            &lines_displayed, simulate);
