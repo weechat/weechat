@@ -91,7 +91,7 @@ gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
                             && (max_length > cfg_look_nicklist_max_size)) ?
                            cfg_look_nicklist_max_size : max_length));
             
-            if (has_colors ())
+            if (cfg_look_nicklist_separator && has_colors ())
             {
                 gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick, COLOR_WIN_NICK_SEP);
                 switch (cfg_look_nicklist_position)
@@ -121,12 +121,12 @@ gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
             
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick, COLOR_WIN_NICK);
             x = 0;
-            y = (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM) ? 1 : 0;
+            y = (cfg_look_nicklist_separator && (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM)) ? 1 : 0;
             column = 0;
             
             if ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_TOP) ||
                 (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM))
-                nicks_displayed = (ptr_win->win_width / (max_length + 2)) * (ptr_win->win_nick_height - 1);
+                nicks_displayed = (ptr_win->win_width / (max_length + 2)) * (ptr_win->win_nick_height - cfg_look_nicklist_separator);
             else
                 nicks_displayed = ptr_win->win_nick_height;
             
@@ -147,7 +147,7 @@ gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
                             x = 0;
                             break;
                         case CFG_LOOK_NICKLIST_RIGHT:
-                            x = 1;
+                            x = cfg_look_nicklist_separator;
                             break;
                         case CFG_LOOK_NICKLIST_TOP:
                         case CFG_LOOK_NICKLIST_BOTTOM:
@@ -214,11 +214,13 @@ gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
                     if ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_TOP) ||
                         (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM))
                     {
-                        if (y - ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM) ? 1 : 0) >= ptr_win->win_nick_height - 1)
+                        if (y - ((cfg_look_nicklist_separator
+                                  && (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM)) ? 1 : 0)
+                            >= ptr_win->win_nick_height - 1)
                         {
                             column += max_length + 2;
-                            y = (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_TOP) ?
-                                0 : 1;
+                            y = (cfg_look_nicklist_separator && (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM)) ?
+                                1 : 0;
                         }
                     }
                 }

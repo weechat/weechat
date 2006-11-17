@@ -102,6 +102,7 @@ extern int cfg_look_nicklist;
 extern int cfg_look_nicklist_position;
 extern int cfg_look_nicklist_min_size;
 extern int cfg_look_nicklist_max_size;
+extern int cfg_look_nicklist_separator;
 extern int cfg_look_nickmode;
 extern int cfg_look_nickmode_empty;
 extern char *cfg_look_no_nickname;

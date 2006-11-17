@@ -83,6 +83,7 @@ char *cfg_look_nicklist_position_values[] =
 { "left", "right", "top", "bottom", NULL };
 int cfg_look_nicklist_min_size;
 int cfg_look_nicklist_max_size;
+int cfg_look_nicklist_separator;
 int cfg_look_nickmode;
 int cfg_look_nickmode_empty;
 char *cfg_look_no_nickname;
@@ -172,6 +173,10 @@ t_config_option weechat_options_look[] =
        "(0 = no max size; if min == max and > 0, then size is fixed))"),
     OPTION_TYPE_INT, 0, 100, 0,
     NULL, NULL, &cfg_look_nicklist_max_size, NULL, config_change_buffers },
+  { "look_nicklist_separator", N_("separator between chat and nicklist"),
+    N_("separator between chat and nicklist"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
+    NULL, NULL, &cfg_look_nicklist_separator, NULL, config_change_buffers },
   { "look_no_nickname", N_("text to display instead of nick when not connected"),
     N_("text to display instead of nick when not connected"),
     OPTION_TYPE_STRING, 0, 0, 0,
@@ -325,6 +330,7 @@ int cfg_col_nick_self;
 int cfg_col_nick_colors[COLOR_WIN_NICK_NUMBER];
 int cfg_col_nick_private;
 int cfg_col_nick_bg;
+int cfg_col_nicklist_bg;
 int cfg_col_dcc_selected;
 int cfg_col_dcc_waiting;
 int cfg_col_dcc_connecting;

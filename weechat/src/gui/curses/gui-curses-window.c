@@ -219,7 +219,7 @@ gui_window_calculate_pos_size (t_gui_window *window, int force_calculate)
             else if ((cfg_look_nicklist_max_size > 0)
                      && (max_length > cfg_look_nicklist_max_size))
                 max_length = cfg_look_nicklist_max_size;
-            if (!force_calculate && (window->win_nick_width == max_length + 2))
+            if (!force_calculate && (window->win_nick_width == max_length + 1 + cfg_look_nicklist_separator))
                 return 0;
         }
         else
@@ -241,19 +241,19 @@ gui_window_calculate_pos_size (t_gui_window *window, int force_calculate)
                 window->win_height - add_top - add_bottom - 2 - 4;
             if (lines > max_height)
                 lines = max_height;
-            if (!force_calculate && (window->win_nick_height == lines + 1))
+            if (!force_calculate && (window->win_nick_height == lines + cfg_look_nicklist_separator))
                 return 0;
         }
         
         switch (cfg_look_nicklist_position)
         {
             case CFG_LOOK_NICKLIST_LEFT:
-                window->win_chat_x = window->win_x + add_left + max_length + 2;
+                window->win_chat_x = window->win_x + add_left + max_length + 1 + cfg_look_nicklist_separator;
                 window->win_chat_y = window->win_y + add_top + 1;
-                window->win_chat_width = window->win_width - add_left - add_right - max_length - 2;
+                window->win_chat_width = window->win_width - add_left - add_right - max_length - 1 - cfg_look_nicklist_separator;
                 window->win_nick_x = window->win_x + add_left + 0;
                 window->win_nick_y = window->win_y + add_top + 1;
-                window->win_nick_width = max_length + 2;
+                window->win_nick_width = max_length + 1 + cfg_look_nicklist_separator;
                 if (cfg_look_infobar)
                 {
                     window->win_chat_height = window->win_height - add_top - add_bottom - 4;
@@ -269,10 +269,10 @@ gui_window_calculate_pos_size (t_gui_window *window, int force_calculate)
             case CFG_LOOK_NICKLIST_RIGHT:
                 window->win_chat_x = window->win_x + add_left;
                 window->win_chat_y = window->win_y + add_top + 1;
-                window->win_chat_width = window->win_width - add_left - add_right - max_length - 2;
-                window->win_nick_x = window->win_x + window->win_width - add_right - max_length - 2;
+                window->win_chat_width = window->win_width - add_left - add_right - max_length - 1 - cfg_look_nicklist_separator;
+                window->win_nick_x = window->win_x + window->win_width - add_right - max_length - 1 - cfg_look_nicklist_separator;
                 window->win_nick_y = window->win_y + add_top + 1;
-                window->win_nick_width = max_length + 2;
+                window->win_nick_width = max_length + 1 + cfg_look_nicklist_separator;
                 if (cfg_look_infobar)
                 {
                     window->win_chat_height = window->win_height - add_top - add_bottom - 4;
@@ -287,16 +287,16 @@ gui_window_calculate_pos_size (t_gui_window *window, int force_calculate)
                 break;
             case CFG_LOOK_NICKLIST_TOP:
                 window->win_chat_x = window->win_x + add_left;
-                window->win_chat_y = window->win_y + add_top + 1 + (lines + 1);
+                window->win_chat_y = window->win_y + add_top + 1 + lines + cfg_look_nicklist_separator;
                 window->win_chat_width = window->win_width - add_left - add_right;
                 if (cfg_look_infobar)
-                    window->win_chat_height = window->win_height - add_top - add_bottom - 3 - (lines + 1) - 1;
+                    window->win_chat_height = window->win_height - add_top - add_bottom - 3 - lines - cfg_look_nicklist_separator - 1;
                 else
-                    window->win_chat_height = window->win_height - add_top - add_bottom - 3 - (lines + 1);
+                    window->win_chat_height = window->win_height - add_top - add_bottom - 3 - lines - cfg_look_nicklist_separator;
                 window->win_nick_x = window->win_x + add_left;
                 window->win_nick_y = window->win_y + add_top + 1;
                 window->win_nick_width = window->win_width - add_left - add_right;
-                window->win_nick_height = lines + 1;
+                window->win_nick_height = lines + cfg_look_nicklist_separator;
                 window->win_nick_num_max = lines * (window->win_nick_width / (max_length + 2));
                 break;
             case CFG_LOOK_NICKLIST_BOTTOM:
@@ -304,16 +304,16 @@ gui_window_calculate_pos_size (t_gui_window *window, int force_calculate)
                 window->win_chat_y = window->win_y + add_top + 1;
                 window->win_chat_width = window->win_width - add_left - add_right;
                 if (cfg_look_infobar)
-                    window->win_chat_height = window->win_height - add_top - add_bottom - 3 - (lines + 1) - 1;
+                    window->win_chat_height = window->win_height - add_top - add_bottom - 3 - lines - cfg_look_nicklist_separator - 1;
                 else
-                    window->win_chat_height = window->win_height - add_top - add_bottom - 3 - (lines + 1);
+                    window->win_chat_height = window->win_height - add_top - add_bottom - 3 - lines - cfg_look_nicklist_separator;
                 window->win_nick_x = window->win_x + add_left;
                 if (cfg_look_infobar)
-                    window->win_nick_y = window->win_y + window->win_height - add_bottom - 2 - (lines + 1) - 1;
+                    window->win_nick_y = window->win_y + window->win_height - add_bottom - 2 - lines - cfg_look_nicklist_separator - 1;
                 else
-                    window->win_nick_y = window->win_y + window->win_height - add_bottom - 2 - (lines + 1);
+                    window->win_nick_y = window->win_y + window->win_height - add_bottom - 2 - lines - cfg_look_nicklist_separator;
                 window->win_nick_width = window->win_width - add_left - add_right;
-                window->win_nick_height = lines + 1;
+                window->win_nick_height = lines + cfg_look_nicklist_separator;
                 window->win_nick_num_max = lines * (window->win_nick_width / (max_length + 2));
                 break;
         }

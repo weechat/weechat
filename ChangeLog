@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-11-14
+ChangeLog - 2006-11-17
 
 
 Version 0.2.2 (under dev!):
+   * added option "look_nicklist_separator" (task #5437)
    * fixed bug with DCC SEND when filename begins with '~'
    * added "irc_send_unknown_commands" option to send unknown commands to
      IRC server (OFF by default) (task #5947)
