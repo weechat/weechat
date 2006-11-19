@@ -1155,17 +1155,6 @@ config_change_read_marker ()
 }
 
 /*
- * config_change_charset: called when charset changes
- */
-
-void
-config_change_charset ()
-{
-    utf8_init ();
-    gui_window_redraw_buffer (gui_current_window->buffer);
-}
-
-/*
  * config_change_one_server_buffer: called when the "one server buffer"
  *                                  setting is changed
  */
@@ -2325,9 +2314,6 @@ config_create_default ()
     weechat_iconv_fprintf (file, "server_autojoin = \"\"\n");
     weechat_iconv_fprintf (file, "server_autorejoin = on\n");
     weechat_iconv_fprintf (file, "server_notify_levels = \"\"\n");
-    weechat_iconv_fprintf (file, "server_charset_decode_iso = \"\"\n");
-    weechat_iconv_fprintf (file, "server_charset_decode_utf = \"\"\n");
-    weechat_iconv_fprintf (file, "server_charset_encode = \"\"\n");
     
     fclose (file);
     chmod (filename, 0600);
