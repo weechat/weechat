@@ -1127,8 +1127,7 @@ config_change_title ()
 void
 config_change_buffers ()
 {
-    gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer);
-    gui_window_redraw_buffer (gui_current_window->buffer);
+    gui_window_refresh_windows ();
 }
 
 /*
