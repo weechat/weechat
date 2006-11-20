@@ -5470,25 +5470,25 @@ end
           <para>
             Perl-Prototyp:
             <command>
-              weechat::add_timer_handler(message, function);
+              weechat::add_timer_handler(interval, function);
             </command>
           </para>
           <para>
             Python-Prototyp:
             <command>
-              weechat.add_timer_handler(message, function)
+              weechat.add_timer_handler(interval, function)
             </command>
           </para>
           <para>
             Ruby-Prototyp:
             <command>
-              Weechat.add_timer_handler(message, function)
+              Weechat.add_timer_handler(interval, function)
             </command>
           </para>
           <para>
             Lua-Prototyp:
             <command>
-              weechat.add_timer_handler(message, function)
+              weechat.add_timer_handler(interval, function)
             </command>
           </para>
           <para>
@@ -5572,25 +5572,25 @@ end
           <para>
             Perl-Prototyp:
             <command>
-              weechat::add_keyboard_handler(message, function);
+              weechat::add_keyboard_handler(function);
             </command>
           </para>
           <para>
             Python-Prototyp:
             <command>
-              weechat.add_keyboard_handler(message, function)
+              weechat.add_keyboard_handler(function)
             </command>
           </para>
           <para>
             Ruby-Prototyp:
             <command>
-              Weechat.add_keyboard_handler(message, function)
+              Weechat.add_keyboard_handler(function)
             </command>
           </para>
           <para>
             Lua-Prototyp:
             <command>
-              weechat.add_keyboard_handler(message, function)
+              weechat.add_keyboard_handler(function)
             </command>
           </para>
           <para>
