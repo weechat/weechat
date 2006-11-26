@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-11-19
+ChangeLog - 2006-11-26
 
 
 Version 0.2.2 (under dev!):
+   * fixed memleak in keyboard input
    * fixed refresh bug when changing config options if window is splited
    * added space between chat and nicklist when position is "right" (bug #17852)
    * added option "look_nicklist_separator" (task #5437)

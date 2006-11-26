@@ -322,6 +322,8 @@ gui_keyboard_read ()
                                                          buffer_before_key,
                                                          gui_current_window->buffer->input_buffer);
 #endif
+                    if (buffer_before_key)
+                        free (buffer_before_key);
                     break;
                 case BUFFER_TYPE_DCC:
                     gui_exec_action_dcc (gui_current_window, key_str);
