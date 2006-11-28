@@ -6756,19 +6756,19 @@ value2 = weechat.get_config("freenode.server_autojoin")
 <screen>
 # perl
 weechat::set_config("look_nicklist", "off");
-weechat::set_config("freenode.server_autojoin, "#weechat");
+weechat::set_config("freenode.server_autojoin", "#weechat");
 
 # python
 weechat.set_config("look_nicklist", "off")
-weechat.set_config("freenode.server_autojoin, "#weechat")
+weechat.set_config("freenode.server_autojoin", "#weechat")
 
 # ruby
 Weechat.set_config("look_nicklist", "off")
-Weechat.set_config("freenode.server_autojoin, "#weechat")
+Weechat.set_config("freenode.server_autojoin", "#weechat")
 
 -- lua
 weechat.set_config("look_nicklist", "off")
-weechat.set_config("freenode.server_autojoin, "#weechat")
+weechat.set_config("freenode.server_autojoin", "#weechat")
 </screen>
           </para>
         </section>
