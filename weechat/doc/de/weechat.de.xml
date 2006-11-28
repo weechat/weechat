@@ -2154,10 +2154,10 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
                           <entry><literal>%C</literal></entry>
                           <entry>Channels des gegenwärtigen Servers</entry>
                         </row>
-                        <!-- <row>
-                             <entry><literal>%f</literal></entry>
-                             <entry>file name</entry>
-                             </row> -->
+                        <row>
+                          <entry><literal>%f</literal></entry>
+                          <entry>Dateiname</entry>
+                        </row>
                         <row>
                           <entry><literal>%h</literal></entry>
                           <entry>Plugin Kommandos</entry>

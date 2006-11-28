@@ -2214,10 +2214,10 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
                           <entry><literal>%C</literal></entry>
                           <entry>canaux du serveur courant</entry>
                         </row>
-                        <!-- <row>
+                        <row>
                           <entry><literal>%f</literal></entry>
                           <entry>nom de fichier</entry>
-                        </row> -->
+                        </row>
                         <row>
                           <entry><literal>%h</literal></entry>
                           <entry>commandes définies par des extensions</entry>
