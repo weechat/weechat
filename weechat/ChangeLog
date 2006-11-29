@@ -5,7 +5,8 @@ ChangeLog - 2006-11-29
 
 
 Version 0.2.2 (under dev!):
-   * added auto completion with channels and filenames
+   * added keys (F9/F10) to scroll topic (task #6030)
+   * added auto completion with channels and filenames (task #5423)
    * fixed memleak in keyboard input
    * fixed refresh bug when changing config options if window is splited
    * added space between chat and nicklist when position is "right" (bug #17852)

@@ -168,7 +168,8 @@ void
 gui_chat_draw_title (t_gui_buffer *buffer, int erase)
 {
     t_gui_window *ptr_win;
-    char format[32], *buf, *buf2;
+    char format[32], *buf, *buf2, *ptr_topic;
+    int length, width;
     
     if (!gui_ok)
         return;
@@ -180,35 +181,71 @@ gui_chat_draw_title (t_gui_buffer *buffer, int erase)
             if (erase)
                 gui_window_curses_clear (GUI_CURSES(ptr_win)->win_title, COLOR_WIN_TITLE);
             
-            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title, COLOR_WIN_TITLE);
             snprintf (format, 32, "%%-%ds", ptr_win->win_title_width);
+            wmove (GUI_CURSES(ptr_win)->win_title, 0, 0);
+            
             if (CHANNEL(buffer))
             {
                 if (CHANNEL(buffer)->topic)
                 {
                     buf = (char *)gui_color_decode ((unsigned char *)(CHANNEL(buffer)->topic), 0);
-                    buf2 = weechat_iconv_from_internal (NULL, (buf) ? buf : CHANNEL(buffer)->topic);
-                    mvwprintw (GUI_CURSES(ptr_win)->win_title, 0, 0,
-                               format, (buf2) ? buf2 : CHANNEL(buffer)->topic);
+                    buf2 = weechat_iconv_from_internal (NULL,
+                                                        (buf) ? buf : CHANNEL(buffer)->topic);
+                    ptr_topic = (buf2) ? buf2 : CHANNEL(buffer)->topic;
+                    length = utf8_strlen (ptr_topic);
+                    if (ptr_win->win_title_start >= length)
+                        ptr_win->win_title_start = 0;
+                    width = (ptr_win->win_title_start == 0) ?
+                        ptr_win->win_width : ptr_win->win_width - 2;
+                    ptr_topic += ptr_win->win_title_start;
+                    
+                    snprintf (format, 32, "%%-%ds", width);
+                    
+                    if (ptr_win->win_title_start > 0)
+                    {
+                        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
+                                                      COLOR_WIN_TITLE_MORE);
+                        wprintw (GUI_CURSES(ptr_win)->win_title, "%s", "++");
+                    }
+                    
+                    if (utf8_strlen (ptr_topic) > ptr_win->win_width)
+                    {
+                        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title, COLOR_WIN_TITLE);
+                        wprintw (GUI_CURSES(ptr_win)->win_title,
+                                 format, ptr_topic);
+                        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
+                                                      COLOR_WIN_TITLE_MORE);
+                        mvwprintw (GUI_CURSES(ptr_win)->win_title, 0, ptr_win->win_width - 2,
+                                   "%s", "++");
+                    }
+                    else
+                    {
+                        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title, COLOR_WIN_TITLE);
+                        wprintw (GUI_CURSES(ptr_win)->win_title, format, ptr_topic);
+                    }
                     if (buf)
                         free (buf);
                     if (buf2)
                         free (buf2);
                 }
                 else
-                    mvwprintw (GUI_CURSES(ptr_win)->win_title, 0, 0, format, " ");
+                {
+                    gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title, COLOR_WIN_TITLE);
+                    wprintw (GUI_CURSES(ptr_win)->win_title, format, " ");
+                }
             }
             else
             {
+                gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title, COLOR_WIN_TITLE);
                 if (buffer->type == BUFFER_TYPE_STANDARD)
                 {
-                    mvwprintw (GUI_CURSES(ptr_win)->win_title, 0, 0,
-                               format,
-                               PACKAGE_STRING " " WEECHAT_COPYRIGHT_DATE " - "
-                               WEECHAT_WEBSITE);
+                    wprintw (GUI_CURSES(ptr_win)->win_title,
+                             format,
+                             PACKAGE_STRING " " WEECHAT_COPYRIGHT_DATE " - "
+                             WEECHAT_WEBSITE);
                 }
                 else
-                    mvwprintw (GUI_CURSES(ptr_win)->win_title, 0, 0, format, " ");
+                    wprintw (GUI_CURSES(ptr_win)->win_title, format, " ");
             }
             wnoutrefresh (GUI_CURSES(ptr_win)->win_title);
             refresh ();

@@ -281,6 +281,7 @@ t_config_option weechat_options_look[] =
 int cfg_col_real_white;
 int cfg_col_separator;
 int cfg_col_title;
+int cfg_col_title_more;
 int cfg_col_title_bg;
 int cfg_col_chat;
 int cfg_col_chat_time;
@@ -356,6 +357,10 @@ t_config_option weechat_options_colors[] =
     N_("color for title bar"),
     OPTION_TYPE_COLOR, 0, 0, 0,
     "default", NULL, &cfg_col_title, NULL, &config_change_color },
+  { "col_title_more", N_("color for '+' when scrolling topic"),
+    N_("color for '+' when scrolling topic"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "lightmagenta", NULL, &cfg_col_title_more, NULL, &config_change_color },
   { "col_title_bg", N_("background for title bar"),
     N_("background for title bar"),
     OPTION_TYPE_COLOR, 0, 0, 0,

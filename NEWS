@@ -1,6 +1,33 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
+* FlashCode, 2006-11-29
+
+    WeeChat 0.2.2 under development.
+
+    Important release notes:
+    
+    - new charset plugin:
+        - for users of any previous version, all your charset settings
+          in weechat.rc will be LOST! You should save your weechat.rc
+          to keep your values and set them again with new "charset" plugin.
+        - for ISO users: history of channels may be without accents
+          (after /upgrade), this is not recoverable, but this is not a bug.
+          All new messages should be ok.
+        - be careful, now default encode is UTF-8 for all channels (before
+          it was terminal charset). If you still want to send messages as
+          ISO-8859-1, you should send either global encode or server specific
+          encode to ISO-8859-1.
+          For global encode:  /setp charset.global.encode = "ISO-8859-1"
+          For server encode: (on server buffer)  /charset encode ISO-8859-1
+    - new keys for topic scroll:
+        - new keys for scrolling topic: F9/F10
+        - key F10 was used for "infobar_clear" in previous WeeChat versions,
+          you have to manually rebind this key (except for new WeeChat users):
+            /key <press alt-k then F10> scroll_topic_right
+          which gives something like this:
+            /key meta2-21~ scroll_topic_right
+
 * FlashCode, 2006-10-01
 
     WeeChat 0.2.1 released.

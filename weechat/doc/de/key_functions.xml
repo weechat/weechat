@@ -118,6 +118,14 @@
   <entry>nach ganz unten scrollen</entry>
 </row>
 <row>
+  <entry><literal>scroll_topic_left</literal></entry>
+  <entry>scroll left topic</entry>
+</row>
+<row>
+  <entry><literal>scroll_topic_right</literal></entry>
+  <entry>scroll right topic</entry>
+</row>
+<row>
   <entry><literal>nick_beginning</literal></entry>
   <entry>zum Anfang der Nicklist gehen</entry>
 </row>

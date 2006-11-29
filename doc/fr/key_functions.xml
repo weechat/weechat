@@ -118,6 +118,14 @@
   <entry>faire défiler jusqu'à la fin du tampon</entry>
 </row>
 <row>
+  <entry><literal>scroll_topic_left</literal></entry>
+  <entry>faire défiler le titre vers la gauche</entry>
+</row>
+<row>
+  <entry><literal>scroll_topic_right</literal></entry>
+  <entry>faire défiler le titre vers la droite</entry>
+</row>
+<row>
   <entry><literal>nick_beginning</literal></entry>
   <entry>afficher le début de la liste des pseudos</entry>
 </row>

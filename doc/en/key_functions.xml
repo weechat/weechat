@@ -118,6 +118,14 @@
   <entry>scroll to bottom of buffer</entry>
 </row>
 <row>
+  <entry><literal>scroll_topic_left</literal></entry>
+  <entry>scroll left topic</entry>
+</row>
+<row>
+  <entry><literal>scroll_topic_right</literal></entry>
+  <entry>scroll right topic</entry>
+</row>
+<row>
   <entry><literal>nick_beginning</literal></entry>
   <entry>display beginning of nicklist</entry>
 </row>

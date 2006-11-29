@@ -372,6 +372,37 @@ gui_window_scroll_bottom (t_gui_window *window)
 }
 
 /*
+ * gui_window_scroll_topic_left: scroll left topic
+ */
+
+void
+gui_window_scroll_topic_left (t_gui_window *window)
+{
+    if (!gui_ok)
+        return;
+    
+    if (window->win_title_start > 0)
+        window->win_title_start -= (window->win_width * 3) / 4;
+    if (window->win_title_start < 0)
+        window->win_title_start = 0;
+    gui_chat_draw_title (window->buffer, 1);
+}
+
+/*
+ * gui_window_scroll_topic_right: scroll right topic
+ */
+
+void
+gui_window_scroll_topic_right (t_gui_window *window)
+{
+    if (!gui_ok)
+        return;
+    
+    window->win_title_start += (window->win_width * 3) / 4;
+    gui_chat_draw_title (window->buffer, 1);
+}
+
+/*
  * gui_window_nick_beginning: go to beginning of nicklist
  */
 

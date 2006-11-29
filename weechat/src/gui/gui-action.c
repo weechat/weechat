@@ -884,6 +884,26 @@ gui_action_scroll_bottom (t_gui_window *window)
 }
 
 /*
+ * gui_action_scroll_topic_left: scroll left topic
+ */
+
+void
+gui_action_scroll_topic_left (t_gui_window *window)
+{
+    gui_window_scroll_topic_left (window);
+}
+
+/*
+ * gui_action_scroll_topic_right: scroll right topic
+ */
+
+void
+gui_action_scroll_topic_right (t_gui_window *window)
+{
+    gui_window_scroll_topic_right (window);
+}
+
+/*
  * gui_action_nick_beginning: go to beginning of nicklist
  */
 

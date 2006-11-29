@@ -619,9 +619,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 </entry>
               </row>
               <row>
-                <entry>F10</entry>
+                <entry>F9 / F10</entry>
                 <entry>
-                  Remove last infobar message
+                  Scroll topic
                 </entry>
               </row>
               <row>
@@ -666,6 +666,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 <entry>
                   Clear hotlist
                   (activity notification on other buffers)
+                </entry>
+              </row>
+              <row>
+                <entry>Alt + I</entry>
+                <entry>
+                  Remove last infobar message
                 </entry>
               </row>
               <row>

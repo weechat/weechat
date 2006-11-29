@@ -83,7 +83,8 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind ( /* m-pgdn      */ "meta-meta2-6~",      "scroll_down");
     gui_keyboard_bind ( /* m-home      */ "meta-meta2-1~",      "scroll_top");
     gui_keyboard_bind ( /* m-end       */ "meta-meta2-4~",      "scroll_bottom");
-    gui_keyboard_bind ( /* F10         */ "meta2-21~",          "infobar_clear");
+    gui_keyboard_bind ( /* F9          */ "meta2-20~",          "scroll_topic_left");
+    gui_keyboard_bind ( /* F10         */ "meta2-21~",          "scroll_topic_right");
     gui_keyboard_bind ( /* F11         */ "meta2-23~",          "nick_page_up");
     gui_keyboard_bind ( /* F12         */ "meta2-24~",          "nick_page_down");
     gui_keyboard_bind ( /* m-F11       */ "meta-meta2-23~",     "nick_beginning");
@@ -96,6 +97,7 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind ( /* m-f         */ "meta-f",             "next_word");
     gui_keyboard_bind ( /* ^right      */ "meta-Oc",            "next_word");
     gui_keyboard_bind ( /* m-h         */ "meta-h",             "hotlist_clear");
+    gui_keyboard_bind ( /* m-i         */ "meta-i"   ,          "infobar_clear");
     gui_keyboard_bind ( /* m-j,m-d     */ "meta-jmeta-d",       "jump_dcc");
     gui_keyboard_bind ( /* m-j,m-l     */ "meta-jmeta-l",       "jump_last_buffer");
     gui_keyboard_bind ( /* m-j,m-s     */ "meta-jmeta-s",       "jump_server");

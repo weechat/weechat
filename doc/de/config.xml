@@ -111,6 +111,13 @@
   <entry>Maximale Größe der Nicklist (Breite oder Höhe, je nach look_nicklist_position (0: kein Maximum); Wenn min == max &gt; 0, ist die Größe fest.</entry>
 </row>
 <row>
+  <entry><option>look_nicklist_separator</option></entry>
+  <entry>Boolean</entry>
+  <entry>zwischen 0 und 100</entry>
+  <entry>'on'</entry>
+  <entry>Trennzeichen zwischen Chatfenster und Nickliste</entry>
+</row>
+<row>
   <entry><option>look_no_nickname</option></entry>
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
@@ -291,6 +298,13 @@
   <entry>Curses- oder Gtk-Farben</entry>
   <entry>'default'</entry>
   <entry>Textfarbe der Titelleiste</entry>
+</row>
+<row>
+  <entry><option>col_title_more</option></entry>
+  <entry>Farbe</entry>
+  <entry>Curses- oder Gtk-Farben</entry>
+  <entry>'lightmagenta'</entry>
+  <entry>Color for '+' when scrolling topic</entry>
 </row>
 <row>
   <entry><option>col_title_bg</option></entry>
@@ -916,6 +930,13 @@
   <entry>Erlaube Benutzern, spezielle Codes zu versenden (%B=fett, %Cxx,yy=Farbe, %U=unterstrichen, %R=reverse/umgekehrt)</entry>
 </row>
 <row>
+  <entry><option>irc_send_unknown_commands</option></entry>
+  <entry>Boolean</entry>
+  <entry>eine beliebige Zeichenfolge</entry>
+  <entry>'off'</entry>
+  <entry>Sende unbekannte Befehle an den IRC-Server</entry>
+</row>
+<row>
   <entry><option>dcc_auto_accept_files</option></entry>
   <entry>Boolean</entry>
   <entry>eine beliebige Zeichenfolge</entry>
@@ -1179,7 +1200,7 @@
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>''</entry>
-  <entry>Command(s) to run when connected to server (many commands should be separated by ';', use '\;' for a semicolon, special variables $nick, $channel and $server are replaced by their value)</entry>
+  <entry>Befehle, die nach der Verbindung zum Server ausgeführt werden sollen (mehrere Befehle müssen mit einem Semikolon getrennt werden, um ein Semikolon zu schreiben, muss man '\;' verwenden, die spezielllen Variablen $nick, $channel und $server werden dabei durch den jeweiligen Wert ersetzt)</entry>
 </row>
 <row>
   <entry><option>server_command_delay</option></entry>
@@ -1207,5 +1228,5 @@
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>''</entry>
-  <entry>Comma separated list of notify levels for channels of this server (format: #channel:1,..), a channel name '*' is reserved for server default notify level</entry>
+  <entry>Durch Kommata getrennte Liste der Notify-Levels für die Channels auf diesem Server (Format: #channel:1,...), der Channelname '*' ist für den Default-Server-Notify-Level</entry>
 </row>

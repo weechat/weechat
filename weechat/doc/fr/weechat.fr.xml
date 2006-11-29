@@ -630,9 +630,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 </entry>
               </row>
               <row>
-                <entry>F10</entry>
+                <entry>F9 / F10</entry>
                 <entry>
-                  Effacer le dernier message de la barre d'informations
+                  Faire défiler le titre du canal
                 </entry>
               </row>
               <row>
@@ -677,6 +677,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 <entry>
                   Vider la hotlist
                   (notification d'activité sur les autres tampons)
+                </entry>
+              </row>
+              <row>
+                <entry>Alt + I</entry>
+                <entry>
+                  Effacer le dernier message de la barre d'informations
                 </entry>
               </row>
               <row>

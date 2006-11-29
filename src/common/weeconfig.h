@@ -130,6 +130,7 @@ extern char *cfg_look_input_format;
 extern int cfg_col_real_white;
 extern int cfg_col_separator;
 extern int cfg_col_title;
+extern int cfg_col_title_more;
 extern int cfg_col_title_bg;
 extern int cfg_col_chat;
 extern int cfg_col_chat_time;

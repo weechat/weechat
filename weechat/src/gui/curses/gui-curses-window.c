@@ -452,6 +452,7 @@ gui_window_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
     }
     
     window->buffer = buffer;
+    window->win_title_start = 0;
     window->win_nick_start = 0;
     
     gui_window_calculate_pos_size (window, 1);
@@ -667,6 +668,37 @@ gui_window_scroll_bottom (t_gui_window *window)
         gui_chat_draw (window->buffer, 0);
         gui_status_draw (window->buffer, 0);
     }
+}
+
+/*
+ * gui_window_scroll_topic_left: scroll left topic
+ */
+
+void
+gui_window_scroll_topic_left (t_gui_window *window)
+{
+    if (!gui_ok)
+        return;
+    
+    if (window->win_title_start > 0)
+        window->win_title_start -= (window->win_width * 3) / 4;
+    if (window->win_title_start < 0)
+        window->win_title_start = 0;
+    gui_chat_draw_title (window->buffer, 1);
+}
+
+/*
+ * gui_window_scroll_topic_right: scroll right topic
+ */
+
+void
+gui_window_scroll_topic_right (t_gui_window *window)
+{
+    if (!gui_ok)
+        return;
+    
+    window->win_title_start += (window->win_width * 3) / 4;
+    gui_chat_draw_title (window->buffer, 1);
 }
 
 /*

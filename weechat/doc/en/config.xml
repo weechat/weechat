@@ -111,6 +111,13 @@
   <entry>Max size for nicklist (width or height, depending on look_nicklist_position (0 = no max size; if min == max and &gt; 0, then size is fixed))</entry>
 </row>
 <row>
+  <entry><option>look_nicklist_separator</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Separator between chat and nicklist</entry>
+</row>
+<row>
   <entry><option>look_no_nickname</option></entry>
   <entry>string</entry>
   <entry>any string</entry>
@@ -291,6 +298,13 @@
   <entry>Curses or Gtk color</entry>
   <entry>'default'</entry>
   <entry>Color for title bar</entry>
+</row>
+<row>
+  <entry><option>col_title_more</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry>'lightmagenta'</entry>
+  <entry>Color for '+' when scrolling topic</entry>
 </row>
 <row>
   <entry><option>col_title_bg</option></entry>
@@ -914,6 +928,13 @@
   <entry>'on' or 'off'</entry>
   <entry>'on'</entry>
   <entry>Allow user to send colors with special codes (%B=bold, %Cxx,yy=color, %U=underline, %R=reverse)</entry>
+</row>
+<row>
+  <entry><option>irc_send_unknown_commands</option></entry>
+  <entry>boolean</entry>
+  <entry>'on' or 'off'</entry>
+  <entry>'off'</entry>
+  <entry>Send unknown commands to IRC server</entry>
 </row>
 <row>
   <entry><option>dcc_auto_accept_files</option></entry>

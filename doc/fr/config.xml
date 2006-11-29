@@ -111,6 +111,13 @@
   <entry>Taille maximum pour la fenêtre d'utilisateurs (largeur ou hauteur, selon look_nicklist_position (0 = pas de taille maximum; si min == max et &gt; 0, alors la taille est fixe))</entry>
 </row>
 <row>
+  <entry><option>look_nicklist_separator</option></entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Séparateur entre la discussion et la liste de pseudos</entry>
+</row>
+<row>
   <entry><option>look_no_nickname</option></entry>
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>
@@ -291,6 +298,13 @@
   <entry>couleur Curses ou Gtk</entry>
   <entry>'default'</entry>
   <entry>Couleur pour la barre de titre</entry>
+</row>
+<row>
+  <entry><option>col_title_more</option></entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'lightmagenta'</entry>
+  <entry>Couleur pour les '+' lors du scroll sur le titre</entry>
 </row>
 <row>
   <entry><option>col_title_bg</option></entry>
@@ -914,6 +928,13 @@
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
   <entry>Autorise l'utilisateur à envoyer des couleurs avec des codes spéciaux (%B=gras, %Cxx,yy=couleur, %U=souligné, %R=inversé)</entry>
+</row>
+<row>
+  <entry><option>irc_send_unknown_commands</option></entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'off'</entry>
+  <entry>Envoie les commandes inconnues au serveur IRC</entry>
 </row>
 <row>
   <entry><option>dcc_auto_accept_files</option></entry>

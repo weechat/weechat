@@ -56,6 +56,7 @@ struct t_gui_window
     int win_title_y;                /* title window position                */
     int win_title_width;            /* width of title window                */
     int win_title_height;           /* height of title window               */
+    int win_title_start;            /* first char of title for display      */
     
     /* status bar settings */
     int win_status_x;               /* status window position               */
