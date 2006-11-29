@@ -27,6 +27,7 @@
 #define COMPLETION_NICK         1
 #define COMPLETION_COMMAND      2
 #define COMPLETION_COMMAND_ARG  3
+#define COMPLETION_AUTO         4
 
 typedef struct t_completion t_completion;
 

@@ -1000,12 +1000,7 @@ completion_find_context (t_completion *completion, char *buffer, int size, int p
         }
     }
     else
-    {
-        if (completion->channel)
-            completion->context = COMPLETION_NICK;
-        else
-            completion->context = COMPLETION_NULL;
-    }
+        completion->context = COMPLETION_AUTO;
     
     /* look for word to complete (base word) */
     completion->base_word_pos = 0;
@@ -1078,28 +1073,13 @@ completion_find_context (t_completion *completion, char *buffer, int size, int p
         }
     }
     
-    /* nick completion with nothing as base word is disabled,
+    /* auto completion with nothing as base word is disabled,
        in order to prevent completion when pasting messages with [tab] inside */
-    if ((completion->context == COMPLETION_NICK)
+    if ((completion->context == COMPLETION_AUTO)
         && ((!completion->base_word) || (!completion->base_word[0])))
     {
         completion->context = COMPLETION_NULL;
         return;
-    }
-    
-    if (!completion->completion_list && completion->channel &&
-        ((((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_PRIVATE)
-         || (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_DCC_CHAT))
-        && (completion->context == COMPLETION_NICK))
-    {
-        /* nick completion in private (only other nick and self) */
-        completion->context = COMPLETION_NICK;
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     ((t_irc_channel *)(completion->channel))->name);
-        weelist_add (&completion->completion_list,
-                     &completion->last_completion,
-                     ((t_irc_server *)(completion->server))->nick);
     }
 }
 
@@ -1323,6 +1303,8 @@ completion_nick (t_completion *completion)
     if (!completion->channel)
         return;
     
+    completion->context = COMPLETION_NICK;
+    
     if ((((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_PRIVATE)
         || (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_DCC_CHAT))
     {
@@ -1407,6 +1389,39 @@ completion_nick (t_completion *completion)
 }
 
 /*
+ * completion_auto: auto complete: nick, filename or channel
+ */
+
+void
+completion_auto (t_completion *completion)
+{
+    /* filename completion */
+    if ((completion->base_word[0] == '/')
+        || (completion->base_word[0] == '~'))
+    {
+        if (!completion->completion_list)
+            completion_list_add_filename (completion);
+        completion_command_arg (completion, 0);
+        return;
+    }
+    
+    /* channel completion */
+    if (string_is_channel (completion->base_word))
+    {
+        if (!completion->completion_list)
+            completion_list_add_server_channels (completion);
+        completion_command_arg (completion, 0);
+        return;
+    }
+    
+    /* default: nick completion (if channel) */
+    if (completion->channel)
+        completion_nick (completion);
+    else
+        completion->context = COMPLETION_NULL;
+}
+
+/*
  * completion_search: complete word according to context
  */
 
@@ -1433,10 +1448,7 @@ completion_search (t_completion *completion, int direction,
             /* should never be executed */
             return;
         case COMPLETION_NICK:
-            if (completion->channel)
-                completion_nick (completion);
-            else
-                return;
+            completion_nick (completion);
             break;
         case COMPLETION_COMMAND:
             completion_command (completion);
@@ -1445,7 +1457,13 @@ completion_search (t_completion *completion, int direction,
             if (completion->completion_list)
                 completion_command_arg (completion, completion->arg_is_nick);
             else
-                completion_nick (completion);
+            {
+                completion->context = COMPLETION_AUTO;
+                completion_auto (completion);
+            }
+            break;
+        case COMPLETION_AUTO:
+            completion_auto (completion);
             break;
     }
     if (completion->word_found)
