@@ -70,7 +70,7 @@ gui_main_loop ()
     t_irc_server *ptr_server;
     t_gui_buffer *ptr_buffer;
     int old_day, old_min, old_sec, diff;
-    char text_time[1024];
+    char text_time[1024], *text_time2;
     time_t new_time;
     struct tm *local_time;
     
@@ -110,6 +110,7 @@ gui_main_loop ()
             {
                 strftime (text_time, sizeof (text_time),
                           cfg_look_day_change_timestamp, local_time);
+                text_time2 = weechat_iconv_to_internal (NULL, text_time);
                 gui_add_hotlist = 0;
                 for (ptr_buffer = gui_buffers; ptr_buffer;
                      ptr_buffer = ptr_buffer->next_buffer)
@@ -117,8 +118,11 @@ gui_main_loop ()
                     if (ptr_buffer->type == BUFFER_TYPE_STANDARD)
                         gui_printf_nolog_notime (ptr_buffer,
                                                  _("Day changed to %s\n"),
-                                                 text_time);
+                                                 (text_time2) ?
+                                                 text_time2 : text_time);
                 }
+                if (text_time2)
+                    free (text_time2);
                 gui_add_hotlist = 1;
             }
             old_day = local_time->tm_mday;
