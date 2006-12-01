@@ -29,6 +29,7 @@ AC_PROG_CC
 AC_PROG_MAKE_SET
 AC_GNU_SOURCE
 AM_PROG_LIBTOOL
+AC_CHECK_PROG(DBLATEX_FOUND, "dblatex", "yes")
 
 # Add some flags for some OS
 case "$host_os" in
@@ -779,6 +780,7 @@ AM_CONDITIONAL(PLUGIN_ASPELL,  test "$enable_aspell" = "yes")
 AM_CONDITIONAL(PLUGIN_CHARSET, test "$enable_charset" = "yes")
 AM_CONDITIONAL(HAVE_GNUTLS,    test "$enable_gnutls" = "yes")
 AM_CONDITIONAL(HAVE_FLOCK,     test "$enable_flock" = "yes")
+AM_CONDITIONAL(DBLATEX_FOUND,  test "$DBLATEX_FOUND" = "yes")
 
 AC_OUTPUT([Makefile
            doc/Makefile

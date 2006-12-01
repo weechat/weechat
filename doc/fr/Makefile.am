@@ -22,9 +22,13 @@ QUICKSTART = weechat_quickstart.$(LANGCODE).txt
 
 EXTRA_DIST = $(BOOK).xml $(BOOK_INCLUDE) $(QUICKSTART)
 
+if DBLATEX_FOUND
+PDF = pdf-stamp
+endif
+
 docdir = $(datadir)/doc/$(PACKAGE)
 
-all-local: html-stamp
+all-local: html-stamp $(PDF)
 
 # HTML output with chunks (many pages)
 
@@ -48,16 +52,26 @@ html1-stamp: $(BOOK).xml $(BOOK_INCLUDE) ../weechat-html-one.xsl ../weechat-doc.
 	cp ../weechat-doc.css html1/
 	touch html1-stamp
 
+# PDF output
+
+pdf: pdf-stamp
+
+pdf-stamp: $(BOOK).xml $(BOOK_INCLUDE)
+	echo "<pubdate>`date '+%F %T'`</pubdate>" >date.xml
+	dblatex -c ../dblatex.conf $(BOOK).xml || true
+	touch pdf-stamp
+
 # install docs
 
 install-data-hook:
 	$(mkinstalldirs) $(DESTDIR)$(docdir)/html/$(LANGCODE)/
 	$(INSTALL_DATA) html/* $(DESTDIR)$(docdir)/html/$(LANGCODE)/
 	$(INSTALL_DATA) $(QUICKSTART) $(DESTDIR)$(docdir)/
+	$(INSTALL_DATA) $(BOOK).pdf $(DESTDIR)$(docdir)/
 
 # clean
 
 clean-local:
 	-rm -f $(BOOK).html $(BOOK).pdf $(BOOK).txt date.xml
 	-rm -rf html/ html1/
-	-rm -f html-stamp html1-stamp
+	-rm -f html-stamp html1-stamp pdf-stamp

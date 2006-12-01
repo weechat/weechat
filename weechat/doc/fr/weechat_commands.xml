@@ -218,7 +218,7 @@ gestion des fenêtres
   list: liste les fenêtres ouvertes (pas de paramètre affiche cette liste)
     -1: saute à la fenêtre précédente
     +1: saute à la fenêtre suivante
-    b#: saute à la fenêtre affichant le tampon n°#
+    b#: saute à la fenêtre affichant le tampon #
     up: saute à la fenêtre au dessus
   down: saute à la fenêtre au dessous
   left: saute à la fenêtre à gauche

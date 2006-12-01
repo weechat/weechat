@@ -1013,7 +1013,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
       <para>
         Liste der Optionen für die Konfigurationsdatei:
         <informaltable colsep="0" frame="none">
-          <tgroup cols="2">
+          <tgroup cols="5">
             <thead>
               <row>
                 <entry> Option </entry>
