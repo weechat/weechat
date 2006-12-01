@@ -472,7 +472,9 @@ plugin_msg_handler_exec (char *server, char *irc_command, char *irc_message)
              ptr_handler; ptr_handler = ptr_handler->next_handler)
         {
             if ((ptr_handler->type == PLUGIN_HANDLER_MESSAGE)
-                && (ascii_strcasecmp (ptr_handler->irc_command, irc_command) == 0))
+                && (((ascii_strcasecmp (ptr_handler->irc_command, "*") == 0)
+                    && (ascii_strncasecmp (irc_command, "weechat_", 8) != 0))
+                    || (ascii_strcasecmp (ptr_handler->irc_command, irc_command) == 0)))
             {
                 if (ptr_handler->running == 0)
                 {

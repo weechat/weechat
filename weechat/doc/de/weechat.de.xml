@@ -1936,7 +1936,8 @@ plugin->log (plugin, "freenode", "#weechat", "test");
               </listitem>
               <listitem>
                 <para>
-                  <option>message</option>: Name (Typ) der IRC-Nachricht.
+                  <option>message</option>: Name (Typ) der IRC-Nachricht ("*" für alle
+                  Nachrichten).
                   Eine Liste der bekannten IRC-Nachrichten ist in den 
                   <acronym>RFC</acronym>s
                   <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink> und

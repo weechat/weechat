@@ -1937,7 +1937,8 @@ plugin->log (plugin, "freenode", "#weechat", "test");
               </listitem>
               <listitem>
                 <para>
-                  <option>message</option>: name of IRC message.
+                  <option>message</option>: name of IRC message ("*" for all
+                  messages).
                   To know list of IRC messages, please consult
                   <acronym>RFC</acronym>s
                   <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink> and

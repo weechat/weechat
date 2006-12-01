@@ -1982,7 +1982,7 @@ plugin->log (plugin, "freenode", "#weechat", "test");
               <listitem>
                 <para>
                   <option>message</option> : nom du message IRC pour lequel la
-                  fonction est appelée.
+                  fonction est appelée ("*" pour tous les messages).
                   Pour connaître la liste des messages IRC disponibles, merci
                   de consulter les <acronym>RFC</acronym>s
                   <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink> et

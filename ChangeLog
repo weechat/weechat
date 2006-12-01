@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-11-29
+ChangeLog - 2006-12-01
 
 
 Version 0.2.2 (under dev!):
+   * plugins: "add_message_handler" now accepts "*" for all IRC messages
    * added keys (F9/F10) to scroll topic (task #6030)
    * added auto completion with channels and filenames (task #5423)
    * fixed memleak in keyboard input
