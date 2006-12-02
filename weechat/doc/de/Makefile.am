@@ -67,7 +67,9 @@ install-data-hook:
 	$(mkinstalldirs) $(DESTDIR)$(docdir)/html/$(LANGCODE)/
 	$(INSTALL_DATA) html/* $(DESTDIR)$(docdir)/html/$(LANGCODE)/
 	$(INSTALL_DATA) $(QUICKSTART) $(DESTDIR)$(docdir)/
+if DBLATEX_FOUND
 	$(INSTALL_DATA) $(BOOK).pdf $(DESTDIR)$(docdir)/
+endif
 
 # clean
 

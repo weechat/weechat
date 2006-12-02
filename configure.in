@@ -658,6 +658,12 @@ fi
 #                               documentation
 # ------------------------------------------------------------------------------
 
+msg_doc=""
+
+if test "x$DBLATEX_FOUND" = "xyes"; then
+    msg_doc="pdf $msg_doc"
+fi
+
 AC_MSG_CHECKING(for html/chunk.xsl)
 DOC_XSL_PREFIX=""
 
@@ -676,7 +682,6 @@ done
 
 if test "x$DOC_XSL_PREFIX" = "x"; then
     AC_MSG_RESULT(no)
-    enable_doc="no"
     AC_MSG_WARN([
 *** Docbook XSL files not found
 *** WeeChat will be built without documentation.
@@ -684,7 +689,7 @@ if test "x$DOC_XSL_PREFIX" = "x"; then
 else
     AC_MSG_RESULT($DOC_XSL_PREFIX)
     AC_SUBST(DOC_XSL_PREFIX)
-    enable_doc="yes"
+    msg_doc="html $msg_doc"
 fi
 
 # ------------------------------------------------------------------------------
@@ -883,7 +888,7 @@ echo "              Aspell plugin....... : $enable_aspell"
 echo "              Charset plugin...... : $enable_charset"
 echo "Compile with debug info........... : $msg_debug_compiler"
 echo "              Backtrace........... : $enable_backtrace"
-echo "Build doc..........................: $enable_doc"
+echo "Build doc..........................: $msg_doc"
 echo "Print debugging messages.......... : $msg_debug_verbose"
 echo ""
 eval echo "WeeChat will be installed in $bindir."
