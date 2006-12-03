@@ -758,7 +758,7 @@ plugin_modifier_exec (t_plugin_modifier_type type,
     t_weechat_plugin *ptr_plugin;
     t_plugin_modifier *ptr_modifier;
     char *argv[2] = { NULL, NULL };
-    char *new_msg, *pos, *command;
+    char *new_msg, *message_modified, *pos, *command;
     int length_command;
     
     argv[0] = server;
@@ -792,6 +792,7 @@ plugin_modifier_exec (t_plugin_modifier_type type,
     }
     
     new_msg = NULL;
+    message_modified = NULL;
     
     for (ptr_plugin = weechat_plugins; ptr_plugin;
          ptr_plugin = ptr_plugin->next_plugin)
@@ -825,6 +826,7 @@ plugin_modifier_exec (t_plugin_modifier_type type,
                             if (argv[1] != message)
                                 free (argv[1]);
                             argv[1] = new_msg;
+                            message_modified = new_msg;
                         }
                     }
                 }
@@ -832,7 +834,7 @@ plugin_modifier_exec (t_plugin_modifier_type type,
         }
     }
     
-    return new_msg;
+    return message_modified;
 }
 
 /*
