@@ -515,8 +515,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
               <row>
                 <entry>Strg + T</entry>
                 <entry>
-                  <!-- TRANSLATION NEEDED -->
-                  Transpose chars
+                  Zeichen transponieren
                 </entry>
               </row>
               <row>
@@ -534,8 +533,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
               <row>
                 <entry>Strg + Y</entry>
                 <entry>
-                  <!-- TRANSLATION NEEDED -->
-                  Paste clipboard content
+                  Inhalt der Zwischenablage einfügen
                 </entry>
               </row>
               <row>
@@ -551,7 +549,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 </entry>
               </row>
               <row>
-                <!-- TRANSLATION NEEDED -->
                 <entry>Tabulator / Shift + Tabulator</entry>
                 <entry>
                   Vervollständige ein Kommando oder Nick
@@ -1284,128 +1281,125 @@ fi
       <section id="secAPIFunctions">
         <title>API Funktionen</title>
                 
-        <!-- TRANSLATION NEEDED -->
         <section id="secAPI_set_charset">
           <title>set_charset</title>
           
           <para>
-            Prototype:
+            Prototyp:
             <command>
               void set_charset (t_weechat_plugin *plugin, char *charset)
             </command>
           </para>
           <para>
-            Set new plugin charset.
+            Legt neuen Zeichensatz für ein Plugin fest.
           </para>
           <para>
-            Arguments:
+            Argumente:
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>plugin</option>: pointer to plugin structure
+                  <option>plugin</option>: Zeiger auf Plugin-Struktur
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>charset</option>: new charset to use
+                  <option>charset</option>: neuer Zeichensatz, der benutzt werden soll
                 </para>
               </listitem>
             </itemizedlist>
           </para>
           <para>
-            Example:
+            Beispiel:
             <screen>plugin->set_charset (plugin, "ISO-8859-1");</screen>
           </para>
         </section>
         
-        <!-- TRANSLATION NEEDED -->                
         <section id="secAPI_iconv_to_internal">
           <title>iconv_to_internal</title>
           
           <para>
-            Prototype:
+            Prototyp:
             <command>
               void iconv_to_internal (t_weechat_plugin *plugin, char *charset,
                                       char *string)
             </command>
           </para>
           <para>
-            Convert string to WeeChat internal charset (UTF-8).
+            Konvertiert eine Zeichenkette in das interne Format von WeeChat (UTF-8).
           </para>
           <para>
-            Arguments:
+            Argumente:
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>plugin</option>: pointer to plugin structure
+                  <option>plugin</option>: Zeiger auf Plugin-Struktur
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>charset</option>: charset to convert
+                  <option>charset</option>: ursprünglicher Zeichensatz, von dem konvertiert werden soll
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>string</option>: string to convert
+                  <option>string</option>: zu konvertierende Zeichenkette
                 </para>
               </listitem>
             </itemizedlist>
           </para>
           <para>
-            Return value: converted string.
+            Rückgabewert: konvertierte Zeichenkette
           </para>
           <para>
-            Note: result has to be free by a call to "free" after use.
+            Anmerkung: der Speicher, der durch das Ergebnis belegt wird, muss mit free() wieder freigegeben werden.
           </para>
           <para>
-            Example:
+            Beispiel:
             <screen>char *str = plugin->iconv_to_internal (plugin, "ISO-8859-1", "iso string: é à");</screen>
           </para>
         </section>
         
-        <!-- TRANSLATION NEEDED -->        
         <section id="secAPI_iconv_from_internal">
           <title>iconv_from_internal</title>
           
           <para>
-            Prototype:
+            Prototyp:
             <command>
               void iconv_from_internal (t_weechat_plugin *plugin, char *charset,
                                         char *string)
             </command>
           </para>
           <para>
-            Convert string from internal WeeChat charset (UTF-8) to another.
+            Konvertiert eine Zeichenkette von dem internen WeeChat-Zeichensatz (UTF-8) in einen anderen.
           </para>
           <para>
-            Arguments:
+            Argumente:
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>plugin</option>: pointer to plugin structure
+                  <option>plugin</option>: Zeiger auf Plugin-Struktur
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>charset</option>: target charset
+                  <option>charset</option>: Ziel-Zeichensatz
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>string</option>: string to convert
+                  <option>string</option>: zu konvertierende Zeichenkette
                 </para>
               </listitem>
             </itemizedlist>
           </para>
           <para>
-            Return value: converted string.
+            Rückgabewert: konvertierte Zeichenkette
           </para>
           <para>
-            Note: result has to be free by a call to "free" after use.
+            Anmerkung: der Speicher, der durch das Ergebnis belegt wird, muss mit free() wieder freigegeben werden.
           </para>
           <para>
-            Example:
+            Beispiel:
             <screen>char *str = plugin->iconv_from_internal (plugin, "ISO-8859-1", "utf-8 string: é à");</screen>
           </para>
         </section>
@@ -2585,12 +2579,11 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;my_keyb);
           </para>
         </section>
                 
-        <!-- TRANSLATION NEEDED -->        
         <section id="secAPI_modifier_add">
           <title>modifier_add</title>
           
           <para>
-            Prototype:
+            Prototyp:
             <command>
               t_plugin_modifier *modifier_add (t_weechat_plugin *plugin,
               char *type, char *message, t_plugin_modifier_func *function,
@@ -2598,45 +2591,46 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;my_keyb);
             </command>
           </para>
           <para>
-            Add a message modifier.
+            Füge einen Nachrichtenmodifikator hinzu.
           </para>
           <para>
-            Arguments:
+            Argumente:
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>plugin</option>: pointer to plugin structure
+                  <option>plugin</option>: Zeiger auf Plugin-Struktur
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>type</option>: modifier type:
+                  <option>type</option>: Modifikatorart:
                   <informaltable colsep="0" frame="none">
                     <tgroup cols="2">
                       <thead>
                         <row>
-                          <entry>Type</entry>
-                          <entry>Description</entry>
+                          <entry>Art</entry>
+                          <entry>Beschreibung</entry>
                         </row>
                       </thead>
                       <tbody>
                         <row>
                           <entry><literal>irc_in</literal></entry>
-                          <entry>called for incoming IRC messages</entry>
+                          <entry>wird bei eingehenden IRC-Nachrichten aufgerufen</entry>
                         </row>
                         <row>
                           <entry><literal>irc_user</literal></entry>
                           <entry>
-                            called for each user message (or command) (before
-                            WeeChat parses message)
+                            wird bei jeder Benutzernachricht (oder Befehl) aufgerufen
+                            (bevor WeeChat die Nachricht parst)
                           </entry>
                         </row>
                         <row>
                           <entry><literal>irc_out</literal></entry>
                           <entry>
-                            called for outgoing messages, immediately before
-                            sending  it to IRC server (this includes messages
-                            sent automatically by WeeChat to server)
+                            wird unmittelbar vor dem Abschicken einer ausgehenden
+                            Nachricht an den IRC-Server aufgerufen (auch bei
+                            Nachrichten, die WeeChat automatisch an den Server
+                            sendet)
                           </entry>
                         </row>
                       </tbody>
@@ -2646,21 +2640,21 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;my_keyb);
               </listitem>
               <listitem>
                 <para>
-                  <option>message</option>: name of IRC message (used only for
-                  types "irc_in" and "irc_out").
-                  To know list of IRC messages, please consult
+                  <option>message</option>: Name der IRC-Nachricht (wird nur bei den Arten
+                  "irc_in" and "irc_out" benutzt)
+                  Um eine Liste der IRC-Nachrichten zu erhalten, lies bitte folgende Dokumente:
                   <acronym>RFC</acronym>s
                   <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink> and
                   <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
-                  Moreover, special value "*" means all messages (no filter).
+                  Außerdem gibt es den Wert "*", der alle Nachrichten anspricht (ohne Filter).
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>function</option>: function called
+                  <option>function</option>: aufgerufene Funktion
                 </para>
                 <para>
-                  It uses following prototype:
+                  Folgender Prototyp wird dafür benutzt:
                   <command>
                     int my_function (t_weechat_plugin *plugin,
                     int argc, char **argv,
@@ -2668,46 +2662,44 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;my_keyb);
                   </command>
                 </para>
                 <para>
-                  Argument argc is set to 2, following values are set in
-                  argv array:
+                  Argument argc hat den Wert 2, folgende Werte sind in dem 
+                  argv-Array:
                   <itemizedlist>
                     <listitem>
-                      <para>argv[0] = server name</para>
+                      <para>argv[0] = Servername</para>
                     </listitem>
                     <listitem>
-                      <para>argv[1] = message</para>
+                      <para>argv[1] = Nachricht</para>
                     </listitem>
                   </itemizedlist>
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>modifier_args</option>: arguments given to function
-                  when called
+                  <option>modifier_args</option>: an die Funktion übergebene Werte
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>modifier_pointer</option>: pointer given to function
-                  when called
+                  <option>modifier_pointer</option>: an die Funktion übergebener Zeiger
                 </para>
               </listitem>
             </itemizedlist>
           </para>
           <para>
-            Return value: pointer to new message modifier.
+            Rückgabewert: Zeiger auf den neuen Nachrichtenmodifikator
           </para>
           <para>
-            Note: function has to return modified string, or NULL if no
-            changes are made to message.
-            If function returns empty string, then message is dropped and
-            will not be read at all by WeeChat (be careful when dropping
-            messages!).
-            Returned string must have been allocated by malloc() and will
-            be freed (with call to free()) automatically by WeeChat after use.
+            Anmerkung: Die Funktion muss die veränderte Zeichenkette oder NULL 
+            (wenn keine Änderungen erfolgten) zurückgeben.
+            Wenn die Funktion eine leere Zeichenkette zurückgibt, wird die
+            Nachricht komplett verworfen und nicht weiter von WeeChat
+            verarbeitet. (Seien Sie vorsichtig mit dem Verwerfen von Nachrichten!)
+            Die zurückgegebene Zeichenkette muss mit malloc() zugewiesen worden sein und
+            wird von WeeChat nach Gebrauch automatisch mit free() wieder freigegeben.
           </para>
           <para>
-            Example:
+            Beispiel:
 <screen>
 char *adder (t_weechat_plugin *plugin, int argc, char **argv,
              char *modifier_args, void *modifier_pointer)
@@ -2726,72 +2718,70 @@ modifier = plugin->modifier_add (plugin, "irc_in", "privmsg",
           </para>
         </section>
         
-        <!-- TRANSLATION NEEDED -->        
         <section id="secAPI_modifier_remove">
           <title>modifier_remove</title>
           
           <para>
-            Prototype:
+            Prototyp:
             <command>
               void modifier_remove (t_weechat_plugin *plugin,
               t_plugin_modifier *modifier)
             </command>
           </para>
           <para>
-            Remove a message modifier.
+            Entfernt einen Nachrichtenmodifikator.
           </para>
           <para>
             Arguments:
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>plugin</option>: pointer to plugin structure
+                  <option>plugin</option>: Zeiger auf Plugin-Struktur
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>modifier</option>: modifier to remove
+                  <option>modifier</option>: zu entfernender Modifikator
                 </para>
               </listitem>
             </itemizedlist>
           </para>
           <para>
-            Return value: none.
+            Rückgabewert: keiner
           </para>
           <para>
-            Example:
+            Beispiel:
             <screen>plugin->modifier_remove (plugin, my_modifier);</screen>
           </para>
         </section>
         
-        <!-- TRANSLATION NEEDED -->        
         <section id="secAPI_modifier_remove_all">
           <title>modifier_remove_all</title>
           
           <para>
-            Prototype:
+            Prototyp:
             <command>
               void modifier_remove_all (t_weechat_plugin *plugin)
             </command>
           </para>
           <para>
-            Remove all modifiers for a plugin.
+            Entfernt alle Modifikatoren für ein Plugin.
           </para>
           <para>
-            Arguments:
+            Argumente:
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>plugin</option>: pointer to plugin structure
+                  <option>plugin</option>: Zeiger auf Plugin-Struktur
                 </para>
               </listitem>
             </itemizedlist>
           </para>
           <para>
-            Return value: none.
+            Rückgabewert: keiner
           </para>
           <para>
-            Example:
+            Beispiel:
             <screen>plugin->modifier_remove_all (plugin);</screen>
           </para>
         </section>
@@ -4839,9 +4829,8 @@ end
               </listitem>
               <listitem>
                 <para>
-                  <!-- TRANSLATION NEEDED -->
-                  <option>charset</option>: charset used by script, you should
-                  set this if script is not written with UTF-8
+                  <option>charset</option>: Zeichensatz, der von dem Script benutzt wird, sollten Sie
+                  setzen, wenn das Script nicht in UTF-8 geschrieben ist
                 </para>
               </listitem>
             </itemizedlist>
@@ -4867,52 +4856,51 @@ weechat.register("test", "1.0", "end_test", "Test script!", "ISO-8859-1")
           </para>
         </section>
         
-        <!-- TRANSLATION NEEDED -->        
         <section id="secScript_set_charset">
           <title>set_charset</title>
           
           <para>
-            Perl prototype:
+            Perl-Prototyp:
             <command>
               weechat::set_charset(charset);
             </command>
           </para>
           <para>
-            Python prototype:
+            Python-Prototyp:
             <command>
               weechat.set_charset(charset)
             </command>
           </para>
           <para>
-            Ruby prototype:
+            Ruby-Prototyp:
             <command>
               Weechat.set_charset(charset)
             </command>
           </para>
           <para>
-            Lua prototype:
+            Lua-Prototyp:
             <command>
               weechat.set_charset(charset)
             </command>
           </para>
           <para>
-            Set new script charset.
+            Legt einen neuen Script-Zeichensatz fest.
           </para>
           <para>
-            Arguments:
+            Argumente:
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>charset</option>: new script charset
+                  <option>charset</option>: neuer Script-Zeichensatz
                 </para>
               </listitem>
             </itemizedlist>
           </para>
           <para>
-            Return value: 1 if new charset was set, 0 if an error occured.
+            Rückgabewert: 1, wenn der Zeichensatz erfolgreich gesetzt wurd, 0, wenn ein Fehler aufgetreten ist
           </para>
           <para>
-            Examples:
+            Beispiele:
 <screen>
 # perl
 weechat::set_charset("ISO-8859-1");
@@ -5864,69 +5852,69 @@ weechat.remove_keyboard_handler("my_keyboard")
           </para>
         </section>
         
-        <!-- TRANSLATION NEEDED -->
         <section id="secScript_add_modifier">
           <title>add_modifier</title>
           
           <para>
-            Perl prototype:
+            Perl-Prototyp:
             <command>
               weechat::add_modifier(type, message, function);
             </command>
           </para>
           <para>
-            Python prototype:
+            Python-Prototyp:
             <command>
               weechat.add_modifier(type, message, function)
             </command>
           </para>
           <para>
-            Ruby prototype:
+            Ruby-Prototyp:
             <command>
               Weechat.add_modifier(type, message, function)
             </command>
           </para>
           <para>
-            Lua prototype:
+            Lua-Prototyp:
             <command>
               weechat.add_modifier(type, message, function)
             </command>
           </para>
           <para>
-            Add a message modifier.
+            Fügt einen Nachrichtenmodifikator hinzu.
           </para>
           <para>
-            Arguments:
+            Argumente:
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>type</option>: modifier type:
+                  <option>type</option>: Modifikatorart:
                   <informaltable colsep="0" frame="none">
                     <tgroup cols="2">
                       <thead>
                         <row>
-                          <entry>Type</entry>
-                          <entry>Description</entry>
+                          <entry>Art</entry>
+                          <entry>Beschreibung</entry>
                         </row>
                       </thead>
                       <tbody>
                         <row>
                           <entry><literal>irc_in</literal></entry>
-                          <entry>called for incoming IRC messages</entry>
+                          <entry>wird bei eingehenden IRC-Nachrichten aufgerufen</entry>
                         </row>
                         <row>
                           <entry><literal>irc_user</literal></entry>
                           <entry>
-                            called for each user message (or command) (before
-                            WeeChat parses message)
+                            wird bei jeder Benutzernachricht (oder Befehl) aufgerufen
+                            (bevor WeeChat die Nachricht parst)
                           </entry>
                         </row>
                         <row>
                           <entry><literal>irc_out</literal></entry>
                           <entry>
-                            called for outgoing messages, immediately before
-                            sending  it to IRC server (this includes messages
-                            sent automatically by WeeChat to server)
+                            wird unmittelbar vor dem Abschicken einer ausgehenden
+                            Nachricht an den IRC-Server aufgerufen (auch bei
+                            Nachrichten, die WeeChat automatisch an den Server
+                            sendet)
                           </entry>
                         </row>
                       </tbody>
@@ -5936,27 +5924,27 @@ weechat.remove_keyboard_handler("my_keyboard")
               </listitem>
               <listitem>
                 <para>
-                  <option>message</option>: name of IRC message (used only for
-                  types "irc_in" and "irc_out").
-                  To know list of IRC messages, please consult
+                  <option>message</option>:Name der IRC-Nachricht (wird nur bei den Arten
+                  "irc_in" and "irc_out" benutzt)
+                  Um eine Liste der IRC-Nachrichten zu erhalten, lies bitte folgende Dokumente:
                   <acronym>RFC</acronym>s
                   <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink> and
                   <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
-                  Moreover, special value "*" means all messages (no filter).
+                  Außerdem gibt es den Wert "*", der alle Nachrichten anspricht (ohne Filter).
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>function</option>: function called
+                  <option>function</option>: aufgerufene Funktion
                 </para>
               </listitem>
             </itemizedlist>
           </para>
           <para>
-            Return value: 1 if success, 0 if an error occurred.
+            Rückgabewert: 1 bei Erfolg, 0 bei einem aufgetretenem Fehler
           </para>
           <para>
-            Examples:
+            Beispiele:
 <screen>
 # perl
 weechat::add_modifier("irc_in", "privmsg", "mod_in");
@@ -5973,9 +5961,9 @@ sub mod_out
 # python
 weechat.add_modifier("irc_in", "privmsg", "mod_in")
 weechat.add_modifier("irc_out", "privmsg", "mod_out")
-def mod_in(serveur, args):
+def mod_in(server, args):
     return args + " [modifier IN]"
-def mod_out(serveur, args):
+def mod_out(server, args):
     return args + " [modifier OUT]"
 
 # ruby
@@ -6001,62 +5989,61 @@ end
           </para>
         </section>
         
-        <!-- TRANSLATION NEEDED -->        
         <section id="secScript_remove_modifier">
           <title>remove_modifier</title>
           
           <para>
-            Perl prototype:
+            Perl-Prototyp:
             <command>
               weechat::remove_modifier(type, message, function);
             </command>
           </para>
           <para>
-            Python prototype:
+            Python-Prototyp:
             <command>
               weechat.remove_modifier(type, message, function)
             </command>
           </para>
           <para>
-            Ruby prototype:
+            Ruby-Prototyp:
             <command>
               Weechat.remove_modifier(type, message, function)
             </command>
           </para>
           <para>
-            Lua prototype:
+            Lua-Prototyp:
             <command>
               weechat.remove_modifier(type, message, function)
             </command>
           </para>
           <para>
-            Remove a message modifier.
+            Entfernt einen Nachrichtenmodifikator.
           </para>
           <para>
-            Arguments:
+            Argumente:
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>type</option>: modifier type
+                  <option>type</option>: Modifikatorart
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>message</option>: message managed by modifier
+                  <option>message</option>: Nachrichtenart, die der Modifikator verwaltet
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>function</option>: function
+                  <option>function</option>: Funktion
                 </para>
               </listitem>
             </itemizedlist>
           </para>
           <para>
-            Return value: 1 if success, 0 if an error occurred.
+            Rückgabewert: 1 bei Erfolg, 0 bei einem aufgetretenem Fehler
           </para>
           <para>
-            Examples:
+            Beispiele:
 <screen>
 # perl
 weechat::remove_modifier("irc_in", "privmsg", "mod_in");
