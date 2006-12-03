@@ -53,7 +53,7 @@ gui_log_write_date (t_gui_buffer *buffer)
         if (date_tmp)
         {
             strftime (buf_time, sizeof (buf_time) - 1, cfg_log_timestamp, date_tmp);
-            weechat_iconv_fprintf (buffer->log_file, "%s  ", buf_time);
+            fprintf (buffer->log_file, "%s  ", buf_time);
             fflush (buffer->log_file);
         }
     }
