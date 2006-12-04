@@ -69,6 +69,14 @@
     else \
         nick->flags &= 0xFFFF - flag;
 
+#define server_sendf_queued(server, fmt, argz...) \
+    if (server) \
+    { \
+        server->queue_msg = 1; \
+        server_sendf(server, fmt, ##argz); \
+        server->queue_msg = 0; \
+    }
+
 typedef struct t_irc_nick t_irc_nick;
 
 struct t_irc_nick
@@ -116,6 +124,17 @@ struct t_irc_channel
 };
 
 /* server types */
+
+typedef struct t_irc_outqueue t_irc_outqueue;
+
+struct t_irc_outqueue
+{
+    char *message_before_mod;       /* message before any modifier            */
+    char *message_after_mod;        /* message after modifier(s)              */
+    int modified;                   /* message was modified by modifier(s)    */
+    t_irc_outqueue *next_outqueue;  /* pointer to next message in queue       */
+    t_irc_outqueue *prev_outqueue;  /* pointer to previous message in queue   */
+};
 
 typedef struct t_irc_server t_irc_server;
 
@@ -165,7 +184,11 @@ struct t_irc_server
     int lag;                        /* lag (in milliseconds)                  */
     struct timeval lag_check_time;  /* last time lag was checked (ping sent)  */
     time_t lag_next_check;          /* time for next check                    */
-    regex_t *cmd_list_regexp;       /* compiled Regular Expression for /list  */ 
+    regex_t *cmd_list_regexp;       /* compiled Regular Expression for /list  */
+    int queue_msg;                  /* set to 1 when queue (out) is required  */
+    time_t last_user_message;       /* time of last user message (anti flood) */
+    t_irc_outqueue *outqueue;       /* queue for outgoing user messages       */
+    t_irc_outqueue *last_outqueue;  /* last outgoing user message             */
     t_gui_buffer *buffer;           /* GUI buffer allocated for server        */
     t_gui_buffer *saved_buffer;     /* channel before jumping to next server  */
     t_irc_channel *channels;        /* opened channels on server              */
@@ -332,6 +355,7 @@ extern t_irc_ignore *irc_last_ignore;
 extern void server_init (t_irc_server *);
 extern int server_init_with_url (char *, t_irc_server *);
 extern t_irc_server *server_alloc ();
+extern void server_outqueue_free_all (t_irc_server *);
 extern void server_destroy (t_irc_server *);
 extern void server_free (t_irc_server *);
 extern void server_free_all ();
@@ -342,6 +366,7 @@ extern char *server_get_charset_decode_iso (t_irc_server *);
 extern char *server_get_charset_decode_utf (t_irc_server *);
 extern char *server_get_charset_encode (t_irc_server *);
 extern int server_send (t_irc_server *, char *, int);
+extern void server_outqueue_send (t_irc_server *);
 extern void server_sendf (t_irc_server *, char *, ...);
 extern void server_parse_message (char *, char **, char **, char **);
 extern void server_recv (t_irc_server *);

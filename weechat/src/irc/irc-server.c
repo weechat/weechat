@@ -115,6 +115,10 @@ server_init (t_irc_server *server)
     server->lag_check_time.tv_usec = 0;
     server->lag_next_check = time (NULL) + cfg_irc_lag_check;
     server->cmd_list_regexp = NULL;
+    server->queue_msg = 0;
+    server->last_user_message = 0;
+    server->outqueue = NULL;
+    server->last_outqueue = NULL;
     server->buffer = NULL;
     server->saved_buffer = NULL;
     server->channels = NULL;
@@ -280,6 +284,74 @@ server_alloc ()
 }
 
 /*
+ * server_outqueue_add: add a message in out queue
+ */
+
+void
+server_outqueue_add (t_irc_server *server, char *msg1, char *msg2, int modified)
+{
+    t_irc_outqueue *new_outqueue;
+
+    new_outqueue = (t_irc_outqueue *)malloc (sizeof (t_irc_outqueue));
+    if (new_outqueue)
+    {
+        new_outqueue->message_before_mod = (msg1) ? strdup (msg1) : NULL;
+        new_outqueue->message_after_mod = (msg2) ? strdup (msg2) : NULL;
+        new_outqueue->modified = modified;
+        
+        new_outqueue->prev_outqueue = server->last_outqueue;
+        new_outqueue->next_outqueue = NULL;
+        if (server->outqueue)
+            server->last_outqueue->next_outqueue = new_outqueue;
+        else
+            server->outqueue = new_outqueue;
+        server->last_outqueue = new_outqueue;
+    }
+}
+
+/*
+ * server_outqueue_free: free a message in out queue
+ */
+
+void
+server_outqueue_free (t_irc_server *server, t_irc_outqueue *outqueue)
+{
+    t_irc_outqueue *new_outqueue;
+    
+    /* remove outqueue message */
+    if (server->last_outqueue == outqueue)
+        server->last_outqueue = outqueue->prev_outqueue;
+    if (outqueue->prev_outqueue)
+    {
+        (outqueue->prev_outqueue)->next_outqueue = outqueue->next_outqueue;
+        new_outqueue = server->outqueue;
+    }
+    else
+        new_outqueue = outqueue->next_outqueue;
+    
+    if (outqueue->next_outqueue)
+        (outqueue->next_outqueue)->prev_outqueue = outqueue->prev_outqueue;
+    
+    if (outqueue->message_before_mod)
+        free (outqueue->message_before_mod);
+    if (outqueue->message_after_mod)
+        free (outqueue->message_after_mod);
+    free (outqueue);
+    server->outqueue = new_outqueue;
+}
+
+/*
+ * server_outqueue_free_all: free all outqueued messages
+ */
+
+void
+server_outqueue_free_all (t_irc_server *server)
+{
+    while (server->outqueue)
+        server_outqueue_free (server, server->outqueue);
+}
+
+/*
  * server_destroy: free server data (not struct himself)
  */
 
@@ -322,6 +394,8 @@ server_destroy (t_irc_server *server)
         free (server->nick_modes);
     if (server->away_message)
         free (server->away_message);
+    if (server->outqueue)
+        server_outqueue_free_all (server);
     if (server->channels)
         channel_free_all (server);
 }
@@ -457,6 +531,54 @@ server_send (t_irc_server *server, char *buffer, int size_buf)
 }
 
 /*
+ * server_outqueue_send: send a message from outqueue
+ */
+
+void
+server_outqueue_send (t_irc_server *server)
+{
+    time_t time_now;
+    char *pos;
+    
+    if (server->outqueue)
+    {
+        time_now = time (NULL);
+        if (time_now >= server->last_user_message + cfg_irc_anti_flood)
+        {
+            if (server->outqueue->message_before_mod)
+            {
+                pos = strchr (server->outqueue->message_before_mod, '\r');
+                if (pos)
+                    pos[0] = '\0';
+                gui_printf_raw_data (server, 1, 0,
+                                     server->outqueue->message_before_mod);
+                if (pos)
+                    pos[0] = '\r';
+            }
+            if (server->outqueue->message_after_mod)
+            {
+                pos = strchr (server->outqueue->message_after_mod, '\r');
+                if (pos)
+                    pos[0] = '\0';
+                gui_printf_raw_data (server, 1, server->outqueue->modified,
+                                     server->outqueue->message_after_mod);
+                if (pos)
+                    pos[0] = '\r';
+            }
+            if (server_send (server, server->outqueue->message_after_mod,
+                             strlen (server->outqueue->message_after_mod)) <= 0)
+            {
+                irc_display_prefix (server, server->buffer, PREFIX_ERROR);
+                gui_printf (server->buffer, _("%s error sending data to IRC server\n"),
+                            WEECHAT_ERROR);
+            }
+            server->last_user_message = time_now;
+            server_outqueue_free (server, server->outqueue);
+        }
+    }
+}
+
+/*
  * server_send_one_msg: send one message to IRC server
  */
 
@@ -465,11 +587,11 @@ server_send_one_msg (t_irc_server *server, char *message)
 {
     static char buffer[4096];
     char *new_msg, *ptr_msg, *pos;
-    int rc;
+    int rc, queue, first_message;
+    time_t time_now;
     
     rc = 1;
     
-    gui_printf_raw_data (server, 1, 0, message);
 #ifdef DEBUG
     gui_printf (server->buffer, "[DEBUG] Sending to server >>> %s\n", message);
 #endif
@@ -491,24 +613,52 @@ server_send_one_msg (t_irc_server *server, char *message)
     /* message not dropped? */
     if (!new_msg || new_msg[0])
     {
+        first_message = 1;
         ptr_msg = (new_msg) ? new_msg : message;
-
+        
         while (rc && ptr_msg && ptr_msg[0])
         {
             pos = strchr (ptr_msg, '\n');
             if (pos)
                 pos[0] = '\0';
             
-            if (new_msg)
-                gui_printf_raw_data (server, 1, 1, ptr_msg);
-            
             snprintf (buffer, sizeof (buffer) - 1, "%s\r\n", ptr_msg);
-            if (server_send (server, buffer, strlen (buffer)) <= 0)
+
+            /* anti-flood: look whether we should queue outgoing message or not */
+            time_now = time (NULL);
+            queue = 0;
+            if ((server->queue_msg)
+                && ((server->outqueue)
+                    || ((cfg_irc_anti_flood > 0)
+                        && (time_now - server->last_user_message < cfg_irc_anti_flood))))
+                queue = 1;
+            
+            /* if queue, then only queue message and send nothing now */
+            if (queue)
             {
-                irc_display_prefix (server, server->buffer, PREFIX_ERROR);
-                gui_printf (server->buffer, _("%s error sending data to IRC server\n"),
-                            WEECHAT_ERROR);
-                rc = 0;
+                server_outqueue_add (server,
+                                     (new_msg && first_message) ? message : NULL,
+                                     buffer,
+                                     (new_msg) ? 1 : 0);
+            }
+            else
+            {
+                if (first_message)
+                    gui_printf_raw_data (server, 1, 0, message);
+                if (new_msg)
+                    gui_printf_raw_data (server, 1, 1, ptr_msg);
+                if (server_send (server, buffer, strlen (buffer)) <= 0)
+                {
+                    irc_display_prefix (server, server->buffer, PREFIX_ERROR);
+                    gui_printf (server->buffer, _("%s error sending data to IRC server\n"),
+                                WEECHAT_ERROR);
+                    rc = 0;
+                }
+                else
+                {
+                    if (server->queue_msg)
+                        server->last_user_message = time_now;
+                }
             }
             if (pos)
             {
@@ -517,6 +667,8 @@ server_send_one_msg (t_irc_server *server, char *message)
             }
             else
                 ptr_msg = NULL;
+            
+            first_message = 0;
         }
     }
     else
@@ -956,6 +1108,7 @@ server_close_connection (t_irc_server *server)
         free (server->unterminated_message);
         server->unterminated_message = NULL;
     }
+    server_outqueue_free_all (server);
     
     /* server is now disconnected */
     server->is_connected = 0;
@@ -2062,6 +2215,9 @@ server_print_log (t_irc_server *server)
                         server->lag_check_time.tv_sec,
                         server->lag_check_time.tv_usec);
     weechat_log_printf ("  lag_next_check. . . : %ld\n",  server->lag_next_check);
+    weechat_log_printf ("  last_user_message . : %ld\n",  server->last_user_message);
+    weechat_log_printf ("  outqueue. . . . . . : 0x%X\n", server->outqueue);
+    weechat_log_printf ("  last_outqueue . . . : 0x%X\n", server->last_outqueue);
     weechat_log_printf ("  buffer. . . . . . . : 0x%X\n", server->buffer);
     weechat_log_printf ("  channels. . . . . . : 0x%X\n", server->channels);
     weechat_log_printf ("  last_channel. . . . : 0x%X\n", server->last_channel);

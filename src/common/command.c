@@ -731,7 +731,7 @@ user_message (t_irc_server *server, t_gui_buffer *buffer, char *text)
         next = pos;
     }
     
-    server_sendf (server, "PRIVMSG %s :%s", CHANNEL(buffer)->name, text);
+    server_sendf_queued (server, "PRIVMSG %s :%s", CHANNEL(buffer)->name, text);
     user_message_display (server, buffer, text);
     
     if (next)
@@ -1616,6 +1616,8 @@ int
 weechat_cmd_debug (t_irc_server *server, t_irc_channel *channel,
                    int argc, char **argv)
 {
+    t_irc_server *ptr_server;
+    
     /* make gcc happy */
     (void) server;
     (void) channel;
@@ -1638,6 +1640,16 @@ weechat_cmd_debug (t_irc_server *server, t_irc_channel *channel,
         gui_printf_nolog (NULL, "\n");
         gui_printf_nolog (NULL, "DEBUG: windows tree:\n");
         weechat_cmd_debug_display_windows (gui_windows_tree, 1);
+    }
+    else if (ascii_strcasecmp (argv[0], "deloutq") == 0)
+    {
+        for (ptr_server = irc_servers; ptr_server;
+             ptr_server = ptr_server->next_server)
+        {
+            server_outqueue_free_all (ptr_server);
+        }
+        gui_printf_nolog (NULL, "\n");
+        gui_printf_nolog (NULL, "DEBUG: outqueue DELETED for all servers.\n");
     }
     else
     {
@@ -3518,6 +3530,15 @@ weechat_cmd_upgrade (t_irc_server *server, t_irc_channel *channel,
                               _("%s can't upgrade: connection to at least "
                                 "one SSL server is active "
                                 "(should be fixed in a future version)\n"),
+                              WEECHAT_ERROR);
+            return -1;
+        }
+        if (ptr_server->outqueue)
+        {
+            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+            gui_printf_nolog (NULL,
+                              _("%s can't upgrade: anti-flood is active on "
+                                "at least one server (sending many lines)\n"),
                               WEECHAT_ERROR);
             return -1;
         }

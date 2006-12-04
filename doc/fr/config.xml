@@ -902,6 +902,13 @@
   <entry>Déconnexion après un lag important (en minutes, 0 = ne jamais se déconnecter)</entry>
 </row>
 <row>
+  <entry><option>irc_anti_flood</option></entry>
+  <entry>entier</entry>
+  <entry>entre 0 et 5</entry>
+  <entry>2</entry>
+  <entry>Anti-flood: nombre de secondes entre deux messages utilisateur (0 = pas d'anti-flood)</entry>
+</row>
+<row>
   <entry><option>irc_fifo_pipe</option></entry>
   <entry>booléen</entry>
   <entry>'on' ou 'off'</entry>

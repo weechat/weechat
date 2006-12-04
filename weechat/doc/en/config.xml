@@ -902,6 +902,13 @@
   <entry>Disconnect after important lag (in minutes, 0 = never disconnect)</entry>
 </row>
 <row>
+  <entry><option>irc_anti_flood</option></entry>
+  <entry>integer</entry>
+  <entry>between 0 and 5</entry>
+  <entry>2</entry>
+  <entry>Anti-flood: # seconds between two user messages (0 = no anti-flood)</entry>
+</row>
+<row>
   <entry><option>irc_fifo_pipe</option></entry>
   <entry>boolean</entry>
   <entry>'on' or 'off'</entry>

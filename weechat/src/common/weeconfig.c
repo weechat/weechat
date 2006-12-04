@@ -717,6 +717,7 @@ int cfg_irc_away_check_max_nicks;
 int cfg_irc_lag_check;
 int cfg_irc_lag_min_show;
 int cfg_irc_lag_disconnect;
+int cfg_irc_anti_flood;
 int cfg_irc_fifo_pipe;
 char *cfg_irc_highlight;
 int cfg_irc_colors_receive;
@@ -765,6 +766,10 @@ t_config_option weechat_options_irc[] =
     N_("disconnect after important lag (in minutes, 0 = never disconnect)"),
     OPTION_TYPE_INT, 0, INT_MAX, 5,
     NULL, NULL, &cfg_irc_lag_disconnect, NULL, &config_change_noop },
+  { "irc_anti_flood", N_("anti-flood"),
+    N_("anti-flood: # seconds between two user messages (0 = no anti-flood)"),
+    OPTION_TYPE_INT, 0, 5, 2,
+    NULL, NULL, &cfg_irc_anti_flood, NULL, &config_change_noop },
   { "irc_fifo_pipe", N_("create a FIFO pipe for remote control"),
     N_("create a FIFO pipe for remote control"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,

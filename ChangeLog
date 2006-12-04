@@ -5,6 +5,7 @@ ChangeLog - 2006-12-04
 
 
 Version 0.2.2 (under dev!):
+   * added anti-flood option (irc_anti_flood) (task #5442)
    * fixed bug with "set_config" function in plugins API (bug #18448)
    * plugins: "add_message_handler" now accepts "*" for all IRC messages
    * added keys (F9/F10) to scroll topic (task #6030)

@@ -210,6 +210,7 @@ extern int cfg_irc_away_check_max_nicks;
 extern int cfg_irc_lag_check;
 extern int cfg_irc_lag_min_show;
 extern int cfg_irc_lag_disconnect;
+extern int cfg_irc_anti_flood;
 extern int cfg_irc_fifo_pipe;
 extern char *cfg_irc_highlight;
 extern int cfg_irc_colors_receive;

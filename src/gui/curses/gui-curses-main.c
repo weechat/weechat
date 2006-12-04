@@ -132,7 +132,18 @@ gui_main_loop ()
         if (local_time->tm_sec != old_sec)
         {
             old_sec = local_time->tm_sec;
+
+            /* send queued messages */
+            for (ptr_server = irc_servers; ptr_server;
+                 ptr_server = ptr_server->next_server)
+            {
+                if (ptr_server->is_connected)
+                {
+                    server_outqueue_send (ptr_server);
+                }
+            }
             
+            /* display time in infobar (if seconds displayed) */
             if (cfg_look_infobar_seconds)
             {
                 gui_infobar_draw_time (gui_current_window->buffer);

@@ -902,9 +902,16 @@
   <entry>Maximal-Lag bis zum Trennen der Verbindung (in Minuten - 0: nie trennen)</entry>
 </row>
 <row>
+  <entry><option>irc_anti_flood</option></entry>
+  <entry>Ganzzahl</entry>
+  <entry>zwischen 0 und 5</entry>
+  <entry>2</entry>
+  <entry>Anti-flood: # seconds between two user messages (0 = no anti-flood)</entry>
+</row>
+<row>
   <entry><option>irc_fifo_pipe</option></entry>
   <entry>Boolean</entry>
-  <entry>zwischen 0 und 2147483647</entry>
+  <entry>zwischen 0 und 5</entry>
   <entry>'off'</entry>
   <entry>Einen FIFO zur Fernsteuerung des Clients von anderen Prozessen öffnen</entry>
 </row>
