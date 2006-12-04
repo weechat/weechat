@@ -796,9 +796,10 @@ weechat_plugin_set_config (t_weechat_plugin *plugin, char *option, char *value)
     {
         /* server config option modification */
         server_name = (char *)malloc (pos - option + 1);
-        strncpy (server_name, option, pos - option);
         if (server_name)
         {
+            strncpy (server_name, option, pos - option);
+            server_name[pos - option] = '\0';
             ptr_server = server_search (server_name);
             free (server_name);
             if (ptr_server)
