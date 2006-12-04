@@ -391,22 +391,28 @@ gui_input_draw (t_gui_buffer *buffer, int erase)
                         {
                             case DCC_WAITING:
                                 if (DCC_IS_RECV(dcc_selected->type))
-                                    wprintw (GUI_CURSES(ptr_win)->win_input, _("  [A] Accept"));
-                                wprintw (GUI_CURSES(ptr_win)->win_input, _("  [C] Cancel"));
+                                    gui_window_wprintw (GUI_CURSES(ptr_win)->win_input,
+                                                        _("  [A] Accept"));
+                                gui_window_wprintw (GUI_CURSES(ptr_win)->win_input,
+                                                    _("  [C] Cancel"));
                                 break;
                             case DCC_CONNECTING:
                             case DCC_ACTIVE:
-                                wprintw (GUI_CURSES(ptr_win)->win_input, _("  [C] Cancel"));
+                                gui_window_wprintw (GUI_CURSES(ptr_win)->win_input,
+                                                    _("  [C] Cancel"));
                                 break;
                             case DCC_DONE:
                             case DCC_FAILED:
                             case DCC_ABORTED:
-                                wprintw (GUI_CURSES(ptr_win)->win_input, _("  [R] Remove"));
+                                gui_window_wprintw (GUI_CURSES(ptr_win)->win_input,
+                                                    _("  [R] Remove"));
                                 break;
                         }
                     }
-                    wprintw (GUI_CURSES(ptr_win)->win_input, _("  [P] Purge old DCC"));
-                    wprintw (GUI_CURSES(ptr_win)->win_input, _("  [Q] Close DCC view"));
+                    gui_window_wprintw (GUI_CURSES(ptr_win)->win_input,
+                                        _("  [P] Purge old DCC"));
+                    gui_window_wprintw (GUI_CURSES(ptr_win)->win_input,
+                                        _("  [Q] Close DCC view"));
                     wclrtoeol (GUI_CURSES(ptr_win)->win_input);
                     ptr_win->win_input_cursor_x = 0;
                     if (ptr_win == gui_current_window)
@@ -414,8 +420,10 @@ gui_input_draw (t_gui_buffer *buffer, int erase)
                     break;
                 case BUFFER_TYPE_RAW_DATA:
                     wmove (GUI_CURSES(ptr_win)->win_input, 0, 0);
-                    wprintw (GUI_CURSES(ptr_win)->win_input, _("  [C] Clear buffer"));
-                    wprintw (GUI_CURSES(ptr_win)->win_input, _("  [Q] Close raw data view"));
+                    gui_window_wprintw (GUI_CURSES(ptr_win)->win_input,
+                                        _("  [C] Clear buffer"));
+                    gui_window_wprintw (GUI_CURSES(ptr_win)->win_input,
+                                        _("  [Q] Close raw data view"));
                     wclrtoeol (GUI_CURSES(ptr_win)->win_input);
                     ptr_win->win_input_cursor_x = 0;
                     if (ptr_win == gui_current_window)
