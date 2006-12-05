@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-12-04
+ChangeLog - 2006-12-05
 
 
 Version 0.2.2 (under dev!):
+   * fixed display bug with color for first line on screen (bug #17719)
    * added anti-flood option (irc_anti_flood) (task #5442)
    * fixed bug with "set_config" function in plugins API (bug #18448)
    * plugins: "add_message_handler" now accepts "*" for all IRC messages

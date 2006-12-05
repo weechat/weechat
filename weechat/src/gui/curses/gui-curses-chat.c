@@ -478,13 +478,14 @@ gui_chat_word_get_next_char (t_gui_window *window, unsigned char *string,
  */
 
 void
-gui_chat_display_word_raw (t_gui_window *window, char *string)
+gui_chat_display_word_raw (t_gui_window *window, char *string, int display)
 {
     char *prev_char, *next_char, saved_char, *output;
-    
-    wmove (GUI_CURSES(window)->win_chat,
-           window->win_chat_cursor_y,
-           window->win_chat_cursor_x);
+
+    if (display)
+        wmove (GUI_CURSES(window)->win_chat,
+               window->win_chat_cursor_y,
+               window->win_chat_cursor_x);
     
     while (string && string[0])
     {
@@ -493,7 +494,7 @@ gui_chat_display_word_raw (t_gui_window *window, char *string)
             return;
         
         prev_char = utf8_prev_char (string, next_char);
-        if (prev_char)
+        if (display && prev_char)
         {
             saved_char = next_char[0];
             next_char[0] = '\0';
@@ -572,18 +573,26 @@ gui_chat_display_word (t_gui_window *window,
             pos_saved_char = gui_word_real_pos (window, data, num_displayed);
             saved_char = data[pos_saved_char];
             data[pos_saved_char] = '\0';
-            if ((!simulate) &&
-                ((count == 0) || (*lines_displayed >= num_lines - count)))
-                gui_chat_display_word_raw (window, data);
+            if (!simulate)
+            {
+                if ((count == 0) || (*lines_displayed >= num_lines - count))
+                    gui_chat_display_word_raw (window, data, 1);
+                else
+                    gui_chat_display_word_raw (window, data, 0);
+            }
             data[pos_saved_char] = saved_char;
             data += pos_saved_char;
         }
         else
         {
             num_displayed = chars_to_display;
-            if ((!simulate) &&
-                ((count == 0) || (*lines_displayed >= num_lines - count)))
-                gui_chat_display_word_raw (window, data);
+            if (!simulate)
+            {
+                if ((count == 0) || (*lines_displayed >= num_lines - count))
+                    gui_chat_display_word_raw (window, data, 1);
+                else
+                    gui_chat_display_word_raw (window, data, 0);
+            }
             data += strlen (data);
         }
         
