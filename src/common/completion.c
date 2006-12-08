@@ -868,6 +868,7 @@ completion_build_list_template (t_completion *completion, char *template)
                             break;
                         case 'n': /* channel nicks */
                             completion_list_add_channel_nicks (completion);
+                            completion->context = COMPLETION_NICK;
                             break;
                         case 'N': /* channel nicks and hosts */
                             completion_list_add_channel_nicks_hosts (completion);
