@@ -590,7 +590,9 @@ weechat_charset_cmd (t_weechat_plugin *plugin,
             }
             break;
     }
-    
+
+    if (argv)
+        plugin->free_exploded_string (plugin, argv);
     if (server)
         free (server);
     if (channel)
