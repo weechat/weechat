@@ -80,7 +80,7 @@ def auto_op(server, args):
 	
 	
 # register and add function to weechat
-weechat.register("auto_op", "0.2", "", "auto op plug-in for weechat")
+weechat.register("auto_op", "0.3", "", "auto op plug-in for weechat")
 weechat.add_message_handler ("join", "auto_op")
 
 
