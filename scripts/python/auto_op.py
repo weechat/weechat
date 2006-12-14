@@ -19,7 +19,9 @@
 # --------------------------------------------------------------------
 # This script automatically op and voice some nicks
 # --------------------------------------------------------------------
-
+#
+# 2006-12-14, FlashCode <flashcode@flashtux.org>:
+#   fixed message split (for servers like quakenet with no ":" after "JOIN")
 
 import weechat
 import re
@@ -40,8 +42,10 @@ def auto_op(server, args):
 		chans = U_OP[server]
 		try:
 			# find nick and channel
-			nothing, user, channel = args.split(":")
+			user, channel = args.split(" JOIN ")
 			nick, next = user.split("!")
+			if channel.startswith(':'):
+				channel = channel[1:]
 		except ValueError:		           
 			result = weechat.PLUGIN_RC_KO
 		else:			
@@ -59,8 +63,10 @@ def auto_op(server, args):
 		chans = C_VOICE[server]
 		try:
 			# find nick and channel
-			nothing, user, channel = args.split(":")
+			user, channel = args.split(" JOIN ")
 			nick, next = user.split("!")
+			if channel.startswith(':'):
+				channel = channel[1:]
 		except ValueError:
 			result = weechat.PLUGIN_RC_KO
 		else:
