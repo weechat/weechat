@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-12-08
+ChangeLog - 2006-12-26
 
 
 Version 0.2.2 (under dev!):
+   * fixed refresh bug with private buffer title
    * fixed bug with nick completion in command args (now uses option
      look_nick_completion_ignore)
    * fixed display bug with color for first line on screen (bug #17719)

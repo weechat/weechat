@@ -963,7 +963,10 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *nick, char *argumen
                                         BUFFER_TYPE_STANDARD, 0);
                     }
                     if (!ptr_channel->topic)
+                    {
                         ptr_channel->topic = strdup ((host2) ? host2 : "");
+                        gui_chat_draw_title (ptr_channel->buffer, 1);
+                    }
                     
                     gui_printf_type (ptr_channel->buffer, MSG_TYPE_NICK,
                                      "%s<",
@@ -1887,7 +1890,10 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                                         BUFFER_TYPE_STANDARD, 0);
                     }
                     if (!ptr_channel->topic)
+                    {
                         ptr_channel->topic = strdup (host2);
+                        gui_chat_draw_title (ptr_channel->buffer, 1);
+                    }
                     
                     pos += 8;
                     pos2 = strchr (pos, '\01');
@@ -1997,7 +2003,10 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                                             BUFFER_TYPE_STANDARD, 0);
                         }
                         if (!ptr_channel->topic)
+                        {
                             ptr_channel->topic = strdup (host2);
+                            gui_chat_draw_title (ptr_channel->buffer, 1);
+                        }
                         
                         if (irc_is_highlight (pos, server->nick))
                         {
