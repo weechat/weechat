@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2006-12-26
+ChangeLog - 2007-01-01
 
 
 Version 0.2.2 (under dev!):
+   * fixed bug with use of first buffer for a channel if not connected
+     to server (now allowed only for a server buffer)
    * fixed refresh bug with private buffer title
    * fixed bug with nick completion in command args (now uses option
      look_nick_completion_ignore)

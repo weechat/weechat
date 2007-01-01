@@ -88,7 +88,8 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
 #endif
     
     /* use first buffer if no server was assigned to this buffer */
-    if ((type == BUFFER_TYPE_STANDARD) && gui_buffers && (!SERVER(gui_buffers)))
+    if ((type == BUFFER_TYPE_STANDARD) && gui_buffers
+        && (!SERVER(gui_buffers)) && (!channel))
     {
         if (server)
             ((t_irc_server *)(server))->buffer = gui_buffers;
