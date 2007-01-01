@@ -545,6 +545,8 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
     if (!gui_buffers && create_new && switch_to_another)
         (void) gui_buffer_new (gui_windows, NULL, NULL,
                                BUFFER_TYPE_STANDARD, 1);
+    
+    gui_status_draw (gui_current_window->buffer, 1);
 }
 
 /*

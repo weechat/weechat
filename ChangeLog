@@ -5,6 +5,7 @@ ChangeLog - 2007-01-01
 
 
 Version 0.2.2 (under dev!):
+   * fixed bug with status bar (missing refresh) when closing a buffer
    * fixed bug with use of first buffer for a channel if not connected
      to server (now allowed only for a server buffer)
    * fixed refresh bug with private buffer title
