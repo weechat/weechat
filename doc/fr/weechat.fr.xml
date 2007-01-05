@@ -4,7 +4,7 @@
 
 WeeChat documentation (french version)
 
-Copyright (c) 2003-2006 by FlashCode <flashcode@flashtux.org>
+Copyright (c) 2003-2007 by FlashCode <flashcode@flashtux.org>
 
 This manual is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   
   <bookinfo>
     
-    <title>WeeChat 0.2.2-cvs - Guide utilisateur</title>
+    <title>WeeChat 0.2.2 - Guide utilisateur</title>
     <subtitle>Client IRC rapide, léger et extensible</subtitle>
     
     <author>

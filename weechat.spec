@@ -1,4 +1,4 @@
-# Copyright (c) 2003-2006 FlashCode <flashcode@flashtux.org>
+# Copyright (c) 2003-2007 FlashCode <flashcode@flashtux.org>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 #
 
 %define name weechat
-%define version 0.2.1
+%define version 0.2.2
 %define release 1
 
 Name:      %{name}
@@ -51,6 +51,7 @@ make
 %makeinstall
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/
 mv $RPM_BUILD_ROOT%{_libdir}/*.* $RPM_BUILD_ROOT%{_libdir}/%{name}/plugins/
+rm -f $RPM_BUILD_ROOT%{_docdir}/%{name}/*.pdf
 
 %find_lang %name
 
@@ -67,6 +68,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_docdir}/%{name}/weechat_quickstart*
 
 %changelog
+* Sat Jan 06 2007 FlashCode <flashcode@flashtux.org> 0.2.2-1
+- Released version 0.2.2
 * Sun Oct 01 2006 FlashCode <flashcode@flashtux.org> 0.2.1-1
 - Released version 0.2.1
 * Sat Aug 19 2006 FlashCode <flashcode@flashtux.org> 0.2.0-1

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2006-12-04 10:31+0100\n"
+"POT-Creation-Date: 2007-01-05 20:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1262,7 +1262,7 @@ msgstr ""
 msgid " (temporary server, will not be saved)"
 msgstr ""
 
-#: src/irc/irc-display.c:393 src/irc/irc-display.c:424 src/irc/irc-recv.c:3135
+#: src/irc/irc-display.c:393 src/irc/irc-display.c:424 src/irc/irc-recv.c:3144
 msgid "seconds"
 msgstr ""
 
@@ -1349,8 +1349,8 @@ msgid "You have been invited to %s%s%s by %s%s\n"
 msgstr ""
 
 #: src/irc/irc-recv.c:428 src/irc/irc-recv.c:534 src/irc/irc-recv.c:734
-#: src/irc/irc-recv.c:1159 src/irc/irc-recv.c:1505 src/irc/irc-recv.c:3433
-#: src/irc/irc-recv.c:3499 src/irc/irc-recv.c:3520
+#: src/irc/irc-recv.c:1162 src/irc/irc-recv.c:1508 src/irc/irc-recv.c:3442
+#: src/irc/irc-recv.c:3508 src/irc/irc-recv.c:3529
 #, c-format
 msgid "%s channel \"%s\" not found for \"%s\" command\n"
 msgstr ""
@@ -1380,8 +1380,8 @@ msgstr ""
 msgid "%s host \"%s\" not found for \"%s\" command\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:676 src/irc/irc-recv.c:777 src/irc/irc-recv.c:1303
-#: src/irc/irc-recv.c:2066
+#: src/irc/irc-recv.c:676 src/irc/irc-recv.c:777 src/irc/irc-recv.c:1306
+#: src/irc/irc-recv.c:2075
 #, c-format
 msgid "%s \"%s\" command received without host\n"
 msgstr ""
@@ -1426,302 +1426,302 @@ msgstr ""
 msgid "CTCP %sPING%s reply from %s%s%s: %ld.%ld seconds\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:958 src/irc/irc-recv.c:1882 src/irc/irc-recv.c:1992
+#: src/irc/irc-recv.c:958 src/irc/irc-recv.c:1885 src/irc/irc-recv.c:1998
 #, c-format
 msgid "%s cannot create new private window \"%s\"\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:982 src/irc/irc-recv.c:2011 src/irc/irc-dcc.c:1320
+#: src/irc/irc-recv.c:985 src/irc/irc-recv.c:2020 src/irc/irc-dcc.c:1320
 #, c-format
 msgid "Private %s> %s"
 msgstr ""
 
-#: src/irc/irc-recv.c:1061
+#: src/irc/irc-recv.c:1064
 #, c-format
 msgid "%s \"%s\" command received without host or channel\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:1089
+#: src/irc/irc-recv.c:1092
 #, c-format
 msgid "%s%s %s(%s%s%s)%s has left %s%s"
 msgstr ""
 
-#: src/irc/irc-recv.c:1266
+#: src/irc/irc-recv.c:1269
 #, c-format
 msgid "CTCP %sVERSION%s received from %s%s"
 msgstr ""
 
-#: src/irc/irc-recv.c:1352 src/irc/irc-recv.c:1909
+#: src/irc/irc-recv.c:1355 src/irc/irc-recv.c:1915
 #, c-format
 msgid "Channel %s: * %s %s"
 msgstr ""
 
-#: src/irc/irc-recv.c:1385
+#: src/irc/irc-recv.c:1388
 #, c-format
 msgid "Received a CTCP %sSOUND%s \"%s\" from %s%s\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:1415 src/irc/irc-recv.c:1554
+#: src/irc/irc-recv.c:1418 src/irc/irc-recv.c:1557
 #, c-format
 msgid "CTCP %sPING%s received from %s%s\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:1449 src/irc/irc-recv.c:1959
+#: src/irc/irc-recv.c:1452 src/irc/irc-recv.c:1965
 #, c-format
 msgid "Unknown CTCP %s%s%s received from %s%s"
 msgstr ""
 
-#: src/irc/irc-recv.c:1481
+#: src/irc/irc-recv.c:1484
 #, c-format
 msgid "Channel %s: %s> %s"
 msgstr ""
 
-#: src/irc/irc-recv.c:1577 src/irc/irc-recv.c:1598 src/irc/irc-recv.c:1614
-#: src/irc/irc-recv.c:1630 src/irc/irc-recv.c:1661 src/irc/irc-recv.c:1682
-#: src/irc/irc-recv.c:1698 src/irc/irc-recv.c:1728 src/irc/irc-recv.c:1749
-#: src/irc/irc-recv.c:1765 src/irc/irc-recv.c:1795 src/irc/irc-recv.c:1816
-#: src/irc/irc-recv.c:1831 src/irc/irc-recv.c:2042 src/irc/irc-recv.c:2479
-#: src/irc/irc-recv.c:3904 src/irc/irc-recv.c:3919 src/irc/irc-recv.c:4018
-#: src/irc/irc-recv.c:4032 src/irc/irc-recv.c:4278 src/irc/irc-recv.c:4396
-#: src/irc/irc-recv.c:4533 src/irc/irc-recv.c:4548 src/irc/irc-recv.c:4654
-#: src/irc/irc-recv.c:4668
+#: src/irc/irc-recv.c:1580 src/irc/irc-recv.c:1601 src/irc/irc-recv.c:1617
+#: src/irc/irc-recv.c:1633 src/irc/irc-recv.c:1664 src/irc/irc-recv.c:1685
+#: src/irc/irc-recv.c:1701 src/irc/irc-recv.c:1731 src/irc/irc-recv.c:1752
+#: src/irc/irc-recv.c:1768 src/irc/irc-recv.c:1798 src/irc/irc-recv.c:1819
+#: src/irc/irc-recv.c:1834 src/irc/irc-recv.c:2051 src/irc/irc-recv.c:2488
+#: src/irc/irc-recv.c:3913 src/irc/irc-recv.c:3928 src/irc/irc-recv.c:4027
+#: src/irc/irc-recv.c:4041 src/irc/irc-recv.c:4287 src/irc/irc-recv.c:4405
+#: src/irc/irc-recv.c:4542 src/irc/irc-recv.c:4557 src/irc/irc-recv.c:4663
+#: src/irc/irc-recv.c:4677
 #, c-format
 msgid "%s cannot parse \"%s\" command\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:1844
+#: src/irc/irc-recv.c:1847
 #, c-format
 msgid "%s unknown DCC CHAT type received from "
 msgstr ""
 
-#: src/irc/irc-recv.c:2090
+#: src/irc/irc-recv.c:2099
 #, c-format
 msgid "%s%s %s(%s%s%s)%s has quit"
 msgstr ""
 
-#: src/irc/irc-recv.c:2262
+#: src/irc/irc-recv.c:2271
 #, c-format
 msgid "%s \"%s\" command received without channel\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:2291
+#: src/irc/irc-recv.c:2300
 #, c-format
 msgid "%s%s%s has changed topic for %s%s%s to:"
 msgstr ""
 
-#: src/irc/irc-recv.c:2302
+#: src/irc/irc-recv.c:2311
 #, c-format
 msgid "%s%s%s has unset topic for %s%s\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:2339
+#: src/irc/irc-recv.c:2348
 #, c-format
 msgid "WALLOPS from %s%s%s: %s\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:2465
+#: src/irc/irc-recv.c:2474
 #, c-format
 msgid "User mode for %s%s%s is %s[%s%s%s]\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:2529
+#: src/irc/irc-recv.c:2538
 #, c-format
 msgid "%s%s%s is away: %s\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:2621
+#: src/irc/irc-recv.c:2630
 msgid "Users online: "
 msgstr ""
 
-#: src/irc/irc-recv.c:2796
+#: src/irc/irc-recv.c:2805
 #, c-format
 msgid "%s[%s%s%s]%s help mode (+h)\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:2986
+#: src/irc/irc-recv.c:2995
 #, c-format
 msgid "%s%s %s(%s%s@%s%s)%s was %s\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:3107
+#: src/irc/irc-recv.c:3116
 #, c-format
 msgid "%s[%s%s%s]%s idle: "
 msgstr ""
 
-#: src/irc/irc-recv.c:3119 src/common/command.c:3631 src/common/command.c:3649
+#: src/irc/irc-recv.c:3128 src/common/command.c:3631 src/common/command.c:3649
 msgid "days"
 msgstr ""
 
-#: src/irc/irc-recv.c:3119 src/common/command.c:3631 src/common/command.c:3649
+#: src/irc/irc-recv.c:3128 src/common/command.c:3631 src/common/command.c:3649
 msgid "day"
 msgstr ""
 
-#: src/irc/irc-recv.c:3123
+#: src/irc/irc-recv.c:3132
 #, c-format
 msgid "%s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
 msgstr ""
 
-#: src/irc/irc-recv.c:3127
+#: src/irc/irc-recv.c:3136
 msgid "hours"
 msgstr ""
 
-#: src/irc/irc-recv.c:3127
+#: src/irc/irc-recv.c:3136
 msgid "hour"
 msgstr ""
 
-#: src/irc/irc-recv.c:3131
+#: src/irc/irc-recv.c:3140
 msgid "minutes"
 msgstr ""
 
-#: src/irc/irc-recv.c:3131
+#: src/irc/irc-recv.c:3140
 msgid "minute"
 msgstr ""
 
-#: src/irc/irc-recv.c:3135
+#: src/irc/irc-recv.c:3144
 msgid "second"
 msgstr ""
 
-#: src/irc/irc-recv.c:3444
+#: src/irc/irc-recv.c:3453
 #, c-format
 msgid "Channel created on %s"
 msgstr ""
 
-#: src/irc/irc-recv.c:3453 src/irc/irc-recv.c:3650
+#: src/irc/irc-recv.c:3462 src/irc/irc-recv.c:3659
 #, c-format
 msgid "%s cannot identify date/time for \"%s\" command\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:3462 src/irc/irc-recv.c:3586 src/irc/irc-recv.c:3668
-#: src/irc/irc-recv.c:3779
+#: src/irc/irc-recv.c:3471 src/irc/irc-recv.c:3595 src/irc/irc-recv.c:3677
+#: src/irc/irc-recv.c:3788
 #, c-format
 msgid "%s cannot identify channel for \"%s\" command\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:3511
+#: src/irc/irc-recv.c:3520
 #, c-format
 msgid "No topic set for %s%s\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:3571
+#: src/irc/irc-recv.c:3580
 #, c-format
 msgid "Topic for %s%s%s is: "
 msgstr ""
 
-#: src/irc/irc-recv.c:3639
+#: src/irc/irc-recv.c:3648
 #, c-format
 msgid "Topic set by %s%s%s, %s"
 msgstr ""
 
-#: src/irc/irc-recv.c:3659 src/irc/irc-recv.c:3788
+#: src/irc/irc-recv.c:3668 src/irc/irc-recv.c:3797
 #, c-format
 msgid "%s cannot identify nickname for \"%s\" command\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:3764
+#: src/irc/irc-recv.c:3773
 #, c-format
 msgid "%s%s%s has invited %s%s%s on %s%s\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:3824
+#: src/irc/irc-recv.c:3833
 #, c-format
 msgid "Channel reop %s%s%s: %s%s\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:3973
+#: src/irc/irc-recv.c:3982
 #, c-format
 msgid " by %s%s %s(%s%s%s)"
 msgstr ""
 
-#: src/irc/irc-recv.c:3982
+#: src/irc/irc-recv.c:3991
 #, c-format
 msgid " by %s%s"
 msgstr ""
 
-#: src/irc/irc-recv.c:4292 src/irc/irc-recv.c:4442
+#: src/irc/irc-recv.c:4301 src/irc/irc-recv.c:4451
 #, c-format
 msgid "Nicks %s%s%s: %s["
 msgstr ""
 
-#: src/irc/irc-recv.c:4364
+#: src/irc/irc-recv.c:4373
 #, c-format
 msgid "%s cannot create nick \"%s\" for channel \"%s\"\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:4463
+#: src/irc/irc-recv.c:4472
 #, c-format
 msgid ""
 "Channel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:4471
+#: src/irc/irc-recv.c:4480
 msgid "nicks"
 msgstr ""
 
-#: src/irc/irc-recv.c:4471
+#: src/irc/irc-recv.c:4480
 msgid "nick"
 msgstr ""
 
-#: src/irc/irc-recv.c:4476
+#: src/irc/irc-recv.c:4485
 msgid "ops"
 msgstr ""
 
-#: src/irc/irc-recv.c:4476
+#: src/irc/irc-recv.c:4485
 msgid "op"
 msgstr ""
 
-#: src/irc/irc-recv.c:4480
+#: src/irc/irc-recv.c:4489
 msgid "halfops"
 msgstr ""
 
-#: src/irc/irc-recv.c:4480
+#: src/irc/irc-recv.c:4489
 msgid "halfop"
 msgstr ""
 
-#: src/irc/irc-recv.c:4484
+#: src/irc/irc-recv.c:4493
 msgid "voices"
 msgstr ""
 
-#: src/irc/irc-recv.c:4484
+#: src/irc/irc-recv.c:4493
 msgid "voice"
 msgstr ""
 
-#: src/irc/irc-recv.c:4488
+#: src/irc/irc-recv.c:4497
 msgid "normal"
 msgstr ""
 
-#: src/irc/irc-recv.c:4588
+#: src/irc/irc-recv.c:4597
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned by "
 msgstr ""
 
-#: src/irc/irc-recv.c:4623
+#: src/irc/irc-recv.c:4632
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:4758
+#: src/irc/irc-recv.c:4767
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\"\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:4770
+#: src/irc/irc-recv.c:4779
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\"\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:4782
+#: src/irc/irc-recv.c:4791
 #, c-format
 msgid ""
 "%s: all declared nicknames are already in use, closing connection with "
 "server!\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:4792
+#: src/irc/irc-recv.c:4801
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\"\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:4804
+#: src/irc/irc-recv.c:4813
 msgid "unknown"
 msgstr ""
 
@@ -2095,23 +2095,23 @@ msgstr ""
 msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 msgstr ""
 
-#: src/gui/curses/gui-curses-chat.c:936
+#: src/gui/curses/gui-curses-chat.c:945
 msgid "bytes"
 msgstr ""
 
-#: src/gui/curses/gui-curses-chat.c:936
+#: src/gui/curses/gui-curses-chat.c:945
 msgid "KB"
 msgstr ""
 
-#: src/gui/curses/gui-curses-chat.c:936
+#: src/gui/curses/gui-curses-chat.c:945
 msgid "MB"
 msgstr ""
 
-#: src/gui/curses/gui-curses-chat.c:936
+#: src/gui/curses/gui-curses-chat.c:945
 msgid "GB"
 msgstr ""
 
-#: src/gui/curses/gui-curses-chat.c:1070
+#: src/gui/curses/gui-curses-chat.c:1079
 msgid "ETA"
 msgstr ""
 
@@ -2190,7 +2190,7 @@ msgstr ""
 msgid "server"
 msgstr ""
 
-#: src/gui/gui-buffer.c:581
+#: src/gui/gui-buffer.c:584
 msgid "Not enough memory for new line\n"
 msgstr ""
 
@@ -3825,7 +3825,7 @@ msgstr ""
 #: src/common/weechat.c:103
 #, c-format
 msgid ""
-"%s (c) Copyright 2003-2006, compiled on %s %s\n"
+"%s (c) Copyright 2003-2007, compiled on %s %s\n"
 "Developed by FlashCode <flashcode@flashtux.org> - %s"
 msgstr ""
 
