@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2003-2006 by FlashCode <flashcode@flashtux.org>
+ * Copyright (c) 2003-2007 by FlashCode <flashcode@flashtux.org>
  * See README for License detail, AUTHORS for developers list.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -52,7 +52,7 @@
 #endif
 
 
-#define WEECHAT_COPYRIGHT_DATE "(c) 2003-2006"
+#define WEECHAT_COPYRIGHT_DATE "(c) 2003-2007"
 #define WEECHAT_WEBSITE "http://weechat.flashtux.org"
 
 #define WEECHAT_ERROR   _("WeeChat Error:")
@@ -65,7 +65,7 @@
 /* license */
 
 #define WEE_LICENSE \
-    PACKAGE_STRING " (c) Copyright 2003-2006, compiled on " __DATE__ " " __TIME__ \
+    PACKAGE_STRING " (c) Copyright 2003-2007, compiled on " __DATE__ " " __TIME__ \
     "\nDeveloped by FlashCode <flashcode@flashtux.org> - " WEECHAT_WEBSITE "\n\n" \
     "This program is free software; you can redistribute it and/or modify\n" \
     "it under the terms of the GNU General Public License as published by\n" \
