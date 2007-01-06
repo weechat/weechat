@@ -5,10 +5,10 @@
 # Andras Voroskoi <voroskoi@frugalware.org>, 2006-2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.2.2\n"
+"Project-Id-Version: WeeChat 0.2.3-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2007-01-05 20:28+0100\n"
-"PO-Revision-Date: 2006-11-01 18:51+0100\n"
+"PO-Revision-Date: 2007-01-06 01:27+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
