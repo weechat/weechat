@@ -202,7 +202,7 @@ weechat_iconv (char *from_code, char *to_code, char *string)
     iconv_t cd;
     char *inbuf;
     int done;
-    ICONV_CONST char *ptr_inbuf;
+    char *ptr_inbuf;
     char *ptr_outbuf;
     size_t err, inbytesleft, outbytesleft;
     
@@ -223,7 +223,7 @@ weechat_iconv (char *from_code, char *to_code, char *string)
             done = 0;
             while (!done)
             {
-                err = iconv (cd, &ptr_inbuf, &inbytesleft,
+                err = iconv (cd, (ICONV_CONST char **)(&ptr_inbuf), &inbytesleft,
                              &ptr_outbuf, &outbytesleft);
                 if (err == (size_t)(-1))
                 {
