@@ -4,6 +4,10 @@ WeeChat - Wee Enhanced Environment for Chat
 ChangeLog - 2007-01-06
 
 
+Version 0.2.3 (under dev!):
+   * fixed bugs with charset: now decodes/encodes nicks and channels in IRC
+     messages (bug #18716)
+
 Version 0.2.2 (2007-01-06):
    * fixed bug with status bar (missing refresh) when closing a buffer
    * fixed bug with use of first buffer for a channel if not connected

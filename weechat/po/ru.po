@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.3-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-01-05 20:28+0100\n"
+"POT-Creation-Date: 2007-01-06 23:17+0100\n"
 "PO-Revision-Date: 2007-01-06 01:27+0100\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1338,38 +1338,38 @@ msgstr "вы не можете менять режимы других польз
 msgid "whois (secure connection)"
 msgstr "whois (защищённое соединение)"
 
-#: src/irc/irc-display.c:375
+#: src/irc/irc-display.c:376
 #, c-format
 msgid "%sServer: %s%s %s[%s%s%s]\n"
 msgstr "%sСервер: %s%s %s[%s%s%s]\n"
 
-#: src/irc/irc-display.c:382
+#: src/irc/irc-display.c:383
 msgid "connected"
 msgstr "подключен"
 
-#: src/irc/irc-display.c:382
+#: src/irc/irc-display.c:383
 msgid "not connected"
 msgstr "отключен"
 
-#: src/irc/irc-display.c:386 src/irc/irc-display.c:390
-#: src/irc/irc-display.c:399 src/irc/irc-display.c:401
+#: src/irc/irc-display.c:387 src/irc/irc-display.c:391
+#: src/irc/irc-display.c:400 src/irc/irc-display.c:402
 msgid "on"
 msgstr "вкл."
 
-#: src/irc/irc-display.c:386 src/irc/irc-display.c:390
-#: src/irc/irc-display.c:399 src/irc/irc-display.c:401
+#: src/irc/irc-display.c:387 src/irc/irc-display.c:391
+#: src/irc/irc-display.c:400 src/irc/irc-display.c:402
 msgid "off"
 msgstr "выкл."
 
-#: src/irc/irc-display.c:388
+#: src/irc/irc-display.c:389
 msgid " (temporary server, will not be saved)"
 msgstr " (временный сервер, не будет сохранён)"
 
-#: src/irc/irc-display.c:393 src/irc/irc-display.c:424 src/irc/irc-recv.c:3144
+#: src/irc/irc-display.c:394 src/irc/irc-display.c:425 src/irc/irc-recv.c:3144
 msgid "seconds"
 msgstr "секунды"
 
-#: src/irc/irc-display.c:404
+#: src/irc/irc-display.c:405
 msgid "(hidden)"
 msgstr "(скрытый)"
 
@@ -2244,31 +2244,31 @@ msgstr "ГБ"
 msgid "ETA"
 msgstr "осталось"
 
-#: src/gui/curses/gui-curses-input.c:395
+#: src/gui/curses/gui-curses-input.c:406
 msgid "  [A] Accept"
 msgstr "  [A] Принять"
 
-#: src/gui/curses/gui-curses-input.c:397 src/gui/curses/gui-curses-input.c:402
+#: src/gui/curses/gui-curses-input.c:408 src/gui/curses/gui-curses-input.c:413
 msgid "  [C] Cancel"
 msgstr "  [C] Отменить"
 
-#: src/gui/curses/gui-curses-input.c:408
+#: src/gui/curses/gui-curses-input.c:419
 msgid "  [R] Remove"
 msgstr "  [R] Удалить"
 
-#: src/gui/curses/gui-curses-input.c:413
+#: src/gui/curses/gui-curses-input.c:424
 msgid "  [P] Purge old DCC"
 msgstr "  [P] Очистить список"
 
-#: src/gui/curses/gui-curses-input.c:415
+#: src/gui/curses/gui-curses-input.c:426
 msgid "  [Q] Close DCC view"
 msgstr "  [Q] Закрыть окно"
 
-#: src/gui/curses/gui-curses-input.c:424
+#: src/gui/curses/gui-curses-input.c:435
 msgid "  [C] Clear buffer"
 msgstr "  [C] Очистить буфер"
 
-#: src/gui/curses/gui-curses-input.c:426
+#: src/gui/curses/gui-curses-input.c:437
 msgid "  [Q] Close raw data view"
 msgstr "  [Q] Закрыть окно сырых данных"
 

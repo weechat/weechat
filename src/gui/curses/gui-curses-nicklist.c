@@ -24,8 +24,11 @@
 #include "config.h"
 #endif
 
+#include <stdlib.h>
+
 #include "../../common/weechat.h"
 #include "../gui.h"
+#include "../../common/util.h"
 #include "../../common/weeconfig.h"
 #include "../../irc/irc.h"
 #include "gui-curses.h"
@@ -40,7 +43,7 @@ gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
 {
     t_gui_window *ptr_win;
     int i, j, x, y, x2, column, max_length, nicks_displayed;
-    char format[32], format_empty[32];
+    char format[32], format_empty[32], *buf;
     t_irc_nick *ptr_nick;
     
     if (!gui_ok || !BUFFER_HAS_NICKLIST(buffer))
@@ -203,7 +206,11 @@ gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
                                                       ((cfg_irc_away_check > 0) && (ptr_nick->flags & NICK_AWAY)) ?
                                                       COLOR_WIN_NICK_AWAY : COLOR_WIN_NICK);
-                        mvwprintw (GUI_CURSES(ptr_win)->win_nick, y, x, format, ptr_nick->nick);
+                        buf = weechat_iconv_from_internal (NULL, ptr_nick->nick);
+                        mvwprintw (GUI_CURSES(ptr_win)->win_nick, y, x, format,
+                                   (buf) ? buf : ptr_nick->nick);
+                        if (buf)
+                            free (buf);
                         
                         ptr_nick = ptr_nick->next_nick;
                         

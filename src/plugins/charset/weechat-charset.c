@@ -29,8 +29,6 @@
 #include "weechat-charset.h"
 
 
-char *weechat_charset_excluded_cmd[] = { "ping", "pong", NULL };
-
 char *weechat_charset_terminal = NULL;
 char *weechat_charset_internal = NULL;
 
@@ -186,28 +184,6 @@ weechat_charset_set_config (t_weechat_plugin *plugin,
 }
 
 /*
- * weechat_charset_command_allowed: return 1 if command can be decoded/encoded
- */
-
-int
-weechat_charset_command_allowed (char *command)
-{
-    int i;
-    
-    if (!command)
-        return 0;
-    
-    for (i = 0; weechat_charset_excluded_cmd[i]; i++)
-    {
-        if (strcasecmp (weechat_charset_excluded_cmd[i], command) == 0)
-            return 0;
-    }
-
-    /* command can be decoded/recoded */
-    return 1;
-}
-
-/*
  * weechat_charset_parse_irc_msg: return nick, command, channel and position
  *                                of arguments in IRC message
  */
@@ -216,15 +192,19 @@ void
 weechat_charset_parse_irc_msg (char *message, char **nick, char **command,
                                char **channel, char **pos_args)
 {
-    char *pos, *pos2, *pos3;
+    char *pos, *pos2, *pos3, *pos_tmp;
     
     *nick = NULL;
     *command = NULL;
     *channel = NULL;
     *pos_args = NULL;
+    
     if (message[0] == ':')
     {
         pos = message + 1;
+        pos_tmp = strchr (pos, ' ');
+        if (pos_tmp)
+            pos_tmp[0] = '\0';
         pos2 = strchr (pos, '!');
         if (pos2)
             *nick = weechat_charset_strndup (pos, pos2 - pos);
@@ -234,6 +214,8 @@ weechat_charset_parse_irc_msg (char *message, char **nick, char **command,
             if (pos2)
                 *nick = weechat_charset_strndup (pos, pos2 - pos);
         }
+        if (pos_tmp)
+            pos_tmp[0] = ' ';
         pos = strchr (message, ' ');
         if (!pos)
             pos = message;
@@ -292,8 +274,7 @@ weechat_charset_irc_in (t_weechat_plugin *plugin, int argc, char **argv,
                         char *handler_args, void *handler_pointer)
 {
     char *nick, *command, *channel, *charset, *ptr_args;
-    char *decoded, *output;
-    int length;
+    char *output;
     
     /* make gcc happy */
     (void) argc;
@@ -303,33 +284,20 @@ weechat_charset_irc_in (t_weechat_plugin *plugin, int argc, char **argv,
     output = NULL;
     
     weechat_charset_parse_irc_msg (argv[1], &nick, &command, &channel, &ptr_args);
-
-    if (weechat_charset_command_allowed (command))
+    
+    charset = weechat_charset_get_config (plugin,
+                                          "decode", argv[0],
+                                          (channel) ? channel : nick);
+    
+    if (weechat_charset_debug)
+        plugin->print(plugin, NULL, NULL,
+                      "Charset IN: srv='%s', nick='%s', chan='%s', "
+                      "msg='%s', ptr_args='%s' => charset: %s",
+                      argv[0], nick, channel, argv[1], ptr_args, charset);
+    
+    if (charset)
     {
-        charset = weechat_charset_get_config (plugin,
-                                              "decode", argv[0],
-                                              (channel) ? channel : nick);
-        
-        if (weechat_charset_debug)
-            plugin->print(plugin, NULL, NULL,
-                          "Charset IN: srv='%s', nick='%s', chan='%s', "
-                          "msg='%s', ptr_args='%s' => charset: %s",
-                          argv[0], nick, channel, argv[1], ptr_args, charset);
-        
-        if (ptr_args && charset)
-        {
-            decoded = plugin->iconv_to_internal (plugin, charset, ptr_args);
-            if (decoded)
-            {
-                length = strlen (decoded) + (ptr_args - argv[1]) + 1;
-                output = (char *)malloc (length + 1);
-                strncpy (output, argv[1], ptr_args - argv[1]);
-                output[ptr_args - argv[1]] = '\0';
-                strcat (output, decoded);
-                free (decoded);
-            }
-        }
-        
+        output = plugin->iconv_to_internal (plugin, charset, argv[1]);
         if (charset)
             free (charset);
     }
@@ -354,8 +322,7 @@ weechat_charset_irc_out (t_weechat_plugin *plugin, int argc, char **argv,
                          char *handler_args, void *handler_pointer)
 {
     char *nick, *command, *channel, *charset, *ptr_args;
-    char *encoded, *output;
-    int length;
+    char *output;
     
     /* make gcc happy */
     (void) argc;
@@ -365,33 +332,20 @@ weechat_charset_irc_out (t_weechat_plugin *plugin, int argc, char **argv,
     output = NULL;
     
     weechat_charset_parse_irc_msg (argv[1], &nick, &command, &channel, &ptr_args);
+    
+    charset = weechat_charset_get_config (plugin,
+                                          "encode", argv[0],
+                                          (channel) ? channel : nick);
+    
+    if (weechat_charset_debug)
+        plugin->print(plugin, NULL, NULL,
+                      "Charset OUT: srv='%s', nick='%s', chan='%s', "
+                      "msg='%s', ptr_args='%s' => charset: %s",
+                      argv[0], nick, channel, argv[1], ptr_args, charset);
 
-    if (weechat_charset_command_allowed (command))
+    if (charset)
     {
-        charset = weechat_charset_get_config (plugin,
-                                              "encode", argv[0],
-                                              (channel) ? channel : nick);
-        
-        if (weechat_charset_debug)
-            plugin->print(plugin, NULL, NULL,
-                          "Charset OUT: srv='%s', nick='%s', chan='%s', "
-                          "msg='%s', ptr_args='%s' => charset: %s",
-                          argv[0], nick, channel, argv[1], ptr_args, charset);
-        
-        if (ptr_args && charset)
-        {
-            encoded = plugin->iconv_from_internal (plugin, charset, ptr_args);
-            if (encoded)
-            {
-                length = strlen (encoded) + (ptr_args - argv[1]) + 1;
-                output = (char *)malloc (length + 1);
-                strncpy (output, argv[1], ptr_args - argv[1]);
-                output[ptr_args - argv[1]] = '\0';
-                strcat (output, encoded);
-                free (encoded);
-            }
-        }
-        
+        output = plugin->iconv_from_internal (plugin, charset, argv[1]);
         if (charset)
             free (charset);
     }

@@ -90,11 +90,11 @@ gui_input_get_prompt_length (t_gui_window *window, char *nick)
                 {
                     case 'c':
                         if (CHANNEL(window->buffer))
-                            length += utf8_strlen (CHANNEL(window->buffer)->name);
+                            length += utf8_width_screen (CHANNEL(window->buffer)->name);
                         else
                         {
                             if (SERVER(window->buffer))
-                                length += utf8_strlen (SERVER(window->buffer)->name);
+                                length += utf8_width_screen (SERVER(window->buffer)->name);
                         }
                         pos++;
                         break;
@@ -108,7 +108,7 @@ gui_input_get_prompt_length (t_gui_window *window, char *nick)
                         pos++;
                         break;
                     case 'n':
-                        length += utf8_strlen (nick);
+                        length += utf8_width_screen (nick);
                         pos++;
                         break;
                     default:
@@ -148,7 +148,7 @@ gui_input_get_prompt_length (t_gui_window *window, char *nick)
 void
 gui_input_draw_prompt (t_gui_window *window, char *nick)
 {
-    char *pos, saved_char;
+    char *pos, saved_char, *buf;
     int char_size;
     
     wmove (GUI_CURSES(window)->win_input, 0, 0);
@@ -166,8 +166,12 @@ gui_input_draw_prompt (t_gui_window *window, char *nick)
                         {
                             gui_window_set_weechat_color (GUI_CURSES(window)->win_input,
                                                           COLOR_WIN_INPUT_CHANNEL);
+                            buf = weechat_iconv_from_internal (NULL,
+                                                               CHANNEL(window->buffer)->name);
                             wprintw (GUI_CURSES(window)->win_input, "%s",
-                                     CHANNEL(window->buffer)->name);
+                                     (buf) ? buf : CHANNEL(window->buffer)->name);
+                            if (buf)
+                                free (buf);
                         }
                         else
                         {
@@ -175,8 +179,12 @@ gui_input_draw_prompt (t_gui_window *window, char *nick)
                             {
                                 gui_window_set_weechat_color (GUI_CURSES(window)->win_input,
                                                               COLOR_WIN_INPUT_SERVER);
+                                buf = weechat_iconv_from_internal (NULL,
+                                                                   SERVER(window->buffer)->name);
                                 wprintw (GUI_CURSES(window)->win_input, "%s",
-                                         SERVER(window->buffer)->name);
+                                         (buf) ? buf : SERVER(window->buffer)->name);
+                                if (buf)
+                                    free (buf);
                             }
                         }
                         pos++;
@@ -198,7 +206,10 @@ gui_input_draw_prompt (t_gui_window *window, char *nick)
                     case 'n':
                         gui_window_set_weechat_color (GUI_CURSES(window)->win_input,
                                                       COLOR_WIN_INPUT_NICK);
-                        wprintw (GUI_CURSES(window)->win_input, "%s", nick);
+                        buf = weechat_iconv_from_internal (NULL, nick);
+                        wprintw (GUI_CURSES(window)->win_input, "%s", (buf) ? buf : nick);
+                        if (buf)
+                            free (buf);
                         pos++;
                         break;
                     default:

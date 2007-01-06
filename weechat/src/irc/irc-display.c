@@ -31,6 +31,7 @@
 
 #include "../common/weechat.h"
 #include "irc.h"
+#include "../common/utf8.h"
 #include "../common/weeconfig.h"
 #include "../gui/gui.h"
 
@@ -159,7 +160,7 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
     ptr_nickname = strdup ((nick) ? nick->nick : nickname);
     if (!ptr_nickname)
         return;
-    nickname_length = strlen (ptr_nickname); 
+    nickname_length = utf8_width_screen (ptr_nickname); 
     external_nick = (!nick && !BUFFER_IS_PRIVATE(buffer));
     disable_prefix_suffix = ((cfg_look_align_nick != CFG_LOOK_ALIGN_NICK_NONE)
                              && ((int)strlen (cfg_look_nick_prefix) +

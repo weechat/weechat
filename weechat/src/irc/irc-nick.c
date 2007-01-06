@@ -31,6 +31,7 @@
 #include "../common/weechat.h"
 #include "irc.h"
 #include "../common/log.h"
+#include "../common/utf8.h"
 #include "../common/util.h"
 #include "../common/weeconfig.h"
 
@@ -387,7 +388,7 @@ nick_get_max_length (t_irc_channel *channel)
     max_length = 0;
     for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
     {
-        length = strlen (ptr_nick->nick);
+        length = utf8_width_screen (ptr_nick->nick);
         if (length > max_length)
             max_length = length;
     }

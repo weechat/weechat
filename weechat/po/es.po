@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Weechat 0.2.3-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-01-05 20:28+0100\n"
+"POT-Creation-Date: 2007-01-06 23:17+0100\n"
 "PO-Revision-Date: 2007-01-06 01:27+0100\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1357,38 +1357,38 @@ msgstr "no es posible cambiar el modo para el resto de usuarios"
 msgid "whois (secure connection)"
 msgstr "quién es (conexión segura)"
 
-#: src/irc/irc-display.c:375
+#: src/irc/irc-display.c:376
 #, c-format
 msgid "%sServer: %s%s %s[%s%s%s]\n"
 msgstr "%sServidor:%s%s %s[%s%s%s]\n"
 
-#: src/irc/irc-display.c:382
+#: src/irc/irc-display.c:383
 msgid "connected"
 msgstr "conectado"
 
-#: src/irc/irc-display.c:382
+#: src/irc/irc-display.c:383
 msgid "not connected"
 msgstr "no conectado"
 
-#: src/irc/irc-display.c:386 src/irc/irc-display.c:390
-#: src/irc/irc-display.c:399 src/irc/irc-display.c:401
+#: src/irc/irc-display.c:387 src/irc/irc-display.c:391
+#: src/irc/irc-display.c:400 src/irc/irc-display.c:402
 msgid "on"
 msgstr "activo"
 
-#: src/irc/irc-display.c:386 src/irc/irc-display.c:390
-#: src/irc/irc-display.c:399 src/irc/irc-display.c:401
+#: src/irc/irc-display.c:387 src/irc/irc-display.c:391
+#: src/irc/irc-display.c:400 src/irc/irc-display.c:402
 msgid "off"
 msgstr "inactivo"
 
-#: src/irc/irc-display.c:388
+#: src/irc/irc-display.c:389
 msgid " (temporary server, will not be saved)"
 msgstr " (servidor temporal, no será guardado)"
 
-#: src/irc/irc-display.c:393 src/irc/irc-display.c:424 src/irc/irc-recv.c:3144
+#: src/irc/irc-display.c:394 src/irc/irc-display.c:425 src/irc/irc-recv.c:3144
 msgid "seconds"
 msgstr "segundos"
 
-#: src/irc/irc-display.c:404
+#: src/irc/irc-display.c:405
 msgid "(hidden)"
 msgstr "(oculto)"
 
@@ -2291,32 +2291,32 @@ msgstr ""
 msgid "ETA"
 msgstr "Tiempo estimado de llegada"
 
-#: src/gui/curses/gui-curses-input.c:395
+#: src/gui/curses/gui-curses-input.c:406
 msgid "  [A] Accept"
 msgstr "  [A] Aceptar"
 
-#: src/gui/curses/gui-curses-input.c:397 src/gui/curses/gui-curses-input.c:402
+#: src/gui/curses/gui-curses-input.c:408 src/gui/curses/gui-curses-input.c:413
 msgid "  [C] Cancel"
 msgstr "  [C] Cancelar"
 
-#: src/gui/curses/gui-curses-input.c:408
+#: src/gui/curses/gui-curses-input.c:419
 msgid "  [R] Remove"
 msgstr "  [R] Eliminar"
 
-#: src/gui/curses/gui-curses-input.c:413
+#: src/gui/curses/gui-curses-input.c:424
 msgid "  [P] Purge old DCC"
 msgstr "  [P] Purgar los viejos DCC"
 
-#: src/gui/curses/gui-curses-input.c:415
+#: src/gui/curses/gui-curses-input.c:426
 msgid "  [Q] Close DCC view"
 msgstr "  [Q] Cerrar la vista DCC"
 
-#: src/gui/curses/gui-curses-input.c:424
+#: src/gui/curses/gui-curses-input.c:435
 #, fuzzy
 msgid "  [C] Clear buffer"
 msgstr "saltar al búfer DCC"
 
-#: src/gui/curses/gui-curses-input.c:426
+#: src/gui/curses/gui-curses-input.c:437
 msgid "  [Q] Close raw data view"
 msgstr "  [Q] Cerrar vista de datos basura"
 
