@@ -28,6 +28,7 @@
 
 #include "../../common/weechat.h"
 #include "../gui.h"
+#include "../../common/utf8.h"
 #include "../../common/util.h"
 #include "../../common/weeconfig.h"
 #include "../../irc/irc.h"
@@ -42,8 +43,8 @@ void
 gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
 {
     t_gui_window *ptr_win;
-    int i, j, x, y, x2, column, max_length, nicks_displayed;
-    char format[32], format_empty[32], *buf;
+    int i, j, k, x, y, x2, column, max_length, max_chars, nicks_displayed;
+    char format_empty[32], *buf, *ptr_buf, *ptr_next, saved_char;
     t_irc_nick *ptr_nick;
     
     if (!gui_ok || !BUFFER_HAS_NICKLIST(buffer))
@@ -84,15 +85,14 @@ gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
             
             if ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_TOP) ||
                 (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM))
-                snprintf (format, 32, "%%.%ds", max_length);
+                max_chars = max_length;
             else
-                snprintf (format, 32, "%%.%ds",
-                          ((cfg_look_nicklist_min_size > 0)
-                           && (max_length < cfg_look_nicklist_min_size)) ?
-                          cfg_look_nicklist_min_size :
-                          (((cfg_look_nicklist_max_size > 0)
-                            && (max_length > cfg_look_nicklist_max_size)) ?
-                           cfg_look_nicklist_max_size : max_length));
+                max_chars = ((cfg_look_nicklist_min_size > 0)
+                             && (max_length < cfg_look_nicklist_min_size)) ?
+                    cfg_look_nicklist_min_size :
+                    (((cfg_look_nicklist_max_size > 0)
+                      && (max_length > cfg_look_nicklist_max_size)) ?
+                     cfg_look_nicklist_max_size : max_length);
             
             if (cfg_look_nicklist_separator && has_colors ())
             {
@@ -206,11 +206,30 @@ gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
                                                       ((cfg_irc_away_check > 0) && (ptr_nick->flags & NICK_AWAY)) ?
                                                       COLOR_WIN_NICK_AWAY : COLOR_WIN_NICK);
-                        buf = weechat_iconv_from_internal (NULL, ptr_nick->nick);
-                        mvwprintw (GUI_CURSES(ptr_win)->win_nick, y, x, format,
-                                   (buf) ? buf : ptr_nick->nick);
-                        if (buf)
-                            free (buf);
+                        wmove (GUI_CURSES(ptr_win)->win_nick, y, x);
+                        ptr_buf = ptr_nick->nick;
+                        saved_char = '\0';
+                        for (k = 0; k < max_chars; k++)
+                        {
+                            if (ptr_buf && ptr_buf[0])
+                            {
+                                ptr_next = utf8_next_char (ptr_buf);
+                                if (ptr_next)
+                                {
+                                    saved_char = ptr_next[0];
+                                    ptr_next[0] = '\0';
+                                }
+                                buf = weechat_iconv_from_internal (NULL, ptr_buf);
+                                wprintw (GUI_CURSES(ptr_win)->win_nick, "%s", (buf) ? buf : "?");
+                                if (buf)
+                                    free (buf);
+                                if (ptr_next)
+                                    ptr_next[0] = saved_char;
+                                ptr_buf = ptr_next;
+                            }
+                            else
+                                wprintw (GUI_CURSES(ptr_win)->win_nick, " ");
+                        }
                         
                         ptr_nick = ptr_nick->next_nick;
                         
