@@ -701,7 +701,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
               <row>
                 <entry>Alt + J then Alt + X</entry>
                 <entry>
-                  Switch to first channel of next buffer
+                  Switch to first channel of next server
                   (or server buffer if no channel is opened)
                 </entry>
               </row>

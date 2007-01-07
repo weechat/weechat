@@ -705,7 +705,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
               <row>
                 <entry>Alt + J dann Alt + X</entry>
                 <entry>
-                  Schalte in den ersten Channel des nächsten Puffers
+                  Schalte in den ersten Channel des nächsten Servers
                   (oder in den Server-Puffer wenn keine Channel offen ist)
                 </entry>
               </row>
