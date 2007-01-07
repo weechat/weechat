@@ -5,6 +5,7 @@ ChangeLog - 2007-01-07
 
 
 Version 0.2.3 (under dev!):
+   * fixed topic scroll when topic has multi-bytes chars
    * fixed compilation problem with iconv under FreeBSD
    * fixed bugs with charset: now decodes/encodes nicks and channels in IRC
      messages (bug #18716)
