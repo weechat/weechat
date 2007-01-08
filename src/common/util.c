@@ -200,10 +200,8 @@ weechat_iconv (char *from_code, char *to_code, char *string)
     
 #ifdef HAVE_ICONV
     iconv_t cd;
-    char *inbuf;
+    char *inbuf, *ptr_inbuf, *ptr_outbuf, *next_char;
     int done;
-    char *ptr_inbuf;
-    char *ptr_outbuf;
     size_t err, inbytesleft, outbytesleft;
     
     if (from_code && from_code[0] && to_code && to_code[0]
@@ -236,7 +234,20 @@ weechat_iconv (char *from_code, char *to_code, char *string)
                             done = 1;
                             break;
                         case EILSEQ:
-                            ptr_inbuf[0] = '?';
+                            next_char = utf8_next_char (ptr_inbuf);
+                            if (next_char)
+                            {
+                                inbytesleft -= next_char - ptr_inbuf;
+                                ptr_inbuf = next_char;
+                            }
+                            else
+                            {
+                                inbytesleft--;
+                                ptr_inbuf++;
+                            }
+                            ptr_outbuf[0] = '?';
+                            ptr_outbuf++;
+                            outbytesleft--;
                             break;
                     }
                 }

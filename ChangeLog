@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-01-07
+ChangeLog - 2007-01-08
 
 
 Version 0.2.3 (under dev!):
+   * fixed iconv problem, causing truncated words when using iso locale
    * fixed topic scroll when topic has multi-bytes chars
    * fixed compilation problem with iconv under FreeBSD
    * fixed bugs with charset: now decodes/encodes nicks and channels in IRC
