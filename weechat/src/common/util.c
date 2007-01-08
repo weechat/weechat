@@ -194,7 +194,7 @@ ascii_strcasestr (char *string, char *search)
  */
 
 char *
-weechat_iconv (char *from_code, char *to_code, char *string)
+weechat_iconv (int from_utf8, char *from_code, char *to_code, char *string)
 {
     char *outbuf;
     
@@ -234,16 +234,24 @@ weechat_iconv (char *from_code, char *to_code, char *string)
                             done = 1;
                             break;
                         case EILSEQ:
-                            next_char = utf8_next_char (ptr_inbuf);
-                            if (next_char)
+                            if (from_utf8)
                             {
-                                inbytesleft -= next_char - ptr_inbuf;
-                                ptr_inbuf = next_char;
+                                next_char = utf8_next_char (ptr_inbuf);
+                                if (next_char)
+                                {
+                                    inbytesleft -= next_char - ptr_inbuf;
+                                    ptr_inbuf = next_char;
+                                }
+                                else
+                                {
+                                    inbytesleft--;
+                                    ptr_inbuf++;
+                                }
                             }
                             else
                             {
-                                inbytesleft--;
                                 ptr_inbuf++;
+                                inbytesleft--;
                             }
                             ptr_outbuf[0] = '?';
                             ptr_outbuf++;
@@ -293,7 +301,8 @@ weechat_iconv_to_internal (char *charset, char *string)
         if (utf8_is_valid (input, NULL))
             return input;
         
-        output = weechat_iconv ((charset && charset[0]) ?
+        output = weechat_iconv (0,
+                                (charset && charset[0]) ?
                                 charset : local_charset,
                                 WEECHAT_INTERNAL_CHARSET,
                                 input);
@@ -324,7 +333,8 @@ weechat_iconv_from_internal (char *charset, char *string)
     if (input)
     {
         utf8_normalize (input, '?');
-        output = weechat_iconv (WEECHAT_INTERNAL_CHARSET,
+        output = weechat_iconv (1,
+                                WEECHAT_INTERNAL_CHARSET,
                                 (charset && charset[0]) ?
                                 charset : local_charset,
                                 input);
