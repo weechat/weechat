@@ -208,7 +208,7 @@ gui_chat_draw_title (t_gui_buffer *buffer, int erase)
                     if (utf8_width_screen (ptr_topic) > ptr_win->win_width)
                     {
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title, COLOR_WIN_TITLE);
-                        wprintw (GUI_CURSES(ptr_win)->win_title, "%s", ptr_topic);
+                        wprintw (GUI_CURSES(ptr_win)->win_title, "%s", (buf2) ? buf2 : ptr_topic);
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
                                                       COLOR_WIN_TITLE_MORE);
                         mvwprintw (GUI_CURSES(ptr_win)->win_title, 0, ptr_win->win_width - 2,
@@ -217,7 +217,7 @@ gui_chat_draw_title (t_gui_buffer *buffer, int erase)
                     else
                     {
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title, COLOR_WIN_TITLE);
-                        wprintw (GUI_CURSES(ptr_win)->win_title, "%s", ptr_topic);
+                        wprintw (GUI_CURSES(ptr_win)->win_title, "%s", (buf2) ? buf2 : ptr_topic);
                     }
                     if (buf)
                         free (buf);
