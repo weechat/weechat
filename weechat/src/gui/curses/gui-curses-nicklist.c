@@ -43,7 +43,7 @@ void
 gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
 {
     t_gui_window *ptr_win;
-    int i, j, k, x, y, x2, column, max_length, max_chars, nicks_displayed;
+    int i, j, k, x, y, x2, max_y, column, max_length, max_chars, nicks_displayed;
     char format_empty[32], *buf, *ptr_buf, *ptr_next, saved_char;
     t_irc_nick *ptr_nick;
     
@@ -125,6 +125,20 @@ gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick, COLOR_WIN_NICK);
             x = 0;
             y = (cfg_look_nicklist_separator && (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM)) ? 1 : 0;
+            max_y = 0;
+            switch (cfg_look_nicklist_position)
+            {
+                case CFG_LOOK_NICKLIST_LEFT:
+                case CFG_LOOK_NICKLIST_RIGHT:
+                    max_y = 0;
+                    break;
+                case CFG_LOOK_NICKLIST_TOP:
+                    max_y = ptr_win->win_nick_height - cfg_look_nicklist_separator;
+                    break;
+                case CFG_LOOK_NICKLIST_BOTTOM:
+                    max_y = ptr_win->win_nick_height;
+                    break;
+            }
             column = 0;
             
             if ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_TOP) ||
@@ -240,9 +254,7 @@ gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
                     if ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_TOP) ||
                         (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM))
                     {
-                        if (y - ((cfg_look_nicklist_separator
-                                  && (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM)) ? 1 : 0)
-                            >= ptr_win->win_nick_height - 1)
+                        if (y >= max_y)
                         {
                             column += max_length + 2;
                             y = (cfg_look_nicklist_separator && (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM)) ?
