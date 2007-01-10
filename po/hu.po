@@ -5,10 +5,10 @@
 # Andras Voroskoi <voroskoi@frugalware.org>, 2006-2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.2.3-cvs\n"
+"Project-Id-Version: WeeChat 0.2.3\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-01-06 23:17+0100\n"
-"PO-Revision-Date: 2007-01-06 01:27+0100\n"
+"POT-Creation-Date: 2007-01-10 18:49+0100\n"
+"PO-Revision-Date: 2007-01-10 18:49+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2243,23 +2243,23 @@ msgstr ""
 msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 msgstr "%s (%s/%s) szerver/szoba nem található a modul futtatása parancshoz\n"
 
-#: src/gui/curses/gui-curses-chat.c:945
+#: src/gui/curses/gui-curses-chat.c:941
 msgid "bytes"
 msgstr "byte"
 
-#: src/gui/curses/gui-curses-chat.c:945
+#: src/gui/curses/gui-curses-chat.c:941
 msgid "KB"
 msgstr "KB"
 
-#: src/gui/curses/gui-curses-chat.c:945
+#: src/gui/curses/gui-curses-chat.c:941
 msgid "MB"
 msgstr "MB"
 
-#: src/gui/curses/gui-curses-chat.c:945
+#: src/gui/curses/gui-curses-chat.c:941
 msgid "GB"
 msgstr "GB"
 
-#: src/gui/curses/gui-curses-chat.c:1079
+#: src/gui/curses/gui-curses-chat.c:1075
 msgid "ETA"
 msgstr "ETA"
 

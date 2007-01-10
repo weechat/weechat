@@ -1,10 +1,10 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-01-09
+ChangeLog - 2007-01-10
 
 
-Version 0.2.3 (under dev!):
+Version 0.2.3 (2007-01-10):
    * fixed display bugs with nicklist at top/bottom when look_nicklist_separator
      is OFF (bug #18737)
    * fixed iconv problem, causing truncated words when using iso locale
