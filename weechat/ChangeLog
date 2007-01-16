@@ -1,8 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-01-10
+ChangeLog - 2007-01-16
 
+
+Version 0.2.4 (under dev!):
+   * fixed freeze with SSL server when disconnecting after connection loss
+     (bug #18735)
 
 Version 0.2.3 (2007-01-10):
    * fixed display bugs with nicklist at top/bottom when look_nicklist_separator

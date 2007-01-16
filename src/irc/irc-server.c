@@ -1092,7 +1092,7 @@ server_close_connection (t_irc_server *server)
     {
 #ifdef HAVE_GNUTLS
         if (server->ssl_connected)
-            gnutls_bye (server->gnutls_sess, GNUTLS_SHUT_RDWR);
+            gnutls_bye (server->gnutls_sess, GNUTLS_SHUT_WR);
 #endif
         close (server->sock);
         server->sock = -1;
