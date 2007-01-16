@@ -1157,10 +1157,10 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                         {
                             ptr_channel = channel_search_any (SERVER(buffer),
                                                               CHANNEL(buffer)->name);
-                            if (ptr_channel)
-                                channel_free (SERVER(buffer),
-                                              ptr_channel);
+                            ptr_server = SERVER(buffer);
                             gui_buffer_free (buffer, 1);
+                            if (ptr_channel)
+                                channel_free (ptr_server, ptr_channel);
                         }
                     }
                     else

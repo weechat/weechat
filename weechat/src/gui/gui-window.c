@@ -294,6 +294,9 @@ gui_window_free (t_gui_window *window)
         gui_windows = window->next_window;
     if (last_gui_window == window)
         last_gui_window = window->prev_window;
+
+    if (gui_current_window == window)
+        gui_current_window = gui_windows;
     
     free (window);
 }

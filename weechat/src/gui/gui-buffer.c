@@ -466,6 +466,16 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
     
     create_new = (buffer->server || buffer->channel);
     
+    if (switch_to_another)
+    {
+        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        {
+            if ((buffer == ptr_win->buffer) &&
+                ((buffer->next_buffer) || (buffer->prev_buffer)))
+                gui_buffer_switch_previous (ptr_win);
+        }
+    }
+    
     hotlist_remove_buffer (buffer);
     if (hotlist_initial_buffer == buffer)
         hotlist_initial_buffer = NULL;
@@ -484,16 +494,6 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
     {
         if (ptr_server->saved_buffer == buffer)
             ptr_server->saved_buffer = NULL;
-    }
-    
-    if (switch_to_another)
-    {
-        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-        {
-            if ((buffer == ptr_win->buffer) &&
-                ((buffer->next_buffer) || (buffer->prev_buffer)))
-                gui_buffer_switch_previous (ptr_win);
-        }
     }
     
     /* decrease buffer number for all next buffers */
@@ -546,7 +546,8 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
         (void) gui_buffer_new (gui_windows, NULL, NULL,
                                BUFFER_TYPE_STANDARD, 1);
     
-    gui_status_draw (gui_current_window->buffer, 1);
+    if (gui_windows && gui_current_window && gui_current_window->buffer)
+        gui_status_draw (gui_current_window->buffer, 1);
 }
 
 /*
