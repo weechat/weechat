@@ -1,4 +1,4 @@
-WeeChat FAQ, 2007-01-06
+WeeChat FAQ, 2007-01-16
 =======================
 
 Intended audience:
@@ -87,10 +87,16 @@ A:	A window is used when you split screen vertically or horizontally.
 ================================================================================
 Q:	I don't see some chars with accents, what can I do?
 
-A:	You have to setup charset used for decoding (ISO and UTF), encoding, and
-	internal WeeChat charset.
-	Internal charset should be empty value, except if WeeChat failed to
-	detect your locale.
+A:	For versions < 0.2.3, please upgrade to last stable version.
+	For versions >= 0.2.3 :
+	- check that weechat-curses is linked to libncursesw (warning: needed
+	  on most distributions but not all) :
+	  ldd /path/to/weechat-curses
+	- check charset line (on server buffer), you should see ISO-XXXXXX or
+	  UTF-8 for terminal charset. If you see ANSI_X3.4-1968 or other values,
+	  probably your locale is wrong.
+	- setup global decode value, for example:
+	  /setp charset.global.decode = ISO-8859-15
 
 
 2.5

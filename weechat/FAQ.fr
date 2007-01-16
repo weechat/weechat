@@ -1,4 +1,4 @@
-WeeChat FAQ, 2007-01-06
+WeeChat FAQ, 2007-01-16
 =======================
 
 Public concerné :
@@ -94,10 +94,17 @@ R:	Une fenêtre ("window") est utilisée quand vous partagez l'écran
 ================================================================================
 Q:	Je ne vois pas bien certains accents dans WeeChat, que faire ?
 
-R:	Il faut configurer le charset utilisé pour le décodage (ISO et UTF),
-	l'encodage ainsi que le charset interne à WeeChat.
-	Le charset interne à WeeChat doit être une valeur vide, sauf si WeeChat
-	n'arrive pas à déterminer votre locale.
+R:	Pour les versions < 0.2.3, merci d'installer la dernière version stable.
+	Pour les versions >= 0.2.3 :
+	- vérifiez que weechat-curses est lié avec libncursesw (attention:
+	  nécessaire sur beaucoup de distributions, mais pas toutes) :
+	  ldd /chemin/vers/weechat-curses
+	- vérifiez la ligne charset (sur le tampon serveur), vous devriez voir
+	  ISO-XXXXXX ou UTF-8 pour le charset du terminal. Si vous voyez
+	  ANSI_X3.4-1968 ou d'autres valeurs, votre locale est probablement
+	  erronée.
+	- affectez la valeur pour le décodage global, par exemple :
+	  /setp charset.global.decode = ISO-8859-15
 
 
 2.5
