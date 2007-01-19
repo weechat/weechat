@@ -2,7 +2,7 @@
 # xmms perl script for weechat                                      #
 #                                                                   #
 # Displays some useless xmms-infopipe values                        #
-# (c) 2006 by Cédric Chalier <llinkz@gmail.com>                     # 
+# (c) 2006 by Cédric Chalier <ounaid AT gmail DOT com>              # 
 #                                                                   #
 # This program is free software; you can redistribute it and/or     #
 # modify it under the terms of the GNU General Public License       #
