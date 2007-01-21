@@ -349,7 +349,7 @@ irc_cmd_send_away (t_irc_server *server, t_irc_channel *channel,
     }
     else
     {
-        if (server->is_connected)
+        if (server && server->is_connected)
             irc_send_away (server, arguments);
         else
         {
