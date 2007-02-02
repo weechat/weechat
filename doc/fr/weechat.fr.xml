@@ -5793,7 +5793,7 @@ def mon_clavier(key, input_before, input_after):
 
 # ruby
 Weechat.add_keyboard_handler("mon_clavier")
-def mon_clavier(server, input_before, input_after)
+def mon_clavier(key, input_before, input_after)
     Weechat.print("gestionnaire clavier: touche = '#{key}', " \
                   "entrée avant = '#{input_before}' " \
                   "après = '#{input_after}'")
@@ -5802,7 +5802,7 @@ end
 
 -- lua
 weechat.add_keyboard_handler("mon_clavier")
-function mon_clavier(server, input_before, input_after)
+function mon_clavier(key, input_before, input_after)
     weechat.print("gestionnaire clavier: touche = '"..key..
                   "', entrée avant = '"..input_before..
                   "' après = '"..input_after.."'")

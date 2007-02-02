@@ -5630,7 +5630,7 @@ def my_keyboard(key, input_before, input_after):
 
 # ruby
 Weechat.add_keyboard_handler("my_keyboard")
-def my_keyboard(server, input_before, input_after)
+def my_keyboard(key, input_before, input_after)
     Weechat.print("keyboard handler: key = '#{key}', " \
                   "input before = '#{input_before}' " \
                   "after = '#{input_after}'")
@@ -5639,7 +5639,7 @@ end
 
 -- lua
 weechat.add_keyboard_handler("my_keyboard")
-function my_keyboard(server, input_before, input_after)
+function my_keyboard(key, input_before, input_after)
     weechat.print("keyboard handler: key = '"..key..
                   "', input before = '"..input_before..
                   "' after = '"..input_after.."'")
