@@ -40,11 +40,12 @@ Befehl: auszuführender Befehl (falls nicht vorhanden wird automatisch ein '/' vo
 
 
 </programlisting>
-<command>clear  [-all]</command>
+<command>clear  [-all | number]</command>
 <programlisting>
 Fenster leeren
 
--all: alle Fenster leeren
+  -all: clear all buffers
+number: clear buffer by number
 
 </programlisting>
 <command>connect  [Servername]</command>

@@ -378,6 +378,12 @@ gui_buffer_clear (t_gui_buffer *buffer)
 {
     t_gui_window *ptr_win;
     t_gui_line *ptr_line;
+
+    if (!buffer)
+        return;
+
+    if (buffer->type == BUFFER_TYPE_DCC)
+        return;
     
     /* remove buffer from hotlist */
     hotlist_remove_buffer (buffer);

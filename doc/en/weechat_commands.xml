@@ -40,11 +40,12 @@ command: command to execute (a '/' is automatically added if not found at beginn
 
 
 </programlisting>
-<command>clear  [-all]</command>
+<command>clear  [-all | number]</command>
 <programlisting>
 clear window(s)
 
--all: clear all windows
+  -all: clear all buffers
+number: clear buffer by number
 
 </programlisting>
 <command>connect  [servername]</command>

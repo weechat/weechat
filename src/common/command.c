@@ -75,8 +75,9 @@ t_weechat_command weechat_commands[] =
     N_("command: command to execute (a '/' is automatically added if not found at beginning of command)\n"),
     "%w|%i", 0, MAX_ARGS, 1, NULL, weechat_cmd_builtin },
   { "clear", N_("clear window(s)"),
-    N_("[-all]"),
-    N_("-all: clear all windows"),
+    N_("[-all | number]"),
+    N_("  -all: clear all buffers\n"
+       "number: clear buffer by number"),
     "-all", 0, 1, 0, weechat_cmd_clear, NULL },
   { "connect", N_("connect to a server"),
     N_("[servername]"),
@@ -1405,8 +1406,8 @@ weechat_cmd_clear (t_irc_server *server, t_irc_channel *channel,
                    int argc, char **argv)
 {
     t_gui_buffer *buffer;
-    
-    irc_find_context (server, channel, NULL, &buffer);
+    char *error;
+    long number;
     
     if (argc == 1)
     {
@@ -1414,15 +1415,37 @@ weechat_cmd_clear (t_irc_server *server, t_irc_channel *channel,
             gui_buffer_clear_all ();
         else
         {
-            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-            gui_printf (NULL,
-                        _("%s unknown option for \"%s\" command\n"),
-                        WEECHAT_ERROR, "clear");
-            return -1;
+            error = NULL;
+            number = strtol (argv[0], &error, 10);
+            if ((error) && (error[0] == '\0'))
+            {
+                buffer = gui_buffer_search_by_number (number);
+                if (!buffer)
+                {
+                    irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                    gui_printf (NULL,
+                                _("%s buffer not found for \"%s\" command\n"),
+                                WEECHAT_ERROR, "clear");
+                    return -1;
+                }
+                gui_buffer_clear (buffer);
+            }
+            else
+            {
+                irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                gui_printf (NULL,
+                            _("%s unknown option for \"%s\" command\n"),
+                            WEECHAT_ERROR, "clear");
+                return -1;
+            }
         }
     }
     else
+    {
+        irc_find_context (server, channel, NULL, &buffer);
         gui_buffer_clear (buffer);
+    }
+    
     return 0;
 }
 
