@@ -2575,6 +2575,25 @@ weechat_lua_cmd (t_weechat_plugin *plugin,
             if (!handler_found)
                 plugin->print_server (plugin, "  (none)");
             
+            /* list Lua event handlers */
+            plugin->print_server (plugin, "");
+            plugin->print_server (plugin, "Lua event handlers:");
+            handler_found = 0;
+            for (ptr_handler = plugin->handlers;
+                 ptr_handler; ptr_handler = ptr_handler->next_handler)
+            {
+                if ((ptr_handler->type == PLUGIN_HANDLER_EVENT)
+                    && (ptr_handler->handler_args))
+                {
+                    handler_found = 1;
+                    plugin->print_server (plugin, "  %s => Lua(%s)",
+                                          ptr_handler->event,
+                                          ptr_handler->handler_args);
+                }
+            }
+            if (!handler_found)
+                plugin->print_server (plugin, "  (none)");
+            
 	    /* list Lua modifiers */
 	    plugin->print_server (plugin, "");
             plugin->print_server (plugin, "Lua modifiers:");

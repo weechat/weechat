@@ -2411,6 +2411,23 @@ weechat_cmd_plugin_list (char *name, int full)
                 else
                     gui_printf (NULL, _("       %d defined\n"),
                                 handler_found);
+
+                /* event handlers */
+                irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
+                gui_printf (NULL, _("     event handlers:\n"));
+                handler_found = 0;
+                for (ptr_handler = ptr_plugin->handlers;
+                     ptr_handler; ptr_handler = ptr_handler->next_handler)
+                {
+                    if (ptr_handler->type == PLUGIN_HANDLER_EVENT)
+                        handler_found++;
+                }
+                irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
+                if (!handler_found)
+                    gui_printf (NULL, _("       (no event handler)\n"));
+                else
+                    gui_printf (NULL, _("       %d defined\n"),
+                                handler_found);
                 
                 /* modifiers */
                 irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
