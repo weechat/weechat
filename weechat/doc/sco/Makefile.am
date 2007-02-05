@@ -15,19 +15,14 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-SUBDIRS = . en fr de ru pl cs sco
+LANGCODE = sco
+QUICKSTART = weechat_quickstart.$(LANGCODE).txt
 
-man_MANS = weechat-curses.1
+EXTRA_DIST = $(QUICKSTART)
 
-EXTRA_DIST = $(man_MANS) weechat-doc.css weechat-html-one.xsl.in weechat-html.xsl.in weechat-pdf.xsl dblatex.conf
+docdir = $(datadir)/doc/$(PACKAGE)
 
-all-local: weechat-html.xsl weechat-html-one.xsl
+# install docs
 
-weechat-html.xsl: weechat-html.xsl.in
-	sed -e 's,\@DOC_XSL_PREFIX\@,$(DOC_XSL_PREFIX),g' < weechat-html.xsl.in > weechat-html.xsl
-
-weechat-html-one.xsl: weechat-html-one.xsl.in
-	sed -e 's,\@DOC_XSL_PREFIX\@,$(DOC_XSL_PREFIX),g' < weechat-html-one.xsl.in > weechat-html-one.xsl
-
-clean-local:
-	-rm -f weechat-html.xsl weechat-html-one.xsl
+install-data-hook:
+	$(INSTALL_DATA) $(QUICKSTART) $(DESTDIR)$(docdir)/
