@@ -44,6 +44,10 @@
 #include "../common/util.h"
 #include "../irc/irc.h"
 
+#ifdef PLUGINS
+#include "../plugins/plugins.h"
+#endif
+
 
 t_gui_buffer *gui_buffers = NULL;           /* pointer to first buffer      */
 t_gui_buffer *last_gui_buffer = NULL;       /* pointer to last buffer       */
@@ -82,6 +86,9 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
                 int switch_to_buffer)
 {
     t_gui_buffer *new_buffer, *ptr_buffer;
+#ifdef PLUGINS
+    char buffer_str[16];
+#endif
     
 #ifdef DEBUG
     weechat_log_printf ("Creating new buffer\n");
@@ -226,6 +233,11 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
         
         /* redraw buffer */
         gui_window_redraw_buffer (new_buffer);
+
+#ifdef PLUGINS
+        snprintf (buffer_str, sizeof (buffer_str) - 1, "%d", new_buffer->number);
+        (void) plugin_event_handler_exec ("buffer_open", buffer_str);
+#endif
     }
     else
         return NULL;
@@ -469,6 +481,14 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
     t_gui_line *ptr_line;
     t_irc_server *ptr_server;
     int create_new;
+#ifdef PLUGINS
+    char buffer_str[16];
+#endif
+    
+#ifdef PLUGINS
+    snprintf (buffer_str, sizeof (buffer_str) - 1, "%d", buffer->number);
+    (void) plugin_event_handler_exec ("buffer_close", buffer_str);
+#endif
     
     create_new = (buffer->server || buffer->channel);
     

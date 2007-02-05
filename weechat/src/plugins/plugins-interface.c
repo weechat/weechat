@@ -357,6 +357,22 @@ weechat_plugin_keyboard_handler_add (t_weechat_plugin *plugin,
 }
 
 /*
+ * weechat_plugin_event_handler_add: add an event handler
+ */
+
+t_plugin_handler *
+weechat_plugin_event_handler_add (t_weechat_plugin *plugin, char *event,
+                                  t_plugin_handler_func *handler_func,
+                                  char *handler_args, void *handler_pointer)
+{
+    if (plugin && event && handler_func)
+        return plugin_event_handler_add (plugin, event, handler_func,
+                                         handler_args, handler_pointer);
+    
+    return NULL;
+}
+
+/*
  * weechat_plugin_handler_remove: remove a WeeChat handler
  */
 
@@ -570,6 +586,15 @@ weechat_plugin_get_info (t_weechat_plugin *plugin, char *info, char *server)
     {
         if (ptr_server && ptr_server->is_connected && ptr_server->name)
             return strdup (ptr_server->name);
+    }
+    else if (ascii_strcasecmp (info, "type") == 0)
+    {
+        return_str = (char *) malloc (32);
+        if (!return_str)
+            return NULL;
+        snprintf (return_str, 32, "%d",
+                  gui_current_window->buffer->type);
+        return return_str;
     }
     else if (ascii_strcasecmp (info, "away") == 0)
     {

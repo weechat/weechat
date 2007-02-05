@@ -201,6 +201,36 @@ weechat_lua_keyboard_handler (t_weechat_plugin *plugin,
 }
 
 /*
+ * weechat_lua_event_handler: general event handler for Lua
+ */
+
+int
+weechat_lua_event_handler (t_weechat_plugin *plugin,
+                           int argc, char **argv,
+                           char *handler_args, void *handler_pointer)
+{
+    int *r;
+    int ret;
+
+    if (argc >= 1)
+    {
+        r = (int *) weechat_lua_exec (plugin, (t_plugin_script *)handler_pointer,
+                                      SCRIPT_EXEC_INT,
+                                      handler_args, argv[0], NULL, NULL);
+        if (r == NULL)
+            ret = PLUGIN_RC_KO;
+        else
+        {
+            ret = *r;
+            free (r);
+        }
+        return ret;
+    }
+    else
+        return PLUGIN_RC_KO;
+}
+
+/*
  * weechat_lua_modifier: general modifier for Lua
  */
 
@@ -310,7 +340,7 @@ weechat_lua_register (lua_State *L)
  */
 
 static int
-weechat_lua_set_charset  (lua_State *L)
+weechat_lua_set_charset (lua_State *L)
 {
     const char *charset;
     int n;
@@ -355,7 +385,7 @@ weechat_lua_set_charset  (lua_State *L)
  */
 
 static int
-weechat_lua_print  (lua_State *L)
+weechat_lua_print (lua_State *L)
 {
     const char *message, *channel_name, *server_name;
     int n;
@@ -414,7 +444,7 @@ weechat_lua_print  (lua_State *L)
  */
 
 static int
-weechat_lua_print_server  (lua_State *L)
+weechat_lua_print_server (lua_State *L)
 {
     const char *message;
     int n;
@@ -457,7 +487,7 @@ weechat_lua_print_server  (lua_State *L)
  */
 
 static int
-weechat_lua_print_infobar  (lua_State *L)
+weechat_lua_print_infobar (lua_State *L)
 {
     const char *message;
     int delay, n;
@@ -502,7 +532,7 @@ weechat_lua_print_infobar  (lua_State *L)
  */
 
 static int
-weechat_lua_remove_infobar  (lua_State *L)
+weechat_lua_remove_infobar (lua_State *L)
 {
     int n, how_many;
     
@@ -536,7 +566,7 @@ weechat_lua_remove_infobar  (lua_State *L)
  */
 
 static int
-weechat_lua_log  (lua_State *L)
+weechat_lua_log (lua_State *L)
 {
     const char *message, *channel_name, *server_name;
     int n;
@@ -595,7 +625,7 @@ weechat_lua_log  (lua_State *L)
  */
 
 static int
-weechat_lua_command  (lua_State *L)
+weechat_lua_command (lua_State *L)
 {
     const char *command, *channel_name, *server_name;
     int n;
@@ -654,7 +684,7 @@ weechat_lua_command  (lua_State *L)
  */
 
 static int
-weechat_lua_add_message_handler  (lua_State *L)
+weechat_lua_add_message_handler (lua_State *L)
 {
     const char *irc_command, *function;
     int n;
@@ -706,7 +736,7 @@ weechat_lua_add_message_handler  (lua_State *L)
  */
 
 static int
-weechat_lua_add_command_handler  (lua_State *L)
+weechat_lua_add_command_handler (lua_State *L)
 {
     const char *command, *function, *description, *arguments, *arguments_description;
     const char *completion_template;
@@ -778,7 +808,7 @@ weechat_lua_add_command_handler  (lua_State *L)
  */
 
 static int
-weechat_lua_add_timer_handler  (lua_State *L)
+weechat_lua_add_timer_handler (lua_State *L)
 {
     int interval;
     const char *function;
@@ -831,7 +861,7 @@ weechat_lua_add_timer_handler  (lua_State *L)
  */
 
 static int
-weechat_lua_add_keyboard_handler  (lua_State *L)
+weechat_lua_add_keyboard_handler (lua_State *L)
 {
     const char *function;
     int n;
@@ -867,6 +897,58 @@ weechat_lua_add_keyboard_handler  (lua_State *L)
                                            weechat_lua_keyboard_handler,
                                            (char *) function,
                                            (void *)lua_current_script))
+    {
+	lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+
+    lua_pushnumber (lua_current_interpreter, 1);
+    return 1;
+}
+
+/*
+ * weechat_lua_add_event_handler: add handler for events
+ */
+
+static int
+weechat_lua_add_event_handler (lua_State *L)
+{
+    const char *event, *function;
+    int n;
+    
+    /* make gcc happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to add event handler, "
+                                  "script not initialized");
+	lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+    
+    event = NULL;
+    function = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+
+    if (n != 2)
+    {
+	lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"add_event_handler\" function");
+        lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+
+    event = lua_tostring (lua_current_interpreter, -2);
+    function = lua_tostring (lua_current_interpreter, -1);
+    
+    if (!lua_plugin->event_handler_add (lua_plugin, (char *) event,
+                                        weechat_lua_event_handler,
+                                        (char *) function,
+                                        (void *)lua_current_script))
     {
 	lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
@@ -1011,6 +1093,50 @@ weechat_lua_remove_keyboard_handler (lua_State *L)
 }
 
 /*
+ * weechat_lua_remove_event_handler: remove an event handler
+ */
+
+static int
+weechat_lua_remove_event_handler (lua_State *L)
+{
+    const char *function;
+    int n;
+    
+    /* make gcc happy */
+    (void) L;
+     
+    if (!lua_current_script)
+    {
+        lua_plugin->print_server (lua_plugin,
+                                  "Lua error: unable to remove event handler, "
+                                  "script not initialized");
+        lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+    
+    function = NULL;
+ 
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n != 1)
+    {
+	lua_plugin->print_server (lua_plugin,
+                                  "Lua error: wrong parameters for "
+                                  "\"remove_event_handler\" function");
+        lua_pushnumber (lua_current_interpreter, 0);
+	return 1;
+    }
+
+    function = lua_tostring (lua_current_interpreter, -1);
+    
+    weechat_script_remove_event_handler (lua_plugin, lua_current_script,
+                                         (char *) function);
+    
+    lua_pushnumber (lua_current_interpreter, 1);
+    return 1;
+}
+
+/*
  * weechat_lua_add_modifier: add a modifier
  */
 
@@ -1118,7 +1244,7 @@ weechat_lua_remove_modifier (lua_State *L)
  */
 
 static int
-weechat_lua_get_info  (lua_State *L)
+weechat_lua_get_info (lua_State *L)
 {
     const char *arg, *server_name;
     char *info;
@@ -1172,7 +1298,7 @@ weechat_lua_get_info  (lua_State *L)
  */
 
 static int
-weechat_lua_get_dcc_info  (lua_State *L)
+weechat_lua_get_dcc_info (lua_State *L)
 {
     t_plugin_dcc_info *dcc_info, *ptr_dcc;
     char timebuffer1[64];
@@ -1289,7 +1415,7 @@ weechat_lua_get_dcc_info  (lua_State *L)
  */
 
 static int
-weechat_lua_get_config  (lua_State *L)
+weechat_lua_get_config (lua_State *L)
 {
     const char *option;
     char *return_value;
@@ -1336,7 +1462,7 @@ weechat_lua_get_config  (lua_State *L)
  */
 
 static int
-weechat_lua_set_config  (lua_State *L)
+weechat_lua_set_config (lua_State *L)
 {
     const char *option, *value;
     int n;
@@ -1383,7 +1509,7 @@ weechat_lua_set_config  (lua_State *L)
  */
 
 static int
-weechat_lua_get_plugin_config  (lua_State *L)
+weechat_lua_get_plugin_config (lua_State *L)
 {
     const char *option;
     char *return_value;
@@ -1432,7 +1558,7 @@ weechat_lua_get_plugin_config  (lua_State *L)
  */
 
 static int
-weechat_lua_set_plugin_config  (lua_State *L)
+weechat_lua_set_plugin_config (lua_State *L)
 {
     const char *option, *value;
     int n;
@@ -1481,7 +1607,7 @@ weechat_lua_set_plugin_config  (lua_State *L)
  */
 
 static int
-weechat_lua_get_server_info  (lua_State *L)
+weechat_lua_get_server_info (lua_State *L)
 {
     t_plugin_server_info *server_info, *ptr_server;
     char timebuffer[64];
@@ -1627,7 +1753,7 @@ weechat_lua_get_server_info  (lua_State *L)
  */
 
 static int
-weechat_lua_get_channel_info  (lua_State *L)
+weechat_lua_get_channel_info (lua_State *L)
 {
     t_plugin_channel_info *channel_info, *ptr_channel;
     const char *server;
@@ -1711,7 +1837,7 @@ weechat_lua_get_channel_info  (lua_State *L)
  */
 
 static int
-weechat_lua_get_nick_info  (lua_State *L)
+weechat_lua_get_nick_info (lua_State *L)
 {
     t_plugin_nick_info *nick_info, *ptr_nick;
     const char *server, *channel;
@@ -1825,7 +1951,7 @@ weechat_lua_get_irc_color (lua_State *L)
  */
 
 static int
-weechat_lua_get_window_info  (lua_State *L)
+weechat_lua_get_window_info (lua_State *L)
 {
     t_plugin_window_info *window_info, *ptr_window;
     int i;
@@ -1897,7 +2023,7 @@ weechat_lua_get_window_info  (lua_State *L)
  */
 
 static int
-weechat_lua_get_buffer_info  (lua_State *L)
+weechat_lua_get_buffer_info (lua_State *L)
 {
     t_plugin_buffer_info *buffer_info, *ptr_buffer;
     
@@ -1929,7 +2055,7 @@ weechat_lua_get_buffer_info  (lua_State *L)
 	lua_pushstring (lua_current_interpreter, "type");
 	lua_pushnumber (lua_current_interpreter, ptr_buffer->type);
 	lua_rawset (lua_current_interpreter, -3);
-	
+        
 	lua_pushstring (lua_current_interpreter, "num_displayed");
 	lua_pushnumber (lua_current_interpreter, ptr_buffer->num_displayed);
 	lua_rawset (lua_current_interpreter, -3);
@@ -1966,7 +2092,7 @@ weechat_lua_get_buffer_info  (lua_State *L)
  */
 
 static int
-weechat_lua_get_buffer_data  (lua_State *L)
+weechat_lua_get_buffer_data (lua_State *L)
 {
     t_plugin_buffer_line *buffer_data, *ptr_data;
     const char *server, *channel;
@@ -2053,7 +2179,7 @@ weechat_lua_get_buffer_data  (lua_State *L)
  */
 
 static int
-weechat_lua_constant_plugin_rc_ok  (lua_State *L)
+weechat_lua_constant_plugin_rc_ok (lua_State *L)
 {
     /* make gcc happy */
     (void) L;
@@ -2063,7 +2189,7 @@ weechat_lua_constant_plugin_rc_ok  (lua_State *L)
 }
 
 static int
-weechat_lua_constant_plugin_rc_ko  (lua_State *L)
+weechat_lua_constant_plugin_rc_ko (lua_State *L)
 {
     /* make gcc happy */
     (void) L;
@@ -2073,7 +2199,7 @@ weechat_lua_constant_plugin_rc_ko  (lua_State *L)
 }
     
 static int
-weechat_lua_constant_plugin_rc_ok_ignore_weechat  (lua_State *L)
+weechat_lua_constant_plugin_rc_ok_ignore_weechat (lua_State *L)
 {
     /* make gcc happy */
     (void) L;
@@ -2083,7 +2209,7 @@ weechat_lua_constant_plugin_rc_ok_ignore_weechat  (lua_State *L)
 }
 
 static int
-weechat_lua_constant_plugin_rc_ok_ignore_plugins  (lua_State *L)
+weechat_lua_constant_plugin_rc_ok_ignore_plugins (lua_State *L)
 {
     /* make gcc happy */
     (void) L;
@@ -2093,7 +2219,7 @@ weechat_lua_constant_plugin_rc_ok_ignore_plugins  (lua_State *L)
 }
 
 static int
-weechat_lua_constant_plugin_rc_ok_ignore_all  (lua_State *L)
+weechat_lua_constant_plugin_rc_ok_ignore_all (lua_State *L)
 {
     /* make gcc happy */
     (void) L;
@@ -2120,9 +2246,11 @@ const struct luaL_reg weechat_lua_funcs[] = {
     { "add_command_handler", weechat_lua_add_command_handler },
     { "add_timer_handler", weechat_lua_add_timer_handler },
     { "add_keyboard_handler", weechat_lua_add_keyboard_handler },
+    { "add_event_handler", weechat_lua_add_event_handler },
     { "remove_handler", weechat_lua_remove_handler },
     { "remove_timer_handler", weechat_lua_remove_timer_handler },
     { "remove_keyboard_handler", weechat_lua_remove_keyboard_handler },
+    { "remove_event_handler", weechat_lua_remove_event_handler },
     { "add_modifier", weechat_lua_add_modifier },
     { "remove_modifier", weechat_lua_remove_modifier },
     { "get_info", weechat_lua_get_info },

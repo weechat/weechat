@@ -243,6 +243,36 @@ weechat_python_keyboard_handler (t_weechat_plugin *plugin,
 }
 
 /*
+ * weechat_python_event_handler: general event handler for Python
+ */
+
+int
+weechat_python_event_handler (t_weechat_plugin *plugin,
+                              int argc, char **argv,
+                              char *handler_args, void *handler_pointer)
+{
+    int *r;
+    int ret;
+
+    if (argc >= 1)
+    {
+        r = (int *) weechat_python_exec (plugin, (t_plugin_script *)handler_pointer,
+                                         SCRIPT_EXEC_INT,
+                                         handler_args, argv[0], NULL, NULL);
+        if (r == NULL)
+            ret = PLUGIN_RC_KO;
+        else
+        {
+            ret = *r;
+            free (r);
+        }
+        return ret;
+    }
+    else
+        return PLUGIN_RC_KO;
+}
+
+/*
  * weechat_python_modifier: general modifier for Python
  */
 
@@ -756,6 +786,46 @@ weechat_python_add_keyboard_handler (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_add_event_handler: add handler for events
+ */
+
+static PyObject *
+weechat_python_add_event_handler (PyObject *self, PyObject *args)
+{
+    char *event, *function;
+    
+    /* make gcc happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to add event handler, "
+                                     "script not initialized");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    event = NULL;
+    function = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &event, &function))
+    {
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"add_event_handler\" function");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    if (python_plugin->event_handler_add (python_plugin, event,
+                                          weechat_python_event_handler,
+                                          function,
+                                          (void *)python_current_script))
+        return Py_BuildValue ("i", 1);
+    
+    return Py_BuildValue ("i", 0);
+}
+
+/*
  * weechat_python_remove_handler: remove a handler
  */
 
@@ -860,6 +930,42 @@ weechat_python_remove_keyboard_handler (PyObject *self, PyObject *args)
     
     weechat_script_remove_keyboard_handler (python_plugin, python_current_script,
                                             function);
+    
+    return Py_BuildValue ("i", 1);
+}
+
+/*
+ * weechat_python_remove_event_handler: remove an event handler
+ */
+
+static PyObject *
+weechat_python_remove_event_handler (PyObject *self, PyObject *args)
+{
+    char *function;
+    
+    /* make gcc happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        python_plugin->print_server (python_plugin,
+                                     "Python error: unable to remove event handler, "
+                                     "script not initialized");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    function = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &function))
+    {
+        python_plugin->print_server (python_plugin,
+                                     "Python error: wrong parameters for "
+                                     "\"remove_event_handler\" function");
+        return Py_BuildValue ("i", 0);
+    }
+    
+    weechat_script_remove_event_handler (python_plugin, python_current_script,
+                                         function);
     
     return Py_BuildValue ("i", 1);
 }
@@ -1761,9 +1867,11 @@ PyMethodDef weechat_python_funcs[] = {
     { "add_command_handler", weechat_python_add_command_handler, METH_VARARGS, "" },
     { "add_timer_handler", weechat_python_add_timer_handler, METH_VARARGS, "" },
     { "add_keyboard_handler", weechat_python_add_keyboard_handler, METH_VARARGS, "" },
+    { "add_event_handler", weechat_python_add_event_handler, METH_VARARGS, "" },
     { "remove_handler", weechat_python_remove_handler, METH_VARARGS, "" },
     { "remove_timer_handler", weechat_python_remove_timer_handler, METH_VARARGS, "" },
     { "remove_keyboard_handler", weechat_python_remove_keyboard_handler, METH_VARARGS, "" },
+    { "remove_event_handler", weechat_python_remove_event_handler, METH_VARARGS, "" },
     { "add_modifier", weechat_python_add_modifier, METH_VARARGS, "" },
     { "remove_modifier", weechat_python_remove_modifier, METH_VARARGS, "" },
     { "get_info", weechat_python_get_info, METH_VARARGS, "" },

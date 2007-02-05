@@ -79,6 +79,9 @@ extern void weechat_script_remove_timer_handler (t_weechat_plugin *,
 extern void weechat_script_remove_keyboard_handler (t_weechat_plugin *,
                                                     t_plugin_script *,
                                                     char *);
+extern void weechat_script_remove_event_handler (t_weechat_plugin *,
+                                                 t_plugin_script *,
+                                                 char *);
 extern void weechat_script_remove_modifier (t_weechat_plugin *,
                                             t_plugin_script *,
                                             char *, char *, char *);

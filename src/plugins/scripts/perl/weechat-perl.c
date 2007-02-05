@@ -321,6 +321,35 @@ weechat_perl_keyboard_handler (t_weechat_plugin *plugin,
 }
 
 /*
+ * weechat_perl_event_handler: general event handler for Perl
+ */
+
+int
+weechat_perl_event_handler (t_weechat_plugin *plugin,
+                            int argc, char **argv,
+                            char *handler_args, void *handler_pointer)
+{
+    int *r, ret;
+    
+    if (argc >= 1)
+    {
+        r = (int *) weechat_perl_exec (plugin, (t_plugin_script *)handler_pointer,
+                                       SCRIPT_EXEC_INT,
+                                       handler_args, argv[0], NULL, NULL);
+        if (r == NULL)
+            ret = PLUGIN_RC_KO;
+        else
+        {
+            ret = *r;
+            free (r);
+        }
+        return ret;
+    }
+    else
+        return PLUGIN_RC_KO;
+}
+
+/*
  * weechat_perl_modifier: general modifier for Perl
  */
 
@@ -836,6 +865,45 @@ static XS (XS_weechat_add_keyboard_handler)
 }
 
 /*
+ * weechat::add_event_handler: add an event handler
+ */
+
+static XS (XS_weechat_add_event_handler)
+{
+    char *event, *function;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to add event handler, "
+                                   "script not initialized");
+	XSRETURN_NO;
+    }
+    
+    if (items < 2)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"add_event_handler\" function");
+        XSRETURN_NO;
+    }
+
+    event = SvPV (ST (0), PL_na);
+    function = SvPV (ST (1), PL_na);
+    
+    if (perl_plugin->event_handler_add (perl_plugin, event,
+                                        weechat_perl_event_handler, function,
+                                        (void *)perl_current_script))
+        XSRETURN_YES;
+    
+    XSRETURN_NO;
+}
+
+/*
  * weechat::remove_handler: remove a message/command handler
  */
 
@@ -940,6 +1008,42 @@ static XS (XS_weechat_remove_keyboard_handler)
     
     weechat_script_remove_keyboard_handler (perl_plugin, perl_current_script,
                                             function);
+    
+    XSRETURN_YES;
+}
+
+/*
+ * weechat::remove_event_handler: remove an event handler
+ */
+
+static XS (XS_weechat_remove_event_handler)
+{
+    char *function;
+    dXSARGS;
+    
+    /* make gcc happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: unable to remove event handler, "
+                                   "script not initialized");
+	XSRETURN_NO;
+    }
+    
+    if (items < 1)
+    {
+        perl_plugin->print_server (perl_plugin,
+                                   "Perl error: wrong parameters for "
+                                   "\"remove_event_handler\" function");
+        XSRETURN_NO;
+    }
+    
+    function = SvPV (ST (0), PL_na);
+    
+    weechat_script_remove_event_handler (perl_plugin, perl_current_script,
+                                         function);
     
     XSRETURN_YES;
 }
@@ -1798,9 +1902,11 @@ weechat_perl_xs_init (pTHX)
     newXS ("weechat::add_command_handler", XS_weechat_add_command_handler, "weechat");
     newXS ("weechat::add_timer_handler", XS_weechat_add_timer_handler, "weechat");
     newXS ("weechat::add_keyboard_handler", XS_weechat_add_keyboard_handler, "weechat");
+    newXS ("weechat::add_event_handler", XS_weechat_add_event_handler, "weechat");
     newXS ("weechat::remove_handler", XS_weechat_remove_handler, "weechat");
     newXS ("weechat::remove_timer_handler", XS_weechat_remove_timer_handler, "weechat");
     newXS ("weechat::remove_keyboard_handler", XS_weechat_remove_keyboard_handler, "weechat");
+    newXS ("weechat::remove_event_handler", XS_weechat_remove_event_handler, "weechat");
     newXS ("weechat::add_modifier", XS_weechat_add_modifier, "weechat");
     newXS ("weechat::remove_modifier", XS_weechat_remove_modifier, "weechat");
     newXS ("weechat::get_info", XS_weechat_get_info, "weechat");

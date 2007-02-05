@@ -282,6 +282,36 @@ weechat_ruby_keyboard_handler (t_weechat_plugin *plugin,
 }
 
 /*
+ * weechat_ruby_event_handler: general event handler for Ruby
+ */
+
+int
+weechat_ruby_event_handler (t_weechat_plugin *plugin,
+                            int argc, char **argv,
+                            char *handler_args, void *handler_pointer)
+{
+    int *r;
+    int ret;
+
+    if (argc >= 1)
+    {
+        r = (int *) weechat_ruby_exec (plugin, (t_plugin_script *)handler_pointer,
+                                       SCRIPT_EXEC_INT,
+                                       handler_args, argv[0], NULL, NULL);
+        if (r == NULL)
+            ret = PLUGIN_RC_KO;
+        else
+        {
+            ret = *r;
+            free (r);
+        }
+        return ret;
+    }
+    else
+        return PLUGIN_RC_KO;
+}
+
+/*
  * weechat_ruby_modifier: general modifier for Ruby
  */
 
@@ -948,6 +978,52 @@ weechat_ruby_add_keyboard_handler (VALUE class, VALUE function)
 }
 
 /*
+ * weechat_ruby_add_event_handler: add a handler for events
+ */
+
+static VALUE
+weechat_ruby_add_event_handler (VALUE class, VALUE event, VALUE function)
+{
+    char *c_event, *c_function;
+    
+    /* make gcc happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: unable to add event handler, "
+                                   "script not initialized");
+        return INT2FIX (0);
+    }
+    
+    c_event = NULL;
+    c_function = NULL;
+    
+    if (NIL_P (event) || NIL_P (function))
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: wrong parameters for "
+                                   "\"add_event_handler\" function");
+        return INT2FIX (0);
+    }
+    
+    Check_Type (event, T_STRING);
+    Check_Type (function, T_STRING);
+    
+    c_event = STR2CSTR (event);
+    c_function = STR2CSTR (function);
+    
+    if (ruby_plugin->event_handler_add (ruby_plugin, c_event,
+                                        weechat_ruby_event_handler,
+                                        c_function,
+                                        (void *)ruby_current_script))
+        return INT2FIX (1);
+    
+    return INT2FIX (0);
+}
+
+/*
  * weechat_ruby_remove_handler: remove a handler
  */
 
@@ -1066,6 +1142,46 @@ weechat_ruby_remove_keyboard_handler (VALUE class, VALUE function)
     
     weechat_script_remove_keyboard_handler (ruby_plugin, ruby_current_script,
                                             c_function);
+    
+    return INT2FIX (1);
+}
+
+/*
+ * weechat_ruby_remove_event_handler: remove an event handler
+ */
+
+static VALUE
+weechat_ruby_remove_event_handler (VALUE class, VALUE function)
+{
+    char *c_function;
+    
+    /* make gcc happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: unable to remove event handler, "
+                                   "script not initialized");
+        return INT2FIX (0);
+    }
+    
+    c_function = NULL;
+    
+    if (NIL_P (function))
+    {
+        ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: wrong parameters for "
+                                   "\"remove_event_handler\" function");
+        return INT2FIX (0);
+    }
+    
+    Check_Type (function, T_STRING);
+    
+    c_function = STR2CSTR (function);
+    
+    weechat_script_remove_event_handler (ruby_plugin, ruby_current_script,
+                                         c_function);
     
     return INT2FIX (1);
 }
@@ -2486,9 +2602,11 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     rb_define_module_function (ruby_mWeechat, "add_command_handler", weechat_ruby_add_command_handler, -1);
     rb_define_module_function (ruby_mWeechat, "add_timer_handler", weechat_ruby_add_timer_handler, 2);
     rb_define_module_function (ruby_mWeechat, "add_keyboard_handler", weechat_ruby_add_keyboard_handler, 1);
+    rb_define_module_function (ruby_mWeechat, "add_event_handler", weechat_ruby_add_event_handler, 2);
     rb_define_module_function (ruby_mWeechat, "remove_handler", weechat_ruby_remove_handler, 2);
     rb_define_module_function (ruby_mWeechat, "remove_timer_handler", weechat_ruby_remove_timer_handler, 1);
     rb_define_module_function (ruby_mWeechat, "remove_keyboard_handler", weechat_ruby_remove_keyboard_handler, 1);
+    rb_define_module_function (ruby_mWeechat, "remove_event_handler", weechat_ruby_remove_event_handler, 1);
     rb_define_module_function (ruby_mWeechat, "add_modifier", weechat_ruby_add_modifier, 3);
     rb_define_module_function (ruby_mWeechat, "remove_modifier", weechat_ruby_remove_modifier, 3);
     rb_define_module_function (ruby_mWeechat, "get_info", weechat_ruby_get_info, -1);

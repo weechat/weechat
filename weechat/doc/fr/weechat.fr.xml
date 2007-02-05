@@ -2596,7 +2596,125 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;mon_keyb);
 </screen>
           </para>
         </section>
-                
+        
+        <section id="secAPI_event_handler_add">
+          <title>event_handler_add</title>
+          
+          <para>
+            Prototype :
+            <command>
+              t_plugin_handler *event_handler_add (t_weechat_plugin
+              *plugin, char *evenement, t_plugin_handler_func *fonction,
+              char *handler_args, void *handler_pointer)
+            </command>
+          </para>
+          <para>
+            Ajoute un gestionnaire d'évènement, appelé dès qu'un évènement se
+            produit.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>plugin</option> : pointeur vers la structure
+                  de l'extension
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>évènement</option> : évènement, voir le tableau
+                  ci-dessous :
+                  <informaltable colsep="0" frame="none">
+                    <tgroup cols="2">
+                      <thead>
+                        <row>
+                          <entry>Evènement</entry>
+                          <entry>Description</entry>
+                        </row>
+                      </thead>
+                      <tbody>
+                        <row>
+                          <entry><literal>buffer_open</literal></entry>
+                          <entry>un tampon a été ouvert</entry>
+                        </row>
+                        <row>
+                          <entry><literal>buffer_close</literal></entry>
+                          <entry>un tampon a été fermé</entry>
+                        </row>
+                      </tbody>
+                    </tgroup>
+                  </informaltable>
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>fonction</option> : fonction appelée
+                </para>
+                <para>
+                  Elle a le prototype suivant :
+                  <command>
+                    int ma_fonction (t_weechat_plugin *plugin,
+                    int argc, char **argv,
+                    char *handler_args, void *handler_pointer)
+                  </command>
+                </para>
+                <para>
+                  Le paramètre argc vaut 1 et argv[0] contient le numéro
+                  du tampon ouvert ou fermé.
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>handler_args</option> : paramètres passés à la
+                  fonction appelée
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <option>handler_pointer</option> : pointeur passé à la
+                  fonction appelée
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : le pointeur vers le nouveau gestionnaire
+            d'évènement.
+          </para>
+          <para>
+            Note : la fonction appelée doit renvoyer une des valeurs
+            suivantes :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_KO</literal> : la fonction a échoué
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_OK</literal> : la fonction a réussi
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Exemple :
+<screen>
+int mon_evenement (t_weechat_plugin *plugin, int argc, char **argv,
+                   char *handler_args, void *handler_pointer)
+{
+    plugin->print (plugin, NULL, NULL, "mon_evenement");
+    return PLUGIN_RC_OK;
+}
+...
+t_plugin_handler *event_handler;
+event_handler = plugin->event_handler_add (plugin, "buffer_open",
+                                           &amp;mon_evenement);
+</screen>
+          </para>
+        </section>
+        
         <section id="secAPI_handler_remove">
           <title>handler_remove</title>
           
@@ -2986,6 +3104,13 @@ plugin->exec_command (plugin, "freenode", "#weechat", "bonjour");
                         <row>
                           <entry><literal>server</literal></entry>
                           <entry>nom du serveur</entry>
+                        </row>
+                        <row>
+                          <entry><literal>type</literal></entry>
+                          <entry>
+                            type de tampon: 0=standard, 1=DCC,
+                            2=données IRC brutes
+                          </entry>
                         </row>
                         <row>
                           <entry><literal>away</literal></entry>
@@ -4408,7 +4533,7 @@ else
                     <entry>int</entry>
                     <entry><literal>type</literal></entry>
                     <entry>
-                      type de tampon: 0=standard, 1=dcc,
+                      type de tampon: 0=standard, 1=DCC,
                       2=données IRC brutes
                     </entry>
                   </row>
@@ -5828,6 +5953,108 @@ end
           </para>
         </section>
         
+        <section id="secScript_add_event_handler">
+          <title>add_event_handler</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::add_event_handler(évènement, fonction);
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.add_event_handler(évènement, fonction)
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.add_event_handler(évènement, fonction)
+            </command>
+          </para>
+          <para>
+            Prototype Lua :
+            <command>
+              weechat.add_event_handler(évènement, fonction)
+            </command>
+          </para>
+          <para>
+            Ajoute un gestionnaire d'évènement, appelé dès qu'un évènement se
+            produit.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>évènement</option> : évènement
+                  (voir <xref linkend="secAPI_event_handler_add" />)
+                </para>
+              </listitem>
+            </itemizedlist>
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>fonction</option> : fonction appelée
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : 1 si succès, 0 si une erreur s'est produite.
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+weechat::add_event_handler("buffer_open", "mon_evenement");
+sub mon_evenement
+{
+    weechat::print("buffer open");
+    return weechat::PLUGIN_RC_OK;
+}
+
+# python
+weechat.add_event_handler("buffer_open", "mon_evenement")
+def mon_evenement():
+    weechat.prnt("buffer open")
+    return weechat.PLUGIN_RC_OK
+
+# ruby
+Weechat.add_event_handler("buffer_open", "mon_evenement")
+def mon_evenement()
+    Weechat.print("buffer open")
+    return Weechat::PLUGIN_RC_OK
+end
+
+-- lua
+weechat.add_event_handler("buffer_open", "mon_evenement")
+function mon_evenement()
+    weechat.print("buffer open")
+    return weechat.PLUGIN_RC_OK()
+end
+</screen>
+          </para>
+          <para>
+            Note : la fonction appelée doit renvoyer une des valeurs
+            suivantes :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_KO</literal> : la fonction a échoué
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <literal>PLUGIN_RC_OK</literal> : la fonction a réussi
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </section>
+        
         <section id="secScript_remove_handler">
           <title>remove_handler</title>
           
@@ -6012,6 +6239,67 @@ Weechat.remove_keyboard_handler("mon_clavier")
 
 -- lua
 weechat.remove_keyboard_handler("mon_clavier")
+</screen>
+          </para>
+        </section>
+        
+        <section id="secScript_remove_event_handler">
+          <title>remove_event_handler</title>
+          
+          <para>
+            Prototype Perl :
+            <command>
+              weechat::remove_event_handler(fonction);
+            </command>
+          </para>
+          <para>
+            Prototype Python :
+            <command>
+              weechat.remove_event_handler(fonction)
+            </command>
+          </para>
+          <para>
+            Prototype Ruby :
+            <command>
+              Weechat.remove_event_handler(fonction)
+            </command>
+          </para>
+          <para>
+            Prototype Lua :
+            <command>
+              weechat.remove_event_handler(fonction)
+            </command>
+          </para>
+          <para>
+            Supprime un gestionnaire d'évènement.
+          </para>
+          <para>
+            Paramètres :
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>fonction</option> : fonction
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            Valeur renvoyée : 1 si succès, 0 si une erreur s'est produite.
+          </para>
+          <para>
+            Exemples :
+<screen>
+# perl
+weechat::remove_event_handler("mon_evenement");
+
+# python
+weechat.remove_event_handler("mon_evenement")
+
+# ruby
+Weechat.remove_event_handler("mon_evenement")
+
+-- lua
+weechat.remove_event_handler("mon_evenement")
 </screen>
           </para>
         </section>
