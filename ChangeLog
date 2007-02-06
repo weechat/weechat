@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-02-05
+ChangeLog - 2007-02-06
 
 
 Version 0.2.4 (under dev!):
+   * fixed permissions on "dcc" and "logs" directories (bug #18978)
    * added event handler to plugin API
    * added scots quickstart guide
    * added numeric argument for /clear command (buffer number) (patch #5372)

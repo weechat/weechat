@@ -445,7 +445,7 @@ weechat_parse_args (int argc, char *argv[])
  */
 
 int
-weechat_create_dir (char *directory)
+weechat_create_dir (char *directory, int permissions)
 {
     if (mkdir (directory, 0755) < 0)
     {
@@ -456,7 +456,10 @@ weechat_create_dir (char *directory)
                                    WEECHAT_ERROR, directory);
             return 0;
         }
+        return 1;
     }
+    if ((permissions != 0) && (strcmp (directory, getenv ("HOME")) != 0))
+        chmod (directory, permissions);
     return 1;
 }
 
@@ -505,7 +508,7 @@ weechat_create_home_dirs ()
     }
     
     /* create home directory; error is fatal */
-    if (!weechat_create_dir (weechat_home))
+    if (!weechat_create_dir (weechat_home, 0))
     {
         weechat_iconv_fprintf (stderr, _("%s unable to create \"%s\" directory\n"),
                                WEECHAT_ERROR, weechat_home);
@@ -525,14 +528,7 @@ weechat_create_config_dirs ()
     /* create logs directory" */
     dir1 = weechat_strreplace (cfg_log_path, "~", getenv ("HOME"));
     dir2 = weechat_strreplace (dir1, "%h", weechat_home);
-    if (weechat_create_dir (dir2))
-    {
-        if (strcmp (dir2, getenv ("HOME")) != 0)
-            chmod (dir2, 0700);
-    }
-    else
-        weechat_iconv_fprintf (stderr, _("%s unable to create \"%s\" directory\n"),
-                               WEECHAT_WARNING, dir2);
+    (void) weechat_create_dir (dir2, 0700);
     if (dir1)
         free (dir1);
     if (dir2)
@@ -541,14 +537,7 @@ weechat_create_config_dirs ()
     /* create DCC download directory */
     dir1 = weechat_strreplace (cfg_dcc_download_path, "~", getenv ("HOME"));
     dir2 = weechat_strreplace (dir1, "%h", weechat_home);
-    if (weechat_create_dir (dir2))
-    {
-        if (strcmp (dir2, getenv ("HOME")) != 0)
-            chmod (dir2, 0700);
-    }
-    else
-        weechat_iconv_fprintf (stderr, _("%s unable to create \"%s\" directory\n"),
-                               WEECHAT_WARNING, dir2);
+    (void) weechat_create_dir (dir2, 0700);
     if (dir1)
         free (dir1);
     if (dir2)
