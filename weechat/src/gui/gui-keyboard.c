@@ -143,6 +143,8 @@ t_gui_key_function gui_key_functions[] =
     N_("refresh screen") },
   { "grab_key",                  gui_action_grab_key,
     N_("grab a key") },
+  { "insert",                    gui_action_insert_string,
+    N_("insert a string in command line") },
   { NULL, NULL, NULL }
 };
 
@@ -322,10 +324,11 @@ gui_keyboard_insert_sorted (t_gui_key *key)
  */
 
 t_gui_key *
-gui_keyboard_new (char *key, char *command, void *function)
+gui_keyboard_new (char *key, char *command, t_gui_key_func *function, char *args)
 {
     t_gui_key *new_key;
     char *internal_code;
+    int length;
     
     if ((new_key = (t_gui_key *) malloc (sizeof (t_gui_key))))
     {
@@ -335,6 +338,21 @@ gui_keyboard_new (char *key, char *command, void *function)
             free (internal_code);
         new_key->command = (command) ? strdup (command) : NULL;
         new_key->function = function;
+        if (args)
+        {
+            if (args[0] == '"')
+            {
+                length = strlen (args);
+                if ((length > 1) && (args[length - 1] == '"'))
+                    new_key->args = strndup (args + 1, length - 2);
+                else
+                    new_key->args = strdup (args);
+            }
+            else
+                new_key->args = strdup (args);
+        }
+        else
+            new_key->args = NULL;
         gui_keyboard_insert_sorted (new_key);
     }
     else
@@ -403,7 +421,7 @@ gui_keyboard_search_part (char *key)
  * gui_keyboard_function_search_by_name: search a function by name
  */
 
-void *
+t_gui_key_func *
 gui_keyboard_function_search_by_name (char *name)
 {
     int i;
@@ -425,7 +443,7 @@ gui_keyboard_function_search_by_name (char *name)
  */
 
 char *
-gui_keyboard_function_search_by_ptr (void *function)
+gui_keyboard_function_search_by_ptr (t_gui_key_func *function)
 {
     int i;
     
@@ -448,8 +466,9 @@ gui_keyboard_function_search_by_ptr (void *function)
 t_gui_key *
 gui_keyboard_bind (char *key, char *command)
 {
-    t_gui_key_function *ptr_function;
+    t_gui_key_func *ptr_function;
     t_gui_key *new_key;
+    char *ptr_args;
     
     if (!key || !command)
     {
@@ -459,9 +478,20 @@ gui_keyboard_bind (char *key, char *command)
     }
     
     ptr_function = NULL;
+    ptr_args = NULL;
     if (command[0] != '/')
     {
+        ptr_args = strchr (command, ' ');
+        if (ptr_args)
+            ptr_args[0] = '\0';
         ptr_function = gui_keyboard_function_search_by_name (command);
+        if (ptr_args)
+        {
+            ptr_args[0] = ' ';
+            ptr_args++;
+            while (ptr_args[0] == ' ')
+                ptr_args++;
+        }
         if (!ptr_function)
         {
             weechat_log_printf (_("%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"),
@@ -474,7 +504,8 @@ gui_keyboard_bind (char *key, char *command)
     
     new_key = gui_keyboard_new (key,
                                 (ptr_function) ? NULL : command,
-                                ptr_function);
+                                ptr_function,
+                                ptr_args);
     if (!new_key)
     {
         weechat_log_printf (_("%s not enough memory for key binding\n"),
@@ -547,7 +578,7 @@ gui_keyboard_pressed (char *key_str)
                               CHANNEL(gui_current_window->buffer),
                               ptr_key->command, 0);
             else
-                (void)(ptr_key->function)(gui_current_window);
+                (void)(ptr_key->function)(gui_current_window, ptr_key->args);
 #ifdef PLUGINS
             (void) plugin_keyboard_handler_exec (
                 (ptr_key->command) ?
@@ -580,6 +611,8 @@ gui_keyboard_free (t_gui_key *key)
         free (key->key);
     if (key->command)
         free (key->command);
+    if (key->args)
+        free (key->args);
     
     /* remove key from keys list */
     if (key->prev_key)

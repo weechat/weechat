@@ -52,7 +52,7 @@ int
 weechat_ascii_strcasecmp (t_weechat_plugin *plugin,
                           char *string1, char *string2)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) plugin;
     
     return ascii_strcasecmp (string1, string2);
@@ -67,7 +67,7 @@ int
 weechat_ascii_strncasecmp (t_weechat_plugin *plugin,
                           char *string1, char *string2, int max)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) plugin;
     
     return ascii_strncasecmp (string1, string2, max);
@@ -82,7 +82,7 @@ weechat_explode_string (t_weechat_plugin *plugin, char *string,
                         char *separators, int num_items_max,
                         int *num_items)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) plugin;
     
     if (!plugin || !string || !separators || !num_items)
@@ -98,7 +98,7 @@ weechat_explode_string (t_weechat_plugin *plugin, char *string,
 void
 weechat_free_exploded_string (t_weechat_plugin *plugin, char **exploded_string)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) plugin;
     
     free_exploded_string (exploded_string);
@@ -114,7 +114,7 @@ weechat_plugin_mkdir_home (t_weechat_plugin *plugin, char *directory)
     char *dir_name;
     int dir_length;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) plugin;
     
     if (!directory)
@@ -753,7 +753,7 @@ weechat_plugin_get_config (t_weechat_plugin *plugin, char *option)
     char option_name[256];
     void *ptr_option_value;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) plugin;
     
     for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
@@ -810,7 +810,7 @@ weechat_plugin_set_config (t_weechat_plugin *plugin, char *option, char *value)
     t_irc_server *ptr_server;
     t_config_option *ptr_option;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) plugin;
     
     if (!option || !value)

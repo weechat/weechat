@@ -197,3 +197,7 @@
   <entry><literal>grab_key</literal></entry>
   <entry>capturer une touche</entry>
 </row>
+<row>
+  <entry><literal>insert</literal></entry>
+  <entry>insérer une chaîne dans la ligne de commande</entry>
+</row>

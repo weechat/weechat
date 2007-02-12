@@ -270,7 +270,7 @@ weechat_iconv (int from_utf8, char *from_code, char *to_code, char *string)
     else
         outbuf = strdup (string);
 #else
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) from_code;
     (void) to_code;
     outbuf = strdup (string);

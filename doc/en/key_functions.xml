@@ -197,3 +197,7 @@
   <entry><literal>grab_key</literal></entry>
   <entry>grab a key</entry>
 </row>
+<row>
+  <entry><literal>insert</literal></entry>
+  <entry>insert a string in command line</entry>
+</row>

@@ -83,7 +83,7 @@ int
 irc_cmd_send_admin (t_irc_server *server, t_irc_channel *channel,
                     char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     if (arguments)
@@ -148,7 +148,7 @@ irc_cmd_send_ame (t_irc_server *server, t_irc_channel *channel,
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) server;
     (void) channel;
     
@@ -183,7 +183,7 @@ irc_cmd_send_amsg (t_irc_server *server, t_irc_channel *channel,
     t_irc_nick *ptr_nick;
     char *string;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) server;
     (void) channel;
     
@@ -328,7 +328,7 @@ irc_cmd_send_away (t_irc_server *server, t_irc_channel *channel,
     
     irc_find_context (server, channel, NULL, &buffer);
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     gui_add_hotlist = 0;
@@ -459,7 +459,7 @@ irc_cmd_send_ctcp (t_irc_server *server, t_irc_channel *channel,
     char *pos_type, *pos_args, *pos;
     struct timeval tv;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     pos_type = strchr (arguments, ' ');
@@ -733,7 +733,7 @@ int
 irc_cmd_send_die (t_irc_server *server, t_irc_channel *channel,
                   char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     (void) arguments;
     
@@ -782,7 +782,7 @@ int
 irc_cmd_send_info (t_irc_server *server, t_irc_channel *channel,
                    char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     if (arguments)
@@ -830,7 +830,7 @@ int
 irc_cmd_send_ison (t_irc_server *server, t_irc_channel *channel,
                    char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     server_sendf (server, "ISON %s", arguments);
@@ -845,7 +845,7 @@ int
 irc_cmd_send_join (t_irc_server *server, t_irc_channel *channel,
                    char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     if (string_is_channel (arguments))
@@ -988,7 +988,7 @@ irc_cmd_send_kill (t_irc_server *server, t_irc_channel *channel,
 {
     char *pos;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     pos = strchr (arguments, ' ');
@@ -1014,7 +1014,7 @@ int
 irc_cmd_send_links (t_irc_server *server, t_irc_channel *channel,
                     char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     if (arguments)
@@ -1034,7 +1034,7 @@ irc_cmd_send_list (t_irc_server *server, t_irc_channel *channel,
 {
     char buffer[512];
     int ret;
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     if (server->cmd_list_regexp)
@@ -1080,7 +1080,7 @@ int
 irc_cmd_send_lusers (t_irc_server *server, t_irc_channel *channel,
                      char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     if (arguments)
@@ -1122,7 +1122,7 @@ int
 irc_cmd_send_mode (t_irc_server *server, t_irc_channel *channel,
                    char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     server_sendf (server, "MODE %s", arguments);
@@ -1168,7 +1168,7 @@ int
 irc_cmd_send_motd (t_irc_server *server, t_irc_channel *channel,
                    char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     if (arguments)
@@ -1415,7 +1415,7 @@ irc_cmd_send_nick (t_irc_server *server, t_irc_channel *channel,
 {
     t_irc_server *ptr_server;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     if (!server)
@@ -1453,7 +1453,7 @@ irc_cmd_send_notice (t_irc_server *server, t_irc_channel *channel,
 {
     char *pos, *string;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     pos = strchr (arguments, ' ');
@@ -1528,7 +1528,7 @@ int
 irc_cmd_send_oper (t_irc_server *server, t_irc_channel *channel,
                    char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     server_sendf (server, "OPER %s", arguments);
@@ -1626,7 +1626,7 @@ int
 irc_cmd_send_ping (t_irc_server *server, t_irc_channel *channel,
                    char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     server_sendf (server, "PING %s", arguments);
@@ -1641,7 +1641,7 @@ int
 irc_cmd_send_pong (t_irc_server *server, t_irc_channel *channel,
                    char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     server_sendf (server, "PONG %s", arguments);
@@ -1760,7 +1760,7 @@ irc_cmd_send_quit (t_irc_server *server, t_irc_channel *channel,
 {
     t_irc_server *ptr_server;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) server;
     (void) channel;
     
@@ -1781,7 +1781,7 @@ int
 irc_cmd_send_quote (t_irc_server *server, t_irc_channel *channel,
                     char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     server_sendf (server, "%s", arguments);
@@ -1796,7 +1796,7 @@ int
 irc_cmd_send_rehash (t_irc_server *server, t_irc_channel *channel,
                      char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     (void) arguments;
     
@@ -1812,7 +1812,7 @@ int
 irc_cmd_send_restart (t_irc_server *server, t_irc_channel *channel,
                       char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     (void) arguments;
     
@@ -1828,7 +1828,7 @@ int
 irc_cmd_send_service (t_irc_server *server, t_irc_channel *channel,
                       char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     server_sendf (server, "SERVICE %s", arguments);
@@ -1843,7 +1843,7 @@ int
 irc_cmd_send_servlist (t_irc_server *server, t_irc_channel *channel,
                        char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     if (arguments)
@@ -1863,7 +1863,7 @@ irc_cmd_send_squery (t_irc_server *server, t_irc_channel *channel,
 {
     char *pos;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
 
     pos = strchr (arguments, ' ');
@@ -1891,7 +1891,7 @@ int
 irc_cmd_send_squit (t_irc_server *server, t_irc_channel *channel,
                     char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     server_sendf (server, "SQUIT %s", arguments);
@@ -1906,7 +1906,7 @@ int
 irc_cmd_send_stats (t_irc_server *server, t_irc_channel *channel,
                     char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     if (arguments)
@@ -1925,7 +1925,7 @@ int
 irc_cmd_send_summon (t_irc_server *server, t_irc_channel *channel,
                      char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     server_sendf (server, "SUMMON %s", arguments);
@@ -1940,7 +1940,7 @@ int
 irc_cmd_send_time (t_irc_server *server, t_irc_channel *channel,
                    char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     if (arguments)
@@ -2020,7 +2020,7 @@ int
 irc_cmd_send_trace (t_irc_server *server, t_irc_channel *channel,
                     char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     if (arguments)
@@ -2115,7 +2115,7 @@ int
 irc_cmd_send_userhost (t_irc_server *server, t_irc_channel *channel,
                        char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     server_sendf (server, "USERHOST %s", arguments);
@@ -2130,7 +2130,7 @@ int
 irc_cmd_send_users (t_irc_server *server, t_irc_channel *channel,
                     char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     if (arguments)
@@ -2215,7 +2215,7 @@ int
 irc_cmd_send_wallops (t_irc_server *server, t_irc_channel *channel,
                       char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     server_sendf (server, "WALLOPS :%s", arguments);
@@ -2230,7 +2230,7 @@ int
 irc_cmd_send_who (t_irc_server *server, t_irc_channel *channel,
                   char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     if (arguments)
@@ -2248,7 +2248,7 @@ int
 irc_cmd_send_whois (t_irc_server *server, t_irc_channel *channel,
                     char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     server_sendf (server, "WHOIS %s", arguments);
@@ -2263,7 +2263,7 @@ int
 irc_cmd_send_whowas (t_irc_server *server, t_irc_channel *channel,
                      char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) channel;
     
     server_sendf (server, "WHOWAS %s", arguments);

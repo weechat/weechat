@@ -854,5 +854,5 @@ main (int argc, char *argv[])
     gui_main_end ();                    /* shut down WeeChat GUI            */
     weechat_shutdown (EXIT_SUCCESS, 0); /* quit WeeChat (oh no, why?)       */
     
-    return EXIT_SUCCESS;                /* make gcc happy (never executed)  */
+    return EXIT_SUCCESS;                /* make C compiler happy            */
 }

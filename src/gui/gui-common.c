@@ -44,6 +44,10 @@
 #include "../common/util.h"
 #include "../irc/irc.h"
 
+#ifdef PLUGINS
+#include "../plugins/plugins.h"
+#endif
+
 
 int gui_init_ok = 0;                        /* = 1 if GUI is initialized    */
 int gui_ok = 0;                             /* = 1 if GUI is ok             */
@@ -603,9 +607,10 @@ gui_input_complete (t_gui_window *window)
                                                                 window->buffer->input_buffer_pos)] != ' ')
                     gui_insert_string_input (window, " ",
                                              window->buffer->input_buffer_pos);
+                else
+                    window->buffer->input_buffer_pos++;
                 if (window->buffer->completion.position >= 0)
                     window->buffer->completion.position++;
-                window->buffer->input_buffer_pos++;
             }
         }
         else
@@ -619,16 +624,18 @@ gui_input_complete (t_gui_window *window)
                              cfg_look_nick_completor, strlen (cfg_look_nick_completor)) != 0)
                     gui_insert_string_input (window, cfg_look_nick_completor,
                                              window->buffer->input_buffer_pos);
+                else
+                    window->buffer->input_buffer_pos += utf8_strlen (cfg_look_nick_completor);
                 if (window->buffer->completion.position >= 0)
                     window->buffer->completion.position += strlen (cfg_look_nick_completor);
-                window->buffer->input_buffer_pos += utf8_strlen (cfg_look_nick_completor);
                 if (window->buffer->input_buffer[utf8_real_pos (window->buffer->input_buffer,
                                                                 window->buffer->input_buffer_pos)] != ' ')
                     gui_insert_string_input (window, " ",
                                              window->buffer->input_buffer_pos);
+                else
+                    window->buffer->input_buffer_pos++;
                 if (window->buffer->completion.position >= 0)
                     window->buffer->completion.position++;
-                window->buffer->input_buffer_pos++;
             }
         }
         gui_input_draw (window->buffer, 0);
@@ -795,10 +802,19 @@ int
 gui_insert_string_input (t_gui_window *window, char *string, int pos)
 {
     int i, pos_start, size, length;
-    char *ptr_start;
+    char *ptr_start, *string2;
+#ifdef PLUGINS
+    char *buffer_before_insert;
+#endif
     
     if (window->buffer->has_input)
     {
+#ifdef PLUGINS
+        buffer_before_insert =
+            (window->buffer->input_buffer) ?
+            strdup (window->buffer->input_buffer) : strdup ("");
+#endif
+        
         if (pos == -1)
             pos = window->buffer->input_buffer_pos;
         
@@ -828,6 +844,23 @@ gui_insert_string_input (t_gui_window *window, char *string, int pos)
         {
             window->buffer->input_buffer_color_mask[pos_start + i] = ' ';
         }
+        
+        window->buffer->input_buffer_pos += length;
+        
+#ifdef PLUGINS
+        string2 = (char *) malloc (size + 2);
+        if (string2)
+        {
+            snprintf (string2, size + 2, "*%s", string);
+            (void) plugin_keyboard_handler_exec (string2,
+                                                 buffer_before_insert,
+                                                 window->buffer->input_buffer);
+            free (string2);
+        }
+        if (buffer_before_insert)
+            free (buffer_before_insert);
+#endif
+        
         return length;
     }
     return 0;

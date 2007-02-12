@@ -273,7 +273,7 @@ weechat_perl_timer_handler (t_weechat_plugin *plugin,
 {
     int *r, ret;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) argc;
     (void) argv;
     
@@ -375,7 +375,7 @@ static XS (XS_weechat_register)
     char *name, *version, *shutdown_func, *description, *charset;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) items;
     (void) cv;
 
@@ -436,7 +436,7 @@ static XS (XS_weechat_set_charset)
 {
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     
     if (!perl_current_script)
@@ -471,7 +471,7 @@ static XS (XS_weechat_print)
     char *message, *channel_name, *server_name;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
 
     if (!perl_current_script)
@@ -518,7 +518,7 @@ static XS (XS_weechat_print_server)
     char *message;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
 
     if (!perl_current_script)
@@ -553,7 +553,7 @@ static XS (XS_weechat_print_infobar)
 {
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     
     if (!perl_current_script)
@@ -587,7 +587,7 @@ static XS (XS_weechat_remove_infobar)
 {
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     
     if (!perl_current_script)
@@ -613,7 +613,7 @@ static XS (XS_weechat_log)
     char *message, *channel_name, *server_name;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
 
     if (!perl_current_script)
@@ -660,7 +660,7 @@ static XS (XS_weechat_command)
     char *channel_name, *server_name;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     
     if (!perl_current_script)
@@ -705,7 +705,7 @@ static XS (XS_weechat_add_message_handler)
     char *irc_command, *function;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     
     if (!perl_current_script)
@@ -745,7 +745,7 @@ static XS (XS_weechat_add_command_handler)
     char *completion_template;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     
     if (!perl_current_script)
@@ -795,7 +795,7 @@ static XS (XS_weechat_add_timer_handler)
     char *function;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     
     if (!perl_current_script)
@@ -834,7 +834,7 @@ static XS (XS_weechat_add_keyboard_handler)
     char *function;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     
     if (!perl_current_script)
@@ -873,7 +873,7 @@ static XS (XS_weechat_add_event_handler)
     char *event, *function;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     
     if (!perl_current_script)
@@ -912,7 +912,7 @@ static XS (XS_weechat_remove_handler)
     char *command, *function;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     
     if (!perl_current_script)
@@ -949,7 +949,7 @@ static XS (XS_weechat_remove_timer_handler)
     char *function;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     
     if (!perl_current_script)
@@ -985,7 +985,7 @@ static XS (XS_weechat_remove_keyboard_handler)
     char *function;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     
     if (!perl_current_script)
@@ -1021,7 +1021,7 @@ static XS (XS_weechat_remove_event_handler)
     char *function;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     
     if (!perl_current_script)
@@ -1057,7 +1057,7 @@ static XS (XS_weechat_add_modifier)
     char *type, *command, *function;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     
     if (!perl_current_script)
@@ -1097,7 +1097,7 @@ static XS (XS_weechat_remove_modifier)
     char *type, *command, *function;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     
     if (!perl_current_script)
@@ -1135,7 +1135,7 @@ static XS (XS_weechat_get_info)
     char *arg, *info, *server_name;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     
     if (!perl_current_script)
@@ -1187,7 +1187,7 @@ static XS (XS_weechat_get_dcc_info)
     HV *dcc_hash_member;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     (void) items;
     
@@ -1248,7 +1248,7 @@ static XS (XS_weechat_get_config)
     char *option, *return_value;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     
     if (!perl_current_script)
@@ -1294,7 +1294,7 @@ static XS (XS_weechat_set_config)
     char *option, *value;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     
     if (!perl_current_script)
@@ -1334,7 +1334,7 @@ static XS (XS_weechat_get_plugin_config)
     char *option, *return_value;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     
     if (!perl_current_script)
@@ -1382,7 +1382,7 @@ static XS (XS_weechat_set_plugin_config)
     char *option, *value;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     
     if (!perl_current_script)
@@ -1426,7 +1426,7 @@ static XS (XS_weechat_get_server_info)
     HV *server_hash, *server_hash_member;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     (void) items;
     
@@ -1503,7 +1503,7 @@ static XS (XS_weechat_get_channel_info)
     HV *channel_hash, *channel_hash_member;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     
     if (!perl_current_script)
@@ -1569,7 +1569,7 @@ static XS (XS_weechat_get_nick_info)
     HV *nick_hash;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     
     if (!perl_current_script)
@@ -1631,7 +1631,7 @@ static XS (XS_weechat_input_color)
     int color, start, length;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     
     if (!perl_current_script)
@@ -1669,7 +1669,7 @@ static XS (XS_weechat_get_irc_color)
     char *color;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     
     if (!perl_current_script)
@@ -1712,7 +1712,7 @@ static XS (XS_weechat_get_window_info)
     HV *window_hash_member;
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     (void) items;
     
@@ -1760,7 +1760,7 @@ static XS (XS_weechat_get_buffer_info)
     char conv[8];
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     (void) items;
     
@@ -1822,7 +1822,7 @@ static XS (XS_weechat_get_buffer_data)
     
     dXSARGS;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) cv;
     (void) items;
     
@@ -2162,7 +2162,7 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
     if (cmd_argc < 3)
         return PLUGIN_RC_KO;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) handler_args;
     (void) handler_pointer;
     

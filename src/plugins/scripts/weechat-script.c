@@ -653,7 +653,7 @@ weechat_script_set_charset (t_weechat_plugin *plugin,
                             t_plugin_script *script,
                             char *charset)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) plugin;
     
     if (script->charset)

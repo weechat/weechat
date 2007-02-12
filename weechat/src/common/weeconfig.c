@@ -2225,9 +2225,11 @@ config_create_default ()
         {
             function_name = gui_keyboard_function_search_by_ptr (ptr_key->function);
             if (function_name)
-                weechat_iconv_fprintf (file, "%s = \"%s\"\n",
+                weechat_iconv_fprintf (file, "%s = \"%s%s%s\"\n",
                                        (expanded_name) ? expanded_name : ptr_key->key,
-                                       function_name);
+                                       function_name,
+                                       (ptr_key->args) ? " " : "",
+                                       (ptr_key->args) ? ptr_key->args : "");
         }
         else
             weechat_iconv_fprintf (file, "%s = \"%s\"\n",
@@ -2441,9 +2443,11 @@ config_write (char *config_name)
         {
             function_name = gui_keyboard_function_search_by_ptr (ptr_key->function);
             if (function_name)
-                weechat_iconv_fprintf (file, "%s = \"%s\"\n",
+                weechat_iconv_fprintf (file, "%s = \"%s%s%s\"\n",
                                        (expanded_name) ? expanded_name : ptr_key->key,
-                                       function_name);
+                                       function_name,
+                                       (ptr_key->args) ? " " : "",
+                                       (ptr_key->args) ? ptr_key->args : "");
         }
         else
             weechat_iconv_fprintf (file, "%s = \"%s\"\n",

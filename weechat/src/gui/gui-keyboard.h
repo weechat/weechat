@@ -26,14 +26,16 @@
 
 /* key structures */
 
+typedef void (t_gui_key_func)(t_gui_window *, char *);
+
 typedef struct t_gui_key t_gui_key;
 
 struct t_gui_key
 {
     char *key;                      /* key combo (ex: a, ^W, ^W^C, meta-a)  */
     char *command;                  /* associated command (may be NULL)     */
-    void (*function)(t_gui_window *);
-                                    /* associated function (if cmd is NULL) */
+    t_gui_key_func *function;       /* associated function (if cmd is NULL) */
+    char *args;                     /* args for function (if cmd is NULL)   */
     t_gui_key *prev_key;            /* link to previous key                 */
     t_gui_key *next_key;            /* link to next key                     */
 };
@@ -43,7 +45,7 @@ typedef struct t_gui_key_function t_gui_key_function;
 struct t_gui_key_function
 {
     char *function_name;            /* name of function                     */
-    void (*function)();             /* associated function                  */
+    t_gui_key_func *function;       /* associated function                  */
     char *description;              /* description of function              */
 };
 

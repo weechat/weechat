@@ -323,7 +323,7 @@ irc_cmd_recv_error (t_irc_server *server, char *host, char *nick, char *argument
     t_gui_buffer *ptr_buffer;
     t_irc_channel *ptr_channel;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) server;
     (void) host;
     (void) nick;
@@ -1176,7 +1176,7 @@ irc_cmd_recv_ping (t_irc_server *server, char *host, char *nick, char *arguments
 {
     char *pos;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     pos = strrchr (arguments, ' ');
@@ -1196,7 +1196,7 @@ irc_cmd_recv_pong (t_irc_server *server, char *host, char *nick, char *arguments
     struct timeval tv;
     int old_lag;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     (void) arguments;
@@ -2130,7 +2130,7 @@ irc_cmd_recv_server_mode_reason (t_irc_server *server, char *host,
 {
     char *ptr_msg;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     
@@ -2170,7 +2170,7 @@ irc_cmd_recv_server_mode_reason (t_irc_server *server, char *host,
 int
 irc_cmd_recv_server_msg (t_irc_server *server, char *host, char *nick, char *arguments)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     
@@ -2204,7 +2204,7 @@ irc_cmd_recv_server_reply (t_irc_server *server, char *host, char *nick, char *a
     char *pos, *pos2;
     int first;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) server;
     (void) host;
     (void) nick;
@@ -2454,7 +2454,7 @@ irc_cmd_recv_221 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_mode;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) server;
     (void) host;
     (void) nick;
@@ -2504,7 +2504,7 @@ irc_cmd_recv_301 (t_irc_server *server, char *host, char *nick, char *arguments)
     t_irc_channel *ptr_channel;
     t_gui_buffer *ptr_buffer;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) server;
     (void) host;
     (void) nick;
@@ -2562,7 +2562,7 @@ irc_cmd_recv_302 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_host, *ptr_next;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     
@@ -2620,7 +2620,7 @@ irc_cmd_recv_303 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *ptr_next;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     
@@ -2668,7 +2668,7 @@ irc_cmd_recv_305 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     t_gui_window *ptr_window;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     
@@ -2705,7 +2705,7 @@ irc_cmd_recv_306 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     t_gui_window *ptr_window;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     
@@ -2745,7 +2745,7 @@ irc_cmd_recv_whois_nick_msg (t_irc_server *server, char *host, char *nick, char 
 {
     char *pos_nick, *pos_msg;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     
@@ -2789,7 +2789,7 @@ irc_cmd_recv_310 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_nick;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     
@@ -2822,7 +2822,7 @@ irc_cmd_recv_311 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_nick, *pos_user, *pos_host, *pos_realname;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     
@@ -2891,7 +2891,7 @@ irc_cmd_recv_312 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_nick, *pos_server, *pos_serverinfo;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     
@@ -2948,7 +2948,7 @@ irc_cmd_recv_314 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_nick, *pos_user, *pos_host, *pos_realname;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
 
@@ -3021,7 +3021,7 @@ irc_cmd_recv_315 (t_irc_server *server, char *host, char *nick, char *arguments)
     char *pos;
     t_irc_channel *ptr_channel;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     
@@ -3076,7 +3076,7 @@ irc_cmd_recv_317 (t_irc_server *server, char *host, char *nick, char *arguments)
     int idle_time, day, hour, min, sec;
     time_t datetime;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     
@@ -3161,7 +3161,7 @@ irc_cmd_recv_319 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_nick, *pos_channel, *pos;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     
@@ -3242,7 +3242,7 @@ irc_cmd_recv_321 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     
@@ -3274,7 +3274,7 @@ irc_cmd_recv_322 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     
@@ -3316,7 +3316,7 @@ irc_cmd_recv_323 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     
@@ -3349,7 +3349,7 @@ irc_cmd_recv_324 (t_irc_server *server, char *host, char *nick, char *arguments)
     char *pos_channel, *pos_modes, *pos;
     t_irc_channel *ptr_channel;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     
@@ -3417,7 +3417,7 @@ irc_cmd_recv_329 (t_irc_server *server, char *host, char *nick, char *arguments)
     t_irc_channel *ptr_channel;
     time_t datetime;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     
@@ -3485,7 +3485,7 @@ irc_cmd_recv_331 (t_irc_server *server, char *host, char *nick, char *arguments)
     char *pos_channel, *pos;
     t_irc_channel *ptr_channel;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) server;
     (void) nick;
     
@@ -3545,7 +3545,7 @@ irc_cmd_recv_332 (t_irc_server *server, char *host, char *nick, char *arguments)
     t_irc_channel *ptr_channel;
     t_gui_buffer *ptr_buffer;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     
@@ -3611,7 +3611,7 @@ irc_cmd_recv_333 (t_irc_server *server, char *host, char *nick, char *arguments)
     t_gui_buffer *ptr_buffer;
     time_t datetime;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     
@@ -3690,7 +3690,7 @@ irc_cmd_recv_338 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_nick, *pos_host, *pos_message;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     
@@ -3746,7 +3746,7 @@ irc_cmd_recv_341 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_nick, *pos_channel;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     
@@ -3810,7 +3810,7 @@ irc_cmd_recv_344 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_channel, *pos_host;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
 
@@ -3851,7 +3851,7 @@ irc_cmd_recv_345 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     
@@ -3901,7 +3901,7 @@ irc_cmd_recv_348 (t_irc_server *server, char *host, char *nick, char *arguments)
     t_gui_buffer *buffer;
     time_t datetime;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) nick;
     
     /* look for channel */
@@ -4016,7 +4016,7 @@ irc_cmd_recv_349 (t_irc_server *server, char *host, char *nick, char *arguments)
     t_irc_channel *ptr_channel;
     t_gui_buffer *buffer;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) nick;
     
     pos_channel = strchr (arguments, ' ');
@@ -4077,7 +4077,7 @@ irc_cmd_recv_351 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos, *pos2;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) server;
     (void) host;
     (void) nick;
@@ -4122,7 +4122,7 @@ irc_cmd_recv_352 (t_irc_server *server, char *host, char *nick, char *arguments)
     t_irc_channel *ptr_channel;
     t_irc_nick *ptr_nick;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) nick;
     
     pos_channel = strchr (arguments, ' ');
@@ -4247,7 +4247,7 @@ irc_cmd_recv_353 (t_irc_server *server, char *host, char *nick, char *arguments)
     t_irc_channel *ptr_channel;
     t_gui_buffer *ptr_buffer;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
         
@@ -4421,7 +4421,7 @@ irc_cmd_recv_366 (t_irc_server *server, char *host, char *nick, char *arguments)
     t_irc_nick *ptr_nick;
     int num_nicks, num_op, num_halfop, num_voice, num_normal;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) nick;
     
     pos = strchr (arguments, ' ');
@@ -4530,7 +4530,7 @@ irc_cmd_recv_367 (t_irc_server *server, char *host, char *nick, char *arguments)
     t_gui_buffer *buffer;
     time_t datetime;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) nick;
     
     /* look for channel */
@@ -4652,7 +4652,7 @@ irc_cmd_recv_368 (t_irc_server *server, char *host, char *nick, char *arguments)
     t_irc_channel *ptr_channel;
     t_gui_buffer *buffer;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) nick;
     
     pos_channel = strchr (arguments, ' ');
@@ -4713,7 +4713,7 @@ irc_cmd_recv_378 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos, *pos2;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     
@@ -4830,7 +4830,7 @@ irc_cmd_recv_438 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos, *pos2;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) server;
     (void) host;
     (void) nick;
@@ -4869,7 +4869,7 @@ irc_cmd_recv_671 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_nick, *pos_message;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) host;
     (void) nick;
     

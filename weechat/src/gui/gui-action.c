@@ -70,14 +70,16 @@ gui_action_clipboard_copy (char *buffer, int size)
  */
 
 void
-gui_action_clipboard_paste (t_gui_window *window)
+gui_action_clipboard_paste (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     if (window->buffer->has_input && gui_input_clipboard) 
     {
         gui_insert_string_input (window, gui_input_clipboard, -1);
-        window->buffer->input_buffer_pos += utf8_strlen (gui_input_clipboard);
-        gui_input_draw (window->buffer, 0);
         window->buffer->completion.position = -1;
+        gui_input_draw (window->buffer, 0);
     }
 }
 
@@ -86,9 +88,12 @@ gui_action_clipboard_paste (t_gui_window *window)
  */
 
 void
-gui_action_return (t_gui_window *window)
+gui_action_return (t_gui_window *window, char *args)
 {
     char *command;
+
+    /* make C compiler happy */
+    (void) args;
     
     if (window->buffer->has_input)
     {
@@ -123,8 +128,11 @@ gui_action_return (t_gui_window *window)
  */
 
 void
-gui_action_tab (t_gui_window *window)
+gui_action_tab (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     if (window->buffer->has_input)
     {
         completion_search (&(window->buffer->completion), 1,
@@ -141,8 +149,11 @@ gui_action_tab (t_gui_window *window)
  */
 
 void
-gui_action_tab_previous (t_gui_window *window)
+gui_action_tab_previous (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     if (window->buffer->has_input)
     {
         completion_search (&(window->buffer->completion), -1,
@@ -159,11 +170,14 @@ gui_action_tab_previous (t_gui_window *window)
  */
 
 void
-gui_action_backspace (t_gui_window *window)
+gui_action_backspace (t_gui_window *window, char *args)
 {
     char *pos, *pos_last;
     int char_size, size_to_move;
-
+    
+    /* make C compiler happy */
+    (void) args;
+    
     if (window->buffer->has_input)
     {
         if (window->buffer->input_buffer_pos > 0)
@@ -191,10 +205,13 @@ gui_action_backspace (t_gui_window *window)
  */
 
 void
-gui_action_delete (t_gui_window *window)
+gui_action_delete (t_gui_window *window, char *args)
 {
     char *pos, *pos_next;
     int char_size, size_to_move;
+
+    /* make C compiler happy */
+    (void) args;
     
     if (window->buffer->has_input)
     {
@@ -223,10 +240,13 @@ gui_action_delete (t_gui_window *window)
  */
 
 void
-gui_action_delete_previous_word (t_gui_window *window)
+gui_action_delete_previous_word (t_gui_window *window, char *args)
 {
     int length_deleted, size_deleted;
     char *start, *string;
+    
+    /* make C compiler happy */
+    (void) args;
     
     if (window->buffer->has_input)
     {
@@ -283,10 +303,13 @@ gui_action_delete_previous_word (t_gui_window *window)
  */
 
 void
-gui_action_delete_next_word (t_gui_window *window)
+gui_action_delete_next_word (t_gui_window *window, char *args)
 {
     int size_deleted, length_deleted;
     char *start, *string;
+    
+    /* make C compiler happy */
+    (void) args;
     
     if (window->buffer->has_input)
     {
@@ -322,10 +345,13 @@ gui_action_delete_next_word (t_gui_window *window)
  */
 
 void
-gui_action_delete_begin_of_line (t_gui_window *window)
+gui_action_delete_begin_of_line (t_gui_window *window, char *args)
 {
     int length_deleted, size_deleted, pos_start;
     char *start;
+
+    /* make C compiler happy */
+    (void) args;
     
     if (window->buffer->has_input)
     {
@@ -358,10 +384,13 @@ gui_action_delete_begin_of_line (t_gui_window *window)
  */
 
 void
-gui_action_delete_end_of_line (t_gui_window *window)
+gui_action_delete_end_of_line (t_gui_window *window, char *args)
 {
     char *start;
     int size_deleted, length_deleted, pos_start;
+
+    /* make C compiler happy */
+    (void) args;
     
     if (window->buffer->has_input)
     {
@@ -386,8 +415,11 @@ gui_action_delete_end_of_line (t_gui_window *window)
  */
 
 void
-gui_action_delete_line (t_gui_window *window)
+gui_action_delete_line (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     if (window->buffer->has_input)
     {
         window->buffer->input_buffer[0] = '\0';
@@ -406,8 +438,11 @@ gui_action_delete_line (t_gui_window *window)
  */
 
 void
-gui_action_transpose_chars (t_gui_window *window)
+gui_action_transpose_chars (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     char *start, *prev_char, saved_char[5];
     int size_prev_char, size_start_char;
     int pos_prev_char, pos_start;
@@ -452,8 +487,11 @@ gui_action_transpose_chars (t_gui_window *window)
  */
 
 void
-gui_action_home (t_gui_window *window)
+gui_action_home (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     if (window->buffer->has_input)
     {
         if (window->buffer->input_buffer_pos > 0)
@@ -469,8 +507,11 @@ gui_action_home (t_gui_window *window)
  */
 
 void
-gui_action_end (t_gui_window *window)
+gui_action_end (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     if (window->buffer->has_input)
     {
         if (window->buffer->input_buffer_pos <
@@ -488,8 +529,11 @@ gui_action_end (t_gui_window *window)
  */
 
 void
-gui_action_left (t_gui_window *window)
+gui_action_left (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     if (window->buffer->has_input)
     {
         if (window->buffer->input_buffer_pos > 0)
@@ -505,9 +549,12 @@ gui_action_left (t_gui_window *window)
  */
 
 void
-gui_action_previous_word (t_gui_window *window)
+gui_action_previous_word (t_gui_window *window, char *args)
 {
     char *pos;
+    
+    /* make C compiler happy */
+    (void) args;
     
     if (window->buffer->has_input)
     {
@@ -545,8 +592,11 @@ gui_action_previous_word (t_gui_window *window)
  */
 
 void
-gui_action_right (t_gui_window *window)
+gui_action_right (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     if (window->buffer->has_input)
     {
         if (window->buffer->input_buffer_pos <
@@ -563,9 +613,12 @@ gui_action_right (t_gui_window *window)
  */
 
 void
-gui_action_next_word (t_gui_window *window)
+gui_action_next_word (t_gui_window *window, char *args)
 {
     char *pos;
+    
+    /* make C compiler happy */
+    (void) args;
     
     if (window->buffer->has_input)
     {
@@ -607,8 +660,11 @@ gui_action_next_word (t_gui_window *window)
  */
 
 void
-gui_action_up (t_gui_window *window)
+gui_action_up (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     if (window->buffer->type == BUFFER_TYPE_DCC)
     {
         if (dcc_list)
@@ -685,8 +741,11 @@ gui_action_up (t_gui_window *window)
  */
 
 void
-gui_action_up_global (t_gui_window *window)
+gui_action_up_global (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     if (window->buffer->has_input)
     {
         if (history_global_ptr)
@@ -720,8 +779,11 @@ gui_action_up_global (t_gui_window *window)
  */
 
 void
-gui_action_down (t_gui_window *window)
+gui_action_down (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     if (window->buffer->type == BUFFER_TYPE_DCC)
     {
         if (dcc_list)
@@ -789,8 +851,11 @@ gui_action_down (t_gui_window *window)
  */
 
 void
-gui_action_down_global (t_gui_window *window)
+gui_action_down_global (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     if (window->buffer->has_input)
     {
         if (history_global_ptr)
@@ -828,8 +893,11 @@ gui_action_down_global (t_gui_window *window)
  */
 
 void
-gui_action_page_up (t_gui_window *window)
+gui_action_page_up (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     gui_window_page_up (window);
 }
 
@@ -838,8 +906,11 @@ gui_action_page_up (t_gui_window *window)
  */
 
 void
-gui_action_page_down (t_gui_window *window)
+gui_action_page_down (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     gui_window_page_down (window);
 }
 
@@ -848,8 +919,11 @@ gui_action_page_down (t_gui_window *window)
  */
 
 void
-gui_action_scroll_up (t_gui_window *window)
+gui_action_scroll_up (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     gui_window_scroll_up (window);
 }
 
@@ -858,8 +932,11 @@ gui_action_scroll_up (t_gui_window *window)
  */
 
 void
-gui_action_scroll_down (t_gui_window *window)
+gui_action_scroll_down (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     gui_window_scroll_down (window);
 }
 
@@ -868,8 +945,11 @@ gui_action_scroll_down (t_gui_window *window)
  */
 
 void
-gui_action_scroll_top (t_gui_window *window)
+gui_action_scroll_top (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     gui_window_scroll_top (window);
 }
 
@@ -878,8 +958,11 @@ gui_action_scroll_top (t_gui_window *window)
  */
 
 void
-gui_action_scroll_bottom (t_gui_window *window)
+gui_action_scroll_bottom (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     gui_window_scroll_bottom (window);
 }
 
@@ -888,8 +971,11 @@ gui_action_scroll_bottom (t_gui_window *window)
  */
 
 void
-gui_action_scroll_topic_left (t_gui_window *window)
+gui_action_scroll_topic_left (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     gui_window_scroll_topic_left (window);
 }
 
@@ -898,8 +984,11 @@ gui_action_scroll_topic_left (t_gui_window *window)
  */
 
 void
-gui_action_scroll_topic_right (t_gui_window *window)
+gui_action_scroll_topic_right (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     gui_window_scroll_topic_right (window);
 }
 
@@ -908,8 +997,11 @@ gui_action_scroll_topic_right (t_gui_window *window)
  */
 
 void
-gui_action_nick_beginning (t_gui_window *window)
+gui_action_nick_beginning (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     gui_window_nick_beginning (window);
 }
 
@@ -918,8 +1010,11 @@ gui_action_nick_beginning (t_gui_window *window)
  */
 
 void
-gui_action_nick_end (t_gui_window *window)
+gui_action_nick_end (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     gui_window_nick_end (window);
 }
 
@@ -928,8 +1023,11 @@ gui_action_nick_end (t_gui_window *window)
  */
 
 void
-gui_action_nick_page_up (t_gui_window *window)
+gui_action_nick_page_up (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     gui_window_nick_page_up (window);
 }
 
@@ -938,8 +1036,11 @@ gui_action_nick_page_up (t_gui_window *window)
  */
 
 void
-gui_action_nick_page_down (t_gui_window *window)
+gui_action_nick_page_down (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     gui_window_nick_page_down (window);
 }
 
@@ -948,8 +1049,11 @@ gui_action_nick_page_down (t_gui_window *window)
  */
 
 void
-gui_action_jump_smart (t_gui_window *window)
+gui_action_jump_smart (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     if (hotlist)
     {
         if (!hotlist_initial_buffer)
@@ -973,8 +1077,11 @@ gui_action_jump_smart (t_gui_window *window)
  */
 
 void
-gui_action_jump_dcc (t_gui_window *window)
+gui_action_jump_dcc (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     if (window->buffer->type == BUFFER_TYPE_DCC)
     {
         if (gui_buffer_before_dcc)
@@ -996,8 +1103,11 @@ gui_action_jump_dcc (t_gui_window *window)
  */
 
 void
-gui_action_jump_raw_data (t_gui_window *window)
+gui_action_jump_raw_data (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     if (window->buffer->type == BUFFER_TYPE_RAW_DATA)
     {
         if (gui_buffer_before_raw_data)
@@ -1019,8 +1129,11 @@ gui_action_jump_raw_data (t_gui_window *window)
  */
 
 void
-gui_action_jump_last_buffer (t_gui_window *window)
+gui_action_jump_last_buffer (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     if (last_gui_buffer)
         gui_buffer_switch_by_number (window, last_gui_buffer->number);
 }
@@ -1030,8 +1143,11 @@ gui_action_jump_last_buffer (t_gui_window *window)
  */
 
 void
-gui_action_jump_server (t_gui_window *window)
+gui_action_jump_server (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     if (SERVER(window->buffer))
     {
         if (SERVER(window->buffer)->buffer !=
@@ -1049,10 +1165,13 @@ gui_action_jump_server (t_gui_window *window)
  */
 
 void
-gui_action_jump_next_server (t_gui_window *window)
+gui_action_jump_next_server (t_gui_window *window, char *args)
 {
     t_irc_server *ptr_server;
     t_gui_buffer *ptr_buffer;
+    
+    /* make C compiler happy */
+    (void) args;
     
     if (SERVER(window->buffer))
     {
@@ -1092,8 +1211,11 @@ gui_action_jump_next_server (t_gui_window *window)
  */
 
 void
-gui_action_switch_server (t_gui_window *window)
+gui_action_switch_server (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     gui_window_switch_server (window);
 }
 
@@ -1102,9 +1224,12 @@ gui_action_switch_server (t_gui_window *window)
  */
 
 void
-gui_action_scroll_previous_highlight (t_gui_window *window)
+gui_action_scroll_previous_highlight (t_gui_window *window, char *args)
 {
     t_gui_line *ptr_line;
+    
+    /* make C compiler happy */
+    (void) args;
     
     if (window->buffer->type == BUFFER_TYPE_STANDARD)
     {
@@ -1135,9 +1260,12 @@ gui_action_scroll_previous_highlight (t_gui_window *window)
  */
 
 void
-gui_action_scroll_next_highlight (t_gui_window *window)
+gui_action_scroll_next_highlight (t_gui_window *window, char *args)
 {
     t_gui_line *ptr_line;
+    
+    /* make C compiler happy */
+    (void) args;
     
     if (window->buffer->type == BUFFER_TYPE_STANDARD)
     {
@@ -1168,8 +1296,11 @@ gui_action_scroll_next_highlight (t_gui_window *window)
  */
 
 void
-gui_action_scroll_unread (t_gui_window *window)
+gui_action_scroll_unread (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     if (cfg_look_read_marker &&
         cfg_look_read_marker[0] &&
         (window->buffer->type == BUFFER_TYPE_STANDARD) &&
@@ -1190,8 +1321,11 @@ gui_action_scroll_unread (t_gui_window *window)
  */
 
 void
-gui_action_hotlist_clear (t_gui_window *window)
+gui_action_hotlist_clear (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     if (hotlist)
     {
         hotlist_free_all ();
@@ -1205,8 +1339,11 @@ gui_action_hotlist_clear (t_gui_window *window)
  */
 
 void
-gui_action_infobar_clear (t_gui_window *window)
+gui_action_infobar_clear (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     gui_infobar_remove ();
     gui_infobar_draw (window->buffer, 1);
 }
@@ -1216,10 +1353,11 @@ gui_action_infobar_clear (t_gui_window *window)
  */
 
 void
-gui_action_refresh_screen (t_gui_window *window)
+gui_action_refresh_screen (t_gui_window *window, char *args)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) window;
+    (void) args;
     
     gui_window_refresh_screen (1);
 }
@@ -1229,8 +1367,25 @@ gui_action_refresh_screen (t_gui_window *window)
  */
 
 void
-gui_action_grab_key (t_gui_window *window)
+gui_action_grab_key (t_gui_window *window, char *args)
 {
+    /* make C compiler happy */
+    (void) args;
+    
     if (window->buffer->has_input)
         gui_keyboard_init_grab ();
+}
+
+/*
+ * gui_action_insert_string: insert a string in command line
+ */
+
+void
+gui_action_insert_string (t_gui_window *window, char *args)
+{
+    if (args)
+    {
+        gui_insert_string_input (window, args, -1);
+        gui_input_draw (window->buffer, 0);
+    }
 }

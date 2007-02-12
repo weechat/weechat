@@ -119,14 +119,15 @@ t_weechat_command weechat_commands[] =
     "*|%n *|action|ctcp|dcc|pv|%I *|%c *|%s",
     0, 4, 0, weechat_cmd_ignore, NULL },
   { "key", N_("bind/unbind keys"),
-    N_("[key [function/command]] [unbind key] [functions] [reset -yes]"),
+    N_("[key [function/command]] [unbind key] [functions] [call function [\"args\"]] [reset -yes]"),
     N_("      key: display or bind this key to an internal function or a command "
        "(beginning by \"/\")\n"
        "   unbind: unbind a key\n"
        "functions: list internal functions for key bindings\n"
+       "     call: call a function by name (with optional arguments)\n"
        "    reset: restore bindings to the default values and delete ALL "
        "personal bindings (use carefully!)"),
-    "unbind|functions|reset %k", 0, MAX_ARGS, 0, NULL, weechat_cmd_key },
+    "unbind|functions|call|reset %k", 0, MAX_ARGS, 0, NULL, weechat_cmd_key },
 /*  { "panel", N_("manage panels"),
     N_("[list | add type position size | resize # size | close # | move #1 #2]"),
     N_("   list: list open panels (no parameter implies this list)\n"
@@ -856,7 +857,7 @@ weechat_cmd_alias (t_irc_server *server, t_irc_channel *channel,
     char *pos;
     t_weechat_alias *ptr_alias;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) server;
     (void) channel;
     
@@ -1641,7 +1642,7 @@ weechat_cmd_debug (t_irc_server *server, t_irc_channel *channel,
 {
     t_irc_server *ptr_server;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) server;
     (void) channel;
     
@@ -1748,7 +1749,7 @@ weechat_cmd_help (t_irc_server *server, t_irc_channel *channel,
     t_plugin_handler *ptr_handler;
 #endif
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) server;
     (void) channel;
     
@@ -2071,11 +2072,14 @@ weechat_cmd_key_display (t_gui_key *key, int new_key)
     }
     else
         gui_printf (NULL, "  %20s", (expanded_name) ? expanded_name : key->key);
-    gui_printf (NULL, "%s => %s%s\n",
+    gui_printf (NULL, "%s => %s%s%s%s%s\n",
                 GUI_COLOR(COLOR_WIN_CHAT_DARK),
                 GUI_COLOR(COLOR_WIN_CHAT),
                 (key->function) ?
-                gui_keyboard_function_search_by_ptr (key->function) : key->command);
+                gui_keyboard_function_search_by_ptr (key->function) : key->command,
+                (key->args) ? " \"" : "",
+                (key->args) ? key->args : "",
+                (key->args) ? "\"" : "");
     if (expanded_name)
         free (expanded_name);
 }
@@ -2088,13 +2092,14 @@ int
 weechat_cmd_key (t_irc_server *server, t_irc_channel *channel,
                  char *arguments)
 {
-    char *pos, *internal_code;
-    int i;
+    t_gui_window *window;
+    t_gui_buffer *buffer;
+    char *pos, *pos_args, *args_tmp, *internal_code;
+    int i, length;
     t_gui_key *ptr_key;
+    void (*ptr_function)(t_gui_window *, char *);
     
-    /* make gcc happy */
-    (void) server;
-    (void) channel;
+    irc_find_context (server, channel, &window, &buffer);
     
     if (arguments)
     {
@@ -2143,6 +2148,50 @@ weechat_cmd_key (t_irc_server *server, t_irc_channel *channel,
             i++;
         }
     }
+    else if (ascii_strncasecmp (arguments, "call ", 5) == 0)
+    {
+        arguments += 5;
+        while (arguments[0] == ' ')
+            arguments++;
+        pos = strchr (arguments, ' ');
+        if (pos)
+            pos[0] = '\0';
+        ptr_function = gui_keyboard_function_search_by_name (arguments);
+        if (pos)
+            pos[0] = ' ';
+        if (ptr_function)
+        {
+            pos_args = pos;
+            args_tmp = NULL;
+            if (pos_args)
+            {
+                pos_args++;
+                while (pos_args[0] == ' ')
+                    pos_args++;
+                if (pos_args[0] == '"')
+                {
+                    length = strlen (pos_args);
+                    if ((length > 1) && (pos_args[length - 1] == '"'))
+                        args_tmp = strndup (pos_args + 1, length - 2);
+                    else
+                        args_tmp = strdup (pos_args);
+                }
+                else
+                    args_tmp = strdup (pos_args);
+            }
+            (void)(*ptr_function)(window, args_tmp);
+            if (args_tmp)
+                free (args_tmp);
+        }
+        else
+        {
+            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+            gui_printf (NULL,
+                        _("%s unknown key function \"%s\"\n"),
+                        WEECHAT_ERROR, arguments);
+            return -1;
+        }
+    }
     else if (ascii_strncasecmp (arguments, "reset", 5) == 0)
     {
         arguments += 5;
@@ -2159,7 +2208,7 @@ weechat_cmd_key (t_irc_server *server, t_irc_channel *channel,
         {
             irc_display_prefix (NULL, NULL, PREFIX_ERROR);
             gui_printf (NULL,
-                        _("%s \"-yes\" argument is required for keys reset (securuty reason)\n"),
+                        _("%s \"-yes\" argument is required for keys reset (security reason)\n"),
                         WEECHAT_ERROR);
             return -1;
         }
@@ -2260,7 +2309,7 @@ weechat_cmd_panel (t_irc_server *server, t_irc_channel *channel,
 {
     t_gui_panel *ptr_panel;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) server;
     (void) channel;
 
@@ -2456,7 +2505,7 @@ weechat_cmd_plugin_list (char *name, int full)
             gui_printf (NULL, _("  (no plugin)\n"));
     }
 #else
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) name;
     (void) full;
 #endif
@@ -2471,7 +2520,7 @@ weechat_cmd_plugin (t_irc_server *server, t_irc_channel *channel,
                     int argc, char **argv)
 {
 #ifdef PLUGINS
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) server;
     (void) channel;
     
@@ -2526,7 +2575,7 @@ weechat_cmd_plugin (t_irc_server *server, t_irc_channel *channel,
                 _("Command \"%s\" is not available, WeeChat was built "
                   "without plugins support.\n"),
                 "plugin");
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) server;
     (void) channel;
     (void) argc;
@@ -2544,7 +2593,7 @@ int
 weechat_cmd_save (t_irc_server *server, t_irc_channel *channel,
                   int argc, char **argv)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) server;
     (void) channel;
     
@@ -2954,7 +3003,7 @@ weechat_cmd_set (t_irc_server *server, t_irc_channel *channel,
     void *ptr_option_value;
     int last_section, last_option, number_found;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) server;
     (void) channel;
     
@@ -3272,7 +3321,7 @@ weechat_cmd_setp (t_irc_server *server, t_irc_channel *channel,
     t_plugin_option *ptr_option;
     int number_found;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) server;
     (void) channel;
     
@@ -3409,7 +3458,7 @@ weechat_cmd_setp (t_irc_server *server, t_irc_channel *channel,
         }
     }
 #else
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) server;
     (void) channel;
     (void) arguments;
@@ -3435,7 +3484,7 @@ weechat_cmd_unalias (t_irc_server *server, t_irc_channel *channel,
     t_weelist *ptr_weelist;
     t_weechat_alias *ptr_alias;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) server;
     (void) channel;
     
@@ -3544,7 +3593,7 @@ weechat_cmd_upgrade (t_irc_server *server, t_irc_channel *channel,
     char *filename;
     char *exec_args[7] = { NULL, "-a", "--dir", NULL, "--session", NULL, NULL };
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) server;
     (void) channel;
     (void) argc;

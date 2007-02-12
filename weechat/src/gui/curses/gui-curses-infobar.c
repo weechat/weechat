@@ -46,7 +46,7 @@ gui_infobar_draw_time (t_gui_buffer *buffer)
     time_t time_seconds;
     struct tm *local_time;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) buffer;
     
     if (!gui_ok)
@@ -84,7 +84,7 @@ gui_infobar_draw (t_gui_buffer *buffer, int erase)
     struct tm *local_time;
     char text_time[1024 + 1], *buf;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) buffer;
     
     if (!gui_ok)

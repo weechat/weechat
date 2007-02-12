@@ -47,7 +47,7 @@ gui_status_draw (t_gui_buffer *buffer, int erase)
     int i, first_mode, x, server_pos, server_total;
     int display_name, names_count;*/
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) buffer;
     
     if (!gui_ok)

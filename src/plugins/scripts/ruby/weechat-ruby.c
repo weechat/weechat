@@ -118,7 +118,7 @@ weechat_ruby_exec (t_weechat_plugin *plugin,
     VALUE rc, err;
     int ruby_error, *ret_i;
     void *ret_value;
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) plugin;
     
     ruby_current_script = script;
@@ -232,7 +232,7 @@ weechat_ruby_timer_handler (t_weechat_plugin *plugin,
                             int argc, char **argv,
                             char *handler_args, void *handler_pointer)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) argc;
     (void) argv;
     int *r;
@@ -338,7 +338,7 @@ weechat_ruby_register (int argc, VALUE *argv, VALUE class)
     VALUE name, version, shutdown_func, description, charset;
     char *c_name, *c_version, *c_shutdown_func, *c_description, *c_charset;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
 
     ruby_current_script = NULL;
@@ -420,7 +420,7 @@ weechat_ruby_set_charset (VALUE class, VALUE charset)
 {
     char *c_charset;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -462,7 +462,7 @@ weechat_ruby_print (int argc, VALUE *argv, VALUE class)
     VALUE message, channel_name, server_name;
     char *c_message, *c_channel_name, *c_server_name;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -521,7 +521,7 @@ weechat_ruby_print_server (VALUE class, VALUE message)
 {
     char *c_message;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -560,7 +560,7 @@ weechat_ruby_print_infobar (VALUE class, VALUE delay, VALUE message)
     int c_delay;
     char *c_message;
 
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -603,7 +603,7 @@ weechat_ruby_remove_infobar (int argc, VALUE *argv, VALUE class)
     VALUE how_many;
     int c_how_many;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -641,7 +641,7 @@ weechat_ruby_log (int argc, VALUE *argv, VALUE class)
     VALUE message, channel_name, server_name;
     char *c_message, *c_channel_name, *c_server_name;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -701,7 +701,7 @@ weechat_ruby_command (int argc, VALUE *argv, VALUE class)
     VALUE command, channel_name, server_name;
     char *c_command, *c_channel_name, *c_server_name;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -760,7 +760,7 @@ weechat_ruby_add_message_handler (VALUE class, VALUE message, VALUE function)
 {
     char *c_message, *c_function;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -809,7 +809,7 @@ weechat_ruby_add_command_handler (int argc, VALUE *argv, VALUE class)
     char *c_command, *c_function, *c_description, *c_arguments, *c_arguments_description;
     char *c_completion_template;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -897,7 +897,7 @@ weechat_ruby_add_timer_handler (VALUE class, VALUE interval, VALUE function)
     int c_interval;
     char *c_function;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -943,7 +943,7 @@ weechat_ruby_add_keyboard_handler (VALUE class, VALUE function)
 {
     char *c_function;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -986,7 +986,7 @@ weechat_ruby_add_event_handler (VALUE class, VALUE event, VALUE function)
 {
     char *c_event, *c_function;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -1032,7 +1032,7 @@ weechat_ruby_remove_handler (VALUE class, VALUE command, VALUE function)
 {
     char *c_command, *c_function;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -1075,7 +1075,7 @@ weechat_ruby_remove_timer_handler (VALUE class, VALUE function)
 {
     char *c_function;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -1115,7 +1115,7 @@ weechat_ruby_remove_keyboard_handler (VALUE class, VALUE function)
 {
     char *c_function;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -1155,7 +1155,7 @@ weechat_ruby_remove_event_handler (VALUE class, VALUE function)
 {
     char *c_function;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -1195,7 +1195,7 @@ weechat_ruby_add_modifier (VALUE class, VALUE type, VALUE message, VALUE functio
 {
     char *c_type, *c_message, *c_function;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -1244,7 +1244,7 @@ weechat_ruby_remove_modifier (VALUE class, VALUE type, VALUE command, VALUE func
 {
     char *c_type, *c_command, *c_function;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -1291,7 +1291,7 @@ weechat_ruby_get_info (int argc, VALUE *argv, VALUE class)
     char *c_arg, *c_server_name, *info;
     VALUE arg, server_name, return_value;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -1354,7 +1354,7 @@ weechat_ruby_get_dcc_info (VALUE class)
     char timebuffer2[64];
     struct in_addr in;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -1438,7 +1438,7 @@ weechat_ruby_get_config (VALUE class, VALUE option)
     char *c_option, *return_value;
     VALUE ruby_return_value;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -1486,7 +1486,7 @@ weechat_ruby_set_config (VALUE class, VALUE option, VALUE value)
 {
     char *c_option, *c_value;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -1533,7 +1533,7 @@ weechat_ruby_get_plugin_config (VALUE class, VALUE option)
     char *c_option, *return_value;
     VALUE ruby_return_value;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -1583,7 +1583,7 @@ weechat_ruby_set_plugin_config (VALUE class, VALUE option, VALUE value)
 {
     char *c_option, *c_value;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -1633,7 +1633,7 @@ weechat_ruby_get_server_info (VALUE class)
     VALUE server_hash, server_hash_member;
     char timebuffer[64];
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -1732,7 +1732,7 @@ weechat_ruby_get_channel_info (VALUE class, VALUE server)
     VALUE channel_hash, channel_hash_member;
     char *c_server;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
         
     if (!ruby_current_script)
@@ -1805,7 +1805,7 @@ weechat_ruby_get_nick_info (VALUE class, VALUE server, VALUE channel)
     VALUE nick_hash, nick_hash_member;
     char *c_server, *c_channel;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
 
     if (!ruby_current_script)
@@ -1873,7 +1873,7 @@ weechat_ruby_get_irc_color (VALUE class, VALUE color)
 {
     char *c_color;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -1911,7 +1911,7 @@ weechat_ruby_get_window_info (VALUE class)
     t_plugin_window_info *window_info, *ptr_window;
     VALUE window_list, window_list_member;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -1971,7 +1971,7 @@ weechat_ruby_get_buffer_info (VALUE class)
     t_plugin_buffer_info *buffer_info, *ptr_buffer;
     VALUE buffer_hash, buffer_hash_member;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -2031,7 +2031,7 @@ weechat_ruby_get_buffer_data (int argc, VALUE *argv, VALUE class)
     char *c_server, *c_channel;
     char timebuffer[64];
 
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) class;
     
     if (!ruby_current_script)
@@ -2102,7 +2102,8 @@ static VALUE
 weechat_ruby_output(VALUE self, VALUE str)
 {
     char *msg, *p, *m;
-    /* make gcc happy */
+    
+    /* make C compiler happy */
     (void) self;
     
     msg = strdup(STR2CSTR(str));
@@ -2143,7 +2144,7 @@ weechat_ruby_output(VALUE self, VALUE str)
 static VALUE 
 weechat_ruby_output_flush(VALUE self)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     
     return Qnil;
@@ -2341,7 +2342,7 @@ weechat_ruby_cmd (t_weechat_plugin *plugin,
     t_plugin_handler *ptr_handler;
     t_plugin_modifier *ptr_modifier;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) handler_args;
     (void) handler_pointer;
     

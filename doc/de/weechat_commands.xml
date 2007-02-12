@@ -109,14 +109,15 @@ Bei jedem Argument steht '*' für 'alle'.
 Ohne Argumente listet /ignore alle definierten /ignore-Regeln auf.
 
 </programlisting>
-<command>key  [Taste [Funktion/Befehl]] [unbind Taste] [functions] [reset -yes]</command>
+<command>key  [key [function/command]] [unbind key] [functions] [call function ["args"]] [reset -yes]</command>
 <programlisting>
 belegen/freigeben von Tasten
 
-      Taste: diese Taste mit einer internen Funktion oder einem Befehl, beginnend mit "/", belegen
-   unbind: Tastenbelegung aufheben
-functions: interne Funktionen für Tastenbelegungen auflisten
-    reset: Standardbelegung wiederherstellen und entferne ALLE eigenen Belegungen (Vorsicht!)
+      key: display or bind this key to an internal function or a command (beginning by "/")
+   unbind: unbind a key
+functions: list internal functions for key bindings
+     call: call a function by name (with optional arguments)
+    reset: restore bindings to the default values and delete ALL personal bindings (use carefully!)
 
 </programlisting>
 <command>plugin  [list [Name]] | [listfull [Name]] | [load Dateiname] | [autoload] | [reload [Name]] | [unload [Name]]</command>

@@ -1258,7 +1258,7 @@ plugin_auto_load_file (t_weechat_plugin *plugin, char *filename)
 {
     char *pos;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) plugin;
     
     if (cfg_plugins_extension && cfg_plugins_extension[0])

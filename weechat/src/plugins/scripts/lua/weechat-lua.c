@@ -151,7 +151,7 @@ weechat_lua_timer_handler (t_weechat_plugin *plugin,
                            int argc, char **argv,
                            char *handler_args, void *handler_pointer)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) argc;
     (void) argv;
     int *r;
@@ -257,7 +257,7 @@ weechat_lua_register (lua_State *L)
     const char *name, *version, *shutdown_func, *description, *charset;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
 
     lua_current_script = NULL;
@@ -345,7 +345,7 @@ weechat_lua_set_charset (lua_State *L)
     const char *charset;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
      
     if (!lua_current_script)
@@ -390,7 +390,7 @@ weechat_lua_print (lua_State *L)
     const char *message, *channel_name, *server_name;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
     
     if (!lua_current_script)
@@ -449,7 +449,7 @@ weechat_lua_print_server (lua_State *L)
     const char *message;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
     
     if (!lua_current_script)
@@ -492,7 +492,7 @@ weechat_lua_print_infobar (lua_State *L)
     const char *message;
     int delay, n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
     
     if (!lua_current_script)
@@ -536,7 +536,7 @@ weechat_lua_remove_infobar (lua_State *L)
 {
     int n, how_many;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
     
     if (!lua_current_script)
@@ -571,7 +571,7 @@ weechat_lua_log (lua_State *L)
     const char *message, *channel_name, *server_name;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
     
     if (!lua_current_script)
@@ -630,7 +630,7 @@ weechat_lua_command (lua_State *L)
     const char *command, *channel_name, *server_name;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
      
     if (!lua_current_script)
@@ -689,7 +689,7 @@ weechat_lua_add_message_handler (lua_State *L)
     const char *irc_command, *function;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
     
     if (!lua_current_script)
@@ -742,7 +742,7 @@ weechat_lua_add_command_handler (lua_State *L)
     const char *completion_template;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
         
     if (!lua_current_script)
@@ -814,7 +814,7 @@ weechat_lua_add_timer_handler (lua_State *L)
     const char *function;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
     
     if (!lua_current_script)
@@ -866,7 +866,7 @@ weechat_lua_add_keyboard_handler (lua_State *L)
     const char *function;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
     
     if (!lua_current_script)
@@ -916,7 +916,7 @@ weechat_lua_add_event_handler (lua_State *L)
     const char *event, *function;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
     
     if (!lua_current_script)
@@ -968,7 +968,7 @@ weechat_lua_remove_handler (lua_State *L)
     const char *command, *function;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
      
     if (!lua_current_script)
@@ -1014,7 +1014,7 @@ weechat_lua_remove_timer_handler (lua_State *L)
     const char *function;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
      
     if (!lua_current_script)
@@ -1058,7 +1058,7 @@ weechat_lua_remove_keyboard_handler (lua_State *L)
     const char *function;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
      
     if (!lua_current_script)
@@ -1102,7 +1102,7 @@ weechat_lua_remove_event_handler (lua_State *L)
     const char *function;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
      
     if (!lua_current_script)
@@ -1146,7 +1146,7 @@ weechat_lua_add_modifier (lua_State *L)
     const char *type, *command, *function;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
     
     if (!lua_current_script)
@@ -1200,7 +1200,7 @@ weechat_lua_remove_modifier (lua_State *L)
     const char *type, *command, *function;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
      
     if (!lua_current_script)
@@ -1250,7 +1250,7 @@ weechat_lua_get_info (lua_State *L)
     char *info;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
     
     if (!lua_current_script)
@@ -1306,7 +1306,7 @@ weechat_lua_get_dcc_info (lua_State *L)
     struct in_addr in;
     int i;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
     
     if (!lua_current_script)
@@ -1421,7 +1421,7 @@ weechat_lua_get_config (lua_State *L)
     char *return_value;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
      
     if (!lua_current_script)
@@ -1467,7 +1467,7 @@ weechat_lua_set_config (lua_State *L)
     const char *option, *value;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
     
     if (!lua_current_script)
@@ -1515,7 +1515,7 @@ weechat_lua_get_plugin_config (lua_State *L)
     char *return_value;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
      
     if (!lua_current_script)
@@ -1563,7 +1563,7 @@ weechat_lua_set_plugin_config (lua_State *L)
     const char *option, *value;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
  	
     if (!lua_current_script)
@@ -1612,7 +1612,7 @@ weechat_lua_get_server_info (lua_State *L)
     t_plugin_server_info *server_info, *ptr_server;
     char timebuffer[64];
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
     
     if (!lua_current_script)
@@ -1759,7 +1759,7 @@ weechat_lua_get_channel_info (lua_State *L)
     const char *server;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
  
     if (!lua_current_script)
@@ -1843,7 +1843,7 @@ weechat_lua_get_nick_info (lua_State *L)
     const char *server, *channel;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
      
     if (!lua_current_script)
@@ -1914,7 +1914,7 @@ weechat_lua_get_irc_color (lua_State *L)
     const char *color;
     int n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
      
     if (!lua_current_script)
@@ -1956,7 +1956,7 @@ weechat_lua_get_window_info (lua_State *L)
     t_plugin_window_info *window_info, *ptr_window;
     int i;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
     
     if (!lua_current_script)
@@ -2027,7 +2027,7 @@ weechat_lua_get_buffer_info (lua_State *L)
 {
     t_plugin_buffer_info *buffer_info, *ptr_buffer;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
     
     if (!lua_current_script)
@@ -2099,7 +2099,7 @@ weechat_lua_get_buffer_data (lua_State *L)
     char timebuffer[64];
     int i, n;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
     
     if (!lua_current_script)
@@ -2181,7 +2181,7 @@ weechat_lua_get_buffer_data (lua_State *L)
 static int
 weechat_lua_constant_plugin_rc_ok (lua_State *L)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
     
     lua_pushnumber (lua_current_interpreter, PLUGIN_RC_OK);
@@ -2191,7 +2191,7 @@ weechat_lua_constant_plugin_rc_ok (lua_State *L)
 static int
 weechat_lua_constant_plugin_rc_ko (lua_State *L)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
     
     lua_pushnumber (lua_current_interpreter, PLUGIN_RC_KO);
@@ -2201,7 +2201,7 @@ weechat_lua_constant_plugin_rc_ko (lua_State *L)
 static int
 weechat_lua_constant_plugin_rc_ok_ignore_weechat (lua_State *L)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
     
     lua_pushnumber (lua_current_interpreter, PLUGIN_RC_OK_IGNORE_WEECHAT);
@@ -2211,7 +2211,7 @@ weechat_lua_constant_plugin_rc_ok_ignore_weechat (lua_State *L)
 static int
 weechat_lua_constant_plugin_rc_ok_ignore_plugins (lua_State *L)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
     
     lua_pushnumber (lua_current_interpreter, PLUGIN_RC_OK_IGNORE_PLUGINS);
@@ -2221,7 +2221,7 @@ weechat_lua_constant_plugin_rc_ok_ignore_plugins (lua_State *L)
 static int
 weechat_lua_constant_plugin_rc_ok_ignore_all (lua_State *L)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) L;
     
     lua_pushnumber (lua_current_interpreter, PLUGIN_RC_OK_IGNORE_ALL);
@@ -2464,7 +2464,7 @@ weechat_lua_cmd (t_weechat_plugin *plugin,
     t_plugin_handler *ptr_handler;
     t_plugin_modifier *ptr_modifier;
 
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) handler_args;
     (void) handler_pointer;
     

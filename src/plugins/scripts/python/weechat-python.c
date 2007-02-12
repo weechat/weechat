@@ -193,7 +193,7 @@ weechat_python_timer_handler (t_weechat_plugin *plugin,
                               int argc, char **argv,
                               char *handler_args, void *handler_pointer)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) argc;
     (void) argv;
     int *r;
@@ -298,7 +298,7 @@ weechat_python_register (PyObject *self, PyObject *args)
 {
     char *name, *version, *shutdown_func, *description, *charset;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
 
     python_current_script = NULL;
@@ -358,7 +358,7 @@ weechat_python_set_charset (PyObject *self, PyObject *args)
 {
     char *charset;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     
     if (!python_current_script)
@@ -398,7 +398,7 @@ weechat_python_print (PyObject *self, PyObject *args)
 {
     char *message, *channel_name, *server_name;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     
     if (!python_current_script)
@@ -437,7 +437,7 @@ weechat_python_print_server (PyObject *self, PyObject *args)
 {
     char *message;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     
     if (!python_current_script)
@@ -473,7 +473,7 @@ weechat_python_print_infobar (PyObject *self, PyObject *args)
     int delay;
     char *message;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     
     if (!python_current_script)
@@ -509,7 +509,7 @@ weechat_python_remove_infobar (PyObject *self, PyObject *args)
 {
     int how_many;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     
     if (!python_current_script)
@@ -544,7 +544,7 @@ weechat_python_log (PyObject *self, PyObject *args)
 {
     char *message, *channel_name, *server_name;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     
     if (!python_current_script)
@@ -583,7 +583,7 @@ weechat_python_command (PyObject *self, PyObject *args)
 {
     char *command, *channel_name, *server_name;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     
     if (!python_current_script)
@@ -622,7 +622,7 @@ weechat_python_add_message_handler (PyObject *self, PyObject *args)
 {
     char *irc_command, *function;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     
     if (!python_current_script)
@@ -663,7 +663,7 @@ weechat_python_add_command_handler (PyObject *self, PyObject *args)
     char *command, *function, *description, *arguments, *arguments_description;
     char *completion_template;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     
     if (!python_current_script)
@@ -715,7 +715,7 @@ weechat_python_add_timer_handler (PyObject *self, PyObject *args)
     int interval;
     char *function;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     
     if (!python_current_script)
@@ -755,7 +755,7 @@ weechat_python_add_keyboard_handler (PyObject *self, PyObject *args)
 {
     char *function;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     
     if (!python_current_script)
@@ -794,7 +794,7 @@ weechat_python_add_event_handler (PyObject *self, PyObject *args)
 {
     char *event, *function;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     
     if (!python_current_script)
@@ -834,7 +834,7 @@ weechat_python_remove_handler (PyObject *self, PyObject *args)
 {
     char *command, *function;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     
     if (!python_current_script)
@@ -871,7 +871,7 @@ weechat_python_remove_timer_handler (PyObject *self, PyObject *args)
 {
     char *function;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     
     if (!python_current_script)
@@ -907,7 +907,7 @@ weechat_python_remove_keyboard_handler (PyObject *self, PyObject *args)
 {
     char *function;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     
     if (!python_current_script)
@@ -943,7 +943,7 @@ weechat_python_remove_event_handler (PyObject *self, PyObject *args)
 {
     char *function;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     
     if (!python_current_script)
@@ -979,7 +979,7 @@ weechat_python_add_modifier (PyObject *self, PyObject *args)
 {
     char *type, *command, *function;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     
     if (!python_current_script)
@@ -1020,7 +1020,7 @@ weechat_python_remove_modifier (PyObject *self, PyObject *args)
 {
     char *type, *command, *function;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     
     if (!python_current_script)
@@ -1059,7 +1059,7 @@ weechat_python_get_info (PyObject *self, PyObject *args)
     char *arg, *server_name, *info;
     PyObject *object;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     
     if (!python_current_script)
@@ -1109,7 +1109,7 @@ weechat_python_get_dcc_info (PyObject *self, PyObject *args)
     char timebuffer2[64];
     struct in_addr in;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     (void) args;
     
@@ -1199,7 +1199,7 @@ weechat_python_get_config (PyObject *self, PyObject *args)
     char *option, *return_value;
     PyObject *python_return_value;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     
     if (!python_current_script)
@@ -1246,7 +1246,7 @@ weechat_python_set_config (PyObject *self, PyObject *args)
 {
     char *option, *value;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
 
     if (!python_current_script)
@@ -1287,7 +1287,7 @@ weechat_python_get_plugin_config (PyObject *self, PyObject *args)
     char *option, *return_value;
     PyObject *python_return_value;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     
     if (!python_current_script)
@@ -1336,7 +1336,7 @@ weechat_python_set_plugin_config (PyObject *self, PyObject *args)
 {
     char *option, *value;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     
     if (!python_current_script)
@@ -1380,7 +1380,7 @@ weechat_python_get_server_info (PyObject *self, PyObject *args)
     PyObject *server_hash, *server_hash_member;
     char timebuffer[64];
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     (void) args;
     
@@ -1485,7 +1485,7 @@ weechat_python_get_channel_info (PyObject *self, PyObject *args)
     PyObject *channel_hash, *channel_hash_member;
     char *server;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
         
     if (!python_current_script)
@@ -1558,7 +1558,7 @@ weechat_python_get_nick_info (PyObject *self, PyObject *args)
     PyObject *nick_hash, *nick_hash_member;
     char *server, *channel;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
         
     if (!python_current_script)
@@ -1623,7 +1623,7 @@ weechat_python_get_irc_color (PyObject *self, PyObject *args)
 {
     char *color;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     
     if (!python_current_script)
@@ -1660,7 +1660,7 @@ weechat_python_get_window_info (PyObject *self, PyObject *args)
     t_plugin_window_info *window_info, *ptr_window;
     PyObject *window_list, *window_list_member;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     (void) args;
         
@@ -1724,7 +1724,7 @@ weechat_python_get_buffer_info (PyObject *self, PyObject *args)
     t_plugin_buffer_info *buffer_info, *ptr_buffer;
     PyObject *buffer_hash, *buffer_hash_member;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     (void) args;
     
@@ -1790,7 +1790,7 @@ weechat_python_get_buffer_data (PyObject *self, PyObject *args)
     char *server, *channel;
     char timebuffer[64];
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) self;
     (void) args;
     
@@ -1898,7 +1898,8 @@ static PyObject *
 weechat_python_output (PyObject *self, PyObject *args)
 {
     char *msg, *m, *p;
-    /* make gcc happy */
+    
+    /* make C compiler happy */
     (void) self;
     
     msg = NULL;
@@ -2181,7 +2182,7 @@ weechat_python_cmd (t_weechat_plugin *plugin,
     t_plugin_handler *ptr_handler;
     t_plugin_modifier *ptr_modifier;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) handler_args;
     (void) handler_pointer;
     

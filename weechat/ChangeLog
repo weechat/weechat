@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-02-06
+ChangeLog - 2007-02-12
 
 
 Version 0.2.4 (under dev!):
+   * added "call" option to /key command, added new key function "insert" to
+     insert text on command line (task #6468)
    * fixed permissions on "dcc" and "logs" directories (bug #18978)
    * added event handler to plugin API
    * added scots quickstart guide

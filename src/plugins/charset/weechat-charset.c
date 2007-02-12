@@ -276,7 +276,7 @@ weechat_charset_irc_in (t_weechat_plugin *plugin, int argc, char **argv,
     char *nick, *command, *channel, *charset, *ptr_args;
     char *output;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) argc;
     (void) handler_args;
     (void) handler_pointer;
@@ -324,7 +324,7 @@ weechat_charset_irc_out (t_weechat_plugin *plugin, int argc, char **argv,
     char *nick, *command, *channel, *charset, *ptr_args;
     char *output;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) argc;
     (void) handler_args;
     (void) handler_pointer;
@@ -457,7 +457,7 @@ weechat_charset_cmd (t_weechat_plugin *plugin,
     if (cmd_argc < 3)
         return PLUGIN_RC_KO;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) handler_args;
     (void) handler_pointer;
     
@@ -609,7 +609,7 @@ weechat_plugin_init (t_weechat_plugin *plugin)
 void
 weechat_plugin_end (t_weechat_plugin *plugin)
 {
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) plugin;
     
     if (weechat_charset_terminal)

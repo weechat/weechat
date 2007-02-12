@@ -136,7 +136,7 @@ weechat_backtrace_addr2line (int number, void *address, char *symbol)
                                   number, function_name);
     pclose (output);
 #else
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) number;
     (void) address;
     (void) symbol;

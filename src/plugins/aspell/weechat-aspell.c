@@ -996,7 +996,7 @@ weechat_aspell_speller_command (t_weechat_plugin *p,
     char **args;
     int c, r;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) p;
     (void) handler_args;
     (void) handler_pointer;
@@ -1227,7 +1227,7 @@ weechat_aspell_keyb_check (t_weechat_plugin *p, int argc, char **argv,
     char *input, *ptr_input, *pos_space, *clword;
     int count, offset;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) p;
     (void) handler_args;
     (void) handler_pointer;
@@ -1381,7 +1381,7 @@ void weechat_plugin_end (t_weechat_plugin *p)
     aspell_speller_t *s, *t;
     aspell_config_t *c, *d;
     
-    /* make gcc happy */
+    /* make C compiler happy */
     (void) p;
     
     weechat_aspell_options_save ();
