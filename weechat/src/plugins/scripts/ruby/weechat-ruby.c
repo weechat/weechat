@@ -2179,12 +2179,10 @@ weechat_ruby_load (t_weechat_plugin *plugin, char *filename)
 
     curModule = rb_define_module(modname);
 
-    ruby_current_script_filename = strdup (filename);
+    ruby_current_script_filename = filename;
     
     ruby_retcode = rb_protect_funcall (curModule, rb_intern("load_eval_file"),
 				       &ruby_error, 1, rb_str_new2(filename));
-    
-    free (ruby_current_script_filename);
     
     if (ruby_retcode == Qnil) {
 	err = rb_inspect(rb_gv_get("$!"));

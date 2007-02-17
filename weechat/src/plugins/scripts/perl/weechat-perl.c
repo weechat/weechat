@@ -145,7 +145,9 @@ weechat_perl_exec (t_weechat_plugin *plugin,
     SAVETMPS;
     PUSHMARK(sp);
     
-    perl_current_script = script;
+    /* are we loading the script file ? */
+    if (strcmp (function, "weechat_perl_load_eval_file") != 0)
+	perl_current_script = script;
 
     if (arg1)
     {
@@ -1980,7 +1982,7 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
         return 0;
     }
 
-    perl_current_script_filename = strdup (filename);
+    perl_current_script_filename = filename;
 
     PERL_SET_CONTEXT (perl_current_interpreter);
     perl_construct (perl_current_interpreter);
@@ -1991,9 +1993,6 @@ weechat_perl_load (t_weechat_plugin *plugin, char *filename)
     eval = weechat_perl_exec (plugin, &tempscript,
 			      SCRIPT_EXEC_INT,
 			      "weechat_perl_load_eval_file", filename, "", "");
-
-    free (perl_current_script_filename);
-
 #endif
     if (eval == NULL)
     {

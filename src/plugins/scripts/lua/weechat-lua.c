@@ -2331,7 +2331,7 @@ weechat_lua_load (t_weechat_plugin *plugin, char *filename)
         plugin->print_server (plugin,
                               "Lua warning: unable to redirect stdout and stderr");
     
-    lua_current_script_filename = strdup (filename);
+    lua_current_script_filename = filename;
     
     if (luaL_loadfile (lua_current_interpreter, filename) != 0)
     {
@@ -2363,9 +2363,7 @@ weechat_lua_load (t_weechat_plugin *plugin, char *filename)
 	    weechat_script_remove (plugin, &lua_scripts, lua_current_script);
         return 0;
     }
-
     fclose (fp);
-    free (lua_current_script_filename);
     
     if (lua_current_script == NULL)
     {

@@ -2053,8 +2053,8 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
 	    plugin->print_server (plugin,
                                   "Python warning: unable to redirect stderr");
     }
-	
-    python_current_script_filename = strdup (filename);
+    
+    python_current_script_filename = filename;
     
     if (PyRun_SimpleFile (fp, filename) != 0)
     {
@@ -2077,7 +2077,6 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
     if (PyErr_Occurred ()) PyErr_Print ();
 
     fclose (fp);
-    free (python_current_script_filename);
     
     if (python_current_script == NULL)
     {
