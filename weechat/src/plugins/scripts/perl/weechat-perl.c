@@ -226,7 +226,7 @@ weechat_perl_exec (t_weechat_plugin *plugin,
     if (ret_value == NULL && mem_err == 1)
     {
 	plugin->print_server (plugin,
-                              "Python error: unable to alloc memory in function \"%s\"",
+                              "Perl error: unable to alloc memory in function \"%s\"",
                               function);
 	return NULL;
     }
@@ -2290,7 +2290,7 @@ weechat_perl_cmd (t_weechat_plugin *plugin,
             
 	    /* List Perl modifiers */
 	    plugin->print_server (plugin, "");
-            plugin->print_server (plugin, "Python modifiers:");
+            plugin->print_server (plugin, "Perl modifiers:");
             modifier_found = 0;
             for (ptr_modifier = plugin->modifiers;
                  ptr_modifier; ptr_modifier = ptr_modifier->next_modifier)

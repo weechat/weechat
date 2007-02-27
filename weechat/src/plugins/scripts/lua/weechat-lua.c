@@ -2341,7 +2341,6 @@ weechat_lua_load (t_weechat_plugin *plugin, char *filename)
 	plugin->print_server (plugin,
                               "Lua error: %s",
                               lua_tostring (lua_current_interpreter, -1));
-        free (lua_current_script_filename);
         lua_close (lua_current_interpreter);
         fclose (fp);
         return 0;
@@ -2355,7 +2354,6 @@ weechat_lua_load (t_weechat_plugin *plugin, char *filename)
 	plugin->print_server (plugin,
                               "Lua error: %s",
                               lua_tostring (lua_current_interpreter, -1));
-        free (lua_current_script_filename);
         lua_close (lua_current_interpreter);
         fclose (fp);
 	/* if script was registered, removing from list */

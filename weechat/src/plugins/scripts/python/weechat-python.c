@@ -2061,7 +2061,6 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
         plugin->print_server (plugin,
                               "Python error: unable to parse file \"%s\"",
                               filename);
-	free (python_current_script_filename);
 	fclose (fp);
 	
 	if (PyErr_Occurred ()) PyErr_Print ();
