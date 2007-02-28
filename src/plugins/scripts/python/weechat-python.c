@@ -1480,7 +1480,7 @@ weechat_python_get_server_info (PyObject *self, PyObject *args)
 	    PyDict_SetItem(server_hash_member, key, value);
 	    Py_DECREF (key);
 	    Py_DECREF (value);
-
+	    
 	    key = Py_BuildValue("s", "autoreconnect");
 	    value = Py_BuildValue("i", ptr_server->autoreconnect);
 	    PyDict_SetItem(server_hash_member, key, value);
@@ -1572,7 +1572,7 @@ weechat_python_get_server_info (PyObject *self, PyObject *args)
 	    Py_DECREF (value);
 	    
 	    key = Py_BuildValue("s", "autojoin");
-	    Py_BuildValue("s", ptr_server->autojoin);
+	    value = Py_BuildValue("s", ptr_server->autojoin);
 	    PyDict_SetItem(server_hash_member, key, value);
 	    Py_DECREF (key);
 	    Py_DECREF (value);

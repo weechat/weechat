@@ -1459,7 +1459,7 @@ static XS (XS_weechat_get_server_info)
 		 localtime(&ptr_server->away_time));
 	
 	server_hash_member = (HV *) sv_2mortal((SV *) newHV());	        
-        
+
 	hv_store (server_hash_member, "autoconnect",          11, newSViv (ptr_server->autoconnect), 0);
         hv_store (server_hash_member, "autoreconnect",        13, newSViv (ptr_server->autoreconnect), 0);
         hv_store (server_hash_member, "autoreconnect_delay",  19, newSViv (ptr_server->autoreconnect_delay), 0);
@@ -1485,12 +1485,14 @@ static XS (XS_weechat_get_server_info)
         hv_store (server_hash_member, "nick_modes",           10, newSVpv (ptr_server->nick_modes, 0), 0);
 	hv_store (server_hash_member, "away_time",             9, newSVpv (timebuffer, 0), 0);
 	hv_store (server_hash_member, "lag",                   3, newSViv (ptr_server->lag), 0);
-	
+
 	hv_store (server_hash, ptr_server->name, strlen(ptr_server->name), newRV_inc((SV *) server_hash_member), 0);	
-    }    
+    }
     perl_plugin->free_server_info (perl_plugin, server_info);
     
     ST (0) = newRV_inc((SV *) server_hash);
+    if (SvREFCNT(ST(0))) sv_2mortal(ST(0));
+    
     XSRETURN (1);
 }
 
@@ -1557,6 +1559,8 @@ static XS (XS_weechat_get_channel_info)
     perl_plugin->free_channel_info (perl_plugin, channel_info);
     
     ST (0) = newRV_inc((SV *) channel_hash);
+    if (SvREFCNT(ST(0))) sv_2mortal(ST(0));
+
     XSRETURN (1);
 }
 
@@ -1621,6 +1625,8 @@ static XS (XS_weechat_get_nick_info)
     perl_plugin->free_nick_info (perl_plugin, nick_info);
     
     ST (0) = newRV_inc((SV *) nick_hash);
+    if (SvREFCNT(ST(0))) sv_2mortal(ST(0));
+    
     XSRETURN (1);
 }
 
@@ -1790,7 +1796,7 @@ static XS (XS_weechat_get_buffer_info)
     for (ptr_buffer = buffer_info; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
     {
 	buffer_hash_member = (HV *) sv_2mortal((SV *) newHV());	        
-        
+
 	hv_store (buffer_hash_member, "type",           4, newSViv (ptr_buffer->type), 0);
         hv_store (buffer_hash_member, "num_displayed", 13, newSViv (ptr_buffer->num_displayed), 0);
 	hv_store (buffer_hash_member, "server",         6, 
@@ -1800,13 +1806,14 @@ static XS (XS_weechat_get_buffer_info)
         hv_store (buffer_hash_member, "notify_level",  12, newSViv (ptr_buffer->notify_level), 0);
 	hv_store (buffer_hash_member, "log_filename",  12, 
 		  newSVpv (ptr_buffer->log_filename == NULL ? "" : ptr_buffer->log_filename, 0), 0);
-	
 	snprintf(conv, sizeof(conv), "%d", ptr_buffer->number);
-	hv_store (buffer_hash, conv, strlen(conv), newRV_inc((SV *) buffer_hash_member), 0);	
+	hv_store (buffer_hash, conv, strlen(conv), newRV_inc((SV *) buffer_hash_member), 0);
     }    
     perl_plugin->free_buffer_info (perl_plugin, buffer_info);
     
     ST (0) = newRV_inc((SV *) buffer_hash);
+    if (SvREFCNT(ST(0))) sv_2mortal(ST(0));
+    
     XSRETURN (1);
 }
 

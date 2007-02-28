@@ -995,6 +995,8 @@ weechat_plugin_free_server_info (t_weechat_plugin *plugin, t_plugin_server_info 
             free (server_info->notify_levels);
 	if (server_info->nick)
             free (server_info->nick);
+	if (server_info->nick_modes)
+            free (server_info->nick_modes);
         new_server_info = server_info->next_server;
         free (server_info);
         server_info = new_server_info;
