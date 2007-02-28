@@ -1104,7 +1104,7 @@ static PyObject *
 weechat_python_get_dcc_info (PyObject *self, PyObject *args)
 {
     t_plugin_dcc_info *dcc_info, *ptr_dcc;
-    PyObject *dcc_list, *dcc_list_member;
+    PyObject *dcc_list, *dcc_list_member, *key, *value;
     char timebuffer1[64];
     char timebuffer2[64];
     struct in_addr in;
@@ -1145,39 +1145,101 @@ weechat_python_get_dcc_info (PyObject *self, PyObject *args)
 	
         if (dcc_list_member) 
         {
+	    key = Py_BuildValue("s", "server");
+	    value = Py_BuildValue("s", ptr_dcc->server);
+	    PyDict_SetItem(dcc_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
 	    
-	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "server"),
-			   Py_BuildValue("s", ptr_dcc->server));
-	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "channel"),
-			   Py_BuildValue("s", ptr_dcc->channel));
-	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "type"),
-			   Py_BuildValue("i", ptr_dcc->type));
-	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "status"),
-			   Py_BuildValue("i", ptr_dcc->status));
-	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "start_time"),
-			   Py_BuildValue("s", timebuffer1));
-	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "start_transfer"),
-			   Py_BuildValue("s", timebuffer2));
-	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "address"),
-			   Py_BuildValue("s", inet_ntoa(in)));
-	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "port"),
-			   Py_BuildValue("i", ptr_dcc->port));
-	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "nick"),
-			   Py_BuildValue("s", ptr_dcc->nick));
-	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "remote_file"),
-			   Py_BuildValue("s", ptr_dcc->filename));
-	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "local_file"),
-			   Py_BuildValue("s", ptr_dcc->local_filename));
-	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "filename_suffix"),
-			   Py_BuildValue("i", ptr_dcc->filename_suffix));
-	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "size"),
-			   Py_BuildValue("k", ptr_dcc->size));
-	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "pos"),
-			   Py_BuildValue("k", ptr_dcc->pos));
-	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "start_resume"),
-			   Py_BuildValue("k", ptr_dcc->start_resume));
-	    PyDict_SetItem(dcc_list_member, Py_BuildValue("s", "cps"),
-			   Py_BuildValue("k", ptr_dcc->bytes_per_sec));	    
+	    key = Py_BuildValue("s", "channel");
+	    value = Py_BuildValue("s", ptr_dcc->channel);
+	    PyDict_SetItem(dcc_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+
+	    key = Py_BuildValue("s", "type");
+	    value = Py_BuildValue("i", ptr_dcc->type);
+	    PyDict_SetItem(dcc_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+
+	    key = Py_BuildValue("s", "status");
+	    value = Py_BuildValue("i", ptr_dcc->status);
+	    PyDict_SetItem(dcc_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "start_time");
+	    value = Py_BuildValue("s", timebuffer1);
+	    PyDict_SetItem(dcc_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+
+	    key = Py_BuildValue("s", "start_transfer");
+	    value = Py_BuildValue("s", timebuffer2);
+	    PyDict_SetItem(dcc_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+
+	    key = Py_BuildValue("s", "address");
+	    value = Py_BuildValue("s", inet_ntoa(in));
+	    PyDict_SetItem(dcc_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "port");
+	    value = Py_BuildValue("i", ptr_dcc->port);
+	    PyDict_SetItem(dcc_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+
+	    key = Py_BuildValue("s", "nick");
+	    value = Py_BuildValue("s", ptr_dcc->nick);
+	    PyDict_SetItem(dcc_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "remote_file");
+	    value = Py_BuildValue("s", ptr_dcc->filename);
+	    PyDict_SetItem(dcc_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+
+	    key = Py_BuildValue("s", "local_file");
+	    value = Py_BuildValue("s", ptr_dcc->local_filename);
+	    PyDict_SetItem(dcc_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+
+	    key = Py_BuildValue("s", "filename_suffix");
+	    value = Py_BuildValue("i", ptr_dcc->filename_suffix);
+	    PyDict_SetItem(dcc_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+
+	    key = Py_BuildValue("s", "size");
+	    value = Py_BuildValue("k", ptr_dcc->size);
+	    PyDict_SetItem(dcc_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+
+	    key = Py_BuildValue("s", "pos");
+	    value = Py_BuildValue("k", ptr_dcc->pos);
+	    PyDict_SetItem(dcc_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+
+	    key = Py_BuildValue("s", "start_resume");
+	    value = Py_BuildValue("k", ptr_dcc->start_resume);
+	    PyDict_SetItem(dcc_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+
+	    key = Py_BuildValue("s", "cps");
+	    value = Py_BuildValue("k", ptr_dcc->bytes_per_sec);
+	    PyDict_SetItem(dcc_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
 	    
             PyList_Append(dcc_list, dcc_list_member);
 	    Py_DECREF (dcc_list_member);
@@ -1377,7 +1439,7 @@ static PyObject *
 weechat_python_get_server_info (PyObject *self, PyObject *args)
 {
     t_plugin_server_info *server_info, *ptr_server;
-    PyObject *server_hash, *server_hash_member;
+    PyObject *server_hash, *server_hash_member, *key, *value;
     char timebuffer[64];
     
     /* make C compiler happy */
@@ -1413,62 +1475,163 @@ weechat_python_get_server_info (PyObject *self, PyObject *args)
 	
 	if (server_hash_member)
 	{
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "autoconnect"),
-			   Py_BuildValue("i", ptr_server->autoconnect));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "autoreconnect"),
-			   Py_BuildValue("i", ptr_server->autoreconnect));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "autoreconnect_delay"),
-			   Py_BuildValue("i", ptr_server->autoreconnect_delay));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "command_line"),
-			   Py_BuildValue("i", ptr_server->command_line));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "address"),
-			   Py_BuildValue("s", ptr_server->address));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "port"),
-			   Py_BuildValue("i", ptr_server->port));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "ipv6"),
-			   Py_BuildValue("i", ptr_server->ipv6));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "ssl"),
-			   Py_BuildValue("i", ptr_server->ssl));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "password"),
-			   Py_BuildValue("s", ptr_server->password));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "nick1"),
-			   Py_BuildValue("s", ptr_server->nick1));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "nick2"),
-			   Py_BuildValue("s", ptr_server->nick2));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "nick3"),
-			   Py_BuildValue("s", ptr_server->nick3));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "username"),
-			   Py_BuildValue("s", ptr_server->username));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "realname"),
-			   Py_BuildValue("s", ptr_server->realname));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "command"),
-			   Py_BuildValue("s", ptr_server->command));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "command_delay"),
-			   Py_BuildValue("i", ptr_server->command_delay));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "autojoin"),
-			   Py_BuildValue("s", ptr_server->autojoin));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "autorejoin"),
-			   Py_BuildValue("i", ptr_server->autorejoin));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "notify_levels"),
-			   Py_BuildValue("s", ptr_server->notify_levels));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "is_connected"),
-			   Py_BuildValue("i", ptr_server->is_connected));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "ssl_connected"),
-			   Py_BuildValue("i", ptr_server->ssl_connected));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "nick"),
-			   Py_BuildValue("s", ptr_server->nick));
-            PyDict_SetItem(server_hash_member, Py_BuildValue("s", "nick_modes"),
-			   Py_BuildValue("s", ptr_server->nick_modes));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "away_time"),
-			   Py_BuildValue("s", timebuffer));
-	    PyDict_SetItem(server_hash_member, Py_BuildValue("s", "lag"),
-			   Py_BuildValue("i", ptr_server->lag));
+	    key = Py_BuildValue("s", "autoconnect");
+	    value = Py_BuildValue("i", ptr_server->autoconnect);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+
+	    key = Py_BuildValue("s", "autoreconnect");
+	    value = Py_BuildValue("i", ptr_server->autoreconnect);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+
+	    key = Py_BuildValue("s", "autoreconnect_delay");
+	    value = Py_BuildValue("i", ptr_server->autoreconnect_delay);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
 	    
-	    PyDict_SetItem(server_hash, Py_BuildValue("s", ptr_server->name), server_hash_member);
+	    key = Py_BuildValue("s", "command_line");
+	    value = Py_BuildValue("i", ptr_server->command_line);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+
+	    key = Py_BuildValue("s", "address");	   
+	    value = Py_BuildValue("s", ptr_server->address);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+
+	    key = Py_BuildValue("s", "port");
+	    value = Py_BuildValue("i", ptr_server->port);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+
+	    key = Py_BuildValue("s", "ipv6");
+	    value = Py_BuildValue("i", ptr_server->ipv6);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "ssl");
+	    value = Py_BuildValue("i", ptr_server->ssl);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    	    
+	    key = Py_BuildValue("s", "password");
+	    value = Py_BuildValue("s", ptr_server->password);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "nick1");
+	    value = Py_BuildValue("s", ptr_server->nick1);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "nick2");
+	    value = Py_BuildValue("s", ptr_server->nick2);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "nick3");
+	    value = Py_BuildValue("s", ptr_server->nick3);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "username");
+	    value = Py_BuildValue("s", ptr_server->username);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "realname");
+	    value = Py_BuildValue("s", ptr_server->realname);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "command");
+	    value = Py_BuildValue("s", ptr_server->command);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "command_delay");
+	    value = Py_BuildValue("i", ptr_server->command_delay);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "autojoin");
+	    Py_BuildValue("s", ptr_server->autojoin);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "autorejoin");
+	    value = Py_BuildValue("i", ptr_server->autorejoin);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "notify_levels");
+	    value = Py_BuildValue("s", ptr_server->notify_levels);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "is_connected");
+	    value = Py_BuildValue("i", ptr_server->is_connected);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "ssl_connected");
+	    value = Py_BuildValue("i", ptr_server->ssl_connected);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "nick");
+	    value = Py_BuildValue("s", ptr_server->nick);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+            key = Py_BuildValue("s", "nick_modes");
+	    value = Py_BuildValue("s", ptr_server->nick_modes);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "away_time");
+	    value = Py_BuildValue("s", timebuffer);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "lag");
+	    value = Py_BuildValue("i", ptr_server->lag);
+	    PyDict_SetItem(server_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", ptr_server->name);
+	    PyDict_SetItem(server_hash, key, server_hash_member);
+	    Py_DECREF (key);
 	    Py_DECREF (server_hash_member);
 	}
     }    
-
+    
     python_plugin->free_server_info(python_plugin, server_info);
     
     return server_hash;
@@ -1482,7 +1645,7 @@ static PyObject *
 weechat_python_get_channel_info (PyObject *self, PyObject *args)
 {
     t_plugin_channel_info *channel_info, *ptr_channel;
-    PyObject *channel_hash, *channel_hash_member;
+    PyObject *channel_hash, *channel_hash_member, *key, *value;
     char *server;
     
     /* make C compiler happy */
@@ -1523,24 +1686,49 @@ weechat_python_get_channel_info (PyObject *self, PyObject *args)
 	channel_hash_member = PyDict_New();
 	
 	if (channel_hash_member)
-	{
-	    PyDict_SetItem(channel_hash_member, Py_BuildValue("s", "type"),
-			   Py_BuildValue("i", ptr_channel->type));
-	    PyDict_SetItem(channel_hash_member, Py_BuildValue("s", "topic"),
-			   Py_BuildValue("s", ptr_channel->topic));
-	    PyDict_SetItem(channel_hash_member, Py_BuildValue("s", "modes"),
-			   Py_BuildValue("s", ptr_channel->modes));
-	    PyDict_SetItem(channel_hash_member, Py_BuildValue("s", "limit"),
-			   Py_BuildValue("i", ptr_channel->limit));
-	    PyDict_SetItem(channel_hash_member, Py_BuildValue("s", "key"),
-			   Py_BuildValue("s", ptr_channel->key));
-	    PyDict_SetItem(channel_hash_member, Py_BuildValue("s", "nicks_count"),
-			   Py_BuildValue("i", ptr_channel->nicks_count));
+	{	    
+	    key = Py_BuildValue("s", "type");
+	    value = Py_BuildValue("i", ptr_channel->type);
+	    PyDict_SetItem(channel_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+
+	    key = Py_BuildValue("s", "topic");
+	    value = Py_BuildValue("s", ptr_channel->topic);
+	    PyDict_SetItem(channel_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+
+	    key = Py_BuildValue("s", "modes");
+	    value = Py_BuildValue("s", ptr_channel->modes);
+	    PyDict_SetItem(channel_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+
+	    key = Py_BuildValue("s", "limit");
+	    value = Py_BuildValue("i", ptr_channel->limit);
+	    PyDict_SetItem(channel_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+
+	    key = Py_BuildValue("s", "key");
+	    value = Py_BuildValue("s", ptr_channel->key);
+	    PyDict_SetItem(channel_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+
+	    key = Py_BuildValue("s", "nicks_count");
+	    value = Py_BuildValue("i", ptr_channel->nicks_count);
+	    PyDict_SetItem(channel_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
 	    
-	    PyDict_SetItem(channel_hash, Py_BuildValue("s", ptr_channel->name), channel_hash_member);
+	    key = Py_BuildValue("s", ptr_channel->name);
+	    PyDict_SetItem(channel_hash, key, channel_hash_member);
+	    Py_DECREF (key);
 	    Py_DECREF (channel_hash_member);
 	}
-    }    
+    }
 
     python_plugin->free_channel_info(python_plugin, channel_info);
     
@@ -1555,7 +1743,7 @@ static PyObject *
 weechat_python_get_nick_info (PyObject *self, PyObject *args)
 {
     t_plugin_nick_info *nick_info, *ptr_nick;
-    PyObject *nick_hash, *nick_hash_member;
+    PyObject *nick_hash, *nick_hash_member, *key, *value;
     char *server, *channel;
     
     /* make C compiler happy */
@@ -1598,12 +1786,21 @@ weechat_python_get_nick_info (PyObject *self, PyObject *args)
 	
 	if (nick_hash_member)
 	{
-	    PyDict_SetItem(nick_hash_member, Py_BuildValue("s", "flags"),
-			   Py_BuildValue("i", ptr_nick->flags));
-	    PyDict_SetItem(nick_hash_member, Py_BuildValue("s", "host"),
-			   Py_BuildValue("s", ptr_nick->host ? ptr_nick->host : ""));
+	    key = Py_BuildValue("s", "flags");
+	    value = Py_BuildValue("i", ptr_nick->flags);
+	    PyDict_SetItem(nick_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
 	    
-	    PyDict_SetItem(nick_hash, Py_BuildValue("s", ptr_nick->nick), nick_hash_member);
+	    key = Py_BuildValue("s", "host");
+	    value = Py_BuildValue("s", ptr_nick->host ? ptr_nick->host : "");
+	    PyDict_SetItem(nick_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", ptr_nick->nick);
+	    PyDict_SetItem(nick_hash, key, nick_hash_member);
+	    Py_DECREF (key);
 	    Py_DECREF (nick_hash_member);
 	}
     }    
@@ -1658,7 +1855,7 @@ static PyObject *
 weechat_python_get_window_info (PyObject *self, PyObject *args)
 {
     t_plugin_window_info *window_info, *ptr_window;
-    PyObject *window_list, *window_list_member;
+    PyObject *window_list, *window_list_member, *key, *value;
     
     /* make C compiler happy */
     (void) self;
@@ -1689,20 +1886,47 @@ weechat_python_get_window_info (PyObject *self, PyObject *args)
 	
 	if (window_list_member)
 	{
-	    PyDict_SetItem(window_list_member, Py_BuildValue("s", "num_buffer"),
-			   Py_BuildValue("i", ptr_window->num_buffer));
-	    PyDict_SetItem(window_list_member, Py_BuildValue("s", "win_x"),
-			   Py_BuildValue("i", ptr_window->win_x));
-	    PyDict_SetItem(window_list_member, Py_BuildValue("s", "win_y"),
-			   Py_BuildValue("i", ptr_window->win_y));
-	    PyDict_SetItem(window_list_member, Py_BuildValue("s", "win_width"),
-			   Py_BuildValue("i", ptr_window->win_width));
-	    PyDict_SetItem(window_list_member, Py_BuildValue("s", "win_height"),
-			   Py_BuildValue("i", ptr_window->win_height));
-	    PyDict_SetItem(window_list_member, Py_BuildValue("s", "win_width_pct"),
-			   Py_BuildValue("i", ptr_window->win_width_pct));
-	    PyDict_SetItem(window_list_member, Py_BuildValue("s", "win_height_pct"),
-			   Py_BuildValue("i", ptr_window->win_height_pct));
+	    key = Py_BuildValue("s", "num_buffer");
+	    value = Py_BuildValue("i", ptr_window->num_buffer);
+	    PyDict_SetItem(window_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "win_x");
+	    value = Py_BuildValue("i", ptr_window->win_x);
+	    PyDict_SetItem(window_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "win_y");
+	    value = Py_BuildValue("i", ptr_window->win_y);
+	    PyDict_SetItem(window_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+
+	    key = Py_BuildValue("s", "win_width");
+	    value = Py_BuildValue("i", ptr_window->win_width);
+	    PyDict_SetItem(window_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "win_height");
+	    value = Py_BuildValue("i", ptr_window->win_height);
+	    PyDict_SetItem(window_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "win_width_pct");
+	    value = Py_BuildValue("i", ptr_window->win_width_pct);
+	    PyDict_SetItem(window_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "win_height_pct");
+	    value = Py_BuildValue("i", ptr_window->win_height_pct);
+	    PyDict_SetItem(window_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
 	    
 	    PyList_Append(window_list, window_list_member);
 	    Py_DECREF (window_list_member);
@@ -1722,7 +1946,7 @@ static PyObject *
 weechat_python_get_buffer_info (PyObject *self, PyObject *args)
 {
     t_plugin_buffer_info *buffer_info, *ptr_buffer;
-    PyObject *buffer_hash, *buffer_hash_member;
+    PyObject *buffer_hash, *buffer_hash_member, *key, *value;
     
     /* make C compiler happy */
     (void) self;
@@ -1747,32 +1971,56 @@ weechat_python_get_buffer_info (PyObject *self, PyObject *args)
     buffer_info = python_plugin->get_buffer_info (python_plugin);
     if  (!buffer_info)
 	return buffer_hash;
-
+    
     for(ptr_buffer = buffer_info; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
     {
 	buffer_hash_member = PyDict_New();
 	
 	if (buffer_hash_member)
 	{
-	    PyDict_SetItem(buffer_hash_member, Py_BuildValue("s", "type"),
-			   Py_BuildValue("i", ptr_buffer->type));
-	    PyDict_SetItem(buffer_hash_member, Py_BuildValue("s", "num_displayed"),
-			   Py_BuildValue("i", ptr_buffer->num_displayed));
-	    PyDict_SetItem(buffer_hash_member, Py_BuildValue("s", "server"),
-			   Py_BuildValue("s", ptr_buffer->server_name == NULL ? "" : ptr_buffer->server_name));
-	    PyDict_SetItem(buffer_hash_member, Py_BuildValue("s", "channel"),
-			   Py_BuildValue("s", ptr_buffer->channel_name == NULL ? "" : ptr_buffer->channel_name));
-	    PyDict_SetItem(buffer_hash_member, Py_BuildValue("s", "notify_level"),
-			   Py_BuildValue("i", ptr_buffer->notify_level));
-	    PyDict_SetItem(buffer_hash_member, Py_BuildValue("s", "log_filename"),
-			   Py_BuildValue("s", ptr_buffer->log_filename == NULL ? "" : ptr_buffer->log_filename));
+
+	    key = Py_BuildValue("s", "type");
+	    value = Py_BuildValue("i", ptr_buffer->type);
+	    PyDict_SetItem(buffer_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
 	    
-	    PyDict_SetItem(buffer_hash, 
-			   Py_BuildValue("i", ptr_buffer->number), buffer_hash_member);
+	    key = Py_BuildValue("s", "num_displayed");
+	    value = Py_BuildValue("i", ptr_buffer->num_displayed);
+	    PyDict_SetItem(buffer_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "server");
+	    value = Py_BuildValue("s", ptr_buffer->server_name == NULL ? "" : ptr_buffer->server_name);
+	    PyDict_SetItem(buffer_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "channel");
+	    value = Py_BuildValue("s", ptr_buffer->channel_name == NULL ? "" : ptr_buffer->channel_name);
+	    PyDict_SetItem(buffer_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "notify_level");
+	    value = Py_BuildValue("i", ptr_buffer->notify_level);
+	    PyDict_SetItem(buffer_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+
+	    key = Py_BuildValue("s", "log_filename");
+	    value = Py_BuildValue("s", ptr_buffer->log_filename == NULL ? "" : ptr_buffer->log_filename);
+	    PyDict_SetItem(buffer_hash_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("i", ptr_buffer->number);
+	    PyDict_SetItem(buffer_hash, key, buffer_hash_member);
+	    Py_DECREF (key);
 	    Py_DECREF (buffer_hash_member);
 	}
     }    
-    
     python_plugin->free_buffer_info(python_plugin, buffer_info);
     
     return buffer_hash;
@@ -1786,7 +2034,7 @@ static PyObject *
 weechat_python_get_buffer_data (PyObject *self, PyObject *args)
 {
     t_plugin_buffer_line *buffer_data, *ptr_data;
-    PyObject *data_list, *data_list_member;
+    PyObject *data_list, *data_list_member, *key, *value;
     char *server, *channel;
     char timebuffer[64];
     
@@ -1831,14 +2079,25 @@ weechat_python_get_buffer_data (PyObject *self, PyObject *args)
         {
 	    strftime(timebuffer, sizeof(timebuffer), "%F %T",
 		     localtime(&ptr_data->date));
-	    
-	    PyDict_SetItem(data_list_member, Py_BuildValue("s", "date"),
-			   Py_BuildValue("s", timebuffer));
-	    PyDict_SetItem(data_list_member, Py_BuildValue("s", "nick"),
-			   Py_BuildValue("s", ptr_data->nick == NULL ? "" : ptr_data->nick));
-	    PyDict_SetItem(data_list_member, Py_BuildValue("s", "data"),
-			   Py_BuildValue("s", ptr_data->data == NULL ? "" : ptr_data->data));
 	    	    
+	    key = Py_BuildValue("s", "date");
+	    value = Py_BuildValue("s", timebuffer);
+	    PyDict_SetItem(data_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+
+	    key = Py_BuildValue("s", "nick");
+	    value = Py_BuildValue("s", ptr_data->nick == NULL ? "" : ptr_data->nick);
+	    PyDict_SetItem(data_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
+	    key = Py_BuildValue("s", "data");
+	    value = Py_BuildValue("s", ptr_data->data == NULL ? "" : ptr_data->data);
+	    PyDict_SetItem(data_list_member, key, value);
+	    Py_DECREF (key);
+	    Py_DECREF (value);
+	    
             PyList_Append(data_list, data_list_member);
 	    Py_DECREF (data_list_member);
         }
