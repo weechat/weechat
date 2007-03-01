@@ -783,6 +783,22 @@ user_message (t_irc_server *server, t_gui_buffer *buffer, char *text)
 }
 
 /*
+ * is_command: return 1 if line is a command, 0 otherwise
+ */
+
+int
+is_command (char *line)
+{
+    char *pos_slash, *pos_space;
+    
+    pos_slash = strchr (line + 1, '/');
+    pos_space = strchr (line + 1, ' ');
+    
+    return (line[0] == '/')
+        && (!pos_slash || (pos_space && pos_slash > pos_space));
+}
+
+/*
  * user_command: interprets user command (if beginning with '/')
  *               any other text is sent to the server, if connected
  */
@@ -826,7 +842,7 @@ user_command (t_irc_server *server, t_irc_channel *channel, char *command, int o
             
             irc_find_context (server, channel, NULL, &buffer);
             
-            if ((ptr_cmd[0] == '/') && (ptr_cmd[1] != '/'))
+            if (is_command (ptr_cmd))
             {
                 /* WeeChat internal command (or IRC command) */
                 (void) exec_weechat_command (server, channel, ptr_cmd, only_builtin);

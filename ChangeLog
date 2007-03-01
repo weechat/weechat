@@ -5,6 +5,7 @@ ChangeLog - 2007-03-01
 
 
 Version 0.2.4 (under dev!):
+   * prefix '/' disabled in commands (patch #5769)
    * fixed completion of redefined commands removed by plugins (bug #19176)
    * fixed memory leaks in perl and python plugins (bug #19163)
    * added "call" option to /key command, added new key function "insert" to
