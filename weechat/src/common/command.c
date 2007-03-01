@@ -276,6 +276,45 @@ command_index_free ()
 }
 
 /*
+ * command_used_by_weechat: return 1 if command is used by weechat
+ *                          (weechat command, IRC command or alias)
+ */
+
+int
+command_used_by_weechat (char *command)
+{
+    t_weechat_alias *ptr_alias;
+    int i;
+
+    /* look for alias */
+    for (ptr_alias = weechat_alias; ptr_alias;
+         ptr_alias = ptr_alias->next_alias)
+    {
+        if (ascii_strcasecmp (ptr_alias->alias_name, command) == 0)
+            return 1;
+    }
+
+    /* look for WeeChat command */
+    for (i = 0; weechat_commands[i].command_name; i++)
+    {
+        if (ascii_strcasecmp (weechat_commands[i].command_name, command) == 0)
+            return 1;
+    }
+
+    /* look for IRC command */
+    for (i = 0; irc_commands[i].command_name; i++)
+    {
+        if ((ascii_strcasecmp (irc_commands[i].command_name, command) == 0) &&
+            ((irc_commands[i].cmd_function_args) ||
+             (irc_commands[i].cmd_function_1arg)))
+            return 1;
+    }
+
+    /* no command/alias found */
+    return 0;
+}
+
+/*
  * exec_weechat_command: executes a command (WeeChat internal or IRC)
  *                       if only_builtin == 1, then try only WeeChat/IRC commands
  *                       (not plugins neither aliases)

@@ -752,7 +752,8 @@ plugin_handler_remove (t_weechat_plugin *plugin,
         (handler->next_handler)->prev_handler = handler->prev_handler;
     
     /* remove command from WeeChat command list, if command handler */
-    if (handler->type == PLUGIN_HANDLER_COMMAND)
+    if ((handler->type == PLUGIN_HANDLER_COMMAND)
+        && (!command_used_by_weechat (handler->command)))
         weelist_remove (&index_commands, &last_index_command,
                         weelist_search (index_commands, handler->command));
     
