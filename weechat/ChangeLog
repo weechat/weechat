@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-03-01
+ChangeLog - 2007-03-05
 
 
 Version 0.2.4 (under dev!):
+   * fixed /help command: displays plugin help for redefined commands
+     (bug #19166)
    * prefix '/' disabled in commands (patch #5769)
    * fixed completion of redefined commands removed by plugins (bug #19176)
    * fixed memory leaks in perl and python plugins (bug #19163)

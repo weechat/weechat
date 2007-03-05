@@ -1862,6 +1862,41 @@ weechat_cmd_help (t_irc_server *server, t_irc_channel *channel,
 #endif
             break;
         case 1:
+#ifdef PLUGINS
+            for (ptr_plugin = weechat_plugins; ptr_plugin;
+                 ptr_plugin = ptr_plugin->next_plugin)
+            {
+                for (ptr_handler = ptr_plugin->handlers;
+                     ptr_handler; ptr_handler = ptr_handler->next_handler)
+                {
+                    if ((ptr_handler->type == PLUGIN_HANDLER_COMMAND)
+                        && (ascii_strcasecmp (ptr_handler->command, argv[0]) == 0))
+                    {
+                        gui_printf (NULL, "\n");
+                        gui_printf (NULL, "[p]");
+                        gui_printf (NULL, "  %s/%s",
+                                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                                    ptr_handler->command);
+                        if (ptr_handler->arguments &&
+                            ptr_handler->arguments[0])
+                            gui_printf (NULL, "  %s%s\n",
+                                        GUI_COLOR(COLOR_WIN_CHAT),
+                                        ptr_handler->arguments);
+                        else
+                            gui_printf (NULL, "\n");
+                        if (ptr_handler->description &&
+                            ptr_handler->description[0])
+                            gui_printf (NULL, "\n%s\n",
+                                        ptr_handler->description);
+                        if (ptr_handler->arguments_description &&
+                            ptr_handler->arguments_description[0])
+                            gui_printf (NULL, "\n%s\n",
+                                        ptr_handler->arguments_description);
+                        return 0;
+                    }
+                }
+            }
+#endif
             for (i = 0; weechat_commands[i].command_name; i++)
             {
                 if (ascii_strcasecmp (weechat_commands[i].command_name, argv[0]) == 0)
@@ -1917,41 +1952,6 @@ weechat_cmd_help (t_irc_server *server, t_irc_channel *channel,
                     return 0;
                 }
             }
-#ifdef PLUGINS
-            for (ptr_plugin = weechat_plugins; ptr_plugin;
-                 ptr_plugin = ptr_plugin->next_plugin)
-            {
-                for (ptr_handler = ptr_plugin->handlers;
-                     ptr_handler; ptr_handler = ptr_handler->next_handler)
-                {
-                    if ((ptr_handler->type == PLUGIN_HANDLER_COMMAND)
-                        && (ascii_strcasecmp (ptr_handler->command, argv[0]) == 0))
-                    {
-                        gui_printf (NULL, "\n");
-                        gui_printf (NULL, "[p]");
-                        gui_printf (NULL, "  %s/%s",
-                                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
-                                    ptr_handler->command);
-                        if (ptr_handler->arguments &&
-                            ptr_handler->arguments[0])
-                            gui_printf (NULL, "  %s%s\n",
-                                        GUI_COLOR(COLOR_WIN_CHAT),
-                                        ptr_handler->arguments);
-                        else
-                            gui_printf (NULL, "\n");
-                        if (ptr_handler->description &&
-                            ptr_handler->description[0])
-                            gui_printf (NULL, "\n%s\n",
-                                        ptr_handler->description);
-                        if (ptr_handler->arguments_description &&
-                            ptr_handler->arguments_description[0])
-                            gui_printf (NULL, "\n%s\n",
-                                        ptr_handler->arguments_description);
-                        return 0;
-                    }
-                }
-            }
-#endif
             irc_display_prefix (NULL, NULL, PREFIX_ERROR);
             gui_printf (NULL,
                         _("No help available, \"%s\" is an unknown command\n"),
