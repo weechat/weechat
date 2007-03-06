@@ -15,7 +15,8 @@ arguments: arguments for command
 
 </programlisting>
 <command>is replaced by all arguments.</command>
-<programlisting>
+<programlisting>Variables $nick, $channel and $server are replaced by current nick/channel/server.
+
 </programlisting>
 <command>buffer  [action [args] | number | [[server] [channel]]]</command>
 <programlisting>

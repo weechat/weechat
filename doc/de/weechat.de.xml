@@ -2047,6 +2047,14 @@ plugin->log (plugin, "freenode", "#weechat", "test");
                   Plugins weitergegeben
                 </para>
               </listitem>
+              <listitem>
+                <para>
+                  <!-- TRANSLATION NEEDED -->
+                  <literal>PLUGIN_RC_OK_WITH_HIGHLIGHT</literal>: function
+                  successfully completed and make "highlight" on received
+                  message
+                </para>
+              </listitem>
             </itemizedlist>
           </para>
           <para>
@@ -5440,6 +5448,14 @@ end
                 <para>
                   <literal>PLUGIN_RC_OK_IGNORE_ALL</literal>: Die Nachricht wird weder
                   an WeeChat noch an andere Plugins übergeben
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <!-- TRANSLATION NEEDED -->
+                  <literal>PLUGIN_RC_OK_WITH_HIGHLIGHT</literal>: function
+                  successfully completed and make "highlight" on received
+                  message
                 </para>
               </listitem>
             </itemizedlist>

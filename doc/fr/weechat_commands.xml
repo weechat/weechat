@@ -15,7 +15,8 @@ paramètres: paramètres pour la commande
 
 </programlisting>
 <command>est remplacé par tous les paramètres.</command>
-<programlisting>
+<programlisting>Les variables $nick, $channel et $server sont remplacées par le pseudo/canal/serveur courant.
+
 </programlisting>
 <command>buffer  [action [args] | nombre | [[serveur] [canal]]]</command>
 <programlisting>

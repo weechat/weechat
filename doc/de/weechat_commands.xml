@@ -9,13 +9,14 @@
 <programlisting>
 einen Alias für einen Befehl anlegen
 
-Aliasname: Name des Alias
-   Befehl: Befehlsname (WeeChat- oder IRC-Befehl ohne führenden '/', mehrere Befehle können durch Semikola getrennt werden)
-Argumente: Argumente für den Befehl
+alias_name: name of alias
+   command: command name (WeeChat or IRC command, many commands can be separated by semicolons)
+arguments: arguments for command
 
 </programlisting>
-<command>wird durch alle Argumente ersetzt.</command>
-<programlisting>
+<command>is replaced by all arguments.</command>
+<programlisting>Variables $nick, $channel and $server are replaced by current nick/channel/server.
+
 </programlisting>
 <command>buffer  [Aktion [Argumente] | Nummer | [[Server] [Channel]]]</command>
 <programlisting>
