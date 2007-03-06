@@ -35,6 +35,8 @@
 #define PLUGIN_RC_OK_IGNORE_ALL      (PLUGIN_RC_OK_IGNORE_WEECHAT \
                                      | PLUGIN_RC_OK_IGNORE_PLUGINS)
                                         /* ignore WeeChat and other plugins */
+#define PLUGIN_RC_OK_WITH_HIGHLIGHT  4  /* ok and ask for highlight         */
+                                        /* (for message handler only)       */
 
 #define WEECHAT_IRC_COLOR_WHITE        0
 #define WEECHAT_IRC_COLOR_BLACK        1

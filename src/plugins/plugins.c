@@ -551,6 +551,8 @@ plugin_msg_handler_exec (char *server, char *irc_command, char *irc_message)
                             final_return_code = PLUGIN_RC_OK_IGNORE_WEECHAT;
                         if (return_code & PLUGIN_RC_OK_IGNORE_PLUGINS)
                             return final_return_code;
+                        if (return_code & PLUGIN_RC_OK_WITH_HIGHLIGHT)
+                            final_return_code = PLUGIN_RC_OK_WITH_HIGHLIGHT;
                     }
                 }
             }

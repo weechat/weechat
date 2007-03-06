@@ -2228,6 +2228,16 @@ weechat_lua_constant_plugin_rc_ok_ignore_all (lua_State *L)
     return 1;
 }
 
+static int
+weechat_lua_constant_plugin_rc_ok_with_highlight (lua_State *L)
+{
+    /* make C compiler happy */
+    (void) L;
+    
+    lua_pushnumber (lua_current_interpreter, PLUGIN_RC_OK_WITH_HIGHLIGHT);
+    return 1;
+}
+
 /*
  * Lua subroutines
  */
@@ -2272,6 +2282,7 @@ const struct luaL_reg weechat_lua_funcs[] = {
     { "PLUGIN_RC_OK_IGNORE_WEECHAT", weechat_lua_constant_plugin_rc_ok_ignore_weechat },
     { "PLUGIN_RC_OK_IGNORE_PLUGINS", weechat_lua_constant_plugin_rc_ok_ignore_plugins },
     { "PLUGIN_RC_OK_IGNORE_ALL", weechat_lua_constant_plugin_rc_ok_ignore_all },
+    { "PLUGIN_RC_OK_WITH_HIGHLIGHT", weechat_lua_constant_plugin_rc_ok_with_highlight },
     { NULL, NULL }
 };
 

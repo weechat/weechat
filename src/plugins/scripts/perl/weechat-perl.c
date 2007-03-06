@@ -1940,6 +1940,7 @@ weechat_perl_xs_init (pTHX)
     newCONSTSUB (stash, "weechat::PLUGIN_RC_OK_IGNORE_WEECHAT", newSViv (PLUGIN_RC_OK_IGNORE_WEECHAT));
     newCONSTSUB (stash, "weechat::PLUGIN_RC_OK_IGNORE_PLUGINS", newSViv (PLUGIN_RC_OK_IGNORE_PLUGINS));
     newCONSTSUB (stash, "weechat::PLUGIN_RC_OK_IGNORE_ALL", newSViv (PLUGIN_RC_OK_IGNORE_ALL));
+    newCONSTSUB (stash, "weechat::PLUGIN_RC_OK_WITH_HIGHLIGHT", newSViv (PLUGIN_RC_OK_WITH_HIGHLIGHT));
 }
 
 /*

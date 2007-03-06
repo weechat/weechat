@@ -2607,7 +2607,8 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     rb_define_const(ruby_mWeechat, "PLUGIN_RC_KO", INT2NUM(PLUGIN_RC_KO));
     rb_define_const(ruby_mWeechat, "PLUGIN_RC_OK_IGNORE_WEECHAT", INT2NUM(PLUGIN_RC_OK_IGNORE_WEECHAT));
     rb_define_const(ruby_mWeechat, "PLUGIN_RC_OK_IGNORE_PLUGINS", INT2NUM(PLUGIN_RC_OK_IGNORE_PLUGINS));
-    rb_define_const(ruby_mWeechat, "PLUGIN_RC_OK_IGNORE_ALL", INT2NUM(PLUGIN_RC_OK_IGNORE_ALL));    
+    rb_define_const(ruby_mWeechat, "PLUGIN_RC_OK_IGNORE_ALL", INT2NUM(PLUGIN_RC_OK_IGNORE_ALL));
+    rb_define_const(ruby_mWeechat, "PLUGIN_RC_OK_WITH_HIGHLIGHT", INT2NUM(PLUGIN_RC_OK_WITH_HIGHLIGHT));
     rb_define_module_function (ruby_mWeechat, "register", weechat_ruby_register, -1);
     rb_define_module_function (ruby_mWeechat, "set_charset", weechat_ruby_set_charset, 1);
     rb_define_module_function (ruby_mWeechat, "print", weechat_ruby_print, -1);

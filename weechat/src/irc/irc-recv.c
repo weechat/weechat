@@ -50,7 +50,7 @@
 
 
 char *irc_last_command_received = NULL;
-int command_ignored;
+int command_ignored, command_force_highlight;
 
 
 /*
@@ -105,6 +105,10 @@ irc_is_highlight (char *message, char *nick)
     /* empty message ? */
     if (!message || !message[0])
         return 0;
+
+    /* highlight asked by a plugin */
+    if (command_force_highlight)
+        return 1;
     
     /* highlight by nickname */
     match = strstr (message, nick);
@@ -272,6 +276,7 @@ irc_recv_command (t_irc_server *server, char *entire_line,
                                         cmd_name,
                                         NULL,
                                         server->name);
+        command_force_highlight = 0;
 #ifdef PLUGINS
         return_code = plugin_msg_handler_exec (server->name,
                                                cmd_name,
@@ -280,6 +285,12 @@ irc_recv_command (t_irc_server *server, char *entire_line,
            so we ignore this message in standard handler */
         if (return_code & PLUGIN_RC_OK_IGNORE_WEECHAT)
             command_ignored = 1;
+        /* plugin asked for highlight ? */
+        if (return_code & PLUGIN_RC_OK_WITH_HIGHLIGHT)
+        {
+            command_force_highlight = 1;
+            gui_printf (NULL, "highlight!!!\n");
+        }
 #endif
         pos = (dup_host) ? strchr (dup_host, '!') : NULL;
         if (pos)

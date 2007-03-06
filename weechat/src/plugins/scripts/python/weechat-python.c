@@ -2296,6 +2296,7 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
     PyDict_SetItemString(weechat_dict, "PLUGIN_RC_OK_IGNORE_WEECHAT", PyInt_FromLong((long) PLUGIN_RC_OK_IGNORE_WEECHAT));
     PyDict_SetItemString(weechat_dict, "PLUGIN_RC_OK_IGNORE_PLUGINS", PyInt_FromLong((long) PLUGIN_RC_OK_IGNORE_PLUGINS));
     PyDict_SetItemString(weechat_dict, "PLUGIN_RC_OK_IGNORE_ALL", PyInt_FromLong((long) PLUGIN_RC_OK_IGNORE_ALL));
+    PyDict_SetItemString(weechat_dict, "PLUGIN_RC_OK_WITH_HIGHLIGHT", PyInt_FromLong((long) PLUGIN_RC_OK_WITH_HIGHLIGHT));
     
     weechat_outputs = Py_InitModule("weechatOutputs", weechat_python_output_funcs);
     if (weechat_outputs == NULL)
