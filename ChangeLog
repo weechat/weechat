@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-03-05
+ChangeLog - 2007-03-06
 
 
 Version 0.2.4 (under dev!):
+   * fixed bug with server buffer when "look_one_server_buffer" is ON and
+     server buffer is moved to any number > 1 (bug #19219)
    * fixed /help command: displays plugin help for redefined commands
      (bug #19166)
    * prefix '/' disabled in commands (patch #5769)

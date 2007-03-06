@@ -94,7 +94,7 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
     weechat_log_printf ("Creating new buffer\n");
 #endif
     
-    /* use first buffer if no server was assigned to this buffer */
+    /* use first buffer if no server is assigned to this buffer */
     if ((type == BUFFER_TYPE_STANDARD) && gui_buffers
         && (!SERVER(gui_buffers)) && (!channel))
     {
@@ -111,19 +111,20 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
         gui_buffers->completion.server = server;
         return gui_buffers;
     }
-    
+
+    /* use "all servers" buffer if found */
     if (cfg_look_one_server_buffer && (type == BUFFER_TYPE_STANDARD) &&
         gui_buffers && server && !channel)
     {
         ptr_buffer = gui_buffer_servers_search ();
         if (ptr_buffer)
         {
-            ((t_irc_server *)(server))->buffer = gui_buffers;
-            gui_buffers->server = server;
+            ((t_irc_server *)(server))->buffer = ptr_buffer;
+            ptr_buffer->server = server;
             if (switch_to_buffer)
-                gui_window_switch_to_buffer (window, gui_buffers);
-            gui_window_redraw_buffer (gui_buffers);
-            return gui_buffers;
+                gui_window_switch_to_buffer (window, ptr_buffer);
+            gui_window_redraw_buffer (ptr_buffer);
+            return ptr_buffer;
         }
     }
     
