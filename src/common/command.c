@@ -54,7 +54,7 @@ t_weechat_command weechat_commands[] =
     N_("alias_name: name of alias\n"
        "   command: command name (WeeChat or IRC command, many commands "
        "can be separated by semicolons)\n"
-       "arguments: arguments for command\n\n"
+       " arguments: arguments for command\n\n"
         "Note: in command, special variables $1, $2,..,$9 are replaced by "
        "arguments given by user, and $* is replaced by all arguments.\n"
        "Variables $nick, $channel and $server are replaced by current "
