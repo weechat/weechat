@@ -22,7 +22,7 @@ import popen2
 import traceback
 
 __desc__ = 'Amarok control and now playing script for Weechat.'
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 __author__ = 'Eric Gach <eric.gach@gmail.com>'
 
 dcop = {}
@@ -119,12 +119,7 @@ def amarokInfobarUpdate():
         return weechat.PLUGIN_RC_OK
     else:
         song = __getSongInfo()
-        format = infobar['format'].replace('%artist%', song['artist'])
-        format = format.replace('%title%', song['title'])
-        format = format.replace('%album%', song['album'])
-        format = format.replace('%cTime%', song['cTime'])
-        format = format.replace('%tTime%', song['tTime'])
-        format = format.replace('%bitrate%', song['bitrate'])
+        format = __formatNP(infobar['format'], song)
         weechat.print_infobar(infobar['update'], format)
         return weechat.PLUGIN_RC_OK
 
@@ -137,12 +132,7 @@ def amarokNowPlaying(server):
         return weechat.PLUGIN_RC_KO
     else:
         song = __getSongInfo()
-        format = output['format'].replace('%artist%', song['artist'])
-        format = format.replace('%title%', song['title'])
-        format = format.replace('%album%', song['album'])
-        format = format.replace('%cTime%', song['cTime'])
-        format = format.replace('%tTime%', song['tTime'])
-        format = format.replace('%bitrate%', song['bitrate'])
+        format = __formatNP(output['format'], song)
         weechat.command(format)
         return weechat.PLUGIN_RC_OK
 
@@ -152,6 +142,16 @@ def amarokUnload():
         weechat.remove_infobar(0)
         weechat.remove_timer_handler('amarokInfobarUpdate')
     return weechat.PLUGIN_RC_OK
+
+def __formatNP(template, song):
+    np = template.replace('%artist%', song['artist'])
+    np = np.replace('%title%', song['title'])
+    np = np.replace('%album%', song['album'])
+    np = np.replace('%cTime%', song['cTime'])
+    np = np.replace('%tTime%', song['tTime'])
+    np = np.replace('%bitrate%', song['bitrate'])
+    np = np.replace('%year%', song['year'])
+    return np
 
 def __dcopCommand(cmd):
     if dcop['user'] == '':
@@ -190,15 +190,16 @@ def __getSongInfo():
             __dcopCommand('album'),
             __dcopCommand('currentTime'),
             __dcopCommand('totalTime'),
-            __dcopCommand('bitrate')
+            __dcopCommand('bitrate'),
+            __dcopCommand('year')
         )
     )
 
-    song['artist'], song['title'], song['album'], song['cTime'], song['tTime'], song['bitrate'], empty = songs.split("\n")
+    song['artist'], song['title'], song['album'], song['cTime'], song['tTime'], song['bitrate'], song['year'], empty = songs.split("\n")
     return song
 
 def __loadSettings():
-    dcop['user'] = __loadSetting('dcop_user', 'user')
+    dcop['user'] = __loadSetting('dcop_user', '')
     debug['file'] = os.path.expanduser(__loadSetting('debug_file', '~/amarok_debug.txt'))
     infobar['enabled'] = __loadSetting('infobar_enabled', '0', 'bool')
     infobar['format'] = __loadSetting('infobar_format', 'Now Playing: %title% by %artist%')
@@ -212,7 +213,8 @@ def __loadSettings():
 def __loadSetting(setting, default=None, type=None):
     value = weechat.get_plugin_config(setting)
     if value == '' and default != None:
-        weechat.set_plugin_config(setting, default)
+        if default != '': # no reason to set the thing we can't get back
+            weechat.set_plugin_config(setting, default)
         value = default
 
     if type == 'int' or type == 'bool':
