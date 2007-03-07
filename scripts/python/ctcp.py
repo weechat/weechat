@@ -15,9 +15,10 @@
   
   Hope you enjoy it :-)
     -- Henning aka asmanian
+    -- Leonid Evdokimov (weechat at darkk dot net one more dot ru)
 """
 
-version = "0.8"
+version = "0.9"
 history = """
   0.1 initial
   0.2
@@ -35,6 +36,8 @@ history = """
     - added multi-server support
   0.8
     - fixed on_msg (occasionally caused a minor fault)
+  0.9
+    - added dump_to_servchan and dump_to_current setting
 """
 
 short_syntax = """[REQUEST ANSWER]"""
@@ -65,13 +68,20 @@ syntax = """  Examples:
 import weechat as wc
 import re
 
-wc.register("ctcp", version, "", "Customize CTCP replies")
-wc.add_command_handler("set_ctcp", "set", "", short_syntax, syntax)
-wc.add_message_handler("privmsg", "on_msg")
+if wc.register("ctcp", version, "", "Customize CTCP replies"):
+  wc.add_command_handler("set_ctcp", "set", "", short_syntax, syntax)
+  wc.add_message_handler("privmsg", "on_msg")
 
-if not wc.get_plugin_config("requests"):
-  wc.set_plugin_config("requests", " ".join(["VERSION", "USERINFO", "FINGER", "TIME", "PING"]))
+  if not wc.get_plugin_config("requests"):
+    wc.set_plugin_config("requests", " ".join(["VERSION", "USERINFO", "FINGER", "TIME", "PING"]))
 
+  for key, default in {'dump_to_servchan': 'OFF', 'dump_to_current': 'ON'}.iteritems():
+    value = wc.get_plugin_config(key)
+    if not value in ['ON', 'OFF']:
+      if value:
+        wc.prnt("[ctcp]: invalid %s value, resetting to %s" % (key, default))
+      wc.set_plugin_config(key, default)
+  
 def get_answers():
   # Strangely, get_plugin_config sometimes returns
   # the integer 0
@@ -125,7 +135,10 @@ def on_msg(server, args):
           l, r = match.span()
           ans = ans[:l+1] + info.get(match.group(1), "$" + match.group(1)) + ans[r:]
       
-      wc.prnt("CTCP %s received from %s (on %s)" % (req, source, server))
+      if wc.get_plugin_config("dump_to_servchan") == 'ON':
+        wc.prnt("CTCP %s received from %s (on %s)" % (req, source, server), server)
+      if wc.get_plugin_config("dump_to_current") == 'ON':
+        wc.prnt("CTCP %s received from %s (on %s)" % (req, source, server))
       wc.command("/quote NOTICE %s :\x01%s %s\x01" % (
             source, req, ans), "", server)
       return wc.PLUGIN_RC_OK_IGNORE_ALL
