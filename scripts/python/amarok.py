@@ -18,12 +18,18 @@
 
 import weechat
 import os
-import popen2
+import subprocess
 import traceback
 
 __desc__ = 'Amarok control and now playing script for Weechat.'
-__version__ = '1.0.1'
+__version__ = '1.0.2'
 __author__ = 'Eric Gach <eric.gach@gmail.com>'
+# With changes by Leonid Evdokimov (weechat at darkk dot net another dot ru):
+# http://darkk.net.ru/weechat/amarok.py
+# v 1.0.1 - added %year%
+# v 1.0.2 - fixed bug with dead zombie-childs 
+#           fixed bug when loading second instance of the script
+#           added better default for dcop_user setting
 
 dcop = {}
 debug = {}
@@ -103,6 +109,7 @@ def amarokDisplayHelp(server):
     weechat.prnt('  %artist%    - Replaced with the song artist.', '', server)
     weechat.prnt('  %title%     - Replaced with the song title.', '', server)
     weechat.prnt('  %album%     - Replaced with the song album.', '', server)
+    weechat.prnt('  %year%      - Replaced with the song year tag.', '', server)
     weechat.prnt('  %cTime%     - Replaced with how long the song has been playing.', '', server)
     weechat.prnt('  %tTime%     - Replaced with the length of the song.', '', server)
     weechat.prnt('  %bitrate%   - Replaced with the bitrate of the song.', '', server)
@@ -154,30 +161,22 @@ def __formatNP(template, song):
     return np
 
 def __dcopCommand(cmd):
-    if dcop['user'] == '':
+    if dcop['user'] == ':':
         return 'dcop amarok player %s' % (cmd)
     else:
         return 'dcop --user %s amarok player %s' % (dcop['user'], cmd)
 
 def __executeCommands(cmds):
+    from subprocess import PIPE
     cmds = " && ".join(cmds)
     if ssh['enabled']:
-        stdout, stdin, stderr = popen2.popen3('ssh -p %d %s@%s "%s"' % (ssh['port'], ssh['user'], ssh['host'], cmds))
-    else:
-        stdout, stdin, stderr = popen2.popen3(cmds)
-
-    error = stderr.read()
+        cmds = 'ssh -p %d %s@%s "%s"' % (ssh['port'], ssh['user'], ssh['host'], cmds)
+    proc = subprocess.Popen(cmds, shell = True, stderr = PIPE, stdout = PIPE, close_fds = True)
+    error = proc.stderr.read()
     if error != '':
-        pass
-
-    output = stdout.read()
-    try:
-        stdout.close()
-        stdin.close()
-        stderr.close()
-    except:
-        pass
-
+        weechat.prnt(error)
+    output = proc.stdout.read()
+    proc.wait()
     return output
 
 def __getSongInfo():
@@ -199,7 +198,7 @@ def __getSongInfo():
     return song
 
 def __loadSettings():
-    dcop['user'] = __loadSetting('dcop_user', '')
+    dcop['user'] = __loadSetting('dcop_user', ':')
     debug['file'] = os.path.expanduser(__loadSetting('debug_file', '~/amarok_debug.txt'))
     infobar['enabled'] = __loadSetting('infobar_enabled', '0', 'bool')
     infobar['format'] = __loadSetting('infobar_format', 'Now Playing: %title% by %artist%')
@@ -213,8 +212,7 @@ def __loadSettings():
 def __loadSetting(setting, default=None, type=None):
     value = weechat.get_plugin_config(setting)
     if value == '' and default != None:
-        if default != '': # no reason to set the thing we can't get back
-            weechat.set_plugin_config(setting, default)
+        weechat.set_plugin_config(setting, default)
         value = default
 
     if type == 'int' or type == 'bool':
@@ -224,10 +222,10 @@ def __loadSetting(setting, default=None, type=None):
 
     return value
 
-weechat.register('amarok', __version__, 'amarokUnload', __desc__)
-__loadSettings()
-if infobar['enabled']:
-    amarokInfobarUpdate()
-    weechat.add_timer_handler(infobar['update'], 'amarokInfobarUpdate')
-weechat.add_command_handler('amarok', 'amarokCommand', 'Manage amarok or display now playing information.', 'next|np|play|pause|prev|stop|infobar')
+if weechat.register('amarok', __version__, 'amarokUnload', __desc__):
+    __loadSettings()
+    if infobar['enabled']:
+        amarokInfobarUpdate()
+        weechat.add_timer_handler(infobar['update'], 'amarokInfobarUpdate')
+    weechat.add_command_handler('amarok', 'amarokCommand', 'Manage amarok or display now playing information.', 'next|np|play|pause|prev|stop|infobar')
 
