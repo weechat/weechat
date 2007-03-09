@@ -2115,26 +2115,18 @@ weechat_lua_get_buffer_data (lua_State *L)
     channel = NULL;
     
     n = lua_gettop (lua_current_interpreter);
-
-    switch (n)
+    if (n != 2)
     {
-    case 0:
-	break;
-    case 1:
-	server = lua_tostring (lua_current_interpreter, -1);
-	break;
-    case 2:
-	server  = lua_tostring (lua_current_interpreter, -2);
-	channel = lua_tostring (lua_current_interpreter, -1);
-	break;
-    default:
 	lua_plugin->print_server (lua_plugin,
 				  "Lua error: wrong parameters for "
 				  "\"get_buffer_data\" function");
 	lua_pushnumber (lua_current_interpreter, 0);
 	return 1;
     }
-
+    
+    server  = lua_tostring (lua_current_interpreter, -2);
+    channel = lua_tostring (lua_current_interpreter, -1);
+    
     buffer_data = lua_plugin->get_buffer_data (lua_plugin, (char *) server, (char *) channel);
     if (!buffer_data)
     {

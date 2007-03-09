@@ -1843,7 +1843,7 @@ static XS (XS_weechat_get_buffer_data)
 	XSRETURN_EMPTY;
     }
     
-    if (items > 2)
+    if (items != 2)
     {
         perl_plugin->print_server (perl_plugin,
                                    "Perl error: wrong parameters for "

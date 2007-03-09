@@ -522,7 +522,7 @@ weechat_python_remove_infobar (PyObject *self, PyObject *args)
     
     how_many = 0;
     
-    if (!PyArg_ParseTuple (args, "|is", &how_many))
+    if (!PyArg_ParseTuple (args, "|i", &how_many))
     {
         python_plugin->print_server (python_plugin,
                                      "Python error: wrong parameters for "
@@ -2050,8 +2050,11 @@ weechat_python_get_buffer_data (PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
         return Py_None;
     }
-
-    if (!PyArg_ParseTuple (args, "|ss", &server, &channel))
+    
+    server = NULL;
+    channel = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss|", &server, &channel))
     {
         python_plugin->print_server (python_plugin,
                                      "Python error: wrong parameters for "

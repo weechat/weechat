@@ -2023,11 +2023,10 @@ weechat_ruby_get_buffer_info (VALUE class)
  */
 
 static VALUE
-weechat_ruby_get_buffer_data (int argc, VALUE *argv, VALUE class)
+weechat_ruby_get_buffer_data (VALUE class, VALUE server, VALUE channel)
 {
     t_plugin_buffer_line *buffer_data, *ptr_data;
     VALUE data_list, data_list_member;
-    VALUE server, channel;
     char *c_server, *c_channel;
     char timebuffer[64];
 
@@ -2042,24 +2041,25 @@ weechat_ruby_get_buffer_data (int argc, VALUE *argv, VALUE class)
         return INT2FIX (0);
     }
 
-    server = Qnil;
-    channel = Qnil;
     c_server = NULL;
     c_channel = NULL;
 
-    rb_scan_args (argc, argv, "02", &server, &channel);
-    
-    if (!NIL_P (server))
+    if (NIL_P (server) || NIL_P (channel))
     {
-	Check_Type (server, T_STRING);
-	c_server = STR2CSTR (server);
+	ruby_plugin->print_server (ruby_plugin,
+                                   "Ruby error: wrong parameters for "
+                                   "\"get_buffer_data\" function");
+	return INT2FIX (0);
     }
     
-    if (!NIL_P (channel))
-    {
-	Check_Type (channel, T_STRING);
-	c_channel = STR2CSTR (channel);
-    }
+    Check_Type (server, T_STRING);
+    Check_Type (channel, T_STRING);
+
+    c_server = STR2CSTR (server);
+    c_channel = STR2CSTR (channel);
+
+    if (!c_server || !c_channel)
+	return INT2FIX (0);
     
     data_list = rb_ary_new();    
     if (NIL_P (data_list))
@@ -2640,7 +2640,7 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     rb_define_module_function (ruby_mWeechat, "get_irc_color", weechat_ruby_get_irc_color, 1);
     rb_define_module_function (ruby_mWeechat, "get_window_info", weechat_ruby_get_window_info, 0);
     rb_define_module_function (ruby_mWeechat, "get_buffer_info", weechat_ruby_get_buffer_info, 0);
-    rb_define_module_function (ruby_mWeechat, "get_buffer_data", weechat_ruby_get_buffer_data, -1);
+    rb_define_module_function (ruby_mWeechat, "get_buffer_data", weechat_ruby_get_buffer_data, 2);
 
     /* redirect stdin and stdout */
     ruby_mWeechatOutputs = rb_define_module("WeechatOutputs");
