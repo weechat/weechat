@@ -110,8 +110,18 @@ gui_status_draw (t_gui_buffer *buffer, int erase)
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
                                           COLOR_WIN_STATUS_CHANNEL);
             if (SERVER(ptr_win->buffer)->is_connected)
-                wprintw (GUI_CURSES(ptr_win)->win_status, "[%s] ",
-                         SERVER(ptr_win->buffer)->name);
+            {
+                if ((ptr_win->buffer->all_servers) && (SERVER(ptr_win->buffer)->is_away))
+                {
+                    wprintw (GUI_CURSES(ptr_win)->win_status, "[%s",
+                             SERVER(ptr_win->buffer)->name);
+                    wprintw (GUI_CURSES(ptr_win)->win_status, _("(away)"));
+                    wprintw (GUI_CURSES(ptr_win)->win_status, "] ");
+                }
+                else
+                    wprintw (GUI_CURSES(ptr_win)->win_status, "[%s] ",
+                             SERVER(ptr_win->buffer)->name);
+            }
             else
                 wprintw (GUI_CURSES(ptr_win)->win_status, "(%s) ",
                          SERVER(ptr_win->buffer)->name);
