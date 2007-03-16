@@ -11,7 +11,7 @@ create an alias for a command
 
 alias_name: name of alias
    command: command name (WeeChat or IRC command, many commands can be separated by semicolons)
-arguments: arguments for command
+ arguments: arguments for command
 
 </programlisting>
 <command>is replaced by all arguments.</command>

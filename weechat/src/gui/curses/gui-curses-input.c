@@ -78,6 +78,9 @@ gui_input_get_prompt_length (t_gui_window *window, char *nick)
     char *pos, saved_char;
     int char_size, length;
     
+    if (window->buffer->text_search != TEXT_SEARCH_DISABLED)
+        return utf8_width_screen (_("Text search: "));
+    
     length = 0;
     pos = cfg_look_input_format;
     while (pos && pos[0])
@@ -152,6 +155,16 @@ gui_input_draw_prompt (t_gui_window *window, char *nick)
     int char_size;
     
     wmove (GUI_CURSES(window)->win_input, 0, 0);
+    
+    if (window->buffer->text_search != TEXT_SEARCH_DISABLED)
+    {
+        gui_window_set_weechat_color (GUI_CURSES(window)->win_input,
+                                      COLOR_WIN_INPUT);
+        wprintw (GUI_CURSES(window)->win_input, "%s",
+                 _("Text search: "));
+        return;
+    }
+    
     pos = cfg_look_input_format;
     while (pos && pos[0])
     {

@@ -51,6 +51,10 @@
 #define NOTIFY_LEVEL_MAX        3
 #define NOTIFY_LEVEL_DEFAULT    NOTIFY_LEVEL_MAX
 
+#define TEXT_SEARCH_DISABLED    0
+#define TEXT_SEARCH_BACKWARD    1
+#define TEXT_SEARCH_FORWARD     2
+
 /* buffer structures */
 
 typedef struct t_gui_line t_gui_line;
@@ -121,6 +125,10 @@ struct t_gui_buffer
     t_history *last_history;        /* last command in history              */
     t_history *ptr_history;         /* current command in history           */
     int num_history;                /* number of commands in history        */
+    
+    /* text search */
+    int text_search;                /* text search type                     */
+    char *text_search_input;        /* input saved before text search       */
     
     /* link to previous/next buffer */
     t_gui_buffer *prev_buffer;      /* link to previous buffer              */

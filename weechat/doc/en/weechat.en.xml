@@ -509,6 +509,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 </entry>
               </row>
               <row>
+                <entry>Ctrl + S</entry>
+                <entry>
+                  Search for text in buffer history
+                </entry>
+              </row>
+              <row>
                 <entry>Ctrl + T</entry>
                 <entry>
                   Transpose chars
@@ -566,7 +572,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
               <row>
                 <entry>Up arrow / Down arrow</entry>
                 <entry>
-                  Call again last commands/messages
+                  Call again last commands/messages (in search mode: search
+                  up/down)
                 </entry>
               </row>
               <row>

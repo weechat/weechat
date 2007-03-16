@@ -91,13 +91,15 @@ void
 gui_action_return (t_gui_window *window, char *args)
 {
     char *command;
-
+    
     /* make C compiler happy */
     (void) args;
     
     if (window->buffer->has_input)
     {
-        if (window->buffer->input_buffer_size > 0)
+        if (window->buffer->text_search != TEXT_SEARCH_DISABLED)
+            gui_buffer_search_stop (window);
+        else if (window->buffer->input_buffer_size > 0)
         {
             window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
             window->buffer->input_buffer_color_mask[window->buffer->input_buffer_size] = '\0';
@@ -133,7 +135,8 @@ gui_action_tab (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->has_input)
+    if (window->buffer->has_input
+        && (window->buffer->text_search == TEXT_SEARCH_DISABLED))
     {
         completion_search (&(window->buffer->completion), 1,
                            window->buffer->input_buffer,
@@ -154,7 +157,8 @@ gui_action_tab_previous (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->has_input)
+    if (window->buffer->has_input
+        && (window->buffer->text_search == TEXT_SEARCH_DISABLED))
     {
         completion_search (&(window->buffer->completion), -1,
                            window->buffer->input_buffer,
@@ -201,7 +205,7 @@ gui_action_backspace (t_gui_window *window, char *args)
 }
 
 /*
- * gui_action_delete: delete key
+ * gui_action_delete: delete next char
  */
 
 void
@@ -685,53 +689,62 @@ gui_action_up (t_gui_window *window, char *args)
     }
     else if (window->buffer->has_input)
     {
-        if (window->buffer->ptr_history)
+        if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
         {
-            window->buffer->ptr_history =
-                window->buffer->ptr_history->next_history;
-            if (!window->buffer->ptr_history)
-                window->buffer->ptr_history =
-                    window->buffer->history;
-        }
-        else
-            window->buffer->ptr_history =
-                window->buffer->history;
-        if (window->buffer->ptr_history)
-        {
-	    /* bash/readline like use of history */
-            if (window->buffer->ptr_history->prev_history == NULL)
+            if (window->buffer->ptr_history)
             {
-                if (window->buffer->input_buffer_size > 0)
-                {
-                    window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-                    window->buffer->input_buffer_color_mask[window->buffer->input_buffer_size] = '\0';
-                    history_buffer_add (window->buffer, window->buffer->input_buffer);
-                    history_global_add (window->buffer->input_buffer);
-                }
+                window->buffer->ptr_history =
+                    window->buffer->ptr_history->next_history;
+                if (!window->buffer->ptr_history)
+                    window->buffer->ptr_history =
+                        window->buffer->history;
             }
             else
+                window->buffer->ptr_history =
+                    window->buffer->history;
+            if (window->buffer->ptr_history)
             {
-                if (window->buffer->input_buffer_size > 0)
+                /* bash/readline like use of history */
+                if (window->buffer->ptr_history->prev_history == NULL)
                 {
-                    window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-                    window->buffer->input_buffer_color_mask[window->buffer->input_buffer_size] = '\0';
-                    if (window->buffer->ptr_history->prev_history->text)
-			free(window->buffer->ptr_history->prev_history->text);
-                    window->buffer->ptr_history->prev_history->text = strdup (window->buffer->input_buffer);
+                    if (window->buffer->input_buffer_size > 0)
+                    {
+                        window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
+                        window->buffer->input_buffer_color_mask[window->buffer->input_buffer_size] = '\0';
+                        history_buffer_add (window->buffer, window->buffer->input_buffer);
+                        history_global_add (window->buffer->input_buffer);
+                    }
                 }
+                else
+                {
+                    if (window->buffer->input_buffer_size > 0)
+                    {
+                        window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
+                        window->buffer->input_buffer_color_mask[window->buffer->input_buffer_size] = '\0';
+                        if (window->buffer->ptr_history->prev_history->text)
+                            free(window->buffer->ptr_history->prev_history->text);
+                        window->buffer->ptr_history->prev_history->text = strdup (window->buffer->input_buffer);
+                    }
+                }
+                window->buffer->input_buffer_size =
+                    strlen (window->buffer->ptr_history->text);
+                window->buffer->input_buffer_length =
+                    utf8_strlen (window->buffer->ptr_history->text);
+                gui_input_optimize_size (window->buffer);
+                window->buffer->input_buffer_pos =
+                    window->buffer->input_buffer_length;
+                window->buffer->input_buffer_1st_display = 0;
+                strcpy (window->buffer->input_buffer,
+                        window->buffer->ptr_history->text);
+                gui_input_init_color_mask (window->buffer);
+                gui_input_draw (window->buffer, 0);
             }
-            window->buffer->input_buffer_size =
-                strlen (window->buffer->ptr_history->text);
-            window->buffer->input_buffer_length =
-                utf8_strlen (window->buffer->ptr_history->text);
-            gui_input_optimize_size (window->buffer);
-            window->buffer->input_buffer_pos =
-                window->buffer->input_buffer_length;
-            window->buffer->input_buffer_1st_display = 0;
-            strcpy (window->buffer->input_buffer,
-                    window->buffer->ptr_history->text);
-            gui_input_init_color_mask (window->buffer);
-            gui_input_draw (window->buffer, 0);
+        }
+        else
+        {
+            /* search backward in buffer history */
+            window->buffer->text_search = TEXT_SEARCH_BACKWARD;
+            (void) gui_buffer_search_text (window);
         }
     }
 }
@@ -746,7 +759,8 @@ gui_action_up_global (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->has_input)
+    if (window->buffer->has_input
+        && (window->buffer->text_search == TEXT_SEARCH_DISABLED))
     {
         if (history_global_ptr)
         {
@@ -815,33 +829,42 @@ gui_action_down (t_gui_window *window, char *args)
     }
     else if (window->buffer->has_input)
     {
-        if (window->buffer->ptr_history)
+        if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
         {
-            window->buffer->ptr_history =
-                window->buffer->ptr_history->prev_history;
             if (window->buffer->ptr_history)
             {
-                window->buffer->input_buffer_size =
-                    strlen (window->buffer->ptr_history->text);
-                window->buffer->input_buffer_length =
-                    utf8_strlen (window->buffer->ptr_history->text);
+                window->buffer->ptr_history =
+                    window->buffer->ptr_history->prev_history;
+                if (window->buffer->ptr_history)
+                {
+                    window->buffer->input_buffer_size =
+                        strlen (window->buffer->ptr_history->text);
+                    window->buffer->input_buffer_length =
+                        utf8_strlen (window->buffer->ptr_history->text);
+                }
+                else
+                {
+                    window->buffer->input_buffer_size = 0;
+                    window->buffer->input_buffer_length = 0;
+                }
+                gui_input_optimize_size (window->buffer);
+                window->buffer->input_buffer_pos =
+                    window->buffer->input_buffer_length;
+                window->buffer->input_buffer_1st_display = 0;
+                if (window->buffer->ptr_history)
+                {
+                    strcpy (window->buffer->input_buffer,
+                            window->buffer->ptr_history->text);
+                    gui_input_init_color_mask (window->buffer);
+                }
+                gui_input_draw (window->buffer, 0);
             }
-            else
-            {
-                window->buffer->input_buffer_size = 0;
-                window->buffer->input_buffer_length = 0;
-            }
-            gui_input_optimize_size (window->buffer);
-            window->buffer->input_buffer_pos =
-                window->buffer->input_buffer_length;
-            window->buffer->input_buffer_1st_display = 0;
-            if (window->buffer->ptr_history)
-            {
-                strcpy (window->buffer->input_buffer,
-                        window->buffer->ptr_history->text);
-                gui_input_init_color_mask (window->buffer);
-            }
-            gui_input_draw (window->buffer, 0);
+        }
+        else
+        {
+            /* search forward in buffer history */
+            window->buffer->text_search = TEXT_SEARCH_FORWARD;
+            (void) gui_buffer_search_text (window);
         }
     }
 }
@@ -856,7 +879,8 @@ gui_action_down_global (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->has_input)
+    if (window->buffer->has_input
+        && (window->buffer->text_search == TEXT_SEARCH_DISABLED))
     {
         if (history_global_ptr)
         {
@@ -1053,21 +1077,24 @@ gui_action_jump_smart (t_gui_window *window, char *args)
 {
     /* make C compiler happy */
     (void) args;
-    
-    if (hotlist)
+
+    if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
     {
-        if (!hotlist_initial_buffer)
-            hotlist_initial_buffer = window->buffer;
-        gui_window_switch_to_buffer (window, hotlist->buffer);
-        gui_window_redraw_buffer (window->buffer);
-    }
-    else
-    {
-        if (hotlist_initial_buffer)
+        if (hotlist)
         {
-            gui_window_switch_to_buffer (window, hotlist_initial_buffer);
+            if (!hotlist_initial_buffer)
+                hotlist_initial_buffer = window->buffer;
+            gui_window_switch_to_buffer (window, hotlist->buffer);
             gui_window_redraw_buffer (window->buffer);
-            hotlist_initial_buffer = NULL;
+        }
+        else
+        {
+            if (hotlist_initial_buffer)
+            {
+                gui_window_switch_to_buffer (window, hotlist_initial_buffer);
+                gui_window_redraw_buffer (window->buffer);
+                hotlist_initial_buffer = NULL;
+            }
         }
     }
 }
@@ -1081,20 +1108,23 @@ gui_action_jump_dcc (t_gui_window *window, char *args)
 {
     /* make C compiler happy */
     (void) args;
-    
-    if (window->buffer->type == BUFFER_TYPE_DCC)
+
+    if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
     {
-        if (gui_buffer_before_dcc)
+        if (window->buffer->type == BUFFER_TYPE_DCC)
         {
-            gui_window_switch_to_buffer (window,
-                                         gui_buffer_before_dcc);
-            gui_window_redraw_buffer (window->buffer);
+            if (gui_buffer_before_dcc)
+            {
+                gui_window_switch_to_buffer (window,
+                                             gui_buffer_before_dcc);
+                gui_window_redraw_buffer (window->buffer);
+            }
         }
-    }
-    else
-    {
-        gui_buffer_before_dcc = window->buffer;
-        gui_buffer_switch_dcc (window);
+        else
+        {
+            gui_buffer_before_dcc = window->buffer;
+            gui_buffer_switch_dcc (window);
+        }
     }
 }
 
@@ -1107,20 +1137,23 @@ gui_action_jump_raw_data (t_gui_window *window, char *args)
 {
     /* make C compiler happy */
     (void) args;
-    
-    if (window->buffer->type == BUFFER_TYPE_RAW_DATA)
+
+    if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
     {
-        if (gui_buffer_before_raw_data)
+        if (window->buffer->type == BUFFER_TYPE_RAW_DATA)
         {
-            gui_window_switch_to_buffer (window,
-                                         gui_buffer_before_raw_data);
-            gui_window_redraw_buffer (window->buffer);
+            if (gui_buffer_before_raw_data)
+            {
+                gui_window_switch_to_buffer (window,
+                                             gui_buffer_before_raw_data);
+                gui_window_redraw_buffer (window->buffer);
+            }
         }
-    }
-    else
-    {
-        gui_buffer_before_raw_data = window->buffer;
-        gui_buffer_switch_raw_data (window);
+        else
+        {
+            gui_buffer_before_raw_data = window->buffer;
+            gui_buffer_switch_raw_data (window);
+        }
     }
 }
 
@@ -1133,9 +1166,12 @@ gui_action_jump_last_buffer (t_gui_window *window, char *args)
 {
     /* make C compiler happy */
     (void) args;
-    
-    if (last_gui_buffer)
-        gui_buffer_switch_by_number (window, last_gui_buffer->number);
+
+    if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
+    {
+        if (last_gui_buffer)
+            gui_buffer_switch_by_number (window, last_gui_buffer->number);
+    }
 }
 
 /*
@@ -1148,14 +1184,17 @@ gui_action_jump_server (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
     
-    if (SERVER(window->buffer))
+    if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
     {
-        if (SERVER(window->buffer)->buffer !=
-            window->buffer)
+        if (SERVER(window->buffer))
         {
-            gui_window_switch_to_buffer (window,
-                                         SERVER(window->buffer)->buffer);
-            gui_window_redraw_buffer (window->buffer);
+            if (SERVER(window->buffer)->buffer !=
+                window->buffer)
+            {
+                gui_window_switch_to_buffer (window,
+                                             SERVER(window->buffer)->buffer);
+                gui_window_redraw_buffer (window->buffer);
+            }
         }
     }
 }
@@ -1173,34 +1212,37 @@ gui_action_jump_next_server (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
     
-    if (SERVER(window->buffer))
+    if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
     {
-        ptr_server = SERVER(window->buffer)->next_server;
-        if (!ptr_server)
-            ptr_server = irc_servers;
-        while (ptr_server != SERVER(window->buffer))
+        if (SERVER(window->buffer))
         {
-            if (ptr_server->buffer)
-                break;
-            ptr_server = (ptr_server->next_server) ?
-                ptr_server->next_server : irc_servers;
-        }
-        if (ptr_server != SERVER(window->buffer))
-        {
-            /* save current buffer */
-            SERVER(window->buffer)->saved_buffer = window->buffer;
-            
-            /* come back to memorized chan if found */
-            if (ptr_server->saved_buffer)
-                ptr_buffer = ptr_server->saved_buffer;
-            else
-                ptr_buffer = (ptr_server->channels) ?
-                    ptr_server->channels->buffer : ptr_server->buffer;
-            if ((ptr_server->buffer == ptr_buffer)
-                && (ptr_buffer->all_servers))
-                ptr_buffer->server = ptr_server;
-            gui_window_switch_to_buffer (window, ptr_buffer);
-            gui_window_redraw_buffer (window->buffer);
+            ptr_server = SERVER(window->buffer)->next_server;
+            if (!ptr_server)
+                ptr_server = irc_servers;
+            while (ptr_server != SERVER(window->buffer))
+            {
+                if (ptr_server->buffer)
+                    break;
+                ptr_server = (ptr_server->next_server) ?
+                    ptr_server->next_server : irc_servers;
+            }
+            if (ptr_server != SERVER(window->buffer))
+            {
+                /* save current buffer */
+                SERVER(window->buffer)->saved_buffer = window->buffer;
+                
+                /* come back to memorized chan if found */
+                if (ptr_server->saved_buffer)
+                    ptr_buffer = ptr_server->saved_buffer;
+                else
+                    ptr_buffer = (ptr_server->channels) ?
+                        ptr_server->channels->buffer : ptr_server->buffer;
+                if ((ptr_server->buffer == ptr_buffer)
+                    && (ptr_buffer->all_servers))
+                    ptr_buffer->server = ptr_server;
+                gui_window_switch_to_buffer (window, ptr_buffer);
+                gui_window_redraw_buffer (window->buffer);
+            }
         }
     }
 }
@@ -1231,12 +1273,13 @@ gui_action_scroll_previous_highlight (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->type == BUFFER_TYPE_STANDARD)
+    if ((window->buffer->type == BUFFER_TYPE_STANDARD)
+        && (window->buffer->text_search == TEXT_SEARCH_DISABLED))
     {
         if (window->buffer->lines)
         {
             ptr_line = (window->start_line) ?
-                window->start_line->prev_line : window->buffer->last_line->prev_line;
+                window->start_line->prev_line : window->buffer->last_line;
             while (ptr_line)
             {
                 if (ptr_line->line_with_highlight)
@@ -1267,7 +1310,8 @@ gui_action_scroll_next_highlight (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->type == BUFFER_TYPE_STANDARD)
+    if ((window->buffer->type == BUFFER_TYPE_STANDARD)
+        && (window->buffer->text_search == TEXT_SEARCH_DISABLED))
     {
         if (window->buffer->lines)
         {
@@ -1300,19 +1344,22 @@ gui_action_scroll_unread (t_gui_window *window, char *args)
 {
     /* make C compiler happy */
     (void) args;
-    
-    if (cfg_look_read_marker &&
-        cfg_look_read_marker[0] &&
-        (window->buffer->type == BUFFER_TYPE_STANDARD) &&
-        window->buffer->last_read_line &&
-        window->buffer->last_read_line != window->buffer->last_line)
+
+    if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
     {
-        window->start_line = window->buffer->last_read_line->next_line;
-        window->start_line_pos = 0;
-        window->first_line_displayed =
-            (window->start_line == window->buffer->lines);
-        gui_chat_draw (window->buffer, 1);
-        gui_status_draw (window->buffer, 0);
+        if (cfg_look_read_marker &&
+            cfg_look_read_marker[0] &&
+            (window->buffer->type == BUFFER_TYPE_STANDARD) &&
+            window->buffer->last_read_line &&
+            window->buffer->last_read_line != window->buffer->last_line)
+        {
+            window->start_line = window->buffer->last_read_line->next_line;
+            window->start_line_pos = 0;
+            window->first_line_displayed =
+                (window->start_line == window->buffer->lines);
+            gui_chat_draw (window->buffer, 1);
+            gui_status_draw (window->buffer, 0);
+        }
     }
 }
 
@@ -1387,5 +1434,25 @@ gui_action_insert_string (t_gui_window *window, char *args)
     {
         gui_insert_string_input (window, args, -1);
         gui_input_draw (window->buffer, 0);
+    }
+}
+
+/*
+ * gui_action_search_text: search text in buffer history
+ */
+
+void
+gui_action_search_text (t_gui_window *window, char *args)
+{
+    /* make C compiler happy */
+    (void) args;
+    
+    if (window->buffer->type == BUFFER_TYPE_STANDARD)
+    {
+        /* toggle search */
+        if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
+            gui_buffer_search_start (window);
+        else
+            gui_buffer_search_stop (window);
     }
 }

@@ -518,6 +518,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 </entry>
               </row>
               <row>
+                <entry>Ctrl + S</entry>
+                <entry>
+                  Chercher du texte dans l'historique du tampon
+                </entry>
+              </row>
+              <row>
                 <entry>Ctrl + T</entry>
                 <entry>
                   Inverser deux caractères
@@ -577,6 +583,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 <entry>Flèche haut / flèche bas</entry>
                 <entry>
                   Rappeler les dernières commandes ou messages
+                  (en mode recherche: chercher en haut/bas)
                 </entry>
               </row>
               <row>

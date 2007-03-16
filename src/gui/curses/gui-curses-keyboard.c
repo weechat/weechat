@@ -49,8 +49,8 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind ( /* RC          */ "ctrl-J",             "return");
     gui_keyboard_bind ( /* tab         */ "ctrl-I",             "tab");
     gui_keyboard_bind ( /* s-tab       */ "meta2-Z",            "tab_previous");
-    gui_keyboard_bind ( /* basckp      */ "ctrl-H",             "backspace");
-    gui_keyboard_bind ( /* basckp      */ "ctrl-?",             "backspace");
+    gui_keyboard_bind ( /* basckpace   */ "ctrl-H",             "backspace");
+    gui_keyboard_bind ( /* basckpace   */ "ctrl-?",             "backspace");
     gui_keyboard_bind ( /* del         */ "meta2-3~",           "delete");
     gui_keyboard_bind ( /* ^K          */ "ctrl-K",             "delete_end_line");
     gui_keyboard_bind ( /* ^U          */ "ctrl-U",             "delete_beginning_line");
@@ -105,6 +105,7 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind ( /* m-r         */ "meta-r",             "delete_line");
     gui_keyboard_bind ( /* m-s         */ "meta-s",             "switch_server");
     gui_keyboard_bind ( /* m-u         */ "meta-u",             "scroll_unread");
+    gui_keyboard_bind ( /* ^S          */ "ctrl-S",             "search_text");
     
     /* keys bound with commands */
     gui_keyboard_bind ( /* m-left      */ "meta-meta2-D",       "/buffer -1");
@@ -174,7 +175,7 @@ void
 gui_keyboard_read ()
 {
     int key, i, insert_ok;
-    char key_str[32], *key_utf;
+    char key_str[32], *key_utf, *input_old;
     
     i = 0;
     /* do not loop too much here (for example when big paste was made),
@@ -272,6 +273,12 @@ gui_keyboard_read ()
         
         /*gui_printf (gui_current_window->buffer, "gui_input_read: key = %s (%d)\n", key_str, key);*/
         
+        if (gui_current_window->buffer->text_search != TEXT_SEARCH_DISABLED)
+            input_old = (gui_current_window->buffer->input_buffer) ?
+                strdup (gui_current_window->buffer->input_buffer) : strdup ("");
+        else
+            input_old = NULL;
+        
         if ((gui_keyboard_pressed (key_str) != 0) && (insert_ok))
         {
             if (strcmp (key_str, "^^") == 0)
@@ -292,6 +299,25 @@ gui_keyboard_read ()
                     break;
             }
         }
+        
+        /* incremental text search in buffer */
+        if ((gui_current_window->buffer->text_search != TEXT_SEARCH_DISABLED)
+            && ((input_old == NULL) || (gui_current_window->buffer->input_buffer == NULL)
+                || (strcmp (input_old, gui_current_window->buffer->input_buffer) != 0)))
+        {
+            gui_current_window->start_line = NULL;
+            gui_current_window->start_line_pos = 0;
+            gui_current_window->buffer->text_search = TEXT_SEARCH_BACKWARD;
+            if (!gui_buffer_search_text (gui_current_window))
+            {
+                gui_chat_draw (gui_current_window->buffer, 1);
+                gui_status_draw (gui_current_window->buffer, 1);
+            }
+        }
+        
+        if (input_old)
+            free (input_old);
+        
         i++;
     }
 }

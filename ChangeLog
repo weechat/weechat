@@ -5,6 +5,8 @@ ChangeLog - 2007-03-16
 
 
 Version 0.2.4 (under dev!):
+   * added new key (ctrl-S) for interactive and incremental search in buffer
+     history (task #6628)
    * fixed /topic completion when no topic set on current channel (bug #19322)
    * improved password hiding, code cleanup (bug #19229)
    * added new return code in plugin API to force highlight (for message

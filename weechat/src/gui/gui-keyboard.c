@@ -145,6 +145,8 @@ t_gui_key_function gui_key_functions[] =
     N_("grab a key") },
   { "insert",                    gui_action_insert_string,
     N_("insert a string in command line") },
+  { "search_text",               gui_action_search_text,
+    N_("search text in buffer history") },
   { NULL, NULL, NULL }
 };
 
@@ -580,11 +582,14 @@ gui_keyboard_pressed (char *key_str)
             else
                 (void)(ptr_key->function)(gui_current_window, ptr_key->args);
 #ifdef PLUGINS
-            (void) plugin_keyboard_handler_exec (
-                (ptr_key->command) ?
-                ptr_key->command : gui_keyboard_function_search_by_ptr (ptr_key->function),
-                buffer_before_key,
-                gui_current_window->buffer->input_buffer);
+            if (gui_current_window->buffer->text_search == TEXT_SEARCH_DISABLED)
+            {
+                (void) plugin_keyboard_handler_exec (
+                    (ptr_key->command) ?
+                    ptr_key->command : gui_keyboard_function_search_by_ptr (ptr_key->function),
+                    buffer_before_key,
+                    gui_current_window->buffer->input_buffer);
+            }
 #endif
             if (buffer_before_key)
                 free (buffer_before_key);

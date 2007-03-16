@@ -90,6 +90,7 @@ extern void gui_buffer_clear (t_gui_buffer *);
 extern void gui_buffer_clear_all ();
 extern void gui_buffer_free (t_gui_buffer *, int);
 extern t_gui_line *gui_buffer_line_new (t_gui_buffer *, time_t);
+extern int gui_buffer_line_search (t_gui_line *, char *, int);
 extern void gui_buffer_merge_servers (t_gui_window *);
 extern void gui_buffer_split_server (t_gui_window *);
 extern void gui_buffer_switch_previous (t_gui_window *);
@@ -98,6 +99,9 @@ extern void gui_buffer_switch_dcc (t_gui_window *);
 extern void gui_buffer_switch_raw_data (t_gui_window *);
 extern t_gui_buffer *gui_buffer_switch_by_number (t_gui_window *, int);
 extern void gui_buffer_move_to_number (t_gui_buffer *, int);
+extern void gui_buffer_search_start (t_gui_window *);
+extern void gui_buffer_search_stop (t_gui_window *);
+extern int gui_buffer_search_text (t_gui_window *);
 extern void gui_buffer_print_log (t_gui_buffer *);
 
 /* panel */
@@ -157,6 +161,7 @@ extern void gui_action_infobar_clear (t_gui_window *, char *);
 extern void gui_action_refresh_screen (t_gui_window *, char *);
 extern void gui_action_grab_key (t_gui_window *, char *);
 extern void gui_action_insert_string (t_gui_window *, char *);
+extern void gui_action_search_text (t_gui_window *, char *);
 
 /* key */
 extern void gui_keyboard_init ();

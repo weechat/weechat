@@ -201,3 +201,7 @@
   <entry><literal>insert</literal></entry>
   <entry>insérer une chaîne dans la ligne de commande</entry>
 </row>
+<row>
+  <entry><literal>search_text</literal></entry>
+  <entry>recherche de texte dans l'historique du tampon</entry>
+</row>

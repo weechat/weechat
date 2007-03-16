@@ -513,6 +513,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 </entry>
               </row>
               <row>
+                <entry>Strg + S</entry>
+                <entry>
+                  <!-- TRANSLATION NEEDED -->
+                  Search for text in buffer history
+                </entry>
+              </row>
+              <row>
                 <entry>Strg + T</entry>
                 <entry>
                   Zeichen transponieren
@@ -571,6 +578,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 <entry>Hoch / Runter</entry>
                 <entry>
                   Rufe das letzte Kommando/die letzte Nachricht wieder auf
+                  <!-- TRANSLATION NEEDED -->
+                  (in search mode: search up/down)
                 </entry>
               </row>
               <row>

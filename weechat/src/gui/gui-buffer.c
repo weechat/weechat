@@ -207,6 +207,10 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
         new_buffer->ptr_history = NULL;
         new_buffer->num_history = 0;
         
+        /* text search */
+        new_buffer->text_search = TEXT_SEARCH_DISABLED;
+        new_buffer->text_search_input = NULL;
+        
         /* add buffer to buffers queue */
         new_buffer->prev_buffer = last_gui_buffer;
         if (gui_buffers)
@@ -550,6 +554,9 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
     
     history_buffer_free (buffer);
     
+    if (buffer->text_search_input)
+        free (buffer->text_search_input);
+    
     /* remove buffer from buffers list */
     if (buffer->prev_buffer)
         buffer->prev_buffer->next_buffer = buffer->next_buffer;
@@ -628,6 +635,31 @@ gui_buffer_line_new (t_gui_buffer *buffer, time_t date)
     }
     
     return new_line;
+}
+
+/*
+ * gui_buffer_line_search: search for text in a line
+ */
+
+int
+gui_buffer_line_search (t_gui_line *line, char *text, int case_sensitive)
+{
+    char *data;
+    int rc;
+    
+    if (!text)
+        return 0;
+    
+    rc = 0;
+    data = (char *)gui_color_decode ((unsigned char *)line->data, 0);
+    if (data)
+    {
+        if ((case_sensitive && (strstr (data, text)))
+            || (!case_sensitive && (strcasestr (data, text))))
+            rc = 1;
+        free (data);
+    }
+    return rc;
 }
 
 /*
@@ -946,6 +978,107 @@ gui_buffer_move_to_number (t_gui_buffer *buffer, int number)
 }
 
 /*
+ * gui_buffer_search_start: start search in a buffer
+ */
+
+void
+gui_buffer_search_start (t_gui_window *window)
+{
+    window->buffer->text_search = TEXT_SEARCH_BACKWARD;
+    if (window->buffer->text_search_input)
+    {
+        free (window->buffer->text_search_input);
+        window->buffer->text_search_input = NULL;
+    }
+    if (window->buffer->input_buffer && window->buffer->input_buffer[0])
+        window->buffer->text_search_input =
+            strdup (window->buffer->input_buffer);
+    gui_action_delete_line (window, NULL);
+    gui_status_draw (window->buffer, 1);
+    gui_input_draw (window->buffer, 1);
+}
+
+/*
+ * gui_buffer_search_stop: stop search in a buffer
+ */
+
+void
+gui_buffer_search_stop (t_gui_window *window)
+{
+    window->buffer->text_search = TEXT_SEARCH_DISABLED;
+    gui_action_delete_line (window, NULL);
+    if (window->buffer->text_search_input)
+    {
+        gui_insert_string_input (window, window->buffer->text_search_input, -1);
+        free (window->buffer->text_search_input);
+        window->buffer->text_search_input = NULL;
+    }
+    window->start_line = NULL;
+    window->start_line_pos = 0;
+    gui_chat_draw (window->buffer, 0);
+    gui_status_draw (window->buffer, 1);
+    gui_input_draw (window->buffer, 1);
+}
+
+/*
+ * gui_buffer_search_text: search text in a buffer
+ */
+
+int
+gui_buffer_search_text (t_gui_window *window)
+{
+    t_gui_line *ptr_line;
+    
+    if (window->buffer->text_search == TEXT_SEARCH_BACKWARD)
+    {
+        if (window->buffer->lines
+            && window->buffer->input_buffer && window->buffer->input_buffer[0])
+        {
+            ptr_line = (window->start_line) ?
+                window->start_line->prev_line : window->buffer->last_line;
+            while (ptr_line)
+            {
+                if (gui_buffer_line_search (ptr_line, window->buffer->input_buffer, 0))
+                {
+                    window->start_line = ptr_line;
+                    window->start_line_pos = 0;
+                    window->first_line_displayed =
+                        (window->start_line == window->buffer->lines);
+                    gui_chat_draw (window->buffer, 1);
+                    gui_status_draw (window->buffer, 1);
+                    return 1;
+                }
+                ptr_line = ptr_line->prev_line;
+            }
+        }
+    }
+    else if (window->buffer->text_search == TEXT_SEARCH_FORWARD)
+    {
+        if (window->buffer->lines
+            && window->buffer->input_buffer && window->buffer->input_buffer[0])
+        {
+            ptr_line = (window->start_line) ?
+                window->start_line->next_line : window->buffer->lines->next_line;
+            while (ptr_line)
+            {
+                if (gui_buffer_line_search (ptr_line, window->buffer->input_buffer, 0))
+                {
+                    window->start_line = ptr_line;
+                    window->start_line_pos = 0;
+                    window->first_line_displayed =
+                        (window->start_line == window->buffer->lines);
+                    gui_chat_draw (window->buffer, 1);
+                    gui_status_draw (window->buffer, 1);
+                    return 1;
+                }
+                ptr_line = ptr_line->next_line;
+            }
+        }
+    }
+    return 0;
+}
+
+/*
  * gui_buffer_print_log: print buffer infos in log (usually for crash dump)
  */
 
@@ -982,6 +1115,9 @@ gui_buffer_print_log (t_gui_buffer *buffer)
     weechat_log_printf ("  history. . . . . . . . : 0x%X\n", buffer->history);
     weechat_log_printf ("  last_history . . . . . : 0x%X\n", buffer->last_history);
     weechat_log_printf ("  ptr_history. . . . . . : 0x%X\n", buffer->ptr_history);
+    weechat_log_printf ("  num_history. . . . . . : %d\n",   buffer->num_history);
+    weechat_log_printf ("  text_search. . . . . . : %d\n",   buffer->text_search);
+    weechat_log_printf ("  text_search_input. . . : '%s'\n", buffer->text_search_input);
     weechat_log_printf ("  prev_buffer. . . . . . : 0x%X\n", buffer->prev_buffer);
     weechat_log_printf ("  next_buffer. . . . . . : 0x%X\n", buffer->next_buffer);
     weechat_log_printf ("\n");
