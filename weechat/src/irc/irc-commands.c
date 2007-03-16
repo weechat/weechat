@@ -258,7 +258,7 @@ t_irc_command irc_commands[] =
     N_("[channel] [topic]"),
     N_("channel: channel name\ntopic: new topic for channel "
        "(if topic is \"-delete\" then topic is deleted)"),
-    "%t|-delete", 0, MAX_ARGS, 1, 1, NULL, irc_cmd_send_topic, irc_cmd_recv_topic },
+    "%t|-delete %-", 0, MAX_ARGS, 1, 1, NULL, irc_cmd_send_topic, irc_cmd_recv_topic },
   { "trace", N_("find the route to specific server"),
     N_("[target]"),
     N_("target: server"),

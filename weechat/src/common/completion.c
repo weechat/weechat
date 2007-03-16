@@ -671,11 +671,9 @@ completion_list_add_topic (t_completion *completion)
 {
     char *string;
     
-    if (!completion->server || !completion->channel
-        || !((t_irc_channel *)(completion->channel))->topic
-        || !((t_irc_channel *)(completion->channel))->topic[0])
-        completion_stop (completion);
-    else
+    if (completion->server && completion->channel
+        && ((t_irc_channel *)(completion->channel))->topic
+        && ((t_irc_channel *)(completion->channel))->topic[0])
     {
         if (cfg_irc_colors_send)
             string = (char *)gui_color_decode_for_user_entry ((unsigned char *)((t_irc_channel *)(completion->channel))->topic);
