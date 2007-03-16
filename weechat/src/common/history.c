@@ -31,6 +31,7 @@
 #include "history.h"
 #include "util.h"
 #include "weeconfig.h"
+#include "../irc/irc.h"
 #include "../gui/gui.h"
 
 
@@ -39,32 +40,6 @@ t_history *history_global_last = NULL;
 t_history *history_global_ptr = NULL;
 int num_history_global = 0;
 
-
-/*
- * history_hide_password: hide a nickserv password
- */
-
-void
-history_hide_password (char *string)
-{
-    char *pos_pwd;
-    
-    if (strstr (string, "nickserv "))
-    {
-        pos_pwd = strstr (string, "identify ");
-        if (!pos_pwd)
-            pos_pwd = strstr (string, "register ");
-        if (pos_pwd)
-        {
-            pos_pwd += 9;
-            while (pos_pwd[0])
-            {
-                pos_pwd[0] = '*';
-                pos_pwd++;
-            }
-        }
-    }
-}
 
 /*
  * history_buffer_add: add a text/command to buffer's history
@@ -87,7 +62,7 @@ history_buffer_add (void *buffer, char *string)
 	{
 	    new_history->text = strdup (string);
 	    if (cfg_log_hide_nickserv_pwd)
-		history_hide_password (new_history->text);
+                irc_hide_password (new_history->text, 1);
 	    
 	    if (((t_gui_buffer *)(buffer))->history)
 		((t_gui_buffer *)(buffer))->history->prev_history = new_history;
@@ -137,7 +112,7 @@ history_global_add (char *string)
 	{
 	    new_history->text = strdup (string);
 	    if (cfg_log_hide_nickserv_pwd)
-		history_hide_password (new_history->text);
+		irc_hide_password (new_history->text, 1);
 	    
 	    if (history_global)
 		history_global->prev_history = new_history;

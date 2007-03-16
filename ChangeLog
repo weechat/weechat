@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-03-06
+ChangeLog - 2007-03-12
 
 
 Version 0.2.4 (under dev!):
+   * improved password hiding, code cleanup (bug #19229)
    * added new return code in plugin API to force highlight (for message
      handlers only)
    * fixed bug with server buffer when "look_one_server_buffer" is ON and

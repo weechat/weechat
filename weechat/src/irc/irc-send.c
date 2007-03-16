@@ -45,6 +45,58 @@
 
 
 /*
+ * irc_hide_password: hide IRC password(s) in a string
+ */
+
+void
+irc_hide_password (char *string, int look_for_nickserv)
+{
+    char *pos_nickserv, *pos, *pos_pwd;
+
+    pos = string;
+    while (1)
+    {
+        if (look_for_nickserv)
+        {
+            pos_nickserv = strstr (pos, "nickserv ");
+            if (!pos_nickserv)
+                return;
+            pos = pos_nickserv + 9;
+            while (pos[0] == ' ')
+                pos++;
+            if ((strncmp (pos, "identify ", 9) == 0)
+                || (strncmp (pos, "register ", 9) == 0))
+                pos_pwd = pos + 9;
+            else
+                pos_pwd = NULL;
+        }
+        else
+        {
+            pos_pwd = strstr (pos, "identify ");
+            if (!pos_pwd)
+                pos_pwd = strstr (pos, "register ");
+            if (!pos_pwd)
+                return;
+            pos_pwd += 9;
+        }
+
+        if (pos_pwd)
+        {
+            while (pos_pwd[0] == ' ')
+                pos_pwd++;
+            
+            while (pos_pwd[0] && (pos_pwd[0] != ';') && (pos_pwd[0] != ' ')
+                   && (pos_pwd[0] != '"'))
+            {
+                pos_pwd[0] = '*';
+                pos_pwd++;
+            }
+            pos = pos_pwd;
+        }
+    }
+}
+
+/*
  * irc_login: login to irc server
  */
 
@@ -1189,7 +1241,7 @@ irc_cmd_send_msg (t_irc_server *server, t_irc_channel *channel,
     t_gui_window *window;
     t_gui_buffer *buffer;
     char *pos, *pos_comma;
-    char *msg_pwd_hidden, *pos_pwd;
+    char *msg_pwd_hidden;
     t_irc_channel *ptr_channel;
     t_irc_nick *ptr_nick;
     char *string;
@@ -1274,20 +1326,7 @@ irc_cmd_send_msg (t_irc_server *server, t_irc_channel *channel,
                     {
                         msg_pwd_hidden = strdup (pos);
                         if (cfg_log_hide_nickserv_pwd)
-                        {
-                            pos_pwd = strstr (msg_pwd_hidden, "identify ");
-                            if (!pos_pwd)
-                                pos_pwd = strstr (msg_pwd_hidden, "register ");
-                            if (pos_pwd)
-                            {
-                                pos_pwd += 9;
-                                while (pos_pwd[0])
-                                {
-                                    pos_pwd[0] = '*';
-                                    pos_pwd++;
-                                }
-                            }
-                        }
+                            irc_hide_password (msg_pwd_hidden, 0);
                         irc_display_prefix (server, server->buffer, PREFIX_SERVER);
                         gui_printf_type (server->buffer, MSG_TYPE_NICK,
                                          "%s-%s%s%s- ",

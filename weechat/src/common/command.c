@@ -2968,7 +2968,7 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
 void
 weechat_cmd_set_display_option (t_config_option *option, char *prefix, void *value)
 {
-    char *color_name, *pos_nickserv, *pos_pwd, *value2;
+    char *color_name, *value2;
     
     gui_printf (NULL, "  %s%s%s%s = ",
                 (prefix) ? prefix : "",
@@ -3009,32 +3009,22 @@ weechat_cmd_set_display_option (t_config_option *option, char *prefix, void *val
             if (*((char **)value))
             {
                 value2 = strdup (*((char **)value));
-                pos_nickserv = NULL;
-                pos_pwd = NULL;
-                pos_nickserv = strstr (value2, "nickserv");
-                if (pos_nickserv)
+                if (value2)
                 {
-                    pos_pwd = strstr (value2, "identify ");
-                    if (!pos_pwd)
-                        pos_pwd = strstr (value2, "register ");
-                }
-                if (cfg_log_hide_nickserv_pwd && pos_nickserv && pos_pwd)
-                {
-                    pos_pwd += 9;
-                    while (pos_pwd[0])
+                    if (cfg_log_hide_nickserv_pwd)
                     {
-                        pos_pwd[0] = '*';
-                        pos_pwd++;
+                        irc_hide_password (value2, 1);
+                        if (strcmp (*((char **)value), value2) != 0)
+                            gui_printf (NULL, _("%s(password hidden) "),
+                                        GUI_COLOR(COLOR_WIN_CHAT));
                     }
-                    gui_printf (NULL, _("%s(password hidden) "),
-                                GUI_COLOR(COLOR_WIN_CHAT));
+                    gui_printf (NULL, "%s\"%s%s%s\"",
+                                GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                                GUI_COLOR(COLOR_WIN_CHAT_HOST),
+                                value2,
+                                GUI_COLOR(COLOR_WIN_CHAT_DARK));
+                    free (value2);
                 }
-                gui_printf (NULL, "%s\"%s%s%s\"",
-                            GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                            GUI_COLOR(COLOR_WIN_CHAT_HOST),
-                            value2,
-                            GUI_COLOR(COLOR_WIN_CHAT_DARK));
-                free (value2);
             }
             else
                 gui_printf (NULL, "%s\"\"",

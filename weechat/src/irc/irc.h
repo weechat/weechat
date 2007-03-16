@@ -472,6 +472,7 @@ extern void irc_display_server (t_irc_server *ptr_server);
 /* IRC commands issued by user (irc-send.c) */
 
 extern void irc_login (t_irc_server *);
+extern void irc_hide_password (char *, int);
 extern int irc_cmd_send_admin (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_ame (t_irc_server *, t_irc_channel *, char *);
 extern int irc_cmd_send_amsg (t_irc_server *, t_irc_channel *, char *);

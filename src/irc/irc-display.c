@@ -372,6 +372,8 @@ irc_display_mode (t_irc_server *server, t_gui_buffer *buffer,
 void
 irc_display_server (t_irc_server *server)
 {
+    char *string;
+    
     gui_printf (NULL, "\n");
     gui_printf (NULL, _("%sServer: %s%s %s[%s%s%s]\n"),
                 GUI_COLOR(COLOR_WIN_CHAT),
@@ -417,9 +419,22 @@ irc_display_server (t_irc_server *server)
                 server->realname);
     gui_printf (NULL, "  server_hostname  . . . . . : %s\n",
                 (server->hostname) ? server->hostname : "");
-    gui_printf (NULL, "  server_command . . . . . . : %s\n",
-                (server->command && server->command[0]) ?
-                server->command : "");
+    if (server->command && server->command[0])
+        string = strdup (server->command);
+    else
+        string = NULL;
+    if (string)
+    {
+        if (cfg_log_hide_nickserv_pwd)
+            irc_hide_password (string, 1);
+        gui_printf (NULL, "  server_command . . . . . . : %s\n",
+                    string);
+        free (string);
+    }
+    else
+        gui_printf (NULL, "  server_command . . . . . . : %s\n",
+                    (server->command && server->command[0]) ?
+                    server->command : "");
     gui_printf (NULL, "  server_command_delay . . . : %d %s\n",
                 server->command_delay,
                 _("seconds"));
