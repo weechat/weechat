@@ -105,7 +105,7 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind ( /* m-r         */ "meta-r",             "delete_line");
     gui_keyboard_bind ( /* m-s         */ "meta-s",             "switch_server");
     gui_keyboard_bind ( /* m-u         */ "meta-u",             "scroll_unread");
-    gui_keyboard_bind ( /* ^S          */ "ctrl-S",             "search_text");
+    gui_keyboard_bind ( /* ^R          */ "ctrl-R",             "search_text");
     
     /* keys bound with commands */
     gui_keyboard_bind ( /* m-left      */ "meta-meta2-D",       "/buffer -1");
