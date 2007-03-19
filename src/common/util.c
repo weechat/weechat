@@ -455,33 +455,30 @@ explode_string (char *string, char *separators, int num_items_max,
 
     if (num_items != NULL)
         *num_items = 0;
-
-    n_items = num_items_max;
-
+    
     if (!string || !string[0])
         return NULL;
-
-    if (num_items_max == 0)
+    
+    /* calculate number of items */
+    ptr = string;
+    i = 1;
+    while ((ptr = strpbrk (ptr, separators)))
     {
-        /* calculate number of items */
-        ptr = string;
-        i = 1;
-        while ((ptr = strpbrk (ptr, separators)))
-        {
-            while (strchr (separators, ptr[0]) != NULL)
-                ptr++;
-            i++;
-        }
-        n_items = i;
+        while (strchr (separators, ptr[0]) != NULL)
+            ptr++;
+        i++;
     }
+    n_items = i;
 
+    if ((num_items_max != 0) && (n_items > num_items_max))
+        n_items = num_items_max;
+    
     array =
-        (char **) malloc ((num_items_max ? n_items : n_items + 1) *
-                          sizeof (char *));
-
+        (char **) malloc ((n_items + 1) * sizeof (char *));
+    
     ptr1 = string;
     ptr2 = string;
-
+    
     for (i = 0; i < n_items; i++)
     {
         while (strchr (separators, ptr1[0]) != NULL)
@@ -490,7 +487,7 @@ explode_string (char *string, char *separators, int num_items_max,
             if ((ptr2 = strchr (ptr1, '\r')) == NULL)
                 if ((ptr2 = strchr (ptr1, '\n')) == NULL)
                     ptr2 = strchr (ptr1, '\0');
-
+        
         if ((ptr1 == NULL) || (ptr2 == NULL))
         {
             array[i] = NULL;
@@ -511,18 +508,11 @@ explode_string (char *string, char *separators, int num_items_max,
             }
         }
     }
-    if (num_items_max == 0)
-    {
-        array[i] = NULL;
-        if (num_items != NULL)
-            *num_items = i;
-    }
-    else
-    {
-        if (num_items != NULL)
-            *num_items = num_items_max;
-    }
-
+    
+    array[i] = NULL;
+    if (num_items != NULL)
+        *num_items = i;
+    
     return array;
 }
 
