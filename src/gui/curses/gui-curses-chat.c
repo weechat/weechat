@@ -1165,11 +1165,7 @@ gui_chat_draw (t_gui_buffer *buffer, int erase)
                 if (!ptr_line && ptr_win->scroll)
                 {
                     if (count == gui_chat_display_line (ptr_win, ptr_win->buffer->last_line, 0, 1))
-                    {
                         ptr_win->scroll = 0;
-                        ptr_win->start_line = NULL;
-                        ptr_win->start_line_pos = 0;
-                    }
                 }
                 
                 if (!ptr_win->scroll && (ptr_win->start_line == ptr_win->buffer->lines))

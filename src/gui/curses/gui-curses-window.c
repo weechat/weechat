@@ -533,6 +533,11 @@ gui_window_page_up (t_gui_window *window)
                                       (-1) * (window->win_chat_height - 1) :
                                       (-1) * ((window->win_chat_height - 1) * 2));
         gui_chat_draw (window->buffer, 0);
+        if (!window->scroll)
+        {
+            window->start_line = NULL;
+            window->start_line_pos = 0;
+        }
         gui_status_draw (window->buffer, 0);
     }
 }
@@ -569,6 +574,11 @@ gui_window_page_down (t_gui_window *window)
         }
         
         gui_chat_draw (window->buffer, 0);
+        if (!window->scroll)
+        {
+            window->start_line = NULL;
+            window->start_line_pos = 0;
+        }
         gui_status_draw (window->buffer, 0);
     }
 }
@@ -591,6 +601,11 @@ gui_window_scroll_up (t_gui_window *window)
                                       (-1) * cfg_look_scroll_amount :
                                       (-1) * ( (window->win_chat_height - 1) + cfg_look_scroll_amount));
         gui_chat_draw (window->buffer, 0);
+        if (!window->scroll)
+        {
+            window->start_line = NULL;
+            window->start_line_pos = 0;
+        }
         gui_status_draw (window->buffer, 0);
     }
 }
@@ -628,6 +643,11 @@ gui_window_scroll_down (t_gui_window *window)
         }
         
         gui_chat_draw (window->buffer, 0);
+        if (!window->scroll)
+        {
+            window->start_line = NULL;
+            window->start_line_pos = 0;
+        }
         gui_status_draw (window->buffer, 0);
     }
 }
@@ -647,6 +667,11 @@ gui_window_scroll_top (t_gui_window *window)
         window->start_line = window->buffer->lines;
         window->start_line_pos = 0;
         gui_chat_draw (window->buffer, 0);
+        if (!window->scroll)
+        {
+            window->start_line = NULL;
+            window->start_line_pos = 0;
+        }
         gui_status_draw (window->buffer, 0);
     }
 }
@@ -666,6 +691,11 @@ gui_window_scroll_bottom (t_gui_window *window)
         window->start_line = NULL;
         window->start_line_pos = 0;
         gui_chat_draw (window->buffer, 0);
+        if (!window->scroll)
+        {
+            window->start_line = NULL;
+            window->start_line_pos = 0;
+        }
         gui_status_draw (window->buffer, 0);
     }
 }
