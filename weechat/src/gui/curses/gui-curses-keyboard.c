@@ -304,16 +304,7 @@ gui_keyboard_read ()
         if ((gui_current_window->buffer->text_search != TEXT_SEARCH_DISABLED)
             && ((input_old == NULL) || (gui_current_window->buffer->input_buffer == NULL)
                 || (strcmp (input_old, gui_current_window->buffer->input_buffer) != 0)))
-        {
-            gui_current_window->start_line = NULL;
-            gui_current_window->start_line_pos = 0;
-            gui_current_window->buffer->text_search = TEXT_SEARCH_BACKWARD;
-            if (!gui_buffer_search_text (gui_current_window))
-            {
-                gui_chat_draw (gui_current_window->buffer, 1);
-                gui_status_draw (gui_current_window->buffer, 1);
-            }
-        }
+            gui_buffer_search_restart (gui_current_window);
         
         if (input_old)
             free (input_old);

@@ -812,14 +812,30 @@ gui_chat_display_line (t_gui_window *window, t_gui_line *line, int count,
     }
     else
     {
-        /* display read marker if needed */
-        if (cfg_look_read_marker && cfg_look_read_marker[0] &&
-            window->buffer->last_read_line &&
-            (window->buffer->last_read_line == line->prev_line))
+        if (cfg_look_read_marker && cfg_look_read_marker[0])
         {
-            gui_chat_set_weechat_color (window, COLOR_WIN_CHAT_READ_MARKER);
-            mvwprintw (GUI_CURSES(window)->win_chat, read_marker_y, read_marker_x,
-                       "%c", cfg_look_read_marker[0]);
+            /* display marker if line is matching user search */
+            if (window->buffer->text_search != TEXT_SEARCH_DISABLED)
+            {
+                if (gui_buffer_line_search (line, window->buffer->input_buffer,
+                                            window->buffer->text_search_exact))
+                {
+                    gui_chat_set_weechat_color (window, COLOR_WIN_CHAT_READ_MARKER);
+                    mvwprintw (GUI_CURSES(window)->win_chat, read_marker_y, read_marker_x,
+                               "%c", cfg_look_read_marker[0]);
+                }
+            }
+            else
+            {
+                /* display read marker if needed */
+                if (window->buffer->last_read_line &&
+                    (window->buffer->last_read_line == line->prev_line))
+                {
+                    gui_chat_set_weechat_color (window, COLOR_WIN_CHAT_READ_MARKER);
+                    mvwprintw (GUI_CURSES(window)->win_chat, read_marker_y, read_marker_x,
+                               "%c", cfg_look_read_marker[0]);
+                }
+            }
         }
     }
     

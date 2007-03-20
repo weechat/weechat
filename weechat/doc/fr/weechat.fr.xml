@@ -521,6 +521,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 <entry>Ctrl + R</entry>
                 <entry>
                   Chercher du texte dans l'historique du tampon
+                  (deux appuis successifs pour rechercher du texte exact)
                 </entry>
               </row>
               <row>
@@ -577,6 +578,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 <entry>Entrée / Ctrl + J / Ctrl + M</entry>
                 <entry>
                   Exécuter la commande ou envoyer le message
+                  (en mode recherche: arrêter la recherche)
                 </entry>
               </row>
               <row>

@@ -1453,6 +1453,10 @@ gui_action_search_text (t_gui_window *window, char *args)
         if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
             gui_buffer_search_start (window);
         else
-            gui_buffer_search_stop (window);
+        {
+            window->buffer->text_search_exact ^= 1;
+            gui_buffer_search_restart (window);
+            gui_input_draw (window->buffer, 1);
+        }
     }
 }

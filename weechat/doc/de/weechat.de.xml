@@ -517,6 +517,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 <entry>
                   <!-- TRANSLATION NEEDED -->
                   Search for text in buffer history
+                  (two times: search exact text)
                 </entry>
               </row>
               <row>
@@ -572,6 +573,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 <entry>Eingabe / Strg + J / Strg + M</entry>
                 <entry>
                   Führe ein Kommando aus oder sende eine Nachricht
+                  <!-- TRANSLATION NEEDED -->
+                  (in search mode: stop search)
                 </entry>
               </row>
               <row>

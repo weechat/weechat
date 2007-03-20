@@ -128,6 +128,7 @@ struct t_gui_buffer
     
     /* text search */
     int text_search;                /* text search type                     */
+    int text_search_exact;          /* exact search (case sensitive) ?      */
     char *text_search_input;        /* input saved before text search       */
     
     /* link to previous/next buffer */

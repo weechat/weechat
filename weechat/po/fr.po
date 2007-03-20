@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.4-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-03-16 14:35+0100\n"
-"PO-Revision-Date: 2007-03-16 14:36+0100\n"
+"POT-Creation-Date: 2007-03-20 11:00+0100\n"
+"PO-Revision-Date: 2007-03-20 11:00+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2267,55 +2267,59 @@ msgstr ""
 "%s serveur/canal (%s/%s) non trouvé pour l'exécution de commande de "
 "l'extension\n"
 
-#: src/gui/curses/gui-curses-chat.c:941
+#: src/gui/curses/gui-curses-chat.c:957
 msgid "bytes"
 msgstr "octets"
 
-#: src/gui/curses/gui-curses-chat.c:941
+#: src/gui/curses/gui-curses-chat.c:957
 msgid "KB"
 msgstr "Ko"
 
-#: src/gui/curses/gui-curses-chat.c:941
+#: src/gui/curses/gui-curses-chat.c:957
 msgid "MB"
 msgstr "Mo"
 
-#: src/gui/curses/gui-curses-chat.c:941
+#: src/gui/curses/gui-curses-chat.c:957
 msgid "GB"
 msgstr "Go"
 
-#: src/gui/curses/gui-curses-chat.c:1075
+#: src/gui/curses/gui-curses-chat.c:1091
 msgid "ETA"
 msgstr "ETA"
 
-#: src/gui/curses/gui-curses-input.c:82 src/gui/curses/gui-curses-input.c:164
+#: src/gui/curses/gui-curses-input.c:84 src/gui/curses/gui-curses-input.c:170
+msgid "Text search (exact): "
+msgstr "Recherche texte (exact): "
+
+#: src/gui/curses/gui-curses-input.c:86 src/gui/curses/gui-curses-input.c:170
 msgid "Text search: "
 msgstr "Recherche texte: "
 
-#: src/gui/curses/gui-curses-input.c:419
+#: src/gui/curses/gui-curses-input.c:425
 msgid "  [A] Accept"
 msgstr "  [A] Accepter"
 
-#: src/gui/curses/gui-curses-input.c:421 src/gui/curses/gui-curses-input.c:426
+#: src/gui/curses/gui-curses-input.c:427 src/gui/curses/gui-curses-input.c:432
 msgid "  [C] Cancel"
 msgstr "  [C] Annuler"
 
-#: src/gui/curses/gui-curses-input.c:432
+#: src/gui/curses/gui-curses-input.c:438
 msgid "  [R] Remove"
 msgstr "  [R] Retirer"
 
-#: src/gui/curses/gui-curses-input.c:437
+#: src/gui/curses/gui-curses-input.c:443
 msgid "  [P] Purge old DCC"
 msgstr "  [P] Purger anciens DCC"
 
-#: src/gui/curses/gui-curses-input.c:439
+#: src/gui/curses/gui-curses-input.c:445
 msgid "  [Q] Close DCC view"
 msgstr "  [Q] Fermer la vue DCC"
 
-#: src/gui/curses/gui-curses-input.c:448
+#: src/gui/curses/gui-curses-input.c:454
 msgid "  [C] Clear buffer"
 msgstr "  [C] Effacer le tampon"
 
-#: src/gui/curses/gui-curses-input.c:450
+#: src/gui/curses/gui-curses-input.c:456
 msgid "  [Q] Close raw data view"
 msgstr "  [Q] Fermer la vue IRC brut"
 
@@ -2367,7 +2371,7 @@ msgstr "-PLUS-"
 msgid "server"
 msgstr "serveur"
 
-#: src/gui/gui-buffer.c:619
+#: src/gui/gui-buffer.c:620
 msgid "Not enough memory for new line\n"
 msgstr "Pas assez de mémoire pour une nouvelle ligne !\n"
 
