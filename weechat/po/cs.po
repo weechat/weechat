@@ -2262,11 +2262,11 @@ msgstr "ETA"
 
 #: src/gui/curses/gui-curses-input.c:84 src/gui/curses/gui-curses-input.c:170
 msgid "Text search (exact): "
-msgstr ""
+msgstr "Vyhledávání textu (presné): "
 
 #: src/gui/curses/gui-curses-input.c:86 src/gui/curses/gui-curses-input.c:170
 msgid "Text search: "
-msgstr ""
+msgstr "Vyhledávání textu: "
 
 #: src/gui/curses/gui-curses-input.c:425
 msgid "  [A] Accept"
@@ -2550,9 +2550,8 @@ msgid "insert a string in command line"
 msgstr "vložit řetězec na řádku"
 
 #: src/gui/gui-keyboard.c:149
-#, fuzzy
 msgid "search text in buffer history"
-msgstr "sezení: načítám historii bufferu\n"
+msgstr "hledání textu v historii bufferu"
 
 #: src/gui/gui-keyboard.c:477 src/common/command.c:2310
 #, c-format
