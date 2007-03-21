@@ -86,7 +86,7 @@ hotlist_add (int priority, t_irc_server *server, t_gui_buffer *buffer,
     
     /* do not highlight current buffer */
     if ((buffer == gui_current_window->buffer)
-        && (!allow_current_buffer))
+        && (!allow_current_buffer) && (!gui_buffer_is_scrolled (buffer)))
         return;
     
     if ((pos_hotlist = hotlist_search (buffer)))

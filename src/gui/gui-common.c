@@ -178,7 +178,8 @@ gui_add_to_line (t_gui_buffer *buffer, int type, time_t date, char *nick, char *
             gui_chat_draw_line (buffer, buffer->last_line);
             gui_chat_draw (buffer, 0);
         }
-        if (gui_add_hotlist && (buffer->num_displayed == 0))
+        if (gui_add_hotlist
+            && ((buffer->num_displayed == 0) || (gui_buffer_is_scrolled (buffer))))
         {
             if (3 - buffer->last_line->line_with_message -
                 buffer->last_line->line_with_highlight <=

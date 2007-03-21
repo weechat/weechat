@@ -367,6 +367,41 @@ gui_buffer_find_window (t_gui_buffer *buffer)
 }
 
 /*
+ * gui_buffer_is_scrolled: return 1 if all windows displaying buffer are scrolled
+ *                         (user doesn't see end of buffer)
+ *                         return 0 if at least one window is NOT scrolled
+ */
+
+int
+gui_buffer_is_scrolled (t_gui_buffer *buffer)
+{
+    t_gui_window *ptr_win;
+    int buffer_found;
+
+    if (!buffer)
+        return 0;
+    
+    buffer_found = 0;
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        if (ptr_win->buffer == buffer)
+        {
+            buffer_found = 1;
+            /* buffer found and not scrolled, exit immediately */
+            if (!ptr_win->scroll)
+                return 0;
+        }
+    }
+    
+    /* buffer found, and all windows were scrolled */
+    if (buffer_found)
+        return 1;
+    
+    /* buffer not found */
+    return 0;
+}
+
+/*
  * gui_buffer_get_dcc: get pointer to DCC buffer (DCC buffer created if not existing)
  */
 

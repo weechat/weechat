@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-03-20
+ChangeLog - 2007-03-21
 
 
 Version 0.2.4 (under dev!):
+   * added current buffer in hotlist when scrolling up in buffer (task #6664)
    * fixed bug with explode_string / free_exploded_string when max_items > 0
    * added new key (ctrl-R) for interactive and incremental search in buffer
      history (task #6628)
