@@ -491,10 +491,18 @@ irc_cmd_recv_join (t_irc_server *server, char *host, char *nick, char *arguments
                     arguments);
     }
     
-    /* display channel creation date if joining new channel */
+    /* remove topic and display channel creation date if joining new channel */
     if (!ptr_channel->nicks)
+    {
+        if (ptr_channel->topic)
+        {
+            free (ptr_channel->topic);
+            ptr_channel->topic = NULL;
+            gui_chat_draw_title (ptr_channel->buffer, 1);
+        }
         ptr_channel->display_creation_date = 1;
-
+    }
+    
     /* add nick in channel */
     ptr_nick = nick_new (server, ptr_channel, nick, 0, 0, 0, 0, 0);
     if (ptr_nick)
