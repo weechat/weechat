@@ -538,7 +538,7 @@ gui_window_page_up (t_gui_window *window)
             window->start_line = NULL;
             window->start_line_pos = 0;
         }
-        gui_status_draw (window->buffer, 0);
+        gui_status_draw (window->buffer, 1);
     }
 }
 
@@ -578,8 +578,9 @@ gui_window_page_down (t_gui_window *window)
         {
             window->start_line = NULL;
             window->start_line_pos = 0;
+            hotlist_remove_buffer (window->buffer);
         }
-        gui_status_draw (window->buffer, 0);
+        gui_status_draw (window->buffer, 1);
     }
 }
 
@@ -606,7 +607,7 @@ gui_window_scroll_up (t_gui_window *window)
             window->start_line = NULL;
             window->start_line_pos = 0;
         }
-        gui_status_draw (window->buffer, 0);
+        gui_status_draw (window->buffer, 1);
     }
 }
 
@@ -647,8 +648,9 @@ gui_window_scroll_down (t_gui_window *window)
         {
             window->start_line = NULL;
             window->start_line_pos = 0;
+            hotlist_remove_buffer (window->buffer);
         }
-        gui_status_draw (window->buffer, 0);
+        gui_status_draw (window->buffer, 1);
     }
 }
 
@@ -672,7 +674,7 @@ gui_window_scroll_top (t_gui_window *window)
             window->start_line = NULL;
             window->start_line_pos = 0;
         }
-        gui_status_draw (window->buffer, 0);
+        gui_status_draw (window->buffer, 1);
     }
 }
 
@@ -695,8 +697,9 @@ gui_window_scroll_bottom (t_gui_window *window)
         {
             window->start_line = NULL;
             window->start_line_pos = 0;
+            hotlist_remove_buffer (window->buffer);
         }
-        gui_status_draw (window->buffer, 0);
+        gui_status_draw (window->buffer, 1);
     }
 }
 
