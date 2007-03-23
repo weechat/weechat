@@ -120,7 +120,7 @@ gui_log_start (t_gui_buffer *buffer)
             free (log_path2);
         return;
     }
-    length = strlen (log_path2) + 64;
+    length = strlen (log_path2) + 128;
     if (SERVER(buffer))
         length += strlen (SERVER(buffer)->name);
     if (CHANNEL(buffer))
@@ -149,6 +149,11 @@ gui_log_start (t_gui_buffer *buffer)
     {
         strcat (buffer->log_filename, SERVER(buffer)->name);
         strcat (buffer->log_filename, ".");
+    }
+    if (CHANNEL(buffer)
+        && (CHANNEL(buffer)->type == CHANNEL_TYPE_DCC_CHAT))
+    {
+        strcat (buffer->log_filename, "dcc.");
     }
     if (CHANNEL(buffer))
     {
