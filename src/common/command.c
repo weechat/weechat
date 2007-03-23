@@ -1214,8 +1214,7 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                         }
                         else
                         {
-                            ptr_channel = channel_search_any (SERVER(buffer),
-                                                              CHANNEL(buffer)->name);
+                            ptr_channel = CHANNEL(buffer);
                             ptr_server = SERVER(buffer);
                             gui_buffer_free (buffer, 1);
                             if (ptr_channel)

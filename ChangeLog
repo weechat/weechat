@@ -1,10 +1,13 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-03-22
+ChangeLog - 2007-03-23
 
 
 Version 0.2.4 (under dev!):
+   * renamed log file for DCC chat (now <server>.dcc.<nick>.weechatlog)
+   * fixed crash when closing a pv if a DCC chat is open on same nick
+     (bug #19147)
    * fixed bug with channel topic after reconnection (not erased) (bug #19384)
    * added current buffer in hotlist when scrolling up in buffer (task #6664)
    * fixed bug with explode_string / free_exploded_string when max_items > 0
