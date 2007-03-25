@@ -192,7 +192,7 @@ void
 weechat_charset_parse_irc_msg (char *message, char **nick, char **command,
                                char **channel, char **pos_args)
 {
-    char *pos, *pos2, *pos3, *pos_tmp;
+    char *pos, *pos2, *pos3, *pos4, *pos_tmp;
     
     *nick = NULL;
     *command = NULL;
@@ -257,6 +257,21 @@ weechat_charset_parse_irc_msg (char *message, char **nick, char **command,
                             *nick = weechat_charset_strndup (pos2, pos3 - pos2);
                         else
                             *nick = strdup (pos2);
+                    }
+                    if (pos3)
+                    {
+                        pos3++;
+                        while (pos3[0] == ' ')
+                            pos3++;
+                        if ((pos3[0] == '#') || (pos3[0] == '&')
+                            || (pos3[0] == '+') || (pos3[0] == '!'))
+                        {
+                            pos4 = strchr (pos3, ' ');
+                            if (pos4)
+                                *channel = weechat_charset_strndup (pos3, pos4 - pos3);
+                            else
+                                *channel = strdup (pos3);
+                        }
                     }
                 }
             }

@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-03-23
+ChangeLog - 2007-03-25
 
 
 Version 0.2.4 (under dev!):
+   * fixed topic charset, now using channel charset if defined (bug #19386)
    * renamed log file for DCC chat (now <server>.dcc.<nick>.weechatlog)
    * fixed crash when closing a pv if a DCC chat is open on same nick
      (bug #19147)
