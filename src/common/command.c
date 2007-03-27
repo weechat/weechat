@@ -792,6 +792,9 @@ int
 is_command (char *line)
 {
     char *pos_slash, *pos_space;
+
+    if (strncmp (line, "/*", 2) == 0)
+        return 0;
     
     pos_slash = strchr (line + 1, '/');
     pos_space = strchr (line + 1, ' ');
