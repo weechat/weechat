@@ -304,7 +304,7 @@
   <entry>Farbe</entry>
   <entry>Curses- oder Gtk-Farben</entry>
   <entry>'lightmagenta'</entry>
-  <entry>Color for '+' when scrolling topic</entry>
+  <entry>Farbe des '+' beim Scrolling des Topics</entry>
 </row>
 <row>
   <entry><option>col_title_bg</option></entry>
@@ -906,7 +906,7 @@
   <entry>Ganzzahl</entry>
   <entry>zwischen 0 und 5</entry>
   <entry>2</entry>
-  <entry>Anti-flood: # seconds between two user messages (0 = no anti-flood)</entry>
+  <entry>Anti-flood: # Sekunden zwischen zwei Benutzernachrichten (0 = kein anti-flood)</entry>
 </row>
 <row>
   <entry><option>irc_fifo_pipe</option></entry>

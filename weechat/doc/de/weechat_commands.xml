@@ -9,13 +9,13 @@
 <programlisting>
 einen Alias für einen Befehl anlegen
 
-alias_name: name of alias
-   command: command name (WeeChat or IRC command, many commands can be separated by semicolons)
- arguments: arguments for command
+Aliasname: Name des Alias
+   Befehl: Befehlsname (WeeChat- oder IRC-Befehl ohne führenden '/', mehrere Befehle können durch Semikola getrennt werden)
+Argumente: Argumente für den Befehl
 
 </programlisting>
-<command>is replaced by all arguments.</command>
-<programlisting>Variables $nick, $channel and $server are replaced by current nick/channel/server.
+<command>wird durch alle Argumente ersetzt.</command>
+<programlisting>Die Variablen $nick, $channel and $server werden durch den aktuellen Nick/Channel oder Server ersetzt.
 
 </programlisting>
 <command>buffer  [Aktion [Argumente] | Nummer | [[Server] [Channel]]]</command>
@@ -41,12 +41,12 @@ Befehl: auszuführender Befehl (falls nicht vorhanden wird automatisch ein '/' vo
 
 
 </programlisting>
-<command>clear  [-all | number]</command>
+<command>clear  [-all | Nummer]</command>
 <programlisting>
 Fenster leeren
 
-  -all: clear all buffers
-number: clear buffer by number
+  -all: lösche alle Puffer
+Nummer: lösche den Puffer mit der angegebenen Nummer
 
 </programlisting>
 <command>connect  [Servername]</command>
@@ -110,15 +110,15 @@ Bei jedem Argument steht '*' für 'alle'.
 Ohne Argumente listet /ignore alle definierten /ignore-Regeln auf.
 
 </programlisting>
-<command>key  [key [function/command]] [unbind key] [functions] [call function ["args"]] [reset -yes]</command>
+<command>key  [Taste [Funktion/Befehl]] [unbind Taste] [functions] [call Funktion ["Argumente"]] [reset -yes] </command>
 <programlisting>
 belegen/freigeben von Tasten
 
-      key: display or bind this key to an internal function or a command (beginning by "/")
-   unbind: unbind a key
-functions: list internal functions for key bindings
-     call: call a function by name (with optional arguments)
-    reset: restore bindings to the default values and delete ALL personal bindings (use carefully!)
+      Taste: diese Taste anzeigen oder mit einer internen Funktion oder einem Befehl, beginnend mit "/", belegen
+   unbind: Tastenbelegung aufheben
+functions: interne Funktionen für Tastenbelegungen auflisten
+     call: rufe eine Funktion über ihren Namen auf (mit optionalen Argumenten)
+    reset: Standardbelegung wiederherstellen und entferne ALLE eigenen Belegungen (Vorsicht!)
 
 </programlisting>
 <command>plugin  [list [Name]] | [listfull [Name]] | [load Dateiname] | [autoload] | [reload [Name]] | [unload [Name]]</command>

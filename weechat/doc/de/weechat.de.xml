@@ -48,7 +48,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
     &date.xml;
     
     <copyright>
-      <year>2006</year>
+      <year>2007</year>
       <holder>Sébastien Helleu</holder>
     </copyright>
     
@@ -515,9 +515,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
               <row>
                 <entry>Strg + R</entry>
                 <entry>
-                  <!-- TRANSLATION NEEDED -->
-                  Search for text in buffer history
-                  (two times: search exact text)
+                  Suche nach Text im Pufferverlauf
+                  (zwei Mal: suche nach dem genauen Text)
                 </entry>
               </row>
               <row>
@@ -573,16 +572,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 <entry>Eingabe / Strg + J / Strg + M</entry>
                 <entry>
                   Führe ein Kommando aus oder sende eine Nachricht
-                  <!-- TRANSLATION NEEDED -->
-                  (in search mode: stop search)
+                  (im Suchmodus: Suche anhalten)
                 </entry>
               </row>
               <row>
                 <entry>Hoch / Runter</entry>
                 <entry>
                   Rufe das letzte Kommando/die letzte Nachricht wieder auf
-                  <!-- TRANSLATION NEEDED -->
-                  (in search mode: search up/down)
+                  (im Suchmodus: suche rückwärts/vorwärts)
                 </entry>
               </row>
               <row>
@@ -2061,10 +2058,9 @@ plugin->log (plugin, "freenode", "#weechat", "test");
               </listitem>
               <listitem>
                 <para>
-                  <!-- TRANSLATION NEEDED -->
-                  <literal>PLUGIN_RC_OK_WITH_HIGHLIGHT</literal>: function
-                  successfully completed and make "highlight" on received
-                  message
+                  <literal>PLUGIN_RC_OK_WITH_HIGHLIGHT</literal>: Funktion
+                  erfolgreich vervollständigt und eine Hervorhebung bei den
+                  empfangenen Nachrichten eingebaut
                 </para>
               </listitem>
             </itemizedlist>
@@ -2531,12 +2527,11 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;my_keyb);
           </para>
         </section>
         
-        <!-- TRANSLATION NEEDED -->
         <section id="secAPI_event_handler_add">
           <title>event_handler_add</title>
           
           <para>
-            Prototype:
+            Prototyp:
             <command>
               t_plugin_handler *event_handler_add (t_weechat_plugin
               *plugin, char *event, t_plugin_handler_func *function,
@@ -2544,35 +2539,35 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;my_keyb);
             </command>
           </para>
           <para>
-            Add an event handler, called when an event happens.
+            Fügt einen Ereignishandler hinzu, der aufgerufen wird, wenn ein Ereignis eintritt.
           </para>
           <para>
-            Arguments:
+            Argumente:
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>plugin</option>: pointer to plugin structure
+                  <option>plugin</option>: Zeiger auf Plugin-Strukture
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>event</option> : event, see table below:
+                  <option>event</option> : Ereignis, siehe folgende Tabelle:
                   <informaltable colsep="0" frame="none">
                     <tgroup cols="2">
                       <thead>
                         <row>
-                          <entry>Event</entry>
-                          <entry>Description</entry>
+                          <entry>Ereignis</entry>
+                          <entry>Beschreibung</entry>
                         </row>
                       </thead>
                       <tbody>
                         <row>
                           <entry><literal>buffer_open</literal></entry>
-                          <entry>a buffer was open</entry>
+                          <entry>ein Puffer wurde geöffnet</entry>
                         </row>
                         <row>
                           <entry><literal>buffer_close</literal></entry>
-                          <entry>a buffer was closed</entry>
+                          <entry>ein Puffer wurde geschlossen</entry>
                         </row>
                       </tbody>
                     </tgroup>
@@ -2581,10 +2576,10 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;my_keyb);
               </listitem>
               <listitem>
                 <para>
-                  <option>function</option>: function called
+                  <option>function</option>: aufgerufene Funktion
                 </para>
                 <para>
-                  It uses following prototype:
+                  Es wird folgender Prototyp verwendet:
                   <command>
                     int my_function (t_weechat_plugin *plugin,
                     int argc, char **argv,
@@ -2592,45 +2587,44 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;my_keyb);
                   </command>
                 </para>
                 <para>
-                  Argument argc is set to 1, argv[0] is number of buffer
-                  open/closed.
+                  Argument argc wird auf 1 gesetzt, argv[0] ist die Nummer des Puffers, der
+                  geöffnet oder geschlossen wird.
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>handler_args</option>: arguments given to function
-                  when called
+                  <option>handler_args</option>: Argument, die an die aufgerufene
+                  Funktion übergeben werden
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>handler_pointer</option>: pointer given to function
-                  when called
+                  <option>handler_pointer</option>: Pointer, der an die aufgerufene
+                  Funktion übergeben werden
                 </para>
               </listitem>
             </itemizedlist>
           </para>
           <para>
-            Return value: pointer to new event handler.
+            Rückgabewert: Pointer auf den neuen Ereignishandler.
           </para>
           <para>
-            Note: function called has to return one of following values:
+            Anmerkung: die aufgerufene Function muss einen der folgenden Werte zurückgeben:
             <itemizedlist>
               <listitem>
                 <para>
-                  <literal>PLUGIN_RC_KO</literal>: function failed
+                  <literal>PLUGIN_RC_KO</literal>: Funktion fehlgeschlagen
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <literal>PLUGIN_RC_OK</literal>: function successfully
-                  completed
+                  <literal>PLUGIN_RC_OK</literal>: Funktion erfolgreich beendet
                 </para>
               </listitem>
             </itemizedlist>
           </para>
           <para>
-            Example:
+            Beispiel:
 <screen>
 int my_event (t_weechat_plugin *plugin, int argc, char **argv,
               char *handler_args, void *handler_pointer)
@@ -5464,10 +5458,9 @@ end
               </listitem>
               <listitem>
                 <para>
-                  <!-- TRANSLATION NEEDED -->
-                  <literal>PLUGIN_RC_OK_WITH_HIGHLIGHT</literal>: function
-                  successfully completed and make "highlight" on received
-                  message
+                  <literal>PLUGIN_RC_OK_WITH_HIGHLIGHT</literal>: Funktion
+                  erfolgreich vervollständigt und eine Hervorhebung bei den
+                  empfangenen Nachrichten eingebaut
                 </para>
               </listitem>
             </itemizedlist>
@@ -5813,58 +5806,57 @@ end
           </para>
         </section>
         
-        <!-- TRANSLATION NEEDED -->
         <section id="secScript_add_event_handler">
           <title>add_event_handler</title>
           
           <para>
-            Perl prototype:
+            Perl-Prototyp:
             <command>
               weechat::add_event_handler(event, function);
             </command>
           </para>
           <para>
-            Python prototype:
+            Python-Prototyp:
             <command>
               weechat.add_event_handler(event, function)
             </command>
           </para>
           <para>
-            Ruby prototype:
+            Ruby-Prototyp:
             <command>
               Weechat.add_event_handler(event, function)
             </command>
           </para>
           <para>
-            Lua prototype:
+            Lua-Prototyp:
             <command>
               weechat.add_event_handler(event, function)
             </command>
           </para>
           <para>
-            Add an event handler, called when an event happens.
+            Fügt einen Ereignis-Handler hinzu, der beim Auftreten eines Ereignisses aufgerufen wird.
           </para>
           <para>
-            Arguments:
+            Argumente:
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>event</option> : event
+                  <option>event</option> : Ereignis
                   (see <xref linkend="secAPI_event_handler_add" />)
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>function</option>: function called
+                  <option>function</option>: aufgerufene Funktion
                 </para>
               </listitem>
             </itemizedlist>
           </para>
           <para>
-            Return value: 1 if success, 0 if an error occurred.
+            Rückgabewerte: 1 bei Erfolg, 0 bei aufgetretenen Fehlern
           </para>
           <para>
-            Examples:
+            Beispiele:
 <screen>
 # perl
 weechat::add_event_handler("buffer_open", "my_event");
@@ -5896,17 +5888,16 @@ end
 </screen>
           </para>
           <para>
-            Note: function called has to return one of following values:
+            Bemerkung: aufgerufene Funktion muss einen der folgenden Werte zurückgeben:
             <itemizedlist>
               <listitem>
                 <para>
-                  <literal>PLUGIN_RC_KO</literal>: function failed
+                  <literal>PLUGIN_RC_KO</literal>: Funktion fehlgeschlagen
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <literal>PLUGIN_RC_OK</literal>: function successfully
-                  completed
+                  <literal>PLUGIN_RC_OK</literal>: Funktion erfolgreich beendet
                 </para>
               </listitem>
             </itemizedlist>
@@ -6081,7 +6072,7 @@ weechat.remove_timer_handler("my_timer")
             </itemizedlist>
           </para>
           <para>
-            Rückgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist.
+            Rückgabewerte: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist.
           </para>
           <para>
             Beispiele:
@@ -6101,52 +6092,51 @@ weechat.remove_keyboard_handler("my_keyboard")
           </para>
         </section>
         
-        <!-- TRANSLATION NEEDED -->
         <section id="secScrip_remove_event_handler">
           <title>remove_event_handler</title>
           
           <para>
-            Perl prototype:
+            Perl-Prototyp:
             <command>
               weechat::remove_event_handler(function);
             </command>
           </para>
           <para>
-            Python prototype:
+            Python-Prototyp:
             <command>
               weechat.remove_event_handler(function)
             </command>
           </para>
           <para>
-            Ruby prototype:
+            Ruby-Prototyp:
             <command>
               Weechat.remove_event_handler(function)
             </command>
           </para>
           <para>
-            Lua prototype:
+            Lua-Prototyp:
             <command>
               weechat.remove_event_handler(function)
             </command>
           </para>
           <para>
-            Remove an event handler.
+            Entfernt einen Ereignis-Handler.
           </para>
           <para>
-            Arguments:
+            Argumente:
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>function</option>: function
+                  <option>function</option>: Funktion
                 </para>
               </listitem>
             </itemizedlist>
           </para>
           <para>
-            Return value: 1 if success, 0 if an error occurred.
+            Rückgabewerte: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist.
           </para>
           <para>
-            Examples:
+            Beispiele:
 <screen>
 # perl
 weechat::remove_event_handler("my_event");

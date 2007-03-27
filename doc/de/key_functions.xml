@@ -119,11 +119,11 @@
 </row>
 <row>
   <entry><literal>scroll_topic_left</literal></entry>
-  <entry>scroll left topic</entry>
+  <entry>Topic nach links scrollen</entry>
 </row>
 <row>
   <entry><literal>scroll_topic_right</literal></entry>
-  <entry>scroll right topic</entry>
+  <entry>Topic nach rechts scrollen</entry>
 </row>
 <row>
   <entry><literal>nick_beginning</literal></entry>
@@ -199,9 +199,9 @@
 </row>
 <row>
   <entry><literal>insert</literal></entry>
-  <entry>insert a string in command line</entry>
+  <entry>füge eine Zeichenkette in der Befehlszeile ein</entry>
 </row>
 <row>
   <entry><literal>search_text</literal></entry>
-  <entry>search text in buffer history</entry>
+  <entry>suche Text im Pufferverlauf</entry>
 </row>
