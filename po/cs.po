@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.2.4-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2007-03-27 18:07+0200\n"
-"PO-Revision-Date: 2007-03-07 09:31+0100\n"
+"PO-Revision-Date: 2007-03-27 09:31+0100\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2262,7 +2262,7 @@ msgstr "ETA"
 
 #: src/gui/curses/gui-curses-input.c:84 src/gui/curses/gui-curses-input.c:170
 msgid "Text search (exact): "
-msgstr "Vyhledávání textu (presné): "
+msgstr "Vyhledávání textu (rozlišování velikosti znaků): "
 
 #: src/gui/curses/gui-curses-input.c:86 src/gui/curses/gui-curses-input.c:170
 msgid "Text search: "
