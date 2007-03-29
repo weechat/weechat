@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.2.4-cvs\n"
+"Project-Id-Version: WeeChat 0.2.4\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-03-27 18:07+0200\n"
-"PO-Revision-Date: 2007-03-20 11:00+0100\n"
+"POT-Creation-Date: 2007-03-29 19:40+0200\n"
+"PO-Revision-Date: 2007-03-29 19:27+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2260,7 +2260,7 @@ msgstr ""
 "des options sont modifiées.\n"
 "#\n"
 
-#: src/plugins/plugins-interface.c:457
+#: src/plugins/plugins-interface.c:465
 #, c-format
 msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 msgstr ""

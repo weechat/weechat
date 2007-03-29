@@ -7,10 +7,10 @@
 # Thomas Schuetz <i18n@internet-villa.de>, 2006, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: de\n"
+"Project-Id-Version: WeeChat 0.2.4\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-03-27 18:07+0200\n"
-"PO-Revision-Date: 2007-03-27 17:28+0200\n"
+"POT-Creation-Date: 2007-03-29 19:40+0200\n"
+"PO-Revision-Date: 2007-03-29 19:27+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2244,7 +2244,7 @@ msgstr ""
 "schreibt diese datei wenn die Optionen geändert werden.\n"
 "#\n"
 
-#: src/plugins/plugins-interface.c:457
+#: src/plugins/plugins-interface.c:465
 #, c-format
 msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 msgstr "%s Server/Channel (%s/%s) für den Plugin-Exec-Befehl nicht gefunden\n"
