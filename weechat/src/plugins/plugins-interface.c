@@ -166,7 +166,7 @@ weechat_plugin_print (t_weechat_plugin *plugin,
     t_gui_buffer *ptr_buffer;
     va_list argptr;
     static char buf[8192];
-    char *buf2;
+    char *buf2, *buf3;
     
     if (!plugin || !message)
         return;
@@ -177,10 +177,14 @@ weechat_plugin_print (t_weechat_plugin *plugin,
     va_end (argptr);
 
     buf2 = weechat_iconv_to_internal (plugin->charset, buf);
+    buf3 = (char *)gui_color_decode ((unsigned char *)((buf2) ? buf2 : buf),
+                                     cfg_irc_colors_receive);
     irc_display_prefix (NULL, ptr_buffer, PREFIX_PLUGIN);
-    gui_printf (ptr_buffer, "%s\n", (buf2) ? buf2 : buf);
+    gui_printf (ptr_buffer, "%s\n", (buf3) ? buf3 : ((buf2) ? buf2 : buf));
     if (buf2)
         free (buf2);
+    if (buf3)
+        free (buf3);
 }
 
 /*
@@ -192,7 +196,7 @@ weechat_plugin_print_server (t_weechat_plugin *plugin, char *message, ...)
 {
     va_list argptr;
     static char buf[8192];
-    char *buf2;
+    char *buf2, *buf3;
     
     if (!plugin || !message)
         return;
@@ -202,10 +206,14 @@ weechat_plugin_print_server (t_weechat_plugin *plugin, char *message, ...)
     va_end (argptr);
 
     buf2 = weechat_iconv_to_internal (plugin->charset, buf);
+    buf3 = (char *)gui_color_decode ((unsigned char *)((buf2) ? buf2 : buf),
+                                     cfg_irc_colors_receive);
     irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
-    gui_printf (NULL, "%s\n", (buf2) ? buf2 : buf);
+    gui_printf (NULL, "%s\n", (buf3) ? buf3 : ((buf2) ? buf2 : buf));
     if (buf2)
         free (buf2);
+    if (buf3)
+        free (buf3);
 }
 
 /*
