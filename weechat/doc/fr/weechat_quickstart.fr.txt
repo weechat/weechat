@@ -53,11 +53,11 @@ Guide de démarrage rapide WeeChat (version française)
        Vous pouvez voir les options du serveur et les valeurs avec /set quakenet
        Pour modifier une option, utilisez /set quakenet.server_option = valeur
 
-5. Se connecter au serveur et rejoindre les canaux :
+5. Se connecter au serveur et rejoindre les canaux
 
      /connect quakenet
 
-6. Rejoindre/quittre les canaux
+6. Rejoindre/quitter les canaux
 
      Joindre un canal :
        /join #channel
