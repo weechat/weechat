@@ -4,6 +4,9 @@ WeeChat - Wee Enhanced Environment for Chat
 ChangeLog - 2007-03-29
 
 
+Version 0.2.5 (under dev!):
+   * fixed USER message when connecting to IRC server (patch #5835)
+
 Version 0.2.4 (2007-03-29):
    * fixed color bug with IRC messages displayed by plugins (bug #19442)
    * fixed topic charset, now using channel charset if defined (bug #19386)

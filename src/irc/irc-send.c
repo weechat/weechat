@@ -103,27 +103,16 @@ irc_hide_password (char *string, int look_for_nickserv)
 void
 irc_login (t_irc_server *server)
 {
-    char hostname[NI_MAXHOST];
-    
     if ((server->password) && (server->password[0]))
         server_sendf (server, "PASS %s", server->password);
     
-    gethostname (hostname, sizeof (hostname) - 1);
-    hostname[sizeof (hostname) - 1] = '\0';
-    if (!hostname[0])
-        snprintf (hostname, NI_MAXHOST, "unknown");
-    
-    irc_display_prefix (server, server->buffer, PREFIX_INFO);
-    gui_printf (server->buffer,
-                _("%s: using hostname \"%s\"\n"),
-                PACKAGE_NAME, hostname);
     if (!server->nick)
         server->nick = strdup (server->nick1);
     server_sendf (server,
                   "NICK %s\n"
                   "USER %s %s %s :%s",
-                  server->nick, server->username, hostname, "servername",
-                  server->realname);
+                  server->nick, server->username, server->username,
+                  server->address, server->realname);
     gui_input_draw (gui_current_window->buffer, 1);
 }
 
