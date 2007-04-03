@@ -1,4 +1,4 @@
-WeeChat FAQ, 2007-03-29
+WeeChat FAQ, 2007-04-03
 =======================
 
 Intended audience:
@@ -177,6 +177,16 @@ A:	Yes, you have to use python script shell.py (available on WeeChat
 	  /upgrade
 	(to have english messages with UTF-8 encoding for terminal, for ISO
 	users, you can issue:  /shell setenv LANG=en_US)
+
+
+2.12
+================================================================================
+Q:	With Curses GUI, how can I copy/paste text without pasting nicklist ?
+
+A:	You can use a terminal with rectangular selection (like rxvt-unicode,
+	konsole, ...).
+	Other solution is to move nicklist to top or bottom, for example:
+	  /set look_nicklist_position = top
 
 
 3.1

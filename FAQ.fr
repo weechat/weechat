@@ -1,4 +1,4 @@
-WeeChat FAQ, 2007-03-29
+WeeChat FAQ, 2007-04-03
 =======================
 
 Public concerné :
@@ -186,6 +186,18 @@ R:	Oui, il faut utiliser le script python shell.py (disponible sur le site
 	(pour avoir des messages anglais avec encodage UTF-8 pour le terminal,
 	pour les utilisateurs en ISO, vous pouvez taper:
 	/shell setenv LANG=en_US)
+
+
+2.12
+================================================================================
+Q:	Avec l'interface Curses, comment puis-je copier/coller du texte sans
+	coller la liste des pseudos ?
+
+R:	Vous pouvez utiliser un terminal qui propose la sélection rectangulaire
+	(comme rxvt-unicode, konsole, etc...).
+	Une autre solution est de déplacer la liste des pseudos en haut ou en
+	bas, par exemple :
+	  /set look_nicklist_position = top
 
 
 3.1
