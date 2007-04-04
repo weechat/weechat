@@ -210,6 +210,7 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
         /* text search */
         new_buffer->text_search = TEXT_SEARCH_DISABLED;
         new_buffer->text_search_exact = 0;
+        new_buffer->text_search_found = 0;
         new_buffer->text_search_input = NULL;
         
         /* add buffer to buffers queue */
@@ -1082,6 +1083,7 @@ gui_buffer_search_start (t_gui_window *window)
 {
     window->buffer->text_search = TEXT_SEARCH_BACKWARD;
     window->buffer->text_search_exact = 0;
+    window->buffer->text_search_found = 0;
     if (window->buffer->text_search_input)
     {
         free (window->buffer->text_search_input);
@@ -1106,11 +1108,15 @@ gui_buffer_search_restart (t_gui_window *window)
     window->start_line = NULL;
     window->start_line_pos = 0;
     window->buffer->text_search = TEXT_SEARCH_BACKWARD;
-    if (!gui_buffer_search_text (window))
+    window->buffer->text_search_found = 0;
+    if (gui_buffer_search_text (window))
+        window->buffer->text_search_found = 1;
+    else
     {
         gui_chat_draw (window->buffer, 1);
         gui_status_draw (window->buffer, 1);
     }
+    gui_input_draw (window->buffer, 0);
 }
 
 /*

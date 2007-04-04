@@ -166,6 +166,7 @@ extern int cfg_col_input_server;
 extern int cfg_col_input_channel;
 extern int cfg_col_input_nick;
 extern int cfg_col_input_delimiters;
+extern int cfg_col_input_text_not_found;
 extern int cfg_col_input_bg;
 extern int cfg_col_nick;
 extern int cfg_col_nick_away;

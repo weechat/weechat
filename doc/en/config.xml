@@ -552,6 +552,13 @@
   <entry>Color for input text (delimiters)</entry>
 </row>
 <row>
+  <entry><option>col_input_text_not_found</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry>'red'</entry>
+  <entry>Color for text not found</entry>
+</row>
+<row>
   <entry><option>col_input_bg</option></entry>
   <entry>color</entry>
   <entry>Curses or Gtk color</entry>

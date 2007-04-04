@@ -552,6 +552,13 @@
   <entry>Farbe des Trennzeichens in der Eingabezeile</entry>
 </row>
 <row>
+  <entry><option>col_input_text_not_found</option></entry>
+  <entry>Farbe</entry>
+  <entry>Curses- oder Gtk-Farben</entry>
+  <entry>'red'</entry>
+  <entry>Color for text not found</entry>
+</row>
+<row>
   <entry><option>col_input_bg</option></entry>
   <entry>Farbe</entry>
   <entry>Curses- oder Gtk-Farben</entry>

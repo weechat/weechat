@@ -284,6 +284,15 @@ gui_input_draw_text (t_gui_window *window, int input_width)
     count_cursor = window->buffer->input_buffer_pos -
         window->buffer->input_buffer_1st_display;
     offset_cursor = 0;
+    if (window->buffer->text_search != TEXT_SEARCH_DISABLED)
+    {
+        if (window->buffer->text_search_found)
+            gui_window_set_weechat_color (GUI_CURSES(window)->win_input,
+                                          COLOR_WIN_INPUT);
+        else
+            gui_window_set_weechat_color (GUI_CURSES(window)->win_input,
+                                          COLOR_WIN_INPUT_TEXT_NOT_FOUND);
+    }
     while ((input_width > 0) && ptr_start && ptr_start[0])
     {
         ptr_next = utf8_next_char (ptr_start);
@@ -292,18 +301,21 @@ gui_input_draw_text (t_gui_window *window, int input_width)
             saved_char = ptr_next[0];
             ptr_next[0] = '\0';
             size = ptr_next - ptr_start;
-            if (window->buffer->input_buffer_color_mask[pos_mask] != ' ')
-                color = window->buffer->input_buffer_color_mask[pos_mask] - '0';
-            else
-                color = -1;
-            if (color != last_color)
+            if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
             {
-                if (color == -1)
-                    gui_window_set_weechat_color (GUI_CURSES(window)->win_input, COLOR_WIN_INPUT);
+                if (window->buffer->input_buffer_color_mask[pos_mask] != ' ')
+                    color = window->buffer->input_buffer_color_mask[pos_mask] - '0';
                 else
-                    gui_input_set_color (window, color);
+                    color = -1;
+                if (color != last_color)
+                {
+                    if (color == -1)
+                        gui_window_set_weechat_color (GUI_CURSES(window)->win_input, COLOR_WIN_INPUT);
+                    else
+                        gui_input_set_color (window, color);
+                }
+                last_color = color;
             }
-            last_color = color;
             output = weechat_iconv_from_internal (NULL, ptr_start);
             wprintw (GUI_CURSES(window)->win_input, "%s", (output) ? output : ptr_start);
             if (output)

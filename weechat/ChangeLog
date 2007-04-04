@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-03-29
+ChangeLog - 2007-04-04
 
 
 Version 0.2.5 (under dev!):
+   * added color for input text not found in buffer history
    * fixed USER message when connecting to IRC server (patch #5835)
 
 Version 0.2.4 (2007-03-29):

@@ -552,6 +552,13 @@
   <entry>Couleur pour le texte saisi (délimiteurs)</entry>
 </row>
 <row>
+  <entry><option>col_input_text_not_found</option></entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'red'</entry>
+  <entry>Couleur pour le texte non trouvé</entry>
+</row>
+<row>
   <entry><option>col_input_bg</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>

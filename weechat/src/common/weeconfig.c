@@ -317,6 +317,7 @@ int cfg_col_input_server;
 int cfg_col_input_channel;
 int cfg_col_input_nick;
 int cfg_col_input_delimiters;
+int cfg_col_input_text_not_found;
 int cfg_col_input_bg;
 int cfg_col_nick;
 int cfg_col_nick_away;
@@ -509,6 +510,10 @@ t_config_option weechat_options_colors[] =
     N_("color for input text (delimiters)"),
     OPTION_TYPE_COLOR, 0, 0, 0,
     "cyan", NULL, &cfg_col_input_delimiters, NULL, &config_change_color },
+  { "col_input_text_not_found", N_("color for text not found"),
+    N_("color for text not found"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "red", NULL, &cfg_col_input_text_not_found, NULL, &config_change_color },
   { "col_input_bg", N_("background for input window"),
     N_("background for input window"),
     OPTION_TYPE_COLOR, 0, 0, 0,
