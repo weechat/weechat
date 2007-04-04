@@ -1116,7 +1116,6 @@ gui_buffer_search_restart (t_gui_window *window)
         gui_chat_draw (window->buffer, 1);
         gui_status_draw (window->buffer, 1);
     }
-    gui_input_draw (window->buffer, 0);
 }
 
 /*

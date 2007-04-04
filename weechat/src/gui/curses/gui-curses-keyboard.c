@@ -174,7 +174,7 @@ gui_keyboard_grab_end ()
 void
 gui_keyboard_read ()
 {
-    int key, i, insert_ok;
+    int key, i, insert_ok, input_draw;
     char key_str[32], *key_utf, *input_old;
     
     i = 0;
@@ -278,6 +278,8 @@ gui_keyboard_read ()
                 strdup (gui_current_window->buffer->input_buffer) : strdup ("");
         else
             input_old = NULL;
+
+        input_draw = 0;
         
         if ((gui_keyboard_pressed (key_str) != 0) && (insert_ok))
         {
@@ -289,7 +291,7 @@ gui_keyboard_read ()
                 case BUFFER_TYPE_STANDARD:
                     gui_insert_string_input (gui_current_window, key_str, -1);
                     gui_current_window->buffer->completion.position = -1;
-                    gui_input_draw (gui_current_window->buffer, 0);
+                    input_draw = 1;
                     break;
                 case BUFFER_TYPE_DCC:
                     gui_exec_action_dcc (gui_current_window, key_str);
@@ -304,7 +306,13 @@ gui_keyboard_read ()
         if ((gui_current_window->buffer->text_search != TEXT_SEARCH_DISABLED)
             && ((input_old == NULL) || (gui_current_window->buffer->input_buffer == NULL)
                 || (strcmp (input_old, gui_current_window->buffer->input_buffer) != 0)))
+        {
             gui_buffer_search_restart (gui_current_window);
+            input_draw = 1;
+        }
+
+        if (input_draw)
+            gui_input_draw (gui_current_window->buffer, 0);
         
         if (input_old)
             free (input_old);
