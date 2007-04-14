@@ -195,6 +195,13 @@
   <entry>Caractères à ignorer pour la complétion des pseudos</entry>
 </row>
 <row>
+  <entry><option>look_nick_completion_smart</option></entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Complétion intelligente pour les pseudos (complète d'abord avec les personnes qui ont parlé récemment)</entry>
+</row>
+<row>
   <entry><option>look_nick_complete_first</option></entry>
   <entry>booléen</entry>
   <entry>'on' ou 'off'</entry>

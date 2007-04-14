@@ -195,6 +195,13 @@
   <entry>Zeichen, die bei der Nickvervollständigung ignoriert werden</entry>
 </row>
 <row>
+  <entry><option>look_nick_completion_smart</option></entry>
+  <entry>Boolean</entry>
+  <entry>eine beliebige Zeichenfolge</entry>
+  <entry>'on'</entry>
+  <entry>Smart completion for nicks (completes with last speakers first)</entry>
+</row>
+<row>
   <entry><option>look_nick_complete_first</option></entry>
   <entry>Boolean</entry>
   <entry>eine beliebige Zeichenfolge</entry>
