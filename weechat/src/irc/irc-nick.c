@@ -232,6 +232,8 @@ nick_new (t_irc_server *server, t_irc_channel *channel, char *nick_name,
     nick_insert_sorted (channel, new_nick);
     
     channel->nicks_count++;
+
+    channel->nick_completion_reset = 1;
     
     /* all is ok, return address of new nick */
     return new_nick;
@@ -296,6 +298,8 @@ nick_free (t_irc_channel *channel, t_irc_nick *nick)
         free (nick->host);
     free (nick);
     channel->nicks = new_nicks;
+
+    channel->nick_completion_reset = 1;
 }
 
 /*

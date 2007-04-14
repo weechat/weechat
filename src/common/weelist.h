@@ -21,6 +21,10 @@
 #ifndef __WEECHAT_LIST_H
 #define __WEECHAT_LIST_H 1
 
+#define WEELIST_POS_SORT      0
+#define WEELIST_POS_BEGINNING 1
+#define WEELIST_POS_END       2
+
 typedef struct t_weelist t_weelist;
 
 struct t_weelist
@@ -30,9 +34,11 @@ struct t_weelist
     t_weelist *next_weelist;
 };
 
+extern int weelist_get_size (t_weelist *);
 extern t_weelist *weelist_search (t_weelist *, char *);
-extern t_weelist *weelist_add (t_weelist **, t_weelist **, char *);
+extern t_weelist *weelist_add (t_weelist **, t_weelist **, char *, int);
 extern void weelist_remove (t_weelist **, t_weelist **, t_weelist *);
+extern void weelist_remove_all (t_weelist **, t_weelist **);
 extern void weelist_print_log (t_weelist *, char *);
 
 #endif /* weelist.h */

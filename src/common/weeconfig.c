@@ -97,6 +97,7 @@ int cfg_look_align_size;
 int cfg_look_align_size_max;
 char *cfg_look_nick_completor;
 char *cfg_look_nick_completion_ignore;
+int cfg_look_nick_completion_smart;
 int cfg_look_nick_complete_first;
 int cfg_look_infobar;
 char *cfg_look_infobar_timestamp;
@@ -222,6 +223,10 @@ t_config_option weechat_options_look[] =
     N_("chars ignored for nick completion"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "[]-^", NULL, NULL, &cfg_look_nick_completion_ignore, config_change_noop },
+  { "look_nick_completion_smart", N_("smart completion for nicks"),
+    N_("smart completion for nicks (completes with last speakers first)"),
+    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
+    NULL, NULL, &cfg_look_nick_completion_smart, NULL, config_change_noop },
   { "look_nick_complete_first", N_("complete only with first nick found"),
     N_("complete only with first nick found"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE,
@@ -2024,7 +2029,8 @@ config_read ()
                             {
                                 /* create new alias */
                                 if (alias_new (line, pos))
-                                    weelist_add (&index_commands, &last_index_command, line);
+                                    weelist_add (&index_commands, &last_index_command,
+                                                 line, WEELIST_POS_SORT);
                             }
                             else if (section == CONFIG_SECTION_IGNORE)
                             {

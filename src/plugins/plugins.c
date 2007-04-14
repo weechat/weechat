@@ -322,7 +322,8 @@ plugin_cmd_handler_add (t_weechat_plugin *plugin, char *command,
         
         /* add command to WeeChat commands list */
         if (!weelist_search (index_commands, command))
-            weelist_add (&index_commands, &last_index_command, command);
+            weelist_add (&index_commands, &last_index_command, command,
+                         WEELIST_POS_SORT);
     }
     else
     {

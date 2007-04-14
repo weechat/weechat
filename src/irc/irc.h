@@ -90,14 +90,15 @@ struct t_irc_nick
     t_irc_nick *next_nick;          /* link to next nick on the channel       */
 };
 
-/* channel types */
-
 #define CHANNEL_PREFIX "#&+!"
 
+/* channel types */
 #define CHANNEL_TYPE_UNKNOWN  -1
 #define CHANNEL_TYPE_CHANNEL  0
 #define CHANNEL_TYPE_PRIVATE  1
 #define CHANNEL_TYPE_DCC_CHAT 2
+
+#define CHANNEL_NICKS_SPEAKING_LIMIT 32
 
 typedef struct t_irc_channel t_irc_channel;
 
@@ -116,8 +117,12 @@ struct t_irc_channel
     int cycle;                      /* currently cycling (/part then /join)   */
     int close;                      /* close request (/buffer close)          */
     int display_creation_date;      /* 1 if creation date should be displayed */
+    int nick_completion_reset;      /* 1 if nick completion should be rebuilt */
+                                    /* there was some join/part on channel    */
     t_irc_nick *nicks;              /* nicks on the channel                   */
     t_irc_nick *last_nick;          /* last nick on the channel               */
+    t_weelist *nicks_speaking;      /* nicks speaking (for smart completion)  */
+    t_weelist *last_nick_speaking;  /* last nick speaking                     */
     t_gui_buffer *buffer;           /* GUI buffer allocated for channel       */
     t_irc_channel *prev_channel;    /* link to previous channel               */
     t_irc_channel *next_channel;    /* link to next channel                   */
@@ -415,6 +420,7 @@ extern void channel_set_away (t_irc_channel *, char *, int);
 extern int channel_create_dcc (t_irc_dcc *);
 extern int channel_get_notify_level (t_irc_server *, t_irc_channel *);
 extern void channel_set_notify_level (t_irc_server *, t_irc_channel *, int);
+extern void channel_add_nick_speaking (t_irc_channel *, char *);
 extern void channel_print_log (t_irc_channel *);
 
 /* nick functions (irc-nick.c) */

@@ -34,6 +34,26 @@
 
 
 /*
+ * weelist_get_size: get list size (number of elements)
+ */
+
+int
+weelist_get_size (t_weelist *weelist)
+{
+    t_weelist *ptr_weelist;
+    int count;
+    
+    count = 0;
+    
+    for (ptr_weelist = weelist; ptr_weelist; ptr_weelist = ptr_weelist->next_weelist)
+    {
+        count++;
+    }
+    
+    return count;
+}
+
+/*
  * weelist_search: search date in a list
  */
 
@@ -74,14 +94,36 @@ weelist_find_pos (t_weelist *weelist, char *data)
  */
 
 void
-weelist_insert (t_weelist **weelist, t_weelist **last_weelist, t_weelist *element)
+weelist_insert (t_weelist **weelist, t_weelist **last_weelist, t_weelist *element,
+                int position)
 {
     t_weelist *pos_weelist;
     
-    pos_weelist = weelist_find_pos (*weelist, element->data);
-    
     if (*weelist)
     {
+        /* remove element if already in list */
+        pos_weelist = weelist_search (*weelist, element->data);
+        if (pos_weelist)
+            weelist_remove (weelist, last_weelist, pos_weelist);
+    }
+
+    if (*weelist)
+    {
+        /* search position for new element, according to pos asked */
+        pos_weelist = NULL;
+        switch (position)
+        {
+            case WEELIST_POS_SORT:
+                pos_weelist = weelist_find_pos (*weelist, element->data);
+                break;
+            case WEELIST_POS_BEGINNING:
+                pos_weelist = *weelist;
+                break;
+            case WEELIST_POS_END:
+                pos_weelist = NULL;
+                break;
+        }
+        
         if (pos_weelist)
         {
             /* insert data into the list (before position found) */
@@ -116,7 +158,8 @@ weelist_insert (t_weelist **weelist, t_weelist **last_weelist, t_weelist *elemen
  */
 
 t_weelist *
-weelist_add (t_weelist **weelist, t_weelist **last_weelist, char *data)
+weelist_add (t_weelist **weelist, t_weelist **last_weelist, char *data,
+             int position)
 {
     t_weelist *new_weelist;
     
@@ -126,7 +169,7 @@ weelist_add (t_weelist **weelist, t_weelist **last_weelist, char *data)
     if ((new_weelist = ((t_weelist *) malloc (sizeof (t_weelist)))))
     {
         new_weelist->data = strdup (data);
-        weelist_insert (weelist, last_weelist, new_weelist);
+        weelist_insert (weelist, last_weelist, new_weelist, position);
         return new_weelist;
     }
     /* failed to allocate new element */
@@ -134,7 +177,7 @@ weelist_add (t_weelist **weelist, t_weelist **last_weelist, char *data)
 }
 
 /*
- * weelist_remove: free an element in a list
+ * weelist_remove: remove an element from a list
  */
 
 void
@@ -142,7 +185,7 @@ weelist_remove (t_weelist **weelist, t_weelist **last_weelist, t_weelist *elemen
 {
     t_weelist *new_weelist;
     
-    if (!element)
+    if (!element || !(*weelist))
         return;
     
     /* remove element from list */
@@ -164,6 +207,19 @@ weelist_remove (t_weelist **weelist, t_weelist **last_weelist, t_weelist *elemen
         free (element->data);
     free (element);
     *weelist = new_weelist;
+}
+
+/*
+ * weelist_remove_all: remove all elements from a list
+ */
+
+void
+weelist_remove_all (t_weelist **weelist, t_weelist **last_weelist)
+{
+    while (*weelist)
+    {
+        weelist_remove (weelist, last_weelist, *weelist);
+    }
 }
 
 /*

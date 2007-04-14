@@ -251,7 +251,8 @@ command_index_build ()
     while (weechat_commands[i].command_name)
     {
         (void) weelist_add (&index_commands, &last_index_command,
-                            weechat_commands[i].command_name);
+                            weechat_commands[i].command_name,
+                            WEELIST_POS_SORT);
         i++;
     }
     i = 0;
@@ -259,7 +260,8 @@ command_index_build ()
     {
         if (irc_commands[i].cmd_function_args || irc_commands[i].cmd_function_1arg)
             (void) weelist_add (&index_commands, &last_index_command,
-                                irc_commands[i].command_name);
+                                irc_commands[i].command_name,
+                                WEELIST_POS_SORT);
         i++;
     }
 }
@@ -945,7 +947,8 @@ weechat_cmd_alias (t_irc_server *server, t_irc_channel *channel,
             }            
 	    if (!alias_new (arguments, pos))
                 return -1;
-            if (weelist_add (&index_commands, &last_index_command, arguments))
+            if (weelist_add (&index_commands, &last_index_command, arguments,
+                             WEELIST_POS_SORT))
             {
                 irc_display_prefix (NULL, NULL, PREFIX_INFO);
                 gui_printf (NULL, _("Alias \"%s\" => \"%s\" created\n"),

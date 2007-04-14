@@ -1,10 +1,15 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-04-04
+ChangeLog - 2007-04-14
 
 
 Version 0.2.5 (under dev!):
+   * improved nick completion: added option look_nick_completion_smart,
+     enabled by default (task #5896)
+   * fixed nick completion in command arguments (bug #19590)
+   * fixed possible crash with nick completion when a nick leaves channel
+     (bug #19589)
    * added color for input text not found in buffer history
    * fixed USER message when connecting to IRC server (patch #5835)
 

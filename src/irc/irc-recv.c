@@ -1392,6 +1392,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                             gui_printf (ptr_channel->buffer, " %s%s\n",
                                         GUI_COLOR(COLOR_WIN_CHAT), pos);
                         }
+                        channel_add_nick_speaking (ptr_channel, nick);
                     }
                     return 0;
                 }
@@ -1520,6 +1521,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                         gui_printf_type (ptr_channel->buffer, MSG_TYPE_MSG,
                                          "%s\n", pos);
                     }
+                    channel_add_nick_speaking (ptr_channel, nick);
                 }
             }
             else

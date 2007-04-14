@@ -95,12 +95,14 @@ completion_free (t_completion *completion)
         free (completion->args);
     completion->args = NULL;
     
-    while (completion->completion_list)
-        weelist_remove (&completion->completion_list,
-                        &completion->last_completion,
-                        completion->completion_list);
+    weelist_remove_all (&completion->completion_list,
+                        &completion->last_completion);
     completion->completion_list = NULL;
     completion->last_completion = NULL;
+
+    if (completion->word_found)
+        free (completion->word_found);
+    completion->word_found = NULL;
 }
 
 /*
@@ -204,19 +206,94 @@ completion_get_command_infos (t_completion *completion,
 }
 
 /*
+ * completion_is_only_alphanum: return 1 if there is only alpha/num chars
+ *                              in a string
+ */
+
+int
+completion_is_only_alphanum (char *string)
+{
+    while (string[0])
+    {
+        if (strchr (cfg_look_nick_completion_ignore, string[0]))
+            return 0;
+        string++;
+    }
+    return 1;
+}
+
+/*
+ * completion_strdup_alphanum: duplicate alpha/num chars in a string
+ */
+
+char *
+completion_strdup_alphanum (char *string)
+{
+    char *result, *pos;
+    
+    result = (char *)malloc (strlen (string) + 1);
+    pos = result;
+    while (string[0])
+    {
+        if (!strchr (cfg_look_nick_completion_ignore, string[0]))
+        {
+            pos[0] = string[0];
+            pos++;
+        }
+        string++;
+    }
+    pos[0] = '\0';
+    return result;
+}
+
+/*
+ * completion_nickncmp: locale and case independent string comparison
+ *                      with max length for nicks (alpha or digits only)
+ */
+
+int
+completion_nickncmp (char *base_word, char *nick, int max)
+{
+    char *base_word2, *nick2;
+    int return_cmp;
+    
+    if (!cfg_look_nick_completion_ignore
+        || !cfg_look_nick_completion_ignore[0]
+        || !base_word || !nick || !base_word[0] || !nick[0]
+        || (!completion_is_only_alphanum (base_word)))
+        return ascii_strncasecmp (base_word, nick, max);
+    
+    base_word2 = completion_strdup_alphanum (base_word);
+    nick2 = completion_strdup_alphanum (nick);
+    
+    return_cmp = ascii_strncasecmp (base_word2, nick2, strlen (base_word2));
+    
+    free (base_word2);
+    free (nick2);
+    
+    return return_cmp;
+}
+
+/*
  * completion_list_add: add a word to completion word list
+ *                      if nick_completion != 0, then add as a nick
+ *                      if nick_completion < 0, then add at beginning of list
  */
 
 void
-completion_list_add (t_completion *completion, char *word)
+completion_list_add (t_completion *completion, char *word, int nick_completion)
 {
     if (!completion->base_word || !completion->base_word[0]
-        || (ascii_strncasecmp (completion->base_word, word,
-                               strlen (completion->base_word)) == 0))
+        || ((nick_completion != 0) && (completion_nickncmp (completion->base_word, word,
+                                                            strlen (completion->base_word)) == 0))
+        || ((nick_completion == 0) && (ascii_strncasecmp (completion->base_word, word,
+                                                          strlen (completion->base_word)) == 0)))
     {
         weelist_add (&completion->completion_list,
                      &completion->last_completion,
-                     word);
+                     word,
+                     (nick_completion < 0) ?
+                     WEELIST_POS_BEGINNING : WEELIST_POS_SORT);
     }
 }
 
@@ -231,7 +308,7 @@ completion_list_add_alias (t_completion *completion)
     
     for (ptr_alias = weechat_alias; ptr_alias; ptr_alias = ptr_alias->next_alias)
     {
-        completion_list_add (completion, ptr_alias->alias_name);
+        completion_list_add (completion, ptr_alias->alias_name, 0);
     }
 }
 
@@ -246,7 +323,7 @@ completion_list_add_alias_cmd (t_completion *completion)
     
     for (ptr_list = index_commands; ptr_list; ptr_list = ptr_list->next_weelist)
     {
-        completion_list_add (completion, ptr_list->data);
+        completion_list_add (completion, ptr_list->data, 0);
     }
 }
 
@@ -259,7 +336,7 @@ completion_list_add_channel (t_completion *completion)
 {
     if (completion->channel)
         completion_list_add (completion,
-                             ((t_irc_channel *)(completion->channel))->name);
+                             ((t_irc_channel *)(completion->channel))->name, 0);
 }
 
 /*
@@ -276,7 +353,7 @@ completion_list_add_server_channels (t_completion *completion)
         for (ptr_channel = ((t_irc_server *)(completion->server))->channels;
              ptr_channel; ptr_channel = ptr_channel->next_channel)
         {
-            completion_list_add (completion, ptr_channel->name);
+            completion_list_add (completion, ptr_channel->name, 0);
         }
     }
 }
@@ -361,7 +438,7 @@ completion_list_add_filename (t_completion *completion)
 			 entry->d_name, 
 			 S_ISDIR(statbuf.st_mode) ? DIR_SEPARATOR : "");
 		
-		completion_list_add (completion, buffer);
+		completion_list_add (completion, buffer, 0);
 	    }
 	}
     }
@@ -392,7 +469,7 @@ completion_list_add_plugin_cmd (t_completion *completion)
              ptr_handler; ptr_handler = ptr_handler->next_handler)
         {
             if (ptr_handler->type == PLUGIN_HANDLER_COMMAND)
-                completion_list_add (completion, ptr_handler->command);
+                completion_list_add (completion, ptr_handler->command, 0);
         }
     }
 #else
@@ -413,7 +490,7 @@ completion_list_add_irc_cmd_sent (t_completion *completion)
     for (i = 0; irc_commands[i].command_name; i++)
     {
         if (irc_commands[i].cmd_function_args || irc_commands[i].cmd_function_1arg)
-            completion_list_add (completion, irc_commands[i].command_name);
+            completion_list_add (completion, irc_commands[i].command_name, 0);
     }
 }
 
@@ -429,7 +506,7 @@ completion_list_add_irc_cmd_recv (t_completion *completion)
     for (i = 0; irc_commands[i].command_name; i++)
     {
         if (irc_commands[i].recv_function)
-            completion_list_add(completion, irc_commands[i].command_name);
+            completion_list_add(completion, irc_commands[i].command_name, 0);
     }
 }
 
@@ -444,7 +521,7 @@ completion_list_add_key_cmd (t_completion *completion)
     
     for (i = 0; gui_key_functions[i].function_name; i++)
     {
-        completion_list_add (completion, gui_key_functions[i].function_name);
+        completion_list_add (completion, gui_key_functions[i].function_name, 0);
     }
 }
 
@@ -457,7 +534,8 @@ completion_list_add_self_nick (t_completion *completion)
 {
     if (completion->server)
     {
-        completion_list_add (completion, ((t_irc_server *)(completion->server))->nick);
+        completion_list_add (completion,
+                             ((t_irc_server *)(completion->server))->nick, 0);
     }
 }
 
@@ -469,22 +547,34 @@ void
 completion_list_add_channel_nicks (t_completion *completion)
 {
     t_irc_nick *ptr_nick;
+    t_weelist *ptr_weelist;
     
     if (completion->channel)
     {
         if (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_CHANNEL)
         {
+            /* add channel nicks */
             for (ptr_nick = ((t_irc_channel *)(completion->channel))->nicks;
                  ptr_nick; ptr_nick = ptr_nick->next_nick)
             {
-                completion_list_add (completion, ptr_nick->nick);
+                completion_list_add (completion, ptr_nick->nick, 1);
+            }
+            /* add nicks speaking recently on this channel */
+            if (cfg_look_nick_completion_smart)
+            {
+                for (ptr_weelist = ((t_irc_channel *)(completion->channel))->nicks_speaking;
+                     ptr_weelist; ptr_weelist = ptr_weelist->next_weelist)
+                {
+                    if (nick_search ((t_irc_channel *)(completion->channel), ptr_weelist->data))
+                        completion_list_add (completion, ptr_weelist->data, -1);
+                }
             }
         }
         if ((((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_PRIVATE)
             || (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_DCC_CHAT))
         {
             completion_list_add (completion,
-                                 ((t_irc_channel *)(completion->channel))->name);
+                                 ((t_irc_channel *)(completion->channel))->name, 1);
         }
         completion->arg_is_nick = 1;
     }
@@ -508,7 +598,7 @@ completion_list_add_channel_nicks_hosts (t_completion *completion)
             for (ptr_nick = ((t_irc_channel *)(completion->channel))->nicks;
                  ptr_nick; ptr_nick = ptr_nick->next_nick)
             {
-                completion_list_add (completion, ptr_nick->nick);
+                completion_list_add (completion, ptr_nick->nick, 1);
                 if (ptr_nick->host)
                 {
                     length = strlen (ptr_nick->nick) + 1 +
@@ -518,7 +608,7 @@ completion_list_add_channel_nicks_hosts (t_completion *completion)
                     {
                         snprintf (buf, length, "%s!%s",
                                   ptr_nick->nick, ptr_nick->host);
-                        completion_list_add (completion, buf);
+                        completion_list_add (completion, buf, 1);
                         free (buf);
                     }
                 }
@@ -528,7 +618,7 @@ completion_list_add_channel_nicks_hosts (t_completion *completion)
              || (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_PRIVATE))
         {
             completion_list_add (completion,
-                                 ((t_irc_channel *)(completion->channel))->name);
+                                 ((t_irc_channel *)(completion->channel))->name, 1);
         }
         completion->arg_is_nick = 1;
     }
@@ -553,7 +643,7 @@ completion_list_add_option (t_completion *completion)
             for (j = 0; weechat_options[i][j].option_name; j++)
             {
                 completion_list_add (completion,
-                                     weechat_options[i][j].option_name);
+                                     weechat_options[i][j].option_name, 0);
             }
         }
     }
@@ -565,7 +655,7 @@ completion_list_add_option (t_completion *completion)
             snprintf (option_name, sizeof (option_name), "%s.%s",
                       ptr_server->name, 
                       weechat_options[CONFIG_SECTION_SERVER][i].option_name);
-            completion_list_add (completion, option_name);
+            completion_list_add (completion, option_name, 0);
         }
     }
 }
@@ -583,7 +673,7 @@ completion_list_add_plugin_option (t_completion *completion)
     for (ptr_option = plugin_options; ptr_option;
          ptr_option = ptr_option->next_option)
     {
-        completion_list_add (completion, ptr_option->name);
+        completion_list_add (completion, ptr_option->name, 0);
     }
 #else
     /* make C compiler happy */
@@ -599,7 +689,7 @@ void
 completion_list_add_part (t_completion *completion)
 {
     if (cfg_irc_default_msg_part && cfg_irc_default_msg_part[0])
-        completion_list_add (completion, cfg_irc_default_msg_part);
+        completion_list_add (completion, cfg_irc_default_msg_part, 0);
 }
 
 /*
@@ -615,7 +705,7 @@ completion_list_add_plugin (t_completion *completion)
     for (ptr_plugin = weechat_plugins; ptr_plugin;
          ptr_plugin = ptr_plugin->next_plugin)
     {
-        completion_list_add (completion, ptr_plugin->name);
+        completion_list_add (completion, ptr_plugin->name, 0);
     }
 #else
     /* make C compiler happy */
@@ -631,7 +721,7 @@ void
 completion_list_add_quit (t_completion *completion)
 {
     if (cfg_irc_default_msg_quit && cfg_irc_default_msg_quit[0])
-        completion_list_add (completion, cfg_irc_default_msg_quit);
+        completion_list_add (completion, cfg_irc_default_msg_quit, 0);
 }
 
 /*
@@ -643,7 +733,7 @@ completion_list_add_server (t_completion *completion)
 {
     if (completion->server)
         completion_list_add (completion,
-                             ((t_irc_server *)(completion->server))->name);
+                             ((t_irc_server *)(completion->server))->name, 0);
 }
 
 /*
@@ -658,7 +748,7 @@ completion_list_add_servers (t_completion *completion)
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        completion_list_add (completion, ptr_server->name);
+        completion_list_add (completion, ptr_server->name, 0);
     }
 }
 
@@ -681,7 +771,7 @@ completion_list_add_topic (t_completion *completion)
             string = (char *)gui_color_decode ((unsigned char *)((t_irc_channel *)(completion->channel))->topic, 0);
         completion_list_add (completion,
                              (string) ?
-                             string : ((t_irc_channel *)(completion->channel))->topic);
+                             string : ((t_irc_channel *)(completion->channel))->topic, 0);
         if (string)
             free (string);
     }
@@ -713,26 +803,26 @@ completion_list_add_option_value (t_completion *completion)
             {
                 case OPTION_TYPE_BOOLEAN:
                     if (option_value && (*((int *)(option_value))))
-                        completion_list_add (completion, "on");
+                        completion_list_add (completion, "on", 0);
                     else
-                        completion_list_add (completion, "off");
+                        completion_list_add (completion, "off", 0);
                     break;
                 case OPTION_TYPE_INT:
                     snprintf (option_string, sizeof (option_string) - 1,
                               "%d", (option_value) ? *((int *)(option_value)) : option->default_int);
-                    completion_list_add (completion, option_string);
+                    completion_list_add (completion, option_string, 0);
                     break;
                 case OPTION_TYPE_INT_WITH_STRING:
                     completion_list_add (completion,
                                          (option_value) ?
                                          option->array_values[*((int *)(option_value))] :
-                                         option->array_values[option->default_int]);
+                                         option->array_values[option->default_int], 0);
                     break;
                 case OPTION_TYPE_COLOR:
                     completion_list_add (completion,
                                          (option_value) ?
                                          gui_color_get_name (*((int *)(option_value))) :
-                                         option->default_string);
+                                         option->default_string, 0);
                     break;
                 case OPTION_TYPE_STRING:
                     snprintf (option_string, sizeof (option_string) - 1,
@@ -740,7 +830,7 @@ completion_list_add_option_value (t_completion *completion)
                               ((option_value) && (*((char **)(option_value)))) ?
                               *((char **)(option_value)) :
                               option->default_string);
-                    completion_list_add (completion, option_string);
+                    completion_list_add (completion, option_string, 0);
                     break;
             }
         }
@@ -768,7 +858,7 @@ completion_list_add_plugin_option_value (t_completion *completion)
         
         ptr_option = plugin_config_search_internal (completion->args);
         if (ptr_option)
-            completion_list_add (completion, ptr_option->value);
+            completion_list_add (completion, ptr_option->value, 0);
         
         if (pos)
             pos[0] = ' ';
@@ -790,7 +880,7 @@ completion_list_add_weechat_cmd (t_completion *completion)
     
     for (i = 0; weechat_commands[i].command_name; i++)
     {
-        completion_list_add (completion, weechat_commands[i].command_name);
+        completion_list_add (completion, weechat_commands[i].command_name, 0);
     }
 }
 
@@ -819,7 +909,8 @@ completion_build_list_template (t_completion *completion, char *template)
                     word[word_offset] = '\0';
                     weelist_add (&completion->completion_list,
                                  &completion->last_completion,
-                                 word);
+                                 word,
+                                 WEELIST_POS_SORT);
                 }
                 word_offset = 0;
                 break;
@@ -1105,7 +1196,9 @@ completion_command (t_completion *completion)
         {
             if ((!completion->word_found) || word_found_seen)
             {
-                completion->word_found = ptr_weelist->data;
+                if (completion->word_found)
+                    free (completion->word_found);
+                completion->word_found = strdup (ptr_weelist->data);
 
                 if (completion->direction < 0)
                     ptr_weelist2 = ptr_weelist->prev_weelist;
@@ -1144,78 +1237,10 @@ completion_command (t_completion *completion)
     }
     if (completion->word_found)
     {
+        free (completion->word_found);
         completion->word_found = NULL;
         completion_command (completion);
     }
-}
-
-/*
- * completion_is_only_alphanum: return 1 if there is only alpha/num chars
- *                              in a string
- */
-
-int
-completion_is_only_alphanum (char *string)
-{
-    while (string[0])
-    {
-        if (strchr (cfg_look_nick_completion_ignore, string[0]))
-            return 0;
-        string++;
-    }
-    return 1;
-}
-
-/*
- * completion_strdup_alphanum: duplicate alpha/num chars in a string
- */
-
-char *
-completion_strdup_alphanum (char *string)
-{
-    char *result, *pos;
-    
-    result = (char *)malloc (strlen (string) + 1);
-    pos = result;
-    while (string[0])
-    {
-        if (!strchr (cfg_look_nick_completion_ignore, string[0]))
-        {
-            pos[0] = string[0];
-            pos++;
-        }
-        string++;
-    }
-    pos[0] = '\0';
-    return result;
-}
-
-/*
- * completion_nickncmp: locale and case independent string comparison
- *                      with max length for nicks (alpha or digits only)
- */
-
-int
-completion_nickncmp (char *base_word, char *nick, int max)
-{
-    char *base_word2, *nick2;
-    int return_cmp;
-    
-    if (!cfg_look_nick_completion_ignore
-        || !cfg_look_nick_completion_ignore[0]
-        || !base_word || !nick || !base_word[0] || !nick[0]
-        || (!completion_is_only_alphanum (base_word)))
-        return ascii_strncasecmp (base_word, nick, max);
-    
-    base_word2 = completion_strdup_alphanum (base_word);
-    nick2 = completion_strdup_alphanum (nick);
-    
-    return_cmp = ascii_strncasecmp (base_word2, nick2, strlen (base_word2));
-    
-    free (base_word2);
-    free (nick2);
-    
-    return return_cmp;
 }
 
 /*
@@ -1243,7 +1268,9 @@ completion_command_arg (t_completion *completion, int nick_completion)
         {
             if ((!completion->word_found) || word_found_seen)
             {
-                completion->word_found = ptr_weelist->data;
+                if (completion->word_found)
+                    free (completion->word_found);
+                completion->word_found = strdup (ptr_weelist->data);
                 
                 if (completion->direction < 0)
                     ptr_weelist2 = ptr_weelist->prev_weelist;
@@ -1284,6 +1311,7 @@ completion_command_arg (t_completion *completion, int nick_completion)
     }
     if (completion->word_found)
     {
+        free (completion->word_found);
         completion->word_found = NULL;
         completion_command_arg (completion, nick_completion);
     }
@@ -1297,7 +1325,8 @@ void
 completion_nick (t_completion *completion)
 {
     int length, word_found_seen, other_completion;
-    t_irc_nick *ptr_nick, *ptr_nick2;
+    t_irc_nick *ptr_nick;
+    t_weelist *ptr_weelist, *ptr_weelist2;
 
     if (!completion->channel)
         return;
@@ -1311,31 +1340,73 @@ completion_nick (t_completion *completion)
         {
             weelist_add (&completion->completion_list,
                          &completion->last_completion,
-                         ((t_irc_channel *)(completion->channel))->name);
+                         ((t_irc_channel *)(completion->channel))->name,
+                         WEELIST_POS_SORT);
             weelist_add (&completion->completion_list,
                          &completion->last_completion,
-                         ((t_irc_server *)(completion->server))->nick);
+                         ((t_irc_server *)(completion->server))->nick,
+                         WEELIST_POS_SORT);
         }
         completion_command_arg (completion, 1);
         return;
+    }
+
+    /* rebuild nick list for completion, with nicks speaking at beginning of list */
+    if ((((t_irc_channel *)(completion->channel))->nick_completion_reset)
+        || (!(completion->completion_list)))
+    {
+        /* empty completion list */
+        if (completion->completion_list)
+        {
+            weelist_remove_all (&(completion->completion_list),
+                                &(completion->last_completion));
+            completion->completion_list = NULL;
+            completion->last_completion = NULL;
+        }
+        
+        /* add channel nicks */
+        for (ptr_nick = ((t_irc_channel *)(completion->channel))->nicks;
+             ptr_nick; ptr_nick = ptr_nick->next_nick)
+        {
+            weelist_add (&(completion->completion_list),
+                         &(completion->last_completion),
+                         ptr_nick->nick,
+                         WEELIST_POS_SORT);
+        }
+        /* add nicks speaking recently on this channel */
+        if (cfg_look_nick_completion_smart)
+        {
+            for (ptr_weelist = ((t_irc_channel *)(completion->channel))->nicks_speaking;
+                 ptr_weelist; ptr_weelist = ptr_weelist->next_weelist)
+            {
+                if (nick_search ((t_irc_channel *)(completion->channel), ptr_weelist->data))
+                    weelist_add (&(completion->completion_list),
+                                 &(completion->last_completion),
+                                 ptr_weelist->data,
+                                 WEELIST_POS_BEGINNING);
+            }
+        }
+        ((t_irc_channel *)(completion->channel))->nick_completion_reset = 0;
     }
     
     length = strlen (completion->base_word);
     word_found_seen = 0;
     other_completion = 0;
-
-    if (completion->direction < 0)
-        ptr_nick = ((t_irc_channel *)(completion->channel))->last_nick;
-    else
-        ptr_nick = ((t_irc_channel *)(completion->channel))->nicks;
     
-    while (ptr_nick)
+    if (completion->direction < 0)
+        ptr_weelist = completion->last_completion;
+    else
+        ptr_weelist = completion->completion_list;
+    
+    while (ptr_weelist)
     {
-        if (completion_nickncmp (completion->base_word, ptr_nick->nick, length) == 0)
+        if (completion_nickncmp (completion->base_word, ptr_weelist->data, length) == 0)
         {
             if ((!completion->word_found) || word_found_seen)
             {
-                completion->word_found = ptr_nick->nick;
+                if (completion->word_found)
+                    free (completion->word_found);
+                completion->word_found = strdup (ptr_weelist->data);
                 if (cfg_look_nick_complete_first)
                 {
                     completion->position = -1;
@@ -1343,21 +1414,21 @@ completion_nick (t_completion *completion)
                 }
 
                 if (completion->direction < 0)
-                    ptr_nick2 = ptr_nick->prev_nick;
+                    ptr_weelist2 = ptr_weelist->prev_weelist;
                 else
-                    ptr_nick2 = ptr_nick->next_nick;
+                    ptr_weelist2 = ptr_weelist->next_weelist;
                 
-                while (ptr_nick2)
+                while (ptr_weelist2)
                 {
                     if (completion_nickncmp (completion->base_word,
-                                             ptr_nick2->nick,
+                                             ptr_weelist2->data,
                                              length) == 0)
                         other_completion++;
-
+                    
                     if (completion->direction < 0)
-                        ptr_nick2 = ptr_nick2->prev_nick;
+                        ptr_weelist2 = ptr_weelist2->prev_weelist;
                     else
-                        ptr_nick2 = ptr_nick2->next_nick;
+                        ptr_weelist2 = ptr_weelist2->next_weelist;
                 }
                 
                 if (other_completion == 0)
@@ -1372,16 +1443,17 @@ completion_nick (t_completion *completion)
             other_completion++;
         }
         if (completion->word_found &&
-            (ascii_strcasecmp (ptr_nick->nick, completion->word_found) == 0))
+            (ascii_strcasecmp (ptr_weelist->data, completion->word_found) == 0))
             word_found_seen = 1;
-
+        
         if (completion->direction < 0)
-            ptr_nick = ptr_nick->prev_nick;
+            ptr_weelist = ptr_weelist->prev_weelist;
         else
-            ptr_nick = ptr_nick->next_nick;
+            ptr_weelist = ptr_weelist->next_weelist;
     }
     if (completion->word_found)
     {
+        free (completion->word_found);
         completion->word_found = NULL;
         completion_nick (completion);
     }
@@ -1435,12 +1507,15 @@ completion_search (t_completion *completion, int direction,
     /* if new completion => look for base word */
     if (pos != completion->position)
     {
+        if (completion->word_found)
+            free (completion->word_found);
         completion->word_found = NULL;
         completion_find_context (completion, buffer, size, pos);
     }
     
     /* completion */
-    old_word_found = completion->word_found;
+    old_word_found = (completion->word_found) ?
+        strdup (completion->word_found) : NULL;
     switch (completion->context)
     {
         case COMPLETION_NULL:
@@ -1487,6 +1562,8 @@ completion_search (t_completion *completion, int direction,
             }
         }
     }
+    if (old_word_found)
+        free (old_word_found);
 }
 
 /*

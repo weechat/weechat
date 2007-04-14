@@ -70,9 +70,12 @@ channel_new (t_irc_server *server, int channel_type, char *channel_name)
     new_channel->cycle = 0;
     new_channel->close = 0;
     new_channel->display_creation_date = 0;
+    new_channel->nick_completion_reset = 0;
     new_channel->nicks = NULL;
     new_channel->last_nick = NULL;
     new_channel->buffer = NULL;
+    new_channel->nicks_speaking = NULL;
+    new_channel->last_nick_speaking = NULL;
     
     /* add new channel to queue */
     new_channel->prev_channel = server->last_channel;
@@ -136,6 +139,9 @@ channel_free (t_irc_server *server, t_irc_channel *channel)
     nick_free_all (channel);
     if (channel->away_message)
         free (channel->away_message);
+    if (channel->nicks_speaking)
+        weelist_remove_all (&(channel->nicks_speaking),
+                            &(channel->last_nick_speaking));
     free (channel);
     server->channels = new_channels;
 }
@@ -405,6 +411,31 @@ channel_set_notify_level (t_irc_server *server, t_irc_channel *channel, int noti
 }
 
 /*
+ * channel_add_nick_speaking: add a nick speaking on a channel
+ */
+
+void
+channel_add_nick_speaking (t_irc_channel *channel, char *nick)
+{
+    int size, to_remove, i;
+    
+    weelist_add (&(channel->nicks_speaking), &(channel->last_nick_speaking),
+                 nick, WEELIST_POS_END);
+    
+    size = weelist_get_size (channel->nicks_speaking);
+    if (size > CHANNEL_NICKS_SPEAKING_LIMIT)
+    {
+        to_remove = size - CHANNEL_NICKS_SPEAKING_LIMIT;
+        for (i = 0; i < to_remove; i++)
+        {
+            weelist_remove (&(channel->nicks_speaking),
+                            &(channel->last_nick_speaking),
+                            channel->nicks_speaking);
+        }
+    }
+}
+
+/*
  * channel_print_log: print channel infos in log (usually for crash dump)
  */
 
@@ -426,6 +457,14 @@ channel_print_log (t_irc_channel *channel)
     weechat_log_printf ("     nicks. . . . . . . . : 0x%X\n",   channel->nicks);
     weechat_log_printf ("     last_nick. . . . . . : 0x%X\n",   channel->last_nick);
     weechat_log_printf ("     buffer . . . . . . . : 0x%X\n",   channel->buffer);
+    weechat_log_printf ("     nicks_speaking . . . : 0x%X\n",   channel->nicks_speaking);
+    weechat_log_printf ("     last_nick_speaking . : 0x%X\n",   channel->last_nick_speaking);
     weechat_log_printf ("     prev_channel . . . . : 0x%X\n",   channel->prev_channel);
     weechat_log_printf ("     next_channel . . . . : 0x%X\n",   channel->next_channel);
+    if (channel->nicks_speaking)
+    {
+        weechat_log_printf ("\n");
+        weelist_print_log (channel->nicks_speaking,
+                           "channel nick speaking element");
+    }
 }
