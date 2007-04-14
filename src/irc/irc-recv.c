@@ -287,10 +287,7 @@ irc_recv_command (t_irc_server *server, char *entire_line,
             command_ignored = 1;
         /* plugin asked for highlight ? */
         if (return_code & PLUGIN_RC_OK_WITH_HIGHLIGHT)
-        {
             command_force_highlight = 1;
-            gui_printf (NULL, "highlight!!!\n");
-        }
 #endif
         pos = (dup_host) ? strchr (dup_host, '!') : NULL;
         if (pos)
