@@ -1,12 +1,13 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-04-14
+ChangeLog - 2007-04-15
 
 
 Version 0.2.5 (under dev!):
-   * improved nick completion: added option look_nick_completion_smart,
-     enabled by default (task #5896)
+   * improved nick completion: completion with last speakers first and self
+     nick at the end; added option look_nick_completion_smart, enabled by
+     default (task #5896)
    * fixed nick completion in command arguments (bug #19590)
    * fixed possible crash with nick completion when a nick leaves channel
      (bug #19589)
