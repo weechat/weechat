@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-04-15
+ChangeLog - 2007-04-24
 
 
 Version 0.2.5 (under dev!):
+   * added "-all" option for /connect and /disconnect commands (task #6232)
    * improved nick completion: completion with last speakers first and self
      nick at the end; added option look_nick_completion_smart, enabled by
      default (task #5896)

@@ -81,14 +81,16 @@ t_weechat_command weechat_commands[] =
     N_("  -all: clear all buffers\n"
        "number: clear buffer by number"),
     "-all", 0, 1, 0, weechat_cmd_clear, NULL },
-  { "connect", N_("connect to a server"),
-    N_("[servername]"),
-    N_("servername: server name to connect"),
-    "%S", 0, 1, 0, weechat_cmd_connect, NULL },
-  { "disconnect", N_("disconnect from a server"),
-    N_("[servername]"),
-    N_("servername: server name to disconnect"),
-    "%S", 0, 1, 0, weechat_cmd_disconnect, NULL },
+  { "connect", N_("connect to server(s)"),
+    N_("[-all | servername [servername ...]]"),
+    N_("      -all: connect to all servers\n"
+       "servername: server name to connect"),
+    "%S|-all", 0, MAX_ARGS, 0, weechat_cmd_connect, NULL },
+  { "disconnect", N_("disconnect from server(s)"),
+    N_("[-all | servername [servername...]]"),
+    N_("      -all: disconnect from all servers\n"
+       "servername: server name to disconnect"),
+    "%S|-all", 0, MAX_ARGS, 0, weechat_cmd_disconnect, NULL },
   { "dcc", N_("starts DCC (file or chat) or close chat"),
     N_("action [nickname [file]]"),
     N_("  action: 'send' (file) or 'chat' or 'close' (chat)\n"
@@ -1513,7 +1515,48 @@ weechat_cmd_clear (t_irc_server *server, t_irc_channel *channel,
 }
 
 /*
- * weechat_cmd_connect: connect to a server
+ * weechat_cmd_connect_one_server: connect to one server
+ *                                 return 0 if error, 1 if ok
+ */
+
+int
+weechat_cmd_connect_one_server (t_irc_server *server, t_gui_window *window)
+{
+    if (server->is_connected)
+    {
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        gui_printf (NULL,
+                    _("%s already connected to server \"%s\"!\n"),
+                    WEECHAT_ERROR, server->name);
+        return 0;
+    }
+    if (server->child_pid > 0)
+    {
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        gui_printf (NULL,
+                    _("%s currently connecting to server \"%s\"!\n"),
+                    WEECHAT_ERROR, server->name);
+        return 0;
+    }
+    if (!server->buffer)
+    {
+        if (!gui_buffer_new (window, server, NULL,
+                             BUFFER_TYPE_STANDARD, 1))
+            return 0;
+    }
+    if (server_connect (server))
+    {
+        server->reconnect_start = 0;
+        server->reconnect_join = (server->channels) ? 1 : 0;
+        gui_status_draw (server->buffer, 1);
+    }
+    
+    /* connect ok */
+    return 1;
+}
+
+/*
+ * weechat_cmd_connect: connect to server(s)
  */
 
 int
@@ -1523,51 +1566,52 @@ weechat_cmd_connect (t_irc_server *server, t_irc_channel *channel,
     t_gui_window *window;
     t_gui_buffer *buffer;
     t_irc_server *ptr_server;
+    int i, connect_ok;
     
     irc_find_context (server, channel, &window, &buffer);
     
-    if (argc == 1)
-        ptr_server = server_search (argv[0]);
+    if (argc == 0)
+        connect_ok = weechat_cmd_connect_one_server (server, window);
     else
-        ptr_server = server;
+    {
+        connect_ok = 1;
+        
+        if (ascii_strcasecmp (argv[0], "-all") == 0)
+        {
+            for (ptr_server = irc_servers; ptr_server;
+                 ptr_server = ptr_server->next_server)
+            {
+                if (!ptr_server->is_connected && (ptr_server->child_pid == 0))
+                {
+                    if (!weechat_cmd_connect_one_server (ptr_server, window))
+                        connect_ok = 0;
+                }
+            }
+        }
+        else
+        {
+            for (i = 0; i < argc; i++)
+            {
+                ptr_server = server_search (argv[i]);
+                if (ptr_server)
+                {
+                    if (!weechat_cmd_connect_one_server (ptr_server, window))
+                        connect_ok = 0;
+                }
+                else
+                {
+                    irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                    gui_printf (NULL, _("%s server \"%s\" not found\n"),
+                                WEECHAT_ERROR, argv[i]);
+                    connect_ok = 0;
+                }
+            }
+        }
+    }
     
-    if (ptr_server)
-    {
-        if (ptr_server->is_connected)
-        {
-            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-            gui_printf (NULL,
-                        _("%s already connected to server \"%s\"!\n"),
-                        WEECHAT_ERROR, ptr_server->name);
-            return -1;
-        }
-        if (ptr_server->child_pid > 0)
-        {
-            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-            gui_printf (NULL,
-                        _("%s currently connecting to server \"%s\"!\n"),
-                        WEECHAT_ERROR, ptr_server->name);
-            return -1;
-        }
-        if (!ptr_server->buffer)
-        {
-            if (!gui_buffer_new (window, ptr_server, NULL,
-                                 BUFFER_TYPE_STANDARD, 1))
-                return -1;
-        }
-        if (server_connect (ptr_server))
-        {
-            ptr_server->reconnect_start = 0;
-            ptr_server->reconnect_join = (ptr_server->channels) ? 1 : 0;
-            gui_status_draw (ptr_server->buffer, 1);
-        }
-    }
-    else
-    {
-        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-        gui_printf (NULL, _("%s server not found\n"), WEECHAT_ERROR);
+    if (!connect_ok)
         return -1;
-    }
+    
     return 0;
 }
 
@@ -1750,6 +1794,37 @@ weechat_cmd_debug (t_irc_server *server, t_irc_channel *channel,
 }
 
 /*
+ * weechat_cmd_disconnect_one_server: disconnect from a server
+ *                                    return 0 if error, 1 if ok
+ */
+
+int
+weechat_cmd_disconnect_one_server (t_irc_server *server)
+{
+    if ((!server->is_connected) && (server->child_pid == 0)
+        && (server->reconnect_start == 0))
+    {
+        irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
+        gui_printf (server->buffer,
+                    _("%s not connected to server \"%s\"!\n"),
+                    WEECHAT_ERROR, server->name);
+        return 0;
+    }
+    if (server->reconnect_start > 0)
+    {
+        irc_display_prefix (NULL, server->buffer, PREFIX_INFO);
+        gui_printf (server->buffer,
+                    _("Auto-reconnection is cancelled\n"));
+    }
+    irc_send_quit_server (server, NULL);
+    server_disconnect (server, 0);
+    gui_status_draw (server->buffer, 1);
+    
+    /* disconnect ok */
+    return 1;
+}
+
+/*
  * weechat_cmd_disconnect: disconnect from a server
  */
 
@@ -1759,41 +1834,53 @@ weechat_cmd_disconnect (t_irc_server *server, t_irc_channel *channel,
 {
     t_gui_buffer *buffer;
     t_irc_server *ptr_server;
+    int i, disconnect_ok;
     
     irc_find_context (server, channel, NULL, &buffer);
     
-    if (argc == 1)
-        ptr_server = server_search (argv[0]);
+    if (argc == 0)
+        disconnect_ok = weechat_cmd_disconnect_one_server (server);
     else
-        ptr_server = server;
+    {
+        disconnect_ok = 1;
+        
+        if (ascii_strcasecmp (argv[0], "-all") == 0)
+        {
+            for (ptr_server = irc_servers; ptr_server;
+                 ptr_server = ptr_server->next_server)
+            {
+                if ((ptr_server->is_connected) || (ptr_server->child_pid != 0)
+                    || (ptr_server->reconnect_start != 0))
+                {
+                    if (!weechat_cmd_disconnect_one_server (ptr_server))
+                        disconnect_ok = 0;
+                }
+            }
+        }
+        else
+        {
+            for (i = 0; i < argc; i++)
+            {
+                ptr_server = server_search (argv[i]);
+                if (ptr_server)
+                {
+                    if (!weechat_cmd_disconnect_one_server (ptr_server))
+                        disconnect_ok = 0;
+                }
+                else
+                {
+                    irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                    gui_printf (NULL, _("%s server \"%s\" not found\n"),
+                                WEECHAT_ERROR, argv[i]);
+                    disconnect_ok = 0;
+                }
+            }
+        }
+    }
     
-    if (ptr_server)
-    {
-        if ((!ptr_server->is_connected) && (ptr_server->child_pid == 0)
-            && (ptr_server->reconnect_start == 0))
-        {
-            irc_display_prefix (NULL, ptr_server->buffer, PREFIX_ERROR);
-            gui_printf (ptr_server->buffer,
-                        _("%s not connected to server \"%s\"!\n"),
-                        WEECHAT_ERROR, ptr_server->name);
-            return -1;
-        }
-        if (ptr_server->reconnect_start > 0)
-        {
-            irc_display_prefix (NULL, ptr_server->buffer, PREFIX_INFO);
-            gui_printf (ptr_server->buffer,
-                        _("Auto-reconnection is cancelled\n"));
-        }
-        irc_send_quit_server (ptr_server, NULL);
-        server_disconnect (ptr_server, 0);
-        gui_status_draw (buffer, 1);
-    }
-    else
-    {
-        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-        gui_printf (NULL, _("%s server not found\n"), WEECHAT_ERROR);
+    if (!disconnect_ok)
         return -1;
-    }
+    
     return 0;
 }
 
