@@ -18,7 +18,7 @@
     -- Leonid Evdokimov (weechat at darkk dot net one more dot ru)
 """
 
-version = "0.9"
+version = "0.10"
 history = """
   0.1 initial
   0.2
@@ -38,6 +38,8 @@ history = """
     - fixed on_msg (occasionally caused a minor fault)
   0.9
     - added dump_to_servchan and dump_to_current setting
+  0.10
+    - added SILENT (asmanian)
 """
 
 short_syntax = """[REQUEST ANSWER]"""
@@ -46,7 +48,8 @@ syntax = """  Examples:
 
     /set_ctcp 
       show settings for common CTCP-Requests.
-      where "OFF" means "use weechat default behaviour.
+      where "OFF" means "use weechat default behaviour,
+      "SILENT" means: "dont answer at all".
 
     /set_ctcp VERSION I prefer using weechat $version
       Reply with a fancy message.
@@ -120,6 +123,9 @@ def on_msg(server, args):
       ans = answers[req]
       if not ans or ans == "OFF":
         raise ValueError
+
+      if ans == "SILENT":
+        return wc.PLUGIN_RC_OK_IGNORE_ALL
 
       info = {
         "version": wc.get_info("version"),
