@@ -49,17 +49,19 @@ effacer la/les fenêtre(s)
 nombre: effacer un tampon par son numéro
 
 </programlisting>
-<command>connect  [nom_serveur]</command>
+<command>connect  [-all | nom_serveur [nom_serveur...]]</command>
 <programlisting>
-se connecter à un serveur
+se connecter à un/plusieurs serveur(s)
 
+       -all: se connecter à tous les serveurs
 nom_serveur: nom du serveur pour se connecter
 
 </programlisting>
-<command>disconnect  [nom_serveur]</command>
+<command>disconnect  [-all | nom_serveur [nom_serveur...]]</command>
 <programlisting>
-se déconnecter d'un serveur
+se déconnecter d'un/plusieurs serveur(s)
 
+       -all: se déconnecter de tous les serveurs
 nom_serveur: nom du serveur pour se déconnecter
 
 </programlisting>
@@ -132,6 +134,14 @@ autoload: charger automatiquement les extensions dans un répertoire système ou u
   unload: décharger une ou plusieurs exteneions
 
 Sans paramètre, la commande /plugin liste les extensions chargées.
+
+</programlisting>
+<command>reconnect  [-all | nom_serveur [nom_serveur...]]</command>
+<programlisting>
+se reconnecter à un/plusieurs serveur(s)
+
+       -all: se reconnecter à tous les serveurs
+nom_serveur: nom du serveur pour se reconnecter
 
 </programlisting>
 <command>server  [nom_serveur] | [nom_serveur nom/IP port [-auto | -noauto] [-ipv6] [-ssl] [-pwd mot_de_passe] [-nicks pseudo1 pseudo2 pseudo3] [-username nom_utilisateur] [-realname nom_réel] [-command commande] [-autojoin canal[,canal]] ] | [del nom_serveur]</command>

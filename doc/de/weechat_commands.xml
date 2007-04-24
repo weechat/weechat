@@ -49,18 +49,20 @@ Fenster leeren
 Nummer: lösche den Puffer mit der angegebenen Nummer
 
 </programlisting>
-<command>connect  [Servername]</command>
+<command>connect  [-all | servername [servername ...]]</command>
 <programlisting>
-mit einem Server verbinden
+connect to server(s)
 
-Servername: Zielserver
+      -all: connect to all servers
+servername: server name to connect
 
 </programlisting>
-<command>disconnect  [Servername]</command>
+<command>disconnect  [-all | servername [servername...]]</command>
 <programlisting>
-Serververbindung trennen
+disconnect from server(s)
 
-Servername: Name des zu trennenden Servers
+      -all: disconnect from all servers
+servername: server name to disconnect
 
 </programlisting>
 <command>dcc  Aktion [Nickname [Datei]]</command>
@@ -133,6 +135,14 @@ autoload: lade automatisch alle Plugins im System- oder Benutzerverzeichnis
   unload: entlade eines oder alle Plugins
 
 Ohne Argument, listet /plugin alle geladenen Plugins auf.
+
+</programlisting>
+<command>reconnect  [-all | servername [servername ...]]</command>
+<programlisting>
+reconnect to server(s)
+
+      -all: reconnect to all servers
+servername: server name to reconnect
 
 </programlisting>
 <command>server  [Servername] | [Servername Hostname Port [-auto | -noauto] [-ipv6] [-ssl] [-pwd Passwort] [-nicks Nick1 Nick2 Nick3] [-username Benutzername] [-realname Name] [-command Befehl] [-autojoin Channel[,Channel]] ] | [del Servername]</command>

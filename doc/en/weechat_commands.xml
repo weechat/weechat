@@ -49,17 +49,19 @@ clear window(s)
 number: clear buffer by number
 
 </programlisting>
-<command>connect  [servername]</command>
+<command>connect  [-all | servername [servername ...]]</command>
 <programlisting>
-connect to a server
+connect to server(s)
 
+      -all: connect to all servers
 servername: server name to connect
 
 </programlisting>
-<command>disconnect  [servername]</command>
+<command>disconnect  [-all | servername [servername...]]</command>
 <programlisting>
-disconnect from a server
+disconnect from server(s)
 
+      -all: disconnect from all servers
 servername: server name to disconnect
 
 </programlisting>
@@ -132,6 +134,14 @@ autoload: autoload plugins in system or user directory
   unload: unload one or all plugins
 
 Without argument, /plugin command lists loaded plugins.
+
+</programlisting>
+<command>reconnect  [-all | servername [servername ...]]</command>
+<programlisting>
+reconnect to server(s)
+
+      -all: reconnect to all servers
+servername: server name to reconnect
 
 </programlisting>
 <command>server  [servername] | [servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 nick2 nick3] [-username username] [-realname realname] [-command command] [-autojoin channel[,channel]] ] | [del servername]</command>

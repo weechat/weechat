@@ -5,6 +5,7 @@ ChangeLog - 2007-04-24
 
 
 Version 0.2.5 (under dev!):
+   * added /reconnect command (task #5448)
    * added "-all" option for /connect and /disconnect commands (task #6232)
    * improved nick completion: completion with last speakers first and self
      nick at the end; added option look_nick_completion_smart, enabled by

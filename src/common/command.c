@@ -151,6 +151,11 @@ t_weechat_command weechat_commands[] =
        "  unload: unload one or all plugins\n\n"
        "Without argument, /plugin command lists loaded plugins."),
     "list|listfull|load|autoload|reload|unload %P", 0, 2, 0, weechat_cmd_plugin, NULL },
+  { "reconnect", N_("reconnect to server(s)"),
+    N_("[-all | servername [servername ...]]"),
+    N_("      -all: reconnect to all servers\n"
+       "servername: server name to reconnect"),
+    "%S|-all", 0, MAX_ARGS, 0, weechat_cmd_reconnect, NULL },
   { "server", N_("list, add or remove servers"),
     N_("[servername] | "
        "[servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 "
@@ -1825,7 +1830,7 @@ weechat_cmd_disconnect_one_server (t_irc_server *server)
 }
 
 /*
- * weechat_cmd_disconnect: disconnect from a server
+ * weechat_cmd_disconnect: disconnect from server(s)
  */
 
 int
@@ -2730,6 +2735,94 @@ weechat_cmd_plugin (t_irc_server *server, t_irc_channel *channel,
     (void) argc;
     (void) argv;
 #endif /* PLUGINS */
+    
+    return 0;
+}
+
+/*
+ * weechat_cmd_reconnect_one_server: reconnect to a server
+ *                                   return 0 if error, 1 if ok
+ */
+
+int
+weechat_cmd_reconnect_one_server (t_irc_server *server)
+{
+    if ((!server->is_connected) && (server->child_pid == 0))
+    {
+        irc_display_prefix (NULL, server->buffer, PREFIX_ERROR);
+        gui_printf (server->buffer,
+                    _("%s not connected to server \"%s\"!\n"),
+                    WEECHAT_ERROR, server->name);
+        return 0;
+    }
+    irc_send_quit_server (server, NULL);
+    server_disconnect (server, 0);
+    if (server_connect (server))
+    {
+        server->reconnect_start = 0;
+        server->reconnect_join = (server->channels) ? 1 : 0;    
+    }
+    gui_status_draw (server->buffer, 1);
+    
+    /* reconnect ok */
+    return 1;
+}
+
+/*
+ * weechat_cmd_reconnect: reconnect to server(s)
+ */
+
+int
+weechat_cmd_reconnect (t_irc_server *server, t_irc_channel *channel,
+                       int argc, char **argv)
+{
+    t_gui_buffer *buffer;
+    t_irc_server *ptr_server;
+    int i, reconnect_ok;
+    
+    irc_find_context (server, channel, NULL, &buffer);
+    
+    if (argc == 0)
+        reconnect_ok = weechat_cmd_reconnect_one_server (server);
+    else
+    {
+        reconnect_ok = 1;
+        
+        if (ascii_strcasecmp (argv[0], "-all") == 0)
+        {
+            for (ptr_server = irc_servers; ptr_server;
+                 ptr_server = ptr_server->next_server)
+            {
+                if ((ptr_server->is_connected) || (ptr_server->child_pid != 0))
+                {
+                    if (!weechat_cmd_reconnect_one_server (ptr_server))
+                        reconnect_ok = 0;
+                }
+            }
+        }
+        else
+        {
+            for (i = 0; i < argc; i++)
+            {
+                ptr_server = server_search (argv[i]);
+                if (ptr_server)
+                {
+                    if (!weechat_cmd_reconnect_one_server (ptr_server))
+                        reconnect_ok = 0;
+                }
+                else
+                {
+                    irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                    gui_printf (NULL, _("%s server \"%s\" not found\n"),
+                                WEECHAT_ERROR, argv[i]);
+                    reconnect_ok = 0;
+                }
+            }
+        }
+    }
+    
+    if (!reconnect_ok)
+        return -1;
     
     return 0;
 }

@@ -73,6 +73,7 @@ extern int weechat_cmd_ignore (t_irc_server *, t_irc_channel *, int, char **);
 extern int weechat_cmd_key (t_irc_server *, t_irc_channel *, char *);
 extern int weechat_cmd_panel (t_irc_server *, t_irc_channel *, int, char **);
 extern int weechat_cmd_plugin (t_irc_server *, t_irc_channel *, int, char **);
+extern int weechat_cmd_reconnect (t_irc_server *, t_irc_channel *, int, char **);
 extern int weechat_cmd_save (t_irc_server *, t_irc_channel *, int, char **);
 extern int weechat_cmd_server (t_irc_server *, t_irc_channel *, int, char **);
 extern int weechat_cmd_set (t_irc_server *, t_irc_channel *, char *);
