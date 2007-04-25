@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-04-24
+ChangeLog - 2007-04-25
 
 
 Version 0.2.5 (under dev!):
+   * fixed string format bug when displaying string thru plugin script API
    * added /reconnect command (task #5448)
    * added "-all" option for /connect and /disconnect commands (task #6232)
    * improved nick completion: completion with last speakers first and self

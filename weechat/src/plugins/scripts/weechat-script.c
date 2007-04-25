@@ -326,7 +326,7 @@ weechat_script_print (t_weechat_plugin *plugin,
     
     buf2 = (script->charset && script->charset[0]) ?
         plugin->iconv_to_internal (plugin, script->charset, buf) : NULL;
-    plugin->print (plugin, server, channel, (buf2) ? buf2 : buf);
+    plugin->print (plugin, server, channel, "%s", (buf2) ? buf2 : buf);
     if (buf2)
         free (buf2);
 }
@@ -350,7 +350,7 @@ weechat_script_print_server (t_weechat_plugin *plugin,
     
     buf2 = (script->charset && script->charset[0]) ?
         plugin->iconv_to_internal (plugin, script->charset, buf) : NULL;
-    plugin->print_server (plugin, (buf2) ? buf2 : buf);
+    plugin->print_server (plugin, "%s", (buf2) ? buf2 : buf);
     if (buf2)
         free (buf2);
 }
@@ -374,7 +374,7 @@ weechat_script_print_infobar (t_weechat_plugin *plugin,
     
     buf2 = (script->charset && script->charset[0]) ?
         plugin->iconv_to_internal (plugin, script->charset, buf) : NULL;
-    plugin->print_infobar (plugin, time_displayed, (buf2) ? buf2 : buf);
+    plugin->print_infobar (plugin, time_displayed, "%s", (buf2) ? buf2 : buf);
     if (buf2)
         free (buf2);
 }
@@ -398,7 +398,7 @@ weechat_script_log (t_weechat_plugin *plugin,
     
     buf2 = (script->charset && script->charset[0]) ?
         plugin->iconv_to_internal (plugin, script->charset, buf) : NULL;
-    plugin->log (plugin, server, channel, (buf2) ? buf2 : buf);
+    plugin->log (plugin, server, channel, "%s", (buf2) ? buf2 : buf);
     if (buf2)
         free (buf2);
 }
