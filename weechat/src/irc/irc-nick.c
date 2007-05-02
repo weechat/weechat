@@ -63,8 +63,10 @@ int
 nick_score_for_sort (t_irc_nick *nick)
 {
     if (nick->flags & NICK_CHANOWNER)
-        return -32;
+        return -64;
     if (nick->flags & NICK_CHANADMIN)
+        return -32;
+    if (nick->flags & NICK_CHANADMIN2)
         return -16;
     if (nick->flags & NICK_OP)
         return -8;
@@ -193,8 +195,8 @@ nick_resort (t_irc_channel *channel, t_irc_nick *nick)
 
 t_irc_nick *
 nick_new (t_irc_server *server, t_irc_channel *channel, char *nick_name,
-          int is_chanowner, int is_chanadmin, int is_op, int is_halfop,
-          int has_voice)
+          int is_chanowner, int is_chanadmin, int is_chanadmin2, int is_op,
+          int is_halfop, int has_voice)
 {
     t_irc_nick *new_nick;
     
@@ -204,6 +206,7 @@ nick_new (t_irc_server *server, t_irc_channel *channel, char *nick_name,
         /* update nick */
         NICK_SET_FLAG(new_nick, is_chanowner, NICK_CHANOWNER);
         NICK_SET_FLAG(new_nick, is_chanadmin, NICK_CHANADMIN);
+        NICK_SET_FLAG(new_nick, is_chanadmin2, NICK_CHANADMIN2);
         NICK_SET_FLAG(new_nick, is_op, NICK_OP);
         NICK_SET_FLAG(new_nick, is_halfop, NICK_HALFOP);
         NICK_SET_FLAG(new_nick, has_voice, NICK_VOICE);
@@ -221,6 +224,7 @@ nick_new (t_irc_server *server, t_irc_channel *channel, char *nick_name,
     new_nick->flags = 0;
     NICK_SET_FLAG(new_nick, is_chanowner, NICK_CHANOWNER);
     NICK_SET_FLAG(new_nick, is_chanadmin, NICK_CHANADMIN);
+    NICK_SET_FLAG(new_nick, is_chanadmin2, NICK_CHANADMIN2);
     NICK_SET_FLAG(new_nick, is_op, NICK_OP);
     NICK_SET_FLAG(new_nick, is_halfop, NICK_HALFOP);
     NICK_SET_FLAG(new_nick, has_voice, NICK_VOICE);
@@ -362,6 +366,7 @@ nick_count (t_irc_channel *channel, int *total, int *count_op,
         (*total)++;
         if ((ptr_nick->flags & NICK_CHANOWNER) ||
             (ptr_nick->flags & NICK_CHANADMIN) ||
+            (ptr_nick->flags & NICK_CHANADMIN2) ||
             (ptr_nick->flags & NICK_OP))
             (*count_op)++;
         else

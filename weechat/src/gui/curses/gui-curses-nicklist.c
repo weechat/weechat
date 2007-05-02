@@ -193,6 +193,12 @@ gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
                             mvwprintw (GUI_CURSES(ptr_win)->win_nick, y, x, "&");
                             x++;
                         }
+                        else if (ptr_nick->flags & NICK_CHANADMIN2)
+                        {
+                            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick, COLOR_WIN_NICK_CHANADMIN);
+                            mvwprintw (GUI_CURSES(ptr_win)->win_nick, y, x, "!");
+                            x++;
+                        }
                         else if (ptr_nick->flags & NICK_OP)
                         {
                             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick, COLOR_WIN_NICK_OP);

@@ -57,12 +57,13 @@
 
 /* nick types */
 
-#define NICK_CHANOWNER 1
-#define NICK_CHANADMIN 2
-#define NICK_OP        4
-#define NICK_HALFOP    8
-#define NICK_VOICE     16
-#define NICK_AWAY      32
+#define NICK_CHANOWNER  1
+#define NICK_CHANADMIN  2
+#define NICK_OP         4
+#define NICK_HALFOP     8
+#define NICK_VOICE      16
+#define NICK_AWAY       32
+#define NICK_CHANADMIN2 64
 #define NICK_SET_FLAG(nick, set, flag) \
     if (set) \
         nick->flags |= flag; \
@@ -427,7 +428,7 @@ extern void channel_print_log (t_irc_channel *);
 
 extern int nick_find_color (t_irc_nick *);
 extern t_irc_nick *nick_new (t_irc_server *, t_irc_channel *, char *,
-                             int, int, int, int, int);
+                             int, int, int, int, int, int);
 extern void nick_resort (t_irc_channel *, t_irc_nick *);
 extern void nick_change (t_irc_channel *, t_irc_nick *, char *);
 extern void nick_free (t_irc_channel *, t_irc_nick *);

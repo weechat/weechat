@@ -174,7 +174,7 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
         length += 2;
     if (nick && cfg_look_nickmode)
     {
-        if (nick->flags & (NICK_CHANOWNER | NICK_CHANADMIN |
+        if (nick->flags & (NICK_CHANOWNER | NICK_CHANADMIN | NICK_CHANADMIN2 |
                            NICK_OP | NICK_HALFOP | NICK_VOICE))
             length += 1;
         else if (cfg_look_nickmode_empty && !no_nickmode)
@@ -219,6 +219,9 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
                              GUI_COLOR(COLOR_WIN_NICK_OP));
         else if (nick->flags & NICK_CHANADMIN)
             gui_printf_type (buffer, type, "%s&",
+                             GUI_COLOR(COLOR_WIN_NICK_OP));
+        else if (nick->flags & NICK_CHANADMIN2)
+            gui_printf_type (buffer, type, "%s!",
                              GUI_COLOR(COLOR_WIN_NICK_OP));
         else if (nick->flags & NICK_OP)
             gui_printf_type (buffer, type, "%s@",

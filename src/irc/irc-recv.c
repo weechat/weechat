@@ -501,7 +501,7 @@ irc_cmd_recv_join (t_irc_server *server, char *host, char *nick, char *arguments
     }
     
     /* add nick in channel */
-    ptr_nick = nick_new (server, ptr_channel, nick, 0, 0, 0, 0, 0);
+    ptr_nick = nick_new (server, ptr_channel, nick, 0, 0, 0, 0, 0, 0);
     if (ptr_nick)
         ptr_nick->host = strdup ((pos) ? pos + 1 : host);
 
@@ -3211,27 +3211,36 @@ irc_cmd_recv_319 (t_irc_server *server, char *host, char *nick, char *arguments)
                             GUI_COLOR(COLOR_WIN_CHAT));
                 while (pos_channel && pos_channel[0])
                 {
-                    if (pos_channel[0] == '@')
+                    if (pos_channel[0] == '!')
                     {
-                        gui_printf (server->buffer, "%s@",
+                        gui_printf (server->buffer, "%s!",
                                     GUI_COLOR(COLOR_WIN_NICK_OP));
                         pos_channel++;
                     }
                     else
                     {
-                        if (pos_channel[0] == '%')
+                        if (pos_channel[0] == '@')
                         {
-                            gui_printf (server->buffer, "%s%%",
-                                        GUI_COLOR(COLOR_WIN_NICK_HALFOP));
+                            gui_printf (server->buffer, "%s@",
+                                        GUI_COLOR(COLOR_WIN_NICK_OP));
                             pos_channel++;
                         }
                         else
-                            if (pos_channel[0] == '+')
+                        {
+                            if (pos_channel[0] == '%')
                             {
-                                gui_printf (server->buffer, "%s+",
-                                            GUI_COLOR(COLOR_WIN_NICK_VOICE));
+                                gui_printf (server->buffer, "%s%%",
+                                            GUI_COLOR(COLOR_WIN_NICK_HALFOP));
                                 pos_channel++;
                             }
+                            else
+                                if (pos_channel[0] == '+')
+                                {
+                                    gui_printf (server->buffer, "%s+",
+                                                GUI_COLOR(COLOR_WIN_NICK_VOICE));
+                                    pos_channel++;
+                                }
+                        }
                     }
                     pos = strchr (pos_channel, ' ');
                     if (pos)
@@ -4263,7 +4272,7 @@ int
 irc_cmd_recv_353 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos, *pos_nick;
-    int is_chanowner, is_chanadmin, is_op, is_halfop, has_voice;
+    int is_chanowner, is_chanadmin, is_chanadmin2, is_op, is_halfop, has_voice;
     t_irc_channel *ptr_channel;
     t_gui_buffer *ptr_buffer;
     
@@ -4332,6 +4341,7 @@ irc_cmd_recv_353 (t_irc_server *server, char *host, char *nick, char *arguments)
             {
                 is_chanowner = 0;
                 is_chanadmin = 0;
+                is_chanadmin2 = 0;
                 is_op = 0;
                 is_halfop = 0;
                 has_voice = 0;
@@ -4376,6 +4386,14 @@ irc_cmd_recv_353 (t_irc_server *server, char *host, char *nick, char *arguments)
                         gui_printf (ptr_buffer, "%s&",
                                     GUI_COLOR(COLOR_WIN_NICK_OP));
                 }
+                if (pos[0] == '!')
+                {
+                    is_chanadmin2 = 1;
+                    pos++;
+                    if (!command_ignored && !ptr_channel)
+                        gui_printf (ptr_buffer, "%s!",
+                                    GUI_COLOR(COLOR_WIN_NICK_OP));
+                }
                 pos_nick = pos;
                 pos = strchr (pos, ' ');
                 if (pos)
@@ -4386,7 +4404,7 @@ irc_cmd_recv_353 (t_irc_server *server, char *host, char *nick, char *arguments)
                 if (ptr_channel)
                 {
                     if (!nick_new (server, ptr_channel, pos_nick, is_chanowner,
-                                   is_chanadmin, is_op, is_halfop, has_voice))
+                                   is_chanadmin, is_chanadmin2, is_op, is_halfop, has_voice))
                     {
                         irc_display_prefix (server, server->buffer, PREFIX_ERROR);
                         gui_printf_nolog (server->buffer,

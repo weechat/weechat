@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.5-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-04-24 14:12+0200\n"
+"POT-Creation-Date: 2007-05-02 11:39+0200\n"
 "PO-Revision-Date: 2007-04-24 12:43+0200\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1357,38 +1357,38 @@ msgstr "no es posible cambiar el modo para el resto de usuarios"
 msgid "whois (secure connection)"
 msgstr "quién es (conexión segura)"
 
-#: src/irc/irc-display.c:378
+#: src/irc/irc-display.c:381
 #, c-format
 msgid "%sServer: %s%s %s[%s%s%s]\n"
 msgstr "%sServidor:%s%s %s[%s%s%s]\n"
 
-#: src/irc/irc-display.c:385
+#: src/irc/irc-display.c:388
 msgid "connected"
 msgstr "conectado"
 
-#: src/irc/irc-display.c:385
+#: src/irc/irc-display.c:388
 msgid "not connected"
 msgstr "no conectado"
 
-#: src/irc/irc-display.c:389 src/irc/irc-display.c:393
-#: src/irc/irc-display.c:402 src/irc/irc-display.c:404
+#: src/irc/irc-display.c:392 src/irc/irc-display.c:396
+#: src/irc/irc-display.c:405 src/irc/irc-display.c:407
 msgid "on"
 msgstr "activo"
 
-#: src/irc/irc-display.c:389 src/irc/irc-display.c:393
-#: src/irc/irc-display.c:402 src/irc/irc-display.c:404
+#: src/irc/irc-display.c:392 src/irc/irc-display.c:396
+#: src/irc/irc-display.c:405 src/irc/irc-display.c:407
 msgid "off"
 msgstr "inactivo"
 
-#: src/irc/irc-display.c:391
+#: src/irc/irc-display.c:394
 msgid " (temporary server, will not be saved)"
 msgstr " (servidor temporal, no será guardado)"
 
-#: src/irc/irc-display.c:396 src/irc/irc-display.c:440 src/irc/irc-recv.c:3164
+#: src/irc/irc-display.c:399 src/irc/irc-display.c:443 src/irc/irc-recv.c:3164
 msgid "seconds"
 msgstr "segundos"
 
-#: src/irc/irc-display.c:407
+#: src/irc/irc-display.c:410
 msgid "(hidden)"
 msgstr "(oculto)"
 
@@ -1468,8 +1468,8 @@ msgid "You have been invited to %s%s%s by %s%s\n"
 msgstr "Usted ha sido invitado a %s%s%s por %s%s\n"
 
 #: src/irc/irc-recv.c:437 src/irc/irc-recv.c:551 src/irc/irc-recv.c:751
-#: src/irc/irc-recv.c:1180 src/irc/irc-recv.c:1528 src/irc/irc-recv.c:3462
-#: src/irc/irc-recv.c:3528 src/irc/irc-recv.c:3549
+#: src/irc/irc-recv.c:1180 src/irc/irc-recv.c:1528 src/irc/irc-recv.c:3471
+#: src/irc/irc-recv.c:3537 src/irc/irc-recv.c:3558
 #, c-format
 msgid "%s channel \"%s\" not found for \"%s\" command\n"
 msgstr "%s canal \"%s\" no encontrado para el comando \"%s\"\n"
@@ -1600,10 +1600,10 @@ msgstr "reop canal %s%s%s: %s%s\n"
 #: src/irc/irc-recv.c:1721 src/irc/irc-recv.c:1751 src/irc/irc-recv.c:1772
 #: src/irc/irc-recv.c:1788 src/irc/irc-recv.c:1818 src/irc/irc-recv.c:1839
 #: src/irc/irc-recv.c:1854 src/irc/irc-recv.c:2071 src/irc/irc-recv.c:2508
-#: src/irc/irc-recv.c:3933 src/irc/irc-recv.c:3948 src/irc/irc-recv.c:4047
-#: src/irc/irc-recv.c:4061 src/irc/irc-recv.c:4307 src/irc/irc-recv.c:4425
-#: src/irc/irc-recv.c:4562 src/irc/irc-recv.c:4577 src/irc/irc-recv.c:4683
-#: src/irc/irc-recv.c:4697
+#: src/irc/irc-recv.c:3942 src/irc/irc-recv.c:3957 src/irc/irc-recv.c:4056
+#: src/irc/irc-recv.c:4070 src/irc/irc-recv.c:4316 src/irc/irc-recv.c:4443
+#: src/irc/irc-recv.c:4580 src/irc/irc-recv.c:4595 src/irc/irc-recv.c:4701
+#: src/irc/irc-recv.c:4715
 #, c-format
 msgid "%s cannot parse \"%s\" command\n"
 msgstr "%s no es posible analizar el comando \"%s\"\n"
@@ -1700,141 +1700,141 @@ msgstr "minuto"
 msgid "second"
 msgstr "segundo"
 
-#: src/irc/irc-recv.c:3473
+#: src/irc/irc-recv.c:3482
 #, fuzzy, c-format
 msgid "Channel created on %s"
 msgstr "lista de excepción de canal"
 
-#: src/irc/irc-recv.c:3482 src/irc/irc-recv.c:3679
+#: src/irc/irc-recv.c:3491 src/irc/irc-recv.c:3688
 #, c-format
 msgid "%s cannot identify date/time for \"%s\" command\n"
 msgstr "%s no es posible identificar la fecha/hora para el comando \"%s\"\n"
 
-#: src/irc/irc-recv.c:3491 src/irc/irc-recv.c:3615 src/irc/irc-recv.c:3697
-#: src/irc/irc-recv.c:3808
+#: src/irc/irc-recv.c:3500 src/irc/irc-recv.c:3624 src/irc/irc-recv.c:3706
+#: src/irc/irc-recv.c:3817
 #, c-format
 msgid "%s cannot identify channel for \"%s\" command\n"
 msgstr "%s no es posible identificar el canal para el comando \"%s\"\n"
 
-#: src/irc/irc-recv.c:3540
+#: src/irc/irc-recv.c:3549
 #, c-format
 msgid "No topic set for %s%s\n"
 msgstr "Sin tema establecido para %s%s\n"
 
-#: src/irc/irc-recv.c:3600
+#: src/irc/irc-recv.c:3609
 #, c-format
 msgid "Topic for %s%s%s is: "
 msgstr "El tema para %s%s%s es: "
 
-#: src/irc/irc-recv.c:3668
+#: src/irc/irc-recv.c:3677
 #, c-format
 msgid "Topic set by %s%s%s, %s"
 msgstr "Tema establecido por %s%s%s, %s"
 
-#: src/irc/irc-recv.c:3688 src/irc/irc-recv.c:3817
+#: src/irc/irc-recv.c:3697 src/irc/irc-recv.c:3826
 #, c-format
 msgid "%s cannot identify nickname for \"%s\" command\n"
 msgstr ""
 "%s no es posible determinar el nombre de usuario para el comando \"%s\"\n"
 
-#: src/irc/irc-recv.c:3793
+#: src/irc/irc-recv.c:3802
 #, c-format
 msgid "%s%s%s has invited %s%s%s on %s%s\n"
 msgstr "%s%s%s ha invitado a %s%s%s en %s%s\n"
 
-#: src/irc/irc-recv.c:3853
+#: src/irc/irc-recv.c:3862
 #, c-format
 msgid "Channel reop %s%s%s: %s%s\n"
 msgstr "reop canal %s%s%s: %s%s\n"
 
-#: src/irc/irc-recv.c:4002
+#: src/irc/irc-recv.c:4011
 #, fuzzy, c-format
 msgid " by %s%s %s(%s%s%s)"
 msgstr "%s%s %s(%s%s%s)%s ha salido"
 
-#: src/irc/irc-recv.c:4011
+#: src/irc/irc-recv.c:4020
 #, c-format
 msgid " by %s%s"
 msgstr ""
 
-#: src/irc/irc-recv.c:4321 src/irc/irc-recv.c:4471
+#: src/irc/irc-recv.c:4330 src/irc/irc-recv.c:4489
 #, c-format
 msgid "Nicks %s%s%s: %s["
 msgstr "Usuarios %s%s%s: %s["
 
-#: src/irc/irc-recv.c:4393
+#: src/irc/irc-recv.c:4411
 #, c-format
 msgid "%s cannot create nick \"%s\" for channel \"%s\"\n"
 msgstr "%s no es posible crear el usuario \"%s\" para el canal \"%s\"\n"
 
-#: src/irc/irc-recv.c:4492
+#: src/irc/irc-recv.c:4510
 #, c-format
 msgid ""
 "Channel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 msgstr ""
 "Canal %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 
-#: src/irc/irc-recv.c:4500
+#: src/irc/irc-recv.c:4518
 msgid "nicks"
 msgstr "usuarios"
 
-#: src/irc/irc-recv.c:4500
+#: src/irc/irc-recv.c:4518
 msgid "nick"
 msgstr "usuario"
 
-#: src/irc/irc-recv.c:4505
+#: src/irc/irc-recv.c:4523
 msgid "ops"
 msgstr "operadores"
 
-#: src/irc/irc-recv.c:4505
+#: src/irc/irc-recv.c:4523
 msgid "op"
 msgstr "operador"
 
-#: src/irc/irc-recv.c:4509
+#: src/irc/irc-recv.c:4527
 msgid "halfops"
 msgstr "semi-operadores"
 
-#: src/irc/irc-recv.c:4509
+#: src/irc/irc-recv.c:4527
 msgid "halfop"
 msgstr "semi-operador"
 
-#: src/irc/irc-recv.c:4513
+#: src/irc/irc-recv.c:4531
 msgid "voices"
 msgstr "voces"
 
-#: src/irc/irc-recv.c:4513
+#: src/irc/irc-recv.c:4531
 msgid "voice"
 msgstr "voz"
 
-#: src/irc/irc-recv.c:4517
+#: src/irc/irc-recv.c:4535
 msgid "normal"
 msgstr "normal"
 
-#: src/irc/irc-recv.c:4617
+#: src/irc/irc-recv.c:4635
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned by "
 msgstr "%s[%s%s%s] %s%s%s baneado por "
 
-#: src/irc/irc-recv.c:4652
+#: src/irc/irc-recv.c:4670
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned\n"
 msgstr "%s[%s%s%s] %s%s%s baneado\n"
 
-#: src/irc/irc-recv.c:4787
+#: src/irc/irc-recv.c:4805
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\"\n"
 msgstr ""
 "%s: el nombre de usuario \"%s\" ya está en uso, probando con el 2 nombre de "
 "usuario \"%s\"\n"
 
-#: src/irc/irc-recv.c:4799
+#: src/irc/irc-recv.c:4817
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\"\n"
 msgstr ""
 "%s: el nombre de usuario \"%s\" ya está en uso, probando con el 3 nombre de "
 "usuario \"%s\"\n"
 
-#: src/irc/irc-recv.c:4811
+#: src/irc/irc-recv.c:4829
 #, c-format
 msgid ""
 "%s: all declared nicknames are already in use, closing connection with "
@@ -1843,14 +1843,14 @@ msgstr ""
 "%s: todos los nombres de usuario declarados ya están en uso, ¡cerrando la "
 "conexión con el servidor!\n"
 
-#: src/irc/irc-recv.c:4821
+#: src/irc/irc-recv.c:4839
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\"\n"
 msgstr ""
 "%s: el nombre de usuario \"%s\" ya está en uso, probando con el 1 nombre de "
 "usuario \"%s\"\n"
 
-#: src/irc/irc-recv.c:4833
+#: src/irc/irc-recv.c:4851
 msgid "unknown"
 msgstr "desconocido"
 
