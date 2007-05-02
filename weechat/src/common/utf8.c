@@ -56,6 +56,22 @@ utf8_init ()
 }
 
 /*
+ * utf8_has_8bits: return 1 if string has 8-bits chars, 0 if only 7-bits chars
+ */
+
+int
+utf8_has_8bits (char *string)
+{
+    while (string && string[0])
+    {
+        if (string[0] & 0x80)
+            return 1;
+        string++;
+    }
+    return 0;
+}
+
+/*
  * utf8_is_valid: return 1 if UTF-8 string is valid, 0 otherwise
  *                if error is not NULL, it's set with first non valid UTF-8
  *                char in string, if any

@@ -201,6 +201,7 @@ weechat_iconv (int from_utf8, char *from_code, char *to_code, char *string)
 #ifdef HAVE_ICONV
     iconv_t cd;
     char *inbuf, *ptr_inbuf, *ptr_outbuf, *next_char;
+    char *ptr_inbuf_shift;
     int done;
     size_t err, inbytesleft, outbytesleft;
     
@@ -218,6 +219,7 @@ weechat_iconv (int from_utf8, char *from_code, char *to_code, char *string)
             outbytesleft = inbytesleft * 4;
             outbuf = (char *) malloc (outbytesleft + 2);
             ptr_outbuf = outbuf;
+            ptr_inbuf_shift = NULL;
             done = 0;
             while (!done)
             {
@@ -260,8 +262,19 @@ weechat_iconv (int from_utf8, char *from_code, char *to_code, char *string)
                     }
                 }
                 else
-                    done = 1;
+                {
+                    if (!ptr_inbuf_shift)
+                    {
+                        ptr_inbuf_shift = ptr_inbuf;
+                        ptr_inbuf = NULL;
+                        inbytesleft = 0;
+                    }
+                    else
+                        done = 1;
+                }
             }
+            if (ptr_inbuf_shift)
+                ptr_inbuf = ptr_inbuf_shift;
             ptr_outbuf[0] = '\0';
             free (inbuf);
             iconv_close (cd);
@@ -298,7 +311,7 @@ weechat_iconv_to_internal (char *charset, char *string)
     
     if (input)
     {
-        if (utf8_is_valid (input, NULL))
+        if (utf8_has_8bits (input) && utf8_is_valid (input, NULL))
             return input;
         
         output = weechat_iconv (0,
