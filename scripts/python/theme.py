@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 Theme manager for WeeChat. 
 It loads configuration parameters from file 

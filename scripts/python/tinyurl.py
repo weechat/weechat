@@ -1,4 +1,3 @@
-#!/bin/env python
 #
 # TinyUrl, version 3.3, for weechat version 0.1.9
 #

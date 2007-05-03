@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 #   Catapult v0.2 - less ordinary abuse generator
 #   Copyright (C) 2007  Pavel Shevchuk <stlwrt@gmail.com>
 
