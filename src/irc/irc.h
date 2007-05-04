@@ -345,6 +345,10 @@ struct t_irc_ignore
 
 extern t_irc_command irc_commands[];
 extern t_irc_server *irc_servers;
+#ifdef HAVE_GNUTLS
+extern const int gnutls_cert_type_prio[];
+extern const int gnutls_prot_prio[];
+#endif
 extern t_irc_message *recv_msgq, *msgq_last_msg;
 extern int check_away;
 extern t_irc_dcc *dcc_list;

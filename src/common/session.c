@@ -825,7 +825,6 @@ session_load_server (FILE *file)
     void *session_data;
     size_t session_size;
     int session_size_int;
-    const int cert_type_prio[] = { GNUTLS_CRT_X509, GNUTLS_CRT_OPENPGP, 0 };
 #endif
     
     /* read server name */
@@ -958,7 +957,8 @@ session_load_server (FILE *file)
                     return 0;
                 }
                 gnutls_set_default_priority (session_current_server->gnutls_sess);
-                gnutls_certificate_type_set_priority (session_current_server->gnutls_sess, cert_type_prio);
+                gnutls_certificate_type_set_priority (session_current_server->gnutls_sess, gnutls_cert_type_prio);
+                gnutls_protocol_set_priority (session_current_server->gnutls_sess, gnutls_prot_prio);
                 gnutls_credentials_set (session_current_server->gnutls_sess, GNUTLS_CRD_CERTIFICATE, gnutls_xcred);
                 session_data = NULL;
                 rc = rc && (session_read_buf_alloc (file, &session_data, &session_size_int));

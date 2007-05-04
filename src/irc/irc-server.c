@@ -64,6 +64,17 @@ int check_away = 0;
 
 char *nick_modes = "aiwroOs";
 
+#ifdef HAVE_GNUTLS
+const int gnutls_cert_type_prio[] = { GNUTLS_CRT_X509, GNUTLS_CRT_OPENPGP, 0 };
+#if LIBGNUTLS_VERSION_NUMBER >= 0x010700
+    const int gnutls_prot_prio[] = { GNUTLS_TLS1_2, GNUTLS_TLS1_1,
+                                     GNUTLS_TLS1_0, GNUTLS_SSL3, 0 };
+#else
+    const int gnutls_prot_prio[] = { GNUTLS_TLS1_1, GNUTLS_TLS1_0,
+                                     GNUTLS_SSL3, 0 };
+#endif
+#endif
+
 
 /*
  * server_init: init server struct with default values
@@ -1730,9 +1741,6 @@ server_connect (t_irc_server *server)
 {
     int child_pipe[2], set;
     pid_t pid;
-#ifdef HAVE_GNUTLS
-    const int cert_type_prio[] = { GNUTLS_CRT_X509, GNUTLS_CRT_OPENPGP, 0 };
-#endif
     
 #ifndef HAVE_GNUTLS
     if (server->ssl)
@@ -1790,7 +1798,8 @@ server_connect (t_irc_server *server)
             return 0;
         }
         gnutls_set_default_priority (server->gnutls_sess);
-        gnutls_certificate_type_set_priority (server->gnutls_sess, cert_type_prio);
+        gnutls_certificate_type_set_priority (server->gnutls_sess, gnutls_cert_type_prio);
+        gnutls_protocol_set_priority (server->gnutls_sess, gnutls_prot_prio);
         gnutls_credentials_set (server->gnutls_sess, GNUTLS_CRD_CERTIFICATE, gnutls_xcred);
         server->ssl_connected = 1;
     }
