@@ -21,6 +21,8 @@
 #ifndef __WEECHAT_ALIAS_H
 #define __WEECHAT_ALIAS_H 1
 
+#include "../irc/irc.h"
+
 typedef struct t_weechat_alias t_weechat_alias;
 
 struct t_weechat_alias
@@ -39,7 +41,7 @@ extern t_weechat_alias *alias_search (char *);
 extern t_weechat_alias *alias_new (char *, char *);
 extern char *alias_get_final_command (t_weechat_alias *);
 extern char *alias_replace_args (char *, char *);
-extern char *alias_replace_vars (char *);
+extern char *alias_replace_vars (t_irc_server *, t_irc_channel *, char *);
 extern void alias_free (t_weechat_alias *);
 extern void alias_free_all ();
 

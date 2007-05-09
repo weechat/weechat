@@ -2419,7 +2419,7 @@ irc_cmd_recv_001 (t_irc_server *server, char *host, char *nick, char *arguments)
 	{
 	    for (ptr = commands; *ptr; ptr++)
             {
-                vars_replaced = alias_replace_vars (*ptr);
+                vars_replaced = alias_replace_vars (server, NULL, *ptr);
                 user_command (server, NULL,
                               (vars_replaced) ? vars_replaced : *ptr, 0);
                 if (vars_replaced)

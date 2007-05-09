@@ -299,40 +299,36 @@ alias_replace_args (char *alias_args, char *user_args)
  */
 
 char *
-alias_replace_vars (char *string)
+alias_replace_vars (t_irc_server *server, t_irc_channel *channel, char *string)
 {
-    char *nick, *channel, *server;
+    char *var_nick, *var_channel, *var_server;
     char empty_string[1] = { '\0' };
     char *res, *temp;
     
-    nick = (SERVER(gui_current_window->buffer)
-            && SERVER(gui_current_window->buffer)->nick) ?
-        SERVER(gui_current_window->buffer)->nick : empty_string;
-    channel = (CHANNEL(gui_current_window->buffer)) ?
-        CHANNEL(gui_current_window->buffer)->name : empty_string;
-    server = (SERVER(gui_current_window->buffer)) ?
-        SERVER(gui_current_window->buffer)->name : empty_string;
-
+    var_nick = (server && server->nick) ? server->nick : empty_string;
+    var_channel = (channel) ? channel->name : empty_string;
+    var_server = (server) ? server->name : empty_string;
+    
     /* replace nick */
-    temp = weechat_strreplace (string, "$nick", nick);
+    temp = weechat_strreplace (string, "$nick", var_nick);
     if (!temp)
         return NULL;
     res = temp;
-
+    
     /* replace channel */
-    temp = weechat_strreplace (res, "$channel", channel);
+    temp = weechat_strreplace (res, "$channel", var_channel);
     free (res);
     if (!temp)
         return NULL;
     res = temp;
-
+    
     /* replace server */
-    temp = weechat_strreplace (res, "$server", server);
+    temp = weechat_strreplace (res, "$server", var_server);
     free (res);
     if (!temp)
         return NULL;
     res = temp;
-
+    
     /* return result */
     return res;
 }

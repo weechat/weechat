@@ -379,7 +379,7 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
         rc = -1;
     else
     {
-        vars_replaced = alias_replace_vars (ptr_args);
+        vars_replaced = alias_replace_vars (server, channel, ptr_args);
         rc = plugin_cmd_handler_exec ((server) ? server->name : "", command + 1,
                                       (vars_replaced) ? vars_replaced : ptr_args);
         if (vars_replaced)
@@ -429,7 +429,7 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                                     ptr_next_cmd = ptr_cmd;
                                     ptr_next_cmd++;
                                     
-                                    vars_replaced = alias_replace_vars (*ptr_cmd);
+                                    vars_replaced = alias_replace_vars (server, channel, *ptr_cmd);
                                     new_ptr_cmd = (vars_replaced) ? vars_replaced : *ptr_cmd;
                                     args_replaced = alias_replace_args (new_ptr_cmd, ptr_args);
                                     if (args_replaced)
