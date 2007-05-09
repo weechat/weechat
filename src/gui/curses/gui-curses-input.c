@@ -96,7 +96,7 @@ gui_input_get_prompt_length (t_gui_window *window, char *nick)
                 pos++;
                 switch (pos[0])
                 {
-                    case 'c':
+                    case 'c': /* channel or server name */
                         if (CHANNEL(window->buffer))
                             length += utf8_width_screen (CHANNEL(window->buffer)->name);
                         else
@@ -106,8 +106,8 @@ gui_input_get_prompt_length (t_gui_window *window, char *nick)
                         }
                         pos++;
                         break;
-                    case 'm':
-                        if (SERVER(window->buffer))
+                    case 'm': /* nick modes */
+                        if (SERVER(window->buffer) && SERVER(window->buffer)->is_connected)
                         {
                             if (SERVER(window->buffer)->nick_modes
                                 && SERVER(window->buffer)->nick_modes[0])
@@ -115,7 +115,7 @@ gui_input_get_prompt_length (t_gui_window *window, char *nick)
                         }
                         pos++;
                         break;
-                    case 'n':
+                    case 'n': /* nick */
                         length += utf8_width_screen (nick);
                         pos++;
                         break;
@@ -180,7 +180,7 @@ gui_input_draw_prompt (t_gui_window *window, char *nick)
                 pos++;
                 switch (pos[0])
                 {
-                    case 'c':
+                    case 'c': /* channel or server name */
                         if (CHANNEL(window->buffer))
                         {
                             gui_window_set_weechat_color (GUI_CURSES(window)->win_input,
@@ -208,8 +208,8 @@ gui_input_draw_prompt (t_gui_window *window, char *nick)
                         }
                         pos++;
                         break;
-                    case 'm':
-                        if (SERVER(window->buffer))
+                    case 'm': /* nick modes */
+                        if (SERVER(window->buffer) && SERVER(window->buffer)->is_connected)
                         {
                             if (SERVER(window->buffer)->nick_modes
                                 && SERVER(window->buffer)->nick_modes[0])
@@ -222,7 +222,7 @@ gui_input_draw_prompt (t_gui_window *window, char *nick)
                         }
                         pos++;
                         break;
-                    case 'n':
+                    case 'n': /* nick */
                         gui_window_set_weechat_color (GUI_CURSES(window)->win_input,
                                                       COLOR_WIN_INPUT_NICK);
                         buf = weechat_iconv_from_internal (NULL, nick);
@@ -367,9 +367,9 @@ gui_input_draw (t_gui_buffer *buffer, int erase)
                         if (buffer->input_buffer_length == 0)
                             buffer->input_buffer[0] = '\0';
                         
-                        if (SERVER(buffer))
+                        if (SERVER(buffer) && SERVER(buffer)->is_connected)
                             ptr_nickname = (SERVER(buffer)->nick) ?
-                                SERVER(buffer)->nick : SERVER(buffer)->nick1;
+                                SERVER(buffer)->nick : cfg_look_no_nickname;
                         else
                             ptr_nickname = cfg_look_no_nickname;
                         
