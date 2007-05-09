@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-05-04
+ChangeLog - 2007-05-09
 
 
 Version 0.2.5 (under dev!):
+   * fixed bug with erroneous nickname when connecting to server (bug #19812)
+   * fixed display bugs in IRC error messages
    * added protocol priority for gnutls (patch #5915)
    * added channel admin mode '!' for some IRC servers
    * fixed bug with iso2022jp locale (bug #18719)

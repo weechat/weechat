@@ -428,7 +428,7 @@ t_irc_command irc_commands[] =
   { "431", N_("no nickname given"), "", "",
     NULL, 0, 0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_error },
   { "432", N_("erroneous nickname"), "", "",
-    NULL, 0, 0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_error },
+    NULL, 0, 0, MAX_ARGS, 1, NULL, NULL, irc_cmd_recv_432 },
   { "433", N_("nickname already in use"), "", "",
     NULL, 0, 0, 0, 1, NULL, NULL, irc_cmd_recv_433 },
   { "436", N_("nickname collision"), "", "",

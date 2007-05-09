@@ -326,69 +326,63 @@ irc_recv_command (t_irc_server *server, char *entire_line,
 int
 irc_cmd_recv_error (t_irc_server *server, char *host, char *nick, char *arguments)
 {
-    char *pos, *pos2;
+    char *pos;
     int first;
     t_gui_buffer *ptr_buffer;
     t_irc_channel *ptr_channel;
     
     /* make C compiler happy */
-    (void) server;
     (void) host;
     (void) nick;
     
-    if (strncmp (arguments, "Closing Link", 12) == 0)
-    {
-        server_disconnect (server, 1);
-        return 0;
-    }
-    
-    pos = strchr (arguments, ' ');
-    if (pos)
-    {
-        pos[0] = '\0';
-        pos++;
-        while (pos[0] == ' ')
-            pos++;
-    }
-    else
-        pos = arguments;
-    
     first = 1;
-    
     ptr_buffer = server->buffer;
-    while (pos && pos[0])
+    
+    while (arguments && arguments[0])
     {
-        pos2 = strchr (pos, ' ');
-        if ((pos[0] == ':') || (!pos2))
+        while (arguments[0] == ' ')
+            arguments++;
+        
+        if (arguments[0] == ':')
         {
-            if (pos[0] == ':')
-                pos++;
+            arguments++;
             if (first)
                 irc_display_prefix (server, ptr_buffer, PREFIX_ERROR);
             gui_printf (ptr_buffer, "%s%s%s\n",
                         GUI_COLOR(COLOR_WIN_CHAT),
                         (first) ? "" : ": ",
-                        pos);
-            pos = NULL;
+                        arguments);
+            if (strncmp (arguments, "Closing Link", 12) == 0)
+                server_disconnect (server, 1);
+            arguments = NULL;
         }
         else
         {
-            pos2[0] = '\0';
-            if (first)
+            pos = strchr (arguments, ' ');
+            if (pos)
+                pos[0] = '\0';
+            if (strcmp (arguments, server->nick) != 0)
             {
-                ptr_channel = channel_search (server, pos);
-                if (ptr_channel)
-                    ptr_buffer = ptr_channel->buffer;
-                irc_display_prefix (server, ptr_buffer, PREFIX_ERROR);
+                if (first)
+                {
+                    ptr_channel = channel_search (server, arguments);
+                    if (ptr_channel)
+                        ptr_buffer = ptr_channel->buffer;
+                    irc_display_prefix (server, ptr_buffer, PREFIX_ERROR);
+                }
+                gui_printf (ptr_buffer, "%s%s%s",
+                            GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                            (first) ? "" : " ",
+                            arguments);
+                first = 0;
             }
-            gui_printf (ptr_buffer, "%s%s%s",
-                        GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
-                        (first) ? "" : " ",
-                        pos);
-            first = 0;
-            pos = pos2 + 1;
+            if (pos)
+                arguments = pos + 1;
+            else
+                arguments = NULL;
         }
     }
+    
     return 0;
 }
 
@@ -452,6 +446,9 @@ irc_cmd_recv_join (t_irc_server *server, char *host, char *nick, char *arguments
     t_irc_channel *ptr_channel;
     t_irc_nick *ptr_nick;
     char *pos;
+
+    if (arguments[0] == ':')
+        arguments++;
     
     command_ignored |= ignore_check (host, "join", arguments, server->name);
     
@@ -795,6 +792,9 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *nick, char *arguments
                           WEECHAT_ERROR, "nick");
         return -1;
     }
+
+    if (arguments[0] == ':')
+        arguments++;
     
     /* change nickname in any opened private window */
     for (ptr_buffer = gui_buffers; ptr_buffer;
@@ -2096,6 +2096,9 @@ irc_cmd_recv_quit (t_irc_server *server, char *host, char *nick, char *arguments
                           WEECHAT_ERROR, "quit");
         return -1;
     }
+
+    if (arguments[0] == ':')
+        arguments++;
     
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
@@ -2196,6 +2199,9 @@ irc_cmd_recv_server_msg (t_irc_server *server, char *host, char *nick, char *arg
     
     if (!command_ignored)
     {
+        while (arguments[0] == ' ')
+            arguments++;
+        
         /* skip nickname if at beginning of server message */
         if (strncmp (server->nick, arguments, strlen (server->nick)) == 0)
         {
@@ -4786,14 +4792,76 @@ irc_cmd_recv_378 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
+ * irc_cmd_recv_432: '432' command received (erroneous nickname)
+ */
+
+int
+irc_cmd_recv_432 (t_irc_server *server, char *host, char *nick, char *arguments)
+{
+    /* Note: this IRC command can not be ignored */
+    
+    irc_cmd_recv_error (server, host, nick, arguments);
+    
+    if (!server->is_connected)
+    {
+        if (strcmp (server->nick, server->nick1) == 0)
+        {
+            irc_display_prefix (server, server->buffer, PREFIX_INFO);
+            gui_printf (server->buffer,
+                        _("%s: trying 2nd nickname \"%s\"\n"),
+                        PACKAGE_NAME, server->nick2);
+            free (server->nick);
+            server->nick = strdup (server->nick2);
+        }
+        else
+        {
+            if (strcmp (server->nick, server->nick2) == 0)
+            {
+                irc_display_prefix (server, server->buffer, PREFIX_INFO);
+                gui_printf (server->buffer,
+                            _("%s: trying 3rd nickname \"%s\"\n"),
+                            PACKAGE_NAME, server->nick3);
+                free (server->nick);
+                server->nick = strdup (server->nick3);
+            }
+            else
+            {
+                if (strcmp (server->nick, server->nick3) == 0)
+                {
+                    irc_display_prefix (server, server->buffer, PREFIX_INFO);
+                    gui_printf (server->buffer,
+                                _("%s: all declared nicknames are already in "
+                                  "use or invalid, closing connection with "
+                                  "server!\n"),
+                                PACKAGE_NAME);
+                    server_disconnect (server, 1);
+                    return 0;
+                }
+                else
+                {
+                    irc_display_prefix (server, server->buffer, PREFIX_INFO);
+                    gui_printf (server->buffer,
+                                _("%s: trying 1st nickname \"%s\"\n"),
+                                PACKAGE_NAME, server->nick1);
+                    free (server->nick);
+                    server->nick = strdup (server->nick1);
+                }
+            }
+        }
+        server_sendf (server,
+                      "NICK %s",
+                      server->nick);
+    }
+    return 0;
+}
+
+/*
  * irc_cmd_recv_433: '433' command received (nickname already in use)
  */
 
 int
 irc_cmd_recv_433 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
-    char hostname[128];
-
     /* Note: this IRC command can not be ignored */
     
     if (!server->is_connected)
@@ -4803,7 +4871,7 @@ irc_cmd_recv_433 (t_irc_server *server, char *host, char *nick, char *arguments)
             irc_display_prefix (server, server->buffer, PREFIX_INFO);
             gui_printf (server->buffer,
                         _("%s: nickname \"%s\" is already in use, "
-                        "trying 2nd nickname \"%s\"\n"),
+                          "trying 2nd nickname \"%s\"\n"),
                         PACKAGE_NAME, server->nick, server->nick2);
             free (server->nick);
             server->nick = strdup (server->nick2);
@@ -4815,7 +4883,7 @@ irc_cmd_recv_433 (t_irc_server *server, char *host, char *nick, char *arguments)
                 irc_display_prefix (server, server->buffer, PREFIX_INFO);
                 gui_printf (server->buffer,
                             _("%s: nickname \"%s\" is already in use, "
-                            "trying 3rd nickname \"%s\"\n"),
+                              "trying 3rd nickname \"%s\"\n"),
                             PACKAGE_NAME, server->nick, server->nick3);
                 free (server->nick);
                 server->nick = strdup (server->nick3);
@@ -4827,7 +4895,7 @@ irc_cmd_recv_433 (t_irc_server *server, char *host, char *nick, char *arguments)
                     irc_display_prefix (server, server->buffer, PREFIX_INFO);
                     gui_printf (server->buffer,
                                 _("%s: all declared nicknames are already in use, "
-                                "closing connection with server!\n"),
+                                  "closing connection with server!\n"),
                                 PACKAGE_NAME);
                     server_disconnect (server, 1);
                     return 0;
@@ -4837,18 +4905,13 @@ irc_cmd_recv_433 (t_irc_server *server, char *host, char *nick, char *arguments)
                     irc_display_prefix (server, server->buffer, PREFIX_INFO);
                     gui_printf (server->buffer,
                                 _("%s: nickname \"%s\" is already in use, "
-                                "trying 1st nickname \"%s\"\n"),
+                                  "trying 1st nickname \"%s\"\n"),
                                 PACKAGE_NAME, server->nick, server->nick1);
                     free (server->nick);
                     server->nick = strdup (server->nick1);
                 }
             }
         }
-    
-        gethostname (hostname, sizeof (hostname) - 1);
-        hostname[sizeof (hostname) - 1] = '\0';
-        if (!hostname[0])
-            strcpy (hostname, _("unknown"));
         server_sendf (server,
                       "NICK %s",
                       server->nick);

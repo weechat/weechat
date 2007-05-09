@@ -771,8 +771,6 @@ server_parse_message (char *message, char **host, char **command, char **args)
             pos2++;
             while (pos2[0] == ' ')
                 pos2++;
-            if (pos2[0] == ':')
-                pos2++;
             *args = strdup (pos2);
         }
     }

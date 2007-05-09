@@ -234,11 +234,9 @@ weechat_charset_parse_irc_msg (char *message, char **nick, char **command,
             pos2++;
             while (pos2[0] == ' ')
                 pos2++;
-            if (pos2[0] == ':')
-                *pos_args = pos2 + 1;
-            else
+            *pos_args = pos2;
+            if (pos2[0] != ':')
             {
-                *pos_args = pos2;
                 if ((pos2[0] == '#') || (pos2[0] == '&')
                     || (pos2[0] == '+') || (pos2[0] == '!'))
                 {
