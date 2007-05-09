@@ -5,6 +5,7 @@ ChangeLog - 2007-05-09
 
 
 Version 0.2.5 (under dev!):
+   * forget current nick when user manually disconnects from server
    * fixed nick display in input window
    * fixed bug with erroneous nickname when connecting to server (bug #19812)
    * fixed display bugs in IRC error messages

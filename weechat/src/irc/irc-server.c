@@ -1958,6 +1958,13 @@ server_disconnect (t_irc_server *server, int reconnect)
     else
         server->reconnect_start = 0;
     
+    /* discard current nick if no reconnection asked */
+    if (!reconnect && server->nick)
+    {
+        free (server->nick);
+        server->nick = NULL;
+    }
+    
     gui_window_redraw_buffer (gui_current_window->buffer);
 }
 
