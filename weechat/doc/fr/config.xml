@@ -87,28 +87,28 @@
   <entry>booléen</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
-  <entry>Afficher la fenêtre des utilisateurs (pour les fenêtres de canaux)</entry>
+  <entry>Afficher la fenêtre des pseudos (pour les fenêtres de canaux)</entry>
 </row>
 <row>
   <entry><option>look_nicklist_position</option></entry>
   <entry>chaîne</entry>
   <entry>'left', 'right', 'top', 'bottom'</entry>
   <entry>'right'</entry>
-  <entry>Position de la fenêtre d'utilisateurs (haut (top), gauche (left), droite (right, par défaut), bas (bottom))</entry>
+  <entry>Position de la fenêtre des pseudos (haut (top), gauche (left), droite (right, par défaut), bas (bottom))</entry>
 </row>
 <row>
   <entry><option>look_nicklist_min_size</option></entry>
   <entry>entier</entry>
   <entry>entre 0 et 100</entry>
   <entry>0</entry>
-  <entry>Taille minimum pour la fenêtre d'utilisateurs (largeur ou hauteur, selon look_nicklist_position (0 = pas de taille minimum))</entry>
+  <entry>Taille minimum pour la fenêtre des pseudos (largeur ou hauteur, selon look_nicklist_position (0 = pas de taille minimum))</entry>
 </row>
 <row>
   <entry><option>look_nicklist_max_size</option></entry>
   <entry>entier</entry>
   <entry>entre 0 et 100</entry>
   <entry>0</entry>
-  <entry>Taille maximum pour la fenêtre d'utilisateurs (largeur ou hauteur, selon look_nicklist_position (0 = pas de taille maximum; si min == max et &gt; 0, alors la taille est fixe))</entry>
+  <entry>Taille maximum pour la fenêtre des pseudos (largeur ou hauteur, selon look_nicklist_position (0 = pas de taille maximum; si min == max et &gt; 0, alors la taille est fixe))</entry>
 </row>
 <row>
   <entry><option>look_nicklist_separator</option></entry>
@@ -122,21 +122,21 @@
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>
   <entry>'-cmd-'</entry>
-  <entry>Texte à afficher en lieu et place du nom d'utilisateur lorsque la connexion n'est pas active</entry>
+  <entry>Texte à afficher en lieu et place du pseudo lorsque la connexion n'est pas active</entry>
 </row>
 <row>
   <entry><option>look_nickmode</option></entry>
   <entry>booléen</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
-  <entry>Afficher le mode de l'utilisateur ((half)op/voice) devant chaque utilisateur</entry>
+  <entry>Afficher le mode du pseudo ((half)op/voice) devant chaque utilisateur</entry>
 </row>
 <row>
   <entry><option>look_nickmode_empty</option></entry>
   <entry>booléen</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'off'</entry>
-  <entry>Afficher un espace si le mode utilisateur n'est pas (half)op/voice</entry>
+  <entry>Afficher un espace si le mode du pseudo n'est pas (half)op/voice</entry>
 </row>
 <row>
   <entry><option>look_nick_prefix</option></entry>
@@ -311,7 +311,7 @@
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'lightmagenta'</entry>
-  <entry>Couleur pour les '+' lors du scroll sur le titre</entry>
+  <entry>Couleur pour les '+' lors du défilement du titre</entry>
 </row>
 <row>
   <entry><option>col_title_bg</option></entry>
@@ -381,7 +381,7 @@
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'lightcyan'</entry>
-  <entry>Couleur pour les noms d'utilisateurs dans les actions (fenêtre de discussion)</entry>
+  <entry>Couleur pour les pseudos dans les actions (fenêtre de discussion)</entry>
 </row>
 <row>
   <entry><option>col_chat_host</option></entry>
@@ -626,7 +626,7 @@
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'lightmagenta'</entry>
-  <entry>Couleur pour les '+' lors du scroll sur les pseudos</entry>
+  <entry>Couleur pour les '+' lors du défilement des pseudos</entry>
 </row>
 <row>
   <entry><option>col_nick_sep</option></entry>

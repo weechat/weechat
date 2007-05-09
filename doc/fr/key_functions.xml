@@ -171,15 +171,15 @@
 </row>
 <row>
   <entry><literal>scroll_previous_highlight</literal></entry>
-  <entry>scroller jusqu'au highlight précédent du tampon</entry>
+  <entry>faire défiler jusqu'au highlight précédent du tampon</entry>
 </row>
 <row>
   <entry><literal>scroll_next_highlight</literal></entry>
-  <entry>scroller jusqu'au highlight suivant du tampon</entry>
+  <entry>faire défiler jusqu'au highlight suivant du tampon</entry>
 </row>
 <row>
   <entry><literal>scroll_unread</literal></entry>
-  <entry>scroller jusqu'à la première ligne non lue du tampon</entry>
+  <entry>faire défiler jusqu'à la première ligne non lue du tampon</entry>
 </row>
 <row>
   <entry><literal>hotlist_clear</literal></entry>

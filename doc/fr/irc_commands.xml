@@ -46,7 +46,7 @@ pseudo: pseudo ou masque pour le bannissement
 <programlisting>
 envoyer un message CTCP (Client-To-Client Protocol)
 
-    cible: utilisateur à qui envoyer le CTCP
+    cible: pseudo à qui envoyer le CTCP
      type: type de CTCP (exemples: "version", "ping", etc...)
 arguments: arguments pour le CTCP
 
@@ -61,12 +61,12 @@ message_de_fin: message de fin (affiché aux autres utilisateurs)
 </programlisting>
 <command>dehalfop  [pseudo [pseudo]]</command>
 <programlisting>
-retire le statut de demi-opérateur du canal à/aux nick(s)
+retire le statut de demi-opérateur du canal à/aux pseudo(s)
 
 </programlisting>
 <command>deop  [pseudo [pseudo]]</command>
 <programlisting>
-retire le statut d'opérateur du canal à/aux nick(s)
+retire le statut d'opérateur du canal à/aux pseudo(s)
 
 </programlisting>
 <command>devoice  [pseudo [pseudo]]</command>
@@ -81,7 +81,7 @@ arrêter le serveur
 </programlisting>
 <command>halfop  [pseudo [pseudo]]</command>
 <programlisting>
-donner le statut de demi-opérateur à un/des utilisateur(s)
+donner le statut de demi-opérateur à un/des pseudo(s)
 
 </programlisting>
 <command>info  [cible]</command>
@@ -93,15 +93,15 @@ cible: nom du serveur
 </programlisting>
 <command>invite  pseudo canal</command>
 <programlisting>
-inviter un utilisateur sur un canal
+inviter un pseudo sur un canal
 
- pseudo: utilisateur à inviter
+ pseudo: pseudo à inviter
 channel: canal pour l'invitation
 
 </programlisting>
 <command>ison  pseudo [pseudo ...]</command>
 <programlisting>
-vérifier si un utilisateur est actuellement sur IRC
+vérifier si un pseudo est actuellement sur IRC
 
 pseudo: pseudo
 
@@ -119,16 +119,16 @@ canal: nom du canal à rejoindre
 retirer par la force un utilisateur d'un canal
 
       canal: canal où l'utilisateur se trouve
-     pseudo: utilisateur à éliminer
+     pseudo: pseudo à éliminer
 commentaire: commentaire pour l'élimination
 
 </programlisting>
 <command>kickban  [canal] pseudo [commentaire]</command>
 <programlisting>
-retirer par la force un utilisateur d'un canal et le bannir
+retirer par la force un pseudo d'un canal et le bannir
 
       canal: canal où l'utilisateur se trouve
-     pseudo: utilisateur à éliminer et bannir
+     pseudo: pseudo à éliminer et bannir
 commentaire: commentaire pour l'élimination
 
 </programlisting>
@@ -136,7 +136,7 @@ commentaire: commentaire pour l'élimination
 <programlisting>
 fermer la connexion client-serveur
 
-     pseudo: utilisateur
+     pseudo: pseudo
 commentaire: commentaire pour la mort
 
 </programlisting>
@@ -171,7 +171,7 @@ envoyer une action CTCP au canal courant
 message: message à envoyer
 
 </programlisting>
-<command>mode  { canal {[+|-]|o|p|s|i|t|n|b|v} [limite] [utilisateur] [masque de banissement] } | { nick {[+|-]|i|w|s|o} }</command>
+<command>mode  { canal {[+|-]|o|p|s|i|t|n|b|v} [limite] [utilisateur] [masque de banissement] } | { pseudo {[+|-]|i|w|s|o} }</command>
 <programlisting>
 changer le mode du canal ou de l'utilisateur
 
@@ -190,7 +190,7 @@ modes de canaux :
   v: donner/reprendre la possibilité de parler sur un canal modéré
   k: définir une clé (mot de passe) pour accéder au canal
 modes utilisateur :
-  pseudo: utilisateur à modifier
+  pseudo: pseudo à modifier
   i: marquer un utilisateur comme invisible
   s: marquer un utilisateur pour recevoir les notices du serveur
   w: l'utilisateur reçoit les wallops
@@ -206,15 +206,15 @@ cible: nom du serveur
 </programlisting>
 <command>msg  cible[,cible] texte</command>
 <programlisting>
-envoyer un message à un utilisateur ou canal
+envoyer un message à un pseudo ou canal
 
-cible: utilisateur ou canal (peut-être un masque, '*' = canal courant)
+cible: pseudo ou canal (peut-être un masque, '*' = canal courant)
 texte: texte à envoyer
 
 </programlisting>
 <command>names  [canal[,canal]]</command>
 <programlisting>
-lister les utilisateurs sur des canaux
+lister les pseudos sur des canaux
 
 canal: nom du canal
 
@@ -231,13 +231,13 @@ pseudo: nouveau pseudo
 <programlisting>
 envoyer un message notice à un utilisateur
 
-pseudo: utilisateur cible pour la notice
+pseudo: pseudo cible pour la notice
  texte: texte à envoyer
 
 </programlisting>
 <command>op  pseudo [pseudo]</command>
 <programlisting>
-donner le statut opérateur à un/des utilisateur(s)
+donner le statut opérateur à un/des pseudo(s)
 
 </programlisting>
 <command>oper  utilisateur mot_de_passe</command>
@@ -273,9 +273,9 @@ démon2: faire suivre le message à ce démon
 </programlisting>
 <command>query  pseudo [texte]</command>
 <programlisting>
-envoyer un message privé à un utilisateur
+envoyer un message privé à un pseudo
 
-pseudo: utilisateur pour la conversation privée
+pseudo: pseudo pour la conversation privée
  texte: texte à envoyer
 
 </programlisting>
@@ -384,7 +384,7 @@ pseudo: pseudo ou masque pour supprimer le bannissement
 </programlisting>
 <command>userhost  pseudo [pseudo ...]</command>
 <programlisting>
-retourne une liste d'informations sur des utilisateurs
+retourne une liste d'informations sur des pseudos
 
 pseudo: pseudo
 
@@ -398,15 +398,15 @@ cible: serveur
 </programlisting>
 <command>version  [serveur | pseudo]</command>
 <programlisting>
-retourne la version de l'utilisateur ou du serveur (courant ou spécifié)
+retourne la version du pseudo ou du serveur (courant ou spécifié)
 
 serveur: nom du serveur
- pseudo: utilisateur
+ pseudo: pseudo
 
 </programlisting>
 <command>voice  [pseudo [pseudo]]</command>
 <programlisting>
-donne la voix à/aux utilisateur(s)
+donne la voix à/aux pseudo(s)
 
 </programlisting>
 <command>wallops  texte</command>
@@ -429,12 +429,12 @@ masque: information qui correspond à ce masque uniquement
 demande les informations sur le(s) utilisateur(s)
 
 serveur: nom du serveur
- pseudo: utilisateur (peut être un masque)
+ pseudo: pseudo (peut être un masque)
 
 </programlisting>
 <command>whowas  pseudo [,pseudo [,pseudo ...]] [nombre [cible]]</command>
 <programlisting>
-demander de l'information sur un nick qui n'existe plus
+demander de l'information sur un pseudo qui n'existe plus
 
 pseudo: pseudo à chercher
 nombre: nombre de réponses à retourner (recherche complète si nombre négatif)
