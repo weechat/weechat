@@ -5,6 +5,8 @@ ChangeLog - 2007-05-09
 
 
 Version 0.2.5 (under dev!):
+   * improved setup file save: now writes temporary file, then rename it
+     (task #6847)
    * fixed bug with $nick/$channel/$server variables in commands
    * forget current nick when user manually disconnects from server
    * fixed nick display in input window

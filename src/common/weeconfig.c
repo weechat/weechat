@@ -2353,9 +2353,9 @@ int
 config_write (char *config_name)
 {
     int filename_length;
-    char *filename;
+    char *filename, *filename2;
     FILE *file;
-    int i, j;
+    int i, j, rc;
     time_t current_time;
     t_irc_server *ptr_server;
     t_weechat_alias *ptr_alias;
@@ -2364,7 +2364,10 @@ config_write (char *config_name)
     char *expanded_name, *function_name;
     
     if (config_name)
+    {
+        filename_length = strlen (config_name);
         filename = strdup (config_name);
+    }
     else
     {
         filename_length = strlen (weechat_home) +
@@ -2376,12 +2379,21 @@ config_write (char *config_name)
         snprintf (filename, filename_length, "%s%s" WEECHAT_CONFIG_NAME,
                   weechat_home, DIR_SEPARATOR);
     }
+
+    filename2 = (char *) malloc ((filename_length + 32) * sizeof (char));
+    if (!filename2)
+    {
+        free (filename);
+        return -2;
+    }
+    snprintf (filename2, filename_length + 32, "%s.weechattmp", filename);
     
-    if ((file = fopen (filename, "w")) == NULL)
+    if ((file = fopen (filename2, "w")) == NULL)
     {
         gui_printf (NULL, _("%s cannot create file \"%s\"\n"),
-                    WEECHAT_ERROR, filename);
+                    WEECHAT_ERROR, filename2);
         free (filename);
+        free (filename2);
         return -1;
     }
     
@@ -2531,7 +2543,12 @@ config_write (char *config_name)
     }
     
     fclose (file);
-    chmod (filename, 0600);
+    chmod (filename2, 0600);
+    unlink (filename);
+    rc = rename (filename2, filename);
     free (filename);
+    free (filename2);
+    if (rc != 0)
+        return -1;
     return 0;
 }
