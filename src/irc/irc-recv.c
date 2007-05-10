@@ -1197,10 +1197,16 @@ irc_cmd_recv_ping (t_irc_server *server, char *host, char *nick, char *arguments
     /* make C compiler happy */
     (void) host;
     (void) nick;
+
+    if (arguments[0] == ':')
+        arguments++;
+    
     pos = strrchr (arguments, ' ');
     if (pos)
         pos[0] = '\0';
+    
     server_sendf (server, "PONG :%s", arguments);
+    
     return 0;
 }
 
