@@ -361,7 +361,7 @@ irc_cmd_recv_error (t_irc_server *server, char *host, char *nick, char *argument
             pos = strchr (arguments, ' ');
             if (pos)
                 pos[0] = '\0';
-            if (strcmp (arguments, server->nick) != 0)
+            if (strcasecmp (arguments, server->nick) != 0)
             {
                 if (first)
                 {
