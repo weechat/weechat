@@ -2209,7 +2209,7 @@ irc_cmd_recv_server_msg (t_irc_server *server, char *host, char *nick, char *arg
             arguments++;
         
         /* skip nickname if at beginning of server message */
-        if (strncmp (server->nick, arguments, strlen (server->nick)) == 0)
+        if (strncasecmp (server->nick, arguments, strlen (server->nick)) == 0)
         {
             arguments += strlen (server->nick) + 1;
             while (arguments[0] == ' ')
