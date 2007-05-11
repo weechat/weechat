@@ -1732,10 +1732,6 @@ weechat_lua_get_server_info (lua_State *L)
 	lua_pushstring (lua_current_interpreter, ptr_server->nick_modes);
 	lua_rawset (lua_current_interpreter, -3);
         
-        lua_pushstring (lua_current_interpreter, "prefix");
-	lua_pushstring (lua_current_interpreter, ptr_server->prefix);
-	lua_rawset (lua_current_interpreter, -3);
-	
 	lua_pushstring (lua_current_interpreter, "away_time");
 	lua_pushstring (lua_current_interpreter, timebuffer);
 	lua_rawset (lua_current_interpreter, -3);

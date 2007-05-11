@@ -1613,12 +1613,6 @@ weechat_python_get_server_info (PyObject *self, PyObject *args)
 	    Py_DECREF (key);
 	    Py_DECREF (value);
             
-            key = Py_BuildValue("s", "prefix");
-	    value = Py_BuildValue("s", ptr_server->prefix);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
 	    key = Py_BuildValue("s", "away_time");
 	    value = Py_BuildValue("s", timebuffer);
 	    PyDict_SetItem(server_hash_member, key, value);

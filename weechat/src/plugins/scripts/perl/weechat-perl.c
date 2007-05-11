@@ -1483,7 +1483,6 @@ static XS (XS_weechat_get_server_info)
         hv_store (server_hash_member, "ssl_connected",        13, newSViv (ptr_server->ssl_connected), 0);
         hv_store (server_hash_member, "nick",                  4, newSVpv (ptr_server->nick, 0), 0);
         hv_store (server_hash_member, "nick_modes",           10, newSVpv (ptr_server->nick_modes, 0), 0);
-        hv_store (server_hash_member, "prefix",                6, newSVpv (ptr_server->prefix, 0), 0);
 	hv_store (server_hash_member, "away_time",             9, newSVpv (timebuffer, 0), 0);
 	hv_store (server_hash_member, "lag",                   3, newSViv (ptr_server->lag), 0);
 
