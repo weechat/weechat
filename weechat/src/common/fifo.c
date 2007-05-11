@@ -147,7 +147,7 @@ fifo_exec (char *text)
             pos = strchr (text, ',');
             if (pos)
                 pos[0] = '\0';
-            ptr_server = server_search (text);
+            ptr_server = irc_server_search (text);
             if (!ptr_server || !ptr_server->buffer)
             {
                 irc_display_prefix (NULL, NULL, PREFIX_ERROR);
@@ -157,7 +157,7 @@ fifo_exec (char *text)
             }
             if (ptr_server && pos)
             {
-                ptr_channel = channel_search_any (ptr_server, pos + 1);
+                ptr_channel = irc_channel_search_any (ptr_server, pos + 1);
                 if (!ptr_channel)
                 {
                     irc_display_prefix (NULL, NULL, PREFIX_ERROR);

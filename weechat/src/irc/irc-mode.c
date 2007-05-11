@@ -45,11 +45,11 @@ irc_mode_channel_set_nick (t_irc_channel *channel, char *nick,
     
     if (nick)
     {
-        ptr_nick = nick_search (channel, nick);
+        ptr_nick = irc_nick_search (channel, nick);
         if (ptr_nick)
         {
             NICK_SET_FLAG(ptr_nick, (set_flag == '+'), flag);
-            nick_resort (channel, ptr_nick);
+            irc_nick_resort (channel, ptr_nick);
             gui_nicklist_draw (channel->buffer, 1, 1);
         }
     }

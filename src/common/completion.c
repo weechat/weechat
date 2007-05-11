@@ -578,7 +578,8 @@ completion_list_add_channel_nicks (t_completion *completion)
                 for (ptr_weelist = ((t_irc_channel *)(completion->channel))->nicks_speaking;
                      ptr_weelist; ptr_weelist = ptr_weelist->next_weelist)
                 {
-                    if (nick_search ((t_irc_channel *)(completion->channel), ptr_weelist->data))
+                    if (irc_nick_search ((t_irc_channel *)(completion->channel),
+                                         ptr_weelist->data))
                         completion_list_add (completion, ptr_weelist->data,
                                              1, WEELIST_POS_BEGINNING);
                 }
@@ -1418,7 +1419,8 @@ completion_nick (t_completion *completion)
             for (ptr_weelist = ((t_irc_channel *)(completion->channel))->nicks_speaking;
                  ptr_weelist; ptr_weelist = ptr_weelist->next_weelist)
             {
-                if (nick_search ((t_irc_channel *)(completion->channel), ptr_weelist->data))
+                if (irc_nick_search ((t_irc_channel *)(completion->channel),
+                                     ptr_weelist->data))
                     weelist_add (&(completion->completion_list),
                                  &(completion->last_completion),
                                  ptr_weelist->data,
@@ -1516,7 +1518,7 @@ completion_auto (t_completion *completion)
     }
     
     /* channel completion */
-    if (string_is_channel (completion->base_word))
+    if (irc_channel_is_channel (completion->base_word))
     {
         if (!completion->completion_list)
             completion_list_add_server_channels (completion);

@@ -1707,6 +1707,8 @@ weechat_ruby_get_server_info (VALUE class)
 			  rb_str_new2(ptr_server->nick));
             rb_hash_aset (server_hash_member, rb_str_new2("nick_modes"),
 			  rb_str_new2(ptr_server->nick_modes));
+            rb_hash_aset (server_hash_member, rb_str_new2("prefix"),
+			  rb_str_new2(ptr_server->prefix));
 	    rb_hash_aset (server_hash_member, rb_str_new2("away_time"),
 			  rb_str_new2(timebuffer));
 	    rb_hash_aset (server_hash_member, rb_str_new2("lag"),

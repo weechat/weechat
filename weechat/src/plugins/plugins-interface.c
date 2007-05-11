@@ -833,7 +833,7 @@ weechat_plugin_set_config (t_weechat_plugin *plugin, char *option, char *value)
         {
             strncpy (server_name, option, pos - option);
             server_name[pos - option] = '\0';
-            ptr_server = server_search (server_name);
+            ptr_server = irc_server_search (server_name);
             free (server_name);
             if (ptr_server)
                 return (config_set_server_value (ptr_server, pos + 1, value) == 0);
@@ -899,8 +899,8 @@ weechat_plugin_set_plugin_config (t_weechat_plugin *plugin, char *option, char *
 
 /*
  * weechat_plugin_get_server_info: get list of server info
- *                          WARNING: caller has to free structure returned
- *                          by this function after use
+ *                                 WARNING: caller has to free structure returned
+ *                                 by this function after use
  */
 
 t_plugin_server_info *
@@ -945,6 +945,7 @@ weechat_plugin_get_server_info (t_weechat_plugin *plugin)
 		new_server_info->ssl_connected = ptr_server->ssl_connected;
 		new_server_info->nick = (ptr_server->nick) ? strdup (ptr_server->nick) : strdup ("");
                 new_server_info->nick_modes = (ptr_server->nick_modes) ? strdup (ptr_server->nick_modes) : strdup ("");
+                new_server_info->prefix = (ptr_server->prefix) ? strdup (ptr_server->prefix) : strdup ("");
 		new_server_info->is_away = ptr_server->is_away;
 		new_server_info->away_time = ptr_server->away_time;
 		new_server_info->lag = ptr_server->lag;
@@ -1005,6 +1006,8 @@ weechat_plugin_free_server_info (t_weechat_plugin *plugin, t_plugin_server_info 
             free (server_info->nick);
 	if (server_info->nick_modes)
             free (server_info->nick_modes);
+        if (server_info->prefix)
+            free (server_info->prefix);
         new_server_info = server_info->next_server;
         free (server_info);
         server_info = new_server_info;
@@ -1027,7 +1030,7 @@ weechat_plugin_get_channel_info (t_weechat_plugin *plugin, char *server)
     if (!plugin || !server || !server[0])
 	return NULL;
     
-    ptr_server = server_search (server);
+    ptr_server = irc_server_search (server);
     if (!ptr_server)
 	return NULL;
 
@@ -1111,11 +1114,11 @@ weechat_plugin_get_nick_info (t_weechat_plugin *plugin, char *server, char *chan
     if (!plugin || !server || !server[0] || !channel || !channel[0])
 	return NULL;
     
-    ptr_server = server_search (server);
+    ptr_server = irc_server_search (server);
     if (!ptr_server)
 	return NULL;
 
-    ptr_channel = channel_search (ptr_server, channel);
+    ptr_channel = irc_channel_search (ptr_server, channel);
     if (!ptr_channel)
 	return NULL;
     

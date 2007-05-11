@@ -54,11 +54,11 @@ int command_ignored, command_force_highlight;
 
 
 /*
- * irc_is_word_char: return 1 if given character is a "word character"
+ * irc_recv_is_word_char: return 1 if given character is a "word character"
  */
 
 int
-irc_is_word_char (char c)
+irc_recv_is_word_char (char c)
 {
     if (isalnum (c))
         return 1;
@@ -76,11 +76,11 @@ irc_is_word_char (char c)
 }
 
 /*
- * irc_is_numeric: return 1 if given string is 100% numeric
+ * irc_recv_command_is_numeric: return 1 if given string is 100% numeric
  */
 
 int
-irc_is_numeric (char *str)
+irc_recv_command_is_numeric (char *str)
 {
     while (str && str[0])
     {
@@ -92,12 +92,12 @@ irc_is_numeric (char *str)
 }
 
 /*
- * irc_is_highlight: returns 1 if given message contains highlight (with given nick
- *                   or at least one of string in "irc_higlight" setting)
+ * irc_recv_is_highlight: return 1 if given message contains highlight (with given nick
+ *                        or at least one of string in "irc_higlight" setting)
  */
 
 int
-irc_is_highlight (char *message, char *nick)
+irc_recv_is_highlight (char *message, char *nick)
 {
     char *msg, *highlight, *match, *match_pre, *match_post, *msg_pos, *pos, *pos_end;
     int end, length, startswith, endswith, wildcard_start, wildcard_end;
@@ -116,8 +116,8 @@ irc_is_highlight (char *message, char *nick)
     {
         match_pre = match - 1;
         match_post = match + strlen(nick);
-        startswith = ((match == message) || (!irc_is_word_char (match_pre[0])));
-        endswith = ((!match_post[0]) || (!irc_is_word_char (match_post[0])));
+        startswith = ((match == message) || (!irc_recv_is_word_char (match_pre[0])));
+        endswith = ((!match_post[0]) || (!irc_recv_is_word_char (match_post[0])));
         if (startswith && endswith)
             return 1;
     }
@@ -190,8 +190,8 @@ irc_is_highlight (char *message, char *nick)
             {
                 match_pre = match - 1;
                 match_post = match + length;
-                startswith = ((match == msg) || (!irc_is_word_char (match_pre[0])));
-                endswith = ((!match_post[0]) || (!irc_is_word_char (match_post[0])));
+                startswith = ((match == msg) || (!irc_recv_is_word_char (match_pre[0])));
+                endswith = ((!match_post[0]) || (!irc_recv_is_word_char (match_post[0])));
                 if ((wildcard_start && wildcard_end) ||
                     (!wildcard_start && !wildcard_end && 
                      startswith && endswith) ||
@@ -252,10 +252,10 @@ irc_recv_command (t_irc_server *server, char *entire_line,
     if (cmd_found < 0)
     {
         /* for numeric commands, we use default recv function (irc_recv_server_msg) */
-        if (irc_is_numeric (command))
+        if (irc_recv_command_is_numeric (command))
         {
             cmd_name = command;
-            cmd_recv_func = irc_cmd_recv_server_msg;
+            cmd_recv_func = irc_recv_cmd_server_msg;
         }
         else
             return -3;
@@ -272,10 +272,10 @@ irc_recv_command (t_irc_server *server, char *entire_line,
         dup_host = (host) ? strdup (host) : NULL;
         dup_arguments = (arguments) ? strdup (arguments) : NULL;
         
-        command_ignored = ignore_check (dup_host,
-                                        cmd_name,
-                                        NULL,
-                                        server->name);
+        command_ignored = irc_ignore_check (dup_host,
+                                            cmd_name,
+                                            NULL,
+                                            server->name);
         command_force_highlight = 0;
 #ifdef PLUGINS
         return_code = plugin_msg_handler_exec (server->name,
@@ -320,11 +320,11 @@ irc_recv_command (t_irc_server *server, char *entire_line,
 }
 
 /*
- * irc_cmd_recv_error: error received from server
+ * irc_recv_cmd_error: error received from server
  */
 
 int
-irc_cmd_recv_error (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_error (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos;
     int first;
@@ -353,7 +353,7 @@ irc_cmd_recv_error (t_irc_server *server, char *host, char *nick, char *argument
                         (first) ? "" : ": ",
                         arguments);
             if (strncmp (arguments, "Closing Link", 12) == 0)
-                server_disconnect (server, 1);
+                irc_server_disconnect (server, 1);
             arguments = NULL;
         }
         else
@@ -365,7 +365,7 @@ irc_cmd_recv_error (t_irc_server *server, char *host, char *nick, char *argument
             {
                 if (first)
                 {
-                    ptr_channel = channel_search (server, arguments);
+                    ptr_channel = irc_channel_search (server, arguments);
                     if (ptr_channel)
                         ptr_buffer = ptr_channel->buffer;
                     irc_display_prefix (server, ptr_buffer, PREFIX_ERROR);
@@ -387,11 +387,11 @@ irc_cmd_recv_error (t_irc_server *server, char *host, char *nick, char *argument
 }
 
 /*
- * irc_cmd_recv_invite: 'invite' message received
+ * irc_recv_cmd_invite: 'invite' message received
  */
 
 int
-irc_cmd_recv_invite (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_invite (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_channel;
     
@@ -405,7 +405,7 @@ irc_cmd_recv_invite (t_irc_server *server, char *host, char *nick, char *argumen
         if (pos_channel[0] == ':')
             pos_channel++;
         
-        command_ignored |= ignore_check (host, "invite", pos_channel, server->name);
+        command_ignored |= irc_ignore_check (host, "invite", pos_channel, server->name);
         
         if (!command_ignored)
         {
@@ -437,11 +437,11 @@ irc_cmd_recv_invite (t_irc_server *server, char *host, char *nick, char *argumen
 
 
 /*
- * irc_cmd_recv_join: 'join' message received
+ * irc_recv_cmd_join: 'join' message received
  */
 
 int
-irc_cmd_recv_join (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_join (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     t_irc_channel *ptr_channel;
     t_irc_nick *ptr_nick;
@@ -450,12 +450,12 @@ irc_cmd_recv_join (t_irc_server *server, char *host, char *nick, char *arguments
     if (arguments[0] == ':')
         arguments++;
     
-    command_ignored |= ignore_check (host, "join", arguments, server->name);
+    command_ignored |= irc_ignore_check (host, "join", arguments, server->name);
     
-    ptr_channel = channel_search (server, arguments);
+    ptr_channel = irc_channel_search (server, arguments);
     if (!ptr_channel)
     {
-        ptr_channel = channel_new (server, CHANNEL_TYPE_CHANNEL, arguments);
+        ptr_channel = irc_channel_new (server, CHANNEL_TYPE_CHANNEL, arguments);
         if (!ptr_channel)
         {
             irc_display_prefix (server, server->buffer, PREFIX_ERROR);
@@ -498,7 +498,7 @@ irc_cmd_recv_join (t_irc_server *server, char *host, char *nick, char *arguments
     }
     
     /* add nick in channel */
-    ptr_nick = nick_new (server, ptr_channel, nick, 0, 0, 0, 0, 0, 0);
+    ptr_nick = irc_nick_new (server, ptr_channel, nick, 0, 0, 0, 0, 0, 0);
     if (ptr_nick)
         ptr_nick->host = strdup ((pos) ? pos + 1 : host);
 
@@ -509,11 +509,11 @@ irc_cmd_recv_join (t_irc_server *server, char *host, char *nick, char *arguments
 }
 
 /*
- * irc_cmd_recv_kick: 'kick' message received
+ * irc_recv_cmd_kick: 'kick' message received
  */
 
 int
-irc_cmd_recv_kick (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_kick (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_nick, *pos_comment;
     t_irc_channel *ptr_channel;
@@ -538,9 +538,9 @@ irc_cmd_recv_kick (t_irc_server *server, char *host, char *nick, char *arguments
                 pos_comment++;
         }
         
-        command_ignored |= ignore_check (host, "kick", arguments, server->name);
+        command_ignored |= irc_ignore_check (host, "kick", arguments, server->name);
         
-        ptr_channel = channel_search (server, arguments);
+        ptr_channel = irc_channel_search (server, arguments);
         if (!ptr_channel)
         {
             irc_display_prefix (server, server->buffer, PREFIX_ERROR);
@@ -583,18 +583,18 @@ irc_cmd_recv_kick (t_irc_server *server, char *host, char *nick, char *arguments
     if (strcmp (pos_nick, server->nick) == 0)
     {
         /* my nick was kicked => free all nicks, channel is not active any more */
-        nick_free_all (ptr_channel);
+        irc_nick_free_all (ptr_channel);
         gui_nicklist_draw (ptr_channel->buffer, 1, 1);
         gui_status_draw (ptr_channel->buffer, 1);
         if (server->autorejoin)
-            irc_cmd_send_join (server, NULL, ptr_channel->name);
+            irc_send_cmd_join (server, NULL, ptr_channel->name);
     }
     {
         /* someone was kicked from channel (but not me) => remove only this nick */
-        ptr_nick = nick_search (ptr_channel, pos_nick);
+        ptr_nick = irc_nick_search (ptr_channel, pos_nick);
         if (ptr_nick)
         {
-            nick_free (ptr_channel, ptr_nick);
+            irc_nick_free (ptr_channel, ptr_nick);
             gui_nicklist_draw (ptr_channel->buffer, 1, 1);
             gui_status_draw (ptr_channel->buffer, 1);
         }
@@ -603,11 +603,11 @@ irc_cmd_recv_kick (t_irc_server *server, char *host, char *nick, char *arguments
 }
 
 /*
- * irc_cmd_recv_kill: 'kill' message received
+ * irc_recv_cmd_kill: 'kill' message received
  */
 
 int
-irc_cmd_recv_kill (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_kill (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_host2, *pos_comment;
     t_irc_channel *ptr_channel;
@@ -640,7 +640,7 @@ irc_cmd_recv_kill (t_irc_server *server, char *host, char *nick, char *arguments
              ptr_channel = ptr_channel->next_channel)
         {
             if (!command_ignored
-                && !ignore_check (host, "kill", ptr_channel->name, server->name))
+                && !irc_ignore_check (host, "kill", ptr_channel->name, server->name))
             {
                 irc_display_prefix (server, ptr_channel->buffer, PREFIX_PART);
                 gui_printf (ptr_channel->buffer, _("%s%s%s has killed %s%s%s from server"),
@@ -673,11 +673,11 @@ irc_cmd_recv_kill (t_irc_server *server, char *host, char *nick, char *arguments
 }
 
 /*
- * irc_cmd_recv_mode: 'mode' message received
+ * irc_recv_cmd_mode: 'mode' message received
  */
 
 int
-irc_cmd_recv_mode (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_mode (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_modes, *pos;
     t_irc_channel *ptr_channel;
@@ -716,13 +716,13 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *nick, char *arguments
         pos--;
     }
     
-    if (string_is_channel (arguments))
+    if (irc_channel_is_channel (arguments))
     {
-        ptr_channel = channel_search (server, arguments);
+        ptr_channel = irc_channel_search (server, arguments);
         if (ptr_channel)
         {
-            command_ignored |= ignore_check (host, "mode",
-                                             ptr_channel->name, server->name);
+            command_ignored |= irc_ignore_check (host, "mode",
+                                                 ptr_channel->name, server->name);
             if (!command_ignored)
             {
                 irc_display_prefix (server, ptr_channel->buffer, PREFIX_INFO);
@@ -739,7 +739,7 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *nick, char *arguments
                             nick);
             }
             irc_mode_channel_set (ptr_channel, pos_modes);
-            server_sendf (server, "MODE %s", ptr_channel->name);
+            irc_server_sendf (server, "MODE %s", ptr_channel->name);
         }
         else
         {
@@ -771,11 +771,11 @@ irc_cmd_recv_mode (t_irc_server *server, char *host, char *nick, char *arguments
 }
 
 /*
- * irc_cmd_recv_nick: 'nick' message received
+ * irc_recv_cmd_nick: 'nick' message received
  */
 
 int
-irc_cmd_recv_nick (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_nick (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     t_irc_channel *ptr_channel;
     t_irc_nick *ptr_nick;
@@ -805,7 +805,7 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *nick, char *arguments
             if ((CHANNEL(ptr_buffer)->name)
                 && (ascii_strcasecmp (nick, CHANNEL(ptr_buffer)->name) == 0))
             {
-                ptr_channel = channel_search_any (server, arguments);
+                ptr_channel = irc_channel_search_any (server, arguments);
                 if (!ptr_channel)
                 {
                     free (CHANNEL(ptr_buffer)->name);
@@ -818,15 +818,15 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *nick, char *arguments
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
-        ptr_nick = nick_search (ptr_channel, nick);
+        ptr_nick = irc_nick_search (ptr_channel, nick);
         if (ptr_nick)
         {
             nick_is_me = (strcmp (ptr_nick->nick, server->nick) == 0) ? 1 : 0;
             if (nick_is_me)
                 gui_add_hotlist = 0;
-            nick_change (ptr_channel, ptr_nick, arguments);
+            irc_nick_change (ptr_channel, ptr_nick, arguments);
             if (!command_ignored
-                && !ignore_check (host, "nick", ptr_channel->name, server->name))
+                && !irc_ignore_check (host, "nick", ptr_channel->name, server->name))
             {
                 irc_display_prefix (server, ptr_channel->buffer, PREFIX_INFO);
                 if (nick_is_me)
@@ -867,11 +867,11 @@ irc_cmd_recv_nick (t_irc_server *server, char *host, char *nick, char *arguments
 }
 
 /*
- * irc_cmd_recv_notice: 'notice' message received
+ * irc_recv_cmd_notice: 'notice' message received
  */
 
 int
-irc_cmd_recv_notice (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_notice (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *host2, *pos, *pos2, *pos_usec;
     struct timeval tv;
@@ -964,10 +964,10 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *nick, char *argumen
             {
                 if (nick && nick[0] && cfg_irc_notice_as_pv)
                 {
-                    ptr_channel = channel_search (server, nick);
+                    ptr_channel = irc_channel_search (server, nick);
                     if (!ptr_channel)
                     {
-                        ptr_channel = channel_new (server, CHANNEL_TYPE_PRIVATE, nick);
+                        ptr_channel = irc_channel_new (server, CHANNEL_TYPE_PRIVATE, nick);
                         if (!ptr_channel)
                         {
                             irc_display_prefix (server, server->buffer, PREFIX_ERROR);
@@ -988,7 +988,7 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *nick, char *argumen
                     gui_printf_type (ptr_channel->buffer, MSG_TYPE_NICK,
                                      "%s<",
                                      GUI_COLOR(COLOR_WIN_CHAT_DARK));
-                    if (irc_is_highlight (pos, server->nick))
+                    if (irc_recv_is_highlight (pos, server->nick))
                     {
                         gui_printf_type (ptr_channel->buffer,
                                          MSG_TYPE_NICK | MSG_TYPE_HIGHLIGHT,
@@ -1063,11 +1063,11 @@ irc_cmd_recv_notice (t_irc_server *server, char *host, char *nick, char *argumen
 }
 
 /*
- * irc_cmd_recv_part: 'part' message received
+ * irc_recv_cmd_part: 'part' message received
  */
 
 int
-irc_cmd_recv_part (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_part (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos, *pos_args, *join_string;
     int join_length;
@@ -1095,11 +1095,11 @@ irc_cmd_recv_part (t_irc_server *server, char *host, char *nick, char *arguments
             pos_args++;
     }
     
-    ptr_channel = channel_search (server, arguments);
+    ptr_channel = irc_channel_search (server, arguments);
     if (ptr_channel)
     {
-        command_ignored |= ignore_check (host, "part", ptr_channel->name, server->name);
-        ptr_nick = nick_search (ptr_channel, nick);
+        command_ignored |= irc_ignore_check (host, "part", ptr_channel->name, server->name);
+        ptr_nick = irc_nick_search (ptr_channel, nick);
         if (ptr_nick)
         {
             /* display part message */
@@ -1130,7 +1130,7 @@ irc_cmd_recv_part (t_irc_server *server, char *host, char *nick, char *arguments
             /* part request was issued by local client ? */
             if (strcmp (ptr_nick->nick, server->nick) == 0)
             {
-                nick_free_all (ptr_channel);
+                irc_nick_free_all (ptr_channel);
                 
                 /* cycling ? => rejoin channel immediately */
                 if (ptr_channel->cycle)
@@ -1146,24 +1146,24 @@ irc_cmd_recv_part (t_irc_server *server, char *host, char *nick, char *arguments
                             snprintf (join_string, join_length, "%s %s",
                                       ptr_channel->name,
                                       ptr_channel->key);
-                            irc_cmd_send_join(server, ptr_channel, join_string);
+                            irc_send_cmd_join(server, ptr_channel, join_string);
                             free (join_string);
                         }
                         else
-                            irc_cmd_send_join(server, ptr_channel, ptr_channel->name);
+                            irc_send_cmd_join(server, ptr_channel, ptr_channel->name);
                     }
                     else
-                        irc_cmd_send_join(server, ptr_channel, ptr_channel->name);
+                        irc_send_cmd_join(server, ptr_channel, ptr_channel->name);
                 }
                 if (ptr_channel->close)
                 {
                     gui_buffer_free (ptr_channel->buffer, 1);
-                    channel_free (server, ptr_channel);
+                    irc_channel_free (server, ptr_channel);
                     ptr_channel = NULL;
                 }
             }
             else
-                nick_free (ptr_channel, ptr_nick);
+                irc_nick_free (ptr_channel, ptr_nick);
             
             if (ptr_channel)
             {
@@ -1186,11 +1186,11 @@ irc_cmd_recv_part (t_irc_server *server, char *host, char *nick, char *arguments
 }
 
 /*
- * irc_cmd_recv_ping: 'ping' command received
+ * irc_recv_cmd_ping: 'ping' command received
  */
 
 int
-irc_cmd_recv_ping (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_ping (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos;
     
@@ -1205,17 +1205,17 @@ irc_cmd_recv_ping (t_irc_server *server, char *host, char *nick, char *arguments
     if (pos)
         pos[0] = '\0';
     
-    server_sendf (server, "PONG :%s", arguments);
+    irc_server_sendf (server, "PONG :%s", arguments);
     
     return 0;
 }
 
 /*
- * irc_cmd_recv_pong: 'pong' command received
+ * irc_recv_cmd_pong: 'pong' command received
  */
 
 int
-irc_cmd_recv_pong (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_pong (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     struct timeval tv;
     int old_lag;
@@ -1256,7 +1256,7 @@ irc_cmd_reply_version (t_irc_server *server, t_irc_channel *channel,
 
     ptr_buffer = (channel) ? channel->buffer : server->buffer;
     
-    command_ignored |= ignore_check (host, "ctcp", NULL, server->name);
+    command_ignored |= irc_ignore_check (host, "ctcp", NULL, server->name);
     if (!command_ignored)
     {
         pos = strchr (message, ' ');
@@ -1273,21 +1273,21 @@ irc_cmd_reply_version (t_irc_server *server, t_irc_channel *channel,
         buf = (struct utsname *) malloc (sizeof (struct utsname));
         if (buf && (uname (buf) >= 0))
         {
-            server_sendf (server,
-                          "NOTICE %s :%sVERSION %s v%s"
-                          " compiled on %s, running "
-                          "%s %s / %s%s",
-                          nick, "\01", PACKAGE_NAME, PACKAGE_VERSION, __DATE__,
-                          &buf->sysname,
-                          &buf->release, &buf->machine, "\01");
+            irc_server_sendf (server,
+                              "NOTICE %s :%sVERSION %s v%s"
+                              " compiled on %s, running "
+                              "%s %s / %s%s",
+                              nick, "\01", PACKAGE_NAME, PACKAGE_VERSION, __DATE__,
+                              &buf->sysname,
+                              &buf->release, &buf->machine, "\01");
             free (buf);
         }
         else
-            server_sendf (server,
-                          "NOTICE %s :%sVERSION %s v%s"
-                          " compiled on %s%s",
-                          nick, "\01", PACKAGE_NAME, PACKAGE_VERSION, __DATE__,
-                          "\01");
+            irc_server_sendf (server,
+                              "NOTICE %s :%sVERSION %s v%s"
+                              " compiled on %s%s",
+                              nick, "\01", PACKAGE_NAME, PACKAGE_VERSION, __DATE__,
+                              "\01");
         irc_display_prefix (server, ptr_buffer, PREFIX_SERVER);
         gui_printf (ptr_buffer,
                     _("CTCP %sVERSION%s received from %s%s"),
@@ -1310,11 +1310,11 @@ irc_cmd_reply_version (t_irc_server *server, t_irc_channel *channel,
 }
 
 /*
- * irc_cmd_recv_privmsg: 'privmsg' command received
+ * irc_recv_cmd_privmsg: 'privmsg' command received
  */
 
 int
-irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_privmsg (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos, *pos2, *host2;
     char *pos_file, *pos_addr, *pos_port, *pos_size, *pos_start_resume;  /* for DCC */
@@ -1339,7 +1339,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
         host2 = host;
     
     /* receiver is a channel ? */
-    if (string_is_channel (arguments))
+    if (irc_channel_is_channel (arguments))
     {
         pos = strchr (arguments, ' ');
         if (pos)
@@ -1351,12 +1351,12 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
             if (pos[0] == ':')
                 pos++;
             
-            ptr_channel = channel_search (server, arguments);
+            ptr_channel = irc_channel_search (server, arguments);
             if (ptr_channel)
             {
                 if (strncmp (pos, "\01ACTION ", 8) == 0)
                 {
-                    command_ignored |= ignore_check (host, "action", ptr_channel->name, server->name);
+                    command_ignored |= irc_ignore_check (host, "action", ptr_channel->name, server->name);
                     pos += 8;
                     pos2 = strchr (pos, '\01');
                     if (pos2)
@@ -1364,7 +1364,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                     if (!command_ignored)
                     {
                         irc_display_prefix (server, ptr_channel->buffer, PREFIX_ACTION_ME);
-                        if (irc_is_highlight (pos, server->nick))
+                        if (irc_recv_is_highlight (pos, server->nick))
                         {
                             gui_printf_type (ptr_channel->buffer,
                                              MSG_TYPE_MSG | MSG_TYPE_HIGHLIGHT,
@@ -1395,13 +1395,13 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                             gui_printf (ptr_channel->buffer, " %s%s\n",
                                         GUI_COLOR(COLOR_WIN_CHAT), pos);
                         }
-                        channel_add_nick_speaking (ptr_channel, nick);
+                        irc_channel_add_nick_speaking (ptr_channel, nick);
                     }
                     return 0;
                 }
                 if (strncmp (pos, "\01SOUND ", 7) == 0)
                 {
-                    command_ignored |= ignore_check (host, "ctcp", ptr_channel->name, server->name);
+                    command_ignored |= irc_ignore_check (host, "ctcp", ptr_channel->name, server->name);
                     pos += 7;
                     pos2 = strchr (pos, '\01');
                     if (pos2)
@@ -1421,7 +1421,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                 }
                 if (strncmp (pos, "\01PING", 5) == 0)
                 {
-                    command_ignored |= ignore_check (host, "ctcp", ptr_channel->name, server->name);
+                    command_ignored |= irc_ignore_check (host, "ctcp", ptr_channel->name, server->name);
                     pos += 5;
                     while (pos[0] == ' ')
                         pos++;
@@ -1433,11 +1433,11 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                     if (pos && !pos[0])
                         pos = NULL;
                     if (pos)
-                        server_sendf (server, "NOTICE %s :\01PING %s\01",
-                                      nick, pos);
+                        irc_server_sendf (server, "NOTICE %s :\01PING %s\01",
+                                          nick, pos);
                     else
-                        server_sendf (server, "NOTICE %s :\01PING\01",
-                                      nick);
+                        irc_server_sendf (server, "NOTICE %s :\01PING\01",
+                                          nick);
                     irc_display_prefix (server, ptr_channel->buffer, PREFIX_SERVER);
                     gui_printf (ptr_channel->buffer,
                                 _("CTCP %sPING%s received from %s%s\n"),
@@ -1457,7 +1457,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                 pos2 = strchr (pos + 1, '\01');
                 if ((pos[0] == '\01') && pos2 && (pos2[1] == '\0'))
                 {
-                    command_ignored |= ignore_check (host, "ctcp", ptr_channel->name, server->name);
+                    command_ignored |= irc_ignore_check (host, "ctcp", ptr_channel->name, server->name);
                     pos++;
                     pos2[0] = '\0';
                     pos2 = strchr (pos, ' ');
@@ -1491,11 +1491,11 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                 }
                 
                 /* other message */
-                command_ignored |= ignore_check (host, "privmsg", ptr_channel->name, server->name);
+                command_ignored |= irc_ignore_check (host, "privmsg", ptr_channel->name, server->name);
                 if (!command_ignored)
                 {
-                    ptr_nick = nick_search (ptr_channel, nick);
-                    if (irc_is_highlight (pos, server->nick))
+                    ptr_nick = irc_nick_search (ptr_channel, nick);
+                    if (irc_recv_is_highlight (pos, server->nick))
                     {
                         irc_display_nick (ptr_channel->buffer, ptr_nick,
                                           (ptr_nick) ? NULL : nick,
@@ -1524,7 +1524,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                         gui_printf_type (ptr_channel->buffer, MSG_TYPE_MSG,
                                          "%s\n", pos);
                     }
-                    channel_add_nick_speaking (ptr_channel, nick);
+                    irc_channel_add_nick_speaking (ptr_channel, nick);
                 }
             }
             else
@@ -1559,7 +1559,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
             /* ping request from another user => answer */
             if (strncmp (pos, "\01PING", 5) == 0)
             {
-                command_ignored |= ignore_check (host, "ctcp", NULL, server->name);
+                command_ignored |= irc_ignore_check (host, "ctcp", NULL, server->name);
                 if (!command_ignored)
                 {
                     pos += 5;
@@ -1573,11 +1573,11 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                     if (pos && !pos[0])
                         pos = NULL;
                     if (pos)
-                        server_sendf (server, "NOTICE %s :\01PING %s\01",
-                                      nick, pos);
+                        irc_server_sendf (server, "NOTICE %s :\01PING %s\01",
+                                          nick, pos);
                     else
-                        server_sendf (server, "NOTICE %s :\01PING\01",
-                                      nick);
+                        irc_server_sendf (server, "NOTICE %s :\01PING\01",
+                                          nick);
                     irc_display_prefix (server, server->buffer, PREFIX_SERVER);
                     gui_printf (server->buffer,
                                 _("CTCP %sPING%s received from %s%s\n"),
@@ -1609,7 +1609,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                 }
                 pos2[0] = '\0';
                 
-                command_ignored |= ignore_check (host, "dcc", NULL, server->name);
+                command_ignored |= irc_ignore_check (host, "dcc", NULL, server->name);
                 
                 if (!command_ignored)
                 {
@@ -1666,9 +1666,9 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                         pos2--;
                     pos2[1] = '\0';
                     
-                    dcc_add (server, DCC_FILE_RECV, strtoul (pos_addr, NULL, 10),
-                             atoi (pos_port), nick, -1, pos_file, NULL,
-                             strtoul (pos_size, NULL, 10));
+                    irc_dcc_add (server, DCC_FILE_RECV, strtoul (pos_addr, NULL, 10),
+                                 atoi (pos_port), nick, -1, pos_file, NULL,
+                                 strtoul (pos_size, NULL, 10));
 #ifdef PLUGINS
                     (void) plugin_msg_handler_exec (server->name,
                                                     "weechat_dcc",
@@ -1693,7 +1693,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                 }
                 pos2[0] = '\0';
                 
-                command_ignored |= ignore_check (host, "dcc", NULL, server->name);
+                command_ignored |= irc_ignore_check (host, "dcc", NULL, server->name);
                 
                 if (!command_ignored)
                 {
@@ -1734,8 +1734,8 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                         pos2--;
                     pos2[1] = '\0';
                     
-                    dcc_accept_resume (server, pos_file, atoi (pos_port),
-                                       strtoul (pos_start_resume, NULL, 10));
+                    irc_dcc_accept_resume (server, pos_file, atoi (pos_port),
+                                           strtoul (pos_start_resume, NULL, 10));
 #ifdef PLUGINS
                     (void) plugin_msg_handler_exec (server->name,
                                                     "weechat_dcc",
@@ -1760,7 +1760,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                 }
                 pos2[0] = '\0';
                 
-                command_ignored |= ignore_check (host, "dcc", NULL, server->name);
+                command_ignored |= irc_ignore_check (host, "dcc", NULL, server->name);
                 
                 if (!command_ignored)
                 {
@@ -1801,8 +1801,8 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                         pos2--;
                     pos2[1] = '\0';
                     
-                    dcc_start_resume (server, pos_file, atoi (pos_port),
-                                      strtoul (pos_start_resume, NULL, 10));
+                    irc_dcc_start_resume (server, pos_file, atoi (pos_port),
+                                          strtoul (pos_start_resume, NULL, 10));
 #ifdef PLUGINS
                     (void) plugin_msg_handler_exec (server->name,
                                                     "weechat_dcc",
@@ -1827,7 +1827,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                 }
                 pos2[0] = '\0';
                 
-                command_ignored |= ignore_check (host, "dcc", NULL, server->name);
+                command_ignored |= irc_ignore_check (host, "dcc", NULL, server->name);
                 
                 if (!command_ignored)
                 {
@@ -1880,8 +1880,8 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                         return -1;
                     }
                     
-                    dcc_add (server, DCC_CHAT_RECV, strtoul (pos_addr, NULL, 10),
-                             atoi (pos_port), nick, -1, NULL, NULL, 0);
+                    irc_dcc_add (server, DCC_CHAT_RECV, strtoul (pos_addr, NULL, 10),
+                                 atoi (pos_port), nick, -1, NULL, NULL, 0);
 #ifdef PLUGINS
                     (void) plugin_msg_handler_exec (server->name,
                                                     "weechat_dcc",
@@ -1892,18 +1892,18 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
             }
             
             /* private message received => display it */
-            ptr_channel = channel_search (server, nick);
+            ptr_channel = irc_channel_search (server, nick);
             
             if (strncmp (pos, "\01ACTION ", 8) == 0)
             {
-                command_ignored |= ignore_check (host, "action", NULL, server->name);
-                command_ignored |= ignore_check (host, "pv", NULL, server->name);
+                command_ignored |= irc_ignore_check (host, "action", NULL, server->name);
+                command_ignored |= irc_ignore_check (host, "pv", NULL, server->name);
                 
                 if (!command_ignored)
                 {
                     if (!ptr_channel)
                     {
-                        ptr_channel = channel_new (server, CHANNEL_TYPE_PRIVATE, nick);
+                        ptr_channel = irc_channel_new (server, CHANNEL_TYPE_PRIVATE, nick);
                         if (!ptr_channel)
                         {
                             irc_display_prefix (server, server->buffer, PREFIX_ERROR);
@@ -1926,7 +1926,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                     if (pos2)
                         pos2[0] = '\0';
                     irc_display_prefix (server, ptr_channel->buffer, PREFIX_ACTION_ME);
-                    if (irc_is_highlight (pos, server->nick))
+                    if (irc_recv_is_highlight (pos, server->nick))
                     {
                         gui_printf_type (ptr_channel->buffer,
                                          MSG_TYPE_MSG | MSG_TYPE_HIGHLIGHT,
@@ -1970,7 +1970,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                 pos2 = strchr (pos + 1, '\01');
                 if ((pos[0] == '\01') && pos2 && (pos2[1] == '\0'))
                 {
-                    command_ignored |= ignore_check (host, "ctcp", NULL, server->name);
+                    command_ignored |= irc_ignore_check (host, "ctcp", NULL, server->name);
                     
                     if (!command_ignored)
                     {
@@ -2010,13 +2010,13 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                 }
                 else
                 {
-                    command_ignored |= ignore_check (host, "pv", NULL, server->name);
+                    command_ignored |= irc_ignore_check (host, "pv", NULL, server->name);
                     
                     if (!command_ignored)
                     {
                         if (!ptr_channel)
                         {
-                            ptr_channel = channel_new (server, CHANNEL_TYPE_PRIVATE, nick);
+                            ptr_channel = irc_channel_new (server, CHANNEL_TYPE_PRIVATE, nick);
                             if (!ptr_channel)
                             {
                                 irc_display_prefix (server, server->buffer, PREFIX_ERROR);
@@ -2034,7 +2034,7 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
                             gui_chat_draw_title (ptr_channel->buffer, 1);
                         }
                         
-                        if (irc_is_highlight (pos, server->nick))
+                        if (irc_recv_is_highlight (pos, server->nick))
                         {
                             irc_display_nick (ptr_channel->buffer, NULL, nick,
                                               MSG_TYPE_NICK | MSG_TYPE_HIGHLIGHT, 1,
@@ -2083,11 +2083,11 @@ irc_cmd_recv_privmsg (t_irc_server *server, char *host, char *nick, char *argume
 }
 
 /*
- * irc_cmd_recv_quit: 'quit' command received
+ * irc_recv_cmd_quit: 'quit' command received
  */
 
 int
-irc_cmd_recv_quit (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_quit (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos;
     t_irc_channel *ptr_channel;
@@ -2113,14 +2113,14 @@ irc_cmd_recv_quit (t_irc_server *server, char *host, char *nick, char *arguments
             || (ptr_channel->type == CHANNEL_TYPE_DCC_CHAT))
             ptr_nick = NULL;
         else
-            ptr_nick = nick_search (ptr_channel, nick);
+            ptr_nick = irc_nick_search (ptr_channel, nick);
         
         if (ptr_nick || (strcmp (ptr_channel->name, nick) == 0))
         {
             if (ptr_nick)
-                nick_free (ptr_channel, ptr_nick);
+                irc_nick_free (ptr_channel, ptr_nick);
             if (!command_ignored
-                && !ignore_check (host, "quit", ptr_channel->name, server->name))
+                && !irc_ignore_check (host, "quit", ptr_channel->name, server->name))
             {
                 pos = strchr (host, '!');
                 irc_display_prefix (server, ptr_channel->buffer, PREFIX_QUIT);
@@ -2149,12 +2149,12 @@ irc_cmd_recv_quit (t_irc_server *server, char *host, char *nick, char *arguments
 }
 
 /*
- * irc_cmd_recv_server_mode_reason: command received from server (numeric),
+ * irc_recv_cmd_server_mode_reason: command received from server (numeric),
  *                                  format: "mode :reason"
  */
 
 int
-irc_cmd_recv_server_mode_reason (t_irc_server *server, char *host,
+irc_recv_cmd_server_mode_reason (t_irc_server *server, char *host,
                                  char *nick, char *arguments)
 {
     char *ptr_msg;
@@ -2193,11 +2193,11 @@ irc_cmd_recv_server_mode_reason (t_irc_server *server, char *host,
 }
 
 /*
- * irc_cmd_recv_server_msg: command received from server (numeric)
+ * irc_recv_cmd_server_msg: command received from server (numeric)
  */
 
 int
-irc_cmd_recv_server_msg (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_server_msg (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     /* make C compiler happy */
     (void) host;
@@ -2227,11 +2227,11 @@ irc_cmd_recv_server_msg (t_irc_server *server, char *host, char *nick, char *arg
 }
 
 /*
- * irc_cmd_recv_server_reply: server reply
+ * irc_recv_cmd_server_reply: server reply
  */
 
 int
-irc_cmd_recv_server_reply (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_server_reply (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos, *pos2;
     int first;
@@ -2286,17 +2286,17 @@ irc_cmd_recv_server_reply (t_irc_server *server, char *host, char *nick, char *a
 }
 
 /*
- * irc_cmd_recv_topic: 'topic' command received
+ * irc_recv_cmd_topic: 'topic' command received
  */
 
 int
-irc_cmd_recv_topic (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_topic (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos;
     t_irc_channel *ptr_channel;
     t_gui_buffer *buffer;
     
-    if (!string_is_channel (arguments))
+    if (!irc_channel_is_channel (arguments))
     {
         irc_display_prefix (server, server->buffer, PREFIX_ERROR);
         gui_printf_nolog (server->buffer,
@@ -2318,9 +2318,9 @@ irc_cmd_recv_topic (t_irc_server *server, char *host, char *nick, char *argument
             pos = NULL;
     }
     
-    command_ignored |= ignore_check (host, "topic", arguments, server->name);
+    command_ignored |= irc_ignore_check (host, "topic", arguments, server->name);
     
-    ptr_channel = channel_search (server, arguments);
+    ptr_channel = irc_channel_search (server, arguments);
     buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
     
     if (!command_ignored)
@@ -2363,13 +2363,13 @@ irc_cmd_recv_topic (t_irc_server *server, char *host, char *nick, char *argument
 }
 
 /*
- * irc_cmd_recv_wallops: 'wallops' command received
+ * irc_recv_cmd_wallops: 'wallops' command received
  */
 
 int
-irc_cmd_recv_wallops (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_wallops (t_irc_server *server, char *host, char *nick, char *arguments)
 {
-    command_ignored |= ignore_check (host, "wallops", arguments, server->name);
+    command_ignored |= irc_ignore_check (host, "wallops", arguments, server->name);
     
     if (!command_ignored)
     {
@@ -2388,11 +2388,11 @@ irc_cmd_recv_wallops (t_irc_server *server, char *host, char *nick, char *argume
 }
 
 /*
- * irc_cmd_recv_001: '001' command (connected to irc server)
+ * irc_recv_cmd_001: '001' command (connected to irc server)
  */
 
 int
-irc_cmd_recv_001 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_001 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos;
     char **commands, **ptr, *vars_replaced;
@@ -2408,7 +2408,7 @@ irc_cmd_recv_001 (t_irc_server *server, char *host, char *nick, char *arguments)
         server->nick = strdup (arguments);
     }
     
-    irc_cmd_recv_server_msg (server, host, nick, arguments);
+    irc_recv_cmd_server_msg (server, host, nick, arguments);
     
     /* connection to IRC server is ok! */
     server->is_connected = 1;
@@ -2447,11 +2447,11 @@ irc_cmd_recv_001 (t_irc_server *server, char *host, char *nick, char *arguments)
             if (ptr_channel->type == CHANNEL_TYPE_CHANNEL)
             {
                 if (ptr_channel->key)
-                    server_sendf (server, "JOIN %s %s",
-                                  ptr_channel->name, ptr_channel->key);
+                    irc_server_sendf (server, "JOIN %s %s",
+                                      ptr_channel->name, ptr_channel->key);
                 else
-                    server_sendf (server, "JOIN %s",
-                                  ptr_channel->name);
+                    irc_server_sendf (server, "JOIN %s",
+                                      ptr_channel->name);
             }
         }
         server->reconnect_join = 0;
@@ -2460,7 +2460,7 @@ irc_cmd_recv_001 (t_irc_server *server, char *host, char *nick, char *arguments)
     {
         /* auto-join when connecting to server for first time */
         if (server->autojoin && server->autojoin[0])
-            return irc_cmd_send_join (server, NULL, server->autojoin);
+            return irc_send_cmd_join (server, NULL, server->autojoin);
     }
 
     /* set away message if user was away (before disconnection for example) */
@@ -2478,15 +2478,15 @@ irc_cmd_recv_001 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_005: '005' command (some infos from server)
+ * irc_recv_cmd_005: '005' command (some infos from server)
  */
 
 int
-irc_cmd_recv_005 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_005 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos, *pos2;
     
-    irc_cmd_recv_server_msg (server, host, nick, arguments);
+    irc_recv_cmd_server_msg (server, host, nick, arguments);
     
     pos = strstr (arguments, "PREFIX=");
     if (pos)
@@ -2513,11 +2513,11 @@ irc_cmd_recv_005 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_221: '221' command (user mode string)
+ * irc_recv_cmd_221: '221' command (user mode string)
  */
 
 int
-irc_cmd_recv_221 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_221 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_mode;
     
@@ -2561,11 +2561,11 @@ irc_cmd_recv_221 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_301: '301' command (away message)
+ * irc_recv_cmd_301: '301' command (away message)
  */
 
 int
-irc_cmd_recv_301 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_301 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_nick, *pos_message;
     t_irc_channel *ptr_channel;
@@ -2594,7 +2594,7 @@ irc_cmd_recv_301 (t_irc_server *server, char *host, char *nick, char *arguments)
             if (!command_ignored)
             {
                 /* look for private buffer to display message */
-                ptr_channel = channel_search (server, pos_nick);
+                ptr_channel = irc_channel_search (server, pos_nick);
                 if (!cfg_irc_show_away_once || !ptr_channel ||
                     !(ptr_channel->away_message) ||
                     (strcmp (ptr_channel->away_message, pos_message) != 0))
@@ -2621,11 +2621,11 @@ irc_cmd_recv_301 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_302: '302' command (userhost)
+ * irc_recv_cmd_302: '302' command (userhost)
  */
 
 int
-irc_cmd_recv_302 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_302 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_host, *ptr_next;
     
@@ -2679,11 +2679,11 @@ irc_cmd_recv_302 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_303: '303' command (ison)
+ * irc_recv_cmd_303: '303' command (ison)
  */
 
 int
-irc_cmd_recv_303 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_303 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *ptr_next;
     
@@ -2727,11 +2727,11 @@ irc_cmd_recv_303 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_305: '305' command (unaway)
+ * irc_recv_cmd_305: '305' command (unaway)
  */
 
 int
-irc_cmd_recv_305 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_305 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     t_gui_window *ptr_window;
     
@@ -2764,11 +2764,11 @@ irc_cmd_recv_305 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_306: '306' command (now away)
+ * irc_recv_cmd_306: '306' command (now away)
  */
 
 int
-irc_cmd_recv_306 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_306 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     t_gui_window *ptr_window;
     
@@ -2804,11 +2804,11 @@ irc_cmd_recv_306 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_whois_nick_msg: a whois command with nick and message
+ * irc_recv_cmd_whois_nick_msg: a whois command with nick and message
  */
 
 int
-irc_cmd_recv_whois_nick_msg (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_whois_nick_msg (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_nick, *pos_msg;
     
@@ -2848,11 +2848,11 @@ irc_cmd_recv_whois_nick_msg (t_irc_server *server, char *host, char *nick, char 
 }
 
 /*
- * irc_cmd_recv_310: '310' command (whois, help mode)
+ * irc_recv_cmd_310: '310' command (whois, help mode)
  */
 
 int
-irc_cmd_recv_310 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_310 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_nick;
     
@@ -2881,11 +2881,11 @@ irc_cmd_recv_310 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_311: '311' command (whois, user)
+ * irc_recv_cmd_311: '311' command (whois, user)
  */
 
 int
-irc_cmd_recv_311 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_311 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_nick, *pos_user, *pos_host, *pos_realname;
     
@@ -2950,11 +2950,11 @@ irc_cmd_recv_311 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_312: '312' command (whois, server)
+ * irc_recv_cmd_312: '312' command (whois, server)
  */
 
 int
-irc_cmd_recv_312 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_312 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_nick, *pos_server, *pos_serverinfo;
     
@@ -3007,11 +3007,11 @@ irc_cmd_recv_312 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_314: '314' command (whowas)
+ * irc_recv_cmd_314: '314' command (whowas)
  */
 
 int
-irc_cmd_recv_314 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_314 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_nick, *pos_user, *pos_host, *pos_realname;
     
@@ -3079,11 +3079,11 @@ irc_cmd_recv_314 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_315: '315' command (end of /who)
+ * irc_recv_cmd_315: '315' command (end of /who)
  */
 
 int
-irc_cmd_recv_315 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_315 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos;
     t_irc_channel *ptr_channel;
@@ -3105,7 +3105,7 @@ irc_cmd_recv_315 (t_irc_server *server, char *host, char *nick, char *arguments)
     {
         pos[0] = '\0';
         pos++;
-        ptr_channel = channel_search (server, arguments);
+        ptr_channel = irc_channel_search (server, arguments);
         if (ptr_channel && (ptr_channel->checking_away > 0))
         {
             ptr_channel->checking_away--;
@@ -3133,11 +3133,11 @@ irc_cmd_recv_315 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_317: '317' command (whois, idle)
+ * irc_recv_cmd_317: '317' command (whois, idle)
  */
 
 int
-irc_cmd_recv_317 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_317 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_nick, *pos_idle, *pos_signon, *pos_message;
     int idle_time, day, hour, min, sec;
@@ -3220,11 +3220,11 @@ irc_cmd_recv_317 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_319: '319' command (whois, channels)
+ * irc_recv_cmd_319: '319' command (whois, channels)
  */
 
 int
-irc_cmd_recv_319 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_319 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_nick, *pos_channel, *pos;
     
@@ -3310,11 +3310,11 @@ irc_cmd_recv_319 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_321: '321' command (/list start)
+ * irc_recv_cmd_321: '321' command (/list start)
  */
 
 int
-irc_cmd_recv_321 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_321 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos;
     
@@ -3342,11 +3342,11 @@ irc_cmd_recv_321 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_322: '322' command (channel for /list)
+ * irc_recv_cmd_322: '322' command (channel for /list)
  */
 
 int
-irc_cmd_recv_322 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_322 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos;
     
@@ -3384,11 +3384,11 @@ irc_cmd_recv_322 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_323: '323' command (/list end)
+ * irc_recv_cmd_323: '323' command (/list end)
  */
 
 int
-irc_cmd_recv_323 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_323 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos;
     
@@ -3416,11 +3416,11 @@ irc_cmd_recv_323 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_324: '324' command (channel mode)
+ * irc_recv_cmd_324: '324' command (channel mode)
  */
 
 int
-irc_cmd_recv_324 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_324 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_channel, *pos_modes, *pos;
     t_irc_channel *ptr_channel;
@@ -3454,7 +3454,7 @@ irc_cmd_recv_324 (t_irc_server *server, char *host, char *nick, char *arguments)
             }
 
             /* search channel */
-            ptr_channel = channel_search (server, pos_channel);
+            ptr_channel = irc_channel_search (server, pos_channel);
             if (ptr_channel)
             {
                 if (pos_modes[0])
@@ -3483,11 +3483,11 @@ irc_cmd_recv_324 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_329: '329' command received (channel creation date)
+ * irc_recv_cmd_329: '329' command received (channel creation date)
  */
 
 int
-irc_cmd_recv_329 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_329 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_channel, *pos_date;
     t_irc_channel *ptr_channel;
@@ -3510,7 +3510,7 @@ irc_cmd_recv_329 (t_irc_server *server, char *host, char *nick, char *arguments)
             while (pos_date[0] == ' ')
                 pos_date++;
             
-            ptr_channel = channel_search (server, pos_channel);
+            ptr_channel = irc_channel_search (server, pos_channel);
             if (!ptr_channel)
             {
                 irc_display_prefix (server, server->buffer, PREFIX_ERROR);
@@ -3520,8 +3520,8 @@ irc_cmd_recv_329 (t_irc_server *server, char *host, char *nick, char *arguments)
                 return -1;
             }
             
-            command_ignored |= ignore_check (host, "329",
-                                             pos_channel, server->name);
+            command_ignored |= irc_ignore_check (host, "329",
+                                                 pos_channel, server->name);
             if (!command_ignored && (ptr_channel->display_creation_date))
             {
                 datetime = (time_t)(atol (pos_date));
@@ -3552,11 +3552,11 @@ irc_cmd_recv_329 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_331: '331' command received (no topic for channel)
+ * irc_recv_cmd_331: '331' command received (no topic for channel)
  */
 
 int
-irc_cmd_recv_331 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_331 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_channel, *pos;
     t_irc_channel *ptr_channel;
@@ -3586,10 +3586,10 @@ irc_cmd_recv_331 (t_irc_server *server, char *host, char *nick, char *arguments)
             return -1;
         }
         
-        ptr_channel = channel_search (server, pos_channel);
+        ptr_channel = irc_channel_search (server, pos_channel);
         if (ptr_channel)
         {
-            command_ignored |= ignore_check (host, "331", ptr_channel->name, server->name);
+            command_ignored |= irc_ignore_check (host, "331", ptr_channel->name, server->name);
             if (!command_ignored)
             {
                 irc_display_prefix (server, ptr_channel->buffer, PREFIX_INFO);
@@ -3611,11 +3611,11 @@ irc_cmd_recv_331 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_332: '332' command received (topic of channel)
+ * irc_recv_cmd_332: '332' command received (topic of channel)
  */
 
 int
-irc_cmd_recv_332 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_332 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos, *pos2;
     t_irc_channel *ptr_channel;
@@ -3634,7 +3634,7 @@ irc_cmd_recv_332 (t_irc_server *server, char *host, char *nick, char *arguments)
         if (pos2)
         {
             pos2[0] = '\0';
-            ptr_channel = channel_search (server, pos);
+            ptr_channel = irc_channel_search (server, pos);
             ptr_buffer = (ptr_channel) ?
                 ptr_channel->buffer : server->buffer;
             pos2++;
@@ -3649,7 +3649,7 @@ irc_cmd_recv_332 (t_irc_server *server, char *host, char *nick, char *arguments)
                 ptr_channel->topic = strdup (pos2);
             }
             
-            command_ignored |= ignore_check (host, "332", pos, server->name);
+            command_ignored |= irc_ignore_check (host, "332", pos, server->name);
             if (!command_ignored)
             {
                 irc_display_prefix (server, ptr_buffer, PREFIX_INFO);
@@ -3676,11 +3676,11 @@ irc_cmd_recv_332 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_333: '333' command received (infos about topic (nick / date))
+ * irc_recv_cmd_333: '333' command received (infos about topic (nick / date))
  */
 
 int
-irc_cmd_recv_333 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_333 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_channel, *pos_nick, *pos_date;
     t_irc_channel *ptr_channel;
@@ -3711,12 +3711,12 @@ irc_cmd_recv_333 (t_irc_server *server, char *host, char *nick, char *arguments)
                 while (pos_date[0] == ' ')
                     pos_date++;
                 
-                ptr_channel = channel_search (server, pos_channel);
+                ptr_channel = irc_channel_search (server, pos_channel);
                 ptr_buffer = (ptr_channel) ?
                     ptr_channel->buffer : server->buffer;
                 
-                command_ignored |= ignore_check (host, "333",
-                                                 pos_channel, server->name);
+                command_ignored |= irc_ignore_check (host, "333",
+                                                     pos_channel, server->name);
                 if (!command_ignored)
                 {
                     datetime = (time_t)(atol (pos_date));
@@ -3758,11 +3758,11 @@ irc_cmd_recv_333 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_338: '338' command (whois, host)
+ * irc_recv_cmd_338: '338' command (whois, host)
  */
 
 int
-irc_cmd_recv_338 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_338 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_nick, *pos_host, *pos_message;
     
@@ -3814,11 +3814,11 @@ irc_cmd_recv_338 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_341: '341' command received (inviting)
+ * irc_recv_cmd_341: '341' command received (inviting)
  */
 
 int
-irc_cmd_recv_341 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_341 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_nick, *pos_channel;
     
@@ -3878,11 +3878,11 @@ irc_cmd_recv_341 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_344: '344' command (channel reop)
+ * irc_recv_cmd_344: '344' command (channel reop)
  */
 
 int
-irc_cmd_recv_344 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_344 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_channel, *pos_host;
     
@@ -3919,11 +3919,11 @@ irc_cmd_recv_344 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_345: '345' command (end of channel reop)
+ * irc_recv_cmd_345: '345' command (end of channel reop)
  */
 
 int
-irc_cmd_recv_345 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_345 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos;
     
@@ -3966,11 +3966,11 @@ irc_cmd_recv_345 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_348: '348' command received (channel exception list)
+ * irc_recv_cmd_348: '348' command received (channel exception list)
  */
 
 int
-irc_cmd_recv_348 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_348 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_channel, *pos_exception, *pos_user, *pos_date, *pos;
     t_irc_channel *ptr_channel;
@@ -4032,10 +4032,10 @@ irc_cmd_recv_348 (t_irc_server *server, char *host, char *nick, char *arguments)
     else
         pos_date = NULL;
     
-    ptr_channel = channel_search (server, pos_channel);
+    ptr_channel = irc_channel_search (server, pos_channel);
     buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
     
-    command_ignored |= ignore_check (host, "348", pos_channel, server->name);
+    command_ignored |= irc_ignore_check (host, "348", pos_channel, server->name);
     
     if (!command_ignored)
     {
@@ -4082,11 +4082,11 @@ irc_cmd_recv_348 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_349: '349' command received (end of channel exception list)
+ * irc_recv_cmd_349: '349' command received (end of channel exception list)
  */
 
 int
-irc_cmd_recv_349 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_349 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_channel, *pos_msg;
     t_irc_channel *ptr_channel;
@@ -4125,10 +4125,10 @@ irc_cmd_recv_349 (t_irc_server *server, char *host, char *nick, char *arguments)
     if (pos_msg[0] == ':')
         pos_msg++;
     
-    ptr_channel = channel_search (server, pos_channel);
+    ptr_channel = irc_channel_search (server, pos_channel);
     buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
 
-    command_ignored |= ignore_check (host, "349", pos_channel, server->name);
+    command_ignored |= irc_ignore_check (host, "349", pos_channel, server->name);
     
     if (!command_ignored)
     {
@@ -4145,11 +4145,11 @@ irc_cmd_recv_349 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_351: '351' command received (server version)
+ * irc_recv_cmd_351: '351' command received (server version)
  */
 
 int
-irc_cmd_recv_351 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_351 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos, *pos2;
     
@@ -4186,11 +4186,11 @@ irc_cmd_recv_351 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_352: '352' command (who)
+ * irc_recv_cmd_352: '352' command (who)
  */
 
 int
-irc_cmd_recv_352 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_352 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_channel, *pos_user, *pos_host, *pos_server, *pos_nick;
     char *pos_attr, *pos_hopcount, *pos_realname;
@@ -4258,12 +4258,12 @@ irc_cmd_recv_352 (t_irc_server *server, char *host, char *nick, char *arguments)
                                     while (pos_realname[0] == ' ')
                                         pos_realname++;
                                     
-                                    command_ignored |= ignore_check (host, "352", pos_channel, server->name);
+                                    command_ignored |= irc_ignore_check (host, "352", pos_channel, server->name);
                                     
-                                    ptr_channel = channel_search (server, pos_channel);
+                                    ptr_channel = irc_channel_search (server, pos_channel);
                                     if (ptr_channel && (ptr_channel->checking_away > 0))
                                     {
-                                        ptr_nick = nick_search (ptr_channel, pos_nick);
+                                        ptr_nick = irc_nick_search (ptr_channel, pos_nick);
                                         if (ptr_nick)
                                         {
                                             if (ptr_nick->host)
@@ -4272,8 +4272,8 @@ irc_cmd_recv_352 (t_irc_server *server, char *host, char *nick, char *arguments)
                                             ptr_nick->host = (char *) malloc (length);
                                             if (ptr_nick->host)
                                                 snprintf (ptr_nick->host, length, "%s@%s", pos_user, pos_host);
-                                            nick_set_away (ptr_channel, ptr_nick,
-                                                           (pos_attr[0] == 'G') ? 1 : 0);
+                                            irc_nick_set_away (ptr_channel, ptr_nick,
+                                                               (pos_attr[0] == 'G') ? 1 : 0);
                                         }
                                         return 0;
                                     }
@@ -4312,11 +4312,11 @@ irc_cmd_recv_352 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_353: '353' command received (list of users on a channel)
+ * irc_recv_cmd_353: '353' command received (list of users on a channel)
  */
 
 int
-irc_cmd_recv_353 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_353 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos, *pos_nick;
     int is_chanowner, is_chanadmin, is_chanadmin2, is_op, is_halfop, has_voice;
@@ -4348,7 +4348,7 @@ irc_cmd_recv_353 (t_irc_server *server, char *host, char *nick, char *arguments)
     {
         pos[0] = '\0';
         
-        ptr_channel = channel_search (server, arguments);
+        ptr_channel = irc_channel_search (server, arguments);
         if (ptr_channel)
             ptr_buffer = ptr_channel->buffer;
         else
@@ -4366,9 +4366,9 @@ irc_cmd_recv_353 (t_irc_server *server, char *host, char *nick, char *arguments)
             return -1;
         }
         
-        command_ignored |= ignore_check (host, "353",
-                                         (ptr_channel) ? ptr_channel->name : NULL,
-                                         server->name);
+        command_ignored |= irc_ignore_check (host, "353",
+                                             (ptr_channel) ? ptr_channel->name : NULL,
+                                             server->name);
         
         /* channel is not joined => display users on server buffer */
         if (!command_ignored && !ptr_channel)
@@ -4474,8 +4474,8 @@ irc_cmd_recv_353 (t_irc_server *server, char *host, char *nick, char *arguments)
                 }
                 if (ptr_channel)
                 {
-                    if (!nick_new (server, ptr_channel, pos_nick, is_chanowner,
-                                   is_chanadmin, is_chanadmin2, is_op, is_halfop, has_voice))
+                    if (!irc_nick_new (server, ptr_channel, pos_nick, is_chanowner,
+                                       is_chanadmin, is_chanadmin2, is_op, is_halfop, has_voice))
                     {
                         irc_display_prefix (server, server->buffer, PREFIX_ERROR);
                         gui_printf_nolog (server->buffer,
@@ -4519,11 +4519,11 @@ irc_cmd_recv_353 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_366: '366' command received (end of /names list)
+ * irc_recv_cmd_366: '366' command received (end of /names list)
  */
 
 int
-irc_cmd_recv_366 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_366 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos, *pos2;
     t_irc_channel *ptr_channel;
@@ -4548,10 +4548,10 @@ irc_cmd_recv_366 (t_irc_server *server, char *host, char *nick, char *arguments)
             if (pos2[0] == ':')
                 pos2++;
             
-            ptr_channel = channel_search (server, pos);
+            ptr_channel = irc_channel_search (server, pos);
             if (ptr_channel)
             {
-                command_ignored |= ignore_check (host, "366", ptr_channel->name, server->name);
+                command_ignored |= irc_ignore_check (host, "366", ptr_channel->name, server->name);
                 
                 if (!command_ignored)
                 {
@@ -4574,8 +4574,8 @@ irc_cmd_recv_366 (t_irc_server *server, char *host, char *nick, char *arguments)
                                 GUI_COLOR(COLOR_WIN_CHAT_DARK));
                     
                     /* display number of nicks, ops, halfops & voices on the channel */
-                    nick_count (ptr_channel, &num_nicks, &num_op, &num_halfop, &num_voice,
-                                &num_normal);
+                    irc_nick_count (ptr_channel, &num_nicks, &num_op, &num_halfop, &num_voice,
+                                    &num_normal);
                     irc_display_prefix (server, ptr_channel->buffer, PREFIX_INFO);
                     gui_printf (ptr_channel->buffer,
                                 _("Channel %s%s%s: %s%d%s %s %s(%s%d%s %s, "
@@ -4606,8 +4606,8 @@ irc_cmd_recv_366 (t_irc_server *server, char *host, char *nick, char *arguments)
                                 _("normal"),
                                 GUI_COLOR(COLOR_WIN_CHAT_DARK));
                 }
-                irc_cmd_send_mode (server, NULL, ptr_channel->name);
-                channel_check_away (server, ptr_channel, 1);
+                irc_send_cmd_mode (server, NULL, ptr_channel->name);
+                irc_channel_check_away (server, ptr_channel, 1);
             }
             else
             {
@@ -4628,11 +4628,11 @@ irc_cmd_recv_366 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_367: '367' command received (banlist)
+ * irc_recv_cmd_367: '367' command received (banlist)
  */
 
 int
-irc_cmd_recv_367 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_367 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_channel, *pos_ban, *pos_user, *pos_date, *pos;
     t_irc_channel *ptr_channel;
@@ -4693,10 +4693,10 @@ irc_cmd_recv_367 (t_irc_server *server, char *host, char *nick, char *arguments)
         }
     }
     
-    ptr_channel = channel_search (server, pos_channel);
+    ptr_channel = irc_channel_search (server, pos_channel);
     buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
     
-    command_ignored |= ignore_check (host, "367", pos_channel, server->name);
+    command_ignored |= irc_ignore_check (host, "367", pos_channel, server->name);
     
     if (!command_ignored)
     {
@@ -4751,11 +4751,11 @@ irc_cmd_recv_367 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_368: '368' command received (end of banlist)
+ * irc_recv_cmd_368: '368' command received (end of banlist)
  */
 
 int
-irc_cmd_recv_368 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_368 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_channel, *pos_msg;
     t_irc_channel *ptr_channel;
@@ -4794,10 +4794,10 @@ irc_cmd_recv_368 (t_irc_server *server, char *host, char *nick, char *arguments)
     if (pos_msg[0] == ':')
         pos_msg++;
     
-    ptr_channel = channel_search (server, pos_channel);
+    ptr_channel = irc_channel_search (server, pos_channel);
     buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
 
-    command_ignored |= ignore_check (host, "368", pos_channel, server->name);
+    command_ignored |= irc_ignore_check (host, "368", pos_channel, server->name);
     
     if (!command_ignored)
     {
@@ -4814,11 +4814,11 @@ irc_cmd_recv_368 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_378: '378' command received (connecting from)
+ * irc_recv_cmd_378: '378' command received (connecting from)
  */
 
 int
-irc_cmd_recv_378 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_378 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos, *pos2;
     
@@ -4857,15 +4857,15 @@ irc_cmd_recv_378 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_432: '432' command received (erroneous nickname)
+ * irc_recv_cmd_432: '432' command received (erroneous nickname)
  */
 
 int
-irc_cmd_recv_432 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_432 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     /* Note: this IRC command can not be ignored */
     
-    irc_cmd_recv_error (server, host, nick, arguments);
+    irc_recv_cmd_error (server, host, nick, arguments);
     
     if (!server->is_connected)
     {
@@ -4899,7 +4899,7 @@ irc_cmd_recv_432 (t_irc_server *server, char *host, char *nick, char *arguments)
                                   "use or invalid, closing connection with "
                                   "server!\n"),
                                 PACKAGE_NAME);
-                    server_disconnect (server, 1);
+                    irc_server_disconnect (server, 1);
                     return 0;
                 }
                 else
@@ -4913,19 +4913,17 @@ irc_cmd_recv_432 (t_irc_server *server, char *host, char *nick, char *arguments)
                 }
             }
         }
-        server_sendf (server,
-                      "NICK %s",
-                      server->nick);
+        irc_server_sendf (server, "NICK %s", server->nick);
     }
     return 0;
 }
 
 /*
- * irc_cmd_recv_433: '433' command received (nickname already in use)
+ * irc_recv_cmd_433: '433' command received (nickname already in use)
  */
 
 int
-irc_cmd_recv_433 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_433 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     /* Note: this IRC command can not be ignored */
     
@@ -4962,7 +4960,7 @@ irc_cmd_recv_433 (t_irc_server *server, char *host, char *nick, char *arguments)
                                 _("%s: all declared nicknames are already in use, "
                                   "closing connection with server!\n"),
                                 PACKAGE_NAME);
-                    server_disconnect (server, 1);
+                    irc_server_disconnect (server, 1);
                     return 0;
                 }
                 else
@@ -4977,22 +4975,20 @@ irc_cmd_recv_433 (t_irc_server *server, char *host, char *nick, char *arguments)
                 }
             }
         }
-        server_sendf (server,
-                      "NICK %s",
-                      server->nick);
+        irc_server_sendf (server, "NICK %s", server->nick);
     }
     else
-        return irc_cmd_recv_error (server, host, nick, arguments);
+        return irc_recv_cmd_error (server, host, nick, arguments);
     
     return 0;
 }
 
 /*
- * irc_cmd_recv_438: '438' command received (not authorized to change nickname)
+ * irc_recv_cmd_438: '438' command received (not authorized to change nickname)
  */
 
 int
-irc_cmd_recv_438 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_438 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos, *pos2;
     
@@ -5027,11 +5023,11 @@ irc_cmd_recv_438 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_cmd_recv_671: '671' command (whois, secure connection)
+ * irc_recv_cmd_671: '671' command (whois, secure connection)
  */
 
 int
-irc_cmd_recv_671 (t_irc_server *server, char *host, char *nick, char *arguments)
+irc_recv_cmd_671 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos_nick, *pos_message;
     

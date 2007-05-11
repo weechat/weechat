@@ -77,11 +77,11 @@ const int gnutls_cert_type_prio[] = { GNUTLS_CRT_X509, GNUTLS_CRT_OPENPGP, 0 };
 
 
 /*
- * server_init: init server struct with default values
+ * irc_server_init: init server struct with default values
  */
 
 void
-server_init (t_irc_server *server)
+irc_server_init (t_irc_server *server)
 {
     /* user choices */
     server->name = NULL;
@@ -138,20 +138,20 @@ server_init (t_irc_server *server)
 }
 
 /*
- * server_init_with_url: init a server with url of this form:
- *                       irc://nick:pass@irc.toto.org:6667
- *                       returns:  0 = ok
- *                                -1 = invalid syntax
+ * irc_server_init_with_url: init a server with url of this form:
+ *                           irc://nick:pass@irc.toto.org:6667
+ *                           returns:  0 = ok
+ *                                    -1 = invalid syntax
  */
 
 int
-server_init_with_url (char *irc_url, t_irc_server *server)
+irc_server_init_with_url (char *irc_url, t_irc_server *server)
 {
     char *url, *pos_server, *pos_channel, *pos, *pos2;
     int ipv6, ssl;
     struct passwd *my_passwd;
     
-    server_init (server);
+    irc_server_init (server);
     ipv6 = 0;
     ssl = 0;
     if (strncasecmp (irc_url, "irc6://", 7) == 0)
@@ -233,7 +233,7 @@ server_init_with_url (char *irc_url, t_irc_server *server)
     server->address = strdup (pos_server);
     if (pos_channel && pos_channel[0])
     {
-        if (string_is_channel (pos_channel))
+        if (irc_channel_is_channel (pos_channel))
             server->autojoin = strdup (pos_channel);
         else
         {
@@ -262,11 +262,11 @@ server_init_with_url (char *irc_url, t_irc_server *server)
 }
 
 /*
- * server_alloc: allocate a new server and add it to the servers queue
+ * irc_server_alloc: allocate a new server and add it to the servers queue
  */
 
 t_irc_server *
-server_alloc ()
+irc_server_alloc ()
 {
     t_irc_server *new_server;
     
@@ -280,7 +280,7 @@ server_alloc ()
     }
 
     /* initialize new server */
-    server_init (new_server);
+    irc_server_init (new_server);
 
     /* add new server to queue */
     new_server->prev_server = last_irc_server;
@@ -296,11 +296,12 @@ server_alloc ()
 }
 
 /*
- * server_outqueue_add: add a message in out queue
+ * irc_server_outqueue_add: add a message in out queue
  */
 
 void
-server_outqueue_add (t_irc_server *server, char *msg1, char *msg2, int modified)
+irc_server_outqueue_add (t_irc_server *server, char *msg1, char *msg2,
+                         int modified)
 {
     t_irc_outqueue *new_outqueue;
 
@@ -322,11 +323,11 @@ server_outqueue_add (t_irc_server *server, char *msg1, char *msg2, int modified)
 }
 
 /*
- * server_outqueue_free: free a message in out queue
+ * irc_server_outqueue_free: free a message in out queue
  */
 
 void
-server_outqueue_free (t_irc_server *server, t_irc_outqueue *outqueue)
+irc_server_outqueue_free (t_irc_server *server, t_irc_outqueue *outqueue)
 {
     t_irc_outqueue *new_outqueue;
     
@@ -353,22 +354,22 @@ server_outqueue_free (t_irc_server *server, t_irc_outqueue *outqueue)
 }
 
 /*
- * server_outqueue_free_all: free all outqueued messages
+ * irc_server_outqueue_free_all: free all outqueued messages
  */
 
 void
-server_outqueue_free_all (t_irc_server *server)
+irc_server_outqueue_free_all (t_irc_server *server)
 {
     while (server->outqueue)
-        server_outqueue_free (server, server->outqueue);
+        irc_server_outqueue_free (server, server->outqueue);
 }
 
 /*
- * server_destroy: free server data (not struct himself)
+ * irc_server_destroy: free server data (not struct himself)
  */
 
 void
-server_destroy (t_irc_server *server)
+irc_server_destroy (t_irc_server *server)
 {
     if (!server)
         return;
@@ -409,17 +410,17 @@ server_destroy (t_irc_server *server)
     if (server->away_message)
         free (server->away_message);
     if (server->outqueue)
-        server_outqueue_free_all (server);
+        irc_server_outqueue_free_all (server);
     if (server->channels)
-        channel_free_all (server);
+        irc_channel_free_all (server);
 }
 
 /*
- * server_free: free a server and remove it from servers queue
+ * irc_server_free: free a server and remove it from servers queue
  */
 
 void
-server_free (t_irc_server *server)
+irc_server_free (t_irc_server *server)
 {
     t_irc_server *new_irc_servers;
 
@@ -428,7 +429,7 @@ server_free (t_irc_server *server)
     
     /* close any opened channel/private */
     while (server->channels)
-        channel_free (server, server->channels);
+        irc_channel_free (server, server->channels);
     
     /* remove server from queue */
     if (last_irc_server == server)
@@ -444,34 +445,34 @@ server_free (t_irc_server *server)
     if (server->next_server)
         (server->next_server)->prev_server = server->prev_server;
     
-    server_destroy (server);
+    irc_server_destroy (server);
     free (server);
     irc_servers = new_irc_servers;
 }
 
 /*
- * server_free_all: free all allocated servers
+ * irc_server_free_all: free all allocated servers
  */
 
 void
-server_free_all ()
+irc_server_free_all ()
 {
     /* for each server in memory, remove it */
     while (irc_servers)
-        server_free (irc_servers);
+        irc_server_free (irc_servers);
 }
 
 /*
- * server_new: creates a new server, and initialize it
+ * irc_server_new: creates a new server, and initialize it
  */
 
 t_irc_server *
-server_new (char *name, int autoconnect, int autoreconnect,
-            int autoreconnect_delay, int command_line, char *address,
-            int port, int ipv6, int ssl, char *password,
-            char *nick1, char *nick2, char *nick3, char *username,
-            char *realname, char *hostname, char *command, int command_delay,
-            char *autojoin, int autorejoin, char *notify_levels)
+irc_server_new (char *name, int autoconnect, int autoreconnect,
+                int autoreconnect_delay, int command_line, char *address,
+                int port, int ipv6, int ssl, char *password,
+                char *nick1, char *nick2, char *nick3, char *username,
+                char *realname, char *hostname, char *command, int command_delay,
+                char *autojoin, int autorejoin, char *notify_levels)
 {
     t_irc_server *new_server;
     
@@ -491,7 +492,7 @@ server_new (char *name, int autoconnect, int autoreconnect,
                         (notify_levels) ? notify_levels : "");
 #endif
     
-    if ((new_server = server_alloc ()))
+    if ((new_server = irc_server_alloc ()))
     {
         new_server->name = strdup (name);
         new_server->autoconnect = autoconnect;
@@ -527,11 +528,11 @@ server_new (char *name, int autoconnect, int autoreconnect,
 }
 
 /*
- * server_send: send data to IRC server
+ * irc_server_send: send data to IRC server
  */
 
 int
-server_send (t_irc_server *server, char *buffer, int size_buf)
+irc_server_send (t_irc_server *server, char *buffer, int size_buf)
 {
     if (!server)
         return -1;
@@ -545,11 +546,11 @@ server_send (t_irc_server *server, char *buffer, int size_buf)
 }
 
 /*
- * server_outqueue_send: send a message from outqueue
+ * irc_server_outqueue_send: send a message from outqueue
  */
 
 void
-server_outqueue_send (t_irc_server *server)
+irc_server_outqueue_send (t_irc_server *server)
 {
     time_t time_now;
     char *pos;
@@ -579,25 +580,25 @@ server_outqueue_send (t_irc_server *server)
                 if (pos)
                     pos[0] = '\r';
             }
-            if (server_send (server, server->outqueue->message_after_mod,
-                             strlen (server->outqueue->message_after_mod)) <= 0)
+            if (irc_server_send (server, server->outqueue->message_after_mod,
+                                 strlen (server->outqueue->message_after_mod)) <= 0)
             {
                 irc_display_prefix (server, server->buffer, PREFIX_ERROR);
                 gui_printf (server->buffer, _("%s error sending data to IRC server\n"),
                             WEECHAT_ERROR);
             }
             server->last_user_message = time_now;
-            server_outqueue_free (server, server->outqueue);
+            irc_server_outqueue_free (server, server->outqueue);
         }
     }
 }
 
 /*
- * server_send_one_msg: send one message to IRC server
+ * irc_server_send_one_msg: send one message to IRC server
  */
 
 int
-server_send_one_msg (t_irc_server *server, char *message)
+irc_server_send_one_msg (t_irc_server *server, char *message)
 {
     static char buffer[4096];
     char *new_msg, *ptr_msg, *pos;
@@ -650,10 +651,10 @@ server_send_one_msg (t_irc_server *server, char *message)
             /* if queue, then only queue message and send nothing now */
             if (queue)
             {
-                server_outqueue_add (server,
-                                     (new_msg && first_message) ? message : NULL,
-                                     buffer,
-                                     (new_msg) ? 1 : 0);
+                irc_server_outqueue_add (server,
+                                         (new_msg && first_message) ? message : NULL,
+                                         buffer,
+                                         (new_msg) ? 1 : 0);
             }
             else
             {
@@ -661,7 +662,7 @@ server_send_one_msg (t_irc_server *server, char *message)
                     gui_printf_raw_data (server, 1, 0, message);
                 if (new_msg)
                     gui_printf_raw_data (server, 1, 1, ptr_msg);
-                if (server_send (server, buffer, strlen (buffer)) <= 0)
+                if (irc_server_send (server, buffer, strlen (buffer)) <= 0)
                 {
                     irc_display_prefix (server, server->buffer, PREFIX_ERROR);
                     gui_printf (server->buffer, _("%s error sending data to IRC server\n"),
@@ -694,12 +695,12 @@ server_send_one_msg (t_irc_server *server, char *message)
 }
 
 /*
- * server_sendf: send formatted data to IRC server
- *               many messages may be sent, separated by '\n'
+ * irc_server_sendf: send formatted data to IRC server
+ *                   many messages may be sent, separated by '\n'
  */
 
 void
-server_sendf (t_irc_server *server, char *fmt, ...)
+irc_server_sendf (t_irc_server *server, char *fmt, ...)
 {
     va_list args;
     static char buffer[4096];
@@ -720,7 +721,7 @@ server_sendf (t_irc_server *server, char *fmt, ...)
         if (pos)
             pos[0] = '\0';
         
-        rc = server_send_one_msg (server, ptr_buf);
+        rc = irc_server_send_one_msg (server, ptr_buf);
         
         if (pos)
         {
@@ -736,12 +737,12 @@ server_sendf (t_irc_server *server, char *fmt, ...)
 }
 
 /*
- * server_parse_message: parse IRC message and return pointer to
- *                       host, command and arguments (if any)
+ * irc_server_parse_message: parse IRC message and return pointer to
+ *                           host, command and arguments (if any)
  */
 
 void
-server_parse_message (char *message, char **host, char **command, char **args)
+irc_server_parse_message (char *message, char **host, char **command, char **args)
 {
     char *pos, *pos2;
     
@@ -780,11 +781,11 @@ server_parse_message (char *message, char **host, char **command, char **args)
 }
 
 /*
- * server_msgq_add_msg: add a message to received messages queue (at the end)
+ * irc_server_msgq_add_msg: add a message to received messages queue (at the end)
  */
 
 void
-server_msgq_add_msg (t_irc_server *server, char *msg)
+irc_server_msgq_add_msg (t_irc_server *server, char *msg)
 {
     t_irc_message *message;
     
@@ -837,11 +838,11 @@ server_msgq_add_msg (t_irc_server *server, char *msg)
 }
 
 /*
- * server_msgq_add_unterminated: add an unterminated message to queue
+ * irc_server_msgq_add_unterminated: add an unterminated message to queue
  */
 
 void
-server_msgq_add_unterminated (t_irc_server *server, char *string)
+irc_server_msgq_add_unterminated (t_irc_server *server, char *string)
 {
     if (!string[0])
         return;
@@ -876,11 +877,11 @@ server_msgq_add_unterminated (t_irc_server *server, char *string)
 }
 
 /*
- * server_msgq_add_buffer: explode received buffer, creating queued messages
+ * irc_server_msgq_add_buffer: explode received buffer, creating queued messages
  */
 
 void
-server_msgq_add_buffer (t_irc_server *server, char *buffer)
+irc_server_msgq_add_buffer (t_irc_server *server, char *buffer)
 {
     char *pos_cr, *pos_lf;
 
@@ -892,7 +893,7 @@ server_msgq_add_buffer (t_irc_server *server, char *buffer)
         if (!pos_cr && !pos_lf)
         {
             /* no CR/LF found => add to unterminated and return */
-            server_msgq_add_unterminated (server, buffer);
+            irc_server_msgq_add_unterminated (server, buffer);
             return;
         }
         
@@ -900,25 +901,25 @@ server_msgq_add_buffer (t_irc_server *server, char *buffer)
         {
             /* found '\r' first => ignore this char */
             pos_cr[0] = '\0';
-            server_msgq_add_unterminated (server, buffer);
+            irc_server_msgq_add_unterminated (server, buffer);
             buffer = pos_cr + 1;
         }
         else
         {
             /* found: '\n' first => terminate message */
             pos_lf[0] = '\0';
-            server_msgq_add_msg (server, buffer);
+            irc_server_msgq_add_msg (server, buffer);
             buffer = pos_lf + 1;
         }
     }
 }
 
 /*
- * server_msgq_flush: flush message queue
+ * irc_server_msgq_flush: flush message queue
  */
 
 void
-server_msgq_flush ()
+irc_server_msgq_flush ()
 {
     t_irc_message *next;
     char *ptr_data, *new_msg, *ptr_msg, *pos;
@@ -970,7 +971,7 @@ server_msgq_flush ()
                         if (new_msg)
                             gui_printf_raw_data (recv_msgq->server, 0, 1, ptr_msg);
                         
-                        server_parse_message (ptr_msg, &host, &command, &args);
+                        irc_server_parse_message (ptr_msg, &host, &command, &args);
                         
                         switch (irc_recv_command (recv_msgq->server, ptr_msg, host, command, args))
                         {
@@ -1027,11 +1028,11 @@ server_msgq_flush ()
 }
 
 /*
- * server_recv: receive data from an irc server
+ * irc_server_recv: receive data from an irc server
  */
 
 void
-server_recv (t_irc_server *server)
+irc_server_recv (t_irc_server *server)
 {
     static char buffer[4096 + 2];
     int num_read;
@@ -1049,8 +1050,8 @@ server_recv (t_irc_server *server)
     if (num_read > 0)
     {
         buffer[num_read] = '\0';
-        server_msgq_add_buffer (server, buffer);
-        server_msgq_flush ();
+        irc_server_msgq_add_buffer (server, buffer);
+        irc_server_msgq_flush ();
     }
     else
     {
@@ -1058,16 +1059,16 @@ server_recv (t_irc_server *server)
         gui_printf (server->buffer,
                     _("%s cannot read data from socket, disconnecting from server...\n"),
                     WEECHAT_ERROR);
-        server_disconnect (server, 1);
+        irc_server_disconnect (server, 1);
     }
 }
 
 /*
- * server_child_kill: kill child process and close pipe
+ * irc_server_child_kill: kill child process and close pipe
  */
 
 void
-server_child_kill (t_irc_server *server)
+irc_server_child_kill (t_irc_server *server)
 {
     /* kill process */
     if (server->child_pid > 0)
@@ -1091,13 +1092,14 @@ server_child_kill (t_irc_server *server)
 }
 
 /*
- * server_close_connection: close server connection (kill child, close socket/pipes)
+ * irc_server_close_connection: close server connection
+ *                              (kill child, close socket/pipes)
  */
 
 void
-server_close_connection (t_irc_server *server)
+irc_server_close_connection (t_irc_server *server)
 {
-    server_child_kill (server);
+    irc_server_child_kill (server);
     
     /* close network socket */
     if (server->sock != -1)
@@ -1120,7 +1122,7 @@ server_close_connection (t_irc_server *server)
         free (server->unterminated_message);
         server->unterminated_message = NULL;
     }
-    server_outqueue_free_all (server);
+    irc_server_outqueue_free_all (server);
     
     /* server is now disconnected */
     server->is_connected = 0;
@@ -1128,11 +1130,11 @@ server_close_connection (t_irc_server *server)
 }
 
 /*
- * server_reconnect_schedule: schedule reconnect for a server
+ * irc_server_reconnect_schedule: schedule reconnect for a server
  */
 
 void
-server_reconnect_schedule (t_irc_server *server)
+irc_server_reconnect_schedule (t_irc_server *server)
 {
     if (server->autoreconnect)
     {
@@ -1146,11 +1148,11 @@ server_reconnect_schedule (t_irc_server *server)
 }
 
 /*
- * server_child_read: read connection progress from child process
+ * irc_server_child_read: read connection progress from child process
  */
 
 void
-server_child_read (t_irc_server *server)
+irc_server_child_read (t_irc_server *server)
 {
     char buffer[1];
     int num_read;
@@ -1174,15 +1176,15 @@ server_child_read (t_irc_server *server)
                         gui_printf (server->buffer,
                                     _("%s gnutls handshake failed\n"),
                                     WEECHAT_ERROR);
-                        server_close_connection (server);
-                        server_reconnect_schedule (server);
+                        irc_server_close_connection (server);
+                        irc_server_reconnect_schedule (server);
                         return;
                     }
                 }
 #endif
                 /* kill child and login to server */
-                server_child_kill (server);
-                irc_login (server);
+                irc_server_child_kill (server);
+                irc_send_login (server);
                 break;
             /* adress not found */
             case '1':
@@ -1195,8 +1197,8 @@ server_child_read (t_irc_server *server)
                     gui_printf (server->buffer,
                                 _("%s address \"%s\" not found\n"),
                                 WEECHAT_ERROR, server->address);
-                server_close_connection (server);
-                server_reconnect_schedule (server);
+                irc_server_close_connection (server);
+                irc_server_reconnect_schedule (server);
                 break;
             /* IP address not found */
             case '2':
@@ -1207,8 +1209,8 @@ server_child_read (t_irc_server *server)
                 else
                     gui_printf (server->buffer,
                                 _("%s IP address not found\n"), WEECHAT_ERROR);
-                server_close_connection (server);
-                server_reconnect_schedule (server);
+                irc_server_close_connection (server);
+                irc_server_reconnect_schedule (server);
                 break;
             /* connection refused */
             case '3':
@@ -1219,8 +1221,8 @@ server_child_read (t_irc_server *server)
                 else
                     gui_printf (server->buffer,
                                 _("%s connection refused\n"), WEECHAT_ERROR);
-                server_close_connection (server);
-                server_reconnect_schedule (server);
+                irc_server_close_connection (server);
+                irc_server_reconnect_schedule (server);
                 break;
             /* proxy fails to connect to server */
             case '4':
@@ -1229,8 +1231,8 @@ server_child_read (t_irc_server *server)
                             _("%s proxy fails to establish connection to "
                               "server (check username/password if used)\n"),
                             WEECHAT_ERROR);
-                server_close_connection (server);
-                server_reconnect_schedule (server);
+                irc_server_close_connection (server);
+                irc_server_reconnect_schedule (server);
                 break;
             /* fails to set local hostname/IP */
             case '5':
@@ -1238,23 +1240,22 @@ server_child_read (t_irc_server *server)
                 gui_printf (server->buffer,
                             _("%s unable to set local hostname/IP\n"),
                             WEECHAT_ERROR);
-                server_close_connection (server);
-                server_reconnect_schedule (server);
+                irc_server_close_connection (server);
+                irc_server_reconnect_schedule (server);
                 break;
         }
     }
 }
 
 /*
- * convbase64_8x3_to_6x4 : convert 3 bytes of 8 bits in 4 bytes of 6 bits
+ * irc_server_convbase64_8x3_to_6x4 : convert 3 bytes of 8 bits in 4 bytes of 6 bits
  */
 
 void
-convbase64_8x3_to_6x4(char *from, char* to)
+irc_server_convbase64_8x3_to_6x4 (char *from, char* to)
 {
-
     unsigned char base64_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-
+    
     to[0] = base64_table [ (from[0] & 0xfc) >> 2 ];
     to[1] = base64_table [ ((from[0] & 0x03) << 4) + ((from[1] & 0xf0) >> 4) ];
     to[2] = base64_table [ ((from[1] & 0x0f) << 2) + ((from[2] & 0xc0) >> 6) ];
@@ -1262,105 +1263,109 @@ convbase64_8x3_to_6x4(char *from, char* to)
 }
 
 /*
- * base64encode: encode a string in base64
+ * irc_server_base64encode: encode a string in base64
  */
 
 void
-base64encode(char *from, char *to)
+irc_server_base64encode (char *from, char *to)
 {
-
     char *f, *t;
     int from_len;
-
+    
     from_len = strlen(from);
-
+    
     f = from;
     t = to;
-  
-    while(from_len >= 3)
+    
+    while (from_len >= 3)
     {
-        convbase64_8x3_to_6x4(f, t);
-        f += 3 * sizeof(*f);
-        t += 4 * sizeof(*t);
+        irc_server_convbase64_8x3_to_6x4 (f, t);
+        f += 3 * sizeof (*f);
+        t += 4 * sizeof (*t);
         from_len -= 3;
     }
-
+    
     if (from_len > 0)
     {
         char rest[3] = { 0, 0, 0 };
-        switch(from_len)
+        switch (from_len)
         {
-        case 1 :
-            rest[0] = f[0];
-            convbase64_8x3_to_6x4(rest, t);
-            t[2] = t[3] = '=';
-            break;
-        case 2 :
-            rest[0] = f[0];
-            rest[1] = f[1];
-            convbase64_8x3_to_6x4(rest, t);
-            t[3] = '=';
-            break;
+            case 1 :
+                rest[0] = f[0];
+                irc_server_convbase64_8x3_to_6x4 (rest, t);
+                t[2] = t[3] = '=';
+                break;
+            case 2 :
+                rest[0] = f[0];
+                rest[1] = f[1];
+                irc_server_convbase64_8x3_to_6x4 (rest, t);
+                t[3] = '=';
+                break;
         }
         t[4] = 0;
     }
 }
 
 /*
- * pass_httpproxy: establish connection/authentification to an http proxy
- *                 return : 
- *                  - 0 if connexion throw proxy was successful
- *                  - 1 if connexion fails
+ * irc_server_pass_httpproxy: establish connection/authentification to an
+ *                            http proxy
+ *                            return : 
+ *                             - 0 if connexion throw proxy was successful
+ *                             - 1 if connexion fails
  */
 
 int
-pass_httpproxy(int sock, char *address, int port)
+irc_server_pass_httpproxy (int sock, char *address, int port)
 {
 
     char buffer[256];
     char authbuf[128];
     char authbuf_base64[196];
     int n, m;
-
-    if (strlen(cfg_proxy_username) > 0) 
+    
+    if (cfg_proxy_username && cfg_proxy_username[0])
     {
         /* authentification */
-        snprintf(authbuf, sizeof(authbuf), "%s:%s", cfg_proxy_username, cfg_proxy_password);
-        base64encode(authbuf, authbuf_base64);
-        n = snprintf(buffer, sizeof(buffer), "CONNECT %s:%d HTTP/1.0\r\nProxy-Authorization: Basic %s\r\n\r\n", address, port, authbuf_base64);
+        snprintf (authbuf, sizeof (authbuf), "%s:%s",
+                  cfg_proxy_username, cfg_proxy_password);
+        irc_server_base64encode (authbuf, authbuf_base64);
+        n = snprintf (buffer, sizeof (buffer),
+                      "CONNECT %s:%d HTTP/1.0\r\nProxy-Authorization: Basic %s\r\n\r\n",
+                      address, port, authbuf_base64);
     }
     else 
     {
         /* no authentification */
-        n = snprintf(buffer, sizeof(buffer), "CONNECT %s:%d HTTP/1.0\r\n\r\n", address, port);
+        n = snprintf (buffer, sizeof (buffer),
+                      "CONNECT %s:%d HTTP/1.0\r\n\r\n", address, port);
     }
-  
+    
     m = send (sock, buffer, n, 0);
     if (n != m)
         return 1;
-
-    n = recv(sock, buffer, sizeof(buffer), 0);
-
+    
+    n = recv (sock, buffer, sizeof (buffer), 0);
+    
     /* success result must be like: "HTTP/1.0 200 OK" */
     if (n < 12)
         return 1;
-
+    
     if (memcmp (buffer, "HTTP/", 5) || memcmp (buffer + 9, "200", 3))
         return 1;
-  
+    
     return 0;
 }
 
 /*
- * resolve: resolve hostname on its IP address
- *          (works with ipv4 and ipv6)
- *          return :
- *           - 0 if resolution was successful
- *           - 1 if resolution fails
+ * irc_server_resolve: resolve hostname on its IP address
+ *                     (works with ipv4 and ipv6)
+ *                     return :
+ *                      - 0 if resolution was successful
+ *                      - 1 if resolution fails
  */
 
 int
-resolve (char *hostname, char *ip, int *version)
+irc_server_resolve (char *hostname, char *ip, int *version)
 {
     char ipbuffer[NI_MAXHOST];
     struct addrinfo *res;
@@ -1369,7 +1374,7 @@ resolve (char *hostname, char *ip, int *version)
         *version = 0;
     
     res = NULL;
-
+    
     if (getaddrinfo (hostname, NULL, NULL, &res) != 0)
         return 1;
     
@@ -1395,21 +1400,22 @@ resolve (char *hostname, char *ip, int *version)
 }
 
 /*
- * pass_socks4proxy: establish connection/authentification throw a socks4 proxy
- *                   return : 
- *                    - 0 if connexion throw proxy was successful
- *                    - 1 if connexion fails
+ * irc_server_pass_socks4proxy: establish connection/authentification thru a
+ *                              socks4 proxy
+ *                              return : 
+ *                               - 0 if connexion thru proxy was successful
+ *                               - 1 if connexion fails
  */
 
 int
-pass_socks4proxy (int sock, char *address, int port, char *username)
+irc_server_pass_socks4proxy (int sock, char *address, int port, char *username)
 {
     /* 
-     * socks4 protocol is explain here: 
+     * socks4 protocol is explained here: 
      *  http://archive.socks.permeo.com/protocol/socks4.protocol
      *
      */
-  
+    
     struct s_socks4
     {
         char version;           /* 1 byte  */ /* socks version : 4 or 5 */
@@ -1420,38 +1426,39 @@ pass_socks4proxy (int sock, char *address, int port, char *username)
     } socks4;
     unsigned char buffer[24];
     char ip_addr[NI_MAXHOST];
-
+    
     socks4.version = 4;
     socks4.method = 1;
     socks4.port = htons (port);
-    resolve(address, ip_addr, NULL);
+    irc_server_resolve (address, ip_addr, NULL);
     socks4.address = inet_addr (ip_addr);
-    strncpy (socks4.user, username, sizeof(socks4.user) - 1);
-  
-    send (sock, (char *) &socks4, 8 + strlen(socks4.user) + 1, 0);
-    recv (sock, buffer, sizeof(buffer), 0);
-
+    strncpy (socks4.user, username, sizeof (socks4.user) - 1);
+    
+    send (sock, (char *) &socks4, 8 + strlen (socks4.user) + 1, 0);
+    recv (sock, buffer, sizeof (buffer), 0);
+    
     if (buffer[0] == 0 && buffer[1] == 90)
         return 0;
-
+    
     return 1;
 }
 
 /*
- * pass_socks5proxy: establish connection/authentification throw a socks5 proxy
- *                   return : 
- *                    - 0 if connexion throw proxy was successful
- *                    - 1 if connexion fails
+ * irc_server_pass_socks5proxy: establish connection/authentification thru a
+ *                              socks5 proxy
+ *                              return : 
+ *                               - 0 if connexion thru proxy was successful
+ *                               - 1 if connexion fails
  */
 
 int
-pass_socks5proxy(int sock, char *address, int port)
+irc_server_pass_socks5proxy (int sock, char *address, int port)
 {
     /* 
      * socks5 protocol is explained in RFC 1928
      * socks5 authentication with username/pass is explained in RFC 1929
      */
-  
+    
     struct s_sock5
     {
         char version;   /* 1 byte      */ /* socks version : 4 or 5 */
@@ -1461,23 +1468,21 @@ pass_socks5proxy(int sock, char *address, int port)
     unsigned char buffer[288];
     int username_len, password_len, addr_len, addr_buffer_len;
     unsigned char *addr_buffer;
-  
+    
     socks5.version = 5;
     socks5.nmethods = 1;
-  
-    if (strlen(cfg_proxy_username) > 0)
-        /* with authentication */
-        socks5.method = 2;
+    
+    if (cfg_proxy_username && cfg_proxy_username[0])
+        socks5.method = 2; /* with authentication */
     else
-        /* without authentication */
-        socks5.method = 0;
-     
+        socks5.method = 0; /* without authentication */
+    
     send (sock, (char *) &socks5, sizeof(socks5), 0);
     /* server socks5 must respond with 2 bytes */
     if (recv (sock, buffer, 2, 0) != 2)
         return 1;
-  
-    if (strlen(cfg_proxy_username) > 0)
+    
+    if (cfg_proxy_username && cfg_proxy_username[0])
     {
         /* with authentication */
         /*   -> socks server must respond with :
@@ -1497,7 +1502,7 @@ pass_socks5proxy(int sock, char *address, int port)
         buffer[1] = (unsigned char) username_len;
         memcpy(buffer + 2, cfg_proxy_username, username_len);
         buffer[2 + username_len] = (unsigned char) password_len;
-        memcpy(buffer + 3 + username_len, cfg_proxy_password, password_len);
+        memcpy (buffer + 3 + username_len, cfg_proxy_password, password_len);
         
         send (sock, buffer, 3 + username_len + password_len, 0);
         
@@ -1519,11 +1524,11 @@ pass_socks5proxy(int sock, char *address, int port)
         if (!(buffer[0] == 5 && buffer[1] == 0))
             return 1;
     }
-  
+    
     /* authentication successful then giving address/port to connect */
     addr_len = strlen(address);
     addr_buffer_len = 4 + 1 + addr_len + 2;
-    addr_buffer = (unsigned char *) malloc ( addr_buffer_len * sizeof(*addr_buffer));
+    addr_buffer = (unsigned char *) malloc (addr_buffer_len * sizeof(*addr_buffer));
     if (!addr_buffer)
         return 1;
     addr_buffer[0] = 5;   /* version 5 */
@@ -1533,80 +1538,81 @@ pass_socks5proxy(int sock, char *address, int port)
     addr_buffer[4] = (unsigned char) addr_len;
     memcpy (addr_buffer + 5, address, addr_len); /* server address */
     *((unsigned short *) (addr_buffer + 5 + addr_len)) = htons (port); /* server port */
-
+    
     send (sock, addr_buffer, addr_buffer_len, 0);
-    free(addr_buffer);
-
+    free (addr_buffer);
+    
     /* dialog with proxy server */
     if (recv (sock, buffer, 4, 0) != 4)
         return 1;
-
+    
     if (!(buffer[0] == 5 && buffer[1] == 0))
         return 1;
-
-    switch(buffer[3]) {
-        /* buffer[3] = address type */
-    case 1 :
-        /* ipv4 
-         * server socks return server bound address and port
-         * address of 4 bytes and port of 2 bytes (= 6 bytes)
-         */
-        if (recv (sock, buffer, 6, 0) != 6)
+    
+    /* buffer[3] = address type */
+    switch(buffer[3])
+    {
+        case 1 :
+            /* ipv4 
+             * server socks return server bound address and port
+             * address of 4 bytes and port of 2 bytes (= 6 bytes)
+             */
+            if (recv (sock, buffer, 6, 0) != 6)
+                return 1;
+            break;
+        case 3:
+            /* domainname
+             * server socks return server bound address and port
+             */
+            /* reading address length */
+            if (recv (sock, buffer, 1, 0) != 1)
+                return 1;    
+            addr_len = buffer[0];
+            /* reading address + port = addr_len + 2 */
+            if (recv (sock, buffer, addr_len + 2, 0) != (addr_len + 2))
+                return 1;
+            break;
+        case 4 :
+            /* ipv6
+             * server socks return server bound address and port
+             * address of 16 bytes and port of 2 bytes (= 18 bytes)
+             */
+            if (recv (sock, buffer, 18, 0) != 18)
+                return 1;
+            break;
+        default:
             return 1;
-        break;
-    case 3:
-        /* domainname
-         * server socks return server bound address and port
-         */
-        /* reading address length */
-        if (recv (sock, buffer, 1, 0) != 1)
-            return 1;    
-        addr_len = buffer[0];
-        /* reading address + port = addr_len + 2 */
-        if (recv (sock, buffer, addr_len + 2, 0) != (addr_len + 2))
-            return 1;
-        break;
-    case 4 :
-        /* ipv6
-         * server socks return server bound address and port
-         * address of 16 bytes and port of 2 bytes (= 18 bytes)
-         */
-        if (recv (sock, buffer, 18, 0) != 18)
-            return 1;
-        break;
-    default:
-        return 1;
     }
- 
+    
     return 0;
 }
 
 /*
- * pass_proxy: establish connection/authentification to a proxy
- *             return : 
- *              - 0 if connexion throw proxy was successful
- *              - 1 if connexion fails
+ * irc_server_pass_proxy: establish connection/authentification to a proxy
+ *                        return : 
+ *                         - 0 if connexion throw proxy was successful
+ *                         - 1 if connexion fails
  */
 
 int
-pass_proxy (int sock, char *address, int port, char *username)
+irc_server_pass_proxy (int sock, char *address, int port, char *username)
 {  
     if (strcmp (cfg_proxy_type_values[cfg_proxy_type], "http") == 0)
-        return pass_httpproxy(sock, address, port);
+        return irc_server_pass_httpproxy (sock, address, port);
     if (strcmp (cfg_proxy_type_values[cfg_proxy_type], "socks4") == 0)
-        return pass_socks4proxy(sock, address, port, username);
+        return irc_server_pass_socks4proxy (sock, address, port, username);
     if (strcmp (cfg_proxy_type_values[cfg_proxy_type], "socks5") == 0)
-        return pass_socks5proxy(sock, address, port);
-
+        return irc_server_pass_socks5proxy (sock, address, port);
+    
     return 1;
 }
 
 /*
- * server_child: child process trying to connect to server
+ * irc_server_child: child process trying to connect to server
  */
 
 int
-server_child (t_irc_server *server)
+irc_server_child (t_irc_server *server)
 {
     struct addrinfo hints, *res, *res_local;
     int rc;
@@ -1651,7 +1657,7 @@ server_child (t_irc_server *server)
             return 0;
         }
         
-        if (pass_proxy(server->sock, server->address, server->port, server->username))
+        if (irc_server_pass_proxy (server->sock, server->address, server->port, server->username))
         {
             write(server->child_write, "4", 1);
             freeaddrinfo (res);
@@ -1734,11 +1740,11 @@ server_child (t_irc_server *server)
 }
 
 /*
- * server_connect: connect to an IRC server
+ * irc_server_connect: connect to an IRC server
  */
 
 int
-server_connect (t_irc_server *server)
+irc_server_connect (t_irc_server *server)
 {
     int child_pipe[2], set;
     pid_t pid;
@@ -1784,7 +1790,7 @@ server_connect (t_irc_server *server)
       }
     
     /* close any opened connection and kill child process if running */
-    server_close_connection (server);
+    irc_server_close_connection (server);
     
     /* init SSL if asked */
     server->ssl_connected = 0;
@@ -1856,12 +1862,12 @@ server_connect (t_irc_server *server)
     {
         /* fork failed */
         case -1:
-            server_close_connection (server);
+            irc_server_close_connection (server);
             return 0;
         /* child process */
         case 0:
             setuid (getuid ());
-            server_child (server);
+            irc_server_child (server);
             _exit (EXIT_SUCCESS);
     }
     
@@ -1872,29 +1878,29 @@ server_connect (t_irc_server *server)
 }
 
 /*
- * server_reconnect: reconnect to a server (after disconnection)
+ * irc_server_reconnect: reconnect to a server (after disconnection)
  */
 
 void
-server_reconnect (t_irc_server *server)
+irc_server_reconnect (t_irc_server *server)
 {
     irc_display_prefix (server, server->buffer, PREFIX_INFO);
     gui_printf (server->buffer, _("%s: Reconnecting to server...\n"),
                 PACKAGE_NAME);
     server->reconnect_start = 0;
     
-    if (server_connect (server))
+    if (irc_server_connect (server))
         server->reconnect_join = 1;
     else
-        server_reconnect_schedule (server);
+        irc_server_reconnect_schedule (server);
 }
 
 /*
- * server_auto_connect: auto-connect to servers (called at startup)
+ * irc_server_auto_connect: auto-connect to servers (called at startup)
  */
 
 void
-server_auto_connect (int auto_connect, int command_line)
+irc_server_auto_connect (int auto_connect, int command_line)
 {
     t_irc_server *ptr_server;
     
@@ -1907,18 +1913,18 @@ server_auto_connect (int auto_connect, int command_line)
             (void) gui_buffer_new (gui_current_window, ptr_server, NULL,
                                    BUFFER_TYPE_STANDARD, 1);
             gui_window_redraw_buffer (gui_current_window->buffer);
-            if (!server_connect (ptr_server))
-                server_reconnect_schedule (ptr_server);
+            if (!irc_server_connect (ptr_server))
+                irc_server_reconnect_schedule (ptr_server);
         }
     }
 }
 
 /*
- * server_disconnect: disconnect from an irc server
+ * irc_server_disconnect: disconnect from an irc server
  */
 
 void
-server_disconnect (t_irc_server *server, int reconnect)
+irc_server_disconnect (t_irc_server *server, int reconnect)
 {
     t_irc_channel *ptr_channel;
     
@@ -1928,7 +1934,7 @@ server_disconnect (t_irc_server *server, int reconnect)
         for (ptr_channel = server->channels; ptr_channel;
              ptr_channel = ptr_channel->next_channel)
         {
-            nick_free_all (ptr_channel);
+            irc_nick_free_all (ptr_channel);
             irc_display_prefix (NULL, ptr_channel->buffer, PREFIX_INFO);
             gui_printf (ptr_channel->buffer, _("Disconnected from server!\n"));
             gui_nicklist_draw (ptr_channel->buffer, 1, 1);
@@ -1936,7 +1942,7 @@ server_disconnect (t_irc_server *server, int reconnect)
         }
     }
     
-    server_close_connection (server);
+    irc_server_close_connection (server);
     
     if (server->buffer)
     {
@@ -1962,7 +1968,7 @@ server_disconnect (t_irc_server *server, int reconnect)
     server->lag_next_check = time (NULL) + cfg_irc_lag_check;
     
     if ((reconnect) && (server->autoreconnect))
-        server_reconnect_schedule (server);
+        irc_server_reconnect_schedule (server);
     else
         server->reconnect_start = 0;
     
@@ -1977,24 +1983,24 @@ server_disconnect (t_irc_server *server, int reconnect)
 }
 
 /*
- * server_disconnect_all: disconnect from all irc servers
+ * irc_server_disconnect_all: disconnect from all irc servers
  */
 
 void
-server_disconnect_all ()
+irc_server_disconnect_all ()
 {
     t_irc_server *ptr_server;
     
     for (ptr_server = irc_servers; ptr_server; ptr_server = ptr_server->next_server)
-        server_disconnect (ptr_server, 0);
+        irc_server_disconnect (ptr_server, 0);
 }
 
 /*
- * server_search: return pointer on a server with a name
+ * irc_server_search: return pointer on a server with a name
  */
 
 t_irc_server *
-server_search (char *servername)
+irc_server_search (char *servername)
 {
     t_irc_server *ptr_server;
     
@@ -2011,11 +2017,11 @@ server_search (char *servername)
 }
 
 /*
- * server_get_number_connected: returns number of connected server
+ * irc_server_get_number_connected: returns number of connected server
  */
 
 int
-server_get_number_connected ()
+irc_server_get_number_connected ()
 {
     t_irc_server *ptr_server;
     int number;
@@ -2030,13 +2036,13 @@ server_get_number_connected ()
 }
 
 /*
- * server_get_number_buffer: returns position of a server and total number of
- *                           buffers with a buffer
+ * irc_server_get_number_buffer: returns position of a server and total number of
+ *                               buffers with a buffer
  */
 
 void
-server_get_number_buffer (t_irc_server *server,
-                          int *server_pos, int *server_total)
+irc_server_get_number_buffer (t_irc_server *server,
+                              int *server_pos, int *server_total)
 {
     t_irc_server *ptr_server;
     
@@ -2055,12 +2061,12 @@ server_get_number_buffer (t_irc_server *server,
 }
 
 /*
- * server_name_already_exists: return 1 if server name already exists
- *                             otherwise return 0
+ * irc_server_name_already_exists: return 1 if server name already exists
+ *                                 otherwise return 0
  */
 
 int
-server_name_already_exists (char *name)
+irc_server_name_already_exists (char *name)
 {
     t_irc_server *ptr_server;
     
@@ -2076,11 +2082,11 @@ server_name_already_exists (char *name)
 }
 
 /*
- * server_remove_away: remove away for all chans/nicks (for all servers)
+ * irc_server_remove_away: remove away for all chans/nicks (for all servers)
  */
 
 void
-server_remove_away ()
+irc_server_remove_away ()
 {
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
@@ -2092,18 +2098,18 @@ server_remove_away ()
             for (ptr_channel = ptr_server->channels; ptr_channel; ptr_channel = ptr_channel->next_channel)
             {
                 if (ptr_channel->type == CHANNEL_TYPE_CHANNEL)
-                    channel_remove_away (ptr_channel);
+                    irc_channel_remove_away (ptr_channel);
             }
         }
     }
 }
 
 /*
- * server_check_away: check for away on all channels (for all servers)
+ * irc_server_check_away: check for away on all channels (for all servers)
  */
 
 void
-server_check_away ()
+irc_server_check_away ()
 {
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
@@ -2115,18 +2121,18 @@ server_check_away ()
             for (ptr_channel = ptr_server->channels; ptr_channel; ptr_channel = ptr_channel->next_channel)
             {
                 if (ptr_channel->type == CHANNEL_TYPE_CHANNEL)
-                    channel_check_away (ptr_server, ptr_channel, 0);
+                    irc_channel_check_away (ptr_server, ptr_channel, 0);
             }
         }
     }
 }
 
 /*
- * server_set_away: set/unset away status for a server (all channels)
+ * irc_server_set_away: set/unset away status for a server (all channels)
  */
 
 void
-server_set_away (t_irc_server *server, char *nick, int is_away)
+irc_server_set_away (t_irc_server *server, char *nick, int is_away)
 {
     t_irc_channel *ptr_channel;
     
@@ -2135,17 +2141,17 @@ server_set_away (t_irc_server *server, char *nick, int is_away)
         if (server->is_connected)
         {
             if (ptr_channel->type == CHANNEL_TYPE_CHANNEL)
-                channel_set_away (ptr_channel, nick, is_away);
+                irc_channel_set_away (ptr_channel, nick, is_away);
         }
     }
 }
 
 /*
- * server_get_default_notify_level: get default notify level for server
+ * irc_server_get_default_notify_level: get default notify level for server
  */
 
 int
-server_get_default_notify_level (t_irc_server *server)
+irc_server_get_default_notify_level (t_irc_server *server)
 {
     int notify, value;
     char *pos;
@@ -2171,11 +2177,11 @@ server_get_default_notify_level (t_irc_server *server)
 }
 
 /*
- * server_set_default_notify_level: set default notify level for server
+ * irc_server_set_default_notify_level: set default notify level for server
  */
 
 void
-server_set_default_notify_level (t_irc_server *server, int notify)
+irc_server_set_default_notify_level (t_irc_server *server, int notify)
 {
     char level_string[2];
 
@@ -2188,11 +2194,11 @@ server_set_default_notify_level (t_irc_server *server, int notify)
 }
 
 /*
- * server_print_log: print server infos in log (usually for crash dump)
+ * irc_server_print_log: print server infos in log (usually for crash dump)
  */
 
 void
-server_print_log (t_irc_server *server)
+irc_server_print_log (t_irc_server *server)
 {
     weechat_log_printf ("[server %s (addr:0x%X)]\n",      server->name, server);
     weechat_log_printf ("  autoconnect . . . . : %d\n",   server->autoconnect);

@@ -839,20 +839,20 @@ session_load_server (FILE *file)
     /* use or allocate server */
     weechat_log_printf (_("session: loading server \"%s\"\n"),
                         server_name);
-    session_current_server = server_search (server_name);
+    session_current_server = irc_server_search (server_name);
     if (session_current_server)
         weechat_log_printf (_("server found, updating values\n"));
     else
     {
         weechat_log_printf (_("server not found, creating new one\n"));
-        session_current_server = server_alloc ();
+        session_current_server = irc_server_alloc ();
         if (!session_current_server)
         {
             free (server_name);
             session_crash (file, _("can't create new server"));
             return 0;
         }
-        server_init (session_current_server);
+        irc_server_init (session_current_server);
         session_current_server->name = strdup (server_name);
     }
     free (server_name);
@@ -1069,9 +1069,9 @@ session_load_channel (FILE *file)
     /* allocate channel */
     weechat_log_printf (_("session: loading channel \"%s\"\n"),
                         channel_name);
-    session_current_channel = channel_new (session_current_server,
-                                           channel_type,
-                                           channel_name);
+    session_current_channel = irc_channel_new (session_current_server,
+                                               channel_type,
+                                               channel_name);
     free (channel_name);
     if (!session_current_channel)
     {
@@ -1164,8 +1164,8 @@ session_load_nick (FILE *file)
     }
     
     /* allocate nick */
-    nick = nick_new (session_current_server, session_current_channel,
-                     nick_name, 0, 0, 0, 0, 0, 0);
+    nick = irc_nick_new (session_current_server, session_current_channel,
+                         nick_name, 0, 0, 0, 0, 0, 0);
     free (nick_name);
     if (!nick)
     {
@@ -1222,7 +1222,7 @@ session_load_dcc (FILE *file)
     t_irc_channel *ptr_channel;
     
     /* allocate DCC */
-    dcc = dcc_alloc ();
+    dcc = irc_dcc_alloc ();
     if (!dcc)
     {
         session_crash (file, _("can't create new DCC"));
@@ -1255,7 +1255,7 @@ session_load_dcc (FILE *file)
                     return 0;
                 if (string && string[0])
                 {
-                    ptr_server = server_search (string);
+                    ptr_server = irc_server_search (string);
                     if (!ptr_server)
                     {
                         session_crash (file, _("server not found for DCC"));
@@ -1276,7 +1276,7 @@ session_load_dcc (FILE *file)
                     return 0;
                 if (string && string[0])
                 {
-                    ptr_channel = channel_search_any (ptr_server, string);
+                    ptr_channel = irc_channel_search_any (ptr_server, string);
                     if (!ptr_channel)
                     {
                         session_crash (file, _("channel not found for DCC"));
@@ -1468,7 +1468,7 @@ session_load_buffer (FILE *file)
     ptr_channel = NULL;
     if (server_name)
     {
-        ptr_server = server_search (server_name);
+        ptr_server = irc_server_search (server_name);
         if (!ptr_server)
         {
             session_crash (file, _("server not found for buffer"));
@@ -1478,7 +1478,7 @@ session_load_buffer (FILE *file)
     
     if (channel_name)
     {
-        ptr_channel = channel_search_any_without_buffer (ptr_server, channel_name);
+        ptr_channel = irc_channel_search_any_without_buffer (ptr_server, channel_name);
         if (!ptr_channel)
         {
             session_crash (file, _("channel not found for buffer"));
@@ -1686,7 +1686,7 @@ session_load_hotlist (FILE *file)
                 server_name = NULL;
                 if (!session_read_str (file, &server_name))
                     return 0;
-                ptr_server = server_search (server_name);
+                ptr_server = irc_server_search (server_name);
                 free (server_name);
                 break;
             case SESSION_HOTL_BUFFER_NUMBER:

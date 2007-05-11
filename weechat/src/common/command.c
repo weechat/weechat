@@ -679,7 +679,7 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                         strcat (unknown_command, " :");
                         strcat (unknown_command, ptr_args);
                     }
-                    irc_cmd_send_quote (server, channel, unknown_command);
+                    irc_send_cmd_quote (server, channel, unknown_command);
                     free (unknown_command);
                 }
             }
@@ -725,7 +725,7 @@ user_message_display (t_irc_server *server, t_gui_buffer *buffer, char *text)
     }
     else
     {
-        ptr_nick = nick_search (CHANNEL(buffer), server->nick);
+        ptr_nick = irc_nick_search (CHANNEL(buffer), server->nick);
         if (ptr_nick)
         {
             irc_display_nick (buffer, ptr_nick, NULL,
@@ -783,7 +783,7 @@ user_message (t_irc_server *server, t_gui_buffer *buffer, char *text)
         next = pos;
     }
     
-    server_sendf_queued (server, "PRIVMSG %s :%s", CHANNEL(buffer)->name, text);
+    irc_server_sendf_queued (server, "PRIVMSG %s :%s", CHANNEL(buffer)->name, text);
     user_message_display (server, buffer, text);
     
     if (next)
@@ -854,7 +854,7 @@ user_command (t_irc_server *server, t_irc_channel *channel, char *command, int o
             if (pos)
                 pos[0] = '\0';
             
-            irc_find_context (server, channel, NULL, &buffer);
+            gui_buffer_find_context (server, channel, NULL, &buffer);
             
             if (is_command (ptr_cmd))
             {
@@ -881,9 +881,9 @@ user_command (t_irc_server *server, t_irc_channel *channel, char *command, int o
                         }
                         else
                         {
-                            dcc_chat_sendf ((t_irc_dcc *)(CHANNEL(buffer)->dcc_chat),
-                                            "%s\r\n",
-                                            (command_with_colors) ? command_with_colors : ptr_cmd);
+                            irc_dcc_chat_sendf ((t_irc_dcc *)(CHANNEL(buffer)->dcc_chat),
+                                                "%s\r\n",
+                                                (command_with_colors) ? command_with_colors : ptr_cmd);
                             user_message_display (server, buffer,
                                                   (command_with_colors) ?
                                                   command_with_colors : ptr_cmd);
@@ -1090,7 +1090,7 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
     char *error, *pos, **argv;
     int argc, target_buffer, count;
     
-    irc_find_context (server, channel, &window, &buffer);
+    gui_buffer_find_context (server, channel, &window, &buffer);
     
     argv = explode_string (arguments, " ", 0, &argc);
     
@@ -1180,7 +1180,7 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                         free_exploded_string (argv);
                         return -1;
                     }
-                    server_disconnect (SERVER(buffer), 0);
+                    irc_server_disconnect (SERVER(buffer), 0);
                     ptr_server = SERVER(buffer);
                     if (!buffer->all_servers)
                     {
@@ -1205,7 +1205,7 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                     ptr_server = SERVER(buffer);
                     ptr_channel = CHANNEL(buffer);
                     gui_buffer_free (ptr_channel->buffer, 1);
-                    channel_free (ptr_server, ptr_channel);
+                    irc_channel_free (ptr_server, ptr_channel);
                     gui_status_draw (gui_current_window->buffer, 1);
                     gui_input_draw (gui_current_window->buffer, 1);
                 }
@@ -1221,7 +1221,7 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                             if (pos)
                                 pos += 6;
                             CHANNEL(buffer)->close = 1;
-                            irc_cmd_send_part (SERVER(buffer),
+                            irc_send_cmd_part (SERVER(buffer),
                                                CHANNEL(buffer),
                                                pos);
                         }
@@ -1231,7 +1231,7 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                             ptr_server = SERVER(buffer);
                             gui_buffer_free (buffer, 1);
                             if (ptr_channel)
-                                channel_free (ptr_server, ptr_channel);
+                                irc_channel_free (ptr_server, ptr_channel);
                         }
                     }
                     else
@@ -1256,7 +1256,7 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                     {
                         gui_printf (NULL, "  %s:%d",
                                     ptr_server->name,
-                                    server_get_default_notify_level (ptr_server));
+                                    irc_server_get_default_notify_level (ptr_server));
                         count++;
                     }
                 }
@@ -1315,8 +1315,8 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                     }
                     if (BUFFER_IS_SERVER(buffer))
                     {
-                        server_set_default_notify_level (SERVER(buffer),
-                                                         number);
+                        irc_server_set_default_notify_level (SERVER(buffer),
+                                                             number);
                         irc_display_prefix (NULL, NULL, PREFIX_INFO);
                         gui_printf (NULL, _("New default notify level for server %s%s%s: %s%d %s"),
                                     GUI_COLOR(COLOR_WIN_CHAT_SERVER),
@@ -1328,9 +1328,9 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                     }
                     else
                     {
-                        channel_set_notify_level (SERVER(buffer),
-                                                  CHANNEL(buffer),
-                                                  number);
+                        irc_channel_set_notify_level (SERVER(buffer),
+                                                      CHANNEL(buffer),
+                                                      number);
                         irc_display_prefix (NULL, NULL, PREFIX_INFO);
                         gui_printf (NULL, _("New notify level for %s%s%s: %s%d %s"),
                                     GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
@@ -1418,7 +1418,7 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                         ptr_buffer = gui_buffer_search (argv[0], argv[1]);
                     else
                     {
-                        if (string_is_channel (argv[0]))
+                        if (irc_channel_is_channel (argv[0]))
                             ptr_buffer = gui_buffer_search (NULL, argv[0]);
                         else
                             ptr_buffer = gui_buffer_search (argv[0], NULL);
@@ -1512,7 +1512,7 @@ weechat_cmd_clear (t_irc_server *server, t_irc_channel *channel,
     }
     else
     {
-        irc_find_context (server, channel, NULL, &buffer);
+        gui_buffer_find_context (server, channel, NULL, &buffer);
         gui_buffer_clear (buffer);
     }
     
@@ -1549,7 +1549,7 @@ weechat_cmd_connect_one_server (t_irc_server *server, t_gui_window *window)
                              BUFFER_TYPE_STANDARD, 1))
             return 0;
     }
-    if (server_connect (server))
+    if (irc_server_connect (server))
     {
         server->reconnect_start = 0;
         server->reconnect_join = (server->channels) ? 1 : 0;
@@ -1573,7 +1573,7 @@ weechat_cmd_connect (t_irc_server *server, t_irc_channel *channel,
     t_irc_server *ptr_server;
     int i, connect_ok;
     
-    irc_find_context (server, channel, &window, &buffer);
+    gui_buffer_find_context (server, channel, &window, &buffer);
     
     if (argc == 0)
         connect_ok = weechat_cmd_connect_one_server (server, window);
@@ -1597,7 +1597,7 @@ weechat_cmd_connect (t_irc_server *server, t_irc_channel *channel,
         {
             for (i = 0; i < argc; i++)
             {
-                ptr_server = server_search (argv[i]);
+                ptr_server = irc_server_search (argv[i]);
                 if (ptr_server)
                 {
                     if (!weechat_cmd_connect_one_server (ptr_server, window))
@@ -1631,7 +1631,7 @@ weechat_cmd_dcc (t_irc_server *server, t_irc_channel *channel,
     t_gui_buffer *buffer;
     char *pos_nick, *pos_file;
     
-    irc_find_context (server, channel, NULL, &buffer);
+    gui_buffer_find_context (server, channel, NULL, &buffer);
     
     /* DCC SEND file */
     if (strncasecmp (arguments, "send", 4) == 0)
@@ -1662,7 +1662,7 @@ weechat_cmd_dcc (t_irc_server *server, t_irc_channel *channel,
         while (pos_file[0] == ' ')
             pos_file++;
         
-        dcc_send_request (server, DCC_FILE_SEND, pos_nick, pos_file);
+        irc_dcc_send_request (server, DCC_FILE_SEND, pos_nick, pos_file);
     }
     /* DCC CHAT */
     else if (strncasecmp (arguments, "chat", 4) == 0)
@@ -1679,7 +1679,7 @@ weechat_cmd_dcc (t_irc_server *server, t_irc_channel *channel,
         while (pos_nick[0] == ' ')
             pos_nick++;
         
-        dcc_send_request (server, DCC_CHAT_SEND, pos_nick, NULL);
+        irc_dcc_send_request (server, DCC_CHAT_SEND, pos_nick, NULL);
     }
     /* close DCC CHAT */
     else if (ascii_strcasecmp (arguments, "close") == 0)
@@ -1687,8 +1687,8 @@ weechat_cmd_dcc (t_irc_server *server, t_irc_channel *channel,
         if (BUFFER_IS_PRIVATE(buffer) &&
             CHANNEL(buffer)->dcc_chat)
         {
-            dcc_close ((t_irc_dcc *)(CHANNEL(buffer)->dcc_chat), DCC_ABORTED);
-            dcc_redraw (1);
+            irc_dcc_close ((t_irc_dcc *)(CHANNEL(buffer)->dcc_chat), DCC_ABORTED);
+            irc_dcc_redraw (1);
         }
     }
     /* unknown DCC action */
@@ -1781,7 +1781,7 @@ weechat_cmd_debug (t_irc_server *server, t_irc_channel *channel,
         for (ptr_server = irc_servers; ptr_server;
              ptr_server = ptr_server->next_server)
         {
-            server_outqueue_free_all (ptr_server);
+            irc_server_outqueue_free_all (ptr_server);
         }
         gui_printf_nolog (NULL, "\n");
         gui_printf_nolog (NULL, "DEBUG: outqueue DELETED for all servers.\n");
@@ -1822,7 +1822,7 @@ weechat_cmd_disconnect_one_server (t_irc_server *server)
                     _("Auto-reconnection is cancelled\n"));
     }
     irc_send_quit_server (server, NULL);
-    server_disconnect (server, 0);
+    irc_server_disconnect (server, 0);
     gui_status_draw (server->buffer, 1);
     
     /* disconnect ok */
@@ -1841,7 +1841,7 @@ weechat_cmd_disconnect (t_irc_server *server, t_irc_channel *channel,
     t_irc_server *ptr_server;
     int i, disconnect_ok;
     
-    irc_find_context (server, channel, NULL, &buffer);
+    gui_buffer_find_context (server, channel, NULL, &buffer);
     
     if (argc == 0)
         disconnect_ok = weechat_cmd_disconnect_one_server (server);
@@ -1866,7 +1866,7 @@ weechat_cmd_disconnect (t_irc_server *server, t_irc_channel *channel,
         {
             for (i = 0; i < argc; i++)
             {
-                ptr_server = server_search (argv[i]);
+                ptr_server = irc_server_search (argv[i]);
                 if (ptr_server)
                 {
                     if (!weechat_cmd_disconnect_one_server (ptr_server))
@@ -2072,7 +2072,7 @@ weechat_cmd_history (t_irc_server *server, t_irc_channel *channel,
     int n_total;
     int n_user;
     
-    irc_find_context (server, channel, NULL, &buffer);
+    gui_buffer_find_context (server, channel, NULL, &buffer);
     
     n_user = cfg_history_display_default;
     
@@ -2148,7 +2148,7 @@ weechat_cmd_ignore (t_irc_server *server, t_irc_channel *channel,
     t_irc_ignore *ptr_ignore;
     int i;
     
-    irc_find_context (server, channel, NULL, &buffer);
+    gui_buffer_find_context (server, channel, NULL, &buffer);
     
     ptr_ignore = NULL;
     switch (argc)
@@ -2180,22 +2180,22 @@ weechat_cmd_ignore (t_irc_server *server, t_irc_channel *channel,
             return 0;
             break;
         case 1:
-            ptr_ignore = ignore_add (argv[0], "*", "*",
-                                     (SERVER(buffer)) ?
-                                     SERVER(buffer)->name : "*");
+            ptr_ignore = irc_ignore_add (argv[0], "*", "*",
+                                         (SERVER(buffer)) ?
+                                         SERVER(buffer)->name : "*");
             break;
         case 2:
-            ptr_ignore = ignore_add (argv[0], argv[1], "*",
-                                     (SERVER(buffer)) ?
-                                     SERVER(buffer)->name : "*");
+            ptr_ignore = irc_ignore_add (argv[0], argv[1], "*",
+                                         (SERVER(buffer)) ?
+                                         SERVER(buffer)->name : "*");
             break;
         case 3:
-            ptr_ignore = ignore_add (argv[0], argv[1], argv[2],
-                                     (SERVER(buffer)) ?
-                                     SERVER(buffer)->name : "*");
+            ptr_ignore = irc_ignore_add (argv[0], argv[1], argv[2],
+                                         (SERVER(buffer)) ?
+                                         SERVER(buffer)->name : "*");
             break;
         case 4:
-            ptr_ignore = ignore_add (argv[0], argv[1], argv[2], argv[3]);
+            ptr_ignore = irc_ignore_add (argv[0], argv[1], argv[2], argv[3]);
             break;
     }
     if (ptr_ignore)
@@ -2253,7 +2253,7 @@ weechat_cmd_key (t_irc_server *server, t_irc_channel *channel,
     t_gui_key *ptr_key;
     void (*ptr_function)(t_gui_window *, char *);
     
-    irc_find_context (server, channel, &window, &buffer);
+    gui_buffer_find_context (server, channel, &window, &buffer);
     
     if (arguments)
     {
@@ -2756,8 +2756,8 @@ weechat_cmd_reconnect_one_server (t_irc_server *server)
         return 0;
     }
     irc_send_quit_server (server, NULL);
-    server_disconnect (server, 0);
-    if (server_connect (server))
+    irc_server_disconnect (server, 0);
+    if (irc_server_connect (server))
     {
         server->reconnect_start = 0;
         server->reconnect_join = (server->channels) ? 1 : 0;    
@@ -2780,7 +2780,7 @@ weechat_cmd_reconnect (t_irc_server *server, t_irc_channel *channel,
     t_irc_server *ptr_server;
     int i, reconnect_ok;
     
-    irc_find_context (server, channel, NULL, &buffer);
+    gui_buffer_find_context (server, channel, NULL, &buffer);
     
     if (argc == 0)
         reconnect_ok = weechat_cmd_reconnect_one_server (server);
@@ -2804,7 +2804,7 @@ weechat_cmd_reconnect (t_irc_server *server, t_irc_channel *channel,
         {
             for (i = 0; i < argc; i++)
             {
-                ptr_server = server_search (argv[i]);
+                ptr_server = irc_server_search (argv[i]);
                 if (ptr_server)
                 {
                     if (!weechat_cmd_reconnect_one_server (ptr_server))
@@ -2883,7 +2883,7 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
     t_gui_buffer *ptr_buffer;
     char *server_name;
     
-    irc_find_context (server, channel, &window, &buffer);
+    gui_buffer_find_context (server, channel, &window, &buffer);
     
     if ((argc == 0) || (argc == 1))
     {
@@ -2906,7 +2906,7 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
         }
         else
         {
-            ptr_server = server_search (argv[0]);
+            ptr_server = irc_server_search (argv[0]);
             if (ptr_server)
                 irc_display_server (ptr_server);
             else
@@ -2937,7 +2937,7 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
             }
             
             /* look for server by name */
-            server_found = server_search (argv[1]);
+            server_found = irc_server_search (argv[1]);
             if (!server_found)
             {
                 irc_display_prefix (NULL, NULL, PREFIX_ERROR);
@@ -2967,7 +2967,7 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
             
             server_name = strdup (server_found->name);
             
-            server_free (server_found);
+            irc_server_free (server_found);
             
             irc_display_prefix (NULL, NULL, PREFIX_INFO);
             gui_printf (NULL, _("Server %s%s%s has been deleted\n"),
@@ -2983,7 +2983,7 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
         }
         
         /* init server struct */
-        server_init (&server_tmp);
+        irc_server_init (&server_tmp);
         
         if (argc < 3)
         {
@@ -2991,17 +2991,17 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
             gui_printf (NULL,
                         _("%s missing parameters for \"%s\" command\n"),
                         WEECHAT_ERROR, "server");
-            server_destroy (&server_tmp);
+            irc_server_destroy (&server_tmp);
             return -1;
         }
         
-        if (server_name_already_exists (argv[0]))
+        if (irc_server_name_already_exists (argv[0]))
         {
             irc_display_prefix (NULL, NULL, PREFIX_ERROR);
             gui_printf (NULL,
                         _("%s server \"%s\" already exists, can't create it!\n"),
                         WEECHAT_ERROR, argv[0]);
-            server_destroy (&server_tmp);
+            irc_server_destroy (&server_tmp);
             return -1;
         }
         
@@ -3030,7 +3030,7 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
                         gui_printf (NULL,
                                     _("%s missing password for \"%s\" parameter\n"),
                                     WEECHAT_ERROR, "-pwd");
-                        server_destroy (&server_tmp);
+                        irc_server_destroy (&server_tmp);
                         return -1;
                     }
                     server_tmp.password = strdup (argv[++i]);
@@ -3043,7 +3043,7 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
                         gui_printf (NULL,
                                     _("%s missing nick(s) for \"%s\" parameter\n"),
                                     WEECHAT_ERROR, "-nicks");
-                        server_destroy (&server_tmp);
+                        irc_server_destroy (&server_tmp);
                         return -1;
                     }
                     server_tmp.nick1 = strdup (argv[++i]);
@@ -3058,7 +3058,7 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
                         gui_printf (NULL,
                                     _("%s missing password for \"%s\" parameter\n"),
                                     WEECHAT_ERROR, "-username");
-                        server_destroy (&server_tmp);
+                        irc_server_destroy (&server_tmp);
                         return -1;
                     }
                     server_tmp.username = strdup (argv[++i]);
@@ -3071,7 +3071,7 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
                         gui_printf (NULL,
                                     _("%s missing password for \"%s\" parameter\n"),
                                     WEECHAT_ERROR, "-realname");
-                        server_destroy (&server_tmp);
+                        irc_server_destroy (&server_tmp);
                         return -1;
                     }
                     server_tmp.realname = strdup (argv[++i]);
@@ -3084,7 +3084,7 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
                         gui_printf (NULL,
                                     _("%s missing command for \"%s\" parameter\n"),
                                     WEECHAT_ERROR, "-command");
-                        server_destroy (&server_tmp);
+                        irc_server_destroy (&server_tmp);
                         return -1;
                     }
                     server_tmp.command = strdup (argv[++i]);
@@ -3097,7 +3097,7 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
                         gui_printf (NULL,
                                     _("%s missing password for \"%s\" parameter\n"),
                                     WEECHAT_ERROR, "-autojoin");
-                        server_destroy (&server_tmp);
+                        irc_server_destroy (&server_tmp);
                         return -1;
                     }
                     server_tmp.autojoin = strdup (argv[++i]);
@@ -3106,16 +3106,16 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
         }
         
         /* create new server */
-        new_server = server_new (server_tmp.name, server_tmp.autoconnect,
-                                 server_tmp.autoreconnect,
-                                 server_tmp.autoreconnect_delay,
-                                 0, server_tmp.address, server_tmp.port,
-                                 server_tmp.ipv6, server_tmp.ssl,
-                                 server_tmp.password, server_tmp.nick1,
-                                 server_tmp.nick2, server_tmp.nick3,
-                                 server_tmp.username, server_tmp.realname,
-                                 server_tmp.hostname,
-                                 server_tmp.command, 1, server_tmp.autojoin, 1, NULL);
+        new_server = irc_server_new (server_tmp.name, server_tmp.autoconnect,
+                                     server_tmp.autoreconnect,
+                                     server_tmp.autoreconnect_delay,
+                                     0, server_tmp.address, server_tmp.port,
+                                     server_tmp.ipv6, server_tmp.ssl,
+                                     server_tmp.password, server_tmp.nick1,
+                                     server_tmp.nick2, server_tmp.nick3,
+                                     server_tmp.username, server_tmp.realname,
+                                     server_tmp.hostname,
+                                     server_tmp.command, 1, server_tmp.autojoin, 1, NULL);
         if (new_server)
         {
             irc_display_prefix (NULL, NULL, PREFIX_INFO);
@@ -3130,7 +3130,7 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
             gui_printf (NULL,
                         _("%s unable to create server\n"),
                         WEECHAT_ERROR);
-            server_destroy (&server_tmp);
+            irc_server_destroy (&server_tmp);
             return -1;
         }
         
@@ -3138,10 +3138,10 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
         {
             (void) gui_buffer_new (window, new_server, NULL,
                                    BUFFER_TYPE_STANDARD, 1);
-            server_connect (new_server);
+            irc_server_connect (new_server);
         }
         
-        server_destroy (&server_tmp);
+        irc_server_destroy (&server_tmp);
     }
     return 0;
 }
@@ -3198,7 +3198,7 @@ weechat_cmd_set_display_option (t_config_option *option, char *prefix, void *val
                 {
                     if (cfg_log_hide_nickserv_pwd)
                     {
-                        irc_hide_password (value2, 1);
+                        irc_display_hide_password (value2, 1);
                         if (strcmp (*((char **)value), value2) != 0)
                             gui_printf (NULL, _("%s(password hidden) "),
                                         GUI_COLOR(COLOR_WIN_CHAT));
@@ -3294,7 +3294,7 @@ weechat_cmd_set (t_irc_server *server, t_irc_channel *channel,
         {
             /* server config option modification */
             pos[0] = '\0';
-            ptr_server = server_search (option);
+            ptr_server = irc_server_search (option);
             if (!ptr_server)
             {
                 irc_display_prefix (NULL, NULL, PREFIX_ERROR);
@@ -3754,7 +3754,7 @@ weechat_cmd_unignore (t_irc_server *server, t_irc_channel *channel,
     char *error;
     int number, ret;
     
-    irc_find_context (server, channel, NULL, &buffer);
+    gui_buffer_find_context (server, channel, NULL, &buffer);
     
     ret = 0;
     switch (argc)
@@ -3768,24 +3768,24 @@ weechat_cmd_unignore (t_irc_server *server, t_irc_channel *channel,
             error = NULL;
             number = strtol (argv[0], &error, 10);
             if ((error) && (error[0] == '\0'))
-                ret = ignore_search_free_by_number (number);
+                ret = irc_ignore_search_free_by_number (number);
             else
-                ret = ignore_search_free (argv[0], "*", "*",
+                ret = irc_ignore_search_free (argv[0], "*", "*",
+                                              (SERVER(buffer)) ?
+                                              SERVER(buffer)->name : "*");
+            break;
+        case 2:
+            ret = irc_ignore_search_free (argv[0], argv[1], "*",
                                           (SERVER(buffer)) ?
                                           SERVER(buffer)->name : "*");
             break;
-        case 2:
-            ret = ignore_search_free (argv[0], argv[1], "*",
-                                      (SERVER(buffer)) ?
-                                      SERVER(buffer)->name : "*");
-            break;
         case 3:
-            ret = ignore_search_free (argv[0], argv[1], argv[2],
-                                      (SERVER(buffer)) ?
-                                      SERVER(buffer)->name : "*");
+            ret = irc_ignore_search_free (argv[0], argv[1], argv[2],
+                                          (SERVER(buffer)) ?
+                                          SERVER(buffer)->name : "*");
             break;
         case 4:
-            ret = ignore_search_free (argv[0], argv[1], argv[2], argv[3]);
+            ret = irc_ignore_search_free (argv[0], argv[1], argv[2], argv[3]);
             break;
     }
     
@@ -3934,7 +3934,7 @@ weechat_cmd_uptime (t_irc_server *server, t_irc_channel *channel,
     int day, hour, min, sec;
     char string[256];
     
-    irc_find_context (server, channel, NULL, &buffer);
+    gui_buffer_find_context (server, channel, NULL, &buffer);
     
     running_time = time (NULL) - weechat_start_time;
     day = running_time / (60 * 60 * 24);
@@ -3998,7 +3998,7 @@ weechat_cmd_window (t_irc_server *server, t_irc_channel *channel,
     char *error;
     long number;
     
-    irc_find_context (server, channel, &window, &buffer);
+    gui_buffer_find_context (server, channel, &window, &buffer);
     
     if ((argc == 0) || ((argc == 1) && (ascii_strcasecmp (argv[0], "list") == 0)))
     {

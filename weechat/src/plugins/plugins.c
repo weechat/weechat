@@ -90,7 +90,7 @@ plugin_find_server_channel (char *server, char *channel,
     {
         if (server && server[0])
         {
-            (*ptr_server) = server_search (server);
+            (*ptr_server) = irc_server_search (server);
             if (!(*ptr_server))
                 return -1;
         }
@@ -104,7 +104,7 @@ plugin_find_server_channel (char *server, char *channel,
         if (channel && channel[0])
         {
             if ((*ptr_server))
-                (*ptr_channel) = channel_search ((*ptr_server), channel);
+                (*ptr_channel) = irc_channel_search ((*ptr_server), channel);
             if (!(*ptr_channel))
                 return -1;
         }

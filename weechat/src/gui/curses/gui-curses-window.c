@@ -206,7 +206,7 @@ gui_window_calculate_pos_size (t_gui_window *window, int force_calculate)
     /* init chat & nicklist settings */
     if (cfg_look_nicklist && BUFFER_IS_CHANNEL(window->buffer))
     {
-        max_length = nick_get_max_length (CHANNEL(window->buffer));
+        max_length = irc_nick_get_max_length (CHANNEL(window->buffer));
         
         lines = 0;
         
@@ -224,8 +224,8 @@ gui_window_calculate_pos_size (t_gui_window *window, int force_calculate)
         }
         else
         {
-            nick_count (CHANNEL(window->buffer), &num_nicks, &num_op,
-                        &num_halfop, &num_voice, &num_normal);
+            irc_nick_count (CHANNEL(window->buffer), &num_nicks, &num_op,
+                            &num_halfop, &num_voice, &num_normal);
             width_used = (window->win_width - add_left - add_right)
                 - ((window->win_width - add_left - add_right) % (max_length + 2));
             if (((max_length + 2) * num_nicks) % width_used == 0)

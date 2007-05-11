@@ -405,7 +405,7 @@ weechat_parse_args (int argc, char *argv[])
         }
         else if ((ascii_strncasecmp (argv[i], "irc", 3) == 0))
         {
-            if (server_init_with_url (argv[i], &server_tmp) < 0)
+            if (irc_server_init_with_url (argv[i], &server_tmp) < 0)
             {
                 weechat_iconv_fprintf (stderr,
                                        _("%s invalid syntax for IRC server ('%s'), ignored\n"),
@@ -413,19 +413,19 @@ weechat_parse_args (int argc, char *argv[])
             }
             else
             {
-                if (!server_new (server_tmp.name, server_tmp.autoconnect,
-                                 server_tmp.autoreconnect,
-                                 server_tmp.autoreconnect_delay,
-                                 1, server_tmp.address, server_tmp.port,
-                                 server_tmp.ipv6, server_tmp.ssl,
-                                 server_tmp.password, server_tmp.nick1,
-                                 server_tmp.nick2, server_tmp.nick3,
-                                 NULL, NULL, NULL, NULL, 0,
-                                 server_tmp.autojoin, 1, NULL))
+                if (!irc_server_new (server_tmp.name, server_tmp.autoconnect,
+                                     server_tmp.autoreconnect,
+                                     server_tmp.autoreconnect_delay,
+                                     1, server_tmp.address, server_tmp.port,
+                                     server_tmp.ipv6, server_tmp.ssl,
+                                     server_tmp.password, server_tmp.nick1,
+                                     server_tmp.nick2, server_tmp.nick3,
+                                     NULL, NULL, NULL, NULL, 0,
+                                     server_tmp.autojoin, 1, NULL))
                     weechat_iconv_fprintf (stderr,
                                            _("%s unable to create server ('%s'), ignored\n"),
                                            WEECHAT_WARNING, argv[i]);
-                server_destroy (&server_tmp);
+                irc_server_destroy (&server_tmp);
                 server_cmd_line = 1;
             }
         }
@@ -584,7 +584,7 @@ weechat_config_read ()
                 exit (EXIT_FAILURE);
             break;
         default: /* other error (fatal) */
-            server_free_all ();
+            irc_server_free_all ();
             exit (EXIT_FAILURE);
     }
 }
@@ -705,25 +705,25 @@ weechat_dump (int crash)
     for (ptr_server = irc_servers; ptr_server; ptr_server = ptr_server->next_server)
     {
         weechat_log_printf ("\n");
-        server_print_log (ptr_server);
+        irc_server_print_log (ptr_server);
         
         for (ptr_channel = ptr_server->channels; ptr_channel;
             ptr_channel = ptr_channel->next_channel)
         {
             weechat_log_printf ("\n");
-            channel_print_log (ptr_channel);
+            irc_channel_print_log (ptr_channel);
             
             for (ptr_nick = ptr_channel->nicks; ptr_nick;
                 ptr_nick = ptr_nick->next_nick)
             {
                 weechat_log_printf ("\n");
-                nick_print_log (ptr_nick);
+                irc_nick_print_log (ptr_nick);
             }
             
         }
     }
     
-    dcc_print_log ();
+    irc_dcc_print_log ();
     
     gui_panel_print_log ();
     
@@ -754,7 +754,7 @@ weechat_dump (int crash)
     }
     
     weechat_log_printf ("\n");
-    ignore_print_log ();
+    irc_ignore_print_log ();
     
     weechat_log_printf ("\n");
     weechat_log_printf ("******                 End of dump                 ******\n");
@@ -769,8 +769,8 @@ void
 weechat_sigsegv ()
 {
     weechat_dump (1);
-    dcc_end ();
-    server_free_all ();
+    irc_dcc_end ();
+    irc_server_free_all ();
     gui_main_end ();
 
     weechat_iconv_fprintf (stderr, "\n");
@@ -837,20 +837,20 @@ main (int argc, char *argv[])
     plugin_init (auto_load_plugins);    /* init plugin interface(s)         */
 #endif
     
-    server_auto_connect (auto_connect,  /* auto-connect to servers          */
-                         server_cmd_line);
+    irc_server_auto_connect (auto_connect,     /* auto-connect to servers   */
+                             server_cmd_line);
     
     gui_main_loop ();                   /* WeeChat main loop                */
     
 #ifdef PLUGINS    
     plugin_end ();                      /* end plugin interface(s)          */
 #endif
-    server_disconnect_all ();           /* disconnect from all servers      */
+    irc_server_disconnect_all ();       /* disconnect from all servers      */
     if (cfg_look_save_on_exit)
         (void) config_write (NULL);     /* save config file                 */
     command_index_free ();              /* free commands index              */
-    dcc_end ();                         /* remove all DCC                   */
-    server_free_all ();                 /* free all servers                 */
+    irc_dcc_end ();                     /* remove all DCC                   */
+    irc_server_free_all ();             /* free all servers                 */
     gui_main_end ();                    /* shut down WeeChat GUI            */
     weechat_shutdown (EXIT_SUCCESS, 0); /* quit WeeChat (oh no, why?)       */
     

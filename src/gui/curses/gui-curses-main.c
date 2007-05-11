@@ -139,7 +139,7 @@ gui_main_loop ()
             {
                 if (ptr_server->is_connected)
                 {
-                    server_outqueue_send (ptr_server);
+                    irc_server_outqueue_send (ptr_server);
                 }
             }
             
@@ -170,7 +170,7 @@ gui_main_loop ()
                 if (check_away >= (cfg_irc_away_check * 60))
                 {
                     check_away = 0;
-                    server_check_away ();
+                    irc_server_check_away ();
                 }
             }
 
@@ -223,7 +223,7 @@ gui_main_loop ()
             if ((!ptr_server->is_connected)
                 && (ptr_server->reconnect_start > 0)
                 && (new_time >= (ptr_server->reconnect_start + ptr_server->autoreconnect_delay)))
-                server_reconnect (ptr_server);
+                irc_server_reconnect (ptr_server);
             else
             {
                 if (ptr_server->is_connected)
@@ -232,7 +232,7 @@ gui_main_loop ()
                     if ((ptr_server->lag_check_time.tv_sec == 0)
                         && (new_time >= ptr_server->lag_next_check))
                     {
-                        server_sendf (ptr_server, "PING %s", ptr_server->address);
+                        irc_server_sendf (ptr_server, "PING %s", ptr_server->address);
                         gettimeofday (&(ptr_server->lag_check_time), NULL);
                     }
                     
@@ -248,7 +248,7 @@ gui_main_loop ()
                             gui_printf (ptr_server->buffer,
                                         _("%s lag is high, disconnecting from server...\n"),
                                         WEECHAT_WARNING);
-                            server_disconnect (ptr_server, 1);
+                            irc_server_disconnect (ptr_server, 1);
                             continue;
                         }
                     }
@@ -282,22 +282,22 @@ gui_main_loop ()
                 if (!ptr_server->is_connected && (ptr_server->child_pid > 0))
                 {
                     if (FD_ISSET (ptr_server->child_read, &read_fd))
-                        server_child_read (ptr_server);
+                        irc_server_child_read (ptr_server);
                 }
                 else
                 {
                     if ((ptr_server->sock >= 0) &&
                         (FD_ISSET (ptr_server->sock, &read_fd)))
-                        server_recv (ptr_server);
+                        irc_server_recv (ptr_server);
                 }
             }
         }
         
         /* manages active DCC */
-        dcc_handle ();
+        irc_dcc_handle ();
     }
     if (send_irc_quit)
-        irc_cmd_send_quit (NULL, NULL, NULL);
+        irc_send_cmd_quit (NULL, NULL, NULL);
 }
 
 /*

@@ -1222,7 +1222,7 @@ config_change_nicks_colors ()
                      ptr_nick = ptr_nick->next_nick)
                 {
                     if (ptr_nick->color != COLOR_WIN_NICK_SELF)
-                        ptr_nick->color = nick_find_color (ptr_nick);
+                        ptr_nick->color = irc_nick_find_color (ptr_nick);
                 }
             }
         }
@@ -1239,7 +1239,7 @@ config_change_away_check ()
     if (cfg_irc_away_check == 0)
     {
         /* reset away flag for all nicks/chans/servers */
-        server_remove_away ();
+        irc_server_remove_away ();
     }
     check_away = cfg_irc_away_check * 60;
 }
@@ -1276,7 +1276,7 @@ config_change_notify_levels ()
     {
         if (BUFFER_IS_CHANNEL(ptr_buffer) || BUFFER_IS_PRIVATE(ptr_buffer))
             ptr_buffer->notify_level =
-                channel_get_notify_level (SERVER(ptr_buffer), CHANNEL(ptr_buffer));
+                irc_channel_get_notify_level (SERVER(ptr_buffer), CHANNEL(ptr_buffer));
     }
 }
 
@@ -1688,7 +1688,7 @@ config_option_search_option_value (char *option_name, t_config_option **option,
         if (pos)
         {
             pos[0] = '\0';
-            ptr_server = server_search (option_name);
+            ptr_server = irc_server_search (option_name);
             if (ptr_server)
             {
                 for (i = 0; weechat_options[CONFIG_SECTION_SERVER][i].option_name; i++)
@@ -1763,40 +1763,40 @@ config_allocate_server (char *filename, int line_number)
         || !cfg_server.username
         || !cfg_server.realname)
     {
-        server_free_all ();
+        irc_server_free_all ();
         gui_printf (NULL,
                     _("%s %s, line %d: new server, but previous was incomplete\n"),
                     WEECHAT_WARNING, filename, line_number);
         return 0;
         
     }
-    if (server_name_already_exists (cfg_server.name))
+    if (irc_server_name_already_exists (cfg_server.name))
     {
-        server_free_all ();
+        irc_server_free_all ();
         gui_printf (NULL,
                     _("%s %s, line %d: server '%s' already exists\n"),
                     WEECHAT_WARNING, filename, line_number, cfg_server.name);
         return 0;
     }
-    if (!server_new (cfg_server.name,
-                     cfg_server.autoconnect, cfg_server.autoreconnect,
-                     cfg_server.autoreconnect_delay, 0, cfg_server.address,
-                     cfg_server.port, cfg_server.ipv6, cfg_server.ssl,
-                     cfg_server.password, cfg_server.nick1, cfg_server.nick2,
-                     cfg_server.nick3, cfg_server.username, cfg_server.realname,
-                     cfg_server.hostname, cfg_server.command,
-                     cfg_server.command_delay, cfg_server.autojoin,
-                     cfg_server.autorejoin, cfg_server.notify_levels))
+    if (!irc_server_new (cfg_server.name,
+                         cfg_server.autoconnect, cfg_server.autoreconnect,
+                         cfg_server.autoreconnect_delay, 0, cfg_server.address,
+                         cfg_server.port, cfg_server.ipv6, cfg_server.ssl,
+                         cfg_server.password, cfg_server.nick1, cfg_server.nick2,
+                         cfg_server.nick3, cfg_server.username, cfg_server.realname,
+                         cfg_server.hostname, cfg_server.command,
+                         cfg_server.command_delay, cfg_server.autojoin,
+                         cfg_server.autorejoin, cfg_server.notify_levels))
     {
-        server_free_all ();
+        irc_server_free_all ();
         gui_printf (NULL,
                     _("%s %s, line %d: unable to create server\n"),
                     WEECHAT_WARNING, filename, line_number);
         return 0;
     }
     
-    server_destroy (&cfg_server);
-    server_init (&cfg_server);
+    irc_server_destroy (&cfg_server);
+    irc_server_init (&cfg_server);
     
     return 1;
 }
@@ -1886,7 +1886,7 @@ config_read ()
     }
     
     config_default_values ();
-    server_init (&cfg_server);
+    irc_server_init (&cfg_server);
     
     /* read config file */
     section = CONFIG_SECTION_NONE;
@@ -2041,7 +2041,7 @@ config_read ()
                                                 WEECHAT_WARNING, filename, line_number, line);
                                 else
                                 {
-                                    if (!ignore_add_from_config (pos))
+                                    if (!irc_ignore_add_from_config (pos))
                                         gui_printf (NULL,
                                                     _("%s %s, line %d: invalid ignore options \"%s\"\n"),
                                                     WEECHAT_WARNING, filename, line_number, pos);

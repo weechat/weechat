@@ -37,49 +37,53 @@
 
 
 /*
- * irc_find_context: find window/buffer for a server/channel
+ * irc_display_hide_password: hide IRC password(s) in a string
  */
 
 void
-irc_find_context (t_irc_server *server, t_irc_channel *channel,
-                  t_gui_window **window, t_gui_buffer **buffer)
+irc_display_hide_password (char *string, int look_for_nickserv)
 {
-    t_gui_window *ptr_win;
-    
-    if (!buffer)
-        return;
-    
-    /* first find buffer */
-    *buffer = NULL;
-    if (channel && channel->buffer)
-        *buffer = channel->buffer;
-    else
+    char *pos_nickserv, *pos, *pos_pwd;
+
+    pos = string;
+    while (1)
     {
-        if (server && server->buffer)
-            *buffer = server->buffer;
-        else
-            *buffer = gui_current_window->buffer;
-    }
-    
-    /* then find first window displaying this buffer */
-    if (window)
-    {
-        *window = NULL;
-        if (gui_current_window->buffer == *buffer)
-            *window = gui_current_window;
+        if (look_for_nickserv)
+        {
+            pos_nickserv = strstr (pos, "nickserv ");
+            if (!pos_nickserv)
+                return;
+            pos = pos_nickserv + 9;
+            while (pos[0] == ' ')
+                pos++;
+            if ((strncmp (pos, "identify ", 9) == 0)
+                || (strncmp (pos, "register ", 9) == 0))
+                pos_pwd = pos + 9;
+            else
+                pos_pwd = NULL;
+        }
         else
         {
-            for (ptr_win = gui_windows; ptr_win;
-                 ptr_win = ptr_win->next_window)
+            pos_pwd = strstr (pos, "identify ");
+            if (!pos_pwd)
+                pos_pwd = strstr (pos, "register ");
+            if (!pos_pwd)
+                return;
+            pos_pwd += 9;
+        }
+
+        if (pos_pwd)
+        {
+            while (pos_pwd[0] == ' ')
+                pos_pwd++;
+            
+            while (pos_pwd[0] && (pos_pwd[0] != ';') && (pos_pwd[0] != ' ')
+                   && (pos_pwd[0] != '"'))
             {
-                if (ptr_win->buffer == *buffer)
-                {
-                    *window = ptr_win;
-                    break;
-                }
+                pos_pwd[0] = '*';
+                pos_pwd++;
             }
-            if (!*window)
-                *window = gui_current_window;
+            pos = pos_pwd;
         }
     }
 }
@@ -429,7 +433,7 @@ irc_display_server (t_irc_server *server)
     if (string)
     {
         if (cfg_log_hide_nickserv_pwd)
-            irc_hide_password (string, 1);
+            irc_display_hide_password (string, 1);
         gui_printf (NULL, "  server_command . . . . . . : %s\n",
                     string);
         free (string);

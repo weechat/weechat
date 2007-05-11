@@ -672,7 +672,7 @@ gui_exec_action_dcc (t_gui_window *window, char *actions)
                         && (DCC_IS_RECV(dcc_selected->status))
                         && (dcc_selected->status == DCC_WAITING))
                     {
-                        dcc_accept (dcc_selected);
+                        irc_dcc_accept (dcc_selected);
                     }
                     break;
                 /* cancel DCC */
@@ -681,7 +681,7 @@ gui_exec_action_dcc (t_gui_window *window, char *actions)
                     if (dcc_selected
                         && (!DCC_ENDED(dcc_selected->status)))
                     {
-                        dcc_close (dcc_selected, DCC_ABORTED);
+                        irc_dcc_close (dcc_selected, DCC_ABORTED);
                         gui_window_redraw_buffer (window->buffer);
                     }
                     break;
@@ -696,7 +696,7 @@ gui_exec_action_dcc (t_gui_window *window, char *actions)
                     {
                         ptr_dcc_next = ptr_dcc->next_dcc;
                         if (DCC_ENDED(ptr_dcc->status))
-                            dcc_free (ptr_dcc);
+                            irc_dcc_free (ptr_dcc);
                         ptr_dcc = ptr_dcc_next;
                     }
                     gui_window_redraw_buffer (window->buffer);
@@ -731,7 +731,7 @@ gui_exec_action_dcc (t_gui_window *window, char *actions)
                             window->dcc_selected = dcc_selected->next_dcc;
                         else
                             window->dcc_selected = NULL;
-                        dcc_free (dcc_selected);
+                        irc_dcc_free (dcc_selected);
                         gui_window_redraw_buffer (window->buffer);
                     }
                     break;

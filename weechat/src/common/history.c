@@ -62,7 +62,7 @@ history_buffer_add (void *buffer, char *string)
 	{
 	    new_history->text = strdup (string);
 	    if (cfg_log_hide_nickserv_pwd)
-                irc_hide_password (new_history->text, 1);
+                irc_display_hide_password (new_history->text, 1);
 	    
 	    if (((t_gui_buffer *)(buffer))->history)
 		((t_gui_buffer *)(buffer))->history->prev_history = new_history;
@@ -112,7 +112,7 @@ history_global_add (char *string)
 	{
 	    new_history->text = strdup (string);
 	    if (cfg_log_hide_nickserv_pwd)
-		irc_hide_password (new_history->text, 1);
+		irc_display_hide_password (new_history->text, 1);
 	    
 	    if (history_global)
 		history_global->prev_history = new_history;

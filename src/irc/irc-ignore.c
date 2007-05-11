@@ -42,12 +42,12 @@ t_irc_ignore *last_irc_ignore = NULL;
 
 
 /*
- * ignore_check_mask: returns 1 is mask1 and mask2 are the same host
- *                    anyone or both strings may have user and/or host after
+ * irc_ignore_check_mask: return 1 is mask1 and mask2 are the same host
+ *                        anyone or both strings may have user and/or host after
  */
 
 int
-ignore_check_mask (char *mask1, char *mask2)
+irc_ignore_check_mask (char *mask1, char *mask2)
 {
     char *m1, *m2, *pos;
     int match;
@@ -85,15 +85,16 @@ ignore_check_mask (char *mask1, char *mask2)
 }
 
 /*
- * ignore_match: check if pointed ignore matches with arguments
+ * irc_ignore_match: check if pointed ignore matches with arguments
  */
 
 int
-ignore_match (t_irc_ignore *ptr_ignore, char *mask, char *type, char *channel_name, char *server_name)
+irc_ignore_match (t_irc_ignore *ptr_ignore, char *mask, char *type,
+                  char *channel_name, char *server_name)
 {
     /* check mask */
     if ((strcmp (mask, "*") != 0) && (strcmp (ptr_ignore->mask, "*") != 0)
-        && (!ignore_check_mask (ptr_ignore->mask, mask)))
+        && (!irc_ignore_check_mask (ptr_ignore->mask, mask)))
                 return 0;
     
     /* mask is matching, go on with type */
@@ -132,13 +133,13 @@ ignore_match (t_irc_ignore *ptr_ignore, char *mask, char *type, char *channel_na
 }
 
 /*
- * ignore_check: check if an ignore is set for arguments
- *               returns 1 if at least one ignore exists (message should NOT be displayed)
- *                       0 if no ignore found (message will be displayed)
+ * irc_ignore_check: check if an ignore is set for arguments
+ *                   return 1 if at least one ignore exists (message should NOT be displayed)
+ *                          0 if no ignore found (message will be displayed)
  */
 
 int
-ignore_check (char *mask, char *type, char *channel_name, char *server_name)
+irc_ignore_check (char *mask, char *type, char *channel_name, char *server_name)
 {
     t_irc_ignore *ptr_ignore;
     
@@ -148,7 +149,7 @@ ignore_check (char *mask, char *type, char *channel_name, char *server_name)
     for (ptr_ignore = irc_ignore; ptr_ignore;
          ptr_ignore = ptr_ignore->next_ignore)
     {
-        if (ignore_match (ptr_ignore, mask, type, channel_name, server_name))
+        if (irc_ignore_match (ptr_ignore, mask, type, channel_name, server_name))
             return 1;
     }
     
@@ -157,11 +158,11 @@ ignore_check (char *mask, char *type, char *channel_name, char *server_name)
 }
 
 /*
- * ignore_search: search for an ignore
+ * irc_ignore_search: search for an ignore
  */
 
 t_irc_ignore *
-ignore_search (char *mask, char *type, char *channel_name, char *server_name)
+irc_ignore_search (char *mask, char *type, char *channel_name, char *server_name)
 {
     t_irc_ignore *ptr_ignore;
     
@@ -180,11 +181,11 @@ ignore_search (char *mask, char *type, char *channel_name, char *server_name)
 }
 
 /*
- * ignore_add: add an ignore in list
+ * irc_ignore_add: add an ignore in list
  */
 
 t_irc_ignore *
-ignore_add (char *mask, char *type, char *channel_name, char *server_name)
+irc_ignore_add (char *mask, char *type, char *channel_name, char *server_name)
 {
     int type_index;
     t_irc_command *command_ptr;
@@ -218,7 +219,7 @@ ignore_add (char *mask, char *type, char *channel_name, char *server_name)
         return NULL;
     }
     
-    if (ignore_search (mask, type, channel_name, server_name))
+    if (irc_ignore_search (mask, type, channel_name, server_name))
     {
         irc_display_prefix (NULL, NULL, PREFIX_ERROR);
         gui_printf (NULL,
@@ -258,12 +259,12 @@ ignore_add (char *mask, char *type, char *channel_name, char *server_name)
 }
 
 /*
- * ignore_add_from_config: add an ignore to list, read from config file
- *                         (comma serparated values)
+ * irc_ignore_add_from_config: add an ignore to list, read from config file
+ *                             (comma serparated values)
  */
 
 t_irc_ignore *
-ignore_add_from_config (char *string)
+irc_ignore_add_from_config (char *string)
 {
     t_irc_ignore *new_ignore;
     char *string2;
@@ -291,7 +292,7 @@ ignore_add_from_config (char *string)
             {
                 pos_server[0] = '\0';
                 pos_server++;
-                new_ignore = ignore_add (pos_mask, pos_type, pos_channel, pos_server);
+                new_ignore = irc_ignore_add (pos_mask, pos_type, pos_channel, pos_server);
             }
         }
     }
@@ -301,11 +302,11 @@ ignore_add_from_config (char *string)
 }
 
 /*
- * ignore_free: free an ignore
+ * irc_ignore_free: free an ignore
  */
 
 void
-ignore_free (t_irc_ignore *ptr_ignore)
+irc_ignore_free (t_irc_ignore *ptr_ignore)
 {
     t_irc_ignore *new_irc_ignore;
 
@@ -338,24 +339,25 @@ ignore_free (t_irc_ignore *ptr_ignore)
 }
 
 /*
- * ignore_free_all: free all ignores
+ * irc_ignore_free_all: free all ignores
  */
 
 void
-ignore_free_all ()
+irc_ignore_free_all ()
 {
     while (irc_ignore)
-        ignore_free (irc_ignore);
+        irc_ignore_free (irc_ignore);
 }
 
 /*
- * ignore_search_free: search and free ignore(s)
- *                     return: number of ignore found and deleted
- *                             0 if no ignore found
+ * irc_ignore_search_free: search and free ignore(s)
+ *                         return: number of ignore found and deleted
+ *                                 0 if no ignore found
  */
 
 int
-ignore_search_free (char *mask, char *type, char *channel_name, char *server_name)
+irc_ignore_search_free (char *mask, char *type,
+                        char *channel_name, char *server_name)
 {
     int found;
     t_irc_ignore *ptr_ignore, *next_ignore;
@@ -364,7 +366,7 @@ ignore_search_free (char *mask, char *type, char *channel_name, char *server_nam
     ptr_ignore = irc_ignore;
     while (ptr_ignore)
     {
-        if (ignore_match (ptr_ignore, mask, type, channel_name, server_name))
+        if (irc_ignore_match (ptr_ignore, mask, type, channel_name, server_name))
         {
             found++;
             if (found == 1)
@@ -372,7 +374,7 @@ ignore_search_free (char *mask, char *type, char *channel_name, char *server_nam
             irc_display_prefix (NULL, NULL, PREFIX_INFO);
             weechat_cmd_ignore_display (_("Removing ignore:"), ptr_ignore);
             next_ignore = ptr_ignore->next_ignore;
-            ignore_free (ptr_ignore);
+            irc_ignore_free (ptr_ignore);
             ptr_ignore = next_ignore;
         }
         else
@@ -383,13 +385,13 @@ ignore_search_free (char *mask, char *type, char *channel_name, char *server_nam
 }
 
 /*
- * ignore_search_free_by_number: search and free ignore(s) by number
- *                               return: 1 if ignore found and deleted
- *                                       0 if ignore not found
+ * irc_ignore_search_free_by_number: search and free ignore(s) by number
+ *                                   return: 1 if ignore found and deleted
+ *                                           0 if ignore not found
  */
 
 int
-ignore_search_free_by_number (int number)
+irc_ignore_search_free_by_number (int number)
 {
     int i;
     t_irc_ignore *ptr_ignore;
@@ -407,7 +409,7 @@ ignore_search_free_by_number (int number)
             gui_printf (NULL, "\n");
             irc_display_prefix (NULL, NULL, PREFIX_INFO);
             weechat_cmd_ignore_display (_("Removing ignore:"), ptr_ignore);
-            ignore_free (ptr_ignore);
+            irc_ignore_free (ptr_ignore);
             return 1;
         }
     }
@@ -417,11 +419,11 @@ ignore_search_free_by_number (int number)
 }
 
 /*
- * ignore_print_log: print ignore list in log (usually for crash dump)
+ * irc_ignore_print_log: print ignore list in log (usually for crash dump)
  */
 
 void
-ignore_print_log ()
+irc_ignore_print_log ()
 {
     t_irc_ignore *ptr_ignore;
     

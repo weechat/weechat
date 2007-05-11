@@ -127,9 +127,9 @@ gui_status_draw (t_gui_buffer *buffer, int erase)
                          SERVER(ptr_win->buffer)->name);
             if (ptr_win->buffer->all_servers)
             {
-                server_get_number_buffer (SERVER(ptr_win->buffer),
-                                          &server_pos,
-                                          &server_total);
+                irc_server_get_number_buffer (SERVER(ptr_win->buffer),
+                                              &server_pos,
+                                              &server_total);
                 gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
                                               COLOR_WIN_STATUS_DELIMITERS);
                 wprintw (GUI_CURSES(ptr_win)->win_status, "(");

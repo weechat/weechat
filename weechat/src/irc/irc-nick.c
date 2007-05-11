@@ -37,11 +37,11 @@
 
 
 /*
- * nick_find_color: find a color for a nick (according to nick letters)
+ * irc_nick_find_color: find a color for a nick (according to nick letters)
  */
 
 int
-nick_find_color (t_irc_nick *nick)
+irc_nick_find_color (t_irc_nick *nick)
 {
     int i, color;
     
@@ -56,11 +56,11 @@ nick_find_color (t_irc_nick *nick)
 }
 
 /*
- * nick_score_for_sort: return score for sorting nick, according to privileges
+ * irc_nick_score_for_sort: return score for sorting nick, according to privileges
  */
 
 int
-nick_score_for_sort (t_irc_nick *nick)
+irc_nick_score_for_sort (t_irc_nick *nick)
 {
     if (nick->flags & NICK_CHANOWNER)
         return -64;
@@ -78,20 +78,20 @@ nick_score_for_sort (t_irc_nick *nick)
 }
 
 /*
- * nick_compare: compare two nicks
- *               return: -1 is nick1 < nick2
- *                        0 if nick1 = nick2
- *                       +1 if nick1 > nick2
- *               status sort: operator > voice > normal nick
+ * irc_nick_compare: compare two nicks
+ *                   return: -1 is nick1 < nick2
+ *                            0 if nick1 = nick2
+ *                           +1 if nick1 > nick2
+ *                   status sort: operator > voice > normal nick
  */
 
 int
-nick_compare (t_irc_nick *nick1, t_irc_nick *nick2)
+irc_nick_compare (t_irc_nick *nick1, t_irc_nick *nick2)
 {
     int score1, score2, comp;
     
-    score1 = nick_score_for_sort (nick1);
-    score2 = nick_score_for_sort (nick2);
+    score1 = irc_nick_score_for_sort (nick1);
+    score2 = irc_nick_score_for_sort (nick2);
     
     comp = ascii_strcasecmp (nick1->nick, nick2->nick);
     if (comp > 0)
@@ -110,34 +110,34 @@ nick_compare (t_irc_nick *nick1, t_irc_nick *nick2)
 }
 
 /*
- * nick_find_pos: find position for a nick (for sorting nick list)
+ * irc_nick_find_pos: find position for a nick (for sorting nick list)
  */
 
 t_irc_nick *
-nick_find_pos (t_irc_channel *channel, t_irc_nick *nick)
+irc_nick_find_pos (t_irc_channel *channel, t_irc_nick *nick)
 {
     t_irc_nick *ptr_nick;
     
     for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
     {
-        if (nick_compare (nick, ptr_nick) < 0)
+        if (irc_nick_compare (nick, ptr_nick) < 0)
             return ptr_nick;
     }
     return NULL;
 }
 
 /*
- * nick_insert_sorted: insert nick into sorted list
+ * irc_nick_insert_sorted: insert nick into sorted list
  */
 
 void
-nick_insert_sorted (t_irc_channel *channel, t_irc_nick *nick)
+irc_nick_insert_sorted (t_irc_channel *channel, t_irc_nick *nick)
 {
     t_irc_nick *pos_nick;
     
     if (channel->nicks)
     {
-        pos_nick = nick_find_pos (channel, nick);
+        pos_nick = irc_nick_find_pos (channel, nick);
         
         if (pos_nick)
         {
@@ -169,11 +169,11 @@ nick_insert_sorted (t_irc_channel *channel, t_irc_nick *nick)
 }
 
 /*
- * nick_resort: resort nick in the list
+ * irc_nick_resort: resort nick in the list
  */
 
 void
-nick_resort (t_irc_channel *channel, t_irc_nick *nick)
+irc_nick_resort (t_irc_channel *channel, t_irc_nick *nick)
 {
     /* temporarly remove nick from list */
     if (nick == channel->nicks)
@@ -186,22 +186,22 @@ nick_resort (t_irc_channel *channel, t_irc_nick *nick)
         channel->last_nick = nick->prev_nick;
     
     /* insert again nick into sorted list */
-    nick_insert_sorted (channel, nick);
+    irc_nick_insert_sorted (channel, nick);
 }
 
 /*
- * nick_new: allocate a new nick for a channel and add it to the nick list
+ * irc_nick_new: allocate a new nick for a channel and add it to the nick list
  */
 
 t_irc_nick *
-nick_new (t_irc_server *server, t_irc_channel *channel, char *nick_name,
-          int is_chanowner, int is_chanadmin, int is_chanadmin2, int is_op,
-          int is_halfop, int has_voice)
+irc_nick_new (t_irc_server *server, t_irc_channel *channel, char *nick_name,
+              int is_chanowner, int is_chanadmin, int is_chanadmin2, int is_op,
+              int is_halfop, int has_voice)
 {
     t_irc_nick *new_nick;
     
     /* nick already exists on this channel? */
-    if ((new_nick = nick_search (channel, nick_name)))
+    if ((new_nick = irc_nick_search (channel, nick_name)))
     {
         /* update nick */
         NICK_SET_FLAG(new_nick, is_chanowner, NICK_CHANOWNER);
@@ -210,7 +210,7 @@ nick_new (t_irc_server *server, t_irc_channel *channel, char *nick_name,
         NICK_SET_FLAG(new_nick, is_op, NICK_OP);
         NICK_SET_FLAG(new_nick, is_halfop, NICK_HALFOP);
         NICK_SET_FLAG(new_nick, has_voice, NICK_VOICE);
-        nick_resort (channel, new_nick);
+        irc_nick_resort (channel, new_nick);
         return new_nick;
     }
     
@@ -231,9 +231,9 @@ nick_new (t_irc_server *server, t_irc_channel *channel, char *nick_name,
     if (ascii_strcasecmp (new_nick->nick, server->nick) == 0)
         new_nick->color = COLOR_WIN_NICK_SELF;
     else
-        new_nick->color = nick_find_color (new_nick);
+        new_nick->color = irc_nick_find_color (new_nick);
     
-    nick_insert_sorted (channel, new_nick);
+    irc_nick_insert_sorted (channel, new_nick);
     
     channel->nicks_count++;
 
@@ -244,11 +244,11 @@ nick_new (t_irc_server *server, t_irc_channel *channel, char *nick_name,
 }
 
 /*
- * nick_change: change nickname and move it if necessary (list is sorted)
+ * irc_nick_change: change nickname and move it if necessary (list is sorted)
  */
 
 void
-nick_change (t_irc_channel *channel, t_irc_nick *nick, char *new_nick)
+irc_nick_change (t_irc_channel *channel, t_irc_nick *nick, char *new_nick)
 {
     int nick_is_me;
     
@@ -261,18 +261,18 @@ nick_change (t_irc_channel *channel, t_irc_nick *nick, char *new_nick)
     if (nick_is_me)
         nick->color = COLOR_WIN_NICK_SELF;
     else
-        nick->color = nick_find_color (nick);
+        nick->color = irc_nick_find_color (nick);
     
     /* insert again nick into sorted list */
-    nick_resort (channel, nick);
+    irc_nick_resort (channel, nick);
 }
 
 /*
- * nick_free: free a nick and remove it from nicks queue
+ * irc_nick_free: free a nick and remove it from nicks queue
  */
 
 void
-nick_free (t_irc_channel *channel, t_irc_nick *nick)
+irc_nick_free (t_irc_channel *channel, t_irc_nick *nick)
 {
     t_irc_nick *new_nicks;
     
@@ -307,29 +307,29 @@ nick_free (t_irc_channel *channel, t_irc_nick *nick)
 }
 
 /*
- * nick_free_all: free all allocated nicks for a channel
+ * irc_nick_free_all: free all allocated nicks for a channel
  */
 
 void
-nick_free_all (t_irc_channel *channel)
+irc_nick_free_all (t_irc_channel *channel)
 {
     if (!channel)
         return;
     
     /* remove all nicks for the channel */
     while (channel->nicks)
-        nick_free (channel, channel->nicks);
+        irc_nick_free (channel, channel->nicks);
     
     /* sould be zero, but prevent any bug :D */
     channel->nicks_count = 0;
 }
 
 /*
- * nick_search: returns pointer on a nick
+ * irc_nick_search: returns pointer on a nick
  */
 
 t_irc_nick *
-nick_search (t_irc_channel *channel, char *nickname)
+irc_nick_search (t_irc_channel *channel, char *nickname)
 {
     t_irc_nick *ptr_nick;
     
@@ -346,12 +346,12 @@ nick_search (t_irc_channel *channel, char *nickname)
 }
 
 /*
- * nick_count: returns number of nicks (total, op, halfop, voice) on a channel
+ * irc_nick_count: returns number of nicks (total, op, halfop, voice) on a channel
  */
 
 void
-nick_count (t_irc_channel *channel, int *total, int *count_op,
-            int *count_halfop, int *count_voice, int *count_normal)
+irc_nick_count (t_irc_channel *channel, int *total, int *count_op,
+                int *count_halfop, int *count_voice, int *count_normal)
 {
     t_irc_nick *ptr_nick;
     
@@ -385,11 +385,11 @@ nick_count (t_irc_channel *channel, int *total, int *count_op,
 }
 
 /*
- * nick_get_max_length: returns longer nickname on a channel
+ * irc_nick_get_max_length: returns longer nickname on a channel
  */
 
 int
-nick_get_max_length (t_irc_channel *channel)
+irc_nick_get_max_length (t_irc_channel *channel)
 {
     int length, max_length;
     t_irc_nick *ptr_nick;
@@ -405,11 +405,11 @@ nick_get_max_length (t_irc_channel *channel)
 }
 
 /*
- * nick_set_away: set/unset away status for a channel
+ * irc_nick_set_away: set/unset away status for a channel
  */
 
 void
-nick_set_away (t_irc_channel *channel, t_irc_nick *nick, int is_away)
+irc_nick_set_away (t_irc_channel *channel, t_irc_nick *nick, int is_away)
 {
     if ((cfg_irc_away_check > 0)
         && ((cfg_irc_away_check_max_nicks == 0) ||
@@ -425,11 +425,11 @@ nick_set_away (t_irc_channel *channel, t_irc_nick *nick, int is_away)
 }
 
 /*
- * nick_print_log: print nick infos in log (usually for crash dump)
+ * irc_nick_print_log: print nick infos in log (usually for crash dump)
  */
 
 void
-nick_print_log (t_irc_nick *nick)
+irc_nick_print_log (t_irc_nick *nick)
 {
     weechat_log_printf ("=> nick %s (addr:0x%X)]\n",    nick->nick, nick);
     weechat_log_printf ("     host . . . . . : %s\n",   nick->host);

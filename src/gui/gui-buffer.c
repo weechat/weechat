@@ -168,7 +168,7 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
         new_buffer->line_complete = 1;
         
         /* notify level */
-        new_buffer->notify_level = channel_get_notify_level (server, channel);
+        new_buffer->notify_level = irc_channel_get_notify_level (server, channel);
         
         /* create/append to log file */
         new_buffer->log_filename = NULL;
@@ -274,7 +274,7 @@ gui_buffer_search (char *server, char *channel)
     {
         if (server && server[0])
         {
-            ptr_server = server_search (server);
+            ptr_server = irc_server_search (server);
             if (!ptr_server)
                 return NULL;
         }
@@ -283,7 +283,7 @@ gui_buffer_search (char *server, char *channel)
         {
             if (ptr_server)
             {
-                ptr_channel = channel_search_any (ptr_server, channel);
+                ptr_channel = irc_channel_search_any (ptr_server, channel);
                 if (ptr_channel)
                     ptr_buffer = ptr_channel->buffer;
             }
@@ -365,6 +365,54 @@ gui_buffer_find_window (t_gui_buffer *buffer)
     
     /* no window found */
     return NULL;
+}
+
+/*
+ * gui_buffer_find_context: find window/buffer for a server/channel
+ */
+
+void
+gui_buffer_find_context (void *server, void *channel,
+                         t_gui_window **window, t_gui_buffer **buffer)
+{
+    t_gui_window *ptr_win;
+    
+    if (!buffer)
+        return;
+    
+    /* first find buffer */
+    *buffer = NULL;
+    if ((t_irc_channel *)channel && ((t_irc_channel *)channel)->buffer)
+        *buffer = ((t_irc_channel *)channel)->buffer;
+    else
+    {
+        if ((t_irc_server *)server && ((t_irc_server *)server)->buffer)
+            *buffer = ((t_irc_server *)server)->buffer;
+        else
+            *buffer = gui_current_window->buffer;
+    }
+    
+    /* then find first window displaying this buffer */
+    if (window)
+    {
+        *window = NULL;
+        if (gui_current_window->buffer == *buffer)
+            *window = gui_current_window;
+        else
+        {
+            for (ptr_win = gui_windows; ptr_win;
+                 ptr_win = ptr_win->next_window)
+            {
+                if (ptr_win->buffer == *buffer)
+                {
+                    *window = ptr_win;
+                    break;
+                }
+            }
+            if (!*window)
+                *window = gui_current_window;
+        }
+    }
 }
 
 /*

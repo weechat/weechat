@@ -54,7 +54,7 @@ gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
     {
         if ((ptr_win->buffer == buffer) && (buffer->num_displayed > 0))
         {
-            max_length = nick_get_max_length (CHANNEL(buffer));
+            max_length = irc_nick_get_max_length (CHANNEL(buffer));
             
             if (calculate_size && (gui_window_calculate_pos_size (ptr_win, 0)))
             {
