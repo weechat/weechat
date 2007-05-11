@@ -2478,6 +2478,41 @@ irc_cmd_recv_001 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
+ * irc_cmd_recv_005: '005' command (some infos from server)
+ */
+
+int
+irc_cmd_recv_005 (t_irc_server *server, char *host, char *nick, char *arguments)
+{
+    char *pos, *pos2;
+    
+    irc_cmd_recv_server_msg (server, host, nick, arguments);
+    
+    pos = strstr (arguments, "PREFIX=");
+    if (pos)
+    {
+        pos += 7;
+        if (pos[0] == '(')
+        {
+            pos2 = strchr (pos, ')');
+            if (!pos2)
+                return 0;
+            pos = pos2 + 1;
+        }
+        pos2 = strchr (pos, ' ');
+        if (pos2)
+            pos2[0] = '\0';
+        if (server->prefix)
+            free (server->prefix);
+        server->prefix = strdup (pos);
+        if (pos2)
+            pos2[0] = ' ';
+    }
+    
+    return 0;
+}
+
+/*
  * irc_cmd_recv_221: '221' command (user mode string)
  */
 
@@ -4285,6 +4320,7 @@ irc_cmd_recv_353 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos, *pos_nick;
     int is_chanowner, is_chanadmin, is_chanadmin2, is_op, is_halfop, has_voice;
+    int prefix_found;
     t_irc_channel *ptr_channel;
     t_gui_buffer *ptr_buffer;
     
@@ -4357,54 +4393,77 @@ irc_cmd_recv_353 (t_irc_server *server, char *host, char *nick, char *arguments)
                 is_op = 0;
                 is_halfop = 0;
                 has_voice = 0;
-                while ((pos[0] == '@') || (pos[0] == '%') || (pos[0] == '+'))
+                prefix_found = 1;
+                
+                while (prefix_found)
                 {
-                    if (pos[0] == '@')
+                    prefix_found = 0;
+
+                    switch (pos[0])
                     {
-                        is_op = 1;
-                        if (!command_ignored && !ptr_channel)
-                            gui_printf (ptr_buffer, "%s@",
-                                        GUI_COLOR(COLOR_WIN_NICK_OP));
+                        case '@': /* op */
+                            if (irc_mode_nick_prefix_allowed (server, '@'))
+                            {
+                                prefix_found = 1;
+                                is_op = 1;
+                                if (!command_ignored && !ptr_channel)
+                                    gui_printf (ptr_buffer, "%s@",
+                                                GUI_COLOR(COLOR_WIN_NICK_OP));
+                            }
+                            break;
+                        case '%': /* half-op */
+                            if (irc_mode_nick_prefix_allowed (server, '%'))
+                            {
+                                prefix_found = 1;
+                                is_halfop = 1;
+                                if (!command_ignored && !ptr_channel)
+                                    gui_printf (ptr_buffer, "%s%%",
+                                                GUI_COLOR(COLOR_WIN_NICK_HALFOP));
+                            }
+                            break;
+                        case '+': /* voice */
+                            if (irc_mode_nick_prefix_allowed (server, '+'))
+                            {
+                                prefix_found = 1;
+                                has_voice = 1;
+                                if (!command_ignored && !ptr_channel)
+                                    gui_printf (ptr_buffer, "%s+",
+                                                GUI_COLOR(COLOR_WIN_NICK_VOICE));
+                            }
+                            break;
+                        case '~': /* channel owner */
+                            if (irc_mode_nick_prefix_allowed (server, '~'))
+                            {
+                                prefix_found = 1;
+                                is_chanowner = 1;
+                                if (!command_ignored && !ptr_channel)
+                                    gui_printf (ptr_buffer, "%s~",
+                                                GUI_COLOR(COLOR_WIN_NICK_OP));
+                            }
+                            break;
+                        case '&': /* channel admin */
+                            if (irc_mode_nick_prefix_allowed (server, '&'))
+                            {
+                                prefix_found = 1;
+                                is_chanadmin = 1;
+                                if (!command_ignored && !ptr_channel)
+                                    gui_printf (ptr_buffer, "%s&",
+                                                GUI_COLOR(COLOR_WIN_NICK_OP));
+                            }
+                            break;
+                        case '!': /* channel admin (2) */
+                            if (irc_mode_nick_prefix_allowed (server, '!'))
+                            {
+                                prefix_found = 1;
+                                is_chanadmin2 = 1;
+                                if (!command_ignored && !ptr_channel)
+                                    gui_printf (ptr_buffer, "%s!",
+                                                GUI_COLOR(COLOR_WIN_NICK_OP));
+                            }
+                            break;
                     }
-                    if (pos[0] == '%')
-                    {
-                        is_halfop = 1;
-                        if (!command_ignored && !ptr_channel)
-                            gui_printf (ptr_buffer, "%s%%",
-                                        GUI_COLOR(COLOR_WIN_NICK_HALFOP));
-                    }
-                    if (pos[0] == '+')
-                    {
-                        has_voice = 1;
-                        if (!command_ignored && !ptr_channel)
-                            gui_printf (ptr_buffer, "%s+",
-                                        GUI_COLOR(COLOR_WIN_NICK_VOICE));
-                    }
-                    pos++;
-                }
-                if (pos[0] == '~')
-                {
-                    is_chanowner = 1;
-                    pos++;
-                    if (!command_ignored && !ptr_channel)
-                        gui_printf (ptr_buffer, "%s~",
-                                    GUI_COLOR(COLOR_WIN_NICK_OP));
-                }
-                if (pos[0] == '&')
-                {
-                    is_chanadmin = 1;
-                    pos++;
-                    if (!command_ignored && !ptr_channel)
-                        gui_printf (ptr_buffer, "%s&",
-                                    GUI_COLOR(COLOR_WIN_NICK_OP));
-                }
-                if (pos[0] == '!')
-                {
-                    is_chanadmin2 = 1;
-                    pos++;
-                    if (!command_ignored && !ptr_channel)
-                        gui_printf (ptr_buffer, "%s!",
-                                    GUI_COLOR(COLOR_WIN_NICK_OP));
+                    if (prefix_found)
+                        pos++;
                 }
                 pos_nick = pos;
                 pos = strchr (pos, ' ');

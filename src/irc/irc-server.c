@@ -116,6 +116,7 @@ server_init (t_irc_server *server)
     server->unterminated_message = NULL;
     server->nick = NULL;
     server->nick_modes = NULL;
+    server->prefix = NULL;
     server->reconnect_start = 0;
     server->reconnect_join = 0;
     server->is_away = 0;
@@ -403,6 +404,8 @@ server_destroy (t_irc_server *server)
         free (server->nick);
     if (server->nick_modes)
         free (server->nick_modes);
+    if (server->prefix)
+        free (server->prefix);
     if (server->away_message)
         free (server->away_message);
     if (server->outqueue)
@@ -1946,6 +1949,11 @@ server_disconnect (t_irc_server *server, int reconnect)
         free (server->nick_modes);
         server->nick_modes = NULL;
     }
+    if (server->prefix)
+    {
+        free (server->prefix);
+        server->prefix = NULL;
+    }
     server->is_away = 0;
     server->away_time = 0;
     server->lag = 0;
@@ -2219,6 +2227,7 @@ server_print_log (t_irc_server *server)
     weechat_log_printf ("  unterminated_message: '%s'\n", server->unterminated_message);
     weechat_log_printf ("  nick. . . . . . . . : '%s'\n", server->nick);
     weechat_log_printf ("  nick_modes. . . . . : '%s'\n", server->nick_modes);
+    weechat_log_printf ("  prefix. . . . . . . : '%s'\n", server->prefix);
     weechat_log_printf ("  reconnect_start . . : %ld\n",  server->reconnect_start);
     weechat_log_printf ("  reconnect_join. . . : %d\n",   server->reconnect_join);
     weechat_log_printf ("  is_away . . . . . . : %d\n",   server->is_away);

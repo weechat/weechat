@@ -257,3 +257,20 @@ irc_mode_user_set (t_irc_server *server, char *modes)
         modes++;
     }
 }
+
+/*
+ * irc_mode_nick_prefix_allowed: return <> 0 if nick prefix is allowed by server
+ *                               for example :
+ *                                 IRC:  005 (...) PREFIX=(ov)@+
+ *                               => allowed prefixes: @+
+ */
+
+int
+irc_mode_nick_prefix_allowed (t_irc_server *server, char prefix)
+{
+    /* if server did not send any prefix info, then consider this prefix is allowed */
+    if (!server->prefix)
+        return 1;
+
+    return (strchr (server->prefix, prefix) != NULL);
+}

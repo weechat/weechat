@@ -307,6 +307,8 @@ t_irc_command irc_commands[] =
     "", 1, MAX_ARGS, 0, 1, NULL, irc_cmd_send_whowas, NULL },
   { "001", N_("a server message"), "", "",
     NULL, 0, 0, 0, 1, NULL, NULL, irc_cmd_recv_001 },
+  { "005", N_("a server message"), "", "",
+    NULL, 0, 0, 0, 1, NULL, NULL, irc_cmd_recv_005 },
   { "221", N_("user mode string"), "", "",
     NULL, 0, 0, 0, 1, NULL, NULL, irc_cmd_recv_221 },
   { "301", N_("away message"), "", "",

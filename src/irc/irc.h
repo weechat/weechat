@@ -182,6 +182,7 @@ struct t_irc_server
     char *unterminated_message;     /* beginning of a message in input buf    */
     char *nick;                     /* current nickname                       */
     char *nick_modes;               /* nick modes                             */
+    char *prefix;                   /* nick prefix allowed (from msg 005)     */
     time_t reconnect_start;         /* this time + delay = reconnect time     */
     int reconnect_join;             /* 1 if channels opened to rejoin         */
     int is_away;                    /* 1 is user is marked as away            */
@@ -447,6 +448,7 @@ extern void nick_print_log (t_irc_nick *);
 
 extern void irc_mode_channel_set (t_irc_channel *, char *);
 extern void irc_mode_user_set (t_irc_server *, char *);
+extern int irc_mode_nick_prefix_allowed (t_irc_server *, char);
 
 /* DCC functions (irc-dcc.c) */
 
@@ -568,6 +570,7 @@ extern int irc_cmd_recv_server_reply (t_irc_server *, char *, char *, char *);
 extern int irc_cmd_recv_topic (t_irc_server *, char *, char *, char *);
 extern int irc_cmd_recv_wallops (t_irc_server *, char *, char *, char *);
 extern int irc_cmd_recv_001 (t_irc_server *, char *, char *, char *);
+extern int irc_cmd_recv_005 (t_irc_server *, char *, char *, char *);
 extern int irc_cmd_recv_221 (t_irc_server *, char *, char *, char *);
 extern int irc_cmd_recv_301 (t_irc_server *, char *, char *, char *);
 extern int irc_cmd_recv_302 (t_irc_server *, char *, char *, char *);

@@ -259,6 +259,7 @@ session_save_servers (FILE *file)
         rc = rc && (session_write_str (file, SESSION_SERV_UNTERMINATED_MESSAGE, ptr_server->unterminated_message));
         rc = rc && (session_write_str (file, SESSION_SERV_NICK, ptr_server->nick));
         rc = rc && (session_write_str (file, SESSION_SERV_NICK_MODES, ptr_server->nick_modes));
+        rc = rc && (session_write_str (file, SESSION_SERV_PREFIX, ptr_server->prefix));
         rc = rc && (session_write_buf (file, SESSION_SERV_RECONNECT_START, &(ptr_server->reconnect_start), sizeof (time_t)));
         rc = rc && (session_write_int (file, SESSION_SERV_RECONNECT_JOIN, ptr_server->reconnect_join));
         rc = rc && (session_write_int (file, SESSION_SERV_IS_AWAY, ptr_server->is_away));
@@ -985,6 +986,9 @@ session_load_server (FILE *file)
                 break;
             case SESSION_SERV_NICK_MODES:
                 rc = rc && (session_read_str (file, &(session_current_server->nick_modes)));
+                break;
+            case SESSION_SERV_PREFIX:
+                rc = rc && (session_read_str (file, &(session_current_server->prefix)));
                 break;
             case SESSION_SERV_RECONNECT_START:
                 rc = rc && (session_read_buf (file, &(session_current_server->reconnect_start), sizeof (time_t)));
