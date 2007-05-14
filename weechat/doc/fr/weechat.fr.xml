@@ -1124,6 +1124,124 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
       </para>
       
     </section>
+        
+    <section id="secCharset">
+      <title>Extension Charset</title>
+      
+      <para>
+        L'extension Charset vous permet d'encoder et décoder les données en
+        utilisant un jeu de caractères, avec 3 niveaux : global, par serveur,
+        ou par canal.
+        Cette extension est facultative, mais recommandée : si elle n'est pas
+        chargée, WeeChat pourra uniquement lire/écrire des données UTF-8.
+      </para>
+      
+      <para>
+        L'extension Charset devrait être automatiquement chargée par WeeChat
+        au démarrage.
+        Pour s'assurer que l'extension est bien chargée, essayez :
+        "<literal>/charset</literal>".
+        Si la commande n'est pas trouvée, alors chargez l'extension avec la
+        commande :
+        <screen>/plugin load charset</screen>
+        Si l'extension n'est pas trouvée, alors vous devriez recompiler
+        WeeChat avec les extensions et le support de Charset.
+      </para>
+      
+      <para>
+        Lorsque l'extension Charset démarre, elle affiche le jeu de caractères
+        du terminal et l'interne.
+        Le jeu de caractères du terminal dépend de votre locale, et l'interne
+        est UTF-8.
+        Par exemple :
+<screen>
+-P- Charset plugin starting, terminal charset: ISO-8859-15 (WeeChat internal: UTF-8)
+</screen>
+      </para>
+              
+      <section id="secCharsetSettings">
+        <title>Configuration</title>
+        
+        <itemizedlist>
+          <listitem>
+            <para>
+              Pour modifier les jeux de caractères de décodage et d'encodage
+              globaux, utilisez la commande "<literal>/setp</literal>".
+              Par exemple :
+<screen>
+/setp charset.global.decode = ISO-8859-15
+/setp charset.global.encode = ISO-8859-15
+</screen>
+              Si le jeu de caractères de décodage global n'est pas renseigné
+              (par exemple pendant le premier chargement de Charset), il sera
+              renseigné automatiquement avec le jeu de caractères du terminal
+              (s'il est différent de UTF-8) ou par défaut à
+              "<literal>ISO-8859-1</literal>".
+              La valeur d'encodage par défaut est vide, donc WeeChat envoie par
+              défaut avec le jeu de caractères interne (UTF-8).
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Pour modifier le jeu de caractères d'un serveur, utilisez la
+              commande "<literal>/charset</literal>" sur le tampon serveur.
+              Si vous donnez seulement le jeu de caractères, alors vous
+              modifiez en même temps les valeurs de décodage et d'encodage.
+              Par exemple :
+              <screen>/charset ISO-8859-15</screen>
+              Ce qui est équivalent à :
+<screen>
+/charset decode ISO-8859-15
+/charset encode ISO-8859-15
+</screen>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Pour modifier le jeu de caractères d'un canal (ou d'une
+              conversation privée), utilisez la même commande que pour le
+              serveur, mais sur le tampon du canal (ou du privé).
+            </para>
+          </listitem>
+        </itemizedlist>
+              
+      </section>
+      
+      <section id="secCharsetFAQ">
+        <title>FAQ</title>
+        
+        <para>
+          Si vous avez des problèmes avec certains caractères ou les accents en
+          utilisant l'extension Charset :
+          <itemizedlist>
+            <listitem>
+              <para>
+                vérifiez que weechat-curses est lié avec libncursesw
+                (attention : nécessaire sur beaucoup de distributions, mais pas
+                toutes) : 
+                <screen>ldd /chemin/vers/weechat-curses</screen>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                vérifiez la ligne charset (sur le tampon serveur), vous devriez
+                voir ISO-XXXXXX ou UTF-8 pour le charset du terminal. Si vous
+                voyez ANSI_X3.4-1968 ou d'autres valeurs, votre locale est
+                probablement erronée.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                affectez la valeur pour le décodage global, par exemple :
+                <screen>/setp charset.global.decode = ISO-8859-15</screen>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+        
+      </section>
+      
+    </section>
     
     <section id="secTubeFIFO">
       <title>Tube FIFO</title>
