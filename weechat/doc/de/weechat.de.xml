@@ -95,14 +95,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   <!-- =========================== Introduction =========================== -->
   
   <chapter id="chapIntroduction">
-    <title> Einführung </title>
+    <title>Einführung</title>
     
     <para>
       Dieses Kapitel beschreibt WeeChat und die Vorraussetzungen für die Installation.
     </para>
     
     <section id="secDescription">
-      <title> Beschreibung </title>
+      <title>Beschreibung</title>
       
       <para>
         WeeChat (Wee Enhanced Environment for Chat) ist ein freier
@@ -166,10 +166,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
     </section>
     
     <section id="secPreRequis">
-      <title> Vorraussetzungen </title>
+      <title>Vorraussetzungen</title>
       
       <para>
-        Um WeeChat zu installieren, werden <emphasis> gebraucht </emphasis>:
+        Um WeeChat zu installieren, werden <emphasis>gebraucht</emphasis>:
         <itemizedlist>
           <listitem>
             <para>
@@ -224,7 +224,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
     </para>
     
     <section id="secBinaryPackages">
-      <title> Binäre Pakete </title>
+      <title>Binäre Pakete</title>
       
       <para>
         Binäre Pakete sind für die folgenden Distributionen verfügbar:
@@ -257,7 +257,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
     </section>
     
     <section id="secSourcePackage">
-      <title> Quellcode-Pakete </title>
+      <title>Quellcode-Pakete</title>
       
       <para>
         Alles was sie tun müssen, ist in einer Konsole oder einem Terminal aufzurufen:
@@ -303,7 +303,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   <!-- ============================== Usage =============================== -->
   
   <chapter id="chapUsage">
-    <title> Nutzung </title>
+    <title>Nutzung</title>
     
     <para>
       Dieses Kapitel erklärt, wie Weechat zu starten ist, die zu verwendenden
@@ -452,15 +452,15 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
     </section>
     
     <section id="secKeyboardShortcuts">
-      <title> Tastenkombinationen </title>
+      <title>Tastenkombinationen</title>
       
       <para>
         <informaltable colsep="0" frame="none">
           <tgroup cols="2">
             <thead>
               <row>
-                <entry> Tastenkombination </entry>
-                <entry> Wirkung </entry>
+                <entry>Tastenkombination</entry>
+                <entry>Wirkung</entry>
               </row>
             </thead>
             <tbody>
@@ -596,19 +596,19 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 </entry>
               </row>
               <row>
-                <entry>Alt + Seite hoch / Alt + Seite runter </entry>
+                <entry>Alt + Seite hoch / Alt + Seite runter</entry>
                 <entry>
                   Ein paar Zeilen hoch / runter im Verlauf des Buffers
                 </entry>
               </row>
               <row>
-                <entry> Alt + Pos1 / Alt + Ende </entry>
+                <entry>Alt + Pos1 / Alt + Ende</entry>
                 <entry>
                   Gehe zum Anfang / Ende des Puffers
                 </entry>
               </row>
               <row>
-                <entry> F5 / Alt + Links </entry>
+                <entry>F5 / Alt + Links</entry>
                 <entry>
                   Gehe zum vorherigen Puffer
                 </entry>
@@ -782,7 +782,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
     </section>
     
     <section id="secCommandLine">
-      <title> Kommandozeile </title>
+      <title>Kommandozeile</title>
       
       <para>
         Die WeeChat Kommandozeile (am Ende des Fensters) lässt sie Nachrichten an einen
@@ -899,11 +899,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
               </row>
               <row>
                 <entry>03</entry>
-                <entry>dunkles Grün </entry>
+                <entry>dunkles Grün</entry>
               </row>
               <row>
                 <entry>04</entry>
-                <entry>helles Rot </entry>
+                <entry>helles Rot</entry>
               </row>
               <row>
                 <entry>05</entry>
@@ -911,43 +911,43 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
               </row>
               <row>
                 <entry>06</entry>
-                <entry> Magenta </entry>
+                <entry>Magenta</entry>
               </row>
               <row>
                 <entry>07</entry>
-                <entry> Orange </entry>
+                <entry>Orange</entry>
               </row>
               <row>
                 <entry>08</entry>
-                <entry> Gelb </entry>
+                <entry>Gelb</entry>
               </row>
               <row>
                 <entry>09</entry>
-                <entry> helles Grün</entry>
+                <entry>helles Grün</entry>
               </row>
               <row>
                 <entry>10</entry>
-                <entry> Cyan </entry>
+                <entry>Cyan</entry>
               </row>
               <row>
                 <entry>11</entry>
-                <entry> helles Cyan</entry>
+                <entry>helles Cyan</entry>
               </row>
               <row>
                 <entry>12</entry>
-                <entry> helles Blau </entry>
+                <entry>helles Blau</entry>
               </row>
               <row>
                 <entry>13</entry>
-                <entry> helles Magenta </entry>
+                <entry>helles Magenta</entry>
               </row>
               <row>
                 <entry>14</entry>
-                <entry> Grau </entry>
+                <entry>Grau</entry>
               </row>
               <row>
                 <entry>15</entry>
-                <entry> helles Grau (Weiss)</entry>
+                <entry>helles Grau (Weiss)</entry>
               </row>
             </tbody>
           </tgroup>
@@ -964,14 +964,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
     </section>
     
     <section id="secWeeChatIRCCommands">
-      <title>WeeChat / IRC Kommandos </title>
+      <title>WeeChat / IRC Kommandos</title>
       
       <para>
         Dieses Kapitel listet alle WeeChat- und IRC-Kommandos auf.
       </para>
       
       <section id="secWeeChatCommands">
-        <title> WeeChat Kommandos </title>
+        <title>WeeChat Kommandos</title>
         
         <para>
           &weechat_commands.xml;
@@ -980,15 +980,15 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
       </section>
       
       <section id="secKeyFunctions">
-        <title> Funktionen </title>
+        <title>Funktionen</title>
         
         <para>
           <informaltable colsep="0" frame="none">
             <tgroup cols="2">
               <thead>
                 <row>
-                  <entry> Funktion </entry>
-                  <entry> Beschreibung </entry>
+                  <entry>Funktion</entry>
+                  <entry>Beschreibung</entry>
                 </row>
               </thead>
               <tbody>
@@ -1003,7 +1003,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
       </section>
       
       <section id="secIRCCommands">
-        <title> IRC Kommandos </title>
+        <title>IRC Kommandos</title>
         
         <para>
           &irc_commands.xml;
@@ -1014,7 +1014,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
     </section>
     
     <section id="secConfigurationFile">
-      <title> Konfigurationsdatei </title>
+      <title>Konfigurationsdatei</title>
       
       <para>
         Liste der Optionen für die Konfigurationsdatei:
@@ -1022,11 +1022,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
           <tgroup cols="5">
             <thead>
               <row>
-                <entry> Option </entry>
-                <entry> Typ </entry>
-                <entry> Wert </entry>
-                <entry> Default </entry>
-                <entry> Beschreibung </entry>
+                <entry>Option</entry>
+                <entry>Typ</entry>
+                <entry>Wert</entry>
+                <entry>Default</entry>
+                <entry>Beschreibung</entry>
               </row>
             </thead>
             <tbody>
@@ -1044,8 +1044,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
           <tgroup cols="2">
             <thead>
               <row>
-                <entry> Schlüsselwort </entry>
-                <entry> Farbe </entry>
+                <entry>Schlüsselwort</entry>
+                <entry>Farbe</entry>
               </row>
             </thead>
             <tbody>
@@ -1055,59 +1055,59 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
               </row>
               <row>
                 <entry><literal>black</literal></entry>
-                <entry> Schwarz </entry>
+                <entry>Schwarz</entry>
               </row>
               <row>
                 <entry><literal>red</literal></entry>
-                <entry> dunkles Rot </entry>
+                <entry>dunkles Rot</entry>
               </row>
               <row>
                 <entry><literal>lightred</literal></entry>
-                <entry> helles Rot </entry>
+                <entry>helles Rot</entry>
               </row>
               <row>
                 <entry><literal>green</literal></entry>
-                <entry> dunkles Grün </entry>
+                <entry>dunkles Grün</entry>
               </row>
               <row>
                 <entry><literal>lightgreen</literal></entry>
-                <entry> helles Grün </entry>
+                <entry>helles Grün</entry>
               </row>
               <row>
                 <entry><literal>brown</literal></entry>
-                <entry> Braun </entry>
+                <entry>Braun</entry>
               </row>
               <row>
                 <entry><literal>yellow</literal></entry>
-                <entry> Gelb </entry>
+                <entry>Gelb</entry>
               </row>
               <row>
                 <entry><literal>blue</literal></entry>
-                <entry> dunkles Blau </entry>
+                <entry>dunkles Blau</entry>
               </row>
               <row>
                 <entry><literal>lightblue</literal></entry>
-                <entry> helles Blau </entry>
+                <entry>helles Blau</entry>
               </row>
               <row>
                 <entry><literal>magenta</literal></entry>
-                <entry> dunkles Magenta </entry>
+                <entry>dunkles Magenta</entry>
               </row>
               <row>
                 <entry><literal>lightmagenta</literal></entry>
-                <entry> helles Magenta </entry>
+                <entry>helles Magenta</entry>
               </row>
               <row>
                 <entry><literal>cyan</literal></entry>
-                <entry> dunkles Cyan </entry>
+                <entry>dunkles Cyan</entry>
               </row>
               <row>
                 <entry><literal>lightcyan</literal></entry>
-                <entry> helles Cyan </entry>
+                <entry>helles Cyan</entry>
               </row>
               <row>
                 <entry><literal>white</literal></entry>
-                <entry> Weiss </entry>
+                <entry>Weiss</entry>
               </row>
             </tbody>
           </tgroup>
@@ -1226,7 +1226,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
     </section>
         
     <section id="secFIFOpipe">
-      <title> Remote-Schnittstelle (FIFO pipe) </title>
+      <title>Remote-Schnittstelle (FIFO pipe)</title>
       
       <para>
         Sie können WeeChat auch extern steuern, indem sie Kommandos oder Text
@@ -1333,7 +1333,7 @@ fi
     </section>
     
     <section id="secWriteAPlugin">
-      <title> Ein Plugin schreiben </title>
+      <title>Ein Plugin schreiben</title>
       
       <para>
         Das Plugin muss die Datei "weechat-plugin.h" einbinden (verfügbar 
@@ -1350,7 +1350,7 @@ fi
             <thead>
               <row>
                 <entry>Variable</entry>
-                <entry> Beschreibung </entry>
+                <entry>Beschreibung</entry>
               </row>
             </thead>
             <tbody>
@@ -3167,7 +3167,7 @@ plugin->exec_command (plugin, "freenode", "#weechat", "hello");
                         </row>
                         <row>
                           <entry><literal>weechat_libdir</literal></entry>
-                          <entry>WeeChat-Systemverzeichnis (Bibliotheken) </entry>
+                          <entry>WeeChat-Systemverzeichnis (Bibliotheken)</entry>
                         </row>
                         <row>
                           <entry><literal>weechat_sharedir</literal></entry>
