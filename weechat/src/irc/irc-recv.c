@@ -446,7 +446,17 @@ irc_recv_cmd_join (t_irc_server *server, char *host, char *nick, char *arguments
     t_irc_channel *ptr_channel;
     t_irc_nick *ptr_nick;
     char *pos;
-
+    
+    /* no host => we can't identify sender of message! */
+    if (!host)
+    {
+        irc_display_prefix (server, server->buffer, PREFIX_ERROR);
+        gui_printf_nolog (server->buffer,
+                          _("%s \"%s\" command received without host\n"),
+                          WEECHAT_ERROR, "join");
+        return -1;
+    }
+    
     if (arguments[0] == ':')
         arguments++;
     
@@ -665,8 +675,8 @@ irc_recv_cmd_kill (t_irc_server *server, char *host, char *nick, char *arguments
     {
         irc_display_prefix (server, server->buffer, PREFIX_ERROR);
         gui_printf_nolog (server->buffer,
-                          _("%s host \"%s\" not found for \"%s\" command\n"),
-                          WEECHAT_ERROR, "", "kill");
+                          _("%s host not found for \"%s\" command\n"),
+                          WEECHAT_ERROR, "kill");
         return -1;
     }
     return 0;
@@ -683,7 +693,7 @@ irc_recv_cmd_mode (t_irc_server *server, char *host, char *nick, char *arguments
     t_irc_channel *ptr_channel;
     
     /* no host => we can't identify sender of message! */
-    if (host == NULL)
+    if (!host)
     {
         irc_display_prefix (server, server->buffer, PREFIX_ERROR);
         gui_printf_nolog (server->buffer,
@@ -784,7 +794,7 @@ irc_recv_cmd_nick (t_irc_server *server, char *host, char *nick, char *arguments
     t_gui_buffer *ptr_buffer;
     
     /* no host => we can't identify sender of message! */
-    if (host == NULL)
+    if (!host)
     {
         irc_display_prefix (server, server->buffer, PREFIX_ERROR);
         gui_printf_nolog (server->buffer,
@@ -1323,7 +1333,7 @@ irc_recv_cmd_privmsg (t_irc_server *server, char *host, char *nick, char *argume
     int highlight;
     
     /* no host => we can't identify sender of message! */
-    if (host == NULL)
+    if (!host)
     {
         irc_display_prefix (server, server->buffer, PREFIX_ERROR);
         gui_printf_nolog (server->buffer,
@@ -2094,7 +2104,7 @@ irc_recv_cmd_quit (t_irc_server *server, char *host, char *nick, char *arguments
     t_irc_nick *ptr_nick;
     
     /* no host => we can't identify sender of message! */
-    if (host == NULL)
+    if (!host)
     {
         irc_display_prefix (server, server->buffer, PREFIX_ERROR);
         gui_printf_nolog (server->buffer,
@@ -3494,7 +3504,6 @@ irc_recv_cmd_329 (t_irc_server *server, char *host, char *nick, char *arguments)
     time_t datetime;
     
     /* make C compiler happy */
-    (void) host;
     (void) nick;
     
     pos_channel = strchr (arguments, ' ');
@@ -3622,7 +3631,6 @@ irc_recv_cmd_332 (t_irc_server *server, char *host, char *nick, char *arguments)
     t_gui_buffer *ptr_buffer;
     
     /* make C compiler happy */
-    (void) host;
     (void) nick;
     
     pos = strchr (arguments, ' ');
@@ -3688,7 +3696,6 @@ irc_recv_cmd_333 (t_irc_server *server, char *host, char *nick, char *arguments)
     time_t datetime;
     
     /* make C compiler happy */
-    (void) host;
     (void) nick;
     
     pos_channel = strchr (arguments, ' ');
@@ -4325,7 +4332,6 @@ irc_recv_cmd_353 (t_irc_server *server, char *host, char *nick, char *arguments)
     t_gui_buffer *ptr_buffer;
     
     /* make C compiler happy */
-    (void) host;
     (void) nick;
         
     pos = strstr (arguments, " = ");

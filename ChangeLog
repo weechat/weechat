@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-05-11
+ChangeLog - 2007-05-18
 
 
 Version 0.2.5 (under dev!):
+   * fixed crash with IRC JOIN malformed message (bug #19891)
    * fixed bug with nick prefixes on some IRC servers (bug #19854)
    * improved setup file save: now writes temporary file, then rename it
      (task #6847)

@@ -388,7 +388,7 @@
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'cyan'</entry>
-  <entry>Couleur pour les noms de machines (fenêtre de discussion)</entry>
+  <entry>Couleur pour les hôtes (fenêtre de discussion)</entry>
 </row>
 <row>
   <entry><option>col_chat_channel</option></entry>
@@ -1039,7 +1039,7 @@
   <entry>booléen</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
-  <entry>Continuer automatiquement les transferts dcc si la connexion avec la machine distante a été perdue</entry>
+  <entry>Continuer automatiquement les transferts dcc si la connexion avec l'hôte a été perdue</entry>
 </row>
 <row>
   <entry><option>proxy_use</option></entry>
@@ -1067,7 +1067,7 @@
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>
   <entry>''</entry>
-  <entry>Adresse du serveur proxy (IP ou nom)</entry>
+  <entry>Adresse du serveur proxy (IP ou nom de machine)</entry>
 </row>
 <row>
   <entry><option>proxy_port</option></entry>

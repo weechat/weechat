@@ -99,9 +99,9 @@ valeur: nombre d'entrées dans l'historique à afficher
 </programlisting>
 <command>ignore  [masque [[type | commande] [canal [serveur]]]]</command>
 <programlisting>
-ignorer des messages IRC et/ou des masques
+ignorer des messages IRC et/ou des hôtes
 
-  masque: pseudo ou masque à ignorer
+  masque: pseudo ou hôte à ignorer
     type: type de message à ignorer (action, ctcp, dcc, pv)
 commande: commande IRC
    canal: nom du canal pour le ignore
@@ -197,10 +197,10 @@ nom_alias: nom de l'alias à supprimer
 </programlisting>
 <command>unignore  [nombre | [masque [[type | commande] [canal [serveur]]]]]</command>
 <programlisting>
-supprimer le ignore des messages IRC et/ou des masques
+supprimer le ignore des messages IRC et/ou des hôtes
 
   nombre: numéro de ignore à supprimer (le nombre est affiché sur la liste des ignore)
-  masque: pseudo ou masque à ignorer
+  masque: pseudo ou hôte à ignorer
     type: type de message à ignorer (action, ctcp, dcc, pv)
 commande: commande IRC
    canal: nom du canal pour le ignore

@@ -36,10 +36,10 @@ message: message pour l'absence (si pas de message donné, le statut d'absence es
 </programlisting>
 <command>ban  [canal] [pseudo [pseudo ...]]</command>
 <programlisting>
-bannit des pseudos ou masques
+bannit des pseudos ou hôtes
 
  canal: nom du canal pour le bannissement
-pseudo: pseudo ou masque pour le bannissement
+pseudo: pseudo ou hôte pour le bannissement
 
 </programlisting>
 <command>ctcp  cible type [arguments]</command>
@@ -376,10 +376,10 @@ cible: serveur
 </programlisting>
 <command>unban  [canal] pseudo [pseudo ...]</command>
 <programlisting>
-supprime le bannissement sur des pseudos ou masques
+supprime le bannissement sur des pseudos ou hôtes
 
  canal: nom du canal pour supprimer le bannissement
-pseudo: pseudo ou masque pour supprimer le bannissement
+pseudo: pseudo ou hôte pour supprimer le bannissement
 
 </programlisting>
 <command>userhost  pseudo [pseudo ...]</command>
