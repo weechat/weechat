@@ -1,5 +1,5 @@
 #
-# UrlGrab, version 1.0, for weechat version 0.1.6
+# UrlGrab, version 1.1, for weechat version 0.2.4
 #
 #   Listens to all channels for URLs, collects them in a list, and launches
 #   them in your favourite web server on the local host or a remote server.
@@ -59,9 +59,13 @@
 #     The file where the command output (if any) is saved.  Overwritten
 #     each time you launch a new URL.  Default is ~/.weechat/urllaunch.log
 #
+#   default
+#     The command that will be run if no arguemnts to /url are given.
+#     Default is help
+#
 # Requirements:
 #
-#  - Designed to run with weechat version 1.0.6 or better.
+#  - Designed to run with weechat version 0.2.4 or better.
 #      http://weechat.flashtux.org/
 #
 # Acknowlegements:
@@ -69,6 +73,13 @@
 #  - Based on an earlier version called 'urlcollector.py' by 'kolter' of
 #    irc.freenode.net/#weechat Honestly, I just cleaned up the code a bit and
 #    made the settings a little more useful (to me).
+#
+#  - With changes by Leonid Evdokimov (weechat at darkk dot net another dot ru):
+#    http://darkk.net.ru/weechat/urlgrab.py
+#    v1.1:  added better handling of dead zombie-childs
+#           added parsing of private messages
+#           added default command setting
+#           added parsing of scrollback buffers on load
 #
 # Copyright (C) 2005 Jim Ramsay <i.am@jimramsay.com>
 #
@@ -88,16 +99,13 @@
 # USA.
 #
 
+import sys
 import os
 import weechat
+import subprocess
 
 UC_NAME="UrlGrab"
-UC_VERSION="1.0"
-
-weechat.register (UC_NAME, UC_VERSION, "", "Url collector/launcher for weechat")
-weechat.add_message_handler("privmsg", "urlGrabCheck")
-weechat.add_command_handler("url", "urlGrabMain", 
-  "Controls UrlGrab -> '/url help' for usage")
+UC_VERSION="1.1"
 
 def urlGrabPrint(message):
     weechat.prnt("-[%s]- %s" % ( UC_NAME, message ) )
@@ -114,6 +122,8 @@ class WeechatSetting:
 class UrlGrabSettings:
     def __init__(self):
         self.settings = {
+            'default':WeechatSetting('default', 'help',
+                "default command to /url to run if none given" ),
             'historysize':WeechatSetting('historysize', '10',
                 "Number of URLs to keep per channel" ),
             'method':WeechatSetting('method', 'local',
@@ -276,15 +286,22 @@ class UrlGrabber:
         if not found:
             urlGrabPrint(channel + "@" +  server + ": no entries")
 
-def urlGrabParsemsg(command):
-    infos = command.split(" ")
-    chan = infos[2]
-    message = " ".join(infos[3:])[1:]
-    return (chan, message)
+def urlGrabParsemsg(server, command):
+    # :nick!ident@host PRIVMSG dest :foobarbaz
+    l = command.split(' ')
+    mask = l[0][1:]
+    dest = l[2]
+    message = ' '.join(l[3:])[1:]
+    ###########################################
+    #nothing, info, message = command.split(":", 2)
+    #info = info.split(' ')
+    if dest == weechat.get_info('nick', server):
+        source = mask.split("!")[0]
+    else:
+        source = dest
+    return (source, message)
 
-def urlGrabCheck(server, args):
-    global urlGrab
-    chan, message = urlGrabParsemsg(args)
+def urlGrabCheckMsgline(server, chan, message):
     # Ignore output from 'tinyurl.py'
     if message.startswith( "[AKA] http://tinyurl.com" ):
         return weechat.PLUGIN_RC_OK
@@ -294,16 +311,19 @@ def urlGrabCheck(server, args):
            word[0:8] == "https://" or \
            word[0:6] == "ftp://":
             urlGrab.addUrl(word, chan, server)
-    # check for any dead children and clean them up
-    while True:
-        try:
-            mypid, status = os.waitpid(0, os.WNOHANG)        
-        except:
-            break
-        else:
-            if mypid <= 0:
-                break
+
+def urlGrabCheck(server, args):
+    global urlGrab
+    chan, message = urlGrabParsemsg(server, args)
+    urlGrabCheckMsgline(server, chan, message)
     return weechat.PLUGIN_RC_OK
+
+def urlGrabCheckOnload():
+    for buf in weechat.get_buffer_info().itervalues():
+        if len(buf['channel']):
+            lines = weechat.get_buffer_data(buf['server'], buf['channel'])
+            for line in reversed(lines):
+                urlGrabCheckMsgline(buf['server'], buf['channel'], line['data'])
 
 def urlGrabOpen(index, channel = None):
     global urlGrab, urlGrabSettings
@@ -336,30 +356,22 @@ def urlGrabOpen(index, channel = None):
             except:
                 urlGrabPrint("Fork failed!")
             if childpid == 0:
-                # in the child- Detach from tty and Exec the command
                 logfile = os.path.expanduser( urlGrabSettings.get( 'cmdlog' ) )
-                din = open("/dev/null", "r")
-                dout = open(logfile, "a")
                 try:
-                    # Redirect IO for the child
-                    os.dup2(din.fileno(), 0)
-                    os.dup2(dout.fileno(), 1)
-                    os.dup2(dout.fileno(), 2)
+                    subprocess.Popen(
+                            argl, 
+                            stdin  = open('/dev/null', 'r'),
+                            stdout = open(logfile, 'a'),
+                            stderr = subprocess.STDOUT)
                 except:
-                    dout.write( "UrlGrab: IO Redirection failed\n" )
-                    dout.close()
-                    din.close()
-                    sys.exit(1)
-                try:
-                    # Actually run the command
-                    os.execvp( argl[0], argl )
-                except:
-                    dout.write( "UrlGrab: Exec failed" )
-                    dout.close()
-                    din.close()
-                    sys.exit(1)
+                    urlGrabPrint(traceback.format_exc(None))
+                sys.exit(0)
             else:
-                # In the parent - Don't wait now, wait later.
+                # In the parent - we may wait for stub to fork again and let the init kill grand-child
+                try:
+                    os.waitpid(childpid, 0)        
+                except:
+                    pass
                 return
 
 def urlGrabList( args ):
@@ -398,50 +410,53 @@ def urlGrabMain(server, args):
     while ' ' in largs:
         largs.remove(' ')
     if len(largs) == 0:
+        largs = [urlGrabSettings.get('default')]
+    if largs[0] == 'help':
         urlGrabHelp()
-    else:
-        if largs[0] == 'help':
-            urlGrabHelp()
-        elif largs[0] == 'list':
-            urlGrabList( largs[1:] )
-        elif largs[0] == 'set':
-            try:
-                if (len(largs) == 1):
-                    urlGrabPrint( "Available settings:" )
-                    urlGrabSettings.prntall()
-                elif (len(largs) == 2):
-                    name = largs[1]
-                    urlGrabPrint( "Get %s" % name )
-                    urlGrabSettings.prnt( name )
-                elif (len(largs) > 2):
-                    name = largs[1]
-                    value = None
-                    if( largs[2] != "="):
-                        value = " ".join(largs[2:])
-                    elif( largs > 3 and largs[2] == "=" ):
-                        value = " ".join(largs[3:])
-                    urlGrabPrint( "set %s = \'%s\'" % (name, value) )
-                    if value is not None:
-                        try:
-                            urlGrabSettings.set( name, value )
-                            urlGrabSettings.prnt( name, verbose=False )
-                        except ValueError, msg:
-                            weechat.prnt( "  Failed: %s" % msg )
-                    else:
-                        weechat.prnt( "  Failed: No value given" )
-            except KeyError:
-                weechat.prnt( "  Failed: Unrecognized parameter '%s'" % name )
-        else:
-            try:
-                no = int(largs[0])
-                if len(largs) > 1:
-                    urlGrabOpen(no, largs[1])
+    elif largs[0] == 'list':
+        urlGrabList( largs[1:] )
+    elif largs[0] == 'set':
+        try:
+            if (len(largs) == 1):
+                urlGrabPrint( "Available settings:" )
+                urlGrabSettings.prntall()
+            elif (len(largs) == 2):
+                name = largs[1]
+                urlGrabPrint( "Get %s" % name )
+                urlGrabSettings.prnt( name )
+            elif (len(largs) > 2):
+                name = largs[1]
+                value = None
+                if( largs[2] != "="):
+                    value = " ".join(largs[2:])
+                elif( largs > 3 and largs[2] == "=" ):
+                    value = " ".join(largs[3:])
+                urlGrabPrint( "set %s = \'%s\'" % (name, value) )
+                if value is not None:
+                    try:
+                        urlGrabSettings.set( name, value )
+                        urlGrabSettings.prnt( name, verbose=False )
+                    except ValueError, msg:
+                        weechat.prnt( "  Failed: %s" % msg )
                 else:
-                    urlGrabOpen(no)
-            except ValueError:
-                urlGrabPrint( "Unknown command '%s'.  Try '/url help' for usage" % largs[0])
+                    weechat.prnt( "  Failed: No value given" )
+        except KeyError:
+            weechat.prnt( "  Failed: Unrecognized parameter '%s'" % name )
+    else:
+        try:
+            no = int(largs[0])
+            if len(largs) > 1:
+                urlGrabOpen(no, largs[1])
+            else:
+                urlGrabOpen(no)
+        except ValueError:
+            urlGrabPrint( "Unknown command '%s'.  Try '/url help' for usage" % largs[0])
     return weechat.PLUGIN_RC_OK
 
-# Initialize global variables
-urlGrabSettings = UrlGrabSettings()
-urlGrab = UrlGrabber( urlGrabSettings.get('historysize') )
+if weechat.register (UC_NAME, UC_VERSION, "", "Url collector/launcher for weechat"):
+    urlGrabSettings = UrlGrabSettings()
+    urlGrab = UrlGrabber( urlGrabSettings.get('historysize') )
+    urlGrabCheckOnload()
+    weechat.add_message_handler("privmsg", "urlGrabCheck")
+    weechat.add_command_handler("url", "urlGrabMain", "Controls UrlGrab -> '/url help' for usage")
+
