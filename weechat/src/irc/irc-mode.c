@@ -117,15 +117,17 @@ irc_mode_channel_set (t_irc_channel *channel, char *modes)
                     break;
                 default:
                     set_flag = irc_mode_channel_get_flag (modes, pos);
-                    ptr_arg = ((argc > 0) && (current_arg >= 0)) ?
-                        argv[current_arg--] : NULL;
                     switch (pos[0])
                     {
                         case 'a': /* unrealircd specific flag */
+                            ptr_arg = ((argc > 0) && (current_arg >= 0)) ?
+                                argv[current_arg--] : NULL;
                             irc_mode_channel_set_nick (channel, ptr_arg,
                                                        set_flag, NICK_CHANADMIN);
                             break;
                         case 'h':
+                            ptr_arg = ((argc > 0) && (current_arg >= 0)) ?
+                                argv[current_arg--] : NULL;
                             irc_mode_channel_set_nick (channel, ptr_arg,
                                                        set_flag, NICK_HALFOP);
                             break;
@@ -135,24 +137,40 @@ irc_mode_channel_set (t_irc_channel *channel, char *modes)
                                 free (channel->key);
                                 channel->key = NULL;
                             }
-                            if ((set_flag == '+') && ptr_arg)
-                                channel->key = strdup (ptr_arg);
+                            if (set_flag == '+')
+                            {
+                                ptr_arg = ((argc > 0) && (current_arg >= 0)) ?
+                                    argv[current_arg--] : NULL;
+                                if (ptr_arg)
+                                    channel->key = strdup (ptr_arg);
+                            }
                             break;
                         case 'l':
                             if (set_flag == '-')
                                 channel->limit = 0;
-                            if ((set_flag == '+') && ptr_arg)
-                                channel->limit = atoi (ptr_arg);
+                            if (set_flag == '+')
+                            {
+                                ptr_arg = ((argc > 0) && (current_arg >= 0)) ?
+                                    argv[current_arg--] : NULL;
+                                if (ptr_arg)
+                                    channel->limit = atoi (ptr_arg);
+                            }
                             break;
                         case 'o':
+                            ptr_arg = ((argc > 0) && (current_arg >= 0)) ?
+                                argv[current_arg--] : NULL;
                             irc_mode_channel_set_nick (channel, ptr_arg,
                                                        set_flag, NICK_OP);
                             break;
                         case 'q': /* unrealircd specific flag */
+                            ptr_arg = ((argc > 0) && (current_arg >= 0)) ?
+                                argv[current_arg--] : NULL;
                             irc_mode_channel_set_nick (channel, ptr_arg,
                                                        set_flag, NICK_CHANOWNER);
                             break;
                         case 'v':
+                            ptr_arg = ((argc > 0) && (current_arg >= 0)) ?
+                                argv[current_arg--] : NULL;
                             irc_mode_channel_set_nick (channel, ptr_arg,
                                                        set_flag, NICK_VOICE);
                             break;
