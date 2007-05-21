@@ -33,6 +33,14 @@
 #include <iconv.h>
 #endif
 
+#ifndef ICONV_CONST
+  #ifdef ICONV_2ARG_IS_CONST
+    #define ICONV_CONST const
+  #else
+    #define ICONV_CONST
+  #endif
+#endif
+
 #include "weechat.h"
 #include "utf8.h"
 #include "weeconfig.h"

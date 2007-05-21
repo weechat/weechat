@@ -1,0 +1,95 @@
+# Copyright (c) 2003-2007 FlashCode <flashcode@flashtux.org>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+#
+
+ADD_DEFINITIONS(-DHAVE_CONFIG_H)
+
+INCLUDE(CheckIncludeFiles)
+INCLUDE(CheckFunctionExists)
+
+CHECK_INCLUDE_FILES("arpa/inet.h" HAVE_ARPA_INET_H)
+CHECK_INCLUDE_FILES("libintl.h" HAVE_LIBINTL_H)
+CHECK_INCLUDE_FILES("limits.h" HAVE_LIMITS_H)
+CHECK_INCLUDE_FILES("locale.h" HAVE_LOCALE_H)
+CHECK_INCLUDE_FILES("netdb.h" HAVE_NETDB_H)
+CHECK_INCLUDE_FILES("netinet/in.h" HAVE_NETINET_IN_H)
+CHECK_INCLUDE_FILES("stdlib.h" HAVE_STDLIB_H)
+CHECK_INCLUDE_FILES("string.h" HAVE_STRING_H)
+CHECK_INCLUDE_FILES("sys/socket.h" HAVE_SYS_SOCKET_H)
+CHECK_INCLUDE_FILES("sys/time.h" HAVE_SYS_TIME_H)
+CHECK_INCLUDE_FILES("sys/types.h" HAVE_SYS_TYPES_H)
+CHECK_INCLUDE_FILES("unistd.h" HAVE_UNISTD_H)
+CHECK_INCLUDE_FILES("pwd.h" HAVE_PWD_H)
+CHECK_INCLUDE_FILES("errno.h" HAVE_ERRNO_H)
+CHECK_INCLUDE_FILES("wchar.h" HAVE_WCHAR_H)
+CHECK_INCLUDE_FILES("langinfo.h" HAVE_LANGINFO_CODESET)
+
+CHECK_FUNCTION_EXISTS(gethostbyname HAVE_GETHOSTBYNAME)
+CHECK_FUNCTION_EXISTS(gethostname HAVE_GETHOSTNAME)
+CHECK_FUNCTION_EXISTS(getsockname HAVE_GETSOCKNAME)
+CHECK_FUNCTION_EXISTS(gettimeofday HAVE_GETTIMEOFDAY)
+CHECK_FUNCTION_EXISTS(inet_ntoa HAVE_INET_NTOA)
+CHECK_FUNCTION_EXISTS(memset HAVE_MEMSET)
+CHECK_FUNCTION_EXISTS(mkdir HAVE_MKDIR)
+CHECK_FUNCTION_EXISTS(select HAVE_SELECT)
+CHECK_FUNCTION_EXISTS(setlocale HAVE_SETLOCALE)
+CHECK_FUNCTION_EXISTS(socket HAVE_SOCKET)
+CHECK_FUNCTION_EXISTS(strcasecmp HAVE_STRCASECMP)
+CHECK_FUNCTION_EXISTS(strchr HAVE_STRCHR)
+CHECK_FUNCTION_EXISTS(strdup HAVE_STRDUP)
+CHECK_FUNCTION_EXISTS(strndup HAVE_STRNDUP)
+CHECK_FUNCTION_EXISTS(strncasecmp HAVE_STRNCASECMP)
+CHECK_FUNCTION_EXISTS(strpbrk HAVE_STRPBRK)
+CHECK_FUNCTION_EXISTS(strrchr HAVE_STRRCHR)
+CHECK_FUNCTION_EXISTS(strstr HAVE_STRSTR)
+
+
+#needs to be splitted in subdirectories
+# FIXME: weechat_gui_common MUST be the first lib in the list
+SET(STATIC_LIBS weechat_gui_common)
+
+# Check for Gettext
+IF(NOT DISABLE_NLS)
+  FIND_PACKAGE(Gettext)
+  IF(GETTEXT_FOUND)
+    ADD_DEFINITIONS(-DENABLE_NLS)
+  ENDIF(GETTEXT_FOUND)
+ENDIF(NOT DISABLE_NLS)
+
+# Check for GnuTLS
+IF(NOT DISABLE_GNUTLS)
+  FIND_PACKAGE(GnuTLS)
+  
+  IF(GNUTLS_FOUND)
+    STRING(REGEX REPLACE "/[^/]*$" "" GNUTLS_LIBRARY_PATH "${GNUTLS_LIBRARY}")
+    ADD_DEFINITIONS(-DHAVE_GNUTLS)
+    INCLUDE_DIRECTORIES(${GNUTLS_INCLUDE_PATH})
+    SET(CMAKE_C_LINK_FLAGS "${CMAKE_C_LINK_FLAGS} -L${GNUTLS_LIBRARY_PATH}")
+    LIST(APPEND EXTRA_LIBS gnutls)
+  ENDIF(GNUTLS_FOUND)
+ENDIF(NOT DISABLE_GNUTLS)
+
+IF(NOT DISABLE_PLUGINS)
+  ADD_DEFINITIONS(-DPLUGINS)
+  LIST(APPEND STATIC_LIBS weechat_plugins)
+  ADD_SUBDIRECTORY( plugins )
+ENDIF(NOT DISABLE_PLUGINS)
+
+ADD_SUBDIRECTORY( common )
+List(APPEND STATIC_LIBS weechat_main)
+ADD_SUBDIRECTORY( irc )
+LIST(APPEND STATIC_LIBS weechat_irc)
+ADD_SUBDIRECTORY( gui )
