@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-05-20
+ChangeLog - 2007-05-21
 
 
 Version 0.2.5 (under dev!):
+   * added cmake for weechat compile (patch #5943)
    * fixed IRC mode parsing when receiving modes with arguments (bug #19902)
    * fixed crash with IRC JOIN malformed message (bug #19891)
    * fixed bug with nick prefixes on some IRC servers (bug #19854)
