@@ -178,7 +178,7 @@ weechat_perl_exec (t_weechat_plugin *plugin,
     if (SvTRUE (ERRSV))
     {
         plugin->print_server (plugin, "Perl error: %s", SvPV_nolen (ERRSV));
-        POPs; /* poping the 'undef' */	
+        (void) POPs; /* poping the 'undef' */	
 	mem_err = 0;
     }
     else
