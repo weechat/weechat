@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-05-21
+ChangeLog - 2007-05-22
 
 
 Version 0.2.5 (under dev!):
+   * fixed bug with "/buffer query_name", added server and channel completion
+     for /buffer command (bug #19928)
    * added cmake for weechat compile (patch #5943)
    * fixed IRC mode parsing when receiving modes with arguments (bug #19902)
    * fixed crash with IRC JOIN malformed message (bug #19891)

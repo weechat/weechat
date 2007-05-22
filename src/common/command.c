@@ -71,7 +71,7 @@ t_weechat_command weechat_commands[] =
        "server,\n"
        "channel: jump to buffer by server and/or channel name\n"
        " number: jump to buffer by number"),
-    "move|close|list|notify", 0, MAX_ARGS, 0, NULL, weechat_cmd_buffer },
+    "move|close|list|notify|%S|%C %S|%C", 0, MAX_ARGS, 0, NULL, weechat_cmd_buffer },
   { "builtin", N_("launch WeeChat/IRC builtin command (do not look at plugins handlers or aliases)"),
     N_("command"),
     N_("command: command to execute (a '/' is automatically added if not found at beginning of command)\n"),
@@ -1418,10 +1418,11 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                         ptr_buffer = gui_buffer_search (argv[0], argv[1]);
                     else
                     {
-                        if (irc_channel_is_channel (argv[0]))
-                            ptr_buffer = gui_buffer_search (NULL, argv[0]);
-                        else
+                        ptr_server = irc_server_search (argv[0]);
+                        if (ptr_server)
                             ptr_buffer = gui_buffer_search (argv[0], NULL);
+                        else
+                            ptr_buffer = gui_buffer_search (NULL, argv[0]);
                     }
                     if (ptr_buffer)
                     {
