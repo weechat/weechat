@@ -5,6 +5,7 @@ ChangeLog - 2007-05-22
 
 
 Version 0.2.5 (under dev!):
+   * improved IRC long message split: use word boundary (task #6685)
    * removed ":" for unknown IRC commands before arguments (bug #19929)
    * fixed "%C" completion: now completes with all channels of all servers
    * fixed bug with "/buffer query_name", added server and channel completion

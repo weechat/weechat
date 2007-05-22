@@ -757,30 +757,39 @@ void
 user_message (t_irc_server *server, t_gui_buffer *buffer, char *text)
 {
     int max_length;
-    char *pos, *pos_next, *pos_max, *next, saved_char;
+    char *pos, *pos_next, *pos_max, *next, saved_char, *last_space;
 
     if (!text || !text[0])
         return;
+
+    next = NULL;
+    last_space = NULL;
+    saved_char = '\0';
     
     max_length = 512 - 16 - 65 - 10 - strlen (server->nick) -
         strlen (CHANNEL(buffer)->name);
     
-    next = NULL;
-    saved_char = '\0';
-    if ((int)strlen (text) > max_length)
+    if (max_length > 0)
     {
-        pos = text;
-        pos_max = text + max_length;
-        while (pos && pos[0])
+        if ((int)strlen (text) > max_length)
         {
-            pos_next = utf8_next_char (pos);
-            if (pos_next > pos_max)
-                break;
-            pos = pos_next;
+            pos = text;
+            pos_max = text + max_length;
+            while (pos && pos[0])
+            {
+                if (pos[0] == ' ')
+                    last_space = pos;
+                pos_next = utf8_next_char (pos);
+                if (pos_next > pos_max)
+                    break;
+                pos = pos_next;
+            }
+            if (last_space && (last_space < pos))
+                pos = last_space + 1;
+            saved_char = pos[0];
+            pos[0] = '\0';
+            next = pos;
         }
-        saved_char = pos[0];
-        pos[0] = '\0';
-        next = pos;
     }
     
     irc_server_sendf_queued (server, "PRIVMSG %s :%s", CHANNEL(buffer)->name, text);
