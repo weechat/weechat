@@ -667,7 +667,7 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
             if (cfg_irc_send_unknown_commands)
             {
                 if (ptr_args)
-                    unknown_command = (char *)malloc (strlen (command + 1) + 2 + strlen (ptr_args) + 1);
+                    unknown_command = (char *)malloc (strlen (command + 1) + 1 + strlen (ptr_args) + 1);
                 else
                     unknown_command = (char *)malloc (strlen (command + 1) + 1);
                 
@@ -676,7 +676,7 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                     strcpy (unknown_command, command + 1);
                     if (ptr_args)
                     {
-                        strcat (unknown_command, " :");
+                        strcat (unknown_command, " ");
                         strcat (unknown_command, ptr_args);
                     }
                     irc_send_cmd_quote (server, channel, unknown_command);
