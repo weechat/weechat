@@ -2294,7 +2294,7 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
                         </row>
                         <row>
                           <entry><literal>%C</literal></entry>
-                          <entry>channels of current server</entry>
+                          <entry>all channels (including queries)</entry>
                         </row>
                         <row>
                           <entry><literal>%f</literal></entry>

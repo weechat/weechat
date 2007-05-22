@@ -340,21 +340,26 @@ completion_list_add_channel (t_completion *completion)
 }
 
 /*
- * completion_list_add_server_channels: add server channels to completion list
+ * completion_list_add_channels: add server channels to completion list
  */
 
 void
-completion_list_add_server_channels (t_completion *completion)
+completion_list_add_channels (t_completion *completion)
 {
+    t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
     
     if (completion->server)
     {
-        for (ptr_channel = ((t_irc_server *)(completion->server))->channels;
-             ptr_channel; ptr_channel = ptr_channel->next_channel)
+        for (ptr_server = irc_servers; ptr_server;
+             ptr_server = ptr_server->next_server)
         {
-            completion_list_add (completion, ptr_channel->name,
-                                 0, WEELIST_POS_SORT);
+            for (ptr_channel = ptr_server->channels;
+                 ptr_channel; ptr_channel = ptr_channel->next_channel)
+            {
+                completion_list_add (completion, ptr_channel->name,
+                                     0, WEELIST_POS_SORT);
+            }
         }
     }
 }
@@ -969,7 +974,7 @@ completion_build_list_template (t_completion *completion, char *template)
                             completion_list_add_channel (completion);
                             break;
                         case 'C': /* all channels */
-                            completion_list_add_server_channels (completion);
+                            completion_list_add_channels (completion);
                             break;
                         case 'f': /* filename */
                             completion_list_add_filename (completion);
@@ -1521,7 +1526,7 @@ completion_auto (t_completion *completion)
     if (irc_channel_is_channel (completion->base_word))
     {
         if (!completion->completion_list)
-            completion_list_add_server_channels (completion);
+            completion_list_add_channels (completion);
         completion_command_arg (completion, 0);
         return;
     }

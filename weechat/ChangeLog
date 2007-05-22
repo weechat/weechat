@@ -6,6 +6,7 @@ ChangeLog - 2007-05-22
 
 Version 0.2.5 (under dev!):
    * removed ":" for unknown IRC commands before arguments (bug #19929)
+   * fixed "%C" completion: now completes with all channels of all servers
    * fixed bug with "/buffer query_name", added server and channel completion
      for /buffer command (bug #19928)
    * added cmake for weechat compile (patch #5943)
