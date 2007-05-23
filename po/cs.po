@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.5-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-05-23 10:07+0200\n"
-"PO-Revision-Date: 2007-04-24 12:43+0200\n"
+"POT-Creation-Date: 2007-05-23 13:49+0200\n"
+"PO-Revision-Date: 2007-05-23 13:49+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2709,7 +2709,7 @@ msgstr ""
 msgid "connect to server(s)"
 msgstr "připojit se k serveru/serverům"
 
-#: src/common/command.c:85 src/common/command.c:155
+#: src/common/command.c:85 src/common/command.c:90 src/common/command.c:155
 msgid "[-all | servername [servername ...]]"
 msgstr "[-all | jméno_serveru [jméno_serveru ...]]"
 
@@ -2724,10 +2724,6 @@ msgstr ""
 #: src/common/command.c:89
 msgid "disconnect from server(s)"
 msgstr "odpojit ze serveru/serverů"
-
-#: src/common/command.c:90
-msgid "[-all | servername [servername...]]"
-msgstr "[-all | jméno_serveru [jméno_serveru ...]]"
 
 #: src/common/command.c:91
 msgid ""
@@ -5625,6 +5621,3 @@ msgstr ""
 #: src/common/weeconfig.c:2400
 msgid "Saving config to disk\n"
 msgstr "Ukládám konfiguraci na disk\n"
-
-#~ msgid "unknown"
-#~ msgstr "neznámý"

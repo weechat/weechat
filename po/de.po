@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.5-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-05-23 10:07+0200\n"
+"POT-Creation-Date: 2007-05-23 13:49+0200\n"
 "PO-Revision-Date: 2007-04-24 12:43+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team:  <de@li.org>\n"
@@ -2723,7 +2723,7 @@ msgstr ""
 msgid "connect to server(s)"
 msgstr "mit einem Server verbinden"
 
-#: src/common/command.c:85 src/common/command.c:155
+#: src/common/command.c:85 src/common/command.c:90 src/common/command.c:155
 #, fuzzy
 msgid "[-all | servername [servername ...]]"
 msgstr "Servername: Zielserver"
@@ -2739,11 +2739,6 @@ msgstr "Servername: Zielserver"
 #, fuzzy
 msgid "disconnect from server(s)"
 msgstr "Serververbindung trennen"
-
-#: src/common/command.c:90
-#, fuzzy
-msgid "[-all | servername [servername...]]"
-msgstr "Servername: Zielserver"
 
 #: src/common/command.c:91
 #, fuzzy
@@ -5687,6 +5682,10 @@ msgstr ""
 #: src/common/weeconfig.c:2400
 msgid "Saving config to disk\n"
 msgstr "Konfiguration wird gespeichert\n"
+
+#, fuzzy
+#~ msgid "[-all | servername [servername...]]"
+#~ msgstr "Servername: Zielserver"
 
 #~ msgid "unknown"
 #~ msgstr "unbekannt"

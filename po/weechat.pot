@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-05-23 10:07+0200\n"
+"POT-Creation-Date: 2007-05-23 13:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2540,7 +2540,7 @@ msgstr ""
 msgid "connect to server(s)"
 msgstr ""
 
-#: src/common/command.c:85 src/common/command.c:155
+#: src/common/command.c:85 src/common/command.c:90 src/common/command.c:155
 msgid "[-all | servername [servername ...]]"
 msgstr ""
 
@@ -2552,10 +2552,6 @@ msgstr ""
 
 #: src/common/command.c:89
 msgid "disconnect from server(s)"
-msgstr ""
-
-#: src/common/command.c:90
-msgid "[-all | servername [servername...]]"
 msgstr ""
 
 #: src/common/command.c:91

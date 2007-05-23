@@ -87,7 +87,7 @@ t_weechat_command weechat_commands[] =
        "servername: server name to connect"),
     "%S|-all", 0, MAX_ARGS, 0, weechat_cmd_connect, NULL },
   { "disconnect", N_("disconnect from server(s)"),
-    N_("[-all | servername [servername...]]"),
+    N_("[-all | servername [servername ...]]"),
     N_("      -all: disconnect from all servers\n"
        "servername: server name to disconnect"),
     "%S|-all", 0, MAX_ARGS, 0, weechat_cmd_disconnect, NULL },
