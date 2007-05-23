@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: WeeChat 0.2.5-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2007-05-23 13:49+0200\n"
-"PO-Revision-Date: 2007-04-24 12:43+0200\n"
+"PO-Revision-Date: 2007-05-23 15:42+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1481,9 +1481,9 @@ msgid "%s%s%s has killed %s%s%s from server"
 msgstr "%s%s%s убил %s%s%s"
 
 #: src/irc/irc-recv.c:678
-#, fuzzy, c-format
+#, c-format
 msgid "%s host not found for \"%s\" command\n"
-msgstr "%s хост \"%s\" не найден для команды \"%s\"\n"
+msgstr "%s хост не найден для команды \"%s\"\n"
 
 #: src/irc/irc-recv.c:710
 #, c-format
@@ -1800,26 +1800,27 @@ msgid "%s[%s%s%s] %s%s%s banned\n"
 msgstr "%s[%s%s%s] %s%s%s забанен\n"
 
 #: src/irc/irc-recv.c:4882
-#, fuzzy, c-format
+#, c-format
 msgid "%s: trying 2nd nickname \"%s\"\n"
-msgstr "%s: ник \"%s\" уже используется, пробую второй ник \"%s\"\n"
+msgstr "%s: пробую второй ник \"%s\"\n"
 
 #: src/irc/irc-recv.c:4893
-#, fuzzy, c-format
+#, c-format
 msgid "%s: trying 3rd nickname \"%s\"\n"
-msgstr "%s: ник \"%s\" уже используется, пробую третий ник \"%s\"\n"
+msgstr "%s: пробую третий ник \"%s\"\n"
 
 #: src/irc/irc-recv.c:4904
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s: all declared nicknames are already in use or invalid, closing connection "
 "with server!\n"
-msgstr "%s: все предложенные ники заняты, отключаюсь от сервера!\n"
+msgstr ""
+"%s: все предложенные ники заняты или непригодны, отключаюсь от сервера!\n"
 
 #: src/irc/irc-recv.c:4915
-#, fuzzy, c-format
+#, c-format
 msgid "%s: trying 1st nickname \"%s\"\n"
-msgstr "%s: ник \"%s\" уже используется, пробую первый ник \"%s\"\n"
+msgstr "%s: пробую первый ник \"%s\"\n"
 
 #: src/irc/irc-recv.c:4942
 #, c-format
@@ -2695,33 +2696,32 @@ msgstr ""
 "номер: очистить буфер с определённым номером"
 
 #: src/common/command.c:84
-#, fuzzy
 msgid "connect to server(s)"
-msgstr "подключиться к серверу"
+msgstr "подключиться к серверу(-ам)"
 
 #: src/common/command.c:85 src/common/command.c:90 src/common/command.c:155
-#, fuzzy
 msgid "[-all | servername [servername ...]]"
-msgstr "сервер: название сервера для подключения"
+msgstr "[-all | сервер [сервер ...]]"
 
 #: src/common/command.c:86
-#, fuzzy
 msgid ""
 "      -all: connect to all servers\n"
 "servername: server name to connect"
-msgstr "сервер: название сервера для подключения"
+msgstr ""
+"  -all: подключиться ко всем серверам\n"
+"сервер: название сервера для подключения"
 
 #: src/common/command.c:89
-#, fuzzy
 msgid "disconnect from server(s)"
-msgstr "отключиться от сервера"
+msgstr "отключиться от сервера(-ов)"
 
 #: src/common/command.c:91
-#, fuzzy
 msgid ""
 "      -all: disconnect from all servers\n"
 "servername: server name to disconnect"
-msgstr "сервер: название сервера для подключения"
+msgstr ""
+"  -all: отключиться от всех серверов\n"
+"сервер: название сервера для отключения"
 
 #: src/common/command.c:94
 msgid "starts DCC (file or chat) or close chat"
@@ -2882,16 +2882,16 @@ msgstr ""
 "Команда /plugin без аргументов перечисляет загруженные pluginы."
 
 #: src/common/command.c:154
-#, fuzzy
 msgid "reconnect to server(s)"
-msgstr "подключиться к серверу"
+msgstr "переподключиться к серверу(-ам)"
 
 #: src/common/command.c:156
-#, fuzzy
 msgid ""
 "      -all: reconnect to all servers\n"
 "servername: server name to reconnect"
-msgstr "сервер: название сервера для подключения"
+msgstr ""
+"  -all: переподключиться ко всем серверам\n"
+"сервер: название сервера для переподключения"
 
 #: src/common/command.c:159
 msgid "list, add or remove servers"
@@ -4506,13 +4506,12 @@ msgid "chars ignored for nick completion"
 msgstr "символы, игнорируемые при автодополнении ника"
 
 #: src/common/weeconfig.c:226
-#, fuzzy
 msgid "smart completion for nicks"
-msgstr "цвет ника"
+msgstr "умное дополнение ников"
 
 #: src/common/weeconfig.c:227
 msgid "smart completion for nicks (completes with last speakers first)"
-msgstr ""
+msgstr "умное дополнение ников (начинает перебор с последних собеседников)"
 
 #: src/common/weeconfig.c:230 src/common/weeconfig.c:231
 msgid "complete only with first nick found"
@@ -4818,9 +4817,8 @@ msgid "color for input text (delimiters)"
 msgstr "цвет вводимого текста (разделители)"
 
 #: src/common/weeconfig.c:518 src/common/weeconfig.c:519
-#, fuzzy
 msgid "color for text not found"
-msgstr "цвет времени в окне чата"
+msgstr "цвет сообщения \"не найдено\""
 
 #: src/common/weeconfig.c:522 src/common/weeconfig.c:523
 msgid "background for input window"
