@@ -552,6 +552,7 @@ gui_keyboard_pressed (char *key_str)
     int first_key;
     t_gui_key *ptr_key;
     char *buffer_before_key;
+    char **commands, **ptr_cmd;
     
     /* add key to buffer */
     first_key = (gui_key_buffer[0] == '\0');
@@ -576,9 +577,19 @@ gui_keyboard_pressed (char *key_str)
                 strdup (gui_current_window->buffer->input_buffer) : strdup ("");
             gui_key_buffer[0] = '\0';
             if (ptr_key->command)
-                user_command (SERVER(gui_current_window->buffer),
-                              CHANNEL(gui_current_window->buffer),
-                              ptr_key->command, 0);
+            {
+                commands = split_multi_command (ptr_key->command, ';');
+                if (commands)
+                {
+                    for (ptr_cmd = commands; *ptr_cmd; ptr_cmd++)
+                    {
+                        user_command (SERVER(gui_current_window->buffer),
+                                      CHANNEL(gui_current_window->buffer),
+                                      *ptr_cmd, 0);
+                    }
+                    free_multi_command (commands);
+                }
+            }
             else
                 (void)(ptr_key->function)(gui_current_window, ptr_key->args);
 #ifdef PLUGINS
