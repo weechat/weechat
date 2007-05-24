@@ -282,6 +282,9 @@ void
 completion_list_add (t_completion *completion, char *word,
                      int nick_completion, int position)
 {
+    if (!word || !word[0])
+        return;
+    
     if (!completion->base_word || !completion->base_word[0]
         || (nick_completion && (completion_nickncmp (completion->base_word, word,
                                                             strlen (completion->base_word)) == 0))
@@ -544,11 +547,9 @@ void
 completion_list_add_self_nick (t_completion *completion)
 {
     if (completion->server)
-    {
         completion_list_add (completion,
                              ((t_irc_server *)(completion->server))->nick,
                              0, WEELIST_POS_SORT);
-    }
 }
 
 /*
@@ -583,11 +584,6 @@ completion_list_add_server_nicks (t_completion *completion)
             }
         }
         
-        /* add self nick at the end */
-        completion_list_add (completion,
-                             ((t_irc_server *)(completion->server))->nick,
-                             1, WEELIST_POS_END);
-        
         /* add current channel nicks at beginning */
         if (completion->channel && (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_CHANNEL))
         {
@@ -598,6 +594,12 @@ completion_list_add_server_nicks (t_completion *completion)
                                      1, WEELIST_POS_BEGINNING);
             }
         }
+        
+        /* add self nick at the end */
+        if (completion->server)
+            completion_list_add (completion,
+                                 ((t_irc_server *)(completion->server))->nick,
+                                 1, WEELIST_POS_END);
         
         completion->arg_is_nick = 1;
     }
@@ -625,12 +627,6 @@ completion_list_add_channel_nicks (t_completion *completion)
                                      1, WEELIST_POS_SORT);
             }
             
-            /* add self nick at the end */
-            if (completion->server)
-                completion_list_add (completion,
-                                     ((t_irc_server *)(completion->server))->nick,
-                                     1, WEELIST_POS_END);
-            
             /* add nicks speaking recently on this channel */
             if (cfg_look_nick_completion_smart)
             {
@@ -643,6 +639,12 @@ completion_list_add_channel_nicks (t_completion *completion)
                                              1, WEELIST_POS_BEGINNING);
                 }
             }
+            
+            /* add self nick at the end */
+            if (completion->server)
+                completion_list_add (completion,
+                                     ((t_irc_server *)(completion->server))->nick,
+                                     1, WEELIST_POS_END);
         }
         if ((((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_PRIVATE)
             || (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_DCC_CHAT))
@@ -1469,12 +1471,7 @@ completion_nick (t_completion *completion)
                          ptr_nick->nick,
                          WEELIST_POS_SORT);
         }
-        /* add self nick at the end */
-        if (completion->server)
-            weelist_add (&(completion->completion_list),
-                         &(completion->last_completion),
-                         ((t_irc_server *)(completion->server))->nick,
-                         WEELIST_POS_END);
+        
         /* add nicks speaking recently on this channel */
         if (cfg_look_nick_completion_smart)
         {
@@ -1489,6 +1486,14 @@ completion_nick (t_completion *completion)
                                  WEELIST_POS_BEGINNING);
             }
         }
+        
+        /* add self nick at the end */
+        if (completion->server)
+            weelist_add (&(completion->completion_list),
+                         &(completion->last_completion),
+                         ((t_irc_server *)(completion->server))->nick,
+                         WEELIST_POS_END);
+        
         ((t_irc_channel *)(completion->channel))->nick_completion_reset = 0;
     }
     
