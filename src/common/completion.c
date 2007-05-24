@@ -552,6 +552,58 @@ completion_list_add_self_nick (t_completion *completion)
 }
 
 /*
+ * completion_list_add_server_nicks: add server nicks to completion list
+ */
+
+void
+completion_list_add_server_nicks (t_completion *completion)
+{
+    t_irc_server *ptr_server;
+    t_irc_channel *ptr_channel;
+    t_irc_nick *ptr_nick;
+    
+    if (completion->server)
+    {
+        for (ptr_server = (t_irc_server *)(completion->server); ptr_server;
+             ptr_server = ptr_server->next_server)
+        {
+            for (ptr_channel = ptr_server->channels; ptr_channel;
+                 ptr_channel = ptr_channel->next_channel)
+            {
+                if ((!completion->channel || (t_irc_channel *)(completion->channel) != ptr_channel)
+                    && (ptr_channel->type == CHANNEL_TYPE_CHANNEL))
+                {
+                    for (ptr_nick = ptr_channel->nicks; ptr_nick;
+                         ptr_nick = ptr_nick->next_nick)
+                    {
+                        completion_list_add (completion, ptr_nick->nick,
+                                             1, WEELIST_POS_SORT);
+                    }
+                }
+            }
+        }
+        
+        /* add self nick at the end */
+        completion_list_add (completion,
+                             ((t_irc_server *)(completion->server))->nick,
+                             1, WEELIST_POS_END);
+        
+        /* add current channel nicks at beginning */
+        if (completion->channel && (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_CHANNEL))
+        {
+            for (ptr_nick = ((t_irc_channel *)(completion->channel))->nicks;
+                 ptr_nick; ptr_nick = ptr_nick->next_nick)
+            {
+                completion_list_add (completion, ptr_nick->nick,
+                                     1, WEELIST_POS_BEGINNING);
+            }
+        }
+        
+        completion->arg_is_nick = 1;
+    }
+}
+
+/*
  * completion_list_add_channel_nicks: add channel nicks to completion list
  */
 
@@ -572,11 +624,13 @@ completion_list_add_channel_nicks (t_completion *completion)
                 completion_list_add (completion, ptr_nick->nick,
                                      1, WEELIST_POS_SORT);
             }
+            
             /* add self nick at the end */
             if (completion->server)
                 completion_list_add (completion,
                                      ((t_irc_server *)(completion->server))->nick,
                                      1, WEELIST_POS_END);
+            
             /* add nicks speaking recently on this channel */
             if (cfg_look_nick_completion_smart)
             {
@@ -993,6 +1047,9 @@ completion_build_list_template (t_completion *completion, char *template)
                             break;
                         case 'm': /* self nickname */
                             completion_list_add_self_nick (completion);
+                            break;
+                        case 'M': /* nicks of current server (all open channels) */
+                            completion_list_add_server_nicks (completion);
                             break;
                         case 'n': /* channel nicks */
                             completion_list_add_channel_nicks (completion);

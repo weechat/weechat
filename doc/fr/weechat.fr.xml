@@ -2378,6 +2378,13 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
                           <entry>pseudo sur le serveur courant</entry>
                         </row>
                         <row>
+                          <entry><literal>%M</literal></entry>
+                          <entry>
+                            pseudos sur le serveur courant
+                            (tous les canaux ouverts)
+                          </entry>
+                        </row>
+                        <row>
                           <entry><literal>%n</literal></entry>
                           <entry>pseudos du canal courant</entry>
                         </row>

@@ -5,6 +5,8 @@ ChangeLog - 2007-05-23
 
 
 Version 0.2.5 (under dev!):
+   * added "%M" for completion with nicks of current server (nicks on open
+     channels) (task #6931)
    * improved key bindings: now possible to bind a key on many commands,
      separated by semicolon (task #5444)
    * improved IRC long message split: use word boundary (task #6685)

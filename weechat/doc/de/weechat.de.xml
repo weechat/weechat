@@ -2306,6 +2306,13 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
                           <entry>Nicknamen des gegenwärtigen Servers</entry>
                         </row>
                         <row>
+                          <entry><literal>%M</literal></entry>
+                          <!-- TRANSLATION NEEDED -->
+                          <entry>
+                            nicks on current server (on all open channels)
+                          </entry>
+                        </row>
+                        <row>
                           <entry><literal>%n</literal></entry>
                           <entry>Nicknamen des gegenwärtigen Channels</entry>
                         </row>
