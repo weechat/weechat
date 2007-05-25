@@ -1094,6 +1094,9 @@ irc_recv_cmd_part (t_irc_server *server, char *host, char *nick, char *arguments
         return -1;
     }
     
+    if (arguments[0] == ':')
+        arguments++;
+    
     pos_args = strchr (arguments, ' ');
     if (pos_args)
     {
