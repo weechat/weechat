@@ -32,6 +32,13 @@ INCLUDE(CheckIncludeFiles)
 INCLUDE(CheckLibraryExists)
 INCLUDE(CheckFunctionExists)
 
+FIND_PATH(LIBINTL_INCLUDE
+  NAMES libintl.h
+  PATH /usr/local/include /usr/pkg/include /usr/include
+)
+
+SET(CMAKE_REQUIRED_INCLUDES ${LIBINTL_INCLUDE})
+
 CHECK_INCLUDE_FILES(libintl.h HAVE_LIBINTL_H)
 
 IF(HAVE_LIBINTL_H)
@@ -41,8 +48,8 @@ IF(HAVE_LIBINTL_H)
   ELSE(LIBC_HAS_DGETTEXT)
     FIND_LIBRARY(LIBINTL_LIBRARY NAMES intl libintl
       PATHS
-      /usr/lib
       /usr/local/lib
+      /usr/lib
       )
     IF(LIBINTL_LIBRARY)
       CHECK_LIBRARY_EXISTS(${LIBINTL_LIBRARY} "dgettext" "" LIBINTL_HAS_DGETTEXT)
