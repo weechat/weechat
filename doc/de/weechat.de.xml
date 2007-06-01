@@ -1116,66 +1116,67 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
       
     </section>
     
-    <!-- TRANSLATION NEEDED -->
     <section id="secCharset">
-      <title>Charset plugin</title>
+      <title>Zeichensatz Plugin</title>
       
       <para>
-        Charset plugin lets you encode or decode data using charsets, with 3
-        levels: global, by server, or by channel.
-        This plugin is optional, but recommended: if it's not loaded, WeeChat
-        can only read/write UTF-8 data.
+        Das Zeichensatz-Plugin ermöglicht das Ver- und Entschlüsseln von Daten
+        auf 3 Ebenen: Global, pro Server oder pro Channel.
+        Das Plugin ist optional, wird jedoch empfohlen: wenn es nicht geladen ist, 
+        kann WeeChat nur UTF-8-Daten lesen und schreiben.
       </para>
       
       <para>
-        Charset plugin should be autoloaded by WeeChat at startup.
-        To be sure plugin is loaded, try:
+        Das Zeichensatz-Plugin sollte beim Start von WeeChat automatisch geladen
+        werden.
+        Um sicherzustellen, dass das Plugin geladen wurde, versuchen Sie:
         "<literal>/charset</literal>".
-        If command is not found, then load plugin with command:
+        Wenn der Befehl nicht gefunden wird, laden Sie das Plugin manuell mit dem Befehl:
         <screen>/plugin load charset</screen>
-        If plugin is not found, then you should compile again WeeChat with
-        plugins and Charset support.
+        Wenn das Plugin nicht gefunden wird, kompilieren Sie WeeChat erneut mit Plugin-
+        und Zeichensatz-Support
       </para>
       
       <para>
-        When Charset plugin starts, it displays terminal and internal charsets.
-        Terminal charset depends on your locale, and internal is UTF-8.
-        For example :
+        Wenn das Zeichensatz-Plugin startet, zeigt es den Terminalzeichensatz
+        und den internen Zeichensatz an. Der Terminalzeichensatz hängt von
+        den LOCALE-Einstellungen ab, der interne ist UTF-8.
+        Zum Beispiel:
 <screen>
 -P- Charset plugin starting, terminal charset: ISO-8859-15 (WeeChat internal: UTF-8)
 </screen>
       </para>
             
       <section id="secCharsetSettings">
-        <title>Settings</title>
+        <title>Einstellungen</title>
         
         <itemizedlist>
           <listitem>
             <para>
-              To set global decode and encode charsets, use
-              "<literal>/setp</literal>" command.
-              For example:
+              Um den globalen Zeichensatz zum Kodieren und Dekodieren festzulegen, benutzen Sie den
+              "<literal>/setp</literal>" Befehl.
+              Zum Beispiel:
 <screen>
 /setp charset.global.decode = ISO-8859-15
 /setp charset.global.encode = ISO-8859-15
 </screen>
-              If global decode charset is not set (for example during first
-              load of Charset plugin), it will be automatically set to terminal
-              charset (if it's different from UTF-8), or by default to
-              "<literal>ISO-8859-1</literal>".
-              Default encode value is empty, so it sends by default with
-              internal charset (UTF-8).
+              Wenn der Zeichensatz zum Dekodieren nicht gesetzt ist (z.B. beim ersten
+              Start des Plugins), wird es automatisch auf den Terminalzeichensatz
+              eingestellt (wenn es nicht UTF-8 ist) oder als Voreinstellung auf
+              "<literal>ISO-8859-1</literal>" gesetzt.
+              Der voreingestellte Enkodierungszeichensatz ist leer, so dass in der
+              Voreinstellung mit dem internen Zeichensatz (UTF-8) enkodiert wird.
             </para>
           </listitem>
           <listitem>
             <para>
-              To set server charset, use "<literal>/charset</literal>" command
-              on server buffer.
-              If you give only charset, then it will set "decode" and "encode"
-              values.
-              For example:
+              Um den Serverzeichensatz festzulegen, benutzen Sie den
+              "<literal>/charset</literal>"-Befehl im Server-Puffer.
+              Wenn Sie nur einen Zeichensatz vorgeben, wird dieser automatisch
+              zum Enkodieren und Dekodieren verwendet.
+              Zum Beispiel:
               <screen>/charset ISO-8859-15</screen>
-              It's equivalent to:
+              Das ist gleichbedeutend mit:
 <screen>
 /charset decode ISO-8859-15
 /charset encode ISO-8859-15
@@ -1184,8 +1185,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
           </listitem>
           <listitem>
             <para>
-              To set channel (or private) charset, use same commands as server,
-              but on channel (or private) buffer.
+              Um den zeichensatz im Channel (oder einem privatem Chat) festzulegen, 
+              müssen Sie den gleichen Befehl wie für den Server benutzen, jedoch in
+              dem Channel-Puffer (oder Query-Puffer) 
             </para>
           </listitem>
         </itemizedlist>
@@ -1196,25 +1198,25 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
         <title>FAQ</title>
         
         <para>
-          If you have problems with chars or accents using Charset plugin:
+          Wenn Sie Probleme mit den Zeichen oder dem Zeichensatz-Plugin haben:
           <itemizedlist>
             <listitem>
               <para>
-                check that weechat-curses is linked to libncursesw (warning:
-                needed on most distributions but not all) :
-                <screen>ldd /path/to/weechat-curses</screen>
+                überprüfen Sie, ob weechat-curses zu libcursesw gelinkt ist
+                (Achtung: Wird bei den meisten, jedoch nicht bei allen Distributionen benötigt):
+                <screen>ldd /pfad/zu/weechat-curses</screen>
               </para>
             </listitem>
             <listitem>
               <para>
-                check charset line (on server buffer), you should see
-                ISO-XXXXXX or UTF-8 for terminal charset. If you see
-                ANSI_X3.4-1968 or other values, probably your locale is wrong.
+                überprüfen Sie die Zeichensatz-Zeile im Server-Puffer, dort sollten ISO-XXXXXX
+                oder UTF-8 für den Terminal-Zeichensatz stehen. Wenn Sie dort ANSI_X3.4-1968
+                oder andere Werte sehen, sind Ihre LOCALES eventuell falsch eingestellt.
               </para>
             </listitem>
             <listitem>
               <para>
-                setup global decode value, for example:
+                Setze die globalen Dekodier-Einstellungen, z.B.:
                 <screen>/setp charset.global.decode = ISO-8859-15</screen>
               </para>
             </listitem>
@@ -2278,8 +2280,7 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
                         </row>
                         <row>
                           <entry><literal>%C</literal></entry>
-                          <!-- TRANSLATION NEEDED -->
-                          <entry>all channels (including queries)</entry>
+                          <entry>alle channels (inklusive Queries)</entry>
                         </row>
                         <row>
                           <entry><literal>%f</literal></entry>
@@ -2307,9 +2308,8 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
                         </row>
                         <row>
                           <entry><literal>%M</literal></entry>
-                          <!-- TRANSLATION NEEDED -->
                           <entry>
-                            nicks on current server (on all open channels)
+                            Nicks auf dem gegenwärtigen Server (in allen offenen Channeln)
                           </entry>
                         </row>
                         <row>
