@@ -57,7 +57,7 @@ connect to server(s)
 servername: server name to connect
 
 </programlisting>
-<command>disconnect  [-all | servername [servername...]]</command>
+<command>disconnect  [-all | servername [servername ...]]</command>
 <programlisting>
 disconnect from server(s)
 

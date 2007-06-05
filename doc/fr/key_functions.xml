@@ -7,201 +7,201 @@
 
 <row>
   <entry><literal>return</literal></entry>
-  <entry>terminer la ligne</entry>
+  <entry>terminate line</entry>
 </row>
 <row>
   <entry><literal>tab</literal></entry>
-  <entry>compléter le mot</entry>
+  <entry>complete word</entry>
 </row>
 <row>
   <entry><literal>tab_previous</literal></entry>
-  <entry>trouver le mot complété précédent</entry>
+  <entry>find previous completion for word</entry>
 </row>
 <row>
   <entry><literal>backspace</literal></entry>
-  <entry>effacer le caractère précédent</entry>
+  <entry>delete previous char</entry>
 </row>
 <row>
   <entry><literal>delete</literal></entry>
-  <entry>effacer le caractère suivant</entry>
+  <entry>delete next char</entry>
 </row>
 <row>
   <entry><literal>delete_end_line</literal></entry>
-  <entry>effacer jusqu'à la fin de la ligne</entry>
+  <entry>delete until end of line</entry>
 </row>
 <row>
   <entry><literal>delete_beginning_line</literal></entry>
-  <entry>effacer jusqu'au début de la ligne</entry>
+  <entry>delete until beginning of line</entry>
 </row>
 <row>
   <entry><literal>delete_line</literal></entry>
-  <entry>effacer la ligne entière</entry>
+  <entry>delete entire line</entry>
 </row>
 <row>
   <entry><literal>delete_previous_word</literal></entry>
-  <entry>effacer le mot précédent</entry>
+  <entry>delete previous word</entry>
 </row>
 <row>
   <entry><literal>delete_next_word</literal></entry>
-  <entry>effacer le mot suivant</entry>
+  <entry>delete next word</entry>
 </row>
 <row>
   <entry><literal>clipboard_paste</literal></entry>
-  <entry>coller le contenu du presse-papier</entry>
+  <entry>paste current clipboard content</entry>
 </row>
 <row>
   <entry><literal>transpose_chars</literal></entry>
-  <entry>inverser les caractères</entry>
+  <entry>transpose chars</entry>
 </row>
 <row>
   <entry><literal>home</literal></entry>
-  <entry>aller au début de la ligne</entry>
+  <entry>go to beginning of line</entry>
 </row>
 <row>
   <entry><literal>end</literal></entry>
-  <entry>aller à la fin de la ligne</entry>
+  <entry>go to end of line</entry>
 </row>
 <row>
   <entry><literal>left</literal></entry>
-  <entry>se déplacer d'un caractère à gauche</entry>
+  <entry>move one char left</entry>
 </row>
 <row>
   <entry><literal>previous_word</literal></entry>
-  <entry>se déplacer au mot précédent</entry>
+  <entry>move to previous word</entry>
 </row>
 <row>
   <entry><literal>right</literal></entry>
-  <entry>se déplacer d'un caractère à droite</entry>
+  <entry>move one char right</entry>
 </row>
 <row>
   <entry><literal>next_word</literal></entry>
-  <entry>se déplacer au mot suivant</entry>
+  <entry>move to next word</entry>
 </row>
 <row>
   <entry><literal>up</literal></entry>
-  <entry>appeler la commande précédente dans l'historique</entry>
+  <entry>call previous command in history</entry>
 </row>
 <row>
   <entry><literal>up_global</literal></entry>
-  <entry>appeler la commande précédente dans l'historique global</entry>
+  <entry>call previous command in global history</entry>
 </row>
 <row>
   <entry><literal>down</literal></entry>
-  <entry>appeler la commande suivante dans l'historique</entry>
+  <entry>call next command in history</entry>
 </row>
 <row>
   <entry><literal>down_global</literal></entry>
-  <entry>appeler la commande suivante dans l'historique global</entry>
+  <entry>call next command in global history</entry>
 </row>
 <row>
   <entry><literal>page_up</literal></entry>
-  <entry>faire défiler d'une page vers le haut</entry>
+  <entry>scroll one page up</entry>
 </row>
 <row>
   <entry><literal>page_down</literal></entry>
-  <entry>faire défiler d'une page vers le bas</entry>
+  <entry>scroll one page down</entry>
 </row>
 <row>
   <entry><literal>scroll_up</literal></entry>
-  <entry>faire défiler de quelques lignes vers le haut</entry>
+  <entry>scroll a few lines up</entry>
 </row>
 <row>
   <entry><literal>scroll_down</literal></entry>
-  <entry>faire défiler de quelques lignes vers le bas</entry>
+  <entry>scroll a few lines down</entry>
 </row>
 <row>
   <entry><literal>scroll_top</literal></entry>
-  <entry>faire défiler jusqu'au début du tampon</entry>
+  <entry>scroll to top of buffer</entry>
 </row>
 <row>
   <entry><literal>scroll_bottom</literal></entry>
-  <entry>faire défiler jusqu'à la fin du tampon</entry>
+  <entry>scroll to bottom of buffer</entry>
 </row>
 <row>
   <entry><literal>scroll_topic_left</literal></entry>
-  <entry>faire défiler le titre vers la gauche</entry>
+  <entry>scroll left topic</entry>
 </row>
 <row>
   <entry><literal>scroll_topic_right</literal></entry>
-  <entry>faire défiler le titre vers la droite</entry>
+  <entry>scroll right topic</entry>
 </row>
 <row>
   <entry><literal>nick_beginning</literal></entry>
-  <entry>afficher le début de la liste des pseudos</entry>
+  <entry>display beginning of nicklist</entry>
 </row>
 <row>
   <entry><literal>nick_end</literal></entry>
-  <entry>afficher la fin de la liste des pseudos</entry>
+  <entry>display end of nicklist</entry>
 </row>
 <row>
   <entry><literal>nick_page_up</literal></entry>
-  <entry>faire défiler la liste des pseudos d'une page vers le haut</entry>
+  <entry>scroll nicklist one page up</entry>
 </row>
 <row>
   <entry><literal>nick_page_down</literal></entry>
-  <entry>faire défiler la liste des pseudos d'une page vers le bas</entry>
+  <entry>scroll nicklist one page down</entry>
 </row>
 <row>
   <entry><literal>jump_smart</literal></entry>
-  <entry>sauter au tampon avec de l'activité</entry>
+  <entry>jump to buffer with activity</entry>
 </row>
 <row>
   <entry><literal>jump_dcc</literal></entry>
-  <entry>sauter au tampon DCC</entry>
+  <entry>jump to DCC buffer</entry>
 </row>
 <row>
   <entry><literal>jump_raw_data</literal></entry>
-  <entry>sauter au tampon IRC brut</entry>
+  <entry>jump to raw IRC data buffer</entry>
 </row>
 <row>
   <entry><literal>jump_last_buffer</literal></entry>
-  <entry>sauter au dernier tampon</entry>
+  <entry>jump to last buffer</entry>
 </row>
 <row>
   <entry><literal>jump_server</literal></entry>
-  <entry>sauter au tampon du serveur</entry>
+  <entry>jump to server buffer</entry>
 </row>
 <row>
   <entry><literal>jump_next_server</literal></entry>
-  <entry>sauter au prochain serveur</entry>
+  <entry>jump to next server</entry>
 </row>
 <row>
   <entry><literal>switch_server</literal></entry>
-  <entry>bascule de serveur actif sur le tampon des serveurs</entry>
+  <entry>switch active server on servers buffer</entry>
 </row>
 <row>
   <entry><literal>scroll_previous_highlight</literal></entry>
-  <entry>faire défiler jusqu'au highlight précédent du tampon</entry>
+  <entry>scroll to previous highlight in buffer</entry>
 </row>
 <row>
   <entry><literal>scroll_next_highlight</literal></entry>
-  <entry>faire défiler jusqu'au highlight suivant du tampon</entry>
+  <entry>scroll to next highlight in buffer</entry>
 </row>
 <row>
   <entry><literal>scroll_unread</literal></entry>
-  <entry>faire défiler jusqu'à la première ligne non lue du tampon</entry>
+  <entry>scroll to first unread line in buffer</entry>
 </row>
 <row>
   <entry><literal>hotlist_clear</literal></entry>
-  <entry>effacer la liste d'activité</entry>
+  <entry>clear hotlist</entry>
 </row>
 <row>
   <entry><literal>infobar_clear</literal></entry>
-  <entry>effacer la barre d'infos</entry>
+  <entry>clear infobar</entry>
 </row>
 <row>
   <entry><literal>refresh</literal></entry>
-  <entry>rafraîchir l'écran</entry>
+  <entry>refresh screen</entry>
 </row>
 <row>
   <entry><literal>grab_key</literal></entry>
-  <entry>capturer une touche</entry>
+  <entry>grab a key</entry>
 </row>
 <row>
   <entry><literal>insert</literal></entry>
-  <entry>insérer une chaîne dans la ligne de commande</entry>
+  <entry>insert a string in command line</entry>
 </row>
 <row>
   <entry><literal>search_text</literal></entry>
-  <entry>recherche de texte dans l'historique du tampon</entry>
+  <entry>search text in buffer history</entry>
 </row>

@@ -5,439 +5,439 @@
      This file is automatically built with a Perl script. DO NOT EDIT!
 -->
 
-<command>admin  [cible]</command>
+<command>admin  [target]</command>
 <programlisting>
-trouver les informations sur l'administrateur du serveur
+find information about the administrator of the server
 
-cible: serveur
+target: server
 
 </programlisting>
 <command>ame  message</command>
 <programlisting>
-envoyer une action CTCP à tous les canaux de tous les serveurs connectés
+send a CTCP action to all channels of all connected servers
 
-message: message à envoyer
+message: message to send
 
 </programlisting>
-<command>amsg  texte</command>
+<command>amsg  text</command>
 <programlisting>
-envoyer un message à tous les canaux de tous les serveurs connectés
+send message to all channels of all connected servers
 
-texte: texte à envoyer
+text: text to send
 
 </programlisting>
 <command>away  [-all] [message]</command>
 <programlisting>
-basculer le statut absent
+toggle away status
 
-   -all: basculer le statut absent sur tous les serveurs connectés
-message: message pour l'absence (si pas de message donné, le statut d'absence est supprimé)
-
-</programlisting>
-<command>ban  [canal] [pseudo [pseudo ...]]</command>
-<programlisting>
-bannit des pseudos ou hôtes
-
- canal: nom du canal pour le bannissement
-pseudo: pseudo ou hôte pour le bannissement
+   -all: toggle away status on all connected servers
+message: message for away (if no message is given, away status is removed)
 
 </programlisting>
-<command>ctcp  cible type [arguments]</command>
+<command>ban  [channel] [nickname [nickname ...]]</command>
 <programlisting>
-envoyer un message CTCP (Client-To-Client Protocol)
+bans nicks or hosts
 
-    cible: pseudo à qui envoyer le CTCP
-     type: type de CTCP (exemples: "version", "ping", etc...)
-arguments: arguments pour le CTCP
+ channel: channel for ban
+nickname: user or host to ban
 
 </programlisting>
-<command>cycle  [canal[,canal]] [message_de_fin]</command>
+<command>ctcp  receiver type [arguments]</command>
 <programlisting>
-quitter et rejoindre un canal
+send a CTCP message (Client-To-Client Protocol)
 
-         canal: canal pour le cycle
-message_de_fin: message de fin (affiché aux autres utilisateurs)
-
-</programlisting>
-<command>dehalfop  [pseudo [pseudo]]</command>
-<programlisting>
-retire le statut de demi-opérateur du canal à/aux pseudo(s)
+ receiver: nick or channel to send CTCP to
+     type: CTCP type (examples: "version", "ping", ..)
+arguments: arguments for CTCP
 
 </programlisting>
-<command>deop  [pseudo [pseudo]]</command>
+<command>cycle  [channel[,channel]] [part_message]</command>
 <programlisting>
-retire le statut d'opérateur du canal à/aux pseudo(s)
+leave and rejoin a channel
+
+     channel: channel name for cycle
+part_message: part message (displayed to other users)
 
 </programlisting>
-<command>devoice  [pseudo [pseudo]]</command>
+<command>dehalfop  [nickname [nickname]]</command>
 <programlisting>
-retire la voix du/des pseudo(s)
+removes half channel operator status from nickname(s)
+
+</programlisting>
+<command>deop  [nickname [nickname]]</command>
+<programlisting>
+removes channel operator status from nickname(s)
+
+</programlisting>
+<command>devoice  [nickname [nickname]]</command>
+<programlisting>
+removes voice from nickname(s)
 
 </programlisting>
 <command>die</command>
 <programlisting>
-arrêter le serveur
+shutdown the server
 
 </programlisting>
-<command>halfop  [pseudo [pseudo]]</command>
+<command>halfop  [nickname [nickname]]</command>
 <programlisting>
-donner le statut de demi-opérateur à un/des pseudo(s)
+gives half channel operator status to nickname(s)
 
 </programlisting>
-<command>info  [cible]</command>
+<command>info  [target]</command>
 <programlisting>
-voir les informations décrivant le serveur
+get information describing the server
 
-cible: nom du serveur
+target: server name
 
 </programlisting>
-<command>invite  pseudo canal</command>
+<command>invite  nickname channel</command>
 <programlisting>
-inviter un pseudo sur un canal
+invite a nick on a channel
 
- pseudo: pseudo à inviter
-channel: canal pour l'invitation
+nickname: nick to invite
+ channel: channel to invite
 
 </programlisting>
-<command>ison  pseudo [pseudo ...]</command>
+<command>ison  nickname [nickname ...]</command>
 <programlisting>
-vérifier si un pseudo est actuellement sur IRC
+check if a nickname is currently on IRC
 
-pseudo: pseudo
+nickname: nickname
 
 </programlisting>
-<command>join  canal[,canal] [clé[,clé]]</command>
+<command>join  channel[,channel] [key[,key]]</command>
 <programlisting>
-joindre un canal
+join a channel
 
-canal: nom du canal à rejoindre
-  clé: clé pour rejoindre le canal
+channel: channel name to join
+    key: key to join the channel
 
 </programlisting>
-<command>kick  [canal] pseudo [commentaire]</command>
+<command>kick  [channel] nickname [comment]</command>
 <programlisting>
-retirer par la force un utilisateur d'un canal
+forcibly remove a user from a channel
 
-      canal: canal où l'utilisateur se trouve
-     pseudo: pseudo à éliminer
-commentaire: commentaire pour l'élimination
+ channel: channel where user is
+nickname: nickname to kick
+ comment: comment for kick
 
 </programlisting>
-<command>kickban  [canal] pseudo [commentaire]</command>
+<command>kickban  [channel] nickname [comment]</command>
 <programlisting>
-retirer par la force un pseudo d'un canal et le bannir
+kicks and bans a nick from a channel
 
-      canal: canal où l'utilisateur se trouve
-     pseudo: pseudo à éliminer et bannir
-commentaire: commentaire pour l'élimination
+ channel: channel where user is
+nickname: nickname to kick and ban
+ comment: comment for kick
 
 </programlisting>
-<command>kill  pseudo commentaire</command>
+<command>kill  nickname comment</command>
 <programlisting>
-fermer la connexion client-serveur
+close client-server connection
 
-     pseudo: pseudo
-commentaire: commentaire pour la mort
+nickname: nickname
+ comment: comment for kill
 
 </programlisting>
-<command>links  [[serveur] masque_serveur]</command>
+<command>links  [[server] server_mask]</command>
 <programlisting>
-lister tous les noms de serveurs connus du serveur qui répondent à la requête
+list all servernames which are known by the server answering the query
 
-       serveur: ce serveur doit répondre à la requête
-masque_serveur: liste des serveurs correspondant au masque
+     server: this server should answer the query
+server_mask: list of servers must match this mask
 
 </programlisting>
-<command>list  [canal[,canal] [serveur]]</command>
+<command>list  [channel[,channel] [server]]</command>
 <programlisting>
-lister les canaux et leur sujet
+list channels and their topic
 
-canal: canal à lister (une expression régulière est acceptée)
-serveur: nom du serveur
+channel: channel to list (a regexp is allowed)
+server: server name
 
 </programlisting>
-<command>lusers  [masque [cible]]</command>
+<command>lusers  [mask [target]]</command>
 <programlisting>
-obtenir des statistiques sur la taille du réseau IRC
+get statistics about the size of the IRC network
 
-masque: serveurs qui correspondent au masque seulement
- cible: serveur pour faire suivre la requête
+  mask: servers matching the mask only
+target: server for forwarding request
 
 </programlisting>
 <command>me  message</command>
 <programlisting>
-envoyer une action CTCP au canal courant
+send a CTCP action to the current channel
 
-message: message à envoyer
-
-</programlisting>
-<command>mode  { canal {[+|-]|o|p|s|i|t|n|b|v} [limite] [utilisateur] [masque de banissement] } | { pseudo {[+|-]|i|w|s|o} }</command>
-<programlisting>
-changer le mode du canal ou de l'utilisateur
-
-modes de canaux :
-  canal: nom du canal à modifier
-  o: donner/reprendre le statut privilégié d'opérateur
-  p: indicateur de canal privé
-  s: indicateur de canal secret
-  i: indicateur de canal avec invitation seulement
-  t: le titre est modifiable seulement par un opérateur du canal
-  n: aucun message au canal depuis l'extérieur
-  m: canal modéré
-  l: fixer la limite d'utilisateurs pour le canal
-  b: paramétrer un masque de banissement pour garder des utilisateurs dehors
-  e: paramétrer un masque d'exception
-  v: donner/reprendre la possibilité de parler sur un canal modéré
-  k: définir une clé (mot de passe) pour accéder au canal
-modes utilisateur :
-  pseudo: pseudo à modifier
-  i: marquer un utilisateur comme invisible
-  s: marquer un utilisateur pour recevoir les notices du serveur
-  w: l'utilisateur reçoit les wallops
-  o: drapeau opérateur
+message: message to send
 
 </programlisting>
-<command>motd  [cible]</command>
+<command>mode  { channel {[+|-]|o|p|s|i|t|n|b|v} [limit] [user] [ban mask] } | { nickname {[+|-]|i|w|s|o} }</command>
 <programlisting>
-obtenir le message du jour
+change channel or user mode
 
-cible: nom du serveur
+channel modes:
+  channel: channel name to modify
+  o: give/take channel operator privileges
+  p: private channel flag
+  s: secret channel flag
+  i: invite-only channel flag
+  t: topic settable by channel operator only flag
+  n: no messages to channel from clients on the outside
+  m: moderated channel
+  l: set the user limit to channel
+  b: set a ban mask to keep users out
+  e: set exception mask
+  v: give/take the ability to speak on a moderated channel
+  k: set a channel key (password)
+user modes:
+  nickname: nickname to modify
+  i: mark a user as invisible
+  s: mark a user for receive server notices
+  w: user receives wallops
+  o: operator flag
 
 </programlisting>
-<command>msg  cible[,cible] texte</command>
+<command>motd  [target]</command>
 <programlisting>
-envoyer un message à un pseudo ou canal
+get the "Message Of The Day"
 
-cible: pseudo ou canal (peut-être un masque, '*' = canal courant)
-texte: texte à envoyer
+target: server name
 
 </programlisting>
-<command>names  [canal[,canal]]</command>
+<command>msg  receiver[,receiver] text</command>
 <programlisting>
-lister les pseudos sur des canaux
+send message to a nick or channel
 
-canal: nom du canal
+receiver: nick or channel (may be mask, '*' = current channel)
+text: text to send
 
 </programlisting>
-<command>nick  [-all] pseudo</command>
+<command>names  [channel[,channel]]</command>
 <programlisting>
-changer le pseudo courant
+list nicknames on channels
 
-  -all: définir le nouveau pseudo sur tous les serveurs connectés
-pseudo: nouveau pseudo
+channel: channel name
 
 </programlisting>
-<command>notice  pseudo texte</command>
+<command>nick  [-all] nickname</command>
 <programlisting>
-envoyer un message notice à un utilisateur
+change current nickname
 
-pseudo: pseudo cible pour la notice
- texte: texte à envoyer
+    -all: set new nickname for all connected servers
+nickname: new nickname
 
 </programlisting>
-<command>op  pseudo [pseudo]</command>
+<command>notice  nickname text</command>
 <programlisting>
-donner le statut opérateur à un/des pseudo(s)
+send notice message to user
+
+nickname: user to send notice to
+    text: text to send
 
 </programlisting>
-<command>oper  utilisateur mot_de_passe</command>
+<command>op  nickname [nickname]</command>
 <programlisting>
-obtenir le statut d'opérateur
-
-utilisateur/mot_de_passe: utilisé pour obtenir les privilèges sur le serveur IRC courant
+gives channel operator status to nickname(s)
 
 </programlisting>
-<command>part  [canal[,canal]] [message_de_fin]</command>
+<command>oper  user password</command>
 <programlisting>
-quitter un canal
+get operator privileges
 
-         canal: canal à quitter
-message_de_fin: message de fin (affiché aux autres utilisateurs)
+user/password: used to get privileges on current IRC server
 
 </programlisting>
-<command>ping  serveur1 [serveur2]</command>
+<command>part  [channel[,channel]] [part_message]</command>
 <programlisting>
-pinguer un serveur
+leave a channel
 
-serveur1: serveur à pinguer
-serveur2: faire suivre le ping à ce serveur
+     channel: channel name to leave
+part_message: part message (displayed to other users)
 
 </programlisting>
-<command>pong  démon [démon2]</command>
+<command>ping  server1 [server2]</command>
 <programlisting>
-répondre à un message ping
+ping server
 
- démon: démon qui a répondu au message Ping
-démon2: faire suivre le message à ce démon
+server1: server to ping
+server2: forward ping to this server
 
 </programlisting>
-<command>query  pseudo [texte]</command>
+<command>pong  daemon [daemon2]</command>
 <programlisting>
-envoyer un message privé à un pseudo
+answer to a ping message
 
-pseudo: pseudo pour la conversation privée
- texte: texte à envoyer
+ daemon: daemon who has responded to Ping message
+daemon2: forward message to this daemon
 
 </programlisting>
-<command>quit  [message_de_fin]</command>
+<command>query  nickname [text]</command>
 <programlisting>
-fermer toutes les connexions et quitter
+send a private message to a nick
 
-message_de_fin: message de fin (affiché aux autres utilisateurs)
+nickname: nickname for private conversation
+    text: text to send
 
 </programlisting>
-<command>quote  données</command>
+<command>quit  [quit_message]</command>
 <programlisting>
-envoyer des données brutes au serveur sans analyse
+close all connections and quit
 
-données: données brutes à envoyer
+quit_message: quit message (displayed to other users)
+
+</programlisting>
+<command>quote  data</command>
+<programlisting>
+send raw data to server without parsing
+
+data: raw data to send
 
 </programlisting>
 <command>rehash</command>
 <programlisting>
-demander au serveur de recharger son fichier de configuration
+tell the server to reload its config file
 
 </programlisting>
 <command>restart</command>
 <programlisting>
-demander au serveur de redémarrer
+tell the server to restart itself
 
 </programlisting>
-<command>service  pseudo réservé distribution type réservé info</command>
+<command>service  nickname reserved distribution type reserved info</command>
 <programlisting>
-enregister un nouveau service
+register a new service
 
-distribution: visibilité du service
-        type: réservé pour une utilisation future
+distribution: visibility of service
+        type: reserved for future usage
 
 </programlisting>
-<command>servlist  [masque [type]]</command>
+<command>servlist  [mask [type]]</command>
 <programlisting>
-lister les services actuellement connectés au réseau
+list services currently connected to the network
 
-masque: lister seulement les services qui correspondent à ce masque
-  type: lister seulement les services de ce type
+mask: list only services matching this mask
+type: list only services of this type
 
 </programlisting>
-<command>squery  service texte</command>
+<command>squery  service text</command>
 <programlisting>
-envoyer un message à un service
+deliver a message to a service
 
-service: nom du service
-texte: texte à envoyer
+service: name of service
+text: text to send
 
 </programlisting>
-<command>squit  serveur commentaire</command>
+<command>squit  server comment</command>
 <programlisting>
-déconnecter les liens vers un serveur
+disconnect server links
 
-serveur: nom du serveur
-commentaire: commentaire pour quitter
+server: server name
+comment: comment for quit
 
 </programlisting>
-<command>stats  [requête [serveur]]</command>
+<command>stats  [query [server]]</command>
 <programlisting>
-demander des statistiques sur le serveur
+query statistics about server
 
-requête: c/h/i/k/l/m/o/y/u (voir la RFC1459)
-serveur: nom du serveur
+ query: c/h/i/k/l/m/o/y/u (see RFC1459)
+server: server name
 
 </programlisting>
-<command>summon  utilisateur [cible [canal]]</command>
+<command>summon  user [target [channel]]</command>
 <programlisting>
-envoyer aux utilisateurs d'un serveur IRC un message leur demandant de rejoindre IRC
+give users who are on a host running an IRC server a message asking them to please join IRC
 
-utilisateur: nom d'utilisateur
-      cible: nom du serveur
-      canal: nom du canal
+   user: username
+target: server name
+channel: channel name
 
 </programlisting>
-<command>time  [cible]</command>
+<command>time  [target]</command>
 <programlisting>
-demander l'heure locale de serveur
+query local time from server
 
-cible: demander l'heure de ce serveur
+target: query time from specified server
 
 </programlisting>
-<command>topic  [canal] [titre]</command>
+<command>topic  [channel] [topic]</command>
 <programlisting>
-recevoir/définir le titre du canal
+get/set channel topic
 
-canal: nom du canal
-titre: nouveau titre pour le canal (si le titre est "-delete" alors le titre est supprimé)
+channel: channel name
+topic: new topic for channel (if topic is "-delete" then topic is deleted)
 
 </programlisting>
-<command>trace  [cible]</command>
+<command>trace  [target]</command>
 <programlisting>
-trouver le chemin jusqu'à un serveur spécifique
+find the route to specific server
 
-cible: serveur
+target: server
 
 </programlisting>
-<command>unban  [canal] pseudo [pseudo ...]</command>
+<command>unban  [channel] nickname [nickname ...]</command>
 <programlisting>
-supprime le bannissement sur des pseudos ou hôtes
+unbans nicks or hosts
 
- canal: nom du canal pour supprimer le bannissement
-pseudo: pseudo ou hôte pour supprimer le bannissement
+ channel: channel for unban
+nickname: user or host to unban
 
 </programlisting>
-<command>userhost  pseudo [pseudo ...]</command>
+<command>userhost  nickname [nickname ...]</command>
 <programlisting>
-retourne une liste d'informations sur des pseudos
+return a list of information about nicknames
 
-pseudo: pseudo
+nickname: nickname
 
 </programlisting>
-<command>users  [cible]</command>
+<command>users  [target]</command>
 <programlisting>
-liste des utilisateurs connectés au serveur
+list of users logged into the server
 
-cible: serveur
+target: server
 
 </programlisting>
-<command>version  [serveur | pseudo]</command>
+<command>version  [server | nickname]</command>
 <programlisting>
-retourne la version du pseudo ou du serveur (courant ou spécifié)
+gives the version info of nick or server (current or specified)
 
-serveur: nom du serveur
- pseudo: pseudo
+  server: server name
+nickname: nickname
 
 </programlisting>
-<command>voice  [pseudo [pseudo]]</command>
+<command>voice  [nickname [nickname]]</command>
 <programlisting>
-donne la voix à/aux pseudo(s)
+gives voice to nickname(s)
 
 </programlisting>
-<command>wallops  texte</command>
+<command>wallops  text</command>
 <programlisting>
-envoyer un message à tous les utilisateurs connectés qui ont activé le mode utilisateur 'w' pour eux-mêmes
+send a message to all currently connected users who have set the 'w' user mode for themselves
 
-texte à envoyer
+text to send
 
 </programlisting>
-<command>who  [masque ["o"]]</command>
+<command>who  [mask ["o"]]</command>
 <programlisting>
-génère une requête qui retourne une liste d'information
+generate a query which returns a list of information
 
-masque: information qui correspond à ce masque uniquement
-     o: seul les opérateurs sont retournés correspondant au masque fourni
+mask: only information which match this mask
+   o: only operators are returned according to the mask supplied
 
 </programlisting>
-<command>whois  [serveur] pseudo[,pseudo]</command>
+<command>whois  [server] nickname[,nickname]</command>
 <programlisting>
-demande les informations sur le(s) utilisateur(s)
+query information about user(s)
 
-serveur: nom du serveur
- pseudo: pseudo (peut être un masque)
+  server: server name
+nickname: nickname (may be a mask)
 
 </programlisting>
-<command>whowas  pseudo [,pseudo [,pseudo ...]] [nombre [cible]]</command>
+<command>whowas  nickname [,nickname [,nickname ...]] [count [target]]</command>
 <programlisting>
-demander de l'information sur un pseudo qui n'existe plus
+ask for information about a nickname which no longer exists
 
-pseudo: pseudo à chercher
-nombre: nombre de réponses à retourner (recherche complète si nombre négatif)
- cible: la réponse doit correspondre à ce masque
+nickname: nickname to search
+   count: number of replies to return (full search if negative number)
+  target: reply should match this mask
 
 </programlisting>

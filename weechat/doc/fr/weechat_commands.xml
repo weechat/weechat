@@ -5,242 +5,242 @@
      This file is automatically built with a Perl script. DO NOT EDIT!
 -->
 
-<command>alias  [nom_alias [commande [paramètres]]]</command>
+<command>alias  [alias_name [command [arguments]]]</command>
 <programlisting>
-créer un alias pour une commande
+create an alias for a command
 
- nom_alias: nom de l'alias
-  commande: nom de la commande (commande WeeChat ou IRC, plusieurs commandes peuvent être séparées par des point-virgules)
-paramètres: paramètres pour la commande
+alias_name: name of alias
+   command: command name (WeeChat or IRC command, many commands can be separated by semicolons)
+ arguments: arguments for command
 
 </programlisting>
-<command>est remplacé par tous les paramètres.</command>
-<programlisting>Les variables $nick, $channel et $server sont remplacées par le pseudo/canal/serveur courant.
+<command>is replaced by all arguments.</command>
+<programlisting>Variables $nick, $channel and $server are replaced by current nick/channel/server.
 
 </programlisting>
-<command>buffer  [action [args] | nombre | [[serveur] [canal]]]</command>
+<command>buffer  [action [args] | number | [[server] [channel]]]</command>
 <programlisting>
-gestion des tampons
+manage buffers
 
- action: action à effectuer:
-   move: déplace le tampon dans la liste (peut être relatif, par exemple -1)
-  close: ferme le tampon (le paramètre optionnel est le message de fin, pour un canal)
-   list: liste les tampons ouverts (pas de paramètre affiche cette liste)
- notify: fixe le niveau de notification (0=jamais, 1=highlight, 2=1+msg, 3=2+join/part)
-         (quand exécuté sur un tampon serveur, cela fixe le niveau de notification par défaut pour le serveur entier)
-serveur,
-  canal: saute au tampon par serveur et/ou nom de canal
- nombre: saute au tampon qui a ce numéro
+ action: action to do:
+   move: move buffer in the list (may be relative, for example -1)
+  close: close buffer (optional arg is part message, for a channel)
+   list: list open buffers (no parameter implies this list)
+ notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)
+         (when executed on server buffer, this sets default notify level for whole server)
+server,
+channel: jump to buffer by server and/or channel name
+ number: jump to buffer by number
 
 </programlisting>
-<command>builtin  commande</command>
+<command>builtin  command</command>
 <programlisting>
-lance une commande WeeChat/IRC interne (sans regarder les gestionnaires de commandes et les alias)
+launch WeeChat/IRC builtin command (do not look at plugins handlers or aliases)
 
-commande: commande à exécuter (un '/' est automatiquement ajouté s'il n'est pas trouvé au début de la commande)
+command: command to execute (a '/' is automatically added if not found at beginning of command)
 
 
 </programlisting>
-<command>clear  [-all | nombre]</command>
+<command>clear  [-all | number]</command>
 <programlisting>
-effacer la/les fenêtre(s)
+clear window(s)
 
-  -all: effacer tous les tampons
-nombre: effacer un tampon par son numéro
+  -all: clear all buffers
+number: clear buffer by number
 
 </programlisting>
-<command>connect  [-all | nom_serveur [nom_serveur...]]</command>
+<command>connect  [-all | servername [servername ...]]</command>
 <programlisting>
-se connecter à un/plusieurs serveur(s)
+connect to server(s)
 
-       -all: se connecter à tous les serveurs
-nom_serveur: nom du serveur pour se connecter
+      -all: connect to all servers
+servername: server name to connect
 
 </programlisting>
-<command>disconnect  [-all | nom_serveur [nom_serveur...]]</command>
+<command>disconnect  [-all | servername [servername ...]]</command>
 <programlisting>
-se déconnecter d'un/plusieurs serveur(s)
+disconnect from server(s)
 
-       -all: se déconnecter de tous les serveurs
-nom_serveur: nom du serveur pour se déconnecter
+      -all: disconnect from all servers
+servername: server name to disconnect
 
 </programlisting>
-<command>dcc  action [pseudo [fichier]]</command>
+<command>dcc  action [nickname [file]]</command>
 <programlisting>
-démarre le DCC (fichier ou discussion) ou ferme une discussion
+starts DCC (file or chat) or close chat
 
- action: 'send' (envoi de fichier) ou 'chat' (discussion) ou 'close' (fermeture discussion)
- pseudo: pseudo pour envoyer le fichier ou discuter
-fichier: nom du fichier (sur la machine locale)
+  action: 'send' (file) or 'chat' or 'close' (chat)
+nickname: nickname to send file or chat
+    file: filename (on local host)
 
 </programlisting>
 <command>debug  dump | windows</command>
 <programlisting>
-affiche des messages de debogage
+print debug messages
 
-   dump: affiche les variables mémoire WeeChat dans le fichier log (les mêmes messages sont affichés lorsque WeeChat plante)
-windows: affiche l'arbre des fenêtres
-
-</programlisting>
-<command>help  [commande]</command>
-<programlisting>
-afficher l'aide sur les commandes
-
-commande: nom d'une commande WeeChat ou IRC
+   dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
+windows: display windows tree
 
 </programlisting>
-<command>history  [clear | valeur]</command>
+<command>help  [command]</command>
 <programlisting>
-affiche l'historique des commandes du tampon
+display help about commands
 
-clear: effacer l'historique
-valeur: nombre d'entrées dans l'historique à afficher
+command: name of a WeeChat or IRC command
 
 </programlisting>
-<command>ignore  [masque [[type | commande] [canal [serveur]]]]</command>
+<command>history  [clear | value]</command>
 <programlisting>
-ignorer des messages IRC et/ou des hôtes
+show buffer command history
 
-  masque: pseudo ou hôte à ignorer
-    type: type de message à ignorer (action, ctcp, dcc, pv)
-commande: commande IRC
-   canal: nom du canal pour le ignore
- serveur: nom du serveur pour le ignore
-
-Pour chaque paramètre, '*' signifie tou(te)s.
-Sans paramètres, la commande /ignore liste les ignore définis.
+clear: clear history
+value: number of history entries to show
 
 </programlisting>
-<command>key  [touche [fonction/commande]] [unbind touche] [functions] [call fonction ["params"]] [reset -yes]</command>
+<command>ignore  [mask [[type | command] [channel [server]]]]</command>
 <programlisting>
-associer/libérer des touches
+ignore IRC messages and/or hosts
 
-   touche: voir ou associer cette touche à une fonction interne ou une commande (commençant par "/")
-   unbind: supprimer l'association à une touche
-functions: lister la liste des fonctions internes pour les associations de touches
-     call: appeler une foonction par son nom (avec paramètres optionnels)
-    reset: restaure les touches aux valeurs par défaut et supprime TOUTES les touches personnelles (utiliser avec précaution !)
+   mask: nick or host mask to ignore
+   type: type of message to ignore (action, ctcp, dcc, pv)
+command: IRC command
+channel: name of channel for ignore
+ server: name of server for ignore
+
+For each argument, '*' means all.
+Without argument, /ignore command lists all defined ignore.
 
 </programlisting>
-<command>plugin  [list [nom]] | [listfull [nom]] | [load fichier] | [autoload] | [reload [nom]] | [unload [nom]]</command>
+<command>key  [key [function/command]] [unbind key] [functions] [call function ["args"]] [reset -yes]</command>
 <programlisting>
-liste/charge/décharge des extensions
+bind/unbind keys
 
-    list: lister les extensions chargées
-listfull: lister les extensions chargées avec de l'info détaillée pour chaque extension
-    load: charger une extension
-autoload: charger automatiquement les extensions dans un répertoire système ou utilisateur
-  reload: recharger une extension (si pas de nom donné, décharger toutes les extensions, puis puis recharger automatiquement les extensions)
-  unload: décharger une ou plusieurs exteneions
-
-Sans paramètre, la commande /plugin liste les extensions chargées.
+      key: display or bind this key to an internal function or a command (beginning by "/")
+   unbind: unbind a key
+functions: list internal functions for key bindings
+     call: call a function by name (with optional arguments)
+    reset: restore bindings to the default values and delete ALL personal bindings (use carefully!)
 
 </programlisting>
-<command>reconnect  [-all | nom_serveur [nom_serveur...]]</command>
+<command>plugin  [list [name]] | [listfull [name]] | [load filename] | [autoload] | [reload [name]] | [unload [name]]</command>
 <programlisting>
-se reconnecter à un/plusieurs serveur(s)
+list/load/unload plugins
 
-       -all: se reconnecter à tous les serveurs
-nom_serveur: nom du serveur pour se reconnecter
+    list: list loaded plugins
+listfull: list loaded plugins with detailed info for each plugin
+    load: load a plugin
+autoload: autoload plugins in system or user directory
+  reload: reload one plugin (if no name given, unload all plugins, then autoload plugins)
+  unload: unload one or all plugins
+
+Without argument, /plugin command lists loaded plugins.
 
 </programlisting>
-<command>server  [nom_serveur] | [nom_serveur nom/IP port [-auto | -noauto] [-ipv6] [-ssl] [-pwd mot_de_passe] [-nicks pseudo1 pseudo2 pseudo3] [-username nom_utilisateur] [-realname nom_réel] [-command commande] [-autojoin canal[,canal]] ] | [del nom_serveur]</command>
+<command>reconnect  [-all | servername [servername ...]]</command>
 <programlisting>
-liste, ajoute ou retire des serveurs
+reconnect to server(s)
 
-    nom_serveur: nom du serveur, pour usage interne et affichage
-         nom/IP: nom ou adresse IP du serveur
-           port: port pour le serveur (nombre entier)
-           ipv6: utiliser le protocole IPv6
-            ssl: utiliser le protocole SSL
-   mot_de_passe: mot de passe pour le serveur
-        pseudo1: premier pseudo pour le serveur
-        pseudo2: pseudo alternatif pour le serveur
-        pseudo3: second pseudo alternatif pour le serveur
-nom_utilisateur: nom d'utilisateur
-       nom_réel: nom réel de l'utilisateur
+      -all: reconnect to all servers
+servername: server name to reconnect
 
 </programlisting>
-<command>save  [fichier]</command>
+<command>server  [servername] | [servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 nick2 nick3] [-username username] [-realname realname] [-command command] [-autojoin channel[,channel]] ] | [del servername]</command>
 <programlisting>
-sauvegarder la configuration sur disque
+list, add or remove servers
 
-fichier: fichier pour sauvegarder la configuration
+servername: server name, for internal and display use
+  hostname: name or IP address of server
+      port: port for server (integer)
+      ipv6: use IPv6 protocol
+       ssl: use SSL protocol
+  password: password for server
+     nick1: first nick for server
+     nick2: alternate nick for server
+     nick3: second alternate nick for server
+  username: user name
+  realname: real name of user
 
 </programlisting>
-<command>set  [option [ = valeur]]</command>
+<command>save  [file]</command>
 <programlisting>
-modifier des options de configuration
+save config to disk
 
-option: nom de l'option (si le nom est complet et qu'aucune valeur n'est donnée, alors l'aide sur l'option est affichée)
-valeur: valeur pour l'option
-
-L'option peut être: nomserveur.server_xxx où "nomserveur" est le nom interne d'un serveur et "xxx" une option pour ce serveur.
+file: filename for writing config
 
 </programlisting>
-<command>setp  [option [ = valeur]]</command>
+<command>set  [option [ = value]]</command>
 <programlisting>
-modifier des options de configuration des extensions
+set config options
 
-option: nom d'une option d'extension
-valeur: valeur pour l'option
+option: name of an option (if name is full and no value is given, then help is displayed on option)
+ value: value for option
 
-L'option est au format: extension.option, par exemple: perl.monscript.variable1
+Option may be: servername.server_xxx where "servername" is an internal server name and "xxx" an option for this server.
 
 </programlisting>
-<command>unalias  nom_alias</command>
+<command>setp  [option [ = value]]</command>
 <programlisting>
-supprimer un alias
+set plugin config options
 
-nom_alias: nom de l'alias à supprimer
+option: name of a plugin option
+ value: value for option
+
+Option is format: plugin.option, example: perl.myscript.item1
 
 </programlisting>
-<command>unignore  [nombre | [masque [[type | commande] [canal [serveur]]]]]</command>
+<command>unalias  alias_name</command>
 <programlisting>
-supprimer le ignore des messages IRC et/ou des hôtes
+remove an alias
 
-  nombre: numéro de ignore à supprimer (le nombre est affiché sur la liste des ignore)
-  masque: pseudo ou hôte à ignorer
-    type: type de message à ignorer (action, ctcp, dcc, pv)
-commande: commande IRC
-   canal: nom du canal pour le ignore
- serveur: nom du serveur pour le ignore
+alias_name: name of alias to remove
 
-Pour chaque paramètre, '*' signifie tou(te)s.
-Sans paramètre, /ignore liste les ignore définis.
+</programlisting>
+<command>unignore  [number | [mask [[type | command] [channel [server]]]]]</command>
+<programlisting>
+unignore IRC messages and/or hosts
+
+ number: # of ignore to unignore (number is displayed by list of ignore)
+   mask: nick or host mask to unignore
+   type: type of message to unignore (action, ctcp, dcc, pv)
+command: IRC command
+channel: name of channel for unignore
+ server: name of server for unignore
+
+For each argument, '*' means all.
+Without argument, /unignore command lists all defined ignore.
 
 </programlisting>
 <command>upgrade</command>
 <programlisting>
-mettre à jour WeeChat sans se déconnecter des serveurs
+upgrade WeeChat without disconnecting from servers
 
-Cette commande lance à nouveau le binaire WeeChat, il doit donc avoir été compilé ou installé via un gestionnaire de paquet avant de lancer cette commande.
+This command run again WeeChat binary, so it should have been compiled or installed with a package manager before running this command.
 
 </programlisting>
 <command>uptime  [-o]</command>
 <programlisting>
-montrer l'uptime de WeeChat
+show WeeChat uptime
 
--o: envoyer l'uptime sur le canal courant en tant que message IRC
+-o: send uptime on current channel as an IRC message
 
 </programlisting>
-<command>window  [list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [ptc] | resize pct | merge [all]]</command>
+<command>window  [list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv [pct] | resize pct | merge [all]]</command>
 <programlisting>
-gestion des fenêtres
+manage windows
 
-  list: liste les fenêtres ouvertes (pas de paramètre affiche cette liste)
-    -1: saute à la fenêtre précédente
-    +1: saute à la fenêtre suivante
-    b#: saute à la fenêtre affichant le tampon #
-    up: saute à la fenêtre au dessus
-  down: saute à la fenêtre au dessous
-  left: saute à la fenêtre à gauche
- right: saute à la fenêtre à droite
-splith: éclate la fenêtre en deux horizontalement
-splitv: éclate la fenêtre en deux verticalement
-resize: redimensionne une fenêtre, la nouvelle taille est &lt;pct&gt; pourcentage de la fenêtre parent
- merge: fusionne la fenêtre avec une autre
+  list: list open windows (no parameter implies this list)
+    -1: jump to previous window
+    +1: jump to next window
+    b#: jump to next window displaying buffer number #
+    up: switch to window above current one
+  down: switch to window below current one
+  left: switch to window on the left
+ right: switch to window on the right
+splith: split current window horizontally
+splitv: split current window vertically
+resize: resize window size, new size is &lt;pct&gt; pourcentage of parent window
+ merge: merge window with another (all = keep only one window)
 
-Pour splith et splitv, pct est un pourcentage qui représente la taille de la nouvelle fenêtre, calculée par rapport à la taille de la fenêtre courante. Par exemple 25 signifie créer une fenêtre qui a pour taille: taille_courante / 4
+For splith and splitv, pct is a pourcentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
 
 </programlisting>
