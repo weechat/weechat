@@ -5,439 +5,439 @@
      This file is automatically built with a Perl script. DO NOT EDIT!
 -->
 
-<command>admin  [target]</command>
+<command>admin  [Ziel]</command>
 <programlisting>
-find information about the administrator of the server
+Information über den Server-Administrator abfragen
 
-target: server
+Ziel: Server
 
 </programlisting>
-<command>ame  message</command>
+<command>ame  Nachricht</command>
 <programlisting>
-send a CTCP action to all channels of all connected servers
+Nachricht an alle Channels aller verbundenen Server schicken
 
-message: message to send
+zu sendende Nachricht
 
 </programlisting>
-<command>amsg  text</command>
+<command>amsg  Text</command>
 <programlisting>
-send message to all channels of all connected servers
+Nachricht an alle Channels aller verbundener Server schicken
 
-text: text to send
+Text: zu sendender Text
 
 </programlisting>
-<command>away  [-all] [message]</command>
+<command>away  [-all] [Nachricht]</command>
 <programlisting>
-toggle away status
+Abwesenheitsnachricht ein/ausschalten
 
-   -all: toggle away status on all connected servers
-message: message for away (if no message is given, away status is removed)
+   -all: Abwesenheitszustand auf allen Servern ändern
+Nachricht: Abwesenheitsnachricht (bzw. keine, um den Abwesenheitszustand zu deaktivieren)
 
 </programlisting>
-<command>ban  [channel] [nickname [nickname ...]]</command>
+<command>ban  [Channel] [Nickname [Nickname ...]]</command>
 <programlisting>
-bans nicks or hosts
+Nicknames oder Hosts sperren/verbannen
 
- channel: channel for ban
-nickname: user or host to ban
+ Channel: Channel für die Sperre
+Nickname: zu sperrender User oder Host
 
 </programlisting>
-<command>ctcp  receiver type [arguments]</command>
+<command>ctcp  Empfänger Typ [Argumente]</command>
 <programlisting>
-send a CTCP message (Client-To-Client Protocol)
+CTCP-Nachricht verschicken
 
- receiver: nick or channel to send CTCP to
-     type: CTCP type (examples: "version", "ping", ..)
-arguments: arguments for CTCP
+ Empfänger: User, an den die CTCP-Nachricht geschickt werden soll
+     Typ: Typ der CTCP-Nachricht (z.B. "version", "ping", ..)
+Argumente: Argumente für CTCP
 
 </programlisting>
-<command>cycle  [channel[,channel]] [part_message]</command>
+<command>cycle  [Channel[,Channel]] [Abschiedsnachricht]</command>
 <programlisting>
-leave and rejoin a channel
+einen Channel verlassen und wieder betreten
 
-     channel: channel name for cycle
-part_message: part message (displayed to other users)
-
-</programlisting>
-<command>dehalfop  [nickname [nickname]]</command>
-<programlisting>
-removes half channel operator status from nickname(s)
+     Channel: zu verlassender Channel
+Abschiedsnachricht: Abschiedsnachricht (die den anderen Usern angezeigt wird)
 
 </programlisting>
-<command>deop  [nickname [nickname]]</command>
+<command>dehalfop  Nickname [Nickname]</command>
 <programlisting>
-removes channel operator status from nickname(s)
+Halb-Operatorstatus aberkennen
 
 </programlisting>
-<command>devoice  [nickname [nickname]]</command>
+<command>deop  Nickname [Nickname]</command>
 <programlisting>
-removes voice from nickname(s)
+Operatorstatus aberkennen
+
+</programlisting>
+<command>devoice  Nickname [Nickname]</command>
+<programlisting>
+Voice wegnehmen
 
 </programlisting>
 <command>die</command>
 <programlisting>
-shutdown the server
+Server herunterfahren
 
 </programlisting>
-<command>halfop  [nickname [nickname]]</command>
+<command>halfop  Nickname [Nickname]</command>
 <programlisting>
-gives half channel operator status to nickname(s)
+Halb-Operatorstatus verleihen
 
 </programlisting>
-<command>info  [target]</command>
+<command>info  [Ziel]</command>
 <programlisting>
-get information describing the server
+Information über den Server abfragen
 
-target: server name
+Ziel: Servername
 
 </programlisting>
-<command>invite  nickname channel</command>
+<command>invite  Nickname Channel</command>
 <programlisting>
-invite a nick on a channel
+jemanden in einen Channel einladen
 
-nickname: nick to invite
- channel: channel to invite
+Nickname: Chatname des Einzuladenden
+Channel: Channel, in den er eingeladen werden soll
 
 </programlisting>
-<command>ison  nickname [nickname ...]</command>
+<command>ison  Nickname [Nickname ...]</command>
 <programlisting>
-check if a nickname is currently on IRC
+überprüfen, ob jemand zur Zeit im IRC ist
 
-nickname: nickname
+Nickname: Nickname
 
 </programlisting>
-<command>join  channel[,channel] [key[,key]]</command>
+<command>join  Channel[,Channel] [Passwort[,Passwort]]</command>
 <programlisting>
-join a channel
+einen Channel betreten
 
-channel: channel name to join
-    key: key to join the channel
+Channel: zu betretender Channel
+    Passwort: Channelpasswort (+k-Mode)
 
 </programlisting>
-<command>kick  [channel] nickname [comment]</command>
+<command>kick  [Channel] Nickname [Kommentar]</command>
 <programlisting>
-forcibly remove a user from a channel
+einen User aus einem Channel herauskicken
 
- channel: channel where user is
-nickname: nickname to kick
- comment: comment for kick
+Channel: Channel des Benutzers
+Nickname: Nickname des Benutzers
+Kommentar: Begründung für den Kick
 
 </programlisting>
-<command>kickban  [channel] nickname [comment]</command>
+<command>kickban  [Channel] Nickname [Kommentar]</command>
 <programlisting>
-kicks and bans a nick from a channel
+kickt und verbannt jemanden von einem Channel
 
- channel: channel where user is
-nickname: nickname to kick and ban
- comment: comment for kick
+Channel: Channel des Benutzers
+Nickname: Nickname des Benutzers
+Kommentar: Begründung für den Kickban
 
 </programlisting>
-<command>kill  nickname comment</command>
+<command>kill  Nickname Kommentar</command>
 <programlisting>
-close client-server connection
+Jemanden vom Server werfen
 
-nickname: nickname
- comment: comment for kill
+Nickname: Chatname
+Kommentar: Begründung
 
 </programlisting>
-<command>links  [[server] server_mask]</command>
+<command>links  [[Server] Servermaske]</command>
 <programlisting>
-list all servernames which are known by the server answering the query
+Alle dem antwortenden Server bekannten Servernamen auflisten
 
-     server: this server should answer the query
-server_mask: list of servers must match this mask
+     Server: dieser Server soll die Anfrage beantworten
+Servermaske: die aufzulistenden Server sollen diesem Muster entsprechen
 
 </programlisting>
-<command>list  [channel[,channel] [server]]</command>
+<command>list  [Channel[,Channel] [Server]]</command>
 <programlisting>
-list channels and their topic
+Channels mit ihren Topics auflisten
 
-channel: channel to list (a regexp is allowed)
-server: server name
+Channel: aufzulistender Channel (reguläre Ausdrücke sind möglich)
+Server: Servername
 
 </programlisting>
-<command>lusers  [mask [target]]</command>
+<command>lusers  [Maske [Ziel]]</command>
 <programlisting>
-get statistics about the size of the IRC network
+Statistik über die Größe dieses IRC-Netzwerks abfragen
 
-  mask: servers matching the mask only
-target: server for forwarding request
+  Maske: Nur Server, die diesem Muster entsprechen
+Ziel: Server, der die Anfrage weiterleiten soll
 
 </programlisting>
-<command>me  message</command>
+<command>me  Nachricht</command>
 <programlisting>
-send a CTCP action to the current channel
+eine CTCP ACTION an den aktuellen Channel senden
 
-message: message to send
+zu sendende Nachricht
 
 </programlisting>
-<command>mode  { channel {[+|-]|o|p|s|i|t|n|b|v} [limit] [user] [ban mask] } | { nickname {[+|-]|i|w|s|o} }</command>
+<command>mode  { Channel {[+|-]|o|p|s|i|t|n|b|v} [Limit] [User] [Bannmaske] } | {Nickname {[+|-]|i|w|s|o} }</command>
 <programlisting>
-change channel or user mode
+Channel- oder Usermode ändern
 
-channel modes:
-  channel: channel name to modify
-  o: give/take channel operator privileges
-  p: private channel flag
-  s: secret channel flag
-  i: invite-only channel flag
-  t: topic settable by channel operator only flag
-  n: no messages to channel from clients on the outside
-  m: moderated channel
-  l: set the user limit to channel
-  b: set a ban mask to keep users out
-  e: set exception mask
-  v: give/take the ability to speak on a moderated channel
-  k: set a channel key (password)
-user modes:
-  nickname: nickname to modify
-  i: mark a user as invisible
-  s: mark a user for receive server notices
-  w: user receives wallops
-  o: operator flag
+Channelmodi:
+  Channel: zu ändernder Channel
+  o: gib/nimm Operatorstatus
+  p: privater Channel
+  s: geheimer Channel
+  i: geschlossener Channel (Zutritt nur mit Einladung)
+  t: nur Operatoren dürfen das Topic setzen
+  n: keine Channelnachrichten von außerhalb des Channels
+  m: moderierter Channel (schreiben nur mit Voice)
+  l: maximale Anzahl an Usern im Channel festlegen
+  b: Bannmaske für zu sperrende User (in nick!ident@host-Form)
+  e: lege Ausnahmemaske fest
+  v: gib/nimm Voice (d.h. Schreibrecht bei moderierten Channels)
+  k: Channelkey/Channelpasswort festlegen
+Usermodi:
+  Nickname: zu ändernder Nickname
+  i: User als unsichtbar kennzeichnen
+  s: User empfängt Server-Nachrichten
+  w: User empfängt WALLOPS
+  o: User ist Channeloperator
 
 </programlisting>
-<command>motd  [target]</command>
+<command>motd  [Ziel]</command>
 <programlisting>
-get the "Message Of The Day"
+die "Nachricht von heute" abfragen
 
-target: server name
+Ziel: Servername
 
 </programlisting>
-<command>msg  receiver[,receiver] text</command>
+<command>msg  Empfänger[,Empfänger] Text</command>
 <programlisting>
-send message to a nick or channel
+Nachricht an Nick/Channel verschicken
 
-receiver: nick or channel (may be mask, '*' = current channel)
-text: text to send
+Empfänger: Nick/Channel (darf eine Maske sein, '*' = aktueller Channel)
+Text: zu sendender Text
 
 </programlisting>
-<command>names  [channel[,channel]]</command>
+<command>names  [Channel[,Channel]]</command>
 <programlisting>
-list nicknames on channels
+Nicknames in Channels auflisten
 
-channel: channel name
+Channel: Channelname
 
 </programlisting>
-<command>nick  [-all] nickname</command>
+<command>nick  [-all] Nickname</command>
 <programlisting>
-change current nickname
+aktuellen Nickname wechseln
 
-    -all: set new nickname for all connected servers
-nickname: new nickname
+    -all: Nickname auf allen verbundenen Servern ändern
+Nickname: neuer Nickname
 
 </programlisting>
-<command>notice  nickname text</command>
+<command>notice  Nickname Text</command>
 <programlisting>
-send notice message to user
+NOTICE an einen User verschicken
 
-nickname: user to send notice to
-    text: text to send
+Nickname: Empfänger der Nachricht
+    Text: zu sendender Text
 
 </programlisting>
-<command>op  nickname [nickname]</command>
+<command>op  Nickname [Nickname]</command>
 <programlisting>
-gives channel operator status to nickname(s)
+Channeloperatorstatus verleihen
 
 </programlisting>
-<command>oper  user password</command>
+<command>oper  Benutzername Passwort</command>
 <programlisting>
-get operator privileges
+Serveroperatorprivilegien anfordern
 
-user/password: used to get privileges on current IRC server
+Benutzername/Passwort: Account im IRC-Server
 
 </programlisting>
-<command>part  [channel[,channel]] [part_message]</command>
+<command>part  [Channel[,Channel]] [Abschiedsnachricht]</command>
 <programlisting>
-leave a channel
+einen Channel verlassen
 
-     channel: channel name to leave
-part_message: part message (displayed to other users)
+     Channel: zu verlassender Channel
+Abschiedsnachricht: Abschiedsnachricht, die den anderen Usern angezeigt wird
 
 </programlisting>
-<command>ping  server1 [server2]</command>
+<command>ping  Server1 [Server2]</command>
 <programlisting>
-ping server
+Server anpingen
 
-server1: server to ping
-server2: forward ping to this server
+Server1: Anzupingender Server
+Server2: Ping an diesen Server weiterleiten
 
 </programlisting>
-<command>pong  daemon [daemon2]</command>
+<command>pong  Daemon [Daemon2]</command>
 <programlisting>
-answer to a ping message
+auf Ping antworten
 
- daemon: daemon who has responded to Ping message
-daemon2: forward message to this daemon
+ Daemon: Daemon, der auf die Ping-Nachricht geantwortet hat
+Daemon2: Nachricht an diesen Daemon weiterleiten
 
 </programlisting>
-<command>query  nickname [text]</command>
+<command>query  Nickname [Text]</command>
 <programlisting>
-send a private message to a nick
+private Nachricht an jemanden schicken
 
-nickname: nickname for private conversation
-    text: text to send
+Nickname: Nickname für privaten Chat
+    Text: zu sendender Text
 
 </programlisting>
-<command>quit  [quit_message]</command>
+<command>quit  [Abschiedsnachricht]</command>
 <programlisting>
-close all connections and quit
+alle Verbindungen trennen und Programm beenden
 
-quit_message: quit message (displayed to other users)
+Abschiednachricht: anderen Usern zu zeigende Nachricht
 
 </programlisting>
-<command>quote  data</command>
+<command>quote  Daten</command>
 <programlisting>
-send raw data to server without parsing
+Daten direkt an Server senden (siehe RFC 2812)
 
-data: raw data to send
+Daten: zu sendende Rohdaten
 
 </programlisting>
 <command>rehash</command>
 <programlisting>
-tell the server to reload its config file
+den Server dazu bringen, seine Konfigurationsdatei neu zu laden
 
 </programlisting>
 <command>restart</command>
 <programlisting>
-tell the server to restart itself
+den Server dazu bringen, sich selbst neu zu starten
 
 </programlisting>
-<command>service  nickname reserved distribution type reserved info</command>
+<command>service  Nickname reserviert Distribution Typ reserviert Info</command>
 <programlisting>
-register a new service
+einen neuen Service eintragen
 
-distribution: visibility of service
-        type: reserved for future usage
+Distribution: Sichtbarkeit des Services
+        Typ: für spätere Verwendung reserviert
 
 </programlisting>
-<command>servlist  [mask [type]]</command>
+<command>servlist  [Maske [Typ]]</command>
 <programlisting>
-list services currently connected to the network
+zur Zeit verbundene Services auflisten
 
-mask: list only services matching this mask
-type: list only services of this type
+Maske: nur zutreffende Services auflisten
+Typ: nur Services von diesem Typ auflisten
 
 </programlisting>
-<command>squery  service text</command>
+<command>squery  Service Text</command>
 <programlisting>
-deliver a message to a service
+Nachricht an einen Service senden
 
-service: name of service
-text: text to send
+Service: Name des Service
+Text: zu sendender Text
 
 </programlisting>
-<command>squit  server comment</command>
+<command>squit  Server Kommentar</command>
 <programlisting>
-disconnect server links
+Serververbindungen trennen
 
-server: server name
-comment: comment for quit
+Server: Servername
+Kommentar: Trennungsgrund
 
 </programlisting>
-<command>stats  [query [server]]</command>
+<command>stats  [Anfrage [Server]]</command>
 <programlisting>
-query statistics about server
+Serverstatistik abfragen
 
- query: c/h/i/k/l/m/o/y/u (see RFC1459)
-server: server name
+ Anfrage: c/h/i/k/l/m/o/y/u (siehe RFC1459)
+Server: zu befragender Server
 
 </programlisting>
-<command>summon  user [target [channel]]</command>
+<command>summon  User [Ziel [Channel]]</command>
 <programlisting>
-give users who are on a host running an IRC server a message asking them to please join IRC
+Nutzer, die auf dem IRC-Server arbeiten, darum bitten, auf den IRC-Server zu kommen
 
-   user: username
-target: server name
-channel: channel name
+   User: Benutzername
+Ziel: Servername
+Channel: Channelname
 
 </programlisting>
-<command>time  [target]</command>
+<command>time  [Ziel]</command>
 <programlisting>
-query local time from server
+Ortszeit des Servers abfragen
 
-target: query time from specified server
+Ziel: der zu fragende Server
 
 </programlisting>
-<command>topic  [channel] [topic]</command>
+<command>topic  [Channel] [Topic]</command>
 <programlisting>
-get/set channel topic
+Channeltopic abfragen/setzen
 
-channel: channel name
-topic: new topic for channel (if topic is "-delete" then topic is deleted)
+Channel: Channelname
+Topic: neues Topic (oder "-delete" zum Entfernen des Topics)
 
 </programlisting>
-<command>trace  [target]</command>
+<command>trace  [Ziel]</command>
 <programlisting>
-find the route to specific server
+Route zum angegebenen Server ermitteln
 
-target: server
+Ziel: Server
 
 </programlisting>
-<command>unban  [channel] nickname [nickname ...]</command>
+<command>unban  [Channel] nickname [nickname ...]</command>
 <programlisting>
-unbans nicks or hosts
+Bann aufheben
 
- channel: channel for unban
-nickname: user or host to unban
+ Channel: Channel, in dem der Bann aufzuheben ist
+Nickname: User, für den der Bann aufzuheben ist
 
 </programlisting>
-<command>userhost  nickname [nickname ...]</command>
+<command>userhost  Nickname [Nickname ...]</command>
 <programlisting>
-return a list of information about nicknames
+liste von Nickname-Informationen ermitteln
 
-nickname: nickname
+Nickname: Nickname
 
 </programlisting>
-<command>users  [target]</command>
+<command>users  [Ziel]</command>
 <programlisting>
-list of users logged into the server
+auf dem Server eingeloggte User auflisten
 
-target: server
+Ziel: Server
 
 </programlisting>
-<command>version  [server | nickname]</command>
+<command>version  [Server | Nickname]</command>
 <programlisting>
-gives the version info of nick or server (current or specified)
+Versionsinformationen von Nickname oder Server ermitteln
 
-  server: server name
-nickname: nickname
+  Server: Servername
+Nickname: Nickname
 
 </programlisting>
-<command>voice  [nickname [nickname]]</command>
+<command>voice  Nickname [Nickname]</command>
 <programlisting>
-gives voice to nickname(s)
+Voice vergeben
 
 </programlisting>
-<command>wallops  text</command>
+<command>wallops  Text</command>
 <programlisting>
-send a message to all currently connected users who have set the 'w' user mode for themselves
+Nachricht an alle User schicken, die den 'w'-Mode gesetzt haben
 
-text to send
+zu sendender Text
 
 </programlisting>
-<command>who  [mask ["o"]]</command>
+<command>who  [Maske ["o"]]</command>
 <programlisting>
-generate a query which returns a list of information
+erweiterte Nicknameliste
 
-mask: only information which match this mask
-   o: only operators are returned according to the mask supplied
+Maske: nur Information über betreffende Nicknames abfragen
+   o: nur Operatoren ausgeben, die dem Filter entsprechen
 
 </programlisting>
-<command>whois  [server] nickname[,nickname]</command>
+<command>whois  [Server] Nickname[,Nickname]</command>
 <programlisting>
-query information about user(s)
+Information über User abfragen
 
-  server: server name
-nickname: nickname (may be a mask)
+  Server: Servername
+Nickname: Nickname (oder eine Maske)
 
 </programlisting>
-<command>whowas  nickname [,nickname [,nickname ...]] [count [target]]</command>
+<command>whowas  Nickname [,Nickname [,Nickname ...]] [Anzahl [Ziel]]</command>
 <programlisting>
-ask for information about a nickname which no longer exists
+Information über die Vergangenheit eines Nicknames erfragen
 
-nickname: nickname to search
-   count: number of replies to return (full search if negative number)
-  target: reply should match this mask
+Nickname: abzufragende Nicknames
+   Anzahl: maximale Anzahl an Antworten (negative Zahl für eine vollständige Liste)
+  Ziel: zu suchende Hostmaske
 
 </programlisting>
