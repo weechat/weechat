@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-05-27 14:42+0200\n"
+"POT-Creation-Date: 2007-06-05 15:56+0200\n"
 "PO-Revision-Date: 2007-05-27 16:08+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team:  <de@li.org>\n"
@@ -118,7 +118,8 @@ msgstr "%s kann lokalen Hostname/lokale IP nicht festlegen\n"
 
 #: src/irc/irc-server.c:1757
 #, c-format
-msgid "%s cannot connect with SSL since WeeChat was not built with GNUtls support\n"
+msgid ""
+"%s cannot connect with SSL since WeeChat was not built with GNUtls support\n"
 msgstr ""
 "%s SSL-Verbindung nicht möglich, da WeeChat nicht mit GNUtls-Support "
 "kompiliert wurde\n"
@@ -1376,7 +1377,8 @@ msgstr "(versteckt)"
 #: src/irc/irc-send.c:208 src/common/command.c:743
 #, c-format
 msgid "%s cannot find nick for sending message\n"
-msgstr "%s kann keinen Nickname finden, an den die Nachricht gesendet werden soll\n"
+msgstr ""
+"%s kann keinen Nickname finden, an den die Nachricht gesendet werden soll\n"
 
 #: src/irc/irc-send.c:347 src/common/command.c:619
 #, c-format
@@ -1689,7 +1691,8 @@ msgstr "Channel erstellt am %s"
 #: src/irc/irc-recv.c:3550 src/irc/irc-recv.c:3745
 #, c-format
 msgid "%s cannot identify date/time for \"%s\" command\n"
-msgstr "%s kann für den \"%s\"-Befehl kein Datum/keine Uhrzeit identifizieren\n"
+msgstr ""
+"%s kann für den \"%s\"-Befehl kein Datum/keine Uhrzeit identifizieren\n"
 
 #: src/irc/irc-recv.c:3559 src/irc/irc-recv.c:3682 src/irc/irc-recv.c:3763
 #: src/irc/irc-recv.c:3874
@@ -1749,8 +1752,10 @@ msgstr "%s Nick \"%s\" für Channel \"%s\" konnte nicht angelegt werden\n"
 
 #: src/irc/irc-recv.c:4590
 #, c-format
-msgid "Channel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
-msgstr "Channel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
+msgid ""
+"Channel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
+msgstr ""
+"Channel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 
 #: src/irc/irc-recv.c:4598
 msgid "nicks"
@@ -1825,12 +1830,14 @@ msgstr "%s: versuche ersten Nickname \"%s\"\n"
 #: src/irc/irc-recv.c:4945
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\"\n"
-msgstr "%s: Nickname \"%s\" wird bereits verwendet, versuche 2. Nickname \"%s\"\n"
+msgstr ""
+"%s: Nickname \"%s\" wird bereits verwendet, versuche 2. Nickname \"%s\"\n"
 
 #: src/irc/irc-recv.c:4957
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\"\n"
-msgstr "%s: Nickname \"%s\" wird bereits verwendet, versuche 3. Nickname \"%s\"\n"
+msgstr ""
+"%s: Nickname \"%s\" wird bereits verwendet, versuche 3. Nickname \"%s\"\n"
 
 #: src/irc/irc-recv.c:4969
 #, c-format
@@ -1844,7 +1851,8 @@ msgstr ""
 #: src/irc/irc-recv.c:4979
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\"\n"
-msgstr "%s: Nickname \"%s\" wird bereits verwendet, versuche 1. Nickname \"%s\"\n"
+msgstr ""
+"%s: Nickname \"%s\" wird bereits verwendet, versuche 1. Nickname \"%s\"\n"
 
 #: src/irc/irc-dcc.c:55
 msgid "Waiting"
@@ -1940,12 +1948,15 @@ msgstr "DCC Chat"
 
 #: src/irc/irc-dcc.c:828
 #, c-format
-msgid "Incoming DCC file from %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s bytes\n"
-msgstr "Eingehende DCC-Datei von %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s Bytes\n"
+msgid ""
+"Incoming DCC file from %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s bytes\n"
+msgstr ""
+"Eingehende DCC-Datei von %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s Bytes\n"
 
 #: src/irc/irc-dcc.c:851
 #, c-format
-msgid "Sending DCC file to %s%s%s: %s%s%s (local filename: %s%s%s), %s%lu%s bytes\n"
+msgid ""
+"Sending DCC file to %s%s%s: %s%s%s (local filename: %s%s%s), %s%lu%s bytes\n"
 msgstr ""
 "Sende DCC-Datei zu %s%s%s: %s%s%s (lokaler Dateiname: %s%s%s), %s%lu%s "
 "Bytes\n"
@@ -1962,7 +1973,8 @@ msgstr "Sende DCC-Chatanforderung an %s%s\n"
 
 #: src/irc/irc-dcc.c:906
 #, c-format
-msgid "DCC: file %s%s%s (local filename: %s%s%s) will be resumed at position %u\n"
+msgid ""
+"DCC: file %s%s%s (local filename: %s%s%s) will be resumed at position %u\n"
 msgstr ""
 "DCC: Datei %s%s%s (lokaler Dateiname: %s%s%s) wird an der Position %u "
 "fortgesetzt\n"
@@ -1980,7 +1992,8 @@ msgstr "%s kann nicht auf die Datei \"%s\" zugreifen\n"
 #: src/irc/irc-dcc.c:1030
 #, c-format
 msgid "%s could not find address for '%s'. Falling back to local IP.\n"
-msgstr "%s kann die Adresse für '%s' nicht finden. Greife auf lokale IP zurück.\n"
+msgstr ""
+"%s kann die Adresse für '%s' nicht finden. Greife auf lokale IP zurück.\n"
 
 #: src/irc/irc-dcc.c:1050
 #, c-format
@@ -2097,7 +2110,8 @@ msgstr ""
 
 #: src/plugins/plugins.c:280
 #, c-format
-msgid "%s plugin %s: unable to add handler for \"%s\" command (already exists)\n"
+msgid ""
+"%s plugin %s: unable to add handler for \"%s\" command (already exists)\n"
 msgstr ""
 "%s Plugin %s: kann keinen Handler für den IRC-Befehl \"%s\" hinzufügen "
 "(existiert bereits)\n"
@@ -2111,7 +2125,8 @@ msgstr ""
 
 #: src/plugins/plugins.c:332
 #, c-format
-msgid "%s plugin %s: unable to add handler for \"%s\" command (not enough memory)\n"
+msgid ""
+"%s plugin %s: unable to add handler for \"%s\" command (not enough memory)\n"
 msgstr ""
 "%s Plugin %s: kann keinen Handler für den IRC-Befehl \"%s\" hinzufügen "
 "(Speichermangel)\n"
@@ -2124,12 +2139,14 @@ msgstr "%s plugin %s: kann keinen Timer-Handler hinzufügen (Speichermangel)\n"
 #: src/plugins/plugins.c:445
 #, c-format
 msgid "%s plugin %s: unable to add keyboard handler (not enough memory)\n"
-msgstr "%s plugin %s: kann keinen Tastatur-Handler hinzufügen (Speichermangel)\n"
+msgstr ""
+"%s plugin %s: kann keinen Tastatur-Handler hinzufügen (Speichermangel)\n"
 
 #: src/plugins/plugins.c:502
 #, c-format
 msgid "%s plugin %s: unable to add event handler (not enough memory)\n"
-msgstr "%s plugin %s: kann keinen Ereignis-Handler hinzufügen (Speichermangel)\n"
+msgstr ""
+"%s plugin %s: kann keinen Ereignis-Handler hinzufügen (Speichermangel)\n"
 
 #: src/plugins/plugins.c:846
 #, c-format
@@ -2150,21 +2167,24 @@ msgstr ""
 
 #: src/plugins/plugins.c:1100
 #, c-format
-msgid "%s unable to load plugin \"%s\": a plugin with same name already exists\n"
+msgid ""
+"%s unable to load plugin \"%s\": a plugin with same name already exists\n"
 msgstr ""
 "%s kann Plugin \"%s\" nicht laden: ein gleichnamiges Plugin existiert "
 "bereits\n"
 
 #: src/plugins/plugins.c:1112
 #, c-format
-msgid "%s symbol \"plugin_description\" not found in plugin \"%s\", failed to load\n"
+msgid ""
+"%s symbol \"plugin_description\" not found in plugin \"%s\", failed to load\n"
 msgstr ""
 "%s Symbol \"plugin_description\" nicht in Plugin \"%s\" gefunden, Laden "
 "gescheitert\n"
 
 #: src/plugins/plugins.c:1123
 #, c-format
-msgid "%s symbol \"plugin_version\" not found in plugin \"%s\", failed to load\n"
+msgid ""
+"%s symbol \"plugin_version\" not found in plugin \"%s\", failed to load\n"
 msgstr ""
 "%s Symbol \"plugin_version\" nicht in Plugin \"%s\" gefunden, Laden "
 "gescheitert\n"
@@ -2565,7 +2585,8 @@ msgstr "%s kann die Taste \"%s\" nicht zuordnen\n"
 #: src/gui/gui-keyboard.c:499
 #, c-format
 msgid "%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"
-msgstr "%s kann die Taste \"%s\" nicht zuornen (ungültiger Funktionsname: \"%s\")\n"
+msgstr ""
+"%s kann die Taste \"%s\" nicht zuornen (ungültiger Funktionsname: \"%s\")\n"
 
 #: src/gui/gui-keyboard.c:513
 #, c-format
@@ -2574,7 +2595,8 @@ msgstr "%s nicht genügend Speicher für Tastenzuordnung\n"
 
 #: src/gui/gui-log.c:116 src/gui/gui-log.c:132
 msgid "Not enough memory to write log file for a buffer\n"
-msgstr "Nicht genügend Speicher, um das Logfile für einen Puffer zu schreiben\n"
+msgstr ""
+"Nicht genügend Speicher, um das Logfile für einen Puffer zu schreiben\n"
 
 #: src/gui/gui-log.c:168
 msgid "Unable to write log file for a buffer\n"
@@ -2662,7 +2684,8 @@ msgstr ""
 msgid ""
 "launch WeeChat/IRC builtin command (do not look at plugins handlers or "
 "aliases)"
-msgstr "starte eingebauten WeeChat/IRC-Befehl (ohne Plugin-Handler oder Aliase)"
+msgstr ""
+"starte eingebauten WeeChat/IRC-Befehl (ohne Plugin-Handler oder Aliase)"
 
 #: src/common/command.c:76
 msgid "command"
@@ -3050,7 +3073,8 @@ msgstr "[-o]"
 
 #: src/common/command.c:216
 msgid "-o: send uptime on current channel as an IRC message"
-msgstr "-o: sendet die Weechat-Uptime als IRC-Nachricht in den aktuellen Channel"
+msgstr ""
+"-o: sendet die Weechat-Uptime als IRC-Nachricht in den aktuellen Channel"
 
 #: src/common/command.c:218
 msgid "manage windows"
@@ -3110,7 +3134,8 @@ msgstr "%s der Befehl \"%s\" schlug fehl\n"
 #: src/common/command.c:522
 #, c-format
 msgid "%s wrong argument count for %s command \"%s\" (expected: %d arg%s)\n"
-msgstr "%s falsche Argumentanzahl für den %s-Befehl \"%s\" (erwartet: %d arg%s)\n"
+msgstr ""
+"%s falsche Argumentanzahl für den %s-Befehl \"%s\" (erwartet: %d arg%s)\n"
 
 #: src/common/command.c:534
 #, c-format
@@ -3124,7 +3149,8 @@ msgstr ""
 #: src/common/command.c:592
 #, c-format
 msgid "%s wrong argument count for IRC command \"%s\" (expected: %d arg%s)\n"
-msgstr "%s falsche Argumentanzahl für den IRC-Befehl \"%s\" (erwartet: %d arg%s)\n"
+msgstr ""
+"%s falsche Argumentanzahl für den IRC-Befehl \"%s\" (erwartet: %d arg%s)\n"
 
 #: src/common/command.c:604
 #, c-format
@@ -3232,7 +3258,8 @@ msgstr "%s der einzige Puffer kann nicht geschlossen werden\n"
 #: src/common/command.c:1186
 #, c-format
 msgid "%s can not close server buffer while channels are open\n"
-msgstr "%s kann den Serverpuffer nicht schließen, solange Channels offen sind\n"
+msgstr ""
+"%s kann den Serverpuffer nicht schließen, solange Channels offen sind\n"
 
 #: src/common/command.c:1259
 msgid "Default notify levels for servers:"
@@ -3509,7 +3536,8 @@ msgstr "  (kein Plugin)\n"
 
 #: src/common/command.c:2739 src/common/command.c:3710
 #, c-format
-msgid "Command \"%s\" is not available, WeeChat was built without plugins support.\n"
+msgid ""
+"Command \"%s\" is not available, WeeChat was built without plugins support.\n"
 msgstr ""
 "Befehl \"%s\" ist nicht verfügbar, WeeChat wurde ohne Plugin-Support "
 "kompiliert.\n"
@@ -3794,7 +3822,8 @@ msgstr "WeeChat Uptime: %d %s %02d:%02d:%02d, gestartet am %s"
 #: src/common/command.c:3974
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
-msgstr "WeeChat Uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, gestartet am %s%s"
+msgstr ""
+"WeeChat Uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, gestartet am %s%s"
 
 #: src/common/command.c:4018
 msgid "Open windows:\n"
@@ -3853,9 +3882,9 @@ msgid "%s cannot add a buffer to hotlist\n"
 msgstr "%s Puffer kann nicht zur Hotlist hinzugefügt werden\n"
 
 #: src/common/log.c:104
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s unable to create/append to log file\n"
+"%s unable to create/append to log file (weechat.log)\n"
 "If another WeeChat process is using this file, try to run WeeChat\n"
 "with another home using \"--dir\" command line option.\n"
 msgstr ""
@@ -3867,7 +3896,8 @@ msgstr ""
 
 #: src/common/session.c:516
 #, c-format
-msgid "Last operation with session file was at position %ld, read of %d bytes\n"
+msgid ""
+"Last operation with session file was at position %ld, read of %d bytes\n"
 msgstr ""
 "Der letzte Zugriff auf die Sitzungsdatei war bei Position %ld, %d Bytes "
 "gelesen.\n"
@@ -4358,7 +4388,8 @@ msgstr "Konfiguration beim Verlassen abspeichern"
 
 #: src/common/weeconfig.c:119 src/common/weeconfig.c:120
 msgid "set title for window (terminal for Curses GUI) with name and version"
-msgstr "Fenstertitel setzen (oder Terminaltitel im Curses-GUI) mit Name und Version"
+msgstr ""
+"Fenstertitel setzen (oder Terminaltitel im Curses-GUI) mit Name und Version"
 
 #: src/common/weeconfig.c:123 src/common/weeconfig.c:124
 msgid "display WeeChat logo at startup"
@@ -4447,7 +4478,8 @@ msgstr "Trennzeichen zwischen Chatfenster und Nickliste"
 
 #: src/common/weeconfig.c:181 src/common/weeconfig.c:182
 msgid "text to display instead of nick when not connected"
-msgstr "Text, der statt Nickname erscheinen soll, wenn keine Verbindung besteht"
+msgstr ""
+"Text, der statt Nickname erscheinen soll, wenn keine Verbindung besteht"
 
 #: src/common/weeconfig.c:185 src/common/weeconfig.c:186
 msgid "display nick mode ((half)op/voice) before each nick"
@@ -4470,14 +4502,16 @@ msgid "nick alignment (fixed size for nicks in chat window)"
 msgstr "Ausrichtung des Nicknamens (feste Breite bei Nicks im Chatfenster)"
 
 #: src/common/weeconfig.c:202
-msgid "nick alignment (fixed size for nicks in chat window (none, left, right))"
+msgid ""
+"nick alignment (fixed size for nicks in chat window (none, left, right))"
 msgstr ""
 "Ausrichtung des Nicknamens (feste Größe bei Nicks im Chatfenster (none, "
 "left, right))"
 
 #: src/common/weeconfig.c:205 src/common/weeconfig.c:206
 msgid "alignment for other messages (not beginning with a nick)"
-msgstr "Ausrichtung für andere Nachrichten, die nicht mit einem Nicknamen beginnen"
+msgstr ""
+"Ausrichtung für andere Nachrichten, die nicht mit einem Nicknamen beginnen"
 
 #: src/common/weeconfig.c:209 src/common/weeconfig.c:210
 msgid "size for aligning nick and other messages"
@@ -4509,7 +4543,9 @@ msgstr "Intelligente vervollständigung der Nicknamen"
 
 #: src/common/weeconfig.c:227
 msgid "smart completion for nicks (completes with last speakers first)"
-msgstr "Intelligente vervollständigung der Nicknamen (vervollständigt zuerst mit dem letzten Nick, der einen angesprochen hat)"
+msgstr ""
+"Intelligente vervollständigung der Nicknamen (vervollständigt zuerst mit dem "
+"letzten Nick, der einen angesprochen hat)"
 
 #: src/common/weeconfig.c:230 src/common/weeconfig.c:231
 msgid "complete only with first nick found"
@@ -4544,8 +4580,10 @@ msgid "max number of names in hotlist"
 msgstr "Maximale Anzahl an Namen in der Hotlist"
 
 #: src/common/weeconfig.c:252
-msgid "max number of names in hotlist (0 = no name displayed, only buffer numbers)"
-msgstr "Maximale Anzahl an Namen in der Hotlist (0 = keine Namen, nur Puffernummern)"
+msgid ""
+"max number of names in hotlist (0 = no name displayed, only buffer numbers)"
+msgstr ""
+"Maximale Anzahl an Namen in der Hotlist (0 = keine Namen, nur Puffernummern)"
 
 #: src/common/weeconfig.c:255
 msgid "level for displaying names in hotlist"
@@ -4609,7 +4647,8 @@ msgstr ""
 
 #: src/common/weeconfig.c:357 src/common/weeconfig.c:358
 msgid "color for window separators (when splited)"
-msgstr "Farbe der Fenster-Separatoren im Chatfenster (bei geteiltem Bildschirm)"
+msgstr ""
+"Farbe der Fenster-Separatoren im Chatfenster (bei geteiltem Bildschirm)"
 
 #: src/common/weeconfig.c:362 src/common/weeconfig.c:363
 msgid "color for title bar"
@@ -4761,7 +4800,8 @@ msgstr "Farbe eines Fensters mit neuen Daten (nicht Nachrichten)"
 
 #: src/common/weeconfig.c:467
 msgid "color for window with new data (not messages) (status bar)"
-msgstr "Farbe eines Fensters mit neuen Daten (nicht Nachrichten in der Statuszeile)"
+msgstr ""
+"Farbe eines Fensters mit neuen Daten (nicht Nachrichten in der Statuszeile)"
 
 #: src/common/weeconfig.c:470
 msgid "color for \"-MORE-\" text"
@@ -5003,7 +5043,8 @@ msgstr "bei Abwesenheit und Rückkehr eine Nachricht anzeigen"
 
 #: src/common/weeconfig.c:742 src/common/weeconfig.c:743
 msgid "show remote away message only once in private"
-msgstr "in privaten Unterhaltungen nur einmalig eine Abwesenheitsnachricht anzeigen"
+msgstr ""
+"in privaten Unterhaltungen nur einmalig eine Abwesenheitsnachricht anzeigen"
 
 #: src/common/weeconfig.c:746
 msgid "default part message (leaving channel)"
@@ -5022,8 +5063,10 @@ msgid "default quit message"
 msgstr "Standardnachricht beim Beenden"
 
 #: src/common/weeconfig.c:752
-msgid "default quit message ('%v' will be replaced by WeeChat version in string)"
-msgstr "Standardnachricht beim Beenden ('%v' wird durch die WeeChat-Version ersetzt)"
+msgid ""
+"default quit message ('%v' will be replaced by WeeChat version in string)"
+msgstr ""
+"Standardnachricht beim Beenden ('%v' wird durch die WeeChat-Version ersetzt)"
 
 #: src/common/weeconfig.c:755 src/common/weeconfig.c:756
 msgid "display notices as private messages"
@@ -5042,7 +5085,8 @@ msgid "max number of nicks for away check"
 msgstr "maximale Nick-Anzahl für Abwesenheitsüberprüfung"
 
 #: src/common/weeconfig.c:764
-msgid "do not check away nicks on channels with high number of nicks (0 = unlimited)"
+msgid ""
+"do not check away nicks on channels with high number of nicks (0 = unlimited)"
 msgstr ""
 "überprüfe Abwesenheitsnachrichten nur in Channels mit maximal dieser Anzahl "
 "an Nicknamen (0 = unbegrenzt)"
@@ -5069,7 +5113,8 @@ msgstr "Maximal-Lag bis zum Trennen der Verbindung"
 
 #: src/common/weeconfig.c:776
 msgid "disconnect after important lag (in minutes, 0 = never disconnect)"
-msgstr "Maximal-Lag bis zum Trennen der Verbindung (in Minuten - 0: nie trennen)"
+msgstr ""
+"Maximal-Lag bis zum Trennen der Verbindung (in Minuten - 0: nie trennen)"
 
 #: src/common/weeconfig.c:779
 msgid "anti-flood"
@@ -5196,7 +5241,8 @@ msgid "default path for sending files with dcc"
 msgstr "Pfad der per DCC zu sendenden Dateien"
 
 #: src/common/weeconfig.c:861
-msgid "path for reading files when sending thru dcc (when no path is specified)"
+msgid ""
+"path for reading files when sending thru dcc (when no path is specified)"
 msgstr ""
 "Pfad, aus dem Dateien standardmäßig gelesen werden, wenn keine explizite "
 "Angabe vorliegt"
@@ -5222,7 +5268,8 @@ msgid "automatically resume aborted transfers"
 msgstr "abgebrochene Übertragungen automatisch fortsetzen"
 
 #: src/common/weeconfig.c:873
-msgid "automatically resume dcc transfer if connection with remote host is loosed"
+msgid ""
+"automatically resume dcc transfer if connection with remote host is loosed"
 msgstr ""
 "abgebrochene Übertragungen automatisch fortsetzen, wenn die Verbindung "
 "abgebrochen ist"
@@ -5233,7 +5280,8 @@ msgstr "Proxy verwenden"
 
 #: src/common/weeconfig.c:893
 msgid "use a proxy server to connect to irc server"
-msgstr "einen Proxyserver verwenden, um die Verbindung zum IRC-Server aufzubauen"
+msgstr ""
+"einen Proxyserver verwenden, um die Verbindung zum IRC-Server aufzubauen"
 
 #: src/common/weeconfig.c:896
 msgid "proxy type"
@@ -5439,7 +5487,8 @@ msgid "custom hostname/IP for server"
 msgstr "angepasster Hostname oder angepasste IP-Adresse für den Server"
 
 #: src/common/weeconfig.c:1016
-msgid "custom hostname/IP for server (optional, if empty local hostname is used)"
+msgid ""
+"custom hostname/IP for server (optional, if empty local hostname is used)"
 msgstr ""
 "angepasster Hostname oder angepasste IP-Adresse für den Server (wenn nichts "
 "eingetragen ist, wird der lokale Hostname verwendet)"
@@ -5553,7 +5602,8 @@ msgstr "%s %s, Zeile %d: unbekannte Sektion \"%s\"\n"
 #: src/common/weeconfig.c:1957
 #, c-format
 msgid "%s %s, line %d: invalid section for option, line is ignored\n"
-msgstr "%s %s, Zeile %d: ungültige Sektion für Option; die Zeile wurde ignoriert\n"
+msgstr ""
+"%s %s, Zeile %d: ungültige Sektion für Option; die Zeile wurde ignoriert\n"
 
 #: src/common/weeconfig.c:2040 src/common/weeconfig.c:2066
 #, c-format
@@ -5628,4 +5678,3 @@ msgstr ""
 #: src/common/weeconfig.c:2400
 msgid "Saving config to disk\n"
 msgstr "Konfiguration wird gespeichert\n"
-
