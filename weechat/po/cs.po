@@ -3855,13 +3855,13 @@ msgid "%s cannot add a buffer to hotlist\n"
 msgstr "%s nemohu přidat buffer do hotlistu\n"
 
 #: src/common/log.c:104
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s unable to create/append to log file (weechat.log)\n"
 "If another WeeChat process is using this file, try to run WeeChat\n"
 "with another home using \"--dir\" command line option.\n"
 msgstr ""
-"%s nemohu vytvořit/přidávat do logovacího souboru\n"
+"%s nemohu vytvořit/přidávat do logovacího souboru (weechat.log)\n"
 "Pokud používá tento soubor jiný proces WeeChat, skuste WeeChat pustit\n"
 "s jiným domovským adresářem pomocí \"--dir\" volby příkazové řádky.\n"
 
