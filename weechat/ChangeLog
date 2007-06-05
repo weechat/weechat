@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-05-23
+ChangeLog - 2007-06-05
 
 
 Version 0.2.5 (under dev!):
+   * fixed hotlist when exiting search mode: current buffer is removed from
+     hotlist
    * added "%M" for completion with nicks of current server (nicks on open
      channels) (task #6931)
    * improved key bindings: now possible to bind a key on many commands,

@@ -1184,6 +1184,7 @@ gui_buffer_search_stop (t_gui_window *window)
     }
     window->start_line = NULL;
     window->start_line_pos = 0;
+    hotlist_remove_buffer (window->buffer);
     gui_chat_draw (window->buffer, 0);
     gui_status_draw (window->buffer, 1);
     gui_input_draw (window->buffer, 1);
