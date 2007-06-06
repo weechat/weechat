@@ -3496,6 +3496,73 @@ irc_recv_cmd_324 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
+ * irc_recv_cmd_327: '327' command (whois, host)
+ */
+
+int
+irc_recv_cmd_327 (t_irc_server *server, char *host, char *nick, char *arguments)
+{
+    char *pos_nick, *pos_host1, *pos_host2, *pos_other;
+    
+    /* make C compiler happy */
+    (void) host;
+    (void) nick;
+    
+    if (!command_ignored)
+    {
+        pos_nick = strchr (arguments, ' ');
+        if (pos_nick)
+        {
+            while (pos_nick[0] == ' ')
+                pos_nick++;
+            pos_host1 = strchr (pos_nick, ' ');
+            if (pos_host1)
+            {
+                pos_host1[0] = '\0';
+                pos_host1++;
+                while (pos_host1[0] == ' ')
+                    pos_host1++;
+                pos_host2 = strchr (pos_host1, ' ');
+                if (pos_host2)
+                {
+                    pos_host2[0] = '\0';
+                    pos_host2++;
+                    while (pos_host2[0] == ' ')
+                        pos_host2++;
+
+                    pos_other = strchr (pos_host2, ' ');
+                    if (pos_other)
+                    {
+                        pos_other[0] = '\0';
+                        pos_other++;
+                        while (pos_other[0] == ' ')
+                            pos_other++;
+                    }
+                    
+                    irc_display_prefix (server, server->buffer, PREFIX_SERVER);
+                    gui_printf (server->buffer,
+                                "%s[%s%s%s] %s%s %s %s%s%s%s%s%s\n",
+                                GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                                GUI_COLOR(COLOR_WIN_CHAT_NICK),
+                                pos_nick,
+                                GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                                GUI_COLOR(COLOR_WIN_CHAT_HOST),
+                                pos_host1,
+                                pos_host2,
+                                GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                                (pos_other) ? "(" : "",
+                                GUI_COLOR(COLOR_WIN_CHAT),
+                                (pos_other) ? pos_other : "",
+                                GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                                (pos_other) ? ")" : "");
+                }
+            }
+        }
+    }
+    return 0;
+}
+
+/*
  * irc_recv_cmd_329: '329' command received (channel creation date)
  */
 

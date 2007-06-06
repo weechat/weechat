@@ -353,6 +353,8 @@ t_irc_command irc_commands[] =
     NULL, 0, 0, 0, 1, NULL, NULL, irc_recv_cmd_324 },
   { "326", N_("whois (has oper privs)"), "", "",
     NULL, 0, 0, 0, 1, NULL, NULL, irc_recv_cmd_whois_nick_msg },
+  { "327", N_("whois (host)"), "", "",
+    NULL, 0, 0, 0, 1, NULL, NULL, irc_recv_cmd_327 },
   { "329", N_("channel creation date"), "", "",
     NULL, 0, 0, 0, 1, NULL, NULL, irc_recv_cmd_329 },
   { "331", N_("no topic for channel"), "", "",
