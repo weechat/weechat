@@ -1123,14 +1123,12 @@ msgid "end of banlist"
 msgstr "konec seznamu zakázaných"
 
 #: src/irc/irc-commands.c:396
-#, fuzzy
 msgid "whois (connecting from)"
-msgstr "Připojuji z"
+msgstr "kdo je (Připojujený z)"
 
 #: src/irc/irc-commands.c:398
-#, fuzzy
 msgid "whois (using modes)"
-msgstr "kdo je (mód nápovědy)"
+msgstr "kdo je (použité módy)"
 
 #: src/irc/irc-commands.c:400
 msgid "no such nick/channel"
