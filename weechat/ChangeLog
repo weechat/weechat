@@ -5,7 +5,7 @@ ChangeLog - 2007-06-06
 
 
 Version 0.2.5 (under dev!):
-   * added missing IRC command 327
+   * added missing IRC commands (327, 378, 379) (bug #20091)
    * fixed hotlist when exiting search mode: current buffer is removed from
      hotlist
    * added "%M" for completion with nicks of current server (nicks on open

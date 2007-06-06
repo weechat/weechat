@@ -600,7 +600,6 @@ extern int irc_recv_cmd_365 (t_irc_server *, char *, char *, char *);
 extern int irc_recv_cmd_366 (t_irc_server *, char *, char *, char *);
 extern int irc_recv_cmd_367 (t_irc_server *, char *, char *, char *);
 extern int irc_recv_cmd_368 (t_irc_server *, char *, char *, char *);
-extern int irc_recv_cmd_378 (t_irc_server *, char *, char *, char *);
 extern int irc_recv_cmd_432 (t_irc_server *, char *, char *, char *);
 extern int irc_recv_cmd_433 (t_irc_server *, char *, char *, char *);
 extern int irc_recv_cmd_438 (t_irc_server *, char *, char *, char *);

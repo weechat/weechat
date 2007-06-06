@@ -4890,49 +4890,6 @@ irc_recv_cmd_368 (t_irc_server *server, char *host, char *nick, char *arguments)
 }
 
 /*
- * irc_recv_cmd_378: '378' command received (connecting from)
- */
-
-int
-irc_recv_cmd_378 (t_irc_server *server, char *host, char *nick, char *arguments)
-{
-    char *pos, *pos2;
-    
-    /* make C compiler happy */
-    (void) host;
-    (void) nick;
-    
-    if (!command_ignored)
-    {
-        /* skip nickname if at beginning of server message */
-        if (strncmp (server->nick, arguments, strlen (server->nick)) == 0)
-        {
-            arguments += strlen (server->nick) + 1;
-            while (arguments[0] == ' ')
-                arguments++;
-        }
-        
-        irc_display_prefix (server, server->buffer, PREFIX_SERVER);
-        pos = strchr (arguments, ':');
-        if (pos)
-        {
-            pos[0] = '\0';
-            pos2 = pos - 1;
-            while (pos2[0] == ' ')
-                pos2--;
-            pos2[1] = '\0';
-            gui_printf (server->buffer, "%s%s %s\n",
-                        GUI_COLOR(COLOR_WIN_CHAT), arguments, pos + 1);
-        }
-        else
-            gui_printf (server->buffer, "%s%s\n",
-                        GUI_COLOR(COLOR_WIN_CHAT), arguments);
-    }
-    
-    return 0;
-}
-
-/*
  * irc_recv_cmd_432: '432' command received (erroneous nickname)
  */
 
