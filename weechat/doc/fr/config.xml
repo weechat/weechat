@@ -7,1247 +7,1247 @@
 
 <row>
   <entry><option>look_save_on_exit</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Save config file on exit</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Sauvegarder la configuration en quittant</entry>
 </row>
 <row>
   <entry><option>look_set_title</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Set title for window (terminal for Curses GUI) with name and version</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Définit le titre de la fenêtre (terminal pour l'interface Curses) avec le nom et la version</entry>
 </row>
 <row>
   <entry><option>look_startup_logo</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Display WeeChat logo at startup</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Afficher le logo WeeChat au démarrage</entry>
 </row>
 <row>
   <entry><option>look_startup_version</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Display WeeChat version at startup</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Afficher la version de WeeChat au démarrage</entry>
 </row>
 <row>
   <entry><option>look_weechat_slogan</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>WeeChat slogan (if empty, slogan is not used)</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>'the geekest IRC client!'</entry>
+  <entry>Slogan WeeChat (si vide, le slogan ne sera pas utilisé)</entry>
 </row>
 <row>
   <entry><option>look_one_server_buffer</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Use same buffer for all servers</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'off'</entry>
+  <entry>Utiliser le même tampon pour tous les serveurs</entry>
 </row>
 <row>
   <entry><option>look_open_near_server</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Open new channels/privates near server</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'off'</entry>
+  <entry>Ouvrir les nouveaux canaux/privés près du serveur</entry>
 </row>
 <row>
   <entry><option>look_scroll_amount</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>How many lines to scroll by with scroll_up and scroll_down</entry>
+  <entry>entier</entry>
+  <entry>entre 1 et 2147483647</entry>
+  <entry>3</entry>
+  <entry>Nombre de lignes pour le défilement avec scroll_up et scroll_down</entry>
 </row>
 <row>
   <entry><option>look_buffer_timestamp</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Timestamp for buffers</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>'[%H:%M:%S]'</entry>
+  <entry>Format de date/heure pour les tampons</entry>
 </row>
 <row>
   <entry><option>look_color_nicks_number</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Number of colors to use for nicks colors</entry>
+  <entry>entier</entry>
+  <entry>entre 1 et 10</entry>
+  <entry>10</entry>
+  <entry>Nombre de couleurs à utiliser pour les couleurs des pseudos</entry>
 </row>
 <row>
   <entry><option>look_color_actions</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Display actions with different colors</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Afficher les actions avec différentes couleurs</entry>
 </row>
 <row>
   <entry><option>look_nicklist</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Display nicklist window (for channel windows)</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Afficher la fenêtre des pseudos (pour les fenêtres de canaux)</entry>
 </row>
 <row>
   <entry><option>look_nicklist_position</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Nicklist position (top, left, right (default), bottom)</entry>
+  <entry>chaîne</entry>
+  <entry>'left', 'right', 'top', 'bottom'</entry>
+  <entry>'right'</entry>
+  <entry>Position de la fenêtre des pseudos (haut (top), gauche (left), droite (right, par défaut), bas (bottom))</entry>
 </row>
 <row>
   <entry><option>look_nicklist_min_size</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Min size for nicklist (width or height, depending on look_nicklist_position (0 = no min size))</entry>
+  <entry>entier</entry>
+  <entry>entre 0 et 100</entry>
+  <entry>0</entry>
+  <entry>Taille minimum pour la fenêtre des pseudos (largeur ou hauteur, selon look_nicklist_position (0 = pas de taille minimum))</entry>
 </row>
 <row>
   <entry><option>look_nicklist_max_size</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Max size for nicklist (width or height, depending on look_nicklist_position (0 = no max size; if min == max and &gt; 0, then size is fixed))</entry>
+  <entry>entier</entry>
+  <entry>entre 0 et 100</entry>
+  <entry>0</entry>
+  <entry>Taille maximum pour la fenêtre des pseudos (largeur ou hauteur, selon look_nicklist_position (0 = pas de taille maximum; si min == max et &gt; 0, alors la taille est fixe))</entry>
 </row>
 <row>
   <entry><option>look_nicklist_separator</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Separator between chat and nicklist</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Séparateur entre la discussion et la liste de pseudos</entry>
 </row>
 <row>
   <entry><option>look_no_nickname</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Text to display instead of nick when not connected</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>'-cmd-'</entry>
+  <entry>Texte à afficher en lieu et place du pseudo lorsque la connexion n'est pas active</entry>
 </row>
 <row>
   <entry><option>look_nickmode</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Display nick mode ((half)op/voice) before each nick</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Afficher le mode du pseudo ((half)op/voice) devant chaque utilisateur</entry>
 </row>
 <row>
   <entry><option>look_nickmode_empty</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Display space if nick mode is not (half)op/voice</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'off'</entry>
+  <entry>Afficher un espace si le mode du pseudo n'est pas (half)op/voice</entry>
 </row>
 <row>
   <entry><option>look_nick_prefix</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Text to display before nick in chat window</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>''</entry>
+  <entry>Texte à afficher avant le pseudo dans la fenêtre de discussion</entry>
 </row>
 <row>
   <entry><option>look_nick_suffix</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Text to display after nick in chat window</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>' |'</entry>
+  <entry>Texte à afficher après le pseudo dans la fenêtre de discussion</entry>
 </row>
 <row>
   <entry><option>look_align_nick</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Nick alignment (fixed size for nicks in chat window (none, left, right))</entry>
+  <entry>chaîne</entry>
+  <entry>'none', 'left', 'right'</entry>
+  <entry>'right'</entry>
+  <entry>Alignement des pseudos (taille fixe pour les pseudos dans la fenêtre de discussion (none, left, right))</entry>
 </row>
 <row>
   <entry><option>look_align_other</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Alignment for other messages (not beginning with a nick)</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Alignement pour les autres messages (ne commençant pas par un pseudo)</entry>
 </row>
 <row>
   <entry><option>look_align_size</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Size for aligning nick and other messages</entry>
+  <entry>entier</entry>
+  <entry>entre 8 et 64</entry>
+  <entry>14</entry>
+  <entry>Taille pour l'alignement des pseudos et autres messages</entry>
 </row>
 <row>
   <entry><option>look_align_size_max</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Max size for aligning nick and other messages (should be &gt;= to look_align_size)</entry>
+  <entry>entier</entry>
+  <entry>entre 8 et 64</entry>
+  <entry>20</entry>
+  <entry>Taille maximum pour l'alignement des pseudos et autres messages (doit être &gt;= à look_align_size)</entry>
 </row>
 <row>
   <entry><option>look_nick_completor</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>The string inserted after nick completion</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>':'</entry>
+  <entry>La chaîne affichée après la complétion des pseudos</entry>
 </row>
 <row>
   <entry><option>look_nick_completion_ignore</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Chars ignored for nick completion</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>'[]-^'</entry>
+  <entry>Caractères à ignorer pour la complétion des pseudos</entry>
 </row>
 <row>
   <entry><option>look_nick_completion_smart</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Smart completion for nicks (completes with last speakers first)</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Complétion intelligente pour les pseudos (complète d'abord avec les personnes qui ont parlé récemment)</entry>
 </row>
 <row>
   <entry><option>look_nick_complete_first</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Complete only with first nick found</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'off'</entry>
+  <entry>Compléter seulement avec le premier pseudo trouvé</entry>
 </row>
 <row>
   <entry><option>look_infobar</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Enable info bar</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Active la barre d'infos</entry>
 </row>
 <row>
   <entry><option>look_infobar_timestamp</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Timestamp for time in infobar</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>'%B, %A %d %Y'</entry>
+  <entry>Format de date/heure dans la barre d'infos</entry>
 </row>
 <row>
   <entry><option>look_infobar_seconds</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Display seconds in infobar time</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Afficher les secondes pour l'heure dans la barre d'infos</entry>
 </row>
 <row>
   <entry><option>look_infobar_delay_highlight</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Delay (in seconds) for highlight messages in infobar (0 = disable highlight notifications in infobar)</entry>
+  <entry>entier</entry>
+  <entry>entre 0 et 2147483647</entry>
+  <entry>7</entry>
+  <entry>Délai (en secondes) pour la notification des messages dans la barre d'infos (0 = désactiver les notifications dans la barre d'infos)</entry>
 </row>
 <row>
   <entry><option>look_hotlist_names_count</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Max number of names in hotlist (0 = no name displayed, only buffer numbers)</entry>
+  <entry>entier</entry>
+  <entry>entre 0 et 32</entry>
+  <entry>3</entry>
+  <entry>Nombre maximum de noms dans la liste d'activité (0 = pas de nom affiché, seulement les numéros de tampons)</entry>
 </row>
 <row>
   <entry><option>look_hotlist_names_level</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Level for displaying names in hotlist (combination of: 1=join/part, 2=message, 4=private, 8=highlight, for example: 12=private+highlight)</entry>
+  <entry>entier</entry>
+  <entry>entre 1 et 15</entry>
+  <entry>12</entry>
+  <entry>Niveau pour l'affichage des noms dans la liste d'activité (combinaison de: 1=join/part, 2=message, 4=privé, 8=highlight, par exemple: 12=privé+highlight)</entry>
 </row>
 <row>
   <entry><option>look_hotlist_names_length</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Max length of names in hotlist (0 = no limit)</entry>
+  <entry>entier</entry>
+  <entry>entre 0 et 32</entry>
+  <entry>0</entry>
+  <entry>Nombre maximum des noms dans la liste d'activité (0 = pas de limite)</entry>
 </row>
 <row>
   <entry><option>look_day_change</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Display special message when day changes</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Affiche un message quand le jour change</entry>
 </row>
 <row>
   <entry><option>look_day_change_timestamp</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Timestamp for date displayed when day changed</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>'%a, %d %b %Y'</entry>
+  <entry>Format de date pour la date affichée quand le jour a changé</entry>
 </row>
 <row>
   <entry><option>look_read_marker</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Use a marker on servers/channels to show first unread line</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>' '</entry>
+  <entry>Utiliser un marqueur sur les serveurs/canaux pour montrer la première ligne non lue</entry>
 </row>
 <row>
   <entry><option>look_input_format</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Format for input prompt ('%c' is replaced by channel or server, '%n' by nick and '%m' by nick modes)</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>'[%n(%m)] '</entry>
+  <entry>Format pour l'invite de la zone de saisie ('%c' est remplacé par le canal ou serveur, '%n' par le pseudo et '%m' par les modes du pseudo)</entry>
 </row>
 <row>
   <entry><option>col_real_white</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>If set, uses real white color, disabled by default for terms with white background (if you never use white background, you should turn on this option to see real white instead of default term foreground color)</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'off'</entry>
+  <entry>Si activé, utilise la vraie couleur blanche, désactivé par défaut pour les terminaux avec un fond blanc (si vous n'utilisez jamais de fond blanc, vous devriez activer cette option pour voir du vrai blanc au lieu de la couleur d'avant plan par défaut du terminal)</entry>
 </row>
 <row>
   <entry><option>col_separator</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for window separators (when splited)</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'blue'</entry>
+  <entry>Couleur pour les séparateurs de fenêtres (quand divisé)</entry>
 </row>
 <row>
   <entry><option>col_title</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for title bar</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'default'</entry>
+  <entry>Couleur pour la barre de titre</entry>
 </row>
 <row>
   <entry><option>col_title_more</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for '+' when scrolling topic</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'lightmagenta'</entry>
+  <entry>Couleur pour les '+' lors du défilement du titre</entry>
 </row>
 <row>
   <entry><option>col_title_bg</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Background for title bar</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'blue'</entry>
+  <entry>Couleur de fond pour la barre de titre</entry>
 </row>
 <row>
   <entry><option>col_chat</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for chat text</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'default'</entry>
+  <entry>Couleur pour le texte de discussion</entry>
 </row>
 <row>
   <entry><option>col_chat_time</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for time in chat window</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'default'</entry>
+  <entry>Couleur pour l'heure dans la fenêtre de discussion</entry>
 </row>
 <row>
   <entry><option>col_chat_time_sep</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for time separator (chat window)</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'brown'</entry>
+  <entry>Couleur pour la séparation de l'heure (fenêtre de discussion)</entry>
 </row>
 <row>
   <entry><option>col_chat_prefix1</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for 1st and 3rd char of prefix</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'lightcyan'</entry>
+  <entry>Couleur pour le 1er et le 3ème caractère du préfixe</entry>
 </row>
 <row>
   <entry><option>col_chat_prefix2</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for middle char of prefix</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'white'</entry>
+  <entry>Couleur pour le caractère du milieu du préfixe</entry>
 </row>
 <row>
   <entry><option>col_chat_server</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for server name</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'brown'</entry>
+  <entry>Couleur pour le nom du serveur</entry>
 </row>
 <row>
   <entry><option>col_chat_join</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for join arrow (prefix)</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'lightgreen'</entry>
+  <entry>Couleur pour la flèche du join (préfixe)</entry>
 </row>
 <row>
   <entry><option>col_chat_part</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for part/quit arrow (prefix)</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'lightred'</entry>
+  <entry>Couleur pour la flèche du part/quit (préfixe)</entry>
 </row>
 <row>
   <entry><option>col_chat_nick</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for nicks in actions (chat window)</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'lightcyan'</entry>
+  <entry>Couleur pour les pseudos dans les actions (fenêtre de discussion)</entry>
 </row>
 <row>
   <entry><option>col_chat_host</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for hostnames (chat window)</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'cyan'</entry>
+  <entry>Couleur pour les hôtes (fenêtre de discussion)</entry>
 </row>
 <row>
   <entry><option>col_chat_channel</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for channel names in actions (chat window)</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'white'</entry>
+  <entry>Couleur pour les canaux dans les actions (fenêtre de discussion)</entry>
 </row>
 <row>
   <entry><option>col_chat_dark</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for dark separators (chat window)</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'green'</entry>
+  <entry>Couleur pour les séparateurs sombres (fenêtre de discussion)</entry>
 </row>
 <row>
   <entry><option>col_chat_highlight</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for highlighted nick (chat window)</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'yellow'</entry>
+  <entry>Couleur pour le pseudo surligné (fenêtre de discussion)</entry>
 </row>
 <row>
   <entry><option>col_chat_bg</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Background for chat window</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'default'</entry>
+  <entry>Couleur de fond pour la fenêtre de discussion</entry>
 </row>
 <row>
   <entry><option>col_chat_read_marker</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for unread data marker</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'yellow'</entry>
+  <entry>Couleur pour le marqueur de données non lues</entry>
 </row>
 <row>
   <entry><option>col_chat_read_marker_bg</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Background for unread data marker</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'magenta'</entry>
+  <entry>Couleur de fond pour le marqueur de données non lues</entry>
 </row>
 <row>
   <entry><option>col_status</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for status bar</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'default'</entry>
+  <entry>Couleur pour la barre de statut</entry>
 </row>
 <row>
   <entry><option>col_status_delimiters</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for status bar delimiters</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'cyan'</entry>
+  <entry>Couleur pour les délimiteurs de la barre de statut</entry>
 </row>
 <row>
   <entry><option>col_status_channel</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for current channel in status bar</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'white'</entry>
+  <entry>Couleur pour le canal courant dans la barre de statut</entry>
 </row>
 <row>
   <entry><option>col_status_data_msg</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for window with new messages (status bar)</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'yellow'</entry>
+  <entry>Couleur pour une fenêtre avec de nouvelles infos (barre de statut)</entry>
 </row>
 <row>
   <entry><option>col_status_private</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for window with private message (status bar)</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'lightmagenta'</entry>
+  <entry>Couleur pour une fenêtre avec un message privé (barre de statut)</entry>
 </row>
 <row>
   <entry><option>col_status_highlight</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for window with highlight (status bar)</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'lightred'</entry>
+  <entry>Couleur pour une fenêtre avec un highlight (barre de statut)</entry>
 </row>
 <row>
   <entry><option>col_status_data_other</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for window with new data (not messages) (status bar)</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'default'</entry>
+  <entry>Couleur pour une fenêtre avec des nouvelles données (pas des infos) (barre de statut)</entry>
 </row>
 <row>
   <entry><option>col_status_more</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for window with new data (status bar)</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'white'</entry>
+  <entry>Couleur pour une fenêtre avec des nouvelles données (barre de statut)</entry>
 </row>
 <row>
   <entry><option>col_status_bg</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Background for status window</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'blue'</entry>
+  <entry>Couleur de fond pour la fenêtre de statut</entry>
 </row>
 <row>
   <entry><option>col_infobar</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for info bar text</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'black'</entry>
+  <entry>Couleur pour la barre d'infos</entry>
 </row>
 <row>
   <entry><option>col_infobar_delimiters</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for infobar delimiters</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'blue'</entry>
+  <entry>Couleur pour les délimiteurs de la barre d'infos</entry>
 </row>
 <row>
   <entry><option>col_infobar_highlight</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for info bar highlight notification</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'white'</entry>
+  <entry>Couleur pour la notification dans la barre d'infos</entry>
 </row>
 <row>
   <entry><option>col_infobar_bg</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Background for info bar window</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'cyan'</entry>
+  <entry>Couleur de fond pour la fenêtre de barre d'infos</entry>
 </row>
 <row>
   <entry><option>col_input</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for input text</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'default'</entry>
+  <entry>Couleur pour le texte saisi</entry>
 </row>
 <row>
   <entry><option>col_input_server</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for input text (server name)</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'brown'</entry>
+  <entry>Couleur pour le texte saisi (nom du serveur)</entry>
 </row>
 <row>
   <entry><option>col_input_channel</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for input text (channel name)</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'white'</entry>
+  <entry>Couleur pour le texte saisi (nom du canal)</entry>
 </row>
 <row>
   <entry><option>col_input_nick</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for input text (nick name)</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'lightcyan'</entry>
+  <entry>Couleur pour le texte saisi (pseudo)</entry>
 </row>
 <row>
   <entry><option>col_input_delimiters</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for input text (delimiters)</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'cyan'</entry>
+  <entry>Couleur pour le texte saisi (délimiteurs)</entry>
 </row>
 <row>
   <entry><option>col_input_text_not_found</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for text not found</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'red'</entry>
+  <entry>Couleur pour le texte non trouvé</entry>
 </row>
 <row>
   <entry><option>col_input_bg</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Background for input window</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'default'</entry>
+  <entry>Couleur de fond pour la fenêtre de saisie</entry>
 </row>
 <row>
   <entry><option>col_nick</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for nicknames</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'default'</entry>
+  <entry>Couleur pour les pseudos</entry>
 </row>
 <row>
   <entry><option>col_nick_away</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for away nicknames</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'cyan'</entry>
+  <entry>Couleur pour les pseudos absents</entry>
 </row>
 <row>
   <entry><option>col_nick_chanowner</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for chan owner symbol (specific to unrealircd)</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'lightgreen'</entry>
+  <entry>Couleur pour le symbole propriétaire du canal (spécifique à unrealircd)</entry>
 </row>
 <row>
   <entry><option>col_nick_chanadmin</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for chan admin symbol (specific to unrealircd)</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'lightgreen'</entry>
+  <entry>Couleur pour le symbole administrateur du canal (spécifique à unrealircd)</entry>
 </row>
 <row>
   <entry><option>col_nick_op</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for operator symbol</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'lightgreen'</entry>
+  <entry>Couleur pour le symbole opérateur</entry>
 </row>
 <row>
   <entry><option>col_nick_halfop</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for half-operator symbol</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'lightmagenta'</entry>
+  <entry>Couleur pour le symbole demi-opérateur</entry>
 </row>
 <row>
   <entry><option>col_nick_voice</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for voice symbol</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'yellow'</entry>
+  <entry>Couleur pour le symbole voix</entry>
 </row>
 <row>
   <entry><option>col_nick_more</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for '+' when scrolling nicks</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'lightmagenta'</entry>
+  <entry>Couleur pour les '+' lors du défilement des pseudos</entry>
 </row>
 <row>
   <entry><option>col_nick_sep</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for nick separator</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'blue'</entry>
+  <entry>Couleur pour le séparateur de pseudos</entry>
 </row>
 <row>
   <entry><option>col_nick_self</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for local nick</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'white'</entry>
+  <entry>Couleur pour le pseudo local</entry>
 </row>
 <row>
   <entry><option>col_nick_color1</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for nick</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'cyan'</entry>
+  <entry>Couleur pour le pseudo</entry>
 </row>
 <row>
   <entry><option>col_nick_color2</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for nick</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'magenta'</entry>
+  <entry>Couleur pour le pseudo</entry>
 </row>
 <row>
   <entry><option>col_nick_color3</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for nick</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'green'</entry>
+  <entry>Couleur pour le pseudo</entry>
 </row>
 <row>
   <entry><option>col_nick_color4</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for nick</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'brown'</entry>
+  <entry>Couleur pour le pseudo</entry>
 </row>
 <row>
   <entry><option>col_nick_color5</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for nick</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'lightblue'</entry>
+  <entry>Couleur pour le pseudo</entry>
 </row>
 <row>
   <entry><option>col_nick_color6</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for nick</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'default'</entry>
+  <entry>Couleur pour le pseudo</entry>
 </row>
 <row>
   <entry><option>col_nick_color7</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for nick</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'lightcyan'</entry>
+  <entry>Couleur pour le pseudo</entry>
 </row>
 <row>
   <entry><option>col_nick_color8</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for nick</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'lightmagenta'</entry>
+  <entry>Couleur pour le pseudo</entry>
 </row>
 <row>
   <entry><option>col_nick_color9</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for nick</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'lightgreen'</entry>
+  <entry>Couleur pour le pseudo</entry>
 </row>
 <row>
   <entry><option>col_nick_color10</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for nick</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'blue'</entry>
+  <entry>Couleur pour le pseudo</entry>
 </row>
 <row>
   <entry><option>col_nick_private</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for other nick in private window</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'default'</entry>
+  <entry>Couleur pour l'autre pseudo dans la fenêtre privée</entry>
 </row>
 <row>
   <entry><option>col_nick_bg</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Background for nicknames</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'default'</entry>
+  <entry>Couleur de fond pour les pseudos</entry>
 </row>
 <row>
   <entry><option>col_chat_dcc_selected</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for selected DCC (chat window)</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'white'</entry>
+  <entry>Couleur pour le DCC sélectionné (fenêtre de discussion)</entry>
 </row>
 <row>
   <entry><option>col_dcc_waiting</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for "waiting" dcc status</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'lightcyan'</entry>
+  <entry>Couleur pour le statut dcc "attente"</entry>
 </row>
 <row>
   <entry><option>col_dcc_connecting</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for "connecting" dcc status</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'yellow'</entry>
+  <entry>Couleur pour le statut dcc "connexion"</entry>
 </row>
 <row>
   <entry><option>col_dcc_active</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for "active" dcc status</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'lightblue'</entry>
+  <entry>Couleur pour le statut dcc "actif"</entry>
 </row>
 <row>
   <entry><option>col_dcc_done</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for "done" dcc status</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'lightgreen'</entry>
+  <entry>Couleur pour le statut dcc "terminé"</entry>
 </row>
 <row>
   <entry><option>col_dcc_failed</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for "failed" dcc status</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'lightred'</entry>
+  <entry>Couleur pour le statut dcc "échoué"</entry>
 </row>
 <row>
   <entry><option>col_dcc_aborted</option></entry>
-  <entry>color</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Color for "aborted" dcc status</entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'lightred'</entry>
+  <entry>Couleur pour le statut dcc "interrompu"</entry>
 </row>
 <row>
   <entry><option>history_max_lines</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Maximum number of lines in history for one server/channel/private window (0 = unlimited)</entry>
+  <entry>entier</entry>
+  <entry>entre 0 et 2147483647</entry>
+  <entry>4096</entry>
+  <entry>Nombre maximum de lignes dans l'historique pour un serveur/fenêtre/fenêtre privée (0 = sans limite)</entry>
 </row>
 <row>
   <entry><option>history_max_commands</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Maximum number of user commands in history (0 = unlimited)</entry>
+  <entry>entier</entry>
+  <entry>entre 0 et 2147483647</entry>
+  <entry>100</entry>
+  <entry>Nombre maximum de commandes utilisateur dans l'historique (0 = sans limite)</entry>
 </row>
 <row>
   <entry><option>history_display_default</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Maximum number of commands to display by default in history listing (0 = unlimited)</entry>
+  <entry>entier</entry>
+  <entry>entre 0 et 2147483647</entry>
+  <entry>5</entry>
+  <entry>Nombre maximum de commandes à afficher par défaut dans le listing d'historique (0 = sans limite)</entry>
 </row>
 <row>
   <entry><option>log_auto_server</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Automatically log server messages</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'off'</entry>
+  <entry>Enregistrer automatiquement les messages du serveur</entry>
 </row>
 <row>
   <entry><option>log_auto_channel</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Automatically log channel chats</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'off'</entry>
+  <entry>Enregistrer automatiquement les conversations des canaux</entry>
 </row>
 <row>
   <entry><option>log_auto_private</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Automatically log private chats</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'off'</entry>
+  <entry>Enregistrer automatiquement les conversations privées</entry>
 </row>
 <row>
   <entry><option>log_plugin_msg</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Log messages from plugins (scripts)</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'off'</entry>
+  <entry>Enregistrer les messages des plugins (scripts)</entry>
 </row>
 <row>
   <entry><option>log_path</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Path for WeeChat log files ('%h' will be replaced by WeeChat home, ~/.weechat by default)</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>'%h/logs/'</entry>
+  <entry>Chemin pour les conversations sauvegardées par WeeChat ('%h' sera remplacé par le répertoire de base WeeChat, par défaut: ~/.weechat)</entry>
 </row>
 <row>
   <entry><option>log_timestamp</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Timestamp for log (see man strftime for date/time specifiers)</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>'%Y %b %d %H:%M:%S'</entry>
+  <entry>Format de date/heure pour les conversations sauvegardées (voir strftime(3) pour le format de date/heure)</entry>
 </row>
 <row>
   <entry><option>log_hide_nickserv_pwd</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Hide password displayed by nickserv</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Masquer le mot de passe affiché par nickserv</entry>
 </row>
 <row>
   <entry><option>irc_display_away</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Display message when (un)marking as away</entry>
+  <entry>chaîne</entry>
+  <entry>'off', 'local', 'channel'</entry>
+  <entry>'off'</entry>
+  <entry>Affiche un message pour l'absence/le retour</entry>
 </row>
 <row>
   <entry><option>irc_show_away_once</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Show remote away message only once in private</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Voir le message d'absence distant une seule fois en privé</entry>
 </row>
 <row>
   <entry><option>irc_default_msg_part</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Default part message (leaving channel) ('%v' will be replaced by WeeChat version in string)</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>'WeeChat %v'</entry>
+  <entry>Message par défaut pour le part (quitte un canal) ('%v' sera remplacé par la version de WeeChat dans la chaîne)</entry>
 </row>
 <row>
   <entry><option>irc_default_msg_quit</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Default quit message ('%v' will be replaced by WeeChat version in string)</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>'WeeChat %v'</entry>
+  <entry>Message de fin par défaut ('%v' sera remplacé par la version de WeeChat dans la chaîne)</entry>
 </row>
 <row>
   <entry><option>irc_notice_as_pv</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Display notices as private messages</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'off'</entry>
+  <entry>Afficher les notices comme des messages privés</entry>
 </row>
 <row>
   <entry><option>irc_away_check</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Interval between two checks for away (in minutes, 0 = never check)</entry>
+  <entry>entier</entry>
+  <entry>entre 0 et 2147483647</entry>
+  <entry>0</entry>
+  <entry>Intervalle entre deux vérifications des absences (en minutes, 0 = ne jamais vérifier)</entry>
 </row>
 <row>
   <entry><option>irc_away_check_max_nicks</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Do not check away nicks on channels with high number of nicks (0 = unlimited)</entry>
+  <entry>entier</entry>
+  <entry>entre 0 et 2147483647</entry>
+  <entry>0</entry>
+  <entry>Ne pas vérifier les pseudos absents lorsqu'il y a un nombre important de pseudos (0 = pas de limite)</entry>
 </row>
 <row>
   <entry><option>irc_lag_check</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Interval between two checks for lag (in seconds)</entry>
+  <entry>entier</entry>
+  <entry>entre 30 et 2147483647</entry>
+  <entry>60</entry>
+  <entry>Intervalle entre deux mesures de lag (en secondes)</entry>
 </row>
 <row>
   <entry><option>irc_lag_min_show</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Minimum lag to show (in seconds)</entry>
+  <entry>entier</entry>
+  <entry>entre 0 et 2147483647</entry>
+  <entry>1</entry>
+  <entry>Lag minimum à afficher (en secondes)</entry>
 </row>
 <row>
   <entry><option>irc_lag_disconnect</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Disconnect after important lag (in minutes, 0 = never disconnect)</entry>
+  <entry>entier</entry>
+  <entry>entre 0 et 2147483647</entry>
+  <entry>5</entry>
+  <entry>Déconnexion après un lag important (en minutes, 0 = ne jamais se déconnecter)</entry>
 </row>
 <row>
   <entry><option>irc_anti_flood</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Anti-flood: # seconds between two user messages (0 = no anti-flood)</entry>
+  <entry>entier</entry>
+  <entry>entre 0 et 5</entry>
+  <entry>2</entry>
+  <entry>Anti-flood: nombre de secondes entre deux messages utilisateur (0 = pas d'anti-flood)</entry>
 </row>
 <row>
   <entry><option>irc_fifo_pipe</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Create a FIFO pipe for remote control</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'off'</entry>
+  <entry>Créer un tube FIFO pour le contrôle à distance</entry>
 </row>
 <row>
   <entry><option>irc_highlight</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Comma separated list of words to highlight (case insensitive comparison, words may begin or end with "*" for partial match)</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>''</entry>
+  <entry>Liste des mots pour la notification (séparés par des virgules, la comparaison ne tient pas compte de la casse, les mots peuvent commencer ou se terminer par "*" pour une comparaison partielle)</entry>
 </row>
 <row>
   <entry><option>irc_colors_receive</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>When off, colors codes are ignored in incoming messages</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Si désactivé, les codes couleurs des messages entrants sont ignorés</entry>
 </row>
 <row>
   <entry><option>irc_colors_send</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Allow user to send colors with special codes (%B=bold, %Cxx,yy=color, %U=underline, %R=reverse)</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Autorise l'utilisateur à envoyer des couleurs avec des codes spéciaux (%B=gras, %Cxx,yy=couleur, %U=souligné, %R=inversé)</entry>
 </row>
 <row>
   <entry><option>irc_send_unknown_commands</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Send unknown commands to IRC server</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'off'</entry>
+  <entry>Envoie les commandes inconnues au serveur IRC</entry>
 </row>
 <row>
   <entry><option>dcc_auto_accept_files</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Automatically accept incoming dcc files</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'off'</entry>
+  <entry>Accepte automatiquement les fichiers dcc entrants</entry>
 </row>
 <row>
   <entry><option>dcc_auto_accept_chats</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Automatically accept dcc chats (use carefully!)</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'off'</entry>
+  <entry>Accepte automatiquement les demandes de discussion dcc (à utiliser avec précaution !)</entry>
 </row>
 <row>
   <entry><option>dcc_timeout</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Timeout for dcc request (in seconds)</entry>
+  <entry>entier</entry>
+  <entry>entre 5 et 2147483647</entry>
+  <entry>300</entry>
+  <entry>Délai d'attente pour les requêtes dcc (en secondes)</entry>
 </row>
 <row>
   <entry><option>dcc_blocksize</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Block size for dcc packets in bytes (default: 65536)</entry>
+  <entry>entier</entry>
+  <entry>entre 1024 et 102400</entry>
+  <entry>65536</entry>
+  <entry>Taille de bloc pour les paquets dcc en octets (défaut: 65536)</entry>
 </row>
 <row>
   <entry><option>dcc_fast_send</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Does not wait for ACK when sending file</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>N'attend pas les accusés de réception lors de l'envoi de fichier</entry>
 </row>
 <row>
   <entry><option>dcc_port_range</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Restricts outgoing dcc to use only ports in the given range (useful for NAT) (syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, empty value means any port)</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>''</entry>
+  <entry>Restreint le dcc sortant à utiliser des ports dans la plage donnée (pratique pour le NAT) (syntaxe: un port simple, par exemple 5000, une plage de ports, par exemple 5000-5015, si non renseigné tout port peut être utilisé)</entry>
 </row>
 <row>
   <entry><option>dcc_own_ip</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>IP or DNS address used for outgoing dcc (if empty, local interface IP is used)</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>''</entry>
+  <entry>Adresse IP ou DNS utilisée pour le dcc sortant (si non renseigné, l'interface IP locale est utilisée)</entry>
 </row>
 <row>
   <entry><option>dcc_download_path</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Path for writing incoming files with dcc (default: user home)</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>'%h/dcc'</entry>
+  <entry>Chemin pour écrire les fichiers reçus par dcc (par défaut: répertoire de l'utilisateur)</entry>
 </row>
 <row>
   <entry><option>dcc_upload_path</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Path for reading files when sending thru dcc (when no path is specified)</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>'~'</entry>
+  <entry>Chemin pour lire les fichiers lorsqu'ils sont envoyés par dcc (quand aucun chemin n'est spécifié)</entry>
 </row>
 <row>
   <entry><option>dcc_convert_spaces</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Convert spaces to underscores when sending files</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Convertir les espaces en underscores lors d'envoi de fichiers</entry>
 </row>
 <row>
   <entry><option>dcc_auto_rename</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Rename incoming files if already exists (add '.1', '.2', ...)</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Renommer les fichiers reçus s'ils existent déjà (ajoute '.1', '.2', ...)</entry>
 </row>
 <row>
   <entry><option>dcc_auto_resume</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Automatically resume dcc transfer if connection with remote host is loosed</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Continuer automatiquement les transferts dcc si la connexion avec l'hôte a été perdue</entry>
 </row>
 <row>
   <entry><option>proxy_use</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Use a proxy server to connect to irc server</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'off'</entry>
+  <entry>Utiliser un proxy pour se connecter au serveur irc</entry>
 </row>
 <row>
   <entry><option>proxy_type</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Proxy type (http (default), socks4, socks5)</entry>
+  <entry>chaîne</entry>
+  <entry>'http', 'socks4', 'socks5'</entry>
+  <entry>'http'</entry>
+  <entry>Type de proxy (http (défaut), socks4, socks5)</entry>
 </row>
 <row>
   <entry><option>proxy_ipv6</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Connect to proxy in ipv6</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'off'</entry>
+  <entry>Se connecter au proxy en ipv6</entry>
 </row>
 <row>
   <entry><option>proxy_address</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Proxy server address (IP or hostname)</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>''</entry>
+  <entry>Adresse du serveur proxy (IP ou nom de machine)</entry>
 </row>
 <row>
   <entry><option>proxy_port</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Port for connecting to proxy server</entry>
+  <entry>entier</entry>
+  <entry>entre 0 et 65535</entry>
+  <entry>3128</entry>
+  <entry>Port pour se connecter au serveur proxy</entry>
 </row>
 <row>
   <entry><option>proxy_username</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Username for proxy server</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>''</entry>
+  <entry>Nom d'utilisateur pour le serveur proxy</entry>
 </row>
 <row>
   <entry><option>proxy_password</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Password for proxy server</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>''</entry>
+  <entry>Mot de passe pour le serveur proxy</entry>
 </row>
 <row>
   <entry><option>plugins_path</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Path for searching plugins ('%h' will be replaced by WeeChat home, ~/.weechat by default)</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>'%h/plugins'</entry>
+  <entry>Chemin de recherche des extensions ('%h' sera remplacé par le répertoire de base WeeChat, par défaut: ~/.weechat)</entry>
 </row>
 <row>
   <entry><option>plugins_autoload</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Comma separated list of plugins to load automatically at startup, "*" means all plugins found (names may be partial, for example "perl" is ok for "libperl.so")</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>'*'</entry>
+  <entry>Liste des extensions à charger automatiquement au démarrage, "*" signifie toutes (séparées par des virgules, les noms peuvent être partiels, par exemple "perl" est ok pour "libperl.so")</entry>
 </row>
 <row>
   <entry><option>plugins_extension</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Standard plugins extension in filename, used for autoload (if empty, then all files are loaded when autoload is "*")</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>'.so'</entry>
+  <entry>Extension standard des extensions dans le nom de fichier, pour le chargement automatique (si vide, alors tous les fichiers sont chargés si autoload vaut "*")</entry>
 </row>
 <row>
   <entry><option>server_name</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Name associated to IRC server (for display only)</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>''</entry>
+  <entry>Nom associé au serveur IRC (pour affichage seulement)</entry>
 </row>
 <row>
   <entry><option>server_autoconnect</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Automatically connect to server when WeeChat is starting</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Connexion automatique au serveur quand WeeChat démarre</entry>
 </row>
 <row>
   <entry><option>server_autoreconnect</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Automatically reconnect to server when disconnected</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Reconnexion automatique au serveur après une déconnexion</entry>
 </row>
 <row>
   <entry><option>server_autoreconnect_delay</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Delay (in seconds) before trying again to reconnect to server</entry>
+  <entry>entier</entry>
+  <entry>entre 0 et 65535</entry>
+  <entry>30</entry>
+  <entry>Délai (en secondes) avant de tenter une reconnexion au serveur</entry>
 </row>
 <row>
   <entry><option>server_address</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>IP address or hostname of IRC server</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>''</entry>
+  <entry>Adresse IP ou nom du serveur IRC</entry>
 </row>
 <row>
   <entry><option>server_port</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Port for connecting to server</entry>
+  <entry>entier</entry>
+  <entry>entre 0 et 65535</entry>
+  <entry>6667</entry>
+  <entry>Port pour se connecter au serveur</entry>
 </row>
 <row>
   <entry><option>server_ipv6</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Use IPv6 protocol for server communication</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'off'</entry>
+  <entry>Utiliser le protocole IPv6 pour la communication avec le serveur</entry>
 </row>
 <row>
   <entry><option>server_ssl</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Use SSL for server communication</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'off'</entry>
+  <entry>Utiliser SSL pour la communication avec le serveur</entry>
 </row>
 <row>
   <entry><option>server_password</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Password for IRC server</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>''</entry>
+  <entry>Mot de passe pour le serveur IRC</entry>
 </row>
 <row>
   <entry><option>server_nick1</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Nickname to use on IRC server</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>''</entry>
+  <entry>Pseudo à utiliser sur le serveur IRC</entry>
 </row>
 <row>
   <entry><option>server_nick2</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Alternate nickname to use on IRC server (if nickname is already used)</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>''</entry>
+  <entry>Pseudo alternatif pour le serveur IRC (si le pseudo est déjà utilisé)</entry>
 </row>
 <row>
   <entry><option>server_nick3</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>2nd alternate nickname to use on IRC server (if alternate nickname is already used)</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>''</entry>
+  <entry>2ème pseudo alternatif pour le serveur IRC (si le pseudo alternatif est déjà utilisé)</entry>
 </row>
 <row>
   <entry><option>server_username</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>User name to use on IRC server</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>''</entry>
+  <entry>Nom d'utilisateur pour le serveur IRC</entry>
 </row>
 <row>
   <entry><option>server_realname</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Real name to use on IRC server</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>''</entry>
+  <entry>Nom réel pour le serveur IRC</entry>
 </row>
 <row>
   <entry><option>server_hostname</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Custom hostname/IP for server (optional, if empty local hostname is used)</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>''</entry>
+  <entry>Nom de machine/IP personnalisé pour le serveur (optionnel, si non renseigné, le nom de machine local est utilisé)</entry>
 </row>
 <row>
   <entry><option>server_command</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Command(s) to run when connected to server (many commands should be separated by ';', use '\;' for a semicolon, special variables $nick, $channel and $server are replaced by their value)</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>''</entry>
+  <entry>Commande(s) à exécuter lorsque connecté au serveur (plusieurs commandes doivent être séparées par ';', utilisez '\;' pour un point-virgule, les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)</entry>
 </row>
 <row>
   <entry><option>server_command_delay</option></entry>
-  <entry>integer</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Delay (in seconds) after command was executed (example: give some time for authentication)</entry>
+  <entry>entier</entry>
+  <entry>entre 0 et 5</entry>
+  <entry>0</entry>
+  <entry>Délai (en secondes) après exécution de la commande (exemple: donner du temps pour l'authentification)</entry>
 </row>
 <row>
   <entry><option>server_autojoin</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Comma separated list of channels to join when connected to server (example: "#chan1,#chan2,#chan3 key1,key2")</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>''</entry>
+  <entry>Liste des canaux (séparés par des virgules) à rejoindre lorsque connecté au serveur (exemple: "#chan1,#chan2,#chan3 key1,key2")</entry>
 </row>
 <row>
   <entry><option>server_autorejoin</option></entry>
-  <entry>boolean</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Automatically rejoin channels when kicked</entry>
+  <entry>booléen</entry>
+  <entry>'on' ou 'off'</entry>
+  <entry>'on'</entry>
+  <entry>Rejoindre automatiquement les canaux quand mis dehors</entry>
 </row>
 <row>
   <entry><option>server_notify_levels</option></entry>
-  <entry>string</entry>
-  <entry></entry>
-  <entry></entry>
-  <entry>Comma separated list of notify levels for channels of this server (format: #channel:1,..), a channel name '*' is reserved for server default notify level</entry>
+  <entry>chaîne</entry>
+  <entry>toute chaîne</entry>
+  <entry>''</entry>
+  <entry>Liste des niveaux de notifications (séparés par des virgules) pour les canaux de ce serveur (format: #canal:1,..), un nom de canal '*' est réservé pour la notification par défaut du serveur</entry>
 </row>
