@@ -215,7 +215,7 @@ t_irc_command irc_commands[] =
   { "quote", N_("send raw data to server without parsing"),
     N_("data"),
     N_("data: raw data to send"),
-    "", 1, MAX_ARGS, 1, 1, NULL, irc_send_cmd_quote, NULL },
+    "", 1, MAX_ARGS, 1, 0, NULL, irc_send_cmd_quote, NULL },
   { "rehash", N_("tell the server to reload its config file"), "", "",
     NULL, 0, 0, 0, 1, NULL, irc_send_cmd_rehash, NULL },
   { "restart", N_("tell the server to restart itself"), "", "",

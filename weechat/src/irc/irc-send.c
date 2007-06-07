@@ -1759,7 +1759,15 @@ irc_send_cmd_quote (t_irc_server *server, t_irc_channel *channel,
 {
     /* make C compiler happy */
     (void) channel;
-    
+
+    if (!server || server->sock < 0)
+    {
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        gui_printf_nolog (NULL,
+                          _("%s command \"%s\" needs a server connection!\n"),
+                          WEECHAT_ERROR, "quote");
+        return -1;
+    }
     irc_server_sendf (server, "%s", arguments);
     return 0;
 }
