@@ -7,12 +7,12 @@
 # Thomas Schuetz <i18n@internet-villa.de>, 2006, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: de\n"
+"Project-Id-Version: WeeChat 0.2.5\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-06-06 12:34+0200\n"
-"PO-Revision-Date: 2007-05-27 16:08+0200\n"
+"POT-Creation-Date: 2007-06-07 17:03+0200\n"
+"PO-Revision-Date: 2007-06-07 16:49+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
-"Language-Team:  <de@li.org>\n"
+"Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1386,7 +1386,7 @@ msgid "%s cannot find nick for sending message\n"
 msgstr ""
 "%s kann keinen Nickname finden, an den die Nachricht gesendet werden soll\n"
 
-#: src/irc/irc-send.c:347 src/common/command.c:619
+#: src/irc/irc-send.c:347 src/irc/irc-send.c:1767 src/common/command.c:619
 #, c-format
 msgid "%s command \"%s\" needs a server connection!\n"
 msgstr "%s der Befehl \"%s\" benötigt eine Serververbindung!\n"
@@ -1394,14 +1394,14 @@ msgstr "%s der Befehl \"%s\" benötigt eine Serververbindung!\n"
 #: src/irc/irc-send.c:402 src/irc/irc-send.c:430 src/irc/irc-send.c:646
 #: src/irc/irc-send.c:678 src/irc/irc-send.c:710 src/irc/irc-send.c:759
 #: src/irc/irc-send.c:804 src/irc/irc-send.c:883 src/irc/irc-send.c:944
-#: src/irc/irc-send.c:1348 src/irc/irc-send.c:1492 src/irc/irc-send.c:2053
-#: src/irc/irc-send.c:2178
+#: src/irc/irc-send.c:1348 src/irc/irc-send.c:1492 src/irc/irc-send.c:2061
+#: src/irc/irc-send.c:2186
 #, c-format
 msgid "%s \"%s\" command can only be executed in a channel buffer\n"
 msgstr "%s der \"%s\"-Befehl kann nur in Channelfenstern ausgeführt werden\n"
 
 #: src/irc/irc-send.c:568 src/irc/irc-send.c:588 src/irc/irc-send.c:1098
-#: src/irc/irc-send.c:1971
+#: src/irc/irc-send.c:1979
 #, c-format
 msgid "%s \"%s\" command can not be executed on a server buffer\n"
 msgstr "%s der \"%s\"-Befehl kann nicht in Serverfenstern ausgeführt werden\n"
@@ -1433,7 +1433,7 @@ msgstr ""
 msgid "%s nick \"%s\" not found for \"%s\" command\n"
 msgstr "%s Nickname \"%s\" für den \"%s\"-Befehl nicht gefunden\n"
 
-#: src/irc/irc-send.c:1321 src/irc/irc-send.c:1459 src/irc/irc-send.c:2079
+#: src/irc/irc-send.c:1321 src/irc/irc-send.c:1459 src/irc/irc-send.c:2087
 #: src/common/command.c:1654 src/common/command.c:1666
 #: src/common/command.c:1685 src/common/command.c:1774
 #: src/common/command.c:2733
@@ -1446,7 +1446,7 @@ msgstr "%s fehlerhafte Anzahl von Argumenten für der \"%s\"-Befehl\n"
 msgid "%s cannot create new private buffer \"%s\"\n"
 msgstr "%s kann kein neues privates Fenster \"%s\" erzeugen\n"
 
-#: src/irc/irc-send.c:2144
+#: src/irc/irc-send.c:2152
 #, c-format
 msgid "%s, compiled on %s %s\n"
 msgstr "%s, kompiliert auf %s %s\n"

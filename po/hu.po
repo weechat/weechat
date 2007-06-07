@@ -5,10 +5,10 @@
 # Andras Voroskoi <voroskoi@frugalware.org>, 2006-2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: WeeChat 0.2.5-cvs\n"
+"Project-Id-Version: WeeChat 0.2.5\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-06-06 12:34+0200\n"
-"PO-Revision-Date: 2007-04-24 12:43+0200\n"
+"POT-Creation-Date: 2007-06-07 17:03+0200\n"
+"PO-Revision-Date: 2007-06-07 16:48+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1397,7 +1397,7 @@ msgstr "(rejtett)"
 msgid "%s cannot find nick for sending message\n"
 msgstr "%s nem található név az üzenet küldéséhez\n"
 
-#: src/irc/irc-send.c:347 src/common/command.c:619
+#: src/irc/irc-send.c:347 src/irc/irc-send.c:1767 src/common/command.c:619
 #, c-format
 msgid "%s command \"%s\" needs a server connection!\n"
 msgstr "%s a \"%s\" parancs futtatásához csatlakozni kell a szerverhez!\n"
@@ -1405,14 +1405,14 @@ msgstr "%s a \"%s\" parancs futtatásához csatlakozni kell a szerverhez!\n"
 #: src/irc/irc-send.c:402 src/irc/irc-send.c:430 src/irc/irc-send.c:646
 #: src/irc/irc-send.c:678 src/irc/irc-send.c:710 src/irc/irc-send.c:759
 #: src/irc/irc-send.c:804 src/irc/irc-send.c:883 src/irc/irc-send.c:944
-#: src/irc/irc-send.c:1348 src/irc/irc-send.c:1492 src/irc/irc-send.c:2053
-#: src/irc/irc-send.c:2178
+#: src/irc/irc-send.c:1348 src/irc/irc-send.c:1492 src/irc/irc-send.c:2061
+#: src/irc/irc-send.c:2186
 #, c-format
 msgid "%s \"%s\" command can only be executed in a channel buffer\n"
 msgstr "%s \"%s\" parancs csak a szobaablakban futtatható\n"
 
 #: src/irc/irc-send.c:568 src/irc/irc-send.c:588 src/irc/irc-send.c:1098
-#: src/irc/irc-send.c:1971
+#: src/irc/irc-send.c:1979
 #, c-format
 msgid "%s \"%s\" command can not be executed on a server buffer\n"
 msgstr "%s \"%s\" parancs nem futtatható a szerverablakban\n"
@@ -1442,7 +1442,7 @@ msgstr "%s \"%s\" parancs csak a szobaablakban futtatható\n"
 msgid "%s nick \"%s\" not found for \"%s\" command\n"
 msgstr "%s név \"%s\" nem található a \"%s\" parancshoz\n"
 
-#: src/irc/irc-send.c:1321 src/irc/irc-send.c:1459 src/irc/irc-send.c:2079
+#: src/irc/irc-send.c:1321 src/irc/irc-send.c:1459 src/irc/irc-send.c:2087
 #: src/common/command.c:1654 src/common/command.c:1666
 #: src/common/command.c:1685 src/common/command.c:1774
 #: src/common/command.c:2733
@@ -1455,7 +1455,7 @@ msgstr "%s rossz argumentum szám a \"%s\" parancsnak\n"
 msgid "%s cannot create new private buffer \"%s\"\n"
 msgstr "%s nem sikerült új privát ablakot nyitni \"%s\"\n"
 
-#: src/irc/irc-send.c:2144
+#: src/irc/irc-send.c:2152
 #, c-format
 msgid "%s, compiled on %s %s\n"
 msgstr "%s, lefordítva: %s %s\n"

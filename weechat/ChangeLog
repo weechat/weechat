@@ -4,7 +4,7 @@ WeeChat - Wee Enhanced Environment for Chat
 ChangeLog - 2007-06-07
 
 
-Version 0.2.5 (under dev!):
+Version 0.2.5 (2007-06-07):
    * fixed QUOTE command: now allowed when socket is ok (even if IRC
      connection to server is not ok) (bug #20113)
    * added missing IRC commands (327, 378, 379) (bug #20091)
