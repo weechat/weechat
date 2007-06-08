@@ -258,6 +258,13 @@
   <entry>Nombre maximum des noms dans la liste d'activité (0 = pas de limite)</entry>
 </row>
 <row>
+  <entry><option>look_hotlist_sort</option></entry>
+  <entry>chaîne</entry>
+  <entry>'group_time_asc', 'group_time_desc', 'group_number_asc', 'group_number_desc', 'number_asc', 'number_desc'</entry>
+  <entry>'group_time_asc'</entry>
+  <entry>Type de tri pour la liste d'activité (group_time_asc (par défaut), group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc)</entry>
+</row>
+<row>
   <entry><option>look_day_change</option></entry>
   <entry>booléen</entry>
   <entry>'on' ou 'off'</entry>

@@ -1080,11 +1080,11 @@ gui_action_jump_smart (t_gui_window *window, char *args)
 
     if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
     {
-        if (hotlist)
+        if (weechat_hotlist)
         {
             if (!hotlist_initial_buffer)
                 hotlist_initial_buffer = window->buffer;
-            gui_window_switch_to_buffer (window, hotlist->buffer);
+            gui_window_switch_to_buffer (window, weechat_hotlist->buffer);
             gui_window_redraw_buffer (window->buffer);
         }
         else
@@ -1373,9 +1373,9 @@ gui_action_hotlist_clear (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
     
-    if (hotlist)
+    if (weechat_hotlist)
     {
-        hotlist_free_all ();
+        hotlist_free_all (&weechat_hotlist, &last_weechat_hotlist);
         gui_window_redraw_buffer (window->buffer);
     }
     hotlist_initial_buffer = window->buffer;

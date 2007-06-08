@@ -1,8 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-06-07
+ChangeLog - 2007-06-08
 
+
+Version 0.2.5 (under dev!):
+   * added hotlist sort with new option "look_hotlist_sort" (task #5870)
 
 Version 0.2.5 (2007-06-07):
    * fixed QUOTE command: now allowed when socket is ok (even if IRC

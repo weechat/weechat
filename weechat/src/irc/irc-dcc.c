@@ -69,7 +69,7 @@ irc_dcc_redraw (int highlight)
     gui_window_redraw_buffer (ptr_buffer);
     if (highlight && gui_add_hotlist && (ptr_buffer->num_displayed == 0))
     {
-        hotlist_add (highlight, NULL, ptr_buffer, 0);
+        hotlist_add (highlight, NULL, NULL, ptr_buffer, 0);
         gui_status_draw (gui_current_window->buffer, 0);
     }
 }

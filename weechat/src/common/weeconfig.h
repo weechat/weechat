@@ -58,6 +58,13 @@
 #define CFG_LOOK_ALIGN_NICK_LEFT  1
 #define CFG_LOOK_ALIGN_NICK_RIGHT 2
 
+#define CFG_LOOK_HOTLIST_SORT_GROUP_TIME_ASC    0
+#define CFG_LOOK_HOTLIST_SORT_GROUP_TIME_DESC   1
+#define CFG_LOOK_HOTLIST_SORT_GROUP_NUMBER_ASC  2
+#define CFG_LOOK_HOTLIST_SORT_GROUP_NUMBER_DESC 3
+#define CFG_LOOK_HOTLIST_SORT_NUMBER_ASC        4
+#define CFG_LOOK_HOTLIST_SORT_NUMBER_DESC       5
+
 #define CFG_IRC_DISPLAY_AWAY_OFF     0
 #define CFG_IRC_DISPLAY_AWAY_LOCAL   1
 #define CFG_IRC_DISPLAY_AWAY_CHANNEL 2
@@ -123,6 +130,7 @@ extern int cfg_look_infobar_delay_highlight;
 extern int cfg_look_hotlist_names_count;
 extern int cfg_look_hotlist_names_level;
 extern int cfg_look_hotlist_names_length;
+extern int cfg_look_hotlist_sort;
 extern int cfg_look_day_change;
 extern char *cfg_look_day_change_timestamp;
 extern char *cfg_look_read_marker;
@@ -254,6 +262,7 @@ extern void config_change_save_on_exit ();
 extern void config_change_title ();
 extern void config_change_buffers ();
 extern void config_change_buffer_content ();
+extern void config_change_hotlist ();
 extern void config_change_read_marker ();
 extern void config_change_charset ();
 extern void config_change_one_server_buffer ();

@@ -258,9 +258,16 @@
   <entry>Maximale Länge der Namen in der Hotlist (0: kein Limit)</entry>
 </row>
 <row>
+  <entry><option>look_hotlist_sort</option></entry>
+  <entry>Zeichenfolge</entry>
+  <entry>'group_time_asc', 'group_time_desc', 'group_number_asc', 'group_number_desc', 'number_asc', 'number_desc'</entry>
+  <entry>'group_time_asc'</entry>
+  <entry>Hotlist sort type (group_time_asc (default), group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc)</entry>
+</row>
+<row>
   <entry><option>look_day_change</option></entry>
   <entry>Boolean</entry>
-  <entry>zwischen 0 und 32</entry>
+  <entry>'group_time_asc', 'group_time_desc', 'group_number_asc', 'group_number_desc', 'number_asc', 'number_desc'</entry>
   <entry>'on'</entry>
   <entry>Spezielle Nachricht anzeigen, wenn ein neuer Tag beginnt</entry>
 </row>

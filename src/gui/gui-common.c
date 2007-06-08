@@ -186,13 +186,13 @@ gui_add_to_line (t_gui_buffer *buffer, int type, time_t date, char *nick, char *
                 buffer->notify_level)
             {
                 if (buffer->last_line->line_with_highlight)
-                    hotlist_add (HOTLIST_HIGHLIGHT, SERVER(buffer), buffer, 0);
+                    hotlist_add (HOTLIST_HIGHLIGHT, NULL, SERVER(buffer), buffer, 0);
                 else if (BUFFER_IS_PRIVATE(buffer) && (buffer->last_line->line_with_message))
-                    hotlist_add (HOTLIST_PRIVATE, SERVER(buffer), buffer, 0);
+                    hotlist_add (HOTLIST_PRIVATE, NULL, SERVER(buffer), buffer, 0);
                 else if (buffer->last_line->line_with_message)
-                    hotlist_add (HOTLIST_MSG, SERVER(buffer), buffer, 0);
+                    hotlist_add (HOTLIST_MSG, NULL, SERVER(buffer), buffer, 0);
                 else
-                    hotlist_add (HOTLIST_LOW, SERVER(buffer), buffer, 0);
+                    hotlist_add (HOTLIST_LOW, NULL, SERVER(buffer), buffer, 0);
                 gui_status_draw (gui_current_window->buffer, 1);
             }
         }

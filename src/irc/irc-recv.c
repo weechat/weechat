@@ -419,7 +419,7 @@ irc_recv_cmd_invite (t_irc_server *server, char *host, char *nick, char *argumen
             if (gui_add_hotlist
                 && ((server->buffer->num_displayed == 0) || (gui_buffer_is_scrolled (server->buffer))))
             {
-                hotlist_add (HOTLIST_HIGHLIGHT, server, server->buffer, 0);
+                hotlist_add (HOTLIST_HIGHLIGHT, NULL, server, server->buffer, 0);
                 gui_status_draw (gui_current_window->buffer, 1);
             }
         }
@@ -1061,7 +1061,7 @@ irc_recv_cmd_notice (t_irc_server *server, char *host, char *nick, char *argumen
                         if (gui_add_hotlist
                             && ((server->buffer->num_displayed == 0) || (gui_buffer_is_scrolled (server->buffer))))
                         {
-                            hotlist_add (HOTLIST_PRIVATE, server, server->buffer, 0);
+                            hotlist_add (HOTLIST_PRIVATE, NULL, server, server->buffer, 0);
                             gui_status_draw (gui_current_window->buffer, 1);
                         }
                     }

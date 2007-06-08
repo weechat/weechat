@@ -258,6 +258,13 @@
   <entry>Max length of names in hotlist (0 = no limit)</entry>
 </row>
 <row>
+  <entry><option>look_hotlist_sort</option></entry>
+  <entry>string</entry>
+  <entry>'group_time_asc', 'group_time_desc', 'group_number_asc', 'group_number_desc', 'number_asc', 'number_desc'</entry>
+  <entry>'group_time_asc'</entry>
+  <entry>Hotlist sort type (group_time_asc (default), group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc)</entry>
+</row>
+<row>
   <entry><option>look_day_change</option></entry>
   <entry>boolean</entry>
   <entry>'on' or 'off'</entry>

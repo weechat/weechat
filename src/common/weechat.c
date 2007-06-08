@@ -60,6 +60,7 @@
 #include "backtrace.h"
 #include "command.h"
 #include "fifo.h"
+#include "hotlist.h"
 #include "log.h"
 #include "session.h"
 #include "utf8.h"
@@ -755,6 +756,9 @@ weechat_dump (int crash)
     
     weechat_log_printf ("\n");
     irc_ignore_print_log ();
+
+    weechat_log_printf ("\n");
+    hotlist_print_log ();
     
     weechat_log_printf ("\n");
     weechat_log_printf ("******                 End of dump                 ******\n");

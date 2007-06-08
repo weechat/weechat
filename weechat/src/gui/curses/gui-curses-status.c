@@ -236,7 +236,7 @@ gui_status_draw (t_gui_buffer *buffer, int erase)
         }
         
         /* display list of other active windows (if any) with numbers */
-        if (hotlist)
+        if (weechat_hotlist)
         {
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
                                           COLOR_WIN_STATUS_DELIMITERS);
@@ -245,7 +245,7 @@ gui_status_draw (t_gui_buffer *buffer, int erase)
             gui_window_wprintw (GUI_CURSES(ptr_win)->win_status, _("Act: "));
             
             names_count = 0;
-            for (ptr_hotlist = hotlist; ptr_hotlist;
+            for (ptr_hotlist = weechat_hotlist; ptr_hotlist;
                  ptr_hotlist = ptr_hotlist->next_hotlist)
             {
                 switch (ptr_hotlist->priority)

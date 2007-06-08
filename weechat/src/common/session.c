@@ -450,13 +450,14 @@ session_save_hotlist (FILE *file)
     
     rc = 1;
     
-    for (ptr_hotlist = hotlist; ptr_hotlist;
+    for (ptr_hotlist = weechat_hotlist; ptr_hotlist;
          ptr_hotlist = ptr_hotlist->next_hotlist)
     {
         rc = rc && (session_write_id  (file, SESSION_OBJ_HOTLIST));
         rc = rc && (session_write_int (file, SESSION_HOTL_PRIORITY, ptr_hotlist->priority));
         rc = rc && (session_write_str (file, SESSION_HOTL_SERVER, (ptr_hotlist->server) ? ptr_hotlist->server->name : NULL));
         rc = rc && (session_write_int (file, SESSION_HOTL_BUFFER_NUMBER, ptr_hotlist->buffer->number));
+        rc = rc && (session_write_buf (file, SESSION_HOTL_CREATION_TIME, &(ptr_hotlist->creation_time), sizeof (struct timeval)));
         rc = rc && (session_write_id  (file, SESSION_HOTL_END));
         
         if (!rc)
@@ -1654,12 +1655,15 @@ session_load_hotlist (FILE *file)
 {
     int object_id, rc;
     int priority;
+    struct timeval creation_time;
     char *server_name;
     t_irc_server *ptr_server;
     int buffer_number;
     t_gui_buffer *ptr_buffer;
 
     priority = 0;
+    creation_time.tv_sec = 0;
+    creation_time.tv_usec = 0;
     ptr_server = NULL;
     ptr_buffer = NULL;
     
@@ -1677,7 +1681,7 @@ session_load_hotlist (FILE *file)
         switch (object_id)
         {
             case SESSION_HOTL_END:
-                hotlist_add (priority, ptr_server, ptr_buffer, 1);
+                hotlist_add (priority, &creation_time, ptr_server, ptr_buffer, 1);
                 return 1;
             case SESSION_HOTL_PRIORITY:
                 rc = rc && (session_read_int (file, &priority));
@@ -1692,6 +1696,9 @@ session_load_hotlist (FILE *file)
             case SESSION_HOTL_BUFFER_NUMBER:
                 rc = rc && (session_read_int (file, &buffer_number));
                 ptr_buffer = gui_buffer_search_by_number (buffer_number);
+                break;
+            case SESSION_HOTL_CREATION_TIME:
+                rc = rc && (session_read_buf (file, &creation_time, sizeof (struct timeval)));
                 break;
             default:
                 weechat_log_printf (_("session: warning: ignoring value from "

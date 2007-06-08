@@ -195,7 +195,8 @@ enum t_session_hotlist
     SESSION_HOTL_END = 0,
     SESSION_HOTL_PRIORITY,
     SESSION_HOTL_SERVER,
-    SESSION_HOTL_BUFFER_NUMBER
+    SESSION_HOTL_BUFFER_NUMBER,
+    SESSION_HOTL_CREATION_TIME
 };
 
 int session_save (char *filename);

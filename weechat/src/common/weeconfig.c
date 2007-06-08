@@ -40,6 +40,7 @@
 #include "alias.h"
 #include "command.h"
 #include "fifo.h"
+#include "hotlist.h"
 #include "log.h"
 #include "utf8.h"
 #include "util.h"
@@ -106,6 +107,11 @@ int cfg_look_infobar_delay_highlight;
 int cfg_look_hotlist_names_count;
 int cfg_look_hotlist_names_level;
 int cfg_look_hotlist_names_length;
+int cfg_look_hotlist_sort;
+char *cfg_look_hotlist_sort_values[] =
+{ "group_time_asc", "group_time_desc",
+  "group_number_asc", "group_number_desc",
+  "number_asc", "number_desc" };
 int cfg_look_day_change;
 char *cfg_look_day_change_timestamp;
 char *cfg_look_read_marker;
@@ -261,6 +267,11 @@ t_config_option weechat_options_look[] =
     N_("max length of names in hotlist (0 = no limit)"),
     OPTION_TYPE_INT, 0, 32, 0,
     NULL, NULL, &cfg_look_hotlist_names_length, NULL, config_change_buffer_content },
+  { "look_hotlist_sort", N_("hotlist sort type"),
+    N_("hotlist sort type (group_time_asc (default), group_time_desc, "
+       "group_number_asc, group_number_desc, number_asc, number_desc)"),
+    OPTION_TYPE_INT_WITH_STRING, 0, 0, 0,
+    "group_time_asc", cfg_look_hotlist_sort_values, &cfg_look_hotlist_sort, NULL, config_change_hotlist },
   { "look_day_change", N_("display special message when day changes"),
     N_("display special message when day changes"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
@@ -1158,6 +1169,17 @@ void
 config_change_buffer_content ()
 {
     gui_window_redraw_buffer (gui_current_window->buffer);
+}
+
+/*
+ * config_change_hotlist: called when hotlist changes
+ */
+
+void
+config_change_hotlist ()
+{
+    hotlist_resort ();
+    gui_status_draw (gui_current_window->buffer, 1);
 }
 
 /*
