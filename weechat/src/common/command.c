@@ -24,6 +24,8 @@
 #include "config.h"
 #endif
 
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
@@ -207,10 +209,11 @@ t_weechat_command weechat_commands[] =
     "*|%n *|action|ctcp|dcc|pv|%I *|%c *|%s",
     0, 4, 0, weechat_cmd_unignore, NULL },
   { "upgrade", N_("upgrade WeeChat without disconnecting from servers"),
-    "",
-    N_("This command run again WeeChat binary, so it should have been compiled "
+    N_("[path_to_binary]"),
+    N_("path_to_binary: path to WeeChat binary (default is current binary)\n\n"
+       "This command run again a WeeChat binary, so it should have been compiled "
        "or installed with a package manager before running this command."),
-    NULL, 0, 0, 0, weechat_cmd_upgrade, NULL },
+    "%f", 0, 1, 0, weechat_cmd_upgrade, NULL },
   { "uptime", N_("show WeeChat uptime"),
     N_("[-o]"),
     N_("-o: send uptime on current channel as an IRC message"),
@@ -3831,15 +3834,16 @@ weechat_cmd_upgrade (t_irc_server *server, t_irc_channel *channel,
                      int argc, char **argv)
 {
     t_irc_server *ptr_server;
-    int filename_length;
-    char *filename;
+    int filename_length, rc;
+    char *filename, *ptr_binary;
     char *exec_args[7] = { NULL, "-a", "--dir", NULL, "--session", NULL, NULL };
+    struct stat stat_buf;
     
     /* make C compiler happy */
     (void) server;
     (void) channel;
-    (void) argc;
-    (void) argv;
+    
+    ptr_binary = (argc > 0) ? argv[0] : weechat_argv0;
     
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
@@ -3875,6 +3879,21 @@ weechat_cmd_upgrade (t_irc_server *server, t_irc_channel *channel,
         }
     }
     
+    /* check if weechat binary is here and executable by user */
+    rc = stat (ptr_binary, &stat_buf);
+    if ((rc != 0) || (!S_ISREG(stat_buf.st_mode))
+        || ((!(stat_buf.st_mode & S_IXUSR)) && (!(stat_buf.st_mode & S_IXGRP))
+             && (!(stat_buf.st_mode & S_IXOTH))))
+    {
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        gui_printf_nolog (NULL,
+                          _("%s can't upgrade: WeeChat binary \"%s\" "
+                            "is not found or does not have execute "
+                            "permissions\n"),
+                          WEECHAT_ERROR, ptr_binary);
+        return -1;
+    }
+    
     filename_length = strlen (weechat_home) + strlen (WEECHAT_SESSION_NAME) + 2;
     filename = (char *) malloc (filename_length * sizeof (char));
     if (!filename)
@@ -3895,7 +3914,7 @@ weechat_cmd_upgrade (t_irc_server *server, t_irc_channel *channel,
         return -1;
     }
     
-    exec_args[0] = strdup (weechat_argv0);
+    exec_args[0] = strdup (ptr_binary);
     exec_args[3] = strdup (weechat_home);
     exec_args[5] = strdup (filename);
     
