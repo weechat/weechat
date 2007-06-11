@@ -210,11 +210,13 @@ For each argument, '*' means all.
 Without argument, /unignore command lists all defined ignore.
 
 </programlisting>
-<command>upgrade</command>
+<command>upgrade  [path_to_binary]</command>
 <programlisting>
 upgrade WeeChat without disconnecting from servers
 
-This command run again WeeChat binary, so it should have been compiled or installed with a package manager before running this command.
+path_to_binary: path to WeeChat binary (default is current binary)
+
+This command run again a WeeChat binary, so it should have been compiled or installed with a package manager before running this command.
 
 </programlisting>
 <command>uptime  [-o]</command>

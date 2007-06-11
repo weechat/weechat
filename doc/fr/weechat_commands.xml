@@ -210,11 +210,13 @@ Pour chaque paramètre, '*' signifie tou(te)s.
 Sans paramètre, /ignore liste les ignore définis.
 
 </programlisting>
-<command>upgrade</command>
+<command>upgrade  [chemin_vers_binaire]</command>
 <programlisting>
 mettre à jour WeeChat sans se déconnecter des serveurs
 
-Cette commande lance à nouveau le binaire WeeChat, il doit donc avoir été compilé ou installé via un gestionnaire de paquet avant de lancer cette commande.
+chemin_vers_binaire: chemin vers le binaire WeeChat (par défaut le binaire courant)
+
+Cette commande lance à nouveau un binaire WeeChat, il doit donc avoir été compilé ou installé via un gestionnaire de paquet avant de lancer cette commande.
 
 </programlisting>
 <command>uptime  [-o]</command>

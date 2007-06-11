@@ -211,11 +211,13 @@ Bei jedem Argument steht '*' für 'alle'.
 Ohne Argumente listet /unignore alle definierten /ignore-Regeln auf.
 
 </programlisting>
-<command>upgrade</command>
+<command>upgrade  [path_to_binary]</command>
 <programlisting>
 aktualisiert WeeChat ohne die Verbindung zum Server zu trennen
 
-Dieser Befehl wird auf dem Weechat-Binary ausgeführt, daher sollte dieses kompiliert oder mit einem Paketmanager installiert sein, bevor der Befehl ausgeführt wird.
+path_to_binary: path to WeeChat binary (default is current binary)
+
+This command run again a WeeChat binary, so it should have been compiled or installed with a package manager before running this command.
 
 </programlisting>
 <command>uptime  [-o]</command>
