@@ -38,7 +38,7 @@ FIND_PATH(
 )
 
 FIND_LIBRARY(
-        LUA51_LIBRARY NAMES lua51 lua5.1 lua-5.1
+        LUA51_LIBRARY NAMES lua51 lua5.1 lua-5.1 lua
         PATHS /lib /usr/lib /usr/local/lib /usr/pkg/lib
 )
 
