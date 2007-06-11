@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-06-08
+ChangeLog - 2007-06-11
 
 
-Version 0.2.5 (under dev!):
+Version 0.2.6 (under dev!):
+   * fixed bug with /topic when channel not open and topic not defined
+     (bug #20141)
    * added hotlist sort with new option "look_hotlist_sort" (task #5870)
 
 Version 0.2.5 (2007-06-07):

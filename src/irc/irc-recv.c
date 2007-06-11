@@ -3666,24 +3666,18 @@ irc_recv_cmd_331 (t_irc_server *server, char *host, char *nick, char *arguments)
         }
         
         ptr_channel = irc_channel_search (server, pos_channel);
-        if (ptr_channel)
+        command_ignored |= irc_ignore_check (host, "331",
+                                             (ptr_channel) ? ptr_channel->name : NULL,
+                                             server->name);
+        if (!command_ignored)
         {
-            command_ignored |= irc_ignore_check (host, "331", ptr_channel->name, server->name);
-            if (!command_ignored)
-            {
-                irc_display_prefix (server, ptr_channel->buffer, PREFIX_INFO);
-                gui_printf (ptr_channel->buffer, _("No topic set for %s%s\n"),
-                            GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
-                            pos_channel);
-            }
-        }
-        else
-        {
-            irc_display_prefix (server, server->buffer, PREFIX_ERROR);
-            gui_printf_nolog (server->buffer,
-                              _("%s channel \"%s\" not found for \"%s\" command\n"),
-                              WEECHAT_ERROR, pos_channel, "331");
-            return -1;
+            irc_display_prefix (server,
+                                (ptr_channel) ? ptr_channel->buffer : NULL,
+                                PREFIX_INFO);
+            gui_printf ((ptr_channel) ? ptr_channel->buffer : NULL,
+                        _("No topic set for %s%s\n"),
+                        GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                        pos_channel);
         }
     }
     return 0;
