@@ -24,8 +24,6 @@
 #include "config.h"
 #endif
 
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
@@ -3834,10 +3832,9 @@ weechat_cmd_upgrade (t_irc_server *server, t_irc_channel *channel,
                      int argc, char **argv)
 {
     t_irc_server *ptr_server;
-    int filename_length, rc;
+    int filename_length;
     char *filename, *ptr_binary;
     char *exec_args[7] = { NULL, "-a", "--dir", NULL, "--session", NULL, NULL };
-    struct stat stat_buf;
     
     /* make C compiler happy */
     (void) server;
@@ -3877,21 +3874,6 @@ weechat_cmd_upgrade (t_irc_server *server, t_irc_channel *channel,
                               WEECHAT_ERROR);
             return -1;
         }
-    }
-    
-    /* check if weechat binary is here and executable by user */
-    rc = stat (ptr_binary, &stat_buf);
-    if ((rc != 0) || (!S_ISREG(stat_buf.st_mode))
-        || ((!(stat_buf.st_mode & S_IXUSR)) && (!(stat_buf.st_mode & S_IXGRP))
-             && (!(stat_buf.st_mode & S_IXOTH))))
-    {
-        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-        gui_printf_nolog (NULL,
-                          _("%s can't upgrade: WeeChat binary \"%s\" "
-                            "is not found or does not have execute "
-                            "permissions\n"),
-                          WEECHAT_ERROR, ptr_binary);
-        return -1;
     }
     
     filename_length = strlen (weechat_home) + strlen (WEECHAT_SESSION_NAME) + 2;
