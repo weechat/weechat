@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.6-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-06-11 15:36+0200\n"
+"POT-Creation-Date: 2007-06-12 12:11+0200\n"
 "PO-Revision-Date: 2007-06-07 18:02+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1397,52 +1397,57 @@ msgstr "(rejtett)"
 msgid "%s cannot find nick for sending message\n"
 msgstr "%s nem található név az üzenet küldéséhez\n"
 
-#: src/irc/irc-send.c:347 src/irc/irc-send.c:1767 src/common/command.c:622
+#: src/irc/irc-send.c:279
 #, c-format
-msgid "%s command \"%s\" needs a server connection!\n"
-msgstr "%s a \"%s\" parancs futtatásához csatlakozni kell a szerverhez!\n"
+msgid "Future away on %s%s%s: %s\n"
+msgstr ""
 
-#: src/irc/irc-send.c:402 src/irc/irc-send.c:430 src/irc/irc-send.c:646
-#: src/irc/irc-send.c:678 src/irc/irc-send.c:710 src/irc/irc-send.c:759
-#: src/irc/irc-send.c:804 src/irc/irc-send.c:883 src/irc/irc-send.c:944
-#: src/irc/irc-send.c:1348 src/irc/irc-send.c:1492 src/irc/irc-send.c:2061
-#: src/irc/irc-send.c:2186
+#: src/irc/irc-send.c:336
+#, fuzzy, c-format
+msgid "Future away on %s%s%s removed.\n"
+msgstr "mellőzés eltávolítva.\n"
+
+#: src/irc/irc-send.c:429 src/irc/irc-send.c:457 src/irc/irc-send.c:673
+#: src/irc/irc-send.c:705 src/irc/irc-send.c:737 src/irc/irc-send.c:786
+#: src/irc/irc-send.c:831 src/irc/irc-send.c:910 src/irc/irc-send.c:971
+#: src/irc/irc-send.c:1375 src/irc/irc-send.c:1519 src/irc/irc-send.c:2088
+#: src/irc/irc-send.c:2213
 #, c-format
 msgid "%s \"%s\" command can only be executed in a channel buffer\n"
 msgstr "%s \"%s\" parancs csak a szobaablakban futtatható\n"
 
-#: src/irc/irc-send.c:568 src/irc/irc-send.c:588 src/irc/irc-send.c:1098
-#: src/irc/irc-send.c:1979
+#: src/irc/irc-send.c:595 src/irc/irc-send.c:615 src/irc/irc-send.c:1125
+#: src/irc/irc-send.c:2006
 #, c-format
 msgid "%s \"%s\" command can not be executed on a server buffer\n"
 msgstr "%s \"%s\" parancs nem futtatható a szerverablakban\n"
 
-#: src/irc/irc-send.c:868 src/irc/irc-send.c:929 src/common/command.c:1712
+#: src/irc/irc-send.c:895 src/irc/irc-send.c:956 src/common/command.c:1712
 #, c-format
 msgid "%s wrong arguments for \"%s\" command\n"
 msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 
-#: src/irc/irc-send.c:1045
+#: src/irc/irc-send.c:1072
 #, c-format
 msgid "%s \"%s\" is not a valid regular expression (%s)\n"
 msgstr "%s a(z) \"%s\" érvénytelen reguláris kifejezés (%s)\n"
 
-#: src/irc/irc-send.c:1054
+#: src/irc/irc-send.c:1081
 #, c-format
 msgid "%s not enough memory for regular expression\n"
 msgstr "%s nincs elég memória a reguláris kifejezéshez\n"
 
-#: src/irc/irc-send.c:1211 src/irc/irc-send.c:1548 src/irc/irc-send.c:1562
+#: src/irc/irc-send.c:1238 src/irc/irc-send.c:1575 src/irc/irc-send.c:1589
 #, c-format
 msgid "%s \"%s\" command can only be executed in a channel or private buffer\n"
 msgstr "%s \"%s\" parancs csak a szobaablakban futtatható\n"
 
-#: src/irc/irc-send.c:1253 src/irc/irc-recv.c:589
+#: src/irc/irc-send.c:1280 src/irc/irc-recv.c:589
 #, c-format
 msgid "%s nick \"%s\" not found for \"%s\" command\n"
 msgstr "%s név \"%s\" nem található a \"%s\" parancshoz\n"
 
-#: src/irc/irc-send.c:1321 src/irc/irc-send.c:1459 src/irc/irc-send.c:2087
+#: src/irc/irc-send.c:1348 src/irc/irc-send.c:1486 src/irc/irc-send.c:2114
 #: src/common/command.c:1657 src/common/command.c:1669
 #: src/common/command.c:1688 src/common/command.c:1777
 #: src/common/command.c:2736
@@ -1450,12 +1455,17 @@ msgstr "%s név \"%s\" nem található a \"%s\" parancshoz\n"
 msgid "%s wrong argument count for \"%s\" command\n"
 msgstr "%s rossz argumentum szám a \"%s\" parancsnak\n"
 
-#: src/irc/irc-send.c:1663
+#: src/irc/irc-send.c:1690
 #, c-format
 msgid "%s cannot create new private buffer \"%s\"\n"
 msgstr "%s nem sikerült új privát ablakot nyitni \"%s\"\n"
 
-#: src/irc/irc-send.c:2152
+#: src/irc/irc-send.c:1794 src/common/command.c:622
+#, c-format
+msgid "%s command \"%s\" needs a server connection!\n"
+msgstr "%s a \"%s\" parancs futtatásához csatlakozni kell a szerverhez!\n"
+
+#: src/irc/irc-send.c:2179
 #, c-format
 msgid "%s, compiled on %s %s\n"
 msgstr "%s, lefordítva: %s %s\n"

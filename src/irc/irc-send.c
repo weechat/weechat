@@ -230,76 +230,114 @@ irc_send_away (t_irc_server *server, char *arguments)
     t_gui_window *ptr_window;
     time_t time_now, elapsed;
     
+    if (!server)
+        return;
+    
     if (arguments)
     {
-        server->is_away = 1;
         if (server->away_message)
             free (server->away_message);
         server->away_message = (char *) malloc (strlen (arguments) + 1);
         if (server->away_message)
             strcpy (server->away_message, arguments);
-        server->away_time = time (NULL);
-        irc_server_sendf (server, "AWAY :%s", arguments);
-        if (cfg_irc_display_away != CFG_IRC_DISPLAY_AWAY_OFF)
+
+        /* if server is connected, send away command now */
+        if (server->is_connected)
         {
-            string = (char *)gui_color_decode ((unsigned char *)arguments, 1);
-            if (cfg_irc_display_away == CFG_IRC_DISPLAY_AWAY_LOCAL)
-                irc_display_away (server, "away", (string) ? string : arguments);
-            else
+            server->is_away = 1;
+            server->away_time = time (NULL);
+            irc_server_sendf (server, "AWAY :%s", arguments);
+            if (cfg_irc_display_away != CFG_IRC_DISPLAY_AWAY_OFF)
             {
-                snprintf (buffer, sizeof (buffer), "is away: %s", (string) ? string : arguments);
-                irc_send_me_all_channels (server, buffer);
+                string = (char *)gui_color_decode ((unsigned char *)arguments, 1);
+                if (cfg_irc_display_away == CFG_IRC_DISPLAY_AWAY_LOCAL)
+                    irc_display_away (server, "away", (string) ? string : arguments);
+                else
+                {
+                    snprintf (buffer, sizeof (buffer), "is away: %s", (string) ? string : arguments);
+                    irc_send_me_all_channels (server, buffer);
+                }
+                if (string)
+                    free (string);
             }
+            irc_server_set_away (server, server->nick, 1);
+            for (ptr_window = gui_windows; ptr_window;
+                 ptr_window = ptr_window->next_window)
+            {
+                if (SERVER(ptr_window->buffer) == server)
+                    ptr_window->buffer->last_read_line =
+                        ptr_window->buffer->last_line;
+            }
+        }
+        else
+        {
+            /* server not connected, store away for future usage
+               (when connecting to server) */
+            string = (char *)gui_color_decode ((unsigned char *)arguments, 1);
+            irc_display_prefix (NULL, server->buffer, PREFIX_INFO);
+            gui_printf_nolog (server->buffer,
+                              _("Future away on %s%s%s: %s\n"),
+                              GUI_COLOR(COLOR_WIN_CHAT_SERVER),
+                              server->name,
+                              GUI_COLOR(COLOR_WIN_CHAT),
+                              (string) ? string : arguments);
             if (string)
                 free (string);
-        }
-        irc_server_set_away (server, server->nick, 1);
-        for (ptr_window = gui_windows; ptr_window;
-             ptr_window = ptr_window->next_window)
-        {
-            if (SERVER(ptr_window->buffer) == server)
-                ptr_window->buffer->last_read_line =
-                    ptr_window->buffer->last_line;
         }
     }
     else
     {
-        irc_server_sendf (server, "AWAY");
-        server->is_away = 0;
         if (server->away_message)
         {
             free (server->away_message);
             server->away_message = NULL;
         }
-        if (server->away_time != 0)
+        
+        /* if server is connected, send away command now */
+        if (server->is_connected)
         {
-            time_now = time (NULL);
-            elapsed = (time_now >= server->away_time) ?
-                time_now - server->away_time : 0;
-            server->away_time = 0;
-            if (cfg_irc_display_away != CFG_IRC_DISPLAY_AWAY_OFF)
+            irc_server_sendf (server, "AWAY");
+            server->is_away = 0;
+            if (server->away_time != 0)
             {
-                if (cfg_irc_display_away == CFG_IRC_DISPLAY_AWAY_LOCAL)
+                time_now = time (NULL);
+                elapsed = (time_now >= server->away_time) ?
+                    time_now - server->away_time : 0;
+                server->away_time = 0;
+                if (cfg_irc_display_away != CFG_IRC_DISPLAY_AWAY_OFF)
                 {
-                    snprintf (buffer, sizeof (buffer),
-                              "gone %.2ld:%.2ld:%.2ld",
-                              (long int)(elapsed / 3600),
-                              (long int)((elapsed / 60) % 60),
-                              (long int)(elapsed % 60));
-                    irc_display_away (server, "back", buffer);
-                }
-                else
-                {
-                    snprintf (buffer, sizeof (buffer),
-                              "is back (gone %.2ld:%.2ld:%.2ld)",
-                              (long int)(elapsed / 3600),
-                              (long int)((elapsed / 60) % 60),
-                              (long int)(elapsed % 60));
-                    irc_send_me_all_channels (server, buffer);
+                    if (cfg_irc_display_away == CFG_IRC_DISPLAY_AWAY_LOCAL)
+                    {
+                        snprintf (buffer, sizeof (buffer),
+                                  "gone %.2ld:%.2ld:%.2ld",
+                                  (long int)(elapsed / 3600),
+                                  (long int)((elapsed / 60) % 60),
+                                  (long int)(elapsed % 60));
+                        irc_display_away (server, "back", buffer);
+                    }
+                    else
+                    {
+                        snprintf (buffer, sizeof (buffer),
+                                  "is back (gone %.2ld:%.2ld:%.2ld)",
+                                  (long int)(elapsed / 3600),
+                                  (long int)((elapsed / 60) % 60),
+                                  (long int)(elapsed % 60));
+                        irc_send_me_all_channels (server, buffer);
+                    }
                 }
             }
+            irc_server_set_away (server, server->nick, 0);
         }
-        irc_server_set_away (server, server->nick, 0);
+        else
+        {
+            /* server not connected, remove away message but do not send anything */
+            irc_display_prefix (NULL, server->buffer, PREFIX_INFO);
+            gui_printf_nolog (server->buffer,
+                              _("Future away on %s%s%s removed.\n"),
+                              GUI_COLOR(COLOR_WIN_CHAT_SERVER),
+                              server->name,
+                              GUI_COLOR(COLOR_WIN_CHAT));
+        }
     }
 }
 
@@ -337,18 +375,7 @@ irc_send_cmd_away (t_irc_server *server, t_irc_channel *channel,
         }
     }
     else
-    {
-        if (server && server->is_connected)
-            irc_send_away (server, arguments);
-        else
-        {
-            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-            gui_printf_nolog (NULL,
-                              _("%s command \"%s\" needs a server connection!\n"),
-                              WEECHAT_ERROR, "away");
-            return -1;
-        }
-    }
+        irc_send_away (server, arguments);
     
     gui_status_draw (buffer, 1);
     gui_add_hotlist = 1;
