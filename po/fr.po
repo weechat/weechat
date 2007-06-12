@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.6-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-06-12 12:11+0200\n"
-"PO-Revision-Date: 2007-06-12 12:13+0200\n"
+"POT-Creation-Date: 2007-06-12 14:59+0200\n"
+"PO-Revision-Date: 2007-06-12 15:00+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2623,19 +2623,22 @@ msgstr ""
 msgid "%s not enough memory for key binding\n"
 msgstr "%s pas assez de mémoire pour la touche\n"
 
-#: src/gui/gui-log.c:116 src/gui/gui-log.c:132
-msgid "Not enough memory to write log file for a buffer\n"
-msgstr "Pas assez de mémoire pour écrire un fichier log de tampon\n"
+#: src/gui/gui-log.c:128 src/gui/gui-log.c:131 src/gui/gui-log.c:153
+#: src/gui/gui-log.c:156
+#, c-format
+msgid "Not enough memory to write log file \"%s\"\n"
+msgstr "Pas assez de mémoire pour écrire le fichier log \"%s\"\n"
 
-#: src/gui/gui-log.c:168
-msgid "Unable to write log file for a buffer\n"
-msgstr "Impossible d'écrire le fichier log pour un tampon\n"
+#: src/gui/gui-log.c:200 src/gui/gui-log.c:203
+#, c-format
+msgid "Unable to write log file \"%s\"\n"
+msgstr "Impossible d'écrire le fichier log \"%s\"\n"
 
-#: src/gui/gui-log.c:172
+#: src/gui/gui-log.c:209
 msgid "****  Beginning of log  "
 msgstr "****  Début du log  "
 
-#: src/gui/gui-log.c:186
+#: src/gui/gui-log.c:225
 msgid "****  End of log  "
 msgstr "****  Fin du log  "
 

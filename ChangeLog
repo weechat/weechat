@@ -5,6 +5,7 @@ ChangeLog - 2007-06-12
 
 
 Version 0.2.6 (under dev!):
+   * fixed log file when channel name contains "/" (bug #20072)
    * command /away allowed when not connected to server (internally stored
      and AWAY command is sent when connecting to server) (task #7003)
    * added argument for /upgrade command (path to binary), check that

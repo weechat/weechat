@@ -108,46 +108,73 @@ gui_log_start (t_gui_buffer *buffer)
 {
     int length;
     char *log_path, *log_path2;
+    char *server_name, *channel_name;
     
     log_path = weechat_strreplace (cfg_log_path, "~", getenv ("HOME"));
     log_path2 = weechat_strreplace (log_path, "%h", weechat_home);
-    if (!log_path || !log_path2)
+    
+    if (SERVER(buffer))
+        server_name = weechat_strreplace (SERVER(buffer)->name, DIR_SEPARATOR, "_");
+    else
+        server_name = NULL;
+    if (CHANNEL(buffer))
+        channel_name = weechat_strreplace (CHANNEL(buffer)->name, DIR_SEPARATOR, "_");
+    else
+        channel_name = NULL;
+    
+    if (!log_path || !log_path2 || (SERVER(buffer) && !server_name) ||
+        (CHANNEL(buffer) && !channel_name))
     {
-        weechat_log_printf (_("Not enough memory to write log file for a buffer\n"));
+        weechat_log_printf (_("Not enough memory to write log file \"%s\"\n"),
+                            (log_path2) ? log_path2 : ((log_path) ? log_path : cfg_log_path));
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        gui_printf_nolog (NULL, _("Not enough memory to write log file \"%s\"\n"),
+                          (log_path2) ? log_path2 : ((log_path) ? log_path : cfg_log_path));
         if (log_path)
             free (log_path);
         if (log_path2)
             free (log_path2);
+        if (server_name)
+            free (server_name);
+        if (channel_name)
+            free (channel_name);
         return;
     }
+    
     length = strlen (log_path2) + 128;
     if (SERVER(buffer))
-        length += strlen (SERVER(buffer)->name);
+        length += strlen (server_name);
     if (CHANNEL(buffer))
-        length += strlen (CHANNEL(buffer)->name);
+        length += strlen (channel_name);
     
     buffer->log_filename = (char *) malloc (length);
     if (!buffer->log_filename)
     {
-        weechat_log_printf (_("Not enough memory to write log file for a buffer\n"));
-        if (log_path)
-            free (log_path);
-        if (log_path2)
-            free (log_path2);
+        weechat_log_printf (_("Not enough memory to write log file \"%s\"\n"),
+                            (log_path2) ? log_path2 : ((log_path) ? log_path : cfg_log_path));
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        gui_printf_nolog (NULL, _("Not enough memory to write log file \"%s\"\n"),
+                          (log_path2) ? log_path2 : ((log_path) ? log_path : cfg_log_path));
+        free (log_path);
+        free (log_path2);
+        if (server_name)
+            free (server_name);
+        if (channel_name)
+            free (channel_name);
         return;
     }
     
     strcpy (buffer->log_filename, log_path2);
-    if (log_path)
-        free (log_path);
-    if (log_path2)
-        free (log_path2);
+    
+    free (log_path);
+    free (log_path2);
+    
     if (buffer->log_filename[strlen (buffer->log_filename) - 1] != DIR_SEPARATOR_CHAR)
         strcat (buffer->log_filename, DIR_SEPARATOR);
     
     if (SERVER(buffer))
     {
-        strcat (buffer->log_filename, SERVER(buffer)->name);
+        strcat (buffer->log_filename, server_name);
         strcat (buffer->log_filename, ".");
     }
     if (CHANNEL(buffer)
@@ -157,21 +184,33 @@ gui_log_start (t_gui_buffer *buffer)
     }
     if (CHANNEL(buffer))
     {
-        strcat (buffer->log_filename, CHANNEL(buffer)->name);
+        strcat (buffer->log_filename, channel_name);
         strcat (buffer->log_filename, ".");
     }
     strcat (buffer->log_filename, "weechatlog");
     
+    if (server_name)
+        free (server_name);
+    if (channel_name)
+        free (channel_name);
+    
     buffer->log_file = fopen (buffer->log_filename, "a");
     if (!buffer->log_file)
     {
-        weechat_log_printf (_("Unable to write log file for a buffer\n"));
+        weechat_log_printf (_("Unable to write log file \"%s\"\n"),
+                            buffer->log_filename);
+        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        gui_printf (NULL, _("Unable to write log file \"%s\"\n"),
+                    buffer->log_filename);
         free (buffer->log_filename);
         return;
     }
+    
     gui_log_write (buffer, _("****  Beginning of log  "));
     gui_log_write_date (buffer);
     gui_log_write (buffer, "****\n");
+    
+    return;
 }
 
 /*
@@ -190,5 +229,8 @@ gui_log_end (t_gui_buffer *buffer)
         buffer->log_file = NULL;
     }
     if (buffer->log_filename)
+    {
         free (buffer->log_filename);
+        buffer->log_filename = NULL;
+    }
 }
