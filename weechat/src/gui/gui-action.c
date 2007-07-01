@@ -859,6 +859,23 @@ gui_action_down (t_gui_window *window, char *args)
                 }
                 gui_input_draw (window->buffer, 0);
             }
+            else
+            {
+                /* add line to history then clear input */
+                if (window->buffer->input_buffer_size > 0)
+                {
+                    window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
+                    window->buffer->input_buffer_color_mask[window->buffer->input_buffer_size] = '\0';
+                    history_buffer_add (window->buffer, window->buffer->input_buffer);
+                    history_global_add (window->buffer->input_buffer);
+                    window->buffer->input_buffer_size = 0;
+                    window->buffer->input_buffer_length = 0;
+                    gui_input_optimize_size (window->buffer);
+                    window->buffer->input_buffer_pos = 0;
+                    window->buffer->input_buffer_1st_display = 0;
+                    gui_input_draw (window->buffer, 0);
+                }
+            }
         }
         else
         {
