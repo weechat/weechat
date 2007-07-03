@@ -1744,7 +1744,9 @@ int
 irc_server_connect (t_irc_server *server)
 {
     int child_pipe[2], set;
+#ifndef __CYGWIN__
     pid_t pid;
+#endif
     
 #ifndef HAVE_GNUTLS
     if (server->ssl)
@@ -1854,7 +1856,16 @@ irc_server_connect (t_irc_server *server)
                     _("%s cannot set socket option \"SO_KEEPALIVE\"\n"),
                     WEECHAT_WARNING);
     }
-    
+
+#ifdef __CYGWIN__
+    /* connection may block under Cygwin, there's no other known way
+       to do better today, since connect() in child process seems not to work
+       any suggestion is welcome to improve that!
+    */
+    irc_server_child (server);
+    server->child_pid = 0;
+    irc_server_child_read (server);
+#else
     switch (pid = fork ())
     {
         /* fork failed */
@@ -1867,9 +1878,9 @@ irc_server_connect (t_irc_server *server)
             irc_server_child (server);
             _exit (EXIT_SUCCESS);
     }
-    
     /* parent process */
     server->child_pid = pid;
+#endif
     
     return 1;
 }
