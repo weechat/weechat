@@ -61,8 +61,6 @@ t_irc_message *recv_msgq, *msgq_last_msg;
 
 int check_away = 0;
 
-char *nick_modes = "aiwroOs";
-
 #ifdef HAVE_GNUTLS
 const int gnutls_cert_type_prio[] = { GNUTLS_CRT_X509, GNUTLS_CRT_OPENPGP, 0 };
 #if LIBGNUTLS_VERSION_NUMBER >= 0x010700
