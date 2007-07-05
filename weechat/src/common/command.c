@@ -65,12 +65,27 @@ t_weechat_command weechat_commands[] =
        "   move: move buffer in the list (may be relative, for example -1)\n"
        "  close: close buffer (optional arg is part message, for a channel)\n"
        "   list: list open buffers (no parameter implies this list)\n"
-       " notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)\n"
-       "         (when executed on server buffer, this sets default notify level for whole server)\n"
+       " notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, "
+       "3=2+join/part)\n"
+       "         (when executed on server buffer, this sets default notify "
+       "level for whole server)\n"
+       " scroll: scroll in history (may be relative, and may end by a letter: "
+       "s=sec, m=min, h=hour, d=day, M=month, y=year); if there is "
+       "only letter, then scroll to beginning of this item\n\n"
+       " number: jump to buffer by number\n"
        "server,\n"
-       "channel: jump to buffer by server and/or channel name\n"
-       " number: jump to buffer by number"),
-    "move|close|list|notify|%S|%C %S|%C", 0, MAX_ARGS, 0, NULL, weechat_cmd_buffer },
+       "channel: jump to buffer by server and/or channel name\n\n"
+       "Examples:\n"
+       "        move buffer: /buffer move 5\n"
+       "       close buffer: /buffer close this is part msg\n"
+       "         set notify: /buffer notify 2\n"
+       "    scroll 1 day up: /buffer scroll 1d  ==  /buffer scroll -1d  ==  /buffer scroll -24h\n"
+       "scroll to beginning\n"
+       "        of this day: /buffer scroll d\n"
+       " scroll 15 min down: /buffer scroll +15m\n"
+       "  scroll 20 msgs up: /buffer scroll -20\n"
+       "   jump to #weechat: /buffer #weechat"),
+    "move|close|list|notify|scroll|%S|%C %S|%C", 0, MAX_ARGS, 0, NULL, weechat_cmd_buffer },
   { "builtin", N_("launch WeeChat/IRC builtin command (do not look at plugins handlers or aliases)"),
     N_("command"),
     N_("command: command to execute (a '/' is automatically added if not found at beginning of command)\n"),
@@ -1379,6 +1394,11 @@ weechat_cmd_buffer (t_irc_server *server, t_irc_channel *channel,
                     return -1;
                 }
             }
+        }
+        else if (ascii_strcasecmp (argv[0], "scroll") == 0)
+        {
+            if (argc >= 2)
+                gui_buffer_scroll (window, argv[1]);
         }
         else
         {
