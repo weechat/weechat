@@ -165,11 +165,11 @@ gui_status_draw (t_gui_buffer *buffer, int erase)
                 || ((CHANNEL(ptr_win->buffer)->type == CHANNEL_TYPE_DCC_CHAT)
                     && (CHANNEL(ptr_win->buffer)->dcc_chat)
                     && (((t_irc_dcc *)(CHANNEL(ptr_win->buffer)->dcc_chat))->sock < 0)))
-                wprintw (GUI_CURSES(ptr_win)->win_status, "(%s)",
-                         CHANNEL(ptr_win->buffer)->name);
+                gui_window_wprintw (GUI_CURSES(ptr_win)->win_status, "(%s)",
+                                    CHANNEL(ptr_win->buffer)->name);
             else
-                wprintw (GUI_CURSES(ptr_win)->win_status, "%s",
-                         CHANNEL(ptr_win->buffer)->name);
+                gui_window_wprintw (GUI_CURSES(ptr_win)->win_status, "%s",
+                                    CHANNEL(ptr_win->buffer)->name);
             if (ptr_win->buffer == CHANNEL(ptr_win->buffer)->buffer)
             {
                 /* display channel modes */
@@ -182,8 +182,8 @@ gui_status_draw (t_gui_buffer *buffer, int erase)
                                                   COLOR_WIN_STATUS);
                     if (CHANNEL(ptr_win->buffer)->modes
                         && (strcmp (CHANNEL(ptr_win->buffer)->modes, "+") != 0))
-                        wprintw (GUI_CURSES(ptr_win)->win_status, "%s",
-                                 CHANNEL(ptr_win->buffer)->modes);
+                        gui_window_wprintw (GUI_CURSES(ptr_win)->win_status, "%s",
+                                            CHANNEL(ptr_win->buffer)->modes);
                     gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
                                                   COLOR_WIN_STATUS_DELIMITERS);
                     wprintw (GUI_CURSES(ptr_win)->win_status, ")");
@@ -295,13 +295,16 @@ gui_status_draw (t_gui_buffer *buffer, int erase)
                             else
                                 snprintf (format, sizeof (format) - 1, "%%.%ds", cfg_look_hotlist_names_length);
                             if (BUFFER_IS_SERVER(ptr_hotlist->buffer))
-                                wprintw (GUI_CURSES(ptr_win)->win_status, format,
-                                         (ptr_hotlist->server) ?
-                                         ptr_hotlist->server->name :
-                                         SERVER(ptr_hotlist->buffer)->name);
+                                gui_window_wprintw (GUI_CURSES(ptr_win)->win_status,
+                                                    format,
+                                                    (ptr_hotlist->server) ?
+                                                    ptr_hotlist->server->name :
+                                                    SERVER(ptr_hotlist->buffer)->name);
                             else if (BUFFER_IS_CHANNEL(ptr_hotlist->buffer)
                                      || BUFFER_IS_PRIVATE(ptr_hotlist->buffer))
-                                wprintw (GUI_CURSES(ptr_win)->win_status, format, CHANNEL(ptr_hotlist->buffer)->name);
+                                gui_window_wprintw (GUI_CURSES(ptr_win)->win_status,
+                                                    format,
+                                                    CHANNEL(ptr_hotlist->buffer)->name);
                         }
                         break;
                     case BUFFER_TYPE_DCC:
