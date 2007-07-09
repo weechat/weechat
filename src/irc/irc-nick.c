@@ -250,8 +250,19 @@ void
 irc_nick_change (t_irc_channel *channel, t_irc_nick *nick, char *new_nick)
 {
     int nick_is_me;
+    t_weelist *ptr_weelist;
     
     nick_is_me = (strcmp (nick->nick, SERVER(channel->buffer)->nick) == 0) ? 1 : 0;
+
+    if (!nick_is_me && channel->nicks_speaking)
+    {
+        ptr_weelist = weelist_search (channel->nicks_speaking, nick->nick);
+        if (ptr_weelist && ptr_weelist->data)
+        {
+            free (ptr_weelist->data);
+            ptr_weelist->data = strdup (new_nick);
+        }
+    }
     
     /* change nickname */
     if (nick->nick)

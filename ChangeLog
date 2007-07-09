@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-07-08
+ChangeLog - 2007-07-09
 
 
 Version 0.2.6 (under dev!):
+   * fixed bug with smart nick completion (last speakers first) when a nick
+     is changed
    * fixed charset bug with channel names in status bar (bug #20400)
    * added "scroll" option to /buffer command
    * down key now saves input to history and clears input line (task #7049)
