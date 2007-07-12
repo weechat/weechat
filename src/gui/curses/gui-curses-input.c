@@ -273,7 +273,7 @@ gui_input_draw_prompt (t_gui_window *window, char *nick)
 int
 gui_input_draw_text (t_gui_window *window, int input_width)
 {
-    char *ptr_start, *ptr_next, saved_char, *output;
+    char *ptr_start, *ptr_next, saved_char, *output, *ptr_string;
     int pos_mask, size, last_color, color, count_cursor, offset_cursor;
     
     ptr_start = utf8_add_offset (window->buffer->input_buffer,
@@ -316,14 +316,34 @@ gui_input_draw_text (t_gui_window *window, int input_width)
                 last_color = color;
             }
             output = weechat_iconv_from_internal (NULL, ptr_start);
-            wprintw (GUI_CURSES(window)->win_input, "%s", (output) ? output : ptr_start);
+            
+            ptr_string = (output) ? output : ptr_start;
+            
+            if ((((unsigned char)ptr_string[0]) < 32) && (!ptr_string[1]))
+            {
+                wattron (GUI_CURSES(window)->win_input, A_REVERSE);
+                wprintw (GUI_CURSES(window)->win_input, "%c",
+                         'A' + ((unsigned char)ptr_string[0]) - 1);
+                wattroff (GUI_CURSES(window)->win_input, A_REVERSE);
+                if (count_cursor > 0)
+                {
+                    offset_cursor++;
+                    count_cursor--;
+                }
+            }
+            else
+            {
+                wprintw (GUI_CURSES(window)->win_input, "%s", ptr_string);
+                if (count_cursor > 0)
+                {
+                    offset_cursor += utf8_width_screen (ptr_start);
+                    count_cursor--;
+                }
+            }
+            
             if (output)
                 free (output);
-            if (count_cursor > 0)
-            {
-                offset_cursor += utf8_width_screen (ptr_start);
-                count_cursor--;
-            }
+            
             ptr_next[0] = saved_char;
             ptr_start = ptr_next;
             pos_mask += size;

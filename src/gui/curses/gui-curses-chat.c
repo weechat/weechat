@@ -186,7 +186,7 @@ gui_chat_draw_title (t_gui_buffer *buffer, int erase)
             {
                 if (CHANNEL(buffer)->topic)
                 {
-                    buf = (char *)gui_color_decode ((unsigned char *)(CHANNEL(buffer)->topic), 0);
+                    buf = (char *)gui_color_decode ((unsigned char *)(CHANNEL(buffer)->topic), 0, 0);
                     ptr_topic = utf8_add_offset ((buf) ? buf : CHANNEL(buffer)->topic,
                                                  ptr_win->win_title_start);
                     if (!ptr_topic || !ptr_topic[0])
@@ -365,6 +365,7 @@ gui_chat_word_get_next_char (t_gui_window *window, unsigned char *string,
                 }
                 break;
             case GUI_ATTR_RESET_CHAR:
+            case GUI_ATTR_WEECHAT_RESET_CHAR:
                 string++;
                 if (apply_style)
                     gui_chat_reset_style (window);

@@ -323,7 +323,8 @@ gui_main_init ()
     curs_set (1);
     noecho ();
     nodelay (stdscr, TRUE);
-
+    raw ();
+    
     gui_color_init ();
     
     gui_infobar = NULL;

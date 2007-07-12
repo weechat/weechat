@@ -122,9 +122,11 @@ enum t_weechat_color
 #define GUI_ATTR_WEECHAT_SET_STR     "\x1A"
 #define GUI_ATTR_WEECHAT_REMOVE_CHAR '\x1B'
 #define GUI_ATTR_WEECHAT_REMOVE_STR  "\x1B"
+#define GUI_ATTR_WEECHAT_RESET_CHAR  '\x1C'
+#define GUI_ATTR_WEECHAT_RESET_STR   "\x1C"
 
 #define GUI_COLOR(color) ((gui_color[color]) ? gui_color[color]->string : "")
-#define GUI_NO_COLOR     GUI_ATTR_RESET_STR
+#define GUI_NO_COLOR     GUI_ATTR_WEECHAT_RESET_STR
 
 /* color structure */
 

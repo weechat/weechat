@@ -39,6 +39,7 @@
 #include "../common/hotlist.h"
 #include "../common/log.h"
 #include "../common/utf8.h"
+#include "../common/util.h"
 #include "../irc/irc.h"
 
 
@@ -1446,10 +1447,16 @@ gui_action_grab_key (t_gui_window *window, char *args)
 void
 gui_action_insert_string (t_gui_window *window, char *args)
 {
+    char *args2;
+    
     if (args)
     {
-        gui_insert_string_input (window, args, -1);
+        args2 = weechat_convert_hex_chars (args);
+        gui_insert_string_input (window,
+                                 (args2) ? args2 : args, -1);
         gui_input_draw (window->buffer, 0);
+        if (args2)
+            free (args2);
     }
 }
 

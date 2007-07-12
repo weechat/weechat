@@ -165,7 +165,7 @@ weechat_plugin_print (t_weechat_plugin *plugin,
     t_gui_buffer *ptr_buffer;
     va_list argptr;
     static char buf[8192];
-    char *buf2, *buf3;
+    char *buf2;
     
     if (!plugin || !message)
         return;
@@ -176,14 +176,10 @@ weechat_plugin_print (t_weechat_plugin *plugin,
     va_end (argptr);
 
     buf2 = weechat_iconv_to_internal (plugin->charset, buf);
-    buf3 = (char *)gui_color_decode ((unsigned char *)((buf2) ? buf2 : buf),
-                                     cfg_irc_colors_receive);
     irc_display_prefix (NULL, ptr_buffer, PREFIX_PLUGIN);
-    gui_printf (ptr_buffer, "%s\n", (buf3) ? buf3 : ((buf2) ? buf2 : buf));
+    gui_printf_keep_colors (ptr_buffer, "%s\n", (buf2) ? buf2 : buf);
     if (buf2)
         free (buf2);
-    if (buf3)
-        free (buf3);
 }
 
 /*
@@ -195,7 +191,7 @@ weechat_plugin_print_server (t_weechat_plugin *plugin, char *message, ...)
 {
     va_list argptr;
     static char buf[8192];
-    char *buf2, *buf3;
+    char *buf2;
     
     if (!plugin || !message)
         return;
@@ -205,14 +201,10 @@ weechat_plugin_print_server (t_weechat_plugin *plugin, char *message, ...)
     va_end (argptr);
 
     buf2 = weechat_iconv_to_internal (plugin->charset, buf);
-    buf3 = (char *)gui_color_decode ((unsigned char *)((buf2) ? buf2 : buf),
-                                     cfg_irc_colors_receive);
     irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
-    gui_printf (NULL, "%s\n", (buf3) ? buf3 : ((buf2) ? buf2 : buf));
+    gui_printf_keep_colors (NULL, "%s\n", (buf2) ? buf2 : buf);
     if (buf2)
         free (buf2);
-    if (buf3)
-        free (buf3);
 }
 
 /*
@@ -1420,7 +1412,7 @@ weechat_plugin_get_buffer_data (t_weechat_plugin *plugin, char *server, char *ch
             new_buffer_line->nick = (ptr_line->nick) ? strdup (ptr_line->nick) : NULL;
             if (ptr_line->data)
             {
-                data1 = (char *) gui_color_decode ((unsigned char *)(ptr_line->data + ptr_line->ofs_start_message), 0);
+                data1 = (char *) gui_color_decode ((unsigned char *)(ptr_line->data + ptr_line->ofs_start_message), 0, 0);
                 data2 = (data1) ? weechat_iconv_from_internal (plugin->charset, data1) : NULL;
                 if (data2)
                     new_buffer_line->data = data2;

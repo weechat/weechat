@@ -69,7 +69,7 @@ gui_log_write_line (t_gui_buffer *buffer, char *message)
     
     if (buffer->log_file)
     {
-        msg_no_color = (char *)gui_color_decode ((unsigned char *)message, 0);
+        msg_no_color = (char *)gui_color_decode ((unsigned char *)message, 0, 0);
         weechat_iconv_fprintf (buffer->log_file,
                                "%s\n", (msg_no_color) ? msg_no_color : message);
         fflush (buffer->log_file);
@@ -89,7 +89,7 @@ gui_log_write (t_gui_buffer *buffer, char *message)
     
     if (buffer->log_file)
     {
-        msg_no_color = (char *)gui_color_decode ((unsigned char *)message, 0);
+        msg_no_color = (char *)gui_color_decode ((unsigned char *)message, 0, 0);
         weechat_iconv_fprintf (buffer->log_file,
                                "%s", (msg_no_color) ? msg_no_color : message);
         fflush (buffer->log_file);

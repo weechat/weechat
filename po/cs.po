@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.6-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-07-05 18:36+0200\n"
+"POT-Creation-Date: 2007-07-12 15:19+0200\n"
 "PO-Revision-Date: 2007-06-07 18:02+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1370,7 +1370,7 @@ msgstr "off"
 msgid " (temporary server, will not be saved)"
 msgstr " (dočasný server, nebude uložen)"
 
-#: src/irc/irc-display.c:402 src/irc/irc-display.c:446 src/irc/irc-recv.c:3223
+#: src/irc/irc-display.c:402 src/irc/irc-display.c:446 src/irc/irc-recv.c:3218
 msgid "seconds"
 msgstr "sekund"
 
@@ -1378,7 +1378,7 @@ msgstr "sekund"
 msgid "(hidden)"
 msgstr "(skrytý)"
 
-#: src/irc/irc-send.c:207 src/common/command.c:758
+#: src/irc/irc-send.c:207 src/common/command.c:753
 #, c-format
 msgid "%s cannot find nick for sending message\n"
 msgstr "%s nemohu najít přezdívku pro poslání zprávy\n"
@@ -1408,7 +1408,7 @@ msgstr "%s \"%s\" příkaz může být spuštěn pouze v bufferu kanálu\n"
 msgid "%s \"%s\" command can not be executed on a server buffer\n"
 msgstr "%s \"%s\" příkaz nemůže být spuštěn v bufferu serveru\n"
 
-#: src/irc/irc-send.c:894 src/irc/irc-send.c:955 src/common/command.c:1729
+#: src/irc/irc-send.c:894 src/irc/irc-send.c:955 src/common/command.c:1721
 #, c-format
 msgid "%s wrong arguments for \"%s\" command\n"
 msgstr "%s špatné parametry pro příkaz \"%s\"\n"
@@ -1430,15 +1430,15 @@ msgstr ""
 "%s \"%s\" příkaz může být spuštěn pouze v bufferu kanálu nebo soukromého "
 "rozhovoru\n"
 
-#: src/irc/irc-send.c:1279 src/irc/irc-recv.c:588
+#: src/irc/irc-send.c:1279 src/irc/irc-recv.c:583
 #, c-format
 msgid "%s nick \"%s\" not found for \"%s\" command\n"
 msgstr "%s přezdívka \"%s\" nebyla nalezena pro příkaz \"%s\"\n"
 
 #: src/irc/irc-send.c:1347 src/irc/irc-send.c:1485 src/irc/irc-send.c:2113
-#: src/common/command.c:1674 src/common/command.c:1686
-#: src/common/command.c:1705 src/common/command.c:1794
-#: src/common/command.c:2753
+#: src/common/command.c:1666 src/common/command.c:1678
+#: src/common/command.c:1697 src/common/command.c:1786
+#: src/common/command.c:2745
 #, c-format
 msgid "%s wrong argument count for \"%s\" command\n"
 msgstr "%s špatný počet parametrů pro příkaz \"%s\"\n"
@@ -1448,7 +1448,7 @@ msgstr "%s špatný počet parametrů pro příkaz \"%s\"\n"
 msgid "%s cannot create new private buffer \"%s\"\n"
 msgstr "%s nemohu vytvořít nové soukromý buffer\"%s\"\n"
 
-#: src/irc/irc-send.c:1793 src/common/command.c:634
+#: src/irc/irc-send.c:1793 src/common/command.c:633
 #, c-format
 msgid "%s command \"%s\" needs a server connection!\n"
 msgstr "%s příkaz \"%s\" potřebuje připojení na server!\n"
@@ -1458,374 +1458,374 @@ msgstr "%s příkaz \"%s\" potřebuje připojení na server!\n"
 msgid "%s, compiled on %s %s\n"
 msgstr "%s, kompilováno na %s %s\n"
 
-#: src/irc/irc-recv.c:412
+#: src/irc/irc-recv.c:407
 #, c-format
 msgid "You have been invited to %s%s%s by %s%s\n"
 msgstr "Byl jsi pozván na %s%s%s od %s%s\n"
 
-#: src/irc/irc-recv.c:430 src/irc/irc-recv.c:557 src/irc/irc-recv.c:757
-#: src/irc/irc-recv.c:1192 src/irc/irc-recv.c:1546 src/irc/irc-recv.c:3596
-#: src/irc/irc-recv.c:3662
+#: src/irc/irc-recv.c:425 src/irc/irc-recv.c:552 src/irc/irc-recv.c:752
+#: src/irc/irc-recv.c:1187 src/irc/irc-recv.c:1541 src/irc/irc-recv.c:3591
+#: src/irc/irc-recv.c:3657
 #, c-format
 msgid "%s channel \"%s\" not found for \"%s\" command\n"
 msgstr "%s kanál \"%s\" nebyl nalezen příkazem \"%s\"\n"
 
-#: src/irc/irc-recv.c:454 src/irc/irc-recv.c:699 src/irc/irc-recv.c:800
-#: src/irc/irc-recv.c:1342 src/irc/irc-recv.c:2113
+#: src/irc/irc-recv.c:449 src/irc/irc-recv.c:694 src/irc/irc-recv.c:795
+#: src/irc/irc-recv.c:1337 src/irc/irc-recv.c:2108
 #, c-format
 msgid "%s \"%s\" command received without host\n"
 msgstr "%s \"%s\" příkaz obdržen bez hosta\n"
 
-#: src/irc/irc-recv.c:472
+#: src/irc/irc-recv.c:467
 #, c-format
 msgid "%s cannot create new channel \"%s\"\n"
 msgstr "%s nemohu vytvořit nový kanál \"%s\"\n"
 
-#: src/irc/irc-recv.c:485
+#: src/irc/irc-recv.c:480
 #, c-format
 msgid "%s%s %s(%s%s%s)%s has joined %s%s\n"
 msgstr "%s%s %s(%s%s%s)%s se připojil %s%s\n"
 
-#: src/irc/irc-recv.c:565
+#: src/irc/irc-recv.c:560
 #, c-format
 msgid "%s%s%s has kicked %s%s%s from %s%s"
 msgstr "%s%s%s byl vykopnut %s%s%s z %s%s"
 
-#: src/irc/irc-recv.c:655
+#: src/irc/irc-recv.c:650
 #, c-format
 msgid "%s%s%s has killed %s%s%s from server"
 msgstr "%s%s%s byl zabit %s%s%s ze serveru"
 
-#: src/irc/irc-recv.c:677
+#: src/irc/irc-recv.c:672
 #, c-format
 msgid "%s host not found for \"%s\" command\n"
 msgstr "%s host pro příkaz \"%s\" nenalezen\n"
 
-#: src/irc/irc-recv.c:709
+#: src/irc/irc-recv.c:704
 #, c-format
 msgid "%s \"%s\" command received without channel or nickname\n"
 msgstr "%s \"%s\" příkaz obdržen bez kanálu nebo přezdívky\n"
 
-#: src/irc/irc-recv.c:739
+#: src/irc/irc-recv.c:734
 #, c-format
 msgid "Mode %s%s %s[%s%s%s]%s by %s%s\n"
 msgstr "Mód %s%s %s[%s%s%s]%s od %s%s\n"
 
-#: src/irc/irc-recv.c:768
+#: src/irc/irc-recv.c:763
 #, c-format
 msgid "User mode %s[%s%s%s]%s by %s%s\n"
 msgstr "Uživatelský mód %s[%s%s%s]%s od %s%s\n"
 
-#: src/irc/irc-recv.c:842
+#: src/irc/irc-recv.c:837
 #, c-format
 msgid "You are now known as %s%s\n"
 msgstr "Nyní známý jako %s%s\n"
 
-#: src/irc/irc-recv.c:846
+#: src/irc/irc-recv.c:841
 #, c-format
 msgid "%s%s%s is now known as %s%s\n"
 msgstr "%s%s%s nyní známý jako %s%s\n"
 
-#: src/irc/irc-recv.c:913
+#: src/irc/irc-recv.c:908
 #, c-format
 msgid "%s nickname not found for \"%s\" command\n"
 msgstr "%s přezdívka nenalezena pro příkaz \"%s\"\n"
 
-#: src/irc/irc-recv.c:927
+#: src/irc/irc-recv.c:922
 #, c-format
 msgid "CTCP %sVERSION%s reply from %s%s%s: %s\n"
 msgstr "CTCP %sVERSION%s odpověď od %s%s%s: %s\n"
 
-#: src/irc/irc-recv.c:961
+#: src/irc/irc-recv.c:956
 #, c-format
 msgid "CTCP %sPING%s reply from %s%s%s: %ld.%ld seconds\n"
 msgstr "CTCP %sPING%s odpověď od %s%s%s: %ld.%ld sekund\n"
 
-#: src/irc/irc-recv.c:984 src/irc/irc-recv.c:1923 src/irc/irc-recv.c:2036
+#: src/irc/irc-recv.c:979 src/irc/irc-recv.c:1918 src/irc/irc-recv.c:2031
 #, c-format
 msgid "%s cannot create new private window \"%s\"\n"
 msgstr "%s nemohu vytvořít nové soukromé okno\"%s\"\n"
 
-#: src/irc/irc-recv.c:1011 src/irc/irc-recv.c:2058 src/irc/irc-dcc.c:1321
+#: src/irc/irc-recv.c:1006 src/irc/irc-recv.c:2053 src/irc/irc-dcc.c:1317
 #, c-format
 msgid "Private %s> %s"
 msgstr "Soukromý %s> %s"
 
-#: src/irc/irc-recv.c:1091
+#: src/irc/irc-recv.c:1086
 #, c-format
 msgid "%s \"%s\" command received without host or channel\n"
 msgstr "%s \"%s\" příkaz obdržen bez hosta nebo kanálu\n"
 
-#: src/irc/irc-recv.c:1122
+#: src/irc/irc-recv.c:1117
 #, c-format
 msgid "%s%s %s(%s%s%s)%s has left %s%s"
 msgstr "%s%s %s(%s%s%s)%s opustil %s%s"
 
-#: src/irc/irc-recv.c:1305
+#: src/irc/irc-recv.c:1300
 #, c-format
 msgid "CTCP %sVERSION%s received from %s%s"
 msgstr "CTCP %sVERSION%s obdržen od %s%s"
 
-#: src/irc/irc-recv.c:1391 src/irc/irc-recv.c:1953
+#: src/irc/irc-recv.c:1386 src/irc/irc-recv.c:1948
 #, c-format
 msgid "Channel %s: * %s %s"
 msgstr "Kanál %s: %s %s"
 
-#: src/irc/irc-recv.c:1425
+#: src/irc/irc-recv.c:1420
 #, c-format
 msgid "Received a CTCP %sSOUND%s \"%s\" from %s%s\n"
 msgstr "Obdržen CTCP %sZVUK%s \"%s\" od %s%s\n"
 
-#: src/irc/irc-recv.c:1455 src/irc/irc-recv.c:1595
+#: src/irc/irc-recv.c:1450 src/irc/irc-recv.c:1590
 #, c-format
 msgid "CTCP %sPING%s received from %s%s\n"
 msgstr "CTCP %sPING%s obdržen od %s%s\n"
 
-#: src/irc/irc-recv.c:1489 src/irc/irc-recv.c:2003
+#: src/irc/irc-recv.c:1484 src/irc/irc-recv.c:1998
 #, c-format
 msgid "Unknown CTCP %s%s%s received from %s%s"
 msgstr "Neznámý CTCP %s%s%s obdržen od %s%s"
 
-#: src/irc/irc-recv.c:1521
+#: src/irc/irc-recv.c:1516
 #, c-format
 msgid "Channel %s: %s> %s"
 msgstr "Kanál %s: %s> %s"
 
-#: src/irc/irc-recv.c:1618 src/irc/irc-recv.c:1639 src/irc/irc-recv.c:1655
-#: src/irc/irc-recv.c:1671 src/irc/irc-recv.c:1702 src/irc/irc-recv.c:1723
-#: src/irc/irc-recv.c:1739 src/irc/irc-recv.c:1769 src/irc/irc-recv.c:1790
-#: src/irc/irc-recv.c:1806 src/irc/irc-recv.c:1836 src/irc/irc-recv.c:1857
-#: src/irc/irc-recv.c:1872 src/irc/irc-recv.c:2089 src/irc/irc-recv.c:2567
-#: src/irc/irc-recv.c:4059 src/irc/irc-recv.c:4074 src/irc/irc-recv.c:4173
-#: src/irc/irc-recv.c:4187 src/irc/irc-recv.c:4433 src/irc/irc-recv.c:4583
-#: src/irc/irc-recv.c:4720 src/irc/irc-recv.c:4735 src/irc/irc-recv.c:4841
-#: src/irc/irc-recv.c:4855
+#: src/irc/irc-recv.c:1613 src/irc/irc-recv.c:1634 src/irc/irc-recv.c:1650
+#: src/irc/irc-recv.c:1666 src/irc/irc-recv.c:1697 src/irc/irc-recv.c:1718
+#: src/irc/irc-recv.c:1734 src/irc/irc-recv.c:1764 src/irc/irc-recv.c:1785
+#: src/irc/irc-recv.c:1801 src/irc/irc-recv.c:1831 src/irc/irc-recv.c:1852
+#: src/irc/irc-recv.c:1867 src/irc/irc-recv.c:2084 src/irc/irc-recv.c:2562
+#: src/irc/irc-recv.c:4054 src/irc/irc-recv.c:4069 src/irc/irc-recv.c:4168
+#: src/irc/irc-recv.c:4182 src/irc/irc-recv.c:4428 src/irc/irc-recv.c:4578
+#: src/irc/irc-recv.c:4715 src/irc/irc-recv.c:4730 src/irc/irc-recv.c:4836
+#: src/irc/irc-recv.c:4850
 #, c-format
 msgid "%s cannot parse \"%s\" command\n"
 msgstr "%s nemohu rozpársovat příkaz \"%s\"\n"
 
-#: src/irc/irc-recv.c:1885
+#: src/irc/irc-recv.c:1880
 #, c-format
 msgid "%s unknown DCC CHAT type received from "
 msgstr "%s neznámý DCC CHAT typ obdržen od "
 
-#: src/irc/irc-recv.c:2140
+#: src/irc/irc-recv.c:2135
 #, c-format
 msgid "%s%s %s(%s%s%s)%s has quit"
 msgstr "%s%s %s(%s%s%s)%s skončil"
 
-#: src/irc/irc-recv.c:2315
+#: src/irc/irc-recv.c:2310
 #, c-format
 msgid "%s \"%s\" command received without channel\n"
 msgstr "%s \"%s\" příkaz obdržen bez kanálu\n"
 
-#: src/irc/irc-recv.c:2344
+#: src/irc/irc-recv.c:2339
 #, c-format
 msgid "%s%s%s has changed topic for %s%s%s to:"
 msgstr "%s%s%s změnil téma pro %s%s%s na:"
 
-#: src/irc/irc-recv.c:2355
+#: src/irc/irc-recv.c:2350
 #, c-format
 msgid "%s%s%s has unset topic for %s%s\n"
 msgstr "%s%s%s zrušil téma pro %s%s\n"
 
-#: src/irc/irc-recv.c:2392
+#: src/irc/irc-recv.c:2387
 #, c-format
 msgid "WALLOPS from %s%s%s: %s\n"
 msgstr "WALLOPS od %s%s%s: %s\n"
 
-#: src/irc/irc-recv.c:2553
+#: src/irc/irc-recv.c:2548
 #, c-format
 msgid "User mode for %s%s%s is %s[%s%s%s]\n"
 msgstr "Uživatelský mód pro %s%s%s je %s[%s%s%s]\n"
 
-#: src/irc/irc-recv.c:2617
+#: src/irc/irc-recv.c:2612
 #, c-format
 msgid "%s%s%s is away: %s\n"
 msgstr "%s%s%s je pryč: %s\n"
 
-#: src/irc/irc-recv.c:2709
+#: src/irc/irc-recv.c:2704
 msgid "Users online: "
 msgstr "Uživatelů online: "
 
-#: src/irc/irc-recv.c:2884
+#: src/irc/irc-recv.c:2879
 #, c-format
 msgid "%s[%s%s%s]%s help mode (+h)\n"
 msgstr "%s[%s%s%s]%s mód nápovědy (+h)\n"
 
-#: src/irc/irc-recv.c:3074
+#: src/irc/irc-recv.c:3069
 #, c-format
 msgid "%s%s %s(%s%s@%s%s)%s was %s\n"
 msgstr "%s%s %s(%s%s@%s%s)%s byl %s\n"
 
-#: src/irc/irc-recv.c:3195
+#: src/irc/irc-recv.c:3190
 #, c-format
 msgid "%s[%s%s%s]%s idle: "
 msgstr "%s[%s%s%s]%s nečinný: "
 
-#: src/irc/irc-recv.c:3207 src/common/command.c:3982 src/common/command.c:4000
+#: src/irc/irc-recv.c:3202 src/common/command.c:3974 src/common/command.c:3992
 msgid "days"
 msgstr "dní"
 
-#: src/irc/irc-recv.c:3207 src/common/command.c:3982 src/common/command.c:4000
+#: src/irc/irc-recv.c:3202 src/common/command.c:3974 src/common/command.c:3992
 msgid "day"
 msgstr "den"
 
-#: src/irc/irc-recv.c:3211
+#: src/irc/irc-recv.c:3206
 #, c-format
 msgid "%s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
 msgstr "%s%02d %s%s %s%02d %s%s %s%02d %s%s, přihlášen v: %s%s"
 
-#: src/irc/irc-recv.c:3215
+#: src/irc/irc-recv.c:3210
 msgid "hours"
 msgstr "hodin"
 
-#: src/irc/irc-recv.c:3215
+#: src/irc/irc-recv.c:3210
 msgid "hour"
 msgstr "hodina"
 
-#: src/irc/irc-recv.c:3219
+#: src/irc/irc-recv.c:3214
 msgid "minutes"
 msgstr "minut"
 
-#: src/irc/irc-recv.c:3219
+#: src/irc/irc-recv.c:3214
 msgid "minute"
 msgstr "minuta"
 
-#: src/irc/irc-recv.c:3223
+#: src/irc/irc-recv.c:3218
 msgid "second"
 msgstr "sekunda"
 
-#: src/irc/irc-recv.c:3607
+#: src/irc/irc-recv.c:3602
 #, c-format
 msgid "Channel created on %s"
 msgstr "Kanál vytvořen v %s"
 
-#: src/irc/irc-recv.c:3616 src/irc/irc-recv.c:3805
+#: src/irc/irc-recv.c:3611 src/irc/irc-recv.c:3800
 #, c-format
 msgid "%s cannot identify date/time for \"%s\" command\n"
 msgstr "%s nemohu identofikovat datum/čas pro příkaz \"%s\"\n"
 
-#: src/irc/irc-recv.c:3625 src/irc/irc-recv.c:3742 src/irc/irc-recv.c:3823
-#: src/irc/irc-recv.c:3934
+#: src/irc/irc-recv.c:3620 src/irc/irc-recv.c:3737 src/irc/irc-recv.c:3818
+#: src/irc/irc-recv.c:3929
 #, c-format
 msgid "%s cannot identify channel for \"%s\" command\n"
 msgstr "%s nemohu identifikovat kanál pro příkaz \"%s\"\n"
 
-#: src/irc/irc-recv.c:3677
+#: src/irc/irc-recv.c:3672
 #, c-format
 msgid "No topic set for %s%s\n"
 msgstr "Není nastaveno téma pro %s%s\n"
 
-#: src/irc/irc-recv.c:3727
+#: src/irc/irc-recv.c:3722
 #, c-format
 msgid "Topic for %s%s%s is: "
 msgstr "Téma pro %s%s%s je: "
 
-#: src/irc/irc-recv.c:3794
+#: src/irc/irc-recv.c:3789
 #, c-format
 msgid "Topic set by %s%s%s, %s"
 msgstr "Téma nastevil %s%s%s, %s"
 
-#: src/irc/irc-recv.c:3814 src/irc/irc-recv.c:3943
+#: src/irc/irc-recv.c:3809 src/irc/irc-recv.c:3938
 #, c-format
 msgid "%s cannot identify nickname for \"%s\" command\n"
 msgstr "%s nemohu identifikovat přezdívku pro příkaz \"%s\"\n"
 
-#: src/irc/irc-recv.c:3919
+#: src/irc/irc-recv.c:3914
 #, c-format
 msgid "%s%s%s has invited %s%s%s on %s%s\n"
 msgstr "%s%s%s pozval %s%s%s na %s%s\n"
 
-#: src/irc/irc-recv.c:3979
+#: src/irc/irc-recv.c:3974
 #, c-format
 msgid "Channel reop %s%s%s: %s%s\n"
 msgstr "Reop kanálu %s%s%s: %s%s\n"
 
-#: src/irc/irc-recv.c:4128
+#: src/irc/irc-recv.c:4123
 #, c-format
 msgid " by %s%s %s(%s%s%s)"
 msgstr " od %s%s %s(%s%s%s)"
 
-#: src/irc/irc-recv.c:4137
+#: src/irc/irc-recv.c:4132
 #, c-format
 msgid " by %s%s"
 msgstr " od %s%s"
 
-#: src/irc/irc-recv.c:4447 src/irc/irc-recv.c:4629
+#: src/irc/irc-recv.c:4442 src/irc/irc-recv.c:4624
 #, c-format
 msgid "Nicks %s%s%s: %s["
 msgstr "Přezdívkz %s%s%s: %s["
 
-#: src/irc/irc-recv.c:4551
+#: src/irc/irc-recv.c:4546
 #, c-format
 msgid "%s cannot create nick \"%s\" for channel \"%s\"\n"
 msgstr "%s nemohu vztvořit přezdívku \"%s\" pro kanál \"%s\"\n"
 
-#: src/irc/irc-recv.c:4650
+#: src/irc/irc-recv.c:4645
 #, c-format
 msgid ""
 "Channel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 msgstr ""
 "Kanál %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 
-#: src/irc/irc-recv.c:4658
+#: src/irc/irc-recv.c:4653
 msgid "nicks"
 msgstr "přezdívky"
 
-#: src/irc/irc-recv.c:4658
+#: src/irc/irc-recv.c:4653
 msgid "nick"
 msgstr "přezdívka"
 
-#: src/irc/irc-recv.c:4663
+#: src/irc/irc-recv.c:4658
 msgid "ops"
 msgstr "ops"
 
-#: src/irc/irc-recv.c:4663
+#: src/irc/irc-recv.c:4658
 msgid "op"
 msgstr "op"
 
-#: src/irc/irc-recv.c:4667
+#: src/irc/irc-recv.c:4662
 msgid "halfops"
 msgstr "částeční-ops"
 
-#: src/irc/irc-recv.c:4667
+#: src/irc/irc-recv.c:4662
 msgid "halfop"
 msgstr "částečný-op"
 
-#: src/irc/irc-recv.c:4671
+#: src/irc/irc-recv.c:4666
 msgid "voices"
 msgstr "voices"
 
-#: src/irc/irc-recv.c:4671
+#: src/irc/irc-recv.c:4666
 msgid "voice"
 msgstr "voice"
 
-#: src/irc/irc-recv.c:4675
+#: src/irc/irc-recv.c:4670
 msgid "normal"
 msgstr "normální"
 
-#: src/irc/irc-recv.c:4775
+#: src/irc/irc-recv.c:4770
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned by "
 msgstr "%s[%s%s%s] %s%s%s zakázal "
 
-#: src/irc/irc-recv.c:4810
+#: src/irc/irc-recv.c:4805
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned\n"
 msgstr "%s[%s%s%s] %s%s%s takázaný\n"
 
-#: src/irc/irc-recv.c:4902
+#: src/irc/irc-recv.c:4897
 #, c-format
 msgid "%s: trying 2nd nickname \"%s\"\n"
 msgstr "%s: zkouším druhou přezdívku \"%s\"\n"
 
-#: src/irc/irc-recv.c:4913
+#: src/irc/irc-recv.c:4908
 #, c-format
 msgid "%s: trying 3rd nickname \"%s\"\n"
 msgstr "%s: zkouším třetí přezdívku \"%s\"\n"
 
-#: src/irc/irc-recv.c:4924
+#: src/irc/irc-recv.c:4919
 #, c-format
 msgid ""
 "%s: all declared nicknames are already in use or invalid, closing connection "
@@ -1834,24 +1834,24 @@ msgstr ""
 "%s: všechny deklarované přezdívky jsou již používány nebo nevalidní, zavírám "
 "spojení se serverem!\n"
 
-#: src/irc/irc-recv.c:4935
+#: src/irc/irc-recv.c:4930
 #, c-format
 msgid "%s: trying 1st nickname \"%s\"\n"
 msgstr "%s: zkouším první přezdívku \"%s\"\n"
 
-#: src/irc/irc-recv.c:4962
+#: src/irc/irc-recv.c:4957
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\"\n"
 msgstr ""
 "%s: přezdívka \"%s\" je již používaná, zkouším druhou přezdívku \"%s\"\n"
 
-#: src/irc/irc-recv.c:4974
+#: src/irc/irc-recv.c:4969
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\"\n"
 msgstr ""
 "%s: přezdívka \"%s\" je již používaná, zkouším třetí přezdívku \"%s\"\n"
 
-#: src/irc/irc-recv.c:4986
+#: src/irc/irc-recv.c:4981
 #, c-format
 msgid ""
 "%s: all declared nicknames are already in use, closing connection with "
@@ -1860,7 +1860,7 @@ msgstr ""
 "%s: všechny deklarované přezdívky jsou již používány, zavírám spojení se "
 "serverem!\n"
 
-#: src/irc/irc-recv.c:4996
+#: src/irc/irc-recv.c:4991
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\"\n"
 msgstr ""
@@ -2026,62 +2026,62 @@ msgstr "%s neomhu poslat DCC\n"
 msgid "%s error sending data to \"%s\" via DCC CHAT\n"
 msgstr "%s chyba posílání dat k \"%s\" přes DCC CHAT\n"
 
-#: src/irc/irc-dcc.c:1365
+#: src/irc/irc-dcc.c:1358
 #, c-format
 msgid "%s DCC: unable to create pipe\n"
 msgstr "%s DCC: nemohu vytvořit rouru\n"
 
-#: src/irc/irc-dcc.c:1593
+#: src/irc/irc-dcc.c:1586
 #, c-format
 msgid "%s DCC: unable to read local file\n"
 msgstr "%s DCC: nemohu číst lokální soubor\n"
 
-#: src/irc/irc-dcc.c:1600
+#: src/irc/irc-dcc.c:1593
 #, c-format
 msgid "%s DCC: unable to send block to receiver\n"
 msgstr "%s DCC: nemohu odeslat blok příjemci\n"
 
-#: src/irc/irc-dcc.c:1607
+#: src/irc/irc-dcc.c:1600
 #, c-format
 msgid "%s DCC: unable to read ACK from receiver\n"
 msgstr "%s DCC: nemohu číst ACK od příjemce\n"
 
-#: src/irc/irc-dcc.c:1615
+#: src/irc/irc-dcc.c:1608
 #, c-format
 msgid "%s DCC: unable to connect to sender\n"
 msgstr "%s DCC: nemohu se připojit k odesílateli\n"
 
-#: src/irc/irc-dcc.c:1622
+#: src/irc/irc-dcc.c:1615
 #, c-format
 msgid "%s DCC: unable to receive block from sender\n"
 msgstr "%s DCC: nemohu přijmout blok od odesílatele\n"
 
-#: src/irc/irc-dcc.c:1629
+#: src/irc/irc-dcc.c:1622
 #, c-format
 msgid "%s DCC: unable to write local file\n"
 msgstr "%s DCC: nemohu zapisovat do lokálního souboru\n"
 
-#: src/irc/irc-dcc.c:1682 src/irc/irc-dcc.c:1725
+#: src/irc/irc-dcc.c:1675 src/irc/irc-dcc.c:1718
 #, c-format
 msgid "%s DCC: unable to fork\n"
 msgstr "%s DCC: nemohu provést fork\n"
 
-#: src/irc/irc-dcc.c:1765
+#: src/irc/irc-dcc.c:1758
 #, c-format
 msgid "%s DCC: timeout\n"
 msgstr "%s DCC: překročení časového limitu\n"
 
-#: src/irc/irc-dcc.c:1797
+#: src/irc/irc-dcc.c:1790
 #, c-format
 msgid "%s DCC: unable to create socket for sending file\n"
 msgstr "%s DCC: nemohu vytvořit socket pro odesílání souboru\n"
 
-#: src/irc/irc-dcc.c:1809
+#: src/irc/irc-dcc.c:1802
 #, c-format
 msgid "%s DCC: unable to set 'nonblock' option for socket\n"
 msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 
-#: src/irc/irc-dcc.c:1894
+#: src/irc/irc-dcc.c:1887
 #, c-format
 msgid "Aborting active DCC: \"%s\" from %s\n"
 msgstr "Ruším aktivní DCC: \"%s\" od %s\n"
@@ -2229,7 +2229,7 @@ msgid "Plugin \"%s\" unloaded.\n"
 msgstr "Plugin \"%s\" odebrán.\n"
 
 #: src/plugins/plugins.c:1426 src/plugins/plugins.c:1469
-#: src/common/command.c:3652
+#: src/common/command.c:3644
 #, c-format
 msgid "%s plugin \"%s\" not found\n"
 msgstr "%s plugin \"%s\" nenalezen\n"
@@ -2264,28 +2264,28 @@ msgstr ""
 "tento soubor při aktualizaci nastavení.\n"
 "#\n"
 
-#: src/plugins/plugins-interface.c:464
+#: src/plugins/plugins-interface.c:456
 #, c-format
 msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 msgstr "%s server/kanál (%s/%s) nenaleyen pro exec příkaz pluginu\n"
 
-#: src/gui/curses/gui-curses-chat.c:956
+#: src/gui/curses/gui-curses-chat.c:957
 msgid "bytes"
 msgstr "bajtů"
 
-#: src/gui/curses/gui-curses-chat.c:956
+#: src/gui/curses/gui-curses-chat.c:957
 msgid "KB"
 msgstr "KB"
 
-#: src/gui/curses/gui-curses-chat.c:956
+#: src/gui/curses/gui-curses-chat.c:957
 msgid "MB"
 msgstr "MB"
 
-#: src/gui/curses/gui-curses-chat.c:956
+#: src/gui/curses/gui-curses-chat.c:957
 msgid "GB"
 msgstr "GB"
 
-#: src/gui/curses/gui-curses-chat.c:1090
+#: src/gui/curses/gui-curses-chat.c:1091
 msgid "ETA"
 msgstr "ETA"
 
@@ -2297,31 +2297,31 @@ msgstr "Vyhledávání textu (rozlišování velikosti znaků): "
 msgid "Text search: "
 msgstr "Vyhledávání textu: "
 
-#: src/gui/curses/gui-curses-input.c:436
+#: src/gui/curses/gui-curses-input.c:456
 msgid "  [A] Accept"
 msgstr "  [A] Akceptovat"
 
-#: src/gui/curses/gui-curses-input.c:438 src/gui/curses/gui-curses-input.c:443
+#: src/gui/curses/gui-curses-input.c:458 src/gui/curses/gui-curses-input.c:463
 msgid "  [C] Cancel"
 msgstr "  [C] Storno"
 
-#: src/gui/curses/gui-curses-input.c:449
+#: src/gui/curses/gui-curses-input.c:469
 msgid "  [R] Remove"
 msgstr "  [R] Odebrat"
 
-#: src/gui/curses/gui-curses-input.c:454
+#: src/gui/curses/gui-curses-input.c:474
 msgid "  [P] Purge old DCC"
 msgstr "  [P] Pročistit staré DCC"
 
-#: src/gui/curses/gui-curses-input.c:456
+#: src/gui/curses/gui-curses-input.c:476
 msgid "  [Q] Close DCC view"
 msgstr "  [Q] Zavřít DCC pohled"
 
-#: src/gui/curses/gui-curses-input.c:465
+#: src/gui/curses/gui-curses-input.c:485
 msgid "  [C] Clear buffer"
 msgstr "  [C] Vyčistit buffer"
 
-#: src/gui/curses/gui-curses-input.c:467
+#: src/gui/curses/gui-curses-input.c:487
 msgid "  [Q] Close raw data view"
 msgstr "  [Q] Zavřít čistý pohled na data"
 
@@ -2356,16 +2356,16 @@ msgstr "<ČISTÉ_IRC> "
 msgid "Act: "
 msgstr "Aktivní: "
 
-#: src/gui/curses/gui-curses-status.c:327
+#: src/gui/curses/gui-curses-status.c:330
 msgid "RAW_IRC"
 msgstr "ČISTÉ_IRC"
 
-#: src/gui/curses/gui-curses-status.c:349
+#: src/gui/curses/gui-curses-status.c:352
 #, c-format
 msgid "Lag: %.1f"
 msgstr "Zpoždění: %.1f"
 
-#: src/gui/curses/gui-curses-status.c:365
+#: src/gui/curses/gui-curses-status.c:368
 msgid "-MORE-"
 msgstr "-VÍCE-"
 
@@ -2377,7 +2377,7 @@ msgstr "server"
 msgid "Not enough memory for new line\n"
 msgstr "Nedostatek paměti pro nový řádek\n"
 
-#: src/gui/gui-common.c:436
+#: src/gui/gui-common.c:448
 #, c-format
 msgid "%s not enough memory for infobar message\n"
 msgstr "%s nedostatek paměti pro infobar zprávu\n"
@@ -2582,17 +2582,17 @@ msgstr "vložit řetězec na řádku"
 msgid "search text in buffer history"
 msgstr "hledání textu v historii bufferu"
 
-#: src/gui/gui-keyboard.c:476 src/common/command.c:2437
+#: src/gui/gui-keyboard.c:476 src/common/command.c:2429
 #, c-format
 msgid "%s unable to bind key \"%s\"\n"
 msgstr "%s nemohu napojit kalávesu \"%s\"\n"
 
-#: src/gui/gui-keyboard.c:498
+#: src/gui/gui-keyboard.c:504
 #, c-format
 msgid "%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"
 msgstr "%s nemohu napojit kalávesu \"%s\" (nevalidní jméno funkce: \"%s\")\n"
 
-#: src/gui/gui-keyboard.c:512
+#: src/gui/gui-keyboard.c:518
 #, c-format
 msgid "%s not enough memory for key binding\n"
 msgstr "%s nedostatek paměti pro klávesovou zkratku\n"
@@ -3151,7 +3151,7 @@ msgstr ""
 "spočítána s aktuálním oknem jako velikost reference. Např. 25 znamená "
 "vytvořít nové okno s velikostí = aktuální_velikost / 4"
 
-#: src/common/command.c:411 src/common/command.c:580 src/common/command.c:669
+#: src/common/command.c:411 src/common/command.c:579 src/common/command.c:667
 #, c-format
 msgid "%s command \"%s\" failed\n"
 msgstr "%s příkaz \"%s\" selhal\n"
@@ -3171,13 +3171,13 @@ msgstr ""
 "%s špatyný počet argumentů pro %s příkaz \"%s\" (očekáváno: mezi %d a %d "
 "argumenty%s)\n"
 
-#: src/common/command.c:607
+#: src/common/command.c:606
 #, c-format
 msgid "%s wrong argument count for IRC command \"%s\" (expected: %d arg%s)\n"
 msgstr ""
 "%s chybný počet argumentů pro IRC příkaz \"%s\" (očekáváno: %d argumentů%s)\n"
 
-#: src/common/command.c:619
+#: src/common/command.c:618
 #, c-format
 msgid ""
 "%s wrong argument count for IRC command \"%s\" (expected: between %d and %d "
@@ -3186,12 +3186,12 @@ msgstr ""
 "%s špatný počet argumentů pro IRC příkaz \"%s\" (očekáváno: mezi %d a %d "
 "argumenty%s)\n"
 
-#: src/common/command.c:643
+#: src/common/command.c:642
 #, c-format
 msgid "%s command \"%s\" can not be executed on DCC CHAT buffer\n"
 msgstr "%s \"%s\" příkaz nemůže být spuštěn v DCC CHAT bufferu\n"
 
-#: src/common/command.c:705
+#: src/common/command.c:703
 #, c-format
 msgid ""
 "%s unknown command \"%s\" (type /help for help). To send unknown commands to "
@@ -3200,411 +3200,411 @@ msgstr ""
 "%s neznámý příkaz \"%s\" (zadejte /help pro nápovědu). Pro zasílání "
 "neznámých příkazů na IRC server povolte volbu irc_send_unknown_commands.\n"
 
-#: src/common/command.c:927
+#: src/common/command.c:919
 msgid "This window is not a channel!\n"
 msgstr "Tohe není okno kanálu!\n"
 
-#: src/common/command.c:975 src/common/command.c:1147
+#: src/common/command.c:967 src/common/command.c:1139
 #, c-format
 msgid "%s missing arguments for \"%s\" command\n"
 msgstr "%s chybí argumenty pro příkaz \"%s\"\n"
 
-#: src/common/command.c:985
+#: src/common/command.c:977
 #, c-format
 msgid "Alias \"%s\" => \"%s\" created\n"
 msgstr "Alias \"%s\" => \"%s\" vytvořen\n"
 
-#: src/common/command.c:991
+#: src/common/command.c:983
 #, c-format
 msgid "Failed to create alias \"%s\" => \"%s\" (not enough memory)\n"
 msgstr "Selhalo vytvoření aliasu \"%s\" => \"%s\" (nedostatek paměti)\n"
 
-#: src/common/command.c:1003
+#: src/common/command.c:995
 msgid "Alias:\n"
 msgstr "Alias:\n"
 
-#: src/common/command.c:1013
+#: src/common/command.c:1005
 msgid "No alias found.\n"
 msgstr "Žádné aliasy nenalezeny.\n"
 
-#: src/common/command.c:1023
+#: src/common/command.c:1015
 msgid "List of aliases:\n"
 msgstr "Seznam pro aliasy:\n"
 
-#: src/common/command.c:1037
+#: src/common/command.c:1029
 msgid "No alias defined.\n"
 msgstr "Žádné aliasy nejsou definovány.\n"
 
-#: src/common/command.c:1056
+#: src/common/command.c:1048
 #, c-format
 msgid "%sServer: %s%s\n"
 msgstr "%sServer: %s%s\n"
 
-#: src/common/command.c:1061
+#: src/common/command.c:1053
 #, c-format
 msgid "%snot connected\n"
 msgstr "%snepřipojen\n"
 
-#: src/common/command.c:1065
+#: src/common/command.c:1057
 #, c-format
 msgid "%sChannel: %s%s %s(server: %s%s%s)\n"
 msgstr "%sKanál: %s%s %s(server: %s%s%s)\n"
 
-#: src/common/command.c:1074
+#: src/common/command.c:1066
 #, c-format
 msgid "%sPrivate with: %s%s %s(server: %s%s%s)\n"
 msgstr "%sSoukromý s: %s%s %s(server: %s%s%s)\n"
 
-#: src/common/command.c:1083 src/common/command.c:1095
+#: src/common/command.c:1075 src/common/command.c:1087
 #, c-format
 msgid "%sunknown\n"
 msgstr "%sneznámý\n"
 
-#: src/common/command.c:1091
+#: src/common/command.c:1083
 #, c-format
 msgid "%sraw IRC data\n"
 msgstr "%sčisté IRC data\n"
 
-#: src/common/command.c:1126
+#: src/common/command.c:1118
 msgid "Open buffers:\n"
 msgstr "Otevřené buffery:\n"
 
-#: src/common/command.c:1171
+#: src/common/command.c:1163
 #, c-format
 msgid "%s incorrect buffer number\n"
 msgstr "%s nekorektní číslo bufferu\n"
 
-#: src/common/command.c:1188
+#: src/common/command.c:1180
 #, c-format
 msgid "%s can not close the single buffer\n"
 msgstr "%s nemohu zavřít jediný buffer\n"
 
-#: src/common/command.c:1201
+#: src/common/command.c:1193
 #, c-format
 msgid "%s can not close server buffer while channels are open\n"
 msgstr "%s nemohu zavřít buffer serveru dokud jsou otevřeny kanály\n"
 
-#: src/common/command.c:1274
+#: src/common/command.c:1266
 msgid "Default notify levels for servers:"
 msgstr "Výchozí level upozornění pro servery:"
 
-#: src/common/command.c:1292
+#: src/common/command.c:1284
 msgid "Notify levels:"
 msgstr "Level upozornění:"
 
-#: src/common/command.c:1299
+#: src/common/command.c:1291
 msgid "Raw IRC data"
 msgstr "Čisté IRC data"
 
-#: src/common/command.c:1321 src/common/command.c:1391
+#: src/common/command.c:1313 src/common/command.c:1383
 #, c-format
 msgid "%s incorrect notify level (must be between %d and %d)\n"
 msgstr "%s nekorektní level upozornění (musí být mezi %d a %d)\n"
 
-#: src/common/command.c:1334
+#: src/common/command.c:1326
 #, c-format
 msgid "%s incorrect buffer for notify (must be server, channel or private)\n"
 msgstr ""
 "%s nekorektní buffer pro upozornění (musí být server, kanál nebo soukromý)\n"
 
-#: src/common/command.c:1345
+#: src/common/command.c:1337
 #, c-format
 msgid "New default notify level for server %s%s%s: %s%d %s"
 msgstr "Nový výchozí level upozornění pro server %s%s%s: %s%d %s"
 
-#: src/common/command.c:1359
+#: src/common/command.c:1351
 #, c-format
 msgid "New notify level for %s%s%s: %s%d %s"
 msgstr "Nový level upozornění %s%s%s: %s%d %s"
 
-#: src/common/command.c:1370
+#: src/common/command.c:1362
 msgid "(hotlist: never)\n"
 msgstr "(hotlist: nikdy)\n"
 
-#: src/common/command.c:1373
+#: src/common/command.c:1365
 msgid "(hotlist: highlights)\n"
 msgstr "(hotlist: zvýraznění)\n"
 
-#: src/common/command.c:1376
+#: src/common/command.c:1368
 msgid "(hotlist: highlights + messages)\n"
 msgstr "(hotlist: zvýraznění + zprávy)\n"
 
-#: src/common/command.c:1379
+#: src/common/command.c:1371
 msgid "(hotlist: highlights + messages + join/part (all))\n"
 msgstr "(hotlist: zvýrazění + zprávy + připojení/odpojení (vše))\n"
 
-#: src/common/command.c:1527
+#: src/common/command.c:1519
 #, c-format
 msgid "%s buffer not found for \"%s\" command\n"
 msgstr "%s buffer nenalezen pro příkaz \"%s\"\n"
 
-#: src/common/command.c:1537 src/common/command.c:1823
-#: src/common/command.c:2746 src/common/command.c:4114
-#: src/common/command.c:4157
+#: src/common/command.c:1529 src/common/command.c:1815
+#: src/common/command.c:2738 src/common/command.c:4106
+#: src/common/command.c:4149
 #, c-format
 msgid "%s unknown option for \"%s\" command\n"
 msgstr "%s neznámá volba pro příkaz \"%s\"\n"
 
-#: src/common/command.c:1564
+#: src/common/command.c:1556
 #, c-format
 msgid "%s already connected to server \"%s\"!\n"
 msgstr "%s již vytvořený server \"%s\"!\n"
 
-#: src/common/command.c:1572
+#: src/common/command.c:1564
 #, c-format
 msgid "%s currently connecting to server \"%s\"!\n"
 msgstr "%s zrovna připojuji k serveru \"%s\"!\n"
 
-#: src/common/command.c:1639 src/common/command.c:1908
-#: src/common/command.c:2846 src/common/command.c:3332
+#: src/common/command.c:1631 src/common/command.c:1900
+#: src/common/command.c:2838 src/common/command.c:3324
 #, c-format
 msgid "%s server \"%s\" not found\n"
 msgstr "%s server \"%s\" nenalezen\n"
 
-#: src/common/command.c:1844 src/common/command.c:2784
+#: src/common/command.c:1836 src/common/command.c:2776
 #, c-format
 msgid "%s not connected to server \"%s\"!\n"
 msgstr "%s nepřipojen k serveru \"%s\"!\n"
 
-#: src/common/command.c:1852
+#: src/common/command.c:1844
 msgid "Auto-reconnection is cancelled\n"
 msgstr "Automatické znovupřipojené je zrušeno\n"
 
-#: src/common/command.c:1944 src/common/weechat.c:218
+#: src/common/command.c:1936 src/common/weechat.c:218
 #, c-format
 msgid "%s internal commands:\n"
 msgstr "%s vnitřní příkazy:\n"
 
-#: src/common/command.c:1954 src/common/weechat.c:238
+#: src/common/command.c:1946 src/common/weechat.c:238
 msgid "IRC commands:\n"
 msgstr "IRC příkazy:\n"
 
-#: src/common/command.c:1968
+#: src/common/command.c:1960
 msgid "Plugin commands:\n"
 msgstr "Příkazy pluginu:\n"
 
-#: src/common/command.c:2084
+#: src/common/command.c:2076
 #, c-format
 msgid "No help available, \"%s\" is an unknown command\n"
 msgstr "Není dostupná žádná nápověda, \"%s\" je neznámý příkaz\n"
 
-#: src/common/command.c:2153
+#: src/common/command.c:2145
 #, c-format
 msgid "%son %s%s%s/%s%s%s:%s ignoring %s%s%s from %s%s\n"
 msgstr "%sna %s%s%s/%s%s%s:%s ignoruji %s%s%s od %s%s\n"
 
-#: src/common/command.c:2191
+#: src/common/command.c:2183
 msgid "List of ignore:\n"
 msgstr "Seznam ignorování:\n"
 
-#: src/common/command.c:2208
+#: src/common/command.c:2200
 msgid "No ignore defined.\n"
 msgstr "Žádné ignorování není definováno.\n"
 
-#: src/common/command.c:2234
+#: src/common/command.c:2226
 msgid "New ignore:"
 msgstr "Nové ignorování:"
 
-#: src/common/command.c:2254
+#: src/common/command.c:2246
 #, c-format
 msgid "New key binding:  %s"
 msgstr "Nová klávesová zkratka:  %s"
 
-#: src/common/command.c:2297
+#: src/common/command.c:2289
 msgid "Key bindings:\n"
 msgstr "Klávesové zkratky:\n"
 
-#: src/common/command.c:2311
+#: src/common/command.c:2303
 #, c-format
 msgid "Key \"%s\" unbound\n"
 msgstr "Klávesa \"%s\" odpojena\n"
 
-#: src/common/command.c:2317
+#: src/common/command.c:2309
 #, c-format
 msgid "%s unable to unbind key \"%s\"\n"
 msgstr "%s nemohu odpojit klávesu \"%s\"\n"
 
-#: src/common/command.c:2325 src/common/weechat.c:270
+#: src/common/command.c:2317 src/common/weechat.c:270
 msgid "Internal key functions:\n"
 msgstr "Vnitřní klávesové funkce:\n"
 
-#: src/common/command.c:2374
+#: src/common/command.c:2366
 #, c-format
 msgid "%s unknown key function \"%s\"\n"
 msgstr "%s neznámá klávesová funkce \"%s\"\n"
 
-#: src/common/command.c:2389
+#: src/common/command.c:2381
 msgid "Default key bindings restored\n"
 msgstr "Výchozí klávesové zkratky obnoveny\n"
 
-#: src/common/command.c:2395
+#: src/common/command.c:2387
 #, c-format
 msgid "%s \"-yes\" argument is required for keys reset (security reason)\n"
 msgstr ""
 "%s \"-yes\" argument je požadován pro reset kaláves (bezpečnostní opatření)\n"
 
-#: src/common/command.c:2414
+#: src/common/command.c:2406
 msgid "Key:\n"
 msgstr "Klávesa: \n"
 
-#: src/common/command.c:2420
+#: src/common/command.c:2412
 msgid "No key found.\n"
 msgstr "Žádná klávesa nenalezena.\n"
 
-#: src/common/command.c:2462
+#: src/common/command.c:2454
 msgid "global"
 msgstr "globální"
 
-#: src/common/command.c:2462
+#: src/common/command.c:2454
 msgid "local"
 msgstr "lokální"
 
-#: src/common/command.c:2468
+#: src/common/command.c:2460
 msgid "top"
 msgstr "nahoře"
 
-#: src/common/command.c:2471
+#: src/common/command.c:2463
 msgid "bottom"
 msgstr "dole"
 
-#: src/common/command.c:2474
+#: src/common/command.c:2466
 msgid "left"
 msgstr "vlevo"
 
-#: src/common/command.c:2477
+#: src/common/command.c:2469
 msgid "right"
 msgstr "vpravo"
 
-#: src/common/command.c:2507
+#: src/common/command.c:2499
 msgid "Open panels:\n"
 msgstr "Otevřené panely:\n"
 
-#: src/common/command.c:2539
+#: src/common/command.c:2531
 msgid "Plugins loaded:\n"
 msgstr "Načtené pluginy:\n"
 
-#: src/common/command.c:2565
+#: src/common/command.c:2557
 msgid "     message handlers:\n"
 msgstr "     obsluhovače zpráv:\n"
 
-#: src/common/command.c:2574
+#: src/common/command.c:2566
 #, c-format
 msgid "       IRC(%s)\n"
 msgstr "       IRC(%s)\n"
 
-#: src/common/command.c:2581
+#: src/common/command.c:2573
 msgid "       (no message handler)\n"
 msgstr "       (není obsluhovač zprávy)\n"
 
-#: src/common/command.c:2586
+#: src/common/command.c:2578
 msgid "     command handlers:\n"
 msgstr "     obsluhovače příkazu:\n"
 
-#: src/common/command.c:2607
+#: src/common/command.c:2599
 msgid "       (no command handler)\n"
 msgstr "       (není obsluhovač příkazu)\n"
 
-#: src/common/command.c:2612
+#: src/common/command.c:2604
 msgid "     timer handlers:\n"
 msgstr "     obsluhovače časovače:\n"
 
-#: src/common/command.c:2621
+#: src/common/command.c:2613
 #, c-format
 msgid "       %d seconds\n"
 msgstr "       %d sekund\n"
 
-#: src/common/command.c:2628
+#: src/common/command.c:2620
 msgid "       (no timer handler)\n"
 msgstr "       (není obsluhovač časovače)\n"
 
-#: src/common/command.c:2633
+#: src/common/command.c:2625
 msgid "     keyboard handlers:\n"
 msgstr "     obsluhovače klávesnice:\n"
 
-#: src/common/command.c:2643
+#: src/common/command.c:2635
 msgid "       (no keyboard handler)\n"
 msgstr "       (není obsluhovač klávesnice)\n"
 
-#: src/common/command.c:2645 src/common/command.c:2662
-#: src/common/command.c:2678
+#: src/common/command.c:2637 src/common/command.c:2654
+#: src/common/command.c:2670
 #, c-format
 msgid "       %d defined\n"
 msgstr "       %d definováno\n"
 
-#: src/common/command.c:2650
+#: src/common/command.c:2642
 msgid "     event handlers:\n"
 msgstr "     obsluhovače událostí:\n"
 
-#: src/common/command.c:2660
+#: src/common/command.c:2652
 msgid "       (no event handler)\n"
 msgstr "       (není obsluhovač události)\n"
 
-#: src/common/command.c:2667
+#: src/common/command.c:2659
 msgid "     modifiers:\n"
 msgstr "     modifikátor\n"
 
-#: src/common/command.c:2676
+#: src/common/command.c:2668
 msgid "       (no modifier)\n"
 msgstr "       (žádný modifikátor)\n"
 
-#: src/common/command.c:2687
+#: src/common/command.c:2679
 msgid "No plugin found.\n"
 msgstr "Nebyl nalezen žádný plugin\n"
 
-#: src/common/command.c:2689
+#: src/common/command.c:2681
 msgid "  (no plugin)\n"
 msgstr "  (není plugin)\n"
 
-#: src/common/command.c:2759 src/common/command.c:3730
+#: src/common/command.c:2751 src/common/command.c:3722
 #, c-format
 msgid ""
 "Command \"%s\" is not available, WeeChat was built without plugins support.\n"
 msgstr ""
 "Příkaz \"%s\" není dostupný, WeeChat byl přeložen bez podpory pluginů.\n"
 
-#: src/common/command.c:2875
+#: src/common/command.c:2867
 msgid "Configuration file saved\n"
 msgstr "Konfigurační soubor uložen\n"
 
-#: src/common/command.c:2880
+#: src/common/command.c:2872
 #, c-format
 msgid "%s failed to save configuration file\n"
 msgstr "%s selhalo uložení konfiguračního souboru\n"
 
-#: src/common/command.c:2888
+#: src/common/command.c:2880
 msgid "Plugins options saved\n"
 msgstr "Možnosti pluginů uloženy\n"
 
-#: src/common/command.c:2893
+#: src/common/command.c:2885
 #, c-format
 msgid "%s failed to save plugins options\n"
 msgstr "%s selhalo uložení nastavení pluginů\n"
 
-#: src/common/command.c:2934
+#: src/common/command.c:2926
 msgid "No server.\n"
 msgstr "žádný server.\n"
 
-#: src/common/command.c:2945
+#: src/common/command.c:2937
 #, c-format
 msgid "Server '%s' not found.\n"
 msgstr "Server '%s' nenalezen.\n"
 
-#: src/common/command.c:2957
+#: src/common/command.c:2949
 #, c-format
 msgid "%s missing servername for \"%s\" command\n"
 msgstr "%s chybí jméno serveru pro příkaz \"%s\"\n"
 
-#: src/common/command.c:2965
+#: src/common/command.c:2957
 #, c-format
 msgid "%s too much arguments for \"%s\" command, ignoring arguments\n"
 msgstr "%s příliž mnoho argumentů pro příkaz \"%s\", ignoruji argumety\n"
 
-#: src/common/command.c:2975
+#: src/common/command.c:2967
 #, c-format
 msgid "%s server \"%s\" not found for \"%s\" command\n"
 msgstr "%s server \"%s\" nenalezen pro příkaz \"%s\"\n"
 
-#: src/common/command.c:2983
+#: src/common/command.c:2975
 #, c-format
 msgid ""
 "%s you can not delete server \"%s\" because you are connected to. Try /"
@@ -3613,191 +3613,191 @@ msgstr ""
 "%s nemůžete odebrat server \"%s\", protože jste k němu připojent. Skuste "
 "nejprve /dissconnect %s.\n"
 
-#: src/common/command.c:3003
+#: src/common/command.c:2995
 #, c-format
 msgid "Server %s%s%s has been deleted\n"
 msgstr "Server %s%s%s byl odebrán\n"
 
-#: src/common/command.c:3022
+#: src/common/command.c:3014
 #, c-format
 msgid "%s missing parameters for \"%s\" command\n"
 msgstr "%s chybí parametry pro příkaz \"%s\"\n"
 
-#: src/common/command.c:3032
+#: src/common/command.c:3024
 #, c-format
 msgid "%s server \"%s\" already exists, can't create it!\n"
 msgstr "%s server \"%s\" již existuje, nemohu jej vytvořít!\n"
 
-#: src/common/command.c:3061 src/common/command.c:3089
-#: src/common/command.c:3102 src/common/command.c:3128
+#: src/common/command.c:3053 src/common/command.c:3081
+#: src/common/command.c:3094 src/common/command.c:3120
 #, c-format
 msgid "%s missing password for \"%s\" parameter\n"
 msgstr "%s chybí heslo pro parametr \"%s\"\n"
 
-#: src/common/command.c:3074
+#: src/common/command.c:3066
 #, c-format
 msgid "%s missing nick(s) for \"%s\" parameter\n"
 msgstr "%s chybí přezdívka/přezdívky pro parametr \"%s\"\n"
 
-#: src/common/command.c:3115
+#: src/common/command.c:3107
 #, c-format
 msgid "%s missing command for \"%s\" parameter\n"
 msgstr "%s chybí příkaz pro parametr \"%s\"\n"
 
-#: src/common/command.c:3152
+#: src/common/command.c:3144
 #, c-format
 msgid "Server %s%s%s created\n"
 msgstr "Server %s%s%s vytvořen\n"
 
-#: src/common/command.c:3161
+#: src/common/command.c:3153
 #, c-format
 msgid "%s unable to create server\n"
 msgstr "%s nemohu vytvořit server\n"
 
-#: src/common/command.c:3221
+#: src/common/command.c:3213
 msgid "(unknown)"
 msgstr "(neznámý)"
 
-#: src/common/command.c:3233
+#: src/common/command.c:3225
 #, c-format
 msgid "%s(password hidden) "
 msgstr "%s(heslo schováno) "
 
-#: src/common/command.c:3365 src/common/command.c:3413
+#: src/common/command.c:3357 src/common/command.c:3405
 #, c-format
 msgid "%s config option \"%s\" not found\n"
 msgstr "%s volba nastavení \"%s\" nenalezena\n"
 
-#: src/common/command.c:3370 src/common/command.c:3405
+#: src/common/command.c:3362 src/common/command.c:3397
 #, c-format
 msgid "%s incorrect value for option \"%s\"\n"
 msgstr "%s nekorektní hodnota pro volbu \"%s\"\n"
 
-#: src/common/command.c:3386
+#: src/common/command.c:3378
 #, c-format
 msgid "%s option \"%s\" can not be changed while WeeChat is running\n"
 msgstr "%s volba \"%s\" nemůže být změněna dokud WeeChat běží\n"
 
-#: src/common/command.c:3496
+#: src/common/command.c:3488
 #, c-format
 msgid "No config option found with \"%s\"\n"
 msgstr "Nebyla nalezena žádná volba nastavení s \"%s\"\n"
 
-#: src/common/command.c:3499
+#: src/common/command.c:3491
 msgid "No config option found\n"
 msgstr "Nebyla nalezena žádná volba nastavení\n"
 
-#: src/common/command.c:3506
+#: src/common/command.c:3498
 #, c-format
 msgid "%sDetail:\n"
 msgstr "%sDetail:\n"
 
-#: src/common/command.c:3511
+#: src/common/command.c:3503
 msgid "  . type boolean (values: 'on' or 'off')\n"
 msgstr "  . typ boolean (hodnota: 'on' nebo 'off')\n"
 
-#: src/common/command.c:3512 src/common/command.c:3535
-#: src/common/command.c:3541 src/common/command.c:3547
+#: src/common/command.c:3504 src/common/command.c:3527
+#: src/common/command.c:3533 src/common/command.c:3539
 #: src/common/weechat.c:153 src/common/weechat.c:178 src/common/weechat.c:185
 #: src/common/weechat.c:192
 #, c-format
 msgid "  . default value: '%s'\n"
 msgstr "  . výchozí hodnota: '%s'\n"
 
-#: src/common/command.c:3517
+#: src/common/command.c:3509
 #, c-format
 msgid "  . type integer (values: between %d and %d)\n"
 msgstr "  . typ celočíselný (hodnoty: mezi %d a %d)\n"
 
-#: src/common/command.c:3520 src/common/weechat.c:162
+#: src/common/command.c:3512 src/common/weechat.c:162
 #, c-format
 msgid "  . default value: %d\n"
 msgstr "  . výchozí hodnota: %d\n"
 
-#: src/common/command.c:3524
+#: src/common/command.c:3516
 msgid "  . type string (values: "
 msgstr "  . typ řetězec (hodnoty: "
 
-#: src/common/command.c:3537 src/common/command.c:3543
-#: src/common/command.c:3549 src/common/weechat.c:180 src/common/weechat.c:187
+#: src/common/command.c:3529 src/common/command.c:3535
+#: src/common/command.c:3541 src/common/weechat.c:180 src/common/weechat.c:187
 #: src/common/weechat.c:194
 msgid "empty"
 msgstr "prázdný"
 
-#: src/common/command.c:3540
+#: src/common/command.c:3532
 msgid "  . type color (Curses or Gtk color, look at WeeChat doc)\n"
 msgstr "  . typ barva (Curses nebo Gtk barva, viz WeeChat dokumentace)\n"
 
-#: src/common/command.c:3546
+#: src/common/command.c:3538
 msgid "  . type string (any string)\n"
 msgstr "  . typ řetězec (jakýkoliv řetězec)\n"
 
-#: src/common/command.c:3552 src/common/weechat.c:197
+#: src/common/command.c:3544 src/common/weechat.c:197
 #, c-format
 msgid "  . description: %s\n"
 msgstr "  . popis: %s\n"
 
-#: src/common/command.c:3563
+#: src/common/command.c:3555
 #, c-format
 msgid "config option(s) found with \"%s\"\n"
 msgstr "volba/volby nastavení nalezeny s \"%s\"\n"
 
-#: src/common/command.c:3566
+#: src/common/command.c:3558
 msgid "config option(s) found\n"
 msgstr "volba/volby nastavení nalezeny\n"
 
-#: src/common/command.c:3674
+#: src/common/command.c:3666
 #, c-format
 msgid "%s incorrect value for plugin option \"%s\"\n"
 msgstr "%s nekorektní hodnota pro možnost pluginu \"%s\"\n"
 
-#: src/common/command.c:3703
+#: src/common/command.c:3695
 #, c-format
 msgid "No plugin option found with \"%s\"\n"
 msgstr "Nebyla nalezena žádná možnost pluginu s \"%s\"\n"
 
-#: src/common/command.c:3706
+#: src/common/command.c:3698
 msgid "No plugin option found\n"
 msgstr "Nebyla nalezena žádná možnost pluginu\n"
 
-#: src/common/command.c:3716
+#: src/common/command.c:3708
 #, c-format
 msgid "plugin option(s) found with \"%s\"\n"
 msgstr "možnost(i) pluginu nalezeny s \"%s\"\n"
 
-#: src/common/command.c:3719
+#: src/common/command.c:3711
 msgid "plugin option(s) found\n"
 msgstr "možnost(i) pluginu nalezeny\n"
 
-#: src/common/command.c:3760
+#: src/common/command.c:3752
 #, c-format
 msgid "%s alias or command \"%s\" not found\n"
 msgstr "%s alias nebo příkaz \"%s\" nenalezen\n"
 
-#: src/common/command.c:3770
+#: src/common/command.c:3762
 #, c-format
 msgid "Alias \"%s\" removed\n"
 msgstr "Alias \"%s\" odebrán\n"
 
-#: src/common/command.c:3830
+#: src/common/command.c:3822
 msgid "ignore were removed.\n"
 msgstr "ignorování bylo odebráno.\n"
 
-#: src/common/command.c:3832
+#: src/common/command.c:3824
 msgid "ignore was removed.\n"
 msgstr "ignorování bylo odebrán\n"
 
-#: src/common/command.c:3837
+#: src/common/command.c:3829
 #, c-format
 msgid "%s no ignore found\n"
 msgstr "%s žádné ignorování nenaleyeno\n"
 
-#: src/common/command.c:3871
+#: src/common/command.c:3863
 #, c-format
 msgid "%s can't upgrade: connection to at least one server is pending\n"
 msgstr "%s nemůžu aktualizovat: existují nevyřešená spojení na server\n"
 
-#: src/common/command.c:3881
+#: src/common/command.c:3873
 #, c-format
 msgid ""
 "%s can't upgrade: connection to at least one SSL server is active (should be "
@@ -3806,7 +3806,7 @@ msgstr ""
 "%s nemohu aktualiyovat: je aktuvní jedno nebo více připojení na SSL server "
 "(mělo by být opraveno v budoucnosti)\n"
 
-#: src/common/command.c:3891
+#: src/common/command.c:3883
 #, c-format
 msgid ""
 "%s can't upgrade: anti-flood is active on at least one server (sending many "
@@ -3815,35 +3815,35 @@ msgstr ""
 "%s nemůžu aktualizovat: anti-flood je aktivní na alespoň jednom serveru "
 "(posílání mnoha řádků)\n"
 
-#: src/common/command.c:3906
+#: src/common/command.c:3898
 msgid "Upgrading WeeChat...\n"
 msgstr "Aktualizuji WeeChat...\n"
 
-#: src/common/command.c:3913
+#: src/common/command.c:3905
 #, c-format
 msgid "%s unable to save session in file\n"
 msgstr "%s nemohu uložit sezení do souboru\n"
 
-#: src/common/command.c:3940
+#: src/common/command.c:3932
 #, c-format
 msgid "%s exec failed (program: \"%s\"), exiting WeeChat\n"
 msgstr "%s exec selhal (program: \"%s\"), ukončuji WeeChat\n"
 
-#: src/common/command.c:3980
+#: src/common/command.c:3972
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
 msgstr "Čas běhu WeeChat: %d %s %02d:%02d:%02d, spuštěn %s"
 
-#: src/common/command.c:3994
+#: src/common/command.c:3986
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr "Čas běhu WeeChat: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, spuštěn %s%s"
 
-#: src/common/command.c:4038
+#: src/common/command.c:4030
 msgid "Open windows:\n"
 msgstr "Otevřené okna:\n"
 
-#: src/common/command.c:4125
+#: src/common/command.c:4117
 #, c-format
 msgid ""
 "%s can not merge windows, there's no other window with same size near "
@@ -5160,9 +5160,10 @@ msgid "allow user to send colors"
 msgstr "povolit uživateli posílat barvy"
 
 #: src/common/weeconfig.c:808
+#, fuzzy
 msgid ""
-"allow user to send colors with special codes (%B=bold, %Cxx,yy=color, %"
-"U=underline, %R=reverse)"
+"allow user to send colors with special codes (^Cb=bold, ^Ccxx=color, ^Ccxx,"
+"yy=color+background, ^Cu=underline, ^Cr=reverse)"
 msgstr ""
 "povolit uživateli posílat barvy se speciálními kódy (%B=tlustě %Cxx,"
 "yy=barva, %U=podtržené, %R=obrácené)"

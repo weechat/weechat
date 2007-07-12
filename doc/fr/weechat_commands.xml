@@ -28,9 +28,22 @@ gestion des tampons
    list: liste les tampons ouverts (pas de paramètre affiche cette liste)
  notify: fixe le niveau de notification (0=jamais, 1=highlight, 2=1+msg, 3=2+join/part)
          (quand exécuté sur un tampon serveur, cela fixe le niveau de notification par défaut pour le serveur entier)
+ scroll: fait défiler l'historique (peut être relatif, et peut se terminer par une lettre: s=sec, m=min, h=heure, d=jour, M=mois, y=année); s'il y a seulement une lettre, alors fait défiler jusqu'au début de cet élément
+
+ nombre: saute au tampon qui a ce numéro
 serveur,
   canal: saute au tampon par serveur et/ou nom de canal
- nombre: saute au tampon qui a ce numéro
+
+Exemples :
+     déplacer tampon: /buffer move 5
+       fermer tampon: /buffer close c'est le message de départ
+    niveau de notif.: /buffer notify 2
+ défiler 1 jour haut: /buffer scroll 1d  ==  /buffer scroll -1d  ==  /buffer scroll -24h
+    défiler au début
+          de ce jour: /buffer scroll d
+  défiler 15 min bas: /buffer scroll +15m
+défiler 20 msgs haut: /buffer scroll -20
+  aller sur #weechat: /buffer #weechat
 
 </programlisting>
 <command>builtin  commande</command>

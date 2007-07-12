@@ -810,7 +810,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       
       <para>
         Wenn die Option IRC-Farben ("<literal>irc_colors_send</literal>") senden 
-        angeschaltet ist, können sie Farbcodierung und Attribute wiefolgt verwenden:
+        angeschaltet ist, können sie Farbcodierung und Attribute wiefolgt verwenden
+        <!-- TRANSLATION NEEDED -->
+        (press Ctrl-C then following letter, with optional value):
         <informaltable colsep="0" frame="none">
           <tgroup cols="2">
             <thead>
@@ -821,20 +823,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </thead>
             <tbody>
               <row>
-                <entry>%B</entry>
+                <entry>^Cb</entry>
                 <entry>
                   Fett (bold)
                 </entry>
               </row>
               <row>
-                <entry>%Cxx</entry>
+                <entry>^Ccxx</entry>
                 <entry>
                   Textfarbe "<literal>xx</literal>" (color)
                   (siehe Farbtabelle)
                 </entry>
               </row>
               <row>
-                <entry>%Cxx,yy</entry>
+                <entry>^Ccxx,yy</entry>
                 <entry>
                   Textfarbe "<literal>xx</literal>"
                   und Hintergrund "<literal>yy</literal>"
@@ -842,27 +844,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </entry>
               </row>
               <row>
-                <entry>%O</entry>
+                <entry>^Co</entry>
                 <entry>
                   Schalte Farben und Attribute ab
                 </entry>
               </row>
               <row>
-                <entry>%R</entry>
+                <entry>^Cr</entry>
                 <entry>
                   umgedrehte Farben (tausche Textfarbe mit Hintergrundfarbe)
                 </entry>
               </row>
               <row>
-                <entry>%U</entry>
+                <entry>^Cu</entry>
                 <entry>
                   Unterstreiche Text
-                </entry>
-              </row>
-              <row>
-                <entry>%%</entry>
-                <entry>
-                  Schreibe ein einzelnes "<literal>%</literal>"
                 </entry>
               </row>
             </tbody>
@@ -873,7 +869,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </para>
       
       <para>
-        Farbcodes für %C:
+        Farbcodes für ^Cc:
         <informaltable colsep="0" frame="none">
           <tgroup cols="2">
             <thead>
@@ -956,7 +952,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         Beispiel: Anzeige von "<literal>hello everybody!</literal>" mit
         "<literal>hello</literal>" fett in hellem Blau, und 
         "<literal>everybody</literal>" unterstrichen in hellem Rot:
-<screen><userinput>%C12%Bhello%B%C04%U everybody%U%C!</userinput></screen>
+<screen><userinput>^Cc12^Cbhello^Cb^Cc04^Cu everybody^Cu^Cc!</userinput></screen>
       </para>
       
     </section>
@@ -1851,6 +1847,63 @@ plugin->exec_on_files (plugin, "/tmp", &amp;callback);
               </listitem>
             </itemizedlist>
           </para>
+          <!-- TRANSLATION NEEDED -->
+          <para>
+            To display colored text, there are following codes:
+            <informaltable colsep="0" frame="none">
+              <tgroup cols="2">
+                <thead>
+                  <row>
+                    <entry>Code</entry>
+                    <entry>Description</entry>
+                  </row>
+                </thead>
+                <tbody>
+                  <row>
+                    <entry>0x02</entry>
+                    <entry>
+                      bold text
+                    </entry>
+                  </row>
+                  <row>
+                    <entry>0x03 + "xx"</entry>
+                    <entry>
+                      text color "<literal>xx</literal>"
+                      (see <xref linkend="secAPI_get_irc_color" /> for colors)
+                    </entry>
+                  </row>
+                  <row>
+                    <entry>0x03 + "xx,yy"</entry>
+                    <entry>
+                      text color "<literal>xx</literal>"
+                      and background "<literal>yy</literal>"
+                      (see <xref linkend="secAPI_get_irc_color" /> for colors)
+                    </entry>
+                  </row>
+                  <row>
+                    <entry>0x0F</entry>
+                    <entry>
+                      disable color and attributes
+                    </entry>
+                  </row>
+                  <row>
+                    <entry>0x12</entry>
+                    <entry>
+                      reverse video (revert text color with background)
+                    </entry>
+                  </row>
+                  <row>
+                    <entry>0x1F</entry>
+                    <entry>
+                      underlined text
+                    </entry>
+                  </row>
+                </tbody>
+              </tgroup>
+            </informaltable>
+            Note: the same code (without number for 0x03) may be used to stop
+            the attribute.
+          </para>
           <para>
             Rückgabewert: keiner.
           </para>
@@ -1860,6 +1913,10 @@ plugin->exec_on_files (plugin, "/tmp", &amp;callback);
 plugin->print (plugin, NULL, NULL, "hello");
 plugin->print (plugin, NULL, "#weechat", "hello");
 plugin->print (plugin, "freenode", "#weechat", "hello");
+plugin->print (plugin, NULL, NULL,
+               "Test: \x02 Fett \x0F\x03%02d Blau \x03%02d Grün",
+               plugin->get_irc_color (plugin, "blue"),
+               plugin->get_irc_color (plugin, "green"));
 </screen>
           </para>
         </section>
@@ -1891,6 +1948,10 @@ plugin->print (plugin, "freenode", "#weechat", "hello");
                 </para>
               </listitem>
             </itemizedlist>
+          </para>
+          <para>
+            <!-- TRANSLATION NEEDED -->
+            To display colored text, see <xref linkend="secAPI_print" />.
           </para>
           <para>
             Rückgabewert: keiner.
@@ -5221,6 +5282,10 @@ weechat.set_charset("ISO-8859-1")
             </itemizedlist>
           </para>
           <para>
+            <!-- TRANSLATION NEEDED -->
+            To display colored text, see <xref linkend="secAPI_print" />.
+          </para>
+          <para>
             Rückgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist
           </para>
           <para>
@@ -5230,6 +5295,7 @@ weechat.set_charset("ISO-8859-1")
 weechat::print("message");
 weechat::print("message", "#weechat");
 weechat::print("message", "#weechat", "freenode");
+weechat::print("test: \x0305 rot \x0F normal");
 
 # python
 weechat.prnt("message")
@@ -5249,6 +5315,72 @@ weechat.print("message", "#weechat", "freenode")
           </para>
         </section>
         
+        <!-- TRANSLATION NEEDED -->
+        <section id="secScript_print_server">
+          <title>print_server</title>
+          
+          <para>
+            Perl prototype:
+            <command>
+              weechat::print_server(message)
+            </command>
+          </para>
+          <para>
+            Python prototype:
+            <command>
+              weechat.print_server(message)
+            </command>
+          </para>
+          <para>
+            Ruby prototype:
+            <command>
+              Weechat.print_server(message)
+            </command>
+          </para>
+          <para>
+            Lua prototype:
+            <command>
+              weechat.print_server(message)
+            </command>
+          </para>
+          <para>
+            Display a message on server buffer.
+          </para>
+          <para>
+            Arguments:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  <option>message</option>: message
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+          <para>
+            To display colored text, see <xref linkend="secAPI_print" />.
+          </para>
+          <para>
+            Return value: 1 if success, 0 if an error occurred.
+          </para>
+          <para>
+            Examples:
+<screen>
+# perl
+weechat::print_server("message");
+weechat::print_server("test: \x0305 rot \x0F normal");
+
+# python
+weechat.print_server("message")
+
+# ruby
+Weechat.print_server("message")
+
+-- lua
+weechat.print_server("message")
+</screen>
+          </para>
+        </section>
+                
         <section id="secScript_print_infobar">
           <title>print_infobar</title>
           

@@ -558,10 +558,9 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                     }
                     else
                     {
-                        ptr_args2 = (weechat_commands[i].conversion
-                                     && cfg_irc_colors_send
-                                     && ptr_args) ?
-                            (char *)gui_color_encode ((unsigned char *)ptr_args) : NULL;
+                        ptr_args2 = (ptr_args) ? (char *)gui_color_encode ((unsigned char *)ptr_args,
+                                                                           (weechat_commands[i].conversion
+                                                                            && cfg_irc_colors_send)) : NULL;
                         if (weechat_commands[i].cmd_function_args)
                         {
                             argv2 = explode_string ((ptr_args2) ? ptr_args2 : ptr_args,
@@ -647,10 +646,9 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                             free (command);
                             return 0;
                         }
-                        ptr_args2 = (irc_commands[i].conversion
-                                     && cfg_irc_colors_send
-                                     && ptr_args) ?
-                            (char *)gui_color_encode ((unsigned char *)ptr_args) : NULL;
+                        ptr_args2 = (ptr_args) ? (char *)gui_color_encode ((unsigned char *)ptr_args,
+                                                                           (irc_commands[i].conversion
+                                                                            && cfg_irc_colors_send)) : NULL;
                         if (irc_commands[i].cmd_function_args)
                         {
                             argv2 = explode_string ((ptr_args2) ? ptr_args2 : ptr_args,
@@ -722,10 +720,7 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
 void
 user_message_display (t_irc_server *server, t_gui_buffer *buffer, char *text)
 {
-    char *decoded_text;
     t_irc_nick *ptr_nick;
-    
-    decoded_text = (char *)gui_color_decode ((unsigned char *)text, 1);
     
     if ((CHANNEL(buffer)->type == CHANNEL_TYPE_PRIVATE)
         || (CHANNEL(buffer)->type == CHANNEL_TYPE_DCC_CHAT))
@@ -736,7 +731,7 @@ user_message_display (t_irc_server *server, t_gui_buffer *buffer, char *text)
                          MSG_TYPE_MSG,
                          "%s%s\n",
                          GUI_COLOR(COLOR_WIN_CHAT),
-                         (decoded_text) ? decoded_text : text);
+                         text);
     }
     else
     {
@@ -749,7 +744,7 @@ user_message_display (t_irc_server *server, t_gui_buffer *buffer, char *text)
                              MSG_TYPE_MSG,
                              "%s%s\n",
                              GUI_COLOR(COLOR_WIN_CHAT),
-                             (decoded_text) ? decoded_text : text);
+                             text);
         }
         else
         {
@@ -759,9 +754,6 @@ user_message_display (t_irc_server *server, t_gui_buffer *buffer, char *text)
                         WEECHAT_ERROR);
         }
     }
-
-    if (decoded_text)
-        free (decoded_text);
 }
 
 /*
@@ -892,8 +884,8 @@ user_command (t_irc_server *server, t_irc_channel *channel, char *command, int o
                 
                 if (server && (!BUFFER_IS_SERVER(buffer)))
                 {
-                    command_with_colors = (cfg_irc_colors_send) ?
-                        (char *)gui_color_encode ((unsigned char *)ptr_cmd) : NULL;
+                    command_with_colors = (char *)gui_color_encode ((unsigned char *)ptr_cmd,
+                                                                    cfg_irc_colors_send);
                     
                     if (CHANNEL(buffer)->dcc_chat)
                     {

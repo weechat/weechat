@@ -735,7 +735,7 @@ gui_buffer_line_search (t_gui_line *line, char *text, int case_sensitive)
         return 0;
     
     rc = 0;
-    data = (char *)gui_color_decode ((unsigned char *)line->data, 0);
+    data = (char *)gui_color_decode ((unsigned char *)line->data, 0, 0);
     if (data)
     {
         if ((case_sensitive && (strstr (data, text)))

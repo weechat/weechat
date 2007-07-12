@@ -220,11 +220,12 @@ gui_add_to_line (t_gui_buffer *buffer, int type, time_t date, char *nick, char *
  */
 
 void
-gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, char *nick, char *message, ...)
+gui_printf_internal (t_gui_buffer *buffer, int display_time, int type,
+                     int keep_irc_colors, char *nick, char *message, ...)
 {
     static char buf[8192];
-    char text_time[1024];
-    char text_time_char[2];
+    char *buf2;
+    char text_time[1024], text_time_char[2];
     time_t date;
     struct tm *local_time;
     int time_first_digit, time_last_digit;
@@ -267,12 +268,20 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, char *nic
     
     if (!buf[0])
         return;
-
-    utf8_normalize (buf, '?');
+    
+    buf2 = (char *)gui_color_decode ((unsigned char *)buf,
+                                     (keep_irc_colors >= 0) ?
+                                     keep_irc_colors : cfg_irc_colors_receive,
+                                     1);
+    
+    if (!buf2)
+        return;
+    
+    utf8_normalize (buf2, '?');
     
     if (gui_init_ok)
     {
-        pos = buf;
+        pos = buf2;
         while (pos)
         {
             date = time (NULL);
@@ -356,7 +365,10 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type, char *nic
         }
     }
     else
-        weechat_iconv_fprintf (stdout, buf);
+        weechat_iconv_fprintf (stdout, buf2);
+
+    if (buf2)
+        free (buf2);
 }
 
 /*
@@ -417,7 +429,7 @@ gui_infobar_printf (int time_displayed, int color, char *message, ...)
     ptr_infobar = (t_gui_infobar *)malloc (sizeof (t_gui_infobar));
     if (ptr_infobar)
     {
-        buf2 = (char *)gui_color_decode ((unsigned char *)buf, 0);
+        buf2 = (char *)gui_color_decode ((unsigned char *)buf, 0, 0);
         ptr_buf = (buf2) ? buf2 : buf;
         
         ptr_infobar->color = color;

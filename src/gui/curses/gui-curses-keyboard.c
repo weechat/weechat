@@ -105,6 +105,11 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind ( /* m-s         */ "meta-s",             "switch_server");
     gui_keyboard_bind ( /* m-u         */ "meta-u",             "scroll_unread");
     gui_keyboard_bind ( /* ^R          */ "ctrl-R",             "search_text");
+    gui_keyboard_bind ( /* ^Cb         */ "ctrl-Cb",            "insert \\x02");
+    gui_keyboard_bind ( /* ^Cc         */ "ctrl-Cc",            "insert \\x03");
+    gui_keyboard_bind ( /* ^Co         */ "ctrl-Co",            "insert \\x0F");
+    gui_keyboard_bind ( /* ^Cr         */ "ctrl-Cr",            "insert \\x12");
+    gui_keyboard_bind ( /* ^Cu         */ "ctrl-Cu",            "insert \\x15");
     
     /* keys bound with commands */
     gui_keyboard_bind ( /* m-left      */ "meta-meta2-D",       "/buffer -1");

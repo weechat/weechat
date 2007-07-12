@@ -33,6 +33,7 @@ extern char *weechat_iconv_to_internal (char *, char *);
 extern char *weechat_iconv_from_internal (char *, char *);
 extern void weechat_iconv_fprintf (FILE *, char *, ...);
 extern char *weechat_strreplace (char *, char *, char *);
+extern char *weechat_convert_hex_chars (char *);
 extern long get_timeval_diff (struct timeval *, struct timeval *);
 extern char **explode_string (char *, char *, int, int *);
 extern void free_exploded_string (char **);

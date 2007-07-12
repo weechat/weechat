@@ -28,19 +28,22 @@
 
 
 #define gui_printf(buffer, fmt, argz...) \
-    gui_printf_internal(buffer, 1, MSG_TYPE_INFO, NULL, fmt, ##argz)
+    gui_printf_internal(buffer, 1, MSG_TYPE_INFO, -1, NULL, fmt, ##argz)
+
+#define gui_printf_keep_colors(buffer, fmt, argz...) \
+    gui_printf_internal(buffer, 1, MSG_TYPE_INFO, 1, NULL, fmt, ##argz)
 
 #define gui_printf_type(buffer, type, fmt, argz...) \
-    gui_printf_internal(buffer, 1, type, NULL, fmt, ##argz)
+    gui_printf_internal(buffer, 1, type, -1, NULL, fmt, ##argz)
 
 #define gui_printf_type_nick(buffer, type, nick, fmt, argz...) \
-    gui_printf_internal(buffer, 1, type, nick, fmt, ##argz)
+    gui_printf_internal(buffer, 1, type, -1, nick, fmt, ##argz)
 
 #define gui_printf_nolog(buffer, fmt, argz...) \
-    gui_printf_internal(buffer, 1, MSG_TYPE_INFO | MSG_TYPE_NOLOG, NULL, fmt, ##argz)
+    gui_printf_internal(buffer, 1, MSG_TYPE_INFO | MSG_TYPE_NOLOG, -1, NULL, fmt, ##argz)
 
 #define gui_printf_nolog_notime(buffer, fmt, argz...) \
-    gui_printf_internal(buffer, 0, MSG_TYPE_NOLOG, NULL, fmt, ##argz)
+    gui_printf_internal(buffer, 0, MSG_TYPE_NOLOG, -1, NULL, fmt, ##argz)
 
 
 typedef struct t_gui_infobar t_gui_infobar;
@@ -191,7 +194,7 @@ extern void gui_log_end (t_gui_buffer *);
 /* other */
 extern int gui_word_strlen (t_gui_window *, char *);
 extern int gui_word_real_pos (t_gui_window *, char *, int);
-extern void gui_printf_internal (t_gui_buffer *, int, int, char *, char *, ...);
+extern void gui_printf_internal (t_gui_buffer *, int, int, int, char *, char *, ...);
 extern void gui_printf_raw_data (void *, int, int, char *);
 extern void gui_infobar_printf (int, int, char *, ...);
 extern void gui_infobar_printf_from_buffer (t_gui_buffer *, int, int, char *, char *, ...);
@@ -210,9 +213,9 @@ extern int gui_insert_string_input (t_gui_window *, char *, int);
 /* color */
 extern int gui_color_assign (int *, char *);
 extern char *gui_color_get_name (int);
-extern unsigned char *gui_color_decode (unsigned char *, int);
+extern unsigned char *gui_color_decode (unsigned char *, int, int);
 extern unsigned char *gui_color_decode_for_user_entry (unsigned char *);
-extern unsigned char *gui_color_encode (unsigned char *);
+extern unsigned char *gui_color_encode (unsigned char *, int);
 extern void gui_color_init_pairs ();
 extern void gui_color_rebuild_weechat();
 

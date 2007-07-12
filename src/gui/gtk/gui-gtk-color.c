@@ -112,16 +112,14 @@ gui_color_get_name (int num_color)
 
 /*
  * gui_color_decode: parses a message (coming from IRC server),
- *                   and according:
- *                     - remove any color/style in message
- *                   or:
- *                     - change colors by codes to be compatible with
- *                       other IRC clients
+ *                   if keep_colors == 0: remove any color/style in message
+ *                     otherwise change colors by internal WeeChat color codes
+ *                   if wkeep_eechat_attr == 0: remove any weechat color/style attribute
  *                   After use, string returned has to be free()
  */
 
 unsigned char *
-gui_color_decode (unsigned char *string, int keep_colors)
+gui_color_decode (unsigned char *string, int keep_irc_colors, int keep_weechat_attr)
 {
     unsigned char *out;
     int out_length, out_pos;
@@ -134,7 +132,7 @@ gui_color_decode (unsigned char *string, int keep_colors)
         return NULL;
     
     out_pos = 0;
-    while (string[0] && (out_pos < out_length - 1))
+    while (string && string[0] && (out_pos < out_length - 1))
     {
         switch (string[0])
         {
@@ -145,7 +143,7 @@ gui_color_decode (unsigned char *string, int keep_colors)
             case GUI_ATTR_REVERSE2_CHAR:
             case GUI_ATTR_ITALIC_CHAR:
             case GUI_ATTR_UNDERLINE_CHAR:
-                if (keep_colors)
+                if (keep_irc_colors)
                     out[out_pos++] = string[0];
                 string++;
                 break;
@@ -181,7 +179,7 @@ gui_color_decode (unsigned char *string, int keep_colors)
                         }
                     }
                 }
-                if (keep_colors)
+                if (keep_irc_colors)
                 {
                     if (!str_fg[0] && !str_bg[0])
                         out[out_pos++] = GUI_ATTR_COLOR_CHAR;
@@ -191,13 +189,13 @@ gui_color_decode (unsigned char *string, int keep_colors)
                         if (str_fg[0])
                         {
                             sscanf (str_fg, "%d", &fg);
-                            fg %= 16;
+                            fg %= GUI_NUM_IRC_COLORS;
                             attr |= gui_irc_colors[fg][1];
                         }
                         if (str_bg[0])
                         {
                             sscanf (str_bg, "%d", &bg);
-                            bg %= 16;
+                            bg %= GUI_NUM_IRC_COLORS;
                             attr |= gui_irc_colors[bg][1];
                         }
                         if (attr & A_BOLD)
@@ -226,10 +224,12 @@ gui_color_decode (unsigned char *string, int keep_colors)
                 }
                 break;
             case GUI_ATTR_WEECHAT_COLOR_CHAR:
+                if (keep_weechat_attr)
+                    out[out_pos++] = string[0];
                 string++;
                 if (isdigit (string[0]) && isdigit (string[1]))
                 {
-                    if (keep_colors)
+                    if (keep_weechat_attr)
                     {
                         out[out_pos++] = string[0];
                         out[out_pos++] = string[1];
@@ -239,16 +239,20 @@ gui_color_decode (unsigned char *string, int keep_colors)
                 break;
             case GUI_ATTR_WEECHAT_SET_CHAR:
             case GUI_ATTR_WEECHAT_REMOVE_CHAR:
+                if (keep_weechat_attr)
+                    out[out_pos++] = string[0];
                 string++;
                 if (string[0])
                 {
-                    if (keep_colors)
-                    {
-                        out[out_pos++] = *(string - 1);
+                    if (keep_weechat_attr)
                         out[out_pos++] = string[0];
-                    }
                     string++;
                 }
+                break;
+            case GUI_ATTR_WEECHAT_RESET_CHAR:
+                if (keep_weechat_attr)
+                    out[out_pos++] = string[0];
+                string++;
                 break;
             default:
                 out[out_pos++] = string[0];
@@ -261,7 +265,7 @@ gui_color_decode (unsigned char *string, int keep_colors)
 
 /*
  * gui_color_decode_for_user_entry: parses a message (coming from IRC server),
- *                                  and replaces colors/bold/.. by %C, %B, ..
+ *                                  and replaces colors/bold/.. by ^C, ^B, ..
  *                                  After use, string returned has to be free()
  */
 
@@ -277,40 +281,35 @@ gui_color_decode_for_user_entry (unsigned char *string)
         return NULL;
     
     out_pos = 0;
-    while (string[0] && (out_pos < out_length - 1))
+    while (string && string[0] && (out_pos < out_length - 1))
     {
         switch (string[0])
         {
             case GUI_ATTR_BOLD_CHAR:
-                out[out_pos++] = '%';
-                out[out_pos++] = 'B';
+                out[out_pos++] = 0x02; /* ^B */
                 string++;
                 break;
             case GUI_ATTR_FIXED_CHAR:
                 string++;
                 break;
             case GUI_ATTR_RESET_CHAR:
-                out[out_pos++] = '%';
-                out[out_pos++] = 'O';
+                out[out_pos++] = 0x0F; /* ^O */
                 string++;
                 break;
             case GUI_ATTR_REVERSE_CHAR:
             case GUI_ATTR_REVERSE2_CHAR:
-                out[out_pos++] = '%';
-                out[out_pos++] = 'R';
+                out[out_pos++] = 0x12; /* ^R */
                 string++;
                 break;
             case GUI_ATTR_ITALIC_CHAR:
                 string++;
                 break;
             case GUI_ATTR_UNDERLINE_CHAR:
-                out[out_pos++] = '%';
-                out[out_pos++] = 'R';
+                out[out_pos++] = 0x15; /* ^U */
                 string++;
                 break;
             case GUI_ATTR_COLOR_CHAR:
-                out[out_pos++] = '%';
-                out[out_pos++] = 'C';
+                out[out_pos++] = 0x03; /* ^C */
                 string++;
                 break;
             default:
@@ -324,12 +323,14 @@ gui_color_decode_for_user_entry (unsigned char *string)
 
 /*
  * gui_color_encode: parses a message (entered by user), and
- *                   encode special chars (%B, %C, ..) in IRC colors
+ *                   encode special chars (^Cb, ^Cc, ..) in IRC colors
+ *                   if keep_colors == 0: remove any color/style in message
+ *                   otherwise: keep colors
  *                   After use, string returned has to be free()
  */
 
 unsigned char *
-gui_color_encode (unsigned char *string)
+gui_color_encode (unsigned char *string, int keep_colors)
 {
     unsigned char *out;
     int out_length, out_pos;
@@ -340,71 +341,64 @@ gui_color_encode (unsigned char *string)
         return NULL;
     
     out_pos = 0;
-    while (string[0] && (out_pos < out_length - 1))
+    while (string && string[0] && (out_pos < out_length - 1))
     {
         switch (string[0])
         {
-            case '%':
+            case 0x02: /* ^B */
+                if (keep_colors)
+                    out[out_pos++] = GUI_ATTR_BOLD_CHAR;
                 string++;
-                switch (string[0])
+                break;
+            case 0x03: /* ^C */
+                if (keep_colors)
+                    out[out_pos++] = GUI_ATTR_COLOR_CHAR;
+                string++;
+                if (isdigit (string[0]))
                 {
-                    case '\0':
-                        out[out_pos++] = '%';
-                        break;
-                    case '%': /* double '%' replaced by single '%' */
+                    if (keep_colors)
                         out[out_pos++] = string[0];
+                    string++;
+                    if (isdigit (string[0]))
+                    {
+                        if (keep_colors)
+                            out[out_pos++] = string[0];
                         string++;
-                        break;
-                    case 'B': /* bold */
-                        out[out_pos++] = GUI_ATTR_BOLD_CHAR;
-                        string++;
-                        break;
-                    case 'C': /* color */
-                        out[out_pos++] = GUI_ATTR_COLOR_CHAR;
+                    }
+                }
+                if (string[0] == ',')
+                {
+                    if (keep_colors)
+                        out[out_pos++] = ',';
+                    string++;
+                    if (isdigit (string[0]))
+                    {
+                        if (keep_colors)
+                            out[out_pos++] = string[0];
                         string++;
                         if (isdigit (string[0]))
                         {
-                            out[out_pos++] = string[0];
+                            if (keep_colors)
+                                out[out_pos++] = string[0];
                             string++;
-                            if (isdigit (string[0]))
-                            {
-                                out[out_pos++] = string[0];
-                                string++;
-                            }
                         }
-                        if (string[0] == ',')
-                        {
-                            out[out_pos++] = ',';
-                            string++;
-                            if (isdigit (string[0]))
-                            {
-                                out[out_pos++] = string[0];
-                                string++;
-                                if (isdigit (string[0]))
-                                {
-                                out[out_pos++] = string[0];
-                                string++;
-                                }
-                            }
-                        }
-                        break;
-                    case 'O': /* reset */
-                        out[out_pos++] = GUI_ATTR_RESET_CHAR;
-                        string++;
-                        break;
-                    case 'R': /* reverse */
-                        out[out_pos++] = GUI_ATTR_REVERSE_CHAR;
-                        string++;
-                        break;
-                    case 'U': /* underline */
-                        out[out_pos++] = GUI_ATTR_UNDERLINE_CHAR;
-                        string++;
-                        break;
-                    default:
-                        out[out_pos++] = '%';
-                        out[out_pos++] = string[0];
-                        string++;
+                    }
                 }
+                break;
+            case 0x0F: /* ^O */
+                if (keep_colors)
+                    out[out_pos++] = GUI_ATTR_RESET_CHAR;
+                string++;
+                break;
+            case 0x12: /* ^R */
+                if (keep_colors)
+                    out[out_pos++] = GUI_ATTR_REVERSE_CHAR;
+                string++;
+                break;
+            case 0x15: /* ^U */
+                if (keep_colors)
+                    out[out_pos++] = GUI_ATTR_UNDERLINE_CHAR;
+                string++;
                 break;
             default:
                 out[out_pos++] = string[0];

@@ -27,6 +27,7 @@
 #include <errno.h>
 #include <stdarg.h>
 #include <string.h>
+#include <ctype.h>
 
 #ifdef HAVE_ICONV
 #include <iconv.h>
@@ -439,6 +440,77 @@ weechat_strreplace (char *string, char *search, char *replace)
         string = pos;
     }
     return new_string;
+}
+
+/*
+ * weechat_convert_hex_chars: convert hex chars (\x??) to value
+ */
+
+char *
+weechat_convert_hex_chars (char *string)
+{
+    char *output, hex_str[8], *error;
+    int pos_output;
+    long number;
+
+    output = (char *)malloc (strlen (string) + 1);
+    if (output)
+    {
+        pos_output = 0;
+        while (string && string[0])
+        {
+            if (string[0] == '\\')
+            {
+                string++;
+                switch (string[0])
+                {
+                    case '\\':
+                        output[pos_output++] = '\\';
+                        string++;
+                        break;
+                    case 'x':
+                    case 'X':
+                        if (isxdigit (string[1])
+                            && isxdigit (string[2]))
+                        {
+                            snprintf (hex_str, sizeof (hex_str),
+                                      "0x%c%c", string[1], string[2]);
+                            number = strtol (hex_str, &error, 16);
+                            if ((error) && (error[0] == '\0'))
+                            {
+                                output[pos_output++] = number;
+                                string += 3;
+                            }
+                            else
+                            {
+                                output[pos_output++] = '\\';
+                                output[pos_output++] = string[0];
+                                string++;
+                            }
+                        }
+                        else
+                        {
+                            output[pos_output++] = string[0];
+                            string++;
+                        }
+                        break;
+                    default:
+                        output[pos_output++] = '\\';
+                        output[pos_output++] = string[0];
+                        string++;
+                        break;
+                }
+            }
+            else
+            {
+                output[pos_output++] = string[0];
+                string++;
+            }
+        }
+        output[pos_output] = '\0';
+    }
+    
+    return output;
 }
 
 /*

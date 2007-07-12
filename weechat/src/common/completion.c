@@ -853,7 +853,7 @@ completion_list_add_topic (t_completion *completion)
         if (cfg_irc_colors_send)
             string = (char *)gui_color_decode_for_user_entry ((unsigned char *)((t_irc_channel *)(completion->channel))->topic);
         else
-            string = (char *)gui_color_decode ((unsigned char *)((t_irc_channel *)(completion->channel))->topic, 0);
+            string = (char *)gui_color_decode ((unsigned char *)((t_irc_channel *)(completion->channel))->topic, 0, 0);
         completion_list_add (completion,
                              (string) ?
                              string : ((t_irc_channel *)(completion->channel))->topic,

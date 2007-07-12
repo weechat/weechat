@@ -228,7 +228,7 @@ irc_recv_command (t_irc_server *server, char *entire_line,
                   char *host, char *command, char *arguments)
 {
     int i, cmd_found, return_code;
-    char *pos, *nick, *args_after_color;
+    char *pos, *nick;
     char *dup_entire_line, *dup_host, *dup_arguments;
     t_irc_recv_func *cmd_recv_func;
     char *cmd_name;
@@ -294,16 +294,11 @@ irc_recv_command (t_irc_server *server, char *entire_line,
         nick = (dup_host) ? strdup (dup_host) : NULL;
         if (pos)
             pos[0] = '!';
-        args_after_color = (char *)gui_color_decode ((unsigned char *)dup_arguments,
-                                                     cfg_irc_colors_receive);
         irc_last_command_received = strdup (dup_entire_line);
         return_code = (int) (cmd_recv_func) (server, dup_host, nick,
-                                             (args_after_color) ?
-                                             args_after_color : dup_arguments);
+                                             dup_arguments);
         if (irc_last_command_received)
             free (irc_last_command_received);
-        if (args_after_color)
-            free (args_after_color);
         if (nick)
             free (nick);
         if (dup_entire_line)
@@ -3728,7 +3723,7 @@ irc_recv_cmd_332 (t_irc_server *server, char *host, char *nick, char *arguments)
                             GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
                             pos,
                             GUI_COLOR(COLOR_WIN_CHAT));
-                gui_printf (ptr_buffer, "\"%s\"\n", pos2);
+                gui_printf (ptr_buffer, "\"%s%s\"\n", pos2, GUI_NO_COLOR);
             }
             
             if (ptr_channel)

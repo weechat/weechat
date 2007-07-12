@@ -805,8 +805,8 @@ t_config_option weechat_options_irc[] =
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
     NULL, NULL, &cfg_irc_colors_receive, NULL, config_change_noop },
   { "irc_colors_send", N_("allow user to send colors"),
-    N_("allow user to send colors with special codes (%B=bold, %Cxx,yy=color, "
-       "%U=underline, %R=reverse)"),
+    N_("allow user to send colors with special codes (^Cb=bold, ^Ccxx=color, "
+       "^Ccxx,yy=color+background, ^Cu=underline, ^Cr=reverse)"),
     OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_TRUE,
     NULL, NULL, &cfg_irc_colors_send, NULL, config_change_noop },
   { "irc_send_unknown_commands", N_("send unknown commands to IRC server"),

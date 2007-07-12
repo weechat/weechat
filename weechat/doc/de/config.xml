@@ -955,7 +955,7 @@
   <entry>Boolean</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>'on'</entry>
-  <entry>Erlaube Benutzern, spezielle Codes zu versenden (%B=fett, %Cxx,yy=Farbe, %U=unterstrichen, %R=reverse/umgekehrt)</entry>
+  <entry>Allow user to send colors with special codes (^Cb=bold, ^Ccxx=color, ^Ccxx,yy=color+background, ^Cu=underline, ^Cr=reverse)</entry>
 </row>
 <row>
   <entry><option>irc_send_unknown_commands</option></entry>

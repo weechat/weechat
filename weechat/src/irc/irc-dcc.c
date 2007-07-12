@@ -1241,7 +1241,6 @@ irc_dcc_chat_recv (t_irc_dcc *ptr_dcc)
     static struct timeval timeout;
     static char buffer[4096 + 2];
     char *buf2, *pos, *ptr_buf, *next_ptr_buf;
-    char *ptr_buf_color;
     int num_read;
     
     FD_ZERO (&read_fd);
@@ -1305,9 +1304,6 @@ irc_dcc_chat_recv (t_irc_dcc *ptr_dcc)
             
             if (ptr_buf)
             {
-                ptr_buf_color = (char *)gui_color_decode ((unsigned char *)ptr_buf,
-                                                          cfg_irc_colors_receive);
-                
                 if (irc_recv_is_highlight (ptr_buf, ptr_dcc->server->nick))
                 {
                     irc_display_nick (ptr_dcc->channel->buffer, NULL, ptr_dcc->nick,
@@ -1319,8 +1315,7 @@ irc_dcc_chat_recv (t_irc_dcc *ptr_dcc)
                         gui_infobar_printf (cfg_look_infobar_delay_highlight,
                                             COLOR_WIN_INFOBAR_HIGHLIGHT,
                                             _("Private %s> %s"),
-                                            ptr_dcc->nick,
-                                            (ptr_buf_color) ? ptr_buf_color : ptr_buf);
+                                            ptr_dcc->nick, ptr_buf);
                     }
                 }
                 else
@@ -1329,9 +1324,7 @@ irc_dcc_chat_recv (t_irc_dcc *ptr_dcc)
                 gui_printf_type (ptr_dcc->channel->buffer, MSG_TYPE_MSG,
                                  "%s%s\n",
                                  GUI_COLOR(COLOR_WIN_CHAT),
-                                 (ptr_buf_color) ? ptr_buf_color : ptr_buf);
-                if (ptr_buf_color)
-                    free (ptr_buf_color);
+                                 ptr_buf);
             }
             
             ptr_buf = next_ptr_buf;

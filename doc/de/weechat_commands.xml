@@ -22,15 +22,28 @@ Argumente: Argumente für den Befehl
 <programlisting>
 Puffer verwalten
 
- Aktion: Pufferaktion:
-   move: Puffer in der Liste bewegen (kann auch relativ sein, wie -1)
-  close: Puffer schließen (eine Part-Message kann optional angegeben werden)
-   list: alle offenen Puffer auflisten (Standardaktion)
- notify: Notify-Level für Puffer festlegen (0=nie, 1=bei hervorgehobenen Nachrichten, 2=1+persönliche Nachricht, 3=2+join/part)
-         (wenn der Befehl in einem Server Puffer ausgeführt wird, setzt er den Default-Notify-Level für den ganzen Server)
-Server
-Channel: gehe zum Puffer mit Servernamen oder Channelnamen
- Nummer: gehe zu Puffer mit dieser Nummer
+ action: action to do:
+   move: move buffer in the list (may be relative, for example -1)
+  close: close buffer (optional arg is part message, for a channel)
+   list: list open buffers (no parameter implies this list)
+ notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2+join/part)
+         (when executed on server buffer, this sets default notify level for whole server)
+ scroll: scroll in history (may be relative, and may end by a letter: s=sec, m=min, h=hour, d=day, M=month, y=year); if there is only letter, then scroll to beginning of this item
+
+ number: jump to buffer by number
+server,
+channel: jump to buffer by server and/or channel name
+
+Examples:
+        move buffer: /buffer move 5
+       close buffer: /buffer close this is part msg
+         set notify: /buffer notify 2
+    scroll 1 day up: /buffer scroll 1d  ==  /buffer scroll -1d  ==  /buffer scroll -24h
+scroll to beginning
+        of this day: /buffer scroll d
+ scroll 15 min down: /buffer scroll +15m
+  scroll 20 msgs up: /buffer scroll -20
+   jump to #weechat: /buffer #weechat
 
 </programlisting>
 <command>builtin  Befehl</command>

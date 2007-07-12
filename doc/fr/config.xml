@@ -955,7 +955,7 @@
   <entry>booléen</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
-  <entry>Autorise l'utilisateur à envoyer des couleurs avec des codes spéciaux (%B=gras, %Cxx,yy=couleur, %U=souligné, %R=inversé)</entry>
+  <entry>Autorise l'utilisateur à envoyer des couleurs avec des codes spéciaux (^Cb=gras, ^Cxx=couleur, ^Ccxx,yy=couleur+fond, ^Cu=souligné, ^Cr=inversé)</entry>
 </row>
 <row>
   <entry><option>irc_send_unknown_commands</option></entry>

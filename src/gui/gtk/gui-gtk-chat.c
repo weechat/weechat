@@ -263,6 +263,7 @@ gui_chat_word_get_next_char (t_gui_window *window, unsigned char *string,
                 }
                 break;
             case GUI_ATTR_RESET_CHAR:
+            case GUI_ATTR_WEECHAT_RESET_CHAR:
                 string++;
                 if (apply_style)
                     gui_chat_reset_style (window);
@@ -628,7 +629,7 @@ gui_chat_draw_line (t_gui_buffer *buffer, t_gui_line *line)
     ptr_win = gui_buffer_find_window (buffer);
     if (ptr_win)
     {
-        text_without_color = gui_color_decode ((unsigned char *)(line->data), 0);
+        text_without_color = gui_color_decode ((unsigned char *)(line->data), 0, 0);
         if (text_without_color)
         {
             gtk_text_buffer_insert_at_cursor (GUI_GTK(ptr_win)->textbuffer_chat,
