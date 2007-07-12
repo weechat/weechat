@@ -497,6 +497,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </entry>
               </row>
               <row>
+                <entry>Ctrl + C puis B</entry>
+                <entry>
+                  Insérer le code pour mettre le texte en gras.
+                </entry>
+              </row>
+              <row>
+                <entry>Ctrl + C puis C</entry>
+                <entry>
+                  Insérer le code pour écrire en couleur.
+                </entry>
+              </row>
+              <row>
+                <entry>Ctrl + C puis O</entry>
+                <entry>
+                  Insérer le code pour réinitaliser la couleur.
+                </entry>
+              </row>
+              <row>
+                <entry>Ctrl + C puis R</entry>
+                <entry>
+                  Insérer le code pour écrire en couleur inversée.
+                </entry>
+              </row>
+              <row>
+                <entry>Ctrl + C puis U</entry>
+                <entry>
+                  Insérer le code pour écrire en souligné.
+                </entry>
+              </row>
+              <row>
                 <entry>End / Ctrl + E</entry>
                 <entry>
                   Aller à la fin de la ligne de commande

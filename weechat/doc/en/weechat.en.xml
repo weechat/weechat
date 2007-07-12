@@ -488,6 +488,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </entry>
               </row>
               <row>
+                <entry>Ctrl + C then B</entry>
+                <entry>
+                  Insert code for bold text.
+                </entry>
+              </row>
+              <row>
+                <entry>Ctrl + C then C</entry>
+                <entry>
+                  Insérer code for colored text.
+                </entry>
+              </row>
+              <row>
+                <entry>Ctrl + C then O</entry>
+                <entry>
+                  Insert code for color reset.
+                </entry>
+              </row>
+              <row>
+                <entry>Ctrl + C then R</entry>
+                <entry>
+                  Insert code for reverse color.
+                </entry>
+              </row>
+              <row>
+                <entry>Ctrl + C then U</entry>
+                <entry>
+                  Insert code for underlined text.
+                </entry>
+              </row>
+              <row>
                 <entry>End / Ctrl + E</entry>
                 <entry>
                   Go to the end of command line

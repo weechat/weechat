@@ -492,6 +492,37 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                   Gehe zum Anfang der Kommandozeile
                 </entry>
               </row>
+              <!-- TRANSLATION NEEDED -->
+              <row>
+                <entry>Strg + C dann B</entry>
+                <entry>
+                  Insert code for bold text.
+                </entry>
+              </row>
+              <row>
+                <entry>Strg + C dann C</entry>
+                <entry>
+                  Insérer code for colored text.
+                </entry>
+              </row>
+              <row>
+                <entry>Strg + C dann O</entry>
+                <entry>
+                  Insert code for color reset.
+                </entry>
+              </row>
+              <row>
+                <entry>Ctrl + C dann R</entry>
+                <entry>
+                  Insert code for reverse color.
+                </entry>
+              </row>
+              <row>
+                <entry>Ctrl + C dann U</entry>
+                <entry>
+                  Insert code for underlined text.
+                </entry>
+              </row>
               <row>
                 <entry>Ende / Strg + E</entry>
                 <entry>
