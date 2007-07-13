@@ -1,4 +1,4 @@
-WeeChat FAQ, 2007-06-07
+WeeChat FAQ, 2007-07-13
 =======================
 
 Public concerné :
@@ -198,6 +198,16 @@ R:	Vous pouvez utiliser un terminal qui propose la sélection rectangulaire
 	Une autre solution est de déplacer la liste des pseudos en haut ou en
 	bas, par exemple :
 	  /set look_nicklist_position = top
+
+
+2.13
+================================================================================
+Q:	Comment être averti lorsque quelqu'un prononce mon pseudo sur un canal ?
+
+R:	Vous pouvez utiliser le script sound.pl (disponible sur la page des
+	scripts), puis configurer une commande système (jouant un son, affichant
+	un message à l'écran, etc...) comme ceci :
+	  /setp perl.sound.cmd_highlight = "/usr/bin/commande parametres..."
 
 
 3.1

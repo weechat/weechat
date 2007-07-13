@@ -1,4 +1,4 @@
-WeeChat FAQ, 2007-06-07
+WeeChat FAQ, 2007-07-13
 =======================
 
 Intended audience:
@@ -187,6 +187,16 @@ A:	You can use a terminal with rectangular selection (like rxvt-unicode,
 	konsole, ...).
 	Other solution is to move nicklist to top or bottom, for example:
 	  /set look_nicklist_position = top
+
+
+2.13
+================================================================================
+Q:	How to be warned when someone highlights me on a channel ?
+
+A:	You can use sound.pl script (available on scripts page), and then
+	setup a system command (to play sound, display message, ..) with this
+	command :
+	  /setp perl.sound.cmd_highlight = "/usr/bin/command arguments..."
 
 
 3.1
