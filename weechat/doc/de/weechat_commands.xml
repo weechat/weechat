@@ -62,12 +62,13 @@ Fenster leeren
 Nummer: lösche den Puffer mit der angegebenen Nummer
 
 </programlisting>
-<command>connect  [-all | Servername [Servername ...]]</command>
+<command>connect  [-all [-nojoin] | [-nojoin] servername [servername ...]]</command>
 <programlisting>
 mit Server verbinden
 
-      -all: verbinde mit allen Servern
-servername: Servername, mit dem verbunden werden soll
+      -all: connect to all servers
+servername: server name to connect
+   -nojoin: do not join any channel (even if autojoin is enabled on server)
 
 </programlisting>
 <command>disconnect  [-all | Servername [Servername ...]]</command>
@@ -150,12 +151,13 @@ autoload: lade automatisch alle Plugins im System- oder Benutzerverzeichnis
 Ohne Argument, listet /plugin alle geladenen Plugins auf.
 
 </programlisting>
-<command>reconnect  [-all | Servername [Servername ...]]</command>
+<command>reconnect  [-all [-nojoin] | servername [servername ...]] [-nojoin]</command>
 <programlisting>
 mit einem Server oder mehreren Servern neu verbinden
 
-      -all: Verbinde mit allen Servern neu
-servername: Servername, mit dem verbunden werden soll
+      -all: reconnect to all servers
+servername: server name to reconnect
+   -nojoin: do not join any channel (even if autojoin is enabled on server)
 
 </programlisting>
 <command>server  [Servername] | [Servername Hostname Port [-auto | -noauto] [-ipv6] [-ssl] [-pwd Passwort] [-nicks Nick1 Nick2 Nick3] [-username Benutzername] [-realname Name] [-command Befehl] [-autojoin Channel[,Channel]] ] | [del Servername]</command>

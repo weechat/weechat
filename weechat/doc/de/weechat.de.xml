@@ -2355,6 +2355,15 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
                           <entry>keine Vervollständigung für das Argument</entry>
                         </row>
                         <row>
+                          <entry><literal>%*</literal></entry>
+                          <entry>
+                            <!-- TRANSLATION NEEDED -->
+                            repeat last completion for all following arguments
+                            (this code has to be at the end of completion
+                            template, preceded by "|")
+                          </entry>
+                        </row>
+                        <row>
                           <entry><literal>%a</literal></entry>
                           <entry>Alias</entry>
                         </row>

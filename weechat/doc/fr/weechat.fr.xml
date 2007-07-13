@@ -2426,6 +2426,14 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
                           <entry>aucune complétion pour le paramètre</entry>
                         </row>
                         <row>
+                          <entry><literal>%*</literal></entry>
+                          <entry>
+                            répétition de la dernière complétion pour tous
+                            les paramètres suivants (ce code doit être à la
+                            fin du modèle de complétion, précédé d'un "|")
+                          </entry>
+                        </row>
+                        <row>
                           <entry><literal>%a</literal></entry>
                           <entry>alias</entry>
                         </row>

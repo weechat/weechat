@@ -184,6 +184,7 @@ struct t_irc_server
     char *prefix;                   /* nick prefix allowed (from msg 005)     */
     time_t reconnect_start;         /* this time + delay = reconnect time     */
     int reconnect_join;             /* 1 if channels opened to rejoin         */
+    int disable_autojoin;           /* 1 if user asked to not autojoin chans  */
     int is_away;                    /* 1 is user is marked as away            */
     char *away_message;             /* away message, NULL if not away         */
     time_t away_time;               /* time() when user marking as away       */
@@ -388,7 +389,7 @@ extern int irc_server_resolve (char *, char *, int *);
 extern int irc_server_pass_socks4proxy (int, char*, int, char*);
 extern int irc_server_pass_socks5proxy (int, char*, int);
 extern int irc_server_pass_proxy (int, char*, int, char*);
-extern int irc_server_connect (t_irc_server *);
+extern int irc_server_connect (t_irc_server *, int);
 extern void irc_server_reconnect (t_irc_server *);
 extern void irc_server_auto_connect (int, int);
 extern void irc_server_disconnect (t_irc_server *, int);

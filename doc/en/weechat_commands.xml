@@ -62,12 +62,13 @@ clear window(s)
 number: clear buffer by number
 
 </programlisting>
-<command>connect  [-all | servername [servername ...]]</command>
+<command>connect  [-all [-nojoin] | [-nojoin] servername [servername ...]]</command>
 <programlisting>
 connect to server(s)
 
       -all: connect to all servers
 servername: server name to connect
+   -nojoin: do not join any channel (even if autojoin is enabled on server)
 
 </programlisting>
 <command>disconnect  [-all | servername [servername ...]]</command>
@@ -149,12 +150,13 @@ autoload: autoload plugins in system or user directory
 Without argument, /plugin command lists loaded plugins.
 
 </programlisting>
-<command>reconnect  [-all | servername [servername ...]]</command>
+<command>reconnect  [-all [-nojoin] | servername [servername ...]] [-nojoin]</command>
 <programlisting>
 reconnect to server(s)
 
       -all: reconnect to all servers
 servername: server name to reconnect
+   -nojoin: do not join any channel (even if autojoin is enabled on server)
 
 </programlisting>
 <command>server  [servername] | [servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 nick2 nick3] [-username username] [-realname realname] [-command command] [-autojoin channel[,channel]] ] | [del servername]</command>

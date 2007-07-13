@@ -1019,6 +1019,8 @@ completion_build_list_template (t_completion *completion, char *template)
                             free (word);
                             return;
                             break;
+                        case '*': /* repeat last completion (do nothing there) */
+                            break;
                         case 'a': /* alias */
                             completion_list_add_alias (completion);
                             break;
@@ -1114,8 +1116,10 @@ completion_build_list_template (t_completion *completion, char *template)
 void
 completion_build_list (t_completion *completion)
 {
-    char *template, *pos_space;
-    int max_arg, i;
+    char *template, *pos_template, *pos_space;
+    int repeat_last, max_arg, i, length;
+
+    repeat_last = 0;
     
     completion_get_command_infos (completion, &template, &max_arg);
     if (!template || (strcmp (template, "-") == 0) ||
@@ -1124,24 +1128,39 @@ completion_build_list (t_completion *completion)
         completion_stop (completion);
         return;
     }
-    i = 1;
-    while (template && template[0])
+
+    length = strlen (template);
+    if (length >= 2)
     {
-        pos_space = strchr (template, ' ');
+        if (strcmp (template + length - 2, "%*") == 0)
+            repeat_last = 1;
+    }
+    
+    i = 1;
+    pos_template = template;
+    while (pos_template && pos_template[0])
+    {
+        pos_space = strchr (pos_template, ' ');
         if (i == completion->base_command_arg)
         {
-            completion_build_list_template (completion, template);
+            completion_build_list_template (completion, pos_template);
             return;
         }
         if (pos_space)
         {
-            template = pos_space;
-            while (template[0] == ' ')
-                template++;
+            pos_template = pos_space;
+            while (pos_template[0] == ' ')
+                pos_template++;
         }
         else
-            template = NULL;
+            pos_template = NULL;
         i++;
+    }
+    if (repeat_last)
+    {
+        pos_space = rindex (template, ' ');
+        completion_build_list_template (completion,
+                                        (pos_space) ? pos_space + 1 : template);
     }
 }
 

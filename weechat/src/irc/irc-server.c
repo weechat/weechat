@@ -116,6 +116,7 @@ irc_server_init (t_irc_server *server)
     server->prefix = NULL;
     server->reconnect_start = 0;
     server->reconnect_join = 0;
+    server->disable_autojoin = 0;
     server->is_away = 0;
     server->away_message = NULL;
     server->away_time = 0;
@@ -1741,7 +1742,7 @@ irc_server_child (t_irc_server *server)
  */
 
 int
-irc_server_connect (t_irc_server *server)
+irc_server_connect (t_irc_server *server, int disable_autojoin)
 {
     int child_pipe[2], set;
 #ifndef __CYGWIN__
@@ -1882,6 +1883,8 @@ irc_server_connect (t_irc_server *server)
     server->child_pid = pid;
 #endif
     
+    server->disable_autojoin = disable_autojoin;
+    
     return 1;
 }
 
@@ -1897,7 +1900,7 @@ irc_server_reconnect (t_irc_server *server)
                 PACKAGE_NAME);
     server->reconnect_start = 0;
     
-    if (irc_server_connect (server))
+    if (irc_server_connect (server, 0))
         server->reconnect_join = 1;
     else
         irc_server_reconnect_schedule (server);
@@ -1921,7 +1924,7 @@ irc_server_auto_connect (int auto_connect, int command_line)
             (void) gui_buffer_new (gui_current_window, ptr_server, NULL,
                                    BUFFER_TYPE_STANDARD, 1);
             gui_window_redraw_buffer (gui_current_window->buffer);
-            if (!irc_server_connect (ptr_server))
+            if (!irc_server_connect (ptr_server, 0))
                 irc_server_reconnect_schedule (ptr_server);
         }
     }
@@ -2244,6 +2247,7 @@ irc_server_print_log (t_irc_server *server)
     weechat_log_printf ("  prefix. . . . . . . : '%s'\n", server->prefix);
     weechat_log_printf ("  reconnect_start . . : %ld\n",  server->reconnect_start);
     weechat_log_printf ("  reconnect_join. . . : %d\n",   server->reconnect_join);
+    weechat_log_printf ("  disable_autojoin. . : %d\n",   server->disable_autojoin);
     weechat_log_printf ("  is_away . . . . . . : %d\n",   server->is_away);
     weechat_log_printf ("  away_message. . . . : '%s'\n", server->away_message);
     weechat_log_printf ("  away_time . . . . . : %ld\n",  server->away_time);

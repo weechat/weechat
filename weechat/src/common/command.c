@@ -96,10 +96,11 @@ t_weechat_command weechat_commands[] =
        "number: clear buffer by number"),
     "-all", 0, 1, 0, weechat_cmd_clear, NULL },
   { "connect", N_("connect to server(s)"),
-    N_("[-all | servername [servername ...]]"),
+    N_("[-all [-nojoin] | [-nojoin] servername [servername ...]]"),
     N_("      -all: connect to all servers\n"
-       "servername: server name to connect"),
-    "%S|-all", 0, MAX_ARGS, 0, weechat_cmd_connect, NULL },
+       "servername: server name to connect\n"
+       "   -nojoin: do not join any channel (even if autojoin is enabled on server)"),
+    "%S|-all|-nojoin|%*", 0, MAX_ARGS, 0, weechat_cmd_connect, NULL },
   { "disconnect", N_("disconnect from server(s)"),
     N_("[-all | servername [servername ...]]"),
     N_("      -all: disconnect from all servers\n"
@@ -166,10 +167,11 @@ t_weechat_command weechat_commands[] =
        "Without argument, /plugin command lists loaded plugins."),
     "list|listfull|load|autoload|reload|unload %P", 0, 2, 0, weechat_cmd_plugin, NULL },
   { "reconnect", N_("reconnect to server(s)"),
-    N_("[-all | servername [servername ...]]"),
+    N_("[-all [-nojoin] | servername [servername ...]] [-nojoin]"),
     N_("      -all: reconnect to all servers\n"
-       "servername: server name to reconnect"),
-    "%S|-all", 0, MAX_ARGS, 0, weechat_cmd_reconnect, NULL },
+       "servername: server name to reconnect\n"
+       "   -nojoin: do not join any channel (even if autojoin is enabled on server)"),
+    "%S|-all|-nojoin|%*", 0, MAX_ARGS, 0, weechat_cmd_reconnect, NULL },
   { "server", N_("list, add or remove servers"),
     N_("[servername] | "
        "[servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 "
@@ -1547,7 +1549,8 @@ weechat_cmd_clear (t_irc_server *server, t_irc_channel *channel,
  */
 
 int
-weechat_cmd_connect_one_server (t_irc_server *server, t_gui_window *window)
+weechat_cmd_connect_one_server (t_gui_window *window, t_irc_server *server,
+                                int no_join)
 {
     if (server->is_connected)
     {
@@ -1571,7 +1574,7 @@ weechat_cmd_connect_one_server (t_irc_server *server, t_gui_window *window)
                              BUFFER_TYPE_STANDARD, 1))
             return 0;
     }
-    if (irc_server_connect (server))
+    if (irc_server_connect (server, no_join))
     {
         server->reconnect_start = 0;
         server->reconnect_join = (server->channels) ? 1 : 0;
@@ -1593,36 +1596,49 @@ weechat_cmd_connect (t_irc_server *server, t_irc_channel *channel,
     t_gui_window *window;
     t_gui_buffer *buffer;
     t_irc_server *ptr_server;
-    int i, connect_ok;
+    int i, nb_connect, connect_ok, all_servers, no_join;
     
     gui_buffer_find_context (server, channel, &window, &buffer);
+
+    nb_connect = 0;
+    connect_ok = 1;
     
-    if (argc == 0)
-        connect_ok = weechat_cmd_connect_one_server (server, window);
-    else
+    all_servers = 0;
+    no_join = 0;
+    for (i = 0; i < argc; i++)
     {
-        connect_ok = 1;
-        
-        if (ascii_strcasecmp (argv[0], "-all") == 0)
+        if (ascii_strcasecmp (argv[i], "-all") == 0)
+            all_servers = 1;
+        if (ascii_strcasecmp (argv[i], "-nojoin") == 0)
+            no_join = 1;
+    }
+    
+    if (all_servers)
+    {
+        for (ptr_server = irc_servers; ptr_server;
+             ptr_server = ptr_server->next_server)
         {
-            for (ptr_server = irc_servers; ptr_server;
-                 ptr_server = ptr_server->next_server)
+            nb_connect++;
+            if (!ptr_server->is_connected && (ptr_server->child_pid == 0))
             {
-                if (!ptr_server->is_connected && (ptr_server->child_pid == 0))
-                {
-                    if (!weechat_cmd_connect_one_server (ptr_server, window))
-                        connect_ok = 0;
-                }
+                if (!weechat_cmd_connect_one_server (window, ptr_server,
+                                                     no_join))
+                    connect_ok = 0;
             }
         }
-        else
+    }
+    else
+    {
+        for (i = 0; i < argc; i++)
         {
-            for (i = 0; i < argc; i++)
+            if (argv[i][0] != '-')
             {
+                nb_connect++;
                 ptr_server = irc_server_search (argv[i]);
                 if (ptr_server)
                 {
-                    if (!weechat_cmd_connect_one_server (ptr_server, window))
+                    if (!weechat_cmd_connect_one_server (window, ptr_server,
+                                                         no_join))
                         connect_ok = 0;
                 }
                 else
@@ -1635,6 +1651,9 @@ weechat_cmd_connect (t_irc_server *server, t_irc_channel *channel,
             }
         }
     }
+    
+    if (nb_connect == 0)
+        connect_ok = weechat_cmd_connect_one_server (window, server, no_join);
     
     if (!connect_ok)
         return -1;
@@ -2767,7 +2786,7 @@ weechat_cmd_plugin (t_irc_server *server, t_irc_channel *channel,
  */
 
 int
-weechat_cmd_reconnect_one_server (t_irc_server *server)
+weechat_cmd_reconnect_one_server (t_irc_server *server, int no_join)
 {
     if ((!server->is_connected) && (server->child_pid == 0))
     {
@@ -2779,7 +2798,7 @@ weechat_cmd_reconnect_one_server (t_irc_server *server)
     }
     irc_send_quit_server (server, NULL);
     irc_server_disconnect (server, 0);
-    if (irc_server_connect (server))
+    if (irc_server_connect (server, no_join))
     {
         server->reconnect_start = 0;
         server->reconnect_join = (server->channels) ? 1 : 0;    
@@ -2800,36 +2819,47 @@ weechat_cmd_reconnect (t_irc_server *server, t_irc_channel *channel,
 {
     t_gui_buffer *buffer;
     t_irc_server *ptr_server;
-    int i, reconnect_ok;
+    int i, nb_reconnect, reconnect_ok, all_servers, no_join;
     
-    gui_buffer_find_context (server, channel, NULL, &buffer);
+    gui_buffer_find_context (server, channel, NULL, &buffer);   
     
-    if (argc == 0)
-        reconnect_ok = weechat_cmd_reconnect_one_server (server);
-    else
+    nb_reconnect = 0;
+    reconnect_ok = 1;
+    
+    all_servers = 0;
+    no_join = 0;
+    for (i = 0; i < argc; i++)
     {
-        reconnect_ok = 1;
-        
-        if (ascii_strcasecmp (argv[0], "-all") == 0)
+        if (ascii_strcasecmp (argv[i], "-all") == 0)
+            all_servers = 1;
+        if (ascii_strcasecmp (argv[i], "-nojoin") == 0)
+            no_join = 1;
+    }
+    
+    if (all_servers)
+    {
+        for (ptr_server = irc_servers; ptr_server;
+             ptr_server = ptr_server->next_server)
         {
-            for (ptr_server = irc_servers; ptr_server;
-                 ptr_server = ptr_server->next_server)
+            nb_reconnect++;
+            if ((ptr_server->is_connected) || (ptr_server->child_pid != 0))
             {
-                if ((ptr_server->is_connected) || (ptr_server->child_pid != 0))
-                {
-                    if (!weechat_cmd_reconnect_one_server (ptr_server))
-                        reconnect_ok = 0;
-                }
+                if (!weechat_cmd_reconnect_one_server (ptr_server, no_join))
+                    reconnect_ok = 0;
             }
         }
-        else
+    }
+    else
+    {
+        for (i = 0; i < argc; i++)
         {
-            for (i = 0; i < argc; i++)
+            if (argv[i][0] != '-')
             {
+                nb_reconnect++;
                 ptr_server = irc_server_search (argv[i]);
                 if (ptr_server)
                 {
-                    if (!weechat_cmd_reconnect_one_server (ptr_server))
+                    if (!weechat_cmd_reconnect_one_server (ptr_server, no_join))
                         reconnect_ok = 0;
                 }
                 else
@@ -2842,6 +2872,9 @@ weechat_cmd_reconnect (t_irc_server *server, t_irc_channel *channel,
             }
         }
     }
+    
+    if (nb_reconnect == 0)
+        reconnect_ok = weechat_cmd_reconnect_one_server (server, no_join);
     
     if (!reconnect_ok)
         return -1;
@@ -3160,7 +3193,7 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
         {
             (void) gui_buffer_new (window, new_server, NULL,
                                    BUFFER_TYPE_STANDARD, 1);
-            irc_server_connect (new_server);
+            irc_server_connect (new_server, 0);
         }
         
         irc_server_destroy (&server_tmp);

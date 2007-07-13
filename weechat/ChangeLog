@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-07-12
+ChangeLog - 2007-07-13
 
 
 Version 0.2.6 (under dev!):
+   * added "%*" to completion template, to repeat last completion
+   * added "-nojoin" option for /connect and /reconnect commands (task #7074)
    * fixed bugs with IRC color in messages, now color codes are inserted in
      command line with ^Cc,^Cb,.. instead of %C,%B,.. (bug #20222, task #7060)
    * fixed bug with smart nick completion (last speakers first) when a nick

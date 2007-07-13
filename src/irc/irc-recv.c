@@ -2446,7 +2446,7 @@ irc_recv_cmd_001 (t_irc_server *server, char *host, char *nick, char *arguments)
     }
 	
     /* auto-join after disconnection (only rejoins opened channels) */
-    if (server->reconnect_join && server->channels)
+    if (!server->disable_autojoin && server->reconnect_join && server->channels)
     {
         for (ptr_channel = server->channels; ptr_channel;
              ptr_channel = ptr_channel->next_channel)
@@ -2466,7 +2466,7 @@ irc_recv_cmd_001 (t_irc_server *server, char *host, char *nick, char *arguments)
     else
     {
         /* auto-join when connecting to server for first time */
-        if (server->autojoin && server->autojoin[0])
+        if (!server->disable_autojoin && server->autojoin && server->autojoin[0])
             return irc_send_cmd_join (server, NULL, server->autojoin);
     }
 
@@ -2480,6 +2480,8 @@ irc_recv_cmd_001 (t_irc_server *server, char *host, char *nick, char *arguments)
             free (away_msg);
         }
     }
+
+    server->disable_autojoin = 0;
     
     return 0;
 }
