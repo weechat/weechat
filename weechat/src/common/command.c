@@ -96,7 +96,7 @@ t_weechat_command weechat_commands[] =
        "number: clear buffer by number"),
     "-all", 0, 1, 0, weechat_cmd_clear, NULL },
   { "connect", N_("connect to server(s)"),
-    N_("[-all [-nojoin] | [-nojoin] servername [servername ...]]"),
+    N_("[-all [-nojoin] | servername [servername ...] [-nojoin]]"),
     N_("      -all: connect to all servers\n"
        "servername: server name to connect\n"
        "   -nojoin: do not join any channel (even if autojoin is enabled on server)"),
@@ -167,7 +167,7 @@ t_weechat_command weechat_commands[] =
        "Without argument, /plugin command lists loaded plugins."),
     "list|listfull|load|autoload|reload|unload %P", 0, 2, 0, weechat_cmd_plugin, NULL },
   { "reconnect", N_("reconnect to server(s)"),
-    N_("[-all [-nojoin] | servername [servername ...]] [-nojoin]"),
+    N_("[-all [-nojoin] | servername [servername ...] [-nojoin]]"),
     N_("      -all: reconnect to all servers\n"
        "servername: server name to reconnect\n"
        "   -nojoin: do not join any channel (even if autojoin is enabled on server)"),

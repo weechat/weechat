@@ -140,6 +140,7 @@ struct t_gui_buffer
 
 extern t_gui_buffer *gui_buffers;
 extern t_gui_buffer *last_gui_buffer;
+extern t_gui_buffer *gui_previous_buffer;
 extern t_gui_buffer *gui_buffer_before_dcc;
 extern t_gui_buffer *gui_buffer_raw_data;
 extern t_gui_buffer *gui_buffer_before_raw_data;

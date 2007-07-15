@@ -50,6 +50,7 @@
 
 t_gui_buffer *gui_buffers = NULL;           /* pointer to first buffer      */
 t_gui_buffer *last_gui_buffer = NULL;       /* pointer to last buffer       */
+t_gui_buffer *gui_previous_buffer = NULL;   /* pointer to previous buffer   */
 t_gui_buffer *gui_buffer_before_dcc = NULL; /* buffer before dcc switch     */
 t_gui_buffer *gui_buffer_raw_data = NULL;   /* buffer with raw IRC data     */
 t_gui_buffer *gui_buffer_before_raw_data = NULL; /* buffer before raw switch*/
@@ -594,6 +595,9 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
     hotlist_remove_buffer (buffer);
     if (hotlist_initial_buffer == buffer)
         hotlist_initial_buffer = NULL;
+
+    if (gui_previous_buffer == buffer)
+        gui_previous_buffer = NULL;
     
     if (gui_buffer_before_dcc == buffer)
         gui_buffer_before_dcc = NULL;

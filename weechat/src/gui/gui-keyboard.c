@@ -122,6 +122,8 @@ t_gui_key_function gui_key_functions[] =
     N_("jump to raw IRC data buffer") },
   { "jump_last_buffer",          gui_action_jump_last_buffer,
     N_("jump to last buffer") },
+  { "jump_previous_buffer",      gui_action_jump_previous_buffer,
+    N_("jump to previous buffer") },
   { "jump_server",               gui_action_jump_server,
     N_("jump to server buffer") },
   { "jump_next_server",          gui_action_jump_next_server,

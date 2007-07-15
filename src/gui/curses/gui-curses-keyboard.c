@@ -95,9 +95,10 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind ( /* m-i         */ "meta-i"   ,          "infobar_clear");
     gui_keyboard_bind ( /* m-j,m-d     */ "meta-jmeta-d",       "jump_dcc");
     gui_keyboard_bind ( /* m-j,m-l     */ "meta-jmeta-l",       "jump_last_buffer");
+    gui_keyboard_bind ( /* m-j,m-p     */ "meta-jmeta-p",       "jump_previous_buffer");
+    gui_keyboard_bind ( /* m-j,m-r     */ "meta-jmeta-r",       "jump_raw_data");
     gui_keyboard_bind ( /* m-j,m-s     */ "meta-jmeta-s",       "jump_server");
     gui_keyboard_bind ( /* m-j,m-x     */ "meta-jmeta-x",       "jump_next_server");
-    gui_keyboard_bind ( /* m-j,m-r     */ "meta-jmeta-r",       "jump_raw_data");
     gui_keyboard_bind ( /* m-k         */ "meta-k",             "grab_key");
     gui_keyboard_bind ( /* m-n         */ "meta-n",             "scroll_next_highlight");
     gui_keyboard_bind ( /* m-p         */ "meta-p",             "scroll_previous_highlight");

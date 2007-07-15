@@ -158,6 +158,10 @@
   <entry>zum letzten Puffer springen</entry>
 </row>
 <row>
+  <entry><literal>jump_previous_buffer</literal></entry>
+  <entry>jump to previous buffer</entry>
+</row>
+<row>
   <entry><literal>jump_server</literal></entry>
   <entry>zum Serverpuffer springen</entry>
 </row>

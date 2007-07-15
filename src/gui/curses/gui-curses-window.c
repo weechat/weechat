@@ -448,6 +448,7 @@ gui_window_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
         window->buffer->last_read_line = window->buffer->last_line;
         if (buffer->last_read_line == buffer->last_line)
             buffer->last_read_line = NULL;
+        gui_previous_buffer = window->buffer;
     }
     
     window->buffer = buffer;

@@ -157,6 +157,7 @@ extern void gui_action_jump_smart (t_gui_window *, char *);
 extern void gui_action_jump_dcc (t_gui_window *, char *);
 extern void gui_action_jump_raw_data (t_gui_window *, char *);
 extern void gui_action_jump_last_buffer (t_gui_window *, char *);
+extern void gui_action_jump_previous_buffer (t_gui_window *, char *);
 extern void gui_action_jump_server (t_gui_window *, char *);
 extern void gui_action_jump_next_server (t_gui_window *, char *);
 extern void gui_action_switch_server (t_gui_window *, char *);

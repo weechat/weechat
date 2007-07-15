@@ -1192,6 +1192,24 @@ gui_action_jump_last_buffer (t_gui_window *window, char *args)
 }
 
 /*
+ * gui_action_jump_previous_buffer: jump to previous buffer (the one displayed
+ *                                  before current one)
+ */
+
+void
+gui_action_jump_previous_buffer (t_gui_window *window, char *args)
+{
+    /* make C compiler happy */
+    (void) args;
+    
+    if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
+    {
+        if (gui_previous_buffer)
+            gui_buffer_switch_by_number (window, gui_previous_buffer->number);
+    }
+}
+
+/*
  * gui_action_jump_server: jump to server buffer
  */
 

@@ -158,6 +158,10 @@
   <entry>jump to last buffer</entry>
 </row>
 <row>
+  <entry><literal>jump_previous_buffer</literal></entry>
+  <entry>jump to previous buffer</entry>
+</row>
+<row>
   <entry><literal>jump_server</literal></entry>
   <entry>jump to server buffer</entry>
 </row>

@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-07-13
+ChangeLog - 2007-07-15
 
 
 Version 0.2.6 (under dev!):
+   * added key function "jump_previous_buffer" to jump to buffer previously
+     displayed (new key: alt-J + alt-P) (task #7085)
    * added "%*" to completion template, to repeat last completion
    * added "-nojoin" option for /connect and /reconnect commands (task #7074)
    * fixed bugs with IRC color in messages, now color codes are inserted in
