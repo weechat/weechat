@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.6-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-07-18 18:21+0200\n"
+"POT-Creation-Date: 2007-07-18 18:49+0200\n"
 "PO-Revision-Date: 2007-06-07 18:02+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1392,14 +1392,19 @@ msgstr "másodperc"
 msgid "(hidden)"
 msgstr "(rejtett)"
 
-#: src/irc/irc-display.c:472
+#: src/irc/irc-display.c:473
 #, fuzzy, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
 msgstr[0] "rossz szoba maszk"
 msgstr[1] "rossz szoba maszk"
 
-#: src/irc/irc-display.c:478
+#: src/irc/irc-display.c:476
+#, c-format
+msgid "%d pv"
+msgstr ""
+
+#: src/irc/irc-display.c:481
 msgid " (temporary)"
 msgstr ""
 

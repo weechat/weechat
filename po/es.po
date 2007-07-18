@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.6-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-07-18 18:21+0200\n"
+"POT-Creation-Date: 2007-07-18 18:49+0200\n"
 "PO-Revision-Date: 2007-07-18 17:44+0200\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1399,14 +1399,19 @@ msgstr "segundos"
 msgid "(hidden)"
 msgstr "(oculto)"
 
-#: src/irc/irc-display.c:472
+#: src/irc/irc-display.c:473
 #, fuzzy, c-format
 msgid "%d channel"
 msgid_plural "%d channels"
 msgstr[0] "máscara de canal incorrecta"
 msgstr[1] "máscara de canal incorrecta"
 
-#: src/irc/irc-display.c:478
+#: src/irc/irc-display.c:476
+#, c-format
+msgid "%d pv"
+msgstr ""
+
+#: src/irc/irc-display.c:481
 msgid " (temporary)"
 msgstr ""
 

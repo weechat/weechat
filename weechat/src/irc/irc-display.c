@@ -379,7 +379,7 @@ void
 irc_display_server (t_irc_server *server, int with_detail)
 {
     char *string;
-    int num_channels;
+    int num_channels, num_pv;
     
     if (with_detail)
     {
@@ -468,9 +468,12 @@ irc_display_server (t_irc_server *server, int with_detail)
         if (server->is_connected)
         {
             num_channels = irc_server_get_channel_count (server);
+            num_pv = irc_server_get_pv_count (server);
             gui_printf (NULL, ", ");
             gui_printf (NULL, NG_("%d channel", "%d channels", num_channels),
                         num_channels);
+            gui_printf (NULL, ", ");
+            gui_printf (NULL, _("%d pv"), num_pv);
         }
         gui_printf (NULL, "%s]%s%s\n",
                     GUI_COLOR(COLOR_WIN_CHAT_DARK),
