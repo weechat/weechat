@@ -729,6 +729,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </entry>
               </row>
               <row>
+                <entry>Alt + J then Alt + P</entry>
+                <entry>
+                  <!-- TRANSLATION NEEDED -->
+                  Switch to buffer previously displayed
+                </entry>
+              </row>
+              <row>
                 <entry>Alt + J dann Alt + R</entry>
                 <entry>
                   Schalte in den reinen IRC-Daten Puffer

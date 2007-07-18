@@ -723,6 +723,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </entry>
               </row>
               <row>
+                <entry>Alt + J then Alt + P</entry>
+                <entry>
+                  Switch to buffer previously displayed
+                </entry>
+              </row>
+              <row>
                 <entry>Alt + J then Alt + R</entry>
                 <entry>
                   Switch to raw IRC data buffer

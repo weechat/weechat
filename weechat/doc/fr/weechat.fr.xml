@@ -734,6 +734,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </entry>
               </row>
               <row>
+                <entry>Alt + J puis Alt + P</entry>
+                <entry>
+                  Sauter au tampon affiché précédemment
+                </entry>
+              </row>
+              <row>
                 <entry>Alt + J puis Alt + R</entry>
                 <entry>
                   Sauter au tampon de données brutes IRC
