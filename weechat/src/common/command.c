@@ -779,7 +779,15 @@ user_message (t_irc_server *server, t_gui_buffer *buffer, char *text)
 
     if (!text || !text[0])
         return;
-
+    
+    if (!server->is_connected)
+    {
+        irc_display_prefix (server, buffer, PREFIX_ERROR);
+        gui_printf (buffer, _("%s you are not connected to server\n"),
+                    WEECHAT_ERROR);
+        return;
+    }
+    
     next = NULL;
     last_space = NULL;
     saved_char = '\0';
