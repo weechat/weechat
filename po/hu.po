@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.6-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-07-15 19:59+0200\n"
+"POT-Creation-Date: 2007-07-18 13:55+0200\n"
 "PO-Revision-Date: 2007-06-07 18:02+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2116,7 +2116,7 @@ msgstr "%s nincs elég memória az ignore elkészítéséhez\n"
 msgid "Removing ignore:"
 msgstr "Ignore eltávolítása:"
 
-#: src/plugins/plugins.c:242
+#: src/plugins/plugins.c:243
 #, c-format
 msgid ""
 "%s plugin %s: unable to add handler for IRC command \"%s\" (not enough "
@@ -2125,7 +2125,7 @@ msgstr ""
 "%s modul %s: nem sikerült kezelőt lefoglalni a \"%s\" IRC parancshoz (nincs "
 "elég memória)\n"
 
-#: src/plugins/plugins.c:279
+#: src/plugins/plugins.c:280
 #, c-format
 msgid ""
 "%s plugin %s: unable to add handler for \"%s\" command (already exists)\n"
@@ -2133,14 +2133,14 @@ msgstr ""
 "%s modul %s: nem sikerült kezelőt rendelni a(z) \"%s\" parancshoz (már "
 "létezik)\n"
 
-#: src/plugins/plugins.c:289
+#: src/plugins/plugins.c:290
 #, c-format
 msgid "%s plugin %s: unable to add handler for \"%s\" command (forbidden)\n"
 msgstr ""
 "%s modul %s: nem sikerült kezelőt rendelni a(z) \"%s\" parancshoz "
 "(megtagadva)\n"
 
-#: src/plugins/plugins.c:331
+#: src/plugins/plugins.c:332
 #, c-format
 msgid ""
 "%s plugin %s: unable to add handler for \"%s\" command (not enough memory)\n"
@@ -2148,46 +2148,46 @@ msgstr ""
 "%s modul %s: nem sikerült kezelőt rendelni a(z) \"%s\" parancshoz (nincs "
 "elég memória)\n"
 
-#: src/plugins/plugins.c:388
+#: src/plugins/plugins.c:389
 #, c-format
 msgid "%s plugin %s: unable to add timer handler (not enough memory)\n"
 msgstr "%s modul %s: nem sikerült időkezelőt hozzáadni (nincs elég memória)\n"
 
-#: src/plugins/plugins.c:444
+#: src/plugins/plugins.c:445
 #, c-format
 msgid "%s plugin %s: unable to add keyboard handler (not enough memory)\n"
 msgstr ""
 "%s modul %s: billentyűzetvezérlő betöltése sikertelen nincs elég memória)\n"
 
-#: src/plugins/plugins.c:501
+#: src/plugins/plugins.c:502
 #, fuzzy, c-format
 msgid "%s plugin %s: unable to add event handler (not enough memory)\n"
 msgstr "%s modul %s: nem sikerült időkezelőt hozzáadni (nincs elég memória)\n"
 
-#: src/plugins/plugins.c:845
+#: src/plugins/plugins.c:844
 #, c-format
 msgid "%s plugin %s: unable to add modifier (not enough memory)\n"
 msgstr "%s modul %s: nem sikerült módosítót hozzáadni (nincs elég memória)\n"
 
-#: src/plugins/plugins.c:1077
+#: src/plugins/plugins.c:1076
 #, c-format
 msgid "%s unable to load plugin \"%s\": %s\n"
 msgstr "%s nem sikerült a modult betölteni \"%s\": %s\n"
 
-#: src/plugins/plugins.c:1088
+#: src/plugins/plugins.c:1087
 #, c-format
 msgid "%s symbol \"plugin_name\" not found in plugin \"%s\", failed to load\n"
 msgstr ""
 "%s a \"plugin_name\" szimbólum nem található a \"%s\" modulban, betöltés "
 "sikertelen\n"
 
-#: src/plugins/plugins.c:1099
+#: src/plugins/plugins.c:1098
 #, c-format
 msgid ""
 "%s unable to load plugin \"%s\": a plugin with same name already exists\n"
 msgstr "%s nem sikerült a \"%s\" modult betölteni: már van ilyen nevű modul\n"
 
-#: src/plugins/plugins.c:1111
+#: src/plugins/plugins.c:1110
 #, c-format
 msgid ""
 "%s symbol \"plugin_description\" not found in plugin \"%s\", failed to load\n"
@@ -2195,7 +2195,7 @@ msgstr ""
 "%s a \"plugin_description\" szimbólum nem található a \"%s\" modulban, "
 "betöltés sikertelen\n"
 
-#: src/plugins/plugins.c:1122
+#: src/plugins/plugins.c:1121
 #, c-format
 msgid ""
 "%s symbol \"plugin_version\" not found in plugin \"%s\", failed to load\n"
@@ -2203,7 +2203,7 @@ msgstr ""
 "%s a \"plugin_version\" szimbólum nem található a \"%s\" modulban, betöltés "
 "sikertelen\n"
 
-#: src/plugins/plugins.c:1135
+#: src/plugins/plugins.c:1134
 #, c-format
 msgid ""
 "%s function \"weechat_plugin_init\" not found in plugin \"%s\", failed to "
@@ -2212,32 +2212,32 @@ msgstr ""
 "%s a \"weechat_plugin_init\" függvény nem található a \"%s\" modulban, "
 "betöltés sikertelen\n"
 
-#: src/plugins/plugins.c:1219
+#: src/plugins/plugins.c:1218
 #, c-format
 msgid "Initializing plugin \"%s\" %s\n"
 msgstr "Modul betöltése: \"%s\" %s\n"
 
-#: src/plugins/plugins.c:1227
+#: src/plugins/plugins.c:1226
 #, c-format
 msgid "%s unable to initialize plugin \"%s\"\n"
 msgstr "%s nem sikerült a modult betölteni \"%s\"\n"
 
-#: src/plugins/plugins.c:1238
+#: src/plugins/plugins.c:1237
 #, c-format
 msgid "%s unable to load plugin \"%s\" (not enough memory)\n"
 msgstr "%s nem sikerült a modult betölteni \"%s\" (nincs elég memória)\n"
 
-#: src/plugins/plugins.c:1246
+#: src/plugins/plugins.c:1245
 #, c-format
 msgid "Plugin \"%s\" (%s) loaded.\n"
 msgstr "A \"%s\" (%s) modul betöltve.\n"
 
-#: src/plugins/plugins.c:1420 src/plugins/plugins.c:1460
+#: src/plugins/plugins.c:1419 src/plugins/plugins.c:1459
 #, c-format
 msgid "Plugin \"%s\" unloaded.\n"
 msgstr "A \"%s\" modul eltávolítva.\n"
 
-#: src/plugins/plugins.c:1426 src/plugins/plugins.c:1469
+#: src/plugins/plugins.c:1425 src/plugins/plugins.c:1468
 #: src/common/command.c:3677
 #, c-format
 msgid "%s plugin \"%s\" not found\n"
@@ -2381,7 +2381,7 @@ msgstr "-TOVÁBB-"
 msgid "server"
 msgstr "szerver"
 
-#: src/gui/gui-buffer.c:707
+#: src/gui/gui-buffer.c:709
 msgid "Not enough memory for new line\n"
 msgstr "Nincs elég memória az új sorhoz\n"
 

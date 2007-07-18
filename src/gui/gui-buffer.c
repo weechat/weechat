@@ -87,7 +87,7 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
 {
     t_gui_buffer *new_buffer, *ptr_buffer;
 #ifdef PLUGINS
-    char buffer_str[16];
+    char buffer_str[16], *argv[1] = { NULL };
 #endif
     
 #ifdef DEBUG
@@ -243,7 +243,8 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
 
 #ifdef PLUGINS
         snprintf (buffer_str, sizeof (buffer_str) - 1, "%d", new_buffer->number);
-        (void) plugin_event_handler_exec ("buffer_open", buffer_str);
+        argv[0] = buffer_str;
+        (void) plugin_event_handler_exec ("buffer_open", 1, argv);
 #endif
     }
     else
@@ -572,12 +573,13 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
     t_irc_server *ptr_server;
     int create_new;
 #ifdef PLUGINS
-    char buffer_str[16];
+    char buffer_str[16], *argv[1] = { NULL };
 #endif
     
 #ifdef PLUGINS
     snprintf (buffer_str, sizeof (buffer_str) - 1, "%d", buffer->number);
-    (void) plugin_event_handler_exec ("buffer_close", buffer_str);
+    argv[0] = buffer_str;
+    (void) plugin_event_handler_exec ("buffer_close", 1, argv);
 #endif
     
     create_new = (buffer->server || buffer->channel);
@@ -985,6 +987,9 @@ gui_buffer_move_to_number (t_gui_buffer *buffer, int number)
 {
     t_gui_buffer *ptr_buffer;
     int i;
+#ifdef PLUGINS
+    char buf1_str[16], buf2_str[16], *argv[2] = { NULL, NULL };
+#endif
     
     /* if only one buffer then return */
     if (gui_buffers == last_gui_buffer)
@@ -996,6 +1001,10 @@ gui_buffer_move_to_number (t_gui_buffer *buffer, int number)
     
     if (number < 1)
         number = 1;
+
+#ifdef PLUGINS
+    snprintf (buf2_str, sizeof (buf2_str) - 1, "%d", buffer->number);
+#endif
     
     /* remove buffer from list */
     if (buffer == gui_buffers)
@@ -1063,6 +1072,13 @@ gui_buffer_move_to_number (t_gui_buffer *buffer, int number)
     }
     
     gui_window_redraw_buffer (buffer);
+    
+#ifdef PLUGINS
+    snprintf (buf1_str, sizeof (buf1_str) - 1, "%d", buffer->number);
+    argv[0] = buf1_str;
+    argv[1] = buf2_str;
+    (void) plugin_event_handler_exec ("buffer_move", 2, argv);
+#endif
 }
 
 /*

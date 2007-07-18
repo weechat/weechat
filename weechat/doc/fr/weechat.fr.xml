@@ -2861,28 +2861,8 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;mon_keyb);
               </listitem>
               <listitem>
                 <para>
-                  <option>évènement</option> : évènement, voir le tableau
-                  ci-dessous :
-                  <informaltable colsep="0" frame="none">
-                    <tgroup cols="2">
-                      <thead>
-                        <row>
-                          <entry>Evènement</entry>
-                          <entry>Description</entry>
-                        </row>
-                      </thead>
-                      <tbody>
-                        <row>
-                          <entry><literal>buffer_open</literal></entry>
-                          <entry>un tampon a été ouvert</entry>
-                        </row>
-                        <row>
-                          <entry><literal>buffer_close</literal></entry>
-                          <entry>un tampon a été fermé</entry>
-                        </row>
-                      </tbody>
-                    </tgroup>
-                  </informaltable>
+                  <option>évènement</option> : évènement (voir le tableau
+                  ci-dessous)
                 </para>
               </listitem>
               <listitem>
@@ -2898,8 +2878,8 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;mon_keyb);
                   </command>
                 </para>
                 <para>
-                  Le paramètre argc vaut 1 et argv[0] contient le numéro
-                  du tampon ouvert ou fermé.
+                  Les paramètres passés à la fonction dépendent de l'évènement
+                  (voir le tableau ci-dessous).
                 </para>
               </listitem>
               <listitem>
@@ -2915,6 +2895,43 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;mon_keyb);
                 </para>
               </listitem>
             </itemizedlist>
+          </para>
+          <para>
+            Liste des évènements :
+            <informaltable colsep="0" frame="none">
+              <tgroup cols="3">
+                <thead>
+                  <row>
+                    <entry>Evènement</entry>
+                    <entry>Description</entry>
+                    <entry>Paramètres</entry>
+                  </row>
+                </thead>
+                <tbody>
+                  <row>
+                    <entry><literal>buffer_open</literal></entry>
+                    <entry>un tampon a été ouvert</entry>
+                    <entry>
+                      argc = 1, argv = { numéro de tampon }
+                    </entry>
+                  </row>
+                  <row>
+                    <entry><literal>buffer_close</literal></entry>
+                    <entry>un tampon a été fermé</entry>
+                    <entry>
+                      argc = 1, argv = { numéro de tampon }
+                    </entry>
+                  </row>
+                  <row>
+                    <entry><literal>buffer_move</literal></entry>
+                    <entry>un tampon a été déplacé</entry>
+                    <entry>
+                      argc = 2, argv = { nouveau numéro de tampon, ancien numéro }
+                    </entry>
+                  </row>
+                </tbody>
+              </tgroup>
+            </informaltable>
           </para>
           <para>
             Valeur renvoyée : le pointeur vers le nouveau gestionnaire

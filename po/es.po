@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.6-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-07-15 19:59+0200\n"
+"POT-Creation-Date: 2007-07-18 13:55+0200\n"
 "PO-Revision-Date: 2007-06-07 18:02+0200\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2142,7 +2142,7 @@ msgstr "%s no hay suficiente memoria para crear el ignore\n"
 msgid "Removing ignore:"
 msgstr "Eliminando el ignore:"
 
-#: src/plugins/plugins.c:242
+#: src/plugins/plugins.c:243
 #, c-format
 msgid ""
 "%s plugin %s: unable to add handler for IRC command \"%s\" (not enough "
@@ -2151,7 +2151,7 @@ msgstr ""
 "%s plugin %s: no ha sido posible añadir un manejador para el comando IRC \"%s"
 "\" (no hay suficiente memoria)\n"
 
-#: src/plugins/plugins.c:279
+#: src/plugins/plugins.c:280
 #, c-format
 msgid ""
 "%s plugin %s: unable to add handler for \"%s\" command (already exists)\n"
@@ -2159,14 +2159,14 @@ msgstr ""
 "%s plugin %s: no ha sido posible añadir un manejador para el comando \"%s"
 "\" (ya existe)\n"
 
-#: src/plugins/plugins.c:289
+#: src/plugins/plugins.c:290
 #, c-format
 msgid "%s plugin %s: unable to add handler for \"%s\" command (forbidden)\n"
 msgstr ""
 "%s plugin %s: no ha sido posible añadir un manejador para el comando \"%s"
 "\" (prohibido)\n"
 
-#: src/plugins/plugins.c:331
+#: src/plugins/plugins.c:332
 #, c-format
 msgid ""
 "%s plugin %s: unable to add handler for \"%s\" command (not enough memory)\n"
@@ -2174,47 +2174,47 @@ msgstr ""
 "%s plugin %s: no ha sido posible añadir un manejador para el comando \"%s"
 "\" (no hay suficiente memoria)\n"
 
-#: src/plugins/plugins.c:388
+#: src/plugins/plugins.c:389
 #, c-format
 msgid "%s plugin %s: unable to add timer handler (not enough memory)\n"
 msgstr ""
 "%s plugin %s: no ha sido posible añadir un manejador temporizador (no hay "
 "suficiente memoria)\n"
 
-#: src/plugins/plugins.c:444
+#: src/plugins/plugins.c:445
 #, c-format
 msgid "%s plugin %s: unable to add keyboard handler (not enough memory)\n"
 msgstr ""
 "%s plugin %s: no ha sido posible añadir un manejador de teclado (no hay "
 "suficiente memoria)\n"
 
-#: src/plugins/plugins.c:501
+#: src/plugins/plugins.c:502
 #, fuzzy, c-format
 msgid "%s plugin %s: unable to add event handler (not enough memory)\n"
 msgstr ""
 "%s plugin %s: no ha sido posible añadir un manejador temporizador (no hay "
 "suficiente memoria)\n"
 
-#: src/plugins/plugins.c:845
+#: src/plugins/plugins.c:844
 #, fuzzy, c-format
 msgid "%s plugin %s: unable to add modifier (not enough memory)\n"
 msgstr ""
 "%s plugin %s: no ha sido posible añadir un manejador temporizador (no hay "
 "suficiente memoria)\n"
 
-#: src/plugins/plugins.c:1077
+#: src/plugins/plugins.c:1076
 #, c-format
 msgid "%s unable to load plugin \"%s\": %s\n"
 msgstr "%s no ha sido posible cargar el plugin \"%s\": %s\n"
 
-#: src/plugins/plugins.c:1088
+#: src/plugins/plugins.c:1087
 #, c-format
 msgid "%s symbol \"plugin_name\" not found in plugin \"%s\", failed to load\n"
 msgstr ""
 "%s símbolo \"plugin_name\" no encontrado en el plugin \"%s\", falló al "
 "cargar\n"
 
-#: src/plugins/plugins.c:1099
+#: src/plugins/plugins.c:1098
 #, c-format
 msgid ""
 "%s unable to load plugin \"%s\": a plugin with same name already exists\n"
@@ -2222,7 +2222,7 @@ msgstr ""
 "%s no ha sido posible cargar el plugin \"%s\": un plugin con el mismo nombre "
 "ya existe\n"
 
-#: src/plugins/plugins.c:1111
+#: src/plugins/plugins.c:1110
 #, c-format
 msgid ""
 "%s symbol \"plugin_description\" not found in plugin \"%s\", failed to load\n"
@@ -2230,7 +2230,7 @@ msgstr ""
 "%s símbolo \"plugin_description\" no encontrado en el plugin \"%s\", falló "
 "al cargar\n"
 
-#: src/plugins/plugins.c:1122
+#: src/plugins/plugins.c:1121
 #, c-format
 msgid ""
 "%s symbol \"plugin_version\" not found in plugin \"%s\", failed to load\n"
@@ -2238,7 +2238,7 @@ msgstr ""
 "%s símbolo \"plugin_version\" no encontrado en el plugin \"%s\", falló al "
 "cargar\n"
 
-#: src/plugins/plugins.c:1135
+#: src/plugins/plugins.c:1134
 #, c-format
 msgid ""
 "%s function \"weechat_plugin_init\" not found in plugin \"%s\", failed to "
@@ -2247,33 +2247,33 @@ msgstr ""
 "%s función \"weechat_plugin_init\" no encontrada en el plugin \"%s\", falló "
 "al cargar\n"
 
-#: src/plugins/plugins.c:1219
+#: src/plugins/plugins.c:1218
 #, c-format
 msgid "Initializing plugin \"%s\" %s\n"
 msgstr "Inicializando plugin \"%s\" %s\n"
 
-#: src/plugins/plugins.c:1227
+#: src/plugins/plugins.c:1226
 #, c-format
 msgid "%s unable to initialize plugin \"%s\"\n"
 msgstr "%s no ha sido posible inicializar el plugin \"%s\"\n"
 
-#: src/plugins/plugins.c:1238
+#: src/plugins/plugins.c:1237
 #, c-format
 msgid "%s unable to load plugin \"%s\" (not enough memory)\n"
 msgstr ""
 "%s no ha sido posible cargar el plugin \"%s\" (no hay suficiente memoria)\n"
 
-#: src/plugins/plugins.c:1246
+#: src/plugins/plugins.c:1245
 #, c-format
 msgid "Plugin \"%s\" (%s) loaded.\n"
 msgstr "Plugin \"%s\" (%s) cargado.\n"
 
-#: src/plugins/plugins.c:1420 src/plugins/plugins.c:1460
+#: src/plugins/plugins.c:1419 src/plugins/plugins.c:1459
 #, c-format
 msgid "Plugin \"%s\" unloaded.\n"
 msgstr "Plugin \"%s\" descargado.\n"
 
-#: src/plugins/plugins.c:1426 src/plugins/plugins.c:1469
+#: src/plugins/plugins.c:1425 src/plugins/plugins.c:1468
 #: src/common/command.c:3677
 #, c-format
 msgid "%s plugin \"%s\" not found\n"
@@ -2420,7 +2420,7 @@ msgstr "-MÁS-"
 msgid "server"
 msgstr "servidor"
 
-#: src/gui/gui-buffer.c:707
+#: src/gui/gui-buffer.c:709
 msgid "Not enough memory for new line\n"
 msgstr "No hay suficiente memoria para una nueva línea\n"
 

@@ -67,7 +67,7 @@ extern int plugin_msg_handler_exec (char *, char *, char *);
 extern int plugin_cmd_handler_exec (char *, char *, char *);
 extern int plugin_timer_handler_exec ();
 extern int plugin_keyboard_handler_exec (char *, char *, char *);
-extern int plugin_event_handler_exec (char *, char *);
+extern int plugin_event_handler_exec (char *, int, char **);
 extern void plugin_handler_remove (t_weechat_plugin *,
                                    t_plugin_handler *);
 extern void plugin_handler_remove_all (t_weechat_plugin *);
@@ -88,5 +88,6 @@ extern void plugin_unload_all ();
 extern void plugin_reload_name (char *);
 extern void plugin_init (int);
 extern void plugin_end ();
+extern void plugin_print_log (t_weechat_plugin *);
 
 #endif /* plugins.h */

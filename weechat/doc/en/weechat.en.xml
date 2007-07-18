@@ -2785,27 +2785,7 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;my_keyb);
               </listitem>
               <listitem>
                 <para>
-                  <option>event</option> : event, see table below:
-                  <informaltable colsep="0" frame="none">
-                    <tgroup cols="2">
-                      <thead>
-                        <row>
-                          <entry>Event</entry>
-                          <entry>Description</entry>
-                        </row>
-                      </thead>
-                      <tbody>
-                        <row>
-                          <entry><literal>buffer_open</literal></entry>
-                          <entry>a buffer was open</entry>
-                        </row>
-                        <row>
-                          <entry><literal>buffer_close</literal></entry>
-                          <entry>a buffer was closed</entry>
-                        </row>
-                      </tbody>
-                    </tgroup>
-                  </informaltable>
+                  <option>event</option> : event (see table below)
                 </para>
               </listitem>
               <listitem>
@@ -2821,8 +2801,7 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;my_keyb);
                   </command>
                 </para>
                 <para>
-                  Argument argc is set to 1, argv[0] is number of buffer
-                  open/closed.
+                  Arguments depend on event (see table below).
                 </para>
               </listitem>
               <listitem>
@@ -2838,6 +2817,43 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;my_keyb);
                 </para>
               </listitem>
             </itemizedlist>
+          </para>
+          <para>
+            List of events:
+            <informaltable colsep="0" frame="none">
+              <tgroup cols="3">
+                <thead>
+                  <row>
+                    <entry>Event</entry>
+                    <entry>Description</entry>
+                    <entry>Arguments</entry>
+                  </row>
+                </thead>
+                <tbody>
+                  <row>
+                    <entry><literal>buffer_open</literal></entry>
+                    <entry>a buffer was open</entry>
+                    <entry>
+                      argc = 1, argv = { buffer number }
+                    </entry>
+                  </row>
+                  <row>
+                    <entry><literal>buffer_close</literal></entry>
+                    <entry>a buffer was closed</entry>
+                    <entry>
+                      argc = 1, argv = { buffer number }
+                    </entry>
+                  </row>
+                  <row>
+                    <entry><literal>buffer_move</literal></entry>
+                    <entry>a buffer was moved</entry>
+                    <entry>
+                      argc = 2, argv = { new buffer number, old number }
+                    </entry>
+                  </row>
+                </tbody>
+              </tgroup>
+            </informaltable>
           </para>
           <para>
             Return value: pointer to new event handler.

@@ -37,6 +37,7 @@
 #include "plugins.h"
 #include "plugins-config.h"
 #include "../common/command.h"
+#include "../common/log.h"
 #include "../common/util.h"
 #include "../common/weeconfig.h"
 #include "../irc/irc.h"
@@ -696,14 +697,11 @@ plugin_keyboard_handler_exec (char *key, char *input_before, char *input_after)
  */
 
 int
-plugin_event_handler_exec (char *event, char *data)
+plugin_event_handler_exec (char *event, int argc, char **argv)
 {
     t_weechat_plugin *ptr_plugin;
     t_plugin_handler *ptr_handler;
     int return_code, final_return_code;
-    char *argv[1] = { NULL };
-    
-    argv[0] = data;
     
     final_return_code = PLUGIN_RC_OK;
     
@@ -717,7 +715,7 @@ plugin_event_handler_exec (char *event, char *data)
                 && (ascii_strcasecmp (ptr_handler->event, event) == 0))
             {
                 return_code = ((int) (ptr_handler->handler) (ptr_plugin,
-                                                             1, argv,
+                                                             argc, argv,
                                                              ptr_handler->handler_args,
                                                              ptr_handler->handler_pointer));
                 if (return_code == PLUGIN_RC_KO)
@@ -823,7 +821,8 @@ plugin_modifier_add (t_weechat_plugin *plugin, char *type, char *command,
     if (new_modifier)
     {
         new_modifier->type = type_int;
-        new_modifier->command = (command) ? strdup (command) : strdup ("*");
+        new_modifier->command = (command && command[0]) ?
+            strdup (command) : strdup ("*");
         new_modifier->modifier = modifier_func;
         new_modifier->modifier_args = (modifier_args) ? strdup (modifier_args) : NULL;
         new_modifier->modifier_pointer = modifier_pointer;
@@ -1498,4 +1497,70 @@ plugin_end ()
     
     /* unload all plugins */
     plugin_unload_all ();
+}
+
+/*
+ * plugin_print_log: print plugin infos in log (usually for crash dump)
+ */
+
+void
+plugin_print_log (t_weechat_plugin *plugin)
+{
+    t_plugin_handler *ptr_handler;
+    t_plugin_modifier *ptr_modifier;
+    
+    weechat_log_printf ("[plugin (addr:0x%X)]\n", plugin);
+    weechat_log_printf ("  filename . . . . . . . : '%s'\n", plugin->filename);
+    weechat_log_printf ("  handle . . . . . . . . : 0x%X\n", plugin->handle);
+    weechat_log_printf ("  name . . . . . . . . . : '%s'\n", plugin->name);
+    weechat_log_printf ("  description. . . . . . : '%s'\n", plugin->description);
+    weechat_log_printf ("  version. . . . . . . . : '%s'\n", plugin->version);
+    weechat_log_printf ("  charset. . . . . . . . : '%s'\n", plugin->charset);
+    weechat_log_printf ("  handlers . . . . . . . : 0x%X\n", plugin->handlers);
+    weechat_log_printf ("  last_handler . . . . . : 0x%X\n", plugin->last_handler);
+    weechat_log_printf ("  modifiers. . . . . . . : 0x%X\n", plugin->modifiers);
+    weechat_log_printf ("  last_modifier. . . . . : 0x%X\n", plugin->last_modifier);
+    weechat_log_printf ("  prev_plugin. . . . . . : 0x%X\n", plugin->prev_plugin);
+    weechat_log_printf ("  next_plugin. . . . . . : 0x%X\n", plugin->next_plugin);
+    
+    weechat_log_printf ("\n");
+    weechat_log_printf ("  => handlers:\n");
+    for (ptr_handler = plugin->handlers; ptr_handler;
+         ptr_handler = ptr_handler->next_handler)
+    {
+        weechat_log_printf ("\n");
+        weechat_log_printf ("       [handler (addr:0x%X)]\n", ptr_handler);
+        weechat_log_printf ("         type . . . . . . . . : %d\n",   ptr_handler->type);
+        weechat_log_printf ("         irc_command. . . . . : '%s'\n", ptr_handler->irc_command);
+        weechat_log_printf ("         command. . . . . . . : '%s'\n", ptr_handler->command);
+        weechat_log_printf ("         description. . . . . : '%s'\n", ptr_handler->description);
+        weechat_log_printf ("         arguments. . . . . . : '%s'\n", ptr_handler->arguments);
+        weechat_log_printf ("         arguments_description: '%s'\n", ptr_handler->arguments_description);
+        weechat_log_printf ("         completion_template. : '%s'\n", ptr_handler->completion_template);
+        weechat_log_printf ("         interval . . . . . . : %d\n",   ptr_handler->interval);
+        weechat_log_printf ("         remaining. . . . . . : %d\n",   ptr_handler->remaining);
+        weechat_log_printf ("         event. . . . . . . . : '%s'\n", ptr_handler->event);
+        weechat_log_printf ("         handler_args . . . . : '%s'\n", ptr_handler->handler_args);
+        weechat_log_printf ("         handler_pointer. . . : 0x%X\n", ptr_handler->handler_pointer);
+        weechat_log_printf ("         running. . . . . . . : %d\n",   ptr_handler->running);
+        weechat_log_printf ("         prev_handler . . . . : 0x%X\n", ptr_handler->prev_handler);
+        weechat_log_printf ("         next_handler . . . . : 0x%X\n", ptr_handler->next_handler);
+    }
+
+    weechat_log_printf ("\n");
+    weechat_log_printf ("  => modifiers:\n");
+    for (ptr_modifier = plugin->modifiers; ptr_modifier;
+         ptr_modifier = ptr_modifier->next_modifier)
+    {
+        weechat_log_printf ("\n");
+        weechat_log_printf ("       [modifier (addr:0x%X)]\n", ptr_modifier);
+        weechat_log_printf ("         type . . . . . . . . : %d\n",   ptr_modifier->type);
+        weechat_log_printf ("         command. . . . . . . : '%s'\n", ptr_modifier->command);
+        weechat_log_printf ("         modifier . . . . . . : 0x%X\n", ptr_modifier->modifier);
+        weechat_log_printf ("         modifier_args. . . . : '%s'\n", ptr_modifier->modifier_args);
+        weechat_log_printf ("         modifier_pointer . . : 0x%X\n", ptr_modifier->modifier_pointer);
+        weechat_log_printf ("         running. . . . . . . : %d\n",   ptr_modifier->running);
+        weechat_log_printf ("         prev_modifier. . . . : 0x%X\n", ptr_modifier->prev_modifier);
+        weechat_log_printf ("         next_modifier. . . . : 0x%X\n", ptr_modifier->next_modifier);
+    }
 }

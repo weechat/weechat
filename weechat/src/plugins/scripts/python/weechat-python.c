@@ -257,7 +257,10 @@ weechat_python_event_handler (t_weechat_plugin *plugin,
     {
         r = (int *) weechat_python_exec (plugin, (t_plugin_script *)handler_pointer,
                                          SCRIPT_EXEC_INT,
-                                         handler_args, argv[0], NULL, NULL);
+                                         handler_args,
+                                         argv[0],
+                                         (argc >= 2) ? argv[1] : NULL,
+                                         (argc >= 3) ? argv[2] : NULL);
         if (r == NULL)
             ret = PLUGIN_RC_KO;
         else

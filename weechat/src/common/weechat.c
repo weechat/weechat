@@ -679,6 +679,9 @@ weechat_dump (int crash)
     t_irc_nick *ptr_nick;
     t_gui_window *ptr_window;
     t_gui_buffer *ptr_buffer;
+#ifdef PLUGINS
+    t_weechat_plugin *ptr_plugin;
+#endif
     
     /* prevent reentrance */
     if (sigsegv)
@@ -747,7 +750,8 @@ weechat_dump (int crash)
         gui_window_print_log (ptr_window);
     }
     
-    for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
     {
         weechat_log_printf ("\n");
         gui_buffer_print_log (ptr_buffer);
@@ -755,9 +759,18 @@ weechat_dump (int crash)
     
     weechat_log_printf ("\n");
     irc_ignore_print_log ();
-
+    
     weechat_log_printf ("\n");
     hotlist_print_log ();
+    
+#ifdef PLUGINS
+    for (ptr_plugin = weechat_plugins; ptr_plugin;
+         ptr_plugin = ptr_plugin->next_plugin)
+    {
+        weechat_log_printf ("\n");
+        plugin_print_log (ptr_plugin);
+    }
+#endif
     
     weechat_log_printf ("\n");
     weechat_log_printf ("******                 End of dump                 ******\n");

@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-07-15
+ChangeLog - 2007-07-18
 
 
 Version 0.2.6 (under dev!):
+   * added "buffer_move" event handler to plugins API (task #6708)
    * added key function "jump_previous_buffer" to jump to buffer previously
      displayed (new key: alt-J + alt-P) (task #7085)
    * added "%*" to completion template, to repeat last completion

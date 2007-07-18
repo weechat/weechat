@@ -215,7 +215,10 @@ weechat_lua_event_handler (t_weechat_plugin *plugin,
     {
         r = (int *) weechat_lua_exec (plugin, (t_plugin_script *)handler_pointer,
                                       SCRIPT_EXEC_INT,
-                                      handler_args, argv[0], NULL, NULL);
+                                      handler_args,
+                                      argv[0],
+                                      (argc >= 2) ? argv[1] : NULL,
+                                      (argc >= 3) ? argv[2] : NULL);
         if (r == NULL)
             ret = PLUGIN_RC_KO;
         else
@@ -767,6 +770,24 @@ weechat_lua_add_command_handler (lua_State *L)
         case 2:
             command = lua_tostring (lua_current_interpreter, -2);
             function = lua_tostring (lua_current_interpreter, -1);
+            break;
+        case 3:
+            command = lua_tostring (lua_current_interpreter, -3);
+            function = lua_tostring (lua_current_interpreter, -2);
+            description = lua_tostring (lua_current_interpreter, -1);
+            break;
+        case 4:
+            command = lua_tostring (lua_current_interpreter, -4);
+            function = lua_tostring (lua_current_interpreter, -3);
+            description = lua_tostring (lua_current_interpreter, -2);
+            arguments = lua_tostring (lua_current_interpreter, -1);
+            break;
+        case 5:
+            command = lua_tostring (lua_current_interpreter, -5);
+            function = lua_tostring (lua_current_interpreter, -4);
+            description = lua_tostring (lua_current_interpreter, -3);
+            arguments = lua_tostring (lua_current_interpreter, -2);
+            arguments_description = lua_tostring (lua_current_interpreter, -1);
             break;
         case 6:
             command = lua_tostring (lua_current_interpreter, -6);

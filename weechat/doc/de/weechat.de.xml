@@ -2767,27 +2767,7 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;my_keyb);
               </listitem>
               <listitem>
                 <para>
-                  <option>event</option> : Ereignis, siehe folgende Tabelle:
-                  <informaltable colsep="0" frame="none">
-                    <tgroup cols="2">
-                      <thead>
-                        <row>
-                          <entry>Ereignis</entry>
-                          <entry>Beschreibung</entry>
-                        </row>
-                      </thead>
-                      <tbody>
-                        <row>
-                          <entry><literal>buffer_open</literal></entry>
-                          <entry>ein Puffer wurde geöffnet</entry>
-                        </row>
-                        <row>
-                          <entry><literal>buffer_close</literal></entry>
-                          <entry>ein Puffer wurde geschlossen</entry>
-                        </row>
-                      </tbody>
-                    </tgroup>
-                  </informaltable>
+                  <option>event</option> : Ereignis (siehe folgende Tabelle)
                 </para>
               </listitem>
               <listitem>
@@ -2803,8 +2783,8 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;my_keyb);
                   </command>
                 </para>
                 <para>
-                  Argument argc wird auf 1 gesetzt, argv[0] ist die Nummer des Puffers, der
-                  geöffnet oder geschlossen wird.
+                  <!-- TRANSLATION NEEDED -->
+                  Arguments depend on event (see table below).
                 </para>
               </listitem>
               <listitem>
@@ -2820,6 +2800,44 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;my_keyb);
                 </para>
               </listitem>
             </itemizedlist>
+          </para>
+          <!-- TRANSLATION NEEDED -->
+          <para>
+            List of events:
+            <informaltable colsep="0" frame="none">
+              <tgroup cols="3">
+                <thead>
+                  <row>
+                    <entry>Ereignis</entry>
+                    <entry>Beschreibung</entry>
+                    <entry>Arguments</entry>
+                  </row>
+                </thead>
+                <tbody>
+                  <row>
+                    <entry><literal>buffer_open</literal></entry>
+                    <entry>ein Puffer wurde geöffnet</entry>
+                    <entry>
+                      argc = 1, argv = { buffer number }
+                    </entry>
+                  </row>
+                  <row>
+                    <entry><literal>buffer_close</literal></entry>
+                    <entry>ein Puffer wurde geschlossen</entry>
+                    <entry>
+                      argc = 1, argv = { buffer number }
+                    </entry>
+                  </row>
+                  <row>
+                    <entry><literal>buffer_move</literal></entry>
+                    <entry>a buffer was moved</entry>
+                    <entry>
+                      argc = 2, argv = { new buffer number, old number }
+                    </entry>
+                  </row>
+                </tbody>
+              </tgroup>
+            </informaltable>
           </para>
           <para>
             Rückgabewert: Pointer auf den neuen Ereignishandler.
