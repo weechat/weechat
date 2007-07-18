@@ -159,7 +159,7 @@
 </row>
 <row>
   <entry><literal>jump_previous_buffer</literal></entry>
-  <entry>jump to previous buffer</entry>
+  <entry>sauter au tampon précédent</entry>
 </row>
 <row>
   <entry><literal>jump_server</literal></entry>

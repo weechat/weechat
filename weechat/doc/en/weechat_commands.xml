@@ -62,7 +62,7 @@ clear window(s)
 number: clear buffer by number
 
 </programlisting>
-<command>connect  [-all [-nojoin] | [-nojoin] servername [servername ...]]</command>
+<command>connect  [-all [-nojoin] | servername [servername ...] [-nojoin]]</command>
 <programlisting>
 connect to server(s)
 
@@ -150,7 +150,7 @@ autoload: autoload plugins in system or user directory
 Without argument, /plugin command lists loaded plugins.
 
 </programlisting>
-<command>reconnect  [-all [-nojoin] | servername [servername ...]] [-nojoin]</command>
+<command>reconnect  [-all [-nojoin] | servername [servername ...] [-nojoin]]</command>
 <programlisting>
 reconnect to server(s)
 

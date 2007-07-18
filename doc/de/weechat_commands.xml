@@ -62,7 +62,7 @@ Fenster leeren
 Nummer: lösche den Puffer mit der angegebenen Nummer
 
 </programlisting>
-<command>connect  [-all [-nojoin] | [-nojoin] servername [servername ...]]</command>
+<command>connect  [-all [-nojoin] | servername [servername ...] [-nojoin]]</command>
 <programlisting>
 mit Server verbinden
 
@@ -151,7 +151,7 @@ autoload: lade automatisch alle Plugins im System- oder Benutzerverzeichnis
 Ohne Argument, listet /plugin alle geladenen Plugins auf.
 
 </programlisting>
-<command>reconnect  [-all [-nojoin] | servername [servername ...]] [-nojoin]</command>
+<command>reconnect  [-all [-nojoin] | servername [servername ...] [-nojoin]]</command>
 <programlisting>
 mit einem Server oder mehreren Servern neu verbinden
 
