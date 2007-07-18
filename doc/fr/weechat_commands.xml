@@ -159,10 +159,19 @@ nom_serveur: nom du serveur pour se reconnecter
     -nojoin: ne rejoindre aucun canal (même si l'autojoin est activé pour le serveur)
 
 </programlisting>
-<command>server  [nom_serveur] | [nom_serveur nom/IP port [-auto | -noauto] [-ipv6] [-ssl] [-pwd mot_de_passe] [-nicks pseudo1 pseudo2 pseudo3] [-username nom_utilisateur] [-realname nom_réel] [-command commande] [-autojoin canal[,canal]] ] | [del nom_serveur]</command>
+<command>save  [fichier]</command>
+<programlisting>
+sauvegarder la configuration sur disque
+
+fichier: fichier pour sauvegarder la configuration
+
+</programlisting>
+<command>server  [list [nom_serveur]] | [listfull [nom_serveur]] | [nom_serveur] | [nom_serveur nom/IP port [-auto | -noauto] [-ipv6] [-ssl] [-pwd mot_de_passe] [-nicks pseudo1 pseudo2 pseudo3] [-username nom_utilisateur] [-realname nom_réel] [-command commande] [-autojoin canal[,canal]] ] | [del nom_serveur]</command>
 <programlisting>
 liste, ajoute ou retire des serveurs
 
+           list: afficher les serveurs (pas de paramètre implique cette liste)
+       listfull: afficher les serveurs avec de l'info détaillée pour chaque
     nom_serveur: nom du serveur, pour usage interne et affichage
          nom/IP: nom ou adresse IP du serveur
            port: port pour le serveur (nombre entier)
@@ -174,13 +183,7 @@ liste, ajoute ou retire des serveurs
         pseudo3: second pseudo alternatif pour le serveur
 nom_utilisateur: nom d'utilisateur
        nom_réel: nom réel de l'utilisateur
-
-</programlisting>
-<command>save  [fichier]</command>
-<programlisting>
-sauvegarder la configuration sur disque
-
-fichier: fichier pour sauvegarder la configuration
+            del: supprimer un serveur
 
 </programlisting>
 <command>set  [option [ = valeur]]</command>

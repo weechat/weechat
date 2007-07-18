@@ -160,28 +160,31 @@ servername: server name to reconnect
    -nojoin: do not join any channel (even if autojoin is enabled on server)
 
 </programlisting>
-<command>server  [Servername] | [Servername Hostname Port [-auto | -noauto] [-ipv6] [-ssl] [-pwd Passwort] [-nicks Nick1 Nick2 Nick3] [-username Benutzername] [-realname Name] [-command Befehl] [-autojoin Channel[,Channel]] ] | [del Servername]</command>
-<programlisting>
-Auflisten, Hinzufügen oder Entfernen von Servern
-
-Servername: anzuzeigender Servername
-  Hostname: Name oder IP-Adresse des Servers
-      Port: Port des Servers
-      ipv6: IPv6 benutzen
-       ssl: SSL benutzen
-  Passwort: Serverpasswort
-     Nick1: erster Nickname
-     Nick2: zweiter Nickname
-     Nick3: dritter Nicname
-  Benutzername: Benutzername
-  Realname: voller Name des Benutzers
-
-</programlisting>
 <command>save  [Datei]</command>
 <programlisting>
 Konfiguration abspeichern
 
 Datei: Name der zu speichernden Konfigurationsdatei
+
+</programlisting>
+<command>server  [list [servername]] | [listfull [servername]] | [servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 nick2 nick3] [-username username] [-realname realname] [-command command] [-autojoin channel[,channel]] ] | [del servername]</command>
+<programlisting>
+Auflisten, Hinzufügen oder Entfernen von Servern
+
+      list: list servers (no parameter implies this list)
+  listfull: list servers with detailed info for each server
+servername: server name, for internal and display use
+  hostname: name or IP address of server
+      port: port for server (integer)
+      ipv6: use IPv6 protocol
+       ssl: use SSL protocol
+  password: password for server
+     nick1: first nick for server
+     nick2: alternate nick for server
+     nick3: second alternate nick for server
+  username: user name
+  realname: real name of user
+       del: delete a server
 
 </programlisting>
 <command>set  [Option [ = Wert]]</command>

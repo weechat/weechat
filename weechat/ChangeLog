@@ -5,6 +5,7 @@ ChangeLog - 2007-07-18
 
 
 Version 0.2.6 (under dev!):
+   * improved command /server ant its output
    * added 3 default new keys: ctrl-B (left), ctrl-F (right), ctrl-D (delete)
    * added "buffer_move" event handler to plugins API (task #6708)
    * added key function "jump_previous_buffer" to jump to buffer previously

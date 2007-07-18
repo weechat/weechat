@@ -159,10 +159,19 @@ servername: server name to reconnect
    -nojoin: do not join any channel (even if autojoin is enabled on server)
 
 </programlisting>
-<command>server  [servername] | [servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 nick2 nick3] [-username username] [-realname realname] [-command command] [-autojoin channel[,channel]] ] | [del servername]</command>
+<command>save  [file]</command>
+<programlisting>
+save config to disk
+
+file: filename for writing config
+
+</programlisting>
+<command>server  [list [servername]] | [listfull [servername]] | [servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 nick2 nick3] [-username username] [-realname realname] [-command command] [-autojoin channel[,channel]] ] | [del servername]</command>
 <programlisting>
 list, add or remove servers
 
+      list: list servers (no parameter implies this list)
+  listfull: list servers with detailed info for each server
 servername: server name, for internal and display use
   hostname: name or IP address of server
       port: port for server (integer)
@@ -174,13 +183,7 @@ servername: server name, for internal and display use
      nick3: second alternate nick for server
   username: user name
   realname: real name of user
-
-</programlisting>
-<command>save  [file]</command>
-<programlisting>
-save config to disk
-
-file: filename for writing config
+       del: delete a server
 
 </programlisting>
 <command>set  [option [ = value]]</command>

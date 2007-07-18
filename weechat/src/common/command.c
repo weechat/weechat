@@ -172,13 +172,18 @@ t_weechat_command weechat_commands[] =
        "servername: server name to reconnect\n"
        "   -nojoin: do not join any channel (even if autojoin is enabled on server)"),
     "%S|-all|-nojoin|%*", 0, MAX_ARGS, 0, weechat_cmd_reconnect, NULL },
+  { "save", N_("save config to disk"),
+    N_("[file]"), N_("file: filename for writing config"),
+    NULL, 0, 1, 0, weechat_cmd_save, NULL },
   { "server", N_("list, add or remove servers"),
-    N_("[servername] | "
+    N_("[list [servername]] | [listfull [servername]] | "
        "[servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 "
        "nick2 nick3] [-username username] [-realname realname] "
        "[-command command] [-autojoin channel[,channel]] ] | "
        "[del servername]"),
-    N_("servername: server name, for internal and display use\n"
+    N_("      list: list servers (no parameter implies this list)\n"
+       "  listfull: list servers with detailed info for each server\n"
+       "servername: server name, for internal and display use\n"
        "  hostname: name or IP address of server\n"
        "      port: port for server (integer)\n"
        "      ipv6: use IPv6 protocol\n"
@@ -188,11 +193,9 @@ t_weechat_command weechat_commands[] =
        "     nick2: alternate nick for server\n"
        "     nick3: second alternate nick for server\n"
        "  username: user name\n"
-       "  realname: real name of user"),
-    NULL, 0, MAX_ARGS, 0, weechat_cmd_server, NULL },
-  { "save", N_("save config to disk"),
-    N_("[file]"), N_("file: filename for writing config"),
-    NULL, 0, 1, 0, weechat_cmd_save, NULL },
+       "  realname: real name of user\n"
+       "       del: delete a server"),
+    "del|list|listfull", 0, MAX_ARGS, 0, weechat_cmd_server, NULL },
   { "set", N_("set config options"),
     N_("[option [ = value]]"),
     N_("option: name of an option (if name is full "
@@ -536,26 +539,28 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                         {
                             irc_display_prefix (NULL, NULL, PREFIX_ERROR);
                             gui_printf (NULL,
-                                        _("%s wrong argument count for %s command \"%s\" "
-                                          "(expected: %d arg%s)\n"),
+                                        NG_("%s wrong argument count for %s command \"%s\" "
+                                            "(expected: %d arg)\n",
+                                            "%s wrong argument count for %s command \"%s\" "
+                                            "(expected: %d args)\n",
+                                            weechat_commands[i].max_arg),
                                         WEECHAT_ERROR, PACKAGE_NAME,
                                         command + 1,
-                                        weechat_commands[i].max_arg,
-                                        (weechat_commands[i].max_arg >
-                                         1) ? "s" : "");
+                                        weechat_commands[i].max_arg);
                         }
                         else
                         {
                             irc_display_prefix (NULL, NULL, PREFIX_ERROR);
                             gui_printf (NULL,
-                                        _("%s wrong argument count for %s command \"%s\" "
-                                          "(expected: between %d and %d arg%s)\n"),
+                                        NG_("%s wrong argument count for %s command \"%s\" "
+                                            "(expected: between %d and %d arg)\n",
+                                            "%s wrong argument count for %s command \"%s\" "
+                                            "(expected: between %d and %d args)\n",
+                                            weechat_commands[i].max_arg),
                                         WEECHAT_ERROR, PACKAGE_NAME,
                                         command + 1,
                                         weechat_commands[i].min_arg,
-                                        weechat_commands[i].max_arg,
-                                        (weechat_commands[i].max_arg >
-                                         1) ? "s" : "");
+                                        weechat_commands[i].max_arg);
                         }
                     }
                     else
@@ -605,24 +610,28 @@ exec_weechat_command (t_irc_server *server, t_irc_channel *channel, char *string
                             irc_display_prefix (NULL, NULL, PREFIX_ERROR);
                             gui_printf
                                 (NULL,
-                                 _("%s wrong argument count for IRC command \"%s\" "
-                                   "(expected: %d arg%s)\n"),
+                                 NG_("%s wrong argument count for IRC command \"%s\" "
+                                     "(expected: %d arg)\n",
+                                     "%s wrong argument count for IRC command \"%s\" "
+                                     "(expected: %d args)\n",
+                                     irc_commands[i].max_arg),
                                  WEECHAT_ERROR,
                                  command + 1,
-                                 irc_commands[i].max_arg,
-                                 (irc_commands[i].max_arg > 1) ? "s" : "");
+                                 irc_commands[i].max_arg);
                         }
                         else
                         {
                             irc_display_prefix (NULL, NULL, PREFIX_ERROR);
                             gui_printf
                                 (NULL,
-                                 _("%s wrong argument count for IRC command \"%s\" "
-                                   "(expected: between %d and %d arg%s)\n"),
+                                 NG_("%s wrong argument count for IRC command \"%s\" "
+                                     "(expected: between %d and %d arg)\n",
+                                     "%s wrong argument count for IRC command \"%s\" "
+                                     "(expected: between %d and %d args)\n",
+                                     irc_commands[i].max_arg),
                                  WEECHAT_ERROR,
                                  command + 1,
-                                 irc_commands[i].min_arg, irc_commands[i].max_arg,
-                                 (irc_commands[i].max_arg > 1) ? "s" : "");
+                                 irc_commands[i].min_arg, irc_commands[i].max_arg);
                         }
                     }
                     else
@@ -2933,24 +2942,42 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
 {
     t_gui_window *window;
     t_gui_buffer *buffer;
-    int i;
+    int i, detailed_list, one_server_found;
     t_irc_server server_tmp, *ptr_server, *server_found, *new_server;
     t_gui_buffer *ptr_buffer;
     char *server_name;
     
     gui_buffer_find_context (server, channel, &window, &buffer);
     
-    if ((argc == 0) || (argc == 1))
+    if ((argc == 0) || (argc == 1)
+        || (ascii_strcasecmp (argv[0], "list") == 0)
+        || (ascii_strcasecmp (argv[0], "listfull") == 0))
     {
-        /* list all servers */
-        if (argc == 0)
+        /* list servers */
+        server_name = NULL;
+        detailed_list = 0;
+        for (i = 0; i < argc; i++)
+        {
+            if (ascii_strcasecmp (argv[i], "list") == 0)
+                continue;
+            if (ascii_strcasecmp (argv[i], "listfull") == 0)
+            {
+                detailed_list = 1;
+                continue;
+            }
+            if (!server_name)
+                server_name = argv[i];
+        }
+        if (!server_name)
         {
             if (irc_servers)
             {
+                gui_printf (NULL, "\n");
+                gui_printf (NULL, _("All servers:\n"));
                 for (ptr_server = irc_servers; ptr_server;
                      ptr_server = ptr_server->next_server)
                 {
-                    irc_display_server (ptr_server);
+                    irc_display_server (ptr_server, detailed_list);
                 }
             }
             else
@@ -2961,13 +2988,27 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
         }
         else
         {
-            ptr_server = irc_server_search (argv[0]);
-            if (ptr_server)
-                irc_display_server (ptr_server);
-            else
+            one_server_found = 0;
+            for (ptr_server = irc_servers; ptr_server;
+                 ptr_server = ptr_server->next_server)
+            {
+                if (ascii_strcasestr (ptr_server->name, server_name))
+                {
+                    if (!one_server_found)
+                    {
+                        gui_printf (NULL, "\n");
+                        gui_printf (NULL, _("Servers with '%s':\n"),
+                                    server_name);
+                    }
+                    one_server_found = 1;
+                    irc_display_server (ptr_server, detailed_list);
+                }
+            }
+            if (!one_server_found)
             {
                 irc_display_prefix (NULL, NULL, PREFIX_INFO);
-                gui_printf (NULL, _("Server '%s' not found.\n"), argv[0]);
+                gui_printf (NULL, _("No server with '%s' found.\n"),
+                            server_name);
             }
         }
     }
@@ -3847,14 +3888,13 @@ weechat_cmd_unignore (t_irc_server *server, t_irc_channel *channel,
     if (ret)
     {
         irc_display_prefix (NULL, NULL, PREFIX_INFO);
-        gui_printf (NULL, "%s%d%s ",
+        gui_printf (NULL,
+                    NG_("%s%d%s ignore was removed.\n",
+                        "%s%d%s ignore were removed.\n",
+                        ret),
                     GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
                     ret,
                     GUI_COLOR(COLOR_WIN_CHAT));
-        if (ret > 1)
-            gui_printf (NULL, _("ignore were removed.\n"));
-        else
-            gui_printf (NULL, _("ignore was removed.\n"));
     }
     else
     {
@@ -4004,7 +4044,7 @@ weechat_cmd_uptime (t_irc_server *server, t_irc_channel *channel,
         snprintf (string, sizeof (string),
                   _("WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"),
                   day,
-                  (day > 1) ? _("days") : _("day"),
+                  NG_("day", "days", day),
                   hour,
                   min,
                   sec,
@@ -4022,7 +4062,7 @@ weechat_cmd_uptime (t_irc_server *server, t_irc_channel *channel,
                           GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
                           day,
                           GUI_COLOR(COLOR_WIN_CHAT),
-                          (day > 1) ? _("days") : _("day"),
+                          NG_("day", "days", day),
                           GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
                           hour,
                           GUI_COLOR(COLOR_WIN_CHAT),

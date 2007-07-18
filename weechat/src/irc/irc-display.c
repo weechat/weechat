@@ -376,78 +376,105 @@ irc_display_mode (t_irc_server *server, t_gui_buffer *buffer,
  */
 
 void
-irc_display_server (t_irc_server *server)
+irc_display_server (t_irc_server *server, int with_detail)
 {
     char *string;
+    int num_channels;
     
-    gui_printf (NULL, "\n");
-    gui_printf (NULL, _("%sServer: %s%s %s[%s%s%s]\n"),
-                GUI_COLOR(COLOR_WIN_CHAT),
-                GUI_COLOR(COLOR_WIN_CHAT_SERVER),
-                server->name,
-                GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                GUI_COLOR(COLOR_WIN_CHAT),
-                (server->is_connected) ?
-                _("connected") : _("not connected"),
-                GUI_COLOR(COLOR_WIN_CHAT_DARK));
-    
-    gui_printf (NULL, "  server_autoconnect . . . . : %s%s\n",
-                (server->autoconnect) ? _("on") : _("off"),
-                (server->command_line) ?
-                _(" (temporary server, will not be saved)") : "");
-    gui_printf (NULL, "  server_autoreconnect . . . : %s\n",
-                (server->autoreconnect) ? _("on") : _("off"));
-    gui_printf (NULL, "  server_autoreconnect_delay : %d %s\n",
-                server->autoreconnect_delay,
-                _("seconds"));
-    gui_printf (NULL, "  server_address . . . . . . : %s\n",
-                server->address);
-    gui_printf (NULL, "  server_port  . . . . . . . : %d\n",
-                server->port);
-    gui_printf (NULL, "  server_ipv6  . . . . . . . : %s\n",
-                (server->ipv6) ? _("on") : _("off"));
-    gui_printf (NULL, "  server_ssl . . . . . . . . : %s\n",
-                (server->ssl) ? _("on") : _("off"));
-    gui_printf (NULL, "  server_password  . . . . . : %s\n",
-                (server->password && server->password[0]) ?
-                _("(hidden)") : "");
-    gui_printf (NULL, "  server_nick1/2/3 . . . . . : %s %s/ %s%s %s/ %s%s\n",
-                server->nick1,
-                GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                GUI_COLOR(COLOR_WIN_CHAT),
-                server->nick2,
-                GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                GUI_COLOR(COLOR_WIN_CHAT),
-                server->nick3);
-    gui_printf (NULL, "  server_username  . . . . . : %s\n",
-                server->username);
-    gui_printf (NULL, "  server_realname  . . . . . : %s\n",
-                server->realname);
-    gui_printf (NULL, "  server_hostname  . . . . . : %s\n",
-                (server->hostname) ? server->hostname : "");
-    if (server->command && server->command[0])
-        string = strdup (server->command);
-    else
-        string = NULL;
-    if (string)
+    if (with_detail)
     {
-        if (cfg_log_hide_nickserv_pwd)
-            irc_display_hide_password (string, 1);
-        gui_printf (NULL, "  server_command . . . . . . : %s\n",
-                    string);
-        free (string);
+        gui_printf (NULL, "\n");
+        gui_printf (NULL, _("%sServer: %s%s %s[%s%s%s]\n"),
+                    GUI_COLOR(COLOR_WIN_CHAT),
+                    GUI_COLOR(COLOR_WIN_CHAT_SERVER),
+                    server->name,
+                    GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                    GUI_COLOR(COLOR_WIN_CHAT),
+                    (server->is_connected) ?
+                    _("connected") : _("not connected"),
+                    GUI_COLOR(COLOR_WIN_CHAT_DARK));
+        
+        gui_printf (NULL, "  server_autoconnect . . . . : %s%s\n",
+                    (server->autoconnect) ? _("on") : _("off"),
+                    (server->command_line) ?
+                    _(" (temporary server, will not be saved)") : "");
+        gui_printf (NULL, "  server_autoreconnect . . . : %s\n",
+                    (server->autoreconnect) ? _("on") : _("off"));
+        gui_printf (NULL, "  server_autoreconnect_delay : %d %s\n",
+                    server->autoreconnect_delay,
+                    _("seconds"));
+        gui_printf (NULL, "  server_address . . . . . . : %s\n",
+                    server->address);
+        gui_printf (NULL, "  server_port  . . . . . . . : %d\n",
+                    server->port);
+        gui_printf (NULL, "  server_ipv6  . . . . . . . : %s\n",
+                    (server->ipv6) ? _("on") : _("off"));
+        gui_printf (NULL, "  server_ssl . . . . . . . . : %s\n",
+                    (server->ssl) ? _("on") : _("off"));
+        gui_printf (NULL, "  server_password  . . . . . : %s\n",
+                    (server->password && server->password[0]) ?
+                    _("(hidden)") : "");
+        gui_printf (NULL, "  server_nick1/2/3 . . . . . : %s %s/ %s%s %s/ %s%s\n",
+                    server->nick1,
+                    GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                    GUI_COLOR(COLOR_WIN_CHAT),
+                    server->nick2,
+                    GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                    GUI_COLOR(COLOR_WIN_CHAT),
+                    server->nick3);
+        gui_printf (NULL, "  server_username  . . . . . : %s\n",
+                    server->username);
+        gui_printf (NULL, "  server_realname  . . . . . : %s\n",
+                    server->realname);
+        gui_printf (NULL, "  server_hostname  . . . . . : %s\n",
+                    (server->hostname) ? server->hostname : "");
+        if (server->command && server->command[0])
+            string = strdup (server->command);
+        else
+            string = NULL;
+        if (string)
+        {
+            if (cfg_log_hide_nickserv_pwd)
+                irc_display_hide_password (string, 1);
+            gui_printf (NULL, "  server_command . . . . . . : %s\n",
+                        string);
+            free (string);
+        }
+        else
+            gui_printf (NULL, "  server_command . . . . . . : %s\n",
+                        (server->command && server->command[0]) ?
+                        server->command : "");
+        gui_printf (NULL, "  server_command_delay . . . : %d %s\n",
+                    server->command_delay,
+                    _("seconds"));
+        gui_printf (NULL, "  server_autojoin  . . . . . : %s\n",
+                    (server->autojoin && server->autojoin[0]) ?
+                    server->autojoin : "");
+        gui_printf (NULL, "  server_notify_levels . . . : %s\n",
+                    (server->notify_levels && server->notify_levels[0]) ?
+                    server->notify_levels : "");
     }
     else
-        gui_printf (NULL, "  server_command . . . . . . : %s\n",
-                    (server->command && server->command[0]) ?
-                    server->command : "");
-    gui_printf (NULL, "  server_command_delay . . . : %d %s\n",
-                server->command_delay,
-                _("seconds"));
-    gui_printf (NULL, "  server_autojoin  . . . . . : %s\n",
-                (server->autojoin && server->autojoin[0]) ?
-                server->autojoin : "");
-    gui_printf (NULL, "  server_notify_levels . . . : %s\n",
-                (server->notify_levels && server->notify_levels[0]) ?
-                server->notify_levels : "");
+    {
+        gui_printf (NULL, " %s %s%s ",
+                    (server->is_connected) ? "*" : " ",
+                    GUI_COLOR(COLOR_WIN_CHAT_SERVER),
+                    server->name);
+        gui_printf (NULL, "%s[%s%s",
+                    GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                    GUI_COLOR(COLOR_WIN_CHAT),
+                    (server->is_connected) ?
+                    _("connected") : _("not connected"));
+        if (server->is_connected)
+        {
+            num_channels = irc_server_get_channel_count (server);
+            gui_printf (NULL, ", ");
+            gui_printf (NULL, NG_("%d channel", "%d channels", num_channels),
+                        num_channels);
+        }
+        gui_printf (NULL, "%s]%s%s\n",
+                    GUI_COLOR(COLOR_WIN_CHAT_DARK),
+                    GUI_COLOR(COLOR_WIN_CHAT),
+                    (server->command_line) ? _(" (temporary)") : "");
+    }
 }

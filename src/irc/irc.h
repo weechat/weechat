@@ -398,6 +398,7 @@ extern t_irc_server *irc_server_search (char *);
 extern int irc_server_get_number_connected ();
 extern void irc_server_get_number_buffer (t_irc_server *, int *, int *);
 extern int irc_server_name_already_exists (char *);
+extern int irc_server_get_channel_count (t_irc_server *);
 extern void irc_server_remove_away ();
 extern void irc_server_check_away ();
 extern void irc_server_set_away (t_irc_server *, char *, int);
@@ -474,7 +475,7 @@ extern void irc_display_nick (t_gui_buffer *, t_irc_nick *, char *, int,
 extern void irc_display_away (t_irc_server *, char *, char *);
 extern void irc_display_mode (t_irc_server *, t_gui_buffer *, char *, char *,
                               char, char *, char *, char *, char *);
-extern void irc_display_server (t_irc_server *ptr_server);
+extern void irc_display_server (t_irc_server *ptr_server, int);
 
 /* IRC commands issued by user (irc-send.c) */
 

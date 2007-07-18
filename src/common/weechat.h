@@ -38,15 +38,17 @@
     #else
         #include "../../intl/libintl.h"
     #endif
-    #define _(x) gettext(x)
+    #define _(string) gettext(string)
+    #define NG_(single,plural,number) ngettext(single,plural,number)
     #ifdef gettext_noop
-        #define N_(string) gettext_noop (string)
+        #define N_(string) gettext_noop(string)
     #else
         #define N_(string) (string)
     #endif
 #endif
 #if !defined(_)
-    #define _(x) (x)
+    #define _(string) (string)
+    #define NG_(single,plural,number) (plural)
     #define N_(string) (string)
 #endif
 
