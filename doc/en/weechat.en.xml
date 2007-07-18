@@ -458,13 +458,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </thead>
             <tbody>
               <row>
-                <entry>Left arrow</entry>
+                <entry>Left arrow / Ctrl + B</entry>
                 <entry>
                   Go to previous char in command line
                 </entry>
               </row>
               <row>
-                <entry>Right arrow</entry>
+                <entry>Right arrow / Ctrl + F</entry>
                 <entry>
                   Go to next char in command line
                 </entry>
@@ -573,7 +573,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </entry>
               </row>
               <row>
-                <entry>Delete</entry>
+                <entry>Delete / Ctrl + D</entry>
                 <entry>
                   Delete next char in command line
                 </entry>

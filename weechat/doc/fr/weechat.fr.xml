@@ -467,13 +467,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </thead>
             <tbody>
               <row>
-                <entry>Flèche gauche</entry>
+                <entry>Flèche gauche / Ctrl + B</entry>
                 <entry>
                   Aller au caractère précédent sur la ligne de commande
                 </entry>
               </row>
               <row>
-                <entry>Flèche droite</entry>
+                <entry>Flèche droite / Ctrl + F</entry>
                 <entry>
                   Aller au caractère suivant sur la ligne de commande
                 </entry>
@@ -582,7 +582,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </entry>
               </row>
               <row>
-                <entry>Delete</entry>
+                <entry>Delete / Ctrl + D</entry>
                 <entry>
                   Effacer le caractère suivant sur la ligne de commande
                 </entry>

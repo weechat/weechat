@@ -463,13 +463,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </thead>
             <tbody>
               <row>
-                <entry>Links</entry>
+                <entry>Links / Strg + B</entry>
                 <entry>
                   Gehe zum vorherigen Zeichen in der Kommandozeile
                 </entry>
               </row>
               <row>
-                <entry>Rechts</entry>
+                <entry>Rechts / Strg + F</entry>
                 <entry>
                   Gehe zum nächsten Zeichen in der Kommandozeile
                 </entry>
@@ -579,7 +579,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </entry>
               </row>
               <row>
-                <entry>Entfernen</entry>
+                <entry>Entfernen / Strg + D</entry>
                 <entry>
                   Lösche das nächste Zeichen in der Kommandozeile
                 </entry>

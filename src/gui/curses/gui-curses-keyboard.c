@@ -51,6 +51,7 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind ( /* basckpace   */ "ctrl-H",             "backspace");
     gui_keyboard_bind ( /* basckpace   */ "ctrl-?",             "backspace");
     gui_keyboard_bind ( /* del         */ "meta2-3~",           "delete");
+    gui_keyboard_bind ( /* ^D          */ "ctrl-D",             "delete");
     gui_keyboard_bind ( /* ^K          */ "ctrl-K",             "delete_end_line");
     gui_keyboard_bind ( /* ^U          */ "ctrl-U",             "delete_beginning_line");
     gui_keyboard_bind ( /* ^W          */ "ctrl-W",             "delete_previous_word");
@@ -65,7 +66,9 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind ( /* end         */ "meta2-8~",           "end");
     gui_keyboard_bind ( /* ^E          */ "ctrl-E",             "end");
     gui_keyboard_bind ( /* left        */ "meta2-D",            "left");
+    gui_keyboard_bind ( /* ^B          */ "ctrl-B",             "left");
     gui_keyboard_bind ( /* right       */ "meta2-C",            "right");
+    gui_keyboard_bind ( /* ^F          */ "ctrl-F",             "right");
     gui_keyboard_bind ( /* up          */ "meta2-A",            "up");
     gui_keyboard_bind ( /* ^up         */ "meta-Oa",            "up_global");
     gui_keyboard_bind ( /* down        */ "meta2-B",            "down");
