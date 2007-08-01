@@ -31,8 +31,9 @@
 #include <gnutls/gnutls.h>
 #endif
 
+#include <locale.h>
+
 #if defined(ENABLE_NLS) && !defined(_)
-    #include <locale.h>
     #ifdef HAVE_LIBINTL_H
         #include <libintl.h>
     #else

@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-07-19
+ChangeLog - 2007-08-01
 
 
 Version 0.2.6 (under dev!):
+   * fixed terminal encoding detection when NLS is disabled (bug #20646)
    * fixed crash when sending data to channel or pv on disconnected server
      (bug #20524)
    * improved command /server ant its output
