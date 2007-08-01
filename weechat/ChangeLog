@@ -5,6 +5,8 @@ ChangeLog - 2007-08-01
 
 
 Version 0.2.6 (under dev!):
+   * fixed nick prefix display on servers that doesn't support all prefixes
+     (bug #20025)
    * fixed terminal encoding detection when NLS is disabled (bug #20646)
    * fixed crash when sending data to channel or pv on disconnected server
      (bug #20524)

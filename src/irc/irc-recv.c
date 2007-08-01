@@ -742,7 +742,7 @@ irc_recv_cmd_mode (t_irc_server *server, char *host, char *nick, char *arguments
                             GUI_COLOR(COLOR_WIN_CHAT_NICK),
                             nick);
             }
-            irc_mode_channel_set (ptr_channel, pos_modes);
+            irc_mode_channel_set (server, ptr_channel, pos_modes);
             irc_server_sendf (server, "MODE %s", ptr_channel->name);
         }
         else
@@ -3474,7 +3474,7 @@ irc_recv_cmd_324 (t_irc_server *server, char *host, char *nick, char *arguments)
                     else
                         ptr_channel->modes = (char *) malloc (strlen (pos_modes) + 1);
                     strcpy (ptr_channel->modes, pos_modes);
-                    irc_mode_channel_set (ptr_channel, pos_modes);
+                    irc_mode_channel_set (server, ptr_channel, pos_modes);
                 }
                 else
                 {

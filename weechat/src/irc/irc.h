@@ -443,7 +443,7 @@ extern void irc_nick_print_log (t_irc_nick *);
 
 /* mode functions (irc-mode.c) */
 
-extern void irc_mode_channel_set (t_irc_channel *, char *);
+extern void irc_mode_channel_set (t_irc_server *, t_irc_channel *, char *);
 extern void irc_mode_user_set (t_irc_server *, char *);
 extern int irc_mode_nick_prefix_allowed (t_irc_server *, char);
 
