@@ -96,7 +96,7 @@ t_irc_command irc_commands[] =
     N_("channel[,channel] [key[,key]]"),
     N_("channel: channel name to join\n"
        "    key: key to join the channel"),
-    NULL, 1, MAX_ARGS, 0, 1, NULL, irc_send_cmd_join, irc_recv_cmd_join },
+    "%C", 1, MAX_ARGS, 0, 1, NULL, irc_send_cmd_join, irc_recv_cmd_join },
   { "kick", N_("forcibly remove a user from a channel"),
     N_("[channel] nickname [comment]"),
     N_(" channel: channel where user is\n"
