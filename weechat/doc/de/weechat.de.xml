@@ -1155,117 +1155,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       
     </section>
     
-    <section id="secCharset">
-      <title>Zeichensatz Plugin</title>
-      
-      <para>
-        Das Zeichensatz-Plugin ermöglicht das Ver- und Entschlüsseln von Daten
-        auf 3 Ebenen: Global, pro Server oder pro Channel.
-        Das Plugin ist optional, wird jedoch empfohlen: wenn es nicht geladen ist, 
-        kann WeeChat nur UTF-8-Daten lesen und schreiben.
-      </para>
-      
-      <para>
-        Das Zeichensatz-Plugin sollte beim Start von WeeChat automatisch geladen
-        werden.
-        Um sicherzustellen, dass das Plugin geladen wurde, versuchen Sie:
-        "<literal>/charset</literal>".
-        Wenn der Befehl nicht gefunden wird, laden Sie das Plugin manuell mit dem Befehl:
-        <screen>/plugin load charset</screen>
-        Wenn das Plugin nicht gefunden wird, kompilieren Sie WeeChat erneut mit Plugin-
-        und Zeichensatz-Support
-      </para>
-      
-      <para>
-        Wenn das Zeichensatz-Plugin startet, zeigt es den Terminalzeichensatz
-        und den internen Zeichensatz an. Der Terminalzeichensatz hängt von
-        den LOCALE-Einstellungen ab, der interne ist UTF-8.
-        Zum Beispiel:
-<screen>
--P- Charset plugin starting, terminal charset: ISO-8859-15 (WeeChat internal: UTF-8)
-</screen>
-      </para>
-            
-      <section id="secCharsetSettings">
-        <title>Einstellungen</title>
-        
-        <itemizedlist>
-          <listitem>
-            <para>
-              Um den globalen Zeichensatz zum Kodieren und Dekodieren festzulegen, benutzen Sie den
-              "<literal>/setp</literal>" Befehl.
-              Zum Beispiel:
-<screen>
-/setp charset.global.decode = ISO-8859-15
-/setp charset.global.encode = ISO-8859-15
-</screen>
-              Wenn der Zeichensatz zum Dekodieren nicht gesetzt ist (z.B. beim ersten
-              Start des Plugins), wird es automatisch auf den Terminalzeichensatz
-              eingestellt (wenn es nicht UTF-8 ist) oder als Voreinstellung auf
-              "<literal>ISO-8859-1</literal>" gesetzt.
-              Der voreingestellte Enkodierungszeichensatz ist leer, so dass in der
-              Voreinstellung mit dem internen Zeichensatz (UTF-8) enkodiert wird.
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              Um den Serverzeichensatz festzulegen, benutzen Sie den
-              "<literal>/charset</literal>"-Befehl im Server-Puffer.
-              Wenn Sie nur einen Zeichensatz vorgeben, wird dieser automatisch
-              zum Enkodieren und Dekodieren verwendet.
-              Zum Beispiel:
-              <screen>/charset ISO-8859-15</screen>
-              Das ist gleichbedeutend mit:
-<screen>
-/charset decode ISO-8859-15
-/charset encode ISO-8859-15
-</screen>
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              Um den zeichensatz im Channel (oder einem privatem Chat) festzulegen, 
-              müssen Sie den gleichen Befehl wie für den Server benutzen, jedoch in
-              dem Channel-Puffer (oder Query-Puffer) 
-            </para>
-          </listitem>
-        </itemizedlist>
-                
-      </section>
-      
-      <section id="secCharsetFAQ">
-        <title>FAQ</title>
-        
-        <para>
-          Wenn Sie Probleme mit den Zeichen oder dem Zeichensatz-Plugin haben:
-          <itemizedlist>
-            <listitem>
-              <para>
-                überprüfen Sie, ob weechat-curses zu libcursesw gelinkt ist
-                (Achtung: Wird bei den meisten, jedoch nicht bei allen Distributionen benötigt):
-                <screen>ldd /pfad/zu/weechat-curses</screen>
-              </para>
-            </listitem>
-            <listitem>
-              <para>
-                überprüfen Sie die Zeichensatz-Zeile im Server-Puffer, dort sollten ISO-XXXXXX
-                oder UTF-8 für den Terminal-Zeichensatz stehen. Wenn Sie dort ANSI_X3.4-1968
-                oder andere Werte sehen, sind Ihre LOCALES eventuell falsch eingestellt.
-              </para>
-            </listitem>
-            <listitem>
-              <para>
-                Setze die globalen Dekodier-Einstellungen, z.B.:
-                <screen>/setp charset.global.decode = ISO-8859-15</screen>
-              </para>
-            </listitem>
-          </itemizedlist>
-        </para>
-        
-      </section>
-      
-    </section>
-        
     <section id="secFIFOpipe">
       <title>Remote-Schnittstelle (FIFO pipe)</title>
       
@@ -4986,6 +4875,117 @@ void weechat_plugin_end (t_weechat_plugin *plugin)
     /* nothing done here */
 }
 </screen>
+        </para>
+        
+      </section>
+      
+    </section>
+    
+    <section id="secCharset">
+      <title>Zeichensatz Plugin</title>
+      
+      <para>
+        Das Zeichensatz-Plugin ermöglicht das Ver- und Entschlüsseln von Daten
+        auf 3 Ebenen: Global, pro Server oder pro Channel.
+        Das Plugin ist optional, wird jedoch empfohlen: wenn es nicht geladen ist, 
+        kann WeeChat nur UTF-8-Daten lesen und schreiben.
+      </para>
+      
+      <para>
+        Das Zeichensatz-Plugin sollte beim Start von WeeChat automatisch geladen
+        werden.
+        Um sicherzustellen, dass das Plugin geladen wurde, versuchen Sie:
+        "<literal>/charset</literal>".
+        Wenn der Befehl nicht gefunden wird, laden Sie das Plugin manuell mit dem Befehl:
+        <screen>/plugin load charset</screen>
+        Wenn das Plugin nicht gefunden wird, kompilieren Sie WeeChat erneut mit Plugin-
+        und Zeichensatz-Support
+      </para>
+      
+      <para>
+        Wenn das Zeichensatz-Plugin startet, zeigt es den Terminalzeichensatz
+        und den internen Zeichensatz an. Der Terminalzeichensatz hängt von
+        den LOCALE-Einstellungen ab, der interne ist UTF-8.
+        Zum Beispiel:
+<screen>
+-P- Charset plugin starting, terminal charset: ISO-8859-15 (WeeChat internal: UTF-8)
+</screen>
+      </para>
+            
+      <section id="secCharsetSettings">
+        <title>Einstellungen</title>
+        
+        <itemizedlist>
+          <listitem>
+            <para>
+              Um den globalen Zeichensatz zum Kodieren und Dekodieren festzulegen, benutzen Sie den
+              "<literal>/setp</literal>" Befehl.
+              Zum Beispiel:
+<screen>
+/setp charset.global.decode = ISO-8859-15
+/setp charset.global.encode = ISO-8859-15
+</screen>
+              Wenn der Zeichensatz zum Dekodieren nicht gesetzt ist (z.B. beim ersten
+              Start des Plugins), wird es automatisch auf den Terminalzeichensatz
+              eingestellt (wenn es nicht UTF-8 ist) oder als Voreinstellung auf
+              "<literal>ISO-8859-1</literal>" gesetzt.
+              Der voreingestellte Enkodierungszeichensatz ist leer, so dass in der
+              Voreinstellung mit dem internen Zeichensatz (UTF-8) enkodiert wird.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Um den Serverzeichensatz festzulegen, benutzen Sie den
+              "<literal>/charset</literal>"-Befehl im Server-Puffer.
+              Wenn Sie nur einen Zeichensatz vorgeben, wird dieser automatisch
+              zum Enkodieren und Dekodieren verwendet.
+              Zum Beispiel:
+              <screen>/charset ISO-8859-15</screen>
+              Das ist gleichbedeutend mit:
+<screen>
+/charset decode ISO-8859-15
+/charset encode ISO-8859-15
+</screen>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Um den zeichensatz im Channel (oder einem privatem Chat) festzulegen, 
+              müssen Sie den gleichen Befehl wie für den Server benutzen, jedoch in
+              dem Channel-Puffer (oder Query-Puffer) 
+            </para>
+          </listitem>
+        </itemizedlist>
+                
+      </section>
+      
+      <section id="secCharsetFAQ">
+        <title>FAQ</title>
+        
+        <para>
+          Wenn Sie Probleme mit den Zeichen oder dem Zeichensatz-Plugin haben:
+          <itemizedlist>
+            <listitem>
+              <para>
+                überprüfen Sie, ob weechat-curses zu libcursesw gelinkt ist
+                (Achtung: Wird bei den meisten, jedoch nicht bei allen Distributionen benötigt):
+                <screen>ldd /pfad/zu/weechat-curses</screen>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                überprüfen Sie die Zeichensatz-Zeile im Server-Puffer, dort sollten ISO-XXXXXX
+                oder UTF-8 für den Terminal-Zeichensatz stehen. Wenn Sie dort ANSI_X3.4-1968
+                oder andere Werte sehen, sind Ihre LOCALES eventuell falsch eingestellt.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Setze die globalen Dekodier-Einstellungen, z.B.:
+                <screen>/setp charset.global.decode = ISO-8859-15</screen>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
         
       </section>
