@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.6-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-07-19 01:23+0200\n"
+"POT-Creation-Date: 2007-08-06 11:23+0200\n"
 "PO-Revision-Date: 2007-07-18 17:44+0200\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2632,43 +2632,48 @@ msgid "scroll to first unread line in buffer"
 msgstr "desplazarse a la primera línea sin leer en el búfer"
 
 #: src/gui/gui-keyboard.c:140
+#, fuzzy
+msgid "set unread marker on all buffers"
+msgstr "longitud inválida para un búfer"
+
+#: src/gui/gui-keyboard.c:142
 msgid "clear hotlist"
 msgstr "limpiar hotlist"
 
-#: src/gui/gui-keyboard.c:142
+#: src/gui/gui-keyboard.c:144
 msgid "clear infobar"
 msgstr "limpiar barra de información"
 
-#: src/gui/gui-keyboard.c:144
+#: src/gui/gui-keyboard.c:146
 msgid "refresh screen"
 msgstr "recargar la pantalla"
 
-#: src/gui/gui-keyboard.c:146
+#: src/gui/gui-keyboard.c:148
 msgid "grab a key"
 msgstr "capturar una clave"
 
-#: src/gui/gui-keyboard.c:148
+#: src/gui/gui-keyboard.c:150
 msgid "insert a string in command line"
 msgstr ""
 
-#: src/gui/gui-keyboard.c:150
+#: src/gui/gui-keyboard.c:152
 #, fuzzy
 msgid "search text in buffer history"
 msgstr "sesión: cargando historial del búfer\n"
 
-#: src/gui/gui-keyboard.c:478 src/common/command.c:2465
+#: src/gui/gui-keyboard.c:480 src/common/command.c:2465
 #, c-format
 msgid "%s unable to bind key \"%s\"\n"
 msgstr "%s No ha sido posible atar la clave \"%s\"\n"
 
-#: src/gui/gui-keyboard.c:506
+#: src/gui/gui-keyboard.c:508
 #, c-format
 msgid "%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"
 msgstr ""
 "%s No ha sido posible atar la clave \"%s\" (nombre de función inválido: \"%s"
 "\")\n"
 
-#: src/gui/gui-keyboard.c:520
+#: src/gui/gui-keyboard.c:522
 #, c-format
 msgid "%s not enough memory for key binding\n"
 msgstr "%s no hay suficiente memoria para atar la clave\n"
@@ -4521,11 +4526,11 @@ msgstr "%sBienvenido a %s%s%s, %s\n"
 msgid "compiled on"
 msgstr "compilado en"
 
-#: src/common/weechat.h:59
+#: src/common/weechat.h:60
 msgid "WeeChat Error:"
 msgstr "Error WeeChat:"
 
-#: src/common/weechat.h:60
+#: src/common/weechat.h:61
 msgid "WeeChat Warning:"
 msgstr "Advertencia WeeChat:"
 

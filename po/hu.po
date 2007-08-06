@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.6-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-07-19 01:23+0200\n"
+"POT-Creation-Date: 2007-08-06 11:23+0200\n"
 "PO-Revision-Date: 2007-06-07 18:02+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2591,43 +2591,48 @@ msgid "scroll to first unread line in buffer"
 msgstr "ugrás az első olvasatlan sorra a pufferben"
 
 #: src/gui/gui-keyboard.c:140
+#, fuzzy
+msgid "set unread marker on all buffers"
+msgstr "érvénytelen pufferhossz"
+
+#: src/gui/gui-keyboard.c:142
 msgid "clear hotlist"
 msgstr "hotlist törlése"
 
-#: src/gui/gui-keyboard.c:142
+#: src/gui/gui-keyboard.c:144
 msgid "clear infobar"
 msgstr "információs pult törlése"
 
-#: src/gui/gui-keyboard.c:144
+#: src/gui/gui-keyboard.c:146
 msgid "refresh screen"
 msgstr "képernyő frissítése"
 
-#: src/gui/gui-keyboard.c:146
+#: src/gui/gui-keyboard.c:148
 msgid "grab a key"
 msgstr "vállasszon billentyűt"
 
-#: src/gui/gui-keyboard.c:148
+#: src/gui/gui-keyboard.c:150
 msgid "insert a string in command line"
 msgstr ""
 
-#: src/gui/gui-keyboard.c:150
+#: src/gui/gui-keyboard.c:152
 #, fuzzy
 msgid "search text in buffer history"
 msgstr "folyamat: puffertörténet betöltése\n"
 
-#: src/gui/gui-keyboard.c:478 src/common/command.c:2465
+#: src/gui/gui-keyboard.c:480 src/common/command.c:2465
 #, c-format
 msgid "%s unable to bind key \"%s\"\n"
 msgstr "%s nem sikerült a(z) \"%s\" billentyűt hozzárendelni\n"
 
-#: src/gui/gui-keyboard.c:506
+#: src/gui/gui-keyboard.c:508
 #, c-format
 msgid "%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"
 msgstr ""
 "%s nem sikerült a(z) \"%s\" billentyűt hozzárendelni (érvénytelen "
 "funkciónév: \"%s\")\n"
 
-#: src/gui/gui-keyboard.c:520
+#: src/gui/gui-keyboard.c:522
 #, c-format
 msgid "%s not enough memory for key binding\n"
 msgstr "%s nincs elég memória a billentyűhozzárendeléshez\n"
@@ -4473,11 +4478,11 @@ msgstr "%sÜdvözöli a %s%s%s, %s\n"
 msgid "compiled on"
 msgstr "lefordítva:"
 
-#: src/common/weechat.h:59
+#: src/common/weechat.h:60
 msgid "WeeChat Error:"
 msgstr "WeeChat Hiba:"
 
-#: src/common/weechat.h:60
+#: src/common/weechat.h:61
 msgid "WeeChat Warning:"
 msgstr "WeeChat Figyelmeztetés:"
 

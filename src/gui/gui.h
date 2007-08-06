@@ -164,6 +164,7 @@ extern void gui_action_switch_server (t_gui_window *, char *);
 extern void gui_action_scroll_previous_highlight (t_gui_window *, char *);
 extern void gui_action_scroll_next_highlight (t_gui_window *, char *);
 extern void gui_action_scroll_unread (t_gui_window *, char *);
+extern void gui_action_set_unread (t_gui_window *, char *);
 extern void gui_action_hotlist_clear (t_gui_window *, char *);
 extern void gui_action_infobar_clear (t_gui_window *, char *);
 extern void gui_action_refresh_screen (t_gui_window *, char *);

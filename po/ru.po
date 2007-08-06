@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.6-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-07-19 01:23+0200\n"
+"POT-Creation-Date: 2007-08-06 11:23+0200\n"
 "PO-Revision-Date: 2007-07-18 17:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2573,42 +2573,47 @@ msgid "scroll to first unread line in buffer"
 msgstr "перейти к первой непрочитанной строчке буфера"
 
 #: src/gui/gui-keyboard.c:140
+#, fuzzy
+msgid "set unread marker on all buffers"
+msgstr "некорректная длина буфера"
+
+#: src/gui/gui-keyboard.c:142
 msgid "clear hotlist"
 msgstr "очистить хотлист"
 
-#: src/gui/gui-keyboard.c:142
+#: src/gui/gui-keyboard.c:144
 msgid "clear infobar"
 msgstr "очистить информационную панель"
 
-#: src/gui/gui-keyboard.c:144
+#: src/gui/gui-keyboard.c:146
 msgid "refresh screen"
 msgstr "обновить экран"
 
-#: src/gui/gui-keyboard.c:146
+#: src/gui/gui-keyboard.c:148
 msgid "grab a key"
 msgstr "захватить клавишу"
 
-#: src/gui/gui-keyboard.c:148
+#: src/gui/gui-keyboard.c:150
 msgid "insert a string in command line"
 msgstr "вставить строку в поле ввода"
 
-#: src/gui/gui-keyboard.c:150
+#: src/gui/gui-keyboard.c:152
 msgid "search text in buffer history"
 msgstr "поиск текста в истории буфера"
 
-#: src/gui/gui-keyboard.c:478 src/common/command.c:2465
+#: src/gui/gui-keyboard.c:480 src/common/command.c:2465
 #, c-format
 msgid "%s unable to bind key \"%s\"\n"
 msgstr "%s не могу установить клавишу \"%s\"\n"
 
-#: src/gui/gui-keyboard.c:506
+#: src/gui/gui-keyboard.c:508
 #, c-format
 msgid "%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"
 msgstr ""
 "%s не могу установить клавишу \"%s\" (некорректное название функции: \"%s"
 "\")\n"
 
-#: src/gui/gui-keyboard.c:520
+#: src/gui/gui-keyboard.c:522
 #, c-format
 msgid "%s not enough memory for key binding\n"
 msgstr "%s недостаточно памяти для установки клавиши\n"
@@ -4459,11 +4464,11 @@ msgstr "%sДобро пожаловать в %s%s%s, %s\n"
 msgid "compiled on"
 msgstr "собран:"
 
-#: src/common/weechat.h:59
+#: src/common/weechat.h:60
 msgid "WeeChat Error:"
 msgstr "Ошибка WeeChat:"
 
-#: src/common/weechat.h:60
+#: src/common/weechat.h:61
 msgid "WeeChat Warning:"
 msgstr "Предупреждение WeeChat:"
 

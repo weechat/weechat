@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-07-19 01:23+0200\n"
+"POT-Creation-Date: 2007-08-06 11:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2440,40 +2440,44 @@ msgid "scroll to first unread line in buffer"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:140
-msgid "clear hotlist"
+msgid "set unread marker on all buffers"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:142
-msgid "clear infobar"
+msgid "clear hotlist"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:144
-msgid "refresh screen"
+msgid "clear infobar"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:146
-msgid "grab a key"
+msgid "refresh screen"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:148
-msgid "insert a string in command line"
+msgid "grab a key"
 msgstr ""
 
 #: src/gui/gui-keyboard.c:150
+msgid "insert a string in command line"
+msgstr ""
+
+#: src/gui/gui-keyboard.c:152
 msgid "search text in buffer history"
 msgstr ""
 
-#: src/gui/gui-keyboard.c:478 src/common/command.c:2465
+#: src/gui/gui-keyboard.c:480 src/common/command.c:2465
 #, c-format
 msgid "%s unable to bind key \"%s\"\n"
 msgstr ""
 
-#: src/gui/gui-keyboard.c:506
+#: src/gui/gui-keyboard.c:508
 #, c-format
 msgid "%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"
 msgstr ""
 
-#: src/gui/gui-keyboard.c:520
+#: src/gui/gui-keyboard.c:522
 #, c-format
 msgid "%s not enough memory for key binding\n"
 msgstr ""
@@ -4128,11 +4132,11 @@ msgstr ""
 msgid "compiled on"
 msgstr ""
 
-#: src/common/weechat.h:59
+#: src/common/weechat.h:60
 msgid "WeeChat Error:"
 msgstr ""
 
-#: src/common/weechat.h:60
+#: src/common/weechat.h:61
 msgid "WeeChat Warning:"
 msgstr ""
 

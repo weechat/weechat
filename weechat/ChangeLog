@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-08-01
+ChangeLog - 2007-08-06
 
 
 Version 0.2.6 (under dev!):
+   * added key for setting unread marker on all buffers (default:
+     ctrl-S + ctrl-U) (task 7180)
    * fixed nick prefix display on servers that doesn't support all prefixes
      (bug #20025)
    * fixed terminal encoding detection when NLS is disabled (bug #20646)

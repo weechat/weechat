@@ -1399,6 +1399,35 @@ gui_action_scroll_unread (t_gui_window *window, char *args)
 }
 
 /*
+ * gui_action_set_unread: set unread marker for all buffers
+ */
+
+void
+gui_action_set_unread (t_gui_window *window, char *args)
+{
+    t_gui_window *ptr_win;
+    t_gui_buffer *ptr_buffer;
+    
+    /* make C compiler happy */
+    (void) window;
+    (void) args;
+
+    /* set read marker for all standard buffers */
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->type == BUFFER_TYPE_STANDARD)
+            ptr_buffer->last_read_line = ptr_buffer->last_line;
+    }
+    
+    /* refresh all windows */
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        gui_window_redraw_buffer (ptr_win->buffer);
+    }
+}
+
+/*
  * gui_action_hotlist_clear: clear hotlist
  */
 

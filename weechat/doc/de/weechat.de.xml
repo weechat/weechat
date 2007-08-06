@@ -502,7 +502,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <row>
                 <entry>Strg + C dann C</entry>
                 <entry>
-                  Insérer code for colored text.
+                  Insert code for colored text.
                 </entry>
               </row>
               <row>
@@ -512,13 +512,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </entry>
               </row>
               <row>
-                <entry>Ctrl + C dann R</entry>
+                <entry>Strg + C dann R</entry>
                 <entry>
                   Insert code for reverse color.
                 </entry>
               </row>
               <row>
-                <entry>Ctrl + C dann U</entry>
+                <entry>Strg + C dann U</entry>
                 <entry>
                   Insert code for underlined text.
                 </entry>
@@ -546,6 +546,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <entry>
                   Suche nach Text im Pufferverlauf
                   (zwei Mal: suche nach dem genauen Text)
+                </entry>
+              </row>
+              <row>
+                <entry>Strg + S dann Strg + U</entry>
+                <entry>
+                  <!-- TRANSLATION NEEDED -->
+                  Set unread marker on all buffers
                 </entry>
               </row>
               <row>

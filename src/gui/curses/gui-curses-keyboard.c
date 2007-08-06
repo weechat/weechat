@@ -108,6 +108,7 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind ( /* m-r         */ "meta-r",             "delete_line");
     gui_keyboard_bind ( /* m-s         */ "meta-s",             "switch_server");
     gui_keyboard_bind ( /* m-u         */ "meta-u",             "scroll_unread");
+    gui_keyboard_bind ( /* ^S^U        */ "ctrl-Sctrl-U",       "set_unread");
     gui_keyboard_bind ( /* ^R          */ "ctrl-R",             "search_text");
     gui_keyboard_bind ( /* ^Cb         */ "ctrl-Cb",            "insert \\x02");
     gui_keyboard_bind ( /* ^Cc         */ "ctrl-Cc",            "insert \\x03");

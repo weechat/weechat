@@ -552,6 +552,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </entry>
               </row>
               <row>
+                <entry>Ctrl + S puis Ctrl + U</entry>
+                <entry>
+                  Positionner le marqueur de données non lues sur tous les
+                  tampons
+                </entry>
+              </row>
+              <row>
                 <entry>Ctrl + T</entry>
                 <entry>
                   Inverser deux caractères

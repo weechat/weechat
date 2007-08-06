@@ -136,6 +136,8 @@ t_gui_key_function gui_key_functions[] =
     N_("scroll to next highlight in buffer") },
   { "scroll_unread",             gui_action_scroll_unread,
     N_("scroll to first unread line in buffer") },
+  { "set_unread",                gui_action_set_unread,
+    N_("set unread marker on all buffers") },
   { "hotlist_clear",             gui_action_hotlist_clear,
     N_("clear hotlist") },
   { "infobar_clear",             gui_action_infobar_clear,

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.6-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-07-19 01:23+0200\n"
+"POT-Creation-Date: 2007-08-06 11:23+0200\n"
 "PO-Revision-Date: 2007-07-18 17:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2584,40 +2584,45 @@ msgid "scroll to first unread line in buffer"
 msgstr "přesunout na první nepřečtenout řádku v bufferu"
 
 #: src/gui/gui-keyboard.c:140
+#, fuzzy
+msgid "set unread marker on all buffers"
+msgstr "nevalidní délka pro buffer"
+
+#: src/gui/gui-keyboard.c:142
 msgid "clear hotlist"
 msgstr "vyčisti hotlist"
 
-#: src/gui/gui-keyboard.c:142
+#: src/gui/gui-keyboard.c:144
 msgid "clear infobar"
 msgstr "vyčisti infobar"
 
-#: src/gui/gui-keyboard.c:144
+#: src/gui/gui-keyboard.c:146
 msgid "refresh screen"
 msgstr "obnov obrazovku"
 
-#: src/gui/gui-keyboard.c:146
+#: src/gui/gui-keyboard.c:148
 msgid "grab a key"
 msgstr "zachytit klávesu"
 
-#: src/gui/gui-keyboard.c:148
+#: src/gui/gui-keyboard.c:150
 msgid "insert a string in command line"
 msgstr "vložit řetězec na řádku"
 
-#: src/gui/gui-keyboard.c:150
+#: src/gui/gui-keyboard.c:152
 msgid "search text in buffer history"
 msgstr "hledání textu v historii bufferu"
 
-#: src/gui/gui-keyboard.c:478 src/common/command.c:2465
+#: src/gui/gui-keyboard.c:480 src/common/command.c:2465
 #, c-format
 msgid "%s unable to bind key \"%s\"\n"
 msgstr "%s nemohu napojit kalávesu \"%s\"\n"
 
-#: src/gui/gui-keyboard.c:506
+#: src/gui/gui-keyboard.c:508
 #, c-format
 msgid "%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"
 msgstr "%s nemohu napojit kalávesu \"%s\" (nevalidní jméno funkce: \"%s\")\n"
 
-#: src/gui/gui-keyboard.c:520
+#: src/gui/gui-keyboard.c:522
 #, c-format
 msgid "%s not enough memory for key binding\n"
 msgstr "%s nedostatek paměti pro klávesovou zkratku\n"
@@ -4453,11 +4458,11 @@ msgstr "%sVítejte do %s%s%s, %s\n"
 msgid "compiled on"
 msgstr "kompilováno"
 
-#: src/common/weechat.h:59
+#: src/common/weechat.h:60
 msgid "WeeChat Error:"
 msgstr "WeeChat chyba:"
 
-#: src/common/weechat.h:60
+#: src/common/weechat.h:61
 msgid "WeeChat Warning:"
 msgstr "WeeChat Upozornění:"
 

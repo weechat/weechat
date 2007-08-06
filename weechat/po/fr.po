@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.6-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-07-19 01:23+0200\n"
-"PO-Revision-Date: 2007-07-19 01:24+0200\n"
+"POT-Creation-Date: 2007-08-06 11:23+0200\n"
+"PO-Revision-Date: 2007-08-06 11:23+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2607,41 +2607,45 @@ msgid "scroll to first unread line in buffer"
 msgstr "faire défiler jusqu'à la première ligne non lue du tampon"
 
 #: src/gui/gui-keyboard.c:140
+msgid "set unread marker on all buffers"
+msgstr "positionner le marqueur de données non lues sur tous les tampons"
+
+#: src/gui/gui-keyboard.c:142
 msgid "clear hotlist"
 msgstr "effacer la liste d'activité"
 
-#: src/gui/gui-keyboard.c:142
+#: src/gui/gui-keyboard.c:144
 msgid "clear infobar"
 msgstr "effacer la barre d'infos"
 
-#: src/gui/gui-keyboard.c:144
+#: src/gui/gui-keyboard.c:146
 msgid "refresh screen"
 msgstr "rafraîchir l'écran"
 
-#: src/gui/gui-keyboard.c:146
+#: src/gui/gui-keyboard.c:148
 msgid "grab a key"
 msgstr "capturer une touche"
 
-#: src/gui/gui-keyboard.c:148
+#: src/gui/gui-keyboard.c:150
 msgid "insert a string in command line"
 msgstr "insérer une chaîne dans la ligne de commande"
 
-#: src/gui/gui-keyboard.c:150
+#: src/gui/gui-keyboard.c:152
 msgid "search text in buffer history"
 msgstr "recherche de texte dans l'historique du tampon"
 
-#: src/gui/gui-keyboard.c:478 src/common/command.c:2465
+#: src/gui/gui-keyboard.c:480 src/common/command.c:2465
 #, c-format
 msgid "%s unable to bind key \"%s\"\n"
 msgstr "%s impossible de créer la touche \"%s\"\n"
 
-#: src/gui/gui-keyboard.c:506
+#: src/gui/gui-keyboard.c:508
 #, c-format
 msgid "%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"
 msgstr ""
 "%s impossible de créer la touche \"%s\" (nom fonction incorrect: \"%s\")\n"
 
-#: src/gui/gui-keyboard.c:520
+#: src/gui/gui-keyboard.c:522
 #, c-format
 msgid "%s not enough memory for key binding\n"
 msgstr "%s pas assez de mémoire pour la touche\n"
@@ -4529,11 +4533,11 @@ msgstr "%sBienvenue dans %s%s%s, %s\n"
 msgid "compiled on"
 msgstr "compilé le"
 
-#: src/common/weechat.h:59
+#: src/common/weechat.h:60
 msgid "WeeChat Error:"
 msgstr "Erreur WeeChat:"
 
-#: src/common/weechat.h:60
+#: src/common/weechat.h:61
 msgid "WeeChat Warning:"
 msgstr "Avertissement WeeChat:"
 

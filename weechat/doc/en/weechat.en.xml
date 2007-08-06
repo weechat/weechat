@@ -496,7 +496,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <row>
                 <entry>Ctrl + C then C</entry>
                 <entry>
-                  Insérer code for colored text.
+                  Insert code for colored text.
                 </entry>
               </row>
               <row>
@@ -540,6 +540,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <entry>
                   Search for text in buffer history
                   (two times: search exact text)
+                </entry>
+              </row>
+              <row>
+                <entry>Ctrl + S then Ctrl + U</entry>
+                <entry>
+                  Set unread marker on all buffers
                 </entry>
               </row>
               <row>

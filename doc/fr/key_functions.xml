@@ -186,6 +186,10 @@
   <entry>faire défiler jusqu'à la première ligne non lue du tampon</entry>
 </row>
 <row>
+  <entry><literal>set_unread</literal></entry>
+  <entry>set unread marker for all buffers</entry>
+</row>
+<row>
   <entry><literal>hotlist_clear</literal></entry>
   <entry>effacer la liste d'activité</entry>
 </row>

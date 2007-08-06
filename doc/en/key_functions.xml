@@ -186,6 +186,10 @@
   <entry>scroll to first unread line in buffer</entry>
 </row>
 <row>
+  <entry><literal>set_unread</literal></entry>
+  <entry>set unread marker for all buffers</entry>
+</row>
+<row>
   <entry><literal>hotlist_clear</literal></entry>
   <entry>clear hotlist</entry>
 </row>

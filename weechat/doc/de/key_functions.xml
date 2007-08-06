@@ -186,6 +186,10 @@
   <entry>scrolle zur ersten, ungelesenen Zeile im Puffer</entry>
 </row>
 <row>
+  <entry><literal>set_unread</literal></entry>
+  <entry>set unread marker for all buffers</entry>
+</row>
+<row>
   <entry><literal>hotlist_clear</literal></entry>
   <entry>Hotlist leeren</entry>
 </row>
