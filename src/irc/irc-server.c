@@ -248,7 +248,7 @@ irc_server_init_with_url (char *irc_url, t_irc_server *server)
 
     /* some default values */
     if (server->port < 0)
-        server->port = DEFAULT_IRC_PORT;
+        server->port = IRC_DEFAULT_PORT;
     server->nick2 = (char *) malloc (strlen (server->nick1) + 2);
     strcpy (server->nick2, server->nick1);
     server->nick2 = strcat (server->nick2, "1");

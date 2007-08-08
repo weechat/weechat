@@ -62,13 +62,17 @@ clear window(s)
 number: clear buffer by number
 
 </programlisting>
-<command>connect  [-all [-nojoin] | servername [servername ...] [-nojoin]]</command>
+<command>connect  [-all [-nojoin] | servername [servername ...] [-nojoin] | hostname [-port port] [-ipv6] [-ssl]]</command>
 <programlisting>
 connect to server(s)
 
       -all: connect to all servers
-servername: server name to connect
+servername: internal server name to connect
    -nojoin: do not join any channel (even if autojoin is enabled on server)
+  hostname: hostname to connect, creating temporary server
+      port: port for server (integer, default is 6667)
+      ipv6: use IPv6 protocol
+       ssl: use SSL protocol
 
 </programlisting>
 <command>disconnect  [-all | servername [servername ...]]</command>
@@ -166,15 +170,19 @@ save config to disk
 file: filename for writing config
 
 </programlisting>
-<command>server  [list [servername]] | [listfull [servername]] | [servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 nick2 nick3] [-username username] [-realname realname] [-command command] [-autojoin channel[,channel]] ] | [copy server newservername] [rename servername newservername] [del servername]</command>
+<command>server  [list [servername]] | [listfull [servername]] | [servername] | [add servername hostname [-port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 nick2 nick3] [-username username] [-realname realname] [-command command] [-autojoin channel[,channel]] ] | [copy server newservername] [rename servername newservername] | [keep servername] [del servername]</command>
 <programlisting>
 list, add or remove servers
 
       list: list servers (no parameter implies this list)
   listfull: list servers with detailed info for each server
+       add: create a new server
 servername: server name, for internal and display use
   hostname: name or IP address of server
-      port: port for server (integer)
+      port: port for server (integer, default is 6667)
+      temp: create temporary server (not saved in config file)
+      auto: automatically connect to server when WeeChat starts
+    noauto: do not connect to server when WeeChat starts (default)
       ipv6: use IPv6 protocol
        ssl: use SSL protocol
   password: password for server
@@ -185,6 +193,7 @@ servername: server name, for internal and display use
   realname: real name of user
       copy: duplicate a server
     rename: rename a server
+      keep: remove temporary flag on a server to keep it (in config file)
        del: delete a server
 
 </programlisting>

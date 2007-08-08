@@ -5,8 +5,10 @@ ChangeLog - 2007-08-08
 
 
 Version 0.2.6 (under dev!):
+   * improved /connect command to connect to a host by creating a temporary
+     server, added option to /server to create temporary server (task #7095)
+   * added "copy", "rename" and "keep" options to /server command
    * allow clear of multiple selected buffers with /clear (patch #6112)
-   * added "copy" and "rename" options to /server command
    * added key for setting unread marker on all buffers (default:
      ctrl-S + ctrl-U) (task 7180)
    * fixed nick prefix display on servers that doesn't support all prefixes

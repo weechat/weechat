@@ -52,7 +52,7 @@
 #define PREFIX_RECV_MOD  "==>"
 #define PREFIX_SEND_MOD  "<=="
 
-#define DEFAULT_IRC_PORT 6667
+#define IRC_DEFAULT_PORT 6667
 
 /* nick types */
 
