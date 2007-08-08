@@ -54,12 +54,12 @@ commande: commande à exécuter (un '/' est automatiquement ajouté s'il n'est pas 
 
 
 </programlisting>
-<command>clear  [-all | nombre]</command>
+<command>clear  [-all | numéro [numéro ...]]</command>
 <programlisting>
 effacer la/les fenêtre(s)
 
   -all: effacer tous les tampons
-nombre: effacer un tampon par son numéro
+numéro: effacer un tampon par son numéro
 
 </programlisting>
 <command>connect  [-all [-nojoin] | nom_serveur [nom_serveur...] [-nojoin]]</command>

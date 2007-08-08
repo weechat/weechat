@@ -54,7 +54,7 @@ command: command to execute (a '/' is automatically added if not found at beginn
 
 
 </programlisting>
-<command>clear  [-all | number]</command>
+<command>clear  [-all | number [number ...]]</command>
 <programlisting>
 clear window(s)
 

@@ -54,7 +54,7 @@ Befehl: auszuführender Befehl (falls nicht vorhanden wird automatisch ein '/' vo
 
 
 </programlisting>
-<command>clear  [-all | Nummer]</command>
+<command>clear  [-all | number [number ...]]</command>
 <programlisting>
 Fenster leeren
 

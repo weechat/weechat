@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.6-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-08-07 22:39+0200\n"
+"POT-Creation-Date: 2007-08-08 10:59+0200\n"
 "PO-Revision-Date: 2007-08-08 10:13+0200\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1446,7 +1446,7 @@ msgstr ""
 msgid "%s \"%s\" command can not be executed on a server buffer\n"
 msgstr "%s el comando \"%s\" no puede ejecutarse en una ventana de servidor\n"
 
-#: src/irc/irc-send.c:894 src/irc/irc-send.c:955 src/common/command.c:1760
+#: src/irc/irc-send.c:894 src/irc/irc-send.c:955 src/common/command.c:1764
 #, c-format
 msgid "%s wrong arguments for \"%s\" command\n"
 msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
@@ -1473,9 +1473,9 @@ msgid "%s nick \"%s\" not found for \"%s\" command\n"
 msgstr "%s usuario \"%s\" no encontrado para el comando \"%s\"\n"
 
 #: src/irc/irc-send.c:1347 src/irc/irc-send.c:1485 src/irc/irc-send.c:2113
-#: src/common/command.c:1705 src/common/command.c:1717
-#: src/common/command.c:1736 src/common/command.c:1825
-#: src/common/command.c:2784
+#: src/common/command.c:1709 src/common/command.c:1721
+#: src/common/command.c:1740 src/common/command.c:1829
+#: src/common/command.c:2788
 #, c-format
 msgid "%s wrong argument count for \"%s\" command\n"
 msgstr "%s número de argumentos incorrecto para el comando \"%s\"\n"
@@ -1704,7 +1704,7 @@ msgstr "%s[%s%s%s]%s inactividad: "
 msgid "days"
 msgstr "días"
 
-#: src/irc/irc-recv.c:3202 src/common/command.c:4148 src/common/command.c:4166
+#: src/irc/irc-recv.c:3202 src/common/command.c:4152 src/common/command.c:4170
 #, fuzzy
 msgid "day"
 msgid_plural "days"
@@ -2294,7 +2294,7 @@ msgid "Plugin \"%s\" unloaded.\n"
 msgstr "Plugin \"%s\" descargado.\n"
 
 #: src/plugins/plugins.c:1425 src/plugins/plugins.c:1468
-#: src/common/command.c:3819
+#: src/common/command.c:3823
 #, c-format
 msgid "%s plugin \"%s\" not found\n"
 msgstr "%s plugin \"%s\" no encontrado\n"
@@ -2661,7 +2661,7 @@ msgstr ""
 msgid "search text in buffer history"
 msgstr "sesión: cargando historial del búfer\n"
 
-#: src/gui/gui-keyboard.c:480 src/common/command.c:2468
+#: src/gui/gui-keyboard.c:480 src/common/command.c:2472
 #, c-format
 msgid "%s unable to bind key \"%s\"\n"
 msgstr "%s No ha sido posible atar la clave \"%s\"\n"
@@ -2806,7 +2806,7 @@ msgstr "limpiar la(s) ventana(s)"
 
 #: src/common/command.c:94
 #, fuzzy
-msgid "[-all | number]"
+msgid "[-all | number [number ...]]"
 msgstr "[-all] usuarios"
 
 #: src/common/command.c:95
@@ -3450,238 +3450,238 @@ msgstr "(hotlist: resaltados + mensajes)\n"
 msgid "(hotlist: highlights + messages + join/part (all))\n"
 msgstr "(hotlist: resaltados + mensajes + join/part (todos))\n"
 
-#: src/common/command.c:1541
+#: src/common/command.c:1544
 #, fuzzy, c-format
-msgid "%s buffer not found for \"%s\" command\n"
+msgid "%s buffer number \"%s\" not found for \"%s\" command\n"
 msgstr "%s nombre de usuario no encontrado para el comando \"%s\"\n"
 
-#: src/common/command.c:1551 src/common/command.c:1854
-#: src/common/command.c:2777 src/common/command.c:4280
-#: src/common/command.c:4323
+#: src/common/command.c:1554 src/common/command.c:1858
+#: src/common/command.c:2781 src/common/command.c:4284
+#: src/common/command.c:4327
 #, c-format
 msgid "%s unknown option for \"%s\" command\n"
 msgstr "%s opción desconocida para el comando \"%s\"\n"
 
-#: src/common/command.c:1579
+#: src/common/command.c:1583
 #, c-format
 msgid "%s already connected to server \"%s\"!\n"
 msgstr "%s ¡ya conectado al servidor \"%s\"!\n"
 
-#: src/common/command.c:1587
+#: src/common/command.c:1591
 #, c-format
 msgid "%s currently connecting to server \"%s\"!\n"
 msgstr "%s ¡actualmente conectando al servidor \"%s\"!\n"
 
-#: src/common/command.c:1667 src/common/command.c:1939
-#: src/common/command.c:2888 src/common/command.c:3499
+#: src/common/command.c:1671 src/common/command.c:1943
+#: src/common/command.c:2892 src/common/command.c:3503
 #, c-format
 msgid "%s server \"%s\" not found\n"
 msgstr "%s servidor \"%s\" no encontrado\n"
 
-#: src/common/command.c:1875 src/common/command.c:2815
+#: src/common/command.c:1879 src/common/command.c:2819
 #, c-format
 msgid "%s not connected to server \"%s\"!\n"
 msgstr "%s ¡no conectado al servidor \"%s\"!\n"
 
-#: src/common/command.c:1883
+#: src/common/command.c:1887
 msgid "Auto-reconnection is cancelled\n"
 msgstr "La reconexión automática está anulada\n"
 
-#: src/common/command.c:1975 src/common/weechat.c:218
+#: src/common/command.c:1979 src/common/weechat.c:218
 #, c-format
 msgid "%s internal commands:\n"
 msgstr "Comandos internos %s :\n"
 
-#: src/common/command.c:1985 src/common/weechat.c:238
+#: src/common/command.c:1989 src/common/weechat.c:238
 msgid "IRC commands:\n"
 msgstr "Comandos IRC :\n"
 
-#: src/common/command.c:1999
+#: src/common/command.c:2003
 msgid "Plugin commands:\n"
 msgstr "Comandos de plugin:\n"
 
-#: src/common/command.c:2115
+#: src/common/command.c:2119
 #, c-format
 msgid "No help available, \"%s\" is an unknown command\n"
 msgstr "No hay ayuda disponible, el comando \"%s\" es desconocido\n"
 
-#: src/common/command.c:2184
+#: src/common/command.c:2188
 #, c-format
 msgid "%son %s%s%s/%s%s%s:%s ignoring %s%s%s from %s%s\n"
 msgstr "%sen %s%s%s/%s%s%s:%s ignorando %s%s%s de %s%s\n"
 
-#: src/common/command.c:2222
+#: src/common/command.c:2226
 msgid "List of ignore:\n"
 msgstr "Lista de ignores:\n"
 
-#: src/common/command.c:2239
+#: src/common/command.c:2243
 msgid "No ignore defined.\n"
 msgstr "Sin ignores definidos.\n"
 
-#: src/common/command.c:2265
+#: src/common/command.c:2269
 msgid "New ignore:"
 msgstr "Nuevo ignore:"
 
-#: src/common/command.c:2285
+#: src/common/command.c:2289
 #, c-format
 msgid "New key binding:  %s"
 msgstr "Nueva anclaje de clave:  %s"
 
-#: src/common/command.c:2328
+#: src/common/command.c:2332
 msgid "Key bindings:\n"
 msgstr "Anclajes de clave:\n"
 
-#: src/common/command.c:2342
+#: src/common/command.c:2346
 #, c-format
 msgid "Key \"%s\" unbound\n"
 msgstr "Clave \"%s\" desatada\n"
 
-#: src/common/command.c:2348
+#: src/common/command.c:2352
 #, c-format
 msgid "%s unable to unbind key \"%s\"\n"
 msgstr "%s No ha sido posible desatar la clave \"%s\"\n"
 
-#: src/common/command.c:2356 src/common/weechat.c:270
+#: src/common/command.c:2360 src/common/weechat.c:270
 msgid "Internal key functions:\n"
 msgstr "Funciones de clave internas:\n"
 
-#: src/common/command.c:2405
+#: src/common/command.c:2409
 #, fuzzy, c-format
 msgid "%s unknown key function \"%s\"\n"
 msgstr "%s opción desconocida para el comando \"%s\"\n"
 
-#: src/common/command.c:2420
+#: src/common/command.c:2424
 msgid "Default key bindings restored\n"
 msgstr "Anclajes de clave por defecto restaurados\n"
 
-#: src/common/command.c:2426
+#: src/common/command.c:2430
 #, fuzzy, c-format
 msgid "%s \"-yes\" argument is required for keys reset (security reason)\n"
 msgstr ""
 "%s \"-yes\" se requiere argumento para resetear las claves (por razones de "
 "seguridad)\n"
 
-#: src/common/command.c:2445
+#: src/common/command.c:2449
 msgid "Key:\n"
 msgstr ""
 
-#: src/common/command.c:2451
+#: src/common/command.c:2455
 #, fuzzy
 msgid "No key found.\n"
 msgstr "Ningún alias definido.\n"
 
-#: src/common/command.c:2493
+#: src/common/command.c:2497
 msgid "global"
 msgstr ""
 
-#: src/common/command.c:2493
+#: src/common/command.c:2497
 msgid "local"
 msgstr ""
 
-#: src/common/command.c:2499
+#: src/common/command.c:2503
 #, fuzzy
 msgid "top"
 msgstr "operador"
 
-#: src/common/command.c:2502
+#: src/common/command.c:2506
 msgid "bottom"
 msgstr ""
 
-#: src/common/command.c:2505
+#: src/common/command.c:2509
 msgid "left"
 msgstr ""
 
-#: src/common/command.c:2508
+#: src/common/command.c:2512
 msgid "right"
 msgstr ""
 
-#: src/common/command.c:2538
+#: src/common/command.c:2542
 #, fuzzy
 msgid "Open panels:\n"
 msgstr "Búfers abiertos:\n"
 
-#: src/common/command.c:2570
+#: src/common/command.c:2574
 msgid "Plugins loaded:\n"
 msgstr "Plugins cargados:\n"
 
-#: src/common/command.c:2596
+#: src/common/command.c:2600
 msgid "     message handlers:\n"
 msgstr "     manejadores de mensaje:\n"
 
-#: src/common/command.c:2605
+#: src/common/command.c:2609
 #, c-format
 msgid "       IRC(%s)\n"
 msgstr "        IRC(%s)\n"
 
-#: src/common/command.c:2612
+#: src/common/command.c:2616
 msgid "       (no message handler)\n"
 msgstr "       (sin manejador de mensaje)\n"
 
-#: src/common/command.c:2617
+#: src/common/command.c:2621
 msgid "     command handlers:\n"
 msgstr "     manejadores de comando:\n"
 
-#: src/common/command.c:2638
+#: src/common/command.c:2642
 msgid "       (no command handler)\n"
 msgstr "       (sin manejador de comando)\n"
 
-#: src/common/command.c:2643
+#: src/common/command.c:2647
 msgid "     timer handlers:\n"
 msgstr "     manejadores de temporización:\n"
 
-#: src/common/command.c:2652
+#: src/common/command.c:2656
 #, c-format
 msgid "       %d seconds\n"
 msgstr "        %d segundos\n"
 
-#: src/common/command.c:2659
+#: src/common/command.c:2663
 msgid "       (no timer handler)\n"
 msgstr "       (sin manejador temporizador)\n"
 
-#: src/common/command.c:2664
+#: src/common/command.c:2668
 msgid "     keyboard handlers:\n"
 msgstr "     manejadores de teclado:\n"
 
-#: src/common/command.c:2674
+#: src/common/command.c:2678
 msgid "       (no keyboard handler)\n"
 msgstr "       (sin manejador de teclado)\n"
 
-#: src/common/command.c:2676 src/common/command.c:2693
-#: src/common/command.c:2709
+#: src/common/command.c:2680 src/common/command.c:2697
+#: src/common/command.c:2713
 #, c-format
 msgid "       %d defined\n"
 msgstr "       %d definido\n"
 
-#: src/common/command.c:2681
+#: src/common/command.c:2685
 #, fuzzy
 msgid "     event handlers:\n"
 msgstr "     manejadores de mensaje:\n"
 
-#: src/common/command.c:2691
+#: src/common/command.c:2695
 #, fuzzy
 msgid "       (no event handler)\n"
 msgstr "       (sin manejador de mensaje)\n"
 
-#: src/common/command.c:2698
+#: src/common/command.c:2702
 #, fuzzy
 msgid "     modifiers:\n"
 msgstr "       (sin manejador temporizador)\n"
 
-#: src/common/command.c:2707
+#: src/common/command.c:2711
 #, fuzzy
 msgid "       (no modifier)\n"
 msgstr "       (sin manejador temporizador)\n"
 
-#: src/common/command.c:2718
+#: src/common/command.c:2722
 #, fuzzy
 msgid "No plugin found.\n"
 msgstr "Ninguna opción de plugin encontrada\n"
 
-#: src/common/command.c:2720
+#: src/common/command.c:2724
 msgid "  (no plugin)\n"
 msgstr "  (sin plugins)\n"
 
-#: src/common/command.c:2790 src/common/command.c:3897
+#: src/common/command.c:2794 src/common/command.c:3901
 #, c-format
 msgid ""
 "Command \"%s\" is not available, WeeChat was built without plugins support.\n"
@@ -3689,72 +3689,72 @@ msgstr ""
 "El comando \"%s\" no está disponible, Weechat fue compilado sin soporte para "
 "plugins.\n"
 
-#: src/common/command.c:2920
+#: src/common/command.c:2924
 msgid "Configuration file saved\n"
 msgstr "Archivo de configuración guardado\n"
 
-#: src/common/command.c:2925
+#: src/common/command.c:2929
 #, c-format
 msgid "%s failed to save configuration file\n"
 msgstr "%s falló al salvar el archivo de configuración\n"
 
-#: src/common/command.c:2933
+#: src/common/command.c:2937
 #, fuzzy
 msgid "Plugins options saved\n"
 msgstr "opción/opciones de plugin encontrada(s)\n"
 
-#: src/common/command.c:2938
+#: src/common/command.c:2942
 #, fuzzy, c-format
 msgid "%s failed to save plugins options\n"
 msgstr "%s falló al salvar el archivo de configuración\n"
 
-#: src/common/command.c:2987
+#: src/common/command.c:2991
 #, fuzzy
 msgid "All servers:\n"
 msgstr "Ningún servidor.\n"
 
-#: src/common/command.c:2997
+#: src/common/command.c:3001
 msgid "No server.\n"
 msgstr "Ningún servidor.\n"
 
-#: src/common/command.c:3011
+#: src/common/command.c:3015
 #, fuzzy, c-format
 msgid "Servers with '%s':\n"
 msgstr "Servidor '%s' no encontrado.\n"
 
-#: src/common/command.c:3021
+#: src/common/command.c:3025
 #, fuzzy, c-format
 msgid "No server with '%s' found.\n"
 msgstr "Servidor '%s' no encontrado.\n"
 
-#: src/common/command.c:3034 src/common/command.c:3083
-#: src/common/command.c:3131
+#: src/common/command.c:3038 src/common/command.c:3087
+#: src/common/command.c:3135
 #, fuzzy, c-format
 msgid "%s missing server name for \"%s\" command\n"
 msgstr "%s falta el nombre de servidor para el comando \"%s\"\n"
 
-#: src/common/command.c:3045 src/common/command.c:3094
-#: src/common/command.c:3142
+#: src/common/command.c:3049 src/common/command.c:3098
+#: src/common/command.c:3146
 #, c-format
 msgid "%s server \"%s\" not found for \"%s\" command\n"
 msgstr "%s servidor \"%s\" no encontrado para el comando \"%s\"\n"
 
-#: src/common/command.c:3055 src/common/command.c:3104
+#: src/common/command.c:3059 src/common/command.c:3108
 #, fuzzy, c-format
 msgid "%s server \"%s\" already exists for \"%s\" command\n"
 msgstr "%s servidor \"%s\" no encontrado para el comando \"%s\"\n"
 
-#: src/common/command.c:3065
+#: src/common/command.c:3069
 #, fuzzy, c-format
 msgid "Server %s%s%s has been copied to %s%s\n"
 msgstr "El servidor %s%s%s ha sido borrado\n"
 
-#: src/common/command.c:3113
+#: src/common/command.c:3117
 #, fuzzy, c-format
 msgid "Server %s%s%s has been renamed to %s%s\n"
 msgstr "El servidor %s%s%s ha sido borrado\n"
 
-#: src/common/command.c:3150
+#: src/common/command.c:3154
 #, c-format
 msgid ""
 "%s you can not delete server \"%s\" because you are connected to. Try /"
@@ -3763,192 +3763,192 @@ msgstr ""
 "%s usted no puede eliminar el servidor \"%s\" ya que está usted conectado a "
 "él. Pruebe /disconnect %s antes.\n"
 
-#: src/common/command.c:3170
+#: src/common/command.c:3174
 #, c-format
 msgid "Server %s%s%s has been deleted\n"
 msgstr "El servidor %s%s%s ha sido borrado\n"
 
-#: src/common/command.c:3189
+#: src/common/command.c:3193
 #, c-format
 msgid "%s missing parameters for \"%s\" command\n"
 msgstr "%s faltan parámetros para el comando \"%s\"\n"
 
-#: src/common/command.c:3199
+#: src/common/command.c:3203
 #, c-format
 msgid "%s server \"%s\" already exists, can't create it!\n"
 msgstr "%s el servidor \"%s\" ya existe, ¡no se puede crear!\n"
 
-#: src/common/command.c:3228 src/common/command.c:3256
-#: src/common/command.c:3269 src/common/command.c:3295
+#: src/common/command.c:3232 src/common/command.c:3260
+#: src/common/command.c:3273 src/common/command.c:3299
 #, c-format
 msgid "%s missing password for \"%s\" parameter\n"
 msgstr "%s falta contraseña para el comando \"%s\"\n"
 
-#: src/common/command.c:3241
+#: src/common/command.c:3245
 #, c-format
 msgid "%s missing nick(s) for \"%s\" parameter\n"
 msgstr "%s falta(n) usuario(s) para el parámetro \"%s\"\n"
 
-#: src/common/command.c:3282
+#: src/common/command.c:3286
 #, c-format
 msgid "%s missing command for \"%s\" parameter\n"
 msgstr "%s falta comando para el parámetro \"%s\"\n"
 
-#: src/common/command.c:3319
+#: src/common/command.c:3323
 #, c-format
 msgid "Server %s%s%s created\n"
 msgstr "Servidor %s%s%s creado\n"
 
-#: src/common/command.c:3328
+#: src/common/command.c:3332
 #, c-format
 msgid "%s unable to create server\n"
 msgstr "%s no es posible crear el servidor\n"
 
-#: src/common/command.c:3388
+#: src/common/command.c:3392
 msgid "(unknown)"
 msgstr "(desconocido)"
 
-#: src/common/command.c:3400
+#: src/common/command.c:3404
 #, c-format
 msgid "%s(password hidden) "
 msgstr "%s(contraseña oculta) "
 
-#: src/common/command.c:3532 src/common/command.c:3580
+#: src/common/command.c:3536 src/common/command.c:3584
 #, c-format
 msgid "%s config option \"%s\" not found\n"
 msgstr "%s opción de configuración \"%s\" no encontrada\n"
 
-#: src/common/command.c:3537 src/common/command.c:3572
+#: src/common/command.c:3541 src/common/command.c:3576
 #, c-format
 msgid "%s incorrect value for option \"%s\"\n"
 msgstr "%s valor incorrecto para la opción \"%s\"\n"
 
-#: src/common/command.c:3553
+#: src/common/command.c:3557
 #, c-format
 msgid "%s option \"%s\" can not be changed while WeeChat is running\n"
 msgstr ""
 "%s la opción \"%s\" no puede ser modificada mientras WeeChat está en "
 "ejecución\n"
 
-#: src/common/command.c:3663
+#: src/common/command.c:3667
 #, c-format
 msgid "No config option found with \"%s\"\n"
 msgstr "Ninguna opción de configuración encontrada con \"%s\"\n"
 
-#: src/common/command.c:3666
+#: src/common/command.c:3670
 msgid "No config option found\n"
 msgstr "Ninguna opción de configuración encontrada\n"
 
-#: src/common/command.c:3673
+#: src/common/command.c:3677
 #, c-format
 msgid "%sDetail:\n"
 msgstr "%sDetalle:\n"
 
-#: src/common/command.c:3678
+#: src/common/command.c:3682
 msgid "  . type boolean (values: 'on' or 'off')\n"
 msgstr "  . tipo booleano (valores: 'on' u 'off')\n"
 
-#: src/common/command.c:3679 src/common/command.c:3702
-#: src/common/command.c:3708 src/common/command.c:3714
+#: src/common/command.c:3683 src/common/command.c:3706
+#: src/common/command.c:3712 src/common/command.c:3718
 #: src/common/weechat.c:153 src/common/weechat.c:178 src/common/weechat.c:185
 #: src/common/weechat.c:192
 #, c-format
 msgid "  . default value: '%s'\n"
 msgstr "  . valor por defecto: '%s'\n"
 
-#: src/common/command.c:3684
+#: src/common/command.c:3688
 #, c-format
 msgid "  . type integer (values: between %d and %d)\n"
 msgstr "  . tipo entero (valores: entre %d y %d)\n"
 
-#: src/common/command.c:3687 src/common/weechat.c:162
+#: src/common/command.c:3691 src/common/weechat.c:162
 #, c-format
 msgid "  . default value: %d\n"
 msgstr "  . valor por defecto: %d\n"
 
-#: src/common/command.c:3691
+#: src/common/command.c:3695
 msgid "  . type string (values: "
 msgstr "  . tipo cadena (valores: "
 
-#: src/common/command.c:3704 src/common/command.c:3710
-#: src/common/command.c:3716 src/common/weechat.c:180 src/common/weechat.c:187
+#: src/common/command.c:3708 src/common/command.c:3714
+#: src/common/command.c:3720 src/common/weechat.c:180 src/common/weechat.c:187
 #: src/common/weechat.c:194
 msgid "empty"
 msgstr "vacío"
 
-#: src/common/command.c:3707
+#: src/common/command.c:3711
 msgid "  . type color (Curses or Gtk color, look at WeeChat doc)\n"
 msgstr "  . tipo color (color Curses o Gtk, ver la documentación de WeeChat)\n"
 
-#: src/common/command.c:3713
+#: src/common/command.c:3717
 msgid "  . type string (any string)\n"
 msgstr "  . tipo cadena (cualquier cadena)\n"
 
-#: src/common/command.c:3719 src/common/weechat.c:197
+#: src/common/command.c:3723 src/common/weechat.c:197
 #, c-format
 msgid "  . description: %s\n"
 msgstr "  . descripción: %s\n"
 
-#: src/common/command.c:3730
+#: src/common/command.c:3734
 #, c-format
 msgid "config option(s) found with \"%s\"\n"
 msgstr "opción/opciones de configuración encontrada(s) con \"%s\"\n"
 
-#: src/common/command.c:3733
+#: src/common/command.c:3737
 msgid "config option(s) found\n"
 msgstr "opción/opciones de configuración encontrada(s)\n"
 
-#: src/common/command.c:3841
+#: src/common/command.c:3845
 #, c-format
 msgid "%s incorrect value for plugin option \"%s\"\n"
 msgstr "%s valor incorrecto para la opción de plugin \"%s\"\n"
 
-#: src/common/command.c:3870
+#: src/common/command.c:3874
 #, c-format
 msgid "No plugin option found with \"%s\"\n"
 msgstr "Ninguna opción de plugin encontrada con \"%s\"\n"
 
-#: src/common/command.c:3873
+#: src/common/command.c:3877
 msgid "No plugin option found\n"
 msgstr "Ninguna opción de plugin encontrada\n"
 
-#: src/common/command.c:3883
+#: src/common/command.c:3887
 #, c-format
 msgid "plugin option(s) found with \"%s\"\n"
 msgstr "opción/opciones de plugin encontrada(s) con \"%s\"\n"
 
-#: src/common/command.c:3886
+#: src/common/command.c:3890
 msgid "plugin option(s) found\n"
 msgstr "opción/opciones de plugin encontrada(s)\n"
 
-#: src/common/command.c:3927
+#: src/common/command.c:3931
 #, c-format
 msgid "%s alias or command \"%s\" not found\n"
 msgstr "%s alias o comando \"%s\" no encontrado\n"
 
-#: src/common/command.c:3937
+#: src/common/command.c:3941
 #, c-format
 msgid "Alias \"%s\" removed\n"
 msgstr "Alias \"%s\" eliminado\n"
 
-#: src/common/command.c:3993
+#: src/common/command.c:3997
 #, fuzzy, c-format
 msgid "%s%d%s ignore was removed.\n"
 msgid_plural "%s%d%s ignore were removed.\n"
 msgstr[0] "el ignore fue eliminado.\n"
 msgstr[1] "el ignore fue eliminado.\n"
 
-#: src/common/command.c:4003
+#: src/common/command.c:4007
 #, c-format
 msgid "%s no ignore found\n"
 msgstr "%s no se encontraron ignores\n"
 
-#: src/common/command.c:4037
+#: src/common/command.c:4041
 #, c-format
 msgid "%s can't upgrade: connection to at least one server is pending\n"
 msgstr "%s no se puede actualizar: conexión pendiente a un servidor al menos\n"
 
-#: src/common/command.c:4047
+#: src/common/command.c:4051
 #, c-format
 msgid ""
 "%s can't upgrade: connection to at least one SSL server is active (should be "
@@ -3957,45 +3957,45 @@ msgstr ""
 "%s no se puede actualizar: conexión activa a un servidor SSL por lo menos "
 "(debería ser corregido en una futura versión)\n"
 
-#: src/common/command.c:4057
+#: src/common/command.c:4061
 #, fuzzy, c-format
 msgid ""
 "%s can't upgrade: anti-flood is active on at least one server (sending many "
 "lines)\n"
 msgstr "%s no se puede actualizar: conexión pendiente a un servidor al menos\n"
 
-#: src/common/command.c:4072
+#: src/common/command.c:4076
 msgid "Upgrading WeeChat...\n"
 msgstr "Actualizando Weechat...\n"
 
-#: src/common/command.c:4079
+#: src/common/command.c:4083
 #, c-format
 msgid "%s unable to save session in file\n"
 msgstr "%s no ha sido posible guardar la sesión en el archivo\n"
 
-#: src/common/command.c:4106
+#: src/common/command.c:4110
 #, c-format
 msgid "%s exec failed (program: \"%s\"), exiting WeeChat\n"
 msgstr "%s exec ha fallado (programa: \"%s\"), saliendo de Weechat\n"
 
-#: src/common/command.c:4146
+#: src/common/command.c:4150
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
 msgstr "Tiempo de uso de WeeChat: %d %s %02d:%02d:%02d, empezó en %s"
 
-#: src/common/command.c:4160
+#: src/common/command.c:4164
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr ""
 "Tiempo de uso de WeeChat: %s%d %s%s %s%02d%s: %s%02d%s:%s%02d%s, empezó en %s"
 "%s"
 
-#: src/common/command.c:4204
+#: src/common/command.c:4208
 #, fuzzy
 msgid "Open windows:\n"
 msgstr "Ventanas abiertas:\n"
 
-#: src/common/command.c:4291
+#: src/common/command.c:4295
 #, c-format
 msgid ""
 "%s can not merge windows, there's no other window with same size near "
