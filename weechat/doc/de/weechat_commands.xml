@@ -167,7 +167,7 @@ Konfiguration abspeichern
 Datei: Name der zu speichernden Konfigurationsdatei
 
 </programlisting>
-<command>server  [list [servername]] | [listfull [servername]] | [servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 nick2 nick3] [-username username] [-realname realname] [-command command] [-autojoin channel[,channel]] ] | [del servername]</command>
+<command>server  [list [servername]] | [listfull [servername]] | [servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 nick2 nick3] [-username username] [-realname realname] [-command command] [-autojoin channel[,channel]] ] | [copy server newservername] [rename servername newservername] [del servername]</command>
 <programlisting>
 Auflisten, Hinzufügen oder Entfernen von Servern
 
@@ -184,6 +184,8 @@ servername: server name, for internal and display use
      nick3: second alternate nick for server
   username: user name
   realname: real name of user
+      copy: duplicate a server
+    rename: rename a server
        del: delete a server
 
 </programlisting>

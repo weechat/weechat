@@ -1672,8 +1672,8 @@ weechat_lua_get_server_info (lua_State *L)
 	lua_pushnumber (lua_current_interpreter, ptr_server->autoreconnect_delay);
 	lua_rawset (lua_current_interpreter, -3);
 		
-	lua_pushstring (lua_current_interpreter, "command_line");
-	lua_pushnumber (lua_current_interpreter, ptr_server->command_line);
+	lua_pushstring (lua_current_interpreter, "temp_server");
+	lua_pushnumber (lua_current_interpreter, ptr_server->temp_server);
 	lua_rawset (lua_current_interpreter, -3);
 	
 	lua_pushstring (lua_current_interpreter, "address");
@@ -1973,7 +1973,7 @@ weechat_lua_get_irc_color (lua_State *L)
 static int
 weechat_lua_get_window_info (lua_State *L)
 {
-    t_plugin_window_info *window_info, *ptr_window;
+    t_plugin_window_info *window_info, *ptr_win;
     int i;
     
     /* make C compiler happy */
@@ -1997,40 +1997,43 @@ weechat_lua_get_window_info (lua_State *L)
     
     lua_newtable (lua_current_interpreter);
 
-    for (i = 0, ptr_window = window_info; ptr_window; ptr_window = ptr_window->next_window, i++)
+    i = 0;
+    for (ptr_win = window_info; ptr_win; ptr_win = ptr_win->next_window)
     {
 	lua_pushnumber (lua_current_interpreter, i);
 	lua_newtable (lua_current_interpreter);
 
 	lua_pushstring (lua_current_interpreter, "num_buffer");
-	lua_pushnumber (lua_current_interpreter, ptr_window->num_buffer);
+	lua_pushnumber (lua_current_interpreter, ptr_win->num_buffer);
 	lua_rawset (lua_current_interpreter, -3);
 		    
 	lua_pushstring (lua_current_interpreter, "win_x");
-	lua_pushnumber (lua_current_interpreter, ptr_window->win_x);
+	lua_pushnumber (lua_current_interpreter, ptr_win->win_x);
 	lua_rawset (lua_current_interpreter, -3);
 		    
 	lua_pushstring (lua_current_interpreter, "win_y");
-	lua_pushnumber (lua_current_interpreter, ptr_window->win_y);
+	lua_pushnumber (lua_current_interpreter, ptr_win->win_y);
 	lua_rawset (lua_current_interpreter, -3);
 	
 	lua_pushstring (lua_current_interpreter, "win_width");
-	lua_pushnumber (lua_current_interpreter, ptr_window->win_width);
+	lua_pushnumber (lua_current_interpreter, ptr_win->win_width);
 	lua_rawset (lua_current_interpreter, -3);
 	
 	lua_pushstring (lua_current_interpreter, "win_height");
-	lua_pushnumber (lua_current_interpreter, ptr_window->win_height);
+	lua_pushnumber (lua_current_interpreter, ptr_win->win_height);
 	lua_rawset (lua_current_interpreter, -3);
 
 	lua_pushstring (lua_current_interpreter, "win_width_pct");
-	lua_pushnumber (lua_current_interpreter, ptr_window->win_width_pct);
+	lua_pushnumber (lua_current_interpreter, ptr_win->win_width_pct);
 	lua_rawset (lua_current_interpreter, -3);
 	
 	lua_pushstring (lua_current_interpreter, "win_height_pct");
-	lua_pushnumber (lua_current_interpreter, ptr_window->win_height_pct);
+	lua_pushnumber (lua_current_interpreter, ptr_win->win_height_pct);
 	lua_rawset (lua_current_interpreter, -3);
 	
 	lua_rawset (lua_current_interpreter, -3);
+        
+        i++;
     }
     
     lua_plugin->free_window_info (lua_plugin, window_info);

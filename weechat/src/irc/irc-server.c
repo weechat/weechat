@@ -85,7 +85,7 @@ irc_server_init (t_irc_server *server)
     server->autoconnect = 0;
     server->autoreconnect = 1;
     server->autoreconnect_delay = 30;
-    server->command_line = 0;
+    server->temp_server = 0;
     server->address = NULL;
     server->port = -1;
     server->ipv6 = 0;
@@ -466,7 +466,7 @@ irc_server_free_all ()
 
 t_irc_server *
 irc_server_new (char *name, int autoconnect, int autoreconnect,
-                int autoreconnect_delay, int command_line, char *address,
+                int autoreconnect_delay, int temp_server, char *address,
                 int port, int ipv6, int ssl, char *password,
                 char *nick1, char *nick2, char *nick3, char *username,
                 char *realname, char *hostname, char *command, int command_delay,
@@ -496,7 +496,7 @@ irc_server_new (char *name, int autoconnect, int autoreconnect,
         new_server->autoconnect = autoconnect;
         new_server->autoreconnect = autoreconnect;
         new_server->autoreconnect_delay = autoreconnect_delay;
-        new_server->command_line = command_line;
+        new_server->temp_server = temp_server;
         new_server->address = strdup (address);
         new_server->port = port;
         new_server->ipv6 = ipv6;
@@ -526,7 +526,74 @@ irc_server_new (char *name, int autoconnect, int autoreconnect,
 }
 
 /*
+ * irc_server_duplicate: duplicate a server
+ *                       return: pointer to new server, NULL if error
+ */
+
+t_irc_server *
+irc_server_duplicate (t_irc_server *server, char *new_name)
+{
+    t_irc_server *new_server;
+    
+    /* check if another server exists with this name */
+    if (irc_server_search (new_name))
+        return 0;
+    
+    /* duplicate server */
+    new_server = irc_server_new (new_name,
+                                 server->autoconnect,
+                                 server->autoreconnect,
+                                 server->autoreconnect_delay,
+                                 server->temp_server,
+                                 server->address,
+                                 server->port,
+                                 server->ipv6,
+                                 server->ssl,
+                                 server->password,
+                                 server->nick1,
+                                 server->nick2,
+                                 server->nick3,
+                                 server->username,
+                                 server->realname,
+                                 server->hostname,
+                                 server->command,
+                                 server->command_delay,
+                                 server->autojoin,
+                                 server->autorejoin,
+                                 server->notify_levels);
+    
+    return new_server;
+}
+
+/*
+ * irc_server_rename: rename server (internal name)
+ *                    return: 1 if ok, 0 if error
+ */
+
+int
+irc_server_rename (t_irc_server *server, char *new_name)
+{
+    char *str;
+    
+    /* check if another server exists with this name */
+    if (irc_server_search (new_name))
+        return 0;
+    
+    /* rename server */
+    str = strdup (new_name);
+    if (str)
+    {
+        if (server->name)
+            free (server->name);
+        server->name = str;
+        return 1;
+    }
+    return 0;
+}
+
+/*
  * irc_server_send: send data to IRC server
+ *                  return number of bytes sent, -1 if error
  */
 
 int
@@ -1911,15 +1978,15 @@ irc_server_reconnect (t_irc_server *server)
  */
 
 void
-irc_server_auto_connect (int auto_connect, int command_line)
+irc_server_auto_connect (int auto_connect, int temp_server)
 {
     t_irc_server *ptr_server;
     
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        if ( ((command_line) && (ptr_server->command_line))
-            || ((!command_line) && (auto_connect) && (ptr_server->autoconnect)) )
+        if ( ((temp_server) && (ptr_server->temp_server))
+            || ((!temp_server) && (auto_connect) && (ptr_server->autoconnect)) )
         {
             (void) gui_buffer_new (gui_current_window, ptr_server, NULL,
                                    BUFFER_TYPE_STANDARD, 1);
@@ -2255,7 +2322,7 @@ irc_server_print_log (t_irc_server *server)
     weechat_log_printf ("  autoconnect . . . . : %d\n",   server->autoconnect);
     weechat_log_printf ("  autoreconnect . . . : %d\n",   server->autoreconnect);
     weechat_log_printf ("  autoreconnect_delay : %d\n",   server->autoreconnect_delay);
-    weechat_log_printf ("  command_line. . . . : %d\n",   server->command_line);
+    weechat_log_printf ("  temp_server . . . . : %d\n",   server->temp_server);
     weechat_log_printf ("  address . . . . . . : '%s'\n", server->address);
     weechat_log_printf ("  port. . . . . . . . : %d\n",   server->port);
     weechat_log_printf ("  ipv6. . . . . . . . : %d\n",   server->ipv6);

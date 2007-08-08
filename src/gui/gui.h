@@ -250,6 +250,7 @@ extern int gui_window_objects_init (t_gui_window *);
 extern void gui_window_objects_free (t_gui_window *, int);
 extern int gui_window_calculate_pos_size (t_gui_window *, int);
 extern void gui_window_redraw_buffer (t_gui_buffer *);
+extern void gui_window_redraw_all_buffers ();
 extern void gui_window_switch_to_buffer (t_gui_window *, t_gui_buffer *);
 extern void gui_window_page_up (t_gui_window *);
 extern void gui_window_page_down (t_gui_window *);

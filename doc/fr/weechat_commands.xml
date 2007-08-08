@@ -166,7 +166,7 @@ sauvegarder la configuration sur disque
 fichier: fichier pour sauvegarder la configuration
 
 </programlisting>
-<command>server  [list [nom_serveur]] | [listfull [nom_serveur]] | [nom_serveur] | [nom_serveur nom/IP port [-auto | -noauto] [-ipv6] [-ssl] [-pwd mot_de_passe] [-nicks pseudo1 pseudo2 pseudo3] [-username nom_utilisateur] [-realname nom_réel] [-command commande] [-autojoin canal[,canal]] ] | [del nom_serveur]</command>
+<command>server  [list [nom_serveur]] | [listfull [nom_serveur]] | [nom_serveur] | [nom_serveur nom/IP port [-auto | -noauto] [-ipv6] [-ssl] [-pwd mot_de_passe] [-nicks pseudo1 pseudo2 pseudo3] [-username nom_utilisateur] [-realname nom_réel] [-command commande] [-autojoin canal[,canal]] ] | [copy nom_serveur nouveau_nom_serveur] [rename nom_serveur nouveau_nom_serveur] [del nom_serveur]</command>
 <programlisting>
 liste, ajoute ou retire des serveurs
 
@@ -183,6 +183,8 @@ liste, ajoute ou retire des serveurs
         pseudo3: second pseudo alternatif pour le serveur
 nom_utilisateur: nom d'utilisateur
        nom_réel: nom réel de l'utilisateur
+           copy: dupliquer un serveur
+         rename: renommer un serveur
             del: supprimer un serveur
 
 </programlisting>

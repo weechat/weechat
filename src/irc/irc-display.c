@@ -396,7 +396,7 @@ irc_display_server (t_irc_server *server, int with_detail)
         
         gui_printf (NULL, "  server_autoconnect . . . . : %s%s\n",
                     (server->autoconnect) ? _("on") : _("off"),
-                    (server->command_line) ?
+                    (server->temp_server) ?
                     _(" (temporary server, will not be saved)") : "");
         gui_printf (NULL, "  server_autoreconnect . . . : %s\n",
                     (server->autoreconnect) ? _("on") : _("off"));
@@ -478,6 +478,6 @@ irc_display_server (t_irc_server *server, int with_detail)
         gui_printf (NULL, "%s]%s%s\n",
                     GUI_COLOR(COLOR_WIN_CHAT_DARK),
                     GUI_COLOR(COLOR_WIN_CHAT),
-                    (server->command_line) ? _(" (temporary)") : "");
+                    (server->temp_server) ? _(" (temporary)") : "");
     }
 }

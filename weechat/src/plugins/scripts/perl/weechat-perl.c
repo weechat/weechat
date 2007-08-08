@@ -1465,7 +1465,7 @@ static XS (XS_weechat_get_server_info)
 	hv_store (server_hash_member, "autoconnect",          11, newSViv (ptr_server->autoconnect), 0);
         hv_store (server_hash_member, "autoreconnect",        13, newSViv (ptr_server->autoreconnect), 0);
         hv_store (server_hash_member, "autoreconnect_delay",  19, newSViv (ptr_server->autoreconnect_delay), 0);
-        hv_store (server_hash_member, "command_line",         12, newSViv (ptr_server->command_line), 0);
+        hv_store (server_hash_member, "temp_server",          11, newSViv (ptr_server->temp_server), 0);
 	hv_store (server_hash_member, "address",               7, newSVpv (ptr_server->address, 0), 0);
         hv_store (server_hash_member, "port",                  4, newSViv (ptr_server->port), 0);
 	hv_store (server_hash_member, "ipv6",                  4, newSViv (ptr_server->ipv6), 0);
@@ -1717,7 +1717,7 @@ static XS (XS_weechat_get_irc_color)
 
 static XS (XS_weechat_get_window_info)
 {
-    t_plugin_window_info *window_info, *ptr_window;
+    t_plugin_window_info *window_info, *ptr_win;
     int count;
     HV *window_hash_member;
     dXSARGS;
@@ -1739,17 +1739,17 @@ static XS (XS_weechat_get_window_info)
     if (!window_info)
 	XSRETURN_EMPTY;
     
-    for (ptr_window = window_info; ptr_window; ptr_window = ptr_window->next_window)
+    for (ptr_win = window_info; ptr_win; ptr_win = ptr_win->next_window)
     {
 	window_hash_member = (HV *) sv_2mortal((SV *) newHV());	        
         
-	hv_store (window_hash_member, "num_buffer",     10, newSViv (ptr_window->num_buffer), 0);
-        hv_store (window_hash_member, "win_x",           5, newSViv (ptr_window->win_x), 0);
-        hv_store (window_hash_member, "win_y",           5, newSViv (ptr_window->win_y), 0);
-        hv_store (window_hash_member, "win_width",       9, newSViv (ptr_window->win_width), 0);
-	hv_store (window_hash_member, "win_height",     10, newSViv (ptr_window->win_height), 0);
-	hv_store (window_hash_member, "win_width_pct",  13, newSViv (ptr_window->win_width_pct), 0);
-	hv_store (window_hash_member, "win_height_pct", 14, newSViv (ptr_window->win_height_pct), 0);
+	hv_store (window_hash_member, "num_buffer",     10, newSViv (ptr_win->num_buffer), 0);
+        hv_store (window_hash_member, "win_x",           5, newSViv (ptr_win->win_x), 0);
+        hv_store (window_hash_member, "win_y",           5, newSViv (ptr_win->win_y), 0);
+        hv_store (window_hash_member, "win_width",       9, newSViv (ptr_win->win_width), 0);
+	hv_store (window_hash_member, "win_height",     10, newSViv (ptr_win->win_height), 0);
+	hv_store (window_hash_member, "win_width_pct",  13, newSViv (ptr_win->win_width_pct), 0);
+	hv_store (window_hash_member, "win_height_pct", 14, newSViv (ptr_win->win_height_pct), 0);
 	
 	XPUSHs(newRV_inc((SV *) window_hash_member));
 	count++;

@@ -86,7 +86,7 @@ struct t_plugin_server_info
     int autoconnect;                /* = 1 if auto connect at startup       */
     int autoreconnect;              /* = 1 if auto reco when disconnected   */
     int autoreconnect_delay;        /* delay before trying again reconnect  */
-    int command_line;               /* server was given on command line     */
+    int temp_server;                /* server was given on command line     */
     char *address;                  /* address of server (IP or name)       */
     int port;                       /* port for server (6667 by default)    */
     int ipv6;                       /* use IPv6 protocol                    */

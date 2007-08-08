@@ -157,6 +157,16 @@ gui_window_redraw_buffer (t_gui_buffer *buffer)
 }
 
 /*
+ * gui_window_redraw_all_buffers: redraw all buffers
+ */
+
+void
+gui_window_redraw_all_buffers ()
+{
+    /* TODO: write this function for Gtk */
+}
+
+/*
  * gui_window_switch_to_buffer: switch to another buffer
  */
 

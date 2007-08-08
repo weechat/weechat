@@ -431,6 +431,21 @@ gui_window_redraw_buffer (t_gui_buffer *buffer)
 }
 
 /*
+ * gui_window_redraw_all_buffers: redraw all buffers
+ */
+
+void
+gui_window_redraw_all_buffers ()
+{
+    t_gui_window *ptr_win;
+    
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        gui_window_redraw_buffer (ptr_win->buffer);
+    }
+}
+
+/*
  * gui_window_switch_to_buffer: switch to another buffer
  */
 

@@ -219,7 +219,7 @@ session_save_servers (FILE *file)
         rc = rc && (session_write_int (file, SESSION_SERV_AUTOCONNECT, ptr_server->autoconnect));
         rc = rc && (session_write_int (file, SESSION_SERV_AUTORECONNECT, ptr_server->autoreconnect));
         rc = rc && (session_write_int (file, SESSION_SERV_AUTORECONNECT_DELAY, ptr_server->autoreconnect_delay));
-        rc = rc && (session_write_int (file, SESSION_SERV_COMMAND_LINE, ptr_server->command_line));
+        rc = rc && (session_write_int (file, SESSION_SERV_TEMP_SERVER, ptr_server->temp_server));
         rc = rc && (session_write_str (file, SESSION_SERV_ADDRESS, ptr_server->address));
         rc = rc && (session_write_int (file, SESSION_SERV_PORT, ptr_server->port));
         rc = rc && (session_write_int (file, SESSION_SERV_IPV6, ptr_server->ipv6));
@@ -881,8 +881,8 @@ session_load_server (FILE *file)
             case SESSION_SERV_AUTORECONNECT_DELAY:
                 rc = rc && (session_read_int (file, &(session_current_server->autoreconnect_delay)));
                 break;
-            case SESSION_SERV_COMMAND_LINE:
-                rc = rc && (session_read_int (file, &(session_current_server->command_line)));
+            case SESSION_SERV_TEMP_SERVER:
+                rc = rc && (session_read_int (file, &(session_current_server->temp_server)));
                 break;
             case SESSION_SERV_ADDRESS:
                 rc = rc && (session_read_str (file, &(session_current_server->address)));

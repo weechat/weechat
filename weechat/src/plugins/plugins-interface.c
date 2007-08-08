@@ -916,7 +916,7 @@ weechat_plugin_get_server_info (t_weechat_plugin *plugin)
 		new_server_info->autoconnect = ptr_server->autoconnect;
 		new_server_info->autoreconnect = ptr_server->autoreconnect;
 		new_server_info->autoreconnect_delay = ptr_server->autoreconnect_delay;
-		new_server_info->command_line = ptr_server->command_line;
+		new_server_info->temp_server = ptr_server->temp_server;
 		new_server_info->address = (ptr_server->address) ? strdup (ptr_server->address) : strdup ("");
 		new_server_info->port = ptr_server->port;
 		new_server_info->ipv6 = ptr_server->ipv6;
@@ -1246,7 +1246,7 @@ t_plugin_window_info *
 weechat_plugin_get_window_info (t_weechat_plugin *plugin)
 {
     t_plugin_window_info *window_info, *last_window_info, *new_window_info;
-    t_gui_window *ptr_window;
+    t_gui_window *ptr_win;
 
     if (!plugin)
 	return NULL;
@@ -1255,18 +1255,18 @@ weechat_plugin_get_window_info (t_weechat_plugin *plugin)
     {
 	window_info = NULL;
 	last_window_info = NULL;
-	for (ptr_window = gui_windows; ptr_window; ptr_window = ptr_window->next_window)
+	for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
 	{
 	    new_window_info = (t_plugin_window_info *) malloc (sizeof (t_plugin_window_info));
 	    if (new_window_info)
 	    {
-                new_window_info->win_x = ptr_window->win_x;
-                new_window_info->win_y = ptr_window->win_y;
-                new_window_info->win_width = ptr_window->win_width;
-                new_window_info->win_height = ptr_window->win_height;
-                new_window_info->win_width_pct = ptr_window->win_width_pct;
-                new_window_info->win_height_pct = ptr_window->win_height_pct;
-                new_window_info->num_buffer = (ptr_window->buffer) ? ptr_window->buffer->number : 0;
+                new_window_info->win_x = ptr_win->win_x;
+                new_window_info->win_y = ptr_win->win_y;
+                new_window_info->win_width = ptr_win->win_width;
+                new_window_info->win_height = ptr_win->win_height;
+                new_window_info->win_width_pct = ptr_win->win_width_pct;
+                new_window_info->win_height_pct = ptr_win->win_height_pct;
+                new_window_info->num_buffer = (ptr_win->buffer) ? ptr_win->buffer->number : 0;
                 
 		new_window_info->prev_window = last_window_info;
                 new_window_info->next_window = NULL;

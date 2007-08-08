@@ -1188,10 +1188,7 @@ config_change_hotlist ()
 void
 config_change_read_marker ()
 {
-    t_gui_window *ptr_win;
-    
-    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-        gui_window_redraw_buffer (ptr_win->buffer);
+    gui_window_redraw_all_buffers ();
 }
 
 /*
@@ -2526,7 +2523,7 @@ config_write (char *config_name)
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        if (!ptr_server->command_line)
+        if (!ptr_server->temp_server)
         {
             weechat_iconv_fprintf (file, "\n[server]\n");
             weechat_iconv_fprintf (file, "server_name = \"%s\"\n", ptr_server->name);

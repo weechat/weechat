@@ -2742,7 +2742,7 @@ irc_recv_cmd_303 (t_irc_server *server, char *host, char *nick, char *arguments)
 int
 irc_recv_cmd_305 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
-    t_gui_window *ptr_window;
+    t_gui_window *ptr_win;
     
     /* make C compiler happy */
     (void) host;
@@ -2763,11 +2763,10 @@ irc_recv_cmd_305 (t_irc_server *server, char *host, char *nick, char *arguments)
     }
     server->is_away = 0;
     server->away_time = 0;
-    for (ptr_window = gui_windows; ptr_window;
-         ptr_window = ptr_window->next_window)
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        if (SERVER(ptr_window->buffer) == server)
-            gui_status_draw (ptr_window->buffer, 1);
+        if (SERVER(ptr_win->buffer) == server)
+            gui_status_draw (ptr_win->buffer, 1);
     }
     return 0;
 }
@@ -2779,7 +2778,7 @@ irc_recv_cmd_305 (t_irc_server *server, char *host, char *nick, char *arguments)
 int
 irc_recv_cmd_306 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
-    t_gui_window *ptr_window;
+    t_gui_window *ptr_win;
     
     /* make C compiler happy */
     (void) host;
@@ -2800,14 +2799,13 @@ irc_recv_cmd_306 (t_irc_server *server, char *host, char *nick, char *arguments)
     }
     server->is_away = 1;
     server->away_time = time (NULL);
-    for (ptr_window = gui_windows; ptr_window;
-         ptr_window = ptr_window->next_window)
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        if (SERVER(ptr_window->buffer) == server)
-            gui_status_draw (ptr_window->buffer, 1);
-        if (SERVER(ptr_window->buffer) == server)
-            ptr_window->buffer->last_read_line =
-                ptr_window->buffer->last_line;
+        if (SERVER(ptr_win->buffer) == server)
+            gui_status_draw (ptr_win->buffer, 1);
+        if (SERVER(ptr_win->buffer) == server)
+            ptr_win->buffer->last_read_line =
+                ptr_win->buffer->last_line;
     }
     return 0;
 }

@@ -146,11 +146,11 @@ typedef struct t_irc_server t_irc_server;
 struct t_irc_server
 {
     /* user choices */
-    char *name;                     /* name of server (only for display)      */
+    char *name;                     /* internal name of server                */
     int autoconnect;                /* = 1 if auto connect at startup         */
     int autoreconnect;              /* = 1 if auto reco when disconnected     */
     int autoreconnect_delay;        /* delay before trying again reconnect    */
-    int command_line;               /* server was given on command line       */
+    int temp_server;                /* server is temporary (will not be saved)*/
     char *address;                  /* address of server (IP or name)         */
     int port;                       /* port for server (6667 by default)      */
     int ipv6;                       /* use IPv6 protocol                      */
@@ -373,9 +373,8 @@ extern void irc_server_free_all ();
 extern t_irc_server *irc_server_new (char *, int, int, int, int, char *, int, int, int,
                                      char *, char *, char *, char *, char *, char *,
                                      char *, char *, int, char *, int, char *);
-extern char *irc_server_get_charset_decode_iso (t_irc_server *);
-extern char *irc_server_get_charset_decode_utf (t_irc_server *);
-extern char *irc_server_get_charset_encode (t_irc_server *);
+extern t_irc_server *irc_server_duplicate (t_irc_server *, char *);
+extern int irc_server_rename (t_irc_server *, char *);
 extern int irc_server_send (t_irc_server *, char *, int);
 extern void irc_server_outqueue_send (t_irc_server *);
 extern void irc_server_sendf (t_irc_server *, char *, ...);

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.6-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-08-06 11:23+0200\n"
-"PO-Revision-Date: 2007-06-07 18:02+0200\n"
+"POT-Creation-Date: 2007-08-07 22:39+0200\n"
+"PO-Revision-Date: 2007-08-08 10:13+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: src/irc/irc-server.c:206 src/common/weeconfig.c:2345
+#: src/irc/irc-server.c:206 src/common/weeconfig.c:2342
 msgid "Unable to get user's name"
 msgstr "A felhasználónév meghatározása sikertelen"
 
@@ -25,84 +25,84 @@ msgstr "A felhasználónév meghatározása sikertelen"
 msgid "%s cannot allocate new server\n"
 msgstr "%s az új szerver lefoglalása sikertelen\n"
 
-#: src/irc/irc-server.c:585 src/irc/irc-server.c:666
+#: src/irc/irc-server.c:652 src/irc/irc-server.c:733
 #, c-format
 msgid "%s error sending data to IRC server\n"
 msgstr "%s adatküldési hiba az IRC szerveren\n"
 
-#: src/irc/irc-server.c:688 src/irc/irc-server.c:1013
+#: src/irc/irc-server.c:755 src/irc/irc-server.c:1080
 msgid "(message dropped)"
 msgstr "(üzenet eldobva)"
 
-#: src/irc/irc-server.c:798 src/irc/irc-server.c:811 src/irc/irc-server.c:858
-#: src/irc/irc-server.c:871
+#: src/irc/irc-server.c:865 src/irc/irc-server.c:878 src/irc/irc-server.c:925
+#: src/irc/irc-server.c:938
 #, c-format
 msgid "%s not enough memory for received IRC message\n"
 msgstr "%s nincs elegendő memória a fogadott IRC üzenet számára\n"
 
-#: src/irc/irc-server.c:980
+#: src/irc/irc-server.c:1047
 #, c-format
 msgid "%s Command \"%s\" failed!\n"
 msgstr "%s Parancs \"%s\" sikertelen!\n"
 
-#: src/irc/irc-server.c:986
+#: src/irc/irc-server.c:1053
 #, c-format
 msgid "%s No command to execute!\n"
 msgstr "%s A futtatandó parancs nem található!\n"
 
-#: src/irc/irc-server.c:992
+#: src/irc/irc-server.c:1059
 #, c-format
 msgid "%s Unknown command: cmd=\"%s\", host=\"%s\", args=\"%s\"\n"
 msgstr ""
 "%s Ismeretlen parancs: parancs=\"%s\", hoszt=\"%s\", argumentum=\"%s\"\n"
 
-#: src/irc/irc-server.c:1058
+#: src/irc/irc-server.c:1125
 #, c-format
 msgid "%s cannot read data from socket, disconnecting from server...\n"
 msgstr ""
 "%s nem sikerült adatot olvasni a csatornából, kilépés a szerverről...\n"
 
-#: src/irc/irc-server.c:1141
+#: src/irc/irc-server.c:1208
 #, c-format
 msgid "%s: Reconnecting to server in %d seconds\n"
 msgstr "%s: Újracsatlakozás a szerverhez %d másodperc múlva\n"
 
-#: src/irc/irc-server.c:1175
+#: src/irc/irc-server.c:1242
 #, c-format
 msgid "%s gnutls handshake failed\n"
 msgstr "%s gnutls kézfogás sikertelen\n"
 
-#: src/irc/irc-server.c:1192
+#: src/irc/irc-server.c:1259
 #, c-format
 msgid "%s proxy address \"%s\" not found\n"
 msgstr "%s proxy cím \"%s\" nem található\n"
 
-#: src/irc/irc-server.c:1196
+#: src/irc/irc-server.c:1263
 #, c-format
 msgid "%s address \"%s\" not found\n"
 msgstr "%s cím \"%s\" nem található\n"
 
-#: src/irc/irc-server.c:1206
+#: src/irc/irc-server.c:1273
 #, c-format
 msgid "%s proxy IP address not found\n"
 msgstr "%s proxy IP-cím nem található\n"
 
-#: src/irc/irc-server.c:1209
+#: src/irc/irc-server.c:1276
 #, c-format
 msgid "%s IP address not found\n"
 msgstr "%s IP-cím nem található\n"
 
-#: src/irc/irc-server.c:1218
+#: src/irc/irc-server.c:1285
 #, c-format
 msgid "%s proxy connection refused\n"
 msgstr "%s a proxy kiszolgálóhoz való csatlakozás elutasítva\n"
 
-#: src/irc/irc-server.c:1221
+#: src/irc/irc-server.c:1288
 #, c-format
 msgid "%s connection refused\n"
 msgstr "%s a csatlakozás elutasítva\n"
 
-#: src/irc/irc-server.c:1229
+#: src/irc/irc-server.c:1296
 #, c-format
 msgid ""
 "%s proxy fails to establish connection to server (check username/password if "
@@ -111,12 +111,12 @@ msgstr ""
 "%s a proxy kiszolgálónak nem sikerült a szerverhez csatlakoznia (ellenőrizze "
 "a felhasználónevet/jelszót ha be van állítva)\n"
 
-#: src/irc/irc-server.c:1239
+#: src/irc/irc-server.c:1306
 #, c-format
 msgid "%s unable to set local hostname/IP\n"
 msgstr "%s nem sikerült a helyi hosztnevet/IP-t beállítani\n"
 
-#: src/irc/irc-server.c:1757
+#: src/irc/irc-server.c:1824
 #, c-format
 msgid ""
 "%s cannot connect with SSL since WeeChat was not built with GNUtls support\n"
@@ -124,61 +124,61 @@ msgstr ""
 "%s nem sikerült SSL használattal kapcsolódni, mert a WeeChat GNUtls "
 "támogatás nélkül lett fordítva\n"
 
-#: src/irc/irc-server.c:1766
+#: src/irc/irc-server.c:1833
 #, c-format
 msgid "%s: connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"
 msgstr ""
 "%s: csatlakozás a(z) %s:%d%s%s szerverhez %s proxy kiszolgálón keresztül: %s:"
 "%d%s...\n"
 
-#: src/irc/irc-server.c:1772
+#: src/irc/irc-server.c:1839
 #, c-format
 msgid "Connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"
 msgstr ""
 "Csatlakozás a(z) %s:%d%s%s szerverhez %s proxy kiszolgálón keresztül: %s:%d%"
 "s...\n"
 
-#: src/irc/irc-server.c:1782
+#: src/irc/irc-server.c:1849
 #, c-format
 msgid "%s: connecting to server %s:%d%s%s...\n"
 msgstr "%s: csatlakozás a(z) %s:%d%s%s szerverhez...\n"
 
-#: src/irc/irc-server.c:1786
+#: src/irc/irc-server.c:1853
 #, c-format
 msgid "Connecting to server %s:%d%s%s...\n"
 msgstr "Csatlakozás a(z) %s:%d%s%s szerverhez...\n"
 
-#: src/irc/irc-server.c:1804
+#: src/irc/irc-server.c:1871
 #, c-format
 msgid "%s gnutls init error\n"
 msgstr "%s gnutls inicializációs hiba\n"
 
-#: src/irc/irc-server.c:1820
+#: src/irc/irc-server.c:1887
 #, c-format
 msgid "%s cannot create pipe\n"
 msgstr "%s nem sikerült a csövet(pipe) létrehozni\n"
 
-#: src/irc/irc-server.c:1835
+#: src/irc/irc-server.c:1902
 #, c-format
 msgid "%s cannot create socket\n"
 msgstr "%s nem sikerült a csatornát létrehozni\n"
 
-#: src/irc/irc-server.c:1846
+#: src/irc/irc-server.c:1913
 #, c-format
 msgid "%s cannot set socket option \"SO_REUSEADDR\"\n"
 msgstr "%s nem sikerült a \"SO_REUSEADDR\" csatornaopciót beállítani\n"
 
-#: src/irc/irc-server.c:1857
+#: src/irc/irc-server.c:1924
 #, c-format
 msgid "%s cannot set socket option \"SO_KEEPALIVE\"\n"
 msgstr "%s nem sikerült a \"SO_KEEPALIVE\" csatornaopciót beállítani\n"
 
-#: src/irc/irc-server.c:1899
+#: src/irc/irc-server.c:1966
 #, c-format
 msgid "%s: Reconnecting to server...\n"
 msgstr "%s: Újracsatlakozás a szerverhez...\n"
 
-#: src/irc/irc-server.c:1950 src/irc/irc-server.c:1961
+#: src/irc/irc-server.c:2017 src/irc/irc-server.c:2028
 msgid "Disconnected from server!\n"
 msgstr "Lekapcsolódott a szerverről!\n"
 
@@ -1384,7 +1384,7 @@ msgstr "ki"
 msgid " (temporary server, will not be saved)"
 msgstr " (átmeneti szerver, nem lesz mentve)"
 
-#: src/irc/irc-display.c:405 src/irc/irc-display.c:449 src/irc/irc-recv.c:3220
+#: src/irc/irc-display.c:405 src/irc/irc-display.c:449 src/irc/irc-recv.c:3218
 msgid "seconds"
 msgstr "másodperc"
 
@@ -1408,7 +1408,7 @@ msgstr ""
 msgid " (temporary)"
 msgstr ""
 
-#: src/irc/irc-send.c:207 src/common/command.c:764
+#: src/irc/irc-send.c:207 src/common/command.c:767
 #, c-format
 msgid "%s cannot find nick for sending message\n"
 msgstr "%s nem található név az üzenet küldéséhez\n"
@@ -1438,7 +1438,7 @@ msgstr "%s \"%s\" parancs csak a szobaablakban futtatható\n"
 msgid "%s \"%s\" command can not be executed on a server buffer\n"
 msgstr "%s \"%s\" parancs nem futtatható a szerverablakban\n"
 
-#: src/irc/irc-send.c:894 src/irc/irc-send.c:955 src/common/command.c:1757
+#: src/irc/irc-send.c:894 src/irc/irc-send.c:955 src/common/command.c:1760
 #, c-format
 msgid "%s wrong arguments for \"%s\" command\n"
 msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
@@ -1464,9 +1464,9 @@ msgid "%s nick \"%s\" not found for \"%s\" command\n"
 msgstr "%s név \"%s\" nem található a \"%s\" parancshoz\n"
 
 #: src/irc/irc-send.c:1347 src/irc/irc-send.c:1485 src/irc/irc-send.c:2113
-#: src/common/command.c:1702 src/common/command.c:1714
-#: src/common/command.c:1733 src/common/command.c:1822
-#: src/common/command.c:2781
+#: src/common/command.c:1705 src/common/command.c:1717
+#: src/common/command.c:1736 src/common/command.c:1825
+#: src/common/command.c:2784
 #, c-format
 msgid "%s wrong argument count for \"%s\" command\n"
 msgstr "%s rossz argumentum szám a \"%s\" parancsnak\n"
@@ -1476,7 +1476,7 @@ msgstr "%s rossz argumentum szám a \"%s\" parancsnak\n"
 msgid "%s cannot create new private buffer \"%s\"\n"
 msgstr "%s nem sikerült új privát ablakot nyitni \"%s\"\n"
 
-#: src/irc/irc-send.c:1793 src/common/command.c:644
+#: src/irc/irc-send.c:1793 src/common/command.c:647
 #, c-format
 msgid "%s command \"%s\" needs a server connection!\n"
 msgstr "%s a \"%s\" parancs futtatásához csatlakozni kell a szerverhez!\n"
@@ -1492,8 +1492,8 @@ msgid "You have been invited to %s%s%s by %s%s\n"
 msgstr "Meghívást kapott a %s%s%s szobába %s%s felhasználótól\n"
 
 #: src/irc/irc-recv.c:425 src/irc/irc-recv.c:552 src/irc/irc-recv.c:752
-#: src/irc/irc-recv.c:1187 src/irc/irc-recv.c:1541 src/irc/irc-recv.c:3593
-#: src/irc/irc-recv.c:3659
+#: src/irc/irc-recv.c:1187 src/irc/irc-recv.c:1541 src/irc/irc-recv.c:3591
+#: src/irc/irc-recv.c:3657
 #, c-format
 msgid "%s channel \"%s\" not found for \"%s\" command\n"
 msgstr "%s a \"%s\" szoba nem található a \"%s\" parancshoz\n"
@@ -1624,10 +1624,10 @@ msgstr "%s szoba: %s> %s"
 #: src/irc/irc-recv.c:1734 src/irc/irc-recv.c:1764 src/irc/irc-recv.c:1785
 #: src/irc/irc-recv.c:1801 src/irc/irc-recv.c:1831 src/irc/irc-recv.c:1852
 #: src/irc/irc-recv.c:1867 src/irc/irc-recv.c:2084 src/irc/irc-recv.c:2564
-#: src/irc/irc-recv.c:4056 src/irc/irc-recv.c:4071 src/irc/irc-recv.c:4170
-#: src/irc/irc-recv.c:4184 src/irc/irc-recv.c:4430 src/irc/irc-recv.c:4580
-#: src/irc/irc-recv.c:4717 src/irc/irc-recv.c:4732 src/irc/irc-recv.c:4838
-#: src/irc/irc-recv.c:4852
+#: src/irc/irc-recv.c:4054 src/irc/irc-recv.c:4069 src/irc/irc-recv.c:4168
+#: src/irc/irc-recv.c:4182 src/irc/irc-recv.c:4428 src/irc/irc-recv.c:4578
+#: src/irc/irc-recv.c:4715 src/irc/irc-recv.c:4730 src/irc/irc-recv.c:4836
+#: src/irc/irc-recv.c:4850
 #, c-format
 msgid "%s cannot parse \"%s\" command\n"
 msgstr "%s nem sikerült végrehajtani a \"%s\" parancsot\n"
@@ -1676,216 +1676,216 @@ msgstr "%s%s%s távol: %s\n"
 msgid "Users online: "
 msgstr "Online felhasználók: "
 
-#: src/irc/irc-recv.c:2881
+#: src/irc/irc-recv.c:2879
 #, c-format
 msgid "%s[%s%s%s]%s help mode (+h)\n"
 msgstr "%s[%s%s%s]%s segítség mód (+h)\n"
 
-#: src/irc/irc-recv.c:3071
+#: src/irc/irc-recv.c:3069
 #, c-format
 msgid "%s%s %s(%s%s@%s%s)%s was %s\n"
 msgstr "%s%s %s(%s%s@%s%s)%s neve %s volt\n"
 
-#: src/irc/irc-recv.c:3192
+#: src/irc/irc-recv.c:3190
 #, c-format
 msgid "%s[%s%s%s]%s idle: "
 msgstr "%s[%s%s%s]%s tétlen: "
 
-#: src/irc/irc-recv.c:3204
+#: src/irc/irc-recv.c:3202
 msgid "days"
 msgstr "nap"
 
-#: src/irc/irc-recv.c:3204 src/common/command.c:4055 src/common/command.c:4073
+#: src/irc/irc-recv.c:3202 src/common/command.c:4148 src/common/command.c:4166
 #, fuzzy
 msgid "day"
 msgid_plural "days"
 msgstr[0] "nap"
 msgstr[1] "nap"
 
-#: src/irc/irc-recv.c:3208
+#: src/irc/irc-recv.c:3206
 #, c-format
 msgid "%s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
 msgstr "%s%02d %s%s %s%02d %s%s %s%02d %s%s, bejelentkezett: %s%s"
 
-#: src/irc/irc-recv.c:3212
+#: src/irc/irc-recv.c:3210
 msgid "hours"
 msgstr "óra"
 
-#: src/irc/irc-recv.c:3212
+#: src/irc/irc-recv.c:3210
 msgid "hour"
 msgstr "óra"
 
-#: src/irc/irc-recv.c:3216
+#: src/irc/irc-recv.c:3214
 msgid "minutes"
 msgstr "perc"
 
-#: src/irc/irc-recv.c:3216
+#: src/irc/irc-recv.c:3214
 msgid "minute"
 msgstr "perc"
 
-#: src/irc/irc-recv.c:3220
+#: src/irc/irc-recv.c:3218
 msgid "second"
 msgstr "másodperc"
 
-#: src/irc/irc-recv.c:3604
+#: src/irc/irc-recv.c:3602
 #, c-format
 msgid "Channel created on %s"
 msgstr "Szoba létrehozva: %s"
 
-#: src/irc/irc-recv.c:3613 src/irc/irc-recv.c:3802
+#: src/irc/irc-recv.c:3611 src/irc/irc-recv.c:3800
 #, c-format
 msgid "%s cannot identify date/time for \"%s\" command\n"
 msgstr "%s nem sikerült a dátumot/időt meghatározni a \"%s\" parancshoz\n"
 
-#: src/irc/irc-recv.c:3622 src/irc/irc-recv.c:3739 src/irc/irc-recv.c:3820
-#: src/irc/irc-recv.c:3931
+#: src/irc/irc-recv.c:3620 src/irc/irc-recv.c:3737 src/irc/irc-recv.c:3818
+#: src/irc/irc-recv.c:3929
 #, c-format
 msgid "%s cannot identify channel for \"%s\" command\n"
 msgstr "%s nem sikerült azonosítani a szobát a \"%s\" parancshoz\n"
 
-#: src/irc/irc-recv.c:3674
+#: src/irc/irc-recv.c:3672
 #, c-format
 msgid "No topic set for %s%s\n"
 msgstr "Nincs téma beállítva a %s%s szobában\n"
 
-#: src/irc/irc-recv.c:3724
+#: src/irc/irc-recv.c:3722
 #, c-format
 msgid "Topic for %s%s%s is: "
 msgstr "A %s%s%s szoba témája: "
 
-#: src/irc/irc-recv.c:3791
+#: src/irc/irc-recv.c:3789
 #, c-format
 msgid "Topic set by %s%s%s, %s"
 msgstr "A témát beállította: %s%s%s, %s"
 
-#: src/irc/irc-recv.c:3811 src/irc/irc-recv.c:3940
+#: src/irc/irc-recv.c:3809 src/irc/irc-recv.c:3938
 #, c-format
 msgid "%s cannot identify nickname for \"%s\" command\n"
 msgstr "%s nem sikerült a felhasználót meghatározni a \"%s\" parancshoz\n"
 
-#: src/irc/irc-recv.c:3916
+#: src/irc/irc-recv.c:3914
 #, c-format
 msgid "%s%s%s has invited %s%s%s on %s%s\n"
 msgstr "%s%s%s meghívta %s%s%s-t %s%s-kor\n"
 
-#: src/irc/irc-recv.c:3976
+#: src/irc/irc-recv.c:3974
 #, c-format
 msgid "Channel reop %s%s%s: %s%s\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:4125
+#: src/irc/irc-recv.c:4123
 #, c-format
 msgid " by %s%s %s(%s%s%s)"
 msgstr ""
 
-#: src/irc/irc-recv.c:4134
+#: src/irc/irc-recv.c:4132
 #, c-format
 msgid " by %s%s"
 msgstr ""
 
-#: src/irc/irc-recv.c:4444 src/irc/irc-recv.c:4626
+#: src/irc/irc-recv.c:4442 src/irc/irc-recv.c:4624
 #, c-format
 msgid "Nicks %s%s%s: %s["
 msgstr "Felhasználók a %s%s%s szobában: %s["
 
-#: src/irc/irc-recv.c:4548
+#: src/irc/irc-recv.c:4546
 #, c-format
 msgid "%s cannot create nick \"%s\" for channel \"%s\"\n"
 msgstr "%s nem sikerült a(z) \"%s\" nevet felvenni a \"%s\" szobában\n"
 
-#: src/irc/irc-recv.c:4647
+#: src/irc/irc-recv.c:4645
 #, c-format
 msgid ""
 "Channel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 msgstr ""
 "%s%s%s szoba: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 
-#: src/irc/irc-recv.c:4655
+#: src/irc/irc-recv.c:4653
 msgid "nicks"
 msgstr "név"
 
-#: src/irc/irc-recv.c:4655
+#: src/irc/irc-recv.c:4653
 msgid "nick"
 msgstr "név"
 
-#: src/irc/irc-recv.c:4660
+#: src/irc/irc-recv.c:4658
 msgid "ops"
 msgstr "operátor"
 
-#: src/irc/irc-recv.c:4660
+#: src/irc/irc-recv.c:4658
 msgid "op"
 msgstr "operátor"
 
-#: src/irc/irc-recv.c:4664
+#: src/irc/irc-recv.c:4662
 msgid "halfops"
 msgstr "féloperátor"
 
-#: src/irc/irc-recv.c:4664
+#: src/irc/irc-recv.c:4662
 msgid "halfop"
 msgstr "féloperátor"
 
-#: src/irc/irc-recv.c:4668
+#: src/irc/irc-recv.c:4666
 msgid "voices"
 msgstr ""
 
-#: src/irc/irc-recv.c:4668
+#: src/irc/irc-recv.c:4666
 msgid "voice"
 msgstr ""
 
-#: src/irc/irc-recv.c:4672
+#: src/irc/irc-recv.c:4670
 msgid "normal"
 msgstr "normál"
 
-#: src/irc/irc-recv.c:4772
+#: src/irc/irc-recv.c:4770
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned by "
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
-#: src/irc/irc-recv.c:4807
+#: src/irc/irc-recv.c:4805
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned\n"
 msgstr "%s[%s%s%s] %s%s%s kitiltva\n"
 
-#: src/irc/irc-recv.c:4899
+#: src/irc/irc-recv.c:4897
 #, fuzzy, c-format
 msgid "%s: trying 2nd nickname \"%s\"\n"
 msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a második nevet: \"%s\"\n"
 
-#: src/irc/irc-recv.c:4910
+#: src/irc/irc-recv.c:4908
 #, fuzzy, c-format
 msgid "%s: trying 3rd nickname \"%s\"\n"
 msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a harmadik nevet: \"%s\"\n"
 
-#: src/irc/irc-recv.c:4921
+#: src/irc/irc-recv.c:4919
 #, fuzzy, c-format
 msgid ""
 "%s: all declared nicknames are already in use or invalid, closing connection "
 "with server!\n"
 msgstr "%s: minden megadott név foglalt, kapcsolat bontása a szerverrel!\n"
 
-#: src/irc/irc-recv.c:4932
+#: src/irc/irc-recv.c:4930
 #, fuzzy, c-format
 msgid "%s: trying 1st nickname \"%s\"\n"
 msgstr "%s: a(z) \"%s\" név már foglalt, próbálom az első nevet: \"%s\"\n"
 
-#: src/irc/irc-recv.c:4959
+#: src/irc/irc-recv.c:4957
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\"\n"
 msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a második nevet: \"%s\"\n"
 
-#: src/irc/irc-recv.c:4971
+#: src/irc/irc-recv.c:4969
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\"\n"
 msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a harmadik nevet: \"%s\"\n"
 
-#: src/irc/irc-recv.c:4983
+#: src/irc/irc-recv.c:4981
 #, c-format
 msgid ""
 "%s: all declared nicknames are already in use, closing connection with "
 "server!\n"
 msgstr "%s: minden megadott név foglalt, kapcsolat bontása a szerverrel!\n"
 
-#: src/irc/irc-recv.c:4993
+#: src/irc/irc-recv.c:4991
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\"\n"
 msgstr "%s: a(z) \"%s\" név már foglalt, próbálom az első nevet: \"%s\"\n"
@@ -2257,18 +2257,18 @@ msgid "Plugin \"%s\" unloaded.\n"
 msgstr "A \"%s\" modul eltávolítva.\n"
 
 #: src/plugins/plugins.c:1425 src/plugins/plugins.c:1468
-#: src/common/command.c:3726
+#: src/common/command.c:3819
 #, c-format
 msgid "%s plugin \"%s\" not found\n"
 msgstr "%s a \"%s\" modul nem található\n"
 
-#: src/plugins/plugins-config.c:274 src/common/weeconfig.c:1986
+#: src/plugins/plugins-config.c:274 src/common/weeconfig.c:1983
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"=\"\n"
 msgstr "%s %s, %d. sor: érvénytelen szintaxis, hiányzó \"=\"\n"
 
-#: src/plugins/plugins-config.c:362 src/common/weeconfig.c:2197
-#: src/common/weeconfig.c:2414
+#: src/plugins/plugins-config.c:362 src/common/weeconfig.c:2194
+#: src/common/weeconfig.c:2411
 #, c-format
 msgid "%s cannot create file \"%s\"\n"
 msgstr "%s nem sikerült a \"%s\" fájlt létrehozni\n"
@@ -2620,7 +2620,7 @@ msgstr ""
 msgid "search text in buffer history"
 msgstr "folyamat: puffertörténet betöltése\n"
 
-#: src/gui/gui-keyboard.c:480 src/common/command.c:2465
+#: src/gui/gui-keyboard.c:480 src/common/command.c:2468
 #, c-format
 msgid "%s unable to bind key \"%s\"\n"
 msgstr "%s nem sikerült a(z) \"%s\" billentyűt hozzárendelni\n"
@@ -2656,7 +2656,7 @@ msgstr "****  Naplófájl kezdete  "
 msgid "****  End of log  "
 msgstr "****  Naplófájl vége  "
 
-#: src/common/alias.c:169 src/common/command.c:436
+#: src/common/alias.c:169 src/common/command.c:439
 #, c-format
 msgid "%s circular reference when calling alias \"/%s\"\n"
 msgstr "%s körreferencia a \"/%s\" aliasz hívásakor\n"
@@ -2992,13 +2992,14 @@ msgid ""
 "[list [servername]] | [listfull [servername]] | [servername hostname port [-"
 "auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 nick2 nick3] [-"
 "username username] [-realname realname] [-command command] [-autojoin channel"
-"[,channel]] ] | [del servername]"
+"[,channel]] ] | [copy server newservername] [rename servername "
+"newservername] [del servername]"
 msgstr ""
 "[szervernév] | [szervernév hosztnév port [-auto | -noauto] [-ipv6] [-ssl] [-"
 "pwd jelszó] [-nicks név1 név2 név3] [-username felhasználónév] [-realname "
 "valódi név] [-command parancs] [-autojoin szoba[,szoba]] ] | [del szervernév]"
 
-#: src/common/command.c:184
+#: src/common/command.c:185
 #, fuzzy
 msgid ""
 "      list: list servers (no parameter implies this list)\n"
@@ -3014,6 +3015,8 @@ msgid ""
 "     nick3: second alternate nick for server\n"
 "  username: user name\n"
 "  realname: real name of user\n"
+"      copy: duplicate a server\n"
+"    rename: rename a server\n"
 "       del: delete a server"
 msgstr ""
 "    szervernév: szerver neve, saját használatra, megjelenítéshez\n"
@@ -3028,15 +3031,15 @@ msgstr ""
 "felhasználónév: felhasználónév a szerveren\n"
 "    valódi név: a felhasználó valódi neve"
 
-#: src/common/command.c:199
+#: src/common/command.c:202
 msgid "set config options"
 msgstr "konfigurációs paraméterek beállítása"
 
-#: src/common/command.c:200 src/common/command.c:208
+#: src/common/command.c:203 src/common/command.c:211
 msgid "[option [ = value]]"
 msgstr "[opció [ = érték]]"
 
-#: src/common/command.c:201
+#: src/common/command.c:204
 msgid ""
 "option: name of an option (if name is full and no value is given, then help "
 "is displayed on option)\n"
@@ -3052,11 +3055,11 @@ msgstr ""
 "A opció lehet: szervernév.szerver_xxx, ahol a \"szervernév\" egy belső "
 "szervernév és az \"xxx\" a szerver egyik opciója."
 
-#: src/common/command.c:207
+#: src/common/command.c:210
 msgid "set plugin config options"
 msgstr "modul opcióinak beállítása"
 
-#: src/common/command.c:209
+#: src/common/command.c:212
 msgid ""
 "option: name of a plugin option\n"
 " value: value for option\n"
@@ -3068,27 +3071,27 @@ msgstr ""
 "\n"
 "Az opció formája: modul.opció, például: perl.azénszkriptem.azénopcióm"
 
-#: src/common/command.c:213
+#: src/common/command.c:216
 msgid "remove an alias"
 msgstr "alias eltávolítása"
 
-#: src/common/command.c:214
+#: src/common/command.c:217
 msgid "alias_name"
 msgstr "alias_név"
 
-#: src/common/command.c:214
+#: src/common/command.c:217
 msgid "alias_name: name of alias to remove"
 msgstr "alias_név: az eltávolítandó alias neve"
 
-#: src/common/command.c:216
+#: src/common/command.c:219
 msgid "unignore IRC messages and/or hosts"
 msgstr "IRC üzenetek és/vagy hosztok mellőzésének eltávolítása"
 
-#: src/common/command.c:217
+#: src/common/command.c:220
 msgid "[number | [mask [[type | command] [channel [server]]]]]"
 msgstr "[szám | [maszk [[típus | parancs] [szoba [szerver]]]]]"
 
-#: src/common/command.c:218
+#: src/common/command.c:221
 msgid ""
 " number: # of ignore to unignore (number is displayed by list of ignore)\n"
 "   mask: nick or host mask to unignore\n"
@@ -3112,15 +3115,15 @@ msgstr ""
 "Paraméter megadása nélkül az /unignore parancs listázza a meglévő "
 "mellőzéseket."
 
-#: src/common/command.c:228
+#: src/common/command.c:231
 msgid "upgrade WeeChat without disconnecting from servers"
 msgstr "WeeChat frissítése a szerverekről való lecsatlakozás nélkül"
 
-#: src/common/command.c:229
+#: src/common/command.c:232
 msgid "[path_to_binary]"
 msgstr ""
 
-#: src/common/command.c:230
+#: src/common/command.c:233
 #, fuzzy
 msgid ""
 "path_to_binary: path to WeeChat binary (default is current binary)\n"
@@ -3131,23 +3134,23 @@ msgstr ""
 "Ez a parancs a WeeChat binárison fut, ezért a futtatása előtt a programot le "
 "kell fordítani vagy egy csomagkezelővel telepíteni."
 
-#: src/common/command.c:234
+#: src/common/command.c:237
 msgid "show WeeChat uptime"
 msgstr "a WeeChat futásidejének mutatása"
 
-#: src/common/command.c:235
+#: src/common/command.c:238
 msgid "[-o]"
 msgstr "[-o]"
 
-#: src/common/command.c:236
+#: src/common/command.c:239
 msgid "-o: send uptime on current channel as an IRC message"
 msgstr "-o: a futásidő mint IRC üzenet elküldése az aktuális szobába"
 
-#: src/common/command.c:238
+#: src/common/command.c:241
 msgid "manage windows"
 msgstr "ablakok kezelése"
 
-#: src/common/command.c:239
+#: src/common/command.c:242
 msgid ""
 "[list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv "
 "[pct] | resize pct | merge [all]]"
@@ -3155,7 +3158,7 @@ msgstr ""
 "[list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv "
 "[pct] | resize pct | merge [all]]"
 
-#: src/common/command.c:241
+#: src/common/command.c:244
 msgid ""
 "  list: list open windows (no parameter implies this list)\n"
 "    -1: jump to previous window\n"
@@ -3191,12 +3194,12 @@ msgstr ""
 "hogy az új ablak hány százaléka lesz a szülőablaknak. Például 25 esetén a "
 "szülőablak negyedét kapjuk."
 
-#: src/common/command.c:416 src/common/command.c:586 src/common/command.c:678
+#: src/common/command.c:419 src/common/command.c:589 src/common/command.c:681
 #, c-format
 msgid "%s command \"%s\" failed\n"
 msgstr "%s a \"%s\" parancs végrehajtása sikertelen\n"
 
-#: src/common/command.c:542
+#: src/common/command.c:545
 #, fuzzy, c-format
 msgid "%s wrong argument count for %s command \"%s\" (expected: %d arg)\n"
 msgid_plural ""
@@ -3208,7 +3211,7 @@ msgstr[1] ""
 "%s helytelen számú paraméter a következő %s parancsnak: \"%s\" (várt: %d "
 "paraméter%s)\n"
 
-#: src/common/command.c:555
+#: src/common/command.c:558
 #, fuzzy, c-format
 msgid ""
 "%s wrong argument count for %s command \"%s\" (expected: between %d and %d "
@@ -3223,7 +3226,7 @@ msgstr[1] ""
 "%s helytelen számú paraméter a következő %s parancsnak: \"%s\" (várt: %d és %"
 "d paraméter között%s)\n"
 
-#: src/common/command.c:613
+#: src/common/command.c:616
 #, fuzzy, c-format
 msgid "%s wrong argument count for IRC command \"%s\" (expected: %d arg)\n"
 msgid_plural ""
@@ -3233,7 +3236,7 @@ msgstr[0] ""
 msgstr[1] ""
 "%s helytelen számú argumentum a(z) \"%s\" IRC parancsnak (várt: %d arg%s)\n"
 
-#: src/common/command.c:627
+#: src/common/command.c:630
 #, fuzzy, c-format
 msgid ""
 "%s wrong argument count for IRC command \"%s\" (expected: between %d and %d "
@@ -3248,12 +3251,12 @@ msgstr[1] ""
 "%s helytelen számú argumentum a(z) \"%s\" IRC parancsnak (várt: %d és %d "
 "közötti arg%s)\n"
 
-#: src/common/command.c:653
+#: src/common/command.c:656
 #, c-format
 msgid "%s command \"%s\" can not be executed on DCC CHAT buffer\n"
 msgstr "%s \"%s\" parancs nem futtatható a DCC CHAT pufferben\n"
 
-#: src/common/command.c:714
+#: src/common/command.c:717
 #, c-format
 msgid ""
 "%s unknown command \"%s\" (type /help for help). To send unknown commands to "
@@ -3263,373 +3266,373 @@ msgstr ""
 "ismeretlen parancsokat kíván küldeni az IRC szervernek, engedélyezze az "
 "irc_send_unknown_commands opciót!\n"
 
-#: src/common/command.c:786
+#: src/common/command.c:789
 #, fuzzy, c-format
 msgid "%s you are not connected to server\n"
 msgstr "%s nincs csatlakozva a \"%s\" szerverhez!\n"
 
-#: src/common/command.c:938
+#: src/common/command.c:941
 msgid "This window is not a channel!\n"
 msgstr "Ez az ablak nem egy szoba!\n"
 
-#: src/common/command.c:986 src/common/command.c:1158
+#: src/common/command.c:989 src/common/command.c:1161
 #, c-format
 msgid "%s missing arguments for \"%s\" command\n"
 msgstr "%s hiányzó argumentum a \"%s\" parancsnak\n"
 
-#: src/common/command.c:996
+#: src/common/command.c:999
 #, c-format
 msgid "Alias \"%s\" => \"%s\" created\n"
 msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
 
-#: src/common/command.c:1002
+#: src/common/command.c:1005
 #, c-format
 msgid "Failed to create alias \"%s\" => \"%s\" (not enough memory)\n"
 msgstr ""
 "A \"%s\" => \"%s\" aliasz elkészítése sikertelen (nincs elég memória)\n"
 
-#: src/common/command.c:1014
+#: src/common/command.c:1017
 msgid "Alias:\n"
 msgstr "Aliasz:\n"
 
-#: src/common/command.c:1024
+#: src/common/command.c:1027
 msgid "No alias found.\n"
 msgstr "Nem találtam aliaszt.\n"
 
-#: src/common/command.c:1034
+#: src/common/command.c:1037
 msgid "List of aliases:\n"
 msgstr "Aliaszok listája:\n"
 
-#: src/common/command.c:1048
+#: src/common/command.c:1051
 msgid "No alias defined.\n"
 msgstr "Nincs aliasz definiálva.\n"
 
-#: src/common/command.c:1067
+#: src/common/command.c:1070
 #, c-format
 msgid "%sServer: %s%s\n"
 msgstr "%sSzerver: %s%s\n"
 
-#: src/common/command.c:1072
+#: src/common/command.c:1075
 #, c-format
 msgid "%snot connected\n"
 msgstr "%snincs csatlakozva\n"
 
-#: src/common/command.c:1076
+#: src/common/command.c:1079
 #, c-format
 msgid "%sChannel: %s%s %s(server: %s%s%s)\n"
 msgstr "%sSzoba: %s%s %s(szerver: %s%s%s)\n"
 
-#: src/common/command.c:1085
+#: src/common/command.c:1088
 #, c-format
 msgid "%sPrivate with: %s%s %s(server: %s%s%s)\n"
 msgstr "%sPrivát beszélgetés: %s%s %s(szerver: %s%s%s)\n"
 
-#: src/common/command.c:1094 src/common/command.c:1106
+#: src/common/command.c:1097 src/common/command.c:1109
 #, c-format
 msgid "%sunknown\n"
 msgstr "%sismeretlen\n"
 
-#: src/common/command.c:1102
+#: src/common/command.c:1105
 #, c-format
 msgid "%sraw IRC data\n"
 msgstr "%snyers IRC adat\n"
 
-#: src/common/command.c:1137
+#: src/common/command.c:1140
 msgid "Open buffers:\n"
 msgstr "Nyitott pufferek:\n"
 
-#: src/common/command.c:1182
+#: src/common/command.c:1185
 #, c-format
 msgid "%s incorrect buffer number\n"
 msgstr "%s helytelen pufferszám\n"
 
-#: src/common/command.c:1199
+#: src/common/command.c:1202
 #, c-format
 msgid "%s can not close the single buffer\n"
 msgstr "%s az utolsó puffert nem lehet bezárni\n"
 
-#: src/common/command.c:1212
+#: src/common/command.c:1215
 #, c-format
 msgid "%s can not close server buffer while channels are open\n"
 msgstr "%s nem lehet a szerver puffert bezárni, míg a szobákban tartózkodunk\n"
 
-#: src/common/command.c:1285
+#: src/common/command.c:1288
 msgid "Default notify levels for servers:"
 msgstr "Szerverek alapértelmezett értesítési szintje:"
 
-#: src/common/command.c:1303
+#: src/common/command.c:1306
 msgid "Notify levels:"
 msgstr "Értesítési szintek:"
 
-#: src/common/command.c:1310
+#: src/common/command.c:1313
 msgid "Raw IRC data"
 msgstr "Nyers IRC adat"
 
-#: src/common/command.c:1332 src/common/command.c:1402
+#: src/common/command.c:1335 src/common/command.c:1405
 #, c-format
 msgid "%s incorrect notify level (must be between %d and %d)\n"
 msgstr ""
 "%s helytelen értesítési szint (az értéknek %d és %d között kell lennie)\n"
 
-#: src/common/command.c:1345
+#: src/common/command.c:1348
 #, c-format
 msgid "%s incorrect buffer for notify (must be server, channel or private)\n"
 msgstr ""
 "%s helytelen puffer az értesítéshez (szervert, szobát vagy privát "
 "beszélgetést kell megjelölnie)\n"
 
-#: src/common/command.c:1356
+#: src/common/command.c:1359
 #, c-format
 msgid "New default notify level for server %s%s%s: %s%d %s"
 msgstr "A(z) %s%s%s szerver új értesítési szintje: %s%d %s"
 
-#: src/common/command.c:1370
+#: src/common/command.c:1373
 #, c-format
 msgid "New notify level for %s%s%s: %s%d %s"
 msgstr "A %s%s%s új értesítési szintje: %s%d %s"
 
-#: src/common/command.c:1381
+#: src/common/command.c:1384
 msgid "(hotlist: never)\n"
 msgstr ""
 
-#: src/common/command.c:1384
+#: src/common/command.c:1387
 msgid "(hotlist: highlights)\n"
 msgstr ""
 
-#: src/common/command.c:1387
+#: src/common/command.c:1390
 msgid "(hotlist: highlights + messages)\n"
 msgstr ""
 
-#: src/common/command.c:1390
+#: src/common/command.c:1393
 msgid "(hotlist: highlights + messages + join/part (all))\n"
 msgstr ""
 
-#: src/common/command.c:1538
+#: src/common/command.c:1541
 #, fuzzy, c-format
 msgid "%s buffer not found for \"%s\" command\n"
 msgstr "%s nem található név a \"%s\" parancshoz\n"
 
-#: src/common/command.c:1548 src/common/command.c:1851
-#: src/common/command.c:2774 src/common/command.c:4187
-#: src/common/command.c:4230
+#: src/common/command.c:1551 src/common/command.c:1854
+#: src/common/command.c:2777 src/common/command.c:4280
+#: src/common/command.c:4323
 #, c-format
 msgid "%s unknown option for \"%s\" command\n"
 msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
-#: src/common/command.c:1576
+#: src/common/command.c:1579
 #, c-format
 msgid "%s already connected to server \"%s\"!\n"
 msgstr "%s már csatlakozott a \"%s\" szerverhez!\n"
 
-#: src/common/command.c:1584
+#: src/common/command.c:1587
 #, c-format
 msgid "%s currently connecting to server \"%s\"!\n"
 msgstr "%s éppen kapcsolódik a(z) \"%s\" szerverhez!\n"
 
-#: src/common/command.c:1664 src/common/command.c:1936
-#: src/common/command.c:2885 src/common/command.c:3406
+#: src/common/command.c:1667 src/common/command.c:1939
+#: src/common/command.c:2888 src/common/command.c:3499
 #, c-format
 msgid "%s server \"%s\" not found\n"
 msgstr "%s a \"%s\" szerver nem található\n"
 
-#: src/common/command.c:1872 src/common/command.c:2812
+#: src/common/command.c:1875 src/common/command.c:2815
 #, c-format
 msgid "%s not connected to server \"%s\"!\n"
 msgstr "%s nincs csatlakozva a \"%s\" szerverhez!\n"
 
-#: src/common/command.c:1880
+#: src/common/command.c:1883
 msgid "Auto-reconnection is cancelled\n"
 msgstr "automata újracsatlakozás megszakítva\n"
 
-#: src/common/command.c:1972 src/common/weechat.c:218
+#: src/common/command.c:1975 src/common/weechat.c:218
 #, c-format
 msgid "%s internal commands:\n"
 msgstr "%s belső parancsok:\n"
 
-#: src/common/command.c:1982 src/common/weechat.c:238
+#: src/common/command.c:1985 src/common/weechat.c:238
 msgid "IRC commands:\n"
 msgstr "IRC parancsok:\n"
 
-#: src/common/command.c:1996
+#: src/common/command.c:1999
 msgid "Plugin commands:\n"
 msgstr "Modul parancsok:\n"
 
-#: src/common/command.c:2112
+#: src/common/command.c:2115
 #, c-format
 msgid "No help available, \"%s\" is an unknown command\n"
 msgstr "Nem érhető el segítség, a \"%s\" ismeretlen parancs\n"
 
-#: src/common/command.c:2181
+#: src/common/command.c:2184
 #, c-format
 msgid "%son %s%s%s/%s%s%s:%s ignoring %s%s%s from %s%s\n"
 msgstr ""
 
-#: src/common/command.c:2219
+#: src/common/command.c:2222
 msgid "List of ignore:\n"
 msgstr "Mellőzések listája:\n"
 
-#: src/common/command.c:2236
+#: src/common/command.c:2239
 msgid "No ignore defined.\n"
 msgstr "Nincs mellőzés megadva.\n"
 
-#: src/common/command.c:2262
+#: src/common/command.c:2265
 msgid "New ignore:"
 msgstr "Új mellőzés:"
 
-#: src/common/command.c:2282
+#: src/common/command.c:2285
 #, c-format
 msgid "New key binding:  %s"
 msgstr "Új billentyűparancs: %s"
 
-#: src/common/command.c:2325
+#: src/common/command.c:2328
 msgid "Key bindings:\n"
 msgstr "Billentyűparancsok:\n"
 
-#: src/common/command.c:2339
+#: src/common/command.c:2342
 #, c-format
 msgid "Key \"%s\" unbound\n"
 msgstr "A(z) \"%s\" billentyűparancs visszavonva\n"
 
-#: src/common/command.c:2345
+#: src/common/command.c:2348
 #, c-format
 msgid "%s unable to unbind key \"%s\"\n"
 msgstr "%s nem sikerült a(z) \"%s\" billentyűparancsot visszavonni\n"
 
-#: src/common/command.c:2353 src/common/weechat.c:270
+#: src/common/command.c:2356 src/common/weechat.c:270
 msgid "Internal key functions:\n"
 msgstr "Belső billentyűfunkciók:\n"
 
-#: src/common/command.c:2402
+#: src/common/command.c:2405
 #, fuzzy, c-format
 msgid "%s unknown key function \"%s\"\n"
 msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
-#: src/common/command.c:2417
+#: src/common/command.c:2420
 msgid "Default key bindings restored\n"
 msgstr "Alapértelmezett billentyűparancsok visszaállítva\n"
 
-#: src/common/command.c:2423
+#: src/common/command.c:2426
 #, fuzzy, c-format
 msgid "%s \"-yes\" argument is required for keys reset (security reason)\n"
 msgstr ""
 "%s \"-yes\" paraméter megadása kötelező a billentyűparancsok "
 "visszaállításához (biztonsági okokból)\n"
 
-#: src/common/command.c:2442
+#: src/common/command.c:2445
 msgid "Key:\n"
 msgstr "Billentyű:\n"
 
-#: src/common/command.c:2448
+#: src/common/command.c:2451
 msgid "No key found.\n"
 msgstr "Nem találtam billentyűt.\n"
 
-#: src/common/command.c:2490
+#: src/common/command.c:2493
 msgid "global"
 msgstr "globális"
 
-#: src/common/command.c:2490
+#: src/common/command.c:2493
 msgid "local"
 msgstr "helyi"
 
-#: src/common/command.c:2496
+#: src/common/command.c:2499
 msgid "top"
 msgstr "legfelső"
 
-#: src/common/command.c:2499
+#: src/common/command.c:2502
 msgid "bottom"
 msgstr "legalsó"
 
-#: src/common/command.c:2502
+#: src/common/command.c:2505
 msgid "left"
 msgstr "bal"
 
-#: src/common/command.c:2505
+#: src/common/command.c:2508
 msgid "right"
 msgstr "jobb"
 
-#: src/common/command.c:2535
+#: src/common/command.c:2538
 msgid "Open panels:\n"
 msgstr "Nyitott panelek:\n"
 
-#: src/common/command.c:2567
+#: src/common/command.c:2570
 msgid "Plugins loaded:\n"
 msgstr "Betöltött modulok:\n"
 
-#: src/common/command.c:2593
+#: src/common/command.c:2596
 msgid "     message handlers:\n"
 msgstr "     üzenetkezelők:\n"
 
-#: src/common/command.c:2602
+#: src/common/command.c:2605
 #, c-format
 msgid "       IRC(%s)\n"
 msgstr "       IRC(%s)\n"
 
-#: src/common/command.c:2609
+#: src/common/command.c:2612
 msgid "       (no message handler)\n"
 msgstr "       (nincs üzenetkezelő)\n"
 
-#: src/common/command.c:2614
+#: src/common/command.c:2617
 msgid "     command handlers:\n"
 msgstr "     parancskezelők:\n"
 
-#: src/common/command.c:2635
+#: src/common/command.c:2638
 msgid "       (no command handler)\n"
 msgstr "       (nincs parancskezelő)\n"
 
-#: src/common/command.c:2640
+#: src/common/command.c:2643
 msgid "     timer handlers:\n"
 msgstr "     időkezelők:\n"
 
-#: src/common/command.c:2649
+#: src/common/command.c:2652
 #, c-format
 msgid "       %d seconds\n"
 msgstr "       %d másodperc\n"
 
-#: src/common/command.c:2656
+#: src/common/command.c:2659
 msgid "       (no timer handler)\n"
 msgstr "       (nincs időkezelő)\n"
 
-#: src/common/command.c:2661
+#: src/common/command.c:2664
 msgid "     keyboard handlers:\n"
 msgstr "     billentyűkezelők:\n"
 
-#: src/common/command.c:2671
+#: src/common/command.c:2674
 msgid "       (no keyboard handler)\n"
 msgstr "       (nincsenek billentyűkezelők)\n"
 
-#: src/common/command.c:2673 src/common/command.c:2690
-#: src/common/command.c:2706
+#: src/common/command.c:2676 src/common/command.c:2693
+#: src/common/command.c:2709
 #, c-format
 msgid "       %d defined\n"
 msgstr "       %d definiálva\n"
 
-#: src/common/command.c:2678
+#: src/common/command.c:2681
 #, fuzzy
 msgid "     event handlers:\n"
 msgstr "     üzenetkezelők:\n"
 
-#: src/common/command.c:2688
+#: src/common/command.c:2691
 #, fuzzy
 msgid "       (no event handler)\n"
 msgstr "       (nincs üzenetkezelő)\n"
 
-#: src/common/command.c:2695
+#: src/common/command.c:2698
 msgid "     modifiers:\n"
 msgstr "     módosítók:\n"
 
-#: src/common/command.c:2704
+#: src/common/command.c:2707
 msgid "       (no modifier)\n"
 msgstr "       (nincs módosító)\n"
 
-#: src/common/command.c:2715
+#: src/common/command.c:2718
 msgid "No plugin found.\n"
 msgstr "Nem található modul.\n"
 
-#: src/common/command.c:2717
+#: src/common/command.c:2720
 msgid "  (no plugin)\n"
 msgstr "  (nem található bővítőmodul)\n"
 
-#: src/common/command.c:2787 src/common/command.c:3804
+#: src/common/command.c:2790 src/common/command.c:3897
 #, c-format
 msgid ""
 "Command \"%s\" is not available, WeeChat was built without plugins support.\n"
@@ -3637,59 +3640,71 @@ msgstr ""
 "A(z) \"%s\" parancs nem elérhető, a WeeChat modultámogatás nélkül lett "
 "lefordítva.\n"
 
-#: src/common/command.c:2917
+#: src/common/command.c:2920
 msgid "Configuration file saved\n"
 msgstr "Konfigurációs fájl elmentve\n"
 
-#: src/common/command.c:2922
+#: src/common/command.c:2925
 #, c-format
 msgid "%s failed to save configuration file\n"
 msgstr "%s nem sikerült a konfigurációs fájlt elmenteni\n"
 
-#: src/common/command.c:2930
+#: src/common/command.c:2933
 msgid "Plugins options saved\n"
 msgstr "Modul beállítások elmentve\n"
 
-#: src/common/command.c:2935
+#: src/common/command.c:2938
 #, c-format
 msgid "%s failed to save plugins options\n"
 msgstr "%s nem sikerült a modul opciókat elmenteni\n"
 
-#: src/common/command.c:2984
+#: src/common/command.c:2987
 #, fuzzy
 msgid "All servers:\n"
 msgstr "Nincs szerver.\n"
 
-#: src/common/command.c:2994
+#: src/common/command.c:2997
 msgid "No server.\n"
 msgstr "Nincs szerver.\n"
 
-#: src/common/command.c:3008
+#: src/common/command.c:3011
 #, fuzzy, c-format
 msgid "Servers with '%s':\n"
 msgstr "A '%s' szerver nem található.\n"
 
-#: src/common/command.c:3018
+#: src/common/command.c:3021
 #, fuzzy, c-format
 msgid "No server with '%s' found.\n"
 msgstr "A '%s' szerver nem található.\n"
 
-#: src/common/command.c:3031
-#, c-format
-msgid "%s missing servername for \"%s\" command\n"
+#: src/common/command.c:3034 src/common/command.c:3083
+#: src/common/command.c:3131
+#, fuzzy, c-format
+msgid "%s missing server name for \"%s\" command\n"
 msgstr "%s hiányzó szervernév a \"%s\" parancshoz\n"
 
-#: src/common/command.c:3039
-#, c-format
-msgid "%s too much arguments for \"%s\" command, ignoring arguments\n"
-msgstr "%s túl sok paraméter a \"%s\" parancsnak, paraméterek mellőzve\n"
-
-#: src/common/command.c:3049
+#: src/common/command.c:3045 src/common/command.c:3094
+#: src/common/command.c:3142
 #, c-format
 msgid "%s server \"%s\" not found for \"%s\" command\n"
 msgstr "%s a \"%s\" szerver nem található a \"%s\" parancshoz\n"
 
-#: src/common/command.c:3057
+#: src/common/command.c:3055 src/common/command.c:3104
+#, fuzzy, c-format
+msgid "%s server \"%s\" already exists for \"%s\" command\n"
+msgstr "%s a \"%s\" szerver nem található a \"%s\" parancshoz\n"
+
+#: src/common/command.c:3065
+#, fuzzy, c-format
+msgid "Server %s%s%s has been copied to %s%s\n"
+msgstr "A %s%s%s szerver törölve\n"
+
+#: src/common/command.c:3113
+#, fuzzy, c-format
+msgid "Server %s%s%s has been renamed to %s%s\n"
+msgstr "A %s%s%s szerver törölve\n"
+
+#: src/common/command.c:3150
 #, c-format
 msgid ""
 "%s you can not delete server \"%s\" because you are connected to. Try /"
@@ -3698,192 +3713,192 @@ msgstr ""
 "%s nem tudja törölni a \"%s\" szervert, mert csatlakozva van hozzá. Próbálja "
 "a /disconnect %s parancsot előbb.\n"
 
-#: src/common/command.c:3077
+#: src/common/command.c:3170
 #, c-format
 msgid "Server %s%s%s has been deleted\n"
 msgstr "A %s%s%s szerver törölve\n"
 
-#: src/common/command.c:3096
+#: src/common/command.c:3189
 #, c-format
 msgid "%s missing parameters for \"%s\" command\n"
 msgstr "%s hiányzó paraméter a \"%s\" parancsnak\n"
 
-#: src/common/command.c:3106
+#: src/common/command.c:3199
 #, c-format
 msgid "%s server \"%s\" already exists, can't create it!\n"
 msgstr "%s a \"%s\" szerver már létezik, nem hozhatja létre!\n"
 
-#: src/common/command.c:3135 src/common/command.c:3163
-#: src/common/command.c:3176 src/common/command.c:3202
+#: src/common/command.c:3228 src/common/command.c:3256
+#: src/common/command.c:3269 src/common/command.c:3295
 #, c-format
 msgid "%s missing password for \"%s\" parameter\n"
 msgstr "%s hiányzó jelszó a \"%s\" paraméterhez\n"
 
-#: src/common/command.c:3148
+#: src/common/command.c:3241
 #, c-format
 msgid "%s missing nick(s) for \"%s\" parameter\n"
 msgstr "%s hiányzó név a \"%s\" paraméterhez\n"
 
-#: src/common/command.c:3189
+#: src/common/command.c:3282
 #, c-format
 msgid "%s missing command for \"%s\" parameter\n"
 msgstr "%s hiányzó parancs a \"%s\" paraméterhez\n"
 
-#: src/common/command.c:3226
+#: src/common/command.c:3319
 #, c-format
 msgid "Server %s%s%s created\n"
 msgstr "A %s%s%s szerver létrehozva\n"
 
-#: src/common/command.c:3235
+#: src/common/command.c:3328
 #, c-format
 msgid "%s unable to create server\n"
 msgstr "%s nem sikerült a szervert létrehozni\n"
 
-#: src/common/command.c:3295
+#: src/common/command.c:3388
 msgid "(unknown)"
 msgstr "(ismeretlen)"
 
-#: src/common/command.c:3307
+#: src/common/command.c:3400
 #, c-format
 msgid "%s(password hidden) "
 msgstr "%s(jelszó rejtve) "
 
-#: src/common/command.c:3439 src/common/command.c:3487
+#: src/common/command.c:3532 src/common/command.c:3580
 #, c-format
 msgid "%s config option \"%s\" not found\n"
 msgstr "%s a \"%s\" opció nem található\n"
 
-#: src/common/command.c:3444 src/common/command.c:3479
+#: src/common/command.c:3537 src/common/command.c:3572
 #, c-format
 msgid "%s incorrect value for option \"%s\"\n"
 msgstr "%s helytelen érték a \"%s\" paraméternek\n"
 
-#: src/common/command.c:3460
+#: src/common/command.c:3553
 #, c-format
 msgid "%s option \"%s\" can not be changed while WeeChat is running\n"
 msgstr "%s a \"%s\" opció nem módosítható a WeeChat futása közben\n"
 
-#: src/common/command.c:3570
+#: src/common/command.c:3663
 #, c-format
 msgid "No config option found with \"%s\"\n"
 msgstr "Nem találtam beállítási lehetőséget a \"%s\" szóhoz\n"
 
-#: src/common/command.c:3573
+#: src/common/command.c:3666
 msgid "No config option found\n"
 msgstr "Nem található az opció\n"
 
-#: src/common/command.c:3580
+#: src/common/command.c:3673
 #, c-format
 msgid "%sDetail:\n"
 msgstr "%sRészletek:\n"
 
-#: src/common/command.c:3585
+#: src/common/command.c:3678
 msgid "  . type boolean (values: 'on' or 'off')\n"
 msgstr "  . típus logikai (értékek: 'on' vagy 'off')\n"
 
-#: src/common/command.c:3586 src/common/command.c:3609
-#: src/common/command.c:3615 src/common/command.c:3621
+#: src/common/command.c:3679 src/common/command.c:3702
+#: src/common/command.c:3708 src/common/command.c:3714
 #: src/common/weechat.c:153 src/common/weechat.c:178 src/common/weechat.c:185
 #: src/common/weechat.c:192
 #, c-format
 msgid "  . default value: '%s'\n"
 msgstr "  . alapérték: '%s'\n"
 
-#: src/common/command.c:3591
+#: src/common/command.c:3684
 #, c-format
 msgid "  . type integer (values: between %d and %d)\n"
 msgstr "  . típus szám (értékek: %d és %d között)\n"
 
-#: src/common/command.c:3594 src/common/weechat.c:162
+#: src/common/command.c:3687 src/common/weechat.c:162
 #, c-format
 msgid "  . default value: %d\n"
 msgstr "  . alapérték: %d\n"
 
-#: src/common/command.c:3598
+#: src/common/command.c:3691
 msgid "  . type string (values: "
 msgstr "  . típus szöveg (értékek: "
 
-#: src/common/command.c:3611 src/common/command.c:3617
-#: src/common/command.c:3623 src/common/weechat.c:180 src/common/weechat.c:187
+#: src/common/command.c:3704 src/common/command.c:3710
+#: src/common/command.c:3716 src/common/weechat.c:180 src/common/weechat.c:187
 #: src/common/weechat.c:194
 msgid "empty"
 msgstr "üres"
 
-#: src/common/command.c:3614
+#: src/common/command.c:3707
 msgid "  . type color (Curses or Gtk color, look at WeeChat doc)\n"
 msgstr "  . típus szín (Curses vagy Gtk szín, lásd WeeChat dokumentáció)\n"
 
-#: src/common/command.c:3620
+#: src/common/command.c:3713
 msgid "  . type string (any string)\n"
 msgstr "  . típus szöveg (bármilyen szöveg)\n"
 
-#: src/common/command.c:3626 src/common/weechat.c:197
+#: src/common/command.c:3719 src/common/weechat.c:197
 #, c-format
 msgid "  . description: %s\n"
 msgstr "  . leírás : %s\n"
 
-#: src/common/command.c:3637
+#: src/common/command.c:3730
 #, c-format
 msgid "config option(s) found with \"%s\"\n"
 msgstr "a \"%s\" kifejezéshez tartozó opciót találtam\n"
 
-#: src/common/command.c:3640
+#: src/common/command.c:3733
 msgid "config option(s) found\n"
 msgstr "megtalált opciók\n"
 
-#: src/common/command.c:3748
+#: src/common/command.c:3841
 #, c-format
 msgid "%s incorrect value for plugin option \"%s\"\n"
 msgstr "%s helytelen érték a(z) \"%s\" modul paraméternek\n"
 
-#: src/common/command.c:3777
+#: src/common/command.c:3870
 #, c-format
 msgid "No plugin option found with \"%s\"\n"
 msgstr "A(z) \"%s\" kifejezéshez nem található modul opció\n"
 
-#: src/common/command.c:3780
+#: src/common/command.c:3873
 msgid "No plugin option found\n"
 msgstr "Nem található modul opció\n"
 
-#: src/common/command.c:3790
+#: src/common/command.c:3883
 #, c-format
 msgid "plugin option(s) found with \"%s\"\n"
 msgstr "a(z) \"%s\" kifejezéshez tartozó modul opciók\n"
 
-#: src/common/command.c:3793
+#: src/common/command.c:3886
 msgid "plugin option(s) found\n"
 msgstr "megtalált modul opciók\n"
 
-#: src/common/command.c:3834
+#: src/common/command.c:3927
 #, c-format
 msgid "%s alias or command \"%s\" not found\n"
 msgstr "%s a \"%s\" aliasz vagy parancs nem található\n"
 
-#: src/common/command.c:3844
+#: src/common/command.c:3937
 #, c-format
 msgid "Alias \"%s\" removed\n"
 msgstr "A \"%s\" aliasz eltávolítva\n"
 
-#: src/common/command.c:3900
+#: src/common/command.c:3993
 #, fuzzy, c-format
 msgid "%s%d%s ignore was removed.\n"
 msgid_plural "%s%d%s ignore were removed.\n"
 msgstr[0] "mellőzés eltávolítva.\n"
 msgstr[1] "mellőzés eltávolítva.\n"
 
-#: src/common/command.c:3910
+#: src/common/command.c:4003
 #, c-format
 msgid "%s no ignore found\n"
 msgstr "%s nem található ilyen mellőzés\n"
 
-#: src/common/command.c:3944
+#: src/common/command.c:4037
 #, c-format
 msgid "%s can't upgrade: connection to at least one server is pending\n"
 msgstr ""
 "%s nem sikerült frissíteni: a kapcsolat egy vagy több szerverrel még "
 "folyamatban van\n"
 
-#: src/common/command.c:3954
+#: src/common/command.c:4047
 #, c-format
 msgid ""
 "%s can't upgrade: connection to at least one SSL server is active (should be "
@@ -3892,7 +3907,7 @@ msgstr ""
 "%s nem sikerült frissíteni: a kapcsolat legalább egy SSL szerverrel aktív (a "
 "következő verziókban javítva lesz)\n"
 
-#: src/common/command.c:3964
+#: src/common/command.c:4057
 #, c-format
 msgid ""
 "%s can't upgrade: anti-flood is active on at least one server (sending many "
@@ -3901,36 +3916,36 @@ msgstr ""
 "%s nem sikerült frissíteni: az anti-flood (több sor küldése) legalább egy "
 "szerveren aktív\n"
 
-#: src/common/command.c:3979
+#: src/common/command.c:4072
 msgid "Upgrading WeeChat...\n"
 msgstr "WeeChat frissítése...\n"
 
-#: src/common/command.c:3986
+#: src/common/command.c:4079
 #, c-format
 msgid "%s unable to save session in file\n"
 msgstr "%s nem sikerült a folyamatot menteni\n"
 
-#: src/common/command.c:4013
+#: src/common/command.c:4106
 #, c-format
 msgid "%s exec failed (program: \"%s\"), exiting WeeChat\n"
 msgstr "%s futtatási hiba (program: \"%s\"), a WeeChat kilép\n"
 
-#: src/common/command.c:4053
+#: src/common/command.c:4146
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
 msgstr "WeeChat futásidő: %d %s %02d:%02d:%02d, elindítva: %s"
 
-#: src/common/command.c:4067
+#: src/common/command.c:4160
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
 msgstr ""
 "WeeChat futásidő: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, elindítva: %s%s"
 
-#: src/common/command.c:4111
+#: src/common/command.c:4204
 msgid "Open windows:\n"
 msgstr "Nyitott ablakok:\n"
 
-#: src/common/command.c:4198
+#: src/common/command.c:4291
 #, c-format
 msgid ""
 "%s can not merge windows, there's no other window with same size near "
@@ -5647,63 +5662,63 @@ msgstr ""
 "%s most javasolt a /save parancs futtatása, hogy a \"save_on_exit\" (mentés "
 "kilépéskor) opció bekerüljön a konfigurációs fájlba.\n"
 
-#: src/common/weeconfig.c:1789
+#: src/common/weeconfig.c:1786
 #, c-format
 msgid "%s %s, line %d: new server, but previous was incomplete\n"
 msgstr "%s %s, %d. sor: új szerver, de az előző nem teljes\n"
 
-#: src/common/weeconfig.c:1798
+#: src/common/weeconfig.c:1795
 #, c-format
 msgid "%s %s, line %d: server '%s' already exists\n"
 msgstr "%s %s, %d. sor: a '%s' szerver már létezik\n"
 
-#: src/common/weeconfig.c:1814
+#: src/common/weeconfig.c:1811
 #, c-format
 msgid "%s %s, line %d: unable to create server\n"
 msgstr "%s %s, %d. sor: nem sikerült a szervert létrehozni\n"
 
-#: src/common/weeconfig.c:1854
+#: src/common/weeconfig.c:1851
 #, c-format
 msgid "%s unable to assign default int with string (\"%s\")\n"
 msgstr ""
 "%s nem sikerült az alapértelmezett számot meghatározni a \"%s\" szöveghez\n"
 
-#: src/common/weeconfig.c:1865
+#: src/common/weeconfig.c:1862
 #, c-format
 msgid "%s unable to assign default color (\"%s\")\n"
 msgstr "%s nem sikerült az alapértelmezett színt meghatározni (\"%s\")\n"
 
-#: src/common/weeconfig.c:1903
+#: src/common/weeconfig.c:1900
 #, c-format
 msgid "%s config file \"%s\" not found.\n"
 msgstr "%s a \"%s\" beállítófájl nem található.\n"
 
-#: src/common/weeconfig.c:1943
+#: src/common/weeconfig.c:1940
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"]\"\n"
 msgstr "%s %s, %d. sor: érvénytelen szintaxis, hiányzó \"]\"\n"
 
-#: src/common/weeconfig.c:1960
+#: src/common/weeconfig.c:1957
 #, c-format
 msgid "%s %s, line %d: unknown section identifier (\"%s\")\n"
 msgstr "%s %s, %d. sor: ismeretlen csoportazonosító (\"%s\")\n"
 
-#: src/common/weeconfig.c:1978
+#: src/common/weeconfig.c:1975
 #, c-format
 msgid "%s %s, line %d: invalid section for option, line is ignored\n"
 msgstr "%s %s, %d. sor: érvénytelen csoport az opcióhoz, a sor mellőzve\n"
 
-#: src/common/weeconfig.c:2061 src/common/weeconfig.c:2087
+#: src/common/weeconfig.c:2058 src/common/weeconfig.c:2084
 #, c-format
 msgid "%s %s, line %d: invalid option \"%s\"\n"
 msgstr "%s %s, %d. sor: érvénytelen opció: \"%s\"\n"
 
-#: src/common/weeconfig.c:2067
+#: src/common/weeconfig.c:2064
 #, c-format
 msgid "%s %s, line %d: invalid ignore options \"%s\"\n"
 msgstr "%s %s, %d. sor: érvénytelen mellőzési opciók: \"%s\"\n"
 
-#: src/common/weeconfig.c:2098
+#: src/common/weeconfig.c:2095
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
@@ -5712,7 +5727,7 @@ msgstr ""
 "%s %s, %d. sor: érvénytelen érték a '%s' opciónak\n"
 "Várt: logikai érték: 'off' vagy 'on'\n"
 
-#: src/common/weeconfig.c:2107
+#: src/common/weeconfig.c:2104
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
@@ -5721,7 +5736,7 @@ msgstr ""
 "%s %s, %d. sor: érvénytelen érték a '%s' opciónak\n"
 "Várt: %d és %d közti szám\n"
 
-#: src/common/weeconfig.c:2118
+#: src/common/weeconfig.c:2115
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
@@ -5730,21 +5745,21 @@ msgstr ""
 "%s %s, %d. sor: érvénytelen érték a '%s' opciónak\n"
 "Várt: egyike az alábbi sztringeknek: "
 
-#: src/common/weeconfig.c:2134
+#: src/common/weeconfig.c:2131
 #, c-format
 msgid "%s %s, line %d: invalid color name for option '%s'\n"
 msgstr "%s %s, sor: %d: érvénytelen színnév a '%s' opciónak\n"
 
-#: src/common/weeconfig.c:2203
+#: src/common/weeconfig.c:2200
 #, c-format
 msgid "%s: creating default config file...\n"
 msgstr "%s: alapértelmezett konfigurációs fájl elkészítése\n"
 
-#: src/common/weeconfig.c:2204
+#: src/common/weeconfig.c:2201
 msgid "Creating default config file\n"
 msgstr "Alapértelmezett konfigurációs fájl elkészítése\n"
 
-#: src/common/weeconfig.c:2207 src/common/weeconfig.c:2424
+#: src/common/weeconfig.c:2204 src/common/weeconfig.c:2421
 #, c-format
 msgid ""
 "#\n"
@@ -5753,7 +5768,7 @@ msgstr ""
 "#\n"
 "# %s konfigurációs fájl, készítette: %s v%s - %s"
 
-#: src/common/weeconfig.c:2211 src/common/weeconfig.c:2428
+#: src/common/weeconfig.c:2208 src/common/weeconfig.c:2425
 msgid ""
 "# WARNING! Be careful when editing this file, WeeChat writes this file when "
 "exiting.\n"
@@ -5763,26 +5778,6 @@ msgstr ""
 "írja.\n"
 "#\n"
 
-#: src/common/weeconfig.c:2421
+#: src/common/weeconfig.c:2418
 msgid "Saving config to disk\n"
 msgstr "Beállítások mentése a lemezre\n"
-
-#~ msgid "ignore were removed.\n"
-#~ msgstr "mellőzés eltávolítva.\n"
-
-#, fuzzy
-#~ msgid "[-all [-nojoin] | [-nojoin] servername [servername ...]]"
-#~ msgstr "szervernév: a szerver neve ahová csatlakozik"
-
-#, fuzzy
-#~ msgid ""
-#~ "%s can't upgrade: WeeChat binary \"%s\" is not found or does not have "
-#~ "execute permissions\n"
-#~ msgstr "%s a \"%s\" opció nem található\n"
-
-#, fuzzy
-#~ msgid "[-all | servername [servername...]]"
-#~ msgstr "szervernév: a szerver neve ahová csatlakozik"
-
-#~ msgid "unknown"
-#~ msgstr "ismeretlen"

@@ -187,7 +187,7 @@
 </row>
 <row>
   <entry><literal>set_unread</literal></entry>
-  <entry>set unread marker for all buffers</entry>
+  <entry>set unread marker on all buffers</entry>
 </row>
 <row>
   <entry><literal>hotlist_clear</literal></entry>

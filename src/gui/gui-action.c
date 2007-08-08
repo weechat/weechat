@@ -1405,7 +1405,6 @@ gui_action_scroll_unread (t_gui_window *window, char *args)
 void
 gui_action_set_unread (t_gui_window *window, char *args)
 {
-    t_gui_window *ptr_win;
     t_gui_buffer *ptr_buffer;
     
     /* make C compiler happy */
@@ -1421,10 +1420,7 @@ gui_action_set_unread (t_gui_window *window, char *args)
     }
     
     /* refresh all windows */
-    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-    {
-        gui_window_redraw_buffer (ptr_win->buffer);
-    }
+    gui_window_redraw_all_buffers ();
 }
 
 /*

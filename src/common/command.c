@@ -177,10 +177,11 @@ t_weechat_command weechat_commands[] =
     NULL, 0, 1, 0, weechat_cmd_save, NULL },
   { "server", N_("list, add or remove servers"),
     N_("[list [servername]] | [listfull [servername]] | "
-       "[servername hostname port [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 "
-       "nick2 nick3] [-username username] [-realname realname] "
-       "[-command command] [-autojoin channel[,channel]] ] | "
-       "[del servername]"),
+       "[servername hostname port [-auto | -noauto] [-ipv6] [-ssl] "
+       "[-pwd password] [-nicks nick1 nick2 nick3] [-username username] "
+       "[-realname realname] [-command command] [-autojoin channel[,channel]] ] | "
+       "[copy server newservername] [rename servername newservername] [del "
+       "servername]"),
     N_("      list: list servers (no parameter implies this list)\n"
        "  listfull: list servers with detailed info for each server\n"
        "servername: server name, for internal and display use\n"
@@ -194,8 +195,10 @@ t_weechat_command weechat_commands[] =
        "     nick3: second alternate nick for server\n"
        "  username: user name\n"
        "  realname: real name of user\n"
+       "      copy: duplicate a server\n"
+       "    rename: rename a server\n"
        "       del: delete a server"),
-    "del|list|listfull", 0, MAX_ARGS, 0, weechat_cmd_server, NULL },
+    "copy|rename|del|list|listfull %S %S", 0, MAX_ARGS, 0, weechat_cmd_server, NULL },
   { "set", N_("set config options"),
     N_("[option [ = value]]"),
     N_("option: name of an option (if name is full "
@@ -3022,22 +3025,112 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
     }
     else
     {
-        if (ascii_strcasecmp (argv[0], "del") == 0)
+        if (ascii_strcasecmp (argv[0], "copy") == 0)
+        {
+            if (argc < 3)
+            {
+                irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                gui_printf (NULL,
+                            _("%s missing server name for \"%s\" command\n"),
+                            WEECHAT_ERROR, "server copy");
+                return -1;
+            }
+            
+            /* look for server by name */
+            server_found = irc_server_search (argv[1]);
+            if (!server_found)
+            {
+                irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                gui_printf (NULL,
+                            _("%s server \"%s\" not found for \"%s\" command\n"),
+                            WEECHAT_ERROR, argv[1], "server copy");
+                return -1;
+            }
+            
+            /* check if target name already exists */
+            if (irc_server_search (argv[2]))
+            {
+                irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                gui_printf (NULL,
+                            _("%s server \"%s\" already exists for \"%s\" command\n"),
+                            WEECHAT_ERROR, argv[2], "server copy");
+                return -1;
+            }
+            
+            /* duplicate server */
+            new_server = irc_server_duplicate (server_found, argv[2]);
+            if (new_server)
+            {
+                irc_display_prefix (NULL, NULL, PREFIX_INFO);
+                gui_printf (NULL, _("Server %s%s%s has been copied to %s%s\n"),
+                            GUI_COLOR(COLOR_WIN_CHAT_SERVER),
+                            argv[1],
+                            GUI_COLOR(COLOR_WIN_CHAT),
+                            GUI_COLOR(COLOR_WIN_CHAT_SERVER),
+                            argv[2]);
+                gui_window_redraw_all_buffers ();
+                return 0;
+            }
+            
+            return -1;
+        }
+        if (ascii_strcasecmp (argv[0], "rename") == 0)
+        {
+            if (argc < 3)
+            {
+                irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                gui_printf (NULL,
+                            _("%s missing server name for \"%s\" command\n"),
+                            WEECHAT_ERROR, "server rename");
+                return -1;
+            }
+            
+            /* look for server by name */
+            server_found = irc_server_search (argv[1]);
+            if (!server_found)
+            {
+                irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                gui_printf (NULL,
+                            _("%s server \"%s\" not found for \"%s\" command\n"),
+                            WEECHAT_ERROR, argv[1], "server rename");
+                return -1;
+            }
+            
+            /* check if target name already exists */
+            if (irc_server_search (argv[2]))
+            {
+                irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                gui_printf (NULL,
+                            _("%s server \"%s\" already exists for \"%s\" command\n"),
+                            WEECHAT_ERROR, argv[2], "server rename");
+                return -1;
+            }
+
+            /* rename server */
+            if (irc_server_rename (server_found, argv[2]))
+            {
+                irc_display_prefix (NULL, NULL, PREFIX_INFO);
+                gui_printf (NULL, _("Server %s%s%s has been renamed to %s%s\n"),
+                            GUI_COLOR(COLOR_WIN_CHAT_SERVER),
+                            argv[1],
+                            GUI_COLOR(COLOR_WIN_CHAT),
+                            GUI_COLOR(COLOR_WIN_CHAT_SERVER),
+                            argv[2]);
+                gui_window_redraw_all_buffers ();
+                return 0;
+            }
+            
+            return -1;
+        }
+        else if (ascii_strcasecmp (argv[0], "del") == 0)
         {
             if (argc < 2)
             {
                 irc_display_prefix (NULL, NULL, PREFIX_ERROR);
                 gui_printf (NULL,
-                            _("%s missing servername for \"%s\" command\n"),
+                            _("%s missing server name for \"%s\" command\n"),
                             WEECHAT_ERROR, "server del");
                 return -1;
-            }
-            if (argc > 2)
-            {
-                irc_display_prefix (NULL, NULL, PREFIX_ERROR);
-                gui_printf (NULL,
-                            _("%s too much arguments for \"%s\" command, ignoring arguments\n"),
-                            WEECHAT_WARNING, "server del");
             }
             
             /* look for server by name */

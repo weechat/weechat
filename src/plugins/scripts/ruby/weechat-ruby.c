@@ -1669,8 +1669,8 @@ weechat_ruby_get_server_info (VALUE class)
 			  INT2FIX(ptr_server->autoreconnect));
 	    rb_hash_aset (server_hash_member, rb_str_new2("autoreconnect_delay"),
 			  INT2FIX(ptr_server->autoreconnect_delay));
-	    rb_hash_aset (server_hash_member, rb_str_new2("command_line"),
-			  INT2FIX(ptr_server->command_line));
+	    rb_hash_aset (server_hash_member, rb_str_new2("temp_server"),
+			  INT2FIX(ptr_server->temp_server));
 	    rb_hash_aset (server_hash_member, rb_str_new2("address"),
 			  rb_str_new2(ptr_server->address));
 	    rb_hash_aset (server_hash_member, rb_str_new2("port"),
@@ -1910,7 +1910,7 @@ weechat_ruby_get_irc_color (VALUE class, VALUE color)
 static VALUE
 weechat_ruby_get_window_info (VALUE class)
 {
-    t_plugin_window_info *window_info, *ptr_window;
+    t_plugin_window_info *window_info, *ptr_win;
     VALUE window_list, window_list_member;
     
     /* make C compiler happy */
@@ -1933,26 +1933,26 @@ weechat_ruby_get_window_info (VALUE class)
     if (!window_info)
         return window_list;
     
-    for(ptr_window = window_info; ptr_window; ptr_window = ptr_window->next_window)
+    for (ptr_win = window_info; ptr_win; ptr_win = ptr_win->next_window)
     {
 	window_list_member = rb_hash_new ();
 
 	if (!NIL_P (window_list_member))
 	{
 	    rb_hash_aset (window_list_member, rb_str_new2("num_buffer"), 
-			  INT2FIX(ptr_window->num_buffer));
+			  INT2FIX(ptr_win->num_buffer));
 	    rb_hash_aset (window_list_member, rb_str_new2("win_x"),
-			  INT2FIX(ptr_window->win_x));
+			  INT2FIX(ptr_win->win_x));
 	    rb_hash_aset (window_list_member, rb_str_new2("win_y"),
-			  INT2FIX(ptr_window->win_y));
+			  INT2FIX(ptr_win->win_y));
 	    rb_hash_aset (window_list_member, rb_str_new2("win_width"),
-			  INT2FIX(ptr_window->win_width));
+			  INT2FIX(ptr_win->win_width));
 	    rb_hash_aset (window_list_member, rb_str_new2("win_height"),
-			  INT2FIX(ptr_window->win_height));
+			  INT2FIX(ptr_win->win_height));
 	    rb_hash_aset (window_list_member, rb_str_new2("win_width_pct"),
-			  INT2FIX(ptr_window->win_width_pct));
+			  INT2FIX(ptr_win->win_width_pct));
 	    rb_hash_aset (window_list_member, rb_str_new2("win_height_pct"),
-			  INT2FIX(ptr_window->win_height_pct));
+			  INT2FIX(ptr_win->win_height_pct));
 	    
 	    rb_ary_push (window_list, window_list_member);
 	}

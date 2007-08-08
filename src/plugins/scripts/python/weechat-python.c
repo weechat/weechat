@@ -1495,8 +1495,8 @@ weechat_python_get_server_info (PyObject *self, PyObject *args)
 	    Py_DECREF (key);
 	    Py_DECREF (value);
 	    
-	    key = Py_BuildValue("s", "command_line");
-	    value = Py_BuildValue("i", ptr_server->command_line);
+	    key = Py_BuildValue("s", "temp_server");
+	    value = Py_BuildValue("i", ptr_server->temp_server);
 	    PyDict_SetItem(server_hash_member, key, value);
 	    Py_DECREF (key);
 	    Py_DECREF (value);
@@ -1856,7 +1856,7 @@ weechat_python_get_irc_color (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_get_window_info (PyObject *self, PyObject *args)
 {
-    t_plugin_window_info *window_info, *ptr_window;
+    t_plugin_window_info *window_info, *ptr_win;
     PyObject *window_list, *window_list_member, *key, *value;
     
     /* make C compiler happy */
@@ -1879,53 +1879,53 @@ weechat_python_get_window_info (PyObject *self, PyObject *args)
     }
 
     window_info = python_plugin->get_window_info (python_plugin);
-    if  (!window_info)
+    if (!window_info)
 	return window_list;
 
-    for(ptr_window = window_info; ptr_window; ptr_window = ptr_window->next_window)
+    for (ptr_win = window_info; ptr_win; ptr_win = ptr_win->next_window)
     {
 	window_list_member = PyDict_New();
 	
 	if (window_list_member)
 	{
 	    key = Py_BuildValue("s", "num_buffer");
-	    value = Py_BuildValue("i", ptr_window->num_buffer);
+	    value = Py_BuildValue("i", ptr_win->num_buffer);
 	    PyDict_SetItem(window_list_member, key, value);
 	    Py_DECREF (key);
 	    Py_DECREF (value);
 	    
 	    key = Py_BuildValue("s", "win_x");
-	    value = Py_BuildValue("i", ptr_window->win_x);
+	    value = Py_BuildValue("i", ptr_win->win_x);
 	    PyDict_SetItem(window_list_member, key, value);
 	    Py_DECREF (key);
 	    Py_DECREF (value);
 	    
 	    key = Py_BuildValue("s", "win_y");
-	    value = Py_BuildValue("i", ptr_window->win_y);
+	    value = Py_BuildValue("i", ptr_win->win_y);
 	    PyDict_SetItem(window_list_member, key, value);
 	    Py_DECREF (key);
 	    Py_DECREF (value);
 
 	    key = Py_BuildValue("s", "win_width");
-	    value = Py_BuildValue("i", ptr_window->win_width);
+	    value = Py_BuildValue("i", ptr_win->win_width);
 	    PyDict_SetItem(window_list_member, key, value);
 	    Py_DECREF (key);
 	    Py_DECREF (value);
 	    
 	    key = Py_BuildValue("s", "win_height");
-	    value = Py_BuildValue("i", ptr_window->win_height);
+	    value = Py_BuildValue("i", ptr_win->win_height);
 	    PyDict_SetItem(window_list_member, key, value);
 	    Py_DECREF (key);
 	    Py_DECREF (value);
 	    
 	    key = Py_BuildValue("s", "win_width_pct");
-	    value = Py_BuildValue("i", ptr_window->win_width_pct);
+	    value = Py_BuildValue("i", ptr_win->win_width_pct);
 	    PyDict_SetItem(window_list_member, key, value);
 	    Py_DECREF (key);
 	    Py_DECREF (value);
 	    
 	    key = Py_BuildValue("s", "win_height_pct");
-	    value = Py_BuildValue("i", ptr_window->win_height_pct);
+	    value = Py_BuildValue("i", ptr_win->win_height_pct);
 	    PyDict_SetItem(window_list_member, key, value);
 	    Py_DECREF (key);
 	    Py_DECREF (value);
