@@ -193,7 +193,7 @@ servername: server name, for internal and display use
   realname: real name of user
       copy: duplicate a server
     rename: rename a server
-      keep: remove temporary flag on a server to keep it (in config file)
+      keep: keep server in config file (for temporary servers only)
        del: delete a server
 
 </programlisting>

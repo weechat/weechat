@@ -208,7 +208,7 @@ t_weechat_command weechat_commands[] =
        "  realname: real name of user\n"
        "      copy: duplicate a server\n"
        "    rename: rename a server\n"
-       "      keep: remove temporary flag on a server to keep it (in config file)\n"
+       "      keep: keep server in config file (for temporary servers only)\n"
        "       del: delete a server"),
     "copy|rename|del|list|listfull %S %S", 0, MAX_ARGS, 0, weechat_cmd_server, NULL },
   { "set", N_("set config options"),

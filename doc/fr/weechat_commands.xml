@@ -193,7 +193,7 @@ nom_utilisateur: nom d'utilisateur
        nom_réel: nom réel de l'utilisateur
            copy: dupliquer un serveur
          rename: renommer un serveur
-           keep: supprimer le drapeau temporaire sur un serveur pour le garder (dans le fichier de configuration)
+           keep: garder le serveur dans le fichier de configuration (pour les serveurs temporaires seulement)
             del: supprimer un serveur
 
 </programlisting>
