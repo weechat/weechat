@@ -629,6 +629,13 @@
   <entry>Color for voice symbol</entry>
 </row>
 <row>
+  <entry><option>col_nick_user</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry>'blue'</entry>
+  <entry>Color for user symbol</entry>
+</row>
+<row>
   <entry><option>col_nick_more</option></entry>
   <entry>color</entry>
   <entry>Curses or Gtk color</entry>

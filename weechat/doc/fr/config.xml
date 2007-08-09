@@ -629,6 +629,13 @@
   <entry>Couleur pour le symbole voix</entry>
 </row>
 <row>
+  <entry><option>col_nick_user</option></entry>
+  <entry>couleur</entry>
+  <entry>couleur Curses ou Gtk</entry>
+  <entry>'blue'</entry>
+  <entry>Couleur pour le symbole utilisateur</entry>
+</row>
+<row>
   <entry><option>col_nick_more</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>

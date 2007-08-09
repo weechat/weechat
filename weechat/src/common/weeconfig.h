@@ -183,6 +183,7 @@ extern int cfg_col_nick_chanadmin;
 extern int cfg_col_nick_op;
 extern int cfg_col_nick_halfop;
 extern int cfg_col_nick_voice;
+extern int cfg_col_nick_user;
 extern int cfg_col_nick_more;
 extern int cfg_col_nick_sep;
 extern int cfg_col_nick_self;

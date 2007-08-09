@@ -1165,7 +1165,7 @@ session_load_nick (FILE *file)
     
     /* allocate nick */
     nick = irc_nick_new (session_current_server, session_current_channel,
-                         nick_name, 0, 0, 0, 0, 0, 0);
+                         nick_name, 0, 0, 0, 0, 0, 0, 0);
     free (nick_name);
     if (!nick)
     {

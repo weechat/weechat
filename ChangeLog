@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-08-08
+ChangeLog - 2007-08-09
 
 
 Version 0.2.6 (under dev!):
+   * added support of channel mode +u (channel user) (bug #20717)
    * improved /connect command to connect to a host by creating a temporary
      server, added option to /server to create temporary server (task #7095)
    * added "copy", "rename" and "keep" options to /server command

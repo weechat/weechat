@@ -62,16 +62,18 @@ int
 irc_nick_score_for_sort (t_irc_nick *nick)
 {
     if (nick->flags & NICK_CHANOWNER)
-        return -64;
+        return -128;
     if (nick->flags & NICK_CHANADMIN)
-        return -32;
+        return -64;
     if (nick->flags & NICK_CHANADMIN2)
-        return -16;
+        return -32;
     if (nick->flags & NICK_OP)
-        return -8;
+        return -16;
     if (nick->flags & NICK_HALFOP)
-        return -4;
+        return -8;
     if (nick->flags & NICK_VOICE)
+        return -4;
+    if (nick->flags & NICK_CHANUSER)
         return -2;
     return 0;
 }
@@ -195,7 +197,7 @@ irc_nick_resort (t_irc_channel *channel, t_irc_nick *nick)
 t_irc_nick *
 irc_nick_new (t_irc_server *server, t_irc_channel *channel, char *nick_name,
               int is_chanowner, int is_chanadmin, int is_chanadmin2, int is_op,
-              int is_halfop, int has_voice)
+              int is_halfop, int has_voice, int is_chanuser)
 {
     t_irc_nick *new_nick;
     
@@ -209,6 +211,7 @@ irc_nick_new (t_irc_server *server, t_irc_channel *channel, char *nick_name,
         NICK_SET_FLAG(new_nick, is_op, NICK_OP);
         NICK_SET_FLAG(new_nick, is_halfop, NICK_HALFOP);
         NICK_SET_FLAG(new_nick, has_voice, NICK_VOICE);
+        NICK_SET_FLAG(new_nick, is_chanuser, NICK_CHANUSER);
         irc_nick_resort (channel, new_nick);
         return new_nick;
     }
@@ -227,6 +230,7 @@ irc_nick_new (t_irc_server *server, t_irc_channel *channel, char *nick_name,
     NICK_SET_FLAG(new_nick, is_op, NICK_OP);
     NICK_SET_FLAG(new_nick, is_halfop, NICK_HALFOP);
     NICK_SET_FLAG(new_nick, has_voice, NICK_VOICE);
+    NICK_SET_FLAG(new_nick, is_chanuser, NICK_CHANUSER);
     if (ascii_strcasecmp (new_nick->nick, server->nick) == 0)
         new_nick->color = COLOR_WIN_NICK_SELF;
     else

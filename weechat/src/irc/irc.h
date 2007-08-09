@@ -63,6 +63,7 @@
 #define NICK_VOICE      16
 #define NICK_AWAY       32
 #define NICK_CHANADMIN2 64
+#define NICK_CHANUSER   128
 #define NICK_SET_FLAG(nick, set, flag) \
     if (set) \
         nick->flags |= flag; \
@@ -429,7 +430,7 @@ extern void irc_channel_print_log (t_irc_channel *);
 
 extern int irc_nick_find_color (t_irc_nick *);
 extern t_irc_nick *irc_nick_new (t_irc_server *, t_irc_channel *, char *,
-                                 int, int, int, int, int, int);
+                                 int, int, int, int, int, int, int);
 extern void irc_nick_resort (t_irc_channel *, t_irc_nick *);
 extern void irc_nick_change (t_irc_channel *, t_irc_nick *, char *);
 extern void irc_nick_free (t_irc_channel *, t_irc_nick *);
