@@ -22,6 +22,7 @@ SET(DOC_LANGS
   pl
   ru
   sco
+  sv
   )
 
 FIND_PROGRAM(
