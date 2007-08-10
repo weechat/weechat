@@ -108,6 +108,8 @@ R:	Pour les versions < 0.2.3, merci d'installer la dernière version stable.
 	  erronée.
 	- affectez la valeur pour le décodage global, par exemple :
 	  /setp charset.global.decode = ISO-8859-15
+	- si vous utilisez la locale UTF-8, vérifiez que votre terminal est
+	  compatible UTF-8. Un terminal conseillé pour l'UTF-8 est rxvt-unicode.
 
 
 2.5

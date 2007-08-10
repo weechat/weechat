@@ -99,6 +99,8 @@ A:	For versions < 0.2.3, please upgrade to last stable version.
 	  probably your locale is wrong.
 	- setup global decode value, for example:
 	  /setp charset.global.decode = ISO-8859-15
+	- if you are using UTF-8 locale, check that your terminal is UTF-8
+	  ready. Terminal recommended for UTF-8 is rxvt-unicode.
 
 
 2.5
