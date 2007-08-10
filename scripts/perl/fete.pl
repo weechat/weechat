@@ -1,123 +1,123 @@
-# =============================================================================
-#  Copyright (c) 2003-2005 by FlashCode <flashcode@flashtux.org>
 #
-#  This program is free software; you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation; either version 2 of the License, or
-#  (at your option) any later version.
+# Copyright (c) 2003-2007 by FlashCode <flashcode@flashtux.org>
 #
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
 #
-#  You should have received a copy of the GNU General Public License
-#  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 #
-#  fete.pl (c) Décembre 2003 par FlashCode <flashcode@flashtux.org>
-#  Mis à jour le 04/06/2005, FlashCode <flashcode@flashtux.org>
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-#  Gestion des fêtes du calendrier français avec la commande "/fete"
-#  Syntaxe: /fete          - affiche la fête du jour et du lendemain
-#           /fete prenom   - cherche un prénom dans le calendrier
-# =============================================================================
+# fete.pl (c) December 2003 by FlashCode <flashcode@flashtux.org>
+# Updated on  2007-08-10    by FlashCode <flashcode@flashtux.org>
+#
+# Manages french calendat feasts with "/fete" command
+# Syntax: /fete            - display today's and tomorrow's feast
+#         /fete firstname  - search for name in calendar
+#
 
 use locale;
 
-my $version = "0.4";
-weechat::register ("Fete", $version, "", "Gestion des fêtes du calendrier français");
-weechat::print ("Script 'Fete' $version chargé");
+my $version = "0.7";
+
+weechat::register ("Fete", $version, "", "Gestion des fÃªtes du calendrier franÃ§ais", "UTF-8");
+weechat::print ("Script 'Fete' $version chargÃ©");
 weechat::add_command_handler ("fete", fete);
 
 @noms_jours = qw(Dimanche Lundi Mardi Mercredi Jeudi Vendredi Samedi);
-@noms_mois = qw(Janvier Février Mars Avril Mai Juin Juillet Août Septembre Octobre Novembre Décembre);
+@noms_mois = qw(Janvier FÃ©vrier Mars Avril Mai Juin Juillet AoÃ»t Septembre Octobre Novembre DÃ©cembre);
 @fetes = (
     # janvier
-    [ '!Marie - JOUR de l\'AN', '&Basile', '!Geneviève', '&Odilon', '&Edouard',
-      '&Mélaine', '&Raymond', '&Lucien', '!Alix', '&Guillaume', '&Paulin',
-      '!Tatiana', '!Yvette', '!Nina', '&Rémi', '&Marcel', '!Roseline',
-      '!Prisca', '&Marius', '&Sébastien', '!Agnès', '&Vincent', '&Barnard',
-      '&François de Sales', '-Conversion de St Paul', '!Paule', '!Angèle',
+    [ '!Marie - JOUR de l\'AN', '&Basile', '!GeneviÃ¨ve', '&Odilon', '&Edouard',
+      '&MÃ©laine', '&Raymond', '&Lucien', '!Alix', '&Guillaume', '&Paulin',
+      '!Tatiana', '!Yvette', '!Nina', '&RÃ©mi', '&Marcel', '!Roseline',
+      '!Prisca', '&Marius', '&SÃ©bastien', '!AgnÃ¨s', '&Vincent', '&Barnard',
+      '&FranÃ§ois de Sales', '-Conversion de St Paul', '!Paule', '!AngÃ¨le',
       '&Thomas d\'Aquin', '&Gildas', '!Martine', '!Marcelle' ],
-    # février
-    [ '!Ella', '-Présentation', '&Blaise', '!Véronique', '!Agathe',
-      '&Gaston', '!Eugénie', '!Jacqueline', '!Apolline', '&Arnaud',
-      '-Notre-Dame de Lourdes', '&Félix', '!Béatrice', '&Valentin', '&Claude',
-      '!Julienne', '&Alexis', '!Bernadette', '&Gabin', '!Aimée',
-      '&Pierre Damien', '!Isabelle', '&Lazare', '&Modeste', '&Roméo', '&Nestor',
+    # fÃ©vrier
+    [ '!Ella', '-PrÃ©sentation', '&Blaise', '!VÃ©ronique', '!Agathe',
+      '&Gaston', '!EugÃ©nie', '!Jacqueline', '!Apolline', '&Arnaud',
+      '-Notre-Dame de Lourdes', '&FÃ©lix', '!BÃ©atrice', '&Valentin', '&Claude',
+      '!Julienne', '&Alexis', '!Bernadette', '&Gabin', '!AimÃ©e',
+      '&Pierre Damien', '!Isabelle', '&Lazare', '&Modeste', '&RomÃ©o', '&Nestor',
       '!Honorine', '&Romain', '&Auguste' ],
     # mars
-    [ '&Aubin', '&Charles le Bon', '&Guénolé', '&Casimir', '&Olive', '&Colette',
-      '!Félicité', '&Jean de Dieu', '!Françoise', '&Vivien', '!Rosine',
-      '!Justine', '&Rodrigue', '!Mathilde', '!Louise de Marillac', '!Bénédicte',
-      '&Patrice', '&Cyrille', '&Joseph', '&Herbert', '!Clémence', '!Léa',
-      '&Victorien', '!Catherine de Suède', '-Annonciation', '!Larissa',
-      '&Habib', '&Gontran', '!Gwladys', '&Amédée', '&Benjamin' ],
+    [ '&Aubin', '&Charles le Bon', '&GuÃ©nolÃ©', '&Casimir', '&Olive', '&Colette',
+      '!FÃ©licitÃ©', '&Jean de Dieu', '!FranÃ§oise', '&Vivien', '!Rosine',
+      '!Justine', '&Rodrigue', '!Mathilde', '!Louise de Marillac', '!BÃ©nÃ©dicte',
+      '&Patrice', '&Cyrille', '&Joseph', '&Herbert', '!ClÃ©mence', '!LÃ©a',
+      '&Victorien', '!Catherine de SuÃ¨de', '-Annonciation', '!Larissa',
+      '&Habib', '&Gontran', '!Gwladys', '&AmÃ©dÃ©e', '&Benjamin' ],
     # avril
-    [ '&Hugues', '!Sandrine', '&Richard', '&Isodore', '!Irène', '&Marcellin',
+    [ '&Hugues', '!Sandrine', '&Richard', '&Isodore', '!IrÃ¨ne', '&Marcellin',
       '&Jean-Baptiste de la Salle', '!Julie', '&Gautier', '&Fulbert',
       '&Stanislas', '&Jules', '!Ida', '&Maxime', '&Paterne',
-      '&Benoît-Joseph Labre', '&Anicet', '&Parfait', '!Emma', '!Odette',
-      '&Anselme', '&Alexandre', '&Georges', '&Fidèle', '&Marc', '!Alida',
-      '!Zita', '!Valérie', '!Catherine de Sienne', '&Robert' ],
+      '&BenoÃ®t-Joseph Labre', '&Anicet', '&Parfait', '!Emma', '!Odette',
+      '&Anselme', '&Alexandre', '&Georges', '&FidÃ¨le', '&Marc', '!Alida',
+      '!Zita', '!ValÃ©rie', '!Catherine de Sienne', '&Robert' ],
     # mai
-    [ '&Jérémie - FETE du TRAVAIL', '&Boris', '&Philippe / Jacques', '&Sylvain',
-      '!Judith', '!Prudence', '!Gisèle', '&Désiré - ANNIVERSAIRE 1945',
-      '&Pacôme', '!Solange', '!Estelle', '&Achille', '!Rolande', '&Mathias',
-      '!Denise', '&Honoré', '&Pascal', '&Eric', '&Yves', '&Bernardin',
-      '&Constantin', '&Emile', '&Didier', '&Donatien', '!Sophie', '&Bérenger',
+    [ '&JÃ©rÃ©mie - FETE du TRAVAIL', '&Boris', '&Philippe / Jacques', '&Sylvain',
+      '!Judith', '!Prudence', '!GisÃ¨le', '&DÃ©sirÃ© - ANNIVERSAIRE 1945',
+      '&PacÃ´me', '!Solange', '!Estelle', '&Achille', '!Rolande', '&Mathias',
+      '!Denise', '&HonorÃ©', '&Pascal', '&Eric', '&Yves', '&Bernardin',
+      '&Constantin', '&Emile', '&Didier', '&Donatien', '!Sophie', '&BÃ©renger',
       '&Augustin', '&Germain', '&Aymar', '&Ferdinand', '-Visitation' ],
     # juin
-    [ '&Justin', '!Blandine', '&Kévin', '!Clotilde', '&Igor', '&Norbert',
-      '&Gilbert', '&Médard', '!Diane', '&Landry', '&Barnabé', '&Guy',
-      '&Antoine de Padoue', '&Elisée', '!Germaine', '&Jean-François Régis',
-      '&Hervé', '&Léonce', '&Romuald', '&Silvère', '&Rodolphe', '&Alban',
+    [ '&Justin', '!Blandine', '&KÃ©vin', '!Clotilde', '&Igor', '&Norbert',
+      '&Gilbert', '&MÃ©dard', '!Diane', '&Landry', '&BarnabÃ©', '&Guy',
+      '&Antoine de Padoue', '&ElisÃ©e', '!Germaine', '&Jean-FranÃ§ois RÃ©gis',
+      '&HervÃ©', '&LÃ©once', '&Romuald', '&SilvÃ¨re', '&Rodolphe', '&Alban',
       '!Audrey', '&Jean-Baptiste', '&Salomon', '&Anthelme', '&Fernand',
-      '&Irénée', '&Pierre / Paul', '&Martial' ],
+      '&IrÃ©nÃ©e', '&Pierre / Paul', '&Martial' ],
     # juillet
     [ '&Thierry', '&Martinien', '&Thomas', '&Florent', '&Antoine', '!Mariette',
-      '&Raoul', '&Thibaut', '!Amandine', '&Ulrich', '&Benoît', '&Olivier',
-      '&Henri / Joël', '!Camille - FETE NATIONALE', '&Donald',
-      '-N.D. du Mont Carmel', '!Charlotte', '&Frédéric', '&Arsène', '!Marina',
+      '&Raoul', '&Thibaut', '!Amandine', '&Ulrich', '&BenoÃ®t', '&Olivier',
+      '&Henri / JoÃ«l', '!Camille - FETE NATIONALE', '&Donald',
+      '-N.D. du Mont Carmel', '!Charlotte', '&FrÃ©dÃ©ric', '&ArsÃ¨ne', '!Marina',
       '&Victor', '!Marie-Madeleine', '!Brigitte', '!Christine', '&Jacques',
       '&Anne', '!Nathalie', '&Samson', '!Marthe', '!Juliette',
       '&Ignace de Loyola' ],
-    # août
+    # aoÃ»t
     [ '&Alphonse', '&Julien', '!Lydie', '&Jean-Marie Vianney', '&Abel',
-      '-Transfiguration', '&Gaëtan', '&Dominique', '&Amour', '&Laurent',
+      '-Transfiguration', '&GaÃ«tan', '&Dominique', '&Amour', '&Laurent',
       '!Claire', '!Clarisse', '&Hippolyte', '&Evrard',
-      '!Marie - ASSOMPTION', '&Armel', '&Hyacinthe', '!Hélène', '&Jean Eudes',
-      '&Bernard', '&Christophe', '&Fabrice', '!Rose de Lima', '&Barthélémy',
+      '!Marie - ASSOMPTION', '&Armel', '&Hyacinthe', '!HÃ©lÃ¨ne', '&Jean Eudes',
+      '&Bernard', '&Christophe', '&Fabrice', '!Rose de Lima', '&BarthÃ©lÃ©my',
       '&Louis', '!Natacha', '!Monique', '&Augustin', '!Sabine', '&Fiacre',
       '&Aristide' ],
     # septembre
-    [ '&Gilles', '!Ingrid', '&Grégoire', '!Rosalie', '!Raïssa', '&Bertrand',
-      '!Reine', '-Nativité de Marie', '&Alain', '!Inès', '&Adelphe',
-      '&Apollinaire', '&Aimé', '-La Ste Croix', '&Roland', '!Edith', '&Renaud',
-      '!Nadège', '!Emilie', '&Davy', '&Matthieu', '&Maurice', '&Constant',
-      '!Thècle', '&Hermann', '&Côme / Damien', '&Vincent de Paul', '&Venceslas',
-      '&Michel / Gabriel', '&Jérôme' ],
+    [ '&Gilles', '!Ingrid', '&GrÃ©goire', '!Rosalie', '!RaÃ¯ssa', '&Bertrand',
+      '!Reine', '-NativitÃ© de Marie', '&Alain', '!InÃ¨s', '&Adelphe',
+      '&Apollinaire', '&AimÃ©', '-La Ste Croix', '&Roland', '!Edith', '&Renaud',
+      '!NadÃ¨ge', '!Emilie', '&Davy', '&Matthieu', '&Maurice', '&Constant',
+      '!ThÃ¨cle', '&Hermann', '&CÃ´me / Damien', '&Vincent de Paul', '&Venceslas',
+      '&Michel / Gabriel', '&JÃ©rÃ´me' ],
     # octobre
-    [ '!Thérèse de l\'Enfant Jésus', '&Léger', '&Gérard', '&François d\'Assise',
-      '!Fleur', '&Bruno', '&Serge', '!Pélagie', '&Denis', '&Ghislain', '&Firmin',
-      '&Wilfried', '&Géraud', '&Juste', '!Thérèse d\'Avila', '!Edwige',
-      '&Baudouin', '&Luc', '&René', '!Adeline', '!Céline', '!Elodie',
-      '&Jean de Capistran', '&Florentin', '&Crépin', '&Dimitri', '!Emeline',
+    [ '!ThÃ©rÃ¨se de l\'Enfant JÃ©sus', '&LÃ©ger', '&GÃ©rard', '&FranÃ§ois d\'Assise',
+      '!Fleur', '&Bruno', '&Serge', '!PÃ©lagie', '&Denis', '&Ghislain', '&Firmin',
+      '&Wilfried', '&GÃ©raud', '&Juste', '!ThÃ©rÃ¨se d\'Avila', '!Edwige',
+      '&Baudouin', '&Luc', '&RenÃ©', '!Adeline', '!CÃ©line', '!Elodie',
+      '&Jean de Capistran', '&Florentin', '&CrÃ©pin', '&Dimitri', '!Emeline',
       '&Simon / Jude', '&Narcisse', '!Bienvenue', '&Quentin' ],
     # novembre
-    [ '&Harold - TOUSSAINT', '-Défunts', '&Hubert', '&Charles', '!Sylvie',
-      '!Bertille', '!Carine', '&Geoffroy', '&Théodore', '&Léon',
+    [ '&Harold - TOUSSAINT', '-DÃ©funts', '&Hubert', '&Charles', '!Sylvie',
+      '!Bertille', '!Carine', '&Geoffroy', '&ThÃ©odore', '&LÃ©on',
       '&Martin - ARMISTICE 1918', '&Christian', '&Brice', '&Sidoine', '&Albert',
       '!Marguerite', '!Elisabeth', '!Aude', '&Tanguy', '&Edmond',
-      '-Présentation de Marie', '!Cécile', '&Clément', '!Flora', '!Catherine',
-      '!Delphine', '&Séverin', '&Jacques de la Marche', '&Saturnin', '&André' ],
-    # décembre
-    [ '!Florence', '!Viviane', '&Xavier', '!Barbara', '&Gérald', '&Nicolas',
-      '&Ambroise', '-Immaculée Conception', '&Pierre Fourier', '&Romaric',
+      '-PrÃ©sentation de Marie', '!CÃ©cile', '&ClÃ©ment', '!Flora', '!Catherine',
+      '!Delphine', '&SÃ©verin', '&Jacques de la Marche', '&Saturnin', '&AndrÃ©' ],
+    # dÃ©cembre
+    [ '!Florence', '!Viviane', '&Xavier', '!Barbara', '&GÃ©rald', '&Nicolas',
+      '&Ambroise', '-ImmaculÃ©e Conception', '&Pierre Fourier', '&Romaric',
       '&Daniel', '!Jeanne de Chantal', '!Lucie', '!Odile', '!Ninon', '!Alice',
-      '&Gaël', '&Gatien', '&Urbain', '&Abraham', '&Pierre Canisius',
-      '!Françoise-Xavier', '&Armand', '!Adèle', '&Emmanuel - NOEL', '&Etienne',
+      '&GaÃ«l', '&Gatien', '&Urbain', '&Abraham', '&Pierre Canisius',
+      '!FranÃ§oise-Xavier', '&Armand', '!AdÃ¨le', '&Emmanuel - NOEL', '&Etienne',
       '&Jean', '-Sts Innocents', '&David', '&Roger', '&Sylvestre' ],
 );
 

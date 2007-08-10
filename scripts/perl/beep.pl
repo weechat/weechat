@@ -1,9 +1,9 @@
 #
-# Copyright (c) 2006 by FlashCode <flashcode@flashtux.org>
+# Copyright (c) 2006-2007 by FlashCode <flashcode@flashtux.org>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
+# the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -12,22 +12,22 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
 #
 # Speaker beep on highlight/private msg.
 #
 # History:
-#
+# 2007-08-10, FlashCode <flashcode@flashtux.org>:
+#     version 0.2: upgraded licence to GPL 3
 # 2006-09-02, FlashCode <flashcode@flashtux.org>:
-#     initial release
+#     version 0.1: initial release
 #
 
 use strict;
 
-my $version = "0.1";
+my $version = "0.2";
 my $beep_command = "echo -n \a";
 
 # default values in setup file (~/.weechat/plugins.rc)

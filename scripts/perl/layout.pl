@@ -21,19 +21,23 @@
 # History:
 #
 # 2007-08-10, FlashCode <flashcode@flashtux.org>:
+#     version 0.2, minor changes in script description
+# 2007-08-10, FlashCode <flashcode@flashtux.org>:
 #     version 0.1, initial release
 #
 
 use strict;
 
+my $version = "0.2";
+
 # default values in setup file (~/.weechat/plugins.rc)
 my $default_auto_save = "on";
 
-weechat::register("layout", "0.1", "unload_layout", "Save/restore windows/buffers layout");
+weechat::register("layout", $version, "unload_layout", "Save/restore buffers layout");
 weechat::set_plugin_config("auto_save", $default_auto_save) if (weechat::get_plugin_config("auto_save") eq "");
 
 weechat::add_command_handler("layout", "layout",
-                             "save/restore windows/buffers layout",
+                             "save/restore buffers layout",
                              "[save]",
                              "save: save buffers order",
                              "save");

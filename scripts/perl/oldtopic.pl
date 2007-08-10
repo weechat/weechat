@@ -3,7 +3,7 @@
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
+# the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
@@ -12,21 +12,22 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
 #
 # Display old topics for a channel.
 #
 # History:
+# 2007-08-10, FlashCode <flashcode@flashtux.org>:
+#     version 0.2: upgraded licence to GPL 3
 # 2007-03-29, FlashCode <flashcode@flashtux.org>:
-#     initial release
+#     version 0.1: initial release
 #
 
 use strict;
 
-my $version = "0.1";
+my $version = "0.2";
 
 my $plugin_help_options = "Plugins options (set with /setp):\n"
     ."  - perl.oldtopic.log_server: if on, displays all topic changes on server buffer\n"
