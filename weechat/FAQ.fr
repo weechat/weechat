@@ -1,4 +1,4 @@
-WeeChat FAQ, 2007-07-13
+WeeChat FAQ, 2007-08-10
 =======================
 
 Public concerné :
@@ -99,6 +99,9 @@ R:	Pour les versions < 0.2.3, merci d'installer la dernière version stable.
 	- vérifiez que weechat-curses est lié avec libncursesw (attention:
 	  nécessaire sur beaucoup de distributions, mais pas toutes) :
 	  ldd /chemin/vers/weechat-curses
+	- vérifiez que l'extension "Charset" est chargée avec la commande
+	  /plugin (s'il ne l'est pas, vous devez peut-être installer le
+	  paquet "weechat-plugins")
 	- vérifiez la ligne charset (sur le tampon serveur), vous devriez voir
 	  ISO-XXXXXX ou UTF-8 pour le charset du terminal. Si vous voyez
 	  ANSI_X3.4-1968 ou d'autres valeurs, votre locale est probablement

@@ -1,4 +1,4 @@
-WeeChat FAQ, 2007-07-13
+WeeChat FAQ, 2007-08-10
 =======================
 
 Intended audience:
@@ -92,6 +92,8 @@ A:	For versions < 0.2.3, please upgrade to last stable version.
 	- check that weechat-curses is linked to libncursesw (warning: needed
 	  on most distributions but not all) :
 	  ldd /path/to/weechat-curses
+	- check that "Charset" plugin is loaded with /plugin command
+	  (if it is not, then you probably need "weechat-plugins" package)
 	- check charset line (on server buffer), you should see ISO-XXXXXX or
 	  UTF-8 for terminal charset. If you see ANSI_X3.4-1968 or other values,
 	  probably your locale is wrong.
