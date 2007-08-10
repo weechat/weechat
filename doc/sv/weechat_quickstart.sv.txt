@@ -9,7 +9,7 @@ WeeChat snabb start guide (svensk version)
      - weechat-qt för Qt GUI (inte utvecklad)
      - weechat-wxwidgets för WxWidgets GUI (inte utvecklad)
 
-2. Online hjälp / options
+2. Online hjälp / inställningar
 
      WeeChat har hjälp för alla kommandon, skriv /help för mer information.
      För att få hjälp med ett kommando, skriv /help kommando.
@@ -18,13 +18,13 @@ WeeChat snabb start guide (svensk version)
      t ex. /set col_nick_self = white (ändrar ditt namn till färgen vit.)
      Du kan använda /set inställning med partial namn (visar alla inställningar
      som innehåller bokstäver), eller bara en inställning utan ett värde
-     (för att se mer information.)
+     (för att se mer information om den specifika inställningen, t ex. /set col_nick_self.)
 
      Viktigt: inställningar sparas när WeeChat avlutas (eller med "/save"
      kommando). Redigera INTE setup filen medans WeeChat körs, därför WeeChat
-     kan skriva i denna fil när som helst, och det är inte möjligt att restarta den.
+     kan skriva i denna fil när som helst, och det är inte möjligt att ladda om den.
      För att ändra inställingar, använd "/set" kommandot, WeeChat använder då
-     direkt de nya instäällningarna.
+     direkt de nya inställningarna.
 
 3. Skapa en server
 
@@ -39,9 +39,9 @@ WeeChat snabb start guide (svensk version)
        /set quakenet.server_nick2 = "mynick2"
        /set quakenet.server_nick3 = "mynick3"
 
-     Användarnamn/Riktigtnamn:
-       /set quakenet.server_username = "My username"
-       /set quakenet.server_realname = "My real name"
+     Användarnamn/Riktigt namn:
+       /set quakenet.server_username = "Mitt användarnamn"
+       /set quakenet.server_realname = "Mtt riktiga namn"
 
      Automatiskt ansluta till server:
        /set quakenet.server_autoconnect = on
@@ -53,14 +53,14 @@ WeeChat snabb start guide (svensk version)
        Du kan see server inställningar and värden med /set quakenet
        För att ställa in en inställning, använd /set quakenet.server_inställning = värde
 
-5. Ansluta till en server och automatiskt joina kanaler to server and auto-join channels
+5. Ansluta till en server och automatiskt joina kanaler:
 
      /connect quakenet
 
-6. Joina/parta en kanal
+6. Joina/parta en kanal:
 
      Joina en kanal:
-       /join #channel
+       /join #kanal
      Parta en kanal:
        /part [quit message]
      Parta en kanal och stäng buffer:
@@ -75,11 +75,10 @@ WeeChat snabb start guide (svensk version)
      och ett stort (2/3), använd kommandot:
        /window splitv 33
 
-8. Tangent 'binding'
+8. Knapp 'binding'
 
-     Beroende på ditt tangentbord och/eller dina behov, kan du binda varje tangent
+     Beroende på ditt tangentbord och/eller dina behov, kan du binda varje tangentknapp
      med "/key" kommandot.
-     En bra tangent är meta-k (alt-k) till att hitta tangent koder..
 
      Till exempel, för att binda meta-y (alt-y) till kommandot "/buffer close":
        /key (tryck meta-k) (tryck meta-y) /buffer close
@@ -88,7 +87,7 @@ WeeChat snabb start guide (svensk version)
 
 9. Plugins/skripts
 
-     På vissa distributioner såsom Debian, är plugins tillgängliga via en separat package
+     På vissa distributioner såsom Debian, är plugins tillgängliga via ett separat paket
      (som weechat-plugins).
      Plugins är automatiskt laddad när det har hittats.
      Det finns många plugins/skripts tillgängliga för WeeChat, Kolla:
@@ -105,6 +104,6 @@ WeeChat snabb start guide (svensk version)
 
 --
 (c) 2006-05-31, skrivet av FlashCode <flashcode@flashtux.org>
-    2007-08-09, översatt av Robin Karlsson <Robin--Karlsson@bredband.net>
-Det här dokumentet är en del av WeeChat och är distribuerad under GPL 
+    2007-08-09, översatt till svenska av Robin Karlsson <Robin--Karlsson@bredband.net>
+Det här dokumentet är en del av WeeChat och är distribuerad under GPL
 licens.
