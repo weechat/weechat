@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-08-09
+ChangeLog - 2007-08-12
 
 
 Version 0.2.6 (under dev!):
+   * fixed bug with highlight and UTF-8 chars around word (bug #20753)
    * added swedish quickstart guide
    * added support of channel mode +u (channel user) (bug #20717)
    * improved /connect command to connect to a host by creating a temporary

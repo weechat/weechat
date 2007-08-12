@@ -29,6 +29,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <wctype.h>
 #include <sys/time.h>
 #include <time.h>
 #include <sys/utsname.h>
@@ -39,6 +40,7 @@
 #include "../common/alias.h"
 #include "../common/command.h"
 #include "../common/hotlist.h"
+#include "../common/utf8.h"
 #include "../common/util.h"
 #include "../common/weeconfig.h"
 #include "../gui/gui.h"
@@ -57,9 +59,14 @@ int command_ignored, command_force_highlight;
  */
 
 int
-irc_recv_is_word_char (char c)
+irc_recv_is_word_char (char *str)
 {
-    if (isalnum (c))
+    wint_t c = utf8_get_wc (str);
+
+    if (c == WEOF)
+        return 0;
+    
+    if (iswalnum (c))
         return 1;
     
     switch (c)
@@ -113,10 +120,12 @@ irc_recv_is_highlight (char *message, char *nick)
     match = strstr (message, nick);
     if (match)
     {
-        match_pre = match - 1;
+        match_pre = utf8_prev_char (message, match);
+        if (!match_pre)
+            match_pre = match - 1;
         match_post = match + strlen(nick);
-        startswith = ((match == message) || (!irc_recv_is_word_char (match_pre[0])));
-        endswith = ((!match_post[0]) || (!irc_recv_is_word_char (match_post[0])));
+        startswith = ((match == message) || (!irc_recv_is_word_char (match_pre)));
+        endswith = ((!match_post[0]) || (!irc_recv_is_word_char (match_post)));
         if (startswith && endswith)
             return 1;
     }
@@ -188,9 +197,12 @@ irc_recv_is_highlight (char *message, char *nick)
             while ((match = strstr (msg_pos, pos)) != NULL)
             {
                 match_pre = match - 1;
+                match_pre = utf8_prev_char (msg, match);
+                if (!match_pre)
+                    match_pre = match - 1;
                 match_post = match + length;
-                startswith = ((match == msg) || (!irc_recv_is_word_char (match_pre[0])));
-                endswith = ((!match_post[0]) || (!irc_recv_is_word_char (match_post[0])));
+                startswith = ((match == msg) || (!irc_recv_is_word_char (match_pre)));
+                endswith = ((!match_post[0]) || (!irc_recv_is_word_char (match_post)));
                 if ((wildcard_start && wildcard_end) ||
                     (!wildcard_start && !wildcard_end && 
                      startswith && endswith) ||

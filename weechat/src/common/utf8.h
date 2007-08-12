@@ -20,6 +20,16 @@
 #ifndef __WEECHAT_UTF8_H
 #define __WEECHAT_UTF8_H 1
 
+#ifndef __USE_XOPEN
+#define __USE_XOPEN
+#endif
+
+#if defined(__OpenBSD__)
+#include <utf8/wchar.h>
+#else
+#include <wchar.h>
+#endif
+
 extern int local_utf8;
 
 extern void utf8_init ();
@@ -35,5 +45,6 @@ extern int utf8_width_screen (char *);
 extern char *utf8_add_offset (char *, int);
 extern int utf8_real_pos (char *, int);
 extern int utf8_pos (char *, int);
+extern wint_t utf8_get_wc (char *);
 
 #endif /* utf8.h */

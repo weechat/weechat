@@ -26,16 +26,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifndef __USE_XOPEN
-#define __USE_XOPEN
-#endif
-
-#if defined(__OpenBSD__)
-#include <utf8/wchar.h>
-#else
-#include <wchar.h>
-#endif
-
 #include "weechat.h"
 #include "utf8.h"
 #include "util.h"
@@ -393,4 +383,44 @@ utf8_pos (char *string, int real_pos)
         count++;
     }
     return count;
+}
+
+/*
+ * utf8_get_wc: get wide char from string (first char)
+ */
+
+wint_t
+utf8_get_wc (char *string)
+{
+    int char_size;
+    wint_t result;
+    
+    if (!string || !string[0])
+        return WEOF;
+    
+    char_size = utf8_char_size (string);
+    switch (char_size)
+    {
+        case 1:
+            result = (wint_t)string[0];
+            break;
+        case 2:
+            result = ((wint_t)((unsigned char)string[0])) << 8
+                |  ((wint_t)((unsigned char)string[1]));
+            break;
+        case 3:
+            result = ((wint_t)((unsigned char)string[0])) << 16
+                |  ((wint_t)((unsigned char)string[1])) << 8
+                |  ((wint_t)((unsigned char)string[2]));
+            break;
+        case 4:
+            result = ((wint_t)((unsigned char)string[0])) << 24
+                |  ((wint_t)((unsigned char)string[1])) << 16
+                |  ((wint_t)((unsigned char)string[2])) << 8
+                |  ((wint_t)((unsigned char)string[3]));
+            break;
+        default:
+            result = WEOF;
+    }
+    return result;
 }
