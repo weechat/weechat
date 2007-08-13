@@ -1207,7 +1207,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <screen>
 #!/bin/sh
 if [ $# -eq 1 ]; then
-    for fifo in $(/bin/ls ~/.weechat/weechat_fifo_* 2>/dev/null); do
+    for fifo in ~/.weechat/weechat_fifo_*
+    do
         echo -e "$1" >$fifo
     done
 fi
