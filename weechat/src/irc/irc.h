@@ -53,6 +53,7 @@
 #define PREFIX_SEND_MOD  "<=="
 
 #define IRC_DEFAULT_PORT 6667
+#define IRC_DEFAULT_PREFIXES_LIST "@%+~&!-"
 
 /* nick types */
 

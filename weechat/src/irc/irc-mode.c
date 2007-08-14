@@ -298,9 +298,15 @@ irc_mode_user_set (t_irc_server *server, char *modes)
 int
 irc_mode_nick_prefix_allowed (t_irc_server *server, char prefix)
 {
-    /* if server did not send any prefix info, then consider this prefix is allowed */
+    char str[2];
+    
+    /* if server did not send any prefix info, then use default prefixes */
     if (!server->prefix)
-        return 1;
-
+    {
+        str[0] = prefix;
+        str[1] = '\0';
+        return (strpbrk (str, IRC_DEFAULT_PREFIXES_LIST)) ? 1 : 0;
+    }
+    
     return (strchr (server->prefix, prefix) != NULL);
 }
