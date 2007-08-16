@@ -203,9 +203,9 @@ gui_window_calculate_pos_size (t_gui_window *window, int force_calculate)
     add_bottom = gui_panel_window_get_size (NULL, window, GUI_PANEL_BOTTOM);
     
     /* init chat & nicklist settings */
-    if (cfg_look_nicklist && BUFFER_IS_CHANNEL(window->buffer))
+    if (cfg_look_nicklist && GUI_BUFFER_IS_CHANNEL(window->buffer))
     {
-        max_length = irc_nick_get_max_length (CHANNEL(window->buffer));
+        max_length = irc_nick_get_max_length (GUI_CHANNEL(window->buffer));
         
         lines = 0;
         
@@ -223,7 +223,7 @@ gui_window_calculate_pos_size (t_gui_window *window, int force_calculate)
         }
         else
         {
-            irc_nick_count (CHANNEL(window->buffer), &num_nicks, &num_op,
+            irc_nick_count (GUI_CHANNEL(window->buffer), &num_nicks, &num_op,
                             &num_halfop, &num_voice, &num_normal);
             width_used = (window->win_width - add_left - add_right)
                 - ((window->win_width - add_left - add_right) % (max_length + 2));
@@ -394,7 +394,7 @@ gui_window_draw_separator (t_gui_window *window)
                                                     1,
                                                     window->win_y,
                                                     window->win_x - 1);
-        gui_window_set_weechat_color (GUI_CURSES(window)->win_separator, COLOR_WIN_SEPARATOR);
+        gui_window_set_weechat_color (GUI_CURSES(window)->win_separator, GUI_COLOR_WIN_SEPARATOR);
         wborder (GUI_CURSES(window)->win_separator, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
         wnoutrefresh (GUI_CURSES(window)->win_separator);
         refresh ();
@@ -484,7 +484,7 @@ gui_window_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
                                             window->win_input_width,
                                             window->win_input_y,
                                             window->win_input_x);
-    if (BUFFER_IS_CHANNEL(buffer))
+    if (GUI_BUFFER_IS_CHANNEL(buffer))
     {
         if (GUI_CURSES(window)->win_chat)
             delwin (GUI_CURSES(window)->win_chat);
@@ -500,7 +500,7 @@ gui_window_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
         else
             GUI_CURSES(window)->win_nick = NULL;
     }
-    if (!(BUFFER_IS_CHANNEL(buffer)))
+    if (!GUI_BUFFER_IS_CHANNEL(buffer))
     {
         if (GUI_CURSES(window)->win_chat)
             delwin (GUI_CURSES(window)->win_chat);
@@ -759,7 +759,7 @@ gui_window_nick_beginning (t_gui_window *window)
     if (!gui_ok)
         return;
     
-    if (BUFFER_HAS_NICKLIST(window->buffer))
+    if (GUI_BUFFER_HAS_NICKLIST(window->buffer))
     {
         if (window->win_nick_start > 0)
         {
@@ -781,10 +781,10 @@ gui_window_nick_end (t_gui_window *window)
     if (!gui_ok)
         return;
     
-    if (BUFFER_HAS_NICKLIST(window->buffer))
+    if (GUI_BUFFER_HAS_NICKLIST(window->buffer))
     {
         new_start =
-            CHANNEL(window->buffer)->nicks_count - window->win_nick_num_max;
+            GUI_CHANNEL(window->buffer)->nicks_count - window->win_nick_num_max;
         if (new_start < 0)
             new_start = 0;
         else if (new_start >= 1)
@@ -808,7 +808,7 @@ gui_window_nick_page_up (t_gui_window *window)
     if (!gui_ok)
         return;
     
-    if (BUFFER_HAS_NICKLIST(window->buffer))
+    if (GUI_BUFFER_HAS_NICKLIST(window->buffer))
     {
         if (window->win_nick_start > 0)
         {
@@ -830,11 +830,11 @@ gui_window_nick_page_down (t_gui_window *window)
     if (!gui_ok)
         return;
     
-    if (BUFFER_HAS_NICKLIST(window->buffer))
+    if (GUI_BUFFER_HAS_NICKLIST(window->buffer))
     {
-        if ((CHANNEL(window->buffer)->nicks_count > window->win_nick_num_max)
+        if ((GUI_CHANNEL(window->buffer)->nicks_count > window->win_nick_num_max)
             && (window->win_nick_start + window->win_nick_num_max - 1
-                < CHANNEL(window->buffer)->nicks_count))
+                < GUI_CHANNEL(window->buffer)->nicks_count))
         {
             if (window->win_nick_start == 0)
                 window->win_nick_start += (window->win_nick_num_max - 1);

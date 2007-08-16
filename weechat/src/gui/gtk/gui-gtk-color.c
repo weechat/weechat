@@ -479,63 +479,7 @@ gui_color_init_pairs ()
 void
 gui_color_init_weechat ()
 {
-    int i;
-    
-    gui_color[COLOR_WIN_SEPARATOR] = gui_color_build (COLOR_WIN_SEPARATOR, cfg_col_separator, cfg_col_separator);
-    gui_color[COLOR_WIN_TITLE] = gui_color_build (COLOR_WIN_TITLE, cfg_col_title, cfg_col_title_bg);
-    gui_color[COLOR_WIN_CHAT] = gui_color_build (COLOR_WIN_CHAT, cfg_col_chat, cfg_col_chat_bg);
-    gui_color[COLOR_WIN_CHAT_TIME] = gui_color_build (COLOR_WIN_CHAT_TIME, cfg_col_chat_time, cfg_col_chat_bg);
-    gui_color[COLOR_WIN_CHAT_TIME_SEP] = gui_color_build (COLOR_WIN_CHAT_TIME_SEP, cfg_col_chat_time_sep, cfg_col_chat_bg);
-    gui_color[COLOR_WIN_CHAT_PREFIX1] = gui_color_build (COLOR_WIN_CHAT_PREFIX1, cfg_col_chat_prefix1, cfg_col_chat_bg);
-    gui_color[COLOR_WIN_CHAT_PREFIX2] = gui_color_build (COLOR_WIN_CHAT_PREFIX2, cfg_col_chat_prefix2, cfg_col_chat_bg);
-    gui_color[COLOR_WIN_CHAT_SERVER] = gui_color_build (COLOR_WIN_CHAT_SERVER, cfg_col_chat_server, cfg_col_chat_bg);
-    gui_color[COLOR_WIN_CHAT_JOIN] = gui_color_build (COLOR_WIN_CHAT_JOIN, cfg_col_chat_join, cfg_col_chat_bg);
-    gui_color[COLOR_WIN_CHAT_PART] = gui_color_build (COLOR_WIN_CHAT_PART, cfg_col_chat_part, cfg_col_chat_bg);
-    gui_color[COLOR_WIN_CHAT_NICK] = gui_color_build (COLOR_WIN_CHAT_NICK, cfg_col_chat_nick, cfg_col_chat_bg);
-    gui_color[COLOR_WIN_CHAT_HOST] = gui_color_build (COLOR_WIN_CHAT_HOST, cfg_col_chat_host, cfg_col_chat_bg);
-    gui_color[COLOR_WIN_CHAT_CHANNEL] = gui_color_build (COLOR_WIN_CHAT_CHANNEL, cfg_col_chat_channel, cfg_col_chat_bg);
-    gui_color[COLOR_WIN_CHAT_DARK] = gui_color_build (COLOR_WIN_CHAT_DARK, cfg_col_chat_dark, cfg_col_chat_bg);
-    gui_color[COLOR_WIN_CHAT_HIGHLIGHT] = gui_color_build (COLOR_WIN_CHAT_HIGHLIGHT, cfg_col_chat_highlight, cfg_col_chat_bg);
-    gui_color[COLOR_WIN_CHAT_READ_MARKER] = gui_color_build (COLOR_WIN_CHAT_READ_MARKER, cfg_col_chat_read_marker, cfg_col_chat_read_marker_bg);
-    gui_color[COLOR_WIN_STATUS] = gui_color_build (COLOR_WIN_STATUS, cfg_col_status, cfg_col_status_bg);
-    gui_color[COLOR_WIN_STATUS_DELIMITERS] = gui_color_build (COLOR_WIN_STATUS_DELIMITERS, cfg_col_status_delimiters, cfg_col_status_bg);
-    gui_color[COLOR_WIN_STATUS_CHANNEL] = gui_color_build (COLOR_WIN_STATUS_CHANNEL, cfg_col_status_channel, cfg_col_status_bg);
-    gui_color[COLOR_WIN_STATUS_DATA_MSG] = gui_color_build (COLOR_WIN_STATUS_DATA_MSG, cfg_col_status_data_msg, cfg_col_status_bg);
-    gui_color[COLOR_WIN_STATUS_DATA_PRIVATE] = gui_color_build (COLOR_WIN_STATUS_DATA_PRIVATE, cfg_col_status_data_private, cfg_col_status_bg);
-    gui_color[COLOR_WIN_STATUS_DATA_HIGHLIGHT] = gui_color_build (COLOR_WIN_STATUS_DATA_HIGHLIGHT, cfg_col_status_data_highlight, cfg_col_status_bg);
-    gui_color[COLOR_WIN_STATUS_DATA_OTHER] = gui_color_build (COLOR_WIN_STATUS_DATA_OTHER, cfg_col_status_data_other, cfg_col_status_bg);
-    gui_color[COLOR_WIN_STATUS_MORE] = gui_color_build (COLOR_WIN_STATUS_MORE, cfg_col_status_more, cfg_col_status_bg);
-    gui_color[COLOR_WIN_INFOBAR] = gui_color_build (COLOR_WIN_INFOBAR, cfg_col_infobar, cfg_col_infobar_bg);
-    gui_color[COLOR_WIN_INFOBAR_DELIMITERS] = gui_color_build (COLOR_WIN_INFOBAR_DELIMITERS, cfg_col_infobar_delimiters, cfg_col_infobar_bg);
-    gui_color[COLOR_WIN_INFOBAR_HIGHLIGHT] = gui_color_build (COLOR_WIN_INFOBAR_HIGHLIGHT, cfg_col_infobar_highlight, cfg_col_infobar_bg);
-    gui_color[COLOR_WIN_INPUT] = gui_color_build (COLOR_WIN_INPUT, cfg_col_input, cfg_col_input_bg);
-    gui_color[COLOR_WIN_INPUT_CHANNEL] = gui_color_build (COLOR_WIN_INPUT_CHANNEL, cfg_col_input_channel, cfg_col_input_bg);
-    gui_color[COLOR_WIN_INPUT_NICK] = gui_color_build (COLOR_WIN_INPUT_NICK, cfg_col_input_nick, cfg_col_input_bg);
-    gui_color[COLOR_WIN_INPUT_DELIMITERS] = gui_color_build (COLOR_WIN_INPUT_DELIMITERS, cfg_col_input_delimiters, cfg_col_input_bg);
-    gui_color[COLOR_WIN_NICK] = gui_color_build (COLOR_WIN_NICK, cfg_col_nick, cfg_col_nick_bg);
-    gui_color[COLOR_WIN_NICK_AWAY] = gui_color_build (COLOR_WIN_NICK_AWAY, cfg_col_nick_away, cfg_col_nick_bg);
-    gui_color[COLOR_WIN_NICK_CHANOWNER] = gui_color_build (COLOR_WIN_NICK_CHANOWNER, cfg_col_nick_chanowner, cfg_col_nick_bg);
-    gui_color[COLOR_WIN_NICK_CHANADMIN] = gui_color_build (COLOR_WIN_NICK_CHANADMIN, cfg_col_nick_chanadmin, cfg_col_nick_bg);
-    gui_color[COLOR_WIN_NICK_OP] = gui_color_build (COLOR_WIN_NICK_OP, cfg_col_nick_op, cfg_col_nick_bg);
-    gui_color[COLOR_WIN_NICK_HALFOP] = gui_color_build (COLOR_WIN_NICK_HALFOP, cfg_col_nick_halfop, cfg_col_nick_bg);
-    gui_color[COLOR_WIN_NICK_VOICE] = gui_color_build (COLOR_WIN_NICK_VOICE, cfg_col_nick_voice, cfg_col_nick_bg);
-    gui_color[COLOR_WIN_NICK_MORE] = gui_color_build (COLOR_WIN_NICK_MORE, cfg_col_nick_more, cfg_col_nick_bg);
-    gui_color[COLOR_WIN_NICK_SEP] = gui_color_build (COLOR_WIN_NICK_SEP, cfg_col_nick_sep, cfg_col_nick_bg);
-    gui_color[COLOR_WIN_NICK_SELF] = gui_color_build (COLOR_WIN_NICK_SELF, cfg_col_nick_self, cfg_col_nick_bg);
-    gui_color[COLOR_WIN_NICK_PRIVATE] = gui_color_build (COLOR_WIN_NICK_PRIVATE, cfg_col_nick_private, cfg_col_nick_bg);
-
-    for (i = 0; i < COLOR_WIN_NICK_NUMBER; i++)
-    {
-        gui_color[COLOR_WIN_NICK_1 + i] = gui_color_build (COLOR_WIN_NICK_1 + i, cfg_col_nick_colors[i], cfg_col_chat_bg);
-    }
-        
-    gui_color[COLOR_DCC_SELECTED] = gui_color_build (COLOR_DCC_SELECTED, cfg_col_dcc_selected, cfg_col_chat_bg);
-    gui_color[COLOR_DCC_WAITING] = gui_color_build (COLOR_DCC_WAITING, cfg_col_dcc_waiting, cfg_col_chat_bg);
-    gui_color[COLOR_DCC_CONNECTING] = gui_color_build (COLOR_DCC_CONNECTING, cfg_col_dcc_connecting, cfg_col_chat_bg);
-    gui_color[COLOR_DCC_ACTIVE] = gui_color_build (COLOR_DCC_ACTIVE, cfg_col_dcc_active, cfg_col_chat_bg);
-    gui_color[COLOR_DCC_DONE] = gui_color_build (COLOR_DCC_DONE, cfg_col_dcc_done, cfg_col_chat_bg);
-    gui_color[COLOR_DCC_FAILED] = gui_color_build (COLOR_DCC_FAILED, cfg_col_dcc_failed, cfg_col_chat_bg);
-    gui_color[COLOR_DCC_ABORTED] = gui_color_build (COLOR_DCC_ABORTED, cfg_col_dcc_aborted, cfg_col_chat_bg);
+    /* TODO: write this function for Gtk */
 }
 
 /*

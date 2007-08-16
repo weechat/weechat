@@ -57,7 +57,7 @@ gui_infobar_draw_time (t_gui_buffer *buffer)
         local_time = localtime (&time_seconds);
         if (local_time)
         {
-            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_infobar, COLOR_WIN_INFOBAR);
+            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_infobar, GUI_COLOR_WIN_INFOBAR);
             mvwprintw (GUI_CURSES(ptr_win)->win_infobar,
                        0, 1,
                        "%02d:%02d",
@@ -92,18 +92,18 @@ gui_infobar_draw (t_gui_buffer *buffer, int erase)
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
         if (erase)
-            gui_window_curses_clear (GUI_CURSES(ptr_win)->win_infobar, COLOR_WIN_INFOBAR);
+            gui_window_curses_clear (GUI_CURSES(ptr_win)->win_infobar, GUI_COLOR_WIN_INFOBAR);
         
-        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_infobar, COLOR_WIN_INFOBAR);
+        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_infobar, GUI_COLOR_WIN_INFOBAR);
         
         time_seconds = time (NULL);
         local_time = localtime (&time_seconds);
         if (local_time)
         {
             strftime (text_time, 1024, cfg_look_infobar_timestamp, local_time);
-            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_infobar, COLOR_WIN_INFOBAR_DELIMITERS);
+            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_infobar, GUI_COLOR_WIN_INFOBAR_DELIMITERS);
             wprintw (GUI_CURSES(ptr_win)->win_infobar, "[");
-            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_infobar, COLOR_WIN_INFOBAR);
+            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_infobar, GUI_COLOR_WIN_INFOBAR);
             wprintw (GUI_CURSES(ptr_win)->win_infobar,
                      "%02d:%02d",
                      local_time->tm_hour, local_time->tm_min);
@@ -111,15 +111,15 @@ gui_infobar_draw (t_gui_buffer *buffer, int erase)
                 wprintw (GUI_CURSES(ptr_win)->win_infobar,
                          ":%02d",
                          local_time->tm_sec);
-            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_infobar, COLOR_WIN_INFOBAR_DELIMITERS);
+            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_infobar, GUI_COLOR_WIN_INFOBAR_DELIMITERS);
             wprintw (GUI_CURSES(ptr_win)->win_infobar, "]");
-            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_infobar, COLOR_WIN_INFOBAR);
+            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_infobar, GUI_COLOR_WIN_INFOBAR);
             wprintw (GUI_CURSES(ptr_win)->win_infobar,
                      " %s", text_time);
         }
         if (gui_infobar)
         {
-            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_infobar, COLOR_WIN_INFOBAR_DELIMITERS);
+            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_infobar, GUI_COLOR_WIN_INFOBAR_DELIMITERS);
             wprintw (GUI_CURSES(ptr_win)->win_infobar, " | ");
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_infobar, gui_infobar->color);
             buf = weechat_iconv_from_internal (NULL, gui_infobar->text);

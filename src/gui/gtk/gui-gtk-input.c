@@ -71,20 +71,20 @@ gui_input_get_prompt_length (t_gui_window *window, char *nick)
                 switch (pos[0])
                 {
                     case 'c':
-                        if (CHANNEL(window->buffer))
-                            length += utf8_strlen (CHANNEL(window->buffer)->name);
+                        if (GUI_CHANNEL(window->buffer))
+                            length += utf8_strlen (GUI_CHANNEL(window->buffer)->name);
                         else
                         {
-                            if (SERVER(window->buffer))
-                                length += utf8_strlen (SERVER(window->buffer)->name);
+                            if (GUI_SERVER(window->buffer))
+                                length += utf8_strlen (GUI_SERVER(window->buffer)->name);
                         }
                         pos++;
                         break;
                     case 'm':
-                        if (SERVER(window->buffer))
+                        if (GUI_SERVER(window->buffer))
                         {
                             mode_found = 0;
-                            for (modes = SERVER(window->buffer)->nick_modes;
+                            for (modes = GUI_SERVER(window->buffer)->nick_modes;
                                  modes && modes[0]; modes++)
                             {
                                 if (modes[0] != ' ')

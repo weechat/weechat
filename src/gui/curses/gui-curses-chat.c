@@ -86,7 +86,7 @@ gui_chat_reset_style (t_gui_window *window)
     window->current_style_attr = 0;
     window->current_color_attr = 0;
     
-    gui_window_set_weechat_color (GUI_CURSES(window)->win_chat, COLOR_WIN_CHAT);
+    gui_window_set_weechat_color (GUI_CURSES(window)->win_chat, GUI_COLOR_WIN_CHAT);
     gui_chat_remove_style (window,
                            A_BOLD | A_UNDERLINE | A_REVERSE);
 }
@@ -177,22 +177,22 @@ gui_chat_draw_title (t_gui_buffer *buffer, int erase)
         if ((ptr_win->buffer == buffer) && (buffer->num_displayed > 0))
         {
             if (erase)
-                gui_window_curses_clear (GUI_CURSES(ptr_win)->win_title, COLOR_WIN_TITLE);
+                gui_window_curses_clear (GUI_CURSES(ptr_win)->win_title, GUI_COLOR_WIN_TITLE);
             
             snprintf (format, 32, "%%-%ds", ptr_win->win_title_width);
             wmove (GUI_CURSES(ptr_win)->win_title, 0, 0);
             
-            if (CHANNEL(buffer))
+            if (GUI_CHANNEL(buffer))
             {
-                if (CHANNEL(buffer)->topic)
+                if (GUI_CHANNEL(buffer)->topic)
                 {
-                    buf = (char *)gui_color_decode ((unsigned char *)(CHANNEL(buffer)->topic), 0, 0);
-                    ptr_topic = utf8_add_offset ((buf) ? buf : CHANNEL(buffer)->topic,
+                    buf = (char *)gui_color_decode ((unsigned char *)(GUI_CHANNEL(buffer)->topic), 0, 0);
+                    ptr_topic = utf8_add_offset ((buf) ? buf : GUI_CHANNEL(buffer)->topic,
                                                  ptr_win->win_title_start);
                     if (!ptr_topic || !ptr_topic[0])
                     {
                         ptr_win->win_title_start = 0;
-                        ptr_topic = (buf) ? buf : CHANNEL(buffer)->topic;
+                        ptr_topic = (buf) ? buf : GUI_CHANNEL(buffer)->topic;
                     }
                     buf2 = weechat_iconv_from_internal (NULL,
                                                         ptr_topic);
@@ -200,22 +200,22 @@ gui_chat_draw_title (t_gui_buffer *buffer, int erase)
                     if (ptr_win->win_title_start > 0)
                     {
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
-                                                      COLOR_WIN_TITLE_MORE);
+                                                      GUI_COLOR_WIN_TITLE_MORE);
                         wprintw (GUI_CURSES(ptr_win)->win_title, "%s", "++");
                     }
                     
                     if (utf8_width_screen (ptr_topic) > ptr_win->win_width)
                     {
-                        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title, COLOR_WIN_TITLE);
+                        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title, GUI_COLOR_WIN_TITLE);
                         wprintw (GUI_CURSES(ptr_win)->win_title, "%s", (buf2) ? buf2 : ptr_topic);
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
-                                                      COLOR_WIN_TITLE_MORE);
+                                                      GUI_COLOR_WIN_TITLE_MORE);
                         mvwprintw (GUI_CURSES(ptr_win)->win_title, 0, ptr_win->win_width - 2,
                                    "%s", "++");
                     }
                     else
                     {
-                        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title, COLOR_WIN_TITLE);
+                        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title, GUI_COLOR_WIN_TITLE);
                         wprintw (GUI_CURSES(ptr_win)->win_title, "%s", (buf2) ? buf2 : ptr_topic);
                     }
                     if (buf)
@@ -225,14 +225,14 @@ gui_chat_draw_title (t_gui_buffer *buffer, int erase)
                 }
                 else
                 {
-                    gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title, COLOR_WIN_TITLE);
+                    gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title, GUI_COLOR_WIN_TITLE);
                     wprintw (GUI_CURSES(ptr_win)->win_title, format, " ");
                 }
             }
             else
             {
-                gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title, COLOR_WIN_TITLE);
-                if (buffer->type == BUFFER_TYPE_STANDARD)
+                gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title, GUI_COLOR_WIN_TITLE);
+                if (buffer->type == GUI_BUFFER_TYPE_STANDARD)
                 {
                     wprintw (GUI_CURSES(ptr_win)->win_title,
                              format,
@@ -815,12 +815,12 @@ gui_chat_display_line (t_gui_window *window, t_gui_line *line, int count,
         if (cfg_look_read_marker && cfg_look_read_marker[0])
         {
             /* display marker if line is matching user search */
-            if (window->buffer->text_search != TEXT_SEARCH_DISABLED)
+            if (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
             {
                 if (gui_buffer_line_search (line, window->buffer->input_buffer,
                                             window->buffer->text_search_exact))
                 {
-                    gui_chat_set_weechat_color (window, COLOR_WIN_CHAT_READ_MARKER);
+                    gui_chat_set_weechat_color (window, GUI_COLOR_WIN_CHAT_READ_MARKER);
                     mvwprintw (GUI_CURSES(window)->win_chat, read_marker_y, read_marker_x,
                                "%c", cfg_look_read_marker[0]);
                 }
@@ -831,7 +831,7 @@ gui_chat_display_line (t_gui_window *window, t_gui_line *line, int count,
                 if (window->buffer->last_read_line &&
                     (window->buffer->last_read_line == line->prev_line))
                 {
-                    gui_chat_set_weechat_color (window, COLOR_WIN_CHAT_READ_MARKER);
+                    gui_chat_set_weechat_color (window, GUI_COLOR_WIN_CHAT_READ_MARKER);
                     mvwprintw (GUI_CURSES(window)->win_chat, read_marker_y, read_marker_x,
                                "%c", cfg_look_read_marker[0]);
                 }
@@ -970,7 +970,7 @@ gui_chat_draw (t_gui_buffer *buffer, int erase)
         {
             if (erase)
             {
-                gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_chat, COLOR_WIN_CHAT);
+                gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_chat, GUI_COLOR_WIN_CHAT);
                 
                 snprintf (format_empty, 32, "%%-%ds", ptr_win->win_chat_width);
                 for (i = 0; i < ptr_win->win_chat_height; i++)
@@ -979,13 +979,13 @@ gui_chat_draw (t_gui_buffer *buffer, int erase)
                 }
             }
             
-            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_chat, COLOR_WIN_CHAT);
+            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_chat, GUI_COLOR_WIN_CHAT);
             
-            if (buffer->type == BUFFER_TYPE_DCC)
+            if (buffer->type == GUI_BUFFER_TYPE_DCC)
             {
                 i = 0;
-                dcc_first = (ptr_win->dcc_first) ? (t_irc_dcc *) ptr_win->dcc_first : dcc_list;
-                dcc_selected = (ptr_win->dcc_selected) ? (t_irc_dcc *) ptr_win->dcc_selected : dcc_list;
+                dcc_first = (ptr_win->dcc_first) ? (t_irc_dcc *) ptr_win->dcc_first : irc_dcc_list;
+                dcc_selected = (ptr_win->dcc_selected) ? (t_irc_dcc *) ptr_win->dcc_selected : irc_dcc_list;
                 for (ptr_dcc = dcc_first; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
                 {
                     if (i >= ptr_win->win_chat_height - 1)
@@ -994,19 +994,19 @@ gui_chat_draw (t_gui_buffer *buffer, int erase)
                     /* nickname and filename */
                     gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_chat,
                                                   (ptr_dcc == dcc_selected) ?
-                                                  COLOR_DCC_SELECTED : COLOR_WIN_CHAT);
+                                                  GUI_COLOR_DCC_SELECTED : GUI_COLOR_WIN_CHAT);
                     mvwprintw (GUI_CURSES(ptr_win)->win_chat, i, 0, "%s %-16s ",
                                (ptr_dcc == dcc_selected) ? "***" : "   ",
                                ptr_dcc->nick);
                     buf = weechat_iconv_from_internal (NULL,
-                                                       (DCC_IS_CHAT(ptr_dcc->type)) ?
+                                                       (IRC_DCC_IS_CHAT(ptr_dcc->type)) ?
                                                        _(ptr_dcc->filename) : ptr_dcc->filename);
                     wprintw (GUI_CURSES(ptr_win)->win_chat, "%s",
-                             (buf) ? buf : ((DCC_IS_CHAT(ptr_dcc->type)) ?
+                             (buf) ? buf : ((IRC_DCC_IS_CHAT(ptr_dcc->type)) ?
                              _(ptr_dcc->filename) : ptr_dcc->filename));
                     if (buf)
                         free (buf);
-                    if (DCC_IS_FILE(ptr_dcc->type))
+                    if (IRC_DCC_IS_FILE(ptr_dcc->type))
                     {
                         if (ptr_dcc->filename_suffix > 0)
                             wprintw (GUI_CURSES(ptr_win)->win_chat, " (.%d)",
@@ -1016,28 +1016,28 @@ gui_chat_draw (t_gui_buffer *buffer, int erase)
                     /* status */
                     gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_chat,
                                                   (ptr_dcc == dcc_selected) ?
-                                                  COLOR_DCC_SELECTED : COLOR_WIN_CHAT);
+                                                  GUI_COLOR_DCC_SELECTED : GUI_COLOR_WIN_CHAT);
                     mvwprintw (GUI_CURSES(ptr_win)->win_chat, i + 1, 0, "%s %s ",
                                (ptr_dcc == dcc_selected) ? "***" : "   ",
-                               (DCC_IS_RECV(ptr_dcc->type)) ? "-->>" : "<<--");
+                               (IRC_DCC_IS_RECV(ptr_dcc->type)) ? "-->>" : "<<--");
                     gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_chat,
-                                                  COLOR_DCC_WAITING + ptr_dcc->status);
-                    buf = weechat_iconv_from_internal (NULL, _(dcc_status_string[ptr_dcc->status]));
+                                                  GUI_COLOR_DCC_WAITING + ptr_dcc->status);
+                    buf = weechat_iconv_from_internal (NULL, _(irc_dcc_status_string[ptr_dcc->status]));
                     wprintw (GUI_CURSES(ptr_win)->win_chat, "%-10s",
-                             (buf) ? buf : _(dcc_status_string[ptr_dcc->status]));
+                             (buf) ? buf : _(irc_dcc_status_string[ptr_dcc->status]));
                     if (buf)
                         free (buf);
                     
                     /* other infos */
                     gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_chat,
                                                   (ptr_dcc == dcc_selected) ?
-                                                  COLOR_DCC_SELECTED : COLOR_WIN_CHAT);
-                    if (DCC_IS_FILE(ptr_dcc->type))
+                                                  GUI_COLOR_DCC_SELECTED : GUI_COLOR_WIN_CHAT);
+                    if (IRC_DCC_IS_FILE(ptr_dcc->type))
                     {
                         wprintw (GUI_CURSES(ptr_win)->win_chat, "  [");
                         if (ptr_dcc->size == 0)
                         {
-                            if (ptr_dcc->status == DCC_DONE)
+                            if (ptr_dcc->status == IRC_DCC_DONE)
                                 num_bars = 10;
                             else
                                 num_bars = 0;
@@ -1061,7 +1061,7 @@ gui_chat_draw (t_gui_buffer *buffer, int erase)
                             num_unit = 3;
                         if (ptr_dcc->size == 0)
                         {
-                            if (ptr_dcc->status == DCC_DONE)
+                            if (ptr_dcc->status == IRC_DCC_DONE)
                                 pct_complete = 100;
                             else
                                 pct_complete = 0;
@@ -1086,7 +1086,7 @@ gui_chat_draw (t_gui_buffer *buffer, int erase)
                         else
                             num_unit = 3;
                         wprintw (GUI_CURSES(ptr_win)->win_chat, "  (");
-                        if (ptr_dcc->status == DCC_ACTIVE)
+                        if (ptr_dcc->status == IRC_DCC_ACTIVE)
                         {
                             wprintw (GUI_CURSES(ptr_win)->win_chat, _("ETA"));
                             wprintw (GUI_CURSES(ptr_win)->win_chat, ": %.2lu:%.2lu:%.2lu - ",

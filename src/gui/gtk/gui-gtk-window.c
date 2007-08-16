@@ -193,7 +193,7 @@ gui_window_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
     {
         GUI_GTK(window)->textview_chat = gtk_text_view_new ();
         gtk_widget_show (GUI_GTK(window)->textview_chat);
-        gtk_container_add (GTK_CONTAINER (scrolledwindow_chat), GUI_GTK(window)->textview_chat);
+        gtk_container_add (GTK_CONTAINER (gui_gtk_scrolledwindow_chat), GUI_GTK(window)->textview_chat);
         gtk_widget_set_size_request (GUI_GTK(window)->textview_chat, 300, -1);
         gtk_text_view_set_editable (GTK_TEXT_VIEW (GUI_GTK(window)->textview_chat), FALSE);
         gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (GUI_GTK(window)->textview_chat), FALSE);
@@ -205,11 +205,11 @@ gui_window_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
         gtk_text_buffer_get_bounds (GUI_GTK(window)->textbuffer_chat, &start, &end);
         gtk_text_buffer_apply_tag (GUI_GTK(window)->textbuffer_chat, GUI_GTK(window)->texttag_chat, &start, &end);
     }
-    if (BUFFER_IS_CHANNEL(buffer) && !GUI_GTK(window)->textbuffer_nicklist)
+    if (GUI_BUFFER_IS_CHANNEL(buffer) && !GUI_GTK(window)->textbuffer_nicklist)
     {
         GUI_GTK(window)->textview_nicklist = gtk_text_view_new ();
         gtk_widget_show (GUI_GTK(window)->textview_nicklist);
-        gtk_container_add (GTK_CONTAINER (scrolledwindow_nick), GUI_GTK(window)->textview_nicklist);
+        gtk_container_add (GTK_CONTAINER (gui_gtk_scrolledwindow_nick), GUI_GTK(window)->textview_nicklist);
         gtk_text_view_set_editable (GTK_TEXT_VIEW (GUI_GTK(window)->textview_nicklist), FALSE);
         gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (GUI_GTK(window)->textview_nicklist), FALSE);
         
@@ -421,7 +421,7 @@ gui_window_nick_beginning (t_gui_window *window)
     if (!gui_ok)
         return;
     
-    if (BUFFER_HAS_NICKLIST(window->buffer))
+    if (GUI_BUFFER_HAS_NICKLIST(window->buffer))
     {
         if (window->win_nick_start > 0)
         {
@@ -443,10 +443,10 @@ gui_window_nick_end (t_gui_window *window)
     if (!gui_ok)
         return;
     
-    if (BUFFER_HAS_NICKLIST(window->buffer))
+    if (GUI_BUFFER_HAS_NICKLIST(window->buffer))
     {
         new_start =
-            CHANNEL(window->buffer)->nicks_count - window->win_nick_height;
+            GUI_CHANNEL(window->buffer)->nicks_count - window->win_nick_height;
         if (new_start < 0)
             new_start = 0;
         else if (new_start >= 1)
@@ -470,7 +470,7 @@ gui_window_nick_page_up (t_gui_window *window)
     if (!gui_ok)
         return;
     
-    if (BUFFER_HAS_NICKLIST(window->buffer))
+    if (GUI_BUFFER_HAS_NICKLIST(window->buffer))
     {
         if (window->win_nick_start > 0)
         {
@@ -492,11 +492,11 @@ gui_window_nick_page_down (t_gui_window *window)
     if (!gui_ok)
         return;
     
-    if (BUFFER_HAS_NICKLIST(window->buffer))
+    if (GUI_BUFFER_HAS_NICKLIST(window->buffer))
     {
-        if ((CHANNEL(window->buffer)->nicks_count > window->win_nick_height)
+        if ((GUI_CHANNEL(window->buffer)->nicks_count > window->win_nick_height)
             && (window->win_nick_start + window->win_nick_height - 1
-                < CHANNEL(window->buffer)->nicks_count))
+                < GUI_CHANNEL(window->buffer)->nicks_count))
         {
             if (window->win_nick_start == 0)
                 window->win_nick_start += (window->win_nick_height - 1);

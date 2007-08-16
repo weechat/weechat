@@ -97,7 +97,7 @@ gui_action_return (t_gui_window *window, char *args)
     
     if (window->buffer->has_input)
     {
-        if (window->buffer->text_search != TEXT_SEARCH_DISABLED)
+        if (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
             gui_buffer_search_stop (window);
         else if (window->buffer->input_buffer_size > 0)
         {
@@ -118,7 +118,7 @@ gui_action_return (t_gui_window *window, char *args)
             window->buffer->ptr_history = NULL;
             gui_input_optimize_size (window->buffer);
             gui_input_draw (window->buffer, 0);
-            user_command (SERVER(window->buffer), CHANNEL(window->buffer),
+            user_command (GUI_SERVER(window->buffer), GUI_CHANNEL(window->buffer),
                           command, 0);
             free (command);
         }
@@ -136,7 +136,7 @@ gui_action_tab (t_gui_window *window, char *args)
     (void) args;
     
     if (window->buffer->has_input
-        && (window->buffer->text_search == TEXT_SEARCH_DISABLED))
+        && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
     {
         completion_search (&(window->buffer->completion), 1,
                            window->buffer->input_buffer,
@@ -158,7 +158,7 @@ gui_action_tab_previous (t_gui_window *window, char *args)
     (void) args;
     
     if (window->buffer->has_input
-        && (window->buffer->text_search == TEXT_SEARCH_DISABLED))
+        && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
     {
         completion_search (&(window->buffer->completion), -1,
                            window->buffer->input_buffer,
@@ -669,9 +669,9 @@ gui_action_up (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->type == BUFFER_TYPE_DCC)
+    if (window->buffer->type == GUI_BUFFER_TYPE_DCC)
     {
-        if (dcc_list)
+        if (irc_dcc_list)
         {
             if (window->dcc_selected
                 && ((t_irc_dcc *)(window->dcc_selected))->prev_dcc)
@@ -689,7 +689,7 @@ gui_action_up (t_gui_window *window, char *args)
     }
     else if (window->buffer->has_input)
     {
-        if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
+        if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
         {
             if (window->buffer->ptr_history)
             {
@@ -743,7 +743,7 @@ gui_action_up (t_gui_window *window, char *args)
         else
         {
             /* search backward in buffer history */
-            window->buffer->text_search = TEXT_SEARCH_BACKWARD;
+            window->buffer->text_search = GUI_TEXT_SEARCH_BACKWARD;
             (void) gui_buffer_search_text (window);
         }
     }
@@ -760,7 +760,7 @@ gui_action_up_global (t_gui_window *window, char *args)
     (void) args;
     
     if (window->buffer->has_input
-        && (window->buffer->text_search == TEXT_SEARCH_DISABLED))
+        && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
     {
         if (history_global_ptr)
         {
@@ -798,9 +798,9 @@ gui_action_down (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->type == BUFFER_TYPE_DCC)
+    if (window->buffer->type == GUI_BUFFER_TYPE_DCC)
     {
-        if (dcc_list)
+        if (irc_dcc_list)
         {
             if (!window->dcc_selected
                 || ((t_irc_dcc *)(window->dcc_selected))->next_dcc)
@@ -814,14 +814,14 @@ gui_action_down (t_gui_window *window, char *args)
                             ((t_irc_dcc *)(window->dcc_first))->next_dcc;
                     else
                         window->dcc_first =
-                            dcc_list->next_dcc;
+                            irc_dcc_list->next_dcc;
                 }
                 if (window->dcc_selected)
                     window->dcc_selected =
                         ((t_irc_dcc *)(window->dcc_selected))->next_dcc;
                 else
                     window->dcc_selected =
-                        dcc_list->next_dcc;
+                        irc_dcc_list->next_dcc;
                 gui_chat_draw (window->buffer, 1);
                 gui_input_draw (window->buffer, 1);
             }
@@ -829,7 +829,7 @@ gui_action_down (t_gui_window *window, char *args)
     }
     else if (window->buffer->has_input)
     {
-        if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
+        if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
         {
             if (window->buffer->ptr_history)
             {
@@ -880,7 +880,7 @@ gui_action_down (t_gui_window *window, char *args)
         else
         {
             /* search forward in buffer history */
-            window->buffer->text_search = TEXT_SEARCH_FORWARD;
+            window->buffer->text_search = GUI_TEXT_SEARCH_FORWARD;
             (void) gui_buffer_search_text (window);
         }
     }
@@ -897,7 +897,7 @@ gui_action_down_global (t_gui_window *window, char *args)
     (void) args;
     
     if (window->buffer->has_input
-        && (window->buffer->text_search == TEXT_SEARCH_DISABLED))
+        && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
     {
         if (history_global_ptr)
         {
@@ -1095,7 +1095,7 @@ gui_action_jump_smart (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
 
-    if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
+    if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
     {
         if (weechat_hotlist)
         {
@@ -1126,9 +1126,9 @@ gui_action_jump_dcc (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
 
-    if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
+    if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
     {
-        if (window->buffer->type == BUFFER_TYPE_DCC)
+        if (window->buffer->type == GUI_BUFFER_TYPE_DCC)
         {
             if (gui_buffer_before_dcc)
             {
@@ -1155,9 +1155,9 @@ gui_action_jump_raw_data (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
 
-    if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
+    if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
     {
-        if (window->buffer->type == BUFFER_TYPE_RAW_DATA)
+        if (window->buffer->type == GUI_BUFFER_TYPE_RAW_DATA)
         {
             if (gui_buffer_before_raw_data)
             {
@@ -1184,7 +1184,7 @@ gui_action_jump_last_buffer (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
 
-    if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
+    if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
     {
         if (last_gui_buffer)
             gui_buffer_switch_by_number (window, last_gui_buffer->number);
@@ -1202,7 +1202,7 @@ gui_action_jump_previous_buffer (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
+    if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
     {
         if (gui_previous_buffer)
             gui_buffer_switch_by_number (window, gui_previous_buffer->number);
@@ -1219,15 +1219,15 @@ gui_action_jump_server (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
+    if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
     {
-        if (SERVER(window->buffer))
+        if (GUI_SERVER(window->buffer))
         {
-            if (SERVER(window->buffer)->buffer !=
+            if (GUI_SERVER(window->buffer)->buffer !=
                 window->buffer)
             {
                 gui_window_switch_to_buffer (window,
-                                             SERVER(window->buffer)->buffer);
+                                             GUI_SERVER(window->buffer)->buffer);
                 gui_window_redraw_buffer (window->buffer);
             }
         }
@@ -1247,24 +1247,24 @@ gui_action_jump_next_server (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
+    if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
     {
-        if (SERVER(window->buffer))
+        if (GUI_SERVER(window->buffer))
         {
-            ptr_server = SERVER(window->buffer)->next_server;
+            ptr_server = GUI_SERVER(window->buffer)->next_server;
             if (!ptr_server)
                 ptr_server = irc_servers;
-            while (ptr_server != SERVER(window->buffer))
+            while (ptr_server != GUI_SERVER(window->buffer))
             {
                 if (ptr_server->buffer)
                     break;
                 ptr_server = (ptr_server->next_server) ?
                     ptr_server->next_server : irc_servers;
             }
-            if (ptr_server != SERVER(window->buffer))
+            if (ptr_server != GUI_SERVER(window->buffer))
             {
                 /* save current buffer */
-                SERVER(window->buffer)->saved_buffer = window->buffer;
+                GUI_SERVER(window->buffer)->saved_buffer = window->buffer;
                 
                 /* come back to memorized chan if found */
                 if (ptr_server->saved_buffer)
@@ -1308,8 +1308,8 @@ gui_action_scroll_previous_highlight (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
     
-    if ((window->buffer->type == BUFFER_TYPE_STANDARD)
-        && (window->buffer->text_search == TEXT_SEARCH_DISABLED))
+    if ((window->buffer->type == GUI_BUFFER_TYPE_STANDARD)
+        && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
     {
         if (window->buffer->lines)
         {
@@ -1345,8 +1345,8 @@ gui_action_scroll_next_highlight (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
     
-    if ((window->buffer->type == BUFFER_TYPE_STANDARD)
-        && (window->buffer->text_search == TEXT_SEARCH_DISABLED))
+    if ((window->buffer->type == GUI_BUFFER_TYPE_STANDARD)
+        && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
     {
         if (window->buffer->lines)
         {
@@ -1380,11 +1380,11 @@ gui_action_scroll_unread (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
 
-    if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
+    if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
     {
         if (cfg_look_read_marker &&
             cfg_look_read_marker[0] &&
-            (window->buffer->type == BUFFER_TYPE_STANDARD) &&
+            (window->buffer->type == GUI_BUFFER_TYPE_STANDARD) &&
             window->buffer->last_read_line &&
             window->buffer->last_read_line != window->buffer->last_line)
         {
@@ -1415,7 +1415,7 @@ gui_action_set_unread (t_gui_window *window, char *args)
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
-        if (ptr_buffer->type == BUFFER_TYPE_STANDARD)
+        if (ptr_buffer->type == GUI_BUFFER_TYPE_STANDARD)
             ptr_buffer->last_read_line = ptr_buffer->last_line;
     }
     
@@ -1513,10 +1513,10 @@ gui_action_search_text (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->type == BUFFER_TYPE_STANDARD)
+    if (window->buffer->type == GUI_BUFFER_TYPE_STANDARD)
     {
         /* toggle search */
-        if (window->buffer->text_search == TEXT_SEARCH_DISABLED)
+        if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
             gui_buffer_search_start (window);
         else
         {

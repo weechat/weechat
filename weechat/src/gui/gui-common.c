@@ -140,20 +140,20 @@ gui_add_to_line (t_gui_buffer *buffer, int type, time_t date, char *nick, char *
         length = strlen (buffer->last_line->data);
         buffer->last_line->data = (char *) realloc (buffer->last_line->data,
                                                     length + strlen (message) + 1);
-        if (((type & MSG_TYPE_TIME) == 0)
+        if (((type & GUI_MSG_TYPE_TIME) == 0)
              && (buffer->last_line->ofs_after_date < 0))
             buffer->last_line->ofs_after_date = length;
-        if (((type & (MSG_TYPE_TIME | MSG_TYPE_NICK)) == 0)
+        if (((type & (GUI_MSG_TYPE_TIME | GUI_MSG_TYPE_NICK)) == 0)
              && (buffer->last_line->ofs_start_message < 0))
             buffer->last_line->ofs_start_message = length;
         strcat (buffer->last_line->data, message);
     }
     else
     {
-        if (((type & MSG_TYPE_TIME) == 0)
+        if (((type & GUI_MSG_TYPE_TIME) == 0)
             && (buffer->last_line->ofs_after_date < 0))
             buffer->last_line->ofs_after_date = 0;
-        if (((type & (MSG_TYPE_TIME | MSG_TYPE_NICK)) == 0)
+        if (((type & (GUI_MSG_TYPE_TIME | GUI_MSG_TYPE_NICK)) == 0)
             && (buffer->last_line->ofs_start_message < 0))
             buffer->last_line->ofs_start_message = 0;
         buffer->last_line->data = strdup (message);
@@ -161,13 +161,13 @@ gui_add_to_line (t_gui_buffer *buffer, int type, time_t date, char *nick, char *
     
     length = gui_word_strlen (NULL, message);
     buffer->last_line->length += length;
-    if (type & MSG_TYPE_MSG)
+    if (type & GUI_MSG_TYPE_MSG)
         buffer->last_line->line_with_message = 1;
-    if (type & MSG_TYPE_HIGHLIGHT)
+    if (type & GUI_MSG_TYPE_HIGHLIGHT)
         buffer->last_line->line_with_highlight = 1;
-    if ((type & MSG_TYPE_TIME) || (type & MSG_TYPE_NICK) || (type & MSG_TYPE_PREFIX))
+    if ((type & GUI_MSG_TYPE_TIME) || (type & GUI_MSG_TYPE_NICK) || (type & GUI_MSG_TYPE_PREFIX))
         buffer->last_line->length_align += length;
-    if (type & MSG_TYPE_NOLOG)
+    if (type & GUI_MSG_TYPE_NOLOG)
         buffer->last_line->log_write = 0;
     if (pos)
     {
@@ -185,13 +185,13 @@ gui_add_to_line (t_gui_buffer *buffer, int type, time_t date, char *nick, char *
                 buffer->notify_level)
             {
                 if (buffer->last_line->line_with_highlight)
-                    hotlist_add (HOTLIST_HIGHLIGHT, NULL, SERVER(buffer), buffer, 0);
-                else if (BUFFER_IS_PRIVATE(buffer) && (buffer->last_line->line_with_message))
-                    hotlist_add (HOTLIST_PRIVATE, NULL, SERVER(buffer), buffer, 0);
+                    hotlist_add (HOTLIST_HIGHLIGHT, NULL, GUI_SERVER(buffer), buffer, 0);
+                else if (GUI_BUFFER_IS_PRIVATE(buffer) && (buffer->last_line->line_with_message))
+                    hotlist_add (HOTLIST_PRIVATE, NULL, GUI_SERVER(buffer), buffer, 0);
                 else if (buffer->last_line->line_with_message)
-                    hotlist_add (HOTLIST_MSG, NULL, SERVER(buffer), buffer, 0);
+                    hotlist_add (HOTLIST_MSG, NULL, GUI_SERVER(buffer), buffer, 0);
                 else
-                    hotlist_add (HOTLIST_LOW, NULL, SERVER(buffer), buffer, 0);
+                    hotlist_add (HOTLIST_LOW, NULL, GUI_SERVER(buffer), buffer, 0);
                 gui_status_draw (gui_current_window->buffer, 1);
             }
         }
@@ -237,13 +237,13 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type,
     {
         if (buffer == NULL)
         {
-            type |= MSG_TYPE_NOLOG;
-            if (SERVER(gui_current_window->buffer))
-                buffer = SERVER(gui_current_window->buffer)->buffer;
+            type |= GUI_MSG_TYPE_NOLOG;
+            if (GUI_SERVER(gui_current_window->buffer))
+                buffer = GUI_SERVER(gui_current_window->buffer)->buffer;
             else
                 buffer = gui_current_window->buffer;
             
-            if (!buffer || (buffer->type != BUFFER_TYPE_STANDARD))
+            if (!buffer || (buffer->type != GUI_BUFFER_TYPE_STANDARD))
                 buffer = gui_buffers;
         }
     
@@ -255,10 +255,10 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type,
             return;
         }
         
-        if (buffer->type == BUFFER_TYPE_DCC)
+        if (buffer->type == GUI_BUFFER_TYPE_DCC)
             buffer = gui_buffers;
         
-        if (buffer->type == BUFFER_TYPE_DCC)
+        if (buffer->type == GUI_BUFFER_TYPE_DCC)
             return;
     }
     
@@ -314,44 +314,44 @@ gui_printf_internal (t_gui_buffer *buffer, int display_time, int type,
                         text_time_char[0] = text_time[i];
                         if (time_first_digit < 0)
                         {
-                            gui_add_to_line (buffer, MSG_TYPE_TIME, date,
-                                             NULL, GUI_COLOR(COLOR_WIN_CHAT_TIME));
-                            gui_add_to_line (buffer, MSG_TYPE_TIME, date,
+                            gui_add_to_line (buffer, GUI_MSG_TYPE_TIME, date,
+                                             NULL, GUI_COLOR(GUI_COLOR_WIN_CHAT_TIME));
+                            gui_add_to_line (buffer, GUI_MSG_TYPE_TIME, date,
                                              NULL, text_time_char);
                         }
                         else
                         {
                             if ((i < time_first_digit) || (i > time_last_digit))
                             {
-                                gui_add_to_line (buffer, MSG_TYPE_TIME, date,
-                                                 NULL, GUI_COLOR(COLOR_WIN_CHAT_DARK));
-                                gui_add_to_line (buffer, MSG_TYPE_TIME, date,
+                                gui_add_to_line (buffer, GUI_MSG_TYPE_TIME, date,
+                                                 NULL, GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK));
+                                gui_add_to_line (buffer, GUI_MSG_TYPE_TIME, date,
                                                  NULL, text_time_char);
                             }
                             else
                             {
                                 if (isdigit (text_time[i]))
                                 {
-                                    gui_add_to_line (buffer, MSG_TYPE_TIME, date,
-                                                     NULL, GUI_COLOR(COLOR_WIN_CHAT_TIME));
-                                    gui_add_to_line (buffer, MSG_TYPE_TIME, date,
+                                    gui_add_to_line (buffer, GUI_MSG_TYPE_TIME, date,
+                                                     NULL, GUI_COLOR(GUI_COLOR_WIN_CHAT_TIME));
+                                    gui_add_to_line (buffer, GUI_MSG_TYPE_TIME, date,
                                                      NULL, text_time_char);
                                 }
                                 else
                                 {
-                                    gui_add_to_line (buffer, MSG_TYPE_TIME, date,
-                                                     NULL, GUI_COLOR(COLOR_WIN_CHAT_TIME_SEP));
-                                    gui_add_to_line (buffer, MSG_TYPE_TIME, date,
+                                    gui_add_to_line (buffer, GUI_MSG_TYPE_TIME, date,
+                                                     NULL, GUI_COLOR(GUI_COLOR_WIN_CHAT_TIME_SEP));
+                                    gui_add_to_line (buffer, GUI_MSG_TYPE_TIME, date,
                                                      NULL, text_time_char);
                                 }
                             }
                         }
                         i++;
                     }
-                    gui_add_to_line (buffer, MSG_TYPE_TIME, date,
-                                     NULL, GUI_COLOR(COLOR_WIN_CHAT));
+                    gui_add_to_line (buffer, GUI_MSG_TYPE_TIME, date,
+                                     NULL, GUI_COLOR(GUI_COLOR_WIN_CHAT));
                 }
-                gui_add_to_line (buffer, MSG_TYPE_TIME, date, NULL, " ");
+                gui_add_to_line (buffer, GUI_MSG_TYPE_TIME, date, NULL, " ");
             }
             gui_add_to_line (buffer, type, date, nick, pos);
             pos = strchr (pos, '\n');
@@ -390,14 +390,14 @@ gui_printf_raw_data (void *server, int send, int modified, char *message)
                 pos[0] = '\0';
             gui_printf_nolog (gui_buffer_raw_data,
                               "%s[%s%s%s] %s%s%s %s\n",
-                              GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                              GUI_COLOR(COLOR_WIN_CHAT_SERVER),
+                              GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK),
+                              GUI_COLOR(GUI_COLOR_WIN_CHAT_SERVER),
                               ((t_irc_server *)server)->name,
-                              GUI_COLOR(COLOR_WIN_CHAT_DARK),
-                              GUI_COLOR((send) ? COLOR_WIN_CHAT_PART : COLOR_WIN_CHAT_JOIN),
-                              (send) ? ((modified) ? PREFIX_SEND_MOD : PREFIX_PART) :
-                              ((modified) ? PREFIX_RECV_MOD : PREFIX_JOIN),
-                              GUI_COLOR(COLOR_WIN_CHAT),
+                              GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK),
+                              GUI_COLOR((send) ? GUI_COLOR_WIN_CHAT_PART : GUI_COLOR_WIN_CHAT_JOIN),
+                              (send) ? ((modified) ? GUI_PREFIX_SEND_MOD : GUI_PREFIX_PART) :
+                              ((modified) ? GUI_PREFIX_RECV_MOD : GUI_PREFIX_JOIN),
+                              GUI_COLOR(GUI_COLOR_WIN_CHAT),
                               message);
             if (pos)
             {
@@ -493,8 +493,8 @@ gui_input_optimize_size (t_gui_buffer *buffer)
     
     if (buffer->has_input)
     {
-        optimal_size = ((buffer->input_buffer_size / INPUT_BUFFER_BLOCK_SIZE) *
-                        INPUT_BUFFER_BLOCK_SIZE) + INPUT_BUFFER_BLOCK_SIZE;
+        optimal_size = ((buffer->input_buffer_size / GUI_INPUT_BUFFER_BLOCK_SIZE) *
+                        GUI_INPUT_BUFFER_BLOCK_SIZE) + GUI_INPUT_BUFFER_BLOCK_SIZE;
         if (buffer->input_buffer_alloc != optimal_size)
         {
             buffer->input_buffer_alloc = optimal_size;
@@ -672,7 +672,7 @@ gui_exec_action_dcc (t_gui_window *window, char *actions)
         if (actions[0] >= 32)
         {
             dcc_selected = (window->dcc_selected) ?
-                (t_irc_dcc *) window->dcc_selected : dcc_list;
+                (t_irc_dcc *) window->dcc_selected : irc_dcc_list;
             
             switch (actions[0])
             {
@@ -680,8 +680,8 @@ gui_exec_action_dcc (t_gui_window *window, char *actions)
                 case 'a':
                 case 'A':
                     if (dcc_selected
-                        && (DCC_IS_RECV(dcc_selected->status))
-                        && (dcc_selected->status == DCC_WAITING))
+                        && (IRC_DCC_IS_RECV(dcc_selected->status))
+                        && (dcc_selected->status == IRC_DCC_WAITING))
                     {
                         irc_dcc_accept (dcc_selected);
                     }
@@ -690,9 +690,9 @@ gui_exec_action_dcc (t_gui_window *window, char *actions)
                 case 'c':
                 case 'C':
                     if (dcc_selected
-                        && (!DCC_ENDED(dcc_selected->status)))
+                        && (!IRC_DCC_ENDED(dcc_selected->status)))
                     {
-                        irc_dcc_close (dcc_selected, DCC_ABORTED);
+                        irc_dcc_close (dcc_selected, IRC_DCC_ABORTED);
                         gui_window_redraw_buffer (window->buffer);
                     }
                     break;
@@ -702,11 +702,11 @@ gui_exec_action_dcc (t_gui_window *window, char *actions)
                     window->dcc_first = NULL;
                     window->dcc_selected = NULL;
                     window->dcc_last_displayed = NULL;
-                    ptr_dcc = dcc_list;
+                    ptr_dcc = irc_dcc_list;
                     while (ptr_dcc)
                     {
                         ptr_dcc_next = ptr_dcc->next_dcc;
-                        if (DCC_ENDED(ptr_dcc->status))
+                        if (IRC_DCC_ENDED(ptr_dcc->status))
                             irc_dcc_free (ptr_dcc);
                         ptr_dcc = ptr_dcc_next;
                     }
@@ -736,7 +736,7 @@ gui_exec_action_dcc (t_gui_window *window, char *actions)
                 case 'r':
                 case 'R':
                     if (dcc_selected
-                        && (DCC_ENDED(dcc_selected->status)))
+                        && (IRC_DCC_ENDED(dcc_selected->status)))
                     {
                         if (dcc_selected->next_dcc)
                             window->dcc_selected = dcc_selected->next_dcc;

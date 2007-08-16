@@ -315,9 +315,10 @@ gui_window_switch_server (t_gui_window *window)
     
     if (ptr_buffer)
     {
-        ptr_server = (SERVER(ptr_buffer) && SERVER(ptr_buffer)->next_server) ?
-            SERVER(ptr_buffer)->next_server : irc_servers;
-        while (ptr_server != SERVER(window->buffer))
+        ptr_server = (GUI_SERVER(ptr_buffer)
+                      && GUI_SERVER(ptr_buffer)->next_server) ?
+            GUI_SERVER(ptr_buffer)->next_server : irc_servers;
+        while (ptr_server != GUI_SERVER(window->buffer))
         {
             if (ptr_server->buffer)
                 break;
@@ -325,7 +326,7 @@ gui_window_switch_server (t_gui_window *window)
                 ptr_server = ptr_server->next_server;
             else
             {
-                if (SERVER(ptr_buffer) == NULL)
+                if (GUI_SERVER(ptr_buffer) == NULL)
                 {
                     ptr_server = NULL;
                     break;
@@ -333,7 +334,7 @@ gui_window_switch_server (t_gui_window *window)
                 ptr_server = irc_servers;
             }
         }
-        if (ptr_server && (ptr_server != SERVER(ptr_buffer)))
+        if (ptr_server && (ptr_server != GUI_SERVER(ptr_buffer)))
         {
             ptr_buffer->server = ptr_server;
             gui_status_draw (window->buffer, 1);

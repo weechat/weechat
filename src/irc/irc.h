@@ -39,33 +39,20 @@
 #define NI_MAXHOST 256
 #endif
 
-/* prefixes for chat window */
-
-#define PREFIX_SERVER    "-@-"
-#define PREFIX_INFO      "-=-"
-#define PREFIX_ACTION_ME "-*-"
-#define PREFIX_JOIN      "-->"
-#define PREFIX_PART      "<--"
-#define PREFIX_QUIT      "<--"
-#define PREFIX_ERROR     "=!="
-#define PREFIX_PLUGIN    "-P-"
-#define PREFIX_RECV_MOD  "==>"
-#define PREFIX_SEND_MOD  "<=="
-
 #define IRC_DEFAULT_PORT 6667
 #define IRC_DEFAULT_PREFIXES_LIST "@%+~&!-"
 
 /* nick types */
 
-#define NICK_CHANOWNER  1
-#define NICK_CHANADMIN  2
-#define NICK_OP         4
-#define NICK_HALFOP     8
-#define NICK_VOICE      16
-#define NICK_AWAY       32
-#define NICK_CHANADMIN2 64
-#define NICK_CHANUSER   128
-#define NICK_SET_FLAG(nick, set, flag) \
+#define IRC_NICK_CHANOWNER  1
+#define IRC_NICK_CHANADMIN  2
+#define IRC_NICK_OP         4
+#define IRC_NICK_HALFOP     8
+#define IRC_NICK_VOICE      16
+#define IRC_NICK_AWAY       32
+#define IRC_NICK_CHANADMIN2 64
+#define IRC_NICK_CHANUSER   128
+#define IRC_NICK_SET_FLAG(nick, set, flag) \
     if (set) \
         nick->flags |= flag; \
     else \
@@ -92,15 +79,15 @@ struct t_irc_nick
     t_irc_nick *next_nick;          /* link to next nick on the channel       */
 };
 
-#define CHANNEL_PREFIX "#&+!"
+#define IRC_CHANNEL_PREFIX "#&+!"
 
 /* channel types */
-#define CHANNEL_TYPE_UNKNOWN  -1
-#define CHANNEL_TYPE_CHANNEL  0
-#define CHANNEL_TYPE_PRIVATE  1
-#define CHANNEL_TYPE_DCC_CHAT 2
+#define IRC_CHANNEL_TYPE_UNKNOWN  -1
+#define IRC_CHANNEL_TYPE_CHANNEL  0
+#define IRC_CHANNEL_TYPE_PRIVATE  1
+#define IRC_CHANNEL_TYPE_DCC_CHAT 2
 
-#define CHANNEL_NICKS_SPEAKING_LIMIT 32
+#define IRC_CHANNEL_NICKS_SPEAKING_LIMIT 32
 
 typedef struct t_irc_channel t_irc_channel;
 
@@ -244,46 +231,51 @@ struct t_irc_message
 
 /* DCC types */
 
-#define DCC_CHAT_RECV            0  /* receiving DCC chat                     */
-#define DCC_CHAT_SEND            1  /* sending DCC chat                       */
-#define DCC_FILE_RECV            2  /* incoming DCC file                      */
-#define DCC_FILE_SEND            3  /* sending DCC file                       */
+#define IRC_DCC_CHAT_RECV        0  /* receiving DCC chat                     */
+#define IRC_DCC_CHAT_SEND        1  /* sending DCC chat                       */
+#define IRC_DCC_FILE_RECV        2  /* incoming DCC file                      */
+#define IRC_DCC_FILE_SEND        3  /* sending DCC file                       */
 
 /* DCC status */
 
-#define DCC_WAITING              0  /* waiting for host answer                */
-#define DCC_CONNECTING           1  /* connecting to host                     */
-#define DCC_ACTIVE               2  /* sending/receiving data                 */
-#define DCC_DONE                 3  /* transfer done                          */
-#define DCC_FAILED               4  /* DCC failed                             */
-#define DCC_ABORTED              5  /* DCC aborted by user                    */
+#define IRC_DCC_WAITING          0  /* waiting for host answer                */
+#define IRC_DCC_CONNECTING       1  /* connecting to host                     */
+#define IRC_DCC_ACTIVE           2  /* sending/receiving data                 */
+#define IRC_DCC_DONE             3  /* transfer done                          */
+#define IRC_DCC_FAILED           4  /* DCC failed                             */
+#define IRC_DCC_ABORTED          5  /* DCC aborted by user                    */
 
 /* DCC blocksize (for file) */
 
-#define DCC_MIN_BLOCKSIZE     1024  /* min DCC block size when sending file   */
-#define DCC_MAX_BLOCKSIZE   102400  /* max DCC block size when sending file   */
+#define IRC_DCC_MIN_BLOCKSIZE   1024  /* min DCC block size when sending file */
+#define IRC_DCC_MAX_BLOCKSIZE 102400  /* max DCC block size when sending file */
 
 /* DCC errors (for file) */
 
-#define DCC_NO_ERROR             0  /* used when no error to report, all ok!  */
-#define DCC_ERROR_READ_LOCAL     1  /* unable to read local file              */
-#define DCC_ERROR_SEND_BLOCK     2  /* unable to send block to receiver       */
-#define DCC_ERROR_READ_ACK       3  /* unable to read ACK from receiver       */
-#define DCC_ERROR_CONNECT_SENDER 4  /* unable to connect to sender            */
-#define DCC_ERROR_RECV_BLOCK     5  /* unable to receive block from sender    */
-#define DCC_ERROR_WRITE_LOCAL    6  /* unable to write to local file          */
+#define IRC_DCC_NO_ERROR             0  /* no error to report, all ok!        */
+#define IRC_DCC_ERROR_READ_LOCAL     1  /* unable to read local file          */
+#define IRC_DCC_ERROR_SEND_BLOCK     2  /* unable to send block to receiver   */
+#define IRC_DCC_ERROR_READ_ACK       3  /* unable to read ACK from receiver   */
+#define IRC_DCC_ERROR_CONNECT_SENDER 4  /* unable to connect to sender        */
+#define IRC_DCC_ERROR_RECV_BLOCK     5  /* unable to recv block from sender   */
+#define IRC_DCC_ERROR_WRITE_LOCAL    6  /* unable to write to local file      */
 
 /* DCC macros for type */
 
-#define DCC_IS_CHAT(type) ((type == DCC_CHAT_RECV) || (type == DCC_CHAT_SEND))
-#define DCC_IS_FILE(type) ((type == DCC_FILE_RECV) || (type == DCC_FILE_SEND))
-#define DCC_IS_RECV(type) ((type == DCC_CHAT_RECV) || (type == DCC_FILE_RECV))
-#define DCC_IS_SEND(type) ((type == DCC_CHAT_SEND) || (type == DCC_FILE_SEND))
+#define IRC_DCC_IS_CHAT(type) ((type == IRC_DCC_CHAT_RECV) || \
+                               (type == IRC_DCC_CHAT_SEND))
+#define IRC_DCC_IS_FILE(type) ((type == IRC_DCC_FILE_RECV) || \
+                               (type == IRC_DCC_FILE_SEND))
+#define IRC_DCC_IS_RECV(type) ((type == IRC_DCC_CHAT_RECV) || \
+                               (type == IRC_DCC_FILE_RECV))
+#define IRC_DCC_IS_SEND(type) ((type == IRC_DCC_CHAT_SEND) || \
+                               (type == IRC_DCC_FILE_SEND))
 
 /* DCC macro for status */
 
-#define DCC_ENDED(status) ((status == DCC_DONE) || (status == DCC_FAILED) || \
-                          (status == DCC_ABORTED))
+#define IRC_DCC_ENDED(status) ((status == IRC_DCC_DONE) || \
+                               (status == IRC_DCC_FAILED) || \
+                               (status == IRC_DCC_ABORTED))
 
 typedef struct t_irc_dcc t_irc_dcc;
 
@@ -327,10 +319,10 @@ struct t_irc_dcc
 /* pre-defined ignore types, all other types are made with IRC commands */
 /* for example:  part  join  quit  notice  invite  ...                  */
 
-#define IGNORE_ACTION  "action"
-#define IGNORE_CTCP    "ctcp"
-#define IGNORE_DCC     "dcc"
-#define IGNORE_PRIVATE "pv"
+#define IRC_IGNORE_ACTION  "action"
+#define IRC_IGNORE_CTCP    "ctcp"
+#define IRC_IGNORE_DCC     "dcc"
+#define IRC_IGNORE_PRIVATE "pv"
 
 typedef struct t_irc_ignore t_irc_ignore;
 
@@ -352,14 +344,11 @@ extern t_irc_server *irc_servers;
 extern const int gnutls_cert_type_prio[];
 extern const int gnutls_prot_prio[];
 #endif
-extern t_irc_message *recv_msgq, *msgq_last_msg;
-extern int check_away;
-extern t_irc_dcc *dcc_list;
-extern t_irc_dcc *last_dcc;
-extern char *dcc_status_string[6];
-extern char *channel_modes;
-extern char *nick_modes;
-extern char *ignore_types[];
+extern t_irc_message *irc_recv_msgq, *irc_msgq_last_msg;
+extern int irc_check_away;
+extern t_irc_dcc *irc_dcc_list;
+extern t_irc_dcc *irc_last_dcc;
+extern char *irc_dcc_status_string[6];
 extern t_irc_ignore *irc_ignore;
 extern t_irc_ignore *irc_last_ignore;
 

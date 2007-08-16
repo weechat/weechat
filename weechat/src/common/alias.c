@@ -164,7 +164,7 @@ alias_get_final_command (t_weechat_alias *alias)
     
     if (alias->running)
     {
-        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        irc_display_prefix (NULL, NULL, GUI_PREFIX_ERROR);
         gui_printf (NULL,
                     _("%s circular reference when calling alias \"/%s\"\n"),
                     WEECHAT_ERROR, alias->alias_name);

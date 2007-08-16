@@ -28,10 +28,10 @@
 
 
 #define gui_printf(buffer, fmt, argz...) \
-    gui_printf_internal(buffer, 1, MSG_TYPE_INFO, -1, NULL, fmt, ##argz)
+    gui_printf_internal(buffer, 1, GUI_MSG_TYPE_INFO, -1, NULL, fmt, ##argz)
 
 #define gui_printf_keep_colors(buffer, fmt, argz...) \
-    gui_printf_internal(buffer, 1, MSG_TYPE_INFO, 1, NULL, fmt, ##argz)
+    gui_printf_internal(buffer, 1, GUI_MSG_TYPE_INFO, 1, NULL, fmt, ##argz)
 
 #define gui_printf_type(buffer, type, fmt, argz...) \
     gui_printf_internal(buffer, 1, type, -1, NULL, fmt, ##argz)
@@ -40,10 +40,10 @@
     gui_printf_internal(buffer, 1, type, -1, nick, fmt, ##argz)
 
 #define gui_printf_nolog(buffer, fmt, argz...) \
-    gui_printf_internal(buffer, 1, MSG_TYPE_INFO | MSG_TYPE_NOLOG, -1, NULL, fmt, ##argz)
+    gui_printf_internal(buffer, 1, GUI_MSG_TYPE_INFO | GUI_MSG_TYPE_NOLOG, -1, NULL, fmt, ##argz)
 
 #define gui_printf_nolog_notime(buffer, fmt, argz...) \
-    gui_printf_internal(buffer, 0, MSG_TYPE_NOLOG, -1, NULL, fmt, ##argz)
+    gui_printf_internal(buffer, 0, GUI_MSG_TYPE_NOLOG, -1, NULL, fmt, ##argz)
 
 
 typedef struct t_gui_infobar t_gui_infobar;

@@ -282,7 +282,7 @@ gui_keyboard_read ()
         
         /*gui_printf (gui_current_window->buffer, "gui_input_read: key = %s (%d)\n", key_str, key);*/
         
-        if (gui_current_window->buffer->text_search != TEXT_SEARCH_DISABLED)
+        if (gui_current_window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
             input_old = (gui_current_window->buffer->input_buffer) ?
                 strdup (gui_current_window->buffer->input_buffer) : strdup ("");
         else
@@ -297,22 +297,22 @@ gui_keyboard_read ()
             
             switch (gui_current_window->buffer->type)
             {
-                case BUFFER_TYPE_STANDARD:
+                case GUI_BUFFER_TYPE_STANDARD:
                     gui_insert_string_input (gui_current_window, key_str, -1);
                     gui_current_window->buffer->completion.position = -1;
                     input_draw = 1;
                     break;
-                case BUFFER_TYPE_DCC:
+                case GUI_BUFFER_TYPE_DCC:
                     gui_exec_action_dcc (gui_current_window, key_str);
                     break;
-                case BUFFER_TYPE_RAW_DATA:
+                case GUI_BUFFER_TYPE_RAW_DATA:
                     gui_exec_action_raw_data (gui_current_window, key_str);
                     break;
             }
         }
         
         /* incremental text search in buffer */
-        if ((gui_current_window->buffer->text_search != TEXT_SEARCH_DISABLED)
+        if ((gui_current_window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
             && ((input_old == NULL) || (gui_current_window->buffer->input_buffer == NULL)
                 || (strcmp (input_old, gui_current_window->buffer->input_buffer) != 0)))
         {

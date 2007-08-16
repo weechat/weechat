@@ -75,17 +75,17 @@ struct t_gui_gtk_objects
 extern t_gui_color gui_weechat_colors[];
 extern int gui_irc_colors[GUI_NUM_IRC_COLORS][2];
 
-extern GtkWidget *gtk_main_window;
-extern GtkWidget *vbox1;
-extern GtkWidget *entry_topic;
-extern GtkWidget *notebook1;
-extern GtkWidget *vbox2;
-extern GtkWidget *hbox1;
-extern GtkWidget *hpaned1;
-extern GtkWidget *scrolledwindow_chat;
-extern GtkWidget *scrolledwindow_nick;
-extern GtkWidget *entry_input;
-extern GtkWidget *label1;
+extern GtkWidget *gui_gtk_main_window;
+extern GtkWidget *gui_gtk_vbox1;
+extern GtkWidget *gui_gtk_entry_topic;
+extern GtkWidget *gui_gtk_notebook1;
+extern GtkWidget *gui_gtk_vbox2;
+extern GtkWidget *gui_gtk_hbox1;
+extern GtkWidget *gui_gtk_hpaned1;
+extern GtkWidget *gui_gtk_scrolledwindow_chat;
+extern GtkWidget *gui_gtk_scrolledwindow_nick;
+extern GtkWidget *gui_gtk_entry_input;
+extern GtkWidget *gui_gtk_label1;
 
 /* color functions */
 extern int gui_color_get_pair (int);

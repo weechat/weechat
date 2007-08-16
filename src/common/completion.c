@@ -571,7 +571,7 @@ completion_list_add_server_nicks (t_completion *completion)
                  ptr_channel = ptr_channel->next_channel)
             {
                 if ((!completion->channel || (t_irc_channel *)(completion->channel) != ptr_channel)
-                    && (ptr_channel->type == CHANNEL_TYPE_CHANNEL))
+                    && (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL))
                 {
                     for (ptr_nick = ptr_channel->nicks; ptr_nick;
                          ptr_nick = ptr_nick->next_nick)
@@ -584,7 +584,7 @@ completion_list_add_server_nicks (t_completion *completion)
         }
         
         /* add current channel nicks at beginning */
-        if (completion->channel && (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_CHANNEL))
+        if (completion->channel && (((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_CHANNEL))
         {
             for (ptr_nick = ((t_irc_channel *)(completion->channel))->nicks;
                  ptr_nick; ptr_nick = ptr_nick->next_nick)
@@ -616,7 +616,7 @@ completion_list_add_channel_nicks (t_completion *completion)
     
     if (completion->channel)
     {
-        if (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_CHANNEL)
+        if (((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_CHANNEL)
         {
             /* add channel nicks */
             for (ptr_nick = ((t_irc_channel *)(completion->channel))->nicks;
@@ -645,8 +645,8 @@ completion_list_add_channel_nicks (t_completion *completion)
                                      ((t_irc_server *)(completion->server))->nick,
                                      1, WEELIST_POS_END);
         }
-        if ((((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_PRIVATE)
-            || (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_DCC_CHAT))
+        if ((((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_PRIVATE)
+            || (((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_DCC_CHAT))
         {
             completion_list_add (completion,
                                  ((t_irc_channel *)(completion->channel))->name,
@@ -669,7 +669,7 @@ completion_list_add_channel_nicks_hosts (t_completion *completion)
     
     if (completion->channel)
     {
-        if (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_CHANNEL)
+        if (((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_CHANNEL)
         {
             for (ptr_nick = ((t_irc_channel *)(completion->channel))->nicks;
                  ptr_nick; ptr_nick = ptr_nick->next_nick)
@@ -692,8 +692,8 @@ completion_list_add_channel_nicks_hosts (t_completion *completion)
                 }
             }
         }
-        if ((((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_PRIVATE)
-             || (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_PRIVATE))
+        if ((((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_PRIVATE)
+             || (((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_PRIVATE))
         {
             completion_list_add (completion,
                                  ((t_irc_channel *)(completion->channel))->name,
@@ -1449,8 +1449,8 @@ completion_nick (t_completion *completion)
     
     completion->context = COMPLETION_NICK;
     
-    if ((((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_PRIVATE)
-        || (((t_irc_channel *)(completion->channel))->type == CHANNEL_TYPE_DCC_CHAT))
+    if ((((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_PRIVATE)
+        || (((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_DCC_CHAT))
     {
         if (!(completion->completion_list))
         {

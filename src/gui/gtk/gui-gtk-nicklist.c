@@ -42,7 +42,7 @@ gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
     char format[32], format_empty[32];
     t_irc_nick *ptr_nick;*/
     
-    if (!gui_ok || !BUFFER_HAS_NICKLIST(buffer))
+    if (!gui_ok || !GUI_BUFFER_HAS_NICKLIST(buffer))
         return;
     
     /* TODO: write this function for Gtk */

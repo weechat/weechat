@@ -592,8 +592,8 @@ gui_keyboard_pressed (char *key_str)
                 {
                     for (ptr_cmd = commands; *ptr_cmd; ptr_cmd++)
                     {
-                        user_command (SERVER(gui_current_window->buffer),
-                                      CHANNEL(gui_current_window->buffer),
+                        user_command (GUI_SERVER(gui_current_window->buffer),
+                                      GUI_CHANNEL(gui_current_window->buffer),
                                       *ptr_cmd, 0);
                     }
                     free_multi_command (commands);
@@ -602,7 +602,7 @@ gui_keyboard_pressed (char *key_str)
             else
                 (void)(ptr_key->function)(gui_current_window, ptr_key->args);
 #ifdef PLUGINS
-            if (gui_current_window->buffer->text_search == TEXT_SEARCH_DISABLED)
+            if (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
             {
                 (void) plugin_keyboard_handler_exec (
                     (ptr_key->command) ?

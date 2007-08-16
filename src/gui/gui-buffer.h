@@ -23,36 +23,49 @@
 #include "../common/completion.h"
 #include "../common/history.h"
 
-#define BUFFER_TYPE_STANDARD    0
-#define BUFFER_TYPE_DCC         1
-#define BUFFER_TYPE_RAW_DATA    2
+#define GUI_BUFFER_TYPE_STANDARD 0
+#define GUI_BUFFER_TYPE_DCC      1
+#define GUI_BUFFER_TYPE_RAW_DATA 2
 
-#define SERVER(buffer)  ((t_irc_server *)(buffer->server))
-#define CHANNEL(buffer) ((t_irc_channel *)(buffer->channel))
+#define GUI_SERVER(buffer)  ((t_irc_server *)(buffer->server))
+#define GUI_CHANNEL(buffer) ((t_irc_channel *)(buffer->channel))
 
-#define BUFFER_IS_SERVER(buffer)  ((SERVER(buffer) || (buffer->all_servers)) && !CHANNEL(buffer))
-#define BUFFER_IS_CHANNEL(buffer) (CHANNEL(buffer) && (CHANNEL(buffer)->type == CHANNEL_TYPE_CHANNEL))
-#define BUFFER_IS_PRIVATE(buffer) (CHANNEL(buffer) && \
-                                  ((CHANNEL(buffer)->type == CHANNEL_TYPE_PRIVATE) \
-                                  || (CHANNEL(buffer)->type == CHANNEL_TYPE_DCC_CHAT)))
+#define GUI_BUFFER_IS_SERVER(buffer)    ((GUI_SERVER(buffer) || (buffer->all_servers)) && !GUI_CHANNEL(buffer))
+#define GUI_BUFFER_IS_CHANNEL(buffer)   (GUI_CHANNEL(buffer) && (GUI_CHANNEL(buffer)->type == IRC_CHANNEL_TYPE_CHANNEL))
+#define GUI_BUFFER_IS_PRIVATE(buffer)   (GUI_CHANNEL(buffer) && \
+                                        ((GUI_CHANNEL(buffer)->type == IRC_CHANNEL_TYPE_PRIVATE) \
+                                        || (GUI_CHANNEL(buffer)->type == IRC_CHANNEL_TYPE_DCC_CHAT)))
 
-#define BUFFER_HAS_NICKLIST(buffer) (BUFFER_IS_CHANNEL(buffer))
+#define GUI_BUFFER_HAS_NICKLIST(buffer) (GUI_BUFFER_IS_CHANNEL(buffer))
 
-#define MSG_TYPE_TIME      1
-#define MSG_TYPE_PREFIX    2
-#define MSG_TYPE_NICK      4
-#define MSG_TYPE_INFO      8
-#define MSG_TYPE_MSG       16
-#define MSG_TYPE_HIGHLIGHT 32
-#define MSG_TYPE_NOLOG     64
+#define GUI_MSG_TYPE_TIME      1
+#define GUI_MSG_TYPE_PREFIX    2
+#define GUI_MSG_TYPE_NICK      4
+#define GUI_MSG_TYPE_INFO      8
+#define GUI_MSG_TYPE_MSG       16
+#define GUI_MSG_TYPE_HIGHLIGHT 32
+#define GUI_MSG_TYPE_NOLOG     64
 
-#define NOTIFY_LEVEL_MIN        0
-#define NOTIFY_LEVEL_MAX        3
-#define NOTIFY_LEVEL_DEFAULT    NOTIFY_LEVEL_MAX
+#define GUI_PREFIX_SERVER    "-@-"
+#define GUI_PREFIX_INFO      "-=-"
+#define GUI_PREFIX_ACTION_ME "-*-"
+#define GUI_PREFIX_JOIN      "-->"
+#define GUI_PREFIX_PART      "<--"
+#define GUI_PREFIX_QUIT      "<--"
+#define GUI_PREFIX_ERROR     "=!="
+#define GUI_PREFIX_PLUGIN    "-P-"
+#define GUI_PREFIX_RECV_MOD  "==>"
+#define GUI_PREFIX_SEND_MOD  "<=="
 
-#define TEXT_SEARCH_DISABLED    0
-#define TEXT_SEARCH_BACKWARD    1
-#define TEXT_SEARCH_FORWARD     2
+#define GUI_NOTIFY_LEVEL_MIN     0
+#define GUI_NOTIFY_LEVEL_MAX     3
+#define GUI_NOTIFY_LEVEL_DEFAULT GUI_NOTIFY_LEVEL_MAX
+
+#define GUI_TEXT_SEARCH_DISABLED 0
+#define GUI_TEXT_SEARCH_BACKWARD 1
+#define GUI_TEXT_SEARCH_FORWARD  2
+
+#define GUI_INPUT_BUFFER_BLOCK_SIZE 256
 
 /* buffer structures */
 

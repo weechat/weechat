@@ -294,7 +294,7 @@ session_save_dcc (FILE *file)
     
     rc = 1;
     
-    for (ptr_dcc = last_dcc; ptr_dcc;
+    for (ptr_dcc = irc_last_dcc; ptr_dcc;
          ptr_dcc = ptr_dcc->prev_dcc)
     {
         rc = rc && (session_write_id  (file, SESSION_OBJ_DCC));
@@ -398,8 +398,8 @@ session_save_buffers (FILE *file)
          ptr_buffer = ptr_buffer->next_buffer)
     {
         rc = rc && (session_write_id  (file, SESSION_OBJ_BUFFER));
-        rc = rc && (session_write_str (file, SESSION_BUFF_SERVER, SERVER(ptr_buffer) ? SERVER(ptr_buffer)->name : NULL));
-        rc = rc && (session_write_str (file, SESSION_BUFF_CHANNEL, CHANNEL(ptr_buffer) ? CHANNEL(ptr_buffer)->name : NULL));
+        rc = rc && (session_write_str (file, SESSION_BUFF_SERVER, GUI_SERVER(ptr_buffer) ? GUI_SERVER(ptr_buffer)->name : NULL));
+        rc = rc && (session_write_str (file, SESSION_BUFF_CHANNEL, GUI_CHANNEL(ptr_buffer) ? GUI_CHANNEL(ptr_buffer)->name : NULL));
         rc = rc && (session_write_int (file, SESSION_BUFF_TYPE, ptr_buffer->type));
         rc = rc && (session_write_int (file, SESSION_BUFF_ALL_SERVERS, ptr_buffer->all_servers));
         rc = rc && (session_write_id  (file, SESSION_BUFF_END));
@@ -1849,13 +1849,13 @@ session_load (char *filename)
     
     if (unlink (filename) < 0)
     {
-        irc_display_prefix (NULL, gui_current_window->buffer, PREFIX_ERROR);
+        irc_display_prefix (NULL, gui_current_window->buffer, GUI_PREFIX_ERROR);
         gui_printf_nolog (gui_current_window->buffer,
                           _("%s can't delete session file (%s)\n"),
                           WEECHAT_ERROR, filename);
     }
     
-    irc_display_prefix (NULL, gui_current_window->buffer, PREFIX_INFO);
+    irc_display_prefix (NULL, gui_current_window->buffer, GUI_PREFIX_INFO);
     gui_printf_nolog (gui_current_window->buffer,
                       _("Upgrade completed successfully\n"));
     

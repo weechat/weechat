@@ -95,8 +95,8 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
 #endif
     
     /* use first buffer if no server is assigned to this buffer */
-    if ((type == BUFFER_TYPE_STANDARD) && gui_buffers
-        && (!SERVER(gui_buffers)) && (!channel))
+    if ((type == GUI_BUFFER_TYPE_STANDARD) && gui_buffers
+        && (!GUI_SERVER(gui_buffers)) && (!channel))
     {
         if (server)
             ((t_irc_server *)(server))->buffer = gui_buffers;
@@ -113,7 +113,7 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
     }
 
     /* use "all servers" buffer if found */
-    if (cfg_look_one_server_buffer && (type == BUFFER_TYPE_STANDARD) &&
+    if (cfg_look_one_server_buffer && (type == GUI_BUFFER_TYPE_STANDARD) &&
         gui_buffers && server && !channel)
     {
         ptr_buffer = gui_buffer_servers_search ();
@@ -138,18 +138,18 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
         new_buffer->all_servers = 0;
         new_buffer->channel = channel;
         new_buffer->type = type;
-        if (new_buffer->type == BUFFER_TYPE_RAW_DATA)
+        if (new_buffer->type == GUI_BUFFER_TYPE_RAW_DATA)
             gui_buffer_raw_data = new_buffer;
         /* assign buffer to server and channel */
         if (server && !channel)
         {
-            SERVER(new_buffer)->buffer = new_buffer;
+            GUI_SERVER(new_buffer)->buffer = new_buffer;
             new_buffer->all_servers = (cfg_look_one_server_buffer) ? 1 : 0;
         }
         if (!gui_buffers && cfg_look_one_server_buffer)
             new_buffer->all_servers = 1;
         if (channel)
-            CHANNEL(new_buffer)->buffer = new_buffer;
+            GUI_CHANNEL(new_buffer)->buffer = new_buffer;
         
         if (!window->buffer)
         {
@@ -173,18 +173,18 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
         /* create/append to log file */
         new_buffer->log_filename = NULL;
         new_buffer->log_file = NULL;
-        if ((cfg_log_auto_server && BUFFER_IS_SERVER(new_buffer))
-            || (cfg_log_auto_channel && BUFFER_IS_CHANNEL(new_buffer))
-            || (cfg_log_auto_private && BUFFER_IS_PRIVATE(new_buffer)))
+        if ((cfg_log_auto_server && GUI_BUFFER_IS_SERVER(new_buffer))
+            || (cfg_log_auto_channel && GUI_BUFFER_IS_CHANNEL(new_buffer))
+            || (cfg_log_auto_private && GUI_BUFFER_IS_PRIVATE(new_buffer)))
             gui_log_start (new_buffer);
         
         /* init input buffer */
-        new_buffer->has_input = (new_buffer->type == BUFFER_TYPE_STANDARD) ? 1 : 0;
+        new_buffer->has_input = (new_buffer->type == GUI_BUFFER_TYPE_STANDARD) ? 1 : 0;
         if (new_buffer->has_input)
         {
-            new_buffer->input_buffer_alloc = INPUT_BUFFER_BLOCK_SIZE;
-            new_buffer->input_buffer = (char *) malloc (INPUT_BUFFER_BLOCK_SIZE);
-            new_buffer->input_buffer_color_mask = (char *) malloc (INPUT_BUFFER_BLOCK_SIZE);
+            new_buffer->input_buffer_alloc = GUI_INPUT_BUFFER_BLOCK_SIZE;
+            new_buffer->input_buffer = (char *) malloc (GUI_INPUT_BUFFER_BLOCK_SIZE);
+            new_buffer->input_buffer_color_mask = (char *) malloc (GUI_INPUT_BUFFER_BLOCK_SIZE);
             new_buffer->input_buffer[0] = '\0';
             new_buffer->input_buffer_color_mask[0] = '\0';
         }
@@ -208,7 +208,7 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
         new_buffer->num_history = 0;
         
         /* text search */
-        new_buffer->text_search = TEXT_SEARCH_DISABLED;
+        new_buffer->text_search = GUI_TEXT_SEARCH_DISABLED;
         new_buffer->text_search_exact = 0;
         new_buffer->text_search_found = 0;
         new_buffer->text_search_input = NULL;
@@ -225,7 +225,7 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
         /* move buffer next to server */
         if (server && cfg_look_open_near_server && (!cfg_look_one_server_buffer))
         {
-            ptr_buffer = SERVER(new_buffer)->buffer;
+            ptr_buffer = GUI_SERVER(new_buffer)->buffer;
             while (ptr_buffer && (ptr_buffer->server == server))
             {
                 ptr_buffer = ptr_buffer->next_buffer;
@@ -321,7 +321,7 @@ gui_buffer_search (char *server, char *channel)
     if (!ptr_buffer)
         return NULL;
     
-    return (ptr_buffer->type != BUFFER_TYPE_STANDARD) ?
+    return (ptr_buffer->type != GUI_BUFFER_TYPE_STANDARD) ?
         gui_buffers : ptr_buffer;
 }
 
@@ -463,13 +463,13 @@ gui_buffer_get_dcc (t_gui_window *window)
     /* check if dcc buffer exists */
     for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
     {
-        if (ptr_buffer->type == BUFFER_TYPE_DCC)
+        if (ptr_buffer->type == GUI_BUFFER_TYPE_DCC)
             break;
     }
     if (ptr_buffer)
         return ptr_buffer;
     else
-        return gui_buffer_new (window, NULL, NULL, BUFFER_TYPE_DCC, 0);
+        return gui_buffer_new (window, NULL, NULL, GUI_BUFFER_TYPE_DCC, 0);
 }
 
 /*
@@ -485,7 +485,7 @@ gui_buffer_clear (t_gui_buffer *buffer)
     if (!buffer)
         return;
 
-    if (buffer->type == BUFFER_TYPE_DCC)
+    if (buffer->type == GUI_BUFFER_TYPE_DCC)
         return;
     
     /* remove buffer from hotlist */
@@ -607,7 +607,7 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
     if (gui_buffer_before_raw_data == buffer)
         gui_buffer_before_raw_data = NULL;
     
-    if (buffer->type == BUFFER_TYPE_RAW_DATA)
+    if (buffer->type == GUI_BUFFER_TYPE_RAW_DATA)
         gui_buffer_raw_data = NULL;
     
     for (ptr_server = irc_servers; ptr_server;
@@ -668,7 +668,7 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
     /* always at least one buffer */
     if (!gui_buffers && create_new && switch_to_another)
         (void) gui_buffer_new (gui_windows, NULL, NULL,
-                               BUFFER_TYPE_STANDARD, 1);
+                               GUI_BUFFER_TYPE_STANDARD, 1);
     
     if (gui_windows && gui_current_window && gui_current_window->buffer)
         gui_status_draw (gui_current_window->buffer, 1);
@@ -766,7 +766,7 @@ gui_buffer_merge_servers (t_gui_window *window)
     for (ptr_buffer_server = gui_buffers; ptr_buffer_server;
          ptr_buffer_server = ptr_buffer_server->next_buffer)
     {
-        if (BUFFER_IS_SERVER(ptr_buffer_server))
+        if (GUI_BUFFER_IS_SERVER(ptr_buffer_server))
             break;
     }
     
@@ -778,9 +778,9 @@ gui_buffer_merge_servers (t_gui_window *window)
     while (ptr_buffer)
     {
         if ((ptr_buffer != ptr_buffer_server)
-            && (BUFFER_IS_SERVER(ptr_buffer)))
+            && (GUI_BUFFER_IS_SERVER(ptr_buffer)))
         {
-            ptr_server = SERVER(ptr_buffer);
+            ptr_server = GUI_SERVER(ptr_buffer);
             
             /* add (by pointer artefact) lines from buffer found to server buffer */
             if (ptr_buffer->lines)
@@ -833,18 +833,18 @@ gui_buffer_split_server (t_gui_window *window)
     
     if (ptr_buffer)
     {
-        if (SERVER(ptr_buffer))
+        if (GUI_SERVER(ptr_buffer))
         {
             for (ptr_server = irc_servers; ptr_server;
                  ptr_server = ptr_server->next_server)
             {
                 if (ptr_server->buffer
-                    && (ptr_server != SERVER(ptr_buffer))
+                    && (ptr_server != GUI_SERVER(ptr_buffer))
                     && (ptr_server->buffer == ptr_buffer))
                 {
                     ptr_server->buffer = NULL;
                     gui_buffer_new (window, ptr_server, NULL,
-                                    BUFFER_TYPE_STANDARD, 0);
+                                    GUI_BUFFER_TYPE_STANDARD, 0);
                 }
             }
         }
@@ -910,7 +910,7 @@ gui_buffer_switch_dcc (t_gui_window *window)
     /* check if dcc buffer exists */
     for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
     {
-        if (ptr_buffer->type == BUFFER_TYPE_DCC)
+        if (ptr_buffer->type == GUI_BUFFER_TYPE_DCC)
             break;
     }
     if (ptr_buffer)
@@ -919,7 +919,7 @@ gui_buffer_switch_dcc (t_gui_window *window)
         gui_window_redraw_buffer (ptr_buffer);
     }
     else
-        gui_buffer_new (window, NULL, NULL, BUFFER_TYPE_DCC, 1);
+        gui_buffer_new (window, NULL, NULL, GUI_BUFFER_TYPE_DCC, 1);
 }
 
 /*
@@ -934,7 +934,7 @@ gui_buffer_switch_raw_data (t_gui_window *window)
     /* check if raw IRC data buffer exists */
     for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
     {
-        if (ptr_buffer->type == BUFFER_TYPE_RAW_DATA)
+        if (ptr_buffer->type == GUI_BUFFER_TYPE_RAW_DATA)
             break;
     }
     if (ptr_buffer)
@@ -943,7 +943,7 @@ gui_buffer_switch_raw_data (t_gui_window *window)
         gui_window_redraw_buffer (ptr_buffer);
     }
     else
-        gui_buffer_new (window, NULL, NULL, BUFFER_TYPE_RAW_DATA, 1);
+        gui_buffer_new (window, NULL, NULL, GUI_BUFFER_TYPE_RAW_DATA, 1);
 }
 
 /*
@@ -1090,7 +1090,7 @@ gui_buffer_search_text (t_gui_window *window)
 {
     t_gui_line *ptr_line;
     
-    if (window->buffer->text_search == TEXT_SEARCH_BACKWARD)
+    if (window->buffer->text_search == GUI_TEXT_SEARCH_BACKWARD)
     {
         if (window->buffer->lines
             && window->buffer->input_buffer && window->buffer->input_buffer[0])
@@ -1114,7 +1114,7 @@ gui_buffer_search_text (t_gui_window *window)
             }
         }
     }
-    else if (window->buffer->text_search == TEXT_SEARCH_FORWARD)
+    else if (window->buffer->text_search == GUI_TEXT_SEARCH_FORWARD)
     {
         if (window->buffer->lines
             && window->buffer->input_buffer && window->buffer->input_buffer[0])
@@ -1148,7 +1148,7 @@ gui_buffer_search_text (t_gui_window *window)
 void
 gui_buffer_search_start (t_gui_window *window)
 {
-    window->buffer->text_search = TEXT_SEARCH_BACKWARD;
+    window->buffer->text_search = GUI_TEXT_SEARCH_BACKWARD;
     window->buffer->text_search_exact = 0;
     window->buffer->text_search_found = 0;
     if (window->buffer->text_search_input)
@@ -1174,7 +1174,7 @@ gui_buffer_search_restart (t_gui_window *window)
 {
     window->start_line = NULL;
     window->start_line_pos = 0;
-    window->buffer->text_search = TEXT_SEARCH_BACKWARD;
+    window->buffer->text_search = GUI_TEXT_SEARCH_BACKWARD;
     window->buffer->text_search_found = 0;
     if (gui_buffer_search_text (window))
         window->buffer->text_search_found = 1;
@@ -1192,7 +1192,7 @@ gui_buffer_search_restart (t_gui_window *window)
 void
 gui_buffer_search_stop (t_gui_window *window)
 {
-    window->buffer->text_search = TEXT_SEARCH_DISABLED;
+    window->buffer->text_search = GUI_TEXT_SEARCH_DISABLED;
     window->buffer->text_search = 0;
     gui_action_delete_line (window, NULL);
     if (window->buffer->text_search_input)

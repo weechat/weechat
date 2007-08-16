@@ -113,12 +113,12 @@ fifo_exec (char *text)
         pos_msg = text + 1;
         if (gui_current_window->buffer->has_input)
         {
-            ptr_server = SERVER(gui_current_window->buffer);
-            ptr_channel = CHANNEL(gui_current_window->buffer);
+            ptr_server = GUI_SERVER(gui_current_window->buffer);
+            ptr_channel = GUI_CHANNEL(gui_current_window->buffer);
         }
         else
         {
-            ptr_server = SERVER(gui_buffers);
+            ptr_server = GUI_SERVER(gui_buffers);
             ptr_channel = NULL;
         }
     }
@@ -127,7 +127,7 @@ fifo_exec (char *text)
         pos_msg = strstr (text, " *");
         if (!pos_msg)
         {
-            irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+            irc_display_prefix (NULL, NULL, GUI_PREFIX_ERROR);
             gui_printf (NULL, _("%s invalid text received on FIFO pipe\n"),
                         WEECHAT_WARNING);
             return;
@@ -149,7 +149,7 @@ fifo_exec (char *text)
             ptr_server = irc_server_search (text);
             if (!ptr_server || !ptr_server->buffer)
             {
-                irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                irc_display_prefix (NULL, NULL, GUI_PREFIX_ERROR);
                 gui_printf (NULL, _("%s server \"%s\" not found (FIFO pipe data)\n"),
                             WEECHAT_WARNING, text);
                 return;
@@ -159,7 +159,7 @@ fifo_exec (char *text)
                 ptr_channel = irc_channel_search_any (ptr_server, pos + 1);
                 if (!ptr_channel)
                 {
-                    irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+                    irc_display_prefix (NULL, NULL, GUI_PREFIX_ERROR);
                     gui_printf (NULL,
                                 _("%s channel \"%s\" not found (FIFO pipe data)\n"),
                                 WEECHAT_WARNING, pos + 1);

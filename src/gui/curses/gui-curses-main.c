@@ -83,7 +83,7 @@ gui_main_loop ()
     
     old_min = -1;
     old_sec = -1;
-    check_away = 0;
+    irc_check_away = 0;
     
     /* if SIGTERM or SIGHUP received => quit */
     signal (SIGTERM, gui_main_quit);
@@ -114,7 +114,7 @@ gui_main_loop ()
                 for (ptr_buffer = gui_buffers; ptr_buffer;
                      ptr_buffer = ptr_buffer->next_buffer)
                 {
-                    if (ptr_buffer->type == BUFFER_TYPE_STANDARD)
+                    if (ptr_buffer->type == GUI_BUFFER_TYPE_STANDARD)
                         gui_printf_nolog_notime (ptr_buffer,
                                                  _("Day changed to %s\n"),
                                                  (text_time2) ?
@@ -165,10 +165,10 @@ gui_main_loop ()
             /* away check */
             if (cfg_irc_away_check != 0)
             {
-                check_away++;
-                if (check_away >= (cfg_irc_away_check * 60))
+                irc_check_away++;
+                if (irc_check_away >= (cfg_irc_away_check * 60))
                 {
-                    check_away = 0;
+                    irc_check_away = 0;
                     irc_server_check_away ();
                 }
             }
@@ -243,7 +243,7 @@ gui_main_loop ()
                         diff = (int) get_timeval_diff (&(ptr_server->lag_check_time), &tv);
                         if (diff / 1000 > cfg_irc_lag_disconnect * 60)
                         {
-                            irc_display_prefix (ptr_server, ptr_server->buffer, PREFIX_ERROR);
+                            irc_display_prefix (ptr_server, ptr_server->buffer, GUI_PREFIX_ERROR);
                             gui_printf (ptr_server->buffer,
                                         _("%s lag is high, disconnecting from server...\n"),
                                         WEECHAT_WARNING);
@@ -340,7 +340,7 @@ gui_main_init ()
     if (gui_window_new (NULL, 0, 0, COLS, LINES, 100, 100))
     {
         gui_current_window = gui_windows;
-        gui_buffer_new (gui_windows, NULL, NULL, BUFFER_TYPE_STANDARD, 1);
+        gui_buffer_new (gui_windows, NULL, NULL, GUI_BUFFER_TYPE_STANDARD, 1);
         
         if (cfg_look_set_title)
             gui_window_set_title ();

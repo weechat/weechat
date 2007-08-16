@@ -345,7 +345,7 @@ int cfg_col_nick_user;
 int cfg_col_nick_more;
 int cfg_col_nick_sep;
 int cfg_col_nick_self;
-int cfg_col_nick_colors[COLOR_WIN_NICK_NUMBER];
+int cfg_col_nick_colors[GUI_COLOR_WIN_NICK_NUMBER];
 int cfg_col_nick_private;
 int cfg_col_nick_bg;
 int cfg_col_nicklist_bg;
@@ -851,7 +851,7 @@ t_config_option weechat_options_dcc[] =
     NULL, NULL, &cfg_dcc_timeout, NULL, &config_change_noop },
   { "dcc_blocksize", N_("block size for dcc packets"),
     N_("block size for dcc packets in bytes (default: 65536)"),
-    OPTION_TYPE_INT, DCC_MIN_BLOCKSIZE, DCC_MAX_BLOCKSIZE, 65536,
+    OPTION_TYPE_INT, IRC_DCC_MIN_BLOCKSIZE, IRC_DCC_MAX_BLOCKSIZE, 65536,
     NULL, NULL, &cfg_dcc_blocksize, NULL, &config_change_noop },
   { "dcc_fast_send", N_("does not wait for ACK when sending file"),
     N_("does not wait for ACK when sending file"),
@@ -1244,7 +1244,7 @@ config_change_nicks_colors ()
                 for (ptr_nick = ptr_channel->nicks; ptr_nick;
                      ptr_nick = ptr_nick->next_nick)
                 {
-                    if (ptr_nick->color != COLOR_WIN_NICK_SELF)
+                    if (ptr_nick->color != GUI_COLOR_WIN_NICK_SELF)
                         ptr_nick->color = irc_nick_find_color (ptr_nick);
                 }
             }
@@ -1264,7 +1264,7 @@ config_change_away_check ()
         /* reset away flag for all nicks/chans/servers */
         irc_server_remove_away ();
     }
-    check_away = cfg_irc_away_check * 60;
+    irc_check_away = cfg_irc_away_check * 60;
 }
 
 /*
@@ -1297,9 +1297,9 @@ config_change_notify_levels ()
     
     for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
     {
-        if (BUFFER_IS_CHANNEL(ptr_buffer) || BUFFER_IS_PRIVATE(ptr_buffer))
+        if (GUI_BUFFER_IS_CHANNEL(ptr_buffer) || GUI_BUFFER_IS_PRIVATE(ptr_buffer))
             ptr_buffer->notify_level =
-                irc_channel_get_notify_level (SERVER(ptr_buffer), CHANNEL(ptr_buffer));
+                irc_channel_get_notify_level (GUI_SERVER(ptr_buffer), GUI_CHANNEL(ptr_buffer));
     }
 }
 
@@ -1315,21 +1315,21 @@ config_change_log ()
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
-        if (BUFFER_IS_SERVER(ptr_buffer))
+        if (GUI_BUFFER_IS_SERVER(ptr_buffer))
         {
             if (cfg_log_auto_server && !ptr_buffer->log_file)
                 gui_log_start (ptr_buffer);
             else if (!cfg_log_auto_server && ptr_buffer->log_file)
                 gui_log_end (ptr_buffer);
         }
-        if (BUFFER_IS_CHANNEL(ptr_buffer))
+        if (GUI_BUFFER_IS_CHANNEL(ptr_buffer))
         {
             if (cfg_log_auto_channel && !ptr_buffer->log_file)
                 gui_log_start (ptr_buffer);
             else if (!cfg_log_auto_channel && ptr_buffer->log_file)
                 gui_log_end (ptr_buffer);
         }
-        if (BUFFER_IS_PRIVATE(ptr_buffer))
+        if (GUI_BUFFER_IS_PRIVATE(ptr_buffer))
         {
             if (cfg_log_auto_private && !ptr_buffer->log_file)
                 gui_log_start (ptr_buffer);

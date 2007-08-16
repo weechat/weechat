@@ -41,17 +41,17 @@
 #endif
 
 
-GtkWidget *gtk_main_window;
-GtkWidget *vbox1;
-GtkWidget *entry_topic;
-GtkWidget *notebook1;
-GtkWidget *vbox2;
-GtkWidget *hbox1;
-GtkWidget *hpaned1;
-GtkWidget *scrolledwindow_chat;
-GtkWidget *scrolledwindow_nick;
-GtkWidget *entry_input;
-GtkWidget *label1;
+GtkWidget *gui_gtk_main_window;
+GtkWidget *gui_gtk_vbox1;
+GtkWidget *gui_gtk_entry_topic;
+GtkWidget *gui_gtk_notebook1;
+GtkWidget *gui_gtk_vbox2;
+GtkWidget *gui_gtk_hbox1;
+GtkWidget *gui_gtk_hpaned1;
+GtkWidget *gui_gtk_scrolledwindow_chat;
+GtkWidget *gui_gtk_scrolledwindow_nick;
+GtkWidget *gui_gtk_entry_input;
+GtkWidget *gui_gtk_label1;
 
 
 /*
@@ -99,67 +99,74 @@ gui_main_init ()
     gdk_color_parse ("white", &color_fg);
     gdk_color_parse ("black", &color_bg);
     
-    gtk_main_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title (GTK_WINDOW (gtk_main_window), PACKAGE_STRING);
+    gui_gtk_main_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title (GTK_WINDOW (gui_gtk_main_window), PACKAGE_STRING);
     
-    g_signal_connect (G_OBJECT (gtk_main_window), "destroy",  gtk_main_quit, NULL);
+    g_signal_connect (G_OBJECT (gui_gtk_main_window), "destroy", gtk_main_quit, NULL);
     
-    vbox1 = gtk_vbox_new (FALSE, 0);
-    gtk_widget_show (vbox1);
-    gtk_container_add (GTK_CONTAINER (gtk_main_window), vbox1);
+    gui_gtk_vbox1 = gtk_vbox_new (FALSE, 0);
+    gtk_widget_show (gui_gtk_vbox1);
+    gtk_container_add (GTK_CONTAINER (gui_gtk_main_window), gui_gtk_vbox1);
     
-    entry_topic = gtk_entry_new ();
-    gtk_widget_show (entry_topic);
-    gtk_box_pack_start (GTK_BOX (vbox1), entry_topic, FALSE, FALSE, 0);
-    gtk_widget_modify_text (entry_topic, GTK_STATE_NORMAL, &color_fg);
-    gtk_widget_modify_base (entry_topic, GTK_STATE_NORMAL, &color_bg);
+    gui_gtk_entry_topic = gtk_entry_new ();
+    gtk_widget_show (gui_gtk_entry_topic);
+    gtk_box_pack_start (GTK_BOX (gui_gtk_vbox1), gui_gtk_entry_topic, FALSE, FALSE, 0);
+    gtk_widget_modify_text (gui_gtk_entry_topic, GTK_STATE_NORMAL, &color_fg);
+    gtk_widget_modify_base (gui_gtk_entry_topic, GTK_STATE_NORMAL, &color_bg);
     
-    notebook1 = gtk_notebook_new ();
-    gtk_widget_show (notebook1);
-    gtk_box_pack_start (GTK_BOX (vbox1), notebook1, TRUE, TRUE, 0);
-    gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook1), GTK_POS_BOTTOM);
+    gui_gtk_notebook1 = gtk_notebook_new ();
+    gtk_widget_show (gui_gtk_notebook1);
+    gtk_box_pack_start (GTK_BOX (gui_gtk_vbox1), gui_gtk_notebook1, TRUE, TRUE, 0);
+    gtk_notebook_set_tab_pos (GTK_NOTEBOOK (gui_gtk_notebook1), GTK_POS_BOTTOM);
     
-    vbox2 = gtk_vbox_new (FALSE, 0);
-    gtk_widget_show (vbox2);
-    gtk_container_add (GTK_CONTAINER (notebook1), vbox2);
+    gui_gtk_vbox2 = gtk_vbox_new (FALSE, 0);
+    gtk_widget_show (gui_gtk_vbox2);
+    gtk_container_add (GTK_CONTAINER (gui_gtk_notebook1), gui_gtk_vbox2);
     
-    hbox1 = gtk_hbox_new (FALSE, 0);
-    gtk_widget_show (hbox1);
-    gtk_box_pack_start (GTK_BOX (vbox2), hbox1, TRUE, TRUE, 0);
+    gui_gtk_hbox1 = gtk_hbox_new (FALSE, 0);
+    gtk_widget_show (gui_gtk_hbox1);
+    gtk_box_pack_start (GTK_BOX (gui_gtk_vbox2), gui_gtk_hbox1, TRUE, TRUE, 0);
     
-    hpaned1 = gtk_hpaned_new ();
-    gtk_widget_show (hpaned1);
-    gtk_box_pack_start (GTK_BOX (hbox1), hpaned1, TRUE, TRUE, 0);
-    gtk_paned_set_position (GTK_PANED (hpaned1), 0);
+    gui_gtk_hpaned1 = gtk_hpaned_new ();
+    gtk_widget_show (gui_gtk_hpaned1);
+    gtk_box_pack_start (GTK_BOX (gui_gtk_hbox1), gui_gtk_hpaned1, TRUE, TRUE, 0);
+    gtk_paned_set_position (GTK_PANED (gui_gtk_hpaned1), 0);
     
-    scrolledwindow_chat = gtk_scrolled_window_new (NULL, NULL);
-    gtk_widget_show (scrolledwindow_chat);
-    gtk_paned_pack1 (GTK_PANED (hpaned1), scrolledwindow_chat, FALSE, TRUE);
+    gui_gtk_scrolledwindow_chat = gtk_scrolled_window_new (NULL, NULL);
+    gtk_widget_show (gui_gtk_scrolledwindow_chat);
+    gtk_paned_pack1 (GTK_PANED (gui_gtk_hpaned1), gui_gtk_scrolledwindow_chat,
+                     FALSE, TRUE);
     //gtk_box_pack_start (GTK_PANED (hpaned1), scrolledwindow_chat, TRUE, TRUE, 0);
-    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow_chat), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
-    gtk_widget_modify_text (scrolledwindow_chat, GTK_STATE_NORMAL, &color_fg);
-    gtk_widget_modify_base (scrolledwindow_chat, GTK_STATE_NORMAL, &color_bg);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (gui_gtk_scrolledwindow_chat),
+                                    GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
+    gtk_widget_modify_text (gui_gtk_scrolledwindow_chat, GTK_STATE_NORMAL, &color_fg);
+    gtk_widget_modify_base (gui_gtk_scrolledwindow_chat, GTK_STATE_NORMAL, &color_bg);
     
-    scrolledwindow_nick = gtk_scrolled_window_new (NULL, NULL);
-    gtk_widget_show (scrolledwindow_nick);
-    gtk_paned_pack2 (GTK_PANED (hpaned1), scrolledwindow_nick, FALSE, TRUE);
+    gui_gtk_scrolledwindow_nick = gtk_scrolled_window_new (NULL, NULL);
+    gtk_widget_show (gui_gtk_scrolledwindow_nick);
+    gtk_paned_pack2 (GTK_PANED (gui_gtk_hpaned1), gui_gtk_scrolledwindow_nick,
+                     FALSE, TRUE);
     //gtk_box_pack_start (GTK_PANED (hpaned1), scrolledwindow_nick, TRUE, TRUE, 0);
-    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow_nick), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
-    gtk_widget_modify_text (scrolledwindow_nick, GTK_STATE_NORMAL, &color_fg);
-    gtk_widget_modify_base (scrolledwindow_nick, GTK_STATE_NORMAL, &color_bg);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (gui_gtk_scrolledwindow_nick),
+                                    GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
+    gtk_widget_modify_text (gui_gtk_scrolledwindow_nick, GTK_STATE_NORMAL, &color_fg);
+    gtk_widget_modify_base (gui_gtk_scrolledwindow_nick, GTK_STATE_NORMAL, &color_bg);
     
-    entry_input = gtk_entry_new ();
-    gtk_widget_show (entry_input);
-    gtk_box_pack_start (GTK_BOX (vbox2), entry_input, FALSE, FALSE, 0);
-    gtk_widget_modify_text (entry_input, GTK_STATE_NORMAL, &color_fg);
-    gtk_widget_modify_base (entry_input, GTK_STATE_NORMAL, &color_bg);
+    gui_gtk_entry_input = gtk_entry_new ();
+    gtk_widget_show (gui_gtk_entry_input);
+    gtk_box_pack_start (GTK_BOX (gui_gtk_vbox2), gui_gtk_entry_input, FALSE,
+                        FALSE, 0);
+    gtk_widget_modify_text (gui_gtk_entry_input, GTK_STATE_NORMAL, &color_fg);
+    gtk_widget_modify_base (gui_gtk_entry_input, GTK_STATE_NORMAL, &color_bg);
     
-    label1 = gtk_label_new (_("server"));
-    gtk_widget_show (label1);
-    gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook1), gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook1), 0), label1);
-    gtk_label_set_justify (GTK_LABEL (label1), GTK_JUSTIFY_LEFT);
+    gui_gtk_label1 = gtk_label_new (_("server"));
+    gtk_widget_show (gui_gtk_label1);
+    gtk_notebook_set_tab_label (GTK_NOTEBOOK (gui_gtk_notebook1),
+                                gtk_notebook_get_nth_page (GTK_NOTEBOOK (gui_gtk_notebook1), 0),
+                                gui_gtk_label1);
+    gtk_label_set_justify (GTK_LABEL (gui_gtk_label1), GTK_JUSTIFY_LEFT);
     
-    gtk_widget_show_all (gtk_main_window);
+    gtk_widget_show_all (gui_gtk_main_window);
     
     /* create new window/buffer */
     if (gui_window_new (NULL, 0, 0, 0, 0, 100, 100))

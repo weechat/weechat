@@ -554,10 +554,6 @@ weechat_init_vars ()
     /* start time, used by /uptime command */
     weechat_start_time = time (NULL);
     
-    /* init received messages queue */
-    recv_msgq = NULL;
-    msgq_last_msg = NULL;
-    
     /* init gnutls */
 #ifdef HAVE_GNUTLS
     gnutls_global_init ();
@@ -604,17 +600,17 @@ weechat_welcome_message ()
                     "%s   __ | /| / /_  _ \\  _ \\  /    __  __ \\  __ `/  __/\n"
                     "%s   __ |/ |/ / /  __/  __/ /___  _  / / / /_/ // /_  \n"
                     "%s   ____/|__/  \\___/\\___/\\____/  /_/ /_/\\__,_/ \\__/  \n",
-                    GUI_COLOR(COLOR_WIN_CHAT_NICK),
-                    GUI_COLOR(COLOR_WIN_CHAT_NICK),
-                    GUI_COLOR(COLOR_WIN_CHAT_NICK),
-                    GUI_COLOR(COLOR_WIN_CHAT_NICK),
-                    GUI_COLOR(COLOR_WIN_CHAT_NICK));
+                    GUI_COLOR(GUI_COLOR_WIN_CHAT_NICK),
+                    GUI_COLOR(GUI_COLOR_WIN_CHAT_NICK),
+                    GUI_COLOR(GUI_COLOR_WIN_CHAT_NICK),
+                    GUI_COLOR(GUI_COLOR_WIN_CHAT_NICK),
+                    GUI_COLOR(GUI_COLOR_WIN_CHAT_NICK));
     }
     if (cfg_look_weechat_slogan && cfg_look_weechat_slogan[0])
     {
         gui_printf (NULL, _("%sWelcome to %s%s%s, %s\n"),
                     (cfg_look_startup_logo) ? "      " : "",
-                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                    GUI_COLOR(GUI_COLOR_WIN_CHAT_CHANNEL),
                     PACKAGE_NAME,
                     GUI_NO_COLOR,
                     cfg_look_weechat_slogan);
@@ -623,7 +619,7 @@ weechat_welcome_message ()
     {
         gui_printf (NULL, "%s%s%s%s, %s %s %s\n",
                     (cfg_look_startup_logo) ? "    " : "",
-                    GUI_COLOR(COLOR_WIN_CHAT_CHANNEL),
+                    GUI_COLOR(GUI_COLOR_WIN_CHAT_CHANNEL),
                     PACKAGE_STRING,
                     GUI_NO_COLOR,
                     _("compiled on"), __DATE__, __TIME__);
@@ -633,7 +629,7 @@ weechat_welcome_message ()
         cfg_look_startup_version)
         gui_printf (NULL,
                     "%s-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n",
-                    GUI_COLOR(COLOR_WIN_CHAT_NICK));
+                    GUI_COLOR(GUI_COLOR_WIN_CHAT_NICK));
     
     weechat_log_printf ("%s (%s %s %s)\n",
                         PACKAGE_STRING, _("compiled on"), __DATE__, __TIME__);

@@ -36,9 +36,6 @@
 #include "../gui/gui.h"
 
 
-char *channel_modes = "iklmnstp";
-
-
 /*
  * irc_channel_new: allocate a new channel for a server and add it to the
  *                  server queue
@@ -106,9 +103,9 @@ irc_channel_free (t_irc_server *server, t_irc_channel *channel)
     if (channel->dcc_chat)
     {
         ((t_irc_dcc *)(channel->dcc_chat))->channel = NULL;
-        if (!DCC_ENDED(((t_irc_dcc *)(channel->dcc_chat))->status))
+        if (!IRC_DCC_ENDED(((t_irc_dcc *)(channel->dcc_chat))->status))
         {
-            irc_dcc_close ((t_irc_dcc *)(channel->dcc_chat), DCC_ABORTED);
+            irc_dcc_close ((t_irc_dcc *)(channel->dcc_chat), IRC_DCC_ABORTED);
             irc_dcc_redraw (1);
         }
     }
@@ -174,7 +171,7 @@ irc_channel_search (t_irc_server *server, char *channel_name)
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
-        if ((ptr_channel->type != CHANNEL_TYPE_DCC_CHAT)
+        if ((ptr_channel->type != IRC_CHANNEL_TYPE_DCC_CHAT)
             && (ascii_strcasecmp (ptr_channel->name, channel_name) == 0))
             return ptr_channel;
     }
@@ -240,7 +237,7 @@ irc_channel_search_dcc (t_irc_server *server, char *channel_name)
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
-        if ((ptr_channel->type == CHANNEL_TYPE_DCC_CHAT)
+        if ((ptr_channel->type == IRC_CHANNEL_TYPE_DCC_CHAT)
             && (ascii_strcasecmp (ptr_channel->name, channel_name) == 0))
             return ptr_channel;
     }
@@ -261,7 +258,7 @@ irc_channel_is_channel (char *string)
     
     first_char[0] = string[0];
     first_char[1] = '\0';
-    return (strpbrk (first_char, CHANNEL_PREFIX)) ? 1 : 0;    
+    return (strpbrk (first_char, IRC_CHANNEL_PREFIX)) ? 1 : 0;    
 }
 
 /*
@@ -273,11 +270,11 @@ irc_channel_remove_away (t_irc_channel *channel)
 {
     t_irc_nick *ptr_nick;
     
-    if (channel->type == CHANNEL_TYPE_CHANNEL)
+    if (channel->type == IRC_CHANNEL_TYPE_CHANNEL)
     {
         for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
         {
-            NICK_SET_FLAG(ptr_nick, 0, NICK_AWAY);
+            IRC_NICK_SET_FLAG(ptr_nick, 0, IRC_NICK_AWAY);
         }
         gui_nicklist_draw (channel->buffer, 0, 0);
     }
@@ -290,7 +287,7 @@ irc_channel_remove_away (t_irc_channel *channel)
 void
 irc_channel_check_away (t_irc_server *server, t_irc_channel *channel, int force)
 {
-    if (channel->type == CHANNEL_TYPE_CHANNEL)
+    if (channel->type == IRC_CHANNEL_TYPE_CHANNEL)
     {
         if (force || (cfg_irc_away_check_max_nicks == 0) ||
             (channel->nicks_count <= cfg_irc_away_check_max_nicks))
@@ -312,7 +309,7 @@ irc_channel_set_away (t_irc_channel *channel, char *nick, int is_away)
 {
     t_irc_nick *ptr_nick;
     
-    if (channel->type == CHANNEL_TYPE_CHANNEL)
+    if (channel->type == IRC_CHANNEL_TYPE_CHANNEL)
     {
         ptr_nick = irc_nick_search (channel, nick);
         if (ptr_nick)
@@ -332,16 +329,17 @@ irc_channel_create_dcc (t_irc_dcc *ptr_dcc)
     ptr_channel = irc_channel_search_dcc (ptr_dcc->server, ptr_dcc->nick);
     if (!ptr_channel)
     {
-        ptr_channel = irc_channel_new (ptr_dcc->server, CHANNEL_TYPE_DCC_CHAT,
+        ptr_channel = irc_channel_new (ptr_dcc->server,
+                                       IRC_CHANNEL_TYPE_DCC_CHAT,
                                        ptr_dcc->nick);
         if (!ptr_channel)
             return 0;
         gui_buffer_new (gui_current_window, ptr_dcc->server, ptr_channel,
-                    BUFFER_TYPE_STANDARD, 0);
+                        GUI_BUFFER_TYPE_STANDARD, 0);
     }
     
     if (ptr_channel->dcc_chat &&
-        (!DCC_ENDED(((t_irc_dcc *)(ptr_channel->dcc_chat))->status)))
+        (!IRC_DCC_ENDED(((t_irc_dcc *)(ptr_channel->dcc_chat))->status)))
         return 0;
     
     ptr_channel->dcc_chat = ptr_dcc;
@@ -361,13 +359,13 @@ irc_channel_get_notify_level (t_irc_server *server, t_irc_channel *channel)
     int server_default_notify, notify;
     
     if ((!server) || (!channel))
-        return NOTIFY_LEVEL_DEFAULT;
+        return GUI_NOTIFY_LEVEL_DEFAULT;
     
     if ((!server->notify_levels) || (!server->notify_levels[0]))
-        return NOTIFY_LEVEL_DEFAULT;
+        return GUI_NOTIFY_LEVEL_DEFAULT;
     
     server_default_notify = irc_server_get_default_notify_level (server);
-    if ((channel->type != CHANNEL_TYPE_CHANNEL)
+    if ((channel->type != IRC_CHANNEL_TYPE_CHANNEL)
         && (server_default_notify == 1))
         server_default_notify = 2;
     
@@ -387,7 +385,7 @@ irc_channel_get_notify_level (t_irc_server *server, t_irc_channel *channel)
         return server_default_notify;
     
     notify = (int)(pos2[0] - '0');
-    if ((notify >= NOTIFY_LEVEL_MIN) && (notify <= NOTIFY_LEVEL_MAX))
+    if ((notify >= GUI_NOTIFY_LEVEL_MIN) && (notify <= GUI_NOTIFY_LEVEL_MAX))
         return notify;
 
     return server_default_notify;
@@ -424,9 +422,9 @@ irc_channel_add_nick_speaking (t_irc_channel *channel, char *nick)
                  nick, WEELIST_POS_END);
     
     size = weelist_get_size (channel->nicks_speaking);
-    if (size > CHANNEL_NICKS_SPEAKING_LIMIT)
+    if (size > IRC_CHANNEL_NICKS_SPEAKING_LIMIT)
     {
-        to_remove = size - CHANNEL_NICKS_SPEAKING_LIMIT;
+        to_remove = size - IRC_CHANNEL_NICKS_SPEAKING_LIMIT;
         for (i = 0; i < to_remove; i++)
         {
             weelist_remove (&(channel->nicks_speaking),

@@ -47,7 +47,7 @@ irc_mode_channel_set_nick (t_irc_channel *channel, char *nick,
         ptr_nick = irc_nick_search (channel, nick);
         if (ptr_nick)
         {
-            NICK_SET_FLAG(ptr_nick, (set_flag == '+'), flag);
+            IRC_NICK_SET_FLAG(ptr_nick, (set_flag == '+'), flag);
             irc_nick_resort (channel, ptr_nick);
             gui_nicklist_draw (channel->buffer, 1, 1);
         }
@@ -124,14 +124,14 @@ irc_mode_channel_set (t_irc_server *server, t_irc_channel *channel,
                                 argv[current_arg--] : NULL;
                             if (irc_mode_nick_prefix_allowed (server, '~'))
                                 irc_mode_channel_set_nick (channel, ptr_arg,
-                                                           set_flag, NICK_CHANADMIN);
+                                                           set_flag, IRC_NICK_CHANADMIN);
                             break;
                         case 'h': /* half-op */
                             ptr_arg = ((argc > 0) && (current_arg >= 0)) ?
                                 argv[current_arg--] : NULL;
                             if (irc_mode_nick_prefix_allowed (server, '%'))
                                 irc_mode_channel_set_nick (channel, ptr_arg,
-                                                           set_flag, NICK_HALFOP);
+                                                           set_flag, IRC_NICK_HALFOP);
                             break;
                         case 'k': /* channel key */
                             if (channel->key)
@@ -163,28 +163,28 @@ irc_mode_channel_set (t_irc_server *server, t_irc_channel *channel,
                                 argv[current_arg--] : NULL;
                             if (irc_mode_nick_prefix_allowed (server, '@'))
                                 irc_mode_channel_set_nick (channel, ptr_arg,
-                                                           set_flag, NICK_OP);
+                                                           set_flag, IRC_NICK_OP);
                             break;
                         case 'q': /* channel owner (unrealircd specific flag) */
                             ptr_arg = ((argc > 0) && (current_arg >= 0)) ?
                                 argv[current_arg--] : NULL;
                             if (irc_mode_nick_prefix_allowed (server, '~'))
                                 irc_mode_channel_set_nick (channel, ptr_arg,
-                                                           set_flag, NICK_CHANOWNER);
+                                                           set_flag, IRC_NICK_CHANOWNER);
                             break;
                         case 'u': /* channel user */
                             ptr_arg = ((argc > 0) && (current_arg >= 0)) ?
                                 argv[current_arg--] : NULL;
                             if (irc_mode_nick_prefix_allowed (server, '-'))
                                 irc_mode_channel_set_nick (channel, ptr_arg,
-                                                           set_flag, NICK_CHANUSER);
+                                                           set_flag, IRC_NICK_CHANUSER);
                             break;
                         case 'v': /* voice */
                             ptr_arg = ((argc > 0) && (current_arg >= 0)) ?
                                 argv[current_arg--] : NULL;
                             if (irc_mode_nick_prefix_allowed (server, '+'))
                                 irc_mode_channel_set_nick (channel, ptr_arg,
-                                                           set_flag, NICK_VOICE);
+                                                           set_flag, IRC_NICK_VOICE);
                             break;
                     }
                     break;

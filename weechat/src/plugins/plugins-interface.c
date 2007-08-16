@@ -176,7 +176,7 @@ weechat_plugin_print (t_weechat_plugin *plugin,
     va_end (argptr);
 
     buf2 = weechat_iconv_to_internal (plugin->charset, buf);
-    irc_display_prefix (NULL, ptr_buffer, PREFIX_PLUGIN);
+    irc_display_prefix (NULL, ptr_buffer, GUI_PREFIX_PLUGIN);
     gui_printf_keep_colors (ptr_buffer, "%s\n", (buf2) ? buf2 : buf);
     if (buf2)
         free (buf2);
@@ -201,7 +201,7 @@ weechat_plugin_print_server (t_weechat_plugin *plugin, char *message, ...)
     va_end (argptr);
 
     buf2 = weechat_iconv_to_internal (plugin->charset, buf);
-    irc_display_prefix (NULL, NULL, PREFIX_PLUGIN);
+    irc_display_prefix (NULL, NULL, GUI_PREFIX_PLUGIN);
     gui_printf_keep_colors (NULL, "%s\n", (buf2) ? buf2 : buf);
     if (buf2)
         free (buf2);
@@ -226,7 +226,7 @@ weechat_plugin_print_infobar (t_weechat_plugin *plugin, int time_displayed, char
     va_end (argptr);
     
     buf2 = weechat_iconv_to_internal (plugin->charset, buf);
-    gui_infobar_printf (time_displayed, COLOR_WIN_INFOBAR, "%s",
+    gui_infobar_printf (time_displayed, GUI_COLOR_WIN_INFOBAR, "%s",
                         (buf2) ? buf2 : buf);
     if (buf2)
         free (buf2);
@@ -451,7 +451,7 @@ weechat_plugin_exec_command (t_weechat_plugin *plugin,
     
     if (plugin_find_server_channel (server, channel, &ptr_server, &ptr_channel) < 0)
     {
-        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        irc_display_prefix (NULL, NULL, GUI_PREFIX_ERROR);
         gui_printf (NULL,
                     _("%s server/channel (%s/%s) not found for plugin "
                       "exec command\n"),
@@ -577,9 +577,9 @@ weechat_plugin_get_info (t_weechat_plugin *plugin, char *info, char *server)
     }
     else if (ascii_strcasecmp (info, "channel") == 0)
     {
-        if (BUFFER_IS_CHANNEL(gui_current_window->buffer)
-            || BUFFER_IS_PRIVATE(gui_current_window->buffer))
-            return strdup (CHANNEL(gui_current_window->buffer)->name);
+        if (GUI_BUFFER_IS_CHANNEL(gui_current_window->buffer)
+            || GUI_BUFFER_IS_PRIVATE(gui_current_window->buffer))
+            return strdup (GUI_CHANNEL(gui_current_window->buffer)->name);
     }
     else if (ascii_strcasecmp (info, "server") == 0)
     {
@@ -622,11 +622,11 @@ weechat_plugin_get_dcc_info (t_weechat_plugin *plugin)
     if (!plugin)
         return NULL;
     
-    if (dcc_list)
+    if (irc_dcc_list)
     {
         dcc_info = NULL;
         last_dcc_info = NULL;
-        for (ptr_dcc = dcc_list; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
+        for (ptr_dcc = irc_dcc_list; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
         {
             new_dcc_info = (t_plugin_dcc_info *)malloc (sizeof (t_plugin_dcc_info));
             if (new_dcc_info)
@@ -1331,8 +1331,8 @@ weechat_plugin_get_buffer_info (t_weechat_plugin *plugin)
                 new_buffer_info->type = ptr_buffer->type;
                 new_buffer_info->number = ptr_buffer->number;
                 new_buffer_info->num_displayed = ptr_buffer->num_displayed;
-                new_buffer_info->server_name = (SERVER(ptr_buffer)) ? strdup (SERVER(ptr_buffer)->name) : NULL;
-                new_buffer_info->channel_name = (CHANNEL(ptr_buffer)) ? strdup (CHANNEL(ptr_buffer)->name) : NULL;
+                new_buffer_info->server_name = (GUI_SERVER(ptr_buffer)) ? strdup (GUI_SERVER(ptr_buffer)->name) : NULL;
+                new_buffer_info->channel_name = (GUI_CHANNEL(ptr_buffer)) ? strdup (GUI_CHANNEL(ptr_buffer)->name) : NULL;
                 new_buffer_info->notify_level = ptr_buffer->notify_level;
                 new_buffer_info->log_filename = (ptr_buffer->log_filename) ? strdup (ptr_buffer->log_filename) : NULL;
                 

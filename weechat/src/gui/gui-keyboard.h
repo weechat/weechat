@@ -20,9 +20,6 @@
 #ifndef __WEECHAT_GUI_KEY_H
 #define __WEECHAT_GUI_KEY_H 1
 
-#define KEY_SHOW_MODE_DISPLAY   1
-#define KEY_SHOW_MODE_BIND      2
-
 /* key structures */
 
 typedef void (t_gui_key_func)(t_gui_window *, char *);

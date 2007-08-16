@@ -187,7 +187,7 @@ extern int cfg_col_nick_user;
 extern int cfg_col_nick_more;
 extern int cfg_col_nick_sep;
 extern int cfg_col_nick_self;
-extern int cfg_col_nick_colors[COLOR_WIN_NICK_NUMBER];
+extern int cfg_col_nick_colors[GUI_COLOR_WIN_NICK_NUMBER];
 extern int cfg_col_nick_private;
 extern int cfg_col_nick_bg;
 extern int cfg_col_dcc_selected;

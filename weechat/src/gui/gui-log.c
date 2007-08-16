@@ -112,21 +112,21 @@ gui_log_start (t_gui_buffer *buffer)
     log_path = weechat_strreplace (cfg_log_path, "~", getenv ("HOME"));
     log_path2 = weechat_strreplace (log_path, "%h", weechat_home);
     
-    if (SERVER(buffer))
-        server_name = weechat_strreplace (SERVER(buffer)->name, DIR_SEPARATOR, "_");
+    if (GUI_SERVER(buffer))
+        server_name = weechat_strreplace (GUI_SERVER(buffer)->name, DIR_SEPARATOR, "_");
     else
         server_name = NULL;
-    if (CHANNEL(buffer))
-        channel_name = weechat_strreplace (CHANNEL(buffer)->name, DIR_SEPARATOR, "_");
+    if (GUI_CHANNEL(buffer))
+        channel_name = weechat_strreplace (GUI_CHANNEL(buffer)->name, DIR_SEPARATOR, "_");
     else
         channel_name = NULL;
     
-    if (!log_path || !log_path2 || (SERVER(buffer) && !server_name) ||
-        (CHANNEL(buffer) && !channel_name))
+    if (!log_path || !log_path2 || (GUI_SERVER(buffer) && !server_name) ||
+        (GUI_CHANNEL(buffer) && !channel_name))
     {
         weechat_log_printf (_("Not enough memory to write log file \"%s\"\n"),
                             (log_path2) ? log_path2 : ((log_path) ? log_path : cfg_log_path));
-        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        irc_display_prefix (NULL, NULL, GUI_PREFIX_ERROR);
         gui_printf_nolog (NULL, _("Not enough memory to write log file \"%s\"\n"),
                           (log_path2) ? log_path2 : ((log_path) ? log_path : cfg_log_path));
         if (log_path)
@@ -141,9 +141,9 @@ gui_log_start (t_gui_buffer *buffer)
     }
     
     length = strlen (log_path2) + 128;
-    if (SERVER(buffer))
+    if (GUI_SERVER(buffer))
         length += strlen (server_name);
-    if (CHANNEL(buffer))
+    if (GUI_CHANNEL(buffer))
         length += strlen (channel_name);
     
     buffer->log_filename = (char *) malloc (length);
@@ -151,7 +151,7 @@ gui_log_start (t_gui_buffer *buffer)
     {
         weechat_log_printf (_("Not enough memory to write log file \"%s\"\n"),
                             (log_path2) ? log_path2 : ((log_path) ? log_path : cfg_log_path));
-        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        irc_display_prefix (NULL, NULL, GUI_PREFIX_ERROR);
         gui_printf_nolog (NULL, _("Not enough memory to write log file \"%s\"\n"),
                           (log_path2) ? log_path2 : ((log_path) ? log_path : cfg_log_path));
         free (log_path);
@@ -171,17 +171,17 @@ gui_log_start (t_gui_buffer *buffer)
     if (buffer->log_filename[strlen (buffer->log_filename) - 1] != DIR_SEPARATOR_CHAR)
         strcat (buffer->log_filename, DIR_SEPARATOR);
     
-    if (SERVER(buffer))
+    if (GUI_SERVER(buffer))
     {
         strcat (buffer->log_filename, server_name);
         strcat (buffer->log_filename, ".");
     }
-    if (CHANNEL(buffer)
-        && (CHANNEL(buffer)->type == CHANNEL_TYPE_DCC_CHAT))
+    if (GUI_CHANNEL(buffer)
+        && (GUI_CHANNEL(buffer)->type == IRC_CHANNEL_TYPE_DCC_CHAT))
     {
         strcat (buffer->log_filename, "dcc.");
     }
-    if (CHANNEL(buffer))
+    if (GUI_CHANNEL(buffer))
     {
         strcat (buffer->log_filename, channel_name);
         strcat (buffer->log_filename, ".");
@@ -198,7 +198,7 @@ gui_log_start (t_gui_buffer *buffer)
     {
         weechat_log_printf (_("Unable to write log file \"%s\"\n"),
                             buffer->log_filename);
-        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        irc_display_prefix (NULL, NULL, GUI_PREFIX_ERROR);
         gui_printf (NULL, _("Unable to write log file \"%s\"\n"),
                     buffer->log_filename);
         free (buffer->log_filename);

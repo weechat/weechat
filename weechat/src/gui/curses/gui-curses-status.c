@@ -56,20 +56,20 @@ gui_status_draw (t_gui_buffer *buffer, int erase)
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
         if (erase)
-            gui_window_curses_clear (GUI_CURSES(ptr_win)->win_status, COLOR_WIN_STATUS);
+            gui_window_curses_clear (GUI_CURSES(ptr_win)->win_status, GUI_COLOR_WIN_STATUS);
         
-        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status, COLOR_WIN_STATUS);
+        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status, GUI_COLOR_WIN_STATUS);
         
         /* display number of buffers */
         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                      COLOR_WIN_STATUS_DELIMITERS);
+                                      GUI_COLOR_WIN_STATUS_DELIMITERS);
         mvwprintw (GUI_CURSES(ptr_win)->win_status, 0, 0, "[");
         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                      COLOR_WIN_STATUS);
+                                      GUI_COLOR_WIN_STATUS);
         wprintw (GUI_CURSES(ptr_win)->win_status, "%d",
                  (last_gui_buffer) ? last_gui_buffer->number : 0);
         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                      COLOR_WIN_STATUS_DELIMITERS);
+                                      GUI_COLOR_WIN_STATUS_DELIMITERS);
         wprintw (GUI_CURSES(ptr_win)->win_status, "] ");
         
         /* display "<servers>" or current server */
@@ -77,157 +77,161 @@ gui_status_draw (t_gui_buffer *buffer, int erase)
         {
             wprintw (GUI_CURSES(ptr_win)->win_status, "[");
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                          COLOR_WIN_STATUS);
+                                          GUI_COLOR_WIN_STATUS);
             gui_window_wprintw (GUI_CURSES(ptr_win)->win_status, _("<servers>"));
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                          COLOR_WIN_STATUS_DELIMITERS);
+                                          GUI_COLOR_WIN_STATUS_DELIMITERS);
             wprintw (GUI_CURSES(ptr_win)->win_status, "] ");
         }
-        else if (SERVER(ptr_win->buffer) && SERVER(ptr_win->buffer)->name)
+        else if (GUI_SERVER(ptr_win->buffer) && GUI_SERVER(ptr_win->buffer)->name)
         {
             wprintw (GUI_CURSES(ptr_win)->win_status, "[");
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                          COLOR_WIN_STATUS);
-            wprintw (GUI_CURSES(ptr_win)->win_status, "%s", SERVER(ptr_win->buffer)->name);
-            if (SERVER(ptr_win->buffer)->is_away)
+                                          GUI_COLOR_WIN_STATUS);
+            wprintw (GUI_CURSES(ptr_win)->win_status, "%s",
+                     GUI_SERVER(ptr_win->buffer)->name);
+            if (GUI_SERVER(ptr_win->buffer)->is_away)
                 gui_window_wprintw (GUI_CURSES(ptr_win)->win_status, _("(away)"));
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                          COLOR_WIN_STATUS_DELIMITERS);
+                                          GUI_COLOR_WIN_STATUS_DELIMITERS);
             wprintw (GUI_CURSES(ptr_win)->win_status, "] ");
         }
         
         /* infos about current server buffer */
-        if (SERVER(ptr_win->buffer) && !CHANNEL(ptr_win->buffer))
+        if (GUI_SERVER(ptr_win->buffer) && !GUI_CHANNEL(ptr_win->buffer))
         {
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                          COLOR_WIN_STATUS);
+                                          GUI_COLOR_WIN_STATUS);
             wprintw (GUI_CURSES(ptr_win)->win_status, "%d",
                      ptr_win->buffer->number);
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                          COLOR_WIN_STATUS_DELIMITERS);
+                                          GUI_COLOR_WIN_STATUS_DELIMITERS);
             wprintw (GUI_CURSES(ptr_win)->win_status, ":");
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                          COLOR_WIN_STATUS_CHANNEL);
-            if (SERVER(ptr_win->buffer)->is_connected)
+                                          GUI_COLOR_WIN_STATUS_CHANNEL);
+            if (GUI_SERVER(ptr_win->buffer)->is_connected)
             {
-                if ((ptr_win->buffer->all_servers) && (SERVER(ptr_win->buffer)->is_away))
+                if ((ptr_win->buffer->all_servers) && (GUI_SERVER(ptr_win->buffer)->is_away))
                 {
                     wprintw (GUI_CURSES(ptr_win)->win_status, "[%s",
-                             SERVER(ptr_win->buffer)->name);
+                             GUI_SERVER(ptr_win->buffer)->name);
                     wprintw (GUI_CURSES(ptr_win)->win_status, _("(away)"));
                     wprintw (GUI_CURSES(ptr_win)->win_status, "] ");
                 }
                 else
                     wprintw (GUI_CURSES(ptr_win)->win_status, "[%s] ",
-                             SERVER(ptr_win->buffer)->name);
+                             GUI_SERVER(ptr_win->buffer)->name);
             }
             else
                 wprintw (GUI_CURSES(ptr_win)->win_status, "(%s) ",
-                         SERVER(ptr_win->buffer)->name);
+                         GUI_SERVER(ptr_win->buffer)->name);
             if (ptr_win->buffer->all_servers)
             {
-                irc_server_get_number_buffer (SERVER(ptr_win->buffer),
+                irc_server_get_number_buffer (GUI_SERVER(ptr_win->buffer),
                                               &server_pos,
                                               &server_total);
                 gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                              COLOR_WIN_STATUS_DELIMITERS);
+                                              GUI_COLOR_WIN_STATUS_DELIMITERS);
                 wprintw (GUI_CURSES(ptr_win)->win_status, "(");
                 gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                              COLOR_WIN_STATUS);
+                                              GUI_COLOR_WIN_STATUS);
                 wprintw (GUI_CURSES(ptr_win)->win_status, "%d", server_pos);
                 gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                              COLOR_WIN_STATUS_DELIMITERS);
+                                              GUI_COLOR_WIN_STATUS_DELIMITERS);
                 wprintw (GUI_CURSES(ptr_win)->win_status, "/");
                 gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                              COLOR_WIN_STATUS);
+                                              GUI_COLOR_WIN_STATUS);
                 wprintw (GUI_CURSES(ptr_win)->win_status, "%d", server_total);
                 gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                              COLOR_WIN_STATUS_DELIMITERS);
+                                              GUI_COLOR_WIN_STATUS_DELIMITERS);
                 wprintw (GUI_CURSES(ptr_win)->win_status, ") ");
 
             }
         }
 
         /* infos about current channel/pv buffer */
-        if (SERVER(ptr_win->buffer) && CHANNEL(ptr_win->buffer))
+        if (GUI_SERVER(ptr_win->buffer) && GUI_CHANNEL(ptr_win->buffer))
         {
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                          COLOR_WIN_STATUS);
+                                          GUI_COLOR_WIN_STATUS);
             wprintw (GUI_CURSES(ptr_win)->win_status, "%d",
                      ptr_win->buffer->number);
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                          COLOR_WIN_STATUS_DELIMITERS);
+                                          GUI_COLOR_WIN_STATUS_DELIMITERS);
             wprintw (GUI_CURSES(ptr_win)->win_status, ":");
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                          COLOR_WIN_STATUS_CHANNEL);
-            if (((CHANNEL(ptr_win->buffer)->type == CHANNEL_TYPE_CHANNEL)
-                 && (!CHANNEL(ptr_win->buffer)->nicks))
-                || ((CHANNEL(ptr_win->buffer)->type == CHANNEL_TYPE_DCC_CHAT)
-                    && (CHANNEL(ptr_win->buffer)->dcc_chat)
-                    && (((t_irc_dcc *)(CHANNEL(ptr_win->buffer)->dcc_chat))->sock < 0)))
+                                          GUI_COLOR_WIN_STATUS_CHANNEL);
+            if (((GUI_CHANNEL(ptr_win->buffer)->type == IRC_CHANNEL_TYPE_CHANNEL)
+                 && (!GUI_CHANNEL(ptr_win->buffer)->nicks))
+                || ((GUI_CHANNEL(ptr_win->buffer)->type == IRC_CHANNEL_TYPE_DCC_CHAT)
+                    && (GUI_CHANNEL(ptr_win->buffer)->dcc_chat)
+                    && (((t_irc_dcc *)(GUI_CHANNEL(ptr_win->buffer)->dcc_chat))->sock < 0)))
                 gui_window_wprintw (GUI_CURSES(ptr_win)->win_status, "(%s)",
-                                    CHANNEL(ptr_win->buffer)->name);
+                                    GUI_CHANNEL(ptr_win->buffer)->name);
             else
                 gui_window_wprintw (GUI_CURSES(ptr_win)->win_status, "%s",
-                                    CHANNEL(ptr_win->buffer)->name);
-            if (ptr_win->buffer == CHANNEL(ptr_win->buffer)->buffer)
+                                    GUI_CHANNEL(ptr_win->buffer)->name);
+            if (ptr_win->buffer == GUI_CHANNEL(ptr_win->buffer)->buffer)
             {
                 /* display channel modes */
-                if (CHANNEL(ptr_win->buffer)->type == CHANNEL_TYPE_CHANNEL)
+                if (GUI_CHANNEL(ptr_win->buffer)->type == IRC_CHANNEL_TYPE_CHANNEL)
                 {
                     gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                                  COLOR_WIN_STATUS_DELIMITERS);
+                                                  GUI_COLOR_WIN_STATUS_DELIMITERS);
                     wprintw (GUI_CURSES(ptr_win)->win_status, "(");
                     gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                                  COLOR_WIN_STATUS);
-                    if (CHANNEL(ptr_win->buffer)->modes
-                        && (strcmp (CHANNEL(ptr_win->buffer)->modes, "+") != 0))
+                                                  GUI_COLOR_WIN_STATUS);
+                    if (GUI_CHANNEL(ptr_win->buffer)->modes
+                        && (strcmp (GUI_CHANNEL(ptr_win->buffer)->modes, "+") != 0))
                         gui_window_wprintw (GUI_CURSES(ptr_win)->win_status, "%s",
-                                            CHANNEL(ptr_win->buffer)->modes);
+                                            GUI_CHANNEL(ptr_win->buffer)->modes);
                     gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                                  COLOR_WIN_STATUS_DELIMITERS);
+                                                  GUI_COLOR_WIN_STATUS_DELIMITERS);
                     wprintw (GUI_CURSES(ptr_win)->win_status, ")");
                     gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                                  COLOR_WIN_STATUS);
+                                                  GUI_COLOR_WIN_STATUS);
                 }
                 
                 /* display DCC if private is DCC CHAT */
-                if (CHANNEL(ptr_win->buffer)->type == CHANNEL_TYPE_DCC_CHAT)
+                if (GUI_CHANNEL(ptr_win->buffer)->type == IRC_CHANNEL_TYPE_DCC_CHAT)
                 {
                     gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                                  COLOR_WIN_STATUS_DELIMITERS);
+                                                  GUI_COLOR_WIN_STATUS_DELIMITERS);
                     wprintw (GUI_CURSES(ptr_win)->win_status, "(");
                     gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                                  COLOR_WIN_STATUS_CHANNEL);
+                                                  GUI_COLOR_WIN_STATUS_CHANNEL);
                     wprintw (GUI_CURSES(ptr_win)->win_status, "DCC");
                     gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                                  COLOR_WIN_STATUS_DELIMITERS);
+                                                  GUI_COLOR_WIN_STATUS_DELIMITERS);
                     wprintw (GUI_CURSES(ptr_win)->win_status, ")");
                     gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                                  COLOR_WIN_STATUS);
+                                                  GUI_COLOR_WIN_STATUS);
                 }
             }
             wprintw (GUI_CURSES(ptr_win)->win_status, " ");
         }
-        if (!SERVER(ptr_win->buffer))
+        if (!GUI_SERVER(ptr_win->buffer))
         {
-            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status, COLOR_WIN_STATUS);
+            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
+                                          GUI_COLOR_WIN_STATUS);
             wprintw (GUI_CURSES(ptr_win)->win_status, "%d",
                      ptr_win->buffer->number);
-            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status, COLOR_WIN_STATUS_DELIMITERS);
+            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
+                                          GUI_COLOR_WIN_STATUS_DELIMITERS);
             wprintw (GUI_CURSES(ptr_win)->win_status, ":");
-            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status, COLOR_WIN_STATUS_CHANNEL);
+            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
+                                          GUI_COLOR_WIN_STATUS_CHANNEL);
             switch (ptr_win->buffer->type)
             {
-                case BUFFER_TYPE_STANDARD:
+                case GUI_BUFFER_TYPE_STANDARD:
                     gui_window_wprintw (GUI_CURSES(ptr_win)->win_status,
                                         _("[not connected] "));
                     break;
-                case BUFFER_TYPE_DCC:
+                case GUI_BUFFER_TYPE_DCC:
                     gui_window_wprintw (GUI_CURSES(ptr_win)->win_status,
                                         "<DCC> ");
                     break;
-                case BUFFER_TYPE_RAW_DATA:
+                case GUI_BUFFER_TYPE_RAW_DATA:
                     gui_window_wprintw (GUI_CURSES(ptr_win)->win_status,
                                         _("<RAW_IRC> "));
                     break;
@@ -238,9 +242,9 @@ gui_status_draw (t_gui_buffer *buffer, int erase)
         if (weechat_hotlist)
         {
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                          COLOR_WIN_STATUS_DELIMITERS);
+                                          GUI_COLOR_WIN_STATUS_DELIMITERS);
             wprintw (GUI_CURSES(ptr_win)->win_status, "[");
-            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status, COLOR_WIN_STATUS);
+            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status, GUI_COLOR_WIN_STATUS);
             gui_window_wprintw (GUI_CURSES(ptr_win)->win_status, _("Act: "));
             
             names_count = 0;
@@ -251,22 +255,22 @@ gui_status_draw (t_gui_buffer *buffer, int erase)
                 {
                     case HOTLIST_LOW:
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                                      COLOR_WIN_STATUS_DATA_OTHER);
+                                                      GUI_COLOR_WIN_STATUS_DATA_OTHER);
                         display_name = ((cfg_look_hotlist_names_level & 1) != 0);
                         break;
                     case HOTLIST_MSG:
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                                      COLOR_WIN_STATUS_DATA_MSG);
+                                                      GUI_COLOR_WIN_STATUS_DATA_MSG);
                         display_name = ((cfg_look_hotlist_names_level & 2) != 0);
                         break;
                     case HOTLIST_PRIVATE:
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                                      COLOR_WIN_STATUS_DATA_PRIVATE);
+                                                      GUI_COLOR_WIN_STATUS_DATA_PRIVATE);
                         display_name = ((cfg_look_hotlist_names_level & 4) != 0);
                         break;
                     case HOTLIST_HIGHLIGHT:
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                                      COLOR_WIN_STATUS_DATA_HIGHLIGHT);
+                                                      GUI_COLOR_WIN_STATUS_DATA_HIGHLIGHT);
                         display_name = ((cfg_look_hotlist_names_level & 8) != 0);
                         break;
                     default:
@@ -275,7 +279,7 @@ gui_status_draw (t_gui_buffer *buffer, int erase)
                 }
                 switch (ptr_hotlist->buffer->type)
                 {
-                    case BUFFER_TYPE_STANDARD:
+                    case GUI_BUFFER_TYPE_STANDARD:
                         wprintw (GUI_CURSES(ptr_win)->win_status, "%d",
                                  ptr_hotlist->buffer->number);
                         
@@ -285,47 +289,47 @@ gui_status_draw (t_gui_buffer *buffer, int erase)
                             names_count++;
                             
                             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                                          COLOR_WIN_STATUS_DELIMITERS);
+                                                          GUI_COLOR_WIN_STATUS_DELIMITERS);
                             wprintw (GUI_CURSES(ptr_win)->win_status, ":");
                             
                             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                                          COLOR_WIN_STATUS);
+                                                          GUI_COLOR_WIN_STATUS);
                             if (cfg_look_hotlist_names_length == 0)
                                 snprintf (format, sizeof (format) - 1, "%%s");
                             else
                                 snprintf (format, sizeof (format) - 1, "%%.%ds", cfg_look_hotlist_names_length);
-                            if (BUFFER_IS_SERVER(ptr_hotlist->buffer))
+                            if (GUI_BUFFER_IS_SERVER(ptr_hotlist->buffer))
                                 gui_window_wprintw (GUI_CURSES(ptr_win)->win_status,
                                                     format,
                                                     (ptr_hotlist->server) ?
                                                     ptr_hotlist->server->name :
-                                                    SERVER(ptr_hotlist->buffer)->name);
-                            else if (BUFFER_IS_CHANNEL(ptr_hotlist->buffer)
-                                     || BUFFER_IS_PRIVATE(ptr_hotlist->buffer))
+                                                    GUI_SERVER(ptr_hotlist->buffer)->name);
+                            else if (GUI_BUFFER_IS_CHANNEL(ptr_hotlist->buffer)
+                                     || GUI_BUFFER_IS_PRIVATE(ptr_hotlist->buffer))
                                 gui_window_wprintw (GUI_CURSES(ptr_win)->win_status,
                                                     format,
-                                                    CHANNEL(ptr_hotlist->buffer)->name);
+                                                    GUI_CHANNEL(ptr_hotlist->buffer)->name);
                         }
                         break;
-                    case BUFFER_TYPE_DCC:
+                    case GUI_BUFFER_TYPE_DCC:
                         wprintw (GUI_CURSES(ptr_win)->win_status, "%d",
                                  ptr_hotlist->buffer->number);
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                                      COLOR_WIN_STATUS_DELIMITERS);
+                                                      GUI_COLOR_WIN_STATUS_DELIMITERS);
                         wprintw (GUI_CURSES(ptr_win)->win_status, ":");
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                                      COLOR_WIN_STATUS);
+                                                      GUI_COLOR_WIN_STATUS);
                         gui_window_wprintw (GUI_CURSES(ptr_win)->win_status,
                                             "DCC");
                         break;
-                    case BUFFER_TYPE_RAW_DATA:
+                    case GUI_BUFFER_TYPE_RAW_DATA:
                         wprintw (GUI_CURSES(ptr_win)->win_status, "%d",
                                  ptr_hotlist->buffer->number);
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                                      COLOR_WIN_STATUS_DELIMITERS);
+                                                      GUI_COLOR_WIN_STATUS_DELIMITERS);
                         wprintw (GUI_CURSES(ptr_win)->win_status, ":");
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                                      COLOR_WIN_STATUS);
+                                                      GUI_COLOR_WIN_STATUS);
                         gui_window_wprintw (GUI_CURSES(ptr_win)->win_status,
                                             _("RAW_IRC"));
                         break;
@@ -335,32 +339,33 @@ gui_status_draw (t_gui_buffer *buffer, int erase)
                     wprintw (GUI_CURSES(ptr_win)->win_status, ",");
             }
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                          COLOR_WIN_STATUS_DELIMITERS);
+                                          GUI_COLOR_WIN_STATUS_DELIMITERS);
             wprintw (GUI_CURSES(ptr_win)->win_status, "] ");
         }
         
         /* display lag */
-        if (SERVER(ptr_win->buffer))
+        if (GUI_SERVER(ptr_win->buffer))
         {
-            if (SERVER(ptr_win->buffer)->lag / 1000 >= cfg_irc_lag_min_show)
+            if (GUI_SERVER(ptr_win->buffer)->lag / 1000 >= cfg_irc_lag_min_show)
             {
                 gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                              COLOR_WIN_STATUS_DELIMITERS);
+                                              GUI_COLOR_WIN_STATUS_DELIMITERS);
                 wprintw (GUI_CURSES(ptr_win)->win_status, "[");
-                gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status, COLOR_WIN_STATUS);
+                gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status, GUI_COLOR_WIN_STATUS);
                 gui_window_wprintw (GUI_CURSES(ptr_win)->win_status,
                                     _("Lag: %.1f"),
-                                    ((float)(SERVER(ptr_win->buffer)->lag)) / 1000);
+                                    ((float)(GUI_SERVER(ptr_win->buffer)->lag)) / 1000);
                 gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                              COLOR_WIN_STATUS_DELIMITERS);
+                                              GUI_COLOR_WIN_STATUS_DELIMITERS);
                 wprintw (GUI_CURSES(ptr_win)->win_status, "]");
             }
         }
         
         /* display "-MORE-" (if last line is not displayed) & nicks count */
-        if (BUFFER_HAS_NICKLIST(ptr_win->buffer))
+        if (GUI_BUFFER_HAS_NICKLIST(ptr_win->buffer))
         {
-            snprintf (str_nicks, sizeof (str_nicks) - 1, "%d", CHANNEL(ptr_win->buffer)->nicks_count);
+            snprintf (str_nicks, sizeof (str_nicks) - 1, "%d",
+                      GUI_CHANNEL(ptr_win->buffer)->nicks_count);
             x = ptr_win->win_status_width - utf8_strlen (str_nicks) - 4;
         }
         else
@@ -369,7 +374,7 @@ gui_status_draw (t_gui_buffer *buffer, int erase)
         x -= utf8_strlen (more) - 1;
         if (x < 0)
             x = 0;
-        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status, COLOR_WIN_STATUS_MORE);
+        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status, GUI_COLOR_WIN_STATUS_MORE);
         if (ptr_win->scroll)
         {
             wmove (GUI_CURSES(ptr_win)->win_status, 0, x);
@@ -381,15 +386,15 @@ gui_status_draw (t_gui_buffer *buffer, int erase)
             wmove (GUI_CURSES(ptr_win)->win_status, 0, x);
             gui_window_wprintw (GUI_CURSES(ptr_win)->win_status, format, " ");
         }
-        if (BUFFER_HAS_NICKLIST(ptr_win->buffer))
+        if (GUI_BUFFER_HAS_NICKLIST(ptr_win->buffer))
         {
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                          COLOR_WIN_STATUS_DELIMITERS);
+                                          GUI_COLOR_WIN_STATUS_DELIMITERS);
             wprintw (GUI_CURSES(ptr_win)->win_status, " [");
-            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status, COLOR_WIN_STATUS);
+            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status, GUI_COLOR_WIN_STATUS);
             wprintw (GUI_CURSES(ptr_win)->win_status, "%s", str_nicks);
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                          COLOR_WIN_STATUS_DELIMITERS);
+                                          GUI_COLOR_WIN_STATUS_DELIMITERS);
             wprintw (GUI_CURSES(ptr_win)->win_status, "]");
         }
         free (more);

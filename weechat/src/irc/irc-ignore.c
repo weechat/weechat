@@ -33,9 +33,6 @@
 #include "../common/util.h"
 
 
-char *ignore_types[] =
-{ IGNORE_ACTION, IGNORE_CTCP, IGNORE_DCC, IGNORE_PRIVATE, NULL };
-
 t_irc_ignore *irc_ignore = NULL;
 t_irc_ignore *last_irc_ignore = NULL;
 
@@ -193,7 +190,7 @@ irc_ignore_add (char *mask, char *type, char *channel_name, char *server_name)
     if (!mask || !mask[0] || !type || !type[0] || !channel_name || !channel_name[0]
         || !server_name || !server_name[0])
     {
-        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        irc_display_prefix (NULL, NULL, GUI_PREFIX_ERROR);
         gui_printf (NULL,
                     _("%s too few arguments for ignore\n"),
                     WEECHAT_ERROR);
@@ -211,7 +208,7 @@ irc_ignore_add (char *mask, char *type, char *channel_name, char *server_name)
     
     if ((strcmp (mask, "*") == 0) && (strcmp (type, "*") == 0))
     {
-        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        irc_display_prefix (NULL, NULL, GUI_PREFIX_ERROR);
         gui_printf (NULL,
                     _("%s mask or type/command should be non generic value for ignore\n"),
                     WEECHAT_ERROR);
@@ -220,7 +217,7 @@ irc_ignore_add (char *mask, char *type, char *channel_name, char *server_name)
     
     if (irc_ignore_search (mask, type, channel_name, server_name))
     {
-        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        irc_display_prefix (NULL, NULL, GUI_PREFIX_ERROR);
         gui_printf (NULL,
                     _("%s ignore already exists\n"),
                     WEECHAT_ERROR);
@@ -247,7 +244,7 @@ irc_ignore_add (char *mask, char *type, char *channel_name, char *server_name)
     }
     else
     {
-        irc_display_prefix (NULL, NULL, PREFIX_ERROR);
+        irc_display_prefix (NULL, NULL, GUI_PREFIX_ERROR);
         gui_printf (NULL,
                     _("%s not enough memory to create ignore\n"),
                     WEECHAT_ERROR);
@@ -370,7 +367,7 @@ irc_ignore_search_free (char *mask, char *type,
             found++;
             if (found == 1)
                 gui_printf (NULL, "\n");
-            irc_display_prefix (NULL, NULL, PREFIX_INFO);
+            irc_display_prefix (NULL, NULL, GUI_PREFIX_INFO);
             weechat_cmd_ignore_display (_("Removing ignore:"), ptr_ignore);
             next_ignore = ptr_ignore->next_ignore;
             irc_ignore_free (ptr_ignore);
@@ -406,7 +403,7 @@ irc_ignore_search_free_by_number (int number)
         if (i == number)
         {
             gui_printf (NULL, "\n");
-            irc_display_prefix (NULL, NULL, PREFIX_INFO);
+            irc_display_prefix (NULL, NULL, GUI_PREFIX_INFO);
             weechat_cmd_ignore_display (_("Removing ignore:"), ptr_ignore);
             irc_ignore_free (ptr_ignore);
             return 1;

@@ -51,7 +51,7 @@ irc_nick_find_color (t_irc_nick *nick)
     }
     color = (color % cfg_look_color_nicks_number);
     
-    return COLOR_WIN_NICK_1 + color;
+    return GUI_COLOR_WIN_NICK_1 + color;
 }
 
 /*
@@ -61,19 +61,19 @@ irc_nick_find_color (t_irc_nick *nick)
 int
 irc_nick_score_for_sort (t_irc_nick *nick)
 {
-    if (nick->flags & NICK_CHANOWNER)
+    if (nick->flags & IRC_NICK_CHANOWNER)
         return -128;
-    if (nick->flags & NICK_CHANADMIN)
+    if (nick->flags & IRC_NICK_CHANADMIN)
         return -64;
-    if (nick->flags & NICK_CHANADMIN2)
+    if (nick->flags & IRC_NICK_CHANADMIN2)
         return -32;
-    if (nick->flags & NICK_OP)
+    if (nick->flags & IRC_NICK_OP)
         return -16;
-    if (nick->flags & NICK_HALFOP)
+    if (nick->flags & IRC_NICK_HALFOP)
         return -8;
-    if (nick->flags & NICK_VOICE)
+    if (nick->flags & IRC_NICK_VOICE)
         return -4;
-    if (nick->flags & NICK_CHANUSER)
+    if (nick->flags & IRC_NICK_CHANUSER)
         return -2;
     return 0;
 }
@@ -205,13 +205,13 @@ irc_nick_new (t_irc_server *server, t_irc_channel *channel, char *nick_name,
     if ((new_nick = irc_nick_search (channel, nick_name)))
     {
         /* update nick */
-        NICK_SET_FLAG(new_nick, is_chanowner, NICK_CHANOWNER);
-        NICK_SET_FLAG(new_nick, is_chanadmin, NICK_CHANADMIN);
-        NICK_SET_FLAG(new_nick, is_chanadmin2, NICK_CHANADMIN2);
-        NICK_SET_FLAG(new_nick, is_op, NICK_OP);
-        NICK_SET_FLAG(new_nick, is_halfop, NICK_HALFOP);
-        NICK_SET_FLAG(new_nick, has_voice, NICK_VOICE);
-        NICK_SET_FLAG(new_nick, is_chanuser, NICK_CHANUSER);
+        IRC_NICK_SET_FLAG(new_nick, is_chanowner, IRC_NICK_CHANOWNER);
+        IRC_NICK_SET_FLAG(new_nick, is_chanadmin, IRC_NICK_CHANADMIN);
+        IRC_NICK_SET_FLAG(new_nick, is_chanadmin2, IRC_NICK_CHANADMIN2);
+        IRC_NICK_SET_FLAG(new_nick, is_op, IRC_NICK_OP);
+        IRC_NICK_SET_FLAG(new_nick, is_halfop, IRC_NICK_HALFOP);
+        IRC_NICK_SET_FLAG(new_nick, has_voice, IRC_NICK_VOICE);
+        IRC_NICK_SET_FLAG(new_nick, is_chanuser, IRC_NICK_CHANUSER);
         irc_nick_resort (channel, new_nick);
         return new_nick;
     }
@@ -224,15 +224,15 @@ irc_nick_new (t_irc_server *server, t_irc_channel *channel, char *nick_name,
     new_nick->nick = strdup (nick_name);
     new_nick->host = NULL;
     new_nick->flags = 0;
-    NICK_SET_FLAG(new_nick, is_chanowner, NICK_CHANOWNER);
-    NICK_SET_FLAG(new_nick, is_chanadmin, NICK_CHANADMIN);
-    NICK_SET_FLAG(new_nick, is_chanadmin2, NICK_CHANADMIN2);
-    NICK_SET_FLAG(new_nick, is_op, NICK_OP);
-    NICK_SET_FLAG(new_nick, is_halfop, NICK_HALFOP);
-    NICK_SET_FLAG(new_nick, has_voice, NICK_VOICE);
-    NICK_SET_FLAG(new_nick, is_chanuser, NICK_CHANUSER);
+    IRC_NICK_SET_FLAG(new_nick, is_chanowner, IRC_NICK_CHANOWNER);
+    IRC_NICK_SET_FLAG(new_nick, is_chanadmin, IRC_NICK_CHANADMIN);
+    IRC_NICK_SET_FLAG(new_nick, is_chanadmin2, IRC_NICK_CHANADMIN2);
+    IRC_NICK_SET_FLAG(new_nick, is_op, IRC_NICK_OP);
+    IRC_NICK_SET_FLAG(new_nick, is_halfop, IRC_NICK_HALFOP);
+    IRC_NICK_SET_FLAG(new_nick, has_voice, IRC_NICK_VOICE);
+    IRC_NICK_SET_FLAG(new_nick, is_chanuser, IRC_NICK_CHANUSER);
     if (ascii_strcasecmp (new_nick->nick, server->nick) == 0)
-        new_nick->color = COLOR_WIN_NICK_SELF;
+        new_nick->color = GUI_COLOR_WIN_NICK_SELF;
     else
         new_nick->color = irc_nick_find_color (new_nick);
     
@@ -256,7 +256,7 @@ irc_nick_change (t_irc_channel *channel, t_irc_nick *nick, char *new_nick)
     int nick_is_me;
     t_weelist *ptr_weelist;
     
-    nick_is_me = (strcmp (nick->nick, SERVER(channel->buffer)->nick) == 0) ? 1 : 0;
+    nick_is_me = (strcmp (nick->nick, GUI_SERVER(channel->buffer)->nick) == 0) ? 1 : 0;
 
     if (!nick_is_me && channel->nicks_speaking)
     {
@@ -273,7 +273,7 @@ irc_nick_change (t_irc_channel *channel, t_irc_nick *nick, char *new_nick)
         free (nick->nick);
     nick->nick = strdup (new_nick);
     if (nick_is_me)
-        nick->color = COLOR_WIN_NICK_SELF;
+        nick->color = GUI_COLOR_WIN_NICK_SELF;
     else
         nick->color = irc_nick_find_color (nick);
     
@@ -378,18 +378,18 @@ irc_nick_count (t_irc_channel *channel, int *total, int *count_op,
          ptr_nick = ptr_nick->next_nick)
     {
         (*total)++;
-        if ((ptr_nick->flags & NICK_CHANOWNER) ||
-            (ptr_nick->flags & NICK_CHANADMIN) ||
-            (ptr_nick->flags & NICK_CHANADMIN2) ||
-            (ptr_nick->flags & NICK_OP))
+        if ((ptr_nick->flags & IRC_NICK_CHANOWNER) ||
+            (ptr_nick->flags & IRC_NICK_CHANADMIN) ||
+            (ptr_nick->flags & IRC_NICK_CHANADMIN2) ||
+            (ptr_nick->flags & IRC_NICK_OP))
             (*count_op)++;
         else
         {
-            if (ptr_nick->flags & NICK_HALFOP)
+            if (ptr_nick->flags & IRC_NICK_HALFOP)
                 (*count_halfop)++;
             else
             {
-                if (ptr_nick->flags & NICK_VOICE)
+                if (ptr_nick->flags & IRC_NICK_VOICE)
                     (*count_voice)++;
                 else
                     (*count_normal)++;
@@ -429,10 +429,10 @@ irc_nick_set_away (t_irc_channel *channel, t_irc_nick *nick, int is_away)
         && ((cfg_irc_away_check_max_nicks == 0) ||
             (channel->nicks_count <= cfg_irc_away_check_max_nicks)))
     {
-        if (((is_away) && (!(nick->flags & NICK_AWAY))) ||
-            ((!is_away) && (nick->flags & NICK_AWAY)))
+        if (((is_away) && (!(nick->flags & IRC_NICK_AWAY))) ||
+            ((!is_away) && (nick->flags & IRC_NICK_AWAY)))
         {
-            NICK_SET_FLAG(nick, is_away, NICK_AWAY);
+            IRC_NICK_SET_FLAG(nick, is_away, IRC_NICK_AWAY);
             gui_nicklist_draw (channel->buffer, 0, 0);
         }
     }
