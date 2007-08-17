@@ -269,25 +269,55 @@ gui_keyboard_read ()
                     else if ((key & 0xE0) == 0xC0)
                     {
                         key_str[0] = (char) key;
-                        key_str[1] = (char) (getch ());
-                        key_str[2] = '\0';
+                        if (i < gui_keyboard_buffer_size - 1)
+                        {
+                            key_str[1] = (char) (gui_keyboard_buffer[++i]);
+                            key_str[2] = '\0';
+                        }
+                        else
+                            key_str[1] = '\0';
                     }
                     /* 3 chars: 1110vvvv 10vvvvvv 10vvvvvv */
                     else if ((key & 0xF0) == 0xE0)
                     {
                         key_str[0] = (char) key;
-                        key_str[1] = (char) (getch ());
-                        key_str[2] = (char) (getch ());
-                        key_str[3] = '\0';
+                        if (i < gui_keyboard_buffer_size - 1)
+                        {
+                            key_str[1] = (char) (gui_keyboard_buffer[++i]);
+                            if (i < gui_keyboard_buffer_size - 1)
+                            {
+                                key_str[2] = (char) (gui_keyboard_buffer[++i]);
+                                key_str[3] = '\0';
+                            }
+                            else
+                                key_str[2] = '\0';
+                        }
+                        else
+                            key_str[1] = '\0';
                     }
                     /* 4 chars: 11110vvv 10vvvvvv 10vvvvvv 10vvvvvv */
                     else if ((key & 0xF8) == 0xF0)
                     {
                         key_str[0] = (char) key;
-                        key_str[1] = (char) (getch ());
-                        key_str[2] = (char) (getch ());
-                        key_str[3] = (char) (getch ());
-                        key_str[4] = '\0';
+                        if (i < gui_keyboard_buffer_size - 1)
+                        {
+                            key_str[1] = (char) (gui_keyboard_buffer[++i]);
+                            if (i < gui_keyboard_buffer_size - 1)
+                            {
+                                key_str[2] = (char) (gui_keyboard_buffer[++i]);
+                                if (i < gui_keyboard_buffer_size - 1)
+                                {
+                                    key_str[3] = (char) (gui_keyboard_buffer[++i]);
+                                    key_str[4] = '\0';
+                                }
+                                else
+                                    key_str[3] = '\0';
+                            }
+                            else
+                                key_str[2] = '\0';
+                        }
+                        else
+                            key_str[1] = '\0';
                     }
                 }
                 else
