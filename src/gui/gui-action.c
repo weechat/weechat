@@ -1480,7 +1480,7 @@ gui_action_grab_key (t_gui_window *window, char *args)
     (void) args;
     
     if (window->buffer->has_input)
-        gui_keyboard_init_grab ();
+        gui_keyboard_grab_init ();
 }
 
 /*

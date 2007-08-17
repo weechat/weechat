@@ -108,7 +108,7 @@
   <entry>integer</entry>
   <entry>between 0 and 100</entry>
   <entry>0</entry>
-  <entry>Max size for nicklist (width or height, depending on look_nicklist_position (0 = no max size; if min == max and &gt; 0, then size is fixed))</entry>
+  <entry>Max size for nicklist (width or height, depending on look_nicklist_position (0 = no max size; if min = max and &gt; 0, then size is fixed))</entry>
 </row>
 <row>
   <entry><option>look_nicklist_separator</option></entry>
@@ -291,6 +291,13 @@
   <entry>any string</entry>
   <entry>'[%n(%m)] '</entry>
   <entry>Format for input prompt ('%c' is replaced by channel or server, '%n' by nick and '%m' by nick modes)</entry>
+</row>
+<row>
+  <entry><option>look_paste_max_lines</option></entry>
+  <entry>integer</entry>
+  <entry>between 0 and 2147483647</entry>
+  <entry>3</entry>
+  <entry>Max number of lines for paste without asking user (0 = disable this feature)</entry>
 </row>
 <row>
   <entry><option>col_real_white</option></entry>
@@ -571,6 +578,13 @@
   <entry>Curses or Gtk color</entry>
   <entry>'red'</entry>
   <entry>Color for text not found</entry>
+</row>
+<row>
+  <entry><option>col_input_actions</option></entry>
+  <entry>color</entry>
+  <entry>Curses or Gtk color</entry>
+  <entry>'lightgreen'</entry>
+  <entry>Color for actions in input window</entry>
 </row>
 <row>
   <entry><option>col_input_bg</option></entry>

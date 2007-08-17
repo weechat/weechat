@@ -30,6 +30,7 @@
 #include "../gui.h"
 #include "../../common/utf8.h"
 #include "../../common/util.h"
+#include "../../common/weeconfig.h"
 #include "gui-curses.h"
 
 
@@ -148,184 +149,215 @@ gui_keyboard_default_bindings ()
 }
 
 /*
- * gui_keyboard_grab_end: insert grabbed key in input buffer
- */
-
-void
-gui_keyboard_grab_end ()
-{
-    char *expanded_key;
-    
-    /* get expanded name (for example: ^U => ctrl-u) */
-    expanded_key = gui_keyboard_get_expanded_name (gui_key_buffer);
-    
-    if (expanded_key)
-    {
-        if (gui_current_window->buffer->has_input)
-        {
-            gui_insert_string_input (gui_current_window, expanded_key, -1);
-            gui_current_window->buffer->completion.position = -1;
-            gui_input_draw (gui_current_window->buffer, 0);
-        }
-        free (expanded_key);
-    }
-    
-    /* end grab mode */
-    gui_key_grab = 0;
-    gui_key_grab_count = 0;
-    gui_key_buffer[0] = '\0';
-}
-
-/*
  * gui_keyboard_read: read keyboard chars
  */
 
 void
 gui_keyboard_read ()
 {
-    int key, i, insert_ok, input_draw;
+    int i, key, insert_ok, input_draw, paste_lines;
+    int accept_paste, cancel_paste, text_added_to_buffer;
     char key_str[32], *key_utf, *input_old;
     
-    i = 0;
-    /* do not loop too much here (for example when big paste was made),
-       to read also socket & co */
-    while (i < 8)
+    accept_paste = 0;
+    cancel_paste = 0;
+    text_added_to_buffer = 0;
+    
+    while (1)
     {
-        if (gui_key_grab && (gui_key_grab_count > 10))
-            gui_keyboard_grab_end ();
-        
         key = getch ();
-        insert_ok = 1;
         
         if (key == ERR)
-        {
-            if (gui_key_grab && (gui_key_grab_count > 0))
-                gui_keyboard_grab_end ();
             break;
-        }
         
 #ifdef KEY_RESIZE
         if (key == KEY_RESIZE)
             continue;
 #endif
-        
-        gui_last_activity_time = time (NULL);
-                
-        if (key < 32)
+        if (gui_keyboard_paste_pending)
         {
-            insert_ok = 0;
-            key_str[0] = '^';
-            key_str[1] = (char) key + '@';
-            key_str[2] = '\0';
-        }
-        else if (key == 127)
-        {
-            key_str[0] = '^';
-            key_str[1] = '?';
-            key_str[2] = '\0';
-        }
-        else
-        {
-            if (local_utf8)
+            /* ctrl-Y: accept paste */
+            if (key == 25)
             {
-                /* 1 char: 0vvvvvvv */
-                if (key < 0x80)
-                {
-                    key_str[0] = (char) key;
-                    key_str[1] = '\0';
-                }
-                /* 2 chars: 110vvvvv 10vvvvvv */
-                else if ((key & 0xE0) == 0xC0)
-                {
-                    key_str[0] = (char) key;
-                    key_str[1] = (char) (getch ());
-                    key_str[2] = '\0';
-                }
-                 /* 3 chars: 1110vvvv 10vvvvvv 10vvvvvv */
-                else if ((key & 0xF0) == 0xE0)
-                {
-                    key_str[0] = (char) key;
-                    key_str[1] = (char) (getch ());
-                    key_str[2] = (char) (getch ());
-                    key_str[3] = '\0';
-                }
-                /* 4 chars: 11110vvv 10vvvvvv 10vvvvvv 10vvvvvv */
-                else if ((key & 0xF8) == 0xF0)
-                {
-                    key_str[0] = (char) key;
-                    key_str[1] = (char) (getch ());
-                    key_str[2] = (char) (getch ());
-                    key_str[3] = (char) (getch ());
-                    key_str[4] = '\0';
-                }
+                accept_paste = 1;
+                break;
+            }
+            /* ctrl-N: cancel paste */
+            else if (key == 14)
+            {
+                cancel_paste = 1;
+                break;
+            }
+        }
+        
+        gui_keyboard_buffer_add (key);
+        text_added_to_buffer = 1;
+    }
+    
+    if (gui_keyboard_paste_pending)
+    {
+        /* user is ok for pasting text, let's paste! */
+        if (accept_paste)
+        {
+            gui_keyboard_paste_accept ();
+            gui_input_draw (gui_current_window->buffer, 1);
+        }
+        /* user doesn't want to paste text: clear whole buffer! */
+        else if (cancel_paste)
+        {
+            gui_keyboard_paste_cancel ();
+            gui_input_draw (gui_current_window->buffer, 1);
+        }
+        else if (text_added_to_buffer)
+            gui_input_draw (gui_current_window->buffer, 1);
+    }
+    else
+    {
+        /* detect user paste or large amount of text
+           if so, ask user what to do */
+        if (cfg_look_paste_max_lines > 0)
+        {
+            paste_lines = gui_keyboard_get_paste_lines ();
+            if (paste_lines > cfg_look_paste_max_lines)
+            {
+                gui_keyboard_paste_pending = 1;
+                gui_input_draw (gui_current_window->buffer, 1);
+            }
+        }
+    }
+    
+    /* if there's no paste pending, then we use buffer and do actions
+       according to keys */
+    if (!gui_keyboard_paste_pending)
+    {
+        if (gui_keyboard_buffer_size > 0)
+            gui_last_activity_time = time (NULL);
+        
+        if (gui_key_grab && (gui_key_grab_count > 0))
+            gui_keyboard_grab_end ();
+        
+        for (i = 0; i < gui_keyboard_buffer_size; i++)
+        {
+            key = gui_keyboard_buffer[i];
+            
+            insert_ok = 1;
+            
+            if (key < 32)
+            {
+                insert_ok = 0;
+                key_str[0] = '^';
+                key_str[1] = (char) key + '@';
+                key_str[2] = '\0';
+            }
+            else if (key == 127)
+            {
+                key_str[0] = '^';
+                key_str[1] = '?';
+                key_str[2] = '\0';
             }
             else
             {
-                key_str[0] = (char) key;
-                key_str[1] = '\0';
-                
-                /* convert input to UTF-8 is user is not using UTF-8 as locale */
-                if (!local_utf8)
+                if (local_utf8)
                 {
-                    key_utf = weechat_iconv_to_internal (NULL, key_str);
-                    strncpy (key_str, key_utf, sizeof (key_str));
-                    key_str[sizeof (key_str) - 1] = '\0';
+                    /* 1 char: 0vvvvvvv */
+                    if (key < 0x80)
+                    {
+                        key_str[0] = (char) key;
+                        key_str[1] = '\0';
+                    }
+                    /* 2 chars: 110vvvvv 10vvvvvv */
+                    else if ((key & 0xE0) == 0xC0)
+                    {
+                        key_str[0] = (char) key;
+                        key_str[1] = (char) (getch ());
+                        key_str[2] = '\0';
+                    }
+                    /* 3 chars: 1110vvvv 10vvvvvv 10vvvvvv */
+                    else if ((key & 0xF0) == 0xE0)
+                    {
+                        key_str[0] = (char) key;
+                        key_str[1] = (char) (getch ());
+                        key_str[2] = (char) (getch ());
+                        key_str[3] = '\0';
+                    }
+                    /* 4 chars: 11110vvv 10vvvvvv 10vvvvvv 10vvvvvv */
+                    else if ((key & 0xF8) == 0xF0)
+                    {
+                        key_str[0] = (char) key;
+                        key_str[1] = (char) (getch ());
+                        key_str[2] = (char) (getch ());
+                        key_str[3] = (char) (getch ());
+                        key_str[4] = '\0';
+                    }
+                }
+                else
+                {
+                    key_str[0] = (char) key;
+                    key_str[1] = '\0';
+                    
+                    /* convert input to UTF-8 is user is not using UTF-8 as locale */
+                    if (!local_utf8)
+                    {
+                        key_utf = weechat_iconv_to_internal (NULL, key_str);
+                        strncpy (key_str, key_utf, sizeof (key_str));
+                        key_str[sizeof (key_str) - 1] = '\0';
+                    }
                 }
             }
-        }
-        
-        if (strcmp (key_str, "^") == 0)
-        {
-            key_str[1] = '^';
-            key_str[2] = '\0';
-        }
-        
-        /*gui_printf (gui_current_window->buffer, "gui_input_read: key = %s (%d)\n", key_str, key);*/
-        
-        if (gui_current_window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
-            input_old = (gui_current_window->buffer->input_buffer) ?
-                strdup (gui_current_window->buffer->input_buffer) : strdup ("");
-        else
-            input_old = NULL;
-
-        input_draw = 0;
-        
-        if ((gui_keyboard_pressed (key_str) != 0) && (insert_ok))
-        {
-            if (strcmp (key_str, "^^") == 0)
-                key_str[1] = '\0';
             
-            switch (gui_current_window->buffer->type)
+            if (strcmp (key_str, "^") == 0)
             {
-                case GUI_BUFFER_TYPE_STANDARD:
-                    gui_insert_string_input (gui_current_window, key_str, -1);
-                    gui_current_window->buffer->completion.position = -1;
-                    input_draw = 1;
-                    break;
-                case GUI_BUFFER_TYPE_DCC:
-                    gui_exec_action_dcc (gui_current_window, key_str);
-                    break;
-                case GUI_BUFFER_TYPE_RAW_DATA:
-                    gui_exec_action_raw_data (gui_current_window, key_str);
-                    break;
+                key_str[1] = '^';
+                key_str[2] = '\0';
             }
+            
+            /*gui_printf (gui_current_window->buffer, "gui_input_read: key = %s (%d)\n", key_str, key);*/
+            
+            if (gui_current_window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
+                input_old = (gui_current_window->buffer->input_buffer) ?
+                    strdup (gui_current_window->buffer->input_buffer) : strdup ("");
+            else
+                input_old = NULL;
+            
+            input_draw = 0;
+            
+            if ((gui_keyboard_pressed (key_str) != 0) && (insert_ok))
+            {
+                if (strcmp (key_str, "^^") == 0)
+                    key_str[1] = '\0';
+                
+                switch (gui_current_window->buffer->type)
+                {
+                    case GUI_BUFFER_TYPE_STANDARD:
+                        gui_insert_string_input (gui_current_window, key_str, -1);
+                        gui_current_window->buffer->completion.position = -1;
+                        input_draw = 1;
+                        break;
+                    case GUI_BUFFER_TYPE_DCC:
+                        gui_exec_action_dcc (gui_current_window, key_str);
+                        break;
+                    case GUI_BUFFER_TYPE_RAW_DATA:
+                        gui_exec_action_raw_data (gui_current_window, key_str);
+                        break;
+                }
+            }
+            
+            /* incremental text search in buffer */
+            if ((gui_current_window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
+                && ((input_old == NULL) || (gui_current_window->buffer->input_buffer == NULL)
+                    || (strcmp (input_old, gui_current_window->buffer->input_buffer) != 0)))
+            {
+                gui_buffer_search_restart (gui_current_window);
+                input_draw = 1;
+            }
+            
+            if (input_draw)
+                gui_input_draw (gui_current_window->buffer, 0);
+            
+            if (input_old)
+                free (input_old);
         }
         
-        /* incremental text search in buffer */
-        if ((gui_current_window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
-            && ((input_old == NULL) || (gui_current_window->buffer->input_buffer == NULL)
-                || (strcmp (input_old, gui_current_window->buffer->input_buffer) != 0)))
-        {
-            gui_buffer_search_restart (gui_current_window);
-            input_draw = 1;
-        }
-
-        if (input_draw)
-            gui_input_draw (gui_current_window->buffer, 0);
-        
-        if (input_old)
-            free (input_old);
-        
-        i++;
+        gui_keyboard_buffer_reset ();
     }
 }

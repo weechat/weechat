@@ -17,8 +17,10 @@
  */
 
 
-#ifndef __WEECHAT_GUI_KEY_H
-#define __WEECHAT_GUI_KEY_H 1
+#ifndef __WEECHAT_GUI_KEYBOARD_H
+#define __WEECHAT_GUI_KEYBOARD_H 1
+
+#define GUI_KEYBOARD_BUFFER_BLOCK_SIZE 256
 
 /* key structures */
 
@@ -50,8 +52,11 @@ struct t_gui_key_function
 extern t_gui_key *gui_keys;
 extern t_gui_key *last_gui_key;
 extern t_gui_key_function gui_key_functions[];
-extern char gui_key_buffer[128];
+extern char gui_key_combo_buffer[128];
 extern int gui_key_grab;
 extern int gui_key_grab_count;
+extern int *gui_keyboard_buffer;
+extern int gui_keyboard_buffer_size;
+extern int gui_keyboard_paste_pending;
 
-#endif /* gui-key.h */
+#endif /* gui-keyboard.h */

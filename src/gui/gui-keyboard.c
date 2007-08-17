@@ -38,12 +38,20 @@
 #endif
 
 
-t_gui_key *gui_keys = NULL;
-t_gui_key *last_gui_key = NULL;
+t_gui_key *gui_keys = NULL;         /* key bindings                           */
+t_gui_key *last_gui_key = NULL;     /* last key binding                       */
 
-char gui_key_buffer[128];
-int gui_key_grab = 0;
-int gui_key_grab_count = 0;
+char gui_key_combo_buffer[128];     /* buffer used for combos                 */
+int gui_key_grab = 0;               /* 1 if grab mode enabled (alt-k pressed) */
+int gui_key_grab_count = 0;         /* number of keys pressed in grab mode    */
+
+int *gui_keyboard_buffer = NULL;    /* input buffer (for paste detection)     */
+int gui_keyboard_buffer_alloc = 0;  /* input buffer allocated size            */
+int gui_keyboard_buffer_size = 0;   /* input buffer size in bytes             */
+
+int gui_keyboard_paste_pending = 0; /* 1 is big paste was detected and        */
+                                    /* WeeChat is asking user what to do      */
+int gui_keyboard_paste_lines = 0;   /* number of lines for pending paste      */
 
 t_gui_key_function gui_key_functions[] =
 { { "return",                    gui_action_return,
@@ -161,7 +169,7 @@ t_gui_key_function gui_key_functions[] =
 void
 gui_keyboard_init ()
 {
-    gui_key_buffer[0] = '\0';
+    gui_key_combo_buffer[0] = '\0';
     gui_key_grab = 0;
     gui_key_grab_count = 0;
     
@@ -169,14 +177,43 @@ gui_keyboard_init ()
 }
 
 /*
- * gui_keyboard_init_show: init "show mode"
+ * gui_keyboard_grab_init: init "grab" mode
  */
 
 void
-gui_keyboard_init_grab ()
+gui_keyboard_grab_init ()
 {
     gui_key_grab = 1;
     gui_key_grab_count = 0;
+}
+
+/*
+ * gui_keyboard_grab_end: insert grabbed key in input buffer
+ */
+
+void
+gui_keyboard_grab_end ()
+{
+    char *expanded_key;
+    
+    /* get expanded name (for example: ^U => ctrl-u) */
+    expanded_key = gui_keyboard_get_expanded_name (gui_key_combo_buffer);
+    
+    if (expanded_key)
+    {
+        if (gui_current_window->buffer->has_input)
+        {
+            gui_insert_string_input (gui_current_window, expanded_key, -1);
+            gui_current_window->buffer->completion.position = -1;
+            gui_input_draw (gui_current_window->buffer, 0);
+        }
+        free (expanded_key);
+    }
+    
+    /* end grab mode */
+    gui_key_grab = 0;
+    gui_key_grab_count = 0;
+    gui_key_combo_buffer[0] = '\0';
 }
 
 /*
@@ -564,8 +601,8 @@ gui_keyboard_pressed (char *key_str)
     char **commands, **ptr_cmd;
     
     /* add key to buffer */
-    first_key = (gui_key_buffer[0] == '\0');
-    strcat (gui_key_buffer, key_str);
+    first_key = (gui_key_combo_buffer[0] == '\0');
+    strcat (gui_key_combo_buffer, key_str);
     
     /* if we are in "show mode", increase counter and return */
     if (gui_key_grab)
@@ -575,16 +612,16 @@ gui_keyboard_pressed (char *key_str)
     }
     
     /* look for key combo in key table */
-    ptr_key = gui_keyboard_search_part (gui_key_buffer);
+    ptr_key = gui_keyboard_search_part (gui_key_combo_buffer);
     if (ptr_key)
     {
-        if (ascii_strcasecmp (ptr_key->key, gui_key_buffer) == 0)
+        if (ascii_strcasecmp (ptr_key->key, gui_key_combo_buffer) == 0)
         {
             /* exact combo found => execute function or command */
             buffer_before_key =
                 (gui_current_window->buffer->input_buffer) ?
                 strdup (gui_current_window->buffer->input_buffer) : strdup ("");
-            gui_key_buffer[0] = '\0';
+            gui_key_combo_buffer[0] = '\0';
             if (ptr_key->command)
             {
                 commands = split_multi_command (ptr_key->command, ';');
@@ -617,7 +654,7 @@ gui_keyboard_pressed (char *key_str)
         return 0;
     }
     
-    gui_key_buffer[0] = '\0';
+    gui_key_combo_buffer[0] = '\0';
 
     /* if this is first key and not found (even partial) => return 1
        else return 0 (= silently discard sequence of bad keys) */
@@ -661,4 +698,113 @@ gui_keyboard_free_all ()
 {
     while (gui_keys)
         gui_keyboard_free (gui_keys);
+}
+
+/*
+ * gui_keyboard_buffer_optimize: optimize keyboard buffer size
+ */
+
+void
+gui_keyboard_buffer_optimize ()
+{
+    int optimal_size;
+    
+    optimal_size = (((gui_keyboard_buffer_size * sizeof (int)) /
+                     GUI_KEYBOARD_BUFFER_BLOCK_SIZE) *
+                    GUI_KEYBOARD_BUFFER_BLOCK_SIZE) +
+        GUI_KEYBOARD_BUFFER_BLOCK_SIZE;
+    
+    if (gui_keyboard_buffer_alloc != optimal_size)
+    {
+        gui_keyboard_buffer_alloc = optimal_size;
+        gui_keyboard_buffer = realloc (gui_keyboard_buffer, optimal_size);
+    }
+}
+
+/*
+ * gui_keyboard_buffer_reset: reset keyboard buffer
+ *                            (create empty if never created before)
+ */
+
+void
+gui_keyboard_buffer_reset ()
+{
+    if (!gui_keyboard_buffer)
+    {
+        gui_keyboard_buffer_alloc = GUI_KEYBOARD_BUFFER_BLOCK_SIZE;
+        gui_keyboard_buffer_size = 0;
+        gui_keyboard_buffer = (int *) malloc (gui_keyboard_buffer_alloc);
+    }
+    else
+    {
+        gui_keyboard_buffer_size = 0;
+        gui_keyboard_buffer_optimize ();
+    }
+    gui_keyboard_paste_lines = 0;
+}
+
+/*
+ * gui_keyboard_buffer_add: add a key to keyboard buffer
+ */
+
+void
+gui_keyboard_buffer_add (int key)
+{
+    if (!gui_keyboard_buffer)
+        gui_keyboard_buffer_reset ();
+    
+    gui_keyboard_buffer_size++;
+    
+    gui_keyboard_buffer_optimize ();
+    
+    if (gui_keyboard_buffer)
+    {
+        gui_keyboard_buffer[gui_keyboard_buffer_size - 1] = key;
+        if (key == 10)
+            gui_keyboard_paste_lines++;
+    }
+    else
+    {
+        gui_keyboard_buffer_alloc = 0;
+        gui_keyboard_buffer_size = 0;
+        gui_keyboard_paste_lines = 0;
+    }
+}
+
+/*
+ * gui_keyboard_get_paste_lines: return real number of lines in buffer
+ *                               if last key is not Return, then this is lines + 1
+ *                               else it's lines
+ */
+
+int
+gui_keyboard_get_paste_lines ()
+{
+    if ((gui_keyboard_buffer_size > 0)
+        && (gui_keyboard_buffer[gui_keyboard_buffer_size - 1] != 10))
+        return gui_keyboard_paste_lines + 1;
+    
+    return gui_keyboard_paste_lines;
+}
+
+/*
+ * gui_keyboard_paste_accept: accept paste from user
+ */
+
+void
+gui_keyboard_paste_accept ()
+{
+    gui_keyboard_paste_pending = 0;
+}
+
+
+/*
+ * gui_keyboard_paste_cancel: cancel paste from user (reset buffer)
+ */
+
+void
+gui_keyboard_paste_cancel ()
+{
+    gui_keyboard_buffer_reset ();
+    gui_keyboard_paste_pending = 0;
 }

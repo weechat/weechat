@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-08-12
+ChangeLog - 2007-08-17
 
 
 Version 0.2.6 (under dev!):
+   * added paste detection, new options look_paste_max_lines and
+     col_input_actions (task #5442)
    * fixed bug with highlight and UTF-8 chars around word (bug #20753)
    * added swedish quickstart guide
    * added support of channel mode +u (channel user) (bug #20717)

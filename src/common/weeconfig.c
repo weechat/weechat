@@ -115,6 +115,7 @@ int cfg_look_day_change;
 char *cfg_look_day_change_timestamp;
 char *cfg_look_read_marker;
 char *cfg_look_input_format;
+int cfg_look_paste_max_lines;
 
 t_config_option weechat_options_look[] =
 { { "look_save_on_exit", N_("save config file on exit"),
@@ -176,7 +177,7 @@ t_config_option weechat_options_look[] =
     NULL, NULL, &cfg_look_nicklist_min_size, NULL, config_change_buffers },
   { "look_nicklist_max_size", N_("max size for nicklist"),
     N_("max size for nicklist (width or height, depending on look_nicklist_position "
-       "(0 = no max size; if min == max and > 0, then size is fixed))"),
+       "(0 = no max size; if min = max and > 0, then size is fixed))"),
     OPTION_TYPE_INT, 0, 100, 0,
     NULL, NULL, &cfg_look_nicklist_max_size, NULL, config_change_buffers },
   { "look_nicklist_separator", N_("separator between chat and nicklist"),
@@ -288,6 +289,10 @@ t_config_option weechat_options_look[] =
        "'%n' by nick and '%m' by nick modes)"),
     OPTION_TYPE_STRING, 0, 0, 0,
     "[%n(%m)] ", NULL, NULL, &cfg_look_input_format, config_change_buffer_content },
+  { "look_paste_max_lines", N_("max number of lines for paste without asking user"),
+    N_("max number of lines for paste without asking user (0 = disable this feature)"),
+    OPTION_TYPE_INT, 0, INT_MAX, 3,
+    NULL, NULL, &cfg_look_paste_max_lines, NULL, &config_change_noop },
   { NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
@@ -333,6 +338,7 @@ int cfg_col_input_channel;
 int cfg_col_input_nick;
 int cfg_col_input_delimiters;
 int cfg_col_input_text_not_found;
+int cfg_col_input_actions;
 int cfg_col_input_bg;
 int cfg_col_nick;
 int cfg_col_nick_away;
@@ -530,6 +536,10 @@ t_config_option weechat_options_colors[] =
     N_("color for text not found"),
     OPTION_TYPE_COLOR, 0, 0, 0,
     "red", NULL, &cfg_col_input_text_not_found, NULL, &config_change_color },
+  { "col_input_actions", N_("color for actions in input window"),
+    N_("color for actions in input window"),
+    OPTION_TYPE_COLOR, 0, 0, 0,
+    "lightgreen", NULL, &cfg_col_input_actions, NULL, &config_change_color },
   { "col_input_bg", N_("background for input window"),
     N_("background for input window"),
     OPTION_TYPE_COLOR, 0, 0, 0,
