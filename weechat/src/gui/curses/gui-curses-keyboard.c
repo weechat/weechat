@@ -155,9 +155,7 @@ gui_keyboard_default_bindings ()
 void
 gui_keyboard_read ()
 {
-    int i, key, insert_ok, input_draw, paste_lines;
-    int accept_paste, cancel_paste, text_added_to_buffer;
-    char key_str[32], *key_utf, *input_old;
+    int key, accept_paste, cancel_paste, text_added_to_buffer, paste_lines;
     
     accept_paste = 0;
     cancel_paste = 0;
@@ -225,6 +223,17 @@ gui_keyboard_read ()
             }
         }
     }
+}
+
+/*
+ * gui_keyboard_flush: flush keyboard buffer
+ */
+
+void
+gui_keyboard_flush ()
+{
+    int i, key, insert_ok, input_draw;
+    char key_str[32], *key_utf, *input_old;
     
     /* if there's no paste pending, then we use buffer and do actions
        according to keys */

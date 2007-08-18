@@ -87,6 +87,7 @@ extern void gui_chat_calculate_line_diff (t_gui_window *, t_gui_line **, int *, 
 /* keyboard functions */
 extern void gui_keyboard_default_bindings ();
 extern void gui_keyboard_read ();
+extern void gui_keyboard_flush ();
 
 /* window functions */
 extern void gui_window_wprintw (WINDOW *, char *, ...);

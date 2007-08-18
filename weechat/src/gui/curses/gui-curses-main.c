@@ -197,6 +197,8 @@ gui_main_loop ()
                 gui_keyboard_read ();
             }
         }
+        else
+            gui_keyboard_flush ();
 #endif
         
         /* read sockets (servers, child process when connecting, FIFO pipe) */
