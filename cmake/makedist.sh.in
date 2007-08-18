@@ -1,0 +1,33 @@
+#!/bin/sh
+VERSION=@VERSION@
+SRCROOT=@CMAKE_SOURCE_DIR@
+BUILDDIR=@CMAKE_BINARY_DIR@
+PROJECT=@PROJECT_NAME@
+TAG=release-$(echo $VERSION | sed -e 's/\./-/g')
+
+EXCLUDE="@DIST_EXCLUDE@"
+EXPORT_DIR="${PROJECT}-${VERSION}"
+
+if [ -z  $CVSROOT ]; then
+    echo "The CVSROOT variable must be set"
+    exit 1
+fi
+
+echo "Exporting source tree"
+if [ $(echo $VERSION | grep cvs) ]; then
+    cvs export -r HEAD -d $PROJECT-$VERSION $PROJECT
+else
+    cvs export -r $TAG -d $PROJECT-$VERSION $PROJECT
+fi
+
+echo "Removing not needed stuff"
+for i in $EXCLUDE ; do
+    echo "  $i"
+    rm -rf $EXPORT_DIR/$i
+done
+
+echo "Generating archive"
+tar cjf ${BUILDDIR}/${PROJECT}-${VERSION}.tar.bz2 ${EXPORT_DIR}
+
+echo "Cleaning up"
+rm -rf ${EXPORT_DIR}
