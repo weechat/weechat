@@ -32,6 +32,7 @@ SET(LOCALEDIR ${CMAKE_INSTALL_PREFIX}/share/locale)
 STRING(REPLACE "\";\"" "\ " PKG_STRING ${PKG_STRING})
 
 OPTION(DISABLE_NCURSES "Disable Ncurses interface")
+OPTION(ENABLE_GTK      "Enable GTK interface")
 OPTION(DISABLE_NLS     "Disable Native Language Support")
 OPTION(DISABLE_GNUTLS  "Disable SSLv3/TLS connection support")
 OPTION(DISABLE_PLUGINS "Disable Plugins support")
