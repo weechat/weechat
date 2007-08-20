@@ -1254,7 +1254,7 @@
 <row>
   <entry><option>server_command_delay</option></entry>
   <entry>integer</entry>
-  <entry>between 0 and 5</entry>
+  <entry>between 0 and 3600</entry>
   <entry>0</entry>
   <entry>Delay (in seconds) after command was executed (example: give some time for authentication)</entry>
 </row>

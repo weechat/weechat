@@ -1254,7 +1254,7 @@
 <row>
   <entry><option>server_command_delay</option></entry>
   <entry>Ganzzahl</entry>
-  <entry>zwischen 0 und 5</entry>
+  <entry>zwischen 0 und 3600</entry>
   <entry>0</entry>
   <entry>Wartezeit in Sekunden nach Ausführung des Befehls, um z.B. eine Authentifizierung zu ermöglichen</entry>
 </row>
