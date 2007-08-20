@@ -253,6 +253,14 @@ gui_main_loop ()
                             continue;
                         }
                     }
+
+                    /* check if it's time to autojoin channels (after command delay) */
+                    if ((ptr_server->command_time != 0)
+                        && (new_time >= ptr_server->command_time + ptr_server->command_delay))
+                    {
+                        irc_server_autojoin_channels (ptr_server);
+                        ptr_server->command_time = 0;
+                    }
                 }
             
                 if (!ptr_server->is_connected && (ptr_server->child_pid > 0))

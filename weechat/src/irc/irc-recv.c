@@ -2421,7 +2421,6 @@ irc_recv_cmd_001 (t_irc_server *server, char *host, char *nick, char *arguments)
 {
     char *pos;
     char **commands, **ptr, *vars_replaced;
-    t_irc_channel *ptr_channel;
     char *away_msg;
     
     pos = strchr (arguments, ' ');
@@ -2438,8 +2437,17 @@ irc_recv_cmd_001 (t_irc_server *server, char *host, char *nick, char *arguments)
     /* connection to IRC server is ok! */
     server->is_connected = 1;
     server->lag_next_check = time (NULL) + cfg_irc_lag_check;
-    gui_status_draw (server->buffer, 1);
-    gui_input_draw (server->buffer, 1);
+    
+    /* set away message if user was away (before disconnection for example) */
+    if (server->away_message && server->away_message[0])
+    {
+        away_msg = strdup (server->away_message);
+        if (away_msg)
+        {
+            irc_send_away (server, away_msg);
+            free (away_msg);
+        }
+    }
     
     /* execute command when connected */
     if (server->command && server->command[0])
@@ -2460,46 +2468,15 @@ irc_recv_cmd_001 (t_irc_server *server, char *host, char *nick, char *arguments)
 	}
 	
 	if (server->command_delay > 0)
-	    sleep (server->command_delay);
-    }
-	
-    /* auto-join after disconnection (only rejoins opened channels) */
-    if (!server->disable_autojoin && server->reconnect_join && server->channels)
-    {
-        for (ptr_channel = server->channels; ptr_channel;
-             ptr_channel = ptr_channel->next_channel)
-        {
-            if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
-            {
-                if (ptr_channel->key)
-                    irc_server_sendf (server, "JOIN %s %s",
-                                      ptr_channel->name, ptr_channel->key);
-                else
-                    irc_server_sendf (server, "JOIN %s",
-                                      ptr_channel->name);
-            }
-        }
-        server->reconnect_join = 0;
+            server->command_time = time (NULL) + 1;
+        else
+            irc_server_autojoin_channels (server);
     }
     else
-    {
-        /* auto-join when connecting to server for first time */
-        if (!server->disable_autojoin && server->autojoin && server->autojoin[0])
-            return irc_send_cmd_join (server, NULL, server->autojoin);
-    }
-
-    /* set away message if user was away (before disconnection for example) */
-    if (server->away_message && server->away_message[0])
-    {
-        away_msg = strdup (server->away_message);
-        if (away_msg)
-        {
-            irc_send_away (server, away_msg);
-            free (away_msg);
-        }
-    }
-
-    server->disable_autojoin = 0;
+        irc_server_autojoin_channels (server);
+    
+    gui_status_draw (server->buffer, 1);
+    gui_input_draw (server->buffer, 1);
     
     return 0;
 }

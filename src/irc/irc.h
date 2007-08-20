@@ -172,6 +172,8 @@ struct t_irc_server
     char *nick_modes;               /* nick modes                             */
     char *prefix;                   /* nick prefix allowed (from msg 005)     */
     time_t reconnect_start;         /* this time + delay = reconnect time     */
+    time_t command_time;            /* this time + command_delay = time to    */
+                                    /* autojoin channels                      */
     int reconnect_join;             /* 1 if channels opened to rejoin         */
     int disable_autojoin;           /* 1 if user asked to not autojoin chans  */
     int is_away;                    /* 1 is user is marked as away            */
@@ -384,6 +386,7 @@ extern void irc_server_reconnect (t_irc_server *);
 extern void irc_server_auto_connect (int, int);
 extern void irc_server_disconnect (t_irc_server *, int);
 extern void irc_server_disconnect_all ();
+extern void irc_server_autojoin_channels ();
 extern t_irc_server *irc_server_search (char *);
 extern int irc_server_get_number_connected ();
 extern void irc_server_get_number_buffer (t_irc_server *, int *, int *);

@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-08-17
+ChangeLog - 2007-08-20
 
 
 Version 0.2.6 (under dev!):
+   * fixed server option "command_delay": does not freeze WeeChat any more
    * added paste detection, new options look_paste_max_lines and
      col_input_actions (task #5442)
    * fixed bug with highlight and UTF-8 chars around word (bug #20753)

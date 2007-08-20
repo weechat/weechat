@@ -116,6 +116,7 @@ irc_server_init (t_irc_server *server)
     server->nick_modes = NULL;
     server->prefix = NULL;
     server->reconnect_start = 0;
+    server->command_time = 0;
     server->reconnect_join = 0;
     server->disable_autojoin = 0;
     server->is_away = 0;
@@ -2075,6 +2076,43 @@ irc_server_disconnect_all ()
 }
 
 /*
+ * irc_server_autojoin_channels: autojoin (or rejoin) channels
+ */
+
+void
+irc_server_autojoin_channels (t_irc_server *server)
+{
+    t_irc_channel *ptr_channel;
+    
+    /* auto-join after disconnection (only rejoins opened channels) */
+    if (!server->disable_autojoin && server->reconnect_join && server->channels)
+    {
+        for (ptr_channel = server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+            {
+                if (ptr_channel->key)
+                    irc_server_sendf (server, "JOIN %s %s",
+                                      ptr_channel->name, ptr_channel->key);
+                else
+                    irc_server_sendf (server, "JOIN %s",
+                                      ptr_channel->name);
+            }
+        }
+        server->reconnect_join = 0;
+    }
+    else
+    {
+        /* auto-join when connecting to server for first time */
+        if (!server->disable_autojoin && server->autojoin && server->autojoin[0])
+            irc_send_cmd_join (server, NULL, server->autojoin);
+    }
+
+    server->disable_autojoin = 0;
+}
+
+/*
  * irc_server_search: return pointer on a server with a name
  */
 
@@ -2355,6 +2393,7 @@ irc_server_print_log (t_irc_server *server)
     weechat_log_printf ("  nick_modes. . . . . : '%s'\n", server->nick_modes);
     weechat_log_printf ("  prefix. . . . . . . : '%s'\n", server->prefix);
     weechat_log_printf ("  reconnect_start . . : %ld\n",  server->reconnect_start);
+    weechat_log_printf ("  command_time. . . . : %ld\n",  server->command_time);
     weechat_log_printf ("  reconnect_join. . . : %d\n",   server->reconnect_join);
     weechat_log_printf ("  disable_autojoin. . : %d\n",   server->disable_autojoin);
     weechat_log_printf ("  is_away . . . . . . : %d\n",   server->is_away);
