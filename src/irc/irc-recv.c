@@ -3794,22 +3794,10 @@ irc_recv_cmd_333 (t_irc_server *server, char *host, char *nick, char *arguments)
                 }
             }
             else
-            {
-                irc_display_prefix (server, server->buffer, GUI_PREFIX_ERROR);
-                gui_printf_nolog (server->buffer,
-                                  _("%s cannot identify date/time for \"%s\" command\n"),
-                                  WEECHAT_ERROR, "333");
-                return -1;
-            }
+                return 0;
         }
         else
-        {
-            irc_display_prefix (server, server->buffer, GUI_PREFIX_ERROR);
-            gui_printf_nolog (server->buffer,
-                              _("%s cannot identify nickname for \"%s\" command\n"),
-                              WEECHAT_ERROR, "333");
-            return -1;
-        }
+            return 0;
     }
     else
     {

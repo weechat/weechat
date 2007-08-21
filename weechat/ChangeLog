@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-08-20
+ChangeLog - 2007-08-21
 
 
 Version 0.2.6 (under dev!):
+   * fixed IRC message 333: silently ignore message if error when parsing it
    * fixed server option "command_delay": does not freeze WeeChat any more
    * added paste detection, new options look_paste_max_lines and
      col_input_actions (task #5442)
