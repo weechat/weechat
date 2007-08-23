@@ -126,6 +126,10 @@ irc_mode_channel_set (t_irc_server *server, t_irc_channel *channel,
                                 irc_mode_channel_set_nick (channel, ptr_arg,
                                                            set_flag, IRC_NICK_CHANADMIN);
                             break;
+                        case 'b': /* ban (ignored) */
+                            ptr_arg = ((argc > 0) && (current_arg >= 0)) ?
+                                argv[current_arg--] : NULL;
+                            break;
                         case 'h': /* half-op */
                             ptr_arg = ((argc > 0) && (current_arg >= 0)) ?
                                 argv[current_arg--] : NULL;

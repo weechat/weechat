@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-08-21
+ChangeLog - 2007-08-23
 
 
 Version 0.2.6 (under dev!):
+   * fixed user modes in nicklist when ban and nick mode are received in the
+     same MODE message (bug #20870)
    * fixed IRC message 333: silently ignore message if error when parsing it
    * fixed server option "command_delay": does not freeze WeeChat any more
    * added paste detection, new options look_paste_max_lines and
