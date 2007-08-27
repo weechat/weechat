@@ -25,23 +25,24 @@ use Mac::Growl;
 
 my $app = 'Weechat (Curses)';
 my @messages_events = (
-	[ nick => 'Changed Nick' => '$nick has changed nick to $text' ],
-	[ join => 'Joined Room' => '$nick has joined $text' ],
-	[ part => 'Left Room' => '$nick has left $channel($text)' ],
-	[ quit => 'Quit' => '$nick has quit($text)' ],
-	[ topic => 'Set Topic' => '$nick has set topic to \'$text\'' ],
-	[ weechat_highlight => 'Highlight Mentioned' => '$text in $channel' ],
-	[ weechat_pv => 'Private Message' => '$nick: $text' ],
+	[ nick => 'Changed Nick', '$nick has changed nick to $text' ],
+	[ join => 'Joined Room', '$nick has joined $text' ],
+	[ part => 'Left Room', '$nick has left $channel($text)' ],
+	[ quit => 'Quit', '$nick has quit($text)' ],
+	[ topic => 'Set Topic', '$nick has set topic to \'$text\'' ],
+	[ weechat_highlight => 'Highlight Mentioned', '$text in $channel' ],
+	[ weechat_pv => 'Private Message', '$nick: $text' ],
 );
 my $notes;
 push @$notes, $_->[1] foreach @messages_events;
 
 Mac::Growl::RegisterNotifications $app, $notes, $notes;
 
-weechat::register 'growl-notify', '0.1', '',
+my $version = '0.2';
+weechat::register 'growl-notify', $version, '',
 	'Send Weechat notifications thru Mac::Growl';
 
-for my $message(@messages_events){
+for my $message (@messages_events) {
 	no strict 'refs';	# access symbol table
 	my $subname = join '', __PACKAGE__, '::handler_', $message->[0];
 	*{$subname} = sub
@@ -53,7 +54,8 @@ for my $message(@messages_events){
 		($mask, undef, $channel) = split / /, $channel;
 		($nick, undef) = split /!/, $mask;
 		Mac::Growl::PostNotification $app, $message->[1],
-			$message->[1], eval qq("$message->[2]");
+			$message->[1], eval qq("$message->[2]"),
+			($message->[0] =~ /(pv|highlight)/ ? 1 : 0);
 		return weechat::PLUGIN_RC_OK;
 	};
 	weechat::add_message_handler $message->[0], $subname;
