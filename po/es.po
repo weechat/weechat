@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.6-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-08-17 10:58+0200\n"
+"POT-Creation-Date: 2007-08-26 22:33+0200\n"
 "PO-Revision-Date: 2007-08-08 15:28+0200\n"
 "Last-Translator: Roberto González Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -15,93 +15,93 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: src/irc/irc-server.c:207 src/common/weeconfig.c:2357
+#: src/irc/irc-server.c:208 src/common/weeconfig.c:2357
 msgid "Unable to get user's name"
 msgstr "No ha sido posible obtener el nombre de usuario"
 
-#: src/irc/irc-server.c:276
+#: src/irc/irc-server.c:277
 #, c-format
 msgid "%s cannot allocate new server\n"
 msgstr "%s no ha sido posible crear un nuevo servidor\n"
 
-#: src/irc/irc-server.c:653 src/irc/irc-server.c:734
+#: src/irc/irc-server.c:654 src/irc/irc-server.c:735
 #, c-format
 msgid "%s error sending data to IRC server\n"
 msgstr "%s error enviando datos al servidor IRC\n"
 
-#: src/irc/irc-server.c:756 src/irc/irc-server.c:1081
+#: src/irc/irc-server.c:757 src/irc/irc-server.c:1082
 #, fuzzy
 msgid "(message dropped)"
 msgstr "mensaje recibido"
 
-#: src/irc/irc-server.c:866 src/irc/irc-server.c:879 src/irc/irc-server.c:926
-#: src/irc/irc-server.c:939
+#: src/irc/irc-server.c:867 src/irc/irc-server.c:880 src/irc/irc-server.c:927
+#: src/irc/irc-server.c:940
 #, c-format
 msgid "%s not enough memory for received IRC message\n"
 msgstr "%s memoria insuficiente para un mensaje IRC recibido\n"
 
-#: src/irc/irc-server.c:1048
+#: src/irc/irc-server.c:1049
 #, c-format
 msgid "%s Command \"%s\" failed!\n"
 msgstr "%s ¡El comando \"%s\" ha fallado!\n"
 
-#: src/irc/irc-server.c:1054
+#: src/irc/irc-server.c:1055
 #, c-format
 msgid "%s No command to execute!\n"
 msgstr "%s ¡Ningún comando para ejecutar!\n"
 
-#: src/irc/irc-server.c:1060
+#: src/irc/irc-server.c:1061
 #, c-format
 msgid "%s Unknown command: cmd=\"%s\", host=\"%s\", args=\"%s\"\n"
 msgstr "%s Comando desconocido: cmd=\"%s\", host=\"%s\", params=\"%s\"\n"
 
-#: src/irc/irc-server.c:1126
+#: src/irc/irc-server.c:1127
 #, c-format
 msgid "%s cannot read data from socket, disconnecting from server...\n"
 msgstr ""
 "%s no ha sido posible leer datos del socket, desconectando del servidor...\n"
 
-#: src/irc/irc-server.c:1209
+#: src/irc/irc-server.c:1210
 #, c-format
 msgid "%s: Reconnecting to server in %d seconds\n"
 msgstr "%s: Reconexión al servidor en %d segundos\n"
 
-#: src/irc/irc-server.c:1243
+#: src/irc/irc-server.c:1244
 #, c-format
 msgid "%s gnutls handshake failed\n"
 msgstr "%s el handshake gnutls ha fallado\n"
 
-#: src/irc/irc-server.c:1260
+#: src/irc/irc-server.c:1261
 #, c-format
 msgid "%s proxy address \"%s\" not found\n"
 msgstr "%s dirección proxy \"%s\" no encontrada\n"
 
-#: src/irc/irc-server.c:1264
+#: src/irc/irc-server.c:1265
 #, c-format
 msgid "%s address \"%s\" not found\n"
 msgstr "%s dirección \"%s\" no encontrada\n"
 
-#: src/irc/irc-server.c:1274
+#: src/irc/irc-server.c:1275
 #, c-format
 msgid "%s proxy IP address not found\n"
 msgstr "%s dirección proxy IP no encontrada\n"
 
-#: src/irc/irc-server.c:1277
+#: src/irc/irc-server.c:1278
 #, c-format
 msgid "%s IP address not found\n"
 msgstr "%s Dirección IP no encontrada\n"
 
-#: src/irc/irc-server.c:1286
+#: src/irc/irc-server.c:1287
 #, c-format
 msgid "%s proxy connection refused\n"
 msgstr "%s conexión proxy rechazada\n"
 
-#: src/irc/irc-server.c:1289
+#: src/irc/irc-server.c:1290
 #, c-format
 msgid "%s connection refused\n"
 msgstr "%s conexión rechazada\n"
 
-#: src/irc/irc-server.c:1297
+#: src/irc/irc-server.c:1298
 #, c-format
 msgid ""
 "%s proxy fails to establish connection to server (check username/password if "
@@ -110,12 +110,12 @@ msgstr ""
 "%s el proxy ha fallado al establecer la conexión al servidor (comprueba el "
 "nombre de usuario o la contraseña si es necesario)\n"
 
-#: src/irc/irc-server.c:1307
+#: src/irc/irc-server.c:1308
 #, fuzzy, c-format
 msgid "%s unable to set local hostname/IP\n"
 msgstr "%s no es posible crear el servidor\n"
 
-#: src/irc/irc-server.c:1825
+#: src/irc/irc-server.c:1826
 #, c-format
 msgid ""
 "%s cannot connect with SSL since WeeChat was not built with GNUtls support\n"
@@ -123,57 +123,57 @@ msgstr ""
 "%s No ha sido posible conectar con SSL debido a que Weechat no fue compilado "
 "con soporte GNUtls\n"
 
-#: src/irc/irc-server.c:1834
+#: src/irc/irc-server.c:1835
 #, c-format
 msgid "%s: connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"
 msgstr "%s: conectando al servidor %s:%d%s%s vía %s proxy %s: %d%s...\n"
 
-#: src/irc/irc-server.c:1840
+#: src/irc/irc-server.c:1841
 #, c-format
 msgid "Connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"
 msgstr "Conectando al servidor %s:%d%s%s vía %s proxy %s:%d%s...\n"
 
-#: src/irc/irc-server.c:1850
+#: src/irc/irc-server.c:1851
 #, c-format
 msgid "%s: connecting to server %s:%d%s%s...\n"
 msgstr "%s: conectando al servidor %s:%d%s%s...\n"
 
-#: src/irc/irc-server.c:1854
+#: src/irc/irc-server.c:1855
 #, c-format
 msgid "Connecting to server %s:%d%s%s...\n"
 msgstr "Conectando al servidor %s:%d%s%s...\n"
 
-#: src/irc/irc-server.c:1872
+#: src/irc/irc-server.c:1873
 #, c-format
 msgid "%s gnutls init error\n"
 msgstr "%s error de inicialización de gnutls\n"
 
-#: src/irc/irc-server.c:1888
+#: src/irc/irc-server.c:1889
 #, c-format
 msgid "%s cannot create pipe\n"
 msgstr "%s no ha sido posible crear la interconexión\n"
 
-#: src/irc/irc-server.c:1903
+#: src/irc/irc-server.c:1904
 #, c-format
 msgid "%s cannot create socket\n"
 msgstr "%s no ha sido posible crear el socket\n"
 
-#: src/irc/irc-server.c:1914
+#: src/irc/irc-server.c:1915
 #, c-format
 msgid "%s cannot set socket option \"SO_REUSEADDR\"\n"
 msgstr "%s no ha sido posible configurar la opción socket \"SO_REUSEADDR\"\n"
 
-#: src/irc/irc-server.c:1925
+#: src/irc/irc-server.c:1926
 #, c-format
 msgid "%s cannot set socket option \"SO_KEEPALIVE\"\n"
 msgstr "%s no ha sido posible configurar la opción socket \"SO_KEEPALIVE\"\n"
 
-#: src/irc/irc-server.c:1967
+#: src/irc/irc-server.c:1968
 #, c-format
 msgid "%s: Reconnecting to server...\n"
 msgstr "%s: Reconectando al servidor...\n"
 
-#: src/irc/irc-server.c:2018 src/irc/irc-server.c:2029
+#: src/irc/irc-server.c:2019 src/irc/irc-server.c:2030
 msgid "Disconnected from server!\n"
 msgstr "¡Desconectado del servidor!\n"
 
@@ -1391,7 +1391,7 @@ msgstr "inactivo"
 msgid " (temporary server, will not be saved)"
 msgstr " (servidor temporal, no será guardado)"
 
-#: src/irc/irc-display.c:409 src/irc/irc-display.c:453 src/irc/irc-recv.c:3236
+#: src/irc/irc-display.c:409 src/irc/irc-display.c:453 src/irc/irc-recv.c:3213
 msgid "seconds"
 msgstr "segundos"
 
@@ -1501,8 +1501,8 @@ msgid "You have been invited to %s%s%s by %s%s\n"
 msgstr "Usted ha sido invitado a %s%s%s por %s%s\n"
 
 #: src/irc/irc-recv.c:437 src/irc/irc-recv.c:564 src/irc/irc-recv.c:764
-#: src/irc/irc-recv.c:1199 src/irc/irc-recv.c:1553 src/irc/irc-recv.c:3614
-#: src/irc/irc-recv.c:3680
+#: src/irc/irc-recv.c:1199 src/irc/irc-recv.c:1553 src/irc/irc-recv.c:3591
+#: src/irc/irc-recv.c:3657
 #, c-format
 msgid "%s channel \"%s\" not found for \"%s\" command\n"
 msgstr "%s canal \"%s\" no encontrado para el comando \"%s\"\n"
@@ -1632,11 +1632,11 @@ msgstr "reop canal %s%s%s: %s%s\n"
 #: src/irc/irc-recv.c:1678 src/irc/irc-recv.c:1710 src/irc/irc-recv.c:1731
 #: src/irc/irc-recv.c:1747 src/irc/irc-recv.c:1777 src/irc/irc-recv.c:1798
 #: src/irc/irc-recv.c:1814 src/irc/irc-recv.c:1844 src/irc/irc-recv.c:1865
-#: src/irc/irc-recv.c:1880 src/irc/irc-recv.c:2102 src/irc/irc-recv.c:2582
-#: src/irc/irc-recv.c:4077 src/irc/irc-recv.c:4092 src/irc/irc-recv.c:4191
-#: src/irc/irc-recv.c:4205 src/irc/irc-recv.c:4452 src/irc/irc-recv.c:4583
-#: src/irc/irc-recv.c:4720 src/irc/irc-recv.c:4735 src/irc/irc-recv.c:4841
-#: src/irc/irc-recv.c:4855
+#: src/irc/irc-recv.c:1880 src/irc/irc-recv.c:2102 src/irc/irc-recv.c:2559
+#: src/irc/irc-recv.c:4042 src/irc/irc-recv.c:4057 src/irc/irc-recv.c:4156
+#: src/irc/irc-recv.c:4170 src/irc/irc-recv.c:4417 src/irc/irc-recv.c:4548
+#: src/irc/irc-recv.c:4685 src/irc/irc-recv.c:4700 src/irc/irc-recv.c:4806
+#: src/irc/irc-recv.c:4820
 #, c-format
 msgid "%s cannot parse \"%s\" command\n"
 msgstr "%s no es posible analizar el comando \"%s\"\n"
@@ -1671,206 +1671,206 @@ msgstr "%s%s%s ha quitado el tema para %s%s\n"
 msgid "WALLOPS from %s%s%s: %s\n"
 msgstr "CTCP %sVERSION%s respuesta de %s%s%s: %s\n"
 
-#: src/irc/irc-recv.c:2568
+#: src/irc/irc-recv.c:2545
 #, fuzzy, c-format
 msgid "User mode for %s%s%s is %s[%s%s%s]\n"
 msgstr "Modo de usuario %s[%s%s%s/%s%s%s]\n"
 
-#: src/irc/irc-recv.c:2632
+#: src/irc/irc-recv.c:2609
 #, c-format
 msgid "%s%s%s is away: %s\n"
 msgstr "%s%s%s está ausente: %s\n"
 
-#: src/irc/irc-recv.c:2724
+#: src/irc/irc-recv.c:2701
 msgid "Users online: "
 msgstr "Usuarios conectados: "
 
-#: src/irc/irc-recv.c:2897
+#: src/irc/irc-recv.c:2874
 #, fuzzy, c-format
 msgid "%s[%s%s%s]%s help mode (+h)\n"
 msgstr "%s[%s%s%s]%s inactividad: "
 
-#: src/irc/irc-recv.c:3087
+#: src/irc/irc-recv.c:3064
 #, c-format
 msgid "%s%s %s(%s%s@%s%s)%s was %s\n"
 msgstr "%s%s %s(%s%s@%s%s)%s estaba %s\n"
 
-#: src/irc/irc-recv.c:3208
+#: src/irc/irc-recv.c:3185
 #, c-format
 msgid "%s[%s%s%s]%s idle: "
 msgstr "%s[%s%s%s]%s inactividad: "
 
-#: src/irc/irc-recv.c:3220
+#: src/irc/irc-recv.c:3197
 msgid "days"
 msgstr "días"
 
-#: src/irc/irc-recv.c:3220 src/common/command.c:4316 src/common/command.c:4334
+#: src/irc/irc-recv.c:3197 src/common/command.c:4316 src/common/command.c:4334
 #, fuzzy
 msgid "day"
 msgid_plural "days"
 msgstr[0] "día"
 msgstr[1] "día"
 
-#: src/irc/irc-recv.c:3224
+#: src/irc/irc-recv.c:3201
 #, c-format
 msgid "%s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
 msgstr "%s%02d %s%s %s%02d %s%s %s%02d %s%s, firmó en: %s%s"
 
-#: src/irc/irc-recv.c:3228
+#: src/irc/irc-recv.c:3205
 msgid "hours"
 msgstr "horas"
 
-#: src/irc/irc-recv.c:3228
+#: src/irc/irc-recv.c:3205
 msgid "hour"
 msgstr "hora"
 
-#: src/irc/irc-recv.c:3232
+#: src/irc/irc-recv.c:3209
 msgid "minutes"
 msgstr "minutos"
 
-#: src/irc/irc-recv.c:3232
+#: src/irc/irc-recv.c:3209
 msgid "minute"
 msgstr "minuto"
 
-#: src/irc/irc-recv.c:3236
+#: src/irc/irc-recv.c:3213
 msgid "second"
 msgstr "segundo"
 
-#: src/irc/irc-recv.c:3625
+#: src/irc/irc-recv.c:3602
 #, fuzzy, c-format
 msgid "Channel created on %s"
 msgstr "lista de excepción de canal"
 
-#: src/irc/irc-recv.c:3634 src/irc/irc-recv.c:3823
+#: src/irc/irc-recv.c:3611
 #, c-format
 msgid "%s cannot identify date/time for \"%s\" command\n"
 msgstr "%s no es posible identificar la fecha/hora para el comando \"%s\"\n"
 
-#: src/irc/irc-recv.c:3643 src/irc/irc-recv.c:3760 src/irc/irc-recv.c:3841
-#: src/irc/irc-recv.c:3952
+#: src/irc/irc-recv.c:3620 src/irc/irc-recv.c:3737 src/irc/irc-recv.c:3806
+#: src/irc/irc-recv.c:3917
 #, c-format
 msgid "%s cannot identify channel for \"%s\" command\n"
 msgstr "%s no es posible identificar el canal para el comando \"%s\"\n"
 
-#: src/irc/irc-recv.c:3695
+#: src/irc/irc-recv.c:3672
 #, c-format
 msgid "No topic set for %s%s\n"
 msgstr "Sin tema establecido para %s%s\n"
 
-#: src/irc/irc-recv.c:3745
+#: src/irc/irc-recv.c:3722
 #, c-format
 msgid "Topic for %s%s%s is: "
 msgstr "El tema para %s%s%s es: "
 
-#: src/irc/irc-recv.c:3812
+#: src/irc/irc-recv.c:3789
 #, c-format
 msgid "Topic set by %s%s%s, %s"
 msgstr "Tema establecido por %s%s%s, %s"
 
-#: src/irc/irc-recv.c:3832 src/irc/irc-recv.c:3961
+#: src/irc/irc-recv.c:3902
+#, c-format
+msgid "%s%s%s has invited %s%s%s on %s%s\n"
+msgstr "%s%s%s ha invitado a %s%s%s en %s%s\n"
+
+#: src/irc/irc-recv.c:3926
 #, c-format
 msgid "%s cannot identify nickname for \"%s\" command\n"
 msgstr ""
 "%s no es posible determinar el nombre de usuario para el comando \"%s\"\n"
 
-#: src/irc/irc-recv.c:3937
-#, c-format
-msgid "%s%s%s has invited %s%s%s on %s%s\n"
-msgstr "%s%s%s ha invitado a %s%s%s en %s%s\n"
-
-#: src/irc/irc-recv.c:3997
+#: src/irc/irc-recv.c:3962
 #, c-format
 msgid "Channel reop %s%s%s: %s%s\n"
 msgstr "reop canal %s%s%s: %s%s\n"
 
-#: src/irc/irc-recv.c:4146
+#: src/irc/irc-recv.c:4111
 #, fuzzy, c-format
 msgid " by %s%s %s(%s%s%s)"
 msgstr "%s%s %s(%s%s%s)%s ha salido"
 
-#: src/irc/irc-recv.c:4155
+#: src/irc/irc-recv.c:4120
 #, c-format
 msgid " by %s%s"
 msgstr ""
 
-#: src/irc/irc-recv.c:4466 src/irc/irc-recv.c:4629
+#: src/irc/irc-recv.c:4431 src/irc/irc-recv.c:4594
 #, c-format
 msgid "Nicks %s%s%s: %s["
 msgstr "Usuarios %s%s%s: %s["
 
-#: src/irc/irc-recv.c:4551
+#: src/irc/irc-recv.c:4516
 #, c-format
 msgid "%s cannot create nick \"%s\" for channel \"%s\"\n"
 msgstr "%s no es posible crear el usuario \"%s\" para el canal \"%s\"\n"
 
-#: src/irc/irc-recv.c:4650
+#: src/irc/irc-recv.c:4615
 #, c-format
 msgid ""
 "Channel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 msgstr ""
 "Canal %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 
-#: src/irc/irc-recv.c:4658
+#: src/irc/irc-recv.c:4623
 msgid "nicks"
 msgstr "usuarios"
 
-#: src/irc/irc-recv.c:4658
+#: src/irc/irc-recv.c:4623
 msgid "nick"
 msgstr "usuario"
 
-#: src/irc/irc-recv.c:4663
+#: src/irc/irc-recv.c:4628
 msgid "ops"
 msgstr "operadores"
 
-#: src/irc/irc-recv.c:4663
+#: src/irc/irc-recv.c:4628
 msgid "op"
 msgstr "operador"
 
-#: src/irc/irc-recv.c:4667
+#: src/irc/irc-recv.c:4632
 msgid "halfops"
 msgstr "semi-operadores"
 
-#: src/irc/irc-recv.c:4667
+#: src/irc/irc-recv.c:4632
 msgid "halfop"
 msgstr "semi-operador"
 
-#: src/irc/irc-recv.c:4671
+#: src/irc/irc-recv.c:4636
 msgid "voices"
 msgstr "voces"
 
-#: src/irc/irc-recv.c:4671
+#: src/irc/irc-recv.c:4636
 msgid "voice"
 msgstr "voz"
 
-#: src/irc/irc-recv.c:4675
+#: src/irc/irc-recv.c:4640
 msgid "normal"
 msgstr "normal"
 
-#: src/irc/irc-recv.c:4775
+#: src/irc/irc-recv.c:4740
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned by "
 msgstr "%s[%s%s%s] %s%s%s baneado por "
 
-#: src/irc/irc-recv.c:4810
+#: src/irc/irc-recv.c:4775
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned\n"
 msgstr "%s[%s%s%s] %s%s%s baneado\n"
 
-#: src/irc/irc-recv.c:4902
+#: src/irc/irc-recv.c:4867
 #, fuzzy, c-format
 msgid "%s: trying 2nd nickname \"%s\"\n"
 msgstr ""
 "%s: el nombre de usuario \"%s\" ya está en uso, probando con el 2 nombre de "
 "usuario \"%s\"\n"
 
-#: src/irc/irc-recv.c:4913
+#: src/irc/irc-recv.c:4878
 #, fuzzy, c-format
 msgid "%s: trying 3rd nickname \"%s\"\n"
 msgstr ""
 "%s: el nombre de usuario \"%s\" ya está en uso, probando con el 3 nombre de "
 "usuario \"%s\"\n"
 
-#: src/irc/irc-recv.c:4924
+#: src/irc/irc-recv.c:4889
 #, fuzzy, c-format
 msgid ""
 "%s: all declared nicknames are already in use or invalid, closing connection "
@@ -1879,28 +1879,28 @@ msgstr ""
 "%s: todos los nombres de usuario declarados ya están en uso, ¡cerrando la "
 "conexión con el servidor!\n"
 
-#: src/irc/irc-recv.c:4935
+#: src/irc/irc-recv.c:4900
 #, fuzzy, c-format
 msgid "%s: trying 1st nickname \"%s\"\n"
 msgstr ""
 "%s: el nombre de usuario \"%s\" ya está en uso, probando con el 1 nombre de "
 "usuario \"%s\"\n"
 
-#: src/irc/irc-recv.c:4962
+#: src/irc/irc-recv.c:4927
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\"\n"
 msgstr ""
 "%s: el nombre de usuario \"%s\" ya está en uso, probando con el 2 nombre de "
 "usuario \"%s\"\n"
 
-#: src/irc/irc-recv.c:4974
+#: src/irc/irc-recv.c:4939
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\"\n"
 msgstr ""
 "%s: el nombre de usuario \"%s\" ya está en uso, probando con el 3 nombre de "
 "usuario \"%s\"\n"
 
-#: src/irc/irc-recv.c:4986
+#: src/irc/irc-recv.c:4951
 #, c-format
 msgid ""
 "%s: all declared nicknames are already in use, closing connection with "
@@ -1909,7 +1909,7 @@ msgstr ""
 "%s: todos los nombres de usuario declarados ya están en uso, ¡cerrando la "
 "conexión con el servidor!\n"
 
-#: src/irc/irc-recv.c:4996
+#: src/irc/irc-recv.c:4961
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\"\n"
 msgstr ""
@@ -2402,7 +2402,7 @@ msgstr "  [Q] Cerrar vista de datos basura"
 msgid "Day changed to %s\n"
 msgstr "Día cambiado a %s\n"
 
-#: src/gui/curses/gui-curses-main.c:248
+#: src/gui/curses/gui-curses-main.c:250
 #, c-format
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr "%s el lag (retraso) es alto, desconectando del servidor...\n"
@@ -3048,8 +3048,8 @@ msgid ""
 "servername hostname [-port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-"
 "pwd password] [-nicks nick1 nick2 nick3] [-username username] [-realname "
 "realname] [-command command] [-autojoin channel[,channel]] ] | [copy server "
-"newservername] [rename servername newservername] | [keep servername] [del "
-"servername]"
+"newservername] | [rename servername newservername] | [keep servername] | "
+"[del servername]"
 msgstr ""
 "[nombre_de_servidor] | [nombre_de_servidor nombre/IP puerto [-auto | -"
 "noauto] [-ipv6] [-ssl] [-pwd contraseña] [-nicks alias1 alias2 alias3] [-"
@@ -4090,7 +4090,7 @@ msgid ""
 "with another home using \"--dir\" command line option.\n"
 msgstr ""
 
-#: src/common/session.c:516
+#: src/common/session.c:517
 #, c-format
 msgid ""
 "Last operation with session file was at position %ld, read of %d bytes\n"
@@ -4098,7 +4098,7 @@ msgstr ""
 "La última operación con el archivo de sesión fue en la posición %ld, lectura "
 "de %d bytes\n"
 
-#: src/common/session.c:521
+#: src/common/session.c:522
 #, c-format
 msgid ""
 "Please send %s/%s, %s/%s and above messages to WeeChat developers for "
@@ -4109,310 +4109,310 @@ msgstr ""
 "de Weechat para el soporte.\n"
 "Sé cuidadoso, puede que haya información privada en estos ficheros.\n"
 
-#: src/common/session.c:547 src/common/session.c:581 src/common/session.c:654
-#: src/common/session.c:695
+#: src/common/session.c:548 src/common/session.c:582 src/common/session.c:655
+#: src/common/session.c:696
 #, c-format
 msgid "wrong type in file (expected: %d, read: %d)"
 msgstr "tipo erróneo en el fichero (esperado: %d, leído: %d)"
 
-#: src/common/session.c:666 src/common/session.c:707
+#: src/common/session.c:667 src/common/session.c:708
 msgid "invalid length for a buffer"
 msgstr "longitud inválida para un búfer"
 
-#: src/common/session.c:731
+#: src/common/session.c:732
 msgid "object read error"
 msgstr "error de lectura de objeto"
 
-#: src/common/session.c:736
+#: src/common/session.c:737
 #, c-format
 msgid "wrong object (expected: %d, read: %d)"
 msgstr "objeto erróneo (esperado: %d, leído: %d)"
 
-#: src/common/session.c:746
+#: src/common/session.c:747
 msgid "type read error"
 msgstr "error de lectura de tipo"
 
-#: src/common/session.c:751
+#: src/common/session.c:752
 #, c-format
 msgid "wrong type (expected: %d, read: %d)"
 msgstr "tipo erróneo (esperado: %d, leído: %d)"
 
-#: src/common/session.c:835
+#: src/common/session.c:836
 msgid "server name not found"
 msgstr "nombre de servidor no encontrado"
 
-#: src/common/session.c:840
+#: src/common/session.c:841
 #, c-format
 msgid "session: loading server \"%s\"\n"
 msgstr "sesión: cargando servidor \"%s\"\n"
 
-#: src/common/session.c:844
+#: src/common/session.c:845
 msgid "server found, updating values\n"
 msgstr "servidor encontrado, actualizando valores\n"
 
-#: src/common/session.c:847
+#: src/common/session.c:848
 msgid "server not found, creating new one\n"
 msgstr "servidor no encontrado, creando uno nuevo\n"
 
-#: src/common/session.c:852
+#: src/common/session.c:853
 msgid "can't create new server"
 msgstr "no se puede crear un nuevo servidor"
 
-#: src/common/session.c:866
+#: src/common/session.c:867
 msgid "unexpected end of file (reading server)"
 msgstr "fin de fichero inesperado (leyendo servidor)"
 
-#: src/common/session.c:957
+#: src/common/session.c:958
 msgid "gnutls init error"
 msgstr "error de inicio de gnutls"
 
-#: src/common/session.c:975
+#: src/common/session.c:976
 msgid "gnutls handshake failed"
 msgstr "el handshake gnutls ha fallado"
 
-#: src/common/session.c:1027
+#: src/common/session.c:1031
 #, c-format
 msgid "session: warning: ignoring value from server (object id: %d)\n"
 msgstr "sesión: advertencia: ignorando valor de servidor (id de objeto: %d)\n"
 
-#: src/common/session.c:1050
+#: src/common/session.c:1054
 msgid "channel found without server"
 msgstr "canal encontrado sin servidor"
 
-#: src/common/session.c:1057
+#: src/common/session.c:1061
 msgid "channel type not found"
 msgstr "tipo de canal no encontrado"
 
-#: src/common/session.c:1065
+#: src/common/session.c:1069
 msgid "channel name not found"
 msgstr "nombre de canal no encontrado"
 
-#: src/common/session.c:1070
+#: src/common/session.c:1074
 #, c-format
 msgid "session: loading channel \"%s\"\n"
 msgstr "sesión: cargando canal \"%s\"\n"
 
-#: src/common/session.c:1078
+#: src/common/session.c:1082
 msgid "can't create new channel"
 msgstr "no se puede crear un nuevo canal"
 
-#: src/common/session.c:1088
+#: src/common/session.c:1092
 msgid "unexpected end of file (reading channel)"
 msgstr "fin de fichero inesperado (leyendo canal)"
 
-#: src/common/session.c:1130
+#: src/common/session.c:1134
 #, c-format
 msgid "session: warning: ignoring value from channel (object id: %d)\n"
 msgstr "sesión: advertencia: ignorando valor de canal (id de objeto: %d)\n"
 
-#: src/common/session.c:1154
+#: src/common/session.c:1158
 msgid "nick found without channel"
 msgstr "nombre de usuario encontrado sin canal"
 
-#: src/common/session.c:1162
+#: src/common/session.c:1166
 msgid "nick name not found"
 msgstr "nombre de usuario no encontrado"
 
-#: src/common/session.c:1172
+#: src/common/session.c:1176
 msgid "can't create new nick"
 msgstr "no se puede crear un nuevo nombre de usuario"
 
-#: src/common/session.c:1182
+#: src/common/session.c:1186
 msgid "unexpected end of file (reading nick)"
 msgstr "fin de fichero inesperado (leyendo nombre de usuario)"
 
-#: src/common/session.c:1201
+#: src/common/session.c:1205
 #, c-format
 msgid "session: warning: ignoring value from nick (object id: %d)\n"
 msgstr "sesión: advertencia: ignorando valor de nick (id de objeto: %d)\n"
 
-#: src/common/session.c:1228
+#: src/common/session.c:1232
 msgid "can't create new DCC"
 msgstr "no se puede crear un nuevo DCC"
 
-#: src/common/session.c:1232
+#: src/common/session.c:1236
 msgid "session: loading DCC\n"
 msgstr "sesión: cargando DCC\n"
 
-#: src/common/session.c:1242
+#: src/common/session.c:1246
 msgid "unexpected end of file (reading DCC)"
 msgstr "fin de fichero inesperado (leyendo DCC)"
 
-#: src/common/session.c:1261
+#: src/common/session.c:1265
 msgid "server not found for DCC"
 msgstr "servidor no encontrado para DCC"
 
-#: src/common/session.c:1270
+#: src/common/session.c:1274
 msgid "DCC with channel but without server"
 msgstr "DCC con canal pero sin servidor"
 
-#: src/common/session.c:1282
+#: src/common/session.c:1286
 msgid "channel not found for DCC"
 msgstr "canal no encontrado para DCC"
 
-#: src/common/session.c:1365
+#: src/common/session.c:1369
 #, c-format
 msgid "session: warning: ignoring value from DCC (object id: %d)\n"
 msgstr "sesión: advertencia: ignorando valor de DCC (id de objeto: %d)\n"
 
-#: src/common/session.c:1386
+#: src/common/session.c:1390
 msgid "session: loading buffer history\n"
 msgstr "sesión: cargando historial del búfer\n"
 
-#: src/common/session.c:1388
+#: src/common/session.c:1392
 msgid "session: loading global history\n"
 msgstr "sesión: cargando historial global\n"
 
-#: src/common/session.c:1396
+#: src/common/session.c:1400
 msgid "unexpected end of file (reading history)"
 msgstr "fin de fichero inesperado (leyendo historial)"
 
-#: src/common/session.c:1416 src/common/session.c:1703
+#: src/common/session.c:1420 src/common/session.c:1707
 #, c-format
 msgid "session: warning: ignoring value from history (object id: %d)\n"
 msgstr ""
 "sesión: advertencia: ignorando valor del historial (id de objeto: %d)\n"
 
-#: src/common/session.c:1443
+#: src/common/session.c:1447
 msgid "server name not found for buffer"
 msgstr "nombre de servidor no encontrado para el búfer"
 
-#: src/common/session.c:1451
+#: src/common/session.c:1455
 msgid "channel name not found for buffer"
 msgstr "nombre de canal no encontrado para el búfer"
 
-#: src/common/session.c:1458
+#: src/common/session.c:1462
 msgid "buffer type not found"
 msgstr "tipo de búfer no encontrado"
 
-#: src/common/session.c:1463
+#: src/common/session.c:1467
 #, c-format
 msgid "session: loading buffer (server: %s, channel: %s, type: %d)\n"
 msgstr "sesión: cargando búfer (servidor: %s, canal: %s, tipo: %d)\n"
 
-#: src/common/session.c:1474
+#: src/common/session.c:1478
 msgid "server not found for buffer"
 msgstr "servidor no encontrado para el búfer"
 
-#: src/common/session.c:1484
+#: src/common/session.c:1488
 msgid "channel not found for buffer"
 msgstr "canal no encontrado para el búfer"
 
-#: src/common/session.c:1493
+#: src/common/session.c:1497
 msgid "can't create new buffer"
 msgstr "no se puede crear un nuevo búfer"
 
-#: src/common/session.c:1506
+#: src/common/session.c:1510
 msgid "unexpected end of file (reading buffer)"
 msgstr "fin de fichero inesperado (leyendo búfer)"
 
-#: src/common/session.c:1519
+#: src/common/session.c:1523
 #, c-format
 msgid "session: warning: ignoring value from buffer (object id: %d)\n"
 msgstr "sesión: advertencia: ignorando valor del búfer (id de objeto: %d)\n"
 
-#: src/common/session.c:1542
+#: src/common/session.c:1546
 msgid "line found without buffer"
 msgstr "línea encontrada sin un búfer"
 
-#: src/common/session.c:1550
+#: src/common/session.c:1554
 msgid "can't create new line"
 msgstr "no se puede crear una nueva línea"
 
-#: src/common/session.c:1560
+#: src/common/session.c:1564
 msgid "unexpected end of file (reading line)"
 msgstr "fin de fichero inesperado (leyendo línea)"
 
-#: src/common/session.c:1600
+#: src/common/session.c:1604
 #, c-format
 msgid "session: warning: ignoring value from line (object id: %d)\n"
 msgstr "sesión: advertencia: ignorando valor de la línea (id de objeto: %d)\n"
 
-#: src/common/session.c:1625
+#: src/common/session.c:1629
 msgid "unexpected end of file (reading uptime)"
 msgstr "fin de fichero no esperado (leyendo tiempo en marcha)"
 
-#: src/common/session.c:1638
+#: src/common/session.c:1642
 #, c-format
 msgid "session: warning: ignoring value from uptime (object id: %d)\n"
 msgstr ""
 "sesión: advertencia: ignorando valor de tiempo en marcha (identificador de "
 "objeto: %d)\n"
 
-#: src/common/session.c:1675
+#: src/common/session.c:1679
 #, fuzzy
 msgid "unexpected end of file (reading hotlist)"
 msgstr "fin de fichero inesperado (leyendo historial)"
 
-#: src/common/session.c:1734
+#: src/common/session.c:1738
 msgid "session file not found"
 msgstr "archivo de sesión no encontrado"
 
-#: src/common/session.c:1741
+#: src/common/session.c:1745
 msgid "signature not found"
 msgstr "firma no encontrada"
 
-#: src/common/session.c:1746
+#: src/common/session.c:1750
 msgid "bad session signature"
 msgstr "firma de sesión corrupta"
 
-#: src/common/session.c:1757
+#: src/common/session.c:1761
 msgid "object id not found"
 msgstr "identificador (id) de objeto no encontrado"
 
-#: src/common/session.c:1765
+#: src/common/session.c:1769
 msgid "failed to load server"
 msgstr "falló al cargar el servidor"
 
-#: src/common/session.c:1772
+#: src/common/session.c:1776
 msgid "failed to load channel"
 msgstr "falló al cargar el canal"
 
-#: src/common/session.c:1779
+#: src/common/session.c:1783
 msgid "failed to load nick"
 msgstr "falló al cargar el nick"
 
-#: src/common/session.c:1786
+#: src/common/session.c:1790
 msgid "failed to load DCC"
 msgstr "falló al cargar el DCC"
 
-#: src/common/session.c:1793
+#: src/common/session.c:1797
 msgid "failed to load history"
 msgstr "falló al cargar el historial"
 
-#: src/common/session.c:1800
+#: src/common/session.c:1804
 msgid "failed to load buffer"
 msgstr "falló al cargar el búfer"
 
-#: src/common/session.c:1807
+#: src/common/session.c:1811
 msgid "failed to load line"
 msgstr "falló al cargar la línea"
 
-#: src/common/session.c:1814
+#: src/common/session.c:1818
 msgid "failed to load uptime"
 msgstr "falló al cargar el tiempo en marcha"
 
-#: src/common/session.c:1821
+#: src/common/session.c:1825
 #, fuzzy
 msgid "failed to load hotlist"
 msgstr "falló al cargar el historial"
 
-#: src/common/session.c:1826
+#: src/common/session.c:1830
 #, c-format
 msgid "ignoring object (id: %d)\n"
 msgstr "ignorando objeto (id: %d)\n"
 
-#: src/common/session.c:1830
+#: src/common/session.c:1834
 #, c-format
 msgid "failed to ignore object (id: %d)"
 msgstr "falló al ignorar el objeto (id: %d)"
 
-#: src/common/session.c:1854
+#: src/common/session.c:1858
 #, c-format
 msgid "%s can't delete session file (%s)\n"
 msgstr "%s no se puede eliminar el archivo de sesión (%s)\n"
 
-#: src/common/session.c:1860
+#: src/common/session.c:1864
 msgid "Upgrade completed successfully\n"
 msgstr "Actualización completada con éxito\n"
 

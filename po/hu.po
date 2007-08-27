@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.6-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-08-17 10:58+0200\n"
+"POT-Creation-Date: 2007-08-26 22:33+0200\n"
 "PO-Revision-Date: 2007-08-08 15:29+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -16,93 +16,93 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: src/irc/irc-server.c:207 src/common/weeconfig.c:2357
+#: src/irc/irc-server.c:208 src/common/weeconfig.c:2357
 msgid "Unable to get user's name"
 msgstr "A felhasználónév meghatározása sikertelen"
 
-#: src/irc/irc-server.c:276
+#: src/irc/irc-server.c:277
 #, c-format
 msgid "%s cannot allocate new server\n"
 msgstr "%s az új szerver lefoglalása sikertelen\n"
 
-#: src/irc/irc-server.c:653 src/irc/irc-server.c:734
+#: src/irc/irc-server.c:654 src/irc/irc-server.c:735
 #, c-format
 msgid "%s error sending data to IRC server\n"
 msgstr "%s adatküldési hiba az IRC szerveren\n"
 
-#: src/irc/irc-server.c:756 src/irc/irc-server.c:1081
+#: src/irc/irc-server.c:757 src/irc/irc-server.c:1082
 msgid "(message dropped)"
 msgstr "(üzenet eldobva)"
 
-#: src/irc/irc-server.c:866 src/irc/irc-server.c:879 src/irc/irc-server.c:926
-#: src/irc/irc-server.c:939
+#: src/irc/irc-server.c:867 src/irc/irc-server.c:880 src/irc/irc-server.c:927
+#: src/irc/irc-server.c:940
 #, c-format
 msgid "%s not enough memory for received IRC message\n"
 msgstr "%s nincs elegendő memória a fogadott IRC üzenet számára\n"
 
-#: src/irc/irc-server.c:1048
+#: src/irc/irc-server.c:1049
 #, c-format
 msgid "%s Command \"%s\" failed!\n"
 msgstr "%s Parancs \"%s\" sikertelen!\n"
 
-#: src/irc/irc-server.c:1054
+#: src/irc/irc-server.c:1055
 #, c-format
 msgid "%s No command to execute!\n"
 msgstr "%s A futtatandó parancs nem található!\n"
 
-#: src/irc/irc-server.c:1060
+#: src/irc/irc-server.c:1061
 #, c-format
 msgid "%s Unknown command: cmd=\"%s\", host=\"%s\", args=\"%s\"\n"
 msgstr ""
 "%s Ismeretlen parancs: parancs=\"%s\", hoszt=\"%s\", argumentum=\"%s\"\n"
 
-#: src/irc/irc-server.c:1126
+#: src/irc/irc-server.c:1127
 #, c-format
 msgid "%s cannot read data from socket, disconnecting from server...\n"
 msgstr ""
 "%s nem sikerült adatot olvasni a csatornából, kilépés a szerverről...\n"
 
-#: src/irc/irc-server.c:1209
+#: src/irc/irc-server.c:1210
 #, c-format
 msgid "%s: Reconnecting to server in %d seconds\n"
 msgstr "%s: Újracsatlakozás a szerverhez %d másodperc múlva\n"
 
-#: src/irc/irc-server.c:1243
+#: src/irc/irc-server.c:1244
 #, c-format
 msgid "%s gnutls handshake failed\n"
 msgstr "%s gnutls kézfogás sikertelen\n"
 
-#: src/irc/irc-server.c:1260
+#: src/irc/irc-server.c:1261
 #, c-format
 msgid "%s proxy address \"%s\" not found\n"
 msgstr "%s proxy cím \"%s\" nem található\n"
 
-#: src/irc/irc-server.c:1264
+#: src/irc/irc-server.c:1265
 #, c-format
 msgid "%s address \"%s\" not found\n"
 msgstr "%s cím \"%s\" nem található\n"
 
-#: src/irc/irc-server.c:1274
+#: src/irc/irc-server.c:1275
 #, c-format
 msgid "%s proxy IP address not found\n"
 msgstr "%s proxy IP-cím nem található\n"
 
-#: src/irc/irc-server.c:1277
+#: src/irc/irc-server.c:1278
 #, c-format
 msgid "%s IP address not found\n"
 msgstr "%s IP-cím nem található\n"
 
-#: src/irc/irc-server.c:1286
+#: src/irc/irc-server.c:1287
 #, c-format
 msgid "%s proxy connection refused\n"
 msgstr "%s a proxy kiszolgálóhoz való csatlakozás elutasítva\n"
 
-#: src/irc/irc-server.c:1289
+#: src/irc/irc-server.c:1290
 #, c-format
 msgid "%s connection refused\n"
 msgstr "%s a csatlakozás elutasítva\n"
 
-#: src/irc/irc-server.c:1297
+#: src/irc/irc-server.c:1298
 #, c-format
 msgid ""
 "%s proxy fails to establish connection to server (check username/password if "
@@ -111,12 +111,12 @@ msgstr ""
 "%s a proxy kiszolgálónak nem sikerült a szerverhez csatlakoznia (ellenőrizze "
 "a felhasználónevet/jelszót ha be van állítva)\n"
 
-#: src/irc/irc-server.c:1307
+#: src/irc/irc-server.c:1308
 #, c-format
 msgid "%s unable to set local hostname/IP\n"
 msgstr "%s nem sikerült a helyi hosztnevet/IP-t beállítani\n"
 
-#: src/irc/irc-server.c:1825
+#: src/irc/irc-server.c:1826
 #, c-format
 msgid ""
 "%s cannot connect with SSL since WeeChat was not built with GNUtls support\n"
@@ -124,61 +124,61 @@ msgstr ""
 "%s nem sikerült SSL használattal kapcsolódni, mert a WeeChat GNUtls "
 "támogatás nélkül lett fordítva\n"
 
-#: src/irc/irc-server.c:1834
+#: src/irc/irc-server.c:1835
 #, c-format
 msgid "%s: connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"
 msgstr ""
 "%s: csatlakozás a(z) %s:%d%s%s szerverhez %s proxy kiszolgálón keresztül: %s:"
 "%d%s...\n"
 
-#: src/irc/irc-server.c:1840
+#: src/irc/irc-server.c:1841
 #, c-format
 msgid "Connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"
 msgstr ""
 "Csatlakozás a(z) %s:%d%s%s szerverhez %s proxy kiszolgálón keresztül: %s:%d%"
 "s...\n"
 
-#: src/irc/irc-server.c:1850
+#: src/irc/irc-server.c:1851
 #, c-format
 msgid "%s: connecting to server %s:%d%s%s...\n"
 msgstr "%s: csatlakozás a(z) %s:%d%s%s szerverhez...\n"
 
-#: src/irc/irc-server.c:1854
+#: src/irc/irc-server.c:1855
 #, c-format
 msgid "Connecting to server %s:%d%s%s...\n"
 msgstr "Csatlakozás a(z) %s:%d%s%s szerverhez...\n"
 
-#: src/irc/irc-server.c:1872
+#: src/irc/irc-server.c:1873
 #, c-format
 msgid "%s gnutls init error\n"
 msgstr "%s gnutls inicializációs hiba\n"
 
-#: src/irc/irc-server.c:1888
+#: src/irc/irc-server.c:1889
 #, c-format
 msgid "%s cannot create pipe\n"
 msgstr "%s nem sikerült a csövet(pipe) létrehozni\n"
 
-#: src/irc/irc-server.c:1903
+#: src/irc/irc-server.c:1904
 #, c-format
 msgid "%s cannot create socket\n"
 msgstr "%s nem sikerült a csatornát létrehozni\n"
 
-#: src/irc/irc-server.c:1914
+#: src/irc/irc-server.c:1915
 #, c-format
 msgid "%s cannot set socket option \"SO_REUSEADDR\"\n"
 msgstr "%s nem sikerült a \"SO_REUSEADDR\" csatornaopciót beállítani\n"
 
-#: src/irc/irc-server.c:1925
+#: src/irc/irc-server.c:1926
 #, c-format
 msgid "%s cannot set socket option \"SO_KEEPALIVE\"\n"
 msgstr "%s nem sikerült a \"SO_KEEPALIVE\" csatornaopciót beállítani\n"
 
-#: src/irc/irc-server.c:1967
+#: src/irc/irc-server.c:1968
 #, c-format
 msgid "%s: Reconnecting to server...\n"
 msgstr "%s: Újracsatlakozás a szerverhez...\n"
 
-#: src/irc/irc-server.c:2018 src/irc/irc-server.c:2029
+#: src/irc/irc-server.c:2019 src/irc/irc-server.c:2030
 msgid "Disconnected from server!\n"
 msgstr "Lekapcsolódott a szerverről!\n"
 
@@ -1384,7 +1384,7 @@ msgstr "ki"
 msgid " (temporary server, will not be saved)"
 msgstr " (átmeneti szerver, nem lesz mentve)"
 
-#: src/irc/irc-display.c:409 src/irc/irc-display.c:453 src/irc/irc-recv.c:3236
+#: src/irc/irc-display.c:409 src/irc/irc-display.c:453 src/irc/irc-recv.c:3213
 msgid "seconds"
 msgstr "másodperc"
 
@@ -1492,8 +1492,8 @@ msgid "You have been invited to %s%s%s by %s%s\n"
 msgstr "Meghívást kapott a %s%s%s szobába %s%s felhasználótól\n"
 
 #: src/irc/irc-recv.c:437 src/irc/irc-recv.c:564 src/irc/irc-recv.c:764
-#: src/irc/irc-recv.c:1199 src/irc/irc-recv.c:1553 src/irc/irc-recv.c:3614
-#: src/irc/irc-recv.c:3680
+#: src/irc/irc-recv.c:1199 src/irc/irc-recv.c:1553 src/irc/irc-recv.c:3591
+#: src/irc/irc-recv.c:3657
 #, c-format
 msgid "%s channel \"%s\" not found for \"%s\" command\n"
 msgstr "%s a \"%s\" szoba nem található a \"%s\" parancshoz\n"
@@ -1623,11 +1623,11 @@ msgstr "%s szoba: %s> %s"
 #: src/irc/irc-recv.c:1678 src/irc/irc-recv.c:1710 src/irc/irc-recv.c:1731
 #: src/irc/irc-recv.c:1747 src/irc/irc-recv.c:1777 src/irc/irc-recv.c:1798
 #: src/irc/irc-recv.c:1814 src/irc/irc-recv.c:1844 src/irc/irc-recv.c:1865
-#: src/irc/irc-recv.c:1880 src/irc/irc-recv.c:2102 src/irc/irc-recv.c:2582
-#: src/irc/irc-recv.c:4077 src/irc/irc-recv.c:4092 src/irc/irc-recv.c:4191
-#: src/irc/irc-recv.c:4205 src/irc/irc-recv.c:4452 src/irc/irc-recv.c:4583
-#: src/irc/irc-recv.c:4720 src/irc/irc-recv.c:4735 src/irc/irc-recv.c:4841
-#: src/irc/irc-recv.c:4855
+#: src/irc/irc-recv.c:1880 src/irc/irc-recv.c:2102 src/irc/irc-recv.c:2559
+#: src/irc/irc-recv.c:4042 src/irc/irc-recv.c:4057 src/irc/irc-recv.c:4156
+#: src/irc/irc-recv.c:4170 src/irc/irc-recv.c:4417 src/irc/irc-recv.c:4548
+#: src/irc/irc-recv.c:4685 src/irc/irc-recv.c:4700 src/irc/irc-recv.c:4806
+#: src/irc/irc-recv.c:4820
 #, c-format
 msgid "%s cannot parse \"%s\" command\n"
 msgstr "%s nem sikerült végrehajtani a \"%s\" parancsot\n"
@@ -1662,230 +1662,230 @@ msgstr "%s%s%s törölte a %s%s szoba témáját\n"
 msgid "WALLOPS from %s%s%s: %s\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:2568
+#: src/irc/irc-recv.c:2545
 #, c-format
 msgid "User mode for %s%s%s is %s[%s%s%s]\n"
 msgstr "%s%s%s felhasználói módja: %s[%s%s%s]\n"
 
-#: src/irc/irc-recv.c:2632
+#: src/irc/irc-recv.c:2609
 #, c-format
 msgid "%s%s%s is away: %s\n"
 msgstr "%s%s%s távol: %s\n"
 
-#: src/irc/irc-recv.c:2724
+#: src/irc/irc-recv.c:2701
 msgid "Users online: "
 msgstr "Online felhasználók: "
 
-#: src/irc/irc-recv.c:2897
+#: src/irc/irc-recv.c:2874
 #, c-format
 msgid "%s[%s%s%s]%s help mode (+h)\n"
 msgstr "%s[%s%s%s]%s segítség mód (+h)\n"
 
-#: src/irc/irc-recv.c:3087
+#: src/irc/irc-recv.c:3064
 #, c-format
 msgid "%s%s %s(%s%s@%s%s)%s was %s\n"
 msgstr "%s%s %s(%s%s@%s%s)%s neve %s volt\n"
 
-#: src/irc/irc-recv.c:3208
+#: src/irc/irc-recv.c:3185
 #, c-format
 msgid "%s[%s%s%s]%s idle: "
 msgstr "%s[%s%s%s]%s tétlen: "
 
-#: src/irc/irc-recv.c:3220
+#: src/irc/irc-recv.c:3197
 msgid "days"
 msgstr "nap"
 
-#: src/irc/irc-recv.c:3220 src/common/command.c:4316 src/common/command.c:4334
+#: src/irc/irc-recv.c:3197 src/common/command.c:4316 src/common/command.c:4334
 #, fuzzy
 msgid "day"
 msgid_plural "days"
 msgstr[0] "nap"
 msgstr[1] "nap"
 
-#: src/irc/irc-recv.c:3224
+#: src/irc/irc-recv.c:3201
 #, c-format
 msgid "%s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
 msgstr "%s%02d %s%s %s%02d %s%s %s%02d %s%s, bejelentkezett: %s%s"
 
-#: src/irc/irc-recv.c:3228
+#: src/irc/irc-recv.c:3205
 msgid "hours"
 msgstr "óra"
 
-#: src/irc/irc-recv.c:3228
+#: src/irc/irc-recv.c:3205
 msgid "hour"
 msgstr "óra"
 
-#: src/irc/irc-recv.c:3232
+#: src/irc/irc-recv.c:3209
 msgid "minutes"
 msgstr "perc"
 
-#: src/irc/irc-recv.c:3232
+#: src/irc/irc-recv.c:3209
 msgid "minute"
 msgstr "perc"
 
-#: src/irc/irc-recv.c:3236
+#: src/irc/irc-recv.c:3213
 msgid "second"
 msgstr "másodperc"
 
-#: src/irc/irc-recv.c:3625
+#: src/irc/irc-recv.c:3602
 #, c-format
 msgid "Channel created on %s"
 msgstr "Szoba létrehozva: %s"
 
-#: src/irc/irc-recv.c:3634 src/irc/irc-recv.c:3823
+#: src/irc/irc-recv.c:3611
 #, c-format
 msgid "%s cannot identify date/time for \"%s\" command\n"
 msgstr "%s nem sikerült a dátumot/időt meghatározni a \"%s\" parancshoz\n"
 
-#: src/irc/irc-recv.c:3643 src/irc/irc-recv.c:3760 src/irc/irc-recv.c:3841
-#: src/irc/irc-recv.c:3952
+#: src/irc/irc-recv.c:3620 src/irc/irc-recv.c:3737 src/irc/irc-recv.c:3806
+#: src/irc/irc-recv.c:3917
 #, c-format
 msgid "%s cannot identify channel for \"%s\" command\n"
 msgstr "%s nem sikerült azonosítani a szobát a \"%s\" parancshoz\n"
 
-#: src/irc/irc-recv.c:3695
+#: src/irc/irc-recv.c:3672
 #, c-format
 msgid "No topic set for %s%s\n"
 msgstr "Nincs téma beállítva a %s%s szobában\n"
 
-#: src/irc/irc-recv.c:3745
+#: src/irc/irc-recv.c:3722
 #, c-format
 msgid "Topic for %s%s%s is: "
 msgstr "A %s%s%s szoba témája: "
 
-#: src/irc/irc-recv.c:3812
+#: src/irc/irc-recv.c:3789
 #, c-format
 msgid "Topic set by %s%s%s, %s"
 msgstr "A témát beállította: %s%s%s, %s"
 
-#: src/irc/irc-recv.c:3832 src/irc/irc-recv.c:3961
-#, c-format
-msgid "%s cannot identify nickname for \"%s\" command\n"
-msgstr "%s nem sikerült a felhasználót meghatározni a \"%s\" parancshoz\n"
-
-#: src/irc/irc-recv.c:3937
+#: src/irc/irc-recv.c:3902
 #, c-format
 msgid "%s%s%s has invited %s%s%s on %s%s\n"
 msgstr "%s%s%s meghívta %s%s%s-t %s%s-kor\n"
 
-#: src/irc/irc-recv.c:3997
+#: src/irc/irc-recv.c:3926
+#, c-format
+msgid "%s cannot identify nickname for \"%s\" command\n"
+msgstr "%s nem sikerült a felhasználót meghatározni a \"%s\" parancshoz\n"
+
+#: src/irc/irc-recv.c:3962
 #, c-format
 msgid "Channel reop %s%s%s: %s%s\n"
 msgstr ""
 
-#: src/irc/irc-recv.c:4146
+#: src/irc/irc-recv.c:4111
 #, c-format
 msgid " by %s%s %s(%s%s%s)"
 msgstr ""
 
-#: src/irc/irc-recv.c:4155
+#: src/irc/irc-recv.c:4120
 #, c-format
 msgid " by %s%s"
 msgstr ""
 
-#: src/irc/irc-recv.c:4466 src/irc/irc-recv.c:4629
+#: src/irc/irc-recv.c:4431 src/irc/irc-recv.c:4594
 #, c-format
 msgid "Nicks %s%s%s: %s["
 msgstr "Felhasználók a %s%s%s szobában: %s["
 
-#: src/irc/irc-recv.c:4551
+#: src/irc/irc-recv.c:4516
 #, c-format
 msgid "%s cannot create nick \"%s\" for channel \"%s\"\n"
 msgstr "%s nem sikerült a(z) \"%s\" nevet felvenni a \"%s\" szobában\n"
 
-#: src/irc/irc-recv.c:4650
+#: src/irc/irc-recv.c:4615
 #, c-format
 msgid ""
 "Channel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 msgstr ""
 "%s%s%s szoba: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
 
-#: src/irc/irc-recv.c:4658
+#: src/irc/irc-recv.c:4623
 msgid "nicks"
 msgstr "név"
 
-#: src/irc/irc-recv.c:4658
+#: src/irc/irc-recv.c:4623
 msgid "nick"
 msgstr "név"
 
-#: src/irc/irc-recv.c:4663
+#: src/irc/irc-recv.c:4628
 msgid "ops"
 msgstr "operátor"
 
-#: src/irc/irc-recv.c:4663
+#: src/irc/irc-recv.c:4628
 msgid "op"
 msgstr "operátor"
 
-#: src/irc/irc-recv.c:4667
+#: src/irc/irc-recv.c:4632
 msgid "halfops"
 msgstr "féloperátor"
 
-#: src/irc/irc-recv.c:4667
+#: src/irc/irc-recv.c:4632
 msgid "halfop"
 msgstr "féloperátor"
 
-#: src/irc/irc-recv.c:4671
+#: src/irc/irc-recv.c:4636
 msgid "voices"
 msgstr ""
 
-#: src/irc/irc-recv.c:4671
+#: src/irc/irc-recv.c:4636
 msgid "voice"
 msgstr ""
 
-#: src/irc/irc-recv.c:4675
+#: src/irc/irc-recv.c:4640
 msgid "normal"
 msgstr "normál"
 
-#: src/irc/irc-recv.c:4775
+#: src/irc/irc-recv.c:4740
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned by "
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
-#: src/irc/irc-recv.c:4810
+#: src/irc/irc-recv.c:4775
 #, c-format
 msgid "%s[%s%s%s] %s%s%s banned\n"
 msgstr "%s[%s%s%s] %s%s%s kitiltva\n"
 
-#: src/irc/irc-recv.c:4902
+#: src/irc/irc-recv.c:4867
 #, fuzzy, c-format
 msgid "%s: trying 2nd nickname \"%s\"\n"
 msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a második nevet: \"%s\"\n"
 
-#: src/irc/irc-recv.c:4913
+#: src/irc/irc-recv.c:4878
 #, fuzzy, c-format
 msgid "%s: trying 3rd nickname \"%s\"\n"
 msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a harmadik nevet: \"%s\"\n"
 
-#: src/irc/irc-recv.c:4924
+#: src/irc/irc-recv.c:4889
 #, fuzzy, c-format
 msgid ""
 "%s: all declared nicknames are already in use or invalid, closing connection "
 "with server!\n"
 msgstr "%s: minden megadott név foglalt, kapcsolat bontása a szerverrel!\n"
 
-#: src/irc/irc-recv.c:4935
+#: src/irc/irc-recv.c:4900
 #, fuzzy, c-format
 msgid "%s: trying 1st nickname \"%s\"\n"
 msgstr "%s: a(z) \"%s\" név már foglalt, próbálom az első nevet: \"%s\"\n"
 
-#: src/irc/irc-recv.c:4962
+#: src/irc/irc-recv.c:4927
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\"\n"
 msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a második nevet: \"%s\"\n"
 
-#: src/irc/irc-recv.c:4974
+#: src/irc/irc-recv.c:4939
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\"\n"
 msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a harmadik nevet: \"%s\"\n"
 
-#: src/irc/irc-recv.c:4986
+#: src/irc/irc-recv.c:4951
 #, c-format
 msgid ""
 "%s: all declared nicknames are already in use, closing connection with "
 "server!\n"
 msgstr "%s: minden megadott név foglalt, kapcsolat bontása a szerverrel!\n"
 
-#: src/irc/irc-recv.c:4996
+#: src/irc/irc-recv.c:4961
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\"\n"
 msgstr "%s: a(z) \"%s\" név már foglalt, próbálom az első nevet: \"%s\"\n"
@@ -2362,7 +2362,7 @@ msgstr "  [Q] Nyers adat nézet bezárása"
 msgid "Day changed to %s\n"
 msgstr "A mai dátum: %s\n"
 
-#: src/gui/curses/gui-curses-main.c:248
+#: src/gui/curses/gui-curses-main.c:250
 #, c-format
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr "%s túl nagy a késés(lag), lecsatlakozás a szerverről...\n"
@@ -3009,8 +3009,8 @@ msgid ""
 "servername hostname [-port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-"
 "pwd password] [-nicks nick1 nick2 nick3] [-username username] [-realname "
 "realname] [-command command] [-autojoin channel[,channel]] ] | [copy server "
-"newservername] [rename servername newservername] | [keep servername] [del "
-"servername]"
+"newservername] | [rename servername newservername] | [keep servername] | "
+"[del servername]"
 msgstr ""
 "[szervernév] | [szervernév hosztnév port [-auto | -noauto] [-ipv6] [-ssl] [-"
 "pwd jelszó] [-nicks név1 név2 név3] [-username felhasználónév] [-realname "
@@ -4042,13 +4042,13 @@ msgstr ""
 "Ha egy másik WeeChat folyamat használja ezt a fájlt, próbálja másik\n"
 "saját könyvtárral futtatni a WeeChat-et a \"--dir\" opció segítségével!\n"
 
-#: src/common/session.c:516
+#: src/common/session.c:517
 #, c-format
 msgid ""
 "Last operation with session file was at position %ld, read of %d bytes\n"
 msgstr ""
 
-#: src/common/session.c:521
+#: src/common/session.c:522
 #, c-format
 msgid ""
 "Please send %s/%s, %s/%s and above messages to WeeChat developers for "
@@ -4059,315 +4059,315 @@ msgstr ""
 "fejlesztőinek ha segítségre van szüksége.\n"
 "Figyelem, ezek a fájlok személyes adatokat tartalmazhatnak.\n"
 
-#: src/common/session.c:547 src/common/session.c:581 src/common/session.c:654
-#: src/common/session.c:695
+#: src/common/session.c:548 src/common/session.c:582 src/common/session.c:655
+#: src/common/session.c:696
 #, c-format
 msgid "wrong type in file (expected: %d, read: %d)"
 msgstr "rossz típus a fájlban (várt: %d, beolvasott: %d)"
 
-#: src/common/session.c:666 src/common/session.c:707
+#: src/common/session.c:667 src/common/session.c:708
 msgid "invalid length for a buffer"
 msgstr "érvénytelen pufferhossz"
 
-#: src/common/session.c:731
+#: src/common/session.c:732
 msgid "object read error"
 msgstr "objektumolvasási hiba"
 
-#: src/common/session.c:736
+#: src/common/session.c:737
 #, c-format
 msgid "wrong object (expected: %d, read: %d)"
 msgstr "hibás objektum (várt: %d, beolvasott: %d)"
 
-#: src/common/session.c:746
+#: src/common/session.c:747
 msgid "type read error"
 msgstr "típus olvasási hiba"
 
-#: src/common/session.c:751
+#: src/common/session.c:752
 #, c-format
 msgid "wrong type (expected: %d, read: %d)"
 msgstr "rossz típus (várt: %d, beolvasott: %d)"
 
-#: src/common/session.c:835
+#: src/common/session.c:836
 msgid "server name not found"
 msgstr "a szerver neve nem található"
 
-#: src/common/session.c:840
+#: src/common/session.c:841
 #, c-format
 msgid "session: loading server \"%s\"\n"
 msgstr "folyamat: \"%s\" szerver betöltése\n"
 
-#: src/common/session.c:844
+#: src/common/session.c:845
 msgid "server found, updating values\n"
 msgstr "megvan a szerver, értékek frissítése\n"
 
-#: src/common/session.c:847
+#: src/common/session.c:848
 msgid "server not found, creating new one\n"
 msgstr "a szerver nem található, új szerver készítése\n"
 
-#: src/common/session.c:852
+#: src/common/session.c:853
 msgid "can't create new server"
 msgstr "nem sikerült új szervert készíteni"
 
-#: src/common/session.c:866
+#: src/common/session.c:867
 msgid "unexpected end of file (reading server)"
 msgstr "váratlan fájlvég (szerver olvasása)"
 
-#: src/common/session.c:957
+#: src/common/session.c:958
 msgid "gnutls init error"
 msgstr "gnutls inicializációs hiba"
 
-#: src/common/session.c:975
+#: src/common/session.c:976
 msgid "gnutls handshake failed"
 msgstr "gnutls kézfogás sikertelen"
 
-#: src/common/session.c:1027
+#: src/common/session.c:1031
 #, c-format
 msgid "session: warning: ignoring value from server (object id: %d)\n"
 msgstr ""
 "folyamat: figyelmeztetés: egyes szerveradatok mellőzve lettek (objektum "
 "azonosító: %d)\n"
 
-#: src/common/session.c:1050
+#: src/common/session.c:1054
 msgid "channel found without server"
 msgstr "nem rendelhető szerver a szobához"
 
-#: src/common/session.c:1057
+#: src/common/session.c:1061
 msgid "channel type not found"
 msgstr "szoba típusa nem található"
 
-#: src/common/session.c:1065
+#: src/common/session.c:1069
 msgid "channel name not found"
 msgstr "szobanév nem található"
 
-#: src/common/session.c:1070
+#: src/common/session.c:1074
 #, c-format
 msgid "session: loading channel \"%s\"\n"
 msgstr "folyamat: \"%s\" szoba betöltése\n"
 
-#: src/common/session.c:1078
+#: src/common/session.c:1082
 msgid "can't create new channel"
 msgstr "nem sikerült új szobát nyitni"
 
-#: src/common/session.c:1088
+#: src/common/session.c:1092
 msgid "unexpected end of file (reading channel)"
 msgstr "váratlan fájlvég (szoba olvasása)"
 
-#: src/common/session.c:1130
+#: src/common/session.c:1134
 #, c-format
 msgid "session: warning: ignoring value from channel (object id: %d)\n"
 msgstr ""
 "folyamat: figyelmeztetés: egyes szobaadatok mellőzve lettek (objektum "
 "azonosító: %d)\n"
 
-#: src/common/session.c:1154
+#: src/common/session.c:1158
 msgid "nick found without channel"
 msgstr "nem rendelhető szoba a névhez"
 
-#: src/common/session.c:1162
+#: src/common/session.c:1166
 msgid "nick name not found"
 msgstr "felhasználónév nem található"
 
-#: src/common/session.c:1172
+#: src/common/session.c:1176
 msgid "can't create new nick"
 msgstr "az új név lefoglalása sikertelen"
 
-#: src/common/session.c:1182
+#: src/common/session.c:1186
 msgid "unexpected end of file (reading nick)"
 msgstr "váratlan fájlvég (név olvasása)"
 
-#: src/common/session.c:1201
+#: src/common/session.c:1205
 #, c-format
 msgid "session: warning: ignoring value from nick (object id: %d)\n"
 msgstr ""
 
-#: src/common/session.c:1228
+#: src/common/session.c:1232
 msgid "can't create new DCC"
 msgstr "nem sikerült új DCC-t létrehozni"
 
-#: src/common/session.c:1232
+#: src/common/session.c:1236
 msgid "session: loading DCC\n"
 msgstr "folyamat: DCC betöltése\n"
 
-#: src/common/session.c:1242
+#: src/common/session.c:1246
 msgid "unexpected end of file (reading DCC)"
 msgstr "váratlan fájlvég (DCC olvasása)"
 
-#: src/common/session.c:1261
+#: src/common/session.c:1265
 msgid "server not found for DCC"
 msgstr "nem található DCC szerver"
 
-#: src/common/session.c:1270
+#: src/common/session.c:1274
 msgid "DCC with channel but without server"
 msgstr "nem rendelhető szerver a DCC szobához"
 
-#: src/common/session.c:1282
+#: src/common/session.c:1286
 msgid "channel not found for DCC"
 msgstr "nem található DCC szoba"
 
-#: src/common/session.c:1365
+#: src/common/session.c:1369
 #, c-format
 msgid "session: warning: ignoring value from DCC (object id: %d)\n"
 msgstr ""
 "folyamat: figyelmeztetés: egyes DCC adatok mellőzve lettek (objektum "
 "azonosító: %d)\n"
 
-#: src/common/session.c:1386
+#: src/common/session.c:1390
 msgid "session: loading buffer history\n"
 msgstr "folyamat: puffertörténet betöltése\n"
 
-#: src/common/session.c:1388
+#: src/common/session.c:1392
 msgid "session: loading global history\n"
 msgstr ""
 
-#: src/common/session.c:1396
+#: src/common/session.c:1400
 msgid "unexpected end of file (reading history)"
 msgstr "váratlan fájlvég (előzmények olvasása)"
 
-#: src/common/session.c:1416 src/common/session.c:1703
+#: src/common/session.c:1420 src/common/session.c:1707
 #, c-format
 msgid "session: warning: ignoring value from history (object id: %d)\n"
 msgstr ""
 
-#: src/common/session.c:1443
+#: src/common/session.c:1447
 msgid "server name not found for buffer"
 msgstr "szervernév nem található a pufferhez"
 
-#: src/common/session.c:1451
+#: src/common/session.c:1455
 msgid "channel name not found for buffer"
 msgstr "szobanév nem található a pufferhez"
 
-#: src/common/session.c:1458
+#: src/common/session.c:1462
 msgid "buffer type not found"
 msgstr "a puffer típusa nem található"
 
-#: src/common/session.c:1463
+#: src/common/session.c:1467
 #, c-format
 msgid "session: loading buffer (server: %s, channel: %s, type: %d)\n"
 msgstr "folyamat: puffer betöltése (szerver: %s, szoba: %s, típus: %d)\n"
 
-#: src/common/session.c:1474
+#: src/common/session.c:1478
 msgid "server not found for buffer"
 msgstr "nem található szerver a pufferhez"
 
-#: src/common/session.c:1484
+#: src/common/session.c:1488
 msgid "channel not found for buffer"
 msgstr "nem található szoba a pufferhez"
 
-#: src/common/session.c:1493
+#: src/common/session.c:1497
 msgid "can't create new buffer"
 msgstr "nem sikerült új puffert nyitni"
 
-#: src/common/session.c:1506
+#: src/common/session.c:1510
 msgid "unexpected end of file (reading buffer)"
 msgstr "váratlan fájlvég (puffer olvasása)"
 
-#: src/common/session.c:1519
+#: src/common/session.c:1523
 #, c-format
 msgid "session: warning: ignoring value from buffer (object id: %d)\n"
 msgstr ""
 "folyamat: figyelmeztetés: egyes pufferadatok mellőzve lettek (objektum "
 "azonosító: %d)\n"
 
-#: src/common/session.c:1542
+#: src/common/session.c:1546
 msgid "line found without buffer"
 msgstr "nem rendelhető puffer a sorhoz"
 
-#: src/common/session.c:1550
+#: src/common/session.c:1554
 msgid "can't create new line"
 msgstr "nem sikerült új sort nyitni"
 
-#: src/common/session.c:1560
+#: src/common/session.c:1564
 msgid "unexpected end of file (reading line)"
 msgstr "váratlan fájlvég (sor olvasása)"
 
-#: src/common/session.c:1600
+#: src/common/session.c:1604
 #, c-format
 msgid "session: warning: ignoring value from line (object id: %d)\n"
 msgstr ""
 
-#: src/common/session.c:1625
+#: src/common/session.c:1629
 msgid "unexpected end of file (reading uptime)"
 msgstr "váratlan fájlvég (futásidő olvasása)"
 
-#: src/common/session.c:1638
+#: src/common/session.c:1642
 #, c-format
 msgid "session: warning: ignoring value from uptime (object id: %d)\n"
 msgstr ""
 "folyamat: figyelmeztetés: egyes uptime adatok mellőzve lettek (objektum "
 "azonosító: %d)\n"
 
-#: src/common/session.c:1675
+#: src/common/session.c:1679
 msgid "unexpected end of file (reading hotlist)"
 msgstr ""
 
-#: src/common/session.c:1734
+#: src/common/session.c:1738
 msgid "session file not found"
 msgstr "folyamatfájl nem található"
 
-#: src/common/session.c:1741
+#: src/common/session.c:1745
 msgid "signature not found"
 msgstr "aláírás nem található"
 
-#: src/common/session.c:1746
+#: src/common/session.c:1750
 msgid "bad session signature"
 msgstr "hibás folyamatellenőrző"
 
-#: src/common/session.c:1757
+#: src/common/session.c:1761
 msgid "object id not found"
 msgstr "objektum azonosító nem található"
 
-#: src/common/session.c:1765
+#: src/common/session.c:1769
 msgid "failed to load server"
 msgstr "hiba a szerverhez történő csatlakozás közben"
 
-#: src/common/session.c:1772
+#: src/common/session.c:1776
 msgid "failed to load channel"
 msgstr "hiba a szobába történő belépés közben"
 
-#: src/common/session.c:1779
+#: src/common/session.c:1783
 msgid "failed to load nick"
 msgstr "nem sikerült a nevet beolvasni"
 
-#: src/common/session.c:1786
+#: src/common/session.c:1790
 msgid "failed to load DCC"
 msgstr "nem sikerült a DCC-t beolvasni"
 
-#: src/common/session.c:1793
+#: src/common/session.c:1797
 msgid "failed to load history"
 msgstr "nem sikerült az előzményeket beolvasni"
 
-#: src/common/session.c:1800
+#: src/common/session.c:1804
 msgid "failed to load buffer"
 msgstr "puffer betöltése sikertelen"
 
-#: src/common/session.c:1807
+#: src/common/session.c:1811
 msgid "failed to load line"
 msgstr "nem sikerült a sort beolvasni"
 
-#: src/common/session.c:1814
+#: src/common/session.c:1818
 msgid "failed to load uptime"
 msgstr "nem sikerült a futásidőt beolvasni"
 
-#: src/common/session.c:1821
+#: src/common/session.c:1825
 msgid "failed to load hotlist"
 msgstr ""
 
-#: src/common/session.c:1826
+#: src/common/session.c:1830
 #, c-format
 msgid "ignoring object (id: %d)\n"
 msgstr "objektum mellőzése (azonosító: %d)\n"
 
-#: src/common/session.c:1830
+#: src/common/session.c:1834
 #, c-format
 msgid "failed to ignore object (id: %d)"
 msgstr "nem sikerült az objektumot mellőzni (azonosító: %d)"
 
-#: src/common/session.c:1854
+#: src/common/session.c:1858
 #, c-format
 msgid "%s can't delete session file (%s)\n"
 msgstr "%s nem sikerült a \"%s\" fájlt létrehozni\n"
 
-#: src/common/session.c:1860
+#: src/common/session.c:1864
 msgid "Upgrade completed successfully\n"
 msgstr "A frissítés sikeresen megtörtént\n"
 

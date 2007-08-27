@@ -186,8 +186,8 @@ t_weechat_command weechat_commands[] =
        "[add servername hostname [-port port] [-temp] [-auto | -noauto] "
        "[-ipv6] [-ssl] [-pwd password] [-nicks nick1 nick2 nick3] "
        "[-username username] [-realname realname] [-command command] "
-       "[-autojoin channel[,channel]] ] | [copy server newservername] "
-       "[rename servername newservername] | [keep servername] "
+       "[-autojoin channel[,channel]] ] | [copy server newservername] | "
+       "[rename servername newservername] | [keep servername] | "
        "[del servername]"),
     N_("      list: list servers (no parameter implies this list)\n"
        "  listfull: list servers with detailed info for each server\n"
