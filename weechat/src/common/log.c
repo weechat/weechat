@@ -27,6 +27,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdarg.h>
+#include <errno.h>
 
 #ifdef HAVE_FLOCK
 #include <sys/file.h>
@@ -79,11 +80,14 @@ weechat_log_open (char *filename, char *mode)
 #ifdef HAVE_FLOCK
     if ((flock (fileno (weechat_log_file), LOCK_EX | LOCK_NB) != 0))
     {
-        fclose (weechat_log_file);
-        weechat_log_file = NULL;
-        free (weechat_log_filename);
-        weechat_log_filename = NULL;
-        return 0;
+        if (errno == EWOULDBLOCK)
+        {
+            fclose (weechat_log_file);
+            weechat_log_file = NULL;
+            free (weechat_log_filename);
+            weechat_log_filename = NULL;
+            return 0;
+        }
     }
 #endif
 
